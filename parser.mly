@@ -34,6 +34,7 @@ open Parser_util
 %token MINUS           "-" 
 %token MINUSDOT        "-." 
 %token <string>DOT_LIDENT            
+%token <string>COLONCOLON_UIDENT
 %token COLON           ":" 
 %token SEMI           
 %token LBRACKET        "[" 
@@ -220,7 +221,10 @@ simple_expr:
   | BARBAR {}
 
 %inline constr:
-  name = UIDENT {}
+  | name = UIDENT {}
+  /* TODO: two tokens or one token here? */
+  | type_name=LIDENT constr_name=COLONCOLON_UIDENT
+    {}
 
 pattern:
   | simple_pattern {}
