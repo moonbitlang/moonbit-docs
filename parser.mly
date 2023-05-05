@@ -11,7 +11,7 @@ open Parser_util
 %token <string> UIDENT
 %token <string > COMMENT
 %token NEWLINE
-%token <string> InFIX1
+%token <string> INFIX1
 %token LT "<"
 %token GT ">"
 %token <string> INFIX2
@@ -21,6 +21,7 @@ open Parser_util
 %token EOF
 %token FALSE
 %token TRUE
+%token IMPORT          "import"
 %token BREAK           "break"
 %token CONTINUE        "continue" 
 %token STRUCT          "struct"
@@ -67,7 +68,7 @@ open Parser_util
 %token FAT_ARROW     "=>" 
 %token SLASH          "/"
 %token WHILE           "while" 
-%nonassoc EQUAL
+
 %nonassoc "as"
 %right "|"
 
@@ -75,7 +76,7 @@ open Parser_util
 %right AMPERSAND AMPERAMPER
 
 
-%left InFIX1 "<"  ">" EQUALEQUAL 
+%left INFIX1 "<"  ">" EQUALEQUAL 
 %left INFIX2 PLUS PLUSDOT MINUS MINUSDOT
 %left INFIX3 STAR SLASH
 %right INFIX4
@@ -84,7 +85,7 @@ open Parser_util
 
 
 %type <Syntax.impls> structure
-%type <Compact.semi_expr_prop > semi_single_bind
+%type <Compact.semi_expr_prop > statement_expr
 %%
 
 
@@ -117,7 +118,7 @@ fun_header:
     {}
 
 
-%inline block_expr: "{" ls=list_semis(semi_single_bind) "}" {}
+%inline block_expr: "{" ls=list_semis(statement_expr) "}" {}
 %inline error_block: error {}
 val_header : mut=id("let" {}| "var"{}) binder=binder t=opt_annot {}
 structure : list_semis(structure_item) EOF {}
@@ -134,10 +135,14 @@ qual_ident:
 
 
 
-%inline semi_expr_semi_opt: ls=non_empty_list_semis(semi_single_bind)  {}
+%inline semi_expr_semi_opt: ls=non_empty_list_semis(statement_expr)  {}
 
-semi_single_bind:
+statement_expr:
   | a=expr  {}
+  | var=var "=" e=expr {}  
+  | record=simple_expr  name=DOT_LIDENT "=" field=expr
+    {}     
+  | obj=simple_expr  "[" ind=expr "]" "=" value=expr {}
   | "break" {}
   | "continue" {}  
   | "let" pat=pattern ty=opt_annot "=" expr=expr
@@ -147,32 +152,43 @@ semi_single_bind:
   | "fn" name=LIDENT params=parameters ty=opt_annot block = block_expr
     {}
 
+ if_expr:
+   | "if"  b=infix_expr ifso=block_expr "else" ifnot=block_expr
+   | "if"  b=infix_expr ifso=block_expr "else" ifnot=if_expr  {}
+   | "if"  b=infix_expr ifso=block_expr {}
+   | "if" b=infix_expr ifso=error_block {}
 
+while_expr:
+  | "while" cond=infix_expr b=block_expr
+    {}
+  | "while" cond=infix_expr b=error_block  
+    {}
+
+match_expr:
+  | "match" e=infix_expr "{" "|"?  mat=separated_nonempty_list("|", pattern "=>" semi_expr_semi_opt {})  "}"  {}
+  | "match" e=infix_expr "{""}" {}
+  | "match" e=infix_expr error {}
+  
 expr:
-  | simple_expr {}  
+  | infix_expr 
+  | match_expr      
+  | if_expr 
+  | while_expr {}
+
+
+infix_expr:
   | op=id(PLUS {} |PLUSDOT{}) e=expr %prec prec_unary_minus {}
   | op=id(MINUS{}|MINUSDOT{}) e=expr %prec prec_unary_minus {}
+  | simple_expr  {}
   | expr infixop expr {}
-  | obj=simple_expr  "[" ind=expr "]" "=" value=expr {}
-  | "if" b=expr ifso=block_expr "else" ifnot=block_expr {}
-  | "if" b=expr ifso=block_expr   {}
-  | "if" b=expr ifso=error_block   {}
-  | "while" cond=expr b=block_expr
-    {}
-  | "while" cond=expr b=error_block  
-    {}
-  | var=var "=" e=expr {}
-  
-  | "fn" ps=parameters f = block_expr  {}
-  // | "fn" LIDENT f = block_expr  {}
-  | "match" e=expr "{" "|"?  mat=separated_nonempty_list("|", pattern "=>" semi_expr_semi_opt {})  "}"  {}
-  | "match" e=expr "{""}" {}
-  | "match" e=expr error {}
-  | "{" fs=list_commas( l=label ":" e=expr {}) "}" {}
-  | record=simple_expr  name=DOT_LIDENT "=" field=expr
-    {}
-  
+
+
 simple_expr:
+  | "{" fs=list_commas( l=label ":" e=expr {}) "}" {}
+  // | "fn"  parameters "=>" atomic_expr
+  // | "{" non_empty_list_semis(statement_expr)"}" {}  
+  | "{" x=semi_expr_semi_opt "}" {}  
+  | "fn" ps=parameters f = block_expr  {}
   | e = atomic_expr {}
   | "_" {}
   | v=var {}
@@ -181,8 +197,8 @@ simple_expr:
   | obj=simple_expr  "[" index=expr "]" {}
   | f=simple_expr "(" args=list_commas(expr) ")" {}
   | record=simple_expr  name=DOT_LIDENT {}
-  | "("  bs=list_commas(semi_expr_semi_opt) ")" {}  
-  | "(" semi_expr_semi_opt ":" type_ ")" {}
+  | "("  bs=list_commas(expr) ")" {}  
+  | "(" expr ":" type_ ")" {}
   | "[" es = list_commas(expr) "]" {}  
 
 %inline label:
@@ -205,7 +221,7 @@ simple_expr:
   | INFIX4
   | INFIX3  
   | INFIX2
-  | InFIX1 {}
+  | INFIX1 {}
   | "<" {}
   | ">" {}
   | STAR {}
