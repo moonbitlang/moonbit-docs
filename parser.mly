@@ -125,6 +125,7 @@ structure : list_semis(structure_item) EOF {}
 structure_item:
   | type_header=type_header components=type_def {}
   | val_header=val_header  "=" expr = expr {}
+  | t=fun_header "=" mname=STRING fname=STRING {}
   | t=fun_header body=block_expr {}
 type_header: "type" tycon=LIDENT params=option(delimited("<", separated_nonempty_list(",",UIDENT) ,">") ) {}    
 
