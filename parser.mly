@@ -139,19 +139,27 @@ qual_ident:
 %inline semi_expr_semi_opt: ls=non_empty_list_semis(statement_expr)  {}
 
 statement_expr:
-  | a=expr  {}
   | var=var "=" e=expr {}  
   | record=simple_expr  name=DOT_LIDENT "=" field=expr
     {}     
   | obj=simple_expr  "[" ind=expr "]" "=" value=expr {}
-  | "break" {}
-  | "continue" {}  
   | "let" pat=pattern ty=opt_annot "=" expr=expr
     {}
   | "var" binder=binder ty=opt_annot "=" expr=expr 
     {}           
   | "fn" name=LIDENT params=parameters ty=opt_annot block = block_expr
     {}
+  | "break" {}
+  | "continue" {}  
+  | while_expr {}
+  | a=expr  {}  
+
+while_expr:
+  | "while" cond=infix_expr b=block_expr
+    {}
+  | "while" cond=infix_expr b=error_block  
+    {}
+
 
  if_expr:
    | "if"  b=infix_expr ifso=block_expr "else" ifnot=block_expr
@@ -159,11 +167,6 @@ statement_expr:
    | "if"  b=infix_expr ifso=block_expr {}
    | "if" b=infix_expr ifso=error_block {}
 
-while_expr:
-  | "while" cond=infix_expr b=block_expr
-    {}
-  | "while" cond=infix_expr b=error_block  
-    {}
 
 match_expr:
   | "match" e=infix_expr "{" "|"?  mat=separated_nonempty_list("|", pattern "=>" semi_expr_semi_opt {})  "}"  {}
@@ -173,8 +176,7 @@ match_expr:
 expr:
   | infix_expr 
   | match_expr      
-  | if_expr 
-  | while_expr {}
+  | if_expr {}
 
 
 infix_expr:
