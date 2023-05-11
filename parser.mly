@@ -68,6 +68,7 @@ open Parser_util
 %token FAT_ARROW     "=>" 
 %token SLASH          "/"
 %token WHILE           "while" 
+%token RETURN          "return"
 
 %nonassoc "as"
 %right "|"
@@ -152,6 +153,7 @@ statement_expr:
   | "break" {}
   | "continue" {}  
   | while_expr {}
+  | "return" expr = option(expr) {}
   | a=expr  {}  
 
 while_expr:
@@ -161,7 +163,7 @@ while_expr:
     {}
 
 
- if_expr:
+if_expr:
    | "if"  b=infix_expr ifso=block_expr "else" ifnot=block_expr
    | "if"  b=infix_expr ifso=block_expr "else" ifnot=if_expr  {}
    | "if"  b=infix_expr ifso=block_expr {}
