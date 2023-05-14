@@ -89,21 +89,28 @@ open Parser_util
 %type <Compact.semi_expr_prop > statement_expr
 %%
 
+non_empty_list_commas_rev(X):
+  | x = X  {}
+  | xs=non_empty_list_commas_rev(X) "," x=X {}
 
 non_empty_list_commas( X):
-  | x = X ioption(",") {}
-  | x = X "," xs = non_empty_list_commas( X) {}
+  | xs = non_empty_list_commas_rev(X) ; ioption(",") {}
 
 %inline list_commas( X):
-  | x = ioption(non_empty_list_commas( X)) {}
+  | {}
+  | non_empty_list_commas(X) {}
+
+non_empty_list_semi_rev(X):
+  | x = X  {}
+  | xs=non_empty_list_semi_rev(X) ; SEMI ;  x=X {}
 
 non_empty_list_semis(X):
-  x = X; ioption(SEMI)
-    {}
-| x = X; SEMI; xs = non_empty_list_semis(X)
-    {}
+  | xs = non_empty_list_semi_rev(X) ; ioption(SEMI) {}
 
-%inline list_semis(X): x= option(non_empty_list_semis(X)) {}
+%inline list_semis(X): 
+  | {}
+  | non_empty_list_semis(X){}
+
 
 %inline id(x): x {}
 %inline opt_annot: option(":" t=type_ {}) {}
