@@ -30,7 +30,7 @@ open Parser_util
 %token EQUALEQUAL      "==" 
 %token LPAREN          "(" 
 %token RPAREN          ")"
-%token STAR            "*" 
+
 %token COMMA          "," 
 %token MINUS           "-" 
 %token MINUSDOT        "-." 
@@ -48,7 +48,7 @@ open Parser_util
 
 %token LBRACE          "{"
 %token RBRACE          "}" 
-%token AMPERSAND       "&" 
+
 %token AMPERAMPER     "&&" 
 %token BARBAR          "||" 
 %token <string>PACKAGE_NAME
@@ -63,23 +63,21 @@ open Parser_util
 %token VAR            "var" 
 %token MATCH          "match" 
 %token MUTABLE        "mut" 
-%token OR             "or" 
 %token TYPE            "type" 
 %token FAT_ARROW     "=>" 
-%token SLASH          "/"
 %token WHILE           "while" 
 %token RETURN          "return"
 
 %nonassoc "as"
 %right "|"
 
-%right OR BARBAR
-%right AMPERSAND AMPERAMPER
+%right BARBAR
+%right AMPERAMPER
 
 
 %left INFIX1 "<"  ">" EQUALEQUAL 
 %left INFIX2 PLUS PLUSDOT MINUS MINUSDOT
-%left INFIX3 STAR SLASH
+%left INFIX3 
 %right INFIX4
 %nonassoc prec_unary_minus
 %start    structure
@@ -236,16 +234,15 @@ simple_expr:
   | INFIX1 {}
   | "<" {}
   | ">" {}
-  | STAR {}
-  | SLASH {}
+
+
   | PLUS {}
   | PLUSDOT  {}
   | MINUS {}
   | MINUSDOT {}  
   | EQUALEQUAL {}
-  | AMPERSAND {}
+
   | AMPERAMPER {}
-  | OR {}
   | BARBAR {}
 
 %inline constr:
