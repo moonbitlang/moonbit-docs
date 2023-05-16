@@ -27,7 +27,7 @@ open Parser_util
 %token STRUCT          "struct"
 %token ENUM            "enum" 
 %token EQUAL           "=" 
-%token EQUALEQUAL      "==" 
+
 %token LPAREN          "(" 
 %token RPAREN          ")"
 
@@ -75,7 +75,7 @@ open Parser_util
 %right AMPERAMPER
 
 
-%left INFIX1 "<"  ">" EQUALEQUAL 
+%left INFIX1 "<"  ">" 
 %left INFIX2 PLUS PLUSDOT MINUS MINUSDOT
 %left INFIX3 
 %right INFIX4
@@ -240,7 +240,7 @@ simple_expr:
   | PLUSDOT  {}
   | MINUS {}
   | MINUSDOT {}  
-  | EQUALEQUAL {}
+
 
   | AMPERAMPER {}
   | BARBAR {}
