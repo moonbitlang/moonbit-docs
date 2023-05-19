@@ -193,7 +193,7 @@ infix_expr:
   | op=id(PLUS {} |PLUSDOT{}) e=expr %prec prec_unary_minus {}
   | op=id(MINUS{}|MINUSDOT{}) e=expr %prec prec_unary_minus {}
   | simple_expr  {}
-  | expr infixop expr {}
+  | lhs=expr infixop rhs=expr {}
 
 
 simple_expr:
