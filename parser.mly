@@ -12,8 +12,8 @@ open Parser_util
 %token <string > COMMENT
 %token NEWLINE
 %token <string> INFIX1
-%token LT "<"
-%token GT ">"
+
+
 %token <string> INFIX2
 %token <string> INFIX3
 %token <string> INFIX4
@@ -75,7 +75,7 @@ open Parser_util
 %right AMPERAMPER
 
 
-%left INFIX1 "<"  ">" 
+%left INFIX1  
 %left INFIX2 PLUS PLUSDOT MINUS MINUSDOT
 %left INFIX3 
 %right INFIX4
@@ -235,8 +235,8 @@ simple_expr:
   | INFIX3  
   | INFIX2
   | INFIX1 {}
-  | "<" {}
-  | ">" {}
+
+
 
 
   | PLUS {}
