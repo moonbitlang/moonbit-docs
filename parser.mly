@@ -113,12 +113,15 @@ non_empty_list_semis(X):
 %inline id(x): x {}
 %inline opt_annot: option(":" t=type_ {}) {}
 %inline parameters : delimited("(",separated_list(",",id(b=binder t=opt_annot {})), ")") {}
-
+optional_type_parameters:
+  | params = option(delimited("[",separated_nonempty_list(",",UIDENT), "]")) {}
+optional_type_arguments:
+  | params = option(delimited("[" ,separated_nonempty_list(",",type_), "]")) {}     
 fun_header:
   "func"
     f=binder
     /* TODO: move the quants before self */
-    quants=option(delimited("<",separated_nonempty_list(",",UIDENT), ">"))
+    quants=optional_type_parameters
     ps=option(parameters)
     ts=opt_annot
     {}
@@ -133,7 +136,7 @@ structure_item:
   | val_header=val_header  "=" expr = expr {}
   | t=fun_header "=" mname=STRING fname=STRING {}
   | t=fun_header body=block_expr {}
-type_header: "type" tycon=LIDENT params=option(delimited("<", separated_nonempty_list(",",UIDENT) ,">") ) {}    
+type_header: "type" tycon=LIDENT params=optional_type_parameters {}    
 
 
 qual_ident:
@@ -282,7 +285,7 @@ type_:
       {} 
   | UIDENT {}  
   // | "(" type_ ")" {}
-  | id=qual_ident params=option(delimited("<" ,separated_nonempty_list(",",type_), ">"))  {}
+  | id=qual_ident params=optional_type_arguments {}
   | "_" {}
 /* type declaration */
 
