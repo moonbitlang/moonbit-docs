@@ -257,7 +257,7 @@ simple_expr:
 pattern:
   | simple_pattern {}
   | b=binder "as" p=pattern {}
-  | pattern "|" pattern {}
+  | pat1=pattern "|" pat2=pattern {}
   
 
 simple_pattern:
@@ -272,7 +272,7 @@ simple_pattern:
   | constr=constr ps=option("(" t=separated_nonempty_list(",",pattern) ")" {}){}
   | "(" pattern ")" {}
   | "(" p = pattern "," ps=separated_nonempty_list(",",pattern) ")"  {}     
-  | "(" pattern ":" type_ ")" {}
+  | "(" pat=pattern ":" ty=type_ ")" {}
   // | "#" "[" pat = pat_list "]" {}
   | "[" lst=separated_list(",",pattern) "]" {}
   | "{" p=separated_list(",", l=label ":" p=pattern {}) "}" {}
