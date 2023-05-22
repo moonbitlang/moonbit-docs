@@ -36,7 +36,8 @@ open Parser_util
 %token MINUSDOT        "-." 
 %token <string>DOT_LIDENT            
 %token <string>COLONCOLON_UIDENT
-%token COLON           ":" 
+%token COLON           ":"
+%token COLONEQUAL      ":="
 %token SEMI           
 %token LBRACKET        "[" 
 %token <string> PLUS           "+" 
