@@ -192,11 +192,12 @@ infix_expr:
   | op=id(MINUS{}|MINUSDOT{}) e=expr %prec prec_unary_minus {}
   | simple_expr  {}
   | lhs=expr infixop rhs=expr {}
-  | var=var "=" e=expr {}  
-  | record=simple_expr  name=DOT_LIDENT "=" field=expr
-    {}     
-  | obj=simple_expr  "[" ind=expr "]" "=" value=expr {} 
+  | lv = left_value"=" e=expr {}  
 
+%inline left_value:
+ | var=var {}
+ | record=simple_expr  name=DOT_LIDENT {}
+ | obj=simple_expr  "[" ind=expr "]" {}
 
 simple_expr:
   | "{" fs=list_commas( l=label ":" e=expr {}) "}" {}
