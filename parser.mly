@@ -71,7 +71,7 @@ open Parser_util
 
 %nonassoc "as"
 %right "|"
-
+%nonassoc "="
 %right BARBAR
 %right AMPERAMPER
 
@@ -149,10 +149,7 @@ qual_ident:
 %inline semi_expr_semi_opt: ls=non_empty_list_semis(statement_expr)  {}
 
 statement_expr:
-  | var=var "=" e=expr {}  
-  | record=simple_expr  name=DOT_LIDENT "=" field=expr
-    {}     
-  | obj=simple_expr  "[" ind=expr "]" "=" value=expr {}
+  
   | "let" pat=pattern ty=opt_annot "=" expr=expr
     {}
   | "var" binder=binder ty=opt_annot "=" expr=expr 
@@ -195,6 +192,10 @@ infix_expr:
   | op=id(MINUS{}|MINUSDOT{}) e=expr %prec prec_unary_minus {}
   | simple_expr  {}
   | lhs=expr infixop rhs=expr {}
+  | var=var "=" e=expr {}  
+  | record=simple_expr  name=DOT_LIDENT "=" field=expr
+    {}     
+  | obj=simple_expr  "[" ind=expr "]" "=" value=expr {} 
 
 
 simple_expr:
