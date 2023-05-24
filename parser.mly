@@ -152,6 +152,8 @@ statement_expr:
   
   | "let" pat=pattern ty=opt_annot "=" expr=expr
     {}
+  | binder=binder ":=" expr=expr 
+    {}
   | "var" binder=binder ty=opt_annot "=" expr=expr 
     {}           
   | "fn" name=LIDENT params=parameters ty=opt_annot block = block_expr
