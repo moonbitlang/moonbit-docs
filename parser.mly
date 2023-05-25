@@ -307,12 +307,17 @@ record_decl_field:
 record_defn:
   | {}
   /* ending comma is required for single field {} for resolving the ambiguity between record punning {} and block {} */
-  | l=label "," fs=list_commas(f=record_defn_single {}) {}
-  | l=label ":" e=expr option(",") {}
+  | l=label_pun "," fs=list_commas(record_defn_single ) {}
+  | l=labeled_expr option(",") {}
   /* rule out {} */
-  | l=label ":" e=expr "," fs=non_empty_list_commas(f=record_defn_single {}) {}
+  | l=labeled_expr "," fs=non_empty_list_commas(record_defn_single) {}
 
 record_defn_single:
+  | labeled_expr 
+  | label_pun {}
+
+%inline labeled_expr:
   | l=label ":" e=expr {}
-  /* punning */
+%inline label_pun:  
   | l=label {}
+    
