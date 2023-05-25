@@ -202,7 +202,8 @@ infix_expr:
  | obj=simple_expr  "[" ind=expr "]" {}
 
 simple_expr:
-  | "{" fs=list_commas( l=label ":" e=expr {}) "}" {}
+  | "{" fs=record_defn "}" {}
+  // | "{" fs=list_commas( l=label ":" e=expr {}) "}" {}
   // | "fn"  parameters "=>" atomic_expr
   // | "{" non_empty_list_semis(statement_expr)"}" {}  
   | "{" x=semi_expr_semi_opt "}" {}  
@@ -302,3 +303,16 @@ type_def:
 
 record_decl_field:
   | mutflag = option("mut") name=LIDENT ":" ty=type_ {}
+
+record_defn:
+  | {}
+  /* ending comma is required for single field {} for resolving the ambiguity between record punning {} and block {} */
+  | l=label "," fs=list_commas(f=record_defn_single {}) {}
+  | l=label ":" e=expr option(",") {}
+  /* rule out {} */
+  | l=label ":" e=expr "," fs=non_empty_list_commas(f=record_defn_single {}) {}
+
+record_defn_single:
+  | l=label ":" e=expr {}
+  /* punning */
+  | l=label {}
