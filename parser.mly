@@ -281,7 +281,8 @@ simple_pattern:
   | "(" pat=pattern ":" ty=type_ ")" {}
   // | "#" "[" pat = pat_list "]" {}
   | "[" lst=separated_list(",",pattern) "]" {}
-  | "{" p=separated_list(",", l=label ":" p=pattern {}) "}" {}
+  //| "{" p=separated_list(",", l=label ":" p=pattern {}) "}" {}
+  | "{" p=fields_pat "}" {}
   
 type_:
   | "(" t=type_ "," ts=separated_nonempty_list(",", type_)")" {}
@@ -321,3 +322,15 @@ record_defn_single:
 %inline label_pun:  
   | l=label {}
     
+fields_pat:
+  | p=separated_list(",", f=fields_pat_single {}) {}
+
+fields_pat_single:
+  | fpat_labeled_pattern
+  | fpat_label_pun {}
+
+%inline fpat_labeled_pattern:
+  | l=label ":" p=pattern {}
+
+%inline fpat_label_pun:
+  | l=label {}
