@@ -193,8 +193,8 @@ infix_expr:
   | op=id(PLUS {} |PLUSDOT{}) e=expr %prec prec_unary_minus {}
   | op=id(MINUS{}|MINUSDOT{}) e=expr %prec prec_unary_minus {}
   | simple_expr  {}
-  | lhs=expr infixop rhs=expr {}
-  | lv = left_value"=" e=expr {}  
+  | lhs=expr op=infixop rhs=expr {}
+  | lv = left_value "=" e=expr {}  
 
 %inline left_value:
  | var=var {}
@@ -217,7 +217,8 @@ simple_expr:
   | f=simple_expr "(" args=list_commas(expr) ")" {}
   | record=simple_expr  name=DOT_LIDENT {}
   | "("  bs=list_commas(expr) ")" {}  
-  | "(" expr ":" type_ ")" {}
+  | "(" expr ":" type_ ")" 
+    {}
   | "[" es = list_commas(expr) "]" {}  
 
 %inline label:
@@ -241,16 +242,10 @@ simple_expr:
   | INFIX3  
   | INFIX2
   | INFIX1 {}
-
-
-
-
   | PLUS {}
   | PLUSDOT  {}
-  | MINUS {}
-  | MINUSDOT {}  
-
-
+  | MINUS  {}
+  | MINUSDOT {}
   | AMPERAMPER {}
   | BARBAR {}
 
