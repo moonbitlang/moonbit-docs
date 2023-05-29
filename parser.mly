@@ -179,7 +179,7 @@ if_expr:
 
 
 match_expr:
-  | "match" e=infix_expr "{" "|"?  mat=separated_nonempty_list("|", pattern "=>" semi_expr_semi_opt {})  "}"  {}
+  | "match" e=infix_expr "{"  mat=non_empty_list_semis( pattern "=>" expr {})  "}"  {}
   | "match" e=infix_expr "{""}" {}
   | "match" e=infix_expr error {}
   
