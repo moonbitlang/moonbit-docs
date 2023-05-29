@@ -156,7 +156,7 @@ statement_expr:
     {}
   | "var" binder=binder ty=opt_annot "=" expr=expr 
     {}           
-  | "fn" name=LIDENT params=parameters ty=opt_annot block = block_expr
+  | "fn" binder=binder params=parameters ty=opt_annot block = block_expr
     {}
   | "break" {}
   | "continue" {}  
