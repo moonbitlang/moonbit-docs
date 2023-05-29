@@ -99,12 +99,19 @@ non_empty_list_commas( X):
   | {}
   | non_empty_list_commas(X) {}
 
-non_empty_list_semi_rev(X):
+non_empty_list_semi_rev_aux(X):
   | x = X  {}
-  | xs=non_empty_list_semi_rev(X) ; SEMI ;  x=X {}
+  | xs=non_empty_list_semi_rev_aux(X) ; SEMI ;  x=X {}
+
+%inline non_empty_list_semis_rev(X):
+  | xs = non_empty_list_semi_rev_aux(X) ; ioption(SEMI) {}
 
 non_empty_list_semis(X):
-  | xs = non_empty_list_semi_rev(X) ; ioption(SEMI) {}
+  | non_empty_list_semis_rev(X) {}
+
+%inline list_semis_rev(X):
+  | {}
+  | non_empty_list_semis_rev(X) {}
 
 %inline list_semis(X): 
   | {}
@@ -128,7 +135,7 @@ fun_header:
     {}
 
 
-%inline block_expr: "{" ls=list_semis(statement_expr) "}" {}
+%inline block_expr: "{" ls=list_semis_rev(statement_expr) "}" {}
 %inline error_block: error {}
 val_header : mut=id("let" {}| "var"{}) binder=binder t=opt_annot {}
 structure : list_semis(structure_item) EOF {}
@@ -146,17 +153,17 @@ qual_ident:
 
 
 
-%inline semi_expr_semi_opt: ls=non_empty_list_semis(statement_expr)  {}
+%inline semi_expr_semi_opt: ls=non_empty_list_semis_rev(statement_expr)  {}
 
 statement_expr:
   
-  | "let" pat=pattern ty=opt_annot "=" expr=expr
+  | "let" pat=pattern ty_opt=opt_annot "=" expr=expr
     {}
   | binder=binder ":=" expr=expr 
     {}
   | "var" binder=binder ty=opt_annot "=" expr=expr 
     {}           
-  | "fn" binder=binder params=parameters ty=opt_annot block = block_expr
+  | "fn" binder=binder params=parameters ty_opt=opt_annot block = block_expr
     {}
   | "break" {}
   | "continue" {}  
@@ -204,8 +211,7 @@ infix_expr:
 simple_expr:
   | "{" fs=record_defn "}" {}
   // | "{" fs=list_commas( l=label ":" e=expr {}) "}" {}
-  // | "fn"  parameters "=>" atomic_expr
-  // | "{" non_empty_list_semis(statement_expr)"}" {}  
+  // | "fn"  parameters "=>" atomic_expr  
   | "{" x=semi_expr_semi_opt "}" {}  
   | "fn" ps=parameters f = block_expr  {}
   | e = atomic_expr {}
