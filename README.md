@@ -106,8 +106,9 @@ add3(1, 2, 7)
 The expression `add3(1, 2, 7)` returns `10`. Any expression that evaluates to a function value is applicable:
 
 ```go
-{ if true { fn (x) { x + 1 } }
-  else    { fn (x) { x + 2 } } } (3)
+let f = fn (x) { x + 1 }
+let g = fn (x) { x + 2 }
+(if true { f } else { g }) (3) // OK
 ```
 
 ## Control Structures
@@ -241,19 +242,20 @@ Enum types are similar to algebraic data types in functional languages. An enum 
 ```go
 type list enum {
   Nil
-  Cons(int, list)
+  Cons (int, list)
 }
 
 func print(l: list) {
   match l {
-  | Nil =>
-      "nil".output()
-  | Cons(x, xs) =>
-      x.output()
-      ", ".output()
+    Nil => "nil".output()
+    Cons(x, xs) => {
+      x.output(); 
+      ",".output(); 
       print(xs)
+    }
   }
 }
+
 
 func init {
   let l: list = Cons(1, Cons(2, Nil))
@@ -277,8 +279,8 @@ There are some other useful constructs in pattern matching. For example, we can 
 
 ```go
 match expr {
-  e as Lit n => ...
-  Add e1 e2 | Mul e1 e2 => ...
+  e as Lit(n) => ...
+  Add(e1, e2) | Mul(e1, e2) => ...
   _ => ...
 }
 ```
