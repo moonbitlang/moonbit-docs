@@ -1,124 +1,167 @@
-## Moonbit 平台
+## Overview
 
-Moonbit语言是专为WebAssembly和 JavaScript 而设计，提供 Native 等多后端支持的程序语言，是Moonbit平台的一个重要部分。
+A MoonBit program consists of type definitions, function definitions, and variable bindings. The entry point of every package is a special `init` function. The `init` function is special in two aspects:
 
-当前(@2023年)Moonbit语言还处于早期阶段，语法特性和语义还没有完全确定。大家可以先去Moonbit的[Playground](https://try.moonbitlang.com/)体验一下这门新的语言，期待得到来自开源社区的反馈
-
-Moonbit语言的设计受到了Rust（强大的类型系统）以及Go语言（简洁、包管理、快速编译）的启发，之所以不直接沿用Rust或Go语言，而设计Moonbit语言，是考虑到如下原因：
-
-### 和Rust对比
-1. Rust编译速度比较慢
-2. Rust的宏、生命周期等复杂的语法特性，使得它的学习曲线对于多数应用开发者来说过于陡峭
-
-### 和Go对比
-1. 相比Go语言，Moonbit有更连贯的设计。表达能力也更强大，比如支持模式匹配以及Algebraic Data Types。
-2. Moonbit是为WebAssembly设计的程序语言，设计之初就考虑全局优化，所以编译出来的WebAssembly体积极小，在内部测试中，Moonbit编译出的WebAssembly比Go语言编译的体积小1000倍以上。
-3. 类型系统方面，Moonbit除了顶层(top level)定义需要标注类型，内部的实现都可以做到自动的类型推导。
-4. 内存管理方面，Moonbit 实现了灵活可插拔的内存管理与垃圾回收机制。目前 Moonbit 实现了基于引用计数的垃圾回收器。除此之外还提供 bump allocator，该分配器仅负责申请内存而不释放，适用于一次性执行的程序场景。在未来等 WebAssembly 的 GC 提案落地后，Moonbit 将提供第三种垃圾回收机制，用户可根据需求灵活选择。
-
-## 语法
-
-Moonbit语言结合学术界近20年沉淀，虽然语言内核是函数式，但是语法和普通命令式语言几乎一样，所以任何业界背景的人都可以容易上手。
-
-Moonbit具体的文法描述可以参考 `parser.mly`，基本语法规则如下：
-
-### init 函数
-Moonbit语言的 `init` 函数具有特殊的作用，它主要用于在程序启动前进行包级别的初始化。以下是init函数的一些特性:
-
-- 在每个包中，可以定义多个 `init` 函数。
-- `init` 函数不能被显示调用或引用，它会在包的初始化阶段自动执行。
-- `init` 函数通常用于调用其他函数、设置全局变量、初始化数据结构等执行其他一次性的配置操作。
-
-示例:
+1. There can be multiple `init` functions in the same package.
+2. An `init` function can't be explicitly called or referred to by other functions. Instead, all `init` functions will be implicitly called when initializing a package. Therefore, `init` functions should always end with a statement.
 
 ```go
-func init{
-    "hello world".output()
+func init {
+  "Hello world!".output() // OK
+}
+
+func init {
+  let x = 1
+  x // fail
 }
 ```
 
-### 函数
-
-函数是用 `func` 关键字定义的，后面是函数名称、类型参数列表、值参数列表和可选返回类型。
-
-示例:
+MoonBit distinguishes between statements and expressions. In a function body, only the last clause should be an expression, which serves as a return value. For example:
 
 ```go
-func sum_two(a : int, b : int): int {
-    a + b
+func foo(): int {
+  let x = 1
+  x + 1 // OK
 }
 
-func max<T>(a : T, b : T): T{
-    if a > b { a } else { b }
-}
-```
-
-### Let绑定
-Let绑定用于使用let关键字将一个模式绑定到一个表达式。该语言支持不可变（let）和可变（var）的绑定。
-
-示例:
-
-```go
-let a : int = 100
-var b : int = 0
-func init{
-    b = 20
-    (a + b).output() // 120
+func foo(): int {
+  let x = 1
+  x + 1 // fail
+  x + 2
 }
 ```
 
-### 条件表达式
-条件表达式是用 `if` 关键字定义的，后面是一个表达式，然后是用大括号`{}`括起来的两个分支。
+### Expressions and Statements
 
-示例:
+Expressions include:
+
+- Value literals (e.g. Boolean values, numbers, characters, strings, arrays, tuples, structs)
+- Arithmetical, logical, or comparison operations
+- Accesses to array elements or struct fields
+- Variables and (capitalized) enum constructors
+- Anonymous local function definitions
+- `match` and `if` expressions
+
+Statements include:
+
+- Named local function definitions
+- Local variable bindings
+- Assignments
+- While loops and related control constructs (`break` and `continue`)
+- `return` statements
+- Any expression whose return type is `unit`
+
+## Functions
+
+Functions take arguments and produce a result. In MoonBit, functions are first-class, which means that functions can be arguments or return values of other functions. 
+
+### Top-Level Functions
+
+Functions can be defined as top-level or local. We can use the `func` keyword to define a top-level function that sums three integers and returns the result, as follows:
 
 ```go
-func fib(x : int): int {
-    if x > 2 { 
-        fib(x-1) + fib(x-2) 
-    } else {
-        x
-    }
+func add3(x: int, y: int, z: int): int {
+  x + y + z
 }
 ```
 
-### 循环
-Moonbit语言支持带有一个循环变量的 `while` 循环，以及用大括号`{}`括起来的循环体。
+Note that the arguments and return value of top-level functions require explicit type annotations. If the return type is omitted, the function will be treated as returning the unit type.
 
-示例:
+### Local Functions
+
+Local functions are defined using the `fn` keyword. Local functions can be named or anonymous. Type annotations can be omitted for local function definitions: they can be automatically inferred in most cases. For example:
 
 ```go
-func init{
-    var i = 0;
-    while i < 10 {
-        i.output()
-        i = i + 1
-    }
+func foo() {
+  fn inc(x) { x + 1 }  // named as `inc`
+  fn (x) { x + 2 } (6) // anonymous, instantly applied to integer literal 6
 }
 ```
 
-### 模式匹配
-模式匹配支持使用 `match` 关键字，后面是表达式和模式及其相关表达式的列表。
-
-示例:
+Functions, whether named or anonymous, are *lexical closures*: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
 
 ```go
-// apply function `f` to each element of list, collect the results into a new list.
-func map <X, Y> (self: list<X>, f: (X) => Y): list<Y> {
-  match self {
-  | Nil => Nil
-  | Cons(x, rest) => Cons(f(x), map(rest, f))
-  }
+let x = 3
+func foo(x: int) {
+  fn inc()  { x + 1 } // OK, will return x + 1
+  fn fail() { y + 1 } // fail: The value identifier y is unbound.
 }
 ```
 
-### 元组 tuple
-Moonbit语言有原生的元组(tuple)，通过圆括号定义。
+### Function Applications
 
-示例:
+A function can be applied to a list of arguments in parentheses:
 
 ```go
-func pack(a : bool, b : int, c : string, d : float) : (bool, int, string, float) {
+add3(1, 2, 7)
+```
+
+This works whether `add3` is a function defined with a name (as in the previous example), or a variable bound to a function value, as shown below:
+
+```go
+var add3 = fn(x, y, z) { x + y + z }
+add3(1, 2, 7)
+```
+
+The expression `add3(1, 2, 7)` returns `10`. Any expression that evaluates to a function value is applicable:
+
+```go
+{ if true { fn (x) { x + 1 } }
+  else    { fn (x) { x + 2 } } } (3)
+```
+
+## Control Structures
+
+### Conditional Expressions
+
+A conditional expression consists of a condition, a consequent, and an optional else clause.
+
+```go
+if x == y {
+  expr1
+} else {
+  expr2
+}
+
+if x == y {
+  expr1
+}
+```
+
+The else clause can also contain another if-else expression:
+
+```go
+if x == y {
+  expr1
+} else if z == k {
+  expr2
+}
+```
+
+Curly brackets are used to group multiple expressions in the consequent or the else clause.
+
+Note that a conditional expression always returns a value in Moonbit, and the return values of the consequent and the else clause must be of the same type.
+
+### Loops
+
+The primary loop statement in Moonbit is the `while` loop:
+
+```go
+while x == y {
+  expr1
+}
+```
+
+The `while` statement doesn't yield anything; it only evaluates to `()` of unit type. Moonbit also provides the `break` and `continue` statements for controlling the flow of a loop.
+
+## Built-in Data Structures
+
+### Tuple
+
+A tuple is a collection of finite values constructed using round brackets `()` with the elements separated by commas `,`. The order of elements matters; for example, `(1,true)` and `(true,1)` have different types. Here's an example:
+
+```go
+func pack(a: bool, b: int, c: string, d: float) : (bool, int, string, float) {
     (a, b, c, d)
 }
 func init{
@@ -127,77 +170,162 @@ func init{
 }
 ```
 
-### enum 与 struct
+### Array
 
-struct与tuple类似，能够组合多个对应类型的值。不同的是struct需要给每个元素取一个名字。
+An array is a finite sequence of values constructed using square brackets `[]`, with elements separated by commas `,`. For example:
 
 ```go
-type User struct{
-    id: int
-    name: string
-    email: string
+let ary = [1, 2, 3, 4]
+```
+
+You can use `array[x]` to refer to the xth element. The index starts from zero.
+
+```go
+let ary = [1, 2, 3, 4]
+let a = ary[2]
+ary[3] = 5
+let b = a + ary[3]
+b.output() // prints 8
+```
+
+## Variable Binding
+
+A variable can be declared as mutable or immutable using the keywords `var` or `let`, respectively. A mutable variable can be reassigned to a new value, while an immutable one cannot.
+
+```go
+let zero = 0
+
+func init {
+  var i = 10
+  i = 20
+  (i + zero).output()
 }
 ```
 
-enum与主流语言类似。 配合pattern matching能够方便地处理enum：
+## Data Types
+
+There are two ways to create new data types: `struct` and `enum`.
+
+### Struct
+
+In Moonbit, structs are similar to tuples, but their fields are indexed by field names. A struct can be constructed using a struct literal, which is composed of a set of labeled values and delimited with curly brackets. The type of a struct literal can be automatically inferred if its fields exactly match the type definition. A field can be accessed using the dot syntax `s.f`. If a field is marked as mutable using the keyword `mut`, it can be assigned a new value.
 
 ```go
-type TreeKind enum{
-    Node
-    Leaf
+type user struct {
+  id: int
+  name: string
+  mut email: string
 }
 
-var a : TreeKind = Leaf
-func init{
-    let str = match a{
-    | Node => "node"
-    | Leaf => "leaf"
-    }
-    str.output()
+func init {
+  let u = { id: 0, name: "John Doe", email: "john@doe.com" }
+  u.email = "john@doe.name"
+  u.email.output()
 }
 ```
 
-不同的是Moonbit语言的enum能够让枚举的每一种情况带上任意个值，这有点像一个带标签的Union：
+Note that you can also include methods associated with your record type, for example:
 
 ```go
-type tree enum{
-    Node(tree, tree)
-    Leaf(int)
-}
-
-func print_tree<T>(t : tree){
-    match t{
-    | Node(a,b) => 
-        "(".output()
-        print_tree(a)
-        ", ".output()
-        print_tree(b)
-        ")".output()
-    | Leaf(v) => 
-        v.output()
-    }
-}
-
-var a : tree = Node(Leaf(1), Leaf(2))
-
-func init{
-    print_tree(a) //output: (1, 2)
+type stack[T] struct { 
+  elems: list[T]
+  push: (T) => list[T]
+  pop: (list[T]) => T
 }
 ```
 
+### Enum
 
-### 数组
-Moonbit语言的数组通过方括号定义。
-
-示例:
+Enum types are similar to algebraic data types in functional languages. An enum can have a set of cases. Additionally, every case can specify associated values of different types, similar to a tuple. The label for every case must be capitalized, which is called a data constructor. An enum can be constructed by calling a data constructor with arguments of specified types. The construction of an enum must be annotated with a type. An enumeration can be destructured by pattern matching, and the associated values can be bound to variables that are specified in each pattern.
 
 ```go
-func init{
-  let ary = [1,2,3,4]
-  let a = ary[2]
-  ary[3] = 5
-  let b = a + ary[3]
-  b.output() //ouput 8
+type list enum {
+  Nil
+  Cons(int, list)
+}
+
+func print(l: list) {
+  match l {
+  | Nil =>
+      "nil".output()
+  | Cons(x, xs) =>
+      x.output()
+      ", ".output()
+      print(xs)
+  }
+}
+
+func init {
+  let l: list = Cons(1, Cons(2, Nil))
+  print(l)
 }
 ```
 
+## Pattern Matching
+
+We have shown a use case of pattern matching for enums, but pattern matching is not restricted to enums. For example, we can also match expressions against Boolean values, numbers, characters, strings, tuples, arrays, and structure literals. Since there is only one case for those types other than enumerations, we can pattern match them using `let`/`var` binding instead of `match` expressions. Note that the scope of bound variables in `match` is limited to the case where the variable is introduced, while `let`/`var` binding will introduce every variable to the current scope. Furthermore, we can use underscores `_` as wildcards for the values we don’t care about.
+
+```go
+let id = match u {
+  { id: id, name: _, email: _ } => id
+}
+// is equivalent to
+let { id: id, name: _, email: _ } = u
+```
+
+There are some other useful constructs in pattern matching. For example, we can use `as` to give a name to some pattern, and we can use `|` to match several cases at once. A variable name can only be bound once in a single pattern, and the same set of variables should be bound on both sides of `|` patterns.
+
+```go
+match expr {
+  e as Lit n => ...
+  Add e1 e2 | Mul e1 e2 => ...
+  _ => ...
+}
+```
+
+## Generics
+
+Generics are supported in top-level function and data type definitions. Type parameters can be introduced within square brackets. We can rewrite the aforementioned data type `list` to add a type parameter `T` to obtain a generic version of lists. We can then define generic functions over lists like `map` and `reduce`.
+
+```go
+type list[T] enum {
+  Nil
+  Cons(T, list[T])
+}
+
+func map[S, T](self: list[S], f: (S) => T): list[T] {
+  match self {
+    Nil => Nil
+    Cons(x, xs) => Cons(f(x), map(xs, f))
+  }
+}
+
+func reduce[T](self: list[T], op: (T, T) => T): T {
+  match self {
+    Cons(x, Nil) => x
+    Cons(x, xs) => op(x, reduce(xs, op))
+  }
+}
+```
+
+## Fluent Interfaces
+
+MoonBit supports methods in a different way from traditional object-oriented languages. A method is defined as a top-level function with `self` as the name of its first parameter. The `self` parameter will be the subject of a method call. For example, `l.map(f)` is equivalent to `map(l, f)`. Such syntax enables method chaining rather than heavily nested function calls. For example, we can chain the previously defined `map` and `reduce` together with `from_array` and `output` to perform list operations in a fluent-interface style.
+
+```go
+func from_array[T](self: array[T]): list[T] {
+  var res: list[T] = Nil
+  var i = self.length() - 1
+  while (i >= 0) {
+    res = Cons(self[i], res)
+    i = i - 1
+  }
+  res
+}
+
+func init {
+  [1, 2, 3, 4 ,5].from_array().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }).output()
+}
+```
+
+Another difference between a method and a regular function is that overloading is only supported by the method syntax. For example, we have multiple output functions, such as `output_int` and `output_float`, for different types, but using the method `output` the type of the subject can be recognized and the appropriate overloaded version will be selected, such as `1.output()` and `1.0.output()`.
