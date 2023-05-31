@@ -1,5 +1,7 @@
 ## Overview
 
+An IDE environment is [available](try.moonbitlang.com) without any installation, it does not rely on any server either.
+
 A MoonBit program consists of type definitions, function definitions, and variable bindings. The entry point of every package is a special `init` function. The `init` function is special in two aspects:
 
 1. There can be multiple `init` functions in the same package.
