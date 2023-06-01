@@ -1,11 +1,11 @@
 ## Overview
 
-An IDE environment is [available](https://try.moonbitlang.com) without any installation, it does not rely on any server either.
+An IDE environment is [available](https://try.moonbitlang.com) without any installation; it does not rely on any server either.
 
 A MoonBit program consists of type definitions, function definitions, and variable bindings. The entry point of every package is a special `init` function. The `init` function is special in two aspects:
 
 1. There can be multiple `init` functions in the same package.
-2. An `init` function can't be explicitly called or referred to by other functions. Instead, all `init` functions will be implicitly called when initializing a package. Therefore, `init` functions should always end with a statement.
+2. An `init` function can't be explicitly called or referred to by other functions. Instead, all `init` functions will be implicitly called when initializing a package. Therefore, `init` functions should only consist of statements.
 
 ```go
 func init {
@@ -167,7 +167,7 @@ A tuple is a collection of finite values constructed using round brackets `()` w
 func pack(a: bool, b: int, c: string, d: float) : (bool, int, string, float) {
     (a, b, c, d)
 }
-func init{
+func init {
     let quad = pack(false, 100, "text", 3.14)
     let (bool_val, int_val, str, float_val) = quad
 }
@@ -178,16 +178,16 @@ func init{
 An array is a finite sequence of values constructed using square brackets `[]`, with elements separated by commas `,`. For example:
 
 ```go
-let ary = [1, 2, 3, 4]
+let array = [1, 2, 3, 4]
 ```
 
 You can use `array[x]` to refer to the xth element. The index starts from zero.
 
 ```go
-let ary = [1, 2, 3, 4]
-let a = ary[2]
-ary[3] = 5
-let b = a + ary[3]
+let array = [1, 2, 3, 4]
+let a = array[2]
+array[3] = 5
+let b = a + array[3]
 b.output() // prints 8
 ```
 
@@ -230,10 +230,10 @@ func init {
 Note that you can also include methods associated with your record type, for example:
 
 ```go
-type stack[T] struct { 
-  elems: list[T]
-  push: (T) => list[T]
-  pop: (list[T]) => T
+type stack struct { 
+  mut elems: list[int]
+  push: (int) => ()
+  pop: (list[int]) => int
 }
 ```
 
@@ -304,17 +304,17 @@ func map[S, T](self: list[S], f: (S) => T): list[T] {
   }
 }
 
-func reduce[T](self: list[T], op: (T, T) => T): T {
+func reduce[S, T](self: list[S], op: (T, S) => T, init: T): T {
   match self {
-    Cons(x, Nil) => x
-    Cons(x, xs) => op(x, reduce(xs, op))
+    Nil => init
+    Cons(x, xs) => reduce(xs, op, op(init, x))
   }
 }
 ```
 
-## Fluent Interfaces
+## Uniform Function Call Syntax
 
-MoonBit supports methods in a different way from traditional object-oriented languages. A method is defined as a top-level function with `self` as the name of its first parameter. The `self` parameter will be the subject of a method call. For example, `l.map(f)` is equivalent to `map(l, f)`. Such syntax enables method chaining rather than heavily nested function calls. For example, we can chain the previously defined `map` and `reduce` together with `from_array` and `output` to perform list operations in a fluent-interface style.
+MoonBit supports methods in a different way from traditional object-oriented languages. A method is defined as a top-level function with `self` as the name of its first parameter. The `self` parameter will be the subject of a method call. For example, `l.map(f)` is equivalent to `map(l, f)`. Such syntax enables method chaining rather than heavily nested function calls. For example, we can chain the previously defined `map` and `reduce` together with `from_array` and `output` to perform list operations using the method call syntax.
 
 ```go
 func from_array[T](self: array[T]): list[T] {
