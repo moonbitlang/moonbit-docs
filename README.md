@@ -328,7 +328,7 @@ func from_array[T](self: array[T]): list[T] {
 }
 
 func init {
-  [1, 2, 3, 4 ,5].from_array().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }, 0).output()
+  [1, 2, 3, 4, 5].from_array().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }, 0).output()
 }
 ```
 
