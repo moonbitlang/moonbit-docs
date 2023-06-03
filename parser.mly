@@ -208,6 +208,12 @@ infix_expr:
  | record=simple_expr  name=DOT_LIDENT {}
  | obj=simple_expr  "[" ind=expr "]" {}
 
+%inline constr_expr:
+  | name = UIDENT {}
+  /* TODO: two tokens or one token here? */
+  | type_name=LIDENT constr_name=COLONCOLON_UIDENT
+    {}
+  
 simple_expr:
   | "{" fs=record_defn "}" {}
   // | "{" fs=list_commas( l=label ":" e=expr {}) "}" {}
@@ -217,10 +223,9 @@ simple_expr:
   | e = atomic_expr {}
   | "_" {}
   | v=var {}
-  | c=constr {}
-  // | constr_longident_expr {} 
-  | obj=simple_expr  "[" index=expr "]" {}
+  | c=constr_expr {}
   | f=simple_expr "(" args=list_commas(expr) ")" {}
+  | obj=simple_expr  "[" index=expr "]" {}  
   | record=simple_expr  name=DOT_LIDENT {}
   | "("  bs=list_commas(expr) ")" {}  
   | "(" expr ":" type_ ")" 
@@ -255,17 +260,17 @@ simple_expr:
   | AMPERAMPER {}
   | BARBAR {}
 
-%inline constr:
-  | name = UIDENT {}
-  /* TODO: two tokens or one token here? */
-  | type_name=LIDENT constr_name=COLONCOLON_UIDENT
-    {}
 
 pattern:
   | simple_pattern {}
   | b=binder "as" p=pattern {}
   | pat1=pattern "|" pat2=pattern {}
   
+%inline constr_pat:
+  | name = UIDENT {}
+  /* TODO: two tokens or one token here? */
+  | type_name=LIDENT constr_name=COLONCOLON_UIDENT
+    {}
 
 simple_pattern:
   | TRUE {}
@@ -276,7 +281,7 @@ simple_pattern:
   | STRING {}
   | UNDERSCORE {}
   | b=binder  {}
-  | constr=constr ps=option("(" t=separated_nonempty_list(",",pattern) ")" {}){}
+  | constr=constr_pat ps=option("(" t=separated_nonempty_list(",",pattern) ")" {}){}
   | "(" pattern ")" {}
   | "(" p = pattern "," ps=separated_nonempty_list(",",pattern) ")"  {}     
   | "(" pat=pattern ":" ty=type_ ")" {}
