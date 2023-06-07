@@ -21,6 +21,7 @@ open Parser_util
 %token EOF
 %token FALSE
 %token TRUE
+%token PUB             "pub"
 %token IMPORT          "import"
 %token BREAK           "break"
 %token CONTINUE        "continue" 
@@ -126,7 +127,7 @@ optional_type_parameters:
 optional_type_arguments:
   | params = option(delimited("[" ,separated_nonempty_list(",",type_), "]")) {}     
 fun_header:
-  "func"
+  pub=ioption("pub") "func"
     f=binder
     /* TODO: move the quants before self */
     quants=optional_type_parameters
