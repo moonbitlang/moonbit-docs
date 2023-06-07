@@ -69,6 +69,7 @@ open Parser_util
 %token FAT_ARROW     "=>" 
 %token WHILE           "while" 
 %token RETURN          "return"
+%token DOTDOT          ".."
 
 %nonassoc "as"
 %right "|"
@@ -217,6 +218,7 @@ infix_expr:
   
 simple_expr:
   | "{" fs=record_defn "}" {}
+  | "{" ".." oe=expr "," fs=record_defn "}" {}
   // | "{" fs=list_commas( l=label ":" e=expr {}) "}" {}
   // | "fn"  parameters "=>" atomic_expr  
   | "{" x=semi_expr_semi_opt "}" {}  
