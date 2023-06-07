@@ -9,7 +9,7 @@ open Parser_util
 %token <string> STRING
 %token <string> LIDENT
 %token <string> UIDENT
-%token <string > COMMENT
+%token <Comment.t> COMMENT
 %token NEWLINE
 %token <string> INFIX1
 
