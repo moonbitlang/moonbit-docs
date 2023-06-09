@@ -139,7 +139,7 @@ fun_header:
 
 %inline block_expr: "{" ls=list_semis_rev(statement_expr) "}" {}
 %inline error_block: error {}
-val_header : mut=id("let" {}| "var"{}) binder=binder t=opt_annot {}
+val_header : pub=ioption("pub") mut=id("let" {}| "var"{}) binder=binder t=opt_annot {}
 structure : list_semis(structure_item) EOF {}
 structure_item:
   | type_header=type_header components=type_def {}
