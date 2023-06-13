@@ -67,6 +67,7 @@ open Parser_util
 %token MUTABLE        "mut" 
 %token TYPE            "type" 
 %token FAT_ARROW     "=>" 
+%token THIN_ARROW     "->" 
 %token WHILE           "while" 
 %token RETURN          "return"
 %token DOTDOT          ".."
@@ -132,8 +133,8 @@ fun_header:
     f=binder
     /* TODO: move the quants before self */
     quants=optional_type_parameters
-    ps=option(parameters)
-    ts=opt_annot
+    ps=option(parameters)    
+    ts=option("->" t=type_{})
     {}
 
 
@@ -165,7 +166,7 @@ statement_expr:
     {}
   | "var" binder=binder ty=opt_annot "=" expr=expr 
     {}           
-  | "fn" binder=binder params=parameters ty_opt=opt_annot block = block_expr
+  | "fn" binder=binder params=parameters ty_opt=option("->" t=type_{}) block = block_expr
     {}
   | "break" {}
   | "continue" {}  
@@ -295,9 +296,9 @@ simple_pattern:
   
 type_:
   | "(" t=type_ "," ts=separated_nonempty_list(",", type_)")" {}
-  | "(" t=type_ "," ts=separated_nonempty_list(",",type_) ")" "=>" rty=type_ {}
-  | "(" ")" "=>" rty=type_ {}
-  | "(" t=type_ ")" rty=option("=>" t2=type_{})
+  | "(" t=type_ "," ts=separated_nonempty_list(",",type_) ")" "->" rty=type_ {}
+  | "(" ")" "->" rty=type_ {}
+  | "(" t=type_ ")" rty=option("->" t2=type_{})
       {} 
   | UIDENT {}  
   // | "(" type_ ")" {}
