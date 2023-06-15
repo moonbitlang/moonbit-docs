@@ -62,7 +62,7 @@ Functions take arguments and produce a result. In MoonBit, functions are first-c
 Functions can be defined as top-level or local. We can use the `func` keyword to define a top-level function that sums three integers and returns the result, as follows:
 
 ```go
-func add3(x: int, y: int, z: int): int {
+func add3(x: int, y: int, z: int)-> int {
   x + y + z
 }
 ```
@@ -204,7 +204,14 @@ func init {
   (i + zero).output()
 }
 ```
+There is a short-hand syntax sugar for local immutable bindings, e.g, using `:=`.
 
+```go
+func test () {
+  a := 3 
+  b := "hello"
+}
+```
 ## Data Types
 
 There are two ways to create new data types: `struct` and `enum`.
