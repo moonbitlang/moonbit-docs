@@ -120,7 +120,6 @@ non_empty_list_semis(X):
   | {}
   | non_empty_list_semis(X){}
 
-
 %inline id(x): x {}
 %inline opt_annot: option(":" t=type_ {}) {}
 %inline parameters : delimited("(",separated_list(",",id(b=binder t=opt_annot {})), ")") {}
@@ -331,9 +330,13 @@ record_defn_single:
   | l=label ":" e=expr {}
 %inline label_pun:  
   | l=label {}
-    
+
+(* A field pattern list is a nonempty list of label-pattern pairs or punnings, optionally
+   followed with an underscore, separated-or-terminated with commas. *)
 fields_pat:
-  | p=separated_list(",", f=fields_pat_single {}) {}
+  | {}
+  | fps=non_empty_list_commas(fields_pat_single) {}
+  | fps=non_empty_list_commas_rev(fields_pat_single) "," ".." ioption(",") {}
 
 fields_pat_single:
   | fpat_labeled_pattern
