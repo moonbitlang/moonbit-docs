@@ -7,6 +7,12 @@ The IDE environment is [available](https://try.moonbitlang.com) without any inst
 
 Pre-alpha, experimental. We expect Moonbit to reach beta status next year.
 
+## Main advantages
+
+- Generate significantly smaller WASM output than any existing solutions. 
+- Much faster runtime performance.
+- State of the art compile time performance.
+- Simple but practical, data oriented language design.
 
 ## Introduction
 
