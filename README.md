@@ -1,6 +1,14 @@
 ## Overview
 
-An IDE environment is [available](https://try.moonbitlang.com) without any installation; it does not rely on any server either.
+Moonbit is an end to end programming language toolchain for Cloud and Edge computing using WebAssembly.
+The IDE environment is [available](https://try.moonbitlang.com) without any installation; it does not rely on any server either.
+
+## Status
+
+Pre-alpha, experimental. We expect Moonbit to reach beta status next year.
+
+
+## Introduction
 
 A MoonBit program consists of type definitions, function definitions, and variable bindings. The entry point of every package is a special `init` function. The `init` function is special in two aspects:
 
