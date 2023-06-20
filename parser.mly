@@ -124,7 +124,7 @@ non_empty_list_semis(X):
 %inline opt_annot: option(":" t=type_ {}) {}
 %inline parameters : delimited("(",separated_list(",",id(b=binder t=opt_annot {})), ")") {}
 optional_type_parameters:
-  | params = option(delimited("[",separated_nonempty_list(",",UIDENT), "]")) {}
+  | params = option(delimited("[",separated_nonempty_list(",",id(tvar_binder)), "]")) {}
 optional_type_arguments:
   | params = option(delimited("[" ,separated_nonempty_list(",",type_), "]")) {}     
 fun_header:
@@ -239,6 +239,8 @@ simple_expr:
   name = LIDENT {}
 %inline binder:
   name = LIDENT {}
+%inline tvar_binder:
+  name = UIDENT {}
 %inline var:
   name = qual_ident {}
 
