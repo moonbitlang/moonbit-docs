@@ -311,10 +311,13 @@ type_:
 type_def:
   | /* empty */ {}
   | "struct" "{" fs=list_semis(record_decl_field) "}"  {}
-  | "enum" "{" fs=list_semis(id=UIDENT opt=option("("  ts=separated_nonempty_list(",",type_)")"{}) {}) "}" {}
+  | "enum" "{" fs=list_semis(enum_constructor) "}" {}
 
 record_decl_field:
   | mutflag = option("mut") name=LIDENT ":" ty=type_ {}
+
+enum_constructor:
+  | id=UIDENT opt=option("("  ts=separated_nonempty_list(",",type_)")"{}) {}
 
 record_defn:
   | {}
