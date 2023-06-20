@@ -146,7 +146,7 @@ structure_item:
   | val_header=val_header  "=" expr = expr {}
   | t=fun_header "=" mname=STRING fname=STRING {}
   | t=fun_header body=block_expr {}
-type_header: "type" tycon=LIDENT params=optional_type_parameters {}    
+type_header: pub=ioption("pub") "type" tycon=LIDENT params=optional_type_parameters {}    
 
 
 qual_ident:
@@ -314,10 +314,10 @@ type_def:
   | "enum" "{" fs=list_semis(enum_constructor) "}" {}
 
 record_decl_field:
-  | mutflag = option("mut") name=LIDENT ":" ty=type_ {}
+  | pubflag=option("pub") mutflag=option("mut") name=LIDENT ":" ty=type_ {}
 
 enum_constructor:
-  | id=UIDENT opt=option("("  ts=separated_nonempty_list(",",type_)")"{}) {}
+  | pubflag=option("pub") id=UIDENT opt=option("("  ts=separated_nonempty_list(",",type_)")"{}) {}
 
 record_defn:
   | {}
