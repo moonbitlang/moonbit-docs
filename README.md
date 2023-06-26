@@ -1,11 +1,11 @@
-## Overview
+# MoonBit
 
-Moonbit is an end to end programming language toolchain for Cloud and Edge computing using WebAssembly.
-The IDE environment is [available](https://try.moonbitlang.com) without any installation; it does not rely on any server either.
+MoonBit is an end-to-end programming language toolchain for cloud and edge computing using WebAssembly.
+The IDE environment is available at <https://try.moonbitlang.com> without any installation; it does not rely on any server either.
 
 ## Status
 
-Pre-alpha, experimental. We expect Moonbit to reach beta status next year.
+Pre-alpha, experimental. We expect MoonBit to reach beta status next year.
 
 ## Main advantages
 
@@ -14,7 +14,7 @@ Pre-alpha, experimental. We expect Moonbit to reach beta status next year.
 - State of the art compile time performance.
 - Simple but practical, data oriented language design.
 
-## Introduction
+## Overview
 
 A MoonBit program consists of type definitions, function definitions, and variable bindings. The entry point of every package is a special `init` function. The `init` function is special in two aspects:
 
@@ -157,11 +157,11 @@ if x == y {
 
 Curly brackets are used to group multiple expressions in the consequent or the else clause.
 
-Note that a conditional expression always returns a value in Moonbit, and the return values of the consequent and the else clause must be of the same type.
+Note that a conditional expression always returns a value in MoonBit, and the return values of the consequent and the else clause must be of the same type.
 
 ### Loops
 
-The primary loop statement in Moonbit is the `while` loop:
+The primary loop statement in MoonBit is the `while` loop:
 
 ```go
 while x == y {
@@ -169,7 +169,7 @@ while x == y {
 }
 ```
 
-The `while` statement doesn't yield anything; it only evaluates to `()` of unit type. Moonbit also provides the `break` and `continue` statements for controlling the flow of a loop.
+The `while` statement doesn't yield anything; it only evaluates to `()` of unit type. MoonBit also provides the `break` and `continue` statements for controlling the flow of a loop.
 
 ## Built-in Data Structures
 
@@ -232,7 +232,7 @@ There are two ways to create new data types: `struct` and `enum`.
 
 ### Struct
 
-In Moonbit, structs are similar to tuples, but their fields are indexed by field names. A struct can be constructed using a struct literal, which is composed of a set of labeled values and delimited with curly brackets. The type of a struct literal can be automatically inferred if its fields exactly match the type definition. A field can be accessed using the dot syntax `s.f`. If a field is marked as mutable using the keyword `mut`, it can be assigned a new value.
+In MoonBit, structs are similar to tuples, but their fields are indexed by field names. A struct can be constructed using a struct literal, which is composed of a set of labeled values and delimited with curly brackets. The type of a struct literal can be automatically inferred if its fields exactly match the type definition. A field can be accessed using the dot syntax `s.f`. If a field is marked as mutable using the keyword `mut`, it can be assigned a new value.
 
 ```go
 type user struct {
@@ -260,7 +260,7 @@ type stack struct {
 
 ### Enum
 
-Enum types are similar to algebraic data types in functional languages. An enum can have a set of cases. Additionally, every case can specify associated values of different types, similar to a tuple. The label for every case must be capitalized, which is called a data constructor. An enum can be constructed by calling a data constructor with arguments of specified types. The construction of an enum must be annotated with a type. An enumeration can be destructured by pattern matching, and the associated values can be bound to variables that are specified in each pattern.
+Enum types are similar to algebraic data types in functional languages. An enum can have a set of cases. Additionally, every case can specify associated values of different types, similar to a tuple. The label for every case must be capitalized, which is called a data constructor. An enum can be constructed by calling a data constructor with arguments of specified types. The construction of an enum must be annotated with a type. An enum can be destructed by pattern matching, and the associated values can be bound to variables that are specified in each pattern.
 
 ```go
 type list enum {
@@ -288,7 +288,7 @@ func init {
 
 ## Pattern Matching
 
-We have shown a use case of pattern matching for enums, but pattern matching is not restricted to enums. For example, we can also match expressions against Boolean values, numbers, characters, strings, tuples, arrays, and structure literals. Since there is only one case for those types other than enumerations, we can pattern match them using `let`/`var` binding instead of `match` expressions. Note that the scope of bound variables in `match` is limited to the case where the variable is introduced, while `let`/`var` binding will introduce every variable to the current scope. Furthermore, we can use underscores `_` as wildcards for the values we don’t care about.
+We have shown a use case of pattern matching for enums, but pattern matching is not restricted to enums. For example, we can also match expressions against Boolean values, numbers, characters, strings, tuples, arrays, and struct literals. Since there is only one case for those types other than enums, we can pattern match them using `let`/`var` binding instead of `match` expressions. Note that the scope of bound variables in `match` is limited to the case where the variable is introduced, while `let`/`var` binding will introduce every variable to the current scope. Furthermore, we can use underscores `_` as wildcards for the values we don’t care about.
 
 ```go
 let id = match u {
@@ -354,3 +354,47 @@ func init {
 ```
 
 Another difference between a method and a regular function is that overloading is only supported by the method syntax. For example, we have multiple output functions, such as `output_int` and `output_float`, for different types, but using the method `output` the type of the subject can be recognized and the appropriate overloaded version will be selected, such as `1.output()` and `1.0.output()`.
+
+## Access Control
+
+By default, all type definitions, function definitions, variable bindings, and struct fields are *invisible* to other packages. This design prevents unintended exposure of implementation details. To make them visible, you can use the pub modifier before `type`, `func`, `let`, `var`, or field names. However, it is important to note that:
+
+- Struct fields cannot be defined as `pub` within a private struct since it makes no sense.
+- Enum constructors do not have individual visibility so you cannot use `pub` before them.
+
+```go
+type r1 struct {  // implicitly private struct
+  x: int          // implicitly private field
+  pub y: int      // ERROR: a field cannot be defined as `pub` within a private struct
+}
+
+pub type r2 struct {  // explicitly public struct
+  x: int              // implicitly private field
+  pub y: int          // explicitly public field
+}
+
+type t1 enum {  // implicitly private enum
+  A(int)        // implicitly private constructor
+  pub B(int)    // ERROR: unexpected `pub`
+}
+
+pub type t2 enum {  // explicitly public enum
+  A(int)            // implicitly public constructor
+  pub B(int)        // ERROR: unexpected `pub`
+}
+```
+
+Access control in MoonBit adheres to the principle that a `pub` type, function, or variable cannot be defined in terms of a private type. This is because the private type may not be accessible everywhere that the `pub` entity is used. MoonBit incorporates sanity checks to prevent the occurrence of use cases that violate this principle.
+
+```go
+pub type s struct {
+  x: t1      // OK
+  pub y: t1  // ERROR: field type `t1` is private!
+}
+
+pub func f(x: t2) -> t2  // OK
+pub func f(x: t1) -> t2  // ERROR: parameter type `t1` is private!
+pub func f(x: t2) -> t1  // ERROR: return type `t1` is private!
+
+pub let a: t1  // ERROR: variable type `t1` is private!
+```
