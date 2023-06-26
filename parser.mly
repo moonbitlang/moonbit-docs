@@ -34,7 +34,6 @@ open Parser_util
 
 %token COMMA          "," 
 %token MINUS           "-" 
-%token MINUSDOT        "-." 
 %token <string>DOT_LIDENT            
 %token <string>COLONCOLON_UIDENT
 %token COLON           ":"
@@ -42,7 +41,6 @@ open Parser_util
 %token SEMI           
 %token LBRACKET        "[" 
 %token <string> PLUS           "+" 
-%token <string> PLUSDOT        "+." 
 %token RBRACKET       "]" 
 
 %token UNDERSCORE      "_" 
@@ -80,7 +78,7 @@ open Parser_util
 
 
 %left INFIX1  
-%left INFIX2 PLUS PLUSDOT MINUS MINUSDOT
+%left INFIX2 PLUS MINUS
 %left INFIX3 
 %right INFIX4
 %nonassoc prec_unary_minus
@@ -199,11 +197,11 @@ expr:
 
 
 infix_expr:
-  | op=id(PLUS {} |PLUSDOT{}) e=expr %prec prec_unary_minus {}
-  | op=id(MINUS{}|MINUSDOT{}) e=expr %prec prec_unary_minus {}
+  | op=id(PLUS {}) e=expr %prec prec_unary_minus {}
+  | op=id(MINUS{}) e=expr %prec prec_unary_minus {}
   | simple_expr  {}
   | lhs=expr op=infixop rhs=expr {}
-  | lv = left_value "=" e=expr {}  
+  | lv = left_value "=" e=expr {}
 
 %inline left_value:
  | var=var {}
@@ -228,7 +226,7 @@ simple_expr:
   | v=var {}
   | c=constr_expr {}
   | f=simple_expr "(" args=list_commas(expr) ")" {}
-  | obj=simple_expr  "[" index=expr "]" {}  
+  | obj=simple_expr  "[" index=expr "]" {}
   | record=simple_expr  name=DOT_LIDENT {}
   | "("  bs=list_commas(expr) ")" {}  
   | "(" expr ":" type_ ")" 
@@ -259,9 +257,7 @@ simple_expr:
   | INFIX2
   | INFIX1 {}
   | PLUS {}
-  | PLUSDOT  {}
   | MINUS  {}
-  | MINUSDOT {}
   | AMPERAMPER {}
   | BARBAR {}
 
