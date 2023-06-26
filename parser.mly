@@ -317,7 +317,7 @@ record_decl_field:
   | pubflag=option("pub") mutflag=option("mut") name=LIDENT ":" ty=type_ {}
 
 enum_constructor:
-  | pubflag=option("pub") id=UIDENT opt=option("("  ts=separated_nonempty_list(",",type_)")"{}) {}
+  | id=UIDENT opt=option("("  ts=separated_nonempty_list(",",type_)")"{}) {}
 
 record_defn:
   | {}
