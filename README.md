@@ -88,9 +88,9 @@ Note that the arguments and return value of top-level functions require explicit
 Local functions are defined using the `fn` keyword. Local functions can be named or anonymous. Type annotations can be omitted for local function definitions: they can be automatically inferred in most cases. For example:
 
 ```go
-func foo() {
+pub func foo() -> int {
   fn inc(x) { x + 1 }  // named as `inc`
-  fn (x) { x + 2 } (6) // anonymous, instantly applied to integer literal 6
+  fn (x) { x + inc(2) } (6) // anonymous, instantly applied to integer literal 6
 }
 ```
 
