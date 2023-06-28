@@ -35,12 +35,12 @@ func init {
 MoonBit distinguishes between statements and expressions. In a function body, only the last clause should be an expression, which serves as a return value. For example:
 
 ```go
-func foo(): int {
+func foo() -> int {
   let x = 1
   x + 1 // OK
 }
 
-func foo(): int {
+func foo() -> int {
   let x = 1
   x + 1 // fail
   x + 2
@@ -178,7 +178,7 @@ The `while` statement doesn't yield anything; it only evaluates to `()` of unit 
 A tuple is a collection of finite values constructed using round brackets `()` with the elements separated by commas `,`. The order of elements matters; for example, `(1,true)` and `(true,1)` have different types. Here's an example:
 
 ```go
-func pack(a: bool, b: int, c: string, d: float) : (bool, int, string, float) {
+func pack(a: bool, b: int, c: string, d: float) -> (bool, int, string, float) {
     (a, b, c, d)
 }
 func init {
@@ -318,14 +318,14 @@ type list[T] enum {
   Cons(T, list[T])
 }
 
-func map[S, T](self: list[S], f: (S) => T): list[T] {
+func map[S, T](self: list[S], f: (S) => T) -> list[T] {
   match self {
     Nil => Nil
     Cons(x, xs) => Cons(f(x), map(xs, f))
   }
 }
 
-func reduce[S, T](self: list[S], op: (T, S) => T, init: T): T {
+func reduce[S, T](self: list[S], op: (T, S) => T, init: T) -> T {
   match self {
     Nil => init
     Cons(x, xs) => reduce(xs, op, op(init, x))
@@ -338,7 +338,7 @@ func reduce[S, T](self: list[S], op: (T, S) => T, init: T): T {
 MoonBit supports methods in a different way from traditional object-oriented languages. A method is defined as a top-level function with `self` as the name of its first parameter. The `self` parameter will be the subject of a method call. For example, `l.map(f)` is equivalent to `map(l, f)`. Such syntax enables method chaining rather than heavily nested function calls. For example, we can chain the previously defined `map` and `reduce` together with `from_array` and `output` to perform list operations using the method call syntax.
 
 ```go
-func from_array[T](self: array[T]): list[T] {
+func from_array[T](self: array[T]) -> list[T] {
   var res: list[T] = Nil
   var i = self.length() - 1
   while (i >= 0) {
