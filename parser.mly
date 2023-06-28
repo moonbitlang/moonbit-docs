@@ -40,7 +40,7 @@ open Parser_util
 %token COLONEQUAL      ":="
 %token SEMI           
 %token LBRACKET        "[" 
-%token <string> PLUS           "+" 
+%token PLUS           "+" 
 %token RBRACKET       "]" 
 
 %token UNDERSCORE      "_" 
