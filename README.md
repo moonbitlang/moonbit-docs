@@ -23,7 +23,7 @@ A MoonBit program consists of type definitions, function definitions, and variab
 
 ```go
 func init {
-  "Hello world!".output() // OK
+  "Hello world!".print() // OK
 }
 
 func init {
@@ -202,7 +202,7 @@ let array = [1, 2, 3, 4]
 let a = array[2]
 array[3] = 5
 let b = a + array[3]
-b.output() // prints 8
+b.print() // prints 8
 ```
 
 ## Variable Binding
@@ -215,7 +215,7 @@ let zero = 0
 func init {
   var i = 10
   i = 20
-  (i + zero).output()
+  (i + zero).print()
 }
 ```
 There is a short-hand syntax sugar for local immutable bindings, e.g, using `:=`.
@@ -244,7 +244,7 @@ type user struct {
 func init {
   let u = { id: 0, name: "John Doe", email: "john@doe.com" }
   u.email = "john@doe.name"
-  u.email.output()
+  u.email.print()
 }
 ```
 
@@ -270,10 +270,10 @@ type list enum {
 
 func print(l: list) {
   match l {
-    Nil => "nil".output()
+    Nil => "nil".print()
     Cons(x, xs) => {
-      x.output(); 
-      ",".output(); 
+      x.print(); 
+      ",".print(); 
       print(xs)
     }
   }
@@ -349,11 +349,11 @@ func from_array[T](self: array[T]) -> list[T] {
 }
 
 func init {
-  [1, 2, 3, 4, 5].from_array().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }, 0).output()
+  [1, 2, 3, 4, 5].from_array().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }, 0).print()
 }
 ```
 
-Another difference between a method and a regular function is that overloading is only supported by the method syntax. For example, we have multiple output functions, such as `output_int` and `output_float`, for different types, but using the method `output` the type of the subject can be recognized and the appropriate overloaded version will be selected, such as `1.output()` and `1.0.output()`.
+Another difference between a method and a regular function is that overloading is only supported by the method syntax. For example, we have multiple output functions, such as `output_int` and `output_float`, for different types, but using the method `output` the type of the subject can be recognized and the appropriate overloaded version will be selected, such as `1.print()` and `1.0.print()`.
 
 ## Access Control
 
