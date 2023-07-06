@@ -355,6 +355,38 @@ func init {
 
 Another difference between a method and a regular function is that overloading is only supported by the method syntax. For example, we have multiple output functions, such as `output_int` and `output_float`, for different types, but using the method `output` the type of the subject can be recognized and the appropriate overloaded version will be selected, such as `1.print()` and `1.0.print()`.
 
+## operator overloading
+MoonBit supports operator overloading of builtin operators. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
+
+```go
+pub type t struct {
+  x:int
+}
+
+pub func op_add(self: t, other: t) -> t {
+  { x: self.x + other.x }
+}
+
+func init {
+  let a = { x:0, }
+  let b = { x:2, }
+  (a + b).x.print()
+}
+```
+
+Currently, the following operators can be overloaded:
+
+|operator name|method name|
+|---|---|
+|`+`|`op_add`|
+|`-`|`op_sub`|
+|`*`|`op_mul`|
+|`/`|`op_div`|
+|`%`|`op_mod`|
+|`-`(unary)|`op_neg`|
+|`_[_]`(get item)|`op_get`|
+|`_[_] = _`(set item)|`op_set`|
+
 ## Access Control
 
 By default, all type definitions, function definitions, variable bindings, and struct fields are *invisible* to other packages. This design prevents unintended exposure of implementation details. To make them visible, you can use the pub modifier before `type`, `func`, `let`, `var`, or field names. However, it is important to note that:
