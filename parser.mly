@@ -297,7 +297,7 @@ type_:
   | "(" ")" "->" rty=type_ {}
   | "(" t=type_ ")" rty=option("->" t2=type_{})
       {} 
-  | UIDENT {}  
+  | id=UIDENT {}
   // | "(" type_ ")" {}
   | id=qual_ident params=optional_type_arguments {}
   | "_" {}
