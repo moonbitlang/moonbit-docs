@@ -35,6 +35,7 @@ open Parser_util
 %token COMMA          "," 
 %token MINUS           "-" 
 %token <string>DOT_LIDENT            
+%token <int>DOT_INT
 %token <string>COLONCOLON_UIDENT
 %token COLON           ":"
 %token COLONEQUAL      ":="
@@ -205,7 +206,7 @@ infix_expr:
 
 %inline left_value:
  | var=var {}
- | record=simple_expr  name=DOT_LIDENT {}
+ | record=simple_expr  acc=accessor {}
  | obj=simple_expr  "[" ind=expr "]" {}
 
 %inline constr_expr:
@@ -227,7 +228,7 @@ simple_expr:
   | c=constr_expr {}
   | f=simple_expr "(" args=list_commas(expr) ")" {}
   | obj=simple_expr  "[" index=expr "]" {}
-  | record=simple_expr  name=DOT_LIDENT {}
+  | record=simple_expr  accessor=accessor {}
   | "("  bs=list_commas(expr) ")" {}  
   | "(" expr ":" type_ ")" 
     {}
@@ -235,6 +236,9 @@ simple_expr:
 
 %inline label:
   name = LIDENT {}
+%inline accessor:
+  | name = DOT_LIDENT {}
+  | index = DOT_INT {}
 %inline binder:
   name = LIDENT {}
 %inline tvar_binder:
