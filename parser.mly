@@ -34,7 +34,8 @@ open Parser_util
 
 %token COMMA          "," 
 %token MINUS           "-" 
-%token <string>DOT_LIDENT            
+
+%token <string>DOT_IDENT
 %token <int>DOT_INT
 %token <string>COLONCOLON_UIDENT
 %token COLON           ":"
@@ -145,14 +146,19 @@ structure_item:
   | val_header=val_header  "=" expr = expr {}
   | t=fun_header "=" mname=STRING fname=STRING {}
   | t=fun_header body=block_expr {}
-type_header: pub=ioption("pub") "type" tycon=LIDENT params=optional_type_parameters {}    
+type_header: pub=ioption("pub") "type" tycon=luident params=optional_type_parameters {}    
 
+luident:
+  | i=LIDENT
+  | i=UIDENT {}
 
 qual_ident:
   | i=LIDENT {}
-  | ps=PACKAGE_NAME id = DOT_LIDENT {}
+  | ps=PACKAGE_NAME id=DOT_IDENT {}
 
-
+qual_ident_ty:
+  | i=luident {}
+  | ps=PACKAGE_NAME id=DOT_IDENT {}
 
 %inline semi_expr_semi_opt: ls=non_empty_list_semis_rev(statement_expr)  {}
 
@@ -237,12 +243,12 @@ simple_expr:
 %inline label:
   name = LIDENT {}
 %inline accessor:
-  | name = DOT_LIDENT {}
+  | name = DOT_IDENT {}
   | index = DOT_INT {}
 %inline binder:
   name = LIDENT {}
 %inline tvar_binder:
-  name = UIDENT {}
+  name = luident {}
 %inline var:
   name = qual_ident {}
 
@@ -301,9 +307,8 @@ type_:
   | "(" ")" "->" rty=type_ {}
   | "(" t=type_ ")" rty=option("->" t2=type_{})
       {} 
-  | id=UIDENT {}
   // | "(" type_ ")" {}
-  | id=qual_ident params=optional_type_arguments {}
+  | id=qual_ident_ty params=optional_type_arguments {}
   | "_" {}
 /* type declaration */
 
