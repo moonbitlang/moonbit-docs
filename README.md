@@ -53,7 +53,7 @@ Expressions include:
 
 - Value literals (e.g. Boolean values, numbers, characters, strings, arrays, tuples, structs)
 - Arithmetical, logical, or comparison operations
-- Accesses to array elements or struct fields
+- Accesses to array elements (e.g. `a[0]`) or struct fields (e.g `r.x`) or tuple components (e.g. `t.0`)
 - Variables and (capitalized) enum constructors
 - Anonymous local function definitions
 - `match` and `if` expressions
@@ -184,6 +184,26 @@ func pack(a: bool, b: int, c: string, d: float) -> (bool, int, string, float) {
 func init {
     let quad = pack(false, 100, "text", 3.14)
     let (bool_val, int_val, str, float_val) = quad
+}
+```
+
+Tuples can be accessed via pattern matching or index:
+
+```go
+func f(t : (int, int)) {
+  let (x1, y1) = t // access via pattern matching
+  // access via index
+  let x2 = t.0
+  let y2 = t.1
+  if (x1 == x2 && y1 == y2) {
+    "yes".print()
+  } else {
+    "no".print()
+  }
+}
+
+func init {
+  f((1, 2))
 }
 ```
 
