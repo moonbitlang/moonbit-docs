@@ -3,7 +3,7 @@
 open Parser_util
 %}
 
-%token <char> CHAR
+%token <Basic.Uchar_utils.uchar> CHAR
 %token <int> INT
 %token <float> FLOAT
 %token <string> STRING
