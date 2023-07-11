@@ -218,7 +218,7 @@ infix_expr:
 %inline constr_expr:
   | name = UIDENT {}
   /* TODO: two tokens or one token here? */
-  | type_name=LIDENT constr_name=COLONCOLON_UIDENT
+  | type_name=luident constr_name=COLONCOLON_UIDENT
     {}
   
 simple_expr:
@@ -280,7 +280,7 @@ pattern:
 %inline constr_pat:
   | name = UIDENT {}
   /* TODO: two tokens or one token here? */
-  | type_name=LIDENT constr_name=COLONCOLON_UIDENT
+  | type_name=luident constr_name=COLONCOLON_UIDENT
     {}
 
 simple_pattern:
