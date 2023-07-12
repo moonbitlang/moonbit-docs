@@ -7,6 +7,7 @@ open Parser_util
 %token <int> INT
 %token <float> FLOAT
 %token <string> STRING
+%token <Interp.t> INTERP
 %token <string> LIDENT
 %token <string> UIDENT
 %token <Comment.t> COMMENT
@@ -259,6 +260,7 @@ simple_expr:
   | INT {}
   | FLOAT {}
   | STRING {}
+  | INTERP {}
 
 
  %inline infixop:

@@ -450,3 +450,16 @@ pub func f(x: t2) -> t1  // ERROR: return type `t1` is private!
 
 pub let a: t1  // ERROR: variable type `t1` is private!
 ```
+
+## String Interpolation
+String interpolation is a powerful feature in MoonBit that allows you to conveniently substitute variables within interpolated strings. With string interpolation, you can easily construct dynamic strings by embedding variable values directly into the text.
+
+To use string interpolation in MoonBit, you can follow the syntax below:
+
+```go
+x := 42
+"The answer is \(x)".print()
+```
+
+Variables used for string interpolation must support the `to_string` method.
+
