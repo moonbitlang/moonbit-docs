@@ -278,7 +278,7 @@ simple_expr:
 
 pattern:
   | simple_pattern {}
-  | b=binder "as" p=pattern {}
+  | p=pattern "as" b=binder {}
   | pat1=pattern "|" pat2=pattern {}
 
 %inline constr_pat:
