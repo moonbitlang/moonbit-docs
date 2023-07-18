@@ -249,7 +249,10 @@ simple_expr:
 %inline binder:
   name = LIDENT {}
 %inline tvar_binder:
-  name = luident {}
+  | name = luident {}
+  | name = luident COLON constraints = separated_nonempty_list(PLUS, tvar_constraint) {}
+%inline tvar_constraint:
+  | name=UIDENT {}
 %inline var:
   name = qual_ident {}
 
