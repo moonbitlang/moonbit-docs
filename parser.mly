@@ -216,10 +216,10 @@ infix_expr:
  | record=simple_expr  acc=accessor {}
  | obj=simple_expr  "[" ind=expr "]" {}
 
-%inline constr_expr:
+%inline constr:
   | name = UIDENT {}
   /* TODO: two tokens or one token here? */
-  | type_name=luident constr_name=COLONCOLON_UIDENT
+  | type_name=qual_ident_ty constr_name=COLONCOLON_UIDENT
     {}
 
 simple_expr:
@@ -232,7 +232,7 @@ simple_expr:
   | e = atomic_expr {}
   | "_" {}
   | v=var {}
-  | c=constr_expr {}
+  | c=constr {}
   | f=simple_expr "(" args=list_commas(expr) ")" {}
   | obj=simple_expr  "[" index=expr "]" {}
   | record=simple_expr  accessor=accessor {}
@@ -281,12 +281,6 @@ pattern:
   | p=pattern "as" b=binder {}
   | pat1=pattern "|" pat2=pattern {}
 
-%inline constr_pat:
-  | name = UIDENT {}
-  /* TODO: two tokens or one token here? */
-  | type_name=luident constr_name=COLONCOLON_UIDENT
-    {}
-
 simple_pattern:
   | TRUE {}
   | FALSE {}
@@ -296,7 +290,7 @@ simple_pattern:
   | STRING {}
   | UNDERSCORE {}
   | b=binder  {}
-  | constr=constr_pat ps=option("(" t=separated_nonempty_list(",",pattern) ")" {}){}
+  | constr=constr ps=option("(" t=separated_nonempty_list(",",pattern) ")" {}){}
   | "(" pattern ")" {}
   | "(" p = pattern "," ps=separated_nonempty_list(",",pattern) ")"  {}
   | "(" pat=pattern ":" ty=type_ ")" {}
