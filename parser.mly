@@ -144,7 +144,9 @@ fun_header:
 val_header : pub=ioption("pub") "let" binder=binder t=opt_annot {}
 structure : list_semis(structure_item) EOF {}
 structure_item:
-  | type_header=type_header components=type_def {}
+  | type_header=type_header {}
+  | struct_header=struct_header "{" fs=list_semis(record_decl_field) "}" {}
+  | enum_header=enum_header "{" cs=list_semis(enum_constructor) "}" {}
   | val_header=val_header  "=" expr = expr {}
   | t=fun_header "=" mname=STRING fname=STRING {}
   | t=fun_header body=block_expr {}
@@ -153,6 +155,8 @@ structure_item:
   | "pub"       {}
   | "priv"      {}
 type_header: vis=visibility "type" tycon=luident params=optional_type_parameters {}
+struct_header: vis=visibility "struct" tycon=luident params=optional_type_parameters {}
+enum_header: vis=visibility "enum" tycon=luident params=optional_type_parameters {}
 
 luident:
   | i=LIDENT
@@ -318,13 +322,6 @@ type_:
   // | "(" type_ ")" {}
   | id=qual_ident_ty params=optional_type_arguments {}
   | "_" {}
-/* type declaration */
-
-
-type_def:
-  | /* empty */ {}
-  | "struct" "{" fs=list_semis(record_decl_field) "}"  {}
-  | "enum" "{" fs=list_semis(enum_constructor) "}" {}
 
 record_decl_field:
   | field_vis=visibility mutflag=option("mut") name=LIDENT ":" ty=type_ {}
