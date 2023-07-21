@@ -304,14 +304,19 @@ simple_pattern:
   | "(" p = pattern "," ps=separated_nonempty_list(",",pattern) ")"  {}
   | "(" pat=pattern ":" ty=type_ ")" {}
   // | "#" "[" pat = pat_list "]" {}
-  | "[" lst=separated_list(",",array_sub_pattern) "]" {} 
+  | "[" lst=array_sub_patterns "]" {} 
   //| "{" p=separated_list(",", l=label ":" p=pattern {}) "}" {}
   | "{" p=fields_pat "}" {}
 
-array_sub_pattern:
-  | pattern {}
-  | ".." {}
-  | ".." binder {}
+array_sub_patterns:
+  | {}
+  | separated_nonempty_list(",", pattern) {}
+  | rest_pat {}
+  | rest_pat preceded(",", pattern)+ {}
+  | terminated(pattern, ",")+ rest_pat {}
+
+rest_pat:
+  | ".." binder? {}
 
 type_:
   | "(" t=type_ "," ts=separated_nonempty_list(",", type_)")" {}
