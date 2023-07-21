@@ -23,6 +23,7 @@ open Parser_util
 %token FALSE
 %token TRUE
 %token PUB             "pub"
+%token PRIV            "priv"
 %token IMPORT          "import"
 %token BREAK           "break"
 %token CONTINUE        "continue"
@@ -147,7 +148,11 @@ structure_item:
   | val_header=val_header  "=" expr = expr {}
   | t=fun_header "=" mname=STRING fname=STRING {}
   | t=fun_header body=block_expr {}
-type_header: pub=ioption("pub") "type" tycon=luident params=optional_type_parameters {}
+%inline visibility:
+  | /* empty */ {}
+  | "pub"       {}
+  | "priv"      {}
+type_header: vis=visibility "type" tycon=luident params=optional_type_parameters {}
 
 luident:
   | i=LIDENT
@@ -322,7 +327,7 @@ type_def:
   | "enum" "{" fs=list_semis(enum_constructor) "}" {}
 
 record_decl_field:
-  | pubflag=option("pub") mutflag=option("mut") name=LIDENT ":" ty=type_ {}
+  | field_vis=visibility mutflag=option("mut") name=LIDENT ":" ty=type_ {}
 
 enum_constructor:
   | id=UIDENT opt=option("("  ts=separated_nonempty_list(",",type_)")"{}) {}
