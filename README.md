@@ -35,12 +35,12 @@ func init {
 MoonBit distinguishes between statements and expressions. In a function body, only the last clause should be an expression, which serves as a return value. For example:
 
 ```go
-func foo() -> int {
+func foo() -> Int {
   let x = 1
   x + 1 // OK
 }
 
-func foo() -> int {
+func foo() -> Int {
   let x = 1
   x + 1 // fail
   x + 2
@@ -76,7 +76,7 @@ Functions take arguments and produce a result. In MoonBit, functions are first-c
 Functions can be defined as top-level or local. We can use the `func` keyword to define a top-level function that sums three integers and returns the result, as follows:
 
 ```go
-func add3(x: int, y: int, z: int)-> int {
+func add3(x: Int, y: Int, z: Int)-> Int {
   x + y + z
 }
 ```
@@ -88,7 +88,7 @@ Note that the arguments and return value of top-level functions require explicit
 Local functions are defined using the `fn` keyword. Local functions can be named or anonymous. Type annotations can be omitted for local function definitions: they can be automatically inferred in most cases. For example:
 
 ```go
-pub func foo() -> int {
+pub func foo() -> Int {
   fn inc(x) { x + 1 }  // named as `inc`
   fn (x) { x + inc(2) } (6) // anonymous, instantly applied to integer literal 6
 }
@@ -98,7 +98,7 @@ Functions, whether named or anonymous, are *lexical closures*: any identifiers w
 
 ```go
 let x = 3
-func foo(x: int) {
+func foo(x: Int) {
   fn inc()  { x + 1 } // OK, will return x + 1
   fn fail() { y + 1 } // fail: The value identifier y is unbound.
 }
@@ -178,7 +178,7 @@ The `while` statement doesn't yield anything; it only evaluates to `()` of unit 
 A tuple is a collection of finite values constructed using round brackets `()` with the elements separated by commas `,`. The order of elements matters; for example, `(1,true)` and `(true,1)` have different types. Here's an example:
 
 ```go
-func pack(a: bool, b: int, c: string, d: float) -> (bool, int, string, float) {
+func pack(a: Bool, b: Int, c: String, d: Float) -> (Bool, Int, String, Float) {
     (a, b, c, d)
 }
 func init {
@@ -190,7 +190,7 @@ func init {
 Tuples can be accessed via pattern matching or index:
 
 ```go
-func f(t : (int, int)) {
+func f(t : (Int, Int)) {
   let (x1, y1) = t // access via pattern matching
   // access via index
   let x2 = t.0
@@ -255,10 +255,10 @@ There are two ways to create new data types: `struct` and `enum`.
 In MoonBit, structs are similar to tuples, but their fields are indexed by field names. A struct can be constructed using a struct literal, which is composed of a set of labeled values and delimited with curly brackets. The type of a struct literal can be automatically inferred if its fields exactly match the type definition. A field can be accessed using the dot syntax `s.f`. If a field is marked as mutable using the keyword `mut`, it can be assigned a new value.
 
 ```go
-struct user {
-  id: int
-  name: string
-  mut email: string
+struct User {
+  id: Int
+  name: String
+  mut email: String
 }
 
 func init {
@@ -271,10 +271,10 @@ func init {
 Note that you can also include methods associated with your record type, for example:
 
 ```go
-struct stack { 
-  mut elems: list[int]
-  push: (int) => ()
-  pop: () => int
+struct Stack { 
+  mut elems: List[Int]
+  push: (Int) => ()
+  pop: () => Int
 }
 ```
 
@@ -283,12 +283,12 @@ struct stack {
 Enum types are similar to algebraic data types in functional languages. An enum can have a set of cases. Additionally, every case can specify associated values of different types, similar to a tuple. The label for every case must be capitalized, which is called a data constructor. An enum can be constructed by calling a data constructor with arguments of specified types. The construction of an enum must be annotated with a type. An enum can be destructed by pattern matching, and the associated values can be bound to variables that are specified in each pattern.
 
 ```go
-enum list {
+enum List {
   Nil
-  Cons (int, list)
+  Cons (Int, List)
 }
 
-func print(l: list) {
+func print(l: List) {
   match l {
     Nil => "nil".print()
     Cons(x, xs) => {
@@ -301,7 +301,7 @@ func print(l: list) {
 
 
 func init {
-  let l: list = Cons(1, Cons(2, Nil))
+  let l: List = Cons(1, Cons(2, Nil))
   print(l)
 }
 ```
@@ -330,22 +330,22 @@ match expr {
 
 ## Generics
 
-Generics are supported in top-level function and data type definitions. Type parameters can be introduced within square brackets. We can rewrite the aforementioned data type `list` to add a type parameter `T` to obtain a generic version of lists. We can then define generic functions over lists like `map` and `reduce`.
+Generics are supported in top-level function and data type definitions. Type parameters can be introduced within square brackets. We can rewrite the aforementioned data type `List` to add a type parameter `T` to obtain a generic version of lists. We can then define generic functions over lists like `map` and `reduce`.
 
 ```go
-enum list[T] {
+enum List[T] {
   Nil
-  Cons(T, list[T])
+  Cons(T, List[T])
 }
 
-func map[S, T](self: list[S], f: (S) => T) -> list[T] {
+func map[S, T](self: List[S], f: (S) => T) -> List[T] {
   match self {
     Nil => Nil
     Cons(x, xs) => Cons(f(x), map(xs, f))
   }
 }
 
-func reduce[S, T](self: list[S], op: (T, S) => T, init: T) -> T {
+func reduce[S, T](self: List[S], op: (T, S) => T, init: T) -> T {
   match self {
     Nil => init
     Cons(x, xs) => reduce(xs, op, op(init, x))
@@ -358,8 +358,8 @@ func reduce[S, T](self: list[S], op: (T, S) => T, init: T) -> T {
 MoonBit supports methods in a different way from traditional object-oriented languages. A method is defined as a top-level function with `self` as the name of its first parameter. The `self` parameter will be the subject of a method call. For example, `l.map(f)` is equivalent to `map(l, f)`. Such syntax enables method chaining rather than heavily nested function calls. For example, we can chain the previously defined `map` and `reduce` together with `from_array` and `output` to perform list operations using the method call syntax.
 
 ```go
-func from_array[T](self: array[T]) -> list[T] {
-  var res: list[T] = Nil
+func from_array[T](self: array[T]) -> List[T] {
+  var res: List[T] = Nil
   var i = self.length() - 1
   while (i >= 0) {
     res = Cons(self[i], res)
@@ -379,11 +379,11 @@ Another difference between a method and a regular function is that overloading i
 MoonBit supports operator overloading of builtin operators. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
 
 ```go
-pub struct t {
-  x:int
+pub struct T {
+  x:Int
 }
 
-pub func op_add(self: t, other: t) -> t {
+pub func op_add(self: T, other: T) -> T {
   { x: self.x + other.x }
 }
 
@@ -415,40 +415,40 @@ By default, all function definitions and variable bindings are *invisible* to ot
 - Enum constructors do not have individual visibility so you cannot use `pub` or `priv` before them.
 
 ```go
-struct r1 {       // abstract data type by default
-  x: int          // implicitly private field
-  pub y: int      // ERROR: `pub` field found in a abstract type!
-  priv z: int     // WARNING: `priv` is redundant!
+struct R1 {       // abstract data type by default
+  x: Int          // implicitly private field
+  pub y: Int      // ERROR: `pub` field found in a abstract type!
+  priv z: Int     // WARNING: `priv` is redundant!
 }
 
-pub struct r2 {       // explicitly public struct
-  x: int              // implicitly public field
-  pub y: int          // WARNING: `pub` is redundant!
-  priv z: int         // explicitly private field
+pub struct R2 {       // explicitly public struct
+  x: Int              // implicitly public field
+  pub y: Int          // WARNING: `pub` is redundant!
+  priv z: Int         // explicitly private field
 }
 
-priv struct r3 {       // explicitly private struct
-  x: int               // implicitly private field
-  pub y: int           // ERROR: `pub` field found in a private type!
-  priv z: int          // WARNING: `priv` is redundant!
+priv struct R3 {       // explicitly private struct
+  x: Int               // implicitly private field
+  pub y: Int           // ERROR: `pub` field found in a private type!
+  priv z: Int          // WARNING: `priv` is redundant!
 }
 
-enum t1 {       // abstract data type by default
-  A(int)        // implicitly private variant
-  pub B(int)    // ERROR: no individual visibility!
-  priv C(int)   // ERROR: no individual visibility!
+enum T1 {       // abstract data type by default
+  A(Int)        // implicitly private variant
+  pub B(Int)    // ERROR: no individual visibility!
+  priv C(Int)   // ERROR: no individual visibility!
 }
 
-pub enum t2 {       // explicitly public enum
-  A(int)            // implicitly public variant
-  pub B(int)        // ERROR: no individual visibility!
-  priv C(int)       // ERROR: no individual visibility!
+pub enum T2 {       // explicitly public enum
+  A(Int)            // implicitly public variant
+  pub B(Int)        // ERROR: no individual visibility!
+  priv C(Int)       // ERROR: no individual visibility!
 }
 
-priv enum t3 {       // explicitly private enum
-  A(int)             // implicitly private variant
-  pub B(int)         // ERROR: no individual visibility!
-  priv C(int)        // ERROR: no individual visibility!
+priv enum T3 {       // explicitly private enum
+  A(Int)             // implicitly private variant
+  pub B(Int)         // ERROR: no individual visibility!
+  priv C(Int)        // ERROR: no individual visibility!
 }
 ```
 
@@ -456,19 +456,19 @@ Access control in MoonBit adheres to the principle that a `pub` type, function, 
 
 ```go
 pub struct s {
-  x: t1  // OK
-  y: t2  // OK
-  z: t3  // ERROR: public field has private type `t3`!
+  x: T1  // OK
+  y: T2  // OK
+  z: T3  // ERROR: public field has private type `T3`!
 }
 
-// ERROR: public function has private parameter type `t3`!
-pub func f1(_x: t3) -> t1 { t1::A(0) }
-// ERROR: public function has private return type `t3`!
-pub func f2(_x: t1) -> t3 { t3::A(0) }
+// ERROR: public function has private parameter type `T3`!
+pub func f1(_x: T3) -> T1 { T1::A(0) }
+// ERROR: public function has private return type `T3`!
+pub func f2(_x: T1) -> T3 { T3::A(0) }
 // OK
-pub func f3(_x: t1) -> t1 { t1::A(0) }
+pub func f3(_x: T1) -> T1 { T1::A(0) }
 
-pub let a: t3  // ERROR: public variable has private type `t3`!
+pub let a: T3  // ERROR: public variable has private type `T3`!
 ```
 
 ## String Interpolation
