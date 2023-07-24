@@ -255,7 +255,7 @@ There are two ways to create new data types: `struct` and `enum`.
 In MoonBit, structs are similar to tuples, but their fields are indexed by field names. A struct can be constructed using a struct literal, which is composed of a set of labeled values and delimited with curly brackets. The type of a struct literal can be automatically inferred if its fields exactly match the type definition. A field can be accessed using the dot syntax `s.f`. If a field is marked as mutable using the keyword `mut`, it can be assigned a new value.
 
 ```go
-type user struct {
+struct user {
   id: int
   name: string
   mut email: string
@@ -271,10 +271,10 @@ func init {
 Note that you can also include methods associated with your record type, for example:
 
 ```go
-type stack struct { 
+struct stack { 
   mut elems: list[int]
   push: (int) => ()
-  pop: (list[int]) => int
+  pop: () => int
 }
 ```
 
@@ -283,7 +283,7 @@ type stack struct {
 Enum types are similar to algebraic data types in functional languages. An enum can have a set of cases. Additionally, every case can specify associated values of different types, similar to a tuple. The label for every case must be capitalized, which is called a data constructor. An enum can be constructed by calling a data constructor with arguments of specified types. The construction of an enum must be annotated with a type. An enum can be destructed by pattern matching, and the associated values can be bound to variables that are specified in each pattern.
 
 ```go
-type list enum {
+enum list {
   Nil
   Cons (int, list)
 }
@@ -333,7 +333,7 @@ match expr {
 Generics are supported in top-level function and data type definitions. Type parameters can be introduced within square brackets. We can rewrite the aforementioned data type `list` to add a type parameter `T` to obtain a generic version of lists. We can then define generic functions over lists like `map` and `reduce`.
 
 ```go
-type list[T] enum {
+enum list[T] {
   Nil
   Cons(T, list[T])
 }
@@ -375,11 +375,11 @@ func init {
 
 Another difference between a method and a regular function is that overloading is only supported by the method syntax. For example, we have multiple output functions, such as `output_int` and `output_float`, for different types, but using the method `output` the type of the subject can be recognized and the appropriate overloaded version will be selected, such as `1.print()` and `1.0.print()`.
 
-## operator overloading
+## Operator Overloading
 MoonBit supports operator overloading of builtin operators. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
 
 ```go
-pub type t struct {
+pub struct t {
   x:int
 }
 
@@ -409,46 +409,66 @@ Currently, the following operators can be overloaded:
 
 ## Access Control
 
-By default, all type definitions, function definitions, variable bindings, and struct fields are *invisible* to other packages. This design prevents unintended exposure of implementation details. To make them visible, you can use the pub modifier before `type`, `func`, `let`, `var`, or field names. However, it is important to note that:
+By default, all function definitions and variable bindings are *invisible* to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`func`/`let` to make them fully visible, or put `priv` before `type` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
 
-- Struct fields cannot be defined as `pub` within a private struct since it makes no sense.
-- Enum constructors do not have individual visibility so you cannot use `pub` before them.
+- Struct fields cannot be defined as `pub` within a abstract or private struct since it makes no sense.
+- Enum constructors do not have individual visibility so you cannot use `pub` or `priv` before them.
 
 ```go
-type r1 struct {  // implicitly private struct
+struct r1 {       // abstract data type by default
   x: int          // implicitly private field
-  pub y: int      // ERROR: a field cannot be defined as `pub` within a private struct
+  pub y: int      // ERROR: `pub` field found in a abstract type!
+  priv z: int     // WARNING: `priv` is redundant!
 }
 
-pub type r2 struct {  // explicitly public struct
-  x: int              // implicitly private field
-  pub y: int          // explicitly public field
+pub struct r2 {       // explicitly public struct
+  x: int              // implicitly public field
+  pub y: int          // WARNING: `pub` is redundant!
+  priv z: int         // explicitly private field
 }
 
-type t1 enum {  // implicitly private enum
-  A(int)        // implicitly private constructor
-  pub B(int)    // ERROR: unexpected `pub`
+priv struct r3 {       // explicitly private struct
+  x: int               // implicitly private field
+  pub y: int           // ERROR: `pub` field found in a private type!
+  priv z: int          // WARNING: `priv` is redundant!
 }
 
-pub type t2 enum {  // explicitly public enum
-  A(int)            // implicitly public constructor
-  pub B(int)        // ERROR: unexpected `pub`
+enum t1 {       // abstract data type by default
+  A(int)        // implicitly private variant
+  pub B(int)    // ERROR: no individual visibility!
+  priv C(int)   // ERROR: no individual visibility!
+}
+
+pub enum t2 {       // explicitly public enum
+  A(int)            // implicitly public variant
+  pub B(int)        // ERROR: no individual visibility!
+  priv C(int)       // ERROR: no individual visibility!
+}
+
+priv enum t3 {       // explicitly private enum
+  A(int)             // implicitly private variant
+  pub B(int)         // ERROR: no individual visibility!
+  priv C(int)        // ERROR: no individual visibility!
 }
 ```
 
 Access control in MoonBit adheres to the principle that a `pub` type, function, or variable cannot be defined in terms of a private type. This is because the private type may not be accessible everywhere that the `pub` entity is used. MoonBit incorporates sanity checks to prevent the occurrence of use cases that violate this principle.
 
 ```go
-pub type s struct {
-  x: t1      // OK
-  pub y: t1  // ERROR: field type `t1` is private!
+pub struct s {
+  x: t1  // OK
+  y: t2  // OK
+  z: t3  // ERROR: public field has private type `t3`!
 }
 
-pub func f(x: t2) -> t2  // OK
-pub func f(x: t1) -> t2  // ERROR: parameter type `t1` is private!
-pub func f(x: t2) -> t1  // ERROR: return type `t1` is private!
+// ERROR: public function has private parameter type `t3`!
+pub func f1(_x: t3) -> t1 { t1::A(0) }
+// ERROR: public function has private return type `t3`!
+pub func f2(_x: t1) -> t3 { t3::A(0) }
+// OK
+pub func f3(_x: t1) -> t1 { t1::A(0) }
 
-pub let a: t1  // ERROR: variable type `t1` is private!
+pub let a: t3  // ERROR: public variable has private type `t3`!
 ```
 
 ## String Interpolation
