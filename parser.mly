@@ -311,12 +311,9 @@ simple_pattern:
 array_sub_patterns:
   | {}
   | separated_nonempty_list(",", pattern) {}
-  | rest_pat {}
-  | rest_pat preceded(",", pattern)+ {}
-  | terminated(pattern, ",")+ rest_pat {}
-
-rest_pat:
-  | ".." binder? {}
+  | ".." {}
+  | ".." preceded(",", pattern)+ {}
+  | terminated(pattern, ",")+ ".." {}
 
 type_:
   | "(" t=type_ "," ts=separated_nonempty_list(",", type_)")" {}
