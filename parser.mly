@@ -176,7 +176,7 @@ statement_expr:
 
   | "let" pat=pattern ty_opt=opt_annot "=" expr=expr
     {}
-  | binder=binder ":=" expr=expr
+  | pat=shorthand_let_pattern ":=" expr=expr
     {}
   | "var" binder=binder ty=opt_annot "=" expr=expr
     {}
@@ -187,6 +187,10 @@ statement_expr:
   | while_expr {}
   | "return" expr = option(expr) {}
   | a=expr  {}
+
+%inline shorthand_let_pattern:
+  | UNDERSCORE {}
+  | binder=binder {}
 
 while_expr:
   | "while" cond=infix_expr b=block_expr
