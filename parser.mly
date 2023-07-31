@@ -24,6 +24,7 @@ open Parser_util
 %token TRUE
 %token PUB             "pub"
 %token PRIV            "priv"
+%token READONLY        "readonly"
 %token IMPORT          "import"
 %token BREAK           "break"
 %token CONTINUE        "continue"
@@ -152,8 +153,11 @@ structure_item:
   | t=fun_header body=block_expr {}
 %inline visibility:
   | /* empty */ {}
-  | "pub"       {}
   | "priv"      {}
+  | "pub" attr=pub_attr {}
+%inline pub_attr:
+  | /* empty */ {}
+  | "(" "readonly" ")" {}
 type_header: vis=visibility "type" tycon=luident params=optional_type_parameters {}
 struct_header: vis=visibility "struct" tycon=luident params=optional_type_parameters {}
 enum_header: vis=visibility "enum" tycon=luident params=optional_type_parameters {}
