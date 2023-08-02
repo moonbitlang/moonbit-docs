@@ -41,6 +41,7 @@ open Parser_util
 %token <string>DOT_IDENT
 %token <int>DOT_INT
 %token <string>COLONCOLON_UIDENT
+%token <string>COLONCOLON_LIDENT
 %token COLON           ":"
 %token COLONEQUAL      ":="
 %token SEMI
@@ -130,9 +131,12 @@ optional_type_parameters:
   | params = option(delimited("[",separated_nonempty_list(",",id(tvar_binder)), "]")) {}
 optional_type_arguments:
   | params = option(delimited("[" ,separated_nonempty_list(",",type_), "]")) {}
+fun_binder:
+  | type_name=qual_ident_ty func_name=COLONCOLON_LIDENT {}
+  | binder {}
 fun_header:
   pub=ioption("pub") "func"
-    f=binder
+    fun_binder=fun_binder
     /* TODO: move the quants before self */
     quants=optional_type_parameters
     ps=option(parameters)
@@ -253,6 +257,7 @@ simple_expr:
   | f=simple_expr "(" args=list_commas(expr) ")" {}
   | obj=simple_expr  "[" index=expr "]" {}
   | record=simple_expr  accessor=accessor {}
+  | type_name=qual_ident_ty method_name=COLONCOLON_LIDENT {}
   | "("  bs=list_commas(expr) ")" {}
   | "(" expr ":" type_ ")"
     {}
