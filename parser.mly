@@ -317,7 +317,7 @@ simple_pattern:
   | "(" p = pattern "," ps=separated_nonempty_list(",",pattern) ")"  {}
   | "(" pat=pattern ":" ty=type_ ")" {}
   // | "#" "[" pat = pat_list "]" {}
-  | "[" lst=array_sub_patterns "]" {} 
+  | "[" lst=array_sub_patterns "]" {}
   //| "{" p=separated_list(",", l=label ":" p=pattern {}) "}" {}
   | "{" p=fields_pat "}" {}
 
