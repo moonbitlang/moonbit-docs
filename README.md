@@ -88,7 +88,7 @@ Note that the arguments and return value of top-level functions require explicit
 Local functions are defined using the `fn` keyword. Local functions can be named or anonymous. Type annotations can be omitted for local function definitions: they can be automatically inferred in most cases. For example:
 
 ```go
-pub func foo() -> Int {
+func foo() -> Int {
   fn inc(x) { x + 1 }  // named as `inc`
   fn (x) { x + inc(2) } (6) // anonymous, instantly applied to integer literal 6
 }
@@ -273,8 +273,8 @@ Note that you can also include methods associated with your record type, for exa
 ```go
 struct Stack { 
   mut elems: List[Int]
-  push: (Int) => ()
-  pop: () => Int
+  push: (Int) -> Unit
+  pop: () -> Int
 }
 ```
 
@@ -338,14 +338,14 @@ enum List[T] {
   Cons(T, List[T])
 }
 
-func map[S, T](self: List[S], f: (S) => T) -> List[T] {
+func map[S, T](self: List[S], f: (S) -> T) -> List[T] {
   match self {
     Nil => Nil
     Cons(x, xs) => Cons(f(x), map(xs, f))
   }
 }
 
-func reduce[S, T](self: List[S], op: (T, S) => T, init: T) -> T {
+func reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
   match self {
     Nil => init
     Cons(x, xs) => reduce(xs, op, op(init, x))
@@ -379,11 +379,11 @@ Another difference between a method and a regular function is that overloading i
 MoonBit supports operator overloading of builtin operators. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
 
 ```go
-pub struct T {
+struct T {
   x:Int
 }
 
-pub func op_add(self: T, other: T) -> T {
+func op_add(self: T, other: T) -> T {
   { x: self.x + other.x }
 }
 
@@ -452,10 +452,34 @@ priv enum T3 {       // explicitly private enum
 }
 ```
 
+Another useful feature supported in MoonBit is `pub(readonly)` types, which are inspired by [private types](https://v2.ocaml.org/manual/privatetypes.html) in OCaml. In short, values of `pub(readonly)` types can be destructed by pattern matching and the dot syntax, but cannot be constructed or mutated in other packages. Note that there is no restriction within the same package where `pub(readonly)` types are defined.
+
+```go
+// Package A
+pub(readonly) struct RO {
+  field: Int
+}
+func init {
+  let r = { field: 4 }       // OK
+  let r = { ..r, field: 8 }  // OK
+}
+
+// Package B
+func print(r : RO) {
+  "{ field: ".print()
+  r.field.print()  // OK
+  " }".print()
+}
+func init {
+  let r : RO = { field: 4 }  // ERROR: Cannot create values of the public read-only type RO!
+  let r = { ..r, field: 8 }  // ERROR: Cannot mutate a public read-only field!
+}
+```
+
 Access control in MoonBit adheres to the principle that a `pub` type, function, or variable cannot be defined in terms of a private type. This is because the private type may not be accessible everywhere that the `pub` entity is used. MoonBit incorporates sanity checks to prevent the occurrence of use cases that violate this principle.
 
 ```go
-pub struct s {
+pub struct S {
   x: T1  // OK
   y: T2  // OK
   z: T3  // ERROR: public field has private type `T3`!
