@@ -249,7 +249,7 @@ simple_expr:
   // | "{" fs=list_commas( l=label ":" e=expr {}) "}" {}
   // | "fn"  parameters "=>" atomic_expr
   | "{" x=semi_expr_semi_opt "}" {}
-  | "fn" ps=parameters ty_opt=opt_annot f=block_expr  {}
+  | "fn" ps=parameters ty_opt=option("->" t=type_ {}) f=block_expr  {}
   | e = atomic_expr {}
   | "_" {}
   | v=var {}
