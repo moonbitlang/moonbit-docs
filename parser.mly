@@ -4,7 +4,7 @@ open Parser_util
 %}
 
 %token <Basic.Uchar_utils.uchar> CHAR
-%token <int> INT
+%token <string> INT
 %token <float> FLOAT
 %token <string> STRING
 %token <Interp.t> INTERP
