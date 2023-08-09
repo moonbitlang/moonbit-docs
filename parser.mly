@@ -78,7 +78,6 @@ open Parser_util
 
 %nonassoc "as"
 %right "|"
-%nonassoc "="
 %right BARBAR
 %right AMPERAMPER
 
@@ -192,6 +191,7 @@ statement_expr:
     {}
   | "var" binder=binder ty=opt_annot "=" expr=expr
     {}
+  | lv = left_value "=" e=expr {}
   | "fn" binder=binder params=parameters ty_opt=option("->" t=type_{}) block = block_expr
     {}
   | "break" {}
@@ -234,7 +234,6 @@ infix_expr:
   | op=id(MINUS{}) e=expr %prec prec_unary_minus {}
   | simple_expr  {}
   | lhs=expr op=infixop rhs=expr {}
-  | lv = left_value "=" e=expr {}
 
 %inline left_value:
  | var=var {}
