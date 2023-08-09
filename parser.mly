@@ -83,6 +83,10 @@ open Parser_util
 %right AMPERAMPER
 
 
+// x.f(...) should be [Pexpr_dot_apply], not [Pexpr_apply(Pexpr_field, ...)]
+// these two precedences are used to resolve this.
+%nonassoc prec_field
+%nonassoc LPAREN
 %left INFIX1
 %left INFIX2 PLUS MINUS
 %left INFIX3
@@ -256,7 +260,8 @@ simple_expr:
   | c=constr {}
   | f=simple_expr "(" args=list_commas(expr) ")" {}
   | obj=simple_expr  "[" index=expr "]" {}
-  | record=simple_expr  accessor=accessor {}
+  | self=simple_expr method_=DOT_IDENT "(" args=list_commas(expr) ")" {}
+  | record=simple_expr accessor=accessor %prec prec_field {}
   | type_name=qual_ident_ty method_name=COLONCOLON_LIDENT {}
   | "("  bs=list_commas(expr) ")" {}
   | "(" expr ":" type_ ")"
