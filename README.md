@@ -506,3 +506,50 @@ x := 42
 
 Variables used for string interpolation must support the `to_string` method.
 
+## Numbers
+
+Moonbit supports the number literals for decimal, hexadecimal, binary, and octal literals.
+
+### Decimal numbers
+
+The following shows some decimal numbers:
+
+```
+let a = 1234
+let b = 10000 + a
+```
+
+### Binary Numbers
+
+The binary number uses a leading zero followed by a lowercase or uppercase letter “B” e.g., `0b` or `0B` :
+
+```
+let bin =  0b110010
+let another_bin = 0B110010
+```
+
+Note that the digit after `0b`/`0B` must be `0` or `1`.
+
+
+
+### Octal Numbers
+
+An octal number uses a leading zero followed a lowercase or uppercase letter “O”  e.g., `0o` or `0O` :
+
+```
+let octal = 0o1234
+let another_octal = 0O1234
+```
+
+Note that the digits after `0o`/`0O` are numbers in the range `0` through `7`:
+
+### Hexadecimal numbers
+
+Hexadecimal numbers use a leading zero followed by a lowercase or uppercase letter "X" e.g., `0x` or `0X` :
+
+```
+let hex = 0XA
+let another_hex = 0xA
+```
+
+Note that the digits after the `0x`/`0X` must be in the range (`0123456789ABCDEF`).
