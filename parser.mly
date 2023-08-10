@@ -5,7 +5,7 @@ open Parser_util
 
 %token <Basic.Uchar_utils.uchar> CHAR
 %token <string> INT
-%token <float> FLOAT
+%token <string> FLOAT
 %token <string> STRING
 %token <Interp.t> INTERP
 %token <string> LIDENT
