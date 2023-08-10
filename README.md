@@ -177,11 +177,13 @@ The `while` statement doesn't yield anything; it only evaluates to `()` of unit 
 
 Moonbit supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
+To improve readability, you may place underscores in the middle of numeric literals such as `1_000_000`. Note that underscores can be placed anywhere within a number, not just every three digits.
+
 - There is nothing surprising about demical numbers.
 
 ```
 let a = 1234
-let b = 10000 + a
+let b = 1_000_000 + a
 ```
 
 - A binary number has a leading zero followed by a letter "B", i.e. `0b`/`0B`.
