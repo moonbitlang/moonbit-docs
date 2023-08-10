@@ -173,6 +173,52 @@ The `while` statement doesn't yield anything; it only evaluates to `()` of unit 
 
 ## Built-in Data Structures
 
+### Number
+
+Moonbit supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
+
+- There is nothing surprising about demical numbers.
+
+```
+let a = 1234
+let b = 10000 + a
+```
+
+- A binary number has a leading zero followed by a letter "B", i.e. `0b`/`0B`.
+  Note that the digits after `0b`/`0B` must be `0` or `1`.
+
+```
+let bin =  0b110010
+let another_bin = 0B110010
+```
+
+- An octal number has a leading zero followed by a letter "O", i.e. `0o`/`0O`.
+  Note that the digits after `0o`/`0O` must be in the range from `0` through `7`:
+
+```
+let octal = 0o1234
+let another_octal = 0O1234
+```
+
+- A hexadecimal number has a leading zero followed by a letter "X", i.e. `0x`/`0X`.
+  Note that the digits after the `0x`/`0X` must be in the range `0123456789ABCDEF`.
+
+```
+let hex = 0XA
+let another_hex = 0xA
+```
+
+### String
+
+String interpolation is a powerful feature in MoonBit that enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text.
+
+```swift
+x := 42
+"The answer is \(x)".print()
+```
+
+Variables used for string interpolation must support the `to_string` method.
+
 ### Tuple
 
 A tuple is a collection of finite values constructed using round brackets `()` with the elements separated by commas `,`. The order of elements matters; for example, `(1,true)` and `(true,1)` have different types. Here's an example:
@@ -494,15 +540,3 @@ pub func f3(_x: T1) -> T1 { T1::A(0) }
 
 pub let a: T3  // ERROR: public variable has private type `T3`!
 ```
-
-## String Interpolation
-
-String interpolation is a powerful feature in MoonBit that enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text.
-
-```swift
-x := 42
-"The answer is \(x)".print()
-```
-
-Variables used for string interpolation must support the `to_string` method.
-
