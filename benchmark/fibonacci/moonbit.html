@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Moonbit Demo</title>
+    <style>
+      /* CSS styles for the result */
+      #result {
+        background-color: #f2f2f2;
+        padding: 10px;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    </style>
+    <script>
+      async function callWasmFunction() {
+        const value = document.getElementById("inputValue").value;
+        const loops = document.getElementById("loopsValue").value;
+        const result = await WebAssembly.instantiateStreaming(
+          fetch("moonbit.wasm")
+        );
+
+        const fibjs = result.instance.exports.fib2;
+
+        const inputValue = parseInt(value);
+        const loopsValue = parseInt(loops);
+
+        var startTime = performance.now();
+
+        for (let i = 0; i < loopsValue; i++) {
+          fibjs(inputValue);
+        }
+        var endTime = performance.now();
+        const cost = (endTime - startTime).toFixed(2);
+        const outputValue = fibjs(inputValue);
+        document.getElementById("result").textContent =
+          "Result: " + outputValue + ", cost: " + cost + " milliseconds";
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Moonbit Demo</h1>
+    <input type="number" id="inputValue" placeholder="number" />
+    <input type="number" id="loopsValue" placeholder="loops" />
+    <button onclick="callWasmFunction()">Call Wasm Function(fib2)</button>
+    <div id="result"></div>
+  </body>
+</html>

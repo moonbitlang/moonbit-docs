@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Golang Demo</title>
+    <style>
+      /* CSS styles for the result */
+      #result {
+        background-color: #f2f2f2;
+        padding: 10px;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    </style>
+    <script src="wasm_exec.js"></script>
+    <script>
+        async function callWasmFunction() {
+      const go = new Go();
+      const value = document.getElementById("inputValue").value;
+      const loops = document.getElementById("loopsValue").value;
+      const inputValue = parseInt(value);
+      const loopsValue = parseInt(loops);
+      
+      WebAssembly.instantiateStreaming(fetch("golang.wasm"), go.importObject)
+        .then((result) => {
+          go.run(result.instance);
+          var startTime = performance.now();
+          for (let i = 0; i < loopsValue; i++) {
+            fib(inputValue);
+          }
+          var endTime = performance.now();          
+          const outputValue = fib(inputValue);
+          const cost = (endTime - startTime).toFixed(2);
+          console.log(cost)        
+          document.getElementById("result").textContent =
+          "Result: " + outputValue + ", cost: " + cost + " milliseconds";          
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+      const imports = {
+        env: {
+          log: function (str) {
+            console.log(str);
+          },
+        },
+      };
+
+      function fib(x) {
+        return window.wasmFib(x);
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Golang Demo</h1>
+    <input type="number" id="inputValue" placeholder="number" />
+    <input type="number" id="loopsValue" placeholder="loops" />
+    <button onclick="callWasmFunction()">Call Wasm Function(fib2)</button>
+    <div id="result"></div>
+  </body>
+</html>
