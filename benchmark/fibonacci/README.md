@@ -43,7 +43,7 @@ cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" $PWD
 Build `golang.wasm`:
 
 ```
-GOOS=js GOARCH=wasm tinygo build -o golang.wasm -target wasm ./main.go
+GOOS=js GOARCH=wasm go build -o golang.wasm ./main.go
 ```
 
 
