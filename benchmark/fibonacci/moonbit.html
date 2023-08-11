@@ -15,7 +15,8 @@
       async function callWasmFunction() {
         const value = document.getElementById("inputValue").value;
         const loops = document.getElementById("loopsValue").value;
-        const result = await WebAssembly.instantiateStreaming(
+        const result = await WebAssembly.instantiateStreaming(          
+          // fetch("assemblyscript.wasm")
           fetch("moonbit.wasm")
         );
 

@@ -50,3 +50,29 @@ GOOS=js GOARCH=wasm tinygo build -o golang.wasm -target wasm ./main.go
 Start a web server with `python3 -m http.server 8080`, and we can now test the benchmark of Moonbit by browsing http://127.0.0.1:8080/golang.html
 
 <img width="600" src="imgs/golang_bench.jpg">
+
+### AssemblyScript
+
+Install AssemblyScript by:
+
+```
+npm i assemblyscript
+```
+
+Build `assemblyscript.wasm` by:
+
+```
+asc assemblyscript.ts --outFile assemblyscript.wasm --optimize
+```
+
+Change the `moonbit.html` from:
+
+```
+fetch("moonbit.wasm")
+```
+
+to
+
+```
+fetch("assemblyscript.wasm")
+```
