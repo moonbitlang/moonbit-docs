@@ -129,11 +129,11 @@ non_empty_list_semis(X):
 
 %inline id(x): x {}
 %inline opt_annot: option(":" t=type_ {}) {}
-%inline parameters : delimited("(",separated_list(",",id(b=binder t=opt_annot {})), ")") {}
+%inline parameters : delimited("(",list_commas(id(b=binder t=opt_annot {})), ")") {}
 optional_type_parameters:
-  | params = option(delimited("[",separated_nonempty_list(",",id(tvar_binder)), "]")) {}
+  | params = option(delimited("[",non_empty_list_commas(id(tvar_binder)), "]")) {}
 optional_type_arguments:
-  | params = option(delimited("[" ,separated_nonempty_list(",",type_), "]")) {}
+  | params = option(delimited("[" ,non_empty_list_commas(type_), "]")) {}
 fun_binder:
   | type_name=qual_ident_ty func_name=COLONCOLON_LIDENT {}
   | binder {}
@@ -259,7 +259,7 @@ simple_expr:
   | c=constr {}
   | f=simple_expr "(" args=list_commas(expr) ")" {}
   | obj=simple_expr  "[" index=expr "]" {}
-  | self=simple_expr method_=DOT_IDENT "(" args=list_commas(expr) ")" {}
+  | self=simple_expr meth=DOT_IDENT "(" args=list_commas(expr) ")" {}
   | record=simple_expr accessor=accessor %prec prec_field {}
   | type_name=qual_ident_ty method_name=COLONCOLON_LIDENT {}
   | "("  bs=list_commas(expr) ")" {}
@@ -316,9 +316,9 @@ simple_pattern:
   | STRING {}
   | UNDERSCORE {}
   | b=binder  {}
-  | constr=constr ps=option("(" t=separated_nonempty_list(",",pattern) ")" {}){}
+  | constr=constr ps=option("(" t=non_empty_list_commas(pattern) ")" {}){}
   | "(" pattern ")" {}
-  | "(" p = pattern "," ps=separated_nonempty_list(",",pattern) ")"  {}
+  | "(" p = pattern "," ps=non_empty_list_commas(pattern) ")"  {}
   | "(" pat=pattern ":" ty=type_ ")" {}
   // | "#" "[" pat = pat_list "]" {}
   | "[" lst=array_sub_patterns "]" {}
@@ -327,14 +327,18 @@ simple_pattern:
 
 array_sub_patterns:
   | {}
-  | separated_nonempty_list(",", pattern) {}
+  | dotdot_patttern {}
+  | ps=non_empty_list_commas(pattern) {}
+  | dotdot_patttern ps=non_empty_list_commas(pattern) {}
+  | ps=non_empty_list_commas(pattern) dotdot_patttern {}
+
+dotdot_patttern:
   | ".." {}
-  | ".." preceded(",", pattern)+ {}
-  | terminated(pattern, ",")+ ".." {}
+  | ".." "," {}
 
 type_:
-  | "(" t=type_ "," ts=separated_nonempty_list(",", type_)")" {}
-  | "(" t=type_ "," ts=separated_nonempty_list(",",type_) ")" "->" rty=type_ {}
+  | "(" t=type_ "," ts=non_empty_list_commas(type_) ")" {}
+  | "(" t=type_ "," ts=non_empty_list_commas(type_) ")" "->" rty=type_ {}
   | "(" ")" "->" rty=type_ {}
   | "(" t=type_ ")" rty=option("->" t2=type_{})
       {}
@@ -346,7 +350,7 @@ record_decl_field:
   | field_vis=visibility mutflag=option("mut") name=LIDENT ":" ty=type_ {}
 
 enum_constructor:
-  | id=UIDENT opt=option("("  ts=separated_nonempty_list(",",type_)")"{}) {}
+  | id=UIDENT opt=option("("  ts=non_empty_list_commas(type_)")"{}) {}
 
 record_defn:
   | {}

@@ -1,0 +1,14 @@
+let rec fibonacci = (n, acc1, acc2) => {
+  if (n == 0 ) {
+    acc1
+  } else if (n==1) {
+    acc2
+  } else {
+    fibonacci(n-1, acc2, acc1+acc2)
+  }
+}
+
+let fib2 = (n) => {
+    fibonacci(n,0,1)
+}
+

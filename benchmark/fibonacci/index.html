@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wasm Demo</title>
+    <style>
+      /* CSS styles for the result */
+      #result {
+        background-color: #f2f2f2;
+        padding: 10px;
+        margin-top: 20px;
+        font-weight: bold;
+        white-space: pre-line;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Wasm Demo</h1>
+    <label for="inputValue">Fib input: </label>
+    <input type="number" id="inputValue" placeholder="number" value="46" />
+    <br />
+    <label for="loopsValue">Repeat times: </label>
+    <input type="number" id="loopsValue" placeholder="loops" value="10000000" />
+    <br />
+    <label for="lang-select">Choose langauge: </label>
+    <select name="languages" id="lang-select">
+      <option value="moonbit">MoonBit</option>
+      <option value="golang">Go</option>
+      <option value="rust">Rust</option>
+    </select>
+    <button id="run">Call Wasm Function</button>
+    <div id="result"></div>
+    <script src="wasm_exec.js"></script>
+    <script>
+      const button = document.getElementById('run')
+      button.onclick = async () => {
+        button.disabled = true
+        const value = document.getElementById('inputValue').value
+        const loops = document.getElementById('loopsValue').value
+        const language = document.getElementById('lang-select').value
+        const displayResult = document.getElementById('result')
+        const go = new Go()
+
+        const wasm = await fetch(`${language}.wasm`).then((res) =>
+          res.arrayBuffer()
+        )
+        const bytes = wasm.byteLength
+        displayResult.textContent = `wasm size: ${bytes} bytes\n`
+
+        const result = await WebAssembly.instantiate(
+          wasm,
+          language === 'golang' ? go.importObject : undefined
+        )
+
+        let testjs
+
+        if (language === 'golang') {
+          go.run(result.instance)
+          testjs = test
+        } else {
+          testjs = result.instance.exports.test
+        }
+
+        const inputValue = parseInt(value)
+        const loopsValue = parseInt(loops)
+
+        const startTime = performance.now()
+        const outputValue = testjs(inputValue, loopsValue)
+        const endTime = performance.now()
+        const cost = (endTime - startTime).toFixed(2)
+        document.getElementById('result').textContent +=
+          'Result: ' + outputValue + ', cost: ' + cost + ' milliseconds'
+        button.disabled = false
+      }
+      function test(x) {
+        return window.wasmTest(x)
+      }
+    </script>
+  </body>
+</html>
