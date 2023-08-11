@@ -11,8 +11,8 @@ Pre-alpha, experimental. We expect MoonBit to reach beta status next year.
 
 - Generate significantly smaller WASM output than any existing solutions. 
 - Much faster runtime performance.
-- State of the art compile time performance.
-- Simple but practical, data oriented language design.
+- State of the art compile-time performance.
+- Simple but practical, data-oriented language design.
 
 ## Overview
 
@@ -179,7 +179,7 @@ Moonbit supports numeric literals, including decimal, binary, octal, and hexadec
 
 To improve readability, you may place underscores in the middle of numeric literals such as `1_000_000`. Note that underscores can be placed anywhere within a number, not just every three digits.
 
-- There is nothing surprising about demical numbers.
+- There is nothing surprising about decimal numbers.
 
 ```
 let a = 1234
@@ -459,13 +459,13 @@ Currently, the following operators can be overloaded:
 
 By default, all function definitions and variable bindings are *invisible* to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`func`/`let` to make them fully visible, or put `priv` before `type` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
 
-- Struct fields cannot be defined as `pub` within a abstract or private struct since it makes no sense.
+- Struct fields cannot be defined as `pub` within an abstract or private struct since it makes no sense.
 - Enum constructors do not have individual visibility so you cannot use `pub` or `priv` before them.
 
 ```go
 struct R1 {       // abstract data type by default
   x: Int          // implicitly private field
-  pub y: Int      // ERROR: `pub` field found in a abstract type!
+  pub y: Int      // ERROR: `pub` field found in an abstract type!
   priv z: Int     // WARNING: `priv` is redundant!
 }
 
