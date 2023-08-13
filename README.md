@@ -403,10 +403,10 @@ func reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
 
 ## Uniform Function Call Syntax
 
-MoonBit supports methods in a different way from traditional object-oriented languages. A method is defined as a top-level function with `self` as the name of its first parameter. The `self` parameter will be the subject of a method call. For example, `l.map(f)` is equivalent to `map(l, f)`. Such syntax enables method chaining rather than heavily nested function calls. For example, we can chain the previously defined `map` and `reduce` together with `from_array` and `output` to perform list operations using the method call syntax.
+MoonBit supports methods in a different way from traditional object-oriented languages. A method is defined as a top-level function with `self` as the name of its first parameter. The `self` parameter will be the subject of a method call. For example, `l.map(f)` is equivalent to `map(l, f)`. Such syntax enables method chaining rather than heavily nested function calls. For example, we can chain the previously defined `map` and `reduce` together with `into_list` and `print` to perform list operations using the method call syntax.
 
 ```go
-func from_array[T](self: array[T]) -> List[T] {
+func into_list[T](self: array[T]) -> List[T] {
   var res: List[T] = Nil
   var i = self.length() - 1
   while (i >= 0) {
@@ -417,11 +417,11 @@ func from_array[T](self: array[T]) -> List[T] {
 }
 
 func init {
-  [1, 2, 3, 4, 5].from_array().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }, 0).print()
+  [1, 2, 3, 4, 5].into_list().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }, 0).print()
 }
 ```
 
-Another difference between a method and a regular function is that overloading is only supported by the method syntax. For example, we have multiple output functions, such as `output_int` and `output_float`, for different types, but using the method `output` the type of the subject can be recognized and the appropriate overloaded version will be selected, such as `1.print()` and `1.0.print()`.
+Another difference between a method and a regular function is that overloading is only supported by the method syntax. For example, we have multiple print functions, such as `print_int` and `print_float`, for different types, but using the method `print` the type of the subject can be recognized and the appropriate overloaded version will be selected, such as `1.print()` and `1.0.print()`.
 
 ## Operator Overloading
 MoonBit supports operator overloading of builtin operators. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
