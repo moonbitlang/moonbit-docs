@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Moonbit Demo</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wasm Demo</title>
     <style>
       /* CSS styles for the result */
       #result {
@@ -11,38 +13,58 @@
         font-weight: bold;
       }
     </style>
-    <script>
-      async function callWasmFunction() {
-        const value = document.getElementById("inputValue").value;
-        const loops = document.getElementById("loopsValue").value;
-        const result = await WebAssembly.instantiateStreaming(          
-          // fetch("assemblyscript.wasm")
-          fetch("moonbit.wasm")
-        );
-
-        const fibjs = result.instance.exports.fib2;
-
-        const inputValue = parseInt(value);
-        const loopsValue = parseInt(loops);
-
-        var startTime = performance.now();
-
-        for (let i = 0; i < loopsValue; i++) {
-          fibjs(inputValue);
-        }
-        var endTime = performance.now();
-        const cost = (endTime - startTime).toFixed(2);
-        const outputValue = fibjs(inputValue);
-        document.getElementById("result").textContent =
-          "Result: " + outputValue + ", cost: " + cost + " milliseconds";
-      }
-    </script>
   </head>
   <body>
-    <h1>Moonbit Demo</h1>
+    <h1>Wasm Demo</h1>
     <input type="number" id="inputValue" placeholder="number" />
     <input type="number" id="loopsValue" placeholder="loops" />
-    <button onclick="callWasmFunction()">Call Wasm Function(fib2)</button>
+    <select name="languages" id="lang-select">
+      <option value="moonbit">MoonBit</option>
+      <option value="assemblyscript">AssemblyScript</option>
+      <option value="golang">Go</option>
+    </select>
+    <button id="run">Call Wasm Function(fib2)</button>
     <div id="result"></div>
+    <script src="wasm_exec.js"></script>
+    <script>
+      const button = document.getElementById('run')
+      button.onclick = async () => {
+        const value = document.getElementById('inputValue').value
+        const loops = document.getElementById('loopsValue').value
+        const language = document.getElementById('lang-select').value
+        const go = new Go()
+
+        const result = await WebAssembly.instantiateStreaming(
+          fetch(`${language}.wasm`),
+          language === 'golang' ? go.importObject : undefined
+        )
+
+        let fibjs
+
+        if (language === 'golang') {
+          go.run(result.instance)
+          fibjs = fib
+        } else {
+          fibjs = result.instance.exports.fib2
+        }
+
+        const inputValue = parseInt(value)
+        const loopsValue = parseInt(loops)
+
+        const startTime = performance.now()
+
+        for (let i = 0; i < loopsValue; i++) {
+          fibjs(inputValue)
+        }
+        const endTime = performance.now()
+        const cost = (endTime - startTime).toFixed(2)
+        const outputValue = fibjs(inputValue)
+        document.getElementById('result').textContent =
+          'Result: ' + outputValue + ', cost: ' + cost + ' milliseconds'
+      }
+      function fib(x) {
+        return window.wasmFib(x)
+      }
+    </script>
   </body>
 </html>

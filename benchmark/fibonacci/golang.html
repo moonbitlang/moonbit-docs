@@ -13,41 +13,41 @@
     </style>
     <script src="wasm_exec.js"></script>
     <script>
-        async function callWasmFunction() {
-      const go = new Go();
-      const value = document.getElementById("inputValue").value;
-      const loops = document.getElementById("loopsValue").value;
-      const inputValue = parseInt(value);
-      const loopsValue = parseInt(loops);
-      
-      WebAssembly.instantiateStreaming(fetch("golang.wasm"), go.importObject)
-        .then((result) => {
-          go.run(result.instance);
-          var startTime = performance.now();
-          for (let i = 0; i < loopsValue; i++) {
-            fib(inputValue);
-          }
-          var endTime = performance.now();          
-          const outputValue = fib(inputValue);
-          const cost = (endTime - startTime).toFixed(2);
-          console.log(cost)        
-          document.getElementById("result").textContent =
-          "Result: " + outputValue + ", cost: " + cost + " milliseconds";          
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
+      async function callWasmFunction() {
+        const go = new Go()
+        const value = document.getElementById('inputValue').value
+        const loops = document.getElementById('loopsValue').value
+        const inputValue = parseInt(value)
+        const loopsValue = parseInt(loops)
+
+        WebAssembly.instantiateStreaming(fetch('golang.wasm'), go.importObject)
+          .then((result) => {
+            go.run(result.instance)
+            var startTime = performance.now()
+            for (let i = 0; i < loopsValue; i++) {
+              fib(inputValue)
+            }
+            var endTime = performance.now()
+            const outputValue = fib(inputValue)
+            const cost = (endTime - startTime).toFixed(2)
+            console.log(cost)
+            document.getElementById('result').textContent =
+              'Result: ' + outputValue + ', cost: ' + cost + ' milliseconds'
+          })
+          .catch((err) => {
+            console.error(err)
+          })
+      }
       const imports = {
         env: {
           log: function (str) {
-            console.log(str);
+            console.log(str)
           },
         },
-      };
+      }
 
       function fib(x) {
-        return window.wasmFib(x);
+        return window.wasmFib(x)
       }
     </script>
   </head>
