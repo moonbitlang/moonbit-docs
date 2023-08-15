@@ -34,18 +34,19 @@ Start a web server with `python3 -m http.server 8080`, and we can now test the b
 
 ### Golang
 
-**CAUTION: Do not use the `wasm_exec.js` in the current folder.**, copy your own from `GOROOT`:
+Install `tinygo` to build wasm: https://tinygo.org/getting-started/install/
+
+**CAUTION: Do not use the `wasm_exec.js` in the current folder.**, copy your own from `TINYGOROOT`:
 
 ```
-cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" $PWD
+cp $(tinygo env TINYGOROOT)/targets/wasm_exec.js .
 ```
 
-Build `golang.wasm`:
+Build `main.wasm` (the compiled wasm code file must be named as `main.wasm`, or there will be error):
 
 ```
-GOOS=js GOARCH=wasm go build -o golang.wasm ./main.go
+tinygo build -o main.wasm -target wasm ./main.go
 ```
-
 
 Start a web server with `python3 -m http.server 8080`, and we can now test the benchmark of GO by browsing http://127.0.0.1:8080/moonbit.html
 

@@ -35,15 +35,17 @@
         const go = new Go()
 
         const result = await WebAssembly.instantiateStreaming(
-          fetch(`${language}.wasm`),
+          fetch(`${language === 'golang' ? 'main' : language}.wasm`),
           language === 'golang' ? go.importObject : undefined
         )
 
         let fibjs
+        let wasm
 
         if (language === 'golang') {
-          go.run(result.instance)
-          fibjs = fib
+          wasm = result.instance
+          go.run(wasm)
+          fibjs = wasm.exports.fib
         } else {
           fibjs = result.instance.exports.fib2
         }
