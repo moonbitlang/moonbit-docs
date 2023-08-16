@@ -67,3 +67,12 @@ asc assemblyscript.ts --outFile assemblyscript.wasm --optimize
 Start a web server with python3 -m http.server 8080, and we can now test the benchmark of AssemblyScript by browsing http://127.0.0.1:8080/
 
 <img width="600" src="imgs/assemblyscript_bench.png">
+
+### Rust
+
+```
+rustup target add wasm32-unknown-unknown
+cd fib-rust
+cargo build --target wasm32-unknown-unknown --release
+mv target/wasm32-unknown-unknown/release/fib-rust.wasm ../rust.wasm
+```
