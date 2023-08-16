@@ -49,21 +49,3 @@ GOOS=js GOARCH=wasm go build -o golang.wasm ./main.go
 Start a web server with `python3 -m http.server 8080`, and we can now test the benchmark of GO by browsing http://127.0.0.1:8080/
 
 <img width="600" src="imgs/golang_bench.png">
-
-### AssemblyScript
-
-Install AssemblyScript by:
-
-```
-npm i assemblyscript
-```
-
-Build `assemblyscript.wasm` by:
-
-```
-asc assemblyscript.ts --outFile assemblyscript.wasm --optimize
-```
-
-Start a web server with python3 -m http.server 8080, and we can now test the benchmark of AssemblyScript by browsing http://127.0.0.1:8080/
-
-<img width="600" src="imgs/assemblyscript_bench.png">
