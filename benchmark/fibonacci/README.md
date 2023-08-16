@@ -22,7 +22,7 @@ pub func fib2(num : Int) -> Int {
 
 Then use [wat2wasm](https://github.com/WebAssembly/wabt) from the WebAssembly Binary Toolkit (WABT) to convert the WebAssembly text format (.wat) to the WebAssembly binary format (.wasm):
 
-```
+``` sh
 wat2wasm target/build/main/main.wat -o moonbit.wasm
 ```
 
@@ -34,18 +34,28 @@ Start a web server with `python3 -m http.server 8080`, and we can now test the b
 
 ### Golang
 
-**CAUTION: Do not use the `wasm_exec.js` in the current folder.**, copy your own from `GOROOT`:
+**CAUTION: Do not use the `wasm_exec.js` in the current folder.** Copy your own from `GOROOT`:
 
-```
+``` sh
 cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" $PWD
 ```
 
 Build `golang.wasm`
 
-```
+``` sh
 GOOS=js GOARCH=wasm go build -o golang.wasm ./main.go
 ```
-
-Start a web server with `python3 -m http.server 8080`, and we can now test the benchmark of GO by browsing http://127.0.0.1:8080/
+Start a web server with `python3 -m http.server 8080`, and we can now test the benchmark of GO by browsing http://127.0.0.1:8080/moonbit.html
 
 <img width="600" src="imgs/golang_bench.png">
+
+### Rust
+
+``` sh
+rustup target add wasm32-unknown-unknown
+cd fib-rust
+cargo build --target wasm32-unknown-unknown --release
+mv target/wasm32-unknown-unknown/release/fib-rust.wasm ../rust.wasm
+```
+
+<img width="600" src="imgs/rust_bench.png">
