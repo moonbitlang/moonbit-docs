@@ -28,27 +28,25 @@ wat2wasm target/build/main/main.wat -o moonbit.wasm
 
 Or you can just use the `moonbit.wasm` in current folder.
 
-Start a web server with `python3 -m http.server 8080`, and we can now test the benchmark of Moonbit by browsing http://127.0.0.1:8080/moonbit.html
+Start a web server with `python3 -m http.server 8080`, and we can now test the benchmark of Moonbit by browsing http://127.0.0.1:8080/
 
 <img width="600" src="imgs/moonbit_bench.png">
 
 ### Golang
 
-Install `tinygo` to build wasm: https://tinygo.org/getting-started/install/
-
-**CAUTION: Do not use the `wasm_exec.js` in the current folder.**, copy your own from `TINYGOROOT`:
+**CAUTION: Do not use the `wasm_exec.js` in the current folder.**, copy your own from `GOROOT`:
 
 ```
-cp $(tinygo env TINYGOROOT)/targets/wasm_exec.js .
+cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" $PWD
 ```
 
-Build `main.wasm` (the compiled wasm code file must be named as `main.wasm`, or there will be error):
+Build `golang.wasm`
 
 ```
-tinygo build -o main.wasm -target wasm ./main.go
+GOOS=js GOARCH=wasm go build -o golang.wasm ./main.go
 ```
 
-Start a web server with `python3 -m http.server 8080`, and we can now test the benchmark of GO by browsing http://127.0.0.1:8080/moonbit.html
+Start a web server with `python3 -m http.server 8080`, and we can now test the benchmark of GO by browsing http://127.0.0.1:8080/
 
 <img width="600" src="imgs/golang_bench.png">
 
@@ -66,6 +64,6 @@ Build `assemblyscript.wasm` by:
 asc assemblyscript.ts --outFile assemblyscript.wasm --optimize
 ```
 
-Start a web server with python3 -m http.server 8080, and we can now test the benchmark of AssemblyScript by browsing http://127.0.0.1:8080/moonbit.html
+Start a web server with python3 -m http.server 8080, and we can now test the benchmark of AssemblyScript by browsing http://127.0.0.1:8080/
 
 <img width="600" src="imgs/assemblyscript_bench.png">

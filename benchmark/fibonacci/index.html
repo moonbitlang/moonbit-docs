@@ -11,6 +11,7 @@
         padding: 10px;
         margin-top: 20px;
         font-weight: bold;
+        white-space: pre-line;
       }
     </style>
   </head>
@@ -21,7 +22,7 @@
     <select name="languages" id="lang-select">
       <option value="moonbit">MoonBit</option>
       <option value="assemblyscript">AssemblyScript</option>
-      <option value="golang">Go(tinygo)</option>
+      <option value="golang">Go</option>
     </select>
     <button id="run">Call Wasm Function(fib2)</button>
     <div id="result"></div>
@@ -32,20 +33,25 @@
         const value = document.getElementById('inputValue').value
         const loops = document.getElementById('loopsValue').value
         const language = document.getElementById('lang-select').value
+        const displayResult = document.getElementById('result')
         const go = new Go()
 
-        const result = await WebAssembly.instantiateStreaming(
-          fetch(`${language === 'golang' ? 'main' : language}.wasm`),
+        const wasm = await fetch(`${language}.wasm`).then((res) =>
+          res.arrayBuffer()
+        )
+        const bytes = wasm.byteLength
+        displayResult.textContent = `wasm size: ${bytes} bytes\n`
+
+        const result = await WebAssembly.instantiate(
+          wasm,
           language === 'golang' ? go.importObject : undefined
         )
 
         let fibjs
-        let wasm
 
         if (language === 'golang') {
-          wasm = result.instance
-          go.run(wasm)
-          fibjs = wasm.exports.fib
+          go.run(result.instance)
+          fibjs = fib
         } else {
           fibjs = result.instance.exports.fib2
         }
@@ -61,7 +67,7 @@
         const endTime = performance.now()
         const cost = (endTime - startTime).toFixed(2)
         const outputValue = fibjs(inputValue)
-        document.getElementById('result').textContent =
+        document.getElementById('result').textContent +=
           'Result: ' + outputValue + ', cost: ' + cost + ' milliseconds'
       }
       function fib(x) {
