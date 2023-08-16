@@ -30,6 +30,7 @@
     <script>
       const button = document.getElementById('run')
       button.onclick = async () => {
+        button.disabled = true
         const value = document.getElementById('inputValue').value
         const loops = document.getElementById('loopsValue').value
         const language = document.getElementById('lang-select').value
@@ -69,6 +70,7 @@
         const outputValue = fibjs(inputValue)
         document.getElementById('result').textContent +=
           'Result: ' + outputValue + ', cost: ' + cost + ' milliseconds'
+        button.disabled = false
       }
       function fib(x) {
         return window.wasmFib(x)
