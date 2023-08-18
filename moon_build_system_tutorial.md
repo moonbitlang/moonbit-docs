@@ -6,6 +6,29 @@ Before you begin with this tutorial, make sure you have installed the following:
 
 1. **MoonBit CLI Tools**: Download it from the <https://www.moonbitlang.com/download/>. This command line tool is needed for creating and managing MoonBit projects.
 
+    Use moon help to view the usage instructions.
+
+    ```bash
+    $ moon help
+    Moonbit's build system
+
+    Usage: moon <COMMAND>
+
+    Commands:
+    build    Build the current package
+    check    Check the current package, but don't build object files
+    run      Run WebAssembly module
+    clean    Remove the target directory
+    new      Create a new moonbit package
+    bench    Generate build matrix for benchmarking
+    fmt      Format moonbit
+    version  Print version info and exit
+    help     Print this message or the help of the given subcommand(s)
+
+    Options:
+    -h, --help  Print help
+    ```
+
 2. **Moonbit Language** plugin in Visual Studio Code: You can install it from the VS Code marketplace. This plugin provides a rich development environment for MoonBit, including functionalities like syntax highlighting, code completion, and more.
 
 Once you have these prerequisites fulfilled, let's start building a new module in MoonBit.
@@ -49,11 +72,13 @@ Here's a brief explanation of the directory structure:
 
 ## Checking Your Project
 
-You can open your project with Visual Studio Code. After you've installed the Moonbit plugin, you can use the `moon check --watch` command in your terminal to automatically check your project.
+You can open your project with Visual Studio Code. After you've installed the MoonBit plugin, you can use the `moon check --watch` command in your terminal to automatically check your project.
 
-```bash
-$ moon check --watch
-```
+![before watch](./imgs/before_watch.png)
+
+After executing `moon check --watch`, VS Code should look like this.
+
+![after watch](./imgs/after_watch.png)
 
 ## Working with Packages
 
