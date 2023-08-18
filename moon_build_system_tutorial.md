@@ -6,7 +6,7 @@ Before you begin with this tutorial, make sure you have installed the following:
 
 1. **MoonBit CLI Tools**: Download it from the <https://www.moonbitlang.com/download/>. This command line tool is needed for creating and managing MoonBit projects.
 
-    Use moon help to view the usage instructions.
+    Use `moon help` to view the usage instructions.
 
     ```bash
     $ moon help
@@ -103,7 +103,7 @@ func init {
 To execute your program, specify the path to the `main` package:
 
 ```bash
-$ moon run main
+$ moon run ./main
 Hello, world!
 ```
 
