@@ -30,6 +30,7 @@ open Parser_util
 %token CONTINUE        "continue"
 %token STRUCT          "struct"
 %token ENUM            "enum"
+%token INTERFACE       "interface"
 %token EQUAL           "="
 
 %token LPAREN          "("
@@ -158,6 +159,7 @@ structure_item:
   | val_header=val_header  "=" expr = expr {}
   | t=fun_header "=" mname=STRING fname=STRING {}
   | t=fun_header body=block_expr {}
+  | pub=ioption("pub") "interface" name=luident "{" methods=list_semis(interface_method_decl) "}" {}
 %inline visibility:
   | /* empty */ {}
   | "priv"      {}
@@ -168,6 +170,14 @@ structure_item:
 type_header: vis=visibility "type" tycon=luident params=optional_type_parameters {}
 struct_header: vis=visibility "struct" tycon=luident params=optional_type_parameters {}
 enum_header: vis=visibility "enum" tycon=luident params=optional_type_parameters {}
+interface_method_decl:
+  fun_binder=fun_binder
+  quantifiers=optional_type_parameters
+  "("
+  param_typs=list_commas(type_)
+  ")"
+  return_type=option("->" t=type_{})
+  {}
 
 luident:
   | i=LIDENT
