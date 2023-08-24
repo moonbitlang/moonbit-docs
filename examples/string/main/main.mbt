@@ -54,6 +54,5 @@ func init {
     Some(v) => v.println()
     None => "Not found".print()
   }
-
   @lib.trim("   abcde   ", ' ').println()
 }
