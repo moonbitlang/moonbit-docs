@@ -288,7 +288,7 @@ simple_expr:
   | name = luident {}
   | name = luident COLON constraints = separated_nonempty_list(PLUS, tvar_constraint) {}
 %inline tvar_constraint:
-  | name=UIDENT {}
+  | qual_ident_ty {}
 %inline var:
   name = qual_ident {}
 
