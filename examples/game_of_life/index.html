@@ -1,0 +1,65 @@
+<html lang="en">
+  <body>
+    <canvas id="canvas"></canvas>
+    <input id="color1" type="color" value="#FFFFFF"/>
+    <input id="color2" type="color" value="#000000"/>
+  </body>
+  <script>
+
+CanvasRenderingContext2D.prototype.setStrokeColor = function(color) {
+  const hexColor = "#" + color.toString(16).padStart(6, "0");
+  this.strokeStyle = hexColor;
+};
+
+CanvasRenderingContext2D.prototype.setFillStyle = function(color) {
+  const hexColor = "#" + color.toString(16).padStart(6, "0");
+  this.fillStyle = hexColor;
+};
+
+const importObject = {
+  canvas: {
+    stroke_rect: (ctx, x, y, width, height) => ctx.strokeRect(x, y, width, height),
+    stroke: (ctx) => ctx.stroke(),
+    move_to: (ctx, x, y) => ctx.moveTo(x, y),
+    line_to: (ctx, x, y) => ctx.lineTo(x, y),
+    begin_path: (ctx) => ctx.beginPath(),
+    fill_rect: (ctx, x, y, width, height) => ctx.fillRect(x, y, width, height),
+    set_stroke_color: (ctx, color) => ctx.setStrokeColor(color),
+    set_fill_style: (ctx, color) => ctx.setFillStyle(color),
+  },
+  spectest: {},
+};
+
+const canvas = document.getElementById("canvas");
+const color1 = document.getElementById("color1");
+const color2 = document.getElementById("color2");
+canvas.height = 385;
+canvas.width = 385;
+
+if (canvas.getContext) {
+  const ctx = canvas.getContext("2d");
+
+  WebAssembly.instantiateStreaming(fetch("target/game_of_life.wasm"), importObject).then(
+    (obj) => {
+      obj.instance.exports._start();
+      const drawGrid = obj.instance.exports["game_of_life/lib::draw_grid"];
+      const drawCell = obj.instance.exports["game_of_life/lib::draw_cell"];
+      const universe_new = obj.instance.exports["game_of_life/lib::new"];
+      const universe_tick = obj.instance.exports["game_of_life/lib::@game_of_life/lib.Universe::tick"];
+      const universe = universe_new();
+      const renderLoop = () => {
+        universe_tick(universe);
+        drawGrid(ctx);
+        let dead = parseInt(color1.value.slice(1), 16);
+        let alive = parseInt(color2.value.slice(1), 16);
+        drawCell(ctx, universe, dead, alive);
+        requestAnimationFrame(renderLoop);
+      }
+      requestAnimationFrame(renderLoop);
+    }
+  )
+}
+
+  </script>
+</html>
+
