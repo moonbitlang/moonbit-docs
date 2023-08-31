@@ -181,7 +181,7 @@ After creating these files, your directory structure should look like this:
 └── moon.mod
 ```
 
-In the `main/main.pkg` file, add the following line:
+In the `main/moon.pkg` file, add the following line:
 
 ```go
 import "hello/lib/fib"
