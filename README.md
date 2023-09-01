@@ -542,3 +542,8 @@ pub func f3(_x: T1) -> T1 { T1::A(0) }
 
 pub let a: T3  // ERROR: public variable has private type `T3`!
 ```
+
+## MoonBit’s build system
+
+The introduction to the build system is available at [MoonBit's Build System Tutorial](https://moonbitlang.com/blog/moon-build-system-tutorial/).
+
