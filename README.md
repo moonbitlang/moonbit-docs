@@ -5,7 +5,7 @@ The IDE environment is available at <https://try.moonbitlang.com> without any in
 
 ## Status
 
-Pre-alpha, experimental. We expect MoonBit to reach beta status next year.
+Alpha, experimental. We expect MoonBit to reach beta status next year(2024).
 
 ## Main advantages
 
