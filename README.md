@@ -543,6 +543,117 @@ pub func f3(_x: T1) -> T1 { T1::A(0) }
 pub let a: T3  // ERROR: public variable has private type `T3`!
 ```
 
+## Interface system
+Moonbit features a structural interface system for overloading/ad-hoc polymorphism.
+Interface can be declared as follows:
+```
+interface I {
+  f(Self, ...) -> ...
+}
+```
+There is no need to implement an interface explicitly.
+Types with the required methods automatically implements an interface.
+For example, the following interface:
+```
+interface Print {
+  print(Self)
+}
+```
+is automatically implemented by builtin types such as `Int` and `String`.
+
+When declaring a generic function/method,
+the type parameters can be annotated with the interface they should implement.
+For example:
+```
+interface Number {
+  op_add(Self, Self) -> Self
+  op_mul(Self, Self) -> Self
+}
+
+func square[N: Number](x: N) -> N {
+  x * x
+}
+```
+Without the `Number` requirement,
+the expression `x * x` in `square` will result in a method/operator not found error.
+Now, the function `square` can be called with any type that implements `Number`, for example:
+```
+func init {
+  square(2).print() // 4
+  square(1.5).print() // 2.25
+  square({ x: 2, y: 3 }).print() // (4, 9)
+}
+
+struct Point {
+  x: Int
+  y: Int
+}
+
+func op_add(self: Point, other: Point) -> Point {
+  { x: self.x + other.x, y: self.y + other.y }
+}
+
+func op_mul(self: Point, other: Point) -> Point {
+  { x: self.x * other.x, y: self.y * other.y }
+}
+
+func print(self: Point) {
+  let x = self.x
+  let y = self.y
+  "(\(x), \(y))".print()
+}
+```
+Moonbit provides the following useful builtin interfaces:
+```
+interface Eq {
+  op_equal(Self, Self) -> Bool
+}
+
+interface Compare {
+  // `0` for equal, `-1` for smaller, `1` for greater
+  op_equal(Self, Self) -> Int
+}
+
+interface Hash {
+  hash(Self) -> Int
+}
+
+interface Show {
+  to_string(Self) -> String
+}
+
+interface Default {
+  Self::default() -> Self
+}
+```
+
+## Methods without a self parameter
+Sometimes it is useful to have methods that do not have a self parameter.
+For example, the builtin `Default` interface describe types with a default value,
+but constructing a default value should not depend on a `self` value.
+So Moonbit provides a special syntax for methods without a `self` parameter:
+```
+func Int::default() -> Int {
+  0
+}
+
+func init {
+  Int::default().print()
+}
+```
+Methods without `self` must be called explicitly with their type name.
+Methods without `self` can be declaraed in interfaces and called with type parameters, for example:
+```
+interface I {
+  Self::one() -> Self
+  op_add(Self, Self) -> Self
+}
+
+func two[X: I]() -> X {
+  X::one() + X::one()
+}
+```
+
 ## MoonBit’s build system
 
 The introduction to the build system is available at [MoonBit's Build System Tutorial](https://moonbitlang.com/blog/moon-build-system-tutorial/).
