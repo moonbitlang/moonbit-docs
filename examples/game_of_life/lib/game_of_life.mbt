@@ -20,7 +20,7 @@ func get_index(self : Universe, row : Int, column : Int) -> Int {
 pub func new() -> Universe {
   let width = 64
   let height = 64
-  let cells : Array[Cell] = array_make(width * height, Dead)
+  let cells : Array[Cell] = Array::make(width * height, Dead)
   var idx = 0
   while idx < width * height {
     if idx % 2 == 0 || idx % 7 == 0 {
@@ -76,7 +76,7 @@ func live_neighbor_count(self : Universe, row : Int, column : Int) -> Int {
 }
 
 pub func tick(self : Universe) {
-  let next : Array[Cell] = array_make(self.width * self.height, Dead)
+  let next : Array[Cell] = Array::make(self.width * self.height, Dead)
   var r = 0
   while r < self.height {
     var c = 0
