@@ -1,6 +1,6 @@
 pub func split(s : String, sep : Char) -> (Array[String], Int) {
   var index = 0
-  var result : Array[String] = array_make(5, "")
+  var result : Array[String] = Array::make(5, "")
   var cur = 0
   let it = iter(s)
   while it.index != it.length {
@@ -10,7 +10,7 @@ pub func split(s : String, sep : Char) -> (Array[String], Int) {
       result.set(cur, sub)
       cur = cur + 1
       if cur >= result.length() {
-        var new_result = array_make(result.length() * 2, "")
+        var new_result = Array::make(result.length() * 2, "")
         var tmp_cur = 0
         while tmp_cur < result.length() {
           new_result.set(tmp_cur, result[tmp_cur])
@@ -123,7 +123,7 @@ pub func contains(s : String, sub : String) -> Bool {
 }
 
 func prefix_function(pattern : String) -> Array[Int] {
-  let result = array_make(pattern.length(), 0)
+  let result = Array::make(pattern.length(), 0)
   var n = pattern.length()
   var i = 1
   while i < n {
@@ -149,7 +149,7 @@ pub func char_at(s : String, pos : Int) -> Option[Char] {
 
 pub func to_char_array(s : String) -> Array[Char] {
   let l = s.length()
-  var array = array_make(l, ' ')
+  var array = Array::make(l, ' ')
   var index = 0
   while index < l {
     array[index] = s.get(index)

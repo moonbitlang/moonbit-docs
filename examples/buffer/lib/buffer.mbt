@@ -5,7 +5,7 @@ pub struct Buffer[T] {
 }
 
 pub func Buffer::new[T : Default](capacity : Int) -> Buffer[T] {
-  { cap: capacity, len: 0, data: array_make(capacity, T::default()) }
+  { cap: capacity, len: 0, data: Array::make(capacity, T::default()) }
 }
 
 pub func capacity[T](self : Buffer[T]) -> Int {
@@ -31,7 +31,7 @@ func expand_size[T : Default](self : Buffer[T]) {
     (self.cap + 1) * 2
   }
   self.cap = new_capacity
-  let new_data = array_make(new_capacity, T::default())
+  let new_data = Array::make(new_capacity, T::default())
   var index = 0
   while index < self.len {
     new_data[index] = self.data[index]
@@ -72,7 +72,7 @@ pub func clear[T : Default](self : Buffer[T]) {
 pub func reset[T : Default](self : Buffer[T], capacity : Int) {
   self.cap = capacity
   self.len = 0
-  self.data = array_make(capacity, T::default())
+  self.data = Array::make(capacity, T::default())
 }
 
 pub func println[T : Show](self : Buffer[T]) {
