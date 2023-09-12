@@ -656,5 +656,5 @@ func two[X: I]() -> X {
 
 ## MoonBit’s build system
 
-The introduction to the build system is available at [MoonBit's Build System Tutorial](https://moonbitlang.com/blog/moon-build-system-tutorial/).
+The introduction to the build system is available at [MoonBit's Build System Tutorial](https://www.moonbitlang.com/docs/build-system-tutorial/).
 
