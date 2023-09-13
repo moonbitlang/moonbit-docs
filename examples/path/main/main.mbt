@@ -1,8 +1,3 @@
-func println(self : String) {
-  self.print()
-  '\n'.print()
-}
-
 func init {
   // Posix
   let posix_path = @lib.Path::new(
@@ -11,32 +6,32 @@ func init {
     @lib.FileType::File,
   )
   if posix_path.is_absolute() {
-    "is absolute".println()
+    println("is absolute")
   }
-  posix_path.parent().println() // /tmp/abc/f/
+  println(posix_path.parent()) // /tmp/abc/f/
   match posix_path.file_name() {
     Some(v) =>
-      v.println() // d
+      println(v) // d
     None => ()
   }
   posix_path.append("def")
-  posix_path.to_string().println() // /tmp/abc/f/d/def
+  println(posix_path.to_string()) // /tmp/abc/f/d/def
   let rel_posix_path = @lib.Path::new(
     "./abc/de/f",
     @lib.Platform::Posix,
     @lib.FileType::File,
   )
   if rel_posix_path.is_relative() {
-    "is relative".println()
+    println("is relative")
   }
-  rel_posix_path.parent().println() // ./abc/de/
+  println(rel_posix_path.parent()) // ./abc/de/
   match rel_posix_path.file_name() {
     Some(v) =>
-      v.println() // f
+      println(v) // f
     None => ()
   }
   rel_posix_path.append("hello")
-  rel_posix_path.to_string().println() // ./abc/de/f/hello
+  println(rel_posix_path.to_string()) // ./abc/de/f/hello
   // windows
   let win_path = @lib.Path::new(
     "C:\\bc\\de",
@@ -44,11 +39,11 @@ func init {
     @lib.FileType::File,
   )
   if win_path.is_absolute() {
-    "is absolute".println()
+    println("is absolute")
   }
   match win_path.file_name() {
     Some(v) =>
-      v.println() // de
+      println(v) // de
     None => ()
   }
 }

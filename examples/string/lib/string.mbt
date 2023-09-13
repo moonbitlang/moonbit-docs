@@ -4,13 +4,19 @@ pub func split(s : String, sep : Char) -> (Array[String], Int) {
   var cur = 0
   let it = iter(s)
   while it.index != it.length {
-    let Some(c) = it.next()
+    let c = match it.next() {
+      Some(c) => c
+      None => {return (result, cur)}
+    }
     if c == sep {
-      let Some(sub) = sub_string(s, index, it.index - 1)
+      let sub = match sub_string(s, index, it.index - 1) {
+        Some(sub) => sub
+        None => {return (result, cur)}
+      }
       result.set(cur, sub)
       cur = cur + 1
       if cur >= result.length() {
-        var new_result = Array::make(result.length() * 2, "")
+        let new_result = Array::make(result.length() * 2, "")
         var tmp_cur = 0
         while tmp_cur < result.length() {
           new_result.set(tmp_cur, result[tmp_cur])
@@ -21,7 +27,10 @@ pub func split(s : String, sep : Char) -> (Array[String], Int) {
       index = it.index
     }
   }
-  let Some(sub) = sub_string(s, index, it.length)
+  let sub = match sub_string(s, index, it.length) {
+    Some(sub) => sub
+    None => {return (result, cur)}
+  }
   result.set(cur, sub)
   (result, cur)
 }
@@ -33,7 +42,10 @@ pub func sub_string(s : String, start : Int, end : Int) -> Option[String] {
   let it = iter(s)
   var result : String = ""
   while it.index != it.length {
-    let Some(c) = it.next()
+    let c = match it.next() {
+      Some(c) => c
+      None => {return None}
+    }
     if it.index - 1 >= start && it.index - 1 < end {
       result = result + c.to_string()
     }
@@ -52,8 +64,10 @@ pub func trim(s : String, removed : Char) -> String {
     end = end - 1
   }
   if start <= end {
-    let Some(r) = sub_string(s, start, end + 1)
-    return r
+    match sub_string(s, start, end + 1) {
+      Some(sub) => {return sub}
+      None => {return s}
+    }
   }
   s
 }
@@ -124,7 +138,7 @@ pub func contains(s : String, sub : String) -> Bool {
 
 func prefix_function(pattern : String) -> Array[Int] {
   let result = Array::make(pattern.length(), 0)
-  var n = pattern.length()
+  let n = pattern.length()
   var i = 1
   while i < n {
     var j = result[i - 1]
@@ -149,7 +163,7 @@ pub func char_at(s : String, pos : Int) -> Option[Char] {
 
 pub func to_char_array(s : String) -> Array[Char] {
   let l = s.length()
-  var array = Array::make(l, ' ')
+  let array = Array::make(l, ' ')
   var index = 0
   while index < l {
     array[index] = s.get(index)
