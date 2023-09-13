@@ -1,4 +1,4 @@
 func init {
-  assert_eq(1, 2) // abort
+  @lib.assert_eq(1, 2) // abort
 }
 
