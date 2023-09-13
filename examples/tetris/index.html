@@ -1,0 +1,128 @@
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+    </div>
+    <canvas id="canvas"></canvas>
+    <div class="information">
+      <div id="score">score: 0</div>
+      <div>
+        <p>up: rotate</p>
+        <p>left: move left</p>
+        <p>right: move right</p>
+        <p>down: speed up</p>
+      </div>
+    </div>
+  </body>
+  <script>
+
+const canvas = document.getElementById("canvas")
+const context = canvas.getContext("2d")
+// canvas: 240*480px
+// grid: 10*20
+const WIDTH = 240
+const HEIGHT = 2*WIDTH
+
+canvas.width = WIDTH
+canvas.height = HEIGHT
+
+context.scale(24, 24)
+const GRID_COL = WIDTH/24
+const GRID_ROW = HEIGHT/24
+
+const colors = [
+  "#021c2d",
+  "#00263f",
+  "#ffb900",
+  "#2753f1",
+  "#f7ff00",
+  "#ff6728",
+  "#11c5bf",
+  "#ae81ff",
+  "#e94659",
+]
+
+let requestAnimationFrameId = null
+let lastTime = 0
+let dropCounter = 0
+let dropInterval = 1000
+const scoreDom = document.getElementById("score")
+window.addEventListener("keydown", (e) => {
+  if (!requestAnimationFrameId) return
+  switch (e.key) {
+    case "ArrowLeft": {
+        tetris_step(tetris, 1)
+        break
+    }
+    case "ArrowRight": {
+        tetris_step(tetris, 2)
+        break
+    }
+    case "ArrowDown": {
+        tetris_step(tetris, 4)
+        break
+    }
+    case "ArrowUp": {
+        tetris_step(tetris, 3)
+        break
+    }
+  }
+})
+let tetris_draw = null;
+let tetris_new = null;
+let tetris_step = null;
+let tetris_score = null;
+let tetris = null;
+
+const importObject = {
+  canvas: {
+    stroke_rect: (ctx, x, y, width, height) => ctx.strokeRect(x, y, width, height),
+    stroke: (ctx) => ctx.stroke(),
+    set_line_width: (ctx, width) => ctx.lineWidth = width,
+    fill_rect: (ctx, x, y, width, height) => ctx.fillRect(x, y, width, height),
+    set_stroke_color: (ctx, color) => ctx.strokeStyle = colors[color],
+    set_fill_style: (ctx, color) => ctx.fillStyle = colors[color],
+    draw_game_over: (ctx) => {
+      ctx.fillStyle = "#000000"
+      ctx.fillRect(0, GRID_ROW/2 - 1.5, GRID_COL, 3);
+      ctx.font = "1px sans-serif";
+      ctx.fillStyle = "red";
+      ctx.textAlign = "center";
+      ctx.fillText("GAME OVER", GRID_COL/2, GRID_ROW/2, GRID_COL*0.7);
+    },
+  },
+  spectest: {
+      print_i32: (x) => console.log(String(x)),
+      print_f64: (x) => console.log(String(x)),
+      print_char: (x) => console.log(String.fromCharCode(x)),
+    }
+};
+
+function update(time = 0) {
+  const deltaTime = time - lastTime
+  dropCounter += deltaTime
+  if (dropCounter > dropInterval) {
+    tetris_step(tetris, 0);
+    scoreDom.innerHTML = "score: " + tetris_score(tetris)
+    dropCounter = 0
+  }
+  lastTime = time
+  tetris_draw(context, tetris);
+  requestAnimationFrameId = requestAnimationFrame(update)
+}
+
+WebAssembly.instantiateStreaming(fetch("target/tetris.wasm"), importObject).then(
+    (obj) => {
+      obj.instance.exports._start();
+      tetris_draw = obj.instance.exports["tetris/lib::draw"];
+      tetris_new = obj.instance.exports["tetris/lib::new"];
+      tetris_step = obj.instance.exports["tetris/lib::step"];
+      tetris_score = obj.instance.exports["tetris/lib::get_score"]
+      tetris = tetris_new();
+      requestAnimationFrameId = requestAnimationFrame(update);
+    }
+  )
+  </script>
+</html>
