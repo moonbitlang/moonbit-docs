@@ -23,7 +23,7 @@ A MoonBit program consists of type definitions, function definitions, and variab
 
 ```go
 func init {
-  "Hello world!".print() // OK
+  print("Hello world!") // OK
 }
 
 func init {
@@ -216,7 +216,7 @@ String interpolation is a powerful feature in MoonBit that enables you to substi
 
 ```swift
 x := 42
-"The answer is \(x)".print()
+print("The answer is \(x)")
 ```
 
 Variables used for string interpolation must support the `to_string` method.
@@ -244,9 +244,9 @@ func f(t : (Int, Int)) {
   let x2 = t.0
   let y2 = t.1
   if (x1 == x2 && y1 == y2) {
-    "yes".print()
+    print("yes")
   } else {
-    "no".print()
+    print("no")
   }
 }
 
@@ -270,7 +270,7 @@ let array = [1, 2, 3, 4]
 let a = array[2]
 array[3] = 5
 let b = a + array[3]
-b.print() // prints 8
+print(b) // prints 8
 ```
 
 ## Variable Binding
@@ -283,7 +283,7 @@ let zero = 0
 func init {
   var i = 10
   i = 20
-  (i + zero).print()
+  print(i + zero)
 }
 ```
 There is a short-hand syntax sugar for local immutable bindings, e.g, using `:=`.
@@ -312,7 +312,7 @@ struct User {
 func init {
   let u = { id: 0, name: "John Doe", email: "john@doe.com" }
   u.email = "john@doe.name"
-  u.email.print()
+  print(u.email)
 }
 ```
 
@@ -336,13 +336,13 @@ enum List {
   Cons (Int, List)
 }
 
-func print(l: List) {
+func print_list(l: List) {
   match l {
-    Nil => "nil".print()
+    Nil => print("nil")
     Cons(x, xs) => {
-      x.print(); 
-      ",".print(); 
-      print(xs)
+      print(x); 
+      print(","); 
+      print_list(xs)
     }
   }
 }
@@ -350,7 +350,7 @@ func print(l: List) {
 
 func init {
   let l: List = Cons(1, Cons(2, Nil))
-  print(l)
+  print_list(l)
 }
 ```
 
@@ -403,10 +403,10 @@ func reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
 
 ## Uniform Function Call Syntax
 
-MoonBit supports methods in a different way from traditional object-oriented languages. A method is defined as a top-level function with `self` as the name of its first parameter. The `self` parameter will be the subject of a method call. For example, `l.map(f)` is equivalent to `map(l, f)`. Such syntax enables method chaining rather than heavily nested function calls. For example, we can chain the previously defined `map` and `reduce` together with `into_list` and `print` to perform list operations using the method call syntax.
+MoonBit supports methods in a different way from traditional object-oriented languages. A method is defined as a top-level function with `self` as the name of its first parameter. The `self` parameter will be the subject of a method call. For example, `l.map(f)` is equivalent to `map(l, f)`. Such syntax enables method chaining rather than heavily nested function calls. For example, we can chain the previously defined `map` and `reduce` together with `into_list` to perform list operations using the method call syntax.
 
 ```go
-func into_list[T](self: array[T]) -> List[T] {
+func into_list[T](self: Array[T]) -> List[T] {
   var res: List[T] = Nil
   var i = self.length() - 1
   while (i >= 0) {
@@ -417,11 +417,9 @@ func into_list[T](self: array[T]) -> List[T] {
 }
 
 func init {
-  [1, 2, 3, 4, 5].into_list().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }, 0).print()
+  print([1, 2, 3, 4, 5].into_list().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }, 0))
 }
 ```
-
-Another difference between a method and a regular function is that overloading is only supported by the method syntax. For example, we have multiple print functions, such as `print_int` and `print_float`, for different types, but using the method `print` the type of the subject can be recognized and the appropriate overloaded version will be selected, such as `1.print()` and `1.0.print()`.
 
 ## Operator Overloading
 MoonBit supports operator overloading of builtin operators. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
@@ -438,7 +436,7 @@ func op_add(self: T, other: T) -> T {
 func init {
   let a = { x:0, }
   let b = { x:2, }
-  (a + b).x.print()
+  print((a + b).x)
 }
 ```
 
@@ -514,9 +512,9 @@ func init {
 
 // Package B
 func print(r : RO) {
-  "{ field: ".print()
-  r.field.print()  // OK
-  " }".print()
+  print("{ field: ")
+  print(r.field)  // OK
+  print(" }")
 }
 func init {
   let r : RO = { field: 4 }  // ERROR: Cannot create values of the public read-only type RO!
