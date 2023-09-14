@@ -8,7 +8,7 @@ Before you begin with this tutorial, make sure you have installed the following:
 
     Use `moon help` to view the usage instructions.
 
-    ```bash
+    ```
     $ moon help
     Moonbit's build system
 
@@ -60,9 +60,9 @@ After creating the new module, your directory structure should resemble the foll
 
 Here's a brief explanation of the directory structure:
 
-- `lib` and `main` directories: These are packages in the module. Each package can contain multiple `.mbt` files, which are the source code files in MoonBit language. However, regardless of the number of .mbt files in a package, they all share a common moon.pkg file.
+- `lib` and `main` directories: These are packages in the module. Each package can contain multiple `.mbt` files, which are the source code files in MoonBit language. However, regardless of the number of `.mbt` files in a package, they all share a common `moon.pkg` file.
 
-- `*.pkg` files: These are package descriptor files. They define the properties of the package, such as its name and the packages it imports.
+- `moon.pkg` is package descriptor. It defines the properties of the package, such as its name, and the packages it imports.
 
 - `moon.mod` is used to identify a directory as a MoonBit module. It contains the module's name:
 
