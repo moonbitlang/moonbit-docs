@@ -553,11 +553,11 @@ There is no need to implement an interface explicitly.
 Types with the required methods automatically implements an interface.
 For example, the following interface:
 ```
-interface Print {
-  print(Self)
+interface Show {
+  to_string(Self) -> String
 }
 ```
-is automatically implemented by builtin types such as `Int` and `String`.
+is automatically implemented by builtin types such as `Int` and `Float`.
 
 When declaring a generic function/method,
 the type parameters can be annotated with the interface they should implement.
@@ -577,9 +577,9 @@ the expression `x * x` in `square` will result in a method/operator not found er
 Now, the function `square` can be called with any type that implements `Number`, for example:
 ```
 func init {
-  square(2).print() // 4
-  square(1.5).print() // 2.25
-  square({ x: 2, y: 3 }).print() // (4, 9)
+  print(square(2)) // 4
+  print(square(1.5)) // 2.25
+  print(square({ x: 2, y: 3 })) // (4, 9)
 }
 
 struct Point {
@@ -595,10 +595,10 @@ func op_mul(self: Point, other: Point) -> Point {
   { x: self.x * other.x, y: self.y * other.y }
 }
 
-func print(self: Point) {
+func to_string(self: Point) -> String {
   let x = self.x
   let y = self.y
-  "(\(x), \(y))".print()
+  "(\(x), \(y))"
 }
 ```
 Moonbit provides the following useful builtin interfaces:
@@ -636,7 +636,7 @@ func Int::default() -> Int {
 }
 
 func init {
-  Int::default().print()
+  print(Int::default())
 }
 ```
 Methods without `self` must be called explicitly with their type name.
