@@ -1,0 +1,73 @@
+<html>
+<body>
+  <canvas id="canvas"></canvas>
+  <input type="number" id="x" value="-0.7"/>
+  <input type="number" id="y" value="0.0"/>
+  <input type="number" id="width" value="3.0769"/>
+  <button type="button" id="button">calculate</button>
+</body>
+<script>
+  const spectest = {
+    imagedata: {
+      set: (img, x, rgb) => set_image_data(imagedata, x, rgb)
+    },
+    math: {
+      log: (x) => Math.log(x),
+      floor: (x) => Math.floor(x),
+      float_of_int: (x) => x,
+    },
+    spectest: {
+      print_i32: (x) => console.log(String(x)),
+      print_f64: (x) => console.log(String(x)),
+      print_char: (x) => console.log(String.fromCharCode(x)),
+    },
+  };
+
+  function set_image_data(imagedata, x, rgb) {
+    imagedata.data[x] = rgb;
+  }
+
+  let canvas = document.getElementById("canvas");
+  let ox = document.getElementById("x");
+  let oy = document.getElementById("y");
+  let width = document.getElementById("width");
+  let button = document.getElementById("button");
+  var context = canvas.getContext("2d");
+  var IMAGEWIDTH = 800;
+  var IMAGEHEIGHT = 600;
+  canvas.width = IMAGEWIDTH;
+  canvas.height = IMAGEHEIGHT;
+  var imagedata = context.createImageData(IMAGEWIDTH, IMAGEHEIGHT);
+
+  WebAssembly.instantiateStreaming(fetch("target/mandelbrot.wasm"), spectest).then(
+    (obj) => {
+      obj.instance.exports._start();
+      const calcColor = obj.instance.exports["mandelbrot/lib::calc_color"];
+      const drawColor = obj.instance.exports["mandelbrot/lib::draw_color"];
+
+      function saveImage() {
+        context.putImageData(imagedata, 0, 0);
+      }
+
+      function generateImage() {
+        for (row = 0; row < IMAGEHEIGHT; row++) {
+          for (col = 0; col < IMAGEWIDTH; col++) {
+            let x = +ox.value;
+            let y = +oy.value;
+            let w = +width.value;
+            var color = calcColor(col, row, x, y, w);
+            drawColor(imagedata, col, row, color);
+          }
+        }
+
+        saveImage();
+      }
+
+      generateImage();
+      button.onclick = function() {
+        generateImage();
+      }
+    }
+  )
+</script>
+</html>
