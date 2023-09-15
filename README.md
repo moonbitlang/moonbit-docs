@@ -9,7 +9,7 @@ Alpha, experimental. We expect MoonBit to reach beta status next year(2024).
 
 ## Main advantages
 
-- Generate significantly smaller WASM output than any existing solutions. 
+- Generate significantly smaller WASM output than any existing solutions.
 - Much faster runtime performance.
 - State of the art compile-time performance.
 - Simple but practical, data-oriented language design.
@@ -21,20 +21,21 @@ A MoonBit program consists of type definitions, function definitions, and variab
 1. There can be multiple `init` functions in the same package.
 2. An `init` function can't be explicitly called or referred to by other functions. Instead, all `init` functions will be implicitly called when initializing a package. Therefore, `init` functions should only consist of statements.
 
-```go
+```go live
 func init {
   print("Hello world!") // OK
 }
 
 func init {
   let x = 1
-  x // fail
+  // x // fail
+  print(x) // success
 }
 ```
 
 MoonBit distinguishes between statements and expressions. In a function body, only the last clause should be an expression, which serves as a return value. For example:
 
-```go
+```go live
 func foo() -> Int {
   let x = 1
   x + 1 // OK
@@ -44,6 +45,11 @@ func foo() -> Int {
   let x = 1
   x + 1 // fail
   x + 2
+}
+
+func init {
+  print(foo())
+  print(bar())
 }
 ```
 
@@ -69,7 +75,7 @@ Statements include:
 
 ## Functions
 
-Functions take arguments and produce a result. In MoonBit, functions are first-class, which means that functions can be arguments or return values of other functions. 
+Functions take arguments and produce a result. In MoonBit, functions are first-class, which means that functions can be arguments or return values of other functions.
 
 ### Top-Level Functions
 
@@ -87,20 +93,30 @@ Note that the arguments and return value of top-level functions require explicit
 
 Local functions are defined using the `fn` keyword. Local functions can be named or anonymous. Type annotations can be omitted for local function definitions: they can be automatically inferred in most cases. For example:
 
-```go
+```go live
 func foo() -> Int {
   fn inc(x) { x + 1 }  // named as `inc`
   fn (x) { x + inc(2) } (6) // anonymous, instantly applied to integer literal 6
+}
+
+func init {
+  print(foo())
 }
 ```
 
 Functions, whether named or anonymous, are *lexical closures*: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
 
-```go
-let x = 3
+```go live
+let y = 3
 func foo(x: Int) {
   fn inc()  { x + 1 } // OK, will return x + 1
-  fn fail() { y + 1 } // fail: The value identifier y is unbound.
+  fn four() { y + 1 } // Ok, will return 4
+  print(inc())
+  print(four())
+}
+
+func init {
+  foo(2)
 }
 ```
 
@@ -114,17 +130,21 @@ add3(1, 2, 7)
 
 This works whether `add3` is a function defined with a name (as in the previous example), or a variable bound to a function value, as shown below:
 
-```go
-var add3 = fn(x, y, z) { x + y + z }
-add3(1, 2, 7)
+```go live
+func init {
+  let add3 = fn(x, y, z) { x + y + z }
+  print(add3(1, 2, 7))
+}
 ```
 
 The expression `add3(1, 2, 7)` returns `10`. Any expression that evaluates to a function value is applicable:
 
-```go
-let f = fn (x) { x + 1 }
-let g = fn (x) { x + 2 }
-(if true { f } else { g }) (3) // OK
+```go live
+func init {
+  let f = fn (x) { x + 1 }
+  let g = fn (x) { x + 2 }
+  print((if true { f } else { g })(3)) // OK
+}
 ```
 
 ## Control Structures
@@ -214,9 +234,11 @@ let another_hex = 0xA
 
 String interpolation is a powerful feature in MoonBit that enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text.
 
-```swift
-x := 42
-print("The answer is \(x)")
+```swift live
+func init {
+  x := 42
+  print("The answer is \(x)")
+}
 ```
 
 Variables used for string interpolation must support the `to_string` method.
@@ -225,7 +247,7 @@ Variables used for string interpolation must support the `to_string` method.
 
 A tuple is a collection of finite values constructed using round brackets `()` with the elements separated by commas `,`. The order of elements matters; for example, `(1,true)` and `(true,1)` have different types. Here's an example:
 
-```go
+```go live
 func pack(a: Bool, b: Int, c: String, d: Float) -> (Bool, Int, String, Float) {
     (a, b, c, d)
 }
@@ -237,7 +259,7 @@ func init {
 
 Tuples can be accessed via pattern matching or index:
 
-```go
+```go live
 func f(t : (Int, Int)) {
   let (x1, y1) = t // access via pattern matching
   // access via index
@@ -265,19 +287,21 @@ let array = [1, 2, 3, 4]
 
 You can use `array[x]` to refer to the xth element. The index starts from zero.
 
-```go
-let array = [1, 2, 3, 4]
-let a = array[2]
-array[3] = 5
-let b = a + array[3]
-print(b) // prints 8
+```go live
+func init {
+  let array = [1, 2, 3, 4]
+  let a = array[2]
+  array[3] = 5
+  let b = a + array[3]
+  print(b) // prints 8
+}
 ```
 
 ## Variable Binding
 
 A variable can be declared as mutable or immutable using the keywords `var` or `let`, respectively. A mutable variable can be reassigned to a new value, while an immutable one cannot.
 
-```go
+```go live
 let zero = 0
 
 func init {
@@ -289,9 +313,11 @@ func init {
 There is a short-hand syntax sugar for local immutable bindings, e.g, using `:=`.
 
 ```go
-func test () {
-  a := 3 
+func init {
+  a := 3
   b := "hello"
+  print(a)
+  print(b)
 }
 ```
 ## Data Types
@@ -302,7 +328,7 @@ There are two ways to create new data types: `struct` and `enum`.
 
 In MoonBit, structs are similar to tuples, but their fields are indexed by field names. A struct can be constructed using a struct literal, which is composed of a set of labeled values and delimited with curly brackets. The type of a struct literal can be automatically inferred if its fields exactly match the type definition. A field can be accessed using the dot syntax `s.f`. If a field is marked as mutable using the keyword `mut`, it can be assigned a new value.
 
-```go
+```go live
 struct User {
   id: Int
   name: String
@@ -312,6 +338,8 @@ struct User {
 func init {
   let u = { id: 0, name: "John Doe", email: "john@doe.com" }
   u.email = "john@doe.name"
+  print(u.id)
+  print(u.name)
   print(u.email)
 }
 ```
@@ -319,7 +347,7 @@ func init {
 Note that you can also include methods associated with your record type, for example:
 
 ```go
-struct Stack { 
+struct Stack {
   mut elems: List[Int]
   push: (Int) -> Unit
   pop: () -> Int
@@ -330,7 +358,7 @@ struct Stack {
 
 Enum types are similar to algebraic data types in functional languages. An enum can have a set of cases. Additionally, every case can specify associated values of different types, similar to a tuple. The label for every case must be capitalized, which is called a data constructor. An enum can be constructed by calling a data constructor with arguments of specified types. The construction of an enum must be annotated with a type. An enum can be destructed by pattern matching, and the associated values can be bound to variables that are specified in each pattern.
 
-```go
+```go live
 enum List {
   Nil
   Cons (Int, List)
@@ -340,13 +368,12 @@ func print_list(l: List) {
   match l {
     Nil => print("nil")
     Cons(x, xs) => {
-      print(x); 
-      print(","); 
+      print(x)
+      print(",")
       print_list(xs)
     }
   }
 }
-
 
 func init {
   let l: List = Cons(1, Cons(2, Nil))
@@ -405,7 +432,21 @@ func reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
 
 MoonBit supports methods in a different way from traditional object-oriented languages. A method is defined as a top-level function with `self` as the name of its first parameter. The `self` parameter will be the subject of a method call. For example, `l.map(f)` is equivalent to `map(l, f)`. Such syntax enables method chaining rather than heavily nested function calls. For example, we can chain the previously defined `map` and `reduce` together with `into_list` to perform list operations using the method call syntax.
 
-```go
+```go live
+func map[S, T](self: List[S], f: (S) -> T) -> List[T] {
+  match self {
+    Nil => Nil
+    Cons(x, xs) => Cons(f(x), map(xs, f))
+  }
+}
+
+func reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
+  match self {
+    Nil => init
+    Cons(x, xs) => reduce(xs, op, op(init, x))
+  }
+}
+
 func into_list[T](self: Array[T]) -> List[T] {
   var res: List[T] = Nil
   var i = self.length() - 1
@@ -424,7 +465,7 @@ func init {
 ## Operator Overloading
 MoonBit supports operator overloading of builtin operators. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
 
-```go
+```go live
 struct T {
   x:Int
 }
@@ -442,16 +483,16 @@ func init {
 
 Currently, the following operators can be overloaded:
 
-|operator name|method name|
-|---|---|
-|`+`|`op_add`|
-|`-`|`op_sub`|
-|`*`|`op_mul`|
-|`/`|`op_div`|
-|`%`|`op_mod`|
-|`-`(unary)|`op_neg`|
-|`_[_]`(get item)|`op_get`|
-|`_[_] = _`(set item)|`op_set`|
+| operator name        | method name |
+| -------------------- | ----------- |
+| `+`                  | `op_add`    |
+| `-`                  | `op_sub`    |
+| `*`                  | `op_mul`    |
+| `/`                  | `op_div`    |
+| `%`                  | `op_mod`    |
+| `-`(unary)           | `op_neg`    |
+| `_[_]`(get item)     | `op_get`    |
+| `_[_] = _`(set item) | `op_set`    |
 
 ## Access Control
 
@@ -544,25 +585,30 @@ pub let a: T3  // ERROR: public variable has private type `T3`!
 ## Interface system
 Moonbit features a structural interface system for overloading/ad-hoc polymorphism.
 Interface can be declared as follows:
-```
+
+```go
 interface I {
   f(Self, ...) -> ...
 }
 ```
+
 There is no need to implement an interface explicitly.
 Types with the required methods automatically implements an interface.
 For example, the following interface:
-```
+
+```go
 interface Show {
   to_string(Self) -> String
 }
 ```
+
 is automatically implemented by builtin types such as `Int` and `Float`.
 
 When declaring a generic function/method,
 the type parameters can be annotated with the interface they should implement.
 For example:
-```
+
+```go
 interface Number {
   op_add(Self, Self) -> Self
   op_mul(Self, Self) -> Self
@@ -572,10 +618,12 @@ func square[N: Number](x: N) -> N {
   x * x
 }
 ```
+
 Without the `Number` requirement,
 the expression `x * x` in `square` will result in a method/operator not found error.
 Now, the function `square` can be called with any type that implements `Number`, for example:
-```
+
+```go live
 func init {
   print(square(2)) // 4
   print(square(1.5)) // 2.25
@@ -601,8 +649,10 @@ func to_string(self: Point) -> String {
   "(\(x), \(y))"
 }
 ```
+
 Moonbit provides the following useful builtin interfaces:
-```
+
+```go
 interface Eq {
   op_equal(Self, Self) -> Bool
 }
@@ -630,7 +680,8 @@ Sometimes it is useful to have methods that do not have a self parameter.
 For example, the builtin `Default` interface describe types with a default value,
 but constructing a default value should not depend on a `self` value.
 So Moonbit provides a special syntax for methods without a `self` parameter:
-```
+
+```go live
 func Int::default() -> Int {
   0
 }
@@ -639,9 +690,11 @@ func init {
   print(Int::default())
 }
 ```
+
 Methods without `self` must be called explicitly with their type name.
 Methods without `self` can be declaraed in interfaces and called with type parameters, for example:
-```
+
+```go
 interface I {
   Self::one() -> Self
   op_add(Self, Self) -> Self
