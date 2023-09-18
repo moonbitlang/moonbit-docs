@@ -41,7 +41,7 @@ func foo() -> Int {
   x + 1 // OK
 }
 
-func foo() -> Int {
+func bar() -> Int {
   let x = 1
   x + 1 // fail
   x + 2
