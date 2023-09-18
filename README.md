@@ -204,6 +204,7 @@ To improve readability, you may place underscores in the middle of numeric liter
 ```
 let a = 1234
 let b = 1_000_000 + a
+let large_num = 9_223_372_036_854_775_807L // Integers of the Int64 type must have an 'L' as a suffix
 ```
 
 - A binary number has a leading zero followed by a letter "B", i.e. `0b`/`0B`.
