@@ -77,16 +77,15 @@ pub func reset[T : Default](self : Buffer[T], capacity : Int) {
 
 pub func println[T : Show](self : Buffer[T]) {
   var index = 0
-  '['.print()
+  print('[')
   while index < self.len {
-    self.data[index].to_string().print()
+    print(self.data[index].to_string())
     index = index + 1
     if index < self.len {
-      ','.print()
+      print(',')
     }
   }
-  ']'.print()
-  '\n'.print()
+  println(']')  
 }
 
 func init {

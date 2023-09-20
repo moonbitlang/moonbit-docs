@@ -1,5 +1,5 @@
 func 😀(self : Int) {
-  self.print()
+  println(self)
 }
 
 pub enum 😆😆 {
@@ -10,12 +10,10 @@ pub enum 😆😆 {
 func init {
   🤣 := 3
   🤣.😀()
-
-  "\n".print()
-
+  
   let 😆 = 😆😆::A
   match 😆 {
-    A => "A".print()
-    B => "B".print()
+    A => print("A")
+    B => print("B")
   }
 }

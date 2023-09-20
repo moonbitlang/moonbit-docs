@@ -4,10 +4,10 @@ func init {
   let a = @lib.is_palindrome(test1)
   let b = @lib.is_palindrome(test2)
   if a {
-    test1.print() // not print
+    print(test1) // not print
   }
   if b {
-    test2.print() // print "aba"
+    print(test2) // print "aba"
   }
 }
 
