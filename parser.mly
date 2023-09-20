@@ -324,6 +324,8 @@ simple_pattern:
   | CHAR {}
   | INT {}
   | FLOAT {}
+  | "-" INT {}
+  | "-" FLOAT {}
   | STRING {}
   | UNDERSCORE {}
   | b=binder  {}
