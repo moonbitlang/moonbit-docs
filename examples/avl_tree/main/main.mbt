@@ -10,7 +10,7 @@ func init {
   }
 
   let height = v.height()
-  "height of the tree: \(height)".print()
+  println("height of the tree: \(height)")
 
   v.print_tree()
 
@@ -18,7 +18,7 @@ func init {
   var j = 0
   while j < iter {
     if not(v.mem(j)) {
-      "impossible".print()
+      println("impossible")
     }
     j = j + 1
   }
@@ -28,14 +28,12 @@ func init {
   while k < iter {
     v = v.remove(k)
     k = k + 1
-  }
-
-  "\n".print()
+  }  
 
   // Tree is empty, removal successful
   match v {
-    Empty => "success".print()
-    Node(_) => "impossible".print()
+    Empty => print("success")
+    Node(_) => print("impossible")
   }
 }
 

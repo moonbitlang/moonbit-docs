@@ -1,7 +1,7 @@
 func init {
-  println(@lib.pi)
+  print_float(@lib.pi)
   println(@lib.max(4, 2)) // 4
-  println(@lib.min(1.2, 1.21)) // 1.2
+  print_float(@lib.min(1.2, 1.21)) // 1.2
   println(@lib.int_max) // 2147483647
   println(@lib.int_min) // -2147483648
   // 214_748
