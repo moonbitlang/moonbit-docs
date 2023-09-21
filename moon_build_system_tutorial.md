@@ -96,7 +96,7 @@ The `main` package contains a `main.mbt` file:
 
 ```rust
 func init {
-  @lib.hello().print()
+  print(@lib.hello())
 }
 ```
 
@@ -193,7 +193,7 @@ This line imports the `fib` package, which is part of the `lib` package in the `
 func init {
   let a = @fib.fib(10)
   let b = @fib.fib2(11)
-  "fib(10) = \(a), fib(11) = \(b)\n".print()
+  print("fib(10) = \(a), fib(11) = \(b)\n")
 }
 ```
 
