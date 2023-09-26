@@ -34,7 +34,8 @@ pub func draw_grid(canvas : Canvas_ctx) {
   canvas.stroke()
 }
 
-pub func draw_cell(canvas : Canvas_ctx, universe : Universe, dead : Int, alive : Int) {
+pub func draw_cell(canvas : Canvas_ctx, universe : Universe, dead : Int,
+        alive : Int) {
   canvas.begin_path()
   var row = 0
   while row < 64 {
