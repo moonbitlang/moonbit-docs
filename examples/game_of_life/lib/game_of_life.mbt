@@ -113,8 +113,7 @@ pub func to_string(self : Universe) -> String {
       let idx = self.get_index(r, c)
       let cell = self.cells[idx]
       // No buffer implementation?
-      cells = cells +
-      match cell {
+      cells = cells + match cell {
         Alive => "▅"
         Dead => "☐"
       }

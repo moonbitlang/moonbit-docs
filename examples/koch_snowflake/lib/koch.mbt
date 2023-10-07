@@ -17,7 +17,7 @@ func cos(x : Float64) -> Float64 = "canvas" "cos"
 
 func get_pi() -> Float64 = "canvas" "get_pi"
 
-pub func koch(ctx : Canvas_ctx, x1 : Float64, y1 : Float64, x2 : Float64,
+func koch(ctx : Canvas_ctx, x1 : Float64, y1 : Float64, x2 : Float64,
         y2 : Float64, n : Float64, m : Float64) {
   ctx.clear_rect(0.0, 0.0, 400.0, 400.0)
   let x3 = (x2 - x1) / 3.0 + x1

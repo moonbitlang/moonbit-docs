@@ -42,8 +42,8 @@
   WebAssembly.instantiateStreaming(fetch("target/mandelbrot.wasm"), spectest).then(
     (obj) => {
       obj.instance.exports._start();
-      const calcColor = obj.instance.exports["mandelbrot/lib::calc_color"];
-      const drawColor = obj.instance.exports["mandelbrot/lib::draw_color"];
+      const calcColor = obj.instance.exports["mandelbrot/main::calc_color"];
+      const drawColor = obj.instance.exports["mandelbrot/main::draw_color"];
 
       function saveImage() {
         context.putImageData(imagedata, 0, 0);

@@ -42,10 +42,10 @@ if (canvas.getContext) {
   WebAssembly.instantiateStreaming(fetch("target/game_of_life.wasm"), importObject).then(
     (obj) => {
       obj.instance.exports._start();
-      const drawGrid = obj.instance.exports["game_of_life/lib::draw_grid"];
-      const drawCell = obj.instance.exports["game_of_life/lib::draw_cell"];
-      const universe_new = obj.instance.exports["game_of_life/lib::new"];
-      const universe_tick = obj.instance.exports["game_of_life/lib::@game_of_life/lib.Universe::tick"];
+      const drawGrid = obj.instance.exports["game_of_life/main::draw_grid"];
+      const drawCell = obj.instance.exports["game_of_life/main::draw_cell"];
+      const universe_new = obj.instance.exports["game_of_life/main::new"];
+      const universe_tick = obj.instance.exports["game_of_life/main::tick"];
       const universe = universe_new();
       const renderLoop = () => {
         universe_tick(universe);

@@ -121,8 +121,9 @@ pub func calc_color(col : Int, row : Int, ox : Float64, oy : Float64,
 }
 
 pub func draw_color(image_data : ImageData, col : Int, row : Int, rgb : Int) {
-  let pindex = ((image_height - float_of_int(row) - 1.0) * image_width +
-  float_of_int(col)) * 4.0
+  let pindex = ((image_height - float_of_int(row) - 1.0) * image_width + float_of_int(
+      col,
+    )) * 4.0
   let pindex = floor(pindex)
   set_image_data(image_data, pindex, rgb.lsr(16).land(0xFF))
   set_image_data(image_data, pindex + 1, rgb.lsr(8).land(0xFF))
