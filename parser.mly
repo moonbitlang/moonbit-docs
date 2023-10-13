@@ -149,7 +149,7 @@ fun_header:
 
 
 %inline block_expr: "{" ls=list_semis_rev(statement_expr) "}" {}
-%inline error_block: error {}
+
 val_header : pub=ioption("pub") "let" binder=binder t=opt_annot {}
 structure : list_semis(structure_item) EOF {}
 structure_item:
@@ -217,21 +217,17 @@ statement_expr:
 while_expr:
   | "while" cond=infix_expr b=block_expr
     {}
-  | "while" cond=infix_expr b=error_block
-    {}
 
 
 if_expr:
    | "if"  b=infix_expr ifso=block_expr "else" ifnot=block_expr
    | "if"  b=infix_expr ifso=block_expr "else" ifnot=if_expr  {}
    | "if"  b=infix_expr ifso=block_expr {}
-   | "if" b=infix_expr ifso=error_block {}
 
 
 match_expr:
   | "match" e=infix_expr "{"  mat=non_empty_list_semis( pattern "=>" expr {})  "}"  {}
   | "match" e=infix_expr "{""}" {}
-  | "match" e=infix_expr error {}
 
 expr:
   | infix_expr
