@@ -41,8 +41,7 @@ open Parser_util
 
 %token <string>DOT_IDENT
 %token <int>DOT_INT
-%token <string>COLONCOLON_UIDENT
-%token <string>COLONCOLON_LIDENT
+%token COLONCOLON      "::"
 %token COLON           ":"
 %token COLONEQUAL      ":="
 %token SEMI
@@ -136,7 +135,7 @@ optional_type_parameters:
 optional_type_arguments:
   | params = option(delimited("[" ,non_empty_list_commas(type_), "]")) {}
 fun_binder:
-  | type_name=qual_ident_ty func_name=COLONCOLON_LIDENT {}
+  | type_name=qual_ident_ty "::" func_name=LIDENT {}
   | binder {}
 fun_header:
   pub=ioption("pub") "func"
@@ -249,7 +248,7 @@ infix_expr:
 %inline constr:
   | name = UIDENT {}
   /* TODO: two tokens or one token here? */
-  | type_name=qual_ident_ty constr_name=COLONCOLON_UIDENT
+  | type_name=qual_ident_ty "::" constr_name=UIDENT
     {}
 
 simple_expr:
@@ -268,7 +267,7 @@ simple_expr:
   | obj=simple_expr  "[" index=expr "]" {}
   | self=simple_expr meth=DOT_IDENT "(" args=list_commas(expr) ")" {}
   | record=simple_expr accessor=accessor %prec prec_field {}
-  | type_name=qual_ident_ty method_name=COLONCOLON_LIDENT {}
+  | type_name=qual_ident_ty "::" method_name=LIDENT {}
   | "("  bs=list_commas(expr) ")" {}
   | "(" expr ":" type_ ")"
     {}
