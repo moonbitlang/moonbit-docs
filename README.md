@@ -1,7 +1,37 @@
 # MoonBit
 
-MoonBit is an end-to-end programming language toolchain for cloud and edge computing using WebAssembly.
-The IDE environment is available at <https://try.moonbitlang.com> without any installation; it does not rely on any server either.
+MoonBit is an end-to-end programming language toolchain for cloud and edge computing using WebAssembly. The IDE environment is available at [try.moonbitlang.com](https://try.moonbitlang.com) without any installation, and it does not rely on any server either.
+
+## Table of Contents
+- [Status](#status)
+- [Main Advantages](#main-advantages)
+- [Overview](#overview)
+  - [MoonBit Program Structure](#moonbit-program-structure)
+  - [Expressions and Statements](#expressions-and-statements)
+- [Functions](#functions)
+  - [Top-Level Functions](#top-level-functions)
+  - [Local Functions](#local-functions)
+  - [Function Applications](#function-applications)
+- [Control Structures](#control-structures)
+  - [Conditional Expressions](#conditional-expressions)
+  - [Loops](#loops)
+- [Built-in Data Structures](#built-in-data-structures)
+  - [Number](#number)
+  - [String](#string)
+  - [Tuple](#tuple)
+  - [Array](#array)
+- [Variable Binding](#variable-binding)
+- [Data Types](#data-types)
+  - [Struct](#struct)
+  - [Enum](#enum)
+- [Pattern Matching](#pattern-matching)
+- [Generics](#generics)
+- [Uniform Function Call Syntax](#uniform-function-call-syntax)
+- [Operator Overloading](#operator-overloading)
+- [Access Control](#access-control)
+- [Interface System](#interface-system)
+- [Methods Without a Self Parameter](#methods-without-a-self-parameter)
+- [MoonBit’s Build System](#moonbit’s-build-system)
 
 ## Status
 
