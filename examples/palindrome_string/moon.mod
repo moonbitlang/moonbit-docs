@@ -1,1 +1,0 @@
-module "palindrome_string"
