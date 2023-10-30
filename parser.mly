@@ -44,7 +44,7 @@ open Parser_util
 %token COLONCOLON      "::"
 %token COLON           ":"
 %token COLONEQUAL      ":="
-%token SEMI
+%token <bool>SEMI
 %token LBRACKET        "["
 %token PLUS           "+"
 %token RBRACKET       "]"
