@@ -22,11 +22,11 @@ A MoonBit program consists of type definitions, function definitions, and variab
 2. An `init` function can't be explicitly called or referred to by other functions. Instead, all `init` functions will be implicitly called when initializing a package. Therefore, `init` functions should only consist of statements.
 
 ```go live
-func init {
+fn init {
   print("Hello world!") // OK
 }
 
-func init {
+fn init {
   let x = 1
   // x // fail
   print(x) // success
@@ -36,18 +36,18 @@ func init {
 MoonBit distinguishes between statements and expressions. In a function body, only the last clause should be an expression, which serves as a return value. For example:
 
 ```go live
-func foo() -> Int {
+fn foo() -> Int {
   let x = 1
   x + 1 // OK
 }
 
-func bar() -> Int {
+fn bar() -> Int {
   let x = 1
   x + 1 // fail
   x + 2
 }
 
-func init {
+fn init {
   print(foo())
   print(bar())
 }
@@ -79,10 +79,10 @@ Functions take arguments and produce a result. In MoonBit, functions are first-c
 
 ### Top-Level Functions
 
-Functions can be defined as top-level or local. We can use the `func` keyword to define a top-level function that sums three integers and returns the result, as follows:
+Functions can be defined as top-level or local. We can use the `fn` keyword to define a top-level function that sums three integers and returns the result, as follows:
 
 ```go
-func add3(x: Int, y: Int, z: Int)-> Int {
+fn add3(x: Int, y: Int, z: Int)-> Int {
   x + y + z
 }
 ```
@@ -91,15 +91,15 @@ Note that the arguments and return value of top-level functions require explicit
 
 ### Local Functions
 
-Local functions are defined using the `fn` keyword. Local functions can be named or anonymous. Type annotations can be omitted for local function definitions: they can be automatically inferred in most cases. For example:
+Local functions can be named or anonymous. Type annotations can be omitted for local function definitions: they can be automatically inferred in most cases. For example:
 
 ```go live
-func foo() -> Int {
+fn foo() -> Int {
   fn inc(x) { x + 1 }  // named as `inc`
   fn (x) { x + inc(2) } (6) // anonymous, instantly applied to integer literal 6
 }
 
-func init {
+fn init {
   print(foo())
 }
 ```
@@ -108,14 +108,14 @@ Functions, whether named or anonymous, are *lexical closures*: any identifiers w
 
 ```go live
 let y = 3
-func foo(x: Int) {
+fn foo(x: Int) {
   fn inc()  { x + 1 } // OK, will return x + 1
   fn four() { y + 1 } // Ok, will return 4
   print(inc())
   print(four())
 }
 
-func init {
+fn init {
   foo(2)
 }
 ```
@@ -131,7 +131,7 @@ add3(1, 2, 7)
 This works whether `add3` is a function defined with a name (as in the previous example), or a variable bound to a function value, as shown below:
 
 ```go live
-func init {
+fn init {
   let add3 = fn(x, y, z) { x + y + z }
   print(add3(1, 2, 7))
 }
@@ -140,7 +140,7 @@ func init {
 The expression `add3(1, 2, 7)` returns `10`. Any expression that evaluates to a function value is applicable:
 
 ```go live
-func init {
+fn init {
   let f = fn (x) { x + 1 }
   let g = fn (x) { x + 2 }
   print((if true { f } else { g })(3)) // OK
@@ -236,7 +236,7 @@ let another_hex = 0xA
 String interpolation is a powerful feature in MoonBit that enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text.
 
 ```swift live
-func init {
+fn init {
   x := 42
   print("The answer is \(x)")
 }
@@ -249,10 +249,10 @@ Variables used for string interpolation must support the `to_string` method.
 A tuple is a collection of finite values constructed using round brackets `()` with the elements separated by commas `,`. The order of elements matters; for example, `(1,true)` and `(true,1)` have different types. Here's an example:
 
 ```go live
-func pack(a: Bool, b: Int, c: String, d: Float) -> (Bool, Int, String, Float) {
+fn pack(a: Bool, b: Int, c: String, d: Float) -> (Bool, Int, String, Float) {
     (a, b, c, d)
 }
-func init {
+fn init {
     let quad = pack(false, 100, "text", 3.14)
     let (bool_val, int_val, str, float_val) = quad
 }
@@ -261,7 +261,7 @@ func init {
 Tuples can be accessed via pattern matching or index:
 
 ```go live
-func f(t : (Int, Int)) {
+fn f(t : (Int, Int)) {
   let (x1, y1) = t // access via pattern matching
   // access via index
   let x2 = t.0
@@ -273,7 +273,7 @@ func f(t : (Int, Int)) {
   }
 }
 
-func init {
+fn init {
   f((1, 2))
 }
 ```
@@ -289,7 +289,7 @@ let array = [1, 2, 3, 4]
 You can use `array[x]` to refer to the xth element. The index starts from zero.
 
 ```go live
-func init {
+fn init {
   let array = [1, 2, 3, 4]
   let a = array[2]
   array[3] = 5
@@ -305,7 +305,7 @@ A variable can be declared as mutable or immutable using the keywords `var` or `
 ```go live
 let zero = 0
 
-func init {
+fn init {
   var i = 10
   i = 20
   print(i + zero)
@@ -314,7 +314,7 @@ func init {
 There is a short-hand syntax sugar for local immutable bindings, e.g, using `:=`.
 
 ```go
-func init {
+fn init {
   a := 3
   b := "hello"
   print(a)
@@ -336,7 +336,7 @@ struct User {
   mut email: String
 }
 
-func init {
+fn init {
   let u = { id: 0, name: "John Doe", email: "john@doe.com" }
   u.email = "john@doe.name"
   print(u.id)
@@ -365,7 +365,7 @@ enum List {
   Cons (Int, List)
 }
 
-func print_list(l: List) {
+fn print_list(l: List) {
   match l {
     Nil => print("nil")
     Cons(x, xs) => {
@@ -376,7 +376,7 @@ func print_list(l: List) {
   }
 }
 
-func init {
+fn init {
   let l: List = Cons(1, Cons(2, Nil))
   print_list(l)
 }
@@ -414,14 +414,14 @@ enum List[T] {
   Cons(T, List[T])
 }
 
-func map[S, T](self: List[S], f: (S) -> T) -> List[T] {
+fn map[S, T](self: List[S], f: (S) -> T) -> List[T] {
   match self {
     Nil => Nil
     Cons(x, xs) => Cons(f(x), map(xs, f))
   }
 }
 
-func reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
+fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
   match self {
     Nil => init
     Cons(x, xs) => reduce(xs, op, op(init, x))
@@ -434,21 +434,21 @@ func reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
 MoonBit supports methods in a different way from traditional object-oriented languages. A method is defined as a top-level function with `self` as the name of its first parameter. The `self` parameter will be the subject of a method call. For example, `l.map(f)` is equivalent to `map(l, f)`. Such syntax enables method chaining rather than heavily nested function calls. For example, we can chain the previously defined `map` and `reduce` together with `into_list` to perform list operations using the method call syntax.
 
 ```go live
-func map[S, T](self: List[S], f: (S) -> T) -> List[T] {
+fn map[S, T](self: List[S], f: (S) -> T) -> List[T] {
   match self {
     Nil => Nil
     Cons(x, xs) => Cons(f(x), map(xs, f))
   }
 }
 
-func reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
+fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
   match self {
     Nil => init
     Cons(x, xs) => reduce(xs, op, op(init, x))
   }
 }
 
-func into_list[T](self: Array[T]) -> List[T] {
+fn into_list[T](self: Array[T]) -> List[T] {
   var res: List[T] = Nil
   var i = self.length() - 1
   while (i >= 0) {
@@ -458,7 +458,7 @@ func into_list[T](self: Array[T]) -> List[T] {
   res
 }
 
-func init {
+fn init {
   print([1, 2, 3, 4, 5].into_list().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }, 0))
 }
 ```
@@ -471,11 +471,11 @@ struct T {
   x:Int
 }
 
-func op_add(self: T, other: T) -> T {
+fn op_add(self: T, other: T) -> T {
   { x: self.x + other.x }
 }
 
-func init {
+fn init {
   let a = { x:0, }
   let b = { x:2, }
   print((a + b).x)
@@ -497,7 +497,7 @@ Currently, the following operators can be overloaded:
 
 ## Access Control
 
-By default, all function definitions and variable bindings are *invisible* to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`func`/`let` to make them fully visible, or put `priv` before `type` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
+By default, all function definitions and variable bindings are *invisible* to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`enum`/`struct`/`let` or top-level function to make them fully visible, or put `priv` before `type`/`enum`/`struct` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
 
 - Struct fields cannot be defined as `pub` within an abstract or private struct since it makes no sense.
 - Enum constructors do not have individual visibility so you cannot use `pub` or `priv` before them.
@@ -547,18 +547,18 @@ Another useful feature supported in MoonBit is `pub(readonly)` types, which are 
 pub(readonly) struct RO {
   field: Int
 }
-func init {
+fn init {
   let r = { field: 4 }       // OK
   let r = { ..r, field: 8 }  // OK
 }
 
 // Package B
-func print(r : RO) {
+fn print(r : RO) {
   print("{ field: ")
   print(r.field)  // OK
   print(" }")
 }
-func init {
+fn init {
   let r : RO = { field: 4 }  // ERROR: Cannot create values of the public read-only type RO!
   let r = { ..r, field: 8 }  // ERROR: Cannot mutate a public read-only field!
 }
@@ -574,11 +574,11 @@ pub struct S {
 }
 
 // ERROR: public function has private parameter type `T3`!
-pub func f1(_x: T3) -> T1 { T1::A(0) }
+pub fn f1(_x: T3) -> T1 { T1::A(0) }
 // ERROR: public function has private return type `T3`!
-pub func f2(_x: T1) -> T3 { T3::A(0) }
+pub fn f2(_x: T1) -> T3 { T3::A(0) }
 // OK
-pub func f3(_x: T1) -> T1 { T1::A(0) }
+pub fn f3(_x: T1) -> T1 { T1::A(0) }
 
 pub let a: T3  // ERROR: public variable has private type `T3`!
 ```
@@ -615,7 +615,7 @@ interface Number {
   op_mul(Self, Self) -> Self
 }
 
-func square[N: Number](x: N) -> N {
+fn square[N: Number](x: N) -> N {
   x * x
 }
 ```
@@ -625,7 +625,7 @@ the expression `x * x` in `square` will result in a method/operator not found er
 Now, the function `square` can be called with any type that implements `Number`, for example:
 
 ```go live
-func init {
+fn init {
   print(square(2)) // 4
   print(square(1.5)) // 2.25
   print(square({ x: 2, y: 3 })) // (4, 9)
@@ -636,15 +636,15 @@ struct Point {
   y: Int
 }
 
-func op_add(self: Point, other: Point) -> Point {
+fn op_add(self: Point, other: Point) -> Point {
   { x: self.x + other.x, y: self.y + other.y }
 }
 
-func op_mul(self: Point, other: Point) -> Point {
+fn op_mul(self: Point, other: Point) -> Point {
   { x: self.x * other.x, y: self.y * other.y }
 }
 
-func to_string(self: Point) -> String {
+fn to_string(self: Point) -> String {
   let x = self.x
   let y = self.y
   "(\(x), \(y))"
@@ -683,11 +683,11 @@ but constructing a default value should not depend on a `self` value.
 So Moonbit provides a special syntax for methods without a `self` parameter:
 
 ```go live
-func Int::default() -> Int {
+fn Int::default() -> Int {
   0
 }
 
-func init {
+fn init {
   print(Int::default())
 }
 ```
@@ -701,7 +701,7 @@ interface I {
   op_add(Self, Self) -> Self
 }
 
-func two[X: I]() -> X {
+fn two[X: I]() -> X {
   X::one() + X::one()
 }
 ```
