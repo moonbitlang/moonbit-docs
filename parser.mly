@@ -63,7 +63,6 @@ open Parser_util
 %token AS              "as"
 %token ELSE            "else"
 %token FN            "fn"
-%token TOPLEVEL_FN   "func"
 %token IF             "if"
 %token LET            "let"
 %token VAR            "var"
@@ -138,7 +137,7 @@ fun_binder:
   | type_name=qual_ident_ty "::" func_name=LIDENT {}
   | binder {}
 fun_header:
-  pub=ioption("pub") toplevel_fn
+  pub=ioption("pub") "fn"
     fun_binder=fun_binder
     /* TODO: move the quants before self */
     quants=optional_type_parameters
@@ -146,8 +145,6 @@ fun_header:
     ts=option("->" t=type_{})
     {}
 
-%inline toplevel_fn: "func"
-  | "fn" {}
 %inline block_expr: "{" ls=list_semis_rev(statement_expr) "}" {}
 
 val_header : pub=ioption("pub") "let" binder=binder t=opt_annot {}
