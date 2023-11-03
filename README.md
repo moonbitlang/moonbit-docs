@@ -104,7 +104,7 @@ fn init {
 }
 ```
 
-Functions, whether named or anonymous, are *lexical closures*: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
+Functions, whether named or anonymous, are _lexical closures_: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
 
 ```go live
 let y = 3
@@ -311,6 +311,7 @@ fn init {
   print(i + zero)
 }
 ```
+
 There is a short-hand syntax sugar for local immutable bindings, e.g, using `:=`.
 
 ```go
@@ -321,6 +322,7 @@ fn init {
   print(b)
 }
 ```
+
 ## Data Types
 
 There are two ways to create new data types: `struct` and `enum`.
@@ -464,6 +466,7 @@ fn init {
 ```
 
 ## Operator Overloading
+
 MoonBit supports operator overloading of builtin operators. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
 
 ```go live
@@ -497,7 +500,7 @@ Currently, the following operators can be overloaded:
 
 ## Access Control
 
-By default, all function definitions and variable bindings are *invisible* to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`enum`/`struct`/`let` or top-level function to make them fully visible, or put `priv` before `type`/`enum`/`struct` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
+By default, all function definitions and variable bindings are _invisible_ to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`enum`/`struct`/`let` or top-level function to make them fully visible, or put `priv` before `type`/`enum`/`struct` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
 
 - Struct fields cannot be defined as `pub` within an abstract or private struct since it makes no sense.
 - Enum constructors do not have individual visibility so you cannot use `pub` or `priv` before them.
@@ -584,6 +587,7 @@ pub let a: T3  // ERROR: public variable has private type `T3`!
 ```
 
 ## Interface system
+
 Moonbit features a structural interface system for overloading/ad-hoc polymorphism.
 Interface can be declared as follows:
 
@@ -677,6 +681,7 @@ interface Default {
 ```
 
 ## Methods without a self parameter
+
 Sometimes it is useful to have methods that do not have a self parameter.
 For example, the builtin `Default` interface describe types with a default value,
 but constructing a default value should not depend on a `self` value.
@@ -708,5 +713,4 @@ fn two[X: I]() -> X {
 
 ## MoonBit’s build system
 
-The introduction to the build system is available at [MoonBit's Build System Tutorial](https://www.moonbitlang.com/docs/build-system-tutorial/).
-
+The introduction to the build system is available at [MoonBit's Build System Tutorial](./build-system-tutorial.md).

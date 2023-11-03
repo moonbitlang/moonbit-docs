@@ -6,29 +6,29 @@ Before you begin with this tutorial, make sure you have installed the following:
 
 1. **MoonBit CLI Tools**: Download it from the <https://www.moonbitlang.com/download/>. This command line tool is needed for creating and managing MoonBit projects.
 
-    Use `moon help` to view the usage instructions.
+   Use `moon help` to view the usage instructions.
 
-    ```
-    $ moon help
-    Moonbit's build system
+   ```
+   $ moon help
+   Moonbit's build system
 
-    Usage: moon <COMMAND>
+   Usage: moon <COMMAND>
 
-    Commands:
-      build    Build the current package
-      check    Check the current package, but don't build object files
-      run      Run WebAssembly module
-      clean    Remove the target directory
-      new      Create a new moonbit package
-      bench    Generate build matrix for benchmarking
-      fmt      Format moonbit
-      version  Print version info and exit
-      test     Run the tests
-      help     Print this message or the help of the given subcommand(s)
+   Commands:
+     build    Build the current package
+     check    Check the current package, but don't build object files
+     run      Run WebAssembly module
+     clean    Remove the target directory
+     new      Create a new moonbit package
+     bench    Generate build matrix for benchmarking
+     fmt      Format moonbit
+     version  Print version info and exit
+     test     Run the tests
+     help     Print this message or the help of the given subcommand(s)
 
-    Options:
-      -h, --help  Print help
-    ```
+   Options:
+     -h, --help  Print help
+   ```
 
 2. **Moonbit Language** plugin in Visual Studio Code: You can install it from the VS Code marketplace. This plugin provides a rich development environment for MoonBit, including functionalities like syntax highlighting, code completion, and more.
 
@@ -245,6 +245,6 @@ This code tests the first five terms of the Fibonacci sequence.
 Finally, use the command `moon test` which scans the module, identifying and running all files ending with `_test.mbt`. If everything works, you'll see:
 
 ```bash
-$ moon test      
+$ moon test
 test lib/fib ... ok
 ```
