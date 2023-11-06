@@ -1,4 +1,4 @@
-# Illstration of Moonbit wasm gc
+# Illstration of MoonBit wasm gc
 
 ## Deps
 
