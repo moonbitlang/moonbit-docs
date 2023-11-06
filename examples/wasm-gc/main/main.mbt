@@ -1,0 +1,3 @@
+fn init {
+  println("hello")
+}

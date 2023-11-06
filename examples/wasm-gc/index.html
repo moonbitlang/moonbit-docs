@@ -1,0 +1,36 @@
+<html lang="en">
+
+<body>
+  <canvas id="canvas" width="150" height="150"></canvas>
+</body>
+<script>
+
+  var memory;
+
+  const importObject = {
+    spectest: {
+      print_i32: (x) => console.log(x),
+      print_f64: (x) => console.log(x),
+      print_char: (x) => console.log(String.fromCharCode(x)),
+    },
+    js_string: {
+      new: (offset, length) => {
+        const bytes = new Uint8Array(memory.buffer, offset, length);
+        const string = new TextDecoder("utf8").decode(bytes);
+        return string
+      },
+      empty: () => { return "" },
+      log: (string) => console.log(string),
+      append: (s1, s2) => { return (s1 + s2) },
+    }
+  };
+
+  WebAssembly.instantiateStreaming(fetch("/target/build/main/main.wasm"), importObject).then(
+    (obj) => {
+      memory = obj.instance.exports["moonbit.memory"];
+      obj.instance.exports._start();
+    }
+  )
+</script>
+
+</html>
