@@ -22,7 +22,7 @@ MoonBit 目前处于 Pre-alpha 阶段，是实验性质的。我们期望明年�
 1. 在同一个包中可以有多个 `init` 函数。
 1. `init` 函数不能被显式地调用或被其他函数引用。相反，在一个包初始化时，所有的`init`函数都将被影式地调用。因此，`init`函数只应该包含语句。
 
-```moonbit live
+```rust live
 fn init {
   print("Hello world!") // OK
 }
@@ -36,7 +36,7 @@ fn init {
 
 MoonBit 区分语句和表达式。在一个函数体中，只有最后一句应该是作为返回值的表达式。例如：
 
-```moonbit live
+```rust live
 fn foo() -> Int {
   let x = 1
   x + 1 // OK
@@ -86,7 +86,7 @@ Functions can be defined as top-level or local.
 我们可以使用`fn`关键字定义一个顶层函数，
 例如以下求三个整数之和并返回结果的函数：
 
-```moonbit
+```rust
 fn add3(x: Int, y: Int, z: Int)-> Int {
   x + y + z
 }
@@ -98,7 +98,7 @@ fn add3(x: Int, y: Int, z: Int)-> Int {
 
 局部函数使用`fn`关键字定义。局部函数可以是命名或匿名的。在大多数情况下，局部函数的类型注解可以省略，因为编译器可以自动推断。例如：
 
-```moonbit live
+```rust live
 fn foo() -> Int {
   fn inc(x) { x + 1 }  // named as `inc`
   fn (x) { x + inc(2) } (6) // anonymous, instantly applied to integer literal 6
@@ -111,7 +111,7 @@ fn init {
 
 无论是命名的还是匿名的，函数都是 _词法闭包_：任何没有局部绑定的标识符必须引用来自周围词法范围的绑定
 
-```moonbit live
+```rust live
 let y = 3
 fn foo(x: Int) {
   fn inc()  { x + 1 } // OK, will return x + 1
@@ -129,13 +129,13 @@ fn init {
 
 函数可以用圆括号内的参数列表进行调用：
 
-```moonbit
+```rust
 add3(1, 2, 7)
 ```
 
 这适用于命名函数（如前面的例子）和绑定到函数值的变量，如下所示：
 
-```moonbit live
+```rust live
 fn init {
   let add3 = fn(x, y, z) { x + y + z }
   print(add3(1, 2, 7))
@@ -144,7 +144,7 @@ fn init {
 
 表达式`add3(1, 2, 7)`返回`10`。任何求值为函数值的表达式都可以被调用：
 
-```moonbit live
+```rust live
 fn init {
   let f = fn (x) { x + 1 }
   let g = fn (x) { x + 2 }
@@ -158,7 +158,7 @@ fn init {
 
 条件表达式由条件、结果和一个可选的`else`子句组成。
 
-```moonbit
+```rust
 if x == y {
   expr1
 } else {
@@ -172,7 +172,7 @@ if x == y {
 
 `else`子句也可以包含另一个`if-else`表达式：
 
-```moonbit
+```rust
 if x == y {
   expr1
 } else if z == k {
@@ -188,7 +188,7 @@ if x == y {
 
 MoonBit 中的主要循环语句是 while 循环：
 
-```moonbit
+```rust
 while x == y {
   expr1
 }
@@ -231,7 +231,7 @@ let another_hex = 0xA
 
 字符串插值是 MoonBit 中的一个强大功能，它允许在插值字符串中替换变量。该功能通过直接将变量值嵌入文本中来简化构建动态字符串的过程
 
-```moonbit live
+```rust live
 fn init {
   x := 42
   print("The answer is \(x)")
@@ -245,7 +245,7 @@ fn init {
 元组是一个有限值的集合，使用圆括号`()`构造，其中元素由逗号`,`分隔。
 元素的顺序很重要，例如`(1, true)`和`(true, 1)`是不同的类型。以下是一个例子：
 
-```moonbit live
+```rust live
 fn pack(a: Bool, b: Int, c: String, d: Float) -> (Bool, Int, String, Float) {
     (a, b, c, d)
 }
@@ -257,7 +257,7 @@ fn init {
 
 可以通过模式匹配或索引来访问元组：
 
-```moonbit live
+```rust live
 fn f(t : (Int, Int)) {
   let (x1, y1) = t // access via pattern matching
   // access via index
@@ -279,13 +279,13 @@ fn init {
 
 数组是由方括号`[]`构造的有限值序列，其中元素由逗号`,`分隔。例如：
 
-```moonbit
+```rust
 let array = [1, 2, 3, 4]
 ```
 
 可以使用`array[x]`来引用第 x 个元素。索引从零开始。
 
-```moonbit live
+```rust live
 fn init {
   let array = [1, 2, 3, 4]
   let a = array[2]
@@ -300,7 +300,7 @@ fn init {
 变量可以使用关键字`var`或`let`分别声明为可变或不可变。
 可变变量可以重新赋值，不可变变量则不能。
 
-```moonbit live
+```rust live
 let zero = 0
 
 fn init {
@@ -312,7 +312,7 @@ fn init {
 
 对于局部不可变绑定，还可以使用`:=`的简写语法糖。
 
-```moonbit live
+```rust live
 fn init {
   a := 3
   b := "hello"
@@ -333,7 +333,7 @@ fn init {
 使用点语法 s.f 可以访问结构体字段。
 如果一个字段使用关键字 mut 标记为可变，那么可以给它赋予新的值。
 
-```moonbit live
+```rust live
 struct User {
   id: Int
   name: String
@@ -351,7 +351,7 @@ fn init {
 
 注意，您还可以在结构类型中包含与之关联的方法，例如：
 
-```moonbit
+```rust
 struct Stack {
   mut elems: List[Int]
   push: (Int) -> Unit
@@ -368,7 +368,7 @@ struct Stack {
 枚举的构造必须使用标明类型。
 可以通过模式匹配来解构枚举，并且可以将关联值绑定到每个模式中指定的变量。
 
-```moonbit live
+```rust live
 enum List {
   Nil
   Cons (Int, List)
@@ -399,7 +399,7 @@ fn init {
 需要注意的是，在`match`中绑定的变量的作用域仅限于引入该变量的分支，而`let`/`var`绑定将引入每个变量到当前作用域。
 此外，我们可以使用下划线 `_` 作为我们不关心的值的通配符。
 
-```moonbit
+```rust
 let id = match u {
   { id: id, name: _, email: _ } => id
 }
@@ -410,7 +410,7 @@ let { id: id, name: _, email: _ } = u
 在模式匹配中还有一些其他有用的构造。
 例如，我们可以使用`as`为某个模式指定一个名称，并且可以使用`|`同时匹配多个情况。
 
-```moonbit
+```rust
 match expr {
   e as Lit(n) => ...
   Add(e1, e2) | Mul(e1, e2) => ...
@@ -425,7 +425,7 @@ match expr {
 我们可以重写前面提到的数据类型`List`，添加类型参数`T`，以获得一个泛型版本的列表。
 然后，我们可以定义泛型函数`map`和`reduce`，用于对列表进行操作。
 
-```moonbit
+```rust
 enum List[T] {
   Nil
   Cons(T, List[T])
@@ -455,7 +455,7 @@ MoonBit 支持与传统面向对象语言不同的方法(method)。
 这种语法使得方法链而不是嵌套的函数调用成为可能。
 例如，我们可以使用这样的语法将先前定义的`map`和`reduce`与`from_array`和`output`方法链在一起，执行列表操作。
 
-```moonbit live
+```rust live
 fn map[S, T](self: List[S], f: (S) -> T) -> List[T] {
   match self {
     Nil => Nil
@@ -493,7 +493,7 @@ fn init {
 
 MoonBit 支持重载内置运算符。与运算符`<op>`相对应的方法名称是`op_<op>`。例如：
 
-```moonbit live
+```rust live
 struct T {
   x:Int
 }
@@ -534,7 +534,7 @@ fn init {
 - 在抽象或私有结构体内，所有字段都不能被定义为`pub`，因为这样没有意义。
 - 枚举类型的构造器没有单独的可见性，所以不能在它们前面使用 `pub` 或 `priv`
 
-```moonbit
+```rust
 struct R1 {       // abstract data type by default
   x: Int          // implicitly private field
   pub y: Int      // ERROR: `pub` field found in a abstract type!
@@ -574,7 +574,7 @@ priv enum T3 {       // explicitly private enum
 
 MoonBit 中另一个有用的特性是 `pub(readonly)` 类型，其受到了 OCaml [private types](https://v2.ocaml.org/manual/privatetypes.html)的启发。简而言之，`pub(readonly)`类型的值可以使用模式匹配或点语法析构，但在其他包中，不能被构造或改变。注意到在`pub(readonly)`类型定义的同一个包中，它没有任何限制。
 
-```moonbit
+```rust
 // Package A
 pub(readonly) struct RO {
   field: Int
@@ -600,7 +600,7 @@ MoonBit 中的访问控制遵循这样一个原则：`pub`类型、函数或变�
 这是因为私有类型可能不是在使用`pub`实体的所有地方都可以被访问。
 MoonBit 内建了一些检查，以防止违反这一原则的用例。
 
-```moonbit
+```rust
 pub struct s {
   x: T1  // OK
   y: T2  // OK
@@ -622,7 +622,7 @@ pub let a: T3  // ERROR: public variable has private type `T3`!
 MoonBit 具有用于重载/特设多态的结构接口系统。
 接口可以声明如下：
 
-```moonbit
+```rust
 interface I {
   f(Self, ...) -> ...
 }
@@ -632,7 +632,7 @@ interface I {
 具有所需方法的类型会自动实现接口。
 例如，以下接口：
 
-```moonbit
+```rust
 interface Show {
   to_string(Self) -> String
 }
@@ -643,7 +643,7 @@ interface Show {
 在声明泛型函数/方法时，类型参数可以用它们应该实现的接口进行注解。
 例如：
 
-```moonbit
+```rust
 interface Number {
   op_add(Self, Self) -> Self
   op_mul(Self, Self) -> Self
@@ -657,7 +657,7 @@ fn square[N: Number](x: N) -> N {
 如果没有 `Number` 的要求，`square` 中的表达式 `x * x` 会导致找不到方法/运算符的错误。
 现在，函数 `square` 可以与任何实现了 `Number` 接口的类型一起使用，例如：
 
-```moonbit live
+```rust live
 fn init {
   print(square(2)) // 4
   print(square(1.5)) // 2.25
@@ -686,7 +686,7 @@ fn to_string(self: Point) -> String {
 
 Moonbit provides the following useful builtin interfaces:
 
-```moonbit
+```rust
 interface Eq {
   op_equal(Self, Self) -> Bool
 }
@@ -713,7 +713,7 @@ interface Default {
 
 有时候，拥有不带 self 参数的方法非常有用。例如，内置的 `Default` 接口描述了具有默认值的类型，但构造默认值不应该依赖于 self 值。因此，MoonBit 提供了一种特殊的语法用于不带 self 参数的方法：
 
-```moonbit live
+```rust live
 fn Int::default() -> Int {
   0
 }
@@ -726,7 +726,7 @@ fn init {
 没有 `self` 的方法必须显式使用它们的类型名称进行调用。
 没有 `self` 的方法可以在接口中声明，并使用类型参数进行调用，例如：
 
-```moonbit
+```rust
 interface I {
   Self::one() -> Self
   op_add(Self, Self) -> Self
