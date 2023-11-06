@@ -249,7 +249,7 @@ Variables used for string interpolation must support the `to_string` method.
 A tuple is a collection of finite values constructed using round brackets `()` with the elements separated by commas `,`. The order of elements matters; for example, `(1,true)` and `(true,1)` have different types. Here's an example:
 
 ```go live
-fn pack(a: Bool, b: Int, c: String, d: Float) -> (Bool, Int, String, Float) {
+fn pack(a: Bool, b: Int, c: String, d: Double) -> (Bool, Int, String, Double) {
     (a, b, c, d)
 }
 fn init {
@@ -607,7 +607,7 @@ interface Show {
 }
 ```
 
-is automatically implemented by builtin types such as `Int` and `Float`.
+is automatically implemented by builtin types such as `Int` and `Double`.
 
 When declaring a generic function/method,
 the type parameters can be annotated with the interface they should implement.

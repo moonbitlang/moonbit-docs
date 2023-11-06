@@ -246,7 +246,7 @@ fn init {
 元素的顺序很重要，例如`(1, true)`和`(true, 1)`是不同的类型。以下是一个例子：
 
 ```rust live
-fn pack(a: Bool, b: Int, c: String, d: Float) -> (Bool, Int, String, Float) {
+fn pack(a: Bool, b: Int, c: String, d: Double) -> (Bool, Int, String, Double) {
     (a, b, c, d)
 }
 fn init {
@@ -638,7 +638,7 @@ interface Show {
 }
 ```
 
-内置类型如 `Int` 和 `Float` 会自动实现这个接口。
+内置类型如 `Int` 和 `Double` 会自动实现这个接口。
 
 在声明泛型函数/方法时，类型参数可以用它们应该实现的接口进行注解。
 例如：
