@@ -23,11 +23,11 @@ MoonBit 目前处于 Pre-alpha 阶段，是实验性质的。我们期望明年�
 1. `init` 函数不能被显式地调用或被其他函数引用。相反，在一个包初始化时，所有的`init`函数都将被影式地调用。因此，`init`函数只应该包含语句。
 
 ```moonbit live
-func init {
+fn init {
   print("Hello world!") // OK
 }
 
-func init {
+fn init {
   let x = 1
   // x // fail
   print(x) // success
@@ -37,18 +37,18 @@ func init {
 MoonBit 区分语句和表达式。在一个函数体中，只有最后一句应该是作为返回值的表达式。例如：
 
 ```moonbit live
-func foo() -> Int {
+fn foo() -> Int {
   let x = 1
   x + 1 // OK
 }
 
-func bar() -> Int {
+fn bar() -> Int {
   let x = 1
   x + 1 // fail
   x + 2
 }
 
-func init {
+fn init {
   print(foo())
   print(bar())
 }
@@ -83,11 +83,11 @@ func init {
 
 Functions can be defined as top-level or local.
 函数可以被定义为顶层或局部。
-我们可以使用`func`关键字定义一个顶层函数，
+我们可以使用`fn`关键字定义一个顶层函数，
 例如以下求三个整数之和并返回结果的函数：
 
 ```moonbit
-func add3(x: Int, y: Int, z: Int)-> Int {
+fn add3(x: Int, y: Int, z: Int)-> Int {
   x + y + z
 }
 ```
@@ -99,12 +99,12 @@ func add3(x: Int, y: Int, z: Int)-> Int {
 局部函数使用`fn`关键字定义。局部函数可以是命名或匿名的。在大多数情况下，局部函数的类型注解可以省略，因为编译器可以自动推断。例如：
 
 ```moonbit live
-func foo() -> Int {
+fn foo() -> Int {
   fn inc(x) { x + 1 }  // named as `inc`
   fn (x) { x + inc(2) } (6) // anonymous, instantly applied to integer literal 6
 }
 
-func init {
+fn init {
   print(foo())
 }
 ```
@@ -113,14 +113,14 @@ func init {
 
 ```moonbit live
 let y = 3
-func foo(x: Int) {
+fn foo(x: Int) {
   fn inc()  { x + 1 } // OK, will return x + 1
   fn four() { y + 1 } // Ok, will return 4
   print(inc())
   print(four())
 }
 
-func init {
+fn init {
   foo(2)
 }
 ```
@@ -136,7 +136,7 @@ add3(1, 2, 7)
 这适用于命名函数（如前面的例子）和绑定到函数值的变量，如下所示：
 
 ```moonbit live
-func init {
+fn init {
   let add3 = fn(x, y, z) { x + y + z }
   print(add3(1, 2, 7))
 }
@@ -145,7 +145,7 @@ func init {
 表达式`add3(1, 2, 7)`返回`10`。任何求值为函数值的表达式都可以被调用：
 
 ```moonbit live
-func init {
+fn init {
   let f = fn (x) { x + 1 }
   let g = fn (x) { x + 2 }
   print((if true { f } else { g })(3)) // OK
@@ -232,7 +232,7 @@ let another_hex = 0xA
 字符串插值是 MoonBit 中的一个强大功能，它允许在插值字符串中替换变量。该功能通过直接将变量值嵌入文本中来简化构建动态字符串的过程
 
 ```moonbit live
-func init {
+fn init {
   x := 42
   print("The answer is \(x)")
 }
@@ -246,10 +246,10 @@ func init {
 元素的顺序很重要，例如`(1, true)`和`(true, 1)`是不同的类型。以下是一个例子：
 
 ```moonbit live
-func pack(a: Bool, b: Int, c: String, d: Float) -> (Bool, Int, String, Float) {
+fn pack(a: Bool, b: Int, c: String, d: Float) -> (Bool, Int, String, Float) {
     (a, b, c, d)
 }
-func init {
+fn init {
     let quad = pack(false, 100, "text", 3.14)
     let (bool_val, int_val, str, float_val) = quad
 }
@@ -258,7 +258,7 @@ func init {
 可以通过模式匹配或索引来访问元组：
 
 ```moonbit live
-func f(t : (Int, Int)) {
+fn f(t : (Int, Int)) {
   let (x1, y1) = t // access via pattern matching
   // access via index
   let x2 = t.0
@@ -270,7 +270,7 @@ func f(t : (Int, Int)) {
   }
 }
 
-func init {
+fn init {
   f((1, 2))
 }
 ```
@@ -286,7 +286,7 @@ let array = [1, 2, 3, 4]
 可以使用`array[x]`来引用第 x 个元素。索引从零开始。
 
 ```moonbit live
-func init {
+fn init {
   let array = [1, 2, 3, 4]
   let a = array[2]
   array[3] = 5
@@ -303,7 +303,7 @@ func init {
 ```moonbit live
 let zero = 0
 
-func init {
+fn init {
   var i = 10
   i = 20
   (i + zero).print()
@@ -313,7 +313,7 @@ func init {
 对于局部不可变绑定，还可以使用`:=`的简写语法糖。
 
 ```moonbit live
-func init {
+fn init {
   a := 3
   b := "hello"
   print(a)
@@ -340,7 +340,7 @@ struct User {
   mut email: String
 }
 
-func init {
+fn init {
   let u = { id: 0, name: "John Doe", email: "john@doe.com" }
   u.email = "john@doe.name"
   print(u.id)
@@ -374,7 +374,7 @@ enum List {
   Cons (Int, List)
 }
 
-func print_list(l: List) {
+fn print_list(l: List) {
   match l {
     Nil => print("nil")
     Cons(x, xs) => {
@@ -385,7 +385,7 @@ func print_list(l: List) {
   }
 }
 
-func init {
+fn init {
   let l: List = Cons(1, Cons(2, Nil))
   print_list(l)
 }
@@ -431,14 +431,14 @@ enum List[T] {
   Cons(T, List[T])
 }
 
-func map[S, T](self: List[S], f: (S) => T) -> List[T] {
+fn map[S, T](self: List[S], f: (S) => T) -> List[T] {
   match self {
     Nil => Nil
     Cons(x, xs) => Cons(f(x), map(xs, f))
   }
 }
 
-func reduce[S, T](self: List[S], op: (T, S) => T, init: T) -> T {
+fn reduce[S, T](self: List[S], op: (T, S) => T, init: T) -> T {
   match self {
     Nil => init
     Cons(x, xs) => reduce(xs, op, op(init, x))
@@ -456,21 +456,21 @@ MoonBit 支持与传统面向对象语言不同的方法(method)。
 例如，我们可以使用这样的语法将先前定义的`map`和`reduce`与`from_array`和`output`方法链在一起，执行列表操作。
 
 ```moonbit live
-func map[S, T](self: List[S], f: (S) -> T) -> List[T] {
+fn map[S, T](self: List[S], f: (S) -> T) -> List[T] {
   match self {
     Nil => Nil
     Cons(x, xs) => Cons(f(x), map(xs, f))
   }
 }
 
-func reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
+fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
   match self {
     Nil => init
     Cons(x, xs) => reduce(xs, op, op(init, x))
   }
 }
 
-func into_list[T](self: Array[T]) -> List[T] {
+fn into_list[T](self: Array[T]) -> List[T] {
   var res: List[T] = Nil
   var i = self.length() - 1
   while (i >= 0) {
@@ -480,7 +480,7 @@ func into_list[T](self: Array[T]) -> List[T] {
   res
 }
 
-func init {
+fn init {
   print([1, 2, 3, 4, 5].into_list().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }, 0))
 }
 ```
@@ -498,11 +498,11 @@ struct T {
   x:Int
 }
 
-func op_add(self: T, other: T) -> T {
+fn op_add(self: T, other: T) -> T {
   { x: self.x + other.x }
 }
 
-func init {
+fn init {
   let a = { x:0, }
   let b = { x:2, }
   print((a + b).x)
@@ -527,7 +527,7 @@ func init {
 默认情况下，所有函数定义和变量绑定对其他包是 _不可见_ 的；
 没有修饰符的类型是抽象数据类型，其名称被导出，但内部是不可见的。
 这种设计防止了意外暴露实现细节。
-您可以在`type`/`func`/`let`前使用`pub`修饰符使其完全可见，或在`type`前使用`priv`修饰符使其对其他包完全不可见。
+您可以在`type`/`fn`/`let`前使用`pub`修饰符使其完全可见，或在`type`前使用`priv`修饰符使其对其他包完全不可见。
 您还可以在字段名前使用`pub`或`priv`获得更细粒度的访问控制。
 但是，请注意：
 
@@ -579,18 +579,18 @@ MoonBit 中另一个有用的特性是 `pub(readonly)` 类型，其受到了 OCa
 pub(readonly) struct RO {
   field: Int
 }
-func init {
+fn init {
   let r = { field: 4 }       // OK
   let r = { ..r, field: 8 }  // OK
 }
 
 // Package B
-func print(r : RO) {
+fn print(r : RO) {
   "{ field: ".print()
   r.field.print()  // OK
   " }".print()
 }
-func init {
+fn init {
   let r : RO = { field: 4 }  // ERROR: Cannot create values of the public read-only type RO!
   let r = { ..r, field: 8 }  // ERROR: Cannot mutate a public read-only field!
 }
@@ -608,11 +608,11 @@ pub struct s {
 }
 
 // ERROR: public function has private parameter type `T3`!
-pub func f1(_x: T3) -> T1 { T1::A(0) }
+pub fn f1(_x: T3) -> T1 { T1::A(0) }
 // ERROR: public function has private return type `T3`!
-pub func f2(_x: T1) -> T3 { T3::A(0) }
+pub fn f2(_x: T1) -> T3 { T3::A(0) }
 // OK
-pub func f3(_x: T1) -> T1 { T1::A(0) }
+pub fn f3(_x: T1) -> T1 { T1::A(0) }
 
 pub let a: T3  // ERROR: public variable has private type `T3`!
 ```
@@ -649,7 +649,7 @@ interface Number {
   op_mul(Self, Self) -> Self
 }
 
-func square[N: Number](x: N) -> N {
+fn square[N: Number](x: N) -> N {
   x * x
 }
 ```
@@ -658,7 +658,7 @@ func square[N: Number](x: N) -> N {
 现在，函数 `square` 可以与任何实现了 `Number` 接口的类型一起使用，例如：
 
 ```moonbit live
-func init {
+fn init {
   print(square(2)) // 4
   print(square(1.5)) // 2.25
   print(square({ x: 2, y: 3 })) // (4, 9)
@@ -669,15 +669,15 @@ struct Point {
   y: Int
 }
 
-func op_add(self: Point, other: Point) -> Point {
+fn op_add(self: Point, other: Point) -> Point {
   { x: self.x + other.x, y: self.y + other.y }
 }
 
-func op_mul(self: Point, other: Point) -> Point {
+fn op_mul(self: Point, other: Point) -> Point {
   { x: self.x * other.x, y: self.y * other.y }
 }
 
-func to_string(self: Point) -> String {
+fn to_string(self: Point) -> String {
   let x = self.x
   let y = self.y
   "(\(x), \(y))"
@@ -714,11 +714,11 @@ interface Default {
 有时候，拥有不带 self 参数的方法非常有用。例如，内置的 `Default` 接口描述了具有默认值的类型，但构造默认值不应该依赖于 self 值。因此，MoonBit 提供了一种特殊的语法用于不带 self 参数的方法：
 
 ```moonbit live
-func Int::default() -> Int {
+fn Int::default() -> Int {
   0
 }
 
-func init {
+fn init {
   print(Int::default())
 }
 ```
@@ -732,7 +732,7 @@ interface I {
   op_add(Self, Self) -> Self
 }
 
-func two[X: I]() -> X {
+fn two[X: I]() -> X {
   X::one() + X::one()
 }
 ```
