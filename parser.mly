@@ -208,7 +208,7 @@ statement_expr:
   | a=expr  {}
 
 %inline shorthand_let_pattern:
-  | UNDERSCORE {}
+  | "_" {}
   | binder=binder {}
 
 while_expr:
