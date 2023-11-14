@@ -1,4 +1,4 @@
-func 😀(self : Int) {
+fn 😀(self : Int) {
   println(self)
 }
 
@@ -7,10 +7,10 @@ pub enum 😆😆 {
   B
 }
 
-func init {
+fn init {
   🤣 := 3
   🤣.😀()
-  
+
   let 😆 = 😆😆::A
   match 😆 {
     A => print("A")

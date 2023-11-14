@@ -1,4 +1,4 @@
-pub func is_palindrome(chars : String) -> Bool {
+pub fn is_palindrome(chars : String) -> Bool {
   let n = chars.length()
   var i = 0
   while i < n / 2 {

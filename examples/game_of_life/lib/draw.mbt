@@ -1,22 +1,22 @@
 type Canvas_ctx
 
-func set_stroke_color(self : Canvas_ctx, color : Int) = "canvas" "set_stroke_color"
+fn set_stroke_color(self : Canvas_ctx, color : Int) = "canvas" "set_stroke_color"
 
-func move_to(self : Canvas_ctx, x : Int, y : Int) = "canvas" "move_to"
+fn move_to(self : Canvas_ctx, x : Int, y : Int) = "canvas" "move_to"
 
-func line_to(self : Canvas_ctx, x : Int, y : Int) = "canvas" "line_to"
+fn line_to(self : Canvas_ctx, x : Int, y : Int) = "canvas" "line_to"
 
-func begin_path(self : Canvas_ctx) = "canvas" "begin_path"
+fn begin_path(self : Canvas_ctx) = "canvas" "begin_path"
 
-func stroke(self : Canvas_ctx) = "canvas" "stroke"
+fn stroke(self : Canvas_ctx) = "canvas" "stroke"
 
-func fill_rect(self : Canvas_ctx, x : Int, y : Int, width : Int, height : Int) = "canvas" "fill_rect"
+fn fill_rect(self : Canvas_ctx, x : Int, y : Int, width : Int, height : Int) = "canvas" "fill_rect"
 
-func set_fill_style(self : Canvas_ctx, color : Int) = "canvas" "set_fill_style"
+fn set_fill_style(self : Canvas_ctx, color : Int) = "canvas" "set_fill_style"
 
 let cell_size = 5
 
-pub func draw_grid(canvas : Canvas_ctx) {
+pub fn draw_grid(canvas : Canvas_ctx) {
   canvas.begin_path()
   canvas.set_stroke_color(0xcccccc)
   var i = 0
@@ -34,7 +34,7 @@ pub func draw_grid(canvas : Canvas_ctx) {
   canvas.stroke()
 }
 
-pub func draw_cell(canvas : Canvas_ctx, universe : Universe, dead : Int,
+pub fn draw_cell(canvas : Canvas_ctx, universe : Universe, dead : Int,
         alive : Int) {
   canvas.begin_path()
   var row = 0

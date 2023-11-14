@@ -1,4 +1,4 @@
-func init {
+fn init {
   // Posix
   let posix_path = @lib.Path::new(
     "/tmp/abc/f/d",

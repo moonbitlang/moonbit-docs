@@ -1,3 +1,3 @@
-func init {
+fn init {
   print(@lib.hello())
 }

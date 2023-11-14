@@ -3,11 +3,11 @@ struct Buffer {
   mut len : Int
 }
 
-pub func Buffer::new(size : Int) -> Buffer {
+pub fn Buffer::new(size : Int) -> Buffer {
   { data: Bytes::make(size, 0), len: 0 }
 }
 
-pub func op_get(self : Buffer, i : Int) -> Option[Int] {
+pub fn op_get(self : Buffer, i : Int) -> Option[Int] {
   if i < self.data.length() {
     Some(self.data[i])
   } else {
@@ -15,15 +15,15 @@ pub func op_get(self : Buffer, i : Int) -> Option[Int] {
   }
 }
 
-pub func capacity(self : Buffer) -> Int {
+pub fn capacity(self : Buffer) -> Int {
   self.data.length()
 }
 
-pub func length(self : Buffer) -> Int {
+pub fn length(self : Buffer) -> Int {
   self.len
 }
 
-func expand_size(self : Buffer) {
+fn expand_size(self : Buffer) {
   let new_capacity = if self.data.length() != 0 {
     self.data.length() * 2
   } else {
@@ -38,7 +38,7 @@ func expand_size(self : Buffer) {
   self.data = new_data
 }
 
-pub func append_int(self : Buffer, value : Int) {
+pub fn append_int(self : Buffer, value : Int) {
   if self.len >= self.data.length() {
     self.expand_size()
   }
@@ -54,7 +54,7 @@ pub func append_int(self : Buffer, value : Int) {
   }
 }
 
-pub func truncate(self : Buffer, another: Buffer) {
+pub fn truncate(self : Buffer, another: Buffer) {
   var index = 0
   while index < another.len {
     if self.len >= self.data.length() {
@@ -66,7 +66,7 @@ pub func truncate(self : Buffer, another: Buffer) {
   }
 }
 
-pub func clear(self : Buffer) {
+pub fn clear(self : Buffer) {
   var index = 0
   while index < self.len {
     self.data[index] = 0
@@ -75,16 +75,16 @@ pub func clear(self : Buffer) {
   self.len = 0
 }
 
-pub func reset(self : Buffer, capacity : Int) {
+pub fn reset(self : Buffer, capacity : Int) {
   self.len = 0
   self.data = Bytes::make(capacity, 0)
 }
 
-pub func to_bytes(self : Buffer) -> Bytes {
+pub fn to_bytes(self : Buffer) -> Bytes {
   self.data
 }
 
-pub func bytes_to_int(bytes : Bytes, start : Int) -> Int {
+pub fn bytes_to_int(bytes : Bytes, start : Int) -> Int {
   bytes[start].land(0xff).lsl(24).lor(
     bytes[start + 1].land(0xff).lsl(16).lor(
       bytes[start + 2].land(0xff).lsl(8).lor(bytes[start + 3].land(0xff)),
@@ -92,7 +92,7 @@ pub func bytes_to_int(bytes : Bytes, start : Int) -> Int {
   )
 }
 
-func init {
+fn init {
   ()
 }
 

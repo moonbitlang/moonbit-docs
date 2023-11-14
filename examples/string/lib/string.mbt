@@ -1,4 +1,4 @@
-pub func split(s : String, sep : Char) -> (Array[String], Int) {
+pub fn split(s : String, sep : Char) -> (Array[String], Int) {
   var index = 0
   var result : Array[String] = Array::make(5, "")
   var cur = 0
@@ -35,7 +35,7 @@ pub func split(s : String, sep : Char) -> (Array[String], Int) {
   (result, cur)
 }
 
-pub func sub_string(s : String, start : Int, end : Int) -> Option[String] {
+pub fn sub_string(s : String, start : Int, end : Int) -> Option[String] {
   if start > end || start < 0 || end > s.length() {
     return None
   }
@@ -53,7 +53,7 @@ pub func sub_string(s : String, start : Int, end : Int) -> Option[String] {
   Some(result)
 }
 
-pub func trim(s : String, removed : Char) -> String {
+pub fn trim(s : String, removed : Char) -> String {
   let l = s.length()
   var start = 0
   var end = l - 1
@@ -72,7 +72,7 @@ pub func trim(s : String, removed : Char) -> String {
   s
 }
 
-pub func index_of(s : String, pattern : String) -> Option[Int] {
+pub fn index_of(s : String, pattern : String) -> Option[Int] {
   let prefix_func = prefix_function(pattern)
   var s_index = 0
   var p_index = 0
@@ -97,7 +97,7 @@ pub func index_of(s : String, pattern : String) -> Option[Int] {
   None
 }
 
-pub func last_index_of(s : String, pattern : String) -> Option[Int] {
+pub fn last_index_of(s : String, pattern : String) -> Option[Int] {
   let prefix_func = prefix_function(pattern)
   var s_index = 0
   var p_index = 0
@@ -129,14 +129,14 @@ pub func last_index_of(s : String, pattern : String) -> Option[Int] {
   }
 }
 
-pub func contains(s : String, sub : String) -> Bool {
+pub fn contains(s : String, sub : String) -> Bool {
   match index_of(s, sub) {
     Some(v) => v != -1
     None => false
   }
 }
 
-func prefix_function(pattern : String) -> Array[Int] {
+fn prefix_function(pattern : String) -> Array[Int] {
   let result = Array::make(pattern.length(), 0)
   let n = pattern.length()
   var i = 1
@@ -154,14 +154,14 @@ func prefix_function(pattern : String) -> Array[Int] {
   result
 }
 
-pub func char_at(s : String, pos : Int) -> Option[Char] {
+pub fn char_at(s : String, pos : Int) -> Option[Char] {
   if pos >= 0 && pos < s.length() {
     return Some(s.get(pos))
   }
   None
 }
 
-pub func to_char_array(s : String) -> Array[Char] {
+pub fn to_char_array(s : String) -> Array[Char] {
   let l = s.length()
   let array = Array::make(l, ' ')
   var index = 0
@@ -178,11 +178,11 @@ pub struct Iterator {
   data : String
 }
 
-pub func iter(s : String) -> Iterator {
+pub fn iter(s : String) -> Iterator {
   { index: 0, length: s.length(), data: s }
 }
 
-pub func next(self : Iterator) -> Option[Char] {
+pub fn next(self : Iterator) -> Option[Char] {
   if self.index == self.length {
     return None
   }

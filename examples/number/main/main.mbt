@@ -1,4 +1,4 @@
-func init {
+fn init {
   print_float(@lib.pi)
   println(@lib.max(4, 2)) // 4
   print_float(@lib.min(1.2, 1.21)) // 1.2

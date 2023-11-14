@@ -1,6 +1,6 @@
 /// `hello()`
 ///
 /// Return a string containing the greeting message.
-pub func hello() -> String {
+pub fn hello() -> String {
     "Hello, world!\n"
 }

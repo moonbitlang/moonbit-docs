@@ -10,7 +10,7 @@ pub enum T[U] {
 /// `height[U](self: T[U])`
 ///
 /// Calculate the height of a tree-like structure.
-pub func height[U](self: T[U]) -> Int {
+pub fn height[U](self: T[U]) -> Int {
   match self {
     Empty => 0
     Node(_, _, _, h) => h
@@ -20,7 +20,7 @@ pub func height[U](self: T[U]) -> Int {
 /// `create[U](l: T[U], v: U, r: T[U])`
 ///
 /// Create a new node with the given left and right subtrees, along with a value of type `U`.
-func create[U](l: T[U], v: U, r: T[U]) -> T[U] {
+fn create[U](l: T[U], v: U, r: T[U]) -> T[U] {
   let hl = l.height()
   let hr = r.height()
   Node(l, v, r, if hl >= hr { hl + 1 } else { hr + 1 })
@@ -33,7 +33,7 @@ func create[U](l: T[U], v: U, r: T[U]) -> T[U] {
 /// This function performs a balancing operation on a avl tree node based on the heights
 /// of its left and right subtrees. It ensures that the heights of the subtrees are balanced
 /// and returns a new avl tree node with appropriate restructuring if necessary.
-func bal[U](l: T[U], v: U, r: T[U]) -> T[U] {
+fn bal[U](l: T[U], v: U, r: T[U]) -> T[U] {
   let hl = l.height()
   let hr = r.height()
 
@@ -79,7 +79,7 @@ func bal[U](l: T[U], v: U, r: T[U]) -> T[U] {
 /// `add[U:Compare](self: T[U], x: U)`
 ///
 /// Add a value to a tree-like structure.
-pub func add[U:Compare](self: T[U], x: U) -> T[U] {
+pub fn add[U:Compare](self: T[U], x: U) -> T[U] {
   match self {
     Empty => Node(Empty, x, Empty, 1)
     Node(l, v, r, _) as t => {
@@ -94,7 +94,7 @@ pub func add[U:Compare](self: T[U], x: U) -> T[U] {
 /// `min_elt[U](self: T[U], default: U)`
 ///
 /// Find the minimum element in a tree-like data structure.
-func min_elt[U](self: T[U], default: U) -> U {
+fn min_elt[U](self: T[U], default: U) -> U {
   match self {
     Empty => default
     Node(Empty, v, _, _) => v
@@ -105,7 +105,7 @@ func min_elt[U](self: T[U], default: U) -> U {
 /// `remove_min_elt[U](l: T[U], v: U, r: T[U])`
 ///
 /// Remove the minimum element from a avl tree and rebalance the tree.
-func remove_min_elt[U](l: T[U], v: U, r: T[U]) -> T[U] {
+fn remove_min_elt[U](l: T[U], v: U, r: T[U]) -> T[U] {
   match l {
     Empty => r
     Node(ll, lv, lr, _) => bal(remove_min_elt(ll, lv, lr), v, r)
@@ -115,7 +115,7 @@ func remove_min_elt[U](l: T[U], v: U, r: T[U]) -> T[U] {
 /// `internal_merge[U](self: T[U], other: T[U])`
 ///
 /// Merge two AVL trees of the same user-defined type `U` into a new AVL tree.
-func internal_merge[U](self: T[U], other: T[U]) -> T[U] {
+fn internal_merge[U](self: T[U], other: T[U]) -> T[U] {
   match (self, other) {
     (Empty, t) => t
     (t, Empty) => t
@@ -127,7 +127,7 @@ func internal_merge[U](self: T[U], other: T[U]) -> T[U] {
 /// `remove[U:Compare](self: T[U], x: U)`
 ///
 /// Removes a value from the AVL tree while maintaining balance
-pub func remove[U:Compare](self: T[U], x: U) -> T[U] {
+pub fn remove[U:Compare](self: T[U], x: U) -> T[U] {
   match self {
     Empty => Empty
     Node(l, v, r, _) => {
@@ -142,7 +142,7 @@ pub func remove[U:Compare](self: T[U], x: U) -> T[U] {
 /// `to_string[U:Show](self: T[U]) -> String`
 ///
 /// convert the AVL tree to string.
-pub func to_string[U : Show](self : T[U]) -> String {
+pub fn to_string[U : Show](self : T[U]) -> String {
   match self {
     Empty => "()"
     Node(Empty, v, Empty, _) => v.to_string()
@@ -153,7 +153,7 @@ pub func to_string[U : Show](self : T[U]) -> String {
 /// `mem[U:Compare](self: T[U], x: U)`
 ///
 /// Check if a given element exists in an AVL tree.
-pub func mem[U:Compare](self: T[U], x: U) -> Bool {
+pub fn mem[U:Compare](self: T[U], x: U) -> Bool {
   match self {
     Empty => false
     Node(l, v, r, _) => {
@@ -164,7 +164,7 @@ pub func mem[U:Compare](self: T[U], x: U) -> Bool {
   }
 }
 
-func repeat_str(s: String, n: Int) -> String {
+fn repeat_str(s: String, n: Int) -> String {
   var result = ""
   var i = 0
   while i < n {
@@ -177,7 +177,7 @@ func repeat_str(s: String, n: Int) -> String {
 /// `print_tree[U:Show](self: T[U])`
 ///
 /// Print the AVL tree
-pub func print_tree[U:Show](self: T[U]) {
+pub fn print_tree[U:Show](self: T[U]) {
   fn helper(node: T[U], level: Int) {
     match node {
       Empty => ()

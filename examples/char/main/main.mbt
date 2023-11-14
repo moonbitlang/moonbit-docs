@@ -1,4 +1,4 @@
-func init {
+fn init {
   match @lib.is_alpha('a') {
     true => println("is alpha")
     false => println("is not alpha")

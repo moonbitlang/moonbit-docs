@@ -1,18 +1,18 @@
 type Canvas_ctx
 
-func set_stroke_color(self : Canvas_ctx, color : Int) = "canvas" "set_stroke_color"
+fn set_stroke_color(self : Canvas_ctx, color : Int) = "canvas" "set_stroke_color"
 
-func set_line_width(self : Canvas_ctx, width : Float64) = "canvas" "set_line_width"
+fn set_line_width(self : Canvas_ctx, width : Double) = "canvas" "set_line_width"
 
-func stroke_rect(self : Canvas_ctx, x : Int, y : Int, width : Int, height : Int) = "canvas" "stroke_rect"
+fn stroke_rect(self : Canvas_ctx, x : Int, y : Int, width : Int, height : Int) = "canvas" "stroke_rect"
 
-func fill_rect(self : Canvas_ctx, x : Int, y : Int, width : Int, height : Int) = "canvas" "fill_rect"
+fn fill_rect(self : Canvas_ctx, x : Int, y : Int, width : Int, height : Int) = "canvas" "fill_rect"
 
-func set_fill_style(self : Canvas_ctx, color : Int) = "canvas" "set_fill_style"
+fn set_fill_style(self : Canvas_ctx, color : Int) = "canvas" "set_fill_style"
 
-func draw_game_over(self : Canvas_ctx) = "canvas" "draw_game_over"
+fn draw_game_over(self : Canvas_ctx) = "canvas" "draw_game_over"
 
-pub func draw(canvas : Canvas_ctx, tetris : Tetris) {
+pub fn draw(canvas : Canvas_ctx, tetris : Tetris) {
   var c = 0
 
   // draw backgroud
@@ -33,7 +33,7 @@ pub func draw(canvas : Canvas_ctx, tetris : Tetris) {
   }
 }
 
-pub func draw_piece(canvas : Canvas_ctx, matrix : List[Array[Int]],
+pub fn draw_piece(canvas : Canvas_ctx, matrix : List[Array[Int]],
         offset : (Int, Int)) {
   fn go(l : List[Array[Int]], r : Int, canvas : Canvas_ctx) {
     match l {

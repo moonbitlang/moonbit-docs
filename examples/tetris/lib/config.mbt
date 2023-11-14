@@ -12,7 +12,7 @@ enum PIECE {
   O
 }
 
-pub func pice_shap(self : PIECE) -> Array[Array[Int]] {
+pub fn pice_shap(self : PIECE) -> Array[Array[Int]] {
   match self {
     I => [[1, 1, 1, 1]]
     L => [[0, 0, 2], [2, 2, 2]]

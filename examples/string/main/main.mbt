@@ -1,4 +1,4 @@
-func init {
+fn init {
   let (arr, len) = @lib.split("a.b.c.e.f.g.h.i.j.k.l.m.n", '.')
   var index = 0
   // let l = arr.length()

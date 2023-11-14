@@ -9,7 +9,7 @@ struct Universe {
   mut cells : Array[Cell]
 }
 
-func get_index(self : Universe, row : Int, column : Int) -> Int {
+fn get_index(self : Universe, row : Int, column : Int) -> Int {
   if row * self.width + column < self.width * self.height {
     row * self.width + column
   } else {
@@ -17,7 +17,7 @@ func get_index(self : Universe, row : Int, column : Int) -> Int {
   }
 }
 
-pub func new() -> Universe {
+pub fn new() -> Universe {
   let width = 64
   let height = 64
   let cells : Array[Cell] = Array::make(width * height, Dead)
@@ -33,26 +33,26 @@ pub func new() -> Universe {
   { width, height, cells }
 }
 
-pub func get_width(self : Universe) -> Int {
+pub fn get_width(self : Universe) -> Int {
   self.width
 }
 
-pub func get_height(self : Universe) -> Int {
+pub fn get_height(self : Universe) -> Int {
   self.height
 }
 
-pub func get_cells(self : Universe) -> Array[Cell] {
+pub fn get_cells(self : Universe) -> Array[Cell] {
   self.cells
 }
 
-pub func get_cell(self : Universe, idx : Int) -> Int {
+pub fn get_cell(self : Universe, idx : Int) -> Int {
   match self.cells[idx] {
     Alive => 1
     Dead => 0
   }
 }
 
-func live_neighbor_count(self : Universe, row : Int, column : Int) -> Int {
+fn live_neighbor_count(self : Universe, row : Int, column : Int) -> Int {
   var count = 0
   let delta_rows = [self.height - 1, 0, 1]
   let delta_cols = [self.width - 1, 0, 1]
@@ -75,7 +75,7 @@ func live_neighbor_count(self : Universe, row : Int, column : Int) -> Int {
   count
 }
 
-pub func tick(self : Universe) {
+pub fn tick(self : Universe) {
   let next : Array[Cell] = Array::make(self.width * self.height, Dead)
   var r = 0
   while r < self.height {
@@ -104,7 +104,7 @@ pub func tick(self : Universe) {
   self.cells = next
 }
 
-pub func to_string(self : Universe) -> String {
+pub fn to_string(self : Universe) -> String {
   var r = 0
   var cells = ""
   while r < self.height {

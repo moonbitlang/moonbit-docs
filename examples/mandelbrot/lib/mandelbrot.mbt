@@ -1,12 +1,12 @@
-func log(x : Float64) -> Float64 = "math" "log"
+fn log(x : Double) -> Double = "math" "log"
 
-func floor(x : Float64) -> Int = "math" "floor"
+fn floor(x : Double) -> Int = "math" "floor"
 
-func float_of_int(x : Int) -> Float64 = "math" "float_of_int"
+fn float_of_int(x : Int) -> Double = "math" "float_of_int"
 
 type ImageData
 
-func set_image_data(self : ImageData, x : Int, rgb : Int) = "imagedata" "set"
+fn set_image_data(self : ImageData, x : Int, rgb : Int) = "imagedata" "set"
 
 let escape_radius = 4.0
 
@@ -20,21 +20,21 @@ let ratio = 0.75
 
 let image_width = 800.0
 
-let image_height : Float64 = image_width * ratio // 600
+let image_height : Double = image_width * ratio // 600
 
-let coffset : Float64 = if floor(image_width) % 2 == 0 {
+let coffset : Double = if floor(image_width) % 2 == 0 {
   image_width / 2.0 - 0.5
 } else {
   image_width / 2.0
 }
 
-let roffset : Float64 = if floor(image_height) % 2 == 0 {
+let roffset : Double = if floor(image_height) % 2 == 0 {
   image_height / 2.0 - 0.5
 } else {
   image_height / 2.0
 }
 
-pub func iter(cx : Float64, cy : Float64) -> Float64 {
+pub fn iter(cx : Double, cy : Double) -> Double {
   var x = 0.0
   var y = 0.0
   var newx = 0.0
@@ -55,7 +55,7 @@ pub func iter(cx : Float64, cy : Float64) -> Float64 {
   return -1.0
 }
 
-func interpolation(f : Float64, c0 : Int, c1 : Int) -> Int {
+fn interpolation(f : Double, c0 : Int, c1 : Int) -> Int {
   let r0 = c0.asr(16).land(0xFF)
   let g0 = c0.asr(8).land(0xFF)
   let b0 = c0.land(0xFF)
@@ -68,7 +68,7 @@ func interpolation(f : Float64, c0 : Int, c1 : Int) -> Int {
   return r.lsl(16).lor(g.lsl(8).lor(b))
 }
 
-pub func get_color(d : Float64) -> Int {
+pub fn get_color(d : Double) -> Int {
   if d >= 0.0 {
     var k = 0.021 * (d - 1.0 + log(log(128.0)) / log(2.0))
     k = log(1.0 + k) - 29.0 / 400.0
@@ -90,8 +90,8 @@ pub func get_color(d : Float64) -> Int {
   }
 }
 
-pub func calc_color(col : Int, row : Int, ox : Float64, oy : Float64,
-        width : Float64) -> Int {
+pub fn calc_color(col : Int, row : Int, ox : Double, oy : Double,
+        width : Double) -> Int {
   let pixel_size = width / image_width
   let cx = (float_of_int(col) - coffset) * pixel_size + ox
   let cy = (float_of_int(row) - roffset) * pixel_size + oy
@@ -120,7 +120,7 @@ pub func calc_color(col : Int, row : Int, ox : Float64, oy : Float64,
   return r.lsl(16).lor(g.lsl(8)).lor(b)
 }
 
-pub func draw_color(image_data : ImageData, col : Int, row : Int, rgb : Int) {
+pub fn draw_color(image_data : ImageData, col : Int, row : Int, rgb : Int) {
   let pindex = ((image_height - float_of_int(row) - 1.0) * image_width + float_of_int(
       col,
     )) * 4.0
