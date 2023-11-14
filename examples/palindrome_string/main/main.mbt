@@ -1,4 +1,4 @@
-func init {
+fn init {
   let test1 = "abc"
   let test2 = "aba"
   let a = @lib.is_palindrome(test1)

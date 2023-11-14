@@ -1,4 +1,4 @@
-func init {
+fn init {
   let buf = @lib.Buffer::new(4)
   buf.append_int(256)
   buf.append_int(255)

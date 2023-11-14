@@ -1,4 +1,4 @@
-func min(a : Int, b : Int) -> Int {
+fn min(a : Int, b : Int) -> Int {
   if a > b {
     return b
   } else {
@@ -9,7 +9,7 @@ func min(a : Int, b : Int) -> Int {
 /// `minPathSum(triangle : Array[Array[Int]])`
 ///
 /// Calculate the minimum path sum through a triangle of integers.
-pub func minPathSum(triangle : Array[Array[Int]]) -> Int {
+pub fn minPathSum(triangle : Array[Array[Int]]) -> Int {
   fn helper(row : Int, col : Int) -> Int {
     if row == triangle.length() {
       return 0

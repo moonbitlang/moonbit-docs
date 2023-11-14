@@ -4,19 +4,19 @@ pub struct Buffer[T] {
   mut data : Array[T]
 }
 
-pub func Buffer::new[T : Default](capacity : Int) -> Buffer[T] {
+pub fn Buffer::new[T : Default](capacity : Int) -> Buffer[T] {
   { cap: capacity, len: 0, data: Array::make(capacity, T::default()) }
 }
 
-pub func capacity[T](self : Buffer[T]) -> Int {
+pub fn capacity[T](self : Buffer[T]) -> Int {
   self.cap
 }
 
-pub func length[T](self : Buffer[T]) -> Int {
+pub fn length[T](self : Buffer[T]) -> Int {
   self.len
 }
 
-pub func op_get[T](self : Buffer[T], i : Int) -> Option[T] {
+pub fn op_get[T](self : Buffer[T], i : Int) -> Option[T] {
   if i < self.cap {
     Some(self.data[i])
   } else {
@@ -24,7 +24,7 @@ pub func op_get[T](self : Buffer[T], i : Int) -> Option[T] {
   }
 }
 
-func expand_size[T : Default](self : Buffer[T]) {
+fn expand_size[T : Default](self : Buffer[T]) {
   let new_capacity = if self.cap != 0 {
     self.cap * 2
   } else {
@@ -40,7 +40,7 @@ func expand_size[T : Default](self : Buffer[T]) {
   self.data = new_data
 }
 
-pub func append[T : Default](self : Buffer[T], value : T) {
+pub fn append[T : Default](self : Buffer[T], value : T) {
   if self.len >= self.cap {
     self.expand_size()
   }
@@ -48,7 +48,7 @@ pub func append[T : Default](self : Buffer[T], value : T) {
   self.len = self.len + 1
 }
 
-pub func truncate[T : Default](self : Buffer[T], another : Buffer[T]) {
+pub fn truncate[T : Default](self : Buffer[T], another : Buffer[T]) {
   var index = 0
   while index < another.len {
     if self.len >= self.cap {
@@ -60,7 +60,7 @@ pub func truncate[T : Default](self : Buffer[T], another : Buffer[T]) {
   }
 }
 
-pub func clear[T : Default](self : Buffer[T]) {
+pub fn clear[T : Default](self : Buffer[T]) {
   var index = 0
   while index < self.len {
     self.data[index] = T::default()
@@ -69,13 +69,13 @@ pub func clear[T : Default](self : Buffer[T]) {
   self.len = 0
 }
 
-pub func reset[T : Default](self : Buffer[T], capacity : Int) {
+pub fn reset[T : Default](self : Buffer[T], capacity : Int) {
   self.cap = capacity
   self.len = 0
   self.data = Array::make(capacity, T::default())
 }
 
-pub func println[T : Show](self : Buffer[T]) {
+pub fn println[T : Show](self : Buffer[T]) {
   var index = 0
   print('[')
   while index < self.len {
@@ -85,10 +85,10 @@ pub func println[T : Show](self : Buffer[T]) {
       print(',')
     }
   }
-  println(']')  
+  println(']')
 }
 
-func init {
+fn init {
   ()
 }
 

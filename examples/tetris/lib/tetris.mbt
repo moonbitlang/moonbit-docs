@@ -10,7 +10,7 @@ struct Tetris {
   mut row_completed : Int
 }
 
-pub func reset_game(self : Tetris) {
+pub fn reset_game(self : Tetris) {
   self.dead = false
   self.score = 0
   self.row_completed = 0
@@ -26,7 +26,7 @@ pub func reset_game(self : Tetris) {
   self.dead = self.generate_piece()
 }
 
-pub func generate_piece(self : Tetris) -> Bool {
+pub fn generate_piece(self : Tetris) -> Bool {
   self.current = self.get_next_piece(true)
   self.pice_shap = self.current.pice_shap()
   self.pice_x = grid_col_count / 2 - self.pice_shap[0].length() / 2
@@ -34,7 +34,7 @@ pub func generate_piece(self : Tetris) -> Bool {
   return check_collision(self.grid, self.pice_shap, (self.pice_x, self.pice_y))
 }
 
-pub func get_next_piece(self : Tetris, pop : Bool) -> PIECE {
+pub fn get_next_piece(self : Tetris, pop : Bool) -> PIECE {
   if self.pice_pool.length() == 0 {
     self.generate_piece_pool()
   }
@@ -45,7 +45,7 @@ pub func get_next_piece(self : Tetris, pop : Bool) -> PIECE {
   cur
 }
 
-pub func generate_piece_pool(self : Tetris) {
+pub fn generate_piece_pool(self : Tetris) {
   self.pice_pool = [
     PIECE::I,
     PIECE::J,
@@ -58,7 +58,7 @@ pub func generate_piece_pool(self : Tetris) {
   // TODO:shuffle
 }
 
-pub func on_piece_collision(self : Tetris) {
+pub fn on_piece_collision(self : Tetris) {
   let len_r = self.pice_shap.length()
   let len_c = self.pice_shap[0].length()
   let y = self.pice_y - 1
@@ -121,7 +121,7 @@ pub func on_piece_collision(self : Tetris) {
   self.dead = self.generate_piece()
 }
 
-pub func drop_piece(self : Tetris, instant : Bool) {
+pub fn drop_piece(self : Tetris, instant : Bool) {
   if instant {
     let y = get_effective_height(
       self.grid,
@@ -142,7 +142,7 @@ pub func drop_piece(self : Tetris, instant : Bool) {
   self.on_piece_collision()
 }
 
-pub func move_piece(self : Tetris, delta : Int) {
+pub fn move_piece(self : Tetris, delta : Int) {
   var new_x = self.pice_x + delta
   new_x = max(0, min(new_x, grid_col_count - self.pice_shap[0].length()))
   if check_collision(self.grid, self.pice_shap, (new_x, self.pice_y)) {
@@ -151,7 +151,7 @@ pub func move_piece(self : Tetris, delta : Int) {
   self.pice_x = new_x
 }
 
-pub func rotate_piece(self : Tetris) {
+pub fn rotate_piece(self : Tetris) {
   let r = self.pice_shap.length()
   let c = self.pice_shap[0].length()
   let new_shap = Array::make(c, Array::make(r, 0))
@@ -180,7 +180,7 @@ pub func rotate_piece(self : Tetris) {
   self.pice_shap = new_shap
 }
 
-pub func step(tetris : Tetris, action : Int) {
+pub fn step(tetris : Tetris, action : Int) {
   if tetris.dead {
     return
   }
@@ -201,7 +201,7 @@ pub func step(tetris : Tetris, action : Int) {
   tetris.drop_piece(false)
 }
 
-pub func new() -> Tetris {
+pub fn new() -> Tetris {
   let tetris = {
     dead: false,
     grid: Nil,
@@ -217,7 +217,7 @@ pub func new() -> Tetris {
   tetris
 }
 
-pub func get_score(tetris : Tetris) -> Int {
+pub fn get_score(tetris : Tetris) -> Int {
   tetris.score
 }
 

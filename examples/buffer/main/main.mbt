@@ -1,4 +1,4 @@
-func init {
+fn init {
   let buf : @lib.Buffer[Int] = @lib.Buffer::new(5)
   println(buf.capacity()) // 5
   var index = 0

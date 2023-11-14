@@ -1,4 +1,4 @@
-func init {
+fn init {
   var v : @lib.T[Int] = Empty // Create an empty AVL tree with Int type
   let iter = 30
 
@@ -28,7 +28,7 @@ func init {
   while k < iter {
     v = v.remove(k)
     k = k + 1
-  }  
+  }
 
   // Tree is empty, removal successful
   match v {

@@ -1,8 +1,8 @@
-pub func draw(ctx : @lib.Canvas_ctx, deep : Float64) {
+pub fn draw(ctx : @lib.Canvas_ctx, deep : Double) {
   @lib.draw(ctx, deep)
 }
 
-func init {
+fn init {
   ()
 }
 

@@ -8,28 +8,28 @@ pub let int_min = -2147483648
 
 pub let int_max = 2147483647
 
-pub func max[T : Compare](a : T, b : T) -> T {
+pub fn max[T : Compare](a : T, b : T) -> T {
   if a.compare(b) >= 0 {
     return a
   }
   return b
 }
 
-pub func min[T : Compare](a : T, b : T) -> T {
+pub fn min[T : Compare](a : T, b : T) -> T {
   if a.compare(b) >= 0 {
     return b
   }
   return a
 }
 
-pub func abs_int(n : Int) -> Int {
+pub fn abs_int(n : Int) -> Int {
   if n.compare(0) >= 0 {
     return n
   }
   return -n
 }
 
-pub func factorial(n : Int) -> Option[Int] {
+pub fn factorial(n : Int) -> Option[Int] {
   fn factorial_helper(n : Int, acc : Int) -> Option[Int] {
     match n {
       0 | 1 => Some(acc)
@@ -45,7 +45,7 @@ pub func factorial(n : Int) -> Option[Int] {
   factorial_helper(n, 1)
 }
 
-pub func parse_int(s : String) -> Option[Int] {
+pub fn parse_int(s : String) -> Option[Int] {
   let char_0 = 0x30
   let char_u_a = 0x41
   let char_a = 0x61
@@ -96,7 +96,7 @@ pub func parse_int(s : String) -> Option[Int] {
   return Some(result_digit)
 }
 
-func init {
+fn init {
   ()
 }
 
