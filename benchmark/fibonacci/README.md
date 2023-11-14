@@ -59,7 +59,7 @@ Build `golang.wasm`
 ``` sh
 GOOS=js GOARCH=wasm go build -o golang.wasm ./main.go
 ```
-Start a web server with `python3 -m http.server 8080`, and we can now test the benchmark of GO by browsing http://127.0.0.1:8080/moonbit.html
+Start a web server with `python3 -m http.server 8080`, and we can now test the benchmark of GO by browsing http://127.0.0.1:8080/
 
 <img width="600" src="imgs/golang_bench.png">
 
