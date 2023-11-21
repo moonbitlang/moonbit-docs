@@ -104,6 +104,9 @@ non_empty_list_commas_rev(X):
 non_empty_list_commas( X):
   | xs = non_empty_list_commas_rev(X) ; ioption(",") {}
 
+non_empty_list_commas_with_tail (X):
+  | xs = non_empty_list_commas_rev(X); "," {}
+
 %inline list_commas( X):
   | {}
   | non_empty_list_commas(X) {}
@@ -333,14 +336,10 @@ simple_pattern:
 
 array_sub_patterns:
   | {}
-  | dotdot_patttern {}
+  | ".." ioption(",") {}
   | ps=non_empty_list_commas(pattern) {}
-  | dotdot_patttern ps=non_empty_list_commas(pattern) {}
-  | ps=non_empty_list_commas(pattern) dotdot_patttern {}
-
-dotdot_patttern:
-  | ".." {}
-  | ".." "," {}
+  | ".." "," ps=non_empty_list_commas(pattern) {}// .. a,b,c
+  | ps=non_empty_list_commas_with_tail(pattern) ".." ioption(",") {}//a,b,c .. | a,b,c ..,
 
 type_:
   | "(" t=type_ "," ts=non_empty_list_commas(type_) ")" {}
@@ -380,7 +379,7 @@ record_defn_single:
 fields_pat:
   | {}
   | fps=non_empty_list_commas(fields_pat_single) {}
-  | fps=non_empty_list_commas_rev(fields_pat_single) "," ".." ioption(",") {}
+  | fps=non_empty_list_commas_with_tail(fields_pat_single) ".." ioption(",") {}
 
 fields_pat_single:
   | fpat_labeled_pattern
