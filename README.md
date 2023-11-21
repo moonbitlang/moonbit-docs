@@ -357,6 +357,53 @@ struct Stack {
 }
 ```
 
+#### Constructing Struct with Shorthand
+
+If you already have some variable like `name` and `email`, it's redundant to repeat those name when constructing a struct: 
+
+```go
+fn init{
+  let name = "john"
+  let email = "john@doe.com"
+  let u = { id: 0, name: name, email: email } 
+}
+```
+
+You can use shorthand instead, it behaves exactly the same.
+
+```go
+fn init{
+  let name = "john"
+  let email = "john@doe.com"
+  let u = { id: 0, name, email }
+}
+```
+
+#### Struct Update Syntax
+
+It's useful to create a new struct based on an existing one, but with some fields updated.
+
+```rust
+struct User {
+  id: Int
+  name: String
+  email: String
+}
+
+fn to_string(self : User) -> String {
+  "{ id: " + self.id.to_string() + 
+    ", name: " + self.name + 
+    ", email: " + self.email + " }" 
+}
+
+fn init {
+  let user = { id: 0, name: "John Doe", email: "john@doe.com" }
+  let updated_user = { ..user, email: "john@doe.name" }
+  println(user) // output: { id: 0, name: John Doe, email: john@doe.com }
+  println(updated_user) // output: { id: 0, name: John Doe, email: john@doe.name }
+}
+```
+
 ### Enum
 
 Enum types are similar to algebraic data types in functional languages. An enum can have a set of cases. Additionally, every case can specify associated values of different types, similar to a tuple. The label for every case must be capitalized, which is called a data constructor. An enum can be constructed by calling a data constructor with arguments of specified types. The construction of an enum must be annotated with a type. An enum can be destructed by pattern matching, and the associated values can be bound to variables that are specified in each pattern.
@@ -386,7 +433,7 @@ fn init {
 
 ## Pattern Matching
 
-We have shown a use case of pattern matching for enums, but pattern matching is not restricted to enums. For example, we can also match expressions against Boolean values, numbers, characters, strings, tuples, arrays, and struct literals. Since there is only one case for those types other than enums, we can pattern match them using `let`/`var` binding instead of `match` expressions. Note that the scope of bound variables in `match` is limited to the case where the variable is introduced, while `let`/`var` binding will introduce every variable to the current scope. Furthermore, we can use underscores `_` as wildcards for the values we don’t care about.
+We have shown a use case of pattern matching for enums, but pattern matching is not restricted to enums. For example, we can also match expressions against Boolean values, numbers, characters, strings, tuples, arrays, and struct literals. Since there is only one case for those types other than enums, we can pattern match them using `let`/`var` binding instead of `match` expressions. Note that the scope of bound variables in `match` is limited to the case where the variable is introduced, while `let`/`var` binding will introduce every variable to the current scope. Furthermore, we can use underscores `_` as wildcards for the values we don’t care about, use `..` to ignore remaining fields of struct or elements of array.
 
 ```go
 let id = match u {
@@ -394,6 +441,14 @@ let id = match u {
 }
 // is equivalent to
 let { id: id, name: _, email: _ } = u
+// or
+let { id: id, ..} = u
+```
+
+```go
+let ary = [1,2,3,4]
+let [a, b, ..] = ary // a = 1, b = 2
+let [.., a, b] = ary // a = 3, b = 4
 ```
 
 There are some other useful constructs in pattern matching. For example, we can use `as` to give a name to some pattern, and we can use `|` to match several cases at once. A variable name can only be bound once in a single pattern, and the same set of variables should be bound on both sides of `|` patterns.
