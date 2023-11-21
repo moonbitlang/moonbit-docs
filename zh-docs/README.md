@@ -264,9 +264,9 @@ fn f(t : (Int, Int)) {
   let x2 = t.0
   let y2 = t.1
   if (x1 == x2 && y1 == y2) {
-    "yes".print()
+    print("yes")
   } else {
-    "no".print()
+    print("no")
   }
 }
 
@@ -291,7 +291,7 @@ fn init {
   let a = array[2]
   array[3] = 5
   let b = a + array[3]
-  b.print() // prints 8
+  print(b) // prints 8
 }
 ```
 
@@ -306,7 +306,7 @@ let zero = 0
 fn init {
   var i = 10
   i = 20
-  (i + zero).print()
+  print(i + zero)
 }
 ```
 
@@ -487,7 +487,7 @@ fn init {
 
 方法和普通函数的另一个区别是，只有方法支持重载。
 例如，我们可能需要多个输出函数：`output_int`和`output_float`用于不同类型的输出。
-但使用方法`output`，可以识别主体的类型，并选择适当的重载版本，例如 1.print()和 1.0.print()。
+但使用方法`output`，可以识别主体的类型，并选择适当的重载版本，例如 print(1) 和 print(1.0)。
 
 ## 运算符重载
 
@@ -585,10 +585,10 @@ fn init {
 }
 
 // Package B
-fn print(r : RO) {
-  "{ field: ".print()
-  r.field.print()  // OK
-  " }".print()
+fn print_RO(r : RO) {
+  print("{ field: ")
+  print(r.field)  // OK
+  print(" }")
 }
 fn init {
   let r : RO = { field: 4 }  // ERROR: Cannot create values of the public read-only type RO!
