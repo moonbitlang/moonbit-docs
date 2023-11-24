@@ -31,6 +31,7 @@ open Parser_util
 %token STRUCT          "struct"
 %token ENUM            "enum"
 %token INTERFACE       "interface"
+%token DERIVE          "derive"
 %token EQUAL           "="
 
 %token LPAREN          "("
@@ -153,9 +154,9 @@ fun_header:
 val_header : pub=ioption("pub") "let" binder=binder t=opt_annot {}
 structure : list_semis(structure_item) EOF {}
 structure_item:
-  | type_header=type_header {}
-  | struct_header=struct_header "{" fs=list_semis(record_decl_field) "}" {}
-  | enum_header=enum_header "{" cs=list_semis(enum_constructor) "}" {}
+  | type_header=type_header deriving_=derive_directive {}
+  | struct_header=struct_header "{" fs=list_semis(record_decl_field) "}" deriving_=derive_directive {}
+  | enum_header=enum_header "{" cs=list_semis(enum_constructor) "}" deriving_=derive_directive {}
   | val_header=val_header  "=" expr = expr {}
   | t=fun_header "=" mname=STRING fname=STRING {}
   | t=fun_header body=block_expr {}
@@ -170,6 +171,14 @@ structure_item:
 type_header: vis=visibility "type" tycon=luident params=optional_type_parameters {}
 struct_header: vis=visibility "struct" tycon=luident params=optional_type_parameters {}
 enum_header: vis=visibility "enum" tycon=luident params=optional_type_parameters {}
+
+derive_item:
+  | qual_ident_ty {}
+
+derive_directive:
+  | /* nothing */ {}
+  | "derive" "(" list_commas(derive_item) ")" {}
+
 interface_method_decl:
   fun_binder=fun_binder
   quantifiers=optional_type_parameters
