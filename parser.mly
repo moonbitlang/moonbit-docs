@@ -159,6 +159,7 @@ structure_item:
   | enum_header=enum_header "{" cs=list_semis(enum_constructor) "}" deriving_=derive_directive {}
   | val_header=val_header  "=" expr = expr {}
   | t=fun_header "=" mname=STRING fname=STRING {}
+  | t=fun_header "=" fname=STRING {}
   | t=fun_header body=block_expr {}
   | pub=ioption("pub") "interface" name=luident "{" methods=list_semis(interface_method_decl) "}" {}
 %inline visibility:
