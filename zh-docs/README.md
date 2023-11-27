@@ -736,6 +736,24 @@ fn two[X: I]() -> X {
 }
 ```
 
+## 自动实现内建接口
+Moonbit 可以自动生成一些内建接口的实现:
+```
+struct T {
+  x: Int
+  y: Int
+} derive(Eq, Compare, Show, Default)
+
+fn init {
+  let t1 = T::default()
+  let t2 = { x: 1, y: 1 }
+  println(t1) // {x: 0, y: 0}
+  println(t2) // {x: 1, y: 1}
+  println(t1 == t2) // false
+  println(t1 < t2) // true
+}
+```
+
 ## MoonBit 的构建系统
 
 构建系统的介绍可以在 [MoonBit 的构建系统教程](./build-system-tutorial.md) 中找到。

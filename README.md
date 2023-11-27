@@ -766,6 +766,24 @@ fn two[X: I]() -> X {
 }
 ```
 
+## Automatically derive builtin interface
+Moonbit can automatically derive implementations for some builtin interfaces:
+```
+struct T {
+  x: Int
+  y: Int
+} derive(Eq, Compare, Show, Default)
+
+fn init {
+  let t1 = T::default()
+  let t2 = { x: 1, y: 1 }
+  println(t1) // {x: 0, y: 0}
+  println(t2) // {x: 1, y: 1}
+  println(t1 == t2) // false
+  println(t1 < t2) // true
+}
+```
+
 ## MoonBit’s build system
 
 The introduction to the build system is available at [MoonBit's Build System Tutorial](./build-system-tutorial.md).
