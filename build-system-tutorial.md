@@ -77,7 +77,7 @@ Here's a brief explanation of the directory structure:
   - `lib/moon.pkg.json`:
   ```json
   {}
-  ``
+  ```
   This file is empty. Its purpose is simply to inform the build system that this folder is a package.
 
 - `moon.mod.json` is used to identify a directory as a MoonBit module. It contains the module's name:
