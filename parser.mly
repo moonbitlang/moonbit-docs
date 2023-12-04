@@ -155,6 +155,7 @@ val_header : pub=ioption("pub") "let" binder=binder t=opt_annot {}
 structure : list_semis(structure_item) EOF {}
 structure_item:
   | type_header=type_header deriving_=derive_directive {}
+  | type_header=type_header ty=type_ deriving_=derive_directive {}
   | struct_header=struct_header "{" fs=list_semis(record_decl_field) "}" deriving_=derive_directive {}
   | enum_header=enum_header "{" cs=list_semis(enum_constructor) "}" deriving_=derive_directive {}
   | val_header=val_header  "=" expr = expr {}
