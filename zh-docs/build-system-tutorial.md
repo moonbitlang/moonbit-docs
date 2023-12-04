@@ -65,7 +65,22 @@ $ moon new hello
 
 - `lib`和`main`目录：这些是模块中的包。每个包可以包含多个`.mbt`文件，这些文件是 MoonBit 语言的源代码文件。不过，无论包中有多少个`.mbt`文件，它们都共享一个公共的`moon.pkg.json`文件。
 
-- `moon.pkg.json`文件：包描述符文件。它定义了包的属性，例如包的名称和导入的包。
+- `moon.pkg.json`文件：包描述符文件。它定义了包的属性，例如该包是否为 main 包，该包所导入的包。
+  - `main/moon.pkg.json`：
+    ```json
+    {
+      "is_main": true,
+      "import": {
+        "hello8/lib": ""
+      }
+    }
+    ```
+    其中的 `"is_main: true"` 声明该包需要被构建系统链接为 wasm 文件。
+  - `lib/moon.pkg.json`
+    ```json
+    {}
+    ```
+    内容为空，其作用仅仅是告诉构建系统该文件夹是一个包。
 
 - `moon.mod.json`用于将目录标识为 MoonBit 模块。它包含模块的名称：
 
@@ -119,7 +134,7 @@ Hello, world!
 
 ```json
 {
-  "name": "main",
+  "is_main": true,
   "import": {
     "hello/lib": ""
   }
@@ -169,9 +184,7 @@ pub fn fib2(num : Int) -> Int {
 `moon.pkg.json`:
 
 ```json
-{
-  "name": "fib"
-}
+{}
 ```
 
 创建这些文件后，目录结构应如下所示：
@@ -195,7 +208,7 @@ pub fn fib2(num : Int) -> Int {
 
 ```json
 {
-  "name": "main",
+  "is_main": true,
   "import": {
     "hello/lib": "",
     "hello/lib/fib": ""
