@@ -4,11 +4,11 @@
 
 Before you begin with this tutorial, make sure you have installed the following:
 
-1. **MoonBit CLI Tools**: Download it from the <https://www.moonbitlang.com/download/>. This command line tool is needed for creating and managing MoonBit projects.
+1. **MoonBit CLI Tools**: Download it from the [https://www.moonbitlang.com/download/](https://www.moonbitlang.com/download/). This command line tool is needed for creating and managing MoonBit projects.
 
    Use `moon help` to view the usage instructions.
 
-   ```
+   ```bash
    $ moon help
    Moonbit's build system
 
@@ -39,7 +39,7 @@ Once you have these prerequisites fulfilled, let's start building a new module i
 To create a new module, use the `moon new hello` command in your terminal:
 
 ```bash
-$ moon new hello
+moon new hello
 ```
 
 This command will create a new module named `hello`.
@@ -64,7 +64,9 @@ Here's a brief explanation of the directory structure:
 - `lib` and `main` directories: These are packages in the module. Each package can contain multiple `.mbt` files, which are the source code files in MoonBit language. However, regardless of the number of `.mbt` files in a package, they all share a common `moon.pkg.json` file.
 
 - `moon.pkg.json` is package descriptor. It defines the properties of the package, such as whether it is the main package and the packages it imports.
+
   - `main/moon.pkg.json`:
+
   ```json
   {
     "is_main": true,
@@ -73,11 +75,15 @@ Here's a brief explanation of the directory structure:
     }
   }
   ```
+
   Here, "is_main: true" declares that the package needs to be linked by the build system into a wasm file.
+
   - `lib/moon.pkg.json`:
+
   ```json
   {}
   ```
+
   This file is empty. Its purpose is simply to inform the build system that this folder is a package.
 
 - `moon.mod.json` is used to identify a directory as a MoonBit module. It contains the module's name:
@@ -146,7 +152,7 @@ Here, `"hello/lib": ""` specifies that the `lib` package from the `hello` module
 First, create a new directory named `fib` under `lib`:
 
 ```bash
-$ mkdir lib/fib
+mkdir lib/fib
 ```
 
 Now, you can create new files under `lib/fib`:
@@ -187,7 +193,7 @@ pub fn fib2(num : Int) -> Int {
 
 After creating these files, your directory structure should look like this:
 
-```
+```bash
 .
 ├── lib
 │   ├── fib
