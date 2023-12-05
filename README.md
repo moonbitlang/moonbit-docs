@@ -1,7 +1,7 @@
 # MoonBit
 
 MoonBit is an end-to-end programming language toolchain for cloud and edge computing using WebAssembly.
-The IDE environment is available at <https://try.moonbitlang.com> without any installation; it does not rely on any server either.
+The IDE environment is available at [https://try.moonbitlang.com](https://try.moonbitlang.com) without any installation; it does not rely on any server either.
 
 ## Status
 
@@ -201,7 +201,7 @@ To improve readability, you may place underscores in the middle of numeric liter
 
 - There is nothing surprising about decimal numbers.
 
-```
+```rust
 let a = 1234
 let b = 1_000_000 + a
 let large_num = 9_223_372_036_854_775_807L // Integers of the Int64 type must have an 'L' as a suffix
@@ -210,7 +210,7 @@ let large_num = 9_223_372_036_854_775_807L // Integers of the Int64 type must ha
 - A binary number has a leading zero followed by a letter "B", i.e. `0b`/`0B`.
   Note that the digits after `0b`/`0B` must be `0` or `1`.
 
-```
+```rust
 let bin =  0b110010
 let another_bin = 0B110010
 ```
@@ -218,7 +218,7 @@ let another_bin = 0B110010
 - An octal number has a leading zero followed by a letter "O", i.e. `0o`/`0O`.
   Note that the digits after `0o`/`0O` must be in the range from `0` through `7`:
 
-```
+```rust
 let octal = 0o1234
 let another_octal = 0O1234
 ```
@@ -226,7 +226,7 @@ let another_octal = 0O1234
 - A hexadecimal number has a leading zero followed by a letter "X", i.e. `0x`/`0X`.
   Note that the digits after the `0x`/`0X` must be in the range `0123456789ABCDEF`.
 
-```
+```rust
 let hex = 0XA
 let another_hex = 0xA
 ```
@@ -359,13 +359,13 @@ struct Stack {
 
 #### Constructing Struct with Shorthand
 
-If you already have some variable like `name` and `email`, it's redundant to repeat those name when constructing a struct: 
+If you already have some variable like `name` and `email`, it's redundant to repeat those name when constructing a struct:
 
 ```go
 fn init{
   let name = "john"
   let email = "john@doe.com"
-  let u = { id: 0, name: name, email: email } 
+  let u = { id: 0, name: name, email: email }
 }
 ```
 
@@ -391,9 +391,9 @@ struct User {
 }
 
 fn to_string(self : User) -> String {
-  "{ id: " + self.id.to_string() + 
-    ", name: " + self.name + 
-    ", email: " + self.email + " }" 
+  "{ id: " + self.id.to_string() +
+    ", name: " + self.name +
+    ", email: " + self.email + " }"
 }
 
 fn init {
@@ -767,8 +767,10 @@ fn two[X: I]() -> X {
 ```
 
 ## Automatically derive builtin interface
+
 Moonbit can automatically derive implementations for some builtin interfaces:
-```
+
+```rust
 struct T {
   x: Int
   y: Int
