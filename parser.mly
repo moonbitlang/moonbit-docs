@@ -266,7 +266,7 @@ infix_expr:
 simple_expr:
   | "{" fs=record_defn "}" {}
   | "{" ".." oe=expr "}" {}
-  | "{" ".." oe=expr "," fs=record_defn "}" {}
+  | "{" ".." oe=expr "," fs=list_commas(record_defn_single) "}" {}
   // | "{" fs=list_commas( l=label ":" e=expr {}) "}" {}
   // | "fn"  parameters "=>" atomic_expr
   | "{" x=semi_expr_semi_opt "}" {}
