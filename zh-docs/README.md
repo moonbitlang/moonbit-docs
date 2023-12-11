@@ -683,7 +683,7 @@ fn to_string(self: Point) -> String {
 }
 ```
 
-Moonbit provides the following useful builtin interfaces:
+Moonbit 提供下列实用的内建接口：
 
 ```rust
 interface Eq {
