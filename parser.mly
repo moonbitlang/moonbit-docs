@@ -212,7 +212,8 @@ statement_expr:
     {}
   | "var" binder=binder ty=opt_annot "=" expr=expr
     {}
-  | lv = left_value "=" e=expr {}
+  | assignment_expr 
+    {}
   | "fn" binder=binder params=parameters ty_opt=option("->" t=type_{}) block = block_expr
     {}
   | "break" {}
@@ -221,13 +222,22 @@ statement_expr:
   | "return" expr = option(expr) {}
   | a=expr  {}
 
+%inline assignment_expr:
+  | lv = left_value "=" e=expr {}
+
 %inline shorthand_let_pattern:
   | "_" {}
   | binder=binder {}
 
 while_expr:
-  | "while" cond=infix_expr b=block_expr
+  | "while" cond=infix_expr COMMA continue=while_continue_block body=block_expr
     {}
+  | "while" cond=infix_expr body=block_expr
+    {}
+
+while_continue_block:
+  | assignment_expr {}
+  | simple_expr {}
 
 
 if_expr:
