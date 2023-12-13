@@ -44,7 +44,6 @@ open Parser_util
 %token <int>DOT_INT
 %token COLONCOLON      "::"
 %token COLON           ":"
-%token COLONEQUAL      ":="
 %token <bool>SEMI
 %token LBRACKET        "["
 %token PLUS           "+"
@@ -208,8 +207,6 @@ statement_expr:
 
   | "let" pat=pattern ty_opt=opt_annot "=" expr=expr
     {}
-  | pat=shorthand_let_pattern ":=" expr=expr
-    {}
   | "var" binder=binder ty=opt_annot "=" expr=expr
     {}
   | assignment_expr 
@@ -224,10 +221,6 @@ statement_expr:
 
 %inline assignment_expr:
   | lv = left_value "=" e=expr {}
-
-%inline shorthand_let_pattern:
-  | "_" {}
-  | binder=binder {}
 
 while_expr:
   | "while" cond=infix_expr COMMA continue=while_continue_block body=block_expr
