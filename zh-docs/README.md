@@ -196,6 +196,27 @@ while x == y {
 `while` 语句不返回任何值；它只求值成 `unit` 类型的 `()`
 MoonBit 还提供 `break` 和 `continue` 语句来控制循环流。
 
+`while` 循环还可以有一个可选的 "continue" 块。"continue" 块位于循环条件和循环体之间，和循环条件用逗号分隔。它会在每次循环的循环体之后、下一次循环的循环条件之前被执行：
+
+```rust
+var i = 0
+while i < 10, i = i + 1 {
+  println(i)
+} // outputs 0 to 9
+```
+
+如果在一个 "continue" 块里有多个语句，它们需要被花括号包裹。循环体中的 `continue` 语句不会跳过 "continue" 块。例如，下面的例子会输出小于 10 的所有奇数：
+
+```rust
+var i = 1
+while i < 10, i = i + 1 {
+  if (i % 2 == 0) {
+    continue
+  }
+  println(i)
+} // outputs 1 3 5 7 9
+```
+
 ## 内置数据结构
 
 ### 数字
