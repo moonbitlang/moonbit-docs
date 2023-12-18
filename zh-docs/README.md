@@ -196,6 +196,25 @@ while x == y {
 `while` 语句不返回任何值；它只求值成 `unit` 类型的 `()`
 MoonBit 还提供 `break` 和 `continue` 语句来控制循环流。
 
+```rust
+var i = 0
+var n = 0
+
+while i < 10 {
+  i = i + 1
+  if (i == 3) {
+    continue
+  }
+
+  if (i == 8) {
+    break
+  }
+  n = n + i
+}
+// n = 1 + 2 + 4 + 5 + 6 + 7
+println(n) // outputs 25
+```
+
 `while` 循环还可以有一个可选的 "continue" 块。"continue" 块位于循环条件和循环体之间，和循环条件用逗号分隔。它会在每次循环的循环体之后、下一次循环的循环条件之前被执行：
 
 ```rust
@@ -758,7 +777,9 @@ fn two[X: I]() -> X {
 ```
 
 ## 自动实现内建接口
+
 Moonbit 可以自动生成一些内建接口的实现:
+
 ```
 struct T {
   x: Int

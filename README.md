@@ -191,7 +191,26 @@ while x == y {
 
 The `while` statement doesn't yield anything; it only evaluates to `()` of unit type. MoonBit also provides the `break` and `continue` statements for controlling the flow of a loop.
 
-The `while` loop can have an optional "continue" block after the loop condition, separated by comma. It is executed *after* the body of every iteration, *before* the condition of next iteration:
+```rust
+var i = 0
+var n = 0
+
+while i < 10 {
+  i = i + 1
+  if (i == 3) {
+    continue
+  }
+
+  if (i == 8) {
+    break
+  }
+  n = n + i
+}
+// n = 1 + 2 + 4 + 5 + 6 + 7
+println(n) // outputs 25
+```
+
+The `while` loop can have an optional "continue" block after the loop condition, separated by comma. It is executed _after_ the body of every iteration, _before_ the condition of next iteration:
 
 ```rust
 var i = 0
