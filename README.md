@@ -3,9 +3,13 @@
 MoonBit is an end-to-end programming language toolchain for cloud and edge computing using WebAssembly.
 The IDE environment is available at [https://try.moonbitlang.com](https://try.moonbitlang.com) without any installation; it does not rely on any server either.
 
-## Status
+## Status and aimed timeline
 
-Alpha, experimental. We expect MoonBit to reach beta status next year(2024).
+It is currently alpha, experimental. We expect MoonBit to reach *beta-preview* in 02/2024 and *beta* in 06/2024.
+
+When MoonBit reaches beta, it means any backwards-incompatible changes will be seriouly evaluated and MoonBit *can* be used in production(very rare compiler bugs).
+MoonBit is developed by a talented full time team who had extensive experience in building language toolchains, so we will grow much faster than the 
+typical language ecosystem, you won't wait long to use MoonBit in your production.
 
 ## Main advantages
 
@@ -21,7 +25,7 @@ A MoonBit program consists of type definitions, function definitions, and variab
 1. There can be multiple `init` functions in the same package.
 2. An `init` function can't be explicitly called or referred to by other functions. Instead, all `init` functions will be implicitly called when initializing a package. Therefore, `init` functions should only consist of statements.
 
-```go live
+```rust live
 fn init {
   print("Hello world!") // OK
 }
@@ -35,7 +39,7 @@ fn init {
 
 MoonBit distinguishes between statements and expressions. In a function body, only the last clause should be an expression, which serves as a return value. For example:
 
-```go live
+```rust live
 fn foo() -> Int {
   let x = 1
   x + 1 // OK
@@ -81,7 +85,7 @@ Functions take arguments and produce a result. In MoonBit, functions are first-c
 
 Functions can be defined as top-level or local. We can use the `fn` keyword to define a top-level function that sums three integers and returns the result, as follows:
 
-```go
+```rust
 fn add3(x: Int, y: Int, z: Int)-> Int {
   x + y + z
 }
