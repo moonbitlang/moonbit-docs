@@ -39,6 +39,7 @@ open Parser_util
 
 %token COMMA          ","
 %token MINUS           "-"
+%token QUESTION        "?"
 
 %token <string>DOT_IDENT
 %token <int>DOT_INT
@@ -287,6 +288,7 @@ simple_expr:
   | "(" expr ":" type_ ")"
     {}
   | "[" es = list_commas(expr) "]" {}
+  | simple_expr "?" {}
 
 %inline label:
   name = LIDENT {}
