@@ -31,6 +31,7 @@ open Parser_util
 %token STRUCT          "struct"
 %token ENUM            "enum"
 %token INTERFACE       "interface"
+%token TRAIT           "trait"
 %token DERIVE          "derive"
 %token EQUAL           "="
 
@@ -162,7 +163,7 @@ structure_item:
   | t=fun_header "=" mname=STRING fname=STRING {}
   | t=fun_header "=" s=STRING {}
   | t=fun_header body=block_expr {}
-  | pub=ioption("pub") "interface" name=luident "{" methods=list_semis(interface_method_decl) "}" {}
+  | pub=ioption("pub") "trait" name=luident "{" methods=list_semis(interface_method_decl) "}" {}
 %inline visibility:
   | /* empty */ {}
   | "priv"      {}
