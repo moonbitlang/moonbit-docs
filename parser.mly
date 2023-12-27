@@ -183,7 +183,7 @@ derive_directive:
   | "derive" "(" list_commas(derive_item) ")" {}
 
 interface_method_decl:
-  fun_binder=fun_binder
+  name=binder
   quantifiers=optional_type_parameters
   "("
   param_typs=list_commas(type_)
