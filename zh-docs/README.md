@@ -485,82 +485,6 @@ fn reduce[S, T](self: List[S], op: (T, S) => T, init: T) -> T {
 }
 ```
 
-## 统一函数调用语法
-
-MoonBit 支持与传统面向对象语言不同的方法(method)。
-一个方法被定义为 `self` 作为其第一个参数的顶层函数。
-`self` 参数将成为方法调用的主体。
-例如，`l.map(f)` 等同于 `map(l, f)`。
-这种语法使得方法链而不是嵌套的函数调用成为可能。
-例如，我们可以使用这样的语法将先前定义的 `map` 和 `reduce` 与 `from_array` 和 `output` 方法链在一起，执行列表操作。
-
-```rust live
-fn map[S, T](self: List[S], f: (S) -> T) -> List[T] {
-  match self {
-    Nil => Nil
-    Cons(x, xs) => Cons(f(x), map(xs, f))
-  }
-}
-
-fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
-  match self {
-    Nil => init
-    Cons(x, xs) => reduce(xs, op, op(init, x))
-  }
-}
-
-fn into_list[T](self: Array[T]) -> List[T] {
-  var res: List[T] = Nil
-  var i = self.length() - 1
-  while (i >= 0) {
-    res = Cons(self[i], res)
-    i = i - 1
-  }
-  res
-}
-
-fn init {
-  print([1, 2, 3, 4, 5].into_list().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }, 0))
-}
-```
-
-方法和普通函数的另一个区别是，只有方法支持重载。
-例如，我们可能需要多个输出函数： `print_int` 和 `print_float` 用于不同类型的输出。
-但使用方法 `print` ，可以识别主体的类型，并选择适当的重载版本，例如 `print(1)` 和 `print(1.0)`。
-
-## 运算符重载
-
-MoonBit 支持重载内置运算符。与运算符 `<op>` 相对应的方法名称是 `op_<op>`。例如：
-
-```rust live
-struct T {
-  x:Int
-}
-
-fn op_add(self: T, other: T) -> T {
-  { x: self.x + other.x }
-}
-
-fn init {
-  let a = { x:0, }
-  let b = { x:2, }
-  print((a + b).x)
-}
-```
-
-目前，以下运算符可以被重载：
-
-| operator name        | method name |
-| -------------------- | ----------- |
-| `+`                  | `op_add`    |
-| `-`                  | `op_sub`    |
-| `*`                  | `op_mul`    |
-| `/`                  | `op_div`    |
-| `%`                  | `op_mod`    |
-| `-`(unary)           | `op_neg`    |
-| `_[_]`(get item)     | `op_get`    |
-| `_[_] = _`(set item) | `op_set`    |
-
 ## 访问控制
 
 默认情况下，所有函数定义和变量绑定对其他包是 _不可见_ 的；
@@ -656,31 +580,110 @@ pub fn f3(_x: T1) -> T1 { T1::A(0) }
 pub let a: T3  // ERROR: public variable has private type `T3`!
 ```
 
-## 接口系统
+## 方法系统
 
-MoonBit 具有用于重载/特设多态的结构接口系统。
-接口可以声明如下：
+MoonBit 支持与传统面向对象语言不同的方法(method)。
+某个类型的一个方法就是一个与该类型关联的普通函数。
+可以使用 `fn TypeName::method_name(...) -> ...` 的语法来为类型 `TypeName` 声明方法：
 
 ```rust
-interface I {
+enum MyList[X] {
+  Nil,
+  Cons(X, MyList[X])
+}
+
+fn MyList::map[X, Y](xs: MyList[X], f: (X) -> Y) -> MyList[Y] { ... }
+fn MyList::concat[X](xs: MyList[MyList[X]]) -> MyList[X] { ... }
+```
+
+如果一个函数的第一个参数名为 `self`，那么 MoonBit 会自动将这个函数定义为 `self` 的类型上的方法：
+
+```rust
+fn map[X, Y](self: MyList[X], f: (X) -> Y) -> List[Y] { ... }
+// 等价于
+fn MyList::map[X, Y](xs: MyList[X], f: (X) -> Y) -> List[Y] { ... }
+```
+
+方法就是由某个类型所有的普通函数。所以，在没有歧义时，它们也可以像普通函数一样调用：
+
+```rust
+fn init {
+  let xs: MyList[MyList[_]] = ...
+  let ys = concat(xs)
+}
+```
+
+但和普通函数不同，方法支持重载。不同的类型可以有同名的方法。如果当前作用域内有多个同名方法，依然可以通过加上 `TypeName::` 的前缀来显式地调用一个方法：
+
+```rust
+struct T1 { x1: Int }
+fn T1::default() -> { { x1: 0 } }
+
+struct T2 { x2: Int }
+fn T2::default() -> { { x2: 0 } }
+
+fn init {
+  // default() 有歧义！
+  let t1 = T1::default() // 可行
+  let t2 = T2::default() // 可行
+}
+```
+
+## 运算符重载
+
+MoonBit 支持通过方法重载内置运算符。与运算符 `<op>` 相对应的方法名称是 `op_<op>`。例如：
+
+```rust live
+struct T {
+  x:Int
+} derive(Debug)
+
+fn op_add(self: T, other: T) -> T {
+  { x: self.x + other.x }
+}
+
+fn init {
+  let a = { x:0, }
+  let b = { x:2, }
+  debug(a + b)
+}
+```
+
+目前，以下运算符可以被重载：
+
+| operator name        | method name |
+| -------------------- | ----------- |
+| `+`                  | `op_add`    |
+| `-`                  | `op_sub`    |
+| `*`                  | `op_mul`    |
+| `/`                  | `op_div`    |
+| `%`                  | `op_mod`    |
+| `-`(unary)           | `op_neg`    |
+| `_[_]`(get item)     | `op_get`    |
+| `_[_] = _`(set item) | `op_set`    |
+
+
+## 接口系统
+
+MoonBit 具有用于重载/特设多态的结构接口系统。接口可以声明如下：
+
+```rust
+trait I {
   f(Self, ...) -> ...
 }
 ```
 
-无需显式实现接口。
-具有所需方法的类型会自动实现接口。
-例如，以下接口：
+接口无需显式实现，具有所需方法的类型会自动实现接口。例如，以下接口：
 
 ```rust
-interface Show {
+trait Show {
   to_string(Self) -> String
 }
 ```
 
 内置类型如 `Int` 和 `Double` 会自动实现这个接口。
 
-在声明泛型函数/方法时，类型参数可以用它们应该实现的接口进行注解。
-例如：
+在声明泛型函数时，类型参数可以用它们应该实现的接口进行注解。如此便能定义只对某些类型可用的泛型函数。例如：
 
 ```rust
 interface Number {
@@ -698,15 +701,15 @@ fn square[N: Number](x: N) -> N {
 
 ```rust live
 fn init {
-  print(square(2)) // 4
-  print(square(1.5)) // 2.25
-  print(square({ x: 2, y: 3 })) // (4, 9)
+  debug(square(2)) // 4
+  debug(square(1.5)) // 2.25
+  debug(square({ x: 2, y: 3 })) // (4, 9)
 }
 
 struct Point {
   x: Int
   y: Int
-}
+} derive(Debug)
 
 fn op_add(self: Point, other: Point) -> Point {
   { x: self.x + other.x, y: self.y + other.y }
@@ -715,66 +718,63 @@ fn op_add(self: Point, other: Point) -> Point {
 fn op_mul(self: Point, other: Point) -> Point {
   { x: self.x * other.x, y: self.y * other.y }
 }
-
-fn to_string(self: Point) -> String {
-  let x = self.x
-  let y = self.y
-  "(\(x), \(y))"
-}
 ```
 
 Moonbit 提供下列实用的内建接口：
 
 ```rust
-interface Eq {
+trait Eq {
   op_equal(Self, Self) -> Bool
 }
 
-interface Compare {
-  // `0` for equal, `-1` for smaller, `1` for greater
+trait Compare {
+  // `0` 代表相等, `-1` 代表小于, `1` 代表大于
   op_equal(Self, Self) -> Int
 }
 
-interface Hash {
+trait Hash {
   hash(Self) -> Int
 }
 
-interface Show {
+trait Show {
   to_string(Self) -> String
 }
 
-interface Default {
-  Self::default() -> Self
+trait Default {
+  default() -> Self
+}
+
+trait Debug {
+  // 将 [self] 的调试信息写入到一个 buffer 里
+  debug_write(Self, Buffer)
 }
 ```
 
-## 没有 self 参数的方法
+## 方法的访问权限控制与拓展方法
+为了使 MoonBit 的接口系统具有一致性（coherence，即任何 `Type: Trait` 的组合都有全局唯一的实现），
+防止第三方包意外地修改现有程序的行为，**只有类型所在的包能为它定义方法**。
+所以用户无法为内建类型或来自第三方包的类型定义方法。
 
-有时候，拥有不带 self 参数的方法非常有用。例如，内置的 `Default` 接口描述了具有默认值的类型，但构造默认值不应该依赖于 self 值。因此，MoonBit 提供了一种特殊的语法用于不带 self 参数的方法：
-
-```rust live
-fn Int::default() -> Int {
-  0
-}
-
-fn init {
-  print(Int::default())
-}
-```
-
-没有 `self` 的方法必须显式使用它们的类型名称进行调用。
-没有 `self` 的方法可以在接口中声明，并使用类型参数进行调用，例如：
+然而，有时候也会出现拓展一个现有类型的功能的需求。
+因此，MoonBit 提供了一种名为拓展方法的机制。拓展方法可以通过 `fn Trait::method_name(...) -> ...` 的形式声明，
+它们通过实现一个接口的方式拓展现有类型的功能。
+例如，假如要为内建类型实现一个新的接口 `ToMyBinaryProtocol`，就可以（且必须）使用拓展方法：
 
 ```rust
-interface I {
-  Self::one() -> Self
-  op_add(Self, Self) -> Self
+trait ToMyBinaryProtocol {
+  to_my_binary_protocol(Self, Buffer)
 }
 
-fn two[X: I]() -> X {
-  X::one() + X::one()
-}
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: Int, b: Buffer) { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: Double, b: Buffer) { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) { ... }
 ```
+
+在搜索某个接口的实现时，拓展方法比普通方法有更高的优先级。所以拓展方法还可以用来覆盖掉行为不能满足要求的现有方法。
+拓展方法只能被用于实现指定的接口，不能像普通的方法一样被直接调用。
+此外，**只有类型或接口所在的包可以定义拓展方法**。
+例如，只有 `@pkg1` 和 `@pkg2` 能为类型 `@pkg2.Type` 定义拓展方法 `@pkg1.Trait::f`。
+这一限制使得 MoonBit 的接口系统在加入拓展方法这一灵活的机制后，依然是一致的。
 
 ## 自动实现内建接口
 
@@ -784,15 +784,15 @@ Moonbit 可以自动生成一些内建接口的实现:
 struct T {
   x: Int
   y: Int
-} derive(Eq, Compare, Show, Default)
+} derive(Eq, Compare, Debug, Default)
 
 fn init {
   let t1 = T::default()
   let t2 = { x: 1, y: 1 }
-  println(t1) // {x: 0, y: 0}
-  println(t2) // {x: 1, y: 1}
-  println(t1 == t2) // false
-  println(t1 < t2) // true
+  debug(t1) // {x: 0, y: 0}
+  debug(t2) // {x: 1, y: 1}
+  debug(t1 == t2) // false
+  debug(t1 < t2) // true
 }
 ```
 
