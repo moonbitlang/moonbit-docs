@@ -530,73 +530,6 @@ fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
 }
 ```
 
-## Uniform Function Call Syntax
-
-MoonBit supports methods in a different way from traditional object-oriented languages. A method is defined as a top-level function with `self` as the name of its first parameter. The `self` parameter will be the subject of a method call. For example, `l.map(f)` is equivalent to `map(l, f)`. Such syntax enables method chaining rather than heavily nested function calls. For example, we can chain the previously defined `map` and `reduce` together with `into_list` to perform list operations using the method call syntax.
-
-```go live
-fn map[S, T](self: List[S], f: (S) -> T) -> List[T] {
-  match self {
-    Nil => Nil
-    Cons(x, xs) => Cons(f(x), map(xs, f))
-  }
-}
-
-fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
-  match self {
-    Nil => init
-    Cons(x, xs) => reduce(xs, op, op(init, x))
-  }
-}
-
-fn into_list[T](self: Array[T]) -> List[T] {
-  var res: List[T] = Nil
-  var i = self.length() - 1
-  while (i >= 0) {
-    res = Cons(self[i], res)
-    i = i - 1
-  }
-  res
-}
-
-fn init {
-  print([1, 2, 3, 4, 5].into_list().map(fn(x) { x * 2 }).reduce(fn(x, y) { x + y }, 0))
-}
-```
-
-## Operator Overloading
-
-MoonBit supports operator overloading of builtin operators. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
-
-```go live
-struct T {
-  x:Int
-}
-
-fn op_add(self: T, other: T) -> T {
-  { x: self.x + other.x }
-}
-
-fn init {
-  let a = { x:0, }
-  let b = { x:2, }
-  print((a + b).x)
-}
-```
-
-Currently, the following operators can be overloaded:
-
-| operator name        | method name |
-| -------------------- | ----------- |
-| `+`                  | `op_add`    |
-| `-`                  | `op_sub`    |
-| `*`                  | `op_mul`    |
-| `/`                  | `op_div`    |
-| `%`                  | `op_mod`    |
-| `-`(unary)           | `op_neg`    |
-| `_[_]`(get item)     | `op_get`    |
-| `_[_] = _`(set item) | `op_set`    |
-
 ## Access Control
 
 By default, all function definitions and variable bindings are _invisible_ to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`enum`/`struct`/`let` or top-level function to make them fully visible, or put `priv` before `type`/`enum`/`struct` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
@@ -685,35 +618,132 @@ pub fn f3(_x: T1) -> T1 { T1::A(0) }
 pub let a: T3  // ERROR: public variable has private type `T3`!
 ```
 
-## Interface system
+## Method system
+MoonBit supports methods in a different way from traditional object-oriented languages. A method in MoonBit is just a toplevel function associated with a type constructor. Methods can be defined using the syntax `fn TypeName::method_name(...) -> ...`:
 
-Moonbit features a structural interface system for overloading/ad-hoc polymorphism.
-Interface can be declared as follows:
+```rust
+enum MyList[X] {
+  Nil,
+  Cons(X, MyList[X])
+}
 
-```go
-interface I {
-  f(Self, ...) -> ...
+fn MyList::map[X, Y](xs: MyList[X], f: (X) -> Y) -> MyList[Y] { ... }
+fn MyList::concat[X](xs: MyList[MyList[X]]) -> MyList[X] { ... }
+```
+
+As a convenient shorthand, when the first parameter of a function is named `self`, MoonBit automatically defines the function as a method of the type of `self`:
+
+```rust
+fn map[X, Y](self: MyList[X], f: (X) -> Y) -> List[Y] { ... }
+// equivalent to
+fn MyList::map[X, Y](xs: MyList[X], f: (X) -> Y) -> List[Y] { ... }
+```
+
+Methods are just regular functions owned by a type constructor. So when there is no ambiguity, methods can be called using regular function call syntax directly:
+
+```rust
+fn init {
+  let xs: MyList[MyList[_]] = ...
+  let ys = concat(xs)
 }
 ```
 
-There is no need to implement an interface explicitly.
-Types with the required methods automatically implements an interface.
-For example, the following interface:
+Unlike regular functions, methods support overloading: different types can define methods of the same name.
+If there are multiple methods of the same name (but for different types) in scope, one can still call them by explicitly adding a `TypeName::` prefix:
 
-```go
-interface Show {
+```rust
+struct T1 { x1: Int }
+fn T1::default() -> { { x1: 0 } }
+
+struct T2 { x2: Int }
+fn T2::default() -> { { x2: 0 } }
+
+fn init {
+  // default() is ambiguous!
+  let t1 = T1::default() // ok
+  let t2 = T2::default() // ok
+}
+```
+
+When the first parameter of a method is also the type it belongs to, methods can be called using dot syntax `x.method(...)`. MoonBit automatically finds the correct method based on the type of `x`, there is no need to write the type name and even the package name of the method:
+
+```rust
+// a package named @list
+enum List[X] { ... }
+fn List::length[X](xs: List[X]) -> Int { ... }
+
+// another package that uses @list
+fn init {
+  let xs: @list.List[_] = ...
+  debug(xs.length()) // always work
+  debug(@list.List::length(xs)) // always work, but verbose
+  debug(@list.length(xs)) // simpler, but only possible when there is no ambiguity in @list
+}
+```
+
+## Operator Overloading
+
+MoonBit supports operator overloading of builtin operators via methods. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
+
+```rust
+struct T {
+  x:Int
+} derive(Debug)
+
+fn op_add(self: T, other: T) -> T {
+  { x: self.x + other.x }
+}
+
+fn init {
+  let a = { x: 0 }
+  let b = { x: 2 }
+  debug(a + b)
+}
+```
+
+Currently, the following operators can be overloaded:
+
+| operator name        | method name |
+| -------------------- | ----------- |
+| `+`                  | `op_add`    |
+| `-`                  | `op_sub`    |
+| `*`                  | `op_mul`    |
+| `/`                  | `op_div`    |
+| `%`                  | `op_mod`    |
+| `-`(unary)           | `op_neg`    |
+| `_[_]`(get item)     | `op_get`    |
+| `_[_] = _`(set item) | `op_set`    |
+
+
+## Trait system
+
+Moonbit features a structural trait system for overloading/ad-hoc polymorphism.
+Traits can be declared as follows:
+
+```rust
+trait I {
+  method(...) -> ...
+}
+```
+
+In the body of a trait definition, a special type `Self` is used to refer to the type that implements the trait.
+
+There is no need to implement a trait explicitly.
+Types with the required methods automatically implements a trait.
+For example, the following trait:
+
+```rust
+trait Show {
   to_string(Self) -> String
 }
 ```
 
 is automatically implemented by builtin types such as `Int` and `Double`.
 
-When declaring a generic function/method,
-the type parameters can be annotated with the interface they should implement.
-For example:
+When declaring a generic function, the type parameters can be annotated with the traits they should implement, allowing the definition of constrained generic functions. For example:
 
-```go
-interface Number {
+```rust
+trait Number {
   op_add(Self, Self) -> Self
   op_mul(Self, Self) -> Self
 }
@@ -727,17 +757,17 @@ Without the `Number` requirement,
 the expression `x * x` in `square` will result in a method/operator not found error.
 Now, the function `square` can be called with any type that implements `Number`, for example:
 
-```go live
+```rust
 fn init {
-  print(square(2)) // 4
-  print(square(1.5)) // 2.25
-  print(square({ x: 2, y: 3 })) // (4, 9)
+  debug(square(2)) // 4
+  debug(square(1.5)) // 2.25
+  debug(square({ x: 2, y: 3 })) // (4, 9)
 }
 
 struct Point {
   x: Int
   y: Int
-}
+} derive(Debug)
 
 fn op_add(self: Point, other: Point) -> Point {
   { x: self.x + other.x, y: self.y + other.y }
@@ -746,87 +776,82 @@ fn op_add(self: Point, other: Point) -> Point {
 fn op_mul(self: Point, other: Point) -> Point {
   { x: self.x * other.x, y: self.y * other.y }
 }
-
-fn to_string(self: Point) -> String {
-  let x = self.x
-  let y = self.y
-  "(\(x), \(y))"
-}
 ```
 
-Moonbit provides the following useful builtin interfaces:
+Moonbit provides the following useful builtin traits:
 
-```go
-interface Eq {
+```rust
+trait Eq {
   op_equal(Self, Self) -> Bool
 }
 
-interface Compare {
+trait Compare {
   // `0` for equal, `-1` for smaller, `1` for greater
   op_equal(Self, Self) -> Int
 }
 
-interface Hash {
+trait Hash {
   hash(Self) -> Int
 }
 
-interface Show {
+trait Show {
   to_string(Self) -> String
 }
 
-interface Default {
-  Self::default() -> Self
+trait Default {
+  default() -> Self
+}
+
+trait Debug {
+  // write debug information of [self] to a buffer
+  debug_write(Self, Buffer)
 }
 ```
 
-## Methods without a self parameter
+## Access control of methods and extension methods
+To make the trait system coherent (i.e. there is a globally unique implementation for every `Type: Trait` pair),
+and prevent third-party packages from modifying behavior of existing programs by accident,
+*only the the package that defines a type can define methods for it*.
+So one cannot define new methods or override old methods for builtin and foreign types.
 
-Sometimes it is useful to have methods that do not have a self parameter.
-For example, the builtin `Default` interface describe types with a default value,
-but constructing a default value should not depend on a `self` value.
-So Moonbit provides a special syntax for methods without a `self` parameter:
+However, it is often useful to extend the functionality of an existing type.
+So MoonBit provides a mechanism called extension method, defined using the syntax `fn Trait::method_name(...) -> ...`.
+Extension methods extend the functionality of an existing type by implementing a trait.
+For example, to implement a new trait `ToMyBinaryProtocol` for builtin types, one can (and must) use extension methods:
 
-```go live
-fn Int::default() -> Int {
-  0
+```rust
+trait ToMyBinaryProtocol {
+  to_my_binary_protocol(Self, Buffer)
 }
 
-fn init {
-  print(Int::default())
-}
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: Int, b: Buffer) { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: Double, b: Buffer) { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) { ... }
 ```
 
-Methods without `self` must be called explicitly with their type name.
-Methods without `self` can be declaraed in interfaces and called with type parameters, for example:
+When searching for the implementation of a trait, extension methods have a higher priority, so they can be used to override ordinary methods with undesirable behavior.
+Extension methods can only be used to implement the specified trait. They cannot be called directly like ordinary methods.
+Furthermore, *only the package of the type or the package of the trait can implement extension methods*.
+For example, only `@pkg1` and `@pkg2` are allowed to implement an extension method `@pkg1.Trait::f` for type `@pkg2.Type`.
+This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of extension methods.
 
-```go
-interface I {
-  Self::one() -> Self
-  op_add(Self, Self) -> Self
-}
+## Automatically derive builtin traits
 
-fn two[X: I]() -> X {
-  X::one() + X::one()
-}
-```
-
-## Automatically derive builtin interface
-
-Moonbit can automatically derive implementations for some builtin interfaces:
+Moonbit can automatically derive implementations for some builtin traits:
 
 ```rust
 struct T {
   x: Int
   y: Int
-} derive(Eq, Compare, Show, Default)
+} derive(Eq, Compare, Debug, Default)
 
 fn init {
   let t1 = T::default()
   let t2 = { x: 1, y: 1 }
-  println(t1) // {x: 0, y: 0}
-  println(t2) // {x: 1, y: 1}
-  println(t1 == t2) // false
-  println(t1 < t2) // true
+  debug(t1) // {x: 0, y: 0}
+  debug(t2) // {x: 1, y: 1}
+  debug(t1 == t2) // false
+  debug(t1 < t2) // true
 }
 ```
 
