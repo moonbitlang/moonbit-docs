@@ -686,7 +686,7 @@ trait Show {
 在声明泛型函数时，类型参数可以用它们应该实现的接口进行注解。如此便能定义只对某些类型可用的泛型函数。例如：
 
 ```rust
-interface Number {
+trait Number {
   op_add(Self, Self) -> Self
   op_mul(Self, Self) -> Self
 }
@@ -780,7 +780,7 @@ fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) { ... }
 
 Moonbit 可以自动生成一些内建接口的实现:
 
-```
+```rust
 struct T {
   x: Int
   y: Int
