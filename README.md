@@ -1,15 +1,12 @@
 # MoonBit
 
-MoonBit is an end-to-end programming language toolchain for cloud and edge computing using WebAssembly.
-The IDE environment is available at [https://try.moonbitlang.com](https://try.moonbitlang.com) without any installation; it does not rely on any server either.
+MoonBit is an end-to-end programming language toolchain for cloud and edge computing using WebAssembly. The IDE environment is available at [https://try.moonbitlang.com](https://try.moonbitlang.com) without any installation; it does not rely on any server either.
 
 ## Status and aimed timeline
 
 It is currently alpha, experimental. We expect MoonBit to reach *beta-preview* in 02/2024 and *beta* in 06/2024.
 
-When MoonBit reaches beta, it means any backwards-incompatible changes will be seriouly evaluated and MoonBit *can* be used in production(very rare compiler bugs).
-MoonBit is developed by a talented full time team who had extensive experience in building language toolchains, so we will grow much faster than the 
-typical language ecosystem, you won't wait long to use MoonBit in your production.
+When MoonBit reaches beta, it means any backwards-incompatible changes will be seriously evaluated and MoonBit *can* be used in production(very rare compiler bugs). MoonBit is developed by a talented full time team who had extensive experience in building language toolchains, so we will grow much faster than the typical language ecosystem, you won't wait long to use MoonBit in your production.
 
 ## Main advantages
 
@@ -239,7 +236,7 @@ while i < 10, i = i + 1 {
 
 ### Number
 
-Moonbit supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
+MoonBit supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
 To improve readability, you may place underscores in the middle of numeric literals such as `1_000_000`. Note that underscores can be placed anywhere within a number, not just every three digits.
 
@@ -619,6 +616,7 @@ pub let a: T3  // ERROR: public variable has private type `T3`!
 ```
 
 ## Method system
+
 MoonBit supports methods in a different way from traditional object-oriented languages. A method in MoonBit is just a toplevel function associated with a type constructor. Methods can be defined using the syntax `fn TypeName::method_name(...) -> ...`:
 
 ```rust
@@ -648,8 +646,7 @@ fn init {
 }
 ```
 
-Unlike regular functions, methods support overloading: different types can define methods of the same name.
-If there are multiple methods of the same name (but for different types) in scope, one can still call them by explicitly adding a `TypeName::` prefix:
+Unlike regular functions, methods support overloading: different types can define methods of the same name. If there are multiple methods of the same name (but for different types) in scope, one can still call them by explicitly adding a `TypeName::` prefix:
 
 ```rust
 struct T1 { x1: Int }
@@ -714,11 +711,9 @@ Currently, the following operators can be overloaded:
 | `_[_]`(get item)     | `op_get`    |
 | `_[_] = _`(set item) | `op_set`    |
 
-
 ## Trait system
 
-Moonbit features a structural trait system for overloading/ad-hoc polymorphism.
-Traits can be declared as follows:
+MoonBit features a structural trait system for overloading/ad-hoc polymorphism. Traits can be declared as follows:
 
 ```rust
 trait I {
@@ -728,9 +723,7 @@ trait I {
 
 In the body of a trait definition, a special type `Self` is used to refer to the type that implements the trait.
 
-There is no need to implement a trait explicitly.
-Types with the required methods automatically implements a trait.
-For example, the following trait:
+There is no need to implement a trait explicitly. Types with the required methods automatically implements a trait. For example, the following trait:
 
 ```rust
 trait Show {
@@ -753,9 +746,7 @@ fn square[N: Number](x: N) -> N {
 }
 ```
 
-Without the `Number` requirement,
-the expression `x * x` in `square` will result in a method/operator not found error.
-Now, the function `square` can be called with any type that implements `Number`, for example:
+Without the `Number` requirement, the expression `x * x` in `square` will result in a method/operator not found error. Now, the function `square` can be called with any type that implements `Number`, for example:
 
 ```rust
 fn init {
@@ -778,7 +769,7 @@ fn op_mul(self: Point, other: Point) -> Point {
 }
 ```
 
-Moonbit provides the following useful builtin traits:
+MoonBit provides the following useful builtin traits:
 
 ```rust
 trait Eq {
@@ -809,15 +800,10 @@ trait Debug {
 ```
 
 ## Access control of methods and extension methods
-To make the trait system coherent (i.e. there is a globally unique implementation for every `Type: Trait` pair),
-and prevent third-party packages from modifying behavior of existing programs by accident,
-*only the the package that defines a type can define methods for it*.
-So one cannot define new methods or override old methods for builtin and foreign types.
 
-However, it is often useful to extend the functionality of an existing type.
-So MoonBit provides a mechanism called extension method, defined using the syntax `fn Trait::method_name(...) -> ...`.
-Extension methods extend the functionality of an existing type by implementing a trait.
-For example, to implement a new trait `ToMyBinaryProtocol` for builtin types, one can (and must) use extension methods:
+To make the trait system coherent (i.e. there is a globally unique implementation for every `Type: Trait` pair), and prevent third-party packages from modifying behavior of existing programs by accident, *only the the package that defines a type can define methods for it*. So one cannot define new methods or override old methods for builtin and foreign types.
+
+However, it is often useful to extend the functionality of an existing type. So MoonBit provides a mechanism called extension method, defined using the syntax `fn Trait::method_name(...) -> ...`. Extension methods extend the functionality of an existing type by implementing a trait. For example, to implement a new trait `ToMyBinaryProtocol` for builtin types, one can (and must) use extension methods:
 
 ```rust
 trait ToMyBinaryProtocol {
@@ -829,15 +815,11 @@ fn ToMyBinaryProtocol::to_my_binary_protocol(x: Double, b: Buffer) { ... }
 fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) { ... }
 ```
 
-When searching for the implementation of a trait, extension methods have a higher priority, so they can be used to override ordinary methods with undesirable behavior.
-Extension methods can only be used to implement the specified trait. They cannot be called directly like ordinary methods.
-Furthermore, *only the package of the type or the package of the trait can implement extension methods*.
-For example, only `@pkg1` and `@pkg2` are allowed to implement an extension method `@pkg1.Trait::f` for type `@pkg2.Type`.
-This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of extension methods.
+When searching for the implementation of a trait, extension methods have a higher priority, so they can be used to override ordinary methods with undesirable behavior. Extension methods can only be used to implement the specified trait. They cannot be called directly like ordinary methods. Furthermore, *only the package of the type or the package of the trait can implement extension methods*. For example, only `@pkg1` and `@pkg2` are allowed to implement an extension method `@pkg1.Trait::f` for type `@pkg2.Type`. This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of extension methods.
 
 ## Automatically derive builtin traits
 
-Moonbit can automatically derive implementations for some builtin traits:
+MoonBit can automatically derive implementations for some builtin traits:
 
 ```rust
 struct T {
