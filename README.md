@@ -7,9 +7,7 @@ The IDE environment is available at [https://try.moonbitlang.com](https://try.mo
 
 It is currently alpha, experimental. We expect MoonBit to reach *beta-preview* in 02/2024 and *beta* in 06/2024.
 
-When MoonBit reaches beta, it means any backwards-incompatible changes will be seriouly evaluated and MoonBit *can* be used in production(very rare compiler bugs).
-MoonBit is developed by a talented full time team who had extensive experience in building language toolchains, so we will grow much faster than the 
-typical language ecosystem, you won't wait long to use MoonBit in your production.
+When MoonBit reaches beta, it means any backwards-incompatible changes will be seriously evaluated and MoonBit *can* be used in production(very rare compiler bugs). MoonBit is developed by a talented full time team who had extensive experience in building language toolchains, so we will grow much faster than the typical language ecosystem, you won't wait long to use MoonBit in your production.
 
 ## Main advantages
 
@@ -239,7 +237,7 @@ while i < 10, i = i + 1 {
 
 ### Number
 
-Moonbit supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
+MoonBit supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
 To improve readability, you may place underscores in the middle of numeric literals such as `1_000_000`. Note that underscores can be placed anywhere within a number, not just every three digits.
 
@@ -619,6 +617,7 @@ pub let a: T3  // ERROR: public variable has private type `T3`!
 ```
 
 ## Method system
+
 MoonBit supports methods in a different way from traditional object-oriented languages. A method in MoonBit is just a toplevel function associated with a type constructor. Methods can be defined using the syntax `fn TypeName::method_name(...) -> ...`:
 
 ```rust
@@ -714,10 +713,9 @@ Currently, the following operators can be overloaded:
 | `_[_]`(get item)     | `op_get`    |
 | `_[_] = _`(set item) | `op_set`    |
 
-
 ## Trait system
 
-Moonbit features a structural trait system for overloading/ad-hoc polymorphism.
+MoonBit features a structural trait system for overloading/ad-hoc polymorphism.
 Traits can be declared as follows:
 
 ```rust
@@ -778,7 +776,7 @@ fn op_mul(self: Point, other: Point) -> Point {
 }
 ```
 
-Moonbit provides the following useful builtin traits:
+MoonBit provides the following useful builtin traits:
 
 ```rust
 trait Eq {
@@ -809,6 +807,7 @@ trait Debug {
 ```
 
 ## Access control of methods and extension methods
+
 To make the trait system coherent (i.e. there is a globally unique implementation for every `Type: Trait` pair),
 and prevent third-party packages from modifying behavior of existing programs by accident,
 *only the the package that defines a type can define methods for it*.
@@ -837,7 +836,7 @@ This restriction ensures that MoonBit's trait system is still coherent with the 
 
 ## Automatically derive builtin traits
 
-Moonbit can automatically derive implementations for some builtin traits:
+MoonBit can automatically derive implementations for some builtin traits:
 
 ```rust
 struct T {
