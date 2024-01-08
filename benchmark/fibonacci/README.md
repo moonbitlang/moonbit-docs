@@ -24,8 +24,8 @@ func fib(num : Int) -> Int {
 }
 
 pub func test(n : Int, count : Int) -> Int {
-  var i = 0
-  var res = 0
+  let mut i = 0
+  let mut res = 0
   while i < count {
     res = fib(n)
     i = i + 1
