@@ -32,7 +32,7 @@ fn expand_size[T : Default](self : Buffer[T]) {
   }
   self.cap = new_capacity
   let new_data = Array::make(new_capacity, T::default())
-  var index = 0
+  let mut index = 0
   while index < self.len {
     new_data[index] = self.data[index]
     index = index + 1
@@ -49,7 +49,7 @@ pub fn append[T : Default](self : Buffer[T], value : T) {
 }
 
 pub fn truncate[T : Default](self : Buffer[T], another : Buffer[T]) {
-  var index = 0
+  let mut index = 0
   while index < another.len {
     if self.len >= self.cap {
       self.expand_size()
@@ -61,7 +61,7 @@ pub fn truncate[T : Default](self : Buffer[T], another : Buffer[T]) {
 }
 
 pub fn clear[T : Default](self : Buffer[T]) {
-  var index = 0
+  let mut index = 0
   while index < self.len {
     self.data[index] = T::default()
     index = index + 1
@@ -76,7 +76,7 @@ pub fn reset[T : Default](self : Buffer[T], capacity : Int) {
 }
 
 pub fn println[T : Show](self : Buffer[T]) {
-  var index = 0
+  let mut index = 0
   print('[')
   while index < self.len {
     print(self.data[index].to_string())

@@ -21,7 +21,7 @@ pub fn new() -> Universe {
   let width = 64
   let height = 64
   let cells : Array[Cell] = Array::make(width * height, Dead)
-  var idx = 0
+  let mut idx = 0
   while idx < width * height {
     if idx % 2 == 0 || idx % 7 == 0 {
       cells[idx] = Alive
@@ -53,12 +53,12 @@ pub fn get_cell(self : Universe, idx : Int) -> Int {
 }
 
 fn live_neighbor_count(self : Universe, row : Int, column : Int) -> Int {
-  var count = 0
+  let mut count = 0
   let delta_rows = [self.height - 1, 0, 1]
   let delta_cols = [self.width - 1, 0, 1]
-  var r = 0
+  let mut r = 0
   while r < 3 {
-    var c = 0
+    let mut c = 0
     while c < 3 {
       if delta_rows[r] == 0 && delta_cols[c] == 0 {
         c = c + 1
@@ -77,9 +77,9 @@ fn live_neighbor_count(self : Universe, row : Int, column : Int) -> Int {
 
 pub fn tick(self : Universe) {
   let next : Array[Cell] = Array::make(self.width * self.height, Dead)
-  var r = 0
+  let mut r = 0
   while r < self.height {
-    var c = 0
+    let mut c = 0
     while c < self.width {
       let idx = self.get_index(r, c)
       let cell = self.cells[idx]
@@ -105,10 +105,10 @@ pub fn tick(self : Universe) {
 }
 
 pub fn to_string(self : Universe) -> String {
-  var r = 0
-  var cells = ""
+  let mut r = 0
+  let mut cells = ""
   while r < self.height {
-    var c = 0
+    let mut c = 0
     while c < self.width {
       let idx = self.get_index(r, c)
       let cell = self.cells[idx]

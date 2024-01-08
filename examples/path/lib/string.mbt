@@ -1,7 +1,7 @@
 pub fn split(s : String, sep : Char) -> (Array[String], Int) {
-  var index = 0
-  var result : Array[String] = Array::make(5, "")
-  var cur = 0
+  let mut index = 0
+  let mut result : Array[String] = Array::make(5, "")
+  let mut cur = 0
   let it = iter(s)
   while it.index != it.length {
     let c = match it.next() {
@@ -17,7 +17,7 @@ pub fn split(s : String, sep : Char) -> (Array[String], Int) {
       cur = cur + 1
       if cur >= result.length() {
         let new_result = Array::make(result.length() * 2, "")
-        var tmp_cur = 0
+        let mut tmp_cur = 0
         while tmp_cur < result.length() {
           new_result.set(tmp_cur, result[tmp_cur])
           tmp_cur = tmp_cur + 1
@@ -40,7 +40,7 @@ pub fn sub_string(s : String, start : Int, end : Int) -> Option[String] {
     return None
   }
   let it = iter(s)
-  var result : String = ""
+  let mut result : String = ""
   while it.index != it.length {
     let c = match it.next() {
       Some(c) => c
@@ -55,8 +55,8 @@ pub fn sub_string(s : String, start : Int, end : Int) -> Option[String] {
 
 pub fn trim(s : String, removed : Char) -> String {
   let l = s.length()
-  var start = 0
-  var end = l - 1
+  let mut start = 0
+  let mut end = l - 1
   while start < l && s[start] == removed {
     start = start + 1
   }
@@ -74,8 +74,8 @@ pub fn trim(s : String, removed : Char) -> String {
 
 pub fn index_of(s : String, pattern : String) -> Option[Int] {
   let prefix_func = prefix_function(pattern)
-  var s_index = 0
-  var p_index = 0
+  let mut s_index = 0
+  let mut p_index = 0
   let l = s.length()
   while s_index < l {
     if s[s_index] == pattern[p_index] {
@@ -99,9 +99,9 @@ pub fn index_of(s : String, pattern : String) -> Option[Int] {
 
 pub fn last_index_of(s : String, pattern : String) -> Option[Int] {
   let prefix_func = prefix_function(pattern)
-  var s_index = 0
-  var p_index = 0
-  var index = -1
+  let mut s_index = 0
+  let mut p_index = 0
+  let mut index = -1
   let l = s.length()
   while s_index < l {
     if s[s_index] == pattern[p_index] {
@@ -139,9 +139,9 @@ pub fn contains(s : String, sub : String) -> Bool {
 fn prefix_function(pattern : String) -> Array[Int] {
   let result = Array::make(pattern.length(), 0)
   let n = pattern.length()
-  var i = 1
+  let mut i = 1
   while i < n {
-    var j = result[i - 1]
+    let mut j = result[i - 1]
     while j > 0 && pattern[i] != pattern[j] {
       j = result[j - 1]
     }
@@ -164,7 +164,7 @@ pub fn char_at(s : String, pos : Int) -> Option[Char] {
 pub fn to_char_array(s : String) -> Array[Char] {
   let l = s.length()
   let array = Array::make(l, ' ')
-  var index = 0
+  let mut index = 0
   while index < l {
     array[index] = s.get(index)
     index = index + 1

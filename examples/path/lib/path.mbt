@@ -25,8 +25,8 @@ pub fn parent(self : Path) -> String {
   match self.platform {
     Posix => {
       let (parts, l) = split(self.inner, '/')
-      var parent = ""
-      var index = 0
+      let mut parent = ""
+      let mut index = 0
       let end = if parts[l] == "" {
         l - 1
       } else {
@@ -40,8 +40,8 @@ pub fn parent(self : Path) -> String {
     }
     Windows => {
       let (parts, l) = split(self.inner, '\\')
-      var parent = ""
-      var index = 0
+      let mut parent = ""
+      let mut index = 0
       let end = if parts[l] == "" {
         l - 1
       } else {

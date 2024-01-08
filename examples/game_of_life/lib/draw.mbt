@@ -19,13 +19,13 @@ let cell_size = 5
 pub fn draw_grid(canvas : Canvas_ctx) {
   canvas.begin_path()
   canvas.set_stroke_color(0xcccccc)
-  var i = 0
+  let mut i = 0
   while i <= 64 {
     canvas.move_to(i * (cell_size + 1) + 1, 0)
     canvas.line_to(i * (cell_size + 1) + 1, (cell_size + 1) * 64 + 1)
     i = i + 1
   }
-  var j = 0
+  let mut j = 0
   while j <= 64 {
     canvas.move_to(0, j * (cell_size + 1) + 1)
     canvas.line_to((cell_size + 1) * 64 + 1, j * (cell_size + 1) + 1)
@@ -37,9 +37,9 @@ pub fn draw_grid(canvas : Canvas_ctx) {
 pub fn draw_cell(canvas : Canvas_ctx, universe : Universe, dead : Int,
         alive : Int) {
   canvas.begin_path()
-  var row = 0
+  let mut row = 0
   while row < 64 {
-    var col = 0
+    let mut col = 0
     while col < 64 {
       let idx = universe.get_index(row, col)
       let color = if universe.get_cell(idx) == 0 {

@@ -165,8 +165,8 @@ pub fn mem[U:Compare](self: T[U], x: U) -> Bool {
 }
 
 fn repeat_str(s: String, n: Int) -> String {
-  var result = ""
-  var i = 0
+  let mut result = ""
+  let mut i = 0
   while i < n {
     result = result + s
     i = i + 1

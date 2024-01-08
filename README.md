@@ -193,8 +193,8 @@ while x == y {
 The `while` statement doesn't yield anything; it only evaluates to `()` of unit type. MoonBit also provides the `break` and `continue` statements for controlling the flow of a loop.
 
 ```rust
-var i = 0
-var n = 0
+let mut i = 0
+let mut n = 0
 
 while i < 10 {
   i = i + 1
@@ -214,7 +214,7 @@ println(n) // outputs 25
 The `while` loop can have an optional "continue" block after the loop condition, separated by comma. It is executed _after_ the body of every iteration, _before_ the condition of next iteration:
 
 ```rust
-var i = 0
+let mut i = 0
 while i < 10, i = i + 1 {
   println(i)
 } // outputs 0 to 9
@@ -223,7 +223,7 @@ while i < 10, i = i + 1 {
 If there are multiple statements in the continue block, they must be wrapped in braces. `continue` statement in the loop body will not skip continue block. For example, the following code will output all odd numbers smaller than 10:
 
 ```rust
-var i = 1
+let mut i = 1
 while i < 10, i = i + 1 {
   if (i % 2 == 0) {
     continue
@@ -347,7 +347,7 @@ A variable can be declared as mutable or immutable using the keywords `var` or `
 let zero = 0
 
 fn init {
-  var i = 10
+  let mut i = 10
   i = 20
   print(i + zero)
 }

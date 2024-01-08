@@ -49,9 +49,9 @@ pub fn parse_int(s : String) -> Option[Int] {
   let char_0 = 0x30
   let char_u_a = 0x41
   let char_a = 0x61
-  var index = 0
-  var is_negative = false
-  var result_digit = 0
+  let mut index = 0
+  let mut is_negative = false
+  let mut result_digit = 0
   if s[index] == '-' {
     index = index + 1
     is_negative = true

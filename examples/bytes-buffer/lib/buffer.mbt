@@ -30,7 +30,7 @@ fn expand_size(self : Buffer) {
     (self.data.length() + 1) * 2
   }
   let new_data = Bytes::make(new_capacity, 0)
-  var index = 0
+  let mut index = 0
   while index < self.len {
     new_data[index] = self.data[index]
     index = index + 1
@@ -55,7 +55,7 @@ pub fn append_int(self : Buffer, value : Int) {
 }
 
 pub fn truncate(self : Buffer, another: Buffer) {
-  var index = 0
+  let mut index = 0
   while index < another.len {
     if self.len >= self.data.length() {
       self.expand_size()
@@ -67,7 +67,7 @@ pub fn truncate(self : Buffer, another: Buffer) {
 }
 
 pub fn clear(self : Buffer) {
-  var index = 0
+  let mut index = 0
   while index < self.len {
     self.data[index] = 0
     index = index + 1

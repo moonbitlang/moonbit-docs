@@ -73,7 +73,7 @@ pub fn on_piece_collision(self : Tetris) {
         if r >= y + len_r {
           return
         }
-        var c = 0
+        let mut c = 0
         while c < len_c {
           if self.pice_shap[r - y][c] == 0 {
             c = c + 1
@@ -105,13 +105,13 @@ pub fn on_piece_collision(self : Tetris) {
     }
   }
 
-  var new_grid : List[Array[Int]] = Nil
+  let mut new_grid : List[Array[Int]] = Nil
   new_grid = go2(self.grid)
   // 1 line == 1 score
   self.score = self.score + self.row_completed
 
   // Insert blank row at the top
-  var i = 0
+  let mut i = 0
   while i < self.row_completed {
     new_grid = Cons(Array::make(grid_col_count, 0), new_grid)
     i = i + 1
@@ -143,7 +143,7 @@ pub fn drop_piece(self : Tetris, instant : Bool) {
 }
 
 pub fn move_piece(self : Tetris, delta : Int) {
-  var new_x = self.pice_x + delta
+  let mut new_x = self.pice_x + delta
   new_x = max(0, min(new_x, grid_col_count - self.pice_shap[0].length()))
   if check_collision(self.grid, self.pice_shap, (new_x, self.pice_y)) {
     return
@@ -155,21 +155,21 @@ pub fn rotate_piece(self : Tetris) {
   let r = self.pice_shap.length()
   let c = self.pice_shap[0].length()
   let new_shap = Array::make(c, Array::make(r, 0))
-  var i = 0
+  let mut i = 0
   while i < c {
     new_shap[i] = Array::make(r, 0)
     i = i + 1
   }
-  var i_c = 0
+  let mut i_c = 0
   while i_c < c {
-    var i_r = 0
+    let mut i_r = 0
     while i_r < r {
       new_shap[i_c][i_r] = self.pice_shap[r - i_r - 1][i_c]
       i_r = i_r + 1
     }
     i_c = i_c + 1
   }
-  var new_x = self.pice_x
+  let mut new_x = self.pice_x
   if new_x + new_shap[0].length() > grid_col_count {
     new_x = grid_col_count - new_shap[0].length()
   }

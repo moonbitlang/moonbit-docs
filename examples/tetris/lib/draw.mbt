@@ -13,7 +13,7 @@ fn set_fill_style(self : Canvas_ctx, color : Int) = "canvas" "set_fill_style"
 fn draw_game_over(self : Canvas_ctx) = "canvas" "draw_game_over"
 
 pub fn draw(canvas : Canvas_ctx, tetris : Tetris) {
-  var c = 0
+  let mut c = 0
 
   // draw backgroud
   while c < grid_col_count {
@@ -38,7 +38,7 @@ pub fn draw_piece(canvas : Canvas_ctx, matrix : List[Array[Int]],
   fn go(l : List[Array[Int]], r : Int, canvas : Canvas_ctx) {
     match l {
       Cons(v, n) => {
-        var c = 0
+        let mut c = 0
         while c < v.length() {
           if v[c] == 0 {
             c = c + 1
