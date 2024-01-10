@@ -8,10 +8,10 @@ This folder will use various programming languages to build Wasm, which will cal
 
 ### Moonbit
 
-Use Moonbit's [playground](https://try.moonbitlang.com/) or [build tool](https://www.moonbitlang.com/download/) to convert the following function to Wat:
+Use Moonbit's [playground](https://try.moonbitlang.com/) or [build tool](https://www.moonbitlang.com/download/) to convert the following function to Wasm:
 
 ```
-func fib(num : Int) -> Int {
+fn fib(num : Int) -> Int {
   fn aux(n, acc1, acc2) {
     match n {
       0 => acc1
@@ -23,22 +23,17 @@ func fib(num : Int) -> Int {
   aux(num, 0, 1)
 }
 
-pub func test(n : Int, count : Int) -> Int {
-  var i = 0
-  var res = 0
-  while i < count {
+pub fn test(n : Int, count : Int) -> Int {
+  let mut i = 0
+  let mut res = 0
+  while i < count, i = i + 1 {
     res = fib(n)
-    i = i + 1
   }
   res
 }
 ```
 
-Then use [wat2wasm](https://github.com/WebAssembly/wabt) from the WebAssembly Binary Toolkit (WABT) to convert the WebAssembly text format (.wat) to the WebAssembly binary format (.wasm):
-
-``` sh
-wat2wasm target/build/main/main.wat -o moonbit.wasm
-```
+With `moonc compile -wasm-gc -o moonbit.wasm main.mbt`
 
 Or you can just use the `moonbit.wasm` in current folder.
 
