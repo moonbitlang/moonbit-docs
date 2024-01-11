@@ -1,6 +1,6 @@
 fn init {
   let (arr, len) = @lib.split("a.b.c.e.f.g.h.i.j.k.l.m.n", '.')
-  var index = 0
+  let mut index = 0
   // let l = arr.length()
   while index < len {
     println(arr[index])
@@ -28,7 +28,7 @@ fn init {
   }
 
   let arr = @lib.to_char_array("HelloWorld")
-  var index = 0
+  let mut index = 0
   let l = arr.length()
   while index < l {
     println(arr[index])

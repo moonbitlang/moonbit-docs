@@ -33,7 +33,7 @@ pub fn check_collision(grid : List[Array[Int]], shap : Array[Array[Int]],
         if r >= offset.1 + len_r {
           return false
         }
-        var c = 0
+        let mut c = 0
         while c < len_c {
           if shap[r - offset.1][c] == 0 {
             c = c + 1
@@ -70,7 +70,7 @@ pub fn min[T : Compare](a : T, b : T) -> T {
 }
 
 pub fn contain(ary : Array[Int], t : Int) -> Bool {
-  var i = 0
+  let mut i = 0
   while i < ary.length() {
     if ary[i] == t {
       return true
@@ -83,7 +83,7 @@ pub fn contain(ary : Array[Int], t : Int) -> Bool {
 pub fn get_effective_height(grid : List[Array[Int]], shap : Array[Array[Int]],
         offset : (Int, Int)) -> Int {
   let x = offset.0
-  var y = offset.1
+  let mut y = offset.1
   while check_collision(grid, shap, (x, y)) == false {
     y = y + 1
   }

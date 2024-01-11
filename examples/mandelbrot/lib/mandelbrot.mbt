@@ -35,12 +35,12 @@ let roffset : Double = if floor(image_height) % 2 == 0 {
 }
 
 pub fn iter(cx : Double, cy : Double) -> Double {
-  var x = 0.0
-  var y = 0.0
-  var newx = 0.0
-  var newy = 0.0
-  var smodz = 0.0
-  var i = 0
+  let mut x = 0.0
+  let mut y = 0.0
+  let mut newx = 0.0
+  let mut newy = 0.0
+  let mut smodz = 0.0
+  let mut i = 0
   while i < max_iter_number {
     newx = x * x - y * y + cx
     newy = 2.0 * x * y + cy
@@ -70,7 +70,7 @@ fn interpolation(f : Double, c0 : Int, c1 : Int) -> Int {
 
 pub fn get_color(d : Double) -> Int {
   if d >= 0.0 {
-    var k = 0.021 * (d - 1.0 + log(log(128.0)) / log(2.0))
+    let mut k = 0.021 * (d - 1.0 + log(log(128.0)) / log(2.0))
     k = log(1.0 + k) - 29.0 / 400.0
     k = k - float_of_int(floor(k))
     k = k * 400.0
@@ -95,12 +95,12 @@ pub fn calc_color(col : Int, row : Int, ox : Double, oy : Double,
   let pixel_size = width / image_width
   let cx = (float_of_int(col) - coffset) * pixel_size + ox
   let cy = (float_of_int(row) - roffset) * pixel_size + oy
-  var r = 0
-  var g = 0
-  var b = 0
-  var i = -1
+  let mut r = 0
+  let mut g = 0
+  let mut b = 0
+  let mut i = -1
   while i <= 1 {
-    var j = -1
+    let mut j = -1
     while j <= 1 {
       let d = iter(
         cx + float_of_int(i) * pixel_size / 3.0,
