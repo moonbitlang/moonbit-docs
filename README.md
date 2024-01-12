@@ -278,7 +278,7 @@ String interpolation is a powerful feature in MoonBit that enables you to substi
 
 ```swift live
 fn init {
-  x := 42
+  let x = 42
   print("The answer is \(x)")
 }
 ```
@@ -341,7 +341,7 @@ fn init {
 
 ## Variable Binding
 
-A variable can be declared as mutable or immutable using the keywords `var` or `let`, respectively. A mutable variable can be reassigned to a new value, while an immutable one cannot.
+A variable can be declared as mutable or immutable using `let mut` or `let`, respectively. A mutable variable can be reassigned to a new value, while an immutable one cannot.
 
 ```go live
 let zero = 0
@@ -350,17 +350,6 @@ fn init {
   let mut i = 10
   i = 20
   print(i + zero)
-}
-```
-
-There is a short-hand syntax sugar for local immutable bindings, e.g, using `:=`.
-
-```go
-fn init {
-  a := 3
-  b := "hello"
-  print(a)
-  print(b)
 }
 ```
 
@@ -474,7 +463,7 @@ fn init {
 
 ## Pattern Matching
 
-We have shown a use case of pattern matching for enums, but pattern matching is not restricted to enums. For example, we can also match expressions against Boolean values, numbers, characters, strings, tuples, arrays, and struct literals. Since there is only one case for those types other than enums, we can pattern match them using `let`/`var` binding instead of `match` expressions. Note that the scope of bound variables in `match` is limited to the case where the variable is introduced, while `let`/`var` binding will introduce every variable to the current scope. Furthermore, we can use underscores `_` as wildcards for the values we don't care about, use `..` to ignore remaining fields of struct or elements of array.
+We have shown a use case of pattern matching for enums, but pattern matching is not restricted to enums. For example, we can also match expressions against Boolean values, numbers, characters, strings, tuples, arrays, and struct literals. Since there is only one case for those types other than enums, we can pattern match them using `let` binding instead of `match` expressions. Note that the scope of bound variables in `match` is limited to the case where the variable is introduced, while `let` binding will introduce every variable to the current scope. Furthermore, we can use underscores `_` as wildcards for the values we don't care about, use `..` to ignore remaining fields of struct or elements of array.
 
 ```go
 let id = match u {
