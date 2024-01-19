@@ -1,19 +1,19 @@
-pub fn stream[T](self : Array[T]) -> List[T] {
+pub fn stream[T](now : Array[T]) -> List[T] {
   fn go(idx : Int) -> List[T] {
-    if idx == self.length() {
+    if idx == now.length() {
       Nil
     } else {
-      Cons(self[idx], go(idx + 1))
+      Cons(now[idx], go(idx + 1))
     }
   }
 
   go(0)
 }
 
-pub fn length[T](self : List[T]) -> Int {
-  match self {
+pub fn length[T](now : List[T]) -> Int {
+  match now {
     Nil => 0
-    Cons(_, n) => 1 + n.length()
+    Cons(_, n) => 1 + length(n)
   }
 }
 

@@ -35,18 +35,22 @@ pub fn generate_piece(self : Tetris) -> Bool {
 }
 
 pub fn get_next_piece(self : Tetris, pop : Bool) -> PIECE {
-  if self.pice_pool.length() == 0 {
+  if length(self.pice_pool) == 0 {
     self.generate_piece_pool()
   }
-  let Cons(cur, n) = self.pice_pool
-  if pop {
-    self.pice_pool = n
+  match self.pice_pool{
+    Nil => abort("impossible")
+    Cons(cur, n) => {
+      if pop {
+        self.pice_pool = n
+      }
+      cur
+    }
   }
-  cur
 }
 
 pub fn generate_piece_pool(self : Tetris) {
-  self.pice_pool = [
+  self.pice_pool = stream([
     PIECE::I,
     PIECE::J,
     PIECE::L,
@@ -54,7 +58,7 @@ pub fn generate_piece_pool(self : Tetris) {
     PIECE::S,
     PIECE::T,
     PIECE::Z,
-  ].stream()
+  ])
   // TODO:shuffle
 }
 
