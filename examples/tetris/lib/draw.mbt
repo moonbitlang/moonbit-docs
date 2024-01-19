@@ -27,7 +27,7 @@ pub fn draw(canvas : Canvas_ctx, tetris : Tetris) {
     c = c + 1
   }
   draw_piece(canvas, tetris.grid, (0, 0))
-  draw_piece(canvas, tetris.pice_shap.stream(), (tetris.pice_x, tetris.pice_y))
+  draw_piece(canvas, stream(tetris.pice_shap), (tetris.pice_x, tetris.pice_y))
   if tetris.dead {
     canvas.draw_game_over()
   }
