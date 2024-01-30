@@ -652,6 +652,19 @@ fn init {
 | `_[_] = _`(set item) | `op_set`    |
 
 
+## 管道运算符
+MoonBit 提供一个便利的管道运算符 `|>`，可以用于链式调用普通函数：
+
+```rust
+fn init {
+  x |> f // 相当于 f(x)
+  x |> f(y) // 相当于 f(x, y)
+  initial
+  |> function1
+  |> function2(other_arguments)
+}
+```
+
 ## 接口系统
 
 MoonBit 具有用于重载/特设多态的结构接口系统。接口可以声明如下：

@@ -700,6 +700,19 @@ Currently, the following operators can be overloaded:
 | `_[_]`(get item)     | `op_get`    |
 | `_[_] = _`(set item) | `op_set`    |
 
+## Pipe operator
+MoonBit provides a convenient pipe operator `|>`, which can be used to chain regular function calls:
+
+```rust
+fn init {
+  x |> f // equivalent to f(x)
+  x |> f(y) // equivalent to f(x, y)
+  initial
+  |> function1
+  |> function2(other_arguments)
+}
+```
+
 ## Trait system
 
 MoonBit features a structural trait system for overloading/ad-hoc polymorphism. Traits can be declared as follows:
