@@ -826,6 +826,49 @@ fn init {
 }
 ```
 
+## Trait objects
+MoonBit supports runtime polymorphism via trait objects.
+If `t` is of type `T`, which implements trait `I`,
+one can pack the methods of `T` that implements `I`, together with `t`,
+into a runtime object via `t as I`.
+Trait object erases the concrete type of a value,
+so objects created from different concrete types can be put in the same data structure and handled uniformly:
+
+```rust
+trait Animal {
+  speak(Self)
+}
+
+type Duck String
+fn Duck::make(name: String) -> Duck { Duck(name) }
+fn speak(self: Duck) {
+  println(self.0 + ": quak!")
+}
+
+type Fox String
+fn Fox::make(name: String) -> Fox { Fox(name) }
+fn Fox::speak(_self: Fox) {
+  println("What does the fox say?")
+}
+
+fn init {
+  let duck1 = Duck::make("duck1")
+  let duck2 = Duck::make("duck2")
+  let fox1 = Fox::make("fox1")
+  let animals = [ duck1 as Animal, duck2 as Animal, fox1 as Animal ]
+  let mut i = 0
+  while i < animals.length(), i = i + 1 {
+    animals[i].speak()
+  }
+}
+```
+
+Not all traits can be used to create objects.
+"object-safe" traits' methods must satisfy the following conditions:
+
+- `Self` must be the first parameter of a method
+- There must be only one occurence of `Self` in the type of the method (i.e. the first parameter)
+
 ## The question operator
 MoonBit features a convenient `?` operator for error handling.
 The `?` postfix operator can be applied to expressions of type `Option` or `Result`.

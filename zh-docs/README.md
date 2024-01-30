@@ -785,6 +785,48 @@ fn init {
 }
 ```
 
+## 接口对象
+MoonBit 通过接口对象的形式支持运行时的多态。
+假设  `t` 的类型为 `T`，而且类型 `T` 实现了接口 `I`,
+那么可以把 `T` 实现 `I` 的各个方法和 `t` 自己打包在一起，
+创建一个 `I` 的接口对象 `t as I`。
+接口对象擦除了值的具体类型，所以从不同的具体类型创建的接口对象可以被装在同一个数据结构里、统一地进行处理：
+
+```rust
+trait Animal {
+  speak(Self)
+}
+
+type Duck String
+fn Duck::make(name: String) -> Duck { Duck(name) }
+fn speak(self: Duck) {
+  println(self.0 + ": quak!")
+}
+
+type Fox String
+fn Fox::make(name: String) -> Fox { Fox(name) }
+fn Fox::speak(_self: Fox) {
+  println("What does the fox say?")
+}
+
+fn init {
+  let duck1 = Duck::make("duck1")
+  let duck2 = Duck::make("duck2")
+  let fox1 = Fox::make("fox1")
+  let animals = [ duck1 as Animal, duck2 as Animal, fox1 as Animal ]
+  let mut i = 0
+  while i < animals.length(), i = i + 1 {
+    animals[i].speak()
+  }
+}
+```
+
+不是所有接口都可以用于创建对象。
+“对象安全” 的接口的方法必须满足下列条件：
+
+- 方法的第一个参数必须是 `Self`
+- 在方法的签名里，`Self` 只能出现在第一个参数
+
 ## 问号操作符
 MoonBit 提供一个便捷的 `?` 操作符，用于错误处理。
 `?` 是一个后缀运算符。它可以作用于类型为 `Option` 或 `Result` 的表达式。
