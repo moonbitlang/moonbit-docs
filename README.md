@@ -771,6 +771,15 @@ fn op_mul(self: Point, other: Point) -> Point {
 }
 ```
 
+Methods of a trait can be called directly via `Trait::method`. MoonBit will infer the type of `Self` and check if `Self` indeed implements `Trait`, for example:
+
+```rust
+fn init {
+  println(Show::to_string(42))
+  debug(Compare::compare(1.0, 2.5))
+}
+```
+
 MoonBit provides the following useful builtin traits:
 
 ```rust
@@ -818,6 +827,23 @@ fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) { ... }
 ```
 
 When searching for the implementation of a trait, extension methods have a higher priority, so they can be used to override ordinary methods with undesirable behavior. Extension methods can only be used to implement the specified trait. They cannot be called directly like ordinary methods. Furthermore, *only the package of the type or the package of the trait can implement extension methods*. For example, only `@pkg1` and `@pkg2` are allowed to implement an extension method `@pkg1.Trait::f` for type `@pkg2.Type`. This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of extension methods.
+
+To involke an extension method directly, use the `Trait::method` syntax.
+
+```rust
+trait MyTrait {
+  f(Self)
+}
+
+fn MyTrait::f(self: Int) {
+  println("Got Int \(self)!")
+}
+
+fn init {
+  MyTrait::f(42)
+}
+```
+
 
 ## Automatically derive builtin traits
 

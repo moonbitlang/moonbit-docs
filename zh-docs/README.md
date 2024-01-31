@@ -722,6 +722,15 @@ fn op_mul(self: Point, other: Point) -> Point {
 }
 ```
 
+接口中的方法可以用 `Trait::method` 的语法来直接调用。MoonBit 会推导 `Self` 的具体类型，并检查 `Self` 是否实现了 `Trait`：
+
+```rust
+fn init {
+  println(Show::to_string(42))
+  debug(Compare::compare(1.0, 2.5))
+}
+```
+
 Moonbit 提供下列实用的内建接口：
 
 ```rust
@@ -777,6 +786,22 @@ fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) { ... }
 此外，**只有类型或接口所在的包可以定义拓展方法**。
 例如，只有 `@pkg1` 和 `@pkg2` 能为类型 `@pkg2.Type` 定义拓展方法 `@pkg1.Trait::f`。
 这一限制使得 MoonBit 的接口系统在加入拓展方法这一灵活的机制后，依然是一致的。
+
+如果需要直接调用一个拓展方法，可以使用 `Trait::method` 语法。例如：
+
+```rust
+trait MyTrait {
+  f(Self)
+}
+
+fn MyTrait::f(self: Int) {
+  println("Got Int \(self)!")
+}
+
+fn init {
+  MyTrait::f(42)
+}
+```
 
 ## 自动实现内建接口
 
