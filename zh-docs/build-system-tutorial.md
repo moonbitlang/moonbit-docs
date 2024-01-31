@@ -233,20 +233,21 @@ $ moon run ./main
 fib(10) = 55, fib(11) = 89
 ```
 
+## 内联测试
+
+
 ## 添加测试
 
-最后，让我们添加一些测试来验证我们的 fib 实现。
-
-首先，在 `lib/fib` 目录下，创建一个名为 `fib_test.mbt` 的文件，并粘贴以下代码：
+最后，让我们添加一些测试来验证我们的 fib 实现。在 `lib/fib/a.mbt` 中添加如下内容：
 
 ```rust
-fn assert_eq[T: Eq](lhs: T, rhs: T) {
+fn assert_eq[T: Show + Eq](lhs: T, rhs: T) {
   if lhs != rhs {
-    abort("")
+    abort("assert_eq failed.\n    lhs: \(lhs)\n    rhs: \(rhs)")
   }
 }
 
-fn init {
+test {
   assert_eq(fib(1), 1)
   assert_eq(fib(2), 1)
   assert_eq(fib(3), 2)
@@ -255,9 +256,39 @@ fn init {
 }
 ```
 
-这段代码测试了斐波那契序列的前五个项。
+这段代码测试了斐波那契序列的前五个项。`test { ... }` 定义了一个内联测试块。内联测试块中的代码会在测试模式下被执行，可以使用 `moon test` 来执行它们：
 
-最后，使用 `moon test` 命令，它扫描整个项目，识别并运行所有以 `_test.mbt` 结尾的文件。如果一切正常，你将看到：
+```bash
+$ moon test
+test lib/fib ... ok
+```
+
+`moon test` 会执行当前模块下的所有内联测试块。
+
+内联测试块会在非测试的编译模式下被丢弃（`moon build` 和 `moon run`），所以它们不会导致生成的代码大小膨胀。
+
+## 独立的测试文件
+
+除了内联测试，MoonBit 还支持独立的测试文件。名字以 `_test.mbt` 结尾的源文件会被视作独立的测试文件。它们只有在测试模式下才会加入到编译中。可以在这些独立测试文件中写内联测试和供测试使用的工具函数。
+例如，可以在 `lib/fib` 目录下，创建一个名为 `fib_test.mbt` 的文件，并粘贴以下代码：
+
+```rust
+fn assert_eq[T: Show + Eq](lhs: T, rhs: T) {
+  if lhs != rhs {
+    abort("assert_eq failed.\n    lhs: \(lhs)\n    rhs: \(rhs)")
+  }
+}
+
+test {
+  assert_eq(fib(1), 1)
+  assert_eq(fib(2), 1)
+  assert_eq(fib(3), 2)
+  assert_eq(fib(4), 3)
+  assert_eq(fib(5), 5)
+}
+```
+
+`moon test` 会在编译时搜索并添加所有名字以 `_test.mbt` 结尾的文件。如果一切正常，运行 `moon test`，你将看到：
 
 ```bash
 $ moon test

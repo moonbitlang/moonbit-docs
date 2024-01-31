@@ -237,20 +237,18 @@ $ moon run ./main
 fib(10) = 55, fib(11) = 89
 ```
 
-## Adding tests
+## Inline tests
 
-In the last, let's add some tests to verify our fib implementation.
-
-First, inside the `lib/fib` directory, create a file named `fib_test.mbt` and paste the following code:
+In the last, let's add some tests to verify our fib implementation. Add the following to `lib/fib/a.mbt`:
 
 ```rust
-fn assert_eq[T: Eq](lhs: T, rhs: T) {
+fn assert_eq[T: Show + Eq](lhs: T, rhs: T) {
   if lhs != rhs {
-    abort("")
+    abort("assert_eq failed.\n    lhs: \(lhs)\n    rhs: \(rhs)")
   }
 }
 
-fn init {
+test {
   assert_eq(fib(1), 1)
   assert_eq(fib(2), 1)
   assert_eq(fib(3), 2)
@@ -259,9 +257,39 @@ fn init {
 }
 ```
 
-This code tests the first five terms of the Fibonacci sequence.
+This code tests the first five terms of the Fibonacci sequence. `test { ... }` defines an inline test block. The code inside inline test blocks will be executed in test mode, using `moon test`:
 
-Finally, use the command `moon test` which scans the module, identifying and running all files ending with `_test.mbt`. If everything works, you'll see:
+```bash
+$ moon test
+test lib/fib ... ok
+```
+
+`moon test` will execute all inline tests in current module.
+
+Inline test blocks will be discarded in normal mode (`moon build` and `moon run`), so they will not result in code size bloat.
+
+## Stand-alone test files
+
+Besides inline tests, MoonBit also supports stand-alone test files. Source files whose names end with `_test.mbt` will be considered test files. They will be included in test mode only. You can write inline tests and test utilities in these stand-alone test files.
+For example, inside the `lib/fib` directory, create a file named `fib_test.mbt` and paste the following code:
+
+```rust
+fn assert_eq[T: Show + Eq](lhs: T, rhs: T) {
+  if lhs != rhs {
+    abort("assert_eq failed.\n    lhs: \(lhs)\n    rhs: \(rhs)")
+  }
+}
+
+test  {
+  assert_eq(fib(1), 1)
+  assert_eq(fib(2), 1)
+  assert_eq(fib(3), 2)
+  assert_eq(fib(4), 3)
+  assert_eq(fib(5), 5)
+}
+```
+
+`moon test` will include all scanfiles ending with `_test.mbt` during compilation. If everything works, run `moon test`, and you'll see:
 
 ```bash
 $ moon test
