@@ -38,20 +38,20 @@ Moon 是 MoonBit 语言的构建系统，目前基于[n2](https://github.com/evm
 
 ## 创建一个新模块
 
-要创建一个新模块，在终端中输入`moon new hello`命令：
+要创建一个新模块，在终端中输入 `moon new` 命令：
 
 ```bash
-$ moon new hello
+$ moon new
 ```
 
-该命令将创建一个名为`hello`的新模块。
+您将看到模块创建向导，使用默认值即可在 `my-project` 目录下创建一个名为 `hello` 的新模块。
 
 ## 理解模块目录结构
 
 创建新模块后，目录结构应如下所示：
 
 ```bash
-.
+my-project
 ├── lib
 │   ├── hello.mbt
 │   └── moon.pkg.json
