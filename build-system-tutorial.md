@@ -36,20 +36,20 @@ Once you have these prerequisites fulfilled, let's start building a new module i
 
 ## Creating a New Module
 
-To create a new module, use the `moon new hello` command in your terminal:
+To create a new module, use the `moon new` command in your terminal:
 
 ```bash
-moon new hello
+moon new
 ```
 
-This command will create a new module named `hello`.
+This command will launch a new module wizard. Following all default options will a new module named `hello` in the `my-project` directory.
 
 ## Understanding the Module Directory Structure
 
 After creating the new module, your directory structure should resemble the following:
 
 ```bash
-.
+my-project
 ├── lib
 │   ├── hello.mbt
 │   └── moon.pkg.json
