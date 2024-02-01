@@ -224,4 +224,3 @@ pub fn new() -> Tetris {
 pub fn get_score(tetris : Tetris) -> Int {
   tetris.score
 }
-

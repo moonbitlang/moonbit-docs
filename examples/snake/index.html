@@ -1,0 +1,126 @@
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+    </div>
+    <canvas id="canvas"></canvas>
+    <div class="information">
+      <div>
+        <p>up: go up</p>
+        <p>left: go left</p>
+        <p>right: go right</p>
+        <p>down: go down</p>
+      </div>
+    </div>
+  </body>
+  <script>
+
+const canvas = document.getElementById("canvas")
+const context = canvas.getContext("2d")
+const WIDTH = 480
+const HEIGHT = WIDTH
+
+canvas.width = WIDTH
+canvas.height = HEIGHT
+
+context.scale(24, 24)
+const GRID_COL = WIDTH/24
+const GRID_ROW = HEIGHT/24
+
+const colors = [
+  "#dcdcdc",
+  "#00263f",
+  "#ffb900",
+  "#2753f1",
+  "#f7ff00",
+  "#ff6728",
+  "#11c5bf",
+  "#ae81ff",
+  "#e94659",
+]
+
+let requestAnimationFrameId = null
+let lastTime = 0
+let dropCounter = 0
+let dropInterval = 500
+window.addEventListener("keydown", (e) => {
+  if (!requestAnimationFrameId) return
+  switch (e.key) {
+    case "ArrowLeft": {
+        snake_step(snake, 3)
+        snake_draw(context, snake)
+        break
+    }
+    case "ArrowRight": {
+       
+        snake_step(snake, 4)
+        snake_draw(context, snake)
+        break
+    }
+    case "ArrowDown": {
+      
+        snake_step(snake, 2)
+        snake_draw(context, snake)
+        break
+    }
+    case "ArrowUp": {
+      
+        snake_step(snake, 1)
+        snake_draw(context, snake)
+        break
+    }
+    
+  }
+})
+let snake_draw = null;
+let snake_new = null;
+let snake_step = null;
+let snake = null;
+
+const importObject = {
+  canvas: {
+    stroke_rect: (ctx, x, y, width, height) => ctx.strokeRect(x, y, width, height),
+    set_line_width: (ctx, width) => ctx.lineWidth = width,
+    fill_rect: (ctx, x, y, width, height) => ctx.fillRect(x, y, width, height),
+    set_stroke_color: (ctx, color) => ctx.strokeStyle = colors[color],
+    set_fill_style: (ctx, color) => ctx.fillStyle = colors[color],
+  
+  },
+  spectest: {
+      print_i32: (x) => console.log(String(x)),
+      print_f64: (x) => console.log(String(x)),
+      print_char: (x) => console.log(String.fromCharCode(x)),
+    },
+  Math:{
+    random: Math.random,
+    floor: Math.floor,
+  }
+};
+
+function update(time = 0) {
+  const deltaTime = time - lastTime
+  dropCounter += deltaTime
+  if (dropCounter > dropInterval) {
+    snake_step(snake, 5);
+    dropCounter = 0
+  }
+  lastTime = time
+  snake_draw(context, snake)
+  requestAnimationFrameId = requestAnimationFrame(update)
+}
+
+
+WebAssembly.instantiateStreaming(fetch("target/wasm/release/build/main/main.wasm"), importObject).then(
+    (obj) => {
+      obj.instance.exports._start();
+      snake_draw = obj.instance.exports["snake/main::draw"];
+      snake_new = obj.instance.exports["snake/main::new"];
+      snake_step = obj.instance.exports["snake/main::step"];
+      snake = snake_new();
+      requestAnimationFrameId = requestAnimationFrame(update);
+    }
+  )
+  </script>
+</html>

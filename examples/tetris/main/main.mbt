@@ -17,4 +17,3 @@ pub fn get_score(tetris : @lib.Tetris) -> Int {
 fn init {
   ()
 }
-
