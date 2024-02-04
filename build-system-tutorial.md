@@ -42,7 +42,7 @@ To create a new module, use the `moon new` command in your terminal:
 moon new
 ```
 
-This command will launch a new module wizard. Following all default options will a new module named `hello` in the `my-project` directory.
+This command will launch a new module wizard. Following all default options will create a new module named `hello` in the `my-project` directory.
 
 ## Understanding the Module Directory Structure
 
