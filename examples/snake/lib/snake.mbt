@@ -7,6 +7,7 @@ enum Direction{
   Down
   Left
   Right
+  Default
 }
 
 enum GridType{
@@ -14,6 +15,14 @@ enum GridType{
   Food
   Default
 }
+
+// enum Action{
+//   1
+//   2
+//   3
+//   4
+//   5
+// }
 
 pub fn grid_num(self: GridType) -> Int{
   match self{
@@ -29,11 +38,18 @@ pub fn dir_posi(self: Direction) -> Position{
     Down => {x: 0, y: 1}
     Left => {x: -1, y: 0}
     Right => {x: 1, y: 0}
+    Default => {x: 0, y: 0}
   }
 }
 
 fn Direction::op_equal(x: Direction, y: Direction) -> Bool{
-  if x == y{ true }else { false }
+  let x0: Position = dir_posi(x)
+  let y0: Position = dir_posi(y)
+  if (x0.x == y0.x && x0.y == y0.y){
+    true
+  }else{
+    false
+  }
 }
 
 struct Position{
@@ -79,7 +95,9 @@ fn generate_Food(self: GameState){
 }
 
 fn go_step(self: GameState){
-  
+  // if (prev == Up && self.dir == Down) ||  (prev == Down && self.dir == Up) || (prev == Left && self.dir == Right) || (prev == Right && self.dir == Left){
+  //   self.dir = prev
+  // }
   let head : Position = get_head(self.body)
   let newHead : Position = {x: head.x , y: head.y }
 
@@ -108,26 +126,62 @@ fn go_step(self: GameState){
 
 }
 
-pub fn step(self : GameState, action : Int) {
+pub fn step(self : GameState, action : Direction) {
+
   match action {
     // move up
-    1 =>{
-      self.dir = Up
+    Up =>{
+      if length(self.body) == 1{
+        self.dir = Up
+      }else{
+        if self.dir == Left || self.dir == Right || self.dir == Up{
+          self.dir = Up
+        }else{
+          self.dir = self.dir
+        }
+      }
+       
       }
       
     // move down
-    2 =>{
-      self.dir = Down
+    Down =>{
+      if length(self.body) == 1{
+        self.dir = Down
+      }else{
+        if self.dir == Left || self.dir == Right || self.dir == Down{
+          self.dir = Down
+        }else{
+          self.dir = self.dir
+        }
+      }
+       
       }
       
     // move left
-    3 =>{
-      self.dir = Left
+    Left =>{
+      if length(self.body) == 1{
+        self.dir = Left
+      }else{
+        if self.dir == Up || self.dir == Left || self.dir == Down{
+          self.dir = Left
+        }else{
+          self.dir = self.dir
+        }  
+      }
+ 
       }
       
     // move right
-    4 =>{
-      self.dir = Right
+    Right =>{
+      if length(self.body) == 1{
+        self.dir = Right
+      }else{
+        if self.dir == Up || self.dir == Right || self.dir == Down{
+          self.dir = Right
+        }else{
+          self.dir = self.dir
+        }
+      }
       }
        
     _ =>{
@@ -139,6 +193,19 @@ pub fn step(self : GameState, action : Int) {
   self.go_step()
 }
 
+pub fn tran_step(self : GameState, a : Int){
+  let mut action : Direction = Default
+  match a {
+    1 => action = Up
+    2 => action = Down
+    3 => action = Left
+    4 => action = Right
+    _ => action = Default
+  }
+
+  self.step(action)  
+}
+
 pub fn new() -> GameState{
   let game: GameState = {
     grid:  [],
@@ -148,4 +215,3 @@ pub fn new() -> GameState{
   game.initialize()
   game
 }
-
