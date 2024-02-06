@@ -1,6 +1,6 @@
 # MoonBit 构建系统教程
 
-Moon 是 MoonBit 语言的构建系统，目前基于[n2](https://github.com/evmar/n2)项目。Moon 支持并行和增量构建本地包。管理和构建第三方包的功能即将推出。
+Moon 是 MoonBit 语言的构建系统，目前基于[n2](https://github.com/evmar/n2)项目。Moon 支持并行和增量构建，此外 moon 还支持管理和构建 [mooncakes.io](mooncakes.io) 上的第三方包。
 
 ## 准备工作
 
@@ -8,43 +8,56 @@ Moon 是 MoonBit 语言的构建系统，目前基于[n2](https://github.com/evm
 
 1. **MoonBit CLI 工具**: 从[这里](https://www.moonbitlang.cn/download/)下载。这个命令行工具用于创建和管理 MoonBit 项目。
 
-   使用`moon help`命令查看使用说明。
+    使用`moon help`命令查看使用说明。
 
-   ```
-   $ moon help
-   Moonbit's build system
+    ```
+    $ moon help
+    Moonbit's build system
 
-   Usage: moon <COMMAND>
+    Usage: moon <COMMAND>
 
-   Commands:
-     build    Build the current package
-     check    Check the current package, but don't build object files
-     run      Run WebAssembly module
-     clean    Remove the target directory
-     new      Create a new moonbit package
-     bench    Generate build matrix for benchmarking
-     fmt      Format moonbit
-     version  Print version info and exit
-     test     Run the tests
-     help     Print this message or the help of the given subcommand(s)
+    Commands:
+      build     Build the current package
+      check     Check the current package, but don't build object files
+      run       Run WebAssembly module
+      clean     Remove the target directory
+      new       Create a new moonbit package
+      bench     Generate build matrix for benchmarking
+      fmt       Format moonbit
+      version   Print version info and exit
+      test      Run the tests
+      login     Log in to your account
+      register  Register an account on mooncakes.io
+      publish   Publish the current package
+      add       Add a new dependency
+      remove    Remove a dependency
+      tree      Display the dependency tree
+      update    Update index
+      doc       Generate documentation
+      install   Install dependencies
+      help      Print this message or the help of the given subcommand(s)
 
-   Options:
-     -h, --help  Print help
-   ```
+    Options:
+      -h, --help  Print help
+    ```
 
 2. **Moonbit Language** Visual Studio Code 插件: 可以从 VS Code 市场安装。该插件为 MoonBit 提供了丰富的开发环境，包括语法高亮、代码补全等功能。
 
-完成这些安装后，让我们开始在 MoonBit 中构建一个新模块。
+完成这些安装后，让我们开始创建一个新的 MoonBit 模块。
 
 ## 创建一个新模块
 
-要创建一个新模块，在终端中输入 `moon new` 命令：
+要创建一个新模块，在终端中输入 `moon new` 命令，您将看到模块创建向导。如果全部使用默认值即可在 `my-project` 目录下创建一个名为 `hello` 的新模块。
 
 ```bash
 $ moon new
+Enter the path to create the project (. for current directory): my-project
+Select the create mode: exec
+Enter your username: username
+Enter your project name: hello
+Enter your license: Apache-2.0
+Created my-project
 ```
-
-您将看到模块创建向导，使用默认值即可在 `my-project` 目录下创建一个名为 `hello` 的新模块。
 
 ## 理解模块目录结构
 
@@ -52,96 +65,108 @@ $ moon new
 
 ```bash
 my-project
+├── README.md
 ├── lib
-│   ├── hello.mbt
-│   └── moon.pkg.json
+│   ├── hello.mbt
+│   ├── hello_test.mbt
+│   └── moon.pkg.json
 ├── main
-│   ├── main.mbt
-│   └── moon.pkg.json
+│   ├── main.mbt
+│   └── moon.pkg.json
 └── moon.mod.json
 ```
 
 这里对目录结构进行简要解释：
 
-- `lib`和`main`目录：这些是模块中的包。每个包可以包含多个`.mbt`文件，这些文件是 MoonBit 语言的源代码文件。不过，无论包中有多少个`.mbt`文件，它们都共享一个公共的`moon.pkg.json`文件。
+- `lib`和`main`目录：这些是模块中的包。每个包可以包含多个`.mbt`文件，这些文件是 MoonBit 语言的源代码文件。不过，无论包中有多少个`.mbt`文件，它们都共享一个公共的`moon.pkg.json`文件。`lib/*_test.mbt` 是 `lib` 包中独立的测试文件，在这些文件中可以直接访问 `lib` 包的私有成员。这些文件只有在测试模式下才会加入到编译中，可以在这些独立测试文件中写内联测试和供测试使用的工具函数。
 
 - `moon.pkg.json`文件：包描述符文件。它定义了包的属性，例如该包是否为 main 包，该包所导入的包。
   - `main/moon.pkg.json`：
     ```json
     {
       "is_main": true,
-      "import": {
-        "hello8/lib": ""
-      }
+      "import": [
+        "username/hello/lib"
+      ]
     }
     ```
     其中的 `"is_main: true"` 声明该包需要被构建系统链接为 wasm 文件。
+
   - `lib/moon.pkg.json`
-    ```json
-    {}
-    ```
+      ```json
+      {}
+      ```
     内容为空，其作用仅仅是告诉构建系统该文件夹是一个包。
 
 - `moon.mod.json`用于将目录标识为 MoonBit 模块。它包含模块的名称：
 
-  ```
+  ```json
   {
     "name": "hello"
   }
   ```
 
-## 检查项目
-
-使用 Visual Studio Code 打开项目。在安装了 MoonBit 插件之后，在终端中使用`moon check --watch`命令自动检查项目。
-
-![before watch](./imgs/before_watch.png)
-
-执行`moon check --watch`之后，VS Code 应该如下所示。
-
-![after watch](./imgs/after_watch.png)
-
 ## 使用包
 
-我们的`hello`模块包含两个包：`lib`和`main`。
+我们的`username/hello`模块包含两个包：`lib`和`main`。
 
-`lib`包含一个`hello.mbt`文件：
+- `lib`包含`hello.mbt`文件与`hello_test.mbt`文件：
 
-```rust
-pub fn hello() -> String {
-    "Hello, world!"
-}
-```
+  `hello.mbt`
+  ```rust
+  pub fn hello() -> String {
+      "Hello, world!"
+  }
+  ```
 
-`main`包含一个`main.mbt`文件：
+  `hello_test.mbt`
+  ```rust
+  test "hello" {
+    if hello() != "Hello, world!" {
+      abort("")
+    }
+  }
+  ```
 
-```rust
-fn init {
-  println(@lib.hello())
-}
-```
+- `main`包含一个`main.mbt`文件：
 
-要执行程序，请指定路径到`main`包：
+  ```rust
+  fn init {
+    println(@lib.hello())
+  }
+  ```
+
+要执行程序，请在 `moon run` 命令中指定路径`main`包的路径：
 
 ```bash
 $ moon run ./main
 Hello, world!
 ```
 
+也可以省略 `./`
+
+```bash
+$ moon run main
+Hello, world!
+```
+
 ## 包导入
 
 在 MoonBit 的构建系统中，模块的名称用于引用其内部包。
-要在`main/main.mbt`中导入`lib`包，需要在`main/moon.pkg`中指定：
+要在`main/main.mbt`中导入`lib`包，需要在`main/moon.pkg.json`中指定：
 
 ```json
 {
   "is_main": true,
-  "import": {
-    "hello/lib": ""
-  }
+  "import": [
+    "username/hello/lib"
+  ]
 }
 ```
 
-这里，`"hello/lib": ""`指定要导入`hello`模块中的`lib`包，冒号后面的空字符串 `""` 表示没有给`lib`起一个别名。
+这里，`username/hello/lib"` 指定导入 `username/hello` 模块中的`username/hello/lib`包，因此在 `main/main.mbt` 中你可以使用 `@lib.hello()`。
+
+注意，我们在 `main/moon.pkg.json` 中导入的包名是 `username/hello/lib`，在 `main/main.mbt ` 中使用的是 `@lib` 来引用该包，这里的 import 其实是给包名 `username/hello/lib` 生成了一个默认的别名。在下文中，你将会学到如何自定义包的别名。
 
 ## 创建和使用包
 
@@ -190,13 +215,15 @@ pub fn fib2(num : Int) -> Int {
 创建这些文件后，目录结构应如下所示：
 
 ```
-.
+my-project
+├── README.md
 ├── lib
 │   ├── fib
 │   │   ├── a.mbt
 │   │   ├── b.mbt
 │   │   └── moon.pkg.json
 │   ├── hello.mbt
+│   ├── hello_test.mbt
 │   └── moon.pkg.json
 ├── main
 │   ├── main.mbt
@@ -204,15 +231,18 @@ pub fn fib2(num : Int) -> Int {
 └── moon.mod.json
 ```
 
-在 `main/moon.pkg.json` 文件中，导入 `hello/lib/fib` 包：
+在 `main/moon.pkg.json` 文件中，导入 `username/hello/lib/fib` 包，并自定义其别名为 `my_awesome_fibonacci`：
 
 ```json
 {
   "is_main": true,
-  "import": {
-    "hello/lib": "",
-    "hello/lib/fib": ""
-  }
+  "import": [
+    "username/hello/lib",
+    {
+      "path": "username/hello/lib/fib",
+      "alias": "my_awesome_fibonacci"
+    }
+  ]
 }
 ```
 
@@ -220,77 +250,76 @@ pub fn fib2(num : Int) -> Int {
 
 ```rust
 fn init {
-  let a = @fib.fib(10)
-  let b = @fib.fib2(11)
+  let a = @my_awesome_fibonacci.fib(10)
+  let b = @my_awesome_fibonacci.fib2(11)
   println("fib(10) = \(a), fib(11) = \(b)")
+  
+  println(@lib.hello())
 }
 ```
 
 要执行程序，请指定主包的路径：
 
 ```bash
-$ moon run ./main
+$ moon run main
 fib(10) = 55, fib(11) = 89
+Hello, world!
 ```
-
-## 内联测试
-
 
 ## 添加测试
 
-最后，让我们添加一些测试来验证我们的 fib 实现。在 `lib/fib/a.mbt` 中添加如下内容：
+最后，让添加一些测试来验证我们的 fib 实现。
 
+首先，在 `lib/fib` 目录下，创建一个名为 `fib_test.mbt` 的文件，并粘贴以下代码：
+
+`lib/fib/fib_test.mbt`
 ```rust
-fn assert_eq[T: Show + Eq](lhs: T, rhs: T) {
+fn assert_eq[T: Eq](lhs: T, rhs: T) {
   if lhs != rhs {
-    abort("assert_eq failed.\n    lhs: \(lhs)\n    rhs: \(rhs)")
+    abort("")
   }
 }
 
-test {
+fn init {
   assert_eq(fib(1), 1)
-  assert_eq(fib(2), 1)
+  assert_eq(fib2(2), 1)
   assert_eq(fib(3), 2)
-  assert_eq(fib(4), 3)
+  assert_eq(fib2(4), 3)
   assert_eq(fib(5), 5)
 }
 ```
 
-这段代码测试了斐波那契序列的前五个项。`test { ... }` 定义了一个内联测试块。内联测试块中的代码会在测试模式下被执行，可以使用 `moon test` 来执行它们：
+这段代码测试了斐波那契序列的前五个项。
 
-```bash
-$ moon test
-test lib/fib ... ok
-```
 
-`moon test` 会执行当前模块下的所有内联测试块。
+你也可以直接在 `lib/fib/a.mbt` 中写inline测试：
 
-内联测试块会在非测试的编译模式下被丢弃（`moon build` 和 `moon run`），所以它们不会导致生成的代码大小膨胀。
-
-## 独立的测试文件
-
-除了内联测试，MoonBit 还支持独立的测试文件。名字以 `_test.mbt` 结尾的源文件会被视作独立的测试文件。它们只有在测试模式下才会加入到编译中。可以在这些独立测试文件中写内联测试和供测试使用的工具函数。
-例如，可以在 `lib/fib` 目录下，创建一个名为 `fib_test.mbt` 的文件，并粘贴以下代码：
-
+`lib/fib/a.mbt`
 ```rust
-fn assert_eq[T: Show + Eq](lhs: T, rhs: T) {
-  if lhs != rhs {
-    abort("assert_eq failed.\n    lhs: \(lhs)\n    rhs: \(rhs)")
+pub fn fib(n : Int) -> Int {
+  match n {
+    0 => 0
+    1 => 1
+    _ => fib(n - 1) + fib(n - 2)
   }
 }
 
 test {
-  assert_eq(fib(1), 1)
-  assert_eq(fib(2), 1)
-  assert_eq(fib(3), 2)
-  assert_eq(fib(4), 3)
-  assert_eq(fib(5), 5)
+  if fib(4) != 3 { abort("fib(4) != 3") }
 }
 ```
 
-`moon test` 会在编译时搜索并添加所有名字以 `_test.mbt` 结尾的文件。如果一切正常，运行 `moon test`，你将看到：
+
+
+最后，使用 `moon test` 命令，它扫描整个项目，识别并运行所有以 `_test.mbt` 结尾的文件。如果一切正常，你将看到：
 
 ```bash
 $ moon test
 test lib/fib ... ok
+test lib ... ok
+fib(10) = 55, fib(11) = 89
+Hello, world!
+test main ... ok
 ```
+
+注意这里也执行了 `main/main.mbt:init`，后续我们将会改善测试与包初始化函数的问题。
