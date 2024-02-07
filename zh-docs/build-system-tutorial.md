@@ -1,6 +1,6 @@
 # MoonBit 构建系统教程
 
-Moon 是 MoonBit 语言的构建系统，目前基于[n2](https://github.com/evmar/n2)项目。Moon 支持并行和增量构建，此外 moon 还支持管理和构建 [mooncakes.io](mooncakes.io) 上的第三方包。
+Moon 是 MoonBit 语言的构建系统，目前基于[n2](https://github.com/evmar/n2)项目。Moon 支持并行和增量构建，此外 moon 还支持管理和构建 [mooncakes.io](https://mooncakes.io/) 上的第三方包。
 
 ## 准备工作
 
