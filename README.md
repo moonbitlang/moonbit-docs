@@ -180,9 +180,29 @@ Curly brackets are used to group multiple expressions in the consequent or the e
 
 Note that a conditional expression always returns a value in MoonBit, and the return values of the consequent and the else clause must be of the same type.
 
-### Loops
 
-The primary loop statement in MoonBit is the `while` loop:
+### Functional loop
+
+Functional loop is a powerful feature in MoonBit that enables you to write loops in a functional style. 
+
+A functional loop consumes arguments and returns a value. It is defined using the `loop` keyword, followed by its arguments and the loop body. The loop body is a sequence of clauses, each of which consists of a pattern and an expression. The clause whose pattern matches the input will be executed, and the loop will return the value of the expression. If no pattern matches, the loop will panic. Use the `continue` keyword with arguments to start the next iteration of the loop. Use the `break` keyword with arguments to return a value from the loop. The `break` keyword can be omitted if the value is the last expression in the loop body.
+
+```rust
+fn sum(xs: List[Int]) -> Int {
+  loop xs, 0 {
+    Nil, acc => break acc // break can be omitted
+    Cons(x, rest), acc => continue rest, x + acc
+  }
+}
+
+fn init {
+  println(sum(Cons(1, Cons(2, Cons(3, Nil)))))
+}
+```
+
+### While loop
+
+In MoonBit, `while` loop can be used to execute a block of code repeatedly as long as a condition is true. The condition is evaluated before executing the block of code. The `while` loop is defined using the `while` keyword, followed by a condition and the loop body. The loop body is a sequence of statements. The loop body is executed as long as the condition is true.
 
 ```go
 while x == y {
@@ -233,6 +253,18 @@ while i < 10, i = i + 1 {
 ```
 
 ## Built-in Data Structures
+
+### Boolean
+
+MoonBit has a built-in boolean type, which has two values: `true` and `false`. The boolean type is used in conditional expressions and control structures.
+
+```rust
+let a = true
+let b = false
+let c = a && b
+let d = a || b
+let e = not(a)
+```
 
 ### Number
 
@@ -458,6 +490,38 @@ fn print_list(l: List) {
 fn init {
   let l: List = Cons(1, Cons(2, Nil))
   print_list(l)
+}
+```
+
+### Newtype
+
+MoonBit supports a special kind of enum called newtype, which is used to create a new type from an existing type. A newtype can have only one case, and the case can have only one associated value. 
+
+```rust
+type UserId Int
+type UserName String
+```
+
+The name of the newtype is both a type and a data constructor. The construction and destruction of a newtype follow the same rules as those of an enum.
+
+```rust
+fn init {
+  let id: UserId = UserId(1)
+  let name: UserName = UserName("John Doe")
+  let UserId(uid) = id
+  let UserName(uname) = name
+  println(uid)
+  println(uname)
+}
+```
+
+Additionally, the value of a newtype can be accessed via the dot syntax.
+
+```rust
+fn init {
+  let id: UserId = UserId(1)
+  let uid = id.0
+  println(uid)
 }
 ```
 
