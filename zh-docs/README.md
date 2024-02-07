@@ -183,9 +183,28 @@ if x == y {
 
 需要注意的是，在 MoonBit 中，条件表达式总是返回一个值，结果和 `else` 子句的返回值类型必须相同。
 
+### 函数式循环
+
+函数式循环是 MoonBit 中的一个强大特性，它允许您以函数式风格编写循环。
+
+函数式循环接受参数并返回一个值。它使用 loop 关键字定义，后跟其参数和循环体。循环体是一系列子句，每个子句由模式和表达式组成。与输入匹配的模式将被执行，并且循环将返回表达式的值。如果没有匹配的模式，循环将抛出异常。使用 continue 关键字和参数来开始下一次循环迭代。使用 break 关键字和参数来从循环中返回一个值。如果值是循环体中的最后一个表达式，则可以省略 break 关键字。
+
+```rust
+fn sum(xs: List[Int]) -> Int {
+  loop xs, 0 {
+    Nil, acc => break acc // break can be omitted
+    Cons(x, rest), acc => continue rest, x + acc
+  }
+}
+
+fn init {
+  println(sum(Cons(1, Cons(2, Cons(3, Nil)))))
+}
+```
+
 ### 循环
 
-MoonBit 中的主要循环语句是 `while` 循环：
+MoonBit 的 `while` 循环可以用如下语法定义：
 
 ```rust
 while x == y {
@@ -237,6 +256,18 @@ while i < 10, i = i + 1 {
 ```
 
 ## 内置数据结构
+
+### 布尔值
+
+MoonBit 内置了布尔类型，它有两个值：`true` 和 `false`。布尔类型用于条件表达式和控制结构。
+
+```rust
+let a = true
+let b = false
+let c = a && b
+let d = a || b
+let e = not(a)
+```
 
 ### 数字
 
@@ -416,6 +447,38 @@ fn print_list(l: List) {
 fn init {
   let l: List = Cons(1, Cons(2, Nil))
   print_list(l)
+}
+```
+
+### Newtype
+
+MoonBit 支持一种特殊的枚举类型，称为 newtype，用于从现有类型创建新类型。一个 newtype 只能有一个情况，并且该情况只能有一个关联值。
+
+```rust
+type UserId Int
+type UserName String
+```
+
+Newtype的名称既是类型又是数据构造函数。新类型的构造和解构遵循与枚举相同的规则。
+
+```rust
+fn init {
+  let id: UserId = UserId(1)
+  let name: UserName = UserName("John Doe")
+  let UserId(uid) = id
+  let UserName(uname) = name
+  println(uid)
+  println(uname)
+}
+```
+
+也可以使用 `.0` 对 Newtype 进行解构：
+
+```rust
+fn init {
+  let id: UserId = UserId(1)
+  let uid = id.0
+  println(uid)
 }
 ```
 
