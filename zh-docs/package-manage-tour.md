@@ -2,9 +2,9 @@
 
 MoonBit的构建系统无缝集成了包管理和文档生成工具，用户可以方便地从mooncakes.io获取依赖、查阅模块的文档，并推送新的模块。
 
-mooncakes.io是MoonBit的中心化包管理平台。所有的“月饼”都是一个模块，是最小的上传单位，都有一个对应的配置文件`moon.mod.json`。模块的路径下可以有多个包，每个包对应一个`moon.pkg.json`配置文件，与`moon.pkg.json`同一层级下的`.mbt`源码属于这个包。
+[mooncakes.io](https://mooncakes.io/)是MoonBit的中心化包管理平台。所有的“月饼”都是一个模块，是最小的上传单位，都有一个对应的配置文件`moon.mod.json`。模块的路径下可以有多个包，每个包对应一个`moon.pkg.json`配置文件，与`moon.pkg.json`同一层级下的`.mbt`源码属于这个包。
 
-在开始前，确保您已经安装了[moon](https://www.moonbitlang.com/download/)。
+在开始前，确保您已经安装了[moon](https://www.moonbitlang.cn/download/)。
 
 ## 注册和登录
 
