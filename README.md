@@ -231,27 +231,6 @@ while i < 10 {
 println(n) // outputs 25
 ```
 
-The `while` loop can have an optional "continue" block after the loop condition, separated by comma. It is executed _after_ the body of every iteration, _before_ the condition of next iteration:
-
-```rust
-let mut i = 0
-while i < 10, i = i + 1 {
-  println(i)
-} // outputs 0 to 9
-```
-
-If there are multiple statements in the continue block, they must be wrapped in braces. `continue` statement in the loop body will not skip continue block. For example, the following code will output all odd numbers smaller than 10:
-
-```rust
-let mut i = 1
-while i < 10, i = i + 1 {
-  if (i % 2 == 0) {
-    continue
-  }
-  println(i)
-} // outputs 1 3 5 7 9
-```
-
 ## Built-in Data Structures
 
 ### Boolean
@@ -960,8 +939,9 @@ fn init {
   let fox1 = Fox::make("fox1")
   let animals = [ duck1 as Animal, duck2 as Animal, fox1 as Animal ]
   let mut i = 0
-  while i < animals.length(), i = i + 1 {
+  while i < animals.length() {
     animals[i].speak()
+    i = i + 1
   }
 }
 ```
