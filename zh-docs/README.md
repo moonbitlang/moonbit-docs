@@ -1,26 +1,26 @@
 # MoonBit
 
-MoonBit 是一个用于云计算和边缘计算的 WebAssembly 端到端编程语言工具链。
-您可以在 https://try.moonbitlang.cn 获得 IDE 环境，无需安装任何软件，也不依赖任何服务器。
+MoonBit 是一个用于云计算和边缘计算的 WebAssembly 端到端的编程语言工具链。
+您可以访问 https://try.moonbitlang.cn 获得 IDE 环境，无需安装任何软件，也不依赖任何服务器。
 
 ## 状态
 
-MoonBit 目前处于 Pre-alpha 阶段，是实验性质的。我们期望明年达到 beta 阶段。
+MoonBit 目前处于 Pre-alpha 阶段，是实验性质的。我们期望今年能达到 beta 阶段。
 
 ## 主要优势
 
-- 生成与现有解决方案相比显著更小的 WASM 文件。
+- 生成比现有解决方案明显更小的 WASM 文件。
 - 更高的运行时性能。
 - 先进的编译时性能。
-- 简单但实用的数据导向语言设计。
+- 简单且实用的数据导向语言设计。
 
 ## 概述
 
 一个月兔程序由类型定义，函数定义和变量绑定组成。
-每个包的入口点是一个特殊的 `init` 函数。`init` 函数特殊在以下两个方面：
+每个包的入口点是一个特殊的 `init` 函数，它有以下两个特点：
 
-1. 在同一个包中可以有多个 `init` 函数。
-1. `init` 函数不能被显式地调用或被其他函数引用。相反，在一个包初始化时，所有的 `init` 函数都将被隐式地调用。因此，`init` 函数只应该包含语句。
+1. 同一个包中可以有多个 `init` 函数。
+2. `init` 函数不能被显式调用或被其他函数引用。相反，在一个包初始化时，所有的 `init` 函数都将被隐式地调用。因此，`init` 函数中只能包含语句。
 
 ```rust live
 fn init {
@@ -29,12 +29,12 @@ fn init {
 
 fn init {
   let x = 1
-  // x // fail
-  print(x) // success
+  // x     // 失败
+  print(x) // 成功
 }
 ```
 
-MoonBit 区分语句和表达式。在一个函数体中，只有最后一句应该是作为返回值的表达式。例如：
+MoonBit 区分语句和表达式。在一个函数体中，只有最后一句才能写成作为返回值的表达式。例如：
 
 ```rust live
 fn foo() -> Int {
@@ -44,7 +44,7 @@ fn foo() -> Int {
 
 fn bar() -> Int {
   let x = 1
-  x + 1 // fail
+  x + 1 // 失败
   x + 2
 }
 
@@ -59,18 +59,18 @@ fn init {
 表达式包括：
 
 - 值字面量（例如布尔值、数字、字符、字符串、数组、元组、结构体）
-- 算术、逻辑或比较操作
-- 访问数组元素（例如 `a[0]`）或结构体字段（例如 `r.x`）或元组组成部分（例如 `t.0`）
+- 算术、逻辑和比较运算
+- 访问数组元素（例如 `a[0]`）、结构体字段（例如 `r.x`）或元组的元素（例如 `t.0`）
 - 变量和（大写字母开头的）枚举构造器
 - 匿名局部函数定义
-- `match` 和 `if`表达式
+- `match` 和 `if` 表达式
 
 语句包括：
 
 - 命名局部函数定义
 - 局部变量绑定
 - 赋值
-- While 循环和相关的控制流结构（`break` 和 `continue`）
+- `while` 循环和相关的控制流结构（`break` 和 `continue`）
 - `return` 语句
 - 返回类型为 `unit` 的任何表达式
 
@@ -83,7 +83,7 @@ fn init {
 
 函数可以被定义为顶层或局部。
 我们可以使用 `fn` 关键字定义一个顶层函数，
-例如以下求三个整数之和并返回结果的函数：
+例如以下函数求三个整数之和并返回结果：
 
 ```rust
 fn add3(x: Int, y: Int, z: Int)-> Int {
@@ -91,16 +91,16 @@ fn add3(x: Int, y: Int, z: Int)-> Int {
 }
 ```
 
-注意顶层函数的参数和返回值类型需要显式标注。如果返回类型被省略，函数将被视为返回 `unit` 类型。
+注意，顶层函数的参数和返回值类型需要显式标注。如果返回值类型被省略，函数将被视为返回 `unit` 类型。
 
 ### 局部函数
 
-局部函数使用 `fn` 关键字定义。局部函数可以是命名或匿名的。在大多数情况下，局部函数的类型注解可以省略，因为编译器可以自动推断。例如：
+局部函数使用 `fn` 关键字定义。局部函数可以是命名的或匿名的。在大多数情况下，局部函数的类型注解可以省略，因为编译器可以自动推断。例如：
 
 ```rust live
 fn foo() -> Int {
-  fn inc(x) { x + 1 }  // named as `inc`
-  fn (x) { x + inc(2) } (6) // anonymous, instantly applied to integer literal 6
+  fn inc(x) { x + 1 }       // 命名为 `inc`
+  fn (x) { x + inc(2) } (6) // 匿名，立即应用到整数字面量 6
 }
 
 fn init {
@@ -108,13 +108,14 @@ fn init {
 }
 ```
 
-无论是命名的还是匿名的，函数都是 _词法闭包_：任何没有局部绑定的标识符必须引用来自周围词法范围的绑定
+无论是命名的还是匿名的，函数都是 _词法闭包_：任何没有局部绑定的标识符，
+必须引用来自周围词法作用域的绑定：
 
 ```rust live
 let y = 3
 fn foo(x: Int) {
-  fn inc()  { x + 1 } // OK, will return x + 1
-  fn four() { y + 1 } // Ok, will return 4
+  fn inc()  { x + 1 } // OK，返回 x + 1
+  fn four() { y + 1 } // Ok，返回 4
   print(inc())
   print(four())
 }
@@ -126,7 +127,7 @@ fn init {
 
 ### 函数调用
 
-函数可以用圆括号内的参数列表进行调用：
+函数可通过向圆括号内传入参数列表进行调用：
 
 ```rust
 add3(1, 2, 7)
@@ -179,20 +180,24 @@ if x == y {
 }
 ```
 
-花括号在结果或 `else` 子句中用于组合表达式
+花括号用于在结果或 `else` 子句中组合表达式。
 
-需要注意的是，在 MoonBit 中，条件表达式总是返回一个值，结果和 `else` 子句的返回值类型必须相同。
+注意，在 MoonBit 中，条件表达式总是返回一个值，其结果和 `else` 子句的返回值类型必须相同。
 
 ### 函数式循环
 
-函数式循环是 MoonBit 中的一个强大特性，它允许您以函数式风格编写循环。
+函数式循环是 MoonBit 中一个强大的特性，它能让您以函数式风格编写循环。
 
-函数式循环接受参数并返回一个值。它使用 loop 关键字定义，后跟其参数和循环体。循环体是一系列子句，每个子句由模式和表达式组成。与输入匹配的模式将被执行，并且循环将返回表达式的值。如果没有匹配的模式，循环将抛出异常。使用 continue 关键字和参数来开始下一次循环迭代。使用 break 关键字和参数来从循环中返回一个值。如果值是循环体中的最后一个表达式，则可以省略 break 关键字。
+函数式循环接受参数并返回一个值。它使用 `loop` 关键字定义，后跟其参数和循环体。
+循环体是一系列子句，每个子句由模式和表达式组成。
+与输入匹配的模式会被执行，并且循环将返回表达式的值。如果没有匹配的模式，循环将抛出异常。
+可以使用 `continue` 关键字和参数开始下一次循环迭代，使用 `break` 关键字和参数来从循环中返回一个值。
+如果值是循环体中的最后一个表达式，则可以省略 `break` 关键字。
 
 ```rust
 fn sum(xs: List[Int]) -> Int {
   loop xs, 0 {
-    Nil, acc => break acc // break can be omitted
+    Nil, acc => break acc // break 可以省略
     Cons(x, rest), acc => continue rest, x + acc
   }
 }
@@ -231,7 +236,7 @@ while i < 10 {
   n = n + i
 }
 // n = 1 + 2 + 4 + 5 + 6 + 7
-println(n) // outputs 25
+println(n)  // 输出 25
 ```
 
 ## 内置数据结构
@@ -250,26 +255,29 @@ let e = not(a)
 
 ### 数字
 
-Moonbit 支持数字的字面量，包括十进制，二进制，八进制和十六进制数。
+Moonbit 支持的数字字面量，包括十进制、二进制、八进制和十六进制。
 
-为了提升可读性，你可以在数字字面量中间插入下划线，例如 `1_000_000`。注意到下划线可以被插入在数字之间的任何位置，不只是每三个数字。
+为了提升可读性，你可以在数字字面量内插入下划线，例如 `1_000_000`。
+注意，下划线可以插入到数字之间的任何位置，而非只能在每三个数字之间。
 
-- 十进制数没有任何出人意料的地方。
+- 十进制数和往常一样。
 
 ```rust
 let a = 1234
 let b = 1_000_000 + a
-let large_num = 9_223_372_036_854_775_807L // Int64 类型的整数必须有'L'作为后缀
+let large_num = 9_223_372_036_854_775_807L // Int64 类型的整数必须后缀“L”
 ```
 
-- 一个八进制数有一个前缀 0 接着一个字母 O，也就是 `0o` 或 `0O`。注意到在 `0o` 或 `0O` 之后出现的数字只能在 `0` 到 `7` 之间。
+- 八进制数的前缀是 0 后接字母 O，也就是 `0o` 或 `0O`。注意在 `0o` 或 `0O`
+  之后出现的数字只能在 `0` 到 `7` 之间。
 
 ```rust
 let octal = 0o1234
 let another_octal = 0O1234
 ```
 
-- 一个十六进制数有一个前缀 0 接着一个字母 X，也就是 `0x` 或 `0X`。注意到在 `0x` 或 `0X` 之后出现的数字只能是 `0123456789ABCDEF` 之一。
+- 十六进制数的前缀是 0 后接字母 X，也就是 `0x` 或 `0X`。注意在 `0x` 或 `0X`
+  之后出现的数字只能是 `0123456789ABCDEF` 之一。
 
 ```rust
 let hex = 0XA
@@ -278,7 +286,8 @@ let another_hex = 0xA
 
 ### 字符串
 
-字符串插值是 MoonBit 中的一个强大功能，它允许在插值字符串中替换变量。该功能通过直接将变量值嵌入文本中来简化构建动态字符串的过程
+字符串内插是 MoonBit 中的一个强大功能，它可以将字符串中的内插变量替换为具体值。
+该功能通过将变量值直接嵌入到文本中来简化构建动态字符串的过程。
 
 ```rust live
 fn init {
@@ -287,11 +296,11 @@ fn init {
 }
 ```
 
-用于字符串插值的变量必须支持 `to_string` 方法。
+用于字符串内插的变量必须支持 `to_string` 方法。
 
 ### 元组
 
-元组是一个有限值的集合，使用圆括号 `()` 构造，其中元素由逗号 `,` 分隔。
+元组是一个有限值的有序集合，使用圆括号 `()` 构造，其中的元素由逗号 `,` 分隔。
 元素的顺序很重要，例如 `(1, true)` 和 `(true, 1)` 是不同的类型。以下是一个例子：
 
 ```rust live
@@ -308,8 +317,8 @@ fn init {
 
 ```rust live
 fn f(t : (Int, Int)) {
-  let (x1, y1) = t // access via pattern matching
-  // access via index
+  let (x1, y1) = t  // 通过模式匹配访问
+  // 通过索引访问
   let x2 = t.0
   let y2 = t.1
   if (x1 == x2 && y1 == y2) {
@@ -332,7 +341,7 @@ fn init {
 let array = [1, 2, 3, 4]
 ```
 
-可以使用 `array[x]` 来引用第 x 个元素。索引从零开始。
+可以用 `array[x]` 来引用第 `x` 个元素。索引从零开始。
 
 ```rust live
 fn init {
@@ -340,7 +349,7 @@ fn init {
   let a = array[2]
   array[3] = 5
   let b = a + array[3]
-  print(b) // prints 8
+  print(b)  // 打印 8
 }
 ```
 
@@ -354,7 +363,7 @@ let zero = 0
 
 fn init {
   let mut i = 10
-  i = 20  
+  i = 20
   print(i + zero)
 }
 ```
@@ -365,7 +374,7 @@ fn init {
 
 ### 结构
 
-在 MoonBit 中，结构与元组类似，但是它们的字段由字段名索引。
+在 MoonBit 中，结构与元组类似，但它们的字段由字段名索引。
 结构体可以使用结构体字面量构造，结构体字面量由一组带有标签的值组成，并用花括号括起来。
 如果结构体字面量的字段完全匹配类型定义，则其类型可以被自动推断。
 使用点语法 `s.f` 可以访问结构体字段。
@@ -399,12 +408,13 @@ struct Stack {
 
 ### 枚举
 
-枚举类型和函数式语言中的代数数据类型类似。
+枚举类型对应于代数数据类型（Algebraic Data Type，ADT）中的和类型（sum type），
+熟悉 C/C++ 的人可能更习惯叫它带标签的联合体（tagged union）。
 枚举可以有一组情况，并且每个情况和元组类似，可以指定不同类型的关联值。
 每个情况的标签必须大写，称为数据构造函数。
-可以通过调用带有指定类型参数的数据构造函数来构造枚举。
-枚举的构造必须使用标明类型。
-可以通过模式匹配来解构枚举，并且可以将关联值绑定到每个模式中指定的变量。
+枚举可通过调用数据构造函数，并传入对应类型的参数来构造。若上下文中的构造函数存在歧义时，
+所赋予的变量必须标明类型，无歧义时则可省略类型标注。
+枚举可通过模式匹配来解构，并将关联值绑定到每个模式中指定的变量。
 
 ```rust live
 enum List {
@@ -429,16 +439,17 @@ fn init {
 }
 ```
 
-### Newtype
+### 新类型
 
-MoonBit 支持一种特殊的枚举类型，称为 newtype，用于从现有类型创建新类型。一个 newtype 只能有一个情况，并且该情况只能有一个关联值。
+MoonBit 支持一种特殊的枚举类型，称为新类型（newtype）。
+新类型只能从一个**现有**的类型创建（包括泛型），并且该新类型只能有**一种**枚举值的情况。
 
 ```rust
 type UserId Int
 type UserName String
 ```
 
-Newtype的名称既是类型又是数据构造函数。新类型的构造和解构遵循与枚举相同的规则。
+新类型的名称既是类型又是数据构造函数。新类型的构造和解构遵循与枚举相同的规则。
 
 ```rust
 fn init {
@@ -451,7 +462,7 @@ fn init {
 }
 ```
 
-也可以使用 `.0` 对 Newtype 进行解构：
+也可以使用 `.0` 对新类型进行解构：
 
 ```rust
 fn init {
@@ -463,22 +474,22 @@ fn init {
 
 ## 模式匹配
 
-我们已经展示了对枚举进行模式匹配的用例，但是模式匹配不局限于枚举。
+我们已经展示了如何对枚举进行模式匹配，但模式匹配并不仅限于枚举。
 例如，我们也可以对布尔值、数字、字符、字符串、元组、数组和结构体字面量进行模式匹配。
 由于这些类型和枚举不同，它们只有一种情况，因此我们可以直接使用 `let` 绑定来对它们进行模式匹配。
-需要注意的是，在 `match` 中绑定的变量的作用域仅限于引入该变量的分支，而 `let` 绑定将引入每个变量到当前作用域。
-此外，我们可以使用下划线 `_` 作为我们不关心的值的通配符。
+需要注意的是，在 `match` 中绑定的变量的作用域仅限于引入该变量的情况分支，而 `let`
+绑定会将每个变量都引入到当前作用域。此外，我们可以使用下划线 `_` 作为我们不关心的值的通配符。
 
 ```rust
 let id = match u {
   { id: id, name: _, email: _ } => id
 }
-// is equivalent to
+// 等价于
 let { id: id, name: _, email: _ } = u
 ```
 
-在模式匹配中还有一些其他有用的构造。
-例如，我们可以使用 `as` 为某个模式指定一个名称，并且可以使用 `|` 同时匹配多个情况。
+模式匹配还有一些有用的构造。例如，我们可以使用 `as` 为某个模式指定一个名称，
+并且可以使用 `|` 同时匹配多个情况。
 
 ```rust
 match expr {
@@ -490,8 +501,7 @@ match expr {
 
 ## 泛型
 
-您可以在顶层的函数和数据结构定义中使用泛型。
-类型参数可以由方括号引入。
+您可以在顶层的函数和数据结构定义中使用泛型。类型参数可以由方括号引入。
 我们可以重写前面提到的数据类型 `List`，添加类型参数 `T`，以获得一个泛型版本的列表。
 然后，我们可以定义泛型函数 `map` 和 `reduce`，用于对列表进行操作。
 
@@ -518,10 +528,11 @@ fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
 
 ## 访问控制
 
-默认情况下，所有函数定义和变量绑定对其他包是 _不可见_ 的；
+默认情况下，所有函数定义和变量绑定对其他包都是 _不可见_ 的；
 没有修饰符的类型是抽象数据类型，其名称被导出，但内部是不可见的。
 这种设计防止了意外暴露实现细节。
-您可以在 `type`/`fn`/`let` 前使用 `pub` 修饰符使其完全可见，或在 `type` 前使用 `priv` 修饰符使其对其他包完全不可见。
+您可以在 `type`/`fn`/`let` 前使用 `pub` 修饰符使其完全可见，或在 `type`
+前使用 `priv` 修饰符使其对其他包完全不可见。
 您还可以在字段名前使用 `pub` 或 `priv` 获得更细粒度的访问控制。
 但是，请注意：
 
@@ -529,40 +540,40 @@ fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
 - 枚举类型的构造器没有单独的可见性，所以不能在它们前面使用 `pub` 或 `priv`
 
 ```rust
-struct R1 {       // abstract data type by default
-  x: Int          // implicitly private field
-  pub y: Int      // ERROR: `pub` field found in a abstract type!
-  priv z: Int     // WARNING: `priv` is redundant!
+struct R1 {       // 默认为抽象数据类型
+  x: Int          // 隐式的私有字段
+  pub y: Int      // ERROR: 在抽象类型中找到了 `pub` 字段！
+  priv z: Int     // WARNING: `priv` 是多余的！
 }
 
-pub struct R2 {       // explicitly public struct
-  x: Int              // implicitly public field
-  pub y: Int          // WARNING: `pub` is redundant!
-  priv z: Int         // explicitly private field
+pub struct R2 {       // 显式的公共结构
+  x: Int              // 隐式的公共字段
+  pub y: Int          // WARNING: `pub` 是多余的！
+  priv z: Int         // 显式的私有字段
 }
 
-priv struct R3 {       // explicitly private struct
-  x: Int               // implicitly private field
-  pub y: Int           // ERROR: `pub` field found in a private type!
-  priv z: Int          // WARNING: `priv` is redundant!
+priv struct R3 {       // 显式的私有结构
+  x: Int               // 隐式的私有字段
+  pub y: Int           // ERROR: `pub` 字段出现在了私有类型中！
+  priv z: Int          // WARNING: `priv` 是多余的！
 }
 
-enum T1 {       // abstract data type by default
-  A(Int)        // implicitly private variant
-  pub B(Int)    // ERROR: no individual visibility!
-  priv C(Int)   // ERROR: no individual visibility!
+enum T1 {       // 默认为抽象数据类型
+  A(Int)        // 隐式的私有变体
+  pub B(Int)    // ERROR: 无独立可见性！
+  priv C(Int)   // ERROR: 无独立可见性！
 }
 
-pub enum T2 {       // explicitly public enum
-  A(Int)            // implicitly public variant
-  pub B(Int)        // ERROR: no individual visibility!
-  priv C(Int)       // ERROR: no individual visibility!
+pub enum T2 {       // 显式的公共枚举
+  A(Int)            // 隐式的公共变体
+  pub B(Int)        // ERROR: 无独立可见性！
+  priv C(Int)       // ERROR: 无独立可见性！
 }
 
-priv enum T3 {       // explicitly private enum
-  A(Int)             // implicitly private variant
-  pub B(Int)         // ERROR: no individual visibility!
-  priv C(Int)        // ERROR: no individual visibility!
+priv enum T3 {       // 显式的私有枚举
+  A(Int)             // 隐式的私有变体
+  pub B(Int)         // ERROR: 无独立可见性！
+  priv C(Int)        // ERROR: 无独立可见性！
 }
 ```
 
@@ -585,12 +596,12 @@ fn print_RO(r : RO) {
   print(" }")
 }
 fn init {
-  let r : RO = { field: 4 }  // ERROR: Cannot create values of the public read-only type RO!
-  let r = { ..r, field: 8 }  // ERROR: Cannot mutate a public read-only field!
+  let r : RO = { field: 4 }  // ERROR: 无法创建公共只读类型 RO 的值！
+  let r = { ..r, field: 8 }  // ERROR: 无法修改一个公共只读字段！
 }
 ```
 
-MoonBit 中的访问控制遵循这样一个原则：`pub` 类型、函数或变量不能基于私有类型进行定义。
+MoonBit 中的访问控制遵循这样一个原则：`pub` 类型、函数或变量不能基于私有类型定义。
 这是因为私有类型可能不是在使用 `pub` 实体的所有地方都可以被访问。
 MoonBit 内建了一些检查，以防止违反这一原则的用例。
 
@@ -598,23 +609,23 @@ MoonBit 内建了一些检查，以防止违反这一原则的用例。
 pub struct s {
   x: T1  // OK
   y: T2  // OK
-  z: T3  // ERROR: public field has private type `T3`!
+  z: T3  // ERROR: 公共字段拥有私有类型 `T3`！
 }
 
-// ERROR: public function has private parameter type `T3`!
+// ERROR: 公共函数拥有私有形参类型 `T3`！
 pub fn f1(_x: T3) -> T1 { T1::A(0) }
-// ERROR: public function has private return type `T3`!
+// ERROR: 公共函数拥有私有返回类型 `T3`！
 pub fn f2(_x: T1) -> T3 { T3::A(0) }
 // OK
 pub fn f3(_x: T1) -> T1 { T1::A(0) }
 
-pub let a: T3  // ERROR: public variable has private type `T3`!
+pub let a: T3  // ERROR: 公共变量拥有私有类型 `T3`！
 ```
 
 ## 方法系统
 
-MoonBit 支持与传统面向对象语言不同的方法(method)。
-某个类型的一个方法就是一个与该类型关联的普通函数。
+MoonBit 支持与传统面向对象语言不同的方法（method）。
+某个类型的方法就是与该类型关联的普通函数。
 可以使用 `fn TypeName::method_name(...) -> ...` 的语法来为类型 `TypeName` 声明方法：
 
 ```rust
@@ -635,7 +646,7 @@ fn map[X, Y](self: MyList[X], f: (X) -> Y) -> List[Y] { ... }
 fn MyList::map[X, Y](xs: MyList[X], f: (X) -> Y) -> List[Y] { ... }
 ```
 
-方法就是由某个类型所有的普通函数。所以，在没有歧义时，它们也可以像普通函数一样调用：
+方法就是某个类型所拥有的普通函数。所以，在没有歧义时，它们也可以像普通函数一样调用：
 
 ```rust
 fn init {
@@ -644,7 +655,8 @@ fn init {
 }
 ```
 
-但和普通函数不同，方法支持重载。不同的类型可以有同名的方法。如果当前作用域内有多个同名方法，依然可以通过加上 `TypeName::` 的前缀来显式地调用一个方法：
+但和普通函数不同，方法支持重载。不同的类型可以有同名的方法。
+如果当前作用域内有多个同名方法，依然可以通过加上 `TypeName::` 的前缀来显式地调用一个方法：
 
 ```rust
 struct T1 { x1: Int }
@@ -662,7 +674,7 @@ fn init {
 
 ## 运算符重载
 
-MoonBit 支持通过方法重载内置运算符。与运算符 `<op>` 相对应的方法名称是 `op_<op>`。例如：
+MoonBit 支持通过方法重载内置运算符。与运算符 `<op>` 相对应的方法名是 `op_<op>`。例如：
 
 ```rust live
 struct T {
@@ -682,25 +694,25 @@ fn init {
 
 目前，以下运算符可以被重载：
 
-| operator name        | method name |
+| 运算符名称           | 方法名      |
 | -------------------- | ----------- |
 | `+`                  | `op_add`    |
 | `-`                  | `op_sub`    |
 | `*`                  | `op_mul`    |
 | `/`                  | `op_div`    |
 | `%`                  | `op_mod`    |
-| `-`(unary)           | `op_neg`    |
-| `_[_]`(get item)     | `op_get`    |
-| `_[_] = _`(set item) | `op_set`    |
-
+| `-`（一元运算符）    | `op_neg`    |
+| `_[_]`（获取项）     | `op_get`    |
+| `_[_] = _`（设置项） | `op_set`    |
 
 ## 管道运算符
-MoonBit 提供一个便利的管道运算符 `|>`，可以用于链式调用普通函数：
+
+MoonBit 提供了便利的管道运算符 `|>`，可以用于链式调用普通函数：
 
 ```rust
 fn init {
-  x |> f // 相当于 f(x)
-  x |> f(y) // 相当于 f(x, y)
+  x |> f     // 等价于 f(x)
+  x |> f(y)  // 等价于 f(x, y)
   initial
   |> function1
   |> function2(other_arguments)
@@ -709,7 +721,7 @@ fn init {
 
 ## 接口系统
 
-MoonBit 具有用于重载/特设多态的结构接口系统。接口可以声明如下：
+MoonBit 具有用于重载/特设多态（ad-hoc polymorphism）的结构接口系统。接口可以声明如下：
 
 ```rust
 trait I {
@@ -727,7 +739,8 @@ trait Show {
 
 内置类型如 `Int` 和 `Double` 会自动实现这个接口。
 
-在声明泛型函数时，类型参数可以用它们应该实现的接口进行注解。如此便能定义只对某些类型可用的泛型函数。例如：
+在声明泛型函数时，类型参数可以用它们应该实现的接口作为注解。
+如此便能定义只对某些类型可用的泛型函数。例如：
 
 ```rust
 trait Number {
@@ -740,7 +753,7 @@ fn square[N: Number](x: N) -> N {
 }
 ```
 
-如果没有 `Number` 的要求，`square` 中的表达式 `x * x` 会导致找不到方法/运算符的错误。
+如果没有 `Number` 的要求，`square` 中的表达式 `x * x` 会导致出现找不到方法/运算符的错误。
 现在，函数 `square` 可以与任何实现了 `Number` 接口的类型一起使用，例如：
 
 ```rust live
@@ -764,7 +777,8 @@ fn op_mul(self: Point, other: Point) -> Point {
 }
 ```
 
-接口中的方法可以用 `Trait::method` 的语法来直接调用。MoonBit 会推导 `Self` 的具体类型，并检查 `Self` 是否实现了 `Trait`：
+接口中的方法可以用 `Trait::method` 的语法来直接调用。MoonBit 会推导 `Self` 的具体类型，
+并检查 `Self` 是否实现了 `Trait`：
 
 ```rust
 fn init {
@@ -773,7 +787,7 @@ fn init {
 }
 ```
 
-Moonbit 提供下列实用的内建接口：
+Moonbit 提供了以下实用的内建接口：
 
 ```rust
 trait Eq {
@@ -804,14 +818,15 @@ trait Debug {
 ```
 
 ## 方法的访问权限控制与拓展方法
+
 为了使 MoonBit 的接口系统具有一致性（coherence，即任何 `Type: Trait` 的组合都有全局唯一的实现），
 防止第三方包意外地修改现有程序的行为，**只有类型所在的包能为它定义方法**。
 所以用户无法为内建类型或来自第三方包的类型定义方法。
 
-然而，有时候也会出现拓展一个现有类型的功能的需求。
-因此，MoonBit 提供了一种名为拓展方法的机制。拓展方法可以通过 `fn Trait::method_name(...) -> ...` 的形式声明，
-它们通过实现一个接口的方式拓展现有类型的功能。
-例如，假如要为内建类型实现一个新的接口 `ToMyBinaryProtocol`，就可以（且必须）使用拓展方法：
+然而，我们有时也会需要拓展一个现有类型的功能，因此，MoonBit 提供了一种名为拓展方法的机制。
+拓展方法可以通过 `fn Trait::method_name(...) -> ...` 的形式声明，
+它们通过实现接口来拓展现有类型的功能。例如，假设要为内建类型实现一个新的接口
+`ToMyBinaryProtocol`，就可以（且必须）使用拓展方法：
 
 ```rust
 trait ToMyBinaryProtocol {
@@ -823,11 +838,12 @@ fn ToMyBinaryProtocol::to_my_binary_protocol(x: Double, b: Buffer) { ... }
 fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) { ... }
 ```
 
-在搜索某个接口的实现时，拓展方法比普通方法有更高的优先级。所以拓展方法还可以用来覆盖掉行为不能满足要求的现有方法。
+在搜索某个接口的实现时，拓展方法比普通方法有更高的优先级，
+因此拓展方法还可以用来覆盖掉行为不能满足要求的现有方法。
 拓展方法只能被用于实现指定的接口，不能像普通的方法一样被直接调用。
 此外，**只有类型或接口所在的包可以定义拓展方法**。
 例如，只有 `@pkg1` 和 `@pkg2` 能为类型 `@pkg2.Type` 定义拓展方法 `@pkg1.Trait::f`。
-这一限制使得 MoonBit 的接口系统在加入拓展方法这一灵活的机制后，依然是一致的。
+这一限制使得 MoonBit 的接口系统在加入拓展方法这一灵活的机制后，仍能保持一致。
 
 如果需要直接调用一个拓展方法，可以使用 `Trait::method` 语法。例如：
 
@@ -866,11 +882,13 @@ fn init {
 ```
 
 ## 接口对象
-MoonBit 通过接口对象的形式支持运行时的多态。
-假设  `t` 的类型为 `T`，而且类型 `T` 实现了接口 `I`,
+
+MoonBit 通过接口对象的形式来支持运行时多态。
+假设 `t` 的类型为 `T`，且类型 `T` 实现了接口 `I`,
 那么可以把 `T` 实现 `I` 的各个方法和 `t` 自己打包在一起，
 创建一个 `I` 的接口对象 `t as I`。
-接口对象擦除了值的具体类型，所以从不同的具体类型创建的接口对象可以被装在同一个数据结构里、统一地进行处理：
+接口对象擦除了值的具体类型，所以从不同的具体类型所创建的接口对象，
+可以被封装在同一个数据结构里，统一进行处理：
 
 ```rust
 trait Animal {
@@ -909,6 +927,7 @@ fn init {
 - 在方法的签名里，`Self` 只能出现在第一个参数
 
 ## 问号操作符
+
 MoonBit 提供一个便捷的 `?` 操作符，用于错误处理。
 `?` 是一个后缀运算符。它可以作用于类型为 `Option` 或 `Result` 的表达式。
 被应用在表达式 `t : Option[T]` 上时，`t?` 等价于：
@@ -953,4 +972,4 @@ fn g() -> Result[Int, String] {
 
 ## MoonBit 的构建系统
 
-构建系统的介绍可以在 [MoonBit 的构建系统教程](./build-system-tutorial.md) 中找到。
+构建系统的介绍参见 [MoonBit 的构建系统教程](./build-system-tutorial.md)。

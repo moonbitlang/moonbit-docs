@@ -183,7 +183,7 @@ Note that a conditional expression always returns a value in MoonBit, and the re
 
 ### Functional loop
 
-Functional loop is a powerful feature in MoonBit that enables you to write loops in a functional style. 
+Functional loop is a powerful feature in MoonBit that enables you to write loops in a functional style.
 
 A functional loop consumes arguments and returns a value. It is defined using the `loop` keyword, followed by its arguments and the loop body. The loop body is a sequence of clauses, each of which consists of a pattern and an expression. The clause whose pattern matches the input will be executed, and the loop will return the value of the expression. If no pattern matches, the loop will panic. Use the `continue` keyword with arguments to start the next iteration of the loop. Use the `break` keyword with arguments to return a value from the loop. The `break` keyword can be omitted if the value is the last expression in the loop body.
 
@@ -474,7 +474,7 @@ fn init {
 
 ### Newtype
 
-MoonBit supports a special kind of enum called newtype, which is used to create a new type from an existing type. A newtype can have only one case, and the case can have only one associated value. 
+MoonBit supports a special kind of enum called newtype, which is used to create a new type from an existing type. A newtype can have only one case, and the case can have only one associated value.
 
 ```rust
 type UserId Int
