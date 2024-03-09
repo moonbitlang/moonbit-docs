@@ -812,7 +812,7 @@ fn init {
 
 ## Trait system
 
-MoonBit features a structural trait system for overloading/ad-hoc polymorphism. Traits can be declared as follows:
+MoonBit features a structural trait system for overloading/ad-hoc polymorphism. Traits declare a list of operations, which must be supplied when a type wants to implement the trait. Traits can be declared as follows:
 
 ```rust
 trait I {
@@ -822,7 +822,8 @@ trait I {
 
 In the body of a trait definition, a special type `Self` is used to refer to the type that implements the trait.
 
-There is no need to implement a trait explicitly. Types with the required methods automatically implements a trait. For example, the following trait:
+To implement a trait, a type must provide all the methods required by the trait.
+However, there is no need to implement a trait explicitly. Types with the required methods automatically implements a trait. For example, the following trait:
 
 ```rust
 trait Show {
