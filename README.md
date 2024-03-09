@@ -372,7 +372,7 @@ There are two ways to create new data types: `struct` and `enum`.
 
 In MoonBit, structs are similar to tuples, but their fields are indexed by field names. A struct can be constructed using a struct literal, which is composed of a set of labeled values and delimited with curly brackets. The type of a struct literal can be automatically inferred if its fields exactly match the type definition. A field can be accessed using the dot syntax `s.f`. If a field is marked as mutable using the keyword `mut`, it can be assigned a new value.
 
-```go live
+```rust live
 struct User {
   id: Int
   name: String
@@ -382,9 +382,9 @@ struct User {
 fn init {
   let u = { id: 0, name: "John Doe", email: "john@doe.com" }
   u.email = "john@doe.name"
-  print(u.id)
-  print(u.name)
-  print(u.email)
+  println(u.id)
+  println(u.name)
+  println(u.email)
 }
 ```
 
@@ -419,13 +419,13 @@ struct User {
   id: Int
   name: String
   email: String
-} derive(Show)
+} derive(Debug)
 
 fn init {
   let user = { id: 0, name: "John Doe", email: "john@doe.com" }
   let updated_user = { ..user, email: "john@doe.name" }
-  println(user) // output: { id: 0, name: John Doe, email: john@doe.com }
-  println(updated_user) // output: { id: 0, name: John Doe, email: john@doe.name }
+  debug(user)         // output: { id: 0, name: "John Doe", email: "john@doe.com" }
+  debug(updated_user) // output: { id: 0, name: "John Doe", email: "john@doe.name" }
 }
 ```
 

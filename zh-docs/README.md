@@ -390,9 +390,9 @@ struct User {
 fn init {
   let u = { id: 0, name: "John Doe", email: "john@doe.com" }
   u.email = "john@doe.name"
-  print(u.id)
-  print(u.name)
-  print(u.email)
+  println(u.id)
+  println(u.name)
+  println(u.email)
 }
 ```
 
@@ -419,13 +419,13 @@ struct User {
   id: Int
   name: String
   email: String
-} derive(Show)
+} derive(Debug)
 
 fn init {
   let user = { id: 0, name: "John Doe", email: "john@doe.com" }
   let updated_user = { ..user, email: "john@doe.name" }
-  println(user)          // 输出: { id: 0, name: John Doe, email: john@doe.com }
-  println(updated_user)  // 输出: { id: 0, name: John Doe, email: john@doe.name }
+  debug(user)          // 输出: { id: 0, name: "John Doe", email: "john@doe.com" }
+  debug(updated_user)  // 输出: { id: 0, name: "John Doe", email: "john@doe.name" }
 }
 ```
 
