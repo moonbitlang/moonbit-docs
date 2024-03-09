@@ -390,41 +390,118 @@ struct User {
 fn init {
   let u = { id: 0, name: "John Doe", email: "john@doe.com" }
   u.email = "john@doe.name"
-  print(u.id)
-  print(u.name)
-  print(u.email)
+  println(u.id)
+  println(u.name)
+  println(u.email)
 }
 ```
 
-注意，您还可以在结构类型中包含与之关联的方法，例如：
+#### 创建结构体的简写形式
+
+如果已经有和结构体的字段同名的变量，并且想使用这些变量作为结构体同名字段的值，
+那么创建结构体时，可以只写字段名，不需要把同一个名字重复两次。例如：
+
+```rust live
+fn init{
+  let name = "john"
+  let email = "john@doe.com"
+  let u = { id: 0, name, email } // 等价于 { id: 0, name: name, email: email }
+}
+```
+
+## 更新结构体的语法
+
+如果想要基于现有的结构体来创建新的结构体，只需修改现有结构体的一部分字段，其他字段的值保持不变，
+可以使用结构体更新语法：
 
 ```rust
-struct Stack {
-  mut elems: List[Int]
-  push: (Int) -> Unit
-  pop: () -> Int
+struct User {
+  id: Int
+  name: String
+  email: String
+} derive(Debug)
+
+fn init {
+  let user = { id: 0, name: "John Doe", email: "john@doe.com" }
+  let updated_user = { ..user, email: "john@doe.name" }
+  debug(user)          // 输出: { id: 0, name: "John Doe", email: "john@doe.com" }
+  debug(updated_user)  // 输出: { id: 0, name: "John Doe", email: "john@doe.name" }
 }
 ```
+
 
 ### 枚举
 
-枚举类型对应于代数数据类型（Algebraic Data Type，ADT）中的和类型（sum type），
+枚举类型对应于代数数据类型（Algebraic Data Type，ADT），
 熟悉 C/C++ 的人可能更习惯叫它带标签的联合体（tagged union）。
-枚举可以有一组情况，并且每个情况和元组类似，可以指定不同类型的关联值。
-每个情况的标签必须大写，称为数据构造函数。
-枚举可通过调用数据构造函数，并传入对应类型的参数来构造。若上下文中的构造函数存在歧义时，
-所赋予的变量必须标明类型，无歧义时则可省略类型标注。
-枚举可通过模式匹配来解构，并将关联值绑定到每个模式中指定的变量。
+
+枚举由一组分支（构造器）组成，每个分支都有一个名字（必须以大写字母开头），可以用这个名字来构造对应分支的值，
+或者在模式匹配中使用这个名字来判断某个枚举值属于哪个分支：
+
+```rust live
+// 一个表示两个值之间的有序关系的枚举类型，有 “小于”、“大于”、“等于” 三个分支
+enum Relation {
+  Smaller
+  Greater
+  Equal
+}
+
+// 计算两个整数之间的顺序关系
+fn compare_int(x: Int, y: Int) -> Relation {
+  if x < y {
+    // 创建枚举时，如果知道想要什么类型，可以直接写分支/构造器的名字来创建
+    Smaller
+  } else if x > y {
+    // 但如果不知道类型，永远可以通过 `类型名字::构造器` 的语法来无歧义地创建枚举值
+    Relation::Greater
+  } else {
+    Equal
+  }
+}
+
+// 输出一个 `Relation` 类型的值
+fn print_relation(r: Relation) {
+  // 使用模式匹配判断 r 属于哪个分支
+  match r {
+    // 模式匹配时，如果知道类型，可以直接使用构造器名字即可
+    Smaller => println("smaller!")
+    // 但也可以用 `类型名字::构造器` 的语法进行模式匹配
+    Relation::Greater => println("greater!")
+    Equal => println("equal!")
+  }
+}
+
+fn init {
+  print_relation(compare_int(0, 1)) // 输出 smaller!
+  print_relation(compare_int(1, 1)) // 输出 equal!
+  print_relation(compare_int(2, 1)) // 输出 greater!
+}
+```
+
+枚举的分支还可以携带额外的数据。下面是用枚举定义整数列表类型的一个例子：
 
 ```rust live
 enum List {
   Nil
+  // 构造器 `Cons` 携带了额外的数据：列表的第一个元素，和列表剩余的部分
   Cons (Int, List)
 }
 
+fn init {
+  // 使用 `Cons` 创建列表时，需要提供 `Cons` 要求的额外数据：第一个元素和剩余的列表
+  let l: List = Cons(1, Cons(2, Nil))
+  println(is_singleton(l))
+  print_list(l)
+}
+
 fn print_list(l: List) {
+  // 使用模式匹配处理带额外数据的枚举时，除了判断值属于哪个分支，
+  // 还可以把对应分支携带的数据提取出来
   match l {
     Nil => print("nil")
+    // 这里的 `x` 和 `xs` 不是现有变量，而是新的变量。
+    // 如果 `l` 是一个 `Cons`，那么 `Cons` 中携带的额外数据（第一个元素和剩余部分）
+    // 会分别被绑定到 `x` 和 `xs`
     Cons(x, xs) => {
       print(x)
       print(",")
@@ -433,41 +510,49 @@ fn print_list(l: List) {
   }
 }
 
-fn init {
-  let l: List = Cons(1, Cons(2, Nil))
-  print_list(l)
+// 除了变量，还可以对构造器中携带的数据进行进一步的匹配。
+// 例如，下面的函数判断一个列表是否只有一个元素
+fn is_singleton(l: List) -> Bool {
+  match l {
+    // 这个分支只会匹配形如 `Cons(_, Nil)` 的值，也就是长度为 1 的列表
+    Cons(_, Nil) => true
+    // 用 `_` 来匹配剩下的所有可能性
+    _ => false
+  }
 }
 ```
 
 ### 新类型
 
-MoonBit 支持一种特殊的枚举类型，称为新类型（newtype）。
-新类型只能从一个**现有**的类型创建（包括泛型），并且该新类型只能有**一种**枚举值的情况。
+MoonBit 支持一种特殊的枚举类型，称为新类型（newtype）：
 
 ```rust
+// `UserId` 是一个全新的类型，而且用户可以给 `UserId` 定义新的方法等
+// 但与此同时，`UserId` 的内部表示和 `Int` 是完全一致的
 type UserId Int
 type UserName String
 ```
 
-新类型的名称既是类型又是数据构造函数。新类型的构造和解构遵循与枚举相同的规则。
+新类型和只有一个构造器（与类型同名）的枚举类型非常相似。
+因此，可以使用构造器来创建新类型的值、使用模式匹配来提取新类型的内部表示：
 
 ```rust
 fn init {
   let id: UserId = UserId(1)
   let name: UserName = UserName("John Doe")
-  let UserId(uid) = id
-  let UserName(uname) = name
+  let UserId(uid) = id        // `uid` 的类型是 `Int`
+  let UserName(uname) = name  // `uname` 的类型是 `String`
   println(uid)
   println(uname)
 }
 ```
 
-也可以使用 `.0` 对新类型进行解构：
+除了模式匹配，还可以使用 `.0` 提取新类型的内部表示：
 
 ```rust
 fn init {
   let id: UserId = UserId(1)
-  let uid = id.0
+  let uid: Int = id.0
   println(uid)
 }
 ```
@@ -721,7 +806,8 @@ fn init {
 
 ## 接口系统
 
-MoonBit 具有用于重载/特设多态（ad-hoc polymorphism）的结构接口系统。接口可以声明如下：
+MoonBit 具有用于重载/特设多态（ad-hoc polymorphism）的结构接口系统。
+接口描述了满足该接口的类型需要支持哪些操作。接口的声明方式如下：
 
 ```rust
 trait I {
@@ -729,7 +815,17 @@ trait I {
 }
 ```
 
-接口无需显式实现，具有所需方法的类型会自动实现接口。例如，以下接口：
+在接口声明中，`Self` 指代实现接口的那个类型。
+
+一个类型要实现某个接口，就要满足该接口中所有的方法。例如，下面的接口描述了一个能够比较元素是否相等的类型需要满足的方法：
+
+```rust
+trait Eq {
+  op_equal(Self, Self) -> Bool
+}
+```
+
+接口无需显式实现，具有所需方法的类型会自动实现接口。考虑以下接口：
 
 ```rust
 trait Show {
