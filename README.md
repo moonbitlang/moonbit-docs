@@ -388,16 +388,6 @@ fn init {
 }
 ```
 
-Note that you can also include methods associated with your record type, for example:
-
-```go
-struct Stack {
-  mut elems: List[Int]
-  push: (Int) -> Unit
-  pop: () -> Int
-}
-```
-
 #### Constructing Struct with Shorthand
 
 If you already have some variable like `name` and `email`, it's redundant to repeat those name when constructing a struct:
@@ -429,13 +419,7 @@ struct User {
   id: Int
   name: String
   email: String
-}
-
-fn to_string(self : User) -> String {
-  "{ id: " + self.id.to_string() +
-    ", name: " + self.name +
-    ", email: " + self.email + " }"
-}
+} derive(Show)
 
 fn init {
   let user = { id: 0, name: "John Doe", email: "john@doe.com" }
@@ -447,17 +431,78 @@ fn init {
 
 ### Enum
 
-Enum types are similar to algebraic data types in functional languages. An enum can have a set of cases. Additionally, every case can specify associated values of different types, similar to a tuple. The label for every case must be capitalized, which is called a data constructor. An enum can be constructed by calling a data constructor with arguments of specified types. The construction of an enum must be annotated with a type. An enum can be destructed by pattern matching, and the associated values can be bound to variables that are specified in each pattern.
+Enum types are similar to algebraic data types in functional languages. Users familiar with C/C++ may prefer calling it tagged union.
 
-```go live
+An enum can have a set of cases (constructors). Constructor names must start with capitalized letter. You can use these names to construct corresponding cases of an enum, or checking which branch an enum value belongs to in pattern matching:
+
+```rust live
+// An enum type that represents the ordering relation between two values,
+// with three cases "Smaller", "Greater" and "Equal"
+enum Relation {
+  Smaller
+  Greater
+  Equal
+}
+
+// compare the ordering relation between two integers
+fn compare_int(x: Int, y: Int) -> Relation {
+  if x < y {
+    // when creating an enum, if the target type is known, you can write the constructor name directly
+    Smaller
+  } else if x > y {
+    // but when the target type is not known,
+    // you can always use `TypeName::Constructor` to create an enum unambiguously
+    Relation::Greater
+  } else {
+    Equal
+  }
+}
+
+// output a value of type `Relation`
+fn print_relation(r: Relation) {
+  // use pattern matching to decide which case `r` belongs to
+  match r {
+    // during pattern matching, if the type is known, writing the name of constructor is sufficient
+    Smaller => println("smaller!")
+    // but you can use the `TypeName::Constructor` syntax for pattern matching as well
+    Relation::Greater => println("greater!")
+    Equal => println("equal!")
+  }
+}
+
+fn init {
+  print_relation(compare_int(0, 1)) // smaller!
+  print_relation(compare_int(1, 1)) // equal!
+  print_relation(compare_int(2, 1)) // greater!
+}
+```
+
+Enum cases can also carry payload data. Here's an example of defining an integer list type using enum:
+
+```rust live
 enum List {
   Nil
+  // constructor `Cons` carries additional payload: the first element of the list,
+  // and the remaining parts of the list
   Cons (Int, List)
 }
 
+fn init {
+  // when creating values using `Cons`, the payload of by `Cons` must be provided
+  let l: List = Cons(1, Cons(2, Nil))
+  println(is_singleton(l))
+  print_list(l)
+}
+
 fn print_list(l: List) {
+  // when pattern-matching an enum with payload,
+  // in additional to deciding which case a value belongs to
+  // you can extract the payload data inside that case
   match l {
     Nil => print("nil")
+    // Here `x` and `xs` are defining new variables instead of referring to existing variables,
+    // if `l` is a `Cons`, then the payload of `Cons` (the first element and the rest of the list)
+    // will be bind to `x` and `xs
     Cons(x, xs) => {
       print(x)
       print(",")
@@ -466,40 +511,49 @@ fn print_list(l: List) {
   }
 }
 
-fn init {
-  let l: List = Cons(1, Cons(2, Nil))
-  print_list(l)
+// In addition to binding payload to variables,
+// you can also continue matching payload data inside constructors.
+// Here's a function that decides if a list contains only one element
+fn is_singleton(l: List) -> Bool {
+  match l {
+    // This branch only matches values of shape `Cons(_, Nil)`, i.e. lists of length 1
+    Cons(_, Nil) => true
+    // Use `_` to match everything else
+    _ => false
+  }
 }
 ```
 
 ### Newtype
 
-MoonBit supports a special kind of enum called newtype, which is used to create a new type from an existing type. A newtype can have only one case, and the case can have only one associated value.
+MoonBit supports a special kind of enum called newtype:
 
 ```rust
+// `UserId` is a fresh new type different from `Int`, and you can define new methods for `UserId`, etc.
+// But at the same time, the internal representation of `UserId` is exactly the same as `Int`
 type UserId Int
 type UserName String
 ```
 
-The name of the newtype is both a type and a data constructor. The construction and destruction of a newtype follow the same rules as those of an enum.
+Newtypes are similar to enums with only one constructor (with the same name as the newtype itself). So, you can use the constructor to create values of newtype, or use pattern matching to extract the underlying representation of a newtype:
 
 ```rust
 fn init {
   let id: UserId = UserId(1)
   let name: UserName = UserName("John Doe")
-  let UserId(uid) = id
-  let UserName(uname) = name
+  let UserId(uid) = id // the type of `uid` is `Int`
+  let UserName(uname) = name // the type of `uname` is `String`
   println(uid)
   println(uname)
 }
 ```
 
-Additionally, the value of a newtype can be accessed via the dot syntax.
+Besides pattern matching, you can also use `.0` to extract the internal representation of newtypes:
 
 ```rust
 fn init {
   let id: UserId = UserId(1)
-  let uid = id.0
+  let uid: Int = id.0
   println(uid)
 }
 ```
