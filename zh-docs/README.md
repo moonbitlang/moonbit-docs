@@ -396,7 +396,7 @@ fn init {
 }
 ```
 
-#### 更简洁的创建结构体的方式
+#### 创建结构体的简写形式
 
 如果已经有和结构体的字段同名的变量，并且想使用这些变量作为结构体同名字段的值，
 那么创建结构体时，可以只写字段名，不需要把同一个名字重复两次。例如：
@@ -411,7 +411,7 @@ fn init{
 
 ## 更新结构体的语法
 
-如果想要基于一个现有结构体创建一个新结构体，只修改现有结构体的一部分字段，保持其他字段的值不变，
+如果想要基于现有的结构体来创建新的结构体，只需修改现有结构体的一部分字段，其他字段的值保持不变，
 可以使用结构体更新语法：
 
 ```rust
@@ -424,8 +424,8 @@ struct User {
 fn init {
   let user = { id: 0, name: "John Doe", email: "john@doe.com" }
   let updated_user = { ..user, email: "john@doe.name" }
-  println(user) // 输出: { id: 0, name: John Doe, email: john@doe.com }
-  println(updated_user) // 输出: { id: 0, name: John Doe, email: john@doe.name }
+  println(user)          // 输出: { id: 0, name: John Doe, email: john@doe.com }
+  println(updated_user)  // 输出: { id: 0, name: John Doe, email: john@doe.name }
 }
 ```
 
@@ -540,8 +540,8 @@ type UserName String
 fn init {
   let id: UserId = UserId(1)
   let name: UserName = UserName("John Doe")
-  let UserId(uid) = id // `uid` 的类型是 `Int`
-  let UserName(uname) = name // `uname` 的类型是 `String`
+  let UserId(uid) = id        // `uid` 的类型是 `Int`
+  let UserName(uname) = name  // `uname` 的类型是 `String`
   println(uid)
   println(uname)
 }
@@ -817,7 +817,7 @@ trait I {
 
 在接口声明中，`Self` 指代实现接口的那个类型。
 
-要实现一个接口，一个类型需要具有接口中要求的所有方法。例如，下面的接口描述了支持比较相等操作的类型：
+一个类型要实现某个接口，就要满足该接口中所有的方法。例如，下面的接口描述了一个能够比较元素是否相等的类型需要满足的方法：
 
 ```rust
 trait Eq {

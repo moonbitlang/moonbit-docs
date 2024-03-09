@@ -541,7 +541,7 @@ Newtypes are similar to enums with only one constructor (with the same name as t
 fn init {
   let id: UserId = UserId(1)
   let name: UserName = UserName("John Doe")
-  let UserId(uid) = id // the type of `uid` is `Int`
+  let UserId(uid) = id       // the type of `uid` is `Int`
   let UserName(uname) = name // the type of `uname` is `String`
   println(uid)
   println(uname)
