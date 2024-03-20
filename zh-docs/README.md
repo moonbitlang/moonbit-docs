@@ -253,6 +253,19 @@ let d = a || b
 let e = not(a)
 ```
 
+### 字节
+
+在MoonBit中，字节字面量可以是一个ASCII字符或一个转义序列，它们被单引号'包围，并且前面有字符b。字节字面量的类型是Byte。例如：
+
+```rust
+fn init {
+  let b1 = b'a'
+  println(b1.to_int())
+  let b2 = b'\xff'
+  println(b2.to_int())
+}
+```
+
 ### 数字
 
 Moonbit 支持的数字字面量，包括十进制、二进制、八进制和十六进制。

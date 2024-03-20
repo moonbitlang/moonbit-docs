@@ -245,6 +245,19 @@ let d = a || b
 let e = not(a)
 ```
 
+### Byte
+
+A byte literal in MoonBit is either a single ASCII character or a single escape enclosed in single quotes `'`, and preceded by the character `b`. Byte literals are of type `Byte`. For example:
+
+```rust
+fn init {
+  let b1 = b'a'
+  println(b1.to_int())
+  let b2 = b'\xff'
+  println(b2.to_int())
+}
+```
+
 ### Number
 
 MoonBit supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
