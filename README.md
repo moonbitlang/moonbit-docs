@@ -348,17 +348,17 @@ fn init {
 An array is a finite sequence of values constructed using square brackets `[]`, with elements separated by commas `,`. For example:
 
 ```go
-let array = [1, 2, 3, 4]
+let numbers = [1, 2, 3, 4]
 ```
 
-You can use `array[x]` to refer to the xth element. The index starts from zero.
+You can use `numbers[x]` to refer to the xth element. The index starts from zero.
 
 ```go live
 fn init {
-  let array = [1, 2, 3, 4]
-  let a = array[2]
-  array[3] = 5
-  let b = a + array[3]
+  let numbers = [1, 2, 3, 4]
+  let a = numbers[2]
+  numbers[3] = 5
+  let b = a + numbers[3]
   print(b) // prints 8
 }
 ```

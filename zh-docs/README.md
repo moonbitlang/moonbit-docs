@@ -351,17 +351,17 @@ fn init {
 数组是由方括号 `[]` 构造的有限值序列，其中元素由逗号 `,` 分隔。例如：
 
 ```rust
-let array = [1, 2, 3, 4]
+let numbers = [1, 2, 3, 4]
 ```
 
-可以用 `array[x]` 来引用第 `x` 个元素。索引从零开始。
+可以用 `numbers[x]` 来引用第 `x` 个元素。索引从零开始。
 
 ```rust live
 fn init {
-  let array = [1, 2, 3, 4]
-  let a = array[2]
-  array[3] = 5
-  let b = a + array[3]
+  let numbers = [1, 2, 3, 4]
+  let a = numbers[2]
+  numbers[3] = 5
+  let b = a + numbers[3]
   print(b)  // 打印 8
 }
 ```
