@@ -273,7 +273,7 @@ Hello, world!
 `lib/fib/a.mbt`
 
 ```rust
-fn assert_eq[T: Show + Eq](lhs: T, rhs: T) {
+fn assert_eq[T: Show + Eq](lhs: T, rhs: T) -> Unit {
   if lhs != rhs {
     abort("assert_eq failed.\n    lhs: \(lhs)\n    rhs: \(rhs)")
   }
