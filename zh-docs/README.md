@@ -113,7 +113,7 @@ fn init {
 
 ```rust live
 let y = 3
-fn foo(x: Int) {
+fn foo(x: Int) -> Unit {
   fn inc()  { x + 1 } // OK，返回 x + 1
   fn four() { y + 1 } // Ok，返回 4
   print(inc())
@@ -329,7 +329,7 @@ fn init {
 可以通过模式匹配或索引来访问元组：
 
 ```rust live
-fn f(t : (Int, Int)) {
+fn f(t : (Int, Int)) -> Unit {
   let (x1, y1) = t  // 通过模式匹配访问
   // 通过索引访问
   let x2 = t.0
@@ -473,7 +473,7 @@ fn compare_int(x: Int, y: Int) -> Relation {
 }
 
 // 输出一个 `Relation` 类型的值
-fn print_relation(r: Relation) {
+fn print_relation(r: Relation) -> Unit {
   // 使用模式匹配判断 r 属于哪个分支
   match r {
     // 模式匹配时，如果知道类型，可以直接使用构造器名字即可
@@ -507,7 +507,7 @@ fn init {
   print_list(l)
 }
 
-fn print_list(l: List) {
+fn print_list(l: List) -> Unit {
   // 使用模式匹配处理带额外数据的枚举时，除了判断值属于哪个分支，
   // 还可以把对应分支携带的数据提取出来
   match l {
@@ -688,7 +688,7 @@ fn init {
 }
 
 // Package B
-fn print_RO(r : RO) {
+fn print_RO(r : RO) -> Unit {
   print("{ field: ")
   print(r.field)  // OK
   print(" }")
@@ -942,9 +942,9 @@ trait ToMyBinaryProtocol {
   to_my_binary_protocol(Self, Buffer)
 }
 
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: Int, b: Buffer) { ... }
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: Double, b: Buffer) { ... }
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: Int, b: Buffer) -> Unit { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: Double, b: Buffer) -> Unit { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) -> Unit { ... }
 ```
 
 在搜索某个接口的实现时，拓展方法比普通方法有更高的优先级，
@@ -961,7 +961,7 @@ trait MyTrait {
   f(Self)
 }
 
-fn MyTrait::f(self: Int) {
+fn MyTrait::f(self: Int) -> Unit {
   println("Got Int \(self)!")
 }
 
@@ -1006,13 +1006,13 @@ trait Animal {
 
 type Duck String
 fn Duck::make(name: String) -> Duck { Duck(name) }
-fn speak(self: Duck) {
+fn speak(self: Duck) -> Unit {
   println(self.0 + ": quak!")
 }
 
 type Fox String
 fn Fox::make(name: String) -> Fox { Fox(name) }
-fn Fox::speak(_self: Fox) {
+fn Fox::speak(_self: Fox) -> Unit {
   println("What does the fox say?")
 }
 

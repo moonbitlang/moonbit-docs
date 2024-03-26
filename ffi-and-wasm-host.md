@@ -85,7 +85,7 @@ fn get_pi() -> Double = "math" "PI"
 let pi : Double = get_pi()
 
 // We then apply these functions to define the drawing function upon the context
-pub fn draw(self : Canvas_ctx) {
+pub fn draw(self : Canvas_ctx) -> Unit {
   self.begin_path()
   self.arc(75, 75, 50, 0.0, pi * 2.0, true) // Outer circle
   self.move_to(110, 75)
@@ -98,7 +98,7 @@ pub fn draw(self : Canvas_ctx) {
 }
 
 // We also demonstrate the `println` functionality here
-pub fn display_pi() {
+pub fn display_pi() -> Unit {
   println("PI: \(pi)")
 }
 

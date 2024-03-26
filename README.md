@@ -109,7 +109,7 @@ Functions, whether named or anonymous, are _lexical closures_: any identifiers w
 
 ```go live
 let y = 3
-fn foo(x: Int) {
+fn foo(x: Int) -> Unit {
   fn inc()  { x + 1 } // OK, will return x + 1
   fn four() { y + 1 } // Ok, will return 4
   print(inc())
@@ -326,7 +326,7 @@ fn init {
 Tuples can be accessed via pattern matching or index:
 
 ```go live
-fn f(t : (Int, Int)) {
+fn f(t : (Int, Int)) -> Unit {
   let (x1, y1) = t // access via pattern matching
   // access via index
   let x2 = t.0
@@ -472,7 +472,7 @@ fn compare_int(x: Int, y: Int) -> Relation {
 }
 
 // output a value of type `Relation`
-fn print_relation(r: Relation) {
+fn print_relation(r: Relation) -> Unit {
   // use pattern matching to decide which case `r` belongs to
   match r {
     // during pattern matching, if the type is known, writing the name of constructor is sufficient
@@ -507,7 +507,7 @@ fn init {
   print_list(l)
 }
 
-fn print_list(l: List) {
+fn print_list(l: List) -> Unit {
   // when pattern-matching an enum with payload,
   // in additional to deciding which case a value belongs to
   // you can extract the payload data inside that case
@@ -684,7 +684,7 @@ fn init {
 }
 
 // Package B
-fn print(r : RO) {
+fn print(r : RO) -> Unit {
   print("{ field: ")
   print(r.field)  // OK
   print(" }")
@@ -932,9 +932,9 @@ trait ToMyBinaryProtocol {
   to_my_binary_protocol(Self, Buffer)
 }
 
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: Int, b: Buffer) { ... }
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: Double, b: Buffer) { ... }
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: Int, b: Buffer) -> Unit { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: Double, b: Buffer) -> Unit { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) -> Unit { ... }
 ```
 
 When searching for the implementation of a trait, extension methods have a higher priority, so they can be used to override ordinary methods with undesirable behavior. Extension methods can only be used to implement the specified trait. They cannot be called directly like ordinary methods. Furthermore, *only the package of the type or the package of the trait can implement extension methods*. For example, only `@pkg1` and `@pkg2` are allowed to implement an extension method `@pkg1.Trait::f` for type `@pkg2.Type`. This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of extension methods.
@@ -946,7 +946,7 @@ trait MyTrait {
   f(Self)
 }
 
-fn MyTrait::f(self: Int) {
+fn MyTrait::f(self: Int) -> Unit {
   println("Got Int \(self)!")
 }
 
@@ -991,13 +991,13 @@ trait Animal {
 
 type Duck String
 fn Duck::make(name: String) -> Duck { Duck(name) }
-fn speak(self: Duck) {
+fn speak(self: Duck) -> Unit {
   println(self.0 + ": quak!")
 }
 
 type Fox String
 fn Fox::make(name: String) -> Fox { Fox(name) }
-fn Fox::speak(_self: Fox) {
+fn Fox::speak(_self: Fox) -> Unit {
   println("What does the fox say?")
 }
 
