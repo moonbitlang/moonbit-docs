@@ -88,7 +88,7 @@ fn add3(x: Int, y: Int, z: Int)-> Int {
 }
 ```
 
-Note that the arguments and return value of top-level functions require explicit type annotations. If the return type is omitted, the function will be treated as returning the unit type.
+Note that the arguments and return value of top-level functions require explicit type annotations.
 
 ### Local Functions
 
@@ -105,11 +105,11 @@ fn init {
 }
 ```
 
-Functions, whether named or anonymous, are _lexical closures_: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
+Functions, whether named or anonymous, are *lexical closures*: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
 
 ```go live
 let y = 3
-fn foo(x: Int) {
+fn foo(x: Int) -> Unit {
   fn inc()  { x + 1 } // OK, will return x + 1
   fn four() { y + 1 } // Ok, will return 4
   print(inc())
@@ -179,7 +179,6 @@ if x == y {
 Curly brackets are used to group multiple expressions in the consequent or the else clause.
 
 Note that a conditional expression always returns a value in MoonBit, and the return values of the consequent and the else clause must be of the same type.
-
 
 ### Functional loop
 
@@ -326,7 +325,7 @@ fn init {
 Tuples can be accessed via pattern matching or index:
 
 ```go live
-fn f(t : (Int, Int)) {
+fn f(t : (Int, Int)) -> Unit {
   let (x1, y1) = t // access via pattern matching
   // access via index
   let x2 = t.0
@@ -507,7 +506,7 @@ fn init {
   print_list(l)
 }
 
-fn print_list(l: List) {
+fn print_list(l: List) -> Unit {
   // when pattern-matching an enum with payload,
   // in additional to deciding which case a value belongs to
   // you can extract the payload data inside that case
@@ -628,7 +627,7 @@ fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
 
 ## Access Control
 
-By default, all function definitions and variable bindings are _invisible_ to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`enum`/`struct`/`let` or top-level function to make them fully visible, or put `priv` before `type`/`enum`/`struct` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
+By default, all function definitions and variable bindings are *invisible* to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`enum`/`struct`/`let` or top-level function to make them fully visible, or put `priv` before `type`/`enum`/`struct` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
 
 - Struct fields cannot be defined as `pub` within an abstract or private struct since it makes no sense.
 - Enum constructors do not have individual visibility so you cannot use `pub` or `priv` before them.
@@ -684,7 +683,7 @@ fn init {
 }
 
 // Package B
-fn print(r : RO) {
+fn print(r : RO) -> Unit {
   print("{ field: ")
   print(r.field)  // OK
   print(" }")
@@ -749,10 +748,10 @@ Unlike regular functions, methods support overloading: different types can defin
 
 ```rust
 struct T1 { x1: Int }
-fn T1::default() -> { { x1: 0 } }
+fn T1::default() -> T1 { { x1: 0 } }
 
 struct T2 { x2: Int }
-fn T2::default() -> { { x2: 0 } }
+fn T2::default() -> T2 { { x2: 0 } }
 
 fn init {
   // default() is ambiguous!
@@ -811,6 +810,7 @@ Currently, the following operators can be overloaded:
 | `_[_] = _`(set item) | `op_set`    |
 
 ## Pipe operator
+
 MoonBit provides a convenient pipe operator `|>`, which can be used to chain regular function calls:
 
 ```rust
@@ -929,12 +929,12 @@ However, it is often useful to extend the functionality of an existing type. So 
 
 ```rust
 trait ToMyBinaryProtocol {
-  to_my_binary_protocol(Self, Buffer)
+  to_my_binary_protocol(Self, Buffer) -> Unit
 }
 
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: Int, b: Buffer) { ... }
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: Double, b: Buffer) { ... }
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: Int, b: Buffer) -> Unit { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: Double, b: Buffer) -> Unit { ... }
+fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) -> Unit { ... }
 ```
 
 When searching for the implementation of a trait, extension methods have a higher priority, so they can be used to override ordinary methods with undesirable behavior. Extension methods can only be used to implement the specified trait. They cannot be called directly like ordinary methods. Furthermore, *only the package of the type or the package of the trait can implement extension methods*. For example, only `@pkg1` and `@pkg2` are allowed to implement an extension method `@pkg1.Trait::f` for type `@pkg2.Type`. This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of extension methods.
@@ -946,7 +946,7 @@ trait MyTrait {
   f(Self)
 }
 
-fn MyTrait::f(self: Int) {
+fn MyTrait::f(self: Int) -> Unit {
   println("Got Int \(self)!")
 }
 
@@ -954,7 +954,6 @@ fn init {
   MyTrait::f(42)
 }
 ```
-
 
 ## Automatically derive builtin traits
 
@@ -977,6 +976,7 @@ fn init {
 ```
 
 ## Trait objects
+
 MoonBit supports runtime polymorphism via trait objects.
 If `t` is of type `T`, which implements trait `I`,
 one can pack the methods of `T` that implements `I`, together with `t`,
@@ -991,13 +991,13 @@ trait Animal {
 
 type Duck String
 fn Duck::make(name: String) -> Duck { Duck(name) }
-fn speak(self: Duck) {
+fn speak(self: Duck) -> Unit {
   println(self.0 + ": quak!")
 }
 
 type Fox String
 fn Fox::make(name: String) -> Fox { Fox(name) }
-fn Fox::speak(_self: Fox) {
+fn Fox::speak(_self: Fox) -> Unit {
   println("What does the fox say?")
 }
 
@@ -1021,6 +1021,7 @@ Not all traits can be used to create objects.
 - There must be only one occurence of `Self` in the type of the method (i.e. the first parameter)
 
 ## The question operator
+
 MoonBit features a convenient `?` operator for error handling.
 The `?` postfix operator can be applied to expressions of type `Option` or `Result`.
 When applied to expression `t : Option[T]`, `t?` is equivalent to:
