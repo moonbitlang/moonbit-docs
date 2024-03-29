@@ -260,7 +260,15 @@ fn init {
 
 ### Number
 
-MoonBit supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
+MoonBit have integer type and floating point type:
+
+|type|description|
+|-|-|
+|`Int`|32-bit signed integer|
+|`Int64`|64-bit signed integer|
+|`Double`|64-bit floating point, defined by IEEE754|
+
+MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
 To improve readability, you may place underscores in the middle of numeric literals such as `1_000_000`. Note that underscores can be placed anywhere within a number, not just every three digits.
 
