@@ -939,7 +939,7 @@ fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) -> Unit { ...
 
 When searching for the implementation of a trait, extension methods have a higher priority, so they can be used to override ordinary methods with undesirable behavior. Extension methods can only be used to implement the specified trait. They cannot be called directly like ordinary methods. Furthermore, *only the package of the type or the package of the trait can implement extension methods*. For example, only `@pkg1` and `@pkg2` are allowed to implement an extension method `@pkg1.Trait::f` for type `@pkg2.Type`. This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of extension methods.
 
-To involke an extension method directly, use the `Trait::method` syntax.
+To invoke an extension method directly, use the `Trait::method` syntax.
 
 ```rust
 trait MyTrait {
