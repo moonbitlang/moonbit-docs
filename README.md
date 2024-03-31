@@ -411,7 +411,7 @@ fn init {
 
 #### Constructing Struct with Shorthand
 
-If you already have some variable like `name` and `email`, it's redundant to repeat those name when constructing a struct:
+If you already have some variable like `name` and `email`, it's redundant to repeat those names when constructing a struct:
 
 ```go
 fn init{
