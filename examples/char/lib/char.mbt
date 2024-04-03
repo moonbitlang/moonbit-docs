@@ -50,7 +50,3 @@ pub fn prev(c : Char) -> Option[Char] {
   None
 }
 
-fn Char::from_int(self : Int) -> Char {
-  obj_magic(self)
-}
-

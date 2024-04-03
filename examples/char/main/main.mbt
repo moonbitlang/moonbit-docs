@@ -1,37 +1,13 @@
-fn init {
-  match @lib.is_alpha('a') {
-    true => println("is alpha")
-    false => println("is not alpha")
-  }
-  match @lib.is_alpha('3') {
-    true => println("is alpha")
-    false => println("is not alpha")
-  }
-  match @lib.is_numeric('1') {
-    true => println("is numeric")
-    false => println("is not numeric")
-  }
-  match @lib.is_numeric('b') {
-    true => println("is numeric")
-    false => println("is not numeric")
-  }
-  match @lib.is_alphanumeric('a') {
-    true => println("is alphanumeric")
-    false => println("is not alphanumeric")
-  }
-  println(@lib.to_lower('H'))
-  println(@lib.to_upper('c'))
-  match @lib.is_whitespace(' ') {
-    true => println("True")
-    false => println("False")
-  }
-  match @lib.next('Z') {
-    Some(v) => println(v)
-    None => ()
-  }
-  match @lib.prev('A') {
-    Some(v) => println(v)
-    None => ()
-  }
+test {
+  @assertion.assert_true(@lib.is_alpha('a'))?
+  @assertion.assert_false(@lib.is_alpha('3'))?
+  @assertion.assert_true(@lib.is_numeric('1'))?
+  @assertion.assert_false(@lib.is_numeric('b'))?
+  @assertion.assert_true(@lib.is_alphanumeric('a'))?
+  @assertion.assert_eq(@lib.to_lower('H'), 'h')?
+  @assertion.assert_eq(@lib.to_upper('c'), 'C')?
+  @assertion.assert_true(@lib.is_whitespace(' '))?
+  @assertion.assert_eq(@lib.next('Z'), Some('['))?
+  @assertion.assert_eq(@lib.prev('A'), Some('@'))?
 }
 
