@@ -1,5 +1,6 @@
-fn 😀(self : Int) {
-  println(self)
+type T😯 Int
+fn 😀(self : T😯) -> Int {
+  self.0
 }
 
 pub enum 😆😆 {
@@ -7,13 +8,17 @@ pub enum 😆😆 {
   B
 }
 
-fn init {
-  🤣 := 3
-  🤣.😀()
+fn to_string(self: 😆😆) -> String {
+  match self {
+    A => "A"
+    B => "B"
+  }
+}
+
+test {
+  let 🤣 = T😯::T😯(3)
+  inspect(🤣.😀(), ~content="3")?
 
   let 😆 = 😆😆::A
-  match 😆 {
-    A => print("A")
-    B => print("B")
-  }
+  inspect(😆, ~content="A")?
 }
