@@ -30,10 +30,10 @@
 
   var canvas = document.getElementById("canvas"); 
 
-  WebAssembly.instantiateStreaming(fetch("target/draw.wasm"), spectest).then(
+  WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), spectest).then(
     (obj) => {
       obj.instance.exports._start();
-      const draw = obj.instance.exports["koch_snowflake/main::draw"];
+      const draw = obj.instance.exports["draw"];
       var ctx = canvas.getContext("2d");
       ctx.strikeStyle="#000";
       draw(ctx, 1);

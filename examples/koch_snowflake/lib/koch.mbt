@@ -18,7 +18,7 @@ fn cos(x : Double) -> Double = "canvas" "cos"
 fn get_pi() -> Double = "canvas" "get_pi"
 
 fn koch(ctx : Canvas_ctx, x1 : Double, y1 : Double, x2 : Double,
-        y2 : Double, n : Double, m : Double) {
+        y2 : Double, n : Double, m : Double) -> Unit {
   ctx.clear_rect(0.0, 0.0, 400.0, 400.0)
   let x3 = (x2 - x1) / 3.0 + x1
   let y3 = (y2 - y1) / 3.0 + y1
@@ -42,7 +42,7 @@ fn koch(ctx : Canvas_ctx, x1 : Double, y1 : Double, x2 : Double,
   koch(ctx, x4, y4, x2, y2, n, m)
 }
 
-pub fn draw(ctx : Canvas_ctx, deep : Double) {
+pub fn draw(ctx : Canvas_ctx, deep : Double) -> Unit {
   ctx.begin_path()
   let y = 80.0 + cos(get_pi() / 6.0) * 200.0
   koch(ctx, 150.0, y, 250.0, 80.0, 0.0, deep)
