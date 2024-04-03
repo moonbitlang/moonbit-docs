@@ -120,7 +120,7 @@ pub fn calc_color(col : Int, row : Int, ox : Double, oy : Double,
   return r.lsl(16).lor(g.lsl(8)).lor(b)
 }
 
-pub fn draw_color(image_data : ImageData, col : Int, row : Int, rgb : Int) {
+pub fn draw_color(image_data : ImageData, col : Int, row : Int, rgb : Int) -> Unit {
   let pindex = ((image_height - float_of_int(row) - 1.0) * image_width + float_of_int(
       col,
     )) * 4.0
