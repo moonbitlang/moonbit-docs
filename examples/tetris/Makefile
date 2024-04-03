@@ -1,3 +1,3 @@
 run:
-	moon build
-	sudo python3 -m http.server 80
+	moon build --target wasm-gc
+	python3 -m http.server 8000

@@ -12,7 +12,7 @@ fn set_fill_style(self : Canvas_ctx, color : Int) = "canvas" "set_fill_style"
 
 fn draw_game_over(self : Canvas_ctx) = "canvas" "draw_game_over"
 
-pub fn draw(canvas : Canvas_ctx, tetris : Tetris) {
+pub fn draw(canvas : Canvas_ctx, tetris : Tetris) -> Unit {
   let mut c = 0
 
   // draw backgroud
@@ -27,14 +27,14 @@ pub fn draw(canvas : Canvas_ctx, tetris : Tetris) {
     c = c + 1
   }
   draw_piece(canvas, tetris.grid, (0, 0))
-  draw_piece(canvas, stream(tetris.pice_shap), (tetris.pice_x, tetris.pice_y))
+  draw_piece(canvas, List::from_array(tetris.pice_shap), (tetris.pice_x, tetris.pice_y))
   if tetris.dead {
     canvas.draw_game_over()
   }
 }
 
 pub fn draw_piece(canvas : Canvas_ctx, matrix : List[Array[Int]],
-        offset : (Int, Int)) {
+        offset : (Int, Int)) -> Unit {
   fn go(l : List[Array[Int]], r : Int, canvas : Canvas_ctx) {
     match l {
       Cons(v, n) => {

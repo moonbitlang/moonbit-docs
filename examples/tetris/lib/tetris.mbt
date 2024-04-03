@@ -10,7 +10,7 @@ struct Tetris {
   mut row_completed : Int
 }
 
-pub fn reset_game(self : Tetris) {
+pub fn reset_game(self : Tetris) -> Unit {
   self.dead = false
   self.score = 0
   self.row_completed = 0
@@ -35,10 +35,10 @@ pub fn generate_piece(self : Tetris) -> Bool {
 }
 
 pub fn get_next_piece(self : Tetris, pop : Bool) -> PIECE {
-  if length(self.pice_pool) == 0 {
+  if self.pice_pool.length() == 0 {
     self.generate_piece_pool()
   }
-  match self.pice_pool{
+  match self.pice_pool {
     Nil => abort("impossible")
     Cons(cur, n) => {
       if pop {
@@ -49,8 +49,8 @@ pub fn get_next_piece(self : Tetris, pop : Bool) -> PIECE {
   }
 }
 
-pub fn generate_piece_pool(self : Tetris) {
-  self.pice_pool = stream([
+pub fn generate_piece_pool(self : Tetris) -> Unit {
+  self.pice_pool = List::[
     PIECE::I,
     PIECE::J,
     PIECE::L,
@@ -58,11 +58,11 @@ pub fn generate_piece_pool(self : Tetris) {
     PIECE::S,
     PIECE::T,
     PIECE::Z,
-  ])
-  // TODO:shuffle
+  ]
 }
+// TODO:shuffle
 
-pub fn on_piece_collision(self : Tetris) {
+pub fn on_piece_collision(self : Tetris) -> Unit {
   let len_r = self.pice_shap.length()
   let len_c = self.pice_shap[0].length()
   let y = self.pice_y - 1
@@ -100,7 +100,7 @@ pub fn on_piece_collision(self : Tetris) {
     match l {
       Nil => Nil
       Cons(v, n) =>
-        if contain(v, 0) {
+        if v.contains(0) {
           return Cons(v, go2(n))
         } else {
           self.row_completed = self.row_completed + 1
@@ -125,7 +125,7 @@ pub fn on_piece_collision(self : Tetris) {
   self.dead = self.generate_piece()
 }
 
-pub fn drop_piece(self : Tetris, instant : Bool) {
+pub fn drop_piece(self : Tetris, instant : Bool) -> Unit {
   if instant {
     let y = get_effective_height(
       self.grid,
@@ -146,16 +146,16 @@ pub fn drop_piece(self : Tetris, instant : Bool) {
   self.on_piece_collision()
 }
 
-pub fn move_piece(self : Tetris, delta : Int) {
+pub fn move_piece(self : Tetris, delta : Int) -> Unit {
   let mut new_x = self.pice_x + delta
-  new_x = max(0, min(new_x, grid_col_count - self.pice_shap[0].length()))
+  new_x = @math.maximum(0, @math.minimum(new_x, grid_col_count - self.pice_shap[0].length()))
   if check_collision(self.grid, self.pice_shap, (new_x, self.pice_y)) {
     return
   }
   self.pice_x = new_x
 }
 
-pub fn rotate_piece(self : Tetris) {
+pub fn rotate_piece(self : Tetris) -> Unit {
   let r = self.pice_shap.length()
   let c = self.pice_shap[0].length()
   let new_shap = Array::make(c, Array::make(r, 0))
@@ -184,21 +184,18 @@ pub fn rotate_piece(self : Tetris) {
   self.pice_shap = new_shap
 }
 
-pub fn step(tetris : Tetris, action : Int) {
+pub fn step(tetris : Tetris, action : Int) -> Unit {
   if tetris.dead {
     return
   }
   match action {
     // move left
-    1 =>
-      tetris.move_piece(-1)
-      // move right
-    2 =>
-      tetris.move_piece(1)
-      // rotate
-    3 =>
-      tetris.rotate_piece()
-      // instant
+    1 => tetris.move_piece(-1)
+    // move right
+    2 => tetris.move_piece(1)
+    // rotate
+    3 => tetris.rotate_piece()
+    // instant
     4 => tetris.drop_piece(true)
     _ => ()
   }

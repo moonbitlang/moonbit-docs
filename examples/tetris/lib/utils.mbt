@@ -1,22 +1,3 @@
-pub fn stream[T](now : Array[T]) -> List[T] {
-  fn go(idx : Int) -> List[T] {
-    if idx == now.length() {
-      Nil
-    } else {
-      Cons(now[idx], go(idx + 1))
-    }
-  }
-
-  go(0)
-}
-
-pub fn length[T](now : List[T]) -> Int {
-  match now {
-    Nil => 0
-    Cons(_, n) => 1 + length(n)
-  }
-}
-
 pub fn check_collision(grid : List[Array[Int]], shap : Array[Array[Int]],
         offset : (Int, Int)) -> Bool {
   let len_r = shap.length()
@@ -51,33 +32,6 @@ pub fn check_collision(grid : List[Array[Int]], shap : Array[Array[Int]],
   }
 
   return go(grid, 0)
-}
-
-pub let int_max = 2147483647
-
-pub fn max[T : Compare](a : T, b : T) -> T {
-  if a.compare(b) >= 0 {
-    return a
-  }
-  return b
-}
-
-pub fn min[T : Compare](a : T, b : T) -> T {
-  if a.compare(b) >= 0 {
-    return b
-  }
-  return a
-}
-
-pub fn contain(ary : Array[Int], t : Int) -> Bool {
-  let mut i = 0
-  while i < ary.length() {
-    if ary[i] == t {
-      return true
-    }
-    i = i + 1
-  }
-  false
 }
 
 pub fn get_effective_height(grid : List[Array[Int]], shap : Array[Array[Int]],

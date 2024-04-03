@@ -113,13 +113,13 @@ function update(time = 0) {
   requestAnimationFrameId = requestAnimationFrame(update)
 }
 
-WebAssembly.instantiateStreaming(fetch("target/wasm/release/build/main/main.wasm"), importObject).then(
+WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
     (obj) => {
       obj.instance.exports._start();
-      tetris_draw = obj.instance.exports["tetris/main::draw"];
-      tetris_new = obj.instance.exports["tetris/main::new"];
-      tetris_step = obj.instance.exports["tetris/main::step"];
-      tetris_score = obj.instance.exports["tetris/main::get_score"]
+      tetris_draw = obj.instance.exports["draw"];
+      tetris_new = obj.instance.exports["new"];
+      tetris_step = obj.instance.exports["step"];
+      tetris_score = obj.instance.exports["get_score"]
       tetris = tetris_new();
       requestAnimationFrameId = requestAnimationFrame(update);
     }
