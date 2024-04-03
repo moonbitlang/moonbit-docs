@@ -75,7 +75,7 @@ fn live_neighbor_count(self : Universe, row : Int, column : Int) -> Int {
   count
 }
 
-pub fn tick(self : Universe) {
+pub fn tick(self : Universe) -> Unit {
   let next : Array[Cell] = Array::make(self.width * self.height, Dead)
   let mut r = 0
   while r < self.height {

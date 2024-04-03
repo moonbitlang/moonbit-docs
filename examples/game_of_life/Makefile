@@ -1,4 +1,3 @@
 run:
-	moon build
-	wat2wasm target/build/main/main.wat --output=target/game_of_life.wasm
-	http-server ./
+	moon build --target wasm-gc
+	python3 -m http.server 8000

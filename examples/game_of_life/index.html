@@ -39,13 +39,13 @@ canvas.width = 385;
 if (canvas.getContext) {
   const ctx = canvas.getContext("2d");
 
-  WebAssembly.instantiateStreaming(fetch("target/game_of_life.wasm"), importObject).then(
+  WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
     (obj) => {
       obj.instance.exports._start();
-      const drawGrid = obj.instance.exports["game_of_life/main::draw_grid"];
-      const drawCell = obj.instance.exports["game_of_life/main::draw_cell"];
-      const universe_new = obj.instance.exports["game_of_life/main::new"];
-      const universe_tick = obj.instance.exports["game_of_life/main::tick"];
+      const drawGrid = obj.instance.exports["draw_grid"];
+      const drawCell = obj.instance.exports["draw_cell"];
+      const universe_new = obj.instance.exports["new"];
+      const universe_tick = obj.instance.exports["tick"];
       const universe = universe_new();
       const renderLoop = () => {
         universe_tick(universe);

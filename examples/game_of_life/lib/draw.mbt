@@ -16,7 +16,7 @@ fn set_fill_style(self : Canvas_ctx, color : Int) = "canvas" "set_fill_style"
 
 let cell_size = 5
 
-pub fn draw_grid(canvas : Canvas_ctx) {
+pub fn draw_grid(canvas : Canvas_ctx) -> Unit {
   canvas.begin_path()
   canvas.set_stroke_color(0xcccccc)
   let mut i = 0
@@ -34,19 +34,19 @@ pub fn draw_grid(canvas : Canvas_ctx) {
   canvas.stroke()
 }
 
-pub fn draw_cell(canvas : Canvas_ctx, universe : Universe, dead : Int,
-        alive : Int) {
+pub fn draw_cell(
+  canvas : Canvas_ctx,
+  universe : Universe,
+  dead : Int,
+  alive : Int
+) -> Unit {
   canvas.begin_path()
   let mut row = 0
   while row < 64 {
     let mut col = 0
     while col < 64 {
       let idx = universe.get_index(row, col)
-      let color = if universe.get_cell(idx) == 0 {
-        dead
-      } else {
-        alive
-      }
+      let color = if universe.get_cell(idx) == 0 { dead } else { alive }
       canvas.set_fill_style(color)
       canvas.fill_rect(col * 6 + 1, row * 6 + 1, 5, 5)
       col = col + 1
@@ -55,4 +55,3 @@ pub fn draw_cell(canvas : Canvas_ctx, universe : Universe, dead : Int,
   }
   canvas.stroke()
 }
-
