@@ -60,17 +60,30 @@ WebAssembly.instantiateStreaming(fetch("xxx.wasm"), {
 
 #### 使用导出的函数
 
-想要导出的函数应当被声明为`pub`。月兔的函数在导出时将根据包名、函数名、是否是方法来生成一个名称。
+公开函数（非方法、非多态）可以被导出，需要在对应包的`moon.pkg.json`中添加链接设置：
 
-名称以模块名和包名起始，由`/`分割，例如`module1/lib`。如果它是一个普通函数，那么将会直接跟着`::<定义的函数名>`。否则，它会跟着`<类型>::<方法名>`。如果是泛型函数，那么类型也会被添加，如`<类型>::<方法名>|<类型参数>|`。如果不确定具体规则，可以将Wasm文件转换为文本格式并且搜索`export`命令。
+```json
+{
+  "link": {
+    "wasm": {
+      "exports": [
+        "add",
+        "fib:test"
+      ]
+    }
+  }
+}
+```
+
+上面的例子中，`add`和`fib`函数将会在编译默认的wasm后端时被导出，并且`fib`函数将被以`test`为名导出。
 
 `_start`函数总是应当被使用，以初始化月兔程序中定义的全局实例。
 
 ## 例子：笑脸
 
-让我们来看一个使用月兔利用画布（Canvas）API画一个简单笑脸的例子。
+让我们来看一个使用月兔利用画布（Canvas）API画一个简单笑脸的例子。假设利用`moon new draw`创建了一个新项目。
 
-```moonbit title="./draw.mbt"
+```moonbit title="lib/draw.mbt"
 // 我们首先定义一个类型，代表着绘画的上下文
 type Canvas_ctx
 
@@ -85,7 +98,7 @@ fn get_pi() -> Double = "math" "PI"
 let pi : Double = get_pi()
 
 // 我们使用这些函数来定义一个在绘画上下文中绘制的函数
-pub fn draw(self : Canvas_ctx) {
+pub fn draw(self : Canvas_ctx) -> Unit {
   self.begin_path()
   self.arc(75, 75, 50, 0.0, pi * 2.0, true) // Outer circle
   self.move_to(110, 75)
@@ -98,17 +111,25 @@ pub fn draw(self : Canvas_ctx) {
 }
 
 // 我们在这里也演示`println`的功能
-pub fn display_pi() {
+pub fn display_pi() -> Unit {
   println("PI: \(pi)")
 }
-
 ```
 
-使用`moonc`来编译文件，以获得`draw.wasm`。我们推荐尽可能地使用wasm-gc特性。如果宿主环境不支持，那么可以省略`-wasm-gc`选项。
-
-```bash
-moonc compile draw.mbt -wasm-gc -o draw.wasm 
+```json title="lib/moon.pkg.json"
+{
+  "link": {
+    "wasm": {
+      "exports": ["draw", "display_pi"]
+    },
+    "wasm-gc": {
+      "exports": ["draw", "display_pi"]
+    }
+  }
+}
 ```
+
+我们使用`moon build --target wasm-gc`构建项目。我们推荐尽可能地使用wasm-gc特性。如果宿主环境不支持，那么可以省略`--target wasm-gc`选项。
 
 在JavaScript中使用它：
 
@@ -126,12 +147,12 @@ moonc compile draw.mbt -wasm-gc -o draw.wasm
     const canvas = document.getElementById("canvas");
     if (canvas.getContext) {
       const ctx = canvas.getContext("2d");
-      WebAssembly.instantiateStreaming(fetch("draw.wasm"), importObject).then(
+      WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
         (obj) => {
           // 总是调用_start来初始化环境
           obj.instance.exports._start();
           // 将JS对象当作参数传递以绘制笑脸
-          obj.instance.exports["Canvas_ctx::draw"](ctx);
+          obj.instance.exports["draw"](ctx);
           // 显示PI的值
           obj.instance.exports["display_pi"]();
         }
@@ -174,7 +195,7 @@ const [log, flush] = (() => {
   var buffer = [];
   function flush() {
     if (buffer.length > 0) {
-      console.log(new TextDecoder().decode(new Uint8Array(buffer).valueOf()));
+      console.log(new TextDecoder("utf-16").decode(new Uint16Array(buffer).valueOf()));
       buffer = [];
     }
   }
@@ -194,7 +215,7 @@ const importObject = {
 }
 
 // ...
-WebAssembly.instantiateStreaming(fetch("draw.wasm"), importObject).then(
+WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
   (obj) => {
     obj.instance.exports._start();
     // ...
@@ -231,7 +252,7 @@ WebAssembly.instantiateStreaming(fetch("draw.wasm"), importObject).then(
       var buffer = [];
       function flush() {
         if (buffer.length > 0) {
-          console.log(new TextDecoder().decode(new Uint8Array(buffer).valueOf()));
+          console.log(new TextDecoder("utf-16").decode(new Uint16Array(buffer).valueOf()));
           buffer = [];
         }
       }
@@ -256,10 +277,10 @@ WebAssembly.instantiateStreaming(fetch("draw.wasm"), importObject).then(
     const canvas = document.getElementById("canvas");
     if (canvas.getContext) {
       const ctx = canvas.getContext("2d");
-      WebAssembly.instantiateStreaming(fetch("draw.wasm"), importObject).then(
+      WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
         (obj) => {
           obj.instance.exports._start();
-          obj.instance.exports["Canvas_ctx::draw"](ctx);
+          obj.instance.exports["draw"](ctx);
           obj.instance.exports["display_pi"]();
           flush()
         }

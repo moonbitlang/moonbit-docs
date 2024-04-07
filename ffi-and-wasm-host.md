@@ -60,17 +60,30 @@ Check out the documentation such as [MDN](https://developer.mozilla.org/en-US/do
 
 #### Use exported functions
 
-Functions should be declared as `pub` so that they can be exported. Functions in MoonBit are exported with a name generated according to the package, the function name, and whether it is a method.
+Functions that are not methods nor polymorphic functions can be exported if they are public and if the link configuration appears in the `moon.pkg.json` of the package:
 
-The name starts with the module name and the package name, separated by the `/`, such as `module1/lib`. If it is a normal function, then it is followed by `::<function_name>` as declared. Otherwise, it is followed by `<Type>::<method_name>`. If it is polymorphism, then the type parameter is also added, as `<Type>::<method_name>|<Type Parameter>|`. If the rule is unclear, you can always convert the Wasm to text format and search for `export` statement.
+```json
+{
+  "link": {
+    "wasm": {
+      "exports": [
+        "add",
+        "fib:test"
+      ]
+    }
+  }
+}
+```
+
+The example above will export function `add` and `fib` if compiled with the default wasm backend, and the function `fib` will be exported with the name of `test`.
 
 The `_start` function should always be called to initialize all the global instances defined in MoonBit program.
 
 ## Example: Smiling face
 
-Let's walk through a full example to draw a smiling face using Canvas API in MoonBit.
+Let's walk through a full example to draw a smiling face using Canvas API in MoonBit. Suppose you created a new project with `moon new draw`
 
-```moonbit title="./draw.mbt"
+```moonbit title="lib/draw.mbt"
 // We first declare a type representing the context of canvas
 type Canvas_ctx
 
@@ -101,14 +114,22 @@ pub fn draw(self : Canvas_ctx) -> Unit {
 pub fn display_pi() -> Unit {
   println("PI: \(pi)")
 }
-
 ```
 
-Compile the file using `moonc` to get `draw.wasm`. We recommend using the wasm-gc feature whenever possible. If the environment does not support wasm-gc feature, simply omit the `-wasm-gc` option.
-
-```bash
-moonc compile draw.mbt -wasm-gc -o draw.wasm 
+```json title="lib/moon.pkg.json"
+{
+  "link": {
+    "wasm": {
+      "exports": ["draw", "display_pi"]
+    },
+    "wasm-gc": {
+      "exports": ["draw", "display_pi"]
+    }
+  }
+}
 ```
+
+Build the project using `moon build --target wasm-gc`. We recommend using the wasm-gc feature whenever possible. If the environment does not support wasm-gc feature, simply omit the `--target wasm-gc` option.
 
 We now can use it from JavaScript.
 
@@ -126,12 +147,12 @@ We now can use it from JavaScript.
     const canvas = document.getElementById("canvas");
     if (canvas.getContext) {
       const ctx = canvas.getContext("2d");
-      WebAssembly.instantiateStreaming(fetch("draw.wasm"), importObject).then(
+      WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
         (obj) => {
           // Always call _start to initialize the environment
           obj.instance.exports._start();
           // Pass the JS object as parameter to draw the smiling face
-          obj.instance.exports["Canvas_ctx::draw"](ctx);
+          obj.instance.exports["draw"](ctx);
           // Display the value of PI
           obj.instance.exports["display_pi"]();
         }
@@ -174,7 +195,7 @@ const [log, flush] = (() => {
   var buffer = [];
   function flush() {
     if (buffer.length > 0) {
-      console.log(new TextDecoder().decode(new Uint8Array(buffer).valueOf()));
+      console.log(new TextDecoder("utf-16").decode(new Uint16Array(buffer).valueOf()));
       buffer = [];
     }
   }
@@ -194,7 +215,7 @@ const importObject = {
 }
 
 // ...
-WebAssembly.instantiateStreaming(fetch("draw.wasm"), importObject).then(
+WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/hello.wasm"), importObject).then(
   (obj) => {
     obj.instance.exports._start();
     // ...
@@ -231,7 +252,7 @@ Now, we put them together, so this is our final complete `index.html`:
       var buffer = [];
       function flush() {
         if (buffer.length > 0) {
-          console.log(new TextDecoder().decode(new Uint8Array(buffer).valueOf()));
+          console.log(new TextDecoder("utf-16").decode(new Uint16Array(buffer).valueOf()));
           buffer = [];
         }
       }
@@ -256,10 +277,10 @@ Now, we put them together, so this is our final complete `index.html`:
     const canvas = document.getElementById("canvas");
     if (canvas.getContext) {
       const ctx = canvas.getContext("2d");
-      WebAssembly.instantiateStreaming(fetch("draw.wasm"), importObject).then(
+      WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/hello.wasm"), importObject).then(
         (obj) => {
           obj.instance.exports._start();
-          obj.instance.exports["Canvas_ctx::draw"](ctx);
+          obj.instance.exports["draw"](ctx);
           obj.instance.exports["display_pi"]();
           flush()
         }
