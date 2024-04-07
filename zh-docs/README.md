@@ -736,7 +736,7 @@ MoonBit 支持与传统面向对象语言不同的方法（method）。
 
 ```rust
 enum MyList[X] {
-  Nil,
+  Nil
   Cons(X, MyList[X])
 }
 

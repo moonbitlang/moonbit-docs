@@ -728,7 +728,7 @@ MoonBit supports methods in a different way from traditional object-oriented lan
 
 ```rust
 enum MyList[X] {
-  Nil,
+  Nil
   Cons(X, MyList[X])
 }
 
