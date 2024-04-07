@@ -215,7 +215,7 @@ const importObject = {
 }
 
 // ...
-WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/hello.wasm"), importObject).then(
+WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
   (obj) => {
     obj.instance.exports._start();
     // ...
@@ -277,7 +277,7 @@ Now, we put them together, so this is our final complete `index.html`:
     const canvas = document.getElementById("canvas");
     if (canvas.getContext) {
       const ctx = canvas.getContext("2d");
-      WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/hello.wasm"), importObject).then(
+      WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
         (obj) => {
           obj.instance.exports._start();
           obj.instance.exports["draw"](ctx);
