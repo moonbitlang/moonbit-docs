@@ -805,6 +805,38 @@ fn init {
 }
 ```
 
+Another example about `op_get` and `op_set`:
+
+```rust
+struct Coord {
+  mut x: Int
+  mut y: Int
+} derive(Debug)
+
+fn op_get(self: Coord, key: String) -> Int {
+  match key {
+    "x" => self.x
+    "y" => self.y
+  }
+}
+
+fn op_set(self: Coord, key: String, val: Int) -> Unit {
+    match key {
+    "x" => self.x = val
+    "y" => self.y = val
+  }
+}
+
+fn init {
+  let c = { x: 1, y: 2 }
+  debug(c)
+  debug(c["y"])
+  c["x"] = 23
+  debug(c)
+  debug(c["x"])
+}
+```
+
 Currently, the following operators can be overloaded:
 
 | operator name        | method name |
