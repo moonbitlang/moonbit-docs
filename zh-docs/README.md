@@ -930,7 +930,7 @@ trait Default {
 
 trait Debug {
   // 将 [self] 的调试信息写入到一个 buffer 里
-  debug_write(Self, Buffer)
+  debug_write(Self, Buffer) -> Unit
 }
 ```
 
@@ -947,7 +947,7 @@ trait Debug {
 
 ```rust
 trait ToMyBinaryProtocol {
-  to_my_binary_protocol(Self, Buffer)
+  to_my_binary_protocol(Self, Buffer) -> Unit
 }
 
 fn ToMyBinaryProtocol::to_my_binary_protocol(x: Int, b: Buffer) -> Unit { ... }
@@ -966,7 +966,7 @@ fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) -> Unit { ...
 
 ```rust
 trait MyTrait {
-  f(Self)
+  f(Self) -> Unit
 }
 
 fn MyTrait::f(self: Int) -> Unit {

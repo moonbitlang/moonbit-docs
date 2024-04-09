@@ -925,7 +925,7 @@ trait Default {
 
 trait Debug {
   // write debug information of [self] to a buffer
-  debug_write(Self, Buffer)
+  debug_write(Self, Buffer) -> Unit
 }
 ```
 
@@ -937,7 +937,7 @@ However, it is often useful to extend the functionality of an existing type. So 
 
 ```rust
 trait ToMyBinaryProtocol {
-  to_my_binary_protocol(Self, Buffer)
+  to_my_binary_protocol(Self, Buffer) -> Unit
 }
 
 fn ToMyBinaryProtocol::to_my_binary_protocol(x: Int, b: Buffer) -> Unit { ... }
@@ -951,7 +951,7 @@ To invoke an extension method directly, use the `Trait::method` syntax.
 
 ```rust
 trait MyTrait {
-  f(Self)
+  f(Self) -> Unit
 }
 
 fn MyTrait::f(self: Int) -> Unit {
