@@ -88,7 +88,7 @@ fn add3(x: Int, y: Int, z: Int)-> Int {
 }
 ```
 
-Note that the arguments and return value of top-level functions require explicit type annotations. If the return type is omitted, the function will be treated as returning the unit type.
+Note that the arguments and return value of top-level functions require explicit type annotations.
 
 ### Local Functions
 
