@@ -963,7 +963,7 @@ trait Debug {
 
 ## Access control of methods and extension methods
 
-To make the trait system coherent (i.e. there is a globally unique implementation for every `Type: Trait` pair), and prevent third-party packages from modifying behavior of existing programs by accident, *only the the package that defines a type can define methods for it*. So one cannot define new methods or override old methods for builtin and foreign types.
+To make the trait system coherent (i.e. there is a globally unique implementation for every `Type: Trait` pair), and prevent third-party packages from modifying behavior of existing programs by accident, *only the package that defines a type can define methods for it*. So one cannot define new methods or override old methods for builtin and foreign types.
 
 However, it is often useful to extend the functionality of an existing type. So MoonBit provides a mechanism called extension method, defined using the syntax `fn Trait::method_name(...) -> ...`. Extension methods extend the functionality of an existing type by implementing a trait. For example, to implement a new trait `ToMyBinaryProtocol` for builtin types, one can (and must) use extension methods:
 
