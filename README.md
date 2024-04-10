@@ -824,7 +824,7 @@ MoonBit provides a convenient pipe operator `|>`, which can be used to chain reg
 ```rust
 fn init {
   x |> f // equivalent to f(x)
-  x |> g(y) // equivalent to f(x, y)
+  x |> f(y) // equivalent to f(x, y)
 
   // Chain calls at multiple lines
   arg_val
