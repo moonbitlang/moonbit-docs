@@ -851,9 +851,11 @@ MoonBit 提供了便利的管道运算符 `|>`，可以用于链式调用普通�
 fn init {
   x |> f     // 等价于 f(x)
   x |> f(y)  // 等价于 f(x, y)
-  initial
-  |> function1
-  |> function2(other_arguments)
+
+  // 分布在多行的链式调用
+  arg_val
+  |> f1 // 等价于 f1(arg_val)
+  |> f2(other_args) // 等价于 f2(f1(arg_val), other_args)
 }
 ```
 

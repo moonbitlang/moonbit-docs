@@ -857,9 +857,11 @@ MoonBit provides a convenient pipe operator `|>`, which can be used to chain reg
 fn init {
   x |> f // equivalent to f(x)
   x |> f(y) // equivalent to f(x, y)
-  initial
-  |> function1
-  |> function2(other_arguments)
+
+  // Chain calls at multiple lines
+  arg_val
+  |> f1 // equivalent to f1(arg_val)
+  |> f2(other_args) // equivalent to f2(f1(arg_val), other_args)
 }
 ```
 
