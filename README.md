@@ -245,19 +245,6 @@ let d = a || b
 let e = not(a)
 ```
 
-### Byte
-
-A byte literal in MoonBit is either a single ASCII character or a single escape enclosed in single quotes `'`, and preceded by the character `b`. Byte literals are of type `Byte`. For example:
-
-```rust
-fn init {
-  let b1 = b'a'
-  println(b1.to_int())
-  let b2 = b'\xff'
-  println(b2.to_int())
-}
-```
-
 ### Number
 
 MoonBit have integer type and floating point type:
@@ -306,7 +293,33 @@ let another_hex = 0xA
 
 ### String
 
-String interpolation is a powerful feature in MoonBit that enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text.
+`String` holds a sequence of UTF-16 code units. You can use double quotes to create a string, or use `#|` to write a multi-line string.
+
+```rust
+let a = "兔rabbit"
+println(a[0]) // output: 兔
+println(a[1]) // output: r
+```
+
+```rust
+let b = 
+  #| Hello
+  #| MoonBit
+  #|
+```
+
+In double quotes string, a backslash followed by certain special characters forms an escape sequence: 
+
+|escape sequences|description|
+|-|-|
+|`\n`,`\r`,`\t`,`\b`|New line, Carriage return, Horizontal tab, Backspace|
+|`\\`|Backslash|
+|`\x41`|Hexadecimal escape sequence|
+|`\o102`|Octal escape sequence|
+|`\u5154`,`\u{1F600}`|Unicode escape sequence|
+
+
+MoonBit supports string interpolation. It enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text.
 
 ```swift live
 fn init {
@@ -316,6 +329,29 @@ fn init {
 ```
 
 Variables used for string interpolation must support the `to_string` method.
+
+### Char
+
+`Char` is an integer representing a Unicode code point.
+
+```rust
+let a : Char = 'A'
+let b = '\x41'
+let c = '🐰'
+```
+
+### Byte
+
+A byte literal in MoonBit is either a single ASCII character or a single escape enclosed in single quotes `'`, and preceded by the character `b`. Byte literals are of type `Byte`. For example:
+
+```rust
+fn init {
+  let b1 : Byte = b'a'
+  println(b1.to_int())
+  let b2 = b'\xff'
+  println(b2.to_int())
+}
+```
 
 ### Tuple
 

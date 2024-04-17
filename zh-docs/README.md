@@ -253,19 +253,6 @@ let d = a || b
 let e = not(a)
 ```
 
-### 字节
-
-在MoonBit中，字节字面量可以是一个ASCII字符或一个转义序列，它们被单引号'包围，并且前面有字符b。字节字面量的类型是Byte。例如：
-
-```rust
-fn init {
-  let b1 = b'a'
-  println(b1.to_int())
-  let b2 = b'\xff'
-  println(b2.to_int())
-}
-```
-
 ### 数字
 
 MoonBit 支持整型和浮点类型：
@@ -307,8 +294,34 @@ let another_hex = 0xA
 
 ### 字符串
 
-字符串内插是 MoonBit 中的一个强大功能，它可以将字符串中的内插变量替换为具体值。
-该功能通过将变量值直接嵌入到文本中来简化构建动态字符串的过程。
+字符串`String`内部保存了UTF-16编码单元序列。可以使用双引号来表示一个字符串，或者通过`#|`来书写多行字符串。
+
+```rust
+let a = "兔rabbit"
+println(a[0]) // output: 兔
+println(a[1]) // output: r
+```
+
+```rust
+let b = 
+  #| Hello
+  #| MoonBit
+  #|
+```
+
+在双引号包围的字符串之间支持使用`\`表示特殊字符转义：
+
+|转义序列|解释|
+|-|-|
+|`\n`,`\r`,`\t`,`\b`|换行、回车、水平制表符、退格|
+|`\\`|反斜杠|
+|`\x41`|16进制转义序列|
+|`\o102`|8进制转义序列|
+|`\u5154`,`\u{1F600}`|Unicode字符转义序列|
+
+
+MoonBit支持字符串插值，它可以把字符串中内插的变量替换为变量具体的值。
+这个特性能够简化动态拼接字符串的过程。
 
 ```rust live
 fn init {
@@ -318,6 +331,29 @@ fn init {
 ```
 
 用于字符串内插的变量必须支持 `to_string` 方法。
+
+### 字符
+
+字符`Char`是表示一个Unicode字符的整数。
+
+```rust
+let a : Char = 'A'
+let b = '\x41'
+let c = '🐰'
+```
+
+### 字节
+
+在MoonBit中，字节字面量可以是一个ASCII字符或一个转义序列，它们被单引号`'`包围，并且前面有字符`b`。字节字面量的类型是Byte。例如：
+
+```rust
+fn init {
+  let b1 : Byte = b'a'
+  println(b1.to_int())
+  let b2 = b'\xff'
+  println(b2.to_int())
+}
+```
 
 ### 元组
 
