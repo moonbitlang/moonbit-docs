@@ -148,6 +148,109 @@ fn init {
 }
 ```
 
+### Labelled arguments
+Functions can declare labelled argument with the syntax `~label : Type`. `label` will also serve as parameter name inside function body:
+
+```rust
+fn labelled(~arg1 : Int, ~arg2 : Int) -> Int {
+  arg1 + arg2
+}
+```
+
+Labelled arguments can be supplied via the syntax `label=arg`. `label=label` can be abbreviated as `~label`:
+
+```rust
+fn init {
+  let arg1 = 1
+  println(labelled(arg2=2, ~arg1)) // 3
+}
+```
+
+Labelled function can be supplied in any order. The evaluation order of arguments is the same as the order of parameters in function declaration.
+
+### Optional arguments
+A labelled argument can be made optional by supplying a default expression with the syntax `~label : Type = default_expr`. If this argument is not supplied at call site, the default expression will be used:
+
+```rust
+fn optional(~opt : Int = 42) -> Int {
+  opt
+}
+
+fn init {
+  println(optional()) // 42
+  println(optional(opt=0)) // 0
+}
+```
+
+The default expression will be evaluated everytime it is used. And the side effect in the default expression, if any, will also be triggered. For example:
+
+```rust
+fn incr(~counter : Ref[Int] = { val: 0 }) -> Int {
+  counter.val = counter.val + 1
+  counter
+}
+
+fn init {
+  println(incr()) // 1
+  println(incr()) // still 1, since a new reference is created everytime default expression is used
+  let counter : Ref[Int] = { val: 0 }
+  println(incr(~counter)) // 1
+  println(incr(~counter)) // 2, since the same counter is used
+}
+```
+
+If you want to share the result of default expression between different function calls, you can lift the default expression to a toplevel `let` declaration:
+
+```rust
+let default_counter : Ref[Int] = { val: 0 }
+
+fn incr(~conuter : Ref[Int] = default_counter) -> Int {
+  counter.val = counter.val + 1
+  counter.val
+}
+
+fn init {
+  println(incr()) // 1
+  println(incr()) // 2
+}
+```
+
+Default expression can depend on the value of previous arguments. For example:
+
+```rust
+fn sub_array[X](xs : Array[X], ~offset : Int, ~len : Int = xs.length() - offset) -> Array[X] {
+  ... // take a sub array of [xs], starting from [offset] with length [len]
+}
+
+fn init {
+  println(sub_array([1, 2, 3], offset=1)) // [2, 3]
+  println(sub_array([1, 2, 3], offset=1, len=1)) // [2]
+}
+```
+
+### Autofill arguments
+MoonBit supports filling specific types of arguments automatically at different call site, such as the source location of a function call.
+To declare an autofill argument, simply declare an optional argument with `_` as default value.
+Now if the argument is not explicitly supplied, MoonBit will automatically fill it at the call site.
+
+Currently MoonBit supports two types of autofill arguments, `SourceLoc`, which is the source location of the whole function call,
+and `ArgsLoc`, which is a array containing the source location of each argument, if any:
+
+```rust
+fn f(_x : Int, _y : Int, ~loc : SourceLoc = _, ~args_loc : ArgsLoc = _) -> Unit {
+  println("loc of whole function call: \(loc)")
+  println("loc of arguments: \(args_loc)")
+}
+
+fn init {
+  f(1, 2)
+  // loc of whole function call: <filename>:7:3-7:10
+  // loc of arguments: [Some(<filename>:7:5-7:6), Some(<filename>:7:8-7:9), None, None]
+}
+```
+
+Autofill arguments are very useful for writing debugging and testing utilities.
+
 ## Control Structures
 
 ### Conditional Expressions
