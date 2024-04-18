@@ -151,6 +151,106 @@ fn init {
 }
 ```
 
+### 带标签的参数
+可以用 `~label : Type` 的语法为函数声明带标签的参数。函数体内参数的名字也是 `label`：
+
+```rust
+fn labelled(~arg1 : Int, ~arg2 : Int) -> Int {
+  arg1 + arg2
+}
+```
+
+调用函数时，可以用 `label=arg` 的语法提供带标签的参数。`label=label` 可以简写成 `~label`：
+
+```rust
+fn init {
+  let arg1 = 1
+  println(labelled(arg2=2, ~arg1)) // 3
+}
+```
+
+可以用任意的顺序提供带标签的参数。参数的求值顺序与函数声明中参数的顺序相同。
+
+### 可选的参数
+可选的参数是带有默认值的带标签参数。声明可选的参数的语法是 `~label : Type = default_expr`。调用函数时，如果没有提供这个参数，就会使用默认值作为参数：
+
+```rust
+fn optional(~opt : Int = 42) -> Int {
+  opt
+}
+
+fn init {
+  println(optional()) // 42
+  println(optional(opt=0)) // 0
+}
+```
+
+每次使用默认参数调用一个函数时，都会重新求值默认值的表达式，也会被重新触发其中的副作用。例如：
+
+```rust
+fn incr(~counter : Ref[Int] = { val: 0 }) -> Int {
+  counter.val = counter.val + 1
+  counter
+}
+
+fn init {
+  println(incr()) // 1
+  println(incr()) // 依然是 1，因为重新求值了默认表达式，产生了一个新的 Ref
+  let counter : Ref[Int] = { val: 0 }
+  println(incr(~counter)) // 1
+  println(incr(~counter)) // 2，因为两次调用使用了同一个 Ref
+}
+```
+
+如果想要在多次不同的函数调用之间共享默认值，可以提前用 `let` 计算并保存默认值：
+
+```rust
+let default_counter : Ref[Int] = { val: 0 }
+
+fn incr(~conuter : Ref[Int] = default_counter) -> Int {
+  counter.val = counter.val + 1
+  counter.val
+}
+
+fn init {
+  println(incr()) // 1
+  println(incr()) // 2
+}
+```
+
+默认值可以依赖于前面的参数，例如：
+
+```rust
+fn sub_array[X](xs : Array[X], ~offset : Int, ~len : Int = xs.length() - offset) -> Array[X] {
+  ... // 生成 xs 的一个从 offset 开始、长度为 len 的子数组
+}
+
+fn init {
+  println(sub_array([1, 2, 3], offset=1)) // [2, 3]
+  println(sub_array([1, 2, 3], offset=1, len=1)) // [2]
+}
+```
+
+### 自动填充的参数
+MoonBit 能够自动在每次函数调用时填充某些特定类型的参数，例如函数调用在源码中的位置。要声明这种自动填充的参数，只需要使用 `_` 作为参数的默认值即可。如果在调用时没有提供这个参数，MoonBit 就会自动根据调用处的上下文填充这个参数。
+
+目前 MoonBit 支持两种类型的自动填充参数。代表整个函数调用在源码中位置的 `SourceLoc` 类型，以及包含每个参数各自的位置的 `ArgsLoc` 类型：
+
+```rust
+fn f(_x : Int, _y : Int, ~loc : SourceLoc = _, ~args_loc : ArgsLoc = _) -> Unit {
+  println("整个函数调用的位置：\(loc)")
+  println("各个参数的位置：\(args_loc)")
+}
+
+fn init {
+  f(1, 2)
+  // 整个函数调用的位置：<文件名>:7:3-7:10
+  // 各个参数的位置：[Some(<文件名>:7:5-7:6), Some(<文件名>:7:8-7:9), None, None]
+}
+```
+
+自动填充的参数可以用于编写调试和测试用的工具函数。
+
 ## 控制结构
 
 ### 条件表达式
