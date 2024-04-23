@@ -1,7 +1,3 @@
-// fn newCanvas(w: Int, h: Int) -> Int= "canvas""newCanvas"
-
-// fn updateCanvas(id: Int, )
-
 pub type Canvas_ctx
 
 fn set_stroke_color(self : Canvas_ctx, color : Int) = "canvas" "set_stroke_color"
@@ -23,7 +19,7 @@ pub fn draw(canvas : Canvas_ctx, snake : GameState) -> Unit {
   draw_piece(canvas, snake.grid, (0, 0))
 }
 
-pub fn draw_piece(
+fn draw_piece(
   canvas : Canvas_ctx,
   matrix : Array[Int],
   offset : (Int, Int)

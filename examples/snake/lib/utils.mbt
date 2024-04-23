@@ -1,11 +1,11 @@
-pub fn get_head(cur: List[Position]) -> Position{
+fn get_head(cur: List[Position]) -> Position{
   match cur{
     Nil => {x: 0, y: 0}
     Cons(x, _) => x
   }
 }
 
-pub fn get_tail(cur: List[Position]) -> Position{
+fn get_tail(cur: List[Position]) -> Position{
   fn go(list: List[Position]) -> Position{
     match list{
       Nil => {x: 0, y:0}
@@ -17,7 +17,7 @@ pub fn get_tail(cur: List[Position]) -> Position{
   go(cur)
 }
 
-pub fn delete_tail(cur: List[Position]) -> List[Position]{
+fn delete_tail(cur: List[Position]) -> List[Position]{
   fn go(list: List[Position]) -> List[Position]{
     match list{
       Nil => Nil
@@ -29,7 +29,7 @@ pub fn delete_tail(cur: List[Position]) -> List[Position]{
   go(cur)
 }
 
-pub fn length[T](now : List[T]) -> Int {
+fn length[T](now : List[T]) -> Int {
   match now {
     Nil => 0
     Cons(_, n) => 1 + length(n)

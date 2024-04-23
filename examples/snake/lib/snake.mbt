@@ -16,7 +16,7 @@ enum GridType {
   Default
 }
 
-pub fn grid_num(self : GridType) -> Int {
+fn grid_num(self : GridType) -> Int {
   match self {
     Body => 1
     Food => 2
@@ -24,7 +24,7 @@ pub fn grid_num(self : GridType) -> Int {
   }
 }
 
-pub fn dir_posi(self : Direction) -> Position {
+fn dir_posi(self : Direction) -> Position {
   match self {
     Up => { x: 0, y: -1 }
     Down => { x: 0, y: 1 }
@@ -55,7 +55,7 @@ struct GameState {
   mut dir : Direction
 }
 
-pub fn initialize(self : GameState) -> Unit {
+fn initialize(self : GameState) -> Unit {
   self.grid = Array::make(grid_row_count * grid_col_count, 0)
   self.dir = Up
   self.body = Cons({ x: grid_col_count / 2, y: grid_col_count / 2 }, Nil)
@@ -151,18 +151,6 @@ pub fn step(self : GameState, action : Direction) -> Unit {
     _ => self.dir = self.dir
   }
   self.go_step()
-}
-
-pub fn tran_step(self : GameState, a : Int) -> Unit {
-  let mut action : Direction = Default
-  match a {
-    1 => action = Up
-    2 => action = Down
-    3 => action = Left
-    4 => action = Right
-    _ => action = Default
-  }
-  self.step(action)
 }
 
 pub fn new() -> GameState {
