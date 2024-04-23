@@ -31,8 +31,8 @@ fn update(time : Double) -> Unit {
   request_animation_frame(update) |> ignore
 }
 
-fn init {
-  set_on_keydown(
+fn main {
+    set_on_keydown(
     fn(event) {
       if last_frame.val < 0.0 { // not started yet
         return
@@ -57,8 +57,5 @@ fn init {
       }
     },
   )
-}
-
-fn main {
   request_animation_frame(update) |> ignore
 }
