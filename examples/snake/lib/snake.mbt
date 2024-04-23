@@ -2,7 +2,7 @@ let grid_row_count = 20
 
 let grid_col_count = 20
 
-enum Direction {
+pub enum Direction {
   Up
   Down
   Left

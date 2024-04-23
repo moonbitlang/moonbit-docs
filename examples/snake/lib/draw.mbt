@@ -2,7 +2,7 @@
 
 // fn updateCanvas(id: Int, )
 
-type Canvas_ctx
+pub type Canvas_ctx
 
 fn set_stroke_color(self : Canvas_ctx, color : Int) = "canvas" "set_stroke_color"
 
