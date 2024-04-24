@@ -18,15 +18,20 @@ fn set_fill_style(self : Canvas_ctx, color : String) -> Unit {
   self.set_fill_style_ffi(@extern.JS_String::from_string(color).unwrap())
 }
 
-let colors = [
-  "#dcdcdc", "#00263f", "#ffb900", "#2753f1", "#f7ff00", "#ff6728", "#11c5bf", "#ae81ff",
-  "#e94659",
-]
+fn body_color(grid : GridType) -> String {
+  match grid {
+    Body => "#ffb900"
+    Food => "#2753f1"
+    Default => "#dcdcdc"
+  }
+}
+
+let border_color = "#00263f"
 
 pub fn draw(canvas : Canvas_ctx, snake : GameState) -> Unit {
   // draw backgroud
   for c = 0; c < grid_col_count; c = c + 1 {
-    canvas.set_fill_style(colors[0])
+    canvas.set_fill_style(body_color(Default))
     canvas.fill_rect(c, 0, 1, grid_row_count)
   }
   draw_piece(canvas, snake.grid, (0, 0))
@@ -34,20 +39,20 @@ pub fn draw(canvas : Canvas_ctx, snake : GameState) -> Unit {
 
 fn draw_piece(
   canvas : Canvas_ctx,
-  matrix : Array[Int],
+  matrix : Array[GridType],
   offset : (Int, Int)
 ) -> Unit {
   let mut r = 0
   let mut c0 = 0
   for c = 0; c < matrix.length(); c = c + 1 {
-    if matrix[c] == 0 {
+    if matrix[c] == Default {
       continue c + 1
     }
     c0 = c % grid_col_count
     r = c / grid_col_count
-    canvas.set_fill_style(colors[matrix[c] + 1])
+    canvas.set_fill_style(body_color(matrix[c]))
     canvas.fill_rect(offset.0 + c0, r, 1, 1)
-    canvas.set_stroke_color(colors[1])
+    canvas.set_stroke_color(border_color)
     canvas.set_line_width(0.1)
     canvas.stroke_rect(c0, r, 1, 1)
   }

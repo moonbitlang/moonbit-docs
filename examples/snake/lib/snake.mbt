@@ -14,15 +14,7 @@ enum GridType {
   Body
   Food
   Default
-}
-
-fn grid_num(self : GridType) -> Int {
-  match self {
-    Body => 1
-    Food => 2
-    Default => 0
-  }
-}
+} derive(Eq)
 
 fn dir_posi(self : Direction) -> Position {
   match self {
@@ -50,21 +42,21 @@ struct Position {
 }
 
 struct GameState {
-  mut grid : Array[Int]
+  mut grid : Array[GridType]
   mut body : List[Position]
   mut dir : Direction
 }
 
 fn initialize(self : GameState) -> Unit {
-  self.grid = Array::make(grid_row_count * grid_col_count, 0)
+  self.grid = Array::make(grid_row_count * grid_col_count, Default)
   self.dir = Up
   self.body = Cons({ x: grid_col_count / 2, y: grid_col_count / 2 }, Nil)
-  self.grid[grid_col_count / 2 * grid_col_count + grid_col_count / 2] = 1
+  self.grid[grid_col_count / 2 * grid_col_count + grid_col_count / 2] = Body
   self.generate_Food()
 }
 
 fn setGridType(self : GameState, p : Position, t : GridType) -> Unit {
-  self.grid[p.y * grid_col_count + p.x] = grid_num(t)
+  self.grid[p.y * grid_col_count + p.x] = t
 }
 
 fn random() -> Double = "Math" "random"
@@ -75,7 +67,7 @@ fn generate_Food(self : GameState) -> Unit {
   while true {
     let i : Int = floor(random() * 20.0)
     let j : Int = floor(random() * 20.0)
-    if self.grid[j * grid_col_count + i] == grid_num(Default) {
+    if self.grid[j * grid_col_count + i] == Default {
       self.setGridType({ x: i, y: j }, Food)
       return
     }
@@ -92,10 +84,10 @@ fn go_step(self : GameState) -> Unit {
   newHead.y = dir_posi(self.dir).y + newHead.y
   newHead.x = (newHead.x + grid_col_count) % grid_col_count
   newHead.y = (newHead.y + grid_col_count) % grid_col_count
-  if self.grid[newHead.y * grid_col_count + newHead.x] == 1 {
+  if self.grid[newHead.y * grid_col_count + newHead.x] == Body {
     initialize(self)
     return
-  } else if self.grid[newHead.y * grid_col_count + newHead.x] == 2 {
+  } else if self.grid[newHead.y * grid_col_count + newHead.x] == Food {
     self.setGridType(newHead, Body)
     self.body = Cons(newHead, self.body)
     generate_Food(self)
@@ -111,7 +103,7 @@ pub fn step(self : GameState, action : Direction) -> Unit {
   match action {
     // move up
     Up =>
-      if length(self.body) == 1 {
+      if self.body.length() == 1 {
         self.dir = Up
       } else if self.dir == Left || self.dir == Right || self.dir == Up {
         self.dir = Up
@@ -121,7 +113,7 @@ pub fn step(self : GameState, action : Direction) -> Unit {
 
     // move down
     Down =>
-      if length(self.body) == 1 {
+      if self.body.length() == 1 {
         self.dir = Down
       } else if self.dir == Left || self.dir == Right || self.dir == Down {
         self.dir = Down
@@ -131,7 +123,7 @@ pub fn step(self : GameState, action : Direction) -> Unit {
 
     // move left
     Left =>
-      if length(self.body) == 1 {
+      if self.body.length() == 1 {
         self.dir = Left
       } else if self.dir == Up || self.dir == Left || self.dir == Down {
         self.dir = Left
@@ -141,7 +133,7 @@ pub fn step(self : GameState, action : Direction) -> Unit {
 
     // move right
     Right =>
-      if length(self.body) == 1 {
+      if self.body.length() == 1 {
         self.dir = Right
       } else if self.dir == Up || self.dir == Right || self.dir == Down {
         self.dir = Right
