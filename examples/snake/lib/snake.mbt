@@ -100,49 +100,19 @@ fn go_step(self : GameState) -> Unit {
 }
 
 pub fn step(self : GameState, action : Direction) -> Unit {
-  match action {
-    // move up
-    Up =>
+  match (action, self.dir) {
+    (Up, Down) | (Left, Right) | (Right, Left) | (Down, Up) =>
       if self.body.length() == 1 {
-        self.dir = Up
-      } else if self.dir == Left || self.dir == Right || self.dir == Up {
-        self.dir = Up
-      } else {
-        self.dir = self.dir
+        self.dir = action
+        self.go_step()
       }
-
-    // move down
-    Down =>
-      if self.body.length() == 1 {
-        self.dir = Down
-      } else if self.dir == Left || self.dir == Right || self.dir == Down {
-        self.dir = Down
-      } else {
-        self.dir = self.dir
+    _ => {
+      if action != Default {
+        self.dir = action
       }
-
-    // move left
-    Left =>
-      if self.body.length() == 1 {
-        self.dir = Left
-      } else if self.dir == Up || self.dir == Left || self.dir == Down {
-        self.dir = Left
-      } else {
-        self.dir = self.dir
-      }
-
-    // move right
-    Right =>
-      if self.body.length() == 1 {
-        self.dir = Right
-      } else if self.dir == Up || self.dir == Right || self.dir == Down {
-        self.dir = Right
-      } else {
-        self.dir = self.dir
-      }
-    _ => self.dir = self.dir
+      self.go_step()
+    }
   }
-  self.go_step()
 }
 
 pub fn new() -> GameState {
