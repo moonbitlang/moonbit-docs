@@ -11,7 +11,7 @@ pub fn log(self : JS_String) = "string" "log"
 pub fn JS_String::from_string(str : String) -> Option[JS_String] {
   let memory = @memory.allocate(str.length() * 2)?
   memory.store_bytes(str.to_bytes())
-  let str = string_load_ffi(memory.offset, memory.length)
+  let str = string_load_ffi(memory.offset, str.length())
   memory.free()?
   Some(str)
 }

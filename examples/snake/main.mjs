@@ -14,18 +14,6 @@ canvas.height = HEIGHT
 
 context.scale(24, 24)
 
-const colors = [
-    "#dcdcdc",
-    "#00263f",
-    "#ffb900",
-    "#2753f1",
-    "#f7ff00",
-    "#ff6728",
-    "#11c5bf",
-    "#ae81ff",
-    "#e94659",
-]
-
 const [log, flush] = (() => {
     var buffer = [];
     function flush() {
@@ -51,9 +39,8 @@ const importObject = {
         stroke_rect: (ctx, x, y, width, height) => ctx.strokeRect(x, y, width, height),
         set_line_width: (ctx, width) => ctx.lineWidth = width,
         fill_rect: (ctx, x, y, width, height) => ctx.fillRect(x, y, width, height),
-        set_stroke_color: (ctx, color) => ctx.strokeStyle = colors[color],
-        set_fill_style: (ctx, color) => ctx.fillStyle = colors[color],
-
+        set_stroke_color: (ctx, color) => ctx.strokeStyle = color,
+        set_fill_style: (ctx, color) => ctx.fillStyle = color
     },
     spectest: {
         print_char: log,
