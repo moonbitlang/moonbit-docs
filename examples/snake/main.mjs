@@ -46,6 +46,7 @@ const importObject = {
         print_char: log,
     },
     string: {
+        empty: () => "",
         length: str => str.length,
         load: (offset, length) => {
             const bytes = new Uint16Array(memory.buffer, offset, length);
