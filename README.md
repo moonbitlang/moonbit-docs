@@ -187,7 +187,7 @@ The default expression will be evaluated everytime it is used. And the side effe
 ```rust
 fn incr(~counter : Ref[Int] = { val: 0 }) -> Int {
   counter.val = counter.val + 1
-  counter
+  counter.val
 }
 
 fn init {
