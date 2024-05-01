@@ -185,7 +185,7 @@ fn init {
 The default expression will be evaluated everytime it is used. And the side effect in the default expression, if any, will also be triggered. For example:
 
 ```rust
-fn incr(~counter : Ref[Int] = { val: 0 }) -> Int {
+fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
   counter.val = counter.val + 1
   counter.val
 }
@@ -204,7 +204,7 @@ If you want to share the result of default expression between different function
 ```rust
 let default_counter : Ref[Int] = { val: 0 }
 
-fn incr(~conuter : Ref[Int] = default_counter) -> Int {
+fn incr(~counter : Ref[Int] = default_counter) -> Int {
   counter.val = counter.val + 1
   counter.val
 }
@@ -467,6 +467,7 @@ fn pack(a: Bool, b: Int, c: String, d: Double) -> (Bool, Int, String, Double) {
 fn init {
     let quad = pack(false, 100, "text", 3.14)
     let (bool_val, int_val, str, float_val) = quad
+    println("\(bool_val) \(int_val) \(str) \(float_val)")
 }
 ```
 

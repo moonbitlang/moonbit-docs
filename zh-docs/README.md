@@ -189,7 +189,7 @@ fn init {
 每次使用默认参数调用一个函数时，都会重新求值默认值的表达式，也会被重新触发其中的副作用。例如：
 
 ```rust
-fn incr(~counter : Ref[Int] = { val: 0 }) -> Int {
+fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
   counter.val = counter.val + 1
   counter
 }
@@ -208,7 +208,7 @@ fn init {
 ```rust
 let default_counter : Ref[Int] = { val: 0 }
 
-fn incr(~conuter : Ref[Int] = default_counter) -> Int {
+fn incr(~counter : Ref[Int] = default_counter) -> Int {
   counter.val = counter.val + 1
   counter.val
 }
@@ -467,6 +467,7 @@ fn pack(a: Bool, b: Int, c: String, d: Double) -> (Bool, Int, String, Double) {
 fn init {
     let quad = pack(false, 100, "text", 3.14)
     let (bool_val, int_val, str, float_val) = quad
+    println("\(bool_val) \(int_val) \(str) \(float_val)")
 }
 ```
 
