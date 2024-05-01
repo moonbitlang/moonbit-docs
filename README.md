@@ -467,6 +467,7 @@ fn pack(a: Bool, b: Int, c: String, d: Double) -> (Bool, Int, String, Double) {
 fn init {
     let quad = pack(false, 100, "text", 3.14)
     let (bool_val, int_val, str, float_val) = quad
+    println("\(bool_val) \(int_val) \(str) \(float_val)")
 }
 ```
 
