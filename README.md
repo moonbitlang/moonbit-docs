@@ -204,7 +204,7 @@ If you want to share the result of default expression between different function
 ```rust
 let default_counter : Ref[Int] = { val: 0 }
 
-fn incr(~conuter : Ref[Int] = default_counter) -> Int {
+fn incr(~counter : Ref[Int] = default_counter) -> Int {
   counter.val = counter.val + 1
   counter.val
 }
