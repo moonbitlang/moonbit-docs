@@ -189,7 +189,7 @@ fn init {
 每次使用默认参数调用一个函数时，都会重新求值默认值的表达式，也会被重新触发其中的副作用。例如：
 
 ```rust
-fn incr(~counter : Ref[Int] = { val: 0 }) -> Int {
+fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
   counter.val = counter.val + 1
   counter
 }

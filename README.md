@@ -185,7 +185,7 @@ fn init {
 The default expression will be evaluated everytime it is used. And the side effect in the default expression, if any, will also be triggered. For example:
 
 ```rust
-fn incr(~counter : Ref[Int] = { val: 0 }) -> Int {
+fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
   counter.val = counter.val + 1
   counter.val
 }
