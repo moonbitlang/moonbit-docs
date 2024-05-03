@@ -13,7 +13,7 @@ To set up a new project, just run `pnpm create cloudflare@2.5.0` and answer the 
 
 ## Adding MoonBit
 
-Create the three following files (`mood.mod.json` `moon.pkg.json` `top.mbt`) to the directory just created
+Create the three following files (`moon.mod.json` `moon.pkg.json` `top.mbt`) to the directory just created
 
 ```json title=moon.mod.json
 {
