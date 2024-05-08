@@ -135,7 +135,7 @@ The `lib` package contains `hello.mbt` and `hello_test.mbt` files:
 The `main` package contains a `main.mbt` file:
 
   ```rust
-  fn init {
+  fn main {
     println(@lib.hello())
   }
   ```
@@ -254,7 +254,7 @@ In the `main/moon.pkg.json` file, import the `username/hello/lib/fib` package an
 This line imports the `fib` package, which is part of the `lib` package in the `hello` module. After doing this, you can use the `fib` package in `main/main.mbt`. Replace the file content of `main/main.mbt` to:
 
 ```rust
-fn init {
+fn main {
   let a = @my_awesome_fibonacci.fib(10)
   let b = @my_awesome_fibonacci.fib2(11)
   println("fib(10) = \(a), fib(11) = \(b)")
