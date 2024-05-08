@@ -1,7 +1,6 @@
 
-// @ts-check
 import ffi from './.mooncakes/peter-jerry-ye/canvas/import.mjs';
-const canvas = /** @type {HTMLCanvasElement | null} */ (document.getElementById("canvas"));
+const canvas = (document.getElementById("canvas"));
 const context = canvas?.getContext("2d")
 if (!canvas || !context) {
     throw Error("Canvas not found");
@@ -14,14 +13,10 @@ canvas.height = HEIGHT
 
 context.scale(24, 24)
 
-/** @type {WebAssembly.Memory} */
 let memory
 
 const importObject = {
     ...ffi(() => memory),
-    game: {
-        get_context: () => context,
-    },
     Math: {
         random: Math.random,
         floor: Math.floor,
@@ -30,8 +25,8 @@ const importObject = {
 
 WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/main/main.wasm"), importObject).then(
     (obj) => {
-        memory = /** @type {WebAssembly.Memory} */ (obj.instance.exports["moonbit.memory"]);
-        // @ts-ignore
+        memory = (obj.instance.exports["moonbit.memory"]);
         obj.instance.exports._start();
+        obj.instance.exports.entry(context);
     }
 )
