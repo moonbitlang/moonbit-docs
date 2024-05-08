@@ -22,18 +22,16 @@ fn draw_piece(
   matrix : Array[GridType],
   offset : (Int, Int)
 ) -> Unit {
-  let mut r = 0
-  let mut c0 = 0
   for c = 0; c < matrix.length(); c = c + 1 {
     if matrix[c] == Default {
       continue c + 1
     }
-    c0 = c % grid_col_count
-    r = c / grid_col_count
+    let col = c % grid_col_count
+    let row = c / grid_col_count
     canvas.set_fill_style(Color(body_color(matrix[c])))
-    canvas.fill_rect(offset.0 + c0 |> Int::to_double, r.to_double(), 1.0, 1.0)
+    canvas.fill_rect(offset.0 + col |> Int::to_double, row.to_double(), 1.0, 1.0)
     canvas.set_stroke_style(Color(border_color))
     canvas.set_line_width(0.1)
-    canvas.stroke_rect(c0.to_double(), r.to_double(), 1.0, 1.0)
+    canvas.stroke_rect(col.to_double(), row.to_double(), 1.0, 1.0)
   }
 }
