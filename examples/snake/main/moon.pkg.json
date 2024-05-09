@@ -1,7 +1,16 @@
 {
-    "is_main": true,
     "import": [
-        "snake/extern",
+        {
+            "path": "peter-jerry-ye/canvas/lib",
+            "alias": "canvas"
+        },
         "snake/lib"
-    ]
+    ],
+    "link": {
+        "wasm-gc": {
+            "exports": [
+                "entry"
+            ]
+        }
+    }
 }

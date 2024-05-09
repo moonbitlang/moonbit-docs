@@ -1,40 +1,24 @@
-fn request_animation_frame(callback : (Double) -> Unit) -> Int = "window" "requestAnimationFrame"
-
-fn set_on_keydown(callback : (KeyboardEvent) -> Unit) = "document" "set_onkeydown"
-
-fn get_context() -> @lib.Canvas_ctx = "canvas" "get_context"
-
-type KeyboardEvent
-
-fn key_ffi(self : KeyboardEvent) -> @extern.JS_String = "keyboard_event" "key"
-
-fn key(self : KeyboardEvent) -> String {
-  self.key_ffi().to_string().unwrap()
-}
-
 let state : @lib.GameState = @lib.new()
 
-let context : @lib.Canvas_ctx = get_context()
+let game_interval = 500L
 
-let last_frame : Ref[Double] = { val: 0.0 }
-
-let game_interval = 500.0
-
-fn update(time : Double) -> Unit {
-  if time - last_frame.val > game_interval {
-    @lib.step(state, @lib.Direction::Default)
-    @lib.draw(context, state)
-    last_frame.val = time
-  } else {
-    @lib.draw(context, state)
+pub fn entry(context : @canvas.Canvas2D, seed : Int) -> Unit {
+  @lib.random.val = seed.to_int64()
+  let last_frame : Ref[Int64] = { val: 0L }
+  fn update(time : Int64) -> Unit {
+    if time - last_frame.val > game_interval {
+      @lib.step(state, @lib.Direction::Default)
+      @lib.draw(context, state)
+      last_frame.val = time
+    } else {
+      @lib.draw(context, state)
+    }
+    @canvas.request_animation_frame(update) |> ignore
   }
-  request_animation_frame(update) |> ignore
-}
 
-fn main {
-    set_on_keydown(
+  @canvas.set_on_key_down(
     fn(event) {
-      if last_frame.val < 0.0 { // not started yet
+      if last_frame.val <= 0L { // not started yet
         return
       }
       match event.key() {
@@ -58,5 +42,5 @@ fn main {
       }
     },
   )
-  request_animation_frame(update) |> ignore
+  @canvas.request_animation_frame(update) |> ignore
 }

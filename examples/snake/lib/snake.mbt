@@ -59,14 +59,15 @@ fn setGridType(self : GameState, p : Position, t : GridType) -> Unit {
   self.grid[p.y * grid_col_count + p.x] = t
 }
 
-fn random() -> Double = "Math" "random"
-
-fn floor(i : Double) -> Int = "Math" "floor"
+pub let random : Ref[Int64] = { val: 314159265L }
 
 fn generate_Food(self : GameState) -> Unit {
   while true {
-    let i : Int = floor(random() * 20.0)
-    let j : Int = floor(random() * 20.0)
+    let (i, seed) = random_lcg(random.val)
+    let (j, seed) = random_lcg(seed)
+    random.val = seed
+    let i = i.mod_u(20)
+    let j = j.mod_u(20)
     if self.grid[j * grid_col_count + i] == Default {
       self.setGridType({ x: i, y: j }, Food)
       return
