@@ -2,9 +2,9 @@ let state : @lib.GameState = @lib.new()
 
 let game_interval = 500L
 
-pub fn entry(context : @canvas.Canvas2D) -> Unit {
+pub fn entry(context : @canvas.Canvas2D, seed : Int) -> Unit {
+  @lib.random.val = seed.to_int64()
   let last_frame : Ref[Int64] = { val: 0L }
-  
   fn update(time : Int64) -> Unit {
     if time - last_frame.val > game_interval {
       @lib.step(state, @lib.Direction::Default)

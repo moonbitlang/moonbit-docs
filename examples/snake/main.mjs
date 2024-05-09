@@ -16,17 +16,13 @@ context.scale(24, 24)
 let memory
 
 const importObject = {
-    ...ffi(() => memory),
-    Math: {
-        random: Math.random,
-        floor: Math.floor,
-    },
+    ...ffi(() => memory)
 };
 
 WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/main/main.wasm"), importObject).then(
     (obj) => {
         memory = (obj.instance.exports["moonbit.memory"]);
         obj.instance.exports._start();
-        obj.instance.exports.entry(context);
+        obj.instance.exports.entry(context, new Date().getTime());
     }
 )
