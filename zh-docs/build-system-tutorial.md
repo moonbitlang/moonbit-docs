@@ -249,7 +249,7 @@ my-project
 这行代码导入了 `fib` 包，它是 `hello` 模块中 `lib` 包的一部分。完成后，你可以在 `main/main.mbt` 中使用 `fib` 包。将 `main/main.mbt` 文件的内容替换为：
 
 ```rust
-fn init {
+fn main {
   let a = @my_awesome_fibonacci.fib(10)
   let b = @my_awesome_fibonacci.fib2(11)
   println("fib(10) = \(a), fib(11) = \(b)")
