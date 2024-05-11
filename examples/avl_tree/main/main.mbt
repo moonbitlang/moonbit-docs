@@ -1,39 +1,30 @@
-fn init {
-  let mut v : @lib.T[Int] = Empty // Create an empty AVL tree with Int type
-  let iter = 30
+fn main {
+  let mut v : @lib.T[Int] = Empty
+  let iter = 30 // Create an empty AVL tree with Int type
 
   // Add values from 0 to iter-1 to the AVL tree
-  let mut i = 0
-  while i < iter {
+  for i = 0; i < iter; i = i + 1 {
     v = v.add(i)
-    i = i + 1
   }
-
   let height = v.height()
   println("height of the tree: \(height)")
-
   v.print_tree()
 
   // Check values from 0 to iter-1 in the AVL tree
-  let mut j = 0
-  while j < iter {
-    if not(v.mem(j)) {
-      println("impossible")
+  for i = 0; i < iter; i = i + 1 {
+    if not(v.mem(i)) {
+      abort("impossible")
     }
-    j = j + 1
   }
 
   // Remove values from 0 to iter-1 from the AVL tree
-  let mut k = 0
-  while k < iter {
-    v = v.remove(k)
-    k = k + 1
+  for i = 0; i < iter; i = i + 1 {
+    v = v.remove(i)
   }
 
   // Tree is empty, removal successful
   match v {
-    Empty => print("success")
-    Node(_) => print("impossible")
+    Empty => println("success")
+    Node(_) => println("impossible")
   }
 }
-

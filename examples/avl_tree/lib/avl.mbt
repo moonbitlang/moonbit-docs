@@ -177,7 +177,7 @@ fn repeat_str(s: String, n: Int) -> String {
 /// `print_tree[U:Show](self: T[U])`
 ///
 /// Print the AVL tree
-pub fn print_tree[U:Show](self: T[U]) {
+pub fn print_tree[U:Show](self: T[U]) -> Unit {
   fn helper(node: T[U], level: Int) {
     match node {
       Empty => ()
