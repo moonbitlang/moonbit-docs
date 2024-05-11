@@ -43,6 +43,7 @@ jobs:
       - name: moon check
         if: ${{ matrix.os.name != 'windows-latest' }}
         run: |
+          moon update
           failed_directories=()
           for dir in examples/*; do
             if [ -d "$dir" ]; then
@@ -64,11 +65,12 @@ jobs:
       - name: moon test
         if: ${{ matrix.os.name != 'windows-latest' }}
         run: |
+          moon update
           failed_directories=()
           for dir in examples/*; do
             if [ -d "$dir" ]; then
               echo "Processing $dir"
-              if ! (cd "$dir" && moon test --target wasm && moon test --target wasm-gc && moon test --target js); then
+              if ! (cd "$dir" && moon install moon test --target wasm && moon test --target wasm-gc && moon test --target js); then
                 echo "Failed in $dir"
                 failed_directories+=("$dir")
               fi
@@ -91,6 +93,7 @@ jobs:
       - name: moon check on windows
         if: ${{ matrix.os.name == 'windows-latest' }}
         run: |
+          moon update
           $failed_directories = @()
           Get-ChildItem -Path ".\examples" -Directory | ForEach-Object {
             Write-Output "Processing $($_.FullName)"
@@ -110,11 +113,12 @@ jobs:
       - name: moon test on windows
         if: ${{ matrix.os.name == 'windows-latest' }}
         run: |
+          moon update
           $failed_directories = @()
           Get-ChildItem -Path ".\examples" -Directory | ForEach-Object {
             Write-Output "Processing $($_.FullName)"
             Set-Location $_.FullName
-            if (!(moon test --target wasm) -or !(moon test --target wasm-gc) -or !(moon test --target js)) {
+            if (!(moon install) -or !(moon test --target wasm) -or !(moon test --target wasm-gc) -or !(moon test --target js)) {
               Write-Output "Failed in $($_.FullName)"
               $failed_directories += $_.FullName
             }
