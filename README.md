@@ -1200,7 +1200,7 @@ Not all traits can be used to create objects.
 "object-safe" traits' methods must satisfy the following conditions:
 
 - `Self` must be the first parameter of a method
-- There must be only one occurence of `Self` in the type of the method (i.e. the first parameter)
+- There must be only one occurrence of `Self` in the type of the method (i.e. the first parameter)
 
 ## The question operator
 MoonBit features a convenient `?` operator for error handling.

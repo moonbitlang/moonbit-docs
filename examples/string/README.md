@@ -1,9 +1,9 @@
 # String
 
-Use Moonbit to implement string tools.
+Use MoonBit to implement string tools.
 
 ## API
-Split a string, and return an array of string splited and the length of the array.
+Split a string, and return an array of string split and the length of the array.
 ```
 split(String, Char) -> (Array[String], Int)
 ```

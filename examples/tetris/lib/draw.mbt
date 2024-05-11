@@ -15,7 +15,7 @@ fn draw_game_over(self : Canvas_ctx) = "canvas" "draw_game_over"
 pub fn draw(canvas : Canvas_ctx, tetris : Tetris) -> Unit {
   let mut c = 0
 
-  // draw backgroud
+  // draw background
   while c < grid_col_count {
     let color = if c % 2 == 0 {
       0
