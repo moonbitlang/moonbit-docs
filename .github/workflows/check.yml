@@ -1,0 +1,113 @@
+name: check
+
+on:
+  pull_request:
+  schedule:
+    - cron: '* * * * 2'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: 
+          - name: ubuntu-latest
+            path: ubuntu_x86_64
+          - name: macos-latest
+            path: mac_intel
+          - name: macos-14
+            path: mac_m1
+          - name: windows-latest
+        backend: [wasm, wasm-gc, js]
+    runs-on: ${{ matrix.os.name }}
+    continue-on-error: ${{ matrix.os.name == 'macos-14' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install
+        if: ${{ matrix.os.name != 'windows-latest' }}
+        run: |
+          /bin/bash -c "$(curl -fsSL https://cli.moonbitlang.com/${{ matrix.os.path }}_moon_setup.sh)"
+          echo "$HOME/.moon/bin" >> $GITHUB_PATH
+
+      - name: install on windows
+        if: ${{ matrix.os.name == 'windows-latest' }}
+        run: |
+          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang.cn/windows_moon_setup.ps1 | iex
+          "C:\Users\runneradmin\.moon\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+      
+      - name: moon version
+        run: |
+          moon version --all
+          moonrun --version
+
+      - name: moon check and test
+        if: ${{ matrix.os.name != 'windows-latest' }}
+        run: |
+          moon update
+          failed_directories=()
+          for dir in examples/*; do
+            if [ -d "$dir" ]; then
+              echo "Processing $dir"
+              if ! (cd "$dir" && moon install && moon check --target ${{ matrix.backend }} && moon test --target ${{ matrix.backend }}); then
+                echo "Failed in $dir"
+                failed_directories+=("$dir")
+              fi
+            fi
+          done
+          if [ ${#failed_directories[@]} -ne 0 ]; then
+            echo "Commands failed in the following directories:"
+            for dir in "${failed_directories[@]}"; do
+              echo "$dir"
+            done
+            exit 1
+          fi
+      
+      - name: check result size
+        if: ${{ matrix.os.name != 'windows-latest' }}
+        run: |
+          find ./target -name '*.wasm' | xargs ls -lh
+          find ./target -name '*.js' | xargs ls -lh
+
+      - name: moon check and test on windows
+        if: ${{ matrix.os.name == 'windows-latest' }}
+        run: |
+          moon update
+          $failed_directories = @()
+          Get-ChildItem -Path ".\examples" -Directory | ForEach-Object {
+            Write-Output "Processing $($_.FullName)"
+            Set-Location $_.FullName
+            if (!(moon install) -or !(moon check --target ${{ matrix.backend }}) -or !(moon test --target ${{ matrix.backend }})) {
+              Write-Output "Failed in $($_.FullName)"
+              $failed_directories += $_.FullName
+            }
+            Set-Location -Path $env:GITHUB_WORKSPACE
+          }
+          if ($failed_directories.Count -ne 0) {
+            Write-Output "Commands failed in the following directories:"
+            $failed_directories | ForEach-Object { Write-Output $_ }
+            exit 1
+          }
+
+      - name: check result size on windows
+        if: ${{ matrix.os.name == 'windows-latest' }}
+        run: |
+          Get-ChildItem -Path ".\target" -Recurse -Filter "*.wasm" | ForEach-Object { "{0} ({1} bytes)" -f $_.FullName, $_.Length }
+          Get-ChildItem -Path ".\target" -Recurse -Filter "*.js" | ForEach-Object { "{0} ({1} bytes)" -f $_.FullName, $_.Length }
+
+  typo-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      FORCE_COLOR: 1
+      TYPOS_VERSION: v1.19.0
+    steps:
+      - name: download typos
+        run: curl -LsSf https://github.com/crate-ci/typos/releases/download/$TYPOS_VERSION/typos-$TYPOS_VERSION-x86_64-unknown-linux-musl.tar.gz | tar zxf - -C ${CARGO_HOME:-~/.cargo}/bin
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: check typos
+        run: typos
