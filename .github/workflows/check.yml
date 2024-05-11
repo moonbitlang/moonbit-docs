@@ -1,0 +1,86 @@
+name: check
+
+on:
+  pull_request:
+  schedule:
+    - cron: '* * * * 2'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: 
+          - name: ubuntu-latest
+            path: ubuntu_x86_64
+          - name: macos-latest
+            path: mac_intel
+          - name: macos-14
+            path: mac_m1
+          - name: windows-latest
+        examples: [ 'assert', 'avl_tree', 'buffer', 'bytes-buffer', 'cf_worker', 'char', 'docstring-demo', 'game_of_life', 'koch_snowflake', 'mandelbrot', 'multidimensional_arrays', 'number', 'palindrome_string', 'path', 'snake', 'string', 'tetris', 'unicode_demo', 'wasm-gc']
+          
+    runs-on: ${{ matrix.os.name }}
+    continue-on-error: ${{ matrix.os.name == 'macos-14' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install
+        if: ${{ matrix.os.name != 'windows-latest' }}
+        run: |
+          /bin/bash -c "$(curl -fsSL https://cli.moonbitlang.com/${{ matrix.os.path }}_moon_setup.sh)"
+          echo "$HOME/.moon/bin" >> $GITHUB_PATH
+
+      - name: install on windows
+        if: ${{ matrix.os.name == 'windows-latest' }}
+        run: |
+          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang.cn/windows_moon_setup.ps1 | iex
+          "C:\Users\runneradmin\.moon\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+      
+      - name: moon version
+        run: |
+          moon version --all
+          moonrun --version
+
+      - name: moon check
+        run: |
+          cd examples/${{ matrix.examples }}
+          moon check --target wasm
+          moon check --target wasm-gc
+          moon check --target js
+
+      - name: moon test
+        continue-on-error: true
+        run: |
+          moon test --target wasm
+          moon test --target wasm-gc
+          moon test --target js
+
+      - name: check result size
+        if: ${{ matrix.os.name != 'windows-latest' }}
+        run: |
+          find ./target -name '*.wasm' | xargs ls -lh
+          find ./target -name '*.js' | xargs ls -lh
+
+      - name: check result size on windows
+        if: ${{ matrix.os.name == 'windows-latest' }}
+        run: |
+          Get-ChildItem -Path ".\target" -Recurse -Filter "*.wasm" | ForEach-Object { "{0} ({1} bytes)" -f $_.FullName, $_.Length }
+          Get-ChildItem -Path ".\target" -Recurse -Filter "*.js" | ForEach-Object { "{0} ({1} bytes)" -f $_.FullName, $_.Length }
+
+  typo-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      FORCE_COLOR: 1
+      TYPOS_VERSION: v1.19.0
+    steps:
+      - name: download typos
+        run: curl -LsSf https://github.com/crate-ci/typos/releases/download/$TYPOS_VERSION/typos-$TYPOS_VERSION-x86_64-unknown-linux-musl.tar.gz | tar zxf - -C ${CARGO_HOME:-~/.cargo}/bin
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: check typos
+        run: typos
