@@ -1,6 +1,9 @@
 name: check
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
   schedule:
     - cron: '* * * * 2'
