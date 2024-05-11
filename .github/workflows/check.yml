@@ -17,7 +17,6 @@ jobs:
           - name: macos-14
             path: mac_m1
           - name: windows-latest
-        examples: [ 'assert', 'avl_tree', 'buffer', 'bytes-buffer', 'cf_worker', 'char', 'docstring-demo', 'game_of_life', 'koch_snowflake', 'mandelbrot', 'multidimensional_arrays', 'number', 'palindrome_string', 'path', 'snake', 'string', 'tetris', 'unicode_demo', 'wasm-gc']
           
     runs-on: ${{ matrix.os.name }}
     continue-on-error: ${{ matrix.os.name == 'macos-14' }}
@@ -42,18 +41,24 @@ jobs:
           moonrun --version
 
       - name: moon check
+        if: ${{ matrix.os.name != 'windows-latest' }}
         run: |
-          cd examples/${{ matrix.examples }}
-          moon check --target wasm
-          moon check --target wasm-gc
-          moon check --target js
+          find examples -type f -name "moon.mod.json" -execdir bash -c 'moon install; moon check --target wasm; moon check --target wasm-gc; moon check --target js' \;
 
       - name: moon test
-        continue-on-error: true
+        if: ${{ matrix.os.name != 'windows-latest' }}
         run: |
-          moon test --target wasm
-          moon test --target wasm-gc
-          moon test --target js
+          find examples -type f -name "moon.mod.json" -execdir bash -c 'moon test --target wasm; moon test --target wasm-gc; moon test --target js' \;
+
+      - name: moon check on windows
+        if: ${{ matrix.os.name == 'windows-latest' }}
+        run: |
+          Get-ChildItem -Path ".\examples" -Recurse -Filter "moon.mod.json" | ForEach-Object { Set-Location $_.DirectoryName; moon install; moon check --target wasm; moon check --target wasm-gc; moon check --target js }
+
+      - name: moon test on windows
+        if: ${{ matrix.os.name == 'windows-latest' }}
+        run: |
+          Get-ChildItem -Path ".\examples" -Recurse -Filter "moon.mod.json" | ForEach-Object { Set-Location $_.DirectoryName; moon test --target wasm; moon test --target wasm-gc; moon test --target js }
 
       - name: check result size
         if: ${{ matrix.os.name != 'windows-latest' }}
