@@ -1,13 +1,13 @@
-struct Buffer {
+struct SBuffer {
   mut data : Bytes
   mut len : Int
 }
 
-pub fn Buffer::new(size : Int) -> Buffer {
+pub fn SBuffer::new(size : Int) -> SBuffer {
   { data: Bytes::make(size, 0), len: 0 }
 }
 
-pub fn op_get(self : Buffer, i : Int) -> Option[Int] {
+pub fn op_get(self : SBuffer, i : Int) -> Option[Int] {
   if i < self.data.length() {
     Some(self.data[i])
   } else {
@@ -15,15 +15,15 @@ pub fn op_get(self : Buffer, i : Int) -> Option[Int] {
   }
 }
 
-pub fn capacity(self : Buffer) -> Int {
+pub fn capacity(self : SBuffer) -> Int {
   self.data.length()
 }
 
-pub fn length(self : Buffer) -> Int {
+pub fn length(self : SBuffer) -> Int {
   self.len
 }
 
-fn expand_size(self : Buffer) {
+fn expand_size(self : SBuffer) -> Unit {
   let new_capacity = if self.data.length() != 0 {
     self.data.length() * 2
   } else {
@@ -38,7 +38,7 @@ fn expand_size(self : Buffer) {
   self.data = new_data
 }
 
-pub fn append_int(self : Buffer, value : Int) {
+pub fn append_int(self : SBuffer, value : Int) -> Unit {
   if self.len >= self.data.length() {
     self.expand_size()
   }
@@ -54,7 +54,7 @@ pub fn append_int(self : Buffer, value : Int) {
   }
 }
 
-pub fn truncate(self : Buffer, another: Buffer) {
+pub fn truncate(self : SBuffer, another: SBuffer) -> Unit {
   let mut index = 0
   while index < another.len {
     if self.len >= self.data.length() {
@@ -66,7 +66,7 @@ pub fn truncate(self : Buffer, another: Buffer) {
   }
 }
 
-pub fn clear(self : Buffer) {
+pub fn clear(self : SBuffer) -> Unit {
   let mut index = 0
   while index < self.len {
     self.data[index] = 0
@@ -75,12 +75,12 @@ pub fn clear(self : Buffer) {
   self.len = 0
 }
 
-pub fn reset(self : Buffer, capacity : Int) {
+pub fn reset(self : SBuffer, capacity : Int) -> Unit {
   self.len = 0
   self.data = Bytes::make(capacity, 0)
 }
 
-pub fn to_bytes(self : Buffer) -> Bytes {
+pub fn to_bytes(self : SBuffer) -> Bytes {
   self.data
 }
 
