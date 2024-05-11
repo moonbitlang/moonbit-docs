@@ -29,7 +29,7 @@ fn body_color(grid : GridType) -> String {
 let border_color = "#00263f"
 
 pub fn draw(canvas : Canvas_ctx, snake : GameState) -> Unit {
-  // draw backgroud
+  // draw background
   for c = 0; c < grid_col_count; c = c + 1 {
     canvas.set_fill_style(body_color(Default))
     canvas.fill_rect(c, 0, 1, grid_row_count)
