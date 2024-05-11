@@ -17,7 +17,7 @@ jobs:
           - name: macos-14
             path: mac_m1
           - name: windows-latest
-          
+        backend: [wasm, wasm-gc, js]
     runs-on: ${{ matrix.os.name }}
     continue-on-error: ${{ matrix.os.name == 'macos-14' }}
     steps:
@@ -40,7 +40,7 @@ jobs:
           moon version --all
           moonrun --version
 
-      - name: moon check
+      - name: moon check and test
         if: ${{ matrix.os.name != 'windows-latest' }}
         run: |
           moon update
@@ -48,29 +48,7 @@ jobs:
           for dir in examples/*; do
             if [ -d "$dir" ]; then
               echo "Processing $dir"
-              if ! (cd "$dir" && moon install && moon check --target wasm && moon check --target wasm-gc && moon check --target js); then
-                echo "Failed in $dir"
-                failed_directories+=("$dir")
-              fi
-            fi
-          done
-          if [ ${#failed_directories[@]} -ne 0 ]; then
-            echo "Commands failed in the following directories:"
-            for dir in "${failed_directories[@]}"; do
-              echo "$dir"
-            done
-            exit 1
-          fi
-    
-      - name: moon test
-        if: ${{ matrix.os.name != 'windows-latest' }}
-        run: |
-          moon update
-          failed_directories=()
-          for dir in examples/*; do
-            if [ -d "$dir" ]; then
-              echo "Processing $dir"
-              if ! (cd "$dir" && moon install moon test --target wasm && moon test --target wasm-gc && moon test --target js); then
+              if ! (cd "$dir" && moon install && moon check --target ${{ matrix.backend }} && moon test --target ${{ matrix.backend }}); then
                 echo "Failed in $dir"
                 failed_directories+=("$dir")
               fi
@@ -90,7 +68,7 @@ jobs:
           find ./target -name '*.wasm' | xargs ls -lh
           find ./target -name '*.js' | xargs ls -lh
 
-      - name: moon check on windows
+      - name: moon check and test on windows
         if: ${{ matrix.os.name == 'windows-latest' }}
         run: |
           moon update
@@ -98,27 +76,7 @@ jobs:
           Get-ChildItem -Path ".\examples" -Directory | ForEach-Object {
             Write-Output "Processing $($_.FullName)"
             Set-Location $_.FullName
-            if (!(moon install) -or !(moon check --target wasm) -or !(moon check --target wasm-gc) -or !(moon check --target js)) {
-              Write-Output "Failed in $($_.FullName)"
-              $failed_directories += $_.FullName
-            }
-            Set-Location -Path $env:GITHUB_WORKSPACE
-          }
-          if ($failed_directories.Count -ne 0) {
-            Write-Output "Commands failed in the following directories:"
-            $failed_directories | ForEach-Object { Write-Output $_ }
-            exit 1
-          }
-      
-      - name: moon test on windows
-        if: ${{ matrix.os.name == 'windows-latest' }}
-        run: |
-          moon update
-          $failed_directories = @()
-          Get-ChildItem -Path ".\examples" -Directory | ForEach-Object {
-            Write-Output "Processing $($_.FullName)"
-            Set-Location $_.FullName
-            if (!(moon install) -or !(moon test --target wasm) -or !(moon test --target wasm-gc) -or !(moon test --target js)) {
+            if (!(moon install) -or !(moon check --target ${{ matrix.backend }}) -or !(moon test --target ${{ matrix.backend }})) {
               Write-Output "Failed in $($_.FullName)"
               $failed_directories += $_.FullName
             }
