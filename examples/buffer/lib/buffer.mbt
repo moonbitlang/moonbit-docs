@@ -1,22 +1,22 @@
-pub struct Buffer[T] {
+pub struct SBuffer[T] {
   mut cap : Int
   mut len : Int
   mut data : Array[T]
 }
 
-pub fn Buffer::new[T : Default](capacity : Int) -> Buffer[T] {
+pub fn SBuffer::new[T : Default](capacity : Int) -> SBuffer[T] {
   { cap: capacity, len: 0, data: Array::make(capacity, T::default()) }
 }
 
-pub fn capacity[T](self : Buffer[T]) -> Int {
+pub fn capacity[T](self : SBuffer[T]) -> Int {
   self.cap
 }
 
-pub fn length[T](self : Buffer[T]) -> Int {
+pub fn length[T](self : SBuffer[T]) -> Int {
   self.len
 }
 
-pub fn op_get[T](self : Buffer[T], i : Int) -> Option[T] {
+pub fn op_get[T](self : SBuffer[T], i : Int) -> Option[T] {
   if i < self.cap {
     Some(self.data[i])
   } else {
@@ -24,7 +24,7 @@ pub fn op_get[T](self : Buffer[T], i : Int) -> Option[T] {
   }
 }
 
-fn expand_size[T : Default](self : Buffer[T]) {
+fn expand_size[T : Default](self : SBuffer[T]) -> Unit {
   let new_capacity = if self.cap != 0 {
     self.cap * 2
   } else {
@@ -40,7 +40,7 @@ fn expand_size[T : Default](self : Buffer[T]) {
   self.data = new_data
 }
 
-pub fn append[T : Default](self : Buffer[T], value : T) {
+pub fn append[T : Default](self : SBuffer[T], value : T) -> Unit {
   if self.len >= self.cap {
     self.expand_size()
   }
@@ -48,7 +48,7 @@ pub fn append[T : Default](self : Buffer[T], value : T) {
   self.len = self.len + 1
 }
 
-pub fn truncate[T : Default](self : Buffer[T], another : Buffer[T]) {
+pub fn truncate[T : Default](self : SBuffer[T], another : SBuffer[T]) -> Unit {
   let mut index = 0
   while index < another.len {
     if self.len >= self.cap {
@@ -60,7 +60,7 @@ pub fn truncate[T : Default](self : Buffer[T], another : Buffer[T]) {
   }
 }
 
-pub fn clear[T : Default](self : Buffer[T]) {
+pub fn clear[T : Default](self : SBuffer[T]) -> Unit {
   let mut index = 0
   while index < self.len {
     self.data[index] = T::default()
@@ -69,13 +69,13 @@ pub fn clear[T : Default](self : Buffer[T]) {
   self.len = 0
 }
 
-pub fn reset[T : Default](self : Buffer[T], capacity : Int) {
+pub fn reset[T : Default](self : SBuffer[T], capacity : Int) -> Unit {
   self.cap = capacity
   self.len = 0
   self.data = Array::make(capacity, T::default())
 }
 
-pub fn println[T : Show](self : Buffer[T]) {
+pub fn println[T : Show](self : SBuffer[T]) -> Unit {
   let mut index = 0
   print('[')
   while index < self.len {
