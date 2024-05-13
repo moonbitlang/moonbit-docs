@@ -680,6 +680,104 @@ fn is_singleton(l: List) -> Bool {
 }
 ```
 
+#### 带标签的构造器参数
+枚举构造器可以有带标签的参数：
+```rust
+enum E {
+  // `x` 和 `y` 是带标签的参数
+  C(~x : Int, ~y : Int)
+}
+
+// 模式匹配有带标签参数的构造器
+fn f(e : E) -> Unit {
+  match e {
+    // `标签=匹配参数的模式`
+    C(x=0, y=0) => println("0!")
+    // `~x` 是 `x=x` 的简写
+    // 未被匹配的带标签参数可以用 `..` 来忽略
+    C(~x, ..) => println(x)
+  }
+}
+
+// 创建有带标签参数的构造器
+fn init {
+  f(C(x=0, y=0)) // `标签=参数的值`
+  let x = 0
+  f(C(~x, y=1)) // `~x` 是 `x=x` 的简写
+}
+```
+
+在模式匹配中，还可以像访问结构体的字段一样直访问取构造器的带标签参数：
+
+```rust
+enum Object {
+  Point(~x : Double, ~y : Double)
+  Circle(~x : Double, ~y : Double, ~raidus : Double)
+}
+
+fn distance_with(self : Object, other : Object) -> Double {
+  match (self, other) {
+    // 如果通过 `Point(..) as p` 的方式定义一个变量 `p`，
+    // 编译器知道 `p` 一定是构造器 `Point`，
+    // 所以可以直接用 `p.x`、`p.y` 访问 `Point` 的带标签参数
+    (Point(_) as p1, Point(_) as p2) => {
+      let dx = p2.x - p1.x
+      let dy = p2.y - p1.y
+      (dx * dx + dy * dy).sqrt()
+    }
+    (Point(_), Circle(_)) | (Circle(_) | Point(_)) | (Circle(_), Circle(_)) => abort("not implemented")
+  }
+}
+
+fn init {
+  let p1 : Point = Point(x=0, y=0)
+  let p2 : Point = Point(x=3, y=4)
+  println(p1.distance_with(p2)) // 5.0
+}
+```
+
+### 构造器的可变字段
+MoonBit 支持给构造器声明可变的字段。这对实现可变数据结构非常有用：
+```rust
+// 一个带父节点指针的可变二叉搜索树的类型
+enum Tree[X] {
+  Nil
+  // only labelled arguments can be mutable
+  Node(mut ~value : X, mut ~left : Tree[X], mut ~right : Tree[X], mut ~parent : Tree[X])
+}
+
+// 一个使用可变的二叉搜索树实现的集合
+struct Set[X] {
+  mut root : Tree[X]
+}
+
+fn Set::insert[X : Compare](self : Set[X], x : X) -> Unit {
+  self.root = self.root.insert(x, parent=Nil)
+}
+
+// 像一棵可变的二叉搜索树中插入一个新的元素。
+// 返回插入后二叉搜索树新的根节点
+fn Tree::insert[X : Compare](self : Tree[X], x : X, ~parent : Tree[X]) -> Tree[X] {
+  match self {
+    Nil => Node(value=x, left=Nil, right=Nil, ~parent)
+    Node(_) as node => {
+      let order = x.compare(node.value)
+      if order == 0 {
+        // 修改构造器中的字段
+        node.value = x
+      } else if order < 0 {
+        // 这里在 `node` 和 `node.left` 之间创建了一个环
+        node.left = node.left.insert(x, parent=node)
+      } else {
+        node.right = node.right.insert(x, parent=node)
+      }
+      // 这棵二叉树是非空的，所以根节点还是原来那个
+      node
+    }
+  }
+}
+```
+
 ### 新类型
 
 MoonBit 支持一种特殊的枚举类型，称为新类型（newtype）：
