@@ -685,7 +685,7 @@ fn is_singleton(l: List) -> Bool {
 }
 ```
 
-#### Constructor with labelled argumnets
+#### Constructor with labelled arguments
 Enum constructors can have labelled argument:
 ```rust
 enum E {
@@ -698,7 +698,7 @@ fn f(e : E) -> Unit {
   match e {
     // `label=pattern`
     C(x=0, y=0) => println("0!")
-    // `~x` is an abbrevation for `x=x`
+    // `~x` is an abbreviation for `x=x`
     // Unmatched labelled arguments can be omitted via `..`
     C(~x, ..) => println(x)
   }
@@ -708,7 +708,7 @@ fn f(e : E) -> Unit {
 fn init {
   f(C(x=0, y=0)) // `label=value`
   let x = 0
-  f(C(~x, y=1)) // `~x` is an abbrevation for `x=x`
+  f(C(~x, y=1)) // `~x` is an abbreviation for `x=x`
 }
 ```
 
