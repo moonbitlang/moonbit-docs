@@ -685,6 +685,103 @@ fn is_singleton(l: List) -> Bool {
 }
 ```
 
+#### Constructor with labelled argumnets
+Enum constructors can have labelled argument:
+```rust
+enum E {
+  // `x` and `y` are alabelled argument
+  C(~x : Int, ~y : Int)
+}
+
+// pattern matching constructor with labelled arguments
+fn f(e : E) -> Unit {
+  match e {
+    // `label=pattern`
+    C(x=0, y=0) => println("0!")
+    // `~x` is an abbrevation for `x=x`
+    // Unmatched labelled arguments can be omitted via `..`
+    C(~x, ..) => println(x)
+  }
+}
+
+// creating constructor with labelled arguments
+fn init {
+  f(C(x=0, y=0)) // `label=value`
+  let x = 0
+  f(C(~x, y=1)) // `~x` is an abbrevation for `x=x`
+}
+```
+
+It is also possible to access labelled arguments of constructors like accessing struct fields in pattern matching:
+```rust
+enum Object {
+  Point(~x : Double, ~y : Double)
+  Circle(~x : Double, ~y : Double, ~raidus : Double)
+}
+
+fn distance_with(self : Object, other : Object) -> Double {
+  match (self, other) {
+    // For variables defined via `Point(..) as p`,
+    // the compiler knows it must be of constructor `Point`,
+    // so you can access fields of `Point` directly via `p.x`, `p.y` etc.
+    (Point(_) as p1, Point(_) as p2) => {
+      let dx = p2.x - p1.x
+      let dy = p2.y - p1.y
+      (dx * dx + dy * dy).sqrt()
+    }
+    (Point(_), Circle(_)) | (Circle(_) | Point(_)) | (Circle(_), Circle(_)) => abort("not implemented")
+  }
+}
+
+fn init {
+  let p1 : Point = Point(x=0, y=0)
+  let p2 : Point = Point(x=3, y=4)
+  println(p1.distance_with(p2)) // 5.0
+}
+```
+
+#### Constructor with mutable fields
+It is also possible to define mutable fields for constructor. This is especially useful for defining imperative data structures:
+```rust
+// A mutable binary search tree with parent pointer
+enum Tree[X] {
+  Nil
+  // only labelled arguments can be mutable
+  Node(mut ~value : X, mut ~left : Tree[X], mut ~right : Tree[X], mut ~parent : Tree[X])
+}
+
+// A set implemented using mutable binary search tree.
+struct Set[X] {
+  mut root : Tree[X]
+}
+
+fn Set::insert[X : Compare](self : Set[X], x : X) -> Unit {
+  self.root = self.root.insert(x, parent=Nil)
+}
+
+// In-place insert a new element to a binary search tree.
+// Return the new tree root
+fn Tree::insert[X : Compare](self : Tree[X], x : X, ~parent : Tree[X]) -> Tree[X] {
+  match self {
+    Nil => Node(value=x, left=Nil, right=Nil, ~parent)
+    Node(_) as node => {
+      let order = x.compare(node.value)
+      if order == 0 {
+        // mutate the field of a constructor
+        node.value = x
+      } else if order < 0 {
+        // cycle between `node` and `node.left` created here
+        node.left = node.left.insert(x, parent=node)
+      } else {
+        node.right = node.right.insert(x, parent=node)
+      }
+      // The tree is non-empty, so the new root is just the original tree
+      node
+    }
+  }
+}
+```
+
 ### Newtype
 
 MoonBit supports a special kind of enum called newtype:
