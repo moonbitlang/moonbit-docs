@@ -95,8 +95,3 @@ pub fn parse_int(s : String) -> Option[Int] {
   }
   return Some(result_digit)
 }
-
-fn init {
-  ()
-}
-
