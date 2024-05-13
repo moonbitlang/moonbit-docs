@@ -16,8 +16,7 @@ pub enum Platform {
   Windows
 }
 
-pub fn Path::new(s : String, platform : Platform, file_type : FileType) ->
-     Path {
+pub fn Path::new(s : String, platform : Platform, file_type : FileType) -> Path {
   { inner: s, platform, file_type }
 }
 
@@ -27,11 +26,7 @@ pub fn parent(self : Path) -> String {
       let (parts, l) = split(self.inner, '/')
       let mut parent = ""
       let mut index = 0
-      let end = if parts[l] == "" {
-        l - 1
-      } else {
-        l
-      }
+      let end = if parts[l] == "" { l - 1 } else { l }
       while index < end {
         parent = parent + parts[index] + "/"
         index = index + 1
@@ -42,11 +37,7 @@ pub fn parent(self : Path) -> String {
       let (parts, l) = split(self.inner, '\\')
       let mut parent = ""
       let mut index = 0
-      let end = if parts[l] == "" {
-        l - 1
-      } else {
-        l
-      }
+      let end = if parts[l] == "" { l - 1 } else { l }
       while index < end {
         parent = parent + parts[index] + "\\"
         index = index + 1
@@ -68,9 +59,9 @@ pub fn has_root(self : Path) -> Bool {
   match self.platform {
     Posix => self.inner[0] == '/'
     Windows =>
-      (self.inner[0].compare('a') >= 0 && self.inner[0].compare('z') <= 0 ||
-      self.inner[0].compare('A') >= 0 && self.inner[0].compare('Z') <= 0) &&
-      self.inner[1] == ':'
+      (self.inner[0].compare('a') >= 0 && self.inner[0].compare('z') <= 0 || self.inner[0].compare(
+        'A',
+      ) >= 0 && self.inner[0].compare('Z') <= 0) && self.inner[1] == ':'
   }
 }
 
@@ -87,7 +78,7 @@ pub fn file_name(self : Path) -> Option[String] {
   }
 }
 
-pub fn append(self : Path, p : String) {
+pub fn append(self : Path, p : String) -> Unit {
   match self.platform {
     Posix => {
       if self.inner[self.inner.length() - 1] != '/' {
@@ -107,8 +98,3 @@ pub fn append(self : Path, p : String) {
 pub fn to_string(self : Path) -> String {
   self.inner
 }
-
-fn init {
-  ()
-}
-
