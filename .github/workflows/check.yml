@@ -1,10 +1,12 @@
-name: check
+name: check examples
 
 on:
   push:
     branches:
       - main
   pull_request:
+    paths:
+      - examples
   schedule:
     - cron: '* * * * 2'
 
