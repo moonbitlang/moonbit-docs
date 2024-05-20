@@ -846,6 +846,24 @@ match expr {
 }
 ```
 
+### Map Pattern
+MoonBit allows convenient matching on map-like data structures:
+```rust
+match map {
+  // matches if any only if "b" exists in `map`
+  { "b": Some(_) } => ..
+  // matches if and only if "b" does not exist in `map` and "a" exists in `map`.
+  // When matches, bind the value of "a" in `map` to `x`
+  { "b": None, "a": Some(x) } => ..
+  // compiler reports missing case: { "b": None, "a": None }
+}
+```
+
+- To match a data type `T` using map pattern, `T` must have a method `op_get(Self, K) -> Option[V]` for some type `K` and `V`.
+- Currently, the key part of map pattern must be a constant
+- Map patterns are always open: unmatched keys are silently ignored
+- Map pattern will be compiled to efficient code: every key will be fetched at most once
+
 ## Generics
 
 Generics are supported in top-level function and data type definitions. Type parameters can be introduced within square brackets. We can rewrite the aforementioned data type `List` to add a type parameter `T` to obtain a generic version of lists. We can then define generic functions over lists like `map` and `reduce`.
