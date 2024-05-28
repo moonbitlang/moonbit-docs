@@ -6,20 +6,20 @@ pub fn split(s : String, sep : Char) -> (Array[String], Int) {
   while it.index != it.length {
     let c = match it.next() {
       Some(c) => c
-      None => {return (result, cur)}
+      None => return (result, cur)
     }
     if c == sep {
       let sub = match sub_string(s, index, it.index - 1) {
         Some(sub) => sub
-        None => {return (result, cur)}
+        None => return (result, cur)
       }
-      result.set(cur, sub)
+      result[cur] = sub
       cur = cur + 1
       if cur >= result.length() {
         let new_result = Array::make(result.length() * 2, "")
         let mut tmp_cur = 0
         while tmp_cur < result.length() {
-          new_result.set(tmp_cur, result[tmp_cur])
+          new_result[tmp_cur] = result[tmp_cur]
           tmp_cur = tmp_cur + 1
         }
         result = new_result
@@ -29,9 +29,9 @@ pub fn split(s : String, sep : Char) -> (Array[String], Int) {
   }
   let sub = match sub_string(s, index, it.length) {
     Some(sub) => sub
-    None => {return (result, cur)}
+    None => return (result, cur)
   }
-  result.set(cur, sub)
+  result[cur] = sub
   (result, cur)
 }
 
@@ -44,7 +44,7 @@ pub fn sub_string(s : String, start : Int, end : Int) -> Option[String] {
   while it.index != it.length {
     let c = match it.next() {
       Some(c) => c
-      None => {return None}
+      None => return None
     }
     if it.index - 1 >= start && it.index - 1 < end {
       result = result + c.to_string()
@@ -65,8 +65,8 @@ pub fn trim(s : String, removed : Char) -> String {
   }
   if start <= end {
     match sub_string(s, start, end + 1) {
-      Some(sub) => {return sub}
-      None => {return s}
+      Some(sub) => return sub
+      None => return s
     }
   }
   s
@@ -79,8 +79,7 @@ pub fn index_of(s : String, pattern : String) -> Option[Int] {
   let l = s.length()
   while s_index < l {
     if s[s_index] == pattern[p_index] {
-      while p_index < pattern.length() &&
-      s_index < l && s[s_index] == pattern[p_index] {
+      while p_index < pattern.length() && s_index < l && s[s_index] == pattern[p_index] {
         s_index = s_index + 1
         p_index = p_index + 1
       }
@@ -105,8 +104,7 @@ pub fn last_index_of(s : String, pattern : String) -> Option[Int] {
   let l = s.length()
   while s_index < l {
     if s[s_index] == pattern[p_index] {
-      while p_index < pattern.length() &&
-      s_index < l && s[s_index] == pattern[p_index] {
+      while p_index < pattern.length() && s_index < l && s[s_index] == pattern[p_index] {
         s_index = s_index + 1
         p_index = p_index + 1
       }
@@ -190,4 +188,3 @@ pub fn next(self : Iterator) -> Option[Char] {
   self.index = self.index + 1
   Some(c)
 }
-
