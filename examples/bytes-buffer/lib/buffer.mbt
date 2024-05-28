@@ -4,10 +4,10 @@ struct SBuffer {
 }
 
 pub fn SBuffer::new(size : Int) -> SBuffer {
-  { data: Bytes::make(size, 0), len: 0 }
+  { data: Bytes::make(size), len: 0 }
 }
 
-pub fn op_get(self : SBuffer, i : Int) -> Option[Int] {
+pub fn op_get(self : SBuffer, i : Int) -> Option[Byte] {
   if i < self.data.length() {
     Some(self.data[i])
   } else {
@@ -29,7 +29,7 @@ fn expand_size(self : SBuffer) -> Unit {
   } else {
     (self.data.length() + 1) * 2
   }
-  let new_data = Bytes::make(new_capacity, 0)
+  let new_data = Bytes::make(new_capacity)
   let mut index = 0
   while index < self.len {
     new_data[index] = self.data[index]
@@ -43,18 +43,18 @@ pub fn append_int(self : SBuffer, value : Int) -> Unit {
     self.expand_size()
   }
   if value > 127 || value < -128 {
-    self.data[self.len] = value.asr(24).land(0xFF)
-    self.data[self.len + 1] = value.asr(16).land(0xFF)
-    self.data[self.len + 2] = value.asr(8).land(0xFF)
-    self.data[self.len + 3] = value.land(0xFF)
+    self.data[self.len] = value.asr(24).land(0xFF).to_byte()
+    self.data[self.len + 1] = value.asr(16).land(0xFF).to_byte()
+    self.data[self.len + 2] = value.asr(8).land(0xFF).to_byte()
+    self.data[self.len + 3] = value.land(0xFF).to_byte()
     self.len = self.len + 4
   } else {
-    self.data[self.len] = value
+    self.data[self.len] = value.to_byte()
     self.len = self.len + 1
   }
 }
 
-pub fn truncate(self : SBuffer, another: SBuffer) -> Unit {
+pub fn truncate(self : SBuffer, another : SBuffer) -> Unit {
   let mut index = 0
   while index < another.len {
     if self.len >= self.data.length() {
@@ -69,7 +69,7 @@ pub fn truncate(self : SBuffer, another: SBuffer) -> Unit {
 pub fn clear(self : SBuffer) -> Unit {
   let mut index = 0
   while index < self.len {
-    self.data[index] = 0
+    self.data[index] = b'\x00'
     index = index + 1
   }
   self.len = 0
@@ -77,7 +77,7 @@ pub fn clear(self : SBuffer) -> Unit {
 
 pub fn reset(self : SBuffer, capacity : Int) -> Unit {
   self.len = 0
-  self.data = Bytes::make(capacity, 0)
+  self.data = Bytes::make(capacity)
 }
 
 pub fn to_bytes(self : SBuffer) -> Bytes {
@@ -85,9 +85,11 @@ pub fn to_bytes(self : SBuffer) -> Bytes {
 }
 
 pub fn bytes_to_int(bytes : Bytes, start : Int) -> Int {
-  bytes[start].land(0xff).lsl(24).lor(
-    bytes[start + 1].land(0xff).lsl(16).lor(
-      bytes[start + 2].land(0xff).lsl(8).lor(bytes[start + 3].land(0xff)),
+  bytes[start].to_int().land(0xff).lsl(24).lor(
+    bytes[start + 1].to_int().land(0xff).lsl(16).lor(
+      bytes[start + 2].to_int().land(0xff).lsl(8).lor(
+        bytes[start + 3].to_int().land(0xff),
+      ),
     ),
   )
 }
@@ -95,4 +97,3 @@ pub fn bytes_to_int(bytes : Bytes, start : Int) -> Int {
 fn init {
   ()
 }
-

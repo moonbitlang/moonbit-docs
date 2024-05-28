@@ -1,4 +1,4 @@
-type JS_String
+pub type JS_String
 
 fn string_load_ffi(offset : Int, length : Int) -> JS_String = "string" "load"
 

@@ -1,6 +1,6 @@
-pub fn split(s : String, sep : Char) -> @vec.Vec[String] {
+pub fn split(s : String, sep : Char) -> Array[String] {
   let mut index = 0
-  let result = @vec.Vec::new()
+  let result = []
   let it = iter(s)
   while it.index != it.length {
     let c = match it.next() {
