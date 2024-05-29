@@ -175,7 +175,7 @@ fn init {
 ### 可选的参数
 可选的参数是带有默认值的带标签参数。声明可选的参数的语法是 `~label : Type = default_expr`。调用函数时，如果没有提供这个参数，就会使用默认值作为参数：
 
-```rust
+```rust live
 fn optional(~opt : Int = 42) -> Int {
   opt
 }
@@ -188,7 +188,7 @@ fn init {
 
 每次使用默认参数调用一个函数时，都会重新求值默认值的表达式，也会被重新触发其中的副作用。例如：
 
-```rust
+```rust live
 fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
   counter.val = counter.val + 1
   counter
@@ -205,7 +205,7 @@ fn init {
 
 如果想要在多次不同的函数调用之间共享默认值，可以提前用 `let` 计算并保存默认值：
 
-```rust
+```rust live
 let default_counter : Ref[Int] = { val: 0 }
 
 fn incr(~counter : Ref[Int] = default_counter) -> Int {
@@ -294,7 +294,7 @@ if x == y {
 可以使用 `continue` 关键字和参数开始下一次循环迭代，使用 `break` 关键字和参数来从循环中返回一个值。
 如果值是循环体中的最后一个表达式，则可以省略 `break` 关键字。
 
-```rust
+```rust live
 fn sum(xs: List[Int]) -> Int {
   loop xs, 0 {
     Nil, acc => break acc // break 可以省略
@@ -357,11 +357,11 @@ let e = not(a)
 
 MoonBit 支持整型和浮点类型：
 
-|类型|描述|
-|-|-|
-|`Int`|32位有符号整数|
-|`Int64`|64位有符号整数|
-|`Double`|64位浮点数，由IEEE754定义|
+| 类型     | 描述                      |
+| -------- | ------------------------- |
+| `Int`    | 32位有符号整数            |
+| `Int64`  | 64位有符号整数            |
+| `Double` | 64位浮点数，由IEEE754定义 |
 
 MoonBit 支持的数字字面量，包括十进制、二进制、八进制和十六进制。
 
@@ -403,7 +403,7 @@ println(a[1]) // output: r
 ```
 
 ```rust
-let b = 
+let b =
   #| Hello
   #| MoonBit
   #|
@@ -411,13 +411,13 @@ let b =
 
 在双引号包围的字符串之间支持使用`\`表示特殊字符转义：
 
-|转义序列|解释|
-|-|-|
-|`\n`,`\r`,`\t`,`\b`|换行、回车、水平制表符、退格|
-|`\\`|反斜杠|
-|`\x41`|16进制转义序列|
-|`\o102`|8进制转义序列|
-|`\u5154`,`\u{1F600}`|Unicode字符转义序列|
+| 转义序列             | 解释                         |
+| -------------------- | ---------------------------- |
+| `\n`,`\r`,`\t`,`\b`  | 换行、回车、水平制表符、退格 |
+| `\\`                 | 反斜杠                       |
+| `\x41`               | 16进制转义序列               |
+| `\o102`              | 8进制转义序列                |
+| `\u5154`,`\u{1F600}` | Unicode字符转义序列          |
 
 
 MoonBit支持字符串插值，它可以把字符串中内插的变量替换为变量具体的值。
@@ -446,7 +446,7 @@ let c = '🐰'
 
 在MoonBit中，字节字面量可以是一个ASCII字符或一个转义序列，它们被单引号`'`包围，并且前面有字符`b`。字节字面量的类型是Byte。例如：
 
-```rust
+```rust live
 fn init {
   let b1 : Byte = b'a'
   println(b1.to_int())
@@ -572,7 +572,7 @@ fn init{
 如果想要基于现有的结构体来创建新的结构体，只需修改现有结构体的一部分字段，其他字段的值保持不变，
 可以使用结构体更新语法：
 
-```rust
+```rust live
 struct User {
   id: Int
   name: String
@@ -682,7 +682,7 @@ fn is_singleton(l: List) -> Bool {
 
 #### 带标签的构造器参数
 枚举构造器可以有带标签的参数：
-```rust
+```rust live
 enum E {
   // `x` 和 `y` 是带标签的参数
   C(~x : Int, ~y : Int)
@@ -709,10 +709,10 @@ fn init {
 
 在模式匹配中，还可以像访问结构体的字段一样直访问取构造器的带标签参数：
 
-```rust
+```rust live
 enum Object {
   Point(~x : Double, ~y : Double)
-  Circle(~x : Double, ~y : Double, ~raidus : Double)
+  Circle(~x : Double, ~y : Double, ~radius : Double)
 }
 
 fn distance_with(self : Object, other : Object) -> Double {
@@ -738,7 +738,7 @@ fn init {
 
 ### 构造器的可变字段
 MoonBit 支持给构造器声明可变的字段。这对实现可变数据结构非常有用：
-```rust
+```rust live
 // 一个带父节点指针的可变二叉搜索树的类型
 enum Tree[X] {
   Nil
@@ -1017,7 +1017,7 @@ fn init {
 但和普通函数不同，方法支持重载。不同的类型可以有同名的方法。
 如果当前作用域内有多个同名方法，依然可以通过加上 `TypeName::` 的前缀来显式地调用一个方法：
 
-```rust
+```rust live
 struct T1 { x1: Int }
 fn T1::default() -> { { x1: 0 } }
 
@@ -1053,7 +1053,7 @@ fn init {
 
 另一个例子（关于`op_get`和`op_set`）:
 
-```rust
+```rust live
 struct Coord {
   mut x: Int
   mut y: Int
@@ -1085,16 +1085,16 @@ fn init {
 
 目前，以下运算符可以被重载：
 
-| 运算符名称           | 方法名      |
-| -------------------- | ----------- |
-| `+`                  | `op_add`    |
-| `-`                  | `op_sub`    |
-| `*`                  | `op_mul`    |
-| `/`                  | `op_div`    |
-| `%`                  | `op_mod`    |
-| `-`（一元运算符）    | `op_neg`    |
-| `_[_]`（获取项）     | `op_get`    |
-| `_[_] = _`（设置项） | `op_set`    |
+| 运算符名称           | 方法名   |
+| -------------------- | -------- |
+| `+`                  | `op_add` |
+| `-`                  | `op_sub` |
+| `*`                  | `op_mul` |
+| `/`                  | `op_div` |
+| `%`                  | `op_mod` |
+| `-`（一元运算符）    | `op_neg` |
+| `_[_]`（获取项）     | `op_get` |
+| `_[_] = _`（设置项） | `op_set` |
 
 ## 管道运算符
 
@@ -1184,7 +1184,7 @@ fn op_mul(self: Point, other: Point) -> Point {
 接口中的方法可以用 `Trait::method` 的语法来直接调用。MoonBit 会推导 `Self` 的具体类型，
 并检查 `Self` 是否实现了 `Trait`：
 
-```rust
+```rust live
 fn init {
   println(Show::to_string(42))
   debug(Compare::compare(1.0, 2.5))
@@ -1251,7 +1251,7 @@ fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) -> Unit { ...
 
 如果需要直接调用一个拓展方法，可以使用 `Trait::method` 语法。例如：
 
-```rust
+```rust live
 trait MyTrait {
   f(Self) -> Unit
 }
@@ -1269,7 +1269,7 @@ fn init {
 
 Moonbit 可以自动生成一些内建接口的实现:
 
-```rust
+```rust live
 struct T {
   x: Int
   y: Int
@@ -1294,7 +1294,7 @@ MoonBit 通过接口对象的形式来支持运行时多态。
 接口对象擦除了值的具体类型，所以从不同的具体类型所创建的接口对象，
 可以被封装在同一个数据结构里，统一进行处理：
 
-```rust
+```rust live
 trait Animal {
   speak(Self)
 }
