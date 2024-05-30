@@ -327,11 +327,12 @@ Finally, use the `moon test` command, which scans the entire project, identifies
 
 ```bash
 $ moon test
-test lib/fib ... ok
-test lib ... ok
-fib(10) = 55, fib(11) = 89
-Hello, world!
-test main ... ok
+Total tests: 3, passed: 3, failed: 0.
+$ moon test -v
+test username/hello/lib/hello_test.mbt::hello ok
+test username/hello/lib/fib/a.mbt::0 ok
+test username/hello/lib/fib/fib_test.mbt::0 ok
+Total tests: 3, passed: 3, failed: 0.
 ```
 
 Note that `main/main.mbt:init` is also executed here, and we will improve the issue of testing with package initialization functions in the future.

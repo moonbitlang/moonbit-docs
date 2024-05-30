@@ -325,11 +325,12 @@ test {
 
 ```bash
 $ moon test
-test lib/fib ... ok
-test lib ... ok
-fib(10) = 55, fib(11) = 89
-Hello, world!
-test main ... ok
+Total tests: 3, passed: 3, failed: 0.
+$ moon test -v
+test username/hello/lib/hello_test.mbt::hello ok
+test username/hello/lib/fib/a.mbt::0 ok
+test username/hello/lib/fib/fib_test.mbt::0 ok
+Total tests: 3, passed: 3, failed: 0.
 ```
 
 注意这里也执行了 `main/main.mbt:init`，后续我们将会改善测试与包初始化函数的问题。
