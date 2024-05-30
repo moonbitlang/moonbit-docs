@@ -133,7 +133,7 @@ The `lib` package contains `hello.mbt` and `hello_test.mbt` files:
   ```rust
   test "hello" {
     if hello() != "Hello, world!" {
-      abort("")
+      return Err("hello() != \"Hello, world!\"")
     }
   }
   ```

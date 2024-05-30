@@ -129,7 +129,7 @@ my-project
   ```rust
   test "hello" {
     if hello() != "Hello, world!" {
-      abort("")
+      return Err("hello() != \"Hello, world!\"")
     }
   }
   ```
