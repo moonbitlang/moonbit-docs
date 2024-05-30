@@ -102,7 +102,13 @@ my-project
 
   ```json
   {
-    "name": "hello"
+    "name": "username/hello",
+    "version": "0.1.0",
+    "readme": "README.md",
+    "repository": "",
+    "license": "Apache-2.0",
+    "keywords": [],
+    "description": ""
   }
   ```
 

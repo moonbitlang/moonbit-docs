@@ -106,7 +106,13 @@ Here's a brief explanation of the directory structure:
 
   ```json
   {
-    "name": "hello"
+    "name": "username/hello",
+    "version": "0.1.0",
+    "readme": "README.md",
+    "repository": "",
+    "license": "Apache-2.0",
+    "keywords": [],
+    "description": ""
   }
   ```
 
@@ -258,7 +264,7 @@ fn main {
   let a = @my_awesome_fibonacci.fib(10)
   let b = @my_awesome_fibonacci.fib2(11)
   println("fib(10) = \(a), fib(11) = \(b)")
-  
+
   println(@lib.hello())
 }
 ```
