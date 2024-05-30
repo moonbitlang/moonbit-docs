@@ -160,6 +160,12 @@ $ moon run main
 Hello, world!
 ```
 
+You can test using the `moon test` command:
+
+```bash
+$ moon test
+Total tests: 1, passed: 1, failed: 0.
+```
 
 ## Package Importing
 

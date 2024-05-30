@@ -156,6 +156,13 @@ $ moon run main
 Hello, world!
 ```
 
+您可以使用 `moon test` 命令进行测试:
+
+```bash
+$ moon test
+Total tests: 1, passed: 1, failed: 0.
+```
+
 ## 包导入
 
 在 MoonBit 的构建系统中，模块的名称用来引用其内部包。
