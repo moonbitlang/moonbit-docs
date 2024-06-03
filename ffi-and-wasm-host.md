@@ -21,14 +21,30 @@ This will be a type that represents a reference to a foreign object, a `CanvasRe
 You can declare a foreign function like this:
 
 ```rust
-fn get_pi() -> Double = "math" "PI"
+fn cos(d : Double) -> Double = "Math" "cos"
 ```
 
 It's similar to a normal function definition except that the function body is replaced with two strings.
 
-These two strings are used to identify the specific function from a Wasm import object, the first string is the module name, and the second string is the function name.
+For Wasm(GC) backend, these two strings are used to identify the specific function from a Wasm import object, the first string is the module name, and the second string is the function name. For JS backend, these two strings are used to call a static function in the global namespace. The example above becomes similar to `const cos = (d) => Math.cos(d)`.
+
+You can also declare inline functions where the function body is replaced with one string.
+
+For WasmGC backend, you may declare it as a Wasm function without name (which will be generated afterwards):
+```rust
+extern "wasm" fn abs(d : Double) -> Double = 
+  #|(func (param f64) (result f64))
+```
+
+and for JS backend, you may declare it as a lambda expression:
+```javascript
+extern "js" fn abs(d : Double) -> Double =
+  #|(d) => Math.abs(d)
+```
 
 After declaration, you can use foreign functions like regular functions.
+
+For multi-backend project, you may implement backend specific code in the files that ends with `.wasm.mbt` `.wasm-gc.mbt` and `.js.mbt`.
 
 You may also declare a foreign function that will be invoked upon a foreign object by using the foreign reference type like this:
 
@@ -37,6 +53,42 @@ fn begin_path(self: Canvas_ctx) = "canvas" "begin_path"
 ```
 
 and apply it to a previously owned reference normally such as `context.begin_path()`.
+
+### Exported functions
+
+Functions that are not methods nor polymorphic functions can be exported if they are public and if the link configuration appears in the `moon.pkg.json` of the package:
+
+```json
+{
+  "link": {
+    "wasm": {
+      "exports": [
+        "add",
+        "fib:test"
+      ]
+    },
+    "wasm-gc": {
+      "exports": [
+        "add",
+        "fib:test"
+      ]
+    },
+    "js": {
+      "exports": [
+        "add",
+        "fib:test"
+      ],
+      "format": "esm"
+    }
+  }
+}
+```
+
+Each backend has a separate definition. For JS backend, a `format` option is used to specify whether the generated JavaScript file should be released as an ES Module (`esm`), a CommonJS module (`cjs`), or an immediately invoked function expression (`iife`).
+
+The example above will export function `add` and `fib`, and the function `fib` will be exported with the name of `test`.
+
+For Wasm(GC) backend, the `_start` function should always be called to initialize all the global instances defined in MoonBit program.
 
 ### Use compiled Wasm
 
@@ -57,27 +109,6 @@ WebAssembly.instantiateStreaming(fetch("xxx.wasm"), {
 ```
 
 Check out the documentation such as [MDN](https://developer.mozilla.org/en-US/docs/WebAssembly) or the manual of runtime that you're using to embed the Wasm.
-
-#### Use exported functions
-
-Functions that are not methods nor polymorphic functions can be exported if they are public and if the link configuration appears in the `moon.pkg.json` of the package:
-
-```json
-{
-  "link": {
-    "wasm": {
-      "exports": [
-        "add",
-        "fib:test"
-      ]
-    }
-  }
-}
-```
-
-The example above will export function `add` and `fib` if compiled with the default wasm backend, and the function `fib` will be exported with the name of `test`.
-
-The `_start` function should always be called to initialize all the global instances defined in MoonBit program.
 
 ## Example: Smiling face
 

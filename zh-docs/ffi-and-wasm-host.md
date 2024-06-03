@@ -21,14 +21,30 @@ type Canvas_ctx
 你可以像这样定义一个外部函数：
 
 ```rust
-fn get_pi() -> Double = "math" "PI"
+fn cos(d : Double) -> Double = "Math" "cos"
 ```
 
 它和正常的函数定义十分相像，除了函数体被替换为两个字符串。
 
-这两个字符串是用来在Wasm导入的对象中识别特定的函数：第一个字符串是模块名称，第二个字符串是函数名称。
+对于Wasm(GC)后端，这两个字符串是用来在Wasm导入的对象中识别特定的函数：第一个字符串是模块名称，第二个字符串是函数名称。对于JS后端，这两个字符串被用于访问全局命名空间中的一个静态函数。上述例子会编译为类似`const cos = (d) => Math.cos(d)`
+
+你也可以定义内联函数，函数体是一个字符串。
+
+对于WasmGC后端，你可以以一个不含名称的Wasm函数定义它（名称将会在之后自动生成）：
+```rust
+extern "wasm" fn abs(d : Double) -> Double = 
+  #|(func (param f64) (result f64))
+```
+
+而对于JS后端，你可以定义一个箭头函数表达式：
+```javascript
+extern "js" fn abs(d : Double) -> Double =
+  #|(d) => Math.abs(d)
+```
 
 在声明之后，你可以像普通的函数那样使用外部函数。
+
+对于多后端项目，你可以在以`.wasm.mbt` `.wasm-gc.mbt` `.js.mbt`结尾的文件中定义后端相关代码。
 
 你也可以定义一个使用外部引用类型的外部函数，就像这样：
 
@@ -37,6 +53,42 @@ fn begin_path(self: Canvas_ctx) = "canvas" "begin_path"
 ```
 
 之后可以将它应用到拥有的外部对象的引用上，如：`context.begin_path()`。
+
+### 导出函数
+
+公开函数（非方法、非多态）可以被导出，需要在对应包的`moon.pkg.json`中添加链接设置：
+
+```json
+{
+  "link": {
+    "wasm": {
+      "exports": [
+        "add",
+        "fib:test"
+      ]
+    },
+    "wasm-gc": {
+      "exports": [
+        "add",
+        "fib:test"
+      ]
+    },
+    "js": {
+      "exports": [
+        "add",
+        "fib:test"
+      ],
+      "format": "esm"
+    }
+  }
+}
+```
+
+每一个后端都有一个单独的定义。对JS后端，还有一个额外的`format`选项，可以用来指定生成的JS文件，是ES Module（`esm`），还是CommonJS module(`cjs`)，还是立即调用函数表达式（`iife`）。
+
+上面的例子中，`add`和`fib`函数将会在编译时被导出，并且`fib`函数将被以`test`为名导出。
+
+对于Wasm(GC)后端，`_start`函数总是应当被使用，以初始化月兔程序中定义的全局实例。
 
 ### 使用编译的Wasm
 
@@ -50,34 +102,13 @@ fn begin_path(self: Canvas_ctx) = "canvas" "begin_path"
 
 ```js
 WebAssembly.instantiateStreaming(fetch("xxx.wasm"), {
-  math: {
-    get_pi: () => Math.PI,
+  Math: {
+    cos: (d) => Math.cos(d),
   },
 });
 ```
 
 具体信息可以查阅嵌入Wasm的宿主环境的文档，例如[MDN](https://developer.mozilla.org/en-US/docs/WebAssembly)。
-
-#### 使用导出的函数
-
-公开函数（非方法、非多态）可以被导出，需要在对应包的`moon.pkg.json`中添加链接设置：
-
-```json
-{
-  "link": {
-    "wasm": {
-      "exports": [
-        "add",
-        "fib:test"
-      ]
-    }
-  }
-}
-```
-
-上面的例子中，`add`和`fib`函数将会在编译默认的wasm后端时被导出，并且`fib`函数将被以`test`为名导出。
-
-`_start`函数总是应当被使用，以初始化月兔程序中定义的全局实例。
 
 ## 例子：笑脸
 
