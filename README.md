@@ -396,7 +396,7 @@ let another_hex = 0xA
 
 ### String
 
-`String` holds a sequence of UTF-16 code units. You can use double quotes to create a string, or use `#|` to write a multi-line string.
+`String` holds a sequence of UTF-16 code units encoded in little endian format. You can use double quotes to create a string, or use `#|` to write a multi-line string.
 
 ```rust
 let a = "兔rabbit"
@@ -435,7 +435,7 @@ Variables used for string interpolation must support the `to_string` method.
 
 ### Char
 
-`Char` is an integer representing a Unicode code point.
+`Char` is an 32 bit integer representing a Unicode code point.
 
 ```rust
 let a : Char = 'A'
