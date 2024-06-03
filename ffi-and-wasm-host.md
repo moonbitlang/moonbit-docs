@@ -102,8 +102,8 @@ For example, to use wasm compiled from above code snippet in JavaScript:
 
 ```js
 WebAssembly.instantiateStreaming(fetch("xxx.wasm"), {
-  math: {
-    PI: () => Math.PI,
+  Math: {
+    cos: (d) => Math.cos(d),
   },
 });
 ```
