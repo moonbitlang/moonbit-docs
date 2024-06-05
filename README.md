@@ -171,7 +171,7 @@ Labelled function can be supplied in any order. The evaluation order of argument
 ### Optional arguments
 A labelled argument can be made optional by supplying a default expression with the syntax `~label : Type = default_expr`. If this argument is not supplied at call site, the default expression will be used:
 
-```rust
+```rust live
 fn optional(~opt : Int = 42) -> Int {
   opt
 }
@@ -184,7 +184,7 @@ fn init {
 
 The default expression will be evaluated everytime it is used. And the side effect in the default expression, if any, will also be triggered. For example:
 
-```rust
+```rust live
 fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
   counter.val = counter.val + 1
   counter
@@ -201,7 +201,7 @@ fn init {
 
 If you want to share the result of default expression between different function calls, you can lift the default expression to a toplevel `let` declaration:
 
-```rust
+```rust live
 let default_counter : Ref[Int] = { val: 0 }
 
 fn incr(~counter : Ref[Int] = default_counter) -> Int {
@@ -290,7 +290,7 @@ Functional loop is a powerful feature in MoonBit that enables you to write loops
 
 A functional loop consumes arguments and returns a value. It is defined using the `loop` keyword, followed by its arguments and the loop body. The loop body is a sequence of clauses, each of which consists of a pattern and an expression. The clause whose pattern matches the input will be executed, and the loop will return the value of the expression. If no pattern matches, the loop will panic. Use the `continue` keyword with arguments to start the next iteration of the loop. Use the `break` keyword with arguments to return a value from the loop. The `break` keyword can be omitted if the value is the last expression in the loop body.
 
-```rust
+```rust live
 fn sum(xs: List[Int]) -> Int {
   loop xs, 0 {
     Nil, acc => break acc // break can be omitted
@@ -352,11 +352,11 @@ let e = not(a)
 
 MoonBit have integer type and floating point type:
 
-|type|description|
-|-|-|
-|`Int`|32-bit signed integer|
-|`Int64`|64-bit signed integer|
-|`Double`|64-bit floating point, defined by IEEE754|
+| type     | description                               |
+| -------- | ----------------------------------------- |
+| `Int`    | 32-bit signed integer                     |
+| `Int64`  | 64-bit signed integer                     |
+| `Double` | 64-bit floating point, defined by IEEE754 |
 
 MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
@@ -405,21 +405,21 @@ println(a[1]) // output: r
 ```
 
 ```rust
-let b = 
+let b =
   #| Hello
   #| MoonBit
   #|
 ```
 
-In double quotes string, a backslash followed by certain special characters forms an escape sequence: 
+In double quotes string, a backslash followed by certain special characters forms an escape sequence:
 
-|escape sequences|description|
-|-|-|
-|`\n`,`\r`,`\t`,`\b`|New line, Carriage return, Horizontal tab, Backspace|
-|`\\`|Backslash|
-|`\x41`|Hexadecimal escape sequence|
-|`\o102`|Octal escape sequence|
-|`\u5154`,`\u{1F600}`|Unicode escape sequence|
+| escape sequences     | description                                          |
+| -------------------- | ---------------------------------------------------- |
+| `\n`,`\r`,`\t`,`\b`  | New line, Carriage return, Horizontal tab, Backspace |
+| `\\`                 | Backslash                                            |
+| `\x41`               | Hexadecimal escape sequence                          |
+| `\o102`              | Octal escape sequence                                |
+| `\u5154`,`\u{1F600}` | Unicode escape sequence                              |
 
 
 MoonBit supports string interpolation. It enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text.
@@ -447,7 +447,7 @@ let c = '🐰'
 
 A byte literal in MoonBit is either a single ASCII character or a single escape enclosed in single quotes `'`, and preceded by the character `b`. Byte literals are of type `Byte`. For example:
 
-```rust
+```rust live
 fn init {
   let b1 : Byte = b'a'
   println(b1.to_int())
@@ -553,7 +553,7 @@ fn init {
 
 If you already have some variable like `name` and `email`, it's redundant to repeat those names when constructing a struct:
 
-```go
+```go live
 fn init{
   let name = "john"
   let email = "john@doe.com"
@@ -563,7 +563,7 @@ fn init{
 
 You can use shorthand instead, it behaves exactly the same.
 
-```go
+```go live
 fn init{
   let name = "john"
   let email = "john@doe.com"
@@ -575,7 +575,7 @@ fn init{
 
 It's useful to create a new struct based on an existing one, but with some fields updated.
 
-```rust
+```rust live
 struct User {
   id: Int
   name: String
@@ -687,7 +687,7 @@ fn is_singleton(l: List) -> Bool {
 
 #### Constructor with labelled arguments
 Enum constructors can have labelled argument:
-```rust
+```rust live
 enum E {
   // `x` and `y` are alabelled argument
   C(~x : Int, ~y : Int)
@@ -713,10 +713,10 @@ fn init {
 ```
 
 It is also possible to access labelled arguments of constructors like accessing struct fields in pattern matching:
-```rust
+```rust live
 enum Object {
   Point(~x : Double, ~y : Double)
-  Circle(~x : Double, ~y : Double, ~raidus : Double)
+  Circle(~x : Double, ~y : Double, ~radius : Double)
 }
 
 fn distance_with(self : Object, other : Object) -> Double {
@@ -742,7 +742,7 @@ fn init {
 
 #### Constructor with mutable fields
 It is also possible to define mutable fields for constructor. This is especially useful for defining imperative data structures:
-```rust
+```rust live
 // A mutable binary search tree with parent pointer
 enum Tree[X] {
   Nil
@@ -1010,7 +1010,7 @@ fn init {
 
 Unlike regular functions, methods support overloading: different types can define methods of the same name. If there are multiple methods of the same name (but for different types) in scope, one can still call them by explicitly adding a `TypeName::` prefix:
 
-```rust
+```rust live
 struct T1 { x1: Int }
 fn T1::default() -> { { x1: 0 } }
 
@@ -1044,7 +1044,7 @@ fn init {
 
 MoonBit supports operator overloading of builtin operators via methods. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
 
-```rust
+```rust live
 struct T {
   x:Int
 } derive(Debug)
@@ -1062,7 +1062,7 @@ fn init {
 
 Another example about `op_get` and `op_set`:
 
-```rust
+```rust live
 struct Coord {
   mut x: Int
   mut y: Int
@@ -1181,7 +1181,7 @@ fn op_mul(self: Point, other: Point) -> Point {
 
 Methods of a trait can be called directly via `Trait::method`. MoonBit will infer the type of `Self` and check if `Self` indeed implements `Trait`, for example:
 
-```rust
+```rust live
 fn init {
   println(Show::to_string(42))
   debug(Compare::compare(1.0, 2.5))
@@ -1238,7 +1238,7 @@ When searching for the implementation of a trait, extension methods have a highe
 
 To invoke an extension method directly, use the `Trait::method` syntax.
 
-```rust
+```rust live
 trait MyTrait {
   f(Self) -> Unit
 }
@@ -1257,7 +1257,7 @@ fn init {
 
 MoonBit can automatically derive implementations for some builtin traits:
 
-```rust
+```rust live
 struct T {
   x: Int
   y: Int
@@ -1281,7 +1281,7 @@ into a runtime object via `t as I`.
 Trait object erases the concrete type of a value,
 so objects created from different concrete types can be put in the same data structure and handled uniformly:
 
-```rust
+```rust live
 trait Animal {
   speak(Self)
 }

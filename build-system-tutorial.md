@@ -106,7 +106,13 @@ Here's a brief explanation of the directory structure:
 
   ```json
   {
-    "name": "hello"
+    "name": "username/hello",
+    "version": "0.1.0",
+    "readme": "README.md",
+    "repository": "",
+    "license": "Apache-2.0",
+    "keywords": [],
+    "description": ""
   }
   ```
 
@@ -127,7 +133,7 @@ The `lib` package contains `hello.mbt` and `hello_test.mbt` files:
   ```rust
   test "hello" {
     if hello() != "Hello, world!" {
-      abort("")
+      return Err("hello() != \"Hello, world!\"")
     }
   }
   ```
@@ -154,6 +160,12 @@ $ moon run main
 Hello, world!
 ```
 
+You can test using the `moon test` command:
+
+```bash
+$ moon test
+Total tests: 1, passed: 1, failed: 0.
+```
 
 ## Package Importing
 
@@ -258,7 +270,7 @@ fn main {
   let a = @my_awesome_fibonacci.fib(10)
   let b = @my_awesome_fibonacci.fib2(11)
   println("fib(10) = \(a), fib(11) = \(b)")
-  
+
   println(@lib.hello())
 }
 ```
@@ -315,11 +327,12 @@ Finally, use the `moon test` command, which scans the entire project, identifies
 
 ```bash
 $ moon test
-test lib/fib ... ok
-test lib ... ok
-fib(10) = 55, fib(11) = 89
-Hello, world!
-test main ... ok
+Total tests: 3, passed: 3, failed: 0.
+$ moon test -v
+test username/hello/lib/hello_test.mbt::hello ok
+test username/hello/lib/fib/a.mbt::0 ok
+test username/hello/lib/fib/fib_test.mbt::0 ok
+Total tests: 3, passed: 3, failed: 0.
 ```
 
 Note that `main/main.mbt:init` is also executed here, and we will improve the issue of testing with package initialization functions in the future.

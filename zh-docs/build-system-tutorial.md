@@ -102,7 +102,13 @@ my-project
 
   ```json
   {
-    "name": "hello"
+    "name": "username/hello",
+    "version": "0.1.0",
+    "readme": "README.md",
+    "repository": "",
+    "license": "Apache-2.0",
+    "keywords": [],
+    "description": ""
   }
   ```
 
@@ -123,7 +129,7 @@ my-project
   ```rust
   test "hello" {
     if hello() != "Hello, world!" {
-      abort("")
+      return Err("hello() != \"Hello, world!\"")
     }
   }
   ```
@@ -148,6 +154,13 @@ Hello, world!
 ```bash
 $ moon run main
 Hello, world!
+```
+
+您可以使用 `moon test` 命令进行测试:
+
+```bash
+$ moon test
+Total tests: 1, passed: 1, failed: 0.
 ```
 
 ## 包导入
@@ -312,11 +325,12 @@ test {
 
 ```bash
 $ moon test
-test lib/fib ... ok
-test lib ... ok
-fib(10) = 55, fib(11) = 89
-Hello, world!
-test main ... ok
+Total tests: 3, passed: 3, failed: 0.
+$ moon test -v
+test username/hello/lib/hello_test.mbt::hello ok
+test username/hello/lib/fib/a.mbt::0 ok
+test username/hello/lib/fib/fib_test.mbt::0 ok
+Total tests: 3, passed: 3, failed: 0.
 ```
 
 注意这里也执行了 `main/main.mbt:init`，后续我们将会改善测试与包初始化函数的问题。
