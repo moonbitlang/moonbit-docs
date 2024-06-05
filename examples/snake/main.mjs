@@ -6,11 +6,6 @@ const context = canvas?.getContext("2d")
 if (!canvas || !context) {
     throw Error("Canvas not found");
 }
-const WIDTH = 480
-const HEIGHT = WIDTH
-
-canvas.width = WIDTH
-canvas.height = HEIGHT
 
 context.scale(24, 24)
 
@@ -30,9 +25,6 @@ const [log, flush] = (() => {
     return [log, flush]
 })();
 
-/** @type {WebAssembly.Memory} */
-let memory
-
 const importObject = {
     canvas: {
         get_context: () => context,
@@ -45,19 +37,17 @@ const importObject = {
     spectest: {
         print_char: log,
     },
+    array: {
+        new: () => [],
+        /** @type {(array: number[], value: number) => void} */
+        push: (array, value) => { array.push(value) },
+    },
     string: {
-        empty: () => "",
-        length: str => str.length,
-        load: (offset, length) => {
-            const bytes = new Uint16Array(memory.buffer, offset, length);
-            const string = new TextDecoder("utf-16").decode(bytes);
-            return string
-        },
-        store: (string, offset) => {
-            const view = new DataView(memory.buffer);
-            for (let i = 0; i < string.length; i++) {
-                view.setUint16(offset + i * 2, string.charCodeAt(i), true);
-            }
+        /** @type {(points: number[]) => String} */
+        fromCodePoint: (points) => String.fromCodePoint(...points),
+        /** @type {(str: String, callback: (arg: number) => void) => void} */
+        iter: (str, callback) => {
+            for (const ch of str) { callback(ch.codePointAt(0) || 0) }
         }
     },
     Math: {
@@ -80,9 +70,8 @@ const importObject = {
     },
 };
 
-WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/main/main.wasm"), importObject).then(
+WebAssembly.instantiateStreaming(fetch("target/wasm/release/build/main/main.wasm"), importObject).then(
     (obj) => {
-        memory = /** @type {WebAssembly.Memory} */ (obj.instance.exports["moonbit.memory"]);
         // @ts-ignore
         obj.instance.exports._start();
         flush();

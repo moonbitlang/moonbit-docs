@@ -8,7 +8,7 @@ pub enum Direction {
   Left
   Right
   Default
-}
+} derive(Eq)
 
 enum GridType {
   Body
@@ -26,31 +26,22 @@ fn dir_posi(self : Direction) -> Position {
   }
 }
 
-fn Direction::op_equal(x : Direction, y : Direction) -> Bool {
-  let x0 : Position = dir_posi(x)
-  let y0 : Position = dir_posi(y)
-  if x0.x == y0.x && x0.y == y0.y {
-    true
-  } else {
-    false
-  }
-}
-
 struct Position {
-  mut x : Int
-  mut y : Int
+  x : Int
+  y : Int
 }
 
 struct GameState {
-  mut grid : Array[GridType]
-  mut body : List[Position]
+  grid : FixedArray[GridType]
+  body : @devec.Devec[Position]
   mut dir : Direction
 }
 
 fn initialize(self : GameState) -> Unit {
-  self.grid = Array::make(grid_row_count * grid_col_count, Default)
+  self.grid.fill(Default)
   self.dir = Up
-  self.body = Cons({ x: grid_col_count / 2, y: grid_col_count / 2 }, Nil)
+  self.body.clear()
+  self.body.push_back({ x: grid_col_count / 2, y: grid_col_count / 2 })
   self.grid[grid_col_count / 2 * grid_col_count + grid_col_count / 2] = Body
   self.generate_Food()
 }
@@ -78,24 +69,23 @@ fn go_step(self : GameState) -> Unit {
   // if (prev == Up && self.dir == Down) ||  (prev == Down && self.dir == Up) || (prev == Left && self.dir == Right) || (prev == Right && self.dir == Left){
   //   self.dir = prev
   // }
-  let head : Position = get_head(self.body)
-  let newHead : Position = { x: head.x, y: head.y }
-  newHead.x = dir_posi(self.dir).x + newHead.x
-  newHead.y = dir_posi(self.dir).y + newHead.y
-  newHead.x = (newHead.x + grid_col_count) % grid_col_count
-  newHead.y = (newHead.y + grid_col_count) % grid_col_count
+  let head : Position = self.body.front().unwrap()
+  let newHead = {
+    x: (head.x + dir_posi(self.dir).x + grid_col_count) % grid_col_count,
+    y: (head.y + dir_posi(self.dir).y + grid_row_count) % grid_row_count,
+  }
   if self.grid[newHead.y * grid_col_count + newHead.x] == Body {
     initialize(self)
     return
   } else if self.grid[newHead.y * grid_col_count + newHead.x] == Food {
     self.setGridType(newHead, Body)
-    self.body = Cons(newHead, self.body)
+    self.body.push_front(newHead)
     generate_Food(self)
   } else {
     self.setGridType(newHead, Body)
-    self.body = Cons(newHead, self.body)
-    self.setGridType(get_tail(self.body), Default)
-    self.body = delete_tail(self.body)
+    self.body.push_front(newHead)
+    self.setGridType(self.body.back().unwrap(), Default)
+    self.body.pop_back_exn()
   }
 }
 
@@ -116,7 +106,11 @@ pub fn step(self : GameState, action : Direction) -> Unit {
 }
 
 pub fn new() -> GameState {
-  let game : GameState = { grid: [], body: Nil, dir: Up }
+  let game : GameState = {
+    grid: FixedArray::make(grid_row_count * grid_col_count, Default),
+    body: @devec.new(),
+    dir: Up,
+  }
   game.initialize()
   game
 }

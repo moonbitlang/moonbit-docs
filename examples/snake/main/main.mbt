@@ -1,17 +1,3 @@
-fn request_animation_frame(callback : (Double) -> Unit) -> Int = "window" "requestAnimationFrame"
-
-fn set_on_keydown(callback : (KeyboardEvent) -> Unit) = "document" "set_onkeydown"
-
-fn get_context() -> @lib.Canvas_ctx = "canvas" "get_context"
-
-type KeyboardEvent
-
-fn key_ffi(self : KeyboardEvent) -> @extern.JS_String = "keyboard_event" "key"
-
-fn key(self : KeyboardEvent) -> String {
-  self.key_ffi().to_string().unwrap()
-}
-
 let state : @lib.GameState = @lib.new()
 
 let context : @lib.Canvas_ctx = get_context()
@@ -32,7 +18,7 @@ fn update(time : Double) -> Unit {
 }
 
 fn main {
-    set_on_keydown(
+  set_on_keydown(
     fn(event) {
       if last_frame.val < 0.0 { // not started yet
         return
