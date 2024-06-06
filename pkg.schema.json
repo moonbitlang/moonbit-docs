@@ -1,0 +1,161 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON schema for Moonbit moon.pkg.json files",
+  "description": "A package in Moonbit lang",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Name of the package (Deprecated)",
+      "type": "string"
+    },
+    "is-main": {
+      "description": "Specify whether this package is a main package or not",
+      "type": "boolean",
+      "default": false
+    },
+    "import": {
+      "description": "Imported packages of the package",
+      "oneOf": [
+        {
+          "title": "Object form",
+          "type": "object",
+          "additionalProperties": {
+            "description": "Path and alias of an imported package",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        {
+          "title": "Array form",
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "title": "Package without alias",
+                "description": "Path of an imported package",
+                "type": "string"
+              },
+              {
+                "title": "Package with alias",
+                "description": "Path and alias of an imported package",
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "description": "Path of an imported package",
+                    "type": "string"
+                  },
+                  "alias": {
+                    "description": "Alias of an imported package",
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "path",
+                  "alias"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "link": {
+      "oneOf": [
+        {
+          "title": "Build this package",
+          "type": "boolean"
+        },
+        {
+          "title": "Build configuration",
+          "description": "Configure the build for each backend",
+          "type": "object",
+          "properties": {
+            "wasm": {
+              "type": "object",
+              "properties": {
+                "exports": {
+                  "description": "Exported functions of the package",
+                  "type": "array",
+                  "items": {
+                    "description": "Name of an exported function, or followed by a colon and the alias name",
+                    "type": "string"
+                  }
+                },
+                "export-memory-name": {
+                  "description": "Name of the exported memory, or no memory will be exported",
+                  "type": "string"
+                },
+                "flags": {
+                  "description": "Flags for the compilation of the package",
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "-no-block-params"
+                    ]
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            "wasm-gc": {
+              "type": "object",
+              "properties": {
+                "exports": {
+                  "description": "Exported functions of the package",
+                  "type": "array",
+                  "items": {
+                    "description": "Name of an exported function, or followed by a colon and the alias name",
+                    "type": "string"
+                  }
+                },
+                "export-memory-name": {
+                  "description": "Name of the exported memory, or no memory will be exported",
+                  "type": "string"
+                },
+                "flags": {
+                  "description": "Flags for the compilation of the package",
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "-no-block-params"
+                    ]
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            "js": {
+              "type": "object",
+              "properties": {
+                "exports": {
+                  "description": "Exported functions of the package",
+                  "type": "array",
+                  "items": {
+                    "description": "Name of an exported function, or followed by a colon and the alias name",
+                    "type": "string"
+                  }
+                },
+                "format": {
+                  "description": "Format of the output JavaScript file",
+                  "enum": [
+                    "esm",
+                    "cjs",
+                    "iife"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "required": []
+}
