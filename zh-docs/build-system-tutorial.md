@@ -137,7 +137,7 @@ my-project
 - `main` 包含一个 `main.mbt` 文件：
 
   ```rust
-  fn init {
+  fn main {
     println(@lib.hello())
   }
   ```
