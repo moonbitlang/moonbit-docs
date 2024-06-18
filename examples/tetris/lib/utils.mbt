@@ -17,16 +17,13 @@ pub fn check_collision(
         if r >= offset.1 + len_r {
           return false
         }
-        let mut c = 0
-        while c < len_c {
+        for c = 0; c < len_c; c = c + 1 {
           if shap[r - offset.1][c] == 0 {
-            c = c + 1
-            continue
+            continue c + 1
           }
           if v[c + offset.0] != 0 {
             return true
           }
-          c = c + 1
         }
         return go(n, r + 1)
       }

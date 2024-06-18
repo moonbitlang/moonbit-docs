@@ -119,10 +119,8 @@ pub fn on_piece_collision(self : Tetris) -> Unit {
   self.score = self.score + self.row_completed
 
   // Insert blank row at the top
-  let mut i = 0
-  while i < self.row_completed {
+  for i = 0; i < self.row_completed; i = i + 1 {
     new_grid = Cons(Array::make(grid_col_count, 0), new_grid)
-    i = i + 1
   }
   self.row_completed = 0
   self.grid = new_grid
@@ -166,19 +164,13 @@ pub fn rotate_piece(self : Tetris) -> Unit {
   let r = self.piece_shape.length()
   let c = self.piece_shape[0].length()
   let new_shap = Array::make(c, Array::make(r, 0))
-  let mut i = 0
-  while i < c {
+  for i = 0; i < c; i = i + 1 {
     new_shap[i] = Array::make(r, 0)
-    i = i + 1
   }
-  let mut i_c = 0
-  while i_c < c {
-    let mut i_r = 0
-    while i_r < r {
+  for i_c = 0; i_c < c; i_c = i_c + 1 {
+    for i_r = 0; i_r < r; i_r = i_r + 1 {
       new_shap[i_c][i_r] = self.piece_shape[r - i_r - 1][i_c]
-      i_r = i_r + 1
     }
-    i_c = i_c + 1
   }
   let mut new_x = self.piece_x
   if new_x + new_shap[0].length() > grid_col_count {
