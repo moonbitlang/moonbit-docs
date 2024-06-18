@@ -1,11 +1,14 @@
-pub fn check_collision(grid : List[Array[Int]], shap : Array[Array[Int]],
-        offset : (Int, Int)) -> Bool {
+pub fn check_collision(
+  grid : @immut/list.List[Array[Int]],
+  shap : Array[Array[Int]],
+  offset : (Int, Int)
+) -> Bool {
   let len_r = shap.length()
   let len_c = shap[0].length()
   if offset.1 + len_r > grid_row_count {
     return true
   }
-  fn go(l : List[Array[Int]], r : Int) -> Bool {
+  fn go(l : @immut/list.List[Array[Int]], r : Int) -> Bool {
     match l {
       Cons(v, n) => {
         if r < offset.1 {
@@ -34,8 +37,11 @@ pub fn check_collision(grid : List[Array[Int]], shap : Array[Array[Int]],
   return go(grid, 0)
 }
 
-pub fn get_effective_height(grid : List[Array[Int]], shap : Array[Array[Int]],
-        offset : (Int, Int)) -> Int {
+pub fn get_effective_height(
+  grid : @immut/list.List[Array[Int]],
+  shap : Array[Array[Int]],
+  offset : (Int, Int)
+) -> Int {
   let x = offset.0
   let mut y = offset.1
   while check_collision(grid, shap, (x, y)) == false {
@@ -43,4 +49,3 @@ pub fn get_effective_height(grid : List[Array[Int]], shap : Array[Array[Int]],
   }
   y - 1
 }
-

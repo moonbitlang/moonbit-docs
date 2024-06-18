@@ -17,25 +17,28 @@ pub fn draw(canvas : Canvas_ctx, tetris : Tetris) -> Unit {
 
   // draw background
   while c < grid_col_count {
-    let color = if c % 2 == 0 {
-      0
-    } else {
-      1
-    }
+    let color = if c % 2 == 0 { 0 } else { 1 }
     canvas.set_fill_style(color)
     canvas.fill_rect(c, 0, 1, grid_row_count)
     c = c + 1
   }
   draw_piece(canvas, tetris.grid, (0, 0))
-  draw_piece(canvas, List::from_array(tetris.piece_shape), (tetris.piece_x, tetris.piece_y))
+  draw_piece(
+    canvas,
+    @immut/list.List::from_array(tetris.piece_shape),
+    (tetris.piece_x, tetris.piece_y),
+  )
   if tetris.dead {
     canvas.draw_game_over()
   }
 }
 
-pub fn draw_piece(canvas : Canvas_ctx, matrix : List[Array[Int]],
-        offset : (Int, Int)) -> Unit {
-  fn go(l : List[Array[Int]], r : Int, canvas : Canvas_ctx) {
+pub fn draw_piece(
+  canvas : Canvas_ctx,
+  matrix : @immut/list.List[Array[Int]],
+  offset : (Int, Int)
+) -> Unit {
+  fn go(l : @immut/list.List[Array[Int]], r : Int, canvas : Canvas_ctx) {
     match l {
       Cons(v, n) => {
         let mut c = 0
@@ -59,4 +62,3 @@ pub fn draw_piece(canvas : Canvas_ctx, matrix : List[Array[Int]],
 
   go(matrix, 0, canvas)
 }
-

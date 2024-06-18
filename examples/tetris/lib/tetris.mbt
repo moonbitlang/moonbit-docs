@@ -1,7 +1,7 @@
 struct Tetris {
   mut dead : Bool
-  mut grid : List[Array[Int]]
-  mut piece_pool : List[PIECE]
+  mut grid : @immut/list.List[Array[Int]]
+  mut piece_pool : @immut/list.List[PIECE]
   mut current : PIECE
   mut piece_x : Int
   mut piece_y : Int
@@ -14,7 +14,7 @@ pub fn reset_game(self : Tetris) -> Unit {
   self.dead = false
   self.score = 0
   self.row_completed = 0
-  fn go(i : Int) -> List[Array[Int]] {
+  fn go(i : Int) -> @immut/list.List[Array[Int]] {
     if i == grid_row_count - 1 {
       Cons(Array::make(grid_col_count, 0), Nil)
     } else {
@@ -31,7 +31,11 @@ pub fn generate_piece(self : Tetris) -> Bool {
   self.piece_shape = self.current.piece_shape()
   self.piece_x = grid_col_count / 2 - self.piece_shape[0].length() / 2
   self.piece_y = 0
-  return check_collision(self.grid, self.piece_shape, (self.piece_x, self.piece_y))
+  return check_collision(
+    self.grid,
+    self.piece_shape,
+    (self.piece_x, self.piece_y),
+  )
 }
 
 pub fn get_next_piece(self : Tetris, pop : Bool) -> PIECE {
@@ -50,7 +54,7 @@ pub fn get_next_piece(self : Tetris, pop : Bool) -> PIECE {
 }
 
 pub fn generate_piece_pool(self : Tetris) -> Unit {
-  self.piece_pool = List::[
+  self.piece_pool = @immut/list.List::[
     PIECE::I,
     PIECE::J,
     PIECE::L,
@@ -68,7 +72,7 @@ pub fn on_piece_collision(self : Tetris) -> Unit {
   let y = self.piece_y - 1
 
   // Add the current shap to grid
-  fn go1(l : List[Array[Int]], r : Int) {
+  fn go1(l : @immut/list.List[Array[Int]], r : Int) {
     match l {
       Cons(v, n) => {
         if r < y {
@@ -96,7 +100,7 @@ pub fn on_piece_collision(self : Tetris) -> Unit {
 
   // Delete the complete row
   self.row_completed = 0
-  fn go2(l : List[Array[Int]]) -> List[Array[Int]] {
+  fn go2(l : @immut/list.List[Array[Int]]) -> @immut/list.List[Array[Int]] {
     match l {
       Nil => Nil
       Cons(v, n) =>
@@ -109,7 +113,7 @@ pub fn on_piece_collision(self : Tetris) -> Unit {
     }
   }
 
-  let mut new_grid : List[Array[Int]] = Nil
+  let mut new_grid : @immut/list.List[Array[Int]] = Nil
   new_grid = go2(self.grid)
   // 1 line == 1 score
   self.score = self.score + self.row_completed
@@ -148,7 +152,10 @@ pub fn drop_piece(self : Tetris, instant : Bool) -> Unit {
 
 pub fn move_piece(self : Tetris, delta : Int) -> Unit {
   let mut new_x = self.piece_x + delta
-  new_x = @math.maximum(0, @math.minimum(new_x, grid_col_count - self.piece_shape[0].length()))
+  new_x = @math.maximum(
+    0,
+    @math.minimum(new_x, grid_col_count - self.piece_shape[0].length()),
+  )
   if check_collision(self.grid, self.piece_shape, (new_x, self.piece_y)) {
     return
   }
