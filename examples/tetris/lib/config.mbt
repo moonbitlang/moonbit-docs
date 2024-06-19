@@ -23,4 +23,3 @@ pub fn piece_shape(self : PIECE) -> Array[Array[Int]] {
     O => [[7, 7], [7, 7]]
   }
 }
-

@@ -7,22 +7,18 @@ struct Tetris {
   mut piece_y : Int
   mut piece_shape : Array[Array[Int]]
   mut score : Int
-  mut row_completed : Int
 }
 
 pub fn reset_game(self : Tetris) -> Unit {
   self.dead = false
   self.score = 0
-  self.row_completed = 0
-  fn go(i : Int) -> @immut/list.List[Array[Int]] {
-    if i == grid_row_count - 1 {
-      Cons(Array::make(grid_col_count, 0), Nil)
-    } else {
-      Cons(Array::make(grid_col_count, 0), go(i + 1))
-    }
-  }
+  self.grid = for i = 0, grid = @immut/list.List::Nil
+                  i < grid_row_count
+                  i = i + 1, grid = Cons(Array::make(grid_col_count, 0), grid) {
 
-  self.grid = go(0)
+  } else {
+    grid
+  }
   self.dead = self.generate_piece()
 }
 
@@ -72,58 +68,48 @@ pub fn on_piece_collision(self : Tetris) -> Unit {
   let y = self.piece_y - 1
 
   // Add the current shap to grid
-  fn go1(l : @immut/list.List[Array[Int]], r : Int) {
-    match l {
-      Cons(v, n) => {
-        if r < y {
-          return go1(n, r + 1)
-        }
-        if r >= y + len_r {
+  self.grid.iteri(
+    fn {
+      r, v => {
+        if r < y || r >= y + len_r {
           return
         }
-        let mut c = 0
-        while c < len_c {
+        for c = 0; c < len_c; c = c + 1 {
           if self.piece_shape[r - y][c] == 0 {
-            c = c + 1
-            continue
+            continue c + 1
           }
           v[c + self.piece_x] = self.piece_shape[r - y][c]
-          c = c + 1
         }
-        return go1(n, r + 1)
       }
-      Nil => ()
-    }
-  }
-
-  go1(self.grid, 0)
+    },
+  )
 
   // Delete the complete row
-  self.row_completed = 0
-  fn go2(l : @immut/list.List[Array[Int]]) -> @immut/list.List[Array[Int]] {
-    match l {
-      Nil => Nil
-      Cons(v, n) =>
+  let (new_grid, row_completed) = self.grid.fold_right(
+    init=(@immut/list.List::Nil, 0),
+    fn {
+      v, (new_grid, row_completed) =>
         if v.contains(0) {
-          return Cons(v, go2(n))
+          (Cons(v, new_grid), row_completed)
         } else {
-          self.row_completed = self.row_completed + 1
-          return go2(n)
+          (new_grid, row_completed + 1)
         }
-    }
-  }
-
-  let mut new_grid : @immut/list.List[Array[Int]] = Nil
-  new_grid = go2(self.grid)
+    },
+  )
   // 1 line == 1 score
-  self.score = self.score + self.row_completed
+  self.score = self.score + row_completed
 
   // Insert blank row at the top
-  for i = 0; i < self.row_completed; i = i + 1 {
-    new_grid = Cons(Array::make(grid_col_count, 0), new_grid)
+  self.grid = for i = 0, new_grid = new_grid
+                  i < row_completed
+                  i = i + 1, new_grid = Cons(
+                      Array::make(grid_col_count, 0),
+                      new_grid,
+                    ) {
+
+  } else {
+    new_grid
   }
-  self.row_completed = 0
-  self.grid = new_grid
   self.dead = self.generate_piece()
 }
 
@@ -211,7 +197,6 @@ pub fn new() -> Tetris {
     piece_y: 0,
     piece_shape: PIECE::I.piece_shape(),
     score: 0,
-    row_completed: 0,
   }
   tetris.reset_game()
   tetris
