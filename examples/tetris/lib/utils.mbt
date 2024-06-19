@@ -8,30 +8,26 @@ pub fn check_collision(
   if offset.1 + len_r > grid_row_count {
     return true
   }
-  fn go(l : @immut/list.List[Array[Int]], r : Int) -> Bool {
-    match l {
-      Cons(v, n) => {
-        if r < offset.1 {
-          return go(n, r + 1)
-        }
-        if r >= offset.1 + len_r {
-          return false
-        }
-        for c = 0; c < len_c; c = c + 1 {
-          if shap[r - offset.1][c] == 0 {
-            continue c + 1
-          }
-          if v[c + offset.0] != 0 {
-            return true
-          }
-        }
-        return go(n, r + 1)
+  loop grid, 0 {
+    Cons(v, n), r => {
+      if r < offset.1 {
+        continue n, r + 1
       }
-      Nil => false
+      if r >= offset.1 + len_r {
+        return false
+      }
+      for c = 0; c < len_c; c = c + 1 {
+        if shap[r - offset.1][c] == 0 {
+          continue c + 1
+        }
+        if v[c + offset.0] != 0 {
+          return true
+        }
+      }
+      continue n, r + 1
     }
+    Nil, _ => false
   }
-
-  return go(grid, 0)
 }
 
 pub fn get_effective_height(
