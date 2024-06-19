@@ -81,7 +81,8 @@ jobs:
           Get-ChildItem -Path ".\examples" -Directory | ForEach-Object {
             Write-Output "Processing $($_.FullName)"
             Set-Location $_.FullName
-            if (!(moon install) -or !(moon check --target ${{ matrix.backend }}) -or !(moon test --target ${{ matrix.backend }})) {
+            moon install && moon check --target ${{ matrix.backend }} && moon test --target ${{ matrix.backend }}
+            if (!$?) {
               Write-Output "Failed in $($_.FullName)"
               $failed_directories += $_.FullName
             }
