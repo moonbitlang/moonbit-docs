@@ -105,11 +105,11 @@ function update(time = 0) {
   dropCounter += deltaTime
   if (dropCounter > dropInterval) {
     tetris_step(tetris, 0);
-    scoreDom.innerHTML = "score: " + tetris_score(tetris)
     dropCounter = 0
   }
   lastTime = time
   tetris_draw(context, tetris);
+  scoreDom.innerHTML = "score: " + tetris_score(tetris)
   requestAnimationFrameId = requestAnimationFrame(update)
 }
 

@@ -182,9 +182,8 @@ pub fn step(tetris : Tetris, action : Int) -> Unit {
     3 => tetris.rotate_piece()
     // instant
     4 => tetris.drop_piece(true)
-    _ => ()
+    _ => tetris.drop_piece(false)
   }
-  tetris.drop_piece(false)
 }
 
 pub fn new() -> Tetris {
