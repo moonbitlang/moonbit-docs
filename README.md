@@ -1101,6 +1101,7 @@ Currently, the following operators can be overloaded:
 | `*`                  | `op_mul`     |
 | `/`                  | `op_div`     |
 | `%`                  | `op_mod`     |
+| `=`                  | `op_eual`    |
 | `-`(unary)           | `op_neg`     |
 | `_[_]`(get item)     | `op_get`     |
 | `_[_] = _`(set item) | `op_set`     |
