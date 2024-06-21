@@ -1094,16 +1094,17 @@ fn init {
 
 Currently, the following operators can be overloaded:
 
-| operator name        | method name |
-| -------------------- | ----------- |
-| `+`                  | `op_add`    |
-| `-`                  | `op_sub`    |
-| `*`                  | `op_mul`    |
-| `/`                  | `op_div`    |
-| `%`                  | `op_mod`    |
-| `-`(unary)           | `op_neg`    |
-| `_[_]`(get item)     | `op_get`    |
-| `_[_] = _`(set item) | `op_set`    |
+| operator name        | method name  |
+| -------------------- | ------------ |
+| `+`                  | `op_add`     |
+| `-`                  | `op_sub`     |
+| `*`                  | `op_mul`     |
+| `/`                  | `op_div`     |
+| `%`                  | `op_mod`     |
+| `-`(unary)           | `op_neg`     |
+| `_[_]`(get item)     | `op_get`     |
+| `_[_] = _`(set item) | `op_set`     |
+| `_[_.._] = _`(slice) | `op_as_view` |
 
 ## Pipe operator
 MoonBit provides a convenient pipe operator `|>`, which can be used to chain regular function calls:
