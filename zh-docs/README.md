@@ -1100,10 +1100,10 @@ fn init {
 | `/`                   | `op_div`     |
 | `%`                   | `op_mod`     |
 | `=`                   | `op_eual`    |
-| `-`（一元运算符）     | `op_neg`     |
-| `_[_]`（获取项）      | `op_get`     |
-| `_[_] = _`（设置项）  | `op_set`     |
-| `_[_.._] = _`（切片） | `op_as_view` |
+| `-`（一元运算符）       | `op_neg`     |
+| `_[_]`（获取项）       | `op_get`     |
+| `_[_] = _`（设置项）   | `op_set`     |
+| `_[_.._]`（视图）      | `op_as_view` | 
 
 ## 管道运算符
 
@@ -1119,6 +1119,72 @@ fn init {
   |> f1 // 等价于 f1(arg_val)
   |> f2(other_args) // 等价于 f2(f1(arg_val), other_args)
 }
+```
+
+## 视图
+
+类似于其他语言的“切片”，视图能够引用数组等数据类型中的片段。可以使用`data[start..end]`的方式创建一个关于数组`data`的视图，这个视图引用了从下标`start`开始到`end`（不包含`end`）的元素。`start`和`end`也可以省略:
+
+```rust
+fn init {
+  let xs = [0,1,2,3,4,5]
+  let s1 : ArrayView[Int] = xs[2..]
+  print_array_view(s1)            //output: 2345
+  xs[..4]  |> print_array_view()  //output: 0123
+  xs[2..5] |> print_array_view()  //output: 234
+  xs[..]   |> print_array_view()  //output: 012345
+
+  // 创建一个视图的视图
+  xs[2..5][1..] |> print_array_view() //output: 34
+}
+
+fn print_array_view[T : Show](view : ArrayView[T]) -> Unit {
+  for i=0; i<view.length(); i = i + 1 {
+    print(view[i])
+  }
+  print("\n")
+}
+```
+
+要为自定义数据类型添加视图支持，需要为它实现`length`和`op_as_view`方法。下面是一个例子：
+
+```rust
+struct MyList[A] {
+  elems : Array[A]
+} 
+
+struct MyListView[A] {
+  ls : MyList[A]
+  start : Int
+  end : Int
+}
+
+pub fn length[A](self : MyList[A]) -> Int {
+  self.elems.length()
+}
+
+pub fn op_as_view[A](self : MyList[A], ~start : Int, ~end : Int) -> MyListView[A] {
+  println("op_as_view: [\(start),\(end))")
+  if start < 0 || end > self.length() { abort("index out of bounds") }
+  { ls: self, start, end }
+}
+
+fn init {
+  let ls = { elems: [1,2,3,4,5] }
+  ls[..] |> ignore()
+  ls[1..] |> ignore()
+  ls[..2] |> ignore()
+  ls[1..2] |> ignore()
+}
+```
+
+输出：
+
+```
+op_as_view: [0,5)
+op_as_view: [1,5)
+op_as_view: [0,2)
+op_as_view: [1,2)
 ```
 
 ## 接口系统
