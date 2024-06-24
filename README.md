@@ -352,11 +352,12 @@ let e = not(a)
 
 MoonBit have integer type and floating point type:
 
-| type     | description                               |
-| -------- | ----------------------------------------- |
-| `Int`    | 32-bit signed integer                     |
-| `Int64`  | 64-bit signed integer                     |
-| `Double` | 64-bit floating point, defined by IEEE754 |
+| type     | description                               |  example |
+| -------- | ----------------------------------------- | -------- |
+| `Int`    | 32-bit signed integer                     | `42`     |
+| `Int64`  | 64-bit signed integer                     | `1000L`  |
+| `UInt`   | 32-bit unsigned integer                   | `14U`    |
+| `Double` | 64-bit floating point, defined by IEEE754 | `3.14`   |
 
 MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
@@ -368,6 +369,7 @@ To improve readability, you may place underscores in the middle of numeric liter
 let a = 1234
 let b = 1_000_000 + a
 let large_num = 9_223_372_036_854_775_807L // Integers of the Int64 type must have an 'L' as a suffix
+let unsigned_num = 4_294_967_295U // Integers of the UInt type must have an 'U' suffix
 ```
 
 - A binary number has a leading zero followed by a letter "B", i.e. `0b`/`0B`.
