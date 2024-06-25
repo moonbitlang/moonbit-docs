@@ -866,6 +866,61 @@ match map {
 - Map patterns are always open: unmatched keys are silently ignored
 - Map pattern will be compiled to efficient code: every key will be fetched at most once
 
+## Error Handling
+The return type of a function can include an error type to indicate that the function might return an error. For example, the following function declaration indicates that the function div might return an error of type String:
+
+```rust
+fn div(x: Int, y: Int) -> Int!String { 
+  if y == 0 {
+    raise "division by zero"
+  }
+  x / y
+}
+```
+
+The keyword `raise` is used to interrupt the function execution and return an error. There are three ways to handle errors in functions:
+
+* Using the `!!` suffix to panic directly in case of an error, for example:
+
+```rust
+fn div_unsafe(x: Int, y: Int) -> Int {
+  div(x, y)!! // Panic if `div` raised an error
+}
+```
+
+* Using the `!` suffix to rethrow the error directly in case of an error, for example:
+
+```rust
+fn div_reraise(x: Int, y: Int) -> Int!String {
+  div(x, y)! // Rethrow the error if `div` raised an error
+}
+```
+
+* Using `try` and `catch` to catch and handle errors, for example:
+
+```rust
+fn div_with_default(x: Int, y: Int, default: Int) -> Int {
+  try {
+    div(x, y)!
+  } catch {
+    s => { println(s); default }
+  }
+}
+```
+
+Here, `try` is used to call a function that might throw an error, and `catch` is used to match and handle the caught error. If no error is caught, the catch block will not be executed.
+
+In MoonBit, error types and error handling are second-class citizens, so error types can only appear in the return value of functions and cannot be used as the type of variables. Error handling with the `!` or `!!` suffix can only be used at the function call site and not in other expressions. Valid usage forms include:
+
+```rust
+f(x)!
+x.f()!
+(x |> f)!
+(x + y)!
+```
+
+Additionally, if the return type of a function includes an error type, the function call must use `!` or `!!` for error handling, otherwise the compiler will report an error.
+
 ## Generics
 
 Generics are supported in top-level function and data type definitions. Type parameters can be introduced within square brackets. We can rewrite the aforementioned data type `List` to add a type parameter `T` to obtain a generic version of lists. We can then define generic functions over lists like `map` and `reduce`.
