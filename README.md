@@ -1419,6 +1419,24 @@ fn g() -> Result[Int, String] {
 }
 ```
 
+## Test Blocks
+MoonBit provides the test code block for writing test cases. For example:
+
+```rust
+test "test_name" {
+  assert_eq(1 + 1, 2)?
+  assert_eq(2 + 2, 4)?
+}
+```
+
+A test code block is essentially a function that returns a `Result[Unit, String]` type. It is called during the execution of `moon test` and outputs a test report through the build system. The `assert_eq` function is from the standard library; if the assertion fails, it prints an error message and terminates the test. The string "test_name" is used to identify the test case and is optional. If it starts with "panic," it indicates that the expected behavior of the test is to trigger a panic, and the test will only pass if the panic is triggered. For example:
+
+```rust
+test "panic_test" {
+  let _ : Int = Option::None.unwrap()
+}
+```
+
 ## MoonBit's build system
 
 The introduction to the build system is available at [MoonBit's Build System Tutorial](./build-system-tutorial.md).
