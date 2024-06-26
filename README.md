@@ -1162,7 +1162,7 @@ Currently, the following operators can be overloaded:
 | `-`(unary)           | `op_neg`     |
 | `_[_]`(get item)     | `op_get`     |
 | `_[_] = _`(set item) | `op_set`     |
-| `_[_.._] = _`(slice) | `op_as_view` |
+| `_[_.._]`(view)      | `op_as_view` |
 
 ## Pipe operator
 MoonBit provides a convenient pipe operator `|>`, which can be used to chain regular function calls:
@@ -1178,6 +1178,76 @@ fn init {
   |> f2(other_args) // equivalent to f2(f1(arg_val), other_args)
 }
 ```
+
+## View
+
+Analogous to `slice` in other languages, the view is a reference to a 
+specific segment of collections. You can use `data[start..end]` to create a 
+view of array `data`, referencing elements from `start` to `end` (exclusive). 
+Both `start` and `end` indices can be omited.
+
+```rust
+fn init {
+  let xs = [0,1,2,3,4,5]
+  let s1 : ArrayView[Int] = xs[2..]
+  print_array_view(s1)            //output: 2345
+  xs[..4]  |> print_array_view()  //output: 0123
+  xs[2..5] |> print_array_view()  //output: 234
+  xs[..]   |> print_array_view()  //output: 012345
+
+  // create a view of another view
+  xs[2..5][1..] |> print_array_view() //output: 34
+}
+
+fn print_array_view[T : Show](view : ArrayView[T]) -> Unit {
+  for i=0; i<view.length(); i = i + 1 {
+    print(view[i])
+  }
+  print("\n")
+}
+```
+
+By implementing `length` and `op_as_view` method, you can also create a view for a user-defined type. Here is an example:
+
+```rust
+struct MyList[A] {
+  elems : Array[A]
+} 
+
+struct MyListView[A] {
+  ls : MyList[A]
+  start : Int
+  end : Int
+}
+
+pub fn length[A](self : MyList[A]) -> Int {
+  self.elems.length()
+}
+
+pub fn op_as_view[A](self : MyList[A], ~start : Int, ~end : Int) -> MyListView[A] {
+  println("op_as_view: [\(start),\(end))")
+  if start < 0 || end > self.length() { abort("index out of bounds") }
+  { ls: self, start, end }
+}
+
+fn init {
+  let ls = { elems: [1,2,3,4,5] }
+  ls[..] |> ignore()
+  ls[1..] |> ignore()
+  ls[..2] |> ignore()
+  ls[1..2] |> ignore()
+}
+```
+
+Output：
+
+```
+op_as_view: [0,5)
+op_as_view: [1,5)
+op_as_view: [0,2)
+op_as_view: [1,2)
+```
+
 
 ## Trait system
 
