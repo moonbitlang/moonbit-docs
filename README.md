@@ -357,6 +357,7 @@ MoonBit have integer type and floating point type:
 | `Int`    | 32-bit signed integer                     | `42`     |
 | `Int64`  | 64-bit signed integer                     | `1000L`  |
 | `UInt`   | 32-bit unsigned integer                   | `14U`    |
+| `UInt64` | 64-bit unsigned integer                   | `14UL`   |
 | `Double` | 64-bit floating point, defined by IEEE754 | `3.14`   |
 
 MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
