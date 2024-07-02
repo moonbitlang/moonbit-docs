@@ -33,7 +33,7 @@ struct Position {
 
 struct GameState {
   grid : FixedArray[GridType]
-  body : @devec.Devec[Position]
+  body : @deque.Deque[Position]
   mut dir : Direction
 }
 
@@ -108,7 +108,7 @@ pub fn step(self : GameState, action : Direction) -> Unit {
 pub fn new() -> GameState {
   let game : GameState = {
     grid: FixedArray::make(grid_row_count * grid_col_count, Default),
-    body: @devec.new(),
+    body: @deque.new(),
     dir: Up,
   }
   game.initialize()

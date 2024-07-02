@@ -16,7 +16,7 @@ pub fn length[T](self : SBuffer[T]) -> Int {
   self.len
 }
 
-pub fn op_get[T](self : SBuffer[T], i : Int) -> Option[T] {
+pub fn op_get[T](self : SBuffer[T], i : Int) -> T? {
   if i < self.cap {
     Some(self.data[i])
   } else {
@@ -77,18 +77,16 @@ pub fn reset[T : Default](self : SBuffer[T], capacity : Int) -> Unit {
 
 pub fn println[T : Show](self : SBuffer[T]) -> Unit {
   let mut index = 0
-  print('[')
+  let buffer = Buffer::new()
+  buffer.write_char('[')
   while index < self.len {
-    print(self.data[index].to_string())
+    buffer.write_string(self.data[index].to_string())
     index = index + 1
     if index < self.len {
-      print(',')
+      buffer.write_char(',')
     }
   }
-  println(']')
+  buffer.write_char(']')
+  println(buffer.to_string())
+  buffer.reset()
 }
-
-fn init {
-  ()
-}
-

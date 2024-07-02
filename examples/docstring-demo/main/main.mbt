@@ -1,3 +1,3 @@
 fn main {
-  print(@lib.hello())
+  println(@lib.hello())
 }

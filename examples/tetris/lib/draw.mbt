@@ -37,7 +37,7 @@ pub fn draw_piece(
 ) -> Unit {
   canvas.set_stroke_color(0)
   canvas.set_line_width(0.1)
-  matrix.iteri(
+  matrix.eachi(
     fn {
       r, v =>
         for c = 0; c < v.length(); c = c + 1 {

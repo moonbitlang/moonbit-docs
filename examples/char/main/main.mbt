@@ -1,13 +1,12 @@
 test {
-  @assertion.assert_true(@lib.is_alpha('a'))?
-  @assertion.assert_false(@lib.is_alpha('3'))?
-  @assertion.assert_true(@lib.is_numeric('1'))?
-  @assertion.assert_false(@lib.is_numeric('b'))?
-  @assertion.assert_true(@lib.is_alphanumeric('a'))?
-  @assertion.assert_eq(@lib.to_lower('H'), 'h')?
-  @assertion.assert_eq(@lib.to_upper('c'), 'C')?
-  @assertion.assert_true(@lib.is_whitespace(' '))?
-  @assertion.assert_eq(@lib.next('Z'), Some('['))?
-  @assertion.assert_eq(@lib.prev('A'), Some('@'))?
+  @test.is_true(@lib.is_alpha('a'))!
+  @test.is_false(@lib.is_alpha('3'))!
+  @test.is_true(@lib.is_numeric('1'))!
+  @test.is_false(@lib.is_numeric('b'))!
+  @test.is_true(@lib.is_alphanumeric('a'))!
+  @test.eq(@lib.to_lower('H'), 'h')!
+  @test.eq(@lib.to_upper('c'), 'C')!
+  @test.is_true(@lib.is_whitespace(' '))!
+  @test.eq(@lib.next('Z'), Some('['))!
+  @test.eq(@lib.prev('A'), Some('@'))!
 }
-

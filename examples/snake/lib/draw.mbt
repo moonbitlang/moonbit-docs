@@ -24,7 +24,7 @@ fn draw_piece(
   matrix : FixedArray[GridType],
   offset : (Int, Int)
 ) -> Unit {
-  matrix.iteri(
+  matrix.eachi(
     fn {
       _, Default => ()
       c, grid => {

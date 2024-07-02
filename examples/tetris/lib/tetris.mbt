@@ -68,7 +68,7 @@ pub fn on_piece_collision(self : Tetris) -> Unit {
   let y = self.piece_y - 1
 
   // Add the current shap to grid
-  self.grid.iteri(
+  self.grid.eachi(
     fn {
       r, v => {
         if r < y || r >= y + len_r {
