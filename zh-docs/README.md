@@ -1520,6 +1520,50 @@ test "panic_test" {
 }
 ```
 
+## 文档注释
+
+文档注释是以 `///` 开头的注释，出现在顶层结构（如 `fn`、`let`、`enum`、`struct`、`type`）的每一行前面。文档注释内包含 Markdown 文本和任意个注解。
+
+```rust
+/// Return a new array with reversed elements.
+/// 
+/// # Example
+/// 
+/// ```
+/// reverse([1,2,3,4]) |> println()
+/// ```
+fn reverse[T](xs : Array[T]) -> Array[T] {
+  ...
+}
+```
+
+### 注解
+
+注解是文档注释中 `@word ...` 形式的特殊注释。*word* 表示注解的类型，后面可以跟随多个 *word* 或字符串字面量，每条注解独占一行。在MoonBit中注解通常不会影响程序的含义。无法识别的注解将会触发警告。
+
+- `@alert`注解
+
+  当引用了被标记了`@alert`的函数时，编译器会触发相应的警告或者错误。这种机制提供了一种通用的方式，将函数标记为 `deprecated` 或 `unsafe`。
+
+  它的形式为 `@alert category "alert message..."`。
+
+  `category`表示`@alert`的类别，它可以是任意标识符。可以通过配置来决定哪些`alert`是启用的或者报告为错误。
+
+  ```rust
+  /// ...
+  /// @alert deprecated "Use foo2 instead"
+  pub fn foo() -> Unit { ... }
+
+  /// ...
+  /// @alert unsafe "Div will cause an error when y is zero"
+  pub fn div(x: Int, y: Int) -> Int { ... } 
+
+  fn main {
+    foo() // warning: Use foo2 instead
+    div(x, y) |> ignore // warning: Div will cause an error when y is zero
+  }
+  ```
+
 ## MoonBit 的构建系统
 
 构建系统的介绍参见 [MoonBit 的构建系统教程](./build-system-tutorial.md)。
