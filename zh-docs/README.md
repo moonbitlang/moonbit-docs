@@ -625,7 +625,7 @@ fn compare_int(x: Int, y: Int) -> Relation {
 fn print_relation(r: Relation) -> Unit {
   // 使用模式匹配判断 r 属于哪个分支
   match r {
-    // 模式匹配时，如果知道类型，可以直接使用构造器名字即可
+    // 模式匹配时，如果知道类型，直接使用构造器名字即可
     Smaller => println("smaller!")
     // 但也可以用 `类型名字::构造器` 的语法进行模式匹配
     Relation::Greater => println("greater!")
