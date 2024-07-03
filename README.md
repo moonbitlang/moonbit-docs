@@ -335,8 +335,7 @@ Output:
 2
 ```
 
-The `while` loop also supports an optional `else` clause. When the loop finishes, the `else` clause is executed.
-
+The `while` loop also supports an optional `else` clause. When the loop condition becomes false, the `else` clause will be executed, and then the loop will end.
 
 ```rust 
 let mut i = 2
