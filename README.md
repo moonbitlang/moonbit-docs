@@ -70,7 +70,6 @@ Statements include:
 - Named local function definitions
 - Local variable bindings
 - Assignments
-- While loops and related control constructs (`break` and `continue`)
 - `return` statements
 - Any expression whose return type is `unit`
 
@@ -307,31 +306,80 @@ fn init {
 
 In MoonBit, `while` loop can be used to execute a block of code repeatedly as long as a condition is true. The condition is evaluated before executing the block of code. The `while` loop is defined using the `while` keyword, followed by a condition and the loop body. The loop body is a sequence of statements. The loop body is executed as long as the condition is true.
 
-```go
-while x == y {
-  expr1
+
+```rust
+let mut i = 5
+while i > 0 {
+  println(i)
+  i = i - 1
 }
 ```
 
-The `while` statement doesn't yield anything; it only evaluates to `()` of unit type. MoonBit also provides the `break` and `continue` statements for controlling the flow of a loop.
+The loop body supports `break` and `continue`. Using `break` allows you to exit the current loop, while using `continue` skips the remaining part of the current iteration and proceeds to the next iteration.
 
-```rust
-let mut i = 0
-let mut n = 0
 
-while i < 10 {
-  i = i + 1
-  if (i == 3) {
-    continue
-  }
-
-  if (i == 8) {
-    break
-  }
-  n = n + i
+```rust 
+let mut i = 5
+while i > 0 {
+  i = i - 1
+  if i == 4 { continue }
+  if i == 1 { break }
+  println(i)
 }
-// n = 1 + 2 + 4 + 5 + 6 + 7
-println(n) // outputs 25
+```
+
+Output:
+
+```
+3
+2
+```
+
+The `while` loop also supports an optional `else` clause. When the loop finishes, the `else` clause is executed.
+
+
+```rust 
+let mut i = 2
+while i > 0 {
+  println(i)
+  i = i - 1
+} else {
+  println(i)
+}
+```
+
+Output:
+
+```
+2
+1
+0
+```
+
+When there is an `else` clause, the `while` loop can also return a value. The return value is the evaluation result of the `else` clause. In this case, if you use `break` to exit the loop, you need to provide a return value after `break`, which should be of the same type as the return value of the `else` clause.
+
+
+```rust 
+  let mut i = 10
+  let r1 = 
+    while i > 0 {
+      i = i - 1
+      if i % 2 == 0 { break 5 } // break with 5
+    } else {
+      7
+    }
+  println(r1) //output: 5
+```
+
+```rust 
+  let mut i = 10
+  let r2 = 
+    while i > 0 {
+      i = i - 1
+    } else {
+      7
+    }
+  println(r2) //output: 7
 ```
 
 ## Built-in Data Structures

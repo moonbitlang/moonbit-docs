@@ -70,7 +70,6 @@ fn init {
 - 命名局部函数定义
 - 局部变量绑定
 - 赋值
-- `while` 循环和相关的控制流结构（`break` 和 `continue`）
 - `return` 语句
 - 返回类型为 `unit` 的任何表达式
 
@@ -287,6 +286,85 @@ if x == y {
 
 注意，在 MoonBit 中，条件表达式总是返回一个值，其结果和 `else` 子句的返回值类型必须相同。
 
+
+### While 循环
+
+MoonBit中支持`while`循环。`while`后的循环条件会在循环体之前执行，当循环条件为真时, 执行循环体：
+
+```rust
+let mut i = 5
+while i > 0 {
+  println(i)
+  i = i - 1
+}
+```
+
+循环体内支持`break`和`continue`。使用`break`能够跳出当前循环；使用`continue`跳过本次循环的剩余部分，提前进入下一次循环。
+
+
+```rust 
+let mut i = 5
+while i > 0 {
+  i = i - 1
+  if i == 4 { continue }
+  if i == 1 { break }
+  println(i)
+}
+```
+
+输出:
+
+```
+3
+2
+```
+
+`while` 循环也支持可选的`else`子句。当循环结束时，执行`else`子句。
+
+```rust 
+let mut i = 2
+while i > 0 {
+  println(i)
+  i = i - 1
+} else {
+  println(i)
+}
+```
+
+输出:
+
+```
+2
+1
+0
+```
+
+当存在 `else` 子句时，`while` 循环也可以返回一个值，返回值是 `else` 子句语句块的求值结果。此时如果使用`break`跳出循环，需要在`break`后提供一个返回值，类型与`else`子句的返回值类型一致：
+
+
+```rust 
+  let mut i = 10
+  let r1 = 
+    while i > 0 {
+      i = i - 1
+      if i % 2 == 0 { break 5 } // 跳出循环并返回 5
+    } else {
+      7
+    }
+  println(r1) //output: 5
+```
+
+```rust 
+  let mut i = 10
+  let r2 = 
+    while i > 0 {
+      i = i - 1
+    } else {
+      7
+    }
+  println(r2) //output: 7
+```
+
 ### 函数式循环
 
 函数式循环是 MoonBit 中一个强大的特性，它能让您以函数式风格编写循环。
@@ -308,38 +386,6 @@ fn sum(xs: List[Int]) -> Int {
 fn init {
   println(sum(Cons(1, Cons(2, Cons(3, Nil)))))
 }
-```
-
-### 循环
-
-MoonBit 的 `while` 循环可以用如下语法定义：
-
-```rust
-while x == y {
-  expr1
-}
-```
-
-`while` 语句不返回任何值；它只求值成 `unit` 类型的 `()`
-MoonBit 还提供 `break` 和 `continue` 语句来控制循环流。
-
-```rust
-let mut i = 0
-let mut n = 0
-
-while i < 10 {
-  i = i + 1
-  if (i == 3) {
-    continue
-  }
-
-  if (i == 8) {
-    break
-  }
-  n = n + i
-}
-// n = 1 + 2 + 4 + 5 + 6 + 7
-println(n)  // 输出 25
 ```
 
 ## 内置数据结构
