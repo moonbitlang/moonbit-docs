@@ -365,6 +365,75 @@ while i > 0 {
   println(r2) //output: 7
 ```
 
+## For 循环
+
+MoonBit 也支持 C 风格的 For 循环。关键字`for`后依次跟随以分号间隔的变量初始化子句、循环条件和更新子句。三者不需要使用圆括号包裹。
+例如下面的代码创建了一个新的变量绑定`i`, 它的作用域在整个循环中，且是不可变的。这更利于编写清晰的代码和推理：
+
+```rust
+for i = 0; i < 5; i = i + 1 {
+  println(i)
+}
+// output:
+// 0
+// 1
+// 2
+```
+
+变量初始化子句中可以创建多个绑定,例如：
+
+```rust
+for i = 0, j = 0; i + j < 100; i = i + 1, j = j + 1 {
+  println(i)
+}
+```
+
+变量初始化子句、循环条件和更新子句都是可选的。例如下面两个无限循环：
+
+```rust
+for i=1;; i=i+1 {
+  println(i) // loop forever!
+}
+```
+
+```rust
+for {
+  println("loop forever!")
+}
+```
+
+`for` 循环同样支持`continue`、`break`和`else`子句。和`while`循环一样，`for` 循环同样
+支持使用`break`和`else`子句使`for`语句返回一个值。
+
+使用`continue`语句将跳过`for`本次循环的剩余部分（包括更新子句）提前进入下次循环。`continue`语句
+也支持同时更新`for`循环的绑定变量，只要在`continue`后面跟随和绑定变量数量一致的表达式，多个表达式使用逗号分隔。
+
+例如，下面的程序计算数字1到6中的偶数的和：
+
+```rust live
+fn main {
+  let sum =
+    for i = 1, acc = 0; i <= 6; i = i + 1 {
+      if i % 2 == 0 {
+        println("even: \(i)")
+        continue i + 1, acc + i
+      }
+    } else {
+      acc
+    }
+  println(sum)
+}
+```
+
+输出：
+
+```
+even: 2
+even: 4
+even: 6
+12
+```
+
 ### 函数式循环
 
 函数式循环是 MoonBit 中一个强大的特性，它能让您以函数式风格编写循环。
