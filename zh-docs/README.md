@@ -1554,11 +1554,11 @@ fn g() -> Result[Int, String] {
 MoonBit 提供了 `test` 代码块，用于编写测试用例，比如
 ```rust
 test "test_name" {
-  assert_eq(1 + 1, 2)?
-  assert_eq(2 + 2, 4)?
+  @test.eq(1 + 1, 2)!
+  @test.eq(2 + 2, 4)!
 }
 ```
-`test` 代码块实际上是一个返回 `Result[Unit, String]` 类型的函数，它会在执行 `moon test` 的过程中被调用，并通过构建系统输出测试报告，其中 `assert_eq` 是一个标准库中的函数，如果断言失败，会打印错误信息并终止测试。字符串 "test_name" 用于标识测试用例，是可选项，当其以 "panic" 开头时，表示该测试的期望行为是触发 panic，只有在 panic 被触发的情况下才能通过测试，比如：
+`test` 代码块实际上是一个返回 `Unit` ，但是可能抛出 `String` 类型错误的函数（函数签名中记为 `Unit!String` ）。它会在执行 `moon test` 的过程中被调用，并通过构建系统输出测试报告。其中 `@test.eq` 是一个标准库中的函数，如果断言失败，会打印错误信息并终止测试。字符串 `"test_name"` 用于标识测试用例，是可选项，当其以 `"panic"` 开头时，表示该测试的期望行为是触发 panic，只有在 panic 被触发的情况下才能通过测试，比如：
 
 ```rust
 test "panic_test" {
