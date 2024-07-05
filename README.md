@@ -17,7 +17,11 @@ When MoonBit reaches beta, it means any backwards-incompatible changes will be s
 
 ## Overview
 
-A MoonBit program consists of type definitions, function definitions, and variable bindings. The entry point of every package is a special `init` function. The `init` function is special in two aspects:
+A MoonBit program consists of type definitions, function definitions, and variable bindings. 
+
+### Program entrance
+
+There is a specialized function called `init` function. The `init` function is special in two aspects:
 
 1. There can be multiple `init` functions in the same package.
 2. An `init` function can't be explicitly called or referred to by other functions. Instead, all `init` functions will be implicitly called when initializing a package. Therefore, `init` functions should only consist of statements.
@@ -33,6 +37,16 @@ fn init {
   print(x) // success
 }
 ```
+
+For WebAssembly backend, it means that it will be executed **before** the instance is available, meaning that the FFIs that relies on the instance's exportations can not be used at this stage;
+for JavaScript backend, it means that it will be executed during the importation stage.
+
+There is another specialized function called `main` function. The `main` function is the main entrance of the program, and it will be executed after the initialization stage.
+Only packages that are `main` packages can define such `main` function. Check out [build system tutorial](./build-system-tutorial.md) for detail.
+
+The two functions above need to drop the parameter list and the return type.
+
+### Expressions and Statements
 
 MoonBit distinguishes between statements and expressions. In a function body, only the last clause should be an expression, which serves as a return value. For example:
 
@@ -53,8 +67,6 @@ fn init {
   print(bar())
 }
 ```
-
-### Expressions and Statements
 
 Expressions include:
 
