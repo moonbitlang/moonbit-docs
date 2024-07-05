@@ -1002,14 +1002,6 @@ fn div(x: Int, y: Int) -> Int!String {
 
 The keyword `raise` is used to interrupt the function execution and return an error. There are three ways to handle errors in functions:
 
-* Using the `!!` suffix to panic directly in case of an error, for example:
-
-```moonbit
-fn div_unsafe(x: Int, y: Int) -> Int {
-  div(x, y)!! // Panic if `div` raised an error
-}
-```
-
 * Using the `!` suffix to rethrow the error directly in case of an error, for example:
 
 ```moonbit
@@ -1031,6 +1023,24 @@ fn div_with_default(x: Int, y: Int, default: Int) -> Int {
 ```
 
 Here, `try` is used to call a function that might throw an error, and `catch` is used to match and handle the caught error. If no error is caught, the catch block will not be executed.
+
+* Using the `!!` suffix to convert the result into a first-class value of the `Result` type, for example:
+
+```moonbit
+test {
+  let res = div(6, 3)!!
+  inspect(res, content="Ok(2)")!
+  let res = div(6, 0)!!
+  inspect(res, content="Err(division by zero)")!
+}
+```
+
+The suffix `!!` is a syntax sugar that is equivalent to the following code:
+```moonbit
+test {
+  let res = try { Ok(div(6, 3)!) } catch { s => Err(s) }
+}
+```
 
 In MoonBit, error types and error handling are second-class citizens, so error types can only appear in the return value of functions and cannot be used as the type of variables. Error handling with the `!` or `!!` suffix can only be used at the function call site and not in other expressions. Valid usage forms include:
 
