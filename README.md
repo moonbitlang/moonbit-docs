@@ -563,6 +563,8 @@ Variables used for string interpolation must support the `to_string` method.
 let a : Char = 'A'
 let b = '\x41'
 let c = '🐰'
+let zero = '\u{30}'
+let zero = '\u0030'
 ```
 
 ### Byte
