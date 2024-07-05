@@ -283,24 +283,6 @@ Curly brackets are used to group multiple expressions in the consequent or the e
 Note that a conditional expression always returns a value in MoonBit, and the return values of the consequent and the else clause must be of the same type.
 
 
-### Functional loop
-
-Functional loop is a powerful feature in MoonBit that enables you to write loops in a functional style.
-
-A functional loop consumes arguments and returns a value. It is defined using the `loop` keyword, followed by its arguments and the loop body. The loop body is a sequence of clauses, each of which consists of a pattern and an expression. The clause whose pattern matches the input will be executed, and the loop will return the value of the expression. If no pattern matches, the loop will panic. Use the `continue` keyword with arguments to start the next iteration of the loop. Use the `break` keyword with arguments to return a value from the loop. The `break` keyword can be omitted if the value is the last expression in the loop body.
-
-```rust live
-fn sum(xs: List[Int]) -> Int {
-  loop xs, 0 {
-    Nil, acc => break acc // break can be omitted
-    Cons(x, rest), acc => continue rest, x + acc
-  }
-}
-
-fn init {
-  println(sum(Cons(1, Cons(2, Cons(3, Nil)))))
-}
-```
 
 ### While loop
 
@@ -379,6 +361,96 @@ When there is an `else` clause, the `while` loop can also return a value. The re
       7
     }
   println(r2) //output: 7
+```
+
+## For Loop
+
+MoonBit also supports C-style For loops. The keyword `for` is followed by variable initialization clauses, loop conditions, and update clauses separated by semicolons. They do not need to be enclosed in parentheses.
+For example, the code below creates a new variable binding `i`, which has a scope throughout the entire loop and is immutable. This makes it easier to write clear code and reason about it:
+
+```rust
+for i = 0; i < 5; i = i + 1 {
+  println(i)
+}
+// output:
+// 0
+// 1
+// 2
+```
+
+The variable initialization clause can create multiple bindings:
+
+```rust
+for i = 0, j = 0; i + j < 100; i = i + 1, j = j + 1 {
+  println(i)
+}
+```
+
+It should be noted that in the update clause, when there are multiple binding variables, the semantics are to update them simultaneously. In other words, in the example above, the update clause does not execute `i = i + 1`, `j = j + 1` sequentially, but rather increments `i` and `j` at the same time. Therefore, when reading the values of the binding variables in the update clause, you will always get the values updated in the previous iteration.
+
+
+Variable initialization clauses, loop conditions, and update clauses are all optional. For example, the following two are infinite loops:
+
+```rust
+for i=1;; i=i+1 {
+  println(i) // loop forever!
+}
+```
+
+```rust
+for {
+  println("loop forever!")
+}
+```
+
+The `for` loop also supports `continue`, `break`, and `else` clauses. Like the `while` loop, the `for` loop can also return a value using the `break` and `else` clauses.
+
+The `continue` statement skips the remaining part of the current iteration of the `for` loop (including the update clause) and proceeds to the next iteration. The `continue` statement can also update the binding variables of the `for` loop, as long as it is followed by expressions that match the number of binding variables, separated by commas. 
+
+For example, the following program calculates the sum of even numbers from 1 to 6:
+
+
+```rust live
+fn main {
+  let sum =
+    for i = 1, acc = 0; i <= 6; i = i + 1 {
+      if i % 2 == 0 {
+        println("even: \(i)")
+        continue i + 1, acc + i
+      }
+    } else {
+      acc
+    }
+  println(sum)
+}
+```
+
+Output：
+
+```
+even: 2
+even: 4
+even: 6
+12
+```
+
+### Functional loop
+
+Functional loop is a powerful feature in MoonBit that enables you to write loops in a functional style.
+
+A functional loop consumes arguments and returns a value. It is defined using the `loop` keyword, followed by its arguments and the loop body. The loop body is a sequence of clauses, each of which consists of a pattern and an expression. The clause whose pattern matches the input will be executed, and the loop will return the value of the expression. If no pattern matches, the loop will panic. Use the `continue` keyword with arguments to start the next iteration of the loop. Use the `break` keyword with arguments to return a value from the loop. The `break` keyword can be omitted if the value is the last expression in the loop body.
+
+```rust live
+fn sum(xs: List[Int]) -> Int {
+  loop xs, 0 {
+    Nil, acc => break acc // break can be omitted
+    Cons(x, rest), acc => continue rest, x + acc
+  }
+}
+
+fn init {
+  println(sum(Cons(1, Cons(2, Cons(3, Nil)))))
+}
 ```
 
 ## Built-in Data Structures
