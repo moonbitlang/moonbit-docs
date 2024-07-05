@@ -378,13 +378,16 @@ for i = 0; i < 5; i = i + 1 {
 // 2
 ```
 
-The initialization clause of variables can create multiple bindings, for example:
+The variable initialization clause can create multiple bindings:
 
 ```rust
 for i = 0, j = 0; i + j < 100; i = i + 1, j = j + 1 {
   println(i)
 }
 ```
+
+It should be noted that in the update clause, when there are multiple binding variables, the semantics are to update them simultaneously. In other words, in the example above, the update clause does not execute `i = i + 1`, `j = j + 1` sequentially, but rather increments `i` and `j` at the same time. Therefore, when reading the values of the binding variables in the update clause, you will always get the values updated in the previous iteration.
+
 
 Variable initialization clauses, loop conditions, and update clauses are all optional. For example, the following two are infinite loops:
 
