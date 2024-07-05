@@ -17,20 +17,11 @@ MoonBit 目前处于 Pre-alpha 阶段，是实验性质的。我们期望今年�
 ## 概述
 
 一个月兔程序由类型定义，函数定义和变量绑定组成。
-每个包的入口点是一个特殊的 `init` 函数，它有以下两个特点：
+每个包的入口点是一个特殊的 `main` 函数，它只能存在于main包中，且只能有一个`main`函数。`main` 函数不能被显式调用或被其他函数引用。
 
-1. 同一个包中可以有多个 `init` 函数。
-2. `init` 函数不能被显式调用或被其他函数引用。相反，在一个包初始化时，所有的 `init` 函数都将被隐式地调用。因此，`init` 函数中只能包含语句。
-
-```moonbit live
-fn init {
-  print("Hello world!") // OK
-}
-
-fn init {
-  let x = 1
-  // x     // 失败
-  print(x) // 成功
+```rust live
+fn main {
+  print("Hello world!")
 }
 ```
 
@@ -48,7 +39,7 @@ fn bar() -> Int {
   x + 2
 }
 
-fn init {
+fn main {
   print(foo())
   print(bar())
 }
@@ -102,7 +93,7 @@ fn foo() -> Int {
   fn (x) { x + inc(2) } (6) // 匿名，立即应用到整数字面量 6
 }
 
-fn init {
+fn main {
   print(foo())
 }
 ```
@@ -119,11 +110,25 @@ fn foo(x: Int) -> Unit {
   print(four())
 }
 
-fn init {
+fn main {
   foo(2)
 }
 ```
 
+### 初始化函数
+
+`init` 函数是一个特殊的函数，它在当前包初始化时，也就是 `main` 函数之前被隐式地调用。`int`函数可以用于为包初始化资源。同一个包中可以存在多个 `init` 函数。与 `main` 函数类似，`init` 函数不能被显式调用或被其他函数引用。
+
+```rust live
+fn init {
+  print("Hello world!") 
+}
+
+fn init {
+  let x = 1
+  println(x) 
+}
+``` 
 ### 函数调用
 
 函数可通过向圆括号内传入参数列表进行调用：
@@ -134,8 +139,8 @@ add3(1, 2, 7)
 
 这适用于命名函数（如前面的例子）和绑定到函数值的变量，如下所示：
 
-```moonbit live
-fn init {
+```rust live
+fn main {
   let add3 = fn(x, y, z) { x + y + z }
   print(add3(1, 2, 7))
 }
@@ -143,8 +148,8 @@ fn init {
 
 表达式 `add3(1, 2, 7)` 返回 `10`。任何求值为函数值的表达式都可以被调用：
 
-```moonbit live
-fn init {
+```rust live
+fn main {
   let f = fn (x) { x + 1 }
   let g = fn (x) { x + 2 }
   print((if true { f } else { g })(3)) // OK
@@ -163,8 +168,8 @@ fn labelled(~arg1 : Int, ~arg2 : Int) -> Int {
 
 调用函数时，可以用 `label=arg` 的语法提供带标签的参数。`label=label` 可以简写成 `~label`：
 
-```moonbit
-fn init {
+```rust
+fn main {
   let arg1 = 1
   println(labelled(arg2=2, ~arg1)) // 3
 }
@@ -181,7 +186,7 @@ fn optional(~opt : Int = 42) -> Int {
   opt
 }
 
-fn init {
+fn main {
   println(optional()) // 42
   println(optional(opt=0)) // 0
 }
@@ -195,7 +200,7 @@ fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
   counter
 }
 
-fn init {
+fn main {
   println(incr()) // 1
   println(incr()) // 依然是 1，因为重新求值了默认表达式，产生了一个新的 Ref
   let counter : Ref[Int] = { val: 0 }
@@ -214,7 +219,7 @@ fn incr(~counter : Ref[Int] = default_counter) -> Int {
   counter.val
 }
 
-fn init {
+fn main {
   println(incr()) // 1
   println(incr()) // 2
 }
@@ -227,7 +232,7 @@ fn sub_array[X](xs : Array[X], ~offset : Int, ~len : Int = xs.length() - offset)
   ... // 生成 xs 的一个从 offset 开始、长度为 len 的子数组
 }
 
-fn init {
+fn main {
   println(sub_array([1, 2, 3], offset=1)) // [2, 3]
   println(sub_array([1, 2, 3], offset=1, len=1)) // [2]
 }
@@ -245,7 +250,7 @@ fn f(_x : Int, _y : Int, ~loc : SourceLoc = _, ~args_loc : ArgsLoc = _) -> Unit 
   println("各个参数的位置：\(args_loc)")
 }
 
-fn init {
+fn main {
   f(1, 2)
   // 整个函数调用的位置：<文件名>:7:3-7:10
   // 各个参数的位置：[Some(<文件名>:7:5-7:6), Some(<文件名>:7:8-7:9), None, None]
@@ -456,7 +461,7 @@ fn sum(xs: List[Int]) -> Int {
   }
 }
 
-fn init {
+fn main {
   println(sum(Cons(1, Cons(2, Cons(3, Nil)))))
 }
 ```
@@ -547,8 +552,8 @@ let b =
 MoonBit 支持字符串插值，它可以把字符串中内插的变量替换为变量具体的值。
 这个特性能够简化动态拼接字符串的过程。
 
-```moonbit live
-fn init {
+```rust live
+fn main {
   let x = 42
   print("The answer is \(x)")
 }
@@ -572,8 +577,8 @@ let zero = '\u0030'
 
 在 MoonBit 中，字节字面量可以是一个 ASCII 字符或一个转义序列，它们被单引号`'`包围，并且前面有字符`b`。字节字面量的类型是 Byte。例如：
 
-```moonbit live
-fn init {
+```rust live
+fn main {
   let b1 : Byte = b'a'
   println(b1.to_int())
   let b2 = b'\xff'
@@ -590,7 +595,7 @@ fn init {
 fn pack(a: Bool, b: Int, c: String, d: Double) -> (Bool, Int, String, Double) {
     (a, b, c, d)
 }
-fn init {
+fn main {
     let quad = pack(false, 100, "text", 3.14)
     let (bool_val, int_val, str, float_val) = quad
     println("\(bool_val) \(int_val) \(str) \(float_val)")
@@ -612,7 +617,7 @@ fn f(t : (Int, Int)) -> Unit {
   }
 }
 
-fn init {
+fn main {
   f((1, 2))
 }
 ```
@@ -627,8 +632,8 @@ let numbers = [1, 2, 3, 4]
 
 可以用 `numbers[x]` 来引用第 `x` 个元素。索引从零开始。
 
-```moonbit live
-fn init {
+```rust live
+fn main {
   let numbers = [1, 2, 3, 4]
   let a = numbers[2]
   numbers[3] = 5
@@ -645,7 +650,7 @@ fn init {
 ```moonbit live
 let zero = 0
 
-fn init {
+fn main {
   let mut i = 10
   i = 20
   print(i + zero)
@@ -671,7 +676,7 @@ struct User {
   mut email: String
 }
 
-fn init {
+fn main {
   let u = { id: 0, name: "John Doe", email: "john@doe.com" }
   u.email = "john@doe.name"
   println(u.id)
@@ -685,8 +690,8 @@ fn init {
 如果已经有和结构体的字段同名的变量，并且想使用这些变量作为结构体同名字段的值，
 那么创建结构体时，可以只写字段名，不需要把同一个名字重复两次。例如：
 
-```moonbit live
-fn init{
+```rust live
+fn main{
   let name = "john"
   let email = "john@doe.com"
   let u = { id: 0, name, email } // 等价于 { id: 0, name: name, email: email }
@@ -705,7 +710,7 @@ struct User {
   email: String
 } derive(Debug)
 
-fn init {
+fn main {
   let user = { id: 0, name: "John Doe", email: "john@doe.com" }
   let updated_user = { ..user, email: "john@doe.name" }
   debug(user)          // 输出: { id: 0, name: "John Doe", email: "john@doe.com" }
@@ -754,7 +759,7 @@ fn print_relation(r: Relation) -> Unit {
   }
 }
 
-fn init {
+fn main {
   print_relation(compare_int(0, 1)) // 输出 smaller!
   print_relation(compare_int(1, 1)) // 输出 equal!
   print_relation(compare_int(2, 1)) // 输出 greater!
@@ -770,7 +775,7 @@ enum List {
   Cons (Int, List)
 }
 
-fn init {
+fn main {
   // 使用 `Cons` 创建列表时，需要提供 `Cons` 要求的额外数据：第一个元素和剩余的列表
   let l: List = Cons(1, Cons(2, Nil))
   println(is_singleton(l))
@@ -827,7 +832,7 @@ fn f(e : E) -> Unit {
 }
 
 // 创建有带标签参数的构造器
-fn init {
+fn main {
   f(C(x=0, y=0)) // `标签=参数的值`
   let x = 0
   f(C(~x, y=1)) // `~x` 是 `x=x` 的简写
@@ -856,7 +861,7 @@ fn distance_with(self : Object, other : Object) -> Double {
   }
 }
 
-fn init {
+fn main {
   let p1 : Point = Point(x=0, y=0)
   let p2 : Point = Point(x=3, y=4)
   println(p1.distance_with(p2)) // 5.0
@@ -921,8 +926,8 @@ type UserName String
 新类型和只有一个构造器（与类型同名）的枚举类型非常相似。
 因此，可以使用构造器来创建新类型的值、使用模式匹配来提取新类型的内部表示：
 
-```moonbit
-fn init {
+```rust
+fn main {
   let id: UserId = UserId(1)
   let name: UserName = UserName("John Doe")
   let UserId(uid) = id        // `uid` 的类型是 `Int`
@@ -934,8 +939,8 @@ fn init {
 
 除了模式匹配，还可以使用 `.0` 提取新类型的内部表示：
 
-```moonbit
-fn init {
+```rust
+fn main {
   let id: UserId = UserId(1)
   let uid: Int = id.0
   println(uid)
@@ -1135,7 +1140,7 @@ MoonBit 中另一个有用的特性是 `pub(readonly)` 类型，其受到了 OCa
 pub(readonly) struct RO {
   field: Int
 }
-fn init {
+fn main {
   let r = { field: 4 }       // OK
   let r = { ..r, field: 8 }  // OK
 }
@@ -1146,7 +1151,7 @@ fn print_RO(r : RO) -> Unit {
   print(r.field)  // OK
   print(" }")
 }
-fn init {
+fn main {
   let r : RO = { field: 4 }  // ERROR: 无法创建公共只读类型 RO 的值！
   let r = { ..r, field: 8 }  // ERROR: 无法修改一个公共只读字段！
 }
@@ -1199,8 +1204,8 @@ fn MyList::map[X, Y](xs: MyList[X], f: (X) -> Y) -> List[Y] { ... }
 
 方法就是某个类型所拥有的普通函数。所以，在没有歧义时，它们也可以像普通函数一样调用：
 
-```moonbit
-fn init {
+```rust
+fn main {
   let xs: MyList[MyList[_]] = ...
   let ys = concat(xs)
 }
@@ -1216,7 +1221,7 @@ fn T1::default() -> { { x1: 0 } }
 struct T2 { x2: Int }
 fn T2::default() -> { { x2: 0 } }
 
-fn init {
+fn main {
   // default() 有歧义！
   let t1 = T1::default() // 可行
   let t2 = T2::default() // 可行
@@ -1236,7 +1241,7 @@ fn op_add(self: T, other: T) -> T {
   { x: self.x + other.x }
 }
 
-fn init {
+fn main {
   let a = { x:0, }
   let b = { x:2, }
   debug(a + b)
@@ -1265,7 +1270,7 @@ fn op_set(self: Coord, key: String, val: Int) -> Unit {
   }
 }
 
-fn init {
+fn main {
   let c = { x: 1, y: 2 }
   debug(c)
   debug(c["y"])
@@ -1294,8 +1299,8 @@ fn init {
 
 MoonBit 提供了便利的管道运算符 `|>`，可以用于链式调用普通函数：
 
-```moonbit
-fn init {
+```rust
+fn main {
   x |> f     // 等价于 f(x)
   x |> f(y)  // 等价于 f(x, y)
 
@@ -1310,8 +1315,8 @@ fn init {
 
 类似于其他语言的“切片”，视图能够引用数组等数据类型中的片段。可以使用`data[start..end]`的方式创建一个关于数组`data`的视图，这个视图引用了从下标`start`开始到`end`（不包含`end`）的元素。`start`和`end`也可以省略:
 
-```moonbit
-fn init {
+```rust
+fn main {
   let xs = [0,1,2,3,4,5]
   let s1 : ArrayView[Int] = xs[2..]
   print_array_view(s1)            //output: 2345
@@ -1354,7 +1359,7 @@ pub fn op_as_view[A](self : MyList[A], ~start : Int, ~end : Int) -> MyListView[A
   { ls: self, start, end }
 }
 
-fn init {
+fn main {
   let ls = { elems: [1,2,3,4,5] }
   ls[..] |> ignore()
   ls[1..] |> ignore()
@@ -1420,8 +1425,8 @@ fn square[N: Number](x: N) -> N {
 如果没有 `Number` 的要求，`square` 中的表达式 `x * x` 会导致出现找不到方法/运算符的错误。
 现在，函数 `square` 可以与任何实现了 `Number` 接口的类型一起使用，例如：
 
-```moonbit live
-fn init {
+```rust live
+fn main {
   debug(square(2)) // 4
   debug(square(1.5)) // 2.25
   debug(square({ x: 2, y: 3 })) // (4, 9)
@@ -1444,8 +1449,8 @@ fn op_mul(self: Point, other: Point) -> Point {
 接口中的方法可以用 `Trait::method` 的语法来直接调用。MoonBit 会推导 `Self` 的具体类型，
 并检查 `Self` 是否实现了 `Trait`：
 
-```moonbit live
-fn init {
+```rust live
+fn main {
   println(Show::to_string(42))
   debug(Compare::compare(1.0, 2.5))
 }
@@ -1520,7 +1525,7 @@ fn MyTrait::f(self: Int) -> Unit {
   println("Got Int \(self)!")
 }
 
-fn init {
+fn main {
   MyTrait::f(42)
 }
 ```
@@ -1535,7 +1540,7 @@ struct T {
   y: Int
 } derive(Eq, Compare, Debug, Default)
 
-fn init {
+fn main {
   let t1 = T::default()
   let t2 = { x: 1, y: 1 }
   debug(t1) // {x: 0, y: 0}
@@ -1571,7 +1576,7 @@ fn Fox::speak(_self: Fox) -> Unit {
   println("What does the fox say?")
 }
 
-fn init {
+fn main {
   let duck1 = Duck::make("duck1")
   let duck2 = Duck::make("duck2")
   let fox1 = Fox::make("fox1")
