@@ -1011,13 +1011,6 @@ fn div_unsafe(x: Int, y: Int) -> Int {
 }
 ```
 
-* 使用 `!` 后缀来在发生错误的情况下将错误直接重新抛出，比如
-```moonbit
-fn div_reraise(x: Int, y: Int) -> Int!String {
-  div(x, y)! // 直接重新抛出错误
-}
-```
-
 * 使用 `try` 和 `catch` 对错误进行捕获并处理，比如
 ```moonbit
 fn div_with_default(x: Int, y: Int, default: Int) -> Int {
@@ -1029,6 +1022,23 @@ fn div_with_default(x: Int, y: Int, default: Int) -> Int {
 }
 ```
 其中 `try` 用于调用可能会抛出错误的函数，`catch` 用于对捕获的错误进行模式匹配并处理，如果没有捕获到错误则不会执行 `catch` 语句块。
+
+* 使用 `!!` 后缀来将函数执行结果转化为 `Result` 类型的值，比如：
+```moonbit
+test {
+  let res = div(6, 3)!!
+  inspect(res, content="Ok(2)")!
+  let res = div(6, 0)!!
+  inspect(res, content="Err(division by zero)")!
+}
+```
+
+本质上，后缀表达式 `!!` 是下面代码的语法糖：
+```moonbit
+test {
+  let res = try { Ok(div(6, 3)!) } catch { s => Err(s) }
+}
+```
 
 在 MoonBit 中，错误类型和错误处理属于二等公民，因此错误类型只能出现在函数的返回值中，而不能作为变量的类型。使用后缀表达式 `!` 或 `!!` 进行的错误处理也只能在函数调用处进行，而不能在其他表达式中使用，合法的使用形式包括：
 ```moonbit
