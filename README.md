@@ -22,7 +22,7 @@ A MoonBit program consists of type definitions, function definitions, and variab
 1. There can be multiple `init` functions in the same package.
 2. An `init` function can't be explicitly called or referred to by other functions. Instead, all `init` functions will be implicitly called when initializing a package. Therefore, `init` functions should only consist of statements.
 
-```rust live
+```moonbit live
 fn init {
   print("Hello world!") // OK
 }
@@ -36,7 +36,7 @@ fn init {
 
 MoonBit distinguishes between statements and expressions. In a function body, only the last clause should be an expression, which serves as a return value. For example:
 
-```rust live
+```moonbit live
 fn foo() -> Int {
   let x = 1
   x + 1 // OK
@@ -81,7 +81,7 @@ Functions take arguments and produce a result. In MoonBit, functions are first-c
 
 Functions can be defined as top-level or local. We can use the `fn` keyword to define a top-level function that sums three integers and returns the result, as follows:
 
-```rust
+```moonbit
 fn add3(x: Int, y: Int, z: Int)-> Int {
   x + y + z
 }
@@ -93,7 +93,7 @@ Note that the arguments and return value of top-level functions require explicit
 
 Local functions can be named or anonymous. Type annotations can be omitted for local function definitions: they can be automatically inferred in most cases. For example:
 
-```go live
+```moonbit live
 fn foo() -> Int {
   fn inc(x) { x + 1 }  // named as `inc`
   fn (x) { x + inc(2) } (6) // anonymous, instantly applied to integer literal 6
@@ -106,7 +106,7 @@ fn init {
 
 Functions, whether named or anonymous, are _lexical closures_: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
 
-```go live
+```moonbit live
 let y = 3
 fn foo(x: Int) -> Unit {
   fn inc()  { x + 1 } // OK, will return x + 1
@@ -124,13 +124,13 @@ fn init {
 
 A function can be applied to a list of arguments in parentheses:
 
-```go
+```moonbit
 add3(1, 2, 7)
 ```
 
 This works whether `add3` is a function defined with a name (as in the previous example), or a variable bound to a function value, as shown below:
 
-```go live
+```moonbit live
 fn init {
   let add3 = fn(x, y, z) { x + y + z }
   print(add3(1, 2, 7))
@@ -139,7 +139,7 @@ fn init {
 
 The expression `add3(1, 2, 7)` returns `10`. Any expression that evaluates to a function value is applicable:
 
-```go live
+```moonbit live
 fn init {
   let f = fn (x) { x + 1 }
   let g = fn (x) { x + 2 }
@@ -150,7 +150,7 @@ fn init {
 ### Labelled arguments
 Functions can declare labelled argument with the syntax `~label : Type`. `label` will also serve as parameter name inside function body:
 
-```rust
+```moonbit
 fn labelled(~arg1 : Int, ~arg2 : Int) -> Int {
   arg1 + arg2
 }
@@ -158,7 +158,7 @@ fn labelled(~arg1 : Int, ~arg2 : Int) -> Int {
 
 Labelled arguments can be supplied via the syntax `label=arg`. `label=label` can be abbreviated as `~label`:
 
-```rust
+```moonbit
 fn init {
   let arg1 = 1
   println(labelled(arg2=2, ~arg1)) // 3
@@ -170,7 +170,7 @@ Labelled function can be supplied in any order. The evaluation order of argument
 ### Optional arguments
 A labelled argument can be made optional by supplying a default expression with the syntax `~label : Type = default_expr`. If this argument is not supplied at call site, the default expression will be used:
 
-```rust live
+```moonbit live
 fn optional(~opt : Int = 42) -> Int {
   opt
 }
@@ -183,7 +183,7 @@ fn init {
 
 The default expression will be evaluated everytime it is used. And the side effect in the default expression, if any, will also be triggered. For example:
 
-```rust live
+```moonbit live
 fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
   counter.val = counter.val + 1
   counter
@@ -200,7 +200,7 @@ fn init {
 
 If you want to share the result of default expression between different function calls, you can lift the default expression to a toplevel `let` declaration:
 
-```rust live
+```moonbit live
 let default_counter : Ref[Int] = { val: 0 }
 
 fn incr(~counter : Ref[Int] = default_counter) -> Int {
@@ -216,7 +216,7 @@ fn init {
 
 Default expression can depend on the value of previous arguments. For example:
 
-```rust
+```moonbit
 fn sub_array[X](xs : Array[X], ~offset : Int, ~len : Int = xs.length() - offset) -> Array[X] {
   ... // take a sub array of [xs], starting from [offset] with length [len]
 }
@@ -235,7 +235,7 @@ Now if the argument is not explicitly supplied, MoonBit will automatically fill 
 Currently MoonBit supports two types of autofill arguments, `SourceLoc`, which is the source location of the whole function call,
 and `ArgsLoc`, which is a array containing the source location of each argument, if any:
 
-```rust
+```moonbit
 fn f(_x : Int, _y : Int, ~loc : SourceLoc = _, ~args_loc : ArgsLoc = _) -> Unit {
   println("loc of whole function call: \(loc)")
   println("loc of arguments: \(args_loc)")
@@ -256,7 +256,7 @@ Autofill arguments are very useful for writing debugging and testing utilities.
 
 A conditional expression consists of a condition, a consequent, and an optional else clause.
 
-```go
+```moonbit
 if x == y {
   expr1
 } else {
@@ -270,7 +270,7 @@ if x == y {
 
 The else clause can also contain another if-else expression:
 
-```go
+```moonbit
 if x == y {
   expr1
 } else if z == k {
@@ -289,7 +289,7 @@ Note that a conditional expression always returns a value in MoonBit, and the re
 In MoonBit, `while` loop can be used to execute a block of code repeatedly as long as a condition is true. The condition is evaluated before executing the block of code. The `while` loop is defined using the `while` keyword, followed by a condition and the loop body. The loop body is a sequence of statements. The loop body is executed as long as the condition is true.
 
 
-```rust
+```moonbit
 let mut i = 5
 while i > 0 {
   println(i)
@@ -300,7 +300,7 @@ while i > 0 {
 The loop body supports `break` and `continue`. Using `break` allows you to exit the current loop, while using `continue` skips the remaining part of the current iteration and proceeds to the next iteration.
 
 
-```rust 
+```moonbit 
 let mut i = 5
 while i > 0 {
   i = i - 1
@@ -319,7 +319,7 @@ Output:
 
 The `while` loop also supports an optional `else` clause. When the loop condition becomes false, the `else` clause will be executed, and then the loop will end.
 
-```rust 
+```moonbit 
 let mut i = 2
 while i > 0 {
   println(i)
@@ -340,7 +340,7 @@ Output:
 When there is an `else` clause, the `while` loop can also return a value. The return value is the evaluation result of the `else` clause. In this case, if you use `break` to exit the loop, you need to provide a return value after `break`, which should be of the same type as the return value of the `else` clause.
 
 
-```rust 
+```moonbit 
   let mut i = 10
   let r1 = 
     while i > 0 {
@@ -352,7 +352,7 @@ When there is an `else` clause, the `while` loop can also return a value. The re
   println(r1) //output: 5
 ```
 
-```rust 
+```moonbit 
   let mut i = 10
   let r2 = 
     while i > 0 {
@@ -368,7 +368,7 @@ When there is an `else` clause, the `while` loop can also return a value. The re
 MoonBit also supports C-style For loops. The keyword `for` is followed by variable initialization clauses, loop conditions, and update clauses separated by semicolons. They do not need to be enclosed in parentheses.
 For example, the code below creates a new variable binding `i`, which has a scope throughout the entire loop and is immutable. This makes it easier to write clear code and reason about it:
 
-```rust
+```moonbit
 for i = 0; i < 5; i = i + 1 {
   println(i)
 }
@@ -380,7 +380,7 @@ for i = 0; i < 5; i = i + 1 {
 
 The variable initialization clause can create multiple bindings:
 
-```rust
+```moonbit
 for i = 0, j = 0; i + j < 100; i = i + 1, j = j + 1 {
   println(i)
 }
@@ -391,13 +391,13 @@ It should be noted that in the update clause, when there are multiple binding va
 
 Variable initialization clauses, loop conditions, and update clauses are all optional. For example, the following two are infinite loops:
 
-```rust
+```moonbit
 for i=1;; i=i+1 {
   println(i) // loop forever!
 }
 ```
 
-```rust
+```moonbit
 for {
   println("loop forever!")
 }
@@ -410,7 +410,7 @@ The `continue` statement skips the remaining part of the current iteration of th
 For example, the following program calculates the sum of even numbers from 1 to 6:
 
 
-```rust live
+```moonbit live
 fn main {
   let sum =
     for i = 1, acc = 0; i <= 6; i = i + 1 {
@@ -440,7 +440,7 @@ Functional loop is a powerful feature in MoonBit that enables you to write loops
 
 A functional loop consumes arguments and returns a value. It is defined using the `loop` keyword, followed by its arguments and the loop body. The loop body is a sequence of clauses, each of which consists of a pattern and an expression. The clause whose pattern matches the input will be executed, and the loop will return the value of the expression. If no pattern matches, the loop will panic. Use the `continue` keyword with arguments to start the next iteration of the loop. Use the `break` keyword with arguments to return a value from the loop. The `break` keyword can be omitted if the value is the last expression in the loop body.
 
-```rust live
+```moonbit live
 fn sum(xs: List[Int]) -> Int {
   loop xs, 0 {
     Nil, acc => break acc // break can be omitted
@@ -459,7 +459,7 @@ fn init {
 
 MoonBit has a built-in boolean type, which has two values: `true` and `false`. The boolean type is used in conditional expressions and control structures.
 
-```rust
+```moonbit
 let a = true
 let b = false
 let c = a && b
@@ -485,7 +485,7 @@ To improve readability, you may place underscores in the middle of numeric liter
 
 - There is nothing surprising about decimal numbers.
 
-```rust
+```moonbit
 let a = 1234
 let b = 1_000_000 + a
 let large_num = 9_223_372_036_854_775_807L // Integers of the Int64 type must have an 'L' as a suffix
@@ -495,7 +495,7 @@ let unsigned_num = 4_294_967_295U // Integers of the UInt type must have an 'U' 
 - A binary number has a leading zero followed by a letter "B", i.e. `0b`/`0B`.
   Note that the digits after `0b`/`0B` must be `0` or `1`.
 
-```rust
+```moonbit
 let bin =  0b110010
 let another_bin = 0B110010
 ```
@@ -503,7 +503,7 @@ let another_bin = 0B110010
 - An octal number has a leading zero followed by a letter "O", i.e. `0o`/`0O`.
   Note that the digits after `0o`/`0O` must be in the range from `0` through `7`:
 
-```rust
+```moonbit
 let octal = 0o1234
 let another_octal = 0O1234
 ```
@@ -511,7 +511,7 @@ let another_octal = 0O1234
 - A hexadecimal number has a leading zero followed by a letter "X", i.e. `0x`/`0X`.
   Note that the digits after the `0x`/`0X` must be in the range `0123456789ABCDEF`.
 
-```rust
+```moonbit
 let hex = 0XA
 let another_hex = 0xA
 ```
@@ -520,13 +520,13 @@ let another_hex = 0xA
 
 `String` holds a sequence of UTF-16 code units. You can use double quotes to create a string, or use `#|` to write a multi-line string.
 
-```rust
+```moonbit
 let a = "兔rabbit"
 println(a[0]) // output: 兔
 println(a[1]) // output: r
 ```
 
-```rust
+```moonbit
 let b =
   #| Hello
   #| MoonBit
@@ -546,7 +546,7 @@ In double quotes string, a backslash followed by certain special characters form
 
 MoonBit supports string interpolation. It enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text.
 
-```swift live
+```moonbit live
 fn init {
   let x = 42
   print("The answer is \(x)")
@@ -559,7 +559,7 @@ Variables used for string interpolation must support the `to_string` method.
 
 `Char` is an integer representing a Unicode code point.
 
-```rust
+```moonbit
 let a : Char = 'A'
 let b = '\x41'
 let c = '🐰'
@@ -569,7 +569,7 @@ let c = '🐰'
 
 A byte literal in MoonBit is either a single ASCII character or a single escape enclosed in single quotes `'`, and preceded by the character `b`. Byte literals are of type `Byte`. For example:
 
-```rust live
+```moonbit live
 fn init {
   let b1 : Byte = b'a'
   println(b1.to_int())
@@ -582,7 +582,7 @@ fn init {
 
 A tuple is a collection of finite values constructed using round brackets `()` with the elements separated by commas `,`. The order of elements matters; for example, `(1,true)` and `(true,1)` have different types. Here's an example:
 
-```go live
+```moonbit live
 fn pack(a: Bool, b: Int, c: String, d: Double) -> (Bool, Int, String, Double) {
     (a, b, c, d)
 }
@@ -595,7 +595,7 @@ fn init {
 
 Tuples can be accessed via pattern matching or index:
 
-```go live
+```moonbit live
 fn f(t : (Int, Int)) -> Unit {
   let (x1, y1) = t // access via pattern matching
   // access via index
@@ -617,13 +617,13 @@ fn init {
 
 An array is a finite sequence of values constructed using square brackets `[]`, with elements separated by commas `,`. For example:
 
-```go
+```moonbit
 let numbers = [1, 2, 3, 4]
 ```
 
 You can use `numbers[x]` to refer to the xth element. The index starts from zero.
 
-```go live
+```moonbit live
 fn init {
   let numbers = [1, 2, 3, 4]
   let a = numbers[2]
@@ -637,7 +637,7 @@ fn init {
 
 A variable can be declared as mutable or immutable using `let mut` or `let`, respectively. A mutable variable can be reassigned to a new value, while an immutable one cannot.
 
-```go live
+```moonbit live
 let zero = 0
 
 fn init {
@@ -655,7 +655,7 @@ There are two ways to create new data types: `struct` and `enum`.
 
 In MoonBit, structs are similar to tuples, but their fields are indexed by field names. A struct can be constructed using a struct literal, which is composed of a set of labeled values and delimited with curly brackets. The type of a struct literal can be automatically inferred if its fields exactly match the type definition. A field can be accessed using the dot syntax `s.f`. If a field is marked as mutable using the keyword `mut`, it can be assigned a new value.
 
-```rust live
+```moonbit live
 struct User {
   id: Int
   name: String
@@ -675,7 +675,7 @@ fn init {
 
 If you already have some variable like `name` and `email`, it's redundant to repeat those names when constructing a struct:
 
-```go live
+```moonbit live
 fn init{
   let name = "john"
   let email = "john@doe.com"
@@ -685,7 +685,7 @@ fn init{
 
 You can use shorthand instead, it behaves exactly the same.
 
-```go live
+```moonbit live
 fn init{
   let name = "john"
   let email = "john@doe.com"
@@ -697,7 +697,7 @@ fn init{
 
 It's useful to create a new struct based on an existing one, but with some fields updated.
 
-```rust live
+```moonbit live
 struct User {
   id: Int
   name: String
@@ -718,7 +718,7 @@ Enum types are similar to algebraic data types in functional languages. Users fa
 
 An enum can have a set of cases (constructors). Constructor names must start with capitalized letter. You can use these names to construct corresponding cases of an enum, or checking which branch an enum value belongs to in pattern matching:
 
-```rust live
+```moonbit live
 // An enum type that represents the ordering relation between two values,
 // with three cases "Smaller", "Greater" and "Equal"
 enum Relation {
@@ -762,7 +762,7 @@ fn init {
 
 Enum cases can also carry payload data. Here's an example of defining an integer list type using enum:
 
-```rust live
+```moonbit live
 enum List {
   Nil
   // constructor `Cons` carries additional payload: the first element of the list,
@@ -809,7 +809,7 @@ fn is_singleton(l: List) -> Bool {
 
 #### Constructor with labelled arguments
 Enum constructors can have labelled argument:
-```rust live
+```moonbit live
 enum E {
   // `x` and `y` are alabelled argument
   C(~x : Int, ~y : Int)
@@ -835,7 +835,7 @@ fn init {
 ```
 
 It is also possible to access labelled arguments of constructors like accessing struct fields in pattern matching:
-```rust live
+```moonbit live
 enum Object {
   Point(~x : Double, ~y : Double)
   Circle(~x : Double, ~y : Double, ~radius : Double)
@@ -864,7 +864,7 @@ fn init {
 
 #### Constructor with mutable fields
 It is also possible to define mutable fields for constructor. This is especially useful for defining imperative data structures:
-```rust live
+```moonbit live
 // A mutable binary search tree with parent pointer
 enum Tree[X] {
   Nil
@@ -908,7 +908,7 @@ fn Tree::insert[X : Compare](self : Tree[X], x : X, ~parent : Tree[X]) -> Tree[X
 
 MoonBit supports a special kind of enum called newtype:
 
-```rust
+```moonbit
 // `UserId` is a fresh new type different from `Int`, and you can define new methods for `UserId`, etc.
 // But at the same time, the internal representation of `UserId` is exactly the same as `Int`
 type UserId Int
@@ -917,7 +917,7 @@ type UserName String
 
 Newtypes are similar to enums with only one constructor (with the same name as the newtype itself). So, you can use the constructor to create values of newtype, or use pattern matching to extract the underlying representation of a newtype:
 
-```rust
+```moonbit
 fn init {
   let id: UserId = UserId(1)
   let name: UserName = UserName("John Doe")
@@ -930,7 +930,7 @@ fn init {
 
 Besides pattern matching, you can also use `.0` to extract the internal representation of newtypes:
 
-```rust
+```moonbit
 fn init {
   let id: UserId = UserId(1)
   let uid: Int = id.0
@@ -942,7 +942,7 @@ fn init {
 
 We have shown a use case of pattern matching for enums, but pattern matching is not restricted to enums. For example, we can also match expressions against Boolean values, numbers, characters, strings, tuples, arrays, and struct literals. Since there is only one case for those types other than enums, we can pattern match them using `let` binding instead of `match` expressions. Note that the scope of bound variables in `match` is limited to the case where the variable is introduced, while `let` binding will introduce every variable to the current scope. Furthermore, we can use underscores `_` as wildcards for the values we don't care about, use `..` to ignore remaining fields of struct or elements of array.
 
-```go
+```moonbit
 let id = match u {
   { id: id, name: _, email: _ } => id
 }
@@ -952,7 +952,7 @@ let { id: id, name: _, email: _ } = u
 let { id: id, ..} = u
 ```
 
-```go
+```moonbit
 let ary = [1,2,3,4]
 let [a, b, ..] = ary // a = 1, b = 2
 let [.., a, b] = ary // a = 3, b = 4
@@ -960,7 +960,7 @@ let [.., a, b] = ary // a = 3, b = 4
 
 There are some other useful constructs in pattern matching. For example, we can use `as` to give a name to some pattern, and we can use `|` to match several cases at once. A variable name can only be bound once in a single pattern, and the same set of variables should be bound on both sides of `|` patterns.
 
-```go
+```moonbit
 match expr {
   Lit(n) as a => ...
   Add(e1, e2) | Mul(e1, e2) => ...
@@ -970,7 +970,7 @@ match expr {
 
 ### Map Pattern
 MoonBit allows convenient matching on map-like data structures:
-```rust
+```moonbit
 match map {
   // matches if any only if "b" exists in `map`
   { "b": Some(_) } => ..
@@ -989,7 +989,7 @@ match map {
 ## Error Handling
 The return type of a function can include an error type to indicate that the function might return an error. For example, the following function declaration indicates that the function div might return an error of type String:
 
-```rust
+```moonbit
 fn div(x: Int, y: Int) -> Int!String { 
   if y == 0 {
     raise "division by zero"
@@ -1002,7 +1002,7 @@ The keyword `raise` is used to interrupt the function execution and return an er
 
 * Using the `!!` suffix to panic directly in case of an error, for example:
 
-```rust
+```moonbit
 fn div_unsafe(x: Int, y: Int) -> Int {
   div(x, y)!! // Panic if `div` raised an error
 }
@@ -1010,7 +1010,7 @@ fn div_unsafe(x: Int, y: Int) -> Int {
 
 * Using the `!` suffix to rethrow the error directly in case of an error, for example:
 
-```rust
+```moonbit
 fn div_reraise(x: Int, y: Int) -> Int!String {
   div(x, y)! // Rethrow the error if `div` raised an error
 }
@@ -1018,7 +1018,7 @@ fn div_reraise(x: Int, y: Int) -> Int!String {
 
 * Using `try` and `catch` to catch and handle errors, for example:
 
-```rust
+```moonbit
 fn div_with_default(x: Int, y: Int, default: Int) -> Int {
   try {
     div(x, y)!
@@ -1032,7 +1032,7 @@ Here, `try` is used to call a function that might throw an error, and `catch` is
 
 In MoonBit, error types and error handling are second-class citizens, so error types can only appear in the return value of functions and cannot be used as the type of variables. Error handling with the `!` or `!!` suffix can only be used at the function call site and not in other expressions. Valid usage forms include:
 
-```rust
+```moonbit
 f(x)!
 x.f()!
 (x |> f)!
@@ -1045,7 +1045,7 @@ Additionally, if the return type of a function includes an error type, the funct
 
 Generics are supported in top-level function and data type definitions. Type parameters can be introduced within square brackets. We can rewrite the aforementioned data type `List` to add a type parameter `T` to obtain a generic version of lists. We can then define generic functions over lists like `map` and `reduce`.
 
-```go
+```moonbit
 enum List[T] {
   Nil
   Cons(T, List[T])
@@ -1073,7 +1073,7 @@ By default, all function definitions and variable bindings are _invisible_ to ot
 - Struct fields cannot be defined as `pub` within an abstract or private struct since it makes no sense.
 - Enum constructors do not have individual visibility so you cannot use `pub` or `priv` before them.
 
-```go
+```moonbit
 struct R1 {       // abstract data type by default
   x: Int          // implicitly private field
   pub y: Int      // ERROR: `pub` field found in an abstract type!
@@ -1113,7 +1113,7 @@ priv enum T3 {       // explicitly private enum
 
 Another useful feature supported in MoonBit is `pub(readonly)` types, which are inspired by [private types](https://v2.ocaml.org/manual/privatetypes.html) in OCaml. In short, values of `pub(readonly)` types can be destructed by pattern matching and the dot syntax, but cannot be constructed or mutated in other packages. Note that there is no restriction within the same package where `pub(readonly)` types are defined.
 
-```go
+```moonbit
 // Package A
 pub(readonly) struct RO {
   field: Int
@@ -1137,7 +1137,7 @@ fn init {
 
 Access control in MoonBit adheres to the principle that a `pub` type, function, or variable cannot be defined in terms of a private type. This is because the private type may not be accessible everywhere that the `pub` entity is used. MoonBit incorporates sanity checks to prevent the occurrence of use cases that violate this principle.
 
-```go
+```moonbit
 pub struct S {
   x: T1  // OK
   y: T2  // OK
@@ -1158,7 +1158,7 @@ pub let a: T3  // ERROR: public variable has private type `T3`!
 
 MoonBit supports methods in a different way from traditional object-oriented languages. A method in MoonBit is just a toplevel function associated with a type constructor. Methods can be defined using the syntax `fn TypeName::method_name(...) -> ...`:
 
-```rust
+```moonbit
 enum MyList[X] {
   Nil
   Cons(X, MyList[X])
@@ -1170,7 +1170,7 @@ fn MyList::concat[X](xs: MyList[MyList[X]]) -> MyList[X] { ... }
 
 As a convenient shorthand, when the first parameter of a function is named `self`, MoonBit automatically defines the function as a method of the type of `self`:
 
-```rust
+```moonbit
 fn map[X, Y](self: MyList[X], f: (X) -> Y) -> List[Y] { ... }
 // equivalent to
 fn MyList::map[X, Y](xs: MyList[X], f: (X) -> Y) -> List[Y] { ... }
@@ -1178,7 +1178,7 @@ fn MyList::map[X, Y](xs: MyList[X], f: (X) -> Y) -> List[Y] { ... }
 
 Methods are just regular functions owned by a type constructor. So when there is no ambiguity, methods can be called using regular function call syntax directly:
 
-```rust
+```moonbit
 fn init {
   let xs: MyList[MyList[_]] = ...
   let ys = concat(xs)
@@ -1187,7 +1187,7 @@ fn init {
 
 Unlike regular functions, methods support overloading: different types can define methods of the same name. If there are multiple methods of the same name (but for different types) in scope, one can still call them by explicitly adding a `TypeName::` prefix:
 
-```rust live
+```moonbit live
 struct T1 { x1: Int }
 fn T1::default() -> { { x1: 0 } }
 
@@ -1203,7 +1203,7 @@ fn init {
 
 When the first parameter of a method is also the type it belongs to, methods can be called using dot syntax `x.method(...)`. MoonBit automatically finds the correct method based on the type of `x`, there is no need to write the type name and even the package name of the method:
 
-```rust
+```moonbit
 // a package named @list
 enum List[X] { ... }
 fn List::length[X](xs: List[X]) -> Int { ... }
@@ -1221,7 +1221,7 @@ fn init {
 
 MoonBit supports operator overloading of builtin operators via methods. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
 
-```rust live
+```moonbit live
 struct T {
   x:Int
 } derive(Debug)
@@ -1239,7 +1239,7 @@ fn init {
 
 Another example about `op_get` and `op_set`:
 
-```rust live
+```moonbit live
 struct Coord {
   mut x: Int
   mut y: Int
@@ -1287,7 +1287,7 @@ Currently, the following operators can be overloaded:
 ## Pipe operator
 MoonBit provides a convenient pipe operator `|>`, which can be used to chain regular function calls:
 
-```rust
+```moonbit
 fn init {
   x |> f // equivalent to f(x)
   x |> f(y) // equivalent to f(x, y)
@@ -1306,7 +1306,7 @@ specific segment of collections. You can use `data[start..end]` to create a
 view of array `data`, referencing elements from `start` to `end` (exclusive). 
 Both `start` and `end` indices can be omited.
 
-```rust
+```moonbit
 fn init {
   let xs = [0,1,2,3,4,5]
   let s1 : ArrayView[Int] = xs[2..]
@@ -1329,7 +1329,7 @@ fn print_array_view[T : Show](view : ArrayView[T]) -> Unit {
 
 By implementing `length` and `op_as_view` method, you can also create a view for a user-defined type. Here is an example:
 
-```rust
+```moonbit
 struct MyList[A] {
   elems : Array[A]
 } 
@@ -1373,7 +1373,7 @@ op_as_view: [1,2)
 
 MoonBit features a structural trait system for overloading/ad-hoc polymorphism. Traits declare a list of operations, which must be supplied when a type wants to implement the trait. Traits can be declared as follows:
 
-```rust
+```moonbit
 trait I {
   method(...) -> ...
 }
@@ -1384,7 +1384,7 @@ In the body of a trait definition, a special type `Self` is used to refer to the
 To implement a trait, a type must provide all the methods required by the trait.
 However, there is no need to implement a trait explicitly. Types with the required methods automatically implements a trait. For example, the following trait:
 
-```rust
+```moonbit
 trait Show {
   to_string(Self) -> String
 }
@@ -1394,7 +1394,7 @@ is automatically implemented by builtin types such as `Int` and `Double`.
 
 When declaring a generic function, the type parameters can be annotated with the traits they should implement, allowing the definition of constrained generic functions. For example:
 
-```rust
+```moonbit
 trait Number {
   op_add(Self, Self) -> Self
   op_mul(Self, Self) -> Self
@@ -1407,7 +1407,7 @@ fn square[N: Number](x: N) -> N {
 
 Without the `Number` requirement, the expression `x * x` in `square` will result in a method/operator not found error. Now, the function `square` can be called with any type that implements `Number`, for example:
 
-```rust
+```moonbit
 fn init {
   debug(square(2)) // 4
   debug(square(1.5)) // 2.25
@@ -1430,7 +1430,7 @@ fn op_mul(self: Point, other: Point) -> Point {
 
 Methods of a trait can be called directly via `Trait::method`. MoonBit will infer the type of `Self` and check if `Self` indeed implements `Trait`, for example:
 
-```rust live
+```moonbit live
 fn init {
   println(Show::to_string(42))
   debug(Compare::compare(1.0, 2.5))
@@ -1439,7 +1439,7 @@ fn init {
 
 MoonBit provides the following useful builtin traits:
 
-```rust
+```moonbit
 trait Eq {
   op_equal(Self, Self) -> Bool
 }
@@ -1473,7 +1473,7 @@ To make the trait system coherent (i.e. there is a globally unique implementatio
 
 However, it is often useful to extend the functionality of an existing type. So MoonBit provides a mechanism called extension method, defined using the syntax `fn Trait::method_name(...) -> ...`. Extension methods extend the functionality of an existing type by implementing a trait. For example, to implement a new trait `ToMyBinaryProtocol` for builtin types, one can (and must) use extension methods:
 
-```rust
+```moonbit
 trait ToMyBinaryProtocol {
   to_my_binary_protocol(Self, Buffer) -> Unit
 }
@@ -1487,7 +1487,7 @@ When searching for the implementation of a trait, extension methods have a highe
 
 To invoke an extension method directly, use the `Trait::method` syntax.
 
-```rust live
+```moonbit live
 trait MyTrait {
   f(Self) -> Unit
 }
@@ -1506,7 +1506,7 @@ fn init {
 
 MoonBit can automatically derive implementations for some builtin traits:
 
-```rust live
+```moonbit live
 struct T {
   x: Int
   y: Int
@@ -1530,7 +1530,7 @@ into a runtime object via `t as I`.
 Trait object erases the concrete type of a value,
 so objects created from different concrete types can be put in the same data structure and handled uniformly:
 
-```rust live
+```moonbit live
 trait Animal {
   speak(Self)
 }
@@ -1571,7 +1571,7 @@ MoonBit features a convenient `?` operator for error handling.
 The `?` postfix operator can be applied to expressions of type `Option` or `Result`.
 When applied to expression `t : Option[T]`, `t?` is equivalent to:
 
-```rust
+```moonbit
 match t {
   None => { return None }
   Some(x) => x
@@ -1580,7 +1580,7 @@ match t {
 
 When applied to expression `t: Result[T, E]`, `t?` is equivalent to:
 
-```rust
+```moonbit
 match t {
   Err(err) => { return Err(err) }
   Ok(x) => x
@@ -1589,7 +1589,7 @@ match t {
 
 The question operator can be used to combine codes that may fail or error elegantly:
 
-```rust
+```moonbit
 fn may_fail() -> Option[Int] { ... }
 
 fn f() -> Option[Int] {
@@ -1612,7 +1612,7 @@ fn g() -> Result[Int, String] {
 ## Test Blocks
 MoonBit provides the test code block for writing test cases. For example:
 
-```rust
+```moonbit
 test "test_name" {
   @test.eq(1 + 1, 2)!
   @test.eq(2 + 2, 4)!
@@ -1621,7 +1621,7 @@ test "test_name" {
 
 A test code block is essentially a function that returns a `Unit` but may throws a `String` on error, or `Unit!String` as one would see in its signature at the position of return type. It is called during the execution of `moon test` and outputs a test report through the build system. The `@test.eq` function is from the standard library; if the assertion fails, it prints an error message and terminates the test. The string `"test_name"` is used to identify the test case and is optional. If it starts with `"panic"`, it indicates that the expected behavior of the test is to trigger a panic, and the test will only pass if the panic is triggered. For example:
 
-```rust
+```moonbit
 test "panic_test" {
   let _ : Int = Option::None.unwrap()
 }
@@ -1630,7 +1630,7 @@ test "panic_test" {
 
 Doc comments are comments prefix with `///` in each line in the leading of toplevel structure like `fn`,`let`,`enum`,`struct`,`type`. The doc comments contains a markdown text and several pragmas.
 
-```rust
+```moonbit
 /// Return a new array with reversed elements.
 /// 
 /// # Example
@@ -1655,7 +1655,7 @@ Pragmas are annotations inside doc comments. They all take the form `/// @word .
 
   The category can be an arbitrary identifier. It allows configuration to decide which alerts are enabled or turned into errors.
 
-  ```rust
+  ```moonbit
   /// @alert deprecated "Use foo2 instead"
   pub fn foo() -> Unit { ... }
 

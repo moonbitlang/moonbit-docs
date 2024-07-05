@@ -10,7 +10,7 @@
 
 你可以定义一个这样的外部引用类型：
 
-```rust
+```moonbit
 type Canvas_ctx
 ```
 
@@ -20,7 +20,7 @@ type Canvas_ctx
 
 你可以像这样定义一个外部函数：
 
-```rust
+```moonbit
 fn cos(d : Double) -> Double = "Math" "cos"
 ```
 
@@ -31,7 +31,7 @@ fn cos(d : Double) -> Double = "Math" "cos"
 你也可以定义内联函数，函数体是一个字符串。
 
 对于WasmGC后端，你可以以一个不含名称的Wasm函数定义它（名称将会在之后自动生成）：
-```rust
+```moonbit
 extern "wasm" fn abs(d : Double) -> Double = 
   #|(func (param f64) (result f64))
 ```
@@ -48,7 +48,7 @@ extern "js" fn abs(d : Double) -> Double =
 
 你也可以定义一个使用外部引用类型的外部函数，就像这样：
 
-```rust
+```moonbit
 fn begin_path(self: Canvas_ctx) = "canvas" "begin_path"
 ```
 

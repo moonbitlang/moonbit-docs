@@ -119,14 +119,14 @@ my-project
 - `lib` 包含 `hello.mbt` 文件与 `hello_test.mbt` 文件：
 
   `hello.mbt`
-  ```rust
+  ```moonbit
   pub fn hello() -> String {
       "Hello, world!"
   }
   ```
 
   `hello_test.mbt`
-  ```rust
+  ```moonbit
   test "hello" {
     if hello() != "Hello, world!" {
       return Err("hello() != \"Hello, world!\"")
@@ -136,7 +136,7 @@ my-project
 
 - `main` 包含一个 `main.mbt` 文件：
 
-  ```rust
+  ```moonbit
   fn main {
     println(@lib.hello())
   }
@@ -193,7 +193,7 @@ mkdir lib/fib
 
 `a.mbt`:
 
-```rust
+```moonbit
 pub fn fib(n : Int) -> Int {
   match n {
     0 => 0
@@ -205,7 +205,7 @@ pub fn fib(n : Int) -> Int {
 
 `b.mbt`:
 
-```rust
+```moonbit
 pub fn fib2(num : Int) -> Int {
   fn aux(n, acc1, acc2) {
     match n {
@@ -261,7 +261,7 @@ my-project
 
 这行代码导入了 `fib` 包，它是 `hello` 模块中 `lib` 包的一部分。完成后，你可以在 `main/main.mbt` 中使用 `fib` 包。将 `main/main.mbt` 文件的内容替换为：
 
-```rust
+```moonbit
 fn main {
   let a = @my_awesome_fibonacci.fib(10)
   let b = @my_awesome_fibonacci.fib2(11)
@@ -285,7 +285,7 @@ Hello, world!
 
 `lib/fib/a.mbt`
 
-```rust
+```moonbit
 fn assert_eq[T: Show + Eq](lhs: T, rhs: T) -> Unit {
   if lhs != rhs {
     abort("assert_eq failed.\n    lhs: \(lhs)\n    rhs: \(rhs)")
@@ -311,7 +311,7 @@ test {
 
 `lib/fib/fib_test.mbt`:
 
-```rust
+```moonbit
 test {
   assert_eq(fib(1), 1)
   assert_eq(fib2(2), 1)

@@ -123,14 +123,14 @@ Our `username/hello` module contains two packages: `lib` and `main`.
 The `lib` package contains `hello.mbt` and `hello_test.mbt` files:
 
   `hello.mbt`
-  ```rust
+  ```moonbit
   pub fn hello() -> String {
       "Hello, world!"
   }
   ```
 
   `hello_test.mbt`
-  ```rust
+  ```moonbit
   test "hello" {
     if hello() != "Hello, world!" {
       return Err("hello() != \"Hello, world!\"")
@@ -140,7 +140,7 @@ The `lib` package contains `hello.mbt` and `hello_test.mbt` files:
 
 The `main` package contains a `main.mbt` file:
 
-  ```rust
+  ```moonbit
   fn main {
     println(@lib.hello())
   }
@@ -197,7 +197,7 @@ Now, you can create new files under `lib/fib`:
 
 `a.mbt`:
 
-```rust
+```moonbit
 pub fn fib(n : Int) -> Int {
   match n {
     0 => 0
@@ -209,7 +209,7 @@ pub fn fib(n : Int) -> Int {
 
 `b.mbt`:
 
-```rust
+```moonbit
 pub fn fib2(num : Int) -> Int {
   fn aux(n, acc1, acc2) {
     match n {
@@ -265,7 +265,7 @@ In the `main/moon.pkg.json` file, import the `username/hello/lib/fib` package an
 
 This line imports the `fib` package, which is part of the `lib` package in the `hello` module. After doing this, you can use the `fib` package in `main/main.mbt`. Replace the file content of `main/main.mbt` to:
 
-```rust
+```moonbit
 fn main {
   let a = @my_awesome_fibonacci.fib(10)
   let b = @my_awesome_fibonacci.fib2(11)
@@ -288,7 +288,7 @@ Hello, world!
 Let's add some tests to verify our fib implementation. Add the following content in `lib/fib/a.mbt`:
 
 `lib/fib/a.mbt`
-```rust
+```moonbit
 fn assert_eq[T: Show + Eq](lhs: T, rhs: T) -> Unit {
   if lhs != rhs {
     abort("assert_eq failed.\n    lhs: \(lhs)\n    rhs: \(rhs)")
@@ -313,7 +313,7 @@ Inline test blocks are discarded in non-test compilation modes (`moon build` and
 Besides inline tests, MoonBit also supports stand-alone test files. Source files ending in `_test.mbt` are considered stand-alone test files. They will be included in test mode only. You can write inline tests and test utilities in these stand-alone test files. For example, inside the `lib/fib` directory, create a file named `fib_test.mbt` and paste the following code:
 
 `lib/fib/fib_test.mbt`
-```rust
+```moonbit
 test {
   assert_eq(fib(1), 1)
   assert_eq(fib2(2), 1)

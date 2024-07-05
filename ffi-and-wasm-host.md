@@ -10,7 +10,7 @@ You can use foreign function in MoonBit through FFI to interact with the hosting
 
 You can declare a foreign reference type like this:
 
-```rust
+```moonbit
 type Canvas_ctx
 ```
 
@@ -20,7 +20,7 @@ This will be a type that represents a reference to a foreign object, a `CanvasRe
 
 You can declare a foreign function like this:
 
-```rust
+```moonbit
 fn cos(d : Double) -> Double = "Math" "cos"
 ```
 
@@ -31,7 +31,7 @@ For Wasm(GC) backend, these two strings are used to identify the specific functi
 You can also declare inline functions where the function body is replaced with one string.
 
 For WasmGC backend, you may declare it as a Wasm function without name (which will be generated afterwards):
-```rust
+```moonbit
 extern "wasm" fn abs(d : Double) -> Double = 
   #|(func (param f64) (result f64))
 ```
@@ -48,7 +48,7 @@ For multi-backend project, you may implement backend specific code in the files 
 
 You may also declare a foreign function that will be invoked upon a foreign object by using the foreign reference type like this:
 
-```rust
+```moonbit
 fn begin_path(self: Canvas_ctx) = "canvas" "begin_path"
 ```
 
