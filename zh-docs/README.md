@@ -1004,10 +1004,10 @@ fn div(x: Int, y: Int) -> Int!String {
 
 其中 `raise` 关键字用于中断函数的执行并返回一个错误。函数的错误处理有以下三种方式：
 
-* 使用 `!!` 后缀来在发生错误的情况下直接 panic，比如
+* 使用 `!` 后缀来在发生错误的情况下将错误直接重新抛出，比如
 ```moonbit
-fn div_unsafe(x: Int, y: Int) -> Int {
-  div(x, y)!! // 直接 panic
+fn div_reraise(x: Int, y: Int) -> Int!String {
+  div(x, y)! // 直接重新抛出错误
 }
 ```
 
