@@ -11,7 +11,7 @@ fn JsString::from_char_code(charCode : JsArray) -> JsString = "string" "fromChar
 fn iter(self : JsString, f : (Int) -> Unit) -> Unit = "string" "iter"
 
 pub fn JsString::from_string(str : String) -> JsString {
-  str.as_iter().fold(
+  str.iter().fold(
     fn(array : JsArray, char : Char) {
       array.push(char.to_int())
       array
@@ -22,7 +22,7 @@ pub fn JsString::from_string(str : String) -> JsString {
 }
 
 pub fn JsString::to_string(str : JsString) -> String {
-  let buffer = Buffer::make(0)
+  let buffer = Buffer::new()
   str.iter(fn(i : Int) { buffer.write_char(Char::from_int(i)) })
   buffer.to_string()
 }

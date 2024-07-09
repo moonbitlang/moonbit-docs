@@ -13,7 +13,7 @@ pub enum Direction {
 enum GridType {
   Body
   Food
-  Default
+  None
 } derive(Eq)
 
 fn dir_posi(self : Direction) -> Position {
@@ -38,7 +38,7 @@ struct GameState {
 }
 
 fn initialize(self : GameState) -> Unit {
-  self.grid.fill(Default)
+  self.grid.fill(None)
   self.dir = Up
   self.body.clear()
   self.body.push_back({ x: grid_col_count / 2, y: grid_col_count / 2 })
@@ -58,7 +58,7 @@ fn generate_Food(self : GameState) -> Unit {
   while true {
     let i : Int = floor(random() * 20.0)
     let j : Int = floor(random() * 20.0)
-    if self.grid[j * grid_col_count + i] == Default {
+    if self.grid[j * grid_col_count + i] == None {
       self.setGridType({ x: i, y: j }, Food)
       return
     }
@@ -84,7 +84,7 @@ fn go_step(self : GameState) -> Unit {
   } else {
     self.setGridType(newHead, Body)
     self.body.push_front(newHead)
-    self.setGridType(self.body.back().unwrap(), Default)
+    self.setGridType(self.body.back().unwrap(), None)
     self.body.pop_back_exn()
   }
 }
@@ -107,7 +107,7 @@ pub fn step(self : GameState, action : Direction) -> Unit {
 
 pub fn new() -> GameState {
   let game : GameState = {
-    grid: FixedArray::make(grid_row_count * grid_col_count, Default),
+    grid: FixedArray::make(grid_row_count * grid_col_count, None),
     body: @deque.new(),
     dir: Up,
   }
