@@ -10,7 +10,6 @@
 import wasm from '../target/wasm-gc/release/build/hello.wasm';
 
 const module = await WebAssembly.instantiate(wasm);
-module.exports._start();
 
 export interface Env {
 	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/

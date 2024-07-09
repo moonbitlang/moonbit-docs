@@ -115,7 +115,6 @@ function update(time = 0) {
 
 WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
     (obj) => {
-      obj.instance.exports._start();
       tetris_draw = obj.instance.exports["draw"];
       tetris_new = obj.instance.exports["new"];
       tetris_step = obj.instance.exports["step"];

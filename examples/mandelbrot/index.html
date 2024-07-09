@@ -41,7 +41,6 @@
 
   WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), spectest).then(
     (obj) => {
-      obj.instance.exports._start();
       const calcColor = obj.instance.exports["calc_color"];
       const drawColor = obj.instance.exports["draw_color"];
 

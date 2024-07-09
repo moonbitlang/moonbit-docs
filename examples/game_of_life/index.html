@@ -41,7 +41,6 @@ if (canvas.getContext) {
 
   WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
     (obj) => {
-      obj.instance.exports._start();
       const drawGrid = obj.instance.exports["draw_grid"];
       const drawCell = obj.instance.exports["draw_cell"];
       const universe_new = obj.instance.exports["new"];

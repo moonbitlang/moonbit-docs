@@ -32,7 +32,6 @@
 
   WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), spectest).then(
     (obj) => {
-      obj.instance.exports._start();
       const draw = obj.instance.exports["draw"];
       var ctx = canvas.getContext("2d");
       ctx.strikeStyle="#000";
