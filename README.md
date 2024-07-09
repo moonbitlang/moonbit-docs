@@ -1328,7 +1328,7 @@ fn init {
 Analogous to `slice` in other languages, the view is a reference to a 
 specific segment of collections. You can use `data[start..end]` to create a 
 view of array `data`, referencing elements from `start` to `end` (exclusive). 
-Both `start` and `end` indices can be omited.
+Both `start` and `end` indices can be omitted.
 
 ```moonbit
 fn init {
