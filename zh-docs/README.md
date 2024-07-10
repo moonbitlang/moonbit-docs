@@ -1297,7 +1297,7 @@ fn init {
 | `-`（一元运算符）       | `op_neg`     |
 | `_[_]`（获取项）       | `op_get`     |
 | `_[_] = _`（设置项）   | `op_set`     |
-| `_[_.._]`（视图）      | `op_as_view` | 
+| `_[_:_]`（视图）      | `op_as_view` | 
 
 ## 管道运算符
 
@@ -1317,19 +1317,21 @@ fn init {
 
 ## 视图
 
-类似于其他语言的“切片”，视图能够引用数组等数据类型中的片段。可以使用`data[start..end]`的方式创建一个关于数组`data`的视图，这个视图引用了从下标`start`开始到`end`（不包含`end`）的元素。`start`和`end`也可以省略:
+类似于其他语言的“切片”，视图能够引用数组等数据类型中的片段。可以使用`data[start:end]`的方式
+创建一个关于数组`data`的视图，这个视图引用了从下标`start`开始到`end`（不包含`end`）的元素。
+`start`和`end`也可以省略:
 
 ```moonbit
 fn init {
   let xs = [0,1,2,3,4,5]
   let s1 : ArrayView[Int] = xs[2..]
   print_array_view(s1)            //output: 2345
-  xs[..4]  |> print_array_view()  //output: 0123
-  xs[2..5] |> print_array_view()  //output: 234
+  xs[:4]  |> print_array_view()  //output: 0123
+  xs[2:5] |> print_array_view()  //output: 234
   xs[..]   |> print_array_view()  //output: 012345
 
   // 创建一个视图的视图
-  xs[2..5][1..] |> print_array_view() //output: 34
+  xs[2:5][1:] |> print_array_view() //output: 34
 }
 
 fn print_array_view[T : Show](view : ArrayView[T]) -> Unit {
@@ -1365,10 +1367,10 @@ pub fn op_as_view[A](self : MyList[A], ~start : Int, ~end : Int) -> MyListView[A
 
 fn init {
   let ls = { elems: [1,2,3,4,5] }
-  ls[..] |> ignore()
-  ls[1..] |> ignore()
-  ls[..2] |> ignore()
-  ls[1..2] |> ignore()
+  ls[:] |> ignore()
+  ls[1:] |> ignore()
+  ls[:2] |> ignore()
+  ls[1:2] |> ignore()
 }
 ```
 
