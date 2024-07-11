@@ -1020,17 +1020,37 @@ fn div_reraise(x: Int, y: Int) -> Int!String {
 }
 ```
 
-* 使用 `try` 和 `catch` 对错误进行捕获并处理，比如
+* 使用 `try` 对错误进行捕获并处理，`try` 表达支持对执行代码过程中正常返回和错误返回的情况进行分别处理，比如：
 ```moonbit
 fn div_with_default(x: Int, y: Int, default: Int) -> Int {
-  try {
-    div(x, y)!
-  } catch {
-    s => { println(s); default }
+  try div(x, y)! {
+    err => { println(err); default  }
+  } else {
+    result => result
   }
 }
 ```
-其中 `try` 用于调用可能会抛出错误的函数，`catch` 用于对捕获的错误进行模式匹配并处理，如果没有捕获到错误则不会执行 `catch` 语句块。
+语法 `try expr { err_pat => err_handle } else { val_pat => val_handle}` 用于执行可能会抛出错误的表达式 `expr`，其后跟随的代码块 `err_pat => err_handle` 用于对捕获的错误进行模式匹配并处理，如果没有捕获到错误则对 `expr` 计算得到的结果执行 `else` 分支中的模式匹配。
+
+当 `else` 分支中的 pattern 是一个变量时，可以使用如下语法对代码进行简化：
+```moonbit
+fn div_with_default(x: Int, y: Int, default: Int) -> Int {
+  try div(x, y)! {
+    err => { println(err); default  }
+  } else (result) {
+    result
+  }
+}
+```
+
+最后，当 `else` 分支中直接将结果返回时，可以省略 `else` 关键字：
+```moonbit
+fn div_with_default(x: Int, y: Int, default: Int) -> Int {
+  try div(x, y)! {
+    err => { println(err); default  }
+  }
+}
+```
 
 * 使用 `!!` 后缀来将函数执行结果转化为 `Result` 类型的值，比如：
 ```moonbit
