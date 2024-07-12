@@ -1643,6 +1643,43 @@ fn g() -> Result[Int, String] {
 }
 ```
 
+## 级联操作符
+
+级联运算符`..`用于连续对同一个值进行一系列可变的操作, 语法如下：
+
+```moonbit
+x..f()
+```
+
+`x..f()..g()`相当于`{{x.f(); x}.g(); x}`。
+
+
+考虑这样的需求：对于一个拥有`add_string`、
+`add_char`、`add_int` 等方法的 `MyStringBuilder` 类型，我们常常需要对同一个 
+`MyStringBuilder` 类型的值进行一系列操作：
+
+```moonbit
+let builder = MyStringBuilder::new()
+builder.add_char('a')
+builder.add_char('a')
+builder.add_int(1001)
+builder.add_string("abcdef")
+let result = builder.to_string()
+```
+为了避免重复键入`builder`，它的方法常常被设计为返回`self`本身，这样就可以使用`.`运算符将操作串连起来。
+为了区分不可变与可变操作，在MoonBit中，对于所有返回`Unit`的方法，可以使用级联运算符进行连续的操作，
+而不需要专门修改方法的返回类型。
+
+```moonbit
+let result = 
+  MyStringBuilder::new()
+    ..add_char('a')
+    ..add_char('a')
+    ..add_int(1001)
+    ..add_string("abcdef")
+    .to_string()
+```
+
 ## 测试块
 
 MoonBit 提供了 `test` 代码块，用于编写测试用例，比如

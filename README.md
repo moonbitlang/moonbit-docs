@@ -1633,6 +1633,46 @@ fn g() -> Result[Int, String] {
 }
 ```
 
+## Cascade Operator
+
+The cascade operator `..` is used to perform a series of mutable operations on 
+the same value consecutively. The syntax is as follows:
+
+
+```moonbit
+x..f()
+```
+`x..f()..g()` is equivalent to `{{x.f(); x}.g(); x}`.
+
+
+Consider the following scenario: for a `MyStringBuilder` type that has methods 
+like `add_string`, `add_char`, `add_int`, etc., we often need to perform 
+a series of operations on the same `MyStringBuilder` value:
+
+```moonbit
+let builder = MyStringBuilder::new()
+builder.add_char('a')
+builder.add_char('a')
+builder.add_int(1001)
+builder.add_string("abcdef")
+let result = builder.to_string()
+```
+To avoid repetitive typing of `builder`, its methods are often designed to 
+return `self` itself, allowing operations to be chained using the `.` operator.
+To distinguish between immutable and mutable operations, in MoonBit, 
+for all methods that return `Unit`, cascade operator can be used for 
+consecutive operations without the need to modify the return type of the methods.
+
+```moonbit
+let result = 
+  MyStringBuilder::new()
+    ..add_char('a')
+    ..add_char('a')
+    ..add_int(1001)
+    ..add_string("abcdef")
+    .to_string()
+```
+
 ## Test Blocks
 MoonBit provides the test code block for writing test cases. For example:
 
