@@ -1435,11 +1435,20 @@ fn square[N: Number](x: N) -> N {
 
 Without the `Number` requirement, the expression `x * x` in `square` will result in a method/operator not found error. Now, the function `square` can be called with any type that implements `Number`, for example:
 
-```moonbit
+```moonbit live
 fn init {
   debug(square(2)) // 4
   debug(square(1.5)) // 2.25
-  debug(square({ x: 2, y: 3 })) // (4, 9)
+  debug(square({ x: 2, y: 3 })) // {x: 4, y: 9}
+}
+
+trait Number {
+  op_add(Self, Self) -> Self
+  op_mul(Self, Self) -> Self
+}
+
+fn square[N: Number](x: N) -> N {
+  x * x
 }
 
 struct Point {

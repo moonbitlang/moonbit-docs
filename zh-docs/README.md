@@ -1436,7 +1436,16 @@ fn square[N: Number](x: N) -> N {
 fn init {
   debug(square(2)) // 4
   debug(square(1.5)) // 2.25
-  debug(square({ x: 2, y: 3 })) // (4, 9)
+  debug(square({ x: 2, y: 3 })) // {x: 4, y: 9}
+}
+
+trait Number {
+  op_add(Self, Self) -> Self
+  op_mul(Self, Self) -> Self
+}
+
+fn square[N: Number](x: N) -> N {
+  x * x
 }
 
 struct Point {
