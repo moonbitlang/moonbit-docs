@@ -10,7 +10,7 @@ Before you begin with this tutorial, make sure you have installed the following:
 
     Use `moon help` to view the usage instructions.
 
-    ```
+    ```bash
     $ moon help
     Moonbit's build system
 
@@ -40,6 +40,7 @@ Before you begin with this tutorial, make sure you have installed the following:
     Options:
       -h, --help  Print help
     ```
+
 2. **Moonbit Language** plugin in Visual Studio Code: You can install it from the VS Code marketplace. This plugin provides a rich development environment for MoonBit, including functionalities like syntax highlighting, code completion, and more.
 
 Once you have these prerequisites fulfilled, let's start by creating a new MoonBit module.
@@ -123,6 +124,7 @@ Our `username/hello` module contains two packages: `lib` and `main`.
 The `lib` package contains `hello.mbt` and `hello_test.mbt` files:
 
   `hello.mbt`
+
   ```moonbit
   pub fn hello() -> String {
       "Hello, world!"
@@ -130,6 +132,7 @@ The `lib` package contains `hello.mbt` and `hello_test.mbt` files:
   ```
 
   `hello_test.mbt`
+
   ```moonbit
   test "hello" {
     if hello() != "Hello, world!" {
@@ -288,6 +291,7 @@ Hello, world!
 Let's add some tests to verify our fib implementation. Add the following content in `lib/fib/a.mbt`:
 
 `lib/fib/a.mbt`
+
 ```moonbit
 fn assert_eq[T: Show + Eq](lhs: T, rhs: T) -> Unit {
   if lhs != rhs {
@@ -313,6 +317,7 @@ Inline test blocks are discarded in non-test compilation modes (`moon build` and
 Besides inline tests, MoonBit also supports stand-alone test files. Source files ending in `_test.mbt` are considered stand-alone test files. They will be included in test mode only. You can write inline tests and test utilities in these stand-alone test files. For example, inside the `lib/fib` directory, create a file named `fib_test.mbt` and paste the following code:
 
 `lib/fib/fib_test.mbt`
+
 ```moonbit
 test {
   assert_eq(fib(1), 1)

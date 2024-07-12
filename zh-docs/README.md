@@ -1,7 +1,7 @@
 # MoonBit
 
 MoonBit 是一个用于云计算和边缘计算的 WebAssembly 端到端的编程语言工具链。
-您可以访问 https://try.moonbitlang.cn 获得 IDE 环境，无需安装任何软件，也不依赖任何服务器。
+您可以访问 <https://try.moonbitlang.cn> 获得 IDE 环境，无需安装任何软件，也不依赖任何服务器。
 
 ## 状态
 
@@ -295,7 +295,6 @@ if x == y {
 
 注意，在 MoonBit 中，条件表达式总是返回一个值，其结果和 `else` 子句的返回值类型必须相同。
 
-
 ### While 循环
 
 MoonBit中支持`while`循环。`while`后的循环条件会在循环体之前执行，当循环条件为真时, 执行循环体：
@@ -310,8 +309,7 @@ while i > 0 {
 
 循环体内支持`break`和`continue`。使用`break`能够跳出当前循环；使用`continue`跳过本次循环的剩余部分，提前进入下一次循环。
 
-
-```moonbit 
+```moonbit
 let mut i = 5
 while i > 0 {
   i = i - 1
@@ -323,14 +321,14 @@ while i > 0 {
 
 输出:
 
-```
+```plaintext
 3
 2
 ```
 
 `while` 循环也支持可选的`else`子句。当循环条件转变为假时，将会执行`else`子句，然后循环结束。
 
-```moonbit 
+```moonbit
 let mut i = 2
 while i > 0 {
   println(i)
@@ -342,7 +340,7 @@ while i > 0 {
 
 输出:
 
-```
+```plaintext
 2
 1
 0
@@ -350,10 +348,9 @@ while i > 0 {
 
 当存在 `else` 子句时，`while` 循环也可以返回一个值，返回值是 `else` 子句语句块的求值结果。此时如果使用`break`跳出循环，需要在`break`后提供一个返回值，类型与`else`子句的返回值类型一致：
 
-
-```moonbit 
+```moonbit
   let mut i = 10
-  let r1 = 
+  let r1 =
     while i > 0 {
       i = i - 1
       if i % 2 == 0 { break 5 } // 跳出循环并返回 5
@@ -363,9 +360,9 @@ while i > 0 {
   println(r1) //output: 5
 ```
 
-```moonbit 
+```moonbit
   let mut i = 10
-  let r2 = 
+  let r2 =
     while i > 0 {
       i = i - 1
     } else {
@@ -382,7 +379,7 @@ MoonBit 也支持 C 风格的 For 循环。关键字`for`后依次跟随以分�
 ```moonbit
 for i = 0; i < 5; i = i + 1 {
   println(i)
-} 
+}
 // output:
 // 0
 // 1
@@ -398,8 +395,6 @@ for i = 0, j = 0; i + j < 100; i = i + 1, j = j + 1 {
 ```
 
 需要注意的是在更新子句中，对于多个绑定变量具有同时更新的语义。也就是说上面的例子中，更新子句并不是顺序执行`i = i + 1`、`j = j + 1`，而是同时令`i`、`j`自增。因此，在更新子句中读取绑定变量得到的值永远是上一次循环更新后的值。
-
-
 
 变量初始化子句、循环条件和更新子句都是可选的。例如下面两个无限循环：
 
@@ -440,7 +435,7 @@ fn main {
 
 输出：
 
-```
+```plaintext
 even: 2
 even: 4
 even: 6
@@ -489,12 +484,12 @@ let e = not(a)
 MoonBit 支持整型和浮点类型：
 
 | 类型     | 描述                         |   例子   |
-| -------- | ---------------------------- | ------- |
-| `Int`    | 32 位有符号整数              | `42`      |
-| `Int64`  | 64 位有符号整数              | `1000L`   |
-| `UInt`   | 32 位无符号整数              ｜`14U`     |
+| -------- | ---------------------------- | -------- |
+| `Int`    | 32 位有符号整数              | `42`     |
+| `Int64`  | 64 位有符号整数              | `1000L`  |
+| `UInt`   | 32 位无符号整数              | `14U`    |
 | `UInt64` | 64 位无符号整数              | `14UL`   |
-| `Double` | 64 位浮点数，由 IEEE754 定义 | `3.14`    |
+| `Double` | 64 位浮点数，由 IEEE754 定义 | `3.14`   |
 
 MoonBit 支持的数字字面量，包括十进制、二进制、八进制和十六进制。
 
@@ -503,28 +498,28 @@ MoonBit 支持的数字字面量，包括十进制、二进制、八进制和十
 
 - 十进制数和往常一样。
 
-```moonbit
-let a = 1234
-let b = 1_000_000 + a
-let large_num = 9_223_372_036_854_775_807L // Int64 类型的整数必须后缀“L”
-let unsigned_num = 4_294_967_295U // UInt 类型的整数必须有后缀”U“
-```
+  ```moonbit
+  let a = 1234
+  let b = 1_000_000 + a
+  let large_num = 9_223_372_036_854_775_807L // Int64 类型的整数必须后缀“L”
+  let unsigned_num = 4_294_967_295U // UInt 类型的整数必须有后缀”U“
+  ```
 
 - 八进制数的前缀是 0 后接字母 O，也就是 `0o` 或 `0O`。注意在 `0o` 或 `0O`
   之后出现的数字只能在 `0` 到 `7` 之间。
 
-```moonbit
-let octal = 0o1234
-let another_octal = 0O1234
-```
+  ```moonbit
+  let octal = 0o1234
+  let another_octal = 0O1234
+  ```
 
 - 十六进制数的前缀是 0 后接字母 X，也就是 `0x` 或 `0X`。注意在 `0x` 或 `0X`
   之后出现的数字只能是 `0123456789ABCDEF` 之一。
 
-```moonbit
-let hex = 0XA
-let another_hex = 0xA
-```
+  ```moonbit
+  let hex = 0XA
+  let another_hex = 0xA
+  ```
 
 ### 字符串
 
@@ -1003,7 +998,7 @@ match map {
 函数的返回值类型中可以包含错误类型，用于表示函数可能返回的错误。比如如下函数声明表示函数 `div` 可能返回一个字符串类型的错误：
 
 ```moonbit
-fn div(x: Int, y: Int) -> Int!String { 
+fn div(x: Int, y: Int) -> Int!String {
   if y == 0 {
     raise "division by zero"
   }
@@ -1013,36 +1008,41 @@ fn div(x: Int, y: Int) -> Int!String {
 
 其中 `raise` 关键字用于中断函数的执行并返回一个错误。函数的错误处理有以下三种方式：
 
-* 使用 `!` 后缀来在发生错误的情况下将错误直接重新抛出，比如
-```moonbit
-fn div_reraise(x: Int, y: Int) -> Int!String {
-  div(x, y)! // 直接重新抛出错误
-}
-```
+- 使用 `!` 后缀来在发生错误的情况下将错误直接重新抛出，比如
 
-* 使用 `try` 和 `catch` 对错误进行捕获并处理，比如
-```moonbit
-fn div_with_default(x: Int, y: Int, default: Int) -> Int {
-  try {
-    div(x, y)!
-  } catch {
-    s => { println(s); default }
+  ```moonbit
+  fn div_reraise(x: Int, y: Int) -> Int!String {
+    div(x, y)! // 直接重新抛出错误
   }
-}
-```
+  ```
+
+- 使用 `try` 和 `catch` 对错误进行捕获并处理，比如
+
+  ```moonbit
+  fn div_with_default(x: Int, y: Int, default: Int) -> Int {
+    try {
+      div(x, y)!
+    } catch {
+      s => { println(s); default }
+    }
+  }
+  ```
+
 其中 `try` 用于调用可能会抛出错误的函数，`catch` 用于对捕获的错误进行模式匹配并处理，如果没有捕获到错误则不会执行 `catch` 语句块。
 
-* 使用 `!!` 后缀来将函数执行结果转化为 `Result` 类型的值，比如：
-```moonbit
-test {
-  let res = div(6, 3)!!
-  inspect(res, content="Ok(2)")!
-  let res = div(6, 0)!!
-  inspect(res, content="Err(division by zero)")!
-}
-```
+- 使用 `!!` 后缀来将函数执行结果转化为 `Result` 类型的值，比如：
+
+  ```moonbit
+  test {
+    let res = div(6, 3)!!
+    inspect(res, content="Ok(2)")!
+    let res = div(6, 0)!!
+    inspect(res, content="Err(division by zero)")!
+  }
+  ```
 
 本质上，后缀表达式 `!!` 是下面代码的语法糖：
+
 ```moonbit
 test {
   let res = try { Ok(div(6, 3)!) } catch { s => Err(s) }
@@ -1050,6 +1050,7 @@ test {
 ```
 
 在 MoonBit 中，错误类型和错误处理属于二等公民，因此错误类型只能出现在函数的返回值中，而不能作为变量的类型。使用后缀表达式 `!` 或 `!!` 进行的错误处理也只能在函数调用处进行，而不能在其他表达式中使用，合法的使用形式包括：
+
 ```moonbit
 f(x)!
 x.f()!
@@ -1293,11 +1294,11 @@ fn init {
 | `*`                   | `op_mul`     |
 | `/`                   | `op_div`     |
 | `%`                   | `op_mod`     |
-| `=`                   | `op_eual`    |
-| `-`（一元运算符）       | `op_neg`     |
-| `_[_]`（获取项）       | `op_get`     |
-| `_[_] = _`（设置项）   | `op_set`     |
-| `_[_:_]`（视图）      | `op_as_view` | 
+| `=`                   | `op_equal`   |
+| `-`（一元运算符）     | `op_neg`     |
+| `_[_]`（获取项）      | `op_get`     |
+| `_[_] = _`（设置项）  | `op_set`     |
+| `_[_:_]`（视图）      | `op_as_view` |
 
 ## 管道运算符
 
@@ -1347,7 +1348,7 @@ fn print_array_view[T : Show](view : ArrayView[T]) -> Unit {
 ```moonbit
 struct MyList[A] {
   elems : Array[A]
-} 
+}
 
 struct MyListView[A] {
   ls : MyList[A]
@@ -1376,7 +1377,7 @@ fn init {
 
 输出：
 
-```
+```plaintext
 op_as_view: [0,5)
 op_as_view: [1,5)
 op_as_view: [0,2)
@@ -1573,7 +1574,7 @@ trait Animal {
 type Duck String
 fn Duck::make(name: String) -> Duck { Duck(name) }
 fn speak(self: Duck) -> Unit {
-  println(self.0 + ": quak!")
+  println(self.0 + ": quack!")
 }
 
 type Fox String
@@ -1648,12 +1649,14 @@ fn g() -> Result[Int, String] {
 ## 测试块
 
 MoonBit 提供了 `test` 代码块，用于编写测试用例，比如
+
 ```moonbit
 test "test_name" {
   @test.eq(1 + 1, 2)!
   @test.eq(2 + 2, 4)!
 }
 ```
+
 `test` 代码块实际上是一个返回 `Unit` ，但是可能抛出 `String` 类型错误的函数（函数签名中记为 `Unit!String` ）。它会在执行 `moon test` 的过程中被调用，并通过构建系统输出测试报告。其中 `@test.eq` 是一个标准库中的函数，如果断言失败，会打印错误信息并终止测试。字符串 `"test_name"` 用于标识测试用例，是可选项，当其以 `"panic"` 开头时，表示该测试的期望行为是触发 panic，只有在 panic 被触发的情况下才能通过测试，比如：
 
 ```moonbit
@@ -1668,9 +1671,9 @@ test "panic_test" {
 
 ```moonbit
 /// Return a new array with reversed elements.
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// reverse([1,2,3,4]) |> println()
 /// ```
@@ -1681,7 +1684,7 @@ fn reverse[T](xs : Array[T]) -> Array[T] {
 
 ### 注解
 
-注解是文档注释中 `@word ...` 形式的特殊注释。*word* 表示注解的类型，后面可以跟随多个 *word* 或字符串字面量，每条注解独占一行。在MoonBit中注解通常不会影响程序的含义。无法识别的注解将会触发警告。
+注解是文档注释中 `@word ...` 形式的特殊注释。_word_ 表示注解的类型，后面可以跟随多个 _word_ 或字符串字面量，每条注解独占一行。在MoonBit中注解通常不会影响程序的含义。无法识别的注解将会触发警告。
 
 - `@alert`注解
 
@@ -1698,7 +1701,7 @@ fn reverse[T](xs : Array[T]) -> Array[T] {
 
   /// ...
   /// @alert unsafe "Div will cause an error when y is zero"
-  pub fn div(x: Int, y: Int) -> Int { ... } 
+  pub fn div(x: Int, y: Int) -> Int { ... }
 
   fn main {
     foo() // warning: Use foo2 instead

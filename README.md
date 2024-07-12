@@ -17,7 +17,7 @@ When MoonBit reaches beta, it means any backwards-incompatible changes will be s
 
 ## Overview
 
-A MoonBit program consists of type definitions, function definitions, and variable bindings. 
+A MoonBit program consists of type definitions, function definitions, and variable bindings.
 
 ### Program entrance
 
@@ -116,7 +116,7 @@ fn init {
 }
 ```
 
-Functions, whether named or anonymous, are _lexical closures_: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
+Functions, whether named or anonymous, are *lexical closures*: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
 
 ```moonbit live
 let y = 3
@@ -160,6 +160,7 @@ fn init {
 ```
 
 ### Labelled arguments
+
 Functions can declare labelled argument with the syntax `~label : Type`. `label` will also serve as parameter name inside function body:
 
 ```moonbit
@@ -180,6 +181,7 @@ fn init {
 Labelled function can be supplied in any order. The evaluation order of arguments is the same as the order of parameters in function declaration.
 
 ### Optional arguments
+
 A labelled argument can be made optional by supplying a default expression with the syntax `~label : Type = default_expr`. If this argument is not supplied at call site, the default expression will be used:
 
 ```moonbit live
@@ -193,7 +195,7 @@ fn init {
 }
 ```
 
-The default expression will be evaluated everytime it is used. And the side effect in the default expression, if any, will also be triggered. For example:
+The default expression will be evaluated every time it is used. And the side effect in the default expression, if any, will also be triggered. For example:
 
 ```moonbit live
 fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
@@ -203,7 +205,7 @@ fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
 
 fn init {
   println(incr()) // 1
-  println(incr()) // still 1, since a new reference is created everytime default expression is used
+  println(incr()) // still 1, since a new reference is created every time default expression is used
   let counter : Ref[Int] = { val: 0 }
   println(incr(~counter)) // 1
   println(incr(~counter)) // 2, since the same counter is used
@@ -240,6 +242,7 @@ fn init {
 ```
 
 ### Autofill arguments
+
 MoonBit supports filling specific types of arguments automatically at different call site, such as the source location of a function call.
 To declare an autofill argument, simply declare an optional argument with `_` as default value.
 Now if the argument is not explicitly supplied, MoonBit will automatically fill it at the call site.
@@ -294,12 +297,9 @@ Curly brackets are used to group multiple expressions in the consequent or the e
 
 Note that a conditional expression always returns a value in MoonBit, and the return values of the consequent and the else clause must be of the same type.
 
-
-
 ### While loop
 
 In MoonBit, `while` loop can be used to execute a block of code repeatedly as long as a condition is true. The condition is evaluated before executing the block of code. The `while` loop is defined using the `while` keyword, followed by a condition and the loop body. The loop body is a sequence of statements. The loop body is executed as long as the condition is true.
-
 
 ```moonbit
 let mut i = 5
@@ -311,8 +311,7 @@ while i > 0 {
 
 The loop body supports `break` and `continue`. Using `break` allows you to exit the current loop, while using `continue` skips the remaining part of the current iteration and proceeds to the next iteration.
 
-
-```moonbit 
+```moonbit
 let mut i = 5
 while i > 0 {
   i = i - 1
@@ -324,14 +323,14 @@ while i > 0 {
 
 Output:
 
-```
+```plaintext
 3
 2
 ```
 
 The `while` loop also supports an optional `else` clause. When the loop condition becomes false, the `else` clause will be executed, and then the loop will end.
 
-```moonbit 
+```moonbit
 let mut i = 2
 while i > 0 {
   println(i)
@@ -343,7 +342,7 @@ while i > 0 {
 
 Output:
 
-```
+```plaintext
 2
 1
 0
@@ -351,10 +350,9 @@ Output:
 
 When there is an `else` clause, the `while` loop can also return a value. The return value is the evaluation result of the `else` clause. In this case, if you use `break` to exit the loop, you need to provide a return value after `break`, which should be of the same type as the return value of the `else` clause.
 
-
-```moonbit 
+```moonbit
   let mut i = 10
-  let r1 = 
+  let r1 =
     while i > 0 {
       i = i - 1
       if i % 2 == 0 { break 5 } // break with 5
@@ -364,9 +362,9 @@ When there is an `else` clause, the `while` loop can also return a value. The re
   println(r1) //output: 5
 ```
 
-```moonbit 
+```moonbit
   let mut i = 10
-  let r2 = 
+  let r2 =
     while i > 0 {
       i = i - 1
     } else {
@@ -400,7 +398,6 @@ for i = 0, j = 0; i + j < 100; i = i + 1, j = j + 1 {
 
 It should be noted that in the update clause, when there are multiple binding variables, the semantics are to update them simultaneously. In other words, in the example above, the update clause does not execute `i = i + 1`, `j = j + 1` sequentially, but rather increments `i` and `j` at the same time. Therefore, when reading the values of the binding variables in the update clause, you will always get the values updated in the previous iteration.
 
-
 Variable initialization clauses, loop conditions, and update clauses are all optional. For example, the following two are infinite loops:
 
 ```moonbit
@@ -417,10 +414,9 @@ for {
 
 The `for` loop also supports `continue`, `break`, and `else` clauses. Like the `while` loop, the `for` loop can also return a value using the `break` and `else` clauses.
 
-The `continue` statement skips the remaining part of the current iteration of the `for` loop (including the update clause) and proceeds to the next iteration. The `continue` statement can also update the binding variables of the `for` loop, as long as it is followed by expressions that match the number of binding variables, separated by commas. 
+The `continue` statement skips the remaining part of the current iteration of the `for` loop (including the update clause) and proceeds to the next iteration. The `continue` statement can also update the binding variables of the `for` loop, as long as it is followed by expressions that match the number of binding variables, separated by commas.
 
 For example, the following program calculates the sum of even numbers from 1 to 6:
-
 
 ```moonbit live
 fn main {
@@ -439,7 +435,7 @@ fn main {
 
 Output：
 
-```
+```plaintext
 even: 2
 even: 4
 even: 6
@@ -497,36 +493,36 @@ To improve readability, you may place underscores in the middle of numeric liter
 
 - There is nothing surprising about decimal numbers.
 
-```moonbit
-let a = 1234
-let b = 1_000_000 + a
-let large_num = 9_223_372_036_854_775_807L // Integers of the Int64 type must have an 'L' as a suffix
-let unsigned_num = 4_294_967_295U // Integers of the UInt type must have an 'U' suffix
-```
+  ```moonbit
+  let a = 1234
+  let b = 1_000_000 + a
+  let large_num = 9_223_372_036_854_775_807L // Integers of the Int64 type must have an 'L' as a suffix
+  let unsigned_num = 4_294_967_295U // Integers of the UInt type must have an 'U' suffix
+  ```
 
 - A binary number has a leading zero followed by a letter "B", i.e. `0b`/`0B`.
   Note that the digits after `0b`/`0B` must be `0` or `1`.
 
-```moonbit
-let bin =  0b110010
-let another_bin = 0B110010
-```
+  ```moonbit
+  let bin =  0b110010
+  let another_bin = 0B110010
+  ```
 
 - An octal number has a leading zero followed by a letter "O", i.e. `0o`/`0O`.
   Note that the digits after `0o`/`0O` must be in the range from `0` through `7`:
 
-```moonbit
-let octal = 0o1234
-let another_octal = 0O1234
-```
+  ```moonbit
+  let octal = 0o1234
+  let another_octal = 0O1234
+  ```
 
 - A hexadecimal number has a leading zero followed by a letter "X", i.e. `0x`/`0X`.
   Note that the digits after the `0x`/`0X` must be in the range `0123456789ABCDEF`.
 
-```moonbit
-let hex = 0XA
-let another_hex = 0xA
-```
+  ```moonbit
+  let hex = 0XA
+  let another_hex = 0xA
+  ```
 
 ### String
 
@@ -554,7 +550,6 @@ In double quotes string, a backslash followed by certain special characters form
 | `\x41`               | Hexadecimal escape sequence                          |
 | `\o102`              | Octal escape sequence                                |
 | `\u5154`,`\u{1F600}` | Unicode escape sequence                              |
-
 
 MoonBit supports string interpolation. It enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text.
 
@@ -822,10 +817,12 @@ fn is_singleton(l: List) -> Bool {
 ```
 
 #### Constructor with labelled arguments
+
 Enum constructors can have labelled argument:
+
 ```moonbit live
 enum E {
-  // `x` and `y` are alabelled argument
+  // `x` and `y` are labelled argument
   C(~x : Int, ~y : Int)
 }
 
@@ -849,6 +846,7 @@ fn init {
 ```
 
 It is also possible to access labelled arguments of constructors like accessing struct fields in pattern matching:
+
 ```moonbit live
 enum Object {
   Point(~x : Double, ~y : Double)
@@ -877,7 +875,9 @@ fn init {
 ```
 
 #### Constructor with mutable fields
+
 It is also possible to define mutable fields for constructor. This is especially useful for defining imperative data structures:
+
 ```moonbit live
 // A mutable binary search tree with parent pointer
 enum Tree[X] {
@@ -983,7 +983,9 @@ match expr {
 ```
 
 ### Map Pattern
+
 MoonBit allows convenient matching on map-like data structures:
+
 ```moonbit
 match map {
   // matches if any only if "b" exists in `map`
@@ -1001,10 +1003,11 @@ match map {
 - Map pattern will be compiled to efficient code: every key will be fetched at most once
 
 ## Error Handling
+
 The return type of a function can include an error type to indicate that the function might return an error. For example, the following function declaration indicates that the function div might return an error of type String:
 
 ```moonbit
-fn div(x: Int, y: Int) -> Int!String { 
+fn div(x: Int, y: Int) -> Int!String {
   if y == 0 {
     raise "division by zero"
   }
@@ -1014,40 +1017,41 @@ fn div(x: Int, y: Int) -> Int!String {
 
 The keyword `raise` is used to interrupt the function execution and return an error. There are three ways to handle errors in functions:
 
-* Using the `!` suffix to rethrow the error directly in case of an error, for example:
+- Using the `!` suffix to rethrow the error directly in case of an error, for example:
 
-```moonbit
-fn div_reraise(x: Int, y: Int) -> Int!String {
-  div(x, y)! // Rethrow the error if `div` raised an error
-}
-```
-
-* Using `try` and `catch` to catch and handle errors, for example:
-
-```moonbit
-fn div_with_default(x: Int, y: Int, default: Int) -> Int {
-  try {
-    div(x, y)!
-  } catch {
-    s => { println(s); default }
+  ```moonbit
+  fn div_reraise(x: Int, y: Int) -> Int!String {
+    div(x, y)! // Rethrow the error if `div` raised an error
   }
-}
-```
+  ```
+
+- Using `try` and `catch` to catch and handle errors, for example:
+
+  ```moonbit
+  fn div_with_default(x: Int, y: Int, default: Int) -> Int {
+    try {
+      div(x, y)!
+    } catch {
+      s => { println(s); default }
+    }
+  }
+  ```
 
 Here, `try` is used to call a function that might throw an error, and `catch` is used to match and handle the caught error. If no error is caught, the catch block will not be executed.
 
-* Using the `!!` suffix to convert the result into a first-class value of the `Result` type, for example:
+- Using the `!!` suffix to convert the result into a first-class value of the `Result` type, for example:
 
-```moonbit
-test {
-  let res = div(6, 3)!!
-  inspect(res, content="Ok(2)")!
-  let res = div(6, 0)!!
-  inspect(res, content="Err(division by zero)")!
-}
-```
+  ```moonbit
+  test {
+    let res = div(6, 3)!!
+    inspect(res, content="Ok(2)")!
+    let res = div(6, 0)!!
+    inspect(res, content="Err(division by zero)")!
+  }
+  ```
 
 The suffix `!!` is a syntax sugar that is equivalent to the following code:
+
 ```moonbit
 test {
   let res = try { Ok(div(6, 3)!) } catch { s => Err(s) }
@@ -1092,7 +1096,7 @@ fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
 
 ## Access Control
 
-By default, all function definitions and variable bindings are _invisible_ to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`enum`/`struct`/`let` or top-level function to make them fully visible, or put `priv` before `type`/`enum`/`struct` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
+By default, all function definitions and variable bindings are *invisible* to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`enum`/`struct`/`let` or top-level function to make them fully visible, or put `priv` before `type`/`enum`/`struct` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
 
 - Struct fields cannot be defined as `pub` within an abstract or private struct since it makes no sense.
 - Enum constructors do not have individual visibility so you cannot use `pub` or `priv` before them.
@@ -1295,20 +1299,21 @@ fn init {
 
 Currently, the following operators can be overloaded:
 
-| operator name        | method name  |
-| -------------------- | ------------ |
-| `+`                  | `op_add`     |
-| `-`                  | `op_sub`     |
-| `*`                  | `op_mul`     |
-| `/`                  | `op_div`     |
-| `%`                  | `op_mod`     |
-| `=`                  | `op_eual`    |
-| `-`(unary)           | `op_neg`     |
-| `_[_]`(get item)     | `op_get`     |
-| `_[_] = _`(set item) | `op_set`     |
-| `_[_:_]`(view)      | `op_as_view` |
+| Operator Name         | Method Name  |
+| --------------------- | ------------ |
+| `+`                   | `op_add`     |
+| `-`                   | `op_sub`     |
+| `*`                   | `op_mul`     |
+| `/`                   | `op_div`     |
+| `%`                   | `op_mod`     |
+| `=`                   | `op_equal`   |
+| `-` (unary)           | `op_neg`     |
+| `_[_]` (get item)     | `op_get`     |
+| `_[_] = _` (set item) | `op_set`     |
+| `_[_:_]` (view)       | `op_as_view` |
 
 ## Pipe operator
+
 MoonBit provides a convenient pipe operator `|>`, which can be used to chain regular function calls:
 
 ```moonbit
@@ -1325,9 +1330,9 @@ fn init {
 
 ## View
 
-Analogous to `slice` in other languages, the view is a reference to a 
-specific segment of collections. You can use `data[start:end]` to create a 
-view of array `data`, referencing elements from `start` to `end` (exclusive). 
+Analogous to `slice` in other languages, the view is a reference to a
+specific segment of collections. You can use `data[start:end]` to create a
+view of array `data`, referencing elements from `start` to `end` (exclusive).
 Both `start` and `end` indices can be omitted.
 
 ```moonbit
@@ -1356,7 +1361,7 @@ By implementing `length` and `op_as_view` method, you can also create a view for
 ```moonbit
 struct MyList[A] {
   elems : Array[A]
-} 
+}
 
 struct MyListView[A] {
   ls : MyList[A]
@@ -1385,13 +1390,12 @@ fn init {
 
 Output：
 
-```
+```plaintext
 op_as_view: [0,5)
 op_as_view: [1,5)
 op_as_view: [0,2)
 op_as_view: [1,2)
 ```
-
 
 ## Trait system
 
@@ -1525,7 +1529,6 @@ fn init {
 }
 ```
 
-
 ## Automatically derive builtin traits
 
 MoonBit can automatically derive implementations for some builtin traits:
@@ -1547,6 +1550,7 @@ fn init {
 ```
 
 ## Trait objects
+
 MoonBit supports runtime polymorphism via trait objects.
 If `t` is of type `T`, which implements trait `I`,
 one can pack the methods of `T` that implements `I`, together with `t`,
@@ -1562,7 +1566,7 @@ trait Animal {
 type Duck String
 fn Duck::make(name: String) -> Duck { Duck(name) }
 fn speak(self: Duck) -> Unit {
-  println(self.0 + ": quak!")
+  println(self.0 + ": quack!")
 }
 
 type Fox String
@@ -1591,6 +1595,7 @@ Not all traits can be used to create objects.
 - There must be only one occurrence of `Self` in the type of the method (i.e. the first parameter)
 
 ## The question operator
+
 MoonBit features a convenient `?` operator for error handling.
 The `?` postfix operator can be applied to expressions of type `Option` or `Result`.
 When applied to expression `t : Option[T]`, `t?` is equivalent to:
@@ -1634,6 +1639,7 @@ fn g() -> Result[Int, String] {
 ```
 
 ## Test Blocks
+
 MoonBit provides the test code block for writing test cases. For example:
 
 ```moonbit
@@ -1650,15 +1656,16 @@ test "panic_test" {
   let _ : Int = Option::None.unwrap()
 }
 ```
+
 ## Doc Comments
 
 Doc comments are comments prefix with `///` in each line in the leading of toplevel structure like `fn`,`let`,`enum`,`struct`,`type`. The doc comments contains a markdown text and several pragmas.
 
 ```moonbit
 /// Return a new array with reversed elements.
-/// 
+///
 /// # Example
-/// 
+///
 /// ```
 /// reverse([1,2,3,4]) |> println()
 /// ```
@@ -1684,7 +1691,7 @@ Pragmas are annotations inside doc comments. They all take the form `/// @word .
   pub fn foo() -> Unit { ... }
 
   /// @alert unsafe "Div will cause an error when y is zero"
-  pub fn div(x: Int, y: Int) -> Int { ... } 
+  pub fn div(x: Int, y: Int) -> Int { ... }
 
   fn main {
     foo() // warning: Use foo2 instead
