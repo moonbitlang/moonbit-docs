@@ -26,17 +26,19 @@ fn cos(d : Double) -> Double = "Math" "cos"
 
 It's similar to a normal function definition except that the function body is replaced with two strings.
 
-For Wasm(GC) backend, these two strings are used to identify the specific function from a Wasm import object, the first string is the module name, and the second string is the function name. For JS backend, these two strings are used to call a static function in the global namespace. The example above becomes similar to `const cos = (d) => Math.cos(d)`.
+For WasmGC backend, these two strings are used to identify the specific function from a Wasm import object, the first string is the module name, and the second string is the function name. For JS backend, these two strings are used to call a static function in the global namespace. The example above becomes similar to `const cos = (d) => Math.cos(d)`.
 
 You can also declare inline functions where the function body is replaced with one string.
 
 For WasmGC backend, you may declare it as a Wasm function without name (which will be generated afterwards):
+
 ```moonbit
-extern "wasm" fn abs(d : Double) -> Double = 
+extern "wasm" fn abs(d : Double) -> Double =
   #|(func (param f64) (result f64))
 ```
 
 and for JS backend, you may declare it as a lambda expression:
+
 ```javascript
 extern "js" fn abs(d : Double) -> Double =
   #|(d) => Math.abs(d)
@@ -88,7 +90,7 @@ Each backend has a separate definition. For JS backend, a `format` option is use
 
 The example above will export function `add` and `fib`, and the function `fib` will be exported with the name of `test`.
 
-For Wasm(GC) backend, the `_start` function should always be called to initialize all the global instances defined in MoonBit program.
+For WasmGC backend, the `_start` function should always be called to initialize all the global instances defined in MoonBit program.
 
 ### Use compiled Wasm
 
@@ -160,7 +162,7 @@ pub fn display_pi() -> Unit {
 }
 ```
 
-Build the project using `moon build --target wasm-gc`. We recommend using the wasm-gc feature whenever possible. If the environment does not support wasm-gc feature, simply omit the `--target wasm-gc` option.
+Build the project using `moon build --target wasm-gc`. We recommend using the WasmGC feature whenever possible. If the environment does not support WasmGC feature, simply omit the `--target wasm-gc` option.
 
 We now can use it from JavaScript.
 
@@ -329,6 +331,6 @@ Make sure that `draw.wasm` and `index.html` are in the same folder, then start a
 python3 -m http.server 8080
 ```
 
-Goto http://localhost:8080 in your browser, there should be a smile face on the screen and an output on the console:
+Goto <http://localhost:8080> in your browser, there should be a smile face on the screen and an output on the console:
 
-![](./imgs/smile_face_with_log.png)
+![A smile face webpage with browser devtools open](./imgs/smile_face_with_log.png)

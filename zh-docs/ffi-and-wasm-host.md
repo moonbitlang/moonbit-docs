@@ -14,7 +14,7 @@
 type Canvas_ctx
 ```
 
-这将会定义一个外部对象的引用。在我们的例子中，它代表了宿主JavaScript环境中的一个`CanvasRenderingContext2D`对象。
+这将会定义一个外部对象的引用。在我们的例子中，它代表了宿主 JavaScript 环境中的一个`CanvasRenderingContext2D`对象。
 
 ### 声明外部函数
 
@@ -26,17 +26,19 @@ fn cos(d : Double) -> Double = "Math" "cos"
 
 它和正常的函数定义十分相像，除了函数体被替换为两个字符串。
 
-对于Wasm(GC)后端，这两个字符串是用来在Wasm导入的对象中识别特定的函数：第一个字符串是模块名称，第二个字符串是函数名称。对于JS后端，这两个字符串被用于访问全局命名空间中的一个静态函数。上述例子会编译为类似`const cos = (d) => Math.cos(d)`
+对于 WasmGC 后端，这两个字符串是用来在 Wasm 导入的对象中识别特定的函数：第一个字符串是模块名称，第二个字符串是函数名称。对于 JS 后端，这两个字符串被用于访问全局命名空间中的一个静态函数。上述例子会编译为类似`const cos = (d) => Math.cos(d)`
 
 你也可以定义内联函数，函数体是一个字符串。
 
-对于WasmGC后端，你可以以一个不含名称的Wasm函数定义它（名称将会在之后自动生成）：
+对于 WasmGC 后端，你可以以一个不含名称的 Wasm 函数定义它（名称将会在之后自动生成）：
+
 ```moonbit
-extern "wasm" fn abs(d : Double) -> Double = 
+extern "wasm" fn abs(d : Double) -> Double =
   #|(func (param f64) (result f64))
 ```
 
 而对于JS后端，你可以定义一个箭头函数表达式：
+
 ```javascript
 extern "js" fn abs(d : Double) -> Double =
   #|(d) => Math.abs(d)
@@ -84,21 +86,21 @@ fn begin_path(self: Canvas_ctx) = "canvas" "begin_path"
 }
 ```
 
-每一个后端都有一个单独的定义。对JS后端，还有一个额外的`format`选项，可以用来指定生成的JS文件，是ES Module（`esm`），还是CommonJS module(`cjs`)，还是立即调用函数表达式（`iife`）。
+每一个后端都有一个单独的定义。对 JS 后端，还有一个额外的`format`选项，可以用来指定生成的 JS 文件，是 ES Module（`esm`），还是 CommonJS module (`cjs`)，还是立即调用函数表达式（`iife`）。
 
 上面的例子中，`add`和`fib`函数将会在编译时被导出，并且`fib`函数将被以`test`为名导出。
 
-对于Wasm(GC)后端，`_start`函数总是应当被使用，以初始化月兔程序中定义的全局实例。
+对于 WasmGC 后端，`_start`函数总是应当被使用，以初始化月兔程序中定义的全局实例。
 
-### 使用编译的Wasm
+### 使用编译的 Wasm
 
-使用编译后的Wasm，你需要首先在宿主环境中初始化Wasm模块。这一步需要满足Wasm模块对外部函数的依赖。之后可以使用Wasm模块提供的函数。
+使用编译后的 Wasm ，你需要首先在宿主环境中初始化 Wasm 模块。这一步需要满足 Wasm 模块对外部函数的依赖。之后可以使用 Wasm 模块提供的函数。
 
 #### 提供宿主函数
 
-使用编译后的Wasm，你需要在Wasm导入对象中提供**所有**声明过的外部函数。
+使用编译后的 WasmGC ，你需要在 WasmGC 导入对象中提供**所有**声明过的外部函数。
 
-例如，在JavaScript中使用包含上述代码片段编译的Wasm：
+例如，在 JavaScript 中使用包含上述代码片段编译的 Wasm：
 
 ```js
 WebAssembly.instantiateStreaming(fetch("xxx.wasm"), {
@@ -108,11 +110,11 @@ WebAssembly.instantiateStreaming(fetch("xxx.wasm"), {
 });
 ```
 
-具体信息可以查阅嵌入Wasm的宿主环境的文档，例如[MDN](https://developer.mozilla.org/en-US/docs/WebAssembly)。
+具体信息可以查阅嵌入 Wasm 的宿主环境的文档，例如[MDN](https://developer.mozilla.org/en-US/docs/WebAssembly)。
 
 ## 例子：笑脸
 
-让我们来看一个使用月兔利用画布（Canvas）API画一个简单笑脸的例子。假设利用`moon new draw`创建了一个新项目。
+让我们来看一个使用月兔利用画布（Canvas）API 画一个简单笑脸的例子。假设利用`moon new draw`创建了一个新项目。
 
 ```moonbit title="lib/draw.mbt"
 // 我们首先定义一个类型，代表着绘画的上下文
@@ -160,9 +162,9 @@ pub fn display_pi() -> Unit {
 }
 ```
 
-我们使用`moon build --target wasm-gc`构建项目。我们推荐尽可能地使用wasm-gc特性。如果宿主环境不支持，那么可以省略`--target wasm-gc`选项。
+我们使用`moon build --target wasm-gc`构建项目。我们推荐尽可能地使用 WasmGC 特性。如果宿主环境不支持，那么可以省略`--target wasm-gc`选项。
 
-在JavaScript中使用它：
+在 JavaScript 中使用它：
 
 ```html title="./index.html"
 <html lang="en">
@@ -323,12 +325,12 @@ WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.was
 </html>
 ```
 
-确保`draw.wasm`以及`index.html`在同一个文件夹下，之后在文件夹中启动HTTP服务器，例如使用Python：
+确保`draw.wasm`以及`index.html`在同一个文件夹下，之后在文件夹中启动 HTTP 服务器，例如使用 Python ：
 
 ```bash
 python3 -m http.server 8080
 ```
 
-在浏览器中打开 http://localhost:8080 后，应该可以看到屏幕上的一个笑脸以及控制台的输出：
+在浏览器中打开 <http://localhost:8080> 后，应该可以看到屏幕上的一个笑脸以及控制台的输出：
 
-![](./imgs/smile_face_with_log.png)
+![A smile face webpage with browser devtools open](./imgs/smile_face_with_log.png)

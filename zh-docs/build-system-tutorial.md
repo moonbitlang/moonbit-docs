@@ -10,7 +10,7 @@
 
     使用 `moon help` 命令可查看使用说明。
 
-    ```
+    ```bash
     $ moon help
     Moonbit's build system
 
@@ -82,6 +82,7 @@ my-project
 
 - `moon.pkg.json` 文件：包描述符文件。它定义了包的属性，例如该包是否为 `main` 包，以及它所导入的包。
   - `main/moon.pkg.json`：
+
     ```json
     {
       "is_main": true,
@@ -90,12 +91,15 @@ my-project
       ]
     }
     ```
+
     其中的 `"is_main: true"` 声明此包需要被构建系统链接为 `wasm` 文件。
 
   - `lib/moon.pkg.json`
+
       ```json
       {}
       ```
+
     内容为空，其作用只是告诉构建系统该文件夹是一个包。
 
 - `moon.mod.json` 用于将目录标识为 MoonBit 模块。它包含模块的名称：
@@ -119,6 +123,7 @@ my-project
 - `lib` 包含 `hello.mbt` 文件与 `hello_test.mbt` 文件：
 
   `hello.mbt`
+
   ```moonbit
   pub fn hello() -> String {
       "Hello, world!"
@@ -126,6 +131,7 @@ my-project
   ```
 
   `hello_test.mbt`
+
   ```moonbit
   test "hello" {
     if hello() != "Hello, world!" {
