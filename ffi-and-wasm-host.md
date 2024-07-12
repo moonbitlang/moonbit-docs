@@ -162,7 +162,7 @@ pub fn display_pi() -> Unit {
 }
 ```
 
-Build the project using `moon build --target wasm-gc`. We recommend using the WasmGC feature whenever possible. If the environment does not support WasmGC feature, simply omit the `--target wasm-gc` option.
+Build the project using `moon build --target wasm-gc`. We recommend using Wasm with GC integration whenever possible. If the environment does not support the GC feature, simply omit the `--target wasm-gc` option.
 
 We now can use it from JavaScript.
 

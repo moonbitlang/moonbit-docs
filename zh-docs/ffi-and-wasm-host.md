@@ -162,7 +162,7 @@ pub fn display_pi() -> Unit {
 }
 ```
 
-我们使用`moon build --target wasm-gc`构建项目。我们推荐尽可能地使用 WasmGC 特性。如果宿主环境不支持，那么可以省略`--target wasm-gc`选项。
+我们使用`moon build --target wasm-gc`构建项目。我们推荐尽可能地使用带有 GC 支持的 Wasm 。如果宿主环境不支持 GC 特性，那么可以省略`--target wasm-gc`选项。
 
 在 JavaScript 中使用它：
 
