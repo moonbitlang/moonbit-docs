@@ -1,7 +1,7 @@
 # MoonBit
 
 MoonBit 是一个用于云计算和边缘计算的 WebAssembly 端到端的编程语言工具链。
-您可以访问 <https://try.moonbitlang.cn> 获得 IDE 环境，无需安装任何软件，也不依赖任何服务器。
+您可以访问 [https://try.moonbitlang.cn](https://try.moonbitlang.cn) 获得 IDE 环境，无需安装任何软件，也不依赖任何服务器。
 
 ## 状态
 
