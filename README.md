@@ -1504,25 +1504,26 @@ trait Debug {
 }
 ```
 
-## Access control of methods and extension methods
+## Access control of methods and direct implementation of traits
 
 To make the trait system coherent (i.e. there is a globally unique implementation for every `Type: Trait` pair), and prevent third-party packages from modifying behavior of existing programs by accident, *only the package that defines a type can define methods for it*. So one cannot define new methods or override old methods for builtin and foreign types.
 
-However, it is often useful to extend the functionality of an existing type. So MoonBit provides a mechanism called extension method, defined using the syntax `fn Trait::method_name(...) -> ...`. Extension methods extend the functionality of an existing type by implementing a trait. For example, to implement a new trait `ToMyBinaryProtocol` for builtin types, one can (and must) use extension methods:
+However, it is often useful to implement new traits for an existing type. So MoonBit provides a mechanism to directly implement a trait, defined using the syntax `impl Trait for Type with method_name(...) { ... }`. Type annotations can be omitted from `impl`, because MoonBit can infer the correct types from the trait's signature. For example, to implement a new trait `ToMyBinaryProtocol` for builtin types, one can (and must) use `impl`:
 
 ```moonbit
 trait ToMyBinaryProtocol {
   to_my_binary_protocol(Self, Buffer) -> Unit
 }
 
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: Int, b: Buffer) -> Unit { ... }
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: Double, b: Buffer) -> Unit { ... }
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) -> Unit { ... }
+impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
+impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
+impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
+impl[X : ToMyBinaryProtocol] for Array[X] with to_my_binary_protocol(arr, b) { ... }
 ```
 
-When searching for the implementation of a trait, extension methods have a higher priority, so they can be used to override ordinary methods with undesirable behavior. Extension methods can only be used to implement the specified trait. They cannot be called directly like ordinary methods. Furthermore, *only the package of the type or the package of the trait can implement extension methods*. For example, only `@pkg1` and `@pkg2` are allowed to implement an extension method `@pkg1.Trait::f` for type `@pkg2.Type`. This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of extension methods.
+When searching for the implementation of a trait, `impl`s have a higher priority, so they can be used to override ordinary methods with undesirable behavior. `impl`s can only be used to implement the specified trait. They cannot be called directly like ordinary methods. Furthermore, *only the package of the type or the package of the trait can define an implementation*. For example, only `@pkg1` and `@pkg2` are allowed to define `impl @pkg1.Trait for @pkg2.Type` for type `@pkg2.Type`. This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of `impl`s.
 
-To invoke an extension method directly, use the `Trait::method` syntax.
+To invoke an trait implementation directly, one can use the `Trait::method` syntax:
 
 ```moonbit live
 trait MyTrait {

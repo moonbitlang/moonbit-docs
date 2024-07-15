@@ -1502,35 +1502,36 @@ trait Debug {
 }
 ```
 
-## 方法的访问权限控制与拓展方法
+## 方法的访问权限控制、直接实现接口
 
 为了使 MoonBit 的接口系统具有一致性（coherence，即任何 `Type: Trait` 的组合都有全局唯一的实现），
 防止第三方包意外地修改现有程序的行为，**只有类型所在的包能为它定义方法**。
 所以用户无法为内建类型或来自第三方包的类型定义方法。
 
-然而，我们有时也会需要拓展一个现有类型的功能，因此，MoonBit 提供了一种名为拓展方法的机制。
-拓展方法可以通过 `fn Trait::method_name(...) -> ...` 的形式声明，
-它们通过实现接口来拓展现有类型的功能。例如，假设要为内建类型实现一个新的接口
-`ToMyBinaryProtocol`，就可以（且必须）使用拓展方法：
+然而，我们有时也会需要给一个现有类型实现新的接口，因此，MoonBit 允许不定义方法直接实现一个接口。
+这种接口实现的语法是 `impl Trait for Type with method_name(...) { ... }`。
+MoonBit 可以根据接口的签名自动推导出实现的参数和返回值的类型，因此实现不强制要求标注类型。
+例如，假设要为内建类型实现一个新的接口 `ToMyBinaryProtocol`，就可以（且必须）使用 `impl`：
 
 ```moonbit
 trait ToMyBinaryProtocol {
   to_my_binary_protocol(Self, Buffer) -> Unit
 }
 
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: Int, b: Buffer) -> Unit { ... }
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: Double, b: Buffer) -> Unit { ... }
-fn ToMyBinaryProtocol::to_my_binary_protocol(x: String, b: Buffer) -> Unit { ... }
+impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
+impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
+impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
+impl[X : ToMyBinaryProtocol] for Array[X] with to_my_binary_protocol(arr, b) { ... }
 ```
 
-在搜索某个接口的实现时，拓展方法比普通方法有更高的优先级，
-因此拓展方法还可以用来覆盖掉行为不能满足要求的现有方法。
-拓展方法只能被用于实现指定的接口，不能像普通的方法一样被直接调用。
-此外，**只有类型或接口所在的包可以定义拓展方法**。
-例如，只有 `@pkg1` 和 `@pkg2` 能为类型 `@pkg2.Type` 定义拓展方法 `@pkg1.Trait::f`。
-这一限制使得 MoonBit 的接口系统在加入拓展方法这一灵活的机制后，仍能保持一致。
+在搜索某个接口的实现时，`impl` 比普通方法有更高的优先级，
+因此 `impl` 还可以用来覆盖掉行为不能满足要求的现有方法。
+`impl` 只能被用于实现指定的接口，不能像普通的方法一样被直接调用。
+此外，**只有类型或接口所在的包可以定义 `impl`**。
+例如，只有 `@pkg1` 和 `@pkg2` 能定义 `impl @pkg1.Trait for @pkg2.Type with ...`。
+这一限制使得 MoonBit 的接口系统在加入 `impl` 后，仍能保持一致。
 
-如果需要直接调用一个拓展方法，可以使用 `Trait::method` 语法。例如：
+如果需要直接调用一个实现，可以使用 `Trait::method` 语法。例如：
 
 ```moonbit live
 trait MyTrait {
