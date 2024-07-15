@@ -1325,11 +1325,11 @@ fn init {
 ```moonbit
 fn init {
   let xs = [0,1,2,3,4,5]
-  let s1 : ArrayView[Int] = xs[2..]
+  let s1 : ArrayView[Int] = xs[2:]
   print_array_view(s1)            //output: 2345
   xs[:4]  |> print_array_view()  //output: 0123
   xs[2:5] |> print_array_view()  //output: 234
-  xs[..]   |> print_array_view()  //output: 012345
+  xs[:]   |> print_array_view()  //output: 012345
 
   // 创建一个视图的视图
   xs[2:5][1:] |> print_array_view() //output: 34
