@@ -483,13 +483,13 @@ let e = not(a)
 
 MoonBit 支持整型和浮点类型：
 
-| 类型     | 描述                         |   例子   |
-| -------- | ---------------------------- | -------- |
-| `Int`    | 32 位有符号整数              | `42`     |
-| `Int64`  | 64 位有符号整数              | `1000L`  |
-| `UInt`   | 32 位无符号整数              | `14U`    |
-| `UInt64` | 64 位无符号整数              | `14UL`   |
-| `Double` | 64 位浮点数，由 IEEE754 定义 | `3.14`   |
+| 类型     | 描述                         | 例子    |
+| -------- | ---------------------------- | ------- |
+| `Int`    | 32 位有符号整数              | `42`    |
+| `Int64`  | 64 位有符号整数              | `1000L` |
+| `UInt`   | 32 位无符号整数              | `14U`   |
+| `UInt64` | 64 位无符号整数              | `14UL`  |
+| `Double` | 64 位浮点数，由 IEEE754 定义 | `3.14`  |
 
 MoonBit 支持的数字字面量，包括十进制、二进制、八进制和十六进制。
 
@@ -993,6 +993,175 @@ match map {
 - 字典模式永远是开放的：未被匹配到的键会被忽略
 - 字典模式会被编译成高效的代码：每个键至多被查询一次
 
+## 操作符
+
+### 运算符重载
+
+MoonBit 支持通过方法重载内置运算符。与运算符 `<op>` 相对应的方法名是 `op_<op>`。例如：
+
+```moonbit live
+struct T {
+  x:Int
+} derive(Debug)
+
+fn op_add(self: T, other: T) -> T {
+  { x: self.x + other.x }
+}
+
+fn init {
+  let a = { x:0, }
+  let b = { x:2, }
+  debug(a + b)
+}
+```
+
+另一个例子（关于`op_get`和`op_set`）:
+
+```moonbit live
+struct Coord {
+  mut x: Int
+  mut y: Int
+} derive(Debug)
+
+fn op_get(self: Coord, key: String) -> Int {
+  match key {
+    "x" => self.x
+    "y" => self.y
+  }
+}
+
+fn op_set(self: Coord, key: String, val: Int) -> Unit {
+    match key {
+    "x" => self.x = val
+    "y" => self.y = val
+  }
+}
+
+fn init {
+  let c = { x: 1, y: 2 }
+  debug(c)
+  debug(c["y"])
+  c["x"] = 23
+  debug(c)
+  debug(c["x"])
+}
+```
+
+目前，以下运算符可以被重载：
+
+| 运算符名称           | 方法名       |
+| -------------------- | ------------ |
+| `+`                  | `op_add`     |
+| `-`                  | `op_sub`     |
+| `*`                  | `op_mul`     |
+| `/`                  | `op_div`     |
+| `%`                  | `op_mod`     |
+| `=`                  | `op_equal`   |
+| `-`（一元运算符）    | `op_neg`     |
+| `_[_]`（获取项）     | `op_get`     |
+| `_[_] = _`（设置项） | `op_set`     |
+| `_[_:_]`（视图）     | `op_as_view` |
+
+### 管道运算符
+
+MoonBit 提供了便利的管道运算符 `|>`，可以用于链式调用普通函数：
+
+```moonbit
+fn init {
+  x |> f     // 等价于 f(x)
+  x |> f(y)  // 等价于 f(x, y)
+
+  // 分布在多行的链式调用
+  arg_val
+  |> f1 // 等价于 f1(arg_val)
+  |> f2(other_args) // 等价于 f2(f1(arg_val), other_args)
+}
+```
+
+### 问号操作符
+
+MoonBit 提供一个便捷的 `?` 操作符，用于错误处理。
+`?` 是一个后缀运算符。它可以作用于类型为 `Option` 或 `Result` 的表达式。
+被应用在表达式 `t : Option[T]` 上时，`t?` 等价于：
+
+```moonbit
+match t {
+  None => { return None }
+  Some(x) => x
+}
+```
+
+被应用在表达式 `t : Result[T, E]` 上时，`t?` 等价于：
+
+```moonbit
+match t {
+  Err(err) => { return Err(err) }
+  Ok(x) => x
+}
+```
+
+问号操作符可以用于优雅地组合多段可能失败或产生错误的程序：
+
+```moonbit
+fn may_fail() -> Option[Int] { ... }
+
+fn f() -> Option[Int] {
+  let x = may_fail()?
+  let y = may_fail()?.lsr(1) + 1
+  if y == 0 { return None }
+  Some(x / y)
+}
+
+fn may_error() -> Result[Int, String] { ... }
+
+fn g() -> Result[Int, String] {
+  let x = may_error()?
+  let y = may_error()? * 2
+  if y == 0 { return Err("divide by zero") }
+  Ok(x / y)
+}
+```
+
+### 级联操作符
+
+级联运算符`..`用于连续对同一个值进行一系列可变的操作, 语法如下：
+
+```moonbit
+x..f()
+```
+
+`x..f()..g()`相当于`{x.f(); x.g(); x}`。
+
+考虑这样的需求：对于一个拥有`add_string`、
+`add_char`、`add_int` 等方法的 `MyStringBuilder` 类型，我们常常需要对同一个
+`MyStringBuilder` 类型的值进行一系列操作：
+
+```moonbit
+let builder = MyStringBuilder::new()
+builder.add_char('a')
+builder.add_char('a')
+builder.add_int(1001)
+builder.add_string("abcdef")
+let result = builder.to_string()
+```
+
+为了避免重复键入`builder`，它的方法常常被设计为返回`self`本身，这样就可以使用`.`运算符将操作串连起来。
+为了区分不可变与可变操作，在MoonBit中，对于所有返回`Unit`的方法，可以使用级联运算符进行连续的操作，
+而不需要专门修改方法的返回类型。
+
+为了避免重复键入上图中的`array`, 和区分不可变与可变操作，MoonBit引入了级联运算符。对于一个类型中的所有返回`Unit`的方法，可以使用`..`将这些方法的调用串联起来，
+而不需要专门修改这些方法的返回类型。 `array..push(5)..sort()`相当于依次调用了可变操作`array.push(5)`和`array.sort()`, 最终返回`array`。
+
+```moonbit
+let result = 
+  MyStringBuilder::new()
+    ..add_char('a')
+    ..add_char('a')
+    ..add_int(1001)
+    ..add_string("abcdef")
+    .to_string()
+```
+
 ## 错误处理
 
 函数的返回值类型中可以包含错误类型，用于表示函数可能返回的错误。比如如下函数声明表示函数 `div` 可能返回一个字符串类型的错误：
@@ -1230,89 +1399,6 @@ fn init {
   // default() 有歧义！
   let t1 = T1::default() // 可行
   let t2 = T2::default() // 可行
-}
-```
-
-## 运算符重载
-
-MoonBit 支持通过方法重载内置运算符。与运算符 `<op>` 相对应的方法名是 `op_<op>`。例如：
-
-```moonbit live
-struct T {
-  x:Int
-} derive(Debug)
-
-fn op_add(self: T, other: T) -> T {
-  { x: self.x + other.x }
-}
-
-fn init {
-  let a = { x:0, }
-  let b = { x:2, }
-  debug(a + b)
-}
-```
-
-另一个例子（关于`op_get`和`op_set`）:
-
-```moonbit live
-struct Coord {
-  mut x: Int
-  mut y: Int
-} derive(Debug)
-
-fn op_get(self: Coord, key: String) -> Int {
-  match key {
-    "x" => self.x
-    "y" => self.y
-  }
-}
-
-fn op_set(self: Coord, key: String, val: Int) -> Unit {
-    match key {
-    "x" => self.x = val
-    "y" => self.y = val
-  }
-}
-
-fn init {
-  let c = { x: 1, y: 2 }
-  debug(c)
-  debug(c["y"])
-  c["x"] = 23
-  debug(c)
-  debug(c["x"])
-}
-```
-
-目前，以下运算符可以被重载：
-
-| 运算符名称            | 方法名       |
-| --------------------- | ------------ |
-| `+`                   | `op_add`     |
-| `-`                   | `op_sub`     |
-| `*`                   | `op_mul`     |
-| `/`                   | `op_div`     |
-| `%`                   | `op_mod`     |
-| `=`                   | `op_equal`   |
-| `-`（一元运算符）     | `op_neg`     |
-| `_[_]`（获取项）      | `op_get`     |
-| `_[_] = _`（设置项）  | `op_set`     |
-| `_[_:_]`（视图）      | `op_as_view` |
-
-## 管道运算符
-
-MoonBit 提供了便利的管道运算符 `|>`，可以用于链式调用普通函数：
-
-```moonbit
-fn init {
-  x |> f     // 等价于 f(x)
-  x |> f(y)  // 等价于 f(x, y)
-
-  // 分布在多行的链式调用
-  arg_val
-  |> f1 // 等价于 f1(arg_val)
-  |> f2(other_args) // 等价于 f2(f1(arg_val), other_args)
 }
 ```
 
@@ -1611,90 +1697,6 @@ fn init {
 
 - 方法的第一个参数必须是 `Self`
 - 在方法的签名里，`Self` 只能出现在第一个参数
-
-## 问号操作符
-
-MoonBit 提供一个便捷的 `?` 操作符，用于错误处理。
-`?` 是一个后缀运算符。它可以作用于类型为 `Option` 或 `Result` 的表达式。
-被应用在表达式 `t : Option[T]` 上时，`t?` 等价于：
-
-```moonbit
-match t {
-  None => { return None }
-  Some(x) => x
-}
-```
-
-被应用在表达式 `t : Result[T, E]` 上时，`t?` 等价于：
-
-```moonbit
-match t {
-  Err(err) => { return Err(err) }
-  Ok(x) => x
-}
-```
-
-问号操作符可以用于优雅地组合多段可能失败或产生错误的程序：
-
-```moonbit
-fn may_fail() -> Option[Int] { ... }
-
-fn f() -> Option[Int] {
-  let x = may_fail()?
-  let y = may_fail()?.lsr(1) + 1
-  if y == 0 { return None }
-  Some(x / y)
-}
-
-fn may_error() -> Result[Int, String] { ... }
-
-fn g() -> Result[Int, String] {
-  let x = may_error()?
-  let y = may_error()? * 2
-  if y == 0 { return Err("divide by zero") }
-  Ok(x / y)
-}
-```
-
-## 级联操作符
-
-级联运算符`..`用于连续对同一个值进行一系列可变的操作, 语法如下：
-
-```moonbit
-x..f()
-```
-
-`x..f()..g()`相当于`{x.f(); x.g(); x}`。
-
-
-考虑这样的需求：对于一个拥有`add_string`、
-`add_char`、`add_int` 等方法的 `MyStringBuilder` 类型，我们常常需要对同一个 
-`MyStringBuilder` 类型的值进行一系列操作：
-
-```moonbit
-let builder = MyStringBuilder::new()
-builder.add_char('a')
-builder.add_char('a')
-builder.add_int(1001)
-builder.add_string("abcdef")
-let result = builder.to_string()
-```
-为了避免重复键入`builder`，它的方法常常被设计为返回`self`本身，这样就可以使用`.`运算符将操作串连起来。
-为了区分不可变与可变操作，在MoonBit中，对于所有返回`Unit`的方法，可以使用级联运算符进行连续的操作，
-而不需要专门修改方法的返回类型。
-
-为了避免重复键入上图中的`array`, 和区分不可变与可变操作，MoonBit引入了级联运算符。对于一个类型中的所有返回`Unit`的方法，可以使用`..`将这些方法的调用串联起来，
-而不需要专门修改这些方法的返回类型。 `array..push(5)..sort()`相当于依次调用了可变操作`array.push(5)`和`array.sort()`, 最终返回`array`。
-
-```moonbit
-let result = 
-  MyStringBuilder::new()
-    ..add_char('a')
-    ..add_char('a')
-    ..add_int(1001)
-    ..add_string("abcdef")
-    .to_string()
-```
 
 ## 测试块
 

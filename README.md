@@ -479,13 +479,13 @@ let e = not(a)
 
 MoonBit have integer type and floating point type:
 
-| type     | description                               |  example |
-| -------- | ----------------------------------------- | -------- |
-| `Int`    | 32-bit signed integer                     | `42`     |
-| `Int64`  | 64-bit signed integer                     | `1000L`  |
-| `UInt`   | 32-bit unsigned integer                   | `14U`    |
-| `UInt64` | 64-bit unsigned integer                   | `14UL`   |
-| `Double` | 64-bit floating point, defined by IEEE754 | `3.14`   |
+| type     | description                               | example |
+| -------- | ----------------------------------------- | ------- |
+| `Int`    | 32-bit signed integer                     | `42`    |
+| `Int64`  | 64-bit signed integer                     | `1000L` |
+| `UInt`   | 32-bit unsigned integer                   | `14U`   |
+| `UInt64` | 64-bit unsigned integer                   | `14UL`  |
+| `Double` | 64-bit floating point, defined by IEEE754 | `3.14`  |
 
 MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
@@ -1002,6 +1002,175 @@ match map {
 - Map patterns are always open: unmatched keys are silently ignored
 - Map pattern will be compiled to efficient code: every key will be fetched at most once
 
+## Operators
+
+### Operator Overloading
+
+MoonBit supports operator overloading of builtin operators via methods. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
+
+```moonbit live
+struct T {
+  x:Int
+} derive(Debug)
+
+fn op_add(self: T, other: T) -> T {
+  { x: self.x + other.x }
+}
+
+fn init {
+  let a = { x: 0 }
+  let b = { x: 2 }
+  debug(a + b)
+}
+```
+
+Another example about `op_get` and `op_set`:
+
+```moonbit live
+struct Coord {
+  mut x: Int
+  mut y: Int
+} derive(Debug)
+
+fn op_get(self: Coord, key: String) -> Int {
+  match key {
+    "x" => self.x
+    "y" => self.y
+  }
+}
+
+fn op_set(self: Coord, key: String, val: Int) -> Unit {
+    match key {
+    "x" => self.x = val
+    "y" => self.y = val
+  }
+}
+
+fn init {
+  let c = { x: 1, y: 2 }
+  debug(c)
+  debug(c["y"])
+  c["x"] = 23
+  debug(c)
+  debug(c["x"])
+}
+```
+
+Currently, the following operators can be overloaded:
+
+| Operator Name         | Method Name  |
+| --------------------- | ------------ |
+| `+`                   | `op_add`     |
+| `-`                   | `op_sub`     |
+| `*`                   | `op_mul`     |
+| `/`                   | `op_div`     |
+| `%`                   | `op_mod`     |
+| `=`                   | `op_equal`   |
+| `-` (unary)           | `op_neg`     |
+| `_[_]` (get item)     | `op_get`     |
+| `_[_] = _` (set item) | `op_set`     |
+| `_[_:_]` (view)       | `op_as_view` |
+
+### Pipe operator
+
+MoonBit provides a convenient pipe operator `|>`, which can be used to chain regular function calls:
+
+```moonbit
+fn init {
+  x |> f // equivalent to f(x)
+  x |> f(y) // equivalent to f(x, y)
+
+  // Chain calls at multiple lines
+  arg_val
+  |> f1 // equivalent to f1(arg_val)
+  |> f2(other_args) // equivalent to f2(f1(arg_val), other_args)
+}
+```
+
+### The question operator
+
+MoonBit features a convenient `?` operator for error handling.
+The `?` postfix operator can be applied to expressions of type `Option` or `Result`.
+When applied to expression `t : Option[T]`, `t?` is equivalent to:
+
+```moonbit
+match t {
+  None => { return None }
+  Some(x) => x
+}
+```
+
+When applied to expression `t: Result[T, E]`, `t?` is equivalent to:
+
+```moonbit
+match t {
+  Err(err) => { return Err(err) }
+  Ok(x) => x
+}
+```
+
+The question operator can be used to combine codes that may fail or error elegantly:
+
+```moonbit
+fn may_fail() -> Option[Int] { ... }
+
+fn f() -> Option[Int] {
+  let x = may_fail()?
+  let y = may_fail()?.lsr(1) + 1
+  if y == 0 { return None }
+  Some(x / y)
+}
+
+fn may_error() -> Result[Int, String] { ... }
+
+fn g() -> Result[Int, String] {
+  let x = may_error()?
+  let y = may_error()? * 2
+  if y == 0 { return Err("divide by zero") }
+  Ok(x / y)
+}
+```
+
+### Cascade Operator
+
+The cascade operator `..` is used to perform a series of mutable operations on
+the same value consecutively. The syntax is as follows:
+
+```moonbit
+x..f()
+```
+
+`x..f()..g()` is equivalent to `{x.f(); x.g(); x}`.
+
+Consider the following scenario: for a `MyStringBuilder` type that has methods
+like `add_string`, `add_char`, `add_int`, etc., we often need to perform
+a series of operations on the same `MyStringBuilder` value:
+
+```moonbit
+let builder = MyStringBuilder::new()
+builder.add_char('a')
+builder.add_char('a')
+builder.add_int(1001)
+builder.add_string("abcdef")
+let result = builder.to_string()
+```
+
+To avoid repetitive typing of `builder`, its methods are often designed to
+return `self` itself, allowing operations to be chained using the `.` operator.
+To distinguish between immutable and mutable operations, in MoonBit,
+for all methods that return `Unit`, cascade operator can be used for
+consecutive operations without the need to modify the return type of the methods.
+
+```moonbit
+let result = 
+  MyStringBuilder::new()
+    ..add_char('a')
+    ..add_char('a')
+    ..add_int(1001)
+    ..add_string("abcdef")
+    .to_string()
+```
+
 ## Error Handling
 
 The return type of a function can include an error type to indicate that the function might return an error. For example, the following function declaration indicates that the function div might return an error of type String:
@@ -1242,89 +1411,6 @@ fn init {
   debug(xs.length()) // always work
   debug(@list.List::length(xs)) // always work, but verbose
   debug(@list.length(xs)) // simpler, but only possible when there is no ambiguity in @list
-}
-```
-
-## Operator Overloading
-
-MoonBit supports operator overloading of builtin operators via methods. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
-
-```moonbit live
-struct T {
-  x:Int
-} derive(Debug)
-
-fn op_add(self: T, other: T) -> T {
-  { x: self.x + other.x }
-}
-
-fn init {
-  let a = { x: 0 }
-  let b = { x: 2 }
-  debug(a + b)
-}
-```
-
-Another example about `op_get` and `op_set`:
-
-```moonbit live
-struct Coord {
-  mut x: Int
-  mut y: Int
-} derive(Debug)
-
-fn op_get(self: Coord, key: String) -> Int {
-  match key {
-    "x" => self.x
-    "y" => self.y
-  }
-}
-
-fn op_set(self: Coord, key: String, val: Int) -> Unit {
-    match key {
-    "x" => self.x = val
-    "y" => self.y = val
-  }
-}
-
-fn init {
-  let c = { x: 1, y: 2 }
-  debug(c)
-  debug(c["y"])
-  c["x"] = 23
-  debug(c)
-  debug(c["x"])
-}
-```
-
-Currently, the following operators can be overloaded:
-
-| Operator Name         | Method Name  |
-| --------------------- | ------------ |
-| `+`                   | `op_add`     |
-| `-`                   | `op_sub`     |
-| `*`                   | `op_mul`     |
-| `/`                   | `op_div`     |
-| `%`                   | `op_mod`     |
-| `=`                   | `op_equal`   |
-| `-` (unary)           | `op_neg`     |
-| `_[_]` (get item)     | `op_get`     |
-| `_[_] = _` (set item) | `op_set`     |
-| `_[_:_]` (view)       | `op_as_view` |
-
-## Pipe operator
-
-MoonBit provides a convenient pipe operator `|>`, which can be used to chain regular function calls:
-
-```moonbit
-fn init {
-  x |> f // equivalent to f(x)
-  x |> f(y) // equivalent to f(x, y)
-
-  // Chain calls at multiple lines
-  arg_val
-  |> f1 // equivalent to f1(arg_val)
-  |> f2(other_args) // equivalent to f2(f1(arg_val), other_args)
 }
 ```
 
@@ -1603,90 +1689,6 @@ Not all traits can be used to create objects.
 
 - `Self` must be the first parameter of a method
 - There must be only one occurrence of `Self` in the type of the method (i.e. the first parameter)
-
-## The question operator
-
-MoonBit features a convenient `?` operator for error handling.
-The `?` postfix operator can be applied to expressions of type `Option` or `Result`.
-When applied to expression `t : Option[T]`, `t?` is equivalent to:
-
-```moonbit
-match t {
-  None => { return None }
-  Some(x) => x
-}
-```
-
-When applied to expression `t: Result[T, E]`, `t?` is equivalent to:
-
-```moonbit
-match t {
-  Err(err) => { return Err(err) }
-  Ok(x) => x
-}
-```
-
-The question operator can be used to combine codes that may fail or error elegantly:
-
-```moonbit
-fn may_fail() -> Option[Int] { ... }
-
-fn f() -> Option[Int] {
-  let x = may_fail()?
-  let y = may_fail()?.lsr(1) + 1
-  if y == 0 { return None }
-  Some(x / y)
-}
-
-fn may_error() -> Result[Int, String] { ... }
-
-fn g() -> Result[Int, String] {
-  let x = may_error()?
-  let y = may_error()? * 2
-  if y == 0 { return Err("divide by zero") }
-  Ok(x / y)
-}
-```
-
-## Cascade Operator
-
-The cascade operator `..` is used to perform a series of mutable operations on 
-the same value consecutively. The syntax is as follows:
-
-
-```moonbit
-x..f()
-```
-`x..f()..g()` is equivalent to `{x.f(); x.g(); x}`.
-
-
-Consider the following scenario: for a `MyStringBuilder` type that has methods 
-like `add_string`, `add_char`, `add_int`, etc., we often need to perform 
-a series of operations on the same `MyStringBuilder` value:
-
-```moonbit
-let builder = MyStringBuilder::new()
-builder.add_char('a')
-builder.add_char('a')
-builder.add_int(1001)
-builder.add_string("abcdef")
-let result = builder.to_string()
-```
-To avoid repetitive typing of `builder`, its methods are often designed to 
-return `self` itself, allowing operations to be chained using the `.` operator.
-To distinguish between immutable and mutable operations, in MoonBit, 
-for all methods that return `Unit`, cascade operator can be used for 
-consecutive operations without the need to modify the return type of the methods.
-
-```moonbit
-let result = 
-  MyStringBuilder::new()
-    ..add_char('a')
-    ..add_char('a')
-    ..add_int(1001)
-    ..add_string("abcdef")
-    .to_string()
-```
 
 ## Test Blocks
 
