@@ -1642,7 +1642,7 @@ the same value consecutively. The syntax is as follows:
 ```moonbit
 x..f()
 ```
-`x..f()..g()` is equivalent to `{{x.f(); x}.g(); x}`.
+`x..f()..g()` is equivalent to `{x.f(); x.g(); x}`.
 
 
 Consider the following scenario: for a `MyStringBuilder` type that has methods 
