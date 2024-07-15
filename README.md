@@ -1171,6 +1171,18 @@ let result =
     .to_string()
 ```
 
+### Bitwise Operator
+
+MoonBit supports C-Style bitwise operators for both 32 bits and 64 bits `Int` and `UInt`, formatter will automatically insert parentheses for bitwise operators to avoid ambiguity.
+
+| Operator | Perform |
+| -------- | ------- |
+| `&`      | `land`  |
+| `\|`     | `lor`   |
+| `^`      | `lxor`  |
+| `<<`     | `lsl`   |
+| `>>`     | `lsr`   |
+
 ## Error Handling
 
 The return type of a function can include an error type to indicate that the function might return an error. For example, the following function declaration indicates that the function div might return an error of type String:
