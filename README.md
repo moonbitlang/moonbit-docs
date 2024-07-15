@@ -1656,7 +1656,7 @@ so objects created from different concrete types can be put in the same data str
 
 ```moonbit live
 trait Animal {
-  speak(Self)
+  speak(Self) -> Unit
 }
 
 type Duck String

@@ -1664,7 +1664,7 @@ MoonBit 通过接口对象的形式来支持运行时多态。
 
 ```moonbit live
 trait Animal {
-  speak(Self)
+  speak(Self) -> Unit
 }
 
 type Duck String
