@@ -479,13 +479,13 @@ let e = not(a)
 
 MoonBit have integer type and floating point type:
 
-| type     | description                               |  example |
-| -------- | ----------------------------------------- | -------- |
-| `Int`    | 32-bit signed integer                     | `42`     |
-| `Int64`  | 64-bit signed integer                     | `1000L`  |
-| `UInt`   | 32-bit unsigned integer                   | `14U`    |
-| `UInt64` | 64-bit unsigned integer                   | `14UL`   |
-| `Double` | 64-bit floating point, defined by IEEE754 | `3.14`   |
+| type     | description                               | example |
+| -------- | ----------------------------------------- | ------- |
+| `Int`    | 32-bit signed integer                     | `42`    |
+| `Int64`  | 64-bit signed integer                     | `1000L` |
+| `UInt`   | 32-bit unsigned integer                   | `14U`   |
+| `UInt64` | 64-bit unsigned integer                   | `14UL`  |
+| `Double` | 64-bit floating point, defined by IEEE754 | `3.14`  |
 
 MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
@@ -1133,18 +1133,17 @@ fn g() -> Result[Int, String] {
 
 ### Cascade Operator
 
-The cascade operator `..` is used to perform a series of mutable operations on 
+The cascade operator `..` is used to perform a series of mutable operations on
 the same value consecutively. The syntax is as follows:
-
 
 ```moonbit
 x..f()
 ```
+
 `x..f()..g()` is equivalent to `{x.f(); x.g(); x}`.
 
-
-Consider the following scenario: for a `MyStringBuilder` type that has methods 
-like `add_string`, `add_char`, `add_int`, etc., we often need to perform 
+Consider the following scenario: for a `MyStringBuilder` type that has methods
+like `add_string`, `add_char`, `add_int`, etc., we often need to perform
 a series of operations on the same `MyStringBuilder` value:
 
 ```moonbit
@@ -1155,10 +1154,11 @@ builder.add_int(1001)
 builder.add_string("abcdef")
 let result = builder.to_string()
 ```
-To avoid repetitive typing of `builder`, its methods are often designed to 
+
+To avoid repetitive typing of `builder`, its methods are often designed to
 return `self` itself, allowing operations to be chained using the `.` operator.
-To distinguish between immutable and mutable operations, in MoonBit, 
-for all methods that return `Unit`, cascade operator can be used for 
+To distinguish between immutable and mutable operations, in MoonBit,
+for all methods that return `Unit`, cascade operator can be used for
 consecutive operations without the need to modify the return type of the methods.
 
 ```moonbit
