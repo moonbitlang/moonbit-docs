@@ -87,7 +87,7 @@ Statements include:
 
 ## Functions
 
-Functions take arguments and produce a result. In MoonBit, functions are first-class, which means that functions can be arguments or return values of other functions. Moonbit's naming convention requires that function names should begin with lowercase letters. Compare for constructors in the `Enum` section below.
+Functions take arguments and produce a result. In MoonBit, functions are first-class, which means that functions can be arguments or return values of other functions. MoonBit's naming convention requires that function names should not begin with lowercase letters `[^a-z]`. Compare for constructors in the `Enum` section below.
 
 ### Top-Level Functions
 
