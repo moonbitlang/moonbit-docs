@@ -65,15 +65,9 @@ pub fn get_next_piece(self : Tetris, pop : Bool) -> PIECE {
 }
 
 pub fn generate_piece_pool(self : Tetris) -> Unit {
-  self.piece_pool = @immut/list.List::[
-    PIECE::I,
-    PIECE::J,
-    PIECE::L,
-    PIECE::O,
-    PIECE::S,
-    PIECE::T,
-    PIECE::Z,
-  ]
+  self.piece_pool = @immut/list.of(
+    [PIECE::I, PIECE::J, PIECE::L, PIECE::O, PIECE::S, PIECE::T, PIECE::Z],
+  )
 }
 // TODO:shuffle
 
