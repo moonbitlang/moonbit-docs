@@ -1,7 +1,7 @@
 # A Tour of MoonBit for Beginners
 
-This guide intended for newcomers, and it't not meant to be a 5-minute quick tour. We try to
-explain as much as possible for those who haven't programmed in a way that MoonBit enables them to do,
+This guide intended for newcomers, and it's not meant to be a 5-minute quick tour. This article tries to be a succinct yet easy to understand guide
+for those who haven't programmed in a way that MoonBit enables them to do,
 that is, in a more modern, functional way.
 
 See [the General Introduction](./README.md) if you want to straight delve into the language.
@@ -53,9 +53,9 @@ Now, we can get started.
 
 ## Start Writing
 
-we write all of codes below in `main.mbt`. As you may have guessed, the `main` function
+We write all of the codes below in `main.mbt`. As you may have guessed, the `main` function
 within the `main` package is the main entrance of a program. For a thorough introduction,
-please see our [build system tutorial](https://www.moonbitlang.com/docs/build-system-tutorial)
+please see our [build system tutorial](https://www.moonbitlang.com/docs/build-system-tutorial).
 
 ### Variables
 
@@ -262,7 +262,7 @@ However MoonBit also provides a more interesting loop construct, the functional 
 fn fib(n: Int) -> Int {
   loop n, 0, 1 { // introduces 3 loop variables: `n` `a = 0` `b = 1`
     // pattern matching is available in `loop`
-    0, a, b => a
+    0, a, b => a // what can be constructed from 0 -- Only 0 it self!
     // assign `b` to `a`, `(a + b)` to `b`, decrease counter `n`
     n, a, b => continue n - 1, b, a + b
     
