@@ -1,11 +1,10 @@
 # Contributing Guidelines
 
-*Pull requests, bug reports, and all other forms of contribution are welcomed and highly encouraged!*
+_Pull requests, bug reports, and all other forms of contribution are welcomed and highly encouraged!_
 
 ## :bulb: Asking Questions
 
-See our forum([EN](https://discuss.moonbitlang.com/)/[ZH](https://taolun.moonbitlang.cn/)). In short, GitHub issues are not the appropriate place to debug your specific project, but should be reserved for filing bugs and feature requests.
-
+See our forum([EN](https://discuss.moonbitlang.com/)/[ZH](https://taolun.moonbitlang.com/)). In short, GitHub issues are not the appropriate place to debug your specific project, but should be reserved for filing bugs and feature requests.
 
 ## :inbox_tray: Opening an Issue
 

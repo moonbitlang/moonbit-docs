@@ -1,0 +1,294 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "moonbit",
+    "scopeName": "source.mbt",
+    "fileTypes": ["mbt"],
+    "patterns": [
+      {
+        "include": "#comments"
+      },
+      {
+        "include": "#constants"
+      },
+      {
+        "include": "#functions"
+      },
+      {
+        "include": "#support"
+      },
+      {
+        "include": "#types"
+      },
+      {
+        "include": "#keywords"
+      },
+      {
+        "include": "#modules"
+      },
+      {
+        "include": "#strings"
+      },
+      {
+        "include": "#variables"
+      }
+    ],
+    "repository": {
+      "support": {
+        "patterns": [
+          {
+            "name": "support.class.moonbit",
+            "match": "\\b(Eq|Compare|Hash|Show|Default|Debug)\\b"
+          }
+        ]
+      },
+      "keywords": {
+        "patterns": [
+          {
+            "name": "keyword.control.moonbit",
+            "match": "\\b(if|while|break|continue|return|match|else|as|loop|for)\\b"
+          },
+          {
+            "name": "keyword.moonbit",
+            "match": "\\b(fn|type|let|enum|struct|import|interface|trait|derive|test)\\b"
+          },
+          {
+            "name": "variable.language.moonbit",
+            "match": "\\b(self)\\b"
+          },
+          {
+            "name": "storage.modifier.moonbit",
+            "match": "\\b(mut|pub|priv|readonly)\\b"
+          },
+          {
+            "name": "storage.type.function.arrow.moonbit",
+            "match": "->"
+          },
+          {
+            "name": "storage.type.function.arrow.moonbit",
+            "match": "=>"
+          },
+          {
+            "name": "keyword.operator.assignment.moonbit",
+            "match": "="
+          },
+          {
+            "name": "keyword.operator.other.moonbit",
+            "match": "(\\?|\\|>)"
+          },
+          {
+            "name": "keyword.operator.comparison.moonbit",
+            "match": "(===|==|!=|>=|<=|(?<!-)>|<)"
+          },
+          {
+            "name": "keyword.operator.logical.moonbit",
+            "match": "(\\bnot\\b|&&|\\|\\|)"
+          },
+          {
+            "name": "keyword.operator.math.moonbit",
+            "match": "(\\+|-(?!>)|\\*|%|/)"
+          }
+        ]
+      },
+      "comments": {
+        "patterns": [
+          {
+            "name": "comment.line",
+            "match": "//.*"
+          }
+        ]
+      },
+      "strings": {
+        "patterns": [
+          {
+            "name": "string.line",
+            "match": "#\\|.*"
+          },
+          {
+            "name": "string.quoted.single.moonbit",
+            "begin": "'",
+            "end": "'",
+            "patterns": [
+              {
+                "match": "\\\\[0\\\\tnrb\"']",
+                "name": "constant.character.escape.moonbit"
+              },
+              {
+                "name": "constant.character.escape.moonbit",
+                "match": "\\\\x[0-9A-Fa-f]{2}"
+              },
+              {
+                "name": "constant.character.escape.moonbit",
+                "match": "\\\\o[0-3][0-7]{2}"
+              },
+              {
+                "match": "\\\\u[0-9a-fA-F]{4}",
+                "name": "constant.character.escape.unicode.moonbit"
+              },
+              {
+                "match": "\\\\u{[0-9a-fA-F]*}",
+                "name": "constant.character.escape.unicode.moonbit"
+              }
+            ]
+          },
+          {
+            "name": "string.quoted.double.moonbit",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+              {
+                "match": "\\\\[0\\\\tnrb\"']",
+                "name": "constant.character.escape.moonbit"
+              },
+              {
+                "name": "constant.character.escape.moonbit",
+                "match": "\\\\x[0-9a-fA-F]{2}"
+              },
+              {
+                "name": "constant.character.escape.moonbit",
+                "match": "\\\\o[0-3][0-7]{2}"
+              },
+              {
+                "match": "\\\\u[0-9a-fA-F]{4}",
+                "name": "constant.character.escape.unicode.moonbit"
+              },
+              {
+                "match": "\\\\u{[0-9a-fA-F]*}",
+                "name": "constant.character.escape.unicode.moonbit"
+              },
+              {
+                "begin": "\\\\\\(",
+                "beginCaptures": {
+                  "0": {
+                    "name": "punctuation.section.embedded.begin.moonbit"
+                  }
+                },
+                "contentName": "source.moonbit",
+                "end": "(\\))",
+                "endCaptures": {
+                  "0": {
+                    "name": "punctuation.section.embedded.end.moonbit"
+                  },
+                  "1": {
+                    "name": "source.moonbit"
+                  }
+                },
+                "name": "meta.embedded.line.moonbit",
+                "patterns": [
+                  {
+                    "include": "$self"
+                  },
+                  {
+                    "begin": "\\(",
+                    "comment": "Nested parens",
+                    "end": "\\)"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "constants": {
+        "patterns": [
+          {
+            "name": "constant.numeric.moonbit",
+            "match": "\\b\\d(\\d|_)*(?!\\.)\\b"
+          },
+          {
+            "name": "constant.numeric.moonbit",
+            "match": "(?<=\\.)\\d((?=\\.)|\\b)"
+          },
+          {
+            "name": "constant.numeric.moonbit",
+            "match": "\\b\\d+(\\.)\\d+\\b"
+          },
+          {
+            "name": "constant.numeric.moonbit",
+            "match": "\\b0[XxOoBb][\\dAaBbCcDdEeFf]+\\b"
+          },
+          {
+            "name": "constant.language.moonbit",
+            "match": "\\b(true|false|\\(\\))\\b"
+          }
+        ]
+      },
+      "modules": {
+        "patterns": [
+          {
+            "name": "entity.name.namespace.moonbit",
+            "match": "@[A-Za-z][A-Za-z0-9_]*"
+          }
+        ]
+      },
+      "variables": {
+        "patterns": [
+          {
+            "comment": "variables",
+            "name": "variable.other.moonbit",
+            "match": "\\b(?<!\\.|::)[a-z_][a-z0-9_]*\\b"
+          }
+        ]
+      },
+      "types": {
+        "patterns": [
+          {
+            "comment": "types",
+            "name": "entity.name.type.moonbit",
+            "match": "\\b(?<!@)[A-Z][A-Za-z0-9_]*\\b"
+          }
+        ]
+      },
+      "functions": {
+        "patterns": [
+          {
+            "comment": "function/method calls, chaining",
+            "name": "meta.function.call.moonbit",
+            "begin": "(?:\\.|::)?([a-z0-9_][A-Za-z0-9_]*)(\\()",
+            "beginCaptures": {
+              "1": {
+                "name": "entity.name.function.moonbit"
+              },
+              "2": {
+                "name": "punctuation.brackets.round.moonbit"
+              }
+            },
+            "end": "\\)",
+            "endCaptures": {
+              "0": {
+                "name": "punctuation.brackets.round.moonbit"
+              }
+            },
+            "patterns": [
+              {
+                "include": "#comments"
+              },
+              {
+                "include": "#constants"
+              },
+              {
+                "include": "#functions"
+              },
+              {
+                "include": "#support"
+              },
+              {
+                "include": "#types"
+              },
+              {
+                "include": "#keywords"
+              },
+              {
+                "include": "#modules"
+              },
+              {
+                "include": "#strings"
+              },
+              {
+                "include": "#variables"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }

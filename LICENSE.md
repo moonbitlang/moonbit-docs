@@ -15,3 +15,8 @@ All prose content added before July 4, 2024 are copyright reserved.
 
 Code examples and snippets are available under
 [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
+## License for website code
+
+Website code are available under
+[Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)

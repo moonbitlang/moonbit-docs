@@ -1,0 +1,40 @@
+name: release website
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  en-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install
+        run: |
+          pnpm install
+      - name: build
+        run: |
+          cd moonbit-docs
+          pnpm build -l en
+      - name: upload
+        run: |
+          aws s3 sync --delete ./build/ ${{secrets.AWS_S3_BUCKET}}
+          aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID}} --paths "/*"
+
+  zh-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: install
+        run: |
+          pnpm install
+      - name: build
+        run: |
+          cd moonbit-docs
+          pnpm build -l zh
+      - name: upload
+        run: |
+          aliyun oss sync ./build/ ${{secrets.ALIYUN_OSS_BUCKET}} --force --delete
+          aliyun cdn RefreshObjectCaches --ObjectPath https://docs.moonbitlang.cn/ --ObjectType Directory
