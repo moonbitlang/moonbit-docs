@@ -8,9 +8,17 @@ See [the General Introduction](./README.md) if you want to straight delve into t
 
 ## Installation
 
-### the runtime
+### the Extension
 
-Linux & macOS users can install MoonBit via
+Currently, MoonBit development support are through VS Code extension. Navigate to
+[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=moonbit.moonbit-lang) to download MoonBit language support.
+
+### the toolchain
+
+> (Recommended) If you've installed the extension above, the runtime can be directly installed by running 'Install moonbit toolchain' in the action menu and you may skip this part:
+> ![runtime-installation](./imgs/runtime-installation.png)
+
+We also provide an installation script: Linux & macOS users can install via
 
 ```bash
 curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
@@ -23,11 +31,11 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang
 ```
 
 This automatically installs MoonBit in `$HOME/.moon` and adds it to your `PATH`
-MoonBit is not production-ready at the moment, it's under active development. To update MoonBit, just run the commands above again.
+Do notice that MoonBit is not production-ready at the moment, it's under active development. To update MoonBit, just run the commands above again.
 
-Running `moon help` gives us a bunch of subcommands. But right now we only need `build` `run` and `new`.
+Running `moon help` gives us a bunch of subcommands. But right now the only commands we need are `build` `run` and `new`.
 
-To create a project (or module, more formally), run `moon new`. We are greeted with a creation wizard, filling up all the info and we get
+To create a project (or module, more formally), run `moon new`. You will be greeted with a creation wizard, filling up all the info and we get
 
 ```
 my-project
@@ -44,30 +52,24 @@ my-project
 
 This resembles a typical MoonBit module structure. Try running `moon run main`.
 
-### the Extension
-
-Currently, MoonBit development support are through VS Code extension. Navigate to
-[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=moonbit.moonbit-lang) to download MoonBit language support.
-
 Now, we can get started.
 
 ## Start Writing
 
-We write all of the codes below in `main.mbt`. As you may have guessed, the `main` function
-within the `main` package is the main entrance of a program. For a thorough introduction,
-please see our [build system tutorial](https://www.moonbitlang.com/docs/build-system-tutorial).
+In our tour, we will write all of the codes below in `main.mbt`. As you may have guessed, the `main` function within the `main` package is the main entrance of a program.
+For a thorough introduction, please take a look at our [build system tutorial](https://www.moonbitlang.com/docs/build-system-tutorial).
 
 ### Variables
 
 Variables are defined with `let`:
 
 ```moonbit live
-let e = 2.718281828459045
-let int_min = -2147483648
-let int_max = 2147483647
+let e = 2.718281828459045 // double
+let int_min = -2147483648 // int
+let int_max: Int = 2147483647 // explicit type annotation
 let tuple = (1, 2)
 let array = [1,2,3,4,5]
-let array = [4,5,6,7,8]
+let array = [4,5,6,7,8] // rebinding (redefine) `array`
 array = [4,5,6,7,8] // WRONG. `let` creates a const binding.
 let mut mut_array = [1,2,3,4,5]
 mut_array = [4,5,6,7,8]
@@ -77,33 +79,42 @@ MoonBit is a strictly typed language with type inference. In the example above, 
 binds (we prefer the word _bind_ to assign) a symbol to a value. The symbol is inferred
 to have the same type as the value. Hover over any of the symbols to check its type.
 
-By default, the `let` - binding creates an immutable reference to a value. That is, changing the value
-to something else. Otherwise one should use `let mut`.
+By default, the `let` - binding creates an immutable reference to a value. That is, you cannot change the symbol to reference something else without rebinding it (using `let`). Otherwise one should use `let mut`.
 
 ### Function
 
 Function is just a piece of code that takes some inputs and produce a result. We may define a function using the keyword `fn` (function name in MoonBit should not begin with uppercase letters A-Z):
 
 ```moonbit
-fn abs_int(n : Int) -> Int { // `Abs_int` doesn't work
-  if n.compare(0) >= 0 {
-    return n
-  }
-  return -n
+fn Identity[T](x: T) -> T { // WRONG: violates naming convention, change to `identity`
+  x
 }
 ```
 
 In this example, we provide types explicitly. Notice how it differs from traditional C-like languages
-which uses prefix type notation, here we use postfix type notation (Formally, we call it _type annotation_).
-We write a arrow `->` before the return type to show the nature of a function: a map from some types to some other types.
-this feels like home if you are familiar with C++'s lambda expression or trailing return types.
+which uses prefix type notation `T x`, here we use postfix type notation `x: T` (Formally, we call it _type annotation_).
+
+We write a arrow `->` before the return type to show the nature of a function: a map from some types to some other types. Formally, we call this syntax _trailing return type_ (languages such as C++, Rust, Swift, etc have this syntax as well).
 
 > The word _expression_ is loosely used. Intuitively, An expression is something with a value we care about.
 
-Consequently, a function type is denoted `(S) -> T` where `S` is the argument type and `T` is the return type. Functions in MoonBit are first-class, meaning it's always possible to pass functions around if you
-get the type right.
+Consequently, a function type is denoted `(S) -> T` where `S` (within parenthesis) is the parameter type and `T` is the return type. 
+Functions in MoonBit are first-class, meaning it's always possible to pass functions around if you
+get the type right:
+
+```moonbit live
+fn compose[S, T, U](f : (T) -> U, g : (S) -> T) -> (S) -> U {
+  fn(x : S) { f(g(x)) } // returns a composition of `f` and `g`
+
+  // moonbit also provides the pipe `|>` operator, 
+  // similar to a lot of functional languages.
+  fn(x : S) { g(x) |> f } // equivalent
+}
+```
 
 Languages nowadays have something called _lambda expression_. Most language implement it as a mere syntactic sugar. A lambda expression is really just a anonymous closure, this, is resembled in our MoonBit's syntax:
+
+> a closure only captures variables in its surroundings, together with its bound variable, that is, having the same indentation level.
 
 ```moonbit
 fn foo() -> Int {
@@ -120,7 +131,7 @@ Now we've learned the very basic, let's learn the rest by coding.
 
 ### enum type
 
-A linked list is a series of node whose right cell is a reference to its successor node. Sounds recursive? Let's define it that way using MoonBit:
+A linked list is a series of node whose right cell is a reference to its successor node. Sounds recursive? Because it is. Let's define it that way using MoonBit:
 
 ```moonbit live
 enum List[T] {
@@ -129,26 +140,26 @@ enum List[T] {
 }
 ```
 
-The `enum` type works like any `enum` from traditional OO languages. However, let's refrain from using OO-term `case`, we'll use _constructor_ from now on. We may read the above code as
+The `enum` type works like any `enum` from traditional OO languages. However, let's refrain from using the OO-term `case`, we'll use _constructor_ from now on. We may read the above code as
 
-> the type `List[T]` can be constructed from the constructor `Nil` or `Cons`, the former represents an empty list; the latter carries some data with type `T` and the rest of the list.
+> the type `List[T]` can be constructed from the constructor `Nil` or `Cons`, the former represents an empty list; the latter carries some data of type `T` and the rest of the list.
 
 The square bracket used here is a _polymorphic_ (generic) definition, meaning a list of something of type `T`. Should we _instantiate_ `T` with a concrete type like `Int`, we define a list containing integers.
 
-Another datatype frequently used in MoonBit is the good ol' `Struct`, which works like you would expect. Let's create a list of `User` using the definition above and `Struct`:
+Another datatype frequently used in MoonBit is our good old `Struct`, which works like you would expect. Let's create a list of `User` using the definition above and `Struct`:
 
 ```moonbit live
 struct User {
   id: Int
   name: String
-  // by default the properties of a struct is immutable.
+  // by default the properties/fields of a struct is immutable.
   // the `mut` keyword works exactly the way we've mentioned before.
   mut email: String 
 } derive(Debug)
 
-// a method of User is defined by passing a object of type User as self.
+// a method of User is defined by passing a object of type User as self first.
 // just like what you would do in Python.
-fn greetUser(self: User) -> String{
+fn greetUser(self: User) -> String{ // a method of struct/type/class `User`
   let id = self.id
   let name = self.name
   "Greetings, \(name) of id \(id)" // string interpolation
@@ -181,14 +192,15 @@ trait Printable {
 
 fn to_string(self : User) -> String {
   (self.id,self.name,self.email).to_string()
-}
+} // now `Printable` is implemented
 
 fn to_string[T: Printable](self : List[T]) -> String {
   let string_aux = to_string_aux(self)
-  "[" + string_aux.substring(end = string_aux.length() - 1) + "]" // arguments can have label
+  // function arguments can have label
+  "[" + string_aux.substring(end = string_aux.length() - 1) + "]" 
 }
 
-// polymorphic functions are toplevel.
+// polymorphic functions have to be toplevel.
 fn to_string_aux[T: Printable](self: List[T]) -> String{ 
   match self {
     Nil => ""
@@ -207,11 +219,14 @@ We use `<T extends Printable>` in Java to constrain the type of list element to 
 
 In the example above we use the `match` expression, a core feature of MoonBit
 (and many other functional programming languages.) In short, we use pattern matching
-to _destructure_ a structure. We may express the above `match` code as
+to _destructure_ (to strip the encapsulation of) a structure. 
 
-> if `self` is constructed with Nil (being an empty list), we return `""`, if self is constructed with `Cons(x,xs)` (being a non-empty list)
+We may express the above `match` code as
+
+> if `self` is constructed with `Nil` (an empty list), we return `""`,  
+> otherwise if `self` is constructed with `Cons(x,xs)` (a non-empty list)
 > we print `x` and rest of the list.
-> where `x` being the head of the `self` and `xs` being the rest.
+> Where `x` is the head of the `self` and `xs` being the rest.
 
 Intuitively, we extract `x` and `xs` (they are bound in situ) from `self` using pattern matching. Let's implement typical list operations such as `map` `reduce` `zip`:
 
@@ -239,10 +254,10 @@ fn zip[T](self : List[T], other : List[T]) -> List[T] {
 }
 ```
 
-Now we have a somewhat usable List type. Realistically, we always prefer the builtin `Array`
+Now we have a somewhat usable `List` type. Realistically, we always prefer the builtin `Array`
 which is much more efficient.
 
-Pattern matching can be used in `let` as well. In `greetUser`, instead of writing
+Pattern matching can be used in `let` as well. In `greetUser()`, instead of writing
 2 `let`'s, we may write
 
 ```moonbit
@@ -256,7 +271,7 @@ let {id,name,..} = self
 
 Finally, let's talk about the major point of every OO-language: looping. Although we've been using recursion all along, MoonBit is designed to be multi-paradigm, thus it retains C-style imperative `for` `while` loop.
 
-However MoonBit also provides a more interesting loop construct, the functional loop. For example the Fibonacci number can be calculated by
+Additionally, MoonBit provides a more interesting loop construct, the functional loop. For example the Fibonacci number can be calculated by
 
 ```moonbit live
 fn fib(n: Int) -> Int {
