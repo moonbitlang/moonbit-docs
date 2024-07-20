@@ -63,16 +63,21 @@ For a thorough introduction, please take a look at our [build system tutorial](h
 
 Variables are defined with `let`:
 
-```moonbit live
+```moonbit
 let e = 2.718281828459045 // double
 let int_min = -2147483648 // int
 let int_max: Int = 2147483647 // explicit type annotation
-let tuple = (1, 2)
-let array = [1,2,3,4,5]
-let array = [4,5,6,7,8] // rebinding (redefine) `array`
-array = [4,5,6,7,8] // WRONG. `let` creates a const binding.
-let mut mut_array = [1,2,3,4,5]
-mut_array = [4,5,6,7,8]
+let tuple = (1, 2) // 2-tuple
+```
+
+```moonbit
+fn init {
+  let array = [1, 2, 3, 4, 5]
+  // array = [4, 5, 6, 7, 8] // WRONG: let creates immutable bindings
+  let mut mut_array = [1, 2, 3, 4, 5]
+  mut_array = [4, 5, 6, 7, 8]
+  println(mut_array)
+}
 ```
 
 MoonBit is a strictly typed language with type inference. In the example above, `let`
@@ -86,7 +91,8 @@ By default, the `let` - binding creates an immutable reference to a value. That 
 Function is just a piece of code that takes some inputs and produce a result. We may define a function using the keyword `fn` (function name in MoonBit should not begin with uppercase letters A-Z):
 
 ```moonbit
-fn Identity[T](x: T) -> T { // WRONG: violates naming convention, change to `identity`
+fn identity[T](x: T) -> T {
+  // `Identity` won't work as it violates naming convention
   x
 }
 ```
@@ -98,15 +104,15 @@ We write a arrow `->` before the return type to show the nature of a function: a
 
 > The word _expression_ is loosely used. Intuitively, An expression is something with a value we care about.
 
-Consequently, a function type is denoted `(S) -> T` where `S` (within parenthesis) is the parameter type and `T` is the return type. 
+Consequently, a function type is denoted `(S) -> T` where `S` (within parenthesis) is the parameter type and `T` is the return type.
 Functions in MoonBit are first-class, meaning it's always possible to pass functions around if you
 get the type right:
 
-```moonbit live
+```moonbit
 fn compose[S, T, U](f : (T) -> U, g : (S) -> T) -> (S) -> U {
-  fn(x : S) { f(g(x)) } // returns a composition of `f` and `g`
+  let composition = fn(x : S) { f(g(x)) } // returns a composition of `f` and `g`
 
-  // moonbit also provides the pipe `|>` operator, 
+  // moonbit also provides the pipe `|>` operator,
   // similar to a lot of functional languages.
   fn(x : S) { g(x) |> f } // equivalent
 }
@@ -121,8 +127,11 @@ fn foo() -> Int {
   fn inc(x) { x + 1 }  // named as `inc`
   fn (x) { x + inc(2) } (6) // anonymous, a so-called 'lambda expression'
   // function automatically captures the result of the last expression
-  // that being `fn (x) { x + inc(2) } (6)` = 9
 }
+```
+
+```moonbit expr
+foo() // => 9
 ```
 
 Now we've learned the very basic, let's learn the rest by coding.
@@ -148,13 +157,13 @@ The square bracket used here is a _polymorphic_ (generic) definition, meaning a 
 
 Another datatype frequently used in MoonBit is our good old `Struct`, which works like you would expect. Let's create a list of `User` using the definition above and `Struct`:
 
-```moonbit live
+```moonbit
 struct User {
   id: Int
   name: String
   // by default the properties/fields of a struct is immutable.
   // the `mut` keyword works exactly the way we've mentioned before.
-  mut email: String 
+  mut email: String
 } derive(Debug)
 
 // a method of User is defined by passing a object of type User as self first.
@@ -165,10 +174,10 @@ fn greetUser(self: User) -> String{ // a method of struct/type/class `User`
   "Greetings, \(name) of id \(id)" // string interpolation
 }
 // construct a User object.
-let evan = {id:0,name:"Evan",email:"someone@example.com"}
-// we use a shorthand by duplicating evan's information 
+let evan: User = {id:0,name:"Evan",email:"someone@example.com"}
+// we use a shorthand by duplicating evan's information
 // and replacing w/ someone elses' email.
-let listOfUser = Cons(evan, Cons({..evan, email: "someoneelse@example.com"}, Nil))
+let listOfUser: List[User] = Cons(evan, Cons({..evan, email: "someoneelse@example.com"}, Nil))
 ```
 
 `enum`, `struct` and `newtype` are the 3 ways to define a datatype. There isn't `class` in MoonBit, nor does it need that.
@@ -183,7 +192,7 @@ A trait (or type trait) is what we would call an `interface` in traditional OO-l
 of builtin types `Int` `String`, we do not need to implement it explicitly. Let's implement the
 trait `Printable` by implementing `to_string()`:
 
-```moonbit live
+```moonbit
 // actually we have `Show` that's builtin and does the same thing.
 // but we'll use our own version of it -- `Printable`.
 trait Printable {
@@ -197,18 +206,20 @@ fn to_string(self : User) -> String {
 fn to_string[T: Printable](self : List[T]) -> String {
   let string_aux = to_string_aux(self)
   // function arguments can have label
-  "[" + string_aux.substring(end = string_aux.length() - 1) + "]" 
+  "[" + string_aux.substring(end = string_aux.length() - 1) + "]"
 }
 
 // polymorphic functions have to be toplevel.
-fn to_string_aux[T: Printable](self: List[T]) -> String{ 
+fn to_string_aux[T: Printable](self: List[T]) -> String{
   match self {
     Nil => ""
     Cons(x,xs) => "\(x) " + to_string_aux(xs)
   }
 }
+```
 
-println(listOfUser.to_string())
+```moonbit expr
+listOfUser.to_string()
 // => [(0, Evan, someone@example.com) (0, Evan, someoneelse@example.com)]
 ```
 
@@ -219,7 +230,7 @@ We use `<T extends Printable>` in Java to constrain the type of list element to 
 
 In the example above we use the `match` expression, a core feature of MoonBit
 (and many other functional programming languages.) In short, we use pattern matching
-to _destructure_ (to strip the encapsulation of) a structure. 
+to _destructure_ (to strip the encapsulation of) a structure.
 
 We may express the above `match` code as
 
@@ -230,7 +241,7 @@ We may express the above `match` code as
 
 Intuitively, we extract `x` and `xs` (they are bound in situ) from `self` using pattern matching. Let's implement typical list operations such as `map` `reduce` `zip`:
 
-```moonbit live
+```moonbit
 fn map[S, T](self : List[S], f : (S) -> T) -> List[T] {
   match self {
     Nil => Nil
@@ -261,10 +272,13 @@ Pattern matching can be used in `let` as well. In `greetUser()`, instead of writ
 2 `let`'s, we may write
 
 ```moonbit
-// extract `id` `name` from `self` of type User. ignores email.
-let { id: id, name: name, email: _ } = self
-// equivalent, but ignores the rest.
-let {id,name,..} = self 
+fn greetUserAlt(self: User) -> String {
+  // extract `id` `name` from `self` of type User. ignores email.
+  let { id: id, name: name, email: _ } = self
+  // equivalent, but ignores the rest.
+  let {id,name,..} = self
+  "Greetings, \(name) of id \(id)"
+}
 ```
 
 ## Iteration
@@ -273,18 +287,20 @@ Finally, let's talk about the major point of every OO-language: looping. Althoug
 
 Additionally, MoonBit provides a more interesting loop construct, the functional loop. For example the Fibonacci number can be calculated by
 
-```moonbit live
+```moonbit
 fn fib(n: Int) -> Int {
   loop n, 0, 1 { // introduces 3 loop variables: `n` `a = 0` `b = 1`
     // pattern matching is available in `loop`
     0, a, b => a // what can be constructed from 0 -- Only 0 it self!
     // assign `b` to `a`, `(a + b)` to `b`, decrease counter `n`
     n, a, b => continue n - 1, b, a + b
-    
+
   }
 }
+```
 
-[1,2,3,4,5].map(fib) // => [1,1,2,3,5]
+```moonbit expr
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(fib) // => [1,1,2,3,5,8,13,21,34,55]
 ```
 
 Semantic-wise, the `loop` construct focuses more on the transition of each state, providing

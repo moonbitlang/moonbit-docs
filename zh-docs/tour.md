@@ -62,16 +62,21 @@ my-project
 
 变量通过 `let` 来定义：
 
-```moonbit live
+```moonbit
 let e = 2.718281828459045 // double
 let int_min = -2147483648 // int
 let int_max: Int = 2147483647 // 显式类型标注
-let tuple = (1, 2)
-let array = [1,2,3,4,5]
-let array = [4,5,6,7,8] // 重新绑定（定义） `array`
-array = [4,5,6,7,8] // 错误：`let` 创建的是不可变绑定。
-let mut mut_array = [1,2,3,4,5]
-mut_array = [4,5,6,7,8]
+let tuple = (1, 2) // 2-tuple
+```
+
+```moonbit
+fn init {
+  let array = [1, 2, 3, 4, 5]
+  // array = [4, 5, 6, 7, 8] // 错误：`let` 创建的是不可变绑定。
+  let mut mut_array = [1, 2, 3, 4, 5]
+  mut_array = [4, 5, 6, 7, 8]
+  println(mut_array)
+}
 ```
 
 MoonBit 是一个带类型推断的严格类型语言。在上方的例子中，`let` 绑定（我们习惯说绑定而不是赋值）一个符号到一个值上，
@@ -85,7 +90,7 @@ MoonBit 是一个带类型推断的严格类型语言。在上方的例子中，
 函数不过是一段接受某些输入并产生一个输出的一段代码。我们用关键词 `fn` 来定义一个函数（MoonBit 中的函数不应该由大写字母 A-Z 起头）：
 
 ```moonbit
-fn Identity[T](x: T) -> T { // 错误：违反命名规范，应改成 `identity`
+fn identity[T](x: T) -> T { // `Identity` 则不符合命名规范
   x
 }
 ```
@@ -101,9 +106,9 @@ fn Identity[T](x: T) -> T { // 错误：违反命名规范，应改成 `identity
 因此， 一个函数类型可以写作 `(S) -> T`，其中 `S`（用圆括号括起）是参数类型，而 `T` 是返回类型。
 MoonBit 中的函数是头等公民，即函数可以像普通的变量一样传来传去，只要保证类型正确即可。
 
-```moonbit live
+```moonbit
 fn compose[S, T, U](f : (T) -> U, g : (S) -> T) -> (S) -> U {
-  fn(x : S) { f(g(x)) } // 定义一个 `f` `g` 的复合函数
+  let composition = fn(x : S) { f(g(x)) } // 定义一个 `f` `g` 的复合函数
 
   // 和其他函数式语言相似
   // moonbit 还提供管道（pipe）操作符 `|>`
@@ -121,8 +126,11 @@ fn foo() -> Int {
   fn inc(x) { x + 1 }  // 命名为 `inc`
   fn (x) { x + inc(2) } (6) // 匿名函数，即 lambda 表达式
   // 函数会自动捕捉最后一个表达式的值并返回
-  // 即 `fn (x) { x + inc(2) } (6)` = 9
 }
+```
+
+```moonbit expr
+foo() // => 9
 ```
 
 现在我们学习了最基本的知识，接下来写点代码吧。
@@ -131,7 +139,7 @@ fn foo() -> Int {
 
 链表由一系列指向自己之后的结点的结点构成。听起来很递归？实际上也的确如此，我们就用递归的方式实现它：
 
-```moonbit live
+```moonbit
 enum List[T] {
   Nil // 基本情况：空表
   Cons(T, List[T]) // 递归定义
@@ -149,13 +157,13 @@ enum List[T] {
 另外一个常见的数据类型是我们的老熟人 `Struct`，其工作方式和类 C 语言中的同名结构相似。我们用上面定义的 `List`
 和下方将要定义的 `User` 来创建一个用户列表：
 
-```moonbit live
+```moonbit
 struct User {
   id: Int
   name: String
   // 默认情况下 Struct 的属性/字段是不可变的
   // `mut` 关键字就和我们之前说的一样
-  mut email: String 
+  mut email: String
 } derive(Debug)
 
 // 我们通过把函数第一个参数定义为 `self: User` 来给该 Struct 定义一个 method
@@ -165,11 +173,12 @@ fn greetUser(self: User) -> String{ // `User` 的一个方法
   let name = self.name
   "Greetings, \(name) of id \(id)" // 字符串插值写法
 }
+
 // 构造 User 对象的写法
-let evan = {id:0,name:"Evan",email:"someone@example.com"}
+let evan: User = {id:0,name:"Evan",email:"someone@example.com"}
 // 可以用一个语法糖将 evan 的属性复制一遍，
 // 并把其 email 换成其他的值，构造一个新对象
-let listOfUser = Cons(evan, Cons({..evan, email: "someoneelse@example.com"}, Nil))
+let listOfUser: List[User] = Cons(evan, Cons({..evan, email: "someoneelse@example.com"}, Nil))
 ```
 
 `enum` `struct` `newtype` 是定义数据类型的三种方式，MoonBit 中没有 `class`，且也不需要。
@@ -184,7 +193,7 @@ let listOfUser = Cons(evan, Cons({..evan, email: "someoneelse@example.com"}, Nil
 这是因为 `User` 由内置类型 `Int` `String` 组成，所以我们不需要手动实现这个 trait。
 不妨试试通过实现 `to_string()` 实现我们自己定义的 `Printable` trait：
 
-```moonbit live
+```moonbit
 // 实际上有内置 `Show` trait，功能上一样
 // 但我们仍用自己的 trait -- `Printable`.
 trait Printable {
@@ -198,18 +207,20 @@ fn to_string(self : User) -> String {
 fn to_string[T: Printable](self : List[T]) -> String {
   let string_aux = to_string_aux(self)
   // 函数参数可以有标签
-  "[" + string_aux.substring(end = string_aux.length() - 1) + "]" 
+  "[" + string_aux.substring(end = string_aux.length() - 1) + "]"
 }
 
 // 多态函数一定是顶层函数
-fn to_string_aux[T: Printable](self: List[T]) -> String{ 
+fn to_string_aux[T: Printable](self: List[T]) -> String{
   match self {
     Nil => ""
     Cons(x,xs) => "\(x) " + to_string_aux(xs)
   }
 }
+```
 
-println(listOfUser.to_string())
+```moonbit expr
+listOfUser.to_string()
 // => [(0, Evan, someone@example.com) (0, Evan, someoneelse@example.com)]
 ```
 
@@ -231,7 +242,7 @@ println(listOfUser.to_string())
 直观上，我们是把 `x` 和 `xs` （这两个符号也是原地绑定的）从 `self` 中通过模式匹配提取出来。
 不妨借此定义一些典型的链表操作 `map` `reduce` `zip`：
 
-```moonbit live
+```moonbit
 fn map[S, T](self : List[S], f : (S) -> T) -> List[T] {
   match self {
     Nil => Nil
@@ -262,10 +273,13 @@ fn zip[T](self : List[T], other : List[T]) -> List[T] {
 模式匹配也能够在 `let` 中使用。在 `greetUser()` 中，可以把两个 `let` 绑定改写为
 
 ```moonbit
-// 从 `self` 中提取 `id` `name` 字段，忽略 `email`
-let { id: id, name: name, email: _ } = self
-// 等价写法，但是忽略 `id `name` 之外的所有字段。
-let {id,name,..} = self 
+fn greetUserAlt(self: User) -> String {
+  // 从 `self` 中提取 `id` `name` 字段，忽略 `email`
+  let { id: id, name: name, email: _ } = self
+  // 等价写法，但是忽略 `id `name` 之外的所有字段。
+  let {id,name,..} = self
+  "Greetings, \(name) of id \(id)"
+}
 ```
 
 ## 循环
@@ -276,18 +290,19 @@ MoonBit 本身是一个多范式语言，
 
 除此之外，MoonBit 还提供了一种更有意思的写法：函数式循环。譬如斐波那契数就可以写成
 
-```moonbit live
+```moonbit
 fn fib(n: Int) -> Int {
   loop n, 0, 1 { // 引入 3 个循环变量: `n` `a = 0` `b = 1`
     // `loop` 中也可以使用 pattern matching
-    0, a, b => a // 只有 0 能从 0 构造出来。
-    // 将 `b` 赋给 `a`，`(a + b)` 赋给 `b`，循环计数器 `n - 1` 
+    0, a, _ => a // 只有 0 能从 0 构造出来。
+    // 将 `b` 赋给 `a`，`(a + b)` 赋给 `b`，循环计数器 `n - 1`
     n, a, b => continue n - 1, b, a + b
-    
   }
 }
+```
 
-[1,2,3,4,5].map(fib) // => [1,1,2,3,5]
+```moonbit expr
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(fib) // => [1,1,2,3,5,8,13,21,34,55]
 ```
 
 从语义上讲， 函数式循环更强调循环过程中每个状态的转换，
