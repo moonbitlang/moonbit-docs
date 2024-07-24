@@ -1,0 +1,62 @@
+{
+  "name": "moonbit-docs",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "docusaurus": "docusaurus",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "zhstart": "docusaurus start -l zh",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "swizzleClassic": "docusaurus swizzle @docusaurus/theme-classic",
+    "typecheck": "tsc",
+    "data": "tsx ./scripts/gen-data.ts",
+    "preinstall": "pnpm -r --filter @shikijs/rehype run build",
+    "postinstall": "pnpm data && cp ./node_modules/@moonbit/moonpad/dist/lsp-server.js ./static/lsp-server.js",
+    "format": "prettier . --write"
+  },
+  "dependencies": {
+    "@docusaurus/core": "3.4.0",
+    "@docusaurus/preset-classic": "3.4.0",
+    "@mdx-js/react": "^3.0.0",
+    "@moonbit/moonpad": "^0.0.6",
+    "clsx": "^2.0.0",
+    "copy-text-to-clipboard": "^3.2.0",
+    "prism-react-renderer": "^2.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "3.4.0",
+    "@docusaurus/theme-classic": "^3.4.0",
+    "@docusaurus/theme-common": "^3.4.0",
+    "@docusaurus/tsconfig": "3.4.0",
+    "@docusaurus/types": "3.4.0",
+    "@shikijs/rehype": "workspace:^",
+    "@types/node": "^20.14.11",
+    "@types/react": "^18.2.0",
+    "shiki": "^1.10.3",
+    "tsx": "^4.9.3",
+    "typescript": "~5.2.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0"
+  }
+}
