@@ -653,6 +653,17 @@ fn init {
 }
 ```
 
+### Map
+
+MoonBit provides a hash map data structure that preserves insertion orde called `Map` in its standard library.
+`Map`s can be created via a convenient literal syntax:
+
+```moonbit
+let map : Map[String, Int] = { "x": 1, "y": 2, "z": 3 }
+```
+
+Currently keys in map literal syntax must be constant. `Map`s can also be destructed elegantly with pattern matching, see [Map Pattern[#map-pattern].
+
 ## Variable Binding
 
 A variable can be declared as mutable or immutable using `let mut` or `let`, respectively. A mutable variable can be reassigned to a new value, while an immutable one cannot.
