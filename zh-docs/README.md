@@ -707,13 +707,13 @@ struct User {
   id: Int
   name: String
   email: String
-} derive(Debug)
+} derive(Show)
 
 fn init {
   let user = { id: 0, name: "John Doe", email: "john@doe.com" }
   let updated_user = { ..user, email: "john@doe.name" }
-  debug(user)          // 输出: { id: 0, name: "John Doe", email: "john@doe.com" }
-  debug(updated_user)  // 输出: { id: 0, name: "John Doe", email: "john@doe.name" }
+  println(user)          // 输出: { id: 0, name: "John Doe", email: "john@doe.com" }
+  println(updated_user)  // 输出: { id: 0, name: "John Doe", email: "john@doe.name" }
 }
 ```
 
@@ -1002,7 +1002,7 @@ MoonBit 支持通过方法重载内置运算符。与运算符 `<op>` 相对应�
 ```moonbit live
 struct T {
   x:Int
-} derive(Debug)
+} derive(Show)
 
 fn op_add(self: T, other: T) -> T {
   { x: self.x + other.x }
@@ -1011,7 +1011,7 @@ fn op_add(self: T, other: T) -> T {
 fn init {
   let a = { x:0, }
   let b = { x:2, }
-  debug(a + b)
+  println(a + b)
 }
 ```
 
@@ -1021,7 +1021,7 @@ fn init {
 struct Coord {
   mut x: Int
   mut y: Int
-} derive(Debug)
+} derive(Show)
 
 fn op_get(self: Coord, key: String) -> Int {
   match key {
@@ -1039,11 +1039,11 @@ fn op_set(self: Coord, key: String, val: Int) -> Unit {
 
 fn init {
   let c = { x: 1, y: 2 }
-  debug(c)
-  debug(c["y"])
+  println(c)
+  println(c["y"])
   c["x"] = 23
-  debug(c)
-  debug(c["x"])
+  println(c)
+  println(c["x"])
 }
 ```
 
@@ -1532,9 +1532,9 @@ fn square[N: Number](x: N) -> N {
 
 ```moonbit live
 fn init {
-  debug(square(2)) // 4
-  debug(square(1.5)) // 2.25
-  debug(square({ x: 2, y: 3 })) // {x: 4, y: 9}
+  println(square(2)) // 4
+  println(square(1.5)) // 2.25
+  println(square({ x: 2, y: 3 })) // {x: 4, y: 9}
 }
 
 trait Number {
@@ -1549,7 +1549,7 @@ fn square[N: Number](x: N) -> N {
 struct Point {
   x: Int
   y: Int
-} derive(Debug)
+} derive(Show)
 
 fn op_add(self: Point, other: Point) -> Point {
   { x: self.x + other.x, y: self.y + other.y }
@@ -1566,7 +1566,7 @@ fn op_mul(self: Point, other: Point) -> Point {
 ```moonbit live
 fn init {
   println(Show::to_string(42))
-  debug(Compare::compare(1.0, 2.5))
+  println(Compare::compare(1.0, 2.5))
 }
 ```
 
@@ -1587,16 +1587,13 @@ trait Hash {
 }
 
 trait Show {
+  // 将 `Self` 的一个字符串表示写入一个 `Logger` 中
+  output(Self, Logger) -> Unit
   to_string(Self) -> String
 }
 
 trait Default {
   default() -> Self
-}
-
-trait Debug {
-  // 将 [self] 的调试信息写入到一个 buffer 里
-  debug_write(Self, Buffer) -> Unit
 }
 ```
 
@@ -1653,15 +1650,15 @@ Moonbit 可以自动生成一些内建接口的实现:
 struct T {
   x: Int
   y: Int
-} derive(Eq, Compare, Debug, Default)
+} derive(Eq, Compare, Show, Default)
 
 fn init {
   let t1 = T::default()
   let t2 = { x: 1, y: 1 }
-  debug(t1) // {x: 0, y: 0}
-  debug(t2) // {x: 1, y: 1}
-  debug(t1 == t2) // false
-  debug(t1 < t2) // true
+  println(t1) // {x: 0, y: 0}
+  println(t2) // {x: 1, y: 1}
+  println(t1 == t2) // false
+  println(t1 < t2) // true
 }
 ```
 
