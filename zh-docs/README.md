@@ -521,6 +521,17 @@ MoonBit 支持的数字字面量，包括十进制、二进制、八进制和十
   let another_hex = 0xA
   ```
 
+#### 整数字面量重载
+
+在知道需要什么类型时，MoonBit 能够自动重载整数字面量，不需要通过后缀来区分不同类型的整数字面量：
+
+```moonbit
+let int : Int = 42
+let uint : UInt = 42
+let int64 : Int64 = 42
+let double : Double = 42
+```
+
 ### 字符串
 
 字符串`String`内部保存了 UTF-16 编码单元序列。可以使用双引号来表示一个字符串，或者通过`#|`来书写多行字符串。

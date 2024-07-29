@@ -524,6 +524,17 @@ To improve readability, you may place underscores in the middle of numeric liter
   let another_hex = 0xA
   ```
 
+#### Overloaded int literal
+
+When the expected type is known, MoonBit can automatically overload integer literal, and there is no need to specify the type of number via letter postfix:
+
+```moonbit
+let int : Int = 42
+let uint : UInt = 42
+let int64 : Int64 = 42
+let double : Double = 42
+```
+
 ### String
 
 `String` holds a sequence of UTF-16 code units. You can use double quotes to create a string, or use `#|` to write a multi-line string.
