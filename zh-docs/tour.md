@@ -40,12 +40,12 @@ MoonBit 目前处于活跃开发的阶段，尚不满足生产环境的需求。
 my-project
 ├── README.md
 ├── lib
-│   ├── hello.mbt
-│   ├── hello_test.mbt
-│   └── moon.pkg.json
+│   ├── hello.mbt
+│   ├── hello_test.mbt
+│   └── moon.pkg.json
 ├── main
-│   ├── main.mbt
-│   └── moon.pkg.json
+│   ├── main.mbt
+│   └── moon.pkg.json
 └── moon.mod.json
 ```
 
@@ -119,7 +119,7 @@ fn compose[S, T, U](f : (T) -> U, g : (S) -> T) -> (S) -> U {
 现在的语言一般都有 Lambda 表达式。大部分语言是通过语法糖来实现这一特性的。
 一个 Lambda 表达式不过是一个匿名的闭包，这一特性也体现在 MoonBit 的语法上：
 
-> 闭包只捕捉其周围（即同一缩进等级的）的变量和自己的约束变量
+> 闭包只捕捉其周围（即同一缩进等级的，假设代码已经格式化过）的变量和自己的约束变量
 
 ```moonbit
 fn foo() -> Int {
@@ -150,9 +150,8 @@ enum List[T] {
 因而上述代码可以读作
 
 > 类型 `List[T]` 可以由 `Nil` `Cons` 构造子构造而来，前者表示一个空链表，后者能够容纳一些类型为 `T` 的数据和链表的剩余部分。
-
-这里的方括号告诉我们这是一个多态（polymorphism）定义（泛型，generics），即一个元素类型为 `T` 的链表（此处 `T` 可以是任何类型，因此称多态）。
-如果用 `Int` 实例化这个 `T`，我们就定义了一个整数的链表。
+> 这里的方括号告诉我们这是一个多态/泛型（polymorphic/generic）函数，即一个元素类型为 `T` 的链表（此处 `T` 可以是任何类型，因此称多态）。
+> 如果用 `Int` 实例化这个 `T`，我们就定义了一个整数的链表。
 
 另外一个常见的数据类型是我们的老熟人 `Struct`，其工作方式和类 C 语言中的同名结构相似。我们用上面定义的 `List`
 和下方将要定义的 `User` 来创建一个用户列表：
@@ -164,10 +163,11 @@ struct User {
   // 默认情况下 Struct 的属性/字段是不可变的
   // `mut` 关键字就和我们之前说的一样
   mut email: String
-} derive(Debug)
+} derive(Show)
 
 // 我们通过把函数第一个参数定义为 `self: User` 来给该 Struct 定义一个 method
 // 写法和 Python 类似
+// 注意：只有类型所在的包能为其定义方法。 不能直接为外部类型定义方法。
 fn greetUser(self: User) -> String{ // `User` 的一个方法
   let id = self.id
   let name = self.name
@@ -181,21 +181,45 @@ let evan: User = {id:0,name:"Evan",email:"someone@example.com"}
 let listOfUser: List[User] = Cons(evan, Cons({..evan, email: "someoneelse@example.com"}, Nil))
 ```
 
+除了这两种数据类型之外，还有一种较为特殊的枚举类型：`type`. 可以看作其将已存在的类型包装起来，
+成为一个新的类型。这样能在保持原有类型特性的基础上继续新增方法，
+为外部类型定义方法的同时不需修改其本身。
+例如 `User` 中的 `name` 的类型，我们还可以定义为
+
+```moonbit no-check
+type UserName String // 一个新类型 UserName，基于 String
+
+// 可以为 UserName 定义方法，String 则不行。
+fn is_blank(self : UserName) -> Bool {
+  // 通过 `.0` 访问其内部类型（String）
+  // iter() 创建一个内部迭代器（internal iterator）
+  // 并借此以函数式的风格在某个序列结构上迭代
+  // find_first 遇到第一个 true （即非空字符）就短路
+  let res = self.0.iter().find_first(
+    fn(c) { if c == ' ' { false } else { true } },
+  )
+  match res {
+    Some(_) => false
+    // 找不到非空字符，所以是只由空格组成的字符串
+    None => true
+  }
+}
+```
+
 `enum` `struct` `newtype` 是定义数据类型的三种方式，MoonBit 中没有 `class`，且也不需要。
 
-`derive` 关键字就和 Java 的 `extends` 和 `implements` 相似。这里 `Debug` 是一个类型类（type trait/class），
-它指出一个类型的内容可以为了 debug 的需要被打印出来。那么什么是类型类？
+`derive` 关键字就和 Java 的 `implements` 相似。这里 `Show` 是一个类型类（type trait/class），
+它指出一个类型的内容可以被打印出来。那么什么是类型类？
 
 ### 类型类
 
 类型类（trait）就是我们在传统面向对象编程中熟悉的接口（interface）。
-`debug(evan)` 会输出 `{id: 0, name: "Evan", email: "someone@example.com"}`，
-这是因为 `User` 由内置类型 `Int` `String` 组成，所以我们不需要手动实现这个 trait。
-不妨试试通过实现 `to_string()` 实现我们自己定义的 `Printable` trait：
+`println(evan)` 会输出 `{id: 0, name: "Evan", email: "someone@example.com"}`，
+这是因为 `User` 由内置类型 `Int` `String` 组成，后者已经实现该 trait，
+所以我们不需要手动实现。
+不妨通过实现 `to_string()` 来实现我们自己定义的 `Printable` trait：
 
 ```moonbit
-// 实际上有内置 `Show` trait，功能上一样
-// 但我们仍用自己的 trait -- `Printable`.
 trait Printable {
   to_string(Self) -> String
 }
@@ -235,7 +259,7 @@ listOfUser.to_string()
 
 上方的 `match` 代码可以表述为
 
-> 如果 `self` 是通过 `Nil` 构造子（空链表）构造的，我们返回 `""`  
+> 如果 `self` 是通过 `Nil` 构造子（空链表）构造的，我们返回 `""`；
 > 否则如果 `self` 是通过 `Cons(x,xs)` 构造出来的（非空链表）
 > 我们输出 `x` 和链表的剩余部分，其中 `x` 是链表的头， `xs` 是剩余部分。
 
@@ -284,7 +308,7 @@ fn greetUserAlt(self: User) -> String {
 
 ## 循环
 
-最后来了解一下面向对象语言中十分重要的循环结构。虽然我们上面都使用递归的写法，
+最后来了解一下面向对象语言中十分重要的循环结构。虽然我们上面主要使用递归，
 MoonBit 本身是一个多范式语言，
 因而其也保留了 C 风格命令式的的 `for` `while` 循环结构。
 
@@ -305,8 +329,8 @@ fn fib(n: Int) -> Int {
 [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(fib) // => [1,1,2,3,5,8,13,21,34,55]
 ```
 
-从语义上讲， 函数式循环更强调循环过程中每个状态的转换，
-相比 [tail-recursion](https://en.wikipedia.org/wiki/Tail_call) 的写法，
+从语义上讲， 函数式循环更强调迭代过程中每个状态的转换，
+相比 [tail-recursive](https://en.wikipedia.org/wiki/Tail_call) 的写法，
 前者的可读性更佳，也保留了递归的风格，同时还具备和尾递归相同的性能。
 
 ## 结束语

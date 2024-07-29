@@ -1,8 +1,7 @@
 # A Tour of MoonBit for Beginners
 
-This guide intended for newcomers, and it's not meant to be a 5-minute quick tour. This article tries to be a succinct yet easy to understand guide
-for those who haven't programmed in a way that MoonBit enables them to do,
-that is, in a more modern, functional way.
+This guide is intended for newcomers, and it's not meant to be a 5-minute quick tour. This article tries to be a succinct yet easy to understand guide
+for those who haven't programmed in a way that MoonBit enables them to, that is, in a more modern, functional way.
 
 See [the General Introduction](./README.md) if you want to straight delve into the language.
 
@@ -30,7 +29,8 @@ For Windows users, powershell is used:
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang.com/install/powershell.ps1 | iex
 ```
 
-This automatically installs MoonBit in `$HOME/.moon` and adds it to your `PATH`
+This automatically installs MoonBit in `$HOME/.moon` and adds it to your `PATH`.
+
 Do notice that MoonBit is not production-ready at the moment, it's under active development. To update MoonBit, just run the commands above again.
 
 Running `moon help` gives us a bunch of subcommands. But right now the only commands we need are `build` `run` and `new`.
@@ -41,12 +41,12 @@ To create a project (or module, more formally), run `moon new`. You will be gree
 my-project
 ├── README.md
 ├── lib
-│   ├── hello.mbt
-│   ├── hello_test.mbt
-│   └── moon.pkg.json
+│   ├── hello.mbt
+│   ├── hello_test.mbt
+│   └── moon.pkg.json
 ├── main
-│   ├── main.mbt
-│   └── moon.pkg.json
+│   ├── main.mbt
+│   └── moon.pkg.json
 └── moon.mod.json
 ```
 
@@ -118,9 +118,9 @@ fn compose[S, T, U](f : (T) -> U, g : (S) -> T) -> (S) -> U {
 }
 ```
 
-Languages nowadays have something called _lambda expression_. Most language implement it as a mere syntactic sugar. A lambda expression is really just a anonymous closure, this, is resembled in our MoonBit's syntax:
+Languages nowadays have something called _lambda expression_. Most languages implement it as a mere syntactic sugar. A lambda expression is really just a anonymous closure, this, is resembled in our MoonBit's syntax:
 
-> a closure only captures variables in its surroundings, together with its bound variable, that is, having the same indentation level.
+> a closure only captures variables in its surroundings, together with its bound variable, that is, having the same indentation level (suppose we've formatted the code already).
 
 ```moonbit
 fn foo() -> Int {
@@ -142,7 +142,7 @@ Now we've learned the very basic, let's learn the rest by coding.
 
 A linked list is a series of node whose right cell is a reference to its successor node. Sounds recursive? Because it is. Let's define it that way using MoonBit:
 
-```moonbit live
+```moonbit
 enum List[T] {
   Nil // base case: empty list
   Cons(T, List[T]) // an recursive definition
@@ -153,7 +153,7 @@ The `enum` type works like any `enum` from traditional OO languages. However, le
 
 > the type `List[T]` can be constructed from the constructor `Nil` or `Cons`, the former represents an empty list; the latter carries some data of type `T` and the rest of the list.
 
-The square bracket used here is a _polymorphic_ (generic) definition, meaning a list of something of type `T`. Should we _instantiate_ `T` with a concrete type like `Int`, we define a list containing integers.
+The square bracket used here denotes a _polymorphic_ (generic) definition, meaning a list of something of type `T`. Should we _instantiate_ `T` with a concrete type like `Int`, we define a list containing integers.
 
 Another datatype frequently used in MoonBit is our good old `Struct`, which works like you would expect. Let's create a list of `User` using the definition above and `Struct`:
 
@@ -164,10 +164,12 @@ struct User {
   // by default the properties/fields of a struct is immutable.
   // the `mut` keyword works exactly the way we've mentioned before.
   mut email: String
-} derive(Debug)
+} derive(Show)
 
 // a method of User is defined by passing a object of type User as self first.
 // just like what you would do in Python.
+// Note that methods may only be defined within the same package the type is in.
+// We may not define methods for foreign types directly
 fn greetUser(self: User) -> String{ // a method of struct/type/class `User`
   let id = self.id
   let name = self.name
@@ -180,21 +182,47 @@ let evan: User = {id:0,name:"Evan",email:"someone@example.com"}
 let listOfUser: List[User] = Cons(evan, Cons({..evan, email: "someoneelse@example.com"}, Nil))
 ```
 
-`enum`, `struct` and `newtype` are the 3 ways to define a datatype. There isn't `class` in MoonBit, nor does it need that.
+Another datatype is `type`, a specific case of `enum` type. `type` can be thought as a wrapper
+around an existing type, keeping the methods of `String` but allows additional methods to be defined.
+Through this we extends the method definition of a foreign type without actually
+modifying it. Consider the type of `name` in `User`,
+we may define it as
 
-the `derive` keyword is like Java's `extends` and `implements`. Here `Debug` is a _trait_,
-indicates a type can be printed for debugging. So what is a trait?
+```moonbit no-check
+type UserName String // a newtype `UserName` based on `String`
+
+// defining a method for UserName is allowed but not String.
+fn is_blank(self : UserName) -> Bool {
+  // use `.0` to access its basetype String
+  // iter() creates a *internal iterator*
+  // which provides a functional way to iterate on sequences.
+  // find_first short circuits on the first `true` i.e. non-blank character
+  let res = self.0.iter().find_first(
+    fn(c) { if c == ' ' { false } else { true } },
+  )
+  match res {
+    Some(_) => false
+    // found NO non-blank character, thus it's a blank string.
+    None => true
+  }
+}
+```
+
+`enum`, `struct` and `newtype` are the 3 ways to define a datatype.
+There isn't `class` in MoonBit, nor does it need that.
+
+the `derive` keyword is like Java's `implements`. Here `Show` is a _trait_ which
+indicates a type is printable. So what is a trait?
 
 ### Trait
 
 A trait (or type trait) is what we would call an `interface` in traditional OO-languages.
-`debug(evan)` would print `{id: 0, name: "Evan", email: "someone@example.com"}`. As `User` consists
-of builtin types `Int` `String`, we do not need to implement it explicitly. Let's implement the
+`println(evan)` would print `{id: 0, name: "Evan", email: "someone@example.com"}`. As `User` consists
+of builtin types `Int` `String`, which already implements `Show`.
+Therefore we do not need to implement it explicitly. Let's implement our own
 trait `Printable` by implementing `to_string()`:
 
 ```moonbit
-// actually we have `Show` that's builtin and does the same thing.
-// but we'll use our own version of it -- `Printable`.
 trait Printable {
   to_string(Self) -> String
 }
@@ -223,7 +251,7 @@ listOfUser.to_string()
 // => [(0, Evan, someone@example.com) (0, Evan, someoneelse@example.com)]
 ```
 
-We use `<T extends Printable>` in Java to constrain the type of list element to make sure object of type
+We use `<T extends Printable>` in Java to constrain the type of list element to make sure objects of type
 `T` can be printed, similarly, in MoonBit we would write `[T: Printable]`.
 
 ### Pattern Matching
@@ -234,12 +262,13 @@ to _destructure_ (to strip the encapsulation of) a structure.
 
 We may express the above `match` code as
 
-> if `self` is constructed with `Nil` (an empty list), we return `""`,  
+> if `self` is constructed with `Nil` (an empty list), we return `""`;
 > otherwise if `self` is constructed with `Cons(x,xs)` (a non-empty list)
 > we print `x` and rest of the list.
 > Where `x` is the head of the `self` and `xs` being the rest.
 
-Intuitively, we extract `x` and `xs` (they are bound in situ) from `self` using pattern matching. Let's implement typical list operations such as `map` `reduce` `zip`:
+Intuitively, we extract `x` and `xs` (they are bound in situ) from `self` using pattern matching.
+Let's implement typical list operations such as `map` `reduce` `zip`:
 
 ```moonbit
 fn map[S, T](self : List[S], f : (S) -> T) -> List[T] {
@@ -283,9 +312,13 @@ fn greetUserAlt(self: User) -> String {
 
 ## Iteration
 
-Finally, let's talk about the major point of every OO-language: looping. Although we've been using recursion all along, MoonBit is designed to be multi-paradigm, thus it retains C-style imperative `for` `while` loop.
+Finally, let's talk about the major point of every OO-language: looping.
+Although we've been using recursion most of the times,
+MoonBit is designed to be multi-paradigm,
+thus it retains C-style imperative `for` `while` loop.
 
-Additionally, MoonBit provides a more interesting loop construct, the functional loop. For example the Fibonacci number can be calculated by
+Additionally, MoonBit provides a more interesting loop construct, the functional loop.
+For example the Fibonacci number can be calculated by
 
 ```moonbit
 fn fib(n: Int) -> Int {
@@ -308,4 +341,7 @@ better readability, preserving recursive flavor and same performance without wri
 
 ## Closing
 
-At this point, we've learned about the very basic and most not-so-trivial features of MoonBit, yet MoonBit is a feature-rich, multi-paradigm programming language. After making sure that you are comfortable with the basics of MoonBit, we suggest that you look into some [interesting examples](https://www.moonbitlang.com/docs/category/examples) to get a better hold of MoonBit.
+At this point, we've learned about the very basic and most not-so-trivial features of MoonBit,
+yet MoonBit is a feature-rich, multi-paradigm programming language.
+After making sure that you are comfortable with the basics of MoonBit,
+we suggest that you look into some [interesting examples](https://www.moonbitlang.com/docs/category/examples) to get a better hold of MoonBit.
