@@ -1123,50 +1123,6 @@ fn init {
 }
 ```
 
-### 问号操作符
-
-MoonBit 提供一个便捷的 `?` 操作符，用于错误处理。
-`?` 是一个后缀运算符。它可以作用于类型为 `Option` 或 `Result` 的表达式。
-被应用在表达式 `t : Option[T]` 上时，`t?` 等价于：
-
-```moonbit
-match t {
-  None => { return None }
-  Some(x) => x
-}
-```
-
-被应用在表达式 `t : Result[T, E]` 上时，`t?` 等价于：
-
-```moonbit
-match t {
-  Err(err) => { return Err(err) }
-  Ok(x) => x
-}
-```
-
-问号操作符可以用于优雅地组合多段可能失败或产生错误的程序：
-
-```moonbit
-fn may_fail() -> Option[Int] { ... }
-
-fn f() -> Option[Int] {
-  let x = may_fail()?
-  let y = may_fail()?.lsr(1) + 1
-  if y == 0 { return None }
-  Some(x / y)
-}
-
-fn may_error() -> Result[Int, String] { ... }
-
-fn g() -> Result[Int, String] {
-  let x = may_error()?
-  let y = may_error()? * 2
-  if y == 0 { return Err("divide by zero") }
-  Ok(x / y)
-}
-```
-
 ### 级联操作符
 
 级联运算符`..`用于连续对同一个值进行一系列可变的操作, 语法如下：

@@ -1136,50 +1136,6 @@ fn init {
 }
 ```
 
-### The question operator
-
-MoonBit features a convenient `?` operator for error handling.
-The `?` postfix operator can be applied to expressions of type `Option` or `Result`.
-When applied to expression `t : Option[T]`, `t?` is equivalent to:
-
-```moonbit
-match t {
-  None => { return None }
-  Some(x) => x
-}
-```
-
-When applied to expression `t: Result[T, E]`, `t?` is equivalent to:
-
-```moonbit
-match t {
-  Err(err) => { return Err(err) }
-  Ok(x) => x
-}
-```
-
-The question operator can be used to combine codes that may fail or error elegantly:
-
-```moonbit
-fn may_fail() -> Option[Int] { ... }
-
-fn f() -> Option[Int] {
-  let x = may_fail()?
-  let y = may_fail()?.lsr(1) + 1
-  if y == 0 { return None }
-  Some(x / y)
-}
-
-fn may_error() -> Result[Int, String] { ... }
-
-fn g() -> Result[Int, String] {
-  let x = may_error()?
-  let y = may_error()? * 2
-  if y == 0 { return Err("divide by zero") }
-  Ok(x / y)
-}
-```
-
 ### Cascade Operator
 
 The cascade operator `..` is used to perform a series of mutable operations on
