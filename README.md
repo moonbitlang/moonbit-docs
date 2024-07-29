@@ -711,13 +711,13 @@ struct User {
   id: Int
   name: String
   email: String
-} derive(Debug)
+} derive(Show)
 
 fn init {
   let user = { id: 0, name: "John Doe", email: "john@doe.com" }
   let updated_user = { ..user, email: "john@doe.name" }
-  debug(user)         // output: { id: 0, name: "John Doe", email: "john@doe.com" }
-  debug(updated_user) // output: { id: 0, name: "John Doe", email: "john@doe.name" }
+  println(user)         // output: { id: 0, name: "John Doe", email: "john@doe.com" }
+  println(updated_user) // output: { id: 0, name: "John Doe", email: "john@doe.name" }
 }
 ```
 
@@ -1011,7 +1011,7 @@ MoonBit supports operator overloading of builtin operators via methods. The meth
 ```moonbit live
 struct T {
   x:Int
-} derive(Debug)
+} derive(Show)
 
 fn op_add(self: T, other: T) -> T {
   { x: self.x + other.x }
@@ -1020,7 +1020,7 @@ fn op_add(self: T, other: T) -> T {
 fn init {
   let a = { x: 0 }
   let b = { x: 2 }
-  debug(a + b)
+  println(a + b)
 }
 ```
 
@@ -1030,7 +1030,7 @@ Another example about `op_get` and `op_set`:
 struct Coord {
   mut x: Int
   mut y: Int
-} derive(Debug)
+} derive(Show)
 
 fn op_get(self: Coord, key: String) -> Int {
   match key {
@@ -1048,11 +1048,11 @@ fn op_set(self: Coord, key: String, val: Int) -> Unit {
 
 fn init {
   let c = { x: 1, y: 2 }
-  debug(c)
-  debug(c["y"])
+  println(c)
+  println(c["y"])
   c["x"] = 23
-  debug(c)
-  debug(c["x"])
+  println(c)
+  println(c["x"])
 }
 ```
 
@@ -1420,9 +1420,9 @@ fn List::length[X](xs: List[X]) -> Int { ... }
 // another package that uses @list
 fn init {
   let xs: @list.List[_] = ...
-  debug(xs.length()) // always work
-  debug(@list.List::length(xs)) // always work, but verbose
-  debug(@list.length(xs)) // simpler, but only possible when there is no ambiguity in @list
+  println(xs.length()) // always work
+  println(@list.List::length(xs)) // always work, but verbose
+  println(@list.length(xs)) // simpler, but only possible when there is no ambiguity in @list
 }
 ```
 
@@ -1535,9 +1535,9 @@ Without the `Number` requirement, the expression `x * x` in `square` will result
 
 ```moonbit live
 fn init {
-  debug(square(2)) // 4
-  debug(square(1.5)) // 2.25
-  debug(square({ x: 2, y: 3 })) // {x: 4, y: 9}
+  println(square(2)) // 4
+  println(square(1.5)) // 2.25
+  println(square({ x: 2, y: 3 })) // {x: 4, y: 9}
 }
 
 trait Number {
@@ -1552,7 +1552,7 @@ fn square[N: Number](x: N) -> N {
 struct Point {
   x: Int
   y: Int
-} derive(Debug)
+} derive(Show)
 
 fn op_add(self: Point, other: Point) -> Point {
   { x: self.x + other.x, y: self.y + other.y }
@@ -1568,7 +1568,7 @@ Methods of a trait can be called directly via `Trait::method`. MoonBit will infe
 ```moonbit live
 fn init {
   println(Show::to_string(42))
-  debug(Compare::compare(1.0, 2.5))
+  println(Compare::compare(1.0, 2.5))
 }
 ```
 
@@ -1589,16 +1589,13 @@ trait Hash {
 }
 
 trait Show {
+  // writes a string representation of `Self` into a `Logger`
+  output(Self, Logger) -> String
   to_string(Self) -> String
 }
 
 trait Default {
   default() -> Self
-}
-
-trait Debug {
-  // write debug information of [self] to a buffer
-  debug_write(Self, Buffer) -> Unit
 }
 ```
 
@@ -1645,15 +1642,15 @@ MoonBit can automatically derive implementations for some builtin traits:
 struct T {
   x: Int
   y: Int
-} derive(Eq, Compare, Debug, Default)
+} derive(Eq, Compare, Show, Default)
 
 fn init {
   let t1 = T::default()
   let t2 = { x: 1, y: 1 }
-  debug(t1) // {x: 0, y: 0}
-  debug(t2) // {x: 1, y: 1}
-  debug(t1 == t2) // false
-  debug(t1 < t2) // true
+  println(t1) // {x: 0, y: 0}
+  println(t2) // {x: 1, y: 1}
+  println(t1 == t2) // false
+  println(t1 < t2) // true
 }
 ```
 
