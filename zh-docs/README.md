@@ -662,6 +662,19 @@ let map : Map[String, Int] = { "x": 1, "y": 2, "z": 3 }
 
 目前，`Map` 字面量中键的部分必须是常量。`Map` 也可以用模式匹配优雅地解构，见 [键值对模式匹配](#键值对模式匹配)。
 
+## Json 字面量
+
+MoonBit 通过重载字面量的形式支持 json 字面量，能够便捷地创建和操作 json 数据。当预期类型是 `@json.JsonValue` 时，数字、字符串、数组和 `Map` 字面量可以被用于创建 json 数据：
+
+```moonbit
+let moon_pkg_json_example : @json.JsonValue = {
+  "import": [ "moonbitlang/core/builtin", "moonbitlang/core/coverage" ],
+  "test-import": [ "moonbitlang/core/random" ]
+}
+```
+
+Json 数据也可以被模式匹配，见 [Json 模式匹配](#json-模式)。
+
 ## 变量绑定
 
 变量可以通过 `let mut` 或 `let` 分别声明为可变或不可变。
@@ -1013,6 +1026,16 @@ match map {
 - 目前，字典模式的键部分必须是一个常量
 - 字典模式永远是开放的：未被匹配到的键会被忽略
 - 字典模式会被编译成高效的代码：每个键至多被查询一次
+
+### Json 模式匹配
+当模式匹配类型是 `@json.JsonValue` 的值是，可以直接使用各种字面量模式来匹配：
+
+```moonbit
+match json {
+  { "version": "1.0.0", "import": [..] as imports } => ...
+  _ => ...
+}
+```
 
 ## 操作符
 

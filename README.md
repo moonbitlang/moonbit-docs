@@ -664,6 +664,20 @@ let map : Map[String, Int] = { "x": 1, "y": 2, "z": 3 }
 
 Currently keys in map literal syntax must be constant. `Map`s can also be destructed elegantly with pattern matching, see [Map Pattern[#map-pattern].
 
+## Json literal
+
+MoonBit supports convenient json handling by overloading literals.
+When the expected type of an expression is `@json.JsonValue`, number, string, array and map literals can be directly used to create json data:
+
+```moonbit
+let moon_pkg_json_example : @json.JsonValue = {
+  "import": [ "moonbitlang/core/builtin", "moonbitlang/core/coverage" ],
+  "test-import": [ "moonbitlang/core/random" ]
+}
+```
+
+Json values can be pattern matched too, see [Json Pattern](#json-pattern).
+
 ## Variable Binding
 
 A variable can be declared as mutable or immutable using `let mut` or `let`, respectively. A mutable variable can be reassigned to a new value, while an immutable one cannot.
@@ -1025,6 +1039,17 @@ match map {
 - Currently, the key part of map pattern must be a constant
 - Map patterns are always open: unmatched keys are silently ignored
 - Map pattern will be compiled to efficient code: every key will be fetched at most once
+
+### Json Pattern
+
+When the matched value has type `@json.JsonValue`, literal patterns can be used directly:
+
+```moonbit
+match json {
+  { "version": "1.0.0", "import": [..] as imports } => ...
+  _ => ...
+}
+```
 
 ## Operators
 
