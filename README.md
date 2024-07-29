@@ -984,16 +984,18 @@ match expr {
 
 ### Map Pattern
 
-MoonBit allows convenient matching on map-like data structures:
+MoonBit allows convenient matching on map-like data structures.
+Inside a map pattern, the `key : value` syntax will match if `key` exists in the map, and match the value of `key` with pattern `value`.
+The `key? : value` syntax will match no matter `key` exists or not, and `value` will be matched against `map[key]` (an optional).
 
 ```moonbit
 match map {
   // matches if any only if "b" exists in `map`
-  { "b": Some(_) } => ..
+  { "b": _ } => ..
   // matches if and only if "b" does not exist in `map` and "a" exists in `map`.
   // When matches, bind the value of "a" in `map` to `x`
-  { "b": None, "a": Some(x) } => ..
-  // compiler reports missing case: { "b": None, "a": None }
+  { "b"? : None, "a": x } => ..
+  // compiler reports missing case: { "b"? : None, "a"? : None }
 }
 ```
 
