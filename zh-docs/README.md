@@ -521,6 +521,17 @@ MoonBit 支持的数字字面量，包括十进制、二进制、八进制和十
   let another_hex = 0xA
   ```
 
+#### 整数字面量重载
+
+在知道需要什么类型时，MoonBit 能够自动重载整数字面量，不需要通过后缀来区分不同类型的整数字面量：
+
+```moonbit
+let int : Int = 42
+let uint : UInt = 42
+let int64 : Int64 = 42
+let double : Double = 42
+```
+
 ### 字符串
 
 字符串`String`内部保存了 UTF-16 编码单元序列。可以使用双引号来表示一个字符串，或者通过`#|`来书写多行字符串。
@@ -640,6 +651,29 @@ fn init {
   print(b)  // 打印 8
 }
 ```
+
+### Map
+
+MoonBit 标准库提供一个保持插入顺序的哈希表数据结构 `Map`。`Map` 可以通过字面量便捷地创建：
+
+```moonbit
+let map : Map[String, Int] = { "x": 1, "y": 2, "z": 3 }
+```
+
+目前，`Map` 字面量中键的部分必须是常量。`Map` 也可以用模式匹配优雅地解构，见 [键值对模式匹配](#键值对模式匹配)。
+
+## Json 字面量
+
+MoonBit 通过重载字面量的形式支持 json 字面量，能够便捷地创建和操作 json 数据。当预期类型是 `@json.JsonValue` 时，数字、字符串、数组和 `Map` 字面量可以被用于创建 json 数据：
+
+```moonbit
+let moon_pkg_json_example : @json.JsonValue = {
+  "import": [ "moonbitlang/core/builtin", "moonbitlang/core/coverage" ],
+  "test-import": [ "moonbitlang/core/random" ]
+}
+```
+
+Json 数据也可以被模式匹配，见 [Json 模式匹配](#json-模式)。
 
 ## 变量绑定
 
@@ -975,16 +1009,16 @@ match expr {
 
 ### 键值对模式匹配
 
-MoonBit 允许模式匹配字典等具有键值对结构的数据结构：
+MoonBit 允许模式匹配字典等具有键值对结构的数据结构。在一个字典模式里，`key : value` 语法可以用来匹配 `key` 存在的情况，`value` 会被用于匹配 `key` 在键值对中的值。`key? : value` 语法无论 `key` 是否存在都能匹配，`value` 会被用于匹配 `map[key]` 的值（一个 `Option` 类型的值）：
 
 ```moonbit
 match map {
   // 匹配键 "b" 存在的情况
-  { "b": Some(_) } => ..
+  { "b": _ } => ..
   // 匹配 "b" 不存在且 "a" 存在的情况，
   // 匹配成功时，把 "a" 的值绑定到 `x`
-  { "b": None, "a": Some(x) } => ..
-  // 编译器指出下列情况没有被匹配到：{ "b": None, "a": None }
+  { "b"? : None, "a": x } => ..
+  // 编译器指出下列情况没有被匹配到：{ "b"? : None, "a"? : None }
 }
 ```
 
@@ -992,6 +1026,16 @@ match map {
 - 目前，字典模式的键部分必须是一个常量
 - 字典模式永远是开放的：未被匹配到的键会被忽略
 - 字典模式会被编译成高效的代码：每个键至多被查询一次
+
+### Json 模式匹配
+当模式匹配类型是 `@json.JsonValue` 的值是，可以直接使用各种字面量模式来匹配：
+
+```moonbit
+match json {
+  { "version": "1.0.0", "import": [..] as imports } => ...
+  _ => ...
+}
+```
 
 ## 操作符
 

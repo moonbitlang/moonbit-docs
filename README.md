@@ -524,6 +524,17 @@ To improve readability, you may place underscores in the middle of numeric liter
   let another_hex = 0xA
   ```
 
+#### Overloaded int literal
+
+When the expected type is known, MoonBit can automatically overload integer literal, and there is no need to specify the type of number via letter postfix:
+
+```moonbit
+let int : Int = 42
+let uint : UInt = 42
+let int64 : Int64 = 42
+let double : Double = 42
+```
+
 ### String
 
 `String` holds a sequence of UTF-16 code units. You can use double quotes to create a string, or use `#|` to write a multi-line string.
@@ -641,6 +652,31 @@ fn init {
   print(b) // prints 8
 }
 ```
+
+### Map
+
+MoonBit provides a hash map data structure that preserves insertion orde called `Map` in its standard library.
+`Map`s can be created via a convenient literal syntax:
+
+```moonbit
+let map : Map[String, Int] = { "x": 1, "y": 2, "z": 3 }
+```
+
+Currently keys in map literal syntax must be constant. `Map`s can also be destructed elegantly with pattern matching, see [Map Pattern[#map-pattern].
+
+## Json literal
+
+MoonBit supports convenient json handling by overloading literals.
+When the expected type of an expression is `@json.JsonValue`, number, string, array and map literals can be directly used to create json data:
+
+```moonbit
+let moon_pkg_json_example : @json.JsonValue = {
+  "import": [ "moonbitlang/core/builtin", "moonbitlang/core/coverage" ],
+  "test-import": [ "moonbitlang/core/random" ]
+}
+```
+
+Json values can be pattern matched too, see [Json Pattern](#json-pattern).
 
 ## Variable Binding
 
@@ -984,16 +1020,18 @@ match expr {
 
 ### Map Pattern
 
-MoonBit allows convenient matching on map-like data structures:
+MoonBit allows convenient matching on map-like data structures.
+Inside a map pattern, the `key : value` syntax will match if `key` exists in the map, and match the value of `key` with pattern `value`.
+The `key? : value` syntax will match no matter `key` exists or not, and `value` will be matched against `map[key]` (an optional).
 
 ```moonbit
 match map {
   // matches if any only if "b" exists in `map`
-  { "b": Some(_) } => ..
+  { "b": _ } => ..
   // matches if and only if "b" does not exist in `map` and "a" exists in `map`.
   // When matches, bind the value of "a" in `map` to `x`
-  { "b": None, "a": Some(x) } => ..
-  // compiler reports missing case: { "b": None, "a": None }
+  { "b"? : None, "a": x } => ..
+  // compiler reports missing case: { "b"? : None, "a"? : None }
 }
 ```
 
@@ -1001,6 +1039,17 @@ match map {
 - Currently, the key part of map pattern must be a constant
 - Map patterns are always open: unmatched keys are silently ignored
 - Map pattern will be compiled to efficient code: every key will be fetched at most once
+
+### Json Pattern
+
+When the matched value has type `@json.JsonValue`, literal patterns can be used directly:
+
+```moonbit
+match json {
+  { "version": "1.0.0", "import": [..] as imports } => ...
+  _ => ...
+}
+```
 
 ## Operators
 
