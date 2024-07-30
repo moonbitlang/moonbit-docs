@@ -1233,40 +1233,43 @@ fn div(x: Int, y: Int) -> Int!String {
 
 其中 `raise` 关键字用于中断函数的执行并返回一个错误。函数的错误处理有以下三种方式：
 
-- 使用 `!` 后缀来在发生错误的情况下将错误直接重新抛出，比如
+- 于函数名后加 `!` 在发生错误的情况下将错误直接重新抛出，比如
 
   ```moonbit
   fn div_reraise(x: Int, y: Int) -> Int!String {
-    div(x, y)! // 直接重新抛出错误
+    div!(x, y) // 直接重新抛出错误
   }
   ```
 
 - 使用 `try` 和 `catch` 对错误进行捕获并处理，比如
 
   ```moonbit
-  fn div_with_default(x: Int, y: Int, default: Int) -> Int {
+  fn div_with_default(x : Int, y : Int, default : Int) -> Int {
     try {
-      div(x, y)!
+      div!(x, y)
     } catch {
-      s => { println(s); default }
+      s => {
+        println(s)
+        default
+      }
     }
   }
   ```
 
 其中 `try` 用于调用可能会抛出错误的函数，`catch` 用于对捕获的错误进行模式匹配并处理，如果没有捕获到错误则不会执行 `catch` 语句块。
 
-- 使用 `!!` 后缀来将函数执行结果转化为 `Result` 类型的值，比如：
+- 于函数名后加 `?` 后缀来将函数执行结果转化为 `Result` 类型的值，比如：
 
   ```moonbit
   test {
-    let res = div(6, 3)!!
-    inspect(res, content="Ok(2)")!
-    let res = div(6, 0)!!
-    inspect(res, content="Err(division by zero)")!
+    let res = div?(6, 3)
+    inspect!(res, content="Ok(2)")
+    let res = div?(6, 0)
+    inspect!(res, content="Err(division by zero)")
   }
   ```
 
-本质上，后缀表达式 `!!` 是下面代码的语法糖：
+实际上 `?` 是下面代码的语法糖：
 
 ```moonbit
 test {
@@ -1274,16 +1277,14 @@ test {
 }
 ```
 
-在 MoonBit 中，错误类型和错误处理属于二等公民，因此错误类型只能出现在函数的返回值中，而不能作为变量的类型。使用后缀表达式 `!` 或 `!!` 进行的错误处理也只能在函数调用处进行，而不能在其他表达式中使用，合法的使用形式包括：
+在 MoonBit 中，错误类型和错误处理属于二等公民，因此错误类型只能出现在函数的返回值中，而不能作为变量的类型。使用 `!` 或 `?` 进行的错误处理也只能在函数调用处进行，而不能在其他表达式中使用，合法的使用形式包括：
 
 ```moonbit
-f(x)!
-x.f()!
-(x |> f)!
-(x + y)!
+f!(x)
+x.f!()
 ```
 
-此外，如果函数的返回值类型中包含错误类型，那么对该函数的调用必须使用 `!` 或 `!!` 进行错误处理，否则编译器会报错。
+此外，如果函数的返回值类型中包含错误类型，那么对该函数的调用必须使用 `!` 或 `?` 进行错误处理，否则编译器会报错。
 
 ## 泛型
 
@@ -1757,8 +1758,8 @@ MoonBit 提供了 `test` 代码块，用于编写测试用例，比如
 
 ```moonbit
 test "test_name" {
-  @test.eq(1 + 1, 2)!
-  @test.eq(2 + 2, 4)!
+  @test.eq!(1 + 1, 2)
+  @test.eq!(2 + 2, 4)
 }
 ```
 

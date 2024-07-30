@@ -4,9 +4,9 @@ MoonBit is an end-to-end programming language toolchain for cloud and edge compu
 
 ## Status and aimed timeline
 
-It is currently alpha, experimental. We expect MoonBit to reach *beta-preview* in 02/2024 and *beta* in 06/2024.
+It is currently alpha, experimental. We expect MoonBit to reach _beta-preview_ in 02/2024 and _beta_ in 06/2024.
 
-When MoonBit reaches beta, it means any backwards-incompatible changes will be seriously evaluated and MoonBit *can* be used in production(very rare compiler bugs). MoonBit is developed by a talented full time team who had extensive experience in building language toolchains, so we will grow much faster than the typical language ecosystem, you won't wait long to use MoonBit in your production.
+When MoonBit reaches beta, it means any backwards-incompatible changes will be seriously evaluated and MoonBit _can_ be used in production(very rare compiler bugs). MoonBit is developed by a talented full time team who had extensive experience in building language toolchains, so we will grow much faster than the typical language ecosystem, you won't wait long to use MoonBit in your production.
 
 ## Main advantages
 
@@ -116,7 +116,7 @@ fn init {
 }
 ```
 
-Functions, whether named or anonymous, are *lexical closures*: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
+Functions, whether named or anonymous, are _lexical closures_: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
 
 ```moonbit live
 let y = 3
@@ -662,7 +662,7 @@ MoonBit provides a hash map data structure that preserves insertion orde called 
 let map : Map[String, Int] = { "x": 1, "y": 2, "z": 3 }
 ```
 
-Currently keys in map literal syntax must be constant. `Map`s can also be destructed elegantly with pattern matching, see [Map Pattern[#map-pattern].
+Currently keys in map literal syntax must be constant. `Map`s can also be destructed elegantly with pattern matching, see [Map Pattern](#map-pattern).
 
 ## Json literal
 
@@ -1211,7 +1211,7 @@ for all methods that return `Unit`, cascade operator can be used for
 consecutive operations without the need to modify the return type of the methods.
 
 ```moonbit
-let result = 
+let result =
   MyStringBuilder::new()
     ..add_char('a')
     ..add_char('a')
@@ -1247,57 +1247,58 @@ fn div(x: Int, y: Int) -> Int!String {
 
 The keyword `raise` is used to interrupt the function execution and return an error. There are three ways to handle errors in functions:
 
-- Using the `!` suffix to rethrow the error directly in case of an error, for example:
+- Append `!` before function name to rethrow the error directly in case of an error, for example:
 
   ```moonbit
   fn div_reraise(x: Int, y: Int) -> Int!String {
-    div(x, y)! // Rethrow the error if `div` raised an error
+    div!(x, y) // Rethrow the error if `div` raised an error
   }
   ```
 
 - Using `try` and `catch` to catch and handle errors, for example:
 
   ```moonbit
-  fn div_with_default(x: Int, y: Int, default: Int) -> Int {
+  fn div_with_default(x : Int, y : Int, default : Int) -> Int {
     try {
-      div(x, y)!
+      div!(x, y)
     } catch {
-      s => { println(s); default }
+      s => {
+        println(s)
+        default
+      }
     }
   }
   ```
 
 Here, `try` is used to call a function that might throw an error, and `catch` is used to match and handle the caught error. If no error is caught, the catch block will not be executed.
 
-- Using the `!!` suffix to convert the result into a first-class value of the `Result` type, for example:
+- Append `?` before function name to convert the result into a first-class value of the `Result` type, for example:
 
   ```moonbit
   test {
-    let res = div(6, 3)!!
-    inspect(res, content="Ok(2)")!
-    let res = div(6, 0)!!
-    inspect(res, content="Err(division by zero)")!
+    let res = div?(6, 3)
+    inspect!(res, content="Ok(2)")
+    let res = div?(6, 0)
+    inspect!(res, content="Err(division by zero)")
   }
   ```
 
-The suffix `!!` is a syntax sugar that is equivalent to the following code:
+`?` is a syntactic sugar that is equivalent to the following code:
 
 ```moonbit
 test {
-  let res = try { Ok(div(6, 3)!) } catch { s => Err(s) }
+  let res = try { Ok(div!(6, 3)) } catch { s => Err(s) }
 }
 ```
 
-In MoonBit, error types and error handling are second-class citizens, so error types can only appear in the return value of functions and cannot be used as the type of variables. Error handling with the `!` or `!!` suffix can only be used at the function call site and not in other expressions. Valid usage forms include:
+In MoonBit, error types and error handling are second-class citizens, so error types can only appear in the return value of functions and cannot be used as the type of variables. Error handling with the `!` or `?` can only be used at the function call site and not in other expressions. Valid ones include:
 
 ```moonbit
-f(x)!
-x.f()!
-(x |> f)!
-(x + y)!
+f!(x)
+x.f!()
 ```
 
-Additionally, if the return type of a function includes an error type, the function call must use `!` or `!!` for error handling, otherwise the compiler will report an error.
+Additionally, if the return type of a function includes an error type, the function call must use `!` or `?` for error handling, otherwise the compiler will report an error.
 
 ## Generics
 
@@ -1326,7 +1327,7 @@ fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
 
 ## Access Control
 
-By default, all function definitions and variable bindings are *invisible* to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`enum`/`struct`/`let` or top-level function to make them fully visible, or put `priv` before `type`/`enum`/`struct` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
+By default, all function definitions and variable bindings are _invisible_ to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`enum`/`struct`/`let` or top-level function to make them fully visible, or put `priv` before `type`/`enum`/`struct` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
 
 - Struct fields cannot be defined as `pub` within an abstract or private struct since it makes no sense.
 - Enum constructors do not have individual visibility so you cannot use `pub` or `priv` before them.
@@ -1650,7 +1651,7 @@ trait Default {
 
 ## Access control of methods and direct implementation of traits
 
-To make the trait system coherent (i.e. there is a globally unique implementation for every `Type: Trait` pair), and prevent third-party packages from modifying behavior of existing programs by accident, *only the package that defines a type can define methods for it*. So one cannot define new methods or override old methods for builtin and foreign types.
+To make the trait system coherent (i.e. there is a globally unique implementation for every `Type: Trait` pair), and prevent third-party packages from modifying behavior of existing programs by accident, _only the package that defines a type can define methods for it_. So one cannot define new methods or override old methods for builtin and foreign types.
 
 However, it is often useful to implement new traits for an existing type. So MoonBit provides a mechanism to directly implement a trait, defined using the syntax `impl Trait for Type with method_name(...) { ... }`. Type annotations can be omitted from `impl`, because MoonBit can infer the correct types from the trait's signature. For example, to implement a new trait `ToMyBinaryProtocol` for builtin types, one can (and must) use `impl`:
 
@@ -1665,7 +1666,7 @@ impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
 impl[X : ToMyBinaryProtocol] for Array[X] with to_my_binary_protocol(arr, b) { ... }
 ```
 
-When searching for the implementation of a trait, `impl`s have a higher priority, so they can be used to override ordinary methods with undesirable behavior. `impl`s can only be used to implement the specified trait. They cannot be called directly like ordinary methods. Furthermore, *only the package of the type or the package of the trait can define an implementation*. For example, only `@pkg1` and `@pkg2` are allowed to define `impl @pkg1.Trait for @pkg2.Type` for type `@pkg2.Type`. This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of `impl`s.
+When searching for the implementation of a trait, `impl`s have a higher priority, so they can be used to override ordinary methods with undesirable behavior. `impl`s can only be used to implement the specified trait. They cannot be called directly like ordinary methods. Furthermore, _only the package of the type or the package of the trait can define an implementation_. For example, only `@pkg1` and `@pkg2` are allowed to define `impl @pkg1.Trait for @pkg2.Type` for type `@pkg2.Type`. This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of `impl`s.
 
 To invoke an trait implementation directly, one can use the `Trait::method` syntax:
 
@@ -1754,8 +1755,8 @@ MoonBit provides the test code block for writing test cases. For example:
 
 ```moonbit
 test "test_name" {
-  @test.eq(1 + 1, 2)!
-  @test.eq(2 + 2, 4)!
+  @test.eq!(1 + 1, 2)
+  @test.eq!(2 + 2, 4)
 }
 ```
 
@@ -1771,7 +1772,7 @@ test "panic_test" {
 
 Doc comments are comments prefix with `///` in each line in the leading of toplevel structure like `fn`,`let`,`enum`,`struct`,`type`. The doc comments contains a markdown text and several pragmas.
 
-```moonbit
+````moonbit
 /// Return a new array with reversed elements.
 ///
 /// # Example
@@ -1782,11 +1783,11 @@ Doc comments are comments prefix with `///` in each line in the leading of tople
 fn reverse[T](xs : Array[T]) -> Array[T] {
   ...
 }
-```
+````
 
 ### Pragmas
 
-Pragmas are annotations inside doc comments. They all take the form `/// @word ...`. The *word* indicates the type of pragma and is followed optionally by several *word* or string literals. Pragmas do not normally affect the meaning of programs. Unrecognized pragmas will be reported as warnings.
+Pragmas are annotations inside doc comments. They all take the form `/// @word ...`. The _word_ indicates the type of pragma and is followed optionally by several _word_ or string literals. Pragmas do not normally affect the meaning of programs. Unrecognized pragmas will be reported as warnings.
 
 - Alert Pragmas
 
