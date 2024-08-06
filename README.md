@@ -1748,6 +1748,33 @@ Not all traits can be used to create objects.
 - `Self` must be the first parameter of a method
 - There must be only one occurrence of `Self` in the type of the method (i.e. the first parameter)
 
+Users can define new methods for trait objects, just like defining new methods for structs and enums:
+
+```moonbit
+trait Logger {
+  write_string(Self, String) -> Unit
+}
+
+trait CanLog {
+  log(Self, Logger) -> Unit
+}
+
+fn Logger::write_object[Obj : CanLog](self : Logger, obj : Obj) -> Unit {
+  obj.log(self)
+}
+
+// use the new method to simplify code
+impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {
+  let (a, b) = self
+  logger
+  ..write_string("(")
+  ..write_object(a)
+  ..write_string(", ")
+  ..write_object(b)
+  .write_string(")")
+}
+```
+
 ## Test Blocks
 
 MoonBit provides the test code block for writing test cases. For example:
