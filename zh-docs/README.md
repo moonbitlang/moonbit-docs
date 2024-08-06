@@ -1751,6 +1751,33 @@ fn init {
 - 方法的第一个参数必须是 `Self`
 - 在方法的签名里，`Self` 只能出现在第一个参数
 
+用户可以像给结构体和枚举定义方法一样，给接口对象定义新的方法：
+
+```moonbit
+trait Logger {
+  write_string(Self, String) -> Unit
+}
+
+trait CanLog {
+  log(Self, Logger) -> Unit
+}
+
+fn Logger::write_object[Obj : CanLog](self : Logger, obj : Obj) -> Unit {
+  obj.log(self)
+}
+
+// 使用接口对象 `Logger` 上的 `write_object` 方法来简化代码
+impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {
+  let (a, b) = self
+  logger
+  ..write_string("(")
+  ..write_object(a)
+  ..write_string(", ")
+  ..write_object(b)
+  .write_string(")")
+}
+```
+
 ## 测试块
 
 MoonBit 提供了 `test` 代码块，用于编写测试用例，比如
