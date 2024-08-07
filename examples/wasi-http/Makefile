@@ -1,6 +1,6 @@
 .DEFAULT_GOAL = build
 
-serve:
+serve: build
 	@wasmtime serve target/wasm/debug/build/gen/gen.wasm
 
 build:

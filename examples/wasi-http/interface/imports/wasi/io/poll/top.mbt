@@ -2,13 +2,13 @@
 /// `pollable` represents a single I/O event which may be ready, or not.
 pub type Pollable Int derive(Show, Eq)
 
-fn wasmImportResourceDropPollable(resource : Int) = "wasi:io/poll@0.2.0" "[resource-drop]pollable"
+fn wasmImportResourceDropPollable(resource : Int) = "wasi:io/poll@0.2.1" "[resource-drop]pollable"
 
 pub fn Pollable::drop(self : Pollable) -> Unit {
   wasmImportResourceDropPollable(self.0)
 }
 
-fn wasmImportMethodPollableReady(p0 : Int) -> Int = "wasi:io/poll@0.2.0" "[method]pollable.ready"
+fn wasmImportMethodPollableReady(p0 : Int) -> Int = "wasi:io/poll@0.2.1" "[method]pollable.ready"
 
 /// Return the readiness of a pollable. This function never blocks.
 ///
@@ -18,7 +18,7 @@ pub fn Pollable::ready(self : Pollable) -> Bool {
   return result != 0
 }
 
-fn wasmImportMethodPollableBlock(p0 : Int) = "wasi:io/poll@0.2.0" "[method]pollable.block"
+fn wasmImportMethodPollableBlock(p0 : Int) = "wasi:io/poll@0.2.1" "[method]pollable.block"
 
 /// `block` returns immediately if the pollable is ready, and otherwise
 /// blocks until ready.
@@ -29,7 +29,7 @@ pub fn Pollable::block(self : Pollable) -> Unit {
   wasmImportMethodPollableBlock(self.0)
 }
 
-fn wasmImportPoll(p0 : Int, p1 : Int, p2 : Int) = "wasi:io/poll@0.2.0" "poll"
+fn wasmImportPoll(p0 : Int, p1 : Int, p2 : Int) = "wasi:io/poll@0.2.1" "poll"
 
 /// Poll for completion on a set of pollables.
 ///
@@ -39,8 +39,9 @@ fn wasmImportPoll(p0 : Int, p1 : Int, p2 : Int) = "wasi:io/poll@0.2.0" "poll"
 /// The result `list<u32>` contains one or more indices of handles in the
 /// argument list that is ready for I/O.
 ///
-/// If the list contains more elements than can be indexed with a `u32`
-/// value, this function traps.
+/// This function traps if either:
+/// - the list is empty, or:
+/// - the list contains more elements than can be indexed with a `u32` value.
 ///
 /// A timeout can be implemented by adding a pollable from the
 /// wasi-clocks API to the list.
@@ -48,7 +49,7 @@ fn wasmImportPoll(p0 : Int, p1 : Int, p2 : Int) = "wasi:io/poll@0.2.0" "poll"
 /// This function does not return a `result`; polling in itself does not
 /// do any I/O so it doesn't fail. If any of the I/O sources identified by
 /// the pollables has an error, it is indicated by marking the source as
-/// being reaedy for I/O.
+/// being ready for I/O.
 pub fn poll(in : Array[Pollable]) -> Array[UInt] {
   let address = @ffi.malloc(in.length() * 4)
   for index = 0; index < in.length(); index = index + 1 {

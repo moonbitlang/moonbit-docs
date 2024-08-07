@@ -6,5 +6,3 @@ Windows.
 
 A monotonic clock is a clock which has an unspecified initial value, and
 successive reads of the clock will produce non-decreasing values.
-
-It is intended for measuring elapsed time.

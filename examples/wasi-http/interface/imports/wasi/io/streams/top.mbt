@@ -15,7 +15,7 @@ pub enum StreamError {
 /// for using `wasi:io/poll`.
 pub type InputStream Int derive(Show, Eq)
 
-fn wasmImportResourceDropInputStream(resource : Int) = "wasi:io/streams@0.2.0" "[resource-drop]input-stream"
+fn wasmImportResourceDropInputStream(resource : Int) = "wasi:io/streams@0.2.1" "[resource-drop]input-stream"
 
 pub fn InputStream::drop(self : InputStream) -> Unit {
   wasmImportResourceDropInputStream(self.0)
@@ -29,15 +29,19 @@ pub fn InputStream::drop(self : InputStream) -> Unit {
 /// promptly, which could even be zero. To wait for the stream to be ready to
 /// accept data, the `subscribe` function to obtain a `pollable` which can be
 /// polled for using `wasi:io/poll`.
+///
+/// Dropping an `output-stream` while there's still an active write in
+/// progress may result in the data being lost. Before dropping the stream,
+/// be sure to fully flush your writes.
 pub type OutputStream Int derive(Show, Eq)
 
-fn wasmImportResourceDropOutputStream(resource : Int) = "wasi:io/streams@0.2.0" "[resource-drop]output-stream"
+fn wasmImportResourceDropOutputStream(resource : Int) = "wasi:io/streams@0.2.1" "[resource-drop]output-stream"
 
 pub fn OutputStream::drop(self : OutputStream) -> Unit {
   wasmImportResourceDropOutputStream(self.0)
 }
 
-fn wasmImportMethodInputStreamRead(p0 : Int, p1 : Int64, p2 : Int) = "wasi:io/streams@0.2.0" "[method]input-stream.read"
+fn wasmImportMethodInputStreamRead(p0 : Int, p1 : Int64, p2 : Int) = "wasi:io/streams@0.2.1" "[method]input-stream.read"
 
 /// Perform a non-blocking read from the stream.
 ///
@@ -93,7 +97,7 @@ pub fn InputStream::read(
   return lifted6
 }
 
-fn wasmImportMethodInputStreamBlockingRead(p0 : Int, p1 : Int64, p2 : Int) = "wasi:io/streams@0.2.0" "[method]input-stream.blocking-read"
+fn wasmImportMethodInputStreamBlockingRead(p0 : Int, p1 : Int64, p2 : Int) = "wasi:io/streams@0.2.1" "[method]input-stream.blocking-read"
 
 /// Read bytes from a stream, after blocking until at least one byte can
 /// be read. Except for blocking, behavior is identical to `read`.
@@ -125,7 +129,7 @@ pub fn InputStream::blocking_read(
   return lifted6
 }
 
-fn wasmImportMethodInputStreamSkip(p0 : Int, p1 : Int64, p2 : Int) = "wasi:io/streams@0.2.0" "[method]input-stream.skip"
+fn wasmImportMethodInputStreamSkip(p0 : Int, p1 : Int64, p2 : Int) = "wasi:io/streams@0.2.1" "[method]input-stream.skip"
 
 /// Skip bytes from a stream. Returns number of bytes skipped.
 ///
@@ -156,7 +160,7 @@ pub fn InputStream::skip(
   return lifted6
 }
 
-fn wasmImportMethodInputStreamBlockingSkip(p0 : Int, p1 : Int64, p2 : Int) = "wasi:io/streams@0.2.0" "[method]input-stream.blocking-skip"
+fn wasmImportMethodInputStreamBlockingSkip(p0 : Int, p1 : Int64, p2 : Int) = "wasi:io/streams@0.2.1" "[method]input-stream.blocking-skip"
 
 /// Skip bytes from a stream, after blocking until at least one byte
 /// can be skipped. Except for blocking behavior, identical to `skip`.
@@ -185,7 +189,7 @@ pub fn InputStream::blocking_skip(
   return lifted6
 }
 
-fn wasmImportMethodInputStreamSubscribe(p0 : Int) -> Int = "wasi:io/streams@0.2.0" "[method]input-stream.subscribe"
+fn wasmImportMethodInputStreamSubscribe(p0 : Int) -> Int = "wasi:io/streams@0.2.1" "[method]input-stream.subscribe"
 
 /// Create a `pollable` which will resolve once either the specified stream
 /// has bytes available to read or the other end of the stream has been
@@ -198,7 +202,7 @@ pub fn InputStream::subscribe(self : InputStream) -> @poll.Pollable {
   return @poll.Pollable::Pollable(result)
 }
 
-fn wasmImportMethodOutputStreamCheckWrite(p0 : Int, p1 : Int) = "wasi:io/streams@0.2.0" "[method]output-stream.check-write"
+fn wasmImportMethodOutputStreamCheckWrite(p0 : Int, p1 : Int) = "wasi:io/streams@0.2.1" "[method]output-stream.check-write"
 
 /// Check readiness for writing. This function never blocks.
 ///
@@ -233,7 +237,7 @@ pub fn OutputStream::check_write(
   return lifted6
 }
 
-fn wasmImportMethodOutputStreamWrite(p0 : Int, p1 : Int, p2 : Int, p3 : Int) = "wasi:io/streams@0.2.0" "[method]output-stream.write"
+fn wasmImportMethodOutputStreamWrite(p0 : Int, p1 : Int, p2 : Int, p3 : Int) = "wasi:io/streams@0.2.1" "[method]output-stream.write"
 
 /// Perform a write. This function never blocks.
 ///
@@ -284,7 +288,7 @@ fn wasmImportMethodOutputStreamBlockingWriteAndFlush(
   p1 : Int,
   p2 : Int,
   p3 : Int
-) = "wasi:io/streams@0.2.0" "[method]output-stream.blocking-write-and-flush"
+) = "wasi:io/streams@0.2.1" "[method]output-stream.blocking-write-and-flush"
 
 /// Perform a write of up to 4096 bytes, and then flush the stream. Block
 /// until all of these operations are complete, or an error occurs.
@@ -341,7 +345,7 @@ pub fn OutputStream::blocking_write_and_flush(
   return lifted6
 }
 
-fn wasmImportMethodOutputStreamFlush(p0 : Int, p1 : Int) = "wasi:io/streams@0.2.0" "[method]output-stream.flush"
+fn wasmImportMethodOutputStreamFlush(p0 : Int, p1 : Int) = "wasi:io/streams@0.2.1" "[method]output-stream.flush"
 
 /// Request to flush buffered output. This function never blocks.
 ///
@@ -375,7 +379,7 @@ pub fn OutputStream::flush(self : OutputStream) -> Result[Unit, StreamError] {
   return lifted6
 }
 
-fn wasmImportMethodOutputStreamBlockingFlush(p0 : Int, p1 : Int) = "wasi:io/streams@0.2.0" "[method]output-stream.blocking-flush"
+fn wasmImportMethodOutputStreamBlockingFlush(p0 : Int, p1 : Int) = "wasi:io/streams@0.2.1" "[method]output-stream.blocking-flush"
 
 /// Request to flush buffered output, and block until flush completes
 /// and stream is ready for writing again.
@@ -403,10 +407,10 @@ pub fn OutputStream::blocking_flush(
   return lifted6
 }
 
-fn wasmImportMethodOutputStreamSubscribe(p0 : Int) -> Int = "wasi:io/streams@0.2.0" "[method]output-stream.subscribe"
+fn wasmImportMethodOutputStreamSubscribe(p0 : Int) -> Int = "wasi:io/streams@0.2.1" "[method]output-stream.subscribe"
 
 /// Create a `pollable` which will resolve once the output-stream
-/// is ready for more writing, or an error has occured. When this
+/// is ready for more writing, or an error has occurred. When this
 /// pollable is ready, `check-write` will return `ok(n)` with n>0, or an
 /// error.
 ///
@@ -420,7 +424,7 @@ pub fn OutputStream::subscribe(self : OutputStream) -> @poll.Pollable {
   return @poll.Pollable::Pollable(result)
 }
 
-fn wasmImportMethodOutputStreamWriteZeroes(p0 : Int, p1 : Int64, p2 : Int) = "wasi:io/streams@0.2.0" "[method]output-stream.write-zeroes"
+fn wasmImportMethodOutputStreamWriteZeroes(p0 : Int, p1 : Int64, p2 : Int) = "wasi:io/streams@0.2.1" "[method]output-stream.write-zeroes"
 
 /// Write zeroes to a stream.
 ///
@@ -457,7 +461,7 @@ fn wasmImportMethodOutputStreamBlockingWriteZeroesAndFlush(
   p0 : Int,
   p1 : Int64,
   p2 : Int
-) = "wasi:io/streams@0.2.0" "[method]output-stream.blocking-write-zeroes-and-flush"
+) = "wasi:io/streams@0.2.1" "[method]output-stream.blocking-write-zeroes-and-flush"
 
 /// Perform a write of up to 4096 zeroes, and then flush the stream.
 /// Block until all of these operations are complete, or an error
@@ -512,11 +516,11 @@ pub fn OutputStream::blocking_write_zeroes_and_flush(
   return lifted6
 }
 
-fn wasmImportMethodOutputStreamSplice(p0 : Int, p1 : Int, p2 : Int64, p3 : Int) = "wasi:io/streams@0.2.0" "[method]output-stream.splice"
+fn wasmImportMethodOutputStreamSplice(p0 : Int, p1 : Int, p2 : Int64, p3 : Int) = "wasi:io/streams@0.2.1" "[method]output-stream.splice"
 
 /// Read from one stream and write to another.
 ///
-/// The behavior of splice is equivelant to:
+/// The behavior of splice is equivalent to:
 /// 1. calling `check-write` on the `output-stream`
 /// 2. calling `read` on the `input-stream` with the smaller of the
 /// `check-write` permitted length and the `len` provided to `splice`
@@ -558,7 +562,7 @@ fn wasmImportMethodOutputStreamBlockingSplice(
   p1 : Int,
   p2 : Int64,
   p3 : Int
-) = "wasi:io/streams@0.2.0" "[method]output-stream.blocking-splice"
+) = "wasi:io/streams@0.2.1" "[method]output-stream.blocking-splice"
 
 /// Read from one stream and write to another, with blocking.
 ///

@@ -102,7 +102,7 @@ pub enum HeaderError {
 /// operations will fail with `header-error.immutable`.
 pub type Fields Int derive(Show, Eq)
 
-fn wasmImportResourceDropFields(resource : Int) = "wasi:http/types@0.2.0" "[resource-drop]fields"
+fn wasmImportResourceDropFields(resource : Int) = "wasi:http/types@0.2.1" "[resource-drop]fields"
 
 pub fn Fields::drop(self : Fields) -> Unit {
   wasmImportResourceDropFields(self.0)
@@ -111,7 +111,7 @@ pub fn Fields::drop(self : Fields) -> Unit {
 /// Represents an incoming HTTP Request.
 pub type IncomingRequest Int derive(Show, Eq)
 
-fn wasmImportResourceDropIncomingRequest(resource : Int) = "wasi:http/types@0.2.0" "[resource-drop]incoming-request"
+fn wasmImportResourceDropIncomingRequest(resource : Int) = "wasi:http/types@0.2.1" "[resource-drop]incoming-request"
 
 pub fn IncomingRequest::drop(self : IncomingRequest) -> Unit {
   wasmImportResourceDropIncomingRequest(self.0)
@@ -120,7 +120,7 @@ pub fn IncomingRequest::drop(self : IncomingRequest) -> Unit {
 /// Represents an outgoing HTTP Request.
 pub type OutgoingRequest Int derive(Show, Eq)
 
-fn wasmImportResourceDropOutgoingRequest(resource : Int) = "wasi:http/types@0.2.0" "[resource-drop]outgoing-request"
+fn wasmImportResourceDropOutgoingRequest(resource : Int) = "wasi:http/types@0.2.1" "[resource-drop]outgoing-request"
 
 pub fn OutgoingRequest::drop(self : OutgoingRequest) -> Unit {
   wasmImportResourceDropOutgoingRequest(self.0)
@@ -134,7 +134,7 @@ pub fn OutgoingRequest::drop(self : OutgoingRequest) -> Unit {
 /// blocking call to `wasi:io/poll.poll`.
 pub type RequestOptions Int derive(Show, Eq)
 
-fn wasmImportResourceDropRequestOptions(resource : Int) = "wasi:http/types@0.2.0" "[resource-drop]request-options"
+fn wasmImportResourceDropRequestOptions(resource : Int) = "wasi:http/types@0.2.1" "[resource-drop]request-options"
 
 pub fn RequestOptions::drop(self : RequestOptions) -> Unit {
   wasmImportResourceDropRequestOptions(self.0)
@@ -147,7 +147,7 @@ pub fn RequestOptions::drop(self : RequestOptions) -> Unit {
 /// other argument to `incoming-handler.handle`.
 pub type ResponseOutparam Int derive(Show, Eq)
 
-fn wasmImportResourceDropResponseOutparam(resource : Int) = "wasi:http/types@0.2.0" "[resource-drop]response-outparam"
+fn wasmImportResourceDropResponseOutparam(resource : Int) = "wasi:http/types@0.2.1" "[resource-drop]response-outparam"
 
 pub fn ResponseOutparam::drop(self : ResponseOutparam) -> Unit {
   wasmImportResourceDropResponseOutparam(self.0)
@@ -156,7 +156,7 @@ pub fn ResponseOutparam::drop(self : ResponseOutparam) -> Unit {
 /// Represents an incoming HTTP Response.
 pub type IncomingResponse Int derive(Show, Eq)
 
-fn wasmImportResourceDropIncomingResponse(resource : Int) = "wasi:http/types@0.2.0" "[resource-drop]incoming-response"
+fn wasmImportResourceDropIncomingResponse(resource : Int) = "wasi:http/types@0.2.1" "[resource-drop]incoming-response"
 
 pub fn IncomingResponse::drop(self : IncomingResponse) -> Unit {
   wasmImportResourceDropIncomingResponse(self.0)
@@ -172,20 +172,20 @@ pub fn IncomingResponse::drop(self : IncomingResponse) -> Unit {
 /// the body contents or waiting on trailers at any given time.
 pub type IncomingBody Int derive(Show, Eq)
 
-fn wasmImportResourceDropIncomingBody(resource : Int) = "wasi:http/types@0.2.0" "[resource-drop]incoming-body"
+fn wasmImportResourceDropIncomingBody(resource : Int) = "wasi:http/types@0.2.1" "[resource-drop]incoming-body"
 
 pub fn IncomingBody::drop(self : IncomingBody) -> Unit {
   wasmImportResourceDropIncomingBody(self.0)
 }
 
-/// Represents a future which may eventaully return trailers, or an error.
+/// Represents a future which may eventually return trailers, or an error.
 ///
 /// In the case that the incoming HTTP Request or Response did not have any
 /// trailers, this future will resolve to the empty set of trailers once the
 /// complete Request or Response body has been received.
 pub type FutureTrailers Int derive(Show, Eq)
 
-fn wasmImportResourceDropFutureTrailers(resource : Int) = "wasi:http/types@0.2.0" "[resource-drop]future-trailers"
+fn wasmImportResourceDropFutureTrailers(resource : Int) = "wasi:http/types@0.2.1" "[resource-drop]future-trailers"
 
 pub fn FutureTrailers::drop(self : FutureTrailers) -> Unit {
   wasmImportResourceDropFutureTrailers(self.0)
@@ -194,7 +194,7 @@ pub fn FutureTrailers::drop(self : FutureTrailers) -> Unit {
 /// Represents an outgoing HTTP Response.
 pub type OutgoingResponse Int derive(Show, Eq)
 
-fn wasmImportResourceDropOutgoingResponse(resource : Int) = "wasi:http/types@0.2.0" "[resource-drop]outgoing-response"
+fn wasmImportResourceDropOutgoingResponse(resource : Int) = "wasi:http/types@0.2.1" "[resource-drop]outgoing-response"
 
 pub fn OutgoingResponse::drop(self : OutgoingResponse) -> Unit {
   wasmImportResourceDropOutgoingResponse(self.0)
@@ -212,32 +212,32 @@ pub fn OutgoingResponse::drop(self : OutgoingResponse) -> Unit {
 ///
 /// If the user code drops this resource, as opposed to calling the static
 /// method `finish`, the implementation should treat the body as incomplete,
-/// and that an error has occured. The implementation should propogate this
+/// and that an error has occurred. The implementation should propagate this
 /// error to the HTTP protocol by whatever means it has available,
 /// including: corrupting the body on the wire, aborting the associated
 /// Request, or sending a late status code for the Response.
 pub type OutgoingBody Int derive(Show, Eq)
 
-fn wasmImportResourceDropOutgoingBody(resource : Int) = "wasi:http/types@0.2.0" "[resource-drop]outgoing-body"
+fn wasmImportResourceDropOutgoingBody(resource : Int) = "wasi:http/types@0.2.1" "[resource-drop]outgoing-body"
 
 pub fn OutgoingBody::drop(self : OutgoingBody) -> Unit {
   wasmImportResourceDropOutgoingBody(self.0)
 }
 
-/// Represents a future which may eventaully return an incoming HTTP
+/// Represents a future which may eventually return an incoming HTTP
 /// Response, or an error.
 ///
 /// This resource is returned by the `wasi:http/outgoing-handler` interface to
 /// provide the HTTP Response corresponding to the sent Request.
 pub type FutureIncomingResponse Int derive(Show, Eq)
 
-fn wasmImportResourceDropFutureIncomingResponse(resource : Int) = "wasi:http/types@0.2.0" "[resource-drop]future-incoming-response"
+fn wasmImportResourceDropFutureIncomingResponse(resource : Int) = "wasi:http/types@0.2.1" "[resource-drop]future-incoming-response"
 
 pub fn FutureIncomingResponse::drop(self : FutureIncomingResponse) -> Unit {
   wasmImportResourceDropFutureIncomingResponse(self.0)
 }
 
-fn wasmImportHttpErrorCode(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "http-error-code"
+fn wasmImportHttpErrorCode(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "http-error-code"
 
 /// Attempts to extract a http-related `error` from the wasi:io `error`
 /// provided.
@@ -494,7 +494,7 @@ pub fn http_error_code(err : @error.Error_) -> ErrorCode? {
   return lifted198
 }
 
-fn wasmImportConstructorFields() -> Int = "wasi:http/types@0.2.0" "[constructor]fields"
+fn wasmImportConstructorFields() -> Int = "wasi:http/types@0.2.1" "[constructor]fields"
 
 /// Construct an empty HTTP Fields.
 ///
@@ -504,7 +504,7 @@ pub fn Fields::fields() -> Fields {
   return Fields::Fields(result)
 }
 
-fn wasmImportStaticFieldsFromList(p0 : Int, p1 : Int, p2 : Int) = "wasi:http/types@0.2.0" "[static]fields.from-list"
+fn wasmImportStaticFieldsFromList(p0 : Int, p1 : Int, p2 : Int) = "wasi:http/types@0.2.1" "[static]fields.from-list"
 
 /// Construct an HTTP Fields.
 ///
@@ -515,12 +515,10 @@ fn wasmImportStaticFieldsFromList(p0 : Int, p1 : Int, p2 : Int) = "wasi:http/typ
 /// list with the same key.
 ///
 /// The tuple is a pair of the field key, represented as a string, and
-/// Value, represented as a list of bytes. In a valid Fields, all keys
-/// and values are valid UTF-8 strings. However, values are not always
-/// well-formed, so they are represented as a raw list of bytes.
+/// Value, represented as a list of bytes.
 ///
-/// An error result will be returned if any header or value was
-/// syntactically invalid, or if a header was forbidden.
+/// An error result will be returned if any `field-key` or `field-value` is
+/// syntactically invalid, or if a field is forbidden.
 pub fn Fields::from_list(
   entries : Array[(String, Bytes)]
 ) -> Result[Fields, HeaderError] {
@@ -559,12 +557,12 @@ pub fn Fields::from_list(
   return lifted10
 }
 
-fn wasmImportMethodFieldsGet(p0 : Int, p1 : Int, p2 : Int, p3 : Int) = "wasi:http/types@0.2.0" "[method]fields.get"
+fn wasmImportMethodFieldsGet(p0 : Int, p1 : Int, p2 : Int, p3 : Int) = "wasi:http/types@0.2.1" "[method]fields.get"
 
 /// Get all of the values corresponding to a key. If the key is not present
-/// in this `fields`, an empty list is returned. However, if the key is
-/// present but empty, this is represented by a list with one or more
-/// empty field-values present.
+/// in this `fields` or is syntactically invalid, an empty list is returned.
+/// However, if the key is present but empty, this is represented by a list
+/// with one or more empty field-values present.
 pub fn Fields::get(self : Fields, name : String) -> Array[Bytes] {
   let return_area = @ffi.malloc(8)
   wasmImportMethodFieldsGet(
@@ -585,7 +583,7 @@ pub fn Fields::get(self : Fields, name : String) -> Array[Bytes] {
   return array
 }
 
-fn wasmImportMethodFieldsHas(p0 : Int, p1 : Int, p2 : Int) -> Int = "wasi:http/types@0.2.0" "[method]fields.has"
+fn wasmImportMethodFieldsHas(p0 : Int, p1 : Int, p2 : Int) -> Int = "wasi:http/types@0.2.1" "[method]fields.has"
 
 /// Returns `true` when the key is present in this `fields`. If the key is
 /// syntactically invalid, `false` is returned.
@@ -606,12 +604,15 @@ fn wasmImportMethodFieldsSet(
   p3 : Int,
   p4 : Int,
   p5 : Int
-) = "wasi:http/types@0.2.0" "[method]fields.set"
+) = "wasi:http/types@0.2.1" "[method]fields.set"
 
 /// Set all of the values for a key. Clears any existing values for that
 /// key, if they have been set.
 ///
 /// Fails with `header-error.immutable` if the `fields` are immutable.
+///
+/// Fails with `header-error.invalid-syntax` if the `field-key` or any of
+/// the `field-value`s are syntactically invalid.
 pub fn Fields::set(
   self : Fields,
   name : String,
@@ -657,12 +658,15 @@ pub fn Fields::set(
   return lifted10
 }
 
-fn wasmImportMethodFieldsDelete(p0 : Int, p1 : Int, p2 : Int, p3 : Int) = "wasi:http/types@0.2.0" "[method]fields.delete"
+fn wasmImportMethodFieldsDelete(p0 : Int, p1 : Int, p2 : Int, p3 : Int) = "wasi:http/types@0.2.1" "[method]fields.delete"
 
 /// Delete all values for a key. Does nothing if no values for the key
 /// exist.
 ///
 /// Fails with `header-error.immutable` if the `fields` are immutable.
+///
+/// Fails with `header-error.invalid-syntax` if the `field-key` is
+/// syntactically invalid.
 pub fn Fields::delete(
   self : Fields,
   name : String
@@ -699,12 +703,15 @@ fn wasmImportMethodFieldsAppend(
   p3 : Int,
   p4 : Int,
   p5 : Int
-) = "wasi:http/types@0.2.0" "[method]fields.append"
+) = "wasi:http/types@0.2.1" "[method]fields.append"
 
 /// Append a value for a key. Does not change or delete any existing
 /// values for that key.
 ///
 /// Fails with `header-error.immutable` if the `fields` are immutable.
+///
+/// Fails with `header-error.invalid-syntax` if the `field-key` or
+/// `field-value` are syntactically invalid.
 pub fn Fields::append(
   self : Fields,
   name : String,
@@ -738,7 +745,7 @@ pub fn Fields::append(
   return lifted8
 }
 
-fn wasmImportMethodFieldsEntries(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]fields.entries"
+fn wasmImportMethodFieldsEntries(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]fields.entries"
 
 /// Retrieve the full set of keys and values in the Fields. Like the
 /// constructor, the list represents each key-value pair.
@@ -761,9 +768,9 @@ pub fn Fields::entries(self : Fields) -> Array[(String, Bytes)] {
   return array
 }
 
-fn wasmImportMethodFieldsClone(p0 : Int) -> Int = "wasi:http/types@0.2.0" "[method]fields.clone"
+fn wasmImportMethodFieldsClone(p0 : Int) -> Int = "wasi:http/types@0.2.1" "[method]fields.clone"
 
-/// Make a deep copy of the Fields. Equivelant in behavior to calling the
+/// Make a deep copy of the Fields. Equivalent in behavior to calling the
 /// `fields` constructor on the return value of `entries`. The resulting
 /// `fields` is mutable.
 pub fn Fields::clone(self : Fields) -> Fields {
@@ -771,7 +778,7 @@ pub fn Fields::clone(self : Fields) -> Fields {
   return Fields::Fields(result)
 }
 
-fn wasmImportMethodIncomingRequestMethod(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]incoming-request.method"
+fn wasmImportMethodIncomingRequestMethod(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]incoming-request.method"
 
 /// Returns the method of the incoming request.
 pub fn IncomingRequest::method(self : IncomingRequest) -> Method {
@@ -797,7 +804,7 @@ pub fn IncomingRequest::method(self : IncomingRequest) -> Method {
   return lifted
 }
 
-fn wasmImportMethodIncomingRequestPathWithQuery(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]incoming-request.path-with-query"
+fn wasmImportMethodIncomingRequestPathWithQuery(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]incoming-request.path-with-query"
 
 /// Returns the path with query parameters from the request, as a string.
 pub fn IncomingRequest::path_with_query(self : IncomingRequest) -> String? {
@@ -815,7 +822,7 @@ pub fn IncomingRequest::path_with_query(self : IncomingRequest) -> String? {
   return lifted
 }
 
-fn wasmImportMethodIncomingRequestScheme(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]incoming-request.scheme"
+fn wasmImportMethodIncomingRequestScheme(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]incoming-request.scheme"
 
 /// Returns the protocol scheme from the request.
 pub fn IncomingRequest::scheme(self : IncomingRequest) -> Scheme? {
@@ -841,9 +848,9 @@ pub fn IncomingRequest::scheme(self : IncomingRequest) -> Scheme? {
   return lifted8
 }
 
-fn wasmImportMethodIncomingRequestAuthority(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]incoming-request.authority"
+fn wasmImportMethodIncomingRequestAuthority(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]incoming-request.authority"
 
-/// Returns the authority from the request, if it was present.
+/// Returns the authority of the Request's target URI, if present.
 pub fn IncomingRequest::authority(self : IncomingRequest) -> String? {
   let return_area = @ffi.malloc(12)
   wasmImportMethodIncomingRequestAuthority(self.0, return_area)
@@ -859,7 +866,7 @@ pub fn IncomingRequest::authority(self : IncomingRequest) -> String? {
   return lifted
 }
 
-fn wasmImportMethodIncomingRequestHeaders(p0 : Int) -> Int = "wasi:http/types@0.2.0" "[method]incoming-request.headers"
+fn wasmImportMethodIncomingRequestHeaders(p0 : Int) -> Int = "wasi:http/types@0.2.1" "[method]incoming-request.headers"
 
 /// Get the `headers` associated with the request.
 ///
@@ -874,7 +881,7 @@ pub fn IncomingRequest::headers(self : IncomingRequest) -> Fields {
   return Fields::Fields(result)
 }
 
-fn wasmImportMethodIncomingRequestConsume(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]incoming-request.consume"
+fn wasmImportMethodIncomingRequestConsume(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]incoming-request.consume"
 
 /// Gives the `incoming-body` associated with this request. Will only
 /// return success at most once, and subsequent calls will return error.
@@ -892,7 +899,7 @@ pub fn IncomingRequest::consume(
   return lifted
 }
 
-fn wasmImportConstructorOutgoingRequest(p0 : Int) -> Int = "wasi:http/types@0.2.0" "[constructor]outgoing-request"
+fn wasmImportConstructorOutgoingRequest(p0 : Int) -> Int = "wasi:http/types@0.2.1" "[constructor]outgoing-request"
 
 /// Construct a new `outgoing-request` with a default `method` of `GET`, and
 /// `none` values for `path-with-query`, `scheme`, and `authority`.
@@ -909,7 +916,7 @@ pub fn OutgoingRequest::outgoing_request(headers : Fields) -> OutgoingRequest {
   return OutgoingRequest::OutgoingRequest(result)
 }
 
-fn wasmImportMethodOutgoingRequestBody(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]outgoing-request.body"
+fn wasmImportMethodOutgoingRequestBody(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]outgoing-request.body"
 
 /// Returns the resource corresponding to the outgoing Body for this
 /// Request.
@@ -931,7 +938,7 @@ pub fn OutgoingRequest::body(
   return lifted
 }
 
-fn wasmImportMethodOutgoingRequestMethod(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]outgoing-request.method"
+fn wasmImportMethodOutgoingRequestMethod(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]outgoing-request.method"
 
 /// Get the Method for the Request.
 pub fn OutgoingRequest::method(self : OutgoingRequest) -> Method {
@@ -962,7 +969,7 @@ fn wasmImportMethodOutgoingRequestSetMethod(
   p1 : Int,
   p2 : Int,
   p3 : Int
-) -> Int = "wasi:http/types@0.2.0" "[method]outgoing-request.set-method"
+) -> Int = "wasi:http/types@0.2.1" "[method]outgoing-request.set-method"
 
 /// Set the Method for the Request. Fails if the string present in a
 /// `method.other` argument is not a syntactically valid method.
@@ -1004,7 +1011,7 @@ pub fn OutgoingRequest::set_method(
   return lifted
 }
 
-fn wasmImportMethodOutgoingRequestPathWithQuery(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]outgoing-request.path-with-query"
+fn wasmImportMethodOutgoingRequestPathWithQuery(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]outgoing-request.path-with-query"
 
 /// Get the combination of the HTTP Path and Query for the Request.
 /// When `none`, this represents an empty Path and empty Query.
@@ -1028,7 +1035,7 @@ fn wasmImportMethodOutgoingRequestSetPathWithQuery(
   p1 : Int,
   p2 : Int,
   p3 : Int
-) -> Int = "wasi:http/types@0.2.0" "[method]outgoing-request.set-path-with-query"
+) -> Int = "wasi:http/types@0.2.1" "[method]outgoing-request.set-path-with-query"
 
 /// Set the combination of the HTTP Path and Query for the Request.
 /// When `none`, this represents an empty Path and empty Query. Fails is the
@@ -1062,7 +1069,7 @@ pub fn OutgoingRequest::set_path_with_query(
   return lifted
 }
 
-fn wasmImportMethodOutgoingRequestScheme(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]outgoing-request.scheme"
+fn wasmImportMethodOutgoingRequestScheme(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]outgoing-request.scheme"
 
 /// Get the HTTP Related Scheme for the Request. When `none`, the
 /// implementation may choose an appropriate default scheme.
@@ -1095,7 +1102,7 @@ fn wasmImportMethodOutgoingRequestSetScheme(
   p2 : Int,
   p3 : Int,
   p4 : Int
-) -> Int = "wasi:http/types@0.2.0" "[method]outgoing-request.set-scheme"
+) -> Int = "wasi:http/types@0.2.1" "[method]outgoing-request.set-scheme"
 
 /// Set the HTTP Related Scheme for the Request. When `none`, the
 /// implementation may choose an appropriate default scheme. Fails if the
@@ -1138,10 +1145,10 @@ pub fn OutgoingRequest::set_scheme(
   return lifted
 }
 
-fn wasmImportMethodOutgoingRequestAuthority(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]outgoing-request.authority"
+fn wasmImportMethodOutgoingRequestAuthority(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]outgoing-request.authority"
 
-/// Get the HTTP Authority for the Request. A value of `none` may be used
-/// with Related Schemes which do not require an Authority. The HTTP and
+/// Get the authority of the Request's target URI. A value of `none` may be used
+/// with Related Schemes which do not require an authority. The HTTP and
 /// HTTPS schemes always require an authority.
 pub fn OutgoingRequest::authority(self : OutgoingRequest) -> String? {
   let return_area = @ffi.malloc(12)
@@ -1163,12 +1170,12 @@ fn wasmImportMethodOutgoingRequestSetAuthority(
   p1 : Int,
   p2 : Int,
   p3 : Int
-) -> Int = "wasi:http/types@0.2.0" "[method]outgoing-request.set-authority"
+) -> Int = "wasi:http/types@0.2.1" "[method]outgoing-request.set-authority"
 
-/// Set the HTTP Authority for the Request. A value of `none` may be used
-/// with Related Schemes which do not require an Authority. The HTTP and
+/// Set the authority of the Request's target URI. A value of `none` may be used
+/// with Related Schemes which do not require an authority. The HTTP and
 /// HTTPS schemes always require an authority. Fails if the string given is
-/// not a syntactically valid uri authority.
+/// not a syntactically valid URI authority.
 pub fn OutgoingRequest::set_authority(
   self : OutgoingRequest,
   authority : String?
@@ -1198,7 +1205,7 @@ pub fn OutgoingRequest::set_authority(
   return lifted
 }
 
-fn wasmImportMethodOutgoingRequestHeaders(p0 : Int) -> Int = "wasi:http/types@0.2.0" "[method]outgoing-request.headers"
+fn wasmImportMethodOutgoingRequestHeaders(p0 : Int) -> Int = "wasi:http/types@0.2.1" "[method]outgoing-request.headers"
 
 /// Get the headers associated with the Request.
 ///
@@ -1206,14 +1213,14 @@ fn wasmImportMethodOutgoingRequestHeaders(p0 : Int) -> Int = "wasi:http/types@0.
 /// `delete` operations will fail with `header-error.immutable`.
 ///
 /// This headers resource is a child: it must be dropped before the parent
-/// `outgoing-request` is dropped, or its ownership is transfered to
+/// `outgoing-request` is dropped, or its ownership is transferred to
 /// another component by e.g. `outgoing-handler.handle`.
 pub fn OutgoingRequest::headers(self : OutgoingRequest) -> Fields {
   let result : Int = wasmImportMethodOutgoingRequestHeaders(self.0)
   return Fields::Fields(result)
 }
 
-fn wasmImportConstructorRequestOptions() -> Int = "wasi:http/types@0.2.0" "[constructor]request-options"
+fn wasmImportConstructorRequestOptions() -> Int = "wasi:http/types@0.2.1" "[constructor]request-options"
 
 /// Construct a default `request-options` value.
 pub fn RequestOptions::request_options() -> RequestOptions {
@@ -1221,7 +1228,7 @@ pub fn RequestOptions::request_options() -> RequestOptions {
   return RequestOptions::RequestOptions(result)
 }
 
-fn wasmImportMethodRequestOptionsConnectTimeout(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]request-options.connect-timeout"
+fn wasmImportMethodRequestOptionsConnectTimeout(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]request-options.connect-timeout"
 
 /// The timeout for the initial connect to the HTTP Server.
 pub fn RequestOptions::connect_timeout(self : RequestOptions) -> UInt64? {
@@ -1240,7 +1247,7 @@ fn wasmImportMethodRequestOptionsSetConnectTimeout(
   p0 : Int,
   p1 : Int,
   p2 : Int64
-) -> Int = "wasi:http/types@0.2.0" "[method]request-options.set-connect-timeout"
+) -> Int = "wasi:http/types@0.2.1" "[method]request-options.set-connect-timeout"
 
 /// Set the timeout for the initial connect to the HTTP Server. An error
 /// return value indicates that this timeout is not supported.
@@ -1265,7 +1272,7 @@ pub fn RequestOptions::set_connect_timeout(
   return lifted
 }
 
-fn wasmImportMethodRequestOptionsFirstByteTimeout(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]request-options.first-byte-timeout"
+fn wasmImportMethodRequestOptionsFirstByteTimeout(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]request-options.first-byte-timeout"
 
 /// The timeout for receiving the first byte of the Response body.
 pub fn RequestOptions::first_byte_timeout(self : RequestOptions) -> UInt64? {
@@ -1284,7 +1291,7 @@ fn wasmImportMethodRequestOptionsSetFirstByteTimeout(
   p0 : Int,
   p1 : Int,
   p2 : Int64
-) -> Int = "wasi:http/types@0.2.0" "[method]request-options.set-first-byte-timeout"
+) -> Int = "wasi:http/types@0.2.1" "[method]request-options.set-first-byte-timeout"
 
 /// Set the timeout for receiving the first byte of the Response body. An
 /// error return value indicates that this timeout is not supported.
@@ -1309,7 +1316,7 @@ pub fn RequestOptions::set_first_byte_timeout(
   return lifted
 }
 
-fn wasmImportMethodRequestOptionsBetweenBytesTimeout(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]request-options.between-bytes-timeout"
+fn wasmImportMethodRequestOptionsBetweenBytesTimeout(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]request-options.between-bytes-timeout"
 
 /// The timeout for receiving subsequent chunks of bytes in the Response
 /// body stream.
@@ -1329,7 +1336,7 @@ fn wasmImportMethodRequestOptionsSetBetweenBytesTimeout(
   p0 : Int,
   p1 : Int,
   p2 : Int64
-) -> Int = "wasi:http/types@0.2.0" "[method]request-options.set-between-bytes-timeout"
+) -> Int = "wasi:http/types@0.2.1" "[method]request-options.set-between-bytes-timeout"
 
 /// Set the timeout for receiving subsequent chunks of bytes in the Response
 /// body stream. An error return value indicates that this timeout is not
@@ -1365,7 +1372,7 @@ fn wasmImportStaticResponseOutparamSet(
   p6 : Int,
   p7 : Int,
   p8 : Int
-) = "wasi:http/types@0.2.0" "[static]response-outparam.set"
+) = "wasi:http/types@0.2.1" "[static]response-outparam.set"
 
 /// Set the value of the `response-outparam` to either send a response,
 /// or indicate an error.
@@ -1673,7 +1680,7 @@ pub fn ResponseOutparam::set(
   ignore(ignoreList)
 }
 
-fn wasmImportMethodIncomingResponseStatus(p0 : Int) -> Int = "wasi:http/types@0.2.0" "[method]incoming-response.status"
+fn wasmImportMethodIncomingResponseStatus(p0 : Int) -> Int = "wasi:http/types@0.2.1" "[method]incoming-response.status"
 
 /// Returns the status code from the incoming response.
 pub fn IncomingResponse::status(self : IncomingResponse) -> UInt {
@@ -1681,7 +1688,7 @@ pub fn IncomingResponse::status(self : IncomingResponse) -> UInt {
   return result.land(0xFFFF).to_uint()
 }
 
-fn wasmImportMethodIncomingResponseHeaders(p0 : Int) -> Int = "wasi:http/types@0.2.0" "[method]incoming-response.headers"
+fn wasmImportMethodIncomingResponseHeaders(p0 : Int) -> Int = "wasi:http/types@0.2.1" "[method]incoming-response.headers"
 
 /// Returns the headers from the incoming response.
 ///
@@ -1695,7 +1702,7 @@ pub fn IncomingResponse::headers(self : IncomingResponse) -> Fields {
   return Fields::Fields(result)
 }
 
-fn wasmImportMethodIncomingResponseConsume(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]incoming-response.consume"
+fn wasmImportMethodIncomingResponseConsume(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]incoming-response.consume"
 
 /// Returns the incoming body. May be called at most once. Returns error
 /// if called additional times.
@@ -1713,7 +1720,7 @@ pub fn IncomingResponse::consume(
   return lifted
 }
 
-fn wasmImportMethodIncomingBodyStream(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]incoming-body.stream"
+fn wasmImportMethodIncomingBodyStream(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]incoming-body.stream"
 
 /// Returns the contents of the body, as a stream of bytes.
 ///
@@ -1747,7 +1754,7 @@ pub fn IncomingBody::stream(
   return lifted
 }
 
-fn wasmImportStaticIncomingBodyFinish(p0 : Int) -> Int = "wasi:http/types@0.2.0" "[static]incoming-body.finish"
+fn wasmImportStaticIncomingBodyFinish(p0 : Int) -> Int = "wasi:http/types@0.2.1" "[static]incoming-body.finish"
 
 /// Takes ownership of `incoming-body`, and returns a `future-trailers`.
 /// This function will trap if the `input-stream` child is still alive.
@@ -1756,19 +1763,19 @@ pub fn IncomingBody::finish(this : IncomingBody) -> FutureTrailers {
   return FutureTrailers::FutureTrailers(result)
 }
 
-fn wasmImportMethodFutureTrailersSubscribe(p0 : Int) -> Int = "wasi:http/types@0.2.0" "[method]future-trailers.subscribe"
+fn wasmImportMethodFutureTrailersSubscribe(p0 : Int) -> Int = "wasi:http/types@0.2.1" "[method]future-trailers.subscribe"
 
 /// Returns a pollable which becomes ready when either the trailers have
-/// been received, or an error has occured. When this pollable is ready,
+/// been received, or an error has occurred. When this pollable is ready,
 /// the `get` method will return `some`.
 pub fn FutureTrailers::subscribe(self : FutureTrailers) -> @poll.Pollable {
   let result : Int = wasmImportMethodFutureTrailersSubscribe(self.0)
   return @poll.Pollable::Pollable(result)
 }
 
-fn wasmImportMethodFutureTrailersGet(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]future-trailers.get"
+fn wasmImportMethodFutureTrailersGet(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]future-trailers.get"
 
-/// Returns the contents of the trailers, or an error which occured,
+/// Returns the contents of the trailers, or an error which occurred,
 /// once the future is ready.
 ///
 /// The outer `option` represents future readiness. Users can wait on this
@@ -1780,7 +1787,7 @@ fn wasmImportMethodFutureTrailersGet(p0 : Int, p1 : Int) = "wasi:http/types@0.2.
 ///
 /// The inner `result` represents that either the HTTP Request or Response
 /// body, as well as any trailers, were received successfully, or that an
-/// error occured receiving them. The optional `trailers` indicates whether
+/// error occurred receiving them. The optional `trailers` indicates whether
 /// or not trailers were present in the body.
 ///
 /// When some `trailers` are returned by this method, the `trailers`
@@ -2094,7 +2101,7 @@ pub fn FutureTrailers::get(
   return lifted213
 }
 
-fn wasmImportConstructorOutgoingResponse(p0 : Int) -> Int = "wasi:http/types@0.2.0" "[constructor]outgoing-response"
+fn wasmImportConstructorOutgoingResponse(p0 : Int) -> Int = "wasi:http/types@0.2.1" "[constructor]outgoing-response"
 
 /// Construct an `outgoing-response`, with a default `status-code` of `200`.
 /// If a different `status-code` is needed, it must be set via the
@@ -2108,7 +2115,7 @@ pub fn OutgoingResponse::outgoing_response(
   return OutgoingResponse::OutgoingResponse(result)
 }
 
-fn wasmImportMethodOutgoingResponseStatusCode(p0 : Int) -> Int = "wasi:http/types@0.2.0" "[method]outgoing-response.status-code"
+fn wasmImportMethodOutgoingResponseStatusCode(p0 : Int) -> Int = "wasi:http/types@0.2.1" "[method]outgoing-response.status-code"
 
 /// Get the HTTP Status Code for the Response.
 pub fn OutgoingResponse::status_code(self : OutgoingResponse) -> UInt {
@@ -2116,7 +2123,7 @@ pub fn OutgoingResponse::status_code(self : OutgoingResponse) -> UInt {
   return result.land(0xFFFF).to_uint()
 }
 
-fn wasmImportMethodOutgoingResponseSetStatusCode(p0 : Int, p1 : Int) -> Int = "wasi:http/types@0.2.0" "[method]outgoing-response.set-status-code"
+fn wasmImportMethodOutgoingResponseSetStatusCode(p0 : Int, p1 : Int) -> Int = "wasi:http/types@0.2.1" "[method]outgoing-response.set-status-code"
 
 /// Set the HTTP Status Code for the Response. Fails if the status-code
 /// given is not a valid http status code.
@@ -2136,7 +2143,7 @@ pub fn OutgoingResponse::set_status_code(
   return lifted
 }
 
-fn wasmImportMethodOutgoingResponseHeaders(p0 : Int) -> Int = "wasi:http/types@0.2.0" "[method]outgoing-response.headers"
+fn wasmImportMethodOutgoingResponseHeaders(p0 : Int) -> Int = "wasi:http/types@0.2.1" "[method]outgoing-response.headers"
 
 /// Get the headers associated with the Request.
 ///
@@ -2144,14 +2151,14 @@ fn wasmImportMethodOutgoingResponseHeaders(p0 : Int) -> Int = "wasi:http/types@0
 /// `delete` operations will fail with `header-error.immutable`.
 ///
 /// This headers resource is a child: it must be dropped before the parent
-/// `outgoing-request` is dropped, or its ownership is transfered to
+/// `outgoing-request` is dropped, or its ownership is transferred to
 /// another component by e.g. `outgoing-handler.handle`.
 pub fn OutgoingResponse::headers(self : OutgoingResponse) -> Fields {
   let result : Int = wasmImportMethodOutgoingResponseHeaders(self.0)
   return Fields::Fields(result)
 }
 
-fn wasmImportMethodOutgoingResponseBody(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]outgoing-response.body"
+fn wasmImportMethodOutgoingResponseBody(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]outgoing-response.body"
 
 /// Returns the resource corresponding to the outgoing Body for this Response.
 ///
@@ -2172,7 +2179,7 @@ pub fn OutgoingResponse::body(
   return lifted
 }
 
-fn wasmImportMethodOutgoingBodyWrite(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]outgoing-body.write"
+fn wasmImportMethodOutgoingBodyWrite(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]outgoing-body.write"
 
 /// Returns a stream for writing the body contents.
 ///
@@ -2200,7 +2207,7 @@ pub fn OutgoingBody::write(
   return lifted
 }
 
-fn wasmImportStaticOutgoingBodyFinish(p0 : Int, p1 : Int, p2 : Int, p3 : Int) = "wasi:http/types@0.2.0" "[static]outgoing-body.finish"
+fn wasmImportStaticOutgoingBodyFinish(p0 : Int, p1 : Int, p2 : Int, p3 : Int) = "wasi:http/types@0.2.1" "[static]outgoing-body.finish"
 
 /// Finalize an outgoing body, optionally providing trailers. This must be
 /// called to signal that the response is complete. If the `outgoing-body`
@@ -2462,10 +2469,10 @@ pub fn OutgoingBody::finish(
   return lifted204
 }
 
-fn wasmImportMethodFutureIncomingResponseSubscribe(p0 : Int) -> Int = "wasi:http/types@0.2.0" "[method]future-incoming-response.subscribe"
+fn wasmImportMethodFutureIncomingResponseSubscribe(p0 : Int) -> Int = "wasi:http/types@0.2.1" "[method]future-incoming-response.subscribe"
 
 /// Returns a pollable which becomes ready when either the Response has
-/// been received, or an error has occured. When this pollable is ready,
+/// been received, or an error has occurred. When this pollable is ready,
 /// the `get` method will return `some`.
 pub fn FutureIncomingResponse::subscribe(
   self : FutureIncomingResponse
@@ -2474,7 +2481,7 @@ pub fn FutureIncomingResponse::subscribe(
   return @poll.Pollable::Pollable(result)
 }
 
-fn wasmImportMethodFutureIncomingResponseGet(p0 : Int, p1 : Int) = "wasi:http/types@0.2.0" "[method]future-incoming-response.get"
+fn wasmImportMethodFutureIncomingResponseGet(p0 : Int, p1 : Int) = "wasi:http/types@0.2.1" "[method]future-incoming-response.get"
 
 /// Returns the incoming HTTP Response, or an error, once one is ready.
 ///
@@ -2486,8 +2493,8 @@ fn wasmImportMethodFutureIncomingResponseGet(p0 : Int, p1 : Int) = "wasi:http/ty
 /// is `some`, and error on subsequent calls.
 ///
 /// The inner `result` represents that either the incoming HTTP Response
-/// status and headers have recieved successfully, or that an error
-/// occured. Errors may also occur while consuming the response body,
+/// status and headers have received successfully, or that an error
+/// occurred. Errors may also occur while consuming the response body,
 /// but those will be reported by the `incoming-body` and its
 /// `output-stream` child.
 pub fn FutureIncomingResponse::get(
