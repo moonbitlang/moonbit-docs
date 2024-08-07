@@ -27,17 +27,17 @@ MoonBit 目前处于 Pre-alpha 阶段，是实验性质的。我们期望今年�
 
 ```moonbit live
 fn init {
-  print("Hello world!") // OK
+  println("Hello world!") // OK
 }
 
 fn init {
   let x = 1
   // x     // 失败
-  print(x) // 成功
+  println(x) // 成功
 }
 ```
 
-对于WebAssembly后端而言，这意味着它将会在实例准备好**之前**被执行，也就是说，如果有FFI依赖实例的导出，那么将不能正常运行；对于JavaScript后端而言，这意味着它将会在被导入的时候执行。
+对于 WebAssembly 后端而言，这意味着它将会在实例准备好**之前**被执行，也就是说，如果有 FFI 依赖实例的导出，那么将不能正常运行；对于 JavaScript 后端而言，这意味着它将会在被导入的时候执行。
 
 另一个特殊的函数是`main`函数。`main`函数是程序的入口，它将会在初始化阶段之后被执行。只有是`main`的包中才能定义`main`函数。查看[构建系统教程](./build-system-tutorial.md)了解更多。
 
@@ -60,8 +60,8 @@ fn bar() -> Int {
 }
 
 fn init {
-  print(foo())
-  print(bar())
+  println(foo())
+  println(bar())
 }
 ```
 
@@ -112,7 +112,7 @@ fn foo() -> Int {
 }
 
 fn init {
-  print(foo())
+  println(foo())
 }
 ```
 
@@ -124,8 +124,8 @@ let y = 3
 fn foo(x: Int) -> Unit {
   fn inc()  { x + 1 } // OK，返回 x + 1
   fn four() { y + 1 } // Ok，返回 4
-  print(inc())
-  print(four())
+  println(inc())
+  println(four())
 }
 
 fn init {
@@ -146,7 +146,7 @@ add3(1, 2, 7)
 ```moonbit live
 fn init {
   let add3 = fn(x, y, z) { x + y + z }
-  print(add3(1, 2, 7))
+  println(add3(1, 2, 7))
 }
 ```
 
@@ -156,7 +156,7 @@ fn init {
 fn init {
   let f = fn (x) { x + 1 }
   let g = fn (x) { x + 2 }
-  print((if true { f } else { g })(3)) // OK
+  println((if true { f } else { g })(3)) // OK
 }
 ```
 
@@ -250,8 +250,8 @@ MoonBit 能够自动在每次函数调用时填充某些特定类型的参数，
 
 ```moonbit
 fn f(_x : Int, _y : Int, ~loc : SourceLoc = _, ~args_loc : ArgsLoc = _) -> Unit {
-  println("整个函数调用的位置：\(loc)")
-  println("各个参数的位置：\(args_loc)")
+  println("整个函数调用的位置：\{loc}")
+  println("各个参数的位置：\{args_loc}")
 }
 
 fn init {
@@ -297,7 +297,7 @@ if x == y {
 
 ### While 循环
 
-MoonBit中支持`while`循环。`while`后的循环条件会在循环体之前执行，当循环条件为真时, 执行循环体：
+MoonBit 中支持`while`循环。`while`后的循环条件会在循环体之前执行，当循环条件为真时, 执行循环体：
 
 ```moonbit
 let mut i = 5
@@ -416,14 +416,14 @@ for {
 使用`continue`语句将跳过`for`本次循环的剩余部分（包括更新子句）提前进入下次循环。`continue`语句
 也支持同时更新`for`循环的绑定变量，只要在`continue`后面跟随和绑定变量数量一致的表达式，多个表达式使用逗号分隔。
 
-例如，下面的程序计算数字1到6中的偶数的和：
+例如，下面的程序计算数字 1 到 6 中的偶数的和：
 
 ```moonbit live
 fn main {
   let sum =
     for i = 1, acc = 0; i <= 6; i = i + 1 {
       if i % 2 == 0 {
-        println("even: \(i)")
+        println("even: \{i}")
         continue i + 1, acc + i
       }
     } else {
@@ -565,7 +565,7 @@ MoonBit 支持字符串插值，它可以把字符串中内插的变量替换为
 ```moonbit live
 fn init {
   let x = 42
-  print("The answer is \(x)")
+  println("The answer is \{x}")
 }
 ```
 
@@ -608,7 +608,7 @@ fn pack(a: Bool, b: Int, c: String, d: Double) -> (Bool, Int, String, Double) {
 fn init {
     let quad = pack(false, 100, "text", 3.14)
     let (bool_val, int_val, str, float_val) = quad
-    println("\(bool_val) \(int_val) \(str) \(float_val)")
+    println("\{bool_val} \{int_val} \{str} \{float_val}")
 }
 ```
 
@@ -621,9 +621,9 @@ fn f(t : (Int, Int)) -> Unit {
   let x2 = t.0
   let y2 = t.1
   if (x1 == x2 && y1 == y2) {
-    print("yes")
+    println("yes")
   } else {
-    print("no")
+    println("no")
   }
 }
 
@@ -648,7 +648,7 @@ fn init {
   let a = numbers[2]
   numbers[3] = 5
   let b = a + numbers[3]
-  print(b)  // 打印 8
+  println(b)  // 打印 8
 }
 ```
 
@@ -686,7 +686,7 @@ let zero = 0
 fn init {
   let mut i = 10
   i = 20
-  print(i + zero)
+  println(i + zero)
 }
 ```
 
@@ -819,13 +819,13 @@ fn print_list(l: List) -> Unit {
   // 使用模式匹配处理带额外数据的枚举时，除了判断值属于哪个分支，
   // 还可以把对应分支携带的数据提取出来
   match l {
-    Nil => print("nil")
+    Nil => println("nil")
     // 这里的 `x` 和 `xs` 不是现有变量，而是新的变量。
     // 如果 `l` 是一个 `Cons`，那么 `Cons` 中携带的额外数据（第一个元素和剩余部分）
     // 会分别被绑定到 `x` 和 `xs`
     Cons(x, xs) => {
-      print(x)
-      print(",")
+      println(x)
+      println(",")
       print_list(xs)
     }
   }
@@ -1028,6 +1028,7 @@ match map {
 - 字典模式会被编译成高效的代码：每个键至多被查询一次
 
 ### Json 模式匹配
+
 当模式匹配类型是 `@json.JsonValue` 的值是，可以直接使用各种字面量模式来匹配：
 
 ```moonbit
@@ -1190,14 +1191,14 @@ let result = builder.to_string()
 ```
 
 为了避免重复键入`builder`，它的方法常常被设计为返回`self`本身，这样就可以使用`.`运算符将操作串连起来。
-为了区分不可变与可变操作，在MoonBit中，对于所有返回`Unit`的方法，可以使用级联运算符进行连续的操作，
+为了区分不可变与可变操作，在 MoonBit 中，对于所有返回`Unit`的方法，可以使用级联运算符进行连续的操作，
 而不需要专门修改方法的返回类型。
 
-为了避免重复键入上图中的`array`, 和区分不可变与可变操作，MoonBit引入了级联运算符。对于一个类型中的所有返回`Unit`的方法，可以使用`..`将这些方法的调用串联起来，
+为了避免重复键入上图中的`array`, 和区分不可变与可变操作，MoonBit 引入了级联运算符。对于一个类型中的所有返回`Unit`的方法，可以使用`..`将这些方法的调用串联起来，
 而不需要专门修改这些方法的返回类型。 `array..push(5)..sort()`相当于依次调用了可变操作`array.push(5)`和`array.sort()`, 最终返回`array`。
 
 ```moonbit
-let result = 
+let result =
   MyStringBuilder::new()
     ..add_char('a')
     ..add_char('a')
@@ -1233,40 +1234,43 @@ fn div(x: Int, y: Int) -> Int!String {
 
 其中 `raise` 关键字用于中断函数的执行并返回一个错误。函数的错误处理有以下三种方式：
 
-- 使用 `!` 后缀来在发生错误的情况下将错误直接重新抛出，比如
+- 于函数名后加 `!` 在发生错误的情况下将错误直接重新抛出，比如
 
   ```moonbit
   fn div_reraise(x: Int, y: Int) -> Int!String {
-    div(x, y)! // 直接重新抛出错误
+    div!(x, y) // 直接重新抛出错误
   }
   ```
 
 - 使用 `try` 和 `catch` 对错误进行捕获并处理，比如
 
   ```moonbit
-  fn div_with_default(x: Int, y: Int, default: Int) -> Int {
+  fn div_with_default(x : Int, y : Int, default : Int) -> Int {
     try {
-      div(x, y)!
+      div!(x, y)
     } catch {
-      s => { println(s); default }
+      s => {
+        println(s)
+        default
+      }
     }
   }
   ```
 
 其中 `try` 用于调用可能会抛出错误的函数，`catch` 用于对捕获的错误进行模式匹配并处理，如果没有捕获到错误则不会执行 `catch` 语句块。
 
-- 使用 `!!` 后缀来将函数执行结果转化为 `Result` 类型的值，比如：
+- 于函数名后加 `?` 后缀来将函数执行结果转化为 `Result` 类型的值，比如：
 
   ```moonbit
   test {
-    let res = div(6, 3)!!
-    inspect(res, content="Ok(2)")!
-    let res = div(6, 0)!!
-    inspect(res, content="Err(division by zero)")!
+    let res = div?(6, 3)
+    inspect!(res, content="Ok(2)")
+    let res = div?(6, 0)
+    inspect!(res, content="Err(division by zero)")
   }
   ```
 
-本质上，后缀表达式 `!!` 是下面代码的语法糖：
+实际上 `?` 是下面代码的语法糖：
 
 ```moonbit
 test {
@@ -1274,16 +1278,14 @@ test {
 }
 ```
 
-在 MoonBit 中，错误类型和错误处理属于二等公民，因此错误类型只能出现在函数的返回值中，而不能作为变量的类型。使用后缀表达式 `!` 或 `!!` 进行的错误处理也只能在函数调用处进行，而不能在其他表达式中使用，合法的使用形式包括：
+在 MoonBit 中，错误类型和错误处理属于二等公民，因此错误类型只能出现在函数的返回值中，而不能作为变量的类型。使用 `!` 或 `?` 进行的错误处理也只能在函数调用处进行，而不能在其他表达式中使用，合法的使用形式包括：
 
 ```moonbit
-f(x)!
-x.f()!
-(x |> f)!
-(x + y)!
+f!(x)
+x.f!()
 ```
 
-此外，如果函数的返回值类型中包含错误类型，那么对该函数的调用必须使用 `!` 或 `!!` 进行错误处理，否则编译器会报错。
+此外，如果函数的返回值类型中包含错误类型，那么对该函数的调用必须使用 `!` 或 `?` 进行错误处理，否则编译器会报错。
 
 ## 泛型
 
@@ -1377,9 +1379,9 @@ fn init {
 
 // Package B
 fn print_RO(r : RO) -> Unit {
-  print("{ field: ")
-  print(r.field)  // OK
-  print(" }")
+  println("{ field: ")
+  println(r.field)  // OK
+  println(" }")
 }
 fn init {
   let r : RO = { field: 4 }  // ERROR: 无法创建公共只读类型 RO 的值！
@@ -1479,9 +1481,9 @@ fn init {
 
 fn print_array_view[T : Show](view : ArrayView[T]) -> Unit {
   for i=0; i<view.length(); i = i + 1 {
-    print(view[i])
+    println(view[i])
   }
-  print("\n")
+  println("\n")
 }
 ```
 
@@ -1503,7 +1505,7 @@ pub fn length[A](self : MyList[A]) -> Int {
 }
 
 pub fn op_as_view[A](self : MyList[A], ~start : Int, ~end : Int) -> MyListView[A] {
-  println("op_as_view: [\(start),\(end))")
+  println("op_as_view: [\{start},\{end})")
   if start < 0 || end > self.length() { abort("index out of bounds") }
   { ls: self, start, end }
 }
@@ -1678,7 +1680,7 @@ trait MyTrait {
 }
 
 fn MyTrait::f(self: Int) -> Unit {
-  println("Got Int \(self)!")
+  println("Got Int \{self}!")
 }
 
 fn init {
@@ -1784,8 +1786,8 @@ MoonBit 提供了 `test` 代码块，用于编写测试用例，比如
 
 ```moonbit
 test "test_name" {
-  @test.eq(1 + 1, 2)!
-  @test.eq(2 + 2, 4)!
+  @test.eq!(1 + 1, 2)
+  @test.eq!(2 + 2, 4)
 }
 ```
 
@@ -1801,7 +1803,7 @@ test "panic_test" {
 
 文档注释是以 `///` 开头的注释，出现在顶层结构（如 `fn`、`let`、`enum`、`struct`、`type`）的每一行前面。文档注释内包含 Markdown 文本和任意个注解。
 
-```moonbit
+````moonbit
 /// Return a new array with reversed elements.
 ///
 /// # Example
@@ -1812,11 +1814,11 @@ test "panic_test" {
 fn reverse[T](xs : Array[T]) -> Array[T] {
   ...
 }
-```
+````
 
 ### 注解
 
-注解是文档注释中 `@word ...` 形式的特殊注释。_word_ 表示注解的类型，后面可以跟随多个 _word_ 或字符串字面量，每条注解独占一行。在MoonBit中注解通常不会影响程序的含义。无法识别的注解将会触发警告。
+注解是文档注释中 `@word ...` 形式的特殊注释。_word_ 表示注解的类型，后面可以跟随多个 _word_ 或字符串字面量，每条注解独占一行。在 MoonBit 中注解通常不会影响程序的含义。无法识别的注解将会触发警告。
 
 - `@alert`注解
 
