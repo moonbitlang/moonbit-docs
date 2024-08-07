@@ -49,7 +49,7 @@ pub fn split(s : String, sep : Char) -> (Array[String], Int) {
   (result, cur)
 }
 
-pub fn sub_string(s : String, start : Int, end : Int) -> Option[String] {
+pub fn sub_string(s : String, start : Int, end : Int) -> String? {
   if start > end || start < 0 || end > s.length() {
     return None
   }
@@ -86,7 +86,7 @@ pub fn trim(s : String, removed : Char) -> String {
   s
 }
 
-pub fn index_of(s : String, pattern : String) -> Option[Int] {
+pub fn index_of(s : String, pattern : String) -> Int? {
   let prefix_func = prefix_function(pattern)
   let mut s_index = 0
   let mut p_index = 0
@@ -110,7 +110,7 @@ pub fn index_of(s : String, pattern : String) -> Option[Int] {
   None
 }
 
-pub fn last_index_of(s : String, pattern : String) -> Option[Int] {
+pub fn last_index_of(s : String, pattern : String) -> Int? {
   let prefix_func = prefix_function(pattern)
   let mut s_index = 0
   let mut p_index = 0
@@ -166,7 +166,7 @@ fn prefix_function(pattern : String) -> Array[Int] {
   result
 }
 
-pub fn char_at(s : String, pos : Int) -> Option[Char] {
+pub fn char_at(s : String, pos : Int) -> Char? {
   if pos >= 0 && pos < s.length() {
     return Some(s.get(pos))
   }
@@ -194,7 +194,7 @@ pub fn iter(s : String) -> Iterator {
   { index: 0, length: s.length(), data: s }
 }
 
-pub fn next(self : Iterator) -> Option[Char] {
+pub fn next(self : Iterator) -> Char? {
   if self.index == self.length {
     return None
   }

@@ -23,4 +23,3 @@ pub fn is_palindrome(chars : String) -> Bool {
   }
   return true
 }
-

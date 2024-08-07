@@ -21,18 +21,11 @@ fn 😀(self : T😯) -> Int {
 pub enum 😆😆 {
   A
   B
-}
-
-fn to_string(self : 😆😆) -> String {
-  match self {
-    A => "A"
-    B => "B"
-  }
-}
+} derive(Show)
 
 test {
   let 🤣 = T😯::T😯(3)
-  inspect(🤣.😀(), content="3")!
+  inspect!(🤣.😀(), content="3")
   let 😆 = 😆😆::A
-  inspect(😆, content="A")!
+  inspect!(😆, content="A")
 }

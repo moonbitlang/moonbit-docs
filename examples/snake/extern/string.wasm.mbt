@@ -25,12 +25,14 @@ fn JsString::from_char_code(charCode : JsArray) -> JsString = "string" "fromChar
 fn iter(self : JsString, f : (Int) -> Unit) -> Unit = "string" "iter"
 
 pub fn JsString::from_string(str : String) -> JsString {
-  str.iter().fold(
+  str
+  .iter()
+  .fold(
     fn(array : JsArray, char : Char) {
       array.push(char.to_int())
       array
     },
-    JsArray::new(),
+    init=JsArray::new(),
   )
   |> JsString::from_char_code
 }

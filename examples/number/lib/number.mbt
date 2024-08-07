@@ -43,23 +43,18 @@ pub fn abs_int(n : Int) -> Int {
   return -n
 }
 
-pub fn factorial(n : Int) -> Option[Int] {
-  fn factorial_helper(n : Int, acc : Int) -> Option[Int] {
+pub fn factorial(n : Int) -> Int? {
+  fn factorial_helper(n : Int, acc : Int) -> Int? {
     match n {
       0 | 1 => Some(acc)
-      _ =>
-        if acc * n < 0 {
-          None
-        } else {
-          factorial_helper(n - 1, acc * n)
-        }
+      _ => if acc * n < 0 { None } else { factorial_helper(n - 1, acc * n) }
     }
   }
 
   factorial_helper(n, 1)
 }
 
-pub fn parse_int(s : String) -> Option[Int] {
+pub fn parse_int(s : String) -> Int? {
   let char_0 = 0x30
   let char_u_a = 0x41
   let char_a = 0x61
@@ -102,7 +97,7 @@ pub fn parse_int(s : String) -> Option[Int] {
     } else {
       result_digit * radix + digit
     }
-    if not(is_negative) && result_digit < 0 || is_negative && result_digit > 0 {
+    if (not(is_negative) && result_digit < 0) || (is_negative && result_digit > 0) {
       return None
     }
     index = index + 1

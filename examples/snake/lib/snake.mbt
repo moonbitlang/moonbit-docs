@@ -47,7 +47,7 @@ struct Position {
 
 struct GameState {
   grid : FixedArray[GridType]
-  body : @deque.Deque[Position]
+  body : @deque.T[Position]
   mut dir : Direction
 }
 

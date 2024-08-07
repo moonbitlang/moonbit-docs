@@ -14,7 +14,7 @@
 //  limitations under the License.
 
 pub fn check_collision(
-  grid : @immut/list.List[Array[Int]],
+  grid : @immut/list.T[Array[Int]],
   shap : Array[Array[Int]],
   offset : (Int, Int)
 ) -> Bool {
@@ -46,7 +46,7 @@ pub fn check_collision(
 }
 
 pub fn get_effective_height(
-  grid : @immut/list.List[Array[Int]],
+  grid : @immut/list.T[Array[Int]],
   shap : Array[Array[Int]],
   offset : (Int, Int)
 ) -> Int {

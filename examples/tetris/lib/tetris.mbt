@@ -15,8 +15,8 @@
 
 struct Tetris {
   mut dead : Bool
-  mut grid : @immut/list.List[Array[Int]]
-  mut piece_pool : @immut/list.List[PIECE]
+  mut grid : @immut/list.T[Array[Int]]
+  mut piece_pool : @immut/list.T[PIECE]
   mut current : PIECE
   mut piece_x : Int
   mut piece_y : Int
@@ -27,7 +27,7 @@ struct Tetris {
 pub fn reset_game(self : Tetris) -> Unit {
   self.dead = false
   self.score = 0
-  self.grid = for i = 0, grid = @immut/list.List::Nil
+  self.grid = for i = 0, grid = @immut/list.Nil
                   i < grid_row_count
                   i = i + 1, grid = Cons(Array::make(grid_col_count, 0), grid) {
 
@@ -95,7 +95,7 @@ pub fn on_piece_collision(self : Tetris) -> Unit {
 
   // Delete the complete row
   let (new_grid, row_completed) = self.grid.fold_right(
-    init=(@immut/list.List::Nil, 0),
+    init=(@immut/list.Nil, 0),
     fn {
       v, (new_grid, row_completed) =>
         if v.contains(0) {
@@ -111,7 +111,7 @@ pub fn on_piece_collision(self : Tetris) -> Unit {
   // Insert blank row at the top
   self.grid = for i = 0, new_grid = new_grid
                   i < row_completed
-                  i = i + 1, new_grid = Cons(
+                  i = i + 1, new_grid = @immut/list.Cons(
                       Array::make(grid_col_count, 0),
                       new_grid,
                     ) {

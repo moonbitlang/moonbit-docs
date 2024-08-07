@@ -37,7 +37,7 @@ pub fn draw(canvas : Canvas_ctx, tetris : Tetris) -> Unit {
   draw_piece(canvas, tetris.grid, (0, 0))
   draw_piece(
     canvas,
-    @immut/list.List::from_array(tetris.piece_shape),
+    @immut/list.from_array(tetris.piece_shape),
     (tetris.piece_x, tetris.piece_y),
   )
   if tetris.dead {
@@ -47,7 +47,7 @@ pub fn draw(canvas : Canvas_ctx, tetris : Tetris) -> Unit {
 
 pub fn draw_piece(
   canvas : Canvas_ctx,
-  matrix : @immut/list.List[Array[Int]],
+  matrix : @immut/list.T[Array[Int]],
   offset : (Int, Int)
 ) -> Unit {
   canvas.set_stroke_color(0)

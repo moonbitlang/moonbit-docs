@@ -73,13 +73,13 @@ pub fn has_root(self : Path) -> Bool {
   match self.platform {
     Posix => self.inner[0] == '/'
     Windows =>
-      (self.inner[0].compare('a') >= 0 && self.inner[0].compare('z') <= 0 || self.inner[0].compare(
+      ((self.inner[0].compare('a') >= 0 && self.inner[0].compare('z') <= 0) || (self.inner[0].compare(
         'A',
-      ) >= 0 && self.inner[0].compare('Z') <= 0) && self.inner[1] == ':'
+      ) >= 0 && self.inner[0].compare('Z') <= 0)) && self.inner[1] == ':'
   }
 }
 
-pub fn file_name(self : Path) -> Option[String] {
+pub fn file_name(self : Path) -> String? {
   match self.file_type {
     FileType::File => {
       let (parts, l) = match self.platform {
@@ -111,4 +111,8 @@ pub fn append(self : Path, p : String) -> Unit {
 
 pub fn to_string(self : Path) -> String {
   self.inner
+}
+
+pub fn output(self : Path, log : Logger) -> Unit {
+  (self.inner as Show).output(log)
 }
