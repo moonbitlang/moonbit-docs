@@ -173,7 +173,7 @@ struct User {
 fn greetUser(self: User) -> String{ // a method of struct/type/class `User`
   let id = self.id
   let name = self.name
-  "Greetings, \(name) of id \(id)" // string interpolation
+  "Greetings, \{name} of id \{id}" // string interpolation
 }
 // construct a User object.
 let evan: User = {id:0,name:"Evan",email:"someone@example.com"}
@@ -241,7 +241,7 @@ fn to_string[T: Printable](self : List[T]) -> String {
 fn to_string_aux[T: Printable](self: List[T]) -> String{
   match self {
     Nil => ""
-    Cons(x,xs) => "\(x) " + to_string_aux(xs)
+    Cons(x,xs) => "\{x} " + to_string_aux(xs)
   }
 }
 ```
@@ -306,7 +306,7 @@ fn greetUserAlt(self: User) -> String {
   let { id: id, name: name, email: _ } = self
   // equivalent, but ignores the rest.
   let {id,name,..} = self
-  "Greetings, \(name) of id \(id)"
+  "Greetings, \{name} of id \{id}"
 }
 ```
 

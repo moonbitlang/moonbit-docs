@@ -28,13 +28,13 @@ There is a specialized function called `init` function. The `init` function is s
 
 ```moonbit live
 fn init {
-  print("Hello world!") // OK
+  println("Hello world!") // OK
 }
 
 fn init {
   let x = 1
   // x // fail
-  print(x) // success
+  println(x) // success
 }
 ```
 
@@ -63,8 +63,8 @@ fn bar() -> Int {
 }
 
 fn init {
-  print(foo())
-  print(bar())
+  println(foo())
+  println(bar())
 }
 ```
 
@@ -112,7 +112,7 @@ fn foo() -> Int {
 }
 
 fn init {
-  print(foo())
+  println(foo())
 }
 ```
 
@@ -123,8 +123,8 @@ let y = 3
 fn foo(x: Int) -> Unit {
   fn inc()  { x + 1 } // OK, will return x + 1
   fn four() { y + 1 } // Ok, will return 4
-  print(inc())
-  print(four())
+  println(inc())
+  println(four())
 }
 
 fn init {
@@ -145,7 +145,7 @@ This works whether `add3` is a function defined with a name (as in the previous 
 ```moonbit live
 fn init {
   let add3 = fn(x, y, z) { x + y + z }
-  print(add3(1, 2, 7))
+  println(add3(1, 2, 7))
 }
 ```
 
@@ -155,7 +155,7 @@ The expression `add3(1, 2, 7)` returns `10`. Any expression that evaluates to a 
 fn init {
   let f = fn (x) { x + 1 }
   let g = fn (x) { x + 2 }
-  print((if true { f } else { g })(3)) // OK
+  println((if true { f } else { g })(3)) // OK
 }
 ```
 
@@ -252,8 +252,8 @@ and `ArgsLoc`, which is a array containing the source location of each argument,
 
 ```moonbit
 fn f(_x : Int, _y : Int, ~loc : SourceLoc = _, ~args_loc : ArgsLoc = _) -> Unit {
-  println("loc of whole function call: \(loc)")
-  println("loc of arguments: \(args_loc)")
+  println("loc of whole function call: \{loc}")
+  println("loc of arguments: \{args_loc}")
 }
 
 fn init {
@@ -423,7 +423,7 @@ fn main {
   let sum =
     for i = 1, acc = 0; i <= 6; i = i + 1 {
       if i % 2 == 0 {
-        println("even: \(i)")
+        println("even: \{i}")
         continue i + 1, acc + i
       }
     } else {
@@ -567,7 +567,7 @@ MoonBit supports string interpolation. It enables you to substitute variables wi
 ```moonbit live
 fn init {
   let x = 42
-  print("The answer is \(x)")
+  println("The answer is \{x}")
 }
 ```
 
@@ -609,7 +609,7 @@ fn pack(a: Bool, b: Int, c: String, d: Double) -> (Bool, Int, String, Double) {
 fn init {
     let quad = pack(false, 100, "text", 3.14)
     let (bool_val, int_val, str, float_val) = quad
-    println("\(bool_val) \(int_val) \(str) \(float_val)")
+    println("\{bool_val} \{int_val} \{str} \{float_val}")
 }
 ```
 
@@ -622,9 +622,9 @@ fn f(t : (Int, Int)) -> Unit {
   let x2 = t.0
   let y2 = t.1
   if (x1 == x2 && y1 == y2) {
-    print("yes")
+    println("yes")
   } else {
-    print("no")
+    println("no")
   }
 }
 
@@ -649,7 +649,7 @@ fn init {
   let a = numbers[2]
   numbers[3] = 5
   let b = a + numbers[3]
-  print(b) // prints 8
+  println(b) // prints 8
 }
 ```
 
@@ -688,7 +688,7 @@ let zero = 0
 fn init {
   let mut i = 10
   i = 20
-  print(i + zero)
+  println(i + zero)
 }
 ```
 
@@ -827,13 +827,13 @@ fn print_list(l: List) -> Unit {
   // in additional to deciding which case a value belongs to
   // you can extract the payload data inside that case
   match l {
-    Nil => print("nil")
+    Nil => println("nil")
     // Here `x` and `xs` are defining new variables instead of referring to existing variables,
     // if `l` is a `Cons`, then the payload of `Cons` (the first element and the rest of the list)
     // will be bind to `x` and `xs
     Cons(x, xs) => {
-      print(x)
-      print(",")
+      println(x)
+      println(",")
       print_list(xs)
     }
   }
@@ -1383,10 +1383,10 @@ fn init {
 }
 
 // Package B
-fn print(r : RO) -> Unit {
-  print("{ field: ")
-  print(r.field)  // OK
-  print(" }")
+fn println(r : RO) -> Unit {
+  println("{ field: ")
+  println(r.field)  // OK
+  println(" }")
 }
 fn init {
   let r : RO = { field: 4 }  // ERROR: Cannot create values of the public read-only type RO!
@@ -1498,9 +1498,9 @@ fn init {
 
 fn print_array_view[T : Show](view : ArrayView[T]) -> Unit {
   for i=0; i<view.length(); i = i + 1 {
-    print(view[i])
+    println(view[i])
   }
-  print("\n")
+  println("\n")
 }
 ```
 
@@ -1522,7 +1522,7 @@ pub fn length[A](self : MyList[A]) -> Int {
 }
 
 pub fn op_as_view[A](self : MyList[A], ~start : Int, ~end : Int) -> MyListView[A] {
-  println("op_as_view: [\(start),\(end))")
+  println("op_as_view: [\{start},\{end})")
   if start < 0 || end > self.length() { abort("index out of bounds") }
   { ls: self, start, end }
 }
@@ -1676,7 +1676,7 @@ trait MyTrait {
 }
 
 fn MyTrait::f(self: Int) -> Unit {
-  println("Got Int \(self)!")
+  println("Got Int \{self}!")
 }
 
 fn init {

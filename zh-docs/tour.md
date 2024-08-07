@@ -171,7 +171,7 @@ struct User {
 fn greetUser(self: User) -> String{ // `User` 的一个方法
   let id = self.id
   let name = self.name
-  "Greetings, \(name) of id \(id)" // 字符串插值写法
+  "Greetings, \{name} of id \{id}" // 字符串插值写法
 }
 
 // 构造 User 对象的写法
@@ -238,7 +238,7 @@ fn to_string[T: Printable](self : List[T]) -> String {
 fn to_string_aux[T: Printable](self: List[T]) -> String{
   match self {
     Nil => ""
-    Cons(x,xs) => "\(x) " + to_string_aux(xs)
+    Cons(x,xs) => "\{x} " + to_string_aux(xs)
   }
 }
 ```
@@ -302,7 +302,7 @@ fn greetUserAlt(self: User) -> String {
   let { id: id, name: name, email: _ } = self
   // 等价写法，但是忽略 `id `name` 之外的所有字段。
   let {id,name,..} = self
-  "Greetings, \(name) of id \(id)"
+  "Greetings, \{name} of id \{id}"
 }
 ```
 
