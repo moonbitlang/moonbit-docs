@@ -12,16 +12,16 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-struct SBuffer {
+pub(readonly) struct Buffer {
   mut data : Bytes
   mut len : Int
 }
 
-pub fn SBuffer::new(size : Int) -> SBuffer {
-  { data: Bytes::make(size), len: 0 }
+pub fn Buffer::new(size : Int) -> Buffer {
+  { data: Bytes::new(size), len: 0 }
 }
 
-pub fn op_get(self : SBuffer, i : Int) -> Option[Byte] {
+pub fn op_get(self : Buffer, i : Int) -> Byte? {
   if i < self.data.length() {
     Some(self.data[i])
   } else {
@@ -29,21 +29,21 @@ pub fn op_get(self : SBuffer, i : Int) -> Option[Byte] {
   }
 }
 
-pub fn capacity(self : SBuffer) -> Int {
+pub fn capacity(self : Buffer) -> Int {
   self.data.length()
 }
 
-pub fn length(self : SBuffer) -> Int {
+pub fn length(self : Buffer) -> Int {
   self.len
 }
 
-fn expand_size(self : SBuffer) -> Unit {
+fn expand_size(self : Buffer) -> Unit {
   let new_capacity = if self.data.length() != 0 {
     self.data.length() * 2
   } else {
     (self.data.length() + 1) * 2
   }
-  let new_data = Bytes::make(new_capacity)
+  let new_data = Bytes::new(new_capacity)
   let mut index = 0
   while index < self.len {
     new_data[index] = self.data[index]
@@ -52,7 +52,7 @@ fn expand_size(self : SBuffer) -> Unit {
   self.data = new_data
 }
 
-pub fn append_int(self : SBuffer, value : Int) -> Unit {
+pub fn append_int(self : Buffer, value : Int) -> Unit {
   if self.len >= self.data.length() {
     self.expand_size()
   }
@@ -68,7 +68,7 @@ pub fn append_int(self : SBuffer, value : Int) -> Unit {
   }
 }
 
-pub fn truncate(self : SBuffer, another : SBuffer) -> Unit {
+pub fn truncate(self : Buffer, another : Buffer) -> Unit {
   let mut index = 0
   while index < another.len {
     if self.len >= self.data.length() {
@@ -80,7 +80,7 @@ pub fn truncate(self : SBuffer, another : SBuffer) -> Unit {
   }
 }
 
-pub fn clear(self : SBuffer) -> Unit {
+pub fn clear(self : Buffer) -> Unit {
   let mut index = 0
   while index < self.len {
     self.data[index] = b'\x00'
@@ -89,12 +89,12 @@ pub fn clear(self : SBuffer) -> Unit {
   self.len = 0
 }
 
-pub fn reset(self : SBuffer, capacity : Int) -> Unit {
+pub fn reset(self : Buffer, capacity : Int) -> Unit {
   self.len = 0
-  self.data = Bytes::make(capacity)
+  self.data = Bytes::new(capacity)
 }
 
-pub fn to_bytes(self : SBuffer) -> Bytes {
+pub fn to_bytes(self : Buffer) -> Bytes {
   self.data
 }
 
