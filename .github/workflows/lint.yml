@@ -1,0 +1,41 @@
+name: lint markdown files
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - examples
+
+jobs:
+  markdown-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: install moonbit runtime
+        run: |
+          /bin/bash -c "$(curl -fsSL https://cli.moonbitlang.com/install/unix.sh)"
+          echo "$HOME/.moon/bin" >> $GITHUB_PATH
+          npm install -g @moonbit/markdown-linter
+      - name: lint markdowns
+        run: |
+          FAIL=0
+          FAILED_FILES=()
+          while read file; do
+            echo "========mdlint results for $file========";
+            mdlint "$file" || {
+              FAIL=1
+              FAILED_FILES+=("$file")
+            }
+          done < <(find . -name '*.md')
+          for file in "${FAILED_FILES[@]}"; do
+            echo "========mdlint failed for $file========"
+          done
+          if [[ $FAIL -eq 1 ]]; then 
+            echo "::error file=${FAILED_FILES[*]}::Markdown lint failed";
+            exit 1
+          fi
