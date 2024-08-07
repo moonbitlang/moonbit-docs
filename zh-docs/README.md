@@ -465,6 +465,65 @@ fn init {
 }
 ```
 
+## 迭代器
+
+迭代器（Iterator）是一个用来遍历访问某个序列的元素的对象。传统面向对象语言（例如 Java），使用 `Iterator<T>` 和 `next()`
+`hasNext()` 来步进一个迭代过程；而函数式语言（例如 JavaScript 的 `forEach`，Lisp 的
+`mapcar`）则是通过接收某个操作和序列，并在遍历过程中将操作应用于该序列的高阶函数来实现迭代器。
+前者叫做外部迭代器（对用户可见）；后者称为内部迭代器（对用户不可见）。
+
+MoonBit 的内置类型 `Iter[T]` 提供了迭代器支持。`Iter[T]` 实际上是 `((T) -> IterResult)->IterResult`
+的类型别名，即一个接收某个操作的高阶函数。基本上所有的内置序列结构都实现了 `Iter`：
+
+```moonbit
+fn filter_even(l : Array[Int]) -> Array[Int] {
+  let l_iter: Iter[Int] = l.iter()
+  l_iter.filter(fn { x => if (x & 1) == 1 { true } else { false } }).collect()
+}
+
+fn fact(n : Int) -> Int {
+  let start = 1
+  start.until(n).fold(Int::op_mul, init=start)
+}
+```
+
+在上面我们使用了 `Iter` 的泛型方法 `fold` `filter`。除此之外常用的方法还有 `map`
+`each`。想要利用好这些方法，我们就需要为自己的序列结构也实现 Iter。
+
+不妨为 `Bytes` 实现 `Iter`：
+
+```moonbit
+fn bytes_to_iter(data : Bytes, ~length : Int = data.length()) -> Iter[Byte] {
+  Iter::new(
+    fn(yield) {
+      // 实际进行迭代的代码
+      /////////////////////////////////////////////
+      for i = 0, len = length; i < len; i = i + 1 {
+        if yield(data[i]) == IterEnd {
+          break IterEnd
+        }
+      /////////////////////////////////////////////
+      } else {
+        IterContinue
+      }
+    },
+  )
+}
+```
+
+基本上所有的 `Iter` 实现都和上述 `Bytes` 的相似，唯一的不同点在于实际用于迭代的代码部分。
+
+迭代器为我们提供了一个统一的方法用于序列结构的迭代，
+且构造这样的迭代器是几乎没有额外开销的：只要 `fn(yield)` 没有执行，那么迭代就不会开始。
+
+在 `map` 等泛型方法的抽象之下，是 `self.run()`。
+只要一个 `self.run()` 被调用，迭代就开始。
+像这样的方法串接起来可能显得十分优雅，但也需要注意抽象之下的重活。
+
+与外部迭代器不同，内部迭代器只要迭代过程一开始就无法停止，除非到达迭代终点。
+类似 `count()` （返回某个迭代器元素数目）之类的方法看上去是 `O(1)`，
+实际上却是线性复杂度。因此对于内部迭代器需要小心使用，否则可能产生性能问题。
+
 ## 内置数据结构
 
 ### 布尔值
