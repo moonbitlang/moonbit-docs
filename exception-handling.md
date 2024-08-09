@@ -2,7 +2,7 @@
 
 Exception handling has always been at core of our language design. In the following
 we'll be explaining how exception/error handling is done in MoonBit. We assume
-you have some prior knowledge of MoonBit, if not, please checkout [A tour of MoonBit](./tour.md)
+you have some prior knowledge of MoonBit, if not, please checkout [A tour of MoonBit](./tour.md).
 
 ## Example: Division by Zero
 
@@ -26,7 +26,18 @@ define a error type `DivisionByZeroError` which wraps around `String`.
 
 > `type! E S` construct a error type `E` from `S`
 
-To utilize this error type, we would usually define a function which may raise
+Just like `type`, `type!` may have a payload like the above `DivisionByZeroError`, or may not, or may even have multiple constructors like a normal `enum`:
+
+```moonbit
+type! ConnectionError {
+  BrokenPipe(Int,String)
+  ConnectionReset
+  ConnectionAbort
+  ConnectionRefused
+}
+```
+
+To utilize `DivisionByZeroError` type, we would usually define a function which may raise
 error by denoting its return type like `T ! E` in the signature, with `T` being
 the actual return type and `E` being the error type. In this case, it's
 `Int!DivisionByZeroError`. The error can be thrown using
@@ -87,7 +98,24 @@ fn test_try() -> Result[Int, Error] {
 ```
 
 Curly braces may be omitted if the body of try is a one-liner (expression). The
-`catch` keyword can also be omitted as well.
+`catch` keyword can also be omitted as well. In the case where a `try` body would raise different errors,
+the special `catch!` can be used to catch some of the errors, while re-raising other uncaught errors:
+
+```moonbit
+type! E1
+type! E2
+fn f1() -> Unit!E1 { raise E1 }
+fn f2() -> Unit!E2 { raise E2 }
+fn f() -> Unit! {
+  try {
+    f1!()
+    f2!()
+  } catch! {
+    E1 => println("E1")
+    // E2 gets re-raised.
+  }
+}
+```
 
 ### Convert to Result
 
@@ -176,7 +204,12 @@ let new_result = res2.bind(fn(x) { Ok(x + 1) }) // Ok(43)
 
 In MoonBit, `Error` is a generalized error type:
 
-```moonbit
+```moonbit no-check
+// These signatures are equivalent. They all raise Error.
+fn f() -> Unit! { .. }
+fn f!() -> Unit { .. }
+fn f() -> Unit!Error { .. }
+
 fn test_error() -> Result[Int, Error] {
   fn f() -> _!_ {
     raise DivisionByZeroError("err")
@@ -193,8 +226,25 @@ fn test_error() -> Result[Int, Error] {
 Although the constructor `Err` expects a type of `Error`, we may
 still pass an error of type `DivisionByZeroError` to it.
 
-But `Error` can't be constructed directly. Instead, we always use the builtin
-`Failure` error type for a generalized error:
+But `Error` can't be constructed directly. It's meant to be passed around, not used directly:
+
+```moonbit
+type! ArithmeticError
+
+fn what_error_is_this(e : Error) -> Unit {
+  match e {
+    DivisionByZeroError(_) => println("DivisionByZeroError")
+    ArithmeticError => println("ArithmeticError")
+    ... => println("...")
+    _ => println("Error")
+  }
+}
+```
+
+As `Error` includes multiple error types, partial matching is not allowed here. We have to do exhaustive matching by providing a catch-all/wildcard case `_`.
+
+We usually use the builtin `Failure` error type for a generalized error, and by
+generalized we mean using it for trivial errors that doesn't need a new error type.
 
 ```moonbit
 fn div_general(x : Int, y : Int) -> Int!Failure {
