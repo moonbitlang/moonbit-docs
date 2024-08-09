@@ -1360,6 +1360,9 @@ fn main {
 } 
 ```
 
+However for infix operators such as `+` `*` that may raise an error,
+the original form has to be used, e.g. `x.op_add!(y)`, `x.op_mul!(y)`.
+
 Additionally, if the return type of a function includes an error type, the
 function call must use `!` or `?` for error handling, otherwise the compiler
 will report an error.
