@@ -34,9 +34,20 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang
 
 MoonBit 目前处于活跃开发的阶段，尚不满足生产环境的需求。若需要更新，只需再次运行上述命令即可。
 
+### 编译目标
+
+MoonBit 目前可以编译到 wasm、wasm-gc 和 javascript。 `moon` 的 `--target` 选项可以指定要编译到的某个目标（或者全部）。
+VS Code 的插件也在状态栏中的语言标签旁边提供了一个选项用于切换编译目标。
+
+![compile-target](./imgs/compile-targets.png)
+
+虽然我们目前的重心是 wasm-gc，但目前 debug 功能只支持 js 后端。不妨试试使用我们的 interactive debugger。
+
+### 项目结构
+
 可以通过 `moon new` 交互式地创建新项目（模块），填写好必要信息之后将会在项目路径下生成如下结构
 
-```
+```plaintext
 my-project
 ├── README.md
 ├── lib
