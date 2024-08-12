@@ -1,0 +1,15 @@
+name: Sync Json Schema
+on:
+  schedule:
+    - cron: '0 0 * * 2'
+  workflow_dispatch:
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@master
+      - name: Run GitHub File Sync
+        uses: hirotomoyamada/repo-file-sync-action@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
