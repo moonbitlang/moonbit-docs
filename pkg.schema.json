@@ -1,26 +1,179 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "JSON schema for Moonbit moon.pkg.json files",
-  "description": "A package in Moonbit lang",
+  "title": "JSON schema for MoonBit moon.pkg.json files",
+  "description": "A package of MoonBit language",
   "type": "object",
   "properties": {
-    "name": {
-      "description": "Name of the package (Deprecated)",
-      "type": "string"
-    },
-    "is-main": {
-      "description": "Specify whether this package is a main package or not",
-      "type": "boolean",
-      "default": false
+    "alert_list": {
+      "description": "Alert list setting of the package",
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "import": {
       "description": "Imported packages of the package",
-      "oneOf": [
+      "anyOf": [
         {
-          "title": "Object form",
+          "$ref": "#/definitions/PkgJSONImport"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "is_main": {
+      "description": "Specify whether this package is a main package or not",
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "link": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/BoolOrLink"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "test_import": {
+      "description": "Black box test imported packages of the package",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/PkgJSONImport"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "warn_list": {
+      "description": "Warn list setting of the package",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "wbtest_import": {
+      "description": "White box test imported packages of the package",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/PkgJSONImport"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "BoolOrLink": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/Link"
+        }
+      ]
+    },
+    "ImportMemory": {
+      "type": "object",
+      "required": [
+        "module",
+        "name"
+      ],
+      "properties": {
+        "module": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "JsFormat": {
+      "type": "string",
+      "enum": [
+        "esm",
+        "cjs",
+        "iife"
+      ]
+    },
+    "JsLinkConfig": {
+      "type": "object",
+      "properties": {
+        "exports": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "format": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JsFormat"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "js": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JsLinkConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "wasm": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WasmLinkConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "wasm-gc": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/WasmGcLinkConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "PkgJSONImport": {
+      "anyOf": [
+        {
+          "description": "Path and alias of an imported package",
           "type": "object",
           "additionalProperties": {
-            "description": "Path and alias of an imported package",
             "type": [
               "string",
               "null"
@@ -28,134 +181,120 @@
           }
         },
         {
-          "title": "Array form",
           "type": "array",
           "items": {
-            "oneOf": [
-              {
-                "title": "Package without alias",
-                "description": "Path of an imported package",
-                "type": "string"
-              },
-              {
-                "title": "Package with alias",
-                "description": "Path and alias of an imported package",
-                "type": "object",
-                "properties": {
-                  "path": {
-                    "description": "Path of an imported package",
-                    "type": "string"
-                  },
-                  "alias": {
-                    "description": "Alias of an imported package",
-                    "type": "string"
-                  }
-                },
-                "additionalProperties": false,
-                "required": [
-                  "path",
-                  "alias"
-                ]
-              }
-            ]
+            "$ref": "#/definitions/PkgJSONImportItem"
           }
         }
       ]
     },
-    "link": {
-      "oneOf": [
+    "PkgJSONImportItem": {
+      "anyOf": [
         {
-          "title": "Build this package",
-          "type": "boolean"
+          "type": "string"
         },
         {
-          "title": "Build configuration",
-          "description": "Configure the build for each backend",
           "type": "object",
+          "required": [
+            "alias",
+            "path"
+          ],
           "properties": {
-            "wasm": {
-              "type": "object",
-              "properties": {
-                "exports": {
-                  "description": "Exported functions of the package",
-                  "type": "array",
-                  "items": {
-                    "description": "Name of an exported function, or followed by a colon and the alias name",
-                    "type": "string"
-                  }
-                },
-                "export-memory-name": {
-                  "description": "Name of the exported memory, or no memory will be exported",
-                  "type": "string"
-                },
-                "flags": {
-                  "description": "Flags for the compilation of the package",
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "enum": [
-                      "-no-block-params"
-                    ]
-                  }
-                }
-              },
-              "additionalProperties": false
+            "alias": {
+              "type": "string"
             },
-            "wasm-gc": {
-              "type": "object",
-              "properties": {
-                "exports": {
-                  "description": "Exported functions of the package",
-                  "type": "array",
-                  "items": {
-                    "description": "Name of an exported function, or followed by a colon and the alias name",
-                    "type": "string"
-                  }
-                },
-                "export-memory-name": {
-                  "description": "Name of the exported memory, or no memory will be exported",
-                  "type": "string"
-                },
-                "flags": {
-                  "description": "Flags for the compilation of the package",
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "enum": [
-                      "-no-block-params"
-                    ]
-                  }
-                }
-              },
-              "additionalProperties": false
-            },
-            "js": {
-              "type": "object",
-              "properties": {
-                "exports": {
-                  "description": "Exported functions of the package",
-                  "type": "array",
-                  "items": {
-                    "description": "Name of an exported function, or followed by a colon and the alias name",
-                    "type": "string"
-                  }
-                },
-                "format": {
-                  "description": "Format of the output JavaScript file",
-                  "enum": [
-                    "esm",
-                    "cjs",
-                    "iife"
-                  ]
-                }
-              },
-              "additionalProperties": false
+            "path": {
+              "type": "string"
             }
-          },
-          "additionalProperties": false
+          }
         }
       ]
+    },
+    "WasmGcLinkConfig": {
+      "type": "object",
+      "properties": {
+        "export-memory-name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "exports": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "flags": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "import-memory": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ImportMemory"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "WasmLinkConfig": {
+      "type": "object",
+      "properties": {
+        "export-memory-name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "exports": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "flags": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "heap-start-address": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "import-memory": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ImportMemory"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
     }
-  },
-  "required": []
+  }
 }
