@@ -7,9 +7,19 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@master
-      - name: Run GitHub File Sync
-        uses: hirotomoyamada/repo-file-sync-action@main
-        with:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+    - uses: actions/checkout@v4
+    - name: Update JSON Schema
+      run: |
+        echo "[INFO] Getting JSON schema from moonbitlang/moon"
+        curl 'https://raw.githubusercontent.com/moonbitlang/moon/main/crates/moonbuild/template/pkg.schema.json' > pkg.schema.json
+        curl 'https://raw.githubusercontent.com/moonbitlang/moon/main/crates/moonbuild/template/mod.schema.json' > mod.schema.json
+    - name: Create PR based on changes
+      uses: peter-evans/create-pull-request@v6
+      with:
+        commit-message: Sync json schema from moon
+        title: sync json schema from moon
+        body: Automated changes by `sync-json-schema` action to sync json schema from moon
+        labels: |
+          bot
+        add-paths: |
+          *.schema.json
