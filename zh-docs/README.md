@@ -1177,71 +1177,210 @@ MoonBit 支持 C 风格的位运算符，可用于 32 位和 64 位的 `Int` 和
 
 ## 错误处理
 
-函数的返回值类型中可以包含错误类型，用于表示函数可能返回的错误。比如如下函数声明表示函数 `div` 可能返回一个字符串类型的错误：
+### 错误类型
+
+在 MoonBit 中使用的错误值必须具有错误类型。错误类型可以通过以下形式定义：
 
 ```moonbit
-fn div(x: Int, y: Int) -> Int!String {
+type! E1 Int  // 错误类型 E1 具有一个构造函数 E1，并带有一个 Int 负载
+type! E2      // 错误类型 E2 具有一个没有负载的构造函数 E2
+type! E3 {    // 错误类型 E3 类似于普通的枚举类型，有三个构造函数
+  A
+  B(Int, ~x : String)
+  C(mut ~x : String, Char, ~y : Bool)
+}
+
+```
+
+函数的返回类型可以包含错误类型，以表明函数可能返回一个错误。例如，以下函数 `div`
+可能返回一个类型为 `DivError` 的错误：
+
+``` moonbit
+type! DivError String
+fn div(x: Int, y: Int) -> Int!DivError {
   if y == 0 {
-    raise "division by zero"
+    raise DivError("division by zero")
   }
   x / y
 }
 ```
 
-其中 `raise` 关键字用于中断函数的执行并返回一个错误。函数的错误处理有以下三种方式：
+这里使用了关键字 `raise` 来中断函数执行并返回一个错误。
 
-- 于函数名后加 `!` 在发生错误的情况下将错误直接重新抛出，比如
+### 默认错误类型
 
-  ```moonbit
-  fn div_reraise(x: Int, y: Int) -> Int!String {
-    div!(x, y) // 直接重新抛出错误
-  }
-  ```
+MoonBit 提供了一个默认的错误类型 `Error`，当具体的错误类型不重要时可以使用该类型。
+为了方便，你可以在函数名或返回类型后加上 ! 来表明使用了 `Error` 类型。例如，以下函
+数签名是等价的：
 
-- 使用 `try` 和 `catch` 对错误进行捕获并处理，比如
+``` moonbit
+fn f() -> Unit! { .. }
+fn f!() -> Unit { .. }
+fn f() -> Unit!Error { .. }
+```
 
-  ```moonbit
-  fn div_with_default(x : Int, y : Int, default : Int) -> Int {
-    try {
-      div!(x, y)
-    } catch {
-      s => {
-        println(s)
-        default
-      }
-    }
-  }
-  ```
+对于匿名函数和矩阵函数，你可以在关键字 `fn` 后加上 `!` 来实现相同的效果。例如：
 
-其中 `try` 用于调用可能会抛出错误的函数，`catch` 用于对捕获的错误进行模式匹配并处理，如果没有捕获到错误则不会执行 `catch` 语句块。
+``` moonbit
+type! IntError Int
+fn h(f: (x: Int) -> Int!, x: Int) -> Unit { .. }
 
-- 于函数名后加 `?` 后缀来将函数执行结果转化为 `Result` 类型的值，比如：
-
-  ```moonbit
-  test {
-    let res = div?(6, 3)
-    inspect!(res, content="Ok(2)")
-    let res = div?(6, 0)
-    inspect!(res, content="Err(division by zero)")
-  }
-  ```
-
-实际上 `?` 是下面代码的语法糖：
-
-```moonbit
-test {
-  let res = try { Ok(div(6, 3)!) } catch { s => Err(s) }
+fn main {
+  let _ = h(fn! { x => raise(IntError(x)) }, 0)     // 矩阵函数
+  let _ = h(fn! (x) { x => raise(IntError(x)) }, 0) // 匿名函数
 }
 ```
 
-在 MoonBit 中，错误类型和错误处理属于二等公民，因此错误类型只能出现在函数的返回值中，而不能作为变量的类型。使用 `!` 或 `?` 进行的错误处理也只能在函数调用处进行，而不能在其他表达式中使用，合法的使用形式包括：
+如上例所示，由 `type!` 定义的错误类型可以用作 `Error` 类型的值，当错误被抛出时。
 
-```moonbit
-f!(x)
-x.f!()
+请注意，只有错误类型或 `Error` 类型可以用作错误。对于错误类型是泛型的函数，可以使
+用 `Error` 约束来实现。例如：
+
+``` moonbit
+pub fn unwrap_or_error[T, E : Error](self : Result[T, E]) -> T!E {
+  match self {
+    Ok(x) => x
+    Err(e) => raise e
+  }
+}
 ```
 
-此外，如果函数的返回值类型中包含错误类型，那么对该函数的调用必须使用 `!` 或 `?` 进行错误处理，否则编译器会报错。
+由于 Error 类型可以包含多个错误类型，因此在对 Error 类型进行模式匹配时，必须使用
+通配符 _ 来匹配所有错误类型。例如：
+
+``` moonbit
+type! E1
+type! E2
+fn f(e: Error) -> Unit {
+  match e {
+    E1 => println("E1")
+    E2 => println("E2")
+    _ => println("unknown error")
+  }
+}
+```
+
+### 处理错误
+
+有三种方式可以处理错误：
+
+* 在函数调用时在函数名后面添加 `!` 以直接重新抛出错误，例如：
+
+``` moonbit
+fn div_reraise(x: Int, y: Int) -> Int!DivError {
+  div!(x, y) // 如果 `div` 抛出错误，则重新抛出该错误
+}
+```
+
+* 在函数名后面添加 `?` 以将结果转换为 `Result` 类型的值，例如：
+
+``` moonbit
+test {
+  let res = div?(6, 3)
+  inspect!(res, content="Ok(2)")
+  let res = div?(6, 0)
+  inspect!(res, content="Err(division by zero)")
+}
+```
+
+* 使用 `try` 和 `catch` 来捕获和处理错误，例如：
+
+``` moonbit
+fn main {
+  try {
+    div!(42, 0)
+  } catch {
+    DivError(s) => println(s)
+  } else {
+    v => println(v)
+  }
+}
+```
+
+这里，`try` 用于调用可能抛出错误的函数，而 `catch` 用于匹配和处理捕获的错误。如果没
+有捕获到错误，则不会执行 `catch` 块，而是执行 `else` 块。
+
+如果没有错误被捕获且不需要采取任何行动，可以省略 `else` 块。例如：
+
+``` moonbit
+fn main {
+  try {
+    println(div!(42, 0))
+  } catch {
+    _ => println("Error")
+  }
+}
+```
+
+`catch` 关键字是可选的，当 `try` 的主体是一个简单的表达式时，可以省略花括号。例
+如：
+
+``` moonbit
+fn main {
+  let a = try div!(42, 0) { _ => 0 }
+  println(a)
+}
+```
+
+`!` 和 `?` 符号也可以用于方法调用和管道操作符。例如：
+
+``` moonbit
+type T Int
+type! E Int derive(Show)
+fn f(self: T) -> Unit!E { raise E(self.0) }
+fn main {
+  let x = T(42)
+  try f!(x) { e => println(e) }
+  try x.f!() { e => println(e) }
+  try x |> f!() { e => println(e) }
+} 
+```
+
+然而，对于 `+` `*` 可能抛出错误的中缀算符来说，必须通过其原本的形式调用，例如 `x.op_add!(y)` `x.op_mul!(y)`。
+
+此外，如果函数的返回类型包含错误类型，则函数调用时必须使用 `!` 或 `?` 来处理错误，否
+则编译器会报错。
+
+### 错误推断
+
+在 `try` 块中，可以抛出几种不同类型的错误。当这种情况发生时，编译器会使用 `Error` 类
+型作为通用错误类型。因此，处理程序必须使用通配符 `_` 来确保所有错误都被捕获。例如：
+
+``` moonbit
+type! E1
+type! E2
+fn f1() -> Unit!E1 { raise E1 }
+fn f2() -> Unit!E2 { raise E2 }
+fn main {
+  try {
+    f1!()
+    f2!()
+  } catch {
+    E1 => println("E1")
+    E2 => println("E2")
+    _ => println("unknown error")
+  }
+}
+```
+
+你也可以使用 `catch!` 来重新抛出未捕获的错误，这对于只想处理特定错误并重新抛出其他
+错误时非常有用。例如：
+
+``` moonbit
+type! E1
+type! E2
+fn f1() -> Unit!E1 { raise E1 }
+fn f2() -> Unit!E2 { raise E2 }
+fn f() -> Unit! {
+  try {
+    f1!()
+    f2!()
+  } catch! {
+    E1 => println("E1")
+  }
+}
+```
+
 
 ## 泛型
 

@@ -1190,71 +1190,225 @@ MoonBit supports C-Style bitwise operators for both 32 bits and 64 bits `Int` an
 
 ## Error Handling
 
-The return type of a function can include an error type to indicate that the function might return an error. For example, the following function declaration indicates that the function div might return an error of type String:
+### Error types
+
+The error values used in MoonBit must have an error type. An error type can be
+defined in the following forms:
+
+``` moonbit
+type! E1 Int  // error type E1 has one constructor E1 with an Int payload
+type! E2      // error type E2 has one constructor E2 with no payload
+type! E3 {    // error type E3 has three constructors like a normal enum type
+  A
+  B(Int, ~x : String)
+  C(mut ~x : String, Char, ~y : Bool)
+}
+```
+
+The return type of a function can include an error type to indicate that the
+function might return an error. For example, the following function `div` might
+return an error of type `DivError`:
 
 ```moonbit
-fn div(x: Int, y: Int) -> Int!String {
+type! DivError String
+fn div(x: Int, y: Int) -> Int!DivError {
   if y == 0 {
-    raise "division by zero"
+    raise DivError("division by zero")
   }
   x / y
 }
 ```
 
-The keyword `raise` is used to interrupt the function execution and return an error. There are three ways to handle errors in functions:
+Here, the keyword `raise` is used to interrupt the function execution and return
+an error.
 
-- Append `!` before function name to rethrow the error directly in case of an error, for example:
+### The Default Error Type
 
-  ```moonbit
-  fn div_reraise(x: Int, y: Int) -> Int!String {
-    div!(x, y) // Rethrow the error if `div` raised an error
-  }
-  ```
+MoonBit provides a default error type `Error` that can be used when the concrete
+error type is not important. For convenience, you can annotate the function name
+or the return type with the suffix `!` to indicate that the `Error` type is
+used. For example, the following function signatures are equivalent:
 
-- Using `try` and `catch` to catch and handle errors, for example:
+``` moonbit
+fn f() -> Unit! { .. }
+fn f!() -> Unit { .. }
+fn f() -> Unit!Error { .. }
+```
 
-  ```moonbit
-  fn div_with_default(x : Int, y : Int, default : Int) -> Int {
-    try {
-      div!(x, y)
-    } catch {
-      s => {
-        println(s)
-        default
-      }
-    }
-  }
-  ```
+For anonymous function and matrix function, you can annotate the keyword `fn`
+with the `!` suffix to achieve that. For example,
 
-Here, `try` is used to call a function that might throw an error, and `catch` is used to match and handle the caught error. If no error is caught, the catch block will not be executed.
+``` moonbit
+type! IntError Int
+fn h(f: (x: Int) -> Int!, x: Int) -> Unit { .. }
 
-- Append `?` before function name to convert the result into a first-class value of the `Result` type, for example:
-
-  ```moonbit
-  test {
-    let res = div?(6, 3)
-    inspect!(res, content="Ok(2)")
-    let res = div?(6, 0)
-    inspect!(res, content="Err(division by zero)")
-  }
-  ```
-
-`?` is a syntactic sugar that is equivalent to the following code:
-
-```moonbit
-test {
-  let res = try { Ok(div!(6, 3)) } catch { s => Err(s) }
+fn main {
+  let _ = h(fn! { x => raise(IntError(x)) }, 0)     // matrix function
+  let _ = h(fn! (x) { x => raise(IntError(x)) }, 0) // anonymous function
 }
 ```
 
-In MoonBit, error types and error handling are second-class citizens, so error types can only appear in the return value of functions and cannot be used as the type of variables. Error handling with the `!` or `?` can only be used at the function call site and not in other expressions. Valid ones include:
+As shown in the above example, the error types defined by `type!` can be used as
+value of the type `Error` when the error is raised.
 
-```moonbit
-f!(x)
-x.f!()
+Note that only error types or the type `Error` can be used as errors. For
+functions that are generic in the error type, you can use the `Error` bound to
+do that. For example,
+
+``` moonbit
+pub fn unwrap_or_error[T, E : Error](self : Result[T, E]) -> T!E {
+  match self {
+    Ok(x) => x
+    Err(e) => raise e
+  }
+}
 ```
 
-Additionally, if the return type of a function includes an error type, the function call must use `!` or `?` for error handling, otherwise the compiler will report an error.
+Since the type `Error` can include multiple error types, pattern matching on the
+`Error` type must use the wildcard `_` to match all error types. For example,
+
+``` moonbit
+type! E1
+type! E2
+fn f(e: Error) -> Unit {
+  match e {
+    E1 => println("E1")
+    E2 => println("E2")
+    _ => println("unknown error")
+  }
+}
+```
+
+### Handling Errors
+
+There are three ways to handle errors:
+
+- Append `!` after the function name in a function application to rethrow the
+  error directly in case of an error, for example:
+
+```moonbit
+fn div_reraise(x: Int, y: Int) -> Int!DivError {
+  div!(x, y) // Rethrow the error if `div` raised an error
+}
+```
+
+- Append `?` after the function name to convert the result into a first-class
+  value of the `Result` type, for example:
+
+```moonbit
+test {
+  let res = div?(6, 3)
+  inspect!(res, content="Ok(2)")
+  let res = div?(6, 0)
+  inspect!(res, content="Err(division by zero)")
+}
+```
+
+- Use `try` and `catch` to catch and handle errors, for example:
+
+```moonbit
+fn main {
+  try {
+    div!(42, 0)
+  } catch {
+    DivError(s) => println(s)
+  } else {
+    v => println(v)
+  }
+}
+```
+
+Here, `try` is used to call a function that might throw an error, and `catch` is
+used to match and handle the caught error. If no error is caught, the catch
+block will not be executed and the `else` block will be executed instead.
+
+The `else` block can be omitted if no action is needed when no error is caught.
+For example:
+  
+```moonbit
+fn main {
+  try {
+    println(div!(42, 0))
+  } catch {
+    _ => println("Error")
+  }
+}
+```
+
+The `catch` keyword is optional, and when the body of `try` is a simple
+expression, the curly braces can be omitted. For example:
+
+``` moonbit
+fn main {
+  let a = try div!(42, 0) { _ => 0 }
+  println(a)
+}
+```
+
+The `!` and `?` attributes can also be used on method invocation and pipe
+operator. For example:
+
+```moonbit
+type T Int
+type! E Int derive(Show)
+fn f(self: T) -> Unit!E { raise E(self.0) }
+fn main {
+  let x = T(42)
+  try f!(x) { e => println(e) }
+  try x.f!() { e => println(e) }
+  try x |> f!() { e => println(e) }
+} 
+```
+
+However for infix operators such as `+` `*` that may raise an error,
+the original form has to be used, e.g. `x.op_add!(y)`, `x.op_mul!(y)`.
+
+Additionally, if the return type of a function includes an error type, the
+function call must use `!` or `?` for error handling, otherwise the compiler
+will report an error.
+
+### Error Inference
+
+Within a `try` block, several different kinds of errors can be raised. When that
+happens, the compiler will use the type `Error` as the common error type.
+Accordingly, the handler must use the wildcard `_` to make sure all errors are
+caught. For example,
+
+``` moonbit
+type! E1
+type! E2
+fn f1() -> Unit!E1 { raise E1 }
+fn f2() -> Unit!E2 { raise E2 }
+fn main {
+  try {
+    f1!()
+    f2!()
+  } catch {
+    E1 => println("E1")
+    E2 => println("E2")
+    _ => println("unknown error")
+  }
+}
+```
+
+You can also use `catch!` to rethrow the uncaught errors for convenience. This
+is useful when you only want to handle a specific error and rethrow others. For
+example,
+
+``` moonbit
+type! E1
+type! E2
+fn f1() -> Unit!E1 { raise E1 }
+fn f2() -> Unit!E2 { raise E2 }
+fn f() -> Unit! {
+  try {
+    f1!()
+    f2!()
+  } catch! {
+    E1 => println("E1")
+  }
+}
+```
 
 ## Generics
 
