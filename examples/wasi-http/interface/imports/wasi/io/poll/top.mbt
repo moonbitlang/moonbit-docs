@@ -50,15 +50,15 @@ fn wasmImportPoll(p0 : Int, p1 : Int, p2 : Int) = "wasi:io/poll@0.2.1" "poll"
 /// do any I/O so it doesn't fail. If any of the I/O sources identified by
 /// the pollables has an error, it is indicated by marking the source as
 /// being ready for I/O.
-pub fn poll(in : Array[Pollable]) -> Array[UInt] {
-  let address = @ffi.malloc(in.length() * 4)
-  for index = 0; index < in.length(); index = index + 1 {
-    let element : Pollable = in[index]
+pub fn poll(in_ : Array[Pollable]) -> Array[UInt] {
+  let address = @ffi.malloc(in_.length() * 4)
+  for index = 0; index < in_.length(); index = index + 1 {
+    let element : Pollable = in_[index]
     let base = address + index * 4
     @ffi.store32(base + 0, element.0)
   }
   let return_area = @ffi.malloc(8)
-  wasmImportPoll(address, in.length(), return_area)
+  wasmImportPoll(address, in_.length(), return_area)
   let array : Array[UInt] = []
   for index2 = 0; index2 < @ffi.load32(return_area + 4); index2 = index2 + 1 {
     let base1 = @ffi.load32(return_area + 0) + index2 * 4
