@@ -461,6 +461,104 @@ fn init {
 }
 ```
 
+## Iterator
+
+An iterator is an object that traverse through a sequence while providing access
+to its elements. Traditional OO languages like Java's `Iterator<T>` use `next()`
+`hasNext()` to step through the iteration process, whereas functional languages
+(JavaScript's `forEach`, Lisp's `mapcar`) provides a high-order function which
+takes an operation and a sequence then consumes the sequence with that operation
+being applied to the sequence. The former is called _external iterator_ (visible
+to user) and the latter is called _internal iterator_ (invisible to user).
+
+The built-in type `Iter[T]` is MoonBit's internal iterator implementation.
+Almost all built-in sequential data structures have implemented `Iter`:
+
+```moonbit
+fn filter_even(l : Array[Int]) -> Array[Int] {
+  let l_iter: Iter[Int] = l.iter()
+  l_iter.filter(fn { x => if (x & 1) == 1 { true } else { false } }).collect()
+}
+
+fn fact(n : Int) -> Int {
+  let start = 1
+  start.until(n).fold(Int::op_mul, init=start)
+}
+```
+
+Commonly used methods include:
+
+- `each`: Iterates over each element in the iterator, applying some function to each element.
+- `fold`: Folds the elements of the iterator using the given function, starting with the given initial value.
+- `collect`: Collects the elements of the iterator into an array.
+
+- `filter`: _lazy_ Filters the elements of the iterator based on a predicate function.
+- `map`: _lazy_ Transforms the elements of the iterator using a mapping function.
+- `concat`: _lazy_ Combines two iterators into one by appending the elements of the second iterator to the first.
+
+Methods like `filter` `map` are very common on a sequence object e.g. Array.
+But what makes `Iter` special is that any method that constructs a new `Iter` is
+_lazy_ (i.e. iteration doesn't start on call because it's wrapped inside a
+function), as a result of no allocation for intermediate value. That's what
+makes `Iter` superior for traversing through sequence: no extra cost. MoonBit
+encourages user to pass an `Iter` across functions instead of the sequence
+object itself.
+
+Pre-defined sequence structures like `Array` and its iterators should be
+enough to use. But to take advantages of these methods when used with a custom
+structure `S`, we will need to implement `Iter`, namely, a function that returns
+an `Iter[S]`. Take `Bytes` as an example:
+
+```moonbit
+fn iter(data : Bytes) -> Iter[Byte] {
+  Iter::new(
+    fn(yield) {
+      // The code that actually does the iteration
+      /////////////////////////////////////////////
+      for i = 0, len = data.length(); i < len; i = i + 1 {
+        if yield(data[i]) == IterEnd {
+          break IterEnd
+        }
+      /////////////////////////////////////////////
+      } else {
+        IterContinue
+      }
+    },
+  )
+}
+```
+
+Almost all `Iter` implementations are identical to that of `Bytes`, the only
+main difference being the code block that actually does the iteration.
+
+### Implementation details
+
+The type `Iter[T]` is basically a type alias for `((T) -> IterResult) -> IterResult`,
+a higher-order function that takes an operation and `IterResult` is an enum
+object that tracks the state of current iteration which consists any of the 2
+states:
+
+- `IterEnd`: marking the end of an iteration
+- `IterContinue`: marking the end of an iteration is yet to be reached, implying the iteration will still continue at this state.
+
+To put it simply, `Iter[T]` takes a function `(T) -> IterResult` and use it to
+transform `Iter[T]` itself to a new state of type `IterResult`. Whether that
+state being `IterEnd` `IterContinue` depends on the function.
+
+Iterator provides a unified way to iterate through data structures, and they
+can be constructed at basically no cost: as long as `fn(yield)` doesn't
+execute, the iteration process doesn't start.
+
+Internally a `Iter::run()` is used to trigger the iteration. Chaining all sorts
+of `Iter` methods might be visually pleasing, but do notice the heavy work
+underneath the abstraction.
+
+Thus, unlike an external iterator, once the iteration starts
+there's no way to stop unless the end is reached. Methods such as `count()`
+which counts the number of elements in a iterator looks like an `O(1)` operation
+but actually has linear time complexity. Carefully use iterators or
+performance issue might occur.
+
 ## Built-in Data Structures
 
 ### Boolean
@@ -1195,7 +1293,7 @@ MoonBit supports C-Style bitwise operators for both 32 bits and 64 bits `Int` an
 The error values used in MoonBit must have an error type. An error type can be
 defined in the following forms:
 
-``` moonbit
+```moonbit
 type! E1 Int  // error type E1 has one constructor E1 with an Int payload
 type! E2      // error type E2 has one constructor E2 with no payload
 type! E3 {    // error type E3 has three constructors like a normal enum type
@@ -1229,7 +1327,7 @@ error type is not important. For convenience, you can annotate the function name
 or the return type with the suffix `!` to indicate that the `Error` type is
 used. For example, the following function signatures are equivalent:
 
-``` moonbit
+```moonbit
 fn f() -> Unit! { .. }
 fn f!() -> Unit { .. }
 fn f() -> Unit!Error { .. }
@@ -1238,7 +1336,7 @@ fn f() -> Unit!Error { .. }
 For anonymous function and matrix function, you can annotate the keyword `fn`
 with the `!` suffix to achieve that. For example,
 
-``` moonbit
+```moonbit
 type! IntError Int
 fn h(f: (x: Int) -> Int!, x: Int) -> Unit { .. }
 
@@ -1255,7 +1353,7 @@ Note that only error types or the type `Error` can be used as errors. For
 functions that are generic in the error type, you can use the `Error` bound to
 do that. For example,
 
-``` moonbit
+```moonbit
 pub fn unwrap_or_error[T, E : Error](self : Result[T, E]) -> T!E {
   match self {
     Ok(x) => x
@@ -1267,7 +1365,7 @@ pub fn unwrap_or_error[T, E : Error](self : Result[T, E]) -> T!E {
 Since the type `Error` can include multiple error types, pattern matching on the
 `Error` type must use the wildcard `_` to match all error types. For example,
 
-``` moonbit
+```moonbit
 type! E1
 type! E2
 fn f(e: Error) -> Unit {
@@ -1324,7 +1422,7 @@ block will not be executed and the `else` block will be executed instead.
 
 The `else` block can be omitted if no action is needed when no error is caught.
 For example:
-  
+
 ```moonbit
 fn main {
   try {
@@ -1338,7 +1436,7 @@ fn main {
 The `catch` keyword is optional, and when the body of `try` is a simple
 expression, the curly braces can be omitted. For example:
 
-``` moonbit
+```moonbit
 fn main {
   let a = try div!(42, 0) { _ => 0 }
   println(a)
@@ -1357,7 +1455,7 @@ fn main {
   try f!(x) { e => println(e) }
   try x.f!() { e => println(e) }
   try x |> f!() { e => println(e) }
-} 
+}
 ```
 
 However for infix operators such as `+` `*` that may raise an error,
@@ -1374,7 +1472,7 @@ happens, the compiler will use the type `Error` as the common error type.
 Accordingly, the handler must use the wildcard `_` to make sure all errors are
 caught. For example,
 
-``` moonbit
+```moonbit
 type! E1
 type! E2
 fn f1() -> Unit!E1 { raise E1 }
@@ -1395,7 +1493,7 @@ You can also use `catch!` to rethrow the uncaught errors for convenience. This
 is useful when you only want to handle a specific error and rethrow others. For
 example,
 
-``` moonbit
+```moonbit
 type! E1
 type! E2
 fn f1() -> Unit!E1 { raise E1 }

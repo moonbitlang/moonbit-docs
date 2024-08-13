@@ -33,26 +33,11 @@ This automatically installs MoonBit in `$HOME/.moon` and adds it to your `PATH`.
 
 Do notice that MoonBit is not production-ready at the moment, it's under active development. To update MoonBit, just run the commands above again.
 
-### Targets
-
-MoonBit currently compiles to wasm, wasm-gc and javascript. The
-`--target` flag in moon is used to specify which target (or all) it compiles to.
-The VS Code extension also has a little button next to the language label in the
-status bar that configures the target.
-
-![compile-target](./imgs/compile-targets.png)
-
-While our main focus being the wasm-gc, debugging is only supported by
-javascript backend for now. Be sure to try out the interactive debugging feature
-provided by our extension.
-
-### Project Structure
-
 Running `moon help` gives us a bunch of subcommands. But right now the only commands we need are `build` `run` and `new`.
 
 To create a project (or module, more formally), run `moon new`. You will be greeted with a creation wizard, filling up all the info and we get
 
-```plaintext
+```
 my-project
 ├── README.md
 ├── lib
