@@ -1,39 +1,91 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "JSON schema for Moonbit moon.mod.json files",
-  "description": "A module of Moonbit lang",
+  "title": "JSON schema for MoonBit moon.mod.json files",
+  "description": "A module of MoonBit lang",
   "type": "object",
+  "required": [
+    "name"
+  ],
   "properties": {
-    "name": {
-      "description": "Name of the module",
-      "type": "string"
-    },
-    "version": {
-      "description": "Version of the module, following Semantic Versioning 2.0.0",
-      "type": "string"
+    "alert-list": {
+      "description": "Alert list setting of the module",
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "deps": {
-      "description": "Third-party dependencies of the module",
-      "type": "object",
+      "description": "third-party dependencies of the module",
+      "type": [
+        "object",
+        "null"
+      ],
       "additionalProperties": {
         "type": "string"
       }
     },
-    "readme": {
-      "description": "Path to module's README file",
-      "type": "string"
+    "description": {
+      "description": "description of this module",
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    "repository": {
-      "description": "URL to module's repository",
-      "type": "string",
-      "format": "uri"
+    "keywords": {
+      "description": "keywords of this module",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
     },
     "license": {
-      "description": "License of the module, an SPDX identifier",
+      "description": "license of this module",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "description": "name of the module",
       "type": "string"
+    },
+    "readme": {
+      "description": "path to module's README file",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "repository": {
+      "description": "url to module's repository",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source": {
+      "description": "source code directory of this module",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "version": {
+      "description": "version of the module",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "warn-list": {
+      "description": "Warn list setting of the module",
+      "type": [
+        "string",
+        "null"
+      ]
     }
-  },
-  "required": [
-    "name"
-  ]
+  }
 }

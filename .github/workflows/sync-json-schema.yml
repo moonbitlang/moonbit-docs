@@ -1,0 +1,40 @@
+name: Sync Json Schema
+on:
+  schedule:
+    - cron: "0 0 * * 2"
+  workflow_dispatch:
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Update JSON Schema
+        run: |
+          echo "[INFO] Getting JSON schema from moonbitlang/moon"
+          curl 'https://raw.githubusercontent.com/moonbitlang/moon/main/crates/moonbuild/template/pkg.schema.json' > pkg.schema.json
+          curl 'https://raw.githubusercontent.com/moonbitlang/moon/main/crates/moonbuild/template/mod.schema.json' > mod.schema.json
+
+      - name: Generate MD Doc based on JSON Schema
+        run: |
+          pip install jsonschema2md
+          jsonschema2md mod.schema.json mod.md
+          jsonschema2md pkg.schema.json pkg.md
+          cat mod.md pkg.md > build-system-configuration.md
+          cp build-system-configuration.md zh-docs/build-system-configuration.md
+          rm mod.md pkg.md
+
+      - name: Create PR based on changes
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: Sync json schema & build docs from moon
+          title: "[Bot] sync json schema from moon"
+          body: Automated changes by `sync-json-schema` action to sync json schema and build markdown documentations from moon
+          labels: |
+            bot
+          add-paths: |
+            *.schema.json
+            build-system-configuration.md
