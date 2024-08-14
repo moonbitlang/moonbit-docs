@@ -442,6 +442,50 @@ even: 6
 12
 ```
 
+### `for .. in` loop
+MoonBit supports traversing elements of different data structures and sequences via the `for .. in` loop syntax:
+
+```moonbit
+for x in [ 1, 2, 3 ] {
+  println(x)
+}
+```
+
+`for .. in` loop is translated to the use of `Iter` in MoonBit's standard library. Any type with a method `.iter() : Iter[T]` can be traversed using `for .. in`.
+For more information of the `Iter` type, see [Iterator](#iterator) below.
+
+In addition to sequences of a single value, MoonBit also supports traversing sequences of two values, such as `Map`, via the `Iter2` type in MoonBit's standard library.
+Any type with method `.iter2() : Iter2[A, B]` can be traversed using `for .. in` with two loop variables:
+
+```moonbit
+for k, v in { "x": 1, "y": 2, "z": 3 } {
+  println("\{k} => \{v}")
+}
+```
+
+Another example of `for .. in` with two loop variables is traversing an array while keeping track of array index:
+
+```moonbit
+for index, elem in [ 4, 5, 6 ] {
+  let i = index + 1
+  println("The \{i}-th element of the array is \{elem}")
+}
+```
+
+Control flow operations such as `return`, `break` and error handling are supported in the body of `for .. in` loop:
+
+```moonbit live
+test "map test" {
+  let map = { "x": 1, "y": 2, "z": 3 }
+  for k, v in map {
+    assert_eq!(map[k], Some(v))
+  }
+}
+```
+
+If a loop variable is unused, it can be ignored with `_`.
+
+
 ### Functional loop
 
 Functional loop is a powerful feature in MoonBit that enables you to write loops in a functional style.

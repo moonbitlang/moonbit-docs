@@ -442,6 +442,47 @@ even: 6
 12
 ```
 
+### `for .. in` 循环
+MoonBit 使用 `for .. in` 循环语法来遍历各种数据结构和序列：
+
+```moonbit
+for x in [ 1, 2, 3 ] {
+  println(x)
+}
+```
+
+`for .. in` 循环会被翻译成 MoonBit 标准库中的迭代器类型 `Iter`。只要一个类型有方法 `.iter() : Iter[T]`，就可以使用 `for .. in` 循环来遍历其中的元素。如果想了解迭代器的更多信息，可以阅读本文档的 [迭代器](#迭代器) 一节。
+
+除了单个元素的序列，MoonBit 还能使用标准库中的 `Iter2` 类型来遍历有两个元素的序列，例如字典 `Map`。
+如果一个类型有方法 `.iter2() : Iter2[A, B]`，就可以使用有两个循环变量的 `for .. in` 循环来遍历它：
+
+```moonbit
+for k, v in { "x": 1, "y": 2, "z": 3 } {
+  println("\{k} => \{v}")
+}
+```
+
+下面是另一个有两个循环变量的 `for .. in` 的例子，在遍历一个数组的同时追踪这是数组中的第几个元素：
+```moonbit
+for index, elem in [ 4, 5, 6 ] {
+  let i = index + 1
+  println("数组的第 \{i} 个元素是 \{elem}")
+}
+```
+
+`for .. in` 的循环体中可以使用 `return`，`break` 和错误处理等控制流操作：
+
+```moonbit live
+test "map test" {
+  let map = { "x": 1, "y": 2, "z": 3 }
+  for k, v in map {
+    assert_eq!(map[k], Some(v))
+  }
+}
+```
+
+最后，如果循环变量没有被使用到，可以用 `_` 来忽略它。
+
 ### 函数式循环
 
 函数式循环是 MoonBit 中一个强大的特性，它能让您以函数式风格编写循环。
