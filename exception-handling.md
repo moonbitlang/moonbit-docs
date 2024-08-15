@@ -185,21 +185,6 @@ let res2: Result[Int, String] = Err("error")
 let option1 = res2.to_option() // None
 ```
 
-#### Monadic Operations
-
-monadic operations always return a `Result`, which is handy for method chaining.
-
-```moonbit no-check
-let res1: Result[Result[Int, String], String] = Ok(Ok(42))
-let flattened = res1.flatten() // Ok(42)
-
-let res2: Result[Int, String] = Ok(42)
-let new_result = res2.bind(fn(x) { Ok(x + 1) }) // Ok(43)
-```
-
-- `flatten` flattens any `Result[Result]`
-- `bind` is like map, but requires the callback to have a return type of `Result`
-
 ## Built-in error type and functions
 
 In MoonBit, `Error` is a generalized error type:
