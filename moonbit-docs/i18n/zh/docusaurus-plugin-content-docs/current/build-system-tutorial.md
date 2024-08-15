@@ -10,46 +10,56 @@
 
     使用 `moon help` 命令可查看使用说明。
 
-    ```bash
+    ```plaintext
     $ moon help
-    Moonbit's build system
+    The build system and package manager for MoonBit.
 
-    Usage: moon <COMMAND>
+    Usage: moon [OPTIONS] <COMMAND>
 
     Commands:
-      build     Build the current package
-      check     Check the current package, but don't build object files
-      run       Run WebAssembly module
-      clean     Remove the target directory
-      new       Create a new moonbit package
-      bench     Generate build matrix for benchmarking
-      fmt       Format moonbit
-      version   Print version info and exit
-      test      Run the tests
-      login     Log in to your account
-      register  Register an account on mooncakes.io
-      publish   Publish the current package
-      add       Add a new dependency
-      remove    Remove a dependency
-      tree      Display the dependency tree
-      update    Update index
-      doc       Generate documentation
-      install   Install dependencies
-      help      Print this message or the help of the given subcommand(s)
+      new                    Create a new moonbit package
+      build                  Build the current package
+      check                  Check the current package, but don't build object files
+      run                    Run WebAssembly module
+      test                   Test the current package
+      clean                  Clean the target directory
+      fmt                    Format moonbit source code
+      doc                    Generate documentation
+      info                   Generate public interface (`.mbti`) files for all packages in the module
+      add                    Add a dependency
+      remove                 Remove a dependency
+      install                Install dependencies
+      tree                   Display the dependency tree
+      login                  Log in to your account
+      register               Register an account at mooncakes.io
+      publish                Publish the current package
+      update                 Update the package registry index
+      coverage               Code coverage utilities
+      generate-build-matrix  Generate build matrix for benchmarking (legacy feature)
+      upgrade                Upgrade toolchains
+      shell-completion       Generate shell completion for bash/elvish/fish/pwsh/zsh to stdout
+      version                Print version info and exit
+      help                   Print this message or the help of the given subcommand(s)
 
     Options:
-      -h, --help  Print help
+      -C, --directory <SOURCE_DIR>   The source code directory. Defaults to the current directory
+          --target-dir <TARGET_DIR>  The target directory. Defaults to `source_dir/target`
+      -q, --quiet                    Suppress output
+      -v, --verbose                  Increase verbosity
+          --trace                    Trace the execution of the program
+          --dry-run                  Do not actually run the command
+      -h, --help                     Print help
     ```
 
-2. **Moonbit Language** Visual Studio Code 插件: 可以从 VS Code 市场安装。该插件为 MoonBit 提供了丰富的开发环境，包括语法高亮、代码补全等功能。
+2. **Moonbit Language** Visual Studio Code 插件: 可以从 VS Code 市场安装。该插件为 MoonBit 提供了丰富的开发环境，包括语法高亮、代码补全、交互式除错和测试等功能。
 
 安装完成后，让我们开始创建一个新的 MoonBit 模块。
 
 ## 创建一个新模块
 
-要创建一个新模块，请在终端中输入 `moon new` 命令，您会看到模块创建向导。如果全部使用默认值即可在 `my-project` 目录下创建一个名为 `hello` 的新模块。
+`moon` 附带一个 `moon new` 模块创建向导。默认的配置是：
 
-```bash
+```plaintext
 $ moon new
 Enter the path to create the project (. for current directory): my-project
 Select the create mode: exec
@@ -59,11 +69,13 @@ Enter your license: Apache-2.0
 Created my-project
 ```
 
+向导会在 `my-project` 下创建一个新模块 `hello`。项目一词在这里与模块是互通的。
+
 ## 了解模块目录结构
 
-创建新模块后，目录结构应如下所示：
+典型的模块/项目结构如下所示：
 
-```bash
+```plaintext
 my-project
 ├── README.md
 ├── lib
@@ -78,21 +90,23 @@ my-project
 
 这里简单解释一下目录结构：
 
-- `lib` 和 `main` 目录：这些是模块中的包。每个包可以包含多个 `.mbt` 文件，这些文件是 MoonBit 语言的源代码文件。不过，无论包中有多少个 `.mbt` 文件，它们都共享一个公共的 `moon.pkg.json` 文件。`lib/*_test.mbt` 是 `lib` 包中独立的测试文件，在这些文件中可以直接访问 `lib` 包的私有成员。这些文件只有在测试模式下才会加入到编译中，可以在这些独立测试文件中写内联测试和供测试使用的工具函数。
+- `lib` 和 `main` 目录：这些是模块中的包。每个包可以包含多个 MoonBit 源文件（.mbt）。一个包中的所有源码都共享一个 `moon.pkg.json`。
 
-- `moon.pkg.json` 文件：包描述符文件。它定义了包的属性，例如该包是否为 `main` 包，以及它所导入的包。
+- `lib/*_test.mbt` 是 `lib` 包中独立的测试文件。但 `lib` 的成员对测试是不可见的，需要显式地用 `@my-project.*` 来访问成员。这些文件只有在测试模式下才会编译，可以在这些独立测试文件中写内联测试和供测试使用的工具函数。
+
+- `moon.pkg.json`：包描述文件，定义了包的属性，例如该包是否为 `main` 包，以及它所导入的包。
   - `main/moon.pkg.json`：
 
     ```json
     {
-      "is_main": true,
+      "is-main": true,
       "import": [
         "username/hello/lib"
       ]
     }
     ```
 
-    其中的 `"is_main: true"` 声明此包需要被构建系统链接为 `wasm` 文件。
+    其中的 `"is-main": true` 声明此包需要被构建系统链接为 `wasm` 文件。
 
   - `lib/moon.pkg.json`
 
@@ -102,7 +116,7 @@ my-project
 
     内容为空，其作用只是告诉构建系统该文件夹是一个包。
 
-- `moon.mod.json` 用于将目录标识为 MoonBit 模块。它包含模块的名称：
+- `moon.mod.json` 用于将目录标记为 MoonBit 模块。它包含模块的名称：
 
   ```json
   {
@@ -116,7 +130,9 @@ my-project
   }
   ```
 
-## 使用包
+模块/包描述文件的 [json schema](./build-system-configuration.md) 给出了全面的定义规范。
+
+## 如何使用包
 
 我们的 `username/hello` 模块包含两个包：`lib` 和 `main`。
 
@@ -140,7 +156,7 @@ my-project
   }
   ```
 
-- `main` 包含一个 `main.mbt` 文件：
+`main` 包含一个 `main.mbt` 文件：
 
   ```moonbit
   fn main {
@@ -148,30 +164,23 @@ my-project
   }
   ```
 
-要执行程序，请在 `moon run` 命令中指定 `main` 包所在的路径：
-
-```bash
-$ moon run ./main
-Hello, world!
-```
-
-也可以省略 `./`
+要执行代码，为 `moon run` 命令指定 `main` 包所在的路径：
 
 ```bash
 $ moon run main
 Hello, world!
 ```
 
-您可以使用 `moon test` 命令进行测试:
+可以使用 `moon test` 命令进行测试:
 
 ```bash
 $ moon test
 Total tests: 1, passed: 1, failed: 0.
 ```
 
-## 包导入
+## 如何导入包
 
-在 MoonBit 的构建系统中，模块的名称用来引用其内部包。
+MoonBit 构建系统使用模块的名称用来引用其内部包。
 要在 `main/main.mbt` 中导入 `lib` 包，需要在 `main/moon.pkg.json` 中指定：
 
 ```json
@@ -183,21 +192,15 @@ Total tests: 1, passed: 1, failed: 0.
 }
 ```
 
-这里的 `username/hello/lib"` 指定了导入 `username/hello` 模块中的 `username/hello/lib` 包，这样你就能在 `main/main.mbt` 中使用 `@lib.hello()` 了。
+这里的 `username/hello/lib"` 指定导入 `username/hello` 模块中的 `username/hello/lib` 包，因此得以在 `main/main.mbt` 中使用 `@lib.hello()` 。
 
-注意，我们在 `main/moon.pkg.json` 中导入的包名是 `username/hello/lib`，在 `main/main.mbt` 中使用的是 `@lib` 来引用该包，这里的 `import` 其实是给包名 `username/hello/lib` 生成了一个默认的别名。之后你会学到如何自定义包的别名。
+注意，我们在 `main/moon.pkg.json` 中导入的包名是 `username/hello/lib`，在 `main/main.mbt` 中使用 `@lib` 来引用该包，这里的 `import` 其实是给包名 `username/hello/lib` 生成了一个默认的别名。
 
 ## 创建和使用包
 
-首先，在 `lib` 目录下创建一个名为 `fib` 的新目录：
+考虑在 `lib` 下创建一个新包 `fib`，并新建两个源码文件 `lib/fib/{a,b}.mbt`。
 
-```bash
-mkdir lib/fib
-```
-
-然后在 `lib/fib` 下创建新文件：
-
-`a.mbt`:
+`a.mbt`：
 
 ```moonbit
 pub fn fib(n : Int) -> Int {
@@ -209,7 +212,7 @@ pub fn fib(n : Int) -> Int {
 }
 ```
 
-`b.mbt`:
+`b.mbt`：
 
 ```moonbit
 pub fn fib2(num : Int) -> Int {
@@ -225,13 +228,13 @@ pub fn fib2(num : Int) -> Int {
 }
 ```
 
-`moon.pkg.json`:
+`moon.pkg.json`：
 
 ```json
 {}
 ```
 
-创建这些文件后，目录结构应如下所示：
+现在项目结构应该如下所示：
 
 ```
 my-project
@@ -250,7 +253,7 @@ my-project
 └── moon.mod.json
 ```
 
-在 `main/moon.pkg.json` 文件中，导入 `username/hello/lib/fib` 包，并定义其别名为 `my_awesome_fibonacci`：
+修改 `main/moon.pkg.json`，导入 `username/hello/lib/fib` 包，并定义其别名为 `my_awesome_fibonacci`：
 
 ```json
 {
@@ -265,7 +268,7 @@ my-project
 }
 ```
 
-这行代码导入了 `fib` 包，它是 `hello` 模块中 `lib` 包的一部分。完成后，你可以在 `main/main.mbt` 中使用 `fib` 包。将 `main/main.mbt` 文件的内容替换为：
+`main/main.mbt`：
 
 ```moonbit
 fn main {
@@ -277,7 +280,7 @@ fn main {
 }
 ```
 
-要执行程序，请指定主包所在的路径：
+运行 `moon run main` 能给出预期结果：
 
 ```bash
 $ moon run main
@@ -287,9 +290,10 @@ Hello, world!
 
 ## 添加测试
 
-最后，我们添加一些测试来验证我们的 `fib` 实现。在 `lib/fib/a.mbt` 中添加以下内容：
+MoonBit 区分白盒、黑盒测试。白盒测试指的是内联测试或一个独立的 `*_wbtest.mbt` 文件，模拟包开发者的测试场景；黑盒测试指的是 `*_test.mbt` 文件，模拟用户使用当前包的场景。
+可以为这两种测试导入不同的包：白盒测试会导入 `moon.pkg.json` 中的 `import` `test-import` 字段；黑盒测试则比白盒测试多导入一个当前包。
 
-`lib/fib/a.mbt`
+不妨为 `fib` 添加一些内联测试来验证其正确性。`lib/fib/a.mbt`：
 
 ```moonbit
 fn assert_eq[T: Show + Eq](lhs: T, rhs: T) -> Unit {
@@ -313,7 +317,9 @@ test {
 
 ## 独立的测试文件
 
-除了内联测试外，MoonBit 还支持独立的测试文件。名字以 `_test.mbt` 结尾的源文件会被视作独立的测试文件。它们只有在测试模式下才会加入到编译中。我们可以在这些独立测试文件中写内联测试，以及供测试使用的工具函数。例如，可以在 `lib/fib` 目录下创建一个名为 `fib_test.mbt` 的文件，并粘贴以下代码：
+MoonBit 还支持独立的测试文件，这些文件只有在测试模式下才会加入到编译中。
+可以在这些独立测试文件中写内联测试，以及供测试使用的工具函数。例如可以在
+`lib/fib` 目录下创建一个名为 `fib_test.mbt` 的文件：
 
 `lib/fib/fib_test.mbt`:
 
@@ -327,7 +333,7 @@ test {
 }
 ```
 
-最后，使用 `moon test` 命令，它会扫描整个项目，识别并运行所有的内联测试以及以 `_test.mbt` 结尾的文件。如果一切正常，你将看到：
+现在可以用 `moon test`，扫描整个项目，识别并运行所有的内联测试以及所有以 `_test.mbt`/ `_wbtest.mbt` 结尾的文件。如果没有问题则输出：
 
 ```bash
 $ moon test
