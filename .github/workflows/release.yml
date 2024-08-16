@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - name: install
         run: |
           pnpm install
@@ -19,6 +22,10 @@ jobs:
           cd moonbit-docs
           pnpm build -l en
       - name: upload
+        env:
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          AWS_DEFAULT_REGION: ${{secrets.AWS_DEFAULT_REGION}}
         run: |
           aws s3 sync --delete ./build/ ${{secrets.AWS_S3_BUCKET}}
           aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID}} --paths "/*"
@@ -27,6 +34,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
       - name: install
         run: |
           pnpm install
@@ -34,7 +44,11 @@ jobs:
         run: |
           cd moonbit-docs
           pnpm build -l zh
+      - uses: aliyun/setup-aliyun-cli-action@v1
       - name: upload
+        env:
+          ALIBABA_CLOUD_ACCESS_KEY_ID: ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_ID}}
+          ALIBABA_CLOUD_ACCESS_KEY_SECRET: ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET}}
         run: |
           aliyun oss sync ./build/ ${{secrets.ALIYUN_OSS_BUCKET}} --force --delete
           aliyun cdn RefreshObjectCaches --ObjectPath https://docs.moonbitlang.cn/ --ObjectType Directory
