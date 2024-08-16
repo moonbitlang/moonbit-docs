@@ -1,0 +1,28 @@
+.CodeBlock {
+  position: relative;
+}
+
+.button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  background: var(--prism-background-color);
+  color: var(--prism-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-global-radius);
+  padding: 0.4rem;
+  line-height: 0;
+  transition: opacity var(--ifm-transition-fast) ease-in-out;
+  opacity: 0;
+}
+
+.CodeBlock:hover .button {
+  opacity: 0.4;
+}
+
+.CodeBlock:hover .button:focus-visible,
+.CodeBlock:hover .button:hover {
+  opacity: 1;
+}

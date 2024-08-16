@@ -6,7 +6,7 @@ on:
       - main
   pull_request:
     paths:
-      - examples
+      - legacy/examples
   schedule:
     - cron: '0 10 * * 2'
 
@@ -50,7 +50,7 @@ jobs:
         run: |
           moon update
           failed_directories=()
-          for dir in examples/*; do
+          for dir in legacy/examples/*; do
             if [ -d "$dir" ]; then
               echo "Processing $dir"
               if ! (cd "$dir" && moon install && moon check --target ${{ matrix.backend }} && moon test --target ${{ matrix.backend }}); then
@@ -78,7 +78,7 @@ jobs:
         run: |
           moon update
           $failed_directories = @()
-          Get-ChildItem -Path ".\examples" -Directory | ForEach-Object {
+          Get-ChildItem -Path ".\legacy\examples" -Directory | ForEach-Object {
             Write-Output "Processing $($_.FullName)"
             Set-Location $_.FullName
             moon install && moon check --target ${{ matrix.backend }} && moon test --target ${{ matrix.backend }}
