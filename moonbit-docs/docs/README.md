@@ -443,6 +443,7 @@ even: 6
 ```
 
 ### `for .. in` loop
+
 MoonBit supports traversing elements of different data structures and sequences via the `for .. in` loop syntax:
 
 ```moonbit
@@ -484,7 +485,6 @@ test "map test" {
 ```
 
 If a loop variable is unused, it can be ignored with `_`.
-
 
 ### Functional loop
 
@@ -1257,6 +1257,8 @@ Currently, the following operators can be overloaded:
 | `/`                   | `op_div`     |
 | `%`                   | `op_mod`     |
 | `=`                   | `op_equal`   |
+| `<<`                  | `op_shl`     |
+| `>>`                  | `op_shr`     |
 | `-` (unary)           | `op_neg`     |
 | `_[_]` (get item)     | `op_get`     |
 | `_[_] = _` (set item) | `op_set`     |
@@ -1327,8 +1329,8 @@ MoonBit supports C-Style bitwise operators for both 32 bits and 64 bits `Int` an
 | `&`      | `land`  |
 | `\|`     | `lor`   |
 | `^`      | `lxor`  |
-| `<<`     | `lsl`   |
-| `>>`     | `lsr`   |
+| `<<`     | `shl`   |
+| `>>`     | `shr`   |
 
 ## Error Handling
 
