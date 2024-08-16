@@ -27,6 +27,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           AWS_DEFAULT_REGION: ${{secrets.AWS_DEFAULT_REGION}}
         run: |
+          cd moonbit-docs
           aws s3 sync --delete ./build/ ${{secrets.AWS_S3_BUCKET}}
           aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID}} --paths "/*"
 
@@ -46,9 +47,8 @@ jobs:
           pnpm build -l zh
       - uses: aliyun/setup-aliyun-cli-action@v1
       - name: upload
-        env:
-          ALIBABA_CLOUD_ACCESS_KEY_ID: ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_ID}}
-          ALIBABA_CLOUD_ACCESS_KEY_SECRET: ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET}}
         run: |
+          cd moonbit-docs
+          aliyun configure set --profile default --mode AK --access-key-id ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_ID}} --access-key-secret ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET}} --region ${{secrets.ALIBABA_REGION}}
           aliyun oss sync ./build/ ${{secrets.ALIYUN_OSS_BUCKET}} --force --delete
           aliyun cdn RefreshObjectCaches --ObjectPath https://docs.moonbitlang.cn/ --ObjectType Directory
