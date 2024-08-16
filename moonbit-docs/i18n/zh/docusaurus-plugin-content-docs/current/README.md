@@ -27,10 +27,6 @@ MoonBit 目前处于 Pre-alpha 阶段，是实验性质的。我们期望今年�
 
 ```moonbit live
 fn init {
-  println("Hello world!") // OK
-}
-
-fn init {
   let x = 1
   // x     // 失败
   println(x) // 成功
@@ -47,7 +43,7 @@ fn init {
 
 MoonBit 区分语句和表达式。在一个函数体中，只有最后一句才能写成作为返回值的表达式。例如：
 
-```moonbit live
+```moonbit
 fn foo() -> Int {
   let x = 1
   x + 1 // OK
@@ -57,11 +53,6 @@ fn bar() -> Int {
   let x = 1
   x + 1 // 失败
   x + 2
-}
-
-fn init {
-  println(foo())
-  println(bar())
 }
 ```
 
@@ -111,7 +102,7 @@ fn foo() -> Int {
   fn (x) { x + inc(2) } (6) // 匿名，立即应用到整数字面量 6
 }
 
-fn init {
+fn main {
   println(foo())
 }
 ```
@@ -128,7 +119,7 @@ fn foo(x: Int) -> Unit {
   println(four())
 }
 
-fn init {
+fn main {
   foo(2)
 }
 ```
@@ -144,7 +135,7 @@ add3(1, 2, 7)
 这适用于命名函数（如前面的例子）和绑定到函数值的变量，如下所示：
 
 ```moonbit live
-fn init {
+fn main {
   let add3 = fn(x, y, z) { x + y + z }
   println(add3(1, 2, 7))
 }
@@ -153,7 +144,7 @@ fn init {
 表达式 `add3(1, 2, 7)` 返回 `10`。任何求值为函数值的表达式都可以被调用：
 
 ```moonbit live
-fn init {
+fn main {
   let f = fn (x) { x + 1 }
   let g = fn (x) { x + 2 }
   println((if true { f } else { g })(3)) // OK
@@ -190,7 +181,7 @@ fn optional(~opt : Int = 42) -> Int {
   opt
 }
 
-fn init {
+fn main {
   println(optional()) // 42
   println(optional(opt=0)) // 0
 }
@@ -204,7 +195,7 @@ fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
   counter
 }
 
-fn init {
+fn main {
   println(incr()) // 1
   println(incr()) // 依然是 1，因为重新求值了默认表达式，产生了一个新的 Ref
   let counter : Ref[Int] = { val: 0 }
@@ -223,7 +214,7 @@ fn incr(~counter : Ref[Int] = default_counter) -> Int {
   counter.val
 }
 
-fn init {
+fn main {
   println(incr()) // 1
   println(incr()) // 2
 }
@@ -236,7 +227,7 @@ fn sub_array[X](xs : Array[X], ~offset : Int, ~len : Int = xs.length() - offset)
   ... // 生成 xs 的一个从 offset 开始、长度为 len 的子数组
 }
 
-fn init {
+fn main {
   println(sub_array([1, 2, 3], offset=1)) // [2, 3]
   println(sub_array([1, 2, 3], offset=1, len=1)) // [2]
 }
@@ -254,7 +245,7 @@ fn f(_x : Int, _y : Int, ~loc : SourceLoc = _, ~args_loc : ArgsLoc = _) -> Unit 
   println("各个参数的位置：\{args_loc}")
 }
 
-fn init {
+fn main {
   f(1, 2)
   // 整个函数调用的位置：<文件名>:7:3-7:10
   // 各个参数的位置：[Some(<文件名>:7:5-7:6), Some(<文件名>:7:8-7:9), None, None]
@@ -309,41 +300,30 @@ while i > 0 {
 
 循环体内支持`break`和`continue`。使用`break`能够跳出当前循环；使用`continue`跳过本次循环的剩余部分，提前进入下一次循环。
 
-```moonbit
-let mut i = 5
-while i > 0 {
-  i = i - 1
-  if i == 4 { continue }
-  if i == 1 { break }
-  println(i)
+```moonbit live
+fn main {
+  let mut i = 5
+  while i > 0 {
+    i = i - 1
+    if i == 4 { continue }
+    if i == 1 { break }
+    println(i)
+  }
 }
-```
-
-输出:
-
-```plaintext
-3
-2
 ```
 
 `while` 循环也支持可选的`else`子句。当循环条件转变为假时，将会执行`else`子句，然后循环结束。
 
-```moonbit
-let mut i = 2
-while i > 0 {
-  println(i)
-  i = i - 1
-} else {
-  println(i)
+```moonbit live
+fn main {
+  let mut i = 2
+  while i > 0 {
+    println(i)
+    i = i - 1
+  } else {
+    println(i)
+  }
 }
-```
-
-输出:
-
-```plaintext
-2
-1
-0
 ```
 
 当存在 `else` 子句时，`while` 循环也可以返回一个值，返回值是 `else` 子句语句块的求值结果。此时如果使用`break`跳出循环，需要在`break`后提供一个返回值，类型与`else`子句的返回值类型一致：
@@ -474,7 +454,7 @@ for index, elem in [ 4, 5, 6 ] {
 
 `for .. in` 的循环体中可以使用 `return`，`break` 和错误处理等控制流操作：
 
-```moonbit live
+```moonbit
 test "map test" {
   let map = { "x": 1, "y": 2, "z": 3 }
   for k, v in map {
@@ -496,14 +476,14 @@ test "map test" {
 如果值是循环体中的最后一个表达式，则可以省略 `break` 关键字。
 
 ```moonbit live
-fn sum(xs: List[Int]) -> Int {
+fn sum(xs: @immut/list.T[Int]) -> Int {
   loop xs, 0 {
     Nil, acc => break acc // break 可以省略
     Cons(x, rest), acc => continue rest, x + acc
   }
 }
 
-fn init {
+fn main {
   println(sum(Cons(1, Cons(2, Cons(3, Nil)))))
 }
 ```
@@ -682,11 +662,9 @@ let b =
 MoonBit 支持字符串插值，它可以把字符串中内插的变量替换为变量具体的值。
 这个特性能够简化动态拼接字符串的过程。
 
-```moonbit live
-fn init {
-  let x = 42
-  println("The answer is \{x}")
-}
+```moonbit
+let x = 42
+println("The answer is \{x}")
 ```
 
 用于字符串内插的变量必须支持 `to_string` 方法。
@@ -708,7 +686,7 @@ let zero = '\u0030'
 在 MoonBit 中，字节字面量可以是一个 ASCII 字符或一个转义序列，它们被单引号`'`包围，并且前面有字符`b`。字节字面量的类型是 Byte。例如：
 
 ```moonbit live
-fn init {
+fn main {
   let b1 : Byte = b'a'
   println(b1.to_int())
   let b2 = b'\xff'
@@ -747,7 +725,7 @@ fn f(t : (Int, Int)) -> Unit {
   }
 }
 
-fn init {
+fn main {
   f((1, 2))
 }
 ```
@@ -763,7 +741,7 @@ let numbers = [1, 2, 3, 4]
 可以用 `numbers[x]` 来引用第 `x` 个元素。索引从零开始。
 
 ```moonbit live
-fn init {
+fn main {
   let numbers = [1, 2, 3, 4]
   let a = numbers[2]
   numbers[3] = 5
@@ -793,7 +771,7 @@ let moon_pkg_json_example : @json.JsonValue = {
 }
 ```
 
-Json 数据也可以被模式匹配，见 [Json 模式匹配](#json-模式)。
+Json 数据也可以被模式匹配，见 [Json 模式匹配](#Json-模式匹配)。
 
 ## 变量绑定
 
@@ -803,7 +781,7 @@ Json 数据也可以被模式匹配，见 [Json 模式匹配](#json-模式)。
 ```moonbit live
 let zero = 0
 
-fn init {
+fn main {
   let mut i = 10
   i = 20
   println(i + zero)
@@ -829,7 +807,7 @@ struct User {
   mut email: String
 }
 
-fn init {
+fn main {
   let u = { id: 0, name: "John Doe", email: "john@doe.com" }
   u.email = "john@doe.name"
   println(u.id)
@@ -843,8 +821,8 @@ fn init {
 如果已经有和结构体的字段同名的变量，并且想使用这些变量作为结构体同名字段的值，
 那么创建结构体时，可以只写字段名，不需要把同一个名字重复两次。例如：
 
-```moonbit live
-fn init{
+```moonbit
+fn main {
   let name = "john"
   let email = "john@doe.com"
   let u = { id: 0, name, email } // 等价于 { id: 0, name: name, email: email }
@@ -863,7 +841,7 @@ struct User {
   email: String
 } derive(Show)
 
-fn init {
+fn main {
   let user = { id: 0, name: "John Doe", email: "john@doe.com" }
   let updated_user = { ..user, email: "john@doe.name" }
   println(user)          // 输出: { id: 0, name: "John Doe", email: "john@doe.com" }
@@ -912,7 +890,7 @@ fn print_relation(r: Relation) -> Unit {
   }
 }
 
-fn init {
+fn main {
   print_relation(compare_int(0, 1)) // 输出 smaller!
   print_relation(compare_int(1, 1)) // 输出 equal!
   print_relation(compare_int(2, 1)) // 输出 greater!
@@ -928,7 +906,7 @@ enum List {
   Cons (Int, List)
 }
 
-fn init {
+fn main {
   // 使用 `Cons` 创建列表时，需要提供 `Cons` 要求的额外数据：第一个元素和剩余的列表
   let l: List = Cons(1, Cons(2, Nil))
   println(is_singleton(l))
@@ -985,7 +963,7 @@ fn f(e : E) -> Unit {
 }
 
 // 创建有带标签参数的构造器
-fn init {
+fn main {
   f(C(x=0, y=0)) // `标签=参数的值`
   let x = 0
   f(C(~x, y=1)) // `~x` 是 `x=x` 的简写
@@ -1000,7 +978,9 @@ enum Object {
   Circle(~x : Double, ~y : Double, ~radius : Double)
 }
 
-fn distance_with(self : Object, other : Object) -> Double {
+type! NotImplementedError derive(Show)
+
+fn distance_with(self : Object, other : Object) -> Double!NotImplementedError {
   match (self, other) {
     // 如果通过 `Point(..) as p` 的方式定义一个变量 `p`，
     // 编译器知道 `p` 一定是构造器 `Point`，
@@ -1010,14 +990,21 @@ fn distance_with(self : Object, other : Object) -> Double {
       let dy = p2.y - p1.y
       (dx * dx + dy * dy).sqrt()
     }
-    (Point(_), Circle(_)) | (Circle(_) | Point(_)) | (Circle(_), Circle(_)) => abort("not implemented")
+    (Point(_), Circle(_)) | (Circle(_), Point(_)) | (Circle(_), Circle(_)) =>
+      raise NotImplementedError
   }
 }
 
-fn init {
-  let p1 : Point = Point(x=0, y=0)
-  let p2 : Point = Point(x=3, y=4)
-  println(p1.distance_with(p2)) // 5.0
+fn main {
+  let p1 : Object = Point(x=0, y=0)
+  let p2 : Object = Point(x=3, y=4)
+  let c1 : Object = Circle(x=0, y=0, radius=2)
+  try {
+    println(p1.distance_with!(p2)) // 5.0
+    println(p1.distance_with!(c1))
+  } catch {
+    e => println(e)
+  }
 }
 ```
 
@@ -1025,7 +1012,7 @@ fn init {
 
 MoonBit 支持给构造器声明可变的字段。这对实现可变数据结构非常有用：
 
-```moonbit live
+```moonbit
 // 一个带父节点指针的可变二叉搜索树的类型
 enum Tree[X] {
   Nil
@@ -1173,7 +1160,7 @@ fn op_add(self: T, other: T) -> T {
   { x: self.x + other.x }
 }
 
-fn init {
+fn main {
   let a = { x:0, }
   let b = { x:2, }
   println(a + b)
@@ -1202,7 +1189,7 @@ fn op_set(self: Coord, key: String, val: Int) -> Unit {
   }
 }
 
-fn init {
+fn main {
   let c = { x: 1, y: 2 }
   println(c)
   println(c["y"])
@@ -1446,7 +1433,7 @@ fn main {
 
 `!` 和 `?` 符号也可以用于方法调用和管道操作符。例如：
 
-```moonbit
+```moonbit live
 type T Int
 type! E Int derive(Show)
 fn f(self: T) -> Unit!E { raise E(self.0) }
@@ -1468,7 +1455,7 @@ fn main {
 在 `try` 块中，可以抛出几种不同类型的错误。当这种情况发生时，编译器会使用 `Error` 类
 型作为通用错误类型。因此，处理程序必须使用通配符 `_` 来确保所有错误都被捕获。例如：
 
-```moonbit
+```moonbit live
 type! E1
 type! E2
 fn f1() -> Unit!E1 { raise E1 }
@@ -1662,7 +1649,7 @@ fn init {
 但和普通函数不同，方法支持重载。不同的类型可以有同名的方法。
 如果当前作用域内有多个同名方法，依然可以通过加上 `TypeName::` 的前缀来显式地调用一个方法：
 
-```moonbit live
+```moonbit
 struct T1 { x1: Int }
 fn T1::default() -> { { x1: 0 } }
 
@@ -1673,6 +1660,22 @@ fn init {
   // default() 有歧义！
   let t1 = T1::default() // 可行
   let t2 = T2::default() // 可行
+}
+```
+
+MoonBit 会自动根据方法的第一个参数的类型找出对应的方法，显式地写出类型名称或者包名并不是必须的：
+
+```moonbit
+// 名为 @list 的包
+enum List[X] { ... }
+fn List::length[X](xs: List[X]) -> Int { ... }
+
+// 另一个使用 @list 的包
+fn init {
+  let xs: @list.List[_] = ...
+  println(xs.length()) // 总是正确
+  println(@list.List::length(xs)) // 总是正确，但繁琐
+  println(@list.length(xs)) // 比上面简单一点，但只有在 @list 确定时正确。
 }
 ```
 
@@ -1792,7 +1795,7 @@ fn square[N: Number](x: N) -> N {
 如果没有 `Number` 的要求，`square` 中的表达式 `x * x` 会导致出现找不到方法/运算符的错误。
 现在，函数 `square` 可以与任何实现了 `Number` 接口的类型一起使用，例如：
 
-```moonbit live
+```moonbit
 fn init {
   println(square(2)) // 4
   println(square(1.5)) // 2.25
@@ -1825,8 +1828,8 @@ fn op_mul(self: Point, other: Point) -> Point {
 接口中的方法可以用 `Trait::method` 的语法来直接调用。MoonBit 会推导 `Self` 的具体类型，
 并检查 `Self` 是否实现了 `Trait`：
 
-```moonbit live
-fn init {
+```moonbit
+fn main {
   println(Show::to_string(42))
   println(Compare::compare(1.0, 2.5))
 }
@@ -1895,11 +1898,9 @@ trait MyTrait {
   f(Self) -> Unit
 }
 
-fn MyTrait::f(self: Int) -> Unit {
-  println("Got Int \{self}!")
-}
+impl MyTrait for Int with f(self) { println("Got Int \{self}!") }
 
-fn init {
+fn main {
   MyTrait::f(42)
 }
 ```
@@ -1914,7 +1915,7 @@ struct T {
   y: Int
 } derive(Eq, Compare, Show, Default)
 
-fn init {
+fn main {
   let t1 = T::default()
   let t2 = { x: 1, y: 1 }
   println(t1) // {x: 0, y: 0}
@@ -1950,7 +1951,7 @@ fn Fox::speak(_self: Fox) -> Unit {
   println("What does the fox say?")
 }
 
-fn init {
+fn main {
   let duck1 = Duck::make("duck1")
   let duck2 = Duck::make("duck2")
   let fox1 = Fox::make("fox1")
