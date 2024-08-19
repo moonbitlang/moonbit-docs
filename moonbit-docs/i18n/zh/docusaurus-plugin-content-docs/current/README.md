@@ -1259,9 +1259,6 @@ let result = builder.to_string()
 为了区分不可变与可变操作，在 MoonBit 中，对于所有返回`Unit`的方法，可以使用级联运算符进行连续的操作，
 而不需要专门修改方法的返回类型。
 
-为了避免重复键入上图中的`array`, 和区分不可变与可变操作，MoonBit 引入了级联运算符。对于一个类型中的所有返回`Unit`的方法，可以使用`..`将这些方法的调用串联起来，
-而不需要专门修改这些方法的返回类型。 `array..push(5)..sort()`相当于依次调用了可变操作`array.push(5)`和`array.sort()`, 最终返回`array`。
-
 ```moonbit
 let result =
   MyStringBuilder::new()
