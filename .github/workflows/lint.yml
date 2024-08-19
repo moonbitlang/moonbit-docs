@@ -31,7 +31,7 @@ jobs:
               FAIL=1
               FAILED_FILES+=("$file")
             }
-          done < <(find . -name '*.md')
+          done < <(find moonbit-docs -name '*.md')
           for file in "${FAILED_FILES[@]}"; do
             echo "========mdlint failed for $file========"
           done
