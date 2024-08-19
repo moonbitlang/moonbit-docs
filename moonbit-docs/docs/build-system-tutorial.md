@@ -163,7 +163,7 @@ The `lib` package contains `hello.mbt` and `hello_test.mbt` files:
 
   `hello.mbt`
 
-  ```moonbit
+  ```moonbit -f=hello.mbt
   pub fn hello() -> String {
       "Hello, world!"
   }
@@ -171,17 +171,17 @@ The `lib` package contains `hello.mbt` and `hello_test.mbt` files:
 
   `hello_test.mbt`
 
-  ```moonbit
+  ```moonbit -f=hello.mbt
   test "hello" {
     if hello() != "Hello, world!" {
-      return Err("hello() != \"Hello, world!\"")
+      fail!("hello() != \"Hello, world!\"")
     }
   }
   ```
 
 The `main` package contains a `main.mbt` file:
 
-  ```moonbit
+  ```moonbit no-check
   fn main {
     println(@lib.hello())
   }
@@ -303,11 +303,11 @@ and define an alias `my_awesome_fibonacci` for it:
 
 In `main/main.mbt`:
 
-```moonbit
+```moonbit no-check
 fn main {
   let a = @my_awesome_fibonacci.fib(10)
   let b = @my_awesome_fibonacci.fib2(11)
-  println("fib(10) = \(a), fib(11) = \(b)")
+  println("fib(10) = \{a}, fib(11) = \{b}")
 
   println(@lib.hello())
 }

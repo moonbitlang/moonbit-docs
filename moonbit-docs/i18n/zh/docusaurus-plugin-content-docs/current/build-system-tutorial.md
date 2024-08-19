@@ -8,48 +8,48 @@
 
 1. **MoonBit CLI 工具**: 从[这里](https://www.moonbitlang.cn/download/)下载。该命令行工具用于创建和管理 MoonBit 项目。
 
-    使用 `moon help` 命令可查看使用说明。
+   使用 `moon help` 命令可查看使用说明。
 
-    ```plaintext
-    $ moon help
-    The build system and package manager for MoonBit.
+   ```plaintext
+   $ moon help
+   The build system and package manager for MoonBit.
 
-    Usage: moon [OPTIONS] <COMMAND>
+   Usage: moon [OPTIONS] <COMMAND>
 
-    Commands:
-      new                    Create a new moonbit package
-      build                  Build the current package
-      check                  Check the current package, but don't build object files
-      run                    Run WebAssembly module
-      test                   Test the current package
-      clean                  Clean the target directory
-      fmt                    Format moonbit source code
-      doc                    Generate documentation
-      info                   Generate public interface (`.mbti`) files for all packages in the module
-      add                    Add a dependency
-      remove                 Remove a dependency
-      install                Install dependencies
-      tree                   Display the dependency tree
-      login                  Log in to your account
-      register               Register an account at mooncakes.io
-      publish                Publish the current package
-      update                 Update the package registry index
-      coverage               Code coverage utilities
-      generate-build-matrix  Generate build matrix for benchmarking (legacy feature)
-      upgrade                Upgrade toolchains
-      shell-completion       Generate shell completion for bash/elvish/fish/pwsh/zsh to stdout
-      version                Print version info and exit
-      help                   Print this message or the help of the given subcommand(s)
+   Commands:
+     new                    Create a new moonbit package
+     build                  Build the current package
+     check                  Check the current package, but don't build object files
+     run                    Run WebAssembly module
+     test                   Test the current package
+     clean                  Clean the target directory
+     fmt                    Format moonbit source code
+     doc                    Generate documentation
+     info                   Generate public interface (`.mbti`) files for all packages in the module
+     add                    Add a dependency
+     remove                 Remove a dependency
+     install                Install dependencies
+     tree                   Display the dependency tree
+     login                  Log in to your account
+     register               Register an account at mooncakes.io
+     publish                Publish the current package
+     update                 Update the package registry index
+     coverage               Code coverage utilities
+     generate-build-matrix  Generate build matrix for benchmarking (legacy feature)
+     upgrade                Upgrade toolchains
+     shell-completion       Generate shell completion for bash/elvish/fish/pwsh/zsh to stdout
+     version                Print version info and exit
+     help                   Print this message or the help of the given subcommand(s)
 
-    Options:
-      -C, --directory <SOURCE_DIR>   The source code directory. Defaults to the current directory
-          --target-dir <TARGET_DIR>  The target directory. Defaults to `source_dir/target`
-      -q, --quiet                    Suppress output
-      -v, --verbose                  Increase verbosity
-          --trace                    Trace the execution of the program
-          --dry-run                  Do not actually run the command
-      -h, --help                     Print help
-    ```
+   Options:
+     -C, --directory <SOURCE_DIR>   The source code directory. Defaults to the current directory
+         --target-dir <TARGET_DIR>  The target directory. Defaults to `source_dir/target`
+     -q, --quiet                    Suppress output
+     -v, --verbose                  Increase verbosity
+         --trace                    Trace the execution of the program
+         --dry-run                  Do not actually run the command
+     -h, --help                     Print help
+   ```
 
 2. **Moonbit Language** Visual Studio Code 插件: 可以从 VS Code 市场安装。该插件为 MoonBit 提供了丰富的开发环境，包括语法高亮、代码补全、交互式除错和测试等功能。
 
@@ -95,14 +95,13 @@ my-project
 - `lib/*_test.mbt` 是 `lib` 包中独立的测试文件。但 `lib` 的成员对测试是不可见的，需要显式地用 `@my-project.*` 来访问成员。这些文件只有在测试模式下才会编译，可以在这些独立测试文件中写内联测试和供测试使用的工具函数。
 
 - `moon.pkg.json`：包描述文件，定义了包的属性，例如该包是否为 `main` 包，以及它所导入的包。
+
   - `main/moon.pkg.json`：
 
     ```json
     {
       "is-main": true,
-      "import": [
-        "username/hello/lib"
-      ]
+      "import": ["username/hello/lib"]
     }
     ```
 
@@ -110,9 +109,9 @@ my-project
 
   - `lib/moon.pkg.json`
 
-      ```json
-      {}
-      ```
+    ```json
+    {}
+    ```
 
     内容为空，其作用只是告诉构建系统该文件夹是一个包。
 
@@ -140,7 +139,7 @@ my-project
 
   `hello.mbt`
 
-  ```moonbit
+  ```moonbit -f=hello.mbt
   pub fn hello() -> String {
       "Hello, world!"
   }
@@ -148,21 +147,21 @@ my-project
 
   `hello_test.mbt`
 
-  ```moonbit
+  ```moonbit -f=hello.mbt
   test "hello" {
     if hello() != "Hello, world!" {
-      return Err("hello() != \"Hello, world!\"")
+      fail!("hello() != \"Hello, world!\"")
     }
   }
   ```
 
 `main` 包含一个 `main.mbt` 文件：
 
-  ```moonbit
-  fn main {
-    println(@lib.hello())
-  }
-  ```
+```moonbit no-check
+fn main {
+  println(@lib.hello())
+}
+```
 
 要执行代码，为 `moon run` 命令指定 `main` 包所在的路径：
 
@@ -186,9 +185,7 @@ MoonBit 构建系统使用模块的名称用来引用其内部包。
 ```json
 {
   "is_main": true,
-  "import": [
-    "username/hello/lib"
-  ]
+  "import": ["username/hello/lib"]
 }
 ```
 
@@ -236,7 +233,7 @@ pub fn fib2(num : Int) -> Int {
 
 现在项目结构应该如下所示：
 
-```
+```plaintext
 my-project
 ├── README.md
 ├── lib
@@ -270,11 +267,11 @@ my-project
 
 `main/main.mbt`：
 
-```moonbit
+```moonbit no-check
 fn main {
   let a = @my_awesome_fibonacci.fib(10)
   let b = @my_awesome_fibonacci.fib2(11)
-  println("fib(10) = \(a), fib(11) = \(b)")
+  println("fib(10) = \{a}, fib(11) = \{b}")
 
   println(@lib.hello())
 }
@@ -298,7 +295,7 @@ MoonBit 区分白盒、黑盒测试。白盒测试指的是内联测试或一个
 ```moonbit
 fn assert_eq[T: Show + Eq](lhs: T, rhs: T) -> Unit {
   if lhs != rhs {
-    abort("assert_eq failed.\n    lhs: \(lhs)\n    rhs: \(rhs)")
+    abort("assert_eq failed.\n\tlhs: \{lhs}\n\trhs: \{rhs}")
   }
 }
 
