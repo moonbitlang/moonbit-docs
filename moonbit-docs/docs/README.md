@@ -599,6 +599,8 @@ MoonBit have integer type and floating point type:
 | `UInt`   | 32-bit unsigned integer                   | `14U`   |
 | `UInt64` | 64-bit unsigned integer                   | `14UL`  |
 | `Double` | 64-bit floating point, defined by IEEE754 | `3.14`  |
+| `Float`  | 32-bit floating point                     ｜ `(3.14 : Float)` |
+| `BigInt` | represents numeric values larger than other types ｜ `10000000000000000000000N` |
 
 MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
@@ -646,6 +648,8 @@ let int : Int = 42
 let uint : UInt = 42
 let int64 : Int64 = 42
 let double : Double = 42
+let float : Float = 42
+let bigint : BigInt = 42
 ```
 
 ### String
