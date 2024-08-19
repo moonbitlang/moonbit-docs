@@ -590,6 +590,8 @@ MoonBit 支持整型和浮点类型：
 | `UInt`   | 32 位无符号整数              | `14U`   |
 | `UInt64` | 64 位无符号整数              | `14UL`  |
 | `Double` | 64 位浮点数，由 IEEE754 定义 | `3.14`  |
+| `Float`  | 32 位单精度浮点数           ｜ `(3.14 : Float)` |
+| `BigInt` | 表示任意大的整数             ｜ `10000000000000000000000N` |
 
 MoonBit 支持的数字字面量，包括十进制、二进制、八进制和十六进制。
 
@@ -630,6 +632,8 @@ let int : Int = 42
 let uint : UInt = 42
 let int64 : Int64 = 42
 let double : Double = 42
+let float : Float = 42
+let bigint : BigInt = 42
 ```
 
 ### 字符串
