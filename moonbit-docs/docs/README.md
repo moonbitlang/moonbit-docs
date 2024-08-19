@@ -4,7 +4,7 @@ MoonBit is an end-to-end programming language toolchain for cloud and edge compu
 
 ## Status and aimed timeline
 
-It is currently alpha, experimental. We expect MoonBit to reach _beta-preview_ in 02/2024 and _beta_ in 06/2024.
+MoonBit is currently in beta-preview. We expect to reach beta in 2024/11/22, and 1.0 in 2025.
 
 When MoonBit reaches beta, it means any backwards-incompatible changes will be seriously evaluated and MoonBit _can_ be used in production(very rare compiler bugs). MoonBit is developed by a talented full time team who had extensive experience in building language toolchains, so we will grow much faster than the typical language ecosystem, you won't wait long to use MoonBit in your production.
 

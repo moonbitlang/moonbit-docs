@@ -5,7 +5,7 @@ MoonBit 是一个用于云计算和边缘计算的 WebAssembly 端到端的编�
 
 ## 状态
 
-MoonBit 目前处于 Pre-alpha 阶段，是实验性质的。我们期望今年能达到 beta 阶段。
+MoonBit 目前处于 Beta-Preview 阶段。我们期望能在 2024/11/22 达到 Beta 阶段，2025年内达到 1.0 阶段。
 
 ## 主要优势
 
