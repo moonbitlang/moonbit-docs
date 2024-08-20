@@ -226,13 +226,16 @@ fn what_error_is_this(e : Error) -> Unit {
 }
 ```
 
+`Error` is typically used where concrete error type is not needed,
+or simply act as a catch-all for all kinds of sub-errors.
+
 As `Error` includes multiple error types, partial matching is not allowed here. We have to do exhaustive matching by providing a catch-all/wildcard case `_`.
 
 We usually use the builtin `Failure` error type for a generalized error, and by
 generalized we mean using it for trivial errors that doesn't need a new error type.
 
 ```moonbit
-fn div_general(x : Int, y : Int) -> Int!Failure {
+fn div_trivial(x : Int, y : Int) -> Int!Failure {
   if y == 0 {
     raise Failure("division by zero")
   }
