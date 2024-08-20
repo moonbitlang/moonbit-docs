@@ -1,7 +1,7 @@
-# Exception handling in MoonBit
+# Error handling in MoonBit
 
-Exception handling has always been at core of our language design. In the following
-we'll be explaining how exception/error handling is done in MoonBit. We assume
+Error handling has always been at core of our language design. In the following
+we'll be explaining how error handling is done in MoonBit. We assume
 you have some prior knowledge of MoonBit, if not, please checkout [A tour of MoonBit](./tour.md).
 
 ## Example: Division by Zero

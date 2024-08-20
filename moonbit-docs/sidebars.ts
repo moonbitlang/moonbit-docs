@@ -13,7 +13,7 @@ const sidebars: SidebarsConfig = {
     'package-manage-tour',
     'build-system-configuration',
     'tour',
-    'exception-handling',
+    'error-handling',
     {
       type: 'category',
       label: 'Examples',
