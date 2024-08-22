@@ -700,7 +700,7 @@ let zero = '\u{30}'
 let zero = '\u0030'
 ```
 
-### Byte
+### Byte(s)
 
 A byte literal in MoonBit is either a single ASCII character or a single escape enclosed in single quotes `'`, and preceded by the character `b`. Byte literals are of type `Byte`. For example:
 
@@ -710,6 +710,16 @@ fn main {
   println(b1.to_int())
   let b2 = b'\xff'
   println(b2.to_int())
+}
+```
+
+A `Bytes` is a sequence of bytes. Similar to byte, bytes literals have the form of `b"..."`. For example:
+
+```moonbit live
+fn main {
+  let b1 : Bytes = b"abcd"
+  let b2 = b"\x61\x62\x63\x64"
+  println(b1 == b2) // true
 }
 ```
 
@@ -782,10 +792,10 @@ Currently keys in map literal syntax must be constant. `Map`s can also be destru
 ## Json literal
 
 MoonBit supports convenient json handling by overloading literals.
-When the expected type of an expression is `@json.JsonValue`, number, string, array and map literals can be directly used to create json data:
+When the expected type of an expression is `Json`, number, string, array and map literals can be directly used to create json data:
 
 ```moonbit
-let moon_pkg_json_example : @json.JsonValue = {
+let moon_pkg_json_example : Json = {
   "import": [ "moonbitlang/core/builtin", "moonbitlang/core/coverage" ],
   "test-import": [ "moonbitlang/core/random" ]
 }
@@ -1166,7 +1176,7 @@ match map {
 
 ### Json Pattern
 
-When the matched value has type `@json.JsonValue`, literal patterns can be used directly:
+When the matched value has type `Json`, literal patterns can be used directly:
 
 ```moonbit
 match json {
