@@ -28,7 +28,8 @@ const sidebars: SidebarsConfig = {
         'examples/gmachine-2',
         'examples/gmachine-3',
         'examples/myers-diff',
-        'examples/myers-diff2'
+        'examples/myers-diff2',
+        'examples/myers-diff3'
       ]
     }
   ]
