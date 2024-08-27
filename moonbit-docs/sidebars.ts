@@ -14,6 +14,7 @@ const sidebars: SidebarsConfig = {
     'build-system-configuration',
     'tour',
     'error-handling',
+    'retro-gaming',
     {
       type: 'category',
       label: 'Examples',
