@@ -23,23 +23,23 @@
 
 ## Properties
 
-- **`alert_list`** *(['string', 'null'])*: Alert list setting of the package.
+- **`alert-list`** *(['string', 'null'])*: Alert list setting of the package.
 - **`import`**: Imported packages of the package.
   - **Any of**
     - : Refer to *[#/definitions/PkgJSONImport](#definitions/PkgJSONImport)*.
     - *null*
-- **`is_main`** *(['boolean', 'null'])*: Specify whether this package is a main package or not.
+- **`is-main`** *(['boolean', 'null'])*: Specify whether this package is a main package or not.
 - **`link`**
   - **Any of**
     - : Refer to *[#/definitions/BoolOrLink](#definitions/BoolOrLink)*.
     - *null*
 - **`name`** *(['string', 'null'])*
-- **`test_import`**: Black box test imported packages of the package.
+- **`test-import`**: Black box test imported packages of the package.
   - **Any of**
     - : Refer to *[#/definitions/PkgJSONImport](#definitions/PkgJSONImport)*.
     - *null*
-- **`warn_list`** *(['string', 'null'])*: Warn list setting of the package.
-- **`wbtest_import`**: White box test imported packages of the package.
+- **`warn-list`** *(['string', 'null'])*: Warn list setting of the package.
+- **`wbtest-import`**: White box test imported packages of the package.
   - **Any of**
     - : Refer to *[#/definitions/PkgJSONImport](#definitions/PkgJSONImport)*.
     - *null*
@@ -49,9 +49,6 @@
   - **Any of**
     - *boolean*
     - : Refer to *[#/definitions/Link](#definitions/Link)*.
-- <a id="definitions/ImportMemory"></a>**`ImportMemory`** *(object)*
-  - **`module`** *(string, required)*
-  - **`name`** *(string, required)*
 - <a id="definitions/JsFormat"></a>**`JsFormat`** *(string)*: Must be one of: `["esm", "cjs", "iife"]`.
 - <a id="definitions/JsLinkConfig"></a>**`JsLinkConfig`** *(object)*
   - **`exports`** *(['array', 'null'])*
@@ -93,7 +90,7 @@
     - **Items** *(string)*
   - **`import-memory`**
     - **Any of**
-      - : Refer to *[#/definitions/ImportMemory](#definitions/ImportMemory)*.
+      - : Refer to *[#/definitions/import-memory](#definitions/import-memory)*.
       - *null*
 - <a id="definitions/WasmLinkConfig"></a>**`WasmLinkConfig`** *(object)*
   - **`export-memory-name`** *(['string', 'null'])*
@@ -104,5 +101,8 @@
   - **`heap-start-address`** *(['integer', 'null'], format: uint32)*: Minimum: `0.0`.
   - **`import-memory`**
     - **Any of**
-      - : Refer to *[#/definitions/ImportMemory](#definitions/ImportMemory)*.
+      - : Refer to *[#/definitions/import-memory](#definitions/import-memory)*.
       - *null*
+- <a id="definitions/import-memory"></a>**`import-memory`** *(object)*
+  - **`module`** *(string, required)*
+  - **`name`** *(string, required)*

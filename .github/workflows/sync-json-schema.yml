@@ -23,8 +23,8 @@ jobs:
           pip install jsonschema2md
           jsonschema2md mod.schema.json mod.md
           jsonschema2md pkg.schema.json pkg.md
-          cat mod.md pkg.md > build-system-configuration.md
-          cp build-system-configuration.md zh-docs/build-system-configuration.md
+          cat mod.md pkg.md > ./moonbit-docs/docs/build-system-configuration.md
+          cp ./moonbit-docs/docs/build-system-configuration.md ./moonbit-docs/i18n/zh/docusaurus-plugin-content-docs/current/build-system-configuration.md
           rm mod.md pkg.md
 
       - name: Create PR based on changes
