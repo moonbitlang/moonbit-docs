@@ -94,7 +94,7 @@ pub fn on_piece_collision(self : Tetris) -> Unit {
   )
 
   // Delete the complete row
-  let (new_grid, row_completed) = self.grid.fold_right(
+  let (new_grid, row_completed) = self.grid.rev_fold(
     init=(@immut/list.Nil, 0),
     fn {
       v, (new_grid, row_completed) =>
