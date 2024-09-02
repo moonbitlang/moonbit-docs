@@ -491,8 +491,8 @@ Almost all built-in sequential data structures have implemented `Iter`:
 
 ```moonbit
 fn filter_even(l : Array[Int]) -> Array[Int] {
-  let l_iter: Iter[Int] = l.iter()
-  l_iter.filter(fn { x => if (x & 1) == 1 { true } else { false } }).collect()
+  let l_iter : Iter[Int] = l.iter()
+  l_iter.filter(fn { x => (x & 1) == 1 }).collect()
 }
 
 fn fact(n : Int) -> Int {
