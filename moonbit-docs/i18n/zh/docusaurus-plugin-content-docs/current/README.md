@@ -499,8 +499,8 @@ MoonBit 的内置类型 `Iter[T]` 提供了迭代器支持。基本上所有的�
 
 ```moonbit
 fn filter_even(l : Array[Int]) -> Array[Int] {
-  let l_iter: Iter[Int] = l.iter()
-  l_iter.filter(fn { x => if (x & 1) == 1 { true } else { false } }).collect()
+  let l_iter : Iter[Int] = l.iter()
+  l_iter.filter(fn { x => (x & 1) == 1 }).collect()
 }
 
 fn fact(n : Int) -> Int {
