@@ -110,9 +110,9 @@ fn find_path(box : Box, a : Array[Line], b : Array[Line]) -> Iter[(Int, Int)]? {
   let end = snake.end;
   let headbox = Box { left: box.left, top: box.top, right: start.0, bottom: start.1 };
   let tailbox = Box { left: end.0, top: end.1, right: box.right, bottom: box.bottom };
-  // println("snake = \(snake)")
-  // println("headbox = \(headbox)")
-  // println("tailbox = \(tailbox)")
+  // println("snake = \{snake}")
+  // println("headbox = \{headbox}")
+  // println("tailbox = \{tailbox}")
   let head = find_path(headbox, a, b).or(Iter::singleton(start));
   let tail = find_path(tailbox, a, b).or(Iter::singleton(end));
   Some(head.concat(tail))

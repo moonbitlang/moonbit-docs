@@ -450,7 +450,7 @@ PushGlobal指令从全局表中找到指定超组合子的地址，然后将地�
 fn pushglobal(self : GState, name : String) {
   let sc = self.globals[name]
   match sc {
-    None => abort("pushglobal(): cant find supercombinator \(name)")
+    None => abort("pushglobal(): cant find supercombinator \{name}")
     Some(addr) => {
       self.putStack(addr)
     }
@@ -467,7 +467,7 @@ fn pusharg(self : GState, offset : Int) {
   let appaddr = nth(self.stack, offset + 1)
   let arg = match self.heap[appaddr] {
     NApp(_, arg) => arg
-    otherwise => abort("pusharg: stack offset \(offset) address \(appaddr) node \(otherwise), not a applicative node")
+    otherwise => abort("pusharg: stack offset \{offset} address \{appaddr} node \{otherwise}, not a applicative node")
   }
   self.putStack(arg)
 }
@@ -522,7 +522,7 @@ fn unwind(self : GState) {
       self.putStack(a)
       self.putCode(Cons(Unwind, Nil))
     }
-    otherwise => abort("unwind() : wrong kind of node \(otherwise), address \(addr)")
+    otherwise => abort("unwind() : wrong kind of node \{otherwise}, address \{addr}")
   }
 }
 ```
@@ -660,9 +660,9 @@ fn reify(self : GState) {
     match stack {
       Cons(addr, Nil) => {
         let res = self.heap[addr]
-        println("\(res)")
+        println("\{res}")
       }
-      _ => abort("wrong stack \(stack)")
+      _ => abort("wrong stack \{stack}")
     }
   }
 }

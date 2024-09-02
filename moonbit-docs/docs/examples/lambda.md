@@ -72,7 +72,7 @@ fn subst(self : Term, var : String, term : Term) -> Term {
     Abs(variable, body) => {
       if freeVars.contains(variable) {
         // The variable name is in the set of free variables of the current inner Lambda, indicating variable capture
-        abort("subst(): error while encountering \(variable)")
+        abort("subst(): error while encountering \{variable}")
       } else {
         ......
       }
@@ -114,8 +114,8 @@ However, directly writing and reading Lambda terms in de Bruijn index form is pa
 fn to_string(self : TermDBI) -> String {
   match self {
     Var(name, _) => name
-    Abs(name, body) => "(\\\(name).\(body))"
-    App(t1, t2) => "\(t1) \(t2)"
+    Abs(name, body) => "(\\\{name}.\{body})"
+    App(t1, t2) => "\{t1} \{t2}"
   }
 }
 ```
@@ -214,7 +214,7 @@ fn eval(self : TermDBI) -> TermDBI {
       }
     }
     Abs(_) => self
-    otherwise => abort("eval(): \(otherwise) ")
+    otherwise => abort("eval(): \{otherwise} ")
     // eval should not encounter free variables
   }
 }

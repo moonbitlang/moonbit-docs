@@ -164,7 +164,7 @@ pub fn to_string[U : Show](self : T[U]) -> String {
   match self {
     Empty => "()"
     Node(Empty, v, Empty, _) => v.to_string()
-    Node(l, v, r, _) => "(\(l), \(v), \(r))"
+    Node(l, v, r, _) => "(\{l}, \{v}, \{r})"
   }
 }
 

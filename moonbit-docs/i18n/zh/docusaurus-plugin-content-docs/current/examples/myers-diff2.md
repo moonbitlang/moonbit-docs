@@ -141,21 +141,21 @@ fn print_edit(edit : Edit) -> String {
       let old_line = pad_right("", line_width)
       let new_line = pad_right(edit.new.number.to_string(), line_width)
       let text = edit.new.text
-      "\(tag) \(old_line) \(new_line)    \(text)"
+      "\{tag} \{old_line} \{new_line}    \{text}"
     }
     Delete(_) as edit => {
       let tag = "-"
       let old_line = pad_right(edit.old.number.to_string(), line_width)
       let new_line = pad_right("", line_width)
       let text = edit.old.text
-      "\(tag) \(old_line) \(new_line)    \(text)"
+      "\{tag} \{old_line} \{new_line}    \{text}"
     }
     Equal(_) as edit => {
       let tag = " "
       let old_line = pad_right(edit.old.number.to_string(), line_width)
       let new_line = pad_right(edit.new.number.to_string(), line_width)
       let text = edit.old.text
-      "\(tag) \(old_line) \(new_line)    \(text)"
+      "\{tag} \{old_line} \{new_line}    \{text}"
     }
   }
 }

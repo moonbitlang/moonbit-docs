@@ -145,7 +145,7 @@ pub fn draw(self : Canvas_ctx) -> Unit {
 
 // 我们在这里也演示`println`的功能
 pub fn display_pi() -> Unit {
-  println("PI: \(pi)")
+  println("PI: \{pi}")
 }
 ```
 
