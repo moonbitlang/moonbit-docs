@@ -71,7 +71,7 @@ fn subst(self : Term, var : String, term : Term) -> Term {
     Abs(variable, body) => {
       if freeVars.contains(variable) {
         //自由变量集合中有当前这个内层lambda的参数名，即会发生变量捕获
-        abort("subst(): error while encountering \(variable)")
+        abort("subst(): error while encountering \{variable}")
       } else {
         ......
       }
@@ -113,8 +113,8 @@ enum TermDBI {
 fn to_string(self : TermDBI) -> String {
   match self {
     VarDBI(name, _) => name
-    AbsDBI(name, body) => "(\\\(name).\(body))"
-    AppDBI(t1, t2) => "\(t1) \(t2)"
+    AbsDBI(name, body) => "(\\\{name}.\{body})"
+    AppDBI(t1, t2) => "\{t1} \{t2}"
   }
 }
 ```
@@ -142,7 +142,7 @@ struct Index {
 // 查找环境中第一个varname对应的整数
 fn find(m : List[Index], varname : String) -> Result[Int, String] {
   match m {
-    Nil => Err(varname) // abort("variable \'\(varname)\' not found")
+    Nil => Err(varname) // abort("variable \'\{varname}\' not found")
     Cons(i, rest) => {
       if i.name == varname {
         Ok(i.depth)
@@ -201,7 +201,7 @@ fn eval(self : TermDBI) -> TermDBI {
       }
     }
     AbsDBI(_) => self
-    otherwise => abort("eval(): \(otherwise) ")
+    otherwise => abort("eval(): \{otherwise} ")
     // eval应该不会遇到自由变量才对
   }
 }

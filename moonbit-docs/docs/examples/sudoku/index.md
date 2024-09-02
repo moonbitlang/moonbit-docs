@@ -89,7 +89,7 @@ fn square_to_int(s : String) -> Int {
     let col = s[1].to_int() - 49 // '1' <=> 0
     return row * 9 + col
   } else {
-    abort("square_to_int(): \(s) is not a square")
+    abort("square_to_int(): \{s} is not a square")
   }
 }
 

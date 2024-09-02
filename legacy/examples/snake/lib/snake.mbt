@@ -99,7 +99,7 @@ fn go_step(self : GameState) -> Unit {
     self.setGridType(newHead, Body)
     self.body.push_front(newHead)
     self.setGridType(self.body.back().unwrap(), None)
-    self.body.pop_back_exn()
+    self.body.unsafe_pop_back()
   }
 }
 

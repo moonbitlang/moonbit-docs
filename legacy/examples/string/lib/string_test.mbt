@@ -14,7 +14,7 @@
 
 test {
   let arr = @lib.split("a.b.c.e.f.g.h.i.j.k.l.m.n", '.')
-  @test.eq!(
+  assert_eq!(
     arr,
     ["a", "b", "c", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n"],
   )
@@ -24,11 +24,11 @@ test {
       #|Some("lo W")
     ,
   )
-  "Hello World" |> @lib.index_of("Wo") |> @test.eq!(Some(6))
-  "Hello World World Hello" |> @lib.last_index_of("Wo") |> @test.eq!(Some(12))
-  @test.is_true!(@lib.contains("Hello World", "Wo"))
+  "Hello World" |> @lib.index_of("Wo") |> assert_eq!(Some(6))
+  "Hello World World Hello" |> @lib.last_index_of("Wo") |> assert_eq!(Some(12))
+  assert_true!(@lib.contains("Hello World", "Wo"))
   let arr = @lib.to_char_array("HelloWorld")
-  @test.eq!(arr, ['H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd'])
-  @test.eq!(@lib.char_at("abcde", 4), Some('e'))
-  @test.eq!(@lib.trim("   abcde   ", ' '), "abcde")
+  assert_eq!(arr, ['H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd'])
+  assert_eq!(@lib.char_at("abcde", 4), Some('e'))
+  assert_eq!(@lib.trim("   abcde   ", ' '), "abcde")
 }

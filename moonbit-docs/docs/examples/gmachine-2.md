@@ -246,7 +246,7 @@ fn liftArith2(self : GState, op : (Int, Int) -> Int) -> Unit {
       let addr = self.heap.alloc(newnode)
       self.putStack(addr)
     }
-    (node1, node2) => abort("liftArith2: \(a1) = \(node1) \(a2) = \(node2)")
+    (node1, node2) => abort("liftArith2: \{a1} = \{node1} \{a2} = \{node2}")
   }
 }
 
@@ -260,7 +260,7 @@ fn liftCmp2(self : GState, op : (Int, Int) -> Bool) -> Unit {
       let addr = self.heap.alloc(newnode)
       self.putStack(addr)
     }
-    (node1, node2) => abort("liftCmp2: \(a1) = \(node1) \(a2) = \(node2)")
+    (node1, node2) => abort("liftCmp2: \{a1} = \{node1} \{a2} = \{node2}")
   }
 }
 
@@ -274,7 +274,7 @@ fn negate(self : GState) -> Unit {
     }
     otherwise => {
       // If not NNum, throw an error
-      abort("negate: wrong kind of node \(otherwise), address \(addr) ")
+      abort("negate: wrong kind of node \{otherwise}, address \{addr} ")
     }
   }
 }
@@ -294,7 +294,7 @@ fn condition(self : GState, i1 : List[Instruction], i2 : List[Instruction]) -> U
       // If true, jump to i1
       self.code = append(i1, self.code)
     }
-    otherwise => abort("cond : \(addr) = \(otherwise)")
+    otherwise => abort("cond : \{addr} = \{otherwise}")
   }
 }
 ```

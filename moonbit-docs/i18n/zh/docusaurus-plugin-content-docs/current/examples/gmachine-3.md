@@ -233,7 +233,7 @@ fn casejump(self : GState, table : List[(Int, List[Instruction])]) -> Unit {
         }
       }
     }
-    otherwise => abort("casejump(): addr = \(addr) node = \(otherwise)")
+    otherwise => abort("casejump(): addr = \{addr} node = \{otherwise}")
   }
 }
 ```
