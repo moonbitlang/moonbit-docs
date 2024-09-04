@@ -38,7 +38,7 @@ For WebAssembly backend, it means that it will be executed **before** the instan
 for JavaScript backend, it means that it will be executed during the importation stage.
 
 There is another specialized function called `main` function. The `main` function is the main entrance of the program, and it will be executed after the initialization stage.
-Only packages that are `main` packages can define such `main` function. Check out [build system tutorial](./build-system-tutorial.md) for detail.
+Only packages that are `main` packages can define such `main` function. Check out [build system tutorial](https://moonbitlang.github.io/moon/) for detail.
 
 The two functions above need to drop the parameter list and the return type.
 
@@ -592,14 +592,14 @@ let e = not(a)
 
 MoonBit have integer type and floating point type:
 
-| type     | description                               | example |
-| -------- | ----------------------------------------- | ------- |
-| `Int`    | 32-bit signed integer                     | `42`    |
-| `Int64`  | 64-bit signed integer                     | `1000L` |
-| `UInt`   | 32-bit unsigned integer                   | `14U`   |
-| `UInt64` | 64-bit unsigned integer                   | `14UL`  |
-| `Double` | 64-bit floating point, defined by IEEE754 | `3.14`  |
-| `Float`  | 32-bit floating point                     ｜ `(3.14 : Float)` |
+| type     | description                                                                     | example |
+| -------- | ------------------------------------------------------------------------------- | ------- |
+| `Int`    | 32-bit signed integer                                                           | `42`    |
+| `Int64`  | 64-bit signed integer                                                           | `1000L` |
+| `UInt`   | 32-bit unsigned integer                                                         | `14U`   |
+| `UInt64` | 64-bit unsigned integer                                                         | `14UL`  |
+| `Double` | 64-bit floating point, defined by IEEE754                                       | `3.14`  |
+| `Float`  | 32-bit floating point ｜ `(3.14 : Float)`                                       |
 | `BigInt` | represents numeric values larger than other types ｜ `10000000000000000000000N` |
 
 MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
@@ -2083,4 +2083,4 @@ Pragmas are annotations inside doc comments. They all take the form `/// @word .
 
 ## MoonBit's build system
 
-The introduction to the build system is available at [MoonBit's Build System Tutorial](./build-system-tutorial.md).
+The introduction to the build system is available at [MoonBit's Build System Tutorial](https://moonbitlang.github.io/moon/).
