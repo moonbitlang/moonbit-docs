@@ -31,13 +31,13 @@ jobs:
       - name: install
         if: ${{ matrix.os.name != 'windows-latest' }}
         run: |
-          /bin/bash -c "$(curl -fsSL https://cli.moonbitlang.com/${{ matrix.os.path }}_moon_setup.sh)"
+          /bin/bash -c "$(curl -fsSL https://cli.moonbitlang.com/install/unix.sh)"
           echo "$HOME/.moon/bin" >> $GITHUB_PATH
 
       - name: install on windows
         if: ${{ matrix.os.name == 'windows-latest' }}
         run: |
-          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang.cn/windows_moon_setup.ps1 | iex
+          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang.cn/install/powershell.ps1 | iex
           "C:\Users\runneradmin\.moon\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
       
       - name: moon version
