@@ -1,5 +1,7 @@
 import type { SidebarsConfig } from '@docusaurus/plugin-content-docs'
 
+const isZh = process.env.DOCUSAURUS_CURRENT_LOCALE === 'zh'
+
 const sidebars: SidebarsConfig = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   docs: [
@@ -8,10 +10,15 @@ const sidebars: SidebarsConfig = {
       id: 'README',
       label: 'MoonBit'
     },
-    'build-system-tutorial',
+    {
+      type: 'link',
+      label: isZh ? 'MoonBit 构建系统教程' : `MoonBit's Build System Tutorial`,
+      href: isZh
+        ? 'https://moonbitlang.github.io/moon/zh/'
+        : 'https://moonbitlang.github.io/moon/'
+    },
     'ffi-and-wasm-host',
     'package-manage-tour',
-    'build-system-configuration',
     'tour',
     'error-handling',
     {
