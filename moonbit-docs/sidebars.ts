@@ -28,16 +28,28 @@ const sidebars: SidebarsConfig = {
       link: {
         type: 'generated-index'
       },
-      items: [
-        'examples/sudoku/index',
-        'examples/lambda',
-        'examples/gmachine-1/index',
-        'examples/gmachine-2',
-        'examples/gmachine-3',
-        'examples/myers-diff',
-        'examples/myers-diff2',
-        'examples/myers-diff3'
-      ]
+      items: isZh
+        ? [
+            'examples/sudoku/index',
+            'examples/lambda',
+            'examples/gmachine-1/index',
+            'examples/gmachine-2',
+            'examples/gmachine-3',
+            'examples/myers-diff',
+            'examples/myers-diff2',
+            'examples/myers-diff3',
+            'examples/pingpong/index'
+          ]
+        : [
+            'examples/sudoku/index',
+            'examples/lambda',
+            'examples/gmachine-1/index',
+            'examples/gmachine-2',
+            'examples/gmachine-3',
+            'examples/myers-diff',
+            'examples/myers-diff2',
+            'examples/myers-diff3'
+          ]
     }
   ]
 }
