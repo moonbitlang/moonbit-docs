@@ -1886,7 +1886,7 @@ trait Hash {
 
 trait Show {
   // writes a string representation of `Self` into a `Logger`
-  output(Self, Logger) -> String
+  output(Self, Logger) -> Unit
   to_string(Self) -> String
 }
 
