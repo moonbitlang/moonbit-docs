@@ -38,18 +38,20 @@ MoonBit 目前处于活跃开发的阶段，尚不满足生产环境的需求。
 
 ```
 my-project
+├── LICENSE
+├── moon.mod.json
 ├── README.md
-├── lib
-│   ├── hello.mbt
-│   ├── hello_test.mbt
-│   └── moon.pkg.json
-├── main
-│   ├── main.mbt
-│   └── moon.pkg.json
-└── moon.mod.json
+└── src
+    ├── lib
+    │   ├── hello.mbt
+    │   ├── hello_test.mbt
+    │   └── moon.pkg.json
+    └── main
+        ├── main.mbt
+        └── moon.pkg.json
 ```
 
-这是一个很典型的项目结构，试试运行 `moon run main`。
+这是一个很典型的项目结构，试试运行 `moon run src/main`。
 
 现在可以开始我们的月兔之旅了。
 

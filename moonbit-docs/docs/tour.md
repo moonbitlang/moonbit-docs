@@ -39,18 +39,20 @@ To create a project (or module, more formally), run `moon new`. You will be gree
 
 ```
 my-project
+├── LICENSE
+├── moon.mod.json
 ├── README.md
-├── lib
-│   ├── hello.mbt
-│   ├── hello_test.mbt
-│   └── moon.pkg.json
-├── main
-│   ├── main.mbt
-│   └── moon.pkg.json
-└── moon.mod.json
+└── src
+    ├── lib
+    │   ├── hello.mbt
+    │   ├── hello_test.mbt
+    │   └── moon.pkg.json
+    └── main
+        ├── main.mbt
+        └── moon.pkg.json
 ```
 
-This resembles a typical MoonBit module structure. Try running `moon run main`.
+This resembles a typical MoonBit module structure. Try running `moon run src/main`.
 
 Now, we can get started.
 
