@@ -68,7 +68,7 @@ Variables are defined with `let`:
 ```moonbit
 let e = 2.718281828459045 // double
 let int_min = -2147483648 // int
-let int_max: Int = 2147483647 // explicit type annotation
+let int_max : Int = 2147483647 // explicit type annotation
 let tuple = (1, 2) // 2-tuple
 ```
 
@@ -93,7 +93,7 @@ By default, the `let` - binding creates an immutable reference to a value. That 
 Function is just a piece of code that takes some inputs and produce a result. We may define a function using the keyword `fn` (function name in MoonBit should not begin with uppercase letters A-Z):
 
 ```moonbit
-fn identity[T](x: T) -> T {
+fn identity[T](x : T) -> T {
   // `Identity` won't work as it violates naming convention
   x
 }
@@ -127,7 +127,7 @@ Languages nowadays have something called _lambda expression_. Most languages imp
 ```moonbit
 fn foo() -> Int {
   fn inc(x) { x + 1 }  // named as `inc`
-  fn (x) { x + inc(2) } (6) // anonymous, a so-called 'lambda expression'
+  (fn (x) { x + inc(2) })(6) // anonymous, a so-called 'lambda expression'
   // function automatically captures the result of the last expression
 }
 ```
@@ -161,27 +161,27 @@ Another datatype frequently used in MoonBit is our good old `Struct`, which work
 
 ```moonbit
 struct User {
-  id: Int
-  name: String
+  id : Int
+  name : String
   // by default the properties/fields of a struct is immutable.
   // the `mut` keyword works exactly the way we've mentioned before.
-  mut email: String
+  mut email : String
 } derive(Show)
 
 // a method of User is defined by passing a object of type User as self first.
 // just like what you would do in Python.
 // Note that methods may only be defined within the same package the type is in.
 // We may not define methods for foreign types directly
-fn greetUser(self: User) -> String{ // a method of struct/type/class `User`
+fn greetUser(self : User) -> String { // a method of struct/type/class `User`
   let id = self.id
   let name = self.name
   "Greetings, \{name} of id \{id}" // string interpolation
 }
 // construct a User object.
-let evan: User = {id:0,name:"Evan",email:"someone@example.com"}
+let evan : User = { id: 0, name: "Evan", email: "someone@example.com" }
 // we use a shorthand by duplicating evan's information
 // and replacing w/ someone elses' email.
-let listOfUser: List[User] = Cons(evan, Cons({..evan, email: "someoneelse@example.com"}, Nil))
+let listOfUser : List[User] = Cons(evan, Cons({ ..evan, email: "someoneelse@example.com" }, Nil))
 ```
 
 Another datatype is `type`, a specific case of `enum` type. `type` can be thought as a wrapper
@@ -230,20 +230,20 @@ trait Printable {
 }
 
 fn to_string(self : User) -> String {
-  (self.id,self.name,self.email).to_string()
+  (self.id, self.name, self.email).to_string()
 } // now `Printable` is implemented
 
-fn to_string[T: Printable](self : List[T]) -> String {
+fn to_string[T : Printable](self : List[T]) -> String {
   let string_aux = to_string_aux(self)
   // function arguments can have label
-  "[" + string_aux.substring(end = string_aux.length() - 1) + "]"
+  "[" + string_aux.substring(end=string_aux.length() - 1) + "]"
 }
 
 // polymorphic functions have to be toplevel.
-fn to_string_aux[T: Printable](self: List[T]) -> String{
+fn to_string_aux[T : Printable](self : List[T]) -> String {
   match self {
     Nil => ""
-    Cons(x,xs) => "\{x} " + to_string_aux(xs)
+    Cons(x, xs) => "\{x} " + to_string_aux(xs)
   }
 }
 ```
@@ -303,11 +303,11 @@ Pattern matching can be used in `let` as well. In `greetUser()`, instead of writ
 2 `let`'s, we may write
 
 ```moonbit
-fn greetUserAlt(self: User) -> String {
+fn greetUserAlt(self : User) -> String {
   // extract `id` `name` from `self` of type User. ignores email.
   let { id: id, name: name, email: _ } = self
   // equivalent, but ignores the rest.
-  let {id,name,..} = self
+  let { id, name, .. } = self
   "Greetings, \{name} of id \{id}"
 }
 ```
@@ -323,13 +323,12 @@ Additionally, MoonBit provides a more interesting loop construct, the functional
 For example the Fibonacci number can be calculated by
 
 ```moonbit
-fn fib(n: Int) -> Int {
+fn fib(n : Int) -> Int {
   loop n, 0, 1 { // introduces 3 loop variables: `n` `a = 0` `b = 1`
     // pattern matching is available in `loop`
     0, a, b => a // what can be constructed from 0 -- Only 0 it self!
     // assign `b` to `a`, `(a + b)` to `b`, decrease counter `n`
     n, a, b => continue n - 1, b, a + b
-
   }
 }
 ```
