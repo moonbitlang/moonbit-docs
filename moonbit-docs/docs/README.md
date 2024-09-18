@@ -507,10 +507,10 @@ enum Resource {
 }
 
 fn getProcessedText(resources : Map[String, Resource], path : String) -> String!Error {
-  guard let Some(PlainText(text)) = resources[name] else { 
-    None => fail!("\{name} not found")
-    Some(Folder(_)) => fail!("\{name} is a folder")
-    Some(JsonFile(_)) => fail!("\{name} is a json config")
+  guard let Some(PlainText(text)) = resources[path] else { 
+    None => fail!("\{path} not found")
+    Some(Folder(_)) => fail!("\{path} is a folder")
+    Some(JsonConfig(_)) => fail!("\{path} is a json config")
   }
   ... 
   process(text)
