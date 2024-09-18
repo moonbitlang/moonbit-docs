@@ -286,9 +286,9 @@ if x == y {
 
 Curly brackets are used to group multiple expressions in the consequent or the else clause.
 
-#### If let
+#### Conditional Binding
 
-In MoonBit, a conditional expression always returns a value, and you can use the `if let` syntax to bind the value of the condition to a variable.
+In MoonBit, as a conditional expression always returns a value, it can be used to bind the value of the condition to a variable.
 Here is an example:
 
 ```moonbit

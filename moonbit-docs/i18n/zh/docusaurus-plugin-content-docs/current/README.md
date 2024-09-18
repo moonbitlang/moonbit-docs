@@ -284,9 +284,9 @@ if x == y {
 
 花括号用于在结果或 `else` 子句中组合表达式。
 
-#### If let
+#### 条件绑定
 
-在 MoonBit 中，条件表达式总是返回一个值，你可以使用 if let 语法将条件的值绑定到一个变量。例如：
+在 MoonBit 中，因为条件表达式总是返回一个值，所以可以使用条件表达式来绑定一个变量：
 
 ```moonbit
 let initial = if size < 1 { 1 } else { size }
