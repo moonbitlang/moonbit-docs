@@ -284,24 +284,11 @@ if x == y {
 
 花括号用于在结果或 `else` 子句中组合表达式。
 
-#### 条件绑定
-
-在 MoonBit 中，因为条件表达式总是返回一个值，所以可以使用条件表达式来绑定一个变量：
+注意，在 MoonBit 中，条件表达式总是返回一个值，其结果和 `else` 子句的返回值类型必须相同。
+一个配合条件表达式使用`let`绑定的例子：
 
 ```moonbit
 let initial = if size < 1 { 1 } else { size }
-```
-
-注意，对于条件表达式返回的值，其结果和 `else` 子句的返回值类型必须相同。
-
-### Guard 语句
-
-`guard` 关键字用于检查指定的条件是否为真。如果条件满足，程序继续执行。如果条件不满足（即为假），则执行 `else` 块中的代码。
-
-```moonbit
-guard index >= 0 && index < len else {
-  abort("Index out of range")
-}
 ```
 
 ### While 循环
@@ -369,7 +356,7 @@ fn main {
   println(r2) //output: 7
 ```
 
-## For 循环
+### For 循环
 
 MoonBit 也支持 C 风格的 For 循环。关键字`for`后依次跟随以分号间隔的变量初始化子句、循环条件和更新子句。三者不需要使用圆括号包裹。
 例如下面的代码创建了一个新的变量绑定`i`, 它的作用域在整个循环中，且是不可变的。这更利于编写清晰的代码和推理：
@@ -505,6 +492,46 @@ fn main {
   println(sum(Cons(1, Cons(2, Cons(3, Nil)))))
 }
 ```
+
+### 卫语句
+
+卫语句用于检查指定的不变量。如果不变量的条件满足，程序继续执行后续的语句并返回。
+如果条件不满足（即为假），则执行 `else` 块中的代码并返回它的求值结果（后续的语句会被跳过）。
+
+```moonbit
+guard index >= 0 && index < len else {
+  abort("Index out of range")
+}
+```
+
+`guard` 语句也支持模式匹配：下面的例子中`getProcessedText`假设输入的`path`指向的都是纯文本的资源，
+它使用卫语句保证这一不变量。相比于直接使用`match`语句，后续对`text`的处理过程可以少一层缩进。
+
+```moonbit
+enum Resource {
+  Folder(Array[String])
+  PlainText(String)
+  JsonConfig(Json)
+}
+
+fn getProcessedText(resources : Map[String, Resource], path : String) -> String!Error {
+  guard let Some(PlainText(text)) = resources[name] else { 
+    None => fail!("\{name} not found")
+    Some(Folder(_)) => fail!("\{name} is a folder")
+    Some(JsonFile(_)) => fail!("\{name} is a json config")
+  }
+  ... 
+  process(text)
+}
+```
+
+当省略`else`的部分时，卫语句指定的条件不为真或者无法匹配时，程序终止。
+
+```moonbit
+guard condition // 相当于 guard condition else { panic() } 
+guard let Some(x) = expr // 相当于 guard let Some(x) = expr else { _ => panic() } 
+```
+
 
 ## 迭代器
 

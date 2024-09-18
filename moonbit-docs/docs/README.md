@@ -286,26 +286,12 @@ if x == y {
 
 Curly brackets are used to group multiple expressions in the consequent or the else clause.
 
-#### Conditional Binding
-
-In MoonBit, as a conditional expression always returns a value, it can be used to bind the value of the condition to a variable.
-Here is an example:
+Note that a conditional expression always returns a value in MoonBit, and the return values of the consequent and the else clause must be of the same type. Here is an example:
 
 ```moonbit
 let initial = if size < 1 { 1 } else { size }
 ```
 
-Note that the return values of the consequent and the else clause must be of the same type.
-
-### Guard Statement
-
-The `guard` keyword checks if a specified condition is true. If the condition is met, the program continues execution. If the condition is not met (i.e., `false`), the code within the else block is executed.
-
-```moonbit
-guard index >= 0 && index < len else {
-  abort("Index out of range")
-}
-```
 
 ### While loop
 
@@ -372,7 +358,7 @@ When there is an `else` clause, the `while` loop can also return a value. The re
   println(r2) //output: 7
 ```
 
-## For Loop
+### For Loop
 
 MoonBit also supports C-style For loops. The keyword `for` is followed by variable initialization clauses, loop conditions, and update clauses separated by semicolons. They do not need to be enclosed in parentheses.
 For example, the code below creates a new variable binding `i`, which has a scope throughout the entire loop and is immutable. This makes it easier to write clear code and reason about it:
@@ -494,6 +480,51 @@ fn main {
   println(sum(Cons(1, Cons(2, Cons(3, Nil)))))
 }
 ```
+
+### Guard Statement
+
+The `guard` statement is used to check a specified invariant. 
+If the condition of the invariant is satisfied, the program continues executing 
+the subsequent statements and returns. If the condition is not satisfied (i.e., false), 
+the code in the `else` block is executed and its evaluation result is returned (the subsequent statements are skipped).
+
+```moonbit
+guard index >= 0 && index < len else {
+  abort("Index out of range")
+}
+```
+
+The `guard` statement also supports pattern matching: in the following example, 
+`getProcessedText` assumes that the input `path` points to resources that are all plain text, 
+and it uses the `guard` statement to ensure this invariant. Compared to using 
+a `match` statement, the subsequent processing of `text` can have one less level of indentation.
+
+```moonbit
+enum Resource {
+  Folder(Array[String])
+  PlainText(String)
+  JsonConfig(Json)
+}
+
+fn getProcessedText(resources : Map[String, Resource], path : String) -> String!Error {
+  guard let Some(PlainText(text)) = resources[name] else { 
+    None => fail!("\{name} not found")
+    Some(Folder(_)) => fail!("\{name} is a folder")
+    Some(JsonFile(_)) => fail!("\{name} is a json config")
+  }
+  ... 
+  process(text)
+}
+```
+
+When the `else` part is omitted, the program terminates if the condition specified 
+in the `guard` statement is not true or cannot be matched.
+
+```moonbit
+guard condition // equivalent to `guard condition else { panic() }` 
+guard let Some(x) = expr // equivalent to `guard let Some(x) = expr else { _ => panic() }`
+```
+
 
 ## Iterator
 
