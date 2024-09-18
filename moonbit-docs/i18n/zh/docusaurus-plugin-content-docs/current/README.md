@@ -284,7 +284,25 @@ if x == y {
 
 花括号用于在结果或 `else` 子句中组合表达式。
 
-注意，在 MoonBit 中，条件表达式总是返回一个值，其结果和 `else` 子句的返回值类型必须相同。
+#### If let
+
+在 MoonBit 中，条件表达式总是返回一个值，你可以使用 if let 语法将条件的值绑定到一个变量。例如：
+
+```moonbit
+let initial = if size < 1 { 1 } else { size }
+```
+
+注意，对于条件表达式返回的值，其结果和 `else` 子句的返回值类型必须相同。
+
+### Guard 语句
+
+`guard` 关键字用于检查指定的条件是否为真。如果条件满足，程序继续执行。如果条件不满足（即为假），则执行 `else` 块中的代码。
+
+```moonbit
+guard index >= 0 && index < len else {
+  abort("Index out of range")
+}
+```
 
 ### While 循环
 

@@ -286,7 +286,26 @@ if x == y {
 
 Curly brackets are used to group multiple expressions in the consequent or the else clause.
 
-Note that a conditional expression always returns a value in MoonBit, and the return values of the consequent and the else clause must be of the same type.
+#### If let
+
+In MoonBit, a conditional expression always returns a value, and you can use the `if let` syntax to bind the value of the condition to a variable.
+Here is an example:
+
+```moonbit
+let initial = if size < 1 { 1 } else { size }
+```
+
+Note that the return values of the consequent and the else clause must be of the same type.
+
+### Guard Statement
+
+The `guard` keyword checks if a specified condition is true. If the condition is met, the program continues execution. If the condition is not met (i.e., `false`), the code within the else block is executed.
+
+```moonbit
+guard index >= 0 && index < len else {
+  abort("Index out of range")
+}
+```
 
 ### While loop
 
