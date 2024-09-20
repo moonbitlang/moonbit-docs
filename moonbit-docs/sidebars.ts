@@ -38,7 +38,8 @@ const sidebars: SidebarsConfig = {
             'examples/myers-diff',
             'examples/myers-diff2',
             'examples/myers-diff3',
-            'examples/pingpong/index'
+            'examples/pingpong/index',
+            'examples/segment-tree/index'
           ]
         : [
             'examples/sudoku/index',
