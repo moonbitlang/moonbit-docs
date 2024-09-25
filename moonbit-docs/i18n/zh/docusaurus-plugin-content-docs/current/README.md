@@ -233,6 +233,36 @@ fn main {
 }
 ```
 
+#### 在提供可选参数时让编译器自动插入 `Some`
+许多可选参数的类型是 `T?`，默认值是 `None`。显式提供这种参数时，需要裹一层构造器 `Some`：
+
+```moonbit
+fn image(~width : Int? = None, ~height : Int? = None) -> Image { ... }
+fn main {
+  let img = image(width=Some(1920), height=Some(1080)) // 丑!
+  ...
+}
+```
+
+MoonBit 提供了一种特殊的可选参数来解决这个问题。可以用 `~label? : T` 来声明一个可选参数，这个可选参数的类型是 `T?`，默认值是 `None`。调用者显式提供这一参数时，MoonBit 会自动在参数上插入一层 `Some`：
+
+```moonbit
+fn image(~width? : Int, ~height? : Int) -> Image { ... }
+fn main {
+  let img = image(width=1920, height=1080) // 好多了!
+  ...
+}
+```
+
+不过，有时依然需要直接直接传递一个类型为 `T?` 的值，例如在转发一个可选参数时。为此，MoonBit 提供了一个语法 `label?=value`，表示直接把类型为 `T?` 的值 `value` 传递给参数 `label`。此外，`label?=label` 可以简写成 `~label?`：
+
+```moonbit
+fn image(~width? : Int, ~height? : Int) -> Image { ... }
+fn fixed_width_image(~height? : Int) -> Image {
+  image(width=1920, ~height?)
+}
+```
+
 ### 自动填充的参数
 
 MoonBit 能够自动在每次函数调用时填充某些特定类型的参数，例如函数调用在源码中的位置。要声明这种自动填充的参数，只需要使用 `_` 作为参数的默认值即可。如果在调用时没有提供这个参数，MoonBit 就会自动根据调用处的上下文填充这个参数。

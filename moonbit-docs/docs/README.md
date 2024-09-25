@@ -232,6 +232,42 @@ fn init {
 }
 ```
 
+#### Automatically insert `Some` when supplying optional arguments
+It is quite often optional arguments have type `T?` with `None` as default value.
+In this case, passing the argument explicitly requires wrapping a `Some`:
+
+```moonbit
+fn image(~width : Int? = None, ~height : Int? = None) -> Image { ... }
+fn main {
+  let img = image(width=Some(1920), height=Some(1080)) // ugly!
+  ...
+}
+```
+
+Fortunately, MoonBit provides a special kind of optional arguments to solve this problem.
+Optional arguments declared with `~label? : T` has type `T?` and `None` as default value.
+When supplying this kind of optional argument directly, MoonBit will automatically insert a `Some`:
+
+```moonbit
+fn image(~width? : Int, ~height? : Int) -> Image { ... }
+fn main {
+  let img = image(width=1920, height=1080) // much better!
+  ...
+}
+```
+
+Sometimes, it is also useful to pass a value of type `T?` directly,
+for example when forwarding optional argument.
+MoonBit provides a syntax `label?=value` for this, with  `~label?` being an abbreviation of `label?=label`:
+
+```moonbit
+fn image(~width? : Int, ~height? : Int) -> Image { ... }
+fn fixed_width_image(~height? : Int) -> Image {
+  image(width=1920, ~height?)
+}
+```
+
+
 ### Autofill arguments
 
 MoonBit supports filling specific types of arguments automatically at different call site, such as the source location of a function call.
