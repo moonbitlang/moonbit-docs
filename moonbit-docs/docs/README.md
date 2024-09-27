@@ -74,7 +74,7 @@ Statements include:
 - Local variable bindings
 - Assignments
 - `return` statements
-- Any expression whose return type is `unit`
+- Any expression whose return type is `Unit`
 
 ## Functions
 
