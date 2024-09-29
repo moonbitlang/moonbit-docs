@@ -242,5 +242,5 @@ pub fn fail[T](msg : String, ~loc : SourceLoc = _) -> T!Failure {
 可以看出，在作用上其不过是有错误信息模板的构造子，可以输出错误信息和错误对应的文件位置。
 实际使用中，`fail!` 比 `Failure` 更常用。
 
-其他可以破坏控制流的函数包括 `about` 和 `panic`。这两者是等价的。
+其他可以破坏控制流的函数包括 `abort` 和 `panic`。这两者是等价的。
 任一位置的 `panic` 都能在该位置将程序崩溃并输出对应 stack trace。
