@@ -234,6 +234,7 @@ fn main {
 ```
 
 #### 在提供可选参数时让编译器自动插入 `Some`
+
 许多可选参数的类型是 `T?`，默认值是 `None`。显式提供这种参数时，需要裹一层构造器 `Some`：
 
 ```moonbit
@@ -545,12 +546,12 @@ enum Resource {
 }
 
 fn getProcessedText(resources : Map[String, Resource], path : String) -> String!Error {
-  guard let Some(PlainText(text)) = resources[path] else { 
+  guard let Some(PlainText(text)) = resources[path] else {
     None => fail!("\{path} not found")
     Some(Folder(_)) => fail!("\{path} is a folder")
     Some(JsonConfig(_)) => fail!("\{path} is a json config")
   }
-  ... 
+  ...
   process(text)
 }
 ```
@@ -558,10 +559,9 @@ fn getProcessedText(resources : Map[String, Resource], path : String) -> String!
 当省略`else`的部分时，卫语句指定的条件不为真或者无法匹配时，程序终止。
 
 ```moonbit
-guard condition // 相当于 guard condition else { panic() } 
-guard let Some(x) = expr // 相当于 guard let Some(x) = expr else { _ => panic() } 
+guard condition // 相当于 guard condition else { panic() }
+guard let Some(x) = expr // 相当于 guard let Some(x) = expr else { _ => panic() }
 ```
-
 
 ## 迭代器
 
@@ -760,7 +760,7 @@ let zero = '\u{30}'
 let zero = '\u0030'
 ```
 
-### 字节
+### 字节（序列）
 
 在 MoonBit 中，字节字面量可以是一个 ASCII 字符或一个转义序列，它们被单引号`'`包围，并且前面有字符`b`。字节字面量的类型是 Byte。例如：
 
@@ -770,6 +770,16 @@ fn main {
   println(b1.to_int())
   let b2 = b'\xff'
   println(b2.to_int())
+}
+```
+
+`Bytes` 则是一个字节序列。类似于字节字面量，字节序列的字面量形式为 `b"..."`。例如：
+
+```moonbit live
+fn main {
+  let b1 : Bytes = b"abcd"
+  let b2 = b"\x61\x62\x63\x64"
+  println(b1 == b2) // true
 }
 ```
 

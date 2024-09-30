@@ -233,6 +233,7 @@ fn init {
 ```
 
 #### Automatically insert `Some` when supplying optional arguments
+
 It is quite often optional arguments have type `T?` with `None` as default value.
 In this case, passing the argument explicitly requires wrapping a `Some`:
 
@@ -258,7 +259,7 @@ fn main {
 
 Sometimes, it is also useful to pass a value of type `T?` directly,
 for example when forwarding optional argument.
-MoonBit provides a syntax `label?=value` for this, with  `~label?` being an abbreviation of `label?=label`:
+MoonBit provides a syntax `label?=value` for this, with `~label?` being an abbreviation of `label?=label`:
 
 ```moonbit
 fn image(~width? : Int, ~height? : Int) -> Image { ... }
@@ -266,7 +267,6 @@ fn fixed_width_image(~height? : Int) -> Image {
   image(width=1920, ~height?)
 }
 ```
-
 
 ### Autofill arguments
 
@@ -327,7 +327,6 @@ Note that a conditional expression always returns a value in MoonBit, and the re
 ```moonbit
 let initial = if size < 1 { 1 } else { size }
 ```
-
 
 ### While loop
 
@@ -519,9 +518,9 @@ fn main {
 
 ### Guard Statement
 
-The `guard` statement is used to check a specified invariant. 
-If the condition of the invariant is satisfied, the program continues executing 
-the subsequent statements and returns. If the condition is not satisfied (i.e., false), 
+The `guard` statement is used to check a specified invariant.
+If the condition of the invariant is satisfied, the program continues executing
+the subsequent statements and returns. If the condition is not satisfied (i.e., false),
 the code in the `else` block is executed and its evaluation result is returned (the subsequent statements are skipped).
 
 ```moonbit
@@ -530,9 +529,9 @@ guard index >= 0 && index < len else {
 }
 ```
 
-The `guard` statement also supports pattern matching: in the following example, 
-`getProcessedText` assumes that the input `path` points to resources that are all plain text, 
-and it uses the `guard` statement to ensure this invariant. Compared to using 
+The `guard` statement also supports pattern matching: in the following example,
+`getProcessedText` assumes that the input `path` points to resources that are all plain text,
+and it uses the `guard` statement to ensure this invariant. Compared to using
 a `match` statement, the subsequent processing of `text` can have one less level of indentation.
 
 ```moonbit
@@ -543,24 +542,23 @@ enum Resource {
 }
 
 fn getProcessedText(resources : Map[String, Resource], path : String) -> String!Error {
-  guard let Some(PlainText(text)) = resources[path] else { 
+  guard let Some(PlainText(text)) = resources[path] else {
     None => fail!("\{path} not found")
     Some(Folder(_)) => fail!("\{path} is a folder")
     Some(JsonConfig(_)) => fail!("\{path} is a json config")
   }
-  ... 
+  ...
   process(text)
 }
 ```
 
-When the `else` part is omitted, the program terminates if the condition specified 
+When the `else` part is omitted, the program terminates if the condition specified
 in the `guard` statement is not true or cannot be matched.
 
 ```moonbit
-guard condition // equivalent to `guard condition else { panic() }` 
+guard condition // equivalent to `guard condition else { panic() }`
 guard let Some(x) = expr // equivalent to `guard let Some(x) = expr else { _ => panic() }`
 ```
-
 
 ## Iterator
 
