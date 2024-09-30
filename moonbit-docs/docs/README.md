@@ -678,15 +678,15 @@ let e = not(a)
 
 MoonBit have integer type and floating point type:
 
-| type     | description                                                                     | example |
-| -------- | ------------------------------------------------------------------------------- | ------- |
-| `Int`    | 32-bit signed integer                                                           | `42`    |
-| `Int64`  | 64-bit signed integer                                                           | `1000L` |
-| `UInt`   | 32-bit unsigned integer                                                         | `14U`   |
-| `UInt64` | 64-bit unsigned integer                                                         | `14UL`  |
-| `Double` | 64-bit floating point, defined by IEEE754                                       | `3.14`  |
-| `Float`  | 32-bit floating point ｜ `(3.14 : Float)`                                       |
-| `BigInt` | represents numeric values larger than other types ｜ `10000000000000000000000N` |
+| type     | description                                       | example                    |
+| -------- | ------------------------------------------------- | -------------------------- |
+| `Int`    | 32-bit signed integer                             | `42`                       |
+| `Int64`  | 64-bit signed integer                             | `1000L`                    |
+| `UInt`   | 32-bit unsigned integer                           | `14U`                      |
+| `UInt64` | 64-bit unsigned integer                           | `14UL`                     |
+| `Double` | 64-bit floating point, defined by IEEE754         | `3.14`                     |
+| `Float`  | 32-bit floating point                             | `(3.14 : Float)`           |
+| `BigInt` | represents numeric values larger than other types | `10000000000000000000000N` |
 
 MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
