@@ -1965,9 +1965,15 @@ trait ToMyBinaryProtocol {
 }
 
 impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
-impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
-impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
-impl[X : ToMyBinaryProtocol] for Array[X] with to_my_binary_protocol(arr, b) { ... }
+
+impl ToMyBinaryProtocol for UInt with to_my_binary_protocol(x, b) { ... }
+
+impl[X : ToMyBinaryProtocol] ToMyBinaryProtocol for Array[X] with to_my_binary_protocol(
+  arr,
+  b
+) {
+  ...
+}
 ```
 
 在搜索某个接口的实现时，`impl` 比普通方法有更高的优先级，

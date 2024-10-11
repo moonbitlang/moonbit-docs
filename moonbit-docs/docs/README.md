@@ -1991,9 +1991,15 @@ trait ToMyBinaryProtocol {
 }
 
 impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
-impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
-impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
-impl[X : ToMyBinaryProtocol] for Array[X] with to_my_binary_protocol(arr, b) { ... }
+
+impl ToMyBinaryProtocol for UInt with to_my_binary_protocol(x, b) { ... }
+
+impl[X : ToMyBinaryProtocol] ToMyBinaryProtocol for Array[X] with to_my_binary_protocol(
+  arr,
+  b
+) {
+  ...
+}
 ```
 
 When searching for the implementation of a trait, `impl`s have a higher priority, so they can be used to override ordinary methods with undesirable behavior. `impl`s can only be used to implement the specified trait. They cannot be called directly like ordinary methods. Furthermore, _only the package of the type or the package of the trait can define an implementation_. For example, only `@pkg1` and `@pkg2` are allowed to define `impl @pkg1.Trait for @pkg2.Type` for type `@pkg2.Type`. This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of `impl`s.
