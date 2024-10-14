@@ -2171,6 +2171,18 @@ Pragmas are annotations inside doc comments. They all take the form `/// @word .
   }
   ```
 
+## Special Syntax
+
+### TODO syntax
+
+The `todo` syntax (`...`) is a special construct used to mark sections of code that are not yet implemented or are placeholders for future functionality. For example:
+
+```moonbit
+fn todo_in_func() -> Int {
+  ...
+}
+```
+
 ## MoonBit's build system
 
 The introduction to the build system is available at [MoonBit's Build System Tutorial](https://moonbitlang.github.io/moon/).
