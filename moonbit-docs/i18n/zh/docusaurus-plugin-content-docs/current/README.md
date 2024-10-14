@@ -2152,6 +2152,18 @@ fn reverse[T](xs : Array[T]) -> Array[T] {
   }
   ```
 
+## 特殊语法
+
+### TODO 语法
+
+MoonBit 提供了 `TODO` 语法（`...`），用于标记未完成的代码块。例如：
+
+```moonbit
+fn todo_in_func() -> Int {
+  ...
+}
+```
+
 ## MoonBit 的构建系统
 
 构建系统的介绍参见 [MoonBit 的构建系统教程](https://moonbitlang.github.io/moon/zh/)。
