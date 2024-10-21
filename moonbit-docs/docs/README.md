@@ -1206,6 +1206,24 @@ fn init {
 }
 ```
 
+### Type alias
+MoonBit supports type alias via the syntax `typealias Name = TargetType`:
+
+```moonbit
+pub typealias Index = Int
+// type alias are private by default
+typealias MapString[X] = Map[String, X]
+```
+
+unlike all other kinds of type declaration above, type alias does not define a new type,
+it is merely a type macro that behaves exactly the same as its definition.
+So for example one cannot define new methods or implement traits for a type alias.
+
+Type alias can be used to perform incremental code refactor.
+For example, if you want to move a type `T` from `@pkgA` to `@pkgB`,
+you can leave a type alias `typealias T = @pkgB.T` in `@pkgA`, and **incrementally** port uses of `@pkgA.T` to `@pkgB.T`.
+The type alias can be removed after all uses of `@pkgA.T` is migrated to `@pkgB.T`.
+
 ## Pattern Matching
 
 We have shown a use case of pattern matching for enums, but pattern matching is not restricted to enums. For example, we can also match expressions against Boolean values, numbers, characters, strings, tuples, arrays, and struct literals. Since there is only one case for those types other than enums, we can pattern match them using `let` binding instead of `match` expressions. Note that the scope of bound variables in `match` is limited to the case where the variable is introduced, while `let` binding will introduce every variable to the current scope. Furthermore, we can use underscores `_` as wildcards for the values we don't care about, use `..` to ignore remaining fields of struct or elements of array.
