@@ -127,10 +127,11 @@ pub fn to_string(self : Universe) -> String {
       let idx = self.get_index(r, c)
       let cell = self.cells[idx]
       // No buffer implementation?
-      cells = cells + match cell {
-        Alive => "▅"
-        Dead => "☐"
-      }
+      cells = cells +
+        (match cell {
+          Alive => "▅"
+          Dead => "☐"
+        })
       c = c + 1
     }
     cells = cells + "\n"
@@ -138,4 +139,3 @@ pub fn to_string(self : Universe) -> String {
   }
   cells
 }
-
