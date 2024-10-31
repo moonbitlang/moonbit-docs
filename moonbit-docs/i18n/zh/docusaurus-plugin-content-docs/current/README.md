@@ -719,9 +719,7 @@ let bigint : BigInt = 42
 let a = "兔rabbit"
 println(a[0]) // output: 兔
 println(a[1]) // output: r
-```
 
-```moonbit
 let b =
   #| Hello
   #| MoonBit
@@ -739,14 +737,34 @@ let b =
 | `\u5154`,`\u{1F600}` | Unicode 字符转义序列         |
 
 MoonBit 支持字符串插值，它可以把字符串中内插的变量替换为变量具体的值。
-这个特性能够简化动态拼接字符串的过程。
+这个特性能够简化动态拼接字符串的过程。用于字符串内插的变量必须实现了 `to_string` 方法。
 
 ```moonbit
 let x = 42
 println("The answer is \{x}")
 ```
 
-用于字符串内插的变量必须支持 `to_string` 方法。
+多行字符串默认不支持插值转义，但可以通过将行首的`#|`改为`$|`单独为某行开启插值转义：
+
+```moonbit
+let lang = "MoonBit"
+let str = 
+  #| Hello
+  #| ---
+  $| \{lang}\n
+  #| ---
+println(str)
+```
+
+输出如下
+
+```
+ Hello
+ ---
+ MoonBit
+
+ ---
+```
 
 ### 字符
 
