@@ -1434,15 +1434,15 @@ let result =
 
 ### Bitwise Operator
 
-MoonBit supports C-Style bitwise operators for both 32 bits and 64 bits `Int` and `UInt`, formatter will automatically insert parentheses for bitwise operators to avoid ambiguity.
+MoonBit supports C-Style bitwise operators.
 
 | Operator | Perform |
 | -------- | ------- |
 | `&`      | `land`  |
 | `\|`     | `lor`   |
 | `^`      | `lxor`  |
-| `<<`     | `shl`   |
-| `>>`     | `shr`   |
+| `<<`     | `op_shl`   |
+| `>>`     | `op_shr`   |
 
 ## Error Handling
 
