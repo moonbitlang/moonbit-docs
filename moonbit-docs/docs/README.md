@@ -763,16 +763,34 @@ In double quotes string, a backslash followed by certain special characters form
 | `\o102`              | Octal escape sequence                                |
 | `\u5154`,`\u{1F600}` | Unicode escape sequence                              |
 
-MoonBit supports string interpolation. It enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text.
+MoonBit supports string interpolation. It enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text. Variables used for string interpolation must support the `to_string` method.
 
 ```moonbit
 let x = 42
 println("The answer is \{x}")
 ```
 
-Variables used for string interpolation must support the `to_string` method.
+Multi-line strings do not support interpolation by default, but you can enable interpolation for a specific line by changing the leading `#|` to `$|`:
 
-### Char
+```moonbit
+let lang = "MoonBit"
+let str = 
+  #| Hello
+  #| ---
+  $| \{lang}\n
+  #| ---
+println(str)
+```
+
+Output:
+
+```
+ Hello
+ ---
+ MoonBit
+
+ ---
+```### Char
 
 `Char` is an integer representing a Unicode code point.
 
