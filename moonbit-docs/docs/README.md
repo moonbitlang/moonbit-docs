@@ -790,7 +790,9 @@ Output:
  MoonBit
 
  ---
-```### Char
+```
+
+### Char
 
 `Char` is an integer representing a Unicode code point.
 
