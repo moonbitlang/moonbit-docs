@@ -60,7 +60,7 @@ fn bar() -> Int {
 
 - 值字面量（例如布尔值、数字、字符、字符串、数组、元组、结构体）
 - 算术、逻辑和比较运算
-- 访问数组元素（例如 `a[0]`）、结构体字段（例如 `r.x`）或元组的元素（例如 `t.0`）
+- 访问数组元素（例如 `a[0]`）、结构体字段（例如 `r.x`）或元组的元素（例如 `t._`）
 - 变量和（大写字母开头的）枚举构造器
 - 匿名局部函数定义
 - `match` 和 `if` 表达式
@@ -1184,12 +1184,12 @@ fn init {
 }
 ```
 
-除了模式匹配，还可以使用 `.0` 提取新类型的内部表示：
+除了模式匹配，还可以使用 `._` 提取新类型的内部表示：
 
 ```moonbit
 fn init {
   let id: UserId = UserId(1)
-  let uid: Int = id.0
+  let uid: Int = id._
   println(uid)
 }
 ```
@@ -1553,7 +1553,7 @@ fn main {
 ```moonbit live
 type T Int
 type! E Int derive(Show)
-fn f(self: T) -> Unit!E { raise E(self.0) }
+fn f(self: T) -> Unit!E { raise E(self._) }
 fn main {
   let x = T(42)
   try f!(x) { e => println(e) }
@@ -2065,7 +2065,7 @@ trait Animal {
 type Duck String
 fn Duck::make(name: String) -> Duck { Duck(name) }
 fn speak(self: Duck) -> Unit {
-  println(self.0 + ": quack!")
+  println(self._ + ": quack!")
 }
 
 type Fox String
