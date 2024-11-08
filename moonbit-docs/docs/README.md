@@ -1216,12 +1216,12 @@ fn init {
 }
 ```
 
-Besides pattern matching, you can also use `.0` to extract the internal representation of newtypes:
+Besides pattern matching, you can also use `._` to extract the internal representation of newtypes:
 
 ```moonbit
 fn init {
   let id: UserId = UserId(1)
-  let uid: Int = id.0
+  let uid: Int = id._
   println(uid)
 }
 ```
@@ -1609,7 +1609,7 @@ operator. For example:
 ```moonbit live
 type T Int
 type! E Int derive(Show)
-fn f(self: T) -> Unit!E { raise E(self.0) }
+fn f(self: T) -> Unit!E { raise E(self._) }
 fn main {
   let x = T(42)
   try f!(x) { e => println(e) }
@@ -2093,7 +2093,7 @@ trait Animal {
 type Duck String
 fn Duck::make(name: String) -> Duck { Duck(name) }
 fn speak(self: Duck) -> Unit {
-  println(self.0 + ": quack!")
+  println(self._ + ": quack!")
 }
 
 type Fox String
