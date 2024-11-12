@@ -31,6 +31,8 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang
 
 This automatically installs MoonBit in `$HOME/.moon` and adds it to your `PATH`.
 
+If you encounter `moon` not found after installation, try restarting your terminal or vscode to let the environment variable take effect.
+
 Do notice that MoonBit is not production-ready at the moment, it's under active development. To update MoonBit, just run the commands above again.
 
 Running `moon help` gives us a bunch of subcommands. But right now the only commands we need are `build` `run` and `new`.
