@@ -2,25 +2,25 @@
 
 ## Introduction
 
-In the previous article, we discussed the basic implementation of a segment tree. That tree only allowed interval queries (single-point modifications and queries were also possible), but it couldn't handle interval modifications, such as adding a value to all elements in a given range.
+In the previous article, we discussed the basic implementation of a segment tree. That tree only allowed range queries (single-point modifications and queries were also possible), but it couldn't handle range modifications, such as adding a value to all elements in a given range.
 
-In this session, we will deepen the abstraction by introducing the concept of **LazyTag** to handle interval modifications, creating a more functional segment tree.
+In this session, we will deepen the abstraction by introducing the concept of **LazyTag** to handle range modifications, creating a more functional segment tree.
 
-## How to Implement Interval Modifications?
+## How to Implement Range Modifications?
 
 First, let's imagine what happens if we add a number to all elements in a range on the segment tree. How would we do this using a straightforward approach?
 
 ![1](./1.svg)
 
-Take the segment tree from the last lesson as an example. In the figure below, we add 1 to the interval [4, 7]. You'll notice that we need to rebuild and maintain all parts of the tree that cover this range, which is too costly.
+Take the segment tree from the last lesson as an example. In the figure below, we add 1 to the range [4, 7]. You'll notice that we need to rebuild and maintain all parts of the tree that cover this range, which is too costly.
 
 Is there a better way? Of course! We can use **LazyTag**.
 
 ![2](./2.svg)
 
-Consider that instead of modifying every affected part, we mark the smallest covering interval with a "+1" tag. Based on the length of the interval, we calculate its value and merge it upward. Following the complexity of querying from the last lesson, this operation would be O(log N).
+Consider that instead of modifying every affected part, we mark the smallest covering range with a "+1" tag. Based on the length of the range, we calculate its value and merge it upward. Following the complexity of querying from the last lesson, this operation would be O(log N).
 
-However, there's a problem. While querying intervals like [1, 7] or [4, 7] works fine, what if we query [4, 6]? The minimal covering intervals are [4, 5] and [6, 6], not [4, 7], so our tag doesn't propagate to lower nodes.
+However, there's a problem. While querying ranges like [1, 7] or [4, 7] works fine, what if we query [4, 6]? The minimal covering ranges are [4, 5] and [6, 6], not [4, 7], so our tag doesn't propagate to lower nodes.
 
 Here’s where the **Lazy** aspect of LazyTag comes into play.
 
@@ -70,7 +70,7 @@ enum Node {
 } derive(Show)
 ```
 
-This allows for clearer initialization and pattern matching, making the code easier to follow. We've also abstracted the `Data` type, adding a `len` attribute to represent the length of the current interval, which is useful for calculating the node's value.
+This allows for clearer initialization and pattern matching, making the code easier to follow. We've also abstracted the `Data` type, adding a `len` attribute to represent the length of the current range, which is useful for calculating the node's value.
 
 ### Tree Construction
 
@@ -110,7 +110,7 @@ fn build(data: ArrayView[Int]) -> Node {
 }
 ```
 
-### LazyTag and Interval Modifications
+### LazyTag and Range Modifications
 
 A node receiving a LazyTag is handled by the `apply` function. The key logic here is how the tag is merged and how the value is computed based on the node’s length:
 
@@ -137,9 +137,9 @@ fn apply(self: Node, v: LazyTag) -> Node {
 }
 ```
 
-This code allows a node to compute its value based on its interval length and the applied LazyTag. It also merges existing tags correctly.
+This code allows a node to compute its value based on its range length and the applied LazyTag. It also merges existing tags correctly.
 
-Next, we implement interval modifications:
+Next, we implement range modifications:
 
 ```moonbit
 fn modify(
@@ -163,7 +163,7 @@ fn modify(
 
 The logic is similar to the query function from the previous lesson, but now each relevant node applies the necessary LazyTag for the modification.
 
-Interestingly, even with interval modifications, this segment tree remains persistent (immutable). The `modify` function returns a new tree without altering the original, reflecting the recursive and functional nature of the code. Since MoonBit uses garbage collection, there’s no need for explicit pointers, unlike in Rust.
+Interestingly, even with range modifications, this segment tree remains persistent (immutable). The `modify` function returns a new tree without altering the original, reflecting the recursive and functional nature of the code. Since MoonBit uses garbage collection, there’s no need for explicit pointers, unlike in Rust.
 
 ### Queries
 
@@ -193,7 +193,7 @@ fn query(self: Node, l: Int, r: Int, query_l: Int, query_r: Int) -> Node {
 
 ## Conclusion
 
-With this, we have a segment tree that supports interval modifications and is much more functional!
+With this, we have a segment tree that supports range modifications and is much more functional!
 
 In the next lesson, we’ll add multiplication support to the segment tree and explore some use cases for immutable segment trees. Stay tuned!
 
