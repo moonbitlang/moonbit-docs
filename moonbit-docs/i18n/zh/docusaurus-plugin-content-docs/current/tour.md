@@ -9,16 +9,9 @@
 
 ## 安装
 
-### 语言插件
+### 语言环境下载
 
-目前 MoonBit 提供的开发支持都是通过 VS Code 插件实现的。转到 [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=moonbit.moonbit-lang) 来下载 MoonBit 语言支持。
-
-### 工具链
-
-> （推荐方式）若您已安装了上述插件，可以通过 action menu 中的 'Install moonbit toolchain' 下载工具链并跳过这部分介绍。
-> ![runtime-installation](./imgs/runtime-installation.png)
-
-除去插件支持外，我们还提供一键安装脚本：Linux 和 macOS 用户可以通过以下命令安装
+通过一键安装脚本：Linux 和 macOS 用户可以通过以下命令安装
 
 ```bash
 curl -fsSL https://cli.moonbitlang.cn/install/unix.sh | bash
@@ -31,6 +24,12 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang
 ```
 
 安装脚本会将工具链安装到 `$HOME/.moon` 下，并自己添加到 `PATH` 环境变量里。
+
+安装完成后请重新开启终端控制台，并输入 `moon version` 得到类似下面信息表示安装完成。
+
+```
+moon 0.1.20241106 (79e45ae 2024-11-06)
+```
 
 MoonBit 目前处于活跃开发的阶段，尚不满足生产环境的需求。若需要更新，只需再次运行上述命令即可。
 
@@ -53,7 +52,20 @@ my-project
 
 这是一个很典型的项目结构，试试运行 `moon run src/main`。
 
-现在可以开始我们的月兔之旅了。
+
+
+
+### 语言插件
+
+目前 MoonBit 提供的开发支持都是通过 VS Code 插件实现的。转到 [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=moonbit.moonbit-lang) 来下载 MoonBit 语言支持。
+
+### 工具链
+
+> （推荐方式）若您已安装了上述插件，可以通过 action menu 中的 `Install moonbit toolchain` 下载工具链并跳过这部分介绍。
+> ![runtime-installation](./imgs/runtime-installation.png)
+
+
+
 
 ## 开始编码
 
