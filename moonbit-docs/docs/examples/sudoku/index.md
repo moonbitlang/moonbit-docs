@@ -391,6 +391,6 @@ The purpose of games is to relieve boredom and bring joy. If playing a game beco
 
 Let's play with MoonBit with ease!
 
-Visit MoonBit [Gallery](https://www.moonbitlang.com/gallery/sudoku/) to play with the Sudoku solver writen in MoonBit. Click [this link](https://github.com/myfreess/sudoku) to view the full source code.
+Visit MoonBit [Gallery](https://www.moonbitlang.com/gallery/sudoku/) to play with the Sudoku solver written in MoonBit. Click [this link](https://github.com/myfreess/sudoku) to view the full source code.
 
 This tutorial references Norvig's blog: [http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)
