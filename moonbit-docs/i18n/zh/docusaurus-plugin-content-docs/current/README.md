@@ -153,20 +153,20 @@ fn main {
 
 ### 带标签的参数
 
-可以用 `~label : Type` 的语法为函数声明带标签的参数。函数体内参数的名字也是 `label`：
+可以用 `label~ : Type` 的语法为函数声明带标签的参数。函数体内参数的名字也是 `label`：
 
 ```moonbit
-fn labelled(~arg1 : Int, ~arg2 : Int) -> Int {
+fn labelled(arg1~ : Int, arg2~ : Int) -> Int {
   arg1 + arg2
 }
 ```
 
-调用函数时，可以用 `label=arg` 的语法提供带标签的参数。`label=label` 可以简写成 `~label`：
+调用函数时，可以用 `label=arg` 的语法提供带标签的参数。`label=label` 可以简写成 `label~`：
 
 ```moonbit
 fn init {
   let arg1 = 1
-  println(labelled(arg2=2, ~arg1)) // 3
+  println(labelled(arg2=2, arg1~)) // 3
 }
 ```
 
@@ -174,10 +174,10 @@ fn init {
 
 ### 可选的参数
 
-可选的参数是带有默认值的带标签参数。声明可选的参数的语法是 `~label : Type = default_expr`。调用函数时，如果没有提供这个参数，就会使用默认值作为参数：
+可选的参数是带有默认值的带标签参数。声明可选的参数的语法是 `label~ : Type = default_expr`。调用函数时，如果没有提供这个参数，就会使用默认值作为参数：
 
 ```moonbit live
-fn optional(~opt : Int = 42) -> Int {
+fn optional(opt~ : Int = 42) -> Int {
   opt
 }
 
@@ -190,7 +190,7 @@ fn main {
 每次使用默认参数调用一个函数时，都会重新求值默认值的表达式，也会被重新触发其中的副作用。例如：
 
 ```moonbit live
-fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
+fn incr(counter~ : Ref[Int] = { val: 0 }) -> Ref[Int] {
   counter.val = counter.val + 1
   counter
 }
@@ -199,8 +199,8 @@ fn main {
   println(incr()) // 1
   println(incr()) // 依然是 1，因为重新求值了默认表达式，产生了一个新的 Ref
   let counter : Ref[Int] = { val: 0 }
-  println(incr(~counter)) // 1
-  println(incr(~counter)) // 2，因为两次调用使用了同一个 Ref
+  println(incr(counter~)) // 1
+  println(incr(counter~)) // 2，因为两次调用使用了同一个 Ref
 }
 ```
 
@@ -209,7 +209,7 @@ fn main {
 ```moonbit live
 let default_counter : Ref[Int] = { val: 0 }
 
-fn incr(~counter : Ref[Int] = default_counter) -> Int {
+fn incr(counter~ : Ref[Int] = default_counter) -> Int {
   counter.val = counter.val + 1
   counter.val
 }
@@ -223,7 +223,7 @@ fn main {
 默认值可以依赖于前面的参数，例如：
 
 ```moonbit
-fn sub_array[X](xs : Array[X], ~offset : Int, ~len : Int = xs.length() - offset) -> Array[X] {
+fn sub_array[X](xs : Array[X], offset~ : Int, len~ : Int = xs.length() - offset) -> Array[X] {
   ... // 生成 xs 的一个从 offset 开始、长度为 len 的子数组
 }
 
@@ -238,29 +238,29 @@ fn main {
 许多可选参数的类型是 `T?`，默认值是 `None`。显式提供这种参数时，需要裹一层构造器 `Some`：
 
 ```moonbit
-fn image(~width : Int? = None, ~height : Int? = None) -> Image { ... }
+fn image(width~ : Int? = None, height~ : Int? = None) -> Image { ... }
 fn main {
   let img = image(width=Some(1920), height=Some(1080)) // 丑!
   ...
 }
 ```
 
-MoonBit 提供了一种特殊的可选参数来解决这个问题。可以用 `~label? : T` 来声明一个可选参数，这个可选参数的类型是 `T?`，默认值是 `None`。调用者显式提供这一参数时，MoonBit 会自动在参数上插入一层 `Some`：
+MoonBit 提供了一种特殊的可选参数来解决这个问题。可以用 `label? : T` 来声明一个可选参数，这个可选参数的类型是 `T?`，默认值是 `None`。调用者显式提供这一参数时，MoonBit 会自动在参数上插入一层 `Some`：
 
 ```moonbit
-fn image(~width? : Int, ~height? : Int) -> Image { ... }
+fn image(width? : Int, height? : Int) -> Image { ... }
 fn main {
   let img = image(width=1920, height=1080) // 好多了!
   ...
 }
 ```
 
-不过，有时依然需要直接直接传递一个类型为 `T?` 的值，例如在转发一个可选参数时。为此，MoonBit 提供了一个语法 `label?=value`，表示直接把类型为 `T?` 的值 `value` 传递给参数 `label`。此外，`label?=label` 可以简写成 `~label?`：
+不过，有时依然需要直接直接传递一个类型为 `T?` 的值，例如在转发一个可选参数时。为此，MoonBit 提供了一个语法 `label?=value`，表示直接把类型为 `T?` 的值 `value` 传递给参数 `label`。此外，`label?=label` 可以简写成 `label?`：
 
 ```moonbit
-fn image(~width? : Int, ~height? : Int) -> Image { ... }
-fn fixed_width_image(~height? : Int) -> Image {
-  image(width=1920, ~height?)
+fn image(width? : Int, height? : Int) -> Image { ... }
+fn fixed_width_image(height? : Int) -> Image {
+  image(width=1920, height?)
 }
 ```
 
@@ -271,7 +271,7 @@ MoonBit 能够自动在每次函数调用时填充某些特定类型的参数，
 目前 MoonBit 支持两种类型的自动填充参数。代表整个函数调用在源码中位置的 `SourceLoc` 类型，以及包含每个参数各自的位置的 `ArgsLoc` 类型：
 
 ```moonbit
-fn f(_x : Int, _y : Int, ~loc : SourceLoc = _, ~args_loc : ArgsLoc = _) -> Unit {
+fn f(_x : Int, _y : Int, loc~ : SourceLoc = _, args_loc~ : ArgsLoc = _) -> Unit {
   println("整个函数调用的位置：\{loc}")
   println("各个参数的位置：\{args_loc}")
 }
@@ -1055,7 +1055,7 @@ fn is_singleton(l: List) -> Bool {
 ```moonbit live
 enum E {
   // `x` 和 `y` 是带标签的参数
-  C(~x : Int, ~y : Int)
+  C(x~ : Int, y~ : Int)
 }
 
 // 模式匹配有带标签参数的构造器
@@ -1063,9 +1063,9 @@ fn f(e : E) -> Unit {
   match e {
     // `标签=匹配参数的模式`
     C(x=0, y=0) => println("0!")
-    // `~x` 是 `x=x` 的简写
+    // `x~` 是 `x=x` 的简写
     // 未被匹配的带标签参数可以用 `..` 来忽略
-    C(~x, ..) => println(x)
+    C(x~, ..) => println(x)
   }
 }
 
@@ -1073,7 +1073,7 @@ fn f(e : E) -> Unit {
 fn main {
   f(C(x=0, y=0)) // `标签=参数的值`
   let x = 0
-  f(C(~x, y=1)) // `~x` 是 `x=x` 的简写
+  f(C(x~, y=1)) // `x~` 是 `x=x` 的简写
 }
 ```
 
@@ -1081,8 +1081,8 @@ fn main {
 
 ```moonbit live
 enum Object {
-  Point(~x : Double, ~y : Double)
-  Circle(~x : Double, ~y : Double, ~radius : Double)
+  Point(x~ : Double, y~ : Double)
+  Circle(x~ : Double, y~ : Double, radius~ : Double)
 }
 
 type! NotImplementedError derive(Show)
@@ -1124,7 +1124,7 @@ MoonBit 支持给构造器声明可变的字段。这对实现可变数据结构
 enum Tree[X] {
   Nil
   // only labelled arguments can be mutable
-  Node(mut ~value : X, mut ~left : Tree[X], mut ~right : Tree[X], mut ~parent : Tree[X])
+  Node(mut value~ : X, mut left~ : Tree[X], mut right~ : Tree[X], mut parent~ : Tree[X])
 }
 
 // 一个使用可变的二叉搜索树实现的集合
@@ -1138,9 +1138,9 @@ fn Set::insert[X : Compare](self : Set[X], x : X) -> Unit {
 
 // 像一棵可变的二叉搜索树中插入一个新的元素。
 // 返回插入后二叉搜索树新的根节点
-fn Tree::insert[X : Compare](self : Tree[X], x : X, ~parent : Tree[X]) -> Tree[X] {
+fn Tree::insert[X : Compare](self : Tree[X], x : X, parent~ : Tree[X]) -> Tree[X] {
   match self {
-    Nil => Node(value=x, left=Nil, right=Nil, ~parent)
+    Nil => Node(value=x, left=Nil, right=Nil, parent~)
     Node(_) as node => {
       let order = x.compare(node.value)
       if order == 0 {
@@ -1412,8 +1412,8 @@ type! E1 Int  // 错误类型 E1 具有一个构造函数 E1，并带有一个 I
 type! E2      // 错误类型 E2 具有一个没有负载的构造函数 E2
 type! E3 {    // 错误类型 E3 类似于普通的枚举类型，有三个构造函数
   A
-  B(Int, ~x : String)
-  C(mut ~x : String, Char, ~y : Bool)
+  B(Int, x~ : String)
+  C(mut x~ : String, Char, y~ : Bool)
 }
 
 ```
@@ -1840,7 +1840,7 @@ pub fn length[A](self : MyList[A]) -> Int {
   self.elems.length()
 }
 
-pub fn op_as_view[A](self : MyList[A], ~start : Int, ~end : Int) -> MyListView[A] {
+pub fn op_as_view[A](self : MyList[A], start~ : Int, end~ : Int) -> MyListView[A] {
   println("op_as_view: [\{start},\{end})")
   if start < 0 || end > self.length() { abort("index out of bounds") }
   { ls: self, start, end }

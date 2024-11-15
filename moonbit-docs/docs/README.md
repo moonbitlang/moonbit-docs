@@ -152,20 +152,20 @@ fn main {
 
 ### Labelled arguments
 
-Functions can declare labelled argument with the syntax `~label : Type`. `label` will also serve as parameter name inside function body:
+Functions can declare labelled argument with the syntax `label~ : Type`. `label` will also serve as parameter name inside function body:
 
 ```moonbit
-fn labelled(~arg1 : Int, ~arg2 : Int) -> Int {
+fn labelled(arg1~ : Int, arg2~ : Int) -> Int {
   arg1 + arg2
 }
 ```
 
-Labelled arguments can be supplied via the syntax `label=arg`. `label=label` can be abbreviated as `~label`:
+Labelled arguments can be supplied via the syntax `label=arg`. `label=label` can be abbreviated as `label~`:
 
 ```moonbit
 fn init {
   let arg1 = 1
-  println(labelled(arg2=2, ~arg1)) // 3
+  println(labelled(arg2=2, arg1~)) // 3
 }
 ```
 
@@ -173,10 +173,10 @@ Labelled function can be supplied in any order. The evaluation order of argument
 
 ### Optional arguments
 
-A labelled argument can be made optional by supplying a default expression with the syntax `~label : Type = default_expr`. If this argument is not supplied at call site, the default expression will be used:
+A labelled argument can be made optional by supplying a default expression with the syntax `label~ : Type = default_expr`. If this argument is not supplied at call site, the default expression will be used:
 
 ```moonbit live
-fn optional(~opt : Int = 42) -> Int {
+fn optional(opt~ : Int = 42) -> Int {
   opt
 }
 
@@ -189,7 +189,7 @@ fn main {
 The default expression will be evaluated every time it is used. And the side effect in the default expression, if any, will also be triggered. For example:
 
 ```moonbit live
-fn incr(~counter : Ref[Int] = { val: 0 }) -> Ref[Int] {
+fn incr(counter~ : Ref[Int] = { val: 0 }) -> Ref[Int] {
   counter.val = counter.val + 1
   counter
 }
@@ -198,8 +198,8 @@ fn main {
   println(incr()) // 1
   println(incr()) // still 1, since a new reference is created every time default expression is used
   let counter : Ref[Int] = { val: 0 }
-  println(incr(~counter)) // 1
-  println(incr(~counter)) // 2, since the same counter is used
+  println(incr(counter~)) // 1
+  println(incr(counter~)) // 2, since the same counter is used
 }
 ```
 
@@ -208,7 +208,7 @@ If you want to share the result of default expression between different function
 ```moonbit live
 let default_counter : Ref[Int] = { val: 0 }
 
-fn incr(~counter : Ref[Int] = default_counter) -> Int {
+fn incr(counter~ : Ref[Int] = default_counter) -> Int {
   counter.val = counter.val + 1
   counter.val
 }
@@ -222,7 +222,7 @@ fn main {
 Default expression can depend on the value of previous arguments. For example:
 
 ```moonbit
-fn sub_array[X](xs : Array[X], ~offset : Int, ~len : Int = xs.length() - offset) -> Array[X] {
+fn sub_array[X](xs : Array[X], offset~ : Int, len~ : Int = xs.length() - offset) -> Array[X] {
   ... // take a sub array of [xs], starting from [offset] with length [len]
 }
 
@@ -238,7 +238,7 @@ It is quite often optional arguments have type `T?` with `None` as default value
 In this case, passing the argument explicitly requires wrapping a `Some`:
 
 ```moonbit
-fn image(~width : Int? = None, ~height : Int? = None) -> Image { ... }
+fn image(width~ : Int? = None, height~ : Int? = None) -> Image { ... }
 fn main {
   let img = image(width=Some(1920), height=Some(1080)) // ugly!
   ...
@@ -246,11 +246,11 @@ fn main {
 ```
 
 Fortunately, MoonBit provides a special kind of optional arguments to solve this problem.
-Optional arguments declared with `~label? : T` has type `T?` and `None` as default value.
+Optional arguments declared with `label? : T` has type `T?` and `None` as default value.
 When supplying this kind of optional argument directly, MoonBit will automatically insert a `Some`:
 
 ```moonbit
-fn image(~width? : Int, ~height? : Int) -> Image { ... }
+fn image(width? : Int, height? : Int) -> Image { ... }
 fn main {
   let img = image(width=1920, height=1080) // much better!
   ...
@@ -259,12 +259,12 @@ fn main {
 
 Sometimes, it is also useful to pass a value of type `T?` directly,
 for example when forwarding optional argument.
-MoonBit provides a syntax `label?=value` for this, with `~label?` being an abbreviation of `label?=label`:
+MoonBit provides a syntax `label?=value` for this, with `label?` being an abbreviation of `label?=label`:
 
 ```moonbit
-fn image(~width? : Int, ~height? : Int) -> Image { ... }
-fn fixed_width_image(~height? : Int) -> Image {
-  image(width=1920, ~height?)
+fn image(width? : Int, height? : Int) -> Image { ... }
+fn fixed_width_image(height? : Int) -> Image {
+  image(width=1920, height?)
 }
 ```
 
@@ -278,7 +278,7 @@ Currently MoonBit supports two types of autofill arguments, `SourceLoc`, which i
 and `ArgsLoc`, which is a array containing the source location of each argument, if any:
 
 ```moonbit
-fn f(_x : Int, _y : Int, ~loc : SourceLoc = _, ~args_loc : ArgsLoc = _) -> Unit {
+fn f(_x : Int, _y : Int, loc~ : SourceLoc = _, args_loc~ : ArgsLoc = _) -> Unit {
   println("loc of whole function call: \{loc}")
   println("loc of arguments: \{args_loc}")
 }
@@ -1088,7 +1088,7 @@ Enum constructors can have labelled argument:
 ```moonbit live
 enum E {
   // `x` and `y` are labelled argument
-  C(~x : Int, ~y : Int)
+  C(x~ : Int, y~ : Int)
 }
 
 // pattern matching constructor with labelled arguments
@@ -1096,9 +1096,9 @@ fn f(e : E) -> Unit {
   match e {
     // `label=pattern`
     C(x=0, y=0) => println("0!")
-    // `~x` is an abbreviation for `x=x`
+    // `x~` is an abbreviation for `x=x`
     // Unmatched labelled arguments can be omitted via `..`
-    C(~x, ..) => println(x)
+    C(x~, ..) => println(x)
   }
 }
 
@@ -1106,7 +1106,7 @@ fn f(e : E) -> Unit {
 fn main {
   f(C(x=0, y=0)) // `label=value`
   let x = 0
-  f(C(~x, y=1)) // `~x` is an abbreviation for `x=x`
+  f(C(x~, y=1)) // `~x` is an abbreviation for `x=x`
 }
 ```
 
@@ -1114,8 +1114,8 @@ It is also possible to access labelled arguments of constructors like accessing 
 
 ```moonbit
 enum Object {
-  Point(~x : Double, ~y : Double)
-  Circle(~x : Double, ~y : Double, ~radius : Double)
+  Point(x~ : Double, y~ : Double)
+  Circle(x~ : Double, y~ : Double, radius~ : Double)
 }
 
 type! NotImplementedError derive(Show)
@@ -1157,7 +1157,7 @@ It is also possible to define mutable fields for constructor. This is especially
 enum Tree[X] {
   Nil
   // only labelled arguments can be mutable
-  Node(mut ~value : X, mut ~left : Tree[X], mut ~right : Tree[X], mut ~parent : Tree[X])
+  Node(mut value~ : X, mut left~ : Tree[X], mut right~ : Tree[X], mut parent~ : Tree[X])
 }
 
 // A set implemented using mutable binary search tree.
@@ -1171,9 +1171,9 @@ fn Set::insert[X : Compare](self : Set[X], x : X) -> Unit {
 
 // In-place insert a new element to a binary search tree.
 // Return the new tree root
-fn Tree::insert[X : Compare](self : Tree[X], x : X, ~parent : Tree[X]) -> Tree[X] {
+fn Tree::insert[X : Compare](self : Tree[X], x : X, parent~ : Tree[X]) -> Tree[X] {
   match self {
-    Nil => Node(value=x, left=Nil, right=Nil, ~parent)
+    Nil => Node(value=x, left=Nil, right=Nil, parent~)
     Node(_) as node => {
       let order = x.compare(node.value)
       if order == 0 {
@@ -1458,8 +1458,8 @@ type! E1 Int  // error type E1 has one constructor E1 with an Int payload
 type! E2      // error type E2 has one constructor E2 with no payload
 type! E3 {    // error type E3 has three constructors like a normal enum type
   A
-  B(Int, ~x : String)
-  C(mut ~x : String, Char, ~y : Bool)
+  B(Int, x~ : String)
+  C(mut x~ : String, Char, y~ : Bool)
 }
 ```
 
@@ -1889,7 +1889,7 @@ pub fn length[A](self : MyList[A]) -> Int {
   self.elems.length()
 }
 
-pub fn op_as_view[A](self : MyList[A], ~start : Int, ~end : Int) -> MyListView[A] {
+pub fn op_as_view[A](self : MyList[A], start~ : Int, end~ : Int) -> MyListView[A] {
   println("op_as_view: [\{start},\{end})")
   if start < 0 || end > self.length() { abort("index out of bounds") }
   { ls: self, start, end }
