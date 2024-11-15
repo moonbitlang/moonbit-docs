@@ -1695,50 +1695,24 @@ fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
 
 ## Access Control
 
-By default, all function definitions and variable bindings are _invisible_ to other packages; types without modifiers are abstract data types, whose name is exported but the internals are invisible. This design prevents unintended exposure of implementation details. You can use the `pub` modifier before `type`/`enum`/`struct`/`let` or top-level function to make them fully visible, or put `priv` before `type`/`enum`/`struct` to make it fully invisible to other packages. You can also use `pub` or `priv` before field names to obtain finer-grained access control. However, it is important to note that:
+By default, all function definitions and variable bindings are _invisible_ to other packages.
+You can use the `pub` modifier before toplevel `let`/`fn` to make them public.
 
-- Struct fields cannot be defined as `pub` within an abstract or private struct since it makes no sense.
-- Enum constructors do not have individual visibility so you cannot use `pub` or `priv` before them.
+There are four different kinds of visibility for types in MoonBit:
 
-```moonbit
-struct R1 {       // abstract data type by default
-  x: Int          // implicitly private field
-  pub y: Int      // ERROR: `pub` field found in an abstract type!
-  priv z: Int     // WARNING: `priv` is redundant!
-}
+- private type, declared with `priv`, completely invisible to the outside world
+- abstract type, which is the default visibility for types. Only the name of an abstract type is visible outside, the internal representation of the type is hidden
+- readonly types, declared with `pub(readonly)`. The internal representation of readonly types are visible outside,
+but users can only read the values of these types from outside, construction and mutation are not allowed
+- fully public types, declared with `pub(all)`. The outside world can freely construct, modify and read values of these types
 
-pub struct R2 {       // explicitly public struct
-  x: Int              // implicitly public field
-  pub y: Int          // WARNING: `pub` is redundant!
-  priv z: Int         // explicitly private field
-}
+Currently, the semantic of `pub` is `pub(all)`. But in the future, the meaning of `pub` will be ported to `pub(readonly)`.
+In addition to the visibility of the type itself, the fields of a public `struct` can be annotated with `priv`,
+which will hide the field from the outside world completely.
+Note that `struct`s with private fields cannot be constructed directly outside,
+but you can update the public fields using the functional struct update syntax.
 
-priv struct R3 {       // explicitly private struct
-  x: Int               // implicitly private field
-  pub y: Int           // ERROR: `pub` field found in a private type!
-  priv z: Int          // WARNING: `priv` is redundant!
-}
-
-enum T1 {       // abstract data type by default
-  A(Int)        // implicitly private variant
-  pub B(Int)    // ERROR: no individual visibility!
-  priv C(Int)   // ERROR: no individual visibility!
-}
-
-pub enum T2 {       // explicitly public enum
-  A(Int)            // implicitly public variant
-  pub B(Int)        // ERROR: no individual visibility!
-  priv C(Int)       // ERROR: no individual visibility!
-}
-
-priv enum T3 {       // explicitly private enum
-  A(Int)             // implicitly private variant
-  pub B(Int)         // ERROR: no individual visibility!
-  priv C(Int)        // ERROR: no individual visibility!
-}
-```
-
-Another useful feature supported in MoonBit is `pub(readonly)` types, which are inspired by [private types](https://v2.ocaml.org/manual/privatetypes.html) in OCaml. In short, values of `pub(readonly)` types can be destructed by pattern matching and the dot syntax, but cannot be constructed or mutated in other packages. Note that there is no restriction within the same package where `pub(readonly)` types are defined.
+Readonly types is a very useful feature, inspired by [private types](https://v2.ocaml.org/manual/privatetypes.html) in OCaml. In short, values of `pub(readonly)` types can be destructed by pattern matching and the dot syntax, but cannot be constructed or mutated in other packages. Note that there is no restriction within the same package where `pub(readonly)` types are defined.
 
 ```moonbit
 // Package A
@@ -2055,6 +2029,58 @@ fn main {
   MyTrait::f(42)
 }
 ```
+
+## Visibility of traits and sealed traits
+There are four visibility for traits, just like `struct` and `enum`: private, abstract, readonly and fully public.
+Private traits are declared with `priv trait`, and they are completely invisible from outside.
+Abstract trait is the default visibility. Only the name of the trait is visible from outside, and the methods in the trait are not exposed.
+Readonly traits are declared with `pub(readonly) trait`, their methods can be involked from outside, but only the current package can add new implementation for readonly traits.
+Finally, fully public traits are declared with `pub(open) trait`, they are open to new implementations outside current package, and their methods can be freely used.
+Currently, `pub trait` defaults to `pub(open) trait`. But in the future, the semantic of `pub trait` will be ported to `pub(readonly)`.
+
+Abstract and readonly traits are sealed, because only the package defining the trait can implement them.
+Implementing a sealed (abstract or readonly) trait outside its package result in compiler error.
+If you are the owner of a sealed trait, and you want to make some implementation available to users of your package,
+make sure there is at least one declaration of the form `impl Trait for Type with ...` in your package.
+Implementations with only regular method and default implementations will not be available outside.
+
+Here's an example of abstract trait:
+
+```moonbit
+trait Number {
+ op_add(Self, Self) -> Self
+ op_sub(Self, Self) -> Self
+}
+
+fn add[N : Number](x : X, y: X) -> X {
+  Number::op_add(x, y)
+}
+
+fn sub[N : Number](x : X, y: X) -> X {
+  Number::op_sub(x, y)
+}
+
+impl Number for Int with op_add(x, y) { x + y }
+impl Number for Int with op_sub(x, y) { x - y }
+
+impl Number for Double with op_add(x, y) { x + y }
+impl Number for Double with op_sub(x, y) { x - y }
+```
+
+From outside this package, users can only see the following:
+
+```moonbit
+trait Number
+
+fn op_add[N : Number](x : N, y : N) -> N
+fn op_sub[N : Number](x : N, y : N) -> N
+
+impl Number for Int
+impl Number for Double
+```
+
+The author of `Number` can make use of the fact that only `Int` and `Double` can ever implement `Number`,
+because new implementations are not allowed outside.
 
 ## Automatically derive builtin traits
 

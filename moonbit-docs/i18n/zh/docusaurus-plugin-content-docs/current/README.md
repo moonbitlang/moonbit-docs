@@ -1637,55 +1637,20 @@ fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
 ## 访问控制
 
 默认情况下，所有函数定义和变量绑定对其他包都是 _不可见_ 的；
-没有修饰符的类型是抽象数据类型，其名称被导出，但内部是不可见的。
-这种设计防止了意外暴露实现细节。
-您可以在 `type`/`fn`/`let` 前使用 `pub` 修饰符使其完全可见，或在 `type`
-前使用 `priv` 修饰符使其对其他包完全不可见。
-您还可以在字段名前使用 `pub` 或 `priv` 获得更细粒度的访问控制。
-但是，请注意：
+您可以在 `fn`/`let` 前使用 `pub` 修饰符使其完全可见。
+类型有四种不同的可见性：
 
-- 在抽象或私有结构体内，所有字段都不能被定义为 `pub`，因为这样没有意义。
-- 枚举类型的构造器没有单独的可见性，所以不能在它们前面使用 `pub` 或 `priv`
+- 私有类型，用 `priv` 修饰，对外完全不可见
+- 抽象类型，这是默认的可见性，无需额外修饰。对外只有名字可见，类型的内部表示不可见。这种设计防止了意外暴露实现细节
+- 只读类型，用 `pub(readonly)` 修饰，其内部表示对外可见，但外部只能读取类型的值，不能构造或修改
+- 公开类型，用 `pub(all)` 修饰，外部可以自由构造、修改、读取这些类型的值
 
-```moonbit
-struct R1 {       // 默认为抽象数据类型
-  x: Int          // 隐式的私有字段
-  pub y: Int      // ERROR: 在抽象类型中找到了 `pub` 字段！
-  priv z: Int     // WARNING: `priv` 是多余的！
-}
+目前，`pub` 修饰符的语义是 `pub(all)`，但未来 `pub` 的语义会调整为 `pub(readonly)`。
+除了类型自身的可见性，一个 `pub(readonly)` 或 `pub(all)` 的结构体的字段可以额外用 `priv` 修饰，
+这样能对外完全隐藏这一字段的存在。
+注意含有私有字段的结构体在外部无法直接构造，但可以用结构体更新语法更新公开的字段。
 
-pub struct R2 {       // 显式的公共结构
-  x: Int              // 隐式的公共字段
-  pub y: Int          // WARNING: `pub` 是多余的！
-  priv z: Int         // 显式的私有字段
-}
-
-priv struct R3 {       // 显式的私有结构
-  x: Int               // 隐式的私有字段
-  pub y: Int           // ERROR: `pub` 字段出现在了私有类型中！
-  priv z: Int          // WARNING: `priv` 是多余的！
-}
-
-enum T1 {       // 默认为抽象数据类型
-  A(Int)        // 隐式的私有变体
-  pub B(Int)    // ERROR: 无独立可见性！
-  priv C(Int)   // ERROR: 无独立可见性！
-}
-
-pub enum T2 {       // 显式的公共枚举
-  A(Int)            // 隐式的公共变体
-  pub B(Int)        // ERROR: 无独立可见性！
-  priv C(Int)       // ERROR: 无独立可见性！
-}
-
-priv enum T3 {       // 显式的私有枚举
-  A(Int)             // 隐式的私有变体
-  pub B(Int)         // ERROR: 无独立可见性！
-  priv C(Int)        // ERROR: 无独立可见性！
-}
-```
-
-MoonBit 中另一个有用的特性是 `pub(readonly)` 类型，其受到了 OCaml [private types](https://v2.ocaml.org/manual/privatetypes.html)的启发。简而言之，`pub(readonly)` 类型的值可以使用模式匹配或点语法析构，但在其他包中，不能被构造或改变。注意到在 `pub(readonly)` 类型定义的同一个包中，它没有任何限制。
+只读类型是一个十分实用的特性，其受到了 OCaml [private types](https://v2.ocaml.org/manual/privatetypes.html)的启发。简而言之，`pub(readonly)` 类型的值可以使用模式匹配或点语法析构，但在其他包中，不能被构造或改变。注意到在 `pub(readonly)` 类型定义的同一个包中，它没有任何限制。
 
 ```moonbit
 // Package A
@@ -2027,6 +1992,58 @@ fn main {
   MyTrait::f(42)
 }
 ```
+
+## 接口的可见性与封闭的接口
+MoonBit 中，接口和类型一样有四种可见性：私有、抽象、只读和完全公开。
+私有接口可以用 `priv trait` 声明，它们在外部是完全不可见的。
+抽象接口是接口的默认可见性。只有接口的名字对外可见，接口中的方法对外是不可见的。
+只读接口可以用 `pub(readonly) trait` 声明，外部可以调用这个接口中的方法，但只有定义这个接口的包可以实现这个接口，外部不能添加新的实现。
+最后，完全公开的接口可以用 `pub(open) trait` 声明，外部可以给这种接口添加新的实现、也可以自由调用其中的方法。
+目前，`pub trait` 默认的语义是 `pub(open) trait`。但未来 `pub trait` 的语义会迁移至 `pub(readonly) trait`。
+
+抽象和只读的接口是 **封闭** 的，因为只有定义接口的包可以为它们添加实现。
+如果尝试在外部实现这些接口，就会产生编译错误。
+如果你是一个封闭接口的所有者，并希望你的用户能够使用你提供的、这些接口的实现，
+那么一定要保证你的包中至少有一处形如 `impl Trait for Type with ...` 的显式声明。
+也就是说，只有普通方法和默认实现的情况下，封闭接口的实现在外部是不可用的。
+
+下面是一个抽象接口的例子：
+
+```moonbit
+trait Number {
+ op_add(Self, Self) -> Self
+ op_sub(Self, Self) -> Self
+}
+
+fn add[N : Number](x : X, y: X) -> X {
+  Number::op_add(x, y)
+}
+
+fn sub[N : Number](x : X, y: X) -> X {
+  Number::op_sub(x, y)
+}
+
+impl Number for Int with op_add(x, y) { x + y }
+impl Number for Int with op_sub(x, y) { x - y }
+
+impl Number for Double with op_add(x, y) { x + y }
+impl Number for Double with op_sub(x, y) { x - y }
+```
+
+在当前包外，用户只能看见下面的内容：
+
+```moonbit
+trait Number
+
+fn op_add[N : Number](x : N, y : N) -> N
+fn op_sub[N : Number](x : N, y : N) -> N
+
+impl Number for Int
+impl Number for Double
+```
+
+由于外部不能给 `Number` 添加新的实现。因此，只有 `Int` 和 `Double` 能够实现 `Number`。
+`Number` 的作者可以在编写程序时利用上这一事实。
 
 ## 自动实现内建接口
 
