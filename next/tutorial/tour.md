@@ -3,7 +3,7 @@
 This guide is intended for newcomers, and it's not meant to be a 5-minute quick tour. This article tries to be a succinct yet easy to understand guide
 for those who haven't programmed in a way that MoonBit enables them to, that is, in a more modern, functional way.
 
-See [the General Introduction](./README.md) if you want to straight delve into the language.
+See [the General Introduction](../language/index.md) if you want to straight delve into the language.
 
 ## Installation
 
