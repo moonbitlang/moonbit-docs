@@ -18,15 +18,20 @@ class MoonBitLexer(RegexLexer):
     tokens = {
         'root': [
             (r"//.*$", token.Comment),
-            (words(('fn', 'if', 'else', 'while', 'for', 'loop', 'match', 'let', 'mut', 'trait', 'impl', 'with'), suffix="\s"), token.Keyword),
-            (words(('true', 'false'), suffix='\s'), token.Keyword),
-            (words(('Array', 'FixedArray', 'Int', 'Int64', 'UInt', 'UInt64', 'Option', 'Result', 'Byte', 'Bool'), suffix='\s'), token.Keyword),
-            (r"(=>)|(\|>)|(->)|[\(\)\{\}\[\]:,\.=+\-*/]", token.Punctuation),
+            (r"#\|.*$", token.String),
+            (r"\$\|.*$", token.String),
+            (r"\'.*\'", token.Literal),
+            (r"\"((\\\")|[^\"])*\"", token.String),
             (r"-?\d+(.\d+)?", token.Number),
+            (words(('type', 'type!', 'enum', 'struct', 'trait'), suffix="\s"), token.Keyword),
+            (words(('fn', 'if', 'else', 'while', 'for', 'loop', 'match', 'let', 'mut', 'impl', 'with', 'derive'), suffix="\s"), token.Keyword),
+            (words(('return', 'break', 'continue'), suffix="\s"), token.Keyword),
+            (words(('try', 'catch', 'raise'), suffix="[\s{]"), token.Keyword),
+            (words(('pub', 'priv', 'pub\\(all\\)', 'pub\\(readonly\\)', 'pub\\(open\\)', 'test'), suffix="\s"), token.Keyword),
+            (words(('true', 'false'), suffix='[?!,\\)\s]'), token.Keyword),
+            (words(('Array', 'FixedArray', 'Int', 'Int64', 'UInt', 'UInt64', 'Option', 'Result', 'Byte', 'Bool', 'Unit', 'String', 'Show', 'Eq', 'Self'), suffix='[?!,\\)\s]'), token.Keyword),
+            (r"(=>)|(\|>)|(->)|(<<)|(>>)|(==)|(&&)|(\|\|)|[\(\)\{\}\[\]:,\.=+\-*/%!?~<>;@&\|]", token.Punctuation),
             (r"[a-zA-Z_][a-zA-Z0-9_]*", token.Name),
-            (r"\'.?\'", token.Literal),
-            (r"\"[^\"]*\"", token.String),
-            (r"#\|.*$", token.Text),
             (r"[\s]", token.Whitespace),
         ]
     }
