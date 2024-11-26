@@ -15,7 +15,7 @@ Currently, MoonBit development support are through VS Code extension. Navigate t
 ### the toolchain
 
 > (Recommended) If you've installed the extension above, the runtime can be directly installed by running 'Install moonbit toolchain' in the action menu and you may skip this part:
-> ![runtime-installation](./imgs/runtime-installation.png)
+> ![runtime-installation](../imgs/runtime-installation.png)
 
 We also provide an installation script: Linux & macOS users can install via
 
