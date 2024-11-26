@@ -1234,6 +1234,37 @@ match expr {
 }
 ```
 
+### 范围模式匹配
+对于内建的整数类型和字符类型 `Char`，MoonBit 允许匹配一个值是否落在某个范围内。
+范围模式的语法是 `a..<b` 或 `a..=b`，其中 `..<` 表示匹配时不包含上界，`..=` 表示包含上界。
+`a` 和 `b` 可以是：
+
+- 字面量
+- 用 `const` 声明的常量
+- `_`，表示在这一侧没有任何约束
+
+下面是一些例子：
+
+```moonbit
+const Zero = 0
+fn sign(x : Int) -> Int {
+  match x {
+    _..<Zero => -1
+    Zero => 0
+    1..<_ => 1
+  }
+}
+
+fn classify_char(c : Char) -> String {
+  match c {
+    'a'..='z' => "lowercase"
+    'A'..='Z' => "uppercase"
+    '0'..='9' => "digit"
+    _ => "other"
+  }
+}
+```
+
 ### 键值对模式匹配
 
 MoonBit 允许模式匹配字典等具有键值对结构的数据结构。在一个字典模式里，`key : value` 语法可以用来匹配 `key` 存在的情况，`value` 会被用于匹配 `key` 在键值对中的值。`key? : value` 语法无论 `key` 是否存在都能匹配，`value` 会被用于匹配 `map[key]` 的值（一个 `Option` 类型的值）：
