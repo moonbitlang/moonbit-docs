@@ -1274,6 +1274,37 @@ match expr {
 }
 ```
 
+### Range Pattern
+For builtin integer types and `Char`, MoonBit allows matching whether the value falls in a specific range.
+Range patterns have the form `a..<b` or `a..=b`, where `..<` means the upper bound is exclusive, and `..=` means inclusive upper bound.
+`a` and `b` can be one of:
+
+- literal
+- named constant declared with `const`
+- `_`, meaning the pattern has no restriction on this side
+
+Here are some examples:
+
+```moonbit
+const Zero = 0
+fn sign(x : Int) -> Int {
+  match x {
+    _..<Zero => -1
+    Zero => 0
+    1..<_ => 1
+  }
+}
+
+fn classify_char(c : Char) -> String {
+  match c {
+    'a'..='z' => "lowercase"
+    'A'..='Z' => "uppercase"
+    '0'..='9' => "digit"
+    _ => "other"
+  }
+}
+```
+
 ### Map Pattern
 
 MoonBit allows convenient matching on map-like data structures.
