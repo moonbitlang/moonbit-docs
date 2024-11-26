@@ -150,13 +150,17 @@ fn modify(
   modify_r: Int,
   tag: LazyTag
 ) -> Node {
-  if modify_l > r || l > modify_r {
+  if l > r {
+    empty_node
+  } else if modify_l > r || l > modify_r {
     self
   } else if modify_l <= l && modify_r >= r {
     self.apply(tag)
   } else {
-    guard let Node(~left, ~right, ..) = self
-    left.apply(tag) + right.apply(tag)
+    guard let Node(left~, right~, ..) = self
+    let mid = (l + r) >> 1
+    left.modify(l, mid, modify_l, modify_r, tag) + 
+    right.modify(mid+1, r, modify_l, modify_r, tag)
   }
 }
 ```
