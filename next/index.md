@@ -10,10 +10,11 @@ The IDE environment is available at [https://try.moonbitlang.com](https://try.mo
 
 - [Language](./language/index.md): Introduction to detailed language specifications
 
-- [Toolchains](./toolchains/index.md): Introduction to all the toolchains making developing MoonBit a unique experience.
+- [Toolchains](./toolchain/index.md): Introduction to all the toolchains making developing MoonBit a unique experience.
 
 ```{toctree}
 :maxdepth: 2
 :caption: Contents:
 language/index
 tutorial/index
+toolchain/index.md

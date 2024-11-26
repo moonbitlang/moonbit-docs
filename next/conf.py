@@ -23,10 +23,11 @@ extensions = ['myst_parser', 'lexer']
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README"]
 
-
-
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'alabaster'
 html_static_path = ['_static']
+
+# -- Options for myst_parser -------------------------------------------------
+myst_heading_anchors = 3
