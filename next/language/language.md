@@ -1274,6 +1274,37 @@ match expr {
 }
 ```
 
+### Range Pattern
+For builtin integer types and `Char`, MoonBit allows matching whether the value falls in a specific range.
+Range patterns have the form `a..<b` or `a..=b`, where `..<` means the upper bound is exclusive, and `..=` means inclusive upper bound.
+`a` and `b` can be one of:
+
+- literal
+- named constant declared with `const`
+- `_`, meaning the pattern has no restriction on this side
+
+Here are some examples:
+
+```moonbit
+const Zero = 0
+fn sign(x : Int) -> Int {
+  match x {
+    _..<Zero => -1
+    Zero => 0
+    1..<_ => 1
+  }
+}
+
+fn classify_char(c : Char) -> String {
+  match c {
+    'a'..='z' => "lowercase"
+    'A'..='Z' => "uppercase"
+    '0'..='9' => "digit"
+    _ => "other"
+  }
+}
+```
+
 ### Map Pattern
 
 MoonBit allows convenient matching on map-like data structures.
@@ -1880,7 +1911,7 @@ fn init {
 
 Output：
 
-```
+```plaintext
 op_as_view: [0,5)
 op_as_view: [1,5)
 op_as_view: [0,2)
@@ -1900,15 +1931,51 @@ trait I {
 In the body of a trait definition, a special type `Self` is used to refer to the type that implements the trait.
 
 To implement a trait, a type must provide all the methods required by the trait.
-However, there is no need to implement a trait explicitly. Types with the required methods automatically implements a trait. For example, the following trait:
+Implementation for trait methods can be provided via the syntax `impl Trait for Type with method_name(...) { ... }`, for example:
 
 ```moonbit
 trait Show {
   to_string(Self) -> String
 }
+
+struct MyType { ... }
+impl Show for MyType with to_string(self) { ... }
+
+// trait implementation with type parameters.
+// `[X : Show]` means the type parameter `X` must implement `Show`,
+// this will be covered later.
+impl[X : Show] Show for Array[X] with to_string(self) { ... }
 ```
 
-is automatically implemented by builtin types such as `Int` and `Double`.
+Type annotation can be omitted for trait `impl`: MoonBit will automatically infer the type based on the signature of `Trait::method` and the self type.
+
+The author of the trait can also define default implementations for some methods in the trait, for example:
+
+```moonbit
+trait I {
+  f(Self) -> Unit
+  f_twice(Self) -> Unit
+}
+
+impl I with f_twice(self) {
+  self.f()
+  self.f()
+}
+```
+
+Implementers of trait `I` don't have to provide an implementation for `f_twice`: to implement `I`, only `f` is necessary.
+They can always override the default implementation with an explicit `impl I for Type with f_twice`, if desired, though.
+
+If an explicit `impl` or default implementation is not found, trait method resolution falls back to regular methods.
+This allows types to implement a trait implicitly, hence allowing different packages to work together without seeing or depending on each other.
+For example, the following trait is automatically implemented for builtin number types such as `Int` and `Double`:
+
+```moonbit
+trait Number {
+  op_add(Self, Self) -> Self
+  op_mul(Self, Self) -> Self
+}
+```
 
 When declaring a generic function, the type parameters can be annotated with the traits they should implement, allowing the definition of constrained generic functions. For example:
 
@@ -1919,7 +1986,7 @@ trait Number {
 }
 
 fn square[N: Number](x: N) -> N {
-  x * x
+  x * x // same as `x.op_mul(x)`
 }
 ```
 
@@ -1938,7 +2005,7 @@ trait Number {
 }
 
 fn square[N: Number](x: N) -> N {
-  x * x
+  x * x // same as `x.op_mul(x)`
 }
 
 struct Point {
@@ -1946,21 +2013,12 @@ struct Point {
   y: Int
 } derive(Show)
 
-fn op_add(self: Point, other: Point) -> Point {
-  { x: self.x + other.x, y: self.y + other.y }
+impl Number for Point with op_add(p1, p2) {
+  { x: p1.x + p2.x, y: p1.y + p2.y }
 }
 
-fn op_mul(self: Point, other: Point) -> Point {
-  { x: self.x * other.x, y: self.y * other.y }
-}
-```
-
-Methods of a trait can be called directly via `Trait::method`. MoonBit will infer the type of `Self` and check if `Self` indeed implements `Trait`, for example:
-
-```moonbit live
-fn main {
-  println(Show::to_string(42))
-  println(Compare::compare(1.0, 2.5))
+impl Number for Point with op_mul(p1, p2) {
+  { x: p1.x * p2.x, y: p1.y * p2.y }
 }
 ```
 
@@ -1991,44 +2049,55 @@ trait Default {
 }
 ```
 
-## Access control of methods and direct implementation of traits
-
-To make the trait system coherent (i.e. there is a globally unique implementation for every `Type: Trait` pair), and prevent third-party packages from modifying behavior of existing programs by accident, _only the package that defines a type can define methods for it_. So one cannot define new methods or override old methods for builtin and foreign types.
-
-However, it is often useful to implement new traits for an existing type. So MoonBit provides a mechanism to directly implement a trait, defined using the syntax `impl Trait for Type with method_name(...) { ... }`. Type annotations can be omitted from `impl`, because MoonBit can infer the correct types from the trait's signature. For example, to implement a new trait `ToMyBinaryProtocol` for builtin types, one can (and must) use `impl`:
-
-```moonbit
-trait ToMyBinaryProtocol {
-  to_my_binary_protocol(Self, Buffer) -> Unit
-}
-
-impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
-
-impl ToMyBinaryProtocol for UInt with to_my_binary_protocol(x, b) { ... }
-
-impl[X : ToMyBinaryProtocol] ToMyBinaryProtocol for Array[X] with to_my_binary_protocol(
-  arr,
-  b
-) {
-  ...
-}
-```
-
-When searching for the implementation of a trait, `impl`s have a higher priority, so they can be used to override ordinary methods with undesirable behavior. `impl`s can only be used to implement the specified trait. They cannot be called directly like ordinary methods. Furthermore, _only the package of the type or the package of the trait can define an implementation_. For example, only `@pkg1` and `@pkg2` are allowed to define `impl @pkg1.Trait for @pkg2.Type` for type `@pkg2.Type`. This restriction ensures that MoonBit's trait system is still coherent with the extra flexibility of `impl`s.
-
-To invoke an trait implementation directly, one can use the `Trait::method` syntax:
+### Involke trait methods directly
+Methods of a trait can be called directly via `Trait::method`. MoonBit will infer the type of `Self` and check if `Self` indeed implements `Trait`, for example:
 
 ```moonbit live
-trait MyTrait {
-  f(Self) -> Unit
-}
-
-impl MyTrait for Int with f(self) { println("Got Int \{self}!") }
-
 fn main {
-  MyTrait::f(42)
+  println(Show::to_string(42))
+  println(Compare::compare(1.0, 2.5))
 }
 ```
+
+Trait implementations can also be involked via dot syntax, with the following restrictions:
+
+1. if a regular method is present, the regular method is always favored when using dot syntax
+2. only trait implementations that are located in the package of the self type can be involked via dot syntax
+   - if there are multiple trait methods (from different traits) with the same name available, an ambiguity error is reported
+3. if neither of the above two rules apply, trait `impl`s in current package will also be searched for dot syntax.
+   This allows extending a foreign type locally.
+   - these `impl`s can only be called via dot syntax locally, even if they are public.
+
+The above rules ensures that MoonBit's dot syntax enjoys good property while being flexible.
+For example, adding a new dependency never break existing code with dot syntax due to ambiguity.
+These rules also make name resolution of MoonBit extremely simple:
+the method called via dot syntax must always come from current package or the package of the type!
+
+Here's an example of calling trait `impl` with dot syntax:
+
+```moonbit
+struct MyType { ... }
+
+impl Show for MyType with ...
+
+fn main {
+  let x : MyType = ...
+  println(x.to_string()) // ok
+}
+```
+
+## Access control of methods and trait implementations
+
+To make the trait system coherent (i.e. there is a globally unique implementation for every `Type: Trait` pair),
+and prevent third-party packages from modifying behavior of existing programs by accident,
+MoonBit employs the following restrictions on who can define methods/implement traits for types:
+
+- _only the package that defines a type can define methods for it_. So one cannot define new methods or override old methods for builtin and foreign types.
+- _only the package of the type or the package of the trait can define an implementation_.
+  For example, only `@pkg1` and `@pkg2` are allowed to write `impl @pkg1.Trait for @pkg2.Type`.
+
+The second rule above allows one to add new functionality to a foreign type by defining a new trait and implementing it.
+This makes MoonBit's trait & method system flexible while enjoying good coherence property.
 
 ## Visibility of traits and sealed traits
 There are four visibility for traits, just like `struct` and `enum`: private, abstract, readonly and fully public.
@@ -2246,7 +2315,3 @@ fn todo_in_func() -> Int {
   ...
 }
 ```
-
-## MoonBit's build system
-
-The introduction to the build system is available at [MoonBit's Build System Tutorial](https://moonbitlang.github.io/moon/).

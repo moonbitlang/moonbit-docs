@@ -441,135 +441,135 @@ Generate shell completion for bash/elvish/fish/pwsh/zsh to stdout
 
 
 Discussion:
-    Enable tab completion for Bash, Elvish, Fish, Zsh, or PowerShell
-    The script is output on `stdout`, allowing one to re-direct the
-    output to the file of their choosing. Where you place the file
-    will depend on which shell, and which operating system you are
-    using. Your particular configuration may also determine where
-    these scripts need to be placed.
+Enable tab completion for Bash, Elvish, Fish, Zsh, or PowerShell
+The script is output on `stdout`, allowing one to re-direct the
+output to the file of their choosing. Where you place the file
+will depend on which shell, and which operating system you are
+using. Your particular configuration may also determine where
+these scripts need to be placed.
 
-    The completion scripts won't update itself, so you may need to
-    periodically run this command to get the latest completions.
-    Or you may put `eval "$(moon shell-completion --shell <SHELL>)"`
-    in your shell's rc file to always load newest completions on startup.
-    Although it's considered not as efficient as having the completions
-    script installed.
+The completion scripts won't update itself, so you may need to
+periodically run this command to get the latest completions.
+Or you may put `eval "$(moon shell-completion --shell <SHELL>)"`
+in your shell's rc file to always load newest completions on startup.
+Although it's considered not as efficient as having the completions
+script installed.
 
-    Here are some common set ups for the three supported shells under
-    Unix and similar operating systems (such as GNU/Linux).
+Here are some common set ups for the three supported shells under
+Unix and similar operating systems (such as GNU/Linux).
 
-    Bash:
+Bash:
 
-    Completion files are commonly stored in `/etc/bash_completion.d/` for
-    system-wide commands, but can be stored in
-    `~/.local/share/bash-completion/completions` for user-specific commands.
-    Run the command:
+Completion files are commonly stored in `/etc/bash_completion.d/` for
+system-wide commands, but can be stored in
+`~/.local/share/bash-completion/completions` for user-specific commands.
+Run the command:
 
-        $ mkdir -p ~/.local/share/bash-completion/completions
-        $ moon shell-completion --shell bash >> ~/.local/share/bash-completion/completions/moon
+    $ mkdir -p ~/.local/share/bash-completion/completions
+    $ moon shell-completion --shell bash >> ~/.local/share/bash-completion/completions/moon
 
-    This installs the completion script. You may have to log out and
-    log back in to your shell session for the changes to take effect.
+This installs the completion script. You may have to log out and
+log back in to your shell session for the changes to take effect.
 
-    Bash (macOS/Homebrew):
+Bash (macOS/Homebrew):
 
-    Homebrew stores bash completion files within the Homebrew directory.
-    With the `bash-completion` brew formula installed, run the command:
+Homebrew stores bash completion files within the Homebrew directory.
+With the `bash-completion` brew formula installed, run the command:
 
-        $ mkdir -p $(brew --prefix)/etc/bash_completion.d
-        $ moon shell-completion --shell bash > $(brew --prefix)/etc/bash_completion.d/moon.bash-completion
+    $ mkdir -p $(brew --prefix)/etc/bash_completion.d
+    $ moon shell-completion --shell bash > $(brew --prefix)/etc/bash_completion.d/moon.bash-completion
 
-    Fish:
+Fish:
 
-    Fish completion files are commonly stored in
-    `$HOME/.config/fish/completions`. Run the command:
+Fish completion files are commonly stored in
+`$HOME/.config/fish/completions`. Run the command:
 
-        $ mkdir -p ~/.config/fish/completions
-        $ moon shell-completion --shell fish > ~/.config/fish/completions/moon.fish
+    $ mkdir -p ~/.config/fish/completions
+    $ moon shell-completion --shell fish > ~/.config/fish/completions/moon.fish
 
-    This installs the completion script. You may have to log out and
-    log back in to your shell session for the changes to take effect.
+This installs the completion script. You may have to log out and
+log back in to your shell session for the changes to take effect.
 
-    Elvish:
+Elvish:
 
-    Elvish completions are commonly stored in a single `completers` module.
-    A typical module search path is `~/.config/elvish/lib`, and
-    running the command:
+Elvish completions are commonly stored in a single `completers` module.
+A typical module search path is `~/.config/elvish/lib`, and
+running the command:
 
-        $ moon shell-completion --shell elvish >> ~/.config/elvish/lib/completers.elv
-    
-    will install the completions script. Note that use `>>` (append) 
-    instead of `>` (overwrite) to prevent overwriting the existing completions 
-    for other commands. Then prepend your rc.elv with:
+    $ moon shell-completion --shell elvish >> ~/.config/elvish/lib/completers.elv
 
-        `use completers`
-    
-    to load the `completers` module and enable completions.
+will install the completions script. Note that use `>>` (append) 
+instead of `>` (overwrite) to prevent overwriting the existing completions 
+for other commands. Then prepend your rc.elv with:
 
-    Zsh:
+    `use completers`
 
-    ZSH completions are commonly stored in any directory listed in
-    your `$fpath` variable. To use these completions, you must either
-    add the generated script to one of those directories, or add your
-    own to this list.
+to load the `completers` module and enable completions.
 
-    Adding a custom directory is often the safest bet if you are
-    unsure of which directory to use. First create the directory; for
-    this example we'll create a hidden directory inside our `$HOME`
-    directory:
+Zsh:
 
-        $ mkdir ~/.zfunc
+ZSH completions are commonly stored in any directory listed in
+your `$fpath` variable. To use these completions, you must either
+add the generated script to one of those directories, or add your
+own to this list.
 
-    Then add the following lines to your `.zshrc` just before
-    `compinit`:
+Adding a custom directory is often the safest bet if you are
+unsure of which directory to use. First create the directory; for
+this example we'll create a hidden directory inside our `$HOME`
+directory:
 
-        fpath+=~/.zfunc
+    $ mkdir ~/.zfunc
 
-    Now you can install the completions script using the following
-    command:
+Then add the following lines to your `.zshrc` just before
+`compinit`:
 
-        $ moon shell-completion --shell zsh > ~/.zfunc/_moon
+    fpath+=~/.zfunc
 
-    You must then open a new zsh session, or simply run
+Now you can install the completions script using the following
+command:
 
-        $ . ~/.zshrc
+    $ moon shell-completion --shell zsh > ~/.zfunc/_moon
 
-    for the new completions to take effect.
+You must then open a new zsh session, or simply run
 
-    Custom locations:
+    $ . ~/.zshrc
 
-    Alternatively, you could save these files to the place of your
-    choosing, such as a custom directory inside your $HOME. Doing so
-    will require you to add the proper directives, such as `source`ing
-    inside your login script. Consult your shells documentation for
-    how to add such directives.
+for the new completions to take effect.
 
-    PowerShell:
+Custom locations:
 
-    The powershell completion scripts require PowerShell v5.0+ (which
-    comes with Windows 10, but can be downloaded separately for windows 7
-    or 8.1).
+Alternatively, you could save these files to the place of your
+choosing, such as a custom directory inside your $HOME. Doing so
+will require you to add the proper directives, such as `source`ing
+inside your login script. Consult your shells documentation for
+how to add such directives.
 
-    First, check if a profile has already been set
+PowerShell:
 
-        PS C:\> Test-Path $profile
+The powershell completion scripts require PowerShell v5.0+ (which
+comes with Windows 10, but can be downloaded separately for windows 7
+or 8.1).
 
-    If the above command returns `False` run the following
+First, check if a profile has already been set
 
-        PS C:\> New-Item -path $profile -type file -force
+    PS C:\> Test-Path $profile
 
-    Now open the file provided by `$profile` (if you used the
-    `New-Item` command it will be
-    `${env:USERPROFILE}\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1`
+If the above command returns `False` run the following
 
-    Next, we either save the completions file into our profile, or
-    into a separate file and source it inside our profile. To save the
-    completions into our profile simply use
+    PS C:\> New-Item -path $profile -type file -force
 
-        PS C:\> moon shell-completion --shell powershell >>
-        ${env:USERPROFILE}\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+Now open the file provided by `$profile` (if you used the
+`New-Item` command it will be
+`${env:USERPROFILE}\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1`
 
-    This discussion is taken from `rustup completions` command with some changes.
+Next, we either save the completions file into our profile, or
+into a separate file and source it inside our profile. To save the
+completions into our profile simply use
+
+    PS C:\> moon shell-completion --shell powershell >>
+    ${env:USERPROFILE}\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+
+This discussion is taken from `rustup completions` command with some changes.
 
 
 ###### **Options:**
