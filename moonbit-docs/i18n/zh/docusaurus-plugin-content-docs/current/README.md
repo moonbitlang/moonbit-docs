@@ -1842,23 +1842,48 @@ trait I {
 
 在接口声明中，`Self` 指代实现接口的那个类型。
 
-一个类型要实现某个接口，就要满足该接口中所有的方法。例如，下面的接口描述了一个能够比较元素是否相等的类型需要满足的方法：
 
-```moonbit
-trait Eq {
-  op_equal(Self, Self) -> Bool
-}
-```
-
-接口无需显式实现，具有所需方法的类型会自动实现接口。考虑以下接口：
+一个类型要实现某个接口，就要满足该接口中所有的方法。Trait 中的方法可以用 `impl Trait for Type with method_name(...)` 的形式实现，例如：
 
 ```moonbit
 trait Show {
   to_string(Self) -> String
 }
+
+struct MyType { ... }
+impl Show for MyType with to_string(self) { ... }
+
+// 带类型参数的 trait 实现。
+// [X : Show] 表示类型参数 X 必须实现 Show，后面会详细介绍其含义
+impl[X : Show] Show for Array[X] with to_string(self) { ... }
 ```
 
-内置类型如 `Int` 和 `Double` 会自动实现这个接口。
+`impl` 上可以省略类型标注：MoonBit 会从 `Trait::method` 的签名和  `impl Trait for Type` 中的 `Type` 自动推断出实现的类型。
+
+```moonbit
+trait I {
+  f(Self) -> Unit
+  f_twice(Self) -> Unit
+}
+
+impl I with f_twice(self) {
+  self.f()
+  self.f()
+}
+```
+
+接口 `I` 的实现者无需为 `f_twice` 提供实现，只需要实现方法 `f` 即可实现接口 `I`。但如果有需要，实现者永远可以用显式的 `impl I for Type with f_twice` 声明来覆盖掉默认实现。
+
+如果在尝试寻找某个接口中的方法的实现时，没有找到任何显式的 `impl` 声明，MoonBit 会尝试用目标类型的普通方法作为实现。
+这允许一个类型隐式地实现接口，从而让两个包可以在互不依赖的情况下模块化地一起工作。
+例如，内建的数字类型 `Int`、`Double` 等会自动实现下面的接口：
+
+```moonbit
+trait Number {
+  op_add(Self, Self) -> Self
+  op_mul(Self, Self) -> Self
+}
+```
 
 在声明泛型函数时，类型参数可以用它们应该实现的接口作为注解。
 如此便能定义只对某些类型可用的泛型函数。例如：
@@ -1898,22 +1923,12 @@ struct Point {
   y: Int
 } derive(Show)
 
-fn op_add(self: Point, other: Point) -> Point {
-  { x: self.x + other.x, y: self.y + other.y }
+impl Number for Point with op_add(p1, p2) {
+  { x: p1.x + p2.x, y: p1.y + p2.y }
 }
 
-fn op_mul(self: Point, other: Point) -> Point {
-  { x: self.x * other.x, y: self.y * other.y }
-}
-```
-
-接口中的方法可以用 `Trait::method` 的语法来直接调用。MoonBit 会推导 `Self` 的具体类型，
-并检查 `Self` 是否实现了 `Trait`：
-
-```moonbit
-fn main {
-  println(Show::to_string(42))
-  println(Compare::compare(1.0, 2.5))
+impl Number for Point with op_mul(p1, p2) {
+  { x: p1.x * p2.x, y: p1.y * p2.y }
 }
 ```
 
@@ -1944,54 +1959,49 @@ trait Default {
 }
 ```
 
+### 直接调用接口中的方法
+接口中的方法可以用 `Trait::method` 的语法来直接调用。MoonBit 会推导 `Self` 的具体类型，
+并检查 `Self` 是否实现了 `Trait`：
+
+```moonbit
+fn main {
+  println(Show::to_string(42))
+  println(Compare::compare(1.0, 2.5))
+}
+```
+
+此外，接口的实现也可以用 `.` 语法在实现接口的类型上调用，不过用 `.` 语法调用接口的实现需要满足一些限制：
+
+1. 如果目标类型有一个同名的普通方法，普通方法永远会被优先调用
+2. 只有定义在类型所在的包里的实现可以用 `.` 语法调用
+   - 如果有多个（来自不同接口的）同名实现，用 `.` 调用会触发一个歧义错误
+3. 如果上述两条规则都没有找到任何实现，MoonBit 会搜索当前包内的接口实现。这允许局部地拓展一个来自外部的类型
+   - 但这些实现即使是公开的，也只能在当前包里本地地调用。对外它们无法用 `.` 语法调用
+
+上述规则保证了 MoonBit 的 `.` 语法在灵活的同时具有良好的性质。例如，添加一个新的依赖永远不会导致现有的代码由于 `.` 语法的歧义而报错。这些规则还使得 MoonBit 的名字解析规则非常简单：用 `.` 调用的方法一定来自当前包或目标类型所属的包。
+
+下面是一个用 `.` 语法调用接口实现的例子：
+
+```moonbit
+struct MyType { ... }
+
+impl Show for MyType with ...
+
+fn main {
+  let x : MyType = ...
+  println(x.to_string()) // ok
+}
+```
+
 ## 方法的访问权限控制、直接实现接口
 
 为了使 MoonBit 的接口系统具有一致性（coherence，即任何 `Type: Trait` 的组合都有全局唯一的实现），
-防止第三方包意外地修改现有程序的行为，**只有类型所在的包能为它定义方法**。
-所以用户无法为内建类型或来自第三方包的类型定义方法。
+防止第三方包意外地修改现有程序的行为，MoonBit 对 “谁能给类型添加新的方法/接口实现” 有如下限制：
 
-然而，我们有时也会需要给一个现有类型实现新的接口，因此，MoonBit 允许不定义方法直接实现一个接口。
-这种接口实现的语法是 `impl Trait for Type with method_name(...) { ... }`。
-MoonBit 可以根据接口的签名自动推导出实现的参数和返回值的类型，因此实现不强制要求标注类型。
-例如，假设要为内建类型实现一个新的接口 `ToMyBinaryProtocol`，就可以（且必须）使用 `impl`：
+- **只有类型所在的包能为它定义方法**。所以用户无法为内建类型或来自第三方包的类型定义方法。
+- **只有类型或接口所在的包可以定义 `impl`**。例如，只有 `@pkg1` 和 `@pkg2` 能定义 `impl @pkg1.Trait for @pkg2.Type`
 
-```moonbit
-trait ToMyBinaryProtocol {
-  to_my_binary_protocol(Self, Buffer) -> Unit
-}
-
-impl ToMyBinaryProtocol for Int with to_my_binary_protocol(x, b) { ... }
-
-impl ToMyBinaryProtocol for UInt with to_my_binary_protocol(x, b) { ... }
-
-impl[X : ToMyBinaryProtocol] ToMyBinaryProtocol for Array[X] with to_my_binary_protocol(
-  arr,
-  b
-) {
-  ...
-}
-```
-
-在搜索某个接口的实现时，`impl` 比普通方法有更高的优先级，
-因此 `impl` 还可以用来覆盖掉行为不能满足要求的现有方法。
-`impl` 只能被用于实现指定的接口，不能像普通的方法一样被直接调用。
-此外，**只有类型或接口所在的包可以定义 `impl`**。
-例如，只有 `@pkg1` 和 `@pkg2` 能定义 `impl @pkg1.Trait for @pkg2.Type with ...`。
-这一限制使得 MoonBit 的接口系统在加入 `impl` 后，仍能保持一致。
-
-如果需要直接调用一个实现，可以使用 `Trait::method` 语法。例如：
-
-```moonbit live
-trait MyTrait {
-  f(Self) -> Unit
-}
-
-impl MyTrait for Int with f(self) { println("Got Int \{self}!") }
-
-fn main {
-  MyTrait::f(42)
-}
-```
+第二条规则允许用户通过定义新接口来拓展一个第三方类型的功能。这些规则使得 MoonBit 的接口系统在具有灵活表达能力的同时享受良好的一致性。
 
 ## 接口的可见性与封闭的接口
 MoonBit 中，接口和类型一样有四种可见性：私有、抽象、只读和完全公开。
