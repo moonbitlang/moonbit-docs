@@ -4,7 +4,7 @@ MoonBit is an end-to-end programming language toolchain for cloud and edge compu
 
 The IDE environment is available at [https://try.moonbitlang.com](https://try.moonbitlang.com) without any installation; it does not reply on any server either.
 
-## Get started
+**Get started**
 
 - [Tutorials](./tutorial/index.md): Follow tutorials to start your journey
 
@@ -17,4 +17,4 @@ The IDE environment is available at [https://try.moonbitlang.com](https://try.mo
 :caption: Contents:
 language/index
 tutorial/index
-toolchain/index.md
+toolchain/index
