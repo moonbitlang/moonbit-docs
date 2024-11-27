@@ -799,7 +799,7 @@ Output:
 ```moonbit
 let a : Char = 'A'
 let b = '\x41'
-let c = '🐰'
+let c = '兔'
 let zero = '\u{30}'
 let zero = '\u0030'
 ```
