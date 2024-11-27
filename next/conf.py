@@ -33,9 +33,8 @@ html_static_path = ['_static']
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-latex-output
 latex_engine = 'xelatex'
 latex_elements = {
-    'preamble': r'''
-    \usepackage{xeCJK}
-    ''',
+    'preamble': r"\usepackage{xeCJK}",
+    'fvset': "\\fvset{formatcom={\\CJKsetecglue{}}}"
 }
 
 # -- Options for myst_parser -------------------------------------------------
