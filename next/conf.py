@@ -39,3 +39,6 @@ latex_elements = {
 
 # -- Options for myst_parser -------------------------------------------------
 myst_heading_anchors = 3
+
+# -- Options for gettext -----------------------------------------------------
+gettext_additional_targets = ["literal-block"]
