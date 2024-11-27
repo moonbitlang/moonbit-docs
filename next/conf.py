@@ -9,7 +9,7 @@
 project = 'MoonBit Document'
 copyright = '2024, International Digital Economy Academy'
 author = 'International Digital Economy Academy'
-release = 'v0.1.0'
+release = 'v0.1.20241125'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -34,7 +34,7 @@ html_static_path = ['_static']
 latex_engine = 'xelatex'
 latex_elements = {
     'preamble': r"\usepackage{xeCJK}",
-    'fvset': "\\fvset{formatcom={\\CJKsetecglue{}}}"
+    'fvset': "\\fvset{formatcom={\\CJKsetecglue{}}}" # avoid having spaces around text in code blocks
 }
 
 # -- Options for myst_parser -------------------------------------------------
