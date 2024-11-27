@@ -2,7 +2,7 @@
 
 Error handling has always been at core of our language design. In the following
 we'll be explaining how error handling is done in MoonBit. We assume
-you have some prior knowledge of MoonBit, if not, please checkout [A tour of MoonBit](../tutorial//tour.md).
+you have some prior knowledge of MoonBit, if not, please checkout [A tour of MoonBit](../tutorial/tour.md).
 
 ## Example: Division by Zero
 
