@@ -197,11 +197,11 @@ type UserName String // a newtype `UserName` based on `String`
 
 // defining a method for UserName is allowed but not String.
 fn is_blank(self : UserName) -> Bool {
-  // use `.0` to access its basetype String
+  // use `._` to access its basetype String
   // iter() creates a *internal iterator*
   // which provides a functional way to iterate on sequences.
   // find_first short circuits on the first `true` i.e. non-blank character
-  let res = self.0.iter().find_first(
+  let res = self._.iter().find_first(
     fn(c) { if c == ' ' { false } else { true } },
   )
   match res {
