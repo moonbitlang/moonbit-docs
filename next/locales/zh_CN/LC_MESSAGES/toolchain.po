@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-27 10:56+0800\n"
+"POT-Creation-Date: 2024-11-27 13:35+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -912,6 +912,13 @@ msgid ""
 "completion/completions` for user-specific commands. Run the command:"
 msgstr ""
 
+#: ../../toolchain/moon/commands.md:468
+msgid ""
+"$ mkdir -p ~/.local/share/bash-completion/completions\n"
+"$ moon shell-completion --shell bash >> ~/.local/share/bash-"
+"completion/completions/moon\n"
+msgstr ""
+
 #: ../../toolchain/moon/commands.md:471 ../../toolchain/moon/commands.md:490
 msgid ""
 "This installs the completion script. You may have to log out and log back"
@@ -928,6 +935,13 @@ msgid ""
 " the `bash-completion` brew formula installed, run the command:"
 msgstr ""
 
+#: ../../toolchain/moon/commands.md:479
+msgid ""
+"$ mkdir -p $(brew --prefix)/etc/bash_completion.d\n"
+"$ moon shell-completion --shell bash > $(brew "
+"--prefix)/etc/bash_completion.d/moon.bash-completion\n"
+msgstr ""
+
 #: ../../toolchain/moon/commands.md:482
 msgid "Fish:"
 msgstr ""
@@ -936,6 +950,13 @@ msgstr ""
 msgid ""
 "Fish completion files are commonly stored in "
 "`$HOME/.config/fish/completions`. Run the command:"
+msgstr ""
+
+#: ../../toolchain/moon/commands.md:487
+msgid ""
+"$ mkdir -p ~/.config/fish/completions\n"
+"$ moon shell-completion --shell fish > "
+"~/.config/fish/completions/moon.fish\n"
 msgstr ""
 
 #: ../../toolchain/moon/commands.md:493
@@ -949,11 +970,21 @@ msgid ""
 "command:"
 msgstr ""
 
+#: ../../toolchain/moon/commands.md:499
+msgid ""
+"$ moon shell-completion --shell elvish >> "
+"~/.config/elvish/lib/completers.elv\n"
+msgstr ""
+
 #: ../../toolchain/moon/commands.md:501
 msgid ""
 "will install the completions script. Note that use `>>` (append)  instead"
 " of `>` (overwrite) to prevent overwriting the existing completions  for "
 "other commands. Then prepend your rc.elv with:"
+msgstr ""
+
+#: ../../toolchain/moon/commands.md:505
+msgid "`use completers`\n"
 msgstr ""
 
 #: ../../toolchain/moon/commands.md:507
@@ -979,16 +1010,32 @@ msgid ""
 "we'll create a hidden directory inside our `$HOME` directory:"
 msgstr ""
 
+#: ../../toolchain/moon/commands.md:521
+msgid "$ mkdir ~/.zfunc\n"
+msgstr ""
+
 #: ../../toolchain/moon/commands.md:523
 msgid "Then add the following lines to your `.zshrc` just before `compinit`:"
+msgstr ""
+
+#: ../../toolchain/moon/commands.md:526
+msgid "fpath+=~/.zfunc\n"
 msgstr ""
 
 #: ../../toolchain/moon/commands.md:528
 msgid "Now you can install the completions script using the following command:"
 msgstr ""
 
+#: ../../toolchain/moon/commands.md:531
+msgid "$ moon shell-completion --shell zsh > ~/.zfunc/_moon\n"
+msgstr ""
+
 #: ../../toolchain/moon/commands.md:533
 msgid "You must then open a new zsh session, or simply run"
+msgstr ""
+
+#: ../../toolchain/moon/commands.md:535
+msgid "$ . ~/.zshrc\n"
 msgstr ""
 
 #: ../../toolchain/moon/commands.md:537
@@ -1021,8 +1068,16 @@ msgstr ""
 msgid "First, check if a profile has already been set"
 msgstr ""
 
+#: ../../toolchain/moon/commands.md:555
+msgid "PS C:\\> Test-Path $profile\n"
+msgstr ""
+
 #: ../../toolchain/moon/commands.md:557
 msgid "If the above command returns `False` run the following"
+msgstr ""
+
+#: ../../toolchain/moon/commands.md:559
+msgid "PS C:\\> New-Item -path $profile -type file -force\n"
 msgstr ""
 
 #: ../../toolchain/moon/commands.md:561
@@ -1037,6 +1092,13 @@ msgid ""
 "Next, we either save the completions file into our profile, or into a "
 "separate file and source it inside our profile. To save the completions "
 "into our profile simply use"
+msgstr ""
+
+#: ../../toolchain/moon/commands.md:569
+msgid ""
+"PS C:\\> moon shell-completion --shell powershell >>\n"
+"${env:USERPROFILE}\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1"
+"\n"
 msgstr ""
 
 #: ../../toolchain/moon/commands.md:572
@@ -1110,6 +1172,14 @@ msgid ""
 "required."
 msgstr ""
 
+#: ../../toolchain/moon/module.md:9
+msgid ""
+"{\n"
+"  \"name\": \"example\",\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/module.md:16
 msgid "The module name can contain letters, numbers, `_`, `-`, and `/`."
 msgstr ""
@@ -1118,6 +1188,14 @@ msgstr ""
 msgid ""
 "For modules published to [mooncakes.io](https://mooncakes.io), the module"
 " name must begin with the username. For example:"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:20
+msgid ""
+"{\n"
+"  \"name\": \"moonbitlang/core\",\n"
+"  ...\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/module.md:27
@@ -1136,6 +1214,15 @@ msgid ""
 "specification."
 msgstr ""
 
+#: ../../toolchain/moon/module.md:33
+msgid ""
+"{\n"
+"  \"name\": \"example\",\n"
+"  \"version\": \"0.1.0\",\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/module.md:41
 msgid "Deps"
 msgstr ""
@@ -1146,6 +1233,16 @@ msgstr ""
 
 #: ../../toolchain/moon/module.md:45
 msgid "It is automatically managed by commands like `moon add` and `moon remove`."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:47
+msgid ""
+"{\n"
+"  \"name\": \"username/hello\",\n"
+"  \"deps\": {\n"
+"    \"moonbitlang/x\": \"0.4.6\"\n"
+"  }\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/module.md:56
@@ -1179,6 +1276,13 @@ msgid ""
 "List](https://spdx.org/licenses/)."
 msgstr ""
 
+#: ../../toolchain/moon/module.md:68
+msgid ""
+"{\n"
+"  \"license\": \"MIT\"\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/module.md:74
 msgid "Keywords"
 msgstr ""
@@ -1187,12 +1291,26 @@ msgstr ""
 msgid "The `keywords` field is used to specify the keywords for the module."
 msgstr ""
 
+#: ../../toolchain/moon/module.md:78
+msgid ""
+"{\n"
+"  \"keywords\": [\"example\", \"test\"]\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/module.md:84
 msgid "Description"
 msgstr ""
 
 #: ../../toolchain/moon/module.md:86
 msgid "The `description` field is used to specify the description of the module."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:88
+msgid ""
+"{\n"
+"  \"description\": \"This is a description of the module.\"\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/module.md:94
@@ -1216,12 +1334,32 @@ msgid ""
 "field will be `src`."
 msgstr ""
 
+#: ../../toolchain/moon/module.md:102
+msgid ""
+"{\n"
+"  \"source\": \"src\"\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/module.md:108
 msgid ""
 "When the `source` field does not exist, or its value is `null` or an "
 "empty string `\"\"`, it is equivalent to setting `\"source\": \".\"`. "
 "This means that the source directory is the same as the directory where "
 "the `moon.mod.json` file is located."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:110
+msgid ""
+"{\n"
+"  \"source\": null\n"
+"}\n"
+"{\n"
+"  \"source\": \"\"\n"
+"}\n"
+"{\n"
+"  \"source\": \".\"\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/module.md:122 ../../toolchain/moon/package.md:224
@@ -1238,10 +1376,50 @@ msgid ""
 "number 2 (Unused variable)."
 msgstr ""
 
+#: ../../toolchain/moon/module.md:128 ../../toolchain/moon/package.md:230
+msgid ""
+"{\n"
+"  \"warn-list\": \"-2\",\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/module.md:134 ../../toolchain/moon/package.md:236
 msgid ""
 "You can use `moonc build-package -warn-help` to see the list of preset "
 "compiler warning numbers."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:136 ../../toolchain/moon/package.md:238
+msgid ""
+"$ moonc -v                      \n"
+"v0.1.20240914+b541585d3\n"
+"\n"
+"$ moonc build-package -warn-help\n"
+"Available warnings: \n"
+"  1 Unused function.\n"
+"  2 Unused variable.\n"
+"  3 Unused type declaration.\n"
+"  4 Redundant case in a pattern matching (unused match case).\n"
+"  5 Unused function argument.\n"
+"  6 Unused constructor.\n"
+"  7 Unused module declaration.\n"
+"  8 Unused struct field.\n"
+" 10 Unused generic type variable.\n"
+" 11 Partial pattern matching.\n"
+" 12 Unreachable code.\n"
+" 13 Unresolved type variable.\n"
+" 14 Lowercase type name.\n"
+" 15 Unused mutability.\n"
+" 16 Parser inconsistency.\n"
+" 18 Useless loop expression.\n"
+" 19 Top-level declaration is not left aligned.\n"
+" 20 Invalid pragma\n"
+" 21 Some arguments of constructor are omitted in pattern.\n"
+" 22 Ambiguous block.\n"
+" 23 Useless try expression.\n"
+" 24 Useless error type.\n"
+" 26 Useless catch all.\n"
+"  A all warnings\n"
 msgstr ""
 
 #: ../../toolchain/moon/module.md:168 ../../toolchain/moon/package.md:270
@@ -1250,6 +1428,13 @@ msgstr ""
 
 #: ../../toolchain/moon/module.md:170 ../../toolchain/moon/package.md:272
 msgid "Disable user preset alerts."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:172 ../../toolchain/moon/package.md:274
+msgid ""
+"{\n"
+"  \"alert-list\": \"-alert_1-alert_2\"\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/package.md:1
@@ -1371,6 +1556,25 @@ msgstr ""
 msgid "Example:"
 msgstr ""
 
+#: ../../toolchain/moon/package.md:49
+msgid ""
+"{\n"
+"    \"targets\": {\n"
+"        \"only_js.mbt\": [\"js\"],\n"
+"        \"only_wasm.mbt\": [\"wasm\"],\n"
+"        \"only_wasm_gc.mbt\": [\"wasm-gc\"],\n"
+"        \"all_wasm.mbt\": [\"wasm\", \"wasm-gc\"],\n"
+"        \"not_js.mbt\": [\"not\", \"js\"],\n"
+"        \"only_debug.mbt\": [\"debug\"],\n"
+"        \"js_and_release.mbt\": [\"and\", [\"js\"], [\"release\"]],\n"
+"        \"js_only_test.mbt\": [\"js\"],\n"
+"        \"js_or_wasm.mbt\": [\"js\", \"wasm\"],\n"
+"        \"wasm_release_or_js_debug.mbt\": [\"or\", [\"and\", \"wasm\", "
+"\"release\"], [\"and\", \"js\", \"debug\"]]\n"
+"    }\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/package.md:66
 msgid "Link Options"
 msgstr ""
@@ -1393,6 +1597,13 @@ msgid ""
 "When the `link` value is `true`, it indicates that the package should be "
 "linked. The output will vary depending on the backend specified during "
 "the build."
+msgstr ""
+
+#: ../../toolchain/moon/package.md:74
+msgid ""
+"{\n"
+"  \"link\": true\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/package.md:80
@@ -1426,6 +1637,20 @@ msgid ""
 "package."
 msgstr ""
 
+#: ../../toolchain/moon/package.md:90
+msgid ""
+"{\n"
+"  \"link\": {\n"
+"    \"wasm\": {\n"
+"      \"exports\": [\n"
+"        \"hello\",\n"
+"        \"foo:bar\"\n"
+"      ]\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/package.md:103
 msgid ""
 "The `heap-start-address` option is used to specify the starting address "
@@ -1437,6 +1662,17 @@ msgstr ""
 msgid ""
 "For example, the following configuration sets the starting address of the"
 " linear memory to 1024."
+msgstr ""
+
+#: ../../toolchain/moon/package.md:107
+msgid ""
+"{\n"
+"  \"link\": {\n"
+"    \"wasm\": {\n"
+"      \"heap-start-address\": 1024\n"
+"    }\n"
+"  }\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/package.md:117
@@ -1452,10 +1688,35 @@ msgid ""
 "module."
 msgstr ""
 
+#: ../../toolchain/moon/package.md:121
+msgid ""
+"{\n"
+"  \"link\": {\n"
+"    \"wasm\": {\n"
+"      \"import-memory\": {\n"
+"        \"module\": \"env\",\n"
+"        \"name\": \"memory\"\n"
+"      }\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/package.md:134
 msgid ""
 "The `export-memory-name` option is used to specify the name of the linear"
 " memory exported by the `wasm` module."
+msgstr ""
+
+#: ../../toolchain/moon/package.md:136
+msgid ""
+"{\n"
+"  \"link\": {\n"
+"    \"wasm\": {\n"
+"      \"export-memory-name\": \"memory\"\n"
+"    }\n"
+"  }\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/package.md:146
@@ -1486,6 +1747,19 @@ msgid ""
 "invoke the `hello` function from the current package."
 msgstr ""
 
+#: ../../toolchain/moon/package.md:158
+msgid ""
+"{\n"
+"  \"link\": {\n"
+"    \"js\": {\n"
+"      \"exports\": [\n"
+"        \"hello\"\n"
+"      ]\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/package.md:170
 msgid ""
 "The `format` option is used to specify the output format of the "
@@ -1512,6 +1786,17 @@ msgstr ""
 msgid ""
 "For example, the following configuration sets the output format of the "
 "current package to ES Module."
+msgstr ""
+
+#: ../../toolchain/moon/package.md:179
+msgid ""
+"{\n"
+"  \"link\": {\n"
+"    \"js\": {\n"
+"      \"format\": \"esm\"\n"
+"    }\n"
+"  }\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/package.md:189
@@ -1545,14 +1830,41 @@ msgid ""
 "is executed in the directory where the `moon.pkg.json` file is located."
 msgstr ""
 
+#: ../../toolchain/moon/package.md:197
+msgid ""
+"{\n"
+"  \"pre-build\": [\n"
+"    {\n"
+"      \"input\": \"a.txt\",\n"
+"      \"output\": \"a.mbt\",\n"
+"      \"command\": \":embed -i $input -o $output\"\n"
+"    }\n"
+"  ]\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/package.md:209
 msgid "If the content of `a.txt` in the current package directory is:"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:210
+msgid ""
+"hello,\n"
+"world\n"
 msgstr ""
 
 #: ../../toolchain/moon/package.md:215
 msgid ""
 "After running `moon build`, the following `a.mbt` file will be generated "
 "in the directory where the `moon.pkg.json` is located:"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:217
+msgid ""
+"let resource : String =\n"
+"  #|hello,\n"
+"  #|world\n"
+"  #|\n"
 msgstr ""
 
 #: ../../toolchain/moon/package-manage-tour.md:1
@@ -1606,6 +1918,10 @@ msgstr ""
 msgid ""
 "When you see the following message, it means you have successfully logged"
 " in:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:19
+msgid "API token saved to ~/.moon/credentials.json\n"
 msgstr ""
 
 #: ../../toolchain/moon/package-manage-tour.md:23
@@ -1693,6 +2009,16 @@ msgstr ""
 
 #: ../../toolchain/moon/package-manage-tour.md:51
 msgid "You can also give an alias to the imported package:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:53
+msgid ""
+"{\n"
+"    \"is_main\": true,\n"
+"    \"import\": [\n"
+"        { \"path\": \"Yoorkin/example/list\", \"alias\": \"ls\" }\n"
+"    ]\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/package-manage-tour.md:62
@@ -1818,6 +2144,25 @@ msgid ""
 "documentation. You can write markdown inside."
 msgstr ""
 
+#: ../../toolchain/moon/package-manage-tour.md:106
+msgid ""
+"/// Get the largest element of a non-empty `Array`.\n"
+"///\n"
+"/// # Example\n"
+"///\n"
+"/// ```\n"
+"/// maximum([1,2,3,4,5,6]) = 6\n"
+"/// ```\n"
+"///\n"
+"/// # Panics\n"
+"///\n"
+"/// Panics if the `xs` is empty.\n"
+"///\n"
+"pub fn maximum[T : Compare](xs : Array[T]) -> T {\n"
+"  // TODO ...\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/package-manage-tour.md:124
 msgid ""
 "You can also use `moon doc --serve` to generate and view documentation in"
@@ -1857,6 +2202,12 @@ msgstr ""
 msgid "Use `moon help` to view the usage instructions."
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:13
+msgid ""
+"$ moon help\n"
+"...\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:18
 msgid ""
 "**MoonBit Language** plugin in Visual Studio Code: You can install it "
@@ -1883,6 +2234,18 @@ msgid ""
 "project` directory."
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:26
+msgid ""
+"$ moon new\n"
+"Enter the path to create the project (. for current directory): my-"
+"project\n"
+"Select the create mode: exec\n"
+"Enter your username: username\n"
+"Enter your project name: hello\n"
+"Enter your license: Apache-2.0\n"
+"Created my-project\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:36
 msgid ""
 "If you want use all default values, you can use `moon new my-project` to "
@@ -1899,6 +2262,22 @@ msgid ""
 "the following:"
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:42
+msgid ""
+"my-project\n"
+"├── LICENSE\n"
+"├── README.md\n"
+"├── moon.mod.json\n"
+"└── src\n"
+"    ├── lib\n"
+"    │   ├── hello.mbt\n"
+"    │   ├── hello_test.mbt\n"
+"    │   └── moon.pkg.json\n"
+"    └── main\n"
+"        ├── main.mbt\n"
+"        └── moon.pkg.json\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:57
 msgid "Here's a brief explanation of the directory structure:"
 msgstr ""
@@ -1909,6 +2288,20 @@ msgid ""
 "contains the module's metadata, such as the module name, version, etc. "
 "`source` specifies the source directory of the module. The default value "
 "is `src`."
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:61
+msgid ""
+"{\n"
+"  \"name\": \"username/hello\",\n"
+"  \"version\": \"0.1.0\",\n"
+"  \"readme\": \"README.md\",\n"
+"  \"repository\": \"\",\n"
+"  \"license\": \"Apache-2.0\",\n"
+"  \"keywords\": [],\n"
+"  \"description\": \"\",\n"
+"  \"source\": \"src\"\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:74
@@ -1933,6 +2326,16 @@ msgstr ""
 msgid "`main/moon.pkg.json`:"
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:80 ../../toolchain/moon/tutorial.md:157
+msgid ""
+"{\n"
+"  \"is_main\": true,\n"
+"  \"import\": [\n"
+"    \"username/hello/lib\"\n"
+"  ]\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:89
 msgid ""
 "Here, `\"is_main: true\"` declares that the package needs to be linked by"
@@ -1941,6 +2344,10 @@ msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:91
 msgid "`lib/moon.pkg.json`:"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:93 ../../toolchain/moon/tutorial.md:210
+msgid "{}\n"
 msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:97
@@ -1969,12 +2376,35 @@ msgstr ""
 msgid "`hello.mbt`"
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:107
+msgid ""
+"pub fn hello() -> String {\n"
+"    \"Hello, world!\"\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:113
 msgid "`hello_test.mbt`"
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:115
+msgid ""
+"test \"hello\" {\n"
+"  if @lib.hello() != \"Hello, world!\" {\n"
+"    fail!(\"@lib.hello() != \\\"Hello, world!\\\"\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:123
 msgid "The `username/hello/main` package contains a `main.mbt` file:"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:125
+msgid ""
+"fn main {\n"
+"  println(@lib.hello())\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:131
@@ -1983,12 +2413,30 @@ msgid ""
 "`username/hello/main` package in the `moon run` command:"
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:133
+msgid ""
+"$ moon run ./src/main\n"
+"Hello, world!\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:138
 msgid "You can also omit `./`"
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:140
+msgid ""
+"$ moon run src/main\n"
+"Hello, world!\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:145
 msgid "You can test using the `moon test` command:"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:147
+msgid ""
+"$ moon test\n"
+"Total tests: 1, passed: 1, failed: 0.\n"
 msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:152
@@ -2026,6 +2474,10 @@ msgstr ""
 msgid "First, create a new directory named `fib` under `lib`:"
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:174
+msgid "mkdir src/lib/fib\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:178
 msgid "Now, you can create new files under `src/lib/fib`:"
 msgstr ""
@@ -2034,8 +2486,34 @@ msgstr ""
 msgid "`a.mbt`:"
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:182
+msgid ""
+"pub fn fib(n : Int) -> Int {\n"
+"  match n {\n"
+"    0 => 0\n"
+"    1 => 1\n"
+"    _ => fib(n - 1) + fib(n - 2)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:192
 msgid "`b.mbt`:"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:194
+msgid ""
+"pub fn fib2(num : Int) -> Int {\n"
+"  fn aux(n, acc1, acc2) {\n"
+"    match n {\n"
+"      0 => acc1\n"
+"      1 => acc2\n"
+"      _ => aux(n - 1, acc2, acc1 + acc2)\n"
+"    }\n"
+"  }\n"
+"\n"
+"  aux(num, 0, 1)\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:208
@@ -2048,10 +2526,44 @@ msgid ""
 "this:"
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:216
+msgid ""
+"my-project\n"
+"├── LICENSE\n"
+"├── README.md\n"
+"├── moon.mod.json\n"
+"└── src\n"
+"    ├── lib\n"
+"    │   ├── fib\n"
+"    │   │   ├── a.mbt\n"
+"    │   │   ├── b.mbt\n"
+"    │   │   └── moon.pkg.json\n"
+"    │   ├── hello.mbt\n"
+"    │   ├── hello_test.mbt\n"
+"    │   └── moon.pkg.json\n"
+"    └── main\n"
+"        ├── main.mbt\n"
+"        └── moon.pkg.json\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:235
 msgid ""
 "In the `src/main/moon.pkg.json` file, import the `username/hello/lib/fib`"
 " package and customize its alias to `my_awesome_fibonacci`:"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:237
+msgid ""
+"{\n"
+"  \"is_main\": true,\n"
+"  \"import\": [\n"
+"    \"username/hello/lib\",\n"
+"    {\n"
+"      \"path\": \"username/hello/lib/fib\",\n"
+"      \"alias\": \"my_awesome_fibonacci\"\n"
+"    }\n"
+"  ]\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:250
@@ -2061,8 +2573,26 @@ msgid ""
 " `main/main.mbt`. Replace the file content of `main/main.mbt` to:"
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:252
+msgid ""
+"fn main {\n"
+"  let a = @my_awesome_fibonacci.fib(10)\n"
+"  let b = @my_awesome_fibonacci.fib2(11)\n"
+"  println(\"fib(10) = \\{a}, fib(11) = \\{b}\")\n"
+"\n"
+"  println(@lib.hello())\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:262
 msgid "To execute your program, specify the path to the `main` package:"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:264
+msgid ""
+"$ moon run ./src/main\n"
+"fib(10) = 55, fib(11) = 89\n"
+"Hello, world!\n"
 msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:270
@@ -2077,6 +2607,17 @@ msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:274
 msgid "`src/lib/fib/a.mbt`"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:276
+msgid ""
+"test {\n"
+"  assert_eq!(fib(1), 1)\n"
+"  assert_eq!(fib(2), 1)\n"
+"  assert_eq!(fib(3), 2)\n"
+"  assert_eq!(fib(4), 3)\n"
+"  assert_eq!(fib(5), 5)\n"
+"}\n"
 msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:286
@@ -2109,6 +2650,17 @@ msgstr ""
 msgid "`src/lib/fib/fib_test.mbt`"
 msgstr ""
 
+#: ../../toolchain/moon/tutorial.md:296
+msgid ""
+"test {\n"
+"  assert_eq!(@fib.fib(1), 1)\n"
+"  assert_eq!(@fib.fib2(2), 1)\n"
+"  assert_eq!(@fib.fib(3), 2)\n"
+"  assert_eq!(@fib.fib2(4), 3)\n"
+"  assert_eq!(@fib.fib(5), 5)\n"
+"}\n"
+msgstr ""
+
 #: ../../toolchain/moon/tutorial.md:306
 msgid ""
 "Notice that the test code uses `@fib` to refer to the "
@@ -2123,5 +2675,16 @@ msgid ""
 "Finally, use the `moon test` command, which scans the entire project, "
 "identifies, and runs all inline tests as well as files ending with "
 "`_test.mbt`. If everything is normal, you will see:"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:310
+msgid ""
+"$ moon test\n"
+"Total tests: 3, passed: 3, failed: 0.\n"
+"$ moon test -v\n"
+"test username/hello/lib/hello_test.mbt::hello ok\n"
+"test username/hello/lib/fib/a.mbt::0 ok\n"
+"test username/hello/lib/fib/fib_test.mbt::0 ok\n"
+"Total tests: 3, passed: 3, failed: 0.\n"
 msgstr ""
 
