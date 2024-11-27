@@ -61,7 +61,7 @@ Now, we can get started.
 ## Start Writing
 
 In our tour, we will write all of the codes below in `main.mbt`. As you may have guessed, the `main` function within the `main` package is the main entrance of a program.
-For a thorough introduction, please take a look at our [build system tutorial](https://www.moonbitlang.com/docs/build-system-tutorial).
+For a thorough introduction, please take a look at our [build system tutorial](../toolchain/moon/tutorial.md).
 
 ### Variables
 
@@ -187,7 +187,7 @@ let listOfUser : List[User] = Cons(evan, Cons({ ..evan, email: "someoneelse@exam
 ```
 
 Another datatype is `type`, a specific case of `enum` type. `type` can be thought as a wrapper
-around an existing type, keeping the methods of `String` but allows additional methods to be defined.
+around an existing type, allowing additional methods to be defined.
 Through this we extends the method definition of a foreign type without actually
 modifying it. Consider the type of `name` in `User`,
 we may define it as
@@ -347,4 +347,4 @@ better readability, preserving recursive flavor and same performance without wri
 At this point, we've learned about the very basic and most not-so-trivial features of MoonBit,
 yet MoonBit is a feature-rich, multi-paradigm programming language.
 After making sure that you are comfortable with the basics of MoonBit,
-we suggest that you look into some [interesting examples](https://www.moonbitlang.com/docs/category/examples) to get a better hold of MoonBit.
+we suggest that you look into some [interesting examples](https://github.com/moonbitlang/moonbit-docs/tree/main/legacy/examples) to get a better hold of MoonBit.

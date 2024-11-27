@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-19 15:42+0800\n"
+"POT-Creation-Date: 2024-11-27 10:56+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -20,15 +20,534 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: ../../language/grammar.md:1
-msgid "Grammar"
+#: ../../language/error-handling.md:1
+msgid "Error handling in MoonBit"
+msgstr ""
+"MoonBit 中的错误处理"
+
+#: ../../language/error-handling.md:3
+msgid ""
+"Error handling has always been at core of our language design. In the "
+"following we'll be explaining how error handling is done in MoonBit. We "
+"assume you have some prior knowledge of MoonBit, if not, please checkout "
+"[A tour of MoonBit](../tutorial/tour.md)."
+msgstr ""
+"错误处理一直是我们语言设计的核心。接下来我们将解释 MoonBit 中的错误处理。"
+"我们假设您对 MoonBit 有一些了解，如果没有，请查看 [MoonBit 之旅](../tutorial/tour.md)。"
+
+#: ../../language/error-handling.md:7
+msgid "Example: Division by Zero"
+msgstr ""
+"示例：除零"
+
+#: ../../language/error-handling.md:9
+msgid ""
+"We'll write a small example to demonstrate the basics of MoonBit's error "
+"handling system. Consider the following `div` function which'll raise an "
+"error on division by zero:"
+msgstr ""
+"我们将编写一个小例子来演示 MoonBit 错误处理系统的基础知识。考虑以下 `div` 函数，"
+"它将在除零时引发错误："
+
+#: ../../language/error-handling.md:23
+msgid ""
+"In before, we would typically use `type` to define a wrapper type which "
+"wraps around some existing foreign type. Here however, we append `type` "
+"with `!` to define a error type `DivisionByZeroError` which wraps around "
+"`String`."
+msgstr ""
+"在以前，我们通常使用 `type` 来定义一个包装器类型，该类型包装了某些现有的外部类型。"
+"然而，在这里，我们使用 `!` 将 `type` 附加到 `DivisionByZeroError`，以定义一个错误类型，"
+"该类型包装了 `String`。"
+
+#: ../../language/error-handling.md:27
+msgid "`type! E S` construct a error type `E` from `S`"
+msgstr ""
+"`type! E S` 从 `S` 构造一个错误类型 `E`"
+
+#: ../../language/error-handling.md:29
+msgid ""
+"Just like `type`, `type!` may have a payload like the above "
+"`DivisionByZeroError`, or may not, or may even have multiple constructors"
+" like a normal `enum`:"
+msgstr ""
+"就像 `type` 一样，`type!` 可能有一个像上面的 `DivisionByZeroError` 那样的数据，"
+"也可能没有，甚至可能像普通的 `enum` 一样有多个构造器："
+
+#: ../../language/error-handling.md:40
+msgid ""
+"To utilize `DivisionByZeroError` type, we would usually define a function"
+" which may raise error by denoting its return type like `T ! E` in the "
+"signature, with `T` being the actual return type and `E` being the error "
+"type. In this case, it's `Int!DivisionByZeroError`. The error can be "
+"thrown using `raise e` where `e` is an instance of `E` which can be "
+"constructed using the default constructor of `S`."
+msgstr ""
+"要使用 `DivisionByZeroError` 类型，我们通常会定义一个函数，该函数通过在签名中定义返回类型为 `T ! E` "
+"来表示它会引发错误，其中 `T` 是实际的返回类型，`E` 是错误类型。在这个例子中，它是 `Int!DivisionByZeroError`。"
+"错误可以使用 `raise e` 抛出，其中 `e` 是 `E` 的实例，可以使用 `S` 的默认构造函数构造。"
+
+#: ../../language/error-handling.md:47
+msgid ""
+"Any instance of an error is a second class object. Meaning it may only "
+"appear in the return value. And if it does appear, the function signature"
+" has to be adjusted to match with the return type."
+msgstr ""
+"任何错误的实例都是一个二等公民对象。这意味着它只能出现在返回值中。如果返回值包含错误，"
+"函数签名必须调整以匹配返回类型。"
+
+#: ../../language/error-handling.md:51
+msgid ""
+"The `test` block in MoonBit may also be seen as a function, with a return"
+" type of Unit!Error."
+msgstr ""
+"MoonBit 中的 `test` 块也可以看作是一个函数，返回类型为 Unit!Error。"
+
+#: ../../language/error-handling.md:54
+msgid "Calling an error-able function"
+msgstr ""
+"调用一个可出错的函数"
+
+#: ../../language/error-handling.md:56
+msgid ""
+"an error-able function is usually called in 2 manners: `f!(...)` and "
+"`f?(...)`."
+msgstr ""
+"一个可出错的函数通常有两种调用方式：`f!(...)` 和 `f?(...)`。"
+
+#: ../../language/error-handling.md:58
+msgid "As-is calling"
+msgstr ""
+"直接调用"
+
+#: ../../language/error-handling.md:60
+msgid ""
+"`f!(...)` calls the function directly. The possible error must be dealt "
+"in the function that calls `f`. We can either re-raising it without "
+"actually dealing with the error:"
+msgstr ""
+"`f!(...)` 直接调用函数。可能的错误必须在调用 `f` 的函数中处理。我们可以重新抛出它，而不实际处理错误："
+
+#: ../../language/error-handling.md:71
+msgid "or use `try...catch` block like in many other languages:"
+msgstr ""
+"或者像其他许多语言一样使用 `try...catch` 块："
+
+#: ../../language/error-handling.md:85
+msgid ""
+"The `catch...` clause has similar semantics like pattern matching. We can"
+" unwrap the error to retrieve the underlying `String` and print it. "
+"Additionally, there's an `else` clause to handle the value of `try...` "
+"block."
+msgstr ""
+"`catch...` 子句的语义类似于模式匹配。我们可以解包错误以检索底层的 `String` 并打印它。"
+"此外，还有一个 `else` 子句来处理 `try...` 块的值。"
+
+#: ../../language/error-handling.md:100
+msgid ""
+"Curly braces may be omitted if the body of try is a one-liner "
+"(expression). The `catch` keyword can also be omitted as well. In the "
+"case where a `try` body would raise different errors, the special "
+"`catch!` can be used to catch some of the errors, while re-raising other "
+"uncaught errors:"
+msgstr ""
+"如果 `try` 的主体是一行代码（表达式），则大括号可以省略。`catch` 关键字也可以省略。"
+"在 `try` 主体可能引发不同错误的情况下，可以使用特殊的 `catch!` 来捕获一些错误，同时重新抛出其他未捕获的错误："
+
+#: ../../language/error-handling.md:120
+msgid "Convert to Result"
+msgstr ""
+"转换为 Result"
+
+#: ../../language/error-handling.md:122
+msgid "Extracting values"
+msgstr ""
+"提取值"
+
+#: ../../language/error-handling.md:124
+msgid ""
+"A object of type `Result` is a first class value in MoonBit. `Result` has"
+" 2 constructors: `Ok(...)` and `Err(...)` where the former accept a first"
+" class object and the latter accept a error object."
+msgstr ""
+"`Result` 类型的对象是 MoonBit 中的一等公民。`Result` 有 2 个构造器：`Ok(...)` 和 `Err(...)`，"
+"前者接受一个一等公民对象，后者接受一个错误对象。"
+
+#: ../../language/error-handling.md:126
+msgid ""
+"With `f?(...)`, the return type `T!E` is turned into `Result[T,E]`. We "
+"may use pattern matching to extract value from it:"
+msgstr ""
+"使用 `f?(...)`，返回类型 `T!E` 被转换为 `Result[T,E]`。我们可以使用模式匹配从中提取值："
+
+#: ../../language/error-handling.md:136
+msgid "the `f?()` is basically a syntactic sugar for"
+msgstr ""
+"`f?()` 基本上是一个语法糖，等价于"
+
+#: ../../language/error-handling.md:146
+msgid ""
+"Note the difference between `T?` and `f?(...)`: `T` is a type and `T?` is"
+" equivalent to `Option[T]` whereas `f?(...)` is a call to an error-able "
+"function `f`."
+msgstr ""
+"注意 `T?` 和 `f?(...)` 之间的区别：`T` 是一个类型，`T?` 等价于 `Option[T]`，而 `f?(...)` 是对可出错函数 `f` 的调用。"
+
+#: ../../language/error-handling.md:150
+msgid ""
+"Besides pattern matching, `Result` provides some useful methods to deal "
+"with possible error:"
+msgstr ""
+"除了模式匹配，`Result` 还提供了一些有用的方法来处理可能的错误："
+
+#: ../../language/error-handling.md:160
+msgid ""
+"`or` returns the value if the result is `Ok` or a default value if it is "
+"`Err`"
+msgstr ""
+"`or` 如果结果是 `Ok`，则返回值，如果是 `Err`，则返回默认值"
+
+#: ../../language/error-handling.md:161
+msgid "`unwrap` panics if the result is `Err` and return the value if it is `Ok`"
+msgstr ""
+"`unwrap` 如果结果是 `Err`，则会崩溃，如果是 `Ok`，则返回值"
+
+#: ../../language/error-handling.md:163
+msgid "Mapping values"
+msgstr ""
+"映射值"
+
+#: ../../language/error-handling.md:173
+msgid ""
+"`map` applies a function to the value within, except it doesn't nothing "
+"if result is `Err`."
+msgstr ""
+"`map` 将函数应用于内部的值；如果结果是 `Err`，则不执行任何操作。"
+
+#: ../../language/error-handling.md:174
+msgid "`map_error` does the opposite."
+msgstr ""
+"`map_error` 则相反。"
+
+#: ../../language/error-handling.md:176
+msgid ""
+"Unlike some languages, MoonBit treats error-able and nullable value "
+"differently. Although one might treat them analogously, as an `Err` "
+"result contains no value, only the error, which is like `null`. MoonBit "
+"knows that."
+msgstr ""
+"与一些语言不同，MoonBit 对可出错值和可空值进行了区分。尽管有些人可能将它们类比对待，"
+"因为一个不包含值的 `Err` 对象就像 `null`。MoonBit 知道这一点。"
+
+#: ../../language/error-handling.md:178
+msgid "`to_option` converts a `Result` to `Option`."
+msgstr ""
+"`to_option` 将 `Result` 转换为 `Option`。"
+
+#: ../../language/error-handling.md:188
+msgid "Built-in error type and functions"
+msgstr ""
+"内置错误类型和相关函数"
+
+#: ../../language/error-handling.md:190
+msgid "In MoonBit, `Error` is a generalized error type:"
+msgstr ""
+"在 MoonBit 中，`Error` 是一个通用的错误类型："
+
+#: ../../language/error-handling.md:211
+msgid ""
+"Although the constructor `Err` expects a type of `Error`, we may still "
+"pass an error of type `DivisionByZeroError` to it."
+msgstr ""
+"尽管构造函数 `Err` 期望一个 `Error` 类型，我们仍然可以将 `DivisionByZeroError` 类型的错误传递给它。"
+
+#: ../../language/error-handling.md:214
+msgid ""
+"But `Error` can't be constructed directly. It's meant to be passed "
+"around, not used directly:"
+msgstr ""
+"但是 `Error` 不能直接构造。它是用来传递的，而不是直接使用："
+
+#: ../../language/error-handling.md:229
+msgid ""
+"`Error` is typically used where concrete error type is not needed, or "
+"simply act as a catch-all for all kinds of sub-errors."
+msgstr ""
+"`Error` 通常用于不需要具体错误类型的情况，或者简单地用来捕获所有的子错误。"
+
+#: ../../language/error-handling.md:232
+msgid ""
+"As `Error` includes multiple error types, partial matching is not allowed"
+" here. We have to do exhaustive matching by providing a catch-"
+"all/wildcard case `_`."
+msgstr ""
+"由于 `Error` 包含多种错误类型，这里不允许部分匹配。我们必须通过提供一个通配符 `_` 来进行兜底匹配。"
+
+#: ../../language/error-handling.md:234
+msgid ""
+"We usually use the builtin `Failure` error type for a generalized error, "
+"and by generalized we mean using it for trivial errors that doesn't need "
+"a new error type."
+msgstr ""
+"我们通常使用内置的 `Failure` 错误类型来表示通用错误：通用意味着它用于不值得单独定义类型的错误。"
+
+#: ../../language/error-handling.md:246
+msgid ""
+"Besides using the constructor directly, the function `fail!` provides a "
+"shorthand to construct a `Failure`. And if we take a look at the source "
+"code:"
+msgstr ""
+"除了直接使用构造函数，函数 `fail!` 提供了一个快捷方式来构造 `Failure`。如果我们查看源代码："
+
+#: ../../language/error-handling.md:255
+msgid ""
+"We can see that `fail` is merely a constructor with a pre-defined output "
+"template for showing both the error and the source location. In practice,"
+" `fail!` is always preferred over `Failure`."
+msgstr ""
+"我们可以看到 `fail` 只是一个带有预定义输出模板的构造函数，用于显示错误和源位置。"
+"在实践中，`fail!` 总是比 `Failure`更常用。"
+
+#: ../../language/error-handling.md:259
+msgid ""
+"Other functions used to break control flow are `abort` and `panic`. They "
+"are equivalent. An `panic` at any place will manually crash the program "
+"at that place, and prints out stack trace."
+msgstr ""
+"其他用于打破控制流的函数有 `abort` 和 `panic`。它们是等效的。在任何地方的 `panic` 都会手动在那个地方崩溃程序，并打印出堆栈跟踪。"
+
+#: ../../language/ffi-and-wasm-host.md:1
+msgid "Foreign Function Interface(FFI)"
 msgstr ""
 
-#: ../../language/grammar.md:3
-msgid "Here's some MoonBit grammar:"
+#: ../../language/ffi-and-wasm-host.md:3
+msgid ""
+"You can use foreign function in MoonBit through FFI to interact with the "
+"hosting runtime when embedded inside the browser or command line "
+"applications through [Wasmtime](https://wasmtime.dev/) or similar "
+"projects."
 msgstr ""
 
-#: ../../language/index.md:5
+#: ../../language/ffi-and-wasm-host.md:5
+msgid ""
+"⚠ Warning: MoonBit is still in early stage, so the content may be "
+"outdated."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:7
+msgid "FFI"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:9
+msgid "Declare Foreign Reference"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:11
+msgid "You can declare a foreign reference type like this:"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:17
+msgid ""
+"This will be a type that represents a reference to a foreign object, a "
+"`CanvasRenderingContext2D` object held by the hosting JavaScript runtime "
+"in this example."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:19
+msgid "Declare Foreign Function"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:21
+msgid "You can declare a foreign function like this:"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:27
+msgid ""
+"It's similar to a normal function definition except that the function "
+"body is replaced with two strings."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:29
+msgid ""
+"For WasmGC backend, these two strings are used to identify the specific "
+"function from a Wasm import object, the first string is the module name, "
+"and the second string is the function name. For JS backend, these two "
+"strings are used to call a static function in the global namespace. The "
+"example above becomes similar to `const cos = (d) => Math.cos(d)`."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:31
+msgid ""
+"You can also declare inline functions where the function body is replaced"
+" with one string."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:33
+msgid ""
+"For WasmGC backend, you may declare it as a Wasm function without name "
+"(which will be generated afterwards):"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:40
+msgid "and for JS backend, you may declare it as a lambda expression:"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:47
+msgid "After declaration, you can use foreign functions like regular functions."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:49
+msgid ""
+"For multi-backend project, you may implement backend specific code in the"
+" files that ends with `.wasm.mbt` `.wasm-gc.mbt` and `.js.mbt`."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:51
+msgid ""
+"You may also declare a foreign function that will be invoked upon a "
+"foreign object by using the foreign reference type like this:"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:57
+msgid ""
+"and apply it to a previously owned reference normally such as "
+"`context.begin_path()`."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:59
+msgid "Exported functions"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:61
+msgid ""
+"Functions that are not methods nor polymorphic functions can be exported "
+"if they are public and if the link configuration appears in the "
+"`moon.pkg.json` of the package:"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:89
+msgid ""
+"Each backend has a separate definition. For JS backend, a `format` option"
+" is used to specify whether the generated JavaScript file should be "
+"released as an ES Module (`esm`), a CommonJS module (`cjs`), or an "
+"immediately invoked function expression (`iife`)."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:91
+msgid ""
+"The example above will export function `add` and `fib`, and the function "
+"`fib` will be exported with the name of `test`."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:93
+msgid ""
+"For WasmGC backend, the `_start` function should always be called to "
+"initialize all the global instances defined in MoonBit program."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:95
+msgid "Use compiled Wasm"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:97
+msgid ""
+"To use the compiled Wasm, you need to initialize the Wasm module with the"
+" host functions so as to meet the needs of the foreign functions, and "
+"then use the exported functions provided by the Wasm module."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:99
+msgid "Provide host functions"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:101
+msgid ""
+"To use the compiled Wasm, you must provide **All** declared foreign "
+"functions in Wasm import object."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:103
+msgid "For example, to use wasm compiled from above code snippet in JavaScript:"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:113
+msgid ""
+"Check out the documentation such as [MDN](https://developer.mozilla.org"
+"/en-US/docs/WebAssembly) or the manual of runtime that you're using to "
+"embed the Wasm."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:115
+msgid "Example: Smiling face"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:117
+msgid ""
+"Let's walk through a full example to draw a smiling face using Canvas API"
+" in MoonBit. Suppose you created a new project with `moon new draw`"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:165
+msgid ""
+"Build the project using `moon build`. We recommend using Wasm with GC "
+"integration whenever possible (which is the default). If the environment "
+"does not support the GC feature, use the `--target wasm` option instead."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:167
+msgid "We now can use it from JavaScript."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:198
+msgid ""
+"For import object, we need to provide all the FFI used in the previously "
+"defined program: the canvas rendering API, the math API and finally, an "
+"API for printing to the console used by the `println` or `print` "
+"function."
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:200
+msgid ""
+"As of the canvas rendering API and the math API, we can use the following"
+" code to convert the methods of objects into function calls that accept "
+"the object as the first parameter, and convert the constant properties of"
+" objects into functions that returns the value:"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:224
+msgid ""
+"As of the printing service, we can provide the following closure so that "
+"it buffers the bytes of string until it needs to be logged to the "
+"console:"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:260
+msgid "Now, we put them together, so this is our final complete `index.html`:"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:328
+msgid ""
+"Make sure that `draw.wasm` and `index.html` are in the same folder, then "
+"start a http server at this folder. For example, using Python:"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:334
+msgid ""
+"Goto [http://localhost:8080](http://localhost:8080) in your browser, "
+"there should be a smile face on the screen and an output on the console:"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:336
+msgid ""
+"![A smile face webpage with browser devtools "
+"open](../imgs/smile_face_with_log.png)"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:336
+msgid "A smile face webpage with browser devtools open"
+msgstr ""
+
+#: ../../language/index.md:9
 msgid "Contents:"
 msgstr ""
 
@@ -39,4 +558,2174 @@ msgstr ""
 #: ../../language/index.md:3
 msgid "Here are the topics about the programming syntax."
 msgstr ""
+
+#: ../../language/index.md:5
+msgid ""
+"[MoonBit](./language.md): almost everything you need to know about the "
+"MoonBit grammar."
+msgstr ""
+
+#: ../../language/index.md:6
+msgid ""
+"[Error handling](./error-handling.md): the error handling mechanism in "
+"MoonBit."
+msgstr ""
+
+#: ../../language/index.md:7
+msgid ""
+"[Foreign Function Interface](./ffi-and-wasm-host.md): how MoonBit "
+"interacts with the real world using different backends."
+msgstr ""
+
+#: ../../language/language.md:1
+msgid "MoonBit"
+msgstr ""
+
+#: ../../language/language.md:3
+msgid ""
+"MoonBit is an end-to-end programming language toolchain for cloud and "
+"edge computing using WebAssembly. The IDE environment is available at "
+"[https://try.moonbitlang.com](https://try.moonbitlang.com) without any "
+"installation; it does not rely on any server either."
+msgstr ""
+
+#: ../../language/language.md:5
+msgid "Status and aimed timeline"
+msgstr ""
+
+#: ../../language/language.md:7
+msgid ""
+"MoonBit is currently in beta-preview. We expect to reach beta in "
+"2024/11/22, and 1.0 in 2025."
+msgstr ""
+
+#: ../../language/language.md:9
+msgid ""
+"When MoonBit reaches beta, it means any backwards-incompatible changes "
+"will be seriously evaluated and MoonBit _can_ be used in production(very "
+"rare compiler bugs). MoonBit is developed by a talented full time team "
+"who had extensive experience in building language toolchains, so we will "
+"grow much faster than the typical language ecosystem, you won't wait long"
+" to use MoonBit in your production."
+msgstr ""
+
+#: ../../language/language.md:11
+msgid "Main advantages"
+msgstr ""
+
+#: ../../language/language.md:13
+msgid "Generate significantly smaller WASM output than any existing solutions."
+msgstr ""
+
+#: ../../language/language.md:14
+msgid "Much faster runtime performance."
+msgstr ""
+
+#: ../../language/language.md:15
+msgid "State of the art compile-time performance."
+msgstr ""
+
+#: ../../language/language.md:16
+msgid "Simple but practical, data-oriented language design."
+msgstr ""
+
+#: ../../language/language.md:18
+msgid "Overview"
+msgstr ""
+
+#: ../../language/language.md:20
+msgid ""
+"A MoonBit program consists of type definitions, function definitions, and"
+" variable bindings."
+msgstr ""
+
+#: ../../language/language.md:22
+msgid "Program entrance"
+msgstr ""
+
+#: ../../language/language.md:24
+msgid ""
+"There is a specialized function called `init` function. The `init` "
+"function is special in two aspects:"
+msgstr ""
+
+#: ../../language/language.md:26
+msgid "There can be multiple `init` functions in the same package."
+msgstr ""
+
+#: ../../language/language.md:27
+msgid ""
+"An `init` function can't be explicitly called or referred to by other "
+"functions. Instead, all `init` functions will be implicitly called when "
+"initializing a package. Therefore, `init` functions should only consist "
+"of statements."
+msgstr ""
+
+#: ../../language/language.md:37
+msgid ""
+"For WebAssembly backend, it means that it will be executed **before** the"
+" instance is available, meaning that the FFIs that relies on the "
+"instance's exportations can not be used at this stage; for JavaScript "
+"backend, it means that it will be executed during the importation stage."
+msgstr ""
+
+#: ../../language/language.md:40
+msgid ""
+"There is another specialized function called `main` function. The `main` "
+"function is the main entrance of the program, and it will be executed "
+"after the initialization stage. Only packages that are `main` packages "
+"can define such `main` function. Check out [build system "
+"tutorial](https://moonbitlang.github.io/moon/) for detail."
+msgstr ""
+
+#: ../../language/language.md:43
+msgid ""
+"The two functions above need to drop the parameter list and the return "
+"type."
+msgstr ""
+
+#: ../../language/language.md:45
+msgid "Expressions and Statements"
+msgstr ""
+
+#: ../../language/language.md:47
+msgid ""
+"MoonBit distinguishes between statements and expressions. In a function "
+"body, only the last clause should be an expression, which serves as a "
+"return value. For example:"
+msgstr ""
+
+#: ../../language/language.md:62
+msgid "Expressions include:"
+msgstr ""
+
+#: ../../language/language.md:64
+msgid ""
+"Value literals (e.g. Boolean values, numbers, characters, strings, "
+"arrays, tuples, structs)"
+msgstr ""
+
+#: ../../language/language.md:65
+msgid "Arithmetical, logical, or comparison operations"
+msgstr ""
+
+#: ../../language/language.md:66
+msgid ""
+"Accesses to array elements (e.g. `a[0]`) or struct fields (e.g `r.x`) or "
+"tuple components (e.g. `t.0`)"
+msgstr ""
+
+#: ../../language/language.md:67
+msgid "Variables and (capitalized) enum constructors"
+msgstr ""
+
+#: ../../language/language.md:68
+msgid "Anonymous local function definitions"
+msgstr ""
+
+#: ../../language/language.md:69
+msgid "`match` and `if` expressions"
+msgstr ""
+
+#: ../../language/language.md:71
+msgid "Statements include:"
+msgstr ""
+
+#: ../../language/language.md:73
+msgid "Named local function definitions"
+msgstr ""
+
+#: ../../language/language.md:74
+msgid "Local variable bindings"
+msgstr ""
+
+#: ../../language/language.md:75
+msgid "Assignments"
+msgstr ""
+
+#: ../../language/language.md:76
+msgid "`return` statements"
+msgstr ""
+
+#: ../../language/language.md:77
+msgid "Any expression whose return type is `Unit`"
+msgstr ""
+
+#: ../../language/language.md:79
+msgid "Functions"
+msgstr ""
+
+#: ../../language/language.md:81
+msgid ""
+"Functions take arguments and produce a result. In MoonBit, functions are "
+"first-class, which means that functions can be arguments or return values"
+" of other functions. MoonBit's naming convention requires that function "
+"names should not begin with uppercase letters (A-Z). Compare for "
+"constructors in the `enum` section below."
+msgstr ""
+
+#: ../../language/language.md:83
+msgid "Top-Level Functions"
+msgstr ""
+
+#: ../../language/language.md:85
+msgid ""
+"Functions can be defined as top-level or local. We can use the `fn` "
+"keyword to define a top-level function that sums three integers and "
+"returns the result, as follows:"
+msgstr ""
+
+#: ../../language/language.md:93
+msgid ""
+"Note that the arguments and return value of top-level functions require "
+"explicit type annotations."
+msgstr ""
+
+#: ../../language/language.md:95
+msgid "Local Functions"
+msgstr ""
+
+#: ../../language/language.md:97
+msgid ""
+"Local functions can be named or anonymous. Type annotations can be "
+"omitted for local function definitions: they can be automatically "
+"inferred in most cases. For example:"
+msgstr ""
+
+#: ../../language/language.md:110
+msgid ""
+"Functions, whether named or anonymous, are _lexical closures_: any "
+"identifiers without a local binding must refer to bindings from a "
+"surrounding lexical scope. For example:"
+msgstr ""
+
+#: ../../language/language.md:126
+msgid "Function Applications"
+msgstr ""
+
+#: ../../language/language.md:128
+msgid "A function can be applied to a list of arguments in parentheses:"
+msgstr ""
+
+#: ../../language/language.md:134
+msgid ""
+"This works whether `add3` is a function defined with a name (as in the "
+"previous example), or a variable bound to a function value, as shown "
+"below:"
+msgstr ""
+
+#: ../../language/language.md:143
+msgid ""
+"The expression `add3(1, 2, 7)` returns `10`. Any expression that "
+"evaluates to a function value is applicable:"
+msgstr ""
+
+#: ../../language/language.md:153
+msgid "Labelled arguments"
+msgstr ""
+
+#: ../../language/language.md:155
+msgid ""
+"Functions can declare labelled argument with the syntax `label~ : Type`. "
+"`label` will also serve as parameter name inside function body:"
+msgstr ""
+
+#: ../../language/language.md:163
+msgid ""
+"Labelled arguments can be supplied via the syntax `label=arg`. "
+"`label=label` can be abbreviated as `label~`:"
+msgstr ""
+
+#: ../../language/language.md:172
+msgid ""
+"Labelled function can be supplied in any order. The evaluation order of "
+"arguments is the same as the order of parameters in function declaration."
+msgstr ""
+
+#: ../../language/language.md:174
+msgid "Optional arguments"
+msgstr ""
+
+#: ../../language/language.md:176
+msgid ""
+"A labelled argument can be made optional by supplying a default "
+"expression with the syntax `label~ : Type = default_expr`. If this "
+"argument is not supplied at call site, the default expression will be "
+"used:"
+msgstr ""
+
+#: ../../language/language.md:189
+msgid ""
+"The default expression will be evaluated every time it is used. And the "
+"side effect in the default expression, if any, will also be triggered. "
+"For example:"
+msgstr ""
+
+#: ../../language/language.md:206
+msgid ""
+"If you want to share the result of default expression between different "
+"function calls, you can lift the default expression to a toplevel `let` "
+"declaration:"
+msgstr ""
+
+#: ../../language/language.md:222
+msgid ""
+"Default expression can depend on the value of previous arguments. For "
+"example:"
+msgstr ""
+
+#: ../../language/language.md:235
+msgid "Automatically insert `Some` when supplying optional arguments"
+msgstr ""
+
+#: ../../language/language.md:237
+msgid ""
+"It is quite often optional arguments have type `T?` with `None` as "
+"default value. In this case, passing the argument explicitly requires "
+"wrapping a `Some`:"
+msgstr ""
+
+#: ../../language/language.md:248
+msgid ""
+"Fortunately, MoonBit provides a special kind of optional arguments to "
+"solve this problem. Optional arguments declared with `label? : T` has "
+"type `T?` and `None` as default value. When supplying this kind of "
+"optional argument directly, MoonBit will automatically insert a `Some`:"
+msgstr ""
+
+#: ../../language/language.md:260
+msgid ""
+"Sometimes, it is also useful to pass a value of type `T?` directly, for "
+"example when forwarding optional argument. MoonBit provides a syntax "
+"`label?=value` for this, with `label?` being an abbreviation of "
+"`label?=label`:"
+msgstr ""
+
+#: ../../language/language.md:271
+msgid "Autofill arguments"
+msgstr ""
+
+#: ../../language/language.md:273
+msgid ""
+"MoonBit supports filling specific types of arguments automatically at "
+"different call site, such as the source location of a function call. To "
+"declare an autofill argument, simply declare an optional argument with "
+"`_` as default value. Now if the argument is not explicitly supplied, "
+"MoonBit will automatically fill it at the call site."
+msgstr ""
+
+#: ../../language/language.md:277
+msgid ""
+"Currently MoonBit supports two types of autofill arguments, `SourceLoc`, "
+"which is the source location of the whole function call, and `ArgsLoc`, "
+"which is a array containing the source location of each argument, if any:"
+msgstr ""
+
+#: ../../language/language.md:293
+msgid ""
+"Autofill arguments are very useful for writing debugging and testing "
+"utilities."
+msgstr ""
+
+#: ../../language/language.md:295
+msgid "Control Structures"
+msgstr ""
+
+#: ../../language/language.md:297
+msgid "Conditional Expressions"
+msgstr ""
+
+#: ../../language/language.md:299
+msgid ""
+"A conditional expression consists of a condition, a consequent, and an "
+"optional else clause."
+msgstr ""
+
+#: ../../language/language.md:313
+msgid "The else clause can also contain another if-else expression:"
+msgstr ""
+
+#: ../../language/language.md:323
+msgid ""
+"Curly brackets are used to group multiple expressions in the consequent "
+"or the else clause."
+msgstr ""
+
+#: ../../language/language.md:325
+msgid ""
+"Note that a conditional expression always returns a value in MoonBit, and"
+" the return values of the consequent and the else clause must be of the "
+"same type. Here is an example:"
+msgstr ""
+
+#: ../../language/language.md:331
+msgid "While loop"
+msgstr ""
+
+#: ../../language/language.md:333
+msgid ""
+"In MoonBit, `while` loop can be used to execute a block of code "
+"repeatedly as long as a condition is true. The condition is evaluated "
+"before executing the block of code. The `while` loop is defined using the"
+" `while` keyword, followed by a condition and the loop body. The loop "
+"body is a sequence of statements. The loop body is executed as long as "
+"the condition is true."
+msgstr ""
+
+#: ../../language/language.md:343
+msgid ""
+"The loop body supports `break` and `continue`. Using `break` allows you "
+"to exit the current loop, while using `continue` skips the remaining part"
+" of the current iteration and proceeds to the next iteration."
+msgstr ""
+
+#: ../../language/language.md:357
+msgid ""
+"The `while` loop also supports an optional `else` clause. When the loop "
+"condition becomes false, the `else` clause will be executed, and then the"
+" loop will end."
+msgstr ""
+
+#: ../../language/language.md:371
+msgid ""
+"When there is an `else` clause, the `while` loop can also return a value."
+" The return value is the evaluation result of the `else` clause. In this "
+"case, if you use `break` to exit the loop, you need to provide a return "
+"value after `break`, which should be of the same type as the return value"
+" of the `else` clause."
+msgstr ""
+
+#: ../../language/language.md:396
+msgid "For Loop"
+msgstr ""
+
+#: ../../language/language.md:398
+msgid ""
+"MoonBit also supports C-style For loops. The keyword `for` is followed by"
+" variable initialization clauses, loop conditions, and update clauses "
+"separated by semicolons. They do not need to be enclosed in parentheses. "
+"For example, the code below creates a new variable binding `i`, which has"
+" a scope throughout the entire loop and is immutable. This makes it "
+"easier to write clear code and reason about it:"
+msgstr ""
+
+#: ../../language/language.md:411
+msgid "The variable initialization clause can create multiple bindings:"
+msgstr ""
+
+#: ../../language/language.md:419
+msgid ""
+"It should be noted that in the update clause, when there are multiple "
+"binding variables, the semantics are to update them simultaneously. In "
+"other words, in the example above, the update clause does not execute `i "
+"= i + 1`, `j = j + 1` sequentially, but rather increments `i` and `j` at "
+"the same time. Therefore, when reading the values of the binding "
+"variables in the update clause, you will always get the values updated in"
+" the previous iteration."
+msgstr ""
+
+#: ../../language/language.md:421
+msgid ""
+"Variable initialization clauses, loop conditions, and update clauses are "
+"all optional. For example, the following two are infinite loops:"
+msgstr ""
+
+#: ../../language/language.md:435
+msgid ""
+"The `for` loop also supports `continue`, `break`, and `else` clauses. "
+"Like the `while` loop, the `for` loop can also return a value using the "
+"`break` and `else` clauses."
+msgstr ""
+
+#: ../../language/language.md:437
+msgid ""
+"The `continue` statement skips the remaining part of the current "
+"iteration of the `for` loop (including the update clause) and proceeds to"
+" the next iteration. The `continue` statement can also update the binding"
+" variables of the `for` loop, as long as it is followed by expressions "
+"that match the number of binding variables, separated by commas."
+msgstr ""
+
+#: ../../language/language.md:439
+msgid ""
+"For example, the following program calculates the sum of even numbers "
+"from 1 to 6:"
+msgstr ""
+
+#: ../../language/language.md:456
+msgid "`for .. in` loop"
+msgstr ""
+
+#: ../../language/language.md:458
+msgid ""
+"MoonBit supports traversing elements of different data structures and "
+"sequences via the `for .. in` loop syntax:"
+msgstr ""
+
+#: ../../language/language.md:466
+msgid ""
+"`for .. in` loop is translated to the use of `Iter` in MoonBit's standard"
+" library. Any type with a method `.iter() : Iter[T]` can be traversed "
+"using `for .. in`. For more information of the `Iter` type, see "
+"[Iterator](#iterator) below."
+msgstr ""
+
+#: ../../language/language.md:469
+msgid ""
+"In addition to sequences of a single value, MoonBit also supports "
+"traversing sequences of two values, such as `Map`, via the `Iter2` type "
+"in MoonBit's standard library. Any type with method `.iter2() : Iter2[A, "
+"B]` can be traversed using `for .. in` with two loop variables:"
+msgstr ""
+
+#: ../../language/language.md:478
+msgid ""
+"Another example of `for .. in` with two loop variables is traversing an "
+"array while keeping track of array index:"
+msgstr ""
+
+#: ../../language/language.md:487
+msgid ""
+"Control flow operations such as `return`, `break` and error handling are "
+"supported in the body of `for .. in` loop:"
+msgstr ""
+
+#: ../../language/language.md:498
+msgid "If a loop variable is unused, it can be ignored with `_`."
+msgstr ""
+
+#: ../../language/language.md:500
+msgid "Functional loop"
+msgstr ""
+
+#: ../../language/language.md:502
+msgid ""
+"Functional loop is a powerful feature in MoonBit that enables you to "
+"write loops in a functional style."
+msgstr ""
+
+#: ../../language/language.md:504
+msgid ""
+"A functional loop consumes arguments and returns a value. It is defined "
+"using the `loop` keyword, followed by its arguments and the loop body. "
+"The loop body is a sequence of clauses, each of which consists of a "
+"pattern and an expression. The clause whose pattern matches the input "
+"will be executed, and the loop will return the value of the expression. "
+"If no pattern matches, the loop will panic. Use the `continue` keyword "
+"with arguments to start the next iteration of the loop. Use the `break` "
+"keyword with arguments to return a value from the loop. The `break` "
+"keyword can be omitted if the value is the last expression in the loop "
+"body."
+msgstr ""
+
+#: ../../language/language.md:519
+msgid "Guard Statement"
+msgstr ""
+
+#: ../../language/language.md:521
+msgid ""
+"The `guard` statement is used to check a specified invariant. If the "
+"condition of the invariant is satisfied, the program continues executing "
+"the subsequent statements and returns. If the condition is not satisfied "
+"(i.e., false), the code in the `else` block is executed and its "
+"evaluation result is returned (the subsequent statements are skipped)."
+msgstr ""
+
+#: ../../language/language.md:532
+msgid ""
+"The `guard` statement also supports pattern matching: in the following "
+"example, `getProcessedText` assumes that the input `path` points to "
+"resources that are all plain text, and it uses the `guard` statement to "
+"ensure this invariant. Compared to using a `match` statement, the "
+"subsequent processing of `text` can have one less level of indentation."
+msgstr ""
+
+#: ../../language/language.md:555
+msgid ""
+"When the `else` part is omitted, the program terminates if the condition "
+"specified in the `guard` statement is not true or cannot be matched."
+msgstr ""
+
+#: ../../language/language.md:563
+msgid "Iterator"
+msgstr ""
+
+#: ../../language/language.md:565
+msgid ""
+"An iterator is an object that traverse through a sequence while providing"
+" access to its elements. Traditional OO languages like Java's "
+"`Iterator<T>` use `next()` `hasNext()` to step through the iteration "
+"process, whereas functional languages (JavaScript's `forEach`, Lisp's "
+"`mapcar`) provides a high-order function which takes an operation and a "
+"sequence then consumes the sequence with that operation being applied to "
+"the sequence. The former is called _external iterator_ (visible to user) "
+"and the latter is called _internal iterator_ (invisible to user)."
+msgstr ""
+
+#: ../../language/language.md:573
+msgid ""
+"The built-in type `Iter[T]` is MoonBit's internal iterator "
+"implementation. Almost all built-in sequential data structures have "
+"implemented `Iter`:"
+msgstr ""
+
+#: ../../language/language.md:588
+msgid "Commonly used methods include:"
+msgstr ""
+
+#: ../../language/language.md:590
+msgid ""
+"`each`: Iterates over each element in the iterator, applying some "
+"function to each element."
+msgstr ""
+
+#: ../../language/language.md:591
+msgid ""
+"`fold`: Folds the elements of the iterator using the given function, "
+"starting with the given initial value."
+msgstr ""
+
+#: ../../language/language.md:592
+msgid "`collect`: Collects the elements of the iterator into an array."
+msgstr ""
+
+#: ../../language/language.md:594
+msgid ""
+"`filter`: _lazy_ Filters the elements of the iterator based on a "
+"predicate function."
+msgstr ""
+
+#: ../../language/language.md:595
+msgid ""
+"`map`: _lazy_ Transforms the elements of the iterator using a mapping "
+"function."
+msgstr ""
+
+#: ../../language/language.md:596
+msgid ""
+"`concat`: _lazy_ Combines two iterators into one by appending the "
+"elements of the second iterator to the first."
+msgstr ""
+
+#: ../../language/language.md:598
+msgid ""
+"Methods like `filter` `map` are very common on a sequence object e.g. "
+"Array. But what makes `Iter` special is that any method that constructs a"
+" new `Iter` is _lazy_ (i.e. iteration doesn't start on call because it's "
+"wrapped inside a function), as a result of no allocation for intermediate"
+" value. That's what makes `Iter` superior for traversing through "
+"sequence: no extra cost. MoonBit encourages user to pass an `Iter` across"
+" functions instead of the sequence object itself."
+msgstr ""
+
+#: ../../language/language.md:606
+msgid ""
+"Pre-defined sequence structures like `Array` and its iterators should be "
+"enough to use. But to take advantages of these methods when used with a "
+"custom sequence with elements of type `S`, we will need to implement "
+"`Iter`, namely, a function that returns an `Iter[S]`. Take `Bytes` as an "
+"example:"
+msgstr ""
+
+#: ../../language/language.md:630
+msgid ""
+"Almost all `Iter` implementations are identical to that of `Bytes`, the "
+"only main difference being the code block that actually does the "
+"iteration."
+msgstr ""
+
+#: ../../language/language.md:633
+msgid "Implementation details"
+msgstr ""
+
+#: ../../language/language.md:635
+msgid ""
+"The type `Iter[T]` is basically a type alias for `((T) -> IterResult) -> "
+"IterResult`, a higher-order function that takes an operation and "
+"`IterResult` is an enum object that tracks the state of current iteration"
+" which consists any of the 2 states:"
+msgstr ""
+
+#: ../../language/language.md:640
+msgid "`IterEnd`: marking the end of an iteration"
+msgstr ""
+
+#: ../../language/language.md:641
+msgid ""
+"`IterContinue`: marking the end of an iteration is yet to be reached, "
+"implying the iteration will still continue at this state."
+msgstr ""
+
+#: ../../language/language.md:643
+msgid ""
+"To put it simply, `Iter[T]` takes a function `(T) -> IterResult` and use "
+"it to transform `Iter[T]` itself to a new state of type `IterResult`. "
+"Whether that state being `IterEnd` `IterContinue` depends on the "
+"function."
+msgstr ""
+
+#: ../../language/language.md:647
+msgid ""
+"Iterator provides a unified way to iterate through data structures, and "
+"they can be constructed at basically no cost: as long as `fn(yield)` "
+"doesn't execute, the iteration process doesn't start."
+msgstr ""
+
+#: ../../language/language.md:651
+msgid ""
+"Internally a `Iter::run()` is used to trigger the iteration. Chaining all"
+" sorts of `Iter` methods might be visually pleasing, but do notice the "
+"heavy work underneath the abstraction."
+msgstr ""
+
+#: ../../language/language.md:655
+msgid ""
+"Thus, unlike an external iterator, once the iteration starts there's no "
+"way to stop unless the end is reached. Methods such as `count()` which "
+"counts the number of elements in a iterator looks like an `O(1)` "
+"operation but actually has linear time complexity. Carefully use "
+"iterators or performance issue might occur."
+msgstr ""
+
+#: ../../language/language.md:661
+msgid "Built-in Data Structures"
+msgstr ""
+
+#: ../../language/language.md:663
+msgid "Boolean"
+msgstr ""
+
+#: ../../language/language.md:665
+msgid ""
+"MoonBit has a built-in boolean type, which has two values: `true` and "
+"`false`. The boolean type is used in conditional expressions and control "
+"structures."
+msgstr ""
+
+#: ../../language/language.md:675
+msgid "Number"
+msgstr ""
+
+#: ../../language/language.md:677
+msgid "MoonBit have integer type and floating point type:"
+msgstr ""
+
+#: ../../language/language.md
+msgid "type"
+msgstr ""
+
+#: ../../language/language.md
+msgid "description"
+msgstr ""
+
+#: ../../language/language.md
+msgid "example"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`Int`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "32-bit signed integer"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`42`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`Int64`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "64-bit signed integer"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`1000L`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`UInt`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "32-bit unsigned integer"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`14U`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`UInt64`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "64-bit unsigned integer"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`14UL`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`Double`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "64-bit floating point, defined by IEEE754"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`3.14`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`Float`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "32-bit floating point"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`(3.14 : Float)`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`BigInt`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "represents numeric values larger than other types"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`10000000000000000000000N`"
+msgstr ""
+
+#: ../../language/language.md:689
+msgid ""
+"MoonBit also supports numeric literals, including decimal, binary, octal,"
+" and hexadecimal numbers."
+msgstr ""
+
+#: ../../language/language.md:691
+msgid ""
+"To improve readability, you may place underscores in the middle of "
+"numeric literals such as `1_000_000`. Note that underscores can be placed"
+" anywhere within a number, not just every three digits."
+msgstr ""
+
+#: ../../language/language.md:693
+msgid "There is nothing surprising about decimal numbers."
+msgstr ""
+
+#: ../../language/language.md:702
+msgid ""
+"A binary number has a leading zero followed by a letter \"B\", i.e. "
+"`0b`/`0B`. Note that the digits after `0b`/`0B` must be `0` or `1`."
+msgstr ""
+
+#: ../../language/language.md:710
+msgid ""
+"An octal number has a leading zero followed by a letter \"O\", i.e. "
+"`0o`/`0O`. Note that the digits after `0o`/`0O` must be in the range from"
+" `0` through `7`:"
+msgstr ""
+
+#: ../../language/language.md:718
+msgid ""
+"A hexadecimal number has a leading zero followed by a letter \"X\", i.e. "
+"`0x`/`0X`. Note that the digits after the `0x`/`0X` must be in the range "
+"`0123456789ABCDEF`."
+msgstr ""
+
+#: ../../language/language.md:726
+msgid "Overloaded int literal"
+msgstr ""
+
+#: ../../language/language.md:728
+msgid ""
+"When the expected type is known, MoonBit can automatically overload "
+"integer literal, and there is no need to specify the type of number via "
+"letter postfix:"
+msgstr ""
+
+#: ../../language/language.md:739
+msgid "String"
+msgstr ""
+
+#: ../../language/language.md:741
+msgid ""
+"`String` holds a sequence of UTF-16 code units. You can use double quotes"
+" to create a string, or use `#|` to write a multi-line string."
+msgstr ""
+
+#: ../../language/language.md:756
+msgid ""
+"In double quotes string, a backslash followed by certain special "
+"characters forms an escape sequence:"
+msgstr ""
+
+#: ../../language/language.md
+msgid "escape sequences"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`\\n`,`\\r`,`\\t`,`\\b`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "New line, Carriage return, Horizontal tab, Backspace"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`\\\\`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "Backslash"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`\\x41`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "Hexadecimal escape sequence"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`\\o102`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "Octal escape sequence"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`\\u5154`,`\\u{1F600}`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "Unicode escape sequence"
+msgstr ""
+
+#: ../../language/language.md:766
+msgid ""
+"MoonBit supports string interpolation. It enables you to substitute "
+"variables within interpolated strings. This feature simplifies the "
+"process of constructing dynamic strings by directly embedding variable "
+"values into the text. Variables used for string interpolation must "
+"support the `to_string` method."
+msgstr ""
+
+#: ../../language/language.md:773
+msgid ""
+"Multi-line strings do not support interpolation by default, but you can "
+"enable interpolation for a specific line by changing the leading `#|` to "
+"`$|`:"
+msgstr ""
+
+#: ../../language/language.md:785
+msgid "Output:"
+msgstr ""
+
+#: ../../language/language.md:795
+msgid "Char"
+msgstr ""
+
+#: ../../language/language.md:797
+msgid "`Char` is an integer representing a Unicode code point."
+msgstr ""
+
+#: ../../language/language.md:807
+msgid "Byte(s)"
+msgstr ""
+
+#: ../../language/language.md:809
+msgid ""
+"A byte literal in MoonBit is either a single ASCII character or a single "
+"escape enclosed in single quotes `'`, and preceded by the character `b`. "
+"Byte literals are of type `Byte`. For example:"
+msgstr ""
+
+#: ../../language/language.md:820
+msgid ""
+"A `Bytes` is a sequence of bytes. Similar to byte, bytes literals have "
+"the form of `b\"...\"`. For example:"
+msgstr ""
+
+#: ../../language/language.md:830
+msgid "Tuple"
+msgstr ""
+
+#: ../../language/language.md:832
+msgid ""
+"A tuple is a collection of finite values constructed using round brackets"
+" `()` with the elements separated by commas `,`. The order of elements "
+"matters; for example, `(1,true)` and `(true,1)` have different types. "
+"Here's an example:"
+msgstr ""
+
+#: ../../language/language.md:845
+msgid "Tuples can be accessed via pattern matching or index:"
+msgstr ""
+
+#: ../../language/language.md:865
+msgid "Array"
+msgstr ""
+
+#: ../../language/language.md:867
+msgid ""
+"An array is a finite sequence of values constructed using square brackets"
+" `[]`, with elements separated by commas `,`. For example:"
+msgstr ""
+
+#: ../../language/language.md:873
+msgid ""
+"You can use `numbers[x]` to refer to the xth element. The index starts "
+"from zero."
+msgstr ""
+
+#: ../../language/language.md:885
+msgid "Map"
+msgstr ""
+
+#: ../../language/language.md:887
+msgid ""
+"MoonBit provides a hash map data structure that preserves insertion orde "
+"called `Map` in its standard library. `Map`s can be created via a "
+"convenient literal syntax:"
+msgstr ""
+
+#: ../../language/language.md:894
+msgid ""
+"Currently keys in map literal syntax must be constant. `Map`s can also be"
+" destructed elegantly with pattern matching, see [Map Pattern](#map-"
+"pattern)."
+msgstr ""
+
+#: ../../language/language.md:896
+msgid "Json literal"
+msgstr ""
+
+#: ../../language/language.md:898
+msgid ""
+"MoonBit supports convenient json handling by overloading literals. When "
+"the expected type of an expression is `Json`, number, string, array and "
+"map literals can be directly used to create json data:"
+msgstr ""
+
+#: ../../language/language.md:908
+msgid "Json values can be pattern matched too, see [Json Pattern](#json-pattern)."
+msgstr ""
+
+#: ../../language/language.md:910
+msgid "Variable Binding"
+msgstr ""
+
+#: ../../language/language.md:912
+msgid ""
+"A variable can be declared as mutable or immutable using `let mut` or "
+"`let`, respectively. A mutable variable can be reassigned to a new value,"
+" while an immutable one cannot."
+msgstr ""
+
+#: ../../language/language.md:924
+msgid "Data Types"
+msgstr ""
+
+#: ../../language/language.md:926
+msgid "There are two ways to create new data types: `struct` and `enum`."
+msgstr ""
+
+#: ../../language/language.md:928
+msgid "Struct"
+msgstr ""
+
+#: ../../language/language.md:930
+msgid ""
+"In MoonBit, structs are similar to tuples, but their fields are indexed "
+"by field names. A struct can be constructed using a struct literal, which"
+" is composed of a set of labeled values and delimited with curly "
+"brackets. The type of a struct literal can be automatically inferred if "
+"its fields exactly match the type definition. A field can be accessed "
+"using the dot syntax `s.f`. If a field is marked as mutable using the "
+"keyword `mut`, it can be assigned a new value."
+msgstr ""
+
+#: ../../language/language.md:948
+msgid "Constructing Struct with Shorthand"
+msgstr ""
+
+#: ../../language/language.md:950
+msgid ""
+"If you already have some variable like `name` and `email`, it's redundant"
+" to repeat those names when constructing a struct:"
+msgstr ""
+
+#: ../../language/language.md:960
+msgid "You can use shorthand instead, it behaves exactly the same."
+msgstr ""
+
+#: ../../language/language.md:970
+msgid "Struct Update Syntax"
+msgstr ""
+
+#: ../../language/language.md:972
+msgid ""
+"It's useful to create a new struct based on an existing one, but with "
+"some fields updated."
+msgstr ""
+
+#: ../../language/language.md:989
+msgid "Enum"
+msgstr ""
+
+#: ../../language/language.md:991
+msgid ""
+"Enum types are similar to algebraic data types in functional languages. "
+"Users familiar with C/C++ may prefer calling it tagged union."
+msgstr ""
+
+#: ../../language/language.md:993
+msgid ""
+"An enum can have a set of cases (constructors). Constructor names must "
+"start with capitalized letter. You can use these names to construct "
+"corresponding cases of an enum, or checking which branch an enum value "
+"belongs to in pattern matching:"
+msgstr ""
+
+#: ../../language/language.md:1037
+msgid ""
+"Enum cases can also carry payload data. Here's an example of defining an "
+"integer list type using enum:"
+msgstr ""
+
+#: ../../language/language.md:1084
+msgid "Constructor with labelled arguments"
+msgstr ""
+
+#: ../../language/language.md:1086
+msgid "Enum constructors can have labelled argument:"
+msgstr ""
+
+#: ../../language/language.md:1113
+msgid ""
+"It is also possible to access labelled arguments of constructors like "
+"accessing struct fields in pattern matching:"
+msgstr ""
+
+#: ../../language/language.md:1151
+msgid "Constructor with mutable fields"
+msgstr ""
+
+#: ../../language/language.md:1153
+msgid ""
+"It is also possible to define mutable fields for constructor. This is "
+"especially useful for defining imperative data structures:"
+msgstr ""
+
+#: ../../language/language.md:1195
+msgid "Newtype"
+msgstr ""
+
+#: ../../language/language.md:1197
+msgid "MoonBit supports a special kind of enum called newtype:"
+msgstr ""
+
+#: ../../language/language.md:1206
+msgid ""
+"Newtypes are similar to enums with only one constructor (with the same "
+"name as the newtype itself). So, you can use the constructor to create "
+"values of newtype, or use pattern matching to extract the underlying "
+"representation of a newtype:"
+msgstr ""
+
+#: ../../language/language.md:1219
+msgid ""
+"Besides pattern matching, you can also use `._` to extract the internal "
+"representation of newtypes:"
+msgstr ""
+
+#: ../../language/language.md:1229
+msgid "Type alias"
+msgstr ""
+
+#: ../../language/language.md:1230
+msgid "MoonBit supports type alias via the syntax `typealias Name = TargetType`:"
+msgstr ""
+
+#: ../../language/language.md:1238
+msgid ""
+"unlike all other kinds of type declaration above, type alias does not "
+"define a new type, it is merely a type macro that behaves exactly the "
+"same as its definition. So for example one cannot define new methods or "
+"implement traits for a type alias."
+msgstr ""
+
+#: ../../language/language.md:1242
+msgid ""
+"Type alias can be used to perform incremental code refactor. For example,"
+" if you want to move a type `T` from `@pkgA` to `@pkgB`, you can leave a "
+"type alias `typealias T = @pkgB.T` in `@pkgA`, and **incrementally** port"
+" uses of `@pkgA.T` to `@pkgB.T`. The type alias can be removed after all "
+"uses of `@pkgA.T` is migrated to `@pkgB.T`."
+msgstr ""
+
+#: ../../language/language.md:1247
+msgid "Pattern Matching"
+msgstr ""
+
+#: ../../language/language.md:1249
+msgid ""
+"We have shown a use case of pattern matching for enums, but pattern "
+"matching is not restricted to enums. For example, we can also match "
+"expressions against Boolean values, numbers, characters, strings, tuples,"
+" arrays, and struct literals. Since there is only one case for those "
+"types other than enums, we can pattern match them using `let` binding "
+"instead of `match` expressions. Note that the scope of bound variables in"
+" `match` is limited to the case where the variable is introduced, while "
+"`let` binding will introduce every variable to the current scope. "
+"Furthermore, we can use underscores `_` as wildcards for the values we "
+"don't care about, use `..` to ignore remaining fields of struct or "
+"elements of array."
+msgstr ""
+
+#: ../../language/language.md:1267
+msgid ""
+"There are some other useful constructs in pattern matching. For example, "
+"we can use `as` to give a name to some pattern, and we can use `|` to "
+"match several cases at once. A variable name can only be bound once in a "
+"single pattern, and the same set of variables should be bound on both "
+"sides of `|` patterns."
+msgstr ""
+
+#: ../../language/language.md:1277
+msgid "Range Pattern"
+msgstr ""
+
+#: ../../language/language.md:1278
+msgid ""
+"For builtin integer types and `Char`, MoonBit allows matching whether the"
+" value falls in a specific range. Range patterns have the form `a..<b` or"
+" `a..=b`, where `..<` means the upper bound is exclusive, and `..=` means"
+" inclusive upper bound. `a` and `b` can be one of:"
+msgstr ""
+
+#: ../../language/language.md:1282
+msgid "literal"
+msgstr ""
+
+#: ../../language/language.md:1283
+msgid "named constant declared with `const`"
+msgstr ""
+
+#: ../../language/language.md:1284
+msgid "`_`, meaning the pattern has no restriction on this side"
+msgstr ""
+
+#: ../../language/language.md:1286
+msgid "Here are some examples:"
+msgstr ""
+
+#: ../../language/language.md:1308
+msgid "Map Pattern"
+msgstr ""
+
+#: ../../language/language.md:1310
+msgid ""
+"MoonBit allows convenient matching on map-like data structures. Inside a "
+"map pattern, the `key : value` syntax will match if `key` exists in the "
+"map, and match the value of `key` with pattern `value`. The `key? : "
+"value` syntax will match no matter `key` exists or not, and `value` will "
+"be matched against `map[key]` (an optional)."
+msgstr ""
+
+#: ../../language/language.md:1325
+msgid ""
+"To match a data type `T` using map pattern, `T` must have a method "
+"`op_get(Self, K) -> Option[V]` for some type `K` and `V`."
+msgstr ""
+
+#: ../../language/language.md:1326
+msgid "Currently, the key part of map pattern must be a constant"
+msgstr ""
+
+#: ../../language/language.md:1327
+msgid "Map patterns are always open: unmatched keys are silently ignored"
+msgstr ""
+
+#: ../../language/language.md:1328
+msgid ""
+"Map pattern will be compiled to efficient code: every key will be fetched"
+" at most once"
+msgstr ""
+
+#: ../../language/language.md:1330
+msgid "Json Pattern"
+msgstr ""
+
+#: ../../language/language.md:1332
+msgid ""
+"When the matched value has type `Json`, literal patterns can be used "
+"directly:"
+msgstr ""
+
+#: ../../language/language.md:1341
+msgid "Operators"
+msgstr ""
+
+#: ../../language/language.md:1343
+msgid "Operator Overloading"
+msgstr ""
+
+#: ../../language/language.md:1345
+msgid ""
+"MoonBit supports operator overloading of builtin operators via methods. "
+"The method name corresponding to a operator `<op>` is `op_<op>`. For "
+"example:"
+msgstr ""
+
+#: ../../language/language.md:1363
+msgid "Another example about `op_get` and `op_set`:"
+msgstr ""
+
+#: ../../language/language.md:1395
+msgid "Currently, the following operators can be overloaded:"
+msgstr ""
+
+#: ../../language/language.md
+msgid "Operator Name"
+msgstr ""
+
+#: ../../language/language.md
+msgid "Method Name"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`+`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`op_add`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`-`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`op_sub`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`*`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`op_mul`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`/`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`op_div`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`%`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`op_mod`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`=`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`op_equal`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`<<`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`op_shl`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`>>`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`op_shr`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`-` (unary)"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`op_neg`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`_[_]` (get item)"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`op_get`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`_[_] = _` (set item)"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`op_set`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`_[_:_]` (view)"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`op_as_view`"
+msgstr ""
+
+#: ../../language/language.md:1412
+msgid "Pipe operator"
+msgstr ""
+
+#: ../../language/language.md:1414
+msgid ""
+"MoonBit provides a convenient pipe operator `|>`, which can be used to "
+"chain regular function calls:"
+msgstr ""
+
+#: ../../language/language.md:1428
+msgid "Cascade Operator"
+msgstr ""
+
+#: ../../language/language.md:1430
+msgid ""
+"The cascade operator `..` is used to perform a series of mutable "
+"operations on the same value consecutively. The syntax is as follows:"
+msgstr ""
+
+#: ../../language/language.md:1437
+msgid "`x..f()..g()` is equivalent to `{x.f(); x.g(); x}`."
+msgstr ""
+
+#: ../../language/language.md:1439
+msgid ""
+"Consider the following scenario: for a `MyStringBuilder` type that has "
+"methods like `add_string`, `add_char`, `add_int`, etc., we often need to "
+"perform a series of operations on the same `MyStringBuilder` value:"
+msgstr ""
+
+#: ../../language/language.md:1452
+msgid ""
+"To avoid repetitive typing of `builder`, its methods are often designed "
+"to return `self` itself, allowing operations to be chained using the `.` "
+"operator. To distinguish between immutable and mutable operations, in "
+"MoonBit, for all methods that return `Unit`, cascade operator can be used"
+" for consecutive operations without the need to modify the return type of"
+" the methods."
+msgstr ""
+
+#: ../../language/language.md:1468
+msgid "Bitwise Operator"
+msgstr ""
+
+#: ../../language/language.md:1470
+msgid "MoonBit supports C-Style bitwise operators."
+msgstr ""
+
+#: ../../language/language.md
+msgid "Operator"
+msgstr ""
+
+#: ../../language/language.md
+msgid "Perform"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`&`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`land`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`|`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`lor`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`^`"
+msgstr ""
+
+#: ../../language/language.md
+msgid "`lxor`"
+msgstr ""
+
+#: ../../language/language.md:1480
+msgid "Error Handling"
+msgstr ""
+
+#: ../../language/language.md:1482
+msgid "Error types"
+msgstr ""
+
+#: ../../language/language.md:1484
+msgid ""
+"The error values used in MoonBit must have an error type. An error type "
+"can be defined in the following forms:"
+msgstr ""
+
+#: ../../language/language.md:1497
+msgid ""
+"The return type of a function can include an error type to indicate that "
+"the function might return an error. For example, the following function "
+"`div` might return an error of type `DivError`:"
+msgstr ""
+
+#: ../../language/language.md:1511
+msgid ""
+"Here, the keyword `raise` is used to interrupt the function execution and"
+" return an error."
+msgstr ""
+
+#: ../../language/language.md:1514
+msgid "The Default Error Type"
+msgstr ""
+
+#: ../../language/language.md:1516
+msgid ""
+"MoonBit provides a default error type `Error` that can be used when the "
+"concrete error type is not important. For convenience, you can annotate "
+"the function name or the return type with the suffix `!` to indicate that"
+" the `Error` type is used. For example, the following function signatures"
+" are equivalent:"
+msgstr ""
+
+#: ../../language/language.md:1527
+msgid ""
+"For anonymous function and matrix function, you can annotate the keyword "
+"`fn` with the `!` suffix to achieve that. For example,"
+msgstr ""
+
+#: ../../language/language.md:1540
+msgid ""
+"As shown in the above example, the error types defined by `type!` can be "
+"used as value of the type `Error` when the error is raised."
+msgstr ""
+
+#: ../../language/language.md:1543
+msgid ""
+"Note that only error types or the type `Error` can be used as errors. For"
+" functions that are generic in the error type, you can use the `Error` "
+"bound to do that. For example,"
+msgstr ""
+
+#: ../../language/language.md:1556
+msgid ""
+"Since the type `Error` can include multiple error types, pattern matching"
+" on the `Error` type must use the wildcard `_` to match all error types. "
+"For example,"
+msgstr ""
+
+#: ../../language/language.md:1571
+msgid "Handling Errors"
+msgstr ""
+
+#: ../../language/language.md:1573
+msgid "There are three ways to handle errors:"
+msgstr ""
+
+#: ../../language/language.md:1575
+msgid ""
+"Append `!` after the function name in a function application to rethrow "
+"the error directly in case of an error, for example:"
+msgstr ""
+
+#: ../../language/language.md:1584
+msgid ""
+"Append `?` after the function name to convert the result into a first-"
+"class value of the `Result` type, for example:"
+msgstr ""
+
+#: ../../language/language.md:1596
+msgid "Use `try` and `catch` to catch and handle errors, for example:"
+msgstr ""
+
+#: ../../language/language.md:1610
+msgid ""
+"Here, `try` is used to call a function that might throw an error, and "
+"`catch` is used to match and handle the caught error. If no error is "
+"caught, the catch block will not be executed and the `else` block will be"
+" executed instead."
+msgstr ""
+
+#: ../../language/language.md:1614
+msgid ""
+"The `else` block can be omitted if no action is needed when no error is "
+"caught. For example:"
+msgstr ""
+
+#: ../../language/language.md:1627
+msgid ""
+"The `catch` keyword is optional, and when the body of `try` is a simple "
+"expression, the curly braces can be omitted. For example:"
+msgstr ""
+
+#: ../../language/language.md:1637
+msgid ""
+"The `!` and `?` attributes can also be used on method invocation and pipe"
+" operator. For example:"
+msgstr ""
+
+#: ../../language/language.md:1652
+msgid ""
+"However for infix operators such as `+` `*` that may raise an error, the "
+"original form has to be used, e.g. `x.op_add!(y)`, `x.op_mul!(y)`."
+msgstr ""
+
+#: ../../language/language.md:1655
+msgid ""
+"Additionally, if the return type of a function includes an error type, "
+"the function call must use `!` or `?` for error handling, otherwise the "
+"compiler will report an error."
+msgstr ""
+
+#: ../../language/language.md:1659
+msgid "Error Inference"
+msgstr ""
+
+#: ../../language/language.md:1661
+msgid ""
+"Within a `try` block, several different kinds of errors can be raised. "
+"When that happens, the compiler will use the type `Error` as the common "
+"error type. Accordingly, the handler must use the wildcard `_` to make "
+"sure all errors are caught. For example,"
+msgstr ""
+
+#: ../../language/language.md:1683
+msgid ""
+"You can also use `catch!` to rethrow the uncaught errors for convenience."
+" This is useful when you only want to handle a specific error and rethrow"
+" others. For example,"
+msgstr ""
+
+#: ../../language/language.md:1702
+msgid "Generics"
+msgstr ""
+
+#: ../../language/language.md:1704
+msgid ""
+"Generics are supported in top-level function and data type definitions. "
+"Type parameters can be introduced within square brackets. We can rewrite "
+"the aforementioned data type `List` to add a type parameter `T` to obtain"
+" a generic version of lists. We can then define generic functions over "
+"lists like `map` and `reduce`."
+msgstr ""
+
+#: ../../language/language.md:1727
+msgid "Access Control"
+msgstr ""
+
+#: ../../language/language.md:1729
+msgid ""
+"By default, all function definitions and variable bindings are "
+"_invisible_ to other packages. You can use the `pub` modifier before "
+"toplevel `let`/`fn` to make them public."
+msgstr ""
+
+#: ../../language/language.md:1732
+msgid "There are four different kinds of visibility for types in MoonBit:"
+msgstr ""
+
+#: ../../language/language.md:1734
+msgid ""
+"private type, declared with `priv`, completely invisible to the outside "
+"world"
+msgstr ""
+
+#: ../../language/language.md:1735
+msgid ""
+"abstract type, which is the default visibility for types. Only the name "
+"of an abstract type is visible outside, the internal representation of "
+"the type is hidden"
+msgstr ""
+
+#: ../../language/language.md:1736
+msgid ""
+"readonly types, declared with `pub(readonly)`. The internal "
+"representation of readonly types are visible outside, but users can only "
+"read the values of these types from outside, construction and mutation "
+"are not allowed"
+msgstr ""
+
+#: ../../language/language.md:1738
+msgid ""
+"fully public types, declared with `pub(all)`. The outside world can "
+"freely construct, modify and read values of these types"
+msgstr ""
+
+#: ../../language/language.md:1740
+msgid ""
+"Currently, the semantic of `pub` is `pub(all)`. But in the future, the "
+"meaning of `pub` will be ported to `pub(readonly)`. In addition to the "
+"visibility of the type itself, the fields of a public `struct` can be "
+"annotated with `priv`, which will hide the field from the outside world "
+"completely. Note that `struct`s with private fields cannot be constructed"
+" directly outside, but you can update the public fields using the "
+"functional struct update syntax."
+msgstr ""
+
+#: ../../language/language.md:1746
+msgid ""
+"Readonly types is a very useful feature, inspired by [private "
+"types](https://v2.ocaml.org/manual/privatetypes.html) in OCaml. In short,"
+" values of `pub(readonly)` types can be destructed by pattern matching "
+"and the dot syntax, but cannot be constructed or mutated in other "
+"packages. Note that there is no restriction within the same package where"
+" `pub(readonly)` types are defined."
+msgstr ""
+
+#: ../../language/language.md:1770
+msgid ""
+"Access control in MoonBit adheres to the principle that a `pub` type, "
+"function, or variable cannot be defined in terms of a private type. This "
+"is because the private type may not be accessible everywhere that the "
+"`pub` entity is used. MoonBit incorporates sanity checks to prevent the "
+"occurrence of use cases that violate this principle."
+msgstr ""
+
+#: ../../language/language.md:1789
+msgid "Method system"
+msgstr ""
+
+#: ../../language/language.md:1791
+msgid ""
+"MoonBit supports methods in a different way from traditional object-"
+"oriented languages. A method in MoonBit is just a toplevel function "
+"associated with a type constructor. Methods can be defined using the "
+"syntax `fn TypeName::method_name(...) -> ...`:"
+msgstr ""
+
+#: ../../language/language.md:1803
+msgid ""
+"As a convenient shorthand, when the first parameter of a function is "
+"named `self`, MoonBit automatically defines the function as a method of "
+"the type of `self`:"
+msgstr ""
+
+#: ../../language/language.md:1811
+msgid ""
+"Methods are just regular functions owned by a type constructor. So when "
+"there is no ambiguity, methods can be called using regular function call "
+"syntax directly:"
+msgstr ""
+
+#: ../../language/language.md:1820
+msgid ""
+"Unlike regular functions, methods support overloading: different types "
+"can define methods of the same name. If there are multiple methods of the"
+" same name (but for different types) in scope, one can still call them by"
+" explicitly adding a `TypeName::` prefix:"
+msgstr ""
+
+#: ../../language/language.md:1836
+msgid ""
+"When the first parameter of a method is also the type it belongs to, "
+"methods can be called using dot syntax `x.method(...)`. MoonBit "
+"automatically finds the correct method based on the type of `x`, there is"
+" no need to write the type name and even the package name of the method:"
+msgstr ""
+
+#: ../../language/language.md:1852
+msgid "View"
+msgstr ""
+
+#: ../../language/language.md:1854
+msgid ""
+"Analogous to `slice` in other languages, the view is a reference to a "
+"specific segment of collections. You can use `data[start:end]` to create "
+"a view of array `data`, referencing elements from `start` to `end` "
+"(exclusive). Both `start` and `end` indices can be omitted."
+msgstr ""
+
+#: ../../language/language.md:1880
+msgid ""
+"By implementing `length` and `op_as_view` method, you can also create a "
+"view for a user-defined type. Here is an example:"
+msgstr ""
+
+#: ../../language/language.md:1912
+msgid "Output："
+msgstr ""
+
+#: ../../language/language.md:1921
+msgid "Trait system"
+msgstr ""
+
+#: ../../language/language.md:1923
+msgid ""
+"MoonBit features a structural trait system for overloading/ad-hoc "
+"polymorphism. Traits declare a list of operations, which must be supplied"
+" when a type wants to implement the trait. Traits can be declared as "
+"follows:"
+msgstr ""
+
+#: ../../language/language.md:1931
+msgid ""
+"In the body of a trait definition, a special type `Self` is used to refer"
+" to the type that implements the trait."
+msgstr ""
+
+#: ../../language/language.md:1933
+msgid ""
+"To implement a trait, a type must provide all the methods required by the"
+" trait. Implementation for trait methods can be provided via the syntax "
+"`impl Trait for Type with method_name(...) { ... }`, for example:"
+msgstr ""
+
+#: ../../language/language.md:1950
+msgid ""
+"Type annotation can be omitted for trait `impl`: MoonBit will "
+"automatically infer the type based on the signature of `Trait::method` "
+"and the self type."
+msgstr ""
+
+#: ../../language/language.md:1952
+msgid ""
+"The author of the trait can also define default implementations for some "
+"methods in the trait, for example:"
+msgstr ""
+
+#: ../../language/language.md:1966
+msgid ""
+"Implementers of trait `I` don't have to provide an implementation for "
+"`f_twice`: to implement `I`, only `f` is necessary. They can always "
+"override the default implementation with an explicit `impl I for Type "
+"with f_twice`, if desired, though."
+msgstr ""
+
+#: ../../language/language.md:1969
+msgid ""
+"If an explicit `impl` or default implementation is not found, trait "
+"method resolution falls back to regular methods. This allows types to "
+"implement a trait implicitly, hence allowing different packages to work "
+"together without seeing or depending on each other. For example, the "
+"following trait is automatically implemented for builtin number types "
+"such as `Int` and `Double`:"
+msgstr ""
+
+#: ../../language/language.md:1980
+msgid ""
+"When declaring a generic function, the type parameters can be annotated "
+"with the traits they should implement, allowing the definition of "
+"constrained generic functions. For example:"
+msgstr ""
+
+#: ../../language/language.md:1993
+msgid ""
+"Without the `Number` requirement, the expression `x * x` in `square` will"
+" result in a method/operator not found error. Now, the function `square` "
+"can be called with any type that implements `Number`, for example:"
+msgstr ""
+
+#: ../../language/language.md:2025
+msgid "MoonBit provides the following useful builtin traits:"
+msgstr ""
+
+#: ../../language/language.md:2052
+msgid "Involke trait methods directly"
+msgstr ""
+
+#: ../../language/language.md:2053
+msgid ""
+"Methods of a trait can be called directly via `Trait::method`. MoonBit "
+"will infer the type of `Self` and check if `Self` indeed implements "
+"`Trait`, for example:"
+msgstr ""
+
+#: ../../language/language.md:2062
+msgid ""
+"Trait implementations can also be involked via dot syntax, with the "
+"following restrictions:"
+msgstr ""
+
+#: ../../language/language.md:2064
+msgid ""
+"if a regular method is present, the regular method is always favored when"
+" using dot syntax"
+msgstr ""
+
+#: ../../language/language.md:2065
+msgid ""
+"only trait implementations that are located in the package of the self "
+"type can be involked via dot syntax"
+msgstr ""
+
+#: ../../language/language.md:2066
+msgid ""
+"if there are multiple trait methods (from different traits) with the same"
+" name available, an ambiguity error is reported"
+msgstr ""
+
+#: ../../language/language.md:2067
+msgid ""
+"if neither of the above two rules apply, trait `impl`s in current package"
+" will also be searched for dot syntax. This allows extending a foreign "
+"type locally."
+msgstr ""
+
+#: ../../language/language.md:2069
+msgid ""
+"these `impl`s can only be called via dot syntax locally, even if they are"
+" public."
+msgstr ""
+
+#: ../../language/language.md:2071
+msgid ""
+"The above rules ensures that MoonBit's dot syntax enjoys good property "
+"while being flexible. For example, adding a new dependency never break "
+"existing code with dot syntax due to ambiguity. These rules also make "
+"name resolution of MoonBit extremely simple: the method called via dot "
+"syntax must always come from current package or the package of the type!"
+msgstr ""
+
+#: ../../language/language.md:2076
+msgid "Here's an example of calling trait `impl` with dot syntax:"
+msgstr ""
+
+#: ../../language/language.md:2089
+msgid "Access control of methods and trait implementations"
+msgstr ""
+
+#: ../../language/language.md:2091
+msgid ""
+"To make the trait system coherent (i.e. there is a globally unique "
+"implementation for every `Type: Trait` pair), and prevent third-party "
+"packages from modifying behavior of existing programs by accident, "
+"MoonBit employs the following restrictions on who can define "
+"methods/implement traits for types:"
+msgstr ""
+
+#: ../../language/language.md:2095
+msgid ""
+"_only the package that defines a type can define methods for it_. So one "
+"cannot define new methods or override old methods for builtin and foreign"
+" types."
+msgstr ""
+
+#: ../../language/language.md:2096
+msgid ""
+"_only the package of the type or the package of the trait can define an "
+"implementation_. For example, only `@pkg1` and `@pkg2` are allowed to "
+"write `impl @pkg1.Trait for @pkg2.Type`."
+msgstr ""
+
+#: ../../language/language.md:2099
+msgid ""
+"The second rule above allows one to add new functionality to a foreign "
+"type by defining a new trait and implementing it. This makes MoonBit's "
+"trait & method system flexible while enjoying good coherence property."
+msgstr ""
+
+#: ../../language/language.md:2102
+msgid "Visibility of traits and sealed traits"
+msgstr ""
+
+#: ../../language/language.md:2103
+msgid ""
+"There are four visibility for traits, just like `struct` and `enum`: "
+"private, abstract, readonly and fully public. Private traits are declared"
+" with `priv trait`, and they are completely invisible from outside. "
+"Abstract trait is the default visibility. Only the name of the trait is "
+"visible from outside, and the methods in the trait are not exposed. "
+"Readonly traits are declared with `pub(readonly) trait`, their methods "
+"can be involked from outside, but only the current package can add new "
+"implementation for readonly traits. Finally, fully public traits are "
+"declared with `pub(open) trait`, they are open to new implementations "
+"outside current package, and their methods can be freely used. Currently,"
+" `pub trait` defaults to `pub(open) trait`. But in the future, the "
+"semantic of `pub trait` will be ported to `pub(readonly)`."
+msgstr ""
+
+#: ../../language/language.md:2110
+msgid ""
+"Abstract and readonly traits are sealed, because only the package "
+"defining the trait can implement them. Implementing a sealed (abstract or"
+" readonly) trait outside its package result in compiler error. If you are"
+" the owner of a sealed trait, and you want to make some implementation "
+"available to users of your package, make sure there is at least one "
+"declaration of the form `impl Trait for Type with ...` in your package. "
+"Implementations with only regular method and default implementations will"
+" not be available outside."
+msgstr ""
+
+#: ../../language/language.md:2116
+msgid "Here's an example of abstract trait:"
+msgstr ""
+
+#: ../../language/language.md:2139
+msgid "From outside this package, users can only see the following:"
+msgstr ""
+
+#: ../../language/language.md:2151
+msgid ""
+"The author of `Number` can make use of the fact that only `Int` and "
+"`Double` can ever implement `Number`, because new implementations are not"
+" allowed outside."
+msgstr ""
+
+#: ../../language/language.md:2154
+msgid "Automatically derive builtin traits"
+msgstr ""
+
+#: ../../language/language.md:2156
+msgid "MoonBit can automatically derive implementations for some builtin traits:"
+msgstr ""
+
+#: ../../language/language.md:2174
+msgid "Trait objects"
+msgstr ""
+
+#: ../../language/language.md:2176
+msgid ""
+"MoonBit supports runtime polymorphism via trait objects. If `t` is of "
+"type `T`, which implements trait `I`, one can pack the methods of `T` "
+"that implements `I`, together with `t`, into a runtime object via `t as "
+"I`. Trait object erases the concrete type of a value, so objects created "
+"from different concrete types can be put in the same data structure and "
+"handled uniformly:"
+msgstr ""
+
+#: ../../language/language.md:2213
+msgid ""
+"Not all traits can be used to create objects. \"object-safe\" traits' "
+"methods must satisfy the following conditions:"
+msgstr ""
+
+#: ../../language/language.md:2216
+msgid "`Self` must be the first parameter of a method"
+msgstr ""
+
+#: ../../language/language.md:2217
+msgid ""
+"There must be only one occurrence of `Self` in the type of the method "
+"(i.e. the first parameter)"
+msgstr ""
+
+#: ../../language/language.md:2219
+msgid ""
+"Users can define new methods for trait objects, just like defining new "
+"methods for structs and enums:"
+msgstr ""
+
+#: ../../language/language.md:2246
+msgid "Test Blocks"
+msgstr ""
+
+#: ../../language/language.md:2248
+msgid "MoonBit provides the test code block for writing test cases. For example:"
+msgstr ""
+
+#: ../../language/language.md:2257
+msgid ""
+"A test code block is essentially a function that returns a `Unit` but may"
+" throws a `String` on error, or `Unit!String` as one would see in its "
+"signature at the position of return type. It is called during the "
+"execution of `moon test` and outputs a test report through the build "
+"system. The `assert_eq` function is from the standard library; if the "
+"assertion fails, it prints an error message and terminates the test. The "
+"string `\"test_name\"` is used to identify the test case and is optional."
+" If it starts with `\"panic\"`, it indicates that the expected behavior "
+"of the test is to trigger a panic, and the test will only pass if the "
+"panic is triggered. For example:"
+msgstr ""
+
+#: ../../language/language.md:2265
+msgid "Doc Comments"
+msgstr ""
+
+#: ../../language/language.md:2267
+msgid ""
+"Doc comments are comments prefix with `///` in each line in the leading "
+"of toplevel structure like `fn`,`let`,`enum`,`struct`,`type`. The doc "
+"comments contains a markdown text and several pragmas."
+msgstr ""
+
+#: ../../language/language.md:2282
+msgid "Pragmas"
+msgstr ""
+
+#: ../../language/language.md:2284
+msgid ""
+"Pragmas are annotations inside doc comments. They all take the form `/// "
+"@word ...`. The _word_ indicates the type of pragma and is followed "
+"optionally by several _word_ or string literals. Pragmas do not normally "
+"affect the meaning of programs. Unrecognized pragmas will be reported as "
+"warnings."
+msgstr ""
+
+#: ../../language/language.md:2286
+msgid "Alert Pragmas"
+msgstr ""
+
+#: ../../language/language.md:2288
+msgid ""
+"Alert pragmas in doc comments of functions will be reported when those "
+"functions are referenced. This mechanism is a generalized way to mark "
+"functions as `deprecated` or `unsafe`."
+msgstr ""
+
+#: ../../language/language.md:2290
+msgid "It takes the form `@alert category \"alert message...\"`."
+msgstr ""
+
+#: ../../language/language.md:2292
+msgid ""
+"The category can be an arbitrary identifier. It allows configuration to "
+"decide which alerts are enabled or turned into errors."
+msgstr ""
+
+#: ../../language/language.md:2307
+msgid "Special Syntax"
+msgstr ""
+
+#: ../../language/language.md:2309
+msgid "TODO syntax"
+msgstr ""
+
+#: ../../language/language.md:2311
+msgid ""
+"The `todo` syntax (`...`) is a special construct used to mark sections of"
+" code that are not yet implemented or are placeholders for future "
+"functionality. For example:"
+msgstr ""
+
+#~ msgid "Grammar"
+#~ msgstr ""
+
+#~ msgid "Here's some MoonBit grammar:"
+#~ msgstr ""
 
