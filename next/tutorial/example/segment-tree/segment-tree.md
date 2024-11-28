@@ -47,11 +47,10 @@ This section only discusses the query operation; we will elaborate on the princi
 
 We use a classic approach to represent the Segment Tree:
 
-```moonbit
-enum Node {
-    Nil,
-    Node(Int, Node, Node)
-} derive(Show)
+```{literalinclude} /sources/segment-tree/src/part1/top.mbt
+:language: moonbit
+:start-after: start node definition
+:end-before: end node definition
 ```
 
 Here, `Nil` represents an empty tree, while a `Node` contains the stored data (of type Int) and its left and right children.
@@ -64,30 +63,20 @@ Building the tree refers to the process of abstracting a linear sequence into a 
 
 To start, we should write an overloaded `op_add` function for the `Node` type to assist with the tree-building process:
 
-```moonbit
-fn op_add(self : Node, v : Node) -> Node {
-    match (self, v) {
-        (Node(left, _, _), Node(right, _, _)) => Node(left + right, self, v)
-        (Node(_), Nil) => self
-        (Nil, Node(_)) => v
-        (Nil, Nil) => Nil
-    }
-}
+```{literalinclude} /sources/segment-tree/src/part1/top.mbt
+:language: moonbit
+:start-after: start op_add definition
+:end-before: end op_add definition
 ```
 
 With this operation defined, we can easily merge two `Node` instances while maintaining the segment sums, laying the foundation for building the tree. In some descriptions of Segment Trees, this process is also called `pushup`.
 
 We can leverage MoonBit's `ArrayView` feature (known as `slice` in some languages) to recursively build the tree from a segment of a linear structure at a low cost, achieving O(Log N) complexity:
 
-```moonbit
-fn build(data : ArrayView[Int]) -> Node {
-    if data.length() == 1 {
-        Node(data[0], Nil, Nil)
-    } else {
-        let mid = (data.length() + 1) >> 1
-        build(data[0:mid]) + build(data[mid:])
-    }
-}
+```{literalinclude} /sources/segment-tree/src/part1/top.mbt
+:language: moonbit
+:start-after: start build definition
+:end-before: end build definition
 ```
 
 Let’s analyze this code:
@@ -97,19 +86,12 @@ Let’s analyze this code:
 
 This code is concise, highly readable, and optimization-friendly, serving as a great learning paradigm for other data structures.
 
-Now, let's build a tree and output it:
+Now, let's build a tree and test it:
 
-```moonbit
-fn main {
-    let tree = build([1, 2, 3, 4, 5][:])
-    println(tree)
-}
-```
-
-The output will be:
-
-```bash
-Node(15, Node(6, Node(3, Node(1, Nil, Nil), Node(2, Nil, Nil)), Node(3, Nil, Nil)), Node(9, Node(4, Nil, Nil), Node(5, Nil, Nil)))
+```{literalinclude} /sources/segment-tree/src/part1/top.mbt
+:language: moonbit
+:start-after: start build test
+:end-before: end build test
 ```
 
 Great! We've successfully built the tree!
@@ -118,21 +100,11 @@ Great! We've successfully built the tree!
 
 Next, we need to implement the query function. Since the nodes of our Segment Tree maintain segment sums, we can write a `query` function to retrieve these sums:
 
-```moonbit
-let empty_node : Node = Node(0, Nil, Nil)
-
-fn query(self : Node, l : Int, r : Int, query_l : Int, query_r : Int) -> Node {
-    if query_l > r || l > query_r {
-        empty_node
-    } else if query_l <= l && query_r >= r {
-        self
-    } else {
-        let Node(_, left, right) = self
-        let mid = (l + r) >> 1
-        left.query(l, mid, query_l, query_r) +
-        right.query(mid + 1, r, query_l, query_r)
-    }
-}
+```{literalinclude} /sources/segment-tree/src/part1/top.mbt
+:language: moonbit
+:start-after: start query definition
+:end-before: end query definition
+:emphasize-lines: 9
 ```
 
 Here, `l` and `r` represent the currently queried range, while `query_l` and `query_r` denote the range we need to query. Let's break down this implementation:
@@ -140,6 +112,20 @@ Here, `l` and `r` represent the currently queried range, while `query_l` and `qu
 - If the queried range does not overlap with the current range, it contributes nothing to the result. We define an `empty_node` to represent a zero-contribution node and return it.
 - If the current range is a subset of the queried range, it fully contributes to the result, so we return it directly.
 - If the current range overlaps with the queried range, we continue searching downwards to find the exact covering ranges, merging the results of the left and right nodes.
+
+#### Before We Continue
+
+Notice the highlighted line. When using the `let` to destructure `Node`, we could be sure that the enum being destructured wasn’t `Nil`. However, the compiler couldn't guarantee this, so we would have received a warning for using:
+
+```moonbit
+let Node(x, y) = z
+```
+
+Although it didn’t affect execution, it was somewhat misleading. With MoonBit’s newly introduced `guard` statement, we can now handle this better using:
+
+```moonbit
+guard let Node(x, y) = z
+```
 
 ### Q&A
 
@@ -151,28 +137,19 @@ Here, `l` and `r` represent the currently queried range, while `query_l` and `qu
 
 Now, let's test the query process:
 
-```moonbit
-fn main {
-    let tree = build([1, 2, 3, 4, 5][:])
-    let sum = match tree.query(1, 5, 1, 3) {
-        Node(sum, _, _) => sum
-        _ => panic()
-    }
-    println(sum)
-}
+```{literalinclude} /sources/segment-tree/src/part1/top.mbt
+:language: moonbit
+:start-after: start query test
+:end-before: end query test
 ```
 
-The output will be:
-
-```bash
-6
-```
+The output is `6`.
 
 Fantastic! We've obtained the correct output!
 
 ### Code
 
-For the complete code, please check the [GitHub repository](https://github.com/moonbit-community/MoonBit-SegmentTree/blob/main/1/main.mbt).
+For the complete code, please check the [GitHub repository](https://github.com/moonbitlang/moonbit-docs/tree/main/next/sources/segment-tree/src/part1/top.mbt).
 
 ## Conclusion
 

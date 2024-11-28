@@ -36,38 +36,14 @@ Let’s dive into the code!
 
 ## Implementation
 
-### Before We Begin
-
-In the last lesson, when using the `let` to destructure `Node`, we could be sure that the enum being destructured wasn’t `Nil`. However, the compiler couldn't guarantee this, so we received a warning for using:
-
-```moonbit
-let Node(x, y) = z
-```
-
-Although it didn’t affect execution, it was somewhat misleading. With MoonBit’s newly introduced `guard` statement, we can now handle this better using:
-
-```moonbit
-guard let Node(x, y) = z
-```
-
 ### Basic Definitions
 
 In the previous code, we defined the segment tree using `enum`. However, none of the elements were clearly named, which was manageable when the data size was small. Now, we need to add **Tag** and **Length** attributes, so it makes sense to use labeled arguments in the `enum` definition:
 
-```moonbit
-enum Data {
-  Data(~sum: Int, ~len: Int)
-} derive(Show)
-
-enum LazyTag {
-  Nil
-  Tag(Int)
-} derive(Show)
-
-enum Node {
-  Nil
-  Node(~data: Data, ~tag: LazyTag, ~left: Node, ~right: Node)
-} derive(Show)
+```{literalinclude} /sources/segment-tree/src/part2/top.mbt
+:language: moonbit
+:start-after: start data definition
+:end-before: end data definition
 ```
 
 This allows for clearer initialization and pattern matching, making the code easier to follow. We've also abstracted the `Data` type, adding a `len` attribute to represent the length of the current range, which is useful for calculating the node's value.
@@ -76,89 +52,42 @@ This allows for clearer initialization and pattern matching, making the code eas
 
 Similar to the last lesson, before building the tree, we need to define the addition operations between `Node` types. However, since we’ve abstracted `Data`, we must account for its addition too:
 
-```moonbit
-fn op_add(self: Data, v: Data) -> Data {
-  match (self, v) {
-    (Data(sum=a, len=len_a), Data(sum=b, len=len_b)) =>
-      Data(sum=a + b, len=len_a + len_b)
-  }
-}
-
-fn op_add(self: Node, v: Node) -> Node {
-  match (self, v) {
-    (Node(data=l, ..), Node(data=r, ..)) =>
-      Node(data=l + r, tag=Nil, left=self, right=v)
-    (Node(_), Nil) => self
-    (Nil, Node(_)) => v
-    (Nil, Nil) => Nil
-  }
-}
+```{literalinclude} /sources/segment-tree/src/part2/top.mbt
+:language: moonbit
+:start-after: start op_add definition
+:end-before: end op_add definition
 ```
 
 Here, we’ve ignored merging LazyTags for now and set the resulting tag to `Nil` because once a node is reached, its parent’s LazyTag no longer applies.
 
 Now, we can implement the tree-building function:
 
-```moonbit
-fn build(data: ArrayView[Int]) -> Node {
-  if data.length() == 1 {
-    Node(data=Data(sum=data[0], len=1), tag=Nil, left=Nil, right=Nil)
-  } else {
-    let mid = (data.length() + 1) >> 1
-    build(data[0:mid]) + build(data[mid:])
-  }
-}
+```{literalinclude} /sources/segment-tree/src/part2/top.mbt
+:language: moonbit
+:start-after: start build definition
+:end-before: end build definition
 ```
 
 ### LazyTag and Range Modifications
 
 A node receiving a LazyTag is handled by the `apply` function. The key logic here is how the tag is merged and how the value is computed based on the node’s length:
 
-```moonbit
-fn op_add(self: LazyTag, v: LazyTag) -> LazyTag {
-  match (self, v) {
-    (Tag(a), Tag(b)) => Tag(a + b)
-    (Nil, t) | (t, Nil) => t
-  }
-}
 
-fn apply(self: Node, v: LazyTag) -> Node {
-  match (self, v) {
-    (Node(data=Data(sum=a, len=length), ~tag, ~left, ~right), Tag(v) as new_tag) =>
-      Node(
-        data=Data(sum=a + v * length, len=length),
-        tag=tag + new_tag,
-        ~left,
-        ~right,
-      )
-    (_, Nil) => self
-    (Nil, _) => Nil
-  }
-}
+```{literalinclude} /sources/segment-tree/src/part2/top.mbt
+:language: moonbit
+:start-after: start lazytag definition
+:end-before: end lazytag definition
 ```
 
 This code allows a node to compute its value based on its range length and the applied LazyTag. It also merges existing tags correctly.
 
 Next, we implement range modifications:
 
-```moonbit
-fn modify(
-  self: Node,
-  l: Int,
-  r: Int,
-  modify_l: Int,
-  modify_r: Int,
-  tag: LazyTag
-) -> Node {
-  if modify_l > r || l > modify_r {
-    self
-  } else if modify_l <= l && modify_r >= r {
-    self.apply(tag)
-  } else {
-    guard let Node(~left, ~right, ..) = self
-    left.apply(tag) + right.apply(tag)
-  }
-}
+
+```{literalinclude} /sources/segment-tree/src/part2/top.mbt
+:language: moonbit
+:start-after: start modify definition
+:end-before: end modify definition
 ```
 
 The logic is similar to the query function from the previous lesson, but now each relevant node applies the necessary LazyTag for the modification.
@@ -169,26 +98,10 @@ Interestingly, even with range modifications, this segment tree remains persiste
 
 For queries, we need to remember to push the LazyTag downwards:
 
-```moonbit
-let empty_node: Node = Node(
-  data=Data(sum=0, len=0),
-  tag=Nil,
-  left=Nil,
-  right=Nil,
-)
-
-fn query(self: Node, l: Int, r: Int, query_l: Int, query_r: Int) -> Node {
-  if query_l > r || l > query_r {
-    empty_node
-  } else if query_l <= l && query_r >= r {
-    self
-  } else {
-    guard let Node(~tag, ~left, ~right, ..) = self
-    let mid = (l + r) >> 1
-    left.apply(tag).query(l, mid, query_l, query_r) +
-    right.apply(tag).query(mid + 1, r, query_l, query_r)
-  }
-}
+```{literalinclude} /sources/segment-tree/src/part2/top.mbt
+:language: moonbit
+:start-after: start query definition
+:end-before: end query definition
 ```
 
 ## Conclusion
@@ -197,4 +110,4 @@ With this, we have a segment tree that supports range modifications and is much 
 
 In the next lesson, we’ll add multiplication support to the segment tree and explore some use cases for immutable segment trees. Stay tuned!
 
-Full code is available [here](https://github.com/moonbit-community/MoonBit-SegmentTree/blob/main/2/main.mbt).
+Full code is available [here](https://github.com/moonbitlang/moonbit-docs/tree/main/next/sources/segment-tree/src/part2/top.mbt).
