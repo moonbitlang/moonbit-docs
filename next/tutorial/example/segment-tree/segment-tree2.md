@@ -10,13 +10,13 @@ In this session, we will deepen the abstraction by introducing the concept of **
 
 First, let's imagine what happens if we add a number to all elements in a range on the segment tree. How would we do this using a straightforward approach?
 
-![add to segment tree](/imgs/segment-tree-add.svg)
+![add to segment tree](/imgs/segment-tree-add.png)
 
 Take the segment tree from the last lesson as an example. In the figure below, we add 1 to the range [4, 7]. You'll notice that we need to rebuild and maintain all parts of the tree that cover this range, which is too costly.
 
 Is there a better way? Of course! We can use **LazyTag**.
 
-![lazytag](/imgs/segment-tree-lazytag.svg)
+![lazytag](/imgs/segment-tree-lazytag.png)
 
 Consider that instead of modifying every affected part, we mark the smallest covering range with a "+1" tag. Based on the length of the range, we calculate its value and merge it upward. Following the complexity of querying from the last lesson, this operation would be O(log N).
 
@@ -24,7 +24,7 @@ However, there's a problem. While querying ranges like [1, 7] or [4, 7] works fi
 
 Here’s where the **Lazy** aspect of LazyTag comes into play.
 
-![add using lazytag](./imgs/segment-tree-add-lazytag.svg)
+![add using lazytag](/imgs/segment-tree-add-lazytag.png)
 
 We define that when querying a node with a tag, the tag is distributed to its child nodes. These child nodes inherit the tag and compute their values based on their length. The following diagram shows the propagation of the tag downward when querying [4, 6].
 
