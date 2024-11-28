@@ -1,0 +1,807 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit Document
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit Document \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-27 13:35+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../tutorial/index.md:7
+msgid "Contents:"
+msgstr "目录："
+
+#: ../../tutorial/index.md:1
+msgid "Tutorial"
+msgstr "教程"
+
+#: ../../tutorial/index.md:3
+msgid "Here are some tutorials that may help you learn the programming language:"
+msgstr "以下是一些可能帮助您学习编程语言的教程："
+
+#: ../../tutorial/index.md:5
+msgid "[Tour for Beginners](./tour.md)"
+msgstr "[新手之旅](./tour.md)"
+
+#: ../../tutorial/tour.md:1
+msgid "A Tour of MoonBit for Beginners"
+msgstr "MoonBit：新手之旅"
+
+#: ../../tutorial/tour.md:3
+msgid ""
+"This guide is intended for newcomers, and it's not meant to be a 5-minute"
+" quick tour. This article tries to be a succinct yet easy to understand "
+"guide for those who haven't programmed in a way that MoonBit enables them"
+" to, that is, in a more modern, functional way."
+msgstr ""
+"这一文档针对不熟悉语言的新手用户所写，并不打算作为一个几分钟就能读完的小文章。本文希望为那些对 MoonBit 的编程思路 "
+"(更加现代化，函数式的) 不甚了解的用户提供一个简洁而不失易懂性的指南。"
+
+#: ../../tutorial/tour.md:6
+msgid ""
+"See [the General Introduction](../language/index.md) if you want to "
+"straight delve into the language."
+msgstr "如果您想直接深入了解语言，请参阅[总体介绍](../language/index.md)。"
+
+#: ../../tutorial/tour.md:8
+msgid "Installation"
+msgstr "安装"
+
+#: ../../tutorial/tour.md:10
+msgid "the Extension"
+msgstr "语言扩展"
+
+#: ../../tutorial/tour.md:12
+msgid ""
+"Currently, MoonBit development support are through VS Code extension. "
+"Navigate to [VS Code "
+"Marketplace](https://marketplace.visualstudio.com/items?itemName=moonbit"
+".moonbit-lang) to download MoonBit language support."
+msgstr ""
+"目前，MoonBit 的开发支持是通过 VS Code 扩展实现的。请前往[VS Code "
+"Marketplace](https://marketplace.visualstudio.com/items?itemName=moonbit"
+".moonbit-lang)下载 MoonBit 语言支持。"
+
+#: ../../tutorial/tour.md:15
+msgid "the toolchain"
+msgstr "工具链"
+
+#: ../../tutorial/tour.md:17
+msgid ""
+"(Recommended) If you've installed the extension above, the runtime can be"
+" directly installed by running 'Install moonbit toolchain' in the action "
+"menu and you may skip this part: ![runtime-installation](/imgs/runtime-"
+"installation.png)"
+msgstr ""
+"(推荐) 如果您已安装了上面的扩展，运行操作菜单中的 “Install moonbit toolchain” "
+"即可直接安装运行时并跳过这部分介绍：![安装运行时](/imgs/runtime-installation.png)"
+
+#: ../../tutorial/tour.md:17
+msgid "runtime-installation"
+msgstr "安装运行时"
+
+#: ../../tutorial/tour.md:20
+msgid ""
+"We also provide an installation script: Linux & macOS users can install "
+"via"
+msgstr "我们还提供了一个安装脚本：Linux 和 macOS 用户可以通过以下方式安装："
+
+#: ../../tutorial/tour.md:22
+msgid "curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash\n"
+msgstr ""
+
+#: ../../tutorial/tour.md:26
+msgid "For Windows users, powershell is used:"
+msgstr "对于 Windows 用户，使用 Powershell："
+
+#: ../../tutorial/tour.md:28
+msgid ""
+"Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm "
+"https://cli.moonbitlang.com/install/powershell.ps1 | iex\n"
+msgstr ""
+
+#: ../../tutorial/tour.md:32
+msgid ""
+"This automatically installs MoonBit in `$HOME/.moon` and adds it to your "
+"`PATH`."
+msgstr "这将自动安装 MoonBit 到 `$HOME/.moon` 并将其添加到您的 `PATH`。"
+
+#: ../../tutorial/tour.md:34
+msgid ""
+"If you encounter `moon` not found after installation, try restarting your"
+" terminal or vscode to let the environment variable take effect."
+msgstr "如果安装后遇到 `moon` 未找到的情况，请尝试重新启动终端或 VSCode 以使环境变量生效。"
+
+#: ../../tutorial/tour.md:36
+msgid ""
+"Do notice that MoonBit is not production-ready at the moment, it's under "
+"active development. To update MoonBit, just run the commands above again."
+msgstr "请注意，目前 MoonBit 还不适用于生产环境：它正在积极开发中。要更新 MoonBit，只需再次运行上面的命令即可。"
+
+#: ../../tutorial/tour.md:38
+msgid ""
+"Running `moon help` gives us a bunch of subcommands. But right now the "
+"only commands we need are `build` `run` and `new`."
+msgstr "运行 `moon help` 可以看到一堆子命令。但是现在我们只需要 `build` `run` 和 `new` 这三个命令。"
+
+#: ../../tutorial/tour.md:40
+msgid ""
+"To create a project (or module, more formally), run `moon new`. You will "
+"be greeted with a creation wizard, filling up all the info and we get"
+msgstr "要创建一个项目（或模块，更正式地说），运行 `moon new`。您将看到一个创建向导，填写所有信息后我们会得到："
+
+#: ../../tutorial/tour.md:42
+msgid ""
+"my-project\n"
+"├── LICENSE\n"
+"├── moon.mod.json\n"
+"├── README.md\n"
+"└── src\n"
+"    ├── lib\n"
+"    │   ├── hello.mbt\n"
+"    │   ├── hello_test.mbt\n"
+"    │   └── moon.pkg.json\n"
+"    └── main\n"
+"        ├── main.mbt\n"
+"        └── moon.pkg.json\n"
+msgstr ""
+
+#: ../../tutorial/tour.md:57
+msgid ""
+"This resembles a typical MoonBit module structure. Try running `moon run "
+"src/main`."
+msgstr "这是一个典型的 MoonBit 模块结构。尝试运行 `moon run src/main`。"
+
+#: ../../tutorial/tour.md:59
+msgid "Now, we can get started."
+msgstr "现在，我们可以开始了。"
+
+#: ../../tutorial/tour.md:61
+msgid "Start Writing"
+msgstr "开始编写"
+
+#: ../../tutorial/tour.md:63
+msgid ""
+"In our tour, we will write all of the codes below in `main.mbt`. As you "
+"may have guessed, the `main` function within the `main` package is the "
+"main entrance of a program. For a thorough introduction, please take a "
+"look at our [build system tutorial](../toolchain/moon/tutorial.md)."
+msgstr ""
+"在我们的新手之旅中，我们将在 `main.mbt` 中编写下面的所有代码。正如您可能猜到的那样，`main` 包中的 `main` "
+"函数是程序的主入口。要进行全面的介绍，请查看我们的[构建系统教程](../toolchain/moon/tutorial.md)。"
+
+#: ../../tutorial/tour.md:66
+msgid "Variables"
+msgstr "变量"
+
+#: ../../tutorial/tour.md:68
+msgid "Variables are defined with `let`:"
+msgstr "变量使用 `let` 定义："
+
+#: ../../tutorial/tour.md:70
+msgid ""
+"let e = 2.718281828459045 // double\n"
+"let int_min = -2147483648 // int\n"
+"let int_max : Int = 2147483647 // explicit type annotation\n"
+"let tuple = (1, 2) // 2-tuple\n"
+msgstr ""
+"let e = 2.718281828459045 // double\n"
+"let int_min = -2147483648 // int\n"
+"let int_max : Int = 2147483647 // 显示类型标注\n"
+"let tuple = (1, 2) // 2-tuple\n"
+
+#: ../../tutorial/tour.md:77
+msgid ""
+"fn init {\n"
+"  let array = [1, 2, 3, 4, 5]\n"
+"  // array = [4, 5, 6, 7, 8] // WRONG: let creates immutable bindings\n"
+"  let mut mut_array = [1, 2, 3, 4, 5]\n"
+"  mut_array = [4, 5, 6, 7, 8]\n"
+"  println(mut_array)\n"
+"}\n"
+msgstr ""
+"fn init {\n"
+"  let array = [1, 2, 3, 4, 5]\n"
+"  // array = [4, 5, 6, 7, 8] // 错误：let 创建的是不可变绑定\n"
+"  let mut mut_array = [1, 2, 3, 4, 5]\n"
+"  mut_array = [4, 5, 6, 7, 8]\n"
+"  println(mut_array)\n"
+"}\n"
+
+#: ../../tutorial/tour.md:87
+msgid ""
+"MoonBit is a strictly typed language with type inference. In the example "
+"above, `let` binds (we prefer the word _bind_ to assign) a symbol to a "
+"value. The symbol is inferred to have the same type as the value. Hover "
+"over any of the symbols to check its type."
+msgstr ""
+"MoonBit 是一种严格类型的语言，具有类型推断。在上面的示例中，`let` 将一个符号绑定（我们更喜欢使用 _绑定_ 这个词而不是 "
+"赋值）到一个值。该符号被推断为与该值具有相同的类型。将鼠标悬停在任何符号上以检查其类型。"
+
+#: ../../tutorial/tour.md:91
+msgid ""
+"By default, the `let` - binding creates an immutable reference to a "
+"value. That is, you cannot change the symbol to reference something else "
+"without rebinding it (using `let`). Otherwise one should use `let mut`."
+msgstr ""
+"默认情况下，`let` - 绑定会创建一个不可变的引用到一个值。也就是说，您不能更改符号以引用其他内容而不重新绑定它（使用 "
+"`let`）。否则，应该使用 `let mut`。"
+
+#: ../../tutorial/tour.md:93
+msgid "Function"
+msgstr "函数"
+
+#: ../../tutorial/tour.md:95
+msgid ""
+"Function is just a piece of code that takes some inputs and produce a "
+"result. We may define a function using the keyword `fn` (function name in"
+" MoonBit should not begin with uppercase letters A-Z):"
+msgstr ""
+"函数只是一段代码，它接受一些输入并产生一个结果。我们可以使用关键字 `fn` 定义一个函数（MoonBit 中的函数名不应以大写字母 A-Z "
+"开头）："
+
+#: ../../tutorial/tour.md:97
+msgid ""
+"fn identity[T](x : T) -> T {\n"
+"  // `Identity` won't work as it violates naming convention\n"
+"  x\n"
+"}\n"
+msgstr ""
+"fn identity[T](x : T) -> T {\n"
+"  // `Identity` 不符合命名规范\n"
+"  x\n"
+"}\n"
+
+#: ../../tutorial/tour.md:104
+msgid ""
+"In this example, we provide types explicitly. Notice how it differs from "
+"traditional C-like languages which uses prefix type notation `T x`, here "
+"we use postfix type notation `x: T` (Formally, we call it _type "
+"annotation_)."
+msgstr ""
+"在这个例子中，我们显式地提供了类型。请注意它与传统的类 C 语言的区别，传统的类 C 语言使用前缀类型表示法 `T "
+"x`，而这里我们使用后缀类型表示法 `x: T`（正式地，我们称之为 _类型标注_）。"
+
+#: ../../tutorial/tour.md:107
+msgid ""
+"We write a arrow `->` before the return type to show the nature of a "
+"function: a map from some types to some other types. Formally, we call "
+"this syntax _trailing return type_ (languages such as C++, Rust, Swift, "
+"etc have this syntax as well)."
+msgstr ""
+"我们在返回类型之前写一个箭头 `->` 来显示函数的本质：从某些类型到某些其他类型的映射。正式地，我们称这种语法为 _尾随返回类型_ （诸如 "
+"C++、Rust、Swift 等语言也有这种语法）。"
+
+#: ../../tutorial/tour.md:109
+msgid ""
+"The word _expression_ is loosely used. Intuitively, An expression is "
+"something with a value we care about."
+msgstr "术语 _表达式_ 被宽泛地使用。直观地说，表达式是我们关心的具有值的东西。"
+
+#: ../../tutorial/tour.md:111
+msgid ""
+"Consequently, a function type is denoted `(S) -> T` where `S` (within "
+"parenthesis) is the parameter type and `T` is the return type. Functions "
+"in MoonBit are first-class, meaning it's always possible to pass "
+"functions around if you get the type right:"
+msgstr ""
+"因此，函数类型表示为 `(S) -> T`，其中 `S`（在括号内）是参数类型，`T` 是返回类型。MoonBit "
+"中的函数是头等公民，这意味着如果您的类型正确，则始终可以传递函数："
+
+#: ../../tutorial/tour.md:115
+msgid ""
+"fn compose[S, T, U](f : (T) -> U, g : (S) -> T) -> (S) -> U {\n"
+"  let composition = fn(x : S) { f(g(x)) } // returns a composition of `f`"
+" and `g`\n"
+"\n"
+"  // moonbit also provides the pipe `|>` operator,\n"
+"  // similar to a lot of functional languages.\n"
+"  fn(x : S) { g(x) |> f } // equivalent\n"
+"}\n"
+msgstr ""
+"fn compose[S, T, U](f : (T) -> U, g : (S) -> T) -> (S) -> U {\n"
+"  let composition = fn(x : S) { f(g(x)) } // 定义 `f` 和 `g` 的复合函数\n"
+"\n"
+"  // 和其他函数式语言类似\n"
+"  // MoonBit 提供管道运算符 `|>`\n"
+"  fn(x : S) { g(x) |> f } // 等价写法\n"
+"}\n"
+
+#: ../../tutorial/tour.md:125
+msgid ""
+"Languages nowadays have something called _lambda expression_. Most "
+"languages implement it as a mere syntactic sugar. A lambda expression is "
+"really just a anonymous closure, this, is resembled in our MoonBit's "
+"syntax:"
+msgstr ""
+"现在的语言中有一种叫做 _lambda 表达式_ 的东西。大多数语言将其实现为一种纯粹的语法糖。lambda "
+"表达式实际上只是一个匿名闭包，这在我们 MoonBit 的语法中体现为："
+
+#: ../../tutorial/tour.md:127
+msgid ""
+"a closure only captures variables in its surroundings, together with its "
+"bound variable, that is, having the same indentation level (suppose we've"
+" formatted the code already)."
+msgstr "闭包只捕获其周围的变量，以及其绑定变量，即具有相同缩进级别（假设我们已经格式化了代码）。"
+
+#: ../../tutorial/tour.md:129
+msgid ""
+"fn foo() -> Int {\n"
+"  fn inc(x) { x + 1 }  // named as `inc`\n"
+"  (fn (x) { x + inc(2) })(6) // anonymous, a so-called 'lambda "
+"expression'\n"
+"  // function automatically captures the result of the last expression\n"
+"}\n"
+msgstr ""
+"fn foo() -> Int {\n"
+"  fn inc(x) { x + 1 }  // 命名为 `inc`\n"
+"  (fn (x) { x + inc(2) })(6) // 匿名函数，即 lambda 表达式\n"
+"  // 函数会自动捕捉最后一个表达式的值并返回\n"
+"}\n"
+
+#: ../../tutorial/tour.md:137
+msgid "foo() // => 9\n"
+msgstr ""
+
+#: ../../tutorial/tour.md:141
+msgid "Now we've learned the very basic, let's learn the rest by coding."
+msgstr "现在我们已经学习了最基本的内容，让我们通过编码来学习其他内容。"
+
+#: ../../tutorial/tour.md:143
+msgid "Implementing List"
+msgstr "实现列表"
+
+#: ../../tutorial/tour.md:145
+msgid "enum type"
+msgstr "枚举类型"
+
+#: ../../tutorial/tour.md:147
+msgid ""
+"A linked list is a series of node whose right cell is a reference to its "
+"successor node. Sounds recursive? Because it is. Let's define it that way"
+" using MoonBit:"
+msgstr "链表是一系列节点，其右侧单元是对其后继节点的引用。听起来像是递归？因为它确实是。让我们使用 MoonBit 来定义它："
+
+#: ../../tutorial/tour.md:149
+msgid ""
+"enum List[T] {\n"
+"  Nil // base case: empty list\n"
+"  Cons(T, List[T]) // an recursive definition\n"
+"}\n"
+msgstr ""
+"enum List[T] {\n"
+"  Nil // 基本情况：空表\n"
+"  Cons(T, List[T]) // 递归定义\n"
+"}\n"
+
+#: ../../tutorial/tour.md:156
+msgid ""
+"The `enum` type works like any `enum` from traditional OO languages. "
+"However, let's refrain from using the OO-term `case`, we'll use "
+"_constructor_ from now on. We may read the above code as"
+msgstr ""
+"`enum` 类型的工作方式类似于传统面向对象语言中的任何 `enum`。但是，让我们避免使用面向对象术语 `case`，从现在开始我们将使用 "
+"_构造器_。我们可以将上面的代码理解为："
+
+#: ../../tutorial/tour.md:158
+msgid ""
+"the type `List[T]` can be constructed from the constructor `Nil` or "
+"`Cons`, the former represents an empty list; the latter carries some data"
+" of type `T` and the rest of the list."
+msgstr "类型 `List[T]` 可以从构造器 `Nil` 或 `Cons` 构造，前者表示一个空列表；后者携带类型 `T` 的一些数据和列表的其余部分。"
+
+#: ../../tutorial/tour.md:160
+msgid ""
+"The square bracket used here denotes a _polymorphic_ (generic) "
+"definition, meaning a list of something of type `T`. Should we "
+"_instantiate_ `T` with a concrete type like `Int`, we define a list "
+"containing integers."
+msgstr "这里使用的方括号表示 _多态_（泛型）定义，意味着一个类型为 `T` 的东西的列表。如果我们使用具体类型（如 `Int`）_实例化_ `T`，"
+
+#: ../../tutorial/tour.md:162
+msgid ""
+"Another datatype frequently used in MoonBit is our good old `Struct`, "
+"which works like you would expect. Let's create a list of `User` using "
+"the definition above and `Struct`:"
+msgstr ""
+"在 MoonBit 中经常使用的另一种数据类型是我们熟悉的 `Struct`，它的工作方式与您期望的一样。让我们使用上面的定义和 `Struct`"
+" 创建一个 `User` 列表："
+
+#: ../../tutorial/tour.md:164
+msgid ""
+"struct User {\n"
+"  id : Int\n"
+"  name : String\n"
+"  // by default the properties/fields of a struct is immutable.\n"
+"  // the `mut` keyword works exactly the way we've mentioned before.\n"
+"  mut email : String\n"
+"} derive(Show)\n"
+"\n"
+"// a method of User is defined by passing a object of type User as self "
+"first.\n"
+"// just like what you would do in Python.\n"
+"// Note that methods may only be defined within the same package the type"
+" is in.\n"
+"// We may not define methods for foreign types directly\n"
+"fn greetUser(self : User) -> String { // a method of struct/type/class "
+"`User`\n"
+"  let id = self.id\n"
+"  let name = self.name\n"
+"  \"Greetings, \\{name} of id \\{id}\" // string interpolation\n"
+"}\n"
+"// construct a User object.\n"
+"let evan : User = { id: 0, name: \"Evan\", email: \"someone@example.com\""
+" }\n"
+"// we use a shorthand by duplicating evan's information\n"
+"// and replacing w/ someone elses' email.\n"
+"let listOfUser : List[User] = Cons(evan, Cons({ ..evan, email: "
+"\"someoneelse@example.com\" }, Nil))\n"
+msgstr ""
+"struct User {\n"
+"  id : Int\n"
+"  name : String\n"
+"  // 默认情况下 Struct 的属性/字段是不可变的\n"
+"  // `mut` 关键字就和我们之前说的一样\n"
+"  mut email : String\n"
+"} derive(Show)\n"
+"\n"
+"// 我们通过把函数第一个参数定义为 `self : User` 来给该Struct定义一个方法\n"
+"// 写法和 Python 类似\n"
+"// 注意：只有类型所在的包能为其定义方法。不能直接为外部类型定义方法。\n"
+"fn greetUser(self : User) -> String { // `User`的一个方法\n"
+"  let id = self.id\n"
+"  let name = self.name\n"
+"  \"Greetings, \\{name} of id \\{id}\" // 字符串插值写法\n"
+"}\n"
+"// 构造 User 对象\n"
+"let evan : User = { id: 0, name: \"Evan\", email: \"someone@example.com\""
+" }\n"
+"// 可以用一个语法糖将 evan 的属性复制一遍\n"
+"// 并将其 email 属性换成其他的值，构建一个新的对象\n"
+"let listOfUser : List[User] = Cons(evan, Cons({ ..evan, email: "
+"\"someoneelse@example.com\" }, Nil))\n"
+
+#: ../../tutorial/tour.md:189
+#, fuzzy
+msgid ""
+"Another datatype is `type`, a specific case of `enum` type. `type` can be"
+" thought as a wrapper around an existing type, allowing additional "
+"methods to be defined. Through this we extends the method definition of a"
+" foreign type without actually modifying it. Consider the type of `name` "
+"in `User`, we may define it as"
+msgstr ""
+"另一种数据类型是 `type`，是 `enum` 类型的特殊情况。`type` 可以被视为对现有类型的包装器，保留 `String` "
+"的方法，但允许定义额外的方法。通过这种方式，我们可以扩展外部类型的方法定义，而无需实际修改它。考虑 `User` 中的 `name` "
+"的类型，我们可以将其定义为："
+
+#: ../../tutorial/tour.md:195
+msgid ""
+"type UserName String // a newtype `UserName` based on `String`\n"
+"\n"
+"// defining a method for UserName is allowed but not String.\n"
+"fn is_blank(self : UserName) -> Bool {\n"
+"  // use `._` to access its basetype String\n"
+"  // iter() creates a *internal iterator*\n"
+"  // which provides a functional way to iterate on sequences.\n"
+"  // find_first short circuits on the first `true` i.e. non-blank "
+"character\n"
+"  let res = self._.iter().find_first(\n"
+"    fn(c) { if c == ' ' { false } else { true } },\n"
+"  )\n"
+"  match res {\n"
+"    Some(_) => false\n"
+"    // found NO non-blank character, thus it's a blank string.\n"
+"    None => true\n"
+"  }\n"
+"}\n"
+msgstr ""
+"type UserName String // 一个新类型 UserName，基于 String\n"
+"\n"
+"// 可以为 UserName 定义方法，String 则不行\n"
+"fn is_blank(self : UserName) -> Bool {\n"
+"  // 通过 `._` 访问其内部类型（String）\n"
+"  // iter() 创建一个内部迭代器（internal iterator）\n"
+"  // 并借此以函数式的风格在某个序列结构上迭代\n"
+"  // find_first 遇到第一个 true（即非空字符）就短路\n"
+"  let res = self._.iter().find_first(\n"
+"    fn(c) { if c == ' ' { false } else { true } },\n"
+"  )\n"
+"  match res {\n"
+"    Some(_) => false\n"
+"    // 找不到非空字符，所以是只由空格组成的字符串\n"
+"    None => true\n"
+"  }\n"
+"}\n"
+
+#: ../../tutorial/tour.md:215
+msgid ""
+"`enum`, `struct` and `newtype` are the 3 ways to define a datatype. There"
+" isn't `class` in MoonBit, nor does it need that."
+msgstr "`enum`、`struct` 和 `newtype` 是定义数据类型的 3 种方式。MoonBit 中没有 `class`，也不需要。"
+
+#: ../../tutorial/tour.md:218
+msgid ""
+"the `derive` keyword is like Java's `implements`. Here `Show` is a "
+"_trait_ which indicates a type is printable. So what is a trait?"
+msgstr ""
+"`derive` 关键字类似于 Java 的 `implements`。这里的 `Show` 是一个 "
+"_trait_，表示一个类型是可打印的。那么什么是 trait？"
+
+#: ../../tutorial/tour.md:221
+msgid "Trait"
+msgstr "特征"
+
+#: ../../tutorial/tour.md:223
+msgid ""
+"A trait (or type trait) is what we would call an `interface` in "
+"traditional OO-languages. `println(evan)` would print `{id: 0, name: "
+"\"Evan\", email: \"someone@example.com\"}`. As `User` consists of builtin"
+" types `Int` `String`, which already implements `Show`. Therefore we do "
+"not need to implement it explicitly. Let's implement our own trait "
+"`Printable` by implementing `to_string()`:"
+msgstr ""
+"特征（或类型特征）是我们在传统面向对象语言中称为 `interface` 的东西。`println(evan)` 将打印 `{id: 0, "
+"name: \"Evan\", email: \"someone@example.com\"}`。由于 `User` 由内置类型 `Int` "
+"`String` 组成，这些类型已经实现了 `Show`。因此我们不需要显式实现它。让我们通过实现 `to_string()` "
+"来实现我们自己的特征 `Printable`："
+
+#: ../../tutorial/tour.md:229
+msgid ""
+"trait Printable {\n"
+"  to_string(Self) -> String\n"
+"}\n"
+"\n"
+"fn to_string(self : User) -> String {\n"
+"  (self.id, self.name, self.email).to_string()\n"
+"} // now `Printable` is implemented\n"
+"\n"
+"fn to_string[T : Printable](self : List[T]) -> String {\n"
+"  let string_aux = to_string_aux(self)\n"
+"  // function arguments can have label\n"
+"  \"[\" + string_aux.substring(end=string_aux.length() - 1) + \"]\"\n"
+"}\n"
+"\n"
+"// polymorphic functions have to be toplevel.\n"
+"fn to_string_aux[T : Printable](self : List[T]) -> String {\n"
+"  match self {\n"
+"    Nil => \"\"\n"
+"    Cons(x, xs) => \"\\{x} \" + to_string_aux(xs)\n"
+"  }\n"
+"}\n"
+msgstr ""
+"trait Printable {\n"
+"  to_string(Self) -> String\n"
+"}\n"
+"\n"
+"fn to_string(self : User) -> String {\n"
+"  (self.id, self.name, self.email).to_string()\n"
+"} 这样就实现了`Printable`\n"
+"\n"
+"fn to_string[T : Printable](self : List[T]) -> String {\n"
+"  let string_aux = to_string_aux(self)\n"
+"  // 函数参数可以有标签\n"
+"  \"[\" + string_aux.substring(end=string_aux.length() - 1) + \"]\"\n"
+"}\n"
+"\n"
+"// 多态函数一定是顶层函数\n"
+"fn to_string_aux[T : Printable](self : List[T]) -> String {\n"
+"  match self {\n"
+"    Nil => \"\"\n"
+"    Cons(x, xs) => \"\\{x} \" + to_string_aux(xs)\n"
+"  }\n"
+"}\n"
+
+#: ../../tutorial/tour.md:253
+msgid ""
+"listOfUser.to_string()\n"
+"// => [(0, Evan, someone@example.com) (0, Evan, someoneelse@example.com)]"
+"\n"
+msgstr ""
+
+#: ../../tutorial/tour.md:258
+msgid ""
+"We use `<T extends Printable>` in Java to constrain the type of list "
+"element to make sure objects of type `T` can be printed, similarly, in "
+"MoonBit we would write `[T: Printable]`."
+msgstr ""
+"我们在 Java 中使用 `<T extends Printable>` 来约束列表元素的类型，以确保类型为 `T` 的对象可以被打印，同样，在 "
+"MoonBit 中我们会写 `[T: Printable]`。"
+
+#: ../../tutorial/tour.md:261
+msgid "Pattern Matching"
+msgstr "模式匹配"
+
+#: ../../tutorial/tour.md:263
+msgid ""
+"In the example above we use the `match` expression, a core feature of "
+"MoonBit (and many other functional programming languages.) In short, we "
+"use pattern matching to _destructure_ (to strip the encapsulation of) a "
+"structure."
+msgstr ""
+"在上面的示例中，我们使用了 `match` 表达式，这是 MoonBit（以及许多其他函数式编程语言）的核心特性。简而言之，我们使用模式匹配来 "
+"_解构_（剥离封装）一个结构。"
+
+#: ../../tutorial/tour.md:267
+msgid "We may express the above `match` code as"
+msgstr "我们可以将上面的 `match` 代码表示为："
+
+#: ../../tutorial/tour.md:269
+msgid ""
+"if `self` is constructed with `Nil` (an empty list), we return `\"\"`; "
+"otherwise if `self` is constructed with `Cons(x,xs)` (a non-empty list) "
+"we print `x` and rest of the list. Where `x` is the head of the `self` "
+"and `xs` being the rest."
+msgstr ""
+"如果 `self` 是用 `Nil`（空列表）构造的，我们返回 `\"\"`；否则，如果 `self` 是用 "
+"`Cons(x,xs)`（非空列表）构造的，我们打印 `x` 和列表的其余部分。其中 `x` 是 `self` 的头部，`xs` 是其余部分。"
+
+#: ../../tutorial/tour.md:274
+msgid ""
+"Intuitively, we extract `x` and `xs` (they are bound in situ) from `self`"
+" using pattern matching. Let's implement typical list operations such as "
+"`map` `reduce` `zip`:"
+msgstr ""
+"直观地说，我们使用模式匹配从 `self` 中提取 `x` 和 `xs`（它们在原地绑定）。让我们实现典型的列表操作，如 `map` "
+"`reduce` `zip`："
+
+#: ../../tutorial/tour.md:277
+msgid ""
+"fn map[S, T](self : List[S], f : (S) -> T) -> List[T] {\n"
+"  match self {\n"
+"    Nil => Nil\n"
+"    Cons(x, xs) => Cons(f(x), map(xs, f))\n"
+"  }\n"
+"}\n"
+"\n"
+"fn reduce[S, T](self : List[S], op : (T, S) -> T, init : T) -> T {\n"
+"  match self {\n"
+"    Nil => init\n"
+"    Cons(x, xs) => reduce(xs, op, op(init, x))\n"
+"  }\n"
+"}\n"
+"\n"
+"fn zip[T](self : List[T], other : List[T]) -> List[T] {\n"
+"  match (self, other) {\n"
+"    (Nil, _) => Nil // we use underscore to ignore the value we don't "
+"care\n"
+"    (_, Nil) => Nil\n"
+"    (Cons(x, xs), Cons(y, ys)) => Cons(x, Cons(y, zip(xs, ys)))\n"
+"  }\n"
+"}\n"
+msgstr ""
+"fn map[S, T](self : List[S], f : (S) -> T) -> List[T] {\n"
+"  match self {\n"
+"    Nil => Nil\n"
+"    Cons(x, xs) => Cons(f(x), map(xs, f))\n"
+"  }\n"
+"}\n"
+"\n"
+"fn reduce[S, T](self : List[S], op : (T, S) -> T, init : T) -> T {\n"
+"  match self {\n"
+"    Nil => init\n"
+"    Cons(x, xs) => reduce(xs, op, op(init, x))\n"
+"  }\n"
+"}\n"
+"\n"
+"fn zip[T](self : List[T], other : List[T]) -> List[T] {\n"
+"  match (self, other) {\n"
+"    (Nil, _) => Nil // 我们用下划线表示我们不关心的值\n"
+"    (_, Nil) => Nil\n"
+"    (Cons(x, xs), Cons(y, ys)) => Cons(x, Cons(y, zip(xs, ys)))\n"
+"  }\n"
+"}\n"
+
+#: ../../tutorial/tour.md:301
+msgid ""
+"Now we have a somewhat usable `List` type. Realistically, we always "
+"prefer the builtin `Array` which is much more efficient."
+msgstr "现在我们有了一个可以使用的 `List` 类型。实际上，我们总是更喜欢内置的 `Array`，它更高效。"
+
+#: ../../tutorial/tour.md:304
+msgid ""
+"Pattern matching can be used in `let` as well. In `greetUser()`, instead "
+"of writing 2 `let`'s, we may write"
+msgstr "模式匹配也可以在 `let` 中使用。在 `greetUser()` 中，我们可以把两个`let`绑定改写成："
+
+#: ../../tutorial/tour.md:307
+msgid ""
+"fn greetUserAlt(self : User) -> String {\n"
+"  // extract `id` `name` from `self` of type User. ignores email.\n"
+"  let { id: id, name: name, email: _ } = self\n"
+"  // equivalent, but ignores the rest.\n"
+"  let { id, name, .. } = self\n"
+"  \"Greetings, \\{name} of id \\{id}\"\n"
+"}\n"
+msgstr ""
+"fn greetUserAlt(self : User) -> String {\n"
+"  // 从 self 中提取 id name 字段，忽略 email\n"
+"  let { id: id, name: name, email: _ } = self\n"
+"  // 等价写法，但是忽略 id name 以外的所有字段\n"
+"  let { id, name, .. } = self\n"
+"  \"Greetings, \\{name} of id \\{id}\"\n"
+"}\n"
+
+#: ../../tutorial/tour.md:317
+msgid "Iteration"
+msgstr "迭代"
+
+#: ../../tutorial/tour.md:319
+msgid ""
+"Finally, let's talk about the major point of every OO-language: looping. "
+"Although we've been using recursion most of the times, MoonBit is "
+"designed to be multi-paradigm, thus it retains C-style imperative `for` "
+"`while` loop."
+msgstr ""
+"最后，让我们谈谈每种面向对象语言的主要特点：循环。尽管我们大多数时候都在使用递归，但 MoonBit 被设计为多范式，因此它保留了类 C "
+"风格的命令式 `for` `while` 循环。"
+
+#: ../../tutorial/tour.md:324
+msgid ""
+"Additionally, MoonBit provides a more interesting loop construct, the "
+"functional loop. For example the Fibonacci number can be calculated by"
+msgstr "此外，MoonBit 还提供了一个更有趣的循环结构，即函数式循环。例如，可以通过以下方式计算斐波那契数："
+
+#: ../../tutorial/tour.md:327
+msgid ""
+"fn fib(n : Int) -> Int {\n"
+"  loop n, 0, 1 { // introduces 3 loop variables: `n` `a = 0` `b = 1`\n"
+"    // pattern matching is available in `loop`\n"
+"    0, a, b => a // what can be constructed from 0 -- Only 0 it self!\n"
+"    // assign `b` to `a`, `(a + b)` to `b`, decrease counter `n`\n"
+"    n, a, b => continue n - 1, b, a + b\n"
+"  }\n"
+"}\n"
+msgstr ""
+"fn fib(n : Int) -> Int {\n"
+"  loop n, 0, 1 { // 引入了三个循环变量 `n` `a = 0` `b = 1`\n"
+"    // `loop` 中也可以使用模式匹配\n"
+"    0, a, b => a // 只有 0 能从 0 构造出来\n"
+"    // 将 `b` 赋值给 `a`, `(a + b)` 赋值给 `b`，循环计数器 `n - 1`\n"
+"    n, a, b => continue n - 1, b, a + b\n"
+"  }\n"
+"}\n"
+
+#: ../../tutorial/tour.md:338
+msgid "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(fib) // => [1,1,2,3,5,8,13,21,34,55]\n"
+msgstr ""
+
+#: ../../tutorial/tour.md:342
+msgid ""
+"Semantic-wise, the `loop` construct focuses more on the transition of "
+"each state, providing better readability, preserving recursive flavor and"
+" same performance without writing [tail-"
+"recursion](https://en.wikipedia.org/wiki/Tail_call) explicitly."
+msgstr ""
+"从语义上讲，`loop` 结构更注重每个状态的转换，提供更好的可读性，保留递归风格，并在不显式编写 "
+"[尾递归](https://baike.baidu.com/item/尾递归/554682) 的情况下保持相同的性能。"
+
+#: ../../tutorial/tour.md:345
+msgid "Closing"
+msgstr "结束语"
+
+#: ../../tutorial/tour.md:347
+msgid ""
+"At this point, we've learned about the very basic and most not-so-trivial"
+" features of MoonBit, yet MoonBit is a feature-rich, multi-paradigm "
+"programming language. After making sure that you are comfortable with the"
+" basics of MoonBit, we suggest that you look into some [interesting "
+"examples](https://github.com/moonbitlang/moonbit-"
+"docs/tree/main/legacy/examples) to get a better hold of MoonBit."
+msgstr ""
+"到目前为止，我们已经了解了 MoonBit 的基本特性和一些不那么简单的特性，但 MoonBit 是一种功能丰富的多范式编程语言。在确保您对 "
+"MoonBit 的基础知识感到满意后，我们建议您查看一些[有趣的示例](https://github.com/moonbitlang"
+"/moonbit-docs/tree/main/legacy/examples) 以更好地掌握 MoonBit。"
+
