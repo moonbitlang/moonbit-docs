@@ -1911,7 +1911,7 @@ fn init {
 
 Output：
 
-```plaintext
+```
 op_as_view: [0,5)
 op_as_view: [1,5)
 op_as_view: [0,2)

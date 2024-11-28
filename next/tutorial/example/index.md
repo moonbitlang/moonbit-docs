@@ -6,3 +6,5 @@ Here are some examples built with MoonBit.
 :maxdepth: 2
 :caption: Contents:
 sudoku/index
+lambda/index
+gmachine/index

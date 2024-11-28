@@ -15,6 +15,6 @@ The IDE environment is available at [https://try.moonbitlang.com](https://try.mo
 ```{toctree}
 :maxdepth: 2
 :caption: Contents:
-language/index
 tutorial/index
+language/index
 toolchain/index

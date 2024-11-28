@@ -9,7 +9,7 @@ The `name` field is used to specify the name of the module, and it is required.
 ```json
 {
   "name": "example",
-  ...
+  // ...
 }
 ```
 
@@ -20,7 +20,7 @@ For modules published to [mooncakes.io](https://mooncakes.io), the module name m
 ```json
 {
   "name": "moonbitlang/core",
-  ...
+  // ...
 }
 ```
 
@@ -34,7 +34,7 @@ This field is optional. For modules published to [mooncakes.io](https://mooncake
 {
   "name": "example",
   "version": "0.1.0",
-  ...
+  // ...
 }
 ```
 
