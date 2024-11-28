@@ -8,3 +8,5 @@ Here are some examples built with MoonBit.
 sudoku/index
 lambda/index
 gmachine/index
+myers-diff/index
+segment-tree/index
