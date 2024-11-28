@@ -23,6 +23,7 @@ Specifically:
 - First, we check the relationship between the ranges 1-7 and 1-6. The latter is a subset of the former, so the data from 1-7 cannot be used in our calculation, and we proceed to explore its two child nodes.
 - Next, we check the relationship between 1-3 and 1-6. The former is a subset of the latter, contributing to our result.
 - Then, we examine the relationship between 4-7 and 1-6, which overlap, requiring us to explore both child nodes further.
+- And we examine the relationship between 4-5 and 1-6, just as the third step.
 - We repeat this process...
 
 Based on binary decomposition, we will query at most Log N segments for any range of length N, ensuring guaranteed complexity.
@@ -42,8 +43,6 @@ We use a classic approach to represent the Segment Tree:
 ```
 
 Here, `Nil` represents an empty tree, while a `Node` contains the stored data (of type Int) and its left and right children.
-
-Additionally, we derive the Show Trait for easy debugging by outputting the tree structure when needed.
 
 ### Building the Tree
 

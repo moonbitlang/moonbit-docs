@@ -13,5 +13,6 @@ In this section, we will learn the basic principles of Segment Trees and how to 
 ```{toctree}
 :maxdepth: 2
 :caption: Contents:
+:hidden:
 segment-tree
 segment-tree2

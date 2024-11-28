@@ -28,15 +28,17 @@ Here’s where the **Lazy** aspect of LazyTag comes into play.
 
 We define that when querying a node with a tag, the tag is distributed to its child nodes. These child nodes inherit the tag and compute their values based on their length. The following diagram shows the propagation of the tag downward when querying [4, 6].
 
-This "lazy propagation" ensures that each modification is completed in \(O(\log N)\), while ensuring correct query results.
+This "lazy propagation" ensures that each modification is completed in O(log N), while ensuring correct query results.
 
-**Note:** Some may wonder about overlapping tags. However, additive tags like these merge seamlessly without affecting the total sum of a node.
+```{note}
+Some may wonder about overlapping tags. However, additive tags like these merge seamlessly without affecting the total sum of a node.
+```
 
 Let’s dive into the code!
 
 ## Implementation
 
-### Basic Definitions
+### Basic Definition
 
 In the previous code, we defined the segment tree using `enum`. However, none of the elements were clearly named, which was manageable when the data size was small. Now, we need to add **Tag** and **Length** attributes, so it makes sense to use labeled arguments in the `enum` definition:
 
@@ -48,7 +50,7 @@ In the previous code, we defined the segment tree using `enum`. However, none of
 
 This allows for clearer initialization and pattern matching, making the code easier to follow. We've also abstracted the `Data` type, adding a `len` attribute to represent the length of the current range, which is useful for calculating the node's value.
 
-### Tree Construction
+### Building the Tree
 
 Similar to the last lesson, before building the tree, we need to define the addition operations between `Node` types. However, since we’ve abstracted `Data`, we must account for its addition too:
 
@@ -70,7 +72,9 @@ Now, we can implement the tree-building function:
 
 ### LazyTag and Range Modifications
 
-A node receiving a LazyTag is handled by the `apply` function. The key logic here is how the tag is merged and how the value is computed based on the node’s length:
+We define a node receiving a LazyTag as `apply`. The key logic lies in here: the node receiving the LazyTag may not own a LazyTag, and if it did own one, how do we merge them? And how do we compute the new value of the node based on the LazyTag?
+
+A decent implementation is to define a new addition operation to merge LazyTags, and define an `apply` function for Node to receive it.
 
 
 ```{literalinclude} /sources/segment-tree/src/part2/top.mbt
@@ -79,10 +83,9 @@ A node receiving a LazyTag is handled by the `apply` function. The key logic her
 :end-before: end lazytag definition
 ```
 
-This code allows a node to compute its value based on its range length and the applied LazyTag. It also merges existing tags correctly.
+Here is the core part of this section: compute the correct node's value with the segment's length and the value of LazyTag.
 
-Next, we implement range modifications:
-
+Then how do we implement range modifications?
 
 ```{literalinclude} /sources/segment-tree/src/part2/top.mbt
 :language: moonbit
@@ -92,7 +95,29 @@ Next, we implement range modifications:
 
 The logic is similar to the query function from the previous lesson, but now each relevant node applies the necessary LazyTag for the modification.
 
-Interestingly, even with range modifications, this segment tree remains persistent (immutable). The `modify` function returns a new tree without altering the original, reflecting the recursive and functional nature of the code. Since MoonBit uses garbage collection, there’s no need for explicit pointers, unlike in Rust.
+When we arrive here, we find that, even with the range modification, it's still a persistent, or **Immutable** segment tree. The `modify` function will return the recently created segment tree, without changing the original one, and the semantics of recurring and merging represent this vividly.
+
+This means that using these kind of implementations (ADT(enum), recursion) for meeting immutable requirements is natural and elegant. With the garbage collection mechanism of MoonBit, we don't need to use pointers **explicitly** for some relationships in recurring ADT(enum), and we don't need to take care of the memory.
+
+Readers unfamiliar with the functional programming languages may not notice this, but we actually always profit from it. For example, writing a `ConsList` in Rust using ADT(enum), we usually need:
+
+```rust
+enum List<T> {
+    Cons(T, Box<List<T>>),
+    Nil,
+}
+```
+
+But in MoonBit, we only need:
+
+```moonbit
+enum List[T] {
+  Cons(T, List[T])
+  Nil
+}
+```
+
+GC is really interesting!
 
 ### Queries
 

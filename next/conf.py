@@ -21,7 +21,7 @@ sys.path.append(str(Path("_ext").resolve()))
 extensions = ['myst_parser', 'lexer']
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README"]
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README", 'sources']
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
