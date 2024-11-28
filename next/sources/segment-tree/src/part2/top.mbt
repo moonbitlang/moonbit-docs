@@ -112,7 +112,9 @@ fn modify(
     self.apply(tag)
   } else {
     guard let Node(left~, right~, ..) = self
-    left.apply(tag) + right.apply(tag)
+    let mid = (l + r) >> 1
+    left.modify(l, mid, modify_l, modify_r, tag) +
+    right.modify(mid + 1, r, modify_l, modify_r, tag)
   }
 }
 // end modify definition
