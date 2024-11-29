@@ -837,61 +837,49 @@ There are two ways to create new data types: `struct` and `enum`.
 
 In MoonBit, structs are similar to tuples, but their fields are indexed by field names. A struct can be constructed using a struct literal, which is composed of a set of labeled values and delimited with curly brackets. The type of a struct literal can be automatically inferred if its fields exactly match the type definition. A field can be accessed using the dot syntax `s.f`. If a field is marked as mutable using the keyword `mut`, it can be assigned a new value.
 
-```moonbit live
-struct User {
-  id: Int
-  name: String
-  mut email: String
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start struct 1
+:end-before: end struct 1
+```
 
-fn main {
-  let u = { id: 0, name: "John Doe", email: "john@doe.com" }
-  u.email = "john@doe.name"
-  println(u.id)
-  println(u.name)
-  println(u.email)
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start struct 2
+:end-before: end struct 2
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/data/__snapshot__/struct_1
+:caption: Output
 ```
 
 #### Constructing Struct with Shorthand
 
-If you already have some variable like `name` and `email`, it's redundant to repeat those names when constructing a struct:
+If you already have some variable like `name` and `email`, it's redundant to repeat those names when constructing a struct. You can use shorthand instead, it behaves exactly the same:
 
-```moonbit
-fn main {
-  let name = "john"
-  let email = "john@doe.com"
-  let u = { id: 0, name: name, email: email }
-}
-```
-
-You can use shorthand instead, it behaves exactly the same.
-
-```moonbit
-fn main {
-  let name = "john"
-  let email = "john@doe.com"
-  let u = { id: 0, name, email }
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start struct 3
+:end-before: end struct 3
 ```
 
 #### Struct Update Syntax
 
 It's useful to create a new struct based on an existing one, but with some fields updated.
 
-```moonbit live
-struct User {
-  id: Int
-  name: String
-  email: String
-} derive(Show)
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start struct 4
+:end-before: end struct 4
+:prepend: "fn main {"
+:append: "}"
+```
 
-fn main  {
-  let user = { id: 0, name: "John Doe", email: "john@doe.com" }
-  let updated_user = { ..user, email: "john@doe.name" }
-  println(user)         // output: { id: 0, name: "John Doe", email: "john@doe.com" }
-  println(updated_user) // output: { id: 0, name: "John Doe", email: "john@doe.name" }
-}
+```{literalinclude} /sources/language/src/data/__snapshot__/struct_4
+:caption: Output
 ```
 
 ### Enum
@@ -900,247 +888,162 @@ Enum types are similar to algebraic data types in functional languages. Users fa
 
 An enum can have a set of cases (constructors). Constructor names must start with capitalized letter. You can use these names to construct corresponding cases of an enum, or checking which branch an enum value belongs to in pattern matching:
 
-```moonbit live
-// An enum type that represents the ordering relation between two values,
-// with three cases "Smaller", "Greater" and "Equal"
-enum Relation {
-  Smaller
-  Greater
-  Equal
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start enum 1
+:end-before: end enum 1
+```
 
-// compare the ordering relation between two integers
-fn compare_int(x: Int, y: Int) -> Relation {
-  if x < y {
-    // when creating an enum, if the target type is known, you can write the constructor name directly
-    Smaller
-  } else if x > y {
-    // but when the target type is not known,
-    // you can always use `TypeName::Constructor` to create an enum unambiguously
-    Relation::Greater
-  } else {
-    Equal
-  }
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start enum 2
+:end-before: end enum 2
+```
 
-// output a value of type `Relation`
-fn print_relation(r: Relation) -> Unit {
-  // use pattern matching to decide which case `r` belongs to
-  match r {
-    // during pattern matching, if the type is known, writing the name of constructor is sufficient
-    Smaller => println("smaller!")
-    // but you can use the `TypeName::Constructor` syntax for pattern matching as well
-    Relation::Greater => println("greater!")
-    Equal => println("equal!")
-  }
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start enum 3
+:end-before: end enum 3
+:prepend: "fn main {"
+:append: "}"
+```
 
-fn main {
-  print_relation(compare_int(0, 1)) // smaller!
-  print_relation(compare_int(1, 1)) // equal!
-  print_relation(compare_int(2, 1)) // greater!
-}
+```{literalinclude} /sources/language/src/data/__snapshot__/enum_3
+:caption: Output
 ```
 
 Enum cases can also carry payload data. Here's an example of defining an integer list type using enum:
 
-```moonbit live
-enum List {
-  Nil
-  // constructor `Cons` carries additional payload: the first element of the list,
-  // and the remaining parts of the list
-  Cons (Int, List)
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start enum 4
+:end-before: end enum 4
+```
 
-fn main {
-  // when creating values using `Cons`, the payload of by `Cons` must be provided
-  let l: List = Cons(1, Cons(2, Nil))
-  println(is_singleton(l))
-  print_list(l)
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start enum 5
+:end-before: end enum 5
+```
 
-fn print_list(l: List) -> Unit {
-  // when pattern-matching an enum with payload,
-  // in additional to deciding which case a value belongs to
-  // you can extract the payload data inside that case
-  match l {
-    Nil => println("nil")
-    // Here `x` and `xs` are defining new variables instead of referring to existing variables,
-    // if `l` is a `Cons`, then the payload of `Cons` (the first element and the rest of the list)
-    // will be bind to `x` and `xs
-    Cons(x, xs) => {
-      println(x)
-      println(",")
-      print_list(xs)
-    }
-  }
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start enum 6
+:end-before: end enum 6
+:prepend: "fn main {"
+:append: "}"
+```
 
-// In addition to binding payload to variables,
-// you can also continue matching payload data inside constructors.
-// Here's a function that decides if a list contains only one element
-fn is_singleton(l: List) -> Bool {
-  match l {
-    // This branch only matches values of shape `Cons(_, Nil)`, i.e. lists of length 1
-    Cons(_, Nil) => true
-    // Use `_` to match everything else
-    _ => false
-  }
-}
+```{literalinclude} /sources/language/src/data/__snapshot__/enum_6
+:caption: Output
 ```
 
 #### Constructor with labelled arguments
 
 Enum constructors can have labelled argument:
 
-```moonbit live
-enum E {
-  // `x` and `y` are labelled argument
-  C(x~ : Int, y~ : Int)
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start enum 7
+:end-before: end enum 7
+```
 
-// pattern matching constructor with labelled arguments
-fn f(e : E) -> Unit {
-  match e {
-    // `label=pattern`
-    C(x=0, y=0) => println("0!")
-    // `x~` is an abbreviation for `x=x`
-    // Unmatched labelled arguments can be omitted via `..`
-    C(x~, ..) => println(x)
-  }
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start enum 8
+:end-before: end enum 8
+```
 
-// creating constructor with labelled arguments
-fn main {
-  f(C(x=0, y=0)) // `label=value`
-  let x = 0
-  f(C(x~, y=1)) // `~x` is an abbreviation for `x=x`
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start enum 9
+:end-before: end enum 9
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/data/__snapshot__/enum_9
+:caption: Output
 ```
 
 It is also possible to access labelled arguments of constructors like accessing struct fields in pattern matching:
 
-```moonbit
-enum Object {
-  Point(x~ : Double, y~ : Double)
-  Circle(x~ : Double, y~ : Double, radius~ : Double)
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start enum 10
+:end-before: end enum 10
+```
 
-type! NotImplementedError derive(Show)
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start enum 11
+:end-before: end enum 11
+:prepend: "fn main {"
+:append: "}"
+```
 
-fn distance_with(self : Object, other : Object) -> Double!NotImplementedError {
-  match (self, other) {
-    // For variables defined via `Point(..) as p`,
-    // the compiler knows it must be of constructor `Point`,
-    // so you can access fields of `Point` directly via `p.x`, `p.y` etc.
-    (Point(_) as p1, Point(_) as p2) => {
-      let dx = p2.x - p1.x
-      let dy = p2.y - p1.y
-      (dx * dx + dy * dy).sqrt()
-    }
-    (Point(_), Circle(_)) | (Circle(_), Point(_)) | (Circle(_), Circle(_)) =>
-      raise NotImplementedError
-  }
-}
-
-fn main {
-  let p1 : Object = Point(x=0, y=0)
-  let p2 : Object = Point(x=3, y=4)
-  let c1 : Object = Circle(x=0, y=0, radius=2)
-  try {
-    println(p1.distance_with!(p2)) // 5.0
-    println(p1.distance_with!(c1))
-  } catch {
-    e => println(e)
-  }
-}
+```{literalinclude} /sources/language/src/data/__snapshot__/enum_11
+:caption: Output
 ```
 
 #### Constructor with mutable fields
 
 It is also possible to define mutable fields for constructor. This is especially useful for defining imperative data structures:
 
-```moonbit
-// A mutable binary search tree with parent pointer
-enum Tree[X] {
-  Nil
-  // only labelled arguments can be mutable
-  Node(mut value~ : X, mut left~ : Tree[X], mut right~ : Tree[X], mut parent~ : Tree[X])
-}
-
-// A set implemented using mutable binary search tree.
-struct Set[X] {
-  mut root : Tree[X]
-}
-
-fn Set::insert[X : Compare](self : Set[X], x : X) -> Unit {
-  self.root = self.root.insert(x, parent=Nil)
-}
-
-// In-place insert a new element to a binary search tree.
-// Return the new tree root
-fn Tree::insert[X : Compare](self : Tree[X], x : X, parent~ : Tree[X]) -> Tree[X] {
-  match self {
-    Nil => Node(value=x, left=Nil, right=Nil, parent~)
-    Node(_) as node => {
-      let order = x.compare(node.value)
-      if order == 0 {
-        // mutate the field of a constructor
-        node.value = x
-      } else if order < 0 {
-        // cycle between `node` and `node.left` created here
-        node.left = node.left.insert(x, parent=node)
-      } else {
-        node.right = node.right.insert(x, parent=node)
-      }
-      // The tree is non-empty, so the new root is just the original tree
-      node
-    }
-  }
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start enum 12
+:end-before: end enum 12
 ```
 
 ### Newtype
 
 MoonBit supports a special kind of enum called newtype:
 
-```moonbit
-// `UserId` is a fresh new type different from `Int`, and you can define new methods for `UserId`, etc.
-// But at the same time, the internal representation of `UserId` is exactly the same as `Int`
-type UserId Int
-type UserName String
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start newtype 1
+:end-before: end newtype 1
 ```
 
 Newtypes are similar to enums with only one constructor (with the same name as the newtype itself). So, you can use the constructor to create values of newtype, or use pattern matching to extract the underlying representation of a newtype:
 
-```moonbit
-fn init {
-  let id: UserId = UserId(1)
-  let name: UserName = UserName("John Doe")
-  let UserId(uid) = id       // the type of `uid` is `Int`
-  let UserName(uname) = name // the type of `uname` is `String`
-  println(uid)
-  println(uname)
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start newtype 2
+:end-before: end newtype 2
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/data/__snapshot__/newtype_2
+:caption: Output
 ```
 
 Besides pattern matching, you can also use `._` to extract the internal representation of newtypes:
 
-```moonbit
-fn init {
-  let id: UserId = UserId(1)
-  let uid: Int = id._
-  println(uid)
-}
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start newtype 3
+:end-before: end newtype 3
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/data/__snapshot__/newtype_3
+:caption: Output
 ```
 
 ### Type alias
 MoonBit supports type alias via the syntax `typealias Name = TargetType`:
 
-```moonbit
-pub typealias Index = Int
-// type alias are private by default
-typealias MapString[X] = Map[String, X]
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start typealias 1
+:end-before: end typealias 1
 ```
 
 unlike all other kinds of type declaration above, type alias does not define a new type,
