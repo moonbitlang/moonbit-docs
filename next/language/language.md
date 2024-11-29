@@ -26,19 +26,37 @@ There is a specialized function called `init` function. The `init` function is s
 1. There can be multiple `init` functions in the same package.
 2. An `init` function can't be explicitly called or referred to by other functions. Instead, all `init` functions will be implicitly called when initializing a package. Therefore, `init` functions should only consist of statements.
 
-```moonbit live
-fn main {
-  let x = 1
-  // x // fail
-  println(x) // success
-}
+```{literalinclude} /sources/language/src/main/top.mbt
+:language: moonbit
+:start-after: start init
+:end-before: end init
 ```
 
 For WebAssembly backend, it means that it will be executed **before** the instance is available, meaning that the FFIs that relies on the instance's exportations can not be used at this stage;
 for JavaScript backend, it means that it will be executed during the importation stage.
 
 There is another specialized function called `main` function. The `main` function is the main entrance of the program, and it will be executed after the initialization stage.
-Only packages that are `main` packages can define such `main` function. Check out [build system tutorial](https://moonbitlang.github.io/moon/) for detail.
+
+```{literalinclude} /sources/language/src/main/top.mbt
+:language: moonbit
+:start-after: start main
+:end-before: end main
+```
+
+The previous two code snippets will print the following at runtime:
+
+```bash
+1
+2
+```
+
+
+Only packages that are `main` packages can define such `main` function. Check out [build system tutorial](/toolchain/moon/tutorial) for detail.
+
+```{literalinclude} /sources/language/src/main/moon.pkg.json
+:language: json
+:caption: moon.pkg.json
+```
 
 The two functions above need to drop the parameter list and the return type.
 
@@ -46,17 +64,10 @@ The two functions above need to drop the parameter list and the return type.
 
 MoonBit distinguishes between statements and expressions. In a function body, only the last clause should be an expression, which serves as a return value. For example:
 
-```moonbit
-fn foo() -> Int {
-  let x = 1
-  x + 1 // OK
-}
-
-fn bar() -> Int {
-  let x = 1
-  x + 1 // fail
-  x + 2
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start expression
+:end-before: end expression
 ```
 
 Expressions include:
@@ -84,10 +95,10 @@ Functions take arguments and produce a result. In MoonBit, functions are first-c
 
 Functions can be defined as top-level or local. We can use the `fn` keyword to define a top-level function that sums three integers and returns the result, as follows:
 
-```moonbit
-fn add3(x: Int, y: Int, z: Int)-> Int {
-  x + y + z
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start top-level functions
+:end-before: end top-level functions
 ```
 
 Note that the arguments and return value of top-level functions require explicit type annotations.
@@ -96,31 +107,18 @@ Note that the arguments and return value of top-level functions require explicit
 
 Local functions can be named or anonymous. Type annotations can be omitted for local function definitions: they can be automatically inferred in most cases. For example:
 
-```moonbit live
-fn foo() -> Int {
-  fn inc(x) { x + 1 }  // named as `inc`
-  fn (x) { x + inc(2) } (6) // anonymous, instantly applied to integer literal 6
-}
-
-fn main {
-  println(foo())
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start local functions 1
+:end-before: end local functions 1
 ```
 
 Functions, whether named or anonymous, are _lexical closures_: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
 
-```moonbit live
-let y = 3
-fn foo(x: Int) -> Unit {
-  fn inc()  { x + 1 } // OK, will return x + 1
-  fn four() { y + 1 } // Ok, will return 4
-  println(inc())
-  println(four())
-}
-
-fn main {
-  foo(2)
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start local functions 2
+:end-before: end local functions 2
 ```
 
 ### Function Applications
@@ -133,40 +131,37 @@ add3(1, 2, 7)
 
 This works whether `add3` is a function defined with a name (as in the previous example), or a variable bound to a function value, as shown below:
 
-```moonbit live
-fn main {
-  let add3 = fn(x, y, z) { x + y + z }
-  println(add3(1, 2, 7))
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start function application 1
+:end-before: end function application 1
 ```
 
 The expression `add3(1, 2, 7)` returns `10`. Any expression that evaluates to a function value is applicable:
 
-```moonbit live
-fn main {
-  let f = fn (x) { x + 1 }
-  let g = fn (x) { x + 2 }
-  println((if true { f } else { g })(3)) // OK
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start function application 2
+:end-before: end function application 2
 ```
 
 ### Labelled arguments
 
 Functions can declare labelled argument with the syntax `label~ : Type`. `label` will also serve as parameter name inside function body:
 
-```moonbit
-fn labelled(arg1~ : Int, arg2~ : Int) -> Int {
-  arg1 + arg2
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start labelled arguments 1
+:end-before: end labelled arguments 1
 ```
 
 Labelled arguments can be supplied via the syntax `label=arg`. `label=label` can be abbreviated as `label~`:
 
-```moonbit
-fn init {
-  let arg1 = 1
-  println(labelled(arg2=2, arg1~)) // 3
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start labelled arguments 2
+:end-before: end labelled arguments 2
 ```
 
 Labelled function can be supplied in any order. The evaluation order of arguments is the same as the order of parameters in function declaration.
@@ -175,97 +170,67 @@ Labelled function can be supplied in any order. The evaluation order of argument
 
 A labelled argument can be made optional by supplying a default expression with the syntax `label~ : Type = default_expr`. If this argument is not supplied at call site, the default expression will be used:
 
-```moonbit live
-fn optional(opt~ : Int = 42) -> Int {
-  opt
-}
-
-fn main {
-  println(optional()) // 42
-  println(optional(opt=0)) // 0
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start optional arguments 1
+:end-before: end optional arguments 1
 ```
 
 The default expression will be evaluated every time it is used. And the side effect in the default expression, if any, will also be triggered. For example:
 
-```moonbit live
-fn incr(counter~ : Ref[Int] = { val: 0 }) -> Ref[Int] {
-  counter.val = counter.val + 1
-  counter
-}
-
-fn main {
-  println(incr()) // 1
-  println(incr()) // still 1, since a new reference is created every time default expression is used
-  let counter : Ref[Int] = { val: 0 }
-  println(incr(counter~)) // 1
-  println(incr(counter~)) // 2, since the same counter is used
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start optional arguments 2
+:end-before: end optional arguments 2
 ```
 
 If you want to share the result of default expression between different function calls, you can lift the default expression to a toplevel `let` declaration:
 
-```moonbit live
-let default_counter : Ref[Int] = { val: 0 }
-
-fn incr(counter~ : Ref[Int] = default_counter) -> Int {
-  counter.val = counter.val + 1
-  counter.val
-}
-
-fn main {
-  println(incr()) // 1
-  println(incr()) // 2
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start optional arguments 3
+:end-before: end optional arguments 3
 ```
 
 Default expression can depend on the value of previous arguments. For example:
 
-```moonbit
-fn sub_array[X](xs : Array[X], offset~ : Int, len~ : Int = xs.length() - offset) -> Array[X] {
-  ... // take a sub array of [xs], starting from [offset] with length [len]
-}
-
-fn init {
-  println(sub_array([1, 2, 3], offset=1)) // [2, 3]
-  println(sub_array([1, 2, 3], offset=1, len=1)) // [2]
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start optional arguments 4
+:end-before: end optional arguments 4
+:emphasize-lines: 4
 ```
 
 #### Automatically insert `Some` when supplying optional arguments
 
 It is quite often optional arguments have type `T?` with `None` as default value.
-In this case, passing the argument explicitly requires wrapping a `Some`:
+In this case, passing the argument explicitly requires wrapping a `Some`,
+which is ugly:
 
-```moonbit
-fn image(width~ : Int? = None, height~ : Int? = None) -> Image { ... }
-fn main {
-  let img = image(width=Some(1920), height=Some(1080)) // ugly!
-  ...
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start optional arguments 5
+:end-before: end optional arguments 5
 ```
 
 Fortunately, MoonBit provides a special kind of optional arguments to solve this problem.
 Optional arguments declared with `label? : T` has type `T?` and `None` as default value.
 When supplying this kind of optional argument directly, MoonBit will automatically insert a `Some`:
 
-```moonbit
-fn image(width? : Int, height? : Int) -> Image { ... }
-fn main {
-  let img = image(width=1920, height=1080) // much better!
-  ...
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start optional arguments 6
+:end-before: end optional arguments 6
 ```
 
 Sometimes, it is also useful to pass a value of type `T?` directly,
 for example when forwarding optional argument.
 MoonBit provides a syntax `label?=value` for this, with `label?` being an abbreviation of `label?=label`:
 
-```moonbit
-fn image(width? : Int, height? : Int) -> Image { ... }
-fn fixed_width_image(height? : Int) -> Image {
-  image(width=1920, height?)
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start optional arguments 7
+:end-before: end optional arguments 7
 ```
 
 ### Autofill arguments
@@ -277,17 +242,10 @@ Now if the argument is not explicitly supplied, MoonBit will automatically fill 
 Currently MoonBit supports two types of autofill arguments, `SourceLoc`, which is the source location of the whole function call,
 and `ArgsLoc`, which is a array containing the source location of each argument, if any:
 
-```moonbit
-fn f(_x : Int, _y : Int, loc~ : SourceLoc = _, args_loc~ : ArgsLoc = _) -> Unit {
-  println("loc of whole function call: \{loc}")
-  println("loc of arguments: \{args_loc}")
-}
-
-fn main {
-  f(1, 2)
-  // loc of whole function call: <filename>:7:3-7:10
-  // loc of arguments: [Some(<filename>:7:5-7:6), Some(<filename>:7:8-7:9), None, None]
-}
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start autofill arguments
+:end-before: end autofill arguments
 ```
 
 Autofill arguments are very useful for writing debugging and testing utilities.
@@ -298,99 +256,101 @@ Autofill arguments are very useful for writing debugging and testing utilities.
 
 A conditional expression consists of a condition, a consequent, and an optional else clause.
 
-```moonbit
-if x == y {
-  expr1
-} else {
-  expr2
-}
-
-if x == y {
-  expr1
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start conditional expressions 1
+:end-before: end conditional expressions 1
 ```
 
 The else clause can also contain another if-else expression:
 
-```moonbit
-if x == y {
-  expr1
-} else if z == k {
-  expr2
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start conditional expressions 2
+:end-before: end conditional expressions 2
 ```
 
 Curly brackets are used to group multiple expressions in the consequent or the else clause.
 
 Note that a conditional expression always returns a value in MoonBit, and the return values of the consequent and the else clause must be of the same type. Here is an example:
 
-```moonbit
-let initial = if size < 1 { 1 } else { size }
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start conditional expressions 3
+:end-before: end conditional expressions 3
 ```
 
 ### While loop
 
 In MoonBit, `while` loop can be used to execute a block of code repeatedly as long as a condition is true. The condition is evaluated before executing the block of code. The `while` loop is defined using the `while` keyword, followed by a condition and the loop body. The loop body is a sequence of statements. The loop body is executed as long as the condition is true.
 
-```moonbit
-let mut i = 5
-while i > 0 {
-  println(i)
-  i = i - 1
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start while loop 1
+:end-before: end while loop 1
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/controls/__snapshot__/while_loop_1
+:caption: Output
 ```
 
 The loop body supports `break` and `continue`. Using `break` allows you to exit the current loop, while using `continue` skips the remaining part of the current iteration and proceeds to the next iteration.
 
-```moonbit live
-fn main {
-  let mut i = 5
-  while i > 0 {
-    i = i - 1
-    if i == 4 { continue }
-    if i == 1 { break }
-    println(i)
-  }
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start while loop 2
+:end-before: end while loop 2
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/controls/__snapshot__/while_loop_2
+:caption: Output
 ```
 
 The `while` loop also supports an optional `else` clause. When the loop condition becomes false, the `else` clause will be executed, and then the loop will end.
 
-```moonbit live
-fn main {
-  let mut i = 2
-  while i > 0 {
-    println(i)
-    i = i - 1
-  } else {
-    println(i)
-  }
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start while loop 3
+:end-before: end while loop 3
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/controls/__snapshot__/while_loop_3
+:caption: Output
 ```
 
 When there is an `else` clause, the `while` loop can also return a value. The return value is the evaluation result of the `else` clause. In this case, if you use `break` to exit the loop, you need to provide a return value after `break`, which should be of the same type as the return value of the `else` clause.
 
-```moonbit
-  let mut i = 10
-  let r1 =
-    while i > 0 {
-      i = i - 1
-      if i % 2 == 0 { break 5 } // break with 5
-    } else {
-      7
-    }
-  println(r1) //output: 5
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start while loop 4
+:end-before: end while loop 4
+:prepend: "fn main {"
+:append: "}"
 ```
 
-```moonbit
-  let mut i = 10
-  let r2 =
-    while i > 0 {
-      i = i - 1
-    } else {
-      7
-    }
-  println(r2) //output: 7
+```{literalinclude} /sources/language/src/controls/__snapshot__/while_loop_4
+:caption: Output
+```
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start while loop 5
+:end-before: end while loop 5
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/controls/__snapshot__/while_loop_5
+:caption: Output
 ```
 
 ### For Loop
@@ -398,38 +358,36 @@ When there is an `else` clause, the `while` loop can also return a value. The re
 MoonBit also supports C-style For loops. The keyword `for` is followed by variable initialization clauses, loop conditions, and update clauses separated by semicolons. They do not need to be enclosed in parentheses.
 For example, the code below creates a new variable binding `i`, which has a scope throughout the entire loop and is immutable. This makes it easier to write clear code and reason about it:
 
-```moonbit
-for i = 0; i < 5; i = i + 1 {
-  println(i)
-}
-// output:
-// 0
-// 1
-// 2
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start for loop 1
+:end-before: end for loop 1
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/controls/__snapshot__/for_loop_1
+:caption: Output
 ```
 
 The variable initialization clause can create multiple bindings:
 
-```moonbit
-for i = 0, j = 0; i + j < 100; i = i + 1, j = j + 1 {
-  println(i)
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start for loop 2
+:end-before: end for loop 2
 ```
 
 It should be noted that in the update clause, when there are multiple binding variables, the semantics are to update them simultaneously. In other words, in the example above, the update clause does not execute `i = i + 1`, `j = j + 1` sequentially, but rather increments `i` and `j` at the same time. Therefore, when reading the values of the binding variables in the update clause, you will always get the values updated in the previous iteration.
 
 Variable initialization clauses, loop conditions, and update clauses are all optional. For example, the following two are infinite loops:
 
-```moonbit
-for i=1;; i=i+1 {
-  println(i) // loop forever!
-}
-```
-
-```moonbit
-for {
-  println("loop forever!")
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start for loop 3
+:end-before: end for loop 3
 ```
 
 The `for` loop also supports `continue`, `break`, and `else` clauses. Like the `while` loop, the `for` loop can also return a value using the `break` and `else` clauses.
@@ -438,29 +396,27 @@ The `continue` statement skips the remaining part of the current iteration of th
 
 For example, the following program calculates the sum of even numbers from 1 to 6:
 
-```moonbit live
-fn main {
-  let sum =
-    for i = 1, acc = 0; i <= 6; i = i + 1 {
-      if i % 2 == 0 {
-        println("even: \{i}")
-        continue i + 1, acc + i
-      }
-    } else {
-      acc
-    }
-  println(sum)
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start for loop 4
+:end-before: end for loop 4
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/controls/__snapshot__/for_loop_4
+:caption: Output
 ```
 
 ### `for .. in` loop
 
 MoonBit supports traversing elements of different data structures and sequences via the `for .. in` loop syntax:
 
-```moonbit
-for x in [ 1, 2, 3 ] {
-  println(x)
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start for loop 5
+:end-before: end for loop 5
 ```
 
 `for .. in` loop is translated to the use of `Iter` in MoonBit's standard library. Any type with a method `.iter() : Iter[T]` can be traversed using `for .. in`.
@@ -469,30 +425,39 @@ For more information of the `Iter` type, see [Iterator](#iterator) below.
 In addition to sequences of a single value, MoonBit also supports traversing sequences of two values, such as `Map`, via the `Iter2` type in MoonBit's standard library.
 Any type with method `.iter2() : Iter2[A, B]` can be traversed using `for .. in` with two loop variables:
 
-```moonbit
-for k, v in { "x": 1, "y": 2, "z": 3 } {
-  println("\{k} => \{v}")
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start for loop 6
+:end-before: end for loop 6
 ```
 
 Another example of `for .. in` with two loop variables is traversing an array while keeping track of array index:
 
-```moonbit
-for index, elem in [ 4, 5, 6 ] {
-  let i = index + 1
-  println("The \{i}-th element of the array is \{elem}")
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start for loop 7
+:end-before: end for loop 7
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/controls/__snapshot__/for_loop_7
+:caption: Output
 ```
 
 Control flow operations such as `return`, `break` and error handling are supported in the body of `for .. in` loop:
 
-```moonbit
-test "map test" {
-  let map = { "x": 1, "y": 2, "z": 3 }
-  for k, v in map {
-    assert_eq!(map[k], Some(v))
-  }
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start for loop 8
+:end-before: end for loop 8
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/controls/__snapshot__/for_loop_8
+:caption: Output
 ```
 
 If a loop variable is unused, it can be ignored with `_`.
@@ -503,17 +468,10 @@ Functional loop is a powerful feature in MoonBit that enables you to write loops
 
 A functional loop consumes arguments and returns a value. It is defined using the `loop` keyword, followed by its arguments and the loop body. The loop body is a sequence of clauses, each of which consists of a pattern and an expression. The clause whose pattern matches the input will be executed, and the loop will return the value of the expression. If no pattern matches, the loop will panic. Use the `continue` keyword with arguments to start the next iteration of the loop. Use the `break` keyword with arguments to return a value from the loop. The `break` keyword can be omitted if the value is the last expression in the loop body.
 
-```moonbit live
-fn sum(xs: @immut/list.T[Int]) -> Int {
-  loop xs, 0 {
-    Nil, acc => break acc // break can be omitted
-    Cons(x, rest), acc => continue rest, x + acc
-  }
-}
-
-fn main {
-  println(sum(Cons(1, Cons(2, Cons(3, Nil)))))
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start for loop 9
+:end-before: end for loop 9
 ```
 
 ### Guard Statement
@@ -523,10 +481,10 @@ If the condition of the invariant is satisfied, the program continues executing
 the subsequent statements and returns. If the condition is not satisfied (i.e., false),
 the code in the `else` block is executed and its evaluation result is returned (the subsequent statements are skipped).
 
-```moonbit
-guard index >= 0 && index < len else {
-  abort("Index out of range")
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start guard 1
+:end-before: end guard 1
 ```
 
 The `guard` statement also supports pattern matching: in the following example,
@@ -534,30 +492,20 @@ The `guard` statement also supports pattern matching: in the following example,
 and it uses the `guard` statement to ensure this invariant. Compared to using
 a `match` statement, the subsequent processing of `text` can have one less level of indentation.
 
-```moonbit
-enum Resource {
-  Folder(Array[String])
-  PlainText(String)
-  JsonConfig(Json)
-}
-
-fn getProcessedText(resources : Map[String, Resource], path : String) -> String!Error {
-  guard let Some(PlainText(text)) = resources[path] else {
-    None => fail!("\{path} not found")
-    Some(Folder(_)) => fail!("\{path} is a folder")
-    Some(JsonConfig(_)) => fail!("\{path} is a json config")
-  }
-  ...
-  process(text)
-}
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start guard 2
+:end-before: end guard 2
 ```
 
 When the `else` part is omitted, the program terminates if the condition specified
 in the `guard` statement is not true or cannot be matched.
 
-```moonbit
-guard condition // equivalent to `guard condition else { panic() }`
-guard let Some(x) = expr // equivalent to `guard let Some(x) = expr else { _ => panic() }`
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start guard 3
+:end-before: end guard 3
 ```
 
 ## Iterator
