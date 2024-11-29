@@ -483,6 +483,7 @@ the code in the `else` block is executed and its evaluation result is returned (
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
+:dedent:
 :start-after: start guard 1
 :end-before: end guard 1
 ```
@@ -521,16 +522,10 @@ to user) and the latter is called _internal iterator_ (invisible to user).
 The built-in type `Iter[T]` is MoonBit's internal iterator implementation.
 Almost all built-in sequential data structures have implemented `Iter`:
 
-```moonbit
-fn filter_even(l : Array[Int]) -> Array[Int] {
-  let l_iter : Iter[Int] = l.iter()
-  l_iter.filter(fn { x => (x & 1) == 1 }).collect()
-}
-
-fn fact(n : Int) -> Int {
-  let start = 1
-  start.until(n).fold(Int::op_mul, init=start)
-}
+```{literalinclude} /sources/language/src/iter/top.mbt
+:language: moonbit
+:start-after: start iter 1
+:end-before: end iter 1
 ```
 
 Commonly used methods include:
@@ -556,23 +551,10 @@ enough to use. But to take advantages of these methods when used with a custom
 sequence with elements of type `S`, we will need to implement `Iter`, namely, a function that returns
 an `Iter[S]`. Take `Bytes` as an example:
 
-```moonbit
-fn iter(data : Bytes) -> Iter[Byte] {
-  Iter::new(
-    fn(yield) {
-      // The code that actually does the iteration
-      /////////////////////////////////////////////
-      for i = 0, len = data.length(); i < len; i = i + 1 {
-        if yield(data[i]) == IterEnd {
-          break IterEnd
-        }
-      /////////////////////////////////////////////
-      } else {
-        IterContinue
-      }
-    },
-  )
-}
+```{literalinclude} /sources/language/src/iter/top.mbt
+:language: moonbit
+:start-after: start iter 2
+:end-before: end iter 2
 ```
 
 Almost all `Iter` implementations are identical to that of `Bytes`, the only
@@ -612,12 +594,11 @@ performance issue might occur.
 
 MoonBit has a built-in boolean type, which has two values: `true` and `false`. The boolean type is used in conditional expressions and control structures.
 
-```moonbit
-let a = true
-let b = false
-let c = a && b
-let d = a || b
-let e = not(a)
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start boolean 1
+:end-before: end boolean 1
 ```
 
 ### Number
@@ -640,65 +621,67 @@ To improve readability, you may place underscores in the middle of numeric liter
 
 - There is nothing surprising about decimal numbers.
 
-  ```moonbit
-  let a = 1234
-  let b = 1_000_000 + a
-  let large_num = 9_223_372_036_854_775_807L // Integers of the Int64 type must have an 'L' as a suffix
-  let unsigned_num = 4_294_967_295U // Integers of the UInt type must have an 'U' suffix
+  ```{literalinclude} /sources/language/src/builtin/top.mbt
+  :language: moonbit
+  :dedent:
+  :start-after: start number 1
+  :end-before: end number 1
   ```
 
 - A binary number has a leading zero followed by a letter "B", i.e. `0b`/`0B`.
   Note that the digits after `0b`/`0B` must be `0` or `1`.
 
-  ```moonbit
-  let bin =  0b110010
-  let another_bin = 0B110010
+  ```{literalinclude} /sources/language/src/builtin/top.mbt
+  :language: moonbit
+  :dedent:
+  :start-after: start number 2
+  :end-before: end number 2
   ```
 
 - An octal number has a leading zero followed by a letter "O", i.e. `0o`/`0O`.
   Note that the digits after `0o`/`0O` must be in the range from `0` through `7`:
 
-  ```moonbit
-  let octal = 0o1234
-  let another_octal = 0O1234
+  ```{literalinclude} /sources/language/src/builtin/top.mbt
+  :language: moonbit
+  :dedent:
+  :start-after: start number 3
+  :end-before: end number 3
   ```
 
 - A hexadecimal number has a leading zero followed by a letter "X", i.e. `0x`/`0X`.
   Note that the digits after the `0x`/`0X` must be in the range `0123456789ABCDEF`.
 
-  ```moonbit
-  let hex = 0XA
-  let another_hex = 0xA
+  ```{literalinclude} /sources/language/src/builtin/top.mbt
+  :language: moonbit
+  :dedent:
+  :start-after: start number 4
+  :end-before: end number 4
   ```
 
 #### Overloaded int literal
 
 When the expected type is known, MoonBit can automatically overload integer literal, and there is no need to specify the type of number via letter postfix:
 
-```moonbit
-let int : Int = 42
-let uint : UInt = 42
-let int64 : Int64 = 42
-let double : Double = 42
-let float : Float = 42
-let bigint : BigInt = 42
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start number 5
+:end-before: end number 5
 ```
 
 ### String
 
 `String` holds a sequence of UTF-16 code units. You can use double quotes to create a string, or use `#|` to write a multi-line string.
 
-```moonbit
-let a = "兔rabbit"
-println(a[0]) // output: 兔
-println(a[1]) // output: r
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start string 1
+:end-before: end string 1
 ```
 
-```moonbit
-let b =
-  #| Hello
-  #| MoonBit
-  #|
+```{literalinclude} /sources/language/src/builtin/__snapshot__/string_1
+:caption: Output
 ```
 
 In double quotes string, a backslash followed by certain special characters forms an escape sequence:
@@ -713,121 +696,103 @@ In double quotes string, a backslash followed by certain special characters form
 
 MoonBit supports string interpolation. It enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text. Variables used for string interpolation must support the `to_string` method.
 
-```moonbit
-let x = 42
-println("The answer is \{x}")
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start string 3
+:end-before: end string 3
 ```
 
 Multi-line strings do not support interpolation by default, but you can enable interpolation for a specific line by changing the leading `#|` to `$|`:
 
-```moonbit
-let lang = "MoonBit"
-let str = 
-  #| Hello
-  #| ---
-  $| \{lang}\n
-  #| ---
-println(str)
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start string 4
+:end-before: end string 4
 ```
 
-Output:
-
-```
- Hello
- ---
- MoonBit
-
- ---
+```{literalinclude} /sources/language/src/builtin/__snapshot__/string_4
+:caption: Output
 ```
 
 ### Char
 
 `Char` is an integer representing a Unicode code point.
 
-```moonbit
-let a : Char = 'A'
-let b = '\x41'
-let c = '兔'
-let zero = '\u{30}'
-let zero = '\u0030'
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start char 1
+:end-before: end char 1
 ```
 
 ### Byte(s)
 
 A byte literal in MoonBit is either a single ASCII character or a single escape enclosed in single quotes `'`, and preceded by the character `b`. Byte literals are of type `Byte`. For example:
 
-```moonbit live
-fn main {
-  let b1 : Byte = b'a'
-  println(b1.to_int())
-  let b2 = b'\xff'
-  println(b2.to_int())
-}
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start byte 1
+:end-before: end byte 1
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/builtin/__snapshot__/byte_1
+:caption: Output
 ```
 
 A `Bytes` is a sequence of bytes. Similar to byte, bytes literals have the form of `b"..."`. For example:
 
-```moonbit live
-fn main {
-  let b1 : Bytes = b"abcd"
-  let b2 = b"\x61\x62\x63\x64"
-  println(b1 == b2) // true
-}
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start byte 2
+:end-before: end byte 2
 ```
 
 ### Tuple
 
 A tuple is a collection of finite values constructed using round brackets `()` with the elements separated by commas `,`. The order of elements matters; for example, `(1,true)` and `(true,1)` have different types. Here's an example:
 
-```moonbit
-fn pack(a: Bool, b: Int, c: String, d: Double) -> (Bool, Int, String, Double) {
-    (a, b, c, d)
-}
-fn init {
-    let quad = pack(false, 100, "text", 3.14)
-    let (bool_val, int_val, str, float_val) = quad
-    println("\{bool_val} \{int_val} \{str} \{float_val}")
-}
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start tuple 1
+:end-before: end tuple 1
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/builtin/__snapshot__/tuple_1
+:caption: Output
 ```
 
 Tuples can be accessed via pattern matching or index:
 
-```moonbit live
-fn f(t : (Int, Int)) -> Unit {
-  let (x1, y1) = t // access via pattern matching
-  // access via index
-  let x2 = t.0
-  let y2 = t.1
-  if (x1 == x2 && y1 == y2) {
-    println("yes")
-  } else {
-    println("no")
-  }
-}
-
-fn main {
-  f((1, 2))
-}
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start tuple 2
+:end-before: end tuple 2
 ```
 
 ### Array
 
 An array is a finite sequence of values constructed using square brackets `[]`, with elements separated by commas `,`. For example:
 
-```moonbit
-let numbers = [1, 2, 3, 4]
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start array 1
+:end-before: end array 1
 ```
 
 You can use `numbers[x]` to refer to the xth element. The index starts from zero.
 
-```moonbit live
-fn main {
-  let numbers = [1, 2, 3, 4]
-  let a = numbers[2]
-  numbers[3] = 5
-  let b = a + numbers[3]
-  println(b) // prints 8
-}
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start array 2
+:end-before: end array 2
 ```
 
 ### Map
@@ -835,22 +800,23 @@ fn main {
 MoonBit provides a hash map data structure that preserves insertion orde called `Map` in its standard library.
 `Map`s can be created via a convenient literal syntax:
 
-```moonbit
-let map : Map[String, Int] = { "x": 1, "y": 2, "z": 3 }
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start map 1
+:end-before: end map 1
 ```
 
 Currently keys in map literal syntax must be constant. `Map`s can also be destructed elegantly with pattern matching, see [Map Pattern](#map-pattern).
 
-## Json literal
+### Json literal
 
 MoonBit supports convenient json handling by overloading literals.
 When the expected type of an expression is `Json`, number, string, array and map literals can be directly used to create json data:
 
-```moonbit
-let moon_pkg_json_example : Json = {
-  "import": [ "moonbitlang/core/builtin", "moonbitlang/core/coverage" ],
-  "test-import": [ "moonbitlang/core/random" ]
-}
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start json 1
+:end-before: end json 1
 ```
 
 Json values can be pattern matched too, see [Json Pattern](#json-pattern).
@@ -859,14 +825,8 @@ Json values can be pattern matched too, see [Json Pattern](#json-pattern).
 
 A variable can be declared as mutable or immutable using `let mut` or `let`, respectively. A mutable variable can be reassigned to a new value, while an immutable one cannot.
 
-```moonbit live
-let zero = 0
-
-fn main {
-  let mut i = 10
-  i = 20
-  println(i + zero)
-}
+```{literalinclude} /sources/language/src/variable/top.mbt
+:language: moonbit
 ```
 
 ## Data Types
