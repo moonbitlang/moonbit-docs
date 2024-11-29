@@ -1059,30 +1059,26 @@ The type alias can be removed after all uses of `@pkgA.T` is migrated to `@pkgB.
 
 We have shown a use case of pattern matching for enums, but pattern matching is not restricted to enums. For example, we can also match expressions against Boolean values, numbers, characters, strings, tuples, arrays, and struct literals. Since there is only one case for those types other than enums, we can pattern match them using `let` binding instead of `match` expressions. Note that the scope of bound variables in `match` is limited to the case where the variable is introduced, while `let` binding will introduce every variable to the current scope. Furthermore, we can use underscores `_` as wildcards for the values we don't care about, use `..` to ignore remaining fields of struct or elements of array.
 
-```moonbit
-let id = match u {
-  { id: id, name: _, email: _ } => id
-}
-// is equivalent to
-let { id: id, name: _, email: _ } = u
-// or
-let { id: id, ..} = u
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start pattern 1
+:end-before: end pattern 1
 ```
 
-```moonbit
-let ary = [1,2,3,4]
-let [a, b, ..] = ary // a = 1, b = 2
-let [.., a, b] = ary // a = 3, b = 4
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:start-after: start pattern 2
+:end-before: end pattern 2
 ```
 
 There are some other useful constructs in pattern matching. For example, we can use `as` to give a name to some pattern, and we can use `|` to match several cases at once. A variable name can only be bound once in a single pattern, and the same set of variables should be bound on both sides of `|` patterns.
 
-```moonbit
-match expr {
-  Lit(n) as a => ...
-  Add(e1, e2) | Mul(e1, e2) => ...
-  _ => ...
-}
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start pattern 3
+:end-before: end pattern 3
 ```
 
 ### Range Pattern
@@ -1096,24 +1092,11 @@ Range patterns have the form `a..<b` or `a..=b`, where `..<` means the upper bou
 
 Here are some examples:
 
-```moonbit
-const Zero = 0
-fn sign(x : Int) -> Int {
-  match x {
-    _..<Zero => -1
-    Zero => 0
-    1..<_ => 1
-  }
-}
-
-fn classify_char(c : Char) -> String {
-  match c {
-    'a'..='z' => "lowercase"
-    'A'..='Z' => "uppercase"
-    '0'..='9' => "digit"
-    _ => "other"
-  }
-}
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start pattern 4
+:end-before: end pattern 4
 ```
 
 ### Map Pattern
@@ -1122,15 +1105,11 @@ MoonBit allows convenient matching on map-like data structures.
 Inside a map pattern, the `key : value` syntax will match if `key` exists in the map, and match the value of `key` with pattern `value`.
 The `key? : value` syntax will match no matter `key` exists or not, and `value` will be matched against `map[key]` (an optional).
 
-```moonbit
-match map {
-  // matches if any only if "b" exists in `map`
-  { "b": _ } => ..
-  // matches if and only if "b" does not exist in `map` and "a" exists in `map`.
-  // When matches, bind the value of "a" in `map` to `x`
-  { "b"? : None, "a": x } => ..
-  // compiler reports missing case: { "b"? : None, "a"? : None }
-}
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start pattern 5
+:end-before: end pattern 5
 ```
 
 - To match a data type `T` using map pattern, `T` must have a method `op_get(Self, K) -> Option[V]` for some type `K` and `V`.
@@ -1142,11 +1121,11 @@ match map {
 
 When the matched value has type `Json`, literal patterns can be used directly:
 
-```moonbit
-match json {
-  { "version": "1.0.0", "import": [..] as imports } => ...
-  _ => ...
-}
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start pattern 6
+:end-before: end pattern 6
 ```
 
 ## Operators
@@ -1155,52 +1134,30 @@ match json {
 
 MoonBit supports operator overloading of builtin operators via methods. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
 
-```moonbit live
-struct T {
-  x:Int
-} derive(Show)
-
-fn op_add(self: T, other: T) -> T {
-  { x: self.x + other.x }
-}
-
-fn main {
-  let a = { x: 0 }
-  let b = { x: 2 }
-  println(a + b)
-}
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:start-after: start operator 1
+:end-before: end operator 1
 ```
 
 Another example about `op_get` and `op_set`:
 
-```moonbit live
-struct Coord {
-  mut x: Int
-  mut y: Int
-} derive(Show)
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:start-after: start operator 2
+:end-before: end operator 2
+```
 
-fn op_get(self: Coord, key: String) -> Int {
-  match key {
-    "x" => self.x
-    "y" => self.y
-  }
-}
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:start-after: start operator 3
+:end-before: end operator 3
+:prepend: "fn main {"
+:append: "}"
+```
 
-fn op_set(self: Coord, key: String, val: Int) -> Unit {
-    match key {
-    "x" => self.x = val
-    "y" => self.y = val
-  }
-}
-
-fn main {
-  let c = { x: 1, y: 2 }
-  println(c)
-  println(c["y"])
-  c["x"] = 23
-  println(c)
-  println(c["x"])
-}
+```{literalinclude} /sources/language/src/operator/__snapshot__/operator_3
+:caption: Output
 ```
 
 Currently, the following operators can be overloaded:
@@ -1224,16 +1181,11 @@ Currently, the following operators can be overloaded:
 
 MoonBit provides a convenient pipe operator `|>`, which can be used to chain regular function calls:
 
-```moonbit
-fn init {
-  x |> f // equivalent to f(x)
-  x |> f(y) // equivalent to f(x, y)
-
-  // Chain calls at multiple lines
-  arg_val
-  |> f1 // equivalent to f1(arg_val)
-  |> f2(other_args) // equivalent to f2(f1(arg_val), other_args)
-}
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start operator 4
+:end-before: end operator 4
 ```
 
 ### Cascade Operator
@@ -1241,23 +1193,24 @@ fn init {
 The cascade operator `..` is used to perform a series of mutable operations on
 the same value consecutively. The syntax is as follows:
 
-```moonbit
-x..f()
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start operator 5
+:end-before: end operator 5
 ```
 
 `x..f()..g()` is equivalent to `{x.f(); x.g(); x}`.
 
-Consider the following scenario: for a `MyStringBuilder` type that has methods
-like `add_string`, `add_char`, `add_int`, etc., we often need to perform
-a series of operations on the same `MyStringBuilder` value:
+Consider the following scenario: for a `StringBuilder` type that has methods
+like `write_string`, `write_char`, `write_object`, etc., we often need to perform
+a series of operations on the same `StringBuilder` value:
 
-```moonbit
-let builder = MyStringBuilder::new()
-builder.add_char('a')
-builder.add_char('a')
-builder.add_int(1001)
-builder.add_string("abcdef")
-let result = builder.to_string()
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start operator 6
+:end-before: end operator 6
 ```
 
 To avoid repetitive typing of `builder`, its methods are often designed to
@@ -1266,14 +1219,11 @@ To distinguish between immutable and mutable operations, in MoonBit,
 for all methods that return `Unit`, cascade operator can be used for
 consecutive operations without the need to modify the return type of the methods.
 
-```moonbit
-let result =
-  MyStringBuilder::new()
-    ..add_char('a')
-    ..add_char('a')
-    ..add_int(1001)
-    ..add_string("abcdef")
-    .to_string()
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start operator 7
+:end-before: end operator 7
 ```
 
 ### Bitwise Operator
@@ -1295,28 +1245,22 @@ MoonBit supports C-Style bitwise operators.
 The error values used in MoonBit must have an error type. An error type can be
 defined in the following forms:
 
-```moonbit
-type! E1 Int  // error type E1 has one constructor E1 with an Int payload
-type! E2      // error type E2 has one constructor E2 with no payload
-type! E3 {    // error type E3 has three constructors like a normal enum type
-  A
-  B(Int, x~ : String)
-  C(mut x~ : String, Char, y~ : Bool)
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 1
+:end-before: end error 1
 ```
 
 The return type of a function can include an error type to indicate that the
 function might return an error. For example, the following function `div` might
 return an error of type `DivError`:
 
-```moonbit
-type! DivError String
-fn div(x: Int, y: Int) -> Int!DivError {
-  if y == 0 {
-    raise DivError("division by zero")
-  }
-  x / y
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 2
+:end-before: end error 2
 ```
 
 Here, the keyword `raise` is used to interrupt the function execution and return
@@ -1329,23 +1273,20 @@ error type is not important. For convenience, you can annotate the function name
 or the return type with the suffix `!` to indicate that the `Error` type is
 used. For example, the following function signatures are equivalent:
 
-```moonbit
-fn f() -> Unit! { .. }
-fn f!() -> Unit { .. }
-fn f() -> Unit!Error { .. }
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 3
+:end-before: end error 3
 ```
 
 For anonymous function and matrix function, you can annotate the keyword `fn`
 with the `!` suffix to achieve that. For example,
 
-```moonbit
-type! IntError Int
-fn h(f: (x: Int) -> Int!, x: Int) -> Unit { .. }
-
-fn main {
-  let _ = h(fn! { x => raise(IntError(x)) }, 0)     // matrix function
-  let _ = h(fn! (x) { x => raise(IntError(x)) }, 0) // anonymous function
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 4
+:end-before: end error 4
 ```
 
 As shown in the above example, the error types defined by `type!` can be used as
@@ -1355,28 +1296,19 @@ Note that only error types or the type `Error` can be used as errors. For
 functions that are generic in the error type, you can use the `Error` bound to
 do that. For example,
 
-```moonbit
-pub fn unwrap_or_error[T, E : Error](self : Result[T, E]) -> T!E {
-  match self {
-    Ok(x) => x
-    Err(e) => raise e
-  }
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 5
+:end-before: end error 5
 ```
 
 Since the type `Error` can include multiple error types, pattern matching on the
 `Error` type must use the wildcard `_` to match all error types. For example,
 
-```moonbit
-type! E1
-type! E2
-fn f(e: Error) -> Unit {
-  match e {
-    E1 => println("E1")
-    E2 => println("E2")
-    _ => println("unknown error")
-  }
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 6
+:end-before: end error 6
 ```
 
 ### Handling Errors
@@ -1386,36 +1318,34 @@ There are three ways to handle errors:
 - Append `!` after the function name in a function application to rethrow the
   error directly in case of an error, for example:
 
-```moonbit
-fn div_reraise(x: Int, y: Int) -> Int!DivError {
-  div!(x, y) // Rethrow the error if `div` raised an error
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 7
+:end-before: end error 7
 ```
 
 - Append `?` after the function name to convert the result into a first-class
   value of the `Result` type, for example:
 
-```moonbit
-test {
-  let res = div?(6, 3)
-  inspect!(res, content="Ok(2)")
-  let res = div?(6, 0)
-  inspect!(res, content="Err(division by zero)")
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 8
+:end-before: end error 8
 ```
 
 - Use `try` and `catch` to catch and handle errors, for example:
 
-```moonbit
-fn main {
-  try {
-    div!(42, 0)
-  } catch {
-    DivError(s) => println(s)
-  } else {
-    v => println(v)
-  }
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 9
+:end-before: end error 9
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/error/__snapshot__/error_9
+:caption: Output
 ```
 
 Here, `try` is used to call a function that might throw an error, and `catch` is
@@ -1425,39 +1355,30 @@ block will not be executed and the `else` block will be executed instead.
 The `else` block can be omitted if no action is needed when no error is caught.
 For example:
 
-```moonbit
-fn main {
-  try {
-    println(div!(42, 0))
-  } catch {
-    _ => println("Error")
-  }
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 10
+:end-before: end error 10
 ```
 
 The `catch` keyword is optional, and when the body of `try` is a simple
 expression, the curly braces can be omitted. For example:
 
-```moonbit
-fn main {
-  let a = try div!(42, 0) { _ => 0 }
-  println(a)
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 11
+:end-before: end error 11
 ```
 
 The `!` and `?` attributes can also be used on method invocation and pipe
 operator. For example:
 
-```moonbit live
-type T Int
-type! E Int derive(Show)
-fn f(self: T) -> Unit!E { raise E(self._) }
-fn main {
-  let x = T(42)
-  try f!(x) { e => println(e) }
-  try x.f!() { e => println(e) }
-  try x |> f!() { e => println(e) }
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 12
+:end-before: end error 12
 ```
 
 However for infix operators such as `+` `*` that may raise an error,
@@ -1474,65 +1395,30 @@ happens, the compiler will use the type `Error` as the common error type.
 Accordingly, the handler must use the wildcard `_` to make sure all errors are
 caught. For example,
 
-```moonbit live
-type! E1
-type! E2
-fn f1() -> Unit!E1 { raise E1 }
-fn f2() -> Unit!E2 { raise E2 }
-fn main {
-  try {
-    f1!()
-    f2!()
-  } catch {
-    E1 => println("E1")
-    E2 => println("E2")
-    _ => println("unknown error")
-  }
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 13
+:end-before: end error 13
 ```
 
 You can also use `catch!` to rethrow the uncaught errors for convenience. This
 is useful when you only want to handle a specific error and rethrow others. For
 example,
 
-```moonbit
-type! E1
-type! E2
-fn f1() -> Unit!E1 { raise E1 }
-fn f2() -> Unit!E2 { raise E2 }
-fn f() -> Unit! {
-  try {
-    f1!()
-    f2!()
-  } catch! {
-    E1 => println("E1")
-  }
-}
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 14
+:end-before: end error 14
 ```
 
 ## Generics
 
 Generics are supported in top-level function and data type definitions. Type parameters can be introduced within square brackets. We can rewrite the aforementioned data type `List` to add a type parameter `T` to obtain a generic version of lists. We can then define generic functions over lists like `map` and `reduce`.
 
-```moonbit
-enum List[T] {
-  Nil
-  Cons(T, List[T])
-}
-
-fn map[S, T](self: List[S], f: (S) -> T) -> List[T] {
-  match self {
-    Nil => Nil
-    Cons(x, xs) => Cons(f(x), map(xs, f))
-  }
-}
-
-fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {
-  match self {
-    Nil => init
-    Cons(x, xs) => reduce(xs, op, op(init, x))
-  }
-}
+```{literalinclude} /sources/language/src/generics/top.mbt
+:language: moonbit
 ```
 
 ## Access Control
