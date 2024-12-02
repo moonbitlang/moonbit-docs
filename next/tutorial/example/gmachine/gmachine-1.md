@@ -1,6 +1,6 @@
 # G-Machine 1
 
-Lazy evaluation stands as a foundational concept in the realm of programming languages. Haskell, renowned as a purely functional programming language, boasts a robust lazy evaluation mechanism. This mechanism not only empowers developers to craft code that's both more efficient and concise but also enhances program performance and responsiveness, especially when tackling sizable datasets or intricate data streams. In this article, we'll delve into the Lazy Evaluation mechanism, thoroughly examining its principles and implementation methods, and then explore how to implement Haskell's evaluation semantics in [MoonBit](https://www.moonbitlang.com/).
+This article is the first in the series on implementing lazy evaluation in MoonBit. In this article, we will exploring the purposes of lazy evaluation and a typical abstract machine for lazy evaluation, the G-Machine.
 
 ## Higher-Order Functions and Performance Challenges
 
