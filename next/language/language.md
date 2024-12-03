@@ -1847,8 +1847,10 @@ Pragmas are annotations inside doc comments. They all take the form `/// @word .
   }
 
   test {
-    foo() // warning: Use foo2 instead
-    div(1, 2) |> ignore // warning: Div will cause an error when y is zero
+    // Warning (Alert deprecated): Use foo2 instead
+    foo()
+    // Warning (Alert unsafe): Div will cause an error when y is zero
+    div(1, 2) |> ignore
   }
   ```
 
