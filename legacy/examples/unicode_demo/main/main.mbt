@@ -15,10 +15,10 @@
 type T😯 Int
 
 fn 😀(self : T😯) -> Int {
-  self.0
+  self._
 }
 
-pub enum 😆😆 {
+pub(all) enum 😆😆 {
   A
   B
 } derive(Show)

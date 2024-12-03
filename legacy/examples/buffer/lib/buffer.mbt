@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-pub struct SBuffer[T] {
+pub(all) struct SBuffer[T] {
   mut cap : Int
   mut len : Int
   mut data : Array[T]
@@ -91,7 +91,7 @@ pub fn reset[T : Default](self : SBuffer[T], capacity : Int) -> Unit {
 
 pub fn println[T : Show](self : SBuffer[T]) -> Unit {
   let mut index = 0
-  let buffer = Buffer::new()
+  let buffer = StringBuilder::new()
   buffer.write_char('[')
   while index < self.len {
     buffer.write_string(self.data[index].to_string())

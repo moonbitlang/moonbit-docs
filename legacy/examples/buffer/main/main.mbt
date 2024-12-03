@@ -29,4 +29,3 @@ fn main {
   println(buf.capacity()) // 10
   println(buf.length()) // 0
 }
-

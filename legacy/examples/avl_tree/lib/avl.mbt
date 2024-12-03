@@ -16,7 +16,7 @@
 
 // Empty represents an empty node in the AVL tree
 // Node represents a node in the AVL tree with left child, value, right child, and height
-pub enum T[U] {
+pub(all) enum T[U] {
   Empty
   Node(T[U], U, T[U], Int)
 }
@@ -196,7 +196,7 @@ fn repeat_str(s : String, n : Int) -> String {
 ///
 /// Print the AVL tree
 pub fn print_tree[U : Show](self : T[U]) -> Unit {
-  let buffer = Buffer::new()
+  let buffer = StringBuilder::new()
   fn helper(node : T[U], level : Int) {
     match node {
       Empty => ()
