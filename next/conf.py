@@ -28,6 +28,13 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README
 
 html_theme = 'sphinx_book_theme'
 html_static_path = ['_static']
+html_theme_options = {
+    "repository_url": "https://github.com/moonbitlang/moonbit-docs/",
+    "path_to_docs": "next",
+    "use_source_button": True,
+    "use_edit_page_button": True,
+    "use_issues_button": True,
+}
 
 # -- Options for LaTeX output ------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-latex-output
