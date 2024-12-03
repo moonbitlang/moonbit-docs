@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-27 13:35+0800\n"
+"POT-Creation-Date: 2024-12-03 16:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1073,14 +1073,13 @@ msgstr ""
 
 #: ../../language/language.md:29
 msgid ""
-"fn main {\n"
+"fn init {\n"
 "  let x = 1\n"
-"  // x // fail\n"
-"  println(x) // success\n"
+"  println(x)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:37
+#: ../../language/language.md:35
 msgid ""
 "For WebAssembly backend, it means that it will be executed **before** the"
 " instance is available, meaning that the FFIs that relies on the "
@@ -1088,107 +1087,140 @@ msgid ""
 "backend, it means that it will be executed during the importation stage."
 msgstr ""
 
-#: ../../language/language.md:40
+#: ../../language/language.md:38
 msgid ""
 "There is another specialized function called `main` function. The `main` "
 "function is the main entrance of the program, and it will be executed "
-"after the initialization stage. Only packages that are `main` packages "
-"can define such `main` function. Check out [build system "
-"tutorial](https://moonbitlang.github.io/moon/) for detail."
+"after the initialization stage."
 msgstr ""
 
-#: ../../language/language.md:43
+#: ../../language/language.md:40
+msgid ""
+"fn main {\n"
+"  let x = 2\n"
+"  println(x)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/language.md:46
+msgid "The previous two code snippets will print the following at runtime:"
+msgstr ""
+
+#: ../../language/language.md:48
+msgid ""
+"1\n"
+"2\n"
+msgstr ""
+
+#: ../../language/language.md:54
+msgid ""
+"Only packages that are `main` packages can define such `main` function. "
+"Check out [build system tutorial](/toolchain/moon/tutorial) for detail."
+msgstr ""
+
+#: ../../language/language.md:56
+msgid "moon.pkg.json"
+msgstr ""
+
+#: ../../language/language.md:56
+msgid ""
+"{\n"
+"  \"is-main\": true\n"
+"}"
+msgstr ""
+
+#: ../../language/language.md:61
 msgid ""
 "The two functions above need to drop the parameter list and the return "
 "type."
 msgstr ""
 
-#: ../../language/language.md:45
+#: ../../language/language.md:63
 msgid "Expressions and Statements"
 msgstr ""
 
-#: ../../language/language.md:47
+#: ../../language/language.md:65
 msgid ""
 "MoonBit distinguishes between statements and expressions. In a function "
 "body, only the last clause should be an expression, which serves as a "
 "return value. For example:"
 msgstr ""
 
-#: ../../language/language.md:49
+#: ../../language/language.md:67
 msgid ""
 "fn foo() -> Int {\n"
 "  let x = 1\n"
-"  x + 1 // OK\n"
+"  x + 1\n"
 "}\n"
 "\n"
 "fn bar() -> Int {\n"
 "  let x = 1\n"
-"  x + 1 // fail\n"
+"  // x + 1 // fail\n"
 "  x + 2\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:62
+#: ../../language/language.md:73
 msgid "Expressions include:"
 msgstr ""
 
-#: ../../language/language.md:64
+#: ../../language/language.md:75
 msgid ""
 "Value literals (e.g. Boolean values, numbers, characters, strings, "
 "arrays, tuples, structs)"
 msgstr ""
 
-#: ../../language/language.md:65
+#: ../../language/language.md:76
 msgid "Arithmetical, logical, or comparison operations"
 msgstr ""
 
-#: ../../language/language.md:66
+#: ../../language/language.md:77
 msgid ""
 "Accesses to array elements (e.g. `a[0]`) or struct fields (e.g `r.x`) or "
 "tuple components (e.g. `t.0`)"
 msgstr ""
 
-#: ../../language/language.md:67
+#: ../../language/language.md:78
 msgid "Variables and (capitalized) enum constructors"
 msgstr ""
 
-#: ../../language/language.md:68
+#: ../../language/language.md:79
 msgid "Anonymous local function definitions"
 msgstr ""
 
-#: ../../language/language.md:69
+#: ../../language/language.md:80
 msgid "`match` and `if` expressions"
 msgstr ""
 
-#: ../../language/language.md:71
+#: ../../language/language.md:82
 msgid "Statements include:"
 msgstr ""
 
-#: ../../language/language.md:73
+#: ../../language/language.md:84
 msgid "Named local function definitions"
 msgstr ""
 
-#: ../../language/language.md:74
+#: ../../language/language.md:85
 msgid "Local variable bindings"
 msgstr ""
 
-#: ../../language/language.md:75
+#: ../../language/language.md:86
 msgid "Assignments"
 msgstr ""
 
-#: ../../language/language.md:76
+#: ../../language/language.md:87
 msgid "`return` statements"
 msgstr ""
 
-#: ../../language/language.md:77
+#: ../../language/language.md:88
 msgid "Any expression whose return type is `Unit`"
 msgstr ""
 
-#: ../../language/language.md:79
+#: ../../language/language.md:90
 msgid "Functions"
 msgstr ""
 
-#: ../../language/language.md:81
+#: ../../language/language.md:92
 msgid ""
 "Functions take arguments and produce a result. In MoonBit, functions are "
 "first-class, which means that functions can be arguments or return values"
@@ -1197,160 +1229,169 @@ msgid ""
 "constructors in the `enum` section below."
 msgstr ""
 
-#: ../../language/language.md:83
+#: ../../language/language.md:94
 msgid "Top-Level Functions"
 msgstr ""
 
-#: ../../language/language.md:85
+#: ../../language/language.md:96
 msgid ""
 "Functions can be defined as top-level or local. We can use the `fn` "
 "keyword to define a top-level function that sums three integers and "
 "returns the result, as follows:"
 msgstr ""
 
-#: ../../language/language.md:87
+#: ../../language/language.md:98
 msgid ""
-"fn add3(x: Int, y: Int, z: Int)-> Int {\n"
+"fn add3(x : Int, y : Int, z : Int) -> Int {\n"
 "  x + y + z\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:93
+#: ../../language/language.md:104
 msgid ""
 "Note that the arguments and return value of top-level functions require "
 "explicit type annotations."
 msgstr ""
 
-#: ../../language/language.md:95
+#: ../../language/language.md:106
 msgid "Local Functions"
 msgstr ""
 
-#: ../../language/language.md:97
+#: ../../language/language.md:108
 msgid ""
 "Local functions can be named or anonymous. Type annotations can be "
 "omitted for local function definitions: they can be automatically "
 "inferred in most cases. For example:"
 msgstr ""
 
-#: ../../language/language.md:99
+#: ../../language/language.md:110
 msgid ""
-"fn foo() -> Int {\n"
-"  fn inc(x) { x + 1 }  // named as `inc`\n"
-"  fn (x) { x + inc(2) } (6) // anonymous, instantly applied to integer "
-"literal 6\n"
+"fn local_1() -> Int {\n"
+"  fn inc(x) { // named as `inc`\n"
+"    x + 1\n"
+"  }\n"
+"  // anonymous, instantly appplied to integer literal 6\n"
+"  (fn(x) { x + inc(2) })(6)\n"
 "}\n"
 "\n"
-"fn main {\n"
-"  println(foo())\n"
+"test {\n"
+"  assert_eq!(local_1(), 9)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:110
+#: ../../language/language.md:116
 msgid ""
 "Functions, whether named or anonymous, are _lexical closures_: any "
 "identifiers without a local binding must refer to bindings from a "
 "surrounding lexical scope. For example:"
 msgstr ""
 
-#: ../../language/language.md:112
+#: ../../language/language.md:118
 msgid ""
-"let y = 3\n"
-"fn foo(x: Int) -> Unit {\n"
-"  fn inc()  { x + 1 } // OK, will return x + 1\n"
-"  fn four() { y + 1 } // Ok, will return 4\n"
-"  println(inc())\n"
-"  println(four())\n"
+"let global_y = 3\n"
+"\n"
+"fn local_2(x : Int) -> (Int, Int) {\n"
+"  fn inc() {\n"
+"    x + 1\n"
+"  }\n"
+"\n"
+"  fn four() {\n"
+"    global_y + 1\n"
+"  }\n"
+"\n"
+"  (inc(), four())\n"
 "}\n"
 "\n"
-"fn main {\n"
-"  foo(2)\n"
+"test {\n"
+"  assert_eq!(local_2(3), (4, 4))\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:126
+#: ../../language/language.md:124
 msgid "Function Applications"
 msgstr ""
 
-#: ../../language/language.md:128
+#: ../../language/language.md:126
 msgid "A function can be applied to a list of arguments in parentheses:"
 msgstr ""
 
-#: ../../language/language.md:130
+#: ../../language/language.md:128
 msgid "add3(1, 2, 7)\n"
 msgstr ""
 
-#: ../../language/language.md:134
+#: ../../language/language.md:132
 msgid ""
 "This works whether `add3` is a function defined with a name (as in the "
 "previous example), or a variable bound to a function value, as shown "
 "below:"
 msgstr ""
 
-#: ../../language/language.md:136
+#: ../../language/language.md:134
 msgid ""
-"fn main {\n"
+"test {\n"
 "  let add3 = fn(x, y, z) { x + y + z }\n"
-"  println(add3(1, 2, 7))\n"
+"  assert_eq!(add3(1, 2, 7), 10)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:143
+#: ../../language/language.md:140
 msgid ""
 "The expression `add3(1, 2, 7)` returns `10`. Any expression that "
 "evaluates to a function value is applicable:"
 msgstr ""
 
-#: ../../language/language.md:145
+#: ../../language/language.md:142
 msgid ""
-"fn main {\n"
-"  let f = fn (x) { x + 1 }\n"
-"  let g = fn (x) { x + 2 }\n"
-"  println((if true { f } else { g })(3)) // OK\n"
+"test {\n"
+"  let f = fn(x) { x + 1 }\n"
+"  let g = fn(x) { x + 2 }\n"
+"  let w = (if true { f } else { g })(3)\n"
+"  assert_eq!(w, 4)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:153
+#: ../../language/language.md:149
 msgid "Labelled arguments"
 msgstr ""
 
-#: ../../language/language.md:155
+#: ../../language/language.md:151
 msgid ""
 "Functions can declare labelled argument with the syntax `label~ : Type`. "
 "`label` will also serve as parameter name inside function body:"
 msgstr ""
 
-#: ../../language/language.md:157
+#: ../../language/language.md:153
 msgid ""
-"fn labelled(arg1~ : Int, arg2~ : Int) -> Int {\n"
+"fn labelled_1(arg1~ : Int, arg2~ : Int) -> Int {\n"
 "  arg1 + arg2\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:163
+#: ../../language/language.md:159
 msgid ""
 "Labelled arguments can be supplied via the syntax `label=arg`. "
 "`label=label` can be abbreviated as `label~`:"
 msgstr ""
 
-#: ../../language/language.md:165
+#: ../../language/language.md:161
 msgid ""
-"fn init {\n"
+"test {\n"
 "  let arg1 = 1\n"
-"  println(labelled(arg2=2, arg1~)) // 3\n"
+"  assert_eq!(labelled_1(arg2=2, arg1~), 3)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:172
+#: ../../language/language.md:167
 msgid ""
 "Labelled function can be supplied in any order. The evaluation order of "
 "arguments is the same as the order of parameters in function declaration."
 msgstr ""
 
-#: ../../language/language.md:174
+#: ../../language/language.md:169
 msgid "Optional arguments"
 msgstr ""
 
-#: ../../language/language.md:176
+#: ../../language/language.md:171
 msgid ""
 "A labelled argument can be made optional by supplying a default "
 "expression with the syntax `label~ : Type = default_expr`. If this "
@@ -1358,105 +1399,107 @@ msgid ""
 "used:"
 msgstr ""
 
-#: ../../language/language.md:178
+#: ../../language/language.md:173
 msgid ""
 "fn optional(opt~ : Int = 42) -> Int {\n"
 "  opt\n"
 "}\n"
 "\n"
-"fn main {\n"
-"  println(optional()) // 42\n"
-"  println(optional(opt=0)) // 0\n"
+"test {\n"
+"  assert_eq!(optional(), 42)\n"
+"  assert_eq!(optional(opt=0), 0)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:189
+#: ../../language/language.md:179
 msgid ""
 "The default expression will be evaluated every time it is used. And the "
 "side effect in the default expression, if any, will also be triggered. "
 "For example:"
 msgstr ""
 
-#: ../../language/language.md:191
+#: ../../language/language.md:181
 msgid ""
 "fn incr(counter~ : Ref[Int] = { val: 0 }) -> Ref[Int] {\n"
 "  counter.val = counter.val + 1\n"
 "  counter\n"
 "}\n"
 "\n"
-"fn main {\n"
-"  println(incr()) // 1\n"
-"  println(incr()) // still 1, since a new reference is created every time"
-" default expression is used\n"
+"test {\n"
+"  inspect!(incr(), content=\"{val: 1}\")\n"
+"  inspect!(incr(), content=\"{val: 1}\")\n"
 "  let counter : Ref[Int] = { val: 0 }\n"
-"  println(incr(counter~)) // 1\n"
-"  println(incr(counter~)) // 2, since the same counter is used\n"
+"  inspect!(incr(counter~), content=\"{val: 1}\")\n"
+"  inspect!(incr(counter~), content=\"{val: 2}\")\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:206
+#: ../../language/language.md:187
 msgid ""
 "If you want to share the result of default expression between different "
 "function calls, you can lift the default expression to a toplevel `let` "
 "declaration:"
 msgstr ""
 
-#: ../../language/language.md:208
+#: ../../language/language.md:189
 msgid ""
 "let default_counter : Ref[Int] = { val: 0 }\n"
 "\n"
-"fn incr(counter~ : Ref[Int] = default_counter) -> Int {\n"
+"fn incr_2(counter~ : Ref[Int] = default_counter) -> Int {\n"
 "  counter.val = counter.val + 1\n"
 "  counter.val\n"
 "}\n"
 "\n"
-"fn main {\n"
-"  println(incr()) // 1\n"
-"  println(incr()) // 2\n"
+"test {\n"
+"  assert_eq!(incr_2(), 1)\n"
+"  assert_eq!(incr_2(), 2)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:222
+#: ../../language/language.md:195
 msgid ""
 "Default expression can depend on the value of previous arguments. For "
 "example:"
 msgstr ""
 
-#: ../../language/language.md:224
+#: ../../language/language.md:197
 msgid ""
-"fn sub_array[X](xs : Array[X], offset~ : Int, len~ : Int = xs.length() - "
-"offset) -> Array[X] {\n"
-"  ... // take a sub array of [xs], starting from [offset] with length "
-"[len]\n"
+"fn sub_array[X](\n"
+"  xs : Array[X],\n"
+"  offset~ : Int,\n"
+"  len~ : Int = xs.length() - offset\n"
+") -> Array[X] {\n"
+"  xs[offset:offset + len].iter().to_array()\n"
 "}\n"
 "\n"
-"fn init {\n"
-"  println(sub_array([1, 2, 3], offset=1)) // [2, 3]\n"
-"  println(sub_array([1, 2, 3], offset=1, len=1)) // [2]\n"
+"test {\n"
+"  assert_eq!(sub_array([1, 2, 3], offset=1), [2, 3])\n"
+"  assert_eq!(sub_array([1, 2, 3], offset=1, len=1), [2])\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:235
+#: ../../language/language.md:204
 msgid "Automatically insert `Some` when supplying optional arguments"
 msgstr ""
 
-#: ../../language/language.md:237
+#: ../../language/language.md:206
 msgid ""
 "It is quite often optional arguments have type `T?` with `None` as "
 "default value. In this case, passing the argument explicitly requires "
-"wrapping a `Some`:"
+"wrapping a `Some`, which is ugly:"
 msgstr ""
 
-#: ../../language/language.md:240
+#: ../../language/language.md:210
 msgid ""
-"fn image(width~ : Int? = None, height~ : Int? = None) -> Image { ... }\n"
-"fn main {\n"
-"  let img = image(width=Some(1920), height=Some(1080)) // ugly!\n"
+"fn ugly_constructor(width~ : Int? = None, height~ : Int? = None) -> Image"
+" {\n"
 "  ...\n"
 "}\n"
+"\n"
+"let img : Image = ugly_constructor(width=Some(1920), height=Some(1080))\n"
 msgstr ""
 
-#: ../../language/language.md:248
+#: ../../language/language.md:216
 msgid ""
 "Fortunately, MoonBit provides a special kind of optional arguments to "
 "solve this problem. Optional arguments declared with `label? : T` has "
@@ -1464,16 +1507,16 @@ msgid ""
 "optional argument directly, MoonBit will automatically insert a `Some`:"
 msgstr ""
 
-#: ../../language/language.md:252
+#: ../../language/language.md:220
 msgid ""
-"fn image(width? : Int, height? : Int) -> Image { ... }\n"
-"fn main {\n"
-"  let img = image(width=1920, height=1080) // much better!\n"
+"fn nice_constructor(width? : Int, height? : Int) -> Image {\n"
 "  ...\n"
 "}\n"
+"\n"
+"let img2 : Image = nice_constructor(width=1920, height=1080)\n"
 msgstr ""
 
-#: ../../language/language.md:260
+#: ../../language/language.md:226
 msgid ""
 "Sometimes, it is also useful to pass a value of type `T?` directly, for "
 "example when forwarding optional argument. MoonBit provides a syntax "
@@ -1481,19 +1524,22 @@ msgid ""
 "`label?=label`:"
 msgstr ""
 
-#: ../../language/language.md:264
+#: ../../language/language.md:230
 msgid ""
-"fn image(width? : Int, height? : Int) -> Image { ... }\n"
+"fn image(width? : Int, height? : Int) -> Image {\n"
+"  ...\n"
+"}\n"
+"\n"
 "fn fixed_width_image(height? : Int) -> Image {\n"
 "  image(width=1920, height?)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:271
+#: ../../language/language.md:236
 msgid "Autofill arguments"
 msgstr ""
 
-#: ../../language/language.md:273
+#: ../../language/language.md:238
 msgid ""
 "MoonBit supports filling specific types of arguments automatically at "
 "different call site, such as the source location of a function call. To "
@@ -1502,97 +1548,87 @@ msgid ""
 "MoonBit will automatically fill it at the call site."
 msgstr ""
 
-#: ../../language/language.md:277
+#: ../../language/language.md:242
 msgid ""
 "Currently MoonBit supports two types of autofill arguments, `SourceLoc`, "
 "which is the source location of the whole function call, and `ArgsLoc`, "
 "which is a array containing the source location of each argument, if any:"
 msgstr ""
 
-#: ../../language/language.md:280
+#: ../../language/language.md:245
 msgid ""
-"fn f(_x : Int, _y : Int, loc~ : SourceLoc = _, args_loc~ : ArgsLoc = _) "
-"-> Unit {\n"
-"  println(\"loc of whole function call: \\{loc}\")\n"
-"  println(\"loc of arguments: \\{args_loc}\")\n"
-"}\n"
+"fn f(_x : Int, loc~ : SourceLoc = _, args_loc~ : ArgsLoc = _) -> String {"
 "\n"
-"fn main {\n"
-"  f(1, 2)\n"
+"  $|loc of whole function call: \\{loc}\n"
+"  $|loc of arguments: \\{args_loc}\n"
 "  // loc of whole function call: <filename>:7:3-7:10\n"
 "  // loc of arguments: [Some(<filename>:7:5-7:6), "
 "Some(<filename>:7:8-7:9), None, None]\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:293
+#: ../../language/language.md:251
 msgid ""
 "Autofill arguments are very useful for writing debugging and testing "
 "utilities."
 msgstr ""
 
-#: ../../language/language.md:295
+#: ../../language/language.md:253
 msgid "Control Structures"
 msgstr ""
 
-#: ../../language/language.md:297
+#: ../../language/language.md:255
 msgid "Conditional Expressions"
 msgstr ""
 
-#: ../../language/language.md:299
+#: ../../language/language.md:257
 msgid ""
 "A conditional expression consists of a condition, a consequent, and an "
 "optional else clause."
 msgstr ""
 
-#: ../../language/language.md:301
+#: ../../language/language.md:259
 msgid ""
 "if x == y {\n"
 "  expr1\n"
 "} else {\n"
 "  expr2\n"
 "}\n"
-"\n"
-"if x == y {\n"
-"  expr1\n"
-"}\n"
 msgstr ""
 
-#: ../../language/language.md:313
+#: ../../language/language.md:266
 msgid "The else clause can also contain another if-else expression:"
 msgstr ""
 
-#: ../../language/language.md:315
+#: ../../language/language.md:268
 msgid ""
 "if x == y {\n"
 "  expr1\n"
-"} else if z == k {\n"
-"  expr2\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:323
+#: ../../language/language.md:275
 msgid ""
 "Curly brackets are used to group multiple expressions in the consequent "
 "or the else clause."
 msgstr ""
 
-#: ../../language/language.md:325
+#: ../../language/language.md:277
 msgid ""
 "Note that a conditional expression always returns a value in MoonBit, and"
 " the return values of the consequent and the else clause must be of the "
 "same type. Here is an example:"
 msgstr ""
 
-#: ../../language/language.md:327
+#: ../../language/language.md:279
 msgid "let initial = if size < 1 { 1 } else { size }\n"
 msgstr ""
 
-#: ../../language/language.md:331
+#: ../../language/language.md:286
 msgid "While loop"
 msgstr ""
 
-#: ../../language/language.md:333
+#: ../../language/language.md:288
 msgid ""
 "In MoonBit, `while` loop can be used to execute a block of code "
 "repeatedly as long as a condition is true. The condition is evaluated "
@@ -1602,43 +1638,79 @@ msgid ""
 "the condition is true."
 msgstr ""
 
-#: ../../language/language.md:335
+#: ../../language/language.md:290
 msgid ""
-"let mut i = 5\n"
-"while i > 0 {\n"
-"  println(i)\n"
-"  i = i - 1\n"
+"fn main {\n"
+"  let mut i = 5\n"
+"  while i > 0 {\n"
+"    println(i)\n"
+"    i = i - 1\n"
+"  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:343
+#: ../../language/language.md:298 ../../language/language.md:312
+#: ../../language/language.md:326 ../../language/language.md:340
+#: ../../language/language.md:352 ../../language/language.md:369
+#: ../../language/language.md:407 ../../language/language.md:445
+#: ../../language/language.md:459 ../../language/language.md:683
+#: ../../language/language.md:715 ../../language/language.md:742
+#: ../../language/language.md:766 ../../language/language.md:854
+#: ../../language/language.md:881 ../../language/language.md:912
+#: ../../language/language.md:939 ../../language/language.md:968
+#: ../../language/language.md:988 ../../language/language.md:1022
+#: ../../language/language.md:1036 ../../language/language.md:1159
+#: ../../language/language.md:1347
+msgid "Output"
+msgstr ""
+
+#: ../../language/language.md:298
+msgid ""
+"5\n"
+"4\n"
+"3\n"
+"2\n"
+"1\n"
+msgstr ""
+
+#: ../../language/language.md:302
 msgid ""
 "The loop body supports `break` and `continue`. Using `break` allows you "
 "to exit the current loop, while using `continue` skips the remaining part"
 " of the current iteration and proceeds to the next iteration."
 msgstr ""
 
-#: ../../language/language.md:345
+#: ../../language/language.md:304
 msgid ""
 "fn main {\n"
 "  let mut i = 5\n"
 "  while i > 0 {\n"
 "    i = i - 1\n"
-"    if i == 4 { continue }\n"
-"    if i == 1 { break }\n"
+"    if i == 4 {\n"
+"      continue\n"
+"    }\n"
+"    if i == 1 {\n"
+"      break\n"
+"    }\n"
 "    println(i)\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:357
+#: ../../language/language.md:312
+msgid ""
+"3\n"
+"2\n"
+msgstr ""
+
+#: ../../language/language.md:316
 msgid ""
 "The `while` loop also supports an optional `else` clause. When the loop "
 "condition becomes false, the `else` clause will be executed, and then the"
 " loop will end."
 msgstr ""
 
-#: ../../language/language.md:359
+#: ../../language/language.md:318
 msgid ""
 "fn main {\n"
 "  let mut i = 2\n"
@@ -1651,7 +1723,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:371
+#: ../../language/language.md:326
+msgid ""
+"2\n"
+"1\n"
+"0\n"
+msgstr ""
+
+#: ../../language/language.md:330
 msgid ""
 "When there is an `else` clause, the `while` loop can also return a value."
 " The return value is the evaluation result of the `else` clause. In this "
@@ -1660,36 +1739,48 @@ msgid ""
 " of the `else` clause."
 msgstr ""
 
-#: ../../language/language.md:373
+#: ../../language/language.md:332
 msgid ""
+"fn main {\n"
 "  let mut i = 10\n"
-"  let r1 =\n"
-"    while i > 0 {\n"
-"      i = i - 1\n"
-"      if i % 2 == 0 { break 5 } // break with 5\n"
-"    } else {\n"
-"      7\n"
+"  let r = while i > 0 {\n"
+"    i = i - 1\n"
+"    if i % 2 == 0 {\n"
+"      break 5\n"
 "    }\n"
-"  println(r1) //output: 5\n"
+"  } else {\n"
+"    7\n"
+"  }\n"
+"  println(r)\n"
+"}\n"
 msgstr ""
 
-#: ../../language/language.md:385
-msgid ""
-"  let mut i = 10\n"
-"  let r2 =\n"
-"    while i > 0 {\n"
-"      i = i - 1\n"
-"    } else {\n"
-"      7\n"
-"    }\n"
-"  println(r2) //output: 7\n"
+#: ../../language/language.md:340
+msgid "5\n"
 msgstr ""
 
-#: ../../language/language.md:396
+#: ../../language/language.md:344
+msgid ""
+"fn main {\n"
+"  let mut i = 10\n"
+"  let r = while i > 0 {\n"
+"    i = i - 1\n"
+"  } else {\n"
+"    7\n"
+"  }\n"
+"  println(r)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/language.md:352
+msgid "7\n"
+msgstr ""
+
+#: ../../language/language.md:356
 msgid "For Loop"
 msgstr ""
 
-#: ../../language/language.md:398
+#: ../../language/language.md:358
 msgid ""
 "MoonBit also supports C-style For loops. The keyword `for` is followed by"
 " variable initialization clauses, loop conditions, and update clauses "
@@ -1699,29 +1790,36 @@ msgid ""
 "easier to write clear code and reason about it:"
 msgstr ""
 
-#: ../../language/language.md:401
+#: ../../language/language.md:361
 msgid ""
-"for i = 0; i < 5; i = i + 1 {\n"
-"  println(i)\n"
+"fn main {\n"
+"  for i = 0; i < 5; i = i + 1 {\n"
+"    println(i)\n"
+"  }\n"
 "}\n"
-"// output:\n"
-"// 0\n"
-"// 1\n"
-"// 2\n"
 msgstr ""
 
-#: ../../language/language.md:411
+#: ../../language/language.md:369
+msgid ""
+"0\n"
+"1\n"
+"2\n"
+"3\n"
+"4\n"
+msgstr ""
+
+#: ../../language/language.md:373
 msgid "The variable initialization clause can create multiple bindings:"
 msgstr ""
 
-#: ../../language/language.md:413
+#: ../../language/language.md:375
 msgid ""
 "for i = 0, j = 0; i + j < 100; i = i + 1, j = j + 1 {\n"
 "  println(i)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:419
+#: ../../language/language.md:382
 msgid ""
 "It should be noted that in the update clause, when there are multiple "
 "binding variables, the semantics are to update them simultaneously. In "
@@ -1732,34 +1830,30 @@ msgid ""
 " the previous iteration."
 msgstr ""
 
-#: ../../language/language.md:421
+#: ../../language/language.md:384
 msgid ""
 "Variable initialization clauses, loop conditions, and update clauses are "
 "all optional. For example, the following two are infinite loops:"
 msgstr ""
 
-#: ../../language/language.md:423
+#: ../../language/language.md:386
 msgid ""
-"for i=1;; i=i+1 {\n"
-"  println(i) // loop forever!\n"
+"for i = 1; ; i = i + 1 {\n"
+"  println(i)\n"
 "}\n"
-msgstr ""
-
-#: ../../language/language.md:429
-msgid ""
 "for {\n"
-"  println(\"loop forever!\")\n"
+"  println(\"loop forever\")\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:435
+#: ../../language/language.md:393
 msgid ""
 "The `for` loop also supports `continue`, `break`, and `else` clauses. "
 "Like the `while` loop, the `for` loop can also return a value using the "
 "`break` and `else` clauses."
 msgstr ""
 
-#: ../../language/language.md:437
+#: ../../language/language.md:395
 msgid ""
 "The `continue` statement skips the remaining part of the current "
 "iteration of the `for` loop (including the update clause) and proceeds to"
@@ -1768,46 +1862,53 @@ msgid ""
 "that match the number of binding variables, separated by commas."
 msgstr ""
 
-#: ../../language/language.md:439
+#: ../../language/language.md:397
 msgid ""
 "For example, the following program calculates the sum of even numbers "
 "from 1 to 6:"
 msgstr ""
 
-#: ../../language/language.md:441
+#: ../../language/language.md:399
 msgid ""
 "fn main {\n"
-"  let sum =\n"
-"    for i = 1, acc = 0; i <= 6; i = i + 1 {\n"
-"      if i % 2 == 0 {\n"
-"        println(\"even: \\{i}\")\n"
-"        continue i + 1, acc + i\n"
-"      }\n"
-"    } else {\n"
-"      acc\n"
+"  let sum = for i = 1, acc = 0; i <= 6; i = i + 1 {\n"
+"    if i % 2 == 0 {\n"
+"      println(\"even: \\{i}\")\n"
+"      continue i + 1, acc + i\n"
 "    }\n"
+"  } else {\n"
+"    acc\n"
+"  }\n"
 "  println(sum)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:456
+#: ../../language/language.md:407
+msgid ""
+"even: 2\n"
+"even: 4\n"
+"even: 6\n"
+"12\n"
+msgstr ""
+
+#: ../../language/language.md:411
 msgid "`for .. in` loop"
 msgstr ""
 
-#: ../../language/language.md:458
+#: ../../language/language.md:413
 msgid ""
 "MoonBit supports traversing elements of different data structures and "
 "sequences via the `for .. in` loop syntax:"
 msgstr ""
 
-#: ../../language/language.md:460
+#: ../../language/language.md:415
 msgid ""
-"for x in [ 1, 2, 3 ] {\n"
+"for x in [1, 2, 3] {\n"
 "  println(x)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:466
+#: ../../language/language.md:422
 msgid ""
 "`for .. in` loop is translated to the use of `Iter` in MoonBit's standard"
 " library. Any type with a method `.iter() : Iter[T]` can be traversed "
@@ -1815,7 +1916,7 @@ msgid ""
 "[Iterator](#iterator) below."
 msgstr ""
 
-#: ../../language/language.md:469
+#: ../../language/language.md:425
 msgid ""
 "In addition to sequences of a single value, MoonBit also supports "
 "traversing sequences of two values, such as `Map`, via the `Iter2` type "
@@ -1823,58 +1924,80 @@ msgid ""
 "B]` can be traversed using `for .. in` with two loop variables:"
 msgstr ""
 
-#: ../../language/language.md:472
+#: ../../language/language.md:428
 msgid ""
 "for k, v in { \"x\": 1, \"y\": 2, \"z\": 3 } {\n"
-"  println(\"\\{k} => \\{v}\")\n"
+"  println(k)\n"
+"  println(v)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:478
+#: ../../language/language.md:435
 msgid ""
 "Another example of `for .. in` with two loop variables is traversing an "
 "array while keeping track of array index:"
 msgstr ""
 
-#: ../../language/language.md:480
+#: ../../language/language.md:437
 msgid ""
-"for index, elem in [ 4, 5, 6 ] {\n"
-"  let i = index + 1\n"
-"  println(\"The \\{i}-th element of the array is \\{elem}\")\n"
+"fn main {\n"
+"  for index, elem in [4, 5, 6] {\n"
+"    let i = index + 1\n"
+"    println(\"The \\{i}-th element of the array is \\{elem}\")\n"
+"  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:487
+#: ../../language/language.md:445
+msgid ""
+"The 1-th element of the array is 4\n"
+"The 2-th element of the array is 5\n"
+"The 3-th element of the array is 6\n"
+msgstr ""
+
+#: ../../language/language.md:449
 msgid ""
 "Control flow operations such as `return`, `break` and error handling are "
 "supported in the body of `for .. in` loop:"
 msgstr ""
 
-#: ../../language/language.md:489
+#: ../../language/language.md:451
 msgid ""
-"test \"map test\" {\n"
-"  let map = { \"x\": 1, \"y\": 2, \"z\": 3 }\n"
+"fn main {\n"
+"  let map = { \"x\": 1, \"y\": 2, \"z\": 3, \"w\": 4 }\n"
 "  for k, v in map {\n"
-"    assert_eq!(map[k], Some(v))\n"
+"    if k == \"y\" {\n"
+"      continue\n"
+"    }\n"
+"    println(\"\\{k}, \\{v}\")\n"
+"    if k == \"z\" {\n"
+"      break\n"
+"    }\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:498
+#: ../../language/language.md:459
+msgid ""
+"x, 1\n"
+"z, 3\n"
+msgstr ""
+
+#: ../../language/language.md:463
 msgid "If a loop variable is unused, it can be ignored with `_`."
 msgstr ""
 
-#: ../../language/language.md:500
+#: ../../language/language.md:465
 msgid "Functional loop"
 msgstr ""
 
-#: ../../language/language.md:502
+#: ../../language/language.md:467
 msgid ""
 "Functional loop is a powerful feature in MoonBit that enables you to "
 "write loops in a functional style."
 msgstr ""
 
-#: ../../language/language.md:504
+#: ../../language/language.md:469
 msgid ""
 "A functional loop consumes arguments and returns a value. It is defined "
 "using the `loop` keyword, followed by its arguments and the loop body. "
@@ -1888,25 +2011,25 @@ msgid ""
 "body."
 msgstr ""
 
-#: ../../language/language.md:506
+#: ../../language/language.md:471
 msgid ""
-"fn sum(xs: @immut/list.T[Int]) -> Int {\n"
-"  loop xs, 0 {\n"
-"    Nil, acc => break acc // break can be omitted\n"
-"    Cons(x, rest), acc => continue rest, x + acc\n"
+"test {\n"
+"  fn sum(xs : @immut/list.T[Int]) -> Int {\n"
+"    loop xs, 0 {\n"
+"      Nil, acc => break acc // <=> Nil, acc => acc\n"
+"      Cons(x, rest), acc => continue rest, x + acc\n"
+"    }\n"
 "  }\n"
-"}\n"
 "\n"
-"fn main {\n"
-"  println(sum(Cons(1, Cons(2, Cons(3, Nil)))))\n"
+"  assert_eq!(sum(Cons(1, Cons(2, Cons(3, Nil)))), 6)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:519
+#: ../../language/language.md:477
 msgid "Guard Statement"
 msgstr ""
 
-#: ../../language/language.md:521
+#: ../../language/language.md:479
 msgid ""
 "The `guard` statement is used to check a specified invariant. If the "
 "condition of the invariant is satisfied, the program continues executing "
@@ -1915,14 +2038,11 @@ msgid ""
 "evaluation result is returned (the subsequent statements are skipped)."
 msgstr ""
 
-#: ../../language/language.md:526
-msgid ""
-"guard index >= 0 && index < len else {\n"
-"  abort(\"Index out of range\")\n"
-"}\n"
+#: ../../language/language.md:484
+msgid "guard index >= 0 && index < len else { abort(\"Index out of range\") }\n"
 msgstr ""
 
-#: ../../language/language.md:532
+#: ../../language/language.md:491
 msgid ""
 "The `guard` statement also supports pattern matching: in the following "
 "example, `getProcessedText` assumes that the input `path` points to "
@@ -1931,7 +2051,7 @@ msgid ""
 "subsequent processing of `text` can have one less level of indentation."
 msgstr ""
 
-#: ../../language/language.md:537
+#: ../../language/language.md:496
 msgid ""
 "enum Resource {\n"
 "  Folder(Array[String])\n"
@@ -1939,36 +2059,37 @@ msgid ""
 "  JsonConfig(Json)\n"
 "}\n"
 "\n"
-"fn getProcessedText(resources : Map[String, Resource], path : String) -> "
-"String!Error {\n"
+"fn getProcessedText(\n"
+"  resources : Map[String, Resource],\n"
+"  path : String\n"
+") -> String!Error {\n"
 "  guard let Some(PlainText(text)) = resources[path] else {\n"
 "    None => fail!(\"\\{path} not found\")\n"
 "    Some(Folder(_)) => fail!(\"\\{path} is a folder\")\n"
 "    Some(JsonConfig(_)) => fail!(\"\\{path} is a json config\")\n"
 "  }\n"
-"  ...\n"
 "  process(text)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:555
+#: ../../language/language.md:502
 msgid ""
 "When the `else` part is omitted, the program terminates if the condition "
 "specified in the `guard` statement is not true or cannot be matched."
 msgstr ""
 
-#: ../../language/language.md:558
+#: ../../language/language.md:505
 msgid ""
-"guard condition // equivalent to `guard condition else { panic() }`\n"
-"guard let Some(x) = expr // equivalent to `guard let Some(x) = expr else "
-"{ _ => panic() }`\n"
+"guard condition  // <=> guard condition else { panic() }\n"
+"guard let Some(x) = expr\n"
+"// <=> guard let Some(x) = expr else { _ => panic() }\n"
 msgstr ""
 
-#: ../../language/language.md:563
+#: ../../language/language.md:512
 msgid "Iterator"
 msgstr ""
 
-#: ../../language/language.md:565
+#: ../../language/language.md:514
 msgid ""
 "An iterator is an object that traverse through a sequence while providing"
 " access to its elements. Traditional OO languages like Java's "
@@ -1980,65 +2101,66 @@ msgid ""
 "and the latter is called _internal iterator_ (invisible to user)."
 msgstr ""
 
-#: ../../language/language.md:573
+#: ../../language/language.md:522
 msgid ""
 "The built-in type `Iter[T]` is MoonBit's internal iterator "
 "implementation. Almost all built-in sequential data structures have "
 "implemented `Iter`:"
 msgstr ""
 
-#: ../../language/language.md:576
+#: ../../language/language.md:525
 msgid ""
 "fn filter_even(l : Array[Int]) -> Array[Int] {\n"
 "  let l_iter : Iter[Int] = l.iter()\n"
-"  l_iter.filter(fn { x => (x & 1) == 1 }).collect()\n"
+"  l_iter.filter(fn { x => (x & 1) == 0 }).collect()\n"
 "}\n"
 "\n"
 "fn fact(n : Int) -> Int {\n"
 "  let start = 1\n"
-"  start.until(n).fold(Int::op_mul, init=start)\n"
+"  let range : Iter[Int] = start.until(n)\n"
+"  range.fold(Int::op_mul, init=start)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:588
+#: ../../language/language.md:531
 msgid "Commonly used methods include:"
 msgstr ""
 
-#: ../../language/language.md:590
+#: ../../language/language.md:533
 msgid ""
 "`each`: Iterates over each element in the iterator, applying some "
 "function to each element."
 msgstr ""
 
-#: ../../language/language.md:591
+#: ../../language/language.md:534
 msgid ""
 "`fold`: Folds the elements of the iterator using the given function, "
 "starting with the given initial value."
 msgstr ""
 
-#: ../../language/language.md:592
+#: ../../language/language.md:535
 msgid "`collect`: Collects the elements of the iterator into an array."
 msgstr ""
 
-#: ../../language/language.md:594
+#: ../../language/language.md:537
 msgid ""
 "`filter`: _lazy_ Filters the elements of the iterator based on a "
 "predicate function."
 msgstr ""
 
-#: ../../language/language.md:595
+#: ../../language/language.md:538
 msgid ""
 "`map`: _lazy_ Transforms the elements of the iterator using a mapping "
 "function."
 msgstr ""
 
-#: ../../language/language.md:596
+#: ../../language/language.md:539
 msgid ""
 "`concat`: _lazy_ Combines two iterators into one by appending the "
 "elements of the second iterator to the first."
 msgstr ""
 
-#: ../../language/language.md:598
+#: ../../language/language.md:541
 msgid ""
 "Methods like `filter` `map` are very common on a sequence object e.g. "
 "Array. But what makes `Iter` special is that any method that constructs a"
@@ -2049,7 +2171,7 @@ msgid ""
 " functions instead of the sequence object itself."
 msgstr ""
 
-#: ../../language/language.md:606
+#: ../../language/language.md:549
 msgid ""
 "Pre-defined sequence structures like `Array` and its iterators should be "
 "enough to use. But to take advantages of these methods when used with a "
@@ -2058,18 +2180,15 @@ msgid ""
 "example:"
 msgstr ""
 
-#: ../../language/language.md:611
+#: ../../language/language.md:554
 msgid ""
 "fn iter(data : Bytes) -> Iter[Byte] {\n"
 "  Iter::new(\n"
-"    fn(yield) {\n"
-"      // The code that actually does the iteration\n"
-"      /////////////////////////////////////////////\n"
-"      for i = 0, len = data.length(); i < len; i = i + 1 {\n"
-"        if yield(data[i]) == IterEnd {\n"
+"    fn(visit : (Byte) -> IterResult) -> IterResult {\n"
+"      for byte in data {\n"
+"        if visit(byte) == IterEnd {\n"
 "          break IterEnd\n"
 "        }\n"
-"      /////////////////////////////////////////////\n"
 "      } else {\n"
 "        IterContinue\n"
 "      }\n"
@@ -2078,18 +2197,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:630
+#: ../../language/language.md:560
 msgid ""
 "Almost all `Iter` implementations are identical to that of `Bytes`, the "
 "only main difference being the code block that actually does the "
 "iteration."
 msgstr ""
 
-#: ../../language/language.md:633
+#: ../../language/language.md:563
 msgid "Implementation details"
 msgstr ""
 
-#: ../../language/language.md:635
+#: ../../language/language.md:565
 msgid ""
 "The type `Iter[T]` is basically a type alias for `((T) -> IterResult) -> "
 "IterResult`, a higher-order function that takes an operation and "
@@ -2097,17 +2216,17 @@ msgid ""
 " which consists any of the 2 states:"
 msgstr ""
 
-#: ../../language/language.md:640
+#: ../../language/language.md:570
 msgid "`IterEnd`: marking the end of an iteration"
 msgstr ""
 
-#: ../../language/language.md:641
+#: ../../language/language.md:571
 msgid ""
 "`IterContinue`: marking the end of an iteration is yet to be reached, "
 "implying the iteration will still continue at this state."
 msgstr ""
 
-#: ../../language/language.md:643
+#: ../../language/language.md:573
 msgid ""
 "To put it simply, `Iter[T]` takes a function `(T) -> IterResult` and use "
 "it to transform `Iter[T]` itself to a new state of type `IterResult`. "
@@ -2115,21 +2234,21 @@ msgid ""
 "function."
 msgstr ""
 
-#: ../../language/language.md:647
+#: ../../language/language.md:577
 msgid ""
 "Iterator provides a unified way to iterate through data structures, and "
 "they can be constructed at basically no cost: as long as `fn(yield)` "
 "doesn't execute, the iteration process doesn't start."
 msgstr ""
 
-#: ../../language/language.md:651
+#: ../../language/language.md:581
 msgid ""
 "Internally a `Iter::run()` is used to trigger the iteration. Chaining all"
 " sorts of `Iter` methods might be visually pleasing, but do notice the "
 "heavy work underneath the abstraction."
 msgstr ""
 
-#: ../../language/language.md:655
+#: ../../language/language.md:585
 msgid ""
 "Thus, unlike an external iterator, once the iteration starts there's no "
 "way to stop unless the end is reached. Methods such as `count()` which "
@@ -2138,22 +2257,22 @@ msgid ""
 "iterators or performance issue might occur."
 msgstr ""
 
-#: ../../language/language.md:661
+#: ../../language/language.md:591
 msgid "Built-in Data Structures"
 msgstr ""
 
-#: ../../language/language.md:663
+#: ../../language/language.md:593
 msgid "Boolean"
 msgstr ""
 
-#: ../../language/language.md:665
+#: ../../language/language.md:595
 msgid ""
 "MoonBit has a built-in boolean type, which has two values: `true` and "
 "`false`. The boolean type is used in conditional expressions and control "
 "structures."
 msgstr ""
 
-#: ../../language/language.md:667
+#: ../../language/language.md:597
 msgid ""
 "let a = true\n"
 "let b = false\n"
@@ -2162,187 +2281,189 @@ msgid ""
 "let e = not(a)\n"
 msgstr ""
 
-#: ../../language/language.md:675
+#: ../../language/language.md:604
 msgid "Number"
 msgstr ""
 
-#: ../../language/language.md:677
+#: ../../language/language.md:606
 msgid "MoonBit have integer type and floating point type:"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "type"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597 ../../language/language.md:683
 msgid "description"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "example"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`Int`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "32-bit signed integer"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`42`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`Int64`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "64-bit signed integer"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`1000L`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`UInt`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "32-bit unsigned integer"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`14U`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`UInt64`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "64-bit unsigned integer"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`14UL`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`Double`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "64-bit floating point, defined by IEEE754"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`3.14`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`Float`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "32-bit floating point"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`(3.14 : Float)`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`BigInt`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "represents numeric values larger than other types"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:597
 msgid "`10000000000000000000000N`"
 msgstr ""
 
-#: ../../language/language.md:689
+#: ../../language/language.md:618
 msgid ""
 "MoonBit also supports numeric literals, including decimal, binary, octal,"
 " and hexadecimal numbers."
 msgstr ""
 
-#: ../../language/language.md:691
+#: ../../language/language.md:620
 msgid ""
 "To improve readability, you may place underscores in the middle of "
 "numeric literals such as `1_000_000`. Note that underscores can be placed"
 " anywhere within a number, not just every three digits."
 msgstr ""
 
-#: ../../language/language.md:693
+#: ../../language/language.md:622
 msgid "There is nothing surprising about decimal numbers."
 msgstr ""
 
-#: ../../language/language.md:695
+#: ../../language/language.md:624
 msgid ""
 "let a = 1234\n"
 "let b = 1_000_000 + a\n"
-"let large_num = 9_223_372_036_854_775_807L // Integers of the Int64 type "
-"must have an 'L' as a suffix\n"
-"let unsigned_num = 4_294_967_295U // Integers of the UInt type must have "
-"an 'U' suffix\n"
+"// UInt : 0_U\n"
+"let unsigned_num = 4_294_967_295U\n"
+"// Int64 : 0_L\n"
+"let large_num = 9_223_372_036_854_775_807L\n"
+"// UInt64 : 0_UL\n"
+"let unsigned_large_num = 18_446_744_073_709_551_615UL\n"
 msgstr ""
 
-#: ../../language/language.md:702
+#: ../../language/language.md:631
 msgid ""
 "A binary number has a leading zero followed by a letter \"B\", i.e. "
 "`0b`/`0B`. Note that the digits after `0b`/`0B` must be `0` or `1`."
 msgstr ""
 
-#: ../../language/language.md:705
+#: ../../language/language.md:634
 msgid ""
-"let bin =  0b110010\n"
+"let bin = 0b110010\n"
 "let another_bin = 0B110010\n"
 msgstr ""
 
-#: ../../language/language.md:710
+#: ../../language/language.md:641
 msgid ""
 "An octal number has a leading zero followed by a letter \"O\", i.e. "
 "`0o`/`0O`. Note that the digits after `0o`/`0O` must be in the range from"
 " `0` through `7`:"
 msgstr ""
 
-#: ../../language/language.md:713
+#: ../../language/language.md:644
 msgid ""
 "let octal = 0o1234\n"
 "let another_octal = 0O1234\n"
 msgstr ""
 
-#: ../../language/language.md:718
+#: ../../language/language.md:651
 msgid ""
 "A hexadecimal number has a leading zero followed by a letter \"X\", i.e. "
 "`0x`/`0X`. Note that the digits after the `0x`/`0X` must be in the range "
 "`0123456789ABCDEF`."
 msgstr ""
 
-#: ../../language/language.md:721
+#: ../../language/language.md:654
 msgid ""
 "let hex = 0XA\n"
 "let another_hex = 0xA\n"
 msgstr ""
 
-#: ../../language/language.md:726
+#: ../../language/language.md:661
 msgid "Overloaded int literal"
 msgstr ""
 
-#: ../../language/language.md:728
+#: ../../language/language.md:663
 msgid ""
 "When the expected type is known, MoonBit can automatically overload "
 "integer literal, and there is no need to specify the type of number via "
 "letter postfix:"
 msgstr ""
 
-#: ../../language/language.md:730
+#: ../../language/language.md:665
 msgid ""
 "let int : Int = 42\n"
 "let uint : UInt = 42\n"
@@ -2352,82 +2473,88 @@ msgid ""
 "let bigint : BigInt = 42\n"
 msgstr ""
 
-#: ../../language/language.md:739
+#: ../../language/language.md:672
 msgid "String"
 msgstr ""
 
-#: ../../language/language.md:741
+#: ../../language/language.md:674
 msgid ""
 "`String` holds a sequence of UTF-16 code units. You can use double quotes"
 " to create a string, or use `#|` to write a multi-line string."
 msgstr ""
 
-#: ../../language/language.md:743
+#: ../../language/language.md:676
 msgid ""
 "let a = \"兔rabbit\"\n"
-"println(a[0]) // output: 兔\n"
-"println(a[1]) // output: r\n"
-msgstr ""
-
-#: ../../language/language.md:749
-msgid ""
+"println(a[0])\n"
+"println(a[1])\n"
 "let b =\n"
 "  #| Hello\n"
-"  #| MoonBit\n"
+"  #| MoonBit\\n\n"
 "  #|\n"
+"println(b)\n"
 msgstr ""
 
-#: ../../language/language.md:756
+#: ../../language/language.md:683
+msgid ""
+"'兔'\n"
+"'r'\n"
+" Hello\n"
+" MoonBit\\n\n"
+"\n"
+msgstr ""
+
+#: ../../language/language.md:687
 msgid ""
 "In double quotes string, a backslash followed by certain special "
 "characters forms an escape sequence:"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:683
 msgid "escape sequences"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:683
 msgid "`\\n`,`\\r`,`\\t`,`\\b`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:683
 msgid "New line, Carriage return, Horizontal tab, Backspace"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:683
 msgid "`\\\\`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:683
 msgid "Backslash"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:683
 msgid "`\\x41`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:683
 msgid "Hexadecimal escape sequence"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:683
 msgid "`\\o102`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:683
 msgid "Octal escape sequence"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:683
 msgid "`\\u5154`,`\\u{1F600}`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:683
 msgid "Unicode escape sequence"
 msgstr ""
 
-#: ../../language/language.md:766
+#: ../../language/language.md:697
 msgid ""
 "MoonBit supports string interpolation. It enables you to substitute "
 "variables within interpolated strings. This feature simplifies the "
@@ -2436,23 +2563,23 @@ msgid ""
 "support the `to_string` method."
 msgstr ""
 
-#: ../../language/language.md:768
+#: ../../language/language.md:699
 msgid ""
 "let x = 42\n"
 "println(\"The answer is \\{x}\")\n"
 msgstr ""
 
-#: ../../language/language.md:773
+#: ../../language/language.md:706
 msgid ""
 "Multi-line strings do not support interpolation by default, but you can "
 "enable interpolation for a specific line by changing the leading `#|` to "
 "`$|`:"
 msgstr ""
 
-#: ../../language/language.md:775
+#: ../../language/language.md:708
 msgid ""
 "let lang = \"MoonBit\"\n"
-"let str = \n"
+"let str =\n"
 "  #| Hello\n"
 "  #| ---\n"
 "  $| \\{lang}\\n\n"
@@ -2460,11 +2587,7 @@ msgid ""
 "println(str)\n"
 msgstr ""
 
-#: ../../language/language.md:785
-msgid "Output:"
-msgstr ""
-
-#: ../../language/language.md:787
+#: ../../language/language.md:715
 msgid ""
 " Hello\n"
 " ---\n"
@@ -2473,15 +2596,15 @@ msgid ""
 " ---\n"
 msgstr ""
 
-#: ../../language/language.md:795
+#: ../../language/language.md:719
 msgid "Char"
 msgstr ""
 
-#: ../../language/language.md:797
+#: ../../language/language.md:721
 msgid "`Char` is an integer representing a Unicode code point."
 msgstr ""
 
-#: ../../language/language.md:799
+#: ../../language/language.md:723
 msgid ""
 "let a : Char = 'A'\n"
 "let b = '\\x41'\n"
@@ -2490,18 +2613,18 @@ msgid ""
 "let zero = '\\u0030'\n"
 msgstr ""
 
-#: ../../language/language.md:807
+#: ../../language/language.md:730
 msgid "Byte(s)"
 msgstr ""
 
-#: ../../language/language.md:809
+#: ../../language/language.md:732
 msgid ""
 "A byte literal in MoonBit is either a single ASCII character or a single "
 "escape enclosed in single quotes `'`, and preceded by the character `b`. "
 "Byte literals are of type `Byte`. For example:"
 msgstr ""
 
-#: ../../language/language.md:811
+#: ../../language/language.md:734
 msgid ""
 "fn main {\n"
 "  let b1 : Byte = b'a'\n"
@@ -2511,26 +2634,32 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:820
+#: ../../language/language.md:742
+msgid ""
+"97\n"
+"255\n"
+msgstr ""
+
+#: ../../language/language.md:746
 msgid ""
 "A `Bytes` is a sequence of bytes. Similar to byte, bytes literals have "
 "the form of `b\"...\"`. For example:"
 msgstr ""
 
-#: ../../language/language.md:822
+#: ../../language/language.md:748
 msgid ""
-"fn main {\n"
+"test {\n"
 "  let b1 : Bytes = b\"abcd\"\n"
 "  let b2 = b\"\\x61\\x62\\x63\\x64\"\n"
-"  println(b1 == b2) // true\n"
+"  assert_eq!(b1, b2)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:830
+#: ../../language/language.md:754
 msgid "Tuple"
 msgstr ""
 
-#: ../../language/language.md:832
+#: ../../language/language.md:756
 msgid ""
 "A tuple is a collection of finite values constructed using round brackets"
 " `()` with the elements separated by commas `,`. The order of elements "
@@ -2538,131 +2667,133 @@ msgid ""
 "Here's an example:"
 msgstr ""
 
-#: ../../language/language.md:834
+#: ../../language/language.md:758
 msgid ""
-"fn pack(a: Bool, b: Int, c: String, d: Double) -> (Bool, Int, String, "
-"Double) {\n"
+"fn main {\n"
+"  fn pack(\n"
+"    a : Bool,\n"
+"    b : Int,\n"
+"    c : String,\n"
+"    d : Double\n"
+"  ) -> (Bool, Int, String, Double) {\n"
 "    (a, b, c, d)\n"
-"}\n"
-"fn init {\n"
-"    let quad = pack(false, 100, \"text\", 3.14)\n"
-"    let (bool_val, int_val, str, float_val) = quad\n"
-"    println(\"\\{bool_val} \\{int_val} \\{str} \\{float_val}\")\n"
+"  }\n"
+"\n"
+"  let quad = pack(false, 100, \"text\", 3.14)\n"
+"  let (bool_val, int_val, str, float_val) = quad\n"
+"  println(\"\\{bool_val} \\{int_val} \\{str} \\{float_val}\")\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:845
+#: ../../language/language.md:766
+msgid "false 100 text 3.14\n"
+msgstr ""
+
+#: ../../language/language.md:770
 msgid "Tuples can be accessed via pattern matching or index:"
 msgstr ""
 
-#: ../../language/language.md:847
+#: ../../language/language.md:772
 msgid ""
-"fn f(t : (Int, Int)) -> Unit {\n"
-"  let (x1, y1) = t // access via pattern matching\n"
-"  // access via index\n"
+"test {\n"
+"  let t = (1, 2)\n"
+"  let (x1, y1) = t\n"
 "  let x2 = t.0\n"
 "  let y2 = t.1\n"
-"  if (x1 == x2 && y1 == y2) {\n"
-"    println(\"yes\")\n"
-"  } else {\n"
-"    println(\"no\")\n"
-"  }\n"
-"}\n"
-"\n"
-"fn main {\n"
-"  f((1, 2))\n"
+"  assert_eq!(x1, x2)\n"
+"  assert_eq!(y1, y2)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:865
+#: ../../language/language.md:778
 msgid "Array"
 msgstr ""
 
-#: ../../language/language.md:867
+#: ../../language/language.md:780
 msgid ""
 "An array is a finite sequence of values constructed using square brackets"
 " `[]`, with elements separated by commas `,`. For example:"
 msgstr ""
 
-#: ../../language/language.md:869
+#: ../../language/language.md:782
 msgid "let numbers = [1, 2, 3, 4]\n"
 msgstr ""
 
-#: ../../language/language.md:873
+#: ../../language/language.md:789
 msgid ""
 "You can use `numbers[x]` to refer to the xth element. The index starts "
 "from zero."
 msgstr ""
 
-#: ../../language/language.md:875
+#: ../../language/language.md:791
 msgid ""
-"fn main {\n"
+"test {\n"
 "  let numbers = [1, 2, 3, 4]\n"
 "  let a = numbers[2]\n"
 "  numbers[3] = 5\n"
 "  let b = a + numbers[3]\n"
-"  println(b) // prints 8\n"
+"  assert_eq!(b, 8)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:885
+#: ../../language/language.md:798
 msgid "Map"
 msgstr ""
 
-#: ../../language/language.md:887
+#: ../../language/language.md:800
 msgid ""
 "MoonBit provides a hash map data structure that preserves insertion orde "
 "called `Map` in its standard library. `Map`s can be created via a "
 "convenient literal syntax:"
 msgstr ""
 
-#: ../../language/language.md:890
+#: ../../language/language.md:803
 msgid "let map : Map[String, Int] = { \"x\": 1, \"y\": 2, \"z\": 3 }\n"
 msgstr ""
 
-#: ../../language/language.md:894
+#: ../../language/language.md:809
 msgid ""
 "Currently keys in map literal syntax must be constant. `Map`s can also be"
 " destructed elegantly with pattern matching, see [Map Pattern](#map-"
 "pattern)."
 msgstr ""
 
-#: ../../language/language.md:896
+#: ../../language/language.md:811
 msgid "Json literal"
 msgstr ""
 
-#: ../../language/language.md:898
+#: ../../language/language.md:813
 msgid ""
 "MoonBit supports convenient json handling by overloading literals. When "
 "the expected type of an expression is `Json`, number, string, array and "
 "map literals can be directly used to create json data:"
 msgstr ""
 
-#: ../../language/language.md:901
+#: ../../language/language.md:816
 msgid ""
 "let moon_pkg_json_example : Json = {\n"
-"  \"import\": [ \"moonbitlang/core/builtin\", "
-"\"moonbitlang/core/coverage\" ],\n"
-"  \"test-import\": [ \"moonbitlang/core/random\" ]\n"
+"  \"import\": [\"moonbitlang/core/builtin\", "
+"\"moonbitlang/core/coverage\"],\n"
+"  \"test-import\": [\"moonbitlang/core/random\"],\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:908
+#: ../../language/language.md:822
 msgid "Json values can be pattern matched too, see [Json Pattern](#json-pattern)."
 msgstr ""
 
-#: ../../language/language.md:910
+#: ../../language/language.md:824
 msgid "Variable Binding"
 msgstr ""
 
-#: ../../language/language.md:912
+#: ../../language/language.md:826
 msgid ""
 "A variable can be declared as mutable or immutable using `let mut` or "
 "`let`, respectively. A mutable variable can be reassigned to a new value,"
 " while an immutable one cannot."
 msgstr ""
 
-#: ../../language/language.md:914
+#: ../../language/language.md:828
 msgid ""
 "let zero = 0\n"
 "\n"
@@ -2673,19 +2804,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:924
+#: ../../language/language.md:832
 msgid "Data Types"
 msgstr ""
 
-#: ../../language/language.md:926
+#: ../../language/language.md:834
 msgid "There are two ways to create new data types: `struct` and `enum`."
 msgstr ""
 
-#: ../../language/language.md:928
+#: ../../language/language.md:836
 msgid "Struct"
 msgstr ""
 
-#: ../../language/language.md:930
+#: ../../language/language.md:838
 msgid ""
 "In MoonBit, structs are similar to tuples, but their fields are indexed "
 "by field names. A struct can be constructed using a struct literal, which"
@@ -2696,14 +2827,17 @@ msgid ""
 "keyword `mut`, it can be assigned a new value."
 msgstr ""
 
-#: ../../language/language.md:932
+#: ../../language/language.md:840
 msgid ""
 "struct User {\n"
-"  id: Int\n"
-"  name: String\n"
-"  mut email: String\n"
+"  id : Int\n"
+"  name : String\n"
+"  mut email : String\n"
 "}\n"
-"\n"
+msgstr ""
+
+#: ../../language/language.md:846
+msgid ""
 "fn main {\n"
 "  let u = { id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
 "  u.email = \"john@doe.name\"\n"
@@ -2713,77 +2847,72 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:948
+#: ../../language/language.md:854
+msgid ""
+"0\n"
+"John Doe\n"
+"john@doe.name\n"
+msgstr ""
+
+#: ../../language/language.md:858
 msgid "Constructing Struct with Shorthand"
 msgstr ""
 
-#: ../../language/language.md:950
+#: ../../language/language.md:860
 msgid ""
 "If you already have some variable like `name` and `email`, it's redundant"
-" to repeat those names when constructing a struct:"
+" to repeat those names when constructing a struct. You can use shorthand "
+"instead, it behaves exactly the same:"
 msgstr ""
 
-#: ../../language/language.md:952
+#: ../../language/language.md:862
 msgid ""
-"fn main {\n"
-"  let name = \"john\"\n"
-"  let email = \"john@doe.com\"\n"
-"  let u = { id: 0, name: name, email: email }\n"
-"}\n"
+"let name = \"john\"\n"
+"let email = \"john@doe.com\"\n"
+"let u = { id: 0, name, email }\n"
 msgstr ""
 
-#: ../../language/language.md:960
-msgid "You can use shorthand instead, it behaves exactly the same."
-msgstr ""
-
-#: ../../language/language.md:962
-msgid ""
-"fn main {\n"
-"  let name = \"john\"\n"
-"  let email = \"john@doe.com\"\n"
-"  let u = { id: 0, name, email }\n"
-"}\n"
-msgstr ""
-
-#: ../../language/language.md:970
+#: ../../language/language.md:869
 msgid "Struct Update Syntax"
 msgstr ""
 
-#: ../../language/language.md:972
+#: ../../language/language.md:871
 msgid ""
 "It's useful to create a new struct based on an existing one, but with "
 "some fields updated."
 msgstr ""
 
-#: ../../language/language.md:974
+#: ../../language/language.md:873
 msgid ""
-"struct User {\n"
-"  id: Int\n"
-"  name: String\n"
-"  email: String\n"
-"} derive(Show)\n"
-"\n"
-"fn main  {\n"
+"fn main {\n"
 "  let user = { id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
 "  let updated_user = { ..user, email: \"john@doe.name\" }\n"
-"  println(user)         // output: { id: 0, name: \"John Doe\", email: "
-"\"john@doe.com\" }\n"
-"  println(updated_user) // output: { id: 0, name: \"John Doe\", email: "
-"\"john@doe.name\" }\n"
+"  println(\n"
+"    $|{ id: \\{user.id}, name: \\{user.name}, email: \\{user.email} }\n"
+"    $|{ id: \\{updated_user.id}, name: \\{updated_user.name}, email: "
+"\\{updated_user.email} }\n"
+"    ,\n"
+"  )\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:989
+#: ../../language/language.md:881
+msgid ""
+"{ id: 0, name: John Doe, email: john@doe.com }\n"
+"{ id: 0, name: John Doe, email: john@doe.name }\n"
+msgstr ""
+
+#: ../../language/language.md:885
 msgid "Enum"
 msgstr ""
 
-#: ../../language/language.md:991
+#: ../../language/language.md:887
 msgid ""
 "Enum types are similar to algebraic data types in functional languages. "
 "Users familiar with C/C++ may prefer calling it tagged union."
 msgstr ""
 
-#: ../../language/language.md:993
+#: ../../language/language.md:889
 msgid ""
 "An enum can have a set of cases (constructors). Constructor names must "
 "start with capitalized letter. You can use these names to construct "
@@ -2791,22 +2920,25 @@ msgid ""
 "belongs to in pattern matching:"
 msgstr ""
 
-#: ../../language/language.md:995
+#: ../../language/language.md:891
 msgid ""
-"// An enum type that represents the ordering relation between two values,"
-"\n"
-"// with three cases \"Smaller\", \"Greater\" and \"Equal\"\n"
+"/// An enum type that represents the ordering relation between two "
+"values,\n"
+"/// with three cases \"Smaller\", \"Greater\" and \"Equal\"\n"
 "enum Relation {\n"
 "  Smaller\n"
 "  Greater\n"
 "  Equal\n"
 "}\n"
-"\n"
-"// compare the ordering relation between two integers\n"
-"fn compare_int(x: Int, y: Int) -> Relation {\n"
+msgstr ""
+
+#: ../../language/language.md:897
+msgid ""
+"/// compare the ordering relation between two integers\n"
+"fn compare_int(x : Int, y : Int) -> Relation {\n"
 "  if x < y {\n"
-"    // when creating an enum, if the target type is known, you can write "
-"the constructor name directly\n"
+"    // when creating an enum, if the target type is known, \n"
+"    // you can write the constructor name directly\n"
 "    Smaller\n"
 "  } else if x > y {\n"
 "    // but when the target type is not known,\n"
@@ -2818,99 +2950,125 @@ msgid ""
 "  }\n"
 "}\n"
 "\n"
-"// output a value of type `Relation`\n"
-"fn print_relation(r: Relation) -> Unit {\n"
+"/// output a value of type `Relation`\n"
+"fn print_relation(r : Relation) -> Unit {\n"
 "  // use pattern matching to decide which case `r` belongs to\n"
 "  match r {\n"
-"    // during pattern matching, if the type is known, writing the name of"
-" constructor is sufficient\n"
+"    // during pattern matching, if the type is known, \n"
+"    // writing the name of constructor is sufficient\n"
 "    Smaller => println(\"smaller!\")\n"
-"    // but you can use the `TypeName::Constructor` syntax for pattern "
-"matching as well\n"
+"    // but you can use the `TypeName::Constructor` syntax \n"
+"    // for pattern matching as well\n"
 "    Relation::Greater => println(\"greater!\")\n"
 "    Equal => println(\"equal!\")\n"
 "  }\n"
 "}\n"
-"\n"
+msgstr ""
+
+#: ../../language/language.md:904
+msgid ""
 "fn main {\n"
-"  print_relation(compare_int(0, 1)) // smaller!\n"
-"  print_relation(compare_int(1, 1)) // equal!\n"
-"  print_relation(compare_int(2, 1)) // greater!\n"
+"  print_relation(compare_int(0, 1))\n"
+"  print_relation(compare_int(1, 1))\n"
+"  print_relation(compare_int(2, 1))\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1037
+#: ../../language/language.md:912
+msgid ""
+"smaller!\n"
+"equal!\n"
+"greater!\n"
+msgstr ""
+
+#: ../../language/language.md:916
 msgid ""
 "Enum cases can also carry payload data. Here's an example of defining an "
 "integer list type using enum:"
 msgstr ""
 
-#: ../../language/language.md:1039
+#: ../../language/language.md:918
 msgid ""
 "enum List {\n"
 "  Nil\n"
 "  // constructor `Cons` carries additional payload: the first element of "
 "the list,\n"
 "  // and the remaining parts of the list\n"
-"  Cons (Int, List)\n"
+"  Cons(Int, List)\n"
 "}\n"
-"\n"
-"fn main {\n"
-"  // when creating values using `Cons`, the payload of by `Cons` must be "
-"provided\n"
-"  let l: List = Cons(1, Cons(2, Nil))\n"
-"  println(is_singleton(l))\n"
-"  print_list(l)\n"
-"}\n"
-"\n"
-"fn print_list(l: List) -> Unit {\n"
-"  // when pattern-matching an enum with payload,\n"
-"  // in additional to deciding which case a value belongs to\n"
-"  // you can extract the payload data inside that case\n"
-"  match l {\n"
-"    Nil => println(\"nil\")\n"
-"    // Here `x` and `xs` are defining new variables instead of referring "
-"to existing variables,\n"
-"    // if `l` is a `Cons`, then the payload of `Cons` (the first element "
-"and the rest of the list)\n"
-"    // will be bind to `x` and `xs\n"
-"    Cons(x, xs) => {\n"
-"      println(x)\n"
-"      println(\",\")\n"
-"      print_list(xs)\n"
-"    }\n"
-"  }\n"
-"}\n"
-"\n"
+msgstr ""
+
+#: ../../language/language.md:924
+msgid ""
 "// In addition to binding payload to variables,\n"
 "// you can also continue matching payload data inside constructors.\n"
 "// Here's a function that decides if a list contains only one element\n"
-"fn is_singleton(l: List) -> Bool {\n"
+"fn is_singleton(l : List) -> Bool {\n"
 "  match l {\n"
-"    // This branch only matches values of shape `Cons(_, Nil)`, i.e. "
-"lists of length 1\n"
+"    // This branch only matches values of shape `Cons(_, Nil)`, \n"
+"    // i.e. lists of length 1\n"
 "    Cons(_, Nil) => true\n"
 "    // Use `_` to match everything else\n"
 "    _ => false\n"
 "  }\n"
 "}\n"
+"\n"
+"fn print_list(l : List) -> Unit {\n"
+"  // when pattern-matching an enum with payload,\n"
+"  // in additional to deciding which case a value belongs to\n"
+"  // you can extract the payload data inside that case\n"
+"  match l {\n"
+"    Nil => println(\"nil\")\n"
+"    // Here `x` and `xs` are defining new variables \n"
+"    // instead of referring to existing variables,\n"
+"    // if `l` is a `Cons`, then the payload of `Cons` \n"
+"    // (the first element and the rest of the list)\n"
+"    // will be bind to `x` and `xs\n"
+"    Cons(x, xs) => {\n"
+"      println(\"\\{x},\")\n"
+"      print_list(xs)\n"
+"    }\n"
+"  }\n"
+"}\n"
 msgstr ""
 
-#: ../../language/language.md:1084
+#: ../../language/language.md:931
+msgid ""
+"fn main {\n"
+"  // when creating values using `Cons`, the payload of by `Cons` must be "
+"provided\n"
+"  let l : List = Cons(1, Cons(2, Nil))\n"
+"  println(is_singleton(l))\n"
+"  print_list(l)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/language.md:939
+msgid ""
+"false\n"
+"1,\n"
+"2,\n"
+"nil\n"
+msgstr ""
+
+#: ../../language/language.md:943
 msgid "Constructor with labelled arguments"
 msgstr ""
 
-#: ../../language/language.md:1086
+#: ../../language/language.md:945
 msgid "Enum constructors can have labelled argument:"
 msgstr ""
 
-#: ../../language/language.md:1088
+#: ../../language/language.md:947
 msgid ""
 "enum E {\n"
 "  // `x` and `y` are labelled argument\n"
 "  C(x~ : Int, y~ : Int)\n"
 "}\n"
-"\n"
+msgstr ""
+
+#: ../../language/language.md:953
+msgid ""
 "// pattern matching constructor with labelled arguments\n"
 "fn f(e : E) -> Unit {\n"
 "  match e {\n"
@@ -2921,29 +3079,37 @@ msgid ""
 "    C(x~, ..) => println(x)\n"
 "  }\n"
 "}\n"
-"\n"
-"// creating constructor with labelled arguments\n"
+msgstr ""
+
+#: ../../language/language.md:960
+msgid ""
 "fn main {\n"
-"  f(C(x=0, y=0)) // `label=value`\n"
+"  f(C(x=0, y=0))\n"
 "  let x = 0\n"
-"  f(C(x~, y=1)) // `~x` is an abbreviation for `x=x`\n"
+"  f(C(x~, y=1)) // <=> C(x=x, y=1)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1113
+#: ../../language/language.md:968
+msgid ""
+"0!\n"
+"0\n"
+msgstr ""
+
+#: ../../language/language.md:972
 msgid ""
 "It is also possible to access labelled arguments of constructors like "
 "accessing struct fields in pattern matching:"
 msgstr ""
 
-#: ../../language/language.md:1115
+#: ../../language/language.md:974
 msgid ""
 "enum Object {\n"
 "  Point(x~ : Double, y~ : Double)\n"
 "  Circle(x~ : Double, y~ : Double, radius~ : Double)\n"
 "}\n"
 "\n"
-"type! NotImplementedError derive(Show)\n"
+"type! NotImplementedError  derive(Show)\n"
 "\n"
 "fn distance_with(self : Object, other : Object) -> "
 "Double!NotImplementedError {\n"
@@ -2962,13 +3128,16 @@ msgid ""
 "      raise NotImplementedError\n"
 "  }\n"
 "}\n"
-"\n"
+msgstr ""
+
+#: ../../language/language.md:980
+msgid ""
 "fn main {\n"
 "  let p1 : Object = Point(x=0, y=0)\n"
 "  let p2 : Object = Point(x=3, y=4)\n"
 "  let c1 : Object = Circle(x=0, y=0, radius=2)\n"
 "  try {\n"
-"    println(p1.distance_with!(p2)) // 5.0\n"
+"    println(p1.distance_with!(p2))\n"
 "    println(p1.distance_with!(c1))\n"
 "  } catch {\n"
 "    e => println(e)\n"
@@ -2976,26 +3145,24 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1151
+#: ../../language/language.md:988
+msgid ""
+"5\n"
+"NotImplementedError\n"
+msgstr ""
+
+#: ../../language/language.md:992
 msgid "Constructor with mutable fields"
 msgstr ""
 
-#: ../../language/language.md:1153
+#: ../../language/language.md:994
 msgid ""
 "It is also possible to define mutable fields for constructor. This is "
 "especially useful for defining imperative data structures:"
 msgstr ""
 
-#: ../../language/language.md:1155
+#: ../../language/language.md:996
 msgid ""
-"// A mutable binary search tree with parent pointer\n"
-"enum Tree[X] {\n"
-"  Nil\n"
-"  // only labelled arguments can be mutable\n"
-"  Node(mut value~ : X, mut left~ : Tree[X], mut right~ : Tree[X], mut "
-"parent~ : Tree[X])\n"
-"}\n"
-"\n"
 "// A set implemented using mutable binary search tree.\n"
 "struct Set[X] {\n"
 "  mut root : Tree[X]\n"
@@ -3005,10 +3172,25 @@ msgid ""
 "  self.root = self.root.insert(x, parent=Nil)\n"
 "}\n"
 "\n"
+"// A mutable binary search tree with parent pointer\n"
+"enum Tree[X] {\n"
+"  Nil\n"
+"  // only labelled arguments can be mutable\n"
+"  Node(\n"
+"    mut value~ : X,\n"
+"    mut left~ : Tree[X],\n"
+"    mut right~ : Tree[X],\n"
+"    mut parent~ : Tree[X]\n"
+"  )\n"
+"}\n"
+"\n"
 "// In-place insert a new element to a binary search tree.\n"
 "// Return the new tree root\n"
-"fn Tree::insert[X : Compare](self : Tree[X], x : X, parent~ : Tree[X]) ->"
-" Tree[X] {\n"
+"fn Tree::insert[X : Compare](\n"
+"  self : Tree[X],\n"
+"  x : X,\n"
+"  parent~ : Tree[X]\n"
+") -> Tree[X] {\n"
 "  match self {\n"
 "    Nil => Node(value=x, left=Nil, right=Nil, parent~)\n"
 "    Node(_) as node => {\n"
@@ -3030,25 +3212,26 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1195
+#: ../../language/language.md:1002
 msgid "Newtype"
 msgstr ""
 
-#: ../../language/language.md:1197
+#: ../../language/language.md:1004
 msgid "MoonBit supports a special kind of enum called newtype:"
 msgstr ""
 
-#: ../../language/language.md:1199
+#: ../../language/language.md:1006
 msgid ""
-"// `UserId` is a fresh new type different from `Int`, and you can define "
-"new methods for `UserId`, etc.\n"
-"// But at the same time, the internal representation of `UserId` is "
-"exactly the same as `Int`\n"
+"// `UserId` is a fresh new type different from `Int`, \n"
+"// and you can define new methods for `UserId`, etc.\n"
+"// But at the same time, the internal representation of `UserId` \n"
+"// is exactly the same as `Int`\n"
 "type UserId Int\n"
+"\n"
 "type UserName String\n"
 msgstr ""
 
-#: ../../language/language.md:1206
+#: ../../language/language.md:1012
 msgid ""
 "Newtypes are similar to enums with only one constructor (with the same "
 "name as the newtype itself). So, you can use the constructor to create "
@@ -3056,49 +3239,60 @@ msgid ""
 "representation of a newtype:"
 msgstr ""
 
-#: ../../language/language.md:1208
+#: ../../language/language.md:1014
 msgid ""
-"fn init {\n"
-"  let id: UserId = UserId(1)\n"
-"  let name: UserName = UserName(\"John Doe\")\n"
-"  let UserId(uid) = id       // the type of `uid` is `Int`\n"
-"  let UserName(uname) = name // the type of `uname` is `String`\n"
+"fn main {\n"
+"  let id : UserId = UserId(1)\n"
+"  let name : UserName = UserName(\"John Doe\")\n"
+"  let UserId(uid) = id // uid : Int\n"
+"  let UserName(uname) = name // uname: String\n"
 "  println(uid)\n"
 "  println(uname)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1219
+#: ../../language/language.md:1022
+msgid ""
+"1\n"
+"John Doe\n"
+msgstr ""
+
+#: ../../language/language.md:1026
 msgid ""
 "Besides pattern matching, you can also use `._` to extract the internal "
 "representation of newtypes:"
 msgstr ""
 
-#: ../../language/language.md:1221
+#: ../../language/language.md:1028
 msgid ""
-"fn init {\n"
-"  let id: UserId = UserId(1)\n"
-"  let uid: Int = id._\n"
+"fn main {\n"
+"  let id : UserId = UserId(1)\n"
+"  let uid : Int = id._\n"
 "  println(uid)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1229
+#: ../../language/language.md:1036
+msgid "1\n"
+msgstr ""
+
+#: ../../language/language.md:1040
 msgid "Type alias"
 msgstr ""
 
-#: ../../language/language.md:1230
+#: ../../language/language.md:1041
 msgid "MoonBit supports type alias via the syntax `typealias Name = TargetType`:"
 msgstr ""
 
-#: ../../language/language.md:1232
+#: ../../language/language.md:1043
 msgid ""
 "pub typealias Index = Int\n"
+"\n"
 "// type alias are private by default\n"
 "typealias MapString[X] = Map[String, X]\n"
 msgstr ""
 
-#: ../../language/language.md:1238
+#: ../../language/language.md:1049
 msgid ""
 "unlike all other kinds of type declaration above, type alias does not "
 "define a new type, it is merely a type macro that behaves exactly the "
@@ -3106,7 +3300,7 @@ msgid ""
 "implement traits for a type alias."
 msgstr ""
 
-#: ../../language/language.md:1242
+#: ../../language/language.md:1053
 msgid ""
 "Type alias can be used to perform incremental code refactor. For example,"
 " if you want to move a type `T` from `@pkgA` to `@pkgB`, you can leave a "
@@ -3115,11 +3309,11 @@ msgid ""
 "uses of `@pkgA.T` is migrated to `@pkgB.T`."
 msgstr ""
 
-#: ../../language/language.md:1247
+#: ../../language/language.md:1058
 msgid "Pattern Matching"
 msgstr ""
 
-#: ../../language/language.md:1249
+#: ../../language/language.md:1060
 msgid ""
 "We have shown a use case of pattern matching for enums, but pattern "
 "matching is not restricted to enums. For example, we can also match "
@@ -3134,25 +3328,31 @@ msgid ""
 "elements of array."
 msgstr ""
 
-#: ../../language/language.md:1251
+#: ../../language/language.md:1062
 msgid ""
 "let id = match u {\n"
-"  { id: id, name: _, email: _ } => id\n"
+"  { id, name: _, email: _ } => id\n"
 "}\n"
-"// is equivalent to\n"
-"let { id: id, name: _, email: _ } = u\n"
-"// or\n"
-"let { id: id, ..} = u\n"
+"\n"
+"// <=>\n"
+"let { id, name: _, email: _ } = u\n"
+"\n"
+"// <=>\n"
+"let { id, .. } = u\n"
 msgstr ""
 
-#: ../../language/language.md:1261
+#: ../../language/language.md:1069
 msgid ""
-"let ary = [1,2,3,4]\n"
-"let [a, b, ..] = ary // a = 1, b = 2\n"
-"let [.., a, b] = ary // a = 3, b = 4\n"
+"test {\n"
+"  let ary = [1, 2, 3, 4]\n"
+"  let [a, b, ..] = ary\n"
+"  inspect!(\"a = \\{a}, b = \\{b}\", content=\"a = 1, b = 2\")\n"
+"  let [.., a, b] = ary\n"
+"  inspect!(\"a = \\{a}, b = \\{b}\", content=\"a = 3, b = 4\")\n"
+"}\n"
 msgstr ""
 
-#: ../../language/language.md:1267
+#: ../../language/language.md:1075
 msgid ""
 "There are some other useful constructs in pattern matching. For example, "
 "we can use `as` to give a name to some pattern, and we can use `|` to "
@@ -3161,7 +3361,7 @@ msgid ""
 "sides of `|` patterns."
 msgstr ""
 
-#: ../../language/language.md:1269
+#: ../../language/language.md:1077
 msgid ""
 "match expr {\n"
 "  Lit(n) as a => ...\n"
@@ -3170,11 +3370,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1277
+#: ../../language/language.md:1084
 msgid "Range Pattern"
 msgstr ""
 
-#: ../../language/language.md:1278
+#: ../../language/language.md:1085
 msgid ""
 "For builtin integer types and `Char`, MoonBit allows matching whether the"
 " value falls in a specific range. Range patterns have the form `a..<b` or"
@@ -3182,25 +3382,26 @@ msgid ""
 " inclusive upper bound. `a` and `b` can be one of:"
 msgstr ""
 
-#: ../../language/language.md:1282
+#: ../../language/language.md:1089
 msgid "literal"
 msgstr ""
 
-#: ../../language/language.md:1283
+#: ../../language/language.md:1090
 msgid "named constant declared with `const`"
 msgstr ""
 
-#: ../../language/language.md:1284
+#: ../../language/language.md:1091
 msgid "`_`, meaning the pattern has no restriction on this side"
 msgstr ""
 
-#: ../../language/language.md:1286
+#: ../../language/language.md:1093
 msgid "Here are some examples:"
 msgstr ""
 
-#: ../../language/language.md:1288
+#: ../../language/language.md:1095
 msgid ""
 "const Zero = 0\n"
+"\n"
 "fn sign(x : Int) -> Int {\n"
 "  match x {\n"
 "    _..<Zero => -1\n"
@@ -3219,11 +3420,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1308
+#: ../../language/language.md:1102
 msgid "Map Pattern"
 msgstr ""
 
-#: ../../language/language.md:1310
+#: ../../language/language.md:1104
 msgid ""
 "MoonBit allows convenient matching on map-like data structures. Inside a "
 "map pattern, the `key : value` syntax will match if `key` exists in the "
@@ -3232,50 +3433,50 @@ msgid ""
 "be matched against `map[key]` (an optional)."
 msgstr ""
 
-#: ../../language/language.md:1314
+#: ../../language/language.md:1108
 msgid ""
 "match map {\n"
 "  // matches if any only if \"b\" exists in `map`\n"
-"  { \"b\": _ } => ..\n"
+"  { \"b\": _ } => ...\n"
 "  // matches if and only if \"b\" does not exist in `map` and \"a\" "
 "exists in `map`.\n"
 "  // When matches, bind the value of \"a\" in `map` to `x`\n"
-"  { \"b\"? : None, \"a\": x } => ..\n"
+"  { \"b\"? : None, \"a\": x } => ...\n"
 "  // compiler reports missing case: { \"b\"? : None, \"a\"? : None }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1325
+#: ../../language/language.md:1115
 msgid ""
 "To match a data type `T` using map pattern, `T` must have a method "
 "`op_get(Self, K) -> Option[V]` for some type `K` and `V`."
 msgstr ""
 
-#: ../../language/language.md:1326
+#: ../../language/language.md:1116
 msgid "Currently, the key part of map pattern must be a constant"
 msgstr ""
 
-#: ../../language/language.md:1327
+#: ../../language/language.md:1117
 msgid "Map patterns are always open: unmatched keys are silently ignored"
 msgstr ""
 
-#: ../../language/language.md:1328
+#: ../../language/language.md:1118
 msgid ""
 "Map pattern will be compiled to efficient code: every key will be fetched"
 " at most once"
 msgstr ""
 
-#: ../../language/language.md:1330
+#: ../../language/language.md:1120
 msgid "Json Pattern"
 msgstr ""
 
-#: ../../language/language.md:1332
+#: ../../language/language.md:1122
 msgid ""
 "When the matched value has type `Json`, literal patterns can be used "
 "directly:"
 msgstr ""
 
-#: ../../language/language.md:1334
+#: ../../language/language.md:1124
 msgid ""
 "match json {\n"
 "  { \"version\": \"1.0.0\", \"import\": [..] as imports } => ...\n"
@@ -3283,63 +3484,66 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1341
+#: ../../language/language.md:1131
 msgid "Operators"
 msgstr ""
 
-#: ../../language/language.md:1343
+#: ../../language/language.md:1133
 msgid "Operator Overloading"
 msgstr ""
 
-#: ../../language/language.md:1345
+#: ../../language/language.md:1135
 msgid ""
 "MoonBit supports operator overloading of builtin operators via methods. "
 "The method name corresponding to a operator `<op>` is `op_<op>`. For "
 "example:"
 msgstr ""
 
-#: ../../language/language.md:1347
+#: ../../language/language.md:1137
 msgid ""
 "struct T {\n"
-"  x:Int\n"
-"} derive(Show)\n"
+"  x : Int\n"
+"}\n"
 "\n"
-"fn op_add(self: T, other: T) -> T {\n"
+"fn op_add(self : T, other : T) -> T {\n"
 "  { x: self.x + other.x }\n"
 "}\n"
 "\n"
-"fn main {\n"
+"test {\n"
 "  let a = { x: 0 }\n"
 "  let b = { x: 2 }\n"
-"  println(a + b)\n"
+"  assert_eq!((a + b).x, 2)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1363
+#: ../../language/language.md:1143
 msgid "Another example about `op_get` and `op_set`:"
 msgstr ""
 
-#: ../../language/language.md:1365
+#: ../../language/language.md:1145
 msgid ""
 "struct Coord {\n"
-"  mut x: Int\n"
-"  mut y: Int\n"
+"  mut x : Int\n"
+"  mut y : Int\n"
 "} derive(Show)\n"
 "\n"
-"fn op_get(self: Coord, key: String) -> Int {\n"
+"fn op_get(self : Coord, key : String) -> Int {\n"
 "  match key {\n"
 "    \"x\" => self.x\n"
 "    \"y\" => self.y\n"
 "  }\n"
 "}\n"
 "\n"
-"fn op_set(self: Coord, key: String, val: Int) -> Unit {\n"
-"    match key {\n"
+"fn op_set(self : Coord, key : String, val : Int) -> Unit {\n"
+"  match key {\n"
 "    \"x\" => self.x = val\n"
 "    \"y\" => self.y = val\n"
 "  }\n"
 "}\n"
-"\n"
+msgstr ""
+
+#: ../../language/language.md:1151
+msgid ""
 "fn main {\n"
 "  let c = { x: 1, y: 2 }\n"
 "  println(c)\n"
@@ -3350,173 +3554,178 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1395
+#: ../../language/language.md:1159
+msgid ""
+"{x: 1, y: 2}\n"
+"2\n"
+"{x: 23, y: 2}\n"
+"23\n"
+msgstr ""
+
+#: ../../language/language.md:1163
 msgid "Currently, the following operators can be overloaded:"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "Operator Name"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "Method Name"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`+`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`op_add`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`-`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`op_sub`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`*`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`op_mul`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`/`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`op_div`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`%`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`op_mod`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`=`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`op_equal`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159 ../../language/language.md:1222
 msgid "`<<`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159 ../../language/language.md:1222
 msgid "`op_shl`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159 ../../language/language.md:1222
 msgid "`>>`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159 ../../language/language.md:1222
 msgid "`op_shr`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`-` (unary)"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`op_neg`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`_[_]` (get item)"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`op_get`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`_[_] = _` (set item)"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`op_set`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`_[_:_]` (view)"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1159
 msgid "`op_as_view`"
 msgstr ""
 
-#: ../../language/language.md:1412
+#: ../../language/language.md:1180
 msgid "Pipe operator"
 msgstr ""
 
-#: ../../language/language.md:1414
+#: ../../language/language.md:1182
 msgid ""
 "MoonBit provides a convenient pipe operator `|>`, which can be used to "
 "chain regular function calls:"
 msgstr ""
 
-#: ../../language/language.md:1416
+#: ../../language/language.md:1184
 msgid ""
-"fn init {\n"
-"  x |> f // equivalent to f(x)\n"
-"  x |> f(y) // equivalent to f(x, y)\n"
-"\n"
-"  // Chain calls at multiple lines\n"
-"  arg_val\n"
-"  |> f1 // equivalent to f1(arg_val)\n"
-"  |> f2(other_args) // equivalent to f2(f1(arg_val), other_args)\n"
-"}\n"
+"5 |> ignore // <=> ignore(5)\n"
+"[] |> push(5) // <=> push([], 5)\n"
+"1\n"
+"|> add(5) // <=> add(1, 5)\n"
+"|> ignore // <=> ignore(add(1, 5))\n"
 msgstr ""
 
-#: ../../language/language.md:1428
+#: ../../language/language.md:1191
 msgid "Cascade Operator"
 msgstr ""
 
-#: ../../language/language.md:1430
+#: ../../language/language.md:1193
 msgid ""
 "The cascade operator `..` is used to perform a series of mutable "
 "operations on the same value consecutively. The syntax is as follows:"
 msgstr ""
 
-#: ../../language/language.md:1433
+#: ../../language/language.md:1196
 msgid "x..f()\n"
 msgstr ""
 
-#: ../../language/language.md:1437
+#: ../../language/language.md:1203
 msgid "`x..f()..g()` is equivalent to `{x.f(); x.g(); x}`."
 msgstr ""
 
-#: ../../language/language.md:1439
+#: ../../language/language.md:1205
 msgid ""
-"Consider the following scenario: for a `MyStringBuilder` type that has "
-"methods like `add_string`, `add_char`, `add_int`, etc., we often need to "
-"perform a series of operations on the same `MyStringBuilder` value:"
+"Consider the following scenario: for a `StringBuilder` type that has "
+"methods like `write_string`, `write_char`, `write_object`, etc., we often"
+" need to perform a series of operations on the same `StringBuilder` "
+"value:"
 msgstr ""
 
-#: ../../language/language.md:1443
+#: ../../language/language.md:1209
 msgid ""
-"let builder = MyStringBuilder::new()\n"
-"builder.add_char('a')\n"
-"builder.add_char('a')\n"
-"builder.add_int(1001)\n"
-"builder.add_string(\"abcdef\")\n"
+"let builder = StringBuilder::new()\n"
+"builder.write_char('a')\n"
+"builder.write_char('a')\n"
+"builder.write_object(1001)\n"
+"builder.write_string(\"abcdef\")\n"
 "let result = builder.to_string()\n"
 msgstr ""
 
-#: ../../language/language.md:1452
+#: ../../language/language.md:1216
 msgid ""
 "To avoid repetitive typing of `builder`, its methods are often designed "
 "to return `self` itself, allowing operations to be chained using the `.` "
@@ -3526,77 +3735,77 @@ msgid ""
 " the methods."
 msgstr ""
 
-#: ../../language/language.md:1458
+#: ../../language/language.md:1222
 msgid ""
-"let result =\n"
-"  MyStringBuilder::new()\n"
-"    ..add_char('a')\n"
-"    ..add_char('a')\n"
-"    ..add_int(1001)\n"
-"    ..add_string(\"abcdef\")\n"
-"    .to_string()\n"
+"let result = StringBuilder::new()\n"
+"  ..write_char('a')\n"
+"  ..write_char('a')\n"
+"  ..write_object(1001)\n"
+"  ..write_string(\"abcdef\")\n"
+"  .to_string()\n"
 msgstr ""
 
-#: ../../language/language.md:1468
+#: ../../language/language.md:1229
 msgid "Bitwise Operator"
 msgstr ""
 
-#: ../../language/language.md:1470
+#: ../../language/language.md:1231
 msgid "MoonBit supports C-Style bitwise operators."
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1222
 msgid "Operator"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1222
 msgid "Perform"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1222
 msgid "`&`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1222
 msgid "`land`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1222
 msgid "`|`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1222
 msgid "`lor`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1222
 msgid "`^`"
 msgstr ""
 
-#: ../../language/language.md
+#: ../../language/language.md:1222
 msgid "`lxor`"
 msgstr ""
 
-#: ../../language/language.md:1480
+#: ../../language/language.md:1241
 msgid "Error Handling"
 msgstr ""
 
-#: ../../language/language.md:1482
+#: ../../language/language.md:1243
 msgid "Error types"
 msgstr ""
 
-#: ../../language/language.md:1484
+#: ../../language/language.md:1245
 msgid ""
 "The error values used in MoonBit must have an error type. An error type "
 "can be defined in the following forms:"
 msgstr ""
 
-#: ../../language/language.md:1487
+#: ../../language/language.md:1248
 msgid ""
-"type! E1 Int  // error type E1 has one constructor E1 with an Int payload"
+"type! E1 Int // error type E1 has one constructor E1 with an Int payload\n"
 "\n"
-"type! E2      // error type E2 has one constructor E2 with no payload\n"
-"type! E3 {    // error type E3 has three constructors like a normal enum "
+"type! E2  // error type E2 has one constructor E2 with no payload\n"
+"\n"
+"type! E3 { // error type E3 has three constructors like a normal enum "
 "type\n"
 "  A\n"
 "  B(Int, x~ : String)\n"
@@ -3604,17 +3813,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1497
+#: ../../language/language.md:1255
 msgid ""
 "The return type of a function can include an error type to indicate that "
 "the function might return an error. For example, the following function "
 "`div` might return an error of type `DivError`:"
 msgstr ""
 
-#: ../../language/language.md:1501
+#: ../../language/language.md:1259
 msgid ""
 "type! DivError String\n"
-"fn div(x: Int, y: Int) -> Int!DivError {\n"
+"\n"
+"fn div(x : Int, y : Int) -> Int!DivError {\n"
 "  if y == 0 {\n"
 "    raise DivError(\"division by zero\")\n"
 "  }\n"
@@ -3622,17 +3832,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1511
+#: ../../language/language.md:1266
 msgid ""
 "Here, the keyword `raise` is used to interrupt the function execution and"
 " return an error."
 msgstr ""
 
-#: ../../language/language.md:1514
+#: ../../language/language.md:1269
 msgid "The Default Error Type"
 msgstr ""
 
-#: ../../language/language.md:1516
+#: ../../language/language.md:1271
 msgid ""
 "MoonBit provides a default error type `Error` that can be used when the "
 "concrete error type is not important. For convenience, you can annotate "
@@ -3641,129 +3851,153 @@ msgid ""
 " are equivalent:"
 msgstr ""
 
-#: ../../language/language.md:1521
+#: ../../language/language.md:1276
 msgid ""
-"fn f() -> Unit! { .. }\n"
-"fn f!() -> Unit { .. }\n"
-"fn f() -> Unit!Error { .. }\n"
+"fn f() -> Unit! {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn g!() -> Unit {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn h() -> Unit!Error {\n"
+"  ...\n"
+"}\n"
 msgstr ""
 
-#: ../../language/language.md:1527
+#: ../../language/language.md:1283
 msgid ""
 "For anonymous function and matrix function, you can annotate the keyword "
 "`fn` with the `!` suffix to achieve that. For example,"
 msgstr ""
 
-#: ../../language/language.md:1530
+#: ../../language/language.md:1286
 msgid ""
 "type! IntError Int\n"
-"fn h(f: (x: Int) -> Int!, x: Int) -> Unit { .. }\n"
 "\n"
-"fn main {\n"
-"  let _ = h(fn! { x => raise(IntError(x)) }, 0)     // matrix function\n"
-"  let _ = h(fn! (x) { x => raise(IntError(x)) }, 0) // anonymous function"
+"fn h(f : (Int) -> Int!, x : Int) -> Unit {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn g() -> Unit {\n"
+"  let _ = h(fn! { x => raise IntError(x) }, 0)\n"
+"  let _ = h(fn!(x) { raise IntError(x) }, 0)\n"
 "\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1540
+#: ../../language/language.md:1292
 msgid ""
 "As shown in the above example, the error types defined by `type!` can be "
 "used as value of the type `Error` when the error is raised."
 msgstr ""
 
-#: ../../language/language.md:1543
+#: ../../language/language.md:1295
 msgid ""
 "Note that only error types or the type `Error` can be used as errors. For"
 " functions that are generic in the error type, you can use the `Error` "
 "bound to do that. For example,"
 msgstr ""
 
-#: ../../language/language.md:1547
+#: ../../language/language.md:1299
 msgid ""
-"pub fn unwrap_or_error[T, E : Error](self : Result[T, E]) -> T!E {\n"
-"  match self {\n"
+"// Result::unwrap_or_error\n"
+"fn unwrap_or_error[T, E : Error](result : Result[T, E]) -> T!E {\n"
+"  match result {\n"
 "    Ok(x) => x\n"
 "    Err(e) => raise e\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1556
+#: ../../language/language.md:1305
 msgid ""
 "Since the type `Error` can include multiple error types, pattern matching"
 " on the `Error` type must use the wildcard `_` to match all error types. "
 "For example,"
 msgstr ""
 
-#: ../../language/language.md:1559
+#: ../../language/language.md:1308
 msgid ""
-"type! E1\n"
-"type! E2\n"
-"fn f(e: Error) -> Unit {\n"
+"type! E4\n"
+"\n"
+"type! E5\n"
+"\n"
+"fn f(e : Error) -> Unit {\n"
 "  match e {\n"
-"    E1 => println(\"E1\")\n"
-"    E2 => println(\"E2\")\n"
+"    E4 => println(\"E1\")\n"
+"    E5 => println(\"E2\")\n"
 "    _ => println(\"unknown error\")\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1571
+#: ../../language/language.md:1314
 msgid "Handling Errors"
 msgstr ""
 
-#: ../../language/language.md:1573
+#: ../../language/language.md:1316
 msgid "There are three ways to handle errors:"
 msgstr ""
 
-#: ../../language/language.md:1575
+#: ../../language/language.md:1318
 msgid ""
 "Append `!` after the function name in a function application to rethrow "
 "the error directly in case of an error, for example:"
 msgstr ""
 
-#: ../../language/language.md:1578
+#: ../../language/language.md:1321
 msgid ""
-"fn div_reraise(x: Int, y: Int) -> Int!DivError {\n"
+"fn div_reraise(x : Int, y : Int) -> Int!DivError {\n"
 "  div!(x, y) // Rethrow the error if `div` raised an error\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1584
+#: ../../language/language.md:1327
 msgid ""
 "Append `?` after the function name to convert the result into a first-"
 "class value of the `Result` type, for example:"
 msgstr ""
 
-#: ../../language/language.md:1587
+#: ../../language/language.md:1330
 msgid ""
 "test {\n"
 "  let res = div?(6, 3)\n"
 "  inspect!(res, content=\"Ok(2)\")\n"
 "  let res = div?(6, 0)\n"
-"  inspect!(res, content=\"Err(division by zero)\")\n"
+"  inspect!(\n"
+"    res,\n"
+"    content=\n"
+"      #|Err(\"division by zero\")\n"
+"    ,\n"
+"  )\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1596
+#: ../../language/language.md:1336
 msgid "Use `try` and `catch` to catch and handle errors, for example:"
 msgstr ""
 
-#: ../../language/language.md:1598
+#: ../../language/language.md:1338
 msgid ""
 "fn main {\n"
-"  try {\n"
-"    div!(42, 0)\n"
-"  } catch {\n"
-"    DivError(s) => println(s)\n"
-"  } else {\n"
-"    v => println(v)\n"
-"  }\n"
+"try {\n"
+"  div!(42, 0)\n"
+"} catch {\n"
+"  DivError(s) => println(s)\n"
+"} else {\n"
+"  v => println(v)\n"
+"}\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1610
+#: ../../language/language.md:1347
+#, fuzzy
+msgid "division by zero\n"
+msgstr "示例：除零"
+
+#: ../../language/language.md:1351
 msgid ""
 "Here, `try` is used to call a function that might throw an error, and "
 "`catch` is used to match and handle the caught error. If no error is "
@@ -3771,74 +4005,79 @@ msgid ""
 " executed instead."
 msgstr ""
 
-#: ../../language/language.md:1614
+#: ../../language/language.md:1355
 msgid ""
 "The `else` block can be omitted if no action is needed when no error is "
 "caught. For example:"
 msgstr ""
 
-#: ../../language/language.md:1617
+#: ../../language/language.md:1358
 msgid ""
-"fn main {\n"
-"  try {\n"
-"    println(div!(42, 0))\n"
-"  } catch {\n"
-"    _ => println(\"Error\")\n"
-"  }\n"
+"try {\n"
+"  println(div!(42, 0))\n"
+"} catch {\n"
+"  _ => println(\"Error\")\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1627
+#: ../../language/language.md:1365
 msgid ""
 "The `catch` keyword is optional, and when the body of `try` is a simple "
 "expression, the curly braces can be omitted. For example:"
 msgstr ""
 
-#: ../../language/language.md:1630
+#: ../../language/language.md:1368
 msgid ""
-"fn main {\n"
-"  let a = try div!(42, 0) { _ => 0 }\n"
-"  println(a)\n"
+"let a = try {\n"
+"  div!(42, 0)\n"
+"} catch {\n"
+"  _ => 0\n"
 "}\n"
+"println(a)\n"
 msgstr ""
 
-#: ../../language/language.md:1637
+#: ../../language/language.md:1375
 msgid ""
 "The `!` and `?` attributes can also be used on method invocation and pipe"
 " operator. For example:"
 msgstr ""
 
-#: ../../language/language.md:1640
+#: ../../language/language.md:1378
 msgid ""
 "type T Int\n"
+"\n"
 "type! E Int derive(Show)\n"
-"fn f(self: T) -> Unit!E { raise E(self._) }\n"
-"fn main {\n"
+"\n"
+"fn k(self : T) -> Unit!E {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn l() -> Unit!E {\n"
 "  let x = T(42)\n"
-"  try f!(x) { e => println(e) }\n"
-"  try x.f!() { e => println(e) }\n"
-"  try x |> f!() { e => println(e) }\n"
+"  k!(x)\n"
+"  x.k!()\n"
+"  x |> k!()\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1652
+#: ../../language/language.md:1384
 msgid ""
 "However for infix operators such as `+` `*` that may raise an error, the "
 "original form has to be used, e.g. `x.op_add!(y)`, `x.op_mul!(y)`."
 msgstr ""
 
-#: ../../language/language.md:1655
+#: ../../language/language.md:1387
 msgid ""
 "Additionally, if the return type of a function includes an error type, "
 "the function call must use `!` or `?` for error handling, otherwise the "
 "compiler will report an error."
 msgstr ""
 
-#: ../../language/language.md:1659
+#: ../../language/language.md:1391
 msgid "Error Inference"
 msgstr ""
 
-#: ../../language/language.md:1661
+#: ../../language/language.md:1393
 msgid ""
 "Within a `try` block, several different kinds of errors can be raised. "
 "When that happens, the compiler will use the type `Error` as the common "
@@ -3846,52 +4085,48 @@ msgid ""
 "sure all errors are caught. For example,"
 msgstr ""
 
-#: ../../language/language.md:1666
+#: ../../language/language.md:1398
 msgid ""
-"type! E1\n"
-"type! E2\n"
-"fn f1() -> Unit!E1 { raise E1 }\n"
-"fn f2() -> Unit!E2 { raise E2 }\n"
-"fn main {\n"
-"  try {\n"
-"    f1!()\n"
-"    f2!()\n"
-"  } catch {\n"
-"    E1 => println(\"E1\")\n"
-"    E2 => println(\"E2\")\n"
-"    _ => println(\"unknown error\")\n"
-"  }\n"
+"fn f1() -> Unit!E1 {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn f2() -> Unit!E2 {\n"
+"  ...\n"
+"}\n"
+"\n"
+"try {\n"
+"  f1!()\n"
+"  f2!()\n"
+"} catch {\n"
+"  E1(_) => ...\n"
+"  E2 => ...\n"
+"  _ => ...\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1683
+#: ../../language/language.md:1405
 msgid ""
 "You can also use `catch!` to rethrow the uncaught errors for convenience."
 " This is useful when you only want to handle a specific error and rethrow"
 " others. For example,"
 msgstr ""
 
-#: ../../language/language.md:1687
+#: ../../language/language.md:1409
 msgid ""
-"type! E1\n"
-"type! E2\n"
-"fn f1() -> Unit!E1 { raise E1 }\n"
-"fn f2() -> Unit!E2 { raise E2 }\n"
-"fn f() -> Unit! {\n"
-"  try {\n"
-"    f1!()\n"
-"    f2!()\n"
-"  } catch! {\n"
-"    E1 => println(\"E1\")\n"
-"  }\n"
+"try {\n"
+"  f1!()\n"
+"  f2!()\n"
+"} catch! {\n"
+"  E1(_) => ...\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1702
+#: ../../language/language.md:1416
 msgid "Generics"
 msgstr ""
 
-#: ../../language/language.md:1704
+#: ../../language/language.md:1418
 msgid ""
 "Generics are supported in top-level function and data type definitions. "
 "Type parameters can be introduced within square brackets. We can rewrite "
@@ -3900,21 +4135,21 @@ msgid ""
 "lists like `map` and `reduce`."
 msgstr ""
 
-#: ../../language/language.md:1706
+#: ../../language/language.md:1420
 msgid ""
 "enum List[T] {\n"
 "  Nil\n"
 "  Cons(T, List[T])\n"
 "}\n"
 "\n"
-"fn map[S, T](self: List[S], f: (S) -> T) -> List[T] {\n"
+"fn map[S, T](self : List[S], f : (S) -> T) -> List[T] {\n"
 "  match self {\n"
 "    Nil => Nil\n"
 "    Cons(x, xs) => Cons(f(x), map(xs, f))\n"
 "  }\n"
 "}\n"
 "\n"
-"fn reduce[S, T](self: List[S], op: (T, S) -> T, init: T) -> T {\n"
+"fn reduce[S, T](self : List[S], op : (T, S) -> T, init : T) -> T {\n"
 "  match self {\n"
 "    Nil => init\n"
 "    Cons(x, xs) => reduce(xs, op, op(init, x))\n"
@@ -3922,35 +4157,35 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1727
+#: ../../language/language.md:1424
 msgid "Access Control"
 msgstr ""
 
-#: ../../language/language.md:1729
+#: ../../language/language.md:1426
 msgid ""
 "By default, all function definitions and variable bindings are "
 "_invisible_ to other packages. You can use the `pub` modifier before "
 "toplevel `let`/`fn` to make them public."
 msgstr ""
 
-#: ../../language/language.md:1732
+#: ../../language/language.md:1429
 msgid "There are four different kinds of visibility for types in MoonBit:"
 msgstr ""
 
-#: ../../language/language.md:1734
+#: ../../language/language.md:1431
 msgid ""
 "private type, declared with `priv`, completely invisible to the outside "
 "world"
 msgstr ""
 
-#: ../../language/language.md:1735
+#: ../../language/language.md:1432
 msgid ""
 "abstract type, which is the default visibility for types. Only the name "
 "of an abstract type is visible outside, the internal representation of "
 "the type is hidden"
 msgstr ""
 
-#: ../../language/language.md:1736
+#: ../../language/language.md:1433
 msgid ""
 "readonly types, declared with `pub(readonly)`. The internal "
 "representation of readonly types are visible outside, but users can only "
@@ -3958,13 +4193,13 @@ msgid ""
 "are not allowed"
 msgstr ""
 
-#: ../../language/language.md:1738
+#: ../../language/language.md:1435
 msgid ""
 "fully public types, declared with `pub(all)`. The outside world can "
 "freely construct, modify and read values of these types"
 msgstr ""
 
-#: ../../language/language.md:1740
+#: ../../language/language.md:1437
 msgid ""
 "Currently, the semantic of `pub` is `pub(all)`. But in the future, the "
 "meaning of `pub` will be ported to `pub(readonly)`. In addition to the "
@@ -3975,7 +4210,7 @@ msgid ""
 "functional struct update syntax."
 msgstr ""
 
-#: ../../language/language.md:1746
+#: ../../language/language.md:1443
 msgid ""
 "Readonly types is a very useful feature, inspired by [private "
 "types](https://v2.ocaml.org/manual/privatetypes.html) in OCaml. In short,"
@@ -3985,13 +4220,13 @@ msgid ""
 " `pub(readonly)` types are defined."
 msgstr ""
 
-#: ../../language/language.md:1748
+#: ../../language/language.md:1447
 msgid ""
 "// Package A\n"
 "pub(readonly) struct RO {\n"
 "  field: Int\n"
 "}\n"
-"fn init {\n"
+"test {\n"
 "  let r = { field: 4 }       // OK\n"
 "  let r = { ..r, field: 8 }  // OK\n"
 "}\n"
@@ -4002,7 +4237,7 @@ msgid ""
 "  println(r.field)  // OK\n"
 "  println(\" }\")\n"
 "}\n"
-"fn init {\n"
+"test {\n"
 "  let r : RO = { field: 4 }  // ERROR: Cannot create values of the public"
 " read-only type RO!\n"
 "  let r = { ..r, field: 8 }  // ERROR: Cannot mutate a public read-only "
@@ -4010,7 +4245,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1770
+#: ../../language/language.md:1469
 msgid ""
 "Access control in MoonBit adheres to the principle that a `pub` type, "
 "function, or variable cannot be defined in terms of a private type. This "
@@ -4019,7 +4254,7 @@ msgid ""
 "occurrence of use cases that violate this principle."
 msgstr ""
 
-#: ../../language/language.md:1772
+#: ../../language/language.md:1472
 msgid ""
 "pub struct S {\n"
 "  x: T1  // OK\n"
@@ -4037,11 +4272,11 @@ msgid ""
 "pub let a: T3  // ERROR: public variable has private type `T3`!\n"
 msgstr ""
 
-#: ../../language/language.md:1789
+#: ../../language/language.md:1489
 msgid "Method system"
 msgstr ""
 
-#: ../../language/language.md:1791
+#: ../../language/language.md:1491
 msgid ""
 "MoonBit supports methods in a different way from traditional object-"
 "oriented languages. A method in MoonBit is just a toplevel function "
@@ -4049,47 +4284,57 @@ msgid ""
 "syntax `fn TypeName::method_name(...) -> ...`:"
 msgstr ""
 
-#: ../../language/language.md:1793
+#: ../../language/language.md:1493 ../../language/language.md:1535
 msgid ""
-"enum MyList[X] {\n"
+"pub(all) enum List[X] {\n"
 "  Nil\n"
-"  Cons(X, MyList[X])\n"
+"  Cons(X, List[X])\n"
 "}\n"
 "\n"
-"fn MyList::map[X, Y](xs: MyList[X], f: (X) -> Y) -> MyList[Y] { ... }\n"
-"fn MyList::concat[X](xs: MyList[MyList[X]]) -> MyList[X] { ... }\n"
+"pub fn List::concat[X](xs : List[List[X]]) -> List[X] {\n"
+"  ...\n"
+"}\n"
 msgstr ""
 
-#: ../../language/language.md:1803
+#: ../../language/language.md:1499
 msgid ""
 "As a convenient shorthand, when the first parameter of a function is "
 "named `self`, MoonBit automatically defines the function as a method of "
 "the type of `self`:"
 msgstr ""
 
-#: ../../language/language.md:1805
+#: ../../language/language.md:1501
 msgid ""
-"fn map[X, Y](self: MyList[X], f: (X) -> Y) -> List[Y] { ... }\n"
-"// equivalent to\n"
-"fn MyList::map[X, Y](xs: MyList[X], f: (X) -> Y) -> List[Y] { ... }\n"
+"fn List::map[X, Y](xs : List[X], f : (X) -> Y) -> List[Y] {\n"
+"  ...\n"
+"}\n"
 msgstr ""
 
-#: ../../language/language.md:1811
+#: ../../language/language.md:1507
+msgid "is equivalent to:"
+msgstr ""
+
+#: ../../language/language.md:1509
+msgid ""
+"fn map[X, Y](self : List[X], f : (X) -> Y) -> List[Y] {\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/language.md:1515
 msgid ""
 "Methods are just regular functions owned by a type constructor. So when "
 "there is no ambiguity, methods can be called using regular function call "
 "syntax directly:"
 msgstr ""
 
-#: ../../language/language.md:1813
+#: ../../language/language.md:1517
 msgid ""
-"fn init {\n"
-"  let xs: MyList[MyList[_]] = ...\n"
-"  let ys = concat(xs)\n"
-"}\n"
+"let xs : List[List[_]] = { ... }\n"
+"let ys = concat(xs)\n"
 msgstr ""
 
-#: ../../language/language.md:1820
+#: ../../language/language.md:1524
 msgid ""
 "Unlike regular functions, methods support overloading: different types "
 "can define methods of the same name. If there are multiple methods of the"
@@ -4097,22 +4342,33 @@ msgid ""
 " explicitly adding a `TypeName::` prefix:"
 msgstr ""
 
-#: ../../language/language.md:1822
+#: ../../language/language.md:1526
 msgid ""
-"struct T1 { x1: Int }\n"
-"fn T1::default() -> { { x1: 0 } }\n"
+"struct T1 {\n"
+"  x1 : Int\n"
+"}\n"
 "\n"
-"struct T2 { x2: Int }\n"
-"fn T2::default() -> { { x2: 0 } }\n"
+"fn T1::default() -> T1 {\n"
+"  { x1: 0 }\n"
+"}\n"
 "\n"
-"fn init {\n"
-"  // default() is ambiguous!\n"
-"  let t1 = T1::default() // ok\n"
-"  let t2 = T2::default() // ok\n"
+"struct T2 {\n"
+"  x2 : Int\n"
+"}\n"
+"\n"
+"fn T2::default() -> T2 {\n"
+"  { x2: 0 }\n"
+"}\n"
+"\n"
+"test {\n"
+"  // default() : T1::default() ? T2::default()?\n"
+"  let t1 = T1::default()\n"
+"  let t2 = T2::default()\n"
+"\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1836
+#: ../../language/language.md:1533
 msgid ""
 "When the first parameter of a method is also the type it belongs to, "
 "methods can be called using dot syntax `x.method(...)`. MoonBit "
@@ -4120,27 +4376,32 @@ msgid ""
 " no need to write the type name and even the package name of the method:"
 msgstr ""
 
-#: ../../language/language.md:1838
+#: ../../language/language.md:1541
+msgid "using package with alias list"
+msgstr ""
+
+#: ../../language/language.md:1541
 msgid ""
-"// a package named @list\n"
-"enum List[X] { ... }\n"
-"fn List::length[X](xs: List[X]) -> Int { ... }\n"
+"fn f() -> Unit {\n"
+"  let xs : @list.List[@list.List[Unit]] = Nil\n"
+"  let _ = xs.concat()\n"
+"  let _ = @list.List::concat(xs)\n"
+"  let _ = @list.concat(xs)\n"
 "\n"
-"// another package that uses @list\n"
-"fn init {\n"
-"  let xs: @list.List[_] = ...\n"
-"  println(xs.length()) // always work\n"
-"  println(@list.List::length(xs)) // always work, but verbose\n"
-"  println(@list.length(xs)) // simpler, but only possible when there is "
-"no ambiguity in @list\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1852
+#: ../../language/language.md:1549
+msgid ""
+"The highlighted line is only possible when there is no ambiguity in "
+"`@list`."
+msgstr ""
+
+#: ../../language/language.md:1551
 msgid "View"
 msgstr ""
 
-#: ../../language/language.md:1854
+#: ../../language/language.md:1553
 msgid ""
 "Analogous to `slice` in other languages, the view is a reference to a "
 "specific segment of collections. You can use `data[start:end]` to create "
@@ -4148,83 +4409,49 @@ msgid ""
 "(exclusive). Both `start` and `end` indices can be omitted."
 msgstr ""
 
-#: ../../language/language.md:1859
+#: ../../language/language.md:1558
 msgid ""
-"fn init {\n"
-"  let xs = [0,1,2,3,4,5]\n"
+"test {\n"
+"  let xs = [0, 1, 2, 3, 4, 5]\n"
 "  let s1 : ArrayView[Int] = xs[2:]\n"
-"  print_array_view(s1)            //output: 2345\n"
-"  xs[:4]  |> print_array_view()  //output: 0123\n"
-"  xs[2:5] |> print_array_view()  //output: 234\n"
-"  xs[:]   |> print_array_view()  //output: 012345\n"
-"\n"
-"  // create a view of another view\n"
-"  xs[2:5][1:] |> print_array_view() //output: 34\n"
-"}\n"
-"\n"
-"fn print_array_view[T : Show](view : ArrayView[T]) -> Unit {\n"
-"  for i=0; i<view.length(); i = i + 1 {\n"
-"    println(view[i])\n"
-"  }\n"
-"  println(\"\\n\")\n"
+"  inspect!(s1, content=\"[2, 3, 4, 5]\")\n"
+"  inspect!(xs[:4], content=\"[0, 1, 2, 3]\")\n"
+"  inspect!(xs[2:5], content=\"[2, 3, 4]\")\n"
+"  inspect!(xs[:], content=\"[0, 1, 2, 3, 4, 5]\")\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1880
+#: ../../language/language.md:1564
 msgid ""
-"By implementing `length` and `op_as_view` method, you can also create a "
-"view for a user-defined type. Here is an example:"
+"By implementing `op_as_view` method, you can also create a view for a "
+"user-defined type. Here is an example:"
 msgstr ""
 
-#: ../../language/language.md:1882
+#: ../../language/language.md:1566
 msgid ""
-"struct MyList[A] {\n"
-"  elems : Array[A]\n"
+"type DataView String\n"
+"\n"
+"struct Data {}\n"
+"\n"
+"fn Data::op_as_view(_self : Data, start~ : Int = 0, end? : Int) -> "
+"DataView {\n"
+"  \"[\\{start}, \\{end.or(100)})\"\n"
 "}\n"
 "\n"
-"struct MyListView[A] {\n"
-"  ls : MyList[A]\n"
-"  start : Int\n"
-"  end : Int\n"
-"}\n"
-"\n"
-"pub fn length[A](self : MyList[A]) -> Int {\n"
-"  self.elems.length()\n"
-"}\n"
-"\n"
-"pub fn op_as_view[A](self : MyList[A], start~ : Int, end~ : Int) -> "
-"MyListView[A] {\n"
-"  println(\"op_as_view: [\\{start},\\{end})\")\n"
-"  if start < 0 || end > self.length() { abort(\"index out of bounds\") }\n"
-"  { ls: self, start, end }\n"
-"}\n"
-"\n"
-"fn init {\n"
-"  let ls = { elems: [1,2,3,4,5] }\n"
-"  ls[:] |> ignore()\n"
-"  ls[1:] |> ignore()\n"
-"  ls[:2] |> ignore()\n"
-"  ls[1:2] |> ignore()\n"
+"test {\n"
+"  let data = Data::{  }\n"
+"  inspect!(data[:]._, content=\"[0, 100)\")\n"
+"  inspect!(data[2:]._, content=\"[2, 100)\")\n"
+"  inspect!(data[:5]._, content=\"[0, 5)\")\n"
+"  inspect!(data[2:5]._, content=\"[2, 5)\")\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1912
-msgid "Output："
-msgstr ""
-
-#: ../../language/language.md:1914
-msgid ""
-"op_as_view: [0,5)\n"
-"op_as_view: [1,5)\n"
-"op_as_view: [0,2)\n"
-"op_as_view: [1,2)\n"
-msgstr ""
-
-#: ../../language/language.md:1921
+#: ../../language/language.md:1572
 msgid "Trait system"
 msgstr ""
 
-#: ../../language/language.md:1923
+#: ../../language/language.md:1574
 msgid ""
 "MoonBit features a structural trait system for overloading/ad-hoc "
 "polymorphism. Traits declare a list of operations, which must be supplied"
@@ -4232,68 +4459,71 @@ msgid ""
 "follows:"
 msgstr ""
 
-#: ../../language/language.md:1925
+#: ../../language/language.md:1576
 msgid ""
 "trait I {\n"
-"  method(...) -> ...\n"
+"  method_(Int) -> Int\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1931
+#: ../../language/language.md:1582
 msgid ""
 "In the body of a trait definition, a special type `Self` is used to refer"
 " to the type that implements the trait."
 msgstr ""
 
-#: ../../language/language.md:1933
+#: ../../language/language.md:1584
 msgid ""
 "To implement a trait, a type must provide all the methods required by the"
 " trait. Implementation for trait methods can be provided via the syntax "
 "`impl Trait for Type with method_name(...) { ... }`, for example:"
 msgstr ""
 
-#: ../../language/language.md:1936
+#: ../../language/language.md:1587
 msgid ""
-"trait Show {\n"
+"trait MyShow {\n"
 "  to_string(Self) -> String\n"
 "}\n"
 "\n"
-"struct MyType { ... }\n"
-"impl Show for MyType with to_string(self) { ... }\n"
+"struct MyType {}\n"
+"\n"
+"impl MyShow for MyType with to_string(self) { ... }\n"
+"\n"
+"struct MyContainer[T] {}\n"
 "\n"
 "// trait implementation with type parameters.\n"
 "// `[X : Show]` means the type parameter `X` must implement `Show`,\n"
 "// this will be covered later.\n"
-"impl[X : Show] Show for Array[X] with to_string(self) { ... }\n"
+"impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ... }\n"
 msgstr ""
 
-#: ../../language/language.md:1950
+#: ../../language/language.md:1593
 msgid ""
 "Type annotation can be omitted for trait `impl`: MoonBit will "
 "automatically infer the type based on the signature of `Trait::method` "
 "and the self type."
 msgstr ""
 
-#: ../../language/language.md:1952
+#: ../../language/language.md:1595
 msgid ""
 "The author of the trait can also define default implementations for some "
 "methods in the trait, for example:"
 msgstr ""
 
-#: ../../language/language.md:1954
+#: ../../language/language.md:1597
 msgid ""
-"trait I {\n"
+"trait J {\n"
 "  f(Self) -> Unit\n"
 "  f_twice(Self) -> Unit\n"
 "}\n"
 "\n"
-"impl I with f_twice(self) {\n"
+"impl J with f_twice(self) {\n"
 "  self.f()\n"
 "  self.f()\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1966
+#: ../../language/language.md:1603
 msgid ""
 "Implementers of trait `I` don't have to provide an implementation for "
 "`f_twice`: to implement `I`, only `f` is necessary. They can always "
@@ -4301,7 +4531,7 @@ msgid ""
 "with f_twice`, if desired, though."
 msgstr ""
 
-#: ../../language/language.md:1969
+#: ../../language/language.md:1606
 msgid ""
 "If an explicit `impl` or default implementation is not found, trait "
 "method resolution falls back to regular methods. This allows types to "
@@ -4311,7 +4541,7 @@ msgid ""
 "such as `Int` and `Double`:"
 msgstr ""
 
-#: ../../language/language.md:1973
+#: ../../language/language.md:1610
 msgid ""
 "trait Number {\n"
 "  op_add(Self, Self) -> Self\n"
@@ -4319,76 +4549,62 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1980
+#: ../../language/language.md:1616
 msgid ""
 "When declaring a generic function, the type parameters can be annotated "
 "with the traits they should implement, allowing the definition of "
 "constrained generic functions. For example:"
 msgstr ""
 
-#: ../../language/language.md:1982
+#: ../../language/language.md:1618
 msgid ""
-"trait Number {\n"
-"  op_add(Self, Self) -> Self\n"
-"  op_mul(Self, Self) -> Self\n"
-"}\n"
-"\n"
-"fn square[N: Number](x: N) -> N {\n"
-"  x * x // same as `x.op_mul(x)`\n"
+"fn square[N : Number](x : N) -> N {\n"
+"  x * x // <=> x.op_mul(x)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:1993
+#: ../../language/language.md:1624
 msgid ""
 "Without the `Number` requirement, the expression `x * x` in `square` will"
 " result in a method/operator not found error. Now, the function `square` "
 "can be called with any type that implements `Number`, for example:"
 msgstr ""
 
-#: ../../language/language.md:1995
+#: ../../language/language.md:1626
 msgid ""
-"fn main {\n"
-"  println(square(2)) // 4\n"
-"  println(square(1.5)) // 2.25\n"
-"  println(square({ x: 2, y: 3 })) // {x: 4, y: 9}\n"
-"}\n"
-"\n"
-"trait Number {\n"
-"  op_add(Self, Self) -> Self\n"
-"  op_mul(Self, Self) -> Self\n"
-"}\n"
-"\n"
-"fn square[N: Number](x: N) -> N {\n"
-"  x * x // same as `x.op_mul(x)`\n"
-"}\n"
-"\n"
 "struct Point {\n"
-"  x: Int\n"
-"  y: Int\n"
-"} derive(Show)\n"
+"  x : Int\n"
+"  y : Int\n"
+"} derive(Eq, Show)\n"
 "\n"
-"impl Number for Point with op_add(p1, p2) {\n"
-"  { x: p1.x + p2.x, y: p1.y + p2.y }\n"
+"impl Number for Point with op_add(self, other) {\n"
+"  { x: self.x + other.x, y: self.y + other.y }\n"
 "}\n"
 "\n"
-"impl Number for Point with op_mul(p1, p2) {\n"
-"  { x: p1.x * p2.x, y: p1.y * p2.y }\n"
+"impl Number for Point with op_mul(self, other) {\n"
+"  { x: self.x * other.x, y: self.y * other.y }\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq!(square(2), 4)\n"
+"  assert_eq!(square(1.5), 2.25)\n"
+"  assert_eq!(square(Point::{ x: 2, y: 3 }), { x: 4, y: 9 })\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:2025
+#: ../../language/language.md:1632
 msgid "MoonBit provides the following useful builtin traits:"
 msgstr ""
 
-#: ../../language/language.md:2027
+#: ../../language/language.md:1636
 msgid ""
 "trait Eq {\n"
 "  op_equal(Self, Self) -> Bool\n"
 "}\n"
 "\n"
-"trait Compare {\n"
+"trait Compare : Eq {\n"
 "  // `0` for equal, `-1` for smaller, `1` for greater\n"
-"  op_equal(Self, Self) -> Int\n"
+"  compare(Self, Self) -> Int\n"
 "}\n"
 "\n"
 "trait Hash {\n"
@@ -4406,63 +4622,63 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:2052
-msgid "Involke trait methods directly"
+#: ../../language/language.md:1661
+msgid "Invoke trait methods directly"
 msgstr ""
 
-#: ../../language/language.md:2053
+#: ../../language/language.md:1662
 msgid ""
 "Methods of a trait can be called directly via `Trait::method`. MoonBit "
 "will infer the type of `Self` and check if `Self` indeed implements "
 "`Trait`, for example:"
 msgstr ""
 
-#: ../../language/language.md:2055
+#: ../../language/language.md:1664
 msgid ""
-"fn main {\n"
-"  println(Show::to_string(42))\n"
-"  println(Compare::compare(1.0, 2.5))\n"
+"test {\n"
+"  assert_eq!(Show::to_string(42), \"42\")\n"
+"  assert_eq!(Compare::compare(1.0, 2.5), -1)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:2062
+#: ../../language/language.md:1670
 msgid ""
-"Trait implementations can also be involked via dot syntax, with the "
+"Trait implementations can also be invoked via dot syntax, with the "
 "following restrictions:"
 msgstr ""
 
-#: ../../language/language.md:2064
+#: ../../language/language.md:1672
 msgid ""
 "if a regular method is present, the regular method is always favored when"
 " using dot syntax"
 msgstr ""
 
-#: ../../language/language.md:2065
+#: ../../language/language.md:1673
 msgid ""
 "only trait implementations that are located in the package of the self "
-"type can be involked via dot syntax"
+"type can be invoked via dot syntax"
 msgstr ""
 
-#: ../../language/language.md:2066
+#: ../../language/language.md:1674
 msgid ""
 "if there are multiple trait methods (from different traits) with the same"
 " name available, an ambiguity error is reported"
 msgstr ""
 
-#: ../../language/language.md:2067
+#: ../../language/language.md:1675
 msgid ""
 "if neither of the above two rules apply, trait `impl`s in current package"
 " will also be searched for dot syntax. This allows extending a foreign "
 "type locally."
 msgstr ""
 
-#: ../../language/language.md:2069
+#: ../../language/language.md:1677
 msgid ""
 "these `impl`s can only be called via dot syntax locally, even if they are"
 " public."
 msgstr ""
 
-#: ../../language/language.md:2071
+#: ../../language/language.md:1679
 msgid ""
 "The above rules ensures that MoonBit's dot syntax enjoys good property "
 "while being flexible. For example, adding a new dependency never break "
@@ -4471,27 +4687,28 @@ msgid ""
 "syntax must always come from current package or the package of the type!"
 msgstr ""
 
-#: ../../language/language.md:2076
+#: ../../language/language.md:1684
 msgid "Here's an example of calling trait `impl` with dot syntax:"
 msgstr ""
 
-#: ../../language/language.md:2078
+#: ../../language/language.md:1686
 msgid ""
-"struct MyType { ... }\n"
+"struct MyCustomType {}\n"
 "\n"
-"impl Show for MyType with ...\n"
+"impl Show for MyCustomType with output(self, logger) { ... }\n"
 "\n"
-"fn main {\n"
-"  let x : MyType = ...\n"
-"  println(x.to_string()) // ok\n"
+"fn f() -> Unit {\n"
+"  let x = MyCustomType::{  }\n"
+"  let _ = x.to_string()\n"
+"\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:2089
+#: ../../language/language.md:1692
 msgid "Access control of methods and trait implementations"
 msgstr ""
 
-#: ../../language/language.md:2091
+#: ../../language/language.md:1694
 msgid ""
 "To make the trait system coherent (i.e. there is a globally unique "
 "implementation for every `Type: Trait` pair), and prevent third-party "
@@ -4500,32 +4717,32 @@ msgid ""
 "methods/implement traits for types:"
 msgstr ""
 
-#: ../../language/language.md:2095
+#: ../../language/language.md:1698
 msgid ""
 "_only the package that defines a type can define methods for it_. So one "
 "cannot define new methods or override old methods for builtin and foreign"
 " types."
 msgstr ""
 
-#: ../../language/language.md:2096
+#: ../../language/language.md:1699
 msgid ""
 "_only the package of the type or the package of the trait can define an "
 "implementation_. For example, only `@pkg1` and `@pkg2` are allowed to "
 "write `impl @pkg1.Trait for @pkg2.Type`."
 msgstr ""
 
-#: ../../language/language.md:2099
+#: ../../language/language.md:1702
 msgid ""
 "The second rule above allows one to add new functionality to a foreign "
 "type by defining a new trait and implementing it. This makes MoonBit's "
 "trait & method system flexible while enjoying good coherence property."
 msgstr ""
 
-#: ../../language/language.md:2102
+#: ../../language/language.md:1705
 msgid "Visibility of traits and sealed traits"
 msgstr ""
 
-#: ../../language/language.md:2103
+#: ../../language/language.md:1706
 msgid ""
 "There are four visibility for traits, just like `struct` and `enum`: "
 "private, abstract, readonly and fully public. Private traits are declared"
@@ -4541,7 +4758,7 @@ msgid ""
 "semantic of `pub trait` will be ported to `pub(readonly)`."
 msgstr ""
 
-#: ../../language/language.md:2110
+#: ../../language/language.md:1713
 msgid ""
 "Abstract and readonly traits are sealed, because only the package "
 "defining the trait can implement them. Implementing a sealed (abstract or"
@@ -4553,11 +4770,11 @@ msgid ""
 " not be available outside."
 msgstr ""
 
-#: ../../language/language.md:2116
+#: ../../language/language.md:1719
 msgid "Here's an example of abstract trait:"
 msgstr ""
 
-#: ../../language/language.md:2118
+#: ../../language/language.md:1722
 msgid ""
 "trait Number {\n"
 " op_add(Self, Self) -> Self\n"
@@ -4579,11 +4796,11 @@ msgid ""
 "impl Number for Double with op_sub(x, y) { x - y }\n"
 msgstr ""
 
-#: ../../language/language.md:2139
+#: ../../language/language.md:1743
 msgid "From outside this package, users can only see the following:"
 msgstr ""
 
-#: ../../language/language.md:2141
+#: ../../language/language.md:1745
 msgid ""
 "trait Number\n"
 "\n"
@@ -4594,43 +4811,43 @@ msgid ""
 "impl Number for Double\n"
 msgstr ""
 
-#: ../../language/language.md:2151
+#: ../../language/language.md:1755
 msgid ""
 "The author of `Number` can make use of the fact that only `Int` and "
 "`Double` can ever implement `Number`, because new implementations are not"
 " allowed outside."
 msgstr ""
 
-#: ../../language/language.md:2154
+#: ../../language/language.md:1758
 msgid "Automatically derive builtin traits"
 msgstr ""
 
-#: ../../language/language.md:2156
+#: ../../language/language.md:1760
 msgid "MoonBit can automatically derive implementations for some builtin traits:"
 msgstr ""
 
-#: ../../language/language.md:2158
+#: ../../language/language.md:1762
 msgid ""
 "struct T {\n"
-"  x: Int\n"
-"  y: Int\n"
+"  x : Int\n"
+"  y : Int\n"
 "} derive(Eq, Compare, Show, Default)\n"
 "\n"
-"fn main {\n"
+"test {\n"
 "  let t1 = T::default()\n"
-"  let t2 = { x: 1, y: 1 }\n"
-"  println(t1) // {x: 0, y: 0}\n"
-"  println(t2) // {x: 1, y: 1}\n"
-"  println(t1 == t2) // false\n"
-"  println(t1 < t2) // true\n"
+"  let t2 = T::{ x: 1, y: 1 }\n"
+"  inspect!(t1, content=\"{x: 0, y: 0}\")\n"
+"  inspect!(t2, content=\"{x: 1, y: 1}\")\n"
+"  assert_not_eq!(t1, t2)\n"
+"  assert_true!(t1 < t2)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:2174
+#: ../../language/language.md:1768
 msgid "Trait objects"
 msgstr ""
 
-#: ../../language/language.md:2176
+#: ../../language/language.md:1770
 msgid ""
 "MoonBit supports runtime polymorphism via trait objects. If `t` is of "
 "type `T`, which implements trait `I`, one can pack the methods of `T` "
@@ -4640,60 +4857,74 @@ msgid ""
 "handled uniformly:"
 msgstr ""
 
-#: ../../language/language.md:2183
+#: ../../language/language.md:1777
 msgid ""
 "trait Animal {\n"
-"  speak(Self) -> Unit\n"
+"  speak(Self) -> String\n"
 "}\n"
 "\n"
 "type Duck String\n"
-"fn Duck::make(name: String) -> Duck { Duck(name) }\n"
-"fn speak(self: Duck) -> Unit {\n"
-"  println(self._ + \": quack!\")\n"
+"\n"
+"fn Duck::make(name : String) -> Duck {\n"
+"  Duck(name)\n"
+"}\n"
+"\n"
+"fn speak(self : Duck) -> String {\n"
+"  \"\\{self._}: quack!\"\n"
 "}\n"
 "\n"
 "type Fox String\n"
-"fn Fox::make(name: String) -> Fox { Fox(name) }\n"
-"fn Fox::speak(_self: Fox) -> Unit {\n"
-"  println(\"What does the fox say?\")\n"
+"\n"
+"fn Fox::make(name : String) -> Fox {\n"
+"  Fox(name)\n"
 "}\n"
 "\n"
-"fn main {\n"
+"fn Fox::speak(_self : Fox) -> String {\n"
+"  \"What does the fox say?\"\n"
+"}\n"
+"\n"
+"test {\n"
 "  let duck1 = Duck::make(\"duck1\")\n"
 "  let duck2 = Duck::make(\"duck2\")\n"
 "  let fox1 = Fox::make(\"fox1\")\n"
-"  let animals = [ duck1 as Animal, duck2 as Animal, fox1 as Animal ]\n"
-"  let mut i = 0\n"
-"  while i < animals.length() {\n"
-"    animals[i].speak()\n"
-"    i = i + 1\n"
-"  }\n"
+"  let animals : Array[Animal] = [\n"
+"    duck1 as Animal,\n"
+"    duck2 as Animal,\n"
+"    fox1 as Animal,\n"
+"  ]\n"
+"  inspect!(\n"
+"    animals.map(fn(animal) { animal.speak() }),\n"
+"    content=\n"
+"      #|[\"duck1: quack!\", \"duck2: quack!\", \"What does the fox "
+"say?\"]\n"
+"    ,\n"
+"  )\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:2213
+#: ../../language/language.md:1783
 msgid ""
 "Not all traits can be used to create objects. \"object-safe\" traits' "
 "methods must satisfy the following conditions:"
 msgstr ""
 
-#: ../../language/language.md:2216
+#: ../../language/language.md:1786
 msgid "`Self` must be the first parameter of a method"
 msgstr ""
 
-#: ../../language/language.md:2217
+#: ../../language/language.md:1787
 msgid ""
 "There must be only one occurrence of `Self` in the type of the method "
 "(i.e. the first parameter)"
 msgstr ""
 
-#: ../../language/language.md:2219
+#: ../../language/language.md:1789
 msgid ""
 "Users can define new methods for trait objects, just like defining new "
 "methods for structs and enums:"
 msgstr ""
 
-#: ../../language/language.md:2221
+#: ../../language/language.md:1791
 msgid ""
 "trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
@@ -4720,15 +4951,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:2246
+#: ../../language/language.md:1797
 msgid "Test Blocks"
 msgstr ""
 
-#: ../../language/language.md:2248
+#: ../../language/language.md:1799
 msgid "MoonBit provides the test code block for writing test cases. For example:"
 msgstr ""
 
-#: ../../language/language.md:2250
+#: ../../language/language.md:1801
 msgid ""
 "test \"test_name\" {\n"
 "  assert_eq!(1 + 1, 2)\n"
@@ -4736,7 +4967,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:2257
+#: ../../language/language.md:1807
 msgid ""
 "A test code block is essentially a function that returns a `Unit` but may"
 " throws a `String` on error, or `Unit!String` as one would see in its "
@@ -4750,25 +4981,26 @@ msgid ""
 "panic is triggered. For example:"
 msgstr ""
 
-#: ../../language/language.md:2259
+#: ../../language/language.md:1809
 msgid ""
 "test \"panic_test\" {\n"
 "  let _ : Int = Option::None.unwrap()\n"
+"\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:2265
+#: ../../language/language.md:1815
 msgid "Doc Comments"
 msgstr ""
 
-#: ../../language/language.md:2267
+#: ../../language/language.md:1817
 msgid ""
 "Doc comments are comments prefix with `///` in each line in the leading "
 "of toplevel structure like `fn`,`let`,`enum`,`struct`,`type`. The doc "
 "comments contains a markdown text and several pragmas."
 msgstr ""
 
-#: ../../language/language.md:2269
+#: ../../language/language.md:1819
 msgid ""
 "/// Return a new array with reversed elements.\n"
 "///\n"
@@ -4782,11 +5014,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:2282
+#: ../../language/language.md:1825
 msgid "Pragmas"
 msgstr ""
 
-#: ../../language/language.md:2284
+#: ../../language/language.md:1827
 msgid ""
 "Pragmas are annotations inside doc comments. They all take the form `/// "
 "@word ...`. The _word_ indicates the type of pragma and is followed "
@@ -4795,66 +5027,65 @@ msgid ""
 "warnings."
 msgstr ""
 
-#: ../../language/language.md:2286
+#: ../../language/language.md:1829
 msgid "Alert Pragmas"
 msgstr ""
 
-#: ../../language/language.md:2288
+#: ../../language/language.md:1831
 msgid ""
 "Alert pragmas in doc comments of functions will be reported when those "
 "functions are referenced. This mechanism is a generalized way to mark "
 "functions as `deprecated` or `unsafe`."
 msgstr ""
 
-#: ../../language/language.md:2290
+#: ../../language/language.md:1833
 msgid "It takes the form `@alert category \"alert message...\"`."
 msgstr ""
 
-#: ../../language/language.md:2292
+#: ../../language/language.md:1835
 msgid ""
 "The category can be an arbitrary identifier. It allows configuration to "
 "decide which alerts are enabled or turned into errors."
 msgstr ""
 
-#: ../../language/language.md:2294
+#: ../../language/language.md:1838
 msgid ""
 "/// @alert deprecated \"Use foo2 instead\"\n"
-"pub fn foo() -> Unit { ... }\n"
+"pub fn foo() -> Unit {\n"
+"  ...\n"
+"}\n"
 "\n"
 "/// @alert unsafe \"Div will cause an error when y is zero\"\n"
-"pub fn div(x: Int, y: Int) -> Int { ... }\n"
+"pub fn div(x : Int, y : Int) -> Int {\n"
+"  ...\n"
+"}\n"
 "\n"
-"fn main {\n"
-"  foo() // warning: Use foo2 instead\n"
-"  div(x, y) |> ignore // warning: Div will cause an error when y is zero\n"
+"test {\n"
+"  // Warning (Alert deprecated): Use foo2 instead\n"
+"  foo()\n"
+"  // Warning (Alert unsafe): Div will cause an error when y is zero\n"
+"  div(1, 2) |> ignore\n"
 "}\n"
 msgstr ""
 
-#: ../../language/language.md:2307
+#: ../../language/language.md:1857
 msgid "Special Syntax"
 msgstr ""
 
-#: ../../language/language.md:2309
+#: ../../language/language.md:1859
 msgid "TODO syntax"
 msgstr ""
 
-#: ../../language/language.md:2311
+#: ../../language/language.md:1861
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr ""
 
-#: ../../language/language.md:2313
+#: ../../language/language.md:1863
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"
 "}\n"
 msgstr ""
-
-#~ msgid "Grammar"
-#~ msgstr ""
-
-#~ msgid "Here's some MoonBit grammar:"
-#~ msgstr ""
-

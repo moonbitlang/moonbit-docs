@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-28 17:11+0800\n"
+"POT-Creation-Date: 2024-12-03 16:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -406,9 +406,8 @@ msgid ""
 msgstr ""
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:206
-#, fuzzy
 msgid "Conventions"
-msgstr "目录："
+msgstr "约定："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:208
 msgid ""
@@ -1366,9 +1365,8 @@ msgid ""
 msgstr ""
 
 #: ../../tutorial/example/gmachine/gmachine-2.md:5
-#, fuzzy
 msgid "let Expressions"
-msgstr "语言扩展"
+msgstr "let 表达式"
 
 #: ../../tutorial/example/gmachine/gmachine-2.md:7
 msgid ""
@@ -3287,9 +3285,8 @@ msgstr ""
 #: ../../tutorial/example/myers-diff/myers-diff.md:171
 #: ../../tutorial/example/segment-tree/segment-tree.md:33
 #: ../../tutorial/example/segment-tree/segment-tree2.md:39
-#, fuzzy
 msgid "Implementation"
-msgstr "实现列表"
+msgstr "实现"
 
 #: ../../tutorial/example/myers-diff/myers-diff.md:173
 msgid ""
@@ -4007,9 +4004,8 @@ msgid ""
 msgstr ""
 
 #: ../../tutorial/example/myers-diff/myers-diff3.md:70
-#, fuzzy
 msgid "Code Implementation"
-msgstr "实现列表"
+msgstr "代码实现"
 
 #: ../../tutorial/example/myers-diff/myers-diff3.md:72
 msgid ""
@@ -4995,7 +4991,9 @@ msgid ""
 "    self.apply(tag)\n"
 "  } else {\n"
 "    guard let Node(left~, right~, ..) = self\n"
-"    left.apply(tag) + right.apply(tag)\n"
+"    let mid = (l + r) >> 1\n"
+"    left.modify(l, mid, modify_l, modify_r, tag) +\n"
+"    right.modify(mid + 1, r, modify_l, modify_r, tag)\n"
 "  }\n"
 "}\n"
 msgstr ""
@@ -5014,9 +5012,9 @@ msgid ""
 " will return the recently created segment tree, without changing the "
 "original one, and the semantics of recurring and merging represent this "
 "vividly."
-msgstr "不过写到这里我们可以发现，这棵线段树就算加入了区间修改之后居然还是一个可持久化的，"
-"或者说 Immutable 的线段树！我们的 modify 函数将会返回最新的那棵线段树，并没有对原来的线段树作任何改变，"
-"而我们的递归与合并语义非常明显的体现了这一点。"
+msgstr ""
+"不过写到这里我们可以发现，这棵线段树就算加入了区间修改之后居然还是一个可持久化的，或者说 Immutable 的线段树！我们的 modify "
+"函数将会返回最新的那棵线段树，并没有对原来的线段树作任何改变，而我们的递归与合并语义非常明显的体现了这一点。"
 
 #: ../../tutorial/example/segment-tree/segment-tree2.md:100
 msgid ""
@@ -5025,18 +5023,19 @@ msgid ""
 "With the garbage collection mechanism of MoonBit, we don't need to use "
 "pointers **explicitly** for some relationships in recurring ADT(enum), "
 "and we don't need to take care of the memory."
-msgstr "这说明在一些 Immutable 的需求上上采用这类写法（ADT(enum)、递归）是非常优雅而且自然的。"
-"而且 MoonBit 语言存在垃圾回收机制 (GC)，所以在无限递归的 ADT(enum) 当中不需要**显式地**用指针来指代一些关系，"
-"我们并不需要关心内存里面发生了什么。"
+msgstr ""
+"这说明在一些 Immutable 的需求上上采用这类写法（ADT(enum)、递归）是非常优雅而且自然的。而且 MoonBit "
+"语言存在垃圾回收机制 (GC)，所以在无限递归的 ADT(enum) "
+"当中不需要**显式地**用指针来指代一些关系，我们并不需要关心内存里面发生了什么。"
 
 #: ../../tutorial/example/segment-tree/segment-tree2.md:102
 msgid ""
 "Readers unfamiliar with the functional programming languages may not "
 "notice this, but we actually always profit from it. For example, writing "
 "a `ConsList` in Rust using ADT(enum), we usually need:"
-msgstr "很多对函数式编程语言不熟悉的读者可能使用 MoonBit 时没有太关注到这个问题，"
-"但其实我们一直从中受益，比如如果我们需要在 Rust 当中使用 ADT(enum) 来写一个 ConsList，"
-"我们往往需要："
+msgstr ""
+"很多对函数式编程语言不熟悉的读者可能使用 MoonBit 时没有太关注到这个问题，但其实我们一直从中受益，比如如果我们需要在 Rust 当中使用 "
+"ADT(enum) 来写一个 ConsList，我们往往需要："
 
 #: ../../tutorial/example/segment-tree/segment-tree2.md:104
 msgid ""
@@ -5104,14 +5103,16 @@ msgstr "到这里我们就完成了一棵支持区间修改的，更加完美的
 msgid ""
 "In the next lesson, we’ll add multiplication support to the segment tree "
 "and explore some use cases for immutable segment trees. Stay tuned!"
-msgstr "接下来，在最后一节课当中我们将会学习如何给当前这棵线段树再加入一个 “乘法操作”，"
-"以及探索一些 Immutable 线段树的应用场景。感兴趣的读者可以提前自行了解。"
+msgstr ""
+"接下来，在最后一节课当中我们将会学习如何给当前这棵线段树再加入一个 “乘法操作”，以及探索一些 Immutable "
+"线段树的应用场景。感兴趣的读者可以提前自行了解。"
 
 #: ../../tutorial/example/segment-tree/segment-tree2.md:138
 msgid ""
 "Full code is available [here](https://github.com/moonbitlang/moonbit-"
 "docs/tree/main/next/sources/segment-tree/src/part2/top.mbt)."
-msgstr "​本篇编程实践完整代码[见此处](https://github.com/moonbitlang/moonbit-"
+msgstr ""
+"​本篇编程实践完整代码[见此处](https://github.com/moonbitlang/moonbit-"
 "docs/tree/main/next/sources/segment-tree/src/part2/top.mbt)"
 
 #: ../../tutorial/example/sudoku/index.md:1
@@ -6191,7 +6192,6 @@ msgstr ""
 "\"someoneelse@example.com\" }, Nil))\n"
 
 #: ../../tutorial/tour.md:189
-#, fuzzy
 msgid ""
 "Another datatype is `type`, a specific case of `enum` type. `type` can be"
 " thought as a wrapper around an existing type, allowing additional "
@@ -6304,7 +6304,7 @@ msgstr ""
 "\n"
 "fn to_string(self : User) -> String {\n"
 "  (self.id, self.name, self.email).to_string()\n"
-"} 这样就实现了`Printable`\n"
+"} // 这样就实现了`Printable`\n"
 "\n"
 "fn to_string[T : Printable](self : List[T]) -> String {\n"
 "  let string_aux = to_string_aux(self)\n"
