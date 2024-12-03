@@ -18,7 +18,7 @@ fn JsArray::new() -> JsArray = "array" "new"
 
 fn push(self : JsArray, charCode : Int) = "array" "push"
 
-pub type JsString
+pub(all) type JsString
 
 fn JsString::from_char_code(charCode : JsArray) -> JsString = "string" "fromCharCode"
 
@@ -38,7 +38,7 @@ pub fn JsString::from_string(str : String) -> JsString {
 }
 
 pub fn JsString::to_string(str : JsString) -> String {
-  let buffer = Buffer::new()
+  let buffer = StringBuilder::new()
   str.iter(fn(i : Int) { buffer.write_char(Char::from_int(i)) })
   buffer.to_string()
 }
