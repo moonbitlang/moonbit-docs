@@ -27,7 +27,7 @@ impl Show for DivError with output(self, logger) {
   }
 }
 
-let siganture : Unit = {
+let signature : Unit = {
   // start error 3
   fn f() -> Unit! {
     ...
