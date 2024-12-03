@@ -19,7 +19,7 @@ class MoonBitLexer(RegexLexer):
         'root': [
             (r"//.*$", token.Comment.Single),
             (r"b?\'.*\'", token.Literal),
-            (r"(#\|)(.*)$", bygroups(token.Punctuation, token.String)),
+            (r"#\|.*$", token.String),
             (r"(b)(\")", bygroups(token.String.Affix, token.String), "string.inline"),
             ("\"", token.String, "string.inline"),
             (r"\$\|", token.String, "string.multiline"),
