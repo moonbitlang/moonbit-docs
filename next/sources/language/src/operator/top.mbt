@@ -122,3 +122,32 @@ test {
   assert_eq!((a << 2).x, 0b101000)
   assert_eq!((b >> 2).x, 0b11)
 }
+
+// start view 1
+test {
+  let xs = [0, 1, 2, 3, 4, 5]
+  let s1 : ArrayView[Int] = xs[2:]
+  inspect!(s1, content="[2, 3, 4, 5]")
+  inspect!(xs[:4], content="[0, 1, 2, 3]")
+  inspect!(xs[2:5], content="[2, 3, 4]")
+  inspect!(xs[:], content="[0, 1, 2, 3, 4, 5]")
+}
+// end view 1
+
+// start view 2
+type DataView String
+
+struct Data {}
+
+fn Data::op_as_view(_self : Data, start~ : Int = 0, end? : Int) -> DataView {
+  "[\{start}, \{end.or(100)})"
+}
+
+test {
+  let data = Data::{  }
+  inspect!(data[:]._, content="[0, 100)")
+  inspect!(data[2:]._, content="[2, 100)")
+  inspect!(data[:5]._, content="[0, 5)")
+  inspect!(data[2:5]._, content="[2, 5)")
+}
+// end view 2

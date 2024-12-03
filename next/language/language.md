@@ -1442,12 +1442,14 @@ but you can update the public fields using the functional struct update syntax.
 
 Readonly types is a very useful feature, inspired by [private types](https://v2.ocaml.org/manual/privatetypes.html) in OCaml. In short, values of `pub(readonly)` types can be destructed by pattern matching and the dot syntax, but cannot be constructed or mutated in other packages. Note that there is no restriction within the same package where `pub(readonly)` types are defined.
 
+<!-- MANUAL CHECK -->
+
 ```moonbit
 // Package A
 pub(readonly) struct RO {
   field: Int
 }
-fn init {
+test {
   let r = { field: 4 }       // OK
   let r = { ..r, field: 8 }  // OK
 }
@@ -1458,7 +1460,7 @@ fn println(r : RO) -> Unit {
   println(r.field)  // OK
   println(" }")
 }
-fn init {
+test {
   let r : RO = { field: 4 }  // ERROR: Cannot create values of the public read-only type RO!
   let r = { ..r, field: 8 }  // ERROR: Cannot mutate a public read-only field!
 }
@@ -1466,6 +1468,7 @@ fn init {
 
 Access control in MoonBit adheres to the principle that a `pub` type, function, or variable cannot be defined in terms of a private type. This is because the private type may not be accessible everywhere that the `pub` entity is used. MoonBit incorporates sanity checks to prevent the occurrence of use cases that violate this principle.
 
+<!-- MANUAL CHECK -->
 ```moonbit
 pub struct S {
   x: T1  // OK
@@ -1487,64 +1490,63 @@ pub let a: T3  // ERROR: public variable has private type `T3`!
 
 MoonBit supports methods in a different way from traditional object-oriented languages. A method in MoonBit is just a toplevel function associated with a type constructor. Methods can be defined using the syntax `fn TypeName::method_name(...) -> ...`:
 
-```moonbit
-enum MyList[X] {
-  Nil
-  Cons(X, MyList[X])
-}
-
-fn MyList::map[X, Y](xs: MyList[X], f: (X) -> Y) -> MyList[Y] { ... }
-fn MyList::concat[X](xs: MyList[MyList[X]]) -> MyList[X] { ... }
+```{literalinclude} /sources/language/src/method/top.mbt
+:language: moonbit
+:start-after: start method 1
+:end-before: end method 1
 ```
 
 As a convenient shorthand, when the first parameter of a function is named `self`, MoonBit automatically defines the function as a method of the type of `self`:
 
-```moonbit
-fn map[X, Y](self: MyList[X], f: (X) -> Y) -> List[Y] { ... }
-// equivalent to
-fn MyList::map[X, Y](xs: MyList[X], f: (X) -> Y) -> List[Y] { ... }
+```{literalinclude} /sources/language/src/method/top.mbt
+:language: moonbit
+:start-after: start method 2
+:end-before: end method 2
+```
+
+is equivalent to:
+
+```{literalinclude} /sources/language/src/method2/top.mbt
+:language: moonbit
+:start-after: start method 3
+:end-before: end method 3
 ```
 
 Methods are just regular functions owned by a type constructor. So when there is no ambiguity, methods can be called using regular function call syntax directly:
 
-```moonbit
-fn init {
-  let xs: MyList[MyList[_]] = ...
-  let ys = concat(xs)
-}
+```{literalinclude} /sources/language/src/method/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start method 4
+:end-before: end method 4
 ```
 
 Unlike regular functions, methods support overloading: different types can define methods of the same name. If there are multiple methods of the same name (but for different types) in scope, one can still call them by explicitly adding a `TypeName::` prefix:
 
-```moonbit
-struct T1 { x1: Int }
-fn T1::default() -> { { x1: 0 } }
-
-struct T2 { x2: Int }
-fn T2::default() -> { { x2: 0 } }
-
-fn init {
-  // default() is ambiguous!
-  let t1 = T1::default() // ok
-  let t2 = T2::default() // ok
-}
+```{literalinclude} /sources/language/src/method/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start method 5
+:end-before: end method 5
 ```
 
 When the first parameter of a method is also the type it belongs to, methods can be called using dot syntax `x.method(...)`. MoonBit automatically finds the correct method based on the type of `x`, there is no need to write the type name and even the package name of the method:
 
-```moonbit
-// a package named @list
-enum List[X] { ... }
-fn List::length[X](xs: List[X]) -> Int { ... }
-
-// another package that uses @list
-fn init {
-  let xs: @list.List[_] = ...
-  println(xs.length()) // always work
-  println(@list.List::length(xs)) // always work, but verbose
-  println(@list.length(xs)) // simpler, but only possible when there is no ambiguity in @list
-}
+```{literalinclude} /sources/language/src/method/top.mbt
+:language: moonbit
+:start-after: start method 1
+:end-before: end method 1
 ```
+
+```{literalinclude} /sources/language/src/method2/top.mbt
+:language: moonbit
+:caption: using package with alias list
+:start-after: start method 6
+:end-before: end method 6
+:emphasize-lines: 5
+```
+
+The highlighted line is only possible when there is no ambiguity in `@list`.
 
 ## View
 
@@ -1553,76 +1555,28 @@ specific segment of collections. You can use `data[start:end]` to create a
 view of array `data`, referencing elements from `start` to `end` (exclusive).
 Both `start` and `end` indices can be omitted.
 
-```moonbit
-fn init {
-  let xs = [0,1,2,3,4,5]
-  let s1 : ArrayView[Int] = xs[2:]
-  print_array_view(s1)            //output: 2345
-  xs[:4]  |> print_array_view()  //output: 0123
-  xs[2:5] |> print_array_view()  //output: 234
-  xs[:]   |> print_array_view()  //output: 012345
-
-  // create a view of another view
-  xs[2:5][1:] |> print_array_view() //output: 34
-}
-
-fn print_array_view[T : Show](view : ArrayView[T]) -> Unit {
-  for i=0; i<view.length(); i = i + 1 {
-    println(view[i])
-  }
-  println("\n")
-}
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:start-after: start view 1
+:end-before: end view 1
 ```
 
-By implementing `length` and `op_as_view` method, you can also create a view for a user-defined type. Here is an example:
+By implementing `op_as_view` method, you can also create a view for a user-defined type. Here is an example:
 
-```moonbit
-struct MyList[A] {
-  elems : Array[A]
-}
-
-struct MyListView[A] {
-  ls : MyList[A]
-  start : Int
-  end : Int
-}
-
-pub fn length[A](self : MyList[A]) -> Int {
-  self.elems.length()
-}
-
-pub fn op_as_view[A](self : MyList[A], start~ : Int, end~ : Int) -> MyListView[A] {
-  println("op_as_view: [\{start},\{end})")
-  if start < 0 || end > self.length() { abort("index out of bounds") }
-  { ls: self, start, end }
-}
-
-fn init {
-  let ls = { elems: [1,2,3,4,5] }
-  ls[:] |> ignore()
-  ls[1:] |> ignore()
-  ls[:2] |> ignore()
-  ls[1:2] |> ignore()
-}
-```
-
-Output：
-
-```
-op_as_view: [0,5)
-op_as_view: [1,5)
-op_as_view: [0,2)
-op_as_view: [1,2)
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:start-after: start view 2
+:end-before: end view 2
 ```
 
 ## Trait system
 
 MoonBit features a structural trait system for overloading/ad-hoc polymorphism. Traits declare a list of operations, which must be supplied when a type wants to implement the trait. Traits can be declared as follows:
 
-```moonbit
-trait I {
-  method(...) -> ...
-}
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait 1
+:end-before: end trait 1
 ```
 
 In the body of a trait definition, a special type `Self` is used to refer to the type that implements the trait.
@@ -1630,34 +1584,20 @@ In the body of a trait definition, a special type `Self` is used to refer to the
 To implement a trait, a type must provide all the methods required by the trait.
 Implementation for trait methods can be provided via the syntax `impl Trait for Type with method_name(...) { ... }`, for example:
 
-```moonbit
-trait Show {
-  to_string(Self) -> String
-}
-
-struct MyType { ... }
-impl Show for MyType with to_string(self) { ... }
-
-// trait implementation with type parameters.
-// `[X : Show]` means the type parameter `X` must implement `Show`,
-// this will be covered later.
-impl[X : Show] Show for Array[X] with to_string(self) { ... }
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait 2
+:end-before: end trait 2
 ```
 
 Type annotation can be omitted for trait `impl`: MoonBit will automatically infer the type based on the signature of `Trait::method` and the self type.
 
 The author of the trait can also define default implementations for some methods in the trait, for example:
 
-```moonbit
-trait I {
-  f(Self) -> Unit
-  f_twice(Self) -> Unit
-}
-
-impl I with f_twice(self) {
-  self.f()
-  self.f()
-}
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait 3
+:end-before: end trait 3
 ```
 
 Implementers of trait `I` don't have to provide an implementation for `f_twice`: to implement `I`, only `f` is necessary.
@@ -1667,68 +1607,40 @@ If an explicit `impl` or default implementation is not found, trait method resol
 This allows types to implement a trait implicitly, hence allowing different packages to work together without seeing or depending on each other.
 For example, the following trait is automatically implemented for builtin number types such as `Int` and `Double`:
 
-```moonbit
-trait Number {
-  op_add(Self, Self) -> Self
-  op_mul(Self, Self) -> Self
-}
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait 4
+:end-before: end trait 4
 ```
 
 When declaring a generic function, the type parameters can be annotated with the traits they should implement, allowing the definition of constrained generic functions. For example:
 
-```moonbit
-trait Number {
-  op_add(Self, Self) -> Self
-  op_mul(Self, Self) -> Self
-}
-
-fn square[N: Number](x: N) -> N {
-  x * x // same as `x.op_mul(x)`
-}
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait 5
+:end-before: end trait 5
 ```
 
 Without the `Number` requirement, the expression `x * x` in `square` will result in a method/operator not found error. Now, the function `square` can be called with any type that implements `Number`, for example:
 
-```moonbit
-fn main {
-  println(square(2)) // 4
-  println(square(1.5)) // 2.25
-  println(square({ x: 2, y: 3 })) // {x: 4, y: 9}
-}
-
-trait Number {
-  op_add(Self, Self) -> Self
-  op_mul(Self, Self) -> Self
-}
-
-fn square[N: Number](x: N) -> N {
-  x * x // same as `x.op_mul(x)`
-}
-
-struct Point {
-  x: Int
-  y: Int
-} derive(Show)
-
-impl Number for Point with op_add(p1, p2) {
-  { x: p1.x + p2.x, y: p1.y + p2.y }
-}
-
-impl Number for Point with op_mul(p1, p2) {
-  { x: p1.x * p2.x, y: p1.y * p2.y }
-}
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait 6
+:end-before: end trait 6
 ```
 
 MoonBit provides the following useful builtin traits:
+
+<!-- MANUAL CHECK https://github.com/moonbitlang/core/blob/80cf250d22a5d5eff4a2a1b9a6720026f2fe8e38/builtin/traits.mbt -->
 
 ```moonbit
 trait Eq {
   op_equal(Self, Self) -> Bool
 }
 
-trait Compare {
+trait Compare : Eq {
   // `0` for equal, `-1` for smaller, `1` for greater
-  op_equal(Self, Self) -> Int
+  compare(Self, Self) -> Int
 }
 
 trait Hash {
@@ -1746,20 +1658,19 @@ trait Default {
 }
 ```
 
-### Involke trait methods directly
+### Invoke trait methods directly
 Methods of a trait can be called directly via `Trait::method`. MoonBit will infer the type of `Self` and check if `Self` indeed implements `Trait`, for example:
 
-```moonbit live
-fn main {
-  println(Show::to_string(42))
-  println(Compare::compare(1.0, 2.5))
-}
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait 7
+:end-before: end trait 7
 ```
 
-Trait implementations can also be involked via dot syntax, with the following restrictions:
+Trait implementations can also be invoked via dot syntax, with the following restrictions:
 
 1. if a regular method is present, the regular method is always favored when using dot syntax
-2. only trait implementations that are located in the package of the self type can be involked via dot syntax
+2. only trait implementations that are located in the package of the self type can be invoked via dot syntax
    - if there are multiple trait methods (from different traits) with the same name available, an ambiguity error is reported
 3. if neither of the above two rules apply, trait `impl`s in current package will also be searched for dot syntax.
    This allows extending a foreign type locally.
@@ -1772,15 +1683,10 @@ the method called via dot syntax must always come from current package or the pa
 
 Here's an example of calling trait `impl` with dot syntax:
 
-```moonbit
-struct MyType { ... }
-
-impl Show for MyType with ...
-
-fn main {
-  let x : MyType = ...
-  println(x.to_string()) // ok
-}
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait 8
+:end-before: end trait 8
 ```
 
 ## Access control of methods and trait implementations
@@ -1812,6 +1718,7 @@ Implementations with only regular method and default implementations will not be
 
 Here's an example of abstract trait:
 
+<!-- MANUAL CHECK -->
 ```moonbit
 trait Number {
  op_add(Self, Self) -> Self
@@ -1852,20 +1759,10 @@ because new implementations are not allowed outside.
 
 MoonBit can automatically derive implementations for some builtin traits:
 
-```moonbit live
-struct T {
-  x: Int
-  y: Int
-} derive(Eq, Compare, Show, Default)
-
-fn main {
-  let t1 = T::default()
-  let t2 = { x: 1, y: 1 }
-  println(t1) // {x: 0, y: 0}
-  println(t2) // {x: 1, y: 1}
-  println(t1 == t2) // false
-  println(t1 < t2) // true
-}
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait 9
+:end-before: end trait 9
 ```
 
 ## Trait objects
@@ -1877,34 +1774,10 @@ into a runtime object via `t as I`.
 Trait object erases the concrete type of a value,
 so objects created from different concrete types can be put in the same data structure and handled uniformly:
 
-```moonbit live
-trait Animal {
-  speak(Self) -> Unit
-}
-
-type Duck String
-fn Duck::make(name: String) -> Duck { Duck(name) }
-fn speak(self: Duck) -> Unit {
-  println(self._ + ": quack!")
-}
-
-type Fox String
-fn Fox::make(name: String) -> Fox { Fox(name) }
-fn Fox::speak(_self: Fox) -> Unit {
-  println("What does the fox say?")
-}
-
-fn main {
-  let duck1 = Duck::make("duck1")
-  let duck2 = Duck::make("duck2")
-  let fox1 = Fox::make("fox1")
-  let animals = [ duck1 as Animal, duck2 as Animal, fox1 as Animal ]
-  let mut i = 0
-  while i < animals.length() {
-    animals[i].speak()
-    i = i + 1
-  }
-}
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait object 1
+:end-before: end trait object 1
 ```
 
 Not all traits can be used to create objects.
@@ -1915,66 +1788,39 @@ Not all traits can be used to create objects.
 
 Users can define new methods for trait objects, just like defining new methods for structs and enums:
 
-```moonbit
-trait Logger {
-  write_string(Self, String) -> Unit
-}
-
-trait CanLog {
-  log(Self, Logger) -> Unit
-}
-
-fn Logger::write_object[Obj : CanLog](self : Logger, obj : Obj) -> Unit {
-  obj.log(self)
-}
-
-// use the new method to simplify code
-impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {
-  let (a, b) = self
-  logger
-  ..write_string("(")
-  ..write_object(a)
-  ..write_string(", ")
-  ..write_object(b)
-  .write_string(")")
-}
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait object 2
+:end-before: end trait object 2
 ```
 
 ## Test Blocks
 
 MoonBit provides the test code block for writing test cases. For example:
 
-```moonbit
-test "test_name" {
-  assert_eq!(1 + 1, 2)
-  assert_eq!(2 + 2, 4)
-}
+```{literalinclude} /sources/language/src/test/top.mbt
+:language: moonbit
+:start-after: start test 1
+:end-before: end test 1
 ```
 
 A test code block is essentially a function that returns a `Unit` but may throws a `String` on error, or `Unit!String` as one would see in its signature at the position of return type. It is called during the execution of `moon test` and outputs a test report through the build system. The `assert_eq` function is from the standard library; if the assertion fails, it prints an error message and terminates the test. The string `"test_name"` is used to identify the test case and is optional. If it starts with `"panic"`, it indicates that the expected behavior of the test is to trigger a panic, and the test will only pass if the panic is triggered. For example:
 
-```moonbit
-test "panic_test" {
-  let _ : Int = Option::None.unwrap()
-}
+```{literalinclude} /sources/language/src/test/top.mbt
+:language: moonbit
+:start-after: start test 2
+:end-before: end test 2
 ```
 
 ## Doc Comments
 
 Doc comments are comments prefix with `///` in each line in the leading of toplevel structure like `fn`,`let`,`enum`,`struct`,`type`. The doc comments contains a markdown text and several pragmas.
 
-````moonbit
-/// Return a new array with reversed elements.
-///
-/// # Example
-///
-/// ```
-/// reverse([1,2,3,4]) |> println()
-/// ```
-fn reverse[T](xs : Array[T]) -> Array[T] {
-  ...
-}
-````
+```{literalinclude} /sources/language/src/misc/top.mbt
+:language: moonbit
+:start-after: start doc string 1
+:end-before: end doc string 1
+```
 
 ### Pragmas
 
@@ -1988,16 +1834,21 @@ Pragmas are annotations inside doc comments. They all take the form `/// @word .
 
   The category can be an arbitrary identifier. It allows configuration to decide which alerts are enabled or turned into errors.
 
+  <!-- MANUAL CHECK -->
   ```moonbit
   /// @alert deprecated "Use foo2 instead"
-  pub fn foo() -> Unit { ... }
+  pub fn foo() -> Unit {
+    ...
+  }
 
   /// @alert unsafe "Div will cause an error when y is zero"
-  pub fn div(x: Int, y: Int) -> Int { ... }
+  pub fn div(x : Int, y : Int) -> Int {
+    ...
+  }
 
-  fn main {
+  test {
     foo() // warning: Use foo2 instead
-    div(x, y) |> ignore // warning: Div will cause an error when y is zero
+    div(1, 2) |> ignore // warning: Div will cause an error when y is zero
   }
   ```
 
@@ -2007,8 +1858,8 @@ Pragmas are annotations inside doc comments. They all take the form `/// @word .
 
 The `todo` syntax (`...`) is a special construct used to mark sections of code that are not yet implemented or are placeholders for future functionality. For example:
 
-```moonbit
-fn todo_in_func() -> Int {
-  ...
-}
+```{literalinclude} /sources/language/src/misc/top.mbt
+:language: moonbit
+:start-after: start todo 1
+:end-before: end todo 1
 ```
