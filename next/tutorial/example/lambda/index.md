@@ -10,7 +10,9 @@ The only actions allowed in untyped Lambda calculus are defining Lambdas (often 
 
 Most programmers are no strange to the name "Lambda expression" as most mainstream programming languages are hugely influenced by functional language paradigm. Lambdas in untyped Lambda calculus are simpler than those in mainstream programming languages. A Lambda typically looks like this: `λx.x x`, where `x` is its parameter (each Lambda can only have one parameter), `.` is the separator between the parameter and the expression defining it, and `x x` is its definition.
 
-> Some materials may omit spaces, so the above example can be rewritten as `λx.xx`.
+```{note}
+Some materials may omit spaces, so the above example can be rewritten as `λx.xx`.
+```
 
 If we replace `x x` with `x(x)`, it might be more in line with the function calls we see in general languages. However, in the more common notation of Lambda calculus, calling a Lambda only requires a space between it and its parameter. Here, we call the parameter given by `x`, which is `x` itself.
 
@@ -99,7 +101,9 @@ De Bruijn index is a technique for representing variables in Lambda terms using 
 
 In the example above, there is one Lambda `λy` between the variable `x` and its introduction position `λx`, so `x` is replaced with `1`. For variable `z`, there are no other Lambdas between its introduction position and its usage, so it is directly replaced with `0`. In a sense, the value of the de Bruijn index describes the relative distance between the variable and its corresponding Lambda. Here, the distance is measured by the number of nested Lambdas.
 
-> The same variable may be replaced with different integers in different positions.
+```{note}
+The same variable may be replaced with different integers in different positions.
+```
 
 We define a new type `TermDBI` to represent Lambda terms using de Bruijn indices:
 
@@ -120,7 +124,9 @@ However, directly writing and reading Lambda terms in de Bruijn index form is pa
 
 To simplify implementation, if the input `Term` contains free variables, the `bruijn()` function will report an error directly. MoonBit provides a `Result[V, E]` type in the standard library, which has two constructors, `Ok(V)` and `Err(E)`, representing success and failure in computation, respectively.
 
-> Readers familiar with Rust should find this familiar.
+```{hint}
+Readers familiar with Rust should find this familiar.
+```
 
 <!-- MANUAL CHECK -->
 ```moonbit
@@ -135,7 +141,7 @@ We take a clumsy approach to save variable names and their associated nesting de
 :end-at: }
 ```
 
-Then we write a helper function to find the corresponding `depth` based on a specific `name` from `List[Index]`:
+Then we write a helper function to find the corresponding `depth` based on a specific `name` from `@immut/list.T[Index]`:
 
 ```{literalinclude} /sources/lambda-expression/src/top.mbt
 :language: moonbit
@@ -167,9 +173,9 @@ Reduction mainly deals with App, i.e., calls:
 :end-before: test
 ```
 
-First, attempt reduction on both sub-items, then see if `eval(t1)` results in a Lambda. If so, perform one step of variable substitution (via the subst function) and then continue simplifying. For Lambdas (`Abs`), simply return them as they are.
+First, attempt reduction on both sub-items, then see if `eval(t1)` results in a Lambda. If so, perform one step of variable substitution (via the `subst` function) and then continue simplifying. For Lambdas (`Abs`), simply return them as they are.
 
-The implementation of the subst function becomes much simpler when we don't need to consider free variables. We just need to keep track of the current depth recursively and compare it with the encountered variables. If they match, it's the variable to be replaced.
+The implementation of the `subst` function becomes much simpler when we don't need to consider free variables. We just need to keep track of the current depth recursively and compare it with the encountered variables. If they match, it's the variable to be replaced.
 
 ```{literalinclude} /sources/lambda-expression/src/top.mbt
 :language: moonbit
