@@ -36,29 +36,20 @@ Before implementing `let` (and the more complex `letrec`), we first need to modi
 
 The adjustment is done in the implementation of the `Unwind` instruction. If the supercombinator has no parameters, it is the same as the original unwind. When there are parameters, the top address of the supercombinator node is discarded, and the `rearrange` function is called.
 
-```moonbit
-fn rearrange(self : GState, n : Int) -> Unit {
-  let appnodes = take(self.stack, n)
-  let args = map(fn (addr) {
-  let NApp(_, arg) = self.heap[addr]
-      arg
-  }, appnodes)
-  self.stack = append(args, drop(appnodes, n - 1))
-}
+```{literalinclude} /sources/gmachine/src/part2/vm.mbt
+:language: moonbit
+:start-after: start rearrange definition
+:end-before: end rearrange definition
 ```
 
 The `rearrange` function assumes that the first N addresses on the stack point to a series of `NApp` nodes. It keeps the bottommost one (used as Redex update), cleans up the top N-1 addresses, and then places N addresses that directly point to the parameters.
 
 After this, both parameters and local variables can be accessed using the same command by changing the `PushArg` instruction to a more general `Push` instruction.
 
-```rust
-fn push(self : GState, offset : Int) -> Unit {
-  // Copy the address at offset + 1 to the top of the stack
-  //    Push(n) a0 : . . . : an : s
-  // => an : a0 : . . . : an : s
-  let appaddr = nth(self.stack, offset)
-  self.putStack(appaddr)
-}
+```{literalinclude} /sources/gmachine/src/part2/vm.mbt
+:language: moonbit
+:start-after: start push definition
+:end-before: end push definition
 ```
 
 The next issue is that we need something to clean up. Consider the following expression:
@@ -83,42 +74,28 @@ After constructing the graph corresponding to the expression `expr`, the stack s
 
 Therefore, we need a new instruction to clean up these no longer needed addresses. It is called `Slide`. As the name suggests, the function of `Slide(n)` is to skip the first address and delete the following N addresses.
 
-```rust
-fn slide(self : GState, n : Int) -> Unit {
-  let addr = self.pop1()
-  self.stack = Cons(addr, drop(self.stack, n))
-}
+```{literalinclude} /sources/gmachine/src/part2/vm.mbt
+:language: moonbit
+:start-after: start slide definition
+:end-before: end slide definition
 ```
 
 Now we can compile `let`. We will compile the expressions corresponding to local variables using the `compileC` function. Then, traverse the list of variable definitions (`defs`), compile and update the corresponding offsets in order. Finally, use the passed `comp` function to compile the main expression and add the `Slide` instruction to clean up the unused addresses.
 
 > Compiling the main expression using the passed function makes it easy to reuse when adding subsequent features.
 
-```rust
-fn compileLet(comp : (RawExpr[String], List[(String, Int)]) -> List[Instruction], defs : List[(String, RawExpr[String])], expr : RawExpr[String], env : List[(String, Int)]) -> List[Instruction] {
-  let (env, codes) = loop env, List::Nil, defs {
-    env, acc, Nil => (env, acc)
-    env, acc, Cons((name, expr), rest) => {
-      let code = compileC(expr, env)
-      // Update offsets and add offsets for local variables corresponding to name
-      let env = List::Cons((name, 0), argOffset(1, env))
-      continue env, append(acc, code), rest
-    }
-  }
-  append(codes, append(comp(expr, env), List::[Slide(length(defs))]))
-}
+```{literalinclude} /sources/gmachine/src/part2/compile.mbt
+:language: moonbit
+:start-after: start compile_let definition
+:end-before: end compile_let definition
 ```
 
 The semantics of `letrec` are more complex - it allows the N variables within the expression to reference each other, so we need to pre-allocate N addresses and place them on the stack. We need a new instruction: `Alloc(N)`, which pre-allocates N `NInd` nodes and pushes the addresses onto the stack sequentially. The addresses in these indirect nodes are negative and only serve as placeholders.
 
-```rust
-fn allocNodes(self : GState, n : Int) -> Unit {
-  let dummynode : Node = NInd(Addr(-1))
-  for i = 0; i < n; i = i + 1 {
-    let addr = self.heap.alloc(dummynode)
-    self.putStack(addr)
-  }
-}
+```{literalinclude} /sources/gmachine/src/part2/vm.mbt
+:language: moonbit
+:start-after: start alloc definition
+:end-before: end alloc definition
 ```
 
 The steps to compile letrec are similar to `let`:
@@ -128,24 +105,10 @@ The steps to compile letrec are similar to `let`:
 - Compile the local variables in `defs`, using the `Update` instruction to update the results to the pre-allocated addresses after compiling each one.
 - Compile the main expression and use the `Slide` instruction to clean up.
 
-```rust
-fn compileLetrec(comp : (RawExpr[String], List[(String, Int)]) -> List[Instruction], defs : List[(String, RawExpr[String])], expr : RawExpr[String], env : List[(String, Int)]) -> List[Instruction] {
-  let env = loop env, defs {
-    env, Nil => env
-    env, Cons((name, _), rest) => {
-      let env = List::Cons((name, 0), argOffset(1, env))
-      continue env, rest
-    }
-  }
-  let n = length(defs)
-  fn compileDefs(defs : List[(String, RawExpr[String])], offset : Int) -> List[Instruction] {
-    match defs {
-      Nil => append(comp(expr, env), List::[Slide(n)])
-      Cons((_, expr), rest) => append(compileC(expr, env), Cons(Update(offset), compileDefs(rest, offset - 1)))
-    }
-  }
-  Cons(Alloc(n), compileDefs(defs, n - 1))
-}
+```{literalinclude} /sources/gmachine/src/part2/compile.mbt
+:language: moonbit
+:start-after: start compile_letrec definition
+:end-before: end compile_letrec definition
 ```
 
 ## Adding Primitives
@@ -201,130 +164,50 @@ The implementation of the `Eval` instruction is not complicated:
 
 > This is similar to how strict evaluation languages handle saving caller contexts, but practical implementations would use more efficient methods.
 
-```rust
-fn eval(self : GState) -> Unit {
-  let addr = self.pop1()
-  self.putDump(self.code, self.stack)
-  self.stack = List::[addr]
-  self.code = List::[Unwind]
-}
+```{literalinclude} /sources/gmachine/src/part2/vm.mbt
+:language: moonbit
+:start-after: start eval definition
+:end-before: end eval definition
 ```
 
 This simple definition requires modifying the `Unwind` instruction to restore the context when `Unwind` in the `NNum` branch finds that there is a recoverable context (`dump` is not empty).
 
-```rust
-fn unwind(self : GState) -> Unit {
-  let addr = self.pop1()
-  match self.heap[addr] {
-    NNum(_) => {
-      match self.dump {
-        Nil => self.putStack(addr)
-        Cons((instrs, stack), restDump) => {
-          // Restore the stack
-          self.stack = stack
-          self.putStack(addr)
-          self.dump = restDump
-          // Return to original code execution
-          self.code = instrs
-        }
-      }
-    }
-    ......
-  }
-}
+```{literalinclude} /sources/gmachine/src/part2/vm.mbt
+:language: moonbit
+:start-after: start unwind definition
+:end-before: end unwind definition
 ```
 
 Next, we need to implement arithmetic and comparison instructions. We use two functions to simplify the form of binary operations. The result of the comparison instruction is a boolean value, and for simplicity, we use numbers to represent it: 0 for `false`, 1 for `true`.
 
-```rust
-fn liftArith2(self : GState, op : (Int, Int) -> Int) -> Unit {
-  // Binary arithmetic operations
-  let (a1, a2) = self.pop2()
-  match (self.heap[a1], self.heap[a2]) {
-    (NNum(n1), NNum(n2)) => {
-      let newnode = Node::NNum(op(n1, n2))
-      let addr = self.heap.alloc(newnode)
-      self.putStack(addr)
-    }
-    (node1, node2) => abort("liftArith2: \{a1} = \{node1} \{a2} = \{node2}")
-  }
-}
-
-fn liftCmp2(self : GState, op : (Int, Int) -> Bool) -> Unit {
-  // Binary comparison operations
-  let (a1, a2) = self.pop2()
-  match (self.heap[a1], self.heap[a2]) {
-    (NNum(n1), NNum(n2)) => {
-      let flag = op(n1, n2)
-      let newnode = if flag { Node::NNum(1) } else { Node::NNum(0) }
-      let addr = self.heap.alloc(newnode)
-      self.putStack(addr)
-    }
-    (node1, node2) => abort("liftCmp2: \{a1} = \{node1} \{a2} = \{node2}")
-  }
-}
-
-// Implement negation separately
-fn negate(self : GState) -> Unit {
-  let addr = self.pop1()
-  match self.heap[addr] {
-    NNum(n) => {
-      let addr = self.heap.alloc(NNum(-n))
-      self.putStack(addr)
-    }
-    otherwise => {
-      // If not NNum, throw an error
-      abort("negate: wrong kind of node \{otherwise}, address \{addr} ")
-    }
-  }
-}
+```{literalinclude} /sources/gmachine/src/part2/vm.mbt
+:language: moonbit
+:start-after: start op definition
+:end-before: end op definition
 ```
 
 Finally, implement branching:
 
-```rust
-fn condition(self : GState, i1 : List[Instruction], i2 : List[Instruction]) -> Unit {
-  let addr = self.pop1()
-  match self.heap[addr] {
-    NNum(0) => {
-      // If false, jump to i2
-      self.code = append(i2, self.code)
-    }
-    NNum(1) => {
-      // If true, jump to i1
-      self.code = append(i1, self.code)
-    }
-    otherwise => abort("cond : \{addr} = \{otherwise}")
-  }
-}
+```{literalinclude} /sources/gmachine/src/part2/vm.mbt
+:language: moonbit
+:start-after: start cond definition
+:end-before: end cond definition
 ```
 
 No major adjustments are needed in the compilation part, just add some predefined programs:
 
-```rust
-let compiledPrimitives : List[(String, Int, List[Instruction])] = List::[
-  // Arithmetic
-  ("add", 2, List::[Push(1), Eval, Push(1), Eval, Add, Update(2), Pop(2), Unwind]),
-  ("sub", 2, List::[Push(1), Eval, Push(1), Eval, Sub, Update(2), Pop(2), Unwind]),
-  ("mul", 2, List::[Push(1), Eval, Push(1), Eval, Mul, Update(2), Pop(2), Unwind]),
-  ("div", 2, List::[Push(1), Eval, Push(1), Eval, Div, Update(2), Pop(2), Unwind]),
-  // Comparison
-  ("eq",  2, List::[Push(1), Eval, Push(1), Eval, Eq,  Update(2), Pop(2), Unwind]),
-  ("neq", 2, List::[Push(1), Eval, Push(1), Eval, Ne,  Update(2), Pop(2), Unwind]),
-  ("ge",  2, List::[Push(1), Eval, Push(1), Eval, Ge,  Update(2), Pop(2), Unwind]),
-  ("gt",  2, List::[Push(1), Eval, Push(1), Eval, Gt,  Update(2), Pop(2), Unwind]),
-  ("le",  2, List::[Push(1), Eval, Push(1), Eval, Le,  Update(2), Pop(2), Unwind]),
-  ("lt",  2, List::[Push(1), Eval, Push(1), Eval, Lt,  Update(2), Pop(2), Unwind]),
-  // Miscellaneous
-  ("negate", 1, List::[Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),
-  ("if",     3,  List::[Push(0), Eval, Cond(List::[Push(1)], List::[Push(2)]), Update(3), Pop(3), Unwind])
-]
+```{literalinclude} /sources/gmachine/src/part2/compile.mbt
+:language: moonbit
+:start-after: start prim definition
+:end-before: end prim definition
 ```
 
 and modify the initial instruction sequence
 
-```rust
-let initialCode : List[Instruction] = List::[PushGlobal("main"), Eval]
+```{literalinclude} /sources/gmachine/src/part2/top.mbt
+:language: moonbit
+:start-after: start init definition
+:end-before: end init definition
 ```
 
 ## Conclusion
