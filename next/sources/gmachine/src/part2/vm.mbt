@@ -139,8 +139,10 @@ fn slide(self : GState, n : Int) -> Unit {
 fn rearrange(self : GState, n : Int) -> Unit {
   let appnodes = self.stack.take(n)
   let args = appnodes.map(fn (addr) {
-    let NApp(_, arg) = self.heap[addr]
-    arg
+    guard let NApp(_, arg) = self.heap[addr] else {
+      _ => panic()
+    }
+    arg 
   })
   self.stack = args + appnodes.drop(n - 1)
 }
@@ -178,19 +180,8 @@ fn unwind(self : GState) -> Unit {
       self.put_code(List::of([Unwind]))
     }
     NGlobal(_, n, c) => {
-      let k = self.stack.length()
-      if k < n {
-        match self.dump {
-          Nil => abort("Unwinding with too few arguments")
-          Cons((i, s), rest) => {
-            // a1 : ...... : ak
-            // ||
-            // ak : s
-            self.stack = self.stack.drop(k - 1) + s
-            self.dump = rest
-            self.code = i
-          }
-        }
+      if self.stack.length() < n {
+        abort("Unwinding with too few arguments")
       } else {
         if n != 0 {
           self.rearrange(n)
@@ -204,8 +195,6 @@ fn unwind(self : GState) -> Unit {
       self.put_stack(a)
       self.put_code(List::of([Unwind]))
     }
-    otherwise => 
-      abort("unwind() : wrong kind of node \{otherwise}, address \{addr}")
   }
 }
 // end unwind definition
@@ -303,7 +292,7 @@ fn build_initial_heap(
 }
 
 
-// start step definition
+
 fn step(self : GState) -> Bool {
   match self.code {
     Nil => return false
@@ -338,7 +327,7 @@ fn step(self : GState) -> Bool {
     }
   }
 }
-// end step definition
+
 
 
 fn reify(self : GState) -> Node {
