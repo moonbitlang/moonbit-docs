@@ -1,6 +1,6 @@
 # G-Machine 1
 
-Lazy evaluation stands as a foundational concept in the realm of programming languages. Haskell, renowned as a purely functional programming language, boasts a robust lazy evaluation mechanism. This mechanism not only empowers developers to craft code that's both more efficient and concise but also enhances program performance and responsiveness, especially when tackling sizable datasets or intricate data streams. In this article, we'll delve into the Lazy Evaluation mechanism, thoroughly examining its principles and implementation methods, and then explore how to implement Haskell's evaluation semantics in [MoonBit](https://www.moonbitlang.com/).
+This article is the first in the series on implementing lazy evaluation in MoonBit. In this article, we will exploring the purposes of lazy evaluation and a typical abstract machine for lazy evaluation, the G-Machine.
 
 ## Higher-Order Functions and Performance Challenges
 
@@ -103,47 +103,18 @@ coreF excludes anonymous functions because anonymous functions introduce extra f
 
 Super combinators will eventually be parsed into `ScDef[String]`, but writing a parser is a tedious task. I will provide it along with the final code.
 
-```moonbit
-enum RawExpr[T] {
-  Var(T)
-  Num(Int)
-  Constructor(Int, Int) // tag, arity
-  App(RawExpr[T], RawExpr[T])
-  Let(Bool, List[(T, RawExpr[T])], RawExpr[T]) // isRec, Defs, Body
-  Case(RawExpr[T], List[(Int, List[T], RawExpr[T])])
-} derive(Show)
-
-struct ScDef[T] {
-  name : String
-  args : List[T]
-  body : RawExpr[T]
-} derive(Show)
+```{literalinclude} /sources/gmachine/src/part1/ast.mbt
+:language: moonbit
+:start-after: start expr_and_scdef definition
+:end-before: end expr_and_scdef definition
 ```
 
 Additionally, some predefined coreF programs are required.
 
-```moonbit
-let preludeDefs : List[ScDef[String]] = {
-  let id = ScDef::new("I", List::of(["x"]), Var("x")) // id x = x
-  let k = ScDef::new("K", List::of(["x", "y"]), Var("x")) // K x y = x
-  let k1 = ScDef::new("K1", List::of(["x", "y"]), Var("y")) // K1 x y = y
-  let s = ScDef::new(
-    "S",
-    List::of(["f", "g", "x"]),
-    App(App(Var("f"), Var("x")), App(Var("g"), Var("x"))),
-  ) // S f g x = f x (g x)
-  let compose = ScDef::new(
-    "compose",
-    List::of(["f", "g", "x"]),
-    App(Var("f"), App(Var("g"), Var("x"))),
-  ) // compose f g x = f (g x)
-  let twice = ScDef::new(
-    "twice",
-    List::of(["f"]),
-    App(App(Var("compose"), Var("f")), Var("f")),
-  ) // twice f = compose f f
-  Cons(id, Cons(k, Cons(k1, Cons(s, Cons(compose, Cons(twice, Nil))))))
-}
+```{literalinclude} /sources/gmachine/src/part1/ast.mbt
+:language: moonbit
+:start-after: start prelude_defs definition
+:end-before: end prelude_defs definition
 ```
 
 ## Why Graph
@@ -175,30 +146,10 @@ fn square(thunk : () -> Int) -> Int {
 
 To represent the program using a graph is to facilitate sharing of computation results and avoid redundant calculations. To achieve this purpose, it's crucial to implement an in-place update algorithm when reducing the graph. Regarding in-place update, let's simulate it using MoonBit code:
 
-```moonbit
-enum LazyData[T] {
-  Waiting(() -> T)
-  Done(T)
-}
-
-struct LazyRef[T] {
-  mut data : LazyData[T]
-}
-
-fn extract[T](self : LazyRef[T]) -> T {
-  match self.data {
-    Waiting(thunk) => {
-      let value = thunk()
-      self.data = Done(value) // in-place update
-      value
-    }
-    Done(value) => value
-  }
-}
-
-fn square(x : LazyRef[Int]) -> Int {
-  x.extract() * x.extract()
-}
+```{literalinclude} /sources/gmachine/src/part1/lazy.mbt
+:language: moonbit
+:start-after: start lazy definition
+:end-before: end lazy definition
 ```
 
 Regardless of which side executes the `extract` method first, it will update the referenced mutable field and replace its content with the computed result. Therefore, there's no need to recompute it during the second execution of the `extract` method.
@@ -311,44 +262,10 @@ In this simple version of the G-Machine, the state includes:
 
 - Heap: This is where the expression graph and the sequences of instructions corresponding to super combinators are stored.
 
-```moonbit
-// Use the 'type' keyword to encapsulate an address type.
-type Addr Int derive(Eq, Show) 
-
-// Describe graph nodes with an enumeration type.
-enum Node { 
-  NNum(Int)
-  // The application node
-  NApp(Addr, Addr) 
-  // To store the number of parameters and 
-  // the corresponding sequence of instructions for a super combinator.
-  NGlobal(String, Int, List[Instruction]) 
-  // The Indirection node，The key component of implementing lazy evaluation
-  NInd(Addr) 
-} derive (Eq, Show)
-
-struct GHeap { // The heap uses an array, and the space with None content in the array is available as free memory.
-  mut objectCount : Int
-  memory : Array[Option[Node]]
-}
-
-// Allocate heap space for nodes.
-fn alloc(self : GHeap, node : Node) -> Addr {
-  let heap = self
-  // Assuming there is still available space in the heap.
-  fn next(n : Int) -> Int {
-    (n + 1) % heap.memory.length()
-  }
-  fn free(i : Int) -> Bool {
-    heap.memory[i].is_empty()
-  }
-  let mut i = heap.objectCount
-  while not(free(i)) {
-    i = next(i)
-  }
-  heap.memory[i] = Some(node)
-  return Addr(i)
-}
+```{literalinclude} /sources/gmachine/src/part1/vm.mbt
+:language: moonbit
+:start-after: start heap definition
+:end-before: end heap definition
 ```
 
 - Stack: The stack only holds addresses pointing to the heap. A simple implementation can use `List[Addr]`.
@@ -356,66 +273,12 @@ fn alloc(self : GHeap, node : Node) -> Addr {
 - Current code sequence to be executed.
 - Execution status statistics: A simple implementation involves calculating how many instructions have been executed.
 
-```moonbit
-type GStats Int
-
-let statInitial : GStats = GStats(0)
-
-fn statInc(self : GStats) -> GStats {
-  let GStats(n) = self
-  GStats(n + 1)
-}
-
-fn statGet(self : GStats) -> Int {
-  let GStats(n) = self
-  return n
-}
-```
-
 The entire state is represented using the type `GState`.
 
-```moonbit
-struct GState {
-  mut stack : List[Addr]
-  heap : GHeap
-  globals : RHTable[String, Addr]
-  mut code : List[Instruction]
-  stats : GStats
-}
-
-fn putStack(self : GState, addr : Addr) -> Unit {
-  self.stack = Cons(addr, self.stack)
-}
-
-fn putCode(self : GState, is : List[Instruction]) -> Unit {
-  self.code = append(is, self.code)
-}
-
-fn pop1(self : GState) -> Addr {
-  match self.stack {
-    Cons(addr, reststack) => {
-      self.stack = reststack
-      addr
-    }
-    Nil => {
-      abort("pop1: stack size smaller than 1")
-    }
-  }
-}
-
-fn pop2(self : GState) -> (Addr, Addr) {
-  // Pop 2 pops the top two elements from the stack.
-  // Returns (the first, the second).
-  match self.stack {
-    Cons(addr1, Cons(addr2, reststack)) => {
-      self.stack = reststack
-      (addr1, addr2)
-    }
-    otherwise => {
-      abort("pop2: stack size smaller than 2")
-    }
-  }
-}
+```{literalinclude} /sources/gmachine/src/part1/vm.mbt
+:language: moonbit
+:start-after: start state definition
+:end-before: end state definition
 ```
 
 Now, we can map each step of the graph reduction algorithm we deduced on paper to this abstract machine:
@@ -436,77 +299,50 @@ All of these tasks have corresponding instruction implementations.
 
 The highly simplified G-Machine currently consists of 7 instructions.
 
-```moonbit
-enum Instruction {
-  Unwind
-  PushGlobal(String)
-  PushInt(Int)
-  PushArg(Int)
-  MkApp
-  Update(Int)
-  Pop(Int)
-} derive(Eq, Show)
+```{literalinclude} /sources/gmachine/src/part1/instruction.mbt
+:language: moonbit
+:start-after: start instr definition
+:end-before: end instr definition
 ```
 
 The `PushInt` instruction is the simplest. It allocates an `NNum` node on the heap and pushes its address onto the stack.
 
-```moonbit
-fn push_int(self : GState, num : Int) -> Unit {
-  let addr = self.heap.alloc(NNum(num))
-  self.putStack(addr)
-}
+```{literalinclude} /sources/gmachine/src/part1/vm.mbt
+:language: moonbit
+:start-after: start push_int definition
+:end-before: end push_int definition
 ```
 
 The `PushGlobal` instruction retrieves the address of the specified super combinator from the global table and then pushes the address onto the stack.
 
-```moonbit
-fn push_global(self : GState, name : String) -> Unit {
-  let sc = self.globals[name]
-  match sc {
-    None => abort("push_global(): cant find super combinator \{name}")
-    Some(addr) => {
-      self.putStack(addr)
-    }
-  }
-}
+```{literalinclude} /sources/gmachine/src/part1/vm.mbt
+:language: moonbit
+:start-after: start push_global definition
+:end-before: end push_global definition
 ```
 
 The `PushArg` instruction is a bit more complex. It has specific requirements regarding the layout of addresses on the stack: the first address should point to the super combinator node, followed by n addresses pointing to N `NApp` nodes. `PushArg` retrieves the Nth parameter, starting from the `offset + 1`.
 
-```moonbit
-fn push_arg(self : GState, offset : Int) -> Unit {
-  // Skip the first super  combinator node.
-  // Access the (offset + 1)th NApp node
-  let appaddr = @immut/list.unsafe_nth(self.stack, offset + 1)
-  let arg = match self.heap[appaddr] {
-    NApp(_, arg) => arg
-    otherwise => 
-      abort(
-        "push_arg: stack offset \{offset} address \{appaddr} node \{otherwise}, not a applicative node"
-      )
-  }
-  self.putStack(arg)
-}
+```{literalinclude} /sources/gmachine/src/part1/vm.mbt
+:language: moonbit
+:start-after: start push_arg definition
+:end-before: end push_arg definition
 ```
 
 The `MkApp` instruction takes two addresses from the top of the stack, constructs an `NApp` node, and pushes its address onto the stack.
 
-```moonbit
-fn mkapp(self : GState) -> Unit {
-  let (a1, a2) = self.pop2()
-  let appaddr = self.heap.alloc(NApp(a1, a2))
-  self.putStack(appaddr)
-}
+```{literalinclude} /sources/gmachine/src/part1/vm.mbt
+:language: moonbit
+:start-after: start mk_apply definition
+:end-before: end mk_apply definition
 ```
 
 The `Update` instruction assumes that the first address on the stack points to the current redex's evaluation result. It skips the addresses of the immediately following super combinator nodes and replaces the Nth `NApp` node with an indirect node pointing to the evaluation result. If the current redex is a CAF, it directly replaces its corresponding `NGlobal` node on the heap. From this, we can see why in lazy functional languages, there is not much distinction between functions without parameters and ordinary variables.
 
-```moonbit
-fn update(self : GState, n : Int) -> Unit {
-  let addr = self.pop1()
-  let dst = @immut/list.unsafe_nth(self.stack, n)
-  self.heap[dst] = NInd(addr)
-}
+```{literalinclude} /sources/gmachine/src/part1/vm.mbt
+:language: moonbit
+:start-after: start update definition
+:end-before: end update definition
 ```
 
 The `Unwind` instruction in the G-Machine is akin to an evaluation loop. It has several branching conditions based on the type of node corresponding to the address at the top of the stack:
@@ -516,32 +352,10 @@ The `Unwind` instruction in the G-Machine is akin to an evaluation loop. It has 
 - For `NGlobal` nodes: If there are enough parameters on the stack, load this super combinator into the current code.
 - For `NInd` nodes: Push the address contained within this indirect node onto the stack and Unwind again.
 
-```moonbit
-fn unwind(self : GState) -> Unit {
-  let addr = self.pop1()
-  match self.heap[addr] {
-    NNum(_) => self.putStack(addr)
-    NApp(a1, _) => {
-      self.putStack(addr)
-      self.putStack(a1)
-      self.putCode(Cons(Unwind, Nil))
-    }
-    NGlobal(_, n, c) => {
-      if self.stack.length() < n {
-        abort("Unwinding with too few arguments")
-      } else {
-        self.putStack(addr)
-        self.putCode(c)
-      }
-    }
-    NInd(a) => {
-      self.putStack(a)
-      self.putCode(Cons(Unwind, Nil))
-    }
-    otherwise => 
-      abort("unwind() : wrong kind of node \{otherwise}, address \{addr}")
-  }
-}
+```{literalinclude} /sources/gmachine/src/part1/vm.mbt
+:language: moonbit
+:start-after: start unwind definition
+:end-before: end unwind definition
 ```
 
 The `Pop` instruction pops N addresses, eliminating the need for a separate function implementation.
@@ -559,23 +373,10 @@ When compiling a super combinator, we need to maintain an environment that allow
 
 > Here, "parameters" refer to addresses pointing to App nodes on the heap, and the actual parameter addresses can be accessed through the pusharg instruction.
 
-```moonbit
-fn compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
-  let name = self.name
-  let body = self.body
-  let mut arity = 0
-  fn gen_env(i : Int, args : List[String]) -> List[(String, Int)] {
-    match args {
-      Nil => {
-        arity = i
-        return Nil
-      }
-      Cons(s, ss) => Cons((s, i), gen_env(i + 1, ss))
-    }
-  }
-  let env = gen_env(0, self.args)
-  (name, arity, compileR(body, env, arity))
-}
+```{literalinclude} /sources/gmachine/src/part1/compile.mbt
+:language: moonbit
+:start-after: start compile_sc definition
+:end-before: end compile_sc definition
 ```
 
 The `compileR` function generates code for instantiating super combinators by calling the `compileC` function, and then appends three instructions:
@@ -584,135 +385,52 @@ The `compileR` function generates code for instantiating super combinators by ca
 - `Pop(N)`: Clears the stack of redundant addresses.
 - `Unwind`: Searches for the next redex to start the next reduction.
 
-```moonbit
-fn compileR(
-  self : RawExpr[String],
-  env : List[(String, Int)],
-  arity : Int
-) -> List[Instruction] {
-  if arity == 0 {
-    // The Pop 0 instruction does nothing in practice, 
-    // so it is not generated when the arity is 0.
-    compileC(self, env).concat(@immut/list.of([Update(arity), Unwind]))
-  } else {
-    compileC(self, env).concat(
-      @immut/list.of([Update(arity), Pop(arity), Unwind]),
-    )
-  }
-}
+```{literalinclude} /sources/gmachine/src/part1/compile.mbt
+:language: moonbit
+:start-after: start compile_r definition
+:end-before: end compile_r definition
 ```
 
 When compiling the definition of super combinators, a rather crude approach is used: if a variable is not a parameter, it is treated as another super combinator (writing it incorrectly will result in a runtime error). For function application, the right-hand expression is compiled first, then all offsets corresponding to parameters in the environment are incremented (because an extra address pointing to the instantiated right-hand expression is added to the top of the stack), then the left-hand expression is compiled, and finally the `MkApp` instruction is added.
 
-```moonbit
-fn compileC(
-  self : RawExpr[String],
-  env : List[(String, Int)]
-) -> List[Instruction] {
-  match self {
-    Var(s) =>
-      match lookupENV(env, s) {
-        None => @immut/list.of([PushGlobal(s)])
-        Some(n) => @immut/list.of([PushArg(n)])
-      }
-    Num(n) => @immut/list.of([PushInt(n)])
-    App(e1, e2) =>
-      compileC(e2, env)
-      .concat(compileC(e1, argOffset(1, env)))
-      .concat(@immut/list.of([MkApp]))
-    _ => abort("not support yet")
-  }
-}
+```{literalinclude} /sources/gmachine/src/part1/compile.mbt
+:language: moonbit
+:start-after: start compile_c definition
+:end-before: end compile_c definition
 ```
 
 ## Running the G-Machine
 
 Once the super combinators are compiled, they need to be placed on the heap (along with adding their addresses to the global table). This can be done recursively.
 
-```moonbit
-fn buildInitialHeap(scdefs : List[(String, Int, List[Instruction])]) -> (GHeap, RHTable[String, Addr]) {
-  let heap = { objectCount : 0, memory : Array::make(10000, None) }
-  let globals = RHTable::new(50)
-  fn go(lst : List[(String, Int, List[Instruction])]) {
-    match lst {
-      Nil => ()
-      Cons((name, arity, instrs), rest) => {
-        let addr = heap.alloc(NGlobal(name, arity, instrs))
-        globals[name] = addr
-        go(rest)
-      }
-    }
-  }
-  go(scdefs)
-  return (heap, globals)
-}
+```{literalinclude} /sources/gmachine/src/part1/vm.mbt
+:language: moonbit
+:start-after: start build_ih definition
+:end-before: end build_ih definition
 ```
 
 Define a function "step" that updates the state of the G-Machine by one step, returning false if the final state has been reached.
 
-```moonbit
-fn step(self : GState) -> Bool {
-  match self.code {
-    Nil => return false
-    Cons(i, is) => {
-      self.code = is
-      self.statInc()
-      match i {
-        PushGlobal(f) => self.push_global(f)
-        PushInt(n) => self.push_int(n)
-        PushArg(n) => self.push_arg(n)
-        MkApp => self.mkapp()
-        Unwind => self.unwind()
-        Update(n) => self.update(n)
-        Pop(n) => self.stack = self.stack.drop(n)
-      } // without the need for additional functions
-      return true
-    }
-  }
-}
+```{literalinclude} /sources/gmachine/src/part1/vm.mbt
+:language: moonbit
+:start-after: start step definition
+:end-before: end step definition
 ```
 
 Additionally, define a function "reify" that continuously executes the "step" function until the final state is reached.
 
-```moonbit
-fn reify(self : GState) -> Unit {
-  if self.step() {
-    self.reify()
-  } else {
-    let stack = self.stack
-    match stack {
-      Cons(addr, Nil) => {
-        let res = self.heap[addr]
-        println("\{res}")
-      }
-      _ => abort("wrong stack \{stack}")
-    }
-  }
-}
+```{literalinclude} /sources/gmachine/src/part1/vm.mbt
+:language: moonbit
+:start-after: start reify definition
+:end-before: end reify definition
 ```
 
 Combine the above components.
 
-```moonbit
-fn run(codes : List[String]) -> Unit {
-  fn parse_then_compile(code : String) -> (String, Int, List[Instruction]) {
-    let code = TokenStream::new(code)
-    let code = parseSC(code)
-    let code = compileSC(code)
-    return code
-  }
-
-  let codes = codes.map(parse_then_compile).concat(preludeDefs.map(compileSC))
-  let (heap, globals) = buildInitialHeap(codes)
-  let initialState : GState = {
-    heap,
-    stack: Nil,
-    code: initialCode,
-    globals,
-    stats: initialStat,
-  }
-  initialState.reify()
-}
+```{literalinclude} /sources/gmachine/src/part1/top.mbt
+:language: moonbit
+:start-after: start run definition
+:end-before: end run definition
 ```
 
 ## Conclusion
