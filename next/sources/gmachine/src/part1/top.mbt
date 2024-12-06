@@ -34,4 +34,6 @@ test "basic eval" {
   inspect!(run(List::of([main])), content = "NNum(0)")
   let main = "(defn main[] (K1 0 1))"
   inspect!(run(List::of([main])), content = "NNum(1)")
+  let r = LazyRef::{ data : Waiting(fn (){ 3 + 4 })}
+  inspect!(square(r), content = "49")
 }
