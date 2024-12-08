@@ -25,24 +25,6 @@ fn is_atom[T](self : RawExpr[T]) -> Bool {
   }
 }
 
-fn binders_of[L, R](l : List[(L, R)]) -> List[L] {
-  fn fst(pair) {
-    let (l, _) = pair
-    return l
-  }
-
-  l.map(fst)
-}
-
-fn rhss_of[L, R](l : List[(L, R)]) -> List[R] {
-  fn snd(pair) {
-    let (_, r) = pair
-    return r
-  }
-
-  l.map(snd)
-}
-
 fn ScDef::new[T](
   name : String,
   args : List[T],

@@ -4,26 +4,12 @@ This article is the third in a series on implementing Haskell's lazy evaluation 
 
 ## Tracking Context
 
-Let's review how we implemented primitives in the [last tutorial](https://www.moonbitlang.com/docs/examples/gmachine-2).
+Let's review how we implemented primitives in the [last tutorial](gmachine-2.md).
 
-```rust
-let compiledPrimitives : List[(String, Int, List[Instruction])] = List::[
-  // Arithmetic
-  ("add", 2, List::[Push(1), Eval, Push(1), Eval, Add, Update(2), Pop(2), Unwind]),
-  ("sub", 2, List::[Push(1), Eval, Push(1), Eval, Sub, Update(2), Pop(2), Unwind]),
-  ("mul", 2, List::[Push(1), Eval, Push(1), Eval, Mul, Update(2), Pop(2), Unwind]),
-  ("div", 2, List::[Push(1), Eval, Push(1), Eval, Div, Update(2), Pop(2), Unwind]),
-  // Comparison
-  ("eq",  2, List::[Push(1), Eval, Push(1), Eval, Eq,  Update(2), Pop(2), Unwind]),
-  ("neq", 2, List::[Push(1), Eval, Push(1), Eval, Ne,  Update(2), Pop(2), Unwind]),
-  ("ge",  2, List::[Push(1), Eval, Push(1), Eval, Ge,  Update(2), Pop(2), Unwind]),
-  ("gt",  2, List::[Push(1), Eval, Push(1), Eval, Gt,  Update(2), Pop(2), Unwind]),
-  ("le",  2, List::[Push(1), Eval, Push(1), Eval, Le,  Update(2), Pop(2), Unwind]),
-  ("lt",  2, List::[Push(1), Eval, Push(1), Eval, Lt,  Update(2), Pop(2), Unwind]),
-  // Miscellaneous
-  ("negate", 1, List::[Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),
-  ("if",     3,  List::[Push(0), Eval, Cond(List::[Push(1)], List::[Push(2)]), Update(3), Pop(3), Unwind])
-]
+```{literalinclude} /sources/gmachine/src/part2/compile.mbt
+:language: moonbit
+:start-after: start prim definition
+:end-before: end prim definition
 ```
 
 This implementation introduces many `Eval` instructions, but they are not always necessary. For example:
@@ -46,74 +32,55 @@ We use the `compileE` function to implement compilation in a strict context, ens
 
 For the default branch, we simply add an `Eval` instruction after the result of `compileC`.
 
-```rust
-append(compileC(self, env), List::[Eval])
+```{literalinclude} /sources/gmachine/src/part3/compile.mbt
+:language: moonbit
+:dedent:
+:start-after: start default definition
+:end-before: end default definition
 ```
 
 Constants are pushed directly.
 
-```rust
-Num(n) => List::[PushInt(n)]
+```{literalinclude} /sources/gmachine/src/part3/compile.mbt
+:language: moonbit
+:dedent:
+:start-after: start num definition
+:end-before: end num definition
 ```
 
 For `let/letrec` expressions, the specially designed `compileLet` and `compileLetrec` become useful. Compiling a `let/letrec` expression in a strict context only requires using `compileE` to compile its main expression.
 
-```rust
-Let(rec, defs, e) => {
-  if rec {
-    compileLetrec(compileE, defs, e, env)
-  } else {
-    compileLet(compileE, defs, e, env)
-  }
-}
+```{literalinclude} /sources/gmachine/src/part3/compile.mbt
+:language: moonbit
+:dedent:
+:start-after: start let definition
+:end-before: end let definition
 ```
 
 The `if` and `negate` functions, with 3 and 1 arguments respectively, require special handling.
 
-```rust
-App(App(App(Var("if"), b), e1), e2) => {
-  let condition = compileE(b, env)
-  let branch1 = compileE(e1, env)
-  let branch2 = compileE(e2, env)
-  append(condition, List::[Cond(branch1, branch2)])
-}
-App(Var("negate"), e) => {
-  append(compileE(e, env), List::[Neg])
-}
+```{literalinclude} /sources/gmachine/src/part3/compile.mbt
+:language: moonbit
+:dedent:
+:start-after: start if_and_neg definition
+:end-before: end if_and_neg definition
 ```
 
 Basic binary operations can be handled uniformly through a lookup table. First, construct a hash table called `builtinOpS` to query the corresponding instructions by the name of the primitive.
 
-```rust
-let builtinOpS : RHTable[String, Instruction] = {
-  let table : RHTable[String, Instruction] = RHTable::new(50)
-  table["add"] = Add
-  table["mul"] = Mul
-  table["sub"] = Sub
-  table["div"] = Div
-  table["eq"]  = Eq
-  table["neq"] = Ne
-  table["ge"] = Ge
-  table["gt"] = Gt
-  table["le"] = Le
-  table["lt"] = Lt
-  table
-}
+```{literalinclude} /sources/gmachine/src/part3/compile.mbt
+:language: moonbit
+:start-after: start builtin definition
+:end-before: end builtin definition
 ```
 
 The rest of the handling is not much different.
 
-```rust
-App(App(Var(op), e0), e1) => {
-  match builtinOpS[op] {
-    None => append(compileC(self, env), List::[Eval]) // Not a primitive op, use the default branch
-    Some(instr) => {
-      let code1 = compileE(e1, env)
-      let code0 = compileE(e0, argOffset(1, env))
-      append(code1, append(code0, List::[instr]))
-    }
-  }
-}
+```{literalinclude} /sources/gmachine/src/part3/compile.mbt
+:language: moonbit
+:dedent:
+:start-after: start binop definition
+:end-before: end binop definition
 ```
 
 Are we done? It seems so, but there's another WHNF besides integers: partially applied functions.
@@ -128,26 +95,11 @@ Here, `(add 1)` is a partial application.
 
 To ensure that the code generated by the new compilation strategy works correctly, we need to modify the implementation of the `Unwind` instruction for the `NGlobal` branch. When the number of arguments is insufficient and the dump has saved stacks, we should only retain the original redex and restore the stack.
 
-```rust
-NGlobal(_, n, c) => {
-  let k = length(self.stack)
-  if k < n {
-    match self.dump {
-      Nil => abort("Unwinding with too few arguments")
-      Cons((i, s), rest) => {
-        // a1 : ...... : ak
-        // ||
-        // ak : s
-        // Retain the redex and restore the stack
-        self.stack = append(drop(self.stack, k - 1), s)
-        self.dump = rest
-        self.code = i
-      }
-    }
-  } else {
-    ......
-  }
-}
+```{literalinclude} /sources/gmachine/src/part3/vm.mbt
+:language: moonbit
+:dedent:
+:start-after: start unwind_g definition
+:end-before: end unwind_g definition
 ```
 
 This context-based strictness analysis technique is useful but cannot do anything with supercombinator calls. Here we briefly introduce a strictness analysis technique based on boolean operations, which can analyze which arguments of a supercombinator call should be compiled using strict mode.
@@ -198,103 +150,52 @@ The corresponding graph node for a list is `NConstr(Int, List[Addr])`, which con
 
 We need to add two instructions, `Split` and `Pack`, to deconstruct and construct lists.
 
-```rust
-fn split(self : GState, n : Int) -> Unit {
-  let addr = self.pop1()
-  match self.heap[addr] {
-    NConstr(_, addrs) => {
-      // n == addrs.length()
-      self.stack = addrs + self.stack
-    }
-  }
-}
-
-fn pack(self : GState, t : Int, n : Int) -> Unit {
-  let addrs = self.stack.take(n)
-  // Assume the number of arguments is sufficient
-  self.stack = self.stack.drop(n)
-  let addr = self.heap.alloc(NConstr(t, addrs))
-  self.putStack(addr)
-}
+```{literalinclude} /sources/gmachine/src/part3/vm.mbt
+:language: moonbit
+:dedent:
+:start-after: start split_pack definition
+:end-before: end split_pack definition
 ```
 
 Additionally, a `CaseJump` instruction is needed to implement the `case` expression.
 
-```rust
-fn casejump(self : GState, table : List[(Int, List[Instruction])]) -> Unit {
-  let addr = self.pop1()
-  match self.heap[addr] {
-    NConstr(t, addrs) => {
-      match lookupENV(table, t) {
-        None => abort("casejump")
-        Some(instrs) => {
-          self.code = instrs + self.code
-          self.putStack(addr)
-        }
-      }
-    }
-    otherwise => abort("casejump(): addr = \{addr} node = \{otherwise}")
-  }
-}
+```{literalinclude} /sources/gmachine/src/part3/vm.mbt
+:language: moonbit
+:start-after: start casejump definition
+:end-before: end casejump definition
 ```
 
 After adding the above instructions, we need to modify the `compileC` and `compileE` functions. Since the object matched by the `case` expression needs to be evaluated to WHNF, only the `compileE` function can compile it.
 
-```rust
-// compileE
-  Case(e, alts) => {
-    compileE(e, env) + List::[CaseJump(compileAlts(alts, env))]
-  }
-  Constructor(0, 0) => {
-    // Nil
-    List::[Pack(0, 0)]
-  }
-  App(App(Constructor(1, 2), x), xs) => {
-    // Cons(x, xs)
-    compileC(xs, env) + compileC(x, argOffset(1, env)) + List::[Pack(1, 2)]
-  }
+```{literalinclude} /sources/gmachine/src/part3/compile.mbt
+:language: moonbit
+:dedent:
+:start-after: start c_constr definition
+:end-before: end c_constr definition
+```
 
-// compileC
-  App(App(Constructor(1, 2), x), xs) => {
-    // Cons(x, xs)
-    compileC(xs, env) + compileC(x, argOffset(1, env)) + List::[Pack(1, 2)]
-  }
-  Constructor(0, 0) => {
-    // Nil
-    List::[Pack(0, 0)]
-  }
+```{literalinclude} /sources/gmachine/src/part3/compile.mbt
+:language: moonbit
+:dedent:
+:start-after: start e_constr_case definition
+:end-before: end e_constr_case definition
 ```
 
 At this point, a new problem arises. Previously, printing the evaluation result only needed to handle simple `NNum` nodes, but `NConstr` nodes have substructures. When the list itself is evaluated to WHNF, its substructures are mostly unevaluated `NApp` nodes. We need to add a `Print` instruction, which will recursively evaluate and write the result into the `output` component of `GState`.
 
-```rust
-struct GState {
-  output : Buffer
-  ......
-}
-
-fn gprint(self : GState) -> Unit {
-  let addr = self.pop1()
-  match self.heap[addr] {
-    NNum(n) => {
-      self.output.write_string(n.to_string())
-      self.output.write_char(' ')
-    }
-    NConstr(0, Nil) => self.output.write_string("Nil")
-    NConstr(1, Cons(addr1, Cons(addr2, Nil))) => {
-      // Force evaluation of addr1 and addr2 is required, so we execute Eval instructions first
-      self.code = List::[Instruction::Eval, Print, Eval, Print] + self.code
-      self.putStack(addr2)
-      self.putStack(addr1)
-    }
-  }
-}
+```{literalinclude} /sources/gmachine/src/part3/vm.mbt
+:language: moonbit
+:start-after: start gprint definition
+:end-before: end gprint definition
 ```
 
 Finally, change the initial code of the G-Machine to:
 
-```rust
-let initialCode : List[Instruction] = List::[PushGlobal("main"), Eval, Print]
+```{literalinclude} /sources/gmachine/src/part3/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start init definition
+:end-before: end init definition
 ```
 
 Now, we can write some classic functional programs using lazy lists, such as the infinite Fibonacci sequence:

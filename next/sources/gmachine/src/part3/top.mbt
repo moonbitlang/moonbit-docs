@@ -1,5 +1,4 @@
-// start run definition
-fn run(codes : List[String]) -> Node {
+fn run(codes : List[String]) -> String {
   fn parse_then_compile(code : String) -> (String, Int, List[Instruction]) {
     let tokens = tokenize(code)
     let code = 
@@ -14,26 +13,31 @@ fn run(codes : List[String]) -> Node {
     return code
   }
   let codes = codes.map(parse_then_compile) + prelude_defs.map(compileSC)
+  let codes = compiled_primitives + codes
   let (heap, globals) = build_initial_heap(codes)
   let initialState : GState = {
+    output : @buffer.new(size_hint = 60),
     heap : heap,
     stack : Nil,
-    code : List::of([PushGlobal("main"), Unwind]),
+    // start init definition
+    code : List::of([PushGlobal("main"), Eval, Print]),
+    // end init definition
     globals : globals,
-    stats : 0
+    stats : 0,
+    dump : Nil
   }
   initialState.reify()
 }
-// end run definition
+
 
 test "basic eval" {
-  // S K K x => ((K x (K x)) => x
-  let main = "(defn main[] (S K K 3))" 
-  inspect!(run(List::of([main])), content = "NNum(3)")
-  let main = "(defn main[] (K 0 1))"
-  inspect!(run(List::of([main])), content = "NNum(0)")
-  let main = "(defn main[] (K1 0 1))"
-  inspect!(run(List::of([main])), content = "NNum(1)")
-  let r = LazyRef::{ data : Waiting(fn (){ 3 + 4 })}
-  inspect!(square(r), content = "49")
+  let basic = []
+  for kv in programs.iter() {
+    let (_, v) = kv
+    basic.push(v)
+  }
+  let basic = List::from_array(basic)
+  
+  let main = "(defn main[] (take 20 fibs))"
+  inspect!(run(Cons(main, basic)), content = "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 Nil")
 }

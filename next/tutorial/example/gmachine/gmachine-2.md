@@ -206,6 +206,7 @@ and modify the initial instruction sequence
 
 ```{literalinclude} /sources/gmachine/src/part2/top.mbt
 :language: moonbit
+:dedent:
 :start-after: start init definition
 :end-before: end init definition
 ```

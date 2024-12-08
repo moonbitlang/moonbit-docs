@@ -12,6 +12,7 @@ enum Node {
   NGlobal(String, Int, List[Instruction])
   // The Indirection node，The key component of implementing lazy evaluation
   NInd(Addr)
+  NConstr(Int, List[Addr])
 } derive(Eq, Show)
 
 struct GHeap {
@@ -59,6 +60,7 @@ fn op_set(self : GHeap, key : Addr, val : Node) -> Unit {
 
 
 struct GState {
+  output : @buffer.T
   mut stack : List[Addr]
   heap : GHeap
   globals : @hashmap.T[String, Addr]
@@ -119,23 +121,19 @@ fn push_global(self : GState, name : String) -> Unit {
   }
 }
 
-// start push definition
+
 fn push(self : GState, offset : Int) -> Unit {
   // Push(n) a0 : . . . : an : s
   //     =>  an : a0 : . . . : an : s
   let addr = self.stack.unsafe_nth(offset)
   self.put_stack(addr)
 }
-// end push definition
 
-// start slide definition
 fn slide(self : GState, n : Int) -> Unit {
   let addr = self.pop1()
   self.stack = Cons(addr, self.stack.drop(n))
 }
-// end slide definition
 
-// start rearrange definition
 fn rearrange(self : GState, n : Int) -> Unit {
   let appnodes = self.stack.take(n)
   let args = appnodes.map(fn (addr) {
@@ -146,7 +144,7 @@ fn rearrange(self : GState, n : Int) -> Unit {
   })
   self.stack = args + appnodes.drop(n - 1)
 }
-// end rearrange definition
+
 
 fn mk_apply(self : GState) -> Unit {
   let (a1, a2) = self.pop2()
@@ -159,7 +157,7 @@ fn update(self : GState, n : Int) -> Unit {
   self.heap[dst] = NInd(addr)
 }
 
-// start unwind definition
+
 fn unwind(self : GState) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {
@@ -179,9 +177,21 @@ fn unwind(self : GState) -> Unit {
       self.put_stack(a1)
       self.put_code(List::of([Unwind]))
     }
+    // start unwind_g definition
     NGlobal(_, n, c) => {
-      if self.stack.length() < n {
-        abort("Unwinding with too few arguments")
+      let k = self.stack.length()
+      if k < n {
+        match self.dump {
+          Nil => abort("Unwinding with too few arguments")
+          Cons((i, s), rest) => {
+            // a1 : ...... : ak
+            // ||
+            // ak : s
+            self.stack = self.stack.drop(k - 1) + s
+            self.dump = rest
+            self.code = i
+          }
+        }
       } else {
         if n != 0 {
           self.rearrange(n)
@@ -191,15 +201,25 @@ fn unwind(self : GState) -> Unit {
         self.put_code(c)
       }
     }
+    // end unwind_g definition
     NInd(a) => {
       self.put_stack(a)
       self.put_code(List::of([Unwind]))
     }
+    NConstr(_, _) => {
+      match self.dump {
+        Nil => abort("Unwinding with too few arguments")
+        Cons((i, s), rest) => {
+          self.dump = rest
+          self.stack = s
+          self.code = i
+          self.put_stack(addr)
+        }
+      }
+    }
   }
 }
-// end unwind definition
 
-// start alloc definition
 fn alloc_nodes(self : GState, n : Int) -> Unit {
   let dummynode : Node = NInd(Addr(-1))
   for i = 0; i < n; i = i + 1 {
@@ -207,18 +227,14 @@ fn alloc_nodes(self : GState, n : Int) -> Unit {
     self.put_stack(addr)
   }
 }
-// end alloc definition
 
-// start eval definition
 fn eval(self : GState) -> Unit {
   let addr = self.pop1()
   self.put_dump(self.code, self.stack)
   self.stack = List::of([addr])
   self.code = List::of([Unwind])
 }
-// end eval definition
 
-// start cond definition
 fn condition(self : GState, i1 : List[Instruction], i2 : List[Instruction]) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {
@@ -233,9 +249,7 @@ fn condition(self : GState, i1 : List[Instruction], i2 : List[Instruction]) -> U
     otherwise => abort("cond : \{addr} = \{otherwise}")
   }
 }
-// end cond definition
 
-// start op definition
 fn negate(self : GState) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {
@@ -273,7 +287,64 @@ fn lift_cmp2(self : GState, op : (Int, Int) -> Bool) -> Unit {
     (node1, node2) => abort("liftCmp2: \{a1} = \{node1} \{a2} = \{node2}")
   }
 }
-// end op definition
+
+// start split_pack definition
+fn pack(self : GState, t : Int, n : Int) -> Unit {
+  let addrs = self.stack.take(n)
+  self.stack = self.stack.drop(n)
+  let addr = self.heap.alloc(NConstr(t, addrs))
+  self.put_stack(addr)
+}
+
+fn split(self : GState) -> Unit {
+  let addr = self.pop1()
+  match self.heap[addr] {
+    NConstr(_, addrs) => {
+      // n == addrs.length()
+      self.stack = addrs + self.stack
+    }
+    _ => panic()
+  }
+}
+// end split_pack definition
+
+// start casejump definition
+fn casejump(self : GState, table : List[(Int, List[Instruction])]) -> Unit {
+  let addr = self.pop1()
+  match self.heap[addr] {
+    NConstr(t, _) => {
+      match table.lookup(t) {
+        None => abort("casejump")
+        Some(instrs) => { 
+          self.code = instrs + self.code
+          self.put_stack(addr)
+        }
+      }
+    }
+    otherwise => abort("casejump(): addr = \{addr} node = \{otherwise}")
+  }
+}
+// end casejump definition
+
+// start gprint definition
+fn gprint(self : GState) -> Unit {
+  let addr = self.pop1()
+  match self.heap[addr] {
+    NNum(n) => {
+      self.output.write_string(n.to_string())
+      self.output.write_char(' ')
+    }
+    NConstr(0, Nil) => self.output.write_string("Nil")
+    NConstr(1, Cons(addr1, Cons(addr2, Nil))) => {
+      self.code = List::of([Instruction::Eval, Print, Eval, Print]) + self.code
+      self.put_stack(addr2)
+      self.put_stack(addr1)
+    }
+    _ => panic()
+  }
+}
+// end gprint definition
+
 
 fn build_initial_heap(
   scdefs : List[(String, Int, List[Instruction])]
@@ -322,6 +393,10 @@ fn step(self : GState) -> Bool {
         Gt => self.lift_cmp2(fn (x, y) { x > y })
         Ge => self.lift_cmp2(fn (x, y) { x >= y })
         Cond(i1, i2) => self.condition(i1, i2)
+        Pack(tag, arity) => self.pack(tag, arity)
+        CaseJump(alts) => self.casejump(alts)
+        Split => self.split()
+        Print => self.gprint()
       }
       return true
     }
@@ -330,18 +405,11 @@ fn step(self : GState) -> Bool {
 
 
 
-fn reify(self : GState) -> Node {
+fn reify(self : GState) -> String {
   if self.step() {
     self.reify()
   } else {
-    let stack = self.stack
-    match stack {
-      Cons(addr, Nil) => {
-        let res = self.heap[addr]
-        return res
-      }
-      _ => abort("wrong stack \{stack}")
-    }
+    self.output.to_unchecked_string()
   }
 }
 
