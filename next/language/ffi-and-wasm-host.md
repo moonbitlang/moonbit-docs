@@ -1,17 +1,17 @@
 # Foreign Function Interface(FFI)
 
-You can use foreign function in MoonBit through FFI to interact with the hosting runtime when embedded inside the browser or command line applications through [Wasmtime](https://wasmtime.dev/) or similar projects.
+What we've introduced is about describing pure computation. In reality, you'll need
+to interact with the real world. However, the "world" is different for each backend (C, JS, Wasm, WasmGC)
+and is sometimes based on runtime ([Wasmtime](https://wasmtime.dev/), Deno, Browser, etc.).
 
-⚠ Warning: MoonBit is still in early stage, so the content may be outdated.
+You can use foreign function in MoonBit through FFI to interact with the hosting runtime when embedded inside the browser or command line applications through [Wasmtime](https://wasmtime.dev/) or similar projects.
 
 ## Init function
 
-For WebAssembly backend, it means that it will be executed **before** the instance is available, meaning that the FFIs that relies on the instance's exportations can not be used at this stage;
+For WebAssembly backend, it is compiled as [start function](https://webassembly.github.io/spec/core/syntax/modules.html#start-function), meaning that it will be executed **before** the instance is available, and the FFIs that relies on the instance's exportations can not be used at this stage;
 for JavaScript backend, it means that it will be executed during the importation stage.
 
-## FFI
-
-### Declare Foreign Reference
+## Declare Foreign Reference
 
 You can declare a foreign reference type like this:
 
@@ -21,7 +21,11 @@ type Canvas_ctx
 
 This will be a type that represents a reference to a foreign object, a `CanvasRenderingContext2D` object held by the hosting JavaScript runtime in this example.
 
-### Declare Foreign Function
+## Declare Foreign Function
+
+You can either import a function with module name and function name or writing an inline function.
+
+### Import function
 
 You can declare a foreign function like this:
 
@@ -31,11 +35,15 @@ fn cos(d : Double) -> Double = "Math" "cos"
 
 It's similar to a normal function definition except that the function body is replaced with two strings.
 
-For WasmGC backend, these two strings are used to identify the specific function from a Wasm import object, the first string is the module name, and the second string is the function name. For JS backend, these two strings are used to call a static function in the global namespace. The example above becomes similar to `const cos = (d) => Math.cos(d)`.
+For Wasm(GC) backend, these two strings are used to identify the specific function from a Wasm import object, the first string is the module name, and the second string is the function name. 
+
+For JS backend, these two strings are used to call a static function in the global namespace. The example above becomes similar to `const cos = (d) => Math.cos(d)`.
+
+### Inline function
 
 You can also declare inline functions where the function body is replaced with one string.
 
-For WasmGC backend, you may declare it as a Wasm function without name (which will be generated afterwards):
+For Wasm(GC) backend, you may declare it as a Wasm function without name (which will be generated afterwards):
 
 ```moonbit
 extern "wasm" fn abs(d : Double) -> Double =
@@ -51,7 +59,7 @@ extern "js" fn abs(d : Double) -> Double =
 
 After declaration, you can use foreign functions like regular functions.
 
-For multi-backend project, you may implement backend specific code in the files that ends with `.wasm.mbt` `.wasm-gc.mbt` and `.js.mbt`.
+For multi-backend project, you may implement backend specific code in the files that ends with `.wasm.mbt` `.wasm-gc.mbt` and `.js.mbt`. Check out [link options](</toolchain/moon/package.md#link-options>) for details.
 
 You may also declare a foreign function that will be invoked upon a foreign object by using the foreign reference type like this:
 
@@ -61,7 +69,7 @@ fn begin_path(self: Canvas_ctx) = "canvas" "begin_path"
 
 and apply it to a previously owned reference normally such as `context.begin_path()`.
 
-### Exported functions
+## Export functions
 
 Functions that are not methods nor polymorphic functions can be exported if they are public and if the link configuration appears in the `moon.pkg.json` of the package:
 
@@ -69,22 +77,13 @@ Functions that are not methods nor polymorphic functions can be exported if they
 {
   "link": {
     "wasm": {
-      "exports": [
-        "add",
-        "fib:test"
-      ]
+      "exports": [ "add", "fib:test" ]
     },
     "wasm-gc": {
-      "exports": [
-        "add",
-        "fib:test"
-      ]
+      "exports": [ "add", "fib:test" ]
     },
     "js": {
-      "exports": [
-        "add",
-        "fib:test"
-      ],
+      "exports": [ "add", "fib:test" ],
       "format": "esm"
     }
   }
@@ -95,13 +94,11 @@ Each backend has a separate definition. For JS backend, a `format` option is use
 
 The example above will export function `add` and `fib`, and the function `fib` will be exported with the name of `test`.
 
-For WasmGC backend, the `_start` function should always be called to initialize all the global instances defined in MoonBit program.
-
-### Use compiled Wasm
+## Use compiled Wasm
 
 To use the compiled Wasm, you need to initialize the Wasm module with the host functions so as to meet the needs of the foreign functions, and then use the exported functions provided by the Wasm module.
 
-#### Provide host functions
+### Provide host functions
 
 To use the compiled Wasm, you must provide **All** declared foreign functions in Wasm import object.
 
