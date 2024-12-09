@@ -170,8 +170,6 @@ fn unwind(self : GState) -> Unit {
       self.put_stack(a)
       self.put_code(Cons(Unwind, Nil))
     }
-    otherwise =>
-      abort("unwind() : wrong kind of node \{otherwise}, address \{addr}")
   }
 }
 // end unwind definition
