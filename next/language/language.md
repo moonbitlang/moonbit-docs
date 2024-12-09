@@ -1238,6 +1238,29 @@ MoonBit supports C-Style bitwise operators.
 | `<<`     | `op_shl`   |
 | `>>`     | `op_shr`   |
 
+### View Operator
+
+<!-- TODO : add introduction to View in Data Types -->
+
+Analogous to `slice` in other languages, the view is a reference to a
+specific segment of collections. You can use `data[start:end]` to create a
+view of array `data`, referencing elements from `start` to `end` (exclusive).
+Both `start` and `end` indices can be omitted.
+
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:start-after: start view 1
+:end-before: end view 1
+```
+
+By implementing `op_as_view` method, you can also create a view for a user-defined type. Here is an example:
+
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:start-after: start view 2
+:end-before: end view 2
+```
+
 ## Error Handling
 
 ### Error types
@@ -1547,27 +1570,6 @@ When the first parameter of a method is also the type it belongs to, methods can
 ```
 
 The highlighted line is only possible when there is no ambiguity in `@list`.
-
-## View
-
-Analogous to `slice` in other languages, the view is a reference to a
-specific segment of collections. You can use `data[start:end]` to create a
-view of array `data`, referencing elements from `start` to `end` (exclusive).
-Both `start` and `end` indices can be omitted.
-
-```{literalinclude} /sources/language/src/operator/top.mbt
-:language: moonbit
-:start-after: start view 1
-:end-before: end view 1
-```
-
-By implementing `op_as_view` method, you can also create a view for a user-defined type. Here is an example:
-
-```{literalinclude} /sources/language/src/operator/top.mbt
-:language: moonbit
-:start-after: start view 2
-:end-before: end view 2
-```
 
 ## Trait system
 
