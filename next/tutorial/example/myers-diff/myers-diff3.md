@@ -71,52 +71,18 @@ How do we determine if the searches overlap? Simply check if the position on a d
 
 We'll start by defining `Snake` and `Box` types, representing the middle snake and the sub-edit graphs (since they're square, we call them `Box`).
 
-```rust
-struct Box {
-  left : Int,
-  right : Int,
-  top : Int,
-  bottom : Int
-} derive(Debug, Show)
-
-struct Snake {
-  start : (Int, Int),
-  end : (Int, Int)
-} derive(Debug, Show)
-
-fn width(self : Box) -> Int {
-  self.right - self.left
-}
-
-fn height(self : Box) -> Int {
-  self.bottom - self.top
-}
-
-fn size(self : Box) -> Int {
-  self.width() + self.height()
-}
-
-fn delta(self : Box) -> Int {
-  self.width() - self.height()
-}
+```{literalinclude} /sources/diff/src/part3/diff.mbt
+:language: moonbit
+:start-after: start box definition
+:end-before: end box definition
 ```
 
 To avoid getting bogged down in details too early, let's assume we already have a function `midpoint : (Box, Array[Line], Array[Line]) -> Snake?` to find the middle snake. Then, we can build the function `find_path` to search for the complete path.
 
-```rust
-fn find_path(box : Box, a : Array[Line], b : Array[Line]) -> Iter[(Int, Int)]? {
-  let snake = midpoint(box, a, b)?;
-  let start = snake.start;
-  let end = snake.end;
-  let headbox = Box { left: box.left, top: box.top, right: start.0, bottom: start.1 };
-  let tailbox = Box { left: end.0, top: end.1, right: box.right, bottom: box.bottom };
-  // println("snake = \{snake}")
-  // println("headbox = \{headbox}")
-  // println("tailbox = \{tailbox}")
-  let head = find_path(headbox, a, b).or(Iter::singleton(start));
-  let tail = find_path(tailbox, a, b).or(Iter::singleton(end));
-  Some(head.concat(tail))
-}
+```{literalinclude} /sources/diff/src/part3/diff.mbt
+:language: moonbit
+:start-after: start findpath definition
+:end-before: end findpath definition
 ```
 
 The implementation of `find_path` is straightforward, but `midpoint` is a bit more complex:
@@ -126,35 +92,10 @@ The implementation of `find_path` is straightforward, but `midpoint` is a bit mo
 - Store the results of the forward and backward searches in two arrays.
 - Alternate between forward and backward searches, returning `None` if no result is found.
 
-```rust
-fn midpoint(self : Box, a : Array[Line], b : Array[Line]) -> Snake? {
-  if self.size() == 0 {
-    return None;
-  }
-  let max = {
-    let half = self.size() / 2;
-    if is_odd(self.size()) {
-      half + 1
-    } else {
-      half
-    }
-  };
-  let vf = BPArray::make(2 * max + 1, 0);
-  vf[1] = self.left;
-  let vb = BPArray::make(2 * max + 1, 0);
-  vb[1] = self.bottom;
-  for d in 0..max + 1 {
-    match forward(self, vf, vb, d, a, b) {
-      None =>
-      match backward(self, vf, vb, d, a, b) {
-        None => continue,
-        res => return res,
-      },
-      res => return res,
-    }
-  }
-  None
-}
+```{literalinclude} /sources/diff/src/part3/diff.mbt
+:language: moonbit
+:start-after: start midpoint definition
+:end-before: end midpoint definition
 ```
 
 The forward and backward searches have some modifications compared to the original Myers algorithm, which need a bit of explanation:
@@ -163,52 +104,10 @@ The forward and backward searches have some modifications compared to the origin
 - The search now works within a `Box` (not the global edit graph), so calculating `y` from `x` (or vice versa) requires conversion.
 - The backward search minimizes `y` as a heuristic strategy, but minimizing `x` would also work.
 
-```rust
-fn forward(self : Box, vf : BPArray<Int>, vb : BPArray<Int>, d : Int, a : Array[Line], b : Array[Line]) -> Snake? {
-  for k in (0..=d).rev() {
-    let c = k - self.delta();
-    let (mut x, mut px) = if k == -d || (k != d && vf[k - 1] < vf[k
-
- + 1]) {
-      (vf[k + 1], vf[k + 1])
-    } else {
-      (vf[k - 1] + 1, vf[k - 1])
-    };
-    let mut y = self.top + (x - self.left) - k;
-    let py = if d == 0 || x != px { y } else { y - 1 };
-    while x < self.right && y < self.bottom && a[x].text == b[y].text {
-      x += 1;
-      y += 1;
-    }
-    vf[k] = x;
-    if is_odd(self.delta()) && (c >= -(d - 1) && c <= d - 1) && y >= vb[c] {
-      return Some(Snake { start: (px, py), end: (x, y) });
-    }
-  }
-  None
-}
-
-fn backward(self : Box, vf : BPArray<Int>, vb : BPArray<Int>, d : Int, a : Array[Line], b : Array[Line]) -> Snake? {
-  for c in (0..=d).rev() {
-    let k = c + self.delta();
-    let (mut y, mut py) = if c == -d || (c != d && vb[c - 1] > vb[c + 1]) {
-      (vb[c + 1], vb[c + 1])
-    } else {
-      (vb[c - 1] - 1, vb[c - 1])
-    };
-    let mut x = self.left + (y - self.top) + k;
-    let px = if d == 0 || y != py { x } else { x + 1 };
-    while x > self.left && y > self.top && a[x - 1].text == b[y - 1].text {
-      x -= 1;
-      y -= 1;
-    }
-    vb[c] = y;
-    if is_even(self.delta()) && (k >= -d && k <= d) && x <= vf[k] {
-      return Some(Snake { start: (x, y), end: (px, py) });
-    }
-  }
-  None
-}
+```{literalinclude} /sources/diff/src/part3/diff.mbt
+:language: moonbit
+:start-after: start search definition
+:end-before: end search definition
 ```
 
 ## Conclusion
