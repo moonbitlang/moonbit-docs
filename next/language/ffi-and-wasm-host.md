@@ -4,6 +4,11 @@ You can use foreign function in MoonBit through FFI to interact with the hosting
 
 ⚠ Warning: MoonBit is still in early stage, so the content may be outdated.
 
+## Init function
+
+For WebAssembly backend, it means that it will be executed **before** the instance is available, meaning that the FFIs that relies on the instance's exportations can not be used at this stage;
+for JavaScript backend, it means that it will be executed during the importation stage.
+
 ## FFI
 
 ### Declare Foreign Reference

@@ -160,6 +160,31 @@ test {
 }
 // end array 2
 
+// start array 3
+let fixed_array_1 : FixedArray[Int] = [1, 2, 3]
+let fixed_array_2 = ([1, 2, 3] : FixedArray[Int])
+let array_3 = [1, 2, 3] // Array[Int]
+// end array 3
+
+// start array pitfall
+test {
+  let two_dimension_array = FixedArray::make(10, FixedArray::make(10, 0))
+  two_dimension_array[0][5] = 10
+  assert_eq!(two_dimension_array[5][5], 10)
+}
+// end array pitfall
+
+// start array pitfall solution
+test {
+  let two_dimension_array = FixedArray::makei(
+    10, 
+    fn (_i) { FixedArray::make(10, 0) }
+  )
+  two_dimension_array[0][5] = 10
+  assert_eq!(two_dimension_array[5][5], 0)
+}
+// end array pitfall solution
+
 // start map 1
 let map : Map[String, Int] = { "x": 1, "y": 2, "z": 3 }
 // end map 1

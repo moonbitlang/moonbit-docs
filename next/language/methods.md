@@ -110,84 +110,14 @@ Currently, the following operators can be overloaded:
 | `_[_]` (get item)     | `op_get`     |
 | `_[_] = _` (set item) | `op_set`     |
 | `_[_:_]` (view)       | `op_as_view` |
-
-### Pipe operator
-
-MoonBit provides a convenient pipe operator `|>`, which can be used to chain regular function calls:
-
-```{literalinclude} /sources/language/src/operator/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start operator 4
-:end-before: end operator 4
-```
-
-### Cascade Operator
-
-The cascade operator `..` is used to perform a series of mutable operations on
-the same value consecutively. The syntax is as follows:
-
-```{literalinclude} /sources/language/src/operator/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start operator 5
-:end-before: end operator 5
-```
-
-`x..f()..g()` is equivalent to `{x.f(); x.g(); x}`.
-
-Consider the following scenario: for a `StringBuilder` type that has methods
-like `write_string`, `write_char`, `write_object`, etc., we often need to perform
-a series of operations on the same `StringBuilder` value:
-
-```{literalinclude} /sources/language/src/operator/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start operator 6
-:end-before: end operator 6
-```
-
-To avoid repetitive typing of `builder`, its methods are often designed to
-return `self` itself, allowing operations to be chained using the `.` operator.
-To distinguish between immutable and mutable operations, in MoonBit,
-for all methods that return `Unit`, cascade operator can be used for
-consecutive operations without the need to modify the return type of the methods.
-
-```{literalinclude} /sources/language/src/operator/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start operator 7
-:end-before: end operator 7
-```
-
-### Bitwise Operator
-
-MoonBit supports C-Style bitwise operators.
-
-| Operator | Perform |
-| -------- | ------- |
 | `&`      | `land`  |
 | `\|`     | `lor`   |
 | `^`      | `lxor`  |
 | `<<`     | `op_shl`   |
 | `>>`     | `op_shr`   |
 
-### View Operator
 
-<!-- TODO : add introduction to View in Data Types -->
-
-Analogous to `slice` in other languages, the view is a reference to a
-specific segment of collections. You can use `data[start:end]` to create a
-view of array `data`, referencing elements from `start` to `end` (exclusive).
-Both `start` and `end` indices can be omitted.
-
-```{literalinclude} /sources/language/src/operator/top.mbt
-:language: moonbit
-:start-after: start view 1
-:end-before: end view 1
-```
-
-By implementing `op_as_view` method, you can also create a view for a user-defined type. Here is an example:
+By implementing `op_as_view` method, you can create a view for a user-defined type. Here is an example:
 
 ```{literalinclude} /sources/language/src/operator/top.mbt
 :language: moonbit

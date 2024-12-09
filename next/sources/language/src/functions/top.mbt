@@ -6,7 +6,7 @@ fn foo() -> Int {
 
 fn bar() -> Int {
   let x = 1
-  // x + 1 // fail
+  //! x + 1
   x + 2
 }
 // end expression
@@ -38,7 +38,7 @@ fn local_1() -> Int {
   fn inc(x) { // named as `inc`
     x + 1
   }
-  // anonymous, instantly appplied to integer literal 6
+  // anonymous, instantly applied to integer literal 6
   (fn(x) { x + inc(2) })(6)
 }
 
