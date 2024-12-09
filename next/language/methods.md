@@ -185,34 +185,18 @@ Without the `Number` requirement, the expression `x * x` in `square` will result
 :end-before: end trait 6
 ```
 
-MoonBit provides the following useful builtin traits:
+### Super trait
 
-<!-- MANUAL CHECK https://github.com/moonbitlang/core/blob/80cf250d22a5d5eff4a2a1b9a6720026f2fe8e38/builtin/traits.mbt -->
+A trait can depend on other traits, for example:
 
-```moonbit
-trait Eq {
-  op_equal(Self, Self) -> Bool
-}
-
-trait Compare : Eq {
-  // `0` for equal, `-1` for smaller, `1` for greater
-  compare(Self, Self) -> Int
-}
-
-trait Hash {
-  hash(Self) -> Int
-}
-
-trait Show {
-  // writes a string representation of `Self` into a `Logger`
-  output(Self, Logger) -> Unit
-  to_string(Self) -> String
-}
-
-trait Default {
-  default() -> Self
-}
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start super trait 1
+:end-before: end super trait 1
 ```
+
+To implement the super trait, one will have to implement the sub traits, 
+and the methods defined in the super trait.
 
 ### Invoke trait methods directly
 Methods of a trait can be called directly via `Trait::method`. MoonBit will infer the type of `Self` and check if `Self` indeed implements `Trait`, for example:
@@ -274,7 +258,38 @@ Users can define new methods for trait objects, just like defining new methods f
 :end-before: end trait object 2
 ```
 
-## Automatically derive builtin traits
+## Builtin traits
+
+MoonBit provides the following useful builtin traits:
+
+<!-- MANUAL CHECK https://github.com/moonbitlang/core/blob/80cf250d22a5d5eff4a2a1b9a6720026f2fe8e38/builtin/traits.mbt -->
+
+```moonbit
+trait Eq {
+  op_equal(Self, Self) -> Bool
+}
+
+trait Compare : Eq {
+  // `0` for equal, `-1` for smaller, `1` for greater
+  compare(Self, Self) -> Int
+}
+
+trait Hash {
+  hash(Self) -> Int
+}
+
+trait Show {
+  // writes a string representation of `Self` into a `Logger`
+  output(Self, Logger) -> Unit
+  to_string(Self) -> String
+}
+
+trait Default {
+  default() -> Self
+}
+```
+
+### Deriving builtin traits
 
 MoonBit can automatically derive implementations for some builtin traits:
 

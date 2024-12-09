@@ -9,8 +9,9 @@ struct User {
 test "struct 1" (t : @test.T) {
   let println = fn(show) { t.writeln(show) }
   // start struct 2
-  let u = { id: 0, name: "John Doe", email: "john@doe.com" }
+  let u = User::{ id: 0, name: "John Doe", email: "john@doe.com" }
   u.email = "john@doe.name"
+  //! u.id = 10
   println(u.id)
   println(u.name)
   println(u.email)
@@ -22,9 +23,11 @@ let struct_3 : Unit = {
   // start struct 3
   let name = "john"
   let email = "john@doe.com"
-  let u = { id: 0, name, email }
+  let u = User::{ id: 0, name, email }
   // end struct 3
-
+  // start struct 5
+  let u2 = { id : 0, name, email }
+  // end struct 5
 }
 
 test "struct 4" (t : @test.T) {
