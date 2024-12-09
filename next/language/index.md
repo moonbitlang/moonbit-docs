@@ -1,14 +1,27 @@
-# Language
+# MoonBit Language
 
-Here are the topics about the programming syntax.
+MoonBit is an end-to-end programming language toolchain for cloud and edge computing using WebAssembly. The IDE environment is available at [https://try.moonbitlang.com](https://try.moonbitlang.com) without any installation; it does not rely on any server either.
 
-- [MoonBit](./language.md): almost everything you need to know about the MoonBit grammar.
-- [Error handling](./error-handling.md): the error handling mechanism in MoonBit.
-- [Foreign Function Interface](./ffi-and-wasm-host.md): how MoonBit interacts with the real world using different backends.
+**Status and aimed timeline**
+
+MoonBit is currently in beta-preview. We expect to reach beta in 2024/11/22, and 1.0 in 2025.
+
+When MoonBit reaches beta, it means any backwards-incompatible changes will be seriously evaluated and MoonBit _can_ be used in production(very rare compiler bugs). MoonBit is developed by a talented full time team who had extensive experience in building language toolchains, so we will grow much faster than the typical language ecosystem, you won't wait long to use MoonBit in your production.
+
+**Main advantages**
+
+- Generate significantly smaller WASM output than any existing solutions.
+- Much faster runtime performance.
+- State of the art compile-time performance.
+- Simple but practical, data-oriented language design.
 
 ```{toctree}
-:maxdepth: 2
-:caption: Contents:
-language
+:hidden:
+introduction
+fundamentals
+methods
 error-handling
+packages
+tests
+docs
 ffi-and-wasm-host

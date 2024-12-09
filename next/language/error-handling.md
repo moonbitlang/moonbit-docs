@@ -1,8 +1,181 @@
-# Error handling in MoonBit
+# Error handling
 
 Error handling has always been at core of our language design. In the following
 we'll be explaining how error handling is done in MoonBit. We assume
 you have some prior knowledge of MoonBit, if not, please checkout [A tour of MoonBit](../tutorial/tour.md).
+
+## Error types
+
+The error values used in MoonBit must have an error type. An error type can be
+defined in the following forms:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 1
+:end-before: end error 1
+```
+
+The return type of a function can include an error type to indicate that the
+function might return an error. For example, the following function `div` might
+return an error of type `DivError`:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 2
+:end-before: end error 2
+```
+
+Here, the keyword `raise` is used to interrupt the function execution and return
+an error.
+
+## The Default Error Type
+
+MoonBit provides a default error type `Error` that can be used when the concrete
+error type is not important. For convenience, you can annotate the function name
+or the return type with the suffix `!` to indicate that the `Error` type is
+used. For example, the following function signatures are equivalent:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 3
+:end-before: end error 3
+```
+
+For anonymous function and matrix function, you can annotate the keyword `fn`
+with the `!` suffix to achieve that. For example,
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 4
+:end-before: end error 4
+```
+
+As shown in the above example, the error types defined by `type!` can be used as
+value of the type `Error` when the error is raised.
+
+Note that only error types or the type `Error` can be used as errors. For
+functions that are generic in the error type, you can use the `Error` bound to
+do that. For example,
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 5
+:end-before: end error 5
+```
+
+Since the type `Error` can include multiple error types, pattern matching on the
+`Error` type must use the wildcard `_` to match all error types. For example,
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 6
+:end-before: end error 6
+```
+
+## Handling Errors
+
+There are three ways to handle errors:
+
+- Append `!` after the function name in a function application to rethrow the
+  error directly in case of an error, for example:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 7
+:end-before: end error 7
+```
+
+- Append `?` after the function name to convert the result into a first-class
+  value of the `Result` type, for example:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 8
+:end-before: end error 8
+```
+
+- Use `try` and `catch` to catch and handle errors, for example:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 9
+:end-before: end error 9
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/error/__snapshot__/error_9
+:caption: Output
+```
+
+Here, `try` is used to call a function that might throw an error, and `catch` is
+used to match and handle the caught error. If no error is caught, the catch
+block will not be executed and the `else` block will be executed instead.
+
+The `else` block can be omitted if no action is needed when no error is caught.
+For example:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 10
+:end-before: end error 10
+```
+
+The `catch` keyword is optional, and when the body of `try` is a simple
+expression, the curly braces can be omitted. For example:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 11
+:end-before: end error 11
+```
+
+The `!` and `?` attributes can also be used on method invocation and pipe
+operator. For example:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 12
+:end-before: end error 12
+```
+
+However for infix operators such as `+` `*` that may raise an error,
+the original form has to be used, e.g. `x.op_add!(y)`, `x.op_mul!(y)`.
+
+Additionally, if the return type of a function includes an error type, the
+function call must use `!` or `?` for error handling, otherwise the compiler
+will report an error.
+
+## Error Inference
+
+Within a `try` block, several different kinds of errors can be raised. When that
+happens, the compiler will use the type `Error` as the common error type.
+Accordingly, the handler must use the wildcard `_` to make sure all errors are
+caught. For example,
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 13
+:end-before: end error 13
+```
+
+You can also use `catch!` to rethrow the uncaught errors for convenience. This
+is useful when you only want to handle a specific error and rethrow others. For
+example,
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start error 14
+:end-before: end error 14
+```
 
 ## Example: Division by Zero
 
