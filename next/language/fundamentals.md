@@ -207,9 +207,56 @@ You can use `numbers[x]` to refer to the xth element. The index starts from zero
 :end-before: end array 2
 ```
 
+There are `Array[T]` and `FixedArray[T]`:
+
+- `Array[T]` can grow in size, while
+- `FixedArray[T]` has a fixed size, thus it needs to be created with initial value.
+
+``````{warning}
+A common pitfall is creating `FixedArray` with the same initial value:
+
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start array pitfall
+:end-before: end array pitfall
+```
+
+This is because all the cells reference to the same object (the `FixedArray[Int]` in this case). One should use `FixedArray::makei()` instead which creates an object for each index.
+
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start array pitfall solution
+:end-before: end array pitfall solution
+```
+``````
+
+When the expected type is known, MoonBit can automatically overload array, otherwise
+`Array[T]` is created:
+
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start array 3
+:end-before: end array 3
+```
+
+#### ArrayView
+
+Analogous to `slice` in other languages, the view is a reference to a
+specific segment of collections. You can use `data[start:end]` to create a
+view of array `data`, referencing elements from `start` to `end` (exclusive).
+Both `start` and `end` indices can be omitted.
+
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:start-after: start view 1
+:end-before: end view 1
+```
+
 ### Map
 
-MoonBit provides a hash map data structure that preserves insertion orde called `Map` in its standard library.
+MoonBit provides a hash map data structure that preserves insertion order called `Map` in its standard library.
 `Map`s can be created via a convenient literal syntax:
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
@@ -294,7 +341,7 @@ The expression `add3(1, 2, 7)` returns `10`. Any expression that evaluates to a 
 
 ### Labelled arguments
 
-Functions can declare labelled argument with the syntax `label~ : Type`. `label` will also serve as parameter name inside function body:
+**Top-level** functions can declare labelled argument with the syntax `label~ : Type`. `label` will also serve as parameter name inside function body:
 
 ```{literalinclude} /sources/language/src/functions/top.mbt
 :language: moonbit
@@ -400,7 +447,7 @@ Autofill arguments are very useful for writing debugging and testing utilities.
 
 ### Conditional Expressions
 
-A conditional expression consists of a condition, a consequent, and an optional else clause.
+A conditional expression consists of a condition, a consequent, and an optional `else` clause or `else if` clause.
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
@@ -409,16 +456,7 @@ A conditional expression consists of a condition, a consequent, and an optional 
 :end-before: end conditional expressions 1
 ```
 
-The else clause can also contain another if-else expression:
-
-```{literalinclude} /sources/language/src/controls/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start conditional expressions 2
-:end-before: end conditional expressions 2
-```
-
-Curly brackets are used to group multiple expressions in the consequent or the else clause.
+The curly brackets around the consequent are required.
 
 Note that a conditional expression always returns a value in MoonBit, and the return values of the consequent and the else clause must be of the same type. Here is an example:
 
@@ -428,6 +466,8 @@ Note that a conditional expression always returns a value in MoonBit, and the re
 :start-after: start conditional expressions 3
 :end-before: end conditional expressions 3
 ```
+
+The `else` clause can only be omitted if the return value has type `Unit`.
 
 ### While loop
 
@@ -567,6 +607,15 @@ MoonBit supports traversing elements of different data structures and sequences 
 
 `for .. in` loop is translated to the use of `Iter` in MoonBit's standard library. Any type with a method `.iter() : Iter[T]` can be traversed using `for .. in`.
 For more information of the `Iter` type, see [Iterator](#iterator) below.
+
+`for .. in` loop also supports iterating through a sequence of integers, such as:
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start for loop 10
+:end-before: end for loop 10
+```
 
 In addition to sequences of a single value, MoonBit also supports traversing sequences of two values, such as `Map`, via the `Iter2` type in MoonBit's standard library.
 Any type with method `.iter2() : Iter2[A, B]` can be traversed using `for .. in` with two loop variables:
@@ -951,14 +1000,17 @@ MoonBit supports type alias via the syntax `typealias Name = TargetType`:
 :end-before: end typealias 1
 ```
 
-unlike all other kinds of type declaration above, type alias does not define a new type,
+Unlike all other kinds of type declaration above, type alias does not define a new type,
 it is merely a type macro that behaves exactly the same as its definition.
 So for example one cannot define new methods or implement traits for a type alias.
 
+```{tip}
 Type alias can be used to perform incremental code refactor.
+
 For example, if you want to move a type `T` from `@pkgA` to `@pkgB`,
 you can leave a type alias `typealias T = @pkgB.T` in `@pkgA`, and **incrementally** port uses of `@pkgA.T` to `@pkgB.T`.
 The type alias can be removed after all uses of `@pkgA.T` is migrated to `@pkgB.T`.
+```
 
 ## Pattern Matching
 
@@ -986,8 +1038,20 @@ There are some other useful constructs in pattern matching. For example, we can 
 :end-before: end pattern 3
 ```
 
+### Array Pattern
+
+For `Array`, `FixedArray` and `ArrayView`, MoonBit allows using array pattern.
+
+Array pattern have the following forms:
+
+- `[]` : matching for an empty data structure
+- `[pa, pb, pc]` : matching for known number of elements, 3 in this example
+- `[pa, ..]` : matching for known number of elements, followed by unknown number of elements
+- `[.., pa]` : matching for known number of elements, preceded by unknown number of elements
+
 ### Range Pattern
 For builtin integer types and `Char`, MoonBit allows matching whether the value falls in a specific range.
+
 Range patterns have the form `a..<b` or `a..=b`, where `..<` means the upper bound is exclusive, and `..=` means inclusive upper bound.
 `a` and `b` can be one of:
 
@@ -1042,6 +1106,55 @@ Generics are supported in top-level function and data type definitions. Type par
 ```
 
 ## Special Syntax
+
+### Pipe operator
+
+MoonBit provides a convenient pipe operator `|>`, which can be used to chain regular function calls:
+
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start operator 4
+:end-before: end operator 4
+```
+
+### Cascade Operator
+
+The cascade operator `..` is used to perform a series of mutable operations on
+the same value consecutively. The syntax is as follows:
+
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start operator 5
+:end-before: end operator 5
+```
+
+`x..f()..g()` is equivalent to `{x.f(); x.g(); x}`.
+
+Consider the following scenario: for a `StringBuilder` type that has methods
+like `write_string`, `write_char`, `write_object`, etc., we often need to perform
+a series of operations on the same `StringBuilder` value:
+
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start operator 6
+:end-before: end operator 6
+```
+
+To avoid repetitive typing of `builder`, its methods are often designed to
+return `self` itself, allowing operations to be chained using the `.` operator.
+To distinguish between immutable and mutable operations, in MoonBit,
+for all methods that return `Unit`, cascade operator can be used for
+consecutive operations without the need to modify the return type of the methods.
+
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start operator 7
+:end-before: end operator 7
+```
 
 ### TODO syntax
 

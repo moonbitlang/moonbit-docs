@@ -1,26 +1,19 @@
 fn a() -> Int {
   let x = 1
   let y = 1
+  let z = 1
   let expr1 = 1
   let expr2 = 1
+  let expr3 = 1
   // start conditional expressions 1
   if x == y {
     expr1
-  } else {
+  } else if x == z {
     expr2
+  } else {
+    expr3
   }
   // end conditional expressions 1
-}
-
-fn b() -> Unit {
-  let x = 1
-  let y = 1
-  let expr1 = ()
-  // start conditional expressions 2
-  if x == y {
-    expr1
-  }
-  // end conditional expressions 2
 }
 
 fn c() -> Unit {
@@ -210,6 +203,22 @@ test {
   assert_eq!(sum(Cons(1, Cons(2, Cons(3, Nil)))), 6)
 }
 // end for loop 9
+
+// start for loop 10
+test {
+  let mut i = 0
+  for j in 0..<10 {
+    i += j
+  }
+  assert_eq!(i, 45)
+
+  let mut k = 0
+  for l in 0..=10 {
+    k += l
+  }
+  assert_eq!(k, 55)
+}
+// end for loop 10
 
 fn f() -> Unit {
   let index = 1
