@@ -820,6 +820,15 @@ If you already have some variable like `name` and `email`, it's redundant to rep
 :end-before: end struct 3
 ```
 
+If there's no other struct that has the same fields, it's redundant to add the struct's name when constructing it:
+
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start struct 5
+:end-before: end struct 5
+```
+
 #### Struct Update Syntax
 
 It's useful to create a new struct based on an existing one, but with some fields updated.

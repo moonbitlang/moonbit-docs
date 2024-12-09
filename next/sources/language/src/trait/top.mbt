@@ -102,6 +102,17 @@ test {
 }
 // end trait 9
 
+// start super trait 1
+trait Position {
+  pos(Self) -> (Int, Int)
+}
+trait Draw {
+  draw(Self) -> Unit
+}
+
+trait Object : Position + Draw {}
+// end super trait 1
+
 // start trait object 1
 trait Animal {
   speak(Self) -> String
