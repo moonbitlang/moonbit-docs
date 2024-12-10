@@ -409,7 +409,7 @@ fn reify(self : GState) -> String {
   if self.step() {
     self.reify()
   } else {
-    self.output.to_unchecked_string()
+    self.output.contents().to_unchecked_string()
   }
 }
 

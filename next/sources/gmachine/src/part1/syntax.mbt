@@ -122,7 +122,7 @@ fn tokenize(source : String) -> Tokens {
         identifier.write_char(peek())
         next()
       }
-      let identifier = identifier.to_unchecked_string()
+      let identifier = identifier.contents().to_unchecked_string()
       match identifier {
         "let" => tokens.push(Let)
         "letrec" => tokens.push(Letrec)
