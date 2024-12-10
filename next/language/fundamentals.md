@@ -31,7 +31,9 @@ MoonBit also supports numeric literals, including decimal, binary, octal, and he
 
 To improve readability, you may place underscores in the middle of numeric literals such as `1_000_000`. Note that underscores can be placed anywhere within a number, not just every three digits.
 
-- There is nothing surprising about decimal numbers.
+- Decimal numbers can have underscore between the numbers. 
+
+  By default, an int literal is signed 32-bit number. For unsigned numbers, a postfix `U` is needed; for 64-bit numbers, a postfix `L` is needed.
 
   ```{literalinclude} /sources/language/src/builtin/top.mbt
   :language: moonbit
@@ -70,9 +72,27 @@ To improve readability, you may place underscores in the middle of numeric liter
   :end-before: end number 4
   ```
 
-#### Overloaded int literal
+- A floating-point number literal is 64-bit floating-point number. To define a float, type annotation is needed.
 
-When the expected type is known, MoonBit can automatically overload integer literal, and there is no need to specify the type of number via letter postfix:
+  ```{literalinclude} /sources/language/src/builtin/top.mbt
+  :language: moonbit
+  :dedent:
+  :start-after: start number 6
+  :end-before: end number 6
+  ```
+
+  A 64-bit floating-point number can also be defined using hexadecimal format:
+
+  ```{literalinclude} /sources/language/src/builtin/top.mbt
+  :language: moonbit
+  :dedent:
+  :start-after: start number 7
+  :end-before: end number 7
+  ```
+
+#### Overloaded literal
+
+When the expected type is known, MoonBit can automatically overload literal, and there is no need to specify the type of number via letter postfix:
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
@@ -130,7 +150,7 @@ Multi-line strings do not support interpolation by default, but you can enable i
 
 ### Char
 
-`Char` is an integer representing a Unicode code point.
+`Char` represents a Unicode code point.
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
