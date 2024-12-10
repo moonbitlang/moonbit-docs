@@ -207,80 +207,35 @@ You can see that in each round of searching, `k` is strictly within the range `[
 
 Let's first define the `Line` struct, which represents a line in the text.
 
-```rust
-struct Line {
-  number : Int // Line number
-  text : String // Does not include newline
-} derive(Debug, Show)
-
-fn Line::new(number : Int, text : String) -> Line {
-  Line::{ number : number, text : text }
-}
+```{literalinclude} /sources/diff/src/part1/line.mbt
+:language: moonbit
+:start-after: start line definition
+:end-before: end line definition
 ```
 
 Then, define a helper function that splits a string into `Array[Line]` based on newline characters. Note that line numbers start from 1.
 
-```rust
-fn lines(str : String) -> Array[Line] {
-  let mut line_number = 0
-  let buf = Buffer::make(50)
-  let vec = []
-  for i = 0; i < str.length(); i = i + 1 {
-    let ch = str[i]
-    buf.write_char(ch)
-    if ch == '\n' {
-      let text = buf.to_string()
-      buf.reset()
-      line_number = line_number + 1
-      vec.push(Line::new(line_number, text))
-    }
-  } else {
-    // The text may not end with a newline
-    let text = buf.to_string()
-    if text != "" {
-      line_number = line_number + 1
-      vec.push(Line::new(line_number, text))
-    }
-    vec
-  }
-}
+```{literalinclude} /sources/diff/src/part1/line.mbt
+:language: moonbit
+:start-after: start lines definition
+:end-before: end lines definition
 ```
 
 Next, we need to wrap the array so that it supports negative indexing because we will use the value of `k` as an index.
 
-```rust
-type BPArray[T] Array[T] // BiPolar Array
-
-fn BPArray::make[T](capacity : Int, default : T) -> BPArray[T] {
-  let arr = Array::make(capacity, default)
-  BPArray(arr)
-}
-
-fn op_get[T](self : BPArray[T], idx : Int) -> T {
-  let BPArray(arr) = self
-  if idx < 0 {
-    arr[arr.length() + idx]
-  } else {
-    arr[idx]
-  }
-}
-
-fn op_set[T](self : BPArray[T], idx : Int, elem : T) -> Unit {
-  let BPArray(arr) = self
-  if idx < 0 {
-    arr[arr.length() + idx] = elem
-  } else {
-    arr[idx] = elem
-  }
-}
+```{literalinclude} /sources/diff/src/part1/bparray.mbt
+:language: moonbit
+:start-after: start bparray definition
+:end-before: end bparray definition
 ```
 
 Now we can start writing the search function. Before searching for the complete path, let's start with our first goal to find the length of the shortest path (equal to the search depth). Here is the basic framework:
 
-```rust
-fn shortst_edit(a : Array[Line], b : Array[Line]) -> Int {
-  let n = a.length()
-  let m = b.length()
+<!-- MANUAL CHECK -->
+```moonbit
+fn shortst_edit(old~ : Array[Line], new~ : Array[Line]) -> Int {
+  let n = old.length()
+  let m = new.length()
   let max = n + m
   let v = BPArray::make(2 * max + 1, 0)
   for d = 0; d < max + 1; d = d + 1 {
@@ -295,11 +250,12 @@ In the most extreme case (the two texts have no matching lines), it can be infer
 
 But even at this point, it is still difficult to figure out what to do next, so let's only consider the case `d = 0; k = 0` for now. At this point, it must be at `(0, 0)`. Also, if the beginnings of the two texts are the same, they can be skipped directly. We write the final coordinates of this round into the array `v`.
 
-```rust
+<!-- MANUAL CHECK -->
+```moonbit
 if d == 0 { // When d equals 0, k must also equal 0
   x = 0
   y = x - k
-  while x < n && y < m && a[x].text == b[y].text {
+  while x < n && y < m && old[x].text == new[y].text {
     // Skip all matching lines
     x = x + 1
     y = y + 1
@@ -318,7 +274,8 @@ There are two boundary cases: `k == -d` and `k == d`.
 
 Recalling the requirement mentioned earlier: arranging deletions before insertions as much as possible, this essentially means choosing the position with the largest `x` value from the previous position.
 
-```rust
+<!-- MANUAL CHECK -->
+```moonbit
 if k == -d {
   x = v[k + 1]
 } else if k == d {
@@ -332,7 +289,8 @@ if k == -d {
 
 Merging these four branches, we get the following code:
 
-```rust
+<!-- MANUAL CHECK -->
+```moonbit
 if k == -d || (k != d && v[k - 1] < v[k + 1]) {
   x = v[k + 1]
 } else {
@@ -342,39 +300,10 @@ if k == -d || (k != d && v[k - 1] < v[k + 1]) {
 
 Combining all the steps above, we get the following code:
 
-```rust
-fn shortst_edit(a : Array[Line], b : Array[Line]) -> Int {
-  let n = a.length()
-  let m = b.length()
-  let max = n + m
-  let v = BPArray::make(2 * max + 1, 0)
-  // v[1] = 0
-  for d = 0; d < max + 1; d = d + 1 {
-    for k = -d; k < d + 1; k = k + 2 {
-      let mut x = 0
-      let mut y = 0
-      // if d == 0 {
-      //   x = 0
-      // }
-      if k == -d || (k != d && v[k - 1] < v[k + 1]) {
-        x = v[k + 1]
-      } else {
-        x = v[k - 1] + 1
-      }
-      y = x - k
-      while x < n && y < m && a[x].text == b[y].text {
-        x = x + 1
-        y = y + 1
-      }
-      v[k] = x
-      if x >= n && y >= m {
-        return d
-      }
-    }
-  } else {
-    abort("impossible")
-  }
-}
+```{literalinclude} /sources/diff/src/part1/diff.mbt
+:language: moonbit
+:start-after: start shortest_edit definition
+:end-before: end shortest_edit definition
 ```
 
 Since the initial value of the array is 0, we can omit the branch for `d == 0`.
