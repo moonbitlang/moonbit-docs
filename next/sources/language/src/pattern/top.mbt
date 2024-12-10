@@ -39,6 +39,7 @@ enum Arith {
 fn eval(expr : Arith) -> Int {
   // start pattern 3
   match expr {
+    //! Add(e1, e2) | Lit(e1) => ...
     Lit(n) as a => ...
     Add(e1, e2) | Mul(e1, e2) => ...
     _ => ...
@@ -86,7 +87,48 @@ fn json() -> Unit {
   // start pattern 6
   match json {
     { "version": "1.0.0", "import": [..] as imports } => ...
+    { "version": Number(i), "import": Array(imports)} => ...
     _ => ...
   }
   // end pattern 6
 }
+
+// start simple pattern 1
+const ONE = 1
+
+fn match_int(x : Int) -> Unit {
+  match x {
+    0 => println("zero")
+    ONE => println("one")
+    value => println(value)
+  }
+}
+// end simple pattern 1
+
+// start simple pattern 2
+struct Point3D {
+  x : Int
+  y : Int
+  z : Int
+}
+
+fn match_point3D(p : Point3D) -> Unit {
+  match p {
+    { x: 0, .. } => println("on yz-plane")
+    _ => println("not on yz-plane")
+  }
+}
+
+enum Point[T] {
+  Point2D(Int, Int, name~: String, payload~ : T)
+}
+
+fn match_point[T](p : Point[T]) -> Unit {
+  match p {
+    //! Point2D(0, 0) => println("2D origin")
+    Point2D(0, 0, ..) => println("2D origin")
+    Point2D(_) => println("2D point")
+    _ => panic()
+  }
+}
+// end simple pattern 2

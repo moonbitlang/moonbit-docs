@@ -220,13 +220,16 @@ test {
 }
 // end for loop 10
 
-fn f() -> Unit {
-  let index = 1
-  let len = 10
-  // start guard 1
-  guard index >= 0 && index < len else { abort("Index out of range") }
-  // end guard 1
+// start guard 1
+fn guarded_get(array : Array[Int], index : Int) -> Int? {
+  guard index >= 0 && index < array.length() else { None }
+  Some(array[index])
 }
+
+test {
+  inspect!(guarded_get([1, 2, 3], -1), content="None")
+}
+// end guard 1
 
 fn process(string : String) -> String {
   string
@@ -261,3 +264,17 @@ fn g() -> Unit {
   // <=> guard let Some(x) = expr else { _ => panic() }
   // end guard 3
 }
+
+// start match 1
+fn decide_sport(weather : String, humidity : Int) -> String {
+  match weather {
+    "sunny" => "tennis"
+    "rainy" => if humidity > 80 { "swimming" } else { "football" }
+    _ => "unknown"
+  }
+}
+
+test {
+  assert_eq!(decide_sport("sunny", 0), "tennis")
+}
+// end match 1

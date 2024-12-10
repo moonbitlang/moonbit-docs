@@ -326,6 +326,14 @@ Local functions can be named or anonymous. Type annotations can be omitted for l
 :end-before: end local functions 1
 ```
 
+There's also a form called **matrix function** that make use of [pattern matching](#pattern-matching):
+
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start local functions 3
+:end-before: end local functions 3
+```
+
 Functions, whether named or anonymous, are _lexical closures_: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
 
 ```{literalinclude} /sources/language/src/functions/top.mbt
@@ -488,6 +496,57 @@ Note that a conditional expression always returns a value in MoonBit, and the re
 ```
 
 The `else` clause can only be omitted if the return value has type `Unit`.
+
+### Match Expression
+
+The `match` expression is similar to conditional expression, but it uses [pattern matching](#pattern-matching) to decide which consequent to evaluate and extracting variables at the same time.
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start match 1
+:end-before: end match 1
+```
+
+If a possible condition is omitted, the compiler will issue a warning, and the program will terminate if that case were reached.
+
+### Guard Statement
+
+The `guard` statement is used to check a specified invariant.
+If the condition of the invariant is satisfied, the program continues executing
+the subsequent statements and returns. If the condition is not satisfied (i.e., false),
+the code in the `else` block is executed and its evaluation result is returned (the subsequent statements are skipped).
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start guard 1
+:end-before: end guard 1
+```
+
+#### Guarded Let
+
+The `let` statement can be used with [pattern matching](#pattern-matching). However, `let` statement can only handle one case. And `guard let` can solve this issue.
+
+In the following example, `getProcessedText` assumes that the input `path` points to resources that are all plain text,
+and it uses the `guard` statement to ensure this invariant. Compared to using
+a `match` statement, the subsequent processing of `text` can have one less level of indentation.
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start guard 2
+:end-before: end guard 2
+```
+
+When the `else` part is omitted, the program terminates if the condition specified
+in the `guard` statement is not true or cannot be matched.
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start guard 3
+:end-before: end guard 3
+```
 
 ### While loop
 
@@ -687,41 +746,6 @@ A functional loop consumes arguments and returns a value. It is defined using th
 :language: moonbit
 :start-after: start for loop 9
 :end-before: end for loop 9
-```
-
-### Guard Statement
-
-The `guard` statement is used to check a specified invariant.
-If the condition of the invariant is satisfied, the program continues executing
-the subsequent statements and returns. If the condition is not satisfied (i.e., false),
-the code in the `else` block is executed and its evaluation result is returned (the subsequent statements are skipped).
-
-```{literalinclude} /sources/language/src/controls/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start guard 1
-:end-before: end guard 1
-```
-
-The `guard` statement also supports pattern matching: in the following example,
-`getProcessedText` assumes that the input `path` points to resources that are all plain text,
-and it uses the `guard` statement to ensure this invariant. Compared to using
-a `match` statement, the subsequent processing of `text` can have one less level of indentation.
-
-```{literalinclude} /sources/language/src/controls/top.mbt
-:language: moonbit
-:start-after: start guard 2
-:end-before: end guard 2
-```
-
-When the `else` part is omitted, the program terminates if the condition specified
-in the `guard` statement is not true or cannot be matched.
-
-```{literalinclude} /sources/language/src/controls/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start guard 3
-:end-before: end guard 3
 ```
 
 ## Iterator
@@ -1043,22 +1067,39 @@ The type alias can be removed after all uses of `@pkgA.T` is migrated to `@pkgB.
 
 ## Pattern Matching
 
-We have shown a use case of pattern matching for enums, but pattern matching is not restricted to enums. For example, we can also match expressions against Boolean values, numbers, characters, strings, tuples, arrays, and struct literals. Since there is only one case for those types other than enums, we can pattern match them using `let` binding instead of `match` expressions. Note that the scope of bound variables in `match` is limited to the case where the variable is introduced, while `let` binding will introduce every variable to the current scope. Furthermore, we can use underscores `_` as wildcards for the values we don't care about, use `..` to ignore remaining fields of struct or elements of array.
+Pattern matching allows us to match on specific pattern and bind data from data structures.
+
+### Simple Patterns
+
+We can pattern match expressions against
+
+- literals, such as boolean values, numbers, chars, strings, etc
+- constants
+- structs
+- enums
+- arrays
+- maps
+- JSONs
+
+and so on. We can define identifiers to bind the matched values so that they can be used later.
 
 ```{literalinclude} /sources/language/src/pattern/top.mbt
 :language: moonbit
 :dedent:
-:start-after: start pattern 1
-:end-before: end pattern 1
+:start-after: start simple pattern 1
+:end-before: end simple pattern 1
 ```
+
+We can use `_` as wildcards for the values we don't care about, and use `..` to ignore remaining fields of struct or enum, or array (see [array pattern](#array-pattern)).
 
 ```{literalinclude} /sources/language/src/pattern/top.mbt
 :language: moonbit
-:start-after: start pattern 2
-:end-before: end pattern 2
+:dedent:
+:start-after: start simple pattern 2
+:end-before: end simple pattern 2
 ```
 
-There are some other useful constructs in pattern matching. For example, we can use `as` to give a name to some pattern, and we can use `|` to match several cases at once. A variable name can only be bound once in a single pattern, and the same set of variables should be bound on both sides of `|` patterns.
+We can use `as` to give a name to some pattern, and we can use `|` to match several cases at once. A variable name can only be bound once in a single pattern, and the same set of variables should be bound on both sides of `|` patterns.
 
 ```{literalinclude} /sources/language/src/pattern/top.mbt
 :language: moonbit
@@ -1077,6 +1118,12 @@ Array pattern have the following forms:
 - `[pa, pb, pc]` : matching for known number of elements, 3 in this example
 - `[pa, ..]` : matching for known number of elements, followed by unknown number of elements
 - `[.., pa]` : matching for known number of elements, preceded by unknown number of elements
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:start-after: start pattern 2
+:end-before: end pattern 2
+```
 
 ### Range Pattern
 For builtin integer types and `Char`, MoonBit allows matching whether the value falls in a specific range.
@@ -1110,14 +1157,14 @@ The `key? : value` syntax will match no matter `key` exists or not, and `value` 
 :end-before: end pattern 5
 ```
 
-- To match a data type `T` using map pattern, `T` must have a method `op_get(Self, K) -> Option[V]` for some type `K` and `V`.
-- Currently, the key part of map pattern must be a constant
+- To match a data type `T` using map pattern, `T` must have a method `op_get(Self, K) -> Option[V]` for some type `K` and `V` (see [method and trait](./methods.md)).
+- Currently, the key part of map pattern must be a literal or constant
 - Map patterns are always open: unmatched keys are silently ignored
 - Map pattern will be compiled to efficient code: every key will be fetched at most once
 
 ### Json Pattern
 
-When the matched value has type `Json`, literal patterns can be used directly:
+When the matched value has type `Json`, literal patterns can be used directly, together with constructors:
 
 ```{literalinclude} /sources/language/src/pattern/top.mbt
 :language: moonbit
