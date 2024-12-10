@@ -104,4 +104,5 @@ There's also a top-level structure called `test` block. A `test` block defines i
 :end-before: end test 1
 ```
 
-The following contents will use `test` block and `main` function to demonstrate the execution result.
+The following contents will use `test` block and `main` function to demonstrate the execution result,
+and we assume that all the `test` blocks pass unless stated otherwise.

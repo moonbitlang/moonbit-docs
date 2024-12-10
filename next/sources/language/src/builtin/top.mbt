@@ -12,13 +12,10 @@ let boolean : Unit = {
 let number : Unit = {
   // start number 1
   let a = 1234
-  let b = 1_000_000 + a
-  // UInt : 0_U
-  let unsigned_num = 4_294_967_295U
-  // Int64 : 0_L
-  let large_num = 9_223_372_036_854_775_807L
-  // UInt64 : 0_UL
-  let unsigned_large_num = 18_446_744_073_709_551_615UL
+  let b : Int = 1_000_000 + a
+  let unsigned_num       : UInt   = 4_294_967_295U
+  let large_num          : Int64  = 9_223_372_036_854_775_807L
+  let unsigned_large_num : UInt64 = 18_446_744_073_709_551_615UL
   // end number 1
 
   // start number 2
@@ -33,8 +30,18 @@ let number : Unit = {
 
   // start number 4
   let hex = 0XA
-  let another_hex = 0xA
+  let another_hex = 0xA_B_C
   // end number 4
+
+  // start number 6
+  let double = 3.14 // Double
+  let float : Float = 3.14
+  let float2 = (3.14 : Float)
+  // end number 6
+
+  // start number 7
+  let hex_double = 0x1.2P3 // (1.0 + 2 / 16) * 2^(+3) == 9
+  // end number 7
 
   // start number 5
   let int : Int = 42
