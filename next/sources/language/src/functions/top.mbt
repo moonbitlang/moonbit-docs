@@ -67,6 +67,13 @@ test {
 }
 // end local functions 2
 
+// start local functions 3
+let extract : (Int?, Int) -> Int = fn {
+  Some(x), _ => x
+  None, default => default
+}
+// end local functions 3
+
 // start labelled arguments 1
 fn labelled_1(arg1~ : Int, arg2~ : Int) -> Int {
   arg1 + arg2
