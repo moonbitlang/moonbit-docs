@@ -748,6 +748,10 @@ A functional loop consumes arguments and returns a value. It is defined using th
 :end-before: end for loop 9
 ```
 
+```{warning}
+Currently in `loop exprs { ... }`, `exprs` is nonempty list, while `for { ... }` is accepted for inifinite loop.
+```
+
 ## Iterator
 
 An iterator is an object that traverse through a sequence while providing access
