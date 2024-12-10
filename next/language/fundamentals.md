@@ -749,7 +749,7 @@ A functional loop consumes arguments and returns a value. It is defined using th
 ```
 
 ```{warning}
-Currently in `loop exprs { ... }`, `exprs` is nonempty list, while `for { ... }` is accepted for inifinite loop.
+Currently in `loop exprs { ... }`, `exprs` is nonempty list, while `for { ... }` is accepted for infinite loop.
 ```
 
 ## Iterator
