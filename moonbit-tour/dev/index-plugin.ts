@@ -17,7 +17,7 @@ const indexPlugin = (): vite.Plugin => {
       return html
         .replace(
           "%HEAD%",
-          `<link rel="icon" href="/favicon.ico" />
+          `<link rel="icon" href="${BASE}/favicon.ico" />
   <title>moonbit tour</title>`,
         )
         .replace("%MARKDOWN%", mdHtml)
