@@ -6,6 +6,7 @@ import indexPlugin from "./dev/index-plugin";
 export default defineConfig({
   base: BASE,
   build: {
+    outDir: "dist/tour",
     rollupOptions: {
       output: {
         entryFileNames: `assets/[name].js`,
