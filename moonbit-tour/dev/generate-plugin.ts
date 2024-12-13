@@ -21,7 +21,11 @@ const generatePlugin = (): vite.Plugin => {
           .replace("%HEAD%", head)
           .replace("%TITLE%", `${l.lesson} - MoonBit Language Tour`)
           .replace("%MARKDOWN%", l.markdown)
-          .replace("%CODE%", l.code);
+          .replace("%CODE%", l.code)
+          .replace(
+            '      <script type="module" src="/src/main.ts"></script>',
+            "",
+          );
         if (i === 0) {
           res = res.replace("%BACK%", `<a href="${BASE}/index.html">Back</a>`);
         }
