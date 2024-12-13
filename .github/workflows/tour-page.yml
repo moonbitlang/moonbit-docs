@@ -34,11 +34,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - uses: pnpm/action-setup@v4
-        with:
-          version: 9
+      - run: pnpm install
       - run: |
           cd moonbit-tour
-          pnpm install
           pnpm build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
