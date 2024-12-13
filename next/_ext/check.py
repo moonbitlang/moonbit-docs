@@ -8,12 +8,19 @@ from sphinx.util import logging
 logger = logging.getLogger(__name__)
 
 def setup(app: Sphinx) -> ExtensionMetadata:
-    result = subprocess.run(["moonc", '-v'], capture_output=True)
-    if result.returncode != 0:
+    metadata = {
+        "version": "0.1.0",
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
+    }
+    try:
+        result = subprocess.run(["moonc", '-v'], capture_output=True, check=True)
+    except (FileNotFoundError, subprocess.CalledProcessError):
         logger.warning("moonbit compiler is missing! No code check performed")
-    else:
-        logger.info(f"moonc version: {result.stdout.decode().strip()}")
-        app.connect("doctree-read", source_read_handler)
+        return metadata
+    logger.info(f"moonc version: {result.stdout.decode().strip()}")
+    app.connect("doctree-read", source_read_handler)
+    return metadata
 
 class Visitor(NodeVisitor):
     def visit_literal_block(self, node : Node):
