@@ -1,4 +1,4 @@
-name: check website
+name: check langauge tour
 
 on:
   pull_request:
@@ -15,6 +15,5 @@ jobs:
           pnpm install
       - name: check
         run: |
-          cd moonbit-docs
-          pnpm typecheck
+          cd moonbit-tour
           pnpm build
