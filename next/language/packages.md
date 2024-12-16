@@ -1,5 +1,29 @@
 # Managing Projects with Packages
 
+When developing projects at large scale, the project usually needs to be divided into smaller modular unit that depends on each other. 
+More often, it involves using other people's work: most noticeably is the [core](https://github.com/moonbitlang/core), the standard library of MoonBit.
+
+## Packages and modules
+
+In MoonBit, the most important unit for code organization is a package, which consists of a number of source code files and a single `moon.pkg.json` configuration file.
+A package can either be a `main` package, consisting a `main` function, or a package that serves as a library. 
+
+A project, corresponding to a module, consists of multiple packages and a single `moon.mod.json` configuration file.
+
+When using things from another package, the dependency between modules should first be declared inside the `moon.mod.json`.
+The dependency between packages should then be declared inside the `moon.pkg.json`.
+Then it is possible to use `@pkg` to access the imported entities, where `pkg` is the last part of the imported package's path or the declared alias in `moon.pkg.json`:
+
+```{literalinclude} /sources/language/src/packages/pkgB/moon.pkg.json
+:language: json
+:caption: pkgB/moon.pkg.json
+```
+
+```{literalinclude} /sources/language/src/packages/pkgB/top.mbt
+:language: moonbit
+:caption: pkgB/top.mbt
+```
+
 ## Access Control
 
 By default, all function definitions and variable bindings are _invisible_ to other packages.
