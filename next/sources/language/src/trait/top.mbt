@@ -1,6 +1,8 @@
 // start trait 1
 trait I {
   method_(Int) -> Int
+  method_with_label(Int, label~: Int) -> Int
+  //! method_with_label(Int, label?: Int) -> Int
 }
 // end trait 1
 

@@ -62,9 +62,7 @@ When the first parameter of a method is also the type it belongs to, methods can
 
 The highlighted line is only possible when there is no ambiguity in `@list`.
 
-## Operators
-
-### Operator Overloading
+## Operator Overloading
 
 MoonBit supports operator overloading of builtin operators via methods. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
 
@@ -137,8 +135,33 @@ MoonBit features a structural trait system for overloading/ad-hoc polymorphism. 
 
 In the body of a trait definition, a special type `Self` is used to refer to the type that implements the trait.
 
+### Super trait
+
+A trait can depend on other traits, for example:
+
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start super trait 1
+:end-before: end super trait 1
+```
+
+To implement the super trait, one will have to implement the sub traits, 
+and the methods defined in the super trait.
+
+### Implementing traits
+
 To implement a trait, a type must provide all the methods required by the trait.
-Implementation for trait methods can be provided via the syntax `impl Trait for Type with method_name(...) { ... }`, for example:
+
+This allows types to implement a trait implicitly, hence allowing different packages to work together without seeing or depending on each other.
+For example, the following trait is automatically implemented for builtin number types such as `Int` and `Double`:
+
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait 4
+:end-before: end trait 4
+```
+
+**Explicit implementation** for trait methods can be provided via the syntax `impl Trait for Type with method_name(...) { ... }`, for example:
 
 ```{literalinclude} /sources/language/src/trait/top.mbt
 :language: moonbit
@@ -148,7 +171,7 @@ Implementation for trait methods can be provided via the syntax `impl Trait for 
 
 Type annotation can be omitted for trait `impl`: MoonBit will automatically infer the type based on the signature of `Trait::method` and the self type.
 
-The author of the trait can also define default implementations for some methods in the trait, for example:
+The author of the trait can also define **default implementations** for some methods in the trait, for example:
 
 ```{literalinclude} /sources/language/src/trait/top.mbt
 :language: moonbit
@@ -160,14 +183,8 @@ Implementers of trait `I` don't have to provide an implementation for `f_twice`:
 They can always override the default implementation with an explicit `impl I for Type with f_twice`, if desired, though.
 
 If an explicit `impl` or default implementation is not found, trait method resolution falls back to regular methods.
-This allows types to implement a trait implicitly, hence allowing different packages to work together without seeing or depending on each other.
-For example, the following trait is automatically implemented for builtin number types such as `Int` and `Double`:
 
-```{literalinclude} /sources/language/src/trait/top.mbt
-:language: moonbit
-:start-after: start trait 4
-:end-before: end trait 4
-```
+### Using traits
 
 When declaring a generic function, the type parameters can be annotated with the traits they should implement, allowing the definition of constrained generic functions. For example:
 
@@ -185,20 +202,8 @@ Without the `Number` requirement, the expression `x * x` in `square` will result
 :end-before: end trait 6
 ```
 
-### Super trait
+#### Invoke trait methods directly
 
-A trait can depend on other traits, for example:
-
-```{literalinclude} /sources/language/src/trait/top.mbt
-:language: moonbit
-:start-after: start super trait 1
-:end-before: end super trait 1
-```
-
-To implement the super trait, one will have to implement the sub traits, 
-and the methods defined in the super trait.
-
-### Invoke trait methods directly
 Methods of a trait can be called directly via `Trait::method`. MoonBit will infer the type of `Self` and check if `Self` indeed implements `Trait`, for example:
 
 ```{literalinclude} /sources/language/src/trait/top.mbt
