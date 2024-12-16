@@ -202,3 +202,31 @@ let moon_pkg_json_example : Json = {
   "test-import": ["moonbitlang/core/random"],
 }
 // end json 1
+
+// start ref 1
+let a : Ref[Int] = { val : 100 }
+
+test {
+  a.val = 200
+  assert_eq!(a.val, 200)
+  a.val += 1
+  assert_eq!(a.val, 201)
+}
+// end ref 1
+
+// start option result 1
+test {
+  let a : Option[Int] = None
+  let b : Option[Int] = Some(42)
+  let c : Result[Int, String] = Ok(42)
+  let d : Result[Int, String] = Err("error")
+  match a {
+    Some(_) => assert_true!(false)
+    None => assert_true!(true)
+  }
+  match d {
+    Ok(_) => assert_true!(false)
+    Err(_) => assert_true!(true)
+  }
+}
+// end option result 1

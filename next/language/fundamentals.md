@@ -207,6 +207,33 @@ Tuples can be accessed via pattern matching or index:
 :end-before: end tuple 2
 ```
 
+### Ref
+
+A `Ref[T]` is a mutable reference containing a value `val` of type `T`.
+
+It can be constructed using `{ val : x }`, and can be accessed using `ref.val`. See [struct](#struct) for detailed explanation.
+
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start ref 1
+:end-before: end ref 1
+```
+
+### Option and Result
+
+`Option` and `Result` are the most common types to represent a possible error or failure in MoonBit.
+
+- `Option[T]` represents a possibly missing value of type `T`. It can be abbreviated as `T?`.
+- `Result[T, E]` represents either a value of type `T` or an error of type `E`.
+
+See [enum](#enum) for detailed explanation.
+
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start option result 1
+:end-before: end option result 1
+```
+
 ### Array
 
 An array is a finite sequence of values constructed using square brackets `[]`, with elements separated by commas `,`. For example:
