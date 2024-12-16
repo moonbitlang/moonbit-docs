@@ -135,7 +135,7 @@ MoonBit features a structural trait system for overloading/ad-hoc polymorphism. 
 
 In the body of a trait definition, a special type `Self` is used to refer to the type that implements the trait.
 
-### Super trait
+### Extending traits
 
 A trait can depend on other traits, for example:
 
@@ -239,7 +239,7 @@ Here's an example of calling trait `impl` with dot syntax:
 MoonBit supports runtime polymorphism via trait objects.
 If `t` is of type `T`, which implements trait `I`,
 one can pack the methods of `T` that implements `I`, together with `t`,
-into a runtime object via `t as I`.
+into a runtime object via `t as &I`.
 Trait object erases the concrete type of a value,
 so objects created from different concrete types can be put in the same data structure and handled uniformly:
 

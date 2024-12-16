@@ -144,10 +144,10 @@ test {
   let duck1 = Duck::make("duck1")
   let duck2 = Duck::make("duck2")
   let fox1 = Fox::make("fox1")
-  let animals : Array[Animal] = [
-    duck1 as Animal,
-    duck2 as Animal,
-    fox1 as Animal,
+  let animals : Array[&Animal] = [
+    duck1 as &Animal,
+    duck2 as &Animal,
+    fox1 as &Animal,
   ]
   inspect!(
     animals.map(fn(animal) { animal.speak() }),
@@ -164,10 +164,10 @@ trait Logger {
 }
 
 trait CanLog {
-  log(Self, Logger) -> Unit
+  log(Self, &Logger) -> Unit
 }
 
-fn Logger::write_object[Obj : CanLog](self : Logger, obj : Obj) -> Unit {
+fn &Logger::write_object[Obj : CanLog](self : &Logger, obj : Obj) -> Unit {
   obj.log(self)
 }
 
