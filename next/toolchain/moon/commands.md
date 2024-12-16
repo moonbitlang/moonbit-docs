@@ -108,6 +108,8 @@ Build the current package
 * `--output-wat` — Output WAT instead of WASM
 * `-d`, `--deny-warn` — Treat all warnings as errors
 * `--no-render` — Don't render diagnostics from moonc (don't pass '-error-format json' to moonc)
+* `--warn-list <WARN_LIST>` — Warn list config
+* `--alert-list <ALERT_LIST>` — Alert list config
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `-w`, `--watch` — Monitor the file system and automatically build artifacts
 
@@ -139,6 +141,8 @@ Check the current package, but don't build object files
 * `--output-wat` — Output WAT instead of WASM
 * `-d`, `--deny-warn` — Treat all warnings as errors
 * `--no-render` — Don't render diagnostics from moonc (don't pass '-error-format json' to moonc)
+* `--warn-list <WARN_LIST>` — Warn list config
+* `--alert-list <ALERT_LIST>` — Alert list config
 * `--output-json` — Output in json format
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `-w`, `--watch` — Monitor the file system and automatically check files
@@ -174,6 +178,8 @@ Run a main package
 * `--output-wat` — Output WAT instead of WASM
 * `-d`, `--deny-warn` — Treat all warnings as errors
 * `--no-render` — Don't render diagnostics from moonc (don't pass '-error-format json' to moonc)
+* `--warn-list <WARN_LIST>` — Warn list config
+* `--alert-list <ALERT_LIST>` — Alert list config
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `--build-only` — Only build, do not run the code
 
@@ -201,6 +207,8 @@ Test the current package
 * `--output-wat` — Output WAT instead of WASM
 * `-d`, `--deny-warn` — Treat all warnings as errors
 * `--no-render` — Don't render diagnostics from moonc (don't pass '-error-format json' to moonc)
+* `--warn-list <WARN_LIST>` — Warn list config
+* `--alert-list <ALERT_LIST>` — Alert list config
 * `-p`, `--package <PACKAGE>` — Run test in the specified package
 * `-f`, `--file <FILE>` — Run test in the specified file. Only valid when `--package` is also specified
 * `-i`, `--index <INDEX>` — Run only the index-th test in the file. Only valid when `--file` is also specified
@@ -282,11 +290,15 @@ Generate public interface (`.mbti`) files for all packages in the module
 
 Add a dependency
 
-**Usage:** `moon add <PACKAGE_PATH>`
+**Usage:** `moon add [OPTIONS] <PACKAGE_PATH>`
 
 **Arguments:**
 
 * `<PACKAGE_PATH>` — The package path to add
+
+**Options:**
+
+* `--bin` — Whether to add the dependency as a binary
 
 
 
