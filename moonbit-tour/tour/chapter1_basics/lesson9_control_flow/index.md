@@ -1,4 +1,4 @@
-# Control flows 
+# Control flow
 
 In this example, we use for loops, while loops, and if-else expression to 
 iterate over an array.
