@@ -314,7 +314,7 @@ Functions can be defined as top-level or local. We can use the `fn` keyword to d
 :end-before: end top-level functions
 ```
 
-Note that the arguments and return value of top-level functions require explicit type annotations.
+Note that the arguments and return value of top-level functions require **explicit** type annotations.
 
 ### Local Functions
 

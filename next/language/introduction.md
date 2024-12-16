@@ -46,6 +46,13 @@ A constant can only be declared at top level and cannot be changed.
 :language: moonbit
 ```
 
+```{note}
+A top level variable binding 
+- requires **explicit** type annotation (unless defined using literals such as string, byte or numbers)
+- can't be mutable (use `Ref` instead)
+```
+
+
 ## Naming conventions
 
 Variables, functions should start with lowercase letters `a-z` and can contain letters, numbers, and other non-ascii unicode chars.
