@@ -1,8 +1,8 @@
 # Tuple pattern
 
-Use tuple pattern to match multiple conditions at once.
+Use a tuple pattern to match multiple conditions at once.
 
-This example simulates *logical and* and *logical or* operation via pattern matching.
+This example simulates *logical and* and *logical or* operations via pattern matching.
 
 In this scenario, the overhead of creating the tuple in the condition will be optimized out by the compiler.
 

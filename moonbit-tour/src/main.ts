@@ -30,6 +30,7 @@ const moonSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 
 `;
 
 let theme: "light" | "dark" = "light";
+// TODO: Preserve theme across multiple pages of the tour.
 
 const themeButton = document.querySelector<HTMLDivElement>("#theme")!;
 

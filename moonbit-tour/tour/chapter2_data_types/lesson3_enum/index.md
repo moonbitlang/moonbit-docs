@@ -1,8 +1,11 @@
-# Enum 
+# Enum
 
-Enum used to define a type by enumerating its possible values. Unlike traditional enums, MoonBit enums can have data associated with each enumeration. We call each enumeration an *enum constructor*.
+An enum is used to define a type by enumerating its possible values.
+Unlike traditional enums, MoonBit enums can have data associated with each enumeration.
+We call each enumeration an *enum constructor*.
 
-In this example, we define an enum `Color`, which has five enum constructors: `Red`, `Green`, `Blue`, `RGB`, and `CMYK`. The `Red`, `Green`, and `Blue` directly represent a color it described, while `RGB` and `CMYK` have data associated with them.
+In this example, we define an enum `Color`, which has five enum constructors: `Red`, `Green`, `Blue`, `RGB`, and `CMYK`.
+The `Red`, `Green`, and `Blue` values directly represent the colors they describe, while `RGB` and `CMYK` have data associated with them.
 
 Values like `Red` and `RGB(255,255,255)` are both instances of the `Color` type. To create an instance more explicitly, you can use `Color::Red`, similar to creating an instance of a struct.
 

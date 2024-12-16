@@ -1,6 +1,6 @@
 # Result
 
-Similar to `Option[Char]`, the enum `Result[Char, String]` represents a `Char` value that may or may not be present. Otherwise, it can contain an error message of type `String`.
+Similar to `Option[Char]`, the enum `Result[Char, String]` represents a `Char` value that may or may not be present. If not present, it can contain an error message of type `String`.
 
 - `Err("error message")` means the value is missing, and the error message is provided.
 - `Ok('h')` is a wrapper that contains the value `'h'`.
