@@ -35,7 +35,7 @@ This document contains the help content for the `moon` command-line program.
 
 **Usage:** `moon <COMMAND>`
 
-###### **Subcommands:**
+**Subcommands:**
 
 * `new` — Create a new MoonBit module
 * `build` — Build the current package
@@ -69,11 +69,11 @@ Create a new MoonBit module
 
 **Usage:** `moon new [OPTIONS] [PACKAGE_NAME]`
 
-###### **Arguments:**
+**Arguments:**
 
 * `<PACKAGE_NAME>` — The name of the package
 
-###### **Options:**
+**Options:**
 
 * `--lib` — Create a library package instead of an executable
 * `--path <PATH>` — Output path of the package
@@ -92,7 +92,7 @@ Build the current package
 
 **Usage:** `moon build [OPTIONS]`
 
-###### **Options:**
+**Options:**
 
 * `--std` — Enable the standard library (default)
 * `--nostd` — Disable the standard library
@@ -119,11 +119,11 @@ Check the current package, but don't build object files
 
 **Usage:** `moon check [OPTIONS] [PACKAGE_PATH]`
 
-###### **Arguments:**
+**Arguments:**
 
 * `<PACKAGE_PATH>` — The package(and it's deps) to check
 
-###### **Options:**
+**Options:**
 
 * `--std` — Enable the standard library (default)
 * `--nostd` — Disable the standard library
@@ -153,12 +153,12 @@ Run a main package
 
 **Usage:** `moon run [OPTIONS] <PACKAGE_OR_MBT_FILE> [ARGS]...`
 
-###### **Arguments:**
+**Arguments:**
 
 * `<PACKAGE_OR_MBT_FILE>` — The package or .mbt file to run
 * `<ARGS>` — The arguments provided to the program to be run
 
-###### **Options:**
+**Options:**
 
 * `--std` — Enable the standard library (default)
 * `--nostd` — Disable the standard library
@@ -185,7 +185,7 @@ Test the current package
 
 **Usage:** `moon test [OPTIONS]`
 
-###### **Options:**
+**Options:**
 
 * `--std` — Enable the standard library (default)
 * `--nostd` — Disable the standard library
@@ -231,11 +231,11 @@ Format source code
 
 **Usage:** `moon fmt [OPTIONS] [ARGS]...`
 
-###### **Arguments:**
+**Arguments:**
 
 * `<ARGS>`
 
-###### **Options:**
+**Options:**
 
 * `--check` — Check only and don't change the source code
 * `--sort-input` — Sort input files
@@ -252,7 +252,7 @@ Generate documentation
 
 **Usage:** `moon doc [OPTIONS]`
 
-###### **Options:**
+**Options:**
 
 * `--serve` — Start a web server to serve the documentation
 * `-b`, `--bind <BIND>` — The address of the server
@@ -271,7 +271,7 @@ Generate public interface (`.mbti`) files for all packages in the module
 
 **Usage:** `moon info [OPTIONS]`
 
-###### **Options:**
+**Options:**
 
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `--no-alias` — Do not use alias to shorten package names in the output
@@ -284,7 +284,7 @@ Add a dependency
 
 **Usage:** `moon add <PACKAGE_PATH>`
 
-###### **Arguments:**
+**Arguments:**
 
 * `<PACKAGE_PATH>` — The package path to add
 
@@ -296,7 +296,7 @@ Remove a dependency
 
 **Usage:** `moon remove <PACKAGE_PATH>`
 
-###### **Arguments:**
+**Arguments:**
 
 * `<PACKAGE_PATH>` — The package path to remove
 
@@ -340,7 +340,7 @@ Publish the current module
 
 **Usage:** `moon publish [OPTIONS]`
 
-###### **Options:**
+**Options:**
 
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 
@@ -352,7 +352,7 @@ Package the current module
 
 **Usage:** `moon package [OPTIONS]`
 
-###### **Options:**
+**Options:**
 
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `--list`
@@ -373,7 +373,7 @@ Code coverage utilities
 
 **Usage:** `moon coverage <COMMAND>`
 
-###### **Subcommands:**
+**Subcommands:**
 
 * `report` — Generate code coverage report
 * `clean` — Clean up coverage artifacts
@@ -386,11 +386,11 @@ Generate code coverage report
 
 **Usage:** `moon coverage report [args]... [COMMAND]`
 
-###### **Arguments:**
+**Arguments:**
 
 * `<args>` — Arguments to pass to the coverage utility
 
-###### **Options:**
+**Options:**
 
 * `-h`, `--help` — Show help for the coverage utility
 
@@ -410,7 +410,7 @@ Generate build matrix for benchmarking (legacy feature)
 
 **Usage:** `moon generate-build-matrix [OPTIONS] --output-dir <OUT_DIR>`
 
-###### **Options:**
+**Options:**
 
 * `-n <NUMBER>` — Set all of `drow`, `dcol`, `mrow`, `mcol` to the same value
 * `--drow <DIR_ROWS>` — Number of directory rows
@@ -427,7 +427,7 @@ Upgrade toolchains
 
 **Usage:** `moon upgrade [OPTIONS]`
 
-###### **Options:**
+**Options:**
 
 * `-f`, `--force` — Force upgrade
 
@@ -572,7 +572,7 @@ completions into our profile simply use
 This discussion is taken from `rustup completions` command with some changes.
 
 
-###### **Options:**
+**Options:**
 
 * `--shell <SHELL>` — The shell to generate completion for
 
@@ -589,7 +589,7 @@ Print version information and exit
 
 **Usage:** `moon version [OPTIONS]`
 
-###### **Options:**
+**Options:**
 
 * `--all` — Print all version information
 * `--json` — Print version information in JSON format
