@@ -43,7 +43,7 @@ fn pprint_diff(diff : Array[Edit]) -> String {
     buf.write_string(pprint_edit(diff[i]))
     buf.write_char('\n')
   } else {
-    buf.to_unchecked_string()
+    buf.contents().to_unchecked_string()
   }
 }
 // end pprint definition
