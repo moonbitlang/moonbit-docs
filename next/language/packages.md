@@ -37,7 +37,10 @@ There are four different kinds of visibility for types in MoonBit:
 but users can only read the values of these types from outside, construction and mutation are not allowed
 - fully public types, declared with `pub(all)`. The outside world can freely construct, modify and read values of these types
 
+```{warning}
 Currently, the semantic of `pub` is `pub(all)`. But in the future, the meaning of `pub` will be ported to `pub(readonly)`.
+```
+
 In addition to the visibility of the type itself, the fields of a public `struct` can be annotated with `priv`,
 which will hide the field from the outside world completely.
 Note that `struct`s with private fields cannot be constructed directly outside,
@@ -112,7 +115,10 @@ Private traits are declared with `priv trait`, and they are completely invisible
 Abstract trait is the default visibility. Only the name of the trait is visible from outside, and the methods in the trait are not exposed.
 Readonly traits are declared with `pub(readonly) trait`, their methods can be involked from outside, but only the current package can add new implementation for readonly traits.
 Finally, fully public traits are declared with `pub(open) trait`, they are open to new implementations outside current package, and their methods can be freely used.
+
+```{warning}
 Currently, `pub trait` defaults to `pub(open) trait`. But in the future, the semantic of `pub trait` will be ported to `pub(readonly)`.
+```
 
 Abstract and readonly traits are sealed, because only the package defining the trait can implement them.
 Implementing a sealed (abstract or readonly) trait outside its package result in compiler error.

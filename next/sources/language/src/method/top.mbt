@@ -1,10 +1,10 @@
 // start method 1
-pub(all) enum List[X] {
+enum List[X] {
   Nil
   Cons(X, List[X])
 }
 
-pub fn List::concat[X](xs : List[List[X]]) -> List[X] {
+fn List::concat[X](xs : List[List[X]]) -> List[X] {
   ...
 }
 // end method 1
