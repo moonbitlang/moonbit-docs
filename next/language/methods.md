@@ -4,10 +4,10 @@
 
 MoonBit supports methods in a different way from traditional object-oriented languages. A method in MoonBit is just a toplevel function associated with a type constructor. Methods can be defined using the syntax `fn TypeName::method_name(...) -> ...`:
 
-```{literalinclude} /sources/language/src/method/top.mbt
+```{literalinclude} /sources/language/src/method2/top.mbt
 :language: moonbit
-:start-after: start method 1
-:end-before: end method 1
+:start-after: start method 7
+:end-before: end method 7
 ```
 
 As a convenient shorthand, when the first parameter of a function is named `self`, MoonBit automatically defines the function as a method of the type of `self`:

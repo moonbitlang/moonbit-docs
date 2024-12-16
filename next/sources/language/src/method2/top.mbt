@@ -1,7 +1,13 @@
+// start method 7
 enum List[X] {
   Nil
   Cons(X, List[X])
 }
+
+fn List::concat[X](xs : List[List[X]]) -> List[X] {
+  ...
+}
+// end method 7
 
 // start method 3
 fn map[X, Y](self : List[X], f : (X) -> Y) -> List[Y] {
