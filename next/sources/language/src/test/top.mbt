@@ -12,3 +12,51 @@ test "panic_test" {
 
 }
 // end test 2
+
+// start snapshot test 1
+struct X { x : Int } derive(Show)
+
+test "show snapshot test" {
+  inspect!({x: 10}, content="{x: 10}")
+}
+// end snapshot test 1
+
+// start snapshot test 2
+enum Rec {
+  End
+  Really_long_name_that_is_difficult_to_read(Rec)
+} derive(Show, ToJson)
+
+test "json snapshot test" {
+  let r = Really_long_name_that_is_difficult_to_read(
+    Really_long_name_that_is_difficult_to_read(
+      Really_long_name_that_is_difficult_to_read(End),
+    ),
+  )
+  inspect!(
+    r,
+    content="Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(End)))",
+  )
+  @json.inspect!(
+    r,
+    content={
+      "$tag": "Really_long_name_that_is_difficult_to_read",
+      "0": {
+        "$tag": "Really_long_name_that_is_difficult_to_read",
+        "0": {
+          "$tag": "Really_long_name_that_is_difficult_to_read",
+          "0": { "$tag": "End" },
+        },
+      },
+    },
+  )
+}
+// end snapshot test 2
+
+// start snapshot test 3
+test "record anything" (t : @test.T) {
+  t.write("Hello, world!")
+  t.writeln(" And hello, MoonBit!")
+  t.snapshot!(filename="record_anything.txt")
+}
+// end snapshot test 3
