@@ -73,20 +73,24 @@ Access control in MoonBit adheres to the principle that a `pub` type, function, 
 
 <!-- MANUAL CHECK -->
 ```moonbit
-pub struct S {
+pub(all) type T1
+pub(all) type T2
+priv type T3
+
+pub(all) struct S {
   x: T1  // OK
   y: T2  // OK
   z: T3  // ERROR: public field has private type `T3`!
 }
 
 // ERROR: public function has private parameter type `T3`!
-pub fn f1(_x: T3) -> T1 { T1::A(0) }
+pub fn f1(_x: T3) -> T1 { ... }
 // ERROR: public function has private return type `T3`!
-pub fn f2(_x: T1) -> T3 { T3::A(0) }
+pub fn f2(_x: T1) -> T3 { ... }
 // OK
-pub fn f3(_x: T1) -> T1 { T1::A(0) }
+pub fn f3(_x: T1) -> T1 { ... }
 
-pub let a: T3  // ERROR: public variable has private type `T3`!
+pub let a: T3 = { ... } // ERROR: public variable has private type `T3`!
 ```
 
 ## Access control of methods and trait implementations
@@ -125,11 +129,11 @@ trait Number {
  op_sub(Self, Self) -> Self
 }
 
-fn add[N : Number](x : X, y: X) -> X {
+fn add[N : Number](x : N, y: N) -> N {
   Number::op_add(x, y)
 }
 
-fn sub[N : Number](x : X, y: X) -> X {
+fn sub[N : Number](x : N, y: N) -> N {
   Number::op_sub(x, y)
 }
 

@@ -275,13 +275,13 @@ trait Compare : Eq {
 }
 
 trait Hash {
-  hash(Self) -> Int
+  hash_combine(Self, Hasher) -> Unit // to be implemented
+  hash(Self) -> Int // has default implementation
 }
 
 trait Show {
-  // writes a string representation of `Self` into a `Logger`
-  output(Self, Logger) -> Unit
-  to_string(Self) -> String
+  output(Self, Logger) -> Unit // to be implemented
+  to_string(Self) -> String // has default implementation
 }
 
 trait Default {
