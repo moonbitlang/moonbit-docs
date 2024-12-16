@@ -34,7 +34,12 @@ html_theme_options = {
     "use_source_button": True,
     "use_edit_page_button": True,
     "use_issues_button": True,
+    "logo": {
+        "text":"MoonBit Documentation",
+    }
 }
+html_logo = "_static/logo.png"
+html_favicon = "_static/favicon.ico"
 
 # -- Options for LaTeX output ------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-latex-output
