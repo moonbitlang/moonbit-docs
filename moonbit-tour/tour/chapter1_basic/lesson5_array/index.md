@@ -1,11 +1,11 @@
 # Array
 
-Array is a collection of elements, which have same type. 
+Array is a collection of elements that have the same type.
 
 You can create an array by *array literal syntax*, which is a comma-separated list 
 of elements enclosed in square brackets: `[1,2,3]`.
 
-You can also create an array by using the `Array::make` function, which takes a size and a element value,
+You can also create an array by using the `Array::make` function, which takes a size and an element value,
 as shown in the example, `Array::make(4,1)` creates an array equal to `[1,1,1,1]`.
 
 The `arr3` is an array consists of elements in `arr1`, elements in `arr2` and a few more numbers.

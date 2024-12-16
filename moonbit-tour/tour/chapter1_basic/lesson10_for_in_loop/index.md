@@ -2,7 +2,7 @@
 
 It's cumbersome to write a for loop and manually decide the end condition.
 
-If you want to iterate over a collection, you can use the `for-in` loop.
+If you want to iterate over a collection, you can use the `for .. in ... {}` loop.
 
 In the first for-in loop, we iterate over an array. The loop will bind each
 element to the variable `element` in each iteration.

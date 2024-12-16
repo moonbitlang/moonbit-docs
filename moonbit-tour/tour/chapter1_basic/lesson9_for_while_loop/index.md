@@ -13,13 +13,9 @@ for init; condition; increment {
 }
 ```
 
+The loop initializes the variables in the `init` part before it starts. When the loop starts, it tests the `condition` and executes the loop body if the `condition` is true. After that, it runs the `increment` expression and repeats the process until the condition is false.
 
-The loop initializes the variables `init` before it starts. When the loop starts,
-it tests the `condition` and executes the loop body if the `condition` is true.
-After that, it runs the `increment` expression and repeats the process until the
-condition is false.
-
-The for loop in MoonBit is more expressive than the C-style for loop. We will
+In MoonBit, the for loop is more expressive than the C-style for loop. We will
 explain it in the following chapters.
 
 ## While loop and if-else expression
