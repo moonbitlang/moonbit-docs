@@ -14,7 +14,7 @@ You may notice that there is a partial match warning because the resource can al
 
 The `count` function traverse the input `res` recursively and return the count of `Image` and `TextFile`, using match expression. 
 
-Match expressions have *first match semantics*. They will try to find the first matching pattern from the first case to the last case and execute the corresponding expression.
+Match expressions have *first match semantics*. They will try to find the first matching pattern from the first case to the last case and execute the corresponding expression. If no pattern matches, the program will abort.
 
 The match expression has a `Int` return value because all the case result in same value type `Int`.
 
