@@ -1,5 +1,5 @@
 fn add(a : Int, b : Int) -> Int {
-  a + b
+  return a + b
 }
 
 fn compute() -> Unit {

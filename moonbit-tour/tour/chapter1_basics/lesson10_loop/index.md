@@ -1,9 +1,8 @@
-# Control flow
+# Loop
 
-In this example, we use for loops, while loops, and an if-else expression to
-iterate over an array.
+In this example, we use for loops and while loops to iterate over an array.
 
-## For loop
+## For Loop Expression
 
 The for loop is analogous to a C-style for loop:
 
@@ -18,11 +17,11 @@ The loop initializes the variables in the `init` part before it starts. When the
 In MoonBit, the for loop is more expressive than the C-style for loop. We will
 explain it in the following chapters.
 
-## While loop and if-else expression
+## While Loop Expression
 
 The while loop is also similar to the C-style while loop.
 
 It tests the condition before executing the loop body. If the condition is true,
 it executes the loop body and repeats the process until the condition is false.
 
-MoonBit also supports both `continue` and `break` within the loop.
+MoonBit also supports both `continue` and `break` statements within the loop.
