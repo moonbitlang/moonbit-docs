@@ -1,3 +1,3 @@
-const BASE = "/moonbit-docs/tour";
+const BASE = "";
 
 export { BASE };
