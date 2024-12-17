@@ -65,6 +65,11 @@ const generatePlugin = (): vite.Plugin => {
           .replace("%BACK%", `<span class="text-zinc-500">Back</span>`)
           .replace("%NEXT%", `<span class="text-zinc-500">Next</span>`),
       });
+      this.emitFile({
+        type: "asset",
+        fileName: "CNAME",
+        source: "tour.moonbitlang.com",
+      });
     },
   };
 };
