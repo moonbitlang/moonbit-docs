@@ -1,6 +1,6 @@
 # Option
 
-`Option[Char]` is an enum represents a `Char` value that may or may not be present. It is a common way to handle exceptional case. 
+`Option[Char]` is an enum that represents a `Char` value that may or may not be present. It is a common way to handle exceptional cases.
 
 - `None` means the value is missing.
 - `Some(e)` is a wrapper that contains the value `e`.

@@ -1,4 +1,3 @@
 # Constant pattern
 
-Almost all constant in MoonBit can be represented as a constant pattern.
-
+Almost all constants in MoonBit can be represented as a constant pattern.
