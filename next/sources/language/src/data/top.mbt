@@ -303,3 +303,17 @@ pub typealias Index = Int
 // type alias are private by default
 typealias MapString[X] = Map[String, X]
 // end typealias 1
+
+// start local-type 1
+fn toplevel[T: Show](x: T) -> Unit {
+  enum LocalEnum {
+    A(T)
+    B(Int)
+  } derive(Show)
+  struct LocalStruct {
+    a: (String, T)
+  } derive(Show)
+  type LocalNewtype T derive(Show)
+  ...
+}
+// end local-type 1

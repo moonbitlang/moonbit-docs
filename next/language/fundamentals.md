@@ -1096,6 +1096,23 @@ you can leave a type alias `typealias T = @pkgB.T` in `@pkgA`, and **incremental
 The type alias can be removed after all uses of `@pkgA.T` is migrated to `@pkgB.T`.
 ```
 
+### Local types
+
+Moonbit supports declaring structs/enums/newtypes at the top of a toplevel
+function, which are only visible within the current toplevel function. These
+local types can use the generic parameters of the toplevel function but cannot
+introduce additional generic parameters themselves. Local types can derive
+methods using derive, but no additional methods can be defined manually. For 
+example:
+
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start local-type 1
+:end-before: end local-type 1
+```
+
+Currently, local types do not support being declared as error types. 
+
 ## Pattern Matching
 
 Pattern matching allows us to match on specific pattern and bind data from data structures.
