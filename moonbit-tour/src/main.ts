@@ -67,26 +67,6 @@ const codePre = document.querySelector<HTMLPreElement>(".shiki")!;
 
 const model = monaco.editor.createModel(codePre.textContent ?? "", "moonbit");
 
-function lineTransformStream() {
-  let buffer = "";
-  return new TransformStream<string, string>({
-    transform(chunk, controller) {
-      buffer += chunk;
-      const lines = buffer.split("\n");
-      buffer = lines.pop() ?? buffer;
-      for (const line of lines) {
-        controller.enqueue(line);
-      }
-    },
-    flush(controller) {
-      if (buffer.length > 0) {
-        controller.enqueue(buffer);
-      }
-      controller.terminate();
-    },
-  });
-}
-
 const output = document.querySelector<HTMLPreElement>("#output")!;
 
 async function run() {
@@ -94,19 +74,16 @@ async function run() {
   const result = await moon.compile({ libContents: [content] });
   switch (result.kind) {
     case "success": {
-      const wasm = result.wasm;
-      const stream = await moon.run(wasm);
+      const js = result.js;
+      const stream = await moon.run(js);
       let buffer = "";
-      await stream
-        .pipeThrough(new TextDecoderStream("utf-16"))
-        .pipeThrough(lineTransformStream())
-        .pipeTo(
-          new WritableStream({
-            write(chunk) {
-              buffer += `${chunk}\n`;
-            },
-          }),
-        );
+      await stream.pipeTo(
+        new WritableStream({
+          write(chunk) {
+            buffer += `${chunk}\n`;
+          },
+        }),
+      );
       output.textContent = buffer;
       return;
     }
