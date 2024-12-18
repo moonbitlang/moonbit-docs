@@ -4,7 +4,6 @@
 # package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
@@ -22,11 +21,11 @@ msgstr ""
 
 #: ../../language/docs.md:1
 msgid "Documentation"
-msgstr ""
+msgstr "文档"
 
 #: ../../language/docs.md:3
 msgid "Doc Comments"
-msgstr ""
+msgstr "文档注释"
 
 #: ../../language/docs.md:5
 msgid ""
@@ -34,6 +33,8 @@ msgid ""
 "of toplevel structure like `fn`,`let`,`enum`,`struct`,`type`. The doc "
 "comments contains a markdown text and several pragmas."
 msgstr ""
+"文档注释是在顶层结构（如 `fn`、`let`、`enum`、`struct`、`type`）的每一行前面加上 `///` 的注释。文档注释包含一个 "
+"markdown 文本和几个注解。"
 
 #: ../../language/docs.md:7
 msgid ""
@@ -48,10 +49,20 @@ msgid ""
 "  ...\n"
 "}\n"
 msgstr ""
+"/// 返回一个新数组，其中元素被反转。\n"
+"///\n"
+"/// # 示例\n"
+"///\n"
+"/// ```\n"
+"/// reverse([1,2,3,4]) |> println()\n"
+"/// ```\n"
+"fn reverse[T](xs : Array[T]) -> Array[T] {\n"
+"  ...\n"
+"}\n"
 
 #: ../../language/docs.md:13
 msgid "Pragmas"
-msgstr ""
+msgstr "注解"
 
 #: ../../language/docs.md:15
 msgid ""
@@ -61,10 +72,11 @@ msgid ""
 "affect the meaning of programs. Unrecognized pragmas will be reported as "
 "warnings."
 msgstr ""
+"注解是文档注释中的标记。它们都采用 `/// @word ...` 的形式。_word_ 表示注解的类型，后面可以跟几个 _word_ 或字符串文字。注解通常不会影响程序的含义。未识别的注解将被报告为警告。"
 
 #: ../../language/docs.md:17
 msgid "Alert Pragmas"
-msgstr ""
+msgstr "警告注解"
 
 #: ../../language/docs.md:19
 msgid ""
@@ -72,16 +84,19 @@ msgid ""
 "functions are referenced. This mechanism is a generalized way to mark "
 "functions as `deprecated` or `unsafe`."
 msgstr ""
+"函数文档注释中的警告注解将在引用这些函数时报告。这种机制是一种通用的方法，用于将函数标记为 `deprecated` 或 `unsafe`。"
 
 #: ../../language/docs.md:21
 msgid "It takes the form `@alert category \"alert message...\"`."
 msgstr ""
+"它采用 `@alert category \"alert message...\"` 的形式。"
 
 #: ../../language/docs.md:23
 msgid ""
 "The category can be an arbitrary identifier. It allows configuration to "
 "decide which alerts are enabled or turned into errors."
 msgstr ""
+"类别可以是任意标识符。它允许配置决定哪些警告是启用的或转换为错误。"
 
 #: ../../language/docs.md:26
 msgid ""
@@ -104,9 +119,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error-handling.md:1
-#, fuzzy
 msgid "Error handling"
-msgstr "MoonBit 中的错误处理"
+msgstr "错误处理"
 
 #: ../../language/error-handling.md:3
 msgid ""
@@ -120,13 +134,14 @@ msgstr ""
 
 #: ../../language/error-handling.md:7
 msgid "Error types"
-msgstr ""
+msgstr "错误类型"
 
 #: ../../language/error-handling.md:9
 msgid ""
 "The error values used in MoonBit must have an error type. An error type "
 "can be defined in the following forms:"
 msgstr ""
+"MoonBit 中使用的错误值必须具有错误类型。错误类型可以用以下形式定义："
 
 #: ../../language/error-handling.md:12
 msgid ""
@@ -141,6 +156,13 @@ msgid ""
 "  C(mut x~ : String, Char, y~ : Bool)\n"
 "}\n"
 msgstr ""
+"type! E1 Int  // 错误类型 E1 具有一个构造函数 E1，并带有一个 Int 负载\n"
+"type! E2      // 错误类型 E2 具有一个没有负载的构造函数 E2\n"
+"type! E3 {    // 错误类型 E3 类似于普通的枚举类型，有三个构造函数\n"
+"  A\n"
+"  B(Int, x~ : String)\n"
+"  C(mut x~ : String, Char, y~ : Bool)\n"
+"}\n"
 
 #: ../../language/error-handling.md:19
 msgid ""
@@ -148,6 +170,7 @@ msgid ""
 "the function might return an error. For example, the following function "
 "`div` might return an error of type `DivError`:"
 msgstr ""
+"函数的返回类型可以包含错误类型，以表明函数可能返回一个错误。例如，以下函数 `div` 可能返回一个类型为 `DivError` 的错误："
 
 #: ../../language/error-handling.md:23
 msgid ""
@@ -166,10 +189,11 @@ msgid ""
 "Here, the keyword `raise` is used to interrupt the function execution and"
 " return an error."
 msgstr ""
+"这里使用了关键字 `raise` 来中断函数执行并返回一个错误。"
 
 #: ../../language/error-handling.md:33
 msgid "The Default Error Type"
-msgstr ""
+msgstr "默认错误类型"
 
 #: ../../language/error-handling.md:35
 msgid ""
@@ -179,6 +203,8 @@ msgid ""
 " the `Error` type is used. For example, the following function signatures"
 " are equivalent:"
 msgstr ""
+"MoonBit 提供了一个默认错误类型 `Error`，当具体的错误类型不重要时可以使用它。为了方便起见，您可以在函数名或返回类型后面加上后缀 `!`，"
+"以表示使用了 `Error` 类型。例如，以下函数签名是等价的："
 
 #: ../../language/error-handling.md:40
 msgid ""
@@ -200,6 +226,7 @@ msgid ""
 "For anonymous function and matrix function, you can annotate the keyword "
 "`fn` with the `!` suffix to achieve that. For example,"
 msgstr ""
+"对于匿名函数和矩阵函数，您可以在关键字 `fn` 后面加上 `!` 后缀来实现这一点。例如："
 
 #: ../../language/error-handling.md:50
 msgid ""
@@ -221,6 +248,7 @@ msgid ""
 "As shown in the above example, the error types defined by `type!` can be "
 "used as value of the type `Error` when the error is raised."
 msgstr ""
+"如上例所示，`type!` 定义的错误类型可以在引发错误时作为 `Error` 类型的值使用。"
 
 #: ../../language/error-handling.md:59
 msgid ""
@@ -228,6 +256,7 @@ msgid ""
 " functions that are generic in the error type, you can use the `Error` "
 "bound to do that. For example,"
 msgstr ""
+"请注意，只有错误类型或 `Error` 类型可以用作错误。对于在错误类型上是泛型的函数，您可以使用 `Error` 约束来实现。例如："
 
 #: ../../language/error-handling.md:63
 msgid ""
@@ -246,6 +275,7 @@ msgid ""
 " on the `Error` type must use the wildcard `_` to match all error types. "
 "For example,"
 msgstr ""
+"由于 `Error` 类型可以包含多个错误类型，对 `Error` 类型进行模式匹配必须使用通配符 `_` 来匹配所有错误类型。例如："
 
 #: ../../language/error-handling.md:72
 msgid ""
@@ -264,17 +294,18 @@ msgstr ""
 
 #: ../../language/error-handling.md:78
 msgid "Handling Errors"
-msgstr ""
+msgstr "处理错误"
 
 #: ../../language/error-handling.md:80
 msgid "There are three ways to handle errors:"
-msgstr ""
+msgstr "有三种方式可以处理错误："
 
 #: ../../language/error-handling.md:82
 msgid ""
 "Append `!` after the function name in a function application to rethrow "
 "the error directly in case of an error, for example:"
 msgstr ""
+"在函数应用中的函数名后面附加 `!`，以便在出现错误时直接重新抛出错误，例如："
 
 #: ../../language/error-handling.md:85
 msgid ""
@@ -282,12 +313,16 @@ msgid ""
 "  div!(x, y) // Rethrow the error if `div` raised an error\n"
 "}\n"
 msgstr ""
+"fn div_reraise(x : Int, y : Int) -> Int!DivError {\n"
+"  div!(x, y) // 如果 `div` 引发错误，则重新抛出错误\n"
+"}\n"
 
 #: ../../language/error-handling.md:91
 msgid ""
 "Append `?` after the function name to convert the result into a first-"
 "class value of the `Result` type, for example:"
 msgstr ""
+"在函数名后面附加 `?`，将结果转换为 `Result` 类型的值，例如："
 
 #: ../../language/error-handling.md:94
 msgid ""
@@ -334,12 +369,11 @@ msgstr ""
 #: ../../language/fundamentals.md:1060 ../../language/fundamentals.md:1074
 #: ../../language/methods.md:91
 msgid "Output"
-msgstr ""
+msgstr "输出"
 
 #: ../../language/error-handling.md:111
-#, fuzzy
 msgid "division by zero\n"
-msgstr "示例：除零"
+msgstr "除零"
 
 #: ../../language/error-handling.md:115
 msgid ""
@@ -348,12 +382,14 @@ msgid ""
 "caught, the catch block will not be executed and the `else` block will be"
 " executed instead."
 msgstr ""
+"这里，`try` 用于调用可能引发错误的函数，`catch` 用于匹配和处理捕获的错误。如果没有捕获到错误，`catch` 块将不会执行，而是执行 `else` 块。"
 
 #: ../../language/error-handling.md:119
 msgid ""
 "The `else` block can be omitted if no action is needed when no error is "
 "caught. For example:"
 msgstr ""
+"如果不需要在没有捕获到错误时执行任何操作，则可以省略 `else` 块。例如："
 
 #: ../../language/error-handling.md:122
 msgid ""
@@ -369,6 +405,7 @@ msgid ""
 "The `catch` keyword is optional, and when the body of `try` is a simple "
 "expression, the curly braces can be omitted. For example:"
 msgstr ""
+"`catch` 关键字是可选的，当 `try` 的主体是一个简单表达式时，大括号可以省略。例如："
 
 #: ../../language/error-handling.md:132
 msgid ""
@@ -385,6 +422,7 @@ msgid ""
 "The `!` and `?` attributes can also be used on method invocation and pipe"
 " operator. For example:"
 msgstr ""
+"`!` 和 `?` 符号也可以用于方法调用和管道运算符。例如："
 
 #: ../../language/error-handling.md:142
 msgid ""
@@ -409,6 +447,7 @@ msgid ""
 "However for infix operators such as `+` `*` that may raise an error, the "
 "original form has to be used, e.g. `x.op_add!(y)`, `x.op_mul!(y)`."
 msgstr ""
+"然而对于可能引发错误的中缀运算符，如 `+` `*`，必须使用原始形式，例如 `x.op_add!(y)`，`x.op_mul!(y)`。"
 
 #: ../../language/error-handling.md:151
 msgid ""
@@ -416,10 +455,11 @@ msgid ""
 "the function call must use `!` or `?` for error handling, otherwise the "
 "compiler will report an error."
 msgstr ""
+"此外，如果函数的返回类型包含错误类型，则函数调用必须使用 `!` 或 `?` 进行错误处理，否则编译器将报告错误。"
 
 #: ../../language/error-handling.md:155
 msgid "Error Inference"
-msgstr ""
+msgstr "错误推导"
 
 #: ../../language/error-handling.md:157
 msgid ""
@@ -428,6 +468,8 @@ msgid ""
 "error type. Accordingly, the handler must use the wildcard `_` to make "
 "sure all errors are caught. For example,"
 msgstr ""
+"在 `try` 块中，可能引发多种不同类型的错误。当发生这种情况时，编译器将使用 `Error` 类型作为通用错误类型。因此，处理程序必须使用通配符 `_` "
+"来确保捕获所有错误。例如："
 
 #: ../../language/error-handling.md:162
 msgid ""
@@ -455,6 +497,7 @@ msgid ""
 " This is useful when you only want to handle a specific error and rethrow"
 " others. For example,"
 msgstr ""
+"您还可以使用 `catch!` 来重新抛出未捕获的错误，以方便处理。当您只想处理特定错误并重新抛出其他错误时，这很有用。例如："
 
 #: ../../language/error-handling.md:173
 msgid ""
