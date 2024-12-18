@@ -1,4 +1,4 @@
-# (WIP) Next gen moonbit-docs
+# Next gen moonbit-docs
 
 A new MoonBit docs framework based on Sphinx.
 
@@ -43,6 +43,13 @@ For PDF:
 ```bash
 PATH=$PATH:/usr/local/texlive/2024/bin/universal-darwin/ make latexpdf
 open ./_build/latex/moonbitdocument.pdf
+```
+
+For Markdown:
+
+```bash
+pip install sphinx-markdown-builder
+make markdown
 ```
 
 ### Update translation template
