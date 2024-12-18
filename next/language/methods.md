@@ -303,3 +303,5 @@ MoonBit can automatically derive implementations for some builtin traits:
 :start-after: start trait 9
 :end-before: end trait 9
 ```
+
+See [Deriving](./derive.md) for more information about deriving traits.
