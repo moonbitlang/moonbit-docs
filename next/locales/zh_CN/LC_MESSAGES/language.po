@@ -4168,17 +4168,18 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1232
 msgid "Special Syntax"
-msgstr ""
+msgstr "特殊语法"
 
 #: ../../language/fundamentals.md:1234
 msgid "Pipe operator"
-msgstr ""
+msgstr "管道运算符"
 
 #: ../../language/fundamentals.md:1236
 msgid ""
 "MoonBit provides a convenient pipe operator `|>`, which can be used to "
 "chain regular function calls:"
 msgstr ""
+"moonbit提供了一个方便的管道运算符`|>`，可以用于链接常规函数调用："
 
 #: ../../language/fundamentals.md:1238
 msgid ""
@@ -4191,13 +4192,14 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1245
 msgid "Cascade Operator"
-msgstr ""
+msgstr "级联运算符"
 
 #: ../../language/fundamentals.md:1247
 msgid ""
 "The cascade operator `..` is used to perform a series of mutable "
 "operations on the same value consecutively. The syntax is as follows:"
 msgstr ""
+"级联运算符`..`用于连续对同一值执行一系列可变操作。 语法如下："
 
 #: ../../language/fundamentals.md:1250
 msgid "x..f()\n"
@@ -4206,6 +4208,7 @@ msgstr ""
 #: ../../language/fundamentals.md:1257
 msgid "`x..f()..g()` is equivalent to `{x.f(); x.g(); x}`."
 msgstr ""
+"`x..f()..g()` 等价于 `{x.f(); x.g(); x}`。"
 
 #: ../../language/fundamentals.md:1259
 msgid ""
@@ -4214,6 +4217,7 @@ msgid ""
 " need to perform a series of operations on the same `StringBuilder` "
 "value:"
 msgstr ""
+"考虑以下情况：对于具有诸如`write_string`，`write_char`，`write_object`等方法的`StringBuilder`类型，我们经常需要对同一`StringBuilder`值执行一系列操作："
 
 #: ../../language/fundamentals.md:1263
 msgid ""
@@ -4234,6 +4238,8 @@ msgid ""
 " for consecutive operations without the need to modify the return type of"
 " the methods."
 msgstr ""
+"为了避免重复输入`builder`，其方法通常设计为返回`self`本身，允许使用`.`运算符链接操作。 "
+"为了区分不可变和可变操作，在MoonBit中，对于所有返回`Unit`的方法，可以使用级联运算符进行连续操作，而无需修改方法的返回类型。"
 
 #: ../../language/fundamentals.md:1276
 msgid ""
@@ -4247,7 +4253,7 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1283
 msgid "TODO syntax"
-msgstr ""
+msgstr "TODO 语法"
 
 #: ../../language/fundamentals.md:1285
 msgid ""
@@ -4255,6 +4261,7 @@ msgid ""
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr ""
+"`todo`语法(`...`)是一种特殊构造，用于标记尚未实现或用于未来功能的占位符代码段。 例如："
 
 #: ../../language/fundamentals.md:1287
 msgid ""
