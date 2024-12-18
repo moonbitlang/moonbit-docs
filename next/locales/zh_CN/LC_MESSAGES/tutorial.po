@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-04 11:42+0800\n"
+"POT-Creation-Date: 2024-12-18 11:20+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -26,16 +26,10 @@ msgstr ""
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:3
 msgid ""
-"Lazy evaluation stands as a foundational concept in the realm of "
-"programming languages. Haskell, renowned as a purely functional "
-"programming language, boasts a robust lazy evaluation mechanism. This "
-"mechanism not only empowers developers to craft code that's both more "
-"efficient and concise but also enhances program performance and "
-"responsiveness, especially when tackling sizable datasets or intricate "
-"data streams. In this article, we'll delve into the Lazy Evaluation "
-"mechanism, thoroughly examining its principles and implementation "
-"methods, and then explore how to implement Haskell's evaluation semantics"
-" in [MoonBit](https://www.moonbitlang.com/)."
+"This article is the first in the series on implementing lazy evaluation "
+"in MoonBit. In this article, we will exploring the purposes of lazy "
+"evaluation and a typical abstract machine for lazy evaluation, the "
+"G-Machine."
 msgstr ""
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:5
@@ -267,7 +261,7 @@ msgid ""
 "enum RawExpr[T] {\n"
 "  Var(T)\n"
 "  Num(Int)\n"
-"  Constructor(Int, Int) // tag, arity\n"
+"  Constructor(tag~:Int, arity~:Int) // tag, arity\n"
 "  App(RawExpr[T], RawExpr[T])\n"
 "  Let(Bool, List[(T, RawExpr[T])], RawExpr[T]) // isRec, Defs, Body\n"
 "  Case(RawExpr[T], List[(Int, List[T], RawExpr[T])])\n"
@@ -280,88 +274,100 @@ msgid ""
 "} derive(Show)\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:123
+#: ../../tutorial/example/gmachine/gmachine-1.md:112
 msgid "Additionally, some predefined coreF programs are required."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:125
+#: ../../tutorial/example/gmachine/gmachine-1.md:114
 msgid ""
-"let preludeDefs : List[ScDef[String]] = {\n"
-"  let id = ScDef::new(\"I\", List::of([\"x\"]), Var(\"x\")) // id x = x\n"
-"  let k = ScDef::new(\"K\", List::of([\"x\", \"y\"]), Var(\"x\")) // K x "
-"y = x\n"
-"  let k1 = ScDef::new(\"K1\", List::of([\"x\", \"y\"]), Var(\"y\")) // K1"
-" x y = y\n"
-"  let s = ScDef::new(\n"
-"    \"S\",\n"
-"    List::of([\"f\", \"g\", \"x\"]),\n"
-"    App(App(Var(\"f\"), Var(\"x\")), App(Var(\"g\"), Var(\"x\"))),\n"
-"  ) // S f g x = f x (g x)\n"
-"  let compose = ScDef::new(\n"
-"    \"compose\",\n"
-"    List::of([\"f\", \"g\", \"x\"]),\n"
-"    App(Var(\"f\"), App(Var(\"g\"), Var(\"x\"))),\n"
-"  ) // compose f g x = f (g x)\n"
-"  let twice = ScDef::new(\n"
-"    \"twice\",\n"
-"    List::of([\"f\"]),\n"
-"    App(App(Var(\"compose\"), Var(\"f\")), Var(\"f\")),\n"
-"  ) // twice f = compose f f\n"
-"  Cons(id, Cons(k, Cons(k1, Cons(s, Cons(compose, Cons(twice, Nil))))))\n"
+"let prelude_defs : List[ScDef[String]] = {\n"
+"  let args : (FixedArray[String]) -> List[String] = List::of\n"
+"  let id = ScDef::new(\"I\", args([\"x\"]), Var(\"x\")) // id x = x\n"
+"  let k = \n"
+"    ScDef::new(\n"
+"      \"K\",\n"
+"      args([\"x\", \"y\"]),\n"
+"      Var(\"x\")\n"
+"    ) // K x y = x\n"
+"  let k1 = \n"
+"    ScDef::new(\n"
+"      \"K1\",\n"
+"      args([\"x\", \"y\"]),\n"
+"      Var(\"y\")\n"
+"    ) // K1 x y = y\n"
+"  let s = \n"
+"    ScDef::new(\n"
+"      \"S\",\n"
+"      args([\"f\", \"g\", \"x\"]),\n"
+"      App(App(Var(\"f\"), Var(\"x\")), App(Var(\"g\"), Var(\"x\")))\n"
+"    ) // S f g x = f x (g x)\n"
+"  let compose = \n"
+"    ScDef::new(\n"
+"      \"compose\",\n"
+"      args([\"f\", \"g\", \"x\"]),\n"
+"      App(Var(\"f\"), App(Var(\"g\"), Var(\"x\")))\n"
+"    ) // compose f g x = f (g x)\n"
+"  let twice = \n"
+"    ScDef::new(\n"
+"      \"twice\",\n"
+"      args([\"f\"]),\n"
+"      App(App(Var(\"compose\"), Var(\"f\")), Var(\"f\"))\n"
+"    ) // twice f = compose f f\n"
+"  List::of([id, k, k1, s, compose, twice])\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:149
+#: ../../tutorial/example/gmachine/gmachine-1.md:120
 msgid "Why Graph"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:151
+#: ../../tutorial/example/gmachine/gmachine-1.md:122
 msgid ""
 "In the coreF language, expressions (not `RawExpr[T]` mentioned earlier, "
 "but runtime expressions) are stored in memory in the form of a graph "
 "rather than a tree when being evaluated.)"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:153
+#: ../../tutorial/example/gmachine/gmachine-1.md:124
 msgid "Why is this approach taken? Let's examine this through a program example:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:155
+#: ../../tutorial/example/gmachine/gmachine-1.md:126
 msgid ""
 "(defn square[x]  (mul x x))\n"
 "(defn main[] (square (square 3)))\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:160
+#: ../../tutorial/example/gmachine/gmachine-1.md:131
 msgid ""
 "If we evaluate according to the conventional expression tree, it would be"
 " reduced to:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:162
+#: ../../tutorial/example/gmachine/gmachine-1.md:133
 msgid "(mul (square 3) (square 3))\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:166
+#: ../../tutorial/example/gmachine/gmachine-1.md:137
 msgid ""
 "In this case, `(square 3)` would be evaluated twice, which is certainly "
 "not desirable for lazy evaluation."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:168
+#: ../../tutorial/example/gmachine/gmachine-1.md:139
 msgid ""
 "To illustrate this more clearly, let's make a somewhat improper analogy "
 "using MoonBit code:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:170
+#: ../../tutorial/example/gmachine/gmachine-1.md:141
 msgid ""
 "fn square(thunk : () -> Int) -> Int {\n"
 "  thunk() * thunk()\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:176
+#: ../../tutorial/example/gmachine/gmachine-1.md:147
 msgid ""
 "To represent the program using a graph is to facilitate sharing of "
 "computation results and avoid redundant calculations. To achieve this "
@@ -370,7 +376,7 @@ msgid ""
 "MoonBit code:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:178
+#: ../../tutorial/example/gmachine/gmachine-1.md:149
 msgid ""
 "enum LazyData[T] {\n"
 "  Waiting(() -> T)\n"
@@ -397,7 +403,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:204
+#: ../../tutorial/example/gmachine/gmachine-1.md:155
 msgid ""
 "Regardless of which side executes the `extract` method first, it will "
 "update the referenced mutable field and replace its content with the "
@@ -405,34 +411,34 @@ msgid ""
 "second execution of the `extract` method."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:206
+#: ../../tutorial/example/gmachine/gmachine-1.md:157
 msgid "Conventions"
 msgstr "约定："
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:208
+#: ../../tutorial/example/gmachine/gmachine-1.md:159
 msgid ""
 "Before delving into how graph reduction works, let's establish some key "
 "terms and basic facts. We'll continue using the same program as an "
 "example:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:210
+#: ../../tutorial/example/gmachine/gmachine-1.md:161
 msgid ""
 "(defn square[x]  (mul x x)) ;; multiplication\n"
 "(defn main[] (square (square 3)))\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:215
+#: ../../tutorial/example/gmachine/gmachine-1.md:166
 msgid "Built-in primitives like `mul` are predefined operations."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:217
+#: ../../tutorial/example/gmachine/gmachine-1.md:168
 msgid ""
 "Evaluating an expression (of course, lazy) and updating its corresponding"
 " node in the graph in place is called reduction."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:218
+#: ../../tutorial/example/gmachine/gmachine-1.md:169
 msgid ""
 "`(square 3)` is a reducible expression (often abbreviated as redex), "
 "consisting of `square` and its argument. It can be reduced to `(mul 3 "
@@ -441,32 +447,32 @@ msgid ""
 "while `mul` is an implemented built-in primitive."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:219
+#: ../../tutorial/example/gmachine/gmachine-1.md:170
 msgid ""
 "The reduction result of `(mul 3 3)` is the expression `9`, which cannot "
 "be further reduced. Such expressions that cannot be further reduced are "
 "called Normal forms."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:220
+#: ../../tutorial/example/gmachine/gmachine-1.md:171
 msgid ""
 "An expression may contain multiple sub-expressions (e.g., `(mul (add 3 5)"
 " (mul 7 9))`). In such cases, the order of reduction of expressions is "
 "crucial – some programs only halt under specific reduction orders."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:222
+#: ../../tutorial/example/gmachine/gmachine-1.md:173
 msgid ""
 "There's a special reduction order that always selects the outermost redex"
 " for reduction, known as _normal order reduction_. This reduction order "
 "will be uniformly adopted in the following discussion."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:224
+#: ../../tutorial/example/gmachine/gmachine-1.md:175
 msgid "So, the graph reduction can be described with the following pseudocode:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:226
+#: ../../tutorial/example/gmachine/gmachine-1.md:177
 msgid ""
 "While there exist reducible expressions in the graph {\n"
 "    Select the outermost reducible expression.\n"
@@ -475,44 +481,44 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:234
+#: ../../tutorial/example/gmachine/gmachine-1.md:185
 msgid ""
 "Dizzy now? Let's find a few examples to demonstrate how to perform "
 "reductions on paper."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:236
+#: ../../tutorial/example/gmachine/gmachine-1.md:187
 msgid "**Step 1: Find the next redex**"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:238
+#: ../../tutorial/example/gmachine/gmachine-1.md:189
 msgid "The execution of the entire program starts from the `main` function."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:240
+#: ../../tutorial/example/gmachine/gmachine-1.md:191
 msgid ""
 "(defn square[x]  (mul x x))\n"
 "(defn main[] (add 33 (square 3)))\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:245
+#: ../../tutorial/example/gmachine/gmachine-1.md:196
 msgid ""
 "`main` itself is a CAF - the simplest kind of redex. If we perform the "
 "substitution, the current expression to be handled is:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:247
+#: ../../tutorial/example/gmachine/gmachine-1.md:198
 msgid "(add 33 (square 3))\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:251
+#: ../../tutorial/example/gmachine/gmachine-1.md:202
 msgid ""
 "According to the principle of finding the outermost redex, it seems like "
 "we've immediately found the redex formed by `add` and its two parameters "
 "(let's assume it for now)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:253
+#: ../../tutorial/example/gmachine/gmachine-1.md:204
 msgid ""
 "But wait! Due to the presence of default currying, the abstract syntax "
 "tree corresponding to this expression is actually composed of multiple "
@@ -520,17 +526,17 @@ msgid ""
 "readability):"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:255
+#: ../../tutorial/example/gmachine/gmachine-1.md:206
 msgid "App(App(add, 33), square3)\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:259
+#: ../../tutorial/example/gmachine/gmachine-1.md:210
 msgid ""
 "This chain-like structure from `add` to the outermost `App` node is "
 "called the \"Spine\""
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:261
+#: ../../tutorial/example/gmachine/gmachine-1.md:212
 msgid ""
 "Going back to check, `add` is an internally defined primitive. However, "
 "since its second argument `(square 3)` is not in normal form, we cannot "
@@ -540,28 +546,28 @@ msgid ""
 "must first reduce `(square 3)`."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:263
+#: ../../tutorial/example/gmachine/gmachine-1.md:214
 msgid "**Step 2: Reduce**"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:265
+#: ../../tutorial/example/gmachine/gmachine-1.md:216
 msgid ""
 "Since `square` is a user-defined super combinator, reducing `(square 3)` "
 "involves only parameter substitution."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:267
+#: ../../tutorial/example/gmachine/gmachine-1.md:218
 msgid ""
 "If a redex has fewer arguments than required by the super combinator, "
 "which is common in higher-order functions, consider the example of "
 "tripling all integers in a list."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:269
+#: ../../tutorial/example/gmachine/gmachine-1.md:220
 msgid "(map (mul 3) list-of-int)\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:273
+#: ../../tutorial/example/gmachine/gmachine-1.md:224
 msgid ""
 "Here, `(mul 3)` cannot be treated as a redex because it lacks sufficient "
 "arguments, making it a `weak head normal form` (often abbreviated as "
@@ -569,48 +575,48 @@ msgid ""
 " action is needed."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:275
+#: ../../tutorial/example/gmachine/gmachine-1.md:226
 msgid "**Step 3: Update**"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:277
+#: ../../tutorial/example/gmachine/gmachine-1.md:228
 msgid ""
 "This step only affects execution efficiency and can be skipped during "
 "paper deductions."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:279
+#: ../../tutorial/example/gmachine/gmachine-1.md:230
 msgid ""
 "These operations are easy to perform on paper (when the amount of code "
 "doesn't exceed half a sheet), but when we switch to computers, how do we "
 "translate these steps into executable code?"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:281
+#: ../../tutorial/example/gmachine/gmachine-1.md:232
 msgid ""
 "To answer this question, pioneers in the world of lazy evaluation "
 "programming languages have proposed various **abstract machines** for "
 "modeling lazy evaluation. These include:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:283
+#: ../../tutorial/example/gmachine/gmachine-1.md:234
 #: ../../tutorial/example/gmachine/index.md:1
 msgid "G-Machine"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:284
+#: ../../tutorial/example/gmachine/gmachine-1.md:235
 msgid "Three Instruction Machine"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:285
+#: ../../tutorial/example/gmachine/gmachine-1.md:236
 msgid "ABC Machine (used by the Clean language)"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:286
+#: ../../tutorial/example/gmachine/gmachine-1.md:237
 msgid "Spineless Tagless G-Machine (abbreviated as STG, used by Haskell language)"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:288
+#: ../../tutorial/example/gmachine/gmachine-1.md:239
 msgid ""
 "They are execution models used to guide compiler implementations. It's "
 "important to note that, unlike various popular virtual machines today "
@@ -622,18 +628,18 @@ msgid ""
 "selected backend."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:290
+#: ../../tutorial/example/gmachine/gmachine-1.md:241
 msgid ""
 "To simplify implementation, this article will directly use MoonBit to "
 "write an interpreter for G-Machine instructions, starting from a minimal "
 "example and gradually adding more features."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:292
+#: ../../tutorial/example/gmachine/gmachine-1.md:243
 msgid "G-Machine Overview"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:294
+#: ../../tutorial/example/gmachine/gmachine-1.md:245
 msgid ""
 "While the G-Machine is an abstract machine for lazy functional languages,"
 " its structure and concepts are not significantly different from what one"
@@ -642,111 +648,118 @@ msgid ""
 "sequentially. Some key differences include:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:296
+#: ../../tutorial/example/gmachine/gmachine-1.md:247
 msgid "The basic unit of memory in the heap is not bytes, but graph nodes."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:297
+#: ../../tutorial/example/gmachine/gmachine-1.md:248
 msgid ""
 "The stack only contains pointers to addresses in the heap, not actual "
 "data."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:299
+#: ../../tutorial/example/gmachine/gmachine-1.md:250
 msgid "This design may not be practical, but it's relatively simple."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:301
+#: ../../tutorial/example/gmachine/gmachine-1.md:252
 msgid ""
 "In coreF, super combinators are compiled into a series of G-Machine "
 "instructions. These instructions can be roughly categorized as follows:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:303
+#: ../../tutorial/example/gmachine/gmachine-1.md:254
 msgid ""
 "Access Data Instructions, For example, `PushArg` (access function "
 "arguments), and `PushGlobal` (access other super combinators)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:304
+#: ../../tutorial/example/gmachine/gmachine-1.md:255
 msgid ""
 "Construct/update graph nodes in the heap, like `MkApp`, `PushInt`, "
 "`Update`"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:305
+#: ../../tutorial/example/gmachine/gmachine-1.md:256
 msgid "Clean up the `Pop` instruction of the unused addresses from the stack."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:306
+#: ../../tutorial/example/gmachine/gmachine-1.md:257
 msgid "Express control flow with the `Unwind` instruction"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:308
+#: ../../tutorial/example/gmachine/gmachine-1.md:259
 msgid "Dissecting the G-Machine State"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:310
+#: ../../tutorial/example/gmachine/gmachine-1.md:261
 msgid "In this simple version of the G-Machine, the state includes:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:312
+#: ../../tutorial/example/gmachine/gmachine-1.md:263
 msgid ""
 "Heap: This is where the expression graph and the sequences of "
 "instructions corresponding to super combinators are stored."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:314
+#: ../../tutorial/example/gmachine/gmachine-1.md:265
 #, python-format
 msgid ""
 "// Use the 'type' keyword to encapsulate an address type.\n"
-"type Addr Int derive(Eq, Show) \n"
+"type Addr Int derive(Eq, Show)\n"
 "\n"
 "// Describe graph nodes with an enumeration type.\n"
-"enum Node { \n"
+"enum Node {\n"
 "  NNum(Int)\n"
 "  // The application node\n"
-"  NApp(Addr, Addr) \n"
+"  NApp(Addr, Addr)\n"
 "  // To store the number of parameters and \n"
-"  // the corresponding sequence of instructions for a super combinator.\n"
-"  NGlobal(String, Int, List[Instruction]) \n"
+"  // the corresponding sequence of instructions for a super combinator\n"
+"  NGlobal(String, Int, List[Instruction])\n"
 "  // The Indirection node，The key component of implementing lazy "
 "evaluation\n"
-"  NInd(Addr) \n"
-"} derive (Eq, Show)\n"
+"  NInd(Addr)\n"
+"} derive(Eq, Show)\n"
 "\n"
-"struct GHeap { // The heap uses an array, and the space with None content"
-" in the array is available as free memory.\n"
-"  mut objectCount : Int\n"
-"  memory : Array[Option[Node]]\n"
+"struct GHeap {\n"
+"  // The heap uses an array, \n"
+"  // and the space with None content in the array is available as free "
+"memory.\n"
+"  mut object_count : Int\n"
+"  memory : Array[Node?]\n"
 "}\n"
 "\n"
 "// Allocate heap space for nodes.\n"
 "fn alloc(self : GHeap, node : Node) -> Addr {\n"
 "  let heap = self\n"
-"  // Assuming there is still available space in the heap.\n"
 "  fn next(n : Int) -> Int {\n"
 "    (n + 1) % heap.memory.length()\n"
 "  }\n"
+"\n"
 "  fn free(i : Int) -> Bool {\n"
-"    heap.memory[i].is_empty()\n"
+"    match heap.memory[i] {\n"
+"      None => true\n"
+"      _ => false\n"
+"    }\n"
 "  }\n"
-"  let mut i = heap.objectCount\n"
+"\n"
+"  let mut i = heap.object_count\n"
 "  while not(free(i)) {\n"
 "    i = next(i)\n"
 "  }\n"
 "  heap.memory[i] = Some(node)\n"
+"  heap.object_count = heap.object_count + 1\n"
 "  return Addr(i)\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:354
+#: ../../tutorial/example/gmachine/gmachine-1.md:271
 msgid ""
 "Stack: The stack only holds addresses pointing to the heap. A simple "
 "implementation can use `List[Addr]`."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:355
+#: ../../tutorial/example/gmachine/gmachine-1.md:272
 msgid ""
 "Global Table: It's a mapping table that records the names of super "
 "combinators (including predefined and user-defined) and their "
@@ -754,53 +767,42 @@ msgid ""
 "Robin Hood hash table."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:356
+#: ../../tutorial/example/gmachine/gmachine-1.md:273
 msgid "Current code sequence to be executed."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:357
+#: ../../tutorial/example/gmachine/gmachine-1.md:274
 msgid ""
 "Execution status statistics: A simple implementation involves calculating"
 " how many instructions have been executed."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:359
-msgid ""
-"type GStats Int\n"
-"\n"
-"let statInitial : GStats = GStats(0)\n"
-"\n"
-"fn statInc(self : GStats) -> GStats {\n"
-"  let GStats(n) = self\n"
-"  GStats(n + 1)\n"
-"}\n"
-"\n"
-"fn statGet(self : GStats) -> Int {\n"
-"  let GStats(n) = self\n"
-"  return n\n"
-"}\n"
-msgstr ""
-
-#: ../../tutorial/example/gmachine/gmachine-1.md:375
+#: ../../tutorial/example/gmachine/gmachine-1.md:276
 msgid "The entire state is represented using the type `GState`."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:377
+#: ../../tutorial/example/gmachine/gmachine-1.md:278
 msgid ""
 "struct GState {\n"
 "  mut stack : List[Addr]\n"
 "  heap : GHeap\n"
-"  globals : RHTable[String, Addr]\n"
+"  globals : @hashmap.T[String, Addr]\n"
 "  mut code : List[Instruction]\n"
-"  stats : GStats\n"
+"  mut stats : GStats\n"
 "}\n"
 "\n"
-"fn putStack(self : GState, addr : Addr) -> Unit {\n"
+"type GStats Int\n"
+"\n"
+"fn stat_incr(self : GState) -> Unit {\n"
+"  self.stats = self.stats._ + 1\n"
+"}\n"
+"\n"
+"fn put_stack(self : GState, addr : Addr) -> Unit {\n"
 "  self.stack = Cons(addr, self.stack)\n"
 "}\n"
 "\n"
-"fn putCode(self : GState, is : List[Instruction]) -> Unit {\n"
-"  self.code = append(is, self.code)\n"
+"fn put_code(self : GState, instrs : List[Instruction]) -> Unit {\n"
+"  self.code = instrs + self.code\n"
 "}\n"
 "\n"
 "fn pop1(self : GState) -> Addr {\n"
@@ -809,36 +811,31 @@ msgid ""
 "      self.stack = reststack\n"
 "      addr\n"
 "    }\n"
-"    Nil => {\n"
-"      abort(\"pop1: stack size smaller than 1\")\n"
-"    }\n"
+"    Nil => abort(\"pop1(): stack size smaller than 1\")\n"
 "  }\n"
 "}\n"
 "\n"
+"// e1 e2 ..... -> (e1, e2) ......\n"
 "fn pop2(self : GState) -> (Addr, Addr) {\n"
-"  // Pop 2 pops the top two elements from the stack.\n"
-"  // Returns (the first, the second).\n"
 "  match self.stack {\n"
 "    Cons(addr1, Cons(addr2, reststack)) => {\n"
 "      self.stack = reststack\n"
 "      (addr1, addr2)\n"
 "    }\n"
-"    otherwise => {\n"
-"      abort(\"pop2: stack size smaller than 2\")\n"
-"    }\n"
+"    _ => abort(\"pop2(): stack size smaller than 2\")\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:421
-#: ../../tutorial/example/gmachine/gmachine-1.md:427
+#: ../../tutorial/example/gmachine/gmachine-1.md:284
+#: ../../tutorial/example/gmachine/gmachine-1.md:290
 msgid ""
 "Now, we can map each step of the graph reduction algorithm we deduced on "
 "paper to this abstract machine:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:423
-#: ../../tutorial/example/gmachine/gmachine-1.md:429
+#: ../../tutorial/example/gmachine/gmachine-1.md:286
+#: ../../tutorial/example/gmachine/gmachine-1.md:292
 msgid ""
 "At the initial state of the machine, all compiled super combinators have "
 "been placed in `NGlobal` nodes on the heap. At this point, the current "
@@ -848,8 +845,8 @@ msgid ""
 "the current code sequence."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:424
-#: ../../tutorial/example/gmachine/gmachine-1.md:430
+#: ../../tutorial/example/gmachine/gmachine-1.md:287
+#: ../../tutorial/example/gmachine/gmachine-1.md:293
 msgid ""
 "The corresponding code sequence of `main` is instantiated on the heap, "
 "where nodes are allocated and data is loaded accordingly, ultimately "
@@ -858,14 +855,14 @@ msgid ""
 "the entry point of this graph is pushed onto the stack."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:425
+#: ../../tutorial/example/gmachine/gmachine-1.md:288
 msgid ""
 "After instantiation is finished, you need to update graph nodes (since "
 "`main` has no parameters, there is no need to clean up residual unused "
 "addresses in the stack) and find the next redex to clean up."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:431
+#: ../../tutorial/example/gmachine/gmachine-1.md:294
 msgid ""
 "After instantiation is finished, cleanup work is done, which involves "
 "updating graph nodes (since `main` has no parameters, there is no need to"
@@ -873,19 +870,19 @@ msgid ""
 "redex."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:433
+#: ../../tutorial/example/gmachine/gmachine-1.md:296
 msgid "All of these tasks have corresponding instruction implementations."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:435
+#: ../../tutorial/example/gmachine/gmachine-1.md:298
 msgid "Corresponding Effect of Each Instruction"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:437
+#: ../../tutorial/example/gmachine/gmachine-1.md:300
 msgid "The highly simplified G-Machine currently consists of 7 instructions."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:439
+#: ../../tutorial/example/gmachine/gmachine-1.md:302
 msgid ""
 "enum Instruction {\n"
 "  Unwind\n"
@@ -895,45 +892,42 @@ msgid ""
 "  MkApp\n"
 "  Update(Int)\n"
 "  Pop(Int)\n"
-"} derive(Eq, Show)\n"
+"} derive (Eq, Show)\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:451
+#: ../../tutorial/example/gmachine/gmachine-1.md:308
 msgid ""
 "The `PushInt` instruction is the simplest. It allocates an `NNum` node on"
 " the heap and pushes its address onto the stack."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:453
+#: ../../tutorial/example/gmachine/gmachine-1.md:310
 msgid ""
 "fn push_int(self : GState, num : Int) -> Unit {\n"
 "  let addr = self.heap.alloc(NNum(num))\n"
-"  self.putStack(addr)\n"
+"  self.put_stack(addr)\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:460
+#: ../../tutorial/example/gmachine/gmachine-1.md:316
 msgid ""
 "The `PushGlobal` instruction retrieves the address of the specified super"
 " combinator from the global table and then pushes the address onto the "
 "stack."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:462
+#: ../../tutorial/example/gmachine/gmachine-1.md:318
 msgid ""
 "fn push_global(self : GState, name : String) -> Unit {\n"
 "  let sc = self.globals[name]\n"
 "  match sc {\n"
-"    None => abort(\"push_global(): cant find super combinator \\{name}\")"
-"\n"
-"    Some(addr) => {\n"
-"      self.putStack(addr)\n"
-"    }\n"
+"    None => abort(\"push_global(): cant find supercombinator \\{name}\")\n"
+"    Some(addr) => self.put_stack(addr)\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:474
+#: ../../tutorial/example/gmachine/gmachine-1.md:324
 msgid ""
 "The `PushArg` instruction is a bit more complex. It has specific "
 "requirements regarding the layout of addresses on the stack: the first "
@@ -942,40 +936,38 @@ msgid ""
 "parameter, starting from the `offset + 1`."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:476
+#: ../../tutorial/example/gmachine/gmachine-1.md:326
 msgid ""
 "fn push_arg(self : GState, offset : Int) -> Unit {\n"
-"  // Skip the first super  combinator node.\n"
-"  // Access the (offset + 1)th NApp node\n"
-"  let appaddr = @immut/list.unsafe_nth(self.stack, offset + 1)\n"
+"  let appaddr = self.stack.unsafe_nth(offset + 1)\n"
 "  let arg = match self.heap[appaddr] {\n"
 "    NApp(_, arg) => arg\n"
-"    otherwise => \n"
+"    otherwise =>\n"
 "      abort(\n"
-"        \"push_arg: stack offset \\{offset} address \\{appaddr} node "
-"\\{otherwise}, not a applicative node\"\n"
+"        \"pusharg: stack offset \\{offset} address \\{appaddr} node "
+"\\{otherwise}\",\n"
 "      )\n"
 "  }\n"
-"  self.putStack(arg)\n"
+"  self.put_stack(arg)\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:492
+#: ../../tutorial/example/gmachine/gmachine-1.md:332
 msgid ""
 "The `MkApp` instruction takes two addresses from the top of the stack, "
 "constructs an `NApp` node, and pushes its address onto the stack."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:494
+#: ../../tutorial/example/gmachine/gmachine-1.md:334
 msgid ""
-"fn mkapp(self : GState) -> Unit {\n"
+"fn mk_apply(self : GState) -> Unit {\n"
 "  let (a1, a2) = self.pop2()\n"
 "  let appaddr = self.heap.alloc(NApp(a1, a2))\n"
-"  self.putStack(appaddr)\n"
+"  self.put_stack(appaddr)\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:502
+#: ../../tutorial/example/gmachine/gmachine-1.md:340
 msgid ""
 "The `Update` instruction assumes that the first address on the stack "
 "points to the current redex's evaluation result. It skips the addresses "
@@ -987,105 +979,101 @@ msgid ""
 "parameters and ordinary variables."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:504
+#: ../../tutorial/example/gmachine/gmachine-1.md:342
 msgid ""
 "fn update(self : GState, n : Int) -> Unit {\n"
 "  let addr = self.pop1()\n"
-"  let dst = @immut/list.unsafe_nth(self.stack, n)\n"
+"  let dst = self.stack.unsafe_nth(n)\n"
 "  self.heap[dst] = NInd(addr)\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:512
+#: ../../tutorial/example/gmachine/gmachine-1.md:348
 msgid ""
 "The `Unwind` instruction in the G-Machine is akin to an evaluation loop. "
 "It has several branching conditions based on the type of node "
 "corresponding to the address at the top of the stack:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:514
+#: ../../tutorial/example/gmachine/gmachine-1.md:350
 msgid "For `Nnum` nodes: Do nothing."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:515
+#: ../../tutorial/example/gmachine/gmachine-1.md:351
 msgid ""
 "For `NApp` nodes: Push the address of the left node onto the stack and "
 "`Unwind` again."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:516
+#: ../../tutorial/example/gmachine/gmachine-1.md:352
 msgid ""
 "For `NGlobal` nodes: If there are enough parameters on the stack, load "
 "this super combinator into the current code."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:517
+#: ../../tutorial/example/gmachine/gmachine-1.md:353
 msgid ""
 "For `NInd` nodes: Push the address contained within this indirect node "
 "onto the stack and Unwind again."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:519
+#: ../../tutorial/example/gmachine/gmachine-1.md:355
 msgid ""
 "fn unwind(self : GState) -> Unit {\n"
 "  let addr = self.pop1()\n"
 "  match self.heap[addr] {\n"
-"    NNum(_) => self.putStack(addr)\n"
+"    NNum(_) => self.put_stack(addr)\n"
 "    NApp(a1, _) => {\n"
-"      self.putStack(addr)\n"
-"      self.putStack(a1)\n"
-"      self.putCode(Cons(Unwind, Nil))\n"
+"      self.put_stack(addr)\n"
+"      self.put_stack(a1)\n"
+"      self.put_code(Cons(Unwind, Nil))\n"
 "    }\n"
-"    NGlobal(_, n, c) => {\n"
+"    NGlobal(_, n, c) =>\n"
 "      if self.stack.length() < n {\n"
 "        abort(\"Unwinding with too few arguments\")\n"
 "      } else {\n"
-"        self.putStack(addr)\n"
-"        self.putCode(c)\n"
+"        self.put_stack(addr)\n"
+"        self.put_code(c)\n"
 "      }\n"
-"    }\n"
 "    NInd(a) => {\n"
-"      self.putStack(a)\n"
-"      self.putCode(Cons(Unwind, Nil))\n"
+"      self.put_stack(a)\n"
+"      self.put_code(Cons(Unwind, Nil))\n"
 "    }\n"
-"    otherwise => \n"
-"      abort(\"unwind() : wrong kind of node \\{otherwise}, address "
-"\\{addr}\")\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:547
+#: ../../tutorial/example/gmachine/gmachine-1.md:361
 msgid ""
 "The `Pop` instruction pops N addresses, eliminating the need for a "
 "separate function implementation."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:549
+#: ../../tutorial/example/gmachine/gmachine-1.md:363
 msgid "Compiling Super Combinators into Instruction Sequences"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:551
+#: ../../tutorial/example/gmachine/gmachine-1.md:365
 msgid ""
 "In the G-Machine Overview section, we roughly described the behavior of "
 "compiled super combinators. Now we can precisely describe the compilation"
 " process of super combinators."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:553
+#: ../../tutorial/example/gmachine/gmachine-1.md:367
 msgid ""
 "Firstly, before the instruction sequence of a compiled super combinator "
 "is executed, there must be certain addresses already present in the "
 "stack:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:555
+#: ../../tutorial/example/gmachine/gmachine-1.md:369
 msgid ""
 "The topmost address points to an `NGlobal` node (the super combinator "
 "itself)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:556
+#: ../../tutorial/example/gmachine/gmachine-1.md:370
 msgid ""
 "Following are N addresses (N being the number of parameters for this "
 "super combinator), pointing to a series of App nodes - corresponding "
@@ -1094,7 +1082,7 @@ msgid ""
 "suit."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:558
+#: ../../tutorial/example/gmachine/gmachine-1.md:372
 msgid ""
 "When compiling a super combinator, we need to maintain an environment "
 "that allows us to find the relative position of parameters in the stack "
@@ -1104,14 +1092,14 @@ msgid ""
 "be passed as well."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:560
+#: ../../tutorial/example/gmachine/gmachine-1.md:374
 msgid ""
 "Here, \"parameters\" refer to addresses pointing to App nodes on the "
 "heap, and the actual parameter addresses can be accessed through the "
 "pusharg instruction."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:562
+#: ../../tutorial/example/gmachine/gmachine-1.md:376
 msgid ""
 "fn compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {\n"
 "  let name = self.name\n"
@@ -1126,33 +1114,34 @@ msgid ""
 "      Cons(s, ss) => Cons((s, i), gen_env(i + 1, ss))\n"
 "    }\n"
 "  }\n"
+"\n"
 "  let env = gen_env(0, self.args)\n"
 "  (name, arity, compileR(body, env, arity))\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:581
+#: ../../tutorial/example/gmachine/gmachine-1.md:382
 msgid ""
 "The `compileR` function generates code for instantiating super "
 "combinators by calling the `compileC` function, and then appends three "
 "instructions:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:583
+#: ../../tutorial/example/gmachine/gmachine-1.md:384
 msgid ""
 "`Update(N)`: Updates the original redex in the heap to an `NInd` node, "
 "which then points to the newly instantiated super combinator."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:584
+#: ../../tutorial/example/gmachine/gmachine-1.md:385
 msgid "`Pop(N)`: Clears the stack of redundant addresses."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:585
+#: ../../tutorial/example/gmachine/gmachine-1.md:386
 msgid "`Unwind`: Searches for the next redex to start the next reduction."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:587
+#: ../../tutorial/example/gmachine/gmachine-1.md:388
 msgid ""
 "fn compileR(\n"
 "  self : RawExpr[String],\n"
@@ -1160,18 +1149,14 @@ msgid ""
 "  arity : Int\n"
 ") -> List[Instruction] {\n"
 "  if arity == 0 {\n"
-"    // The Pop 0 instruction does nothing in practice, \n"
-"    // so it is not generated when the arity is 0.\n"
-"    compileC(self, env).concat(@immut/list.of([Update(arity), Unwind]))\n"
+"    compileC(self, env) + List::of([Update(arity), Unwind])\n"
 "  } else {\n"
-"    compileC(self, env).concat(\n"
-"      @immut/list.of([Update(arity), Pop(arity), Unwind]),\n"
-"    )\n"
+"    compileC(self, env) + List::of([Update(arity), Pop(arity), Unwind])\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:605
+#: ../../tutorial/example/gmachine/gmachine-1.md:394
 msgid ""
 "When compiling the definition of super combinators, a rather crude "
 "approach is used: if a variable is not a parameter, it is treated as "
@@ -1184,7 +1169,7 @@ msgid ""
 "added."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:607
+#: ../../tutorial/example/gmachine/gmachine-1.md:396
 msgid ""
 "fn compileC(\n"
 "  self : RawExpr[String],\n"
@@ -1192,90 +1177,87 @@ msgid ""
 ") -> List[Instruction] {\n"
 "  match self {\n"
 "    Var(s) =>\n"
-"      match lookupENV(env, s) {\n"
-"        None => @immut/list.of([PushGlobal(s)])\n"
-"        Some(n) => @immut/list.of([PushArg(n)])\n"
+"      match env.lookup(s) {\n"
+"        None => List::of([PushGlobal(s)])\n"
+"        Some(n) => List::of([PushArg(n)])\n"
 "      }\n"
-"    Num(n) => @immut/list.of([PushInt(n)])\n"
+"    Num(n) => List::of([PushInt(n)])\n"
 "    App(e1, e2) =>\n"
-"      compileC(e2, env)\n"
-"      .concat(compileC(e1, argOffset(1, env)))\n"
-"      .concat(@immut/list.of([MkApp]))\n"
+"      compileC(e2, env) + compileC(e1, argOffset(1, env)) + "
+"List::of([MkApp])\n"
 "    _ => abort(\"not support yet\")\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:628
+#: ../../tutorial/example/gmachine/gmachine-1.md:402
 msgid "Running the G-Machine"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:630
+#: ../../tutorial/example/gmachine/gmachine-1.md:404
 msgid ""
 "Once the super combinators are compiled, they need to be placed on the "
 "heap (along with adding their addresses to the global table). This can be"
 " done recursively."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:632
+#: ../../tutorial/example/gmachine/gmachine-1.md:406
 msgid ""
-"fn buildInitialHeap(scdefs : List[(String, Int, List[Instruction])]) -> "
-"(GHeap, RHTable[String, Addr]) {\n"
-"  let heap = { objectCount : 0, memory : Array::make(10000, None) }\n"
-"  let globals = RHTable::new(50)\n"
-"  fn go(lst : List[(String, Int, List[Instruction])]) {\n"
-"    match lst {\n"
-"      Nil => ()\n"
-"      Cons((name, arity, instrs), rest) => {\n"
-"        let addr = heap.alloc(NGlobal(name, arity, instrs))\n"
-"        globals[name] = addr\n"
-"        go(rest)\n"
-"      }\n"
+"fn build_initial_heap(\n"
+"  scdefs : List[(String, Int, List[Instruction])]\n"
+") -> (GHeap, @hashmap.T[String, Addr]) {\n"
+"  let heap = { object_count: 0, memory: Array::make(10000, None) }\n"
+"  let globals = @hashmap.new(capacity=50)\n"
+"  loop scdefs {\n"
+"    Nil => ()\n"
+"    Cons((name, arity, instrs), rest) => {\n"
+"      let addr = heap.alloc(NGlobal(name, arity, instrs))\n"
+"      globals[name] = addr\n"
+"      continue rest\n"
 "    }\n"
 "  }\n"
-"  go(scdefs)\n"
 "  return (heap, globals)\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:651
+#: ../../tutorial/example/gmachine/gmachine-1.md:412
 msgid ""
 "Define a function \"step\" that updates the state of the G-Machine by one"
 " step, returning false if the final state has been reached."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:653
+#: ../../tutorial/example/gmachine/gmachine-1.md:414
 msgid ""
 "fn step(self : GState) -> Bool {\n"
 "  match self.code {\n"
 "    Nil => return false\n"
 "    Cons(i, is) => {\n"
 "      self.code = is\n"
-"      self.statInc()\n"
+"      self.stat_incr()\n"
 "      match i {\n"
 "        PushGlobal(f) => self.push_global(f)\n"
 "        PushInt(n) => self.push_int(n)\n"
 "        PushArg(n) => self.push_arg(n)\n"
-"        MkApp => self.mkapp()\n"
+"        MkApp => self.mk_apply()\n"
 "        Unwind => self.unwind()\n"
 "        Update(n) => self.update(n)\n"
 "        Pop(n) => self.stack = self.stack.drop(n)\n"
-"      } // without the need for additional functions\n"
+"      }\n"
 "      return true\n"
 "    }\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:675
+#: ../../tutorial/example/gmachine/gmachine-1.md:420
 msgid ""
 "Additionally, define a function \"reify\" that continuously executes the "
 "\"step\" function until the final state is reached."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:677
+#: ../../tutorial/example/gmachine/gmachine-1.md:422
 msgid ""
-"fn reify(self : GState) -> Unit {\n"
+"fn reify(self : GState) -> Node {\n"
 "  if self.step() {\n"
 "    self.reify()\n"
 "  } else {\n"
@@ -1283,7 +1265,7 @@ msgid ""
 "    match stack {\n"
 "      Cons(addr, Nil) => {\n"
 "        let res = self.heap[addr]\n"
-"        println(\"\\{res}\")\n"
+"        return res\n"
 "      }\n"
 "      _ => abort(\"wrong stack \\{stack}\")\n"
 "    }\n"
@@ -1291,46 +1273,52 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:694
+#: ../../tutorial/example/gmachine/gmachine-1.md:428
 msgid "Combine the above components."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:696
+#: ../../tutorial/example/gmachine/gmachine-1.md:430
 msgid ""
-"fn run(codes : List[String]) -> Unit {\n"
+"fn run(codes : List[String]) -> Node {\n"
 "  fn parse_then_compile(code : String) -> (String, Int, "
 "List[Instruction]) {\n"
-"    let code = TokenStream::new(code)\n"
-"    let code = parseSC(code)\n"
+"    let tokens = tokenize(code)\n"
+"    let code = \n"
+"      try {\n"
+"        tokens.parse_sc!()\n"
+"      } catch {\n"
+"        ParseError(s) => abort(s)\n"
+"      } else {\n"
+"        expr => expr\n"
+"      }\n"
 "    let code = compileSC(code)\n"
 "    return code\n"
 "  }\n"
+"  let codes = codes.map(parse_then_compile) + prelude_defs.map(compileSC)"
 "\n"
-"  let codes = "
-"codes.map(parse_then_compile).concat(preludeDefs.map(compileSC))\n"
-"  let (heap, globals) = buildInitialHeap(codes)\n"
+"  let (heap, globals) = build_initial_heap(codes)\n"
 "  let initialState : GState = {\n"
-"    heap,\n"
-"    stack: Nil,\n"
-"    code: initialCode,\n"
-"    globals,\n"
-"    stats: initialStat,\n"
+"    heap : heap,\n"
+"    stack : Nil,\n"
+"    code : List::of([PushGlobal(\"main\"), Unwind]),\n"
+"    globals : globals,\n"
+"    stats : 0\n"
 "  }\n"
 "  initialState.reify()\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:718
-#: ../../tutorial/example/gmachine/gmachine-2.md:330
-#: ../../tutorial/example/myers-diff/myers-diff2.md:186
-#: ../../tutorial/example/myers-diff/myers-diff3.md:214
+#: ../../tutorial/example/gmachine/gmachine-1.md:436
+#: ../../tutorial/example/gmachine/gmachine-2.md:214
+#: ../../tutorial/example/myers-diff/myers-diff2.md:86
+#: ../../tutorial/example/myers-diff/myers-diff3.md:113
 #: ../../tutorial/example/segment-tree/segment-tree.md:141
 #: ../../tutorial/example/segment-tree/segment-tree2.md:132
 #: ../../tutorial/example/sudoku/index.md:388
 msgid "Conclusion"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:720
+#: ../../tutorial/example/gmachine/gmachine-1.md:438
 msgid ""
 "The features of the G-Machine we've constructed so far are too limited to"
 " run even a somewhat decent program. In the next article, we will "
@@ -1339,11 +1327,11 @@ msgid ""
 "covering the G-Machine."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:722
+#: ../../tutorial/example/gmachine/gmachine-1.md:440
 msgid "Reference"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-1.md:724
+#: ../../tutorial/example/gmachine/gmachine-1.md:442
 msgid ""
 "Peyton Jones, Simon & Lester, David. (2000). Implementing functional "
 "languages: a tutorial."
@@ -1437,16 +1425,18 @@ msgstr ""
 #: ../../tutorial/example/gmachine/gmachine-2.md:39
 msgid ""
 "fn rearrange(self : GState, n : Int) -> Unit {\n"
-"  let appnodes = take(self.stack, n)\n"
-"  let args = map(fn (addr) {\n"
-"  let NApp(_, arg) = self.heap[addr]\n"
-"      arg\n"
-"  }, appnodes)\n"
-"  self.stack = append(args, drop(appnodes, n - 1))\n"
+"  let appnodes = self.stack.take(n)\n"
+"  let args = appnodes.map(fn (addr) {\n"
+"    guard let NApp(_, arg) = self.heap[addr] else {\n"
+"      _ => panic()\n"
+"    }\n"
+"    arg \n"
+"  })\n"
+"  self.stack = args + appnodes.drop(n - 1)\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:50
+#: ../../tutorial/example/gmachine/gmachine-2.md:45
 msgid ""
 "The `rearrange` function assumes that the first N addresses on the stack "
 "point to a series of `NApp` nodes. It keeps the bottommost one (used as "
@@ -1454,38 +1444,37 @@ msgid ""
 "addresses that directly point to the parameters."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:52
+#: ../../tutorial/example/gmachine/gmachine-2.md:47
 msgid ""
 "After this, both parameters and local variables can be accessed using the"
 " same command by changing the `PushArg` instruction to a more general "
 "`Push` instruction."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:54
+#: ../../tutorial/example/gmachine/gmachine-2.md:49
 msgid ""
 "fn push(self : GState, offset : Int) -> Unit {\n"
-"  // Copy the address at offset + 1 to the top of the stack\n"
-"  //    Push(n) a0 : . . . : an : s\n"
-"  // => an : a0 : . . . : an : s\n"
-"  let appaddr = nth(self.stack, offset)\n"
-"  self.putStack(appaddr)\n"
+"  // Push(n) a0 : . . . : an : s\n"
+"  //     =>  an : a0 : . . . : an : s\n"
+"  let addr = self.stack.unsafe_nth(offset)\n"
+"  self.put_stack(addr)\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:64
+#: ../../tutorial/example/gmachine/gmachine-2.md:55
 msgid ""
 "The next issue is that we need something to clean up. Consider the "
 "following expression:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:66
+#: ../../tutorial/example/gmachine/gmachine-2.md:57
 msgid ""
 "(let ([x1 e1]\n"
 "      [x2 e2])\n"
 "  expr)\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:72
+#: ../../tutorial/example/gmachine/gmachine-2.md:63
 msgid ""
 "After constructing the graph corresponding to the expression `expr`, the "
 "stack still contains addresses pointing to e1 and e2 (corresponding to "
@@ -1493,7 +1482,7 @@ msgid ""
 "top):"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:74
+#: ../../tutorial/example/gmachine/gmachine-2.md:65
 msgid ""
 "<Address pointing to expr>\n"
 "       |\n"
@@ -1504,7 +1493,7 @@ msgid ""
 "...remaining stack...\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:84
+#: ../../tutorial/example/gmachine/gmachine-2.md:75
 msgid ""
 "Therefore, we need a new instruction to clean up these no longer needed "
 "addresses. It is called `Slide`. As the name suggests, the function of "
@@ -1512,15 +1501,15 @@ msgid ""
 "addresses."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:86
+#: ../../tutorial/example/gmachine/gmachine-2.md:77
 msgid ""
 "fn slide(self : GState, n : Int) -> Unit {\n"
 "  let addr = self.pop1()\n"
-"  self.stack = Cons(addr, drop(self.stack, n))\n"
+"  self.stack = Cons(addr, self.stack.drop(n))\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:93
+#: ../../tutorial/example/gmachine/gmachine-2.md:83
 msgid ""
 "Now we can compile `let`. We will compile the expressions corresponding "
 "to local variables using the `compileC` function. Then, traverse the list"
@@ -1530,32 +1519,33 @@ msgid ""
 "addresses."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:95
+#: ../../tutorial/example/gmachine/gmachine-2.md:85
 msgid ""
 "Compiling the main expression using the passed function makes it easy to "
 "reuse when adding subsequent features."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:97
+#: ../../tutorial/example/gmachine/gmachine-2.md:87
 msgid ""
-"fn compileLet(comp : (RawExpr[String], List[(String, Int)]) -> "
-"List[Instruction], defs : List[(String, RawExpr[String])], expr : "
-"RawExpr[String], env : List[(String, Int)]) -> List[Instruction] {\n"
+"fn compileLet(\n"
+"  comp : (RawExpr[String], List[(String, Int)]) -> List[Instruction],\n"
+"  defs : List[(String, RawExpr[String])],\n"
+"  expr : RawExpr[String],\n"
+"  env : List[(String, Int)]\n"
+") -> List[Instruction] {\n"
 "  let (env, codes) = loop env, List::Nil, defs {\n"
 "    env, acc, Nil => (env, acc)\n"
 "    env, acc, Cons((name, expr), rest) => {\n"
 "      let code = compileC(expr, env)\n"
-"      // Update offsets and add offsets for local variables corresponding"
-" to name\n"
 "      let env = List::Cons((name, 0), argOffset(1, env))\n"
-"      continue env, append(acc, code), rest\n"
+"      continue env, acc + code, rest\n"
 "    }\n"
 "  }\n"
-"  append(codes, append(comp(expr, env), List::[Slide(length(defs))]))\n"
+"  codes + comp(expr, env) + List::of([Slide(defs.length())])\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:112
+#: ../../tutorial/example/gmachine/gmachine-2.md:93
 msgid ""
 "The semantics of `letrec` are more complex - it allows the N variables "
 "within the expression to reference each other, so we need to pre-allocate"
@@ -1565,77 +1555,85 @@ msgid ""
 "negative and only serve as placeholders."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:114
+#: ../../tutorial/example/gmachine/gmachine-2.md:95
 msgid ""
-"fn allocNodes(self : GState, n : Int) -> Unit {\n"
+"fn alloc_nodes(self : GState, n : Int) -> Unit {\n"
 "  let dummynode : Node = NInd(Addr(-1))\n"
 "  for i = 0; i < n; i = i + 1 {\n"
 "    let addr = self.heap.alloc(dummynode)\n"
-"    self.putStack(addr)\n"
+"    self.put_stack(addr)\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:124
+#: ../../tutorial/example/gmachine/gmachine-2.md:101
 msgid "The steps to compile letrec are similar to `let`:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:126
+#: ../../tutorial/example/gmachine/gmachine-2.md:103
 msgid "Use `Alloc(n)` to allocate N addresses."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:127
+#: ../../tutorial/example/gmachine/gmachine-2.md:104
 msgid "Use the `loop` expression to build a complete environment."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:128
+#: ../../tutorial/example/gmachine/gmachine-2.md:105
 msgid ""
 "Compile the local variables in `defs`, using the `Update` instruction to "
 "update the results to the pre-allocated addresses after compiling each "
 "one."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:129
+#: ../../tutorial/example/gmachine/gmachine-2.md:106
 msgid "Compile the main expression and use the `Slide` instruction to clean up."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:131
+#: ../../tutorial/example/gmachine/gmachine-2.md:108
 msgid ""
-"fn compileLetrec(comp : (RawExpr[String], List[(String, Int)]) -> "
-"List[Instruction], defs : List[(String, RawExpr[String])], expr : "
-"RawExpr[String], env : List[(String, Int)]) -> List[Instruction] {\n"
-"  let env = loop env, defs {\n"
-"    env, Nil => env\n"
-"    env, Cons((name, _), rest) => {\n"
-"      let env = List::Cons((name, 0), argOffset(1, env))\n"
-"      continue env, rest\n"
+"fn compileLetrec(\n"
+"  comp : (RawExpr[String], List[(String, Int)]) -> List[Instruction],\n"
+"  defs : List[(String, RawExpr[String])],\n"
+"  expr : RawExpr[String],\n"
+"  env : List[(String, Int)]\n"
+") -> List[Instruction] {\n"
+"  let mut env = env\n"
+"  loop defs {\n"
+"    Nil => ()\n"
+"    Cons((name, _), rest) => {\n"
+"      env = Cons((name, 0), argOffset(1, env))\n"
+"      continue rest\n"
 "    }\n"
 "  }\n"
-"  let n = length(defs)\n"
-"  fn compileDefs(defs : List[(String, RawExpr[String])], offset : Int) ->"
-" List[Instruction] {\n"
+"  let n = defs.length()\n"
+"  fn compileDefs(\n"
+"    defs : List[(String, RawExpr[String])],\n"
+"    offset : Int\n"
+"  ) -> List[Instruction] {\n"
 "    match defs {\n"
-"      Nil => append(comp(expr, env), List::[Slide(n)])\n"
-"      Cons((_, expr), rest) => append(compileC(expr, env), "
-"Cons(Update(offset), compileDefs(rest, offset - 1)))\n"
+"      Nil => comp(expr, env) + List::of([Slide(n)])\n"
+"      Cons((_, expr), rest) =>\n"
+"        compileC(expr, env) +\n"
+"        Cons(Update(offset), compileDefs(rest, offset - 1))\n"
 "    }\n"
 "  }\n"
+"\n"
 "  Cons(Alloc(n), compileDefs(defs, n - 1))\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:151
+#: ../../tutorial/example/gmachine/gmachine-2.md:114
 msgid "Adding Primitives"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:153
+#: ../../tutorial/example/gmachine/gmachine-2.md:116
 msgid ""
 "From this step, we can finally perform basic integer operations such as "
 "arithmetic, comparison, and checking if two numbers are equal. First, "
 "modify the `Instruction` type to add related instructions."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:155
+#: ../../tutorial/example/gmachine/gmachine-2.md:118
 msgid ""
 "  Add\n"
 "  Sub\n"
@@ -1651,7 +1649,7 @@ msgid ""
 "  Cond(List[Instruction], List[Instruction])\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:170
+#: ../../tutorial/example/gmachine/gmachine-2.md:133
 msgid ""
 "At first glance, implementing these instructions seems simple. Take `Add`"
 " as an example: just pop two top addresses from the stack, retrieve the "
@@ -1659,7 +1657,7 @@ msgid ""
 "result address back onto the stack."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:172
+#: ../../tutorial/example/gmachine/gmachine-2.md:135
 msgid ""
 "fn add(self : GState) -> Unit {\n"
 "  let (a1, a2) = self.pop2() // Pop two top addresses\n"
@@ -1674,7 +1672,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:186
+#: ../../tutorial/example/gmachine/gmachine-2.md:149
 msgid ""
 "However, the next problem we face is that this is a lazy evaluation "
 "language. The parameters of `add` are likely not yet computed (i.e., not "
@@ -1683,88 +1681,106 @@ msgid ""
 "Evaluation)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:188
+#: ../../tutorial/example/gmachine/gmachine-2.md:151
 msgid ""
 "In jargon, the result of such a computation is called Weak Head Normal "
 "Form (WHNF)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:190
+#: ../../tutorial/example/gmachine/gmachine-2.md:153
 msgid ""
 "At the same time, we need to modify the structure of `GState` and add a "
 "state called `dump`. Its type is `List[(List[Instruction], List[Addr])]`,"
 " used by `Eval` and `Unwind` instructions."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:192
+#: ../../tutorial/example/gmachine/gmachine-2.md:155
 msgid "The implementation of the `Eval` instruction is not complicated:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:194
+#: ../../tutorial/example/gmachine/gmachine-2.md:157
 msgid "Pop the top address of the stack."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:196
+#: ../../tutorial/example/gmachine/gmachine-2.md:159
 msgid ""
 "Save the current unexecuted instruction sequence and stack (by putting "
 "them into the dump)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:198
+#: ../../tutorial/example/gmachine/gmachine-2.md:161
 msgid "Clear the current stack and place the previously saved address."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:200
+#: ../../tutorial/example/gmachine/gmachine-2.md:163
 msgid "Clear the current instruction sequence and place the `Unwind` instruction."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:202
+#: ../../tutorial/example/gmachine/gmachine-2.md:165
 msgid ""
 "This is similar to how strict evaluation languages handle saving caller "
 "contexts, but practical implementations would use more efficient methods."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:204
+#: ../../tutorial/example/gmachine/gmachine-2.md:167
 msgid ""
 "fn eval(self : GState) -> Unit {\n"
 "  let addr = self.pop1()\n"
-"  self.putDump(self.code, self.stack)\n"
-"  self.stack = List::[addr]\n"
-"  self.code = List::[Unwind]\n"
+"  self.put_dump(self.code, self.stack)\n"
+"  self.stack = List::of([addr])\n"
+"  self.code = List::of([Unwind])\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:213
+#: ../../tutorial/example/gmachine/gmachine-2.md:173
 msgid ""
 "This simple definition requires modifying the `Unwind` instruction to "
 "restore the context when `Unwind` in the `NNum` branch finds that there "
 "is a recoverable context (`dump` is not empty)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:215
+#: ../../tutorial/example/gmachine/gmachine-2.md:175
 msgid ""
 "fn unwind(self : GState) -> Unit {\n"
 "  let addr = self.pop1()\n"
 "  match self.heap[addr] {\n"
 "    NNum(_) => {\n"
 "      match self.dump {\n"
-"        Nil => self.putStack(addr)\n"
-"        Cons((instrs, stack), restDump) => {\n"
-"          // Restore the stack\n"
+"        Nil => self.put_stack(addr)\n"
+"        Cons((instrs, stack), rest_dump) => {\n"
 "          self.stack = stack\n"
-"          self.putStack(addr)\n"
-"          self.dump = restDump\n"
-"          // Return to original code execution\n"
+"          self.put_stack(addr)\n"
+"          self.dump = rest_dump\n"
 "          self.code = instrs\n"
 "        }\n"
 "      }\n"
 "    }\n"
-"    ......\n"
+"    NApp(a1, _) => {\n"
+"      self.put_stack(addr)\n"
+"      self.put_stack(a1)\n"
+"      self.put_code(List::of([Unwind]))\n"
+"    }\n"
+"    NGlobal(_, n, c) => {\n"
+"      if self.stack.length() < n {\n"
+"        abort(\"Unwinding with too few arguments\")\n"
+"      } else {\n"
+"        if n != 0 {\n"
+"          self.rearrange(n)\n"
+"        } else {\n"
+"          self.put_stack(addr)\n"
+"        }\n"
+"        self.put_code(c)\n"
+"      }\n"
+"    }\n"
+"    NInd(a) => {\n"
+"      self.put_stack(a)\n"
+"      self.put_code(List::of([Unwind]))\n"
+"    }\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:237
+#: ../../tutorial/example/gmachine/gmachine-2.md:181
 msgid ""
 "Next, we need to implement arithmetic and comparison instructions. We use"
 " two functions to simplify the form of binary operations. The result of "
@@ -1772,127 +1788,177 @@ msgid ""
 " numbers to represent it: 0 for `false`, 1 for `true`."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:239
+#: ../../tutorial/example/gmachine/gmachine-2.md:183
 msgid ""
-"fn liftArith2(self : GState, op : (Int, Int) -> Int) -> Unit {\n"
-"  // Binary arithmetic operations\n"
+"fn negate(self : GState) -> Unit {\n"
+"  let addr = self.pop1()\n"
+"  match self.heap[addr] {\n"
+"    NNum(n) => {\n"
+"      let addr = self.heap.alloc(NNum(-n))\n"
+"      self.put_stack(addr)\n"
+"    }\n"
+"    otherwise => {\n"
+"      abort(\"negate: wrong kind of node \\{otherwise}, address "
+"\\{addr}\")\n"
+"    }\n"
+"  }\n"
+"}\n"
+"\n"
+"fn lift_arith2(self : GState, op : (Int, Int) -> Int) -> Unit {\n"
 "  let (a1, a2) = self.pop2()\n"
 "  match (self.heap[a1], self.heap[a2]) {\n"
 "    (NNum(n1), NNum(n2)) => {\n"
 "      let newnode = Node::NNum(op(n1, n2))\n"
 "      let addr = self.heap.alloc(newnode)\n"
-"      self.putStack(addr)\n"
+"      self.put_stack(addr)\n"
 "    }\n"
 "    (node1, node2) => abort(\"liftArith2: \\{a1} = \\{node1} \\{a2} = "
 "\\{node2}\")\n"
 "  }\n"
 "}\n"
 "\n"
-"fn liftCmp2(self : GState, op : (Int, Int) -> Bool) -> Unit {\n"
-"  // Binary comparison operations\n"
+"fn lift_cmp2(self : GState, op : (Int, Int) -> Bool) -> Unit {\n"
 "  let (a1, a2) = self.pop2()\n"
 "  match (self.heap[a1], self.heap[a2]) {\n"
 "    (NNum(n1), NNum(n2)) => {\n"
 "      let flag = op(n1, n2)\n"
 "      let newnode = if flag { Node::NNum(1) } else { Node::NNum(0) }\n"
 "      let addr = self.heap.alloc(newnode)\n"
-"      self.putStack(addr)\n"
+"      self.put_stack(addr)\n"
 "    }\n"
 "    (node1, node2) => abort(\"liftCmp2: \\{a1} = \\{node1} \\{a2} = "
 "\\{node2}\")\n"
 "  }\n"
 "}\n"
-"\n"
-"// Implement negation separately\n"
-"fn negate(self : GState) -> Unit {\n"
-"  let addr = self.pop1()\n"
-"  match self.heap[addr] {\n"
-"    NNum(n) => {\n"
-"      let addr = self.heap.alloc(NNum(-n))\n"
-"      self.putStack(addr)\n"
-"    }\n"
-"    otherwise => {\n"
-"      // If not NNum, throw an error\n"
-"      abort(\"negate: wrong kind of node \\{otherwise}, address \\{addr} "
-"\")\n"
-"    }\n"
-"  }\n"
-"}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:283
+#: ../../tutorial/example/gmachine/gmachine-2.md:189
 msgid "Finally, implement branching:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:285
+#: ../../tutorial/example/gmachine/gmachine-2.md:191
 msgid ""
 "fn condition(self : GState, i1 : List[Instruction], i2 : "
 "List[Instruction]) -> Unit {\n"
 "  let addr = self.pop1()\n"
 "  match self.heap[addr] {\n"
 "    NNum(0) => {\n"
-"      // If false, jump to i2\n"
-"      self.code = append(i2, self.code)\n"
+"      // false\n"
+"      self.code = i2 + self.code\n"
 "    }\n"
 "    NNum(1) => {\n"
-"      // If true, jump to i1\n"
-"      self.code = append(i1, self.code)\n"
+"      // true\n"
+"      self.code = i1 + self.code\n"
 "    }\n"
 "    otherwise => abort(\"cond : \\{addr} = \\{otherwise}\")\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:302
+#: ../../tutorial/example/gmachine/gmachine-2.md:197
 msgid ""
 "No major adjustments are needed in the compilation part, just add some "
 "predefined programs:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:304
+#: ../../tutorial/example/gmachine/gmachine-2.md:199
 #: ../../tutorial/example/gmachine/gmachine-3.md:9
 msgid ""
-"let compiledPrimitives : List[(String, Int, List[Instruction])] = List::["
-"\n"
-"  // Arithmetic\n"
-"  (\"add\", 2, List::[Push(1), Eval, Push(1), Eval, Add, Update(2), "
-"Pop(2), Unwind]),\n"
-"  (\"sub\", 2, List::[Push(1), Eval, Push(1), Eval, Sub, Update(2), "
-"Pop(2), Unwind]),\n"
-"  (\"mul\", 2, List::[Push(1), Eval, Push(1), Eval, Mul, Update(2), "
-"Pop(2), Unwind]),\n"
-"  (\"div\", 2, List::[Push(1), Eval, Push(1), Eval, Div, Update(2), "
-"Pop(2), Unwind]),\n"
-"  // Comparison\n"
-"  (\"eq\",  2, List::[Push(1), Eval, Push(1), Eval, Eq,  Update(2), "
-"Pop(2), Unwind]),\n"
-"  (\"neq\", 2, List::[Push(1), Eval, Push(1), Eval, Ne,  Update(2), "
-"Pop(2), Unwind]),\n"
-"  (\"ge\",  2, List::[Push(1), Eval, Push(1), Eval, Ge,  Update(2), "
-"Pop(2), Unwind]),\n"
-"  (\"gt\",  2, List::[Push(1), Eval, Push(1), Eval, Gt,  Update(2), "
-"Pop(2), Unwind]),\n"
-"  (\"le\",  2, List::[Push(1), Eval, Push(1), Eval, Le,  Update(2), "
-"Pop(2), Unwind]),\n"
-"  (\"lt\",  2, List::[Push(1), Eval, Push(1), Eval, Lt,  Update(2), "
-"Pop(2), Unwind]),\n"
-"  // Miscellaneous\n"
-"  (\"negate\", 1, List::[Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),"
-"\n"
-"  (\"if\",     3,  List::[Push(0), Eval, Cond(List::[Push(1)], "
-"List::[Push(2)]), Update(3), Pop(3), Unwind])\n"
-"]\n"
+"let compiled_primitives : List[(String, Int, List[Instruction])] = "
+"List::of(\n"
+"  [\n"
+"    // Arith\n"
+"    (\n"
+"      \"add\",\n"
+"      2,\n"
+"      List::of([Push(1), Eval, Push(1), Eval, Add, Update(2), Pop(2), "
+"Unwind]),\n"
+"    ),\n"
+"    (\n"
+"      \"sub\",\n"
+"      2,\n"
+"      List::of([Push(1), Eval, Push(1), Eval, Sub, Update(2), Pop(2), "
+"Unwind]),\n"
+"    ),\n"
+"    (\n"
+"      \"mul\",\n"
+"      2,\n"
+"      List::of([Push(1), Eval, Push(1), Eval, Mul, Update(2), Pop(2), "
+"Unwind]),\n"
+"    ),\n"
+"    (\n"
+"      \"div\",\n"
+"      2,\n"
+"      List::of([Push(1), Eval, Push(1), Eval, Div, Update(2), Pop(2), "
+"Unwind]),\n"
+"    ),\n"
+"    // Compare\n"
+"    (\n"
+"      \"eq\",\n"
+"      2,\n"
+"      List::of([Push(1), Eval, Push(1), Eval, Eq, Update(2), Pop(2), "
+"Unwind]),\n"
+"    ),\n"
+"    (\n"
+"      \"neq\",\n"
+"      2,\n"
+"      List::of([Push(1), Eval, Push(1), Eval, Ne, Update(2), Pop(2), "
+"Unwind]),\n"
+"    ),\n"
+"    (\n"
+"      \"ge\",\n"
+"      2,\n"
+"      List::of([Push(1), Eval, Push(1), Eval, Ge, Update(2), Pop(2), "
+"Unwind]),\n"
+"    ),\n"
+"    (\n"
+"      \"gt\",\n"
+"      2,\n"
+"      List::of([Push(1), Eval, Push(1), Eval, Gt, Update(2), Pop(2), "
+"Unwind]),\n"
+"    ),\n"
+"    (\n"
+"      \"le\",\n"
+"      2,\n"
+"      List::of([Push(1), Eval, Push(1), Eval, Le, Update(2), Pop(2), "
+"Unwind]),\n"
+"    ),\n"
+"    (\n"
+"      \"lt\",\n"
+"      2,\n"
+"      List::of([Push(1), Eval, Push(1), Eval, Lt, Update(2), Pop(2), "
+"Unwind]),\n"
+"    ),\n"
+"    // MISC\n"
+"    (\"negate\", 1, List::of([Push(0), Eval, Neg, Update(1), Pop(1), "
+"Unwind])),\n"
+"    (\n"
+"      \"if\",\n"
+"      3,\n"
+"      List::of(\n"
+"        [\n"
+"          Push(0),\n"
+"          Eval,\n"
+"          Cond(List::of([Push(1)]), List::of([Push(2)])),\n"
+"          Update(3),\n"
+"          Pop(3),\n"
+"          Unwind,\n"
+"        ],\n"
+"      ),\n"
+"    ),\n"
+"  ],\n"
+")\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:324
+#: ../../tutorial/example/gmachine/gmachine-2.md:205
 msgid "and modify the initial instruction sequence"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:326
-msgid "let initialCode : List[Instruction] = List::[PushGlobal(\"main\"), Eval]\n"
+#: ../../tutorial/example/gmachine/gmachine-2.md:207
+msgid "code : List::of([PushGlobal(\"main\"), Eval]),\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-2.md:332
+#: ../../tutorial/example/gmachine/gmachine-2.md:216
 msgid ""
 "In the next part, we will improve the code generation for primitives and "
 "add support for data structures."
@@ -1918,27 +1984,27 @@ msgstr ""
 #: ../../tutorial/example/gmachine/gmachine-3.md:7
 msgid ""
 "Let's review how we implemented primitives in the [last "
-"tutorial](https://www.moonbitlang.com/docs/examples/gmachine-2)."
+"tutorial](gmachine-2.md)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:29
+#: ../../tutorial/example/gmachine/gmachine-3.md:15
 msgid ""
 "This implementation introduces many `Eval` instructions, but they are not"
 " always necessary. For example:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:31
+#: ../../tutorial/example/gmachine/gmachine-3.md:17
 msgid "(add 3 (mul 4 5))\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:35
+#: ../../tutorial/example/gmachine/gmachine-3.md:21
 msgid ""
 "The two arguments of `add` are already in WHNF (Weak Head Normal Form) "
 "before executing `Eval`. Therefore, the `Eval` instructions here are "
 "redundant."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:37
+#: ../../tutorial/example/gmachine/gmachine-3.md:23
 msgid ""
 "One feasible optimization method is to consider the context when "
 "compiling expressions. For example, `add` requires its arguments to be "
@@ -1947,49 +2013,49 @@ msgid ""
 "safely compiled with strict evaluation (only a subset)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:39
+#: ../../tutorial/example/gmachine/gmachine-3.md:25
 msgid "An expression in a supercombinator definition is in a strict context."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:41
+#: ../../tutorial/example/gmachine/gmachine-3.md:27
 msgid ""
 "If `(op e1 e2)` is in a strict context (where `op` is a primitive), then "
 "`e1` and `e2` are also in a strict context."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:43
+#: ../../tutorial/example/gmachine/gmachine-3.md:29
 msgid ""
 "If `(let (.....) e)` is in a strict context, then `e` is also in a strict"
 " context (but the expressions corresponding to the local variables are "
 "not, as `e` may not need their results)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:45
+#: ../../tutorial/example/gmachine/gmachine-3.md:31
 msgid ""
 "We use the `compileE` function to implement compilation in a strict "
 "context, ensuring that _the value at the top of the stack is always in "
 "WHNF_."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:47
+#: ../../tutorial/example/gmachine/gmachine-3.md:33
 msgid ""
 "For the default branch, we simply add an `Eval` instruction after the "
 "result of `compileC`."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:49
-msgid "append(compileC(self, env), List::[Eval])\n"
+#: ../../tutorial/example/gmachine/gmachine-3.md:35
+msgid "_ => compileC(self, env) + List::of([Eval])\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:53
+#: ../../tutorial/example/gmachine/gmachine-3.md:42
 msgid "Constants are pushed directly."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:55
-msgid "Num(n) => List::[PushInt(n)]\n"
+#: ../../tutorial/example/gmachine/gmachine-3.md:44
+msgid "Num(n) => List::of([PushInt(n)])\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:59
+#: ../../tutorial/example/gmachine/gmachine-3.md:51
 msgid ""
 "For `let/letrec` expressions, the specially designed `compileLet` and "
 "`compileLetrec` become useful. Compiling a `let/letrec` expression in a "
@@ -1997,7 +2063,7 @@ msgid ""
 "expression."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:61
+#: ../../tutorial/example/gmachine/gmachine-3.md:53
 msgid ""
 "Let(rec, defs, e) => {\n"
 "  if rec {\n"
@@ -2008,43 +2074,43 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:71
+#: ../../tutorial/example/gmachine/gmachine-3.md:60
 msgid ""
 "The `if` and `negate` functions, with 3 and 1 arguments respectively, "
 "require special handling."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:73
+#: ../../tutorial/example/gmachine/gmachine-3.md:62
 msgid ""
 "App(App(App(Var(\"if\"), b), e1), e2) => {\n"
 "  let condition = compileE(b, env)\n"
 "  let branch1 = compileE(e1, env)\n"
 "  let branch2 = compileE(e2, env)\n"
-"  append(condition, List::[Cond(branch1, branch2)])\n"
+"  condition +  List::of([Cond(branch1, branch2)])\n"
 "}\n"
 "App(Var(\"negate\"), e) => {\n"
-"  append(compileE(e, env), List::[Neg])\n"
+"  compileE(e, env) + List::of([Neg])\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:85
+#: ../../tutorial/example/gmachine/gmachine-3.md:69
 msgid ""
 "Basic binary operations can be handled uniformly through a lookup table. "
 "First, construct a hash table called `builtinOpS` to query the "
 "corresponding instructions by the name of the primitive."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:87
+#: ../../tutorial/example/gmachine/gmachine-3.md:71
 msgid ""
-"let builtinOpS : RHTable[String, Instruction] = {\n"
-"  let table : RHTable[String, Instruction] = RHTable::new(50)\n"
-"  table[\"add\"] = Add\n"
+"let builtinOpS : @hashmap.T[String, Instruction] = {\n"
+"  let table  = @hashmap.new(capacity = 50)\n"
+"  table[\"add\"] = Add \n"
 "  table[\"mul\"] = Mul\n"
 "  table[\"sub\"] = Sub\n"
 "  table[\"div\"] = Div\n"
 "  table[\"eq\"]  = Eq\n"
 "  table[\"neq\"] = Ne\n"
-"  table[\"ge\"] = Ge\n"
+"  table[\"ge\"] = Ge \n"
 "  table[\"gt\"] = Gt\n"
 "  table[\"le\"] = Le\n"
 "  table[\"lt\"] = Lt\n"
@@ -2052,46 +2118,45 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:104
+#: ../../tutorial/example/gmachine/gmachine-3.md:77
 msgid "The rest of the handling is not much different."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:106
+#: ../../tutorial/example/gmachine/gmachine-3.md:79
 msgid ""
 "App(App(Var(op), e0), e1) => {\n"
 "  match builtinOpS[op] {\n"
-"    None => append(compileC(self, env), List::[Eval]) // Not a primitive "
-"op, use the default branch\n"
+"    None => compileC(self, env) + List::of([Eval])\n"
 "    Some(instr) => {\n"
 "      let code1 = compileE(e1, env)\n"
 "      let code0 = compileE(e0, argOffset(1, env))\n"
-"      append(code1, append(code0, List::[instr]))\n"
+"      code1 + code0 + List::of([instr])\n"
 "    }\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:119
+#: ../../tutorial/example/gmachine/gmachine-3.md:86
 msgid ""
 "Are we done? It seems so, but there's another WHNF besides integers: "
 "partially applied functions."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:121
+#: ../../tutorial/example/gmachine/gmachine-3.md:88
 msgid ""
 "A partial application is when the number of arguments is insufficient. "
 "This situation is common in higher-order functions, for example:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:123
+#: ../../tutorial/example/gmachine/gmachine-3.md:90
 msgid "(map (add 1) listofnumbers)\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:127
+#: ../../tutorial/example/gmachine/gmachine-3.md:94
 msgid "Here, `(add 1)` is a partial application."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:129
+#: ../../tutorial/example/gmachine/gmachine-3.md:96
 msgid ""
 "To ensure that the code generated by the new compilation strategy works "
 "correctly, we need to modify the implementation of the `Unwind` "
@@ -2100,10 +2165,10 @@ msgid ""
 "original redex and restore the stack."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:131
+#: ../../tutorial/example/gmachine/gmachine-3.md:98
 msgid ""
 "NGlobal(_, n, c) => {\n"
-"  let k = length(self.stack)\n"
+"  let k = self.stack.length()\n"
 "  if k < n {\n"
 "    match self.dump {\n"
 "      Nil => abort(\"Unwinding with too few arguments\")\n"
@@ -2111,19 +2176,23 @@ msgid ""
 "        // a1 : ...... : ak\n"
 "        // ||\n"
 "        // ak : s\n"
-"        // Retain the redex and restore the stack\n"
-"        self.stack = append(drop(self.stack, k - 1), s)\n"
+"        self.stack = self.stack.drop(k - 1) + s\n"
 "        self.dump = rest\n"
 "        self.code = i\n"
 "      }\n"
 "    }\n"
 "  } else {\n"
-"    ......\n"
+"    if n != 0 {\n"
+"      self.rearrange(n)\n"
+"    } else {\n"
+"      self.put_stack(addr)\n"
+"    }\n"
+"    self.put_code(c)\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:153
+#: ../../tutorial/example/gmachine/gmachine-3.md:105
 msgid ""
 "This context-based strictness analysis technique is useful but cannot do "
 "anything with supercombinator calls. Here we briefly introduce a "
@@ -2132,7 +2201,7 @@ msgid ""
 "using strict mode."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:155
+#: ../../tutorial/example/gmachine/gmachine-3.md:107
 msgid ""
 "We first define a concept: bottom, which conceptually represents a value "
 "that never terminates or causes an exception. For a supercombinator `f "
@@ -2143,7 +2212,7 @@ msgid ""
 "result. Therefore, a`[i]` should be strictly evaluated."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:157
+#: ../../tutorial/example/gmachine/gmachine-3.md:109
 msgid ""
 "If this condition is not met, it does not necessarily mean that the "
 "argument is not needed at all; it may be used only in certain branches "
@@ -2151,24 +2220,24 @@ msgid ""
 "example of one that should be lazily evaluated."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:159
+#: ../../tutorial/example/gmachine/gmachine-3.md:111
 msgid ""
 "Let's consider bottom as `false` and non-bottom values as `true`. In this"
 " way, all functions in coref can be considered boolean functions. Take "
 "`abs` as an example:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:161
+#: ../../tutorial/example/gmachine/gmachine-3.md:113
 msgid ""
 "(defn abs[n]\n"
 "  (if (lt n 0) (negate n) n))\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:166
+#: ../../tutorial/example/gmachine/gmachine-3.md:118
 msgid "We analyze how to translate it into a boolean function from top to bottom:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:168
+#: ../../tutorial/example/gmachine/gmachine-3.md:120
 msgid ""
 "For an expression like `(if x y z)`, x must be evaluated, but only one of"
 " `y` or `z` needs to be evaluated. This can be translated into `x and (y "
@@ -2177,11 +2246,11 @@ msgid ""
 "entire expression is also bottom."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:170
+#: ../../tutorial/example/gmachine/gmachine-3.md:122
 msgid "For primitive expressions, using `and` for all parts is sufficient."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:172
+#: ../../tutorial/example/gmachine/gmachine-3.md:124
 msgid ""
 "To determine whether a parameter needs to be compiled strictly, you can "
 "convert the above condition into a Boolean function: `a[i] = false` "
@@ -2189,17 +2258,17 @@ msgid ""
 "being true)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:174
+#: ../../tutorial/example/gmachine/gmachine-3.md:126
 msgid ""
 "This is essentially a method of program analysis called \"abstract "
 "interpretation.\""
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:176
+#: ../../tutorial/example/gmachine/gmachine-3.md:128
 msgid "Custom Data Structures"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:178
+#: ../../tutorial/example/gmachine/gmachine-3.md:130
 msgid ""
 "The data structure type definition in Haskell is similar to the `enum` in"
 " MoonBit. However, since CoreF is a simple toy language used to "
@@ -2207,7 +2276,7 @@ msgid ""
 "only built-in data structure is the lazy list."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:180
+#: ../../tutorial/example/gmachine/gmachine-3.md:132
 msgid ""
 "(defn take[n l]\n"
 "  (case l\n"
@@ -2218,82 +2287,82 @@ msgid ""
 "        (Cons x (take (sub n 1) xs)))]))\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:190
+#: ../../tutorial/example/gmachine/gmachine-3.md:142
 msgid ""
 "As shown above, you can use the `case` expression for simple pattern "
 "matching on lists."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:192
+#: ../../tutorial/example/gmachine/gmachine-3.md:144
 msgid ""
 "The corresponding graph node for a list is `NConstr(Int, List[Addr])`, "
 "which consists of two parts:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:194
+#: ../../tutorial/example/gmachine/gmachine-3.md:146
 msgid ""
 "A tag for different value constructors: the tag for `Nil` is 0, and the "
 "tag for `Cons` is 1."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:195
+#: ../../tutorial/example/gmachine/gmachine-3.md:147
 msgid ""
 "A list of addresses for storing substructures, whose length corresponds "
 "to the number of parameters (arity) of a value constructor."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:197
+#: ../../tutorial/example/gmachine/gmachine-3.md:149
 msgid ""
 "This graph node structure can be used to implement various data "
 "structures, but CoreF does not have a type system. For demonstration "
 "purposes, only lazy lists are implemented."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:199
+#: ../../tutorial/example/gmachine/gmachine-3.md:151
 msgid ""
 "We need to add two instructions, `Split` and `Pack`, to deconstruct and "
 "construct lists."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:201
+#: ../../tutorial/example/gmachine/gmachine-3.md:153
 msgid ""
-"fn split(self : GState, n : Int) -> Unit {\n"
+"fn pack(self : GState, t : Int, n : Int) -> Unit {\n"
+"  let addrs = self.stack.take(n)\n"
+"  self.stack = self.stack.drop(n)\n"
+"  let addr = self.heap.alloc(NConstr(t, addrs))\n"
+"  self.put_stack(addr)\n"
+"}\n"
+"\n"
+"fn split(self : GState) -> Unit {\n"
 "  let addr = self.pop1()\n"
 "  match self.heap[addr] {\n"
 "    NConstr(_, addrs) => {\n"
 "      // n == addrs.length()\n"
 "      self.stack = addrs + self.stack\n"
 "    }\n"
+"    _ => panic()\n"
 "  }\n"
-"}\n"
-"\n"
-"fn pack(self : GState, t : Int, n : Int) -> Unit {\n"
-"  let addrs = self.stack.take(n)\n"
-"  // Assume the number of arguments is sufficient\n"
-"  self.stack = self.stack.drop(n)\n"
-"  let addr = self.heap.alloc(NConstr(t, addrs))\n"
-"  self.putStack(addr)\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:221
+#: ../../tutorial/example/gmachine/gmachine-3.md:160
 msgid ""
 "Additionally, a `CaseJump` instruction is needed to implement the `case` "
 "expression."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:223
+#: ../../tutorial/example/gmachine/gmachine-3.md:162
 msgid ""
 "fn casejump(self : GState, table : List[(Int, List[Instruction])]) -> "
 "Unit {\n"
 "  let addr = self.pop1()\n"
 "  match self.heap[addr] {\n"
-"    NConstr(t, addrs) => {\n"
-"      match lookupENV(table, t) {\n"
+"    NConstr(t, _) => {\n"
+"      match table.lookup(t) {\n"
 "        None => abort(\"casejump\")\n"
-"        Some(instrs) => {\n"
+"        Some(instrs) => { \n"
 "          self.code = instrs + self.code\n"
-"          self.putStack(addr)\n"
+"          self.put_stack(addr)\n"
 "        }\n"
 "      }\n"
 "    }\n"
@@ -2303,7 +2372,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:241
+#: ../../tutorial/example/gmachine/gmachine-3.md:168
 msgid ""
 "After adding the above instructions, we need to modify the `compileC` and"
 " `compileE` functions. Since the object matched by the `case` expression "
@@ -2311,35 +2380,34 @@ msgid ""
 "it."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:243
+#: ../../tutorial/example/gmachine/gmachine-3.md:170
 msgid ""
-"// compileE\n"
-"  Case(e, alts) => {\n"
-"    compileE(e, env) + List::[CaseJump(compileAlts(alts, env))]\n"
-"  }\n"
-"  Constructor(0, 0) => {\n"
-"    // Nil\n"
-"    List::[Pack(0, 0)]\n"
-"  }\n"
-"  App(App(Constructor(1, 2), x), xs) => {\n"
-"    // Cons(x, xs)\n"
-"    compileC(xs, env) + compileC(x, argOffset(1, env)) + List::[Pack(1, "
-"2)]\n"
-"  }\n"
-"\n"
-"// compileC\n"
-"  App(App(Constructor(1, 2), x), xs) => {\n"
-"    // Cons(x, xs)\n"
-"    compileC(xs, env) + compileC(x, argOffset(1, env)) + List::[Pack(1, "
-"2)]\n"
-"  }\n"
-"  Constructor(0, 0) => {\n"
-"    // Nil\n"
-"    List::[Pack(0, 0)]\n"
-"  }\n"
+"App(App(Constructor(tag = 1, arity = 2), x), xs) => {\n"
+"  // Cons(x, xs)\n"
+"  compileC(xs, env) + compileC(x, argOffset(1, env)) + List::of([Pack(1, "
+"2)])\n"
+"}\n"
+"// Nil\n"
+"Constructor(tag = 0, arity = 0) => List::of([Pack(0, 0)])\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:268
+#: ../../tutorial/example/gmachine/gmachine-3.md:177
+msgid ""
+"Case(e, alts) => {\n"
+"  compileE(e, env) + List::of([CaseJump(compileAlts(alts, env))])\n"
+"}\n"
+"Constructor(tag = 0, arity = 0) => {\n"
+"  // Nil\n"
+"  List::of([Pack(0, 0)])\n"
+"}\n"
+"App(App(Constructor(tag = 1, arity = 2), x), xs) => {\n"
+"  // Cons(x, xs)\n"
+"  compileC(xs, env) + compileC(x, argOffset(1, env)) + List::of([Pack(1, "
+"2)])\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/example/gmachine/gmachine-3.md:184
 msgid ""
 "At this point, a new problem arises. Previously, printing the evaluation "
 "result only needed to handle simple `NNum` nodes, but `NConstr` nodes "
@@ -2349,13 +2417,8 @@ msgid ""
 " into the `output` component of `GState`."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:270
+#: ../../tutorial/example/gmachine/gmachine-3.md:186
 msgid ""
-"struct GState {\n"
-"  output : Buffer\n"
-"  ......\n"
-"}\n"
-"\n"
 "fn gprint(self : GState) -> Unit {\n"
 "  let addr = self.pop1()\n"
 "  match self.heap[addr] {\n"
@@ -2365,62 +2428,59 @@ msgid ""
 "    }\n"
 "    NConstr(0, Nil) => self.output.write_string(\"Nil\")\n"
 "    NConstr(1, Cons(addr1, Cons(addr2, Nil))) => {\n"
-"      // Force evaluation of addr1 and addr2 is required, so we execute "
-"Eval instructions first\n"
-"      self.code = List::[Instruction::Eval, Print, Eval, Print] + "
+"      self.code = List::of([Instruction::Eval, Print, Eval, Print]) + "
 "self.code\n"
-"      self.putStack(addr2)\n"
-"      self.putStack(addr1)\n"
+"      self.put_stack(addr2)\n"
+"      self.put_stack(addr1)\n"
 "    }\n"
+"    _ => panic()\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:294
+#: ../../tutorial/example/gmachine/gmachine-3.md:192
 msgid "Finally, change the initial code of the G-Machine to:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:296
-msgid ""
-"let initialCode : List[Instruction] = List::[PushGlobal(\"main\"), Eval, "
-"Print]\n"
+#: ../../tutorial/example/gmachine/gmachine-3.md:194
+msgid "code : List::of([PushGlobal(\"main\"), Eval, Print]),\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:300
+#: ../../tutorial/example/gmachine/gmachine-3.md:201
 msgid ""
 "Now, we can write some classic functional programs using lazy lists, such"
 " as the infinite Fibonacci sequence:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:302
+#: ../../tutorial/example/gmachine/gmachine-3.md:203
 msgid "(defn fibs[] (Cons 0 (Cons 1 (zipWith add fibs (tail fibs)))))\n"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:306
+#: ../../tutorial/example/gmachine/gmachine-3.md:207
 msgid ""
 "After introducing data structures, strictness analysis becomes more "
 "complex. For lazy lists, there are various evaluation modes:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:308
+#: ../../tutorial/example/gmachine/gmachine-3.md:209
 msgid ""
 "Fully strict (requires the list to be finite and all elements to be non-"
 "bottom)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:309
+#: ../../tutorial/example/gmachine/gmachine-3.md:210
 msgid "Fully lazy."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:310
+#: ../../tutorial/example/gmachine/gmachine-3.md:211
 msgid "Head strict (the list can be infinite, but its elements cannot be bottom)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:311
+#: ../../tutorial/example/gmachine/gmachine-3.md:212
 msgid "Tail strict (the list must be finite, but its elements can be bottom)."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:313
+#: ../../tutorial/example/gmachine/gmachine-3.md:214
 msgid ""
 "Moreover, the context in which a function is used can change the "
 "evaluation mode of its parameters (it cannot be analyzed in isolation and"
@@ -2429,45 +2489,45 @@ msgid ""
 "includes:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:315
+#: ../../tutorial/example/gmachine/gmachine-3.md:216
 msgid "Projections for Strictness Analysis"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:317
+#: ../../tutorial/example/gmachine/gmachine-3.md:218
 msgid "Static Analysis and Code Optimizations in Glasgow Haskell Compiler"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:319
+#: ../../tutorial/example/gmachine/gmachine-3.md:220
 msgid "Implementing Projection-based Strictness Analysis"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:321
+#: ../../tutorial/example/gmachine/gmachine-3.md:222
 msgid "Theory and Practice of Demand Analysis in Haskell"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:323
-#: ../../tutorial/example/myers-diff/myers-diff.md:382
+#: ../../tutorial/example/gmachine/gmachine-3.md:224
+#: ../../tutorial/example/myers-diff/myers-diff.md:311
 msgid "Epilogue"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:325
+#: ../../tutorial/example/gmachine/gmachine-3.md:226
 msgid ""
 "Lazy evaluation can reduce runtime redundant calculations, but it also "
 "introduces new problems, such as:"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:327
+#: ../../tutorial/example/gmachine/gmachine-3.md:228
 msgid "The notorious side effect order issue."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:329
+#: ../../tutorial/example/gmachine/gmachine-3.md:230
 msgid ""
 "Excessive redundant nodes. Some computations that are not shared still "
 "store their results on the heap, which is detrimental to utilizing the "
 "CPU's caching mechanism."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:331
+#: ../../tutorial/example/gmachine/gmachine-3.md:232
 msgid ""
 "The representative of lazy evaluation languages, Haskell, offers a "
 "controversial solution to the side effect order problem: Monads. This "
@@ -2476,21 +2536,21 @@ msgid ""
 " to explain how to use it effectively."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:333
+#: ../../tutorial/example/gmachine/gmachine-3.md:234
 msgid ""
 "Idris2, Haskell's successor (which is no longer a lazy language), retains"
 " Monads and introduces another mechanism for handling side effects: "
 "Algebraic Effects."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:335
+#: ../../tutorial/example/gmachine/gmachine-3.md:236
 msgid ""
 "The Spineless G-Machine designed by SPJ improved the problem of excessive"
 " redundant nodes, and its successor, the STG, unified the data layout of "
 "different types of nodes."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:337
+#: ../../tutorial/example/gmachine/gmachine-3.md:238
 msgid ""
 "In addition to improvements in abstract machine models, GHC's "
 "optimization of Haskell programs heavily relies on inline-based "
@@ -2498,7 +2558,7 @@ msgid ""
 "techniques."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:339
+#: ../../tutorial/example/gmachine/gmachine-3.md:240
 msgid ""
 "In 2004, several GHC designers discovered that the previous push-enter "
 "model, where parameters are pushed onto the stack and then a function is "
@@ -2508,7 +2568,7 @@ msgid ""
 "Languages.\""
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:341
+#: ../../tutorial/example/gmachine/gmachine-3.md:242
 msgid ""
 "In 2007, Simon Marlow found that jump and execute code in the tagless "
 "design significantly affected the performance of modern CPU branch "
@@ -2516,18 +2576,37 @@ msgid ""
 " described several solutions."
 msgstr ""
 
-#: ../../tutorial/example/gmachine/gmachine-3.md:343
+#: ../../tutorial/example/gmachine/gmachine-3.md:244
 msgid ""
 "Lazy purely functional languages have shown many interesting "
 "possibilities, but they have also faced much criticism and reflection. "
 "Nevertheless, it is undoubtedly an intriguing technology!"
 msgstr ""
 
-#: ../../tutorial/example/gmachine/index.md:3 ../../tutorial/example/index.md:5
+#: ../../tutorial/example/gmachine/index.md:7 ../../tutorial/example/index.md:5
 #: ../../tutorial/example/myers-diff/index.md:3
-#: ../../tutorial/example/segment-tree/index.md:13 ../../tutorial/index.md:8
+#: ../../tutorial/example/segment-tree/index.md:13
 msgid "Contents:"
 msgstr "目录："
+
+#: ../../tutorial/example/gmachine/index.md:3
+msgid ""
+"Lazy evaluation stands as a foundational concept in the realm of "
+"programming languages. Haskell, renowned as a purely functional "
+"programming language, boasts a robust lazy evaluation mechanism. This "
+"mechanism not only empowers developers to craft code that's both more "
+"efficient and concise but also enhances program performance and "
+"responsiveness, especially when tackling sizable datasets or intricate "
+"data streams."
+msgstr ""
+
+#: ../../tutorial/example/gmachine/index.md:5
+msgid ""
+"In this article, we'll delve into the Lazy Evaluation mechanism, "
+"thoroughly examining its principles and implementation methods, and then "
+"explore how to implement Haskell's evaluation semantics in "
+"[MoonBit](https://www.moonbitlang.com/)."
+msgstr ""
 
 #: ../../tutorial/example/index.md:1
 msgid "Examples"
@@ -3416,62 +3495,61 @@ msgstr ""
 
 #: ../../tutorial/example/myers-diff/myers-diff.md:210
 msgid ""
+"///|\n"
 "struct Line {\n"
 "  number : Int // Line number\n"
 "  text : String // Does not include newline\n"
-"} derive(Debug, Show)\n"
+"} derive(Show)\n"
 "\n"
+"///|\n"
 "fn Line::new(number : Int, text : String) -> Line {\n"
-"  Line::{ number : number, text : text }\n"
+"  Line::{ number, text }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:221
+#: ../../tutorial/example/myers-diff/myers-diff.md:216
 msgid ""
 "Then, define a helper function that splits a string into `Array[Line]` "
 "based on newline characters. Note that line numbers start from 1."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:223
+#: ../../tutorial/example/myers-diff/myers-diff.md:218
 msgid ""
 "fn lines(str : String) -> Array[Line] {\n"
+"  let lines = Array::new(capacity=50)\n"
 "  let mut line_number = 0\n"
-"  let buf = Buffer::make(50)\n"
-"  let vec = []\n"
-"  for i = 0; i < str.length(); i = i + 1 {\n"
-"    let ch = str[i]\n"
-"    buf.write_char(ch)\n"
-"    if ch == '\\n' {\n"
-"      let text = buf.to_string()\n"
-"      buf.reset()\n"
-"      line_number = line_number + 1\n"
-"      vec.push(Line::new(line_number, text))\n"
-"    }\n"
+"  for line in str.split(\"\\n\") {\n"
+"    line_number = line_number + 1\n"
+"    lines.push(Line::new(line_number, line))\n"
 "  } else {\n"
-"    // The text may not end with a newline\n"
-"    let text = buf.to_string()\n"
-"    if text != \"\" {\n"
-"      line_number = line_number + 1\n"
-"      vec.push(Line::new(line_number, text))\n"
-"    }\n"
-"    vec\n"
+"    return lines\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:249
+#: ../../tutorial/example/myers-diff/myers-diff.md:224
 msgid ""
 "Next, we need to wrap the array so that it supports negative indexing "
 "because we will use the value of `k` as an index."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:251
+#: ../../tutorial/example/myers-diff/myers-diff.md:226
 msgid ""
-"type BPArray[T] Array[T] // BiPolar Array\n"
+"type BPArray[T] Array[T] // BiPolar Array \n"
 "\n"
 "fn BPArray::make[T](capacity : Int, default : T) -> BPArray[T] {\n"
 "  let arr = Array::make(capacity, default)\n"
 "  BPArray(arr)\n"
+"}\n"
+"\n"
+"fn copy(self : BPArray[Int]) -> BPArray[Int] {\n"
+"  let BPArray(arr) = self\n"
+"  let newarr = Array::make(arr.length(), 0)\n"
+"  for i = 0; i < arr.length(); i = i + 1 {\n"
+"    newarr[i] = arr[i]\n"
+"  } else {\n"
+"    BPArray(newarr)\n"
+"  }\n"
 "}\n"
 "\n"
 "fn op_get[T](self : BPArray[T], idx : Int) -> T {\n"
@@ -3493,18 +3571,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:278
+#: ../../tutorial/example/myers-diff/myers-diff.md:232
 msgid ""
 "Now we can start writing the search function. Before searching for the "
 "complete path, let's start with our first goal to find the length of the "
 "shortest path (equal to the search depth). Here is the basic framework:"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:280
+#: ../../tutorial/example/myers-diff/myers-diff.md:235
 msgid ""
-"fn shortst_edit(a : Array[Line], b : Array[Line]) -> Int {\n"
-"  let n = a.length()\n"
-"  let m = b.length()\n"
+"fn shortst_edit(old~ : Array[Line], new~ : Array[Line]) -> Int {\n"
+"  let n = old.length()\n"
+"  let m = new.length()\n"
 "  let max = n + m\n"
 "  let v = BPArray::make(2 * max + 1, 0)\n"
 "  for d = 0; d < max + 1; d = d + 1 {\n"
@@ -3515,7 +3593,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:294
+#: ../../tutorial/example/myers-diff/myers-diff.md:249
 msgid ""
 "In the most extreme case (the two texts have no matching lines), it can "
 "be inferred that the maximum number of steps needed is `n + m`, and the "
@@ -3525,7 +3603,7 @@ msgid ""
 "1`."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:296
+#: ../../tutorial/example/myers-diff/myers-diff.md:251
 msgid ""
 "But even at this point, it is still difficult to figure out what to do "
 "next, so let's only consider the case `d = 0; k = 0` for now. At this "
@@ -3534,12 +3612,12 @@ msgid ""
 "coordinates of this round into the array `v`."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:298
+#: ../../tutorial/example/myers-diff/myers-diff.md:254
 msgid ""
 "if d == 0 { // When d equals 0, k must also equal 0\n"
 "  x = 0\n"
 "  y = x - k\n"
-"  while x < n && y < m && a[x].text == b[y].text {\n"
+"  while x < n && y < m && old[x].text == new[y].text {\n"
 "    // Skip all matching lines\n"
 "    x = x + 1\n"
 "    y = y + 1\n"
@@ -3548,7 +3626,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:311
+#: ../../tutorial/example/myers-diff/myers-diff.md:267
 msgid ""
 "When `d > 0`, the coordinate information stored from the previous round "
 "is required. When we know the `k` value of a point and the coordinates of"
@@ -3559,26 +3637,26 @@ msgid ""
 "ending at `v[k - 1]` and `v[k + 1]`?"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:313
+#: ../../tutorial/example/myers-diff/myers-diff.md:269
 msgid "There are two boundary cases: `k == -d` and `k == d`."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:315
+#: ../../tutorial/example/myers-diff/myers-diff.md:271
 msgid "When `k == -d`, you can only choose `v[k + 1]`."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:317
+#: ../../tutorial/example/myers-diff/myers-diff.md:273
 msgid "When `k == -d`, you can only choose `v[k - 1]`."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:319
+#: ../../tutorial/example/myers-diff/myers-diff.md:275
 msgid ""
 "Recalling the requirement mentioned earlier: arranging deletions before "
 "insertions as much as possible, this essentially means choosing the "
 "position with the largest `x` value from the previous position."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:321
+#: ../../tutorial/example/myers-diff/myers-diff.md:278
 msgid ""
 "if k == -d {\n"
 "  x = v[k + 1]\n"
@@ -3591,11 +3669,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:333
+#: ../../tutorial/example/myers-diff/myers-diff.md:290
 msgid "Merging these four branches, we get the following code:"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:335
+#: ../../tutorial/example/myers-diff/myers-diff.md:293
 msgid ""
 "if k == -d || (k != d && v[k - 1] < v[k + 1]) {\n"
 "  x = v[k + 1]\n"
@@ -3604,15 +3682,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:343
+#: ../../tutorial/example/myers-diff/myers-diff.md:301
 msgid "Combining all the steps above, we get the following code:"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:345
+#: ../../tutorial/example/myers-diff/myers-diff.md:303
 msgid ""
-"fn shortst_edit(a : Array[Line], b : Array[Line]) -> Int {\n"
-"  let n = a.length()\n"
-"  let m = b.length()\n"
+"fn shortest_edit(old~ : Array[Line], new~ : Array[Line]) -> Int {\n"
+"  let n = old.length()\n"
+"  let m = new.length()\n"
 "  let max = n + m\n"
 "  let v = BPArray::make(2 * max + 1, 0)\n"
 "  // v[1] = 0\n"
@@ -3629,7 +3707,8 @@ msgid ""
 "        x = v[k - 1] + 1\n"
 "      }\n"
 "      y = x - k\n"
-"      while x < n && y < m && a[x].text == b[y].text {\n"
+"      while x < n && y < m && old[x].text == new[y].text {\n"
+"        // Skip all matching lines\n"
 "        x = x + 1\n"
 "        y = y + 1\n"
 "      }\n"
@@ -3644,13 +3723,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:380
+#: ../../tutorial/example/myers-diff/myers-diff.md:309
 msgid ""
 "Since the initial value of the array is 0, we can omit the branch for `d "
 "== 0`."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:384
+#: ../../tutorial/example/myers-diff/myers-diff.md:313
 msgid ""
 "We have implemented an incomplete version of Myers' algorithm, which "
 "completes the forward path search. In the next article, we will implement"
@@ -3658,18 +3737,18 @@ msgid ""
 "to output a colored diff."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:386
+#: ../../tutorial/example/myers-diff/myers-diff.md:315
 msgid "This article references:"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:388
+#: ../../tutorial/example/myers-diff/myers-diff.md:317
 msgid ""
 "[https://blog.jcoglan.com/2017/02/15/the-myers-diff-algorithm-"
 "part-2/](https://blog.jcoglan.com/2017/02/15/the-myers-diff-algorithm-"
 "part-2/)"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff.md:390
+#: ../../tutorial/example/myers-diff/myers-diff.md:319
 msgid "Thanks to the author James Coglan."
 msgstr ""
 
@@ -3701,10 +3780,12 @@ msgstr ""
 
 #: ../../tutorial/example/myers-diff/myers-diff2.md:9
 msgid ""
-"fn shortest_edit(a : Array[Line], b : Array[Line]) -> "
-"Array[(BPArray[Int], Int)] {\n"
-"  let n = a.length()\n"
-"  let m = b.length()\n"
+"fn shortest_edit(\n"
+"  old~ : Array[Line],\n"
+"  new~ : Array[Line]\n"
+") -> Array[(BPArray[Int], Int)] {\n"
+"  let n = old.length()\n"
+"  let m = new.length()\n"
 "  let max = n + m\n"
 "  let v = BPArray::make(2 * max + 1, 0)\n"
 "  let trace = []\n"
@@ -3713,7 +3794,7 @@ msgid ""
 "  }\n"
 "  // v[1] = 0\n"
 "  for d = 0; d < max + 1; d = d + 1 {\n"
-"    push(v.copy(), d) // Save search depth and node\n"
+"    push(v.copy(), d) \n"
 "    for k = -d; k < d + 1; k = k + 2 {\n"
 "      let mut x = 0\n"
 "      let mut y = 0\n"
@@ -3726,11 +3807,10 @@ msgid ""
 "        x = v[k - 1] + 1\n"
 "      }\n"
 "      y = x - k\n"
-"      while x < n && y < m && a[x].text == b[y].text {\n"
+"      while x < n && y < m && old[x].text == new[y].text {\n"
 "        x = x + 1\n"
 "        y = y + 1\n"
 "      }\n"
-"\n"
 "      v[k] = x\n"
 "      if x >= n && y >= m {\n"
 "        return trace\n"
@@ -3742,127 +3822,126 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:50
+#: ../../tutorial/example/myers-diff/myers-diff2.md:15
 msgid "Backtracking the Edit Path"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:52
+#: ../../tutorial/example/myers-diff/myers-diff2.md:17
 msgid ""
 "After recording the entire search process, the next step is to walk back "
 "from the endpoint to find the path taken. But before we do that, let's "
 "first define the `Edit` type."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:54
+#: ../../tutorial/example/myers-diff/myers-diff2.md:19
 msgid ""
 "enum Edit {\n"
-"  Insert(~new : Line)\n"
-"  Delete(~old : Line)\n"
-"  Equal(~old : Line, ~new : Line) // old, new\n"
-"} derive(Debug, Show)\n"
+"  Insert(new~ : Line)\n"
+"  Delete(old~ : Line)\n"
+"  Equal(old~ : Line, new~ : Line) // old, new\n"
+"} derive(Show)\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:62
+#: ../../tutorial/example/myers-diff/myers-diff2.md:25
 msgid "Next, let's perform the backtracking."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:64
+#: ../../tutorial/example/myers-diff/myers-diff2.md:27
 msgid ""
-"fn backtrack(a : Array[Line], b : Array[Line], trace : "
-"Array[(BPArray[Int], Int)]) -> Array[Edit] {\n"
-"  let mut x = a.length()\n"
-"  let mut y = b.length()\n"
-"  let edits = []\n"
-"  fn push(edit : Edit) -> Unit {\n"
-"    edits.push(edit)\n"
-"  }\n"
-"  ......\n"
+"fn backtrack(\n"
+"  new~ : Array[Line],\n"
+"  old~ : Array[Line],\n"
+"  trace : Array[(BPArray[Int], Int)]\n"
+") -> Array[Edit] {\n"
+"  let mut x = old.length()\n"
+"  let mut y = new.length()\n"
+"  let edits = Array::new(capacity=trace.length())\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:75
+#: ../../tutorial/example/myers-diff/myers-diff2.md:33
 msgid ""
 "The method of backtracking is essentially the same as forward search, "
 "just in reverse."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:77
+#: ../../tutorial/example/myers-diff/myers-diff2.md:35
 msgid "Calculate the current `k` value using `x` and `y`."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:79
+#: ../../tutorial/example/myers-diff/myers-diff2.md:37
 msgid ""
 "Access the historical records and use the same judgment criteria as in "
 "forward search to find the `k` value at the previous search round."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:81
+#: ../../tutorial/example/myers-diff/myers-diff2.md:39
 msgid "Restore the coordinates of the previous search round."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:83
+#: ../../tutorial/example/myers-diff/myers-diff2.md:41
 msgid "Try free movement and record the corresponding edit actions."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:85
+#: ../../tutorial/example/myers-diff/myers-diff2.md:43
 msgid "Determine the type of edit that caused the change in `k` value."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:87
+#: ../../tutorial/example/myers-diff/myers-diff2.md:45
 msgid "Continue iterating."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:89
+#: ../../tutorial/example/myers-diff/myers-diff2.md:47
 msgid ""
-"  for i = trace.length() - 1; i >= 0; i = i - 1 {\n"
-"    let (v, d) = trace[i]\n"
-"    let k = x - y\n"
-"    let prev_k = if k == -d || (k != d && v[k - 1] < v[k + 1]) {\n"
-"      k + 1\n"
-"    } else {\n"
-"      k - 1\n"
-"    }\n"
-"    let prev_x = v[prev_k]\n"
-"    let prev_y = prev_x - prev_k\n"
-"    while x > prev_x && y > prev_y {\n"
-"      x = x - 1\n"
-"      y = y - 1\n"
-"      push(Equal(old = a[x], new = b[y]))\n"
-"    }\n"
-"    if d > 0 {\n"
-"      if x == prev_x {\n"
-"        push(Insert(new = b[prev_y]))\n"
-"      } else if y == prev_y {\n"
-"        push(Delete(old = a[prev_x]))\n"
-"      }\n"
-"      x = prev_x\n"
-"      y = prev_y\n"
-"    }\n"
+"for i = trace.length() - 1; i >= 0; i = i - 1 {\n"
+"  let (v, d) = trace[i]\n"
+"  let k = x - y\n"
+"  let prev_k = if k == -d || (k != d && v[k - 1] < v[k + 1]) {\n"
+"    k + 1\n"
+"  } else {\n"
+"    k - 1\n"
 "  }\n"
-msgstr ""
-
-#: ../../tutorial/example/myers-diff/myers-diff2.md:117
-msgid "Combining the two functions, we get a complete `diff` implementation."
-msgstr ""
-
-#: ../../tutorial/example/myers-diff/myers-diff2.md:119
-msgid ""
-"fn diff(a : Array[Line], b : Array[Line]) -> Array[Edit] {\n"
-"  let trace = shortest_edit(a, b)\n"
-"  backtrack(a, b, trace)\n"
+"  let prev_x = v[prev_k]\n"
+"  let prev_y = prev_x - prev_k\n"
+"  while x > prev_x && y > prev_y {\n"
+"    x = x - 1\n"
+"    y = y - 1\n"
+"    edits.push(Equal(old=old[x], new=new[y]))\n"
+"  }\n"
+"  if d > 0 {\n"
+"    if x == prev_x {\n"
+"      edits.push(Insert(new=new[prev_y]))\n"
+"    } else if y == prev_y {\n"
+"      edits.push(Delete(old=old[prev_x]))\n"
+"    }\n"
+"    x = prev_x\n"
+"    y = prev_y\n"
+"  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:126
+#: ../../tutorial/example/myers-diff/myers-diff2.md:54
+msgid "Combining the two functions, we get a complete `diff` implementation."
+msgstr ""
+
+#: ../../tutorial/example/myers-diff/myers-diff2.md:56
+msgid ""
+"fn diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit] {\n"
+"  let trace = shortest_edit(old~, new~)\n"
+"  backtrack(old~, new~, trace)\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/example/myers-diff/myers-diff2.md:62
 msgid "Printing the Diff"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:128
+#: ../../tutorial/example/myers-diff/myers-diff2.md:64
 msgid ""
 "To print a neat diff, we need to left-align the text. Also, due to the "
 "order issue during backtracking, we need to print from back to front."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:130
+#: ../../tutorial/example/myers-diff/myers-diff2.md:66
 msgid ""
 "let line_width = 4\n"
 "\n"
@@ -3870,7 +3949,7 @@ msgid ""
 "  String::make(width - s.length(), ' ') + s\n"
 "}\n"
 "\n"
-"fn print_edit(edit : Edit) -> String {\n"
+"fn pprint_edit(edit : Edit) -> String {\n"
 "  match edit {\n"
 "    Insert(_) as edit => {\n"
 "      let tag = \"+\"\n"
@@ -3896,20 +3975,22 @@ msgid ""
 "  }\n"
 "}\n"
 "\n"
-"fn print_diff(diff : Array[Edit]) -> Unit {\n"
-"  for i = diff.length() - 1; i >= 0; i = i - 1 {\n"
-"    diff[i]\n"
-"    |> print_edit\n"
-"    |> println\n"
+"fn pprint_diff(diff : Array[Edit]) -> String {\n"
+"  let buf = @buffer.new(size_hint = 100)\n"
+"  for i = diff.length(); i > 0; i = i - 1 {\n"
+"    buf.write_string(pprint_edit(diff[i - 1]))\n"
+"    buf.write_char('\\n')\n"
+"  } else {\n"
+"    buf.contents().to_unchecked_string()\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:172
+#: ../../tutorial/example/myers-diff/myers-diff2.md:72
 msgid "The result is as follows:"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:174
+#: ../../tutorial/example/myers-diff/myers-diff2.md:74
 msgid ""
 "-    1         A\n"
 "-    2         B\n"
@@ -3922,7 +4003,7 @@ msgid ""
 "+         6    C\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff2.md:188
+#: ../../tutorial/example/myers-diff/myers-diff2.md:88
 msgid ""
 "The Myers algorithm demonstrated above is complete, but due to the "
 "frequent copying of arrays, it has a very large space overhead. "
@@ -4072,16 +4153,16 @@ msgstr ""
 #: ../../tutorial/example/myers-diff/myers-diff3.md:74
 msgid ""
 "struct Box {\n"
-"  left : Int,\n"
-"  right : Int,\n"
-"  top : Int,\n"
+"  left : Int\n"
+"  right : Int\n"
+"  top : Int\n"
 "  bottom : Int\n"
-"} derive(Debug, Show)\n"
+"} derive(Show)\n"
 "\n"
 "struct Snake {\n"
-"  start : (Int, Int),\n"
+"  start : (Int, Int)\n"
 "  end : (Int, Int)\n"
-"} derive(Debug, Show)\n"
+"} derive(Show)\n"
 "\n"
 "fn width(self : Box) -> Int {\n"
 "  self.right - self.left\n"
@@ -4100,7 +4181,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:104
+#: ../../tutorial/example/myers-diff/myers-diff3.md:80
 msgid ""
 "To avoid getting bogged down in details too early, let's assume we "
 "already have a function `midpoint : (Box, Array[Line], Array[Line]) -> "
@@ -4108,164 +4189,198 @@ msgid ""
 "`find_path` to search for the complete path."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:106
+#: ../../tutorial/example/myers-diff/myers-diff3.md:82
 msgid ""
-"fn find_path(box : Box, a : Array[Line], b : Array[Line]) -> Iter[(Int, "
-"Int)]? {\n"
-"  let snake = midpoint(box, a, b)?;\n"
-"  let start = snake.start;\n"
-"  let end = snake.end;\n"
-"  let headbox = Box { left: box.left, top: box.top, right: start.0, "
-"bottom: start.1 };\n"
-"  let tailbox = Box { left: end.0, top: end.1, right: box.right, bottom: "
-"box.bottom };\n"
-"  // println(\"snake = \\{snake}\")\n"
-"  // println(\"headbox = \\{headbox}\")\n"
-"  // println(\"tailbox = \\{tailbox}\")\n"
-"  let head = find_path(headbox, a, b).or(Iter::singleton(start));\n"
-"  let tail = find_path(tailbox, a, b).or(Iter::singleton(end));\n"
+"fn find_path(\n"
+"  box : Box,\n"
+"  old~ : Array[Line],\n"
+"  new~ : Array[Line]\n"
+") -> Iter[(Int, Int)]? {\n"
+"  guard let Some(snake) = midpoint(box, old~, new~) else { None => None }"
+"\n"
+"  let start = snake.start\n"
+"  let end = snake.end\n"
+"  let headbox = Box::{\n"
+"    left: box.left,\n"
+"    top: box.top,\n"
+"    right: start.0,\n"
+"    bottom: start.1,\n"
+"  }\n"
+"  let tailbox = Box::{\n"
+"    left: end.0,\n"
+"    top: end.1,\n"
+"    right: box.right,\n"
+"    bottom: box.bottom,\n"
+"  }\n"
+"  let head = find_path(headbox, old~, new~).or(Iter::singleton(start))\n"
+"  let tail = find_path(tailbox, old~, new~).or(Iter::singleton(end))\n"
 "  Some(head.concat(tail))\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:122
+#: ../../tutorial/example/myers-diff/myers-diff3.md:88
 msgid ""
 "The implementation of `find_path` is straightforward, but `midpoint` is a"
 " bit more complex:"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:124
+#: ../../tutorial/example/myers-diff/myers-diff3.md:90
 msgid "For a `Box` of size 0, return `None`."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:125
+#: ../../tutorial/example/myers-diff/myers-diff3.md:91
 msgid ""
 "Calculate the search boundaries. Since forward and backward searches each"
 " cover half the distance, divide by two. However, if the size of the "
 "`Box` is odd, add one more to the forward search boundary."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:126
+#: ../../tutorial/example/myers-diff/myers-diff3.md:92
 msgid "Store the results of the forward and backward searches in two arrays."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:127
+#: ../../tutorial/example/myers-diff/myers-diff3.md:93
 msgid ""
 "Alternate between forward and backward searches, returning `None` if no "
 "result is found."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:129
+#: ../../tutorial/example/myers-diff/myers-diff3.md:95
 msgid ""
-"fn midpoint(self : Box, a : Array[Line], b : Array[Line]) -> Snake? {\n"
+"fn midpoint(self : Box, old~ : Array[Line], new~ : Array[Line]) -> Snake?"
+" {\n"
 "  if self.size() == 0 {\n"
-"    return None;\n"
+"    return None\n"
 "  }\n"
 "  let max = {\n"
-"    let half = self.size() / 2;\n"
+"    let half = self.size() / 2\n"
 "    if is_odd(self.size()) {\n"
 "      half + 1\n"
 "    } else {\n"
 "      half\n"
 "    }\n"
-"  };\n"
-"  let vf = BPArray::make(2 * max + 1, 0);\n"
-"  vf[1] = self.left;\n"
-"  let vb = BPArray::make(2 * max + 1, 0);\n"
-"  vb[1] = self.bottom;\n"
-"  for d in 0..max + 1 {\n"
-"    match forward(self, vf, vb, d, a, b) {\n"
-"      None =>\n"
-"      match backward(self, vf, vb, d, a, b) {\n"
-"        None => continue,\n"
-"        res => return res,\n"
-"      },\n"
-"      res => return res,\n"
-"    }\n"
 "  }\n"
-"  None\n"
+"  let vf = BPArray::make(2 * max + 1, 0)\n"
+"  vf[1] = self.left\n"
+"  let vb = BPArray::make(2 * max + 1, 0)\n"
+"  vb[1] = self.bottom\n"
+"  for d = 0; d < max + 1; d = d + 1 {\n"
+"    match self.forward(forward = vf, backward = vb, d, old~, new~) {\n"
+"      None =>\n"
+"        match self.backward(forward = vf, backward = vb, d, old~, new~) {"
+"\n"
+"          None => continue\n"
+"          res => return res\n"
+"        }\n"
+"      res => return res\n"
+"    }\n"
+"  } else {\n"
+"    None\n"
+"  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:160
+#: ../../tutorial/example/myers-diff/myers-diff3.md:101
 msgid ""
 "The forward and backward searches have some modifications compared to the"
 " original Myers algorithm, which need a bit of explanation:"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:162
+#: ../../tutorial/example/myers-diff/myers-diff3.md:103
 msgid ""
 "Since we need to return the snake, the search process must calculate the "
 "previous coordinate (`px` stands for previous x)."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:163
+#: ../../tutorial/example/myers-diff/myers-diff3.md:104
 msgid ""
 "The search now works within a `Box` (not the global edit graph), so "
 "calculating `y` from `x` (or vice versa) requires conversion."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:164
+#: ../../tutorial/example/myers-diff/myers-diff3.md:105
 msgid ""
 "The backward search minimizes `y` as a heuristic strategy, but minimizing"
 " `x` would also work."
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:166
+#: ../../tutorial/example/myers-diff/myers-diff3.md:107
 msgid ""
-"fn forward(self : Box, vf : BPArray<Int>, vb : BPArray<Int>, d : Int, a :"
-" Array[Line], b : Array[Line]) -> Snake? {\n"
-"  for k in (0..=d).rev() {\n"
-"    let c = k - self.delta();\n"
-"    let (mut x, mut px) = if k == -d || (k != d && vf[k - 1] < vf[k\n"
-"\n"
-" + 1]) {\n"
-"      (vf[k + 1], vf[k + 1])\n"
+"fn forward(\n"
+"  self : Box,\n"
+"  forward~ : BPArray[Int],\n"
+"  backward~ : BPArray[Int],\n"
+"  depth : Int,\n"
+"  old~ : Array[Line],\n"
+"  new~ : Array[Line]\n"
+") -> Snake? {\n"
+"  for k = depth; k >= -depth; k = k - 2 {\n"
+"    let c = k - self.delta()\n"
+"    let mut x = 0\n"
+"    let mut px = 0\n"
+"    if k == -depth || (k != depth && forward[k - 1] < forward[k + 1]) {\n"
+"      x = forward[k + 1]\n"
+"      px = x\n"
 "    } else {\n"
-"      (vf[k - 1] + 1, vf[k - 1])\n"
-"    };\n"
-"    let mut y = self.top + (x - self.left) - k;\n"
-"    let py = if d == 0 || x != px { y } else { y - 1 };\n"
-"    while x < self.right && y < self.bottom && a[x].text == b[y].text {\n"
-"      x += 1;\n"
-"      y += 1;\n"
+"      px = forward[k - 1]\n"
+"      x = px + 1\n"
 "    }\n"
-"    vf[k] = x;\n"
-"    if is_odd(self.delta()) && (c >= -(d - 1) && c <= d - 1) && y >= "
-"vb[c] {\n"
-"      return Some(Snake { start: (px, py), end: (x, y) });\n"
+"    let mut y = self.top + (x - self.left) - k\n"
+"    let py = if depth == 0 || x != px { y } else { y - 1 }\n"
+"    while x < self.right && y < self.bottom && old[x].text == new[y].text"
+" {\n"
+"      x = x + 1\n"
+"      y = y + 1\n"
+"    }\n"
+"    forward[k] = x\n"
+"    if is_odd(self.delta()) &&\n"
+"      (c >= -(depth - 1) && c <= depth - 1) &&\n"
+"      y >= backward[c] {\n"
+"      return Some(Snake::{ start: (px, py), end: (x, y) })\n"
 "    }\n"
 "  }\n"
-"  None\n"
+"  return None\n"
 "}\n"
 "\n"
-"fn backward(self : Box, vf : BPArray<Int>, vb : BPArray<Int>, d : Int, a "
-": Array[Line], b : Array[Line]) -> Snake? {\n"
-"  for c in (0..=d).rev() {\n"
-"    let k = c + self.delta();\n"
-"    let (mut y, mut py) = if c == -d || (c != d && vb[c - 1] > vb[c + 1])"
-" {\n"
-"      (vb[c + 1], vb[c + 1])\n"
+"\n"
+"fn backward(\n"
+"  self : Box,\n"
+"  forward~ : BPArray[Int],\n"
+"  backward~ : BPArray[Int],\n"
+"  depth : Int,\n"
+"  old~ : Array[Line],\n"
+"  new~ : Array[Line]\n"
+") -> Snake? {\n"
+"  for c = depth; c >= -depth; c = c - 2 {\n"
+"    let k = c + self.delta()\n"
+"    let mut y = 0\n"
+"    let mut py = 0\n"
+"    if c == -depth || (c != depth && backward[c - 1] > backward[c + 1]) {"
+"\n"
+"      y = backward[c + 1]\n"
+"      py = y\n"
 "    } else {\n"
-"      (vb[c - 1] - 1, vb[c - 1])\n"
-"    };\n"
-"    let mut x = self.left + (y - self.top) + k;\n"
-"    let px = if d == 0 || y != py { x } else { x + 1 };\n"
-"    while x > self.left && y > self.top && a[x - 1].text == b[y - 1].text"
-" {\n"
-"      x -= 1;\n"
-"      y -= 1;\n"
+"      py = backward[c - 1]\n"
+"      y = py - 1\n"
 "    }\n"
-"    vb[c] = y;\n"
-"    if is_even(self.delta()) && (k >= -d && k <= d) && x <= vf[k] {\n"
-"      return Some(Snake { start: (x, y), end: (px, py) });\n"
+"    let mut x = self.left + (y - self.top) + k\n"
+"    let px = if depth == 0 || y != py { x } else { x + 1 }\n"
+"    while x > self.left && y > self.top && old[x - 1].text == new[y - "
+"1].text {\n"
+"      x = x - 1\n"
+"      y = y - 1\n"
+"    }\n"
+"    backward[c] = y\n"
+"    if is_even(self.delta()) && (k >= -depth && k <= depth) && x <= "
+"forward[k] {\n"
+"      return Some(Snake::{ start: (x, y), end: (px, py) })\n"
 "    }\n"
 "  }\n"
-"  None\n"
+"  return None\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/example/myers-diff/myers-diff3.md:216
+#: ../../tutorial/example/myers-diff/myers-diff3.md:115
 msgid ""
 "In addition to the default diff algorithm, Git also offers another diff "
 "algorithm called patience diff. It differs significantly from Myers diff "
@@ -5802,10 +5917,14 @@ msgid "Here are some tutorials that may help you learn the programming language:
 msgstr "以下是一些可能帮助您学习编程语言的教程："
 
 #: ../../tutorial/index.md:5
+msgid "[An interactive tour with language basics](https://tour.moonbitlang.com)"
+msgstr ""
+
+#: ../../tutorial/index.md:6
 msgid "[Tour for Beginners](./tour.md)"
 msgstr "[新手之旅](./tour.md)"
 
-#: ../../tutorial/index.md:6
+#: ../../tutorial/index.md:7
 msgid "[Examples](./example/index.md)"
 msgstr ""
 
