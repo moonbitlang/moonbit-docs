@@ -2,7 +2,7 @@
 
 MoonBit has built-in testing support. There is no need to import or configure extra packages or tools; just use the test block and write the test code inside.
 
-**Note: this feature is not supported in this tour. You can try it in our [playground](try.moonbitlang.com) or in your terminal if the MoonBit toolchain is installed.**
+**Note: this feature is not supported in this tour. You can try it in our [playground](https://try.moonbitlang.com) or in your terminal if the MoonBit toolchain is installed.**
 
 In the first test block, we test some properties using the built-in functions `assert_eq`, `assert_false`, and `assert_true`.
 By running `moon test` in the terminal or clicking the test button in your integrated development environment (IDE), the tests will be executed.
