@@ -5514,7 +5514,7 @@ msgstr ""
 
 #: ../../language/packages.md:1
 msgid "Managing Projects with Packages"
-msgstr ""
+msgstr "使用包管理项目"
 
 #: ../../language/packages.md:3
 msgid ""
@@ -5524,10 +5524,12 @@ msgid ""
 "[core](https://github.com/moonbitlang/core), the standard library of "
 "MoonBit."
 msgstr ""
+"在大规模开发项目时，项目通常需要分解为相互依赖的较小模块单元。更常见的是使用其他人的工作："
+"最典型的是 [core](https://github.com/moonbitlang/core)，MoonBit 的标准库。"
 
 #: ../../language/packages.md:6
 msgid "Packages and modules"
-msgstr ""
+msgstr "包和模块"
 
 #: ../../language/packages.md:8
 msgid ""
@@ -5537,12 +5539,15 @@ msgid ""
 "package, consisting a `main` function, or a package that serves as a "
 "library."
 msgstr ""
+"在 MoonBit 中，代码组织的最重要单元是包，它由多个源代码文件和一个单独的 `moon.pkg.json` 配置文件组成。"
+"包可以是一个 `main` 包，包含一个 `main` 函数，或者是一个用作库的包。"
 
 #: ../../language/packages.md:11
 msgid ""
 "A project, corresponding to a module, consists of multiple packages and a"
 " single `moon.mod.json` configuration file."
 msgstr ""
+"一个项目对应一个模块，由多个包和一个单独的 `moon.mod.json` 配置文件组成。"
 
 #: ../../language/packages.md:13
 msgid ""
@@ -5553,6 +5558,8 @@ msgid ""
 "`pkg` is the last part of the imported package's path or the declared "
 "alias in `moon.pkg.json`:"
 msgstr ""
+"在从另一个包中使用内容时，模块之间的依赖关系应首先在 `moon.mod.json` 中声明。然后在 `moon.pkg.json` 中声明包之间的依赖关系。"
+"然后可以使用 `@pkg` 访问导入的实体，其中 `pkg` 是导入包路径的最后一部分或 `moon.pkg.json` 中声明的别名："
 
 #: ../../language/packages.md:17
 msgid "pkgB/moon.pkg.json"
@@ -5581,6 +5588,7 @@ msgstr ""
 #: ../../language/packages.md:27
 msgid "Access Control"
 msgstr ""
+"访问控制"
 
 #: ../../language/packages.md:29
 msgid ""
@@ -5588,16 +5596,19 @@ msgid ""
 "_invisible_ to other packages. You can use the `pub` modifier before "
 "toplevel `let`/`fn` to make them public."
 msgstr ""
+"默认情况下，所有函数定义和变量绑定对其他包是 _不可见_ 的。可以在顶层 `let`/`fn` 前使用 `pub` 修饰符使其公开。"
 
 #: ../../language/packages.md:32
 msgid "There are four different kinds of visibility for types in MoonBit:"
 msgstr ""
+"MoonBit 中有四种不同的类型可见性："
 
 #: ../../language/packages.md:34
 msgid ""
 "private type, declared with `priv`, completely invisible to the outside "
 "world"
 msgstr ""
+"私有类型，使用 `priv` 声明，对外部世界完全不可见"
 
 #: ../../language/packages.md:35
 msgid ""
@@ -5605,6 +5616,7 @@ msgid ""
 "of an abstract type is visible outside, the internal representation of "
 "the type is hidden"
 msgstr ""
+"抽象类型，这是类型的默认可见性。只有抽象类型的名称对外部可见，类型的内部表示被隐藏"
 
 #: ../../language/packages.md:36
 msgid ""
@@ -5613,18 +5625,21 @@ msgid ""
 "read the values of these types from outside, construction and mutation "
 "are not allowed"
 msgstr ""
+"只读类型，使用 `pub(readonly)` 声明。只读类型的内部表示对外部可见，但用户只能从外部读取这些类型的值，不允许构造和修改"
 
 #: ../../language/packages.md:38
 msgid ""
 "fully public types, declared with `pub(all)`. The outside world can "
 "freely construct, modify and read values of these types"
 msgstr ""
+"完全公开类型，使用 `pub(all)` 声明。外部世界可以自由构造、修改和读取这些类型的值"
 
 #: ../../language/packages.md:41
 msgid ""
 "Currently, the semantic of `pub` is `pub(all)`. But in the future, the "
 "meaning of `pub` will be ported to `pub(readonly)`."
 msgstr ""
+"目前，`pub` 的语义是 `pub(all)`。但在未来，`pub` 的含义将迁移到 `pub(readonly)`。"
 
 #: ../../language/packages.md:44
 msgid ""
@@ -5634,6 +5649,7 @@ msgid ""
 " be constructed directly outside, but you can update the public fields "
 "using the functional struct update syntax."
 msgstr ""
+"除了类型本身的可见性外，公开的结构体的字段可以用 `priv` 注释，这将完全隐藏字段对外部世界。请注意，具有私有字段的 `struct` 不能直接在外部构造，但可以使用函数式 `struct` 更新语法更新公共字段。"
 
 #: ../../language/packages.md:49
 msgid ""
@@ -5644,6 +5660,7 @@ msgid ""
 "packages. Note that there is no restriction within the same package where"
 " `pub(readonly)` types are defined."
 msgstr ""
+"只读类型是一个非常有用的功能，受到 OCaml 中 [私有类型](https://v2.ocaml.org/manual/privatetypes.html) 的启发。简而言之，`pub(readonly)` 类型的值可以通过模式匹配和点语法解构，但不能在其他包中构造或修改。请注意，在定义 `pub(readonly)` 类型的同一包中没有限制。"
 
 #: ../../language/packages.md:53
 msgid ""
@@ -5669,6 +5686,25 @@ msgid ""
 "field!\n"
 "}\n"
 msgstr ""
+"// Package A\n"
+"pub(readonly) struct RO {\n"
+"  field: Int\n"
+"}\n"
+"test {\n"
+"  let r = { field: 4 }       // 可以\n"
+"  let r = { ..r, field: 8 }  // 可以\n"
+"}\n"
+"\n"
+"// Package B\n"
+"fn println(r : RO) -> Unit {\n"
+"  println(\"{ field: \")\n"
+"  println(r.field)  // 可以\n"
+"  println(\" }\")\n"
+"}\n"
+"test {\n"
+"  let r : RO = { field: 4 }  // 错误：不能创建公共只读类型 RO 的值！\n"
+"  let r = { ..r, field: 8 }  // 错误：不能修改公共只读字段！\n"
+"}\n"
 
 #: ../../language/packages.md:75
 msgid ""
@@ -5678,6 +5714,7 @@ msgid ""
 "`pub` entity is used. MoonBit incorporates sanity checks to prevent the "
 "occurrence of use cases that violate this principle."
 msgstr ""
+"MoonBit 中的访问控制遵循一个原则，即公开的类型、函数或变量不能以私有类型定义。这是因为私有类型可能无法在使用公开的实体的所有地方访问。MoonBit 包含了健全性检查，以防止违反这一原则的用例发生。"
 
 #: ../../language/packages.md:78
 msgid ""
@@ -5700,10 +5737,29 @@ msgid ""
 "\n"
 "pub let a: T3 = { ... } // ERROR: public variable has private type `T3`!\n"
 msgstr ""
+"pub(all) type T1\n"
+"pub(all) type T2\n"
+"priv type T3\n"
+"\n"
+"pub(all) struct S {\n"
+"  x: T1  // 可以\n"
+"  y: T2  // 可以\n"
+"  z: T3  // 错误：公开字段使用了私有类型 `T3`！\n"
+"}\n"
+"\n"
+"// 错误：公开函数使用了私有类型 `T3`！\n"
+"pub fn f1(_x: T3) -> T1 { ... }\n"
+"// 错误：公开函数的返回值使用了私有类型 `T3`！\n"
+"pub fn f2(_x: T1) -> T3 { ... }\n"
+"// 可以\n"
+"pub fn f3(_x: T1) -> T1 { ... }\n"
+"\n"
+"pub let a: T3 = { ... } // 错误：公开变量的类型是私有类型 `T3`！\n"
 
 #: ../../language/packages.md:99
 msgid "Access control of methods and trait implementations"
 msgstr ""
+"方法和特征实现的访问控制"
 
 #: ../../language/packages.md:101
 msgid ""
@@ -5713,6 +5769,7 @@ msgid ""
 "MoonBit employs the following restrictions on who can define "
 "methods/implement traits for types:"
 msgstr ""
+"为了使特征系统一致（即每个 `Type: Trait` 对都有全局唯一的实现），并防止第三方包意外地修改现有程序的行为，MoonBit 对谁可以定义方法/实现类型的特征采用了以下限制："
 
 #: ../../language/packages.md:105
 msgid ""
@@ -5720,6 +5777,7 @@ msgid ""
 "cannot define new methods or override old methods for builtin and foreign"
 " types."
 msgstr ""
+"**只有定义类型的包才能为其定义方法**。因此，不能为内建和外部类型定义新方法或覆盖旧方法。"
 
 #: ../../language/packages.md:106
 msgid ""
@@ -5727,6 +5785,7 @@ msgid ""
 "implementation_. For example, only `@pkg1` and `@pkg2` are allowed to "
 "write `impl @pkg1.Trait for @pkg2.Type`."
 msgstr ""
+"**只有类型的包或特征的包才能定义实现**。例如，只有 `@pkg1` 和 `@pkg2` 允许编写 `impl @pkg1.Trait for @pkg2.Type`。"
 
 #: ../../language/packages.md:109
 msgid ""
@@ -5734,10 +5793,12 @@ msgid ""
 "type by defining a new trait and implementing it. This makes MoonBit's "
 "trait & method system flexible while enjoying good coherence property."
 msgstr ""
+"上述第二条规则允许通过定义新特征并实现它来为外部类型添加新功能。这使 MoonBit 的特征和方法系统灵活，同时享有良好的一致性属性。"
 
 #: ../../language/packages.md:112
 msgid "Visibility of traits and sealed traits"
 msgstr ""
+"特征的可见性和封闭特征"
 
 #: ../../language/packages.md:113
 msgid ""
@@ -5752,12 +5813,17 @@ msgid ""
 "declared with `pub(open) trait`, they are open to new implementations "
 "outside current package, and their methods can be freely used."
 msgstr ""
+"特征有四种可见性，就像 `struct` 和 `enum`：私有、抽象、只读和完全公开。私有特征使用 `priv trait` 声明，对外部完全不可见。"
+"抽象特征是默认可见性：只有特征的名称对外部可见，特征中的方法不会暴露。"
+"只读特征使用 `pub(readonly) trait` 声明，它们的方法可以从外部调用，但只有当前包可以为只读特征添加新实现。"
+"最后，完全公开特征使用 `pub(open) trait` 声明，它们对外部新实现是开放的，它们的方法可以自由使用。"
 
 #: ../../language/packages.md:120
 msgid ""
 "Currently, `pub trait` defaults to `pub(open) trait`. But in the future, "
 "the semantic of `pub trait` will be ported to `pub(readonly)`."
 msgstr ""
+"目前，`pub trait` 的语义默认为 `pub(open) trait`。但在未来，`pub trait` 的含义将迁移到 `pub(readonly)`。"
 
 #: ../../language/packages.md:123
 msgid ""
@@ -5770,10 +5836,12 @@ msgid ""
 "Implementations with only regular method and default implementations will"
 " not be available outside."
 msgstr ""
+"抽象和只读特征是封闭的，因为只有定义特征的包才能实现它们。在其包外实现封闭（抽象或只读）特征会导致编译器错误。"
 
 #: ../../language/packages.md:129
 msgid "Here's an example of abstract trait:"
 msgstr ""
+"以下是抽象特征的示例："
 
 #: ../../language/packages.md:132
 msgid ""
@@ -5800,6 +5868,7 @@ msgstr ""
 #: ../../language/packages.md:153
 msgid "From outside this package, users can only see the following:"
 msgstr ""
+"从包外，用户只能看到以下内容："
 
 #: ../../language/packages.md:155
 msgid ""
@@ -5818,6 +5887,7 @@ msgid ""
 "`Double` can ever implement `Number`, because new implementations are not"
 " allowed outside."
 msgstr ""
+"`Number` 的作者可以利用只有 `Int` 和 `Double` 可以实现 `Number` 这一事实，因为在外部不允许新的实现。"
 
 #: ../../language/tests.md:1
 msgid "Writing Tests"
