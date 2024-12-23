@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-23 14:26+0800\n"
+"POT-Creation-Date: 2024-12-23 14:38+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -4485,7 +4485,9 @@ msgid ""
 "Variables, functions should start with lowercase letters `a-z` and can "
 "contain letters, numbers, underscore, and other non-ascii unicode chars. "
 "It is recommended to name them with snake_case."
-msgstr "变量、函数应以小写字母 `a-z` 开头，可以包含字母、数字、下划线和其他非 ASCII 的 Unicode 字符。建议使用 snake_case 命名。"
+msgstr ""
+"变量、函数应以小写字母 `a-z` 开头，可以包含字母、数字、下划线和其他非 ASCII 的 Unicode 字符。建议使用 snake_case"
+" 命名。"
 
 #: ../../language/introduction.md:61
 msgid ""
@@ -4493,8 +4495,8 @@ msgid ""
 "contain letters, numbers, underscore, and other non-ascii unicode chars. "
 "It is recommended to name them with PascalCase or SCREAMING_SNAKE_CASE."
 msgstr ""
-"常量、类型应以大写字母 `A-Z` 开头，可以包含字母、数字、下划线和其他非 ASCII 的 Unicode 字符。建议使用 PascalCase 或 "
-"SCREAMING_SNAKE_CASE 命名。"
+"常量、类型应以大写字母 `A-Z` 开头，可以包含字母、数字、下划线和其他非 ASCII 的 Unicode 字符。建议使用 PascalCase"
+" 或 SCREAMING_SNAKE_CASE 命名。"
 
 #: ../../language/introduction.md:64
 msgid "Program entrance"
@@ -4508,18 +4510,15 @@ msgstr "`init` 和 `main`"
 msgid ""
 "There is a specialized function called `init` function. The `init` "
 "function is special:"
-msgstr ""
-"有一个专门的函数称为 `init` 函数。`init` 函数是特殊的："
+msgstr "有一个专门的函数称为 `init` 函数。`init` 函数是特殊的："
 
 #: ../../language/introduction.md:69
 msgid "It has no parameter list nor return type."
-msgstr ""
-"它没有参数列表也没有返回类型。"
+msgstr "它没有参数列表也没有返回类型。"
 
 #: ../../language/introduction.md:70
 msgid "There can be multiple `init` functions in the same package."
-msgstr ""
-"同一个包中可以有多个 `init` 函数。"
+msgstr "同一个包中可以有多个 `init` 函数。"
 
 #: ../../language/introduction.md:71
 msgid ""
@@ -4527,8 +4526,7 @@ msgid ""
 "functions.  Instead, all `init` functions will be implicitly called when "
 "initializing a package. Therefore, `init` functions should only consist "
 "of statements."
-msgstr ""
-"`init` 函数不能被显式调用或被其他函数引用。相反，所有 `init` 函数将在初始化包时隐式调用。因此，`init` 函数应该只包含语句。"
+msgstr "`init` 函数不能被显式调用或被其他函数引用。相反，所有 `init` 函数将在初始化包时隐式调用。因此，`init` 函数应该只包含语句。"
 
 #: ../../language/introduction.md:74
 msgid ""
@@ -4543,13 +4541,11 @@ msgid ""
 "There is another specialized function called `main` function. The `main` "
 "function is the main entrance of the program, and it will be executed "
 "after the initialization stage."
-msgstr ""
-"还有另一个专门的函数称为 `main` 函数。`main` 函数是程序的主入口，它将在初始化阶段之后执行。"
+msgstr "还有另一个专门的函数称为 `main` 函数。`main` 函数是程序的主入口，它将在初始化阶段之后执行。"
 
 #: ../../language/introduction.md:82
 msgid "Same as the `init` function, it has no parameter list nor return type."
-msgstr ""
-"与 `init` 函数相同，它没有参数列表也没有返回类型。"
+msgstr "与 `init` 函数相同，它没有参数列表也没有返回类型。"
 
 #: ../../language/introduction.md:84
 msgid ""
@@ -4561,8 +4557,7 @@ msgstr ""
 
 #: ../../language/introduction.md:90
 msgid "The previous two code snippets will print the following at runtime:"
-msgstr ""
-"前两个代码片段将在运行时打印以下内容："
+msgstr "前两个代码片段将在运行时打印以下内容："
 
 #: ../../language/introduction.md:92
 msgid ""
@@ -4574,8 +4569,7 @@ msgstr ""
 msgid ""
 "Only packages that are `main` packages can define such `main` function. "
 "Check out [build system tutorial](/toolchain/moon/tutorial) for detail."
-msgstr ""
-"只有 `main` 包的包才能定义这样的 `main` 函数。查看[构建系统教程](/toolchain/moon/tutorial)了解详情。"
+msgstr "只有 `main` 包的包才能定义这样的 `main` 函数。查看[构建系统教程](/toolchain/moon/tutorial)了解详情。"
 
 #: ../../language/introduction.md:99
 msgid "moon.pkg.json"
@@ -4596,8 +4590,7 @@ msgstr ""
 msgid ""
 "There's also a top-level structure called `test` block. A `test` block "
 "defines inline tests, such as:"
-msgstr ""
-"还有一个称为 `test` 块的顶级结构。`test` 块定义内联测试，例如："
+msgstr "还有一个称为 `test` 块的顶级结构。`test` 块定义内联测试，例如："
 
 #: ../../language/introduction.md:108 ../../language/tests.md:11
 msgid ""
@@ -4613,16 +4606,15 @@ msgid ""
 "The following contents will use `test` block and `main` function to "
 "demonstrate the execution result, and we assume that all the `test` "
 "blocks pass unless stated otherwise."
-msgstr ""
-"以下内容将使用 `test` 块和 `main` 函数来演示执行结果。我们假设所有 `test` 块都通过测试，除非另有说明。"
+msgstr "以下内容将使用 `test` 块和 `main` 函数来演示执行结果。我们假设所有 `test` 块都通过测试，除非另有说明。"
 
 #: ../../language/methods.md:1
 msgid "Method and Trait"
-msgstr ""
+msgstr "方法和特征"
 
 #: ../../language/methods.md:3
 msgid "Method system"
-msgstr ""
+msgstr "方法系统"
 
 #: ../../language/methods.md:5
 msgid ""
@@ -4631,6 +4623,8 @@ msgid ""
 "associated with a type constructor. Methods can be defined using the "
 "syntax `fn TypeName::method_name(...) -> ...`:"
 msgstr ""
+"MoonBit 支持方法的方式与传统的面向对象语言不同。MoonBit 中的方法只是与类型构造函数关联的顶级函数。可以使用语法 `fn "
+"TypeName::method_name(...) -> ...` 定义方法："
 
 #: ../../language/methods.md:7
 msgid ""
@@ -4649,7 +4643,7 @@ msgid ""
 "As a convenient shorthand, when the first parameter of a function is "
 "named `self`, MoonBit automatically defines the function as a method of "
 "the type of `self`:"
-msgstr ""
+msgstr "一个简写是，当函数的第一个参数命名为 `self` 时，MoonBit 会自动将该函数定义为 `self` 类型的方法："
 
 #: ../../language/methods.md:15
 msgid ""
@@ -4660,7 +4654,7 @@ msgstr ""
 
 #: ../../language/methods.md:21
 msgid "is equivalent to:"
-msgstr ""
+msgstr "等价于"
 
 #: ../../language/methods.md:23
 msgid ""
@@ -4674,7 +4668,7 @@ msgid ""
 "Methods are just regular functions owned by a type constructor. So when "
 "there is no ambiguity, methods can be called using regular function call "
 "syntax directly:"
-msgstr ""
+msgstr "方法只是由类型构造函数拥有的常规函数。因此，当没有歧义时，可以直接使用常规函数调用语法调用方法："
 
 #: ../../language/methods.md:31
 msgid ""
@@ -4689,6 +4683,8 @@ msgid ""
 " same name (but for different types) in scope, one can still call them by"
 " explicitly adding a `TypeName::` prefix:"
 msgstr ""
+"与常规函数不同，方法支持重载：不同类型可以定义相同名称的方法。如果作用域中有多个相同名称的方法（但是针对不同类型），仍然可以通过显式添加 "
+"`TypeName::` 前缀来调用它们："
 
 #: ../../language/methods.md:40
 msgid ""
@@ -4723,6 +4719,8 @@ msgid ""
 "automatically finds the correct method based on the type of `x`, there is"
 " no need to write the type name and even the package name of the method:"
 msgstr ""
+"当方法的第一个参数也是它所属的类型时，可以使用点语法 `x.method(...)` 调用方法。MoonBit 根据 `x` "
+"的类型自动找到正确的方法，无需编写方法的类型名称甚至包名称："
 
 #: ../../language/methods.md:49
 msgid ""
@@ -4738,7 +4736,7 @@ msgstr ""
 
 #: ../../language/methods.md:55
 msgid "using package with alias list"
-msgstr ""
+msgstr "以别名 list 使用包"
 
 #: ../../language/methods.md:55
 msgid ""
@@ -4755,18 +4753,18 @@ msgstr ""
 msgid ""
 "The highlighted line is only possible when there is no ambiguity in "
 "`@list`."
-msgstr ""
+msgstr "只有在 `@list` 中没有歧义时，才能像高亮显示的行那样书写。"
 
 #: ../../language/methods.md:65
 msgid "Operator Overloading"
-msgstr ""
+msgstr "运算符重载"
 
 #: ../../language/methods.md:67
 msgid ""
 "MoonBit supports operator overloading of builtin operators via methods. "
 "The method name corresponding to a operator `<op>` is `op_<op>`. For "
 "example:"
-msgstr ""
+msgstr "MoonBit 支持通过方法对内置运算符进行运算符重载。与运算符 `<op>` 对应的方法名是 `op_<op>`。例如："
 
 #: ../../language/methods.md:69
 msgid ""
@@ -4787,7 +4785,7 @@ msgstr ""
 
 #: ../../language/methods.md:75
 msgid "Another example about `op_get` and `op_set`:"
-msgstr ""
+msgstr "关于 `op_get` 和 `op_set` 的另一个例子："
 
 #: ../../language/methods.md:77
 msgid ""
@@ -4833,15 +4831,15 @@ msgstr ""
 
 #: ../../language/methods.md:95
 msgid "Currently, the following operators can be overloaded:"
-msgstr ""
+msgstr "目前，可以重载以下运算符："
 
 #: ../../language/methods.md:91
 msgid "Operator Name"
-msgstr ""
+msgstr "运算符名称"
 
 #: ../../language/methods.md:91
 msgid "Method Name"
-msgstr ""
+msgstr "方法名称"
 
 #: ../../language/methods.md:91
 msgid "`+`"
@@ -4909,7 +4907,7 @@ msgstr ""
 
 #: ../../language/methods.md:91
 msgid "`-` (unary)"
-msgstr ""
+msgstr "`-`（一元）"
 
 #: ../../language/methods.md:91
 msgid "`op_neg`"
@@ -4917,7 +4915,7 @@ msgstr ""
 
 #: ../../language/methods.md:91
 msgid "`_[_]` (get item)"
-msgstr ""
+msgstr "`_[_]`（获取项）"
 
 #: ../../language/methods.md:91
 msgid "`op_get`"
@@ -4925,7 +4923,7 @@ msgstr ""
 
 #: ../../language/methods.md:91
 msgid "`_[_] = _` (set item)"
-msgstr ""
+msgstr "`_[_] = _`（设置项）"
 
 #: ../../language/methods.md:91
 msgid "`op_set`"
@@ -4933,7 +4931,7 @@ msgstr ""
 
 #: ../../language/methods.md:91
 msgid "`_[_:_]` (view)"
-msgstr ""
+msgstr "`_[_:_]`（视图）"
 
 #: ../../language/methods.md:91
 msgid "`op_as_view`"
@@ -4967,7 +4965,7 @@ msgstr ""
 msgid ""
 "By implementing `op_as_view` method, you can create a view for a user-"
 "defined type. Here is an example:"
-msgstr ""
+msgstr "通过实现 `op_as_view` 方法，可以为用户定义的类型创建视图。以下是一个例子："
 
 #: ../../language/methods.md:120
 msgid ""
@@ -4991,7 +4989,7 @@ msgstr ""
 
 #: ../../language/methods.md:126
 msgid "Trait system"
-msgstr ""
+msgstr "Trait（特征）系统"
 
 #: ../../language/methods.md:128
 msgid ""
@@ -4999,7 +4997,7 @@ msgid ""
 "polymorphism. Traits declare a list of operations, which must be supplied"
 " when a type wants to implement the trait. Traits can be declared as "
 "follows:"
-msgstr ""
+msgstr "MoonBit 具有用于重载/特殊多态的结构特征系统。特征声明一系列操作，当类型想要实现特征时，必须提供这些操作。特征可以如下声明："
 
 #: ../../language/methods.md:130
 msgid ""
@@ -5014,15 +5012,15 @@ msgstr ""
 msgid ""
 "In the body of a trait definition, a special type `Self` is used to refer"
 " to the type that implements the trait."
-msgstr ""
+msgstr "在特征定义的主体中，使用特殊类型 `Self` 来引用实现特征的类型。"
 
 #: ../../language/methods.md:138
 msgid "Extending traits"
-msgstr ""
+msgstr "扩展特征"
 
 #: ../../language/methods.md:140
 msgid "A trait can depend on other traits, for example:"
-msgstr ""
+msgstr "特征（子特征）可以依赖于其他特征（超特征），例如："
 
 #: ../../language/methods.md:142
 msgid ""
@@ -5038,19 +5036,20 @@ msgstr ""
 
 #: ../../language/methods.md:148
 msgid ""
-"To implement the super trait, one will have to implement the sub traits,"
-"  and the methods defined in the super trait."
-msgstr ""
+"To implement the sub trait, one will have to implement the super traits,"
+"  and the methods defined in the sub trait."
+msgstr "要实现子特征，必须实现子特征和所有超特征中定义的方法。"
 
 #: ../../language/methods.md:151
 msgid "Implementing traits"
-msgstr ""
+msgstr "实现特征"
 
 #: ../../language/methods.md:153
 msgid ""
 "To implement a trait, a type must provide all the methods required by the"
 " trait."
 msgstr ""
+"要实现特征，类型必须提供特征所需的所有方法。"
 
 #: ../../language/methods.md:155
 msgid ""
@@ -5059,6 +5058,7 @@ msgid ""
 "other. For example, the following trait is automatically implemented for "
 "builtin number types such as `Int` and `Double`:"
 msgstr ""
+"这使得类型可以隐式满足特征，从而允许不同的包在不看到或依赖于彼此的情况下运行。例如，内置数字类型（如 `Int` 和 `Double`）自动满足了以下的特征："
 
 #: ../../language/methods.md:158
 msgid ""
@@ -5073,6 +5073,7 @@ msgid ""
 "**Explicit implementation** for trait methods can be provided via the "
 "syntax `impl Trait for Type with method_name(...) { ... }`, for example:"
 msgstr ""
+"**显式实现**特征方法可以通过语法 `impl Trait for Type with method_name(...) { ... }` 提供，例如："
 
 #: ../../language/methods.md:166
 msgid ""
@@ -5091,6 +5092,20 @@ msgid ""
 "// this will be covered later.\n"
 "impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ... }\n"
 msgstr ""
+"trait MyShow {\n"
+"  to_string(Self) -> String\n"
+"}\n"
+"\n"
+"struct MyType {}\n"
+"\n"
+"impl MyShow for MyType with to_string(self) { ... }\n"
+"\n"
+"struct MyContainer[T] {}\n"
+"\n"
+"// 使用类型参数实现特征。\n"
+"// `[X : Show]` 意味着类型参数 `X` 必须实现 `Show`，\n"
+"// 我们将稍后介绍。\n"
+"impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ... }\n"
 
 #: ../../language/methods.md:172
 msgid ""
@@ -5098,12 +5113,14 @@ msgid ""
 "automatically infer the type based on the signature of `Trait::method` "
 "and the self type."
 msgstr ""
+"`impl` 实现的类型注释可以省略：MoonBit 将根据 `Trait::method` 的签名和 self 类型自动推断类型。"
 
 #: ../../language/methods.md:174
 msgid ""
 "The author of the trait can also define **default implementations** for "
 "some methods in the trait, for example:"
 msgstr ""
+"特征的作者还可以为特征中的某些方法定义**默认实现**，例如："
 
 #: ../../language/methods.md:176
 msgid ""
@@ -5125,16 +5142,19 @@ msgid ""
 "override the default implementation with an explicit `impl I for Type "
 "with f_twice`, if desired, though."
 msgstr ""
+" `I` 的类型实现特征时不必为 `f_twice` 提供实现：要实现 `I`，只有 `f` 是必要的。如果需要，他们总是可以显式地用 `impl I for Type "
+"with f_twice` 覆盖默认实现。"
 
 #: ../../language/methods.md:185
 msgid ""
 "If an explicit `impl` or default implementation is not found, trait "
 "method resolution falls back to regular methods."
 msgstr ""
+"如果找不到显式的 `impl` 或默认实现，特征方法解析将回退到常规方法。"
 
 #: ../../language/methods.md:187
 msgid "Using traits"
-msgstr ""
+msgstr "使用特征"
 
 #: ../../language/methods.md:189
 msgid ""
@@ -5142,6 +5162,7 @@ msgid ""
 "with the traits they should implement, allowing the definition of "
 "constrained generic functions. For example:"
 msgstr ""
+"在声明泛型函数时，可以使用特征注释类型参数，来定义受约束的泛型函数。例如："
 
 #: ../../language/methods.md:191
 msgid ""
@@ -5156,6 +5177,7 @@ msgid ""
 " result in a method/operator not found error. Now, the function `square` "
 "can be called with any type that implements `Number`, for example:"
 msgstr ""
+"如果没有 `Number` 要求，`square` 中的表达式 `x * x` 将产生方法/运算符未找到的错误。现在，函数 `square` 可以使用任何实现 `Number` 的类型调用，例如："
 
 #: ../../language/methods.md:199
 msgid ""
@@ -5181,7 +5203,7 @@ msgstr ""
 
 #: ../../language/methods.md:205
 msgid "Invoke trait methods directly"
-msgstr ""
+msgstr "直接调用特征方法"
 
 #: ../../language/methods.md:207
 msgid ""
@@ -5189,6 +5211,7 @@ msgid ""
 "will infer the type of `Self` and check if `Self` indeed implements "
 "`Trait`, for example:"
 msgstr ""
+"可以通过 `Trait::method` 直接调用特征的方法。MoonBit 将推断 `Self` 的类型，并检查 `Self` 是否确实实现了 `Trait`，例如："
 
 #: ../../language/methods.md:209
 msgid ""
@@ -5203,24 +5226,28 @@ msgid ""
 "Trait implementations can also be invoked via dot syntax, with the "
 "following restrictions:"
 msgstr ""
+"特征实现也可以通过点语法调用，但有以下限制："
 
 #: ../../language/methods.md:217
 msgid ""
 "if a regular method is present, the regular method is always favored when"
 " using dot syntax"
 msgstr ""
+"如果存在常规方法，使用点语法时总是优先选择常规方法"
 
 #: ../../language/methods.md:218
 msgid ""
 "only trait implementations that are located in the package of the self "
 "type can be invoked via dot syntax"
 msgstr ""
+"只有位于 self 类型的包中的特征实现才能通过点语法调用"
 
 #: ../../language/methods.md:219
 msgid ""
 "if there are multiple trait methods (from different traits) with the same"
 " name available, an ambiguity error is reported"
 msgstr ""
+"如果有多个具有相同名称的特征方法（来自不同的特征）可用，将报告歧义错误"
 
 #: ../../language/methods.md:220
 msgid ""
@@ -5228,12 +5255,14 @@ msgid ""
 " will also be searched for dot syntax. This allows extending a foreign "
 "type locally."
 msgstr ""
+"如果上述两条规则都不适用，还将在当前包中搜索特征 `impl` 以进行点语法。这允许在本地扩展外部类型。"
 
 #: ../../language/methods.md:222
 msgid ""
 "these `impl`s can only be called via dot syntax locally, even if they are"
 " public."
 msgstr ""
+"这些 `impl` 只能在本地通过点语法调用，即使它们是公共的。"
 
 #: ../../language/methods.md:224
 msgid ""
@@ -5243,10 +5272,12 @@ msgid ""
 "name resolution of MoonBit extremely simple: the method called via dot "
 "syntax must always come from current package or the package of the type!"
 msgstr ""
+"上述规则确保了 MoonBit 的点语法具有良好的特性，同时也具有灵活性。例如，由于歧义，添加新依赖关系永远不会破坏现有的点语法代码。这些规则还使 MoonBit 的名称解析非常简单：通过点语法调用的方法必须始终来自当前包或类型的包！"
 
 #: ../../language/methods.md:229
 msgid "Here's an example of calling trait `impl` with dot syntax:"
 msgstr ""
+"以下是使用点语法调用特征 `impl` 的示例："
 
 #: ../../language/methods.md:231
 msgid ""
@@ -5264,6 +5295,7 @@ msgstr ""
 #: ../../language/methods.md:237
 msgid "Trait objects"
 msgstr ""
+"特征对象"
 
 #: ../../language/methods.md:239
 msgid ""
@@ -5274,6 +5306,8 @@ msgid ""
 " from different concrete types can be put in the same data structure and "
 "handled uniformly:"
 msgstr ""
+"MoonBit 支持通过特征对象实现运行时多态。如果 `t` 是类型 `T`，它实现了特征 `I`，可以通过 `t as &I` 将实现 `I` 的 `T` 的方法与 `t` "
+"一起打包到运行时对象中。特征对象擦除了值的具体类型，因此可以将从不同具体类型创建的对象放入相同的数据结构并统一处理："
 
 #: ../../language/methods.md:246
 msgid ""
@@ -5325,22 +5359,26 @@ msgid ""
 "Not all traits can be used to create objects. \"object-safe\" traits' "
 "methods must satisfy the following conditions:"
 msgstr ""
+"并非所有特征都可以用于创建对象。“对象安全” 特征的方法必须满足以下条件："
 
 #: ../../language/methods.md:255
 msgid "`Self` must be the first parameter of a method"
 msgstr ""
+"`Self` 必须是方法的第一个参数"
 
 #: ../../language/methods.md:256
 msgid ""
 "There must be only one occurrence of `Self` in the type of the method "
 "(i.e. the first parameter)"
 msgstr ""
+"方法的类型中只能出现一个 `Self` （即第一个参数）"
 
 #: ../../language/methods.md:258
 msgid ""
 "Users can define new methods for trait objects, just like defining new "
 "methods for structs and enums:"
 msgstr ""
+"用户可以为特征对象定义新方法，就像为结构体和枚举定义新方法一样："
 
 #: ../../language/methods.md:260
 msgid ""
@@ -5368,14 +5406,38 @@ msgid ""
 "  .write_string(\")\")\n"
 "}\n"
 msgstr ""
+"trait Logger {\n"
+"  write_string(Self, String) -> Unit\n"
+"}\n"
+"\n"
+"trait CanLog {\n"
+"  log(Self, &Logger) -> Unit\n"
+"}\n"
+"\n"
+"fn &Logger::write_object[Obj : CanLog](self : &Logger, obj : Obj) -> Unit"
+" {\n"
+"  obj.log(self)\n"
+"}\n"
+"\n"
+"// 使用新的方法来简化代码\n"
+"impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {\n"
+"  let (a, b) = self\n"
+"  logger\n"
+"  ..write_string(\"(\")\n"
+"  ..write_object(a)\n"
+"  ..write_string(\", \")\n"
+"  ..write_object(b)\n"
+"  .write_string(\")\")\n"
+"}\n"
 
 #: ../../language/methods.md:266
 msgid "Builtin traits"
-msgstr ""
+msgstr "内建特征"
 
 #: ../../language/methods.md:268
 msgid "MoonBit provides the following useful builtin traits:"
 msgstr ""
+"MoonBit 提供了以下有用的内建特征："
 
 #: ../../language/methods.md:272
 msgid ""
@@ -5402,14 +5464,36 @@ msgid ""
 "  default() -> Self\n"
 "}\n"
 msgstr ""
+"trait Eq {\n"
+"  op_equal(Self, Self) -> Bool\n"
+"}\n"
+"\n"
+"trait Compare : Eq {\n"
+"  // `0` 代表相等，`-1` 代表小于，`1` 代表大于\n"
+"  compare(Self, Self) -> Int\n"
+"}\n"
+"\n"
+"trait Hash {\n"
+"  hash_combine(Self, Hasher) -> Unit // 待实现\n"
+"  hash(Self) -> Int // 有默认实现\n"
+"}\n"
+"\n"
+"trait Show {\n"
+"  output(Self, Logger) -> Unit // 待实现\n"
+"  to_string(Self) -> String // 有默认实现\n"
+"}\n"
+"\n"
+"trait Default {\n"
+"  default() -> Self\n"
+"}\n"
 
 #: ../../language/methods.md:297
 msgid "Deriving builtin traits"
-msgstr ""
+msgstr "派生内建特征"
 
 #: ../../language/methods.md:299
 msgid "MoonBit can automatically derive implementations for some builtin traits:"
-msgstr ""
+msgstr "MoonBit 可以自动为一些内建特征派生实现："
 
 #: ../../language/methods.md:301
 msgid ""

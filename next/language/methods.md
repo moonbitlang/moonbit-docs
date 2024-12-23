@@ -145,8 +145,8 @@ A trait can depend on other traits, for example:
 :end-before: end super trait 1
 ```
 
-To implement the super trait, one will have to implement the sub traits, 
-and the methods defined in the super trait.
+To implement the sub trait, one will have to implement the super traits, 
+and the methods defined in the sub trait.
 
 ### Implementing traits
 
