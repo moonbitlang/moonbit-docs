@@ -33,6 +33,7 @@ class Visitor(NodeVisitor):
                         temp_file.write("fn init {\n".encode())
                         temp_file.write("\n".join(["  " + line for line in node.astext().splitlines()]).encode())
                         temp_file.write("\n}".encode())
+                        temp_file.flush()
                         temp_file_path = temp_file.name
 
                         result = subprocess.run(["moonc", "compile", "-stop-after-parsing", temp_file_path], capture_output=True)
@@ -43,6 +44,7 @@ class Visitor(NodeVisitor):
                      # Check as top-level
                     with tempfile.NamedTemporaryFile(suffix=".mbt") as temp_file:
                         temp_file.write(node.astext().encode())
+                        temp_file.flush()
                         temp_file_path = temp_file.name
                     
                         result = subprocess.run(["moonc", "compile", "-stop-after-parsing", temp_file_path], capture_output=True)
