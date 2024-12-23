@@ -55,10 +55,10 @@ A top level variable binding
 
 ## Naming conventions
 
-Variables, functions should start with lowercase letters `a-z` and can contain letters, numbers, and other non-ascii unicode chars.
+Variables, functions should start with lowercase letters `a-z` and can contain letters, numbers, underscore, and other non-ascii unicode chars.
 It is recommended to name them with snake_case.
 
-Constants, types should start with uppercase letters `A-Z` and can contain letters, numbers, and other non-ascii unicode chars.
+Constants, types should start with uppercase letters `A-Z` and can contain letters, numbers, underscore, and other non-ascii unicode chars.
 It is recommended to name them with PascalCase or SCREAMING_SNAKE_CASE.
 
 ## Program entrance
