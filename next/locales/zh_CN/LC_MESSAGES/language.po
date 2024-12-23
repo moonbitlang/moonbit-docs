@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-23 14:38+0800\n"
+"POT-Creation-Date: 2024-12-23 15:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -5048,8 +5048,7 @@ msgstr "实现特征"
 msgid ""
 "To implement a trait, a type must provide all the methods required by the"
 " trait."
-msgstr ""
-"要实现特征，类型必须提供特征所需的所有方法。"
+msgstr "要实现特征，类型必须提供特征所需的所有方法。"
 
 #: ../../language/methods.md:155
 msgid ""
@@ -5058,7 +5057,8 @@ msgid ""
 "other. For example, the following trait is automatically implemented for "
 "builtin number types such as `Int` and `Double`:"
 msgstr ""
-"这使得类型可以隐式满足特征，从而允许不同的包在不看到或依赖于彼此的情况下运行。例如，内置数字类型（如 `Int` 和 `Double`）自动满足了以下的特征："
+"这使得类型可以隐式满足特征，从而允许不同的包在不看到或依赖于彼此的情况下运行。例如，内置数字类型（如 `Int` 和 "
+"`Double`）自动满足了以下的特征："
 
 #: ../../language/methods.md:158
 msgid ""
@@ -5073,7 +5073,8 @@ msgid ""
 "**Explicit implementation** for trait methods can be provided via the "
 "syntax `impl Trait for Type with method_name(...) { ... }`, for example:"
 msgstr ""
-"**显式实现**特征方法可以通过语法 `impl Trait for Type with method_name(...) { ... }` 提供，例如："
+"**显式实现**特征方法可以通过语法 `impl Trait for Type with method_name(...) { ... }` "
+"提供，例如："
 
 #: ../../language/methods.md:166
 msgid ""
@@ -5112,15 +5113,13 @@ msgid ""
 "Type annotation can be omitted for trait `impl`: MoonBit will "
 "automatically infer the type based on the signature of `Trait::method` "
 "and the self type."
-msgstr ""
-"`impl` 实现的类型注释可以省略：MoonBit 将根据 `Trait::method` 的签名和 self 类型自动推断类型。"
+msgstr "`impl` 实现的类型注释可以省略：MoonBit 将根据 `Trait::method` 的签名和 self 类型自动推断类型。"
 
 #: ../../language/methods.md:174
 msgid ""
 "The author of the trait can also define **default implementations** for "
 "some methods in the trait, for example:"
-msgstr ""
-"特征的作者还可以为特征中的某些方法定义**默认实现**，例如："
+msgstr "特征的作者还可以为特征中的某些方法定义**默认实现**，例如："
 
 #: ../../language/methods.md:176
 msgid ""
@@ -5142,15 +5141,14 @@ msgid ""
 "override the default implementation with an explicit `impl I for Type "
 "with f_twice`, if desired, though."
 msgstr ""
-" `I` 的类型实现特征时不必为 `f_twice` 提供实现：要实现 `I`，只有 `f` 是必要的。如果需要，他们总是可以显式地用 `impl I for Type "
-"with f_twice` 覆盖默认实现。"
+" `I` 的类型实现特征时不必为 `f_twice` 提供实现：要实现 `I`，只有 `f` 是必要的。如果需要，他们总是可以显式地用 `impl"
+" I for Type with f_twice` 覆盖默认实现。"
 
 #: ../../language/methods.md:185
 msgid ""
 "If an explicit `impl` or default implementation is not found, trait "
 "method resolution falls back to regular methods."
-msgstr ""
-"如果找不到显式的 `impl` 或默认实现，特征方法解析将回退到常规方法。"
+msgstr "如果找不到显式的 `impl` 或默认实现，特征方法解析将回退到常规方法。"
 
 #: ../../language/methods.md:187
 msgid "Using traits"
@@ -5161,8 +5159,7 @@ msgid ""
 "When declaring a generic function, the type parameters can be annotated "
 "with the traits they should implement, allowing the definition of "
 "constrained generic functions. For example:"
-msgstr ""
-"在声明泛型函数时，可以使用特征注释类型参数，来定义受约束的泛型函数。例如："
+msgstr "在声明泛型函数时，可以使用特征注释类型参数，来定义受约束的泛型函数。例如："
 
 #: ../../language/methods.md:191
 msgid ""
@@ -5177,7 +5174,8 @@ msgid ""
 " result in a method/operator not found error. Now, the function `square` "
 "can be called with any type that implements `Number`, for example:"
 msgstr ""
-"如果没有 `Number` 要求，`square` 中的表达式 `x * x` 将产生方法/运算符未找到的错误。现在，函数 `square` 可以使用任何实现 `Number` 的类型调用，例如："
+"如果没有 `Number` 要求，`square` 中的表达式 `x * x` 将产生方法/运算符未找到的错误。现在，函数 `square` "
+"可以使用任何实现 `Number` 的类型调用，例如："
 
 #: ../../language/methods.md:199
 msgid ""
@@ -5211,7 +5209,8 @@ msgid ""
 "will infer the type of `Self` and check if `Self` indeed implements "
 "`Trait`, for example:"
 msgstr ""
-"可以通过 `Trait::method` 直接调用特征的方法。MoonBit 将推断 `Self` 的类型，并检查 `Self` 是否确实实现了 `Trait`，例如："
+"可以通过 `Trait::method` 直接调用特征的方法。MoonBit 将推断 `Self` 的类型，并检查 `Self` 是否确实实现了 "
+"`Trait`，例如："
 
 #: ../../language/methods.md:209
 msgid ""
@@ -5225,44 +5224,38 @@ msgstr ""
 msgid ""
 "Trait implementations can also be invoked via dot syntax, with the "
 "following restrictions:"
-msgstr ""
-"特征实现也可以通过点语法调用，但有以下限制："
+msgstr "特征实现也可以通过点语法调用，但有以下限制："
 
 #: ../../language/methods.md:217
 msgid ""
 "if a regular method is present, the regular method is always favored when"
 " using dot syntax"
-msgstr ""
-"如果存在常规方法，使用点语法时总是优先选择常规方法"
+msgstr "如果存在常规方法，使用点语法时总是优先选择常规方法"
 
 #: ../../language/methods.md:218
 msgid ""
 "only trait implementations that are located in the package of the self "
 "type can be invoked via dot syntax"
-msgstr ""
-"只有位于 self 类型的包中的特征实现才能通过点语法调用"
+msgstr "只有位于 self 类型的包中的特征实现才能通过点语法调用"
 
 #: ../../language/methods.md:219
 msgid ""
 "if there are multiple trait methods (from different traits) with the same"
 " name available, an ambiguity error is reported"
-msgstr ""
-"如果有多个具有相同名称的特征方法（来自不同的特征）可用，将报告歧义错误"
+msgstr "如果有多个具有相同名称的特征方法（来自不同的特征）可用，将报告歧义错误"
 
 #: ../../language/methods.md:220
 msgid ""
 "if neither of the above two rules apply, trait `impl`s in current package"
 " will also be searched for dot syntax. This allows extending a foreign "
 "type locally."
-msgstr ""
-"如果上述两条规则都不适用，还将在当前包中搜索特征 `impl` 以进行点语法。这允许在本地扩展外部类型。"
+msgstr "如果上述两条规则都不适用，还将在当前包中搜索特征 `impl` 以进行点语法。这允许在本地扩展外部类型。"
 
 #: ../../language/methods.md:222
 msgid ""
 "these `impl`s can only be called via dot syntax locally, even if they are"
 " public."
-msgstr ""
-"这些 `impl` 只能在本地通过点语法调用，即使它们是公共的。"
+msgstr "这些 `impl` 只能在本地通过点语法调用，即使它们是公共的。"
 
 #: ../../language/methods.md:224
 msgid ""
@@ -5272,12 +5265,12 @@ msgid ""
 "name resolution of MoonBit extremely simple: the method called via dot "
 "syntax must always come from current package or the package of the type!"
 msgstr ""
-"上述规则确保了 MoonBit 的点语法具有良好的特性，同时也具有灵活性。例如，由于歧义，添加新依赖关系永远不会破坏现有的点语法代码。这些规则还使 MoonBit 的名称解析非常简单：通过点语法调用的方法必须始终来自当前包或类型的包！"
+"上述规则确保了 MoonBit 的点语法具有良好的特性，同时也具有灵活性。例如，由于歧义，添加新依赖关系永远不会破坏现有的点语法代码。这些规则还使"
+" MoonBit 的名称解析非常简单：通过点语法调用的方法必须始终来自当前包或类型的包！"
 
 #: ../../language/methods.md:229
 msgid "Here's an example of calling trait `impl` with dot syntax:"
-msgstr ""
-"以下是使用点语法调用特征 `impl` 的示例："
+msgstr "以下是使用点语法调用特征 `impl` 的示例："
 
 #: ../../language/methods.md:231
 msgid ""
@@ -5294,8 +5287,7 @@ msgstr ""
 
 #: ../../language/methods.md:237
 msgid "Trait objects"
-msgstr ""
-"特征对象"
+msgstr "特征对象"
 
 #: ../../language/methods.md:239
 msgid ""
@@ -5306,8 +5298,8 @@ msgid ""
 " from different concrete types can be put in the same data structure and "
 "handled uniformly:"
 msgstr ""
-"MoonBit 支持通过特征对象实现运行时多态。如果 `t` 是类型 `T`，它实现了特征 `I`，可以通过 `t as &I` 将实现 `I` 的 `T` 的方法与 `t` "
-"一起打包到运行时对象中。特征对象擦除了值的具体类型，因此可以将从不同具体类型创建的对象放入相同的数据结构并统一处理："
+"MoonBit 支持通过特征对象实现运行时多态。如果 `t` 是类型 `T`，它实现了特征 `I`，可以通过 `t as &I` 将实现 `I` "
+"的 `T` 的方法与 `t` 一起打包到运行时对象中。特征对象擦除了值的具体类型，因此可以将从不同具体类型创建的对象放入相同的数据结构并统一处理："
 
 #: ../../language/methods.md:246
 msgid ""
@@ -5358,27 +5350,23 @@ msgstr ""
 msgid ""
 "Not all traits can be used to create objects. \"object-safe\" traits' "
 "methods must satisfy the following conditions:"
-msgstr ""
-"并非所有特征都可以用于创建对象。“对象安全” 特征的方法必须满足以下条件："
+msgstr "并非所有特征都可以用于创建对象。“对象安全” 特征的方法必须满足以下条件："
 
 #: ../../language/methods.md:255
 msgid "`Self` must be the first parameter of a method"
-msgstr ""
-"`Self` 必须是方法的第一个参数"
+msgstr "`Self` 必须是方法的第一个参数"
 
 #: ../../language/methods.md:256
 msgid ""
 "There must be only one occurrence of `Self` in the type of the method "
 "(i.e. the first parameter)"
-msgstr ""
-"方法的类型中只能出现一个 `Self` （即第一个参数）"
+msgstr "方法的类型中只能出现一个 `Self` （即第一个参数）"
 
 #: ../../language/methods.md:258
 msgid ""
 "Users can define new methods for trait objects, just like defining new "
 "methods for structs and enums:"
-msgstr ""
-"用户可以为特征对象定义新方法，就像为结构体和枚举定义新方法一样："
+msgstr "用户可以为特征对象定义新方法，就像为结构体和枚举定义新方法一样："
 
 #: ../../language/methods.md:260
 msgid ""
@@ -5436,8 +5424,7 @@ msgstr "内建特征"
 
 #: ../../language/methods.md:268
 msgid "MoonBit provides the following useful builtin traits:"
-msgstr ""
-"MoonBit 提供了以下有用的内建特征："
+msgstr "MoonBit 提供了以下有用的内建特征："
 
 #: ../../language/methods.md:272
 msgid ""
@@ -5524,8 +5511,8 @@ msgid ""
 "[core](https://github.com/moonbitlang/core), the standard library of "
 "MoonBit."
 msgstr ""
-"在大规模开发项目时，项目通常需要分解为相互依赖的较小模块单元。更常见的是使用其他人的工作："
-"最典型的是 [core](https://github.com/moonbitlang/core)，MoonBit 的标准库。"
+"在大规模开发项目时，项目通常需要分解为相互依赖的较小模块单元。更常见的是使用其他人的工作：最典型的是 "
+"[core](https://github.com/moonbitlang/core)，MoonBit 的标准库。"
 
 #: ../../language/packages.md:6
 msgid "Packages and modules"
@@ -5539,15 +5526,14 @@ msgid ""
 "package, consisting a `main` function, or a package that serves as a "
 "library."
 msgstr ""
-"在 MoonBit 中，代码组织的最重要单元是包，它由多个源代码文件和一个单独的 `moon.pkg.json` 配置文件组成。"
-"包可以是一个 `main` 包，包含一个 `main` 函数，或者是一个用作库的包。"
+"在 MoonBit 中，代码组织的最重要单元是包，它由多个源代码文件和一个单独的 `moon.pkg.json` 配置文件组成。包可以是一个 "
+"`main` 包，包含一个 `main` 函数，或者是一个用作库的包。"
 
 #: ../../language/packages.md:11
 msgid ""
 "A project, corresponding to a module, consists of multiple packages and a"
 " single `moon.mod.json` configuration file."
-msgstr ""
-"一个项目对应一个模块，由多个包和一个单独的 `moon.mod.json` 配置文件组成。"
+msgstr "一个项目对应一个模块，由多个包和一个单独的 `moon.mod.json` 配置文件组成。"
 
 #: ../../language/packages.md:13
 msgid ""
@@ -5558,8 +5544,9 @@ msgid ""
 "`pkg` is the last part of the imported package's path or the declared "
 "alias in `moon.pkg.json`:"
 msgstr ""
-"在从另一个包中使用内容时，模块之间的依赖关系应首先在 `moon.mod.json` 中声明。然后在 `moon.pkg.json` 中声明包之间的依赖关系。"
-"然后可以使用 `@pkg` 访问导入的实体，其中 `pkg` 是导入包路径的最后一部分或 `moon.pkg.json` 中声明的别名："
+"在从另一个包中使用内容时，模块之间的依赖关系应首先在 `moon.mod.json` 中声明。然后在 `moon.pkg.json` "
+"中声明包之间的依赖关系。然后可以使用 `@pkg` 访问导入的实体，其中 `pkg` 是导入包路径的最后一部分或 `moon.pkg.json` "
+"中声明的别名："
 
 #: ../../language/packages.md:17
 msgid "pkgB/moon.pkg.json"
@@ -5587,36 +5574,31 @@ msgstr ""
 
 #: ../../language/packages.md:27
 msgid "Access Control"
-msgstr ""
-"访问控制"
+msgstr "访问控制"
 
 #: ../../language/packages.md:29
 msgid ""
 "By default, all function definitions and variable bindings are "
 "_invisible_ to other packages. You can use the `pub` modifier before "
 "toplevel `let`/`fn` to make them public."
-msgstr ""
-"默认情况下，所有函数定义和变量绑定对其他包是 _不可见_ 的。可以在顶层 `let`/`fn` 前使用 `pub` 修饰符使其公开。"
+msgstr "默认情况下，所有函数定义和变量绑定对其他包是 _不可见_ 的。可以在顶层 `let`/`fn` 前使用 `pub` 修饰符使其公开。"
 
 #: ../../language/packages.md:32
 msgid "There are four different kinds of visibility for types in MoonBit:"
-msgstr ""
-"MoonBit 中有四种不同的类型可见性："
+msgstr "MoonBit 中有四种不同的类型可见性："
 
 #: ../../language/packages.md:34
 msgid ""
 "private type, declared with `priv`, completely invisible to the outside "
 "world"
-msgstr ""
-"私有类型，使用 `priv` 声明，对外部世界完全不可见"
+msgstr "私有类型，使用 `priv` 声明，对外部世界完全不可见"
 
 #: ../../language/packages.md:35
 msgid ""
 "abstract type, which is the default visibility for types. Only the name "
 "of an abstract type is visible outside, the internal representation of "
 "the type is hidden"
-msgstr ""
-"抽象类型，这是类型的默认可见性。只有抽象类型的名称对外部可见，类型的内部表示被隐藏"
+msgstr "抽象类型，这是类型的默认可见性。只有抽象类型的名称对外部可见，类型的内部表示被隐藏"
 
 #: ../../language/packages.md:36
 msgid ""
@@ -5624,22 +5606,19 @@ msgid ""
 "representation of readonly types are visible outside, but users can only "
 "read the values of these types from outside, construction and mutation "
 "are not allowed"
-msgstr ""
-"只读类型，使用 `pub(readonly)` 声明。只读类型的内部表示对外部可见，但用户只能从外部读取这些类型的值，不允许构造和修改"
+msgstr "只读类型，使用 `pub(readonly)` 声明。只读类型的内部表示对外部可见，但用户只能从外部读取这些类型的值，不允许构造和修改"
 
 #: ../../language/packages.md:38
 msgid ""
 "fully public types, declared with `pub(all)`. The outside world can "
 "freely construct, modify and read values of these types"
-msgstr ""
-"完全公开类型，使用 `pub(all)` 声明。外部世界可以自由构造、修改和读取这些类型的值"
+msgstr "完全公开类型，使用 `pub(all)` 声明。外部世界可以自由构造、修改和读取这些类型的值"
 
 #: ../../language/packages.md:41
 msgid ""
 "Currently, the semantic of `pub` is `pub(all)`. But in the future, the "
 "meaning of `pub` will be ported to `pub(readonly)`."
-msgstr ""
-"目前，`pub` 的语义是 `pub(all)`。但在未来，`pub` 的含义将迁移到 `pub(readonly)`。"
+msgstr "目前，`pub` 的语义是 `pub(all)`。但在未来，`pub` 的含义将迁移到 `pub(readonly)`。"
 
 #: ../../language/packages.md:44
 msgid ""
@@ -5649,7 +5628,8 @@ msgid ""
 " be constructed directly outside, but you can update the public fields "
 "using the functional struct update syntax."
 msgstr ""
-"除了类型本身的可见性外，公开的结构体的字段可以用 `priv` 注释，这将完全隐藏字段对外部世界。请注意，具有私有字段的 `struct` 不能直接在外部构造，但可以使用函数式 `struct` 更新语法更新公共字段。"
+"除了类型本身的可见性外，公开的结构体的字段可以用 `priv` 注释，这将完全隐藏字段对外部世界。请注意，具有私有字段的 `struct` "
+"不能直接在外部构造，但可以使用函数式 `struct` 更新语法更新公共字段。"
 
 #: ../../language/packages.md:49
 msgid ""
@@ -5660,7 +5640,10 @@ msgid ""
 "packages. Note that there is no restriction within the same package where"
 " `pub(readonly)` types are defined."
 msgstr ""
-"只读类型是一个非常有用的功能，受到 OCaml 中 [私有类型](https://v2.ocaml.org/manual/privatetypes.html) 的启发。简而言之，`pub(readonly)` 类型的值可以通过模式匹配和点语法解构，但不能在其他包中构造或修改。请注意，在定义 `pub(readonly)` 类型的同一包中没有限制。"
+"只读类型是一个非常有用的功能，受到 OCaml 中 "
+"[私有类型](https://v2.ocaml.org/manual/privatetypes.html) "
+"的启发。简而言之，`pub(readonly)` 类型的值可以通过模式匹配和点语法解构，但不能在其他包中构造或修改。请注意，在定义 "
+"`pub(readonly)` 类型的同一包中没有限制。"
 
 #: ../../language/packages.md:53
 msgid ""
@@ -5714,7 +5697,9 @@ msgid ""
 "`pub` entity is used. MoonBit incorporates sanity checks to prevent the "
 "occurrence of use cases that violate this principle."
 msgstr ""
-"MoonBit 中的访问控制遵循一个原则，即公开的类型、函数或变量不能以私有类型定义。这是因为私有类型可能无法在使用公开的实体的所有地方访问。MoonBit 包含了健全性检查，以防止违反这一原则的用例发生。"
+"MoonBit "
+"中的访问控制遵循一个原则，即公开的类型、函数或变量不能以私有类型定义。这是因为私有类型可能无法在使用公开的实体的所有地方访问。MoonBit "
+"包含了健全性检查，以防止违反这一原则的用例发生。"
 
 #: ../../language/packages.md:78
 msgid ""
@@ -5758,8 +5743,7 @@ msgstr ""
 
 #: ../../language/packages.md:99
 msgid "Access control of methods and trait implementations"
-msgstr ""
-"方法和特征实现的访问控制"
+msgstr "方法和特征实现的访问控制"
 
 #: ../../language/packages.md:101
 msgid ""
@@ -5769,15 +5753,15 @@ msgid ""
 "MoonBit employs the following restrictions on who can define "
 "methods/implement traits for types:"
 msgstr ""
-"为了使特征系统一致（即每个 `Type: Trait` 对都有全局唯一的实现），并防止第三方包意外地修改现有程序的行为，MoonBit 对谁可以定义方法/实现类型的特征采用了以下限制："
+"为了使特征系统一致（即每个 `Type: Trait` 对都有全局唯一的实现），并防止第三方包意外地修改现有程序的行为，MoonBit "
+"对谁可以定义方法/实现类型的特征采用了以下限制："
 
 #: ../../language/packages.md:105
 msgid ""
 "_only the package that defines a type can define methods for it_. So one "
 "cannot define new methods or override old methods for builtin and foreign"
 " types."
-msgstr ""
-"**只有定义类型的包才能为其定义方法**。因此，不能为内建和外部类型定义新方法或覆盖旧方法。"
+msgstr "**只有定义类型的包才能为其定义方法**。因此，不能为内建和外部类型定义新方法或覆盖旧方法。"
 
 #: ../../language/packages.md:106
 msgid ""
@@ -5785,20 +5769,19 @@ msgid ""
 "implementation_. For example, only `@pkg1` and `@pkg2` are allowed to "
 "write `impl @pkg1.Trait for @pkg2.Type`."
 msgstr ""
-"**只有类型的包或特征的包才能定义实现**。例如，只有 `@pkg1` 和 `@pkg2` 允许编写 `impl @pkg1.Trait for @pkg2.Type`。"
+"**只有类型的包或特征的包才能定义实现**。例如，只有 `@pkg1` 和 `@pkg2` 允许编写 `impl @pkg1.Trait for "
+"@pkg2.Type`。"
 
 #: ../../language/packages.md:109
 msgid ""
 "The second rule above allows one to add new functionality to a foreign "
 "type by defining a new trait and implementing it. This makes MoonBit's "
 "trait & method system flexible while enjoying good coherence property."
-msgstr ""
-"上述第二条规则允许通过定义新特征并实现它来为外部类型添加新功能。这使 MoonBit 的特征和方法系统灵活，同时享有良好的一致性属性。"
+msgstr "上述第二条规则允许通过定义新特征并实现它来为外部类型添加新功能。这使 MoonBit 的特征和方法系统灵活，同时享有良好的一致性属性。"
 
 #: ../../language/packages.md:112
 msgid "Visibility of traits and sealed traits"
-msgstr ""
-"特征的可见性和封闭特征"
+msgstr "特征的可见性和封闭特征"
 
 #: ../../language/packages.md:113
 msgid ""
@@ -5813,17 +5796,18 @@ msgid ""
 "declared with `pub(open) trait`, they are open to new implementations "
 "outside current package, and their methods can be freely used."
 msgstr ""
-"特征有四种可见性，就像 `struct` 和 `enum`：私有、抽象、只读和完全公开。私有特征使用 `priv trait` 声明，对外部完全不可见。"
-"抽象特征是默认可见性：只有特征的名称对外部可见，特征中的方法不会暴露。"
-"只读特征使用 `pub(readonly) trait` 声明，它们的方法可以从外部调用，但只有当前包可以为只读特征添加新实现。"
-"最后，完全公开特征使用 `pub(open) trait` 声明，它们对外部新实现是开放的，它们的方法可以自由使用。"
+"特征有四种可见性，就像 `struct` 和 `enum`：私有、抽象、只读和完全公开。私有特征使用 `priv trait` "
+"声明，对外部完全不可见。抽象特征是默认可见性：只有特征的名称对外部可见，特征中的方法不会暴露。只读特征使用 `pub(readonly) "
+"trait` 声明，它们的方法可以从外部调用，但只有当前包可以为只读特征添加新实现。最后，完全公开特征使用 `pub(open) trait` "
+"声明，它们对外部新实现是开放的，它们的方法可以自由使用。"
 
 #: ../../language/packages.md:120
 msgid ""
 "Currently, `pub trait` defaults to `pub(open) trait`. But in the future, "
 "the semantic of `pub trait` will be ported to `pub(readonly)`."
 msgstr ""
-"目前，`pub trait` 的语义默认为 `pub(open) trait`。但在未来，`pub trait` 的含义将迁移到 `pub(readonly)`。"
+"目前，`pub trait` 的语义默认为 `pub(open) trait`。但在未来，`pub trait` 的含义将迁移到 "
+"`pub(readonly)`。"
 
 #: ../../language/packages.md:123
 msgid ""
@@ -5835,13 +5819,11 @@ msgid ""
 "declaration of the form `impl Trait for Type with ...` in your package. "
 "Implementations with only regular method and default implementations will"
 " not be available outside."
-msgstr ""
-"抽象和只读特征是封闭的，因为只有定义特征的包才能实现它们。在其包外实现封闭（抽象或只读）特征会导致编译器错误。"
+msgstr "抽象和只读特征是封闭的，因为只有定义特征的包才能实现它们。在其包外实现封闭（抽象或只读）特征会导致编译器错误。"
 
 #: ../../language/packages.md:129
 msgid "Here's an example of abstract trait:"
-msgstr ""
-"以下是抽象特征的示例："
+msgstr "以下是抽象特征的示例："
 
 #: ../../language/packages.md:132
 msgid ""
@@ -5867,8 +5849,7 @@ msgstr ""
 
 #: ../../language/packages.md:153
 msgid "From outside this package, users can only see the following:"
-msgstr ""
-"从包外，用户只能看到以下内容："
+msgstr "从包外，用户只能看到以下内容："
 
 #: ../../language/packages.md:155
 msgid ""
@@ -5886,33 +5867,32 @@ msgid ""
 "The author of `Number` can make use of the fact that only `Int` and "
 "`Double` can ever implement `Number`, because new implementations are not"
 " allowed outside."
-msgstr ""
-"`Number` 的作者可以利用只有 `Int` 和 `Double` 可以实现 `Number` 这一事实，因为在外部不允许新的实现。"
+msgstr "`Number` 的作者可以利用只有 `Int` 和 `Double` 可以实现 `Number` 这一事实，因为在外部不允许新的实现。"
 
 #: ../../language/tests.md:1
 msgid "Writing Tests"
-msgstr ""
+msgstr "编写测试"
 
 #: ../../language/tests.md:3
 msgid ""
 "Tests are important for improving quality and maintainability of a "
 "program. They verify the behavior of a program and also serves as a "
 "specification to avoid regressions over time."
-msgstr ""
+msgstr "测试对于提高程序的质量和可维护性很重要。它们验证程序的行为，也作为规范，以避免随时间的推移出现退步。"
 
 #: ../../language/tests.md:5
 msgid "MoonBit comes with test support to make the writing easier and simpler."
-msgstr ""
+msgstr "MoonBit 提供测试支持，使编写测试更加简单和容易。"
 
 #: ../../language/tests.md:7
 msgid "Test Blocks"
-msgstr ""
+msgstr "测试块"
 
 #: ../../language/tests.md:9
 msgid ""
 "MoonBit provides the test code block for writing inline test cases. For "
 "example:"
-msgstr ""
+msgstr "MoonBit 提供测试代码块，用于编写内联测试用例。例如："
 
 #: ../../language/tests.md:17
 msgid ""
@@ -5924,13 +5904,16 @@ msgid ""
 "assertion fails, it prints an error message and terminates the test. The "
 "string `\"test_name\"` is used to identify the test case and is optional."
 msgstr ""
+"测试代码块本质上是一个返回 `Unit` 抛出 `String` 的函数。它在执行 `moon test` "
+"期间被调用，并通过构建系统输出测试报告。`assert_eq` 函数来自标准库；如果断言失败，它会打印错误消息并终止测试。字符串 "
+"`\"test_name\"` 用于标识测试用例，是可选的。"
 
 #: ../../language/tests.md:19
 msgid ""
 "If a test name starts with `\"panic\"`, it indicates that the expected "
 "behavior of the test is to trigger a panic, and the test will only pass "
 "if the panic is triggered. For example:"
-msgstr ""
+msgstr "如果测试名称以 `\"panic\"` 开头，表示测试的预期行为是触发 panic，只有在触发 panic 时测试才会通过。例如："
 
 #: ../../language/tests.md:21
 msgid ""
@@ -5942,7 +5925,7 @@ msgstr ""
 
 #: ../../language/tests.md:27
 msgid "Snapshot Tests"
-msgstr ""
+msgstr "快照测试"
 
 #: ../../language/tests.md:29
 msgid ""
@@ -5950,10 +5933,12 @@ msgid ""
 "MoonBit provides three kinds of snapshot tests. All of which can be "
 "inserted or updated automatically using `moon test --update`."
 msgstr ""
+"在指定预期值时，编写测试可能会很繁琐。因此，MoonBit 提供了三种快照测试。所有这些都可以使用 `moon test --update` "
+"自动插入或更新。"
 
 #: ../../language/tests.md:32
 msgid "Snapshotting `Show`"
-msgstr ""
+msgstr "快照 `Show`"
 
 #: ../../language/tests.md:34
 msgid ""
@@ -5963,6 +5948,9 @@ msgid ""
 "content of the data structures.  The labelled argument `content` can be "
 "omitted as `moon test --update` will insert it for you:"
 msgstr ""
+"我们可以使用 `inspect!(x, content=\"x\")` 来检查实现了 `Show` "
+"特征的任何内容。正如我们之前提到的，`Show` 是一个可以派生的内建特征，提供了 `to_string`来打印数据结构的内容。标记参数 "
+"`content` 可以省略，因为 `moon test --update` 会自动插入："
 
 #: ../../language/tests.md:38
 msgid ""
@@ -5975,20 +5963,20 @@ msgstr ""
 
 #: ../../language/tests.md:44
 msgid "Snapshotting `JSON`"
-msgstr ""
+msgstr "快照 `JSON`"
 
 #: ../../language/tests.md:46
 msgid ""
 "The problem with the derived `Show` trait is that it does not perform "
 "pretty printing, resulting in extremely long output."
-msgstr ""
+msgstr "派生的 `Show` 特征的问题是它不能对输出进行格式化，导致输出非常长。"
 
 #: ../../language/tests.md:48
 msgid ""
 "The solution is to use `@json.inspect!(x, content=x)`. The benefit is "
 "that the resulting content is a JSON structure, which can be more "
 "readable after being formatted."
-msgstr ""
+msgstr "解决方案是使用 `@json.inspect!(x, content=x)`。其好处是生成的内容是一个 JSON 结构，在格式化后更易读。"
 
 #: ../../language/tests.md:50
 msgid ""
@@ -6029,23 +6017,23 @@ msgstr ""
 msgid ""
 "One can also implement a custom `ToJson` to keep only the essential "
 "information."
-msgstr ""
+msgstr "也可以实现自定义 `ToJson` 来保留必要的信息。"
 
 #: ../../language/tests.md:58
 msgid "Snapshotting Anything"
-msgstr ""
+msgstr "快照任何内容"
 
 #: ../../language/tests.md:60
 msgid ""
 "Still, sometimes we want to not only record one data structure but the "
 "output of a whole process."
-msgstr ""
+msgstr "有时我们不仅要记录一个数据结构，还要记录整个过程的输出。"
 
 #: ../../language/tests.md:62
 msgid ""
 "A full snapshot test can be used to record anything using "
 "`@test.T::write` and `@test.T::writeln`:"
-msgstr ""
+msgstr "可以使用完整的快照测试使用 `@test.T::write` 和 `@test.T::writeln` 记录任何内容："
 
 #: ../../language/tests.md:64
 msgid ""
@@ -6060,7 +6048,7 @@ msgstr ""
 msgid ""
 "This will create a file under `__snapshot__` of that package with the "
 "given filename:"
-msgstr ""
+msgstr "这将在该包的 `__snapshot__` 下创建一个具有给定文件名的文件："
 
 #: ../../language/tests.md:72
 msgid "Hello, world! And hello, MoonBit!\n"
@@ -6070,11 +6058,11 @@ msgstr ""
 msgid ""
 "This can also be used for applications to test the generated output, "
 "whether it were creating an image, a video or some custom data."
-msgstr ""
+msgstr "这也可以用于测试应用程序的输出，无论是创建图像、视频还是一些自定义数据。"
 
 #: ../../language/tests.md:77
 msgid "BlackBox Tests and WhiteBox Tests"
-msgstr ""
+msgstr "黑盒测试和白盒测试"
 
 #: ../../language/tests.md:79
 msgid ""
@@ -6083,6 +6071,8 @@ msgid ""
 "public. That's why MoonBit provides BlackBox tests, allowing developers "
 "to have a grasp of how others are feeling."
 msgstr ""
+"在开发库时，验证用户是否可以正确使用它是很重要的。例如，可能会忘记使类型或函数公开。这就是为什么 MoonBit "
+"提供了黑盒测试，允许开发人员了解其他人的感受。"
 
 #: ../../language/tests.md:81
 msgid ""
@@ -6090,20 +6080,31 @@ msgid ""
 "WhiteBox tests as we can see everything. Such tests can be defined inline"
 " or defined in a file whose name ends with `_wbtest.mbt`."
 msgstr ""
+"只能访问包中所有成员的测试称为白盒测试，因为我们可以看到一切。这样的测试可以内联定义，也可以在文件中定义，文件名以 `_wbtest.mbt` "
+"结尾。"
 
 #: ../../language/tests.md:83
 msgid ""
 "A test that has access only to the public members in a package is called "
 "a BlackBox tests. Such tests need to be defined in a file whose name ends"
 " with `_test.mbt`."
-msgstr ""
+msgstr "只能访问包中公共成员的测试称为黑盒测试。这样的测试需要在文件中定义，文件名以 `_test.mbt` 结尾。"
 
 #: ../../language/tests.md:85
 msgid ""
 "The WhiteBox test files (`_wbtest.mbt`) imports the packages defined in "
 "the `import` and `wbtest-import` sections of the package configuration "
-"(`moon.pkg.json`).  The BlackBox test files (`_test.mbt`) imports the "
-"current package and the packages defined in the `import` and `test-"
-"import` sections of the package configuration (`moon.pkg.json`)."
+"(`moon.pkg.json`)."
 msgstr ""
+"白盒测试文件（`_wbtest.mbt`）导入包配置（`moon.pkg.json`）中的 `import` 和 `wbtest-import` "
+"部分定义的包。"
+
+#: ../../language/tests.md:87
+msgid ""
+"The BlackBox test files (`_test.mbt`) imports the current package and the"
+" packages defined in the `import` and `test-import` sections of the "
+"package configuration (`moon.pkg.json`)."
+msgstr ""
+"黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 "
+"`test-import` 部分定义的包。"
 
