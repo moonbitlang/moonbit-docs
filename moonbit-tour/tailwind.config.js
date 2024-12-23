@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: "selector",
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", "./dev/*.ts"],
   theme: {
     fontFamily: {
@@ -33,7 +33,36 @@ export default {
         "serif",
       ],
     },
-    extend: {},
+    extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            'code::before': {
+              content: '""',
+            },
+            'code::after': {
+              content: '""',
+            },
+            code: {
+              backgroundColor: '#f7fafc',
+              borderRadius: '0.25rem',
+              padding: '0.125rem 0.25rem',
+              border: '1px solid #e9e9e9',
+              color: '#222',
+            },
+          },
+        },
+        invert: {
+          css: {
+            code: {
+              backgroundColor: '#1f2937',
+              border: '1px solid #374151',
+              color: '#d1d5db',
+            },
+          },
+        },
+      },
+    },
   },
   plugins: [require("@tailwindcss/typography")],
 };
