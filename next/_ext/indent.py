@@ -10,3 +10,5 @@ class ModifiedIndent:
         return f"```\n{self.s}\n```"
 
 i18n.indent = ModifiedIndent
+
+def setup(_app): pass
