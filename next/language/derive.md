@@ -105,7 +105,9 @@ JSON files correspondingly.
 
 Both derive directives accept a number of arguments to configure the exact behavior of serialization and deserialization.
 
-> **Warning**: The actual behavior of JSON serialization arguments is unstable.
+```{warning}
+The actual behavior of JSON serialization arguments is unstable.
+```
 
 ```{literalinclude} /sources/language/src/derive/json.mbt
 :language: moonbit
