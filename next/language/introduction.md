@@ -11,10 +11,18 @@ A MoonBit program consists of top-level definitions including:
 
 MoonBit distinguishes between statements and expressions. In a function body, only the last clause should be an expression, which serves as a return value. For example:
 
-```{literalinclude} /sources/language/src/functions/top.mbt
-:language: moonbit
-:start-after: start expression
-:end-before: end expression
+```{code-block} moonbit
+:class: top-level
+fn foo() -> Int {
+  let x = 1
+  x + 1
+}
+
+fn bar() -> Int {
+  let x = 1
+  //! x + 1
+  x + 2
+}
 ```
 
 Expressions include:
@@ -42,8 +50,18 @@ A variable can be declared as mutable or immutable using `let mut` or `let`, res
 
 A constant can only be declared at top level and cannot be changed.
 
-```{literalinclude} /sources/language/src/variable/top.mbt
-:language: moonbit
+```{code-block} moonbit
+:class: top-level
+let zero = 0
+
+const ZERO = 0
+
+fn main {
+  //! const ZERO = 0 
+  let mut i = 10
+  i = 20
+  println(i + zero + ZERO)
+}
 ```
 
 ```{note}
@@ -71,20 +89,24 @@ There is a specialized function called `init` function. The `init` function is s
 3. An `init` function can't be explicitly called or referred to by other functions. 
 Instead, all `init` functions will be implicitly called when initializing a package. Therefore, `init` functions should only consist of statements.
 
-```{literalinclude} /sources/language/src/main/top.mbt
-:language: moonbit
-:start-after: start init
-:end-before: end init
+```{code-block} moonbit
+:class: top-level
+fn init {
+  let x = 1
+  println(x)
+}
 ```
 
 There is another specialized function called `main` function. The `main` function is the main entrance of the program, and it will be executed after the initialization stage.
 
 Same as the `init` function, it has no parameter list nor return type.
 
-```{literalinclude} /sources/language/src/main/top.mbt
-:language: moonbit
-:start-after: start main
-:end-before: end main
+```{code-block} moonbit
+:class: top-level
+fn main {
+  let x = 2
+  println(x)
+}
 ```
 
 The previous two code snippets will print the following at runtime:

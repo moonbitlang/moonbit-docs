@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path("_ext").resolve()))
 
-extensions = ['myst_parser', 'lexer', 'indent', 'sphinx_copybutton']
+extensions = ['myst_parser', 'lexer', 'check', 'indent', 'sphinx_copybutton']
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README.md", 'sources']
@@ -27,7 +27,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_book_theme'
-html_static_path = ['_static']
+# html_static_path = ['_static']
 html_theme_options = {
     "repository_url": "https://github.com/moonbitlang/moonbit-docs/",
     "path_to_docs": "next",
