@@ -779,6 +779,17 @@ A functional loop consumes arguments and returns a value. It is defined using th
 Currently in `loop exprs { ... }`, `exprs` is nonempty list, while `for { ... }` is accepted for infinite loop.
 ```
 
+### Labelled Continue/Break
+
+When a loop is labelled, it can be referenced from a `break` or `continue` from
+within a nested loop. For example:
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start loop label
+:end-before: end loop label
+```
+
 ## Iterator
 
 An iterator is an object that traverse through a sequence while providing access
