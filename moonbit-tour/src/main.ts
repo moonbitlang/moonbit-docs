@@ -29,23 +29,32 @@ const moonSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 
 </svg>
 `;
 
-let theme: "light" | "dark" = "light";
-// TODO: Preserve theme across multiple pages of the tour.
+type Theme = "light" | "dark";
 
+function getTheme(): Theme {
+  return (localStorage.getItem("theme") as Theme) ?? "light";
+}
+
+let theme: Theme = getTheme();
 const themeButton = document.querySelector<HTMLDivElement>("#theme")!;
+setTheme(theme);
 
-function toggleTheme() {
+function setTheme(theme: Theme) {
   if (theme === "light") {
-    theme = "dark";
-    document.querySelector("html")?.classList.add("dark");
-    monaco.editor.setTheme("dark-plus");
-    themeButton.innerHTML = moonSvg;
-  } else {
-    theme = "light";
     document.querySelector("html")?.classList.remove("dark");
     monaco.editor.setTheme("light-plus");
     themeButton.innerHTML = sunSvg;
+  } else {
+    document.querySelector("html")?.classList.add("dark");
+    monaco.editor.setTheme("dark-plus");
+    themeButton.innerHTML = moonSvg;
   }
+  localStorage.setItem("theme", theme);
+}
+
+function toggleTheme() {
+  theme = theme === "light" ? "dark" : "light";
+  setTheme(theme);
 }
 
 themeButton.addEventListener("click", toggleTheme);
@@ -116,7 +125,6 @@ monaco.editor.create(editor, {
     alwaysConsumeMouseWheel: false,
   },
   fontFamily: "monospace",
-  theme: "light-plus",
 });
 
 run();
