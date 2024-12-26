@@ -43,11 +43,11 @@ function setTheme(theme: Theme) {
   if (theme === "light") {
     document.querySelector("html")?.classList.remove("dark");
     monaco.editor.setTheme("light-plus");
-    themeButton.innerHTML = sunSvg;
+    themeButton.innerHTML = moonSvg;
   } else {
     document.querySelector("html")?.classList.add("dark");
     monaco.editor.setTheme("dark-plus");
-    themeButton.innerHTML = moonSvg;
+    themeButton.innerHTML = sunSvg;
   }
   localStorage.setItem("theme", theme);
 }
