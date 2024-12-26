@@ -12,7 +12,7 @@ The `is-main` field is used to specify whether a package needs to be linked into
 
 The output of the linking process depends on the backend. When this field is set to `true`:
 
-- For the `wasm` and `wasm-gc` backends, a standalone WebAssembly module will be generated.
+- For the Wasm and `wasm-gc` backends, a standalone WebAssembly module will be generated.
 - For the `js` backend, a standalone JavaScript file will be generated.
 
 ## import
@@ -83,9 +83,9 @@ The `link` option is used to specify link options, and its value can be either a
 
 #### Configurable Options
 
-- The `exports` option is used to specify the function names exported by the `wasm` backend.
+- The `exports` option is used to specify the function names exported by the Wasm backend.
 
-  For example, in the following configuration, the `hello` function from the current package is exported as the `hello` function in the `wasm` module, and the `foo` function is exported as the `bar` function in the `wasm` module. In the `wasm` host, the `hello` and `bar` functions can be called to invoke the `hello` and `foo` functions from the current package.
+  For example, in the following configuration, the `hello` function from the current package is exported as the `hello` function in the Wasm module, and the `foo` function is exported as the `bar` function in the Wasm module. In the Wasm host, the `hello` and `bar` functions can be called to invoke the `hello` and `foo` functions from the current package.
 
   ```json
   {
@@ -100,7 +100,7 @@ The `link` option is used to specify link options, and its value can be either a
   }
   ```
 
-- The `heap-start-address` option is used to specify the starting address of the linear memory that can be used when compiling to the `wasm` backend.
+- The `heap-start-address` option is used to specify the starting address of the linear memory that can be used when compiling to the Wasm backend.
 
   For example, the following configuration sets the starting address of the linear memory to 1024.
 
@@ -114,9 +114,9 @@ The `link` option is used to specify link options, and its value can be either a
   }
   ```
 
-- The `import-memory` option is used to specify the linear memory imported by the `wasm` module.
+- The `import-memory` option is used to specify the linear memory imported by the Wasm module.
 
-  For example, the following configuration specifies that the linear memory imported by the `wasm` module is the `memory` variable from the `env` module.
+  For example, the following configuration specifies that the linear memory imported by the Wasm module is the `memory` variable from the `env` module.
 
   ```json
   {
@@ -131,7 +131,7 @@ The `link` option is used to specify link options, and its value can be either a
   }
   ```
 
-- The `export-memory-name` option is used to specify the name of the linear memory exported by the `wasm` module.
+- The `export-memory-name` option is used to specify the name of the linear memory exported by the Wasm module.
 
   ```json
   {
@@ -145,7 +145,7 @@ The `link` option is used to specify link options, and its value can be either a
 
 ### Wasm GC Backend Link Options
 
-The link options for the `wasm-gc` backend are similar to those for the `wasm` backend, except there is no `heap-start-address` option.
+The link options for the `wasm-gc` backend are similar to those for the Wasm backend, except there is no `heap-start-address` option.
 
 ### JS Backend Link Options
 
