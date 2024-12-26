@@ -153,9 +153,9 @@ msgid ""
 "  C(mut x~ : String, Char, y~ : Bool)\n"
 "}\n"
 msgstr ""
-"type! E1 Int  // 错误类型 E1 具有一个构造函数 E1，并带有一个 Int 负载\n"
-"type! E2      // 错误类型 E2 具有一个没有负载的构造函数 E2\n"
-"type! E3 {    // 错误类型 E3 类似于普通的枚举类型，有三个构造函数\n"
+"type! E1 Int  // 错误类型 E1 具有一个构造器 E1，并带有一个 Int 负载\n"
+"type! E2      // 错误类型 E2 具有一个没有负载的构造器 E2\n"
+"type! E3 {    // 错误类型 E3 类似于普通的枚举类型，有三个构造器\n"
 "  A\n"
 "  B(Int, x~ : String)\n"
 "  C(mut x~ : String, Char, y~ : Bool)\n"
@@ -560,7 +560,7 @@ msgstr ""
 "要使用 `DivisionByZeroError` 类型，我们通常会定义一个函数，该函数通过在签名中定义返回类型为 `T ! E` "
 "来表示它会引发错误，其中 `T` 是实际的返回类型，`E` 是错误类型。在这个例子中，它是 "
 "`Int!DivisionByZeroError`。错误可以使用 `raise e` 抛出，其中 `e` 是 `E` 的实例，可以使用 `S` "
-"的默认构造函数构造。"
+"的默认构造器构造。"
 
 #: ../../language/error-handling.md:220
 msgid ""
@@ -828,7 +828,7 @@ msgstr ""
 msgid ""
 "Although the constructor `Err` expects a type of `Error`, we may still "
 "pass an error of type `DivisionByZeroError` to it."
-msgstr "尽管构造函数 `Err` 期望一个 `Error` 类型，我们仍然可以将 `DivisionByZeroError` 类型的错误传递给它。"
+msgstr "尽管构造器 `Err` 期望一个 `Error` 类型，我们仍然可以将 `DivisionByZeroError` 类型的错误传递给它。"
 
 #: ../../language/error-handling.md:387
 msgid ""
@@ -885,7 +885,7 @@ msgid ""
 "Besides using the constructor directly, the function `fail!` provides a "
 "shorthand to construct a `Failure`. And if we take a look at the source "
 "code:"
-msgstr "除了直接使用构造函数，函数 `fail!` 提供了一个快捷方式来构造 `Failure`。如果我们查看源代码："
+msgstr "除了直接使用构造器，函数 `fail!` 提供了一个快捷方式来构造 `Failure`。如果我们查看源代码："
 
 #: ../../language/error-handling.md:422
 msgid ""
@@ -2170,7 +2170,7 @@ msgid ""
 "constructors in the `enum` section below."
 msgstr ""
 "函数接受参数并产生结果。在 MoonBit 中，函数是一等公民，这意味着函数可以是其他函数的参数或返回值。MoonBit "
-"的命名约定要求函数名不应以大写字母（A-Z）开头。请参见下面的 `enum` 部分中的构造函数。"
+"的命名约定要求函数名不应以大写字母（A-Z）开头。请参见下面的 `enum` 部分中的构造器。"
 
 #: ../../language/fundamentals.md:334
 msgid "Top-Level Functions"
@@ -3339,15 +3339,15 @@ msgstr ""
 
 #: ../../language/fundamentals.md:861
 msgid "Custom Data Types"
-msgstr ""
+msgstr "自定义数据类型"
 
 #: ../../language/fundamentals.md:863
 msgid "There are two ways to create new data types: `struct` and `enum`."
-msgstr ""
+msgstr "创建新数据类型有两种方法：`struct` 和 `enum`。"
 
 #: ../../language/fundamentals.md:865
 msgid "Struct"
-msgstr ""
+msgstr "结构体"
 
 #: ../../language/fundamentals.md:867
 msgid ""
@@ -3359,6 +3359,9 @@ msgid ""
 "using the dot syntax `s.f`. If a field is marked as mutable using the "
 "keyword `mut`, it can be assigned a new value."
 msgstr ""
+"在 MoonBit 中，结构体类似于元组，但其字段由字段名称索引。可以使用结构体字面量构造结构体，结构体字面量由一组带标签的值组成，"
+"并用大括号括起来。如果结构体的字段与类型定义完全匹配，那么结构体字面量的类型可以自动推断。"
+"可以使用点语法 `s.f` 访问字段。如果使用关键字 `mut` 标记字段为可变的，则可以为其分配新值。"
 
 #: ../../language/fundamentals.md:869
 msgid ""
@@ -3390,7 +3393,7 @@ msgstr ""
 
 #: ../../language/fundamentals.md:887
 msgid "Constructing Struct with Shorthand"
-msgstr ""
+msgstr "使用简写构造结构体"
 
 #: ../../language/fundamentals.md:889
 msgid ""
@@ -3398,6 +3401,7 @@ msgid ""
 " to repeat those names when constructing a struct. You can use shorthand "
 "instead, it behaves exactly the same:"
 msgstr ""
+"如果已经有一些变量，如 `name` 和 `email`，在构造结构体时重复这些名称是多余的。可以使用简写，它的行为完全相同："
 
 #: ../../language/fundamentals.md:891
 msgid ""
@@ -3411,6 +3415,7 @@ msgid ""
 "If there's no other struct that has the same fields, it's redundant to "
 "add the struct's name when constructing it:"
 msgstr ""
+"如果没有其他具有相同字段的结构体，在构造结构体时添加结构体的名称是多余的："
 
 #: ../../language/fundamentals.md:900
 msgid "let u2 = { id : 0, name, email }\n"
@@ -3418,13 +3423,14 @@ msgstr ""
 
 #: ../../language/fundamentals.md:907
 msgid "Struct Update Syntax"
-msgstr ""
+msgstr "结构体更新语法"
 
 #: ../../language/fundamentals.md:909
 msgid ""
 "It's useful to create a new struct based on an existing one, but with "
 "some fields updated."
 msgstr ""
+"可以用这个语法来根据现有结构体创建一个新的结构体，但只更新部分字段。"
 
 #: ../../language/fundamentals.md:911
 msgid ""
@@ -3448,13 +3454,14 @@ msgstr ""
 
 #: ../../language/fundamentals.md:923
 msgid "Enum"
-msgstr ""
+msgstr "枚举"
 
 #: ../../language/fundamentals.md:925
 msgid ""
 "Enum types are similar to algebraic data types in functional languages. "
 "Users familiar with C/C++ may prefer calling it tagged union."
 msgstr ""
+"枚举类型类似于函数式语言中的代数数据类型。熟悉 C/C++ 的用户可能更喜欢称其为标记联合。"
 
 #: ../../language/fundamentals.md:927
 msgid ""
@@ -3463,6 +3470,8 @@ msgid ""
 "corresponding cases of an enum, or checking which branch an enum value "
 "belongs to in pattern matching:"
 msgstr ""
+"枚举可以有一组情况（构造函数）。构造函数的名称必须以大写字母开头。"
+"可以使用这些名称来构造枚举的相应情况，或在模式匹配中检查枚举值属于哪个分支："
 
 #: ../../language/fundamentals.md:929
 msgid ""
@@ -3475,6 +3484,13 @@ msgid ""
 "  Equal\n"
 "}\n"
 msgstr ""
+"/// 一个枚举类型，表示两个值之间的顺序关系，\n"
+"/// 有三种情况 \"Smaller\"、\"Greater\" 和 \"Equal\"\n"
+"enum Relation {\n"
+"  Smaller\n"
+"  Greater\n"
+"  Equal\n"
+"}\n"
 
 #: ../../language/fundamentals.md:935
 msgid ""
@@ -3508,6 +3524,33 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+"/// 比较两个整数之间的顺序关系\n"
+"fn compare_int(x : Int, y : Int) -> Relation {\n"
+"  if x < y {\n"
+"    // 当创建一个枚举时，如果目标类型已知，\n"
+"    // 可以直接写构造函数名称\n"
+"    Smaller\n"
+"  } else if x > y {\n"
+"    // 但是当目标类型未知时，\n"
+"    // 你总是可以使用 `TypeName::Constructor` 来创建一个枚举\n"
+"    Relation::Greater\n"
+"  } else {\n"
+"    Equal\n"
+"  }\n"
+"}\n"
+"\n"
+"/// 输出一个类型为 `Relation` 的值\n"
+"fn print_relation(r : Relation) -> Unit {\n"
+"  // 使用模式匹配来决定 `r` 属于哪种情况\n"
+"  match r {\n"
+"    // 在模式匹配期间，如果类型已知，\n"
+"    // 写构造函数的名称就足够了\n"
+"    Smaller => println(\"smaller!\")\n"
+"    // 但是你也可以在模式匹配中使用 `TypeName::Constructor` 语法\n"
+"    Relation::Greater => println(\"greater!\")\n"
+"    Equal => println(\"equal!\")\n"
+"  }\n"
+"}\n"
 
 #: ../../language/fundamentals.md:942
 msgid ""
@@ -3530,6 +3573,7 @@ msgid ""
 "Enum cases can also carry payload data. Here's an example of defining an "
 "integer list type using enum:"
 msgstr ""
+"枚举情况也可以携带额外数据。以下是使用枚举定义整数列表类型的示例："
 
 #: ../../language/fundamentals.md:956
 msgid ""
@@ -3541,6 +3585,12 @@ msgid ""
 "  Cons(Int, List)\n"
 "}\n"
 msgstr ""
+"enum List {\n"
+"  Nil\n"
+"  // 构造函数 `Cons` 携带额外的数据：列表的第一个元素，\n"
+"  // 和列表的其余部分\n"
+"  Cons(Int, List)\n"
+"}\n"
 
 #: ../../language/fundamentals.md:962
 msgid ""
@@ -3575,6 +3625,36 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+"// 除了将额外数据绑定到变量之外，\n"
+"// 你还可以继续匹配构造函数内部的额外数据。\n"
+"// 以下是一个函数，用于判断列表是否只包含一个元素\n"
+"fn is_singleton(l : List) -> Bool {\n"
+"  match l {\n"
+"    // 此分支仅匹配形状为 `Cons(_, Nil)` 的值，\n"
+"    // 即长度为 1 的列表\n"
+"    Cons(_, Nil) => true\n"
+"    // 使用 `_` 匹配其他所有情况\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+"\n"
+"fn print_list(l : List) -> Unit {\n"
+"  // 在模式匹配带有额外数据的枚举时，\n"
+"  // 除了决定值属于哪种情况\n"
+"  // 你还可以提取该情况内部的额外数据\n"
+"  match l {\n"
+"    Nil => println(\"nil\")\n"
+"    // 这里 `x` 和 `xs` 定义了新变量\n"
+"    // 而不是引用现有变量，\n"
+"    // 如果 `l` 是一个 `Cons`，那么 `Cons` 的额外数据\n"
+"    // （第一个元素和列表的其余部分）\n"
+"    // 将绑定到 `x` 和 `xs\n"
+"    Cons(x, xs) => {\n"
+"      println(\"\\{x},\")\n"
+"      print_list(xs)\n"
+"    }\n"
+"  }\n"
+"}\n"
 
 #: ../../language/fundamentals.md:969
 msgid ""
@@ -3586,6 +3666,12 @@ msgid ""
 "  print_list(l)\n"
 "}\n"
 msgstr ""
+"fn main {\n"
+"  // 使用 `Cons` 创建值时，必须提供 `Cons` 的额外数据\n"
+"  let l : List = Cons(1, Cons(2, Nil))\n"
+"  println(is_singleton(l))\n"
+"  print_list(l)\n"
+"}\n"
 
 #: ../../language/fundamentals.md:977
 msgid ""
@@ -3597,11 +3683,11 @@ msgstr ""
 
 #: ../../language/fundamentals.md:981
 msgid "Constructor with labelled arguments"
-msgstr ""
+msgstr "构造器与带标签参数"
 
 #: ../../language/fundamentals.md:983
 msgid "Enum constructors can have labelled argument:"
-msgstr ""
+msgstr "枚举构造器可以有带标签的参数："
 
 #: ../../language/fundamentals.md:985
 msgid ""
@@ -3610,6 +3696,10 @@ msgid ""
 "  C(x~ : Int, y~ : Int)\n"
 "}\n"
 msgstr ""
+"enum E {\n"
+"  // `x` 和 `y` 是有标签参数\n"
+"  C(x~ : Int, y~ : Int)\n"
+"}\n"
 
 #: ../../language/fundamentals.md:991
 msgid ""
@@ -3624,6 +3714,16 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+"// 使用有标签参数的构造函数进行模式匹配\n"
+"fn f(e : E) -> Unit {\n"
+"  match e {\n"
+"    // `label=pattern`\n"
+"    C(x=0, y=0) => println(\"0!\")\n"
+"    // `x~` 是 `x=x` 的缩写\n"
+"    // 未匹配的有标签参数可以通过 `..` 省略\n"
+"    C(x~, ..) => println(x)\n"
+"  }\n"
+"}\n"
 
 #: ../../language/fundamentals.md:998
 msgid ""
@@ -3645,6 +3745,7 @@ msgid ""
 "It is also possible to access labelled arguments of constructors like "
 "accessing struct fields in pattern matching:"
 msgstr ""
+"也可以像在模式匹配中访问结构体字段一样访问构造函数的有标签参数："
 
 #: ../../language/fundamentals.md:1012
 msgid ""
@@ -3673,6 +3774,30 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+"enum Object {\n"
+"  Point(x~ : Double, y~ : Double)\n"
+"  Circle(x~ : Double, y~ : Double, radius~ : Double)\n"
+"}\n"
+"\n"
+"type! NotImplementedError  derive(Show)\n"
+"\n"
+"fn distance_with(self : Object, other : Object) -> "
+"Double!NotImplementedError {\n"
+"  match (self, other) {\n"
+"    // 对于通过 `Point(..) as p` 定义的变量，\n"
+"    // 编译器知道它必须是构造函数 `Point`，\n"
+"    // 因此可以通过 `p.x`、`p.y` 等直接访问 `Point` 的字段。\n"
+"    (Point(_) as p1, Point(_) as p2) => {\n"
+"      let dx = p2.x - p1.x\n"
+"      let dy = p2.y - p1.y\n"
+"      (dx * dx + dy * dy).sqrt()\n"
+"    }\n"
+"    (Point(_), Circle(_)) | (Circle(_), Point(_)) | (Circle(_), "
+"Circle(_)) =>\n"
+"      raise NotImplementedError\n"
+"  }\n"
+"}\n"
+"\n"
 
 #: ../../language/fundamentals.md:1018
 msgid ""
@@ -3698,12 +3823,14 @@ msgstr ""
 #: ../../language/fundamentals.md:1030
 msgid "Constructor with mutable fields"
 msgstr ""
+"构造器与可变字段"
 
 #: ../../language/fundamentals.md:1032
 msgid ""
 "It is also possible to define mutable fields for constructor. This is "
 "especially useful for defining imperative data structures:"
 msgstr ""
+"也可以为构造器定义可变字段。这对于定义命令式数据结构特别有用："
 
 #: ../../language/fundamentals.md:1034
 msgid ""
@@ -3755,14 +3882,61 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+"// 使用可变二叉搜索树实现的集合。\n"
+"struct Set[X] {\n"
+"  mut root : Tree[X]\n"
+"}\n"
+"\n"
+"fn Set::insert[X : Compare](self : Set[X], x : X) -> Unit {\n"
+"  self.root = self.root.insert(x, parent=Nil)\n"
+"}\n"
+"\n"
+"// 带有亲指针的可变二叉搜索树\n"
+"enum Tree[X] {\n"
+"  Nil\n"
+"  // 只有带标签的参数可以是可变的\n"
+"  Node(\n"
+"    mut value~ : X,\n"
+"    mut left~ : Tree[X],\n"
+"    mut right~ : Tree[X],\n"
+"    mut parent~ : Tree[X]\n"
+"  )\n"
+"}\n"
+"\n"
+"// 将一个新元素插入到二叉搜索树中。\n"
+"// 返回新的树\n"
+"fn Tree::insert[X : Compare](\n"
+"  self : Tree[X],\n"
+"  x : X,\n"
+"  parent~ : Tree[X]\n"
+") -> Tree[X] {\n"
+"  match self {\n"
+"    Nil => Node(value=x, left=Nil, right=Nil, parent~)\n"
+"    Node(_) as node => {\n"
+"      let order = x.compare(node.value)\n"
+"      if order == 0 {\n"
+"        // 修改构造器的字段\n"
+"        node.value = x\n"
+"      } else if order < 0 {\n"
+"        // 在这里创建的 `node` 和 `node.left` 之间的循环\n"
+"        node.left = node.left.insert(x, parent=node)\n"
+"      } else {\n"
+"        node.right = node.right.insert(x, parent=node)\n"
+"      }\n"
+"      // 树不为空，所以新的树就是原来的树\n"
+"      node\n"
+"    }\n"
+"  }\n"
+"}\n"
 
 #: ../../language/fundamentals.md:1040
 msgid "Newtype"
-msgstr ""
+msgstr "Newtype"
 
 #: ../../language/fundamentals.md:1042
 msgid "MoonBit supports a special kind of enum called newtype:"
 msgstr ""
+"MoonBit 支持一种特殊的枚举称为 newtype："
 
 #: ../../language/fundamentals.md:1044
 msgid ""
@@ -3774,6 +3948,13 @@ msgid ""
 "\n"
 "type UserName String\n"
 msgstr ""
+"// `UserId` 是一个与 `Int` 不同的全新类型，\n"
+"// 你可以为 `UserId` 定义新方法等。\n"
+"// 但与此同时，`UserId` 的内部表示\n"
+"// 与 `Int` 完全相同\n"
+"type UserId Int\n"
+"\n"
+"type UserName String\n"
 
 #: ../../language/fundamentals.md:1050
 msgid ""
@@ -3782,6 +3963,8 @@ msgid ""
 "values of newtype, or use pattern matching to extract the underlying "
 "representation of a newtype:"
 msgstr ""
+"Newtype 类似于只有一个构造函数的枚举（与 newtype 本身的名称相同）。"
+"因此，可以使用构造函数创建 newtype 的值，或使用模式匹配提取 newtype 的底层表示："
 
 #: ../../language/fundamentals.md:1052
 msgid ""
@@ -3806,6 +3989,7 @@ msgid ""
 "Besides pattern matching, you can also use `._` to extract the internal "
 "representation of newtypes:"
 msgstr ""
+"除了模式匹配，还可以使用 `._` 提取 newtype 的内部表示："
 
 #: ../../language/fundamentals.md:1066
 msgid ""
@@ -3823,10 +4007,12 @@ msgstr ""
 #: ../../language/fundamentals.md:1078
 msgid "Type alias"
 msgstr ""
+"类型别名"
 
 #: ../../language/fundamentals.md:1079
 msgid "MoonBit supports type alias via the syntax `typealias Name = TargetType`:"
 msgstr ""
+"MoonBit 支持使用语法 `typealias Name = TargetType` 定义类型别名："
 
 #: ../../language/fundamentals.md:1081
 msgid ""
@@ -3835,6 +4021,10 @@ msgid ""
 "// type alias are private by default\n"
 "typealias MapString[X] = Map[String, X]\n"
 msgstr ""
+"pub typealias Index = Int\n"
+"\n"
+"// 类型别名默认为私有\n"
+"typealias MapString[X] = Map[String, X]\n"
 
 #: ../../language/fundamentals.md:1087
 msgid ""
@@ -3843,10 +4033,13 @@ msgid ""
 "same as its definition. So for example one cannot define new methods or "
 "implement traits for a type alias."
 msgstr ""
+"与上面所有其他类型声明不同，类型别名不定义新类型，它只是一个行为与其定义完全相同的类型宏。"
+"因此，例如，不能为类型别名定义新方法或实现特征。"
 
 #: ../../language/fundamentals.md:1092
 msgid "Type alias can be used to perform incremental code refactor."
 msgstr ""
+"类型别名可用于执行增量代码重构。"
 
 #: ../../language/fundamentals.md:1094
 msgid ""
@@ -3855,10 +4048,11 @@ msgid ""
 "**incrementally** port uses of `@pkgA.T` to `@pkgB.T`. The type alias can"
 " be removed after all uses of `@pkgA.T` is migrated to `@pkgB.T`."
 msgstr ""
+"例如，如果要将类型 `T` 从 `@pkgA` 移动到 `@pkgB`，可以在 `@pkgA` 中留下一个类型别名 `typealias T = @pkgB.T`，"
 
 #: ../../language/fundamentals.md:1099
 msgid "Local types"
-msgstr ""
+msgstr "本地类型"
 
 #: ../../language/fundamentals.md:1101
 msgid ""
@@ -3869,6 +4063,9 @@ msgid ""
 "themselves. Local types can derive methods using derive, but no "
 "additional methods can be defined manually. For  example:"
 msgstr ""
+"Moonbit 支持在顶层函数的顶部声明结构体/枚举/newtype，这些类型仅在当前顶层函数中可见。"
+"这些本地类型可以使用顶层函数的泛型参数，但不能引入额外的泛型参数。本地类型可以使用 derive 派生方法，"
+"但不能手动定义额外的方法。例如："
 
 #: ../../language/fundamentals.md:1108
 msgid ""
@@ -3888,58 +4085,71 @@ msgstr ""
 #: ../../language/fundamentals.md:1114
 msgid "Currently, local types do not support being declared as error types."
 msgstr ""
+"目前，本地类型不支持声明为错误类型。"
 
 #: ../../language/fundamentals.md:1116
 msgid "Pattern Matching"
 msgstr ""
+"模式匹配"
 
 #: ../../language/fundamentals.md:1118
 msgid ""
 "Pattern matching allows us to match on specific pattern and bind data "
 "from data structures."
 msgstr ""
+"模式匹配允许我们匹配特定模式并从数据结构中绑定数据。"
 
 #: ../../language/fundamentals.md:1120
 msgid "Simple Patterns"
 msgstr ""
+"简单模式"
 
 #: ../../language/fundamentals.md:1122
 msgid "We can pattern match expressions against"
 msgstr ""
+"我们可以将表达式与以下内容进行模式匹配："
 
 #: ../../language/fundamentals.md:1124
 msgid "literals, such as boolean values, numbers, chars, strings, etc"
 msgstr ""
+"字面量，例如布尔值、数字、字符、字符串等"
 
 #: ../../language/fundamentals.md:1125
 msgid "constants"
 msgstr ""
+"常量"
 
 #: ../../language/fundamentals.md:1126
 msgid "structs"
 msgstr ""
+"结构体"
 
 #: ../../language/fundamentals.md:1127
 msgid "enums"
 msgstr ""
+"枚举"
 
 #: ../../language/fundamentals.md:1128
 msgid "arrays"
 msgstr ""
+"数组"
 
 #: ../../language/fundamentals.md:1129
 msgid "maps"
 msgstr ""
+"键值对"
 
 #: ../../language/fundamentals.md:1130
 msgid "JSONs"
 msgstr ""
+"JSON"
 
 #: ../../language/fundamentals.md:1132
 msgid ""
 "and so on. We can define identifiers to bind the matched values so that "
 "they can be used later."
 msgstr ""
+"等等。我们可以定义标识符来绑定匹配的值，以便稍后使用。"
 
 #: ../../language/fundamentals.md:1134
 msgid ""
@@ -3960,6 +4170,7 @@ msgid ""
 "`..` to ignore remaining fields of struct or enum, or array (see [array "
 "pattern](#array-pattern))."
 msgstr ""
+"我们可以使用 `_` 作为我们不关心的值的通配符，并使用 `..` 忽略结构体或枚举的剩余字段，或数组（参见 [数组模式](#array-pattern)）。"
 
 #: ../../language/fundamentals.md:1143
 msgid ""
@@ -3997,6 +4208,8 @@ msgid ""
 "single pattern, and the same set of variables should be bound on both "
 "sides of `|` patterns."
 msgstr ""
+"我们可以使用 `as` 为某些模式命名，可以使用 `|` 一次匹配多个情况。在单个模式中，变量名只能绑定一次，"
+"并且在 `|` 模式的两侧应绑定相同的变量集。"
 
 #: ../../language/fundamentals.md:1152
 msgid ""
@@ -4010,37 +4223,43 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1159
 msgid "Array Pattern"
-msgstr ""
+msgstr "数组模式"
 
 #: ../../language/fundamentals.md:1161
 msgid ""
 "For `Array`, `FixedArray` and `ArrayView`, MoonBit allows using array "
 "pattern."
 msgstr ""
+"对于 `Array`、`FixedArray` 和 `ArrayView`，MoonBit 允许使用数组模式。"
 
 #: ../../language/fundamentals.md:1163
 msgid "Array pattern have the following forms:"
 msgstr ""
+"数组模式有以下形式："
 
 #: ../../language/fundamentals.md:1165
 msgid "`[]` : matching for an empty data structure"
 msgstr ""
+"`[]`：匹配空数据结构"
 
 #: ../../language/fundamentals.md:1166
 msgid "`[pa, pb, pc]` : matching for known number of elements, 3 in this example"
 msgstr ""
+"`[pa, pb, pc]`：匹配已知数量的元素，在此示例中为 3 个"
 
 #: ../../language/fundamentals.md:1167
 msgid ""
 "`[pa, ..]` : matching for known number of elements, followed by unknown "
 "number of elements"
 msgstr ""
+"`[pa, ..]`：匹配已知数量的元素，后跟未知数量的元素"
 
 #: ../../language/fundamentals.md:1168
 msgid ""
 "`[.., pa]` : matching for known number of elements, preceded by unknown "
 "number of elements"
 msgstr ""
+"`[.., pa]`：匹配已知数量的元素，前面是未知数量的元素"
 
 #: ../../language/fundamentals.md:1170
 msgid ""
@@ -4055,13 +4274,14 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1176
 msgid "Range Pattern"
-msgstr ""
+msgstr "范围模式"
 
 #: ../../language/fundamentals.md:1177
 msgid ""
 "For builtin integer types and `Char`, MoonBit allows matching whether the"
 " value falls in a specific range."
 msgstr ""
+"对于内置整数类型和 `Char`，MoonBit 允许匹配值是否落在特定范围内。"
 
 #: ../../language/fundamentals.md:1179
 msgid ""
@@ -4069,22 +4289,23 @@ msgid ""
 "upper bound is exclusive, and `..=` means inclusive upper bound. `a` and "
 "`b` can be one of:"
 msgstr ""
+"范围模式的形式为 `a..<b` 或 `a..=b`，其中 `..<` 表示上限是排他的，`..=` 表示包含上限。`a` 和 `b` 可以是以下之一："
 
 #: ../../language/fundamentals.md:1182
 msgid "literal"
-msgstr ""
+msgstr "字面量"
 
 #: ../../language/fundamentals.md:1183
 msgid "named constant declared with `const`"
-msgstr ""
+msgstr "使用 `const` 声明的常量"
 
 #: ../../language/fundamentals.md:1184
 msgid "`_`, meaning the pattern has no restriction on this side"
-msgstr ""
+msgstr "`_`，表示此模式在此侧没有限制"
 
 #: ../../language/fundamentals.md:1186
 msgid "Here are some examples:"
-msgstr ""
+msgstr "以下是一些示例："
 
 #: ../../language/fundamentals.md:1188
 msgid ""
@@ -4110,7 +4331,7 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1195
 msgid "Map Pattern"
-msgstr ""
+msgstr "Map 模式"
 
 #: ../../language/fundamentals.md:1197
 msgid ""
@@ -4120,6 +4341,8 @@ msgid ""
 "value` syntax will match no matter `key` exists or not, and `value` will "
 "be matched against `map[key]` (an optional)."
 msgstr ""
+"MoonBit 允许在类似 map 的数据结构上方便地进行匹配。在 map 模式内，`key : value` 语法将在 map 中存在 `key` 时匹配，"
+"并将 `key` 的值与模式 `value` 匹配。`key? : value` 语法将无论 `key` 是否存在都匹配，`value` 将与 `map[key]`（一个可选项）匹配。"
 
 #: ../../language/fundamentals.md:1201
 msgid ""
@@ -4133,6 +4356,14 @@ msgid ""
 "  // compiler reports missing case: { \"b\"? : None, \"a\"? : None }\n"
 "}\n"
 msgstr ""
+"match map {\n"
+"  // 仅在 `map` 中存在 \"b\" 时匹配\n"
+"  { \"b\": _ } => ...\n"
+"  // 仅在 `map` 中不存在 \"b\" 且 \"a\" 存在于 `map` 时匹配。\n"
+"  // 匹配时，将 `map` 中的 \"a\" 的值绑定到 `x`\n"
+"  { \"b\"? : None, \"a\": x } => ...\n"
+"  // 编译器报告缺失的情况：{ \"b\"? : None, \"a\"? : None }\n"
+"}\n"
 
 #: ../../language/fundamentals.md:1208
 msgid ""
@@ -4140,30 +4371,36 @@ msgid ""
 "`op_get(Self, K) -> Option[V]` for some type `K` and `V` (see [method and"
 " trait](./methods.md))."
 msgstr ""
+"要使用 map 模式匹配数据类型 `T`，`T` 必须具有某种类型 `K` 和 `V` 的方法 `op_get(Self, K) -> Option[V]`（请参见 [方法和特征](./methods.md)）。"
 
 #: ../../language/fundamentals.md:1209
 msgid "Currently, the key part of map pattern must be a literal or constant"
 msgstr ""
+"目前，map 模式的键部分必须是字面量或常量"
 
 #: ../../language/fundamentals.md:1210
 msgid "Map patterns are always open: unmatched keys are silently ignored"
 msgstr ""
+"Map 模式始终是开放的：未匹配的键会被静默忽略"
 
 #: ../../language/fundamentals.md:1211
 msgid ""
 "Map pattern will be compiled to efficient code: every key will be fetched"
 " at most once"
 msgstr ""
+"Map 模式将编译为高效的代码：每个键最多只会被获取一次"
 
 #: ../../language/fundamentals.md:1213
 msgid "Json Pattern"
 msgstr ""
+"Json 模式"
 
 #: ../../language/fundamentals.md:1215
 msgid ""
 "When the matched value has type `Json`, literal patterns can be used "
 "directly, together with constructors:"
 msgstr ""
+"当匹配的值具有类型 `Json` 时，可以直接使用字面量模式，以及构造函数："
 
 #: ../../language/fundamentals.md:1217
 msgid ""
@@ -4177,6 +4414,7 @@ msgstr ""
 #: ../../language/fundamentals.md:1224
 msgid "Generics"
 msgstr ""
+"泛型"
 
 #: ../../language/fundamentals.md:1226
 msgid ""
@@ -4186,6 +4424,8 @@ msgid ""
 " a generic version of lists. We can then define generic functions over "
 "lists like `map` and `reduce`."
 msgstr ""
+"泛型在顶层函数和数据类型定义中受支持。可以在方括号内引入类型参数。我们可以重写上述数据类型 `List`，"
+"添加类型参数 `T` 以获得列表的通用版本。然后，我们可以定义列表上的通用函数，如 `map` 和 `reduce`。"
 
 #: ../../language/fundamentals.md:1228
 msgid ""
@@ -4436,7 +4676,7 @@ msgstr "访问数组元素（例如 `a[0]`），结构体字段（例如 `r.x`�
 
 #: ../../language/introduction.md:33
 msgid "Variables and (capitalized) enum constructors"
-msgstr "变量和枚举构造函数"
+msgstr "变量和枚举构造器"
 
 #: ../../language/introduction.md:34
 msgid "Anonymous local function definitions"
@@ -4666,7 +4906,7 @@ msgid ""
 "associated with a type constructor. Methods can be defined using the "
 "syntax `fn TypeName::method_name(...) -> ...`:"
 msgstr ""
-"MoonBit 支持方法的方式与传统的面向对象语言不同。MoonBit 中的方法只是与类型构造函数关联的顶级函数。可以使用语法 `fn "
+"MoonBit 支持方法的方式与传统的面向对象语言不同。MoonBit 中的方法只是与类型构造器关联的顶级函数。可以使用语法 `fn "
 "TypeName::method_name(...) -> ...` 定义方法："
 
 #: ../../language/methods.md:7
@@ -4711,7 +4951,7 @@ msgid ""
 "Methods are just regular functions owned by a type constructor. So when "
 "there is no ambiguity, methods can be called using regular function call "
 "syntax directly:"
-msgstr "方法只是由类型构造函数拥有的常规函数。因此，当没有歧义时，可以直接使用常规函数调用语法调用方法："
+msgstr "方法只是由类型构造器拥有的常规函数。因此，当没有歧义时，可以直接使用常规函数调用语法调用方法："
 
 #: ../../language/methods.md:31
 msgid ""
