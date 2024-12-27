@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-27 16:07+0800\n"
+"POT-Creation-Date: 2024-12-27 16:28+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1178,8 +1178,10 @@ msgid ""
 "moon uses the `moon.mod.json` file to identify and describe a module. For"
 " full JSON schema, please check [moon's "
 "repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json)."
-msgstr "moon 使用 `moon.mod.json` 文件来标识和描述一个模块。"
-"访问 [moon 的仓库](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json) 查看完整的 JSON 模式。"
+msgstr ""
+"moon 使用 `moon.mod.json` 文件来标识和描述一个模块。访问 [moon "
+"的仓库](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json)"
+" 查看完整的 JSON 模式。"
 
 #: ../../toolchain/moon/module.md:5 ../../toolchain/moon/package.md:5
 msgid "Name"
@@ -1385,34 +1387,34 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:122 ../../toolchain/moon/package.md:272
+#: ../../toolchain/moon/module.md:122 ../../toolchain/moon/package.md:291
 msgid "Warning List"
 msgstr "警告列表"
 
-#: ../../toolchain/moon/module.md:124 ../../toolchain/moon/package.md:274
+#: ../../toolchain/moon/module.md:124 ../../toolchain/moon/package.md:293
 msgid "This is used to disable specific preset compiler warning numbers."
 msgstr "这用于禁用特定的预设编译器警告编号。"
 
-#: ../../toolchain/moon/module.md:126 ../../toolchain/moon/package.md:276
+#: ../../toolchain/moon/module.md:126 ../../toolchain/moon/package.md:295
 msgid ""
 "For example, in the following configuration, `-2` disables the warning "
 "number 2 (Unused variable)."
 msgstr "例如，在以下配置中，`-2` 禁用警告编号 2（未使用的变量）。"
 
-#: ../../toolchain/moon/module.md:128 ../../toolchain/moon/package.md:278
+#: ../../toolchain/moon/module.md:128 ../../toolchain/moon/package.md:297
 msgid ""
 "{\n"
 "  \"warn-list\": \"-2\",\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:134 ../../toolchain/moon/package.md:284
+#: ../../toolchain/moon/module.md:134 ../../toolchain/moon/package.md:303
 msgid ""
 "You can use `moonc build-package -warn-help` to see the list of preset "
 "compiler warning numbers."
 msgstr "你可以使用 `moonc build-package -warn-help` 来查看预设编译器警告编号列表。"
 
-#: ../../toolchain/moon/module.md:136 ../../toolchain/moon/package.md:286
+#: ../../toolchain/moon/module.md:136 ../../toolchain/moon/package.md:305
 msgid ""
 "$ moonc -v                      \n"
 "v0.1.20240914+b541585d3\n"
@@ -1445,15 +1447,15 @@ msgid ""
 "  A all warnings\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:168 ../../toolchain/moon/package.md:318
+#: ../../toolchain/moon/module.md:168 ../../toolchain/moon/package.md:337
 msgid "Alert List"
 msgstr "警示列表"
 
-#: ../../toolchain/moon/module.md:170 ../../toolchain/moon/package.md:320
+#: ../../toolchain/moon/module.md:170 ../../toolchain/moon/package.md:339
 msgid "Disable user preset alerts."
 msgstr "禁用用户预设警示。"
 
-#: ../../toolchain/moon/module.md:172 ../../toolchain/moon/package.md:322
+#: ../../toolchain/moon/module.md:172 ../../toolchain/moon/package.md:341
 msgid ""
 "{\n"
 "  \"alert-list\": \"-alert_1-alert_2\"\n"
@@ -1469,8 +1471,10 @@ msgid ""
 "moon uses the `moon.pkg.json` file to identify and describe a package. "
 "For full JSON schema, please check [moon's "
 "repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/pkg.schema.json)."
-msgstr "moon 使用 `moon.pkg.json` 文件来标识和描述一个包。"
-"访问 [moon 的仓库](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/pkg.schema.json) 查看完整的 JSON 模式。"
+msgstr ""
+"moon 使用 `moon.pkg.json` 文件来标识和描述一个包。访问 [moon "
+"的仓库](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/pkg.schema.json)"
+" 查看完整的 JSON 模式。"
 
 #: ../../toolchain/moon/package.md:7
 msgid ""
@@ -1505,85 +1509,119 @@ msgid "For the `js` backend, a standalone JavaScript file will be generated."
 msgstr "对于 `js` 后端，将生成一个独立的 JavaScript 文件。"
 
 #: ../../toolchain/moon/package.md:18
+msgid "Importing dependencies"
+msgstr "导入依赖"
+
+#: ../../toolchain/moon/package.md:20
 msgid "import"
 msgstr "导入"
 
-#: ../../toolchain/moon/package.md:20
+#: ../../toolchain/moon/package.md:22
 msgid ""
 "The `import` field is used to specify other packages that a package "
 "depends on."
 msgstr "`import` 字段用于指定包依赖的其他包。"
 
-#: ../../toolchain/moon/package.md:22
-msgid "test-import"
-msgstr "测试导入"
-
 #: ../../toolchain/moon/package.md:24
 msgid ""
-"The `test-import` field is used to specify other packages that the black-"
-"box test package of this package depends on."
-msgstr "`test-import` 字段用于指定此包的黑盒测试包依赖的其他包。"
-
-#: ../../toolchain/moon/package.md:26
-msgid "wbtest-import"
-msgstr "白盒测试导入"
+"For example, the following imports `moonbitlang/quickcheck` and "
+"`moonbitlang/x/encoding`,  aliasing the latter to `lib` and importing the"
+" function `encode` from the latter. User can write `@lib.encode` instead "
+"of `encode`."
+msgstr ""
+"例如，以下导入了 `moonbitlang/quickcheck` 和 `moonbitlang/x/encoding`，"
+"将后者别名为 `lib` 并从后者导入函数 `encode`。用户可以使用 `@lib.encode` 代替 `encode`。"
 
 #: ../../toolchain/moon/package.md:28
 msgid ""
-"The `wbtest-import` field is used to specify other packages that the "
-"white-box test package of this package depends on."
-msgstr "`wbtest-import` 字段用于指定此包的白盒测试包依赖的其他包。"
+"{\n"
+"  \"import\": [\n"
+"    \"moonbitlang/quickcheck\",\n"
+"    { \"path\" : \"moonbitlang/x/encoding\", \"alias\": \"lib\", "
+"\"value\": [\"encode\"] }\n"
+"  ]\n"
+"}\n"
+msgstr ""
 
-#: ../../toolchain/moon/package.md:30
+#: ../../toolchain/moon/package.md:37
+msgid "test-import"
+msgstr "测试导入"
+
+#: ../../toolchain/moon/package.md:39
+msgid ""
+"The `test-import` field is used to specify other packages that the black-"
+"box test package of this package depends on, with the same format as "
+"`import`."
+msgstr "`test-import` 字段用于指定此包的黑盒测试包依赖的其他包，配置语法与 `import` 相同"
+
+#: ../../toolchain/moon/package.md:42
+msgid ""
+"The `test-import` field is used to specify whether the public definitions"
+" from the package being tested should be imported (`true`) by default."
+msgstr ""
+"`test-import` 字段用于指定是否导入被测试包的公共定义（默认为 `true`）。"
+
+#: ../../toolchain/moon/package.md:44
+msgid "wbtest-import"
+msgstr "白盒测试导入"
+
+#: ../../toolchain/moon/package.md:46
+msgid ""
+"The `wbtest-import` field is used to specify other packages that the "
+"white-box test package of this package depends on, with the same format "
+"as `import`."
+msgstr "`wbtest-import` 字段用于指定此包的白盒测试包依赖的其他包，配置语法与 `import` 相同。"
+
+#: ../../toolchain/moon/package.md:49
 msgid "Conditional Compilation"
 msgstr "条件编译"
 
-#: ../../toolchain/moon/package.md:32
+#: ../../toolchain/moon/package.md:51
 msgid "The smallest unit of conditional compilation is a file."
 msgstr "条件编译的最小单元是一个文件。"
 
-#: ../../toolchain/moon/package.md:34
+#: ../../toolchain/moon/package.md:53
 msgid ""
 "In a conditional compilation expression, three logical operators are "
 "supported: `and`, `or`, and `not`, where the `or` operator can be "
 "omitted."
 msgstr "在条件编译表达式中，支持三种逻辑运算符：`and`、`or` 和 `not`，其中 `or` 运算符可以省略。"
 
-#: ../../toolchain/moon/package.md:36
+#: ../../toolchain/moon/package.md:55
 msgid ""
 "For example, `[\"or\", \"wasm\", \"wasm-gc\"]` can be simplified to "
 "`[\"wasm\", \"wasm-gc\"]`."
 msgstr "例如，`[\"or\", \"wasm\", \"wasm-gc\"]` 可以简化为 `[\"wasm\", \"wasm-gc\"]`。"
 
-#: ../../toolchain/moon/package.md:38
+#: ../../toolchain/moon/package.md:57
 msgid ""
 "Conditions in the expression can be categorized into backends and "
 "optimization levels:"
 msgstr "表达式中的条件可以被归类为后端和优化层次："
 
-#: ../../toolchain/moon/package.md:40
+#: ../../toolchain/moon/package.md:59
 msgid "**Backend conditions**: `\"wasm\"`, `\"wasm-gc\"`, and `\"js\"`"
 msgstr "**后端条件**：`\"wasm\"`、`\"wasm-gc\"` 和 `\"js\"`"
 
-#: ../../toolchain/moon/package.md:41
+#: ../../toolchain/moon/package.md:60
 msgid "**Optimization level conditions**: `\"debug\"` and `\"release\"`"
 msgstr "**优化层次条件**：`\"debug\"` 和 `\"release\"`"
 
-#: ../../toolchain/moon/package.md:43
+#: ../../toolchain/moon/package.md:62
 msgid "Conditional expressions support nesting."
 msgstr "条件表达式支持嵌套。"
 
-#: ../../toolchain/moon/package.md:45
+#: ../../toolchain/moon/package.md:64
 msgid ""
 "If a file is not listed in `\"targets\"`, it will be compiled under all "
 "conditions by default."
 msgstr "如果文件未列在 `\"targets\"` 中，它将默认在所有条件下编译。"
 
-#: ../../toolchain/moon/package.md:47
+#: ../../toolchain/moon/package.md:66
 msgid "Example:"
 msgstr "例如："
 
-#: ../../toolchain/moon/package.md:49
+#: ../../toolchain/moon/package.md:68
 msgid ""
 "{\n"
 "  \"targets\": {\n"
@@ -1602,59 +1640,59 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:66
+#: ../../toolchain/moon/package.md:85
 msgid "Link Options"
 msgstr "链接选项"
 
-#: ../../toolchain/moon/package.md:68
+#: ../../toolchain/moon/package.md:87
 msgid ""
 "By default, moon only links packages where `is-main` is set to `true`. If"
 " you need to link other packages, you can specify this with the `link` "
 "option."
 msgstr "默认情况下，moon 仅链接 `is-main` 设置为 `true` 的包。如果需要链接其他包，可以使用 `link` 选项指定。"
 
-#: ../../toolchain/moon/package.md:70
+#: ../../toolchain/moon/package.md:89
 msgid ""
 "The `link` option is used to specify link options, and its value can be "
 "either a boolean or an object."
 msgstr "`link` 选项用于指定链接选项，其值可以是布尔值或对象。"
 
-#: ../../toolchain/moon/package.md:72
+#: ../../toolchain/moon/package.md:91
 msgid ""
 "When the `link` value is `true`, it indicates that the package should be "
 "linked. The output will vary depending on the backend specified during "
 "the build."
 msgstr "当 `link` 值为 `true` 时，表示应链接包。输出将根据构建时指定的后端而有所不同。"
 
-#: ../../toolchain/moon/package.md:74
+#: ../../toolchain/moon/package.md:93
 msgid ""
 "{\n"
 "  \"link\": true\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:80
+#: ../../toolchain/moon/package.md:99
 msgid ""
 "When the `link` value is an object, it indicates that the package should "
 "be linked, and you can specify link options. For detailed configuration, "
 "please refer to the subpage for the corresponding backend."
 msgstr "当 `link` 值为对象时，表示应链接包，您可以指定链接选项。有关详细配置，请参阅相应后端的子页面。"
 
-#: ../../toolchain/moon/package.md:82
+#: ../../toolchain/moon/package.md:101
 msgid "Wasm Backend Link Options"
 msgstr "Wasm 后端链接选项"
 
-#: ../../toolchain/moon/package.md:84
+#: ../../toolchain/moon/package.md:103
 msgid "Common Options"
 msgstr "共有选项"
 
-#: ../../toolchain/moon/package.md:86
+#: ../../toolchain/moon/package.md:105
 msgid ""
 "The `exports` option is used to specify the function names exported by "
 "the Wasm backend."
 msgstr "`exports` 选项用于指定 Wasm 后端导出的函数名称。"
 
-#: ../../toolchain/moon/package.md:88
+#: ../../toolchain/moon/package.md:107
 msgid ""
 "For example, in the following configuration, the `hello` function from "
 "the current package is exported as the `hello` function in the Wasm "
@@ -1667,7 +1705,7 @@ msgstr ""
 "模块中的 `bar` 函数。在 Wasm 宿主中，可以调用 `hello` 和 `bar` 函数来调用当前包中的 `hello` 和 `foo` "
 "函数。"
 
-#: ../../toolchain/moon/package.md:90
+#: ../../toolchain/moon/package.md:109
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -1687,20 +1725,20 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:109
+#: ../../toolchain/moon/package.md:128
 msgid ""
 "The `import-memory` option is used to specify the linear memory imported "
 "by the Wasm module."
 msgstr "`import-memory` 选项用于指定 Wasm 模块导入的线性内存。"
 
-#: ../../toolchain/moon/package.md:111
+#: ../../toolchain/moon/package.md:130
 msgid ""
 "For example, the following configuration specifies that the linear memory"
 " imported by the Wasm module is the `memory` variable from the `env` "
 "module."
 msgstr "例如，以下配置指定 Wasm 模块导入的线性内存是 `env` 模块的 `memory` 变量。"
 
-#: ../../toolchain/moon/package.md:113
+#: ../../toolchain/moon/package.md:132
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -1720,13 +1758,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:132
+#: ../../toolchain/moon/package.md:151
 msgid ""
 "The `export-memory-name` option is used to specify the name of the linear"
 " memory exported by the Wasm module."
 msgstr "`export-memory-name` 选项用于指定 Wasm 模块导出的线性内存的名称。"
 
-#: ../../toolchain/moon/package.md:134
+#: ../../toolchain/moon/package.md:153
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -1740,23 +1778,23 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:147
+#: ../../toolchain/moon/package.md:166
 msgid "Wasm Linear Backend Link Options"
 msgstr "Wasm 线性内存后端链接选项"
 
-#: ../../toolchain/moon/package.md:149
+#: ../../toolchain/moon/package.md:168
 msgid ""
 "The `heap-start-address` option is used to specify the starting address "
 "of the linear memory that can be used when compiling to the Wasm backend."
 msgstr "`heap-start-address` 选项用于指定编译到 Wasm 后端时可以使用的线性内存的起始地址。"
 
-#: ../../toolchain/moon/package.md:151
+#: ../../toolchain/moon/package.md:170
 msgid ""
 "For example, the following configuration sets the starting address of the"
 " linear memory to 1024."
 msgstr "例如，以下配置将线性内存的起始地址设置为 1024。"
 
-#: ../../toolchain/moon/package.md:153
+#: ../../toolchain/moon/package.md:172
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -1767,11 +1805,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:163
+#: ../../toolchain/moon/package.md:182
 msgid "Wasm GC Backend Link Options"
 msgstr "Wasm GC 后端链接选项"
 
-#: ../../toolchain/moon/package.md:165
+#: ../../toolchain/moon/package.md:184
 msgid ""
 "The `use-js-string-builtin` option is used to specify whether the [JS "
 "String Builtin Proposal](https://github.com/WebAssembly/js-string-"
@@ -1779,15 +1817,16 @@ msgid ""
 "enabled when compiling to the Wasm GC backend.  It will make the `String`"
 " in MoonBit equivalent to the `String` in JavaScript host runtime."
 msgstr ""
-"`use-js-string-builtin` 选项用于指定在编译到 Wasm GC 后端时是否应启用 "
-"[内建 JS String 提案](https://github.com/WebAssembly/js-string-builtins/blob/main/proposals/js-string-builtins/Overview.md)"
-"。它将使 MoonBit 中的 `String` 等效于 JavaScript 宿主运行时中的 `String`。"
+"`use-js-string-builtin` 选项用于指定在编译到 Wasm GC 后端时是否应启用 [内建 JS String "
+"提案](https://github.com/WebAssembly/js-string-builtins/blob/main/proposals"
+"/js-string-builtins/Overview.md)。它将使 MoonBit 中的 `String` 等效于 JavaScript "
+"宿主运行时中的 `String`。"
 
-#: ../../toolchain/moon/package.md:168
+#: ../../toolchain/moon/package.md:187
 msgid "For example, the following configuration enables the JS String Builtin."
 msgstr "例如，以下配置将启用内建 JS String 提案。"
 
-#: ../../toolchain/moon/package.md:170
+#: ../../toolchain/moon/package.md:189
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -1798,21 +1837,22 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:180
+#: ../../toolchain/moon/package.md:199
 msgid ""
 "The `imported-string-constants` option is used to specify the imported "
 "string namespace used by the JS String Builtin Proposal, which is \"_\" "
 "by default. It should meet the configuration in the JS host runtime."
 msgstr ""
-"`imported-string-constants` 选项用于指定内建 JS String 提案使用的导入字符串命名空间，默认为 `_`。它应符合 JS 宿主运行时中的配置。"
+"`imported-string-constants` 选项用于指定内建 JS String 提案使用的导入字符串命名空间，默认为 "
+"`_`。它应符合 JS 宿主运行时中的配置。"
 
-#: ../../toolchain/moon/package.md:183
+#: ../../toolchain/moon/package.md:202
 msgid ""
 "For example, the following configuration and JS initialization configures"
 " the imported string namespace."
 msgstr "例如，以下配置与 JS 初始化配置了导入字符串命名空间。"
 
-#: ../../toolchain/moon/package.md:185
+#: ../../toolchain/moon/package.md:204
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -1824,23 +1864,23 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:196
+#: ../../toolchain/moon/package.md:215
 msgid ""
 "const { instance } = await WebAssembly.instantiate(bytes, {}, { "
 "importedStringConstants: \"strings\" });\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:200
+#: ../../toolchain/moon/package.md:219
 msgid "JS Backend Link Options"
 msgstr "JS 后端链接选项"
 
-#: ../../toolchain/moon/package.md:202
+#: ../../toolchain/moon/package.md:221
 msgid ""
 "The `exports` option is used to specify the function names to export in "
 "the JavaScript module."
 msgstr "`exports` 选项用于指定要在 JavaScript 模块中导出的函数名称。"
 
-#: ../../toolchain/moon/package.md:204
+#: ../../toolchain/moon/package.md:223
 msgid ""
 "For example, in the following configuration, the `hello` function from "
 "the current package is exported as the `hello` function in the JavaScript"
@@ -1850,7 +1890,7 @@ msgstr ""
 "例如，在以下配置中，当前包中的 `hello` 函数被导出为 JavaScript 模块中的 `hello` 函数。在 JavaScript "
 "宿主中，可以调用 `hello` 函数来调用当前包中的 `hello` 函数。"
 
-#: ../../toolchain/moon/package.md:206
+#: ../../toolchain/moon/package.md:225
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -1863,35 +1903,35 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:218
+#: ../../toolchain/moon/package.md:237
 msgid ""
 "The `format` option is used to specify the output format of the "
 "JavaScript module."
 msgstr "`format` 选项用于指定 JavaScript 模块的输出格式。"
 
-#: ../../toolchain/moon/package.md:220
+#: ../../toolchain/moon/package.md:239
 msgid "The currently supported formats are:"
 msgstr "目前支持的格式有："
 
-#: ../../toolchain/moon/package.md:221
+#: ../../toolchain/moon/package.md:240
 msgid "`esm`"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:222
+#: ../../toolchain/moon/package.md:241
 msgid "`cjs`"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:223
+#: ../../toolchain/moon/package.md:242
 msgid "`iife`"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:225
+#: ../../toolchain/moon/package.md:244
 msgid ""
 "For example, the following configuration sets the output format of the "
 "current package to ES Module."
 msgstr "例如，以下配置将当前包的输出格式设置为 ES 模块。"
 
-#: ../../toolchain/moon/package.md:227
+#: ../../toolchain/moon/package.md:246
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -1902,17 +1942,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:237
+#: ../../toolchain/moon/package.md:256
 msgid "Pre-build"
 msgstr "预构建"
 
-#: ../../toolchain/moon/package.md:239
+#: ../../toolchain/moon/package.md:258
 msgid ""
 "The `\"pre-build\"` field is used to specify pre-build commands, which "
 "will be executed before build commands such as `moon check|build|test`."
 msgstr "`pre-build` 字段用于指定预构建命令，这些命令将在构建命令（如 `moon check|build|test`）之前执行。"
 
-#: ../../toolchain/moon/package.md:241
+#: ../../toolchain/moon/package.md:260
 msgid ""
 "`\"pre-build\"` is an array, where each element is an object containing "
 "`input`, `output`, and `command` fields. The `input` and `output` fields "
@@ -1927,7 +1967,7 @@ msgstr ""
 "中，可以使用任何 shell 命令，以及分别表示输入和输出文件的 `$input` 和 `$output` "
 "变量。如果这些字段是数组，它们将默认使用空格连接。"
 
-#: ../../toolchain/moon/package.md:243
+#: ../../toolchain/moon/package.md:262
 msgid ""
 "Currently, there is a built-in special command `:embed`, which converts "
 "files into MoonBit source code. The `--text` parameter is used to embed "
@@ -1940,7 +1980,7 @@ msgstr ""
 "用于二进制文件。`--text` 是默认值，可以省略。`--name` 参数用于指定生成的变量名，默认为 `resource`。该命令在 "
 "`moon.pkg.json` 文件所在的目录中执行。"
 
-#: ../../toolchain/moon/package.md:245
+#: ../../toolchain/moon/package.md:264
 msgid ""
 "{\n"
 "  \"pre-build\": [\n"
@@ -1953,23 +1993,23 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:257
+#: ../../toolchain/moon/package.md:276
 msgid "If the content of `a.txt` in the current package directory is:"
 msgstr "如果当前包目录中 `a.txt` 的内容为："
 
-#: ../../toolchain/moon/package.md:258
+#: ../../toolchain/moon/package.md:277
 msgid ""
 "hello,\n"
 "world\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:263
+#: ../../toolchain/moon/package.md:282
 msgid ""
 "After running `moon build`, the following `a.mbt` file will be generated "
 "in the directory where the `moon.pkg.json` is located:"
 msgstr "那么在 `moon.pkg.json` 所在目录中运行 `moon build` 后，将生成以下 `a.mbt` 文件："
 
-#: ../../toolchain/moon/package.md:265
+#: ../../toolchain/moon/package.md:284
 msgid ""
 "let resource : String =\n"
 "  #|hello,\n"
@@ -2845,3 +2885,4 @@ msgid ""
 "test username/hello/lib/fib/fib_test.mbt::0 ok\n"
 "Total tests: 3, passed: 3, failed: 0.\n"
 msgstr ""
+

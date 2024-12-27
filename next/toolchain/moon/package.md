@@ -15,17 +15,36 @@ The output of the linking process depends on the backend. When this field is set
 - For the Wasm and `wasm-gc` backends, a standalone WebAssembly module will be generated.
 - For the `js` backend, a standalone JavaScript file will be generated.
 
-## import
+## Importing dependencies
+
+### import
 
 The `import` field is used to specify other packages that a package depends on.
 
-## test-import
+For example, the following imports `moonbitlang/quickcheck` and `moonbitlang/x/encoding`, 
+aliasing the latter to `lib` and importing the function `encode` from the latter.
+User can write `@lib.encode` instead of `encode`.
 
-The `test-import` field is used to specify other packages that the black-box test package of this package depends on.
+```json
+{
+  "import": [
+    "moonbitlang/quickcheck",
+    { "path" : "moonbitlang/x/encoding", "alias": "lib", "value": ["encode"] }
+  ]
+}
+```
 
-## wbtest-import
+### test-import
 
-The `wbtest-import` field is used to specify other packages that the white-box test package of this package depends on.
+The `test-import` field is used to specify other packages that the black-box test package of this package depends on,
+with the same format as `import`.
+
+The `test-import` field is used to specify whether the public definitions from the package being tested should be imported (`true`) by default.
+
+### wbtest-import
+
+The `wbtest-import` field is used to specify other packages that the white-box test package of this package depends on,
+with the same format as `import`.
 
 ## Conditional Compilation
 
