@@ -1,6 +1,6 @@
 # Module Configuration
 
-moon uses the `moon.mod.json` file to identify and describe a module.
+moon uses the `moon.mod.json` file to identify and describe a module. For full JSON schema, please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json).
 
 ## Name
 

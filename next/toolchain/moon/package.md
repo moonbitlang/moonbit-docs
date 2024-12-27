@@ -1,6 +1,6 @@
 # Package Configuration
 
-moon uses the `moon.pkg.json` file to identify and describe a package.
+moon uses the `moon.pkg.json` file to identify and describe a package. For full JSON schema, please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/pkg.schema.json).
 
 ## Name
 
@@ -48,18 +48,18 @@ Example:
 
 ```json
 {
-    "targets": {
-        "only_js.mbt": ["js"],
-        "only_wasm.mbt": ["wasm"],
-        "only_wasm_gc.mbt": ["wasm-gc"],
-        "all_wasm.mbt": ["wasm", "wasm-gc"],
-        "not_js.mbt": ["not", "js"],
-        "only_debug.mbt": ["debug"],
-        "js_and_release.mbt": ["and", ["js"], ["release"]],
-        "js_only_test.mbt": ["js"],
-        "js_or_wasm.mbt": ["js", "wasm"],
-        "wasm_release_or_js_debug.mbt": ["or", ["and", "wasm", "release"], ["and", "js", "debug"]]
-    }
+  "targets": {
+    "only_js.mbt": ["js"],
+    "only_wasm.mbt": ["wasm"],
+    "only_wasm_gc.mbt": ["wasm-gc"],
+    "all_wasm.mbt": ["wasm", "wasm-gc"],
+    "not_js.mbt": ["not", "js"],
+    "only_debug.mbt": ["debug"],
+    "js_and_release.mbt": ["and", ["js"], ["release"]],
+    "js_only_test.mbt": ["js"],
+    "js_or_wasm.mbt": ["js", "wasm"],
+    "wasm_release_or_js_debug.mbt": ["or", ["and", "wasm", "release"], ["and", "js", "debug"]]
+  }
 }
 ```
 
@@ -81,7 +81,7 @@ The `link` option is used to specify link options, and its value can be either a
 
 ### Wasm Backend Link Options
 
-#### Configurable Options
+#### Common Options
 
 - The `exports` option is used to specify the function names exported by the Wasm backend.
 
@@ -95,20 +95,12 @@ The `link` option is used to specify link options, and its value can be either a
           "hello",
           "foo:bar"
         ]
-      }
-    }
-  }
-  ```
-
-- The `heap-start-address` option is used to specify the starting address of the linear memory that can be used when compiling to the Wasm backend.
-
-  For example, the following configuration sets the starting address of the linear memory to 1024.
-
-  ```json
-  {
-    "link": {
-      "wasm": {
-        "heap-start-address": 1024
+      },
+      "wasm-gc": {
+        "exports": [
+          "hello",
+          "foo:bar"
+        ]
       }
     }
   }
@@ -126,6 +118,12 @@ The `link` option is used to specify link options, and its value can be either a
           "module": "env",
           "name": "memory"
         }
+      },
+      "wasm-gc": {
+        "import-memory": {
+          "module": "env",
+          "name": "memory"
+        }
       }
     }
   }
@@ -138,18 +136,68 @@ The `link` option is used to specify link options, and its value can be either a
     "link": {
       "wasm": {
         "export-memory-name": "memory"
+      },
+      "wasm-gc": {
+        "export-memroy-name": "memory"
       }
     }
   }
   ```
 
-### Wasm GC Backend Link Options
+#### Wasm Linear Backend Link Options
 
-The link options for the `wasm-gc` backend are similar to those for the Wasm backend, except there is no `heap-start-address` option.
+- The `heap-start-address` option is used to specify the starting address of the linear memory that can be used when compiling to the Wasm backend.
+
+  For example, the following configuration sets the starting address of the linear memory to 1024.
+
+  ```json
+  {
+    "link": {
+      "wasm": {
+        "heap-start-address": 1024
+      }
+    }
+  }
+  ```
+
+#### Wasm GC Backend Link Options
+
+- The `use-js-string-builtin` option is used to specify whether the [JS String Builtin Proposal](https://github.com/WebAssembly/js-string-builtins/blob/main/proposals/js-string-builtins/Overview.md) should be enabled when compiling to the Wasm GC backend. 
+  It will make the `String` in MoonBit equivalent to the `String` in JavaScript host runtime.
+
+  For example, the following configuration enables the JS String Builtin.
+
+  ```json
+  {
+    "link": {
+      "wasm-gc": {
+        "use-js-builtin-string": true
+      }
+    }
+  }
+  ```
+
+- The `imported-string-constants` option is used to specify the imported string namespace used by the JS String Builtin Proposal, which is "_" by default.
+  It should meet the configuration in the JS host runtime.
+
+  For example, the following configuration and JS initialization configures the imported string namespace.
+
+  ```json
+  {
+    "link": {
+      "wasm-gc": {
+        "use-js-builtin-string": true,
+        "imported-string-contants": "_"
+      }
+    }
+  }
+  ```
+
+  ```javascript
+  const { instance } = await WebAssembly.instantiate(bytes, {}, { importedStringConstants: "strings" });
+  ```
 
 ### JS Backend Link Options
-
-#### Configurable Options
 
 - The `exports` option is used to specify the function names to export in the JavaScript module.
 
