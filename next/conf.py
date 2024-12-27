@@ -54,3 +54,6 @@ myst_heading_anchors = 3
 
 # -- Options for gettext -----------------------------------------------------
 gettext_additional_targets = ["literal-block"]
+
+# -- Options for sphinx_copybutton -------------------------------------------------
+copybutton_prompt_text = "$ "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-26 16:07+0800\n"
+"POT-Creation-Date: 2024-12-26 18:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1487,11 +1487,10 @@ msgid ""
 msgstr "链接过程的输出取决于后端。当此字段设置为 `true` 时："
 
 #: ../../toolchain/moon/package.md:15
-#, fuzzy
 msgid ""
 "For the Wasm and `wasm-gc` backends, a standalone WebAssembly module will"
 " be generated."
-msgstr "对于 `wasm` 和 `wasm-gc` 后端，将生成一个独立的 WebAssembly 模块。"
+msgstr "对于 Wasm 和 `wasm-gc` 后端，将生成一个独立的 WebAssembly 模块。"
 
 #: ../../toolchain/moon/package.md:16
 msgid "For the `js` backend, a standalone JavaScript file will be generated."
@@ -1656,9 +1655,9 @@ msgid ""
 "called to invoke the `hello` and `foo` functions from the current "
 "package."
 msgstr ""
-"例如，在以下配置中，当前包中的 `hello` 函数被导出为 `wasm` 模块中的 `hello` 函数，`foo` 函数被导出为 Wasm"
-" 模块中的 `bar` 函数。在 Wasm 宿主中，可以调用 `hello` 和 `bar` 函数来调用当前包中的 `hello` 和 `foo`"
-" 函数。"
+"例如，在以下配置中，当前包中的 `hello` 函数被导出为 `wasm` 模块中的 `hello` 函数，`foo` 函数被导出为 Wasm "
+"模块中的 `bar` 函数。在 Wasm 宿主中，可以调用 `hello` 和 `bar` 函数来调用当前包中的 `hello` 和 `foo` "
+"函数。"
 
 #: ../../toolchain/moon/package.md:90
 msgid ""
@@ -1678,15 +1677,13 @@ msgstr ""
 msgid ""
 "The `heap-start-address` option is used to specify the starting address "
 "of the linear memory that can be used when compiling to the Wasm backend."
-msgstr ""
-"`heap-start-address` 选项用于指定编译到 Wasm 后端时可以使用的线性内存的起始地址。"
+msgstr "`heap-start-address` 选项用于指定编译到 Wasm 后端时可以使用的线性内存的起始地址。"
 
 #: ../../toolchain/moon/package.md:105
 msgid ""
 "For example, the following configuration sets the starting address of the"
 " linear memory to 1024."
-msgstr ""
-"例如，以下配置将线性内存的起始地址设置为 1024。"
+msgstr "例如，以下配置将线性内存的起始地址设置为 1024。"
 
 #: ../../toolchain/moon/package.md:107
 msgid ""
@@ -1710,8 +1707,7 @@ msgid ""
 "For example, the following configuration specifies that the linear memory"
 " imported by the Wasm module is the `memory` variable from the `env` "
 "module."
-msgstr ""
-"例如，以下配置指定 Wasm 模块导入的线性内存是 `env` 模块的 `memory` 变量。"
+msgstr "例如，以下配置指定 Wasm 模块导入的线性内存是 `env` 模块的 `memory` 变量。"
 
 #: ../../toolchain/moon/package.md:121
 msgid ""
@@ -1752,8 +1748,7 @@ msgstr "Wasm GC 后端链接选项"
 msgid ""
 "The link options for the `wasm-gc` backend are similar to those for the "
 "Wasm backend, except there is no `heap-start-address` option."
-msgstr ""
-"`wasm-gc` 后端的链接选项与 Wasm 后端的类似，只是没有 `heap-start-address` 选项。"
+msgstr "`wasm-gc` 后端的链接选项与 Wasm 后端的类似，只是没有 `heap-start-address` 选项。"
 
 #: ../../toolchain/moon/package.md:150
 msgid "JS Backend Link Options"
@@ -1771,7 +1766,9 @@ msgid ""
 "the current package is exported as the `hello` function in the JavaScript"
 " module. In the JavaScript host, the `hello` function can be called to "
 "invoke the `hello` function from the current package."
-msgstr "例如，在以下配置中，当前包中的 `hello` 函数被导出为 JavaScript 模块中的 `hello` 函数。在 JavaScript 宿主中，可以调用 `hello` 函数来调用当前包中的 `hello` 函数。"
+msgstr ""
+"例如，在以下配置中，当前包中的 `hello` 函数被导出为 JavaScript 模块中的 `hello` 函数。在 JavaScript "
+"宿主中，可以调用 `hello` 函数来调用当前包中的 `hello` 函数。"
 
 #: ../../toolchain/moon/package.md:158
 msgid ""
@@ -1845,9 +1842,10 @@ msgid ""
 "files, respectively. If these fields are arrays, they will be joined with"
 " spaces by default."
 msgstr ""
-"`\"pre-build\"` 是一个数组，其中每个元素是一个包含 `input`、`output` 和 `command` 字段的对象。"
-"`input` 和 `output` 字段可以是字符串或字符串数组，而 `command` 字段是一个字符串。"
-"在 `command` 中，可以使用任何 shell 命令，以及分别表示输入和输出文件的 `$input` 和 `$output` 变量。如果这些字段是数组，它们将默认使用空格连接。"
+"`\"pre-build\"` 是一个数组，其中每个元素是一个包含 `input`、`output` 和 `command` "
+"字段的对象。`input` 和 `output` 字段可以是字符串或字符串数组，而 `command` 字段是一个字符串。在 `command` "
+"中，可以使用任何 shell 命令，以及分别表示输入和输出文件的 `$input` 和 `$output` "
+"变量。如果这些字段是数组，它们将默认使用空格连接。"
 
 #: ../../toolchain/moon/package.md:195
 msgid ""
@@ -1858,8 +1856,9 @@ msgid ""
 " generated variable name, with `resource` being the default. The command "
 "is executed in the directory where the `moon.pkg.json` file is located."
 msgstr ""
-"目前，内置了一个特殊命令 `:embed`，它将文件转换为 MoonBit 源代码。`--text` 参数用于嵌入文本文件，"
-"`--binary` 用于二进制文件。`--text` 是默认值，可以省略。`--name` 参数用于指定生成的变量名，默认为 `resource`。该命令在 `moon.pkg.json` 文件所在的目录中执行。"
+"目前，内置了一个特殊命令 `:embed`，它将文件转换为 MoonBit 源代码。`--text` 参数用于嵌入文本文件，`--binary` "
+"用于二进制文件。`--text` 是默认值，可以省略。`--name` 参数用于指定生成的变量名，默认为 `resource`。该命令在 "
+"`moon.pkg.json` 文件所在的目录中执行。"
 
 #: ../../toolchain/moon/package.md:197
 msgid ""
@@ -1900,11 +1899,11 @@ msgstr ""
 
 #: ../../toolchain/moon/package-manage-tour.md:1
 msgid "MoonBit's Package Manager Tutorial"
-msgstr ""
+msgstr "MoonBit 包管理教程"
 
 #: ../../toolchain/moon/package-manage-tour.md:3
 msgid "Overview"
-msgstr ""
+msgstr "概述"
 
 #: ../../toolchain/moon/package-manage-tour.md:5
 msgid ""
@@ -1912,7 +1911,7 @@ msgid ""
 "documentation generation tools, allowing users to easily fetch "
 "dependencies from mooncakes.io, access module documentation, and publish "
 "new modules."
-msgstr ""
+msgstr "MoonBit 的构建系统无缝集成了包管理和文档生成工具，使用户可以轻松从 mooncakes.io 获取依赖项，访问模块文档，并发布新模块。"
 
 #: ../../toolchain/moon/package-manage-tour.md:7
 msgid ""
@@ -1923,126 +1922,139 @@ msgid ""
 "`moon.pkg.json` configuration file. The `.mbt` files at the same level as"
 " `moon.pkg.json` belong to this package."
 msgstr ""
+"[mooncakes.io](https://mooncakes.io/) "
+"是一个集中式包管理平台。模块是发布的最小单元。每个模块都有一个对应的配置文件 "
+"`moon.mod.json`，在模块的路径下，可以有多个包，每个包对应一个 `moon.pkg.json` 配置文件。与 "
+"`moon.pkg.json` 同级的 `.mbt` 文件属于此包。"
 
 #: ../../toolchain/moon/package-manage-tour.md:9
 msgid ""
 "Before getting started, make sure you have installed "
 "[moon](https://www.moonbitlang.com/download/)."
-msgstr ""
+msgstr "在开始之前，请确保你已经安装了 [moon](https://www.moonbitlang.com/download/)。"
 
 #: ../../toolchain/moon/package-manage-tour.md:11
 msgid "Setup mooncakes.io account"
-msgstr ""
+msgstr "设置 mooncakes.io 账户"
 
-#: ../../toolchain/moon/package-manage-tour.md:13
-msgid "**Note: If you don't need to publishing, you can skip this step.**"
-msgstr ""
+#: ../../toolchain/moon/package-manage-tour.md:14
+msgid "If you don't need to publishing, you can skip this step."
+msgstr "如果你不需要发布，可以跳过此步骤。"
 
-#: ../../toolchain/moon/package-manage-tour.md:15
+#: ../../toolchain/moon/package-manage-tour.md:17
 msgid ""
 "If you don't have an account on mooncakes.io, run `moon register` and "
 "follow the guide. If you have previously registered an account, you can "
 "use `moon login` to log in."
 msgstr ""
+"如果你没有 mooncakes.io 账户，请运行 `moon register` 并按照指南操作。如果你之前注册过账户，可以使用 `moon "
+"login` 登录。"
 
-#: ../../toolchain/moon/package-manage-tour.md:17
+#: ../../toolchain/moon/package-manage-tour.md:19
 msgid ""
 "When you see the following message, it means you have successfully logged"
 " in:"
 msgstr ""
+"当你看到以下消息时，表示你已成功登录："
 
-#: ../../toolchain/moon/package-manage-tour.md:19
+#: ../../toolchain/moon/package-manage-tour.md:21
 msgid "API token saved to ~/.moon/credentials.json\n"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:23
-msgid "Update index"
-msgstr ""
-
 #: ../../toolchain/moon/package-manage-tour.md:25
-msgid "Use `moon update` to update the mooncakes.io index."
-msgstr ""
+msgid "Update index"
+msgstr "更新索引"
 
 #: ../../toolchain/moon/package-manage-tour.md:27
+msgid "Use `moon update` to update the mooncakes.io index."
+msgstr "使用 `moon update` 来更新 mooncakes.io 索引。"
+
+#: ../../toolchain/moon/package-manage-tour.md:29
 msgid "![moon update cli](/imgs/moon-update.png)"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:27
+#: ../../toolchain/moon/package-manage-tour.md:29
 msgid "moon update cli"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:29
-msgid "Setup MoonBit project"
-msgstr ""
-
 #: ../../toolchain/moon/package-manage-tour.md:31
-msgid "Open an existing project or create a new project via `moon new`:"
-msgstr ""
+msgid "Setup MoonBit project"
+msgstr "设置 MoonBit 项目"
 
 #: ../../toolchain/moon/package-manage-tour.md:33
+msgid "Open an existing project or create a new project via `moon new`:"
+msgstr "打开现有项目或通过 `moon new` 创建一个新项目："
+
+#: ../../toolchain/moon/package-manage-tour.md:35
 msgid "![moon new](/imgs/moon-new.png)"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:33
+#: ../../toolchain/moon/package-manage-tour.md:35
 msgid "moon new"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:35
-msgid "Add dependencies"
-msgstr ""
-
 #: ../../toolchain/moon/package-manage-tour.md:37
+msgid "Add dependencies"
+msgstr "添加依赖"
+
+#: ../../toolchain/moon/package-manage-tour.md:39
 msgid ""
 "You can browse all available modules on mooncakes.io. Use `moon add` to "
 "add the dependencies you need, or manually edit the `deps` field in "
 "`moon.mod.json`."
 msgstr ""
+"你可以在 mooncakes.io 上浏览所有可用的模块。使用 `moon add` 来添加你需要的依赖，或手动编辑 `moon.mod.json` 中的 `deps` "
 
-#: ../../toolchain/moon/package-manage-tour.md:39
+#: ../../toolchain/moon/package-manage-tour.md:41
 msgid ""
 "For example, to add the latest version of the `Yoorkin/example/list` "
 "module:"
 msgstr ""
+"例如，要添加 `Yoorkin/example/list` 模块的最新版本："
 
-#: ../../toolchain/moon/package-manage-tour.md:41
+#: ../../toolchain/moon/package-manage-tour.md:43
 msgid "![add deps](/imgs/add-deps.png)"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:41
+#: ../../toolchain/moon/package-manage-tour.md:43
 msgid "add deps"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:43
+#: ../../toolchain/moon/package-manage-tour.md:45
 msgid "Import packages from module"
 msgstr ""
+"从模块导入包"
 
-#: ../../toolchain/moon/package-manage-tour.md:45
+#: ../../toolchain/moon/package-manage-tour.md:47
 msgid ""
 "Modify the configuration file `moon.pkg.json` and declare the packages "
 "that need to be imported in the `import` field."
 msgstr ""
+"修改配置文件 `moon.pkg.json` 并在 `import` 字段中声明需要导入的包。"
 
-#: ../../toolchain/moon/package-manage-tour.md:47
+#: ../../toolchain/moon/package-manage-tour.md:49
 msgid ""
 "For example, in the image below, the `hello/main/moon.pkg.json` file is "
 "modified to declare the import of `Yoorkin/example/list` in the `main` "
 "package. Now, you can call the functions of the third-party package in "
 "the `main` package using `@list`."
 msgstr ""
+"例如，在下面的图片中，`hello/main/moon.pkg.json` 文件被修改，"
+"声明了在 `main` 包中导入 `Yoorkin/example/list`。现在，你可以在 `main` 包中使用 `@list` 调用第三方包的函数。"
 
-#: ../../toolchain/moon/package-manage-tour.md:49
+#: ../../toolchain/moon/package-manage-tour.md:51
 msgid "![import package](/imgs/import.png)"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:49
+#: ../../toolchain/moon/package-manage-tour.md:51
 msgid "import package"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:51
-msgid "You can also give an alias to the imported package:"
-msgstr ""
-
 #: ../../toolchain/moon/package-manage-tour.md:53
+msgid "You can also give an alias to the imported package:"
+msgstr "你还可以给导入的包起一个别名："
+
+#: ../../toolchain/moon/package-manage-tour.md:55
 msgid ""
 "{\n"
 "    \"is_main\": true,\n"
@@ -2052,71 +2064,78 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:62
+#: ../../toolchain/moon/package-manage-tour.md:64
 msgid ""
 "Read the documentation of this module on mooncakes.io, we can use its "
 "`of_array` and `reverse` functions to implement a new function "
 "`reverse_array`."
 msgstr ""
+"在 mooncakes.io 上阅读此模块的文档，我们可以使用其 `of_array` 和 `reverse` 函数来实现一个新函数 `reverse_array`。"
 
-#: ../../toolchain/moon/package-manage-tour.md:64
+#: ../../toolchain/moon/package-manage-tour.md:66
 msgid "![reverse array](/imgs/reverse-array.png)"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:64
+#: ../../toolchain/moon/package-manage-tour.md:66
 msgid "reverse array"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:66
-msgid "Remove dependencies"
-msgstr ""
-
 #: ../../toolchain/moon/package-manage-tour.md:68
-msgid "You can remove dependencies via `moon remove <module name>`."
-msgstr ""
+msgid "Remove dependencies"
+msgstr "移除依赖"
 
 #: ../../toolchain/moon/package-manage-tour.md:70
-msgid "Publish your module"
-msgstr ""
+msgid "You can remove dependencies via `moon remove <module name>`."
+msgstr "你可以通过 `moon remove <模块名>` 移除依赖。"
 
 #: ../../toolchain/moon/package-manage-tour.md:72
+msgid "Publish your module"
+msgstr "发布你的模块"
+
+#: ../../toolchain/moon/package-manage-tour.md:74
 msgid ""
 "If you are ready to share your module, use `moon publish` to push a "
 "module to mooncakes.io. There are some important considerations to keep "
 "in mind before publishing:"
 msgstr ""
-
-#: ../../toolchain/moon/package-manage-tour.md:75
-msgid "Semantic versioning convention"
-msgstr ""
+"如果你准备分享你的模块，使用 `moon publish` 将模块推送到 mooncakes.io。在发布之前有一些重要的注意事项需要记住："
 
 #: ../../toolchain/moon/package-manage-tour.md:77
+msgid "Semantic versioning convention"
+msgstr "语义化版本约定"
+
+#: ../../toolchain/moon/package-manage-tour.md:79
 msgid ""
 "MoonBit's package management follows the convention of [Semantic "
 "Versioning](https://semver.org/). Each module must define a version "
 "number in the format `MAJOR.MINOR.PATCH`. With each push, the module must"
 " increment the:"
 msgstr ""
-
-#: ../../toolchain/moon/package-manage-tour.md:79
-msgid "MAJOR version when you make incompatible API changes"
-msgstr ""
-
-#: ../../toolchain/moon/package-manage-tour.md:80
-msgid "MINOR version when you add functionality in a backward compatible manner"
-msgstr ""
+"MoonBit 的包管理遵循 [语义化版本](https://semver.org/) 约定。每个模块必须以 `MAJOR.MINOR.PATCH` 格式定义一个版本号。每次推送，模块必须递增："
 
 #: ../../toolchain/moon/package-manage-tour.md:81
-msgid "PATCH version when you make backward compatible bug fixes"
+msgid "MAJOR version when you make incompatible API changes"
 msgstr ""
+"当你进行不兼容的 API 更改时，递增 MAJOR 版本"
+
+#: ../../toolchain/moon/package-manage-tour.md:82
+msgid "MINOR version when you add functionality in a backward compatible manner"
+msgstr ""
+"在向后兼容的方式下添加功能时，递增 MINOR 版本"
 
 #: ../../toolchain/moon/package-manage-tour.md:83
+msgid "PATCH version when you make backward compatible bug fixes"
+msgstr ""
+"在进行向后兼容的错误修复时，递增 PATCH 版本"
+
+#: ../../toolchain/moon/package-manage-tour.md:85
 msgid ""
 "Additional labels for pre-release and build metadata are available as "
 "extensions to the `MAJOR.MINOR.PATCH` format."
 msgstr ""
+"附加的预发布和构建元数据标签可作为 `MAJOR.MINOR.PATCH` 格式的扩展。"
 
-#: ../../toolchain/moon/package-manage-tour.md:85
+#: ../../toolchain/moon/package-manage-tour.md:87
 msgid ""
 "moon implements the [minimal version "
 "selection](https://research.swtch.com/vgo-mvs), which automatically "
@@ -2126,56 +2145,62 @@ msgid ""
 "versioning convention, aiming to make the user's dependency graph as "
 "close as possible to the author's development-time dependencies."
 msgstr ""
-
-#: ../../toolchain/moon/package-manage-tour.md:87
-msgid "Readme & metadata"
-msgstr ""
+"moon 实现了 [最小版本选择](https://research.swtch.com/vgo-mvs)，"
+"根据模块的语义化版本信息自动处理和安装依赖。最小版本选择假定每个模块声明自己的依赖要求，"
+"并遵循语义化版本约定，旨在使用户的依赖图尽可能接近作者的开发时依赖。"
 
 #: ../../toolchain/moon/package-manage-tour.md:89
-msgid "Metadata in `moon.mod.json` and `README.md` will be shown in mooncakes.io."
-msgstr ""
+msgid "Readme & metadata"
+msgstr "自述文件 & 元数据"
 
 #: ../../toolchain/moon/package-manage-tour.md:91
-msgid "Metadata consist of the following sections:"
+msgid "Metadata in `moon.mod.json` and `README.md` will be shown in mooncakes.io."
 msgstr ""
+"`moon.mod.json` 和 `README.md` 中的元数据将显示在 mooncakes.io 上。"
 
 #: ../../toolchain/moon/package-manage-tour.md:93
+msgid "Metadata consist of the following sections:"
+msgstr ""
+"元数据包括以下部分："
+
+#: ../../toolchain/moon/package-manage-tour.md:95
 msgid ""
 "`license`: license of this module, it following the "
 "[SPDX](https://spdx.dev/about/overview/) convention"
-msgstr ""
-
-#: ../../toolchain/moon/package-manage-tour.md:94
-msgid "`keywords`: keywords of this module"
-msgstr ""
-
-#: ../../toolchain/moon/package-manage-tour.md:95
-msgid "`repository`: URL of the package source repository"
-msgstr ""
+msgstr "`license`：此模块的许可证，遵循 [SPDX](https://spdx.dev/about/overview/) 约定"
 
 #: ../../toolchain/moon/package-manage-tour.md:96
-msgid "`description`: short description to this module"
-msgstr ""
+msgid "`keywords`: keywords of this module"
+msgstr "`keywords`：此模块的关键字"
 
 #: ../../toolchain/moon/package-manage-tour.md:97
-msgid "`homepage`: URL of the module homepage"
-msgstr ""
+msgid "`repository`: URL of the package source repository"
+msgstr "`repository`：包源代码仓库的 URL"
+
+#: ../../toolchain/moon/package-manage-tour.md:98
+msgid "`description`: short description to this module"
+msgstr "`description`：此模块的简短描述"
 
 #: ../../toolchain/moon/package-manage-tour.md:99
-msgid "Moondoc"
-msgstr ""
+msgid "`homepage`: URL of the module homepage"
+msgstr "`homepage`：模块主页的 URL"
 
 #: ../../toolchain/moon/package-manage-tour.md:101
-msgid "mooncakes.io will generate documentation for each modules automatically."
-msgstr ""
+msgid "Moondoc"
+msgstr "Moondoc"
 
 #: ../../toolchain/moon/package-manage-tour.md:103
+msgid "mooncakes.io will generate documentation for each modules automatically."
+msgstr "mooncakes.io 将自动生成每个模块的文档。"
+
+#: ../../toolchain/moon/package-manage-tour.md:105
 msgid ""
 "The leading `///` comments of each toplevel will be recognized as "
 "documentation. You can write markdown inside."
 msgstr ""
+"每个顶级的 `///` 注释将被识别为文档。你可以在其中写 markdown。"
 
-#: ../../toolchain/moon/package-manage-tour.md:106
+#: ../../toolchain/moon/package-manage-tour.md:108
 msgid ""
 "/// Get the largest element of a non-empty `Array`.\n"
 "///\n"
@@ -2194,15 +2219,16 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package-manage-tour.md:124
+#: ../../toolchain/moon/package-manage-tour.md:126
 msgid ""
 "You can also use `moon doc --serve` to generate and view documentation in"
 " local."
 msgstr ""
+"你也可以使用 `moon doc --serve` 来生成并在本地查看文档。"
 
 #: ../../toolchain/moon/tutorial.md:1
 msgid "MoonBit's Build System Tutorial"
-msgstr ""
+msgstr "MoonBit 构建系统教程"
 
 #: ../../toolchain/moon/tutorial.md:3
 msgid ""
@@ -2211,16 +2237,19 @@ msgid ""
 "incremental builds. Additionally, moon also supports managing and "
 "building third-party packages on [mooncakes.io](https://mooncakes.io/)"
 msgstr ""
+"Moon 是 MoonBit 语言的构建系统，目前基于 [n2](https://github.com/evmar/n2) 项目。"
+"Moon 支持并行和增量构建。此外，moon 还在 [mooncakes.io](https://mooncakes.io/) 上管理和构建第三方包。"
 
 #: ../../toolchain/moon/tutorial.md:5
 msgid "Prerequisites"
-msgstr ""
+msgstr "先决条件"
 
 #: ../../toolchain/moon/tutorial.md:7
 msgid ""
 "Before you begin with this tutorial, make sure you have installed the "
 "following:"
 msgstr ""
+"在开始本教程之前，请确保你已安装以下内容："
 
 #: ../../toolchain/moon/tutorial.md:9
 msgid ""
@@ -2228,10 +2257,13 @@ msgid ""
 "<https://www.moonbitlang.com/download/>. This command line tool is needed"
 " for creating and managing MoonBit projects."
 msgstr ""
+"**MoonBit CLI 工具**：从 <https://www.moonbitlang.cn/download/> 下载。"
+"这个命令行工具用于创建和管理 MoonBit 项目。"
 
 #: ../../toolchain/moon/tutorial.md:11
 msgid "Use `moon help` to view the usage instructions."
 msgstr ""
+"使用 `moon help` 查看使用说明。"
 
 #: ../../toolchain/moon/tutorial.md:13
 msgid ""
@@ -2246,16 +2278,19 @@ msgid ""
 "environment for MoonBit, including functionalities like syntax "
 "highlighting, code completion, and more."
 msgstr ""
+"Visual Studio Code 中的 **MoonBit 语言** 插件：你可以从 VS Code 市场安装。"
+"此插件为 MoonBit 提供了丰富的开发环境，包括语法高亮、代码补全等功能。"
 
 #: ../../toolchain/moon/tutorial.md:20
 msgid ""
 "Once you have these prerequisites fulfilled, let's start by creating a "
 "new MoonBit module."
 msgstr ""
+"一旦你满足了这些先决条件，我们就可以开始创建一个新的 MoonBit 模块。"
 
 #: ../../toolchain/moon/tutorial.md:22
 msgid "Creating a New Module"
-msgstr ""
+msgstr "创建一个新模块"
 
 #: ../../toolchain/moon/tutorial.md:24
 msgid ""
@@ -2264,6 +2299,8 @@ msgid ""
 "values, you can create a new module named `username/hello` in the `my-"
 "project` directory."
 msgstr ""
+"要创建一个新模块，在终端中输入 `moon new` 命令，你将看到模块创建向导。"
+"通过使用所有默认值，你可以在 `my-project` 目录中创建一个名为 `username/hello` 的新模块。"
 
 #: ../../toolchain/moon/tutorial.md:26
 msgid ""
@@ -2282,16 +2319,18 @@ msgid ""
 "If you want use all default values, you can use `moon new my-project` to "
 "create a new module named `username/hello` in the `my-project` directory."
 msgstr ""
+"如果你想使用所有默认值，你可以使用 `moon new my-project` 在 `my-project` 目录中创建一个名为 `username/hello` 的新模块。"
 
 #: ../../toolchain/moon/tutorial.md:38
 msgid "Understanding the Module Directory Structure"
-msgstr ""
+msgstr "理解模块目录结构"
 
 #: ../../toolchain/moon/tutorial.md:40
 msgid ""
 "After creating the new module, your directory structure should resemble "
 "the following:"
 msgstr ""
+"创建新模块后，你的目录结构应该如下："
 
 #: ../../toolchain/moon/tutorial.md:42
 msgid ""
@@ -2312,6 +2351,7 @@ msgstr ""
 #: ../../toolchain/moon/tutorial.md:57
 msgid "Here's a brief explanation of the directory structure:"
 msgstr ""
+"以下是目录结构的简要说明："
 
 #: ../../toolchain/moon/tutorial.md:59
 msgid ""
@@ -2320,6 +2360,8 @@ msgid ""
 "`source` specifies the source directory of the module. The default value "
 "is `src`."
 msgstr ""
+"`moon.mod.json` 用于标识目录为 MoonBit 模块。它包含模块的元数据，如模块名称、版本等。"
+"`source` 指定模块的源目录。默认值是 `src`。"
 
 #: ../../toolchain/moon/tutorial.md:61
 msgid ""
@@ -2345,6 +2387,9 @@ msgid ""
 "files are for blackbox test, so private members of the `lib` package "
 "cannot be accessed directly."
 msgstr ""
+"`lib` 和 `main` 目录：这些是模块中的包。每个包可以包含多个 `.mbt` 文件，这些文件是 MoonBit 语言的源代码文件。"
+"但是，无论一个包有多少 `.mbt` 文件，它们都共享一个公共的 `moon.pkg.json` 文件。"
+"`lib/*_test.mbt` 是 `lib` 包中的单独测试文件，这些文件用于黑盒测试，因此 `lib` 包的私有成员不能直接访问。"
 
 #: ../../toolchain/moon/tutorial.md:76
 msgid ""
@@ -2352,6 +2397,7 @@ msgid ""
 "package, such as whether it is the main package and the packages it "
 "imports."
 msgstr ""
+"`moon.pkg.json` 是包描述符。它定义了包的属性，例如它是否是 main 包以及它导入的包。"
 
 #: ../../toolchain/moon/tutorial.md:78
 msgid "`main/moon.pkg.json`:"
@@ -2372,6 +2418,7 @@ msgid ""
 "Here, `\"is_main: true\"` declares that the package needs to be linked by"
 " the build system into a wasm file."
 msgstr ""
+"这里，`\"is_main: true\"` 声明该包需要被构建系统链接为一个 Wasm 文件。"
 
 #: ../../toolchain/moon/tutorial.md:91
 msgid "`lib/moon.pkg.json`:"
@@ -2386,22 +2433,25 @@ msgid ""
 "This file is empty. Its purpose is simply to inform the build system that"
 " this folder is a package."
 msgstr ""
+"此文件为空。它的目的只是告诉构建系统这个文件夹是一个包。"
 
 #: ../../toolchain/moon/tutorial.md:99
 msgid "Working with Packages"
-msgstr ""
+msgstr "使用包"
 
 #: ../../toolchain/moon/tutorial.md:101
 msgid ""
 "Our `username/hello` module contains two packages: `username/hello/lib` "
 "and `username/hello/main`."
 msgstr ""
+"我们的 `username/hello` 模块包含两个包：`username/hello/lib` 和 `username/hello/main`。"
 
 #: ../../toolchain/moon/tutorial.md:103
 msgid ""
 "The `username/hello/lib` package contains `hello.mbt` and "
 "`hello_test.mbt` files:"
 msgstr ""
+"`username/hello/lib` 包包含 `hello.mbt` 和 `hello_test.mbt` 文件："
 
 #: ../../toolchain/moon/tutorial.md:105
 msgid "`hello.mbt`"
@@ -2429,7 +2479,7 @@ msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:123
 msgid "The `username/hello/main` package contains a `main.mbt` file:"
-msgstr ""
+msgstr "`username/hello/main` 包包含一个 `main.mbt` 文件："
 
 #: ../../toolchain/moon/tutorial.md:125
 msgid ""
@@ -2443,6 +2493,7 @@ msgid ""
 "To execute the program, specify the file system's path to the "
 "`username/hello/main` package in the `moon run` command:"
 msgstr ""
+"要执行程序，在 `moon run` 命令中指定文件系统路径到 `username/hello/main` 包："
 
 #: ../../toolchain/moon/tutorial.md:133
 msgid ""
@@ -2452,7 +2503,7 @@ msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:138
 msgid "You can also omit `./`"
-msgstr ""
+msgstr "你也可以省略 `./`"
 
 #: ../../toolchain/moon/tutorial.md:140
 msgid ""
@@ -2462,7 +2513,7 @@ msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:145
 msgid "You can test using the `moon test` command:"
-msgstr ""
+msgstr "你可以使用 `moon test` 命令进行测试："
 
 #: ../../toolchain/moon/tutorial.md:147
 msgid ""
@@ -2472,7 +2523,7 @@ msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:152
 msgid "Package Importing"
-msgstr ""
+msgstr "包导入"
 
 #: ../../toolchain/moon/tutorial.md:154
 msgid ""
@@ -2480,6 +2531,8 @@ msgid ""
 "internal packages. To import the `username/hello/lib` package in "
 "`src/main/main.mbt`, you need to specify it in `src/main/moon.pkg.json`:"
 msgstr ""
+"在 MoonBit 的构建系统中，模块的名称用于引用其内部包。"
+"要在 `src/main/main.mbt` 中导入 `username/hello/lib` 包，你需要在 `src/main/moon.pkg.json` 中指定："
 
 #: ../../toolchain/moon/tutorial.md:166
 msgid ""
@@ -2487,6 +2540,8 @@ msgid ""
 "package from the `username/hello` module, so you can use `@lib.hello()` "
 "in `main/main.mbt`."
 msgstr ""
+"这里，`username/hello/lib` 指定从 `username/hello` 模块导入 `username/hello/lib` 包，"
+"所以你可以在 `main/main.mbt` 中使用 `@lib.hello()`。"
 
 #: ../../toolchain/moon/tutorial.md:168
 msgid ""
@@ -2496,14 +2551,17 @@ msgid ""
 "for the package name `username/hello/lib`. In the following sections, you"
 " will learn how to customize the alias for a package."
 msgstr ""
+"请注意，`src/main/moon.pkg.json` 中导入的包名是 `username/hello/lib`，"
+"在 `src/main/main.mbt` 中使用 `@lib` 来引用这个包。这里的导入实际上为包名 `username/hello/lib` 生成了一个默认别名。"
+"在接下来的章节中，你将学习如何为包定制别名。"
 
 #: ../../toolchain/moon/tutorial.md:170
 msgid "Creating and Using a New Package"
-msgstr ""
+msgstr "创建和使用新包"
 
 #: ../../toolchain/moon/tutorial.md:172
 msgid "First, create a new directory named `fib` under `lib`:"
-msgstr ""
+msgstr "首先，在 `lib` 下创建一个名为 `fib` 的新目录："
 
 #: ../../toolchain/moon/tutorial.md:174
 msgid "mkdir src/lib/fib\n"
@@ -2511,7 +2569,7 @@ msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:178
 msgid "Now, you can create new files under `src/lib/fib`:"
-msgstr ""
+msgstr "现在，你可以在 `src/lib/fib` 下创建新文件："
 
 #: ../../toolchain/moon/tutorial.md:180
 msgid "`a.mbt`:"
@@ -2555,7 +2613,7 @@ msgstr ""
 msgid ""
 "After creating these files, your directory structure should look like "
 "this:"
-msgstr ""
+msgstr "在创建这些文件后，你的目录结构应该如下："
 
 #: ../../toolchain/moon/tutorial.md:216
 msgid ""
@@ -2581,7 +2639,7 @@ msgstr ""
 msgid ""
 "In the `src/main/moon.pkg.json` file, import the `username/hello/lib/fib`"
 " package and customize its alias to `my_awesome_fibonacci`:"
-msgstr ""
+msgstr "在 `src/main/moon.pkg.json` 文件中，导入 `username/hello/lib/fib` 包并将其别名定制为 `my_awesome_fibonacci`："
 
 #: ../../toolchain/moon/tutorial.md:237
 msgid ""
@@ -2603,6 +2661,8 @@ msgid ""
 "in the `hello` module. After doing this, you can use the `fib` package in"
 " `main/main.mbt`. Replace the file content of `main/main.mbt` to:"
 msgstr ""
+"这一行导入了 `fib` 包，它是 `hello` 模块中 `lib` 包的一部分。"
+"在这样做之后，你可以在 `main/main.mbt` 中使用 `fib` 包。"
 
 #: ../../toolchain/moon/tutorial.md:252
 msgid ""
@@ -2617,7 +2677,7 @@ msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:262
 msgid "To execute your program, specify the path to the `main` package:"
-msgstr ""
+msgstr "为了执行你的程序，指定 main 包的路径："
 
 #: ../../toolchain/moon/tutorial.md:264
 msgid ""
@@ -2628,13 +2688,14 @@ msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:270
 msgid "Adding Tests"
-msgstr ""
+msgstr "添加测试"
 
 #: ../../toolchain/moon/tutorial.md:272
 msgid ""
 "Let's add some tests to verify our fib implementation. Add the following "
 "content in `src/lib/fib/a.mbt`:"
 msgstr ""
+"让我们添加一些测试来验证我们的 fib 实现。在 `src/lib/fib/a.mbt` 中添加以下内容："
 
 #: ../../toolchain/moon/tutorial.md:274
 msgid "`src/lib/fib/a.mbt`"
@@ -2657,6 +2718,8 @@ msgid ""
 "... }` defines an inline test block. The code inside an inline test block"
 " is executed in test mode."
 msgstr ""
+"这段代码测试斐波那契数列的前五项。`test { ... }` 定义了一个内联测试块。"
+"内联测试块中的代码在测试模式下执行。"
 
 #: ../../toolchain/moon/tutorial.md:288
 msgid ""
@@ -2664,10 +2727,13 @@ msgid ""
 "build` and `moon run`), so they won't cause the generated code size to "
 "bloat."
 msgstr ""
+"内联测试块在非测试编译模式（`moon build` 和 `moon run`）中被丢弃，"
+"因此它们不会导致生成的代码大小膨胀。"
 
 #: ../../toolchain/moon/tutorial.md:290
 msgid "Stand-alone test files for blackbox tests"
 msgstr ""
+"黑盒测试的独立测试文件"
 
 #: ../../toolchain/moon/tutorial.md:292
 msgid ""
@@ -2676,6 +2742,8 @@ msgid ""
 " tests. For example, inside the `src/lib/fib` directory, create a file "
 "named `fib_test.mbt` and paste the following code:"
 msgstr ""
+"除了内联测试，MoonBit 还支持独立测试文件。以 `_test.mbt` 结尾的源文件被视为黑盒测试的测试文件。"
+"例如，在 `src/lib/fib` 目录中，创建一个名为 `fib_test.mbt` 的文件，并粘贴以下代码："
 
 #: ../../toolchain/moon/tutorial.md:294
 msgid "`src/lib/fib/fib_test.mbt`"
@@ -2700,6 +2768,9 @@ msgid ""
 "`_test.mbt`. This new package will import the current package "
 "automatically, allowing you to use `@lib` in the test code."
 msgstr ""
+"注意，测试代码使用 `@fib` 来引用 `username/hello/lib/fib` 包。"
+"构建系统通过使用以 `_test.mbt` 结尾的文件自动为黑盒测试创建一个新包。"
+"这个新包将自动导入当前包，允许你在测试代码中使用 `@lib`。"
 
 #: ../../toolchain/moon/tutorial.md:308
 msgid ""
@@ -2707,6 +2778,8 @@ msgid ""
 "identifies, and runs all inline tests as well as files ending with "
 "`_test.mbt`. If everything is normal, you will see:"
 msgstr ""
+"最后，使用 `moon test` 命令，它会扫描整个项目，识别并运行所有内联测试以及以 `_test.mbt` 结尾的文件。"
+"如果一切正常，你将看到："
 
 #: ../../toolchain/moon/tutorial.md:310
 msgid ""
@@ -2718,43 +2791,3 @@ msgid ""
 "test username/hello/lib/fib/fib_test.mbt::0 ok\n"
 "Total tests: 3, passed: 3, failed: 0.\n"
 msgstr ""
-
-#~ msgid "**Usage:** `moon add <PACKAGE_PATH>`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The `heap-start-address` option is "
-#~ "used to specify the starting address "
-#~ "of the linear memory that can be"
-#~ " used when compiling to the `wasm`"
-#~ " backend."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The `import-memory` option is used "
-#~ "to specify the linear memory imported"
-#~ " by the `wasm` module."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "For example, the following configuration "
-#~ "specifies that the linear memory "
-#~ "imported by the `wasm` module is "
-#~ "the `memory` variable from the `env` "
-#~ "module."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The `export-memory-name` option is "
-#~ "used to specify the name of the"
-#~ " linear memory exported by the `wasm`"
-#~ " module."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The link options for the `wasm-gc`"
-#~ " backend are similar to those for "
-#~ "the `wasm` backend, except there is "
-#~ "no `heap-start-address` option."
-#~ msgstr ""
-

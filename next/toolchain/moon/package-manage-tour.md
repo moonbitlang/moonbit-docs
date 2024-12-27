@@ -10,7 +10,9 @@ Before getting started, make sure you have installed [moon](https://www.moonbitl
 
 ## Setup mooncakes.io account
 
-**Note: If you don't need to publishing, you can skip this step.**
+```{note}
+If you don't need to publishing, you can skip this step.
+```
 
 If you don't have an account on mooncakes.io, run `moon register` and follow the guide. If you have previously registered an account, you can use `moon login` to log in.
 
