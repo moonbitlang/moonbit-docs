@@ -138,7 +138,7 @@ The `link` option is used to specify link options, and its value can be either a
         "export-memory-name": "memory"
       },
       "wasm-gc": {
-        "export-memroy-name": "memory"
+        "export-memory-name": "memory"
       }
     }
   }
@@ -187,7 +187,7 @@ The `link` option is used to specify link options, and its value can be either a
     "link": {
       "wasm-gc": {
         "use-js-builtin-string": true,
-        "imported-string-contants": "_"
+        "imported-string-constants": "_"
       }
     }
   }
