@@ -98,6 +98,8 @@ Build the current package
 * `--nostd` — Disable the standard library
 * `-g`, `--debug` — Emit debug information
 * `--release` — Compile in release mode
+* `--strip` — Enable stripping debug information
+* `--no-strip` — Disable stripping debug information
 * `--target <TARGET>` — Select output target
 
   Possible values: `wasm`, `wasm-gc`, `js`, `native`, `all`
@@ -131,6 +133,8 @@ Check the current package, but don't build object files
 * `--nostd` — Disable the standard library
 * `-g`, `--debug` — Emit debug information
 * `--release` — Compile in release mode
+* `--strip` — Enable stripping debug information
+* `--no-strip` — Disable stripping debug information
 * `--target <TARGET>` — Select output target
 
   Possible values: `wasm`, `wasm-gc`, `js`, `native`, `all`
@@ -168,6 +172,8 @@ Run a main package
 * `--nostd` — Disable the standard library
 * `-g`, `--debug` — Emit debug information
 * `--release` — Compile in release mode
+* `--strip` — Enable stripping debug information
+* `--no-strip` — Disable stripping debug information
 * `--target <TARGET>` — Select output target
 
   Possible values: `wasm`, `wasm-gc`, `js`, `native`, `all`
@@ -197,6 +203,8 @@ Test the current package
 * `--nostd` — Disable the standard library
 * `-g`, `--debug` — Emit debug information
 * `--release` — Compile in release mode
+* `--strip` — Enable stripping debug information
+* `--no-strip` — Disable stripping debug information
 * `--target <TARGET>` — Select output target
 
   Possible values: `wasm`, `wasm-gc`, `js`, `native`, `all`
