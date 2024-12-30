@@ -4,7 +4,7 @@ This article is the first in the series on implementing lazy evaluation in MoonB
 
 ## Higher-Order Functions and Performance Challenges
 
-Higher-order functions such as `map` and `filter` often serve as many people's first impression of functional programming (although it goes far beyond these functions). They simplify many list processing tasks, but another problem emerges: using too many of these higher-order functions can lead to poor performance (because it requires multiple traversals of the list).
+Higher-order functions such as `map` and `filter` often serve as many people's first impression of functional programming (although it goes far beyond these functions). They simplify many list processing tasks, but another problem emerges: nesting these higher-order functions too deep can lead to poor performance (because it requires multiple traversals of the list).
 
 To enhance code efficiency, some propose leveraging compiler optimizations based on recurring patterns within higher-order functions. For instance, by rewriting `map(f, map(g, list))` as：
 
@@ -184,7 +184,7 @@ While there exist reducible expressions in the graph {
 
 Dizzy now? Let's find a few examples to demonstrate how to perform reductions on paper.
 
-**Step 1: Find the next redex**
+### Step 1: Find the next redex
 
 The execution of the entire program starts from the `main` function.
 
@@ -204,14 +204,14 @@ According to the principle of finding the outermost redex, it seems like we've i
 But wait! Due to the presence of default currying, the abstract syntax tree corresponding to this expression is actually composed of multiple nested `App` nodes. It roughly looks like this (simplified for readability):
 
 ```moonbit
-App(App(add, 33), square3)
+App(App(add, 33), App(square, 3))
 ```
 
 This chain-like structure from `add` to the outermost `App` node is called the "Spine"
 
 Going back to check, `add` is an internally defined primitive. However, since its second argument `(square 3)` is not in normal form, we cannot reduce it (adding an unevaluated expression to an integer seems a bit absurd). So, we can't definitively say that `(add 33 (square 3))` is a redex; it's just the outermost function application. To reduce it, we must first reduce `(square 3)`.
 
-**Step 2: Reduce**
+### Step 2: Reduce
 
 Since `square` is a user-defined super combinator, reducing `(square 3)` involves only parameter substitution.
 
@@ -223,7 +223,7 @@ If a redex has fewer arguments than required by the super combinator, which is c
 
 Here, `(mul 3)` cannot be treated as a redex because it lacks sufficient arguments, making it a `weak head normal form` (often abbreviated as WHNF). In this situation, even if its sub-expressions contain redexes, no action is needed.
 
-**Step 3: Update**
+### Step 3: Update
 
 This step only affects execution efficiency and can be skipped during paper deductions.
 
@@ -236,7 +236,7 @@ To answer this question, pioneers in the world of lazy evaluation programming la
 - ABC Machine (used by the Clean language)
 - Spineless Tagless G-Machine (abbreviated as STG, used by Haskell language)
 
-They are execution models used to guide compiler implementations. It's important to note that, unlike various popular virtual machines today (such as the JVM), abstract machines are more like intermediate representations (IR) for compilers. Taking Haskell's compiler GHC as an example, after generating STG (Spineless Tagless G-Machine) code, it doesn't directly pass it to an interpreter for execution. Instead, it further transforms it into LLVM, C code, or machine code based on the selected backend.
+They are execution models used to guide compiler implementations. It's important to note that, unlike various popular virtual machines today (such as the JVM), abstract machines are more like intermediate representations (IR) for compilers. Taking Haskell's compiler GHC as an example, after generating STG code, it doesn't directly pass it to an interpreter for execution. Instead, it further transforms it into LLVM, C code, or machine code based on the selected backend.
 
 To simplify implementation, this article will directly use MoonBit to write an interpreter for G-Machine instructions, starting from a minimal example and gradually adding more features.
 

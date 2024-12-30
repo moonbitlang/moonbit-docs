@@ -3,13 +3,11 @@
 # This file is distributed under the same license as the MoonBit Document
 # package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-23 14:26+0800\n"
+"POT-Creation-Date: 2024-12-30 16:06+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -22,7 +20,7 @@ msgstr ""
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:1
 msgid "G-Machine 1"
-msgstr ""
+msgstr "G-Machine 第一部分"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:3
 msgid ""
@@ -31,27 +29,31 @@ msgid ""
 "evaluation and a typical abstract machine for lazy evaluation, the "
 "G-Machine."
 msgstr ""
+"本文是关于在 MoonBit 中实现惰性求值的系列文章的第一篇。在本文中，我们将探讨惰性求值的目的以及用于惰性求值的典型抽象机器 "
+"G-Machine。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:5
 msgid "Higher-Order Functions and Performance Challenges"
-msgstr ""
+msgstr "高阶函数和性能挑战"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:7
 msgid ""
 "Higher-order functions such as `map` and `filter` often serve as many "
 "people's first impression of functional programming (although it goes far"
 " beyond these functions). They simplify many list processing tasks, but "
-"another problem emerges: using too many of these higher-order functions "
+"another problem emerges: nesting these higher-order functions too deep "
 "can lead to poor performance (because it requires multiple traversals of "
 "the list)."
 msgstr ""
+"高阶函数，如 `map` 和 "
+"`filter`，通常是许多人对函数式编程的第一印象（尽管函数式编程远不止于这些函数）。它们简化了许多列表处理任务，但另一个问题出现了：这些高阶函数嵌套太深可能会导致性能不佳（因为它需要多次遍历列表）。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:9
 msgid ""
 "To enhance code efficiency, some propose leveraging compiler "
 "optimizations based on recurring patterns within higher-order functions. "
 "For instance, by rewriting `map(f, map(g, list))` as："
-msgstr ""
+msgstr "为了提高代码效率，一些人提出利用基于高阶函数内部重复模式的编译器优化。例如，将 `map(f, map(g, list))` 重写为："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:11
 msgid "map(fn (x) { f(g(x)) }, list)\n"
@@ -66,7 +68,7 @@ msgid ""
 "detrimentally affects code readability and complicates the process of "
 "making modifications. Could there be a more equitable solution that "
 "balances efficiency with maintainability?"
-msgstr ""
+msgstr "尝试不错，但重要的是要认识到这种优化技术具有固有的局限性，特别是在处理更复杂的场景时。将所有处理合并到一个函数中可以避免重复的列表遍历，但它会对降低代码的可读性，并使修改变得复杂。是否有一种更平衡的解决方案，兼顾效率和可维护性？"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:17
 msgid ""
@@ -77,24 +79,27 @@ msgid ""
 "designed to be lazy (successful examples include the Miranda language of "
 "the 1980s and later by Haskell and Clean languages)."
 msgstr ""
+"惰性求值是一种技术，可以在这种情况下在一定程度上减少不必要的成本。这种策略可以集成到特定的数据结构中（例如，Java 8 中添加的 Stream "
+"类型，以及早期 Scheme 语言中的 stream），或者整个语言可以被设计为惰性（成功的例子包括 20 世纪 80 年代的 Miranda "
+"语言，以及后来的 Haskell 和 Clean 语言）。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:19
 msgid ""
 "Let's first explore how lazy lists (`Stream`) can avoid multiple "
 "traversals in such cases."
-msgstr ""
+msgstr "首先，让我们探讨一下惰性列表（`Stream`）如何避免在这种情况下多次遍历。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:22
 msgid "The `List[T]` here is a `typealias` of `@immut/list.T[T]`"
-msgstr ""
+msgstr "这里的 `List[T]` 是 `@immut/list.T[T]` 的 `typealias`"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:25
 msgid "Lazy List Implementation"
-msgstr ""
+msgstr "惰性列表实现"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:27
 msgid "First, let's define its type:"
-msgstr ""
+msgstr "首先，让我们定义它的类型："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:29
 msgid ""
@@ -112,10 +117,12 @@ msgid ""
 "implementation of lazy evaluation: wrapping things you don't want to "
 "compute right away in a thunk."
 msgstr ""
+"`Stream[T]` 和 `List[T]` 之间唯一的真正区别在于 `Cons`：保存列表其余部分的位置被一个无参数函数（俗称为 "
+"thunk）替换。这是惰性求值的一个简单实现：将不想立即计算的东西包装在一个 thunk 中。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:38
 msgid "We also need a function to convert a regular list into a lazy list:"
-msgstr ""
+msgstr "我们还需要一个函数将常规列表转换为惰性列表："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:40
 msgid ""
@@ -135,6 +142,9 @@ msgid ""
 "The following `map` function will adopt this approach (though here, `xs` "
 "is already a thunk)."
 msgstr ""
+"这个函数不需要遍历整个列表来将其转换为 `Stream`。对于不急着要结果的运算（这里是 "
+"`Stream::from_list(xs)`），我们直接将它们包装在一个 thunk 中并返回。下面的 `map` "
+"函数将采用这种方法（不过这里的 `xs` 已经是一个 thunk 了）。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:51
 msgid ""
@@ -150,7 +160,7 @@ msgstr ""
 msgid ""
 "The `take` function is responsible for performing computations, and it "
 "can extract n elements as needed."
-msgstr ""
+msgstr "`take` 函数负责执行计算，它可以根据需要提取 n 个元素。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:62
 msgid ""
@@ -177,10 +187,12 @@ msgid ""
 "implementation of a lazy functional language and briefly introduce its "
 "underlying theoretical model."
 msgstr ""
+"使用 thunk "
+"实现惰性数据结构的方法很简单，有效地解决了上述问题。这种方法要求用户明确指示代码中应该延迟计算的位置，而惰性语言的策略则更加激进：它默认使用惰性求值来处理所有用户定义的函数！在接下来的章节中，我们将介绍一个惰性函数式语言的最小实现，并简要介绍其潜在的理论模型。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:77
 msgid "A Lazy Evaluation Language and Its Abstract Syntax Tree"
-msgstr ""
+msgstr "一种惰性求值语言及其抽象语法树"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:79
 msgid ""
@@ -190,10 +202,12 @@ msgid ""
 " markdown. Don't worry, though the syntax might seem a bit complex at "
 "first, it is straightforward enough."
 msgstr ""
+"本文中使用的示例是一种惰性求值语言，故意设计成类似 Clojure（一种 Lisp 方言）的语言，命名为 coreF。这是为了在 Markdown"
+" 中使用 Clojure 的语法高亮。请别担心，语法可能有点麻烦，但是绝对够简单。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:81
 msgid "Functions are defined using the `defn` keyword:"
-msgstr ""
+msgstr "使用 `defn` 关键字定义函数："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:83
 msgid ""
@@ -204,6 +218,10 @@ msgid ""
 "    1\n"
 "    (mul n (factorial (sub n 1)))))\n"
 msgstr ""
+"(defn factorial[n] ;; n 是参数，这个函数计算 n 的阶乘\n"
+"  (if (eq n 0) ;; 定义从这里开始，持续到下面的三行\n"
+"    1\n"
+"    (mul n (factorial (sub n 1)))))\n"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:90
 msgid ""
@@ -213,12 +231,14 @@ msgid ""
 "combinator, all free variables should be included in an initial pair of "
 "`[]`."
 msgstr ""
+"在一般对话中，我们将它成为函数就好。但当我们讨论惰性函数式语言时，我们必须引入一个专门的术语：_超组合子_（ Super Combinator "
+"）。在超组合子的定义中，所有自由变量都应该包含在一个初始的 `[]` 中。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:92
 msgid ""
 "Execution of a coreF program begins with `main`, calling a specific super"
 " combinator as if replacing it with its definition."
-msgstr ""
+msgstr "coreF 程序的执行从 `main` 开始，调用一个特定的超组合子，等价于用它的定义替换它。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:94
 msgid "(defn main[] (factorial 42))\n"
@@ -228,7 +248,7 @@ msgstr ""
 msgid ""
 "Super combinators without parameters, such as `main`, are referred to by "
 "a specific term: _Constant Applicative Forms (CAF)_."
-msgstr ""
+msgstr "没有参数的超组合子，如 `main`，有一个术语：_常量应用形式（ Constant Applicative Forms ，简称 CAF）_。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:100
 msgid ""
@@ -239,6 +259,8 @@ msgid ""
 "less, as built-in functions like `eq`, `mul`, `sub`, etc., are planned "
 "for future implementation)."
 msgstr ""
+"coreF 还具有几个语言特性，包括自定义数据结构、用于解构的 `case` 表达式，以及用于声明局部变量的 `let` 和 "
+"`letrec`。但是，本文的范围仅限于上述特性（实际上，甚至更少，因为像 `eq`、`mul`、`sub` 等内置函数之后才会实现）。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:102
 msgid ""
@@ -248,13 +270,15 @@ msgid ""
 "into an external Super Combinator, but this is not a main point of lazy "
 "evaluation, hence its omission here."
 msgstr ""
+"coreF 不包括匿名函数，因为匿名函数会引入额外的自由变量。删除它们需要额外的转换步骤：lambda 提升。这种技术可以将 lambda "
+"表达式转换为外部超组合子，但这不是惰性求值的主要内容，因此在这里省略了。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:104
 msgid ""
 "Super combinators will eventually be parsed into `ScDef[String]`, but "
 "writing a parser is a tedious task. I will provide it along with the "
 "final code."
-msgstr ""
+msgstr "超组合子最终将被解析为 `ScDef[String]`，但编写解析器是一项繁琐的任务。我将在最终代码中提供它。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:106
 msgid ""
@@ -276,7 +300,7 @@ msgstr ""
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:112
 msgid "Additionally, some predefined coreF programs are required."
-msgstr ""
+msgstr "此外，还有一些预定义的 coreF 程序需要给出。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:114
 msgid ""
@@ -319,18 +343,18 @@ msgstr ""
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:120
 msgid "Why Graph"
-msgstr ""
+msgstr "为什么是图"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:122
 msgid ""
 "In the coreF language, expressions (not `RawExpr[T]` mentioned earlier, "
 "but runtime expressions) are stored in memory in the form of a graph "
 "rather than a tree when being evaluated.)"
-msgstr ""
+msgstr "在 coreF 语言中，表达式（不是前面提到的 `RawExpr[T]`，而是运行时表达式）在被求值时，以图的形式存储在内存中，而不是树。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:124
 msgid "Why is this approach taken? Let's examine this through a program example:"
-msgstr ""
+msgstr "为什么要这样？看看这个程序："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:126
 msgid ""
@@ -342,7 +366,7 @@ msgstr ""
 msgid ""
 "If we evaluate according to the conventional expression tree, it would be"
 " reduced to:"
-msgstr ""
+msgstr "如果我们按照一般的树形表达式来求值，表达式会被规约成："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:133
 msgid "(mul (square 3) (square 3))\n"
@@ -352,13 +376,13 @@ msgstr ""
 msgid ""
 "In this case, `(square 3)` would be evaluated twice, which is certainly "
 "not desirable for lazy evaluation."
-msgstr ""
+msgstr "在这种情况下，`(square 3)` 将被计算两次，这对于惰性求值来说显然是不可取的。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:139
 msgid ""
 "To illustrate this more clearly, let's make a somewhat improper analogy "
 "using MoonBit code:"
-msgstr ""
+msgstr "为了更清楚地说明这一点，让我们用 MoonBit 代码做一个不太恰当的类比："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:141
 msgid ""
@@ -375,6 +399,8 @@ msgid ""
 "reducing the graph. Regarding in-place update, let's simulate it using "
 "MoonBit code:"
 msgstr ""
+"使用图来表示程序是为了方便共享计算结果，避免冗余计算。为了实现这个目的，在减少图时实现一个原地更新算法是至关重要的。关于原地更新，让我们用 "
+"MoonBit 代码来模拟它："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:149
 msgid ""
@@ -402,6 +428,30 @@ msgid ""
 "  x.extract() * x.extract()\n"
 "}\n"
 msgstr ""
+"enum LazyData[T] {\n"
+"  Waiting(() -> T)\n"
+"  Done(T)\n"
+"}\n"
+"\n"
+"struct LazyRef[T] {\n"
+"  mut data : LazyData[T]\n"
+"}\n"
+"\n"
+"fn extract[T](self : LazyRef[T]) -> T {\n"
+"  match self.data {\n"
+"    Waiting(thunk) => {\n"
+"      let value = thunk()\n"
+"      self.data = Done(value) // 原地更新\n"
+"      value\n"
+"    }\n"
+"    Done(value) => value\n"
+"  }\n"
+"}\n"
+"\n"
+"fn square(x : LazyRef[Int]) -> Int {\n"
+"  x.extract() * x.extract()\n"
+"}\n"
+"\n"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:155
 msgid ""
@@ -409,7 +459,7 @@ msgid ""
 "update the referenced mutable field and replace its content with the "
 "computed result. Therefore, there's no need to recompute it during the "
 "second execution of the `extract` method."
-msgstr ""
+msgstr "无论哪一方先执行 `extract` 方法，它都会更新引用的可变字段，并用计算结果替换其内容。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:157
 msgid "Conventions"
@@ -420,23 +470,25 @@ msgid ""
 "Before delving into how graph reduction works, let's establish some key "
 "terms and basic facts. We'll continue using the same program as an "
 "example:"
-msgstr ""
+msgstr "在讨论图规约如何进行之前，让我们先定义一些术语和基本事实。我们将继续使用相同的程序作为示例："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:161
 msgid ""
 "(defn square[x]  (mul x x)) ;; multiplication\n"
 "(defn main[] (square (square 3)))\n"
 msgstr ""
+"(defn square[x]  (mul x x)) ;; 乘法\n"
+"(defn main[] (square (square 3)))"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:166
 msgid "Built-in primitives like `mul` are predefined operations."
-msgstr ""
+msgstr "内置的原语，如 `mul`，是预定义的操作。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:168
 msgid ""
 "Evaluating an expression (of course, lazy) and updating its corresponding"
 " node in the graph in place is called reduction."
-msgstr ""
+msgstr "对表达式进行求值（当然是惰性的），并原地更新图中对应的节点，这个过程称为规约。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:169
 msgid ""
@@ -446,13 +498,16 @@ msgid ""
 "compared to `(square 3)` because `square` is a user-defined combinator "
 "while `mul` is an implemented built-in primitive."
 msgstr ""
+"`(square 3)` 是一个可规约的表达式（reducible expression，通常缩写为 redex），由 `square` "
+"和它的参数组成。它可以规约为 `(mul 3 3)`。`(mul 3 3)` 也是一个 redex，但与 `(square 3)` "
+"相比，它是一种不同类型的 redex，因为 `square` 是一个用户定义的组合子，而 `mul` 是一个实现的内置原语。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:170
 msgid ""
 "The reduction result of `(mul 3 3)` is the expression `9`, which cannot "
 "be further reduced. Such expressions that cannot be further reduced are "
 "called Normal forms."
-msgstr ""
+msgstr "`(mul 3 3)` 的规约结果是表达式 `9`，它不能进一步规约。这种不能进一步规约的表达式称为范式（normal form）。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:171
 msgid ""
@@ -460,6 +515,8 @@ msgid ""
 " (mul 7 9))`). In such cases, the order of reduction of expressions is "
 "crucial – some programs only halt under specific reduction orders."
 msgstr ""
+"一个表达式可能包含多个子表达式（例如 `(mul (add 3 5) (mul 7 "
+"9))`）。在这种情况下，表达式的规约顺序至关重要——有些程序只在特定的规约顺序下停机。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:173
 msgid ""
@@ -467,10 +524,12 @@ msgid ""
 " for reduction, known as _normal order reduction_. This reduction order "
 "will be uniformly adopted in the following discussion."
 msgstr ""
+"有一种特殊的规约顺序总是选择最外层的 redex 进行规约，称为 _正则序规约_（normal order "
+"reduction）。下文也将统一采用这种规约顺序。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:175
 msgid "So, the graph reduction can be described with the following pseudocode:"
-msgstr ""
+msgstr "因此，图规约可以用以下伪代码描述："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:177
 msgid ""
@@ -480,20 +539,25 @@ msgid ""
 "    Update the graph with the result of reduction.\n"
 "}\n"
 msgstr ""
+"当图中存在可规约的表达式时 {\n"
+"    选择最外层的可规约表达式。\n"
+"    规约表达式。\n"
+"    用规约的结果更新图。\n"
+"}\n"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:185
 msgid ""
 "Dizzy now? Let's find a few examples to demonstrate how to perform "
 "reductions on paper."
-msgstr ""
+msgstr "头晕了吗？让我们找一些例子来演示如何在纸上进行规约。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:187
-msgid "**Step 1: Find the next redex**"
-msgstr ""
+msgid "Step 1: Find the next redex"
+msgstr "第一步：找到下一个 redex"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:189
 msgid "The execution of the entire program starts from the `main` function."
-msgstr ""
+msgstr "在整个程序中，执行从 `main` 函数开始。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:191
 msgid ""
@@ -505,7 +569,7 @@ msgstr ""
 msgid ""
 "`main` itself is a CAF - the simplest kind of redex. If we perform the "
 "substitution, the current expression to be handled is:"
-msgstr ""
+msgstr "`main` 本身是一个 CAF - 最简单的 redex。如果我们进行替换，当前要处理的表达式是："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:198
 msgid "(add 33 (square 3))\n"
@@ -516,7 +580,7 @@ msgid ""
 "According to the principle of finding the outermost redex, it seems like "
 "we've immediately found the redex formed by `add` and its two parameters "
 "(let's assume it for now)."
-msgstr ""
+msgstr "根据找到最外层 redex 的原则，我们似乎立即找到了由 `add` 和它的两个参数组成的 redex（暂时这么假设）。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:204
 msgid ""
@@ -524,17 +588,17 @@ msgid ""
 "tree corresponding to this expression is actually composed of multiple "
 "nested `App` nodes. It roughly looks like this (simplified for "
 "readability):"
-msgstr ""
+msgstr "但是稍等！由于存在默认的柯里化，这个表达式对应的抽象语法树实际上由多个 `App` 节点嵌套而成。它大致看起来是这样的（为了可读性而简化）："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:206
-msgid "App(App(add, 33), square3)\n"
+msgid "App(App(add, 33), App(square, 3))\n"
 msgstr ""
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:210
 msgid ""
 "This chain-like structure from `add` to the outermost `App` node is "
 "called the \"Spine\""
-msgstr ""
+msgstr "这个从 `add` 到最外层 `App` 节点的链式结构称为“脊柱”（Spine）"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:212
 msgid ""
@@ -545,16 +609,19 @@ msgid ""
 "redex; it's just the outermost function application. To reduce it, we "
 "must first reduce `(square 3)`."
 msgstr ""
+"回过头来看一下，`add` 是一个内部定义的原语。但是，由于它的第二个参数 `(square 3)` "
+"不是范式，我们不能对它进行规约（将一个未求值的表达式加到一个整数上似乎有点荒谬）。因此，我们不能明确地说 `(add 33 (square "
+"3))` 是一个 redex；它只是最外层的函数应用。要对它进行规约，我们必须先规约 `(square 3)`。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:214
-msgid "**Step 2: Reduce**"
-msgstr ""
+msgid "Step 2: Reduce"
+msgstr "第二步：规约"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:216
 msgid ""
 "Since `square` is a user-defined super combinator, reducing `(square 3)` "
 "involves only parameter substitution."
-msgstr ""
+msgstr "因为 `square` 是一个用户定义的超组合子，所以对 `(square 3)` 进行规约只涉及参数替换。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:218
 msgid ""
@@ -576,28 +643,28 @@ msgid ""
 msgstr ""
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:226
-msgid "**Step 3: Update**"
-msgstr ""
+msgid "Step 3: Update"
+msgstr "第三步：更新"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:228
 msgid ""
 "This step only affects execution efficiency and can be skipped during "
 "paper deductions."
-msgstr ""
+msgstr "这一步只影响执行效率，在纸上推导时可以跳过。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:230
 msgid ""
 "These operations are easy to perform on paper (when the amount of code "
 "doesn't exceed half a sheet), but when we switch to computers, how do we "
 "translate these steps into executable code?"
-msgstr ""
+msgstr "这些操作在纸上执行很容易（当代码量不超过半张纸时），但当我们切换到计算机时，我们如何将这些步骤转换为可执行代码呢？"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:232
 msgid ""
 "To answer this question, pioneers in the world of lazy evaluation "
 "programming languages have proposed various **abstract machines** for "
 "modeling lazy evaluation. These include:"
-msgstr ""
+msgstr "为了回答这个问题，惰性求值编程语言的先驱们提出了各种用于建模惰性求值的 **抽象机器**。这些包括："
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:234
 #: ../../tutorial/example/gmachine/index.md:1
@@ -610,11 +677,11 @@ msgstr ""
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:236
 msgid "ABC Machine (used by the Clean language)"
-msgstr ""
+msgstr "ABC Machine（由 Clean 语言使用）"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:237
 msgid "Spineless Tagless G-Machine (abbreviated as STG, used by Haskell language)"
-msgstr ""
+msgstr "Spineless Tagless G-Machine（简称 STG，由 Haskell 语言使用）"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:239
 msgid ""
@@ -622,11 +689,13 @@ msgid ""
 "important to note that, unlike various popular virtual machines today "
 "(such as the JVM), abstract machines are more like intermediate "
 "representations (IR) for compilers. Taking Haskell's compiler GHC as an "
-"example, after generating STG (Spineless Tagless G-Machine) code, it "
-"doesn't directly pass it to an interpreter for execution. Instead, it "
-"further transforms it into LLVM, C code, or machine code based on the "
-"selected backend."
+"example, after generating STG code, it doesn't directly pass it to an "
+"interpreter for execution. Instead, it further transforms it into LLVM, C"
+" code, or machine code based on the selected backend."
 msgstr ""
+"它们是用于指导编译器实现的执行模型。重要的是要注意，与今天各种流行的虚拟机（如 JVM）不同，抽象机器更像是编译器的中间表示（IR）。以 "
+"Haskell 的编译器 GHC 为例，生成 STG 代码后，它不会直接将其传递给解释器执行。相反，它会根据所选的后端进一步将其转换为 "
+"LLVM、C 代码或机器代码。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:241
 msgid ""
@@ -634,6 +703,7 @@ msgid ""
 "write an interpreter for G-Machine instructions, starting from a minimal "
 "example and gradually adding more features."
 msgstr ""
+"为了简化实现，本文将直接使用 MoonBit 为 G-Machine 指令编写解释器，从一个最小的示例开始，逐渐添加更多功能。"
 
 #: ../../tutorial/example/gmachine/gmachine-1.md:243
 msgid "G-Machine Overview"
@@ -6696,4 +6766,7 @@ msgstr ""
 "到目前为止，我们已经了解了 MoonBit 的基本特性和一些不那么简单的特性，但 MoonBit 是一种功能丰富的多范式编程语言。在确保您对 "
 "MoonBit 的基础知识感到满意后，我们建议您查看一些[有趣的示例](https://github.com/moonbitlang"
 "/moonbit-docs/tree/main/legacy/examples) 以更好地掌握 MoonBit。"
+
+#~ msgid "App(App(add, 33), square3)\n"
+#~ msgstr ""
 
