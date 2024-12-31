@@ -235,7 +235,7 @@ _internally tagged_ enums cannot use _tuple-like_ representation.
 
   you are able to control each case using `cases(A(...), B(...))`.
 
-  See _Case arguments_ below for details.
+  See [Case arguments](#case-arguments) below for details.
 
 - `fields(...)` (struct only) controls the layout of struct fields.
 
@@ -250,7 +250,7 @@ _internally tagged_ enums cannot use _tuple-like_ representation.
 
   you are able to control each field using `fields(x(...), y(...))`
 
-  See _Field arguments_ below for details.
+  See [Field arguments](#field-arguments) below for details.
 
 ### Case arguments
 
@@ -260,7 +260,7 @@ _internally tagged_ enums cannot use _tuple-like_ representation.
 - `fields(...)` controls the layout of the payload of this case.
   Note that renaming positional fields are not possible currently.
 
-  See _Field arguments_ below for details.
+  See [Field arguments](#field-arguments) below for details.
 
 ### Field arguments
 

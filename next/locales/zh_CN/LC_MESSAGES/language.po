@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-31 14:46+0800\n"
+"POT-Creation-Date: 2024-12-31 14:58+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -35,7 +35,8 @@ msgid ""
 "implements `T`. For example, deriving `Show` for a struct `struct A { x: "
 "T1; y: T2 }` requires both `T1: Show` and `T2: Show`"
 msgstr ""
-"要派生特征 `T`，需要类型中使用的所有字段都实现了 `T`。例如，为结构体 `struct A { x: T1; y: T2 }` 派生 `Show` 需要 `T1: Show` 和 `T2: Show`。"
+"要派生特征 `T`，需要类型中使用的所有字段都实现了 `T`。例如，为结构体 `struct A { x: T1; y: T2 }` 派生 "
+"`Show` 需要 `T1: Show` 和 `T2: Show`。"
 
 #: ../../language/derive.md:8
 msgid "Show"
@@ -45,8 +46,7 @@ msgstr "输出"
 msgid ""
 "`derive(Show)` will generate a pretty-printing method for the type. The "
 "derived format is similar to how the type can be constructed in code."
-msgstr ""
-"`derive(Show)` 将为类型生成一个漂亮的打印方法。派生的格式类似于代码中构造类型的方式。"
+msgstr "`derive(Show)` 将为类型生成一个漂亮的打印方法。派生的格式类似于代码中构造类型的方式。"
 
 #: ../../language/derive.md:13
 msgid ""
@@ -88,7 +88,8 @@ msgid ""
 "order as their definitions. For enums, the order between cases ascends in"
 " the order of definition."
 msgstr ""
-"`derive(Eq)` 和 `derive(Compare)` 将为测试相等性和比较生成相应的方法。字段按照它们的定义顺序进行比较。对于枚举，构造器的顺序按照定义的顺序升序。"
+"`derive(Eq)` 和 `derive(Compare)` "
+"将为测试相等性和比较生成相应的方法。字段按照它们的定义顺序进行比较。对于枚举，构造器的顺序按照定义的顺序升序。"
 
 #: ../../language/derive.md:31
 msgid ""
@@ -168,15 +169,13 @@ msgstr "默认值"
 msgid ""
 "`derive(Default)` will generate a method that returns the default value "
 "of the type."
-msgstr ""
-"`derive(Default)` 将生成一个返回类型的默认值的方法。"
+msgstr "`derive(Default)` 将生成一个返回类型的默认值的方法。"
 
 #: ../../language/derive.md:47
 msgid ""
 "For structs, the default value is the struct with all fields set as their"
 " default value."
-msgstr ""
-"对于结构体，默认值是所有字段设置为它们的默认值的结构体。"
+msgstr "对于结构体，默认值是所有字段设置为它们的默认值的结构体。"
 
 #: ../../language/derive.md:49
 msgid ""
@@ -193,8 +192,7 @@ msgstr ""
 
 #: ../../language/derive.md:55
 msgid "For enums, the default value is the only case that has no parameters."
-msgstr ""
-"对于枚举，默认值是唯一没有参数的构造器。"
+msgstr "对于枚举，默认值是唯一没有参数的构造器。"
 
 #: ../../language/derive.md:57
 msgid ""
@@ -213,8 +211,7 @@ msgstr ""
 msgid ""
 "Enums that has no cases or more than one cases without parameters cannot "
 "derive `Default`."
-msgstr ""
-"没有构造器或有多个没有参数的构造器的枚举不能派生 `Default`。"
+msgstr "没有构造器或有多个没有参数的构造器的枚举不能派生 `Default`。"
 
 #: ../../language/derive.md:67
 msgid ""
@@ -240,7 +237,8 @@ msgid ""
 "will allow the type to be used in places that expects a `Hash` "
 "implementation, for example `HashMap`s and `HashSet`s."
 msgstr ""
-"`derive(Hash)` 将为类型生成一个哈希实现。这将允许类型在期望 `Hash` 实现的地方使用，例如 `HashMap` 和 `HashSet`。"
+"`derive(Hash)` 将为类型生成一个哈希实现。这将允许类型在期望 `Hash` 实现的地方使用，例如 `HashMap` 和 "
+"`HashSet`。"
 
 #: ../../language/derive.md:85
 msgid ""
@@ -276,8 +274,7 @@ msgid ""
 "`derive(FromJson)` and `derive(ToJson)` will generate methods that "
 "deserializes/serializes the given type from/to JSON files "
 "correspondingly."
-msgstr ""
-"`derive(FromJson)` 和 `derive(ToJson)` 将分别生成从/到 JSON 文件反序列化/序列化给定类型的方法。"
+msgstr "`derive(FromJson)` 和 `derive(ToJson)` 将分别生成从/到 JSON 文件反序列化/序列化给定类型的方法。"
 
 #: ../../language/derive.md:100
 msgid ""
@@ -308,13 +305,11 @@ msgstr ""
 msgid ""
 "Both derive directives accept a number of arguments to configure the "
 "exact behavior of serialization and deserialization."
-msgstr ""
-"这两个派生指令都接受一些参数来配置序列化和反序列化的确切行为。"
+msgstr "这两个派生指令都接受一些参数来配置序列化和反序列化的确切行为。"
 
 #: ../../language/derive.md:109
 msgid "The actual behavior of JSON serialization arguments is unstable."
-msgstr ""
-"JSON 序列化参数的实际行为是不稳定的。"
+msgstr "JSON 序列化参数的实际行为是不稳定的。"
 
 #: ../../language/derive.md:112
 msgid ""
@@ -357,22 +352,19 @@ msgstr "枚举表示"
 msgid ""
 "Enums can be represented in JSON in a number of styles. There are two "
 "aspects of the representation:"
-msgstr ""
-"枚举表示为 JSON 有多种风格。表示有两个方面："
+msgstr "枚举表示为 JSON 有多种风格。表示有两个方面："
 
 #: ../../language/derive.md:123
 msgid ""
 "**Tag position** determines where the name of the enum tag (i.e. case or "
 "constructor name) is stored."
-msgstr ""
-"**标签位置** 决定枚举标签（即构造器名称）的名称存储在哪里。"
+msgstr "**标签位置** 决定枚举标签（即构造器名称）的名称存储在哪里。"
 
 #: ../../language/derive.md:124
 msgid ""
 "**Case representation** determines how to represent the payload of the "
 "enum."
-msgstr ""
-"**构造器表示** 决定如何表示枚举的负载。"
+msgstr "**构造器表示** 决定如何表示枚举的负载。"
 
 #: ../../language/derive.md:126
 msgid "Let's consider the following enum definition:"
@@ -477,8 +469,7 @@ msgid ""
 "`repr(...)` configures the representation of the container. This controls"
 " the tag position of enums. For structs, the tag is assumed to be the "
 "type of the type."
-msgstr ""
-"`repr(...)` 配置容器的表示。这控制枚举的标签位置。对于结构体，假定标签是类型的类型。"
+msgstr "`repr(...)` 配置容器的表示。这控制枚举的标签位置。对于结构体，假定标签是类型的类型。"
 
 #: ../../language/derive.md:177
 msgid "There are 4 representations available for selection:"
@@ -488,25 +479,21 @@ msgstr "有 4 种可供选择的表示："
 msgid ""
 "`repr(tag = \"tag\")` – Use internally tagged representation, with the "
 "tag's object key name as specified."
-msgstr ""
-"`repr(tag = \"tag\")` – 使用内部标记表示，标记的对象键名称如指定。"
+msgstr "`repr(tag = \"tag\")` – 使用内部标记表示，标记的对象键名称如指定。"
 
 #: ../../language/derive.md:182
 msgid "`repr(untagged)` – Use untagged representation."
-msgstr ""
-"`repr(untagged)` – 使用无标记表示。"
+msgstr "`repr(untagged)` – 使用无标记表示。"
 
 #: ../../language/derive.md:184
 msgid "`repr(ext_tagged)` – Use externally tagged representation."
-msgstr ""
-"`repr(ext_tagged)` – 使用外部标记表示。"
+msgstr "`repr(ext_tagged)` – 使用外部标记表示。"
 
 #: ../../language/derive.md:186
 msgid ""
 "`repr(tag = \"tag\", contents = \"contents\")` – Use adjacently tagged "
 "representation, with the tag and contents key names as specified."
-msgstr ""
-"`repr(tag = \"tag\", contents = \"contents\")` – 使用相邻标记表示，标记和内容键名称如指定。"
+msgstr "`repr(tag = \"tag\", contents = \"contents\")` – 使用相邻标记表示，标记和内容键名称如指定。"
 
 #: ../../language/derive.md:190
 msgid "The default representation for struct is `repr(untagged)`."
@@ -520,8 +507,7 @@ msgstr "枚举的默认表示为 `repr(tag = \"$tag\")`"
 msgid ""
 "`case_repr(...)` (enum only) configures the case representation of the "
 "container. This option is only available on enums."
-msgstr ""
-"`case_repr(...)`（仅枚举）配置容器的构造器表示。此选项仅适用于枚举。"
+msgstr "`case_repr(...)`（仅枚举）配置容器的构造器表示。此选项仅适用于枚举。"
 
 #: ../../language/derive.md:197
 msgid "`case_repr(struct)` – Use struct-like representation of enums."
@@ -537,7 +523,8 @@ msgid ""
 "only), `rename_all` renames fields, case names, struct name and all names"
 " correspondingly, into a specific style."
 msgstr ""
-"`rename_fields`、`rename_cases`（仅枚举）、`rename_struct`（仅结构体）、`rename_all` 分别将字段、构造器名称、结构体名称和所有名称重命名为特定风格。"
+"`rename_fields`、`rename_cases`（仅枚举）、`rename_struct`（仅结构体）、`rename_all` "
+"分别将字段、构造器名称、结构体名称和所有名称重命名为特定风格。"
 
 #: ../../language/derive.md:207
 msgid "Available parameters are:"
@@ -580,24 +567,22 @@ msgid ""
 "Example: `rename_fields = \"PascalCase\"` for a field named "
 "`my_long_field_name` results in `MyLongFieldName`."
 msgstr ""
-"例如：`rename_fields = \"PascalCase\"` 用于名为 `my_long_field_name` 的字段将得到 `MyLongFieldName`。"
+"例如：`rename_fields = \"PascalCase\"` 用于名为 `my_long_field_name` 的字段将得到 "
+"`MyLongFieldName`。"
 
 #: ../../language/derive.md:222
 msgid ""
 "Renaming assumes the name of fields in `snake_case` and the name of "
 "structs/enum cases in `PascalCase`."
-msgstr ""
-"重命名假定字段的名称为 `snake_case`，结构体/枚举构造器的名称为 `PascalCase`。"
+msgstr "重命名假定字段的名称为 `snake_case`，结构体/枚举构造器的名称为 `PascalCase`。"
 
 #: ../../language/derive.md:225
 msgid "`cases(...)` (enum only) controls the layout of enum cases."
-msgstr ""
-"`cases(...)`（仅枚举）控制枚举构造器的布局。"
+msgstr "`cases(...)`（仅枚举）控制枚举构造器的布局。"
 
 #: ../../language/derive.md:227
 msgid "For example, for an enum"
-msgstr ""
-"例如，对于一个枚举"
+msgstr "例如，对于一个枚举"
 
 #: ../../language/derive.md:229
 msgid ""
@@ -609,23 +594,19 @@ msgstr ""
 
 #: ../../language/derive.md:236
 msgid "you are able to control each case using `cases(A(...), B(...))`."
-msgstr ""
-"您可以使用 `cases(A(...), B(...))` 控制每个构造器。"
+msgstr "您可以使用 `cases(A(...), B(...))` 控制每个构造器。"
 
 #: ../../language/derive.md:238
-msgid "See _Case arguments_ below for details."
-msgstr ""
-"有关详细信息，请参见下面的 _构造器参数_。"
+msgid "See [Case arguments](#case-arguments) below for details."
+msgstr "有关详细信息，请参见下面的[构造器参数](#case-arguments)。"
 
 #: ../../language/derive.md:240
 msgid "`fields(...)` (struct only) controls the layout of struct fields."
-msgstr ""
-"`fields(...)`（仅结构体）控制结构体字段的布局。"
+msgstr "`fields(...)`（仅结构体）控制结构体字段的布局。"
 
 #: ../../language/derive.md:242
 msgid "For example, for a struct"
-msgstr ""
-"例如，对于一个结构体"
+msgstr "例如，对于一个结构体"
 
 #: ../../language/derive.md:244
 msgid ""
@@ -637,13 +618,11 @@ msgstr ""
 
 #: ../../language/derive.md:251
 msgid "you are able to control each field using `fields(x(...), y(...))`"
-msgstr ""
-"您可以使用 `fields(x(...), y(...))` 控制每个字段。"
+msgstr "您可以使用 `fields(x(...), y(...))` 控制每个字段。"
 
 #: ../../language/derive.md:253 ../../language/derive.md:263
-msgid "See _Field arguments_ below for details."
-msgstr ""
-"有关详细信息，请参见下面的 _字段参数_。"
+msgid "See [Field arguments](#field-arguments) below for details."
+msgstr "有关详细信息，请参见下面的[字段参数](#field-arguments)。"
 
 #: ../../language/derive.md:255
 msgid "Case arguments"
@@ -653,15 +632,13 @@ msgstr "构造器参数"
 msgid ""
 "`rename = \"...\"` renames this specific case, overriding existing "
 "container-wide rename directive if any."
-msgstr ""
-"`rename = \"...\"` 重命名此特定构造器，覆盖现有的容器范围重命名指令（如果有的话）。"
+msgstr "`rename = \"...\"` 重命名此特定构造器，覆盖现有的容器范围重命名指令（如果有的话）。"
 
 #: ../../language/derive.md:260
 msgid ""
 "`fields(...)` controls the layout of the payload of this case. Note that "
 "renaming positional fields are not possible currently."
-msgstr ""
-"`fields(...)` 控制此构造器的负载布局。请注意，目前无法重命名位置字段。"
+msgstr "`fields(...)` 控制此构造器的负载布局。请注意，目前无法重命名位置字段。"
 
 #: ../../language/derive.md:265
 msgid "Field arguments"
