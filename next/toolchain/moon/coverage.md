@@ -132,7 +132,7 @@ The default export location is the folder named `_coverage`.
 The `index.html` in the folder shows a list of all source files,
 as well as the coverage percentage in them:
 
-![Index of the HTML](../imgs/coverage_html_index.png)
+![Index of the HTML](/imgs/coverage_html_index.png)
 
 Clicking on each file shows the coverage detail within each file.
 Each coverage point (start of branch)
@@ -151,7 +151,7 @@ This does not mean the line has not been executed at all,
 just the line is not a start of a branch.
 Such a line shares the coverage of closest covered the line before it.
 
-![Detailed coverage data](../imgs/coverage_html_page.png)
+![Detailed coverage data](/imgs/coverage_html_page.png)
 
 ## Skipping coverage
 
