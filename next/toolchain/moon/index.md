@@ -8,3 +8,5 @@ package-manage-tour
 commands
 module
 package
+coverage
+```
