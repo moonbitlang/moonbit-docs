@@ -19,8 +19,10 @@ MoonBit have integer type and floating point type:
 
 | type     | description                                       | example                    |
 | -------- | ------------------------------------------------- | -------------------------- |
+| `Int16`  | 16-bit signed integer                             | `(42 : Int16)`             |
 | `Int`    | 32-bit signed integer                             | `42`                       |
 | `Int64`  | 64-bit signed integer                             | `1000L`                    |
+| `UInt16` | 16-bit unsigned integer                           | `(14 : UInt16)`            |
 | `UInt`   | 32-bit unsigned integer                           | `14U`                      |
 | `UInt64` | 64-bit unsigned integer                           | `14UL`                     |
 | `Double` | 64-bit floating point, defined by IEEE754         | `3.14`                     |
