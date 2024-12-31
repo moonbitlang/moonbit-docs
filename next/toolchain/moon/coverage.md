@@ -103,7 +103,7 @@ $ cat coveralls.json
 ```
 
 You can directly send this coverage report to Coveralls or CodeCov using the `--send-to` argument.
-The following is an example of using it in GitHub aCTIONS:
+The following is an example of using it in GitHub Actions:
 
 ```
 moon coverage report \
@@ -122,9 +122,7 @@ More information can be found in `moon coverage report --help`.
 
 ### Cobertura XML format
 
-`moon coverage report -f cobertura` exports the coverage data into a format that can be read by [Cobertura][].
-
-[cobertura]: https://cobertura.github.io/cobertura/
+`moon coverage report -f cobertura` exports the coverage data into a format that can be read by [Cobertura](https://cobertura.github.io/cobertura/).
 
 ### HTML
 
