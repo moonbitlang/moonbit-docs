@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-31 14:58+0800\n"
+"POT-Creation-Date: 2024-12-31 15:26+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1543,7 +1543,7 @@ msgstr ""
 
 #: ../../language/ffi-and-wasm-host.md:1
 msgid "Foreign Function Interface(FFI)"
-msgstr ""
+msgstr "外部函数接口(FFI)"
 
 #: ../../language/ffi-and-wasm-host.md:3
 msgid ""
@@ -1551,7 +1551,7 @@ msgid ""
 "you'll need to interact with the real world. However, the \"world\" is "
 "different for each backend (C, JS, Wasm, WasmGC) and is sometimes based "
 "on runtime ([Wasmtime](https://wasmtime.dev/), Deno, Browser, etc.)."
-msgstr ""
+msgstr "我们已经介绍的是纯粹的计算。在现实中，需要与真实世界互动。然而，对于每个后端（C、JS、Wasm、WasmGC），“世界”是不同的，并且基于运行时（[Wasmtime](https://wasmtime.dev/)、Deno、浏览器等）。"
 
 #: ../../language/ffi-and-wasm-host.md:7
 msgid ""
@@ -1560,10 +1560,12 @@ msgid ""
 "applications through [Wasmtime](https://wasmtime.dev/) or similar "
 "projects."
 msgstr ""
+"当嵌入到浏览器，或通过 [Wasmtime](https://wasmtime.dev/) "
+"嵌入到命令行应用程序中时，可以通过外部函数接口(FFI)在 MoonBit 中使用外部函数与宿主运行时进行交互。"
 
 #: ../../language/ffi-and-wasm-host.md:9
 msgid "Init function"
-msgstr ""
+msgstr "`init` 函数"
 
 #: ../../language/ffi-and-wasm-host.md:11
 msgid ""
@@ -1574,14 +1576,18 @@ msgid ""
 "exportations can not be used at this stage; for JavaScript backend, it "
 "means that it will be executed during the importation stage."
 msgstr ""
+"对于 WebAssembly 后端，它被编译为 [start "
+"函数](https://webassembly.github.io/spec/core/syntax/modules.html#start-"
+"function)，这意味着它将在实例可用之前执行，并且依赖于实例的导出的外部函数接口(FFI)在这个阶段不能使用；对于 JavaScript "
+"后端，这意味着它将在导入阶段执行。"
 
 #: ../../language/ffi-and-wasm-host.md:14
 msgid "Declare Foreign Reference"
-msgstr ""
+msgstr "声明外部引用"
 
 #: ../../language/ffi-and-wasm-host.md:16
 msgid "You can declare a foreign reference type like this:"
-msgstr ""
+msgstr "您可以像这样声明一个外部引用类型："
 
 #: ../../language/ffi-and-wasm-host.md:18
 msgid "type Canvas_ctx\n"
@@ -1593,24 +1599,26 @@ msgid ""
 "`CanvasRenderingContext2D` object held by the hosting JavaScript runtime "
 "in this example."
 msgstr ""
+"这将是一个表示对外部对象的引用的类型，在这个例子中，它是由宿主 JavaScript 运行时持有的 "
+"`CanvasRenderingContext2D` 对象。"
 
 #: ../../language/ffi-and-wasm-host.md:24
 msgid "Declare Foreign Function"
-msgstr ""
+msgstr "声明外部函数"
 
 #: ../../language/ffi-and-wasm-host.md:26
 msgid ""
 "You can either import a function with module name and function name or "
 "writing an inline function."
-msgstr ""
+msgstr "您可以通过模块名和函数名导入一个函数，也可以编写一个内联函数。"
 
 #: ../../language/ffi-and-wasm-host.md:28
 msgid "Import function"
-msgstr ""
+msgstr "导入函数"
 
 #: ../../language/ffi-and-wasm-host.md:30
 msgid "You can declare a foreign function like this:"
-msgstr ""
+msgstr "您可以像这样声明一个外部函数："
 
 #: ../../language/ffi-and-wasm-host.md:32
 msgid "fn cos(d : Double) -> Double = \"Math\" \"cos\"\n"
@@ -1620,37 +1628,37 @@ msgstr ""
 msgid ""
 "It's similar to a normal function definition except that the function "
 "body is replaced with two strings."
-msgstr ""
+msgstr "它与普通函数定义类似，只是函数体被替换为两个字符串。"
 
 #: ../../language/ffi-and-wasm-host.md:38
 msgid ""
 "For Wasm(GC) backend, these two strings are used to identify the specific"
 " function from a Wasm import object, the first string is the module name,"
 " and the second string is the function name."
-msgstr ""
+msgstr "对于 Wasm(GC) 后端，这两个字符串用于从 Wasm 导入对象中识别特定函数，第一个字符串是模块名，第二个字符串是函数名。"
 
 #: ../../language/ffi-and-wasm-host.md:40
 msgid ""
 "For JS backend, these two strings are used to call a static function in "
 "the global namespace. The example above becomes similar to `const cos = "
 "(d) => Math.cos(d)`."
-msgstr ""
+msgstr "对于 JS 后端，这两个字符串用于调用全局命名空间中的静态函数。上面的例子类似于 `const cos = (d) => Math.cos(d)`。"
 
 #: ../../language/ffi-and-wasm-host.md:42
 msgid "Inline function"
-msgstr ""
+msgstr "内联函数"
 
 #: ../../language/ffi-and-wasm-host.md:44
 msgid ""
 "You can also declare inline functions where the function body is replaced"
 " with one string."
-msgstr ""
+msgstr "您还可以声明内联函数，其中函数体被替换为一个字符串。"
 
 #: ../../language/ffi-and-wasm-host.md:46
 msgid ""
 "For Wasm(GC) backend, you may declare it as a Wasm function without name "
 "(which will be generated afterwards):"
-msgstr ""
+msgstr "对于 Wasm(GC) 后端，您可以将其声明为一个没有名称的 Wasm 函数（稍后将生成名称）："
 
 #: ../../language/ffi-and-wasm-host.md:48
 msgid ""
@@ -1660,7 +1668,7 @@ msgstr ""
 
 #: ../../language/ffi-and-wasm-host.md:53
 msgid "and for JS backend, you may declare it as a lambda expression:"
-msgstr ""
+msgstr "对于 JS 后端，您可以将其声明为一个 lambda 表达式："
 
 #: ../../language/ffi-and-wasm-host.md:55
 msgid ""
@@ -1670,7 +1678,7 @@ msgstr ""
 
 #: ../../language/ffi-and-wasm-host.md:60
 msgid "After declaration, you can use foreign functions like regular functions."
-msgstr ""
+msgstr "声明后，您可以像普通函数一样使用外部函数。"
 
 #: ../../language/ffi-and-wasm-host.md:62
 msgid ""
@@ -1678,12 +1686,15 @@ msgid ""
 " files that ends with `.wasm.mbt` `.wasm-gc.mbt` and `.js.mbt`. Check out"
 " [link options](</toolchain/moon/package.md#link-options>) for details."
 msgstr ""
+"对于多后端项目，您可以在以 `.wasm.mbt` `.wasm-gc.mbt` 和 `.js.mbt` "
+"结尾的文件中实现特定于后端的代码。有关详细信息，请查看[链接选项](</toolchain/moon/package.md#link-"
+"options>)。"
 
 #: ../../language/ffi-and-wasm-host.md:64
 msgid ""
 "You may also declare a foreign function that will be invoked upon a "
 "foreign object by using the foreign reference type like this:"
-msgstr ""
+msgstr "您还可以声明一个外部函数，该函数将通过使用外部引用类型在外部对象上调用，如下所示："
 
 #: ../../language/ffi-and-wasm-host.md:66
 msgid "fn begin_path(self: Canvas_ctx) = \"canvas\" \"begin_path\"\n"
@@ -1693,18 +1704,18 @@ msgstr ""
 msgid ""
 "and apply it to a previously owned reference normally such as "
 "`context.begin_path()`."
-msgstr ""
+msgstr "然后将其应用于以前拥有的引用，例如 `context.begin_path()`。"
 
 #: ../../language/ffi-and-wasm-host.md:72
 msgid "Export functions"
-msgstr ""
+msgstr "导出函数"
 
 #: ../../language/ffi-and-wasm-host.md:74
 msgid ""
 "Functions that are not methods nor polymorphic functions can be exported "
 "if they are public and if the link configuration appears in the "
 "`moon.pkg.json` of the package:"
-msgstr ""
+msgstr "如果函数既不是方法也不是多态函数，则可以导出它们，前提是它们是公共的，并且链接配置出现在包的 `moon.pkg.json` 中："
 
 #: ../../language/ffi-and-wasm-host.md:76
 msgid ""
@@ -1731,37 +1742,39 @@ msgid ""
 "released as an ES Module (`esm`), a CommonJS module (`cjs`), or an "
 "immediately invoked function expression (`iife`)."
 msgstr ""
+"每个后端都有单独的定义。对于 JS 后端，`format` 选项用于指定生成的 JavaScript 文件是作为 ES 模块 "
+"(`esm`)、CommonJS 模块 (`cjs`) 还是立即调用的函数表达式 (`iife`) 发布。"
 
 #: ../../language/ffi-and-wasm-host.md:95
 msgid ""
 "The example above will export function `add` and `fib`, and the function "
 "`fib` will be exported with the name of `test`."
-msgstr ""
+msgstr "上面的例子将导出函数 `add` 和 `fib`，函数 `fib` 将以 `test` 的名称导出。"
 
 #: ../../language/ffi-and-wasm-host.md:97
 msgid "Use compiled Wasm"
-msgstr ""
+msgstr "使用编译后的 Wasm"
 
 #: ../../language/ffi-and-wasm-host.md:99
 msgid ""
 "To use the compiled Wasm, you need to initialize the Wasm module with the"
 " host functions so as to meet the needs of the foreign functions, and "
 "then use the exported functions provided by the Wasm module."
-msgstr ""
+msgstr "要使用编译后的 Wasm，您需要使用宿主函数初始化 Wasm 模块，以满足外部函数的需求，然后使用 Wasm 模块提供的导出函数。"
 
 #: ../../language/ffi-and-wasm-host.md:101
 msgid "Provide host functions"
-msgstr ""
+msgstr "提供宿主函数"
 
 #: ../../language/ffi-and-wasm-host.md:103
 msgid ""
 "To use the compiled Wasm, you must provide **All** declared foreign "
 "functions in Wasm import object."
-msgstr ""
+msgstr "要使用编译后的 Wasm，您必须在 Wasm 导入对象中提供**所有**声明的外部函数。"
 
 #: ../../language/ffi-and-wasm-host.md:105
 msgid "For example, to use wasm compiled from above code snippet in JavaScript:"
-msgstr ""
+msgstr "例如，在 JavaScript 中使用上面代码片段编译的 wasm："
 
 #: ../../language/ffi-and-wasm-host.md:107
 msgid ""
@@ -1778,16 +1791,20 @@ msgid ""
 "/en-US/docs/WebAssembly) or the manual of runtime that you're using to "
 "embed the Wasm."
 msgstr ""
+"查看文档，例如 [MDN](https://developer.mozilla.org/en-US/docs/WebAssembly) "
+"或您用于嵌入 Wasm 的运行时的手册。"
 
 #: ../../language/ffi-and-wasm-host.md:117
 msgid "Example: Smiling face"
-msgstr ""
+msgstr "示例：笑脸"
 
 #: ../../language/ffi-and-wasm-host.md:119
 msgid ""
 "Let's walk through a full example to draw a smiling face using Canvas API"
 " in MoonBit. Suppose you created a new project with `moon new draw`"
 msgstr ""
+"让我们通过一个完整的示例来使用 Canvas API 在 MoonBit 中绘制一个笑脸。假设您使用 `moon new draw` "
+"创建了一个新项目"
 
 #: ../../language/ffi-and-wasm-host.md:121
 msgid ""
@@ -1824,6 +1841,8 @@ msgid ""
 "  println(\"PI: \\{pi}\")\n"
 "}\n"
 msgstr ""
+"// 首先声明一个表示 canvas 上下文的类型\n"
+"type Canvas_ctx\n"
 
 #: ../../language/ffi-and-wasm-host.md:154
 msgid ""
@@ -1845,10 +1864,12 @@ msgid ""
 "integration whenever possible (which is the default). If the environment "
 "does not support the GC feature, use the `--target wasm` option instead."
 msgstr ""
+"使用 `moon build` 构建项目。我们建议尽可能使用 Wasm GC（这是默认值）。如果环境不支持 GC 特性，请改用 `--target"
+" wasm` 选项。"
 
 #: ../../language/ffi-and-wasm-host.md:169
 msgid "We now can use it from JavaScript."
-msgstr ""
+msgstr "现在我们可以从 JavaScript 中使用它。"
 
 #: ../../language/ffi-and-wasm-host.md:171
 msgid ""
@@ -1868,8 +1889,6 @@ msgid ""
 "      WebAssembly.instantiateStreaming(fetch(\"target/wasm-"
 "gc/release/build/lib/lib.wasm\"), importObject).then(\n"
 "        (obj) => {\n"
-"          // Always call _start to initialize the environment\n"
-"          obj.instance.exports._start();\n"
 "          // Pass the JS object as parameter to draw the smiling face\n"
 "          obj.instance.exports[\"draw\"](ctx);\n"
 "          // Display the value of PI\n"
@@ -1880,24 +1899,52 @@ msgid ""
 "  </script>\n"
 "</html>\n"
 msgstr ""
+"<html lang=\"en\">\n"
+"  <body>\n"
+"    <canvas id=\"canvas\" width=\"150\" height=\"150\"></canvas>\n"
+"  </body>\n"
+"  <script>\n"
+"    // 用于定义 FFI 的导入对象\n"
+"    const importObject = {\n"
+"      // TODO\n"
+"    }\n"
+"\n"
+"    const canvas = document.getElementById(\"canvas\");\n"
+"    if (canvas.getContext) {\n"
+"      const ctx = canvas.getContext(\"2d\");\n"
+"      WebAssembly.instantiateStreaming(fetch(\"target/wasm-"
+"gc/release/build/lib/lib.wasm\"), importObject).then(\n"
+"        (obj) => {\n"
+"          // 将 JS 对象作为参数传递以绘制笑脸\n"
+"          obj.instance.exports[\"draw\"](ctx);\n"
+"          // 显示 PI 的值\n"
+"          obj.instance.exports[\"display_pi\"]();\n"
+"        }\n"
+"      );\n"
+"    }\n"
+"  </script>\n"
+"</html>\n"
 
-#: ../../language/ffi-and-wasm-host.md:200
+#: ../../language/ffi-and-wasm-host.md:198
 msgid ""
 "For import object, we need to provide all the FFI used in the previously "
 "defined program: the canvas rendering API, the math API and finally, an "
 "API for printing to the console used by the `println` or `print` "
 "function."
 msgstr ""
+"对于导入对象，我们需要提供先前定义的程序中使用的所有 FFI：canvas 渲染 API、math API 和最后，用于 `println` 或 `print` "
+"函数的打印到控制台的 API。"
 
-#: ../../language/ffi-and-wasm-host.md:202
+#: ../../language/ffi-and-wasm-host.md:200
 msgid ""
 "As of the canvas rendering API and the math API, we can use the following"
 " code to convert the methods of objects into function calls that accept "
 "the object as the first parameter, and convert the constant properties of"
 " objects into functions that returns the value:"
 msgstr ""
+"至于 canvas 渲染 API 和 math API，我们可以使用以下代码将对象的方法转换为接受对象作为第一个参数的函数调用，并将对象的常量属性转换为返回值的函数："
 
-#: ../../language/ffi-and-wasm-host.md:204
+#: ../../language/ffi-and-wasm-host.md:202
 msgid ""
 "function prototype_to_ffi(prototype) {\n"
 "  return Object.fromEntries(\n"
@@ -1921,14 +1968,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:226
+#: ../../language/ffi-and-wasm-host.md:224
 msgid ""
 "As of the printing service, we can provide the following closure so that "
 "it buffers the bytes of string until it needs to be logged to the "
 "console:"
 msgstr ""
+"至于打印服务，我们可以提供以下闭包，以便它缓冲字符串的字节，直到需要将其记录到控制台："
 
-#: ../../language/ffi-and-wasm-host.md:228
+#: ../../language/ffi-and-wasm-host.md:226
 msgid ""
 "const [log, flush] = (() => {\n"
 "  var buffer = [];\n"
@@ -1958,18 +2006,17 @@ msgid ""
 "WebAssembly.instantiateStreaming(fetch(\"target/wasm-"
 "gc/release/build/lib/lib.wasm\"), importObject).then(\n"
 "  (obj) => {\n"
-"    obj.instance.exports._start();\n"
 "    // ...\n"
 "    flush()\n"
 "  }\n"
 ");\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:262
+#: ../../language/ffi-and-wasm-host.md:259
 msgid "Now, we put them together, so this is our final complete `index.html`:"
-msgstr ""
+msgstr "现在，我们将它们放在一起，这是我们最终的完整 `index.html`："
 
-#: ../../language/ffi-and-wasm-host.md:264
+#: ../../language/ffi-and-wasm-host.md:261
 msgid ""
 "<!DOCTYPE html>\n"
 "<html>\n"
@@ -2025,7 +2072,6 @@ msgid ""
 "      WebAssembly.instantiateStreaming(fetch(\"target/wasm-"
 "gc/release/build/lib/lib.wasm\"), importObject).then(\n"
 "        (obj) => {\n"
-"          obj.instance.exports._start();\n"
 "          obj.instance.exports[\"draw\"](ctx);\n"
 "          obj.instance.exports[\"display_pi\"]();\n"
 "          flush()\n"
@@ -2038,31 +2084,34 @@ msgid ""
 "</html>\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:330
+#: ../../language/ffi-and-wasm-host.md:326
 msgid ""
 "Make sure that `draw.wasm` and `index.html` are in the same folder, then "
 "start a http server at this folder. For example, using Python:"
 msgstr ""
+"确保 `draw.wasm` 和 `index.html` 在同一个文件夹中，然后在此文件夹中启动一个 http 服务器。例如，使用 Python："
 
-#: ../../language/ffi-and-wasm-host.md:332
+#: ../../language/ffi-and-wasm-host.md:328
 msgid "python3 -m http.server 8080\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:336
+#: ../../language/ffi-and-wasm-host.md:332
 msgid ""
 "Goto [http://localhost:8080](http://localhost:8080) in your browser, "
 "there should be a smile face on the screen and an output on the console:"
 msgstr ""
+"在浏览器中转到 [http://localhost:8080](http://localhost:8080)，屏幕上应该有一个笑脸，控制台上应该有一个输出："
 
-#: ../../language/ffi-and-wasm-host.md:338
+#: ../../language/ffi-and-wasm-host.md:334
 msgid ""
 "![A smile face webpage with browser devtools "
 "open](../imgs/smile_face_with_log.png)"
 msgstr ""
+"![带有笑脸的浏览器开发工具的网页](../imgs/smile_face_with_log.png)"
 
-#: ../../language/ffi-and-wasm-host.md:338
+#: ../../language/ffi-and-wasm-host.md:334
 msgid "A smile face webpage with browser devtools open"
-msgstr ""
+msgstr "带有笑脸的浏览器开发工具的网页"
 
 #: ../../language/fundamentals.md:1
 msgid "Fundamentals"
@@ -7017,3 +7066,109 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
+
+#~ msgid ""
+#~ "const [log, flush] = (() => {\n"
+#~ "  var buffer = [];\n"
+#~ "  function flush() {\n"
+#~ "    if (buffer.length > 0) {\n"
+#~ "      console.log(new TextDecoder(\"utf-16\").decode(new"
+#~ " Uint16Array(buffer).valueOf()));\n"
+#~ "      buffer = [];\n"
+#~ "    }\n"
+#~ "  }\n"
+#~ "  function log(ch) {\n"
+#~ "    if (ch == '\\n'.charCodeAt(0)) { flush(); }\n"
+#~ "    else if (ch == '\\r'.charCodeAt(0)) { /* noop */ }\n"
+#~ "    else { buffer.push(ch); }\n"
+#~ "  }\n"
+#~ "  return [log, flush]\n"
+#~ "})();\n"
+#~ "\n"
+#~ "const importObject = {\n"
+#~ "  // ...\n"
+#~ "  spectest: {\n"
+#~ "    print_char: log\n"
+#~ "  },\n"
+#~ "}\n"
+#~ "\n"
+#~ "// ...\n"
+#~ "WebAssembly.instantiateStreaming(fetch(\"target/wasm-"
+#~ "gc/release/build/lib/lib.wasm\"), importObject).then(\n"
+#~ "  (obj) => {\n"
+#~ "    obj.instance.exports._start();\n"
+#~ "    // ...\n"
+#~ "    flush()\n"
+#~ "  }\n"
+#~ ");\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "<!DOCTYPE html>\n"
+#~ "<html>\n"
+#~ "\n"
+#~ "<head></head>\n"
+#~ "\n"
+#~ "<body>\n"
+#~ "  <canvas id=\"canvas\" width=\"150\" height=\"150\"></canvas>\n"
+#~ "  <script>\n"
+#~ "    function prototype_to_ffi(prototype) {\n"
+#~ "      return Object.fromEntries(\n"
+#~ "        Object.entries(Object.getOwnPropertyDescriptors(prototype))\n"
+#~ "          .filter(([_key, value]) => value.value)\n"
+#~ "          .map(([key, value]) => {\n"
+#~ "            if (typeof value.value == 'function')\n"
+#~ "              return [key, Function.prototype.call.bind(value.value)]\n"
+#~ "            else\n"
+#~ "              return [key, () => value.value]\n"
+#~ "          })\n"
+#~ "      );\n"
+#~ "    }\n"
+#~ "\n"
+#~ "    const [log, flush] = (() => {\n"
+#~ "      var buffer = [];\n"
+#~ "      function flush() {\n"
+#~ "        if (buffer.length > 0) {\n"
+#~ "          console.log(new "
+#~ "TextDecoder(\"utf-16\").decode(new "
+#~ "Uint16Array(buffer).valueOf()));\n"
+#~ "          buffer = [];\n"
+#~ "        }\n"
+#~ "      }\n"
+#~ "      function log(ch) {\n"
+#~ "        if (ch == '\\n'.charCodeAt(0)) { flush(); }\n"
+#~ "        else if (ch == '\\r'.charCodeAt(0)) { /* noop */ }\n"
+#~ "        else { buffer.push(ch); }\n"
+#~ "      }\n"
+#~ "      return [log, flush]\n"
+#~ "    })();\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "    const importObject = {\n"
+#~ "      canvas: prototype_to_ffi(CanvasRenderingContext2D.prototype),\n"
+#~ "      math: prototype_to_ffi(Math),\n"
+#~ "      spectest: {\n"
+#~ "        print_char: log\n"
+#~ "      },\n"
+#~ "    }\n"
+#~ "\n"
+#~ "    const canvas = document.getElementById(\"canvas\");\n"
+#~ "    if (canvas.getContext) {\n"
+#~ "      const ctx = canvas.getContext(\"2d\");\n"
+#~ "      WebAssembly.instantiateStreaming(fetch(\"target/wasm-"
+#~ "gc/release/build/lib/lib.wasm\"), importObject).then(\n"
+#~ "        (obj) => {\n"
+#~ "          obj.instance.exports._start();\n"
+#~ "          obj.instance.exports[\"draw\"](ctx);\n"
+#~ "          obj.instance.exports[\"display_pi\"]();\n"
+#~ "          flush()\n"
+#~ "        }\n"
+#~ "      );\n"
+#~ "    }\n"
+#~ "  </script>\n"
+#~ "</body>\n"
+#~ "\n"
+#~ "</html>\n"
+#~ msgstr ""
+

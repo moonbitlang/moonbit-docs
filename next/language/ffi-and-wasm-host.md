@@ -184,8 +184,6 @@ We now can use it from JavaScript.
       const ctx = canvas.getContext("2d");
       WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
         (obj) => {
-          // Always call _start to initialize the environment
-          obj.instance.exports._start();
           // Pass the JS object as parameter to draw the smiling face
           obj.instance.exports["draw"](ctx);
           // Display the value of PI
@@ -252,7 +250,6 @@ const importObject = {
 // ...
 WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
   (obj) => {
-    obj.instance.exports._start();
     // ...
     flush()
   }
@@ -314,7 +311,6 @@ Now, we put them together, so this is our final complete `index.html`:
       const ctx = canvas.getContext("2d");
       WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
         (obj) => {
-          obj.instance.exports._start();
           obj.instance.exports["draw"](ctx);
           obj.instance.exports["display_pi"]();
           flush()
