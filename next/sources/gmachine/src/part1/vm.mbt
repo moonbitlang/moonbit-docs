@@ -10,7 +10,7 @@ enum Node {
   // To store the number of parameters and 
   // the corresponding sequence of instructions for a super combinator
   NGlobal(String, Int, List[Instruction])
-  // The Indirection node，The key component of implementing lazy evaluation
+  // The Indirection node. The key component of implementing lazy evaluation
   NInd(Addr)
 } derive(Eq, Show)
 

@@ -215,13 +215,13 @@ Going back to check, `add` is an internally defined primitive. However, since it
 
 Since `square` is a user-defined super combinator, reducing `(square 3)` involves only parameter substitution.
 
-If a redex has fewer arguments than required by the super combinator, which is common in higher-order functions, consider the example of tripling all integers in a list.
+If a redex has fewer arguments than required by the super combinator, which is common in higher-order functions, it becomes a `weak head normal form` (often abbreviated as WHNF). In this situation, even if its sub-expressions contain redexes, no action is needed. Consider the example of tripling all integers in a list.
 
 ```clojure
 (map (mul 3) list-of-int)
 ```
 
-Here, `(mul 3)` cannot be treated as a redex because it lacks sufficient arguments, making it a `weak head normal form` (often abbreviated as WHNF). In this situation, even if its sub-expressions contain redexes, no action is needed.
+Here, `(mul 3)` cannot be treated as a redex because it lacks sufficient arguments.
 
 ### Step 3: Update
 
@@ -253,8 +253,8 @@ In coreF, super combinators are compiled into a series of G-Machine instructions
 
 - Access Data Instructions, For example, `PushArg` (access function arguments), and `PushGlobal` (access other super combinators).
 - Construct/update graph nodes in the heap, like `MkApp`, `PushInt`, `Update`
-- Clean up the `Pop` instruction of the unused addresses from the stack.
-- Express control flow with the `Unwind` instruction
+- The `Pop` instruction to cleanup the unused addresses from the stack.
+- The `Unwind` instruction to express the control flow.
 
 ## Dissecting the G-Machine State
 
@@ -262,11 +262,11 @@ In this simple version of the G-Machine, the state includes:
 
 - Heap: This is where the expression graph and the sequences of instructions corresponding to super combinators are stored.
 
-```{literalinclude} /sources/gmachine/src/part1/vm.mbt
-:language: moonbit
-:start-after: start heap definition
-:end-before: end heap definition
-```
+  ```{literalinclude} /sources/gmachine/src/part1/vm.mbt
+  :language: moonbit
+  :start-after: start heap definition
+  :end-before: end heap definition
+  ```
 
 - Stack: The stack only holds addresses pointing to the heap. A simple implementation can use `List[Addr]`.
 - Global Table: It's a mapping table that records the names of super combinators (including predefined and user-defined) and their corresponding addresses as `NGlobal` nodes. Here I implement it using a Robin Hood hash table.
@@ -280,12 +280,6 @@ The entire state is represented using the type `GState`.
 :start-after: start state definition
 :end-before: end state definition
 ```
-
-Now, we can map each step of the graph reduction algorithm we deduced on paper to this abstract machine:
-
-- At the initial state of the machine, all compiled super combinators have been placed in `NGlobal` nodes on the heap. At this point, the current code sequence in the G-Machine contains only two instructions. The first instruction pushes the address of the `main` node onto the stack, and the second instruction loads the corresponding code sequence of `main` into the current code sequence.
-- The corresponding code sequence of `main` is instantiated on the heap, where nodes are allocated and data is loaded accordingly, ultimately constructing a graph in memory. This process is referred to as "instantiating" `main`. Once instantiation is complete, the address of the entry point of this graph is pushed onto the stack.
-- After instantiation is finished, you need to update graph nodes (since `main` has no parameters, there is no need to clean up residual unused addresses in the stack) and find the next redex to clean up.
 
 Now, we can map each step of the graph reduction algorithm we deduced on paper to this abstract machine:
 
@@ -371,7 +365,7 @@ Firstly, before the instruction sequence of a compiled super combinator is execu
 
 When compiling a super combinator, we need to maintain an environment that allows us to find the relative position of parameters in the stack during the compilation process by their names. Additionally, since clearing the preceding N+1 addresses is necessary after completing the instantiation of a super combinator, the number of parameters N needs to be passed as well.
 
-> Here, "parameters" refer to addresses pointing to App nodes on the heap, and the actual parameter addresses can be accessed through the pusharg instruction.
+> Here, "parameters" refer to addresses pointing to App nodes on the heap, and the actual parameter addresses can be accessed through the `PushArg` instruction.
 
 ```{literalinclude} /sources/gmachine/src/part1/compile.mbt
 :language: moonbit
