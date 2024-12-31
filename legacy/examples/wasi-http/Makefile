@@ -10,5 +10,5 @@ build:
 
 regenerate:
 	@wit-deps update
-	@wit-bindgen moonbit --out-dir . wit --derive-show --derive-eq
+	@wit-bindgen moonbit --out-dir . wit --derive-show --derive-eq --derive-error --project-name moonbit-community/wasi-http
 	@moon fmt
