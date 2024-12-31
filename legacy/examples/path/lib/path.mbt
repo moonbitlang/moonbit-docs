@@ -12,20 +12,20 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-pub struct Path {
+pub(all) struct Path {
   mut inner : String
   platform : Platform
   file_type : FileType
 }
 
-pub enum FileType {
+pub(all) enum FileType {
   File
   Directory
   Symlink
   Unknown
 }
 
-pub enum Platform {
+pub(all) enum Platform {
   Posix
   Windows
 }
@@ -113,6 +113,6 @@ pub fn to_string(self : Path) -> String {
   self.inner
 }
 
-pub fn output(self : Path, log : Logger) -> Unit {
-  (self.inner as Show).output(log)
+pub fn output(self : Path, log : &Logger) -> Unit {
+  self.inner.output(log)
 }
