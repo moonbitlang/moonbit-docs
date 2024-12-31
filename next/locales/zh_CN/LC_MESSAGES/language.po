@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-26 14:41+0800\n"
+"POT-Creation-Date: 2024-12-31 14:46+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -18,6 +18,660 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
+
+#: ../../language/derive.md:1
+msgid "Deriving traits"
+msgstr "派生内建特征"
+
+#: ../../language/derive.md:3
+msgid ""
+"MoonBit supports deriving a number of builtin traits automatically from "
+"the type definition."
+msgstr "MoonBit 支持从类型定义中自动派生一些内建特征。"
+
+#: ../../language/derive.md:5
+msgid ""
+"To derive a trait `T`, it is required that all fields used in the type "
+"implements `T`. For example, deriving `Show` for a struct `struct A { x: "
+"T1; y: T2 }` requires both `T1: Show` and `T2: Show`"
+msgstr ""
+"要派生特征 `T`，需要类型中使用的所有字段都实现了 `T`。例如，为结构体 `struct A { x: T1; y: T2 }` 派生 `Show` 需要 `T1: Show` 和 `T2: Show`。"
+
+#: ../../language/derive.md:8
+msgid "Show"
+msgstr "输出"
+
+#: ../../language/derive.md:10
+msgid ""
+"`derive(Show)` will generate a pretty-printing method for the type. The "
+"derived format is similar to how the type can be constructed in code."
+msgstr ""
+"`derive(Show)` 将为类型生成一个漂亮的打印方法。派生的格式类似于代码中构造类型的方式。"
+
+#: ../../language/derive.md:13
+msgid ""
+"struct MyStruct {\n"
+"  x : Int\n"
+"  y : Int\n"
+"} derive(Show)\n"
+"\n"
+"test \"derive show struct\" {\n"
+"  let p = MyStruct::{ x: 1, y: 2 }\n"
+"  assert_eq!(Show::to_string(p), \"{x: 1, y: 2}\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:19
+msgid ""
+"enum MyEnum {\n"
+"  Case1(Int)\n"
+"  Case2(label~ : String)\n"
+"  Case3\n"
+"} derive(Show)\n"
+"\n"
+"test \"derive show enum\" {\n"
+"  assert_eq!(Show::to_string(MyEnum::Case1(42)), \"Case1(42)\")\n"
+"  assert_eq!(Show::to_string(MyEnum::Case2(label=\"hello\")), "
+"\"Case2(label=\\\"hello\\\")\")\n"
+"  assert_eq!(Show::to_string(MyEnum::Case3), \"Case3\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:25
+msgid "Eq and Compare"
+msgstr "相等和比较"
+
+#: ../../language/derive.md:27
+msgid ""
+"`derive(Eq)` and `derive(Compare)` will generate the corresponding method"
+" for testing equality and comparison. Fields are compared in the same "
+"order as their definitions. For enums, the order between cases ascends in"
+" the order of definition."
+msgstr ""
+"`derive(Eq)` 和 `derive(Compare)` 将为测试相等性和比较生成相应的方法。字段按照它们的定义顺序进行比较。对于枚举，构造器的顺序按照定义的顺序升序。"
+
+#: ../../language/derive.md:31
+msgid ""
+"struct DeriveEqCompare {\n"
+"  x : Int\n"
+"  y : Int\n"
+"} derive(Eq, Compare)\n"
+"\n"
+"test \"derive eq_compare struct\" {\n"
+"  let p1 = DeriveEqCompare::{ x: 1, y: 2 }\n"
+"  let p2 = DeriveEqCompare::{ x: 2, y: 1 }\n"
+"  let p3 = DeriveEqCompare::{ x: 1, y: 2 }\n"
+"  let p4 = DeriveEqCompare::{ x: 1, y: 3 }\n"
+"\n"
+"  // Eq\n"
+"  assert_eq!(p1 == p2, false)\n"
+"  assert_eq!(p1 == p3, true)\n"
+"  assert_eq!(p1 == p4, false)\n"
+"\n"
+"  assert_eq!(p1 != p2, true)\n"
+"  assert_eq!(p1 != p3, false)\n"
+"  assert_eq!(p1 != p4, true)\n"
+"  \n"
+"  // Compare\n"
+"  assert_eq!(p1 < p2, true)\n"
+"  assert_eq!(p1 < p3, false)\n"
+"  assert_eq!(p1 < p4, true)\n"
+"  assert_eq!(p1 > p2, false)\n"
+"  assert_eq!(p1 > p3, false)\n"
+"  assert_eq!(p1 > p4, false)\n"
+"  assert_eq!(p1 <= p2, true)\n"
+"  assert_eq!(p1 >= p2, false)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:37
+msgid ""
+"enum DeriveEqCompareEnum {\n"
+"  Case1(Int)\n"
+"  Case2(label~ : String)\n"
+"  Case3\n"
+"} derive(Eq, Compare)\n"
+"\n"
+"test \"derive eq_compare enum\" {\n"
+"  let p1 = DeriveEqCompareEnum::Case1(42)\n"
+"  let p2 = DeriveEqCompareEnum::Case1(43)\n"
+"  let p3 = DeriveEqCompareEnum::Case1(42)\n"
+"  let p4 = DeriveEqCompareEnum::Case2(label=\"hello\")\n"
+"  let p5 = DeriveEqCompareEnum::Case2(label=\"world\")\n"
+"  let p6 = DeriveEqCompareEnum::Case2(label=\"hello\")\n"
+"  let p7 = DeriveEqCompareEnum::Case3\n"
+"\n"
+"  // Eq\n"
+"  assert_eq!(p1 == p2, false)\n"
+"  assert_eq!(p1 == p3, true)\n"
+"  assert_eq!(p1 == p4, false)\n"
+"\n"
+"  assert_eq!(p1 != p2, true)\n"
+"  assert_eq!(p1 != p3, false)\n"
+"  assert_eq!(p1 != p4, true)\n"
+"\n"
+"  // Compare\n"
+"  assert_eq!(p1 < p2, true) // 42 < 43\n"
+"  assert_eq!(p1 < p3, false)\n"
+"  assert_eq!(p1 < p4, true) // Case1 < Case2\n"
+"  assert_eq!(p4 < p5, true)\n"
+"  assert_eq!(p4 < p6, false)\n"
+"  assert_eq!(p4 < p7, true) // Case2 < Case3\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:43
+msgid "Default"
+msgstr "默认值"
+
+#: ../../language/derive.md:45
+msgid ""
+"`derive(Default)` will generate a method that returns the default value "
+"of the type."
+msgstr ""
+"`derive(Default)` 将生成一个返回类型的默认值的方法。"
+
+#: ../../language/derive.md:47
+msgid ""
+"For structs, the default value is the struct with all fields set as their"
+" default value."
+msgstr ""
+"对于结构体，默认值是所有字段设置为它们的默认值的结构体。"
+
+#: ../../language/derive.md:49
+msgid ""
+"struct DeriveDefault {\n"
+"  x : Int\n"
+"  y : Option[String]\n"
+"} derive(Default, Eq, Show)\n"
+"\n"
+"test \"derive default struct\" {\n"
+"  let p = DeriveDefault::default()\n"
+"  assert_eq!(p, DeriveDefault::{ x: 0, y: None })\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:55
+msgid "For enums, the default value is the only case that has no parameters."
+msgstr ""
+"对于枚举，默认值是唯一没有参数的构造器。"
+
+#: ../../language/derive.md:57
+msgid ""
+"enum DeriveDefaultEnum {\n"
+"  Case1(Int)\n"
+"  Case2(label~ : String)\n"
+"  Case3\n"
+"} derive(Default, Eq, Show)\n"
+"\n"
+"test \"derive default enum\" {\n"
+"  assert_eq!(DeriveDefaultEnum::default(), DeriveDefaultEnum::Case3)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:63
+msgid ""
+"Enums that has no cases or more than one cases without parameters cannot "
+"derive `Default`."
+msgstr ""
+"没有构造器或有多个没有参数的构造器的枚举不能派生 `Default`。"
+
+#: ../../language/derive.md:67
+msgid ""
+"enum CannotDerive1 {\n"
+"    Case1(String)\n"
+"    Case2(Int)\n"
+"} derive(Default) // cannot find a constant constructor as default\n"
+"\n"
+"enum CannotDerive2 {\n"
+"    Case1\n"
+"    Case2\n"
+"} derive(Default) // Case1 and Case2 are both candidates as default "
+"constructor\n"
+msgstr ""
+
+#: ../../language/derive.md:79
+msgid "Hash"
+msgstr "哈希值"
+
+#: ../../language/derive.md:81
+msgid ""
+"`derive(Hash)` will generate a hash implementation for the type. This "
+"will allow the type to be used in places that expects a `Hash` "
+"implementation, for example `HashMap`s and `HashSet`s."
+msgstr ""
+"`derive(Hash)` 将为类型生成一个哈希实现。这将允许类型在期望 `Hash` 实现的地方使用，例如 `HashMap` 和 `HashSet`。"
+
+#: ../../language/derive.md:85
+msgid ""
+"struct DeriveHash {\n"
+"  x : Int\n"
+"  y : Option[String]\n"
+"} derive(Hash, Eq, Show)\n"
+"\n"
+"test \"derive hash struct\" {\n"
+"  let hs = @hashset.new()\n"
+"  hs.add(DeriveHash::{x: 123, y: None})\n"
+"  hs.add(DeriveHash::{x: 123, y: None})\n"
+"  assert_eq!(hs.size(), 1)\n"
+"  hs.add(DeriveHash::{x: 123, y: Some(\"456\")})\n"
+"  assert_eq!(hs.size(), 2)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:91
+msgid "Arbitrary"
+msgstr "任意值"
+
+#: ../../language/derive.md:93
+msgid "`derive(Arbitrary)` will generate random values of the given type."
+msgstr "`derive(Arbitrary)` 将生成给定类型的随机值。"
+
+#: ../../language/derive.md:95
+msgid "FromJson and ToJson"
+msgstr "从/到 Json"
+
+#: ../../language/derive.md:97
+msgid ""
+"`derive(FromJson)` and `derive(ToJson)` will generate methods that "
+"deserializes/serializes the given type from/to JSON files "
+"correspondingly."
+msgstr ""
+"`derive(FromJson)` 和 `derive(ToJson)` 将分别生成从/到 JSON 文件反序列化/序列化给定类型的方法。"
+
+#: ../../language/derive.md:100
+msgid ""
+"struct JsonTest1 {\n"
+"  x: Int\n"
+"  y: Int\n"
+"} derive(FromJson, ToJson, Eq, Show)\n"
+"\n"
+"enum JsonTest2 {\n"
+"  A(x~: Int)\n"
+"  B(x~: Int, y~: Int)\n"
+"} derive(FromJson, ToJson, Eq, Show)\n"
+"\n"
+"test \"json basic\"{\n"
+"  let input = JsonTest1::{ x: 123, y: 456 }\n"
+"  let expected: Json = { \"x\": 123, \"y\": 456 }\n"
+"  assert_eq!(input.to_json(), expected)\n"
+"  assert_eq!(@json.from_json!(expected), input)\n"
+"\n"
+"  let input = JsonTest2::A(x=123)\n"
+"  let expected: Json = { \"$tag\": \"A\", \"x\": 123 }\n"
+"  assert_eq!(input.to_json(), expected)\n"
+"  assert_eq!(@json.from_json!(expected), input)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:106
+msgid ""
+"Both derive directives accept a number of arguments to configure the "
+"exact behavior of serialization and deserialization."
+msgstr ""
+"这两个派生指令都接受一些参数来配置序列化和反序列化的确切行为。"
+
+#: ../../language/derive.md:109
+msgid "The actual behavior of JSON serialization arguments is unstable."
+msgstr ""
+"JSON 序列化参数的实际行为是不稳定的。"
+
+#: ../../language/derive.md:112
+msgid ""
+"struct JsonTest3 {\n"
+"  x: Int\n"
+"  y: Int\n"
+"} derive(\n"
+"  FromJson(fields(x(rename = \"renamedX\"))), \n"
+"  ToJson(fields(x(rename = \"renamedX\"))),\n"
+"  Eq, Show\n"
+")\n"
+"\n"
+"enum JsonTest4 {\n"
+"  A(x~: Int)\n"
+"  B(x~: Int, y~: Int)\n"
+"} derive(\n"
+"  FromJson(rename_fields = \"SCREAMING_SNAKE_CASE\", repr(ext_tagged)),\n"
+"  ToJson(rename_fields = \"SCREAMING_SNAKE_CASE\", repr(ext_tagged)),\n"
+"  Eq, Show\n"
+")\n"
+"\n"
+"test \"json args\"{\n"
+"  let input = JsonTest3::{ x: 123, y: 456 }\n"
+"  let expected: Json = { \"renamedX\": 123, \"y\": 456 }\n"
+"  assert_eq!(input.to_json(), expected)\n"
+"  assert_eq!(@json.from_json!(expected), input)\n"
+"\n"
+"  let input = JsonTest4::A(x=123)\n"
+"  let expected: Json = { \"A\": { \"X\": 123 } }\n"
+"  assert_eq!(input.to_json(), expected)\n"
+"  assert_eq!(@json.from_json!(expected), input)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:118
+msgid "Enum representations"
+msgstr "枚举表示"
+
+#: ../../language/derive.md:120
+msgid ""
+"Enums can be represented in JSON in a number of styles. There are two "
+"aspects of the representation:"
+msgstr ""
+"枚举表示为 JSON 有多种风格。表示有两个方面："
+
+#: ../../language/derive.md:123
+msgid ""
+"**Tag position** determines where the name of the enum tag (i.e. case or "
+"constructor name) is stored."
+msgstr ""
+"**标签位置** 决定枚举标签（即构造器名称）的名称存储在哪里。"
+
+#: ../../language/derive.md:124
+msgid ""
+"**Case representation** determines how to represent the payload of the "
+"enum."
+msgstr ""
+"**构造器表示** 决定如何表示枚举的负载。"
+
+#: ../../language/derive.md:126
+msgid "Let's consider the following enum definition:"
+msgstr "让我们考虑以下枚举定义："
+
+#: ../../language/derive.md:128
+msgid ""
+"enum E {\n"
+"    Uniform(Int)\n"
+"    Axes(x~: Int, y~: Int)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:135
+msgid "For tag position, there are 4 variants:"
+msgstr "对于标签位置，有 4 个变体："
+
+#: ../../language/derive.md:137
+msgid "**Internally tagged** puts the tag alongside the payload values:"
+msgstr "**内部标记** 将标签与负载值一起放置："
+
+#: ../../language/derive.md:139
+msgid ""
+"`{ \"$tag\": \"Uniform\", \"0\": 1 }`, `{ \"$tag\": \"Axes\", \"x\": 2, "
+"\"y\": 3 }`"
+msgstr ""
+
+#: ../../language/derive.md:141
+msgid ""
+"**Externally tagged** puts the tag as the JSON object key outside the "
+"payload values:"
+msgstr "**外部标记** 将标签作为 JSON 对象键放置在负载值之外："
+
+#: ../../language/derive.md:143
+msgid "`{ \"Uniform\": { \"0\": 1 } }`, `{ \"Axes\": { \"x\": 2, \"y\": 3 } }`"
+msgstr ""
+
+#: ../../language/derive.md:145
+msgid ""
+"**Adjacently tagged** puts the tag payload in two adjacent keys in a JSON"
+" object:"
+msgstr "**相邻标记** 将标签负载放置在 JSON 对象中的两个相邻键中："
+
+#: ../../language/derive.md:147
+msgid ""
+"`{ \"t\": \"Uniform\", \"c\": { \"0\": 1 } }`, `{ \"t\": \"Axes\", \"c\":"
+" { \"x\": 2, \"y\": 3 } }`"
+msgstr ""
+
+#: ../../language/derive.md:149
+msgid "**Untagged** has no explicit tag identifying which case the data is:"
+msgstr "**无标记** 没有明确的标记标识数据属于哪个构造器："
+
+#: ../../language/derive.md:151
+msgid "`{ \"0\": 1 }`, `{ \"x\": 2, \"y\": 3 }`."
+msgstr ""
+
+#: ../../language/derive.md:153
+msgid ""
+"The JSON deserializer will try to deserialize each case in order and "
+"return the first one succeeding."
+msgstr "JSON 反序列化器将尝试按顺序反序列化每个构造器，并返回第一个成功的构造器。"
+
+#: ../../language/derive.md:155
+msgid "For case representation, there are 2 variants:"
+msgstr "对于构造器表示，有 2 个变体："
+
+#: ../../language/derive.md:157
+msgid ""
+"**Object-like** representation serializes enum payloads into a JSON "
+"object, whose key is either the tag name or the string of the positional "
+"index within the struct."
+msgstr "**对象式** 表示将枚举负载序列化为 JSON 对象，其键是标签名称或结构体中的位置索引的字符串。"
+
+#: ../../language/derive.md:160
+msgid "`{ \"0\": 1 }`, `{ \"x\": 2, \"y\": 3 }`"
+msgstr ""
+
+#: ../../language/derive.md:162
+msgid ""
+"**Tuple-like** representation serializes enum payloads into a tuple (jSON"
+" array), in the same order as the type declaration. Labels are omitted in"
+" tuple-like representations."
+msgstr "**元组式** 表示将枚举负载序列化为元组（JSON 数组），顺序与类型声明相同。标签在元组式表示中被省略。"
+
+#: ../../language/derive.md:166
+msgid "`[1]`, `[2, 3]`"
+msgstr ""
+
+#: ../../language/derive.md:168
+msgid ""
+"The two aspects can be combined freely, except one case: _internally "
+"tagged_ enums cannot use _tuple-like_ representation."
+msgstr "这两个方面可以自由组合，除了一个情况：_内部标记_ 枚举不能使用 _元组式_ 表示。"
+
+#: ../../language/derive.md:171
+msgid "Container arguments"
+msgstr "容器参数"
+
+#: ../../language/derive.md:173
+msgid ""
+"`repr(...)` configures the representation of the container. This controls"
+" the tag position of enums. For structs, the tag is assumed to be the "
+"type of the type."
+msgstr ""
+"`repr(...)` 配置容器的表示。这控制枚举的标签位置。对于结构体，假定标签是类型的类型。"
+
+#: ../../language/derive.md:177
+msgid "There are 4 representations available for selection:"
+msgstr "有 4 种可供选择的表示："
+
+#: ../../language/derive.md:179
+msgid ""
+"`repr(tag = \"tag\")` – Use internally tagged representation, with the "
+"tag's object key name as specified."
+msgstr ""
+"`repr(tag = \"tag\")` – 使用内部标记表示，标记的对象键名称如指定。"
+
+#: ../../language/derive.md:182
+msgid "`repr(untagged)` – Use untagged representation."
+msgstr ""
+"`repr(untagged)` – 使用无标记表示。"
+
+#: ../../language/derive.md:184
+msgid "`repr(ext_tagged)` – Use externally tagged representation."
+msgstr ""
+"`repr(ext_tagged)` – 使用外部标记表示。"
+
+#: ../../language/derive.md:186
+msgid ""
+"`repr(tag = \"tag\", contents = \"contents\")` – Use adjacently tagged "
+"representation, with the tag and contents key names as specified."
+msgstr ""
+"`repr(tag = \"tag\", contents = \"contents\")` – 使用相邻标记表示，标记和内容键名称如指定。"
+
+#: ../../language/derive.md:190
+msgid "The default representation for struct is `repr(untagged)`."
+msgstr "结构体的默认表示为 `repr(untagged)`。"
+
+#: ../../language/derive.md:192
+msgid "The default representation for enums is `repr(tag = \"$tag\")`"
+msgstr "枚举的默认表示为 `repr(tag = \"$tag\")`"
+
+#: ../../language/derive.md:194
+msgid ""
+"`case_repr(...)` (enum only) configures the case representation of the "
+"container. This option is only available on enums."
+msgstr ""
+"`case_repr(...)`（仅枚举）配置容器的构造器表示。此选项仅适用于枚举。"
+
+#: ../../language/derive.md:197
+msgid "`case_repr(struct)` – Use struct-like representation of enums."
+msgstr "`case_repr(struct)` – 使用结构体式表示的枚举。"
+
+#: ../../language/derive.md:200
+msgid "`case_repr(tuple)` – Use tuple-like representation of enums."
+msgstr "`case_repr(tuple)` – 使用元组式表示的枚举。"
+
+#: ../../language/derive.md:203
+msgid ""
+"`rename_fields`, `rename_cases` (enum only), `rename_struct` (struct "
+"only), `rename_all` renames fields, case names, struct name and all names"
+" correspondingly, into a specific style."
+msgstr ""
+"`rename_fields`、`rename_cases`（仅枚举）、`rename_struct`（仅结构体）、`rename_all` 分别将字段、构造器名称、结构体名称和所有名称重命名为特定风格。"
+
+#: ../../language/derive.md:207
+msgid "Available parameters are:"
+msgstr "可选的参数有："
+
+#: ../../language/derive.md:209
+msgid "`lowercase`"
+msgstr ""
+
+#: ../../language/derive.md:210
+msgid "`UPPERCASE`"
+msgstr ""
+
+#: ../../language/derive.md:211
+msgid "`camelCase`"
+msgstr ""
+
+#: ../../language/derive.md:212
+msgid "`PascalCase`"
+msgstr ""
+
+#: ../../language/derive.md:213
+msgid "`snake_case`"
+msgstr ""
+
+#: ../../language/derive.md:214
+msgid "`SCREAMING_SNAKE_CASE`"
+msgstr ""
+
+#: ../../language/derive.md:215
+msgid "`kebab-case`"
+msgstr ""
+
+#: ../../language/derive.md:216
+msgid "`SCREAMING-KEBAB-CASE`"
+msgstr ""
+
+#: ../../language/derive.md:218
+msgid ""
+"Example: `rename_fields = \"PascalCase\"` for a field named "
+"`my_long_field_name` results in `MyLongFieldName`."
+msgstr ""
+"例如：`rename_fields = \"PascalCase\"` 用于名为 `my_long_field_name` 的字段将得到 `MyLongFieldName`。"
+
+#: ../../language/derive.md:222
+msgid ""
+"Renaming assumes the name of fields in `snake_case` and the name of "
+"structs/enum cases in `PascalCase`."
+msgstr ""
+"重命名假定字段的名称为 `snake_case`，结构体/枚举构造器的名称为 `PascalCase`。"
+
+#: ../../language/derive.md:225
+msgid "`cases(...)` (enum only) controls the layout of enum cases."
+msgstr ""
+"`cases(...)`（仅枚举）控制枚举构造器的布局。"
+
+#: ../../language/derive.md:227
+msgid "For example, for an enum"
+msgstr ""
+"例如，对于一个枚举"
+
+#: ../../language/derive.md:229
+msgid ""
+"enum E {\n"
+"  A(...)\n"
+"  B(...)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:236
+msgid "you are able to control each case using `cases(A(...), B(...))`."
+msgstr ""
+"您可以使用 `cases(A(...), B(...))` 控制每个构造器。"
+
+#: ../../language/derive.md:238
+msgid "See _Case arguments_ below for details."
+msgstr ""
+"有关详细信息，请参见下面的 _构造器参数_。"
+
+#: ../../language/derive.md:240
+msgid "`fields(...)` (struct only) controls the layout of struct fields."
+msgstr ""
+"`fields(...)`（仅结构体）控制结构体字段的布局。"
+
+#: ../../language/derive.md:242
+msgid "For example, for a struct"
+msgstr ""
+"例如，对于一个结构体"
+
+#: ../../language/derive.md:244
+msgid ""
+"struct S {\n"
+"  x: Int\n"
+"  y: Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:251
+msgid "you are able to control each field using `fields(x(...), y(...))`"
+msgstr ""
+"您可以使用 `fields(x(...), y(...))` 控制每个字段。"
+
+#: ../../language/derive.md:253 ../../language/derive.md:263
+msgid "See _Field arguments_ below for details."
+msgstr ""
+"有关详细信息，请参见下面的 _字段参数_。"
+
+#: ../../language/derive.md:255
+msgid "Case arguments"
+msgstr "构造器参数"
+
+#: ../../language/derive.md:257
+msgid ""
+"`rename = \"...\"` renames this specific case, overriding existing "
+"container-wide rename directive if any."
+msgstr ""
+"`rename = \"...\"` 重命名此特定构造器，覆盖现有的容器范围重命名指令（如果有的话）。"
+
+#: ../../language/derive.md:260
+msgid ""
+"`fields(...)` controls the layout of the payload of this case. Note that "
+"renaming positional fields are not possible currently."
+msgstr ""
+"`fields(...)` 控制此构造器的负载布局。请注意，目前无法重命名位置字段。"
+
+#: ../../language/derive.md:265
+msgid "Field arguments"
+msgstr "字段参数"
+
+#: ../../language/derive.md:267
+msgid ""
+"`rename = \"...\"` renames this specific field, overriding existing "
+"container-wide rename directives if any."
+msgstr "`rename = \"...\"` 重命名此特定字段，覆盖现有的容器范围重命名指令（如果有的话）。"
 
 #: ../../language/docs.md:1
 msgid "Documentation"
@@ -352,10 +1006,10 @@ msgstr ""
 #: ../../language/fundamentals.md:632 ../../language/fundamentals.md:644
 #: ../../language/fundamentals.md:661 ../../language/fundamentals.md:699
 #: ../../language/fundamentals.md:746 ../../language/fundamentals.md:760
-#: ../../language/fundamentals.md:883 ../../language/fundamentals.md:919
-#: ../../language/fundamentals.md:950 ../../language/fundamentals.md:977
-#: ../../language/fundamentals.md:1006 ../../language/fundamentals.md:1026
-#: ../../language/fundamentals.md:1060 ../../language/fundamentals.md:1074
+#: ../../language/fundamentals.md:894 ../../language/fundamentals.md:930
+#: ../../language/fundamentals.md:961 ../../language/fundamentals.md:988
+#: ../../language/fundamentals.md:1017 ../../language/fundamentals.md:1037
+#: ../../language/fundamentals.md:1071 ../../language/fundamentals.md:1085
 #: ../../language/methods.md:91
 msgid "Output"
 msgstr "输出"
@@ -3021,7 +3675,6 @@ msgid ""
 "    i += j\n"
 "  }\n"
 "  assert_eq!(i, 45)\n"
-"\n"
 "  let mut k = 0\n"
 "  for l in 0..=10 {\n"
 "    k += l\n"
@@ -3152,10 +3805,55 @@ msgid ""
 msgstr "目前在 `loop exprs { ... }` 中，`exprs` 是非空列表，而 `for { ... }` 用于无限循环。"
 
 #: ../../language/fundamentals.md:782
+msgid "Labelled Continue/Break"
+msgstr ""
+
+#: ../../language/fundamentals.md:784
+msgid ""
+"When a loop is labelled, it can be referenced from a `break` or "
+"`continue` from within a nested loop. For example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:787
+msgid ""
+"test \"break label\" {\n"
+"  let mut count = 0\n"
+"  let xs = [1, 2, 3]\n"
+"  let ys = [4, 5, 6]\n"
+"  let res = outer~: for i in xs {\n"
+"    for j in ys {\n"
+"      count = count + i\n"
+"      break outer~ j\n"
+"    }\n"
+"  } else {\n"
+"    -1\n"
+"  }\n"
+"  assert_eq!(res, 4)\n"
+"  assert_eq!(count, 1)\n"
+"}\n"
+"\n"
+"test \"continue label\" {\n"
+"  let mut count = 0\n"
+"  let init = 10\n"
+"  let res =outer~: loop init {\n"
+"    0 => 42\n"
+"    i => {\n"
+"      for {\n"
+"        count = count + 1\n"
+"        continue outer~ i - 1\n"
+"      }\n"
+"    }\n"
+"  }\n"
+"  assert_eq!(res, 42)\n"
+"  assert_eq!(count, 10)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:793
 msgid "Iterator"
 msgstr "迭代器"
 
-#: ../../language/fundamentals.md:784
+#: ../../language/fundamentals.md:795
 msgid ""
 "An iterator is an object that traverse through a sequence while providing"
 " access to its elements. Traditional OO languages like Java's "
@@ -3170,14 +3868,14 @@ msgstr ""
 "`hasNext()` 来遍历迭代过程，而函数式语言（JavaScript 的 `forEach`，Lisp 的 "
 "`mapcar`）提供了一个高阶函数，该函数接受一个操作和一个序列，然后使用该操作应用于序列。前者称为_外部迭代器_（对用户可见），后者称为_内部迭代器_（对用户不可见）。"
 
-#: ../../language/fundamentals.md:792
+#: ../../language/fundamentals.md:803
 msgid ""
 "The built-in type `Iter[T]` is MoonBit's internal iterator "
 "implementation. Almost all built-in sequential data structures have "
 "implemented `Iter`:"
 msgstr "内置类型 `Iter[T]` 是 MoonBit 的内部迭代器实现。几乎所有内置的顺序数据结构都已经实现了 `Iter`："
 
-#: ../../language/fundamentals.md:795
+#: ../../language/fundamentals.md:806
 msgid ""
 "///|\n"
 "fn filter_even(l : Array[Int]) -> Array[Int] {\n"
@@ -3193,45 +3891,45 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:801
+#: ../../language/fundamentals.md:812
 msgid "Commonly used methods include:"
 msgstr "常用的方法包括："
 
-#: ../../language/fundamentals.md:803
+#: ../../language/fundamentals.md:814
 msgid ""
 "`each`: Iterates over each element in the iterator, applying some "
 "function to each element."
 msgstr "`each`: 遍历迭代器中的每个元素，对每个元素应用某个函数。"
 
-#: ../../language/fundamentals.md:804
+#: ../../language/fundamentals.md:815
 msgid ""
 "`fold`: Folds the elements of the iterator using the given function, "
 "starting with the given initial value."
 msgstr "`fold`: 使用给定的函数，从给定的初始值开始，对迭代器的元素进行“折叠”。"
 
-#: ../../language/fundamentals.md:805
+#: ../../language/fundamentals.md:816
 msgid "`collect`: Collects the elements of the iterator into an array."
 msgstr "`collect`: 将迭代器的元素收集到一个数组中。"
 
-#: ../../language/fundamentals.md:807
+#: ../../language/fundamentals.md:818
 msgid ""
 "`filter`: _lazy_ Filters the elements of the iterator based on a "
 "predicate function."
 msgstr "`filter`: （惰性）根据谓词函数过滤迭代器的元素。"
 
-#: ../../language/fundamentals.md:808
+#: ../../language/fundamentals.md:819
 msgid ""
 "`map`: _lazy_ Transforms the elements of the iterator using a mapping "
 "function."
 msgstr "`map`: （惰性）使用映射函数转换迭代器的元素。"
 
-#: ../../language/fundamentals.md:809
+#: ../../language/fundamentals.md:820
 msgid ""
 "`concat`: _lazy_ Combines two iterators into one by appending the "
 "elements of the second iterator to the first."
 msgstr "`concat`: （惰性）通过将第二个迭代器的元素附加到第一个迭代器，将两个迭代器合并为一个。"
 
-#: ../../language/fundamentals.md:811
+#: ../../language/fundamentals.md:822
 msgid ""
 "Methods like `filter` `map` are very common on a sequence object e.g. "
 "Array. But what makes `Iter` special is that any method that constructs a"
@@ -3245,7 +3943,7 @@ msgstr ""
 " 的方法都是**惰性**的（即在调用时不会开始迭代，因为它被包装在一个函数内），因此不会为中间值分配内存。这就是使 `Iter` "
 "优于遍历序列的原因：没有额外的成本。MoonBit 鼓励用户将 `Iter` 传递给函数，而不是传递序列对象本身。"
 
-#: ../../language/fundamentals.md:819
+#: ../../language/fundamentals.md:830
 msgid ""
 "Pre-defined sequence structures like `Array` and its iterators should be "
 "enough to use. But to take advantages of these methods when used with a "
@@ -3256,7 +3954,7 @@ msgstr ""
 "预定义的序列结构如 `Array` 及其迭代器应该足够使用。但是，为了在自定义序列（元素类型为 `S`）中使用这些方法，我们需要实现 "
 "`Iter`，即返回 `Iter[S]` 的函数。以 `Bytes` 为例："
 
-#: ../../language/fundamentals.md:824
+#: ../../language/fundamentals.md:835
 msgid ""
 "///|\n"
 "fn iter(data : Bytes) -> Iter[Byte] {\n"
@@ -3271,18 +3969,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:830
+#: ../../language/fundamentals.md:841
 msgid ""
 "Almost all `Iter` implementations are identical to that of `Bytes`, the "
 "only main difference being the code block that actually does the "
 "iteration."
 msgstr "几乎所有 `Iter` 实现都与 `Bytes` 的实现相同，唯一的主要区别是实际执行迭代的代码块。"
 
-#: ../../language/fundamentals.md:833
+#: ../../language/fundamentals.md:844
 msgid "Implementation details"
 msgstr "实现细节"
 
-#: ../../language/fundamentals.md:835
+#: ../../language/fundamentals.md:846
 msgid ""
 "The type `Iter[T]` is basically a type alias for `((T) -> IterResult) -> "
 "IterResult`, a higher-order function that takes an operation and "
@@ -3292,17 +3990,17 @@ msgstr ""
 "类型 `Iter[T]` 基本上是 `((T) -> IterResult) -> IterResult` "
 "的类型别名，它是一个高阶函数，接受一个操作，`IterResult` 是一个枚举对象，用于跟踪当前迭代的状态，包含以下 2 种状态："
 
-#: ../../language/fundamentals.md:840
+#: ../../language/fundamentals.md:851
 msgid "`IterEnd`: marking the end of an iteration"
 msgstr "`IterEnd`: 标记迭代结束"
 
-#: ../../language/fundamentals.md:841
+#: ../../language/fundamentals.md:852
 msgid ""
 "`IterContinue`: marking the end of an iteration is yet to be reached, "
 "implying the iteration will still continue at this state."
 msgstr "`IterContinue`: 标记迭代结束尚未到达，暗示迭代将在此状态继续。"
 
-#: ../../language/fundamentals.md:843
+#: ../../language/fundamentals.md:854
 msgid ""
 "To put it simply, `Iter[T]` takes a function `(T) -> IterResult` and use "
 "it to transform `Iter[T]` itself to a new state of type `IterResult`. "
@@ -3312,21 +4010,21 @@ msgstr ""
 "简单来说，`Iter[T]` 接受一个函数 `(T) -> IterResult` 并使用它将 `Iter[T]` 本身转换为类型为 "
 "`IterResult` 的新状态。"
 
-#: ../../language/fundamentals.md:847
+#: ../../language/fundamentals.md:858
 msgid ""
 "Iterator provides a unified way to iterate through data structures, and "
 "they can be constructed at basically no cost: as long as `fn(yield)` "
 "doesn't execute, the iteration process doesn't start."
 msgstr "迭代器提供了一种统一的遍历数据结构的方式，它们基本上可以无成本地构建：只要 `fn(yield)` 不执行，迭代过程就不会开始。"
 
-#: ../../language/fundamentals.md:851
+#: ../../language/fundamentals.md:862
 msgid ""
 "Internally a `Iter::run()` is used to trigger the iteration. Chaining all"
 " sorts of `Iter` methods might be visually pleasing, but do notice the "
 "heavy work underneath the abstraction."
 msgstr "`Iter::run()` 在在内部触发迭代。链接各种 `Iter` 方法可能看起来很美观，但请注意抽象层下面的繁重工作。"
 
-#: ../../language/fundamentals.md:855
+#: ../../language/fundamentals.md:866
 msgid ""
 "Thus, unlike an external iterator, once the iteration starts there's no "
 "way to stop unless the end is reached. Methods such as `count()` which "
@@ -3337,19 +4035,19 @@ msgstr ""
 "因此，与外部迭代器不同，一旦迭代开始，除非到达末尾，否则无法停止。诸如 `count()` 这样的方法，它计算迭代器中元素的数量看起来像是一个 "
 "`O(1)` 操作，但实际上具有线性时间复杂度。请谨慎使用迭代器，否则可能会出现性能问题。"
 
-#: ../../language/fundamentals.md:861
+#: ../../language/fundamentals.md:872
 msgid "Custom Data Types"
 msgstr "自定义数据类型"
 
-#: ../../language/fundamentals.md:863
+#: ../../language/fundamentals.md:874
 msgid "There are two ways to create new data types: `struct` and `enum`."
 msgstr "创建新数据类型有两种方法：`struct` 和 `enum`。"
 
-#: ../../language/fundamentals.md:865
+#: ../../language/fundamentals.md:876
 msgid "Struct"
 msgstr "结构体"
 
-#: ../../language/fundamentals.md:867
+#: ../../language/fundamentals.md:878
 msgid ""
 "In MoonBit, structs are similar to tuples, but their fields are indexed "
 "by field names. A struct can be constructed using a struct literal, which"
@@ -3359,11 +4057,11 @@ msgid ""
 "using the dot syntax `s.f`. If a field is marked as mutable using the "
 "keyword `mut`, it can be assigned a new value."
 msgstr ""
-"在 MoonBit 中，结构体类似于元组，但其字段由字段名称索引。可以使用结构体字面量构造结构体，结构体字面量由一组带标签的值组成，"
-"并用大括号括起来。如果结构体的字段与类型定义完全匹配，那么结构体字面量的类型可以自动推断。"
-"可以使用点语法 `s.f` 访问字段。如果使用关键字 `mut` 标记字段为可变的，则可以为其分配新值。"
+"在 MoonBit "
+"中，结构体类似于元组，但其字段由字段名称索引。可以使用结构体字面量构造结构体，结构体字面量由一组带标签的值组成，并用大括号括起来。如果结构体的字段与类型定义完全匹配，那么结构体字面量的类型可以自动推断。可以使用点语法"
+" `s.f` 访问字段。如果使用关键字 `mut` 标记字段为可变的，则可以为其分配新值。"
 
-#: ../../language/fundamentals.md:869
+#: ../../language/fundamentals.md:880
 msgid ""
 "struct User {\n"
 "  id : Int\n"
@@ -3372,7 +4070,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:875
+#: ../../language/fundamentals.md:886
 msgid ""
 "fn main {\n"
 "  let u = User::{ id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
@@ -3384,55 +4082,52 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:883
+#: ../../language/fundamentals.md:894
 msgid ""
 "0\n"
 "John Doe\n"
 "john@doe.name\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:887
+#: ../../language/fundamentals.md:898
 msgid "Constructing Struct with Shorthand"
 msgstr "使用简写构造结构体"
 
-#: ../../language/fundamentals.md:889
+#: ../../language/fundamentals.md:900
 msgid ""
 "If you already have some variable like `name` and `email`, it's redundant"
 " to repeat those names when constructing a struct. You can use shorthand "
 "instead, it behaves exactly the same:"
-msgstr ""
-"如果已经有一些变量，如 `name` 和 `email`，在构造结构体时重复这些名称是多余的。可以使用简写，它的行为完全相同："
+msgstr "如果已经有一些变量，如 `name` 和 `email`，在构造结构体时重复这些名称是多余的。可以使用简写，它的行为完全相同："
 
-#: ../../language/fundamentals.md:891
+#: ../../language/fundamentals.md:902
 msgid ""
 "let name = \"john\"\n"
 "let email = \"john@doe.com\"\n"
 "let u = User::{ id: 0, name, email }\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:898
+#: ../../language/fundamentals.md:909
 msgid ""
 "If there's no other struct that has the same fields, it's redundant to "
 "add the struct's name when constructing it:"
-msgstr ""
-"如果没有其他具有相同字段的结构体，在构造结构体时添加结构体的名称是多余的："
+msgstr "如果没有其他具有相同字段的结构体，在构造结构体时添加结构体的名称是多余的："
 
-#: ../../language/fundamentals.md:900
+#: ../../language/fundamentals.md:911
 msgid "let u2 = { id : 0, name, email }\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:907
+#: ../../language/fundamentals.md:918
 msgid "Struct Update Syntax"
 msgstr "结构体更新语法"
 
-#: ../../language/fundamentals.md:909
+#: ../../language/fundamentals.md:920
 msgid ""
 "It's useful to create a new struct based on an existing one, but with "
 "some fields updated."
-msgstr ""
-"可以用这个语法来根据现有结构体创建一个新的结构体，但只更新部分字段。"
+msgstr "可以用这个语法来根据现有结构体创建一个新的结构体，但只更新部分字段。"
 
-#: ../../language/fundamentals.md:911
+#: ../../language/fundamentals.md:922
 msgid ""
 "fn main {\n"
 "  let user = { id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
@@ -3446,34 +4141,31 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:919
+#: ../../language/fundamentals.md:930
 msgid ""
 "{ id: 0, name: John Doe, email: john@doe.com }\n"
 "{ id: 0, name: John Doe, email: john@doe.name }\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:923
+#: ../../language/fundamentals.md:934
 msgid "Enum"
 msgstr "枚举"
 
-#: ../../language/fundamentals.md:925
+#: ../../language/fundamentals.md:936
 msgid ""
 "Enum types are similar to algebraic data types in functional languages. "
 "Users familiar with C/C++ may prefer calling it tagged union."
-msgstr ""
-"枚举类型类似于函数式语言中的代数数据类型。熟悉 C/C++ 的用户可能更喜欢称其为标记联合。"
+msgstr "枚举类型类似于函数式语言中的代数数据类型。熟悉 C/C++ 的用户可能更喜欢称其为标记联合。"
 
-#: ../../language/fundamentals.md:927
+#: ../../language/fundamentals.md:938
 msgid ""
 "An enum can have a set of cases (constructors). Constructor names must "
 "start with capitalized letter. You can use these names to construct "
 "corresponding cases of an enum, or checking which branch an enum value "
 "belongs to in pattern matching:"
-msgstr ""
-"枚举可以有一组情况（构造函数）。构造函数的名称必须以大写字母开头。"
-"可以使用这些名称来构造枚举的相应情况，或在模式匹配中检查枚举值属于哪个分支："
+msgstr "枚举可以有一组情况（构造函数）。构造函数的名称必须以大写字母开头。可以使用这些名称来构造枚举的相应情况，或在模式匹配中检查枚举值属于哪个分支："
 
-#: ../../language/fundamentals.md:929
+#: ../../language/fundamentals.md:940
 msgid ""
 "/// An enum type that represents the ordering relation between two "
 "values,\n"
@@ -3492,7 +4184,7 @@ msgstr ""
 "  Equal\n"
 "}\n"
 
-#: ../../language/fundamentals.md:935
+#: ../../language/fundamentals.md:946
 msgid ""
 "/// compare the ordering relation between two integers\n"
 "fn compare_int(x : Int, y : Int) -> Relation {\n"
@@ -3552,7 +4244,7 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:942
+#: ../../language/fundamentals.md:953
 msgid ""
 "fn main {\n"
 "  print_relation(compare_int(0, 1))\n"
@@ -3561,21 +4253,20 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:950
+#: ../../language/fundamentals.md:961
 msgid ""
 "smaller!\n"
 "equal!\n"
 "greater!\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:954
+#: ../../language/fundamentals.md:965
 msgid ""
 "Enum cases can also carry payload data. Here's an example of defining an "
 "integer list type using enum:"
-msgstr ""
-"枚举情况也可以携带额外数据。以下是使用枚举定义整数列表类型的示例："
+msgstr "枚举情况也可以携带额外数据。以下是使用枚举定义整数列表类型的示例："
 
-#: ../../language/fundamentals.md:956
+#: ../../language/fundamentals.md:967
 msgid ""
 "enum List {\n"
 "  Nil\n"
@@ -3592,7 +4283,7 @@ msgstr ""
 "  Cons(Int, List)\n"
 "}\n"
 
-#: ../../language/fundamentals.md:962
+#: ../../language/fundamentals.md:973
 msgid ""
 "// In addition to binding payload to variables,\n"
 "// you can also continue matching payload data inside constructors.\n"
@@ -3656,7 +4347,7 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:969
+#: ../../language/fundamentals.md:980
 msgid ""
 "fn main {\n"
 "  // when creating values using `Cons`, the payload of by `Cons` must be "
@@ -3673,7 +4364,7 @@ msgstr ""
 "  print_list(l)\n"
 "}\n"
 
-#: ../../language/fundamentals.md:977
+#: ../../language/fundamentals.md:988
 msgid ""
 "false\n"
 "1,\n"
@@ -3681,15 +4372,15 @@ msgid ""
 "nil\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:981
+#: ../../language/fundamentals.md:992
 msgid "Constructor with labelled arguments"
 msgstr "构造器与带标签参数"
 
-#: ../../language/fundamentals.md:983
+#: ../../language/fundamentals.md:994
 msgid "Enum constructors can have labelled argument:"
 msgstr "枚举构造器可以有带标签的参数："
 
-#: ../../language/fundamentals.md:985
+#: ../../language/fundamentals.md:996
 msgid ""
 "enum E {\n"
 "  // `x` and `y` are labelled argument\n"
@@ -3701,7 +4392,7 @@ msgstr ""
 "  C(x~ : Int, y~ : Int)\n"
 "}\n"
 
-#: ../../language/fundamentals.md:991
+#: ../../language/fundamentals.md:1002
 msgid ""
 "// pattern matching constructor with labelled arguments\n"
 "fn f(e : E) -> Unit {\n"
@@ -3725,7 +4416,7 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:998
+#: ../../language/fundamentals.md:1009
 msgid ""
 "fn main {\n"
 "  f(C(x=0, y=0))\n"
@@ -3734,20 +4425,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1006
+#: ../../language/fundamentals.md:1017
 msgid ""
 "0!\n"
 "0\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1010
+#: ../../language/fundamentals.md:1021
 msgid ""
 "It is also possible to access labelled arguments of constructors like "
 "accessing struct fields in pattern matching:"
-msgstr ""
-"也可以像在模式匹配中访问结构体字段一样访问构造函数的有标签参数："
+msgstr "也可以像在模式匹配中访问结构体字段一样访问构造函数的有标签参数："
 
-#: ../../language/fundamentals.md:1012
+#: ../../language/fundamentals.md:1023
 msgid ""
 "enum Object {\n"
 "  Point(x~ : Double, y~ : Double)\n"
@@ -3799,7 +4489,7 @@ msgstr ""
 "}\n"
 "\n"
 
-#: ../../language/fundamentals.md:1018
+#: ../../language/fundamentals.md:1029
 msgid ""
 "fn main {\n"
 "  let p1 : Object = Point(x=0, y=0)\n"
@@ -3814,25 +4504,23 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1026
+#: ../../language/fundamentals.md:1037
 msgid ""
 "5\n"
 "NotImplementedError\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1030
+#: ../../language/fundamentals.md:1041
 msgid "Constructor with mutable fields"
-msgstr ""
-"构造器与可变字段"
+msgstr "构造器与可变字段"
 
-#: ../../language/fundamentals.md:1032
+#: ../../language/fundamentals.md:1043
 msgid ""
 "It is also possible to define mutable fields for constructor. This is "
 "especially useful for defining imperative data structures:"
-msgstr ""
-"也可以为构造器定义可变字段。这对于定义命令式数据结构特别有用："
+msgstr "也可以为构造器定义可变字段。这对于定义命令式数据结构特别有用："
 
-#: ../../language/fundamentals.md:1034
+#: ../../language/fundamentals.md:1045
 msgid ""
 "// A set implemented using mutable binary search tree.\n"
 "struct Set[X] {\n"
@@ -3929,16 +4617,15 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1040
+#: ../../language/fundamentals.md:1051
 msgid "Newtype"
 msgstr "Newtype"
 
-#: ../../language/fundamentals.md:1042
+#: ../../language/fundamentals.md:1053
 msgid "MoonBit supports a special kind of enum called newtype:"
-msgstr ""
-"MoonBit 支持一种特殊的枚举称为 newtype："
+msgstr "MoonBit 支持一种特殊的枚举称为 newtype："
 
-#: ../../language/fundamentals.md:1044
+#: ../../language/fundamentals.md:1055
 msgid ""
 "// `UserId` is a fresh new type different from `Int`, \n"
 "// and you can define new methods for `UserId`, etc.\n"
@@ -3956,17 +4643,17 @@ msgstr ""
 "\n"
 "type UserName String\n"
 
-#: ../../language/fundamentals.md:1050
+#: ../../language/fundamentals.md:1061
 msgid ""
 "Newtypes are similar to enums with only one constructor (with the same "
 "name as the newtype itself). So, you can use the constructor to create "
 "values of newtype, or use pattern matching to extract the underlying "
 "representation of a newtype:"
 msgstr ""
-"Newtype 类似于只有一个构造函数的枚举（与 newtype 本身的名称相同）。"
-"因此，可以使用构造函数创建 newtype 的值，或使用模式匹配提取 newtype 的底层表示："
+"Newtype 类似于只有一个构造函数的枚举（与 newtype 本身的名称相同）。因此，可以使用构造函数创建 newtype "
+"的值，或使用模式匹配提取 newtype 的底层表示："
 
-#: ../../language/fundamentals.md:1052
+#: ../../language/fundamentals.md:1063
 msgid ""
 "fn main {\n"
 "  let id : UserId = UserId(1)\n"
@@ -3978,20 +4665,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1060
+#: ../../language/fundamentals.md:1071
 msgid ""
 "1\n"
 "John Doe\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1064
+#: ../../language/fundamentals.md:1075
 msgid ""
 "Besides pattern matching, you can also use `._` to extract the internal "
 "representation of newtypes:"
-msgstr ""
-"除了模式匹配，还可以使用 `._` 提取 newtype 的内部表示："
+msgstr "除了模式匹配，还可以使用 `._` 提取 newtype 的内部表示："
 
-#: ../../language/fundamentals.md:1066
+#: ../../language/fundamentals.md:1077
 msgid ""
 "fn main {\n"
 "  let id : UserId = UserId(1)\n"
@@ -4000,21 +4686,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1074
+#: ../../language/fundamentals.md:1085
 msgid "1\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1078
+#: ../../language/fundamentals.md:1089
 msgid "Type alias"
-msgstr ""
-"类型别名"
+msgstr "类型别名"
 
-#: ../../language/fundamentals.md:1079
+#: ../../language/fundamentals.md:1090
 msgid "MoonBit supports type alias via the syntax `typealias Name = TargetType`:"
-msgstr ""
-"MoonBit 支持使用语法 `typealias Name = TargetType` 定义类型别名："
+msgstr "MoonBit 支持使用语法 `typealias Name = TargetType` 定义类型别名："
 
-#: ../../language/fundamentals.md:1081
+#: ../../language/fundamentals.md:1092
 msgid ""
 "pub typealias Index = Int\n"
 "\n"
@@ -4026,35 +4710,33 @@ msgstr ""
 "// 类型别名默认为私有\n"
 "typealias MapString[X] = Map[String, X]\n"
 
-#: ../../language/fundamentals.md:1087
+#: ../../language/fundamentals.md:1098
 msgid ""
 "Unlike all other kinds of type declaration above, type alias does not "
 "define a new type, it is merely a type macro that behaves exactly the "
 "same as its definition. So for example one cannot define new methods or "
 "implement traits for a type alias."
-msgstr ""
-"与上面所有其他类型声明不同，类型别名不定义新类型，它只是一个行为与其定义完全相同的类型宏。"
-"因此，例如，不能为类型别名定义新方法或实现特征。"
+msgstr "与上面所有其他类型声明不同，类型别名不定义新类型，它只是一个行为与其定义完全相同的类型宏。因此，例如，不能为类型别名定义新方法或实现特征。"
 
-#: ../../language/fundamentals.md:1092
+#: ../../language/fundamentals.md:1103
 msgid "Type alias can be used to perform incremental code refactor."
-msgstr ""
-"类型别名可用于执行增量代码重构。"
+msgstr "类型别名可用于执行增量代码重构。"
 
-#: ../../language/fundamentals.md:1094
+#: ../../language/fundamentals.md:1105
 msgid ""
 "For example, if you want to move a type `T` from `@pkgA` to `@pkgB`, you "
 "can leave a type alias `typealias T = @pkgB.T` in `@pkgA`, and "
 "**incrementally** port uses of `@pkgA.T` to `@pkgB.T`. The type alias can"
 " be removed after all uses of `@pkgA.T` is migrated to `@pkgB.T`."
 msgstr ""
-"例如，如果要将类型 `T` 从 `@pkgA` 移动到 `@pkgB`，可以在 `@pkgA` 中留下一个类型别名 `typealias T = @pkgB.T`，"
+"例如，如果要将类型 `T` 从 `@pkgA` 移动到 `@pkgB`，可以在 `@pkgA` 中留下一个类型别名 `typealias T = "
+"@pkgB.T`，"
 
-#: ../../language/fundamentals.md:1099
+#: ../../language/fundamentals.md:1110
 msgid "Local types"
 msgstr "本地类型"
 
-#: ../../language/fundamentals.md:1101
+#: ../../language/fundamentals.md:1112
 msgid ""
 "Moonbit supports declaring structs/enums/newtypes at the top of a "
 "toplevel function, which are only visible within the current toplevel "
@@ -4063,11 +4745,11 @@ msgid ""
 "themselves. Local types can derive methods using derive, but no "
 "additional methods can be defined manually. For  example:"
 msgstr ""
-"Moonbit 支持在顶层函数的顶部声明结构体/枚举/newtype，这些类型仅在当前顶层函数中可见。"
-"这些本地类型可以使用顶层函数的泛型参数，但不能引入额外的泛型参数。本地类型可以使用 derive 派生方法，"
-"但不能手动定义额外的方法。例如："
+"Moonbit "
+"支持在顶层函数的顶部声明结构体/枚举/newtype，这些类型仅在当前顶层函数中可见。这些本地类型可以使用顶层函数的泛型参数，但不能引入额外的泛型参数。本地类型可以使用"
+" derive 派生方法，但不能手动定义额外的方法。例如："
 
-#: ../../language/fundamentals.md:1108
+#: ../../language/fundamentals.md:1119
 msgid ""
 "fn toplevel[T: Show](x: T) -> Unit {\n"
 "  enum LocalEnum {\n"
@@ -4082,76 +4764,63 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1114
+#: ../../language/fundamentals.md:1125
 msgid "Currently, local types do not support being declared as error types."
-msgstr ""
-"目前，本地类型不支持声明为错误类型。"
+msgstr "目前，本地类型不支持声明为错误类型。"
 
-#: ../../language/fundamentals.md:1116
+#: ../../language/fundamentals.md:1127
 msgid "Pattern Matching"
-msgstr ""
-"模式匹配"
+msgstr "模式匹配"
 
-#: ../../language/fundamentals.md:1118
+#: ../../language/fundamentals.md:1129
 msgid ""
 "Pattern matching allows us to match on specific pattern and bind data "
 "from data structures."
-msgstr ""
-"模式匹配允许我们匹配特定模式并从数据结构中绑定数据。"
+msgstr "模式匹配允许我们匹配特定模式并从数据结构中绑定数据。"
 
-#: ../../language/fundamentals.md:1120
+#: ../../language/fundamentals.md:1131
 msgid "Simple Patterns"
-msgstr ""
-"简单模式"
+msgstr "简单模式"
 
-#: ../../language/fundamentals.md:1122
+#: ../../language/fundamentals.md:1133
 msgid "We can pattern match expressions against"
-msgstr ""
-"我们可以将表达式与以下内容进行模式匹配："
+msgstr "我们可以将表达式与以下内容进行模式匹配："
 
-#: ../../language/fundamentals.md:1124
+#: ../../language/fundamentals.md:1135
 msgid "literals, such as boolean values, numbers, chars, strings, etc"
-msgstr ""
-"字面量，例如布尔值、数字、字符、字符串等"
+msgstr "字面量，例如布尔值、数字、字符、字符串等"
 
-#: ../../language/fundamentals.md:1125
+#: ../../language/fundamentals.md:1136
 msgid "constants"
-msgstr ""
-"常量"
+msgstr "常量"
 
-#: ../../language/fundamentals.md:1126
+#: ../../language/fundamentals.md:1137
 msgid "structs"
-msgstr ""
-"结构体"
+msgstr "结构体"
 
-#: ../../language/fundamentals.md:1127
+#: ../../language/fundamentals.md:1138
 msgid "enums"
-msgstr ""
-"枚举"
+msgstr "枚举"
 
-#: ../../language/fundamentals.md:1128
+#: ../../language/fundamentals.md:1139
 msgid "arrays"
-msgstr ""
-"数组"
+msgstr "数组"
 
-#: ../../language/fundamentals.md:1129
+#: ../../language/fundamentals.md:1140
 msgid "maps"
-msgstr ""
-"键值对"
+msgstr "键值对"
 
-#: ../../language/fundamentals.md:1130
+#: ../../language/fundamentals.md:1141
 msgid "JSONs"
-msgstr ""
-"JSON"
+msgstr "JSON"
 
-#: ../../language/fundamentals.md:1132
+#: ../../language/fundamentals.md:1143
 msgid ""
 "and so on. We can define identifiers to bind the matched values so that "
 "they can be used later."
-msgstr ""
-"等等。我们可以定义标识符来绑定匹配的值，以便稍后使用。"
+msgstr "等等。我们可以定义标识符来绑定匹配的值，以便稍后使用。"
 
-#: ../../language/fundamentals.md:1134
+#: ../../language/fundamentals.md:1145
 msgid ""
 "const ONE = 1\n"
 "\n"
@@ -4164,15 +4833,16 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1141
+#: ../../language/fundamentals.md:1152
 msgid ""
 "We can use `_` as wildcards for the values we don't care about, and use "
 "`..` to ignore remaining fields of struct or enum, or array (see [array "
 "pattern](#array-pattern))."
 msgstr ""
-"我们可以使用 `_` 作为我们不关心的值的通配符，并使用 `..` 忽略结构体或枚举的剩余字段，或数组（参见 [数组模式](#array-pattern)）。"
+"我们可以使用 `_` 作为我们不关心的值的通配符，并使用 `..` 忽略结构体或枚举的剩余字段，或数组（参见 [数组模式](#array-"
+"pattern)）。"
 
-#: ../../language/fundamentals.md:1143
+#: ../../language/fundamentals.md:1154
 msgid ""
 "struct Point3D {\n"
 "  x : Int\n"
@@ -4201,17 +4871,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1150
+#: ../../language/fundamentals.md:1161
 msgid ""
 "We can use `as` to give a name to some pattern, and we can use `|` to "
 "match several cases at once. A variable name can only be bound once in a "
 "single pattern, and the same set of variables should be bound on both "
 "sides of `|` patterns."
 msgstr ""
-"我们可以使用 `as` 为某些模式命名，可以使用 `|` 一次匹配多个情况。在单个模式中，变量名只能绑定一次，"
-"并且在 `|` 模式的两侧应绑定相同的变量集。"
+"我们可以使用 `as` 为某些模式命名，可以使用 `|` 一次匹配多个情况。在单个模式中，变量名只能绑定一次，并且在 `|` "
+"模式的两侧应绑定相同的变量集。"
 
-#: ../../language/fundamentals.md:1152
+#: ../../language/fundamentals.md:1163
 msgid ""
 "match expr {\n"
 "  //! Add(e1, e2) | Lit(e1) => ...\n"
@@ -4221,47 +4891,41 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1159
+#: ../../language/fundamentals.md:1170
 msgid "Array Pattern"
 msgstr "数组模式"
 
-#: ../../language/fundamentals.md:1161
+#: ../../language/fundamentals.md:1172
 msgid ""
 "For `Array`, `FixedArray` and `ArrayView`, MoonBit allows using array "
 "pattern."
-msgstr ""
-"对于 `Array`、`FixedArray` 和 `ArrayView`，MoonBit 允许使用数组模式。"
+msgstr "对于 `Array`、`FixedArray` 和 `ArrayView`，MoonBit 允许使用数组模式。"
 
-#: ../../language/fundamentals.md:1163
+#: ../../language/fundamentals.md:1174
 msgid "Array pattern have the following forms:"
-msgstr ""
-"数组模式有以下形式："
+msgstr "数组模式有以下形式："
 
-#: ../../language/fundamentals.md:1165
+#: ../../language/fundamentals.md:1176
 msgid "`[]` : matching for an empty data structure"
-msgstr ""
-"`[]`：匹配空数据结构"
+msgstr "`[]`：匹配空数据结构"
 
-#: ../../language/fundamentals.md:1166
+#: ../../language/fundamentals.md:1177
 msgid "`[pa, pb, pc]` : matching for known number of elements, 3 in this example"
-msgstr ""
-"`[pa, pb, pc]`：匹配已知数量的元素，在此示例中为 3 个"
+msgstr "`[pa, pb, pc]`：匹配已知数量的元素，在此示例中为 3 个"
 
-#: ../../language/fundamentals.md:1167
+#: ../../language/fundamentals.md:1178
 msgid ""
 "`[pa, ..]` : matching for known number of elements, followed by unknown "
 "number of elements"
-msgstr ""
-"`[pa, ..]`：匹配已知数量的元素，后跟未知数量的元素"
+msgstr "`[pa, ..]`：匹配已知数量的元素，后跟未知数量的元素"
 
-#: ../../language/fundamentals.md:1168
+#: ../../language/fundamentals.md:1179
 msgid ""
 "`[.., pa]` : matching for known number of elements, preceded by unknown "
 "number of elements"
-msgstr ""
-"`[.., pa]`：匹配已知数量的元素，前面是未知数量的元素"
+msgstr "`[.., pa]`：匹配已知数量的元素，前面是未知数量的元素"
 
-#: ../../language/fundamentals.md:1170
+#: ../../language/fundamentals.md:1181
 msgid ""
 "test {\n"
 "  let ary = [1, 2, 3, 4]\n"
@@ -4272,42 +4936,42 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1176
+#: ../../language/fundamentals.md:1187
 msgid "Range Pattern"
 msgstr "范围模式"
 
-#: ../../language/fundamentals.md:1177
+#: ../../language/fundamentals.md:1188
 msgid ""
 "For builtin integer types and `Char`, MoonBit allows matching whether the"
 " value falls in a specific range."
-msgstr ""
-"对于内置整数类型和 `Char`，MoonBit 允许匹配值是否落在特定范围内。"
+msgstr "对于内置整数类型和 `Char`，MoonBit 允许匹配值是否落在特定范围内。"
 
-#: ../../language/fundamentals.md:1179
+#: ../../language/fundamentals.md:1190
 msgid ""
 "Range patterns have the form `a..<b` or `a..=b`, where `..<` means the "
 "upper bound is exclusive, and `..=` means inclusive upper bound. `a` and "
 "`b` can be one of:"
 msgstr ""
-"范围模式的形式为 `a..<b` 或 `a..=b`，其中 `..<` 表示上限是排他的，`..=` 表示包含上限。`a` 和 `b` 可以是以下之一："
+"范围模式的形式为 `a..<b` 或 `a..=b`，其中 `..<` 表示上限是排他的，`..=` 表示包含上限。`a` 和 `b` "
+"可以是以下之一："
 
-#: ../../language/fundamentals.md:1182
+#: ../../language/fundamentals.md:1193
 msgid "literal"
 msgstr "字面量"
 
-#: ../../language/fundamentals.md:1183
+#: ../../language/fundamentals.md:1194
 msgid "named constant declared with `const`"
 msgstr "使用 `const` 声明的常量"
 
-#: ../../language/fundamentals.md:1184
+#: ../../language/fundamentals.md:1195
 msgid "`_`, meaning the pattern has no restriction on this side"
 msgstr "`_`，表示此模式在此侧没有限制"
 
-#: ../../language/fundamentals.md:1186
+#: ../../language/fundamentals.md:1197
 msgid "Here are some examples:"
 msgstr "以下是一些示例："
 
-#: ../../language/fundamentals.md:1188
+#: ../../language/fundamentals.md:1199
 msgid ""
 "const Zero = 0\n"
 "\n"
@@ -4329,11 +4993,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1195
+#: ../../language/fundamentals.md:1206
 msgid "Map Pattern"
 msgstr "Map 模式"
 
-#: ../../language/fundamentals.md:1197
+#: ../../language/fundamentals.md:1208
 msgid ""
 "MoonBit allows convenient matching on map-like data structures. Inside a "
 "map pattern, the `key : value` syntax will match if `key` exists in the "
@@ -4341,10 +5005,11 @@ msgid ""
 "value` syntax will match no matter `key` exists or not, and `value` will "
 "be matched against `map[key]` (an optional)."
 msgstr ""
-"MoonBit 允许在类似 map 的数据结构上方便地进行匹配。在 map 模式内，`key : value` 语法将在 map 中存在 `key` 时匹配，"
-"并将 `key` 的值与模式 `value` 匹配。`key? : value` 语法将无论 `key` 是否存在都匹配，`value` 将与 `map[key]`（一个可选项）匹配。"
+"MoonBit 允许在类似 map 的数据结构上方便地进行匹配。在 map 模式内，`key : value` 语法将在 map 中存在 "
+"`key` 时匹配，并将 `key` 的值与模式 `value` 匹配。`key? : value` 语法将无论 `key` "
+"是否存在都匹配，`value` 将与 `map[key]`（一个可选项）匹配。"
 
-#: ../../language/fundamentals.md:1201
+#: ../../language/fundamentals.md:1212
 msgid ""
 "match map {\n"
 "  // matches if any only if \"b\" exists in `map`\n"
@@ -4365,44 +5030,40 @@ msgstr ""
 "  // 编译器报告缺失的情况：{ \"b\"? : None, \"a\"? : None }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1208
+#: ../../language/fundamentals.md:1219
 msgid ""
 "To match a data type `T` using map pattern, `T` must have a method "
 "`op_get(Self, K) -> Option[V]` for some type `K` and `V` (see [method and"
 " trait](./methods.md))."
 msgstr ""
-"要使用 map 模式匹配数据类型 `T`，`T` 必须具有某种类型 `K` 和 `V` 的方法 `op_get(Self, K) -> Option[V]`（请参见 [方法和特征](./methods.md)）。"
+"要使用 map 模式匹配数据类型 `T`，`T` 必须具有某种类型 `K` 和 `V` 的方法 `op_get(Self, K) -> "
+"Option[V]`（请参见 [方法和特征](./methods.md)）。"
 
-#: ../../language/fundamentals.md:1209
+#: ../../language/fundamentals.md:1220
 msgid "Currently, the key part of map pattern must be a literal or constant"
-msgstr ""
-"目前，map 模式的键部分必须是字面量或常量"
+msgstr "目前，map 模式的键部分必须是字面量或常量"
 
-#: ../../language/fundamentals.md:1210
+#: ../../language/fundamentals.md:1221
 msgid "Map patterns are always open: unmatched keys are silently ignored"
-msgstr ""
-"Map 模式始终是开放的：未匹配的键会被静默忽略"
+msgstr "Map 模式始终是开放的：未匹配的键会被静默忽略"
 
-#: ../../language/fundamentals.md:1211
+#: ../../language/fundamentals.md:1222
 msgid ""
 "Map pattern will be compiled to efficient code: every key will be fetched"
 " at most once"
-msgstr ""
-"Map 模式将编译为高效的代码：每个键最多只会被获取一次"
+msgstr "Map 模式将编译为高效的代码：每个键最多只会被获取一次"
 
-#: ../../language/fundamentals.md:1213
+#: ../../language/fundamentals.md:1224
 msgid "Json Pattern"
-msgstr ""
-"Json 模式"
+msgstr "Json 模式"
 
-#: ../../language/fundamentals.md:1215
+#: ../../language/fundamentals.md:1226
 msgid ""
 "When the matched value has type `Json`, literal patterns can be used "
 "directly, together with constructors:"
-msgstr ""
-"当匹配的值具有类型 `Json` 时，可以直接使用字面量模式，以及构造函数："
+msgstr "当匹配的值具有类型 `Json` 时，可以直接使用字面量模式，以及构造函数："
 
-#: ../../language/fundamentals.md:1217
+#: ../../language/fundamentals.md:1228
 msgid ""
 "match json {\n"
 "  { \"version\": \"1.0.0\", \"import\": [..] as imports } => ...\n"
@@ -4411,12 +5072,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1224
+#: ../../language/fundamentals.md:1235
 msgid "Generics"
-msgstr ""
-"泛型"
+msgstr "泛型"
 
-#: ../../language/fundamentals.md:1226
+#: ../../language/fundamentals.md:1237
 msgid ""
 "Generics are supported in top-level function and data type definitions. "
 "Type parameters can be introduced within square brackets. We can rewrite "
@@ -4424,10 +5084,10 @@ msgid ""
 " a generic version of lists. We can then define generic functions over "
 "lists like `map` and `reduce`."
 msgstr ""
-"泛型在顶层函数和数据类型定义中受支持。可以在方括号内引入类型参数。我们可以重写上述数据类型 `List`，"
-"添加类型参数 `T` 以获得列表的通用版本。然后，我们可以定义列表上的通用函数，如 `map` 和 `reduce`。"
+"泛型在顶层函数和数据类型定义中受支持。可以在方括号内引入类型参数。我们可以重写上述数据类型 `List`，添加类型参数 `T` "
+"以获得列表的通用版本。然后，我们可以定义列表上的通用函数，如 `map` 和 `reduce`。"
 
-#: ../../language/fundamentals.md:1228
+#: ../../language/fundamentals.md:1239
 msgid ""
 "enum List[T] {\n"
 "  Nil\n"
@@ -4449,21 +5109,21 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1232
+#: ../../language/fundamentals.md:1243
 msgid "Special Syntax"
 msgstr "特殊语法"
 
-#: ../../language/fundamentals.md:1234
+#: ../../language/fundamentals.md:1245
 msgid "Pipe operator"
 msgstr "管道运算符"
 
-#: ../../language/fundamentals.md:1236
+#: ../../language/fundamentals.md:1247
 msgid ""
 "MoonBit provides a convenient pipe operator `|>`, which can be used to "
 "chain regular function calls:"
 msgstr "moonbit提供了一个方便的管道运算符`|>`，可以用于链接常规函数调用："
 
-#: ../../language/fundamentals.md:1238
+#: ../../language/fundamentals.md:1249
 msgid ""
 "5 |> ignore // <=> ignore(5)\n"
 "[] |> push(5) // <=> push([], 5)\n"
@@ -4472,25 +5132,25 @@ msgid ""
 "|> ignore // <=> ignore(add(1, 5))\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1245
+#: ../../language/fundamentals.md:1256
 msgid "Cascade Operator"
 msgstr "级联运算符"
 
-#: ../../language/fundamentals.md:1247
+#: ../../language/fundamentals.md:1258
 msgid ""
 "The cascade operator `..` is used to perform a series of mutable "
 "operations on the same value consecutively. The syntax is as follows:"
 msgstr "级联运算符`..`用于连续对同一值执行一系列可变操作。 语法如下："
 
-#: ../../language/fundamentals.md:1250
+#: ../../language/fundamentals.md:1261
 msgid "x..f()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1257
+#: ../../language/fundamentals.md:1268
 msgid "`x..f()..g()` is equivalent to `{x.f(); x.g(); x}`."
 msgstr "`x..f()..g()` 等价于 `{x.f(); x.g(); x}`。"
 
-#: ../../language/fundamentals.md:1259
+#: ../../language/fundamentals.md:1270
 msgid ""
 "Consider the following scenario: for a `StringBuilder` type that has "
 "methods like `write_string`, `write_char`, `write_object`, etc., we often"
@@ -4498,7 +5158,7 @@ msgid ""
 "value:"
 msgstr "考虑以下情况：对于具有诸如`write_string`，`write_char`，`write_object`等方法的`StringBuilder`类型，我们经常需要对同一`StringBuilder`值执行一系列操作："
 
-#: ../../language/fundamentals.md:1263
+#: ../../language/fundamentals.md:1274
 msgid ""
 "let builder = StringBuilder::new()\n"
 "builder.write_char('a')\n"
@@ -4508,7 +5168,7 @@ msgid ""
 "let result = builder.to_string()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1270
+#: ../../language/fundamentals.md:1281
 msgid ""
 "To avoid repetitive typing of `builder`, its methods are often designed "
 "to return `self` itself, allowing operations to be chained using the `.` "
@@ -4520,7 +5180,7 @@ msgstr ""
 "为了避免重复输入`builder`，其方法通常设计为返回`self`本身，允许使用`.`运算符链接操作。 "
 "为了区分不可变和可变操作，在MoonBit中，对于所有返回`Unit`的方法，可以使用级联运算符进行连续操作，而无需修改方法的返回类型。"
 
-#: ../../language/fundamentals.md:1276
+#: ../../language/fundamentals.md:1287
 msgid ""
 "let result = StringBuilder::new()\n"
 "  ..write_char('a')\n"
@@ -4530,18 +5190,18 @@ msgid ""
 "  .to_string()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1283
+#: ../../language/fundamentals.md:1294
 msgid "TODO syntax"
 msgstr "TODO 语法"
 
-#: ../../language/fundamentals.md:1285
+#: ../../language/fundamentals.md:1296
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo`语法(`...`)是一种特殊构造，用于标记尚未实现或用于未来功能的占位符代码段。 例如："
 
-#: ../../language/fundamentals.md:1287
+#: ../../language/fundamentals.md:1298
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"
@@ -5782,6 +6442,10 @@ msgid ""
 "}\n"
 msgstr ""
 
+#: ../../language/methods.md:307
+msgid "See [Deriving](./derive.md) for more information about deriving traits."
+msgstr "参见 [派生](./derive.md) 了解有关派生特征的更多信息。"
+
 #: ../../language/packages.md:1
 msgid "Managing Projects with Packages"
 msgstr "使用包管理项目"
@@ -5897,13 +6561,7 @@ msgid ""
 "freely construct, modify and read values of these types"
 msgstr "完全公开类型，使用 `pub(all)` 声明。外部世界可以自由构造、修改和读取这些类型的值"
 
-#: ../../language/packages.md:41
-msgid ""
-"Currently, the semantic of `pub` is `pub(all)`. But in the future, the "
-"meaning of `pub` will be ported to `pub(readonly)`."
-msgstr "目前，`pub` 的语义是 `pub(all)`。但在未来，`pub` 的含义将迁移到 `pub(readonly)`。"
-
-#: ../../language/packages.md:44
+#: ../../language/packages.md:40
 msgid ""
 "In addition to the visibility of the type itself, the fields of a public "
 "`struct` can be annotated with `priv`, which will hide the field from the"
@@ -5914,7 +6572,7 @@ msgstr ""
 "除了类型本身的可见性外，公开的结构体的字段可以用 `priv` 注释，这将完全隐藏字段对外部世界。请注意，具有私有字段的 `struct` "
 "不能直接在外部构造，但可以使用函数式 `struct` 更新语法更新公共字段。"
 
-#: ../../language/packages.md:49
+#: ../../language/packages.md:45
 msgid ""
 "Readonly types is a very useful feature, inspired by [private "
 "types](https://v2.ocaml.org/manual/privatetypes.html) in OCaml. In short,"
@@ -5928,7 +6586,7 @@ msgstr ""
 "的启发。简而言之，`pub(readonly)` 类型的值可以通过模式匹配和点语法解构，但不能在其他包中构造或修改。请注意，在定义 "
 "`pub(readonly)` 类型的同一包中没有限制。"
 
-#: ../../language/packages.md:53
+#: ../../language/packages.md:49
 msgid ""
 "// Package A\n"
 "pub(readonly) struct RO {\n"
@@ -5972,7 +6630,7 @@ msgstr ""
 "  let r = { ..r, field: 8 }  // 错误：不能修改公共只读字段！\n"
 "}\n"
 
-#: ../../language/packages.md:75
+#: ../../language/packages.md:71
 msgid ""
 "Access control in MoonBit adheres to the principle that a `pub` type, "
 "function, or variable cannot be defined in terms of a private type. This "
@@ -5984,7 +6642,7 @@ msgstr ""
 "中的访问控制遵循一个原则，即公开的类型、函数或变量不能以私有类型定义。这是因为私有类型可能无法在使用公开的实体的所有地方访问。MoonBit "
 "包含了健全性检查，以防止违反这一原则的用例发生。"
 
-#: ../../language/packages.md:78
+#: ../../language/packages.md:74
 msgid ""
 "pub(all) type T1\n"
 "pub(all) type T2\n"
@@ -6024,11 +6682,11 @@ msgstr ""
 "\n"
 "pub let a: T3 = { ... } // 错误：公开变量的类型是私有类型 `T3`！\n"
 
-#: ../../language/packages.md:99
+#: ../../language/packages.md:95
 msgid "Access control of methods and trait implementations"
 msgstr "方法和特征实现的访问控制"
 
-#: ../../language/packages.md:101
+#: ../../language/packages.md:97
 msgid ""
 "To make the trait system coherent (i.e. there is a globally unique "
 "implementation for every `Type: Trait` pair), and prevent third-party "
@@ -6039,14 +6697,14 @@ msgstr ""
 "为了使特征系统一致（即每个 `Type: Trait` 对都有全局唯一的实现），并防止第三方包意外地修改现有程序的行为，MoonBit "
 "对谁可以定义方法/实现类型的特征采用了以下限制："
 
-#: ../../language/packages.md:105
+#: ../../language/packages.md:101
 msgid ""
 "_only the package that defines a type can define methods for it_. So one "
 "cannot define new methods or override old methods for builtin and foreign"
 " types."
 msgstr "**只有定义类型的包才能为其定义方法**。因此，不能为内建和外部类型定义新方法或覆盖旧方法。"
 
-#: ../../language/packages.md:106
+#: ../../language/packages.md:102
 msgid ""
 "_only the package of the type or the package of the trait can define an "
 "implementation_. For example, only `@pkg1` and `@pkg2` are allowed to "
@@ -6055,18 +6713,18 @@ msgstr ""
 "**只有类型的包或特征的包才能定义实现**。例如，只有 `@pkg1` 和 `@pkg2` 允许编写 `impl @pkg1.Trait for "
 "@pkg2.Type`。"
 
-#: ../../language/packages.md:109
+#: ../../language/packages.md:105
 msgid ""
 "The second rule above allows one to add new functionality to a foreign "
 "type by defining a new trait and implementing it. This makes MoonBit's "
 "trait & method system flexible while enjoying good coherence property."
 msgstr "上述第二条规则允许通过定义新特征并实现它来为外部类型添加新功能。这使 MoonBit 的特征和方法系统灵活，同时享有良好的一致性属性。"
 
-#: ../../language/packages.md:112
+#: ../../language/packages.md:108
 msgid "Visibility of traits and sealed traits"
 msgstr "特征的可见性和封闭特征"
 
-#: ../../language/packages.md:113
+#: ../../language/packages.md:109
 msgid ""
 "There are four visibility for traits, just like `struct` and `enum`: "
 "private, abstract, readonly and fully public. Private traits are declared"
@@ -6084,15 +6742,7 @@ msgstr ""
 "trait` 声明，它们的方法可以从外部调用，但只有当前包可以为只读特征添加新实现。最后，完全公开特征使用 `pub(open) trait` "
 "声明，它们对外部新实现是开放的，它们的方法可以自由使用。"
 
-#: ../../language/packages.md:120
-msgid ""
-"Currently, `pub trait` defaults to `pub(open) trait`. But in the future, "
-"the semantic of `pub trait` will be ported to `pub(readonly)`."
-msgstr ""
-"目前，`pub trait` 的语义默认为 `pub(open) trait`。但在未来，`pub trait` 的含义将迁移到 "
-"`pub(readonly)`。"
-
-#: ../../language/packages.md:123
+#: ../../language/packages.md:115
 msgid ""
 "Abstract and readonly traits are sealed, because only the package "
 "defining the trait can implement them. Implementing a sealed (abstract or"
@@ -6104,11 +6754,11 @@ msgid ""
 " not be available outside."
 msgstr "抽象和只读特征是封闭的，因为只有定义特征的包才能实现它们。在其包外实现封闭（抽象或只读）特征会导致编译器错误。"
 
-#: ../../language/packages.md:129
+#: ../../language/packages.md:121
 msgid "Here's an example of abstract trait:"
 msgstr "以下是抽象特征的示例："
 
-#: ../../language/packages.md:132
+#: ../../language/packages.md:124
 msgid ""
 "trait Number {\n"
 " op_add(Self, Self) -> Self\n"
@@ -6130,11 +6780,11 @@ msgid ""
 "impl Number for Double with op_sub(x, y) { x - y }\n"
 msgstr ""
 
-#: ../../language/packages.md:153
+#: ../../language/packages.md:145
 msgid "From outside this package, users can only see the following:"
 msgstr "从包外，用户只能看到以下内容："
 
-#: ../../language/packages.md:155
+#: ../../language/packages.md:147
 msgid ""
 "trait Number\n"
 "\n"
@@ -6145,7 +6795,7 @@ msgid ""
 "impl Number for Double\n"
 msgstr ""
 
-#: ../../language/packages.md:165
+#: ../../language/packages.md:157
 msgid ""
 "The author of `Number` can make use of the fact that only `Int` and "
 "`Double` can ever implement `Number`, because new implementations are not"
