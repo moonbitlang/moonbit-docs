@@ -26,5 +26,4 @@ tests
 docs
 ffi-and-wasm-host
 derive
-coverage
 ```
