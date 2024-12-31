@@ -211,7 +211,6 @@ test {
     i += j
   }
   assert_eq!(i, 45)
-
   let mut k = 0
   for l in 0..=10 {
     k += l
@@ -219,6 +218,40 @@ test {
   assert_eq!(k, 55)
 }
 // end for loop 10
+
+// start loop label
+test "break label" {
+  let mut count = 0
+  let xs = [1, 2, 3]
+  let ys = [4, 5, 6]
+  let res = outer~: for i in xs {
+    for j in ys {
+      count = count + i
+      break outer~ j
+    }
+  } else {
+    -1
+  }
+  assert_eq!(res, 4)
+  assert_eq!(count, 1)
+}
+
+test "continue label" {
+  let mut count = 0
+  let init = 10
+  let res =outer~: loop init {
+    0 => 42
+    i => {
+      for {
+        count = count + 1
+        continue outer~ i - 1
+      }
+    }
+  }
+  assert_eq!(res, 42)
+  assert_eq!(count, 10)
+}
+// end loop label
 
 // start guard 1
 fn guarded_get(array : Array[Int], index : Int) -> Int? {
