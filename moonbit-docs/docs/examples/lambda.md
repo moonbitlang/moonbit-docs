@@ -1,6 +1,6 @@
 # Lambda calculus
 
-Functional programming rises with the fall of Moore's Law. The full utilization of milti-core processors has become an increasingly important optimization method, while functional programming also becomes more popularized with its affinity for parallel computation. The reasons behind this trend can be traced back to one of its theoretical ancestors—Lambda calculus.
+Functional programming rises with the fall of Moore's Law. The full utilization of multi-core processors has become an increasingly important optimization method, while functional programming also becomes more popularized with its affinity for parallel computation. The reasons behind this trend can be traced back to one of its theoretical ancestors—Lambda calculus.
 
 Lambda calculus originated from the 1930s. Created by Turing's mentor Alonzo Church, formal systems have now evolved a vast and flourishing family tree. This article will illustrate one of its most fundamental forms: untyped Lambda calculus (which was also one of the earliest forms proposed by Alonzo Church).
 

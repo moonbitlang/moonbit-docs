@@ -1,6 +1,6 @@
 # WASM benchmark
 
-You can expericence this benchmark online at https://moonbitlang.github.io/moonbit-docs/legacy/benchmark/fibonacci/ or set it up at local following below instructions.
+You can experience this benchmark online at https://moonbitlang.github.io/moonbit-docs/legacy/benchmark/fibonacci/ or set it up at local following below instructions.
 
 ## Fibonacci
 
