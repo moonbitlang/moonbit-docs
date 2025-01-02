@@ -10,6 +10,9 @@ const moon = moonbitMode.init({
   onigWasmUrl: wasmUrl,
   lspWorker: new lspWorker(),
   mooncWorkerFactory: () => new mooncWorker(),
+  codeLensFilter(l) {
+    return !(l.command?.command === "moonbit-lsp/run-main");
+  },
 });
 
 // @ts-ignore
@@ -78,9 +81,12 @@ const model = monaco.editor.createModel(codePre.textContent ?? "", "moonbit");
 
 const output = document.querySelector<HTMLPreElement>("#output")!;
 
-async function run() {
+async function run(debug: boolean) {
   const content = model.getValue();
-  const result = await moon.compile({ libContents: [content] });
+  const result = await moon.compile({
+    libContents: [content],
+    debugMain: debug,
+  });
   switch (result.kind) {
     case "success": {
       const js = result.js;
@@ -102,7 +108,7 @@ async function run() {
   }
 }
 
-model.onDidChangeContent(debounce(run, 100));
+model.onDidChangeContent(debounce(() => run(false), 100));
 
 monaco.editor.onDidCreateEditor(() => {
   codePre.remove();
@@ -125,6 +131,11 @@ monaco.editor.create(editor, {
     alwaysConsumeMouseWheel: false,
   },
   fontFamily: "monospace",
+  theme: theme === "light" ? "light-plus" : "dark-plus",
 });
 
-run();
+monaco.editor.registerCommand("moonbit-lsp/debug-main", () => {
+  run(true);
+});
+
+run(false);
