@@ -11,7 +11,7 @@ const moon = moonbitMode.init({
   lspWorker: new lspWorker(),
   mooncWorkerFactory: () => new mooncWorker(),
   codeLensFilter(l) {
-    return !(l.command?.command === "moonbit-lsp/run-main");
+    return l.command?.command === "moonbit-lsp/debug-main";
   },
 });
 
