@@ -11,7 +11,7 @@ const moon = moonbitMode.init({
   lspWorker: new lspWorker(),
   mooncWorkerFactory: () => new mooncWorker(),
   codeLensFilter(l) {
-    return !(l.command?.command === "moonbit-lsp/run-main");
+    return l.command?.command === "moonbit-lsp/debug-main";
   },
 });
 
@@ -84,31 +84,38 @@ const model = monaco.editor.createModel(
 );
 
 const output = document.querySelector<HTMLPreElement>("#output")!;
+const trace = moonbitMode.traceCommandFactory();
 
 async function run(debug: boolean) {
-  const result = await moon.compile({
-    libUris: [monaco.Uri.file("/main.mbt").toString()],
-    debugMain: debug,
-  });
-  switch (result.kind) {
-    case "success": {
-      const js = result.js;
-      const stream = await moon.run(js);
-      let buffer = "";
-      await stream.pipeTo(
-        new WritableStream({
-          write(chunk) {
-            buffer += `${chunk}\n`;
-          },
-        }),
-      );
-      output.textContent = buffer;
-      return;
+  if (debug) {
+    const result = await moon.compile({
+      libInputs: [["main.mbt", model.getValue()]],
+      debugMain: true,
+    });
+    switch (result.kind) {
+      case "success": {
+        const js = result.js;
+        const stream = await moon.run(js);
+        let buffer = "";
+        await stream.pipeTo(
+          new WritableStream({
+            write(chunk) {
+              buffer += `${chunk}\n`;
+            },
+          }),
+        );
+        output.textContent = buffer;
+        return;
+      }
+      case "error": {
+        console.error(result.diagnostics);
+      }
     }
-    case "error": {
-      console.error(result.diagnostics);
-    }
+    return;
   }
+  const stdout = await trace(monaco.Uri.file("/main.mbt").toString());
+  if (stdout === undefined) return;
+  output.textContent = stdout;
 }
 
 model.onDidChangeContent(debounce(() => run(false), 100));
@@ -117,9 +124,9 @@ monaco.editor.onDidCreateEditor(() => {
   codePre.remove();
 });
 
-const editor = document.getElementById("editor")!;
-editor.classList.remove("pl-[10px]", "text-[14px]");
-monaco.editor.create(editor, {
+const editorContainer = document.getElementById("editor")!;
+editorContainer.classList.remove("pl-[10px]", "text-[14px]");
+monaco.editor.create(editorContainer, {
   model,
   lineNumbers: "off",
   glyphMargin: false,

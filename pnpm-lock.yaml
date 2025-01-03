@@ -11,8 +11,8 @@ importers:
   moonbit-tour:
     dependencies:
       '@moonbit/moonpad-monaco':
-        specifier: ^0.1.202501030
-        version: 0.1.202501030(monaco-editor-core@0.52.2)
+        specifier: ^0.1.202501031
+        version: 0.1.202501031(monaco-editor-core@0.52.2)
       monaco-editor-core:
         specifier: ^0.52.0
         version: 0.52.2
@@ -376,6 +376,10 @@ packages:
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
     engines: {node: '>=6.0.0'}
 
+  '@jridgewell/gen-mapping@0.3.8':
+    resolution: {integrity: sha512-imAbBGkb+ebQyxKgzv5Hu2nmROxoDOXHh80evxdoXNOrvAnVx7zimzc1Oo5h9RlfV4vPXaE2iM5pOFbvOCClWA==}
+    engines: {node: '>=6.0.0'}
+
   '@jridgewell/resolve-uri@3.1.2':
     resolution: {integrity: sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==}
     engines: {node: '>=6.0.0'}
@@ -399,8 +403,8 @@ packages:
   '@moonbit/moonc-worker@0.1.202412310':
     resolution: {integrity: sha512-xUjqIfQOfA5PKo6PupgJw6ewxM2qOhsU0A1Nju3QR6ZZ/At2cU2yEex7N61QeQ/7JycCQR1p9EpoUdGrgohWMw==}
 
-  '@moonbit/moonpad-monaco@0.1.202501030':
-    resolution: {integrity: sha512-Rc8AJ9mjPXZb4lpuf0kkrzYGMYFOk4nnXfDn3JuC9/D5Bj3nvy2UKwLiZRhyByiND8G2PUnKrYCJ+zz8nq3V3w==}
+  '@moonbit/moonpad-monaco@0.1.202501031':
+    resolution: {integrity: sha512-nwfaH7p9PvyiXWCFV1jc0wSxc7sy5RkrxYPO4QUgC8gZkV3dSaV5LMS/kUA6kJrOzGvlIbkLAiAiBBB9gImIuQ==}
     peerDependencies:
       monaco-editor-core: ^0.52.0
 
@@ -1740,13 +1744,20 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.0
       '@jridgewell/trace-mapping': 0.3.25
 
+  '@jridgewell/gen-mapping@0.3.8':
+    dependencies:
+      '@jridgewell/set-array': 1.2.1
+      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/trace-mapping': 0.3.25
+    optional: true
+
   '@jridgewell/resolve-uri@3.1.2': {}
 
   '@jridgewell/set-array@1.2.1': {}
 
   '@jridgewell/source-map@0.3.6':
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.5
+      '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
     optional: true
 
@@ -1761,7 +1772,7 @@ snapshots:
 
   '@moonbit/moonc-worker@0.1.202412310': {}
 
-  '@moonbit/moonpad-monaco@0.1.202501030(monaco-editor-core@0.52.2)':
+  '@moonbit/moonpad-monaco@0.1.202501031(monaco-editor-core@0.52.2)':
     dependencies:
       '@moonbit/analyzer': 0.1.202412310
       '@moonbit/moonc-worker': 0.1.202412310
