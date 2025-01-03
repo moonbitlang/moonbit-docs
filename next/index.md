@@ -17,3 +17,4 @@ The IDE environment is available at [https://try.moonbitlang.com](https://try.mo
 tutorial/index
 language/index
 toolchain/index
+example/index
