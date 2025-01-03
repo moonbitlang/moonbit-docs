@@ -6,6 +6,16 @@ fn main {
     println("array[\{i}]: \{array[i]}")
   }
 
+  println("\nfunctional for loop:")
+
+  let sum = for i = 1, acc = 0; i <= 10; i = i + 1 {
+    let even = i % 2 == 0
+    continue i + 1, acc + i
+  } else {
+    acc
+  }
+  println(sum)
+
   println("\nwhile loop:")
   let mut j = 0
   while true {
