@@ -1,50 +1,25 @@
 name: release website
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
-jobs:
-  en-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - name: install
-        run: |
-          pnpm install
-      - name: build
-        run: |
-          cd moonbit-docs
-          pnpm build -l en
-      - name: upload
-        env:
-          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          AWS_DEFAULT_REGION: ${{secrets.AWS_DEFAULT_REGION}}
-        run: |
-          cd moonbit-docs
-          aws s3 sync --delete ./build/ ${{secrets.AWS_S3_BUCKET}}
-          aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID}} --paths "/*"
+defaults:
+  run:
+    working-directory: next
 
+jobs:
   zh-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-python@v5
       - name: install
-        run: |
-          pnpm install
+        run: pip install -r requirements.txt
       - name: build
-        run: |
-          cd moonbit-docs
-          pnpm build -l zh
+        run: make -e SPHINXOPTS="-D language='zh_CN'" html
       - uses: aliyun/setup-aliyun-cli-action@v1
       - name: upload
         run: |
-          cd moonbit-docs
           aliyun configure set --profile default --mode AK --access-key-id ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_ID}} --access-key-secret ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET}} --region ${{secrets.ALIBABA_REGION}}
           aliyun oss sync ./build/ ${{secrets.ALIYUN_OSS_BUCKET}} --force --delete
           aliyun cdn RefreshObjectCaches --ObjectPath https://docs.moonbitlang.cn/ --ObjectType Directory
