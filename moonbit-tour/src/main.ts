@@ -77,14 +77,17 @@ function debounce<P extends any[], R>(f: (...args: P) => R, timeout: number) {
 
 const codePre = document.querySelector<HTMLPreElement>(".shiki")!;
 
-const model = monaco.editor.createModel(codePre.textContent ?? "", "moonbit");
+const model = monaco.editor.createModel(
+  codePre.textContent ?? "",
+  "moonbit",
+  monaco.Uri.file("/main.mbt"),
+);
 
 const output = document.querySelector<HTMLPreElement>("#output")!;
 
 async function run(debug: boolean) {
-  const content = model.getValue();
   const result = await moon.compile({
-    libContents: [content],
+    libUris: [monaco.Uri.file("/main.mbt").toString()],
     debugMain: debug,
   });
   switch (result.kind) {
