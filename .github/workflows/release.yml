@@ -21,5 +21,5 @@ jobs:
       - name: upload
         run: |
           aliyun configure set --profile default --mode AK --access-key-id ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_ID}} --access-key-secret ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET}} --region ${{secrets.ALIBABA_REGION}}
-          aliyun oss sync ./build/ ${{secrets.ALIYUN_OSS_BUCKET}} --force --delete
+          aliyun oss sync ./_build/html/ ${{secrets.ALIYUN_OSS_BUCKET}} --force --delete
           aliyun cdn RefreshObjectCaches --ObjectPath https://docs.moonbitlang.cn/ --ObjectType Directory
