@@ -41,7 +41,7 @@ python3 -m http.server -d _build/html
 For PDF:
 
 ```bash
-PATH=$PATH:/usr/local/texlive/2024/bin/universal-darwin/ make latexpdf
+make latexpdf
 open ./_build/latex/moonbitdocument.pdf
 ```
 

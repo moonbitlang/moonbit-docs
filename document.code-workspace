@@ -1,0 +1,137 @@
+{
+    "folders": [
+        {
+            "path": "legacy/examples",
+            "name": "examples"
+        },
+        {
+            "path": "next",
+            "name": "document"
+        },
+        {
+            "path": "moonbit-tour",
+            "name": "tour",
+        }
+    ],
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "Watch Document 监视文档",
+                "command": "make",
+                "type": "shell",
+                "args": [
+                    "html"
+                ],
+                "options": {
+                    "env": {
+                        "SPHINXBUILD": "sphinx-autobuild",
+                        "SPHINXOPTS": "-D language='${input:language}'"
+                    },
+                    "cwd": "${workspaceFolder:document}"
+                },
+                "group": "build"
+            },
+            {
+                "label": "Build Document 构建文档",
+                "command": "make",
+                "type": "shell",
+                "args": [
+                    "${input:target}"
+                ],
+                "options": {
+                    "env": {
+                        "SPHINXOPTS": "-D language='${input:language}'"
+                    },
+                    "cwd": "${workspaceFolder:document}"
+                },
+                "group": "build"
+            },
+            {
+                "label": "Translate Document 翻译文档",
+                "command": "make gettext && sphinx-intl update -p _build/gettext -l zh_CN",
+                "type": "shell",
+                "options": {
+                    "cwd": "${workspaceFolder:document}"
+                },
+                "group": "build"
+            },
+            {
+                "label": "Install Dependencies 安装依赖",
+                "command": "pnpm",
+                "type": "shell",
+                "args": [
+                    "install"
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder:document}"
+                },
+                "group": "build"
+            },
+            {
+                "label": "Develop Tour 开发导览",
+                "command": "pnpm",
+                "type": "shell",
+                "args": [
+                    "dev"
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder:tour}"
+                },
+                "group": "build",
+                "dependsOn": [
+                    "Install Dependencies 安装依赖"
+                ]
+            }
+        ],
+        "inputs": [
+            {
+                "id": "language",
+                "type": "pickString",
+                "description": "Language 语言",
+                "default": "en",
+                "options": [
+                    {
+                        "value": "en",
+                        "label": "English 英语",
+                    },
+                    {
+                        "value": "zh_CN",
+                        "label": "Chinese 中文"
+                    }
+                ],
+            },
+            {
+                "id": "target",
+                "type": "pickString",
+                "default": "html",
+                "description": "Target 目标",
+                "options": [
+                    {
+                        "value": "html",
+                        "label": "HTML"
+                    },
+                    {
+                        "value": "latexpdf",
+                        "label": "PDF"
+                    },
+                    {
+                        "value": "markdown",
+                        "label": "Markdown"
+                    }
+                ]
+            }
+        ]
+    },
+    "settings": {
+        "task.autoDetect": "off",
+        "editor.rulers": [ 80 ],
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-python.python",
+            "executablebookproject.myst-highlight",
+            "moonbit.moonbit-lang"
+        ]
+    }
+}
