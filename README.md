@@ -2,7 +2,7 @@
 
 This repository hosts the documentation website for MoonBit [docs.moonbitlang.com](https://docs.moonbitlang.com).
 
-Open `document.code-workspace` for better development experience.
+Open `document.code-workspace` for better development experience. Choose commands to run from either the `+` sign in the Terminal Panel or run `Tasks: Run Build Task` in the command palette.
 
 ## Layout
 

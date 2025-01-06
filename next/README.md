@@ -6,18 +6,22 @@ A new MoonBit docs framework based on Sphinx.
 
 ### Install
 
-```bash
-python3 -m venv .env
-source .env/bin/activate
-pip install -r requirements.txt
-```
+- For Python Environment, execute command `> Python: Create Environment` for `next` using `requirement.txt` in VSCode, or:
 
-For building PDF using Latex, `latexmk` needs to be installed:
-- MacOS: 
+  ```bash
+  python3 -m venv .env
+  source .env/bin/activate
+  pip install -r requirements.txt
+  ```
+
+- For building PDF using Latex, `latexmk` needs to be installed:
+  - MacOS:
     - install [Mactex](https://www.tug.org/mactex/)
     - install `latexmk` using TeX Live Utility
 
 ### Development
+
+Execute task `Watch Document` in VSCode, or:
 
 ```bash
 sphinx-autobuild . ./_build/html
@@ -25,6 +29,8 @@ sphinx-autobuild . ./_build/html
 ```
 
 ### Build
+
+Execute task `Build Document` in VSCode, or:
 
 ```bash
 make html
@@ -53,6 +59,8 @@ make markdown
 ```
 
 ### Update translation template
+
+Execute task `Translate Document` in VSCode, or:
 
 ```bash
 make gettext
