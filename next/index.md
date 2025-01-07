@@ -12,6 +12,15 @@ The IDE environment is available at [https://try.moonbitlang.com](https://try.mo
 
 - [Toolchains](./toolchain/index.md): Introduction to all the toolchains making developing MoonBit a unique experience.
 
+**Useful Sources**
+
+- [MoonCakes](https://mooncakes.io): Package registry along with API documents, including:
+  - [Standard library API](https://mooncakes.io/docs/#/moonbitlang/core/)
+  - [Experimental library API](https://mooncakes.io/docs/#/moonbitlang/x/)
+
+- [Blogs](https://www.moonbitlang.com/blog/): Big news and updates from the team
+- [Updates](https://www.moonbitlang.com/weekly-updates/): Changelogs to language features
+
 ```{toctree}
 :hidden:
 tutorial/index
