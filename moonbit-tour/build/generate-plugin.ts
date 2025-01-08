@@ -1,13 +1,12 @@
 import fs from "fs/promises";
 import path from "path";
 import * as vite from "vite";
-import { BASE } from "./const";
 import { generateTOC, scanTour, slug } from "./scan-tour";
 
-const head = `<link rel="icon" href="${BASE}/favicon.ico" />
+const head = `<link rel="icon" href="/favicon.ico" />
     <title>%TITLE%</title>
-    <script type="module" crossorigin src="${BASE}/assets/index.js"></script>
-    <link rel="stylesheet" crossorigin href="${BASE}/assets/index.css">`;
+    <script type="module" crossorigin src="/assets/index.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index.css">`;
 
 const generatePlugin = (): vite.Plugin => {
   return {
@@ -27,18 +26,18 @@ const generatePlugin = (): vite.Plugin => {
             "",
           );
         if (i === 0) {
-          res = res.replace("%BACK%", `<a href="${BASE}/index.html">Back</a>`);
+          res = res.replace("%BACK%", `<a href="/index.html">Back</a>`);
         }
         if (i - 1 >= 0) {
           res = res.replace(
             "%BACK%",
-            `<a href="${BASE}/${slug(lessons[i - 1])}/index.html">Back</a>`,
+            `<a href="/${slug(lessons[i - 1])}/index.html">Back</a>`,
           );
         }
         if (i + 1 < lessons.length) {
           res = res.replace(
             "%NEXT%",
-            `<a href="${BASE}/${slug(lessons[i + 1])}/index.html">Next</a>`,
+            `<a href="/${slug(lessons[i + 1])}/index.html">Next</a>`,
           );
         }
         if (i === lessons.length - 1) {
