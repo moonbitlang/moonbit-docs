@@ -1,8 +1,5 @@
 import fs from "fs/promises";
 import path from "path";
-import { BASE } from "./const";
-import * as remark from "./remark";
-import * as shiki from "./shiki";
 
 type Chapter = {
   chapter: string;
@@ -46,8 +43,8 @@ async function scanTour(): Promise<Chapter[]> {
           lesson,
           lessonIndex: i,
           lessonsLength: arr.length,
-          markdown: remark.mdToHtml(md),
-          code: shiki.renderMoonBitCode(mbt),
+          markdown: md,
+          code: mbt,
         };
       }),
     );
@@ -66,17 +63,15 @@ function generateTOC(chapters: Chapter[]): { markdown: string; code: string } {
   for (const c of chapters) {
     lines.push(`## ${c.chapter}`);
     for (const l of c.lessons) {
-      lines.push(`- [${l.lesson}](${BASE}/${slug(l)}/index.html)`);
+      lines.push(`- [${l.lesson}](/${slug(l)}/index.html)`);
     }
   }
   return {
-    markdown: remark.mdToHtml(lines.join("\n")),
-    code: shiki.renderMoonBitCode(`fn main {
+    markdown: lines.join("\n"),
+    code: `fn main {
   println("hello, world")
-}`),
+}`,
   };
 }
-
-generateTOC(await scanTour());
 
 export { generateTOC, scanTour, slug };

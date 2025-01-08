@@ -1,15 +1,11 @@
 import * as moonbitMode from "@moonbit/moonpad-monaco";
-import lspWorker from "@moonbit/moonpad-monaco/lsp-server.js?worker";
-import mooncWorker from "@moonbit/moonpad-monaco/moonc-worker.js?worker";
-import wasmUrl from "@moonbit/moonpad-monaco/onig.wasm?url";
 import * as monaco from "monaco-editor-core";
-import editorWorker from "monaco-editor-core/esm/vs/editor/editor.worker?worker";
 import "./style.css";
 
 const moon = moonbitMode.init({
-  onigWasmUrl: wasmUrl,
-  lspWorker: new lspWorker(),
-  mooncWorkerFactory: () => new mooncWorker(),
+  onigWasmUrl: new URL("./onig.wasm", import.meta.url).toString(),
+  lspWorker: new Worker("/lsp-server.js"),
+  mooncWorkerFactory: () => new Worker("/moonc-worker.js"),
   codeLensFilter(l) {
     return l.command?.command === "moonbit-lsp/debug-main";
   },
@@ -17,8 +13,8 @@ const moon = moonbitMode.init({
 
 // @ts-ignore
 self.MonacoEnvironment = {
-  getWorker() {
-    return new editorWorker();
+  getWorkerUrl: function () {
+    return "/editor.worker.js";
   },
 };
 

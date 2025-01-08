@@ -1,6 +1,5 @@
 import * as fs from "fs/promises";
 import * as vite from "vite";
-import { BASE } from "./const";
 import * as remark from "./remark";
 import { scanTour, slug } from "./scan-tour";
 import * as shiki from "./shiki";
@@ -17,7 +16,7 @@ const indexPlugin = (): vite.Plugin => {
       return html
         .replace(
           "%HEAD%",
-          `<link rel="icon" href="${BASE}/favicon.ico" />
+          `<link rel="icon" href="/favicon.ico" />
   <title>moonbit tour</title>`,
         )
         .replace("%MARKDOWN%", mdHtml)
@@ -25,7 +24,7 @@ const indexPlugin = (): vite.Plugin => {
         .replace("%BACK%", `<span class="text-zinc-500">Back</span>`)
         .replace(
           "%NEXT%",
-          `<a href="${BASE}/${slug(lessons[0])}/index.html">Next</a>`,
+          `<a href="/${slug(lessons[0])}/index.html">Next</a>`,
         );
     },
   };
