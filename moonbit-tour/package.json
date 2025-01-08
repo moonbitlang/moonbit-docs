@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "DEV=true tsx ./build/build.mts --watch",
-    "build": "tsc && tsx ./build/build.mts --build",
+    "build": "tsc && DEV=false tsx ./build/build.mts --build",
     "preview": "serve dist",
     "format": "prettier --write ."
   },
