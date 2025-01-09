@@ -2,7 +2,6 @@ import * as chokidar from "chokidar";
 import * as esbuild from "esbuild";
 import { tailwindPlugin } from "esbuild-plugin-tailwindcss";
 import * as fs from "fs/promises";
-import * as http from "http";
 import * as path from "path";
 import * as page from "./page";
 
@@ -72,11 +71,6 @@ const ctx = await esbuild.context({
   },
   drop: isDev ? [] : ["console", "debugger"],
   dropLabels: isDev ? [] : ["DEV"],
-  banner: isDev
-    ? {
-        js: '(() => new EventSource("/esbuild").onmessage = () => location.reload())();',
-      }
-    : undefined,
   plugins: [tailwindPlugin(), plugin()],
 });
 
@@ -84,44 +78,6 @@ await ctx.rebuild();
 
 if (isBuild) {
   process.exit(0);
-}
-
-const clients: http.ServerResponse[] = [];
-
-if (isDev) {
-  const { host, port } = await ctx.serve({
-    servedir: "dist",
-  });
-  const server = http.createServer((req, res) => {
-    if (req.url === "/esbuild") {
-      clients.push(
-        res.writeHead(200, {
-          "Content-Type": "text/event-stream",
-          "Cache-Control": "no-cache",
-          Connection: "keep-alive",
-        }),
-      );
-      return;
-    }
-    req.pipe(
-      http.request(
-        {
-          host,
-          port,
-          path: req.url,
-          method: req.method,
-          headers: req.headers,
-        },
-        (prxRes) => {
-          res.writeHead(prxRes.statusCode || 0, prxRes.headers);
-          prxRes.pipe(res, { end: true });
-        },
-      ),
-      { end: true },
-    );
-  });
-  server.listen(3000);
-  console.log(`Local: http://localhost:3000`);
 }
 
 if (isWatch) {
@@ -132,7 +88,5 @@ if (isWatch) {
     .on("all", async (e, path) => {
       console.log(`[watch] ${e} ${path}`);
       await ctx.rebuild();
-      clients.forEach((res) => res.write("data: update\n\n"));
-      clients.length = 0;
     });
 }
