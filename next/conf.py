@@ -23,6 +23,10 @@ extensions = ['myst_parser', 'lexer', 'check', 'indent', 'sphinx_copybutton']
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README.md", 'sources']
 
+smartquotes_excludes = {
+  'builders': ['man', 'text', 'markdown', 'latex'],
+}
+
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
