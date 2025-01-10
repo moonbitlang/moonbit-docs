@@ -50,6 +50,9 @@ jobs:
           for dir in next/sources/*; do
             if [ -d "$dir" ]; then
               echo "Processing $dir"
+              if [ $(basename "$dir") = async ] && [ ${{ matrix.backend }} != "js" ]; then
+                continue
+              fi
               if ! (cd "$dir" && moon install && moon check --deny-warn --target ${{ matrix.backend }} && moon test --target ${{ matrix.backend }}); then
                 echo "Failed in $dir"
                 failed_directories+=("$dir")
@@ -77,6 +80,9 @@ jobs:
           $failed_directories = @()
           Get-ChildItem -Path ".\next\sources" -Directory | ForEach-Object {
             Write-Output "Processing $($_.FullName)"
+            if ($_.Name -eq "async" && "${{ matrix.backend }}" -ne "js") {
+              return
+            }
             Set-Location $_.FullName
             moon install && moon check --deny-warn --target ${{ matrix.backend }} && moon test --target ${{ matrix.backend }}
             if (!$?) {

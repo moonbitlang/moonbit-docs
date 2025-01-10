@@ -26,4 +26,5 @@ tests
 docs
 ffi-and-wasm-host
 derive
+async-experimental
 ```
