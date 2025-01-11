@@ -76,16 +76,20 @@ function generateTOC(chapters: Chapter[]): { markdown: string; code: string } {
 
 function renderTOC(chapters: Chapter[]): string {
   const lines: string[] = [];
-  lines.push(`<ul>`);
+  lines.push(`<ul class="border-l-4 border-l-purple-100">`);
   for (const c of chapters) {
-    lines.push(`<li>`);
-    lines.push(c.chapter);
-    lines.push(`<ul>`);
+    lines.push(`<li><div class="toc-chapter pl-1">`);
+    lines.push(
+      `<button class="toc-chapter-title cursor-pointer capitalize py-1">${c.chapter}</button>`,
+    );
+    lines.push(`<ul class="toc-sections bg-gray-50">`);
     for (const l of c.lessons) {
-      lines.push(`<li><a href="/${slug(l)}/index.html">${l.lesson}</a></li>`);
+      lines.push(
+        `<li class="text-base capitalize pl-2 py-[2px]"><a href="/${slug(l)}/index.html">${l.lesson}</a></li>`,
+      );
     }
     lines.push(`</ul>`);
-    lines.push("</li>");
+    lines.push("</div></li>");
   }
   lines.push(`</ul>`);
   return lines.join("\n");

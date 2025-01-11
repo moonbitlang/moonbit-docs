@@ -1,6 +1,7 @@
 import * as moonbitMode from "@moonbit/moonpad-monaco";
 import * as monaco from "monaco-editor-core";
 import "./style.css";
+import "./toc";
 
 const moon = moonbitMode.init({
   onigWasmUrl: new URL("./onig.wasm", import.meta.url).toString(),
@@ -16,12 +17,6 @@ self.MonacoEnvironment = {
   getWorkerUrl: function () {
     return "/editor.worker.js";
   },
-};
-
-const tocButton = document.getElementById("toc-button")!;
-const toc = document.getElementById("toc")!;
-tocButton.onclick = () => {
-  toc.classList.toggle("md:block");
 };
 
 const sunSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
