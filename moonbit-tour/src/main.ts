@@ -1,6 +1,7 @@
 import * as moonbitMode from "@moonbit/moonpad-monaco";
 import * as monaco from "monaco-editor-core";
 import "./style.css";
+import "./toc";
 
 const moon = moonbitMode.init({
   onigWasmUrl: new URL("./onig.wasm", import.meta.url).toString(),
