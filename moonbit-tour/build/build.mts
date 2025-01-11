@@ -10,7 +10,7 @@ const isWatch = process.argv.includes("--watch");
 
 async function exists(path: string) {
   try {
-    await fs.stat(path);
+    await fs.access(path);
     return true;
   } catch {
     return false;
@@ -18,7 +18,7 @@ async function exists(path: string) {
 }
 
 async function clearDirectory(dir: string) {
-  if (!exists(dir)) return;
+  if (!(await exists(dir))) return;
   const items = await fs.readdir(dir);
   await Promise.all(
     items.map((i) =>
