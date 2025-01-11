@@ -23,6 +23,8 @@ open <http://localhost:3000> to view the tour.
    pnpm dev
    ```
 
+1. open <http://localhost:8080> to view the tour.
+
 1. Create a new folder under the chapter folder following the naming convention `lesson<n>_<lesson-name>` (count start from 1).
 
 1. Write the lesson content in `index.md` and lesson code in `index.mbt` under the created folder.

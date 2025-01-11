@@ -9,17 +9,35 @@
     <link rel="stylesheet" crossorigin href="/main.css" />
   </head>
   <body class="flex flex-col font-sans md:h-screen">
-    <header class="flex h-8 items-center gap-2 bg-purple-200 px-2 py-6 md:px-6">
+    <header class="flex h-8 items-center gap-3 bg-purple-200 px-2 py-6 md:px-6">
+      <div class="cursor-pointer" id="toc-button">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#000000"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </div>
       <a class="text-base" href="/index.html">MoonBit Language Tour</a>
       <a class="ml-auto" href="https://www.moonbitlang.com">MoonBit</a>
-      <div class="ml-2 cursor-pointer" id="theme">
+      <div class="cursor-pointer" id="theme">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-6"
+          width="24"
+          height="24"
         >
           <path
             stroke-linecap="round"
@@ -29,6 +47,12 @@
         </svg>
       </div>
     </header>
+    <div
+      id="toc"
+      class="absolute hidden bg-pink-300 md:bottom-0 md:h-[calc(100vh-3rem)]"
+    >
+      %TOC%
+    </div>
     <main
       class="flex flex-grow flex-col bg-gray-100 dark:bg-zinc-800 md:h-[calc(100vh-4rem)] md:flex-row"
     >

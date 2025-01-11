@@ -7,7 +7,25 @@ import * as page from "./page";
 
 const isDev = process.env["DEV"] === "true";
 const isWatch = process.argv.includes("--watch");
-const isBuild = process.argv.includes("--build");
+
+async function exists(path: string) {
+  try {
+    await fs.stat(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function clearDirectory(dir: string) {
+  if (!exists(dir)) return;
+  const items = await fs.readdir(dir);
+  await Promise.all(
+    items.map((i) =>
+      fs.rm(path.join(dir, i), { recursive: true, force: true }),
+    ),
+  );
+}
 
 const plugin = (): esbuild.Plugin => {
   return {
@@ -16,10 +34,7 @@ const plugin = (): esbuild.Plugin => {
       build.onStart(async () => {
         console.log("start build");
         build.initialOptions.outdir &&
-          (await fs.rm(build.initialOptions.outdir, {
-            recursive: true,
-            force: true,
-          }));
+          (await clearDirectory(build.initialOptions.outdir));
       });
       build.onEnd(async () => {
         console.log("end build");
@@ -76,7 +91,7 @@ const ctx = await esbuild.context({
 
 await ctx.rebuild();
 
-if (isBuild) {
+if (!isDev) {
   process.exit(0);
 }
 

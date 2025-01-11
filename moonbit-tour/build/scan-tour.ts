@@ -74,4 +74,21 @@ function generateTOC(chapters: Chapter[]): { markdown: string; code: string } {
   };
 }
 
-export { generateTOC, scanTour, slug };
+function renderTOC(chapters: Chapter[]): string {
+  const lines: string[] = [];
+  lines.push(`<ul>`);
+  for (const c of chapters) {
+    lines.push(`<li>`);
+    lines.push(c.chapter);
+    lines.push(`<ul>`);
+    for (const l of c.lessons) {
+      lines.push(`<li><a href="/${slug(l)}/index.html">${l.lesson}</a></li>`);
+    }
+    lines.push(`</ul>`);
+    lines.push("</li>");
+  }
+  lines.push(`</ul>`);
+  return lines.join("\n");
+}
+
+export { generateTOC, renderTOC, scanTour, slug };
