@@ -1,20 +1,27 @@
 # A Tour of MoonBit for Beginners
 
-This guide is intended for newcomers, and it's not meant to be a 5-minute quick tour. This article tries to be a succinct yet easy to understand guide
-for those who haven't programmed in a way that MoonBit enables them to, that is, in a more modern, functional way.
+This guide is intended for newcomers, and it's not meant to be a 5-minute quick
+tour. This article tries to be a succinct yet easy to understand guide for those
+who haven't programmed in a way that MoonBit enables them to, that is, in a more
+modern, functional way.
 
-See [the General Introduction](../language/index.md) if you want to straight delve into the language.
+See [the General Introduction](../language/index.md) if you want to straight
+delve into the language.
 
 ## Installation
 
-### the Extension
+**The extension**
 
-Currently, MoonBit development support are through VS Code extension. Navigate to
-[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=moonbit.moonbit-lang) to download MoonBit language support.
+Currently, MoonBit development support is through the VS Code extension.
+Navigate to
+[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=moonbit.moonbit-lang)
+to download MoonBit language support.
 
-### the toolchain
+**The toolchain**
 
-> (Recommended) If you've installed the extension above, the runtime can be directly installed by running 'Install moonbit toolchain' in the action menu and you may skip this part:
+> (Recommended) If you've installed the extension above, the runtime can be
+> directly installed by running 'Install moonbit toolchain' in the action menu
+> and you may skip this part:
 > ![runtime-installation](/imgs/runtime-installation.png)
 
 We also provide an installation script: Linux & macOS users can install via
@@ -23,7 +30,7 @@ We also provide an installation script: Linux & macOS users can install via
 curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
 ```
 
-For Windows users, powershell is used:
+For Windows users, PowerShell is used:
 
 ```powershell
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang.com/install/powershell.ps1 | iex
@@ -31,13 +38,19 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang
 
 This automatically installs MoonBit in `$HOME/.moon` and adds it to your `PATH`.
 
-If you encounter `moon` not found after installation, try restarting your terminal or vscode to let the environment variable take effect.
+If you encounter `moon` not found after installation, try restarting your
+terminal or VS Code to let the environment variable take effect.
 
-Do notice that MoonBit is not production-ready at the moment, it's under active development. To update MoonBit, just run the commands above again.
+Do notice that MoonBit is not production-ready at the moment, it's under active
+development. To update MoonBit, just run the commands above again.
 
-Running `moon help` gives us a bunch of subcommands. But right now the only commands we need are `build` `run` and `new`.
+Running `moon help` gives us a bunch of subcommands. But right now the only
+commands we need are `build`, `run`, and `new`.
 
-To create a project (or module, more formally), run `moon new`. You will be greeted with a creation wizard, filling up all the info and we get
+To create a project (or module, more formally), run `moon new`. You will be
+greeted with a creation wizard.
+
+If you choose to create an `exec` mode project, you will get:
 
 ```
 my-project
@@ -54,297 +67,338 @@ my-project
         └── moon.pkg.json
 ```
 
-This resembles a typical MoonBit module structure. Try running `moon run src/main`.
+which contains a `main` lib containing a `fn main` that serves as the entrance
+of the program. Try running `moon run src/main`.
 
-Now, we can get started.
+If you choose to create a `lib` mode project, you will get:
 
-## Start Writing
-
-In our tour, we will write all of the codes below in `main.mbt`. As you may have guessed, the `main` function within the `main` package is the main entrance of a program.
-For a thorough introduction, please take a look at our [build system tutorial](../toolchain/moon/tutorial.md).
-
-### Variables
-
-Variables are defined with `let`:
-
-```moonbit
-let e = 2.718281828459045 // double
-let int_min = -2147483648 // int
-let int_max : Int = 2147483647 // explicit type annotation
-let tuple = (1, 2) // 2-tuple
+```
+my-project
+├── LICENSE
+├── moon.mod.json
+├── README.md
+└── src
+    ├── lib
+    │   ├── hello.mbt
+    │   ├── hello_test.mbt
+    │   └── moon.pkg.json
+    ├── moon.pkg.json
+    └── top.mbt
 ```
 
-```moonbit
-fn init {
-  let array = [1, 2, 3, 4, 5]
-  // array = [4, 5, 6, 7, 8] // WRONG: let creates immutable bindings
-  let mut mut_array = [1, 2, 3, 4, 5]
-  mut_array = [4, 5, 6, 7, 8]
-  println(mut_array)
+In this tutorial, we will work with the `lib` mode project, and we assume the
+project name is `examine`.
+
+## Example: Finding those who passed
+
+In this example, we will try to find out, given the scores of some students, how
+many of them have passed the test?
+
+To do so, we will start with defining our data types, identify our functions,
+and write our tests. Then we will implement our functions.
+
+Unless specified, the following will be defined under the file `src/top.mbt`.
+
+### Data types
+
+The [basic data types](/language/fundamentals.md#built-in-data-structures) in MoonBit includes the following:
+
+- `Unit`
+- `Bool`
+- `Int`, `UInt`, `Int64`, `UInt64`, `Byte`, ...
+- `Float`, `Double`
+- `Char`, `String`, ...
+- `Array[T]`, ...
+- Tuples, and still others
+
+To represent a record containing a student ID and a score using a primitive
+type, we can use a 2-tuple containing a student ID (of type `String`) and a
+score (of type `Double`) as `(String, Double)`. However this is not very
+intuitive as we can't identify with other possible data types, such as a record
+containing a student ID and the height of the student.
+
+So we choose to declare our own data type using [struct](/language/fundamentals.md#struct):
+
+```{code-block} moonbit
+:class: top-level
+struct Student {
+  id : String
+  score : Double
 }
 ```
 
-MoonBit is a strictly typed language with type inference. In the example above, `let`
-binds (we prefer the word _bind_ to assign) a symbol to a value. The symbol is inferred
-to have the same type as the value. Hover over any of the symbols to check its type.
+One can either pass or fail an exam, so the judgement result can be defined
+using [enum](/language/fundamentals.md#enum):
 
-By default, the `let` - binding creates an immutable reference to a value. That is, you cannot change the symbol to reference something else without rebinding it (using `let`). Otherwise one should use `let mut`.
-
-### Function
-
-Function is just a piece of code that takes some inputs and produce a result. We may define a function using the keyword `fn` (function name in MoonBit should not begin with uppercase letters A-Z):
-
-```moonbit
-fn identity[T](x : T) -> T {
-  // `Identity` won't work as it violates naming convention
-  x
+```{code-block} moonbit
+:class: top-level
+enum ExamResult {
+  Pass
+  Fail
 }
 ```
 
-In this example, we provide types explicitly. Notice how it differs from traditional C-like languages
-which uses prefix type notation `T x`, here we use postfix type notation `x: T` (Formally, we call it _type annotation_).
+### Functions
 
-We write a arrow `->` before the return type to show the nature of a function: a map from some types to some other types. Formally, we call this syntax _trailing return type_ (languages such as C++, Rust, Swift, etc have this syntax as well).
+[Function](/language/fundamentals.md#functions) is a piece of code that takes some inputs and produces a result.
 
-> The word _expression_ is loosely used. Intuitively, An expression is something with a value we care about.
+In our example, we need to judge whether a student have passed an exam:
 
-Consequently, a function type is denoted `(S) -> T` where `S` (within parenthesis) is the parameter type and `T` is the return type.
-Functions in MoonBit are first-class, meaning it's always possible to pass functions around if you
-get the type right:
-
-```moonbit
-fn compose[S, T, U](f : (T) -> U, g : (S) -> T) -> (S) -> U {
-  let composition = fn(x : S) { f(g(x)) } // returns a composition of `f` and `g`
-
-  // moonbit also provides the pipe `|>` operator,
-  // similar to a lot of functional languages.
-  fn(x : S) { g(x) |> f } // equivalent
+```{code-block} moonbit
+:class: top-level
+fn is_qualified(student : Student, criteria: Double) -> ExamResult {
+  ...
 }
 ```
 
-Languages nowadays have something called _lambda expression_. Most languages implement it as a mere syntactic sugar. A lambda expression is really just a anonymous closure, this, is resembled in our MoonBit's syntax:
+This function takes an input `student` of type `Student` that we've just defined, an input `criteria` of type `Double` as the criteria may be different for each courses or different in each country, and returns an `ExamResult`. 
 
-> a closure only captures variables in its surroundings, together with its bound variable, that is, having the same indentation level (suppose we've formatted the code already).
+The `...` syntax allows us to leave functions unimplemented for now.
 
-```moonbit
-fn foo() -> Int {
-  fn inc(x) { x + 1 }  // named as `inc`
-  (fn (x) { x + inc(2) })(6) // anonymous, a so-called 'lambda expression'
-  // function automatically captures the result of the last expression
+We also need need to find out how many students have passed an exam:
+
+```{code-block} moonbit
+:class: top-level
+fn count_qualified_students(
+  students : Array[Student],
+  is_qualified : (Student) -> ExamResult
+) -> Int {
+  ...
 }
 ```
 
-```moonbit expr
-foo() // => 9
-```
+In MoonBit, functions are first-classed, meaning that we can bind a function to a variable, pass a function as parameter or receiving a function as a result.
+This function takes an array of students' records and another function that will judge whether a student have passed an exam.
 
-Now we've learned the very basic, let's learn the rest by coding.
+### Writing tests
 
-## Implementing List
+We can define inline tests to define the expected behavior of the functions. This is also helpful to make sure that there'll be no regressions when we refactor the program.
 
-### enum type
-
-A linked list is a series of node whose right cell is a reference to its successor node. Sounds recursive? Because it is. Let's define it that way using MoonBit:
-
-```moonbit
-enum List[T] {
-  Nil // base case: empty list
-  Cons(T, List[T]) // an recursive definition
+```{code-block} moonbit
+:class: top-level
+test "is qualified" {
+  assert_eq!(is_qualified(Student::{ id : "0", score : 50.0 }, 60.0), Fail)
+  assert_eq!(is_qualified(Student::{ id : "1", score : 60.0 }, 60.0), Pass)
+  assert_eq!(is_qualified(Student::{ id : "2", score : 13.0 }, 7.0), Pass)
 }
 ```
 
-The `enum` type works like any `enum` from traditional OO languages. However, let's refrain from using the OO-term `case`, we'll use _constructor_ from now on. We may read the above code as
+We will get an error messaging, reminding us that `Show` and `Eq` are not implemented for `ExamResult`. 
 
-> the type `List[T]` can be constructed from the constructor `Nil` or `Cons`, the former represents an empty list; the latter carries some data of type `T` and the rest of the list.
+`Show` and `Eq` are **traits**. A trait in MoonBit defines some common operations that a type should be able to perform.
 
-The square bracket used here denotes a _polymorphic_ (generic) definition, meaning a list of something of type `T`. Should we _instantiate_ `T` with a concrete type like `Int`, we define a list containing integers.
+For example, `Eq` defines that there should be a way to compare two values of the same type with a function called `op_equal`:
 
-Another datatype frequently used in MoonBit is our good old `Struct`, which works like you would expect. Let's create a list of `User` using the definition above and `Struct`:
-
-```moonbit
-struct User {
-  id : Int
-  name : String
-  // by default the properties/fields of a struct is immutable.
-  // the `mut` keyword works exactly the way we've mentioned before.
-  mut email : String
-} derive(Show)
-
-// a method of User is defined by passing a object of type User as self first.
-// just like what you would do in Python.
-// Note that methods may only be defined within the same package the type is in.
-// We may not define methods for foreign types directly
-fn greetUser(self : User) -> String { // a method of struct/type/class `User`
-  let id = self.id
-  let name = self.name
-  "Greetings, \{name} of id \{id}" // string interpolation
-}
-// construct a User object.
-let evan : User = { id: 0, name: "Evan", email: "someone@example.com" }
-// we use a shorthand by duplicating evan's information
-// and replacing w/ someone elses' email.
-let listOfUser : List[User] = Cons(evan, Cons({ ..evan, email: "someoneelse@example.com" }, Nil))
-```
-
-Another datatype is `type`, a specific case of `enum` type. `type` can be thought as a wrapper
-around an existing type, allowing additional methods to be defined.
-Through this we extends the method definition of a foreign type without actually
-modifying it. Consider the type of `name` in `User`,
-we may define it as
-
-```moonbit no-check
-type UserName String // a newtype `UserName` based on `String`
-
-// defining a method for UserName is allowed but not String.
-fn is_blank(self : UserName) -> Bool {
-  // use `._` to access its basetype String
-  // iter() creates a *internal iterator*
-  // which provides a functional way to iterate on sequences.
-  // find_first short circuits on the first `true` i.e. non-blank character
-  let res = self._.iter().find_first(
-    fn(c) { if c == ' ' { false } else { true } },
-  )
-  match res {
-    Some(_) => false
-    // found NO non-blank character, thus it's a blank string.
-    None => true
-  }
+```{code-block} moonbit
+:class: top-level
+trait Eq {
+  op_equal(Self, Self) -> Bool
 }
 ```
 
-`enum`, `struct` and `newtype` are the 3 ways to define a datatype.
-There isn't `class` in MoonBit, nor does it need that.
+and `Show` defines that there should be a way to either convert a value of a type into `String` or write it using a `Logger`:
 
-the `derive` keyword is like Java's `implements`. Here `Show` is a _trait_ which
-indicates a type is printable. So what is a trait?
-
-### Trait
-
-A trait (or type trait) is what we would call an `interface` in traditional OO-languages.
-`println(evan)` would print `{id: 0, name: "Evan", email: "someone@example.com"}`. As `User` consists
-of builtin types `Int` `String`, which already implements `Show`.
-Therefore we do not need to implement it explicitly. Let's implement our own
-trait `Printable` by implementing `to_string()`:
-
-```moonbit
-trait Printable {
+```{code-block} moonbit
+:class: top-level
+trait Show {
+  output(Self, &Logger) -> Unit
   to_string(Self) -> String
 }
+```
 
-fn to_string(self : User) -> String {
-  (self.id, self.name, self.email).to_string()
-} // now `Printable` is implemented
+And the `assert_eq` uses them to constraint the passed parameters so that it can compare the two values and print them when they are not equal:
 
-fn to_string[T : Printable](self : List[T]) -> String {
-  let string_aux = to_string_aux(self)
-  // function arguments can have label
-  "[" + string_aux.substring(end=string_aux.length() - 1) + "]"
+```{code-block} moonbit
+:class: top-level
+fn assert_eq![A : Eq + Show](value : A, other : A) -> Unit {
+  ...
+}
+```
+
+We need to implement `Eq` and `Show` for our `ExamResult`. There are two ways to do so.
+
+1. By defining an explicit implementation:
+
+    ```{code-block} moonbit
+    :class: top-level
+    impl Eq for ExamResult with op_equal(self, other) {
+      match (self, other) {
+        (Pass, Pass) | (Fail, Fail) => true
+        _ => false
+      }
+    }
+    ```
+
+    Here we use [pattern matching](/language/fundamentals.md#pattern-matching) to check the cases of the `ExamResult`.
+
+2. Other is by [deriving](/language/derive.md) since `Eq` and `Show` are [builtin traits](/language/methods.md#builtin-traits) and the output for `ExamResult` is quite straightforward:
+
+    ```{code-block} moonbit
+    :class: top-level
+    enum ExamResult {
+      Pass
+      Fail
+    } derive(Show)
+    ```
+
+Now that we've implemented the traits, we can continue with our test implementations:
+
+```{code-block} moonbit
+:class: top-level
+test "count qualified students" {
+  let students = [
+    { id: "0", score: 10.0 },
+    { id: "1", score: 50.0 },
+    { id: "2", score: 61.0 },
+  ]
+  let criteria1 = fn(student) { is_qualified(student, 10) }
+  let criteria2 = fn(student) { is_qualified(student, 50) }
+  assert_eq!(count_qualified_students(students, criteria1), 3)
+  assert_eq!(count_qualified_students(students, criteria2), 2)
 }
 
-// polymorphic functions have to be toplevel.
-fn to_string_aux[T : Printable](self : List[T]) -> String {
-  match self {
-    Nil => ""
-    Cons(x, xs) => "\{x} " + to_string_aux(xs)
+```
+
+Here we use [lambda expressions](/language/fundamentals.md#local-functions) to reuse the previously defined `is_qualified` to create different criteria.
+
+We can run `moon test` to see whether the tests succeed or not.
+
+### Implementing the functions
+
+For the `is_qualified` function, it is as easy as a simple comparison:
+
+```{code-block} moonbit
+:class: top-level
+fn is_qualified(student : Student, criteria : Double) -> ExamResult {
+  if student.score >= criteria {
+    Pass
+  } else {
+    Fail
   }
 }
 ```
 
-```moonbit expr
-listOfUser.to_string()
-// => [(0, Evan, someone@example.com) (0, Evan, someoneelse@example.com)]
-```
+In MoonBit, the result of the last expression is the return value of the function, and the result of each branch is the value of the `if` expression.
 
-We use `<T extends Printable>` in Java to constrain the type of list element to make sure objects of type
-`T` can be printed, similarly, in MoonBit we would write `[T: Printable]`.
+For the `count_qualified_students` function, we need to iterate through the array to check if each student has passed or not.
 
-### Pattern Matching
+A naive version is by using a mutable value and a [`for` loop](/language/fundamentals.md#for-loop):
 
-In the example above we use the `match` expression, a core feature of MoonBit
-(and many other functional programming languages.) In short, we use pattern matching
-to _destructure_ (to strip the encapsulation of) a structure.
-
-We may express the above `match` code as
-
-> if `self` is constructed with `Nil` (an empty list), we return `""`;
-> otherwise if `self` is constructed with `Cons(x,xs)` (a non-empty list)
-> we print `x` and rest of the list.
-> Where `x` is the head of the `self` and `xs` being the rest.
-
-Intuitively, we extract `x` and `xs` (they are bound in situ) from `self` using pattern matching.
-Let's implement typical list operations such as `map` `reduce` `zip`:
-
-```moonbit
-fn map[S, T](self : List[S], f : (S) -> T) -> List[T] {
-  match self {
-    Nil => Nil
-    Cons(x, xs) => Cons(f(x), map(xs, f))
+```{code-block} moonbit
+:class: top-level
+fn count_qualified_students(
+  students : Array[Student],
+  is_qualified : (Student) -> ExamResult
+) -> Int {
+  let mut count = 0
+  for i = 0; i < students.length(); i = i + 1 {
+    if is_qualified(students[i]) == Pass {
+      count += 1
+    }
   }
+  count
 }
+```
 
-fn reduce[S, T](self : List[S], op : (T, S) -> T, init : T) -> T {
-  match self {
-    Nil => init
-    Cons(x, xs) => reduce(xs, op, op(init, x))
+However, this is neither efficient (due to the border check) nor intuitive, so we can replace the `for` loop with a [`for .. in` loop](/language/fundamentals.md#for--in-loop):
+
+```{code-block} moonbit
+:class: top-level
+fn count_qualified_students(
+  students : Array[Student],
+  is_qualified : (Student) -> ExamResult
+) -> Int {
+  let mut count = 0
+  for student in students {
+    if is_qualified(student) == Pass { count += 1}
   }
-}
-
-fn zip[T](self : List[T], other : List[T]) -> List[T] {
-  match (self, other) {
-    (Nil, _) => Nil // we use underscore to ignore the value we don't care
-    (_, Nil) => Nil
-    (Cons(x, xs), Cons(y, ys)) => Cons(x, Cons(y, zip(xs, ys)))
-  }
+  count
 }
 ```
 
-Now we have a somewhat usable `List` type. Realistically, we always prefer the builtin `Array`
-which is much more efficient.
+Still another way is use the functions defined for [iterator](/language/fundamentals.md#iterator):
 
-Pattern matching can be used in `let` as well. In `greetUser()`, instead of writing
-2 `let`'s, we may write
-
-```moonbit
-fn greetUserAlt(self : User) -> String {
-  // extract `id` `name` from `self` of type User. ignores email.
-  let { id: id, name: name, email: _ } = self
-  // equivalent, but ignores the rest.
-  let { id, name, .. } = self
-  "Greetings, \{name} of id \{id}"
+```{code-block} moonbit
+:class: top-level
+fn count_qualified_students(
+  students : Array[Student],
+  is_qualified : (Student) -> ExamResult
+) -> Int {
+  students.iter().filter(fn(student) { is_qualified(student) == Pass }).count()
 }
 ```
 
-## Iteration
+Now the tests defined before should pass.
 
-Finally, let's talk about the major point of every OO-language: looping.
-Although we've been using recursion most of the times,
-MoonBit is designed to be multi-paradigm,
-thus it retains C-style imperative `for` `while` loop.
+## Making the library available
 
-Additionally, MoonBit provides a more interesting loop construct, the functional loop.
-For example the Fibonacci number can be calculated by
+Congratulation on your first MoonBit library!
 
-```moonbit
-fn fib(n : Int) -> Int {
-  loop n, 0, 1 { // introduces 3 loop variables: `n` `a = 0` `b = 1`
-    // pattern matching is available in `loop`
-    0, a, b => a // what can be constructed from 0 -- Only 0 it self!
-    // assign `b` to `a`, `(a + b)` to `b`, decrease counter `n`
-    n, a, b => continue n - 1, b, a + b
-  }
+You can now share it with other developers so that they don't need to repeat what you have done.
+
+But before that, you have some other things to do.
+
+### Adjusting the visibility
+
+To see how other people may use our program, MoonBit provides a mechanism called ["black box test"](/language/tests.md#blackbox-tests-and-whitebox-tests).
+
+Let's move the `test` block we defined above into a new file `src/top_test.mbt`.
+
+Oops! Now there are errors complaining that:
+- `is_qualified` and `count_qualified_students` are unbound
+- `Fail` and `Pass` are undefined
+- `Student` is not a record type and the field `id` is not found, etc.
+
+All these come from the problem of visibility. By default, a function defined is not visible for other part of the program outside the current package (bound by the current folder).
+And by default, a type is viewed as an abstract type, i.e. we know only that there exists a type `Student` and a type `ExamResult`. By using the black box test, you can make sure that
+everything you'd like others to have is indeed decorated with the intended visibility.
+
+In order for others to use the functions, we need to add `pub` before the `fn` to make the function public.
+
+In order for others to construct the types and read the content, we need to add `pub(all)` before the `struct` and `enum` to make the types public.
+
+We also need to slightly modify the test of `count qualified students` to add type annotation:
+
+```{code-block} moonbit
+:class: top-level
+test "count qualified students" {
+  let students: Array[@examine.Student] = [
+    { id: "0", score: 10.0 },
+    { id: "1", score: 50.0 },
+    { id: "2", score: 61.0 },
+  ]
+  let criteria1 = fn(student) { @examine.is_qualified(student, 10) }
+  let criteria2 = fn(student) { @examine.is_qualified(student, 50) }
+  assert_eq!(@examine.count_qualified_students(students, criteria1), 3)
+  assert_eq!(@examine.count_qualified_students(students, criteria2), 2)
 }
 ```
 
-```moonbit expr
-[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(fib) // => [1,1,2,3,5,8,13,21,34,55]
-```
+Note that we access the type and the functions with `@examine`, the name of your package. This is how others use your package, but you can omit them in the black box tests.
 
-Semantic-wise, the `loop` construct focuses more on the transition of each state, providing
-better readability, preserving recursive flavor and same performance without writing [tail-recursion](https://en.wikipedia.org/wiki/Tail_call) explicitly.
+And now, the compilation should work and the tests should pass again.
 
-## Closing
+### Publishing the library
 
-At this point, we've learned about the very basic and most not-so-trivial features of MoonBit,
-yet MoonBit is a feature-rich, multi-paradigm programming language.
-After making sure that you are comfortable with the basics of MoonBit,
-we suggest that you look into some [interesting examples](https://github.com/moonbitlang/moonbit-docs/tree/main/legacy/examples) to get a better hold of MoonBit.
+Now that you've ready, you can publish this project to [mooncakes.io](https://mooncakes.io),
+the module registry of MoonBit. You can find other interesting projects there
+too.
+
+1. Execute `moon login` and follow the instruction to create your account with
+   an existing GitHub account.
+2. Modify the project name in `moon.mod.json` to
+   `<your github account name>/<project name>`. Run `moon check` to see if
+   there's any other affected places in `moon.pkg.json`.
+3. Execute `moon publish` and your done. Your project will be available for
+   others to use.
+
+By default, the project will be shared under [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html), 
+which is a permissive license allowing everyone to use. You can also use other licenses, such as the [MulanPSL 2.0](https://license.coscl.org.cn/MulanPSL2),
+by changing the field `license` in `moon.mod.json` and the content of `LICENSE`.
+
+### Closing
+
+At this point, we've learned about the very basic and most not-so-trivial
+features of MoonBit, yet MoonBit is a feature-rich, multi-paradigm programming
+language. Visit [language tours](https://tour.moonbitlang.com) for more information in grammar and basic types,
+and other documents to get a better hold of MoonBit.
