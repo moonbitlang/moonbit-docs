@@ -72,3 +72,13 @@ export function render(template: string, page: Page): string {
     .replace("%BACK%", page.back)
     .replace("%NEXT%", page.next);
 }
+
+export function route(page: Page): string {
+  return JSON.stringify({
+    title: page.title,
+    markdownHtml: remark.mdToHtml(page.markdown),
+    code: page.code,
+    back: page.back,
+    next: page.next,
+  });
+}

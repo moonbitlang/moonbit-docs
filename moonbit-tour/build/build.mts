@@ -57,12 +57,17 @@ const plugin = (): esbuild.Plugin => {
         await Promise.all(
           pages.map(async (p) => {
             const content = page.render(template, p);
+            const data = page.route(p);
             await fs.mkdir(`./dist/${path.dirname(p.path)}`, {
               recursive: true,
             });
             await fs.writeFile(`./dist/${p.path}`, content, {
               encoding: "utf8",
             });
+            await fs.writeFile(
+              `./dist/${p.path.replace(".html", ".json")}`,
+              data,
+            );
           }),
         );
       });
