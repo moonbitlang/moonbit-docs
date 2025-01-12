@@ -28,8 +28,10 @@
         </svg>
       </button>
       <a class="text-base" href="/index.html">MoonBit Language Tour</a>
-      <a class="ml-auto" href="https://www.moonbitlang.com">MoonBit</a>
-      <div class="cursor-pointer" id="theme">
+      <a class="ml-auto" href="https://www.moonbitlang.com" target="_blank"
+        >MoonBit</a
+      >
+      <button class="cursor-pointer" id="theme">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -45,7 +47,7 @@
             d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
           />
         </svg>
-      </div>
+      </button>
     </header>
     <div
       id="toc"
@@ -59,11 +61,13 @@
       <section
         class="prose flex max-w-none flex-1 flex-col items-center gap-4 p-2 dark:prose-invert prose-h2:capitalize md:justify-between md:overflow-auto md:p-6"
       >
-        <div class="w-full">%MARKDOWN%</div>
+        <div class="w-full" id="tour-content">%MARKDOWN%</div>
         <nav class="flex gap-4 md:pb-2">
-          %BACK% —
+          <div id="nav-back">%BACK%</div>
+          —
           <a href="/table-of-contents/index.html">Contents</a>
-          — %NEXT%
+          —
+          <div id="nav-next">%NEXT%</div>
         </nav>
       </section>
       <section

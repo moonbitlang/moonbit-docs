@@ -80,12 +80,12 @@ function renderTOC(chapters: Chapter[]): string {
   for (const c of chapters) {
     lines.push(`<li><div class="toc-chapter pl-1">`);
     lines.push(
-      `<button class="toc-chapter-title cursor-pointer capitalize py-1">${c.chapter}</button>`,
+      `<button class="toc-chapter-title block w-full text-start cursor-pointer capitalize py-1">${c.chapter}</button>`,
     );
     lines.push(`<ul class="toc-sections bg-gray-50">`);
     for (const l of c.lessons) {
       lines.push(
-        `<li class="text-base capitalize pl-2 py-[2px]"><a href="/${slug(l)}/index.html">${l.lesson}</a></li>`,
+        `<li><a class="text-base capitalize pl-2 py-[2px] block" href="/${slug(l)}/index.html">${l.lesson}</a></li>`,
       );
     }
     lines.push(`</ul>`);
