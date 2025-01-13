@@ -6,14 +6,17 @@ const moonbitLang = JSON.parse(
 );
 
 const highlighter = await shiki.createHighlighter({
-  themes: ["light-plus"],
+  themes: ["light-plus", "dark-plus"],
   langs: [moonbitLang],
 });
 
 function renderMoonBitCode(code: string): string {
   return highlighter.codeToHtml(code, {
     lang: "moonbit",
-    theme: "light-plus",
+    themes: {
+      light: "light-plus",
+      dark: "dark-plus",
+    },
   });
 }
 
