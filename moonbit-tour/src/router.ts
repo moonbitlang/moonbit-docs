@@ -30,7 +30,7 @@ export async function init() {
     if (url.origin !== location.origin) return;
     e.preventDefault();
     const data = await getRouteData(url.toString());
-    window.dispatchEvent(new CustomEvent("route-change", { detail: data }));
     history.pushState(data, "", url.toString());
+    window.dispatchEvent(new CustomEvent("route-change", { detail: data }));
   });
 }
