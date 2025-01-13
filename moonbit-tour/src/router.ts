@@ -10,7 +10,9 @@ function getRouteDataHref(href: string) {
 
 async function getRouteData(href: string) {
   const url = getRouteDataHref(href);
+  document.querySelector("html")!.classList.add("cursor-wait");
   const res = await fetch(url);
+  document.querySelector("html")!.classList.remove("cursor-wait");
   return await res.json();
 }
 
