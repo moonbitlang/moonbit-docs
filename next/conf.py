@@ -7,9 +7,9 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'MoonBit Document'
-copyright = '2024, International Digital Economy Academy'
+copyright = '2025, International Digital Economy Academy'
 author = 'International Digital Economy Academy'
-release = 'v0.1.20241231'
+release = 'v0.1.20250113'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
