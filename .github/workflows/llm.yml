@@ -8,21 +8,40 @@ defaults:
     working-directory: next
 
 jobs:
-  llm-upload:
+  llm-upload-en:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: aliyun/setup-aliyun-cli-action@v1
+      - uses: actions/setup-python@v5
+      - name: install
+        run: pip install -r requirements.txt
+      - name: build
+        run: make markdown
+      - name: compilation
+        run: python3 llm.py
       - name: upload
         env:
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           AWS_DEFAULT_REGION: ${{secrets.AWS_DEFAULT_REGION}}
         run: |
-          echo 'soyo' > llm.txt
-          aliyun configure set --profile default --mode AK --access-key-id ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_ID}} --access-key-secret ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET}} --region ${{secrets.ALIBABA_REGION}}
-          echo y | aliyun oss cp llm.txt ${{secrets.ALIYUN_HOMEPAGE_BUCKET}}/llm.txt
-          aliyun cdn RefreshObjectCaches --ObjectPath https://www.moonbitlang.cn/llm.txt --ObjectType File
-          aws s3 cp llm.txt ${{secrets.AWS_HOMEPAGE_BUCKET}}/llm.txt
+          aws s3 cp ./_build/markdown/llm.txt ${{secrets.AWS_HOMEPAGE_BUCKET}}/llm.txt
           aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_CLOUDFRONT_HOMEPAGE_DISTRIBUTION_ID}} --paths "/llm.txt"
+
+  llm-upload-zh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - name: install
+        run: pip install -r requirements.txt
+      - name: build
+        run: LANGUAGE="zh_CN" make markdown
+      - name: compilation
+        run: python3 llm.py
+      - uses: aliyun/setup-aliyun-cli-action@v1
+      - name: upload
+        run: |
+          aliyun configure set --profile default --mode AK --access-key-id ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_ID}} --access-key-secret ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET}} --region ${{secrets.ALIBABA_REGION}}
+          echo y | aliyun oss cp ./_build/markdown/llm.txt ${{secrets.ALIYUN_HOMEPAGE_BUCKET}}/llm.txt
+          aliyun cdn RefreshObjectCaches --ObjectPath https://www.moonbitlang.cn/llm.txt --ObjectType File
