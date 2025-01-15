@@ -40,7 +40,7 @@ python3 -m http.server -d _build/html
 For Chinese version:
 
 ```bash
-make -e SPHINXOPTS="-D language='zh_CN'" html
+LANGUAGE="zh_CN" make html
 python3 -m http.server -d _build/html
 ```
 

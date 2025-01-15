@@ -14,10 +14,12 @@ release = 'v0.1.20250113'
 # I18N based on Readthedocs Environment
 # https://docs.readthedocs.io/en/stable/reference/environment-variables.html
 import os
-if os.getenv('READTHEDOCS_LANGUAGE') == 'zh-cn':
+if (os.getenv('READTHEDOCS_LANGUAGE') == 'zh-cn' or
+    os.getenv('LANGUAGE') == 'zh_CN'): # For local build
     project = 'MoonBit 月兔'
     author = '粤港澳大湾区数字经济院'
     copyright = '%Y, {author}'.format(author=author)
+    language = 'zh_CN'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
