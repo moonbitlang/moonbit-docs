@@ -16,7 +16,7 @@ jobs:
       - name: install
         run: pip install -r requirements.txt
       - name: build
-        run: make -e SPHINXOPTS="-D language='zh_CN'" html
+        run: LANGUAGE="zh_CN" make html
       - uses: aliyun/setup-aliyun-cli-action@v1
       - name: upload
         run: |
