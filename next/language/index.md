@@ -15,6 +15,8 @@ When MoonBit reaches beta, it means any backwards-incompatible changes will be s
 - State of the art compile-time performance.
 - Simple but practical, data-oriented language design.
 
+[Download this section in Markdown](path:/download/language/summary.md)
+
 ```{toctree}
 :hidden:
 introduction
