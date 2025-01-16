@@ -3,6 +3,9 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.13"
+  jobs:
+    pre_build:
+      - cd next && python3 llm.py && cd ..
 
 sphinx:
   configuration: next/conf.py
