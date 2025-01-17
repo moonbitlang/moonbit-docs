@@ -53,7 +53,7 @@ When the first parameter of a method is also the type it belongs to, methods can
 
 ### API design guideline
 Since there are two ways to define methods, and both allow dot syntax,
-a natural question is which syntax to choose when desining the API of a package.
+a natural question is which syntax to choose when designing the API of a package.
 The rule here is:
 
 - if the package exports only one primary type,
