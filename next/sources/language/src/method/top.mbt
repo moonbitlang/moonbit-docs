@@ -4,25 +4,12 @@ pub(all) enum List[X] {
   Cons(X, List[X])
 }
 
-pub fn List::concat[X](xs : List[List[X]]) -> List[X] {
+pub fn concat[X](self : List[List[X]]) -> List[X] {
   ...
 }
 // end method 1
 
-// start method 2
-fn List::map[X, Y](xs : List[X], f : (X) -> Y) -> List[Y] {
-  ...
-}
-// end method 2
-
-fn list() -> Unit {
-  // start method 4
-  let xs : List[List[_]] = { ... }
-  let ys = concat(xs)
-  // end method 4
-}
-
-// start method 5
+// start method overload example
 struct T1 {
   x1 : Int
 }
@@ -40,9 +27,8 @@ fn T2::default() -> T2 {
 }
 
 test {
-  // default() : T1::default() ? T2::default()?
   let t1 = T1::default()
   let t2 = T2::default()
 
 }
-// end method 5
+// end method overload example
