@@ -1,26 +1,32 @@
-// start method 7
+// start method declaration example
 enum List[X] {
   Nil
   Cons(X, List[X])
 }
 
-fn List::concat[X](xs : List[List[X]]) -> List[X] {
+fn length[X](self : List[X]) -> Int {
   ...
 }
-// end method 7
 
-// start method 3
-fn map[X, Y](self : List[X], f : (X) -> Y) -> List[Y] {
+fn List::length_qualified[X](xs : List[X]) -> Int {
   ...
 }
-// end method 3
+// end method declaration example
 
-// start method 6
+fn _call_syntax_example() -> Unit {
+// start method call syntax example
+  let l : List[Int] = Nil
+  println(length(l))
+  println(List::length_qualified(l))
+// end method call syntax example
+}
+
 fn f() -> Unit {
   let xs : @list.List[@list.List[Unit]] = Nil
+// start dot syntax example
+  // assume `xs` is a list of lists, all the following three lines are equivalent
   let _ = xs.concat()
   let _ = @list.List::concat(xs)
   let _ = @list.concat(xs)
-
+// end dot syntax example
 }
-// end method 6

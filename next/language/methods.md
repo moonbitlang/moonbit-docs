@@ -2,46 +2,38 @@
 
 ## Method system
 
-MoonBit supports methods in a different way from traditional object-oriented languages. A method in MoonBit is just a toplevel function associated with a type constructor. Methods can be defined using the syntax `fn TypeName::method_name(...) -> ...`:
+MoonBit supports methods in a different way from traditional object-oriented languages. A method in MoonBit is just a toplevel function associated with a type constructor.
+There are two ways to define a method:
+
+- `fn method_name(self : SelfType, ..)`, where the method belongs to `SelfType`. The name of the first parameter must be `self` here
+- `fn SelfTypeName::method_name(...)`, where the method belongs to `SelfTypeName`
 
 ```{literalinclude} /sources/language/src/method2/top.mbt
 :language: moonbit
-:start-after: start method 7
-:end-before: end method 7
+:start-after: start method declaration example
+:end-before: end method declaration example
 ```
 
-As a convenient shorthand, when the first parameter of a function is named `self`, MoonBit automatically defines the function as a method of the type of `self`:
-
-```{literalinclude} /sources/language/src/method/top.mbt
-:language: moonbit
-:start-after: start method 2
-:end-before: end method 2
-```
-
-is equivalent to:
+The difference between these two syntax is:
+the syntax `fn method_name(self : T, ..)` defines a regular function.
+So the defined method can be involked directly, just like regular functions.
+In the `fn T::method_name(..)` syntax, however,
+the method is defined in the small namespace `T`, and must be involked using qualified syntax `T::method_name(..)`:
 
 ```{literalinclude} /sources/language/src/method2/top.mbt
 :language: moonbit
-:start-after: start method 3
-:end-before: end method 3
+:start-after: start method call syntax example
+:end-before: end method call syntax example
 ```
 
-Methods are just regular functions owned by a type constructor. So when there is no ambiguity, methods can be called using regular function call syntax directly:
+Unlike regular functions, methods defined using the `TypeName::method_name` syntax support overloading:
+different types can define methods of the same name, because each method lives in a different name space:
 
 ```{literalinclude} /sources/language/src/method/top.mbt
 :language: moonbit
 :dedent:
-:start-after: start method 4
-:end-before: end method 4
-```
-
-Unlike regular functions, methods support overloading: different types can define methods of the same name. If there are multiple methods of the same name (but for different types) in scope, one can still call them by explicitly adding a `TypeName::` prefix:
-
-```{literalinclude} /sources/language/src/method/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start method 5
-:end-before: end method 5
+:start-after: start method overload example
+:end-before: end method overload example
 ```
 
 When the first parameter of a method is also the type it belongs to, methods can be called using dot syntax `x.method(...)`. MoonBit automatically finds the correct method based on the type of `x`, there is no need to write the type name and even the package name of the method:
@@ -55,12 +47,19 @@ When the first parameter of a method is also the type it belongs to, methods can
 ```{literalinclude} /sources/language/src/method2/top.mbt
 :language: moonbit
 :caption: using package with alias list
-:start-after: start method 6
-:end-before: end method 6
-:emphasize-lines: 5
+:start-after: start dot syntax example
+:end-before: end dot syntax example
 ```
 
-The highlighted line is only possible when there is no ambiguity in `@list`.
+### API design guideline
+Since there are two ways to define methods, and both allow dot syntax,
+a natural question is which syntax to choose when desining the API of a package.
+The rule here is:
+
+- if the package exports only one primary type,
+or if a method is intuitively unambiguous in the package,
+use the `fn f(self : T, ..)` syntax
+- otherwise, use the qualified `fn T::f(..)` syntax
 
 ## Operator Overloading
 
