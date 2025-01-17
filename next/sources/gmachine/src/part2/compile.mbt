@@ -23,9 +23,9 @@ fn compileR(
   arity : Int
 ) -> List[Instruction] {
   if arity == 0 {
-    compileC(self, env) + List::of([Update(arity), Unwind])
+    compileC(self, env) + @immut/list.of([Update(arity), Unwind])
   } else {
-    compileC(self, env) + List::of([Update(arity), Pop(arity), Unwind])
+    compileC(self, env) + @immut/list.of([Update(arity), Pop(arity), Unwind])
   }
 }
 
@@ -36,12 +36,12 @@ fn compileC(
   match self {
     Var(s) =>
       match env.lookup(s) {
-        None => List::of([PushGlobal(s)])
-        Some(n) => List::of([Push(n)])
+        None => @immut/list.of([PushGlobal(s)])
+        Some(n) => @immut/list.of([Push(n)])
       }
-    Num(n) => List::of([PushInt(n)])
+    Num(n) => @immut/list.of([PushInt(n)])
     App(e1, e2) =>
-      compileC(e2, env) + compileC(e1, argOffset(1, env)) + List::of([MkApp])
+      compileC(e2, env) + compileC(e1, argOffset(1, env)) + @immut/list.of([MkApp])
     Let(rec, defs, e) =>
       if rec {
         compileLetrec(compileC, defs, e, env)
@@ -71,7 +71,7 @@ fn compileLet(
       continue env, acc + code, rest
     }
   }
-  codes + comp(expr, env) + List::of([Slide(defs.length())])
+  codes + comp(expr, env) + @immut/list.of([Slide(defs.length())])
 }
 // end compile_let definition
 
@@ -96,7 +96,7 @@ fn compileLetrec(
     offset : Int
   ) -> List[Instruction] {
     match defs {
-      Nil => comp(expr, env) + List::of([Slide(n)])
+      Nil => comp(expr, env) + @immut/list.of([Slide(n)])
       Cons((_, expr), rest) =>
         compileC(expr, env) +
         Cons(Update(offset), compileDefs(rest, offset - 1))
@@ -108,70 +108,70 @@ fn compileLetrec(
 // end compile_letrec definition
 
 // start prim definition
-let compiled_primitives : List[(String, Int, List[Instruction])] = List::of(
+let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.of(
   [
     // Arith
     (
       "add",
       2,
-      List::of([Push(1), Eval, Push(1), Eval, Add, Update(2), Pop(2), Unwind]),
+      @immut/list.of([Push(1), Eval, Push(1), Eval, Add, Update(2), Pop(2), Unwind]),
     ),
     (
       "sub",
       2,
-      List::of([Push(1), Eval, Push(1), Eval, Sub, Update(2), Pop(2), Unwind]),
+      @immut/list.of([Push(1), Eval, Push(1), Eval, Sub, Update(2), Pop(2), Unwind]),
     ),
     (
       "mul",
       2,
-      List::of([Push(1), Eval, Push(1), Eval, Mul, Update(2), Pop(2), Unwind]),
+      @immut/list.of([Push(1), Eval, Push(1), Eval, Mul, Update(2), Pop(2), Unwind]),
     ),
     (
       "div",
       2,
-      List::of([Push(1), Eval, Push(1), Eval, Div, Update(2), Pop(2), Unwind]),
+      @immut/list.of([Push(1), Eval, Push(1), Eval, Div, Update(2), Pop(2), Unwind]),
     ),
     // Compare
     (
       "eq",
       2,
-      List::of([Push(1), Eval, Push(1), Eval, Eq, Update(2), Pop(2), Unwind]),
+      @immut/list.of([Push(1), Eval, Push(1), Eval, Eq, Update(2), Pop(2), Unwind]),
     ),
     (
       "neq",
       2,
-      List::of([Push(1), Eval, Push(1), Eval, Ne, Update(2), Pop(2), Unwind]),
+      @immut/list.of([Push(1), Eval, Push(1), Eval, Ne, Update(2), Pop(2), Unwind]),
     ),
     (
       "ge",
       2,
-      List::of([Push(1), Eval, Push(1), Eval, Ge, Update(2), Pop(2), Unwind]),
+      @immut/list.of([Push(1), Eval, Push(1), Eval, Ge, Update(2), Pop(2), Unwind]),
     ),
     (
       "gt",
       2,
-      List::of([Push(1), Eval, Push(1), Eval, Gt, Update(2), Pop(2), Unwind]),
+      @immut/list.of([Push(1), Eval, Push(1), Eval, Gt, Update(2), Pop(2), Unwind]),
     ),
     (
       "le",
       2,
-      List::of([Push(1), Eval, Push(1), Eval, Le, Update(2), Pop(2), Unwind]),
+      @immut/list.of([Push(1), Eval, Push(1), Eval, Le, Update(2), Pop(2), Unwind]),
     ),
     (
       "lt",
       2,
-      List::of([Push(1), Eval, Push(1), Eval, Lt, Update(2), Pop(2), Unwind]),
+      @immut/list.of([Push(1), Eval, Push(1), Eval, Lt, Update(2), Pop(2), Unwind]),
     ),
     // MISC
-    ("negate", 1, List::of([Push(0), Eval, Neg, Update(1), Pop(1), Unwind])),
+    ("negate", 1, @immut/list.of([Push(0), Eval, Neg, Update(1), Pop(1), Unwind])),
     (
       "if",
       3,
-      List::of(
+      @immut/list.of(
         [
           Push(0),
           Eval,
-          Cond(List::of([Push(1)]), List::of([Push(2)])),
+          Cond(@immut/list.of([Push(1)]), @immut/list.of([Push(2)])),
           Update(3),
           Pop(3),
           Unwind,

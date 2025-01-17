@@ -25,9 +25,9 @@ fn compileR(
   arity : Int
 ) -> List[Instruction] {
   if arity == 0 {
-    compileC(self, env) + List::of([Update(arity), Unwind])
+    compileC(self, env) + @immut/list.of([Update(arity), Unwind])
   } else {
-    compileC(self, env) + List::of([Update(arity), Pop(arity), Unwind])
+    compileC(self, env) + @immut/list.of([Update(arity), Pop(arity), Unwind])
   }
 }
 // end compile_r definition
@@ -40,12 +40,12 @@ fn compileC(
   match self {
     Var(s) =>
       match env.lookup(s) {
-        None => List::of([PushGlobal(s)])
-        Some(n) => List::of([PushArg(n)])
+        None => @immut/list.of([PushGlobal(s)])
+        Some(n) => @immut/list.of([PushArg(n)])
       }
-    Num(n) => List::of([PushInt(n)])
+    Num(n) => @immut/list.of([PushInt(n)])
     App(e1, e2) =>
-      compileC(e2, env) + compileC(e1, argOffset(1, env)) + List::of([MkApp])
+      compileC(e2, env) + compileC(e1, argOffset(1, env)) + @immut/list.of([MkApp])
     _ => abort("not support yet")
   }
 }

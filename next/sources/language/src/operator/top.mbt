@@ -55,7 +55,7 @@ fn add(i : Int, j : Int) -> Int {
 fn pipe() -> Unit {
   // start operator 4
   5 |> ignore // <=> ignore(5)
-  [] |> push(5) // <=> push([], 5)
+  [] |> Array::push(5) // <=> Array::push([], 5)
   1
   |> add(5) // <=> add(1, 5)
   |> ignore // <=> ignore(add(1, 5))

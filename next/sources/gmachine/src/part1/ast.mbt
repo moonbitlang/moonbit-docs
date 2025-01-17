@@ -35,7 +35,7 @@ fn ScDef::new[T](
 
 // start prelude_defs definition
 let prelude_defs : List[ScDef[String]] = {
-  let args : (FixedArray[String]) -> List[String] = List::of
+  let args : (FixedArray[String]) -> List[String] = @immut/list.of
   let id = ScDef::new("I", args(["x"]), Var("x")) // id x = x
   let k = 
     ScDef::new(
@@ -67,6 +67,6 @@ let prelude_defs : List[ScDef[String]] = {
       args(["f"]),
       App(App(Var("compose"), Var("f")), Var("f"))
     ) // twice f = compose f f
-  List::of([id, k, k1, s, compose, twice])
+  @immut/list.of([id, k, k1, s, compose, twice])
 }
 // end prelude_defs definition
