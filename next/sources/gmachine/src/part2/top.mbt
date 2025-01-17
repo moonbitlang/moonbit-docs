@@ -19,7 +19,7 @@ fn run(codes : List[String]) -> Node {
     heap : heap,
     stack : Nil,
     // start init definition
-    code : List::of([PushGlobal("main"), Eval]),
+    code : @immut/list.of([PushGlobal("main"), Eval]),
     // end init definition
     globals : globals,
     stats : 0,
@@ -31,7 +31,7 @@ fn run(codes : List[String]) -> Node {
 
 test "basic eval" {
   let main = "(defn main[] (let ([add1 (add 1)]) (add1 1)))"
-  inspect!(run(List::of([main])), content = "NNum(2)")
+  inspect!(run(@immut/list.of([main])), content = "NNum(2)")
   let main = "(defn main[] (let ([x 4] [y 5]) (sub x y)))"
-  inspect!(run(List::of([main])), content = "NNum(-1)")
+  inspect!(run(@immut/list.of([main])), content = "NNum(-1)")
 }

@@ -177,7 +177,7 @@ fn unwind(self : GState) -> Unit {
     NApp(a1, _) => {
       self.put_stack(addr)
       self.put_stack(a1)
-      self.put_code(List::of([Unwind]))
+      self.put_code(@immut/list.of([Unwind]))
     }
     NGlobal(_, n, c) => {
       if self.stack.length() < n {
@@ -193,7 +193,7 @@ fn unwind(self : GState) -> Unit {
     }
     NInd(a) => {
       self.put_stack(a)
-      self.put_code(List::of([Unwind]))
+      self.put_code(@immut/list.of([Unwind]))
     }
   }
 }
@@ -213,8 +213,8 @@ fn alloc_nodes(self : GState, n : Int) -> Unit {
 fn eval(self : GState) -> Unit {
   let addr = self.pop1()
   self.put_dump(self.code, self.stack)
-  self.stack = List::of([addr])
-  self.code = List::of([Unwind])
+  self.stack = @immut/list.of([addr])
+  self.code = @immut/list.of([Unwind])
 }
 // end eval definition
 

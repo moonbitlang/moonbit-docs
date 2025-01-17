@@ -175,7 +175,7 @@ fn unwind(self : GState) -> Unit {
     NApp(a1, _) => {
       self.put_stack(addr)
       self.put_stack(a1)
-      self.put_code(List::of([Unwind]))
+      self.put_code(@immut/list.of([Unwind]))
     }
     // start unwind_g definition
     NGlobal(_, n, c) => {
@@ -204,7 +204,7 @@ fn unwind(self : GState) -> Unit {
     // end unwind_g definition
     NInd(a) => {
       self.put_stack(a)
-      self.put_code(List::of([Unwind]))
+      self.put_code(@immut/list.of([Unwind]))
     }
     NConstr(_, _) => {
       match self.dump {
@@ -231,8 +231,8 @@ fn alloc_nodes(self : GState, n : Int) -> Unit {
 fn eval(self : GState) -> Unit {
   let addr = self.pop1()
   self.put_dump(self.code, self.stack)
-  self.stack = List::of([addr])
-  self.code = List::of([Unwind])
+  self.stack = @immut/list.of([addr])
+  self.code = @immut/list.of([Unwind])
 }
 
 fn condition(self : GState, i1 : List[Instruction], i2 : List[Instruction]) -> Unit {
@@ -336,7 +336,7 @@ fn gprint(self : GState) -> Unit {
     }
     NConstr(0, Nil) => self.output.write_string("Nil")
     NConstr(1, Cons(addr1, Cons(addr2, Nil))) => {
-      self.code = List::of([Instruction::Eval, Print, Eval, Print]) + self.code
+      self.code = @immut/list.of([Instruction::Eval, Print, Eval, Print]) + self.code
       self.put_stack(addr2)
       self.put_stack(addr1)
     }

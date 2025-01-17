@@ -230,7 +230,7 @@ fn parse_alts(
           self.next()
           let x = self.parse_var!()
           let xs = self.parse_var!()
-          (1, List::of([x, xs]))
+          (1, @immut/list.of([x, xs]))
         }
         other =>
           raise ParseError("parse_alts(): expect NIL or CONS but got \{other}")

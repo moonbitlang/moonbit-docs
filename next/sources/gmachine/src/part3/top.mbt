@@ -20,7 +20,7 @@ fn run(codes : List[String]) -> String {
     heap : heap,
     stack : Nil,
     // start init definition
-    code : List::of([PushGlobal("main"), Eval, Print]),
+    code : @immut/list.of([PushGlobal("main"), Eval, Print]),
     // end init definition
     globals : globals,
     stats : 0,
@@ -36,7 +36,7 @@ test "basic eval" {
     let (_, v) = kv
     basic.push(v)
   }
-  let basic = List::from_array(basic)
+  let basic = @immut/list.from_array(basic)
   
   let main = "(defn main[] (take 20 fibs))"
   inspect!(run(Cons(main, basic)), content = "0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 Nil")
