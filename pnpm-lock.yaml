@@ -11,8 +11,8 @@ importers:
   moonbit-tour:
     dependencies:
       '@moonbit/moonpad-monaco':
-        specifier: ^0.1.202501070
-        version: 0.1.202501070(monaco-editor-core@0.52.2)
+        specifier: ^0.1.202501220
+        version: 0.1.202501220(monaco-editor-core@0.52.2)
       monaco-editor-core:
         specifier: ^0.52.0
         version: 0.52.2
@@ -403,14 +403,14 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@moonbit/analyzer@0.1.202501060':
-    resolution: {integrity: sha512-B/XMJdpnaRUvsSb5qhlcFix4QqOFD4IjBRQE1IuzXiQxTRcfg2SOWU6rzLXJfs4tg/WVVzs+prAtTvOhnY/n/w==}
+  '@moonbit/analyzer@0.1.202501210':
+    resolution: {integrity: sha512-wD8ylYSiRWZSI42VB5ofllcdWqt9ap3CWyLs4bIQwxv67To+UQcN3hdx10yJC+uA8by+aRL0TaF9+SwMYrvgjg==}
 
-  '@moonbit/moonc-worker@0.1.202501060':
-    resolution: {integrity: sha512-1qBd+Wx8h+TMiO2+VtgwduUkT7AzTTkQ5Q7s2EF4riiFjee9yrDGVNQ0UlUvwMq6KNw2c8tvm6BiL+sxPHuozA==}
+  '@moonbit/moonc-worker@0.1.202501210':
+    resolution: {integrity: sha512-h41QQnzWAooTYiEK8xY1tsXS0f8v16uVbSOifMYu7vMY1CGDEhHTJauHhHP6HvjTzDphZ5MUw2pQz5rnB/AWXg==}
 
-  '@moonbit/moonpad-monaco@0.1.202501070':
-    resolution: {integrity: sha512-I7MVJ7yUqH1PZi8DN/QmrxyvMb7JBsxTPYjSgpFcxGog8KNbNyaPaWRqVNfzVjJLAQXpDLc18S+ZrYsrw5cVHg==}
+  '@moonbit/moonpad-monaco@0.1.202501220':
+    resolution: {integrity: sha512-c9fvba6CusMA3pPqARh648jUWRk5EzEifBdPzWjsK/3Lkl5ZvvQfOcJTktdYjgctp+y7KBEver5dz3LwkH/IBw==}
     peerDependencies:
       monaco-editor-core: ^0.52.0
 
@@ -835,6 +835,15 @@ packages:
 
   debug@4.3.5:
     resolution: {integrity: sha512-pt0bNEmneDIvdL1Xsd9oDQ/wrQRkXDT4AUWlNZNPKvW5x/jyO9VFXkJUP07vQ2upmw5PlaITaPKc31jK13V+jg==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+
+  debug@4.4.0:
+    resolution: {integrity: sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA==}
     engines: {node: '>=6.0'}
     peerDependencies:
       supports-color: '*'
@@ -2843,14 +2852,14 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@moonbit/analyzer@0.1.202501060': {}
+  '@moonbit/analyzer@0.1.202501210': {}
 
-  '@moonbit/moonc-worker@0.1.202501060': {}
+  '@moonbit/moonc-worker@0.1.202501210': {}
 
-  '@moonbit/moonpad-monaco@0.1.202501070(monaco-editor-core@0.52.2)':
+  '@moonbit/moonpad-monaco@0.1.202501220(monaco-editor-core@0.52.2)':
     dependencies:
-      '@moonbit/analyzer': 0.1.202501060
-      '@moonbit/moonc-worker': 0.1.202501060
+      '@moonbit/analyzer': 0.1.202501210
+      '@moonbit/moonc-worker': 0.1.202501210
       '@zenfs/core': 1.7.2
       comlink: 4.4.2
       monaco-editor-core: 0.52.2
@@ -3358,6 +3367,10 @@ snapshots:
   debug@4.3.5:
     dependencies:
       ms: 2.1.2
+
+  debug@4.4.0:
+    dependencies:
+      ms: 2.1.3
 
   decode-named-character-reference@1.0.2:
     dependencies:
@@ -4949,7 +4962,7 @@ snapshots:
 
   send@1.1.0:
     dependencies:
-      debug: 4.3.5
+      debug: 4.4.0
       destroy: 1.2.0
       encodeurl: 2.0.0
       escape-html: 1.0.3
