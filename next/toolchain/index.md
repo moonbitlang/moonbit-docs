@@ -6,7 +6,9 @@ Here are some manuals that may help you use the toolchains of the programming la
 - VSCode extension
 - ...
 
+```{only} html
 [Download this section in Markdown](path:/download/toolchain/summary.md)
+```
 
 ```{toctree}
 :maxdepth: 2

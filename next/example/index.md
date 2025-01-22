@@ -2,7 +2,9 @@
 
 Here are some examples built with MoonBit.
 
+```{only} html
 [Download this section in Markdown](path:/download/example/summary.md)
+```
 
 ```{toctree}
 :maxdepth: 2
