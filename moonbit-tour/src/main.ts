@@ -11,6 +11,8 @@ toc.init();
 const markdown = document.querySelector<HTMLDivElement>("#tour-content")!;
 const next = document.querySelector<HTMLDivElement>("#nav-next")!;
 const back = document.querySelector<HTMLDivElement>("#nav-back")!;
+const lessonIndex = document.querySelector<HTMLSpanElement>("#lesson-index")!;
+const lessonTotal = document.querySelector<HTMLSpanElement>("#lesson-total")!;
 
 window.addEventListener("route-change", async (e) => {
   const state = e.detail;
@@ -19,4 +21,6 @@ window.addEventListener("route-change", async (e) => {
   next.innerHTML = state.next;
   back.innerHTML = state.back;
   document.title = state.title;
+  lessonIndex.textContent = state.index.toString();
+  lessonTotal.textContent = state.total.toString();
 });

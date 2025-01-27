@@ -11,6 +11,8 @@ type Page = {
   back: string;
   next: string;
   path: string;
+  index: number;
+  total: number;
 };
 
 export async function collectTourPage(): Promise<Page[]> {
@@ -28,6 +30,8 @@ export async function collectTourPage(): Promise<Page[]> {
     back: `<span class="text-zinc-500">Back</span>`,
     next: `<a href="/${scan.slug(lessons[0])}/index.html">Next</a>`,
     path: "index.html",
+    index: 1,
+    total: 1,
     toc,
   });
 
@@ -46,20 +50,12 @@ export async function collectTourPage(): Promise<Page[]> {
           ? `<span class="text-zinc-500">Next</span>`
           : `<a href="/${scan.slug(lessons[i + 1])}/index.html">Next</a>`,
       path: `${scan.slug(l)}/index.html`,
+      index: l.index + 1,
+      total: l.total,
     };
     pages.push(p);
   }
 
-  const tocPage = scan.generateTOC(chapters);
-  pages.push({
-    title: `Table of Contents - MoonBit Language Tour`,
-    toc,
-    markdown: tocPage.markdown,
-    code: tocPage.code,
-    back: `<span class="text-zinc-500">Back</span>`,
-    next: `<span class="text-zinc-500">Next</span>`,
-    path: "table-of-contents/index.html",
-  });
   return pages;
 }
 
@@ -70,7 +66,9 @@ export function render(template: string, page: Page): string {
     .replace("%MARKDOWN%", remark.mdToHtml(page.markdown))
     .replace("%CODE%", shiki.renderMoonBitCode(page.code))
     .replace("%BACK%", page.back)
-    .replace("%NEXT%", page.next);
+    .replace("%NEXT%", page.next)
+    .replace("%INDEX%", page.index.toString())
+    .replace("%TOTAL%", page.total.toString());
 }
 
 export function route(page: Page): string {
@@ -80,5 +78,7 @@ export function route(page: Page): string {
     code: page.code,
     back: page.back,
     next: page.next,
+    index: page.index,
+    total: page.total,
   });
 }

@@ -4,6 +4,8 @@ export type RouteState = {
   code: string;
   back: string;
   next: string;
+  index: number;
+  total: number;
 };
 
 export type Theme = "light" | "dark";

@@ -9,8 +9,8 @@ type Chapter = {
 type Lesson = {
   chapter: string;
   lesson: string;
-  lessonIndex: number;
-  lessonsLength: number;
+  index: number;
+  total: number;
   markdown: string;
   code: string;
 };
@@ -41,8 +41,8 @@ async function scanTour(): Promise<Chapter[]> {
         return {
           chapter,
           lesson,
-          lessonIndex: i,
-          lessonsLength: arr.length,
+          index: i,
+          total: arr.length,
           markdown: md,
           code: mbt,
         };
@@ -55,23 +55,6 @@ async function scanTour(): Promise<Chapter[]> {
 
 function slug(lesson: Lesson): string {
   return `${lesson.chapter.replaceAll(" ", "-")}/${lesson.lesson.replaceAll(" ", "-")}`;
-}
-
-function generateTOC(chapters: Chapter[]): { markdown: string; code: string } {
-  const lines: string[] = [];
-  lines.push(`# Table of Contents`);
-  for (const c of chapters) {
-    lines.push(`## ${c.chapter}`);
-    for (const l of c.lessons) {
-      lines.push(`- [${l.lesson}](/${slug(l)}/index.html)`);
-    }
-  }
-  return {
-    markdown: lines.join("\n"),
-    code: `fn main {
-  println("hello, world")
-}`,
-  };
 }
 
 function renderTOC(chapters: Chapter[]): string {
@@ -97,4 +80,4 @@ function renderTOC(chapters: Chapter[]): string {
   return lines.join("\n");
 }
 
-export { generateTOC, renderTOC, scanTour, slug };
+export { renderTOC, scanTour, slug };
