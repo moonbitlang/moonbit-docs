@@ -9,4 +9,3 @@ The `0xFFFF` is a hexadecimal number, `0o777` is an octal number, `0b1010` is a 
 and `1_000_000` is a decimal number equivalent to `1000000`.
 
 
-

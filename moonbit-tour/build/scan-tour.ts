@@ -1,7 +1,10 @@
+import { Dirent } from "fs";
 import fs from "fs/promises";
 import path from "path";
 
-type Chapter = {
+export type Locale = "en" | "zh";
+
+export type Chapter = {
   chapter: string;
   lessons: Lesson[];
 };
@@ -13,11 +16,18 @@ type Lesson = {
   total: number;
   markdown: string;
   code: string;
+  locale: Locale;
 };
 
-async function dirs(path: string) {
+type Tour = {
+  en: Chapter[];
+  zh: Chapter[];
+};
+
+async function dirs(path: string, filter?: (d: Dirent) => boolean) {
   return (await fs.readdir(path, { withFileTypes: true }))
     .filter((i) => i.isDirectory())
+    .filter(filter ?? (() => true))
     .sort((a, b) => {
       const na = +a.name.slice(a.name.search(/\d+/), a.name.search("_"));
       const nb = +b.name.slice(b.name.search(/\d+/), b.name.search("_"));
@@ -25,36 +35,53 @@ async function dirs(path: string) {
     });
 }
 
-async function scanTour(): Promise<Chapter[]> {
-  const chapterFolders = await dirs("tour");
-  const chapters: Chapter[] = [];
-  for (const c of chapterFolders) {
-    const chapter = c.name.split("_").slice(1).join(" ");
-    const ds = await dirs(path.join(c.parentPath, c.name));
-    const lessons: Lesson[] = await Promise.all(
-      ds.map(async (d, i, arr) => {
-        const lesson = d.name.split("_").slice(1).join(" ");
-        const mdPath = path.join(d.parentPath, d.name, "index.md");
-        const mbtPath = path.join(d.parentPath, d.name, "index.mbt");
-        const md = await fs.readFile(mdPath, "utf8");
-        const mbt = await fs.readFile(mbtPath, "utf8");
-        return {
-          chapter,
-          lesson,
-          index: i,
-          total: arr.length,
-          markdown: md,
-          code: mbt,
-        };
-      }),
-    );
-    chapters.push({ chapter, lessons });
+async function scanTour(): Promise<Tour> {
+  async function getChapters(
+    folders: Dirent[],
+    locale: Locale,
+  ): Promise<Chapter[]> {
+    const chapters: Chapter[] = [];
+    for (const f of folders) {
+      const chapter = f.name.split("_").slice(1).join(" ");
+      const ds = await dirs(path.join(f.parentPath, f.name));
+      const lessons: Lesson[] = await Promise.all(
+        ds.map(async (d, i, arr) => {
+          const lesson = d.name.split("_").slice(1).join(" ");
+          const mdPath = path.join(d.parentPath, d.name, "index.md");
+          const mbtPath = path.join(d.parentPath, d.name, "index.mbt");
+          const md = await fs.readFile(mdPath, "utf8");
+          const mbt = await fs.readFile(mbtPath, "utf8");
+          return {
+            chapter,
+            lesson,
+            index: i,
+            total: arr.length,
+            markdown: md,
+            code: mbt,
+            locale,
+          };
+        }),
+      );
+      chapters.push({ chapter, lessons });
+    }
+    return chapters;
   }
-  return chapters;
+  const enChapterFolders = await dirs("tour", (d) => d.name !== "zh");
+  const zhChapterFolders = await dirs("tour/zh");
+  const [enChapters, zhChapters] = await Promise.all([
+    getChapters(enChapterFolders, "en"),
+    getChapters(zhChapterFolders, "zh"),
+  ]);
+  return {
+    en: enChapters,
+    zh: zhChapters,
+  };
 }
 
 function slug(lesson: Lesson): string {
-  return `${lesson.chapter.replaceAll(" ", "-")}/${lesson.lesson.replaceAll(" ", "-")}`;
+  const prefix = lesson.locale === "zh" ? "zh/" : "";
+  const postfix = `${lesson.chapter.replaceAll(" ", "-")}/${lesson.lesson.replaceAll(" ", "-")}`;
+  return prefix + postfix;
 }
 
 function renderTOC(chapters: Chapter[]): string {
