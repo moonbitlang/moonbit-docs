@@ -31,4 +31,5 @@ docs
 ffi-and-wasm-host
 derive
 async-experimental
+error_codes/index
 ```
