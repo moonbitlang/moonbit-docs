@@ -53,7 +53,7 @@ html_theme_options = {
     }
 }
 html_logo = "_static/logo.png"
-html_favicon = "_static/favicon.ico"
+html_favicon = "_static/logo.png"
 
 # -- Options for LaTeX output ------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-latex-output
