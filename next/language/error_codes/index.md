@@ -6,5 +6,4 @@ This page lists all error codes produced by the MoonBit compiler.
 :titlesonly:
 :glob:
 E*
-W*
 ```
