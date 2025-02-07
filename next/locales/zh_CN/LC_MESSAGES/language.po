@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 15:04+0800\n"
+"POT-Creation-Date: 2025-02-07 17:04+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2073,7 +2073,94 @@ msgid "E1018"
 msgstr ""
 
 #: ../../language/error_codes/E1018.md:3
-msgid "There is no [continue] in this loop expression, so [loop] is useless here."
+msgid "There is no `continue` in this loop expression, so `loop` is useless here."
+msgstr ""
+
+#: ../../language/error_codes/E1018.md:5
+msgid ""
+"This error occurs when using a `loop` expression that contains no "
+"`continue` statement. In MoonBit, a `loop` without any `continue` "
+"statements is equivalent to an block expression that will be executed "
+"only once, making the `loop` keyword redundant in such cases. You should "
+"either add a `continue` statement if you need to restart the loop from "
+"the beginning, or use a simpler control flow construct like `match` or "
+"`if`."
+msgstr ""
+
+#: ../../language/error_codes/E1018.md:12
+#: ../../language/error_codes/E2000.md:17 ../../language/error_codes/E3003.md:5
+#: ../../language/error_codes/E3004.md:6 ../../language/error_codes/E3005.md:14
+#: ../../language/error_codes/E3006.md:7 ../../language/error_codes/E3007.md:5
+#: ../../language/error_codes/E3008.md:5 ../../language/error_codes/E3009.md:5
+#: ../../language/error_codes/E3010.md:5 ../../language/error_codes/E4000.md:5
+#: ../../language/error_codes/E4005.md:5 ../../language/error_codes/E4007.md:8
+#: ../../language/error_codes/E4056.md:5
+#, fuzzy
+msgid "Erroneous example"
+msgstr "以下是一些示例："
+
+#: ../../language/error_codes/E1018.md:14
+msgid ""
+"fn countdown(n : Int) -> Int {\n"
+"  let mut count = n\n"
+"  loop count {\n"
+"    _..<0 => break\n"
+"    _ => count = count - 1\n"
+"  }\n"
+"  return count\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1018.md:25
+#: ../../language/error_codes/E2000.md:39
+#: ../../language/error_codes/E3003.md:13
+#: ../../language/error_codes/E3004.md:14
+#: ../../language/error_codes/E3005.md:20
+#: ../../language/error_codes/E3006.md:16
+#: ../../language/error_codes/E3007.md:20
+#: ../../language/error_codes/E3008.md:14
+#: ../../language/error_codes/E3009.md:20
+#: ../../language/error_codes/E3010.md:13
+#: ../../language/error_codes/E4000.md:17
+#: ../../language/error_codes/E4005.md:14
+#: ../../language/error_codes/E4006.md:21
+#: ../../language/error_codes/E4007.md:21
+#: ../../language/error_codes/E4056.md:22
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E1018.md:27
+msgid "Either add a `continue` statement if you need to restart the loop:"
+msgstr ""
+
+#: ../../language/error_codes/E1018.md:29
+msgid ""
+"fn countdown(n : Int) -> Int {\n"
+"  let mut count = n\n"
+"  loop count {\n"
+"    _..<0 => break\n"
+"    _ => {\n"
+"      continue count - 1\n"
+"    }\n"
+"  }\n"
+"  return count\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1018.md:42
+msgid "Or use `if`/`match` you don't need to use `continue`:"
+msgstr ""
+
+#: ../../language/error_codes/E1018.md:44
+msgid ""
+"fn countdown(n : Int) -> Int {\n"
+"  let mut count = n\n"
+"  match count {\n"
+"    _..<0 => ()\n"
+"    _ => count = count - 1\n"
+"  }\n"
+"  return count\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1019.md:1
@@ -2279,16 +2366,6 @@ msgid ""
 "the documentation or the author of these packages for further details."
 msgstr ""
 
-#: ../../language/error_codes/E2000.md:17 ../../language/error_codes/E3003.md:5
-#: ../../language/error_codes/E3004.md:6 ../../language/error_codes/E3005.md:14
-#: ../../language/error_codes/E3006.md:7 ../../language/error_codes/E3007.md:5
-#: ../../language/error_codes/E3008.md:5 ../../language/error_codes/E3009.md:5
-#: ../../language/error_codes/E3010.md:5 ../../language/error_codes/E4000.md:5
-#: ../../language/error_codes/E4005.md:5 ../../language/error_codes/E4007.md:5
-#, fuzzy
-msgid "Erroneous example"
-msgstr "以下是一些示例："
-
 #: ../../language/error_codes/E2000.md:19
 msgid ""
 "/// @alert deprecated \"Use `greet` instead\"\n"
@@ -2308,22 +2385,6 @@ msgid ""
 "  println(greeting())\n"
 "  //      ^~~~~~~~ Warning (Alert deprecated): Use `greet` instead(2000)\n"
 "}\n"
-msgstr ""
-
-#: ../../language/error_codes/E2000.md:39
-#: ../../language/error_codes/E3003.md:13
-#: ../../language/error_codes/E3004.md:14
-#: ../../language/error_codes/E3005.md:20
-#: ../../language/error_codes/E3006.md:16
-#: ../../language/error_codes/E3007.md:11
-#: ../../language/error_codes/E3008.md:11
-#: ../../language/error_codes/E3009.md:20
-#: ../../language/error_codes/E3010.md:13
-#: ../../language/error_codes/E4000.md:17
-#: ../../language/error_codes/E4005.md:14
-#: ../../language/error_codes/E4006.md:21
-#: ../../language/error_codes/E4007.md:14
-msgid "Suggestion"
 msgstr ""
 
 #: ../../language/error_codes/E2000.md:41
@@ -2513,11 +2574,26 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E3007.md:7
-msgid "let {a, .., c} = s\n"
+msgid ""
+"struct S {\n"
+"  a : Int\n"
+"  b : Int\n"
+"  c : Int\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let s : S = { a : 1, b : 2, c : 3 }\n"
+"  let { a, .., c } = s\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3007.md:13
-msgid "let {a, c, ..} = s\n"
+#: ../../language/error_codes/E3007.md:22
+msgid ""
+"// ...\n"
+"fn main {\n"
+"  // ...\n"
+"  let { a, c, .. } = s\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E3008.md:1
@@ -2531,15 +2607,23 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E3008.md:7
-msgid "let [fst, .., .., snd] = array\n"
+msgid ""
+"fn main {\n"
+"  let array = [1, 2, 3, 4, 5]\n"
+"  let [fst, .., .., snd] = array\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3008.md:13
+#: ../../language/error_codes/E3008.md:16
 msgid "Remove the extra `..` pattern."
 msgstr ""
 
-#: ../../language/error_codes/E3008.md:15
-msgid "let [fst, .., snd] = array\n"
+#: ../../language/error_codes/E3008.md:18
+msgid ""
+"fn main {\n"
+"  // ...\n"
+"  let [fst, .., snd] = array\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E3009.md:1
@@ -2927,42 +3011,51 @@ msgstr ""
 
 #: ../../language/error_codes/E4007.md:3
 msgid ""
-"Constructor arguments cannot be unit `()`. MoonBit does not allow "
-"constructors to take unit as an argument because it would be redundant - "
-"a constructor without arguments already represents a singleton value."
+"When constructing a enum, the arguments passed to the constructor cannot "
+"be unit `()`. MoonBit does not allow constructors to take unit as an "
+"argument because it would be redundant - a constructor without arguments "
+"already represents a singleton value."
 msgstr ""
 
-#: ../../language/error_codes/E4007.md:7
+#: ../../language/error_codes/E4007.md:10
 msgid ""
 "enum Status {\n"
-"  Done()  // Error: constructor can't take unit as argument\n"
+"  Done\n"
 "  Pending\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let status = Done() // Error: constructor can't take unit as argument\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4007.md:16
+#: ../../language/error_codes/E4007.md:23
 msgid "Remove the unit argument from the constructor since it adds no value:"
-msgstr ""
-
-#: ../../language/error_codes/E4007.md:18
-msgid ""
-"enum Status {\n"
-"  Done    // Correct: constructor without arguments\n"
-"  Pending\n"
-"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4007.md:25
 msgid ""
-"If you need the constructor to take arguments, provide meaningful values "
-"instead of unit:"
+"// ...\n"
+"fn main {\n"
+"  let status = Done\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4007.md:27
+#: ../../language/error_codes/E4007.md:32
+msgid ""
+"If you really need the constructor to take a unit arguments, explicitly "
+"use `Unit` as its argument"
+msgstr ""
+
+#: ../../language/error_codes/E4007.md:35
 msgid ""
 "enum Status {\n"
-"  Done(Int) // Constructor with meaningful argument\n"
+"  Done(Unit)\n"
 "  Pending\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let status = Done(())\n"
 "}\n"
 msgstr ""
 
@@ -3348,7 +3441,41 @@ msgid "E4056"
 msgstr ""
 
 #: ../../language/error_codes/E4056.md:3
-msgid "The method has been defined."
+msgid "Method has already been defined."
+msgstr ""
+
+#: ../../language/error_codes/E4056.md:7
+msgid ""
+"struct Point {\n"
+"  x: Int\n"
+"  y: Int\n"
+"}\n"
+"\n"
+"fn Point::to_string(self : Point) -> String {\n"
+"  \"(\" + self.x.to_string() + \",\" + self.y.to_string() + \")\"\n"
+"}\n"
+"\n"
+"fn Point::to_string(self : Point) -> String {\n"
+"  \"<\" + self.x.to_string() + \",\" + self.y.to_string() + \">\"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4056.md:24
+msgid "Remove the duplicate method and keep only one method:"
+msgstr ""
+
+#: ../../language/error_codes/E4056.md:26
+msgid ""
+"struct Point {\n"
+"  x: Int\n"
+"  y: Int\n"
+"}\n"
+"\n"
+"fn Point::to_string(self : Point) -> String {\n"
+"  \"(\" + self.x.to_string() + \",\" + self.y.to_string() + \")\"\n"
+"}\n"
+"\n"
+"// Remove the second Point::to_string method\n"
 msgstr ""
 
 #: ../../language/error_codes/E4057.md:1
@@ -4085,7 +4212,8 @@ msgid ""
 "docs](https://github.com/moonbitlang/moonbit-docs)."
 msgstr ""
 "许多错误条目只有非常简单的描述。我们非常欢迎您通过向 [moonbitlang/moonbit-"
-"docs](https://github.com/moonbitlang/moonbit-docs) 提交 Pull Request 的方式来扩充条目内容。"
+"docs](https://github.com/moonbitlang/moonbit-docs) 提交 Pull Request "
+"的方式来扩充条目内容。"
 
 #: ../../language/error_codes/index.md:11
 msgid "This page lists all error codes produced by the MoonBit compiler."
@@ -9783,5 +9911,62 @@ msgstr ""
 #~ "</body>\n"
 #~ "\n"
 #~ "</html>\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "There is no [continue] in this "
+#~ "loop expression, so [loop] is useless"
+#~ " here."
+#~ msgstr ""
+
+#~ msgid "let {a, .., c} = s\n"
+#~ msgstr ""
+
+#~ msgid "let {a, c, ..} = s\n"
+#~ msgstr ""
+
+#~ msgid "let [fst, .., .., snd] = array\n"
+#~ msgstr ""
+
+#~ msgid "let [fst, .., snd] = array\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Constructor arguments cannot be unit "
+#~ "`()`. MoonBit does not allow "
+#~ "constructors to take unit as an "
+#~ "argument because it would be redundant"
+#~ " - a constructor without arguments "
+#~ "already represents a singleton value."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "enum Status {\n"
+#~ "  Done()  // Error: constructor can't take unit as argument\n"
+#~ "  Pending\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "enum Status {\n"
+#~ "  Done    // Correct: constructor without arguments\n"
+#~ "  Pending\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you need the constructor to "
+#~ "take arguments, provide meaningful values "
+#~ "instead of unit:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "enum Status {\n"
+#~ "  Done(Int) // Constructor with meaningful argument\n"
+#~ "  Pending\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "The method has been defined."
 #~ msgstr ""
 
