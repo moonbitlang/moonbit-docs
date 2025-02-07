@@ -114,6 +114,38 @@ WebAssembly.instantiateStreaming(fetch("xxx.wasm"), {
 
 Check out the documentation such as [MDN](https://developer.mozilla.org/en-US/docs/WebAssembly) or the manual of runtime that you're using to embed the Wasm.
 
+
+In order to passing closure to host, we need to add `make_closure` into `moonbit:ffi`.
+e.g. [onclick](https://html.spec.whatwg.org/multipage/webappapis.html#handler-onclick)
+
+```moonbit
+type MouseEvent 
+type Window 
+fn onclick(self : Window, e : (MouseEvent) -> Unit) = "Window" "onclick"
+pub fn print_hello(self : Window) -> Unit {
+  self.onclick(fn (_){ println("hello")})
+}
+```
+
+```typescript
+let importObject = { 
+  Window : {
+    onclick : (w : Window, f : (e : MouseEvent) => void ) => w.onclick = f 
+  },
+  spectest: {
+    print_char: log
+  },
+  "moonbit:ffi": {
+    make_closure: (funcref, closure) => funcref.bind(null, closure)
+  } 
+}
+WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
+  (obj) => {
+    obj.instance.exports["print_hello"](window);
+  }
+);
+```
+
 ## Example: Smiling face
 
 Let's walk through a full example to draw a smiling face using Canvas API in MoonBit. Suppose you created a new project with `moon new draw`
