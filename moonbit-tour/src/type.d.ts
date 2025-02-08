@@ -6,6 +6,12 @@ export type RouteState = {
   next: string;
   index: number;
   total: number;
+  locale: string;
+  enHref: string;
+  zhHref: string;
+  homePage: string;
+  homePageHref: string;
+  toc: string;
 };
 
 export type Theme = "light" | "dark";
