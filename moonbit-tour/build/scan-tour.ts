@@ -1,6 +1,7 @@
 import { Dirent } from "fs";
 import fs from "fs/promises";
 import path from "path";
+import * as remark from "./remark";
 
 export type Locale = "en" | "zh";
 
@@ -12,6 +13,7 @@ export type Chapter = {
 type Lesson = {
   chapter: string;
   lesson: string;
+  title: string;
   index: number;
   total: number;
   markdown: string;
@@ -51,9 +53,11 @@ async function scanTour(): Promise<Tour> {
           const mbtPath = path.join(d.parentPath, d.name, "index.mbt");
           const md = await fs.readFile(mdPath, "utf8");
           const mbt = await fs.readFile(mbtPath, "utf8");
+          const title = remark.getFirstH1Title(md) ?? lesson;
           return {
             chapter,
             lesson,
+            title,
             index: i,
             total: arr.length,
             markdown: md,
@@ -97,7 +101,7 @@ function renderTOC(chapters: Chapter[]): string {
     lines.push(`<ul class="toc-sections bg-gray-50 dark:bg-zinc-700">`);
     for (const l of c.lessons) {
       lines.push(
-        `<li><a class="toc-link text-base capitalize pl-2 py-1 block" href="/${slug(l)}/index.html">${l.lesson}</a></li>`,
+        `<li><a class="toc-link text-base capitalize pl-2 py-1 block" href="/${slug(l)}/index.html">${l.title}</a></li>`,
       );
     }
     lines.push(`</ul>`);
