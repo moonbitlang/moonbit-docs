@@ -344,7 +344,7 @@ let new_result = res2.map_err(fn(x) { x + "!" }) // Err("error!")
 ```
 
 - `map` applies a function to the value within, except it doesn't nothing if result is `Err`.
-- `map_error` does the opposite.
+- `map_err` does the opposite.
 
 Unlike some languages, MoonBit treats error-able and nullable value differently. Although one might treat them analogously, as an `Err` result contains no value, only the error, which is like `null`. MoonBit knows that.
 
