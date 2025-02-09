@@ -107,12 +107,9 @@ Currently, the following operators can be overloaded:
 | `_[_]` (get item)     | `op_get`     |
 | `_[_] = _` (set item) | `op_set`     |
 | `_[_:_]` (view)       | `op_as_view` |
-| `&`      | `land`  |
-| `\|`     | `lor`   |
-| `^`      | `lxor`  |
-| `<<`     | `op_shl`   |
-| `>>`     | `op_shr`   |
-
+| `&`                   | `land`       |
+| `\|`                  | `lor`        |
+| `^`                   | `lxor`       |
 
 By implementing `op_as_view` method, you can create a view for a user-defined type. Here is an example:
 
