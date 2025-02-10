@@ -39,7 +39,7 @@ User can write `@lib.encode` instead of `encode`.
 The `test-import` field is used to specify other packages that the black-box test package of this package depends on,
 with the same format as `import`.
 
-The `test-import` field is used to specify whether the public definitions from the package being tested should be imported (`true`) by default.
+The `test-import-all` field is used to specify whether all public definitions from the package being tested should be imported (`true`) by default.
 
 ### wbtest-import
 
