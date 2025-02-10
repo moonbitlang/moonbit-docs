@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 17:04+0800\n"
+"POT-Creation-Date: 2025-02-10 09:56+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1778,8 +1778,8 @@ msgid ""
 msgstr "`map` 将函数应用于内部的值；如果结果是 `Err`，则不执行任何操作。"
 
 #: ../../language/error-handling.md:347
-msgid "`map_error` does the opposite."
-msgstr "`map_error` 则相反。"
+msgid "`map_err` does the opposite."
+msgstr "`map_err` 则相反。"
 
 #: ../../language/error-handling.md:349
 msgid ""
@@ -2088,13 +2088,14 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E1018.md:12
-#: ../../language/error_codes/E2000.md:17 ../../language/error_codes/E3003.md:5
+#: ../../language/error_codes/E2000.md:17 ../../language/error_codes/E3001.md:5
+#: ../../language/error_codes/E3002.md:5 ../../language/error_codes/E3003.md:5
 #: ../../language/error_codes/E3004.md:6 ../../language/error_codes/E3005.md:14
 #: ../../language/error_codes/E3006.md:7 ../../language/error_codes/E3007.md:5
 #: ../../language/error_codes/E3008.md:5 ../../language/error_codes/E3009.md:5
-#: ../../language/error_codes/E3010.md:5 ../../language/error_codes/E4000.md:5
-#: ../../language/error_codes/E4005.md:5 ../../language/error_codes/E4007.md:8
-#: ../../language/error_codes/E4056.md:5
+#: ../../language/error_codes/E3010.md:5 ../../language/error_codes/E3011.md:6
+#: ../../language/error_codes/E4000.md:5 ../../language/error_codes/E4005.md:5
+#: ../../language/error_codes/E4007.md:8 ../../language/error_codes/E4056.md:5
 #, fuzzy
 msgid "Erroneous example"
 msgstr "以下是一些示例："
@@ -2113,6 +2114,8 @@ msgstr ""
 
 #: ../../language/error_codes/E1018.md:25
 #: ../../language/error_codes/E2000.md:39
+#: ../../language/error_codes/E3001.md:23
+#: ../../language/error_codes/E3002.md:21
 #: ../../language/error_codes/E3003.md:13
 #: ../../language/error_codes/E3004.md:14
 #: ../../language/error_codes/E3005.md:20
@@ -2121,6 +2124,7 @@ msgstr ""
 #: ../../language/error_codes/E3008.md:14
 #: ../../language/error_codes/E3009.md:20
 #: ../../language/error_codes/E3010.md:13
+#: ../../language/error_codes/E3011.md:16
 #: ../../language/error_codes/E4000.md:17
 #: ../../language/error_codes/E4005.md:14
 #: ../../language/error_codes/E4006.md:21
@@ -2425,16 +2429,91 @@ msgid "E3001"
 msgstr ""
 
 #: ../../language/error_codes/E3001.md:3
-#, fuzzy
-msgid "Lexing error"
-msgstr "处理错误"
+msgid "This source files contains invalid or incomplete tokens."
+msgstr ""
+
+#: ../../language/error_codes/E3001.md:7
+msgid ""
+"fn main() -> Unit {\n"
+"  println('3)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3001.md:13
+msgid "This example gives the following error on line 2:"
+msgstr ""
+
+#: ../../language/error_codes/E3001.md:15
+msgid "Lexing error: unrecognized character u32:0x27\n"
+msgstr ""
+
+#: ../../language/error_codes/E3001.md:19
+msgid ""
+"... which indicates that the compiler don't know how to interpret the "
+"dangling character `'` (ASCII 0x27) on that line as a part of a MoonBit "
+"token."
+msgstr ""
+
+#: ../../language/error_codes/E3001.md:25
+msgid ""
+"Change your code to strictly follow the MoonBit syntax rules, so that it "
+"only contains valid MoonBit tokens."
+msgstr ""
+
+#: ../../language/error_codes/E3001.md:28
+msgid "In the above example, the missing closing apostrophe should be added:"
+msgstr ""
+
+#: ../../language/error_codes/E3001.md:30
+msgid ""
+"fn main {\n"
+"  println('3')\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E3002.md:1
 msgid "E3002"
 msgstr ""
 
 #: ../../language/error_codes/E3002.md:3
-msgid "Parse error"
+msgid "This source files contains errors in the syntax of the code."
+msgstr ""
+
+#: ../../language/error_codes/E3002.md:7
+msgid ""
+"fn main() -> Unit {\n"
+"  println(\"Hello, world!\"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3002.md:13
+msgid "This example gives the following error on line 3:"
+msgstr ""
+
+#: ../../language/error_codes/E3002.md:15
+msgid "Parse error, unexpected token `}`, you may expect `,` or `)`.\n"
+msgstr ""
+
+#: ../../language/error_codes/E3002.md:19
+msgid ""
+"... which indicates a missing closing parenthesis (`)`) in the `println` "
+"function call."
+msgstr ""
+
+#: ../../language/error_codes/E3002.md:23
+msgid "Change your code to strictly follow the MoonBit syntax rules."
+msgstr ""
+
+#: ../../language/error_codes/E3002.md:25
+msgid "In the above example, the missing closing parenthesis should be added:"
+msgstr ""
+
+#: ../../language/error_codes/E3002.md:27
+#: ../../language/error_codes/E3003.md:17
+msgid ""
+"fn main {\n"
+"  println(\"Hello, world!\")\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E3003.md:1
@@ -2455,13 +2534,6 @@ msgstr ""
 
 #: ../../language/error_codes/E3003.md:15
 msgid "Remove the argument list and return type annotation, as:"
-msgstr ""
-
-#: ../../language/error_codes/E3003.md:17
-msgid ""
-"fn main {\n"
-"  println(\"Hello, world!\")\n"
-"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E3004.md:1
@@ -2730,7 +2802,32 @@ msgid "E3011"
 msgstr ""
 
 #: ../../language/error_codes/E3011.md:3
-msgid "Invalid left value for assignment."
+msgid ""
+"The assignment contains an invalid left-hand-side (LHS) expression, such "
+"as a constant or a constructor."
+msgstr ""
+
+#: ../../language/error_codes/E3011.md:8
+msgid ""
+"const N = 4\n"
+"\n"
+"fn main {\n"
+"  N = 5\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3011.md:18
+msgid ""
+"Change the LHS to a valid mutable memory location, such as a mutable "
+"variable or a mutable field:"
+msgstr ""
+
+#: ../../language/error_codes/E3011.md:21
+msgid ""
+"fn main {\n"
+"  let mut n = 4\n"
+"  n = 5\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E3012.md:1
@@ -8671,13 +8768,13 @@ msgstr ""
 msgid "`lxor`"
 msgstr ""
 
-#: ../../language/methods.md:117
+#: ../../language/methods.md:114
 msgid ""
 "By implementing `op_as_view` method, you can create a view for a user-"
 "defined type. Here is an example:"
 msgstr "通过实现 `op_as_view` 方法，可以为用户定义的类型创建视图。以下是一个例子："
 
-#: ../../language/methods.md:119
+#: ../../language/methods.md:116
 msgid ""
 "type DataView String\n"
 "\n"
@@ -8697,11 +8794,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:125
+#: ../../language/methods.md:122
 msgid "Trait system"
 msgstr "Trait（特征）系统"
 
-#: ../../language/methods.md:127
+#: ../../language/methods.md:124
 msgid ""
 "MoonBit features a structural trait system for overloading/ad-hoc "
 "polymorphism. Traits declare a list of operations, which must be supplied"
@@ -8709,7 +8806,7 @@ msgid ""
 "follows:"
 msgstr "MoonBit 具有用于重载/特殊多态的结构特征系统。特征声明一系列操作，当类型想要实现特征时，必须提供这些操作。特征可以如下声明："
 
-#: ../../language/methods.md:129
+#: ../../language/methods.md:126
 msgid ""
 "trait I {\n"
 "  method_(Int) -> Int\n"
@@ -8718,21 +8815,21 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:135
+#: ../../language/methods.md:132
 msgid ""
 "In the body of a trait definition, a special type `Self` is used to refer"
 " to the type that implements the trait."
 msgstr "在特征定义的主体中，使用特殊类型 `Self` 来引用实现特征的类型。"
 
-#: ../../language/methods.md:137
+#: ../../language/methods.md:134
 msgid "Extending traits"
 msgstr "扩展特征"
 
-#: ../../language/methods.md:139
+#: ../../language/methods.md:136
 msgid "A trait can depend on other traits, for example:"
 msgstr "特征（子特征）可以依赖于其他特征（超特征），例如："
 
-#: ../../language/methods.md:141
+#: ../../language/methods.md:138
 msgid ""
 "trait Position {\n"
 "  pos(Self) -> (Int, Int)\n"
@@ -8744,23 +8841,23 @@ msgid ""
 "trait Object : Position + Draw {}\n"
 msgstr ""
 
-#: ../../language/methods.md:147
+#: ../../language/methods.md:144
 msgid ""
 "To implement the sub trait, one will have to implement the super traits,"
 "  and the methods defined in the sub trait."
 msgstr "要实现子特征，必须实现子特征和所有超特征中定义的方法。"
 
-#: ../../language/methods.md:150
+#: ../../language/methods.md:147
 msgid "Implementing traits"
 msgstr "实现特征"
 
-#: ../../language/methods.md:152
+#: ../../language/methods.md:149
 msgid ""
 "To implement a trait, a type must provide all the methods required by the"
 " trait."
 msgstr "要实现特征，类型必须提供特征所需的所有方法。"
 
-#: ../../language/methods.md:154
+#: ../../language/methods.md:151
 msgid ""
 "This allows types to implement a trait implicitly, hence allowing "
 "different packages to work together without seeing or depending on each "
@@ -8770,7 +8867,7 @@ msgstr ""
 "这使得类型可以隐式满足特征，从而允许不同的包在不看到或依赖于彼此的情况下运行。例如，内置数字类型（如 `Int` 和 "
 "`Double`）自动满足了以下的特征："
 
-#: ../../language/methods.md:157
+#: ../../language/methods.md:154
 msgid ""
 "trait Number {\n"
 "  op_add(Self, Self) -> Self\n"
@@ -8778,7 +8875,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:163
+#: ../../language/methods.md:160
 msgid ""
 "**Explicit implementation** for trait methods can be provided via the "
 "syntax `impl Trait for Type with method_name(...) { ... }`, for example:"
@@ -8786,7 +8883,7 @@ msgstr ""
 "**显式实现**特征方法可以通过语法 `impl Trait for Type with method_name(...) { ... }` "
 "提供，例如："
 
-#: ../../language/methods.md:165
+#: ../../language/methods.md:162
 msgid ""
 "trait MyShow {\n"
 "  to_string(Self) -> String\n"
@@ -8818,20 +8915,20 @@ msgstr ""
 "// 我们将稍后介绍。\n"
 "impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ... }\n"
 
-#: ../../language/methods.md:171
+#: ../../language/methods.md:168
 msgid ""
 "Type annotation can be omitted for trait `impl`: MoonBit will "
 "automatically infer the type based on the signature of `Trait::method` "
 "and the self type."
 msgstr "`impl` 实现的类型注释可以省略：MoonBit 将根据 `Trait::method` 的签名和 self 类型自动推断类型。"
 
-#: ../../language/methods.md:173
+#: ../../language/methods.md:170
 msgid ""
 "The author of the trait can also define **default implementations** for "
 "some methods in the trait, for example:"
 msgstr "特征的作者还可以为特征中的某些方法定义**默认实现**，例如："
 
-#: ../../language/methods.md:175
+#: ../../language/methods.md:172
 msgid ""
 "trait J {\n"
 "  f(Self) -> Unit\n"
@@ -8844,7 +8941,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:181
+#: ../../language/methods.md:178
 msgid ""
 "Implementers of trait `I` don't have to provide an implementation for "
 "`f_twice`: to implement `I`, only `f` is necessary. They can always "
@@ -8854,31 +8951,31 @@ msgstr ""
 " `I` 的类型实现特征时不必为 `f_twice` 提供实现：要实现 `I`，只有 `f` 是必要的。如果需要，他们总是可以显式地用 `impl"
 " I for Type with f_twice` 覆盖默认实现。"
 
-#: ../../language/methods.md:184
+#: ../../language/methods.md:181
 msgid ""
 "If an explicit `impl` or default implementation is not found, trait "
 "method resolution falls back to regular methods."
 msgstr "如果找不到显式的 `impl` 或默认实现，特征方法解析将回退到常规方法。"
 
-#: ../../language/methods.md:186
+#: ../../language/methods.md:183
 msgid "Using traits"
 msgstr "使用特征"
 
-#: ../../language/methods.md:188
+#: ../../language/methods.md:185
 msgid ""
 "When declaring a generic function, the type parameters can be annotated "
 "with the traits they should implement, allowing the definition of "
 "constrained generic functions. For example:"
 msgstr "在声明泛型函数时，可以使用特征注释类型参数，来定义受约束的泛型函数。例如："
 
-#: ../../language/methods.md:190
+#: ../../language/methods.md:187
 msgid ""
 "fn square[N : Number](x : N) -> N {\n"
 "  x * x // <=> x.op_mul(x)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:196
+#: ../../language/methods.md:193
 msgid ""
 "Without the `Number` requirement, the expression `x * x` in `square` will"
 " result in a method/operator not found error. Now, the function `square` "
@@ -8887,7 +8984,7 @@ msgstr ""
 "如果没有 `Number` 要求，`square` 中的表达式 `x * x` 将产生方法/运算符未找到的错误。现在，函数 `square` "
 "可以使用任何实现 `Number` 的类型调用，例如："
 
-#: ../../language/methods.md:198
+#: ../../language/methods.md:195
 msgid ""
 "struct Point {\n"
 "  x : Int\n"
@@ -8909,11 +9006,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:204
+#: ../../language/methods.md:201
 msgid "Invoke trait methods directly"
 msgstr "直接调用特征方法"
 
-#: ../../language/methods.md:206
+#: ../../language/methods.md:203
 msgid ""
 "Methods of a trait can be called directly via `Trait::method`. MoonBit "
 "will infer the type of `Self` and check if `Self` indeed implements "
@@ -8922,7 +9019,7 @@ msgstr ""
 "可以通过 `Trait::method` 直接调用特征的方法。MoonBit 将推断 `Self` 的类型，并检查 `Self` 是否确实实现了 "
 "`Trait`，例如："
 
-#: ../../language/methods.md:208
+#: ../../language/methods.md:205
 msgid ""
 "test {\n"
 "  assert_eq!(Show::to_string(42), \"42\")\n"
@@ -8930,44 +9027,44 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:214
+#: ../../language/methods.md:211
 msgid ""
 "Trait implementations can also be invoked via dot syntax, with the "
 "following restrictions:"
 msgstr "特征实现也可以通过点语法调用，但有以下限制："
 
-#: ../../language/methods.md:216
+#: ../../language/methods.md:213
 msgid ""
 "if a regular method is present, the regular method is always favored when"
 " using dot syntax"
 msgstr "如果存在常规方法，使用点语法时总是优先选择常规方法"
 
-#: ../../language/methods.md:217
+#: ../../language/methods.md:214
 msgid ""
 "only trait implementations that are located in the package of the self "
 "type can be invoked via dot syntax"
 msgstr "只有位于 self 类型的包中的特征实现才能通过点语法调用"
 
-#: ../../language/methods.md:218
+#: ../../language/methods.md:215
 msgid ""
 "if there are multiple trait methods (from different traits) with the same"
 " name available, an ambiguity error is reported"
 msgstr "如果有多个具有相同名称的特征方法（来自不同的特征）可用，将报告歧义错误"
 
-#: ../../language/methods.md:219
+#: ../../language/methods.md:216
 msgid ""
 "if neither of the above two rules apply, trait `impl`s in current package"
 " will also be searched for dot syntax. This allows extending a foreign "
 "type locally."
 msgstr "如果上述两条规则都不适用，还将在当前包中搜索特征 `impl` 以进行点语法。这允许在本地扩展外部类型。"
 
-#: ../../language/methods.md:221
+#: ../../language/methods.md:218
 msgid ""
 "these `impl`s can only be called via dot syntax locally, even if they are"
 " public."
 msgstr "这些 `impl` 只能在本地通过点语法调用，即使它们是公共的。"
 
-#: ../../language/methods.md:223
+#: ../../language/methods.md:220
 msgid ""
 "The above rules ensures that MoonBit's dot syntax enjoys good property "
 "while being flexible. For example, adding a new dependency never break "
@@ -8978,11 +9075,11 @@ msgstr ""
 "上述规则确保了 MoonBit 的点语法具有良好的特性，同时也具有灵活性。例如，由于歧义，添加新依赖关系永远不会破坏现有的点语法代码。这些规则还使"
 " MoonBit 的名称解析非常简单：通过点语法调用的方法必须始终来自当前包或类型的包！"
 
-#: ../../language/methods.md:228
+#: ../../language/methods.md:225
 msgid "Here's an example of calling trait `impl` with dot syntax:"
 msgstr "以下是使用点语法调用特征 `impl` 的示例："
 
-#: ../../language/methods.md:230
+#: ../../language/methods.md:227
 msgid ""
 "struct MyCustomType {}\n"
 "\n"
@@ -8995,11 +9092,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:236
+#: ../../language/methods.md:233
 msgid "Trait objects"
 msgstr "特征对象"
 
-#: ../../language/methods.md:238
+#: ../../language/methods.md:235
 msgid ""
 "MoonBit supports runtime polymorphism via trait objects. If `t` is of "
 "type `T`, which implements trait `I`, one can pack the methods of `T` "
@@ -9011,7 +9108,7 @@ msgstr ""
 "MoonBit 支持通过特征对象实现运行时多态。如果 `t` 是类型 `T`，它实现了特征 `I`，可以通过 `t as &I` 将实现 `I` "
 "的 `T` 的方法与 `t` 一起打包到运行时对象中。特征对象擦除了值的具体类型，因此可以将从不同具体类型创建的对象放入相同的数据结构并统一处理："
 
-#: ../../language/methods.md:245
+#: ../../language/methods.md:242
 msgid ""
 "trait Animal {\n"
 "  speak(Self) -> String\n"
@@ -9056,29 +9153,29 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:251
+#: ../../language/methods.md:248
 msgid ""
 "Not all traits can be used to create objects. \"object-safe\" traits' "
 "methods must satisfy the following conditions:"
 msgstr "并非所有特征都可以用于创建对象。“对象安全” 特征的方法必须满足以下条件："
 
-#: ../../language/methods.md:254
+#: ../../language/methods.md:251
 msgid "`Self` must be the first parameter of a method"
 msgstr "`Self` 必须是方法的第一个参数"
 
-#: ../../language/methods.md:255
+#: ../../language/methods.md:252
 msgid ""
 "There must be only one occurrence of `Self` in the type of the method "
 "(i.e. the first parameter)"
 msgstr "方法的类型中只能出现一个 `Self` （即第一个参数）"
 
-#: ../../language/methods.md:257
+#: ../../language/methods.md:254
 msgid ""
 "Users can define new methods for trait objects, just like defining new "
 "methods for structs and enums:"
 msgstr "用户可以为特征对象定义新方法，就像为结构体和枚举定义新方法一样："
 
-#: ../../language/methods.md:259
+#: ../../language/methods.md:256
 msgid ""
 "trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
@@ -9128,15 +9225,15 @@ msgstr ""
 "  .write_string(\")\")\n"
 "}\n"
 
-#: ../../language/methods.md:265
+#: ../../language/methods.md:262
 msgid "Builtin traits"
 msgstr "内建特征"
 
-#: ../../language/methods.md:267
+#: ../../language/methods.md:264
 msgid "MoonBit provides the following useful builtin traits:"
 msgstr "MoonBit 提供了以下有用的内建特征："
 
-#: ../../language/methods.md:271
+#: ../../language/methods.md:268
 msgid ""
 "trait Eq {\n"
 "  op_equal(Self, Self) -> Bool\n"
@@ -9184,15 +9281,15 @@ msgstr ""
 "  default() -> Self\n"
 "}\n"
 
-#: ../../language/methods.md:296
+#: ../../language/methods.md:293
 msgid "Deriving builtin traits"
 msgstr "派生内建特征"
 
-#: ../../language/methods.md:298
+#: ../../language/methods.md:295
 msgid "MoonBit can automatically derive implementations for some builtin traits:"
 msgstr "MoonBit 可以自动为一些内建特征派生实现："
 
-#: ../../language/methods.md:300
+#: ../../language/methods.md:297
 msgid ""
 "struct T {\n"
 "  x : Int\n"
@@ -9209,7 +9306,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:306
+#: ../../language/methods.md:303
 msgid "See [Deriving](./derive.md) for more information about deriving traits."
 msgstr "参见 [派生](./derive.md) 了解有关派生特征的更多信息。"
 
@@ -9807,166 +9904,4 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
-
-#~ msgid ""
-#~ "const [log, flush] = (() => {\n"
-#~ "  var buffer = [];\n"
-#~ "  function flush() {\n"
-#~ "    if (buffer.length > 0) {\n"
-#~ "      console.log(new TextDecoder(\"utf-16\").decode(new"
-#~ " Uint16Array(buffer).valueOf()));\n"
-#~ "      buffer = [];\n"
-#~ "    }\n"
-#~ "  }\n"
-#~ "  function log(ch) {\n"
-#~ "    if (ch == '\\n'.charCodeAt(0)) { flush(); }\n"
-#~ "    else if (ch == '\\r'.charCodeAt(0)) { /* noop */ }\n"
-#~ "    else { buffer.push(ch); }\n"
-#~ "  }\n"
-#~ "  return [log, flush]\n"
-#~ "})();\n"
-#~ "\n"
-#~ "const importObject = {\n"
-#~ "  // ...\n"
-#~ "  spectest: {\n"
-#~ "    print_char: log\n"
-#~ "  },\n"
-#~ "}\n"
-#~ "\n"
-#~ "// ...\n"
-#~ "WebAssembly.instantiateStreaming(fetch(\"target/wasm-"
-#~ "gc/release/build/lib/lib.wasm\"), importObject).then(\n"
-#~ "  (obj) => {\n"
-#~ "    obj.instance.exports._start();\n"
-#~ "    // ...\n"
-#~ "    flush()\n"
-#~ "  }\n"
-#~ ");\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "<!DOCTYPE html>\n"
-#~ "<html>\n"
-#~ "\n"
-#~ "<head></head>\n"
-#~ "\n"
-#~ "<body>\n"
-#~ "  <canvas id=\"canvas\" width=\"150\" height=\"150\"></canvas>\n"
-#~ "  <script>\n"
-#~ "    function prototype_to_ffi(prototype) {\n"
-#~ "      return Object.fromEntries(\n"
-#~ "        Object.entries(Object.getOwnPropertyDescriptors(prototype))\n"
-#~ "          .filter(([_key, value]) => value.value)\n"
-#~ "          .map(([key, value]) => {\n"
-#~ "            if (typeof value.value == 'function')\n"
-#~ "              return [key, Function.prototype.call.bind(value.value)]\n"
-#~ "            else\n"
-#~ "              return [key, () => value.value]\n"
-#~ "          })\n"
-#~ "      );\n"
-#~ "    }\n"
-#~ "\n"
-#~ "    const [log, flush] = (() => {\n"
-#~ "      var buffer = [];\n"
-#~ "      function flush() {\n"
-#~ "        if (buffer.length > 0) {\n"
-#~ "          console.log(new "
-#~ "TextDecoder(\"utf-16\").decode(new "
-#~ "Uint16Array(buffer).valueOf()));\n"
-#~ "          buffer = [];\n"
-#~ "        }\n"
-#~ "      }\n"
-#~ "      function log(ch) {\n"
-#~ "        if (ch == '\\n'.charCodeAt(0)) { flush(); }\n"
-#~ "        else if (ch == '\\r'.charCodeAt(0)) { /* noop */ }\n"
-#~ "        else { buffer.push(ch); }\n"
-#~ "      }\n"
-#~ "      return [log, flush]\n"
-#~ "    })();\n"
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "    const importObject = {\n"
-#~ "      canvas: prototype_to_ffi(CanvasRenderingContext2D.prototype),\n"
-#~ "      math: prototype_to_ffi(Math),\n"
-#~ "      spectest: {\n"
-#~ "        print_char: log\n"
-#~ "      },\n"
-#~ "    }\n"
-#~ "\n"
-#~ "    const canvas = document.getElementById(\"canvas\");\n"
-#~ "    if (canvas.getContext) {\n"
-#~ "      const ctx = canvas.getContext(\"2d\");\n"
-#~ "      WebAssembly.instantiateStreaming(fetch(\"target/wasm-"
-#~ "gc/release/build/lib/lib.wasm\"), importObject).then(\n"
-#~ "        (obj) => {\n"
-#~ "          obj.instance.exports._start();\n"
-#~ "          obj.instance.exports[\"draw\"](ctx);\n"
-#~ "          obj.instance.exports[\"display_pi\"]();\n"
-#~ "          flush()\n"
-#~ "        }\n"
-#~ "      );\n"
-#~ "    }\n"
-#~ "  </script>\n"
-#~ "</body>\n"
-#~ "\n"
-#~ "</html>\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "There is no [continue] in this "
-#~ "loop expression, so [loop] is useless"
-#~ " here."
-#~ msgstr ""
-
-#~ msgid "let {a, .., c} = s\n"
-#~ msgstr ""
-
-#~ msgid "let {a, c, ..} = s\n"
-#~ msgstr ""
-
-#~ msgid "let [fst, .., .., snd] = array\n"
-#~ msgstr ""
-
-#~ msgid "let [fst, .., snd] = array\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Constructor arguments cannot be unit "
-#~ "`()`. MoonBit does not allow "
-#~ "constructors to take unit as an "
-#~ "argument because it would be redundant"
-#~ " - a constructor without arguments "
-#~ "already represents a singleton value."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "enum Status {\n"
-#~ "  Done()  // Error: constructor can't take unit as argument\n"
-#~ "  Pending\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "enum Status {\n"
-#~ "  Done    // Correct: constructor without arguments\n"
-#~ "  Pending\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "If you need the constructor to "
-#~ "take arguments, provide meaningful values "
-#~ "instead of unit:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "enum Status {\n"
-#~ "  Done(Int) // Constructor with meaningful argument\n"
-#~ "  Pending\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid "The method has been defined."
-#~ msgstr ""
 
