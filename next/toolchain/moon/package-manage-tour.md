@@ -123,4 +123,4 @@ pub fn maximum[T : Compare](xs : Array[T]) -> T {
 }
 ```
 
-You can also use `moon doc --serve` to generate and view documentation in local.
+You can also use `moon doc --serve` to generate and view documentation locally.
