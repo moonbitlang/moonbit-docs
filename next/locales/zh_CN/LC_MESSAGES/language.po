@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-10 09:56+0800\n"
+"POT-Creation-Date: 2025-02-10 16:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1946,12 +1946,235 @@ msgstr ""
 msgid "Unused function."
 msgstr "内联函数"
 
+#: ../../language/error_codes/E1001.md:5
+msgid ""
+"This function is not used by any other part of your code, nor marked with"
+" `pub` visibility."
+msgstr ""
+
+#: ../../language/error_codes/E1001.md:8
+msgid ""
+"Note that this warning might uncover other bugs in your code. For "
+"example, if there are two functions in your codebase that has similar "
+"name, you might just call the other function by mistake."
+msgstr ""
+
+#: ../../language/error_codes/E1001.md:12
+#: ../../language/error_codes/E1002.md:15
+#: ../../language/error_codes/E1003.md:16 ../../language/error_codes/E1005.md:9
+#: ../../language/error_codes/E1018.md:12
+#: ../../language/error_codes/E2000.md:17 ../../language/error_codes/E3001.md:5
+#: ../../language/error_codes/E3002.md:5 ../../language/error_codes/E3003.md:5
+#: ../../language/error_codes/E3004.md:6 ../../language/error_codes/E3005.md:14
+#: ../../language/error_codes/E3006.md:7 ../../language/error_codes/E3007.md:5
+#: ../../language/error_codes/E3008.md:5 ../../language/error_codes/E3009.md:5
+#: ../../language/error_codes/E3010.md:5 ../../language/error_codes/E3011.md:6
+#: ../../language/error_codes/E4000.md:5 ../../language/error_codes/E4005.md:5
+#: ../../language/error_codes/E4007.md:8 ../../language/error_codes/E4056.md:5
+#, fuzzy
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E1001.md:14
+msgid ""
+"fn greeting() -> String {\n"
+"  \"Hello!\"\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  fn local_greeting() -> String {\n"
+"    \"Hello, world!\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1001.md:26
+#: ../../language/error_codes/E1002.md:31
+#: ../../language/error_codes/E1003.md:30
+#: ../../language/error_codes/E1005.md:24
+#: ../../language/error_codes/E1018.md:25
+#: ../../language/error_codes/E2000.md:39
+#: ../../language/error_codes/E3001.md:23
+#: ../../language/error_codes/E3002.md:21
+#: ../../language/error_codes/E3003.md:13
+#: ../../language/error_codes/E3004.md:14
+#: ../../language/error_codes/E3005.md:20
+#: ../../language/error_codes/E3006.md:16
+#: ../../language/error_codes/E3007.md:20
+#: ../../language/error_codes/E3008.md:14
+#: ../../language/error_codes/E3009.md:20
+#: ../../language/error_codes/E3010.md:13
+#: ../../language/error_codes/E3011.md:16
+#: ../../language/error_codes/E4000.md:17
+#: ../../language/error_codes/E4005.md:14
+#: ../../language/error_codes/E4006.md:21
+#: ../../language/error_codes/E4007.md:21
+#: ../../language/error_codes/E4056.md:22
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E1001.md:28
+#: ../../language/error_codes/E1002.md:33
+#: ../../language/error_codes/E1003.md:32
+#, fuzzy
+msgid "There are multiple ways to fix this warning:"
+msgstr "有三种方式可以处理错误："
+
+#: ../../language/error_codes/E1001.md:30
+msgid ""
+"If the function is indeed useless, you can remove the definition of the "
+"function."
+msgstr ""
+
+#: ../../language/error_codes/E1001.md:32
+msgid ""
+"If this function is at the toplevel (i.e., not local), and is part of the"
+" public API of your module, you can add the `pub` keyword to the "
+"function."
+msgstr ""
+
+#: ../../language/error_codes/E1001.md:35
+msgid ""
+"pub fn greeting() -> String {\n"
+"  \"Hello!\"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1001.md:41
+msgid ""
+"If you made a typo in the function name, you can rename the function to "
+"the correct name at the call site."
+msgstr ""
+
+#: ../../language/error_codes/E1001.md:44
+msgid ""
+"There are some cases where you might want to keep the function private "
+"and unused at the same time. In this case, you can call `ignore()` on the"
+" function to force the use of it."
+msgstr ""
+
+#: ../../language/error_codes/E1001.md:48
+msgid ""
+"fn greeting() -> String {\n"
+"  \"Hello, world!\"\n"
+"}\n"
+"\n"
+"fn init {\n"
+"  ignore(greeting)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1001.md:58
+msgid ""
+"fn main {\n"
+"  fn local_greeting() -> String {\n"
+"    \"Hello, world!\"\n"
+"  }\n"
+"  ignore(local_greeting)\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E1002.md:1
 msgid "E1002"
 msgstr ""
 
 #: ../../language/error_codes/E1002.md:3
 msgid "Unused variable."
+msgstr ""
+
+#: ../../language/error_codes/E1002.md:5
+msgid ""
+"This variable is unused by any other part of your code, nor marked with "
+"`pub` visibility."
+msgstr ""
+
+#: ../../language/error_codes/E1002.md:8
+msgid ""
+"Note that this warning might uncover other bugs in your code. For "
+"example, if there are two variables in your codebase that has similar "
+"name, you might just use the other variable by mistake."
+msgstr ""
+
+#: ../../language/error_codes/E1002.md:12
+msgid ""
+"Specifically, if the variable is at the toplevel, and the body of the "
+"module contains side effects, the side effects will not happen."
+msgstr ""
+
+#: ../../language/error_codes/E1002.md:17
+msgid ""
+"let p : Int = {\n"
+"//  ^ Warning: Unused toplevel variable 'p'.\n"
+"//             Note if the body contains side effect, it will not happen."
+"\n"
+"//             Use `fn init { .. }` to wrap the effect.\n"
+"  println(\"Side effect\")\n"
+"  42\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let x = 42 // Warning: Unused variable 'x'\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1002.md:35
+msgid ""
+"If the variable is indeed useless, you can remove the definition of the "
+"variable."
+msgstr ""
+
+#: ../../language/error_codes/E1002.md:37
+msgid ""
+"If this variable is at the toplevel (i.e., not local), and is part of the"
+" public API of your module, you can add the `pub` keyword to the "
+"variable."
+msgstr ""
+
+#: ../../language/error_codes/E1002.md:40
+msgid "pub let p = 42\n"
+msgstr ""
+
+#: ../../language/error_codes/E1002.md:44
+msgid ""
+"If you made a typo in the variable name, you can rename the variable to "
+"the correct name at the use site."
+msgstr ""
+
+#: ../../language/error_codes/E1002.md:46
+msgid ""
+"If your code depends on the side-effect of the variable, you can wrap the"
+" side-effect in a `fn init` block."
+msgstr ""
+
+#: ../../language/error_codes/E1002.md:49
+msgid ""
+"fn init {\n"
+"  println(\"Side effect\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1002.md:55
+msgid ""
+"There are some cases where you might want to keep the variable private "
+"and unused at the same time. In this case, you can call `ignore()` on the"
+" variable to force the use of it."
+msgstr ""
+
+#: ../../language/error_codes/E1002.md:59
+msgid ""
+"let p : Int = {\n"
+"  println(\"Side effect\")\n"
+"  42\n"
+"}\n"
+"\n"
+"fn init {\n"
+"  ignore(p)\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let x = 42\n"
+"  ignore(x)\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1003.md:1
@@ -1962,6 +2185,64 @@ msgstr ""
 msgid "Unused type declaration."
 msgstr ""
 
+#: ../../language/error_codes/E1003.md:5
+msgid ""
+"This type is not used by any other part of your code, and it is private. "
+"Type declaration is by default abstract, which means it is publicly "
+"visible to users of this package, but they cannot see the implementation "
+"of the type, nor can create instances of it directly. Therefore, this "
+"warning is only shown if the type is marked with `priv` visibility, and "
+"is not used by any other part of this package."
+msgstr ""
+
+#: ../../language/error_codes/E1003.md:12
+msgid ""
+"Note that this warning might uncover other bugs in your code. For "
+"example, if there are two types in the package that has similar name, you"
+" might just use the other type by mistake."
+msgstr ""
+
+#: ../../language/error_codes/E1003.md:18
+msgid ""
+"priv struct Foo { // Warning: Unused type 'Foo'.\n"
+"  bar : Int\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  struct Bar { // Warning: Unused type 'Bar'.\n"
+"    foot : Int\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1003.md:34
+msgid "If the type is indeed useless, you can remove the definition of the type."
+msgstr ""
+
+#: ../../language/error_codes/E1003.md:35
+msgid ""
+"If this type is not local, and is part of the public API of your module, "
+"you can remove the `priv` visibility keyword from the type."
+msgstr ""
+
+#: ../../language/error_codes/E1003.md:38
+msgid ""
+"type Foo {\n"
+"  bar : Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1003.md:44
+msgid "Check if you are referencing the type with a correct name."
+msgstr ""
+
+#: ../../language/error_codes/E1003.md:46
+msgid ""
+"It is rather rare (and difficult) to have a type that is private and "
+"unused at the same time; therefore, we suggest you remove the type if it "
+"is not used."
+msgstr ""
+
 #: ../../language/error_codes/E1004.md:1
 msgid "E1004"
 msgstr ""
@@ -1970,12 +2251,63 @@ msgstr ""
 msgid "Unused abstract type."
 msgstr ""
 
+#: ../../language/error_codes/E1004.md:5
+msgid "Currently, MoonBit won't emit this warning."
+msgstr ""
+
 #: ../../language/error_codes/E1005.md:1
 msgid "E1005"
 msgstr ""
 
 #: ../../language/error_codes/E1005.md:3
 msgid "Unused generic type variable."
+msgstr ""
+
+#: ../../language/error_codes/E1005.md:5
+msgid ""
+"In some cases, using types with unused generic type variables will make "
+"it impossible for the type checker to infer the type of the unused "
+"variable. This might lead to cryptic error messages, even unexpected "
+"runtime behavior."
+msgstr ""
+
+#: ../../language/error_codes/E1005.md:11
+msgid ""
+"struct Foo[T] { // Warning: Unused type variable 'T'.\n"
+"  bar : Int\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let foo : Foo[Int] = { bar : 42 }\n"
+"  let baz = { bar : 42 } // Warning: The type of this expression is "
+"Foo[_/0]\n"
+"  println(foo.bar)\n"
+"  println(baz.bar)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1005.md:26
+msgid "If the type variable is indeed useless, remove the unused type variable."
+msgstr ""
+
+#: ../../language/error_codes/E1005.md:28
+msgid ""
+"struct Foo { // Remove the unused type variable.\n"
+"  bar : Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1005.md:34
+msgid ""
+"If you wish to keep the type variable, you can use `_` to indicate that "
+"the type variable is intentionally unused."
+msgstr ""
+
+#: ../../language/error_codes/E1005.md:37
+msgid ""
+"struct Foo[_] {\n"
+"  bar : Int\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1006.md:1
@@ -2087,19 +2419,6 @@ msgid ""
 "`if`."
 msgstr ""
 
-#: ../../language/error_codes/E1018.md:12
-#: ../../language/error_codes/E2000.md:17 ../../language/error_codes/E3001.md:5
-#: ../../language/error_codes/E3002.md:5 ../../language/error_codes/E3003.md:5
-#: ../../language/error_codes/E3004.md:6 ../../language/error_codes/E3005.md:14
-#: ../../language/error_codes/E3006.md:7 ../../language/error_codes/E3007.md:5
-#: ../../language/error_codes/E3008.md:5 ../../language/error_codes/E3009.md:5
-#: ../../language/error_codes/E3010.md:5 ../../language/error_codes/E3011.md:6
-#: ../../language/error_codes/E4000.md:5 ../../language/error_codes/E4005.md:5
-#: ../../language/error_codes/E4007.md:8 ../../language/error_codes/E4056.md:5
-#, fuzzy
-msgid "Erroneous example"
-msgstr "以下是一些示例："
-
 #: ../../language/error_codes/E1018.md:14
 msgid ""
 "fn countdown(n : Int) -> Int {\n"
@@ -2110,27 +2429,6 @@ msgid ""
 "  }\n"
 "  return count\n"
 "}\n"
-msgstr ""
-
-#: ../../language/error_codes/E1018.md:25
-#: ../../language/error_codes/E2000.md:39
-#: ../../language/error_codes/E3001.md:23
-#: ../../language/error_codes/E3002.md:21
-#: ../../language/error_codes/E3003.md:13
-#: ../../language/error_codes/E3004.md:14
-#: ../../language/error_codes/E3005.md:20
-#: ../../language/error_codes/E3006.md:16
-#: ../../language/error_codes/E3007.md:20
-#: ../../language/error_codes/E3008.md:14
-#: ../../language/error_codes/E3009.md:20
-#: ../../language/error_codes/E3010.md:13
-#: ../../language/error_codes/E3011.md:16
-#: ../../language/error_codes/E4000.md:17
-#: ../../language/error_codes/E4005.md:14
-#: ../../language/error_codes/E4006.md:21
-#: ../../language/error_codes/E4007.md:21
-#: ../../language/error_codes/E4056.md:22
-msgid "Suggestion"
 msgstr ""
 
 #: ../../language/error_codes/E1018.md:27
