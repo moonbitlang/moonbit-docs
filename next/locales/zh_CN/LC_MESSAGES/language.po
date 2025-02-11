@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-11 16:26+0800\n"
+"POT-Creation-Date: 2025-02-11 17:12+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -8702,17 +8702,82 @@ msgid ""
 msgstr ""
 
 #: ../../language/fundamentals.md:1304
+msgid "Is Expression"
+msgstr "Is 表达式"
+
+#: ../../language/fundamentals.md:1306
+msgid ""
+"The `is` expression tests whether a value conforms to a specific pattern."
+" It returns a `Bool` value and can be used anywhere a boolean value is "
+"expected, for example:"
+msgstr ""
+"`is` 表达式测试值是否符合特定模式。它返回一个 `Bool` 值，并可以在期望布尔值的任何地方使用，例如："
+
+#: ../../language/fundamentals.md:1310
+msgid ""
+"fn is_none[T](x : T?) -> Bool {\n"
+"  x is None\n"
+"}\n"
+"\n"
+"fn start_with_lower_letter(s: String) -> Bool {\n"
+"  s is ['a'..='z', ..]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1317
+msgid ""
+"Pattern binders introduced by `is` expressions can be used in two "
+"contexts:"
+msgstr ""
+"通过 `is` 表达式绑定的标识符可以在两个上下文中使用："
+
+#: ../../language/fundamentals.md:1319
+msgid ""
+"In boolean AND expressions (`&&`): binders introduced in the left-hand "
+"expression can be used in the right-hand expression"
+msgstr ""
+"在与表达式（`&&`）中：左侧表达式中绑定的标识符可以在右侧表达式中使用"
+
+#: ../../language/fundamentals.md:1323
+msgid ""
+"fn f(x : Int?) -> Bool {\n"
+"  x is Some(v) && v >= 0\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1330
+msgid ""
+"In `if` conditions and their corresponding branches: if the condition is "
+"a sequence of boolean expressions `e1 && e2 && ...`, the binders "
+"introduced in the `is` expression can be used in the branch of the `if` "
+"expression."
+msgstr ""
+"在 `if` 条件及其对应的分支中：如果条件是一系列布尔表达式 `e1 && e2 && ...`，则可以在 `if` 表达式的分支中使用 `is` "
+"表达式中绑定的标识符。"
+
+#: ../../language/fundamentals.md:1335
+msgid ""
+"fn g(x : Array[Int?]) -> Unit {\n"
+"  if x is [v, .. rest] && v is Some(i) && i is 0..=10 {\n"
+"    println(v)\n"
+"    println(i)\n"
+"    println(rest)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1342
 msgid "TODO syntax"
 msgstr "TODO 语法"
 
-#: ../../language/fundamentals.md:1306
+#: ../../language/fundamentals.md:1344
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo`语法(`...`)是一种特殊构造，用于标记尚未实现或用于未来功能的占位符代码段。 例如："
 
-#: ../../language/fundamentals.md:1308
+#: ../../language/fundamentals.md:1346
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"

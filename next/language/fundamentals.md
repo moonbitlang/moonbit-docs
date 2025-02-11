@@ -1320,24 +1320,24 @@ Pattern binders introduced by `is` expressions can be used in two contexts:
    binders introduced in the left-hand expression can be used in the right-hand
    expression
 
-```{literalinclude} /sources/language/src/is/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start is 2
-:end-before: end is 2
-```
+   ```{literalinclude} /sources/language/src/is/top.mbt
+   :language: moonbit
+   :dedent:
+   :start-after: start is 2
+   :end-before: end is 2
+   ```
 
 2. In `if` conditions and their corresponding branches:
    if the condition is a sequence of boolean expressions `e1 && e2 && ...`,
    the binders introduced in the `is` expression can be used in the branch of
    the `if` expression.
 
-```{literalinclude} /sources/language/src/is/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start is 3
-:end-before: end is 3
-```
+   ```{literalinclude} /sources/language/src/is/top.mbt
+   :language: moonbit
+   :dedent:
+   :start-after: start is 3
+   :end-before: end is 3
+   ```
 
 ### TODO syntax
 
