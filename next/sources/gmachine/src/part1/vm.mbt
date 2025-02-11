@@ -196,8 +196,8 @@ fn build_initial_heap(
 fn step(self : GState) -> Bool {
   match self.code {
     Nil => return false
-    Cons(i, is) => {
-      self.code = is
+    Cons(i, rest) => {
+      self.code = rest
       self.stat_incr()
       match i {
         PushGlobal(f) => self.push_global(f)
