@@ -233,7 +233,7 @@ Now we can start writing the search function. Before searching for the complete 
 
 <!-- MANUAL CHECK -->
 ```moonbit
-fn shortst_edit(old~ : Array[Line], new~ : Array[Line]) -> Int {
+fn shortest_edit(old~ : Array[Line], new~ : Array[Line]) -> Int {
   let n = old.length()
   let m = new.length()
   let max = n + m
