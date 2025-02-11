@@ -1,3 +1,3 @@
 pub fn add1(x : Int) -> Int {
-  @pkgA.incr(x)
+  @c.incr(@pkgA.incr(x))
 }
