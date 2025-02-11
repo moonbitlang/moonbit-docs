@@ -120,6 +120,15 @@ test {
 }
 // end byte 2
 
+// start buffer 1
+test "buffer 1" {
+  let buf : @buffer.T = @buffer.new()
+  buf.write_bytes(b"Hello")
+  buf.write_byte(b'!')
+  assert_eq!(buf.contents(), b"Hello!")
+}
+// end buffer 1
+
 test "tuple 1" (t : @test.T) {
   let println = fn(show) { t.writeln(show) }
   // start tuple 1

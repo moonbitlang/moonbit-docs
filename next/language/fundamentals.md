@@ -177,12 +177,20 @@ A byte literal in MoonBit is either a single ASCII character or a single escape 
 :caption: Output
 ```
 
-A `Bytes` is a sequence of bytes. Similar to byte, bytes literals have the form of `b"..."`. For example:
+A `Bytes` is an immutable sequence of bytes. Similar to byte, bytes literals have the form of `b"..."`. For example:
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
 :start-after: start byte 2
 :end-before: end byte 2
+```
+
+A `@buffer.T` is a constructor for bytes that comes with methods for writing different kinds of data. For example:
+
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start buffer 1
+:end-before: end buffer 1
 ```
 
 ### Tuple
