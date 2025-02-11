@@ -33,7 +33,7 @@ There are four different kinds of visibility for types in MoonBit:
 
 - private type, declared with `priv`, completely invisible to the outside world
 - abstract type, which is the default visibility for types. Only the name of an abstract type is visible outside, the internal representation of the type is hidden
-- readonly types, declared with `pub(readonly)`. The internal representation of readonly types are visible outside,
+- readonly types, declared with `pub`. The internal representation of readonly types are visible outside,
 but users can only read the values of these types from outside, construction and mutation are not allowed
 - fully public types, declared with `pub(all)`. The outside world can freely construct, modify and read values of these types
 
@@ -42,13 +42,13 @@ which will hide the field from the outside world completely.
 Note that `struct`s with private fields cannot be constructed directly outside,
 but you can update the public fields using the functional struct update syntax.
 
-Readonly types is a very useful feature, inspired by [private types](https://v2.ocaml.org/manual/privatetypes.html) in OCaml. In short, values of `pub(readonly)` types can be destructed by pattern matching and the dot syntax, but cannot be constructed or mutated in other packages. Note that there is no restriction within the same package where `pub(readonly)` types are defined.
+Readonly types is a very useful feature, inspired by [private types](https://v2.ocaml.org/manual/privatetypes.html) in OCaml. In short, values of `pub` types can be destructed by pattern matching and the dot syntax, but cannot be constructed or mutated in other packages. Note that there is no restriction within the same package where `pub` types are defined.
 
 <!-- MANUAL CHECK -->
 
 ```moonbit
 // Package A
-pub(readonly) struct RO {
+pub struct RO {
   field: Int
 }
 test {
@@ -109,7 +109,7 @@ This makes MoonBit's trait & method system flexible while enjoying good coherenc
 There are four visibility for traits, just like `struct` and `enum`: private, abstract, readonly and fully public.
 Private traits are declared with `priv trait`, and they are completely invisible from outside.
 Abstract trait is the default visibility. Only the name of the trait is visible from outside, and the methods in the trait are not exposed.
-Readonly traits are declared with `pub(readonly) trait`, their methods can be involked from outside, but only the current package can add new implementation for readonly traits.
+Readonly traits are declared with `pub trait`, their methods can be involked from outside, but only the current package can add new implementation for readonly traits.
 Finally, fully public traits are declared with `pub(open) trait`, they are open to new implementations outside current package, and their methods can be freely used.
 
 Abstract and readonly traits are sealed, because only the package defining the trait can implement them.
