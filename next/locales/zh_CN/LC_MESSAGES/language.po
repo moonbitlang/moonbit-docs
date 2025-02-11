@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-10 16:40+0800\n"
+"POT-Creation-Date: 2025-02-11 11:29+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1962,6 +1962,9 @@ msgstr ""
 #: ../../language/error_codes/E1001.md:12
 #: ../../language/error_codes/E1002.md:15
 #: ../../language/error_codes/E1003.md:16 ../../language/error_codes/E1005.md:9
+#: ../../language/error_codes/E1006.md:11 ../../language/error_codes/E1007.md:6
+#: ../../language/error_codes/E1008.md:6 ../../language/error_codes/E1009.md:5
+#: ../../language/error_codes/E1010.md:10
 #: ../../language/error_codes/E1018.md:12
 #: ../../language/error_codes/E2000.md:17 ../../language/error_codes/E3001.md:5
 #: ../../language/error_codes/E3002.md:5 ../../language/error_codes/E3003.md:5
@@ -1992,6 +1995,11 @@ msgstr ""
 #: ../../language/error_codes/E1002.md:31
 #: ../../language/error_codes/E1003.md:30
 #: ../../language/error_codes/E1005.md:24
+#: ../../language/error_codes/E1006.md:28
+#: ../../language/error_codes/E1007.md:37
+#: ../../language/error_codes/E1008.md:22
+#: ../../language/error_codes/E1009.md:23
+#: ../../language/error_codes/E1010.md:21
 #: ../../language/error_codes/E1018.md:25
 #: ../../language/error_codes/E2000.md:39
 #: ../../language/error_codes/E3001.md:23
@@ -2315,7 +2323,101 @@ msgid "E1006"
 msgstr ""
 
 #: ../../language/error_codes/E1006.md:3
-msgid "Variant is unused."
+msgid "Variant is never read, never constructed, or both."
+msgstr ""
+
+#: ../../language/error_codes/E1006.md:5
+msgid ""
+"If a variant is never read, it means it is defined but never destructed "
+"in a pattern matching expression (`match`, `let`, `guard let`, loop "
+"function, etc.)."
+msgstr ""
+
+#: ../../language/error_codes/E1006.md:8
+msgid "If a variant `A` is never constructed, it means there is no `A(...)`."
+msgstr ""
+
+#: ../../language/error_codes/E1006.md:9
+msgid "If a variant is unused, it means it is never constructed and never read."
+msgstr ""
+
+#: ../../language/error_codes/E1006.md:13
+msgid ""
+"priv enum T {\n"
+"  A // Warning: Variant 'A' is never read\n"
+"  B // Warning: Variant 'B' is never constructed\n"
+"  C // Warning: Variant 'C' is unused\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  match T::A {\n"
+"    B => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1006.md:30
+msgid ""
+"If some variants are never read, while others are read, this means that "
+"you have use wildcard pattern (`_`) in your code. You can expand the "
+"wildcard pattern to include the unused variants."
+msgstr ""
+
+#: ../../language/error_codes/E1006.md:34
+msgid ""
+"fn main {\n"
+"  match T::A {\n"
+"    B => ()\n"
+"    C => ()\n"
+"    A => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1006.md:44
+msgid ""
+"If all variants are never read, and you need to read these variants "
+"outside of current package, you can add `pub` keyword to the enum "
+"definition."
+msgstr ""
+
+#: ../../language/error_codes/E1006.md:47
+msgid ""
+"pub enum T {\n"
+"  A\n"
+"  B\n"
+"  C\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1006.md:55
+msgid ""
+"If you need to construct the \"never constructed\" variant outside of the"
+" current package, you can add `pub(all)` keyword to the variant. Notice "
+"this will make the implementation of the variant visible to the users of "
+"the package."
+msgstr ""
+
+#: ../../language/error_codes/E1006.md:60
+msgid ""
+"pub(all) enum T {\n"
+"  A\n"
+"  B\n"
+"  C\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1006.md:68
+msgid "If some variants are indeed useless, you can remove the unused variants."
+msgstr ""
+
+#: ../../language/error_codes/E1006.md:70
+msgid ""
+"enum T {\n"
+"  A\n"
+"  B\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1007.md:1
@@ -2323,15 +2425,143 @@ msgid "E1007"
 msgstr ""
 
 #: ../../language/error_codes/E1007.md:3
-msgid "Field is never read."
+msgid ""
+"Field is never read. This include fields in structs and fields in enum "
+"constructors."
 msgstr ""
+
+#: ../../language/error_codes/E1007.md:8
+#, fuzzy
+msgid "For enum constructor fields:"
+msgstr "构造器与可变字段"
+
+#: ../../language/error_codes/E1007.md:10
+msgid ""
+"enum E {\n"
+"  A(Int) // Warning: The 1st positional argument of constructor 'A' is "
+"unused.\n"
+"  B(value~ : Int) // Warning: Field 'value' of constructor 'B' is unused."
+"\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  ignore(B(value=1))\n"
+"  match A(1) {\n"
+"    A(_) => println(\"A\")\n"
+"    B(_) => println(\"B\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1007.md:25
+#, fuzzy
+msgid "For struct fields:"
+msgstr "控制结构"
+
+#: ../../language/error_codes/E1007.md:27
+msgid ""
+"struct S {\n"
+"  value : Int // Warning: Field 'value' is never read\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  ignore(S::{ value : 1 })\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1007.md:39
+msgid ""
+"If the fields in enum constructors are unused, you can expand them in the"
+" pattern to use them:"
+msgstr ""
+
+#: ../../language/error_codes/E1007.md:42
+msgid ""
+"fn main {\n"
+"  // ...\n"
+"  match A(1) {\n"
+"    A(x) => println(\"A(\\{x})\")\n"
+"    B(value~) => println(\"B(\\{value})\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1007.md:52
+msgid ""
+"If the fields in structs are unused, you can list them in record pattern,"
+" or use the dot-syntax to access them:"
+msgstr ""
+
+#: ../../language/error_codes/E1007.md:55
+msgid ""
+"fn main {\n"
+"  let s = S::{ value : 1 }\n"
+"  match s {\n"
+"    { value } => println(\"S(\\{value})\")\n"
+"  }\n"
+"  println(\"S(\\{s.value})\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1007.md:65
+msgid ""
+"Or, if the fields are indeed useless, you can remove the field from the "
+"constructor:"
+msgstr ""
+
+#: ../../language/error_codes/E1007.md:68
+msgid ""
+"enum E {\n"
+"  A\n"
+"  B\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1007.md:75
+#, fuzzy
+msgid ""
+"struct S {\n"
+"}\n"
+msgstr "结构体"
 
 #: ../../language/error_codes/E1008.md:1
 msgid "E1008"
 msgstr ""
 
 #: ../../language/error_codes/E1008.md:3
-msgid "The modifier is redundant here since field is modifier by default."
+msgid ""
+"The modifier (`pub`/`priv`) is redundant here, since this field has such "
+"visibility by default."
+msgstr ""
+
+#: ../../language/error_codes/E1008.md:8
+msgid ""
+"struct A {\n"
+"  priv value : Int\n"
+"  // Warning: The private modifier is redundant here\n"
+"  //          since field value is private by default\n"
+"}\n"
+"\n"
+"pub struct B {\n"
+"  pub value : Int\n"
+"  // Warning: The public modifier is redundant here\n"
+"  //          since field value is public by default\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1008.md:24
+msgid "Remove the visibility modifier on the field."
+msgstr ""
+
+#: ../../language/error_codes/E1008.md:26
+msgid ""
+"struct A {\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"pub struct B {\n"
+"  value : Int\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1009.md:1
@@ -2342,14 +2572,138 @@ msgstr ""
 msgid "The struct is never constructed."
 msgstr ""
 
+#: ../../language/error_codes/E1009.md:7
+msgid ""
+"pub struct A { // Warning: The struct A is never constructed\n"
+"  value : Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1009.md:13
+msgid ""
+"priv struct A { // Warning: The struct A is never constructed\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"fn f(a : A) -> Int {\n"
+"  a.value\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1009.md:25
+msgid ""
+"The `pub` visibility modifier only allows external packages to access the"
+" struct, by dot-syntax (`a.value`), or by pattern matching. Therefore, if"
+" you expect external packages to be able to construct the struct, you "
+"should use the `pub(all)` visibility modifier."
+msgstr ""
+
+#: ../../language/error_codes/E1009.md:30
+msgid ""
+"pub(all) struct A {\n"
+"  value : Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1009.md:36
+msgid ""
+"However, if you do not want external packages to construct the struct, "
+"this might be due to incompleteness or bugs in your code. There are some "
+"common cases:"
+msgstr ""
+
+#: ../../language/error_codes/E1009.md:40
+msgid ""
+"You planned to use smart constructors or factory functions to construct "
+"the struct, but you forgot or have not implemented them."
+msgstr ""
+
+#: ../../language/error_codes/E1009.md:42
+msgid ""
+"You intend to keep the struct private to control its instantiation but "
+"may have forgotten to provide a way to do so within its own package."
+msgstr ""
+
+#: ../../language/error_codes/E1009.md:45
+msgid ""
+"In these cases, you should consider providing a way to construct the "
+"struct within its own package."
+msgstr ""
+
+#: ../../language/error_codes/E1009.md:48
+msgid ""
+"priv struct A {\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"fn A::new(value : Int) -> A {\n"
+"  A::{ value }\n"
+"}\n"
+"\n"
+"fn A::value(self : A) -> Int {\n"
+"  self.value\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E1010.md:1
 msgid "E1010"
 msgstr ""
 
 #: ../../language/error_codes/E1010.md:3
-#, fuzzy
-msgid "Unused pattern."
-msgstr "范围模式"
+msgid ""
+"This pattern is unused. This usually happens in pattern matching, and "
+"this pattern is completely covered by a prior pattern."
+msgstr ""
+
+#: ../../language/error_codes/E1010.md:6
+msgid ""
+"Pattern matching in MoonBit is executed sequentially, from the first "
+"branch to the last. If a pattern is covered by a prior pattern, it will "
+"never be reached, since all control flow will be directed to the first "
+"matching branch."
+msgstr ""
+
+#: ../../language/error_codes/E1010.md:12
+msgid ""
+"fn main {\n"
+"  match Some(1) {\n"
+"    _ => println(\"_\")\n"
+"    Some(a) => println(\"Some(\\{a})\") // Warning: Unused pattern\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1010.md:23
+msgid ""
+"This warning can be usually fixed by swapping the order of the branches "
+"in the pattern matching. If the order of the branches is important, then "
+"you may want to refine the first pattern so that it excludes what the "
+"second pattern covers."
+msgstr ""
+
+#: ../../language/error_codes/E1010.md:27
+msgid ""
+"fn main {\n"
+"  match Some(1) {\n"
+"    Some(a) => println(\"Some(\\{a})\")\n"
+"    _ => println(\"_\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1010.md:36
+msgid "Or,"
+msgstr ""
+
+#: ../../language/error_codes/E1010.md:38
+msgid ""
+"fn main {\n"
+"  match Some(1) {\n"
+"    None => println(\"_\")\n"
+"    Some(a) => println(\"Some(\\{a})\")\n"
+"  }\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E1011.md:1
 msgid "E1011"
@@ -4867,11 +5221,52 @@ msgstr ""
 "查看文档，例如 [MDN](https://developer.mozilla.org/en-US/docs/WebAssembly) "
 "或您用于嵌入 Wasm 的运行时的手册。"
 
-#: ../../language/ffi-and-wasm-host.md:117
+#: ../../language/ffi-and-wasm-host.md:118
+msgid ""
+"In order to passing closure to host, we need to add `make_closure` into "
+"`moonbit:ffi`. e.g. "
+"[onclick](https://html.spec.whatwg.org/multipage/webappapis.html#handler-"
+"onclick)"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:121
+msgid ""
+"type MouseEvent \n"
+"type Window \n"
+"fn onclick(self : Window, e : (MouseEvent) -> Unit) = \"Window\" "
+"\"onclick\"\n"
+"pub fn print_hello(self : Window) -> Unit {\n"
+"  self.onclick(fn (_){ println(\"hello\")})\n"
+"}\n"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:130
+msgid ""
+"let importObject = { \n"
+"  Window : {\n"
+"    onclick : (w : Window, f : (e : MouseEvent) => void ) => w.onclick = "
+"f \n"
+"  },\n"
+"  spectest: {\n"
+"    print_char: log\n"
+"  },\n"
+"  \"moonbit:ffi\": {\n"
+"    make_closure: (funcref, closure) => funcref.bind(null, closure)\n"
+"  } \n"
+"}\n"
+"WebAssembly.instantiateStreaming(fetch(\"target/wasm-"
+"gc/release/build/lib/lib.wasm\"), importObject).then(\n"
+"  (obj) => {\n"
+"    obj.instance.exports[\"print_hello\"](window);\n"
+"  }\n"
+");\n"
+msgstr ""
+
+#: ../../language/ffi-and-wasm-host.md:149
 msgid "Example: Smiling face"
 msgstr "示例：笑脸"
 
-#: ../../language/ffi-and-wasm-host.md:119
+#: ../../language/ffi-and-wasm-host.md:151
 msgid ""
 "Let's walk through a full example to draw a smiling face using Canvas API"
 " in MoonBit. Suppose you created a new project with `moon new draw`"
@@ -4879,7 +5274,7 @@ msgstr ""
 "让我们通过一个完整的示例来使用 Canvas API 在 MoonBit 中绘制一个笑脸。假设您使用 `moon new draw` "
 "创建了一个新项目"
 
-#: ../../language/ffi-and-wasm-host.md:121
+#: ../../language/ffi-and-wasm-host.md:153
 msgid ""
 "// We first declare a type representing the context of canvas\n"
 "type Canvas_ctx\n"
@@ -4917,7 +5312,7 @@ msgstr ""
 "// 首先声明一个表示 canvas 上下文的类型\n"
 "type Canvas_ctx\n"
 
-#: ../../language/ffi-and-wasm-host.md:154
+#: ../../language/ffi-and-wasm-host.md:186
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -4931,7 +5326,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:167
+#: ../../language/ffi-and-wasm-host.md:199
 msgid ""
 "Build the project using `moon build`. We recommend using Wasm with GC "
 "integration whenever possible (which is the default). If the environment "
@@ -4940,11 +5335,11 @@ msgstr ""
 "使用 `moon build` 构建项目。我们建议尽可能使用 Wasm GC（这是默认值）。如果环境不支持 GC 特性，请改用 `--target"
 " wasm` 选项。"
 
-#: ../../language/ffi-and-wasm-host.md:169
+#: ../../language/ffi-and-wasm-host.md:201
 msgid "We now can use it from JavaScript."
 msgstr "现在我们可以从 JavaScript 中使用它。"
 
-#: ../../language/ffi-and-wasm-host.md:171
+#: ../../language/ffi-and-wasm-host.md:203
 msgid ""
 "<html lang=\"en\">\n"
 "  <body>\n"
@@ -4998,7 +5393,7 @@ msgstr ""
 "  </script>\n"
 "</html>\n"
 
-#: ../../language/ffi-and-wasm-host.md:198
+#: ../../language/ffi-and-wasm-host.md:230
 msgid ""
 "For import object, we need to provide all the FFI used in the previously "
 "defined program: the canvas rendering API, the math API and finally, an "
@@ -5008,7 +5403,7 @@ msgstr ""
 "对于导入对象，我们需要提供先前定义的程序中使用的所有 FFI：canvas 渲染 API、math API 和最后，用于 `println` 或 "
 "`print` 函数的打印到控制台的 API。"
 
-#: ../../language/ffi-and-wasm-host.md:200
+#: ../../language/ffi-and-wasm-host.md:232
 msgid ""
 "As of the canvas rendering API and the math API, we can use the following"
 " code to convert the methods of objects into function calls that accept "
@@ -5018,7 +5413,7 @@ msgstr ""
 "至于 canvas 渲染 API 和 math "
 "API，我们可以使用以下代码将对象的方法转换为接受对象作为第一个参数的函数调用，并将对象的常量属性转换为返回值的函数："
 
-#: ../../language/ffi-and-wasm-host.md:202
+#: ../../language/ffi-and-wasm-host.md:234
 msgid ""
 "function prototype_to_ffi(prototype) {\n"
 "  return Object.fromEntries(\n"
@@ -5042,14 +5437,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:224
+#: ../../language/ffi-and-wasm-host.md:256
 msgid ""
 "As of the printing service, we can provide the following closure so that "
 "it buffers the bytes of string until it needs to be logged to the "
 "console:"
 msgstr "至于打印服务，我们可以提供以下闭包，以便它缓冲字符串的字节，直到需要将其记录到控制台："
 
-#: ../../language/ffi-and-wasm-host.md:226
+#: ../../language/ffi-and-wasm-host.md:258
 msgid ""
 "const [log, flush] = (() => {\n"
 "  var buffer = [];\n"
@@ -5085,11 +5480,11 @@ msgid ""
 ");\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:259
+#: ../../language/ffi-and-wasm-host.md:291
 msgid "Now, we put them together, so this is our final complete `index.html`:"
 msgstr "现在，我们将它们放在一起，这是我们最终的完整 `index.html`："
 
-#: ../../language/ffi-and-wasm-host.md:261
+#: ../../language/ffi-and-wasm-host.md:293
 msgid ""
 "<!DOCTYPE html>\n"
 "<html>\n"
@@ -5157,17 +5552,17 @@ msgid ""
 "</html>\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:326
+#: ../../language/ffi-and-wasm-host.md:358
 msgid ""
 "Make sure that `draw.wasm` and `index.html` are in the same folder, then "
 "start a http server at this folder. For example, using Python:"
 msgstr "确保 `draw.wasm` 和 `index.html` 在同一个文件夹中，然后在此文件夹中启动一个 http 服务器。例如，使用 Python："
 
-#: ../../language/ffi-and-wasm-host.md:328
+#: ../../language/ffi-and-wasm-host.md:360
 msgid "python3 -m http.server 8080\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:332
+#: ../../language/ffi-and-wasm-host.md:364
 msgid ""
 "Goto [http://localhost:8080](http://localhost:8080) in your browser, "
 "there should be a smile face on the screen and an output on the console:"
@@ -5175,13 +5570,13 @@ msgstr ""
 "在浏览器中转到 "
 "[http://localhost:8080](http://localhost:8080)，屏幕上应该有一个笑脸，控制台上应该有一个输出："
 
-#: ../../language/ffi-and-wasm-host.md:334
+#: ../../language/ffi-and-wasm-host.md:366
 msgid ""
 "![A smile face webpage with browser devtools "
 "open](../imgs/smile_face_with_log.png)"
 msgstr "![带有笑脸的浏览器开发工具的网页](../imgs/smile_face_with_log.png)"
 
-#: ../../language/ffi-and-wasm-host.md:334
+#: ../../language/ffi-and-wasm-host.md:366
 msgid "A smile face webpage with browser devtools open"
 msgstr "带有笑脸的浏览器开发工具的网页"
 
@@ -10202,4 +10597,16 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
+
+#~ msgid "Variant is unused."
+#~ msgstr ""
+
+#~ msgid "Field is never read."
+#~ msgstr ""
+
+#~ msgid "The modifier is redundant here since field is modifier by default."
+#~ msgstr ""
+
+#~ msgid "Unused pattern."
+#~ msgstr "范围模式"
 
