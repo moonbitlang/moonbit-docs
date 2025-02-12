@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-11 17:12+0800\n"
+"POT-Creation-Date: 2025-02-12 16:41+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1963,16 +1963,23 @@ msgstr ""
 #: ../../language/error_codes/E1003.md:16 ../../language/error_codes/E1005.md:9
 #: ../../language/error_codes/E1006.md:11 ../../language/error_codes/E1007.md:6
 #: ../../language/error_codes/E1008.md:6 ../../language/error_codes/E1009.md:5
-#: ../../language/error_codes/E1010.md:10
-#: ../../language/error_codes/E1018.md:12
-#: ../../language/error_codes/E2000.md:17 ../../language/error_codes/E3001.md:5
-#: ../../language/error_codes/E3002.md:5 ../../language/error_codes/E3003.md:5
-#: ../../language/error_codes/E3004.md:6 ../../language/error_codes/E3005.md:14
-#: ../../language/error_codes/E3006.md:7 ../../language/error_codes/E3007.md:5
-#: ../../language/error_codes/E3008.md:5 ../../language/error_codes/E3009.md:5
-#: ../../language/error_codes/E3010.md:5 ../../language/error_codes/E3011.md:6
-#: ../../language/error_codes/E4000.md:5 ../../language/error_codes/E4005.md:5
-#: ../../language/error_codes/E4007.md:8 ../../language/error_codes/E4056.md:5
+#: ../../language/error_codes/E1010.md:10 ../../language/error_codes/E1011.md:6
+#: ../../language/error_codes/E1012.md:7 ../../language/error_codes/E1014.md:5
+#: ../../language/error_codes/E1015.md:8 ../../language/error_codes/E1018.md:12
+#: ../../language/error_codes/E1019.md:11
+#: ../../language/error_codes/E1020.md:30 ../../language/error_codes/E1021.md:5
+#: ../../language/error_codes/E1022.md:8 ../../language/error_codes/E1023.md:5
+#: ../../language/error_codes/E1024.md:5 ../../language/error_codes/E1026.md:8
+#: ../../language/error_codes/E1028.md:5 ../../language/error_codes/E1029.md:5
+#: ../../language/error_codes/E1030.md:5 ../../language/error_codes/E2000.md:17
+#: ../../language/error_codes/E3001.md:5 ../../language/error_codes/E3002.md:5
+#: ../../language/error_codes/E3003.md:5 ../../language/error_codes/E3004.md:6
+#: ../../language/error_codes/E3005.md:14 ../../language/error_codes/E3006.md:7
+#: ../../language/error_codes/E3007.md:5 ../../language/error_codes/E3008.md:5
+#: ../../language/error_codes/E3009.md:5 ../../language/error_codes/E3010.md:5
+#: ../../language/error_codes/E3011.md:6 ../../language/error_codes/E4000.md:5
+#: ../../language/error_codes/E4005.md:5 ../../language/error_codes/E4007.md:8
+#: ../../language/error_codes/E4056.md:5
 msgid "Erroneous example"
 msgstr "错误示例"
 
@@ -1998,7 +2005,21 @@ msgstr ""
 #: ../../language/error_codes/E1008.md:22
 #: ../../language/error_codes/E1009.md:23
 #: ../../language/error_codes/E1010.md:21
+#: ../../language/error_codes/E1011.md:17
+#: ../../language/error_codes/E1012.md:16
+#: ../../language/error_codes/E1014.md:14
+#: ../../language/error_codes/E1015.md:18
 #: ../../language/error_codes/E1018.md:25
+#: ../../language/error_codes/E1019.md:17
+#: ../../language/error_codes/E1020.md:40
+#: ../../language/error_codes/E1021.md:22
+#: ../../language/error_codes/E1022.md:22
+#: ../../language/error_codes/E1023.md:17
+#: ../../language/error_codes/E1024.md:13
+#: ../../language/error_codes/E1026.md:34
+#: ../../language/error_codes/E1028.md:13
+#: ../../language/error_codes/E1029.md:50
+#: ../../language/error_codes/E1030.md:19
 #: ../../language/error_codes/E2000.md:39
 #: ../../language/error_codes/E3001.md:23
 #: ../../language/error_codes/E3002.md:21
@@ -2704,15 +2725,81 @@ msgid "E1011"
 msgstr ""
 
 #: ../../language/error_codes/E1011.md:3
-msgid "Partial match."
-msgstr "部分匹配"
+msgid ""
+"Partial match. The match/guard/loop expression does not cover all "
+"possible cases."
+msgstr ""
+
+#: ../../language/error_codes/E1011.md:8
+msgid ""
+"///|\n"
+"fn main {\n"
+"  match Some(1) { // Partial match, some hints: None\n"
+"    Some(x) => println(x)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1011.md:19
+msgid ""
+"The warning message usually contains hints about the missing patterns. "
+"Add the missing cases to avoid incomplete matches."
+msgstr ""
+
+#: ../../language/error_codes/E1011.md:21
+msgid ""
+"fn main {\n"
+"  match Some(1) {\n"
+"    Some(x) => println(x)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1011.md:29
+msgid "Or, you can add a wildcard pattern to catch all remaining cases:"
+msgstr ""
+
+#: ../../language/error_codes/E1011.md:31
+msgid ""
+"fn main {\n"
+"  match Some(1) {\n"
+"    Some(x) => println(x)\n"
+"    _ => println(\"Other\")\n"
+"  }\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E1012.md:1
 msgid "E1012"
 msgstr ""
 
 #: ../../language/error_codes/E1012.md:3
-msgid "Unreachable code."
+msgid ""
+"Unreachable code. This usually happens when a `return` statement is "
+"followed by more code. The `return` statement will exit the function "
+"immediately, so any code after it will not be executed."
+msgstr ""
+
+#: ../../language/error_codes/E1012.md:9
+msgid ""
+"fn main {\n"
+"  return\n"
+"  println(\"Hello, World!\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1012.md:18
+msgid ""
+"Remove the unreachable code, or move it before the `return` statement if "
+"you want the code to be executed."
+msgstr ""
+
+#: ../../language/error_codes/E1012.md:21
+msgid ""
+"fn main {\n"
+"  println(\"Hello, World!\")\n"
+"  return\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1013.md:1
@@ -2728,7 +2815,31 @@ msgid "E1014"
 msgstr ""
 
 #: ../../language/error_codes/E1014.md:3
-msgid "Type name should be capitalized."
+msgid ""
+"Type name should be capitalized. In MoonBit, we recommend using a "
+"capitalized type name for all types, including built-in types and user-"
+"defined types. This is a convention that is followed by the standard "
+"library and most of the community code."
+msgstr ""
+
+#: ../../language/error_codes/E1014.md:7
+msgid ""
+"struct point {\n"
+"  x: Int\n"
+"  y: Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1014.md:16
+msgid "Capitalize the type name."
+msgstr ""
+
+#: ../../language/error_codes/E1014.md:18
+msgid ""
+"struct Point {\n"
+"  x: Int\n"
+"  y: Int\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1015.md:1
@@ -2736,7 +2847,33 @@ msgid "E1015"
 msgstr ""
 
 #: ../../language/error_codes/E1015.md:3
-msgid "The mutability is never used."
+msgid ""
+"The mutability is never used. It is a common mistake to declare an array "
+"to be mutable when it is not necessary. Setting the value of an element "
+"in an array does not require the array to be mutable. For example, `a[0] "
+"= 0` does not require `a` to be mutable, but `a = [0, 1, 2]` does."
+msgstr ""
+
+#: ../../language/error_codes/E1015.md:10
+msgid ""
+"fn main {\n"
+"  let mut x = [1, 2, 3] // Warning: The mutability of 'x' is never used.\n"
+"  x[0] = 0\n"
+"  println(x)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1015.md:20
+msgid "Remove the `mut` keyword from the variable declaration."
+msgstr ""
+
+#: ../../language/error_codes/E1015.md:22
+msgid ""
+"fn main {\n"
+"  let x = [1, 2, 3]\n"
+"  x[0] = 0\n"
+"  println(x)\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1016.md:1
@@ -2817,7 +2954,30 @@ msgid "E1019"
 msgstr ""
 
 #: ../../language/error_codes/E1019.md:3
-msgid "Toplevel declaration is not left aligned."
+msgid ""
+"Toplevel declaration is not left aligned. Every toplevel structure in "
+"MoonBit should be left-aligned, i.e. there is no space between the "
+"beginning of the line and the declaration."
+msgstr ""
+
+#: ../../language/error_codes/E1019.md:7
+msgid ""
+"Sometimes, earlier parsing errors might causing this error to be raised "
+"in the following lines. Therefore, when your are writing local "
+"declarations while seeing this error, you should check the previous lines"
+" for any parsing errors."
+msgstr ""
+
+#: ../../language/error_codes/E1019.md:13
+msgid "  let x = 1\n"
+msgstr ""
+
+#: ../../language/error_codes/E1019.md:19
+msgid "Remove the leading spaces:"
+msgstr ""
+
+#: ../../language/error_codes/E1019.md:21
+msgid "let x = 1\n"
 msgstr ""
 
 #: ../../language/error_codes/E1020.md:1
@@ -2825,8 +2985,70 @@ msgid "E1020"
 msgstr ""
 
 #: ../../language/error_codes/E1020.md:3
-msgid "Invalid pragma."
-msgstr "非法注解"
+msgid ""
+"Invalid pragma. The pragma either has invalid id, or has invalid "
+"properties."
+msgstr ""
+
+#: ../../language/error_codes/E1020.md:5
+#, fuzzy
+msgid "MoonBit compiler support the following pragmas:"
+msgstr "MoonBit 提供了以下有用的内建特征："
+
+#: ../../language/error_codes/E1020.md:7
+msgid ""
+"`@alert`. This pragma is used to emit a warning message. It has the "
+"following format: `@alert <category> \"message\"`. For example:"
+msgstr ""
+
+#: ../../language/error_codes/E1020.md:10
+msgid ""
+"///|\n"
+"/// @alert deprecated \"This function is deprecated\"\n"
+"fn deprecated_function() {\n"
+"  // ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1020.md:18
+msgid ""
+"`@coverage.skip`. This pragma indicates that the following declaration "
+"should be skipped when calculating code coverage. It has the following "
+"format: `@coverage.skip`. For example:"
+msgstr ""
+
+#: ../../language/error_codes/E1020.md:22
+msgid ""
+"///|\n"
+"/// @coverage.skip\n"
+"fn function_to_skip() {\n"
+"  // ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1020.md:32
+msgid ""
+"///|\n"
+"/// @deprecated \"This function is deprecated\"\n"
+"fn f() {\n"
+"  // ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1020.md:42
+msgid ""
+"Depending on the pragma you want to use, you should either remove the "
+"invalid pragma, or replace it with a valid one."
+msgstr ""
+
+#: ../../language/error_codes/E1020.md:45
+msgid ""
+"///|\n"
+"/// @alert deprecated \"This function is deprecated\"\n"
+"fn f() {\n"
+"  // ...\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E1021.md:1
 msgid "E1021"
@@ -2836,13 +3058,113 @@ msgstr ""
 msgid "Some arguments of constructor are omitted in pattern."
 msgstr ""
 
+#: ../../language/error_codes/E1021.md:7
+msgid ""
+"enum E {\n"
+"  A(Int, w~ : Int, h~ : Int)\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  match A(0, w=1, h=2) {\n"
+"    A(v, w~) => { // Warning: The argument(s) h of constructor A are "
+"omitted.\n"
+"      println(v)\n"
+"      println(w)\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1021.md:24
+msgid ""
+"If you want to omit some arguments, add the `..` to the end of the "
+"pattern:"
+msgstr ""
+
+#: ../../language/error_codes/E1021.md:26
+msgid ""
+"fn main {\n"
+"  match A(0, w=1, h=2) {\n"
+"    A(v, w~, ..) => {\n"
+"      println(v)\n"
+"      println(w)\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1021.md:37
+msgid "Or, you can match all arguments:"
+msgstr ""
+
+#: ../../language/error_codes/E1021.md:39
+msgid ""
+"fn main {\n"
+"  match A(0, w=1, h=2) {\n"
+"    A(v, w~, h~) => {\n"
+"      println(v)\n"
+"      println(w)\n"
+"      println(h)\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E1022.md:1
 msgid "E1022"
 msgstr ""
 
 #: ../../language/error_codes/E1022.md:3
-msgid "Ambiguous block expression."
-msgstr "有歧义的块表达式"
+msgid ""
+"Ambiguous block expression. In MoonBit, the expression `{ value }` is "
+"ambiguous because it could be interpreted as a block expression or a "
+"struct literal. For now, we treat it as a struct literal, but writing "
+"such expressions is discouraged."
+msgstr ""
+
+#: ../../language/error_codes/E1022.md:10
+msgid ""
+"struct S {\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let value = 3\n"
+"  let s = { value }\n"
+"  ignore(s)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1022.md:24
+msgid ""
+"If you want to construct a struct using the struct literal, you can add a"
+" comma to the end of the struct literal. Or you can call formatter on "
+"this buffer to have the comma added automatically."
+msgstr ""
+
+#: ../../language/error_codes/E1022.md:28
+msgid ""
+"fn main {\n"
+"  let value = 3\n"
+"  let s = { value, }\n"
+"  ignore(s)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1022.md:36
+msgid ""
+"If you are using it as a block expression, please remove the braces as it"
+" has only one expression and is equivalent to the expression `value`:"
+msgstr ""
+
+#: ../../language/error_codes/E1022.md:39
+msgid ""
+"fn main {\n"
+"  let value = 3\n"
+"  let s = value\n"
+"  ignore(s)\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E1023.md:1
 msgid "E1023"
@@ -2850,6 +3172,31 @@ msgstr ""
 
 #: ../../language/error_codes/E1023.md:3
 msgid "The body of this try expression never raises any error."
+msgstr ""
+
+#: ../../language/error_codes/E1023.md:7
+msgid ""
+"fn main {\n"
+"  try {\n"
+"    println(\"Hello, world!\")\n"
+"  } catch {\n"
+"    _ => println(\"Error\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1023.md:19
+#, fuzzy
+msgid "Remove the `try` expression:"
+msgstr "匹配表达式"
+
+#: ../../language/error_codes/E1023.md:21
+#: ../../language/error_codes/E3002.md:27
+#: ../../language/error_codes/E3003.md:17
+msgid ""
+"fn main {\n"
+"  println(\"Hello, world!\")\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1024.md:1
@@ -2860,12 +3207,89 @@ msgstr ""
 msgid "The error type of this function is never used."
 msgstr ""
 
+#: ../../language/error_codes/E1024.md:7
+msgid ""
+"fn greet() -> Unit! {\n"
+"  println(\"Hello, world!\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1024.md:15
+#, fuzzy
+msgid "Remove the error type:"
+msgstr "默认错误类型"
+
+#: ../../language/error_codes/E1024.md:17
+msgid ""
+"fn greet() -> Unit {\n"
+"  println(\"Hello, world!\")\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E1026.md:1
 msgid "E1026"
 msgstr ""
 
 #: ../../language/error_codes/E1026.md:3
-msgid "The patterns are complete so the usage of `catch!` is useless."
+msgid ""
+"The patterns are complete so the usage of `catch!` is useless. In "
+"MoonBit, when there is only one error type that will be raised in a try "
+"block, compiler will know that the error type is the only one that will "
+"be caught. So, there is no need to use `catch!` in this case."
+msgstr ""
+
+#: ../../language/error_codes/E1026.md:10
+msgid ""
+"type! E\n"
+"\n"
+"fn f() -> Unit!E {\n"
+"  raise E\n"
+"}\n"
+"\n"
+"fn g() -> Unit! {\n"
+"  try {\n"
+"    f!()\n"
+"  } catch! {\n"
+"    E => raise E\n"
+"  }\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  try {\n"
+"    g!()\n"
+"  } catch {\n"
+"    _ => println(\"Error\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1026.md:36
+msgid "Remove the `!` in the `catch!`:"
+msgstr ""
+
+#: ../../language/error_codes/E1026.md:38
+msgid ""
+"type! E\n"
+"\n"
+"fn f() -> Unit!E {\n"
+"  raise E\n"
+"}\n"
+"\n"
+"fn g() -> Unit! {\n"
+"  try {\n"
+"    f!()\n"
+"  } catch {\n"
+"    E => raise E\n"
+"  }\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  try {\n"
+"    g!()\n"
+"  } catch {\n"
+"    _ => println(\"Error\")\n"
+"  }\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1027.md:1
@@ -2873,7 +3297,9 @@ msgid "E1027"
 msgstr ""
 
 #: ../../language/error_codes/E1027.md:3
-msgid "The syntax is deprecated."
+msgid ""
+"The syntax is deprecated. Please refer to the warning message on the "
+"reason and potential fix."
 msgstr ""
 
 #: ../../language/error_codes/E1028.md:1
@@ -2881,7 +3307,28 @@ msgid "E1028"
 msgstr ""
 
 #: ../../language/error_codes/E1028.md:3
-msgid "Unfinished code."
+msgid ""
+"Unfinished code. In MoonBit, you can use `...` to mark a piece of code "
+"that is incomplete. You can still compile and run the code, but it will "
+"cause a runtime error when it is executed."
+msgstr ""
+
+#: ../../language/error_codes/E1028.md:7
+msgid ""
+"fn f() -> Unit {\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1028.md:15
+msgid "Complete the code:"
+msgstr ""
+
+#: ../../language/error_codes/E1028.md:17
+msgid ""
+"fn f() -> Unit {\n"
+"  println(\"Hello, world!\")\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1029.md:1
@@ -2892,13 +3339,115 @@ msgstr ""
 msgid "Unused package."
 msgstr ""
 
+#: ../../language/error_codes/E1029.md:7
+msgid "`moon.mod.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E1029.md:9
+msgid ""
+"{\n"
+"  \"name\": \"username/hello\",\n"
+"  \"version\": \"0.1.0\",\n"
+"  \"readme\": \"README.md\",\n"
+"  \"source\": \"src\"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1029.md:18
+msgid "`lib/moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E1029.md:20
+msgid "{}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1029.md:24
+msgid "`lib/hello.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E1029.md:26
+msgid ""
+"pub fn greeting() -> String {\n"
+"  \"Hello, world!\"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1029.md:32
+#: ../../language/error_codes/E1029.md:54
+msgid "`main/moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E1029.md:34
+msgid ""
+"{\n"
+"  \"is-main\": true,\n"
+"  \"import\": [\n"
+"    \"username/hello/lib\" // Unused package 'username/hello/lib'\n"
+"  ]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1029.md:43
+msgid "`main/main.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E1029.md:45
+msgid ""
+"fn main {\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1029.md:52
+msgid "Remove the unused package:"
+msgstr ""
+
+#: ../../language/error_codes/E1029.md:56
+msgid ""
+"{\n"
+"  \"is-main\": true\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E1030.md:1
 msgid "E1030"
 msgstr ""
 
 #: ../../language/error_codes/E1030.md:3
-msgid "The package alias is empty."
-msgstr "别名为空"
+msgid ""
+"The package alias is empty. The default package alias will be used "
+"instead."
+msgstr ""
+
+#: ../../language/error_codes/E1030.md:7
+msgid ""
+"{\n"
+"  \"is-main\": true,\n"
+"  \"import\": [\n"
+"    {\n"
+"      \"path\": \"username/hello/lib\",\n"
+"      \"alias\": \"\" // Warning: The package alias is empty. The default"
+" package alias will be used instead.\n"
+"    }\n"
+"  ]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1030.md:21
+msgid "Use a non-empty alias for the package:"
+msgstr ""
+
+#: ../../language/error_codes/E1030.md:23
+msgid ""
+"{\n"
+"  \"is-main\": true,\n"
+"  \"import\": [\n"
+"    {\n"
+"      \"path\": \"username/hello/lib\",\n"
+"      \"alias\": \"hello\"\n"
+"    }\n"
+"  ]\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E1031.md:1
 msgid "E1031"
@@ -3075,7 +3624,7 @@ msgstr ""
 
 #: ../../language/error_codes/E3001.md:7
 msgid ""
-"fn main() -> Unit {\n"
+"fn main {\n"
 "  println('3)\n"
 "}\n"
 msgstr ""
@@ -3147,14 +3696,6 @@ msgstr ""
 
 #: ../../language/error_codes/E3002.md:25
 msgid "In the above example, the missing closing parenthesis should be added:"
-msgstr ""
-
-#: ../../language/error_codes/E3002.md:27
-#: ../../language/error_codes/E3003.md:17
-msgid ""
-"fn main {\n"
-"  println(\"Hello, world!\")\n"
-"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E3003.md:1
@@ -8710,8 +9251,7 @@ msgid ""
 "The `is` expression tests whether a value conforms to a specific pattern."
 " It returns a `Bool` value and can be used anywhere a boolean value is "
 "expected, for example:"
-msgstr ""
-"`is` 表达式测试值是否符合特定模式。它返回一个 `Bool` 值，并可以在期望布尔值的任何地方使用，例如："
+msgstr "`is` 表达式测试值是否符合特定模式。它返回一个 `Bool` 值，并可以在期望布尔值的任何地方使用，例如："
 
 #: ../../language/fundamentals.md:1310
 msgid ""
@@ -8728,15 +9268,13 @@ msgstr ""
 msgid ""
 "Pattern binders introduced by `is` expressions can be used in two "
 "contexts:"
-msgstr ""
-"通过 `is` 表达式绑定的标识符可以在两个上下文中使用："
+msgstr "通过 `is` 表达式绑定的标识符可以在两个上下文中使用："
 
 #: ../../language/fundamentals.md:1319
 msgid ""
 "In boolean AND expressions (`&&`): binders introduced in the left-hand "
 "expression can be used in the right-hand expression"
-msgstr ""
-"在与表达式（`&&`）中：左侧表达式中绑定的标识符可以在右侧表达式中使用"
+msgstr "在与表达式（`&&`）中：左侧表达式中绑定的标识符可以在右侧表达式中使用"
 
 #: ../../language/fundamentals.md:1323
 msgid ""
@@ -8752,8 +9290,8 @@ msgid ""
 "introduced in the `is` expression can be used in the branch of the `if` "
 "expression."
 msgstr ""
-"在 `if` 条件及其对应的分支中：如果条件是一系列布尔表达式 `e1 && e2 && ...`，则可以在 `if` 表达式的分支中使用 `is` "
-"表达式中绑定的标识符。"
+"在 `if` 条件及其对应的分支中：如果条件是一系列布尔表达式 `e1 && e2 && ...`，则可以在 `if` 表达式的分支中使用 "
+"`is` 表达式中绑定的标识符。"
 
 #: ../../language/fundamentals.md:1335
 msgid ""
@@ -10655,4 +11193,43 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
+
+#~ msgid "Partial match."
+#~ msgstr "部分匹配"
+
+#~ msgid "Unreachable code."
+#~ msgstr ""
+
+#~ msgid "Type name should be capitalized."
+#~ msgstr ""
+
+#~ msgid "The mutability is never used."
+#~ msgstr ""
+
+#~ msgid "Toplevel declaration is not left aligned."
+#~ msgstr ""
+
+#~ msgid "Invalid pragma."
+#~ msgstr "非法注解"
+
+#~ msgid "Ambiguous block expression."
+#~ msgstr "有歧义的块表达式"
+
+#~ msgid "The patterns are complete so the usage of `catch!` is useless."
+#~ msgstr ""
+
+#~ msgid "The syntax is deprecated."
+#~ msgstr ""
+
+#~ msgid "Unfinished code."
+#~ msgstr ""
+
+#~ msgid "The package alias is empty."
+#~ msgstr "别名为空"
+
+#~ msgid ""
+#~ "fn main() -> Unit {\n"
+#~ "  println('3)\n"
+#~ "}\n"
+#~ msgstr ""
 
