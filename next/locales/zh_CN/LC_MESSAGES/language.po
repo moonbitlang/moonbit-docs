@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-12 16:41+0800\n"
+"POT-Creation-Date: 2025-02-12 18:05+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1971,7 +1971,11 @@ msgstr ""
 #: ../../language/error_codes/E1022.md:8 ../../language/error_codes/E1023.md:5
 #: ../../language/error_codes/E1024.md:5 ../../language/error_codes/E1026.md:8
 #: ../../language/error_codes/E1028.md:5 ../../language/error_codes/E1029.md:5
-#: ../../language/error_codes/E1030.md:5 ../../language/error_codes/E2000.md:17
+#: ../../language/error_codes/E1030.md:5 ../../language/error_codes/E1031.md:7
+#: ../../language/error_codes/E1032.md:5 ../../language/error_codes/E1033.md:10
+#: ../../language/error_codes/E1035.md:29 ../../language/error_codes/E1037.md:5
+#: ../../language/error_codes/E1038.md:13 ../../language/error_codes/E1039.md:9
+#: ../../language/error_codes/E1040.md:7 ../../language/error_codes/E2000.md:17
 #: ../../language/error_codes/E3001.md:5 ../../language/error_codes/E3002.md:5
 #: ../../language/error_codes/E3003.md:5 ../../language/error_codes/E3004.md:6
 #: ../../language/error_codes/E3005.md:14 ../../language/error_codes/E3006.md:7
@@ -2020,6 +2024,14 @@ msgstr ""
 #: ../../language/error_codes/E1028.md:13
 #: ../../language/error_codes/E1029.md:50
 #: ../../language/error_codes/E1030.md:19
+#: ../../language/error_codes/E1031.md:33
+#: ../../language/error_codes/E1032.md:30
+#: ../../language/error_codes/E1033.md:51
+#: ../../language/error_codes/E1035.md:37
+#: ../../language/error_codes/E1037.md:24
+#: ../../language/error_codes/E1038.md:28
+#: ../../language/error_codes/E1039.md:28
+#: ../../language/error_codes/E1040.md:25
 #: ../../language/error_codes/E2000.md:39
 #: ../../language/error_codes/E3001.md:23
 #: ../../language/error_codes/E3002.md:21
@@ -3354,10 +3366,12 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E1029.md:18
+#: ../../language/error_codes/E1033.md:12
 msgid "`lib/moon.pkg.json`:"
 msgstr ""
 
 #: ../../language/error_codes/E1029.md:20
+#: ../../language/error_codes/E1033.md:14
 msgid "{}\n"
 msgstr ""
 
@@ -3366,6 +3380,7 @@ msgid "`lib/hello.mbt`:"
 msgstr ""
 
 #: ../../language/error_codes/E1029.md:26
+#: ../../language/error_codes/E1033.md:20
 msgid ""
 "pub fn greeting() -> String {\n"
 "  \"Hello, world!\"\n"
@@ -3374,6 +3389,8 @@ msgstr ""
 
 #: ../../language/error_codes/E1029.md:32
 #: ../../language/error_codes/E1029.md:54
+#: ../../language/error_codes/E1033.md:26
+#: ../../language/error_codes/E1033.md:56
 msgid "`main/moon.pkg.json`:"
 msgstr ""
 
@@ -3388,6 +3405,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E1029.md:43
+#: ../../language/error_codes/E1033.md:43
+#: ../../language/error_codes/E1033.md:72
 msgid "`main/main.mbt`:"
 msgstr ""
 
@@ -3454,15 +3473,119 @@ msgid "E1031"
 msgstr ""
 
 #: ../../language/error_codes/E1031.md:3
-msgid "The optional argument is never supplied."
-msgstr "可选参数未被提供"
+msgid ""
+"The optional argument is never supplied. If the optional argument is "
+"never supplied, then it can be safety removed from the parameter list and"
+" be used purely internally as a normal variable."
+msgstr ""
+
+#: ../../language/error_codes/E1031.md:9
+msgid ""
+"Note, this warning is turned off by default. To enable this warning, you "
+"have to modify the `\"warn-list\"` of `moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E1031.md:12
+msgid ""
+"{\n"
+"  // ...\n"
+"  \"warn-list\": \"+31\"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1031.md:19
+#: ../../language/error_codes/E1032.md:16
+msgid "`main.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E1031.md:21
+msgid ""
+"fn f(opt~ : Int = 4) -> Int {\n"
+"  ignore(opt)\n"
+"  0\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  println(f())\n"
+"  println(f())\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1031.md:35
+msgid ""
+"You can remove the optional argument, and use a local variable definition"
+" instead:"
+msgstr ""
+
+#: ../../language/error_codes/E1031.md:38
+msgid ""
+"fn f() -> Int {\n"
+"  let opt = 4\n"
+"  ignore(opt)\n"
+"  0\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  println(f())\n"
+"  println(f())\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E1032.md:1
 msgid "E1032"
 msgstr ""
 
 #: ../../language/error_codes/E1032.md:3
-msgid "Default value of optional argument is unused."
+msgid ""
+"Default value of optional argument is unused. This implies at every call "
+"site of this function, the optional argument is always explicitly "
+"supplied with a value. This means the optional argument can be refactored"
+" into a labelled argument."
+msgstr ""
+
+#: ../../language/error_codes/E1032.md:7
+msgid ""
+"Note, this warning is turned off by default. To enable this warning, you "
+"need to modify the `\"warn-list\"` of `moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E1032.md:9
+msgid ""
+"{\n"
+"  // ...\n"
+"  \"warn-list\": \"+32\"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1032.md:18
+msgid ""
+"fn f(opt~ : Int = 4) -> Int {\n"
+"  ignore(opt)\n"
+"  0\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  println(f(opt=3))\n"
+"  println(f(opt=3))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1032.md:32
+#, fuzzy
+msgid "Turn the optional argument into a labelled argument:"
+msgstr "只有顶层函数可以有带标签的参数。"
+
+#: ../../language/error_codes/E1032.md:34
+msgid ""
+"fn f(opt~ : Int) -> Int {\n"
+"  ignore(opt)\n"
+"  0\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  println(f(opt=3))\n"
+"  println(f(opt=3))\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1033.md:1
@@ -3473,12 +3596,82 @@ msgstr ""
 msgid "The import value is never used directly."
 msgstr ""
 
+#: ../../language/error_codes/E1033.md:5
+msgid ""
+"In MoonBit, you can import a value (say `f`) from another package into "
+"current package, so that you don't have to use `@pkg.f` to qualify the "
+"value, and you can just use `f` as if it were defined in this package. "
+"However, if `f` is not used in current package, this warning will be "
+"emitted."
+msgstr ""
+
+#: ../../language/error_codes/E1033.md:18
+msgid "`lib/main.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E1033.md:28
+msgid ""
+"{\n"
+"  \"is-main\": true,\n"
+"  \"import\": [\n"
+"    {\n"
+"      \"path\": \"username/hello/lib\",\n"
+"      \"alias\": \"hello\",\n"
+"      \"value\": [\n"
+"        \"greeting\" // Warning: The import value greeting is never used "
+"directly.\n"
+"      ]\n"
+"    }\n"
+"  ]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1033.md:45
+msgid ""
+"fn main {\n"
+"  println(@hello.greeting())\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1033.md:53
+msgid ""
+"It is possible that you still use qualified name to access the imported "
+"value. In this case, either remove the imported value from "
+"`moon.pkg.json`."
+msgstr ""
+
+#: ../../language/error_codes/E1033.md:58
+msgid ""
+"{\n"
+"  // ...\n"
+"  \"import\": [\n"
+"    {\n"
+"      \"path\": \"username/hello/lib\",\n"
+"      \"alias\": \"hello\"\n"
+"    }\n"
+"  ]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1033.md:70
+msgid "Or remove the qualified package name from your code:"
+msgstr ""
+
+#: ../../language/error_codes/E1033.md:74
+msgid ""
+"fn main {\n"
+"  println(greeting())\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E1034.md:1
 msgid "E1034"
 msgstr ""
 
 #: ../../language/error_codes/E1034.md:3
-msgid "The syntax `~label` is deprecated."
+msgid ""
+"The syntax `~label` is deprecated. We have removed this syntax and this "
+"warning is no longer emitted by the compiler."
 msgstr ""
 
 #: ../../language/error_codes/E1035.md:1
@@ -3486,7 +3679,115 @@ msgid "E1035"
 msgstr ""
 
 #: ../../language/error_codes/E1035.md:3
-msgid "The word is reserved for possible future use."
+msgid ""
+"The word is reserved for possible future use. Please use another name for"
+" it."
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:5
+msgid "Here is a list of reserved name:"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:7
+msgid "`module`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:8
+msgid "`move`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:9
+msgid "`ref`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:10
+msgid "`static`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:11
+msgid "`super`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:12
+msgid "`unsafe`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:13
+msgid "`use`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:14
+msgid "`where`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:15
+msgid "`await`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:16
+msgid "`dyn`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:17
+#, fuzzy
+msgid "`abstract`"
+msgstr "结构体"
+
+#: ../../language/error_codes/E1035.md:18
+msgid "`do`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:19
+msgid "`final`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:20
+msgid "`macro`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:21
+msgid "`override`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:22
+#, fuzzy
+msgid "`typeof`"
+msgstr "类型"
+
+#: ../../language/error_codes/E1035.md:23
+msgid "`virtual`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:24
+msgid "`yield`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:25
+msgid "`local`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:26
+#, fuzzy
+msgid "`method`"
+msgstr "方法名称"
+
+#: ../../language/error_codes/E1035.md:27
+msgid "`alias`"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:31
+msgid ""
+"fn module() -> Int { // Warning: The word `module` is reserved for "
+"possible future use. Please consider using another name.\n"
+"  3\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1035.md:39
+msgid ""
+"fn module_() -> Int {\n"
+"  3\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1036.md:1
@@ -3502,7 +3803,44 @@ msgid "E1037"
 msgstr ""
 
 #: ../../language/error_codes/E1037.md:3
-msgid "The label name is never used."
+#, fuzzy
+msgid "The loop label name is never used."
+msgstr "可选参数未被提供"
+
+#: ../../language/error_codes/E1037.md:7
+msgid ""
+"fn read() -> BytesView {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let mut bytes = []\n"
+"  read~: loop read() {\n"
+"    [] => break\n"
+"    bs => {\n"
+"      bytes = [..bytes, ..bs]\n"
+"      continue read()\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1037.md:26
+msgid "Remove the unused loop label."
+msgstr ""
+
+#: ../../language/error_codes/E1037.md:28
+msgid ""
+"fn main {\n"
+"  let mut bytes = []\n"
+"  loop {\n"
+"    let bs = read()\n"
+"    if bs == [] {\n"
+"      break\n"
+"    }\n"
+"    bytes = [..bytes, ..bs]\n"
+"  }\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1038.md:1
@@ -3510,7 +3848,65 @@ msgid "E1038"
 msgstr ""
 
 #: ../../language/error_codes/E1038.md:3
-msgid "Useless guard because the pattern is irrefutable."
+msgid ""
+"Useless guard because the pattern is irrefutable. A pattern is "
+"irrefutable means it accepts all possible input. If a pattern in guard "
+"let accepts all possible input, then it will always continue on, making "
+"the guard useless."
+msgstr ""
+
+#: ../../language/error_codes/E1038.md:7
+msgid ""
+"One common mistake is, say if you want to return early on some condition,"
+" and continues otherwise. However, since the pattern matching is "
+"evaluated from first to last, the pattern after `guard let` will be first"
+" evaluated and will always be success. Therefore, such code will not work"
+" since all control will continue on and never returns early."
+msgstr ""
+
+#: ../../language/error_codes/E1038.md:15
+msgid ""
+"fn f(input : Int?) -> Int {\n"
+"  guard let _ = input else {\n"
+"    Some(_..<0) => abort(\"Invalid input\")\n"
+"  }\n"
+"  3\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  ignore(f(None))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1038.md:30
+msgid ""
+"If you want all possible control flows goes through, then you can remove "
+"the guard and just use let expression."
+msgstr ""
+
+#: ../../language/error_codes/E1038.md:33
+msgid ""
+"fn f(input : Int?) -> Int {\n"
+"  let _ = input\n"
+"  3\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1038.md:40
+msgid ""
+"If you fail into the early return mistake, you can switch to `match` "
+"expression:"
+msgstr ""
+
+#: ../../language/error_codes/E1038.md:42
+msgid ""
+"fn f(input : Int?) -> Int {\n"
+"  match input {\n"
+"    Some(_..<0) => abort(\"Invalid input\")\n"
+"    _ => ()\n"
+"  }\n"
+"  3\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1039.md:1
@@ -3521,12 +3917,115 @@ msgstr ""
 msgid "Method name conflicts with another definition."
 msgstr ""
 
+#: ../../language/error_codes/E1039.md:5
+msgid ""
+"Note: methods declared with the syntax `fn f(self : T, ..)` will be "
+"promoted to regular function in the future, declare the method using `fn "
+"T::f(..)` to avoid name clash."
+msgstr ""
+
+#: ../../language/error_codes/E1039.md:11
+msgid ""
+"type A Int\n"
+"\n"
+"fn f() -> Int {\n"
+"  3\n"
+"}\n"
+"\n"
+"fn f(self : A) -> Int {\n"
+"  self._\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  println(f())\n"
+"  println(A(3).f())\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1039.md:30
+msgid "You can defined the method as `A::f`:"
+msgstr ""
+
+#: ../../language/error_codes/E1039.md:32
+msgid ""
+"fn T::f(self : A) -> Int {\n"
+"  self._\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1039.md:38
+msgid ""
+"However, defining a method with `T::` prefix makes it impossible to be "
+"invoked as regular function. If you wish to call the method as regular "
+"function, then you have to rename either the method name, or the regular "
+"function name to resolve the name clash."
+msgstr ""
+
+#: ../../language/error_codes/E1039.md:43
+msgid ""
+"fn f_(self : A) -> Int {\n"
+"  self._\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  println(f_(A(3)))\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E1040.md:1
 msgid "E1040"
 msgstr ""
 
 #: ../../language/error_codes/E1040.md:3
-msgid "Calling this kind of method directly via name(..) is deprecated."
+msgid ""
+"This method is declared as `T::f`, Calling this kind of method directly "
+"via name(..) is deprecated, use qualified syntax `T::f(..)`, or declare "
+"the method as `fn f(self : A, ..)` instead."
+msgstr ""
+
+#: ../../language/error_codes/E1040.md:9
+msgid ""
+"type A Int\n"
+"\n"
+"fn A::f(self : A) -> Int {\n"
+"  self._\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let _ = f(A(1))\n"
+"  // Warning:\n"
+"  // This method is declared as A::f, calling this kind of method "
+"directly via\n"
+"  // f(..) is deprecated, use qualified syntax A::f(..), or declare the "
+"method\n"
+"  // as `fn f(self : A, ..)` instead.\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1040.md:27
+msgid "You can either modify the calling of this function at call sites:"
+msgstr ""
+
+#: ../../language/error_codes/E1040.md:29
+msgid ""
+"fn main {\n"
+"  let _ = A::f(A(1))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1040.md:35
+msgid "Or you can define the method as:"
+msgstr ""
+
+#: ../../language/error_codes/E1040.md:37
+msgid ""
+"fn f(self : A) -> Int {\n"
+"  self._\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let _ = f(A(1))\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E2000.md:1
@@ -11231,5 +11730,23 @@ msgstr ""
 #~ "fn main() -> Unit {\n"
 #~ "  println('3)\n"
 #~ "}\n"
+#~ msgstr ""
+
+#~ msgid "Default value of optional argument is unused."
+#~ msgstr ""
+
+#~ msgid "The syntax `~label` is deprecated."
+#~ msgstr ""
+
+#~ msgid "The word is reserved for possible future use."
+#~ msgstr ""
+
+#~ msgid "The label name is never used."
+#~ msgstr ""
+
+#~ msgid "Useless guard because the pattern is irrefutable."
+#~ msgstr ""
+
+#~ msgid "Calling this kind of method directly via name(..) is deprecated."
 #~ msgstr ""
 
