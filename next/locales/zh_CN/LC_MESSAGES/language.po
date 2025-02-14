@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-12 18:05+0800\n"
+"POT-Creation-Date: 2025-02-14 15:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1981,7 +1981,11 @@ msgstr ""
 #: ../../language/error_codes/E3005.md:14 ../../language/error_codes/E3006.md:7
 #: ../../language/error_codes/E3007.md:5 ../../language/error_codes/E3008.md:5
 #: ../../language/error_codes/E3009.md:5 ../../language/error_codes/E3010.md:5
-#: ../../language/error_codes/E3011.md:6 ../../language/error_codes/E4000.md:5
+#: ../../language/error_codes/E3011.md:6 ../../language/error_codes/E3012.md:6
+#: ../../language/error_codes/E3014.md:8 ../../language/error_codes/E3015.md:25
+#: ../../language/error_codes/E3016.md:5 ../../language/error_codes/E3017.md:9
+#: ../../language/error_codes/E3019.md:10 ../../language/error_codes/E3020.md:6
+#: ../../language/error_codes/E3800.md:10 ../../language/error_codes/E4000.md:5
 #: ../../language/error_codes/E4005.md:5 ../../language/error_codes/E4007.md:8
 #: ../../language/error_codes/E4056.md:5
 msgid "Erroneous example"
@@ -2044,10 +2048,28 @@ msgstr ""
 #: ../../language/error_codes/E3009.md:20
 #: ../../language/error_codes/E3010.md:13
 #: ../../language/error_codes/E3011.md:16
+#: ../../language/error_codes/E3012.md:29
+#: ../../language/error_codes/E3014.md:16
+#: ../../language/error_codes/E3015.md:33
+#: ../../language/error_codes/E3016.md:21
+#: ../../language/error_codes/E3017.md:18
+#: ../../language/error_codes/E3018.md:17
+#: ../../language/error_codes/E3019.md:21
+#: ../../language/error_codes/E3020.md:21
+#: ../../language/error_codes/E3800.md:26
 #: ../../language/error_codes/E4000.md:17
+#: ../../language/error_codes/E4001.md:21
+#: ../../language/error_codes/E4002.md:20
+#: ../../language/error_codes/E4003.md:18
+#: ../../language/error_codes/E4004.md:14
 #: ../../language/error_codes/E4005.md:14
 #: ../../language/error_codes/E4006.md:21
 #: ../../language/error_codes/E4007.md:21
+#: ../../language/error_codes/E4008.md:14
+#: ../../language/error_codes/E4009.md:21
+#: ../../language/error_codes/E4010.md:18
+#: ../../language/error_codes/E4011.md:18
+#: ../../language/error_codes/E4013.md:21
 #: ../../language/error_codes/E4056.md:22
 msgid "Suggestion"
 msgstr "建议"
@@ -2719,6 +2741,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E1010.md:36
+#: ../../language/error_codes/E3012.md:43
+#: ../../language/error_codes/E3016.md:39
 msgid "Or,"
 msgstr ""
 
@@ -4515,15 +4539,60 @@ msgid "E3012"
 msgstr ""
 
 #: ../../language/error_codes/E3012.md:3
-msgid "Record pattern and map pattern cannot be mixed."
+msgid ""
+"Record pattern and map pattern cannot be mixed. The key in map pattern "
+"must be a literal, while the key in record pattern must be the field "
+"name."
 msgstr ""
 
-#: ../../language/error_codes/E3013.md:1
-msgid "E3013"
+#: ../../language/error_codes/E3012.md:8
+msgid ""
+"struct S {\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"pub fn S::op_get(self : S, index : String) -> Int? {\n"
+"  if index == \"value\" {\n"
+"    return Some(self.value)\n"
+"  }\n"
+"  return None\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let s : S = { value: 42 }\n"
+"  match s {\n"
+"    { \"value\": value, value } => println(\"Value is: \\{value}\") // "
+"Error: Record pattern and map pattern cannot be mixed.\n"
+"    _ => println(\"No value\")\n"
+"  }\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3013.md:3
-msgid "Map patterns are always open, the `..` is useless."
+#: ../../language/error_codes/E3012.md:31
+msgid ""
+"Remove either the map pattern part or the record pattern part from the "
+"pattern."
+msgstr ""
+
+#: ../../language/error_codes/E3012.md:33
+msgid ""
+"fn main {\n"
+"  let s : S = { value: 42 }\n"
+"  match s {\n"
+"    { \"value\": value } => println(\"Value is: \\{value}\")\n"
+"    _ => println(\"No value\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3012.md:45
+msgid ""
+"fn main {\n"
+"  let s : S = { value: 42 }\n"
+"  match s {\n"
+"    { value } => println(\"Value is: \\{value}\")\n"
+"  }\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E3014.md:1
@@ -4531,7 +4600,36 @@ msgid "E3014"
 msgstr ""
 
 #: ../../language/error_codes/E3014.md:3
-msgid "Inline wasm syntax error."
+msgid ""
+"Inline wasm syntax error. MoonBit will check if the inline wasm syntax is"
+" correct, including:"
+msgstr ""
+
+#: ../../language/error_codes/E3014.md:5
+msgid "If the parenthesis are correctly matched."
+msgstr ""
+
+#: ../../language/error_codes/E3014.md:6
+msgid "If the wasm instructions are correctly formatted."
+msgstr ""
+
+#: ../../language/error_codes/E3014.md:10
+msgid ""
+"extern \"wasm\" fn i32_load(addr : Int) -> Int = // Error: Inline wasm "
+"syntax error: unmatched parenthesis at 1:1-1:57\n"
+"  #|(func (param i32) (result i32)\n"
+"  #| (i32.load (local.get 0))\n"
+msgstr ""
+
+#: ../../language/error_codes/E3014.md:18
+msgid "Fix the inline wasm syntax as suggested by the warning message."
+msgstr ""
+
+#: ../../language/error_codes/E3014.md:20
+msgid ""
+"extern \"wasm\" fn i32_load(addr : Int) -> Int =\n"
+"  #|(func (param i32) (result i32)\n"
+"  #| (i32.load (local.get 0)))\n"
 msgstr ""
 
 #: ../../language/error_codes/E3015.md:1
@@ -4542,6 +4640,59 @@ msgstr ""
 msgid "The parameter already has default value `None`."
 msgstr ""
 
+#: ../../language/error_codes/E3015.md:5
+msgid "In MoonBit, the optional parameter has one of the two following forms:"
+msgstr ""
+
+#: ../../language/error_codes/E3015.md:7
+msgid "Optional parameter with default value:"
+msgstr ""
+
+#: ../../language/error_codes/E3015.md:9
+msgid ""
+"fn f(a~ : Int = 0) -> Unit {\n"
+"  // ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3015.md:15
+msgid ""
+"Optional parameter with no default value. In this case, when the "
+"parameter is not provided, it is `None` by default."
+msgstr ""
+
+#: ../../language/error_codes/E3015.md:17
+msgid ""
+"fn f(a? : Int) -> Unit { // a has type Int?\n"
+"  // ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3015.md:23
+msgid ""
+"Therefore, if the optional parameter has a default value of `None`, it is"
+" redundant and should be removed."
+msgstr ""
+
+#: ../../language/error_codes/E3015.md:27
+msgid ""
+"fn f(a? : Int = None) -> Unit { // Error: The parameter a? already has "
+"default value `None`.\n"
+"  println(a)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3015.md:35
+msgid "Remove the `= None` part from the optional parameter."
+msgstr ""
+
+#: ../../language/error_codes/E3015.md:37
+msgid ""
+"fn f(a? : Int) -> Unit {\n"
+"  println(a)\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E3016.md:1
 msgid "E3016"
 msgstr ""
@@ -4550,13 +4701,87 @@ msgstr ""
 msgid "Unexpected `~` in argument. Did you mean `label=pattern` or `label~`?"
 msgstr ""
 
+#: ../../language/error_codes/E3016.md:7
+msgid ""
+"enum A {\n"
+"  A(b~ : Int)\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  match A(b=1) {\n"
+"    A(b~=c) => {\n"
+"      println(\"Hello, world! \\{c}\") // Error: unexpected `~` in "
+"argument. Did you mean `label=pattern` or `label~`?\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3016.md:23
+msgid "Replace `b~` with `b=` or `b~` as appropriate."
+msgstr ""
+
+#: ../../language/error_codes/E3016.md:25
+msgid ""
+"enum A {\n"
+"  A(b~ : Int)\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  match A(b=1) {\n"
+"    A(b~) => {\n"
+"      println(\"Hello, world! \\{b}\")\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3016.md:41
+msgid ""
+"enum A {\n"
+"  A(b~ : Int)\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  match A(b=1) {\n"
+"    A(b=c) => {\n"
+"      println(\"Hello, world! \\{c}\")\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E3017.md:1
 msgid "E3017"
 msgstr ""
 
 #: ../../language/error_codes/E3017.md:3
-msgid "JSON parse error."
-msgstr "Json 解析错误。"
+msgid "JSON parse error. This will only appear in `moon.pkg.json` files only."
+msgstr ""
+
+#: ../../language/error_codes/E3017.md:5
+msgid ""
+"It is very like that the editor you are using will have support for JSON "
+"installed (for example, Visual Studio Code has a built-in JSON parser). "
+"This error is likely to be caused by a missing comma or a missing closing"
+" brace."
+msgstr ""
+
+#: ../../language/error_codes/E3017.md:11
+msgid ""
+"{\n"
+"  \"is-main\": true\n"
+"  \"import\": [] // Error: Expect_comma_or_rbrace\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3017.md:20
+msgid ""
+"{\n"
+"  \"is-main\": true,\n"
+"  \"import\": []\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E3018.md:1
 msgid "E3018"
@@ -4566,12 +4791,110 @@ msgstr ""
 msgid "Bounds of range pattern must be constant, named constant or wildcard."
 msgstr ""
 
+#: ../../language/error_codes/E3018.md:5
+#, fuzzy
+msgid "Errnoeous example"
+msgstr "错误示例："
+
+#: ../../language/error_codes/E3018.md:7
+msgid ""
+"fn main {\n"
+"  let a = 3\n"
+"  match 0 {\n"
+"    0..<a => println(\"Between 0 and 3\") // Error: Bounds of range "
+"pattern must be constant, named constant or wildcard.\n"
+"    _ => println(\"Not between 0 and 3\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:19
+msgid "You can either lift the variable `a` to a named constant:"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:21
+msgid ""
+"const A = 3\n"
+"fn main {\n"
+"  match 0 {\n"
+"    0..<A => println(\"Between 0 and 3\")\n"
+"    _ => println(\"Not between 0 and 3\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:31
+msgid "Or, you can use the constant value directly:"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:33
+msgid ""
+"fn main {\n"
+"  match 0 {\n"
+"    0..<3 => println(\"Between 0 and 3\")\n"
+"    _ => println(\"Not between 0 and 3\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:42
+msgid "Or, you can use a wildcard:"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:44
+msgid ""
+"fn main {\n"
+"  let a = 3\n"
+"  match 0 {\n"
+"    0..<_ => println(\"Big than or equal to 0\")\n"
+"    _ => println(\"Less than 0\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:54
+msgid "Notice, using wildcard alters the meaning of this range pattern."
+msgstr ""
+
 #: ../../language/error_codes/E3019.md:1
 msgid "E3019"
 msgstr ""
 
 #: ../../language/error_codes/E3019.md:3
 msgid "Inclusive range pattern `a..=b` cannot have `_` as upper bound."
+msgstr ""
+
+#: ../../language/error_codes/E3019.md:5
+msgid ""
+"Writing `a..=_` does not make sense, because `_` is a wildcard that "
+"matches any value. It is unclear what does \"equals to any value\" mean. "
+"If you want to express the meaning of \"greater than or equal to `a`\", "
+"you can use `a..<_` instead."
+msgstr ""
+
+#: ../../language/error_codes/E3019.md:12
+msgid ""
+"fn main {\n"
+"  match 0 {\n"
+"    0..=_ => println(\"Big than or equal to 0\") // Error: Inclusive "
+"range pattern `a..=b` cannot have `_` as upper bound\n"
+"    _ => println(\"Less than 0\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3019.md:23
+msgid "Replace `_` with `<`:"
+msgstr ""
+
+#: ../../language/error_codes/E3019.md:25
+msgid ""
+"fn main {\n"
+"  match 0 {\n"
+"    0..<_ => println(\"Big than or equal to 0\")\n"
+"    _ => println(\"Less than 0\")\n"
+"  }\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E3020.md:1
@@ -4584,12 +4907,93 @@ msgid ""
 "expression is `{ field: expression }`."
 msgstr ""
 
+#: ../../language/error_codes/E3020.md:8
+msgid ""
+"struct S {\n"
+"  a : Int\n"
+"  b : Int\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let s : S = { a : 1, b : 2 }\n"
+"  let ss = { ..s, a = 1 } // Error: Unexpected `=` in struct expression.\n"
+"  ignore(ss)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3020.md:23
+msgid "Change the struct expression to use the correct syntax:"
+msgstr ""
+
+#: ../../language/error_codes/E3020.md:25
+msgid ""
+"struct S {\n"
+"  a : Int\n"
+"  b : Int\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let s : S = { a : 1, b : 2 }\n"
+"  let ss = { ..s, a : 1 }\n"
+"  ignore(ss)\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E3800.md:1
 msgid "E3800"
 msgstr ""
 
 #: ../../language/error_codes/E3800.md:3
 msgid "Expecting a newline or `;` here, but encountered another delimiter."
+msgstr ""
+
+#: ../../language/error_codes/E3800.md:5
+msgid ""
+"Constructors in `enum` definition, fields in `struct` definition, and "
+"constructors in error type `type!` definition, should be separated by a "
+"newline or a `;`. It is so common for AI to generate code with a wrong "
+"delimiter `,`, and we specifically catch this error to help you and AI "
+"fix it."
+msgstr ""
+
+#: ../../language/error_codes/E3800.md:12
+msgid ""
+"enum V {\n"
+"  A, // Error: Expecting a newline or `;` here, but encountered another "
+"delimiter `,`.\n"
+"}\n"
+"\n"
+"struct S {\n"
+"  a : Int, // Error: Expecting a newline or `;` here, but encountered "
+"another delimiter `,`.\n"
+"}\n"
+"\n"
+"type! E {\n"
+"  A, // Error: Expecting a newline or `;` here, but encountered another "
+"delimiter `,`.\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3800.md:28
+msgid ""
+"Replace `,` with a newline or `;` as appropriate. We suggest using a "
+"newline since it conforms to the MoonBit style suggested by the MoonBit "
+"formatter."
+msgstr ""
+
+#: ../../language/error_codes/E3800.md:31
+msgid ""
+"enum V {\n"
+"  A\n"
+"}\n"
+"\n"
+"struct S {\n"
+"  a : Int\n"
+"}\n"
+"\n"
+"type! E {\n"
+"  A\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4000.md:1
@@ -4649,12 +5053,90 @@ msgstr ""
 msgid "A field with different visibility cannot be declared within a struct."
 msgstr ""
 
+#: ../../language/error_codes/E4001.md:5 ../../language/error_codes/E4002.md:5
+#: ../../language/error_codes/E4003.md:5 ../../language/error_codes/E4004.md:6
+#: ../../language/error_codes/E4006.md:5 ../../language/error_codes/E4008.md:5
+#: ../../language/error_codes/E4009.md:5 ../../language/error_codes/E4010.md:5
+#: ../../language/error_codes/E4011.md:5 ../../language/error_codes/E4012.md:5
+#: ../../language/error_codes/E4013.md:5
+msgid "Erroneous Example"
+msgstr "错误示例："
+
+#: ../../language/error_codes/E4001.md:7
+msgid ""
+"priv struct S {\n"
+"  pub field: Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4001.md:13
+msgid ""
+"This example declares a field with public visibility within a struct with"
+" private visibility, which is not allowed and will give the following "
+"error on line 2:"
+msgstr ""
+
+#: ../../language/error_codes/E4001.md:17
+msgid "A public field cannot be declared within a private struct.\n"
+msgstr ""
+
+#: ../../language/error_codes/E4001.md:23
+#: ../../language/error_codes/E4002.md:22
+msgid "Change the visibility of the field to match the visibility of the struct:"
+msgstr ""
+
+#: ../../language/error_codes/E4001.md:25
+#, fuzzy
+msgid ""
+"priv struct S {\n"
+"  field: Int\n"
+"}\n"
+msgstr "对于结构体字段"
+
+#: ../../language/error_codes/E4001.md:31
+msgid ""
+"We could have written `priv field: Int` instead of `field: Int` as well, "
+"but it is not necessary, as all fields in a private struct are private by"
+" default."
+msgstr ""
+
 #: ../../language/error_codes/E4002.md:1
 msgid "E4002"
 msgstr ""
 
 #: ../../language/error_codes/E4002.md:3
 msgid "The modifier is not supported here."
+msgstr ""
+
+#: ../../language/error_codes/E4002.md:7
+msgid ""
+"pub struct S {\n"
+"  pub(open) field: Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4002.md:13
+msgid ""
+"This example declares a field with the `pub(open)` visibility modifier, "
+"which is not allowed and will give the following error on line 2:"
+msgstr ""
+
+#: ../../language/error_codes/E4002.md:16
+msgid "The public open modifier is not supported here\n"
+msgstr ""
+
+#: ../../language/error_codes/E4002.md:24
+msgid ""
+"pub struct S {\n"
+"  field: Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4002.md:30
+msgid ""
+"We could have written `pub field: Int` instead of `field: Int` as well, "
+"but it is not necessary, as all fields in a public struct are public by "
+"default."
 msgstr ""
 
 #: ../../language/error_codes/E4003.md:1
@@ -4667,6 +5149,28 @@ msgid ""
 " or trait."
 msgstr ""
 
+#: ../../language/error_codes/E4003.md:7
+msgid "struct Error {}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4003.md:11
+msgid ""
+"`Error` is the reserved name for the built-in error type, so it cannot be"
+" used for a custom type. This will give the following error on line 1:"
+msgstr ""
+
+#: ../../language/error_codes/E4003.md:14
+msgid "\"Error\" is a reserved type name. Cannot declare it as type\n"
+msgstr ""
+
+#: ../../language/error_codes/E4003.md:20
+msgid "Consider using another name for your type, such as `MyError` or `Error_`."
+msgstr ""
+
+#: ../../language/error_codes/E4003.md:22
+msgid "struct MyError {}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4004.md:1
 msgid "E4004"
 msgstr ""
@@ -4676,6 +5180,24 @@ msgid ""
 "Trait methods cannot have type parameters (be polymorphic). MoonBit "
 "currently does not support generic/polymorphic methods within trait "
 "definitions."
+msgstr ""
+
+#: ../../language/error_codes/E4004.md:8
+msgid ""
+"trait Stringer {\n"
+"  stringify[T: Show](Self, T) -> String\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4004.md:16
+msgid "Consider using dynamic dispatch instead of generics:"
+msgstr ""
+
+#: ../../language/error_codes/E4004.md:18
+msgid ""
+"trait Stringer {\n"
+"  stringify(Self, &Show) -> String\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4005.md:1
@@ -4734,10 +5256,6 @@ msgid ""
 "times within the same scope. Each local function name must be unique "
 "within its scope."
 msgstr ""
-
-#: ../../language/error_codes/E4006.md:5
-msgid "Erroneous Example"
-msgstr "错误示例："
 
 #: ../../language/error_codes/E4006.md:7
 msgid ""
@@ -4842,12 +5360,78 @@ msgstr ""
 msgid "FFI function cannot have type parameters."
 msgstr ""
 
+#: ../../language/error_codes/E4008.md:7
+msgid "extern \"js\" fn id[T](x: T) -> T = \"(x) => x\"\n"
+msgstr ""
+
+#: ../../language/error_codes/E4008.md:11
+msgid ""
+"The example declares an FFI function (marked `extern`) with a type "
+"parameter, which is not allowed."
+msgstr ""
+
+#: ../../language/error_codes/E4008.md:16
+msgid "Consider using a concrete type that suits your needs:"
+msgstr ""
+
+#: ../../language/error_codes/E4008.md:18
+msgid "extern \"js\" fn int_id(x: Int) -> Int = \"(x) => x\"\n"
+msgstr ""
+
+#: ../../language/error_codes/E4008.md:22
+msgid "For more complicated scenarios, consider adding an extra trait:"
+msgstr ""
+
+#: ../../language/error_codes/E4008.md:24
+msgid ""
+"///|\n"
+"trait Ider {\n"
+"  id(Self) -> Self\n"
+"}\n"
+"\n"
+"///|\n"
+"impl Ider for Int with id(self) { int_id(self) }\n"
+msgstr ""
+
 #: ../../language/error_codes/E4009.md:1
 msgid "E4009"
 msgstr ""
 
 #: ../../language/error_codes/E4009.md:3
 msgid "Match function expects a different number of arguments than provided."
+msgstr ""
+
+#: ../../language/error_codes/E4009.md:7
+msgid ""
+"let f = fn {\n"
+"  0 => 0\n"
+"  a, b => a + b\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4009.md:14
+msgid ""
+"The example defines a match function that has incoherent number of "
+"arguments in different branches. This will result in the following error "
+"on line 3:"
+msgstr ""
+
+#: ../../language/error_codes/E4009.md:17
+msgid "Match function expects 1 arguments, but 2 arguments are provided.\n"
+msgstr ""
+
+#: ../../language/error_codes/E4009.md:23
+msgid ""
+"Change the branches so that the number of arguments are exactly the same "
+"in all of them:"
+msgstr ""
+
+#: ../../language/error_codes/E4009.md:26
+msgid ""
+"let f = fn {\n"
+"  0 => 0\n"
+"  a => a\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4010.md:1
@@ -4858,12 +5442,60 @@ msgstr ""
 msgid "`pub` is not allowed on default implementation for traits."
 msgstr ""
 
+#: ../../language/error_codes/E4010.md:7
+msgid ""
+"pub(open) trait Stringer {\n"
+"  stringify(Self) -> String\n"
+"}\n"
+"\n"
+"pub impl Stringer with stringify(_self) { \"hey\" }\n"
+msgstr ""
+
+#: ../../language/error_codes/E4010.md:15
+msgid ""
+"In the example above, the `pub` keyword is used on the default "
+"implementation of the `Stringer` trait, which is not allowed."
+msgstr ""
+
+#: ../../language/error_codes/E4010.md:20
+msgid "Make sure to keep the default implementation private:"
+msgstr ""
+
+#: ../../language/error_codes/E4010.md:22
+#: ../../language/error_codes/E4011.md:22
+msgid ""
+"pub(open) trait Stringer {\n"
+"  stringify(Self) -> String\n"
+"}\n"
+"\n"
+"impl Stringer with stringify(_self) { \"hey\" }\n"
+msgstr ""
+
 #: ../../language/error_codes/E4011.md:1
 msgid "E4011"
 msgstr ""
 
 #: ../../language/error_codes/E4011.md:3
 msgid "Type parameters are not allowed on default implementation for traits."
+msgstr ""
+
+#: ../../language/error_codes/E4011.md:7
+msgid ""
+"pub(open) trait Stringer {\n"
+"  stringify(Self) -> String\n"
+"}\n"
+"\n"
+"impl[T] Stringer with stringify(_self) { \"hey\" }\n"
+msgstr ""
+
+#: ../../language/error_codes/E4011.md:15
+msgid ""
+"The example above uses a type parameter `T` on the default implementation"
+" of the `Stringer` trait, which is not allowed."
+msgstr ""
+
+#: ../../language/error_codes/E4011.md:20
+msgid "Remove the type parameter from the default implementation:"
 msgstr ""
 
 #: ../../language/error_codes/E4012.md:1
@@ -4874,6 +5506,35 @@ msgstr ""
 msgid "Mutable constructor fields are only allowed on labelled arguments."
 msgstr "只有带标签的构造器字段可以是可变的。"
 
+#: ../../language/error_codes/E4012.md:7
+msgid ""
+"enum E {\n"
+"  F(mut x : Int)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4012.md:13
+msgid ""
+"The example above declares an unlabeled mutable field `x` in the "
+"constructor of the `F` variant of the `E` enum, which is not allowed."
+msgstr ""
+
+#: ../../language/error_codes/E4012.md:16
+#, fuzzy
+msgid "Suggestions"
+msgstr "建议"
+
+#: ../../language/error_codes/E4012.md:18
+msgid "Add a label to the mutable field:"
+msgstr ""
+
+#: ../../language/error_codes/E4012.md:20
+msgid ""
+"enum E {\n"
+"  F(mut x~ : Int)\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4013.md:1
 msgid "E4013"
 msgstr ""
@@ -4882,6 +5543,50 @@ msgstr ""
 msgid ""
 "This function has a type which expects a different number of arguments "
 "than provided."
+msgstr ""
+
+#: ../../language/error_codes/E4013.md:7
+msgid ""
+"fn f() -> (() -> Int) {\n"
+"  fn (x: Int) { x }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4013.md:13
+msgid ""
+"The example above declares a function `f` which expects no arguments, but"
+" returns a function that expects one argument. This will give the "
+"following error on line 2:"
+msgstr ""
+
+#: ../../language/error_codes/E4013.md:17
+msgid ""
+"This function has type () -> Int, which expects 0 argument(s), but is "
+"given 1 argument(s).\n"
+msgstr ""
+
+#: ../../language/error_codes/E4013.md:23
+msgid ""
+"Adjust the code so that the number of arguments in the function type "
+"matches the number of arguments in the function definition:"
+msgstr ""
+
+#: ../../language/error_codes/E4013.md:26
+msgid ""
+"fn f() -> (Int -> Int) {\n"
+"  fn (x: Int) { x }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4013.md:32
+msgid "... or:"
+msgstr ""
+
+#: ../../language/error_codes/E4013.md:34
+msgid ""
+"fn f(x: Int) -> (() -> Int) {\n"
+"  fn() { x }\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4014.md:1
@@ -11692,61 +12397,3 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
-
-#~ msgid "Partial match."
-#~ msgstr "部分匹配"
-
-#~ msgid "Unreachable code."
-#~ msgstr ""
-
-#~ msgid "Type name should be capitalized."
-#~ msgstr ""
-
-#~ msgid "The mutability is never used."
-#~ msgstr ""
-
-#~ msgid "Toplevel declaration is not left aligned."
-#~ msgstr ""
-
-#~ msgid "Invalid pragma."
-#~ msgstr "非法注解"
-
-#~ msgid "Ambiguous block expression."
-#~ msgstr "有歧义的块表达式"
-
-#~ msgid "The patterns are complete so the usage of `catch!` is useless."
-#~ msgstr ""
-
-#~ msgid "The syntax is deprecated."
-#~ msgstr ""
-
-#~ msgid "Unfinished code."
-#~ msgstr ""
-
-#~ msgid "The package alias is empty."
-#~ msgstr "别名为空"
-
-#~ msgid ""
-#~ "fn main() -> Unit {\n"
-#~ "  println('3)\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid "Default value of optional argument is unused."
-#~ msgstr ""
-
-#~ msgid "The syntax `~label` is deprecated."
-#~ msgstr ""
-
-#~ msgid "The word is reserved for possible future use."
-#~ msgstr ""
-
-#~ msgid "The label name is never used."
-#~ msgstr ""
-
-#~ msgid "Useless guard because the pattern is irrefutable."
-#~ msgstr ""
-
-#~ msgid "Calling this kind of method directly via name(..) is deprecated."
-#~ msgstr ""
-
