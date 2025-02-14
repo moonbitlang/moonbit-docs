@@ -16,12 +16,13 @@
 
 // Empty represents an empty node in the AVL tree
 // Node represents a node in the AVL tree with left child, value, right child, and height
+///|
 pub(all) enum T[U] {
   Empty
   Node(T[U], U, T[U], Int)
 }
 
-/// `height[U](self: T[U])`
+///| `height[U](self: T[U])`
 ///
 /// Calculate the height of a tree-like structure.
 pub fn height[U](self : T[U]) -> Int {
@@ -31,7 +32,7 @@ pub fn height[U](self : T[U]) -> Int {
   }
 }
 
-/// `create[U](l: T[U], v: U, r: T[U])`
+///| `create[U](l: T[U], v: U, r: T[U])`
 ///
 /// Create a new node with the given left and right subtrees, along with a value of type `U`.
 fn create[U](l : T[U], v : U, r : T[U]) -> T[U] {
@@ -40,7 +41,7 @@ fn create[U](l : T[U], v : U, r : T[U]) -> T[U] {
   Node(l, v, r, if hl >= hr { hl + 1 } else { hr + 1 })
 }
 
-/// `bal[U](l: T[U], v: U, r: T[U])`
+///| `bal[U](l: T[U], v: U, r: T[U])`
 ///
 /// Perform balancing operation on a avl tree node.
 ///
@@ -86,7 +87,7 @@ fn bal[U](l : T[U], v : U, r : T[U]) -> T[U] {
   }
 }
 
-/// `add[U:Compare](self: T[U], x: U)`
+///| `add[U:Compare](self: T[U], x: U)`
 ///
 /// Add a value to a tree-like structure.
 pub fn add[U : Compare](self : T[U], x : U) -> T[U] {
@@ -105,7 +106,7 @@ pub fn add[U : Compare](self : T[U], x : U) -> T[U] {
   }
 }
 
-/// `min_elt[U](self: T[U], default: U)`
+///| `min_elt[U](self: T[U], default: U)`
 ///
 /// Find the minimum element in a tree-like data structure.
 fn min_elt[U](self : T[U], default : U) -> U {
@@ -116,7 +117,7 @@ fn min_elt[U](self : T[U], default : U) -> U {
   }
 }
 
-/// `remove_min_elt[U](l: T[U], v: U, r: T[U])`
+///| `remove_min_elt[U](l: T[U], v: U, r: T[U])`
 ///
 /// Remove the minimum element from a avl tree and rebalance the tree.
 fn remove_min_elt[U](l : T[U], v : U, r : T[U]) -> T[U] {
@@ -126,7 +127,7 @@ fn remove_min_elt[U](l : T[U], v : U, r : T[U]) -> T[U] {
   }
 }
 
-/// `internal_merge[U](self: T[U], other: T[U])`
+///| `internal_merge[U](self: T[U], other: T[U])`
 ///
 /// Merge two AVL trees of the same user-defined type `U` into a new AVL tree.
 fn internal_merge[U](self : T[U], other : T[U]) -> T[U] {
@@ -138,7 +139,7 @@ fn internal_merge[U](self : T[U], other : T[U]) -> T[U] {
   }
 }
 
-/// `remove[U:Compare](self: T[U], x: U)`
+///| `remove[U:Compare](self: T[U], x: U)`
 ///
 /// Removes a value from the AVL tree while maintaining balance
 pub fn remove[U : Compare](self : T[U], x : U) -> T[U] {
@@ -157,18 +158,18 @@ pub fn remove[U : Compare](self : T[U], x : U) -> T[U] {
   }
 }
 
-/// `to_string[U:Show](self: T[U]) -> String`
+///| `to_string[U:Show](self: T[U]) -> String`
 ///
 /// convert the AVL tree to string.
-pub fn to_string[U : Show](self : T[U]) -> String {
+pub impl[U : Show] Show for T[U] with output(self : T[U], logger) -> Unit {
   match self {
-    Empty => "()"
-    Node(Empty, v, Empty, _) => v.to_string()
-    Node(l, v, r, _) => "(\{l}, \{v}, \{r})"
+    Empty => logger.write_string("()")
+    Node(Empty, v, Empty, _) => v.output(logger)
+    Node(l, v, r, _) => logger.write_string("(\{l}, \{v}, \{r})")
   }
 }
 
-/// `mem[U:Compare](self: T[U], x: U)`
+///| `mem[U:Compare](self: T[U], x: U)`
 ///
 /// Check if a given element exists in an AVL tree.
 pub fn mem[U : Compare](self : T[U], x : U) -> Bool {
@@ -182,6 +183,7 @@ pub fn mem[U : Compare](self : T[U], x : U) -> Bool {
   }
 }
 
+///|
 fn repeat_str(s : String, n : Int) -> String {
   let mut result = ""
   let mut i = 0
@@ -192,7 +194,7 @@ fn repeat_str(s : String, n : Int) -> String {
   result
 }
 
-/// `print_tree[U:Show](self: T[U])`
+///| `print_tree[U:Show](self: T[U])`
 ///
 /// Print the AVL tree
 pub fn print_tree[U : Show](self : T[U]) -> Unit {
