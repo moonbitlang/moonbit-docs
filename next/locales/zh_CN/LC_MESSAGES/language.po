@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-14 15:49+0800\n"
+"POT-Creation-Date: 2025-02-17 15:50+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1987,7 +1987,10 @@ msgstr ""
 #: ../../language/error_codes/E3019.md:10 ../../language/error_codes/E3020.md:6
 #: ../../language/error_codes/E3800.md:10 ../../language/error_codes/E4000.md:5
 #: ../../language/error_codes/E4005.md:5 ../../language/error_codes/E4007.md:8
-#: ../../language/error_codes/E4056.md:5
+#: ../../language/error_codes/E4050.md:9 ../../language/error_codes/E4051.md:15
+#: ../../language/error_codes/E4052.md:7 ../../language/error_codes/E4053.md:18
+#: ../../language/error_codes/E4055.md:5 ../../language/error_codes/E4056.md:5
+#: ../../language/error_codes/E4057.md:5 ../../language/error_codes/E4059.md:9
 msgid "Erroneous example"
 msgstr "错误示例"
 
@@ -2070,7 +2073,19 @@ msgstr ""
 #: ../../language/error_codes/E4010.md:18
 #: ../../language/error_codes/E4011.md:18
 #: ../../language/error_codes/E4013.md:21
+#: ../../language/error_codes/E4014.md:16
+#: ../../language/error_codes/E4015.md:18
+#: ../../language/error_codes/E4016.md:22
+#: ../../language/error_codes/E4017.md:26
+#: ../../language/error_codes/E4018.md:22
+#: ../../language/error_codes/E4050.md:19
+#: ../../language/error_codes/E4051.md:47
+#: ../../language/error_codes/E4052.md:14
+#: ../../language/error_codes/E4053.md:53
+#: ../../language/error_codes/E4055.md:14
 #: ../../language/error_codes/E4056.md:22
+#: ../../language/error_codes/E4057.md:14
+#: ../../language/error_codes/E4059.md:34
 msgid "Suggestion"
 msgstr "建议"
 
@@ -5058,7 +5073,9 @@ msgstr ""
 #: ../../language/error_codes/E4006.md:5 ../../language/error_codes/E4008.md:5
 #: ../../language/error_codes/E4009.md:5 ../../language/error_codes/E4010.md:5
 #: ../../language/error_codes/E4011.md:5 ../../language/error_codes/E4012.md:5
-#: ../../language/error_codes/E4013.md:5
+#: ../../language/error_codes/E4013.md:5 ../../language/error_codes/E4014.md:5
+#: ../../language/error_codes/E4015.md:5 ../../language/error_codes/E4016.md:5
+#: ../../language/error_codes/E4017.md:5 ../../language/error_codes/E4018.md:5
 msgid "Erroneous Example"
 msgstr "错误示例："
 
@@ -5597,12 +5614,66 @@ msgstr ""
 msgid "Type Mismatch."
 msgstr ""
 
+#: ../../language/error_codes/E4014.md:7
+msgid ""
+"fn fst[X, Y] (a: X, b: Y) -> X {\n"
+"  b\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4014.md:13
+msgid ""
+"The above example returns a value `b` of type `Y` on line 2, which is not"
+" the same as the return type `X` of the function."
+msgstr ""
+
+#: ../../language/error_codes/E4014.md:18
+msgid ""
+"Please make sure to return a value of the same type as the return type of"
+" the function."
+msgstr ""
+
+#: ../../language/error_codes/E4014.md:21
+msgid "For instance, in the example above, you may write:"
+msgstr ""
+
+#: ../../language/error_codes/E4014.md:23
+msgid ""
+"fn fst[X, Y] (a: X, b: Y) -> X {\n"
+"  a\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4015.md:1
 msgid "E4015"
 msgstr ""
 
 #: ../../language/error_codes/E4015.md:3
 msgid "Type has no method with the specified name."
+msgstr ""
+
+#: ../../language/error_codes/E4015.md:7
+msgid "let hey = \"hey\".upper()\n"
+msgstr ""
+
+#: ../../language/error_codes/E4015.md:11
+msgid ""
+"The above example tries to call an inexistent method `upper()` on a "
+"string literal, giving the following error on line 1:"
+msgstr ""
+
+#: ../../language/error_codes/E4015.md:14
+msgid "Type String has no method upper.\n"
+msgstr ""
+
+#: ../../language/error_codes/E4015.md:20
+msgid ""
+"This is usually a typo or a misunderstanding of the methods available. "
+"Please make sure to use the correct method name:"
+msgstr ""
+
+#: ../../language/error_codes/E4015.md:23
+msgid "let hey = \"hey\".to_upper()\n"
 msgstr ""
 
 #: ../../language/error_codes/E4016.md:1
@@ -5615,6 +5686,43 @@ msgid ""
 "operator."
 msgstr ""
 
+#: ../../language/error_codes/E4016.md:7
+msgid ""
+"struct S { v : Int }\n"
+"\n"
+"let s : S = { v: 3 }\n"
+"let t = s + s\n"
+msgstr ""
+
+#: ../../language/error_codes/E4016.md:14
+msgid ""
+"The example above tries to use the infix operator `+` on a type `S` that "
+"does not implement the required method `op_add`, giving the following "
+"error on line 4:"
+msgstr ""
+
+#: ../../language/error_codes/E4016.md:18
+msgid ""
+"Please implement the method op_add for the type S to use the infix "
+"operator \"+\".\n"
+msgstr ""
+
+#: ../../language/error_codes/E4016.md:24
+msgid "Implement the required method for the type `S`:"
+msgstr ""
+
+#: ../../language/error_codes/E4016.md:26
+msgid ""
+"struct S { v : Int }\n"
+"\n"
+"let s : S = { v: 3 }\n"
+"let t = s + s\n"
+"\n"
+"fn S::op_add(self : S, other : S) -> S {\n"
+"  { v: self.v + other.v }\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4017.md:1
 msgid "E4017"
 msgstr ""
@@ -5623,12 +5731,88 @@ msgstr ""
 msgid "Method of type is ambiguous, it may come from multiple traits."
 msgstr ""
 
+#: ../../language/error_codes/E4017.md:7
+msgid ""
+"struct S { v : Int } derive(Show)\n"
+"\n"
+"trait Tee { to_string(Self) -> String }\n"
+"\n"
+"impl Tee for S with to_string(_self) { \"Tee\" }\n"
+"\n"
+"let s : S = { v: 3 }\n"
+"let t = s.to_string()\n"
+msgstr ""
+
+#: ../../language/error_codes/E4017.md:18
+msgid ""
+"The example above tries to call the method `to_string` on a type `S`, but"
+" the method name comes from both `Show` and `Tee` traits, giving the "
+"following error on line 8:"
+msgstr ""
+
+#: ../../language/error_codes/E4017.md:22
+msgid ""
+"Method to_string of type S is ambiguous, it may come from trait Tee or "
+"Show\n"
+msgstr ""
+
+#: ../../language/error_codes/E4017.md:28
+msgid "Disambiguate the method by specifying the trait it comes from:"
+msgstr ""
+
+#: ../../language/error_codes/E4017.md:30
+msgid ""
+"struct S { v : Int } derive(Show)\n"
+"\n"
+"trait Tee { to_string(Self) -> String }\n"
+"\n"
+"impl Tee for S with to_string(_self) { \"Tee\" }\n"
+"\n"
+"let s : S = { v: 3 }\n"
+"let t = Tee::to_string(s)\n"
+msgstr ""
+
 #: ../../language/error_codes/E4018.md:1
 msgid "E4018"
 msgstr ""
 
 #: ../../language/error_codes/E4018.md:3
 msgid "Cannot resolve trait for the given type."
+msgstr ""
+
+#: ../../language/error_codes/E4018.md:7
+msgid ""
+"struct S { v : Int }\n"
+"\n"
+"let s : S = { v: 3 }\n"
+"let t = Show::to_string(s)\n"
+msgstr ""
+
+#: ../../language/error_codes/E4018.md:14
+msgid ""
+"The example above tries to call the method `to_string` from the `Show` "
+"trait on a type `S`, but since `S` does not implement that trait, it "
+"gives the following error on line 4:"
+msgstr ""
+
+#: ../../language/error_codes/E4018.md:18
+msgid "Type S does not implement trait Show: method output is missing\n"
+msgstr ""
+
+#: ../../language/error_codes/E4018.md:24
+msgid "Implement the `Show` trait for the type `S`:"
+msgstr ""
+
+#: ../../language/error_codes/E4018.md:26
+msgid ""
+"struct S { v : Int }\n"
+"\n"
+"let s : S = { v: 3 }\n"
+"let t = Show::to_string(s)\n"
+"\n"
+"impl Show for S with output(self, logger) {\n"
+"  logger.write_object(self.v)\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4019.md:1
@@ -5873,12 +6057,151 @@ msgstr ""
 msgid "Definition cycle detected in dependencies."
 msgstr ""
 
+#: ../../language/error_codes/E4050.md:5
+msgid ""
+"The toplevel definitions in a MoonBit package are mutually recursive. "
+"This means that the definitions can refer to each other in any order. "
+"However, no cycles are allowed in the dependencies between the toplevel "
+"variable definitions."
+msgstr ""
+
+#: ../../language/error_codes/E4050.md:11
+msgid ""
+"pub let a : Int = f() // Error: Definition cycle detected : a -> f -> a\n"
+"\n"
+"fn f() -> Int { // Error: Definition cycle detected : a -> f -> a\n"
+"  a\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4050.md:21
+msgid ""
+"The fix to this error varies depending on the logic of the program. One "
+"possible fix is to make the variable definition to use `Ref[_?]`, and "
+"initialize the variable later in `init` block of the program."
+msgstr ""
+
+#: ../../language/error_codes/E4050.md:25
+msgid ""
+"pub let a : Ref[Int?] = Ref::new(None)\n"
+"\n"
+"fn init {\n"
+"  a.val = Some(f())\n"
+"}\n"
+"\n"
+"fn f() -> Int {\n"
+"  a.val.unwrap()\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4051.md:1
 msgid "E4051"
 msgstr ""
 
 #: ../../language/error_codes/E4051.md:3
 msgid "The identifier is declared twice."
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:5
+msgid ""
+"Mutually recursive definitions in MoonBit shall not have the same "
+"identifier. This include:"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:8
+msgid ""
+"All toplevel definitions, including variables, functions, types, traits, "
+"etc."
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:9
+msgid "Locally named functions. (Reported as [E4006](E4006))"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:10
+#, fuzzy
+msgid "Local types."
+msgstr "本地类型"
+
+#: ../../language/error_codes/E4051.md:12
+msgid ""
+"Note, locally defined variables are not mutually recursive, so they can "
+"have the same identifier, and the later definition shadows the previous "
+"one."
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:17
+#, fuzzy
+msgid "Toplevel variable definition:"
+msgstr "顶层变量绑定"
+
+#: ../../language/error_codes/E4051.md:19
+msgid ""
+"pub let a = 0\n"
+"pub let a = 1 // Error: The toplevel identifier a is declared twice: it "
+"was previously defined at ...\n"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:24
+#, fuzzy
+msgid "Toplevel function definition:"
+msgstr "函数定义"
+
+#: ../../language/error_codes/E4051.md:26
+msgid ""
+"pub fn f() -> Unit {}\n"
+"pub fn f() -> Unit {} // Error: The toplevel identifier f is declared "
+"twice: it was previously defined at ...\n"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:31
+#, fuzzy
+msgid "Toplevel type definition:"
+msgstr "类型定义"
+
+#: ../../language/error_codes/E4051.md:33
+msgid ""
+"pub enum A {}\n"
+"pub struct A {} // Error: The type A is declared twice: it was previously"
+" defined at ...\n"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:38
+#, fuzzy
+msgid "Local type definition:"
+msgstr "类型定义"
+
+#: ../../language/error_codes/E4051.md:40
+msgid ""
+"pub fn g() -> Unit {\n"
+"  struct A {}\n"
+"  struct A {} // Error: The local type A is declared twice: it was "
+"previously defined at ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:49
+msgid "Rename the identifier to a different name."
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:51
+msgid ""
+"pub let a = 0\n"
+"pub let b = 1\n"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:56
+msgid ""
+"If you want to shadow the previous definition, you can use a block and "
+"put the definition in the block."
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:59
+msgid ""
+"pub let a = {\n"
+"  let a = 0\n"
+"  1\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4052.md:1
@@ -5889,12 +6212,171 @@ msgstr ""
 msgid "The type/trait name duplicates with a previously defined identifier."
 msgstr ""
 
+#: ../../language/error_codes/E4052.md:5
+msgid "This can happen when you define a type and a trait with the same name."
+msgstr ""
+
+#: ../../language/error_codes/E4052.md:9
+msgid ""
+"pub type A\n"
+"pub trait A {} // Error: The trait A duplicates with type A previously "
+"defined at ...\n"
+msgstr ""
+
+#: ../../language/error_codes/E4052.md:16
+msgid "Rename either the type or the trait to a different name."
+msgstr ""
+
+#: ../../language/error_codes/E4052.md:18
+msgid ""
+"pub type A\n"
+"pub trait B {}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4053.md:1
 msgid "E4053"
 msgstr ""
 
 #: ../../language/error_codes/E4053.md:3
 msgid "Invalid type for \"self\": must be a type constructor."
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:5
+msgid ""
+"This error happens when you want to define a method for implement a trait"
+" for a type that is not a type constructor."
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:8
+msgid "Types that **are** type constructors:"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:10
+msgid "Tuple: `(Int, Bool)`"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:11
+msgid ""
+"`enum`s, `struct`s, `trait`s, new types (`type`), and error types "
+"(`type!`)."
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:13
+msgid "Types that **are not** type constructors:"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:15
+msgid "Function: `(Int) -> Bool`"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:16
+msgid "Type parameter: `T` in `fn f[T](x : T) -> T`"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:20
+msgid "Defining a method for a type that is not type constructor."
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:22
+msgid ""
+"fn f[T](self : T) -> Int { // Error: Invalid type for \"self\": must be a"
+" type constructor.\n"
+"  ignore(self)\n"
+"  0\n"
+"}\n"
+"\n"
+"fn g(self : (Int) -> Unit) -> Unit { // Error: Invalid type for \"self\":"
+" must be a type constructor.\n"
+"  self(0)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:33
+msgid "Implementing a method for a type that is not a type constructor."
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:35
+msgid ""
+"pub trait A {\n"
+"  f(Self) -> Int\n"
+"}\n"
+"\n"
+"// Without constraints\n"
+"impl[X] A for X with f(self : X) -> Int { // Error: Invalid type for "
+"\"self\": must be a type constructor.\n"
+"  ignore(self)\n"
+"  0\n"
+"}\n"
+"\n"
+"// With constraints\n"
+"impl[X: Default] A for X with f(self : X) -> Int { // Error: Invalid type"
+" for \"self\": must be a type constructor.\n"
+"  ignore(self)\n"
+"  0\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:55
+msgid ""
+"When you want to define a method for a type that is not a type "
+"constructor, you may use new type to wrap the type."
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:58
+msgid ""
+"pub(all) type Wrap[T] T\n"
+"\n"
+"fn f[T](self : Wrap[T]) -> Int {\n"
+"  ignore(self)\n"
+"  0\n"
+"}\n"
+"\n"
+"fn g(self : Wrap[(Int) -> Unit]) -> Unit {\n"
+"  (self._)(0)\n"
+"}\n"
+"\n"
+"impl[X] A for Wrap[X] with f(self : Wrap[X]) -> Int {\n"
+"  ignore(self)\n"
+"  0\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:76
+msgid ""
+"However, this means you may have to wrap the value with `Wrap` every time"
+" you want to call the method."
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:79
+msgid ""
+"If you find yourself implementing a trait for a type parameter, you may "
+"also want to consider using default implementation for the trait."
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:82
+msgid ""
+"impl A with f(self : Self) -> Int {\n"
+"  ignore(self)\n"
+"  0\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:89
+msgid ""
+"If you want to provide the implementation for types with specific "
+"constraints, you can add these constraints to the trait definition."
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:92
+msgid ""
+"trait A: Default {\n"
+"  f(Self) -> Int\n"
+"}\n"
+"\n"
+"impl A with f(self : Self) -> Int {\n"
+"  ignore(self)\n"
+"  0\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4054.md:1
@@ -5912,7 +6394,27 @@ msgid "E4055"
 msgstr ""
 
 #: ../../language/error_codes/E4055.md:3
-msgid "field is already declared."
+msgid "Field is already declared."
+msgstr ""
+
+#: ../../language/error_codes/E4055.md:7
+msgid ""
+"struct A {\n"
+"  a : Int\n"
+"  a : Double\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4055.md:16
+msgid "Rename the field to a different name."
+msgstr ""
+
+#: ../../language/error_codes/E4055.md:18
+msgid ""
+"struct A {\n"
+"  a : Int\n"
+"  b : Double\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4056.md:1
@@ -5965,12 +6467,101 @@ msgstr ""
 msgid "The constructor is duplicate."
 msgstr ""
 
+#: ../../language/error_codes/E4057.md:7
+msgid ""
+"enum E {\n"
+"  A\n"
+"  A(Int)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4057.md:16
+msgid "Rename the constructor to a different name."
+msgstr ""
+
+#: ../../language/error_codes/E4057.md:18
+msgid ""
+"enum E {\n"
+"  A\n"
+"  B(Int)\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4059.md:1
 msgid "E4059"
 msgstr ""
 
 #: ../../language/error_codes/E4059.md:3
 msgid "Cannot define method for foreign type."
+msgstr ""
+
+#: ../../language/error_codes/E4059.md:5
+msgid ""
+"Foreign types are types that is not defined in the current package. "
+"MoonBit only allows defining methods or implementing traits for types "
+"that are defined in the current package."
+msgstr ""
+
+#: ../../language/error_codes/E4059.md:11
+msgid "In package `a`:"
+msgstr ""
+
+#: ../../language/error_codes/E4059.md:13
+msgid "pub type A Int\n"
+msgstr ""
+
+#: ../../language/error_codes/E4059.md:17
+msgid "In package `b`:"
+msgstr ""
+
+#: ../../language/error_codes/E4059.md:19
+msgid ""
+"fn f(self : @a.A) -> Int { // Error: Cannot define method f for foreign "
+"type @a.A\n"
+"  0\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4059.md:25
+msgid ""
+"Defining methods for builtin types, or types in standard library, is "
+"another frequent case of this error:"
+msgstr ""
+
+#: ../../language/error_codes/E4059.md:28
+msgid ""
+"fn f(self : Int) -> Int { // Error: Cannot define method f for foreign "
+"type Int\n"
+"  0\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4059.md:36
+msgid "You can either move the type definition to the current package:"
+msgstr ""
+
+#: ../../language/error_codes/E4059.md:38
+msgid ""
+"pub type A Int\n"
+"\n"
+"fn f(self : A) -> Int {\n"
+"  0\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4059.md:46
+msgid "Or use new type to wrap the foreign type:"
+msgstr ""
+
+#: ../../language/error_codes/E4059.md:48
+msgid ""
+"pub type WrapA @a.A\n"
+"\n"
+"fn f(self : WrapA) -> Int {\n"
+"  ignore(self._) // Use `._` to access the wrapped value if @a.A is "
+"public\n"
+"  0\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4060.md:1
