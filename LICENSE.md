@@ -9,7 +9,7 @@ All prose content added on or after July 4, 2024 is available under the
 
 ### Added before July 4, 2024
 
-All prose content added before July 4, 2024 are copyright reserved.
+All prose content added before July 4, 2024 is copyright reserved.
 
 ## License for code examples
 
@@ -18,5 +18,5 @@ Code examples and snippets are available under
 
 ## License for website code
 
-Website code are available under
+Website code is available under
 [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)

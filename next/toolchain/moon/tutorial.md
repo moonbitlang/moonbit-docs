@@ -33,7 +33,7 @@ Enter your license: Apache-2.0
 Created my-project
 ```
 
-> If you want use all default values, you can use `moon new my-project` to create a new module named `username/hello` in the `my-project` directory.
+> If you want to use all default values, you can use `moon new my-project` to create a new module named `username/hello` in the `my-project` directory.
 
 ## Understanding the Module Directory Structure
 
