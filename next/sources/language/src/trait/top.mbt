@@ -1,5 +1,5 @@
 // start trait 1
-trait I {
+pub(open) trait I {
   method_(Int) -> Int
   method_with_label(Int, label~: Int) -> Int
   //! method_with_label(Int, label?: Int) -> Int
@@ -7,24 +7,24 @@ trait I {
 // end trait 1
 
 // start trait 2
-trait MyShow {
+pub(open) trait MyShow {
   to_string(Self) -> String
 }
 
 struct MyType {}
 
-impl MyShow for MyType with to_string(self) { ... }
+pub impl MyShow for MyType with to_string(self) { ... }
 
 struct MyContainer[T] {}
 
 // trait implementation with type parameters.
 // `[X : Show]` means the type parameter `X` must implement `Show`,
 // this will be covered later.
-impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ... }
+pub impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ... }
 // end trait 2
 
 // start trait 3
-trait J {
+pub(open) trait J {
   f(Self) -> Unit
   f_twice(Self) -> Unit
 }
@@ -36,7 +36,7 @@ impl J with f_twice(self) {
 // end trait 3
 
 // start trait 4
-trait Number {
+pub(open) trait Number {
   op_add(Self, Self) -> Self
   op_mul(Self, Self) -> Self
 }
@@ -54,11 +54,11 @@ struct Point {
   y : Int
 } derive(Eq, Show)
 
-impl Number for Point with op_add(self, other) {
+pub impl Number for Point with op_add(self, other) {
   { x: self.x + other.x, y: self.y + other.y }
 }
 
-impl Number for Point with op_mul(self, other) {
+pub impl Number for Point with op_mul(self, other) {
   { x: self.x * other.x, y: self.y * other.y }
 }
 
@@ -79,7 +79,7 @@ test {
 // start trait 8
 struct MyCustomType {}
 
-impl Show for MyCustomType with output(self, logger) { ... }
+pub impl Show for MyCustomType with output(self, logger) { ... }
 
 fn f() -> Unit {
   let x = MyCustomType::{  }
@@ -105,18 +105,18 @@ test {
 // end trait 9
 
 // start super trait 1
-trait Position {
+pub(open) trait Position {
   pos(Self) -> (Int, Int)
 }
-trait Draw {
+pub(open) trait Draw {
   draw(Self) -> Unit
 }
 
-trait Object : Position + Draw {}
+pub(open) trait Object : Position + Draw {}
 // end super trait 1
 
 // start trait object 1
-trait Animal {
+pub(open) trait Animal {
   speak(Self) -> String
 }
 
@@ -159,11 +159,11 @@ test {
 // end trait object 1
 
 // start trait object 2
-trait Logger {
+pub(open) trait Logger {
   write_string(Self, String) -> Unit
 }
 
-trait CanLog {
+pub(open) trait CanLog {
   log(Self, &Logger) -> Unit
 }
 
@@ -172,7 +172,7 @@ fn &Logger::write_object[Obj : CanLog](self : &Logger, obj : Obj) -> Unit {
 }
 
 // use the new method to simplify code
-impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {
+pub impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {
   let (a, b) = self
   logger
   ..write_string("(")
