@@ -1,4 +1,4 @@
-# Bytes-Buffer
+# 字节缓冲区
 
 ## API
 
@@ -6,52 +6,52 @@
 pub func Buffer::new(size : Int) -> Buffer
 ```
 
-Creates a new buffer with the specified size.
+创建一个具有指定大小的新缓冲区。
 
 ```moonbit
 pub func capacity(self : Buffer) -> Int
 ```
 
-Returns the total capacity of the buffer.
+返回缓冲区的总容量。
 
 ```moonbit
 pub func length(self : Buffer) -> Int
 ```
 
-Returns the current length of the buffer.
+返回缓冲区的当前长度。
 
 ```moonbit
 pub func append_int(self : Buffer, value : Int)
 ```
 
-Appends an integer value to the buffer.
+将一个整数值追加到缓冲区中。
 
 ```moonbit
 pub func truncate(self : Buffer, another: Buffer)
 ```
 
-Truncates the buffer and replaces its content with the content of another buffer.
+截断当前缓冲区，并将其内容替换为另一个缓冲区的内容。
 
 ```moonbit
 pub func clear(self : Buffer)
 ```
 
-Clears the content of the buffer.
+清除缓冲区的内容。
 
 ```moonbit
 pub func reset(self : Buffer, capacity : Int)
 ```
 
-Resets the buffer with a new capacity.
+使用新的容量重置缓冲区。
 
 ```moonbit
 pub func to_bytes(self : Buffer) -> Bytes
 ```
 
-Converts the buffer content to bytes.
+将缓冲区的内容转换为字节。
 
 ```moonbit
 pub func bytes_to_int(bytes : Bytes, start : Int) -> Int
 ```
 
-Converts a section of bytes to an integer.
+将一段字节转换为整数。
