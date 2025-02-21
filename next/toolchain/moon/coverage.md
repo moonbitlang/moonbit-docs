@@ -2,7 +2,7 @@
 
 We have included tooling for you to measure the code coverage of test and program runs.
 The measurement is currently based on branch coverage.
-In other words, it measures whether each program branch were executed,
+In other words, it measures whether each program branch was executed,
 and how many times if they were.
 
 ## Running code coverage in tests

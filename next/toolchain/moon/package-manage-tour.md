@@ -100,7 +100,7 @@ Metadata consist of the following sections:
 
 ### Moondoc
 
-mooncakes.io will generate documentation for each modules automatically.
+mooncakes.io will generate documentation for each module automatically.
 
 The leading `///` comments of each toplevel will be recognized as documentation.
 You can write markdown inside.

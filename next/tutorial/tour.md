@@ -151,11 +151,11 @@ fn is_qualified(student : Student, criteria: Double) -> ExamResult {
 }
 ```
 
-This function takes an input `student` of type `Student` that we've just defined, an input `criteria` of type `Double` as the criteria may be different for each courses or different in each country, and returns an `ExamResult`. 
+This function takes an input `student` of type `Student` that we've just defined, an input `criteria` of type `Double` as the criteria may be different for each course or different in each country, and returns an `ExamResult`. 
 
 The `...` syntax allows us to leave functions unimplemented for now.
 
-We also need need to find out how many students have passed an exam:
+We also need to find out how many students have passed an exam:
 
 ```{code-block} moonbit
 :class: top-level
@@ -183,7 +183,7 @@ test "is qualified" {
 }
 ```
 
-We will get an error messaging, reminding us that `Show` and `Eq` are not implemented for `ExamResult`. 
+We will get an error message, reminding us that `Show` and `Eq` are not implemented for `ExamResult`. 
 
 `Show` and `Eq` are **traits**. A trait in MoonBit defines some common operations that a type should be able to perform.
 

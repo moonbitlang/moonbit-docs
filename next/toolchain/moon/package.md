@@ -296,7 +296,7 @@ For example, in the following configuration, `-2` disables the warning number 2 
 
 ```json
 {
-  "warn-list": "-2",
+  "warn-list": "-2"
 }
 ```
 
