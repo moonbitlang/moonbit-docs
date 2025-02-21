@@ -23,3 +23,20 @@ fn g(x : Array[Int?]) -> Unit {
   }
 }
 // end is 3
+
+// start is 4
+fn h(x : Int?) -> Unit {
+  guard x is Some(v) 
+  println(v)
+}
+// end is 4
+
+// start is 5
+fn i(x : Int?) -> Unit {
+  let mut m = x
+  while m is Some(v) {
+    println(v)
+    m = None
+  }
+}
+// end is 5
