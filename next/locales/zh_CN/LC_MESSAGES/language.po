@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:18+0800\n"
+"POT-Creation-Date: 2025-02-21 16:04+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1933,7 +1933,8 @@ msgid ""
 "greatly appreciated. You can submit the bug report here:"
 msgstr ""
 
-#: ../../language/error_codes/E0001.md:9
+#: ../../language/error_codes/E0001.md:9 ../../language/error_codes/E4048.md:9
+#: ../../language/error_codes/E4049.md:11
 msgid "<https://github.com/moonbitlang/moonbit-docs/issues/new?labels=bug,ICE>"
 msgstr ""
 
@@ -2019,8 +2020,16 @@ msgstr ""
 #: ../../language/error_codes/E4106.md:11
 #: ../../language/error_codes/E4107.md:10
 #: ../../language/error_codes/E4108.md:25 ../../language/error_codes/E4109.md:8
-#: ../../language/error_codes/E4110.md:21
-#: ../../language/error_codes/E4113.md:16 ../../language/error_codes/E4114.md:8
+#: ../../language/error_codes/E4110.md:21 ../../language/error_codes/E4111.md:8
+#: ../../language/error_codes/E4112.md:8 ../../language/error_codes/E4113.md:16
+#: ../../language/error_codes/E4114.md:8 ../../language/error_codes/E4115.md:9
+#: ../../language/error_codes/E4116.md:9 ../../language/error_codes/E4117.md:7
+#: ../../language/error_codes/E4118.md:8 ../../language/error_codes/E4119.md:5
+#: ../../language/error_codes/E4120.md:11
+#: ../../language/error_codes/E4121.md:13
+#: ../../language/error_codes/E4122.md:14 ../../language/error_codes/E4124.md:5
+#: ../../language/error_codes/E4125.md:13 ../../language/error_codes/E4127.md:8
+#: ../../language/error_codes/E4128.md:5 ../../language/error_codes/E4129.md:5
 #: ../../language/error_codes/E4130.md:10
 #: ../../language/error_codes/E4131.md:10 ../../language/error_codes/E4132.md:5
 #: ../../language/error_codes/E4133.md:11 ../../language/error_codes/E4134.md:6
@@ -2091,10 +2100,10 @@ msgstr ""
 #: ../../language/error_codes/E3004.md:14
 #: ../../language/error_codes/E3005.md:20
 #: ../../language/error_codes/E3006.md:16
-#: ../../language/error_codes/E3007.md:20
-#: ../../language/error_codes/E3008.md:14
-#: ../../language/error_codes/E3009.md:20
-#: ../../language/error_codes/E3010.md:13
+#: ../../language/error_codes/E3007.md:22
+#: ../../language/error_codes/E3008.md:16
+#: ../../language/error_codes/E3009.md:22
+#: ../../language/error_codes/E3010.md:14
 #: ../../language/error_codes/E3011.md:16
 #: ../../language/error_codes/E3012.md:29
 #: ../../language/error_codes/E3014.md:16
@@ -2142,6 +2151,7 @@ msgstr ""
 #: ../../language/error_codes/E4039.md:18
 #: ../../language/error_codes/E4040.md:20
 #: ../../language/error_codes/E4041.md:15
+#: ../../language/error_codes/E4042.md:20
 #: ../../language/error_codes/E4043.md:32
 #: ../../language/error_codes/E4044.md:22
 #: ../../language/error_codes/E4045.md:22
@@ -2198,8 +2208,22 @@ msgstr ""
 #: ../../language/error_codes/E4108.md:43
 #: ../../language/error_codes/E4109.md:23
 #: ../../language/error_codes/E4110.md:33
+#: ../../language/error_codes/E4111.md:21
+#: ../../language/error_codes/E4112.md:21
 #: ../../language/error_codes/E4113.md:34
 #: ../../language/error_codes/E4114.md:20
+#: ../../language/error_codes/E4115.md:17
+#: ../../language/error_codes/E4116.md:17
+#: ../../language/error_codes/E4118.md:23
+#: ../../language/error_codes/E4119.md:15
+#: ../../language/error_codes/E4120.md:28
+#: ../../language/error_codes/E4121.md:33
+#: ../../language/error_codes/E4122.md:50
+#: ../../language/error_codes/E4124.md:25
+#: ../../language/error_codes/E4125.md:35
+#: ../../language/error_codes/E4127.md:18
+#: ../../language/error_codes/E4128.md:11
+#: ../../language/error_codes/E4129.md:12
 #: ../../language/error_codes/E4130.md:20
 #: ../../language/error_codes/E4131.md:22
 #: ../../language/error_codes/E4132.md:13
@@ -2461,7 +2485,7 @@ msgstr ""
 msgid "Unused abstract type."
 msgstr ""
 
-#: ../../language/error_codes/E1004.md:5
+#: ../../language/error_codes/E1004.md:5 ../../language/error_codes/E1016.md:5
 msgid "Currently, MoonBit won't emit this warning."
 msgstr ""
 
@@ -4589,11 +4613,13 @@ msgid "`init` and `main` function must have no arguments and no return value."
 msgstr "`init` 与 `main` 函数不得有参数列表或返回类型。"
 
 #: ../../language/error_codes/E3003.md:7
+#, fuzzy
 msgid ""
-"fn main() -> Unit {\n"
+"fn main() -> Unit { // Error: Main function must have no arguments and no"
+" return value.\n"
 "  println(\"Hello, world!\")\n"
 "}\n"
-msgstr ""
+msgstr "非 main 包中出现 `main` 函数。"
 
 #: ../../language/error_codes/E3003.md:15
 msgid "Remove the argument list and return type annotation, as:"
@@ -4610,11 +4636,13 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E3004.md:8
+#, fuzzy
 msgid ""
-"fn greet {\n"
+"fn greet { // Error: Missing parameters list. Add `()` if function "
+"`greet` has 0 parameter.\n"
 "  println(\"Hello, world!\")\n"
 "}\n"
-msgstr ""
+msgstr "非 main 包中出现 `main` 函数。"
 
 #: ../../language/error_codes/E3004.md:16
 msgid "Add `()` after the function name."
@@ -4651,7 +4679,7 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E3005.md:16
-msgid "priv let value = 3\n"
+msgid "priv let value = 3 // Error: No 'priv' visibility for value.\n"
 msgstr ""
 
 #: ../../language/error_codes/E3005.md:22
@@ -4679,8 +4707,8 @@ msgstr ""
 #: ../../language/error_codes/E3006.md:9
 msgid ""
 "enum A {\n"
-"  priv A1\n"
-"  pub A2\n"
+"  priv A1 // Error: No individual visibility for enum constructor.\n"
+"  pub A2 // Error: No individual visibility for enum constructor.\n"
 "}\n"
 msgstr ""
 
@@ -4719,10 +4747,13 @@ msgid ""
 "fn main {\n"
 "  let s : S = { a : 1, b : 2, c : 3 }\n"
 "  let { a, .., c } = s\n"
+"  //       ^^\n"
+"  // Error: Unexpected `..` here, add `, ..` behind the last field to "
+"ignore the rest of record.\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3007.md:22
+#: ../../language/error_codes/E3007.md:24
 msgid ""
 "// ...\n"
 "fn main {\n"
@@ -4746,14 +4777,16 @@ msgid ""
 "fn main {\n"
 "  let array = [1, 2, 3, 4, 5]\n"
 "  let [fst, .., .., snd] = array\n"
+"  //            ^^\n"
+"  // Error: At most one `..` is allowed in array pattern.\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3008.md:16
+#: ../../language/error_codes/E3008.md:18
 msgid "Remove the extra `..` pattern."
 msgstr ""
 
-#: ../../language/error_codes/E3008.md:18
+#: ../../language/error_codes/E3008.md:20
 msgid ""
 "fn main {\n"
 "  // ...\n"
@@ -4772,47 +4805,50 @@ msgstr ""
 #: ../../language/error_codes/E3009.md:7
 msgid ""
 "struct Point {\n"
-"  x: Int,\n"
+"  x: Int\n"
 "  y: Int\n"
 "}\n"
 "\n"
-"fn process_point(p: Point) {\n"
+"fn process_point(p: Point) -> Unit {\n"
 "  match p {\n"
-"    { .. } -> println(\"Got a point\")\n"
+"    { .. } => println(\"Got a point\")\n"
+"  //^~~~~~\n"
+"  // Error: Record pattern cannot contain only `..`, use wildcard pattern"
+" `_` instead.\n"
 "  }\n"
 "}\n"
-msgstr ""
-
-#: ../../language/error_codes/E3009.md:22
-msgid "Use the wildcard pattern `_` instead of `{ .. }`:"
 msgstr ""
 
 #: ../../language/error_codes/E3009.md:24
+msgid "Use the wildcard pattern `_` instead of `{ .. }`:"
+msgstr ""
+
+#: ../../language/error_codes/E3009.md:26
 msgid ""
 "struct Point {\n"
-"  x: Int,\n"
+"  x: Int\n"
 "  y: Int\n"
 "}\n"
 "\n"
-"fn process_point(p: Point) {\n"
+"fn process_point(p: Point) -> Unit {\n"
 "  match p {\n"
-"    _ -> println(\"Got a point\")\n"
+"    _ => println(\"Got a point\")\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3009.md:37
+#: ../../language/error_codes/E3009.md:39
 msgid ""
 "You can also use `{ .. }` along with other fields if you want to match "
 "specific fields:"
 msgstr ""
 
-#: ../../language/error_codes/E3009.md:39
+#: ../../language/error_codes/E3009.md:41
 msgid ""
-"fn process_point(p: Point) {\n"
+"fn process_point(p: Point) -> Unit {\n"
 "  match p {\n"
-"    { x: 0, .. } -> println(\"Point on y-axis\")\n"
-"    _ -> println(\"Other point\")\n"
+"    { x: 0, .. } => println(\"Point on y-axis\")\n"
+"    _ => println(\"Other point\")\n"
 "  }\n"
 "}\n"
 msgstr ""
@@ -4827,35 +4863,39 @@ msgstr ""
 
 #: ../../language/error_codes/E3010.md:7
 msgid ""
-"fn greet(name = \"World\") {\n"
+"fn greet(name : String = \"World\") -> Unit {\n"
+"  //                   ^ Error: Only labelled arguments can have default "
+"value.\n"
 "  println(\"Hello, \" + name + \"!\")\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3010.md:15
+#: ../../language/error_codes/E3010.md:16
 msgid "Use a labelled argument with `~` if you want to provide a default value:"
 msgstr ""
 
-#: ../../language/error_codes/E3010.md:17
+#: ../../language/error_codes/E3010.md:18
 msgid ""
-"fn greet(~name = \"World\") {\n"
+"fn greet(name~ : String = \"World\") -> Unit {\n"
 "  println(\"Hello, \" + name + \"!\")\n"
 "}\n"
 "\n"
-"// Can be called as:\n"
-"greet() // Uses default value \"World\"\n"
-"greet(~name = \"Alice\") // Uses provided value \"Alice\"\n"
+"fn main {\n"
+"  // Can be called as:\n"
+"  greet() // Uses default value \"World\"\n"
+"  greet(name=\"Alice\") // Uses provided value \"Alice\"\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3010.md:27
+#: ../../language/error_codes/E3010.md:30
 msgid ""
 "Or remove the default value if you want to keep it as a positional "
 "argument:"
 msgstr ""
 
-#: ../../language/error_codes/E3010.md:29
+#: ../../language/error_codes/E3010.md:32
 msgid ""
-"fn greet(name: String) {\n"
+"fn greet(name: String) -> Unit {\n"
 "  println(\"Hello, \" + name + \"!\")\n"
 "}\n"
 msgstr ""
@@ -4875,7 +4915,7 @@ msgid ""
 "const N = 4\n"
 "\n"
 "fn main {\n"
-"  N = 5\n"
+"  N = 5 // Error: Invalid left value for assignment.\n"
 "}\n"
 msgstr ""
 
@@ -5430,10 +5470,11 @@ msgstr ""
 #: ../../language/error_codes/E4036.md:5 ../../language/error_codes/E4037.md:5
 #: ../../language/error_codes/E4038.md:5 ../../language/error_codes/E4039.md:5
 #: ../../language/error_codes/E4040.md:5 ../../language/error_codes/E4041.md:5
-#: ../../language/error_codes/E4043.md:5 ../../language/error_codes/E4044.md:5
-#: ../../language/error_codes/E4045.md:5 ../../language/error_codes/E4046.md:5
-#: ../../language/error_codes/E4081.md:9 ../../language/error_codes/E4082.md:9
-#: ../../language/error_codes/E4084.md:5 ../../language/error_codes/E4085.md:11
+#: ../../language/error_codes/E4042.md:11 ../../language/error_codes/E4043.md:5
+#: ../../language/error_codes/E4044.md:5 ../../language/error_codes/E4045.md:5
+#: ../../language/error_codes/E4046.md:5 ../../language/error_codes/E4081.md:9
+#: ../../language/error_codes/E4082.md:9 ../../language/error_codes/E4084.md:5
+#: ../../language/error_codes/E4085.md:11
 #: ../../language/error_codes/E4087.md:10
 msgid "Erroneous Example"
 msgstr "错误示例："
@@ -6627,6 +6668,10 @@ msgstr ""
 msgid "The type is undefined."
 msgstr ""
 
+#: ../../language/error_codes/E4032.md:5 ../../language/error_codes/E4054.md:6
+msgid "Currently, MoonBit won't emit this error."
+msgstr ""
+
 #: ../../language/error_codes/E4033.md:1
 msgid "E4033"
 msgstr ""
@@ -7010,6 +7055,45 @@ msgstr ""
 msgid "Invalid stub type."
 msgstr ""
 
+#: ../../language/error_codes/E4042.md:5
+msgid ""
+"When defineing a FFI, the stub type must be a valid type, namely they can"
+" be represented natively at corresponding backends."
+msgstr ""
+
+#: ../../language/error_codes/E4042.md:8
+msgid ""
+"For example, you cannot use `FixedArray[T]` and `String` in FFI "
+"definition on WASM linear backend."
+msgstr ""
+
+#: ../../language/error_codes/E4042.md:13
+msgid "On WASM linear backend:"
+msgstr ""
+
+#: ../../language/error_codes/E4042.md:15
+msgid ""
+"fn ffi(array : FixedArray[Int]) -> Unit = \"mod\" \"ffi\"\n"
+"//             ^~~~~~~~~~~~~~~ Error: Invalid stub type.\n"
+msgstr ""
+
+#: ../../language/error_codes/E4042.md:22
+msgid ""
+"The way to pass non-native types through the FFI interface depends on "
+"both the backend of the MoonBit compiler and the runtime you are using. "
+"For example, if you wish to pass an array of int to the JS host with the "
+"WASM linear backend, you can pass the int one by one to the host function"
+" and store the array on the JS side."
+msgstr ""
+
+#: ../../language/error_codes/E4042.md:28
+msgid ""
+"type JsArray\n"
+"fn make_js_array() -> JsArray = \"mod\" \"make_js_array\"\n"
+"fn push_js_array(array : JsArray, value : Int) -> Unit = \"mod\" "
+"\"push_js_array\"\n"
+msgstr ""
+
 #: ../../language/error_codes/E4043.md:1
 msgid "E4043"
 msgstr ""
@@ -7201,6 +7285,16 @@ msgstr ""
 msgid "Package not found when loading packages."
 msgstr ""
 
+#: ../../language/error_codes/E4047.md:5
+msgid ""
+"Normally, this error should never be emitted. If you see this error, "
+"please report it as a bug at:"
+msgstr ""
+
+#: ../../language/error_codes/E4047.md:8
+msgid "<https://github.com/moonbitlang/moonbit-docs/issues/new?labels=bug>"
+msgstr ""
+
 #: ../../language/error_codes/E4048.md:1
 msgid "E4048"
 msgstr ""
@@ -7209,12 +7303,28 @@ msgstr ""
 msgid "The package file is in wrong format."
 msgstr ""
 
+#: ../../language/error_codes/E4048.md:5
+msgid ""
+"This means your local build files are corrupted. Try to run `moon clean` "
+"or remove the `target` directory manually and build again. If the error "
+"persists, please submit a bug report here:"
+msgstr ""
+
 #: ../../language/error_codes/E4049.md:1
 msgid "E4049"
 msgstr ""
 
 #: ../../language/error_codes/E4049.md:3
 msgid "Magic number mismatch for the package file."
+msgstr ""
+
+#: ../../language/error_codes/E4049.md:5
+msgid ""
+"This means your local build files are corrupted or outdated. First try "
+"update/reinstall your MoonBit installation as in our [Download "
+"Page](https://www.moonbitlang.com/download/). Then try to run `moon "
+"clean` or remove the `target` directory manually and build again. If the "
+"error persists, please submit a bug report here:"
 msgstr ""
 
 #: ../../language/error_codes/E4050.md:1
@@ -10642,8 +10752,28 @@ msgstr ""
 msgid "The usage of break statement is invalid."
 msgstr ""
 
-#: ../../language/error_codes/E4111.md:5 ../../language/error_codes/E4112.md:5
-msgid "This error duplicates with [E4102](E4102.md)."
+#: ../../language/error_codes/E4111.md:5
+msgid ""
+"This error happens when you use a `break` statement in the "
+"initialization, condition, or update statement of a loop."
+msgstr ""
+
+#: ../../language/error_codes/E4111.md:10
+msgid ""
+"pub fn f(x: Int, y: Int) -> Unit {\n"
+"  for i = 0; i < x; i = i + 1 {\n"
+"    for j = { break }; j < y; j = j + 1 {\n"
+"//            ^^^^^ Error: The usage of break statement is invalid.\n"
+"        println(i + j)\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4111.md:23
+msgid ""
+"Do not write `break` statement in the initialization, condition, or "
+"update statement of a loop."
 msgstr ""
 
 #: ../../language/error_codes/E4112.md:1
@@ -10652,6 +10782,31 @@ msgstr ""
 
 #: ../../language/error_codes/E4112.md:3
 msgid "The usage of continue statement is invalid."
+msgstr ""
+
+#: ../../language/error_codes/E4112.md:5
+msgid ""
+"This error happens when you use a `continue` statement in the "
+"initialization, condition, or update statement of a loop."
+msgstr ""
+
+#: ../../language/error_codes/E4112.md:10
+msgid ""
+"pub fn f(x: Int, y: Int) -> Unit {\n"
+"  for i = 0; i < x; i = i + 1 {\n"
+"    for j = { continue }; j < y; j = j + 1 {\n"
+"//            ^^^^^^^^ Error: The usage of continue statement is invalid."
+"\n"
+"        println(i + j)\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4112.md:23
+msgid ""
+"Do not write `continue` statement in the initialization, condition, or "
+"update statement of a loop."
 msgstr ""
 
 #: ../../language/error_codes/E4113.md:1
@@ -10797,12 +10952,61 @@ msgstr ""
 msgid "Cannot auto-fill parameter of this type."
 msgstr ""
 
+#: ../../language/error_codes/E4115.md:5
+msgid ""
+"MoonBit supports and auto-filling `SourceLoc` and `ArgsLoc` parameters in"
+" functions. Leaving the default value of parameter of other types will "
+"result in this error."
+msgstr ""
+
+#: ../../language/error_codes/E4115.md:11
+msgid ""
+"fn f(parameter~ : Int = _) -> Unit {\n"
+"  // ^~~~~~~~~ Error: Cannot auto-fill parameter of type Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4115.md:19
+msgid "Use a default value for the parameter:"
+msgstr ""
+
+#: ../../language/error_codes/E4115.md:21
+msgid ""
+"fn f(parameter~ : Int = 0) -> Unit {\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4116.md:1
 msgid "E4116"
 msgstr ""
 
 #: ../../language/error_codes/E4116.md:3
 msgid "Found hole _."
+msgstr ""
+
+#: ../../language/error_codes/E4116.md:5
+msgid ""
+"If you want to represent unfinished code, we recommend using `...` "
+"instead. Using `...` allows the program to be compiled and run, while `_`"
+" will cause a compilation error."
+msgstr ""
+
+#: ../../language/error_codes/E4116.md:11
+msgid ""
+"fn main {\n"
+"  _ // Error: Found hole _\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4116.md:19
+msgid "Use `...` instead:"
+msgstr ""
+
+#: ../../language/error_codes/E4116.md:21
+msgid ""
+"fn main {\n"
+"  ... // Warning: unfinished code\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4117.md:1
@@ -10813,12 +11017,69 @@ msgstr ""
 msgid "Function with labelled arguments can only be applied directly."
 msgstr ""
 
+#: ../../language/error_codes/E4117.md:5
+msgid ""
+"This means you cannot pass a function with labelled arguments as an "
+"argument to another function."
+msgstr ""
+
+#: ../../language/error_codes/E4117.md:9
+msgid ""
+"pub fn func_takes_closure[F](f : F) -> Unit {\n"
+"  ...\n"
+"}\n"
+"\n"
+"pub fn accumulate(acc~ : Int, value : Int) -> Int {\n"
+"  acc + value\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  func_takes_closure(accumulate)\n"
+"  //                 ^~~~~~~~~~\n"
+"  // Error: Function with labelled arguments can only be applied "
+"directly.\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4118.md:1
 msgid "E4118"
 msgstr ""
 
 #: ../../language/error_codes/E4118.md:3
 msgid "Cannot match type with map pattern."
+msgstr ""
+
+#: ../../language/error_codes/E4118.md:5
+msgid ""
+"You can use map patterns on custom types, as long as they have a method "
+"`op_get` that returns an optional value for a given key."
+msgstr ""
+
+#: ../../language/error_codes/E4118.md:10
+msgid ""
+"type MyMap[K, V] Map[K, V]\n"
+"\n"
+"fn main {\n"
+"  let map : MyMap[String, Int] = { \"a\": 1, \"b\": 2, \"c\": 3 }\n"
+"  match map {\n"
+"    { \"a\": a, .. } => println(\"a: \\{a}\")\n"
+"  //^~~~~~~~~~~~~~\n"
+"  // Error: Please implement method `op_get` for type MyMap[String, Int] "
+"to match it with map pattern.\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4118.md:25
+msgid "Implement the `op_get` method as suggested in the error message."
+msgstr ""
+
+#: ../../language/error_codes/E4118.md:27
+msgid ""
+"pub fn MyMap::op_get[K: Eq + Hash, V](self : MyMap[K, V], key : K) -> V? "
+"{\n"
+"  self._[key]\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4119.md:1
@@ -10831,6 +11092,47 @@ msgid ""
 "arguments."
 msgstr "这个函数不是顶层函数，因此不能有带标签的参数。"
 
+#: ../../language/error_codes/E4119.md:7
+msgid ""
+"fn main {\n"
+"  fn greet(name~ : String) -> Unit {\n"
+"    println(\"Hello, \\{name}\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4119.md:17
+msgid ""
+"You can either remove the labelled argument, using positional argument "
+"instead:"
+msgstr ""
+
+#: ../../language/error_codes/E4119.md:19
+msgid ""
+"fn main {\n"
+"  fn greet(name : String) -> Unit {\n"
+"    println(\"Hello, \\{name}\")\n"
+"  }\n"
+"  greet(\"world\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4119.md:28
+#, fuzzy
+msgid "Or you can make the function a toplevel function:"
+msgstr "main 包中缺少 `main` 函数"
+
+#: ../../language/error_codes/E4119.md:30
+msgid ""
+"fn greet(name~ : String) -> Unit {\n"
+"  println(\"Hello, \\{name}\")\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  greet(name=\"World\")\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4120.md:1
 msgid "E4120"
 msgstr ""
@@ -10841,12 +11143,126 @@ msgid ""
 "infix operator `!` or `?` to the application."
 msgstr ""
 
+#: ../../language/error_codes/E4120.md:6
+msgid ""
+"In MoonBit, we require programmers to explicitly annotate which functions"
+" may raise errors. This is done by adding an infix operator `!` or `?` to"
+" the function application. The `!` operator to re-raise the error, and "
+"the `?` operator is to materialize the error to a `Result[T, E]` type."
+msgstr ""
+
+#: ../../language/error_codes/E4120.md:13
+msgid ""
+"fn may_raise_error(input : Int) -> Unit! {\n"
+"  if input == 42 {\n"
+"    return\n"
+"  }\n"
+"  fail!(\"failed\")\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  may_raise_error(42)\n"
+"  // Error: The application might raise errors of type Error, but it's "
+"not handled.\n"
+"  // Try adding a infix operator `!` or `?` to the application, so that "
+"it looks like `...!(...)` or `...?(...)`.\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4120.md:30
+msgid "You can either re-raise the error:"
+msgstr ""
+
+#: ../../language/error_codes/E4120.md:32
+msgid ""
+"fn main {\n"
+"  try {\n"
+"    may_raise_error!(42)\n"
+"  } catch {\n"
+"    error => println(\"Error: \\{error}\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4120.md:42
+msgid "Or materialize the error to a `Result[T, E]` type:"
+msgstr ""
+
+#: ../../language/error_codes/E4120.md:44
+msgid ""
+"fn main {\n"
+"  let result = may_raise_error?(42)\n"
+"  println(\"Result: \\{result}\")\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4121.md:1
 msgid "E4121"
 msgstr ""
 
 #: ../../language/error_codes/E4121.md:3
-msgid "The attribute cannot be used on this application."
+msgid "The attribute (`!`, `?`, `!!` mark) cannot be used on this application."
+msgstr ""
+
+#: ../../language/error_codes/E4121.md:5
+msgid "This error occurs when:"
+msgstr ""
+
+#: ../../language/error_codes/E4121.md:7
+msgid "The attribute (`!`, `?`, `!!` mark) is used on a constructor."
+msgstr ""
+
+#: ../../language/error_codes/E4121.md:8
+msgid "The attribute (`!`, `?`, `!!` mark) is used on a function that does fit."
+msgstr ""
+
+#: ../../language/error_codes/E4121.md:9
+msgid "`!` and `?` must be annotated on a function that may raise errors."
+msgstr ""
+
+#: ../../language/error_codes/E4121.md:10
+msgid ""
+"`!!` must be annotated on an async function (this will be reported as "
+"[E4150](E4150.md) though)."
+msgstr ""
+
+#: ../../language/error_codes/E4121.md:15
+msgid ""
+"enum Err {\n"
+"  IntErr(Int)\n"
+"}\n"
+"\n"
+"fn square(x: Int) -> Int {\n"
+"  x * x\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  IntErr!(1) |> ignore() // Error: The attribute `!` cannot be used on "
+"constructors.\n"
+"  IntErr?(2) |> ignore() // Error: The attribute `?` cannot be used on "
+"constructors.\n"
+"  IntErr!!(3) |> ignore() // Error: The attribute `!!` cannot be used on "
+"constructors.\n"
+"  square!(1) |> ignore() // Error: The attribute `!` cannot be used on "
+"application that does not raise errors\n"
+"  square?(2) |> ignore() // Error: The attribute `?` cannot be used on "
+"application that does not raise errors\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4121.md:35
+msgid "Remove the attribute (`!`, `?`, `!!` mark) from the application."
+msgstr ""
+
+#: ../../language/error_codes/E4121.md:37
+msgid ""
+"fn main {\n"
+"  IntErr(1) |> ignore()\n"
+"  IntErr(2) |> ignore()\n"
+"  IntErr(3) |> ignore()\n"
+"  square(1) |> ignore()\n"
+"  square(2) |> ignore()\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4122.md:1
@@ -10859,12 +11275,156 @@ msgid ""
 "types in its signature."
 msgstr ""
 
+#: ../../language/error_codes/E4122.md:6
+msgid ""
+"There are 3 raise operations in MoonBit, and they must be used inside a "
+"function with error types in its signature or a try block."
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:9
+msgid "Use the `raise` keyword to raise an error directly."
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:10
+msgid ""
+"Re-raise an error by annotating the function application with the `!` "
+"operator."
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:11
+msgid ""
+"Explicitly handle the error using the `try ... catch! ...` block. The "
+"`catch!` means re-raise all the errors that are not handled in the catch "
+"block."
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:16
+#, fuzzy
+msgid "Raise the error directly:"
+msgstr "默认错误类型"
+
+#: ../../language/error_codes/E4122.md:18
+msgid ""
+"type! ArithmeticError {\n"
+"  DivisionByZero\n"
+"}\n"
+"\n"
+"pub fn checked_div(a : Double, b : Double) -> Double {\n"
+"  if b == 0.0 {\n"
+"    raise DivisionByZero // Error: raise can only be used inside ...\n"
+"  }\n"
+"  return a / b\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:31
+#, fuzzy
+msgid "Re-raise the error:"
+msgstr "默认错误类型"
+
+#: ../../language/error_codes/E4122.md:33
+msgid ""
+"pub fn rethrow() -> Unit {\n"
+"  fail!(\"throwing\") // Error: `!` operator will rethrow the error "
+"raised in the function application, and can only be used inside ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:39
+msgid "Catch all errors using `catch!`:"
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:41
+msgid ""
+"pub fn catch_all() -> Double {\n"
+"  try {\n"
+"    fail!(\"Failed\") // Error: catch! will rethrow unhandled error, and "
+"can only be used inside ...\n"
+"  } catch! {\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:52
+msgid ""
+"You can either modify the surrounding function to have error types in its"
+" signature:"
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:55
+msgid ""
+"pub fn checked_div(a : Double, b : Double) -> Double!ArithmeticError {\n"
+"  ...\n"
+"}\n"
+"\n"
+"pub fn rethrow() -> Unit! {\n"
+"  ...\n"
+"}\n"
+"\n"
+"pub fn catch_all() -> Double! {\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:69
+#, fuzzy
+msgid "Or use the `try ... catch ...` block to handle the error:"
+msgstr "或者像其他许多语言一样使用 `try...catch` 块："
+
+#: ../../language/error_codes/E4122.md:71
+msgid ""
+"pub fn checked_div(a : Double, b : Double) -> Double {\n"
+"  try {\n"
+"    if b == 0.0 {\n"
+"      raise DivisionByZero // Error: raise can only be used inside ...\n"
+"    }\n"
+"    return a / b\n"
+"  } catch {\n"
+"    _ => {\n"
+"      println(\"DivisionByZero\")\n"
+"      @double.not_a_number\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4124.md:1
 msgid "E4124"
 msgstr ""
 
 #: ../../language/error_codes/E4124.md:3
 msgid "The constructor is ambiguous: it may come from multiple types."
+msgstr ""
+
+#: ../../language/error_codes/E4124.md:7
+msgid ""
+"enum A {\n"
+"  A(Int)\n"
+"  B(Bool)\n"
+"  C(Double)\n"
+"}\n"
+"\n"
+"enum B {\n"
+"  A(Double)\n"
+"  B(Int)\n"
+"  C(Bool)\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let a = A(1) // Error: The constructor A is ambiguous: it may come from"
+" type B or A.\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4124.md:27
+msgid "Add `T::` before the constructor:"
+msgstr ""
+
+#: ../../language/error_codes/E4124.md:29
+msgid ""
+"fn main {\n"
+"  let a = A::A(1)\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4125.md:1
@@ -10875,6 +11435,57 @@ msgstr ""
 msgid "`?` operator cannot be used with `..`."
 msgstr ""
 
+#: ../../language/error_codes/E4125.md:5
+msgid ""
+"`..` operator allows chaining of method call that returns `Unit`. This is"
+" especially useful when the method performs side-effects, like modifying "
+"the object itself, and thus returns `Unit`."
+msgstr ""
+
+#: ../../language/error_codes/E4125.md:9
+msgid ""
+"Using `?` materializes the error that will be raised by the method to "
+"`Result[T, E]`. If one combine the `?` with `..`, the method call will "
+"return `Result[T, E]` instead of `Unit`, which is not allowed by the `..`"
+" operator."
+msgstr ""
+
+#: ../../language/error_codes/E4125.md:15
+msgid ""
+"type A Double derive(Show)\n"
+"\n"
+"pub fn A::check(self : A) -> Unit! {\n"
+"  if self._.is_nan() {\n"
+"    fail!(\"NaN\")\n"
+"  }\n"
+"}\n"
+"\n"
+"pub fn A::div(self : A, other : A) -> A {\n"
+"  A(self._ / other._)\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let a : A = 1.0\n"
+"  let b : A = 2.0\n"
+"  println(a.div(b)..check?())\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4125.md:37
+msgid ""
+"Use the single dot syntax to call the method, and store the result in a "
+"variable."
+msgstr ""
+
+#: ../../language/error_codes/E4125.md:40
+msgid ""
+"fn main {\n"
+"  let a : A = 1.0\n"
+"  let b : A = 2.0\n"
+"  println(a.div(b).check?())\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4127.md:1
 msgid "E4127"
 msgstr ""
@@ -10882,6 +11493,34 @@ msgstr ""
 #: ../../language/error_codes/E4127.md:3
 msgid "Type is not an error type."
 msgstr "类型不是错误类型。"
+
+#: ../../language/error_codes/E4127.md:5
+msgid ""
+"MoonBit only allow error types (defined with `type!` keyword) to appear "
+"after the exclamation mark (`!`) in the return type of a function."
+msgstr ""
+
+#: ../../language/error_codes/E4127.md:10
+msgid ""
+"pub fn may_raise_error() -> Unit!String {\n"
+"  //                             ^~~~~~\n"
+"  // Error: Type String is not an error type.\n"
+"  raise \"Failed\" // Error: Type String is not an error type.\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4127.md:20
+msgid "You can wrap the type you wish to raise in a error type:"
+msgstr ""
+
+#: ../../language/error_codes/E4127.md:22
+msgid ""
+"type! StringError String\n"
+"\n"
+"pub fn may_raise_error() -> Unit!StringError {\n"
+"  raise StringError(\"Failed\")\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E4128.md:1
 msgid "E4128"
@@ -10891,12 +11530,59 @@ msgstr ""
 msgid "Target of type alias must not be a type parameter."
 msgstr ""
 
+#: ../../language/error_codes/E4128.md:7
+msgid ""
+"typealias Wrap[T] = T // Error: Target of type alias must not be a type "
+"parameter.\n"
+msgstr ""
+
+#: ../../language/error_codes/E4128.md:13
+msgid "Use the type directly without using a typealias:"
+msgstr ""
+
 #: ../../language/error_codes/E4129.md:1
 msgid "E4129"
 msgstr ""
 
 #: ../../language/error_codes/E4129.md:3
 msgid "Found cycle in type alias."
+msgstr ""
+
+#: ../../language/error_codes/E4129.md:7
+msgid ""
+"typealias A = B // Found cycle A -> B -> A in type alias.\n"
+"typealias B = A\n"
+msgstr ""
+
+#: ../../language/error_codes/E4129.md:14
+msgid "You can break cycle using new type:"
+msgstr ""
+
+#: ../../language/error_codes/E4129.md:16
+msgid ""
+"type A B\n"
+"typealias B = A\n"
+msgstr ""
+
+#: ../../language/error_codes/E4129.md:21
+msgid "However, this is equivalent to writing"
+msgstr ""
+
+#: ../../language/error_codes/E4129.md:23
+#, fuzzy
+msgid "type A A\n"
+msgstr "类型别名"
+
+#: ../../language/error_codes/E4129.md:27
+msgid ""
+"And this might not be want to want to do. Therefore, we recommend using "
+"newtypes instead of typealiases in most of times:"
+msgstr ""
+
+#: ../../language/error_codes/E4129.md:30
+msgid ""
+"type A B\n"
+"type B A\n"
 msgstr ""
 
 #: ../../language/error_codes/E4130.md:1
@@ -12876,8 +13562,8 @@ msgstr ""
 
 #: ../../language/fundamentals.md:117
 msgid ""
-"'兔'\n"
-"'r'\n"
+"兔\n"
+"r\n"
 " Hello\n"
 " MoonBit\\n\n"
 "\n"
@@ -15462,9 +16148,14 @@ msgstr "`[.., pa]`：匹配已知数量的元素，前面是未知数量的元�
 msgid ""
 "test {\n"
 "  let ary = [1, 2, 3, 4]\n"
-"  let [a, b, ..] = ary\n"
-"  inspect!(\"a = \\{a}, b = \\{b}\", content=\"a = 1, b = 2\")\n"
-"  let [.., a, b] = ary\n"
+"  if ary is [a, b, ..] && a == 1 && b == 2 {\n"
+"    inspect!(\"a = \\{a}, b = \\{b}\", content=\"a = 1, b = 2\")\n"
+"  } else {\n"
+"    fail!(\"\")\n"
+"  }\n"
+"  guard let [.., a, b] = ary else {\n"
+"    _ => fail!(\"\")\n"
+"  }\n"
 "  inspect!(\"a = \\{a}, b = \\{b}\", content=\"a = 3, b = 4\")\n"
 "}\n"
 msgstr ""
