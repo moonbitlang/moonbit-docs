@@ -94,23 +94,23 @@ Another example about `op_get` and `op_set`:
 
 Currently, the following operators can be overloaded:
 
-| Operator Name         | Method Name  | Recommended Signature |
-| --------------------- | ------------ | --------------------- |
-| `+`                   | `op_add`     | (A, A) -> X           |
-| `-`                   | `op_sub`     | (A, A) -> X           |
-| `*`                   | `op_mul`     | (A, A) -> X           |
-| `/`                   | `op_div`     | (A, A) -> X           |
-| `%`                   | `op_mod`     | (A, A) -> X           |
-| `==`                  | `op_equal`   | (A, A) -> Bool        |
-| `<<`                  | `op_shl`     | (A, B) -> X           |
-| `>>`                  | `op_shr`     | (A, B) -> X           |
-| `-` (unary)           | `op_neg`     | (A) -> X              |
-| `_[_]` (get item)     | `op_get`     | (A, B) -> X           |
-| `_[_] = _` (set item) | `op_set`     | (A, B, C) -> Unit     |
-| `_[_:_]` (view)       | `op_as_view` | (A, start? : B, end? : C) -> X |
-| `&`                   | `land`       | (A, B) -> X           |
-| `\|`                  | `lor`        | (A, B) -> X           |
-| `^`                   | `lxor`       | (A, B) -> X           |
+| Operator Name         | Method Name  | Recommended Signature   |
+| --------------------- | ------------ | ----------------------- |
+| `+`                   | `op_add`     | `(A, A) -> X`           |
+| `-`                   | `op_sub`     | `(A, A) -> X`           |
+| `*`                   | `op_mul`     | `(A, A) -> X`           |
+| `/`                   | `op_div`     | `(A, A) -> X`           |
+| `%`                   | `op_mod`     | `(A, A) -> X`           |
+| `==`                  | `op_equal`   | `(A, A) -> Bool` (Required by trait `Eq`) |
+| `<<`                  | `op_shl`     | `(A, B) -> X`           |
+| `>>`                  | `op_shr`     | `(A, B) -> X`           |
+| `-` (unary)           | `op_neg`     | `(A) -> X`              |
+| `_[_]` (get item)     | `op_get`     | `(A, B) -> X`           |
+| `_[_] = _` (set item) | `op_set`     | `(A, B, C) -> Unit`     |
+| `_[_:_]` (view)       | `op_as_view` | `(A, start? : B, end? : C) -> X` |
+| `&`                   | `land`       | `(A, B) -> X`           |
+| `\|`                  | `lor`        | `(A, B) -> X`           |
+| `^`                   | `lxor`       | `(A, B) -> X`           |
 
 By implementing `op_as_view` method, you can create a view for a user-defined type. Here is an example:
 
