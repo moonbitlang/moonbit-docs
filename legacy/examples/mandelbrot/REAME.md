@@ -1,12 +1,15 @@
 # Mandelbrot
+
 ## How to Run
+
 ```
 make run
 ```
 
-Open `localhost::3000`
+Open `localhost:3000`
 
 # Result
+
 -0.7+0.0i@3.0769
 ![-0.7+0.0i@3.0769](./docs/-0.7+0.0i@3.0769.png)
 -0.743030+0.126433i@0.016110
