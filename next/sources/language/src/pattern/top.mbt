@@ -23,9 +23,14 @@ let user : Unit = {
 // start pattern 2
 test {
   let ary = [1, 2, 3, 4]
-  let [a, b, ..] = ary
-  inspect!("a = \{a}, b = \{b}", content="a = 1, b = 2")
-  let [.., a, b] = ary
+  if ary is [a, b, ..] && a == 1 && b == 2 {
+    inspect!("a = \{a}, b = \{b}", content="a = 1, b = 2")
+  } else {
+    fail!("")
+  }
+  guard let [.., a, b] = ary else {
+    _ => fail!("")
+  }
   inspect!("a = \{a}, b = \{b}", content="a = 3, b = 4")
 }
 // end pattern 2
