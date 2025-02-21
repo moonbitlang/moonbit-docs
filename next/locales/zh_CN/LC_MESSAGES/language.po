@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-21 16:04+0800\n"
+"POT-Creation-Date: 2025-02-21 17:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2258,14 +2258,14 @@ msgstr "有几种方式可以修复这个警告："
 msgid ""
 "If the function is indeed useless, you can remove the definition of the "
 "function."
-msgstr ""
+msgstr "如果这个函数确实没有用，你可以移除函数的定义"
 
 #: ../../language/error_codes/E1001.md:32
 msgid ""
 "If this function is at the toplevel (i.e., not local), and is part of the"
 " public API of your module, you can add the `pub` keyword to the "
 "function."
-msgstr ""
+msgstr "如果这个函数是在顶层（即不是局部的），并且是你模块的公共 API 的一部分，你可以给函数添加 `pub` 关键字。"
 
 #: ../../language/error_codes/E1001.md:35
 msgid ""
@@ -2278,14 +2278,14 @@ msgstr ""
 msgid ""
 "If you made a typo in the function name, you can rename the function to "
 "the correct name at the call site."
-msgstr ""
+msgstr "如果你在函数名上犯了拼写错误，你可以在调用的地方将函数重命名为正确的名字。"
 
 #: ../../language/error_codes/E1001.md:44
 msgid ""
 "There are some cases where you might want to keep the function private "
 "and unused at the same time. In this case, you can call `ignore()` on the"
 " function to force the use of it."
-msgstr ""
+msgstr "在某些情况下，你可能想要保持函数为私有且同时不使用。在这种情况下，你可以对该函数调用 `ignore()` 以强制使用它。"
 
 #: ../../language/error_codes/E1001.md:48
 msgid ""
@@ -2314,26 +2314,26 @@ msgstr ""
 
 #: ../../language/error_codes/E1002.md:3
 msgid "Unused variable."
-msgstr ""
+msgstr "未使用的变量。"
 
 #: ../../language/error_codes/E1002.md:5
 msgid ""
 "This variable is unused by any other part of your code, nor marked with "
 "`pub` visibility."
-msgstr ""
+msgstr "这个变量未被代码的其他部分使用，也没有标记 `pub` 可见性。"
 
 #: ../../language/error_codes/E1002.md:8
 msgid ""
 "Note that this warning might uncover other bugs in your code. For "
 "example, if there are two variables in your codebase that has similar "
 "name, you might just use the other variable by mistake."
-msgstr ""
+msgstr "请注意，这个警告可能会揭示你代码中的其他错误。例如，如果你的代码库中有两个变量名称相似，你可能会错误地使用另一个变量。"
 
 #: ../../language/error_codes/E1002.md:12
 msgid ""
 "Specifically, if the variable is at the toplevel, and the body of the "
 "module contains side effects, the side effects will not happen."
-msgstr ""
+msgstr "具体来说，如果变量是在顶层，并且模块的主体包含副作用，则这些副作用将不会发生。"
 
 #: ../../language/error_codes/E1002.md:17
 msgid ""
@@ -2355,14 +2355,14 @@ msgstr ""
 msgid ""
 "If the variable is indeed useless, you can remove the definition of the "
 "variable."
-msgstr ""
+msgstr "如果这个变量确实没有用，你可以移除变量的定义。"
 
 #: ../../language/error_codes/E1002.md:37
 msgid ""
 "If this variable is at the toplevel (i.e., not local), and is part of the"
 " public API of your module, you can add the `pub` keyword to the "
 "variable."
-msgstr ""
+msgstr "如果这个变量是在顶层（即不是局部的），并且是你模块的公共 API 的一部分，你可以给变量添加 `pub` 关键字。"
 
 #: ../../language/error_codes/E1002.md:40
 msgid "pub let p = 42\n"
@@ -2372,13 +2372,13 @@ msgstr ""
 msgid ""
 "If you made a typo in the variable name, you can rename the variable to "
 "the correct name at the use site."
-msgstr ""
+msgstr "如果你在变量名上犯了拼写错误，你可以在使用的地方将变量重命名为正确的名字。"
 
 #: ../../language/error_codes/E1002.md:46
 msgid ""
 "If your code depends on the side-effect of the variable, you can wrap the"
 " side-effect in a `fn init` block."
-msgstr ""
+msgstr "如果你的代码依赖于变量的副作用，你可以将副作用包装在 `fn init` 块中。"
 
 #: ../../language/error_codes/E1002.md:49
 msgid ""
@@ -2392,7 +2392,7 @@ msgid ""
 "There are some cases where you might want to keep the variable private "
 "and unused at the same time. In this case, you can call `ignore()` on the"
 " variable to force the use of it."
-msgstr ""
+msgstr "在某些情况下，你可能想要保持变量为私有且同时不使用。在这种情况下，你可以对该变量调用 `ignore()` 以强制使用它。"
 
 #: ../../language/error_codes/E1002.md:59
 msgid ""
@@ -2417,7 +2417,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1003.md:3
 msgid "Unused type declaration."
-msgstr ""
+msgstr "未使用的类型声明。"
 
 #: ../../language/error_codes/E1003.md:5
 msgid ""
@@ -2428,13 +2428,15 @@ msgid ""
 "warning is only shown if the type is marked with `priv` visibility, and "
 "is not used by any other part of this package."
 msgstr ""
+"这个类型没有被代码的其他部分使用，而且它是私有的。类型声明默认是抽象的，这意味着它对这个包的用户是公开可见的，但他们不能看到类型的实现，也不能直接创建它的实例。因此，只有当类型标记为"
+" `priv` 可见性，并且没有被这个包的其他部分使用时，才会显示这个警告。"
 
 #: ../../language/error_codes/E1003.md:12
 msgid ""
 "Note that this warning might uncover other bugs in your code. For "
 "example, if there are two types in the package that has similar name, you"
 " might just use the other type by mistake."
-msgstr ""
+msgstr "请注意，这个警告可能会揭示你代码中的其他错误。例如，如果包中有两个类型名称相似，你可能会错误地使用另一个类型。"
 
 #: ../../language/error_codes/E1003.md:18
 msgid ""
@@ -2451,31 +2453,30 @@ msgstr ""
 
 #: ../../language/error_codes/E1003.md:34
 msgid "If the type is indeed useless, you can remove the definition of the type."
-msgstr ""
+msgstr "如果这个类型确实没有用，你可以移除类型的定义。"
 
 #: ../../language/error_codes/E1003.md:35
 msgid ""
 "If this type is not local, and is part of the public API of your module, "
 "you can remove the `priv` visibility keyword from the type."
-msgstr ""
+msgstr "如果这个类型不是局部的，并且是你模块的公共 API 的一部分，你可以移除 `priv` 可见性关键字。"
 
 #: ../../language/error_codes/E1003.md:38
 msgid ""
-"type Foo {\n"
+"struct Foo {\n"
 "  bar : Int\n"
 "}\n"
 msgstr ""
 
 #: ../../language/error_codes/E1003.md:44
 msgid "Check if you are referencing the type with a correct name."
-msgstr ""
+msgstr "检查你是否以正确的名称引用该类型。"
 
 #: ../../language/error_codes/E1003.md:46
 msgid ""
-"It is rather rare (and difficult) to have a type that is private and "
-"unused at the same time; therefore, we suggest you remove the type if it "
-"is not used."
-msgstr ""
+"It is rather rare to have a type that is private and unused at the same "
+"time; therefore, we suggest you remove the type if it is not used."
+msgstr "在某些情况下，私有且未使用的类型是相对少见的；因此，我们建议你如果没有使用这个类型，就将其移除。"
 
 #: ../../language/error_codes/E1004.md:1
 msgid "E1004"
@@ -2483,11 +2484,11 @@ msgstr ""
 
 #: ../../language/error_codes/E1004.md:3
 msgid "Unused abstract type."
-msgstr ""
+msgstr "未使用的抽象类型。"
 
 #: ../../language/error_codes/E1004.md:5 ../../language/error_codes/E1016.md:5
 msgid "Currently, MoonBit won't emit this warning."
-msgstr ""
+msgstr "目前，MoonBit 不会发出这个警告。"
 
 #: ../../language/error_codes/E1005.md:1
 msgid "E1005"
@@ -2495,7 +2496,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1005.md:3
 msgid "Unused generic type variable."
-msgstr ""
+msgstr "未使用的泛型类型变量。"
 
 #: ../../language/error_codes/E1005.md:5
 msgid ""
@@ -2503,7 +2504,7 @@ msgid ""
 "it impossible for the type checker to infer the type of the unused "
 "variable. This might lead to cryptic error messages, even unexpected "
 "runtime behavior."
-msgstr ""
+msgstr "在某些情况下，使用带有未使用的泛型类型变量的类型将使类型检查器无法推断未使用变量的类型。这可能导致难以理解的错误信息，甚至是意想不到的运行时行为。"
 
 #: ../../language/error_codes/E1005.md:11
 msgid ""
@@ -2522,7 +2523,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1005.md:26
 msgid "If the type variable is indeed useless, remove the unused type variable."
-msgstr ""
+msgstr "如果类型变量确实没有用，移除未使用的类型变量。"
 
 #: ../../language/error_codes/E1005.md:28
 msgid ""
@@ -2535,7 +2536,7 @@ msgstr ""
 msgid ""
 "If you wish to keep the type variable, you can use `_` to indicate that "
 "the type variable is intentionally unused."
-msgstr ""
+msgstr "如果你希望保留类型变量，你可以使用 `_` 来表示类型变量是有意未使用的。"
 
 #: ../../language/error_codes/E1005.md:37
 msgid ""
@@ -2550,22 +2551,22 @@ msgstr ""
 
 #: ../../language/error_codes/E1006.md:3
 msgid "Variant is never read, never constructed, or both."
-msgstr ""
+msgstr "枚举值从未被读取，从未被构造，或两者都是。"
 
 #: ../../language/error_codes/E1006.md:5
 msgid ""
 "If a variant is never read, it means it is defined but never destructed "
 "in a pattern matching expression (`match`, `let`, `guard let`, loop "
 "function, etc.)."
-msgstr ""
+msgstr "如果枚举值从未被读取，意味着它被定义但从未在模式匹配表达式中析构（`match`、`let`、`guard let`、循环函数等）。"
 
 #: ../../language/error_codes/E1006.md:8
 msgid "If a variant `A` is never constructed, it means there is no `A(...)`."
-msgstr ""
+msgstr "如果枚举值 `A` 从未被构造，意味着没有 `A(...)`。"
 
 #: ../../language/error_codes/E1006.md:9
 msgid "If a variant is unused, it means it is never constructed and never read."
-msgstr ""
+msgstr "如果枚举值未使用，意味着它既没有被构造也没有被读取。"
 
 #: ../../language/error_codes/E1006.md:13
 msgid ""
@@ -2588,7 +2589,7 @@ msgid ""
 "If some variants are never read, while others are read, this means that "
 "you have use wildcard pattern (`_`) in your code. You can expand the "
 "wildcard pattern to include the unused variants."
-msgstr ""
+msgstr "如果有一些枚举值从未被读取，而其他枚举值被读取，这意味着你在代码中使用了通配符模式（`_`）。你可以展开通配符模式以包含未使用的枚举值。"
 
 #: ../../language/error_codes/E1006.md:34
 msgid ""
@@ -2605,10 +2606,11 @@ msgstr ""
 msgid ""
 "If all variants are never read, and you need to read these variants "
 "outside of current package, you can add `pub` keyword to the enum "
-"definition."
-msgstr ""
+"definition. Notice this will make the implementation of the variant "
+"visible to the users of the package."
+msgstr "如果所有枚举值从未被读取，而你需要在当前包之外读取这些枚举值，你可以给枚举定义添加 `pub` 关键字。注意这将使枚举值的实现对包的用户可见。"
 
-#: ../../language/error_codes/E1006.md:47
+#: ../../language/error_codes/E1006.md:49
 msgid ""
 "pub enum T {\n"
 "  A\n"
@@ -2617,13 +2619,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E1006.md:55
+#: ../../language/error_codes/E1006.md:57
 msgid ""
 "If you need to construct the \"never constructed\" variant outside of the"
-" current package, you can add `pub(all)` keyword to the variant. Notice "
-"this will make the implementation of the variant visible to the users of "
-"the package."
-msgstr ""
+" current package, you can add `pub(all)` keyword to the variant."
+msgstr "如果你需要在当前包之外构造“从未被构造”的枚举值，你可以给枚举值添加 `pub(all)` 关键字。"
 
 #: ../../language/error_codes/E1006.md:60
 msgid ""
@@ -2636,7 +2636,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1006.md:68
 msgid "If some variants are indeed useless, you can remove the unused variants."
-msgstr ""
+msgstr "如果有一些枚举值确实没有用，你可以移除未使用的枚举值。"
 
 #: ../../language/error_codes/E1006.md:70
 msgid ""
@@ -2654,7 +2654,7 @@ msgstr ""
 msgid ""
 "Field is never read. This include fields in structs and fields in enum "
 "constructors."
-msgstr ""
+msgstr "字段从未被读取。这包括结构体中的字段和枚举构造器中的字段。"
 
 #: ../../language/error_codes/E1007.md:8
 msgid "For enum constructor fields:"
@@ -2697,7 +2697,7 @@ msgstr ""
 msgid ""
 "If the fields in enum constructors are unused, you can expand them in the"
 " pattern to use them:"
-msgstr ""
+msgstr "如果枚举构造器中的字段未使用，你可以在模式中展开它们以使用它们："
 
 #: ../../language/error_codes/E1007.md:42
 msgid ""
@@ -2714,7 +2714,7 @@ msgstr ""
 msgid ""
 "If the fields in structs are unused, you can list them in record pattern,"
 " or use the dot-syntax to access them:"
-msgstr ""
+msgstr "如果结构体中的字段未使用，你可以在结构体模式中列出它们，或使用点语法访问它们："
 
 #: ../../language/error_codes/E1007.md:55
 msgid ""
@@ -2731,7 +2731,7 @@ msgstr ""
 msgid ""
 "Or, if the fields are indeed useless, you can remove the field from the "
 "constructor:"
-msgstr ""
+msgstr "或者，如果字段确实没有用，你可以从构造器中移除字段："
 
 #: ../../language/error_codes/E1007.md:68
 msgid ""
@@ -2755,7 +2755,7 @@ msgstr ""
 msgid ""
 "The modifier (`pub`/`priv`) is redundant here, since this field has such "
 "visibility by default."
-msgstr ""
+msgstr "修饰符（`pub`/`priv`）在这里是多余的，因为这个字段默认具有这样的可见性。"
 
 #: ../../language/error_codes/E1008.md:8
 msgid ""
@@ -2774,7 +2774,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1008.md:24
 msgid "Remove the visibility modifier on the field."
-msgstr ""
+msgstr "移除字段上的可见性修饰符。"
 
 #: ../../language/error_codes/E1008.md:26
 msgid ""
@@ -2793,7 +2793,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1009.md:3
 msgid "The struct is never constructed."
-msgstr ""
+msgstr "结构体从未被构造。"
 
 #: ../../language/error_codes/E1009.md:7
 msgid ""
@@ -2820,6 +2820,8 @@ msgid ""
 " you expect external packages to be able to construct the struct, you "
 "should use the `pub(all)` visibility modifier."
 msgstr ""
+"`pub` 可见性修饰符只允许外部包通过点语法（`a.value`）或模式匹配来访问结构体。因此，如果你希望外部包能够构造结构体，你应该使用 "
+"`pub(all)` 可见性修饰符。"
 
 #: ../../language/error_codes/E1009.md:30
 msgid ""
@@ -2833,25 +2835,25 @@ msgid ""
 "However, if you do not want external packages to construct the struct, "
 "this might be due to incompleteness or bugs in your code. There are some "
 "common cases:"
-msgstr ""
+msgstr "然而，如果你不希望外部包构造结构体，这可能是由于你代码的不完整或错误。以下是一些常见情况："
 
 #: ../../language/error_codes/E1009.md:40
 msgid ""
 "You planned to use smart constructors or factory functions to construct "
 "the struct, but you forgot or have not implemented them."
-msgstr ""
+msgstr "你计划使用智能构造器或工厂函数来构造结构体，但你忘记了或尚未实现它们。"
 
 #: ../../language/error_codes/E1009.md:42
 msgid ""
 "You intend to keep the struct private to control its instantiation but "
 "may have forgotten to provide a way to do so within its own package."
-msgstr ""
+msgstr "你打算保持结构体私有以控制其实例化，但可能忘记了在其自己的包中提供这样的方法。"
 
 #: ../../language/error_codes/E1009.md:45
 msgid ""
 "In these cases, you should consider providing a way to construct the "
 "struct within its own package."
-msgstr ""
+msgstr "在这些情况下，你应该考虑在自己的包内提供构造结构体的方法。"
 
 #: ../../language/error_codes/E1009.md:48
 msgid ""
@@ -2876,7 +2878,7 @@ msgstr ""
 msgid ""
 "This pattern is unused. This usually happens in pattern matching, and "
 "this pattern is completely covered by a prior pattern."
-msgstr ""
+msgstr "这个模式未使用。这通常发生在模式匹配中，这个模式完全被前一个模式覆盖。"
 
 #: ../../language/error_codes/E1010.md:6
 msgid ""
@@ -2885,6 +2887,8 @@ msgid ""
 "never be reached, since all control flow will be directed to the first "
 "matching branch."
 msgstr ""
+"MoonBit "
+"中的模式匹配是按顺序执行的，从第一个分支到最后一个。如果一个模式被前一个模式覆盖，它将永远不会被执行，因为所有的控制流都将被定向到第一个匹配的分支。"
 
 #: ../../language/error_codes/E1010.md:12
 msgid ""
@@ -2902,7 +2906,7 @@ msgid ""
 "in the pattern matching. If the order of the branches is important, then "
 "you may want to refine the first pattern so that it excludes what the "
 "second pattern covers."
-msgstr ""
+msgstr "这个警告通常可以通过交换模式匹配中分支的顺序来修复。如果分支的顺序很重要，那么你可能希望完善第一个模式，使其排除第二个模式覆盖的内容。"
 
 #: ../../language/error_codes/E1010.md:27
 msgid ""
@@ -2918,7 +2922,7 @@ msgstr ""
 #: ../../language/error_codes/E3012.md:43
 #: ../../language/error_codes/E3016.md:39
 msgid "Or,"
-msgstr ""
+msgstr "或者，"
 
 #: ../../language/error_codes/E1010.md:38
 msgid ""
@@ -2938,7 +2942,7 @@ msgstr ""
 msgid ""
 "Partial match. The match/guard/loop expression does not cover all "
 "possible cases."
-msgstr ""
+msgstr "部分匹配。`match`/`guard`/`loop` 表达式未覆盖所有可能的情况。"
 
 #: ../../language/error_codes/E1011.md:8
 msgid ""
@@ -2954,7 +2958,7 @@ msgstr ""
 msgid ""
 "The warning message usually contains hints about the missing patterns. "
 "Add the missing cases to avoid incomplete matches."
-msgstr ""
+msgstr "警告消息通常包含有关缺失模式的提示。添加缺失的情况以避免不完整的匹配。"
 
 #: ../../language/error_codes/E1011.md:21
 msgid ""
@@ -2967,7 +2971,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1011.md:29
 msgid "Or, you can add a wildcard pattern to catch all remaining cases:"
-msgstr ""
+msgstr "或者，你可以添加一个通配符模式来捕获所有剩余的情况："
 
 #: ../../language/error_codes/E1011.md:31
 msgid ""
@@ -2988,7 +2992,7 @@ msgid ""
 "Unreachable code. This usually happens when a `return` statement is "
 "followed by more code. The `return` statement will exit the function "
 "immediately, so any code after it will not be executed."
-msgstr ""
+msgstr "不可达代码。这通常发生在 `return` 语句后面跟着更多代码的情况。`return` 语句将立即退出函数，因此它后面的任何代码都不会被执行。"
 
 #: ../../language/error_codes/E1012.md:9
 msgid ""
@@ -3002,7 +3006,7 @@ msgstr ""
 msgid ""
 "Remove the unreachable code, or move it before the `return` statement if "
 "you want the code to be executed."
-msgstr ""
+msgstr "移除不可达代码，或者如果你希望代码被执行，将其移动到 `return` 语句之前。"
 
 #: ../../language/error_codes/E1012.md:21
 msgid ""
@@ -3018,34 +3022,34 @@ msgstr ""
 
 #: ../../language/error_codes/E1013.md:3
 msgid "The type of this expression contains unresolved type variables."
-msgstr ""
+msgstr "这个表达式的类型包含未解析的类型变量。"
 
 #: ../../language/error_codes/E1013.md:5
 msgid ""
 "This error occurs when the compiler encounters a type that contains type "
 "variables which cannot be determined from the context. Type variables are"
 " placeholders for types that should be inferred by the compiler."
-msgstr ""
+msgstr "当编译器遇到无法从上下文确定的类型变量时，将会出现此错误。类型变量是应由编译器推断的类型的占位符。"
 
 #: ../../language/error_codes/E1013.md:9
 msgid "Common cases where this happens:"
-msgstr ""
+msgstr "常见情况："
 
 #: ../../language/error_codes/E1013.md:11
 msgid "Writing local functions without explicit type annotations"
-msgstr ""
+msgstr "编写没有明确类型注释的局部函数"
 
 #: ../../language/error_codes/E1013.md:12
 msgid ""
 "Creating empty collections (Arrays, Options) without specifying their "
 "element type"
-msgstr ""
+msgstr "创建空集合（数组，选项），而未指定其元素类型。"
 
 #: ../../language/error_codes/E1013.md:15
 msgid ""
 "When the compiler cannot resolve these type variables, it defaults them "
 "to `Unit` type, which may not be what you intended."
-msgstr ""
+msgstr "当编译器无法解析这些类型变量时，它将其默认为 `Unit` 类型，这可能并不是你所期望的。"
 
 #: ../../language/error_codes/E1013.md:20
 msgid ""
@@ -3097,11 +3101,11 @@ msgstr ""
 
 #: ../../language/error_codes/E1013.md:61
 msgid "To fix this warning, you can:"
-msgstr ""
+msgstr "要修复这个警告，你可以："
 
 #: ../../language/error_codes/E1013.md:63
 msgid "Add type annotations to local function parameters. For example,"
-msgstr ""
+msgstr "为局部类型函数参数添加类型注释。例如："
 
 #: ../../language/error_codes/E1013.md:65
 msgid ""
@@ -3127,7 +3131,7 @@ msgstr ""
 msgid ""
 "Explicitly specify the type of the variable or the collection element "
 "type."
-msgstr ""
+msgstr "显式指定变量或集合元素的类型。"
 
 #: ../../language/error_codes/E1013.md:86
 msgid ""
@@ -3141,7 +3145,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1013.md:95
 msgid "Or equivalently, add annotations on the collection creation."
-msgstr ""
+msgstr "或者，等效地，在集合创建时添加类型注释。"
 
 #: ../../language/error_codes/E1013.md:97
 msgid ""
@@ -3155,7 +3159,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1013.md:106
 msgid "Provide enough context through usage."
-msgstr ""
+msgstr "通过使用提供足够的上下文。"
 
 #: ../../language/error_codes/E1013.md:108
 msgid ""
@@ -3183,7 +3187,7 @@ msgid ""
 "capitalized type name for all types, including built-in types and user-"
 "defined types. This is a convention that is followed by the standard "
 "library and most of the community code."
-msgstr ""
+msgstr "类型名称应该大写。在 MoonBit 中，我们建议对所有类型使用大写类型名称，包括内置类型和用户定义类型。这是一个标准库和大多数社区代码遵循的约定。"
 
 #: ../../language/error_codes/E1014.md:7
 msgid ""
@@ -3195,7 +3199,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1014.md:16
 msgid "Capitalize the type name."
-msgstr ""
+msgstr "将类型名称大写。"
 
 #: ../../language/error_codes/E1014.md:18
 msgid ""
@@ -3216,6 +3220,8 @@ msgid ""
 "in an array does not require the array to be mutable. For example, `a[0] "
 "= 0` does not require `a` to be mutable, but `a = [0, 1, 2]` does."
 msgstr ""
+"数据从未被修改。一个常见错误是在不必要的情况下声明数组为可变。设置数组中元素的值并不需要数组是可变的。例如，`a[0] = 0` 不需要 `a` "
+"是可变的，但 `a = [0, 1, 2]` 需要。"
 
 #: ../../language/error_codes/E1015.md:10
 msgid ""
@@ -3228,7 +3234,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1015.md:20
 msgid "Remove the `mut` keyword from the variable declaration."
-msgstr ""
+msgstr "移除变量声明中的 `mut` 关键字。"
 
 #: ../../language/error_codes/E1015.md:22
 msgid ""
@@ -3245,7 +3251,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1016.md:3
 msgid "Parser consistency check failed."
-msgstr ""
+msgstr "解析器一致性检查失败。"
 
 #: ../../language/error_codes/E1018.md:1
 msgid "E1018"
@@ -3253,7 +3259,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1018.md:3
 msgid "There is no `continue` in this loop expression, so `loop` is useless here."
-msgstr ""
+msgstr "在这个循环表达式中没有 `continue`，因此 `loop` 在这里是无用的。"
 
 #: ../../language/error_codes/E1018.md:5
 msgid ""
@@ -3265,6 +3271,10 @@ msgid ""
 "the beginning, or use a simpler control flow construct like `match` or "
 "`if`."
 msgstr ""
+"当使用一个不包含 `continue` 语句的 `loop` 表达式时，将会出现这个错误。在 MoonBit 中，一个不包含任何 "
+"`continue` 语句的 `loop` 相当于一个只执行一次的块表达式，使得在这种情况下 `loop` "
+"关键字是多余的。如果你需要从头重新开始循环，你应该添加一个 `continue` 语句，或者使用一个更简单的控制流结构，如 `match` 或 "
+"`if`。"
 
 #: ../../language/error_codes/E1018.md:14
 msgid ""
@@ -3280,7 +3290,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1018.md:27
 msgid "Either add a `continue` statement if you need to restart the loop:"
-msgstr ""
+msgstr "如果你需要重新开始循环，添加一个 `continue` 语句："
 
 #: ../../language/error_codes/E1018.md:29
 msgid ""
@@ -3298,7 +3308,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1018.md:42
 msgid "Or use `if`/`match` you don't need to use `continue`:"
-msgstr ""
+msgstr "或者如果不需要使用 `continue`，使用 `if`/`match`："
 
 #: ../../language/error_codes/E1018.md:44
 msgid ""
@@ -3321,7 +3331,7 @@ msgid ""
 "Toplevel declaration is not left aligned. Every toplevel structure in "
 "MoonBit should be left-aligned, i.e. there is no space between the "
 "beginning of the line and the declaration."
-msgstr ""
+msgstr "顶层声明未左对齐。MoonBit 中的每个顶层结构都应该左对齐，即行首和声明之间没有空格。"
 
 #: ../../language/error_codes/E1019.md:7
 msgid ""
@@ -3329,7 +3339,7 @@ msgid ""
 "in the following lines. Therefore, when your are writing local "
 "declarations while seeing this error, you should check the previous lines"
 " for any parsing errors."
-msgstr ""
+msgstr "有时，更早出现的解析错误可能会导致在后续行中引发此错误。因此，当你在编写局部声明时看到这个错误，你应该检查前面的行是否有解析错误。"
 
 #: ../../language/error_codes/E1019.md:13
 msgid "  let x = 1\n"
@@ -3337,7 +3347,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1019.md:19
 msgid "Remove the leading spaces:"
-msgstr ""
+msgstr "移除前导空格："
 
 #: ../../language/error_codes/E1019.md:21
 msgid "let x = 1\n"
@@ -3351,18 +3361,17 @@ msgstr ""
 msgid ""
 "Invalid pragma. The pragma either has invalid id, or has invalid "
 "properties."
-msgstr ""
+msgstr "无效的编译器指令。编译器指令的 id 不合法，或者有不合法的属性。"
 
 #: ../../language/error_codes/E1020.md:5
-#, fuzzy
 msgid "MoonBit compiler support the following pragmas:"
-msgstr "MoonBit 提供了以下有用的内建特征："
+msgstr "MoonBit 编译器支持以下编译器指令："
 
 #: ../../language/error_codes/E1020.md:7
 msgid ""
 "`@alert`. This pragma is used to emit a warning message. It has the "
 "following format: `@alert <category> \"message\"`. For example:"
-msgstr ""
+msgstr "`@alert`。这个编译器指令用于发出警告消息。它有以下格式：`@alert <category> \"message\"`。例如："
 
 #: ../../language/error_codes/E1020.md:10
 msgid ""
@@ -3378,7 +3387,7 @@ msgid ""
 "`@coverage.skip`. This pragma indicates that the following declaration "
 "should be skipped when calculating code coverage. It has the following "
 "format: `@coverage.skip`. For example:"
-msgstr ""
+msgstr "`@coverage.skip`。这个编译器指令表示在计算代码覆盖率时应跳过以下声明。它有以下格式：`@coverage.skip`。例如："
 
 #: ../../language/error_codes/E1020.md:22
 msgid ""
@@ -3402,7 +3411,7 @@ msgstr ""
 msgid ""
 "Depending on the pragma you want to use, you should either remove the "
 "invalid pragma, or replace it with a valid one."
-msgstr ""
+msgstr "根据你想使用的编译器指令，你应该移除无效的编译器指令，或者替换为有效的编译器指令。"
 
 #: ../../language/error_codes/E1020.md:45
 msgid ""
@@ -3419,7 +3428,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1021.md:3
 msgid "Some arguments of constructor are omitted in pattern."
-msgstr ""
+msgstr "一些构造器的参数在模式中被省略。"
 
 #: ../../language/error_codes/E1021.md:7
 msgid ""
@@ -3442,7 +3451,7 @@ msgstr ""
 msgid ""
 "If you want to omit some arguments, add the `..` to the end of the "
 "pattern:"
-msgstr ""
+msgstr "如果你想省略一些参数，在模式的末尾添加 `..`："
 
 #: ../../language/error_codes/E1021.md:26
 msgid ""
@@ -3458,7 +3467,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1021.md:37
 msgid "Or, you can match all arguments:"
-msgstr ""
+msgstr "或者，你可以匹配所有参数："
 
 #: ../../language/error_codes/E1021.md:39
 msgid ""
@@ -3484,6 +3493,8 @@ msgid ""
 "struct literal. For now, we treat it as a struct literal, but writing "
 "such expressions is discouraged."
 msgstr ""
+"有歧义的块表达式。在 MoonBit 中，表达式 `{ value }` "
+"有歧义，因为它可以被解释为块表达式或结构体字面量。目前，我们将其视为结构体字面量，但不建议编写这样的表达式。"
 
 #: ../../language/error_codes/E1022.md:10
 msgid ""
@@ -3503,7 +3514,7 @@ msgid ""
 "If you want to construct a struct using the struct literal, you can add a"
 " comma to the end of the struct literal. Or you can call formatter on "
 "this buffer to have the comma added automatically."
-msgstr ""
+msgstr "如果你想使用结构体字面量构造结构体，你可以在结构体字面量的末尾添加逗号。或者你可以在这个编辑区域中调用格式化程序，让它自动添加逗号。"
 
 #: ../../language/error_codes/E1022.md:28
 msgid ""
@@ -3518,7 +3529,7 @@ msgstr ""
 msgid ""
 "If you are using it as a block expression, please remove the braces as it"
 " has only one expression and is equivalent to the expression `value`:"
-msgstr ""
+msgstr "如果你将其用作块表达式，请移除大括号，因为它只有一个表达式，等效于表达式 `value`："
 
 #: ../../language/error_codes/E1022.md:39
 msgid ""
@@ -3535,7 +3546,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1023.md:3
 msgid "The body of this try expression never raises any error."
-msgstr ""
+msgstr "这个 try 表达式的主体从未引发任何错误。"
 
 #: ../../language/error_codes/E1023.md:7
 msgid ""
@@ -3549,9 +3560,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E1023.md:19
-#, fuzzy
 msgid "Remove the `try` expression:"
-msgstr "匹配表达式"
+msgstr "移除 `try` 表达式："
 
 #: ../../language/error_codes/E1023.md:21
 #: ../../language/error_codes/E3002.md:27
@@ -3569,7 +3579,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1024.md:3
 msgid "The error type of this function is never used."
-msgstr ""
+msgstr "这个函数的错误类型从未被使用。"
 
 #: ../../language/error_codes/E1024.md:7
 msgid ""
@@ -3579,9 +3589,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E1024.md:15
-#, fuzzy
 msgid "Remove the error type:"
-msgstr "默认错误类型"
+msgstr "移除错误类型"
 
 #: ../../language/error_codes/E1024.md:17
 msgid ""
@@ -3601,6 +3610,8 @@ msgid ""
 "block, compiler will know that the error type is the only one that will "
 "be caught. So, there is no need to use `catch!` in this case."
 msgstr ""
+"模式匹配是完整的，因此使用 `catch!` 是无用的。在 MoonBit 中，当在 try "
+"块中只会引发一个错误类型时，编译器将知道这个错误类型是唯一会被捕获的。因此，在这种情况下，不需要使用 `catch!`。"
 
 #: ../../language/error_codes/E1026.md:10
 msgid ""
@@ -3629,7 +3640,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1026.md:36
 msgid "Remove the `!` in the `catch!`:"
-msgstr ""
+msgstr "移除 `catch!` 中的 `!`："
 
 #: ../../language/error_codes/E1026.md:38
 msgid ""
@@ -3664,7 +3675,7 @@ msgstr ""
 msgid ""
 "The syntax is deprecated. Please refer to the warning message on the "
 "reason and potential fix."
-msgstr ""
+msgstr "语法已弃用。请参考警告消息，了解原因和潜在修复方法。"
 
 #: ../../language/error_codes/E1028.md:1
 msgid "E1028"
@@ -3675,7 +3686,7 @@ msgid ""
 "Unfinished code. In MoonBit, you can use `...` to mark a piece of code "
 "that is incomplete. You can still compile and run the code, but it will "
 "cause a runtime error when it is executed."
-msgstr ""
+msgstr "未完成的代码。在 MoonBit 中，你可以使用 `...` 标记一个不完整的代码片段。你仍然可以编译和运行代码，但在执行时会导致运行时错误。"
 
 #: ../../language/error_codes/E1028.md:7
 msgid ""
@@ -3686,7 +3697,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1028.md:15
 msgid "Complete the code:"
-msgstr ""
+msgstr "完成代码："
 
 #: ../../language/error_codes/E1028.md:17
 msgid ""
@@ -3701,7 +3712,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1029.md:3
 msgid "Unused package."
-msgstr ""
+msgstr "未使用的包。"
 
 #: ../../language/error_codes/E1029.md:7
 msgid "`moon.mod.json`:"
@@ -3783,7 +3794,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1029.md:52
 msgid "Remove the unused package:"
-msgstr ""
+msgstr "移除未使用的包："
 
 #: ../../language/error_codes/E1029.md:56
 #: ../../language/error_codes/E4068.md:17
@@ -3804,7 +3815,7 @@ msgstr ""
 msgid ""
 "The package alias is empty. The default package alias will be used "
 "instead."
-msgstr ""
+msgstr "包别名为空。将使用默认包别名。"
 
 #: ../../language/error_codes/E1030.md:7
 msgid ""
@@ -3822,7 +3833,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1030.md:21
 msgid "Use a non-empty alias for the package:"
-msgstr ""
+msgstr "为包使用非空别名："
 
 #: ../../language/error_codes/E1030.md:23
 msgid ""
@@ -3844,15 +3855,16 @@ msgstr ""
 #: ../../language/error_codes/E1031.md:3
 msgid ""
 "The optional argument is never supplied. If the optional argument is "
-"never supplied, then it can be safety removed from the parameter list and"
+"never supplied, then it can be safely removed from the parameter list and"
 " be used purely internally as a normal variable."
-msgstr ""
+msgstr "可选参数从未被提供。如果可选参数从未被提供，那么它可以安全地从参数列表中移除，并作为普通变量纯粹在内部使用。"
 
 #: ../../language/error_codes/E1031.md:9
 msgid ""
 "Note, this warning is turned off by default. To enable this warning, you "
 "have to modify the `\"warn-list\"` of `moon.pkg.json`:"
 msgstr ""
+"注意，默认情况下，此警告是关闭的。要启用此警告，你必须修改 `moon.pkg.json` 的 `\"warn-list\"`："
 
 #: ../../language/error_codes/E1031.md:12
 msgid ""
@@ -3885,6 +3897,7 @@ msgid ""
 "You can remove the optional argument, and use a local variable definition"
 " instead:"
 msgstr ""
+"你可以移除可选参数，并使用局部变量定义代替："
 
 #: ../../language/error_codes/E1031.md:38
 msgid ""
@@ -3911,12 +3924,14 @@ msgid ""
 "supplied with a value. This means the optional argument can be refactored"
 " into a labelled argument."
 msgstr ""
+"可选参数的默认值未被使用。这意味着在这个函数的每个调用点，可选参数总是显式地提供一个值。这意味着可选参数可以重构为带标签的参数。"
 
 #: ../../language/error_codes/E1032.md:7
 msgid ""
 "Note, this warning is turned off by default. To enable this warning, you "
 "need to modify the `\"warn-list\"` of `moon.pkg.json`:"
 msgstr ""
+"注意，默认情况下，此警告是关闭的。要启用此警告，你需要修改 `moon.pkg.json` 的 `\"warn-list\"`："
 
 #: ../../language/error_codes/E1032.md:9
 msgid ""
@@ -3940,9 +3955,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E1032.md:32
-#, fuzzy
 msgid "Turn the optional argument into a labelled argument:"
-msgstr "只有顶层函数可以有带标签的参数。"
+msgstr "将可选参数转换为带标签的参数："
 
 #: ../../language/error_codes/E1032.md:34
 msgid ""
@@ -3963,7 +3977,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1033.md:3
 msgid "The import value is never used directly."
-msgstr ""
+msgstr "导入的值从未被直接使用。"
 
 #: ../../language/error_codes/E1033.md:5
 msgid ""
@@ -3973,6 +3987,8 @@ msgid ""
 "However, if `f` is not used in current package, this warning will be "
 "emitted."
 msgstr ""
+"在 MoonBit 中，你可以从另一个包中导入一个值（比如 `f`）到当前包中，这样你就不必使用 `@pkg.f` 来限定值，“
+”而是可以像在当前包中定义得一样使用 `f`。然而，如果 `f` 在当前包中未被使用，将会发出此警告。"
 
 #: ../../language/error_codes/E1033.md:18
 msgid "`lib/main.mbt`:"
@@ -4007,7 +4023,7 @@ msgid ""
 "It is possible that you still use qualified name to access the imported "
 "value. In this case, either remove the imported value from "
 "`moon.pkg.json`."
-msgstr ""
+msgstr "你可能仍然使用限定名称来访问导入的值。在这种情况下，要么从 `moon.pkg.json` 中删除导入的值。"
 
 #: ../../language/error_codes/E1033.md:58
 msgid ""
@@ -4024,7 +4040,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1033.md:70
 msgid "Or remove the qualified package name from your code:"
-msgstr ""
+msgstr "或者从你的代码中移除限定的包名："
 
 #: ../../language/error_codes/E1033.md:74
 msgid ""
@@ -4041,7 +4057,7 @@ msgstr ""
 msgid ""
 "The syntax `~label` is deprecated. We have removed this syntax and this "
 "warning is no longer emitted by the compiler."
-msgstr ""
+msgstr "语法 `~label` 已弃用。我们已经移除了这个语法，编译器不再发出此警告。"
 
 #: ../../language/error_codes/E1035.md:1
 msgid "E1035"
@@ -4051,11 +4067,11 @@ msgstr ""
 msgid ""
 "The word is reserved for possible future use. Please use another name for"
 " it."
-msgstr ""
+msgstr "这个词被保留以备将来使用。请使用其他名称。"
 
 #: ../../language/error_codes/E1035.md:5
 msgid "Here is a list of reserved name:"
-msgstr ""
+msgstr "这里有一个保留名称的列表："
 
 #: ../../language/error_codes/E1035.md:7
 msgid "`module`"
@@ -4098,9 +4114,8 @@ msgid "`dyn`"
 msgstr ""
 
 #: ../../language/error_codes/E1035.md:17
-#, fuzzy
 msgid "`abstract`"
-msgstr "结构体"
+msgstr ""
 
 #: ../../language/error_codes/E1035.md:18
 msgid "`do`"
@@ -4119,9 +4134,8 @@ msgid "`override`"
 msgstr ""
 
 #: ../../language/error_codes/E1035.md:22
-#, fuzzy
 msgid "`typeof`"
-msgstr "类型"
+msgstr ""
 
 #: ../../language/error_codes/E1035.md:23
 msgid "`virtual`"
@@ -4136,9 +4150,8 @@ msgid "`local`"
 msgstr ""
 
 #: ../../language/error_codes/E1035.md:26
-#, fuzzy
 msgid "`method`"
-msgstr "方法名称"
+msgstr ""
 
 #: ../../language/error_codes/E1035.md:27
 msgid "`alias`"
@@ -4165,7 +4178,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1036.md:3
 msgid "The loop label name shadows a label that is already in scope."
-msgstr ""
+msgstr "循环标签名称隐藏了已经在作用域中的标签。"
 
 #: ../../language/error_codes/E1036.md:5
 msgid ""
@@ -4173,7 +4186,8 @@ msgid ""
 "reused within a nested scope, it shadows the outer label, which can lead "
 "to confusion about which loop is being referenced by `break` or "
 "`continue` statements."
-msgstr ""
+msgstr "循环标签在它们的作用域内必须是唯一的。当标签名在嵌套作用域内被重复使用时，它会遮蔽外部标签，"
+"这可能导致对 `break` 或 `continue` 语句所引用的循环产生混淆。"
 
 #: ../../language/error_codes/E1036.md:9
 msgid ""
@@ -4182,6 +4196,8 @@ msgid ""
 "recommended to use distinct, descriptive label names for different loops "
 "to make the code's intent clear."
 msgstr ""
+"此警告有助于防止由于标签遮蔽而导致错误地中断或继续到错误的循环级别。建议为不同的循环使用不同的、描述性的标签名称，"
+"以使代码的意图清晰。"
 
 #: ../../language/error_codes/E1036.md:15
 msgid ""
@@ -4204,15 +4220,15 @@ msgid ""
 "Use distinct, descriptive label names for different loops to make the "
 "code's intent clear."
 msgstr ""
+"为不同的循环使用不同的、描述性的标签名称，以使代码的意图清晰。"
 
 #: ../../language/error_codes/E1037.md:1
 msgid "E1037"
 msgstr ""
 
 #: ../../language/error_codes/E1037.md:3
-#, fuzzy
 msgid "The loop label name is never used."
-msgstr "可选参数未被提供"
+msgstr "循环标签名称从未被使用。"
 
 #: ../../language/error_codes/E1037.md:7
 msgid ""
@@ -4234,7 +4250,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1037.md:26
 msgid "Remove the unused loop label."
-msgstr ""
+msgstr "移除未使用的循环标签。"
 
 #: ../../language/error_codes/E1037.md:28
 msgid ""
@@ -4261,6 +4277,8 @@ msgid ""
 "let accepts all possible input, then it will always continue on, making "
 "the guard useless."
 msgstr ""
+"无用的 guard，因为模式是不可反驳的。不可反驳的模式意味着它接受所有可能的输入。"
+"如果 guard let 中的模式接受所有可能的输入，那么它将总是继续执行，使 guard 无用。"
 
 #: ../../language/error_codes/E1038.md:7
 msgid ""
@@ -4270,6 +4288,9 @@ msgid ""
 " evaluated and will always be success. Therefore, such code will not work"
 " since all control will continue on and never returns early."
 msgstr ""
+"一个常见的错误是，比如你想在某些条件下提前返回，否则继续。然而，由于模式匹配是从前到后评估的，"
+"`guard let` 后的模式将首先被评估，并且总是成功。因此，这样的代码将不起作用，因为所有控制都将继续执行，"
+"并且永远不会提前返回。"
 
 #: ../../language/error_codes/E1038.md:15
 msgid ""
@@ -4290,6 +4311,7 @@ msgid ""
 "If you want all possible control flows goes through, then you can remove "
 "the guard and just use let expression."
 msgstr ""
+"如果你希望所有可能的控制流都通过，那么你可以移除 guard，只使用 let 表达式。"
 
 #: ../../language/error_codes/E1038.md:33
 msgid ""
@@ -4304,6 +4326,7 @@ msgid ""
 "If you fail into the early return mistake, you can switch to `match` "
 "expression:"
 msgstr ""
+"如果你陷入了提前返回的错误，你可以切换到 `match` 表达式："
 
 #: ../../language/error_codes/E1038.md:42
 msgid ""
@@ -4322,7 +4345,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1039.md:3
 msgid "Method name conflicts with another definition."
-msgstr ""
+msgstr "方法名与另一个定义冲突。"
 
 #: ../../language/error_codes/E1039.md:5
 msgid ""
@@ -4330,6 +4353,7 @@ msgid ""
 "promoted to regular function in the future, declare the method using `fn "
 "T::f(..)` to avoid name clash."
 msgstr ""
+"注意：使用语法 `fn f(self : T, ..)` 声明的方法将在未来提升为常规函数，使用 `fn T::f(..)` 声明方法以避免名称冲突。"
 
 #: ../../language/error_codes/E1039.md:11
 msgid ""
@@ -4351,7 +4375,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1039.md:30
 msgid "You can defined the method as `A::f`:"
-msgstr ""
+msgstr "你可以将方法定义为 `A::f`："
 
 #: ../../language/error_codes/E1039.md:32
 msgid ""
@@ -4366,7 +4390,8 @@ msgid ""
 "invoked as regular function. If you wish to call the method as regular "
 "function, then you have to rename either the method name, or the regular "
 "function name to resolve the name clash."
-msgstr ""
+msgstr "但是，使用 `T::` 前缀定义方法将使其无法作为常规函数调用。"
+"如果你希望将方法作为常规函数调用，那么你必须重命名方法名或常规函数名以解决名称冲突。"
 
 #: ../../language/error_codes/E1039.md:43
 msgid ""
@@ -4388,7 +4413,7 @@ msgid ""
 "This method is declared as `T::f`, Calling this kind of method directly "
 "via name(..) is deprecated, use qualified syntax `T::f(..)`, or declare "
 "the method as `fn f(self : A, ..)` instead."
-msgstr ""
+msgstr "这个方法被声明为 `T::f`，直接通过名称(..) 调用的语法被废弃了，使用限定语法 `T::f(..)`，或者将方法声明为 `fn f(self : A, ..)`。"
 
 #: ../../language/error_codes/E1040.md:9
 msgid ""
@@ -4411,7 +4436,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1040.md:27
 msgid "You can either modify the calling of this function at call sites:"
-msgstr ""
+msgstr "你可以在调用点修改这个函数的调用："
 
 #: ../../language/error_codes/E1040.md:29
 msgid ""
@@ -4422,7 +4447,7 @@ msgstr ""
 
 #: ../../language/error_codes/E1040.md:35
 msgid "Or you can define the method as:"
-msgstr ""
+msgstr "或者你可以将方法定义为："
 
 #: ../../language/error_codes/E1040.md:37
 msgid ""
