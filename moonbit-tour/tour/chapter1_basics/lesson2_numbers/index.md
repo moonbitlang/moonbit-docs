@@ -1,7 +1,7 @@
 # Numbers
 
 Integers and floats are the most common types in MoonBit.
-`Int`s can be represented in decimal, hexadecimal, octal, and binary,
+`Int`(32 bit signed integer) can be represented in decimal, hexadecimal, octal, and binary,
 and you can use the underscore to separate digits for better readability.
 We call these *number literals*.
 
