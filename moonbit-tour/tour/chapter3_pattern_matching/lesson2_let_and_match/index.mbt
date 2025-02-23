@@ -2,7 +2,7 @@ enum Resource {
   TextFile(String)
   Image(String)
   Folder(Map[String, Resource])
-}
+} derive(Show)
 
 let assets : Resource = Folder(
   {
