@@ -1479,7 +1479,8 @@ msgid ""
 "article, we will further extend the G-Machine implementation from the "
 "previous article to support `let` expressions and basic arithmetic, "
 "comparison, and other operations."
-msgstr ""
+msgstr "在第一部分中我们探讨了惰性求值的目的，介绍了典型的惰性求值抽象机器 G-Machine并实现它的一些基本指令。本章为“MoonBit 
+中实现惰性求值”主题的第二部分，将延续并进一步扩展之前文章中 G-Machine 的实现来支持 let 表达式和基础算术，比较，和其他相关操作。"
 
 #: ../../example/gmachine/gmachine-2.md:5
 msgid "let Expressions"
@@ -1490,7 +1491,7 @@ msgid ""
 "The `let` expression in coref differs slightly from that in MoonBit. A "
 "`let` expression can create multiple variables but can only be used "
 "within a limited scope. Here is an example:"
-msgstr ""
+msgstr "coref中的let表达式与MoonBit略有差异。MoonBit 的let表达式可以创建多个变量，但只能在有限的范围内使用。示例如下："
 
 #: ../../example/gmachine/gmachine-2.md:9
 msgid ""
@@ -1503,7 +1504,7 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-2.md:17
 msgid "Equivalent coref expression:"
-msgstr ""
+msgstr "对应的 coreF 表达式："
 
 #: ../../example/gmachine/gmachine-2.md:19
 msgid ""
@@ -1516,7 +1517,7 @@ msgstr ""
 msgid ""
 "It is important to note that coref's `let` expressions must follow a "
 "sequential order. For example, the following is not valid:"
-msgstr ""
+msgstr "需要注意coreF 中的 let 表达式必须按顺序执行，如下代码是无效的："
 
 #: ../../example/gmachine/gmachine-2.md:27
 msgid ""
@@ -1530,7 +1531,7 @@ msgid ""
 "In contrast, `letrec` is more complex as it allows the local variables "
 "defined to reference each other without considering the order of their "
 "definitions."
-msgstr ""
+msgstr "相比之下，let rec 允许本地变量不考虑定义顺序下相互引用，从而更加复杂。 "
 
 #: ../../example/gmachine/gmachine-2.md:35
 msgid ""
@@ -1540,7 +1541,11 @@ msgid ""
 "parameters, but the local variables defined by `let` do not correspond to"
 " `NApp` nodes. Therefore, we need to adjust the stack parameters before "
 "calling the supercombinator."
-msgstr ""
+msgstr 
+"在实现 let （和更复杂的 let rec）表达式之前，我们首先需要修改当前的参数传递方法。"
+"let 创建的本地变量应该像参数一样访问，但 let 中的本地变量不对应 NApp 节点，因此我们需要在调用超组合子之前调整栈参数。“
+
+"
 
 #: ../../example/gmachine/gmachine-2.md:37
 msgid ""
@@ -1549,7 +1554,7 @@ msgid ""
 " unwind. When there are parameters, the top address of the "
 "supercombinator node is discarded, and the `rearrange` function is "
 "called."
-msgstr ""
+msgstr "调整是在执行Unwind指令的过程中完成的。如果超组合子没有参数，则与原始unwind相同。当有参数时，超组合子节点的顶部地址会被丢弃，并开始调用rearrange函数。"
 
 #: ../../example/gmachine/gmachine-2.md:39
 msgid ""
@@ -1571,14 +1576,15 @@ msgid ""
 "point to a series of `NApp` nodes. It keeps the bottommost one (used as "
 "Redex update), cleans up the top N-1 addresses, and then places N "
 "addresses that directly point to the parameters."
-msgstr ""
+msgstr "rearrange 函数假设堆栈上的前N个地址指向一系列NApp节点。它保留最底部的地址（用于Redex更新），清理栈顶的N-1个地址，然后将 N 个地址放置在栈中，"
+"这些地址直接指向参数。"
 
 #: ../../example/gmachine/gmachine-2.md:47
 msgid ""
 "After this, both parameters and local variables can be accessed using the"
 " same command by changing the `PushArg` instruction to a more general "
 "`Push` instruction."
-msgstr ""
+msgstr "在这之后，通过将PushArg指令更改为更通用的Push指令，参数和局部变量都可以使用相同的命令进行访问。"
 
 #: ../../example/gmachine/gmachine-2.md:49
 msgid ""
@@ -1594,7 +1600,7 @@ msgstr ""
 msgid ""
 "The next issue is that we need something to clean up. Consider the "
 "following expression:"
-msgstr ""
+msgstr "接下来我们需要清理一些不再使用的数据或状态，考虑以下表达式，"
 
 #: ../../example/gmachine/gmachine-2.md:57
 msgid ""
@@ -1609,7 +1615,8 @@ msgid ""
 "stack still contains addresses pointing to e1 and e2 (corresponding to "
 "variables x1 and x2), as shown below (the stack grows from bottom to "
 "top):"
-msgstr ""
+msgstr "在构建与表达式 expr 对应的图之后，栈中仍然包含指向 e1 和 e2 的地址（分别对应变量 x1 和 x2）,"
+"如下所示（栈从下到上增长）"
 
 #: ../../example/gmachine/gmachine-2.md:65
 msgid ""
@@ -1628,7 +1635,8 @@ msgid ""
 "addresses. It is called `Slide`. As the name suggests, the function of "
 "`Slide(n)` is to skip the first address and delete the following N "
 "addresses."
-msgstr ""
+msgstr "因此，我们需要一个新的指令来清理这些不再需要的地址。它被称为Slide。顾名思义，Slide（n）的功能是跳过第一个地址并删除以下N个地址。
+"
 
 #: ../../example/gmachine/gmachine-2.md:77
 msgid ""
@@ -1646,13 +1654,14 @@ msgid ""
 "offsets in order. Finally, use the passed `comp` function to compile the "
 "main expression and add the `Slide` instruction to clean up the unused "
 "addresses."
-msgstr ""
+msgstr "现在我们来使用let表达式，我们将用compileC函数编译与本地变量对应的表达式。"
+"然后，遍历变量定义（defs）列表，依次编译并更新相应的偏移量。最后，使用传入的comp函数编译主表达式，并添加Slide指令来清理不使用的地址。"
 
 #: ../../example/gmachine/gmachine-2.md:85
 msgid ""
 "Compiling the main expression using the passed function makes it easy to "
 "reuse when adding subsequent features."
-msgstr ""
+msgstr "使用传入的函数编译主表达式，有助于在后续添加新功能时实现代码的高效复用。"
 
 #: ../../example/gmachine/gmachine-2.md:87
 msgid ""
@@ -1682,7 +1691,8 @@ msgid ""
 "`Alloc(N)`, which pre-allocates N `NInd` nodes and pushes the addresses "
 "onto the stack sequentially. The addresses in these indirect nodes are "
 "negative and only serve as placeholders."
-msgstr ""
+msgstr "`letrec`的语义更加复杂——它允许表达式中的N个变量相互引用，因此我们需要预先分配N个地址并将其放置在堆栈上。"
+"我们需要一个新的指令：`Alloc（N）`，它预先分配N个`NInd`节点，并将地址顺序推送到堆栈上。这些间接节点中的地址是负数，仅用作占位符。"
 
 #: ../../example/gmachine/gmachine-2.md:95
 msgid ""
@@ -1697,26 +1707,26 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-2.md:101
 msgid "The steps to compile letrec are similar to `let`:"
-msgstr ""
+msgstr "`letrec`的用法与`let`语句类似"
 
 #: ../../example/gmachine/gmachine-2.md:103
 msgid "Use `Alloc(n)` to allocate N addresses."
-msgstr ""
+msgstr "使用`Alloc(n)`来分配N个节点"
 
 #: ../../example/gmachine/gmachine-2.md:104
 msgid "Use the `loop` expression to build a complete environment."
-msgstr ""
+msgstr "使用`loop`表达式构建一个完整的环境"
 
 #: ../../example/gmachine/gmachine-2.md:105
 msgid ""
 "Compile the local variables in `defs`, using the `Update` instruction to "
 "update the results to the pre-allocated addresses after compiling each "
 "one."
-msgstr ""
+msgstr "在`defs`中编译本地变量，然后使用`Update`指令将结果更新到预先分配好的地址。"
 
 #: ../../example/gmachine/gmachine-2.md:106
 msgid "Compile the main expression and use the `Slide` instruction to clean up."
-msgstr ""
+msgstr "编译主表达式，并使用`Slide`指令进行清理。"
 
 #: ../../example/gmachine/gmachine-2.md:108
 msgid ""
@@ -1753,14 +1763,15 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-2.md:114
 msgid "Adding Primitives"
-msgstr ""
+msgstr "添加原语"
 
 #: ../../example/gmachine/gmachine-2.md:116
 msgid ""
 "From this step, we can finally perform basic integer operations such as "
 "arithmetic, comparison, and checking if two numbers are equal. First, "
 "modify the `Instruction` type to add related instructions."
-msgstr ""
+msgstr "从这步开始，我们终于可以开始执行基本的整数运算，如算术、比较与检查两个数字是否相等。"
+"首先，修改 `Instruction`类型以添加相关指令。"
 
 #: ../../example/gmachine/gmachine-2.md:118
 msgid ""
@@ -1784,7 +1795,8 @@ msgid ""
 " as an example: just pop two top addresses from the stack, retrieve the "
 "corresponding numbers from memory, perform the operation, and push the "
 "result address back onto the stack."
-msgstr ""
+msgstr "实现这些指令乍看上去似乎很简单。"
+“以`Add`为例：只需从栈中弹出两个地址，获取对应的数字，执行加法操作，然后把结果的地址推回栈中。"
 
 #: ../../example/gmachine/gmachine-2.md:135
 msgid ""
@@ -1808,48 +1820,49 @@ msgid ""
 "`NNum` nodes). We also need an instruction that can force a computation "
 "to give a result or never stop computing. We call it `Eval` (short for "
 "Evaluation)."
-msgstr ""
+msgstr "然而，接下来我们面临的问题是：这是一个惰性求值的语言。在惰性求值中，传递给 `add` 的参数很可能还没有被计算（即它们可能不是 `NNum `节点，而是尚未计算的表达式）。"
+"因此，我们需要一种指令来强制执行计算，确保获取结果，或者在某些情况下，保证计算不会停下来。我们称之为 `Eval`（即 Evaluation缩写）。"
 
 #: ../../example/gmachine/gmachine-2.md:151
 msgid ""
 "In jargon, the result of such a computation is called Weak Head Normal "
 "Form (WHNF)."
-msgstr ""
+msgstr "在术语中，这种计算的结果称为弱头范式（WHNF）。"
 
 #: ../../example/gmachine/gmachine-2.md:153
 msgid ""
 "At the same time, we need to modify the structure of `GState` and add a "
 "state called `dump`. Its type is `List[(List[Instruction], List[Addr])]`,"
 " used by `Eval` and `Unwind` instructions."
-msgstr ""
+msgstr "同时我们需要修改`GState`的架构并加入`dump`的状态，类型是`List[(List[Instruction], List[Addr])]`，使用`Eval` 和`Unwind`指令的功能 "
 
 #: ../../example/gmachine/gmachine-2.md:155
 msgid "The implementation of the `Eval` instruction is not complicated:"
-msgstr ""
+msgstr "执行`Eval`指令并不复杂"
 
 #: ../../example/gmachine/gmachine-2.md:157
 msgid "Pop the top address of the stack."
-msgstr ""
+msgstr "弹出堆栈的顶部地址"
 
 #: ../../example/gmachine/gmachine-2.md:159
 msgid ""
 "Save the current unexecuted instruction sequence and stack (by putting "
 "them into the dump)."
-msgstr ""
+msgstr "保存当前未执行的指令序列和栈（通过将它们放入 `dump` 中）"
 
 #: ../../example/gmachine/gmachine-2.md:161
 msgid "Clear the current stack and place the previously saved address."
-msgstr ""
+msgstr "清空当前栈并放入先前保存的地址。"
 
 #: ../../example/gmachine/gmachine-2.md:163
 msgid "Clear the current instruction sequence and place the `Unwind` instruction."
-msgstr ""
+msgstr "清空当前的指令序列，并放入 `Unwind `指令"
 
 #: ../../example/gmachine/gmachine-2.md:165
 msgid ""
 "This is similar to how strict evaluation languages handle saving caller "
 "contexts, but practical implementations would use more efficient methods."
-msgstr ""
+msgstr "这与严格求值语言中保存调用者上下文的方式类似，但在实际实现中会采用更高效的方法。"
 
 #: ../../example/gmachine/gmachine-2.md:167
 msgid ""
@@ -1866,7 +1879,7 @@ msgid ""
 "This simple definition requires modifying the `Unwind` instruction to "
 "restore the context when `Unwind` in the `NNum` branch finds that there "
 "is a recoverable context (`dump` is not empty)."
-msgstr ""
+msgstr "这个简单的定义要求我们修改 `Unwind` 指令，使其在遇到 `NNum` 分支时，如果发现存在可恢复的上下文（即 `dump` 不为空），则恢复该上下文。"
 
 #: ../../example/gmachine/gmachine-2.md:175
 msgid ""
@@ -1915,7 +1928,9 @@ msgid ""
 " two functions to simplify the form of binary operations. The result of "
 "the comparison instruction is a boolean value, and for simplicity, we use"
 " numbers to represent it: 0 for `false`, 1 for `true`."
-msgstr ""
+msgstr 
+"接下来，我们需要实现算术和比较算法。我们使用两个函数来简化二进制运算的形式。"
+"比较指令的结果是一个布尔值，简单起见我们使用数字来表示它：0表示false，1表示true。"
 
 #: ../../example/gmachine/gmachine-2.md:183
 msgid ""
@@ -1963,7 +1978,7 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-2.md:189
 msgid "Finally, implement branching:"
-msgstr ""
+msgstr "最后，实现分支："
 
 #: ../../example/gmachine/gmachine-2.md:191
 msgid ""
@@ -1988,7 +2003,7 @@ msgstr ""
 msgid ""
 "No major adjustments are needed in the compilation part, just add some "
 "predefined programs:"
-msgstr ""
+msgstr "编译部分不需要进行重大调整，只需添加一些预定义程序："
 
 #: ../../example/gmachine/gmachine-2.md:199
 #: ../../example/gmachine/gmachine-3.md:9
@@ -2081,7 +2096,7 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-2.md:205
 msgid "and modify the initial instruction sequence"
-msgstr ""
+msgstr "并修改初始指令序列"
 
 #: ../../example/gmachine/gmachine-2.md:207
 msgid "code : @immut/list.of([PushGlobal(\"main\"), Eval]),\n"
@@ -2091,7 +2106,7 @@ msgstr ""
 msgid ""
 "In the next part, we will improve the code generation for primitives and "
 "add support for data structures."
-msgstr ""
+msgstr "在下一章，我们将改进原语的代码生成，并添加对数据结构的支持。"
 
 #: ../../example/gmachine/gmachine-3.md:1
 msgid "G-Machine 3"
