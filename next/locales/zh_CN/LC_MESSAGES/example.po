@@ -3285,6 +3285,7 @@ msgid ""
 "comparing the differences between two text files. What's more, Unix has a"
 " tool called `patch`."
 msgstr ""
+"你是否曾经使用过Unix系统中的'diff'工具？简单来说，它是一种用于比较两个文本文件之间差异的工具。此外，Unix系统中还有名为'patch'的工具。"
 
 #: ../../example/myers-diff/myers-diff.md:5
 msgid ""
@@ -3295,6 +3296,9 @@ msgid ""
 "(and highlighted with different colors). Take the most popular version "
 "control system today, git, as an example:"
 msgstr ""
+"现在很少有人手动应用软件包的修补，但'diff'在另一个领域中仍然非常有用：版本控制系统。"
+"你有看到特定提交后代码文件所做更改（并以不同的颜色突出显示）的函数是非常方便的。"
+"例如，最受欢迎的版本控制系统之一，git，就是一个很好的例子。"
 
 #: ../../example/myers-diff/myers-diff.md:7
 msgid ""
@@ -3315,7 +3319,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:23
 msgid "But how exactly do we calculate the differences between two text files?"
-msgstr ""
+msgstr "但我们具体怎么计算两个文本文件之间的差异呢？"
 
 #: ../../example/myers-diff/myers-diff.md:25
 msgid ""
@@ -3325,10 +3329,13 @@ msgid ""
 "following text, we will understand the basic framework of this algorithm "
 "in a less rigorous way and use MoonBit to write a simple implementation."
 msgstr ""
+"Git 的默认比较差异算法由 Eugene W. Myers 在他的论文**一个O(ND)的差分算法及其变体**中提出。"
+"这篇论文主要聚焦于证明该算法的正确性。"
+"接下来，我们将以一种不那么严谨的方式理解其基本架构，并使用 MoonBit 编写一个简单的实现。"
 
 #: ../../example/myers-diff/myers-diff.md:27
 msgid "Defining \"Difference\" and Its Measurement Criteria"
-msgstr ""
+msgstr "“差异”的定义及其度量标准"
 
 #: ../../example/myers-diff/myers-diff.md:29
 msgid ""
@@ -3336,10 +3343,11 @@ msgid ""
 " actually referring to is a series of editing steps that can transform "
 "text a into text b."
 msgstr ""
+"当我们讨论两个文本文件之间的“差异”时，我们实际上是在指能将文本a变成文本b的一系列编辑步骤。"
 
 #: ../../example/myers-diff/myers-diff.md:31
 msgid "Assume the content of text a is"
-msgstr ""
+msgstr "假设文本a的内容是"
 
 #: ../../example/myers-diff/myers-diff.md:33
 msgid ""
@@ -3354,7 +3362,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:43
 msgid "Assume the content of text b is"
-msgstr ""
+msgstr "假设文本b的内容是"
 
 #: ../../example/myers-diff/myers-diff.md:45
 msgid ""
@@ -3372,6 +3380,8 @@ msgid ""
 "each character in a (indicated with a minus sign) and then insert each "
 "character in b (indicated with a plus sign)."
 msgstr ""
+"为了把文本a转变为文本b，最简单的编辑序列是删除所有a中的字符（用减号表示），然后"
+"插入文本b中的每个字符（用加号表示）。"
 
 #: ../../example/myers-diff/myers-diff.md:56
 msgid ""
@@ -3395,6 +3405,8 @@ msgid ""
 "But such a result might not be very helpful for programmers reading the "
 "code. The following edit sequence is much better, at least it is shorter."
 msgstr ""
+"但是这样的结果可能对程序员阅读程序来说并没有太大帮助。"
+"接下来的编辑序列会好很多，至少它更短。"
 
 #: ../../example/myers-diff/myers-diff.md:74
 msgid ""
@@ -3418,6 +3430,10 @@ msgid ""
 "are equally important for user experience. Let's look at the following "
 "examples:"
 msgstr ""
+"实际上，这是实现文本a转换为文本b所需的最简编辑序列，仅需要5个操作。"
+"如果我们只考虑编辑序列的长度，这一结果已经令人满意。"
+"但在探索多种编程语言时，我们发现除了编辑序列长度外，还有其他度量指标对用户体验同样重要。"
+"让我们来看看以下例子："
 
 #: ../../example/myers-diff/myers-diff.md:88
 msgid ""
@@ -3451,6 +3467,9 @@ msgid ""
 "not to calculate an edit sequence that interleaves these two operations. "
 "Here's another example."
 msgstr ""
+"当我们在文件末尾插入一个新函数定义时，理想的编辑序列应将所做的更改置于文件末尾。"
+"同样，在有删除和插入操作的情况下，不应该将这两个操作交替进行计算。"
+"这是另一个例子。"
 
 #: ../../example/myers-diff/myers-diff.md:113
 msgid ""
@@ -3469,10 +3488,13 @@ msgid ""
 "inserting text before `{`), and it also tries to place deletions before "
 "insertions, avoiding the latter situation."
 msgstr ""
+"Myers的diff算法可以满足所有这些需求。"
+"它是一种贪婪算法，每次都尽可能地跳过匹配行（避免在出现'{'之前插入文本），同时"
+"也会尝试将删除操作置于插入操作之前，避免后者发生。"
 
 #: ../../example/myers-diff/myers-diff.md:124
 msgid "Algorithm Overview"
-msgstr ""
+msgstr "算法概述"
 
 #: ../../example/myers-diff/myers-diff.md:126
 msgid ""
@@ -3481,6 +3503,8 @@ msgid ""
 "previous example `a = ABCABBA` and `b = CBABAC`, we create an `(x, y)` "
 "coordinate grid."
 msgstr ""
+"Myers的论文中的基本思路是构建一个编辑操作的网格图，并在该网格上搜索最短路径。"
+"以之前的例子'a = ABCABBA'和'b = CBABAC'为例，我们创建一个'(x, y)'坐标网格。"
 
 #: ../../example/myers-diff/myers-diff.md:128
 msgid ""
@@ -3525,18 +3549,23 @@ msgid ""
 "indicate matching characters that can be skipped without triggering any "
 "edits."
 msgstr ""
+"该网格的左上角是起始点'(0, 0)'，右下角是终点'(7, 6)'。"
+"沿着x轴移动一个单位右侧删除a中的对应字符，沿y轴向下移动一个单位插入b中的对应字符。"
+"斜线表示匹配字符，可跳过而不触发编辑。"
 
 #: ../../example/myers-diff/myers-diff.md:163
 msgid ""
 "Before writing the actual search code, let's manually perform two rounds "
 "of searching:"
 msgstr ""
+"在编写实际搜索代码之前，我们手动执行两轮搜索。"
 
 #: ../../example/myers-diff/myers-diff.md:165
 msgid ""
 "The first round starts at `(0, 0)` and moves one step to reach `(0,1)` "
 "and `(1,0)`."
 msgstr ""
+"第一轮从'(0, 0)'开始，移动一步到达'(0,1)'和'(1,0)'。"
 
 #: ../../example/myers-diff/myers-diff.md:167
 msgid ""
@@ -3544,10 +3573,11 @@ msgid ""
 " reaches `(0,2)`, but there is a diagonal line leading to `(1,3)`, so the"
 " final point is `(1,3)`."
 msgstr ""
+"第二轮从'(0,1)'和'(1, 0)'开始。从'(0,1)'向下移动到'(0,2)'，但有一条斜线指向'(1,3)'，因此最终点是'(1,3)'。"
 
 #: ../../example/myers-diff/myers-diff.md:169
 msgid "The entire Myers algorithm is based on this kind of breadth-first search."
-msgstr ""
+msgstr "Myers算法的整个原理基于这种广度优先搜索。"
 
 #: ../../example/myers-diff/myers-diff.md:171
 #: ../../example/segment-tree/segment-tree.md:33
