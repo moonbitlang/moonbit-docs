@@ -5334,7 +5334,7 @@ msgstr ""
 msgid ""
 "Unexpected `=` in struct expression. The correct syntax for struct "
 "expression is `{ field: expression }`."
-msgstr ""
+msgstr "结构体表达式中出现了意外的 `=`。结构体表达式的正确语法是 `{ field: expression }`。"
 
 #: ../../language/error_codes/E3020.md:8
 msgid ""
@@ -5352,7 +5352,7 @@ msgstr ""
 
 #: ../../language/error_codes/E3020.md:23
 msgid "Change the struct expression to use the correct syntax:"
-msgstr ""
+msgstr "更改结构体表达式，使用正确的语法："
 
 #: ../../language/error_codes/E3020.md:25
 msgid ""
@@ -5374,16 +5374,18 @@ msgstr ""
 
 #: ../../language/error_codes/E3800.md:3
 msgid "Expecting a newline or `;` here, but encountered another delimiter."
-msgstr ""
+msgstr "这里期望一个换行符或 `;`，但遇到了另一个分隔符。"
 
 #: ../../language/error_codes/E3800.md:5
 msgid ""
 "Constructors in `enum` definition, fields in `struct` definition, and "
 "constructors in error type `type!` definition, should be separated by a "
 "newline or a `;`. It is so common for AI to generate code with a wrong "
-"delimiter `,`, and we specifically catch this error to help you and AI "
+"delimiter `,` that we specifically catch this error to help you and AI "
 "fix it."
 msgstr ""
+"`enum` 定义中的构造器、`struct` 定义中的字段和错误类型 `type!` 定义中的构造器，"
+"应该用换行符或 `;` 分隔。AI 生成的代码中常常会出现错误的分隔符 `,`，因此我们特意捕获这个错误来帮助你和 AI 修复它。"
 
 #: ../../language/error_codes/E3800.md:12
 msgid ""
@@ -5408,7 +5410,7 @@ msgid ""
 "Replace `,` with a newline or `;` as appropriate. We suggest using a "
 "newline since it conforms to the MoonBit style suggested by the MoonBit "
 "formatter."
-msgstr ""
+msgstr "将 `,` 替换为适当的换行符或 `;`。我们建议使用换行符，因为它符合 MoonBit 格式化程序建议的 MoonBit 风格。"
 
 #: ../../language/error_codes/E3800.md:31
 msgid ""
@@ -5431,7 +5433,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4000.md:3
 msgid "Generic type variable name is already used."
-msgstr ""
+msgstr "类型变量名称已被使用。"
 
 #: ../../language/error_codes/E4000.md:7
 msgid ""
@@ -5446,7 +5448,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4000.md:19
 msgid "Use different names for type variables:"
-msgstr ""
+msgstr "使用不同的类型变量名称："
 
 #: ../../language/error_codes/E4000.md:21
 msgid ""
@@ -5461,7 +5463,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4000.md:31
 msgid "Or remove the duplicate type parameter if you meant to use the same type:"
-msgstr ""
+msgstr "或者如果你想使用相同的类型，移除重复的类型参数："
 
 #: ../../language/error_codes/E4000.md:33
 msgid ""
@@ -5480,7 +5482,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4001.md:3
 msgid "A field with different visibility cannot be declared within a struct."
-msgstr ""
+msgstr "一个不同可见性的字段不能在结构体中声明。"
 
 #: ../../language/error_codes/E4001.md:5 ../../language/error_codes/E4002.md:5
 #: ../../language/error_codes/E4003.md:5 ../../language/error_codes/E4004.md:6
@@ -5521,31 +5523,30 @@ msgid ""
 "This example declares a field with public visibility within a struct with"
 " private visibility, which is not allowed and will give the following "
 "error on line 2:"
-msgstr ""
+msgstr "这个例子在一个私有结构体中声明了一个公共可见性的字段，这是不允许的，会在第 2 行报错："
 
 #: ../../language/error_codes/E4001.md:17
 msgid "A public field cannot be declared within a private struct.\n"
-msgstr ""
+msgstr "一个公共字段不能在私有结构体中声明。\n"
 
 #: ../../language/error_codes/E4001.md:23
 #: ../../language/error_codes/E4002.md:22
 msgid "Change the visibility of the field to match the visibility of the struct:"
-msgstr ""
+msgstr "将字段的可见性修改至与结构体的可见性匹配："
 
 #: ../../language/error_codes/E4001.md:25
-#, fuzzy
 msgid ""
 "priv struct S {\n"
 "  field: Int\n"
 "}\n"
-msgstr "对于结构体字段"
+msgstr ""
 
 #: ../../language/error_codes/E4001.md:31
 msgid ""
 "We could have written `priv field: Int` instead of `field: Int` as well, "
 "but it is not necessary, as all fields in a private struct are private by"
 " default."
-msgstr ""
+msgstr "我们可以将 `field: Int` 改为 `priv field: Int`，但这并不是必要的，因为私有结构体中的所有字段默认都是私有的。"
 
 #: ../../language/error_codes/E4002.md:1
 msgid "E4002"
@@ -5553,7 +5554,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4002.md:3
 msgid "The modifier is not supported here."
-msgstr ""
+msgstr "这里不支持这个修饰符"
 
 #: ../../language/error_codes/E4002.md:7
 msgid ""
@@ -5566,11 +5567,11 @@ msgstr ""
 msgid ""
 "This example declares a field with the `pub(open)` visibility modifier, "
 "which is not allowed and will give the following error on line 2:"
-msgstr ""
+msgstr "这个例子在一个字段中声明了 `pub(open)` 可见性修饰符，这是不允许的，会在第 2 行报错："
 
 #: ../../language/error_codes/E4002.md:16
 msgid "The public open modifier is not supported here\n"
-msgstr ""
+msgstr "这里不支持公共开放修饰符\n"
 
 #: ../../language/error_codes/E4002.md:24
 msgid ""
@@ -5584,7 +5585,7 @@ msgid ""
 "We could have written `pub field: Int` instead of `field: Int` as well, "
 "but it is not necessary, as all fields in a public struct are public by "
 "default."
-msgstr ""
+msgstr "我们可以将 `field: Int` 改为 `pub field: Int`，但这并不是必要的，因为公共结构体中的所有字段默认都是公共的。"
 
 #: ../../language/error_codes/E4003.md:1
 msgid "E4003"
@@ -5594,7 +5595,7 @@ msgstr ""
 msgid ""
 "This is a reserved type name. Cannot declare it as a type variable, type,"
 " or trait."
-msgstr ""
+msgstr "这是一个保留的类型名称。不能将其声明为类型变量、类型或特性。"
 
 #: ../../language/error_codes/E4003.md:7
 msgid "struct Error {}\n"
@@ -5604,7 +5605,7 @@ msgstr ""
 msgid ""
 "`Error` is the reserved name for the built-in error type, so it cannot be"
 " used for a custom type. This will give the following error on line 1:"
-msgstr ""
+msgstr "`Error` 是内置错误类型的保留名称，因此不能用于自定义类型。这会在第 1 行出现如下错误："
 
 #: ../../language/error_codes/E4003.md:14
 msgid "\"Error\" is a reserved type name. Cannot declare it as type\n"
@@ -5612,7 +5613,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4003.md:20
 msgid "Consider using another name for your type, such as `MyError` or `Error_`."
-msgstr ""
+msgstr "考虑将你的类型命名为其他名称，例如 `MyError` 或 `Error_`。"
 
 #: ../../language/error_codes/E4003.md:22
 msgid "struct MyError {}\n"
@@ -5628,6 +5629,7 @@ msgid ""
 "currently does not support generic/polymorphic methods within trait "
 "definitions."
 msgstr ""
+"特征方法不能有类型参数（不能是多态的）。MoonBit 目前不支持特征定义中的泛型/多态方法。"
 
 #: ../../language/error_codes/E4004.md:8
 msgid ""
@@ -5638,7 +5640,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4004.md:16
 msgid "Consider using dynamic dispatch instead of generics:"
-msgstr ""
+msgstr "考虑使用动态分发而不是泛型："
 
 #: ../../language/error_codes/E4004.md:18
 msgid ""
@@ -5657,6 +5659,7 @@ msgid ""
 "method name. Each method in a trait must have a unique name to avoid "
 "ambiguity."
 msgstr ""
+"这个错误发生在一个特征有多个相同方法名的声明时。特征中的每个方法必须有一个唯一的名称，以避免歧义。"
 
 #: ../../language/error_codes/E4005.md:7
 msgid ""
@@ -5671,7 +5674,7 @@ msgstr ""
 msgid ""
 "Remove the duplicate method declaration and keep only one definition for "
 "each method name:"
-msgstr ""
+msgstr "移除重复的方法声明，只保留每个方法名的一个定义："
 
 #: ../../language/error_codes/E4005.md:18
 msgid ""
@@ -5682,7 +5685,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4005.md:24
 msgid "If you need different method behaviors, use distinct method names:"
-msgstr ""
+msgstr "如果你需要不同的方法行为，使用不同的方法名称："
 
 #: ../../language/error_codes/E4005.md:26
 msgid ""
