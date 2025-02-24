@@ -5450,7 +5450,7 @@ msgstr ""
 
 #: ../../example/sudoku/index.md:1
 msgid "Sudoku Solver"
-msgstr ""
+msgstr "数独求解器"
 
 #: ../../example/sudoku/index.md:3
 msgid ""
@@ -5463,14 +5463,19 @@ msgid ""
 "demonstrate how to write a suitable program to solve Sudoku using "
 "MoonBit. ![sudoku example](/imgs/sudoku.jpg)"
 msgstr ""
+"数独是一种基于逻辑的益智游戏，起源于 1979 年。"
+"它非常适合报纸等印刷媒体，即使在数字时代，许多数独游戏程序也可用于计算机和智能手机。"
+"尽管如今娱乐选择多种多样，但数独爱好者仍在继续组建活跃的社区"
+"(在线论坛，例如：[enjoysudoku](http://forum.enjoysudoku.com/))。"
+"本文将演示如何使用 MoonBit 编写合适的程序来解决数独问题。"
 
 #: ../../example/sudoku/index.md:3
 msgid "sudoku example"
-msgstr ""
+msgstr "数独示例"
 
 #: ../../example/sudoku/index.md:6
 msgid "Squares, Units, and Peers"
-msgstr ""
+msgstr "方格、单元和同级"
 
 #: ../../example/sudoku/index.md:8
 msgid ""
@@ -5479,6 +5484,10 @@ msgid ""
 "This gives each square in the grid a coordinate, for example, the square "
 "containing the number 0 in the grid below has the coordinate C3."
 msgstr ""
+"最常见的数独形式是在 9x9 网格上进行的。"
+"我们将从上到下的行标记为 A-I，从左到右的列标记为 1-9。"
+"这为网格中的每个方格提供了一个坐标，"
+"例如，下面网格中包含数字 0 的方格的坐标为 C3。"
 
 #: ../../example/sudoku/index.md:10
 msgid ""
@@ -5500,6 +5509,9 @@ msgid ""
 " must have unique digits from 1 to 9. However, in the initial state of "
 "the game, most squares do not contain any digits."
 msgstr ""
+"这个 9x9 的网格共有 9 个单元，"
+"每个单元包含的方格必须具有从 1 到 9 的唯一数字。"
+"但是在游戏的初始状态下，大多数方格不包含任何数字。"
 
 #: ../../example/sudoku/index.md:25
 msgid ""
@@ -5522,6 +5534,9 @@ msgid ""
 "include other squares in the same row, column, and unit. For example, the"
 " peers of C2 include these squares:"
 msgstr ""
+"除了单元之外，另一个重要概念是同级。"
+"一个方格的同级包括同一行、同一列和同一单位的其他方格。"
+"例如，C2的同级包括以下方格："
 
 #: ../../example/sudoku/index.md:41
 msgid ""
@@ -5565,7 +5580,7 @@ msgstr ""
 
 #: ../../example/sudoku/index.md:80
 msgid "No two squares that are peers can contain the same digit."
-msgstr ""
+msgstr "没有两个同级的格子可以包含相同的数字。"
 
 #: ../../example/sudoku/index.md:82
 msgid ""
@@ -5574,6 +5589,9 @@ msgid ""
 "hashtable, but using an array would be more compact and simple. First, we"
 " write a function to convert coordinates A1-I9 to indices 0-80:"
 msgstr ""
+"我们需要一个数据类型 SquareMap[T] 来存储这81个方格以及与每个方格相关的信息。"
+"这可以使用哈希表来实现，但使用数组会更紧凑、更简单。"
+"首先，我们编写一个函数将坐标 A1-I9 转换为索引 0-80："
 
 #: ../../example/sudoku/index.md:84
 msgid ""
@@ -5601,6 +5619,8 @@ msgid ""
 "overloading the op_get and op_set methods, we can write convenient code "
 "like table[\"A2\"] and table[\"C3\"] = Nil."
 msgstr ""
+"然后我们包装这个数组，并提供创建、访问、为特定坐标赋值以及复制 SquareMap[T] 的操作。"
+"通过重载 op_get 和 op_set 方法，我们可以编写类似 table[\"A2\"] 和 table[\"C3\"] = Nil 的便捷代码。"
 
 #: ../../example/sudoku/index.md:104
 msgid ""
@@ -5633,7 +5653,7 @@ msgstr ""
 
 #: ../../example/sudoku/index.md:132
 msgid "Next, we prepare some constants:"
-msgstr ""
+msgstr "接下来我们准备一些常量："
 
 #: ../../example/sudoku/index.md:134
 msgid ""
@@ -5659,10 +5679,11 @@ msgid ""
 "The process of constructing the units and peers tables is tedious, so it "
 "will not be detailed here."
 msgstr ""
+"构建单元和同级表的过程非常繁琐，因此这里不再详述。"
 
 #: ../../example/sudoku/index.md:152
 msgid "Preprocessing the Grid"
-msgstr ""
+msgstr "预处理网格"
 
 #: ../../example/sudoku/index.md:154
 msgid ""
@@ -5670,6 +5691,9 @@ msgid ""
 " acceptable; both `.` and `0` represent empty squares, and other "
 "characters like spaces and newlines are ignored."
 msgstr ""
+"我们使用字符串来表示初始数独网格。"
+"各种格式均可接受；"
+". 和 0 均表示空方块，其他字符（如空格和换行符）将被忽略。"
 
 #: ../../example/sudoku/index.md:156
 msgid ""
@@ -5695,6 +5719,10 @@ msgid ""
 "Therefore, we initially set the content of all squares to `['1', '2', "
 "'3', '4', '5', '6', '7', '8', '9']` (a List)."
 msgstr ""
+"暂时先不考虑太多游戏规则，如果只考虑每个方格能填入的数字，"
+"那么 1-9 都是有可能的，"
+"因此我们初始将所有方格的内容设置为"
+"`['1', '2', '3', '4', '5', '6', '7', '8', '9']` (a List)。"
 
 #: ../../example/sudoku/index.md:173
 msgid ""
@@ -5712,6 +5740,9 @@ msgid ""
 "key, val)`, where `key` is a string like `A6` and `val` is a character. "
 "It is easy to write such code."
 msgstr ""
+"接下来，我们需要将输入中已知数字的方块赋值。"
+"这个过程可以用函数`assign(values, key, val)`来实现，"
+"其中`key`是一个字符串，比如`A6`，`val`是一个字符。这样的代码写起来很容易。"
 
 #: ../../example/sudoku/index.md:183
 msgid ""
@@ -5722,7 +5753,7 @@ msgstr ""
 
 #: ../../example/sudoku/index.md:189
 msgid "Let's run it and see"
-msgstr ""
+msgstr "让我们运行一下看看"
 
 #: ../../example/sudoku/index.md:191
 msgid ""
@@ -5758,7 +5789,7 @@ msgstr ""
 
 #: ../../example/sudoku/index.md:209
 msgid "This implementation is simple and precise, but we can do more."
-msgstr ""
+msgstr "这个实现简单而精确，但我们可以做得更多。"
 
 #: ../../example/sudoku/index.md:211
 msgid ""
@@ -5767,6 +5798,10 @@ msgid ""
 " to gain insights from the rules, similar to solving Sudoku with pen and "
 "paper. Let's start with the elimination method:"
 msgstr ""
+"现在，我们可以重新引入之前搁置的规则。"
+"但是，规则本身并没有告诉我们该做什么。"
+"我们需要启发式策略来从规则中获得见解，"
+"类似于用笔和纸解决数独。让我们从消除法开始："
 
 #: ../../example/sudoku/index.md:213
 msgid ""
@@ -5775,6 +5810,9 @@ msgid ""
 "values, as this would violate the rule that no two squares in the same "
 "unit, row, or column can have the same digit."
 msgstr ""
+"**策略 1**：如果为一个方块`key`分配了一个值`val`，"
+"则其对同级（'peers[key]'）的可能值列表中不应该包含`val'，"
+"因为这会违反同一单元、行或列中没有两个方块可以具有相同数字的规则。"
 
 #: ../../example/sudoku/index.md:215
 msgid ""
@@ -5782,6 +5820,10 @@ msgid ""
 "specific digit (possibly happen after applying the above rule several "
 "times), then that digit should be assigned to that square."
 msgstr ""
+"**策略 2**：如果一个单元中只有一个方格可以容纳特定的数字"
+"（在多次应用上述规则后可能发生），"
+"则应将该数字分配给该方格。"
+
 
 #: ../../example/sudoku/index.md:217
 msgid ""
@@ -5792,6 +5834,10 @@ msgid ""
 "value to handle possible contradictions. If the list of possible values "
 "for a square becomes empty, something went wrong, and we return `false`."
 msgstr ""
+"我们通过定义一个消除函数`eliminate`来调整代码，该函数从正方形的可能值中删除一个数字。"
+"执行消除任务后，它将上述策略应用于`key`和`val`以尝试进一步消除。"
+"请注意，它包含一个布尔返回值来处理可能的矛盾。"
+"如果方格的可能值列表为空，则出现问题，我们返回`false`。"
 
 #: ../../example/sudoku/index.md:219
 msgid ""
@@ -5853,6 +5899,7 @@ msgid ""
 "Next, we define `assign(values, key, val)` to remove all values except "
 "`val` from the possible values of `key`."
 msgstr ""
+"接下来，我们定义`assign(values, key, val)`来从`key`的可能值中删除除`val`之外的所有值。"
 
 #: ../../example/sudoku/index.md:272
 msgid ""
@@ -5874,10 +5921,13 @@ msgid ""
 "consider, allowing these strategies to propagate widely across the grid. "
 "This is key to quickly eliminating invalid options."
 msgstr ""
+"这两个函数将启发式策略应用于它们访问的每个方格。"
+"成功的启发式应用会引入新的方格供考虑，从而使这些策略在整个网格中广泛传播。"
+"这是快速消除无效选项的关键。"
 
 #: ../../example/sudoku/index.md:285
 msgid "Let's try the example again"
-msgstr ""
+msgstr "让我们再试一次这个例子"
 
 #: ../../example/sudoku/index.md:287
 msgid ""
@@ -5913,6 +5963,7 @@ msgid ""
 "A significant improvement! In fact, this preprocessing can already solve "
 "some simple Sudoku puzzles."
 msgstr ""
+"这是一个显著的进步！事实上，这种预处理已经可以解决一些简单的数独难题了。"
 
 #: ../../example/sudoku/index.md:305
 msgid ""
@@ -5940,10 +5991,13 @@ msgid ""
 "topic, refer to Chapter 6 of _Artificial Intelligence: A Modern "
 "Approach_."
 msgstr ""
+"如果您对人工智能感兴趣，您可能会将其视为约束满足问题 (CSP)，"
+"而'分配'和'消除'是专门的弧一致性算法。"
+"有关此主题的更多信息，请参阅 _Artificial Intelligence: A Modern Approach_ 第6章"
 
 #: ../../example/sudoku/index.md:323
 msgid "Search"
-msgstr ""
+msgstr "搜索"
 
 #: ../../example/sudoku/index.md:325
 msgid ""
@@ -5953,6 +6007,9 @@ msgid ""
 "square, we still use `assign`, which allows us to apply previous "
 "optimizations to eliminate many invalid branches during the search."
 msgstr ""
+"经过预处理后，我们可以大胆地使用蛮力枚举来搜索所有可行的组合。"
+"但是，在搜索过程中，我们仍然可以使用启发式策略。当尝试为某个方块赋值时，"
+"我们仍然使用`assign`，这使我们能够应用先前的优化来消除搜索过程中的许多无效分支。"
 
 #: ../../example/sudoku/index.md:327
 msgid ""
@@ -5961,6 +6018,8 @@ msgid ""
 " backtracking troublesome, we directly copy values each time we assign a "
 "value."
 msgstr ""
+"另外需要注意的是，搜索过程中可能会发生冲突（当一个方格的可能值耗尽时）。"
+"由于可变结构使回溯变得麻烦，因此我们每次分配值时都直接复制值。"
 
 #: ../../example/sudoku/index.md:329
 msgid ""
@@ -6010,6 +6069,9 @@ msgid ""
 "[magictour](http://magictour.free.fr/top95), a list of difficult Sudoku "
 "puzzles, which is not easy for humans)"
 msgstr ""
+"我们再运行一​​遍同样的例子"
+"（这个例子其实取自[magictour](http://magictour.free.fr/top95)，"
+"一个难度数独谜题列表，对人类来说并不容易）"
 
 #: ../../example/sudoku/index.md:368
 msgid ""
@@ -6035,12 +6097,16 @@ msgid ""
 "Running on [MoonBit online IDE](https://try.moonbitlang.com/), It takes "
 "only about 0.11 seconds to solve this Sudoku!"
 msgstr ""
+"在[MoonBit online IDE](https://try.moonbitlang.com/)上运行，"
+"仅需大约 0.11 秒即可解决这个数独！"
 
 #: ../../example/sudoku/index.md:386
 msgid ""
 "Complete code here: "
 "[try.moonbitlang.com/#6806c2fe](https://try.moonbitlang.com/#6806c2fe)"
 msgstr ""
+"完整代码在："
+"[try.moonbitlang.com/#6806c2fe](https://try.moonbitlang.com/#6806c2fe)"
 
 #: ../../example/sudoku/index.md:390
 msgid ""
@@ -6052,10 +6118,14 @@ msgid ""
 "reveals that one should not be overly concerned with an unsolvable Sudoku"
 " puzzle."
 msgstr ""
+"游戏的目的是为了缓解无聊并带来快乐。"
+"如果玩游戏让人感到焦虑而不是兴奋，那么它可能违背了游戏设计师的初衷。"
+"本文表明，简单的消除法和强力搜索可以快速解决一些数独难题。"
+"这并不意味着数独不值得玩；相反，它表明人们不应该过分担心无法解决的数独难题。"
 
 #: ../../example/sudoku/index.md:392
 msgid "Let's play with MoonBit with ease!"
-msgstr ""
+msgstr "让我们轻松玩转MoonBit吧！"
 
 #: ../../example/sudoku/index.md:394
 msgid ""
@@ -6063,12 +6133,17 @@ msgid ""
 "play with the Sudoku solver written in MoonBit. Click [this "
 "link](https://github.com/myfreess/sudoku) to view the full source code."
 msgstr ""
+"访问 MoonBit [Gallery](https://www.moonbitlang.com/gallery/sudoku/)"
+"来试用用 MoonBit 编写的数独解算器。"
+"单击[此链接](https://github.com/myfreess/sudoku)可查看完整源代码。"
 
 #: ../../example/sudoku/index.md:396
 msgid ""
 "This tutorial references Norvig's blog: "
 "[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)"
 msgstr ""
+"本教程参考了Norvig的博客："
+"[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)"
 
 #~ msgid ""
 #~ "fn step(self : GState) -> Bool {\n"
