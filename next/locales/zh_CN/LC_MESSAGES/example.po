@@ -1710,6 +1710,10 @@ msgid ""
 "onto the stack sequentially. The addresses in these indirect nodes are "
 "negative and only serve as placeholders."
 msgstr ""
+"'letrec' 的语义更为复杂，因为它允许表达式中的N个变量彼此互相引用。"
+"因此，我们需要预先分配N个地址并将其放置于栈上。"
+"为此，我们引入了一个新的指令：'Alloc(N)'。这个指令会预先生成N个NInd节点，并按顺序将这些地址推送到栈中。"
+"需要注意的是，这些间接节点中的地址是负数，仅仅作为占位符使用。"
 
 #: ../../example/gmachine/gmachine-2.md:95
 msgid ""
