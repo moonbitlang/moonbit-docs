@@ -1649,6 +1649,9 @@ msgid ""
 "`Slide(n)` is to skip the first address and delete the following N "
 "addresses."
 msgstr ""
+"因此，我们需要一个新的指令来清理这些不再被需要的地址。"
+"它被称为 'Slide' 。正如名字所表达的，函数 'Slide(n)' 是"
+"为了跳过第一个地址并且删除后续的 N 个地址。"
 
 #: ../../example/gmachine/gmachine-2.md:77
 msgid ""
@@ -1667,6 +1670,9 @@ msgid ""
 "main expression and add the `Slide` instruction to clean up the unused "
 "addresses."
 msgstr ""
+"现在我们可以编译 'let' 。我们将使用 'compileC' 函数编译与局部变量对应的表达式。"
+"然后，遍历变量定义列表（'defs'），按顺序编译并且更新相应的偏移量。最后，用"
+"给定的 'comp' 函数编译主表达式，并添加 'Slide' 指令来清除无用地址。"
 
 #: ../../example/gmachine/gmachine-2.md:85
 msgid ""
