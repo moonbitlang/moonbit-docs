@@ -1468,7 +1468,7 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-2.md:1
 msgid "G-Machine 2"
-msgstr ""
+msgstr "G-Machine 第二部分"
 
 #: ../../example/gmachine/gmachine-2.md:3
 msgid ""
@@ -1480,6 +1480,11 @@ msgid ""
 "previous article to support `let` expressions and basic arithmetic, "
 "comparison, and other operations."
 msgstr ""
+"本文是关于在 MoonBit 中实现惰性求值的系列文章的第二篇。"
+"在第一部分中，我们探索了惰性求值的过程和一个典型的、抽象的用于惰性求值的机器，G-Machine，"
+"并且执行了一些基本的 G-Machine 指令。在这篇文章中，我们将要在前一篇文章的基础上，进一步"
+"扩展 G-Machine 的实现，以此来支持 'let' 表达式以及基本的计算，"
+"比较，和其他操作。"
 
 #: ../../example/gmachine/gmachine-2.md:5
 msgid "let Expressions"
@@ -1491,6 +1496,8 @@ msgid ""
 "`let` expression can create multiple variables but can only be used "
 "within a limited scope. Here is an example:"
 msgstr ""
+"coref 中的 'let' 表达式与 MoonBit 中的 'let' 表达式略有不同。"
+"一个 'let' 表达式可以创建多个变量，但是只能在一个有限的范围内使用。这里是一个例子："
 
 #: ../../example/gmachine/gmachine-2.md:9
 msgid ""
@@ -1530,7 +1537,7 @@ msgid ""
 "In contrast, `letrec` is more complex as it allows the local variables "
 "defined to reference each other without considering the order of their "
 "definitions."
-msgstr ""
+msgstr "相比之下，'letrec' 更加复杂，因为它允许本地变量在不考虑它们定义顺序的情况下互相引用。"
 
 #: ../../example/gmachine/gmachine-2.md:35
 msgid ""
@@ -1541,6 +1548,10 @@ msgid ""
 " `NApp` nodes. Therefore, we need to adjust the stack parameters before "
 "calling the supercombinator."
 msgstr ""
+"在执行 'let' （以及更复杂的 'letrec'）之前，我们首先需要"
+"修改目前的参数传递方式。"
+"由 'let' 创建的局部变量应该和参数一样被直观地访问，但它们与 `NApp` 节点们并不对应。"
+"因此，我们需要在调用超组合器之前调整堆栈参数。"
 
 #: ../../example/gmachine/gmachine-2.md:37
 msgid ""
