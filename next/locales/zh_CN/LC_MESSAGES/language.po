@@ -5705,7 +5705,7 @@ msgid ""
 "This error occurs when the same local function name is declared multiple "
 "times within the same scope. Each local function name must be unique "
 "within its scope."
-msgstr ""
+msgstr "这个错误会在同一个作用域内声明多次相同的局部函数名时发生。每个局部函数名在其作用域内必须唯一。"
 
 #: ../../language/error_codes/E4006.md:7
 msgid ""
@@ -5724,7 +5724,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4006.md:23
 msgid "To fix this error, give each local function a unique name:"
-msgstr ""
+msgstr "要修复这个错误，给每个局部函数一个唯一的名称："
 
 #: ../../language/error_codes/E4006.md:25
 msgid ""
@@ -5746,7 +5746,7 @@ msgstr ""
 msgid ""
 "You can also move one of the functions to a different scope or merge the "
 "functionality into a single function if they serve similar purposes."
-msgstr ""
+msgstr "你也可以把其中一个函数移动到别的作用域，或者将它们合并到一个函数中（如果功能类似）。"
 
 #: ../../language/error_codes/E4007.md:1
 msgid "E4007"
@@ -5754,7 +5754,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4007.md:3
 msgid ""
-"When constructing a enum, the arguments passed to the constructor cannot "
+"When constructing an enum, the arguments passed to the constructor cannot "
 "be unit `()`. MoonBit does not allow constructors to take unit as an "
 "argument because it would be redundant - a constructor without arguments "
 "already represents a singleton value."
@@ -5808,7 +5808,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4008.md:3
 msgid "FFI function cannot have type parameters."
-msgstr ""
+msgstr "FFI 函数不能有类型参数。"
 
 #: ../../language/error_codes/E4008.md:7
 msgid "extern \"js\" fn id[T](x: T) -> T = \"(x) => x\"\n"
@@ -5818,11 +5818,11 @@ msgstr ""
 msgid ""
 "The example declares an FFI function (marked `extern`) with a type "
 "parameter, which is not allowed."
-msgstr ""
+msgstr "这个例子中，FFI 函数（用 `extern` 标识）带有一个类型参数，而这是不允许的。"
 
 #: ../../language/error_codes/E4008.md:16
 msgid "Consider using a concrete type that suits your needs:"
-msgstr ""
+msgstr "考虑使用符合你需求的具体类型："
 
 #: ../../language/error_codes/E4008.md:18
 msgid "extern \"js\" fn int_id(x: Int) -> Int = \"(x) => x\"\n"
@@ -5830,7 +5830,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4008.md:22
 msgid "For more complicated scenarios, consider adding an extra trait:"
-msgstr ""
+msgstr "对于更复杂的场景，考虑添加一个额外的特征："
 
 #: ../../language/error_codes/E4008.md:24
 msgid ""
@@ -5849,7 +5849,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4009.md:3
 msgid "Match function expects a different number of arguments than provided."
-msgstr ""
+msgstr "匹配函数期望的参数数量与提供的数量不同。"
 
 #: ../../language/error_codes/E4009.md:7
 msgid ""
@@ -5865,6 +5865,7 @@ msgid ""
 "arguments in different branches. This will result in the following error "
 "on line 3:"
 msgstr ""
+"这个例子定义了一个匹配函数，但是不同分支的参数数量不一致。这会在第三行出现如下错误："
 
 #: ../../language/error_codes/E4009.md:17
 msgid "Match function expects 1 arguments, but 2 arguments are provided.\n"
@@ -5874,7 +5875,7 @@ msgstr ""
 msgid ""
 "Change the branches so that the number of arguments are exactly the same "
 "in all of them:"
-msgstr ""
+msgstr "修改分支使得所有分支的参数数量相同："
 
 #: ../../language/error_codes/E4009.md:26
 msgid ""
@@ -5967,17 +5968,16 @@ msgstr ""
 msgid ""
 "The example above declares an unlabeled mutable field `x` in the "
 "constructor of the `F` variant of the `E` enum, which is not allowed."
-msgstr ""
+msgstr "上述示例在 `E` 枚举的 `F` 变体构造函数中声明了一个未标记的可变字段 `x`，这是不允许的。"
 
 #: ../../language/error_codes/E4012.md:16
 #: ../../language/error_codes/E4029.md:24
-#, fuzzy
 msgid "Suggestions"
 msgstr "建议"
 
 #: ../../language/error_codes/E4012.md:18
 msgid "Add a label to the mutable field:"
-msgstr ""
+msgstr "为可变字段添加标签："
 
 #: ../../language/error_codes/E4012.md:20
 msgid ""
