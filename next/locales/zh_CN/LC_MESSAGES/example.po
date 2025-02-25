@@ -1634,8 +1634,7 @@ msgid ""
 "addresses. It is called `Slide`. As the name suggests, the function of "
 "`Slide(n)` is to skip the first address and delete the following N "
 "addresses."
-msgstr "因此，我们需要一个新的指令来清理这些不再需要的地址。它被称为 `Slide`。顾名思义，`Slide(n)` 的功能是跳过第一个地址并删除以下N个地址。
-"
+msgstr "因此，我们需要一个新的指令来清理这些不再需要的地址。它被称为 `Slide`。顾名思义，`Slide(n)` 的功能是跳过第一个地址并删除以下N个地址。"
 
 #: ../../example/gmachine/gmachine-2.md:77
 msgid ""
@@ -1653,7 +1652,7 @@ msgid ""
 "offsets in order. Finally, use the passed `comp` function to compile the "
 "main expression and add the `Slide` instruction to clean up the unused "
 "addresses."
-msgstr "现在我们来使用let表达式，我们将用compileC函数编译与本地变量对应的表达式。"
+msgstr "现在我们来使用 `let` 表达式，我们将用compileC函数编译与本地变量对应的表达式。"
 "然后，遍历变量定义（`defs`）列表，依次编译并更新相应的偏移量。最后，使用传入的 `comp` 函数编译主表达式，并添加 `Slide` 指令来清理不使用的地址。"
 
 #: ../../example/gmachine/gmachine-2.md:85
@@ -1690,8 +1689,8 @@ msgid ""
 "`Alloc(N)`, which pre-allocates N `NInd` nodes and pushes the addresses "
 "onto the stack sequentially. The addresses in these indirect nodes are "
 "negative and only serve as placeholders."
-msgstr "`letrec`的语义更加复杂——它允许表达式中的N个变量相互引用，因此我们需要预先分配N个地址并将其放置在堆栈上。"
-"我们需要一个新的指令：`Alloc（N）`，它预先分配N个`NInd`节点，并将地址顺序推送到堆栈上。这些间接节点中的地址是负数，仅用作占位符。"
+msgstr " `letrec` 的语义更加复杂——它允许表达式中的N个变量相互引用，因此我们需要预先分配N个地址并将其放置在堆栈上。"
+"我们需要一个新的指令：`Alloc（N）`，它预先分配 N 个 `NInd` 节点，并将地址顺序推送到堆栈上。这些间接节点中的地址是负数，仅用作占位符。"
 
 #: ../../example/gmachine/gmachine-2.md:95
 msgid ""
@@ -1710,11 +1709,11 @@ msgstr "`letrec`的用法与`let`语句类似"
 
 #: ../../example/gmachine/gmachine-2.md:103
 msgid "Use `Alloc(n)` to allocate N addresses."
-msgstr "使用`Alloc(n)`来分配N个节点"
+msgstr "使用`Alloc(n)`来分配 N 个节点"
 
 #: ../../example/gmachine/gmachine-2.md:104
 msgid "Use the `loop` expression to build a complete environment."
-msgstr "使用`loop`表达式构建一个完整的环境"
+msgstr "使用 `loop` 表达式构建一个完整的环境"
 
 #: ../../example/gmachine/gmachine-2.md:105
 msgid ""
@@ -1770,7 +1769,7 @@ msgid ""
 "arithmetic, comparison, and checking if two numbers are equal. First, "
 "modify the `Instruction` type to add related instructions."
 msgstr "从这步开始，我们终于可以开始执行基本的整数运算，如算术、比较与检查两个数字是否相等。"
-"首先，修改 `Instruction`类型以添加相关指令。"
+"首先，修改 `Instruction` 类型以添加相关指令。"
 
 #: ../../example/gmachine/gmachine-2.md:118
 msgid ""
@@ -1795,7 +1794,7 @@ msgid ""
 "corresponding numbers from memory, perform the operation, and push the "
 "result address back onto the stack."
 msgstr "实现这些指令乍看上去似乎很简单。"
-"以`Add`为例：只需从栈中弹出两个地址，获取对应的数字，执行加法操作，然后把结果的地址推回栈中。"
+"以 `Add` 为例：只需从栈中弹出两个地址，获取对应的数字，执行加法操作，然后把结果的地址推回栈中。"
 
 #: ../../example/gmachine/gmachine-2.md:135
 msgid ""
@@ -1820,7 +1819,7 @@ msgid ""
 "to give a result or never stop computing. We call it `Eval` (short for "
 "Evaluation)."
 msgstr "然而，接下来我们面临的问题是：这是一个惰性求值的语言。在惰性求值中，传递给 `add` 的参数很可能还没有被计算（即它们可能不是 `NNum `节点，而是尚未计算的表达式）。"
-"因此，我们需要一种指令来强制执行计算，确保获取结果，或者在某些情况下，保证计算不会停下来。我们称之为 `Eval`（即 Evaluation缩写）。"
+"因此，我们需要一种指令来强制执行计算，确保获取结果，或者在某些情况下，保证计算不会停下来。我们称之为 `Eval`（即 Evaluation 缩写）。"
 
 #: ../../example/gmachine/gmachine-2.md:151
 msgid ""
