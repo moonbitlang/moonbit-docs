@@ -89,7 +89,7 @@ test {
 // end async example
 
 // start async timer example
-type JSTimer
+extern type JSTimer
 extern "js" fn js_set_timeout(f : () -> Unit, duration : Int) -> JSTimer =
   #| (f, duration) => setTimeout(f, duration)
 

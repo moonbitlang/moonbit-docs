@@ -16,7 +16,7 @@ for JavaScript backend, it means that it will be executed during the importation
 You can declare a foreign reference type like this:
 
 ```moonbit
-type Canvas_ctx
+extern type Canvas_ctx
 ```
 
 This will be a type that represents a reference to a foreign object, a `CanvasRenderingContext2D` object held by the hosting JavaScript runtime in this example.
@@ -119,8 +119,8 @@ In order to passing closure to host, we need to add `make_closure` into `moonbit
 e.g. [onclick](https://html.spec.whatwg.org/multipage/webappapis.html#handler-onclick)
 
 ```moonbit
-type MouseEvent 
-type Window 
+extern type MouseEvent
+extern type Window
 fn onclick(self : Window, e : (MouseEvent) -> Unit) = "Window" "onclick"
 pub fn print_hello(self : Window) -> Unit {
   self.onclick(fn (_){ println("hello")})
@@ -152,7 +152,7 @@ Let's walk through a full example to draw a smiling face using Canvas API in Moo
 
 ```moonbit title="lib/draw.mbt"
 // We first declare a type representing the context of canvas
-type Canvas_ctx
+extern type Canvas_ctx
 
 // We then declare the foreign function interfaces
 fn begin_path(self : Canvas_ctx) = "canvas" "beginPath"
