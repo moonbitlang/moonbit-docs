@@ -12,6 +12,6 @@ fn main {
 fn sum(array : ArrayView[Int]) -> Int {
   match array {
     [] => 0
-    [x, .. as xs] => x + sum(xs)
+    [x, .. xs] => x + sum(xs)
   }
 }

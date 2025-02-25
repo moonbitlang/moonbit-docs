@@ -1479,7 +1479,8 @@ msgid ""
 "article, we will further extend the G-Machine implementation from the "
 "previous article to support `let` expressions and basic arithmetic, "
 "comparison, and other operations."
-msgstr ""
+msgstr "在第一部分中我们探讨了惰性求值的目的，介绍了典型的惰性求值抽象机器 G-Machine并实现它的一些基本指令。本章为“MoonBit "
+"中实现惰性求值”主题的第二部分，将延续并进一步扩展之前文章中 G-Machine 的实现来支持 `let` 表达式和基础算术，比较，和其他相关操作。"
 
 #: ../../example/gmachine/gmachine-2.md:5
 msgid "let Expressions"
@@ -1490,7 +1491,7 @@ msgid ""
 "The `let` expression in coref differs slightly from that in MoonBit. A "
 "`let` expression can create multiple variables but can only be used "
 "within a limited scope. Here is an example:"
-msgstr ""
+msgstr "coref 中的 `let` 表达式与 MoonBit 略有差异。MoonBit 的 `let` 表达式可以创建多个变量，但只能在有限的范围内使用。示例如下："
 
 #: ../../example/gmachine/gmachine-2.md:9
 msgid ""
@@ -1503,7 +1504,7 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-2.md:17
 msgid "Equivalent coref expression:"
-msgstr ""
+msgstr "对应的 coreF 表达式："
 
 #: ../../example/gmachine/gmachine-2.md:19
 msgid ""
@@ -1516,7 +1517,7 @@ msgstr ""
 msgid ""
 "It is important to note that coref's `let` expressions must follow a "
 "sequential order. For example, the following is not valid:"
-msgstr ""
+msgstr "需要注意 coreF 中的 `let` 表达式必须按顺序执行，如下代码是无效的："
 
 #: ../../example/gmachine/gmachine-2.md:27
 msgid ""
@@ -1530,7 +1531,7 @@ msgid ""
 "In contrast, `letrec` is more complex as it allows the local variables "
 "defined to reference each other without considering the order of their "
 "definitions."
-msgstr ""
+msgstr "相比之下，`letrec` 允许本地变量不考虑定义顺序下相互引用，从而更加复杂。 "
 
 #: ../../example/gmachine/gmachine-2.md:35
 msgid ""
@@ -1541,6 +1542,9 @@ msgid ""
 " `NApp` nodes. Therefore, we need to adjust the stack parameters before "
 "calling the supercombinator."
 msgstr ""
+"在实现 `let` （和更复杂的 `letrec`）表达式之前，我们首先需要修改当前的参数传递方法。"
+"`let` 创建的本地变量应该像参数一样访问，但 `let` 中的本地变量不对应 NApp 节点，因此我们需要在调用超组合子之前调整栈参数。"
+
 
 #: ../../example/gmachine/gmachine-2.md:37
 msgid ""
@@ -1549,7 +1553,7 @@ msgid ""
 " unwind. When there are parameters, the top address of the "
 "supercombinator node is discarded, and the `rearrange` function is "
 "called."
-msgstr ""
+msgstr "调整是在执行 `Unwind` 指令的过程中完成的。如果超组合子没有参数，则与原始 `unwind` 相同。当有参数时，超组合子节点的顶部地址会被丢弃，并开始调用 `rearrange` 函数。"
 
 #: ../../example/gmachine/gmachine-2.md:39
 msgid ""
@@ -1571,14 +1575,15 @@ msgid ""
 "point to a series of `NApp` nodes. It keeps the bottommost one (used as "
 "Redex update), cleans up the top N-1 addresses, and then places N "
 "addresses that directly point to the parameters."
-msgstr ""
+msgstr "`rearrange` 函数假设堆栈上的前 N 个地址指向一系列 `NApp` 节点。它保留最底部的地址（用于 Redex 更新），清理栈顶的 N-1 个地址，然后将 N 个地址放置在栈中，"
+"这些地址直接指向参数。"
 
 #: ../../example/gmachine/gmachine-2.md:47
 msgid ""
 "After this, both parameters and local variables can be accessed using the"
 " same command by changing the `PushArg` instruction to a more general "
 "`Push` instruction."
-msgstr ""
+msgstr "在这之后，通过将 `PushArg` 指令更改为更通用的 `Push` 指令，参数和局部变量都可以使用相同的命令进行访问。"
 
 #: ../../example/gmachine/gmachine-2.md:49
 msgid ""
@@ -1594,7 +1599,7 @@ msgstr ""
 msgid ""
 "The next issue is that we need something to clean up. Consider the "
 "following expression:"
-msgstr ""
+msgstr "接下来我们需要清理一些不再使用的数据或状态，考虑以下表达式，"
 
 #: ../../example/gmachine/gmachine-2.md:57
 msgid ""
@@ -1609,7 +1614,8 @@ msgid ""
 "stack still contains addresses pointing to e1 and e2 (corresponding to "
 "variables x1 and x2), as shown below (the stack grows from bottom to "
 "top):"
-msgstr ""
+msgstr "在构建与表达式 expr 对应的图之后，栈中仍然包含指向 e1 和 e2 的地址（分别对应变量 x1 和 x2）,"
+"如下所示（栈从下到上增长）"
 
 #: ../../example/gmachine/gmachine-2.md:65
 msgid ""
@@ -1628,7 +1634,8 @@ msgid ""
 "addresses. It is called `Slide`. As the name suggests, the function of "
 "`Slide(n)` is to skip the first address and delete the following N "
 "addresses."
-msgstr ""
+msgstr "因此，我们需要一个新的指令来清理这些不再需要的地址。它被称为 `Slide`。顾名思义，`Slide(n)` 的功能是跳过第一个地址并删除以下N个地址。
+"
 
 #: ../../example/gmachine/gmachine-2.md:77
 msgid ""
@@ -1646,13 +1653,14 @@ msgid ""
 "offsets in order. Finally, use the passed `comp` function to compile the "
 "main expression and add the `Slide` instruction to clean up the unused "
 "addresses."
-msgstr ""
+msgstr "现在我们来使用let表达式，我们将用compileC函数编译与本地变量对应的表达式。"
+"然后，遍历变量定义（`defs`）列表，依次编译并更新相应的偏移量。最后，使用传入的 `comp` 函数编译主表达式，并添加 `Slide` 指令来清理不使用的地址。"
 
 #: ../../example/gmachine/gmachine-2.md:85
 msgid ""
 "Compiling the main expression using the passed function makes it easy to "
 "reuse when adding subsequent features."
-msgstr ""
+msgstr "使用传入的函数编译主表达式，有助于在后续添加新功能时实现代码的高效复用。"
 
 #: ../../example/gmachine/gmachine-2.md:87
 msgid ""
@@ -1682,7 +1690,8 @@ msgid ""
 "`Alloc(N)`, which pre-allocates N `NInd` nodes and pushes the addresses "
 "onto the stack sequentially. The addresses in these indirect nodes are "
 "negative and only serve as placeholders."
-msgstr ""
+msgstr "`letrec`的语义更加复杂——它允许表达式中的N个变量相互引用，因此我们需要预先分配N个地址并将其放置在堆栈上。"
+"我们需要一个新的指令：`Alloc（N）`，它预先分配N个`NInd`节点，并将地址顺序推送到堆栈上。这些间接节点中的地址是负数，仅用作占位符。"
 
 #: ../../example/gmachine/gmachine-2.md:95
 msgid ""
@@ -1697,26 +1706,26 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-2.md:101
 msgid "The steps to compile letrec are similar to `let`:"
-msgstr ""
+msgstr "`letrec`的用法与`let`语句类似"
 
 #: ../../example/gmachine/gmachine-2.md:103
 msgid "Use `Alloc(n)` to allocate N addresses."
-msgstr ""
+msgstr "使用`Alloc(n)`来分配N个节点"
 
 #: ../../example/gmachine/gmachine-2.md:104
 msgid "Use the `loop` expression to build a complete environment."
-msgstr ""
+msgstr "使用`loop`表达式构建一个完整的环境"
 
 #: ../../example/gmachine/gmachine-2.md:105
 msgid ""
 "Compile the local variables in `defs`, using the `Update` instruction to "
 "update the results to the pre-allocated addresses after compiling each "
 "one."
-msgstr ""
+msgstr "在`defs`中编译本地变量，然后使用`Update`指令将结果更新到预先分配好的地址。"
 
 #: ../../example/gmachine/gmachine-2.md:106
 msgid "Compile the main expression and use the `Slide` instruction to clean up."
-msgstr ""
+msgstr "编译主表达式，并使用`Slide`指令进行清理。"
 
 #: ../../example/gmachine/gmachine-2.md:108
 msgid ""
@@ -1753,14 +1762,15 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-2.md:114
 msgid "Adding Primitives"
-msgstr ""
+msgstr "添加原语"
 
 #: ../../example/gmachine/gmachine-2.md:116
 msgid ""
 "From this step, we can finally perform basic integer operations such as "
 "arithmetic, comparison, and checking if two numbers are equal. First, "
 "modify the `Instruction` type to add related instructions."
-msgstr ""
+msgstr "从这步开始，我们终于可以开始执行基本的整数运算，如算术、比较与检查两个数字是否相等。"
+"首先，修改 `Instruction`类型以添加相关指令。"
 
 #: ../../example/gmachine/gmachine-2.md:118
 msgid ""
@@ -1784,7 +1794,8 @@ msgid ""
 " as an example: just pop two top addresses from the stack, retrieve the "
 "corresponding numbers from memory, perform the operation, and push the "
 "result address back onto the stack."
-msgstr ""
+msgstr "实现这些指令乍看上去似乎很简单。"
+"以`Add`为例：只需从栈中弹出两个地址，获取对应的数字，执行加法操作，然后把结果的地址推回栈中。"
 
 #: ../../example/gmachine/gmachine-2.md:135
 msgid ""
@@ -1808,48 +1819,49 @@ msgid ""
 "`NNum` nodes). We also need an instruction that can force a computation "
 "to give a result or never stop computing. We call it `Eval` (short for "
 "Evaluation)."
-msgstr ""
+msgstr "然而，接下来我们面临的问题是：这是一个惰性求值的语言。在惰性求值中，传递给 `add` 的参数很可能还没有被计算（即它们可能不是 `NNum `节点，而是尚未计算的表达式）。"
+"因此，我们需要一种指令来强制执行计算，确保获取结果，或者在某些情况下，保证计算不会停下来。我们称之为 `Eval`（即 Evaluation缩写）。"
 
 #: ../../example/gmachine/gmachine-2.md:151
 msgid ""
 "In jargon, the result of such a computation is called Weak Head Normal "
 "Form (WHNF)."
-msgstr ""
+msgstr "在术语中，这种计算的结果称为弱头范式（WHNF）。"
 
 #: ../../example/gmachine/gmachine-2.md:153
 msgid ""
 "At the same time, we need to modify the structure of `GState` and add a "
 "state called `dump`. Its type is `List[(List[Instruction], List[Addr])]`,"
 " used by `Eval` and `Unwind` instructions."
-msgstr ""
+msgstr "同时我们需要修改 `GState` 的架构并加入 `dump` 的状态，类型是 `List[(List[Instruction], List[Addr])]`，使用 `Eval` 和 `Unwind` 指令的功能 "
 
 #: ../../example/gmachine/gmachine-2.md:155
 msgid "The implementation of the `Eval` instruction is not complicated:"
-msgstr ""
+msgstr "执行`Eval`指令并不复杂"
 
 #: ../../example/gmachine/gmachine-2.md:157
 msgid "Pop the top address of the stack."
-msgstr ""
+msgstr "弹出堆栈的顶部地址"
 
 #: ../../example/gmachine/gmachine-2.md:159
 msgid ""
 "Save the current unexecuted instruction sequence and stack (by putting "
 "them into the dump)."
-msgstr ""
+msgstr "保存当前未执行的指令序列和栈（通过将它们放入 `dump` 中）"
 
 #: ../../example/gmachine/gmachine-2.md:161
 msgid "Clear the current stack and place the previously saved address."
-msgstr ""
+msgstr "清空当前栈并放入先前保存的地址。"
 
 #: ../../example/gmachine/gmachine-2.md:163
 msgid "Clear the current instruction sequence and place the `Unwind` instruction."
-msgstr ""
+msgstr "清空当前的指令序列，并放入 `Unwind `指令"
 
 #: ../../example/gmachine/gmachine-2.md:165
 msgid ""
 "This is similar to how strict evaluation languages handle saving caller "
 "contexts, but practical implementations would use more efficient methods."
-msgstr ""
+msgstr "这与严格求值语言中保存调用者上下文的方式类似，但在实际实现中会采用更高效的方法。"
 
 #: ../../example/gmachine/gmachine-2.md:167
 msgid ""
@@ -1866,7 +1878,7 @@ msgid ""
 "This simple definition requires modifying the `Unwind` instruction to "
 "restore the context when `Unwind` in the `NNum` branch finds that there "
 "is a recoverable context (`dump` is not empty)."
-msgstr ""
+msgstr "这个简单的定义要求我们修改 `Unwind` 指令，使其在遇到 `NNum` 分支时，如果发现存在可恢复的上下文（即 `dump` 不为空），则恢复该上下文。"
 
 #: ../../example/gmachine/gmachine-2.md:175
 msgid ""
@@ -1916,6 +1928,8 @@ msgid ""
 "the comparison instruction is a boolean value, and for simplicity, we use"
 " numbers to represent it: 0 for `false`, 1 for `true`."
 msgstr ""
+"接下来，我们需要实现算术和比较算法。我们使用两个函数来简化二进制运算的形式。"
+"比较指令的结果是一个布尔值，简单起见我们使用数字来表示它：0 表示 `false`，1 表示 `true`。"
 
 #: ../../example/gmachine/gmachine-2.md:183
 msgid ""
@@ -1963,7 +1977,7 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-2.md:189
 msgid "Finally, implement branching:"
-msgstr ""
+msgstr "最后，实现分支："
 
 #: ../../example/gmachine/gmachine-2.md:191
 msgid ""
@@ -1988,7 +2002,7 @@ msgstr ""
 msgid ""
 "No major adjustments are needed in the compilation part, just add some "
 "predefined programs:"
-msgstr ""
+msgstr "编译部分不需要进行重大调整，只需添加一些预定义程序："
 
 #: ../../example/gmachine/gmachine-2.md:199
 #: ../../example/gmachine/gmachine-3.md:9
@@ -2081,7 +2095,7 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-2.md:205
 msgid "and modify the initial instruction sequence"
-msgstr ""
+msgstr "并修改初始指令序列"
 
 #: ../../example/gmachine/gmachine-2.md:207
 msgid "code : @immut/list.of([PushGlobal(\"main\"), Eval]),\n"
@@ -2091,7 +2105,7 @@ msgstr ""
 msgid ""
 "In the next part, we will improve the code generation for primitives and "
 "add support for data structures."
-msgstr ""
+msgstr "在下一章，我们将改进原语的代码生成，并添加对数据结构的支持。"
 
 #: ../../example/gmachine/gmachine-3.md:1
 msgid "G-Machine 3"
@@ -3285,6 +3299,7 @@ msgid ""
 "comparing the differences between two text files. What's more, Unix has a"
 " tool called `patch`."
 msgstr ""
+"你是否曾经使用过Unix系统中的'diff'工具？简单来说，它是一种用于比较两个文本文件之间差异的工具。此外，Unix系统中还有名为'patch'的工具。"
 
 #: ../../example/myers-diff/myers-diff.md:5
 msgid ""
@@ -3295,6 +3310,9 @@ msgid ""
 "(and highlighted with different colors). Take the most popular version "
 "control system today, git, as an example:"
 msgstr ""
+"现在很少有人手动应用软件包的修补，但'diff'在另一个领域中仍然非常有用：版本控制系统。"
+"你有看到特定提交后代码文件所做更改（并以不同的颜色突出显示）的函数是非常方便的。"
+"例如，最受欢迎的版本控制系统之一，git，就是一个很好的例子。"
 
 #: ../../example/myers-diff/myers-diff.md:7
 msgid ""
@@ -3315,7 +3333,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:23
 msgid "But how exactly do we calculate the differences between two text files?"
-msgstr ""
+msgstr "但我们具体怎么计算两个文本文件之间的差异呢？"
 
 #: ../../example/myers-diff/myers-diff.md:25
 msgid ""
@@ -3325,10 +3343,13 @@ msgid ""
 "following text, we will understand the basic framework of this algorithm "
 "in a less rigorous way and use MoonBit to write a simple implementation."
 msgstr ""
+"Git 的默认比较差异算法由 Eugene W. Myers 在他的论文**一个O(ND)的差分算法及其变体**中提出。"
+"这篇论文主要聚焦于证明该算法的正确性。"
+"接下来，我们将以一种不那么严谨的方式理解其基本架构，并使用 MoonBit 编写一个简单的实现。"
 
 #: ../../example/myers-diff/myers-diff.md:27
 msgid "Defining \"Difference\" and Its Measurement Criteria"
-msgstr ""
+msgstr "“差异”的定义及其度量标准"
 
 #: ../../example/myers-diff/myers-diff.md:29
 msgid ""
@@ -3336,10 +3357,11 @@ msgid ""
 " actually referring to is a series of editing steps that can transform "
 "text a into text b."
 msgstr ""
+"当我们讨论两个文本文件之间的“差异”时，我们实际上是在指能将文本a变成文本b的一系列编辑步骤。"
 
 #: ../../example/myers-diff/myers-diff.md:31
 msgid "Assume the content of text a is"
-msgstr ""
+msgstr "假设文本a的内容是"
 
 #: ../../example/myers-diff/myers-diff.md:33
 msgid ""
@@ -3354,7 +3376,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:43
 msgid "Assume the content of text b is"
-msgstr ""
+msgstr "假设文本b的内容是"
 
 #: ../../example/myers-diff/myers-diff.md:45
 msgid ""
@@ -3372,6 +3394,8 @@ msgid ""
 "each character in a (indicated with a minus sign) and then insert each "
 "character in b (indicated with a plus sign)."
 msgstr ""
+"为了把文本a转变为文本b，最简单的编辑序列是删除所有a中的字符（用减号表示），然后"
+"插入文本b中的每个字符（用加号表示）。"
 
 #: ../../example/myers-diff/myers-diff.md:56
 msgid ""
@@ -3395,6 +3419,8 @@ msgid ""
 "But such a result might not be very helpful for programmers reading the "
 "code. The following edit sequence is much better, at least it is shorter."
 msgstr ""
+"但是这样的结果可能对程序员阅读程序来说并没有太大帮助。"
+"接下来的编辑序列会好很多，至少它更短。"
 
 #: ../../example/myers-diff/myers-diff.md:74
 msgid ""
@@ -3418,6 +3444,10 @@ msgid ""
 "are equally important for user experience. Let's look at the following "
 "examples:"
 msgstr ""
+"实际上，这是实现文本a转换为文本b所需的最简编辑序列，仅需要5个操作。"
+"如果我们只考虑编辑序列的长度，这一结果已经令人满意。"
+"但在探索多种编程语言时，我们发现除了编辑序列长度外，还有其他度量指标对用户体验同样重要。"
+"让我们来看看以下例子："
 
 #: ../../example/myers-diff/myers-diff.md:88
 msgid ""
@@ -3451,6 +3481,9 @@ msgid ""
 "not to calculate an edit sequence that interleaves these two operations. "
 "Here's another example."
 msgstr ""
+"当我们在文件末尾插入一个新函数定义时，理想的编辑序列应将所做的更改置于文件末尾。"
+"同样，在有删除和插入操作的情况下，不应该将这两个操作交替进行计算。"
+"这是另一个例子。"
 
 #: ../../example/myers-diff/myers-diff.md:113
 msgid ""
@@ -3469,10 +3502,13 @@ msgid ""
 "inserting text before `{`), and it also tries to place deletions before "
 "insertions, avoiding the latter situation."
 msgstr ""
+"Myers的diff算法可以满足所有这些需求。"
+"它是一种贪婪算法，每次都尽可能地跳过匹配行（避免在出现'{'之前插入文本），同时"
+"也会尝试将删除操作置于插入操作之前，避免后者发生。"
 
 #: ../../example/myers-diff/myers-diff.md:124
 msgid "Algorithm Overview"
-msgstr ""
+msgstr "算法概述"
 
 #: ../../example/myers-diff/myers-diff.md:126
 msgid ""
@@ -3481,6 +3517,8 @@ msgid ""
 "previous example `a = ABCABBA` and `b = CBABAC`, we create an `(x, y)` "
 "coordinate grid."
 msgstr ""
+"Myers的论文中的基本思路是构建一个编辑操作的网格图，并在该网格上搜索最短路径。"
+"以之前的例子'a = ABCABBA'和'b = CBABAC'为例，我们创建一个'(x, y)'坐标网格。"
 
 #: ../../example/myers-diff/myers-diff.md:128
 msgid ""
@@ -3525,18 +3563,23 @@ msgid ""
 "indicate matching characters that can be skipped without triggering any "
 "edits."
 msgstr ""
+"该网格的左上角是起始点'(0, 0)'，右下角是终点'(7, 6)'。"
+"沿着x轴移动一个单位右侧删除a中的对应字符，沿y轴向下移动一个单位插入b中的对应字符。"
+"斜线表示匹配字符，可跳过而不触发编辑。"
 
 #: ../../example/myers-diff/myers-diff.md:163
 msgid ""
 "Before writing the actual search code, let's manually perform two rounds "
 "of searching:"
 msgstr ""
+"在编写实际搜索代码之前，我们手动执行两轮搜索。"
 
 #: ../../example/myers-diff/myers-diff.md:165
 msgid ""
 "The first round starts at `(0, 0)` and moves one step to reach `(0,1)` "
 "and `(1,0)`."
 msgstr ""
+"第一轮从'(0, 0)'开始，移动一步到达'(0,1)'和'(1,0)'。"
 
 #: ../../example/myers-diff/myers-diff.md:167
 msgid ""
@@ -3544,10 +3587,11 @@ msgid ""
 " reaches `(0,2)`, but there is a diagonal line leading to `(1,3)`, so the"
 " final point is `(1,3)`."
 msgstr ""
+"第二轮从'(0,1)'和'(1, 0)'开始。从'(0,1)'向下移动到'(0,2)'，但有一条斜线指向'(1,3)'，因此最终点是'(1,3)'。"
 
 #: ../../example/myers-diff/myers-diff.md:169
 msgid "The entire Myers algorithm is based on this kind of breadth-first search."
-msgstr ""
+msgstr "Myers算法的整个原理基于这种广度优先搜索。"
 
 #: ../../example/myers-diff/myers-diff.md:171
 #: ../../example/segment-tree/segment-tree.md:33
@@ -4528,7 +4572,7 @@ msgid ""
 "The Segment Tree is a common data structure used to solve various range "
 "modification and query problems. For instance, consider the following "
 "problem:"
-msgstr "先断树是一种常见的数据结构，用于一些线性区间的修改、查询问题，比如对于以下问题："
+msgstr "线段树是一种常见的数据结构，用于一些线性区间的修改、查询问题，比如对于以下问题："
 
 #: ../../example/segment-tree/index.md:5
 msgid ""
@@ -5420,7 +5464,7 @@ msgstr ""
 
 #: ../../example/sudoku/index.md:1
 msgid "Sudoku Solver"
-msgstr ""
+msgstr "数独求解器"
 
 #: ../../example/sudoku/index.md:3
 msgid ""
@@ -5433,14 +5477,19 @@ msgid ""
 "demonstrate how to write a suitable program to solve Sudoku using "
 "MoonBit. ![sudoku example](/imgs/sudoku.jpg)"
 msgstr ""
+"数独是一种基于逻辑的益智游戏，起源于 1979 年。"
+"它非常适合报纸等印刷媒体，即使在数字时代，许多数独游戏程序也可用于计算机和智能手机。"
+"尽管如今娱乐选择多种多样，但数独爱好者仍在继续组建活跃的社区"
+"(在线论坛，例如：[enjoysudoku](http://forum.enjoysudoku.com/))。"
+"本文将演示如何使用 MoonBit 编写合适的程序来解决数独问题。"
 
 #: ../../example/sudoku/index.md:3
 msgid "sudoku example"
-msgstr ""
+msgstr "数独示例"
 
 #: ../../example/sudoku/index.md:6
 msgid "Squares, Units, and Peers"
-msgstr ""
+msgstr "方格、单元和同级"
 
 #: ../../example/sudoku/index.md:8
 msgid ""
@@ -5449,6 +5498,10 @@ msgid ""
 "This gives each square in the grid a coordinate, for example, the square "
 "containing the number 0 in the grid below has the coordinate C3."
 msgstr ""
+"最常见的数独形式是在 9x9 网格上进行的。"
+"我们将从上到下的行标记为 A-I，从左到右的列标记为 1-9。"
+"这为网格中的每个方格提供了一个坐标，"
+"例如，下面网格中包含数字 0 的方格的坐标为 C3。"
 
 #: ../../example/sudoku/index.md:10
 msgid ""
@@ -5470,6 +5523,9 @@ msgid ""
 " must have unique digits from 1 to 9. However, in the initial state of "
 "the game, most squares do not contain any digits."
 msgstr ""
+"这个 9x9 的网格共有 9 个单元，"
+"每个单元包含的方格必须具有从 1 到 9 的唯一数字。"
+"但是在游戏的初始状态下，大多数方格不包含任何数字。"
 
 #: ../../example/sudoku/index.md:25
 msgid ""
@@ -5492,6 +5548,9 @@ msgid ""
 "include other squares in the same row, column, and unit. For example, the"
 " peers of C2 include these squares:"
 msgstr ""
+"除了单元之外，另一个重要概念是同级。"
+"一个方格的同级包括同一行、同一列和同一单位的其他方格。"
+"例如，C2的同级包括以下方格："
 
 #: ../../example/sudoku/index.md:41
 msgid ""
@@ -5535,7 +5594,7 @@ msgstr ""
 
 #: ../../example/sudoku/index.md:80
 msgid "No two squares that are peers can contain the same digit."
-msgstr ""
+msgstr "没有两个同级的格子可以包含相同的数字。"
 
 #: ../../example/sudoku/index.md:82
 msgid ""
@@ -5544,6 +5603,9 @@ msgid ""
 "hashtable, but using an array would be more compact and simple. First, we"
 " write a function to convert coordinates A1-I9 to indices 0-80:"
 msgstr ""
+"我们需要一个数据类型 SquareMap[T] 来存储这81个方格以及与每个方格相关的信息。"
+"这可以使用哈希表来实现，但使用数组会更紧凑、更简单。"
+"首先，我们编写一个函数将坐标 A1-I9 转换为索引 0-80："
 
 #: ../../example/sudoku/index.md:84
 msgid ""
@@ -5571,6 +5633,8 @@ msgid ""
 "overloading the op_get and op_set methods, we can write convenient code "
 "like table[\"A2\"] and table[\"C3\"] = Nil."
 msgstr ""
+"然后我们包装这个数组，并提供创建、访问、为特定坐标赋值以及复制 SquareMap[T] 的操作。"
+"通过重载 op_get 和 op_set 方法，我们可以编写类似 table[\"A2\"] 和 table[\"C3\"] = Nil 的便捷代码。"
 
 #: ../../example/sudoku/index.md:104
 msgid ""
@@ -5603,7 +5667,7 @@ msgstr ""
 
 #: ../../example/sudoku/index.md:132
 msgid "Next, we prepare some constants:"
-msgstr ""
+msgstr "接下来我们准备一些常量："
 
 #: ../../example/sudoku/index.md:134
 msgid ""
@@ -5629,10 +5693,11 @@ msgid ""
 "The process of constructing the units and peers tables is tedious, so it "
 "will not be detailed here."
 msgstr ""
+"构建单元和同级表的过程非常繁琐，因此这里不再详述。"
 
 #: ../../example/sudoku/index.md:152
 msgid "Preprocessing the Grid"
-msgstr ""
+msgstr "预处理网格"
 
 #: ../../example/sudoku/index.md:154
 msgid ""
@@ -5640,6 +5705,9 @@ msgid ""
 " acceptable; both `.` and `0` represent empty squares, and other "
 "characters like spaces and newlines are ignored."
 msgstr ""
+"我们使用字符串来表示初始数独网格。"
+"各种格式均可接受；"
+". 和 0 均表示空方块，其他字符（如空格和换行符）将被忽略。"
 
 #: ../../example/sudoku/index.md:156
 msgid ""
@@ -5665,6 +5733,10 @@ msgid ""
 "Therefore, we initially set the content of all squares to `['1', '2', "
 "'3', '4', '5', '6', '7', '8', '9']` (a List)."
 msgstr ""
+"暂时先不考虑太多游戏规则，如果只考虑每个方格能填入的数字，"
+"那么 1-9 都是有可能的，"
+"因此我们初始将所有方格的内容设置为"
+"`['1', '2', '3', '4', '5', '6', '7', '8', '9']` (a List)。"
 
 #: ../../example/sudoku/index.md:173
 msgid ""
@@ -5682,6 +5754,9 @@ msgid ""
 "key, val)`, where `key` is a string like `A6` and `val` is a character. "
 "It is easy to write such code."
 msgstr ""
+"接下来，我们需要将输入中已知数字的方块赋值。"
+"这个过程可以用函数`assign(values, key, val)`来实现，"
+"其中`key`是一个字符串，比如`A6`，`val`是一个字符。这样的代码写起来很容易。"
 
 #: ../../example/sudoku/index.md:183
 msgid ""
@@ -5692,7 +5767,7 @@ msgstr ""
 
 #: ../../example/sudoku/index.md:189
 msgid "Let's run it and see"
-msgstr ""
+msgstr "让我们运行一下看看"
 
 #: ../../example/sudoku/index.md:191
 msgid ""
@@ -5728,7 +5803,7 @@ msgstr ""
 
 #: ../../example/sudoku/index.md:209
 msgid "This implementation is simple and precise, but we can do more."
-msgstr ""
+msgstr "这个实现简单而精确，但我们可以做得更多。"
 
 #: ../../example/sudoku/index.md:211
 msgid ""
@@ -5737,6 +5812,10 @@ msgid ""
 " to gain insights from the rules, similar to solving Sudoku with pen and "
 "paper. Let's start with the elimination method:"
 msgstr ""
+"现在，我们可以重新引入之前搁置的规则。"
+"但是，规则本身并没有告诉我们该做什么。"
+"我们需要启发式策略来从规则中获得见解，"
+"类似于用笔和纸解决数独。让我们从消除法开始："
 
 #: ../../example/sudoku/index.md:213
 msgid ""
@@ -5745,6 +5824,9 @@ msgid ""
 "values, as this would violate the rule that no two squares in the same "
 "unit, row, or column can have the same digit."
 msgstr ""
+"**策略 1**：如果为一个方块`key`分配了一个值`val`，"
+"则其对同级（'peers[key]'）的可能值列表中不应该包含`val'，"
+"因为这会违反同一单元、行或列中没有两个方块可以具有相同数字的规则。"
 
 #: ../../example/sudoku/index.md:215
 msgid ""
@@ -5752,6 +5834,10 @@ msgid ""
 "specific digit (possibly happen after applying the above rule several "
 "times), then that digit should be assigned to that square."
 msgstr ""
+"**策略 2**：如果一个单元中只有一个方格可以容纳特定的数字"
+"（在多次应用上述规则后可能发生），"
+"则应将该数字分配给该方格。"
+
 
 #: ../../example/sudoku/index.md:217
 msgid ""
@@ -5762,6 +5848,10 @@ msgid ""
 "value to handle possible contradictions. If the list of possible values "
 "for a square becomes empty, something went wrong, and we return `false`."
 msgstr ""
+"我们通过定义一个消除函数`eliminate`来调整代码，该函数从正方形的可能值中删除一个数字。"
+"执行消除任务后，它将上述策略应用于`key`和`val`以尝试进一步消除。"
+"请注意，它包含一个布尔返回值来处理可能的矛盾。"
+"如果方格的可能值列表为空，则出现问题，我们返回`false`。"
 
 #: ../../example/sudoku/index.md:219
 msgid ""
@@ -5823,6 +5913,7 @@ msgid ""
 "Next, we define `assign(values, key, val)` to remove all values except "
 "`val` from the possible values of `key`."
 msgstr ""
+"接下来，我们定义`assign(values, key, val)`来从`key`的可能值中删除除`val`之外的所有值。"
 
 #: ../../example/sudoku/index.md:272
 msgid ""
@@ -5844,10 +5935,13 @@ msgid ""
 "consider, allowing these strategies to propagate widely across the grid. "
 "This is key to quickly eliminating invalid options."
 msgstr ""
+"这两个函数将启发式策略应用于它们访问的每个方格。"
+"成功的启发式应用会引入新的方格供考虑，从而使这些策略在整个网格中广泛传播。"
+"这是快速消除无效选项的关键。"
 
 #: ../../example/sudoku/index.md:285
 msgid "Let's try the example again"
-msgstr ""
+msgstr "让我们再试一次这个例子"
 
 #: ../../example/sudoku/index.md:287
 msgid ""
@@ -5883,6 +5977,7 @@ msgid ""
 "A significant improvement! In fact, this preprocessing can already solve "
 "some simple Sudoku puzzles."
 msgstr ""
+"这是一个显著的进步！事实上，这种预处理已经可以解决一些简单的数独难题了。"
 
 #: ../../example/sudoku/index.md:305
 msgid ""
@@ -5910,10 +6005,13 @@ msgid ""
 "topic, refer to Chapter 6 of _Artificial Intelligence: A Modern "
 "Approach_."
 msgstr ""
+"如果您对人工智能感兴趣，您可能会将其视为约束满足问题 (CSP)，"
+"而'分配'和'消除'是专门的弧一致性算法。"
+"有关此主题的更多信息，请参阅 _Artificial Intelligence: A Modern Approach_ 第6章"
 
 #: ../../example/sudoku/index.md:323
 msgid "Search"
-msgstr ""
+msgstr "搜索"
 
 #: ../../example/sudoku/index.md:325
 msgid ""
@@ -5923,6 +6021,9 @@ msgid ""
 "square, we still use `assign`, which allows us to apply previous "
 "optimizations to eliminate many invalid branches during the search."
 msgstr ""
+"经过预处理后，我们可以大胆地使用蛮力枚举来搜索所有可行的组合。"
+"但是，在搜索过程中，我们仍然可以使用启发式策略。当尝试为某个方块赋值时，"
+"我们仍然使用`assign`，这使我们能够应用先前的优化来消除搜索过程中的许多无效分支。"
 
 #: ../../example/sudoku/index.md:327
 msgid ""
@@ -5931,6 +6032,8 @@ msgid ""
 " backtracking troublesome, we directly copy values each time we assign a "
 "value."
 msgstr ""
+"另外需要注意的是，搜索过程中可能会发生冲突（当一个方格的可能值耗尽时）。"
+"由于可变结构使回溯变得麻烦，因此我们每次分配值时都直接复制值。"
 
 #: ../../example/sudoku/index.md:329
 msgid ""
@@ -5980,6 +6083,9 @@ msgid ""
 "[magictour](http://magictour.free.fr/top95), a list of difficult Sudoku "
 "puzzles, which is not easy for humans)"
 msgstr ""
+"我们再运行一​​遍同样的例子"
+"（这个例子其实取自[magictour](http://magictour.free.fr/top95)，"
+"一个难度数独谜题列表，对人类来说并不容易）"
 
 #: ../../example/sudoku/index.md:368
 msgid ""
@@ -6005,12 +6111,16 @@ msgid ""
 "Running on [MoonBit online IDE](https://try.moonbitlang.com/), It takes "
 "only about 0.11 seconds to solve this Sudoku!"
 msgstr ""
+"在[MoonBit online IDE](https://try.moonbitlang.com/)上运行，"
+"仅需大约 0.11 秒即可解决这个数独！"
 
 #: ../../example/sudoku/index.md:386
 msgid ""
 "Complete code here: "
 "[try.moonbitlang.com/#6806c2fe](https://try.moonbitlang.com/#6806c2fe)"
 msgstr ""
+"完整代码在："
+"[try.moonbitlang.com/#6806c2fe](https://try.moonbitlang.com/#6806c2fe)"
 
 #: ../../example/sudoku/index.md:390
 msgid ""
@@ -6022,10 +6132,14 @@ msgid ""
 "reveals that one should not be overly concerned with an unsolvable Sudoku"
 " puzzle."
 msgstr ""
+"游戏的目的是为了缓解无聊并带来快乐。"
+"如果玩游戏让人感到焦虑而不是兴奋，那么它可能违背了游戏设计师的初衷。"
+"本文表明，简单的消除法和强力搜索可以快速解决一些数独难题。"
+"这并不意味着数独不值得玩；相反，它表明人们不应该过分担心无法解决的数独难题。"
 
 #: ../../example/sudoku/index.md:392
 msgid "Let's play with MoonBit with ease!"
-msgstr ""
+msgstr "让我们轻松玩转MoonBit吧！"
 
 #: ../../example/sudoku/index.md:394
 msgid ""
@@ -6033,12 +6147,17 @@ msgid ""
 "play with the Sudoku solver written in MoonBit. Click [this "
 "link](https://github.com/myfreess/sudoku) to view the full source code."
 msgstr ""
+"访问 MoonBit [Gallery](https://www.moonbitlang.com/gallery/sudoku/)"
+"来试用用 MoonBit 编写的数独解算器。"
+"单击[此链接](https://github.com/myfreess/sudoku)可查看完整源代码。"
 
 #: ../../example/sudoku/index.md:396
 msgid ""
 "This tutorial references Norvig's blog: "
 "[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)"
 msgstr ""
+"本教程参考了Norvig的博客："
+"[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)"
 
 #~ msgid ""
 #~ "fn step(self : GState) -> Bool {\n"

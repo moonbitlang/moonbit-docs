@@ -52,6 +52,7 @@ When the first parameter of a method is also the type it belongs to, methods can
 ```
 
 ### API design guideline
+
 Since there are two ways to define methods, and both allow dot syntax,
 a natural question is which syntax to choose when designing the API of a package.
 The rule here is:
@@ -93,23 +94,23 @@ Another example about `op_get` and `op_set`:
 
 Currently, the following operators can be overloaded:
 
-| Operator Name         | Method Name  |
-| --------------------- | ------------ |
-| `+`                   | `op_add`     |
-| `-`                   | `op_sub`     |
-| `*`                   | `op_mul`     |
-| `/`                   | `op_div`     |
-| `%`                   | `op_mod`     |
-| `=`                   | `op_equal`   |
-| `<<`                  | `op_shl`     |
-| `>>`                  | `op_shr`     |
-| `-` (unary)           | `op_neg`     |
-| `_[_]` (get item)     | `op_get`     |
-| `_[_] = _` (set item) | `op_set`     |
-| `_[_:_]` (view)       | `op_as_view` |
-| `&`                   | `land`       |
-| `\|`                  | `lor`        |
-| `^`                   | `lxor`       |
+| Operator Name         | Method Name  | Recommended Signature   |
+| --------------------- | ------------ | ----------------------- |
+| `+`                   | `op_add`     | `(A, A) -> X`           |
+| `-`                   | `op_sub`     | `(A, A) -> X`           |
+| `*`                   | `op_mul`     | `(A, A) -> X`           |
+| `/`                   | `op_div`     | `(A, A) -> X`           |
+| `%`                   | `op_mod`     | `(A, A) -> X`           |
+| `==`                  | `op_equal`   | `(A, A) -> Bool` (Required by trait `Eq`) |
+| `<<`                  | `op_shl`     | `(A, B) -> X`           |
+| `>>`                  | `op_shr`     | `(A, B) -> X`           |
+| `-` (unary)           | `op_neg`     | `(A) -> X`              |
+| `_[_]` (get item)     | `op_get`     | `(A, B) -> X`           |
+| `_[_] = _` (set item) | `op_set`     | `(A, B, C) -> Unit`     |
+| `_[_:_]` (view)       | `op_as_view` | `(A, start? : B, end? : C) -> X` |
+| `&`                   | `land`       | `(A, B) -> X`           |
+| `\|`                  | `lor`        | `(A, B) -> X`           |
+| `^`                   | `lxor`       | `(A, B) -> X`           |
 
 By implementing `op_as_view` method, you can create a view for a user-defined type. Here is an example:
 
@@ -141,7 +142,7 @@ A trait can depend on other traits, for example:
 :end-before: end super trait 1
 ```
 
-To implement the sub trait, one will have to implement the super traits, 
+To implement the sub trait, one will have to implement the super traits,
 and the methods defined in the sub trait.
 
 ### Implementing traits

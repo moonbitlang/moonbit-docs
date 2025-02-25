@@ -4,7 +4,7 @@ enum Color {
   Blue
   RGB(Int, Int, Int)
   CMYK(Int, Int, Int, Int)
-}
+} derive(Show)
 
 fn print_color(color : Color) -> Unit {
   match color {

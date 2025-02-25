@@ -12,14 +12,17 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 test {
   let buf = @lib.Buffer::new(4)
   buf.append_int(256)
   buf.append_int(255)
-  inspect!(@lib.bytes_to_int(buf.data, 0), content="256")
-  inspect!(@lib.bytes_to_int(buf.data, 4), content="255")
+  let content = buf.to_bytes()
+  inspect!(content[:].to_int_be(), content="256")
+  inspect!(content[4:].to_int_be(), content="255")
   let buf1 = @lib.Buffer::new(4)
   buf1.append_int(257)
   buf.truncate(buf1)
-  inspect!(@lib.bytes_to_int(buf.data, 8), content="257")
+  let content = buf.to_bytes()
+  inspect!(content[8:].to_int_be(), content="257")
 }

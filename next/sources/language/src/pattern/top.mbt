@@ -23,9 +23,14 @@ let user : Unit = {
 // start pattern 2
 test {
   let ary = [1, 2, 3, 4]
-  let [a, b, ..] = ary
-  inspect!("a = \{a}, b = \{b}", content="a = 1, b = 2")
-  let [.., a, b] = ary
+  if ary is [a, b, ..] && a == 1 && b == 2 {
+    inspect!("a = \{a}, b = \{b}", content="a = 1, b = 2")
+  } else {
+    fail!("")
+  }
+  guard let [.., a, b] = ary else {
+    _ => fail!("")
+  }
   inspect!("a = \{a}, b = \{b}", content="a = 3, b = 4")
 }
 // end pattern 2
@@ -73,10 +78,10 @@ fn map() -> Unit {
   // start pattern 5
   match map {
     // matches if any only if "b" exists in `map`
-    { "b": _ } => ...
+    { "b": _, .. } => ...
     // matches if and only if "b" does not exist in `map` and "a" exists in `map`.
     // When matches, bind the value of "a" in `map` to `x`
-    { "b"? : None, "a": x } => ...
+    { "b"? : None, "a": x, .. } => ...
     // compiler reports missing case: { "b"? : None, "a"? : None }
   }
   // end pattern 5
@@ -86,8 +91,8 @@ fn json() -> Unit {
   let json = Null
   // start pattern 6
   match json {
-    { "version": "1.0.0", "import": [..] as imports } => ...
-    { "version": Number(i), "import": Array(imports)} => ...
+    { "version": "1.0.0", "import": [..] as imports, .. } => ...
+    { "version": Number(i), "import": Array(imports), ..} => ...
     _ => ...
   }
   // end pattern 6

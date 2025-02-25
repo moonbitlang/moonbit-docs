@@ -1,5 +1,5 @@
-type UserId Int
-type UserName String
+type UserId Int derive(Show)
+type UserName String derive(Show)
 
 fn main {
   let user_id : UserId = UserId(1)

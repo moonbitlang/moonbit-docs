@@ -1228,7 +1228,7 @@ The `key? : value` syntax will match no matter `key` exists or not, and `value` 
 
 - To match a data type `T` using map pattern, `T` must have a method `op_get(Self, K) -> Option[V]` for some type `K` and `V` (see [method and trait](./methods.md)).
 - Currently, the key part of map pattern must be a literal or constant
-- Map patterns are always open: unmatched keys are silently ignored
+- Map patterns are always open: the unmatched keys are silently ignored, and `..` needs to be added to identify this nature
 - Map pattern will be compiled to efficient code: every key will be fetched at most once
 
 ### Json Pattern
