@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-25 15:13+0800\n"
+"POT-Creation-Date: 2025-02-25 16:52+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -317,7 +317,6 @@ msgstr ""
 "的异步编程支持和 JS 的回调 API 的例子："
 
 #: ../../language/async-experimental.md:75
-#, fuzzy
 msgid ""
 "extern type JSTimer\n"
 "extern \"js\" fn js_set_timeout(f : () -> Unit, duration : Int) -> "
@@ -353,7 +352,7 @@ msgid ""
 "  })\n"
 "}\n"
 msgstr ""
-"type JSTimer\n"
+"extern type JSTimer\n"
 "extern \"js\" fn js_set_timeout(f : () -> Unit, duration : Int) -> "
 "JSTimer =\n"
 "  #| (f, duration) => setTimeout(f, duration)\n"
@@ -6091,8 +6090,7 @@ msgstr "上述示例在第 2 行返回一个类型为 `Y` 的值 `b`，这与函
 msgid ""
 "Please make sure to return a value of the same type as the return type of"
 " the function."
-msgstr ""
-"请确保返回与函数的返回类型相同的值。"
+msgstr "请确保返回与函数的返回类型相同的值。"
 
 #: ../../language/error_codes/E4014.md:21
 msgid "For instance, in the example above, you may write:"
@@ -6625,7 +6623,9 @@ msgid ""
 "The example above tries to call a function `f` with a value `None`, which"
 " is a variant of the `Option[_]` type, but `f` only accepts a tuple, "
 "giving the following error on line 5:"
-msgstr "在上述例子中，试图对 `None` 值调用函数 `f`，这是 `Option[_]` 类型的一个枚举值，但 `f` 只接受一个元组，在第 5 行报错："
+msgstr ""
+"在上述例子中，试图对 `None` 值调用函数 `f`，这是 `Option[_]` 类型的一个枚举值，但 `f` 只接受一个元组，在第 5 "
+"行报错："
 
 #: ../../language/error_codes/E4029.md:20
 msgid ""
@@ -6792,7 +6792,9 @@ msgid ""
 "The example above tries to assign a record with fields `x` and `y` to a "
 "variable `c`, but this field combination matches both `S` and `T` types, "
 "giving the following error on line 4:"
-msgstr "在上述例子中，试图将一个带有字段 `x` 和 `y` 的结构体赋值给一个变量 `c`，但这个字段组合同时匹配了 `S` 和 `T` 两种类型，会在第 4 行报错："
+msgstr ""
+"在上述例子中，试图将一个带有字段 `x` 和 `y` 的结构体赋值给一个变量 `c`，但这个字段组合同时匹配了 `S` 和 `T` "
+"两种类型，会在第 4 行报错："
 
 #: ../../language/error_codes/E4034.md:18
 msgid ""
@@ -7066,7 +7068,9 @@ msgid ""
 "`Option` type is a generic type that expects a single type argument, but "
 "the example does not provide any type arguments, giving the following "
 "error on line 1:"
-msgstr "在上述例子中，试图创建一个 `Option` 类型的实例。`Option` 类型是一个泛型类型，期望一个类型参数，但是这个例子没有提供任何类型参数，在第 1 行报错："
+msgstr ""
+"在上述例子中，试图创建一个 `Option` 类型的实例。`Option` "
+"类型是一个泛型类型，期望一个类型参数，但是这个例子没有提供任何类型参数，在第 1 行报错："
 
 #: ../../language/error_codes/E4040.md:16
 msgid ""
@@ -7118,15 +7122,13 @@ msgstr "不合法的桩类型。"
 msgid ""
 "When defineing a FFI, the stub type must be a valid type, namely they can"
 " be represented natively at corresponding backends."
-msgstr ""
-"在定义 FFI 时，桩类型必须是一个有效的类型，即它们可以在相应的后端原生地表示。"
+msgstr "在定义 FFI 时，桩类型必须是一个有效的类型，即它们可以在相应的后端原生地表示。"
 
 #: ../../language/error_codes/E4042.md:8
 msgid ""
 "For example, you cannot use `FixedArray[T]` and `String` in FFI "
 "definition on WASM linear backend."
-msgstr ""
-"例如，在 WASM 线性后端的 FFI 定义中，不能使用 `FixedArray[T]` 和 `String`。"
+msgstr "例如，在 WASM 线性后端的 FFI 定义中，不能使用 `FixedArray[T]` 和 `String`。"
 
 #: ../../language/error_codes/E4042.md:13
 msgid "On WASM linear backend:"
@@ -7145,8 +7147,9 @@ msgid ""
 "For example, if you wish to pass an array of int to the JS host with the "
 "WASM linear backend, you can pass the int one by one to the host function"
 " and store the array on the JS side."
-msgstr "将非原生类型通过 FFI 接口传递的方式取决于 MoonBit 编译器的后端和您使用的运行时。"
-"例如，如果你希望在 Wasm 线性内存后端将一个整数数组传递给 JS 宿主，可以将整数一个一个地传递给宿主函数，并在 JS 端存储数组。"
+msgstr ""
+"将非原生类型通过 FFI 接口传递的方式取决于 MoonBit 编译器的后端和您使用的运行时。例如，如果你希望在 Wasm "
+"线性内存后端将一个整数数组传递给 JS 宿主，可以将整数一个一个地传递给宿主函数，并在 JS 端存储数组。"
 
 #: ../../language/error_codes/E4042.md:28
 msgid ""
@@ -7369,8 +7372,7 @@ msgid ""
 "This means your local build files are corrupted. Try to run `moon clean` "
 "or remove the `target` directory manually and build again. If the error "
 "persists, please submit a bug report here:"
-msgstr "这意味着你本地的构建文件已经损坏。尝试运行 `moon clean` 或移除 `target` 文件夹并重新构建。"
-"如果错误依然存在，请在此报告："
+msgstr "这意味着你本地的构建文件已经损坏。尝试运行 `moon clean` 或移除 `target` 文件夹并重新构建。如果错误依然存在，请在此报告："
 
 #: ../../language/error_codes/E4049.md:1
 msgid "E4049"
@@ -7387,9 +7389,10 @@ msgid ""
 "Page](https://www.moonbitlang.com/download/). Then try to run `moon "
 "clean` or remove the `target` directory manually and build again. If the "
 "error persists, please submit a bug report here:"
-msgstr "这意味着你本地的构建文件已经损坏或过失。首先尝试通过我们的 [下载页](https://www.moonbitlang.cn/download/)"
-"更新/重装你的 MoonBit 工具链。然后尝试运行 `moon clean` 或移除 `target` 文件夹并重新构建。"
-"如果错误依然存在，请在此报告："
+msgstr ""
+"这意味着你本地的构建文件已经损坏或过失。首先尝试通过我们的 "
+"[下载页](https://www.moonbitlang.cn/download/)更新/重装你的 MoonBit 工具链。然后尝试运行 "
+"`moon clean` 或移除 `target` 文件夹并重新构建。如果错误依然存在，请在此报告："
 
 #: ../../language/error_codes/E4050.md:1
 msgid "E4050"
@@ -7405,8 +7408,7 @@ msgid ""
 "This means that the definitions can refer to each other in any order. "
 "However, no cycles are allowed in the dependencies between the toplevel "
 "variable definitions."
-msgstr "MoonBit 包中的顶层定义是相互递归的。这意味着定义可以以任何顺序相互引用。"
-"然而，在顶层变量定义之间的依赖中不允许循环。"
+msgstr "MoonBit 包中的顶层定义是相互递归的。这意味着定义可以以任何顺序相互引用。然而，在顶层变量定义之间的依赖中不允许循环。"
 
 #: ../../language/error_codes/E4050.md:11
 msgid ""
@@ -7422,8 +7424,7 @@ msgid ""
 "The fix to this error varies depending on the logic of the program. One "
 "possible fix is to make the variable definition to use `Ref[_?]`, and "
 "initialize the variable later in `init` block of the program."
-msgstr ""
-"这个错误的修复取决于程序的逻辑。一个可能的修复是将变量定义为 `Ref[_?]`，并在程序的 `init` 块中初始化变量。"
+msgstr "这个错误的修复取决于程序的逻辑。一个可能的修复是将变量定义为 `Ref[_?]`，并在程序的 `init` 块中初始化变量。"
 
 #: ../../language/error_codes/E4050.md:25
 msgid ""
@@ -7450,15 +7451,13 @@ msgstr "标识符被定义了两次。"
 msgid ""
 "Mutually recursive definitions in MoonBit shall not have the same "
 "identifier. This include:"
-msgstr ""
-"MoonBit 中的相互递归的定义不应该有相同的标识符。这包括："
+msgstr "MoonBit 中的相互递归的定义不应该有相同的标识符。这包括："
 
 #: ../../language/error_codes/E4051.md:8
 msgid ""
 "All toplevel definitions, including variables, functions, types, traits, "
 "etc."
-msgstr ""
-"所有的顶层定义，包括变量、函数、类型、特征等。"
+msgstr "所有的顶层定义，包括变量、函数、类型、特征等。"
 
 #: ../../language/error_codes/E4051.md:9
 msgid "Locally named functions. (Reported as [E4006](E4006))"
@@ -7473,8 +7472,7 @@ msgid ""
 "Note, locally defined variables are not mutually recursive, so they can "
 "have the same identifier, and the later definition shadows the previous "
 "one."
-msgstr ""
-"注意，局部定义的变量不是相互递归的，所以它们可以有相同的标识符，后一个定义会遮蔽前一个。"
+msgstr "注意，局部定义的变量不是相互递归的，所以它们可以有相同的标识符，后一个定义会遮蔽前一个。"
 
 #: ../../language/error_codes/E4051.md:17
 msgid "Toplevel variable definition:"
@@ -7973,12 +7971,10 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4061.md
-#, fuzzy
 msgid "Traits"
-msgstr "使用特征"
+msgstr "特征"
 
 #: ../../language/error_codes/E4061.md
-#, fuzzy
 msgid "Types"
 msgstr "类型"
 
@@ -13025,7 +13021,6 @@ msgstr ""
 "创建了一个新项目"
 
 #: ../../language/ffi-and-wasm-host.md:153
-#, fuzzy
 msgid ""
 "// We first declare a type representing the context of canvas\n"
 "extern type Canvas_ctx\n"
@@ -13060,8 +13055,37 @@ msgid ""
 "  println(\"PI: \\{pi}\")\n"
 "}\n"
 msgstr ""
-"// 首先声明一个表示 canvas 上下文的类型\n"
-"type Canvas_ctx\n"
+"// 我们首先定义一个表示画布的上下文的类型\n"
+"extern type Canvas_ctx\n"
+"\n"
+"// 然后定义外部函数接口\n"
+"fn begin_path(self : Canvas_ctx) = \"canvas\" \"beginPath\"\n"
+"fn arc(self : Canvas_ctx, x : Int, y : Int, radius : Int, start_angle : "
+"Double,\n"
+"    end_angle : Double, counterclockwise : Bool) = \"canvas\" \"arc\"\n"
+"fn move_to(self : Canvas_ctx, x : Int, y : Int) = \"canvas\" \"moveTo\"\n"
+"fn stroke(self : Canvas_ctx) = \"canvas\" \"stroke\"\n"
+"\n"
+"fn get_pi() -> Double = \"math\" \"PI\"\n"
+"let pi : Double = get_pi()\n"
+"\n"
+"// 然后应用这些函数来定义在画布上绘制的函数\n"
+"pub fn draw(self : Canvas_ctx) -> Unit {\n"
+"  self.begin_path()\n"
+"  self.arc(75, 75, 50, 0.0, pi * 2.0, true) // Outer circle\n"
+"  self.move_to(110, 75)\n"
+"  self.arc(75, 75, 35, 0.0, pi, false) // Mouth (clockwise)\n"
+"  self.move_to(65, 65)\n"
+"  self.arc(60, 65, 5, 0.0, pi * 2.0, true) // Left eye\n"
+"  self.move_to(95, 65)\n"
+"  self.arc(90, 65, 5, 0.0, pi * 2.0, true) // Right eye\n"
+"  self.stroke()\n"
+"}\n"
+"\n"
+"// 我们也在此展示 `println` 功能\n"
+"pub fn display_pi() -> Unit {\n"
+"  println(\"PI: \\{pi}\")\n"
+"}\n"
 
 #: ../../language/ffi-and-wasm-host.md:186
 msgid ""
@@ -16505,31 +16529,31 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1317
 msgid ""
-"Pattern binders introduced by `is` expressions can be used in two "
-"contexts:"
-msgstr "通过 `is` 表达式绑定的标识符可以在两个上下文中使用："
+"Pattern binders introduced by `is` expressions can be used in the "
+"following contexts:"
+msgstr "通过 `is` 表达式绑定的标识符可以在以下的上下文中使用："
 
-#: ../../language/fundamentals.md:1319
+#: ../../language/fundamentals.md:1320
 msgid ""
 "In boolean AND expressions (`&&`): binders introduced in the left-hand "
 "expression can be used in the right-hand expression"
 msgstr "在与表达式（`&&`）中：左侧表达式中绑定的标识符可以在右侧表达式中使用"
 
-#: ../../language/fundamentals.md:1323
+#: ../../language/fundamentals.md:1324
 msgid ""
 "fn f(x : Int?) -> Bool {\n"
 "  x is Some(v) && v >= 0\n"
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1330
+#: ../../language/fundamentals.md:1331
 msgid ""
-"In `if` conditions and their corresponding branches: if the condition is "
-"a sequence of boolean expressions `e1 && e2 && ...`, the binders "
-"introduced in the `is` expression can be used in the branch of the `if` "
-"expression."
+"In the first branch of `if` expression: if the condition is a sequence of"
+" boolean expressions `e1 && e2 && ...`, the binders introduced by the "
+"`is` expression can be used in the branch where the condition evaluates "
+"to `true`."
 msgstr ""
-"在 `if` 条件及其对应的分支中：如果条件是一系列布尔表达式 `e1 && e2 && ...`，则可以在 `if` 表达式的分支中使用 "
+"在 `if` 的第一个分支中：如果条件是一系列布尔表达式 `e1 && e2 && ...`，则可以在条件为真的分支中使用 "
 "`is` 表达式中绑定的标识符。"
 
 #: ../../language/fundamentals.md:1335
@@ -16544,17 +16568,44 @@ msgid ""
 msgstr ""
 
 #: ../../language/fundamentals.md:1342
+msgid "In the following statements of a `guard` condition:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1344
+msgid ""
+"fn h(x : Int?) -> Unit {\n"
+"  guard x is Some(v) \n"
+"  println(v)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1351
+msgid "In the body of a `while` loop:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1353
+msgid ""
+"fn i(x : Int?) -> Unit {\n"
+"  let mut m = x\n"
+"  while m is Some(v) {\n"
+"    println(v)\n"
+"    m = None\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1360
 msgid "TODO syntax"
 msgstr "TODO 语法"
 
-#: ../../language/fundamentals.md:1344
+#: ../../language/fundamentals.md:1362
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo`语法(`...`)是一种特殊构造，用于标记尚未实现或用于未来功能的占位符代码段。 例如："
 
-#: ../../language/fundamentals.md:1346
+#: ../../language/fundamentals.md:1364
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"
@@ -17284,7 +17335,6 @@ msgid ""
 msgstr ""
 
 #: ../../language/methods.md:145
-#, fuzzy
 msgid ""
 "To implement the sub trait, one will have to implement the super traits, "
 "and the methods defined in the sub trait."
@@ -17327,7 +17377,6 @@ msgstr ""
 "提供，例如："
 
 #: ../../language/methods.md:163
-#, fuzzy
 msgid ""
 "pub(open) trait MyShow {\n"
 "  to_string(Self) -> String\n"
@@ -17345,20 +17394,20 @@ msgid ""
 "pub impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ..."
 " }\n"
 msgstr ""
-"trait MyShow {\n"
+"pub(open) trait MyShow {\n"
 "  to_string(Self) -> String\n"
 "}\n"
 "\n"
 "struct MyType {}\n"
 "\n"
-"impl MyShow for MyType with to_string(self) { ... }\n"
+"pub impl MyShow for MyType with to_string(self) { ... }\n"
 "\n"
 "struct MyContainer[T] {}\n"
 "\n"
 "// 使用类型参数实现特征。\n"
 "// `[X : Show]` 意味着类型参数 `X` 必须实现 `Show`，\n"
 "// 我们将稍后介绍。\n"
-"impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ... }\n"
+"pub impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ... }\n"
 
 #: ../../language/methods.md:169
 msgid ""
@@ -17621,7 +17670,6 @@ msgid ""
 msgstr "用户可以为特征对象定义新方法，就像为结构体和枚举定义新方法一样："
 
 #: ../../language/methods.md:257
-#, fuzzy
 msgid ""
 "pub(open) trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
@@ -17648,11 +17696,11 @@ msgid ""
 "  .write_string(\")\")\n"
 "}\n"
 msgstr ""
-"trait Logger {\n"
+"pub(open) trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
 "}\n"
 "\n"
-"trait CanLog {\n"
+"pub(open) trait CanLog {\n"
 "  log(Self, &Logger) -> Unit\n"
 "}\n"
 "\n"
@@ -17662,7 +17710,7 @@ msgstr ""
 "}\n"
 "\n"
 "// 使用新的方法来简化代码\n"
-"impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {\n"
+"pub impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {\n"
 "  let (a, b) = self\n"
 "  logger\n"
 "  ..write_string(\"(\")\n"
