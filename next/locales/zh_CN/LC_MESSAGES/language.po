@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-25 15:13+0800\n"
+"POT-Creation-Date: 2025-02-25 16:52+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -317,7 +317,6 @@ msgstr ""
 "的异步编程支持和 JS 的回调 API 的例子："
 
 #: ../../language/async-experimental.md:75
-#, fuzzy
 msgid ""
 "extern type JSTimer\n"
 "extern \"js\" fn js_set_timeout(f : () -> Unit, duration : Int) -> "
@@ -353,7 +352,7 @@ msgid ""
 "  })\n"
 "}\n"
 msgstr ""
-"type JSTimer\n"
+"extern type JSTimer\n"
 "extern \"js\" fn js_set_timeout(f : () -> Unit, duration : Int) -> "
 "JSTimer =\n"
 "  #| (f, duration) => setTimeout(f, duration)\n"
@@ -2267,7 +2266,7 @@ msgid ""
 "If this function is at the toplevel (i.e., not local), and is part of the"
 " public API of your module, you can add the `pub` keyword to the "
 "function."
-msgstr "如果这个函数是在顶层（即不是局部的），并且是你模块的公共 API 的一部分，你可以给函数添加 `pub` 关键字。"
+msgstr "如果这个函数是在顶层（即不是局部的），并且是你模块的公开 API 的一部分，你可以给函数添加 `pub` 关键字。"
 
 #: ../../language/error_codes/E1001.md:35
 msgid ""
@@ -2364,7 +2363,7 @@ msgid ""
 "If this variable is at the toplevel (i.e., not local), and is part of the"
 " public API of your module, you can add the `pub` keyword to the "
 "variable."
-msgstr "如果这个变量是在顶层（即不是局部的），并且是你模块的公共 API 的一部分，你可以给变量添加 `pub` 关键字。"
+msgstr "如果这个变量是在顶层（即不是局部的），并且是你模块的公开 API 的一部分，你可以给变量添加 `pub` 关键字。"
 
 #: ../../language/error_codes/E1002.md:40
 msgid "pub let p = 42\n"
@@ -2461,7 +2460,7 @@ msgstr "如果这个类型确实没有用，你可以移除类型的定义。"
 msgid ""
 "If this type is not local, and is part of the public API of your module, "
 "you can remove the `priv` visibility keyword from the type."
-msgstr "如果这个类型不是局部的，并且是你模块的公共 API 的一部分，你可以移除 `priv` 可见性关键字。"
+msgstr "如果这个类型不是局部的，并且是你模块的公开 API 的一部分，你可以移除 `priv` 可见性关键字。"
 
 #: ../../language/error_codes/E1003.md:38
 msgid ""
@@ -5485,30 +5484,28 @@ msgid "E4001"
 msgstr ""
 
 #: ../../language/error_codes/E4001.md:3
-#, fuzzy
 msgid "A field with incompatible visibility cannot be declared within a struct."
-msgstr "一个不同可见性的字段不能在结构体中声明。"
+msgstr "结构体字段的可见性不兼容。"
 
 #: ../../language/error_codes/E4001.md:5
 msgid "The following visibility combinations are allowed:"
-msgstr ""
+msgstr "以下可见性组合是允许的："
 
 #: ../../language/error_codes/E4001.md:7
 msgid ""
 "A public field within a public struct, although it will emit a warning "
 "[E1008](./E1008.md)."
-msgstr ""
+msgstr "公开结构体和公开字段，虽然这会产生一个警告 [E1008](./E1008.md)。"
 
 #: ../../language/error_codes/E4001.md:9
-#, fuzzy
 msgid "A private field within a public struct."
-msgstr "一个公共字段不能在私有结构体中声明。\n"
+msgstr "公开结构体和私有字段。\n"
 
 #: ../../language/error_codes/E4001.md:10
 msgid ""
 "A private field within a private struct, emitting [E1008](./E1008.md) as "
 "well."
-msgstr ""
+msgstr "私有结构体和私有字段，虽然也会产生 [E1008](./E1008.md) 警告。"
 
 #: ../../language/error_codes/E4001.md:12 ../../language/error_codes/E4002.md:5
 #: ../../language/error_codes/E4003.md:5 ../../language/error_codes/E4004.md:6
@@ -5549,11 +5546,11 @@ msgid ""
 "This example declares a field with public visibility within a struct with"
 " private visibility, which is not allowed and will give the following "
 "error on line 2:"
-msgstr "这个例子在一个私有结构体中声明了一个公共可见性的字段，这是不允许的，会在第 2 行报错："
+msgstr "这个例子在一个私有结构体中声明了一个公开可见性的字段，这是不允许的，会在第 2 行报错："
 
 #: ../../language/error_codes/E4001.md:24
 msgid "A public field cannot be declared within a private struct.\n"
-msgstr "一个公共字段不能在私有结构体中声明。\n"
+msgstr "一个公开字段不能在私有结构体中声明。\n"
 
 #: ../../language/error_codes/E4001.md:30
 #: ../../language/error_codes/E4002.md:22
@@ -5597,7 +5594,7 @@ msgstr "这个例子在一个字段中声明了 `pub(open)` 可见性修饰符�
 
 #: ../../language/error_codes/E4002.md:16
 msgid "The public open modifier is not supported here\n"
-msgstr "这里不支持公共开放修饰符\n"
+msgstr "这里不支持公开且开放修饰符\n"
 
 #: ../../language/error_codes/E4002.md:24
 msgid ""
@@ -5611,7 +5608,7 @@ msgid ""
 "We could have written `pub field: Int` instead of `field: Int` as well, "
 "but it is not necessary, as all fields in a public struct are public by "
 "default."
-msgstr "我们可以将 `field: Int` 改为 `pub field: Int`，但这并不是必要的，因为公共结构体中的所有字段默认都是公共的。"
+msgstr "我们可以将 `field: Int` 改为 `pub field: Int`，但这并不是必要的，因为公开结构体中的所有字段默认都是公开的。"
 
 #: ../../language/error_codes/E4003.md:1
 msgid "E4003"
@@ -5934,11 +5931,10 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4010.md:21
-#, fuzzy
 msgid ""
 "Remove the `pub` keyword so that the default implementation has the same "
 "visibility as the trait itself:"
-msgstr "不能为外来特征定义默认实现。"
+msgstr "移除 `pub` 关键字，使默认实现与特性本身具有相同的可见性："
 
 #: ../../language/error_codes/E4010.md:24
 #: ../../language/error_codes/E4011.md:22
@@ -5956,7 +5952,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4011.md:3
 msgid "Type parameters are not allowed on default implementation for traits."
-msgstr ""
+msgstr "不允许在特性默认实现中使用类型参数。"
 
 #: ../../language/error_codes/E4011.md:7
 msgid ""
@@ -5971,11 +5967,11 @@ msgstr ""
 msgid ""
 "The example above uses a type parameter `T` on the default implementation"
 " of the `Stringer` trait, which is not allowed."
-msgstr ""
+msgstr "在上述例子中，在 `Stringer` 特性的默认实现中使用了类型参数 `T`，这是不允许的。"
 
 #: ../../language/error_codes/E4011.md:20
 msgid "Remove the type parameter from the default implementation:"
-msgstr ""
+msgstr "从默认实现中移除类型参数："
 
 #: ../../language/error_codes/E4012.md:1
 msgid "E4012"
@@ -6051,20 +6047,16 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4013.md:26
-#, fuzzy
 msgid ""
 "fn f() -> ((Int) -> Int) {\n"
 "  fn (x: Int) { x }\n"
 "}\n"
 msgstr ""
-"fn f(a? : Int) -> Unit { // a 的类型为 Int?\n"
-"  // ...\n"
-"}\n"
 
 #: ../../language/error_codes/E4013.md:32
 #: ../../language/error_codes/E4046.md:29
 msgid "... or:"
-msgstr ""
+msgstr "或："
 
 #: ../../language/error_codes/E4013.md:34
 msgid ""
@@ -6079,7 +6071,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4014.md:3
 msgid "Type Mismatch."
-msgstr ""
+msgstr "类型不匹配。"
 
 #: ../../language/error_codes/E4014.md:7
 msgid ""
@@ -6092,17 +6084,17 @@ msgstr ""
 msgid ""
 "The above example returns a value `b` of type `Y` on line 2, which is not"
 " the same as the return type `X` of the function."
-msgstr ""
+msgstr "上述示例在第 2 行返回一个类型为 `Y` 的值 `b`，这与函数的返回类型 `X` 不同。"
 
 #: ../../language/error_codes/E4014.md:18
 msgid ""
 "Please make sure to return a value of the same type as the return type of"
 " the function."
-msgstr ""
+msgstr "请确保返回与函数的返回类型相同的值。"
 
 #: ../../language/error_codes/E4014.md:21
 msgid "For instance, in the example above, you may write:"
-msgstr ""
+msgstr "例如，在上述示例中，你可以这样写："
 
 #: ../../language/error_codes/E4014.md:23
 msgid ""
@@ -6117,7 +6109,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4015.md:3
 msgid "Type has no method with the specified name."
-msgstr ""
+msgstr "类型没有指定名称的方法。"
 
 #: ../../language/error_codes/E4015.md:7
 msgid "let hey = \"hey\".upper()\n"
@@ -6127,7 +6119,7 @@ msgstr ""
 msgid ""
 "The above example tries to call an inexistent method `upper()` on a "
 "string literal, giving the following error on line 1:"
-msgstr ""
+msgstr "上述例子中，试图对字符串常量调用一个不存在的方法 `upper()`，在第 1 行报错："
 
 #: ../../language/error_codes/E4015.md:14
 msgid "Type String has no method upper.\n"
@@ -6137,7 +6129,7 @@ msgstr ""
 msgid ""
 "This is usually a typo or a misunderstanding of the methods available. "
 "Please make sure to use the correct method name:"
-msgstr ""
+msgstr "这通常是因为一个拼写错误或对可用方法的误解。请确保使用正确的方法名称："
 
 #: ../../language/error_codes/E4015.md:23
 msgid "let hey = \"hey\".to_upper()\n"
@@ -6151,7 +6143,7 @@ msgstr ""
 msgid ""
 "Please implement the required method for the type to use the infix "
 "operator."
-msgstr ""
+msgstr "请为类型实现所需的方法以使用中缀运算符。"
 
 #: ../../language/error_codes/E4016.md:7
 msgid ""
@@ -6166,17 +6158,17 @@ msgid ""
 "The example above tries to use the infix operator `+` on a type `S` that "
 "does not implement the required method `op_add`, giving the following "
 "error on line 4:"
-msgstr ""
+msgstr "在上述例子中，试图在一个未实现所需方法 `op_add` 的类型 `S` 上使用中缀运算符 `+`，在第 4 行报错："
 
 #: ../../language/error_codes/E4016.md:18
 msgid ""
 "Please implement the method op_add for the type S to use the infix "
 "operator \"+\".\n"
-msgstr ""
+msgstr "请为类型 S 实现方法 op_add 以使用中缀运算符 \"+\"。"
 
 #: ../../language/error_codes/E4016.md:24
 msgid "Implement the required method for the type `S`:"
-msgstr ""
+msgstr "实现类型 `S` 所需的方法："
 
 #: ../../language/error_codes/E4016.md:26
 msgid ""
@@ -6196,7 +6188,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4017.md:3
 msgid "Method of type is ambiguous, it may come from multiple traits."
-msgstr ""
+msgstr "方法的类型有歧义，可能来自多个特征。"
 
 #: ../../language/error_codes/E4017.md:7
 msgid ""
@@ -6215,7 +6207,7 @@ msgid ""
 "The example above tries to call the method `to_string` on a type `S`, but"
 " the method name comes from both `Show` and `Tee` traits, giving the "
 "following error on line 8:"
-msgstr ""
+msgstr "上述例子中，试图在类型 `S` 上调用方法 `to_string`，但方法名称来自 `Show` 和 `Tee` 两个特征，会在第 8 行报错："
 
 #: ../../language/error_codes/E4017.md:22
 msgid ""
@@ -6225,7 +6217,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4017.md:28
 msgid "Disambiguate the method by specifying the trait it comes from:"
-msgstr ""
+msgstr "通过指明具体的特征对方法去歧义："
 
 #: ../../language/error_codes/E4017.md:30
 msgid ""
@@ -6245,7 +6237,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4018.md:3
 msgid "Cannot resolve trait for the given type."
-msgstr ""
+msgstr "无法为给定类型解析特征。"
 
 #: ../../language/error_codes/E4018.md:7
 msgid ""
@@ -6260,7 +6252,7 @@ msgid ""
 "The example above tries to call the method `to_string` from the `Show` "
 "trait on a type `S`, but since `S` does not implement that trait, it "
 "gives the following error on line 4:"
-msgstr ""
+msgstr "在上述例子中，试图在类型 `S` 上调用 `Show` 特征的方法 `to_string`，但由于 `S` 没有实现该特征，会在第 4 行报错："
 
 #: ../../language/error_codes/E4018.md:18
 msgid "Type S does not implement trait Show: method output is missing\n"
@@ -6268,7 +6260,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4018.md:24
 msgid "Implement the `Show` trait for the type `S`:"
-msgstr ""
+msgstr "给类型 `S` 实现 `Show` 特征："
 
 #: ../../language/error_codes/E4018.md:26
 msgid ""
@@ -6288,7 +6280,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4019.md:3
 msgid "The label is declared twice in this function."
-msgstr ""
+msgstr "这个函数中的标签声明了两次。"
 
 #: ../../language/error_codes/E4019.md:7
 msgid ""
@@ -6301,7 +6293,7 @@ msgstr ""
 msgid ""
 "The above example declares the label `g` twice in the function `f`, which"
 " is not allowed and gives the following error on line 1:"
-msgstr ""
+msgstr "上述例子中，在函数 `f` 中声明了标签 `g` 两次，这是不允许的，会在第 1 行报错："
 
 #: ../../language/error_codes/E4019.md:16
 msgid "The label g~ is declared twice in this function, first in <FILE>.mbt:1:6\n"
@@ -6309,7 +6301,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4019.md:22
 msgid "Rename one of the labels to avoid the conflict:"
-msgstr ""
+msgstr "重命名其中一个标签以避免冲突："
 
 #: ../../language/error_codes/E4019.md:24
 msgid ""
@@ -6324,7 +6316,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4020.md:3
 msgid "Package not found in the loaded packages."
-msgstr ""
+msgstr "未在加载的包中找到包。"
 
 #: ../../language/error_codes/E4020.md:7
 msgid "let a = @boolean.to_int(true)\n"
@@ -6335,7 +6327,7 @@ msgid ""
 "The example above tries to call the method `to_int` in a package "
 "`boolean`, but this package is not present in the list of loaded "
 "packages, giving the following error on line 1:"
-msgstr ""
+msgstr "上述例子中，试图在包 `boolean` 中调用方法 `to_int`，但这个包不在加载的包列表中，会在第 1 行报错："
 
 #: ../../language/error_codes/E4020.md:15
 msgid "Package \"boolean\" not found in the loaded packages.\n"
@@ -6343,13 +6335,13 @@ msgstr ""
 
 #: ../../language/error_codes/E4020.md:21
 msgid "Make sure the package name is valid."
-msgstr ""
+msgstr "确保包名是合法的。"
 
 #: ../../language/error_codes/E4020.md:23
 msgid ""
 "If it is an external package, make sure that it is mentioned as one of "
 "the imported packages in `moon.pkg.json` as well."
-msgstr ""
+msgstr "如果是一个外部包，请确保它也在 `moon.pkg.json` 中作为导入包之一被声明。"
 
 #: ../../language/error_codes/E4020.md:26
 msgid ""
@@ -6368,7 +6360,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4021.md:3
 msgid "The value identifier is unbound."
-msgstr ""
+msgstr "标识符未绑定。"
 
 #: ../../language/error_codes/E4021.md:7
 msgid "let a = @bool.to_integer(true)\n"
@@ -6376,10 +6368,10 @@ msgstr ""
 
 #: ../../language/error_codes/E4021.md:11
 msgid ""
-"The example above tries to call the method `to_integer` in a package "
-"`@bool`, but this method is not present in the package `@bool`, giving "
+"The example above tries to call the function `to_integer` in a package "
+"`@bool`, but this function is not present in the package `@bool`, giving "
 "the following error on line 1:"
-msgstr ""
+msgstr "在上述例子中，尝试使用包 `@bool` 中的函数 `to_integer`，但这个方法不在包 `@bool` 中，会在第 1 行报错："
 
 #: ../../language/error_codes/E4021.md:15
 msgid "Value to_integer not found in package `bool`.\n"
@@ -6387,13 +6379,13 @@ msgstr ""
 
 #: ../../language/error_codes/E4021.md:21
 msgid "Make sure the identifier is correct."
-msgstr ""
+msgstr "请确保标识符是正确的。"
 
 #: ../../language/error_codes/E4021.md:23
 msgid ""
-"In the above example, the method name should be `to_int` instead of "
+"In the above example, the function name should be `to_int` instead of "
 "`to_integer`:"
-msgstr ""
+msgstr "在上述例子中，函数名称应该为 `to_int` 而不是 `to_integer`："
 
 #: ../../language/error_codes/E4023.md:1
 msgid "E4023"
@@ -6401,7 +6393,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4023.md:3
 msgid "The trait is not found."
-msgstr ""
+msgstr "未找到该特征。"
 
 #: ../../language/error_codes/E4023.md:7
 msgid "let a = true as &Sh0w\n"
@@ -6412,7 +6404,7 @@ msgid ""
 "The example above tries to cast a boolean value to an object of the "
 "`Sh0w` trait, but this trait is not found in the current scope, giving "
 "the following error on line 1:"
-msgstr ""
+msgstr "这个例子中，试图将一个布尔值转换为一个 `Sh0w` 特征的对象，但这个特征在当前作用域中未找到，会在第 1 行报错："
 
 #: ../../language/error_codes/E4023.md:15
 msgid "The trait Sh0w is not found.\n"
@@ -6420,7 +6412,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4023.md:21
 msgid "Make sure the trait name is correct:"
-msgstr ""
+msgstr "确保特征名是正确的："
 
 #: ../../language/error_codes/E4023.md:23
 msgid "let a = true as &Show\n"
@@ -6432,7 +6424,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4024.md:3
 msgid "The type/trait is not found."
-msgstr ""
+msgstr "这个类型/特征未找到。"
 
 #: ../../language/error_codes/E4024.md:7
 msgid "let a = Sh0w::to_string(true)\n"
@@ -6443,7 +6435,7 @@ msgid ""
 "The example above tries to call the method `to_string` from the `Sh0w` "
 "type (or trait), but this type (or trait) is not found in the current "
 "scope, given the following error on line 1:"
-msgstr ""
+msgstr "在上述例子中，试图在 `Sh0w` 类型（或特征）上调用方法 `to_string`，但这个类型（或特征）在当前作用域中未找到，会在第 1 行报错："
 
 #: ../../language/error_codes/E4024.md:15
 msgid "The type/trait Sh0w is not found.\n"
@@ -6451,11 +6443,11 @@ msgstr ""
 
 #: ../../language/error_codes/E4024.md:21
 msgid "Make sure the type (or trait) name is correct."
-msgstr ""
+msgstr "请确保类型（或特征）名是正确的。"
 
 #: ../../language/error_codes/E4024.md:23
 msgid "In the above example, you can choose to use a proper trait name `Show`:"
-msgstr ""
+msgstr "在上述例子中，你可以选择使用合适的特征名称 `Show`："
 
 #: ../../language/error_codes/E4024.md:25
 msgid "let a = Show::to_string(true)\n"
@@ -6463,7 +6455,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4024.md:29
 msgid "... or a proper type name `Bool`:"
-msgstr ""
+msgstr "或者使用合适的类型名称 `Bool`："
 
 #: ../../language/error_codes/E4024.md:31
 #: ../../language/error_codes/E4025.md:27
@@ -6476,7 +6468,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4025.md:3
 msgid "Method has been defined for multiple types."
-msgstr ""
+msgstr "方法已为多个类型定义。"
 
 #: ../../language/error_codes/E4025.md:7
 msgid "let a = to_string(true)\n"
@@ -6488,7 +6480,7 @@ msgid ""
 "value, but this method has already been defined for multiple types so "
 "that the compiler cannot properly deduce which method to call, giving the"
 " following error on line 1:"
-msgstr ""
+msgstr "在上述例子中，试图在布尔值上调用方法 `to_string`，但这个方法已经为多个类型定义，因此编译器无法正确推断调用哪个方法，会在第 1 行报错："
 
 #: ../../language/error_codes/E4025.md:16
 msgid ""
@@ -6500,7 +6492,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4025.md:25
 msgid "Disambiguate the method by specifying the type it comes from:"
-msgstr ""
+msgstr "通过指定方法的类型来去歧义："
 
 #: ../../language/error_codes/E4026.md:1
 msgid "E4026"
@@ -6508,7 +6500,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4026.md:3
 msgid "The field is not found."
-msgstr ""
+msgstr "该字段未找到。"
 
 #: ../../language/error_codes/E4026.md:7
 msgid ""
@@ -6523,13 +6515,13 @@ msgid ""
 "The example above tries to create a record with a field `b`, but no "
 "record with such a field is found in the current scope, giving the above "
 "error on line 3."
-msgstr ""
+msgstr "在上述例子中，试图创建一个带有字段 `b` 的结构体，但在当前作用域中找不到带有这样字段的结构体，在第 3 行报错。"
 
 #: ../../language/error_codes/E4026.md:20
 msgid ""
 "Make sure a record is available in the current scope, defined with the "
 "correct field name:"
-msgstr ""
+msgstr "确保在当前作用域中有一个结构体，且其定义了正确的字段名称："
 
 #: ../../language/error_codes/E4026.md:23
 msgid ""
@@ -6541,7 +6533,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4026.md:30
 msgid "... in the fix above, `t` is inferred to be of type `T`."
-msgstr ""
+msgstr "在上述修复中，`t` 被推断为类型 `T`。"
 
 #: ../../language/error_codes/E4027.md:1
 msgid "E4027"
@@ -6549,7 +6541,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4027.md:3
 msgid "Unused type parameter."
-msgstr ""
+msgstr "未使用的类型参数。"
 
 #: ../../language/error_codes/E4027.md:7
 msgid "fn id[T](a: Int) -> Int { a }\n"
@@ -6560,7 +6552,7 @@ msgid ""
 "The example above declares a type parameter `T` in the identity function "
 "`id`, however `T` is not used anywhere in the function signature, giving "
 "the following error on line 1:"
-msgstr ""
+msgstr "在上述例子中，在恒等函数 `id` 中声明了一个类型参数 `T` ，然而 `T` 在函数签名中没有被使用，在第 1 行报错："
 
 #: ../../language/error_codes/E4027.md:15
 msgid "Unused type parameter 'T'\n"
@@ -6568,7 +6560,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4027.md:21
 msgid "Make sure the type parameter is used in the function signature:"
-msgstr ""
+msgstr "确保类型参数在函数签名中被使用："
 
 #: ../../language/error_codes/E4027.md:23
 msgid "fn id[T](a: T) -> T { a }\n"
@@ -6580,7 +6572,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4028.md:3
 msgid "This expression has a type which is not a record."
-msgstr ""
+msgstr "这个表达式的类型不是一个结构体。"
 
 #: ../../language/error_codes/E4028.md:7
 msgid ""
@@ -6592,15 +6584,15 @@ msgstr ""
 msgid ""
 "The example above tries to assign a record to a variable `a` of type "
 "`Int`, which is not possible and gives the following error on line 2:"
-msgstr ""
+msgstr "在上述例子中，试图将一个结构体赋值给一个类型为 `Int` 的变量 `a`，这是不可能的，会在第 2 行报错："
 
 #: ../../language/error_codes/E4028.md:15
 msgid "This expression has type Int, which is a Int type and not a record.\n"
-msgstr ""
+msgstr "这个表达式类型为 Int，是一个 Int 类型而不是一个结构体。\n"
 
 #: ../../language/error_codes/E4028.md:21
 msgid "Make sure to use the correct type instead:"
-msgstr ""
+msgstr "确保使用正确的类型："
 
 #: ../../language/error_codes/E4028.md:23
 msgid ""
@@ -6614,7 +6606,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4029.md:3
 msgid "This expression has a type which is not a variant."
-msgstr ""
+msgstr "这个表达式的类型不是一个枚举值。"
 
 #: ../../language/error_codes/E4029.md:7
 msgid ""
@@ -6632,6 +6624,8 @@ msgid ""
 " is a variant of the `Option[_]` type, but `f` only accepts a tuple, "
 "giving the following error on line 5:"
 msgstr ""
+"在上述例子中，试图对 `None` 值调用函数 `f`，这是 `Option[_]` 类型的一个枚举值，但 `f` 只接受一个元组，在第 5 "
+"行报错："
 
 #: ../../language/error_codes/E4029.md:20
 msgid ""
@@ -6641,7 +6635,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4029.md:26
 msgid "Make sure to use a value of the correct type instead:"
-msgstr ""
+msgstr "确保使用正确类型的值："
 
 #: ../../language/error_codes/E4029.md:28
 msgid ""
@@ -6659,7 +6653,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4030.md:3
 msgid "The record type does not have the specified field."
-msgstr ""
+msgstr "结构体没有指定的字段。"
 
 #: ../../language/error_codes/E4030.md:7
 msgid ""
@@ -6673,7 +6667,7 @@ msgid ""
 "The example above tries to assign an updated record with a field `b` to a"
 " variable `u` of type `T`, but this field doesn't exist, giving the "
 "following error on line 3:"
-msgstr ""
+msgstr "在上述例子中，试图将一个更新后的带有字段 `b` 的结构体赋值给一个类型为 `T` 的变量 `u`，但这个字段不存在 `T` 中，在第 3 行报错："
 
 #: ../../language/error_codes/E4030.md:17
 msgid "The record type T does not have the field b.\n"
@@ -6681,7 +6675,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4030.md:23
 msgid "Make sure to use the correct field instead:"
-msgstr ""
+msgstr "确保使用正确的字段："
 
 #: ../../language/error_codes/E4030.md:25
 msgid ""
@@ -6696,7 +6690,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4031.md:3
 msgid "The constructor is not found."
-msgstr ""
+msgstr "构造器未找到。"
 
 #: ../../language/error_codes/E4031.md:7
 msgid ""
@@ -6709,7 +6703,7 @@ msgid ""
 "The example above tries to assign a variant `W` to a variable `v` of type"
 " `U`, but this variant doesn't exist, giving the following error on line "
 "2:"
-msgstr ""
+msgstr "在上述例子中，试图将一个 `W` 枚举值赋值给一个类型为 `U` 的变量 `v`，但这个枚举值不存在，会在第 2 行报错："
 
 #: ../../language/error_codes/E4031.md:15
 msgid "The variant type U does not have the constructor W.\n"
@@ -6717,7 +6711,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4031.md:21
 msgid "Make sure to use the correct constructor instead:"
-msgstr ""
+msgstr "确保使用正确的构造器："
 
 #: ../../language/error_codes/E4031.md:23
 msgid ""
@@ -6731,11 +6725,11 @@ msgstr ""
 
 #: ../../language/error_codes/E4032.md:3
 msgid "The type is undefined."
-msgstr ""
+msgstr "这个类型未定义。"
 
 #: ../../language/error_codes/E4032.md:5 ../../language/error_codes/E4054.md:6
 msgid "Currently, MoonBit won't emit this error."
-msgstr ""
+msgstr "目前，MoonBit 不会报告这个错误。"
 
 #: ../../language/error_codes/E4033.md:1
 msgid "E4033"
@@ -6743,7 +6737,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4033.md:3
 msgid "There is no record definition with the specified fields."
-msgstr ""
+msgstr "没有定义指定字段的结构体。"
 
 #: ../../language/error_codes/E4033.md:7
 msgid ""
@@ -6758,7 +6752,7 @@ msgid ""
 "The example above tries to assign a record with fields `x` and `w` to a "
 "variable `c`, but this field doesn't exist in any known record type, "
 "giving the following error on line 3:"
-msgstr ""
+msgstr "在上述例子中，试图将一个带有字段 `x` 和 `w` 的结构体赋值给一个变量 `c`，但这个字段在任何已知的结构体类型中都不存在，在第 3 行报错："
 
 #: ../../language/error_codes/E4033.md:17
 msgid "There is no record definition with the fields: x, w.\n"
@@ -6766,7 +6760,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4033.md:23
 msgid "Make sure to use the correct field identifiers instead:"
-msgstr ""
+msgstr "确保使用正确的字段标识符："
 
 #: ../../language/error_codes/E4033.md:25
 msgid ""
@@ -6782,7 +6776,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4034.md:3
 msgid "Multiple possible record types detected, please add more annotation."
-msgstr ""
+msgstr "发现多个可能的结构体类型，请添加更多注释。"
 
 #: ../../language/error_codes/E4034.md:7
 msgid ""
@@ -6799,6 +6793,8 @@ msgid ""
 "variable `c`, but this field combination matches both `S` and `T` types, "
 "giving the following error on line 4:"
 msgstr ""
+"在上述例子中，试图将一个带有字段 `x` 和 `y` 的结构体赋值给一个变量 `c`，但这个字段组合同时匹配了 `S` 和 `T` "
+"两种类型，会在第 4 行报错："
 
 #: ../../language/error_codes/E4034.md:18
 msgid ""
@@ -6808,7 +6804,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4034.md:24
 msgid "Disambiguate the record type by adding a type annotation:"
-msgstr ""
+msgstr "通过添加类型注释来去歧义："
 
 #: ../../language/error_codes/E4034.md:26
 msgid ""
@@ -6825,13 +6821,13 @@ msgstr ""
 
 #: ../../language/error_codes/E4036.md:3
 msgid "Cannot create values of the read-only type."
-msgstr ""
+msgstr "无法创建只读类型的值。"
 
 #: ../../language/error_codes/E4036.md:7
 msgid ""
 "In `lib/lib.mbt`, we declare a struct `R` with a private field "
 "`__private`:"
-msgstr ""
+msgstr "在 `lib/lib.mbt` 中，我们声明了一个带有私有字段 `__private` 的结构体 `R`："
 
 #: ../../language/error_codes/E4036.md:9
 msgid ""
@@ -6847,7 +6843,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4036.md:20
 msgid "In `main/main.mbt`, we try to create a value of type `R`:"
-msgstr ""
+msgstr "在 `main/main.mbt` 中，我们试图创建一个类型为 `R` 的值："
 
 #: ../../language/error_codes/E4036.md:22
 msgid "let r : @lib.R = { x: 1, __private: 42 }\n"
@@ -6855,7 +6851,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4036.md:26
 msgid "This gives the following error on line 1:"
-msgstr ""
+msgstr "这会在第 1 行报错："
 
 #: ../../language/error_codes/E4036.md:28
 msgid ""
@@ -6865,7 +6861,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4036.md:34
 msgid "Construct the value using the public constructor:"
-msgstr ""
+msgstr "使用公开构造函数构造值："
 
 #: ../../language/error_codes/E4036.md:36
 msgid "let r : @lib.R = @lib.R::new(1)\n"
@@ -6877,11 +6873,11 @@ msgstr ""
 
 #: ../../language/error_codes/E4037.md:3
 msgid "Cannot perform action: package is not imported."
-msgstr ""
+msgstr "无法完成操作：包未导入。"
 
 #: ../../language/error_codes/E4037.md:7
 msgid "In `main/main.mbt`, we try to call a function from `@middle`:"
-msgstr ""
+msgstr "在 `main/main.mbt` 中，我们试图调用 `@middle` 中的一个函数："
 
 #: ../../language/error_codes/E4037.md:9
 msgid ""
@@ -6894,7 +6890,7 @@ msgstr ""
 msgid ""
 "In `middle/middle.mbt`, we define a function that returns an object of a "
 "trait `Obj` defined in `@ty`:"
-msgstr ""
+msgstr "在 `middle/middle.mbt` 中，我们定义了一个函数，返回了一个在 `@ty` 中定义的特征 `Obj` 的对象："
 
 #: ../../language/error_codes/E4037.md:18
 msgid ""
@@ -6905,7 +6901,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4037.md:24
 msgid "In `ty/ty.mbt`, we define a trait `Obj` and a type `T` that implements it:"
-msgstr ""
+msgstr "在 `ty/ty.mbt` 中，我们定义了一个特征 `Obj` 和一个实现它的类型 `T`："
 
 #: ../../language/error_codes/E4037.md:27
 msgid ""
@@ -6922,7 +6918,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4037.md:39
 msgid "... but in `main/moon.pkg.json` there is no mention of `@ty`:"
-msgstr ""
+msgstr "但是在 `main/moon.pkg.json` 中没有提到 `@ty`："
 
 #: ../../language/error_codes/E4037.md:41
 msgid ""
@@ -6933,23 +6929,23 @@ msgstr ""
 
 #: ../../language/error_codes/E4037.md:47
 msgid "This gives the following error on line 2 of `main/main.mbt`:"
-msgstr ""
+msgstr "这会在 `main/main.mbt` 的第 2 行报错："
 
 #: ../../language/error_codes/E4037.md:49
 msgid ""
 "Cannot call method of type &@<PACKAGE>/ty.Obj: package @<PACKAGE>/ty is "
 "not imported.\n"
-msgstr ""
+msgstr "无法调用类型为 &@<PACKAGE>/ty.Obj 的方法：包 @<PACKAGE>/ty 未导入。\n"
 
 #: ../../language/error_codes/E4037.md:55
 msgid "Make sure that all relevant packages are imported."
-msgstr ""
+msgstr "确保所有相关的包都已经导入。"
 
 #: ../../language/error_codes/E4037.md:57
 msgid ""
 "In the above example, this means importing both `@middle` and `@ty` in "
 "`main/moon.pkg.json`:"
-msgstr ""
+msgstr "在上面的示例中，这意味着在 `main/moon.pkg.json` 中导入 `@middle` 和 `@ty`："
 
 #: ../../language/error_codes/E4037.md:59
 msgid ""
@@ -6964,7 +6960,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4038.md:3
 msgid "Trait object for the type is not allowed."
-msgstr ""
+msgstr "该类型的特征对象是不允许的。"
 
 #: ../../language/error_codes/E4038.md:7
 msgid ""
@@ -6977,11 +6973,11 @@ msgstr ""
 msgid ""
 "The example above tries to create an object of the `Eq` trait. This is "
 "not allowed, as the trait is not object safe."
-msgstr ""
+msgstr "在上述例子中，试图创建一个 `Eq` 特征的对象。这是不允许的，因为这个特征不是对象安全的。"
 
 #: ../../language/error_codes/E4038.md:16
 msgid "The `Eq` trait is defined as follows:"
-msgstr ""
+msgstr "`Eq` 特征定义如下："
 
 #: ../../language/error_codes/E4038.md:18
 msgid ""
@@ -6992,7 +6988,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4038.md:24
 msgid "... which is why the following error is given on line 2:"
-msgstr ""
+msgstr "因此在第 2 行报错："
 
 #: ../../language/error_codes/E4038.md:26
 msgid ""
@@ -7002,14 +6998,14 @@ msgstr ""
 
 #: ../../language/error_codes/E4038.md:32
 msgid "Use an object-safe trait to create a trait object."
-msgstr ""
+msgstr "使用一个对象安全的特征来创建一个特征对象。"
 
 #: ../../language/error_codes/E4038.md:34
 msgid ""
 "For a trait to be object-safe, its dispatchable functions must use and "
 "only use the `Self` type as the first parameter. For example, `Show` is "
 "such a trait:"
-msgstr ""
+msgstr "一个特征要是类型安全的，它的可调用函数必须使用并且只能使用 `Self` 类型作为第一个参数。例如，`Show` 就是这样一个特征："
 
 #: ../../language/error_codes/E4038.md:37
 msgid ""
@@ -7025,7 +7021,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4039.md:3
 msgid "There is no method with the specified name in this trait."
-msgstr ""
+msgstr "在这个特征中没有指定的方法。"
 
 #: ../../language/error_codes/E4039.md:7
 msgid "let a : String = Show::to_str(42)\n"
@@ -7036,7 +7032,7 @@ msgid ""
 "The example above tries to call the method `to_str` on the `Show` trait, "
 "but the method is not defined in the trait, giving the following error on"
 " line 1:"
-msgstr ""
+msgstr "在上述例子中，试图在 `Show` 特征上调用方法 `to_str`，但这个方法在特征中未定义，在第 1 行报错："
 
 #: ../../language/error_codes/E4039.md:14
 msgid "There is no method to_str in trait Show\n"
@@ -7046,7 +7042,7 @@ msgstr ""
 msgid ""
 "Make sure that the method name is spelled correctly and that it is "
 "defined in the trait:"
-msgstr ""
+msgstr "确保方法名拼写正确，并且在特征中定义："
 
 #: ../../language/error_codes/E4039.md:23
 msgid "let a : String = Show::to_string(42)\n"
@@ -7060,7 +7056,7 @@ msgstr ""
 msgid ""
 "The type constructor expects a different number of arguments than "
 "provided."
-msgstr ""
+msgstr "类型构造器期望的参数数量与提供的参数数量不同。"
 
 #: ../../language/error_codes/E4040.md:7
 msgid "let a : Option = Some(3)\n"
@@ -7073,6 +7069,8 @@ msgid ""
 "the example does not provide any type arguments, giving the following "
 "error on line 1:"
 msgstr ""
+"在上述例子中，试图创建一个 `Option` 类型的实例。`Option` "
+"类型是一个泛型类型，期望一个类型参数，但是这个例子没有提供任何类型参数，在第 1 行报错："
 
 #: ../../language/error_codes/E4040.md:16
 msgid ""
@@ -7082,7 +7080,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4040.md:22
 msgid "Make sure to provide the correct number of type arguments:"
-msgstr ""
+msgstr "确保提供正确数量的类型参数："
 
 #: ../../language/error_codes/E4040.md:24
 #: ../../language/error_codes/E4041.md:19
@@ -7095,7 +7093,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4041.md:3
 msgid "Partial type is not allowed in toplevel declarations."
-msgstr ""
+msgstr "不完整的类型在顶层声明中是不允许的。"
 
 #: ../../language/error_codes/E4041.md:7
 msgid "let a : Option[_] = Some(3)\n"
@@ -7106,11 +7104,11 @@ msgid ""
 "The example above tries to create a top-level instance of the `Option[_]`"
 " type. However, partial type annotations are not allowed in toplevel "
 "declarations, giving the aforementioned error on line 1."
-msgstr ""
+msgstr "在上述例子中，试图创建一个顶层的 `Option[_]` 类型的实例。然而，不完整的类型注释在顶层声明中是不允许的，在第 1 行报错。"
 
 #: ../../language/error_codes/E4041.md:17
 msgid "Make sure to provide a complete type annotation:"
-msgstr ""
+msgstr "提供一个完整的类型注释："
 
 #: ../../language/error_codes/E4042.md:1
 msgid "E4042"
@@ -7118,23 +7116,23 @@ msgstr ""
 
 #: ../../language/error_codes/E4042.md:3
 msgid "Invalid stub type."
-msgstr ""
+msgstr "不合法的桩类型。"
 
 #: ../../language/error_codes/E4042.md:5
 msgid ""
 "When defineing a FFI, the stub type must be a valid type, namely they can"
 " be represented natively at corresponding backends."
-msgstr ""
+msgstr "在定义 FFI 时，桩类型必须是一个有效的类型，即它们可以在相应的后端原生地表示。"
 
 #: ../../language/error_codes/E4042.md:8
 msgid ""
 "For example, you cannot use `FixedArray[T]` and `String` in FFI "
 "definition on WASM linear backend."
-msgstr ""
+msgstr "例如，在 WASM 线性后端的 FFI 定义中，不能使用 `FixedArray[T]` 和 `String`。"
 
 #: ../../language/error_codes/E4042.md:13
 msgid "On WASM linear backend:"
-msgstr ""
+msgstr "在 WASM 线性后端："
 
 #: ../../language/error_codes/E4042.md:15
 msgid ""
@@ -7150,6 +7148,8 @@ msgid ""
 "WASM linear backend, you can pass the int one by one to the host function"
 " and store the array on the JS side."
 msgstr ""
+"将非原生类型通过 FFI 接口传递的方式取决于 MoonBit 编译器的后端和您使用的运行时。例如，如果你希望在 Wasm "
+"线性内存后端将一个整数数组传递给 JS 宿主，可以将整数一个一个地传递给宿主函数，并在 JS 端存储数组。"
 
 #: ../../language/error_codes/E4042.md:28
 msgid ""
@@ -7165,7 +7165,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4043.md:3
 msgid "The record field is defined or matched multiple times."
-msgstr ""
+msgstr "结构体字段被多次定义或匹配。"
 
 #: ../../language/error_codes/E4043.md:7
 msgid ""
@@ -7177,21 +7177,20 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4043.md:15
-#, fuzzy
 msgid "The example above tries to:"
-msgstr "以下是抽象特征的示例："
+msgstr "上述例子中，试图："
 
 #: ../../language/error_codes/E4043.md:17
 msgid "Create a record with the field `a` defined multiple times."
-msgstr ""
+msgstr "创建一个多次定义字段 `a` 的结构体。"
 
 #: ../../language/error_codes/E4043.md:18
 msgid "Destructure a record with the field `a` matched multiple times."
-msgstr ""
+msgstr "通过多次匹配字段 `a` 解构结构体。"
 
 #: ../../language/error_codes/E4043.md:20
 msgid "... giving the following error on line 2:"
-msgstr ""
+msgstr "在第 2 行给出了以下错误："
 
 #: ../../language/error_codes/E4043.md:22
 msgid "The record field a is defined several times.\n"
@@ -7199,7 +7198,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4043.md:26
 msgid "... and the following error on line 3:"
-msgstr ""
+msgstr "在第 3 行给出了以下错误："
 
 #: ../../language/error_codes/E4043.md:28
 msgid "The record field a is matched several times in this pattern.\n"
@@ -7207,7 +7206,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4043.md:34
 msgid "Make sure that the record field is defined or matched only once:"
-msgstr ""
+msgstr "确保结构体字段只被定义或匹配一次："
 
 #: ../../language/error_codes/E4043.md:36
 msgid ""
@@ -7224,7 +7223,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4044.md:3
 msgid "Record fields are missing. Use `..` to ignore them in patterns."
-msgstr ""
+msgstr "结构体字段缺失。在模式中使用 `..` 忽略它们。"
 
 #: ../../language/error_codes/E4044.md:7
 msgid ""
@@ -7239,7 +7238,7 @@ msgstr ""
 msgid ""
 "The example above tries to match a record with a missing field `b`, "
 "giving the following error on line 3:"
-msgstr ""
+msgstr "在上述例子中，试图匹配一个结构体但缺少字段 `b` ，在第 3 行报错："
 
 #: ../../language/error_codes/E4044.md:18
 msgid "Record fields b are unmatched, use `..` to ignore them.\n"
@@ -7249,7 +7248,7 @@ msgstr ""
 msgid ""
 "Make sure to provide all fields in the pattern, or simply ignore the "
 "missing fields using `..`:"
-msgstr ""
+msgstr "确保在模式中提供所有字段，或者使用 `..` 忽略缺失的字段："
 
 #: ../../language/error_codes/E4044.md:27
 msgid ""
@@ -7267,7 +7266,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4045.md:3
 msgid "The field is not defined in the record type."
-msgstr ""
+msgstr "这个字段在结构体类型中未定义。"
 
 #: ../../language/error_codes/E4045.md:7
 msgid ""
@@ -7282,7 +7281,7 @@ msgstr ""
 msgid ""
 "The example above tries to match a record with a nonexistent field `c`, "
 "giving the following error on line 3:"
-msgstr ""
+msgstr "在上述例子中，试图匹配一个结构体的不存在的字段 `c`，在第 3 行报错："
 
 #: ../../language/error_codes/E4045.md:18
 msgid "The fields c is not defined in the record type S.\n"
@@ -7290,7 +7289,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4045.md:24
 msgid "Make sure to provide all fields with the correct names in the pattern."
-msgstr ""
+msgstr "确保在模式中提供所有字段并使用正确的名称。"
 
 #: ../../language/error_codes/E4045.md:26
 msgid ""
@@ -7307,7 +7306,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4046.md:3
 msgid "A public definition cannot depend on private entities."
-msgstr ""
+msgstr "一个公开的定义不能依赖私有实体。"
 
 #: ../../language/error_codes/E4046.md:7
 msgid ""
@@ -7320,7 +7319,7 @@ msgid ""
 "The above example tries to implement a private trait `I` for the type "
 "`Int`, but the implementation itself is public, which is not allowed. "
 "This gives the following error on line 2:"
-msgstr ""
+msgstr "在上述例子中，试图为类型 `Int` 实现一个私有特征 `I`，但实现本身是公开的，这是不允许的。在第 2 行报错："
 
 #: ../../language/error_codes/E4046.md:16
 msgid "A public definition cannot depend on private trait\n"
@@ -7328,7 +7327,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4046.md:22
 msgid "Adjust the visibility of the trait or the implementation to match:"
-msgstr ""
+msgstr "调整特征或实现的可见性以互相匹配："
 
 #: ../../language/error_codes/E4046.md:24
 msgid ""
@@ -7348,13 +7347,13 @@ msgstr ""
 
 #: ../../language/error_codes/E4047.md:3
 msgid "Package not found when loading packages."
-msgstr ""
+msgstr "未在加载中的包中发现包。"
 
 #: ../../language/error_codes/E4047.md:5
 msgid ""
 "Normally, this error should never be emitted. If you see this error, "
 "please report it as a bug at:"
-msgstr ""
+msgstr "通常，这个错误不应该被发出。如果你看到这个错误，请提交报告："
 
 #: ../../language/error_codes/E4047.md:8
 msgid "<https://github.com/moonbitlang/moonbit-docs/issues/new?labels=bug>"
@@ -7366,14 +7365,14 @@ msgstr ""
 
 #: ../../language/error_codes/E4048.md:3
 msgid "The package file is in wrong format."
-msgstr ""
+msgstr "包文件的格式错误。"
 
 #: ../../language/error_codes/E4048.md:5
 msgid ""
 "This means your local build files are corrupted. Try to run `moon clean` "
 "or remove the `target` directory manually and build again. If the error "
 "persists, please submit a bug report here:"
-msgstr ""
+msgstr "这意味着你本地的构建文件已经损坏。尝试运行 `moon clean` 或移除 `target` 文件夹并重新构建。如果错误依然存在，请在此报告："
 
 #: ../../language/error_codes/E4049.md:1
 msgid "E4049"
@@ -7381,7 +7380,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4049.md:3
 msgid "Magic number mismatch for the package file."
-msgstr ""
+msgstr "魔法数字不匹配包文件。"
 
 #: ../../language/error_codes/E4049.md:5
 msgid ""
@@ -7391,6 +7390,9 @@ msgid ""
 "clean` or remove the `target` directory manually and build again. If the "
 "error persists, please submit a bug report here:"
 msgstr ""
+"这意味着你本地的构建文件已经损坏或过失。首先尝试通过我们的 "
+"[下载页](https://www.moonbitlang.cn/download/)更新/重装你的 MoonBit 工具链。然后尝试运行 "
+"`moon clean` 或移除 `target` 文件夹并重新构建。如果错误依然存在，请在此报告："
 
 #: ../../language/error_codes/E4050.md:1
 msgid "E4050"
@@ -7398,7 +7400,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4050.md:3
 msgid "Definition cycle detected in dependencies."
-msgstr ""
+msgstr "发现循环依赖。"
 
 #: ../../language/error_codes/E4050.md:5
 msgid ""
@@ -7406,7 +7408,7 @@ msgid ""
 "This means that the definitions can refer to each other in any order. "
 "However, no cycles are allowed in the dependencies between the toplevel "
 "variable definitions."
-msgstr ""
+msgstr "MoonBit 包中的顶层定义是相互递归的。这意味着定义可以以任何顺序相互引用。然而，在顶层变量定义之间的依赖中不允许循环。"
 
 #: ../../language/error_codes/E4050.md:11
 msgid ""
@@ -7422,7 +7424,7 @@ msgid ""
 "The fix to this error varies depending on the logic of the program. One "
 "possible fix is to make the variable definition to use `Ref[_?]`, and "
 "initialize the variable later in `init` block of the program."
-msgstr ""
+msgstr "这个错误的修复取决于程序的逻辑。一个可能的修复是将变量定义为 `Ref[_?]`，并在程序的 `init` 块中初始化变量。"
 
 #: ../../language/error_codes/E4050.md:25
 msgid ""
@@ -7443,40 +7445,38 @@ msgstr ""
 
 #: ../../language/error_codes/E4051.md:3
 msgid "The identifier is declared twice."
-msgstr ""
+msgstr "标识符被定义了两次。"
 
 #: ../../language/error_codes/E4051.md:5
 msgid ""
 "Mutually recursive definitions in MoonBit shall not have the same "
 "identifier. This include:"
-msgstr ""
+msgstr "MoonBit 中的相互递归的定义不应该有相同的标识符。这包括："
 
 #: ../../language/error_codes/E4051.md:8
 msgid ""
 "All toplevel definitions, including variables, functions, types, traits, "
 "etc."
-msgstr ""
+msgstr "所有的顶层定义，包括变量、函数、类型、特征等。"
 
 #: ../../language/error_codes/E4051.md:9
 msgid "Locally named functions. (Reported as [E4006](E4006))"
-msgstr ""
+msgstr "局部的命名函数。 (报告为 [E4006](E4006))"
 
 #: ../../language/error_codes/E4051.md:10
-#, fuzzy
 msgid "Local types."
-msgstr "本地类型"
+msgstr "局部类型。"
 
 #: ../../language/error_codes/E4051.md:12
 msgid ""
 "Note, locally defined variables are not mutually recursive, so they can "
 "have the same identifier, and the later definition shadows the previous "
 "one."
-msgstr ""
+msgstr "注意，局部定义的变量不是相互递归的，所以它们可以有相同的标识符，后一个定义会遮蔽前一个。"
 
 #: ../../language/error_codes/E4051.md:17
-#, fuzzy
 msgid "Toplevel variable definition:"
-msgstr "顶层变量绑定"
+msgstr "顶层变量定义："
 
 #: ../../language/error_codes/E4051.md:19
 msgid ""
@@ -7486,9 +7486,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4051.md:24
-#, fuzzy
 msgid "Toplevel function definition:"
-msgstr "函数定义"
+msgstr "顶层函数定义："
 
 #: ../../language/error_codes/E4051.md:26
 msgid ""
@@ -7498,9 +7497,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4051.md:31
-#, fuzzy
 msgid "Toplevel type definition:"
-msgstr "类型定义"
+msgstr "顶层类型定义"
 
 #: ../../language/error_codes/E4051.md:33
 msgid ""
@@ -7510,9 +7508,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4051.md:38
-#, fuzzy
 msgid "Local type definition:"
-msgstr "类型定义"
+msgstr "局部类型定义"
 
 #: ../../language/error_codes/E4051.md:40
 msgid ""
@@ -7525,7 +7522,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4051.md:49
 msgid "Rename the identifier to a different name."
-msgstr ""
+msgstr "将标识符改为其他的名称。"
 
 #: ../../language/error_codes/E4051.md:51
 msgid ""
@@ -7537,7 +7534,7 @@ msgstr ""
 msgid ""
 "If you want to shadow the previous definition, you can use a block and "
 "put the definition in the block."
-msgstr ""
+msgstr "如果你希望遮蔽前一个定义，可以使用一个块并将定义放在块中。"
 
 #: ../../language/error_codes/E4051.md:59
 msgid ""
@@ -7553,11 +7550,11 @@ msgstr ""
 
 #: ../../language/error_codes/E4052.md:3
 msgid "The type/trait name duplicates with a previously defined identifier."
-msgstr ""
+msgstr "类型/特征名称与先前定义的标识符重复。"
 
 #: ../../language/error_codes/E4052.md:5
 msgid "This can happen when you define a type and a trait with the same name."
-msgstr ""
+msgstr "这发生在你定义了相同名称的类型和特征时。"
 
 #: ../../language/error_codes/E4052.md:9
 msgid ""
@@ -7568,7 +7565,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4052.md:16
 msgid "Rename either the type or the trait to a different name."
-msgstr ""
+msgstr "将类型或特征改为其他名称。"
 
 #: ../../language/error_codes/E4052.md:18
 msgid ""
@@ -7974,12 +7971,10 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4061.md
-#, fuzzy
 msgid "Traits"
-msgstr "使用特征"
+msgstr "特征"
 
 #: ../../language/error_codes/E4061.md
-#, fuzzy
 msgid "Types"
 msgstr "类型"
 
@@ -12893,7 +12888,7 @@ msgid ""
 "Functions that are not methods nor polymorphic functions can be exported "
 "if they are public and if the link configuration appears in the "
 "`moon.pkg.json` of the package:"
-msgstr "如果函数既不是方法也不是多态函数，则可以导出它们，前提是它们是公共的，并且链接配置出现在包的 `moon.pkg.json` 中："
+msgstr "如果函数既不是方法也不是多态函数，则可以导出它们，前提是它们是公开的，并且链接配置出现在包的 `moon.pkg.json` 中："
 
 #: ../../language/ffi-and-wasm-host.md:76
 msgid ""
@@ -13026,7 +13021,6 @@ msgstr ""
 "创建了一个新项目"
 
 #: ../../language/ffi-and-wasm-host.md:153
-#, fuzzy
 msgid ""
 "// We first declare a type representing the context of canvas\n"
 "extern type Canvas_ctx\n"
@@ -13061,8 +13055,37 @@ msgid ""
 "  println(\"PI: \\{pi}\")\n"
 "}\n"
 msgstr ""
-"// 首先声明一个表示 canvas 上下文的类型\n"
-"type Canvas_ctx\n"
+"// 我们首先定义一个表示画布的上下文的类型\n"
+"extern type Canvas_ctx\n"
+"\n"
+"// 然后定义外部函数接口\n"
+"fn begin_path(self : Canvas_ctx) = \"canvas\" \"beginPath\"\n"
+"fn arc(self : Canvas_ctx, x : Int, y : Int, radius : Int, start_angle : "
+"Double,\n"
+"    end_angle : Double, counterclockwise : Bool) = \"canvas\" \"arc\"\n"
+"fn move_to(self : Canvas_ctx, x : Int, y : Int) = \"canvas\" \"moveTo\"\n"
+"fn stroke(self : Canvas_ctx) = \"canvas\" \"stroke\"\n"
+"\n"
+"fn get_pi() -> Double = \"math\" \"PI\"\n"
+"let pi : Double = get_pi()\n"
+"\n"
+"// 然后应用这些函数来定义在画布上绘制的函数\n"
+"pub fn draw(self : Canvas_ctx) -> Unit {\n"
+"  self.begin_path()\n"
+"  self.arc(75, 75, 50, 0.0, pi * 2.0, true) // Outer circle\n"
+"  self.move_to(110, 75)\n"
+"  self.arc(75, 75, 35, 0.0, pi, false) // Mouth (clockwise)\n"
+"  self.move_to(65, 65)\n"
+"  self.arc(60, 65, 5, 0.0, pi * 2.0, true) // Left eye\n"
+"  self.move_to(95, 65)\n"
+"  self.arc(90, 65, 5, 0.0, pi * 2.0, true) // Right eye\n"
+"  self.stroke()\n"
+"}\n"
+"\n"
+"// 我们也在此展示 `println` 功能\n"
+"pub fn display_pi() -> Unit {\n"
+"  println(\"PI: \\{pi}\")\n"
+"}\n"
 
 #: ../../language/ffi-and-wasm-host.md:186
 msgid ""
@@ -16506,31 +16529,31 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1317
 msgid ""
-"Pattern binders introduced by `is` expressions can be used in two "
-"contexts:"
-msgstr "通过 `is` 表达式绑定的标识符可以在两个上下文中使用："
+"Pattern binders introduced by `is` expressions can be used in the "
+"following contexts:"
+msgstr "通过 `is` 表达式绑定的标识符可以在以下的上下文中使用："
 
-#: ../../language/fundamentals.md:1319
+#: ../../language/fundamentals.md:1320
 msgid ""
 "In boolean AND expressions (`&&`): binders introduced in the left-hand "
 "expression can be used in the right-hand expression"
 msgstr "在与表达式（`&&`）中：左侧表达式中绑定的标识符可以在右侧表达式中使用"
 
-#: ../../language/fundamentals.md:1323
+#: ../../language/fundamentals.md:1324
 msgid ""
 "fn f(x : Int?) -> Bool {\n"
 "  x is Some(v) && v >= 0\n"
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1330
+#: ../../language/fundamentals.md:1331
 msgid ""
-"In `if` conditions and their corresponding branches: if the condition is "
-"a sequence of boolean expressions `e1 && e2 && ...`, the binders "
-"introduced in the `is` expression can be used in the branch of the `if` "
-"expression."
+"In the first branch of `if` expression: if the condition is a sequence of"
+" boolean expressions `e1 && e2 && ...`, the binders introduced by the "
+"`is` expression can be used in the branch where the condition evaluates "
+"to `true`."
 msgstr ""
-"在 `if` 条件及其对应的分支中：如果条件是一系列布尔表达式 `e1 && e2 && ...`，则可以在 `if` 表达式的分支中使用 "
+"在 `if` 的第一个分支中：如果条件是一系列布尔表达式 `e1 && e2 && ...`，则可以在条件为真的分支中使用 "
 "`is` 表达式中绑定的标识符。"
 
 #: ../../language/fundamentals.md:1335
@@ -16545,17 +16568,44 @@ msgid ""
 msgstr ""
 
 #: ../../language/fundamentals.md:1342
+msgid "In the following statements of a `guard` condition:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1344
+msgid ""
+"fn h(x : Int?) -> Unit {\n"
+"  guard x is Some(v) \n"
+"  println(v)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1351
+msgid "In the body of a `while` loop:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1353
+msgid ""
+"fn i(x : Int?) -> Unit {\n"
+"  let mut m = x\n"
+"  while m is Some(v) {\n"
+"    println(v)\n"
+"    m = None\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1360
 msgid "TODO syntax"
 msgstr "TODO 语法"
 
-#: ../../language/fundamentals.md:1344
+#: ../../language/fundamentals.md:1362
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo`语法(`...`)是一种特殊构造，用于标记尚未实现或用于未来功能的占位符代码段。 例如："
 
-#: ../../language/fundamentals.md:1346
+#: ../../language/fundamentals.md:1364
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"
@@ -17285,7 +17335,6 @@ msgid ""
 msgstr ""
 
 #: ../../language/methods.md:145
-#, fuzzy
 msgid ""
 "To implement the sub trait, one will have to implement the super traits, "
 "and the methods defined in the sub trait."
@@ -17328,7 +17377,6 @@ msgstr ""
 "提供，例如："
 
 #: ../../language/methods.md:163
-#, fuzzy
 msgid ""
 "pub(open) trait MyShow {\n"
 "  to_string(Self) -> String\n"
@@ -17346,20 +17394,20 @@ msgid ""
 "pub impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ..."
 " }\n"
 msgstr ""
-"trait MyShow {\n"
+"pub(open) trait MyShow {\n"
 "  to_string(Self) -> String\n"
 "}\n"
 "\n"
 "struct MyType {}\n"
 "\n"
-"impl MyShow for MyType with to_string(self) { ... }\n"
+"pub impl MyShow for MyType with to_string(self) { ... }\n"
 "\n"
 "struct MyContainer[T] {}\n"
 "\n"
 "// 使用类型参数实现特征。\n"
 "// `[X : Show]` 意味着类型参数 `X` 必须实现 `Show`，\n"
 "// 我们将稍后介绍。\n"
-"impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ... }\n"
+"pub impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ... }\n"
 
 #: ../../language/methods.md:169
 msgid ""
@@ -17508,7 +17556,7 @@ msgstr "如果上述两条规则都不适用，还将在当前包中搜索特征
 msgid ""
 "these `impl`s can only be called via dot syntax locally, even if they are"
 " public."
-msgstr "这些 `impl` 只能在本地通过点语法调用，即使它们是公共的。"
+msgstr "这些 `impl` 只能在本地通过点语法调用，即使它们是公开的。"
 
 #: ../../language/methods.md:221
 msgid ""
@@ -17622,7 +17670,6 @@ msgid ""
 msgstr "用户可以为特征对象定义新方法，就像为结构体和枚举定义新方法一样："
 
 #: ../../language/methods.md:257
-#, fuzzy
 msgid ""
 "pub(open) trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
@@ -17649,11 +17696,11 @@ msgid ""
 "  .write_string(\")\")\n"
 "}\n"
 msgstr ""
-"trait Logger {\n"
+"pub(open) trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
 "}\n"
 "\n"
-"trait CanLog {\n"
+"pub(open) trait CanLog {\n"
 "  log(Self, &Logger) -> Unit\n"
 "}\n"
 "\n"
@@ -17663,7 +17710,7 @@ msgstr ""
 "}\n"
 "\n"
 "// 使用新的方法来简化代码\n"
-"impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {\n"
+"pub impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {\n"
 "  let (a, b) = self\n"
 "  logger\n"
 "  ..write_string(\"(\")\n"
@@ -17885,7 +17932,7 @@ msgid ""
 "using the functional struct update syntax."
 msgstr ""
 "除了类型本身的可见性外，公开的结构体的字段可以用 `priv` 注释，这将完全隐藏字段对外部世界。请注意，具有私有字段的 `struct` "
-"不能直接在外部构造，但可以使用函数式 `struct` 更新语法更新公共字段。"
+"不能直接在外部构造，但可以使用函数式 `struct` 更新语法更新公开字段。"
 
 #: ../../language/packages.md:45
 msgid ""
@@ -17940,8 +17987,8 @@ msgstr ""
 "  println(\" }\")\n"
 "}\n"
 "test {\n"
-"  let r : RO = { field: 4 }  // 错误：不能创建公共只读类型 RO 的值！\n"
-"  let r = { ..r, field: 8 }  // 错误：不能修改公共只读字段！\n"
+"  let r : RO = { field: 4 }  // 错误：不能创建公开只读类型 RO 的值！\n"
+"  let r = { ..r, field: 8 }  // 错误：不能修改公开只读字段！\n"
 "}\n"
 
 #: ../../language/packages.md:71
@@ -18335,7 +18382,7 @@ msgid ""
 "A test that has access only to the public members in a package is called "
 "a BlackBox tests. Such tests need to be defined in a file whose name ends"
 " with `_test.mbt`."
-msgstr "只能访问包中公共成员的测试称为黑盒测试。这样的测试需要在文件中定义，文件名以 `_test.mbt` 结尾。"
+msgstr "只能访问包中公开成员的测试称为黑盒测试。这样的测试需要在文件中定义，文件名以 `_test.mbt` 结尾。"
 
 #: ../../language/tests.md:85
 msgid ""
