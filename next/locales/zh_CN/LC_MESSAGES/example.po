@@ -3604,32 +3604,36 @@ msgid ""
 "detail. The input to the algorithm is two strings, but the search needs "
 "to be conducted on a graph. It's a waste of both memory and time to "
 "construct the graph and then search it."
-msgstr ""
+msgstr "先前我们已概述基本思路，是时候来详细思考设计了。该算法输入的是两个字符串，但搜索需要在图中进行。构建图形后再"
+"进行搜索浪费内存和时间。"
 
 #: ../../example/myers-diff/myers-diff.md:175
 msgid ""
 "The implementation of the Myers algorithm adopts a clever approach by "
 "defining a new coordinate `k = x - y`."
-msgstr ""
+msgstr "Myers算法采用了一种巧妙的方法，即“
+“定义新坐标 k= x - y"
 
 #: ../../example/myers-diff/myers-diff.md:177
 msgid "Moving right increases `k` by one."
-msgstr ""
+msgstr "向右移动会使 'k' 增加 1 "
 
 #: ../../example/myers-diff/myers-diff.md:179
 msgid "Moving left decreases `k` by one."
-msgstr ""
+msgstr "向右移动会使 'k' 减少 1"
 
 #: ../../example/myers-diff/myers-diff.md:181
 msgid "Moving diagonally down-left keeps `k` unchanged."
-msgstr ""
+msgstr "“向左下对角线移动 `k` 不变。"
 
 #: ../../example/myers-diff/myers-diff.md:183
 msgid ""
 "Let's define another coordinate `d` to represent the depth of the search."
 " Using `d` as the horizontal axis and `k` as the vertical axis, we can "
 "draw a tree diagram of the search process."
-msgstr ""
+msgstr "让我们定义另一个坐标 `d` 来表示搜索的深度。将 `d` 作为横轴，`k` 作为纵轴，可以绘制搜索过程的树状图。
+
+"
 
 #: ../../example/myers-diff/myers-diff.md:185
 msgid ""
@@ -3662,11 +3666,12 @@ msgid ""
 "idea: searching by iterating over `d` and `k`. Of course, it also needs "
 "to save the `x` coordinates of each round for use in the next round of "
 "searching."
-msgstr ""
+msgstr "可以看到，在每轮搜索中 `k` 始终位于 `[-d, d]` 范围内（因为每一步中，`k` 至多比上一轮增加或减少 1），并且相邻点之间的 `k` 值"
+"间隔为 2。Myers算法的基本思想正来源于这个概念：通过迭代 `d` 和 `k` 来进行搜索。算法还需要保存每轮的 `x` 坐标在下一轮搜索中使用。"
 
 #: ../../example/myers-diff/myers-diff.md:208
 msgid "Let's first define the `Line` struct, which represents a line in the text."
-msgstr ""
+msgstr "我们定义 `Line` 结构体，它表示文本中的一行"
 
 #: ../../example/myers-diff/myers-diff.md:210
 msgid ""
@@ -3686,7 +3691,7 @@ msgstr ""
 msgid ""
 "Then, define a helper function that splits a string into `Array[Line]` "
 "based on newline characters. Note that line numbers start from 1."
-msgstr ""
+msgstr "然后，定义一个辅助函数，基于换行符将字符串拆分为 `Array[Line]`。注意行号要从 1 开始。"
 
 #: ../../example/myers-diff/myers-diff.md:218
 msgid ""
@@ -3706,7 +3711,8 @@ msgstr ""
 msgid ""
 "Next, we need to wrap the array so that it supports negative indexing "
 "because we will use the value of `k` as an index."
-msgstr ""
+msgstr "下一步，我们需要包装数组使其支持负索引”
+“因为我们将使用k的值作为索引"
 
 #: ../../example/myers-diff/myers-diff.md:226
 msgid ""
@@ -3751,7 +3757,9 @@ msgid ""
 "Now we can start writing the search function. Before searching for the "
 "complete path, let's start with our first goal to find the length of the "
 "shortest path (equal to the search depth). Here is the basic framework:"
-msgstr ""
+msgstr "现在我们开始编写搜索函数。在搜索"
+"完整的路径前，让我们从第一个目标开始，找到"
+"最短路径的长度（等于搜索深度）。基本框架如下："
 
 #: ../../example/myers-diff/myers-diff.md:235
 msgid ""
@@ -3776,7 +3784,8 @@ msgid ""
 "uses `k` as an index to store the historical record of `x` values. Since "
 "`k` ranges from `[-d, d]`, the size of this array is set to `2 * max + "
 "1`."
-msgstr ""
+msgstr "在最极端的情况（两个文本没有匹配的行）下，可以推断出所需的最大步数是 `n + m`，最小步数是 0。因此，设置变量 `max = n + m`。数组 `v` 使用 `k` 作为索引"
+"来存储 `x` 值的历史记录。由于 `k` 的范围是 `[-d, d]`，这个数组的大小设置为 2 * `max + 1`。"
 
 #: ../../example/myers-diff/myers-diff.md:251
 msgid ""
@@ -3785,7 +3794,8 @@ msgid ""
 "point, it must be at `(0, 0)`. Also, if the beginnings of the two texts "
 "are the same, they can be skipped directly. We write the final "
 "coordinates of this round into the array `v`."
-msgstr ""
+msgstr "但即使这样，仍然很难确定下一步怎么做，因此我们现在只考虑 d = 0; k = 0 的情况。此时，它必须位于 (0, 0)。另外，"
+"如果两个文本的开头相同可以直接跳过。我们将这一轮的最终坐标写入数组 v。"
 
 #: ../../example/myers-diff/myers-diff.md:254
 msgid ""
@@ -3810,26 +3820,28 @@ msgid ""
 " one, `v[k]` in the search tree must extend from either `v[k - 1]` or "
 "`v[k + 1]`. The next question is: how to choose between the two paths "
 "ending at `v[k - 1]` and `v[k + 1]`?"
-msgstr ""
+msgstr "当 `d > 0` 时，需要使用上一轮存储的坐标信息。当我们知道一个点的 k 值以及上一轮搜索中点的坐标时，v[k] 的值可以轻松推断出来。"
+"因为在每一步中，`k` 只能增加或减少 1，搜索树中的 `v[k]` 必须从 `v[k - 1]` 或 `v[k + 1]` 延伸过来。接下来的问题是：如何在以 `v[k - 1]` 和 `v[k + 1]` "
+" 结尾的两条路径之间做选择？"
 
 #: ../../example/myers-diff/myers-diff.md:269
 msgid "There are two boundary cases: `k == -d` and `k == d`."
-msgstr ""
+msgstr "有两个边界情况：`k == -d` 和 `k == d`"
 
 #: ../../example/myers-diff/myers-diff.md:271
 msgid "When `k == -d`, you can only choose `v[k + 1]`."
-msgstr ""
+msgstr "当 `k == -d` 时，只能选择 `v[k + 1]`"
 
 #: ../../example/myers-diff/myers-diff.md:273
 msgid "When `k == -d`, you can only choose `v[k - 1]`."
-msgstr ""
+msgstr "当 `k == -d` 时，只能选择 v[k - 1]"
 
 #: ../../example/myers-diff/myers-diff.md:275
 msgid ""
 "Recalling the requirement mentioned earlier: arranging deletions before "
 "insertions as much as possible, this essentially means choosing the "
 "position with the largest `x` value from the previous position."
-msgstr ""
+msgstr "根据先前提到的要求：尽可能将删除操作安排在插入操作之前，这意味着选择上一位置中具有最大 `x` 值的位置。"
 
 #: ../../example/myers-diff/myers-diff.md:278
 msgid ""
@@ -3846,7 +3858,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:290
 msgid "Merging these four branches, we get the following code:"
-msgstr ""
+msgstr "合并这四个分支，我们得到以下代码："
 
 #: ../../example/myers-diff/myers-diff.md:293
 msgid ""
@@ -3859,7 +3871,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:301
 msgid "Combining all the steps above, we get the following code:"
-msgstr ""
+msgstr "结合上述步骤，我们得到以下代码:"
 
 #: ../../example/myers-diff/myers-diff.md:303
 msgid ""
@@ -3902,7 +3914,7 @@ msgstr ""
 msgid ""
 "Since the initial value of the array is 0, we can omit the branch for `d "
 "== 0`."
-msgstr ""
+msgstr "由于数组的初始值为 0 ，我们可以省略 `d== 0` 分支"
 
 #: ../../example/myers-diff/myers-diff.md:313
 msgid ""
@@ -3910,11 +3922,12 @@ msgid ""
 "completes the forward path search. In the next article, we will implement"
 " the backtracking to restore the complete edit path and write a function "
 "to output a colored diff."
-msgstr ""
+msgstr "我们已经实现了 Myers 算法的一个不完整版本，该版本完成了正向路径搜索。在下一节中，我们将实现回溯，恢复完整的编辑路径，"
+"并编写一个函数来输出带颜色的差异对比。"
 
 #: ../../example/myers-diff/myers-diff.md:315
 msgid "This article references:"
-msgstr ""
+msgstr "本文文献引用"
 
 #: ../../example/myers-diff/myers-diff.md:317
 msgid ""
@@ -3925,7 +3938,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:319
 msgid "Thanks to the author James Coglan."
-msgstr ""
+msgstr "感谢作者James Coglan "
 
 #: ../../example/myers-diff/myers-diff2.md:1
 msgid "Myers diff 2"
