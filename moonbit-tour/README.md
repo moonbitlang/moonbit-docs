@@ -1,5 +1,7 @@
 # MoonBit Language Tour
 
+view the [Chinese version](./README-zh.md) of this file.
+
 An interactive tour to learn the MoonBit programming language.
 
 ## Get started
