@@ -1,5 +1,7 @@
 # Next gen moonbit-docs
 
+view [README-zh.md](./README-zh.md) for Chinese version.
+
 A new MoonBit docs framework based on Sphinx.
 
 ## Develop
