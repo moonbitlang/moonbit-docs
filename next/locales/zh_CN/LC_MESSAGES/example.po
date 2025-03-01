@@ -1468,7 +1468,7 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-2.md:1
 msgid "G-Machine 2"
-msgstr ""
+msgstr "G-Machine 第二部分"
 
 #: ../../example/gmachine/gmachine-2.md:3
 msgid ""
@@ -2109,7 +2109,7 @@ msgstr "在下一章，我们将改进原语的代码生成，并添加对数据
 
 #: ../../example/gmachine/gmachine-3.md:1
 msgid "G-Machine 3"
-msgstr ""
+msgstr "G-Machine 第三部分"
 
 #: ../../example/gmachine/gmachine-3.md:3
 msgid ""
@@ -2776,7 +2776,7 @@ msgid ""
 "ancestors—Lambda calculus."
 msgstr ""
 "相信点开这篇文章的您或多或少地听说过函数式编程这个名词。在摩尔定律失效的今天，对多核处理器的充分利用成为了一种越发重要的程序优化方法，而函数式编程也因为其并行运算亲和的特点在大众视野中越发频繁地出现。究其原因，离不开它从其理论上的祖先之一"
-" - lambda演算那里所继承的特征。"
+" - lambda 演算那里所继承的特征。"
 
 #: ../../example/lambda/index.md:5
 msgid ""
@@ -2785,11 +2785,11 @@ msgid ""
 "family tree. This article will illustrate one of its most fundamental "
 "forms: untyped Lambda calculus (which was also one of the earliest forms "
 "proposed by Alonzo Church)."
-msgstr "而lambda演算这一起源于20世纪30年代，出自图灵导师阿隆佐·邱奇之手的形式系统如今已经发展成了蔚为大观的一个大家族，本文将展示其中最基础的一种：无类型lambda演算(这也是最早阿隆佐·邱奇提出的那种)"
+msgstr "而 lambda 演算这一起源于20世纪30年代，出自图灵导师阿隆佐·邱奇之手的形式系统如今已经发展成了蔚为大观的一个大家族，本文将展示其中最基础的一种：无类型 lambda 演算(这也是最早阿隆佐·邱奇提出的那种)"
 
 #: ../../example/lambda/index.md:7
 msgid "Basic rules of untyped Lambda calculus"
-msgstr "无类型lambda演算的基本规则"
+msgstr "无类型 lambda 演算的基本规则"
 
 #: ../../example/lambda/index.md:9
 msgid ""
@@ -2797,7 +2797,7 @@ msgid ""
 "(often referred to as Abstraction) and calling Lambdas (often referred to"
 " as Application). These actions constitute the basic expressions in "
 "Lambda calculus."
-msgstr "无类型lambda演算中能做的事情只有定义lambda(经常称为Abstraction)和调用lambda(经常称为Application)，它们也是lambda演算中的基础表达式。"
+msgstr "无类型 lambda 演算中能做的事情只有定义 lambda (经常称为 Abstraction)和调用 lambda (经常称为 Application)，它们也是 lambda 演算中的基础表达式。"
 
 #: ../../example/lambda/index.md:11
 msgid ""
@@ -2809,14 +2809,14 @@ msgid ""
 " parameter), `.` is the separator between the parameter and the "
 "expression defining it, and `x x` is its definition."
 msgstr ""
-"由于函数式编程范式对主流编程语言的影响，大多数程序员对lambda表达式这个名字已经不会感到陌生了，不过，无类型lambda演算中的lambda要比主流编程语言简单一些。一个lambda通常看起来就像这样：`λx.x"
-" x`, 其中x是它的参数(每个lambda只能有一个参数)，`.`是分隔参数与表达式具体定义的分隔符，后面的`x x`便是它的定义了。"
+"由于函数式编程范式对主流编程语言的影响，大多数程序员对lambda表达式这个名字已经不会感到陌生了，不过，无类型 lambda 演算中的 lambda 要比主流编程语言简单一些。一个 lambda 通常看起来就像这样：`λx.x"
+" x`, 其中x是它的参数(每个 lambda 只能有一个参数)，`.`是分隔参数与表达式具体定义的分隔符，后面的`x x`便是它的定义了。"
 
 #: ../../example/lambda/index.md:14
 msgid ""
 "Some materials may omit spaces, so the above example can be rewritten as "
 "`λx.xx`."
-msgstr "也有些材料的记法不写空格，上面的例子要改写成`λx.xx`"
+msgstr "也有些材料的记法不写空格，上面的例子要改写成 `λx.xx`"
 
 #: ../../example/lambda/index.md:17
 msgid ""
@@ -2826,15 +2826,15 @@ msgid ""
 "between it and its parameter. Here, we call the parameter given by `x`, "
 "which is `x` itself."
 msgstr ""
-"上面的`x x`如果换成`x(x)`, "
-"可能更符合我们在一般语言中见到的函数调用。但在lambda演算较常见的写法中，调用一个lambda只需要在它和它的参数中间写个空格。此处我们调用`x`所给出的参数就是`x`自己。"
+"上面的 `x x` 如果换成 `x(x)`, "
+"可能更符合我们在一般语言中见到的函数调用。但在 lambda 演算较常见的写法中，调用一个 lambda 只需要在它和它的参数中间写个空格。此处我们调用 `x` 所给出的参数就是 `x` 自己。"
 
 #: ../../example/lambda/index.md:19
 msgid ""
 "The combination of the above two expressions and the variables introduced"
 " when defining Lambdas are collectively referred to as the Lambda term. "
 "In MoonBit, we use an enum type to represent it:"
-msgstr "以上两种表达式和定义lambda时引入的变量加在一起合称lambda项，我们在MoonBit里用一个enum类型来表示它："
+msgstr "以上两种表达式和定义lambda时引入的变量加在一起合称 lambda 项，我们在 MoonBit 里用一个 enum 类型来表示它："
 
 #: ../../example/lambda/index.md:21
 msgid ""
@@ -2856,7 +2856,7 @@ msgid ""
 "expressions, natural number arithmetic, and even recursion can all be "
 "implemented using Lambda expressions. However, this is not the focus of "
 "this article."
-msgstr "我们在日常编程中所接触的概念诸如布尔值，if表达式，自然数算术乃至递归都可以通过lambda表达式实现，但这并非本文内容的重心所在。"
+msgstr "我们在日常编程中所接触的概念诸如布尔值，if 表达式，自然数算术乃至递归都可以通过 lambda 表达式实现，但这并非本文内容的重心所在。"
 
 #: ../../example/lambda/index.md:30
 msgid ""
@@ -2871,7 +2871,7 @@ msgid ""
 "To implement an interpreter for untyped Lambda calculus, the basic things"
 " we need to understand are just two rules: Alpha conversion and Beta "
 "reduction."
-msgstr "要实现一个无类型lambda演算的解释器，我们所需要了解的基本就只有两条规则：Alpha转换与Beta规约。"
+msgstr "要实现一个无类型 lambda 演算的解释器，我们所需要了解的基本就只有两条规则：Alpha 转换与 Beta 规约。"
 
 #: ../../example/lambda/index.md:35
 msgid ""
@@ -2882,14 +2882,14 @@ msgid ""
 " cannot be renamed. For example, the above example can be rewritten using"
 " Alpha conversion as `λy.(λx.x) y`."
 msgstr ""
-"Alpha转换所描述的事实是，lambda的结构是重点，变量名叫什么没那么重要。`λx.x`和`λfoo.foo`可以互相替换。对于某些有重复变量名的嵌套lambda例如`λx.(λx.x)"
-" x`，重命名时不能把内层的变量也重命名了，例如上面的例子可以通过Alpha转换写成`λy.(λx.x) y`。"
+"Alpha 转换所描述的事实是，lambda 的结构是重点，变量名叫什么没那么重要。`λx.x` 和 `λfoo.foo` 可以互相替换。对于某些有重复变量名的嵌套 lambda 例如 `λx.(λx.x)"
+" x`，重命名时不能把内层的变量也重命名了，例如上面的例子可以通过 Alpha 转换写成 `λy.(λx.x) y`。"
 
 #: ../../example/lambda/index.md:37
 msgid ""
 "**Beta reduction** focuses on handling Lambda calls. Let's take an "
 "example:"
-msgstr "Beta规约则专注于处理lambda的调用，还是举一个例子："
+msgstr "Beta 规约则专注于处理 lambda 的调用，还是举一个例子："
 
 #: ../../example/lambda/index.md:39
 msgid "(λx.(λy.x)) (λs.(λz.z))\n"
@@ -2900,7 +2900,7 @@ msgid ""
 "In untyped Lambda calculus, all that needs to be done after calling a "
 "Lambda is to substitute the parameter. In the example above, we need to "
 "replace the variable `x` with `(λs.(λz.z))`, resulting in:"
-msgstr "在无类型lambda演算中，调用lambda之后所需要作的事情仅仅是对参数进行替换(substitution)，上面这个例子里就需要把变量`x`替换成`(λs.(λz.z))`，得到的结果是"
+msgstr "在无类型 lambda 演算中，调用 lambda 之后所需要作的事情仅仅是对参数进行替换(substitution)，上面这个例子里就需要把变量 `x` 替换成 `(λs.(λz.z))`，得到的结果是"
 
 #: ../../example/lambda/index.md:45
 msgid "(λy.(λs.(λz.z)))\n"
@@ -2916,15 +2916,15 @@ msgid ""
 "a free variable. For example, in the Lambda term `(λx.(λy.fgv h))`, the "
 "variables `fgv` and `h` do not have corresponding Lambda definitions."
 msgstr ""
-"一个lambda项中的变量如果在它所处的上下文中没有定义，那么我们叫它自由变量。例如`(λx.(λy.fgv "
-"h))`这个lambda项中变量`fgv`和`h`就没有对应的lambda定义."
+"一个 lambda 项中的变量如果在它所处的上下文中没有定义，那么我们叫它自由变量。例如 `(λx.(λy.fgv "
+"h))` 这个 lambda 项中变量 `fgv` 和 `h` 就没有对应的 lambda 定义."
 
 #: ../../example/lambda/index.md:53
 msgid ""
 "During Beta reduction, if the Lambda term used for variable substitution "
 "contains free variables, it may lead to a behavior called \"variable "
 "capture\":"
-msgstr "在进行Beta规约时，如果用于替换变量的那个lambda项中含有自由变量，可能会导致一种被称为“变量捕获”的行为"
+msgstr "在进行 Beta 规约时，如果用于替换变量的那个 lambda 项中含有自由变量，可能会导致一种被称为“变量捕获”的行为"
 
 #: ../../example/lambda/index.md:55
 msgid "(λx.(λy.x)) (λz.y)\n"
@@ -2942,7 +2942,7 @@ msgstr ""
 msgid ""
 "The free variable in `λz.y` is treated as a parameter of some Lambda, "
 "which is obviously not what we want."
-msgstr "`λz.y`中的自由变量被当成了某个lambda的参数，这显然不是我们想要的。"
+msgstr "`λz.y` 中的自由变量被当成了某个 lambda 的参数，这显然不是我们想要的。"
 
 #: ../../example/lambda/index.md:67
 msgid ""
@@ -2953,7 +2953,7 @@ msgid ""
 "variables:"
 msgstr ""
 "变量捕获问题在编写解释器时的常见解决方案是在替换前遍历表达式得到一个自由变量的集合, "
-"做替换时遇到内层lambda就判断一下变量名在不在这个自由变量集合里面"
+"做替换时遇到内层 lambda 就判断一下变量名在不在这个自由变量集合里面"
 
 #: ../../example/lambda/index.md:71
 msgid ""
@@ -2980,7 +2980,7 @@ msgstr ""
 "  match self {\n"
 "    Abs(variable, body) => {\n"
 "      if freeVars.contains(variable) {\n"
-"        //自由变量集合中有当前这个内层lambda的参数名，即会发生变量捕获\n"
+"        //自由变量集合中有当前这个内层 lambda 的参数名，即会发生变量捕获\n"
 "        abort(\"subst(): error while encountering \\{variable}\")\n"
 "      } else {\n"
 "        ...\n"
@@ -3005,7 +3005,7 @@ msgid ""
 "De Bruijn index is a technique for representing variables in Lambda terms"
 " using integers. Specifically, it replaces specific variables with "
 "Lambdas between the variable and its original imported position."
-msgstr "德布朗指数是一种用整数表示lambda项中变量的技术，具体地说，它用变量所在位置和原先引入它的位置中间有几层lambda来替换特定变量。"
+msgstr "德布朗指数是一种用整数表示 lambda 项中变量的技术，具体地说，它用变量所在位置和原先引入它的位置中间有几层 lambda 来替换特定变量。"
 
 #: ../../example/lambda/index.md:96
 msgid ""
@@ -3024,8 +3024,8 @@ msgid ""
 "the variable and its corresponding Lambda. Here, the distance is measured"
 " by the number of nested Lambdas."
 msgstr ""
-"上面的例子中，变量`x`和引入它的地方`λx`中间有一个`λy`, "
-"于是将`x`替换为`1`，而`z`和定义它的位置中间没有夹杂其他的lambda，于是直接用`0`替换。某种程度上说，德布朗指数的值描述的是变量与对应lambda的相对距离，此处的距离衡量标注就是中间嵌套的lambda层数。"
+"上面的例子中，变量 `x` 和引入它的地方 `λx` 中间有一个 `λy`, "
+"于是将 `x` 替换为 `1`，而 `z` 和定义它的位置中间没有夹杂其他的 lambda，于是直接用 `0` 替换。某种程度上说，德布朗指数的值描述的是变量与对应 lambda 的相对距离，此处的距离衡量标注就是中间嵌套的 lambda 层数。"
 
 #: ../../example/lambda/index.md:105
 msgid ""
@@ -3037,7 +3037,7 @@ msgstr "同一个变量在不同的地方可能会用不同的整数来替换。
 msgid ""
 "We define a new type `TermDBI` to represent Lambda terms using de Bruijn "
 "indices:"
-msgstr "我们定义一个新类型`TermDBI`来表示使用德布朗指数的lambda项："
+msgstr "我们定义一个新类型 `TermDBI` 来表示使用德布朗指数的 lambda 项："
 
 #: ../../example/lambda/index.md:110
 msgid ""
@@ -3057,9 +3057,9 @@ msgid ""
 "be used for its `Show` implementation, making it easy to print and view "
 "the evaluation results with `println`."
 msgstr ""
-"不过直接编写以及阅读德布朗指数形式的lambda很痛苦，所以我们需要编写一个将`Term`转换成`TermDBI`的函数`debruijn()` "
+"不过直接编写以及阅读德布朗指数形式的 lambda 很痛苦，所以我们需要编写一个将 `Term` 转换成 `TermDBI` 的函数 `debruijn()` "
 "- "
-"这也是`TermDBI`类型定义中仍有`String`的原因，保留原变量名可用于它的`Show`的实现，这样就可以方便地用`println`打印求值结果查看了。"
+"这也是 `TermDBI` 类型定义中仍有 `String` 的原因，保留原变量名可用于它的 `Show` 的实现，这样就可以方便地用 `println` 打印求值结果查看了。"
 
 #: ../../example/lambda/index.md:118
 msgid ""
@@ -3080,12 +3080,12 @@ msgid ""
 " `Ok(V)` and `Err(E)`, representing success and failure in computation, "
 "respectively."
 msgstr ""
-"为了简化实现，如果输入的Term中含有自由变量，`debruijn()`函数会直接报错。MoonBit中一般用`Result[V, "
-"E]`类型表示可能会出错的计算, 它有`Ok(V)`和`Err(E)`两个值构造子，分别代表计算成功与失败。"
+"为了简化实现，如果输入的 Term 中含有自由变量，`debruijn()` 函数会直接报错。MoonBit 中一般用 `Result[V, "
+"E]` 类型表示可能会出错的计算, 它有 `Ok(V)` 和 `Err(E)` 两个值构造子，分别代表计算成功与失败。"
 
 #: ../../example/lambda/index.md:128
 msgid "Readers familiar with Rust should find this familiar."
-msgstr "使用过Rust语言的读者应该会感到熟悉。"
+msgstr "使用过 Rust 语言的读者应该会感到熟悉。"
 
 #: ../../example/lambda/index.md:132
 msgid "fn bruijn(self : Term) -> Result[TermDBI, String]\n"
@@ -3095,7 +3095,7 @@ msgstr ""
 msgid ""
 "We take a clumsy approach to save variable names and their associated "
 "nesting depth. First, we define the `Index` type:"
-msgstr "我们采取一种笨办法来保存变量名与相关联的嵌套深度，首先定义`Index`类型"
+msgstr "我们采取一种笨办法来保存变量名与相关联的嵌套深度，首先定义 `Index` 类型"
 
 #: ../../example/lambda/index.md:138
 msgid ""
@@ -3109,7 +3109,7 @@ msgstr ""
 msgid ""
 "Then we write a helper function to find the corresponding `depth` based "
 "on a specific `name` from `@immut/list.T[Index]`:"
-msgstr "然后写一个从`@immut/list.T[Index]`中根据特定`name`查找对应`depth`的辅助函数"
+msgstr "然后写一个从 `@immut/list.T[Index]` 中根据特定 `name` 查找对应 `depth` 的辅助函数"
 
 #: ../../example/lambda/index.md:146
 msgid ""
@@ -3131,13 +3131,13 @@ msgstr ""
 
 #: ../../example/lambda/index.md:153
 msgid "Now we can complete the `bruijn()` function."
-msgstr "现在可以补全`debruijn()`函数了。"
+msgstr "现在可以补全 `debruijn()` 函数了。"
 
 #: ../../example/lambda/index.md:155
 msgid ""
 "Handling `Var` is the simplest, just look up the table to find the "
 "corresponding `depth`."
-msgstr "`Var`的处理最简单，只需要查表寻找对应`depth`即可。"
+msgstr "`Var` 的处理最简单，只需要查表寻找对应 `depth` 即可。"
 
 #: ../../example/lambda/index.md:156
 msgid ""
@@ -3146,14 +3146,14 @@ msgid ""
 "one), and then add `{ name : varname, depth : 0 }` to the beginning of "
 "the list."
 msgstr ""
-"`Abs`稍微复杂一点，首先对列表中所有`index`的`depth`加一(因为lambda嵌套加深了一层)，然后在列表的开头加上`{ name "
+"`Abs` 稍微复杂一点，首先对列表中所有 `index` 的 `depth` 加一(因为 lambda 嵌套加深了一层)，然后在列表的开头加上 `{ name "
 ": varname, depth : 0 }`。"
 
 #: ../../example/lambda/index.md:157
 msgid ""
 "`App` succeeds when both sub-items can be converted; otherwise, it "
 "returns an `Err`."
-msgstr "`App`在两个子项都能转换时成功，否则返回一个`Err`"
+msgstr "`App` 在两个子项都能转换时成功，否则返回一个 `Err`"
 
 #: ../../example/lambda/index.md:159
 msgid ""
@@ -3192,11 +3192,11 @@ msgstr ""
 
 #: ../../example/lambda/index.md:166
 msgid "Reduce on TermDBI"
-msgstr "在`TermDBI`上做规约"
+msgstr "在 `TermDBI` 上做规约"
 
 #: ../../example/lambda/index.md:168
 msgid "Reduction mainly deals with App, i.e., calls:"
-msgstr "规约主要处理的是`App`，即调用："
+msgstr "规约主要处理的是 `App`，即调用："
 
 #: ../../example/lambda/index.md:170
 msgid ""
@@ -3222,7 +3222,7 @@ msgstr ""
 "        (t1, t2) => App(t1, t2)\n"
 "      }\n"
 "    Abs(_) => self\n"
-"    // Eval应该不会遇到自由变量才对\n"
+"    // Eval 应该不会遇到自由变量才对\n"
 "    _ => panic()\n"
 "  }\n"
 "}\n"
@@ -3235,7 +3235,7 @@ msgid ""
 "(via the `subst` function) and then continue simplifying. For Lambdas "
 "(`Abs`), simply return them as they are."
 msgstr ""
-"首先对两个子项尝试规约，然后看`eval(t1)`得到的是否是一个lambda，如果是，就执行一步变量替换(通过`subst`函数)然后继续化简。对于lambda(即`Abs`),"
+"首先对两个子项尝试规约，然后看 `eval(t1)` 得到的是否是一个 lambda，如果是，就执行一步变量替换(通过 `subst` 函数)然后继续化简。对于 lambda (即 `Abs`),"
 " 直接原样返回即可。"
 
 #: ../../example/lambda/index.md:178
@@ -3245,7 +3245,7 @@ msgid ""
 "current depth recursively and compare it with the encountered variables. "
 "If they match, it's the variable to be replaced."
 msgstr ""
-"`subst`函数的实现在不用考虑自由变量的情况下简单了许多, "
+"`subst` 函数的实现在不用考虑自由变量的情况下简单了许多, "
 "只要记录递归到当前位置的深度并且与遇到的变量进行比对，大小相等就是需要替换的目标变量。"
 
 #: ../../example/lambda/index.md:180
@@ -3283,7 +3283,7 @@ msgid ""
 "added a new Lambda. However, this is actually quite a clumsy method. I "
 "believe you can quickly realize that to store a `@immut/list.T[String]` "
 "should simply suffice. If you're interested, you can try it yourself."
-msgstr "笔者在保存变量名到索引的对应关系时使用了`@immut/list.T[Index]`类型，并且在每增加一层lambda时更新整个列表，但是这其实是个很笨的办法。相信聪明且注意力集中的读者很快就能发现，其实只需要保存一个`@immut/list.T[String]`就够了，有兴趣的读者可以自己试着做一做。"
+msgstr "笔者在保存变量名到索引的对应关系时使用了 `@immut/list.T[Index]` 类型，并且在每增加一层 lambda 时更新整个列表，但是这其实是个很笨的办法。相信聪明且注意力集中的读者很快就能发现，其实只需要保存一个 `@immut/list.T[String]` 就够了，有兴趣的读者可以自己试着做一做。"
 
 #: ../../example/myers-diff/index.md:1
 msgid "Myers Diff"
@@ -3299,7 +3299,7 @@ msgid ""
 "comparing the differences between two text files. What's more, Unix has a"
 " tool called `patch`."
 msgstr ""
-"你是否曾经使用过Unix系统中的'diff'工具？简单来说，它是一种用于比较两个文本文件之间差异的工具。此外，Unix系统中还有名为'patch'的工具。"
+"你是否曾经使用过Unix系统中的 'diff' 工具？简单来说，它是一种用于比较两个文本文件之间差异的工具。此外，Unix 系统中还有名为 'patch' 的工具。"
 
 #: ../../example/myers-diff/myers-diff.md:5
 msgid ""
@@ -3310,7 +3310,7 @@ msgid ""
 "(and highlighted with different colors). Take the most popular version "
 "control system today, git, as an example:"
 msgstr ""
-"现在很少有人手动应用软件包的修补，但'diff'在另一个领域中仍然非常有用：版本控制系统。"
+"现在很少有人手动应用软件包的修补，但 'diff' 在另一个领域中仍然非常有用：版本控制系统。"
 "你有看到特定提交后代码文件所做更改（并以不同的颜色突出显示）的函数是非常方便的。"
 "例如，最受欢迎的版本控制系统之一，git，就是一个很好的例子。"
 
@@ -3343,7 +3343,7 @@ msgid ""
 "following text, we will understand the basic framework of this algorithm "
 "in a less rigorous way and use MoonBit to write a simple implementation."
 msgstr ""
-"Git 的默认比较差异算法由 Eugene W. Myers 在他的论文**一个O(ND)的差分算法及其变体**中提出。"
+"Git 的默认比较差异算法由 Eugene W. Myers 在他的论文**一个 O(ND) 的差分算法及其变体**中提出。"
 "这篇论文主要聚焦于证明该算法的正确性。"
 "接下来，我们将以一种不那么严谨的方式理解其基本架构，并使用 MoonBit 编写一个简单的实现。"
 
@@ -3361,7 +3361,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:31
 msgid "Assume the content of text a is"
-msgstr "假设文本a的内容是"
+msgstr "假设文本 a 的内容是"
 
 #: ../../example/myers-diff/myers-diff.md:33
 msgid ""
@@ -3376,7 +3376,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:43
 msgid "Assume the content of text b is"
-msgstr "假设文本b的内容是"
+msgstr "假设文本 b 的内容是"
 
 #: ../../example/myers-diff/myers-diff.md:45
 msgid ""
@@ -3394,8 +3394,8 @@ msgid ""
 "each character in a (indicated with a minus sign) and then insert each "
 "character in b (indicated with a plus sign)."
 msgstr ""
-"为了把文本a转变为文本b，最简单的编辑序列是删除所有a中的字符（用减号表示），然后"
-"插入文本b中的每个字符（用加号表示）。"
+"为了把文本 a 转变为文本 b，最简单的编辑序列是删除所有 a 中的字符（用减号表示），然后"
+"插入文本 b 中的每个字符（用加号表示）。"
 
 #: ../../example/myers-diff/myers-diff.md:56
 msgid ""
@@ -3444,7 +3444,7 @@ msgid ""
 "are equally important for user experience. Let's look at the following "
 "examples:"
 msgstr ""
-"实际上，这是实现文本a转换为文本b所需的最简编辑序列，仅需要5个操作。"
+"实际上，这是实现文本 a 转换为文本 b 所需的最简编辑序列，仅需要 5 个操作。"
 "如果我们只考虑编辑序列的长度，这一结果已经令人满意。"
 "但在探索多种编程语言时，我们发现除了编辑序列长度外，还有其他度量指标对用户体验同样重要。"
 "让我们来看看以下例子："
@@ -3502,7 +3502,7 @@ msgid ""
 "inserting text before `{`), and it also tries to place deletions before "
 "insertions, avoiding the latter situation."
 msgstr ""
-"Myers的diff算法可以满足所有这些需求。"
+"Myers 的 diff 算法可以满足所有这些需求。"
 "它是一种贪婪算法，每次都尽可能地跳过匹配行（避免在出现'{'之前插入文本），同时"
 "也会尝试将删除操作置于插入操作之前，避免后者发生。"
 
@@ -3517,8 +3517,8 @@ msgid ""
 "previous example `a = ABCABBA` and `b = CBABAC`, we create an `(x, y)` "
 "coordinate grid."
 msgstr ""
-"Myers的论文中的基本思路是构建一个编辑操作的网格图，并在该网格上搜索最短路径。"
-"以之前的例子'a = ABCABBA'和'b = CBABAC'为例，我们创建一个'(x, y)'坐标网格。"
+"Myers 的论文中的基本思路是构建一个编辑操作的网格图，并在该网格上搜索最短路径。"
+"以之前的例子 'a = ABCABBA' 和 'b = CBABAC' 为例，我们创建一个 '(x, y)' 坐标网格。"
 
 #: ../../example/myers-diff/myers-diff.md:128
 msgid ""
@@ -3563,8 +3563,8 @@ msgid ""
 "indicate matching characters that can be skipped without triggering any "
 "edits."
 msgstr ""
-"该网格的左上角是起始点'(0, 0)'，右下角是终点'(7, 6)'。"
-"沿着x轴移动一个单位右侧删除a中的对应字符，沿y轴向下移动一个单位插入b中的对应字符。"
+"该网格的左上角是起始点 '(0, 0)'，右下角是终点 '(7, 6)'。"
+"沿着 x 轴移动一个单位右侧删除 a 中的对应字符，沿 y 轴向下移动一个单位插入 b 中的对应字符。"
 "斜线表示匹配字符，可跳过而不触发编辑。"
 
 #: ../../example/myers-diff/myers-diff.md:163
@@ -3579,7 +3579,7 @@ msgid ""
 "The first round starts at `(0, 0)` and moves one step to reach `(0,1)` "
 "and `(1,0)`."
 msgstr ""
-"第一轮从'(0, 0)'开始，移动一步到达'(0,1)'和'(1,0)'。"
+"第一轮从 '(0, 0)' 开始，移动一步到达 '(0,1)' 和 '(1,0)'。"
 
 #: ../../example/myers-diff/myers-diff.md:167
 msgid ""
@@ -3587,11 +3587,11 @@ msgid ""
 " reaches `(0,2)`, but there is a diagonal line leading to `(1,3)`, so the"
 " final point is `(1,3)`."
 msgstr ""
-"第二轮从'(0,1)'和'(1, 0)'开始。从'(0,1)'向下移动到'(0,2)'，但有一条斜线指向'(1,3)'，因此最终点是'(1,3)'。"
+"第二轮从 '(0,1)' 和 '(1, 0)' 开始。从 '(0,1)' 向下移动到 '(0,2)'，但有一条斜线指向 '(1,3)'，因此最终点是 '(1,3)'。"
 
 #: ../../example/myers-diff/myers-diff.md:169
 msgid "The entire Myers algorithm is based on this kind of breadth-first search."
-msgstr "Myers算法的整个原理基于这种广度优先搜索。"
+msgstr "Myers 算法的整个原理基于这种广度优先搜索。"
 
 #: ../../example/myers-diff/myers-diff.md:171
 #: ../../example/segment-tree/segment-tree.md:33
@@ -5550,7 +5550,7 @@ msgid ""
 msgstr ""
 "除了单元之外，另一个重要概念是同级。"
 "一个方格的同级包括同一行、同一列和同一单位的其他方格。"
-"例如，C2的同级包括以下方格："
+"例如，C2 的同级包括以下方格："
 
 #: ../../example/sudoku/index.md:41
 msgid ""
@@ -5755,8 +5755,8 @@ msgid ""
 "It is easy to write such code."
 msgstr ""
 "接下来，我们需要将输入中已知数字的方块赋值。"
-"这个过程可以用函数`assign(values, key, val)`来实现，"
-"其中`key`是一个字符串，比如`A6`，`val`是一个字符。这样的代码写起来很容易。"
+"这个过程可以用函数 `assign(values, key, val)` 来实现，"
+"其中 `key` 是一个字符串，比如 `A6`，`val` 是一个字符。这样的代码写起来很容易。"
 
 #: ../../example/sudoku/index.md:183
 msgid ""
@@ -5824,8 +5824,8 @@ msgid ""
 "values, as this would violate the rule that no two squares in the same "
 "unit, row, or column can have the same digit."
 msgstr ""
-"**策略 1**：如果为一个方块`key`分配了一个值`val`，"
-"则其对同级（'peers[key]'）的可能值列表中不应该包含`val'，"
+"**策略 1**：如果为一个方块 `key` 分配了一个值 `val`，"
+"则其对同级（'peers[key]'）的可能值列表中不应该包含 `val'，"
 "因为这会违反同一单元、行或列中没有两个方块可以具有相同数字的规则。"
 
 #: ../../example/sudoku/index.md:215
@@ -5848,10 +5848,10 @@ msgid ""
 "value to handle possible contradictions. If the list of possible values "
 "for a square becomes empty, something went wrong, and we return `false`."
 msgstr ""
-"我们通过定义一个消除函数`eliminate`来调整代码，该函数从正方形的可能值中删除一个数字。"
-"执行消除任务后，它将上述策略应用于`key`和`val`以尝试进一步消除。"
+"我们通过定义一个消除函数 `eliminate` 来调整代码，该函数从正方形的可能值中删除一个数字。"
+"执行消除任务后，它将上述策略应用于 `key` 和 `val` 以尝试进一步消除。"
 "请注意，它包含一个布尔返回值来处理可能的矛盾。"
-"如果方格的可能值列表为空，则出现问题，我们返回`false`。"
+"如果方格的可能值列表为空，则出现问题，我们返回 `false`。"
 
 #: ../../example/sudoku/index.md:219
 msgid ""
@@ -5913,7 +5913,7 @@ msgid ""
 "Next, we define `assign(values, key, val)` to remove all values except "
 "`val` from the possible values of `key`."
 msgstr ""
-"接下来，我们定义`assign(values, key, val)`来从`key`的可能值中删除除`val`之外的所有值。"
+"接下来，我们定义 `assign(values, key, val)` 来从 `key` 的可能值中删除除 `val` 之外的所有值。"
 
 #: ../../example/sudoku/index.md:272
 msgid ""
@@ -6007,7 +6007,7 @@ msgid ""
 msgstr ""
 "如果您对人工智能感兴趣，您可能会将其视为约束满足问题 (CSP)，"
 "而'分配'和'消除'是专门的弧一致性算法。"
-"有关此主题的更多信息，请参阅 _Artificial Intelligence: A Modern Approach_ 第6章"
+"有关此主题的更多信息，请参阅 Artificial Intelligence: A Modern Approach 第6章"
 
 #: ../../example/sudoku/index.md:323
 msgid "Search"
@@ -6023,7 +6023,7 @@ msgid ""
 msgstr ""
 "经过预处理后，我们可以大胆地使用蛮力枚举来搜索所有可行的组合。"
 "但是，在搜索过程中，我们仍然可以使用启发式策略。当尝试为某个方块赋值时，"
-"我们仍然使用`assign`，这使我们能够应用先前的优化来消除搜索过程中的许多无效分支。"
+"我们仍然使用 `assign`，这使我们能够应用先前的优化来消除搜索过程中的许多无效分支。"
 
 #: ../../example/sudoku/index.md:327
 msgid ""
@@ -6084,7 +6084,7 @@ msgid ""
 "puzzles, which is not easy for humans)"
 msgstr ""
 "我们再运行一​​遍同样的例子"
-"（这个例子其实取自[magictour](http://magictour.free.fr/top95)，"
+"（这个例子其实取自 [magictour](http://magictour.free.fr/top95)，"
 "一个难度数独谜题列表，对人类来说并不容易）"
 
 #: ../../example/sudoku/index.md:368
@@ -6111,7 +6111,7 @@ msgid ""
 "Running on [MoonBit online IDE](https://try.moonbitlang.com/), It takes "
 "only about 0.11 seconds to solve this Sudoku!"
 msgstr ""
-"在[MoonBit online IDE](https://try.moonbitlang.com/)上运行，"
+"在 [MoonBit online IDE](https://try.moonbitlang.com/) 上运行，"
 "仅需大约 0.11 秒即可解决这个数独！"
 
 #: ../../example/sudoku/index.md:386
@@ -6139,7 +6139,7 @@ msgstr ""
 
 #: ../../example/sudoku/index.md:392
 msgid "Let's play with MoonBit with ease!"
-msgstr "让我们轻松玩转MoonBit吧！"
+msgstr "让我们轻松玩转 MoonBit 吧！"
 
 #: ../../example/sudoku/index.md:394
 msgid ""
@@ -6156,7 +6156,7 @@ msgid ""
 "This tutorial references Norvig's blog: "
 "[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)"
 msgstr ""
-"本教程参考了Norvig的博客："
+"本教程参考了 Norvig 的博客："
 "[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)"
 
 #~ msgid ""
