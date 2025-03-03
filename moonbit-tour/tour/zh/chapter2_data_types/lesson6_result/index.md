@@ -1,4 +1,4 @@
-# Result类型
+# Result 类型
 
 与`Option[Char]`类似，枚举类型`Result[Char, String]`表示可能存在的字符值。当值缺失时，可携带`String`类型的错误信息。
 
