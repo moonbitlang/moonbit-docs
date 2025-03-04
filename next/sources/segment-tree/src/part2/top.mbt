@@ -111,7 +111,7 @@ fn modify(
   } else if modify_l <= l && modify_r >= r {
     self.apply(tag)
   } else {
-    guard let Node(left~, right~, ..) = self
+    guard self is Node(left~, right~, ..)
     let mid = (l + r) >> 1
     left.modify(l, mid, modify_l, modify_r, tag) +
     right.modify(mid + 1, r, modify_l, modify_r, tag)
@@ -133,7 +133,7 @@ fn query(self : Node, l : Int, r : Int, query_l : Int, query_r : Int) -> Node {
   } else if query_l <= l && query_r >= r {
     self
   } else {
-    guard let Node(tag~, left~, right~, ..) = self
+    guard self is Node(tag~, left~, right~, ..)
     let mid = (l + r) >> 1
     left.apply(tag).query(l, mid, query_l, query_r) +
     right.apply(tag).query(mid + 1, r, query_l, query_r)
