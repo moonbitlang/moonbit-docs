@@ -563,7 +563,7 @@ the code in the `else` block is executed and its evaluation result is returned (
 
 #### Guard statement and is expression
 
-The `let` statement can be used with [pattern matching](#pattern-matching). However, `let` statement can only handle one case. And `guard expr is pat` can solve this issue.
+The `let` statement can be used with [pattern matching](#pattern-matching). However, `let` statement can only handle one case. And using [is expression](#is-expression) with `guard` statement can solve this issue.
 
 In the following example, `getProcessedText` assumes that the input `path` points to resources that are all plain text,
 and it uses the `guard` statement to ensure this invariant while extracting the plain text resource.
