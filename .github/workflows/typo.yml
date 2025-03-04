@@ -15,4 +15,8 @@ jobs:
 
       - name: check typos
         uses: crate-ci/typos@v1.26.0
-  
+
+      - name: autocorrect lint
+        uses: huacnlee/autocorrect-action@v2
+        with:
+          args: . --lint --no-diff-bg-color

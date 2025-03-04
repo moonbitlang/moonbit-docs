@@ -279,10 +279,11 @@ fn getProcessedText(
   resources : Map[String, Resource],
   path : String
 ) -> String!Error {
-  guard let Some(PlainText(text)) = resources[path] else {
-    None => fail!("\{path} not found")
-    Some(Folder(_)) => fail!("\{path} is a folder")
-    Some(JsonConfig(_)) => fail!("\{path} is a json config")
+  guard resources[path] is Some(resource) else {
+    fail!("\{path} not found")
+  }
+  guard resource is PlainText(text) else {
+    fail!("\{path} is not plain text")
   }
   process(text)
 }
@@ -293,8 +294,8 @@ fn g() -> Unit {
   let expr = Some(5)
   // start guard 3
   guard condition  // <=> guard condition else { panic() }
-  guard let Some(x) = expr
-  // <=> guard let Some(x) = expr else { _ => panic() }
+  guard expr is Some(x)
+  // <=> guard expr is Some(x) else { _ => panic() }
   // end guard 3
 }
 

@@ -122,7 +122,7 @@ By implementing `op_as_view` method, you can create a view for a user-defined ty
 
 ## Trait system
 
-MoonBit features a structural trait system for overloading/ad-hoc polymorphism. Traits declare a list of operations, which must be supplied when a type wants to implement the trait. Traits can be declared as follows:
+MoonBit provides a trait system for overloading/ad-hoc polymorphism. Traits declare a list of operations, which must be supplied when a type wants to implement the trait. Traits can be declared as follows:
 
 ```{literalinclude} /sources/language/src/trait/top.mbt
 :language: moonbit
@@ -147,18 +147,8 @@ and the methods defined in the sub trait.
 
 ### Implementing traits
 
-To implement a trait, a type must provide all the methods required by the trait.
-
-This allows types to implement a trait implicitly, hence allowing different packages to work together without seeing or depending on each other.
-For example, the following trait is automatically implemented for builtin number types such as `Int` and `Double`:
-
-```{literalinclude} /sources/language/src/trait/top.mbt
-:language: moonbit
-:start-after: start trait 4
-:end-before: end trait 4
-```
-
-**Explicit implementation** for trait methods can be provided via the syntax `impl Trait for Type with method_name(...) { ... }`, for example:
+To implement a trait, a type must explicitly provide all the methods required by the trait
+using the syntax `impl Trait for Type with method_name(...) { ... }`. For example:
 
 ```{literalinclude} /sources/language/src/trait/top.mbt
 :language: moonbit
@@ -179,8 +169,6 @@ The author of the trait can also define **default implementations** for some met
 Implementers of trait `I` don't have to provide an implementation for `f_twice`: to implement `I`, only `f` is necessary.
 They can always override the default implementation with an explicit `impl I for Type with f_twice`, if desired, though.
 
-If an explicit `impl` or default implementation is not found, trait method resolution falls back to regular methods.
-
 ### Using traits
 
 When declaring a generic function, the type parameters can be annotated with the traits they should implement, allowing the definition of constrained generic functions. For example:
@@ -191,7 +179,7 @@ When declaring a generic function, the type parameters can be annotated with the
 :end-before: end trait 5
 ```
 
-Without the `Number` requirement, the expression `x * x` in `square` will result in a method/operator not found error. Now, the function `square` can be called with any type that implements `Number`, for example:
+Without the `Eq` requirement, the expression `x == elem` in `contains` will result in a type error. Now, the function `contains` can be called with any type that implements `Eq`, for example:
 
 ```{literalinclude} /sources/language/src/trait/top.mbt
 :language: moonbit
@@ -237,6 +225,7 @@ MoonBit supports runtime polymorphism via trait objects.
 If `t` is of type `T`, which implements trait `I`,
 one can pack the methods of `T` that implements `I`, together with `t`,
 into a runtime object via `t as &I`.
+When the expected type of an expression is known to be a trait object type, `as &I` can be omitted.
 Trait object erases the concrete type of a value,
 so objects created from different concrete types can be put in the same data structure and handled uniformly:
 

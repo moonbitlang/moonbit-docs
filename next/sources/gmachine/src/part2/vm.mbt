@@ -139,9 +139,7 @@ fn slide(self : GState, n : Int) -> Unit {
 fn rearrange(self : GState, n : Int) -> Unit {
   let appnodes = self.stack.take(n)
   let args = appnodes.map(fn (addr) {
-    guard let NApp(_, arg) = self.heap[addr] else {
-      _ => panic()
-    }
+    guard self.heap[addr] is NApp(_, arg)
     arg 
   })
   self.stack = args + appnodes.drop(n - 1)
