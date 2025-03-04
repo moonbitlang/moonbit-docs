@@ -561,13 +561,13 @@ the code in the `else` block is executed and its evaluation result is returned (
 :end-before: end guard 1
 ```
 
-#### Guarded Let
+#### Guard statement and is expression
 
-The `let` statement can be used with [pattern matching](#pattern-matching). However, `let` statement can only handle one case. And `guard let` can solve this issue.
+The `let` statement can be used with [pattern matching](#pattern-matching). However, `let` statement can only handle one case. And `guard expr is pat` can solve this issue.
 
 In the following example, `getProcessedText` assumes that the input `path` points to resources that are all plain text,
-and it uses the `guard` statement to ensure this invariant. Compared to using
-a `match` statement, the subsequent processing of `text` can have one less level of indentation.
+and it uses the `guard` statement to ensure this invariant while extracting the plain text resource.
+Compared to using a `match` statement, the subsequent processing of `text` can have one less level of indentation.
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit

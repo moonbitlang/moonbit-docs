@@ -144,7 +144,7 @@ fn find_path(
   old~ : Array[Line],
   new~ : Array[Line]
 ) -> Iter[(Int, Int)]? {
-  guard let Some(snake) = midpoint(box, old~, new~) else { None => None }
+  guard midpoint(box, old~, new~) is Some(snake) else { None }
   let start = snake.start
   let end = snake.end
   let headbox = Box::{
@@ -173,9 +173,7 @@ fn linear_diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit]? {
     right: old.length(),
     bottom: new.length(),
   }
-  guard let Some(path) = find_path(initial_box, old~, new~) else {
-    None => None
-  }
+  guard find_path(initial_box, old~, new~) is Some(path) else { None }
   // path length >= 2
   let xy = path.take(1).collect()[0] // (0, 0)
   let mut x1 = xy.0
