@@ -35,16 +35,15 @@ impl J with f_twice(self) {
 }
 // end trait 3
 
-// start trait 4
-pub(open) trait Number {
-  op_add(Self, Self) -> Self
-  op_mul(Self, Self) -> Self
-}
-// end trait 4
-
 // start trait 5
-fn square[N : Number](x : N) -> N {
-  x * x // <=> x.op_mul(x)
+fn contains[X : Eq](xs : Array[X], elem : X) -> Bool {
+  for x in xs {
+    if x == elem {
+      return true
+    }
+  } else {
+    false
+  }
 }
 // end trait 5
 
@@ -52,20 +51,16 @@ fn square[N : Number](x : N) -> N {
 struct Point {
   x : Int
   y : Int
-} derive(Eq, Show)
-
-pub impl Number for Point with op_add(self, other) {
-  { x: self.x + other.x, y: self.y + other.y }
 }
 
-pub impl Number for Point with op_mul(self, other) {
-  { x: self.x * other.x, y: self.y * other.y }
+impl Eq for Point with op_equal(p1, p2) {
+  p1.x == p2.x && p1.y == p2.y
 }
 
 test {
-  assert_eq!(square(2), 4)
-  assert_eq!(square(1.5), 2.25)
-  assert_eq!(square(Point::{ x: 2, y: 3 }), { x: 4, y: 9 })
+  assert_false!(contains([ 1, 2, 3 ], 4))
+  assert_true!(contains([ 1.5, 2.25, 3.375 ], 2.25))
+  assert_false!(contains([ { x: 2, y: 3 } ], { x: 4, y: 9 }))
 }
 // end trait 6
 
@@ -90,15 +85,15 @@ fn f() -> Unit {
 
 // start trait 9
 struct T {
-  x : Int
-  y : Int
+  a : Int
+  b : Int
 } derive(Eq, Compare, Show, Default)
 
 test {
   let t1 = T::default()
-  let t2 = T::{ x: 1, y: 1 }
-  inspect!(t1, content="{x: 0, y: 0}")
-  inspect!(t2, content="{x: 1, y: 1}")
+  let t2 = T::{ a: 1, b: 1 }
+  inspect!(t1, content="{a: 0, b: 0}")
+  inspect!(t2, content="{a: 1, b: 1}")
   assert_not_eq!(t1, t2)
   assert_true!(t1 < t2)
 }
@@ -126,7 +121,7 @@ fn Duck::make(name : String) -> Duck {
   Duck(name)
 }
 
-fn speak(self : Duck) -> String {
+impl Animal for Duck with speak(self) {
   "\{self._}: quack!"
 }
 
@@ -136,7 +131,7 @@ fn Fox::make(name : String) -> Fox {
   Fox(name)
 }
 
-fn Fox::speak(_self : Fox) -> String {
+impl Animal for Fox with speak(_self) {
   "What does the fox say?"
 }
 
@@ -144,11 +139,7 @@ test {
   let duck1 = Duck::make("duck1")
   let duck2 = Duck::make("duck2")
   let fox1 = Fox::make("fox1")
-  let animals : Array[&Animal] = [
-    duck1 as &Animal,
-    duck2 as &Animal,
-    fox1 as &Animal,
-  ]
+  let animals : Array[&Animal] = [ duck1, duck2, fox1 ]
   inspect!(
     animals.map(fn(animal) { animal.speak() }),
     content=
