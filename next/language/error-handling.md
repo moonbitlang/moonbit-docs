@@ -222,7 +222,7 @@ the return value. And if it does appear, the function signature has to be
 adjusted to match with the return type.
 
 The `test` block in MoonBit may also be seen as a function, with a return type
-of Unit!Error.
+of `Unit!Error`.
 
 ## Calling an error-able function
 

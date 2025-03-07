@@ -266,8 +266,7 @@ You can use `numbers[x]` to refer to the xth element. The index starts from zero
 
 There are `Array[T]` and `FixedArray[T]`:
 
-- `Array[T]` can grow in size, while
-- `FixedArray[T]` has a fixed size, thus it needs to be created with initial value.
+`Array[T]` can grow in size, while `FixedArray[T]` has a fixed size, thus it needs to be created with initial value.
 
 ``````{warning}
 A common pitfall is creating `FixedArray` with the same initial value:
