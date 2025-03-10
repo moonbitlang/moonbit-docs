@@ -2792,6 +2792,10 @@ msgid ""
 "responsiveness, especially when tackling sizable datasets or intricate "
 "data streams."
 msgstr ""
+"惰性求值是编程语言领域的一个基本概念。"
+"Haskell作为一种纯粹的函数式编程语言而闻名，它拥有健壮的惰性求值机制。"
+"这种机制不仅使开发人员能够编写更高效、更简洁的代码，"
+"而且还增强了程序的性能和响应能力，特别是在处理大型数据集或复杂的数据流时。"
 
 #: ../../example/gmachine/index.md:5
 msgid ""
@@ -2800,6 +2804,10 @@ msgid ""
 "explore how to implement Haskell's evaluation semantics in "
 "[MoonBit](https://www.moonbitlang.com/)."
 msgstr ""
+"在本文中，我们将深入研究惰性求值机制，全面研究其原理和实现方法，"
+"然后探索如何在"
+"[MoonBit](https://www.moonbitlang.com/)."
+"中实现Haskell的求值语义。"
 
 #: ../../example/index.md:1
 msgid "Examples"
@@ -3657,24 +3665,27 @@ msgid ""
 "to be conducted on a graph. It's a waste of both memory and time to "
 "construct the graph and then search it."
 msgstr ""
+"我们已经概述了基本思想，现在是详细考虑设计的时候了。"
+"算法的输入是两个字符串，但是搜索需要在一个图上进行。"
+"而构造图然后再去搜索它是浪费内存和时间成本的。"
 
 #: ../../example/myers-diff/myers-diff.md:175
 msgid ""
 "The implementation of the Myers algorithm adopts a clever approach by "
 "defining a new coordinate `k = x - y`."
-msgstr ""
+msgstr "Myers算法的实现采用了一种聪明的方法，定义了一个新的坐标 `k = x - y` 。"
 
 #: ../../example/myers-diff/myers-diff.md:177
 msgid "Moving right increases `k` by one."
-msgstr ""
+msgstr "向右移动会使 `k` 增加1。"
 
 #: ../../example/myers-diff/myers-diff.md:179
 msgid "Moving left decreases `k` by one."
-msgstr ""
+msgstr "向左移动会使 `k` 减少1"
 
 #: ../../example/myers-diff/myers-diff.md:181
 msgid "Moving diagonally down-left keeps `k` unchanged."
-msgstr ""
+msgstr "沿对角线向左下方移动保持 `k` 不变"
 
 #: ../../example/myers-diff/myers-diff.md:183
 msgid ""
@@ -3682,6 +3693,8 @@ msgid ""
 " Using `d` as the horizontal axis and `k` as the vertical axis, we can "
 "draw a tree diagram of the search process."
 msgstr ""
+"让我们定义另一个坐标 `d` 来表示搜索的深度。"
+"以 `d` 为横轴， `k` 为纵轴，我们可以画出搜索过程的树状图。"
 
 #: ../../example/myers-diff/myers-diff.md:185
 msgid ""
@@ -3715,10 +3728,14 @@ msgid ""
 "to save the `x` coordinates of each round for use in the next round of "
 "searching."
 msgstr ""
+"你可以看到，在每一轮搜索中，"
+" `k` 严格地在 `[-d, d]` 范围内（因为在一次移动中，它最多可以比前一轮增加或减少1），"
+"并且点之间的 `k` 值的间隔为2。Myers算法的基本思想来自于这样一个思想："
+"通过遍历 `d` 和 `k` 来进行搜索。当然，它还需要保存每一轮的 `x` 坐标，以便在下一轮搜索中使用。"
 
 #: ../../example/myers-diff/myers-diff.md:208
 msgid "Let's first define the `Line` struct, which represents a line in the text."
-msgstr ""
+msgstr "让我们首先定义 `Line` 结构，它代表文本中的一行。"
 
 #: ../../example/myers-diff/myers-diff.md:210
 msgid ""
@@ -3739,6 +3756,7 @@ msgid ""
 "Then, define a helper function that splits a string into `Array[Line]` "
 "based on newline characters. Note that line numbers start from 1."
 msgstr ""
+"然后，定义一个辅助函数，根据换行符将字符串拆分为 `Array[Line]` 。注意，行号从1开始。"
 
 #: ../../example/myers-diff/myers-diff.md:218
 msgid ""
@@ -3759,6 +3777,7 @@ msgid ""
 "Next, we need to wrap the array so that it supports negative indexing "
 "because we will use the value of `k` as an index."
 msgstr ""
+"接下来，我们需要包装数组，以便它支持负索引，因为我们将使用 `k` 的值作为索引。"
 
 #: ../../example/myers-diff/myers-diff.md:226
 msgid ""
@@ -3804,6 +3823,9 @@ msgid ""
 "complete path, let's start with our first goal to find the length of the "
 "shortest path (equal to the search depth). Here is the basic framework:"
 msgstr ""
+"现在我们可以开始编写搜索函数了。"
+"在搜索完整路径之前，让我们从第一个目标开始，"
+"即找到最短路径的长度（等于搜索深度）。以下是基本框架："
 
 #: ../../example/myers-diff/myers-diff.md:235
 msgid ""
@@ -3829,6 +3851,9 @@ msgid ""
 "`k` ranges from `[-d, d]`, the size of this array is set to `2 * max + "
 "1`."
 msgstr ""
+"在最极端的情况下（两个文本没有匹配的行），可以推断所需的最大步数为 `n + m` ，最小步数为0。"
+"因此，设置变量 `max = n + m` 。数组 `v` 使用 `k` 作为索引来存储 `x` 值的历史记录。"
+"因为 `k` 的范围是从 `[-d, d]` ，所以这个数组的大小被设置为 `2 * max + 1` 。"
 
 #: ../../example/myers-diff/myers-diff.md:251
 msgid ""
@@ -3838,6 +3863,9 @@ msgid ""
 "are the same, they can be skipped directly. We write the final "
 "coordinates of this round into the array `v`."
 msgstr ""
+"但即使在这一点上，仍然很难弄清楚下一步该怎么做，"
+"所以我们只考虑 `d = 0; k = 0` 的情况，在这一点，它一定在 `(0, 0)` 处。"
+"此外，如果两篇文本的开头相同，可以直接跳过。我们将这一轮的最终坐标写入数组 `v` 。"
 
 #: ../../example/myers-diff/myers-diff.md:254
 msgid ""
@@ -3863,18 +3891,22 @@ msgid ""
 "`v[k + 1]`. The next question is: how to choose between the two paths "
 "ending at `v[k - 1]` and `v[k + 1]`?"
 msgstr ""
+"当 `d > 0` 时，需要前一轮存储的坐标信息。"
+"当我们知道一个点的 `k` 值和前一轮搜索中点的坐标时，就很容易推导出 `v[k]` 的值。"
+"因为每一步k只能增加或减少1，所以搜索树中的 `v[k]` 必须从 `v[k - 1]` 或`v[k + 1]` 扩展。"
+"而下一个问题是：如何在以 `v[k - 1]` 和 `v[k + 1]` 结尾的两条路径之间做出选择？"
 
 #: ../../example/myers-diff/myers-diff.md:269
 msgid "There are two boundary cases: `k == -d` and `k == d`."
-msgstr ""
+msgstr "有两种边界情况： `k == -d` 和 `k == d`。"
 
 #: ../../example/myers-diff/myers-diff.md:271
 msgid "When `k == -d`, you can only choose `v[k + 1]`."
-msgstr ""
+msgstr "当 `k == -d` 时，只能选择 `v[k + 1]` 。"
 
 #: ../../example/myers-diff/myers-diff.md:273
-msgid "When `k == -d`, you can only choose `v[k - 1]`."
-msgstr ""
+msgid "When `k == d`, you can only choose `v[k - 1]`."
+msgstr "当 `k == d` 时，只能选择 `v[k + 1]` 。"
 
 #: ../../example/myers-diff/myers-diff.md:275
 msgid ""
@@ -3882,6 +3914,7 @@ msgid ""
 "insertions as much as possible, this essentially means choosing the "
 "position with the largest `x` value from the previous position."
 msgstr ""
+"而回顾前面提到的要求：尽可能在插入之前删除，这本质上意味着从前一个位置选择具有最大 `x` 值的位置。"
 
 #: ../../example/myers-diff/myers-diff.md:278
 msgid ""
@@ -3898,7 +3931,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:290
 msgid "Merging these four branches, we get the following code:"
-msgstr ""
+msgstr "合并这四个分支，我们得到以下代码："
 
 #: ../../example/myers-diff/myers-diff.md:293
 msgid ""
@@ -3911,7 +3944,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:301
 msgid "Combining all the steps above, we get the following code:"
-msgstr ""
+msgstr "结合上述所有步骤，我们得到以下代码："
 
 #: ../../example/myers-diff/myers-diff.md:303
 msgid ""
@@ -3954,7 +3987,7 @@ msgstr ""
 msgid ""
 "Since the initial value of the array is 0, we can omit the branch for `d "
 "== 0`."
-msgstr ""
+msgstr "由于数组的初始值为0，我们可以省略 `d == 0` 的分支。"
 
 #: ../../example/myers-diff/myers-diff.md:313
 msgid ""
@@ -3963,10 +3996,12 @@ msgid ""
 " the backtracking to restore the complete edit path and write a function "
 "to output a colored diff."
 msgstr ""
+"我们已经实现了Myers算法的一个不完整版本，它完成了正向路径搜索。"
+"在下一篇文章中，我们将实现回溯以恢复完整的编辑路径，并编写一个函数来输出彩色差值。"
 
 #: ../../example/myers-diff/myers-diff.md:315
 msgid "This article references:"
-msgstr ""
+msgstr "本文引用："
 
 #: ../../example/myers-diff/myers-diff.md:317
 msgid ""
@@ -3974,10 +4009,11 @@ msgid ""
 "part-2/](https://blog.jcoglan.com/2017/02/15/the-myers-diff-algorithm-"
 "part-2/)"
 msgstr ""
+"[The Myers diff algorithm](https://blog.jcoglan.com/2017/02/15/the-myers-diff-algorithm-part-2/)"
 
 #: ../../example/myers-diff/myers-diff.md:319
 msgid "Thanks to the author James Coglan."
-msgstr ""
+msgstr "感谢作者James Coglan。"
 
 #: ../../example/myers-diff/myers-diff2.md:1
 msgid "Myers diff 2"
@@ -3992,10 +4028,14 @@ msgid ""
 "article, we will learn how to extend the search process from the previous"
 " post to obtain the complete edit sequence."
 msgstr ""
+"这是diff系列的第二篇文章。"
+"在上一篇[myers-diff](https://www.moonbitlang.com/docs/examples/myers-diff)中，"
+"我们学习了如何将计算差分的过程转化为图搜索问题，以及如何搜索最短的编辑距离。"
+"在本文中，我们将学习如何扩展前一篇文章中的搜索过程，以获得完整的编辑序列。"
 
 #: ../../example/myers-diff/myers-diff2.md:5
 msgid "Recording the Search Process"
-msgstr ""
+msgstr "记录搜索过程"
 
 #: ../../example/myers-diff/myers-diff2.md:7
 msgid ""
@@ -4004,6 +4044,8 @@ msgid ""
 "save the current search depth `d` and the graph node with depth `d` at "
 "the beginning of each search round."
 msgstr ""
+"获得完整编辑序列的第一步是保存整个编辑过程。"
+"这一步相对简单：我们只需要保存当前搜索深度 `d` 和每个搜索轮开始时深度 `d` 的图节点。"
 
 #: ../../example/myers-diff/myers-diff2.md:9
 msgid ""
@@ -4051,7 +4093,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff2.md:15
 msgid "Backtracking the Edit Path"
-msgstr ""
+msgstr "回溯编辑路径"
 
 #: ../../example/myers-diff/myers-diff2.md:17
 msgid ""
@@ -4059,6 +4101,8 @@ msgid ""
 "from the endpoint to find the path taken. But before we do that, let's "
 "first define the `Edit` type."
 msgstr ""
+"在记录了整个搜索过程之后，下一步是从端点返回以查找所使用的路径。"
+"但在我们这样做之前，让我们先定义 `Edit` 类型。"
 
 #: ../../example/myers-diff/myers-diff2.md:19
 msgid ""
@@ -4071,7 +4115,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff2.md:25
 msgid "Next, let's perform the backtracking."
-msgstr ""
+msgstr "接下来，让我们执行回溯。"
 
 #: ../../example/myers-diff/myers-diff2.md:27
 msgid ""
@@ -4089,33 +4133,34 @@ msgstr ""
 msgid ""
 "The method of backtracking is essentially the same as forward search, "
 "just in reverse."
-msgstr ""
+msgstr "回溯的方法本质上与正向搜索相同，只是方向相反。"
 
 #: ../../example/myers-diff/myers-diff2.md:35
 msgid "Calculate the current `k` value using `x` and `y`."
-msgstr ""
+msgstr "使用 `x` 和 `y` 计算当前 `k` 值。"
 
 #: ../../example/myers-diff/myers-diff2.md:37
 msgid ""
 "Access the historical records and use the same judgment criteria as in "
 "forward search to find the `k` value at the previous search round."
 msgstr ""
+"访问历史记录并使用与前向搜索相同的判断标准来查找前一轮搜索中的 `k` 值。"
 
 #: ../../example/myers-diff/myers-diff2.md:39
 msgid "Restore the coordinates of the previous search round."
-msgstr ""
+msgstr "恢复上一轮搜索的坐标。"
 
 #: ../../example/myers-diff/myers-diff2.md:41
 msgid "Try free movement and record the corresponding edit actions."
-msgstr ""
+msgstr "尝试自由移动并记录相应的编辑动作。"
 
 #: ../../example/myers-diff/myers-diff2.md:43
 msgid "Determine the type of edit that caused the change in `k` value."
-msgstr ""
+msgstr "确定导致 `k` 值更改的编辑类型。"
 
 #: ../../example/myers-diff/myers-diff2.md:45
 msgid "Continue iterating."
-msgstr ""
+msgstr "继续迭代。"
 
 #: ../../example/myers-diff/myers-diff2.md:47
 msgid ""
@@ -4148,7 +4193,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff2.md:54
 msgid "Combining the two functions, we get a complete `diff` implementation."
-msgstr ""
+msgstr "结合这两个函数，我们得到了一个完整的 `diff` 实现。"
 
 #: ../../example/myers-diff/myers-diff2.md:56
 msgid ""
@@ -4160,13 +4205,15 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff2.md:62
 msgid "Printing the Diff"
-msgstr ""
+msgstr "打印diff"
 
 #: ../../example/myers-diff/myers-diff2.md:64
 msgid ""
 "To print a neat diff, we need to left-align the text. Also, due to the "
 "order issue during backtracking, we need to print from back to front."
 msgstr ""
+"要打印整齐的diff，我们需要左对齐文本。"
+"另外，由于回溯过程中的顺序问题，我们需要从后往前打印。"
 
 #: ../../example/myers-diff/myers-diff2.md:66
 msgid ""
@@ -4215,7 +4262,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff2.md:72
 msgid "The result is as follows:"
-msgstr ""
+msgstr "结果如下："
 
 #: ../../example/myers-diff/myers-diff2.md:74
 msgid ""
@@ -4240,6 +4287,10 @@ msgid ""
 "than the standard Myers algorithm but can still ensure the shortest edit "
 "sequence."
 msgstr ""
+"上面演示的Myers算法是完整的，但是由于频繁地复制数组，它有非常大的空间开销。"
+"因此，像Git这样的大多数软件使用diff算法的线性变体（在原始论文的附录中找到）。"
+"这种变体有时可能会产生比标准Myers算法质量更低的diffs（对人类来说更难阅读），"
+"但仍然可以确保最短的编辑序列。"
 
 #: ../../example/myers-diff/myers-diff3.md:1
 msgid "Myers diff 3"
@@ -4254,10 +4305,14 @@ msgid ""
 "we'll learn how to implement a variant of the Myers algorithm that "
 "operates with linear space complexity."
 msgstr ""
+"本文是[diff系列](https://docs.moonbitlang.com/examples/myers-diff)的第三篇。"
+"在[上一部分](https://docs.moonbitlang.com/examples/myers-diff2)中，"
+"我们探讨了完整的Myers算法及其局限性。"
+"在这篇文章中，我们将学习如何实现Myers算法的一种变体，该算法具有线性空间复杂度。"
 
 #: ../../example/myers-diff/myers-diff3.md:5
 msgid "Divide and Conquer"
-msgstr ""
+msgstr "分类和解决"
 
 #: ../../example/myers-diff/myers-diff3.md:7
 msgid ""
@@ -4270,6 +4325,11 @@ msgid ""
 "parts. The subsequent steps apply the same technique to the resulting "
 "subgraphs, eventually producing a complete edit path."
 msgstr ""
+"Git使用的Myers的diff算法的线性变体采用了一个称为"
+" _Snake_ （有时称为 _Middle Snake_ ）的概念来分解整个搜索过程。"
+"编辑图中的Snake表示在一次向左或向下移动后的0到N步的对角线移动。"
+"线性Myers算法在最优编辑路径上找到中间的Snake，并用它将整个编辑图分成两部分。"
+"随后的步骤将相同的技术应用于结果子图，最终生成完整的编辑路径。"
 
 #: ../../example/myers-diff/myers-diff3.md:9
 msgid ""
@@ -4311,6 +4371,7 @@ msgid ""
 "distance to the endpoint (a diagonal distance of zero), and there can be "
 "more than one such path."
 msgstr ""
+"简要回顾一下：最佳编辑路径是到端点的距离最短的路径（对角线距离为零），并且可以有多个这样的路径。"
 
 #: ../../example/myers-diff/myers-diff3.md:44
 msgid ""
@@ -4318,6 +4379,9 @@ msgid ""
 "Snake, you need an optimal edit path, but to get an optimal edit path, it"
 " seems like you need to run the original Myers algorithm first."
 msgstr ""
+"细心的读者可能已经注意到一个鸡生蛋还是蛋生鸡的问题："
+"为了找到Snake，你需要一个最优的编辑路径，"
+"但是为了获得最优的编辑路径，你似乎需要先运行原始的Myers算法。"
 
 #: ../../example/myers-diff/myers-diff3.md:46
 msgid ""
@@ -4327,12 +4391,14 @@ msgid ""
 "Instead, it simply checks if the searches from both sides overlap. When "
 "they do, the overlapping portion is returned as the Middle Snake."
 msgstr ""
+"事实上，线性Myers算法背后的思想有些不寻常：它从左上角和右下角替换原始Myers算法，但不存储历史。"
+"相反，它只是检查两边的搜索是否重叠。当它们这样做时，重叠的部分作为 `Middle Snake` 返回。"
 
 #: ../../example/myers-diff/myers-diff3.md:48
 msgid ""
 "This approach seems straightforward, but there are still some details to "
 "sort out."
-msgstr ""
+msgstr "这种方法似乎很简单，但仍有一些细节需要解决。"
 
 #: ../../example/myers-diff/myers-diff3.md:50
 msgid ""
@@ -4341,6 +4407,8 @@ msgid ""
 " **c = k - delta**. This coordinate is the mirror image of _k_, perfectly"
 " suited for reverse direction search."
 msgstr ""
+"当从右下搜索时，对角线坐标不能再被称为 _k_ 。"
+"我们需要定义一个新的对角线坐标 **c = k - delta** 。这个坐标是 _k_ 的镜像，非常适合反向搜索。"
 
 #: ../../example/myers-diff/myers-diff3.md:52
 msgid ""
@@ -4366,6 +4434,8 @@ msgid ""
 "that in the reverse search. However, since the _k_ and _c_ coordinates "
 "differ for the same diagonal, the conversion can be a bit tricky."
 msgstr ""
+"我们如何确定搜索是否重叠? 只需检查正向搜索中对角线上的位置的 _x_ 值是否大于反向搜索中的 _x_ 值。"
+"但是，由于同一对角线的 _k_ 和 _c_ 坐标不同，因此转换可能有点棘手。"
 
 #: ../../example/myers-diff/myers-diff3.md:70
 msgid "Code Implementation"
@@ -4376,6 +4446,8 @@ msgid ""
 "We'll start by defining `Snake` and `Box` types, representing the middle "
 "snake and the sub-edit graphs (since they're square, we call them `Box`)."
 msgstr ""
+"我们将首先定义 `Snake` 和 `Box` 类型，代表 `middle snake` 和子编辑图"
+"（因为它们是方形的，所以我们称之为 `Box` ）。"
 
 #: ../../example/myers-diff/myers-diff3.md:74
 msgid ""
@@ -4415,6 +4487,9 @@ msgid ""
 "Snake?` to find the middle snake. Then, we can build the function "
 "`find_path` to search for the complete path."
 msgstr ""
+"为了避免太早陷入细节，让我们假设我们已经有一个函数："
+" `midpoint : (Box, Array[Line], Array[Line]) -> Snake?` 去找 `middle snake` 。"
+"然后，我们可以构建函数 `find_path` 来搜索完整的路径。"
 
 #: ../../example/myers-diff/myers-diff3.md:82
 msgid ""
@@ -4450,10 +4525,11 @@ msgid ""
 "The implementation of `find_path` is straightforward, but `midpoint` is a"
 " bit more complex:"
 msgstr ""
+" `find_path` 的实现很简单，但 `midpoint` 有点复杂："
 
 #: ../../example/myers-diff/myers-diff3.md:90
 msgid "For a `Box` of size 0, return `None`."
-msgstr ""
+msgstr "对于大小为0的 `Box` ，返回 `None` 。"
 
 #: ../../example/myers-diff/myers-diff3.md:91
 msgid ""
@@ -4461,16 +4537,18 @@ msgid ""
 " cover half the distance, divide by two. However, if the size of the "
 "`Box` is odd, add one more to the forward search boundary."
 msgstr ""
+"计算搜索边界。因为向前和向后搜索各占一半的距离，所以除以2。"
+"但是，如果 `Box` 的大小是奇数，则在正向搜索边界上再添加一个。"
 
 #: ../../example/myers-diff/myers-diff3.md:92
 msgid "Store the results of the forward and backward searches in two arrays."
-msgstr ""
+msgstr "将向前和向后搜索的结果存储在两个数组中。"
 
 #: ../../example/myers-diff/myers-diff3.md:93
 msgid ""
 "Alternate between forward and backward searches, returning `None` if no "
 "result is found."
-msgstr ""
+msgstr "在向前和向后搜索之间交替，如果没有找到结果则返回 `None` 。"
 
 #: ../../example/myers-diff/myers-diff3.md:95
 msgid ""
@@ -4511,25 +4589,27 @@ msgstr ""
 msgid ""
 "The forward and backward searches have some modifications compared to the"
 " original Myers algorithm, which need a bit of explanation:"
-msgstr ""
+msgstr "与最初的Myers算法相比，向前和向后搜索有一些修改，需要做出解释："
 
 #: ../../example/myers-diff/myers-diff3.md:103
 msgid ""
 "Since we need to return the snake, the search process must calculate the "
 "previous coordinate (`px` stands for previous x)."
 msgstr ""
+"因为我们需要返回 `snake` ，所以搜索过程必须计算前一个坐标（ `px` 代表前一个x）。"
 
 #: ../../example/myers-diff/myers-diff3.md:104
 msgid ""
 "The search now works within a `Box` (not the global edit graph), so "
 "calculating `y` from `x` (or vice versa) requires conversion."
 msgstr ""
+"搜索现在在 `Box` （不是全局编辑图）中工作，因此从 `x` 计算 `y` 需要转换（反之亦然）。"
 
 #: ../../example/myers-diff/myers-diff3.md:105
 msgid ""
 "The backward search minimizes `y` as a heuristic strategy, but minimizing"
 " `x` would also work."
-msgstr ""
+msgstr "反向搜索最小化 `y` 是一种启发式策略，但最小化 `x` 也是可行的。"
 
 #: ../../example/myers-diff/myers-diff3.md:107
 msgid ""
@@ -4613,6 +4693,8 @@ msgid ""
 "algorithm called patience diff. It differs significantly from Myers diff "
 "in approach and sometimes produces more readable diff results."
 msgstr ""
+"除了默认的diff算法之外，Git还提供了另一种diff算法，称为 `patience diff` 。"
+"它在方法上与Myers diff有很大不同，有时会产生更可读的diff结果。"
 
 #: ../../example/segment-tree/index.md:1
 msgid "Segment Tree"
@@ -5457,7 +5539,7 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:120
 msgid "GC is really interesting!"
-msgstr ""
+msgstr "GC真的很有趣！"
 
 #: ../../example/segment-tree/segment-tree2.md:122
 msgid "Queries"
