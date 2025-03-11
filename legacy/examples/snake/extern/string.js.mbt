@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-pub type JsString
+pub extern type JsString
 
 pub fn JsString::from_string(str : String) -> JsString = "%identity"
 

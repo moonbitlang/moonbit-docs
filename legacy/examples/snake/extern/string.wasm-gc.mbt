@@ -12,13 +12,13 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-priv type JsArray
+priv extern type JsArray
 
 fn JsArray::new() -> JsArray = "array" "new"
 
 fn push(self : JsArray, charCode : Int) = "array" "push"
 
-pub(all) type JsString
+pub(all) extern type JsString
 
 fn JsString::from_code_point(charCode : JsArray) -> JsString = "string" "fromCodePoint"
 
@@ -34,7 +34,7 @@ pub fn JsString::from_string(str : String) -> JsString {
     },
     init=JsArray::new(),
   )
-  |> from_code_point
+  |> JsString::from_code_point
 }
 
 pub fn JsString::to_string(str : JsString) -> String {
