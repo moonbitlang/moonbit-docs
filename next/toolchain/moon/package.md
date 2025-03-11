@@ -304,19 +304,20 @@ You can use `moonc build-package -warn-help` to see the list of preset compiler 
 
 ```
 $ moonc -v                      
-v0.1.20240914+b541585d3
+v0.1.20250310+a7a1e9804
 
 $ moonc build-package -warn-help
 Available warnings: 
   1 Unused function.
   2 Unused variable.
   3 Unused type declaration.
-  4 Redundant case in a pattern matching (unused match case).
-  5 Unused function argument.
+  4 Unused abstract type.
+  5 Unused type variable.
   6 Unused constructor.
-  7 Unused module declaration.
-  8 Unused struct field.
- 10 Unused generic type variable.
+  7 Unused field or constructor argument.
+  8 Redunant modifier.
+  9 Unused function declaration.
+ 10 Struct never constructed.
  11 Partial pattern matching.
  12 Unreachable code.
  13 Unresolved type variable.
@@ -331,6 +332,24 @@ Available warnings:
  23 Useless try expression.
  24 Useless error type.
  26 Useless catch all.
+ 27 Deprecated syntax.
+ 28 Todo
+ 29 Unused package.
+ 30 Empty package alias.
+ 31 Optional argument never supplied.
+ 32 Default value of optional argument never used.
+ 33 Unused import value
+ 35 Reserved keyword.
+ 36 Loop label shadows another label.
+ 37 Unused loop label.
+ 38 Useless guard.
+ 39 Duplicated method.
+ 40 Call a qualified method using regular call syntax.
+ 41 Closed map pattern.
+ 42 Invalid attribute.
+ 43 Unused attribute.
+ 44 Invalid inline-wasm.
+ 45 Type implments trait with regular methods.
   A all warnings
 ```
 
