@@ -24,6 +24,12 @@ Then it is possible to use `@pkg` to access the imported entities, where `pkg` i
 :caption: pkgB/top.mbt
 ```
 
+### Internal Packages
+
+You can define internal packages that are only available for certain packages.
+
+Code in `a/b/c/internal/x/y/z` are only available to packages `a/b/c` and `a/b/c/**`.
+
 ## Access Control
 
 By default, all function definitions and variable bindings are _invisible_ to other packages.
