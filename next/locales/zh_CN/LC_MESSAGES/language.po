@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-11 16:19+0800\n"
+"POT-Creation-Date: 2025-03-11 16:53+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -13994,11 +13994,10 @@ msgid "There are `Array[T]` and `FixedArray[T]`:"
 msgstr "有 `Array[T]` 和 `FixedArray[T]`："
 
 #: ../../language/fundamentals.md:269
-#, fuzzy
 msgid ""
 "`Array[T]` can grow in size, while `FixedArray[T]` has a fixed size, thus"
 " it needs to be created with initial value."
-msgstr "`FixedArray[T]` 有固定的大小，因此需要使用初始值创建。"
+msgstr "`Array[T] 可以增长，`FixedArray[T]` 有固定的大小，因此需要使用初始值创建。"
 
 #: ../../language/fundamentals.md:272
 msgid "A common pitfall is creating `FixedArray` with the same initial value:"
@@ -18061,41 +18060,61 @@ msgstr "上述第二条规则允许通过定义新特征并实现它来为外部
 msgid "Visibility of traits and sealed traits"
 msgstr "特征的可见性和封闭特征"
 
-#: ../../language/packages.md:109
+#: ../../language/packages.md:110
 msgid ""
 "There are four visibility for traits, just like `struct` and `enum`: "
-"private, abstract, readonly and fully public. Private traits are declared"
-" with `priv trait`, and they are completely invisible from outside. "
-"Abstract trait is the default visibility. Only the name of the trait is "
-"visible from outside, and the methods in the trait are not exposed. "
-"Readonly traits are declared with `pub trait`, their methods can be "
-"involked from outside, but only the current package can add new "
-"implementation for readonly traits. Finally, fully public traits are "
-"declared with `pub(open) trait`, they are open to new implementations "
-"outside current package, and their methods can be freely used."
-msgstr ""
-"特征有四种可见性，就像 `struct` 和 `enum`：私有、抽象、只读和完全公开。私有特征使用 `priv trait` "
-"声明，对外部完全不可见。抽象特征是默认可见性：只有特征的名称对外部可见，特征中的方法不会暴露。只读特征使用 `pub trait` "
-"声明，它们的方法可以从外部调用，但只有当前包可以为只读特征添加新实现。最后，完全公开特征使用 `pub(open) trait` "
-"声明，它们对外部新实现是开放的，它们的方法可以自由使用。"
+"private, abstract, readonly and fully public."
+msgstr "特征有四种可见性，就像 `struct` 和 `enum`：私有、抽象、只读和完全公开。"
 
-#: ../../language/packages.md:115
+#: ../../language/packages.md:111
+msgid ""
+"Private traits are declared with `priv trait`, and they are completely "
+"invisible from outside."
+msgstr "私有类型，使用 `priv` 声明，对外部世界完全不可见"
+
+#: ../../language/packages.md:112
+msgid ""
+"Abstract trait is the default visibility. Only the name of the trait is "
+"visible from outside, and the methods in the trait are not exposed."
+msgstr "特征默认是抽象的。只有特征类型的名称对外部可见，特征的方法被隐藏"
+
+#: ../../language/packages.md:113
+msgid ""
+"Readonly traits are declared with `pub trait`, their methods can be "
+"invoked from outside, but only the current package can add new "
+"implementation for readonly traits."
+msgstr "只读特征，使用 `pub trait` 声明，它们的方法可以从外部调用，但只有当前包可以为只读特征添加新实现"
+
+#: ../../language/packages.md:114
+msgid ""
+"Fully public traits are declared with `pub(open) trait`, they are open to"
+" new implementations outside current package, and their methods can be "
+"freely used."
+msgstr "完全公开的特征，使用 `pub(open) trait` 声明，在外部包也可以增加实现，其方法可以自由使用"
+
+#: ../../language/packages.md:116
 msgid ""
 "Abstract and readonly traits are sealed, because only the package "
 "defining the trait can implement them. Implementing a sealed (abstract or"
-" readonly) trait outside its package result in compiler error. If you are"
-" the owner of a sealed trait, and you want to make some implementation "
-"available to users of your package, make sure there is at least one "
-"declaration of the form `impl Trait for Type with ...` in your package. "
-"Implementations with only regular method and default implementations will"
-" not be available outside."
-msgstr "抽象和只读特征是封闭的，因为只有定义特征的包才能实现它们。在其包外实现封闭（抽象或只读）特征会导致编译器错误。"
+" readonly) trait outside its package result in compiler error."
+msgstr "抽象特征和只读特征是封闭的，因为只有定义特征的包才能实现它们。在包外实现封闭（抽象或只读）特征会导致编译器错误。"
 
-#: ../../language/packages.md:121
+#: ../../language/packages.md:119
+msgid ""
+"Implementations have independent visibility, just like functions. The "
+"type will not be considered having fulfillled the trait outside current "
+"package unless the implementation is `pub`."
+msgstr "实现本身有独立的可见性，就像函数一样。除非实现是 `pub`，否则在当前包之外，类型不会被认为已经实现了特征。"
+
+#: ../../language/packages.md:122
+msgid "Currently, you cannot implement an empty trait for a type."
+msgstr "目前，你不能为一个类型实现一个空特征。"
+
+#: ../../language/packages.md:125
 msgid "Here's an example of abstract trait:"
 msgstr "以下是抽象特征的示例："
 
-#: ../../language/packages.md:124
+#: ../../language/packages.md:128
 msgid ""
 "trait Number {\n"
 " op_add(Self, Self) -> Self\n"
@@ -18117,11 +18136,11 @@ msgid ""
 "impl Number for Double with op_sub(x, y) { x - y }\n"
 msgstr ""
 
-#: ../../language/packages.md:145
+#: ../../language/packages.md:149
 msgid "From outside this package, users can only see the following:"
 msgstr "从包外，用户只能看到以下内容："
 
-#: ../../language/packages.md:147
+#: ../../language/packages.md:151
 msgid ""
 "trait Number\n"
 "\n"
@@ -18132,7 +18151,7 @@ msgid ""
 "impl Number for Double\n"
 msgstr ""
 
-#: ../../language/packages.md:157
+#: ../../language/packages.md:161
 msgid ""
 "The author of `Number` can make use of the fact that only `Int` and "
 "`Double` can ever implement `Number`, because new implementations are not"

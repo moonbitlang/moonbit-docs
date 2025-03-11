@@ -106,17 +106,21 @@ The second rule above allows one to add new functionality to a foreign type by d
 This makes MoonBit's trait & method system flexible while enjoying good coherence property.
 
 ## Visibility of traits and sealed traits
+
 There are four visibility for traits, just like `struct` and `enum`: private, abstract, readonly and fully public.
-Private traits are declared with `priv trait`, and they are completely invisible from outside.
-Abstract trait is the default visibility. Only the name of the trait is visible from outside, and the methods in the trait are not exposed.
-Readonly traits are declared with `pub trait`, their methods can be involked from outside, but only the current package can add new implementation for readonly traits.
-Finally, fully public traits are declared with `pub(open) trait`, they are open to new implementations outside current package, and their methods can be freely used.
+- Private traits are declared with `priv trait`, and they are completely invisible from outside.
+- Abstract trait is the default visibility. Only the name of the trait is visible from outside, and the methods in the trait are not exposed.
+- Readonly traits are declared with `pub trait`, their methods can be invoked from outside, but only the current package can add new implementation for readonly traits.
+- Fully public traits are declared with `pub(open) trait`, they are open to new implementations outside current package, and their methods can be freely used.
 
 Abstract and readonly traits are sealed, because only the package defining the trait can implement them.
 Implementing a sealed (abstract or readonly) trait outside its package result in compiler error.
-If you are the owner of a sealed trait, and you want to make some implementation available to users of your package,
-make sure there is at least one declaration of the form `impl Trait for Type with ...` in your package.
-Implementations with only regular method and default implementations will not be available outside.
+
+Implementations have independent visibility, just like functions. The type will not be considered having fulfillled the trait outside current package unless the implementation is `pub`.
+
+```{note}
+Currently, you cannot implement an empty trait for a type.
+```
 
 Here's an example of abstract trait:
 
