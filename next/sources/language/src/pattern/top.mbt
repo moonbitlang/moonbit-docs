@@ -28,9 +28,7 @@ test {
   } else {
     fail!("")
   }
-  guard let [.., a, b] = ary else {
-    _ => fail!("")
-  }
+  guard ary is [.., a, b] else { fail!("") }
   inspect!("a = \{a}, b = \{b}", content="a = 3, b = 4")
 }
 // end pattern 2

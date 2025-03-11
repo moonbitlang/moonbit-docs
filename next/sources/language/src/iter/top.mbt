@@ -18,7 +18,7 @@ fn fact(n : Int) -> Int {
 fn iter(data : Bytes) -> Iter[Byte] {
   Iter::new(fn(visit : (Byte) -> IterResult) -> IterResult {
     for byte in data {
-      guard let IterContinue = visit(byte) else { x => break x }
+      guard visit(byte) is IterContinue else { break IterEnd }
 
     } else {
       IterContinue
