@@ -85,7 +85,7 @@ jobs:
           Get-ChildItem -Path ".\legacy\examples" -Directory | ForEach-Object {
             Write-Output "Processing $($_.FullName)"
             Set-Location $_.FullName
-            if (${{ matrix.backend }} -ne "wasm" -and $_.Name -eq "wasi-http") {
+            if ("${{ matrix.backend }}" -ne "wasm" -and $_.Name -eq "wasi-http") {
               Write-Output "Skipping $($_.FullName) for backend ${{ matrix.backend }}"
               continue
             }
