@@ -34,7 +34,7 @@ class MoonBitLexer(RegexLexer):
             (r"\d(_|\d)*U?", token.Number.Integer),
             (r"\d+(.\d+)?", token.Number),
             (words(('type', 'type!', 'enum', 'struct', 'trait', 'typealias', 'traitalias'), suffix=r"\b"), token.Keyword.Declaration),
-            (words(('fn', 'const', 'let', 'mut', 'impl', 'with', 'derive'), suffix=r"\b"), token.Keyword.Declaration),
+            (words(('async', 'fn', 'const', 'let', 'mut', 'impl', 'with', 'derive'), suffix=r"\b"), token.Keyword.Declaration),
             (words(('self', 'Self'), suffix=r"\b"), token.Keyword),
             (words(('guard', 'if', 'while', 'match', 'else', 'loop', 'for', 'in', 'is'), suffix=r"\b"), token.Keyword),
             (words(('return', 'break', 'continue'), suffix=r"\b"), token.Keyword),
