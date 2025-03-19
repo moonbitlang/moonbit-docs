@@ -304,7 +304,7 @@ You can use `moonc build-package -warn-help` to see the list of preset compiler 
 
 ```
 $ moonc -v                      
-v0.1.20250310+a7a1e9804
+v0.1.20250318+35770a65e
 
 $ moonc build-package -warn-help
 Available warnings: 
@@ -315,7 +315,7 @@ Available warnings:
   5 Unused type variable.
   6 Unused constructor.
   7 Unused field or constructor argument.
-  8 Redunant modifier.
+  8 Redundant modifier.
   9 Unused function declaration.
  10 Struct never constructed.
  11 Partial pattern matching.
@@ -349,7 +349,7 @@ Available warnings:
  42 Invalid attribute.
  43 Unused attribute.
  44 Invalid inline-wasm.
- 45 Type implments trait with regular methods.
+ 45 Type implements trait with regular methods.
   A all warnings
 ```
 
