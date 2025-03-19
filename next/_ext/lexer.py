@@ -40,7 +40,7 @@ class MoonBitLexer(RegexLexer):
             (words(('return', 'break', 'continue'), suffix=r"\b"), token.Keyword),
             (words(('try', 'catch', 'catch!', 'raise'), suffix=r"\b"), token.Keyword),
             (r"\bas\b", token.Keyword),
-            (words(('extern', 'pub', 'priv', 'pub\\(all\\)', 'pub(readonly)', 'pub(open)', 'test'), suffix=r"\b"), token.Keyword),
+            (words(('extern', 'pub', 'priv', 'pub(all)', 'pub(readonly)', 'pub(open)', 'test'), suffix=r"\b"), token.Keyword),
             (words(('true', 'false'), suffix=r"\b"), token.Keyword.Constant),
             (words(('Eq', 'Compare', 'Hash', 'Show', 'Default', 'ToJson', 'FromJson'), suffix=r"\b"), token.Name.Builtin),
             (words(('Array', 'FixedArray', 'Int', 'Int64', 'UInt', 'UInt64', 'Option', 'Result', 'Byte', 'Bool', 'Unit', 'String', 'Float', 'Double'), suffix=r"\b"), token.Name.Builtin),
