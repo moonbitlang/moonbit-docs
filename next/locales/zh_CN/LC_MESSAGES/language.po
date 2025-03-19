@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-11 17:00+0800\n"
+"POT-Creation-Date: 2025-03-19 12:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1990,7 +1990,7 @@ msgstr ""
 #: ../../language/error_codes/E3017.md:9 ../../language/error_codes/E3018.md:5
 #: ../../language/error_codes/E3019.md:10 ../../language/error_codes/E3020.md:6
 #: ../../language/error_codes/E3800.md:10 ../../language/error_codes/E4000.md:5
-#: ../../language/error_codes/E4005.md:5 ../../language/error_codes/E4007.md:8
+#: ../../language/error_codes/E4005.md:5 ../../language/error_codes/E4007.md:6
 #: ../../language/error_codes/E4050.md:9 ../../language/error_codes/E4051.md:15
 #: ../../language/error_codes/E4052.md:7 ../../language/error_codes/E4053.md:18
 #: ../../language/error_codes/E4055.md:5 ../../language/error_codes/E4056.md:5
@@ -2122,7 +2122,7 @@ msgstr ""
 #: ../../language/error_codes/E4004.md:14
 #: ../../language/error_codes/E4005.md:14
 #: ../../language/error_codes/E4006.md:21
-#: ../../language/error_codes/E4007.md:21
+#: ../../language/error_codes/E4007.md:19
 #: ../../language/error_codes/E4008.md:14
 #: ../../language/error_codes/E4009.md:21
 #: ../../language/error_codes/E4010.md:19
@@ -2971,10 +2971,23 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E1011.md:29
+msgid "Or, you can use `is` syntax to use this pattern matching as a condition:"
+msgstr ""
+
+#: ../../language/error_codes/E1011.md:31
+msgid ""
+"fn main {\n"
+"  if Some(1) is Some(x) {\n"
+"    println(x)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E1011.md:39
 msgid "Or, you can add a wildcard pattern to catch all remaining cases:"
 msgstr "或者，你可以添加一个通配符模式来捕获所有剩余的情况："
 
-#: ../../language/error_codes/E1011.md:31
+#: ../../language/error_codes/E1011.md:41
 msgid ""
 "fn main {\n"
 "  match Some(1) {\n"
@@ -5775,13 +5788,11 @@ msgstr ""
 
 #: ../../language/error_codes/E4007.md:3
 msgid ""
-"When constructing an enum, the arguments passed to the constructor cannot"
-" be unit `()`. MoonBit does not allow constructors to take unit as an "
-"argument because it would be redundant - a constructor without arguments "
-"already represents a singleton value."
+"Enum variants without payloads are considered as singleton values. "
+"MoonBit does not allow such constructors to be called as functions."
 msgstr ""
 
-#: ../../language/error_codes/E4007.md:10
+#: ../../language/error_codes/E4007.md:8
 msgid ""
 "enum Status {\n"
 "  Done\n"
@@ -5789,15 +5800,16 @@ msgid ""
 "}\n"
 "\n"
 "fn main {\n"
-"  let status = Done() // Error: constructor can't take unit as argument\n"
+"  let status = Done() // Error: constructor without payload cannot be "
+"called with ()\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4007.md:23
-msgid "Remove the unit argument from the constructor since it adds no value:"
+#: ../../language/error_codes/E4007.md:21
+msgid "Remove the function calling syntax from the constructor:"
 msgstr ""
 
-#: ../../language/error_codes/E4007.md:25
+#: ../../language/error_codes/E4007.md:23
 msgid ""
 "// ...\n"
 "fn main {\n"
@@ -5805,13 +5817,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4007.md:32
+#: ../../language/error_codes/E4007.md:30
 msgid ""
-"If you really need the constructor to take a unit arguments, explicitly "
-"use `Unit` as its argument"
+"If you really need the constructor to construct values, explicitly use "
+"`Unit` as its argument"
 msgstr ""
 
-#: ../../language/error_codes/E4007.md:35
+#: ../../language/error_codes/E4007.md:33
 msgid ""
 "enum Status {\n"
 "  Done(Unit)\n"
@@ -6812,6 +6824,7 @@ msgid ""
 "  struct S { x : Int; y : Int }\n"
 "  struct T { x : Int; y : Int }\n"
 "  let c : S = { x: 2, y: 1 }\n"
+"  let c2 = S::{ x : 2, y : 1 }\n"
 "}\n"
 msgstr ""
 
@@ -18412,4 +18425,3 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
-
