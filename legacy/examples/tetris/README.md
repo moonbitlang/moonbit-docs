@@ -26,7 +26,7 @@ make
 ### Use External Ref to Call Canvas API
 * Create external ref
 ```
-type Canvas_ctx
+extern type Canvas_ctx
 
 func set_stroke_color(self : Canvas_ctx, color : Int) = "canvas" "set_stroke_color"
 

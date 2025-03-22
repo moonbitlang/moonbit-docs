@@ -208,6 +208,29 @@ fn set_header_ffi(offset : Int, len : Int) -> Unit {
 }
 
 ///|
+pub fn cabi_realloc(
+  src_offset : Int,
+  src_size : Int,
+  _dst_alignment : Int,
+  dst_size : Int
+) -> Int {
+  // malloc
+  if src_offset == 0 && src_size == 0 {
+    return malloc(dst_size)
+  }
+  // free
+  if dst_size <= 0 {
+    free(src_offset)
+    return 0
+  }
+  // realloc
+  let dst = malloc(dst_size)
+  copy(dst, src_offset)
+  free(src_offset)
+  dst
+}
+
+///|
 pub(open) trait Any {}
 
 ///|

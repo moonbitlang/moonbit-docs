@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-type Canvas_ctx
+extern type Canvas_ctx
 
 fn begin_path(self : Canvas_ctx) = "canvas" "begin_path"
 

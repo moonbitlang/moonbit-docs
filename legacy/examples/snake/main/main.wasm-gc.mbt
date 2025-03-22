@@ -18,7 +18,7 @@ fn set_on_keydown(callback : (KeyboardEvent) -> Unit) = "document" "set_onkeydow
 
 fn get_context() -> @lib.Canvas_ctx = "canvas" "get_context"
 
-type KeyboardEvent
+extern type KeyboardEvent
 
 fn key_ffi(self : KeyboardEvent) -> @extern.JsString = "keyboard_event" "key"
 

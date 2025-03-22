@@ -9,7 +9,7 @@
 project = 'MoonBit'
 author = 'International Digital Economy Academy'
 copyright = '%Y, {author}'.format(author=author)
-release = 'v0.1.20250210'
+release = 'v0.1.20250310'
 
 # I18N based on Readthedocs Environment
 # https://docs.readthedocs.io/en/stable/reference/environment-variables.html
@@ -31,7 +31,7 @@ sys.path.append(str(Path("_ext").resolve()))
 extensions = ['myst_parser', 'lexer', 'check', 'indent', 'sphinx_copybutton']
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README.md", 'sources', 'download']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README*.md", 'sources', 'download']
 
 smartquotes_excludes = {
   'builders': ['man', 'text', 'markdown', 'latex'],

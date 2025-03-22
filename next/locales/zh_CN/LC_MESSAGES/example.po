@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-11 11:47+0800\n"
+"POT-Creation-Date: 2025-03-11 16:20+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1479,8 +1479,10 @@ msgid ""
 "article, we will further extend the G-Machine implementation from the "
 "previous article to support `let` expressions and basic arithmetic, "
 "comparison, and other operations."
-msgstr "在第一部分中我们探讨了惰性求值的目的，介绍了典型的惰性求值抽象机器 G-Machine 并实现它的一些基本指令。本章为“MoonBit "
-"中实现惰性求值”主题的第二部分，将延续并进一步扩展之前文章中 G-Machine 的实现来支持 `let` 表达式和基础算术，比较，和其他相关操作。"
+msgstr ""
+"在第一部分中我们探讨了惰性求值的目的，介绍了典型的惰性求值抽象机器 G-Machine 并实现它的一些基本指令。本章为“MoonBit "
+"中实现惰性求值”主题的第二部分，将延续并进一步扩展之前文章中 G-Machine 的实现来支持 `let` "
+"表达式和基础算术，比较，和其他相关操作。"
 
 #: ../../example/gmachine/gmachine-2.md:5
 msgid "let Expressions"
@@ -1491,7 +1493,9 @@ msgid ""
 "The `let` expression in coref differs slightly from that in MoonBit. A "
 "`let` expression can create multiple variables but can only be used "
 "within a limited scope. Here is an example:"
-msgstr "coref 中的 `let` 表达式与 MoonBit 略有差异。MoonBit 的 `let` 表达式可以创建多个变量，但只能在有限的范围内使用。示例如下："
+msgstr ""
+"coref 中的 `let` 表达式与 MoonBit 略有差异。MoonBit 的 `let` "
+"表达式可以创建多个变量，但只能在有限的范围内使用。示例如下："
 
 #: ../../example/gmachine/gmachine-2.md:9
 msgid ""
@@ -1542,9 +1546,8 @@ msgid ""
 " `NApp` nodes. Therefore, we need to adjust the stack parameters before "
 "calling the supercombinator."
 msgstr ""
-"在实现 `let`（和更复杂的 `letrec`）表达式之前，我们首先需要修改当前的参数传递方法。"
-"`let` 创建的本地变量应该像参数一样访问，但 `let` 中的本地变量不对应 NApp 节点，因此我们需要在调用超组合子之前调整栈参数。"
-
+"在实现 `let`（和更复杂的 `letrec`）表达式之前，我们首先需要修改当前的参数传递方法。`let` 创建的本地变量应该像参数一样访问，但"
+" `let` 中的本地变量不对应 NApp 节点，因此我们需要在调用超组合子之前调整栈参数。"
 
 #: ../../example/gmachine/gmachine-2.md:37
 msgid ""
@@ -1553,16 +1556,16 @@ msgid ""
 " unwind. When there are parameters, the top address of the "
 "supercombinator node is discarded, and the `rearrange` function is "
 "called."
-msgstr "调整是在执行 `Unwind` 指令的过程中完成的。如果超组合子没有参数，则与原始 `unwind` 相同。当有参数时，超组合子节点的顶部地址会被丢弃，并开始调用 `rearrange` 函数。"
+msgstr ""
+"调整是在执行 `Unwind` 指令的过程中完成的。如果超组合子没有参数，则与原始 `unwind` "
+"相同。当有参数时，超组合子节点的顶部地址会被丢弃，并开始调用 `rearrange` 函数。"
 
 #: ../../example/gmachine/gmachine-2.md:39
 msgid ""
 "fn rearrange(self : GState, n : Int) -> Unit {\n"
 "  let appnodes = self.stack.take(n)\n"
 "  let args = appnodes.map(fn (addr) {\n"
-"    guard let NApp(_, arg) = self.heap[addr] else {\n"
-"      _ => panic()\n"
-"    }\n"
+"    guard self.heap[addr] is NApp(_, arg)\n"
 "    arg \n"
 "  })\n"
 "  self.stack = args + appnodes.drop(n - 1)\n"
@@ -1575,8 +1578,9 @@ msgid ""
 "point to a series of `NApp` nodes. It keeps the bottommost one (used as "
 "Redex update), cleans up the top N-1 addresses, and then places N "
 "addresses that directly point to the parameters."
-msgstr "`rearrange` 函数假设堆栈上的前 N 个地址指向一系列 `NApp` 节点。它保留最底部的地址（用于 Redex 更新），清理栈顶的 N-1 个地址，然后将 N 个地址放置在栈中，"
-"这些地址直接指向参数。"
+msgstr ""
+"`rearrange` 函数假设堆栈上的前 N 个地址指向一系列 `NApp` 节点。它保留最底部的地址（用于 Redex 更新），清理栈顶的 "
+"N-1 个地址，然后将 N 个地址放置在栈中，这些地址直接指向参数。"
 
 #: ../../example/gmachine/gmachine-2.md:47
 msgid ""
@@ -1614,8 +1618,7 @@ msgid ""
 "stack still contains addresses pointing to e1 and e2 (corresponding to "
 "variables x1 and x2), as shown below (the stack grows from bottom to "
 "top):"
-msgstr "在构建与表达式 expr 对应的图之后，栈中仍然包含指向 e1 和 e2 的地址（分别对应变量 x1 和 x2）,"
-"如下所示（栈从下到上增长）"
+msgstr "在构建与表达式 expr 对应的图之后，栈中仍然包含指向 e1 和 e2 的地址（分别对应变量 x1 和 x2）,如下所示（栈从下到上增长）"
 
 #: ../../example/gmachine/gmachine-2.md:65
 msgid ""
@@ -1634,8 +1637,9 @@ msgid ""
 "addresses. It is called `Slide`. As the name suggests, the function of "
 "`Slide(n)` is to skip the first address and delete the following N "
 "addresses."
-msgstr "因此，我们需要一个新的指令来清理这些不再需要的地址。它被称为 `Slide`。顾名思义，`Slide(n)` 的功能是跳过第一个地址并删除以下N个地址。
-"
+msgstr ""
+"因此，我们需要一个新的指令来清理这些不再需要的地址。它被称为 `Slide`。顾名思义，`Slide(n)` "
+"的功能是跳过第一个地址并删除以下 N 个地址"
 
 #: ../../example/gmachine/gmachine-2.md:77
 msgid ""
@@ -1653,8 +1657,10 @@ msgid ""
 "offsets in order. Finally, use the passed `comp` function to compile the "
 "main expression and add the `Slide` instruction to clean up the unused "
 "addresses."
-msgstr "现在我们来使用 let 表达式，我们将用 compileC 函数编译与本地变量对应的表达式。"
-"然后，遍历变量定义（`defs`）列表，依次编译并更新相应的偏移量。最后，使用传入的 `comp` 函数编译主表达式，并添加 `Slide` 指令来清理不使用的地址。"
+msgstr ""
+"现在我们来使用 let 表达式，我们将用 compileC "
+"函数编译与本地变量对应的表达式。然后，遍历变量定义（`defs`）列表，依次编译并更新相应的偏移量。最后，使用传入的 `comp` "
+"函数编译主表达式，并添加 `Slide` 指令来清理不使用的地址。"
 
 #: ../../example/gmachine/gmachine-2.md:85
 msgid ""
@@ -1690,8 +1696,10 @@ msgid ""
 "`Alloc(N)`, which pre-allocates N `NInd` nodes and pushes the addresses "
 "onto the stack sequentially. The addresses in these indirect nodes are "
 "negative and only serve as placeholders."
-msgstr "`letrec`的语义更加复杂——它允许表达式中的 N 个变量相互引用，因此我们需要预先分配 N 个地址并将其放置在堆栈上。"
-"我们需要一个新的指令：`Alloc（N）`，它预先分配 N 个`NInd`节点，并将地址顺序推送到堆栈上。这些间接节点中的地址是负数，仅用作占位符。"
+msgstr ""
+"`letrec`的语义更加复杂——它允许表达式中的 N 个变量相互引用，因此我们需要预先分配 N "
+"个地址并将其放置在堆栈上。我们需要一个新的指令：`Alloc（N）`，它预先分配 N "
+"个`NInd`节点，并将地址顺序推送到堆栈上。这些间接节点中的地址是负数，仅用作占位符。"
 
 #: ../../example/gmachine/gmachine-2.md:95
 msgid ""
@@ -1769,8 +1777,7 @@ msgid ""
 "From this step, we can finally perform basic integer operations such as "
 "arithmetic, comparison, and checking if two numbers are equal. First, "
 "modify the `Instruction` type to add related instructions."
-msgstr "从这步开始，我们终于可以开始执行基本的整数运算，如算术、比较与检查两个数字是否相等。"
-"首先，修改 `Instruction`类型以添加相关指令。"
+msgstr "从这步开始，我们终于可以开始执行基本的整数运算，如算术、比较与检查两个数字是否相等。首先，修改 `Instruction`类型以添加相关指令。"
 
 #: ../../example/gmachine/gmachine-2.md:118
 msgid ""
@@ -1794,8 +1801,7 @@ msgid ""
 " as an example: just pop two top addresses from the stack, retrieve the "
 "corresponding numbers from memory, perform the operation, and push the "
 "result address back onto the stack."
-msgstr "实现这些指令乍看上去似乎很简单。"
-"以`Add`为例：只需从栈中弹出两个地址，获取对应的数字，执行加法操作，然后把结果的地址推回栈中。"
+msgstr "实现这些指令乍看上去似乎很简单。以`Add`为例：只需从栈中弹出两个地址，获取对应的数字，执行加法操作，然后把结果的地址推回栈中。"
 
 #: ../../example/gmachine/gmachine-2.md:135
 msgid ""
@@ -1819,8 +1825,10 @@ msgid ""
 "`NNum` nodes). We also need an instruction that can force a computation "
 "to give a result or never stop computing. We call it `Eval` (short for "
 "Evaluation)."
-msgstr "然而，接下来我们面临的问题是：这是一个惰性求值的语言。在惰性求值中，传递给 `add` 的参数很可能还没有被计算（即它们可能不是 `NNum `节点，而是尚未计算的表达式）。"
-"因此，我们需要一种指令来强制执行计算，确保获取结果，或者在某些情况下，保证计算不会停下来。我们称之为 `Eval`（即 Evaluation 缩写）。"
+msgstr ""
+"然而，接下来我们面临的问题是：这是一个惰性求值的语言。在惰性求值中，传递给 `add` 的参数很可能还没有被计算（即它们可能不是 `NNum "
+"`节点，而是尚未计算的表达式）。因此，我们需要一种指令来强制执行计算，确保获取结果，或者在某些情况下，保证计算不会停下来。我们称之为 "
+"`Eval`（即 Evaluation 缩写）。"
 
 #: ../../example/gmachine/gmachine-2.md:151
 msgid ""
@@ -1833,7 +1841,9 @@ msgid ""
 "At the same time, we need to modify the structure of `GState` and add a "
 "state called `dump`. Its type is `List[(List[Instruction], List[Addr])]`,"
 " used by `Eval` and `Unwind` instructions."
-msgstr "同时我们需要修改 `GState` 的架构并加入 `dump` 的状态，类型是 `List[(List[Instruction], List[Addr])]`，使用 `Eval` 和 `Unwind` 指令的功能 "
+msgstr ""
+"同时我们需要修改 `GState` 的架构并加入 `dump` 的状态，类型是 `List[(List[Instruction], "
+"List[Addr])]`，使用 `Eval` 和 `Unwind` 指令的功能 "
 
 #: ../../example/gmachine/gmachine-2.md:155
 msgid "The implementation of the `Eval` instruction is not complicated:"
@@ -1878,7 +1888,9 @@ msgid ""
 "This simple definition requires modifying the `Unwind` instruction to "
 "restore the context when `Unwind` in the `NNum` branch finds that there "
 "is a recoverable context (`dump` is not empty)."
-msgstr "这个简单的定义要求我们修改 `Unwind` 指令，使其在遇到 `NNum` 分支时，如果发现存在可恢复的上下文（即 `dump` 不为空），则恢复该上下文。"
+msgstr ""
+"这个简单的定义要求我们修改 `Unwind` 指令，使其在遇到 `NNum` 分支时，如果发现存在可恢复的上下文（即 `dump` "
+"不为空），则恢复该上下文。"
 
 #: ../../example/gmachine/gmachine-2.md:175
 msgid ""
@@ -1928,8 +1940,8 @@ msgid ""
 "the comparison instruction is a boolean value, and for simplicity, we use"
 " numbers to represent it: 0 for `false`, 1 for `true`."
 msgstr ""
-"接下来，我们需要实现算术和比较算法。我们使用两个函数来简化二进制运算的形式。"
-"比较指令的结果是一个布尔值，简单起见我们使用数字来表示它：0 表示 `false`，1 表示 `true`。"
+"接下来，我们需要实现算术和比较算法。我们使用两个函数来简化二进制运算的形式。比较指令的结果是一个布尔值，简单起见我们使用数字来表示它：0 表示 "
+"`false`，1 表示 `true`。"
 
 #: ../../example/gmachine/gmachine-2.md:183
 msgid ""
@@ -2119,7 +2131,8 @@ msgid ""
 "operations. In this article, we will implement a context-based "
 "optimization method and add support for data structures."
 msgstr ""
-"本文是关于在 MoonBit 中实现 Haskell 懒惰求值的系列文章中的第三篇。在上一篇文章中，我们学习了如何编译 `let` 表达式以及如何实现基本的算术和比较操作。在本文中，我们将实现一种基于上下文的优化方法，并添加对数据结构的支持。"
+"本文是关于在 MoonBit 中实现 Haskell 懒惰求值的系列文章中的第三篇。在上一篇文章中，我们学习了如何编译 `let` "
+"表达式以及如何实现基本的算术和比较操作。在本文中，我们将实现一种基于上下文的优化方法，并添加对数据结构的支持。"
 
 #: ../../example/gmachine/gmachine-3.md:5
 msgid "Tracking Context"
@@ -2130,14 +2143,12 @@ msgid ""
 "Let's review how we implemented primitives in the [last "
 "tutorial](gmachine-2.md)."
 msgstr ""
-"让我们回顾一下我们在上一篇教程 (gmachine-2) 中如何实现原语的。"
 
 #: ../../example/gmachine/gmachine-3.md:15
 msgid ""
 "This implementation introduces many `Eval` instructions, but they are not"
 " always necessary. For example:"
 msgstr ""
-"这个实现引入了许多 `Eval` 指令，但它们并不总是必要的。例如："
 
 #: ../../example/gmachine/gmachine-3.md:17
 msgid "(add 3 (mul 4 5))\n"
@@ -2149,7 +2160,6 @@ msgid ""
 "before executing `Eval`. Therefore, the `Eval` instructions here are "
 "redundant."
 msgstr ""
-"add` 的两个参数在执行 `Eval` 之前已经处于 WHNF（弱头正常形式），因此，这里的 `Eval` 指令是多余的。"
 
 #: ../../example/gmachine/gmachine-3.md:23
 msgid ""
@@ -2159,7 +2169,6 @@ msgid ""
 "compilation. By doing this, we can identify some expressions that can be "
 "safely compiled with strict evaluation (only a subset)."
 msgstr ""
-"一种可行的优化方法是在编译表达式时考虑上下文。例如，`add` 需要其参数被求值到 WHNF，因此它的参数在编译过程中处于严格上下文。通过这种方式，我们可以识别出一些可以安全地使用严格求值编译的表达式（仅为其中的一部分）。"
 
 #: ../../example/gmachine/gmachine-3.md:25
 msgid "An expression in a supercombinator definition is in a strict context."
@@ -2170,7 +2179,6 @@ msgid ""
 "If `(op e1 e2)` is in a strict context (where `op` is a primitive), then "
 "`e1` and `e2` are also in a strict context."
 msgstr ""
-"如果 `(op e1 e2)` 处于严格上下文中（其中 `op` 是一个原语），那么 `e1` 和 `e2` 也处于严格上下文中。"
 
 #: ../../example/gmachine/gmachine-3.md:29
 msgid ""
@@ -2178,7 +2186,6 @@ msgid ""
 " context (but the expressions corresponding to the local variables are "
 "not, as `e` may not need their results)."
 msgstr ""
-"如果 `(let (.....) e)` 处于严格上下文中，那么 `e` 也处于严格上下文中（但与局部变量对应的表达式不一定是严格的，因为 `e` 可能不需要它们的结果）。"
 
 #: ../../example/gmachine/gmachine-3.md:31
 msgid ""
@@ -2186,14 +2193,12 @@ msgid ""
 "context, ensuring that _the value at the top of the stack is always in "
 "WHNF_."
 msgstr ""
-"我们使用 `compileE` 函数在严格上下文中实现编译，确保_栈顶的值始终处于 WHNF_。"
 
 #: ../../example/gmachine/gmachine-3.md:33
 msgid ""
 "For the default branch, we simply add an `Eval` instruction after the "
 "result of `compileC`."
 msgstr ""
-"对于默认分支，我们仅在 `compileC` 的结果后添加一个 `Eval` 指令。"
 
 #: ../../example/gmachine/gmachine-3.md:35
 msgid "_ => compileC(self, env) + @immut/list.of([Eval])\n"
@@ -2214,7 +2219,6 @@ msgid ""
 "strict context only requires using `compileE` to compile its main "
 "expression."
 msgstr ""
-"对于 `let/letrec` 表达式，专门设计的 `compileLet` 和 `compileLetrec` 变得非常有用。在严格上下文中编译 `let/letrec` 表达式时，只需要使用 `compileE` 来编译它的主要表达式。"
 
 #: ../../example/gmachine/gmachine-3.md:53
 msgid ""
@@ -2232,7 +2236,6 @@ msgid ""
 "The `if` and `negate` functions, with 3 and 1 arguments respectively, "
 "require special handling."
 msgstr ""
-"`if` 和 `negate` 函数分别需要 3 和 1 个参数，需要特殊处理。"
 
 #: ../../example/gmachine/gmachine-3.md:62
 msgid ""
@@ -2253,7 +2256,6 @@ msgid ""
 "First, construct a hash table called `builtinOpS` to query the "
 "corresponding instructions by the name of the primitive."
 msgstr ""
-"基本的二元操作可以通过查找表统一处理。首先，构建一个名为 `builtinOpS` 的哈希表，通过原语的名称查询相应的指令。"
 
 #: ../../example/gmachine/gmachine-3.md:71
 msgid ""
@@ -2296,14 +2298,12 @@ msgid ""
 "Are we done? It seems so, but there's another WHNF besides integers: "
 "partially applied functions."
 msgstr ""
-"我们完成了吗？看起来是的，但除了整数之外，还有另一种 WHNF：部分应用函数。"
 
 #: ../../example/gmachine/gmachine-3.md:88
 msgid ""
 "A partial application is when the number of arguments is insufficient. "
 "This situation is common in higher-order functions, for example:"
 msgstr ""
-"部分应用是指参数数量不足的情况。这种情况在高阶函数中很常见，例如："
 
 #: ../../example/gmachine/gmachine-3.md:90
 msgid "(map (add 1) listofnumbers)\n"
@@ -2321,7 +2321,6 @@ msgid ""
 "insufficient and the dump has saved stacks, we should only retain the "
 "original redex and restore the stack."
 msgstr ""
-"为了确保新编译策略生成的代码正常工作，我们需要修改 `NGlobal` 分支的 `Unwind` 指令实现。当参数不足且转储保存了堆栈时，我们应仅保留原始的红 ex 并恢复堆栈。"
 
 #: ../../example/gmachine/gmachine-3.md:98
 msgid ""
@@ -2358,7 +2357,6 @@ msgid ""
 "analyze which arguments of a supercombinator call should be compiled "
 "using strict mode."
 msgstr ""
-"这种基于上下文的严格性分析技术很有用，但不能处理超级组合子调用。在这里，我们简要介绍一种基于布尔运算的严格性分析技术，它可以分析超级组合子调用的哪些参数应该使用严格模式编译。"
 
 #: ../../example/gmachine/gmachine-3.md:107
 msgid ""
@@ -2370,7 +2368,6 @@ msgid ""
 "`f` is, it **must** need the result of argument `a[i]` to get the final "
 "result. Therefore, a`[i]` should be strictly evaluated."
 msgstr ""
-"我们首先定义一个概念：bottom，它在概念上代表一个永不终止或引发异常的值。对于一个超级组合子 `f a[1] ...... a[n]`，如果其中一个参数 `a[i]` 满足 `a[i] = bottom`，那么 `f a[1] .... a[i] .... a[n] = bottom`（其他参数不是 bottom）。这表明，无论 `f` 的内部控制流多么复杂，它**必须**需要参数 `a[i]` 的结果才能得到最终结果。因此，`a[i]` 应该被严格求值。"
 
 #: ../../example/gmachine/gmachine-3.md:109
 msgid ""
@@ -2379,7 +2376,6 @@ msgid ""
 "and its use is determined at runtime. Such an argument is a typical "
 "example of one that should be lazily evaluated."
 msgstr ""
-"如果此条件不满足，并不一定意味着该参数完全不需要；它可能只在某些分支中使用，其使用在运行时确定。这样的参数是应该延迟求值的典型例子。"
 
 #: ../../example/gmachine/gmachine-3.md:111
 msgid ""
@@ -2387,7 +2383,6 @@ msgid ""
 " way, all functions in coref can be considered boolean functions. Take "
 "`abs` as an example:"
 msgstr ""
-"我们将 bottom 视为 `false`，非 bottom 值视为 `true`。这样，coref 中的所有函数都可以视为布尔函数。以 `abs` 为例："
 
 #: ../../example/gmachine/gmachine-3.md:113
 msgid ""
@@ -2407,7 +2402,6 @@ msgid ""
 "the condition `(lt n 0)` is also bottom, and thus the result of the "
 "entire expression is also bottom."
 msgstr ""
-"对于像 `(if x y z)` 这样的表达式，`x` 必须被求值，但只需要评估 `y` 或 `z` 之一。这可以转换为 `x and (y or z)`。以上面的函数为例，如果 `n` 是 bottom，那么条件 `(lt n 0)` 也是 bottom，因此整个表达式的结果也是 bottom。"
 
 #: ../../example/gmachine/gmachine-3.md:122
 msgid "For primitive expressions, using `and` for all parts is sufficient."
@@ -2420,14 +2414,12 @@ msgid ""
 "implies `f a[1] .... a[i] .... a[n] = false` (with all other parameters "
 "being true)."
 msgstr ""
-"为了确定一个参数是否需要严格编译，可以将上述条件转换为布尔函数：`a[i] = false` 表示 `f a[1] .... a[i] .... a[n] = false`（其他所有参数为 true）。"
 
 #: ../../example/gmachine/gmachine-3.md:126
 msgid ""
 "This is essentially a method of program analysis called \"abstract "
 "interpretation.\""
 msgstr ""
-"这本质上是一种名为“抽象解释”的程序分析方法。"
 
 #: ../../example/gmachine/gmachine-3.md:128
 msgid "Custom Data Structures"
@@ -2440,7 +2432,6 @@ msgid ""
 "demonstrate lazy evaluation, it does not allow custom data types. The "
 "only built-in data structure is the lazy list."
 msgstr ""
-"Haskell 中的数据结构类型定义类似于 MoonBit 中的 `enum`。然而，由于 CoreF 是一种简单的玩具语言，用于演示懒惰求值，它不允许自定义数据类型。唯一的内置数据结构是懒惰列表。"
 
 #: ../../example/gmachine/gmachine-3.md:132
 msgid ""
@@ -2458,28 +2449,24 @@ msgid ""
 "As shown above, you can use the `case` expression for simple pattern "
 "matching on lists."
 msgstr ""
-"如上所示，可以使用 `case` 表达式进行列表的简单模式匹配。"
 
 #: ../../example/gmachine/gmachine-3.md:144
 msgid ""
 "The corresponding graph node for a list is `NConstr(Int, List[Addr])`, "
 "which consists of two parts:"
 msgstr ""
-"列表的对应图节点是 `NConstr(Int, List[Addr])`，由两部分组成："
 
 #: ../../example/gmachine/gmachine-3.md:146
 msgid ""
 "A tag for different value constructors: the tag for `Nil` is 0, and the "
 "tag for `Cons` is 1."
 msgstr ""
-"不同值构造器的标签：`Nil` 的标签是 0，`Cons` 的标签是 1。"
 
 #: ../../example/gmachine/gmachine-3.md:147
 msgid ""
 "A list of addresses for storing substructures, whose length corresponds "
 "to the number of parameters (arity) of a value constructor."
 msgstr ""
-"用于存储子结构的地址列表，其长度对应于值构造器的参数数量（元数）。"
 
 #: ../../example/gmachine/gmachine-3.md:149
 msgid ""
@@ -2487,14 +2474,12 @@ msgid ""
 "structures, but CoreF does not have a type system. For demonstration "
 "purposes, only lazy lists are implemented."
 msgstr ""
-"该图节点结构可用于实现各种数据结构，但 CoreF 没有类型系统。为了演示目的，仅实现了懒惰列表。"
 
 #: ../../example/gmachine/gmachine-3.md:151
 msgid ""
 "We need to add two instructions, `Split` and `Pack`, to deconstruct and "
 "construct lists."
 msgstr ""
-"我们需要添加两个指令，`Split` 和 `Pack`，来解构和构建列表。"
 
 #: ../../example/gmachine/gmachine-3.md:153
 msgid ""
@@ -2522,7 +2507,6 @@ msgid ""
 "Additionally, a `CaseJump` instruction is needed to implement the `case` "
 "expression."
 msgstr ""
-"此外，需要一个 `CaseJump` 指令来实现 `case` 表达式。"
 
 #: ../../example/gmachine/gmachine-3.md:162
 msgid ""
@@ -2552,7 +2536,6 @@ msgid ""
 "needs to be evaluated to WHNF, only the `compileE` function can compile "
 "it."
 msgstr ""
-"在添加上述指令之后，我们需要修改 `compileC` 和 `compileE` 函数。由于 `case` 表达式匹配的对象需要被求值到 WHNF，因此只能通过 `compileE` 函数来编译它。"
 
 #: ../../example/gmachine/gmachine-3.md:170
 msgid ""
@@ -2590,7 +2573,6 @@ msgid ""
 "`Print` instruction, which will recursively evaluate and write the result"
 " into the `output` component of `GState`."
 msgstr ""
-"此时，出现了一个新问题。以前，打印求值结果只需要处理简单的 `NNum` 节点，但 `NConstr` 节点有子结构。当列表本身被求值到 WHNF 时，它的子结构大多是未求值的 `NApp` 节点。我们需要添加一个 `Print` 指令，它将递归地求值并将结果写入 `GState` 的 `output` 组件。"
 
 #: ../../example/gmachine/gmachine-3.md:186
 msgid ""
@@ -2616,19 +2598,16 @@ msgstr ""
 #: ../../example/gmachine/gmachine-3.md:192
 msgid "Finally, change the initial code of the G-Machine to:"
 msgstr ""
-"最后，将 G-Machine 的初始代码修改为："
 
 #: ../../example/gmachine/gmachine-3.md:194
 msgid "code : @immut/list.of([PushGlobal(\"main\"), Eval, Print]),\n"
 msgstr ""
-"代码：@immut/list.of([PushGlobal(\"main\"), Eval, Print]),\n"
 
 #: ../../example/gmachine/gmachine-3.md:201
 msgid ""
 "Now, we can write some classic functional programs using lazy lists, such"
 " as the infinite Fibonacci sequence:"
 msgstr ""
-"现在，我们可以使用懒惰列表编写一些经典的函数式程序，例如无限斐波那契数列："
 
 #: ../../example/gmachine/gmachine-3.md:203
 msgid "(defn fibs[] (Cons 0 (Cons 1 (zipWith add fibs (tail fibs)))))\n"
@@ -2639,29 +2618,24 @@ msgid ""
 "After introducing data structures, strictness analysis becomes more "
 "complex. For lazy lists, there are various evaluation modes:"
 msgstr ""
-"引入数据结构后，严格性分析变得更加复杂。对于懒惰列表，有几种评估模式："
 
 #: ../../example/gmachine/gmachine-3.md:209
 msgid ""
 "Fully strict (requires the list to be finite and all elements to be non-"
 "bottom)."
 msgstr ""
-"完全严格（要求列表是有限的，且所有元素都不能是底值）。"
 
 #: ../../example/gmachine/gmachine-3.md:210
 msgid "Fully lazy."
 msgstr ""
-"完全懒惰。"
 
 #: ../../example/gmachine/gmachine-3.md:211
 msgid "Head strict (the list can be infinite, but its elements cannot be bottom)."
 msgstr ""
-"头部严格（列表可以是无限的，但其元素不能是底值）。"
 
 #: ../../example/gmachine/gmachine-3.md:212
 msgid "Tail strict (the list must be finite, but its elements can be bottom)."
 msgstr ""
-"尾部严格（列表必须是有限的，但其元素可以是底值）。"
 
 #: ../../example/gmachine/gmachine-3.md:214
 msgid ""
@@ -2671,7 +2645,6 @@ msgid ""
 "usually employs projection analysis techniques. Relevant literature "
 "includes:"
 msgstr ""
-"此外，函数使用的上下文可以改变其参数的评估模式（不能孤立分析，需要跨函数分析）。这种复杂的严格性分析通常采用投影分析技术。相关文献包括："
 
 #: ../../example/gmachine/gmachine-3.md:216
 msgid "Projections for Strictness Analysis"
@@ -2699,12 +2672,10 @@ msgid ""
 "Lazy evaluation can reduce runtime redundant calculations, but it also "
 "introduces new problems, such as:"
 msgstr ""
-"懒惰求值可以减少运行时冗余计算，但它也引入了一些新问题，例如："
 
 #: ../../example/gmachine/gmachine-3.md:228
 msgid "The notorious side effect order issue."
 msgstr ""
-"臭名昭著的副作用顺序问题。"
 
 #: ../../example/gmachine/gmachine-3.md:230
 msgid ""
@@ -2712,7 +2683,6 @@ msgid ""
 "store their results on the heap, which is detrimental to utilizing the "
 "CPU's caching mechanism."
 msgstr ""
-"过多的冗余节点。一些未共享的计算仍然将结果存储在堆中，这不利于利用 CPU 的缓存机制。"
 
 #: ../../example/gmachine/gmachine-3.md:232
 msgid ""
@@ -2722,7 +2692,6 @@ msgid ""
 " online tutorials emphasize its mathematical background too much and fail"
 " to explain how to use it effectively."
 msgstr ""
-"懒惰求值语言的代表 Haskell 提出了一个有争议的解决方案来解决副作用顺序问题：单子（Monads）。这个解决方案对急切求值语言也有一定价值，但许多在线教程过于强调其数学背景，未能有效解释如何使用它。"
 
 #: ../../example/gmachine/gmachine-3.md:234
 msgid ""
@@ -2730,7 +2699,6 @@ msgid ""
 " Monads and introduces another mechanism for handling side effects: "
 "Algebraic Effects."
 msgstr ""
-"Idris2，Haskell 的继任者（不再是懒惰语言），保留了单子并引入了另一种处理副作用的机制：代数效应（Algebraic Effects）。"
 
 #: ../../example/gmachine/gmachine-3.md:236
 msgid ""
@@ -2738,7 +2706,6 @@ msgid ""
 " redundant nodes, and its successor, the STG, unified the data layout of "
 "different types of nodes."
 msgstr ""
-"由 SPJ 设计的无脊柱 G-Machine 改善了过多冗余节点的问题，它的继任者 STG 统一了不同类型节点的数据布局。"
 
 #: ../../example/gmachine/gmachine-3.md:238
 msgid ""
@@ -2747,7 +2714,6 @@ msgid ""
 "optimizations and projection analysis-based strictness analysis "
 "techniques."
 msgstr ""
-"除了抽象机器模型的改进外，GHC 对 Haskell 程序的优化还大量依赖于基于内联的优化和基于投影分析的严格性分析技术。"
 
 #: ../../example/gmachine/gmachine-3.md:240
 msgid ""
@@ -2758,7 +2724,6 @@ msgid ""
 "\"Making a Fast Curry: Push/Enter vs. Eval/Apply for Higher-order "
 "Languages.\""
 msgstr ""
-"2004 年，几位 GHC 设计者发现，之前的 push-enter 模型（参数被推入栈中，然后调用函数）比 eval-apply 模型效果差，后者将责任交给了调用者。他们发表了一篇题为《Making a Fast Curry: Push/Enter vs. Eval/Apply for Higher-order Languages》的论文。"
 
 #: ../../example/gmachine/gmachine-3.md:242
 msgid ""
@@ -2767,7 +2732,6 @@ msgid ""
 "predictors. The paper \"_Faster laziness using dynamic pointer tagging_\""
 " described several solutions."
 msgstr ""
-"2007 年，Simon Marlow 发现 tagless 设计中的跳转和执行代码显著影响了现代 CPU 分支预测器的性能。论文《Faster laziness using dynamic pointer tagging》描述了几种解决方案。"
 
 #: ../../example/gmachine/gmachine-3.md:244
 msgid ""
@@ -2775,7 +2739,6 @@ msgid ""
 "possibilities, but they have also faced much criticism and reflection. "
 "Nevertheless, it is undoubtedly an intriguing technology!"
 msgstr ""
-"懒惰的纯函数式语言展现了许多有趣的可能性，但也面临着许多批评和反思。尽管如此，它无疑是一项引人入胜的技术！"
 
 #: ../../example/gmachine/index.md:7 ../../example/index.md:9
 #: ../../example/myers-diff/index.md:3 ../../example/segment-tree/index.md:13
@@ -2792,6 +2755,8 @@ msgid ""
 "responsiveness, especially when tackling sizable datasets or intricate "
 "data streams."
 msgstr ""
+"惰性求值是编程语言领域的一个基本概念。Haskell "
+"作为一种纯粹的函数式编程语言而闻名，它拥有健壮的惰性求值机制。这种机制不仅使开发人员能够编写更高效、更简洁的代码，而且还增强了程序的性能和响应能力，特别是在处理大型数据集或复杂的数据流时。"
 
 #: ../../example/gmachine/index.md:5
 msgid ""
@@ -2800,6 +2765,8 @@ msgid ""
 "explore how to implement Haskell's evaluation semantics in "
 "[MoonBit](https://www.moonbitlang.com/)."
 msgstr ""
+"在本文中，我们将深入研究惰性求值机制，全面研究其原理和实现方法，然后探索如何在 [MoonBit](https://www.moonbitlang.com/) 中实现"
+" Haskell 的求值语义。"
 
 #: ../../example/index.md:1
 msgid "Examples"
@@ -2836,7 +2803,10 @@ msgid ""
 "family tree. This article will illustrate one of its most fundamental "
 "forms: untyped Lambda calculus (which was also one of the earliest forms "
 "proposed by Alonzo Church)."
-msgstr "而 lambda 演算这一起源于 20 世纪 30 年代，出自图灵导师阿隆佐·邱奇之手的形式系统如今已经发展成了蔚为大观的一个大家族，本文将展示其中最基础的一种：无类型 lambda 演算 (这也是最早阿隆佐·邱奇提出的那种)"
+msgstr ""
+"而 lambda 演算这一起源于 20 世纪 30 "
+"年代，出自图灵导师阿隆佐·邱奇之手的形式系统如今已经发展成了蔚为大观的一个大家族，本文将展示其中最基础的一种：无类型 lambda 演算 "
+"(这也是最早阿隆佐·邱奇提出的那种)"
 
 #: ../../example/lambda/index.md:7
 msgid "Basic rules of untyped Lambda calculus"
@@ -2848,7 +2818,9 @@ msgid ""
 "(often referred to as Abstraction) and calling Lambdas (often referred to"
 " as Application). These actions constitute the basic expressions in "
 "Lambda calculus."
-msgstr "无类型 lambda 演算中能做的事情只有定义 lambda (经常称为 Abstraction) 和调用 lambda (经常称为 Application)，它们也是 lambda 演算中的基础表达式。"
+msgstr ""
+"无类型 lambda 演算中能做的事情只有定义 lambda (经常称为 Abstraction) 和调用 lambda (经常称为 "
+"Application)，它们也是 lambda 演算中的基础表达式。"
 
 #: ../../example/lambda/index.md:11
 msgid ""
@@ -2860,8 +2832,9 @@ msgid ""
 " parameter), `.` is the separator between the parameter and the "
 "expression defining it, and `x x` is its definition."
 msgstr ""
-"由于函数式编程范式对主流编程语言的影响，大多数程序员对 lambda 表达式这个名字已经不会感到陌生了，不过，无类型 lambda 演算中的 lambda 要比主流编程语言简单一些。一个 lambda 通常看起来就像这样：`λx.x"
-" x`, 其中 x 是它的参数 (每个 lambda 只能有一个参数)，`.`是分隔参数与表达式具体定义的分隔符，后面的`x x`便是它的定义了。"
+"由于函数式编程范式对主流编程语言的影响，大多数程序员对 lambda 表达式这个名字已经不会感到陌生了，不过，无类型 lambda 演算中的 "
+"lambda 要比主流编程语言简单一些。一个 lambda 通常看起来就像这样：`λx.x x`, 其中 x 是它的参数 (每个 lambda "
+"只能有一个参数)，`.`是分隔参数与表达式具体定义的分隔符，后面的`x x`便是它的定义了。"
 
 #: ../../example/lambda/index.md:14
 msgid ""
@@ -2877,8 +2850,8 @@ msgid ""
 "between it and its parameter. Here, we call the parameter given by `x`, "
 "which is `x` itself."
 msgstr ""
-"上面的 `x x` 如果换成 `x(x)`, "
-"可能更符合我们在一般语言中见到的函数调用。但在 lambda 演算较常见的写法中，调用一个 lambda 只需要在它和它的参数中间写个空格。此处我们调用 `x` 所给出的参数就是 `x` 自己。"
+"上面的 `x x` 如果换成 `x(x)`, 可能更符合我们在一般语言中见到的函数调用。但在 lambda 演算较常见的写法中，调用一个 "
+"lambda 只需要在它和它的参数中间写个空格。此处我们调用 `x` 所给出的参数就是 `x` 自己。"
 
 #: ../../example/lambda/index.md:19
 msgid ""
@@ -2914,8 +2887,8 @@ msgid ""
 "Interested readers can refer to: [Programming with "
 "Nothing](https://tomstu.art/programming-with-nothing)"
 msgstr ""
-"有兴趣的读者可以参阅 [Programming with Nothing](https://tomstu.art/programming-with-"
-"nothing) 这篇博客。"
+"有兴趣的读者可以参阅 [Programming with Nothing](https://tomstu.art/programming-"
+"with-nothing) 这篇博客。"
 
 #: ../../example/lambda/index.md:33
 msgid ""
@@ -2933,8 +2906,9 @@ msgid ""
 " cannot be renamed. For example, the above example can be rewritten using"
 " Alpha conversion as `λy.(λx.x) y`."
 msgstr ""
-"Alpha 转换所描述的事实是，lambda 的结构是重点，变量名叫什么没那么重要。`λx.x` 和 `λfoo.foo` 可以互相替换。对于某些有重复变量名的嵌套 lambda 例如 `λx.(λx.x)"
-" x`，重命名时不能把内层的变量也重命名了，例如上面的例子可以通过 Alpha 转换写成 `λy.(λx.x) y`。"
+"Alpha 转换所描述的事实是，lambda 的结构是重点，变量名叫什么没那么重要。`λx.x` 和 `λfoo.foo` "
+"可以互相替换。对于某些有重复变量名的嵌套 lambda 例如 `λx.(λx.x) "
+"x`，重命名时不能把内层的变量也重命名了，例如上面的例子可以通过 Alpha 转换写成 `λy.(λx.x) y`。"
 
 #: ../../example/lambda/index.md:37
 msgid ""
@@ -2951,7 +2925,9 @@ msgid ""
 "In untyped Lambda calculus, all that needs to be done after calling a "
 "Lambda is to substitute the parameter. In the example above, we need to "
 "replace the variable `x` with `(λs.(λz.z))`, resulting in:"
-msgstr "在无类型 lambda 演算中，调用 lambda 之后所需要作的事情仅仅是对参数进行替换 (substitution)，上面这个例子里就需要把变量 `x` 替换成 `(λs.(λz.z))`，得到的结果是"
+msgstr ""
+"在无类型 lambda 演算中，调用 lambda 之后所需要作的事情仅仅是对参数进行替换 "
+"(substitution)，上面这个例子里就需要把变量 `x` 替换成 `(λs.(λz.z))`，得到的结果是"
 
 #: ../../example/lambda/index.md:45
 msgid "(λy.(λs.(λz.z)))\n"
@@ -2967,8 +2943,8 @@ msgid ""
 "a free variable. For example, in the Lambda term `(λx.(λy.fgv h))`, the "
 "variables `fgv` and `h` do not have corresponding Lambda definitions."
 msgstr ""
-"一个 lambda 项中的变量如果在它所处的上下文中没有定义，那么我们叫它自由变量。例如 `(λx.(λy.fgv "
-"h))` 这个 lambda 项中变量 `fgv` 和 `h` 就没有对应的 lambda 定义。"
+"一个 lambda 项中的变量如果在它所处的上下文中没有定义，那么我们叫它自由变量。例如 `(λx.(λy.fgv h))` 这个 lambda "
+"项中变量 `fgv` 和 `h` 就没有对应的 lambda 定义。"
 
 #: ../../example/lambda/index.md:53
 msgid ""
@@ -3003,8 +2979,8 @@ msgid ""
 "substitution, check if the variable name is in this set of free "
 "variables:"
 msgstr ""
-"变量捕获问题在编写解释器时的常见解决方案是在替换前遍历表达式得到一个自由变量的集合，"
-"做替换时遇到内层 lambda 就判断一下变量名在不在这个自由变量集合里面"
+"变量捕获问题在编写解释器时的常见解决方案是在替换前遍历表达式得到一个自由变量的集合，做替换时遇到内层 lambda "
+"就判断一下变量名在不在这个自由变量集合里面"
 
 #: ../../example/lambda/index.md:71
 msgid ""
@@ -3075,8 +3051,9 @@ msgid ""
 "the variable and its corresponding Lambda. Here, the distance is measured"
 " by the number of nested Lambdas."
 msgstr ""
-"上面的例子中，变量 `x` 和引入它的地方 `λx` 中间有一个 `λy`, "
-"于是将 `x` 替换为 `1`，而 `z` 和定义它的位置中间没有夹杂其他的 lambda，于是直接用 `0` 替换。某种程度上说，德布朗指数的值描述的是变量与对应 lambda 的相对距离，此处的距离衡量标注就是中间嵌套的 lambda 层数。"
+"上面的例子中，变量 `x` 和引入它的地方 `λx` 中间有一个 `λy`, 于是将 `x` 替换为 `1`，而 `z` "
+"和定义它的位置中间没有夹杂其他的 lambda，于是直接用 `0` 替换。某种程度上说，德布朗指数的值描述的是变量与对应 lambda "
+"的相对距离，此处的距离衡量标注就是中间嵌套的 lambda 层数。"
 
 #: ../../example/lambda/index.md:105
 msgid ""
@@ -3108,9 +3085,9 @@ msgid ""
 "be used for its `Show` implementation, making it easy to print and view "
 "the evaluation results with `println`."
 msgstr ""
-"不过直接编写以及阅读德布朗指数形式的 lambda 很痛苦，所以我们需要编写一个将 `Term` 转换成 `TermDBI` 的函数 `debruijn()` "
-"- "
-"这也是 `TermDBI` 类型定义中仍有 `String` 的原因，保留原变量名可用于它的 `Show` 的实现，这样就可以方便地用 `println` 打印求值结果查看了。"
+"不过直接编写以及阅读德布朗指数形式的 lambda 很痛苦，所以我们需要编写一个将 `Term` 转换成 `TermDBI` 的函数 "
+"`debruijn()` - 这也是 `TermDBI` 类型定义中仍有 `String` 的原因，保留原变量名可用于它的 `Show` "
+"的实现，这样就可以方便地用 `println` 打印求值结果查看了。"
 
 #: ../../example/lambda/index.md:118
 msgid ""
@@ -3197,8 +3174,8 @@ msgid ""
 "one), and then add `{ name : varname, depth : 0 }` to the beginning of "
 "the list."
 msgstr ""
-"`Abs` 稍微复杂一点，首先对列表中所有 `index` 的 `depth` 加一 (因为 lambda 嵌套加深了一层)，然后在列表的开头加上 `{ name "
-": varname, depth : 0 }`。"
+"`Abs` 稍微复杂一点，首先对列表中所有 `index` 的 `depth` 加一 (因为 lambda 嵌套加深了一层)，然后在列表的开头加上"
+" `{ name : varname, depth : 0 }`。"
 
 #: ../../example/lambda/index.md:157
 msgid ""
@@ -3286,8 +3263,8 @@ msgid ""
 "(via the `subst` function) and then continue simplifying. For Lambdas "
 "(`Abs`), simply return them as they are."
 msgstr ""
-"首先对两个子项尝试规约，然后看 `eval(t1)` 得到的是否是一个 lambda，如果是，就执行一步变量替换 (通过 `subst` 函数) 然后继续化简。对于 lambda (即 `Abs`),"
-" 直接原样返回即可。"
+"首先对两个子项尝试规约，然后看 `eval(t1)` 得到的是否是一个 lambda，如果是，就执行一步变量替换 (通过 `subst` 函数) "
+"然后继续化简。对于 lambda (即 `Abs`), 直接原样返回即可。"
 
 #: ../../example/lambda/index.md:178
 msgid ""
@@ -3296,8 +3273,8 @@ msgid ""
 "current depth recursively and compare it with the encountered variables. "
 "If they match, it's the variable to be replaced."
 msgstr ""
-"`subst` 函数的实现在不用考虑自由变量的情况下简单了许多，"
-"只要记录递归到当前位置的深度并且与遇到的变量进行比对，大小相等就是需要替换的目标变量。"
+"`subst` "
+"函数的实现在不用考虑自由变量的情况下简单了许多，只要记录递归到当前位置的深度并且与遇到的变量进行比对，大小相等就是需要替换的目标变量。"
 
 #: ../../example/lambda/index.md:180
 msgid ""
@@ -3334,7 +3311,10 @@ msgid ""
 "added a new Lambda. However, this is actually quite a clumsy method. I "
 "believe you can quickly realize that to store a `@immut/list.T[String]` "
 "should simply suffice. If you're interested, you can try it yourself."
-msgstr "笔者在保存变量名到索引的对应关系时使用了 `@immut/list.T[Index]` 类型，并且在每增加一层 lambda 时更新整个列表，但是这其实是个很笨的办法。相信聪明且注意力集中的读者很快就能发现，其实只需要保存一个 `@immut/list.T[String]` 就够了，有兴趣的读者可以自己试着做一做。"
+msgstr ""
+"笔者在保存变量名到索引的对应关系时使用了 `@immut/list.T[Index]` 类型，并且在每增加一层 lambda "
+"时更新整个列表，但是这其实是个很笨的办法。相信聪明且注意力集中的读者很快就能发现，其实只需要保存一个 "
+"`@immut/list.T[String]` 就够了，有兴趣的读者可以自己试着做一做。"
 
 #: ../../example/myers-diff/index.md:1
 msgid "Myers Diff"
@@ -3350,7 +3330,8 @@ msgid ""
 "comparing the differences between two text files. What's more, Unix has a"
 " tool called `patch`."
 msgstr ""
-"你是否曾经使用过 Unix 系统中的 'diff' 工具？简单来说，它是一种用于比较两个文本文件之间差异的工具。此外，Unix 系统中还有名为 'patch' 的工具。"
+"你是否曾经使用过 Unix 系统中的 'diff' 工具？简单来说，它是一种用于比较两个文本文件之间差异的工具。此外，Unix 系统中还有名为 "
+"'patch' 的工具。"
 
 #: ../../example/myers-diff/myers-diff.md:5
 msgid ""
@@ -3361,9 +3342,8 @@ msgid ""
 "(and highlighted with different colors). Take the most popular version "
 "control system today, git, as an example:"
 msgstr ""
-"现在很少有人手动应用软件包的修补，但 'diff' 在另一个领域中仍然非常有用：版本控制系统。"
-"你有看到特定提交后代码文件所做更改（并以不同的颜色突出显示）的函数是非常方便的。"
-"例如，最受欢迎的版本控制系统之一，git，就是一个很好的例子。"
+"现在很少有人手动应用软件包的修补，但 'diff' "
+"在另一个领域中仍然非常有用：版本控制系统。你有看到特定提交后代码文件所做更改（并以不同的颜色突出显示）的函数是非常方便的。例如，最受欢迎的版本控制系统之一，git，就是一个很好的例子。"
 
 #: ../../example/myers-diff/myers-diff.md:7
 msgid ""
@@ -3394,9 +3374,9 @@ msgid ""
 "following text, we will understand the basic framework of this algorithm "
 "in a less rigorous way and use MoonBit to write a simple implementation."
 msgstr ""
-"Git 的默认比较差异算法由 Eugene W. Myers 在他的论文**一个 O(ND) 的差分算法及其变体**中提出。"
-"这篇论文主要聚焦于证明该算法的正确性。"
-"接下来，我们将以一种不那么严谨的方式理解其基本架构，并使用 MoonBit 编写一个简单的实现。"
+"Git 的默认比较差异算法由 Eugene W. Myers 在他的论文**一个 O(ND) "
+"的差分算法及其变体**中提出。这篇论文主要聚焦于证明该算法的正确性。接下来，我们将以一种不那么严谨的方式理解其基本架构，并使用 MoonBit "
+"编写一个简单的实现。"
 
 #: ../../example/myers-diff/myers-diff.md:27
 msgid "Defining \"Difference\" and Its Measurement Criteria"
@@ -3407,8 +3387,7 @@ msgid ""
 "When we talk about the \"difference\" between two text files, what we are"
 " actually referring to is a series of editing steps that can transform "
 "text a into text b."
-msgstr ""
-"当我们讨论两个文本文件之间的“差异”时，我们实际上是在指能将文本 a 变成文本 b 的一系列编辑步骤。"
+msgstr "当我们讨论两个文本文件之间的“差异”时，我们实际上是在指能将文本 a 变成文本 b 的一系列编辑步骤。"
 
 #: ../../example/myers-diff/myers-diff.md:31
 msgid "Assume the content of text a is"
@@ -3444,9 +3423,7 @@ msgid ""
 "To transform text a into text b, the simplest edit sequence is to delete "
 "each character in a (indicated with a minus sign) and then insert each "
 "character in b (indicated with a plus sign)."
-msgstr ""
-"为了把文本 a 转变为文本 b，最简单的编辑序列是删除所有 a 中的字符（用减号表示），然后"
-"插入文本 b 中的每个字符（用加号表示）。"
+msgstr "为了把文本 a 转变为文本 b，最简单的编辑序列是删除所有 a 中的字符（用减号表示），然后插入文本 b 中的每个字符（用加号表示）。"
 
 #: ../../example/myers-diff/myers-diff.md:56
 msgid ""
@@ -3469,9 +3446,7 @@ msgstr ""
 msgid ""
 "But such a result might not be very helpful for programmers reading the "
 "code. The following edit sequence is much better, at least it is shorter."
-msgstr ""
-"但是这样的结果可能对程序员阅读程序来说并没有太大帮助。"
-"接下来的编辑序列会好很多，至少它更短。"
+msgstr "但是这样的结果可能对程序员阅读程序来说并没有太大帮助。接下来的编辑序列会好很多，至少它更短。"
 
 #: ../../example/myers-diff/myers-diff.md:74
 msgid ""
@@ -3495,10 +3470,8 @@ msgid ""
 "are equally important for user experience. Let's look at the following "
 "examples:"
 msgstr ""
-"实际上，这是实现文本 a 转换为文本 b 所需的最简编辑序列，仅需要 5 个操作。"
-"如果我们只考虑编辑序列的长度，这一结果已经令人满意。"
-"但在探索多种编程语言时，我们发现除了编辑序列长度外，还有其他度量指标对用户体验同样重要。"
-"让我们来看看以下例子："
+"实际上，这是实现文本 a 转换为文本 b 所需的最简编辑序列，仅需要 5 "
+"个操作。如果我们只考虑编辑序列的长度，这一结果已经令人满意。但在探索多种编程语言时，我们发现除了编辑序列长度外，还有其他度量指标对用户体验同样重要。让我们来看看以下例子："
 
 #: ../../example/myers-diff/myers-diff.md:88
 msgid ""
@@ -3531,10 +3504,7 @@ msgid ""
 " similar cases, when there are both deletions and insertions, it is best "
 "not to calculate an edit sequence that interleaves these two operations. "
 "Here's another example."
-msgstr ""
-"当我们在文件末尾插入一个新函数定义时，理想的编辑序列应将所做的更改置于文件末尾。"
-"同样，在有删除和插入操作的情况下，不应该将这两个操作交替进行计算。"
-"这是另一个例子。"
+msgstr "当我们在文件末尾插入一个新函数定义时，理想的编辑序列应将所做的更改置于文件末尾。同样，在有删除和插入操作的情况下，不应该将这两个操作交替进行计算。这是另一个例子。"
 
 #: ../../example/myers-diff/myers-diff.md:113
 msgid ""
@@ -3553,9 +3523,8 @@ msgid ""
 "inserting text before `{`), and it also tries to place deletions before "
 "insertions, avoiding the latter situation."
 msgstr ""
-"Myers 的 diff 算法可以满足所有这些需求。"
-"它是一种贪婪算法，每次都尽可能地跳过匹配行（避免在出现'{'之前插入文本），同时"
-"也会尝试将删除操作置于插入操作之前，避免后者发生。"
+"Myers 的 diff "
+"算法可以满足所有这些需求。它是一种贪婪算法，每次都尽可能地跳过匹配行（避免在出现'{'之前插入文本），同时也会尝试将删除操作置于插入操作之前，避免后者发生。"
 
 #: ../../example/myers-diff/myers-diff.md:124
 msgid "Algorithm Overview"
@@ -3568,8 +3537,8 @@ msgid ""
 "previous example `a = ABCABBA` and `b = CBABAC`, we create an `(x, y)` "
 "coordinate grid."
 msgstr ""
-"Myers 的论文中的基本思路是构建一个编辑操作的网格图，并在该网格上搜索最短路径。"
-"以之前的例子 'a = ABCABBA' 和 'b = CBABAC' 为例，我们创建一个 '(x, y)' 坐标网格。"
+"Myers 的论文中的基本思路是构建一个编辑操作的网格图，并在该网格上搜索最短路径。以之前的例子 'a = ABCABBA' 和 'b = "
+"CBABAC' 为例，我们创建一个 '(x, y)' 坐标网格。"
 
 #: ../../example/myers-diff/myers-diff.md:128
 msgid ""
@@ -3614,23 +3583,20 @@ msgid ""
 "indicate matching characters that can be skipped without triggering any "
 "edits."
 msgstr ""
-"该网格的左上角是起始点 '(0, 0)'，右下角是终点 '(7, 6)'。"
-"沿着 x 轴移动一个单位右侧删除 a 中的对应字符，沿 y 轴向下移动一个单位插入 b 中的对应字符。"
-"斜线表示匹配字符，可跳过而不触发编辑。"
+"该网格的左上角是起始点 '(0, 0)'，右下角是终点 '(7, 6)'。沿着 x 轴移动一个单位右侧删除 a 中的对应字符，沿 y "
+"轴向下移动一个单位插入 b 中的对应字符。斜线表示匹配字符，可跳过而不触发编辑。"
 
 #: ../../example/myers-diff/myers-diff.md:163
 msgid ""
 "Before writing the actual search code, let's manually perform two rounds "
 "of searching:"
-msgstr ""
-"在编写实际搜索代码之前，我们手动执行两轮搜索。"
+msgstr "在编写实际搜索代码之前，我们手动执行两轮搜索。"
 
 #: ../../example/myers-diff/myers-diff.md:165
 msgid ""
 "The first round starts at `(0, 0)` and moves one step to reach `(0,1)` "
 "and `(1,0)`."
-msgstr ""
-"第一轮从 '(0, 0)' 开始，移动一步到达 '(0,1)' 和 '(1,0)'。"
+msgstr "第一轮从 '(0, 0)' 开始，移动一步到达 '(0,1)' 和 '(1,0)'。"
 
 #: ../../example/myers-diff/myers-diff.md:167
 msgid ""
@@ -3638,7 +3604,8 @@ msgid ""
 " reaches `(0,2)`, but there is a diagonal line leading to `(1,3)`, so the"
 " final point is `(1,3)`."
 msgstr ""
-"第二轮从 '(0,1)' 和 '(1, 0)' 开始。从 '(0,1)' 向下移动到 '(0,2)'，但有一条斜线指向 '(1,3)'，因此最终点是 '(1,3)'。"
+"第二轮从 '(0,1)' 和 '(1, 0)' 开始。从 '(0,1)' 向下移动到 '(0,2)'，但有一条斜线指向 "
+"'(1,3)'，因此最终点是 '(1,3)'。"
 
 #: ../../example/myers-diff/myers-diff.md:169
 msgid "The entire Myers algorithm is based on this kind of breadth-first search."
@@ -3656,32 +3623,32 @@ msgid ""
 "detail. The input to the algorithm is two strings, but the search needs "
 "to be conducted on a graph. It's a waste of both memory and time to "
 "construct the graph and then search it."
-msgstr ""
+msgstr "我们已经概述了基本思想，现在是详细考虑设计的时候了。算法的输入是两个字符串，但是搜索需要在一个图上进行。而构造图然后再去搜索它是浪费内存和时间成本的。"
 
 #: ../../example/myers-diff/myers-diff.md:175
 msgid ""
 "The implementation of the Myers algorithm adopts a clever approach by "
 "defining a new coordinate `k = x - y`."
-msgstr ""
+msgstr "Myers 算法的实现采用了一种聪明的方法，定义了一个新的坐标 `k = x - y`。"
 
 #: ../../example/myers-diff/myers-diff.md:177
 msgid "Moving right increases `k` by one."
-msgstr ""
+msgstr "向右移动会使 `k` 增加 1。"
 
 #: ../../example/myers-diff/myers-diff.md:179
 msgid "Moving left decreases `k` by one."
-msgstr ""
+msgstr "向左移动会使 `k` 减少 1"
 
 #: ../../example/myers-diff/myers-diff.md:181
 msgid "Moving diagonally down-left keeps `k` unchanged."
-msgstr ""
+msgstr "沿对角线向左下方移动保持 `k` 不变"
 
 #: ../../example/myers-diff/myers-diff.md:183
 msgid ""
 "Let's define another coordinate `d` to represent the depth of the search."
 " Using `d` as the horizontal axis and `k` as the vertical axis, we can "
 "draw a tree diagram of the search process."
-msgstr ""
+msgstr "让我们定义另一个坐标 `d` 来表示搜索的深度。以 `d` 为横轴，`k` 为纵轴，我们可以画出搜索过程的树状图。"
 
 #: ../../example/myers-diff/myers-diff.md:185
 msgid ""
@@ -3715,10 +3682,13 @@ msgid ""
 "to save the `x` coordinates of each round for use in the next round of "
 "searching."
 msgstr ""
+"你可以看到，在每一轮搜索中，`k` 严格地在 `[-d, d]` 范围内（因为在一次移动中，它最多可以比前一轮增加或减少 1），并且点之间的 "
+"`k` 值的间隔为 2。Myers 算法的基本思想来自于这样一个思想：通过遍历 `d` 和 `k` 来进行搜索。当然，它还需要保存每一轮的 `x`"
+" 坐标，以便在下一轮搜索中使用。"
 
 #: ../../example/myers-diff/myers-diff.md:208
 msgid "Let's first define the `Line` struct, which represents a line in the text."
-msgstr ""
+msgstr "让我们首先定义 `Line` 结构，它代表文本中的一行。"
 
 #: ../../example/myers-diff/myers-diff.md:210
 msgid ""
@@ -3738,7 +3708,7 @@ msgstr ""
 msgid ""
 "Then, define a helper function that splits a string into `Array[Line]` "
 "based on newline characters. Note that line numbers start from 1."
-msgstr ""
+msgstr "然后，定义一个辅助函数，根据换行符将字符串拆分为 `Array[Line]`。注意，行号从 1 开始。"
 
 #: ../../example/myers-diff/myers-diff.md:218
 msgid ""
@@ -3758,7 +3728,7 @@ msgstr ""
 msgid ""
 "Next, we need to wrap the array so that it supports negative indexing "
 "because we will use the value of `k` as an index."
-msgstr ""
+msgstr "接下来，我们需要包装数组，以便它支持负索引，因为我们将使用 `k` 的值作为索引。"
 
 #: ../../example/myers-diff/myers-diff.md:226
 msgid ""
@@ -3803,7 +3773,7 @@ msgid ""
 "Now we can start writing the search function. Before searching for the "
 "complete path, let's start with our first goal to find the length of the "
 "shortest path (equal to the search depth). Here is the basic framework:"
-msgstr ""
+msgstr "现在我们可以开始编写搜索函数了。在搜索完整路径之前，让我们从第一个目标开始，即找到最短路径的长度（等于搜索深度）。以下是基本框架："
 
 #: ../../example/myers-diff/myers-diff.md:235
 msgid ""
@@ -3829,6 +3799,9 @@ msgid ""
 "`k` ranges from `[-d, d]`, the size of this array is set to `2 * max + "
 "1`."
 msgstr ""
+"在最极端的情况下（两个文本没有匹配的行），可以推断所需的最大步数为 `n + m`，最小步数为 0。因此，设置变量 `max = n + "
+"m`。数组 `v` 使用 `k` 作为索引来存储 `x` 值的历史记录。因为 `k` 的范围是从 `[-d, d]`，所以这个数组的大小被设置为 "
+"`2 * max + 1`。"
 
 #: ../../example/myers-diff/myers-diff.md:251
 msgid ""
@@ -3838,6 +3811,8 @@ msgid ""
 "are the same, they can be skipped directly. We write the final "
 "coordinates of this round into the array `v`."
 msgstr ""
+"但即使在这一点上，仍然很难弄清楚下一步该怎么做，所以我们只考虑 `d = 0; k = 0` 的情况，在这一点，它一定在 `(0, 0)` "
+"处。此外，如果两篇文本的开头相同，可以直接跳过。我们将这一轮的最终坐标写入数组 `v`。"
 
 #: ../../example/myers-diff/myers-diff.md:254
 msgid ""
@@ -3863,25 +3838,28 @@ msgid ""
 "`v[k + 1]`. The next question is: how to choose between the two paths "
 "ending at `v[k - 1]` and `v[k + 1]`?"
 msgstr ""
+"当 `d > 0` 时，需要前一轮存储的坐标信息。当我们知道一个点的 `k` 值和前一轮搜索中点的坐标时，就很容易推导出 `v[k]` "
+"的值。因为每一步 k 只能增加或减少 1，所以搜索树中的 `v[k]` 必须从 `v[k - 1]` 或`v[k + 1]` "
+"扩展。而下一个问题是：如何在以 `v[k - 1]` 和 `v[k + 1]` 结尾的两条路径之间做出选择？"
 
 #: ../../example/myers-diff/myers-diff.md:269
 msgid "There are two boundary cases: `k == -d` and `k == d`."
-msgstr ""
+msgstr "有两种边界情况:`k == -d` 和 `k == d`。"
 
 #: ../../example/myers-diff/myers-diff.md:271
 msgid "When `k == -d`, you can only choose `v[k + 1]`."
-msgstr ""
+msgstr "当 `k == -d` 时，只能选择 `v[k + 1]`。"
 
 #: ../../example/myers-diff/myers-diff.md:273
-msgid "When `k == -d`, you can only choose `v[k - 1]`."
-msgstr ""
+msgid "When `k == d`, you can only choose `v[k - 1]`."
+msgstr "当 `k == d` 时，只能选择 `v[k - 1]`。"
 
 #: ../../example/myers-diff/myers-diff.md:275
 msgid ""
 "Recalling the requirement mentioned earlier: arranging deletions before "
 "insertions as much as possible, this essentially means choosing the "
 "position with the largest `x` value from the previous position."
-msgstr ""
+msgstr "而回顾前面提到的要求：尽可能在插入之前删除，这本质上意味着从前一个位置选择具有最大 `x` 值的位置。"
 
 #: ../../example/myers-diff/myers-diff.md:278
 msgid ""
@@ -3898,7 +3876,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:290
 msgid "Merging these four branches, we get the following code:"
-msgstr ""
+msgstr "合并这四个分支，我们得到以下代码："
 
 #: ../../example/myers-diff/myers-diff.md:293
 msgid ""
@@ -3911,7 +3889,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff.md:301
 msgid "Combining all the steps above, we get the following code:"
-msgstr ""
+msgstr "结合上述所有步骤，我们得到以下代码："
 
 #: ../../example/myers-diff/myers-diff.md:303
 msgid ""
@@ -3954,7 +3932,7 @@ msgstr ""
 msgid ""
 "Since the initial value of the array is 0, we can omit the branch for `d "
 "== 0`."
-msgstr ""
+msgstr "由于数组的初始值为 0，我们可以省略 `d == 0` 的分支。"
 
 #: ../../example/myers-diff/myers-diff.md:313
 msgid ""
@@ -3963,10 +3941,12 @@ msgid ""
 " the backtracking to restore the complete edit path and write a function "
 "to output a colored diff."
 msgstr ""
+"我们已经实现了 Myers "
+"算法的一个不完整版本，它完成了正向路径搜索。在下一篇文章中，我们将实现回溯以恢复完整的编辑路径，并编写一个函数来输出彩色差值。"
 
 #: ../../example/myers-diff/myers-diff.md:315
 msgid "This article references:"
-msgstr ""
+msgstr "本文引用："
 
 #: ../../example/myers-diff/myers-diff.md:317
 msgid ""
@@ -3974,10 +3954,12 @@ msgid ""
 "part-2/](https://blog.jcoglan.com/2017/02/15/the-myers-diff-algorithm-"
 "part-2/)"
 msgstr ""
+"[The Myers diff algorithm](https://blog.jcoglan.com/2017/02/15/the-myers-"
+"diff-algorithm-part-2/)"
 
 #: ../../example/myers-diff/myers-diff.md:319
 msgid "Thanks to the author James Coglan."
-msgstr ""
+msgstr "感谢作者 James Coglan。"
 
 #: ../../example/myers-diff/myers-diff2.md:1
 msgid "Myers diff 2"
@@ -3992,10 +3974,13 @@ msgid ""
 "article, we will learn how to extend the search process from the previous"
 " post to obtain the complete edit sequence."
 msgstr ""
+"这是 diff 系列的第二篇文章。在上一篇 [myers-"
+"diff](https://www.moonbitlang.com/docs/examples/myers-diff) "
+"中，我们学习了如何将计算差分的过程转化为图搜索问题，以及如何搜索最短的编辑距离。在本文中，我们将学习如何扩展前一篇文章中的搜索过程，以获得完整的编辑序列。"
 
 #: ../../example/myers-diff/myers-diff2.md:5
 msgid "Recording the Search Process"
-msgstr ""
+msgstr "记录搜索过程"
 
 #: ../../example/myers-diff/myers-diff2.md:7
 msgid ""
@@ -4003,7 +3988,7 @@ msgid ""
 "entire editing process. This step is relatively simple; we just need to "
 "save the current search depth `d` and the graph node with depth `d` at "
 "the beginning of each search round."
-msgstr ""
+msgstr "获得完整编辑序列的第一步是保存整个编辑过程。这一步相对简单：我们只需要保存当前搜索深度 `d` 和每个搜索轮开始时深度 `d` 的图节点。"
 
 #: ../../example/myers-diff/myers-diff2.md:9
 msgid ""
@@ -4051,14 +4036,14 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff2.md:15
 msgid "Backtracking the Edit Path"
-msgstr ""
+msgstr "回溯编辑路径"
 
 #: ../../example/myers-diff/myers-diff2.md:17
 msgid ""
 "After recording the entire search process, the next step is to walk back "
 "from the endpoint to find the path taken. But before we do that, let's "
 "first define the `Edit` type."
-msgstr ""
+msgstr "在记录了整个搜索过程之后，下一步是从端点返回以查找所使用的路径。但在我们这样做之前，让我们先定义 `Edit` 类型。"
 
 #: ../../example/myers-diff/myers-diff2.md:19
 msgid ""
@@ -4071,7 +4056,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff2.md:25
 msgid "Next, let's perform the backtracking."
-msgstr ""
+msgstr "接下来，让我们执行回溯。"
 
 #: ../../example/myers-diff/myers-diff2.md:27
 msgid ""
@@ -4089,33 +4074,33 @@ msgstr ""
 msgid ""
 "The method of backtracking is essentially the same as forward search, "
 "just in reverse."
-msgstr ""
+msgstr "回溯的方法本质上与正向搜索相同，只是方向相反。"
 
 #: ../../example/myers-diff/myers-diff2.md:35
 msgid "Calculate the current `k` value using `x` and `y`."
-msgstr ""
+msgstr "使用 `x` 和 `y` 计算当前 `k` 值。"
 
 #: ../../example/myers-diff/myers-diff2.md:37
 msgid ""
 "Access the historical records and use the same judgment criteria as in "
 "forward search to find the `k` value at the previous search round."
-msgstr ""
+msgstr "访问历史记录并使用与前向搜索相同的判断标准来查找前一轮搜索中的 `k` 值。"
 
 #: ../../example/myers-diff/myers-diff2.md:39
 msgid "Restore the coordinates of the previous search round."
-msgstr ""
+msgstr "恢复上一轮搜索的坐标。"
 
 #: ../../example/myers-diff/myers-diff2.md:41
 msgid "Try free movement and record the corresponding edit actions."
-msgstr ""
+msgstr "尝试自由移动并记录相应的编辑动作。"
 
 #: ../../example/myers-diff/myers-diff2.md:43
 msgid "Determine the type of edit that caused the change in `k` value."
-msgstr ""
+msgstr "确定导致 `k` 值更改的编辑类型。"
 
 #: ../../example/myers-diff/myers-diff2.md:45
 msgid "Continue iterating."
-msgstr ""
+msgstr "继续迭代。"
 
 #: ../../example/myers-diff/myers-diff2.md:47
 msgid ""
@@ -4148,7 +4133,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff2.md:54
 msgid "Combining the two functions, we get a complete `diff` implementation."
-msgstr ""
+msgstr "结合这两个函数，我们得到了一个完整的 `diff` 实现。"
 
 #: ../../example/myers-diff/myers-diff2.md:56
 msgid ""
@@ -4160,13 +4145,13 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff2.md:62
 msgid "Printing the Diff"
-msgstr ""
+msgstr "打印 diff"
 
 #: ../../example/myers-diff/myers-diff2.md:64
 msgid ""
 "To print a neat diff, we need to left-align the text. Also, due to the "
 "order issue during backtracking, we need to print from back to front."
-msgstr ""
+msgstr "要打印整齐的 diff，我们需要左对齐文本。另外，由于回溯过程中的顺序问题，我们需要从后往前打印。"
 
 #: ../../example/myers-diff/myers-diff2.md:66
 msgid ""
@@ -4215,7 +4200,7 @@ msgstr ""
 
 #: ../../example/myers-diff/myers-diff2.md:72
 msgid "The result is as follows:"
-msgstr ""
+msgstr "结果如下："
 
 #: ../../example/myers-diff/myers-diff2.md:74
 msgid ""
@@ -4240,6 +4225,9 @@ msgid ""
 "than the standard Myers algorithm but can still ensure the shortest edit "
 "sequence."
 msgstr ""
+"上面演示的 Myers 算法是完整的，但是由于频繁地复制数组，它有非常大的空间开销。因此，像 Git 这样的大多数软件使用 diff "
+"算法的线性变体（在原始论文的附录中找到）。这种变体有时可能会产生比标准 Myers 算法质量更低的 "
+"diffs（对人类来说更难阅读），但仍然可以确保最短的编辑序列。"
 
 #: ../../example/myers-diff/myers-diff3.md:1
 msgid "Myers diff 3"
@@ -4254,10 +4242,13 @@ msgid ""
 "we'll learn how to implement a variant of the Myers algorithm that "
 "operates with linear space complexity."
 msgstr ""
+"本文是 [diff 系列](https://docs.moonbitlang.com/examples/myers-diff) 的第三篇。在 "
+"[上一部分](https://docs.moonbitlang.com/examples/myers-diff2) 中，我们探讨了完整的 "
+"Myers 算法及其局限性。在这篇文章中，我们将学习如何实现 Myers 算法的一种变体，该算法具有线性空间复杂度。"
 
 #: ../../example/myers-diff/myers-diff3.md:5
 msgid "Divide and Conquer"
-msgstr ""
+msgstr "分而治之"
 
 #: ../../example/myers-diff/myers-diff3.md:7
 msgid ""
@@ -4270,6 +4261,9 @@ msgid ""
 "parts. The subsequent steps apply the same technique to the resulting "
 "subgraphs, eventually producing a complete edit path."
 msgstr ""
+"Git 使用的 Myers 的 diff 算法的线性变体采用了一个称为 _Snake_（有时称为 _Middle "
+"Snake_）的概念来分解整个搜索过程。编辑图中的 Snake 表示在一次向左或向下移动后的 0 到 N 步的对角线移动。线性 Myers "
+"算法在最优编辑路径上找到中间的 Snake，并用它将整个编辑图分成两部分。随后的步骤将相同的技术应用于结果子图，最终生成完整的编辑路径。"
 
 #: ../../example/myers-diff/myers-diff3.md:9
 msgid ""
@@ -4310,7 +4304,7 @@ msgid ""
 "A quick recap: The optimal edit path is the one that has the shortest "
 "distance to the endpoint (a diagonal distance of zero), and there can be "
 "more than one such path."
-msgstr ""
+msgstr "简要回顾一下：最佳编辑路径是到端点的距离最短的路径（对角线距离为零），并且可以有多个这样的路径。"
 
 #: ../../example/myers-diff/myers-diff3.md:44
 msgid ""
@@ -4318,6 +4312,8 @@ msgid ""
 "Snake, you need an optimal edit path, but to get an optimal edit path, it"
 " seems like you need to run the original Myers algorithm first."
 msgstr ""
+"细心的读者可能已经注意到一个鸡生蛋还是蛋生鸡的问题：为了找到 "
+"Snake，你需要一个最优的编辑路径，但是为了获得最优的编辑路径，你似乎需要先运行原始的 Myers 算法。"
 
 #: ../../example/myers-diff/myers-diff3.md:46
 msgid ""
@@ -4327,12 +4323,14 @@ msgid ""
 "Instead, it simply checks if the searches from both sides overlap. When "
 "they do, the overlapping portion is returned as the Middle Snake."
 msgstr ""
+"事实上，线性 Myers 算法背后的思想有些不寻常：它从左上角和右下角替换原始 Myers "
+"算法，但不存储历史。相反，它只是检查两边的搜索是否重叠。当它们这样做时，重叠的部分作为 `Middle Snake` 返回。"
 
 #: ../../example/myers-diff/myers-diff3.md:48
 msgid ""
 "This approach seems straightforward, but there are still some details to "
 "sort out."
-msgstr ""
+msgstr "这种方法似乎很简单，但仍有一些细节需要解决。"
 
 #: ../../example/myers-diff/myers-diff3.md:50
 msgid ""
@@ -4341,6 +4339,8 @@ msgid ""
 " **c = k - delta**. This coordinate is the mirror image of _k_, perfectly"
 " suited for reverse direction search."
 msgstr ""
+"当从右下搜索时，对角线坐标不能再被称为 _k_。我们需要定义一个新的对角线坐标 **c = k - delta** 。这个坐标是 _k_ "
+"的镜像，非常适合反向搜索。"
 
 #: ../../example/myers-diff/myers-diff3.md:52
 msgid ""
@@ -4366,6 +4366,8 @@ msgid ""
 "that in the reverse search. However, since the _k_ and _c_ coordinates "
 "differ for the same diagonal, the conversion can be a bit tricky."
 msgstr ""
+"我们如何确定搜索是否重叠？只需检查正向搜索中对角线上的位置的 _x_ 值是否大于反向搜索中的 _x_ 值。但是，由于同一对角线的 _k_ 和 "
+"_c_ 坐标不同，因此转换可能有点棘手。"
 
 #: ../../example/myers-diff/myers-diff3.md:70
 msgid "Code Implementation"
@@ -4376,6 +4378,8 @@ msgid ""
 "We'll start by defining `Snake` and `Box` types, representing the middle "
 "snake and the sub-edit graphs (since they're square, we call them `Box`)."
 msgstr ""
+"我们将首先定义 `Snake` 和 `Box` 类型，代表 `middle snake` 和子编辑图（因为它们是方形的，所以我们称之为 "
+"`Box`）。"
 
 #: ../../example/myers-diff/myers-diff3.md:74
 msgid ""
@@ -4415,6 +4419,8 @@ msgid ""
 "Snake?` to find the middle snake. Then, we can build the function "
 "`find_path` to search for the complete path."
 msgstr ""
+"为了避免太早陷入细节，让我们假设我们已经有一个函数：`midpoint : (Box, Array[Line], Array[Line]) ->"
+" Snake?` 去找 `middle snake`。然后，我们可以构建函数 `find_path` 来搜索完整的路径。"
 
 #: ../../example/myers-diff/myers-diff3.md:82
 msgid ""
@@ -4423,8 +4429,7 @@ msgid ""
 "  old~ : Array[Line],\n"
 "  new~ : Array[Line]\n"
 ") -> Iter[(Int, Int)]? {\n"
-"  guard let Some(snake) = midpoint(box, old~, new~) else { None => None }"
-"\n"
+"  guard midpoint(box, old~, new~) is Some(snake) else { None }\n"
 "  let start = snake.start\n"
 "  let end = snake.end\n"
 "  let headbox = Box::{\n"
@@ -4449,28 +4454,28 @@ msgstr ""
 msgid ""
 "The implementation of `find_path` is straightforward, but `midpoint` is a"
 " bit more complex:"
-msgstr ""
+msgstr " `find_path` 的实现很简单，但 `midpoint` 有点复杂："
 
 #: ../../example/myers-diff/myers-diff3.md:90
 msgid "For a `Box` of size 0, return `None`."
-msgstr ""
+msgstr "对于大小为 0 的 `Box`，返回 `None`。"
 
 #: ../../example/myers-diff/myers-diff3.md:91
 msgid ""
 "Calculate the search boundaries. Since forward and backward searches each"
 " cover half the distance, divide by two. However, if the size of the "
 "`Box` is odd, add one more to the forward search boundary."
-msgstr ""
+msgstr "计算搜索边界。因为向前和向后搜索各占一半的距离，所以除以 2。但是，如果 `Box` 的大小是奇数，则在正向搜索边界上再添加一个。"
 
 #: ../../example/myers-diff/myers-diff3.md:92
 msgid "Store the results of the forward and backward searches in two arrays."
-msgstr ""
+msgstr "将向前和向后搜索的结果存储在两个数组中。"
 
 #: ../../example/myers-diff/myers-diff3.md:93
 msgid ""
 "Alternate between forward and backward searches, returning `None` if no "
 "result is found."
-msgstr ""
+msgstr "在向前和向后搜索之间交替，如果没有找到结果则返回 `None`。"
 
 #: ../../example/myers-diff/myers-diff3.md:95
 msgid ""
@@ -4511,25 +4516,25 @@ msgstr ""
 msgid ""
 "The forward and backward searches have some modifications compared to the"
 " original Myers algorithm, which need a bit of explanation:"
-msgstr ""
+msgstr "与最初的 Myers 算法相比，向前和向后搜索有一些修改，需要做出解释："
 
 #: ../../example/myers-diff/myers-diff3.md:103
 msgid ""
 "Since we need to return the snake, the search process must calculate the "
 "previous coordinate (`px` stands for previous x)."
-msgstr ""
+msgstr "因为我们需要返回 `snake`，所以搜索过程必须计算前一个坐标（`px` 代表前一个 x）。"
 
 #: ../../example/myers-diff/myers-diff3.md:104
 msgid ""
 "The search now works within a `Box` (not the global edit graph), so "
 "calculating `y` from `x` (or vice versa) requires conversion."
-msgstr ""
+msgstr "搜索现在在 `Box`（不是全局编辑图）中工作，因此从 `x` 计算 `y` 需要转换（反之亦然）。"
 
 #: ../../example/myers-diff/myers-diff3.md:105
 msgid ""
 "The backward search minimizes `y` as a heuristic strategy, but minimizing"
 " `x` would also work."
-msgstr ""
+msgstr "反向搜索最小化 `y` 是一种启发式策略，但最小化 `x` 也是可行的。"
 
 #: ../../example/myers-diff/myers-diff3.md:107
 msgid ""
@@ -4613,6 +4618,8 @@ msgid ""
 "algorithm called patience diff. It differs significantly from Myers diff "
 "in approach and sometimes produces more readable diff results."
 msgstr ""
+"除了默认的 diff 算法之外，Git 还提供了另一种 diff 算法，称为 `patience diff`。它在方法上与 Myers diff "
+"有很大不同，有时会产生更可读的 diff 结果。"
 
 #: ../../example/segment-tree/index.md:1
 msgid "Segment Tree"
@@ -4930,7 +4937,7 @@ msgid ""
 "  } else if query_l <= l && query_r >= r {\n"
 "    self\n"
 "  } else {\n"
-"    guard let Node(_, left, right) = self\n"
+"    guard self is Node(_, left, right)\n"
 "    let mid = (l + r) >> 1\n"
 "    left.query(l, mid, query_l, query_r) +\n"
 "    right.query(mid + 1, r, query_l, query_r)\n"
@@ -4943,9 +4950,7 @@ msgid ""
 "Here, `l` and `r` represent the currently queried range, while `query_l` "
 "and `query_r` denote the range we need to query. Let's break down this "
 "implementation:"
-msgstr ""
-"首先，`l` 与 `r` 是当前函数中已经查询到的区间，`query_l` 与 `query_r` "
-"是需要查询的区间，让我们来尝试解析一下这段实现："
+msgstr "首先，`l` 与 `r` 是当前函数中已经查询到的区间，`query_l` 与 `query_r` 是需要查询的区间，让我们来尝试解析一下这段实现："
 
 #: ../../example/segment-tree/segment-tree.md:99
 msgid ""
@@ -5388,7 +5393,7 @@ msgid ""
 "  } else if modify_l <= l && modify_r >= r {\n"
 "    self.apply(tag)\n"
 "  } else {\n"
-"    guard let Node(left~, right~, ..) = self\n"
+"    guard self is Node(left~, right~, ..)\n"
 "    let mid = (l + r) >> 1\n"
 "    left.modify(l, mid, modify_l, modify_r, tag) +\n"
 "    right.modify(mid + 1, r, modify_l, modify_r, tag)\n"
@@ -5457,7 +5462,7 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:120
 msgid "GC is really interesting!"
-msgstr ""
+msgstr "GC 真的很有趣！"
 
 #: ../../example/segment-tree/segment-tree2.md:122
 msgid "Queries"
@@ -5483,7 +5488,7 @@ msgid ""
 "  } else if query_l <= l && query_r >= r {\n"
 "    self\n"
 "  } else {\n"
-"    guard let Node(tag~, left~, right~, ..) = self\n"
+"    guard self is Node(tag~, left~, right~, ..)\n"
 "    let mid = (l + r) >> 1\n"
 "    left.apply(tag).query(l, mid, query_l, query_r) +\n"
 "    right.apply(tag).query(mid + 1, r, query_l, query_r)\n"
@@ -5528,11 +5533,9 @@ msgid ""
 "demonstrate how to write a suitable program to solve Sudoku using "
 "MoonBit. ![sudoku example](/imgs/sudoku.jpg)"
 msgstr ""
-"数独是一种基于逻辑的益智游戏，起源于 1979 年。"
-"它非常适合报纸等印刷媒体，即使在数字时代，许多数独游戏程序也可用于计算机和智能手机。"
-"尽管如今娱乐选择多种多样，但数独爱好者仍在继续组建活跃的社区"
-"(在线论坛，例如：[enjoysudoku](http://forum.enjoysudoku.com/))。"
-"本文将演示如何使用 MoonBit 编写合适的程序来解决数独问题。"
+"数独是一种基于逻辑的益智游戏，起源于 1979 "
+"年。它非常适合报纸等印刷媒体，即使在数字时代，许多数独游戏程序也可用于计算机和智能手机。尽管如今娱乐选择多种多样，但数独爱好者仍在继续组建活跃的社区（在线论坛，例如：[enjoysudoku](http://forum.enjoysudoku.com/)）。本文将演示如何使用"
+" MoonBit 编写合适的程序来解决数独问题。"
 
 #: ../../example/sudoku/index.md:3
 msgid "sudoku example"
@@ -5549,10 +5552,8 @@ msgid ""
 "This gives each square in the grid a coordinate, for example, the square "
 "containing the number 0 in the grid below has the coordinate C3."
 msgstr ""
-"最常见的数独形式是在 9x9 网格上进行的。"
-"我们将从上到下的行标记为 A-I，从左到右的列标记为 1-9。"
-"这为网格中的每个方格提供了一个坐标，"
-"例如，下面网格中包含数字 0 的方格的坐标为 C3。"
+"最常见的数独形式是在 9x9 网格上进行的。我们将从上到下的行标记为 A-I，从左到右的列标记为 "
+"1-9。这为网格中的每个方格提供了一个坐标，例如，下面网格中包含数字 0 的方格的坐标为 C3。"
 
 #: ../../example/sudoku/index.md:10
 msgid ""
@@ -5573,10 +5574,7 @@ msgid ""
 "This 9x9 grid has a total of 9 units, and each unit contains squares that"
 " must have unique digits from 1 to 9. However, in the initial state of "
 "the game, most squares do not contain any digits."
-msgstr ""
-"这个 9x9 的网格共有 9 个单元，"
-"每个单元包含的方格必须具有从 1 到 9 的唯一数字。"
-"但是在游戏的初始状态下，大多数方格不包含任何数字。"
+msgstr "这个 9x9 的网格共有 9 个单元，每个单元包含的方格必须具有从 1 到 9 的唯一数字。但是在游戏的初始状态下，大多数方格不包含任何数字。"
 
 #: ../../example/sudoku/index.md:25
 msgid ""
@@ -5598,10 +5596,7 @@ msgid ""
 "Beyond the units, another important concept is peers. A square's peers "
 "include other squares in the same row, column, and unit. For example, the"
 " peers of C2 include these squares:"
-msgstr ""
-"除了单元之外，另一个重要概念是同级。"
-"一个方格的同级包括同一行、同一列和同一单位的其他方格。"
-"例如，C2 的同级包括以下方格："
+msgstr "除了单元之外，另一个重要概念是同级。一个方格的同级包括同一行、同一列和同一单位的其他方格。例如，C2 的同级包括以下方格："
 
 #: ../../example/sudoku/index.md:41
 msgid ""
@@ -5654,9 +5649,9 @@ msgid ""
 "hashtable, but using an array would be more compact and simple. First, we"
 " write a function to convert coordinates A1-I9 to indices 0-80:"
 msgstr ""
-"我们需要一个数据类型 SquareMap[T] 来存储这 81 个方格以及与每个方格相关的信息。"
-"这可以使用哈希表来实现，但使用数组会更紧凑、更简单。"
-"首先，我们编写一个函数将坐标 A1-I9 转换为索引 0-80："
+"我们需要一个数据类型 SquareMap[T] 来存储这 81 "
+"个方格以及与每个方格相关的信息。这可以使用哈希表来实现，但使用数组会更紧凑、更简单。首先，我们编写一个函数将坐标 A1-I9 转换为索引 "
+"0-80："
 
 #: ../../example/sudoku/index.md:84
 msgid ""
@@ -5684,8 +5679,8 @@ msgid ""
 "overloading the op_get and op_set methods, we can write convenient code "
 "like table[\"A2\"] and table[\"C3\"] = Nil."
 msgstr ""
-"然后我们包装这个数组，并提供创建、访问、为特定坐标赋值以及复制 SquareMap[T] 的操作。"
-"通过重载 op_get 和 op_set 方法，我们可以编写类似 table[\"A2\"] 和 table[\"C3\"] = Nil 的便捷代码。"
+"然后我们包装这个数组，并提供创建、访问、为特定坐标赋值以及复制 SquareMap[T] 的操作。通过重载 op_get 和 op_set "
+"方法，我们可以编写类似 table[\"A2\"] 和 table[\"C3\"] = Nil 的便捷代码。"
 
 #: ../../example/sudoku/index.md:104
 msgid ""
@@ -5743,8 +5738,7 @@ msgstr ""
 msgid ""
 "The process of constructing the units and peers tables is tedious, so it "
 "will not be detailed here."
-msgstr ""
-"构建单元和同级表的过程非常繁琐，因此这里不再详述。"
+msgstr "构建单元和同级表的过程非常繁琐，因此这里不再详述。"
 
 #: ../../example/sudoku/index.md:152
 msgid "Preprocessing the Grid"
@@ -5755,10 +5749,7 @@ msgid ""
 "We use a string to represent the initial Sudoku grid. Various formats are"
 " acceptable; both `.` and `0` represent empty squares, and other "
 "characters like spaces and newlines are ignored."
-msgstr ""
-"我们使用字符串来表示初始数独网格。"
-"各种格式均可接受；"
-". 和 0 均表示空方块，其他字符（如空格和换行符）将被忽略。"
+msgstr "我们使用字符串来表示初始数独网格。各种格式均可接受；. 和 0 均表示空方块，其他字符（如空格和换行符）将被忽略。"
 
 #: ../../example/sudoku/index.md:156
 msgid ""
@@ -5784,10 +5775,8 @@ msgid ""
 "Therefore, we initially set the content of all squares to `['1', '2', "
 "'3', '4', '5', '6', '7', '8', '9']` (a List)."
 msgstr ""
-"暂时先不考虑太多游戏规则，如果只考虑每个方格能填入的数字，"
-"那么 1-9 都是有可能的，"
-"因此我们初始将所有方格的内容设置为"
-"`['1', '2', '3', '4', '5', '6', '7', '8', '9']` (a List)。"
+"暂时先不考虑太多游戏规则，如果只考虑每个方格能填入的数字，那么 1-9 都是有可能的，因此我们初始将所有方格的内容设置为`['1', '2', "
+"'3', '4', '5', '6', '7', '8', '9']` (a List)。"
 
 #: ../../example/sudoku/index.md:173
 msgid ""
@@ -5805,9 +5794,8 @@ msgid ""
 "key, val)`, where `key` is a string like `A6` and `val` is a character. "
 "It is easy to write such code."
 msgstr ""
-"接下来，我们需要将输入中已知数字的方块赋值。"
-"这个过程可以用函数 `assign(values, key, val)` 来实现，"
-"其中 `key` 是一个字符串，比如 `A6`，`val` 是一个字符。这样的代码写起来很容易。"
+"接下来，我们需要将输入中已知数字的方块赋值。这个过程可以用函数 `assign(values, key, val)` 来实现，其中 `key` "
+"是一个字符串，比如 `A6`，`val` 是一个字符。这样的代码写起来很容易。"
 
 #: ../../example/sudoku/index.md:183
 msgid ""
@@ -5862,11 +5850,7 @@ msgid ""
 " rules themselves do not tell us what to do. We need heuristic strategies"
 " to gain insights from the rules, similar to solving Sudoku with pen and "
 "paper. Let's start with the elimination method:"
-msgstr ""
-"现在，我们可以重新引入之前搁置的规则。"
-"但是，规则本身并没有告诉我们该做什么。"
-"我们需要启发式策略来从规则中获得见解，"
-"类似于用笔和纸解决数独。让我们从消除法开始："
+msgstr "现在，我们可以重新引入之前搁置的规则。但是，规则本身并没有告诉我们该做什么。我们需要启发式策略来从规则中获得见解，类似于用笔和纸解决数独。让我们从消除法开始："
 
 #: ../../example/sudoku/index.md:213
 msgid ""
@@ -5875,20 +5859,15 @@ msgid ""
 "values, as this would violate the rule that no two squares in the same "
 "unit, row, or column can have the same digit."
 msgstr ""
-"**策略 1**：如果为一个方块 `key` 分配了一个值 `val`，"
-"则其对同级（'peers[key]'）的可能值列表中不应该包含 `val'，"
-"因为这会违反同一单元、行或列中没有两个方块可以具有相同数字的规则。"
+"**策略 1**：如果为一个方块 `key` 分配了一个值 `val`，则其对同级（'peers[key]'）的可能值列表中不应该包含 "
+"`val'，因为这会违反同一单元、行或列中没有两个方块可以具有相同数字的规则。"
 
 #: ../../example/sudoku/index.md:215
 msgid ""
 "**Strategy 2**: If there is only one square in a unit that can hold a "
 "specific digit (possibly happen after applying the above rule several "
 "times), then that digit should be assigned to that square."
-msgstr ""
-"**策略 2**：如果一个单元中只有一个方格可以容纳特定的数字"
-"（在多次应用上述规则后可能发生），"
-"则应将该数字分配给该方格。"
-
+msgstr "**策略 2**：如果一个单元中只有一个方格可以容纳特定的数字（在多次应用上述规则后可能发生），则应将该数字分配给该方格。"
 
 #: ../../example/sudoku/index.md:217
 msgid ""
@@ -5899,10 +5878,8 @@ msgid ""
 "value to handle possible contradictions. If the list of possible values "
 "for a square becomes empty, something went wrong, and we return `false`."
 msgstr ""
-"我们通过定义一个消除函数 `eliminate` 来调整代码，该函数从正方形的可能值中删除一个数字。"
-"执行消除任务后，它将上述策略应用于 `key` 和 `val` 以尝试进一步消除。"
-"请注意，它包含一个布尔返回值来处理可能的矛盾。"
-"如果方格的可能值列表为空，则出现问题，我们返回 `false`。"
+"我们通过定义一个消除函数 `eliminate` 来调整代码，该函数从正方形的可能值中删除一个数字。执行消除任务后，它将上述策略应用于 `key`"
+" 和 `val` 以尝试进一步消除。请注意，它包含一个布尔返回值来处理可能的矛盾。如果方格的可能值列表为空，则出现问题，我们返回 `false`。"
 
 #: ../../example/sudoku/index.md:219
 msgid ""
@@ -5963,8 +5940,7 @@ msgstr ""
 msgid ""
 "Next, we define `assign(values, key, val)` to remove all values except "
 "`val` from the possible values of `key`."
-msgstr ""
-"接下来，我们定义 `assign(values, key, val)` 来从 `key` 的可能值中删除除 `val` 之外的所有值。"
+msgstr "接下来，我们定义 `assign(values, key, val)` 来从 `key` 的可能值中删除除 `val` 之外的所有值。"
 
 #: ../../example/sudoku/index.md:272
 msgid ""
@@ -5985,10 +5961,7 @@ msgid ""
 "access. A successful heuristic application introduces new squares to "
 "consider, allowing these strategies to propagate widely across the grid. "
 "This is key to quickly eliminating invalid options."
-msgstr ""
-"这两个函数将启发式策略应用于它们访问的每个方格。"
-"成功的启发式应用会引入新的方格供考虑，从而使这些策略在整个网格中广泛传播。"
-"这是快速消除无效选项的关键。"
+msgstr "这两个函数将启发式策略应用于它们访问的每个方格。成功的启发式应用会引入新的方格供考虑，从而使这些策略在整个网格中广泛传播。这是快速消除无效选项的关键。"
 
 #: ../../example/sudoku/index.md:285
 msgid "Let's try the example again"
@@ -6027,8 +6000,7 @@ msgstr ""
 msgid ""
 "A significant improvement! In fact, this preprocessing can already solve "
 "some simple Sudoku puzzles."
-msgstr ""
-"这是一个显著的进步！事实上，这种预处理已经可以解决一些简单的数独难题了。"
+msgstr "这是一个显著的进步！事实上，这种预处理已经可以解决一些简单的数独难题了。"
 
 #: ../../example/sudoku/index.md:305
 msgid ""
@@ -6056,9 +6028,8 @@ msgid ""
 "topic, refer to Chapter 6 of _Artificial Intelligence: A Modern "
 "Approach_."
 msgstr ""
-"如果您对人工智能感兴趣，您可能会将其视为约束满足问题 (CSP)，"
-"而'分配'和'消除'是专门的弧一致性算法。"
-"有关此主题的更多信息，请参阅 Artificial Intelligence: A Modern Approach 第 6 章"
+"如果您对人工智能感兴趣，您可能会将其视为约束满足问题 (CSP)，而'分配'和'消除'是专门的弧一致性算法。有关此主题的更多信息，请参阅 "
+"Artificial Intelligence: A Modern Approach 第 6 章"
 
 #: ../../example/sudoku/index.md:323
 msgid "Search"
@@ -6072,9 +6043,8 @@ msgid ""
 "square, we still use `assign`, which allows us to apply previous "
 "optimizations to eliminate many invalid branches during the search."
 msgstr ""
-"经过预处理后，我们可以大胆地使用蛮力枚举来搜索所有可行的组合。"
-"但是，在搜索过程中，我们仍然可以使用启发式策略。当尝试为某个方块赋值时，"
-"我们仍然使用 `assign`，这使我们能够应用先前的优化来消除搜索过程中的许多无效分支。"
+"经过预处理后，我们可以大胆地使用蛮力枚举来搜索所有可行的组合。但是，在搜索过程中，我们仍然可以使用启发式策略。当尝试为某个方块赋值时，我们仍然使用"
+" `assign`，这使我们能够应用先前的优化来消除搜索过程中的许多无效分支。"
 
 #: ../../example/sudoku/index.md:327
 msgid ""
@@ -6082,9 +6052,7 @@ msgid ""
 " a square's possible values are exhausted). Since mutable structures make"
 " backtracking troublesome, we directly copy values each time we assign a "
 "value."
-msgstr ""
-"另外需要注意的是，搜索过程中可能会发生冲突（当一个方格的可能值耗尽时）。"
-"由于可变结构使回溯变得麻烦，因此我们每次分配值时都直接复制值。"
+msgstr "另外需要注意的是，搜索过程中可能会发生冲突（当一个方格的可能值耗尽时）。由于可变结构使回溯变得麻烦，因此我们每次分配值时都直接复制值。"
 
 #: ../../example/sudoku/index.md:329
 msgid ""
@@ -6134,9 +6102,8 @@ msgid ""
 "[magictour](http://magictour.free.fr/top95), a list of difficult Sudoku "
 "puzzles, which is not easy for humans)"
 msgstr ""
-"我们再运行一​​遍同样的例子"
-"（这个例子其实取自 [magictour](http://magictour.free.fr/top95)，"
-"一个难度数独谜题列表，对人类来说并不容易）"
+"我们再运行一​​遍同样的例子（这个例子其实取自 "
+"[magictour](http://magictour.free.fr/top95)，一个难度数独谜题列表，对人类来说并不容易）"
 
 #: ../../example/sudoku/index.md:368
 msgid ""
@@ -6162,16 +6129,14 @@ msgid ""
 "Running on [MoonBit online IDE](https://try.moonbitlang.com/), It takes "
 "only about 0.11 seconds to solve this Sudoku!"
 msgstr ""
-"在 [MoonBit online IDE](https://try.moonbitlang.com/) 上运行，"
-"仅需大约 0.11 秒即可解决这个数独！"
+"在 [MoonBit online IDE](https://try.moonbitlang.com/) 上运行，仅需大约 0.11 "
+"秒即可解决这个数独！"
 
 #: ../../example/sudoku/index.md:386
 msgid ""
 "Complete code here: "
 "[try.moonbitlang.com/#6806c2fe](https://try.moonbitlang.com/#6806c2fe)"
-msgstr ""
-"完整代码在："
-"[try.moonbitlang.com/#6806c2fe](https://try.moonbitlang.com/#6806c2fe)"
+msgstr "完整代码在：[try.moonbitlang.com/#6806c2fe](https://try.moonbitlang.com/#6806c2fe)"
 
 #: ../../example/sudoku/index.md:390
 msgid ""
@@ -6182,11 +6147,7 @@ msgid ""
 "puzzles. This does not mean that Sudoku is not worth playing; rather, it "
 "reveals that one should not be overly concerned with an unsolvable Sudoku"
 " puzzle."
-msgstr ""
-"游戏的目的是为了缓解无聊并带来快乐。"
-"如果玩游戏让人感到焦虑而不是兴奋，那么它可能违背了游戏设计师的初衷。"
-"本文表明，简单的消除法和强力搜索可以快速解决一些数独难题。"
-"这并不意味着数独不值得玩；相反，它表明人们不应该过分担心无法解决的数独难题。"
+msgstr "游戏的目的是为了缓解无聊并带来快乐。如果玩游戏让人感到焦虑而不是兴奋，那么它可能违背了游戏设计师的初衷。本文表明，简单的消除法和强力搜索可以快速解决一些数独难题。这并不意味着数独不值得玩；相反，它表明人们不应该过分担心无法解决的数独难题。"
 
 #: ../../example/sudoku/index.md:392
 msgid "Let's play with MoonBit with ease!"
@@ -6198,37 +6159,14 @@ msgid ""
 "play with the Sudoku solver written in MoonBit. Click [this "
 "link](https://github.com/myfreess/sudoku) to view the full source code."
 msgstr ""
-"访问 MoonBit [Gallery](https://www.moonbitlang.com/gallery/sudoku/)"
-"来试用用 MoonBit 编写的数独解算器。"
-"单击 [此链接](https://github.com/myfreess/sudoku) 可查看完整源代码。"
+"访问 MoonBit [Gallery](https://www.moonbitlang.com/gallery/sudoku/) 来试用用 "
+"MoonBit 编写的数独解算器。单击 [此链接](https://github.com/myfreess/sudoku) 可查看完整源代码。"
 
 #: ../../example/sudoku/index.md:396
 msgid ""
 "This tutorial references Norvig's blog: "
 "[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)"
 msgstr ""
-"本教程参考了 Norvig 的博客："
-"[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)"
-
-#~ msgid ""
-#~ "fn step(self : GState) -> Bool {\n"
-#~ "  match self.code {\n"
-#~ "    Nil => return false\n"
-#~ "    Cons(i, is) => {\n"
-#~ "      self.code = is\n"
-#~ "      self.stat_incr()\n"
-#~ "      match i {\n"
-#~ "        PushGlobal(f) => self.push_global(f)\n"
-#~ "        PushInt(n) => self.push_int(n)\n"
-#~ "        PushArg(n) => self.push_arg(n)\n"
-#~ "        MkApp => self.mk_apply()\n"
-#~ "        Unwind => self.unwind()\n"
-#~ "        Update(n) => self.update(n)\n"
-#~ "        Pop(n) => self.stack = self.stack.drop(n)\n"
-#~ "      }\n"
-#~ "      return true\n"
-#~ "    }\n"
-#~ "  }\n"
-#~ "}\n"
-#~ msgstr ""
+"本教程参考了 Norvig "
+"的博客：[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)"
 

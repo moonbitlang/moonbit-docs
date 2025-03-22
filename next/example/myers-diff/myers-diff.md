@@ -270,7 +270,7 @@ There are two boundary cases: `k == -d` and `k == d`.
 
 - When `k == -d`, you can only choose `v[k + 1]`.
 
-- When `k == -d`, you can only choose `v[k - 1]`.
+- When `k == d`, you can only choose `v[k - 1]`.
 
 Recalling the requirement mentioned earlier: arranging deletions before insertions as much as possible, this essentially means choosing the position with the largest `x` value from the previous position.
 

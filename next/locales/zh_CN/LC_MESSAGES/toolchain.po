@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-25 15:13+0800\n"
+"POT-Creation-Date: 2025-03-19 12:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -912,6 +912,9 @@ msgid ""
 "particular configuration may also determine where these scripts need to "
 "be placed."
 msgstr ""
+"讨论：为 Bash、Elvish、Fish、Zsh 或 PowerShell "
+"启用命令补全功能。该脚本的输出在标准输出（stdout）上，用户可以将输出重定向到自己选择的文件。文件的存放位置将取决于所使用的 shell "
+"以及操作系统。具体的配置也可能决定这些脚本应放置在何处。"
 
 #: ../../toolchain/moon/commands.md:471
 msgid ""
@@ -921,12 +924,15 @@ msgid ""
 "rc file to always load newest completions on startup. Although it's "
 "considered not as efficient as having the completions script installed."
 msgstr ""
+"补全脚本不会自动更新，因此你可能需要定期运行此命令以获取最新的补全内容。或者，你可以将`eval \"$(moon shell-"
+"completion --shell <SHELL>)\"`添加到你所用 shell 的配置文件（rc file）中，这样每次启动 shell "
+"时都会加载最新的补全内容。不过，这种方式被认为不如安装补全脚本高效。 "
 
 #: ../../toolchain/moon/commands.md:478
 msgid ""
 "Here are some common set ups for the three supported shells under Unix "
 "and similar operating systems (such as GNU/Linux)."
-msgstr ""
+msgstr "以下是在 Unix 及类似操作系统（如 GNU/Linux）下，针对三种受支持的 shell 的一些常见设置。"
 
 #: ../../toolchain/moon/commands.md:481
 msgid "Bash:"
@@ -938,6 +944,8 @@ msgid ""
 "system-wide commands, but can be stored in `~/.local/share/bash-"
 "completion/completions` for user-specific commands. Run the command:"
 msgstr ""
+"对于系统范围的命令，补全文件通常存放在 `/etc/bash_completion.d/`；而针对用户特定的命令，它们可存放在 "
+"`~/.local/share/bash - completion/completions`。运行以下命令："
 
 #: ../../toolchain/moon/commands.md:488
 msgid ""
@@ -950,7 +958,7 @@ msgstr ""
 msgid ""
 "This installs the completion script. You may have to log out and log back"
 " in to your shell session for the changes to take effect."
-msgstr ""
+msgstr "这会安装补全脚本。你可能需要注销并重新登录 shell 会话，以使更改生效。"
 
 #: ../../toolchain/moon/commands.md:494
 msgid "Bash (macOS/Homebrew):"
@@ -961,6 +969,8 @@ msgid ""
 "Homebrew stores bash completion files within the Homebrew directory. With"
 " the `bash-completion` brew formula installed, run the command:"
 msgstr ""
+"Homebrew 会将 bash 补全文件存储在 Homebrew 目录内。在安装了 `bash-completion` 的 Homebrew "
+"软件包后，运行以下命令："
 
 #: ../../toolchain/moon/commands.md:499
 msgid ""
@@ -977,7 +987,7 @@ msgstr ""
 msgid ""
 "Fish completion files are commonly stored in "
 "`$HOME/.config/fish/completions`. Run the command:"
-msgstr ""
+msgstr "Fish 补全文件通常存储在 `$HOME/.config/fish/completions` 目录下。运行以下命令： "
 
 #: ../../toolchain/moon/commands.md:507
 msgid ""
@@ -1008,7 +1018,7 @@ msgid ""
 "will install the completions script. Note that use `>>` (append)  instead"
 " of `>` (overwrite) to prevent overwriting the existing completions  for "
 "other commands. Then prepend your rc.elv with:"
-msgstr ""
+msgstr "将安装补全脚本。请注意使用`>>`（追加）而不是 `>`（覆盖），以防止覆盖其他命令的现有补全。然后在你的 rc.elv 文件前面添加："
 
 #: ../../toolchain/moon/commands.md:525
 msgid "`use completers`\n"
@@ -1016,7 +1026,7 @@ msgstr ""
 
 #: ../../toolchain/moon/commands.md:527
 msgid "to load the `completers` module and enable completions."
-msgstr ""
+msgstr "以加载 `completers` 模块并启用补全功能。"
 
 #: ../../toolchain/moon/commands.md:529
 msgid "Zsh:"
@@ -1029,13 +1039,15 @@ msgid ""
 "generated script to one of those directories, or add your own to this "
 "list."
 msgstr ""
+"ZSH 补全文件通常存放在 `$fpath` "
+"变量所列出的任意目录中。要使用这些补全功能，你要么将生成的脚本添加到这些目录之一，要么将你自己的目录添加到这个列表中。"
 
 #: ../../toolchain/moon/commands.md:536
 msgid ""
 "Adding a custom directory is often the safest bet if you are unsure of "
 "which directory to use. First create the directory; for this example "
 "we'll create a hidden directory inside our `$HOME` directory:"
-msgstr ""
+msgstr "如果你不确定该使用哪个目录，添加一个自定义目录通常是最稳妥的做法。首先创建这个目录；在这个示例中，我们将在 `$HOME` 目录下创建一个隐藏目录："
 
 #: ../../toolchain/moon/commands.md:541
 msgid "$ mkdir ~/.zfunc\n"
@@ -1043,7 +1055,7 @@ msgstr ""
 
 #: ../../toolchain/moon/commands.md:543
 msgid "Then add the following lines to your `.zshrc` just before `compinit`:"
-msgstr ""
+msgstr "然后，在你的 `.zshrc` 文件里 `compinit` 命令之前添加以下几行："
 
 #: ../../toolchain/moon/commands.md:546
 msgid "fpath+=~/.zfunc\n"
@@ -1051,7 +1063,7 @@ msgstr ""
 
 #: ../../toolchain/moon/commands.md:548
 msgid "Now you can install the completions script using the following command:"
-msgstr ""
+msgstr "现在你可以使用以下命令来安装补全脚本"
 
 #: ../../toolchain/moon/commands.md:551
 msgid "$ moon shell-completion --shell zsh > ~/.zfunc/_moon\n"
@@ -1059,7 +1071,7 @@ msgstr ""
 
 #: ../../toolchain/moon/commands.md:553
 msgid "You must then open a new zsh session, or simply run"
-msgstr ""
+msgstr "然后，你必须开启一个新的 zsh 会话，或者直接运行 "
 
 #: ../../toolchain/moon/commands.md:555
 msgid "$ . ~/.zshrc\n"
@@ -1067,7 +1079,7 @@ msgstr ""
 
 #: ../../toolchain/moon/commands.md:557
 msgid "for the new completions to take effect."
-msgstr ""
+msgstr "以便新的补全功能生效。"
 
 #: ../../toolchain/moon/commands.md:559
 msgid "Custom locations:"
@@ -1080,6 +1092,8 @@ msgid ""
 "to add the proper directives, such as `source`ing inside your login "
 "script. Consult your shells documentation for how to add such directives."
 msgstr ""
+"另外，你可以将这些文件保存到你选择的位置，比如你家目录（$HOME）下的自定义目录。这样做的话，你需要添加合适的指令，例如在登录脚本中使用 "
+"`source`命令引入这些文件。请查阅你所使用 shell 的文档，了解如何添加此类指令。"
 
 #: ../../toolchain/moon/commands.md:567
 msgid "PowerShell:"
@@ -1090,10 +1104,12 @@ msgid ""
 "The powershell completion scripts require PowerShell v5.0+ (which comes "
 "with Windows 10, but can be downloaded separately for windows 7 or 8.1)."
 msgstr ""
+"PowerShell 补全脚本需要 PowerShell 5.0 及更高版本（Windows 10 系统自带该版本，而 Windows 7 或 "
+"8.1 系统可单独下载）。 "
 
 #: ../../toolchain/moon/commands.md:573
 msgid "First, check if a profile has already been set"
-msgstr ""
+msgstr "首先，检查是否已经设置了配置文件。"
 
 #: ../../toolchain/moon/commands.md:575
 msgid "PS C:\\> Test-Path $profile\n"
@@ -1101,7 +1117,7 @@ msgstr ""
 
 #: ../../toolchain/moon/commands.md:577
 msgid "If the above command returns `False` run the following"
-msgstr ""
+msgstr "如果上述命令返回 `False`，则运行以下命令。"
 
 #: ../../toolchain/moon/commands.md:579
 msgid "PS C:\\> New-Item -path $profile -type file -force\n"
@@ -1113,13 +1129,16 @@ msgid ""
 "command it will be "
 "`${env:USERPROFILE}\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1`"
 msgstr ""
+"现在打开由 `$profile` 指定的文件（如果你使用了 `New-Item` 命令，该文件将是 "
+"`${env:USERPROFILE}\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1`）。"
+" "
 
 #: ../../toolchain/moon/commands.md:585
 msgid ""
 "Next, we either save the completions file into our profile, or into a "
 "separate file and source it inside our profile. To save the completions "
 "into our profile simply use"
-msgstr ""
+msgstr "接下来，我们可以将补全文件保存到我们的配置文件中，或者保存到一个单独的文件里"
 
 #: ../../toolchain/moon/commands.md:589
 msgid ""
@@ -1132,7 +1151,7 @@ msgstr ""
 msgid ""
 "This discussion is taken from `rustup completions` command with some "
 "changes."
-msgstr ""
+msgstr "这段讨论内容改编自 `rustup completions` 命令相关内容，并做了一些修改。"
 
 #: ../../toolchain/moon/commands.md:597
 msgid "`--shell <SHELL>` — The shell to generate completion for"
@@ -1705,19 +1724,20 @@ msgstr "你可以使用 `moonc build-package -warn-help` 来查看预设编译�
 #: ../../toolchain/moon/module.md:136 ../../toolchain/moon/package.md:305
 msgid ""
 "$ moonc -v                      \n"
-"v0.1.20240914+b541585d3\n"
+"v0.1.20250318+35770a65e\n"
 "\n"
 "$ moonc build-package -warn-help\n"
 "Available warnings: \n"
 "  1 Unused function.\n"
 "  2 Unused variable.\n"
 "  3 Unused type declaration.\n"
-"  4 Redundant case in a pattern matching (unused match case).\n"
-"  5 Unused function argument.\n"
+"  4 Unused abstract type.\n"
+"  5 Unused type variable.\n"
 "  6 Unused constructor.\n"
-"  7 Unused module declaration.\n"
-"  8 Unused struct field.\n"
-" 10 Unused generic type variable.\n"
+"  7 Unused field or constructor argument.\n"
+"  8 Redundant modifier.\n"
+"  9 Unused function declaration.\n"
+" 10 Struct never constructed.\n"
 " 11 Partial pattern matching.\n"
 " 12 Unreachable code.\n"
 " 13 Unresolved type variable.\n"
@@ -1732,18 +1752,36 @@ msgid ""
 " 23 Useless try expression.\n"
 " 24 Useless error type.\n"
 " 26 Useless catch all.\n"
+" 27 Deprecated syntax.\n"
+" 28 Todo\n"
+" 29 Unused package.\n"
+" 30 Empty package alias.\n"
+" 31 Optional argument never supplied.\n"
+" 32 Default value of optional argument never used.\n"
+" 33 Unused import value\n"
+" 35 Reserved keyword.\n"
+" 36 Loop label shadows another label.\n"
+" 37 Unused loop label.\n"
+" 38 Useless guard.\n"
+" 39 Duplicated method.\n"
+" 40 Call a qualified method using regular call syntax.\n"
+" 41 Closed map pattern.\n"
+" 42 Invalid attribute.\n"
+" 43 Unused attribute.\n"
+" 44 Invalid inline-wasm.\n"
+" 45 Type implements trait with regular methods.\n"
 "  A all warnings\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:168 ../../toolchain/moon/package.md:337
+#: ../../toolchain/moon/module.md:187 ../../toolchain/moon/package.md:356
 msgid "Alert List"
 msgstr "警示列表"
 
-#: ../../toolchain/moon/module.md:170 ../../toolchain/moon/package.md:339
+#: ../../toolchain/moon/module.md:189 ../../toolchain/moon/package.md:358
 msgid "Disable user preset alerts."
 msgstr "禁用用户预设警示。"
 
-#: ../../toolchain/moon/module.md:172 ../../toolchain/moon/package.md:341
+#: ../../toolchain/moon/module.md:191 ../../toolchain/moon/package.md:360
 msgid ""
 "{\n"
 "  \"alert-list\": \"-alert_1-alert_2\"\n"
@@ -2716,7 +2754,6 @@ msgid ""
 msgstr ""
 
 #: ../../toolchain/moon/tutorial.md:36
-#, fuzzy
 msgid ""
 "If you want to use all default values, you can use `moon new my-project` "
 "to create a new module named `username/hello` in the `my-project` "

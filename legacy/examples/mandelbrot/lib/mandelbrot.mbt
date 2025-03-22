@@ -18,7 +18,7 @@ fn floor(x : Double) -> Int = "math" "floor"
 
 fn float_of_int(x : Int) -> Double = "math" "float_of_int"
 
-type ImageData
+extern type ImageData
 
 fn set_image_data(self : ImageData, x : Int, rgb : Int) = "imagedata" "set"
 
