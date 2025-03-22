@@ -89,7 +89,7 @@ pub fn reset[T : Default](self : SBuffer[T], capacity : Int) -> Unit {
   self.data = Array::make(capacity, T::default())
 }
 
-pub fn println[T : Show](self : SBuffer[T]) -> Unit {
+pub fn SBuffer::println[T : Show](self : SBuffer[T]) -> Unit {
   let mut index = 0
   let buffer = StringBuilder::new()
   buffer.write_char('[')

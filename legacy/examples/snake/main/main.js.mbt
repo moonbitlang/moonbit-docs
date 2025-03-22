@@ -25,7 +25,7 @@ extern "js" fn get_context() -> @lib.Canvas_ctx =
   #|  return context;
   #|}
 
-type KeyboardEvent
+extern type KeyboardEvent
 
 extern "js" fn key_ffi(self : KeyboardEvent) -> @extern.JsString =
   #|(event) => event.key
