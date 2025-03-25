@@ -104,11 +104,31 @@ pub(open) trait Position {
   pos(Self) -> (Int, Int)
 }
 pub(open) trait Draw {
-  draw(Self) -> Unit
+  draw(Self, Int, Int) -> Unit
 }
 
 pub(open) trait Object : Position + Draw {}
 // end super trait 1
+
+// start super trait 2
+impl Position for Point with pos(self) {
+  (self.x, self.y)
+}
+
+impl Draw for Point with draw(self, x, y) {
+  ()
+}
+
+pub fn draw_object[O : Object](obj : O) -> Unit {
+  let (x, y) = obj.pos()
+  obj.draw(x, y)
+}
+
+test {
+  let p = Point::{ x: 1, y: 2 }
+  draw_object(p)
+}
+// end super trait 2
 
 // start trait object 1
 pub(open) trait Animal {

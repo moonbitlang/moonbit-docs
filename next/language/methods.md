@@ -148,9 +148,6 @@ A trait can depend on other traits, for example:
 :end-before: end super trait 1
 ```
 
-To implement the sub trait, one will have to implement the super traits,
-and the methods defined in the sub trait.
-
 ### Implementing traits
 
 To implement a trait, a type must explicitly provide all the methods required by the trait
@@ -174,6 +171,19 @@ The author of the trait can also define **default implementations** for some met
 
 Implementers of trait `I` don't have to provide an implementation for `f_twice`: to implement `I`, only `f` is necessary.
 They can always override the default implementation with an explicit `impl I for Type with f_twice`, if desired, though.
+
+To implement the sub trait, one will have to implement the super traits,
+and the methods defined in the sub trait. For example:
+
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start super trait 2
+:end-before: end super trait 2
+```
+
+```{warning}
+Currently, an empty trait is implemented automatically.
+```
 
 ### Using traits
 
