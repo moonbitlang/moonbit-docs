@@ -3,7 +3,7 @@ struct T {
   x : Int
 }
 
-fn op_add(self : T, other : T) -> T {
+impl Add for T with op_add(self : T, other : T) -> T {
   { x: self.x + other.x }
 }
 

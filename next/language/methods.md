@@ -64,7 +64,7 @@ use the `fn f(self : T, ..)` syntax
 
 ## Operator Overloading
 
-MoonBit supports operator overloading of builtin operators via methods. The method name corresponding to a operator `<op>` is `op_<op>`. For example:
+MoonBit supports overloading infix operators of builtin operators via several builtin traits. For example:
 
 ```{literalinclude} /sources/language/src/operator/top.mbt
 :language: moonbit
@@ -72,7 +72,7 @@ MoonBit supports operator overloading of builtin operators via methods. The meth
 :end-before: end operator 1
 ```
 
-Another example about `op_get` and `op_set`:
+Other operators are overloaded via methods, for example `op_get` and `op_set`:
 
 ```{literalinclude} /sources/language/src/operator/top.mbt
 :language: moonbit
@@ -94,23 +94,29 @@ Another example about `op_get` and `op_set`:
 
 Currently, the following operators can be overloaded:
 
-| Operator Name         | Method Name  | Recommended Signature   |
-| --------------------- | ------------ | ----------------------- |
-| `+`                   | `op_add`     | `(A, A) -> X`           |
-| `-`                   | `op_sub`     | `(A, A) -> X`           |
-| `*`                   | `op_mul`     | `(A, A) -> X`           |
-| `/`                   | `op_div`     | `(A, A) -> X`           |
-| `%`                   | `op_mod`     | `(A, A) -> X`           |
-| `==`                  | `op_equal`   | `(A, A) -> Bool` (Required by trait `Eq`) |
-| `<<`                  | `op_shl`     | `(A, B) -> X`           |
-| `>>`                  | `op_shr`     | `(A, B) -> X`           |
-| `-` (unary)           | `op_neg`     | `(A) -> X`              |
-| `_[_]` (get item)     | `op_get`     | `(A, B) -> X`           |
-| `_[_] = _` (set item) | `op_set`     | `(A, B, C) -> Unit`     |
-| `_[_:_]` (view)       | `op_as_view` | `(A, start? : B, end? : C) -> X` |
-| `&`                   | `land`       | `(A, B) -> X`           |
-| `\|`                  | `lor`        | `(A, B) -> X`           |
-| `^`                   | `lxor`       | `(A, B) -> X`           |
+| Operator Name         | overloading mechanism |
+| --------------------- | --------------------- |
+| `+`                   | trait `Add`           |
+| `-`                   | trait `Sub`           |
+| `*`                   | trait `Mul`           |
+| `/`                   | trait `Div`           |
+| `%`                   | trait `Mod`           |
+| `==`                  | trait `Eq`            |
+| `<<`                  | trait `Shl`           |
+| `>>`                  | trait `Shr`           |
+| `-` (unary)           | trait `Neg`           |
+| `_[_]` (get item)     | method `op_get`       |
+| `_[_] = _` (set item) | method `op_set`       |
+| `_[_:_]` (view)       | method `op_as_view`   |
+| `&`                   | trait `BitAnd`        |
+| `\|`                  | trait `BitOr`         |
+| `^`                   | trait `BitXOr`        |
+
+When overloading `op_get`/`op_set`/`op_as_view`, the method must have a correcnt signature:
+
+- `op_get` should have signature `(Self, Index) -> Result`
+- `op_set` should have signature `(Self, Index, Value) -> Result`
+- `op_as_view` should have signature `(Self, start? : Index, end? : Index) -> Result`
 
 By implementing `op_as_view` method, you can create a view for a user-defined type. Here is an example:
 
