@@ -102,7 +102,7 @@ Build the current package
 * `--no-strip` — Disable stripping debug information
 * `--target <TARGET>` — Select output target
 
-  Possible values: `wasm`, `wasm-gc`, `js`, `native`, `all`
+  Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`
 
 * `--serial` — Handle the selected targets sequentially
 * `--enable-coverage` — Enable coverage instrumentation
@@ -112,6 +112,7 @@ Build the current package
 * `--no-render` — Don't render diagnostics from moonc (don't pass '-error-format json' to moonc)
 * `--warn-list <WARN_LIST>` — Warn list config
 * `--alert-list <ALERT_LIST>` — Alert list config
+* `-j`, `--jobs <JOBS>` — Set the max number of jobs to run in parallel
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `-w`, `--watch` — Monitor the file system and automatically build artifacts
 
@@ -137,7 +138,7 @@ Check the current package, but don't build object files
 * `--no-strip` — Disable stripping debug information
 * `--target <TARGET>` — Select output target
 
-  Possible values: `wasm`, `wasm-gc`, `js`, `native`, `all`
+  Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`
 
 * `--serial` — Handle the selected targets sequentially
 * `--enable-coverage` — Enable coverage instrumentation
@@ -147,11 +148,13 @@ Check the current package, but don't build object files
 * `--no-render` — Don't render diagnostics from moonc (don't pass '-error-format json' to moonc)
 * `--warn-list <WARN_LIST>` — Warn list config
 * `--alert-list <ALERT_LIST>` — Alert list config
+* `-j`, `--jobs <JOBS>` — Set the max number of jobs to run in parallel
 * `--output-json` — Output in json format
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `-w`, `--watch` — Monitor the file system and automatically check files
 * `--patch-file <PATCH_FILE>` — The patch file to check, Only valid when checking specified package
 * `--no-mi` — Whether to skip the mi generation, Only valid when checking specified package
+* `--explain` — Whether to explain the error code with details
 
 
 
@@ -176,7 +179,7 @@ Run a main package
 * `--no-strip` — Disable stripping debug information
 * `--target <TARGET>` — Select output target
 
-  Possible values: `wasm`, `wasm-gc`, `js`, `native`, `all`
+  Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`
 
 * `--serial` — Handle the selected targets sequentially
 * `--enable-coverage` — Enable coverage instrumentation
@@ -186,6 +189,7 @@ Run a main package
 * `--no-render` — Don't render diagnostics from moonc (don't pass '-error-format json' to moonc)
 * `--warn-list <WARN_LIST>` — Warn list config
 * `--alert-list <ALERT_LIST>` — Alert list config
+* `-j`, `--jobs <JOBS>` — Set the max number of jobs to run in parallel
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `--build-only` — Only build, do not run the code
 
@@ -207,7 +211,7 @@ Test the current package
 * `--no-strip` — Disable stripping debug information
 * `--target <TARGET>` — Select output target
 
-  Possible values: `wasm`, `wasm-gc`, `js`, `native`, `all`
+  Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`
 
 * `--serial` — Handle the selected targets sequentially
 * `--enable-coverage` — Enable coverage instrumentation
@@ -217,6 +221,7 @@ Test the current package
 * `--no-render` — Don't render diagnostics from moonc (don't pass '-error-format json' to moonc)
 * `--warn-list <WARN_LIST>` — Warn list config
 * `--alert-list <ALERT_LIST>` — Alert list config
+* `-j`, `--jobs <JOBS>` — Set the max number of jobs to run in parallel
 * `-p`, `--package <PACKAGE>` — Run test in the specified package
 * `-f`, `--file <FILE>` — Run test in the specified file. Only valid when `--package` is also specified
 * `-i`, `--index <INDEX>` — Run only the index-th test in the file. Only valid when `--file` is also specified
@@ -230,6 +235,7 @@ Test the current package
 * `--test-failure-json` — Print failure message in JSON format
 * `--patch-file <PATCH_FILE>` — Path to the patch file
 * `--doc` — Run doc test
+* `--md` — Run test in markdown file
 
 
 
@@ -291,6 +297,11 @@ Generate public interface (`.mbti`) files for all packages in the module
 
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `--no-alias` — Do not use alias to shorten package names in the output
+* `--target <TARGET>` — Select output target
+
+  Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`
+
+* `-p`, `--package <PACKAGE>` — only emit mbti files for the specified package
 
 
 
@@ -450,6 +461,7 @@ Upgrade toolchains
 **Options:**
 
 * `-f`, `--force` — Force upgrade
+* `--dev` — Install the latest development version
 
 
 
