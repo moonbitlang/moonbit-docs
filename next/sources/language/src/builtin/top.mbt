@@ -93,8 +93,7 @@ test "string 4" (t : @test.T) {
 let char : Unit = {
   // start char 1
   let a : Char = 'A'
-  let b = '\x41'
-  let c = '兔'
+  let b = '兔'
   let zero = '\u{30}'
   let zero = '\u0030'
   // end char 1
