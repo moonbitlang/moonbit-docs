@@ -29,6 +29,7 @@ packages
 tests
 docs
 ffi-and-wasm-host
+C-ffi
 derive
 async-experimental
 error_codes/index
