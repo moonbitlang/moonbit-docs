@@ -257,7 +257,6 @@ The `link` option is used to specify link options, and its value can be either a
 
 - The `cc` option is used to specify the compiler for compiling the `moonc`-generated C source files.
   It can be either a full path to the compiler or a simple name that is accessible via the PATH environment variable.
-  By default, the 
 
   ```json
   {
