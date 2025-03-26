@@ -237,7 +237,10 @@ Test the current package
 * `--doc` — Run doc test
 * `--md` — Run test in markdown file
 
-
+If the target is `native`, the `--release` option is not used, and no `stub-cc*`
+options are specified in `moon.pkg.json` for any dependencies,
+the fast-debugging-test feature will be enabled.
+It will attempt to use `tcc -run` to execute the tests.
 
 ## `moon clean`
 

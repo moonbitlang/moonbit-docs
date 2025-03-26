@@ -253,6 +253,93 @@ The `link` option is used to specify link options, and its value can be either a
   }
   ```
 
+### Native Backend Link Options
+
+- The `cc` option is used to specify the compiler for compiling the `moonc`-generated C source files.
+  It can be either a full path to the compiler or a simple name that is accessible via the PATH environment variable.
+  By default, the 
+
+  ```json
+  {
+    "link": {
+      "native": {
+        "cc": "/usr/bin/gcc13"
+      }
+    }
+  }
+  ```
+
+- The `cc-flags` option is used to override the default flags passed to the compiler.
+  For example, you can use the following flag to define a macro called MOONBIT.
+
+  ```json
+  {
+    "link": {
+      "native": {
+        "cc-flags": "-DMOONBIT"
+      }
+    }
+  }
+  ```
+
+- The `cc-link-flags` option is used to override the default flags passed to the linker.
+  Since the linker is invoked through the compiler driver (e.g., `cc` instead of `ld`, `cl` instead of `link`),
+  you should prefix specific options with `-Wl,` or `/link ` when passing them.
+
+  The following example strips symbol information from produced binary.
+
+  ```json
+  {
+    "link": {
+      "native": {
+        "cc-link-flags": "-s"
+      }
+    }
+  }
+  ```
+
+- The `stub-cc` option is similar to `cc` but controls which compiler to use for compiling stubs.
+  Although it can be different from `cc`, it is not recommended and should only be used for debugging purposes.
+  Therefore, we strongly recommend to specify `cc` and `stub-cc` at the same time
+  and make them consistent to avoid potential conflicts.
+
+- The `stub-cc-flags` is similar to `cc-flags`. It only have effects on stubs compilation.
+
+- The `stub-cc-link-flags` are similar but have a subtle difference. 
+  Normally, stubs are compiled into object files and linked against object files generated from `moonc`-generated C source files. 
+  This linking is only controlled by `cc-flags` and `cc-link-flags`, as mentioned earlier. 
+  However, in specific modes, such as when the fast-debugging-test feature is enabled,
+  there will be a separate linking procedure for stub objects files, where 
+  `stub-cc-link-flags` will take effect.
+
+#### Default C compiler and compiler flags for the native backend
+
+Here is a brief summarization to [compiler_flags.rs](https://github.com/moonbitlang/moon/blob/main/crates/moonutil/src/compiler_flags.rs)
+
+##### C Compiler
+
+Search in PATH for the following items from top to bottom.
+
+- cl
+- gcc
+- clang
+- cc
+- the internal tcc
+
+For GCC-like compilers, the default compile & link command is as follows.
+`[]` is used to indicate the flags may not exist in some modes.
+```shell
+cc -o $target -I$MOON_HOME/include -L$MOON_HOME/lib [-g] [-shared -fPIC] \
+   -fwrapv -fno-strict-aliasing (-O2|-Og) [$MOON_HOME/lib/libmoonbitrun.o] \
+   $sources -lm $cc_flags $cc_link_flags
+```
+
+For MSVC, the default compile & link command is as follows.
+```shell
+cl (/Fo|/Fe)$target -I$MOON_HOME/include [/LD] /utf-8 /wd4819 /nologo (/O2|/Od) \
+   /link /LIBPATH:$MOON_HOME/lib
+```
+
 ## Pre-build
 
 The `"pre-build"` field is used to specify pre-build commands, which will be executed before build commands such as `moon check|build|test`.
