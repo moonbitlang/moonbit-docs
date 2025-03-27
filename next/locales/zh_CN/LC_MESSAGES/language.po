@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-26 11:30+0800\n"
+"POT-Creation-Date: 2025-03-26 16:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -18,6 +18,393 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
+
+#: ../../language/C-ffi.md:1
+msgid "Interacting with C library"
+msgstr "和 C 库交互"
+
+#: ../../language/C-ffi.md:3
+msgid ""
+"MoonBit's native backend can call native libraries in C ABI directly at "
+"almost no cost. This page introduces how to interact with C libraries in "
+"MoonBit."
+msgstr ""
+"MoonBit 的原生后端能够用 C ABI 直接调用各种原生库，而且调用时几乎没有额外开销。本页面将介绍如何在 MoonBit 中和使用 C "
+"ABI 的原生库交互。"
+
+#: ../../language/C-ffi.md:6
+msgid "Binding C function"
+msgstr "绑定 C 函数"
+
+#: ../../language/C-ffi.md:7
+msgid ""
+"In order to call a foreign function in some C library, you should first "
+"bind the function with the `extern \"C\"` syntax:"
+msgstr "想要在 MoonBit 里调用一个外部的 C 函数，首先需要用 `extern \"C\"` 语法绑定这个外部函数："
+
+#: ../../language/C-ffi.md:10
+msgid "extern \"C\" fn c_lib_function(..) -> .. = \"function_name\"\n"
+msgstr ""
+
+#: ../../language/C-ffi.md:14
+msgid ""
+"Now, you can use `c_lib_function` just like normal MoonBit function. "
+"Under the hood, `c_lib_function` will be linked to the symbol named "
+"`function_name`. There is no need to specify or include any C header, but"
+" do make sure the signature of `c_lib_function` is ABI-compatible with "
+"the symbol `function_name` in the C library."
+msgstr ""
+"现在，可以把 `c_lib_function` 当作一个普通 MoonBit 函数随意使用。在背后，`c_lib_function` "
+"会被链接到名为 `function_name` 的符号。绑定 C 函数时不需要显式指定任何头文件，只需要保证 `c_lib_function` "
+"的签名和 C 库中的 `function_name` 的二进制接口兼容即可。"
+
+#: ../../language/C-ffi.md:19
+#, fuzzy
+msgid "Linking with C library"
+msgstr "和 C 库交互"
+
+#: ../../language/C-ffi.md:20
+msgid ""
+"If a package needs to dynamically link with foreign C library, add the "
+"following to `moon.pkg.json`:"
+msgstr "如果一个包需要动态链接外部 C 库，可以在它的 `moon.pkg.json` 里添加下列内容："
+
+#: ../../language/C-ffi.md:22
+msgid ""
+"{\n"
+"  ...\n"
+"  \"link\": {\n"
+"    \"native\": {\n"
+"      \"cc-link-flags\": \"-l<c library>\"\n"
+"    }\n"
+"  },\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/C-ffi.md:34
+msgid "`cc-link-flags` would be passed to C compiler directly."
+msgstr "`cc-link-flags` 会直接被传递给 C 编译器。"
+
+#: ../../language/C-ffi.md:36
+msgid "ABI when interacting with C"
+msgstr "和 C 交互时的二进制接口"
+
+#: ../../language/C-ffi.md:37
+msgid ""
+"When binding foreign C functions, it is vital to ensure the binding has "
+"the same ABI as the actual foreign function. The table below shows the "
+"ABI of different kinds of MoonBit types:"
+msgstr ""
+"在绑定外部的 C 函数时，必须保证 MoonBit 中的声明和实际的函数的二进制接口兼容。下面的表格列出了各种 MoonBit "
+"类型对应的二进制接口："
+
+#: ../../language/C-ffi.md
+msgid "MoonBit type"
+msgstr "MoonBit 中的类型"
+
+#: ../../language/C-ffi.md
+msgid "C ABI"
+msgstr "对应的二进制接口"
+
+#: ../../language/C-ffi.md ../../language/fundamentals.md:9
+msgid "`Int`"
+msgstr ""
+
+#: ../../language/C-ffi.md
+msgid "`int32_t`"
+msgstr ""
+
+#: ../../language/C-ffi.md ../../language/fundamentals.md:9
+msgid "`UInt`"
+msgstr ""
+
+#: ../../language/C-ffi.md
+msgid "`uint32_t`"
+msgstr ""
+
+#: ../../language/C-ffi.md ../../language/fundamentals.md:9
+msgid "`Int64`"
+msgstr ""
+
+#: ../../language/C-ffi.md
+msgid "`int64_t`"
+msgstr ""
+
+#: ../../language/C-ffi.md ../../language/fundamentals.md:9
+msgid "`UInt64`"
+msgstr ""
+
+#: ../../language/C-ffi.md
+msgid "`uint64_t`"
+msgstr ""
+
+#: ../../language/C-ffi.md
+msgid "constant `enum`"
+msgstr "常量枚举"
+
+#: ../../language/C-ffi.md
+msgid "abstract type (`type T`)"
+msgstr "抽象类型（`type T`）"
+
+#: ../../language/C-ffi.md
+msgid "pointer (must be valid MoonBit object)"
+msgstr "指针（必须指向合法的 MoonBit 对象）"
+
+#: ../../language/C-ffi.md
+msgid "external type (`extern type T`)"
+msgstr "外部类型（`extern type T`）"
+
+#: ../../language/C-ffi.md
+msgid "`void*`"
+msgstr ""
+
+#: ../../language/C-ffi.md
+msgid "`FixedArray[Byte]`/`Bytes`"
+msgstr ""
+
+#: ../../language/C-ffi.md
+msgid "`uint8_t*`"
+msgstr ""
+
+#: ../../language/C-ffi.md
+msgid "`FixedArray[T]`"
+msgstr ""
+
+#: ../../language/C-ffi.md
+msgid "`T*`"
+msgstr ""
+
+#: ../../language/C-ffi.md:53
+msgid ""
+"Types not mentioned above have an unstable ABI, so your code should not "
+"depend on their current representation."
+msgstr "上表中未提及的类型不具有稳定的二进制接口，请尽量避免依赖它们的实际二进制表示。"
+
+#: ../../language/C-ffi.md:55
+msgid ""
+"MoonBit's automatic memory management requires a small object header in "
+"front of every MoonBit value on the heap. So it is invalid to convert a "
+"foreign pointer to regular MoonBit type. To represent foreign pointer to "
+"non-MoonBit object in C FFI, you use the `extern type T` syntax. Types "
+"defined in this way will be ignored by MoonBit's automatic memory "
+"management system, and need no object header."
+msgstr ""
+"MoonBit 的自动内存管理系统需要在堆上的每个 MoonBit 对象的头部存储一段元数据。因此，把没有元数据的、指向外部对象的裸指针绑定到普通"
+" MoonBit 类型是不合法的操作。如果想要在 MoonBit 中表示一个指向外部对象的裸指针，可以使用 `extern type T` "
+"声明的类型。MoonBit 的内存管理系统会无视用这种语法声明的类型，因此它们不需要带有对象头。"
+
+#: ../../language/C-ffi.md:61
+msgid ""
+"The ABI of `Unit` is unstable. Don't write any return type annotation if "
+"you want to bind a C function that returns nothing (`void`),"
+msgstr ""
+"`Unit` 的二进制表示目前是不稳定的。如果想要绑定一个不返回值（`void`）的 C 函数，"
+"就不要写任何返回类型标注。"
+
+#: ../../language/C-ffi.md:64
+msgid "Passing callback to C"
+msgstr "向 C 传递回调函数"
+
+#: ../../language/C-ffi.md:65
+msgid ""
+"Sometimes, we need to pass a MoonBit function to C as callback. For this "
+"purpose, MoonBit provides a special type `FuncRef[T]`, which represents "
+"capture-free function of type `T`. Values of type `FuncRef[T]` must be "
+"capture free function of type `T`. In C FFI, `FuncRef[T]` will correspond"
+" to function pointer with signature `T`, and it is guaranteed that "
+"`FuncRef[(..) -> Unit]` will correspond to `void`-returning functions in "
+"C (although the ABI of `Unit` itself is unstable). Here's an example of "
+"binding the UNIX `signal` function:"
+msgstr ""
+"有时候，我们需要向 C 库传递一个 MoonBit 函数作为回调。为此，MoonBit 提供了一个特殊的内建类型 "
+"`FuncRef[T]`，它表示类型为 `T`  的无捕获的函数。类型为 `FuncRef[T]` 的值必须是无捕获的函数。在 C FFI "
+"中，`FuncRef[T]` 会对应签名为 `T` 的函数指针。此外，`FuncRef[(..) -> Unit]` 会对应返回 `void` "
+"的函数指针（`Unit` 自身的二进制接口是不稳定的）。下面是一个绑定 UNIX 的 `signal` 函数的例子："
+
+#: ../../language/C-ffi.md:74
+msgid ""
+"enum Signal {\n"
+"  SIGHUP = 1\n"
+"  SIGINT = 2\n"
+"  SIGQUIT = 3\n"
+"} derive(Show)\n"
+"\n"
+"typealias SignalHandler = FuncRef[(Signal) -> Unit]\n"
+"\n"
+"extern \"C\" fn signal(\n"
+"  signum : Signal,\n"
+"  handler : SignalHandler\n"
+") -> SignalHandler = \"signal\"\n"
+"\n"
+"fn init {\n"
+"  signal(SIGQUIT, fn (sig) {\n"
+"    println(\"received signal \\{sig}\")\n"
+"  })\n"
+"}\n"
+msgstr ""
+
+#: ../../language/C-ffi.md:95
+msgid "Passing closure to C"
+msgstr "向 C 传递闭包"
+
+#: ../../language/C-ffi.md:96
+msgid ""
+"Some C library functions allow supplying extra data in addition to the "
+"callback function. Assume we have the following C library function:"
+msgstr "有些 C 函数允许在回调函数之外额外提供一些附加数据。例如，假设我们有下面的 C 函数："
+
+#: ../../language/C-ffi.md:99
+msgid "void register_callback(void (*callback)(void*), void *data);\n"
+msgstr ""
+
+#: ../../language/C-ffi.md:103
+msgid ""
+"we can bind this C function and pass closure to it using the following "
+"trick:"
+msgstr "通过一个小技巧，我们可以向这个 C 函数传递 MoonBit 中的闭包："
+
+#: ../../language/C-ffi.md:105
+msgid ""
+"extern \"C\" fn register_callback_ffi(\n"
+"  callback : FuncRef[(() -> Unit) -> Unit],\n"
+"  data : () -> Unit\n"
+") = \"register_callback\"\n"
+"\n"
+"fn register_callback(callback : () -> Unit) -> Unit {\n"
+"  register_callback_ffi(\n"
+"    fn (closure_callback) { closure_callback() },\n"
+"    callback\n"
+"  )\n"
+"}\n"
+msgstr ""
+
+#: ../../language/C-ffi.md:119
+msgid ""
+"Here, we treat the MoonBit closure as opaque data passed to the C "
+"function, and use a capture-free wrapper to invoke the closure."
+msgstr "这里，我们把 MoonBit 闭包当作不透明的额外数据传递给了 C 函数，并使用一个无捕获的封装函数来调用这个闭包。"
+
+#: ../../language/C-ffi.md:122
+msgid "Writing C stub"
+msgstr "编写胶水 C 代码"
+
+#: ../../language/C-ffi.md:123
+msgid ""
+"Some C functions are difficult to bind using pure MoonBit syntax. In this"
+" case, you can write some simple C wrapper functions to glue the C side "
+"and the MoonBit side. To add a C stub file to a package, add the "
+"following to the `moon.pkg.json` of the package:"
+msgstr ""
+"有些 C 函数难以用纯 MoonBit 语法来绑定。此时，可以写一些小的 C 胶水函数来连接 C 与 MoonBit。如果想要在一个包中引入一些 "
+"C 胶水，需要向 `moon.pkg.json` 文件加入下面的内容："
+
+#: ../../language/C-ffi.md:127
+msgid ""
+"{\n"
+"  ...\n"
+"  \"native-stub\": [ <list of stub file names> ],\n"
+"  ...\n"
+"}\n"
+msgstr ""
+"{\n"
+"  ...\n"
+"  \"native-stub\": [ <包含胶水函数的 C 文件列表> ],\n"
+"  ...\n"
+"}\n"
+
+#: ../../language/C-ffi.md:135
+msgid ""
+"Now, you can write your C wrappers in the listed C files and bind them in"
+" MoonBit. You would probably like to `#include \"moonbit.h\"`, which "
+"contains type definitions and handy utilities for MoonBit's C interface. "
+"The header itself is usually located in `~/.moon/include`, check its "
+"content for more details."
+msgstr ""
+"现在，就可以在 `native-sutb` 中列出的文件里写 C 胶水函数，并在 MoonBit 中绑定这些胶水函数了。你很可能会想要 "
+"`#include \"moonbit.h\"`，这个头文件包含了 MoonBit 的 C FFI "
+"接口中的类型定义和一些实用的辅助函数。这个头文件自身通常位于 `~/.moon/include`，如果想要了解 `moonbit.h` "
+"中有哪些可用的定义，可以直接查看它的内容。"
+
+#: ../../language/C-ffi.md:140
+msgid "Lifetime management of external object"
+msgstr "外部对象的生命周期管理"
+
+#: ../../language/C-ffi.md:141
+msgid ""
+"When handling foreign object/resource in MoonBit, it is important to free"
+" the object/resource in time to prevent memory/resource leak. `moonbit.h`"
+" provides an API `moonbit_make_external_object` for handling lifetime of "
+"external object/resource using MoonBit's own automatic memory management "
+"system:"
+msgstr ""
+"在 MoonBit 中处理来自外部的对象和资源时，需要即使释放这些外部对象占用的内存和资源以避免泄漏。`moonbit.h` "
+"中提供了一个实用的函数 `moonbit_make_external_object`，它可以借助 MoonBit "
+"的自动内存管理系统来管理外部对象的生命周期："
+
+#: ../../language/C-ffi.md:146
+msgid ""
+"void *moonbit_make_external_object(\n"
+"  void (*finalize)(void *self),\n"
+"  uint32_t payload_size\n"
+");\n"
+msgstr ""
+
+#: ../../language/C-ffi.md:153
+msgid ""
+"`moonbit_make_external_object` will create a new MoonBit object of size "
+"`payload_size + sizeof(finalize)`, the layout of the object is as "
+"follows:"
+msgstr ""
+"`moonbit_make_external_object` 会创建一个大小为 `payload_size + sizeof(finalize)`"
+" 的新的 MoonBit 对象，这个对象的内存布局如下："
+
+#: ../../language/C-ffi.md:156
+msgid ""
+"| MoonBit object header | ... payload | finalize function |\n"
+"                        ^\n"
+"                        |\n"
+"                        |_\n"
+"                           pointer returned by "
+"`moonbit_make_external_object`\n"
+msgstr ""
+"| MoonBit 对象头 | ... 外部数据 | 释放资源的回调 |\n"
+"                 ^\n"
+"                 |\n"
+"                 |_\n"
+"                    `moonbit_make_external_object` 返回的指针"
+
+#: ../../language/C-ffi.md:164
+msgid ""
+"so you can treat the object as a pointer to its payload directly. When "
+"MoonBit's automatic memory management system finds that an object created"
+" by `moonbit_make_external_object` is no longer alive, it will invoke the"
+" function `finalize` with the object itself as argument. Now, `finalize` "
+"can release external resource/memory held by the object's payload. Notice"
+" that `finalize` **must not** drop the object itself, as this is handled "
+"by MoonBit runtime."
+msgstr ""
+"因此，`moonbit_make_external_object` 返回的指针可以直接当作指向外部数据的指针使用。当 MoonBit "
+"的自动内存管理系统发现 `moonbit_make_external_object` "
+"返回的对象生命周期已经结束时，它会以对象自身为参数，调用创建对象时提供的 `finalize` "
+"函数来释放这个对象占有的外部资源。不过，`finalize` **一定不能** 释放对象自身，因为这部分工作是由 MoonBit 运行时负责的。"
+
+#: ../../language/C-ffi.md:171
+msgid ""
+"On the MoonBit side, objects returned by `moonbit_make_external_object` "
+"should be bind to an *abstract* type, declared using `type T`, so that "
+"MoonBit's memory management system will not ignore the object."
+msgstr ""
+"在 MoonBit 侧，`moonbit_make_external_object` 返回的对象应当被绑定到 *抽象* 类型，即用 `type "
+"T` 语法声明的类型。这样一来，MoonBit 的内存管理系统就不会无视这个对象。"
+
+#: ../../language/C-ffi.md:175
+msgid "Lifetime management of MoonBit object"
+msgstr "MoonBit 对象的生命周期管理"
+
+#: ../../language/C-ffi.md:176
+msgid "Design still evolving, TODO"
+msgstr "设计仍在演进中，待补充"
 
 #: ../../language/async-experimental.md:1
 msgid "Experimental async programming support"
@@ -13858,19 +14245,11 @@ msgid "`(42 : Int16)`"
 msgstr ""
 
 #: ../../language/fundamentals.md:9
-msgid "`Int`"
-msgstr ""
-
-#: ../../language/fundamentals.md:9
 msgid "32-bit signed integer"
 msgstr "32 位有符号整数"
 
 #: ../../language/fundamentals.md:9
 msgid "`42`"
-msgstr ""
-
-#: ../../language/fundamentals.md:9
-msgid "`Int64`"
 msgstr ""
 
 #: ../../language/fundamentals.md:9
@@ -13894,19 +14273,11 @@ msgid "`(14 : UInt16)`"
 msgstr ""
 
 #: ../../language/fundamentals.md:9
-msgid "`UInt`"
-msgstr ""
-
-#: ../../language/fundamentals.md:9
 msgid "32-bit unsigned integer"
 msgstr "32 位无符号整数"
 
 #: ../../language/fundamentals.md:9
 msgid "`14U`"
-msgstr ""
-
-#: ../../language/fundamentals.md:9
-msgid "`UInt64`"
 msgstr ""
 
 #: ../../language/fundamentals.md:9
@@ -18929,3 +19300,4 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
+
