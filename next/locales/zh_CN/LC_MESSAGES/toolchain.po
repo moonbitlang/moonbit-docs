@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-25 17:18+0800\n"
+"POT-Creation-Date: 2025-03-27 08:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -177,7 +177,7 @@ msgstr ""
 msgid "**Usage:** `moon <COMMAND>`"
 msgstr "**用法：** `moon <命令>`"
 
-#: ../../toolchain/moon/commands.md:38 ../../toolchain/moon/commands.md:407
+#: ../../toolchain/moon/commands.md:38 ../../toolchain/moon/commands.md:410
 msgid "**Subcommands:**"
 msgstr "**子命令：**"
 
@@ -292,9 +292,9 @@ msgid "**Usage:** `moon new [OPTIONS] [PACKAGE_NAME]`"
 msgstr "**用法：** `moon new [选项] [包名]`"
 
 #: ../../toolchain/moon/commands.md:72 ../../toolchain/moon/commands.md:127
-#: ../../toolchain/moon/commands.md:167 ../../toolchain/moon/commands.md:256
-#: ../../toolchain/moon/commands.md:314 ../../toolchain/moon/commands.md:330
-#: ../../toolchain/moon/commands.md:420
+#: ../../toolchain/moon/commands.md:167 ../../toolchain/moon/commands.md:259
+#: ../../toolchain/moon/commands.md:317 ../../toolchain/moon/commands.md:333
+#: ../../toolchain/moon/commands.md:423
 msgid "**Arguments:**"
 msgstr "**参数：**"
 
@@ -304,12 +304,12 @@ msgstr "`<包名>` — 包的名称"
 
 #: ../../toolchain/moon/commands.md:76 ../../toolchain/moon/commands.md:95
 #: ../../toolchain/moon/commands.md:131 ../../toolchain/moon/commands.md:172
-#: ../../toolchain/moon/commands.md:204 ../../toolchain/moon/commands.md:260
-#: ../../toolchain/moon/commands.md:277 ../../toolchain/moon/commands.md:296
-#: ../../toolchain/moon/commands.md:318 ../../toolchain/moon/commands.md:374
-#: ../../toolchain/moon/commands.md:386 ../../toolchain/moon/commands.md:424
-#: ../../toolchain/moon/commands.md:444 ../../toolchain/moon/commands.md:461
-#: ../../toolchain/moon/commands.md:607 ../../toolchain/moon/commands.md:624
+#: ../../toolchain/moon/commands.md:204 ../../toolchain/moon/commands.md:263
+#: ../../toolchain/moon/commands.md:280 ../../toolchain/moon/commands.md:299
+#: ../../toolchain/moon/commands.md:321 ../../toolchain/moon/commands.md:377
+#: ../../toolchain/moon/commands.md:389 ../../toolchain/moon/commands.md:427
+#: ../../toolchain/moon/commands.md:447 ../../toolchain/moon/commands.md:464
+#: ../../toolchain/moon/commands.md:610 ../../toolchain/moon/commands.md:627
 msgid "**Options:**"
 msgstr "**选项：**"
 
@@ -385,13 +385,13 @@ msgstr "`--no-strip` — 不删除调试信息"
 
 #: ../../toolchain/moon/commands.md:103 ../../toolchain/moon/commands.md:139
 #: ../../toolchain/moon/commands.md:180 ../../toolchain/moon/commands.md:212
-#: ../../toolchain/moon/commands.md:300
+#: ../../toolchain/moon/commands.md:303
 msgid "`--target <TARGET>` — Select output target"
 msgstr "`--target <目标>` — 选择输出目标"
 
 #: ../../toolchain/moon/commands.md:105 ../../toolchain/moon/commands.md:141
 #: ../../toolchain/moon/commands.md:182 ../../toolchain/moon/commands.md:214
-#: ../../toolchain/moon/commands.md:302
+#: ../../toolchain/moon/commands.md:305
 msgid "Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`"
 msgstr "可能的值：`wasm`，`wasm-gc`，`js`，`native`，`llvm`，`all`"
 
@@ -407,7 +407,7 @@ msgstr "`--enable-coverage` — 启用覆盖率指令"
 
 #: ../../toolchain/moon/commands.md:109 ../../toolchain/moon/commands.md:145
 #: ../../toolchain/moon/commands.md:186 ../../toolchain/moon/commands.md:218
-#: ../../toolchain/moon/commands.md:263
+#: ../../toolchain/moon/commands.md:266
 msgid "`--sort-input` — Sort input files"
 msgstr "`--sort-input` — 排序输入文件"
 
@@ -445,8 +445,8 @@ msgstr ""
 
 #: ../../toolchain/moon/commands.md:116 ../../toolchain/moon/commands.md:153
 #: ../../toolchain/moon/commands.md:193 ../../toolchain/moon/commands.md:232
-#: ../../toolchain/moon/commands.md:286 ../../toolchain/moon/commands.md:298
-#: ../../toolchain/moon/commands.md:376 ../../toolchain/moon/commands.md:388
+#: ../../toolchain/moon/commands.md:289 ../../toolchain/moon/commands.md:301
+#: ../../toolchain/moon/commands.md:379 ../../toolchain/moon/commands.md:391
 msgid ""
 "`--frozen` — Do not sync dependencies, assuming local dependencies are "
 "up-to-date"
@@ -588,345 +588,355 @@ msgstr "`--doc` — 运行文档测试"
 msgid "`--md` — Run test in markdown file"
 msgstr "`--md` — 运行 markdown 文件中的测试"
 
-#: ../../toolchain/moon/commands.md:242
+#: ../../toolchain/moon/commands.md:240
+msgid ""
+"If the target is `native`, the `--release` option is not used, and no "
+"`stub-cc*` options are specified in `moon.pkg.json` for any dependencies,"
+" the fast-debugging-test feature will be enabled. It will attempt to use "
+"`tcc -run` to execute the tests."
+msgstr ""
+
+#: ../../toolchain/moon/commands.md:245
 msgid "`moon clean`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:244
+#: ../../toolchain/moon/commands.md:247
 msgid "Remove the target directory"
 msgstr "删除 target 目录"
 
-#: ../../toolchain/moon/commands.md:246
+#: ../../toolchain/moon/commands.md:249
 msgid "**Usage:** `moon clean`"
 msgstr "**用法：** `moon clean`"
 
-#: ../../toolchain/moon/commands.md:250
+#: ../../toolchain/moon/commands.md:253
 msgid "`moon fmt`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:252
+#: ../../toolchain/moon/commands.md:255
 msgid "Format source code"
 msgstr "格式化源代码"
 
-#: ../../toolchain/moon/commands.md:254
+#: ../../toolchain/moon/commands.md:257
 msgid "**Usage:** `moon fmt [OPTIONS] [ARGS]...`"
 msgstr "**用法：** `moon fmt [选项] [参数]...`"
 
-#: ../../toolchain/moon/commands.md:258
+#: ../../toolchain/moon/commands.md:261
 msgid "`<ARGS>`"
 msgstr "`<参数>`"
 
-#: ../../toolchain/moon/commands.md:262
+#: ../../toolchain/moon/commands.md:265
 msgid "`--check` — Check only and don't change the source code"
 msgstr "`--check` — 仅检查，不更改源代码"
 
-#: ../../toolchain/moon/commands.md:264
+#: ../../toolchain/moon/commands.md:267
 msgid "`--block-style <BLOCK_STYLE>` — Add separator between each segments"
 msgstr "`--block-style <块样式>` — 在每个段之间添加分隔符"
 
-#: ../../toolchain/moon/commands.md:266
+#: ../../toolchain/moon/commands.md:269
 msgid "Possible values: `false`, `true`"
 msgstr "可能的值：`false`，`true`"
 
-#: ../../toolchain/moon/commands.md:271
+#: ../../toolchain/moon/commands.md:274
 msgid "`moon doc`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:273
+#: ../../toolchain/moon/commands.md:276
 msgid "Generate documentation"
 msgstr "生成文档"
 
-#: ../../toolchain/moon/commands.md:275
+#: ../../toolchain/moon/commands.md:278
 msgid "**Usage:** `moon doc [OPTIONS]`"
 msgstr "**用法：** `moon doc [选项]`"
 
-#: ../../toolchain/moon/commands.md:279
+#: ../../toolchain/moon/commands.md:282
 msgid "`--serve` — Start a web server to serve the documentation"
 msgstr "`--serve` — 启动一个 Web 服务器来提供文档"
 
-#: ../../toolchain/moon/commands.md:280
+#: ../../toolchain/moon/commands.md:283
 msgid "`-b`, `--bind <BIND>` — The address of the server"
 msgstr "`-b`, `--bind <绑定>` — 服务器的地址"
 
-#: ../../toolchain/moon/commands.md:282
+#: ../../toolchain/moon/commands.md:285
 msgid "Default value: `127.0.0.1`"
 msgstr "默认值：`"
 
-#: ../../toolchain/moon/commands.md:283
+#: ../../toolchain/moon/commands.md:286
 msgid "`-p`, `--port <PORT>` — The port of the server"
 msgstr "`-p`, `--port <端口>` — 服务器的端口"
 
-#: ../../toolchain/moon/commands.md:285
+#: ../../toolchain/moon/commands.md:288
 msgid "Default value: `3000`"
 msgstr "默认值：`3000`"
 
-#: ../../toolchain/moon/commands.md:290
+#: ../../toolchain/moon/commands.md:293
 msgid "`moon info`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:292
+#: ../../toolchain/moon/commands.md:295
 msgid "Generate public interface (`.mbti`) files for all packages in the module"
 msgstr "为模块中的所有包生成公共接口（`.mbti`）文件"
 
-#: ../../toolchain/moon/commands.md:294
+#: ../../toolchain/moon/commands.md:297
 msgid "**Usage:** `moon info [OPTIONS]`"
 msgstr "**用法：** `moon info [选项]`"
 
-#: ../../toolchain/moon/commands.md:299
+#: ../../toolchain/moon/commands.md:302
 msgid "`--no-alias` — Do not use alias to shorten package names in the output"
 msgstr "`--no-alias` — 不要使用别名来缩短输出中的包名"
 
-#: ../../toolchain/moon/commands.md:304
-msgid "`-p`, `--package <PACKAGE>` — only emit mbti files for the specified package"
+#: ../../toolchain/moon/commands.md:307
+msgid ""
+"`-p`, `--package <PACKAGE>` — only emit mbti files for the specified "
+"package"
 msgstr "`-p`, `--package <包>` — 仅为指定的包生成 mbti 文件"
 
-#: ../../toolchain/moon/commands.md:308
+#: ../../toolchain/moon/commands.md:311
 msgid "`moon add`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:310
+#: ../../toolchain/moon/commands.md:313
 msgid "Add a dependency"
 msgstr "添加一个依赖"
 
-#: ../../toolchain/moon/commands.md:312
+#: ../../toolchain/moon/commands.md:315
 msgid "**Usage:** `moon add [OPTIONS] <PACKAGE_PATH>`"
 msgstr "**用法：** `moon add [选项] <包路径>`"
 
-#: ../../toolchain/moon/commands.md:316
+#: ../../toolchain/moon/commands.md:319
 msgid "`<PACKAGE_PATH>` — The package path to add"
 msgstr "`<包路径>` — 要添加的包路径"
 
-#: ../../toolchain/moon/commands.md:320
+#: ../../toolchain/moon/commands.md:323
 msgid "`--bin` — Whether to add the dependency as a binary"
 msgstr "`--bin` — 是否将依赖项添加为二进制文件"
 
-#: ../../toolchain/moon/commands.md:324
+#: ../../toolchain/moon/commands.md:327
 msgid "`moon remove`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:326
+#: ../../toolchain/moon/commands.md:329
 msgid "Remove a dependency"
 msgstr "移除一个依赖"
 
-#: ../../toolchain/moon/commands.md:328
+#: ../../toolchain/moon/commands.md:331
 msgid "**Usage:** `moon remove <PACKAGE_PATH>`"
 msgstr "**用法：** `moon remove <包路径>`"
 
-#: ../../toolchain/moon/commands.md:332
+#: ../../toolchain/moon/commands.md:335
 msgid "`<PACKAGE_PATH>` — The package path to remove"
 msgstr "`<包路径>` — 要移除的包路径"
 
-#: ../../toolchain/moon/commands.md:336
+#: ../../toolchain/moon/commands.md:339
 msgid "`moon install`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:338
+#: ../../toolchain/moon/commands.md:341
 msgid "Install dependencies"
 msgstr "安装依赖"
 
-#: ../../toolchain/moon/commands.md:340
+#: ../../toolchain/moon/commands.md:343
 msgid "**Usage:** `moon install`"
 msgstr "**用法：** `moon install`"
 
-#: ../../toolchain/moon/commands.md:344
+#: ../../toolchain/moon/commands.md:347
 msgid "`moon tree`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:346
+#: ../../toolchain/moon/commands.md:349
 msgid "Display the dependency tree"
 msgstr "显示依赖树"
 
-#: ../../toolchain/moon/commands.md:348
+#: ../../toolchain/moon/commands.md:351
 msgid "**Usage:** `moon tree`"
 msgstr "**用法：** `moon tree`"
 
-#: ../../toolchain/moon/commands.md:352
+#: ../../toolchain/moon/commands.md:355
 msgid "`moon login`"
 msgstr "`moon login`"
 
-#: ../../toolchain/moon/commands.md:354
+#: ../../toolchain/moon/commands.md:357
 msgid "Log in to your account"
 msgstr "登录到您的账户"
 
-#: ../../toolchain/moon/commands.md:356
+#: ../../toolchain/moon/commands.md:359
 msgid "**Usage:** `moon login`"
 msgstr "**用法：** `moon login`"
 
-#: ../../toolchain/moon/commands.md:360
+#: ../../toolchain/moon/commands.md:363
 msgid "`moon register`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:362
+#: ../../toolchain/moon/commands.md:365
 msgid "Register an account at mooncakes.io"
 msgstr "在 mooncakes.io 注册一个账户"
 
-#: ../../toolchain/moon/commands.md:364
+#: ../../toolchain/moon/commands.md:367
 msgid "**Usage:** `moon register`"
 msgstr "**用法：** `moon register`"
 
-#: ../../toolchain/moon/commands.md:368
+#: ../../toolchain/moon/commands.md:371
 msgid "`moon publish`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:370
+#: ../../toolchain/moon/commands.md:373
 msgid "Publish the current module"
 msgstr "发布当前模块"
 
-#: ../../toolchain/moon/commands.md:372
+#: ../../toolchain/moon/commands.md:375
 msgid "**Usage:** `moon publish [OPTIONS]`"
 msgstr "**用法：** `moon publish [选项]`"
 
-#: ../../toolchain/moon/commands.md:380
+#: ../../toolchain/moon/commands.md:383
 msgid "`moon package`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:382
+#: ../../toolchain/moon/commands.md:385
 msgid "Package the current module"
 msgstr "打包当前模块"
 
-#: ../../toolchain/moon/commands.md:384
+#: ../../toolchain/moon/commands.md:387
 msgid "**Usage:** `moon package [OPTIONS]`"
 msgstr "**用法：** `moon package [选项]`"
 
-#: ../../toolchain/moon/commands.md:389
+#: ../../toolchain/moon/commands.md:392
 msgid "`--list`"
 msgstr "`--list`"
 
-#: ../../toolchain/moon/commands.md:393
+#: ../../toolchain/moon/commands.md:396
 msgid "`moon update`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:395
+#: ../../toolchain/moon/commands.md:398
 msgid "Update the package registry index"
 msgstr "更新包注册表索引"
 
-#: ../../toolchain/moon/commands.md:397
+#: ../../toolchain/moon/commands.md:400
 msgid "**Usage:** `moon update`"
 msgstr "**用法：** `moon update`"
 
-#: ../../toolchain/moon/commands.md:401
+#: ../../toolchain/moon/commands.md:404
 msgid "`moon coverage`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:403
+#: ../../toolchain/moon/commands.md:406
 msgid "Code coverage utilities"
 msgstr "代码覆盖率工具"
 
-#: ../../toolchain/moon/commands.md:405
+#: ../../toolchain/moon/commands.md:408
 msgid "**Usage:** `moon coverage <COMMAND>`"
 msgstr "**用法：** `moon coverage <命令>`"
 
-#: ../../toolchain/moon/commands.md:409
+#: ../../toolchain/moon/commands.md:412
 msgid "`report` — Generate code coverage report"
 msgstr "`report` — 生成代码覆盖率报告"
 
-#: ../../toolchain/moon/commands.md:410
+#: ../../toolchain/moon/commands.md:413
 msgid "`clean` — Clean up coverage artifacts"
 msgstr "`clean` — 清理覆盖率工件"
 
-#: ../../toolchain/moon/commands.md:414
+#: ../../toolchain/moon/commands.md:417
 msgid "`moon coverage report`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:416
+#: ../../toolchain/moon/commands.md:419
 msgid "Generate code coverage report"
 msgstr "生成代码覆盖率报告"
 
-#: ../../toolchain/moon/commands.md:418
+#: ../../toolchain/moon/commands.md:421
 msgid "**Usage:** `moon coverage report [args]... [COMMAND]`"
 msgstr "**用法：** `moon coverage report [参数]... [命令]`"
 
-#: ../../toolchain/moon/commands.md:422
+#: ../../toolchain/moon/commands.md:425
 msgid "`<args>` — Arguments to pass to the coverage utility"
 msgstr "`<参数>` — 要传递给覆盖率工具的参数"
 
-#: ../../toolchain/moon/commands.md:426
+#: ../../toolchain/moon/commands.md:429
 msgid "`-h`, `--help` — Show help for the coverage utility"
 msgstr "`-h`, `--help` — 显示覆盖率工具的帮助"
 
-#: ../../toolchain/moon/commands.md:430
+#: ../../toolchain/moon/commands.md:433
 msgid "`moon coverage clean`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:432
+#: ../../toolchain/moon/commands.md:435
 msgid "Clean up coverage artifacts"
 msgstr "清理覆盖率工件"
 
-#: ../../toolchain/moon/commands.md:434
+#: ../../toolchain/moon/commands.md:437
 msgid "**Usage:** `moon coverage clean`"
 msgstr "**用法：** `moon coverage clean`"
 
-#: ../../toolchain/moon/commands.md:438
+#: ../../toolchain/moon/commands.md:441
 msgid "`moon generate-build-matrix`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:440
+#: ../../toolchain/moon/commands.md:443
 msgid "Generate build matrix for benchmarking (legacy feature)"
 msgstr "生成用于基准测试的构建矩阵（遗留功能）"
 
-#: ../../toolchain/moon/commands.md:442
+#: ../../toolchain/moon/commands.md:445
 msgid "**Usage:** `moon generate-build-matrix [OPTIONS] --output-dir <OUT_DIR>`"
 msgstr "**用法：** `moon generate-build-matrix [选项] --output-dir <输出目录>`"
 
-#: ../../toolchain/moon/commands.md:446
+#: ../../toolchain/moon/commands.md:449
 msgid ""
 "`-n <NUMBER>` — Set all of `drow`, `dcol`, `mrow`, `mcol` to the same "
 "value"
 msgstr "`-n <数字>` — 将 `drow`、`dcol`、`mrow`、`mcol` 的所有值设置为相同的值"
 
-#: ../../toolchain/moon/commands.md:447
+#: ../../toolchain/moon/commands.md:450
 msgid "`--drow <DIR_ROWS>` — Number of directory rows"
 msgstr "`--drow <DIR_ROWS>` — 目录行数"
 
-#: ../../toolchain/moon/commands.md:448
+#: ../../toolchain/moon/commands.md:451
 msgid "`--dcol <DIR_COLS>` — Number of directory columns"
 msgstr "`--dcol <DIR_COLS>` — 目录列数"
 
-#: ../../toolchain/moon/commands.md:449
+#: ../../toolchain/moon/commands.md:452
 msgid "`--mrow <MOD_ROWS>` — Number of module rows"
 msgstr "`--mrow <MOD_ROWS>` — 模块行数"
 
-#: ../../toolchain/moon/commands.md:450
+#: ../../toolchain/moon/commands.md:453
 msgid "`--mcol <MOD_COLS>` — Number of module columns"
 msgstr "`--mcol <MOD_COLS>` — 模块列数"
 
-#: ../../toolchain/moon/commands.md:451
+#: ../../toolchain/moon/commands.md:454
 msgid "`-o`, `--output-dir <OUT_DIR>` — The output directory"
 msgstr "`-o`, `--output-dir <输出目录>` — 输出目录"
 
-#: ../../toolchain/moon/commands.md:455
+#: ../../toolchain/moon/commands.md:458
 msgid "`moon upgrade`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:457
+#: ../../toolchain/moon/commands.md:460
 msgid "Upgrade toolchains"
 msgstr "升级工具链"
 
-#: ../../toolchain/moon/commands.md:459
+#: ../../toolchain/moon/commands.md:462
 msgid "**Usage:** `moon upgrade [OPTIONS]`"
 msgstr "**用法：** `moon upgrade [选项]`"
 
-#: ../../toolchain/moon/commands.md:463
+#: ../../toolchain/moon/commands.md:466
 msgid "`-f`, `--force` — Force upgrade"
 msgstr "`-f`, `--force` — 强制升级"
 
-#: ../../toolchain/moon/commands.md:464
+#: ../../toolchain/moon/commands.md:467
 msgid "`--dev` — Install the latest development version"
 msgstr "`--dev` — 安装最新的开发版本"
 
-#: ../../toolchain/moon/commands.md:468
+#: ../../toolchain/moon/commands.md:471
 msgid "`moon shell-completion`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:470
+#: ../../toolchain/moon/commands.md:473
 msgid "Generate shell completion for bash/elvish/fish/pwsh/zsh to stdout"
 msgstr "为 bash/elvish/fish/pwsh/zsh 生成 shell 补全并输出到标准输出"
 
-#: ../../toolchain/moon/commands.md:472
+#: ../../toolchain/moon/commands.md:475
 msgid "**Usage:** `moon shell-completion [OPTIONS]`"
 msgstr "**用法：** `moon shell-completion [选项]`"
 
-#: ../../toolchain/moon/commands.md:475
+#: ../../toolchain/moon/commands.md:478
 msgid ""
 "Discussion: Enable tab completion for Bash, Elvish, Fish, Zsh, or "
 "PowerShell The script is output on `stdout`, allowing one to re-direct "
@@ -939,7 +949,7 @@ msgstr ""
 "启用命令补全功能。该脚本的输出在标准输出（stdout）上，用户可以将输出重定向到自己选择的文件。文件的存放位置将取决于所使用的 shell "
 "以及操作系统。具体的配置也可能决定这些脚本应放置在何处。"
 
-#: ../../toolchain/moon/commands.md:483
+#: ../../toolchain/moon/commands.md:486
 msgid ""
 "The completion scripts won't update itself, so you may need to "
 "periodically run this command to get the latest completions. Or you may "
@@ -951,17 +961,17 @@ msgstr ""
 "completion --shell <SHELL>)\"`添加到你所用 shell 的配置文件（rc file）中，这样每次启动 shell "
 "时都会加载最新的补全内容。不过，这种方式被认为不如安装补全脚本高效。 "
 
-#: ../../toolchain/moon/commands.md:490
+#: ../../toolchain/moon/commands.md:493
 msgid ""
 "Here are some common set ups for the three supported shells under Unix "
 "and similar operating systems (such as GNU/Linux)."
 msgstr "以下是在 Unix 及类似操作系统（如 GNU/Linux）下，针对三种受支持的 shell 的一些常见设置。"
 
-#: ../../toolchain/moon/commands.md:493
+#: ../../toolchain/moon/commands.md:496
 msgid "Bash:"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:495
+#: ../../toolchain/moon/commands.md:498
 msgid ""
 "Completion files are commonly stored in `/etc/bash_completion.d/` for "
 "system-wide commands, but can be stored in `~/.local/share/bash-"
@@ -970,24 +980,24 @@ msgstr ""
 "对于系统范围的命令，补全文件通常存放在 `/etc/bash_completion.d/`；而针对用户特定的命令，它们可存放在 "
 "`~/.local/share/bash - completion/completions`。运行以下命令："
 
-#: ../../toolchain/moon/commands.md:500
+#: ../../toolchain/moon/commands.md:503
 msgid ""
 "$ mkdir -p ~/.local/share/bash-completion/completions\n"
 "$ moon shell-completion --shell bash >> ~/.local/share/bash-"
 "completion/completions/moon\n"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:503 ../../toolchain/moon/commands.md:522
+#: ../../toolchain/moon/commands.md:506 ../../toolchain/moon/commands.md:525
 msgid ""
 "This installs the completion script. You may have to log out and log back"
 " in to your shell session for the changes to take effect."
 msgstr "这会安装补全脚本。你可能需要注销并重新登录 shell 会话，以使更改生效。"
 
-#: ../../toolchain/moon/commands.md:506
+#: ../../toolchain/moon/commands.md:509
 msgid "Bash (macOS/Homebrew):"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:508
+#: ../../toolchain/moon/commands.md:511
 msgid ""
 "Homebrew stores bash completion files within the Homebrew directory. With"
 " the `bash-completion` brew formula installed, run the command:"
@@ -995,67 +1005,67 @@ msgstr ""
 "Homebrew 会将 bash 补全文件存储在 Homebrew 目录内。在安装了 `bash-completion` 的 Homebrew "
 "软件包后，运行以下命令："
 
-#: ../../toolchain/moon/commands.md:511
+#: ../../toolchain/moon/commands.md:514
 msgid ""
 "$ mkdir -p $(brew --prefix)/etc/bash_completion.d\n"
 "$ moon shell-completion --shell bash > $(brew "
 "--prefix)/etc/bash_completion.d/moon.bash-completion\n"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:514
+#: ../../toolchain/moon/commands.md:517
 msgid "Fish:"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:516
+#: ../../toolchain/moon/commands.md:519
 msgid ""
 "Fish completion files are commonly stored in "
 "`$HOME/.config/fish/completions`. Run the command:"
 msgstr "Fish 补全文件通常存储在 `$HOME/.config/fish/completions` 目录下。运行以下命令： "
 
-#: ../../toolchain/moon/commands.md:519
+#: ../../toolchain/moon/commands.md:522
 msgid ""
 "$ mkdir -p ~/.config/fish/completions\n"
 "$ moon shell-completion --shell fish > "
 "~/.config/fish/completions/moon.fish\n"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:525
+#: ../../toolchain/moon/commands.md:528
 msgid "Elvish:"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:527
+#: ../../toolchain/moon/commands.md:530
 msgid ""
 "Elvish completions are commonly stored in a single `completers` module. A"
 " typical module search path is `~/.config/elvish/lib`, and running the "
 "command:"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:531
+#: ../../toolchain/moon/commands.md:534
 msgid ""
 "$ moon shell-completion --shell elvish >> "
 "~/.config/elvish/lib/completers.elv\n"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:533
+#: ../../toolchain/moon/commands.md:536
 msgid ""
 "will install the completions script. Note that use `>>` (append)  instead"
 " of `>` (overwrite) to prevent overwriting the existing completions  for "
 "other commands. Then prepend your rc.elv with:"
 msgstr "将安装补全脚本。请注意使用`>>`（追加）而不是 `>`（覆盖），以防止覆盖其他命令的现有补全。然后在你的 rc.elv 文件前面添加："
 
-#: ../../toolchain/moon/commands.md:537
+#: ../../toolchain/moon/commands.md:540
 msgid "`use completers`\n"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:539
+#: ../../toolchain/moon/commands.md:542
 msgid "to load the `completers` module and enable completions."
 msgstr "以加载 `completers` 模块并启用补全功能。"
 
-#: ../../toolchain/moon/commands.md:541
+#: ../../toolchain/moon/commands.md:544
 msgid "Zsh:"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:543
+#: ../../toolchain/moon/commands.md:546
 msgid ""
 "ZSH completions are commonly stored in any directory listed in your "
 "`$fpath` variable. To use these completions, you must either add the "
@@ -1065,50 +1075,50 @@ msgstr ""
 "ZSH 补全文件通常存放在 `$fpath` "
 "变量所列出的任意目录中。要使用这些补全功能，你要么将生成的脚本添加到这些目录之一，要么将你自己的目录添加到这个列表中。"
 
-#: ../../toolchain/moon/commands.md:548
+#: ../../toolchain/moon/commands.md:551
 msgid ""
 "Adding a custom directory is often the safest bet if you are unsure of "
 "which directory to use. First create the directory; for this example "
 "we'll create a hidden directory inside our `$HOME` directory:"
 msgstr "如果你不确定该使用哪个目录，添加一个自定义目录通常是最稳妥的做法。首先创建这个目录；在这个示例中，我们将在 `$HOME` 目录下创建一个隐藏目录："
 
-#: ../../toolchain/moon/commands.md:553
+#: ../../toolchain/moon/commands.md:556
 msgid "$ mkdir ~/.zfunc\n"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:555
+#: ../../toolchain/moon/commands.md:558
 msgid "Then add the following lines to your `.zshrc` just before `compinit`:"
 msgstr "然后，在你的 `.zshrc` 文件里 `compinit` 命令之前添加以下几行："
 
-#: ../../toolchain/moon/commands.md:558
+#: ../../toolchain/moon/commands.md:561
 msgid "fpath+=~/.zfunc\n"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:560
+#: ../../toolchain/moon/commands.md:563
 msgid "Now you can install the completions script using the following command:"
 msgstr "现在你可以使用以下命令来安装补全脚本"
 
-#: ../../toolchain/moon/commands.md:563
+#: ../../toolchain/moon/commands.md:566
 msgid "$ moon shell-completion --shell zsh > ~/.zfunc/_moon\n"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:565
+#: ../../toolchain/moon/commands.md:568
 msgid "You must then open a new zsh session, or simply run"
 msgstr "然后，你必须开启一个新的 zsh 会话，或者直接运行 "
 
-#: ../../toolchain/moon/commands.md:567
+#: ../../toolchain/moon/commands.md:570
 msgid "$ . ~/.zshrc\n"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:569
+#: ../../toolchain/moon/commands.md:572
 msgid "for the new completions to take effect."
 msgstr "以便新的补全功能生效。"
 
-#: ../../toolchain/moon/commands.md:571
+#: ../../toolchain/moon/commands.md:574
 msgid "Custom locations:"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:573
+#: ../../toolchain/moon/commands.md:576
 msgid ""
 "Alternatively, you could save these files to the place of your choosing, "
 "such as a custom directory inside your $HOME. Doing so will require you "
@@ -1118,11 +1128,11 @@ msgstr ""
 "另外，你可以将这些文件保存到你选择的位置，比如你家目录（$HOME）下的自定义目录。这样做的话，你需要添加合适的指令，例如在登录脚本中使用 "
 "`source`命令引入这些文件。请查阅你所使用 shell 的文档，了解如何添加此类指令。"
 
-#: ../../toolchain/moon/commands.md:579
+#: ../../toolchain/moon/commands.md:582
 msgid "PowerShell:"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:581
+#: ../../toolchain/moon/commands.md:584
 msgid ""
 "The powershell completion scripts require PowerShell v5.0+ (which comes "
 "with Windows 10, but can be downloaded separately for windows 7 or 8.1)."
@@ -1130,23 +1140,23 @@ msgstr ""
 "PowerShell 补全脚本需要 PowerShell 5.0 及更高版本（Windows 10 系统自带该版本，而 Windows 7 或 "
 "8.1 系统可单独下载）。 "
 
-#: ../../toolchain/moon/commands.md:585
+#: ../../toolchain/moon/commands.md:588
 msgid "First, check if a profile has already been set"
 msgstr "首先，检查是否已经设置了配置文件。"
 
-#: ../../toolchain/moon/commands.md:587
+#: ../../toolchain/moon/commands.md:590
 msgid "PS C:\\> Test-Path $profile\n"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:589
+#: ../../toolchain/moon/commands.md:592
 msgid "If the above command returns `False` run the following"
 msgstr "如果上述命令返回 `False`，则运行以下命令。"
 
-#: ../../toolchain/moon/commands.md:591
+#: ../../toolchain/moon/commands.md:594
 msgid "PS C:\\> New-Item -path $profile -type file -force\n"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:593
+#: ../../toolchain/moon/commands.md:596
 msgid ""
 "Now open the file provided by `$profile` (if you used the `New-Item` "
 "command it will be "
@@ -1156,63 +1166,63 @@ msgstr ""
 "`${env:USERPROFILE}\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1`）。"
 " "
 
-#: ../../toolchain/moon/commands.md:597
+#: ../../toolchain/moon/commands.md:600
 msgid ""
 "Next, we either save the completions file into our profile, or into a "
 "separate file and source it inside our profile. To save the completions "
 "into our profile simply use"
 msgstr "接下来，我们可以将补全文件保存到我们的配置文件中，或者保存到一个单独的文件里"
 
-#: ../../toolchain/moon/commands.md:601
+#: ../../toolchain/moon/commands.md:604
 msgid ""
 "PS C:\\> moon shell-completion --shell powershell >>\n"
 "${env:USERPROFILE}\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1"
 "\n"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:604
+#: ../../toolchain/moon/commands.md:607
 msgid ""
 "This discussion is taken from `rustup completions` command with some "
 "changes."
 msgstr "这段讨论内容改编自 `rustup completions` 命令相关内容，并做了一些修改。"
 
-#: ../../toolchain/moon/commands.md:609
+#: ../../toolchain/moon/commands.md:612
 msgid "`--shell <SHELL>` — The shell to generate completion for"
 msgstr "`--shell <SHELL>` — 要为其生成补全的 shell"
 
-#: ../../toolchain/moon/commands.md:611
+#: ../../toolchain/moon/commands.md:614
 msgid "Default value: `<your shell>`"
 msgstr "默认值：`<您的 shell>`"
 
-#: ../../toolchain/moon/commands.md:613
+#: ../../toolchain/moon/commands.md:616
 msgid "Possible values: `bash`, `elvish`, `fish`, `powershell`, `zsh`"
 msgstr "可能的值：`bash`, `elvish`, `fish`, `powershell`, `zsh`"
 
-#: ../../toolchain/moon/commands.md:618
+#: ../../toolchain/moon/commands.md:621
 msgid "`moon version`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:620
+#: ../../toolchain/moon/commands.md:623
 msgid "Print version information and exit"
 msgstr "打印版本信息并退出"
 
-#: ../../toolchain/moon/commands.md:622
+#: ../../toolchain/moon/commands.md:625
 msgid "**Usage:** `moon version [OPTIONS]`"
 msgstr "**用法：** `moon version [选项]`"
 
-#: ../../toolchain/moon/commands.md:626
+#: ../../toolchain/moon/commands.md:629
 msgid "`--all` — Print all version information"
 msgstr "`--all` — 打印所有版本信息"
 
-#: ../../toolchain/moon/commands.md:627
+#: ../../toolchain/moon/commands.md:630
 msgid "`--json` — Print version information in JSON format"
 msgstr "`--json` — 以 JSON 格式打印版本信息"
 
-#: ../../toolchain/moon/commands.md:628
+#: ../../toolchain/moon/commands.md:631
 msgid "`--no-path` — Do not print the path"
 msgstr "`--no-path` — 不打印路径"
 
-#: ../../toolchain/moon/commands.md:634
+#: ../../toolchain/moon/commands.md:637
 msgid ""
 "<small><i>     This document was generated automatically by     <a "
 "href=\"https://crates.io/crates/clap-markdown\"><code>clap-"
@@ -1717,15 +1727,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:122 ../../toolchain/moon/package.md:291
+#: ../../toolchain/moon/module.md:122 ../../toolchain/moon/package.md:377
 msgid "Warning List"
 msgstr "警告列表"
 
-#: ../../toolchain/moon/module.md:124 ../../toolchain/moon/package.md:293
+#: ../../toolchain/moon/module.md:124 ../../toolchain/moon/package.md:379
 msgid "This is used to disable specific preset compiler warning numbers."
 msgstr "这用于禁用特定的预设编译器警告编号。"
 
-#: ../../toolchain/moon/module.md:126 ../../toolchain/moon/package.md:295
+#: ../../toolchain/moon/module.md:126 ../../toolchain/moon/package.md:381
 msgid ""
 "For example, in the following configuration, `-2` disables the warning "
 "number 2 (Unused variable)."
@@ -1738,13 +1748,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:134 ../../toolchain/moon/package.md:303
+#: ../../toolchain/moon/module.md:134 ../../toolchain/moon/package.md:389
 msgid ""
 "You can use `moonc build-package -warn-help` to see the list of preset "
 "compiler warning numbers."
 msgstr "你可以使用 `moonc build-package -warn-help` 来查看预设编译器警告编号列表。"
 
-#: ../../toolchain/moon/module.md:136 ../../toolchain/moon/package.md:305
+#: ../../toolchain/moon/module.md:136 ../../toolchain/moon/package.md:391
 msgid ""
 "$ moonc -v                      \n"
 "v0.1.20250318+35770a65e\n"
@@ -1796,15 +1806,15 @@ msgid ""
 "  A all warnings\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:187 ../../toolchain/moon/package.md:356
+#: ../../toolchain/moon/module.md:187 ../../toolchain/moon/package.md:442
 msgid "Alert List"
 msgstr "警示列表"
 
-#: ../../toolchain/moon/module.md:189 ../../toolchain/moon/package.md:358
+#: ../../toolchain/moon/module.md:189 ../../toolchain/moon/package.md:444
 msgid "Disable user preset alerts."
 msgstr "禁用用户预设警示。"
 
-#: ../../toolchain/moon/module.md:191 ../../toolchain/moon/package.md:360
+#: ../../toolchain/moon/module.md:191 ../../toolchain/moon/package.md:446
 msgid ""
 "{\n"
 "  \"alert-list\": \"-alert_1-alert_2\"\n"
@@ -2292,16 +2302,179 @@ msgid ""
 msgstr ""
 
 #: ../../toolchain/moon/package.md:256
+msgid "Native Backend Link Options"
+msgstr "原生后端链接选项"
+
+#: ../../toolchain/moon/package.md:258
+msgid ""
+"The `cc` option is used to specify the compiler for compiling the "
+"`moonc`-generated C source files. It can be either a full path to the "
+"compiler or a simple name that is accessible via the PATH environment "
+"variable."
+msgstr " `cc` 选项用于指定用于编译 `moonc` 生成的 C 源文件的编译器。它可以是编译器的完整路径，"
+"也可以是通过 PATH 环境变量可访问的简单名称。"
+
+#: ../../toolchain/moon/package.md:261
+msgid ""
+"{\n"
+"  \"link\": {\n"
+"    \"native\": {\n"
+"      \"cc\": \"/usr/bin/gcc13\"\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:271
+msgid ""
+"The `cc-flags` option is used to override the default flags passed to the"
+" compiler. For example, you can use the following flag to define a macro "
+"called MOONBIT."
+msgstr ""
+"`cc-flags` 选项用于覆盖传递给编译器的默认标志。例如，您可以使用以下标志来定义一个名为 MOONBIT 的宏。"
+
+#: ../../toolchain/moon/package.md:274
+msgid ""
+"{\n"
+"  \"link\": {\n"
+"    \"native\": {\n"
+"      \"cc-flags\": \"-DMOONBIT\"\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:284
+msgid ""
+"The `cc-link-flags` option is used to override the default flags passed "
+"to the linker. Since the linker is invoked through the compiler driver "
+"(e.g., `cc` instead of `ld`, `cl` instead of `link`), you should prefix "
+"specific options with `-Wl,` or `/link ` when passing them."
+msgstr ""
+"`cc-link-flags` 选项用于覆盖传递给链接器的默认标志。由于链接器是通过编译器驱动程序调用的（例如，"
+"通过 `cc` 而不是 `ld`，通过 `cl` 而不是 `link`），因此在传递特定选项时，应该使用 `-Wl,` 或 `/link ` 前缀。"
+
+#: ../../toolchain/moon/package.md:288
+msgid "The following example strips symbol information from produced binary."
+msgstr "以下示例从生成的二进制文件中剥离符号信息。"
+
+#: ../../toolchain/moon/package.md:290
+msgid ""
+"{\n"
+"  \"link\": {\n"
+"    \"native\": {\n"
+"      \"cc-link-flags\": \"-s\"\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:300
+msgid ""
+"The `stub-cc` option is similar to `cc` but controls which compiler to "
+"use for compiling stubs. Although it can be different from `cc`, it is "
+"not recommended and should only be used for debugging purposes. "
+"Therefore, we strongly recommend to specify `cc` and `stub-cc` at the "
+"same time and make them consistent to avoid potential conflicts."
+msgstr ""
+"`stub-cc` 选项与 `cc` 类似，但控制用于编译存根的编译器。虽然它可以与 `cc` 不同，但不建议这样做，"
+"应仅用于调试目的。因此，我们强烈建议同时指定 `cc` 和 `stub-cc` 并使它们保持一致，以避免潜在冲突。"
+
+#: ../../toolchain/moon/package.md:305
+msgid ""
+"The `stub-cc-flags` is similar to `cc-flags`. It only have effects on "
+"stubs compilation."
+msgstr "`stub-cc-flags` 选项类似于 `cc-flags`。它仅对存根编译有效。"
+
+#: ../../toolchain/moon/package.md:307
+msgid ""
+"The `stub-cc-link-flags` are similar but have a subtle difference.  "
+"Normally, stubs are compiled into object files and linked against object "
+"files generated from `moonc`-generated C source files.  This linking is "
+"only controlled by `cc-flags` and `cc-link-flags`, as mentioned earlier."
+"  However, in specific modes, such as when the fast-debugging-test "
+"feature is enabled, there will be a separate linking procedure for stub "
+"objects files, where  `stub-cc-link-flags` will take effect."
+msgstr ""
+"`stub-cc-link-flags` 与 `cc-link-flags` 类似，但有微妙的区别。通常，存根被编译为目标文件，并与从 `moonc` "
+"生成的 C 源文件的目标文件链接。这种链接仅由前面提到的 `cc-flags` 和 `cc-link-flags` 控制。然而，在特定模式下，"
+"存根目标文件将有一个单独的链接过程，在该过程中，`stub-cc-link-flags` 将生效。"
+
+#: ../../toolchain/moon/package.md:314
+msgid "Default C compiler and compiler flags for the native backend"
+msgstr "原生后端的默认 C 编译器和编译器标志"
+
+#: ../../toolchain/moon/package.md:316
+msgid ""
+"Here is a brief summarization to "
+"[compiler_flags.rs](https://github.com/moonbitlang/moon/blob/main/crates/moonutil/src/compiler_flags.rs)"
+msgstr "以下是对 [compiler_flags.rs](https://github.com/moonbitlang/moon/blob/main/crates/moonutil/src/compiler_flags.rs) 的简要总结。"
+
+#: ../../toolchain/moon/package.md:318
+msgid "C Compiler"
+msgstr "C 编译器"
+
+#: ../../toolchain/moon/package.md:320
+msgid "Search in PATH for the following items from top to bottom."
+msgstr "在 PATH 中从上到下搜索以下项目。"
+
+#: ../../toolchain/moon/package.md:322
+msgid "cl"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:323
+msgid "gcc"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:324
+msgid "clang"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:325
+msgid "cc"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:326
+msgid "the internal tcc"
+msgstr "内部的 tcc"
+
+#: ../../toolchain/moon/package.md:328
+msgid ""
+"For GCC-like compilers, the default compile & link command is as follows."
+" `[]` is used to indicate the flags may not exist in some modes."
+msgstr "对于类似 GCC 的编译器，默认的编译和链接命令如下。`[]` 用于指示某些模式下可能不存在的标志。"
+
+#: ../../toolchain/moon/package.md:330
+msgid ""
+"cc -o $target -I$MOON_HOME/include -L$MOON_HOME/lib [-g] [-shared -fPIC] "
+"\\\n"
+"   -fwrapv -fno-strict-aliasing (-O2|-Og) "
+"[$MOON_HOME/lib/libmoonbitrun.o] \\\n"
+"   $sources -lm $cc_flags $cc_link_flags\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:336
+msgid "For MSVC, the default compile & link command is as follows."
+msgstr "对于 MSVC，默认的编译和链接命令如下。"
+
+#: ../../toolchain/moon/package.md:337
+msgid ""
+"cl (/Fo|/Fe)$target -I$MOON_HOME/include [/LD] /utf-8 /wd4819 /nologo "
+"(/O2|/Od) \\\n"
+"   /link /LIBPATH:$MOON_HOME/lib\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:342
 msgid "Pre-build"
 msgstr "预构建"
 
-#: ../../toolchain/moon/package.md:258
+#: ../../toolchain/moon/package.md:344
 msgid ""
 "The `\"pre-build\"` field is used to specify pre-build commands, which "
 "will be executed before build commands such as `moon check|build|test`."
 msgstr "`pre-build` 字段用于指定预构建命令，这些命令将在构建命令（如 `moon check|build|test`）之前执行。"
 
-#: ../../toolchain/moon/package.md:260
+#: ../../toolchain/moon/package.md:346
 msgid ""
 "`\"pre-build\"` is an array, where each element is an object containing "
 "`input`, `output`, and `command` fields. The `input` and `output` fields "
@@ -2316,7 +2489,7 @@ msgstr ""
 "中，可以使用任何 shell 命令，以及分别表示输入和输出文件的 `$input` 和 `$output` "
 "变量。如果这些字段是数组，它们将默认使用空格连接。"
 
-#: ../../toolchain/moon/package.md:262
+#: ../../toolchain/moon/package.md:348
 msgid ""
 "Currently, there is a built-in special command `:embed`, which converts "
 "files into MoonBit source code. The `--text` parameter is used to embed "
@@ -2329,7 +2502,7 @@ msgstr ""
 "用于二进制文件。`--text` 是默认值，可以省略。`--name` 参数用于指定生成的变量名，默认为 `resource`。该命令在 "
 "`moon.pkg.json` 文件所在的目录中执行。"
 
-#: ../../toolchain/moon/package.md:264
+#: ../../toolchain/moon/package.md:350
 msgid ""
 "{\n"
 "  \"pre-build\": [\n"
@@ -2342,23 +2515,23 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:276
+#: ../../toolchain/moon/package.md:362
 msgid "If the content of `a.txt` in the current package directory is:"
 msgstr "如果当前包目录中 `a.txt` 的内容为："
 
-#: ../../toolchain/moon/package.md:277
+#: ../../toolchain/moon/package.md:363
 msgid ""
 "hello,\n"
 "world\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:282
+#: ../../toolchain/moon/package.md:368
 msgid ""
 "After running `moon build`, the following `a.mbt` file will be generated "
 "in the directory where the `moon.pkg.json` is located:"
 msgstr "那么在 `moon.pkg.json` 所在目录中运行 `moon build` 后，将生成以下 `a.mbt` 文件："
 
-#: ../../toolchain/moon/package.md:284
+#: ../../toolchain/moon/package.md:370
 msgid ""
 "let resource : String =\n"
 "  #|hello,\n"
@@ -2366,7 +2539,7 @@ msgid ""
 "  #|\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:297
+#: ../../toolchain/moon/package.md:383
 msgid ""
 "{\n"
 "  \"warn-list\": \"-2\"\n"
