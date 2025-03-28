@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-26 16:00+0800\n"
+"POT-Creation-Date: 2025-03-28 10:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -59,9 +59,8 @@ msgstr ""
 "的签名和 C 库中的 `function_name` 的二进制接口兼容即可。"
 
 #: ../../language/C-ffi.md:19
-#, fuzzy
 msgid "Linking with C library"
-msgstr "和 C 库交互"
+msgstr "链接外部 C 库"
 
 #: ../../language/C-ffi.md:20
 msgid ""
@@ -198,9 +197,7 @@ msgstr ""
 msgid ""
 "The ABI of `Unit` is unstable. Don't write any return type annotation if "
 "you want to bind a C function that returns nothing (`void`),"
-msgstr ""
-"`Unit` 的二进制表示目前是不稳定的。如果想要绑定一个不返回值（`void`）的 C 函数，"
-"就不要写任何返回类型标注。"
+msgstr "`Unit` 的二进制表示目前是不稳定的。如果想要绑定一个不返回值（`void`）的 C 函数，就不要写任何返回类型标注。"
 
 #: ../../language/C-ffi.md:64
 msgid "Passing callback to C"
@@ -4871,7 +4868,6 @@ msgid "E1042"
 msgstr ""
 
 #: ../../language/error_codes/E1042.md:3
-#, fuzzy
 msgid "Invalid attribute."
 msgstr "不合法的属性。"
 
@@ -4915,9 +4911,8 @@ msgid "E1043"
 msgstr ""
 
 #: ../../language/error_codes/E1043.md:3
-#, fuzzy
 msgid "Unused attribute."
-msgstr "无用的属性标准。"
+msgstr "无用的属性标注。"
 
 #: ../../language/error_codes/E1043.md:5
 msgid ""
@@ -4980,7 +4975,6 @@ msgid "E1045"
 msgstr ""
 
 #: ../../language/error_codes/E1045.md:3
-#, fuzzy
 msgid "Implementing traits with methods."
 msgstr "使用方法实现特征"
 
@@ -13431,11 +13425,11 @@ msgid ""
 "the captures as extra parameters to the function."
 msgstr "如果你的回调函数真的需要捕获局部变量，可以把局部变量变成回调函数的额外参数。"
 
-#: ../../language/error_codes/E4153.md:1 ../../language/error_codes/E4154.md:1
+#: ../../language/error_codes/E4153.md:1
 msgid "E4153"
 msgstr ""
 
-#: ../../language/error_codes/E4153.md:3 ../../language/error_codes/E4154.md:3
+#: ../../language/error_codes/E4153.md:3
 msgid "Duplicated tag in `enum` with custom tag value."
 msgstr "自定义枚举构造器的整数值时有重复。"
 
@@ -13473,6 +13467,14 @@ msgstr ""
 "  B // `B` 的值是 `A + 1 = 2`\n"
 "  C = 2 // 和 `B` 冲突\n"
 "}\n"
+
+#: ../../language/error_codes/E4154.md:1
+msgid "E4154"
+msgstr ""
+
+#: ../../language/error_codes/E4154.md:3
+msgid "Non-constant `enum` with custom tag value."
+msgstr "给非常量枚举指定了构造器的自定义整数值。"
 
 #: ../../language/error_codes/E4154.md:5
 msgid "MoonBit supports customizing the integer representation of constructors:"
