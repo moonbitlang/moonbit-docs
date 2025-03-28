@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-28 10:00+0800\n"
+"POT-Creation-Date: 2025-03-28 18:19+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -10544,7 +10544,7 @@ msgid ""
 "follows:"
 msgstr ""
 
-#: ../../language/error_codes/E4095.md
+#: ../../language/error_codes/E4095.md ../../language/fundamentals.md:1172
 #, fuzzy
 msgid "Type"
 msgstr "类型"
@@ -10559,7 +10559,7 @@ msgstr "映射值"
 msgid "Maximum value"
 msgstr "映射值"
 
-#: ../../language/error_codes/E4095.md
+#: ../../language/error_codes/E4095.md ../../language/fundamentals.md:1172
 #, fuzzy
 msgid "Byte"
 msgstr "字节"
@@ -14568,7 +14568,7 @@ msgid ""
 " ---\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:153
+#: ../../language/fundamentals.md:153 ../../language/fundamentals.md:1172
 msgid "Char"
 msgstr "字符"
 
@@ -17017,39 +17017,89 @@ msgstr "数组模式"
 
 #: ../../language/fundamentals.md:1181
 msgid ""
-"For `Array`, `FixedArray` and `ArrayView`, MoonBit allows using array "
-"pattern."
-msgstr "对于 `Array`、`FixedArray` 和 `ArrayView`，MoonBit 允许使用数组模式。"
+"Array patterns can be used to match on the following types to obtain "
+"their corresponding elements or views:"
+msgstr "数组模式可以用来匹配以下类型以获取其对应的元素或视图（View）："
 
-#: ../../language/fundamentals.md:1183
-msgid "Array pattern have the following forms:"
-msgstr "数组模式有以下形式："
+#: ../../language/fundamentals.md:1172
+msgid "Element"
+msgstr "元素"
 
-#: ../../language/fundamentals.md:1185
-msgid "`[]` : matching for an empty data structure"
-msgstr "`[]`：匹配空数据结构"
+#: ../../language/fundamentals.md:1172
+msgid "View"
+msgstr "视图"
 
-#: ../../language/fundamentals.md:1186
-msgid "`[pa, pb, pc]` : matching for known number of elements, 3 in this example"
-msgstr "`[pa, pb, pc]`：匹配已知数量的元素，在此示例中为 3 个"
+#: ../../language/fundamentals.md:1172
+msgid "Array[T], @array.View[T]"
+msgstr "Array[T], @array.View[T]"
 
-#: ../../language/fundamentals.md:1187
+#: ../../language/fundamentals.md:1172
+msgid "T"
+msgstr "T"
+
+#: ../../language/fundamentals.md:1172
+msgid "@array.View[T]"
+msgstr "@array.View[T]"
+
+#: ../../language/fundamentals.md:1172
+msgid "Bytes, @bytes.View"
+msgstr "Bytes, @bytes.View"
+
+#: ../../language/fundamentals.md:1172
+msgid "@bytes.View"
+msgstr "@bytes.View"
+
+#: ../../language/fundamentals.md:1172
+msgid "String, @string.View"
+msgstr "String, @string.View"
+
+#: ../../language/fundamentals.md:1172
+#, fuzzy
+msgid "@string.View"
+msgstr "@string.View"
+
+#: ../../language/fundamentals.md:1172
+msgid "FixedArray[T]"
+msgstr "FixedArray[T]"
+
+#: ../../language/fundamentals.md:1172
+msgid "N/A"
+msgstr "N/A"
+
+#: ../../language/fundamentals.md:1191
+#, fuzzy
+msgid "Array patterns have the following forms:"
+msgstr "数组模式可以有以下形式："
+
+#: ../../language/fundamentals.md:1193
+#, fuzzy
+msgid "`[]` : matching for empty array"
+msgstr "`[]`：匹配空数组"
+
+#: ../../language/fundamentals.md:1194
 msgid ""
-"`[pa, ..]` : matching for known number of elements, followed by unknown "
-"number of elements"
-msgstr "`[pa, ..]`：匹配已知数量的元素，后跟未知数量的元素"
+"`[pa, pb, pc]` : matching for array of length three, and bind `pa`, `pb`,"
+" `pc` to the three elements"
+msgstr "`[pa, pb, pc]`：匹配长度为 3 的数组，并将其中的元素分别绑定到 `pa`, `pb`, `pc`"
 
-#: ../../language/fundamentals.md:1188
+#: ../../language/fundamentals.md:1196
 msgid ""
-"`[.., pa]` : matching for known number of elements, preceded by unknown "
-"number of elements"
-msgstr "`[.., pa]`：匹配已知数量的元素，前面是未知数量的元素"
+"`[pa, ..rest, pb]` : matching for array with at least two elements, and "
+"bind `pa` to the first element, `pb` to the last element, and `rest` to "
+"the remaining elements. the binder `rest` can be omitted if the rest of "
+"the elements are not needed. Arbitrary number of elements are allowed "
+"preceding and following the `..` part. Because `..` can match uncertain "
+"number of elements, it can appear at most once in an array pattern."
+msgstr "`[pa, ..rest, pb]`：匹配至少有两个元素的数组，并将第一个元素绑定到"
+"`pa`，最后一个元素绑定到 `pb`，其余元素绑定到 `rest`。如果不需要其余元素，可以省"
+"略绑定 `rest`。在 `..` 部分前后允许任意数量的元素。由于 `..` 可以匹配不确定数"
+"量的元素，因此在数组模式中最多只能出现一次。"
 
-#: ../../language/fundamentals.md:1190
+#: ../../language/fundamentals.md:1203
 msgid ""
 "test {\n"
 "  let ary = [1, 2, 3, 4]\n"
-"  if ary is [a, b, ..] && a == 1 && b == 2 {\n"
+"  if ary is [a, b, ..rest] && a == 1 && b == 2 && rest.length() == 2{\n"
 "    inspect!(\"a = \\{a}, b = \\{b}\", content=\"a = 1, b = 2\")\n"
 "  } else {\n"
 "    fail!(\"\")\n"
@@ -17059,17 +17109,68 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1196
+#: ../../language/fundamentals.md:1209
+msgid ""
+"Array patterns provide a unicode-safe way to manipulate strings, meaning "
+"that it respects the code unit boundaries. For example, we can check if a"
+" string is a  palindrome:"
+msgstr "数组模式提供了一种 Unicode 安全的方式来操作字符串，这意味着它在访问元素的时候不会跨"
+"越代码单元边界。例如，我们可以检查一个包含 Unicode 的字符串是否是回文："
+
+#: ../../language/fundamentals.md:1213
+msgid ""
+"test {\n"
+"  fn palindrome(s: String) -> Bool {\n"
+"    loop s.view() {\n"
+"      [] | [_] => true\n"
+"      [a, ..rest, b] => if a == b { continue rest } else { false }\n"
+"    }\n"
+"  }\n"
+"  inspect!(palindrome(\"abba\"), content=\"true\")\n"
+"  inspect!(palindrome(\"😭b😭\"), content=\"true\")\n"
+"  inspect!(palindrome(\"😭bb🤔\"), content=\"false\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1219
+msgid ""
+"When there are consecutive char or byte constants in an array pattern, "
+"the pattern spread `..` operator can be used to combine them to make the "
+"code look cleaner. Note that in this case the `..` followed by string or "
+"bytes constant matches exact number of elements so its usage is not "
+"limited to once."
+msgstr "当数组模式中有连续的字符或字节常量时，可以使用模式展开 `..` 运算符将它们组合起来，"
+"使代码看起来更整洁。在这种情况下，`..` 后跟字符串或字节常量匹配确切数量的元素，"
+"因此它可以在数组模式中多次使用。"
+
+#: ../../language/fundamentals.md:1224
+msgid ""
+"const NO: Bytes = \"no\"\n"
+"test {\n"
+"  fn match_string(s: String) -> Bool {\n"
+"    match s {\n"
+"      [..\"yes\", ..] => true // equivalent to ['y', 'e', 's', ..]\n"
+"    }\n"
+"  }\n"
+"  fn match_bytes(b: Bytes) -> Bool {\n"
+"    match b {\n"
+"      [..NO, ..] => false // equivalent to ['n', 'o', ..]\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1230
 msgid "Range Pattern"
 msgstr "范围模式"
 
-#: ../../language/fundamentals.md:1197
+#: ../../language/fundamentals.md:1231
 msgid ""
 "For builtin integer types and `Char`, MoonBit allows matching whether the"
 " value falls in a specific range."
 msgstr "对于内置整数类型和 `Char`，MoonBit 允许匹配值是否落在特定范围内。"
 
-#: ../../language/fundamentals.md:1199
+#: ../../language/fundamentals.md:1233
 msgid ""
 "Range patterns have the form `a..<b` or `a..=b`, where `..<` means the "
 "upper bound is exclusive, and `..=` means inclusive upper bound. `a` and "
@@ -17078,23 +17179,23 @@ msgstr ""
 "范围模式的形式为 `a..<b` 或 `a..=b`，其中 `..<` 表示上限是排他的，`..=` 表示包含上限。`a` 和 `b` "
 "可以是以下之一："
 
-#: ../../language/fundamentals.md:1202
+#: ../../language/fundamentals.md:1236
 msgid "literal"
 msgstr "字面量"
 
-#: ../../language/fundamentals.md:1203
+#: ../../language/fundamentals.md:1237
 msgid "named constant declared with `const`"
 msgstr "使用 `const` 声明的常量"
 
-#: ../../language/fundamentals.md:1204
+#: ../../language/fundamentals.md:1238
 msgid "`_`, meaning the pattern has no restriction on this side"
 msgstr "`_`，表示此模式在此侧没有限制"
 
-#: ../../language/fundamentals.md:1206
+#: ../../language/fundamentals.md:1240
 msgid "Here are some examples:"
 msgstr "以下是一些示例："
 
-#: ../../language/fundamentals.md:1208
+#: ../../language/fundamentals.md:1242
 msgid ""
 "const Zero = 0\n"
 "\n"
@@ -17116,11 +17217,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1215
+#: ../../language/fundamentals.md:1249
 msgid "Map Pattern"
 msgstr "Map 模式"
 
-#: ../../language/fundamentals.md:1217
+#: ../../language/fundamentals.md:1251
 msgid ""
 "MoonBit allows convenient matching on map-like data structures. Inside a "
 "map pattern, the `key : value` syntax will match if `key` exists in the "
@@ -17132,7 +17233,7 @@ msgstr ""
 "`key` 时匹配，并将 `key` 的值与模式 `value` 匹配。`key? : value` 语法将无论 `key` "
 "是否存在都匹配，`value` 将与 `map[key]`（一个可选项）匹配。"
 
-#: ../../language/fundamentals.md:1221
+#: ../../language/fundamentals.md:1255
 msgid ""
 "match map {\n"
 "  // matches if any only if \"b\" exists in `map`\n"
@@ -17153,7 +17254,7 @@ msgstr ""
 "  // 编译器报告缺失的情况：{ \"b\"? : None, \"a\"? : None }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1228
+#: ../../language/fundamentals.md:1262
 msgid ""
 "To match a data type `T` using map pattern, `T` must have a method "
 "`op_get(Self, K) -> Option[V]` for some type `K` and `V` (see [method and"
@@ -17162,33 +17263,33 @@ msgstr ""
 "要使用 map 模式匹配数据类型 `T`，`T` 必须具有某种类型 `K` 和 `V` 的方法 `op_get(Self, K) -> "
 "Option[V]`（请参见 [方法和特征](./methods.md)）。"
 
-#: ../../language/fundamentals.md:1229
+#: ../../language/fundamentals.md:1263
 msgid "Currently, the key part of map pattern must be a literal or constant"
 msgstr "目前，map 模式的键部分必须是字面量或常量"
 
-#: ../../language/fundamentals.md:1230
+#: ../../language/fundamentals.md:1264
 msgid ""
 "Map patterns are always open: the unmatched keys are silently ignored, "
 "and `..` needs to be added to identify this nature"
 msgstr "Map 模式始终是开放的：未匹配的键会被静默忽略，并且需要添加 `..` 以显示这一点"
 
-#: ../../language/fundamentals.md:1231
+#: ../../language/fundamentals.md:1265
 msgid ""
 "Map pattern will be compiled to efficient code: every key will be fetched"
 " at most once"
 msgstr "Map 模式将编译为高效的代码：每个键最多只会被获取一次"
 
-#: ../../language/fundamentals.md:1233
+#: ../../language/fundamentals.md:1267
 msgid "Json Pattern"
 msgstr "Json 模式"
 
-#: ../../language/fundamentals.md:1235
+#: ../../language/fundamentals.md:1269
 msgid ""
 "When the matched value has type `Json`, literal patterns can be used "
 "directly, together with constructors:"
 msgstr "当匹配的值具有类型 `Json` 时，可以直接使用字面量模式，以及构造函数："
 
-#: ../../language/fundamentals.md:1237
+#: ../../language/fundamentals.md:1271
 msgid ""
 "match json {\n"
 "  { \"version\": \"1.0.0\", \"import\": [..] as imports, .. } => ...\n"
@@ -17197,11 +17298,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1244
+#: ../../language/fundamentals.md:1278
 msgid "Generics"
 msgstr "泛型"
 
-#: ../../language/fundamentals.md:1246
+#: ../../language/fundamentals.md:1280
 msgid ""
 "Generics are supported in top-level function and data type definitions. "
 "Type parameters can be introduced within square brackets. We can rewrite "
@@ -17212,7 +17313,7 @@ msgstr ""
 "泛型在顶层函数和数据类型定义中受支持。可以在方括号内引入类型参数。我们可以重写上述数据类型 `List`，添加类型参数 `T` "
 "以获得列表的通用版本。然后，我们可以定义列表上的通用函数，如 `map` 和 `reduce`。"
 
-#: ../../language/fundamentals.md:1248
+#: ../../language/fundamentals.md:1282
 msgid ""
 "enum List[T] {\n"
 "  Nil\n"
@@ -17234,21 +17335,21 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1252
+#: ../../language/fundamentals.md:1286
 msgid "Special Syntax"
 msgstr "特殊语法"
 
-#: ../../language/fundamentals.md:1254
+#: ../../language/fundamentals.md:1288
 msgid "Pipe operator"
 msgstr "管道运算符"
 
-#: ../../language/fundamentals.md:1256
+#: ../../language/fundamentals.md:1290
 msgid ""
 "MoonBit provides a convenient pipe operator `|>`, which can be used to "
 "chain regular function calls:"
 msgstr "moonbit 提供了一个方便的管道运算符`|>`，可以用于链接常规函数调用："
 
-#: ../../language/fundamentals.md:1258
+#: ../../language/fundamentals.md:1292
 msgid ""
 "5 |> ignore // <=> ignore(5)\n"
 "[] |> Array::push(5) // <=> Array::push([], 5)\n"
@@ -17257,25 +17358,25 @@ msgid ""
 "|> ignore // <=> ignore(add(1, 5))\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1265
+#: ../../language/fundamentals.md:1299
 msgid "Cascade Operator"
 msgstr "级联运算符"
 
-#: ../../language/fundamentals.md:1267
+#: ../../language/fundamentals.md:1301
 msgid ""
 "The cascade operator `..` is used to perform a series of mutable "
 "operations on the same value consecutively. The syntax is as follows:"
 msgstr "级联运算符`..`用于连续对同一值执行一系列可变操作。语法如下："
 
-#: ../../language/fundamentals.md:1270
+#: ../../language/fundamentals.md:1304
 msgid "x..f()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1277
+#: ../../language/fundamentals.md:1311
 msgid "`x..f()..g()` is equivalent to `{x.f(); x.g(); x}`."
 msgstr "`x..f()..g()` 等价于 `{x.f(); x.g(); x}`。"
 
-#: ../../language/fundamentals.md:1279
+#: ../../language/fundamentals.md:1313
 msgid ""
 "Consider the following scenario: for a `StringBuilder` type that has "
 "methods like `write_string`, `write_char`, `write_object`, etc., we often"
@@ -17283,7 +17384,7 @@ msgid ""
 "value:"
 msgstr "考虑以下情况：对于具有诸如`write_string`，`write_char`，`write_object`等方法的`StringBuilder`类型，我们经常需要对同一`StringBuilder`值执行一系列操作："
 
-#: ../../language/fundamentals.md:1283
+#: ../../language/fundamentals.md:1317
 msgid ""
 "let builder = StringBuilder::new()\n"
 "builder.write_char('a')\n"
@@ -17293,7 +17394,7 @@ msgid ""
 "let result = builder.to_string()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1290
+#: ../../language/fundamentals.md:1324
 msgid ""
 "To avoid repetitive typing of `builder`, its methods are often designed "
 "to return `self` itself, allowing operations to be chained using the `.` "
@@ -17305,7 +17406,7 @@ msgstr ""
 "为了避免重复输入`builder`，其方法通常设计为返回`self`本身，允许使用`.`运算符链接操作。为了区分不可变和可变操作，在 "
 "MoonBit 中，对于所有返回`Unit`的方法，可以使用级联运算符进行连续操作，而无需修改方法的返回类型。"
 
-#: ../../language/fundamentals.md:1296
+#: ../../language/fundamentals.md:1330
 msgid ""
 "let result = StringBuilder::new()\n"
 "  ..write_char('a')\n"
@@ -17315,18 +17416,18 @@ msgid ""
 "  .to_string()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1303
+#: ../../language/fundamentals.md:1337
 msgid "Is Expression"
 msgstr "Is 表达式"
 
-#: ../../language/fundamentals.md:1305
+#: ../../language/fundamentals.md:1339
 msgid ""
 "The `is` expression tests whether a value conforms to a specific pattern."
 " It returns a `Bool` value and can be used anywhere a boolean value is "
 "expected, for example:"
 msgstr "`is` 表达式测试值是否符合特定模式。它返回一个 `Bool` 值，并可以在期望布尔值的任何地方使用，例如："
 
-#: ../../language/fundamentals.md:1309
+#: ../../language/fundamentals.md:1343
 msgid ""
 "fn is_none[T](x : T?) -> Bool {\n"
 "  x is None\n"
@@ -17337,26 +17438,26 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1316
+#: ../../language/fundamentals.md:1350
 msgid ""
 "Pattern binders introduced by `is` expressions can be used in the "
 "following contexts:"
 msgstr "通过 `is` 表达式绑定的标识符可以在以下的上下文中使用："
 
-#: ../../language/fundamentals.md:1319
+#: ../../language/fundamentals.md:1353
 msgid ""
 "In boolean AND expressions (`&&`): binders introduced in the left-hand "
 "expression can be used in the right-hand expression"
 msgstr "在与表达式（`&&`）中：左侧表达式中绑定的标识符可以在右侧表达式中使用"
 
-#: ../../language/fundamentals.md:1323
+#: ../../language/fundamentals.md:1357
 msgid ""
 "fn f(x : Int?) -> Bool {\n"
 "  x is Some(v) && v >= 0\n"
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1330
+#: ../../language/fundamentals.md:1364
 msgid ""
 "In the first branch of `if` expression: if the condition is a sequence of"
 " boolean expressions `e1 && e2 && ...`, the binders introduced by the "
@@ -17366,7 +17467,7 @@ msgstr ""
 "在 `if` 的第一个分支中：如果条件是一系列布尔表达式 `e1 && e2 && ...`，则可以在条件为真的分支中使用 `is` "
 "表达式中绑定的标识符。"
 
-#: ../../language/fundamentals.md:1334
+#: ../../language/fundamentals.md:1368
 msgid ""
 "fn g(x : Array[Int?]) -> Unit {\n"
 "  if x is [v, .. rest] && v is Some(i) && i is 0..=10 {\n"
@@ -17377,11 +17478,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1341
+#: ../../language/fundamentals.md:1375
 msgid "In the following statements of a `guard` condition:"
 msgstr "下面举一个在 `guard` 中使用的情况："
 
-#: ../../language/fundamentals.md:1343
+#: ../../language/fundamentals.md:1377
 msgid ""
 "fn h(x : Int?) -> Unit {\n"
 "  guard x is Some(v) \n"
@@ -17389,11 +17490,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1350
+#: ../../language/fundamentals.md:1384
 msgid "In the body of a `while` loop:"
 msgstr "在 `while` 循环中的使用："
 
-#: ../../language/fundamentals.md:1352
+#: ../../language/fundamentals.md:1386
 msgid ""
 "fn i(x : Int?) -> Unit {\n"
 "  let mut m = x\n"
@@ -17404,18 +17505,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1359
+#: ../../language/fundamentals.md:1393
 msgid "TODO syntax"
 msgstr "TODO 语法"
 
-#: ../../language/fundamentals.md:1361
+#: ../../language/fundamentals.md:1395
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo`语法 (`...`) 是一种特殊构造，用于标记尚未实现或用于未来功能的占位符代码段。例如："
 
-#: ../../language/fundamentals.md:1363
+#: ../../language/fundamentals.md:1397
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"
@@ -19302,4 +19403,40 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
+
+#~ msgid ""
+#~ "For `Array`, `FixedArray` and `ArrayView`, "
+#~ "MoonBit allows using array pattern."
+#~ msgstr "对于 `Array`、`FixedArray` 和 `ArrayView`，MoonBit 允许使用数组模式。"
+
+#~ msgid ""
+#~ "`[pa, pb, pc]` : matching for "
+#~ "known number of elements, 3 in "
+#~ "this example"
+#~ msgstr "`[pa, pb, pc]`：匹配已知数量的元素，在此示例中为 3 个"
+
+#~ msgid ""
+#~ "`[pa, ..]` : matching for known "
+#~ "number of elements, followed by unknown"
+#~ " number of elements"
+#~ msgstr "`[pa, ..]`：匹配已知数量的元素，后跟未知数量的元素"
+
+#~ msgid ""
+#~ "`[.., pa]` : matching for known "
+#~ "number of elements, preceded by unknown"
+#~ " number of elements"
+#~ msgstr "`[.., pa]`：匹配已知数量的元素，前面是未知数量的元素"
+
+#~ msgid ""
+#~ "test {\n"
+#~ "  let ary = [1, 2, 3, 4]\n"
+#~ "  if ary is [a, b, ..] && a == 1 && b == 2 {\n"
+#~ "    inspect!(\"a = \\{a}, b = \\{b}\", content=\"a = 1, b = 2\")\n"
+#~ "  } else {\n"
+#~ "    fail!(\"\")\n"
+#~ "  }\n"
+#~ "  guard ary is [.., a, b] else { fail!(\"\") }\n"
+#~ "  inspect!(\"a = \\{a}, b = \\{b}\", content=\"a = 3, b = 4\")\n"
+#~ "}\n"
+#~ msgstr ""
 

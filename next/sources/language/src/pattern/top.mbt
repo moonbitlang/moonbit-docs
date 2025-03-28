@@ -23,7 +23,7 @@ let user : Unit = {
 // start pattern 2
 test {
   let ary = [1, 2, 3, 4]
-  if ary is [a, b, ..] && a == 1 && b == 2 {
+  if ary is [a, b, ..rest] && a == 1 && b == 2 && rest.length() == 2{
     inspect!("a = \{a}, b = \{b}", content="a = 1, b = 2")
   } else {
     fail!("")
@@ -32,6 +32,36 @@ test {
   inspect!("a = \{a}, b = \{b}", content="a = 3, b = 4")
 }
 // end pattern 2
+
+// start array pattern 1
+test {
+  fn palindrome(s: String) -> Bool {
+    loop s.view() {
+      [] | [_] => true
+      [a, ..rest, b] => if a == b { continue rest } else { false }
+    }
+  }
+  inspect!(palindrome("abba"), content="true")
+  inspect!(palindrome("😭b😭"), content="true")
+  inspect!(palindrome("😭bb🤔"), content="false")
+}
+// end array pattern 1
+
+// start array pattern 2
+const NO: Bytes = "no"
+test {
+  fn match_string(s: String) -> Bool {
+    match s {
+      [.."yes", ..] => true // equivalent to ['y', 'e', 's', ..]
+    }
+  }
+  fn match_bytes(b: Bytes) -> Bool {
+    match b {
+      [..NO, ..] => false // equivalent to ['n', 'o', ..]
+    }
+  }
+}
+// end array pattern 2
 
 enum Arith {
   Lit(Int)
