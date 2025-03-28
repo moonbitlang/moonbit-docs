@@ -1178,19 +1178,53 @@ We can use `as` to give a name to some pattern, and we can use `|` to match seve
 
 ### Array Pattern
 
-For `Array`, `FixedArray` and `ArrayView`, MoonBit allows using array pattern.
+Array patterns can be used to match on the following types to obtain their
+corresponding elements or views:
 
-Array pattern have the following forms:
+| Type                     | Element | View           |
+|--------------------------|---------|----------------|
+| Array[T], @array.View[T] | T       | @array.View[T] |
+| Bytes, @bytes.View       | Byte    | @bytes.View    |
+| String, @string.View     | Char    | @string.View   |
+| FixedArray[T]            | T       | N/A            |
 
-- `[]` : matching for an empty data structure
-- `[pa, pb, pc]` : matching for known number of elements, 3 in this example
-- `[pa, ..]` : matching for known number of elements, followed by unknown number of elements
-- `[.., pa]` : matching for known number of elements, preceded by unknown number of elements
+Array patterns have the following forms:
+
+- `[]` : matching for empty array
+- `[pa, pb, pc]` : matching for array of length three, and bind `pa`, `pb`, `pc`
+  to the three elements
+- `[pa, ..rest, pb]` : matching for array with at least two elements, and bind
+  `pa` to the first element, `pb` to the last element, and `rest` to the
+  remaining elements. the binder `rest` can be omitted if the rest of the
+  elements are not needed. Arbitrary number of elements are allowed preceding
+  and following the `..` part. Because `..` can match uncertain number of
+  elements, it can appear at most once in an array pattern.
 
 ```{literalinclude} /sources/language/src/pattern/top.mbt
 :language: moonbit
 :start-after: start pattern 2
 :end-before: end pattern 2
+```
+
+Array patterns provide a unicode-safe way to manipulate strings, meaning that it
+respects the code unit boundaries. For example, we can check if a string is a
+ palindrome:
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:start-after: start array pattern 1
+:end-before: end array pattern 1
+```
+
+When there are consecutive char or byte constants in an array pattern, the
+pattern spread `..` operator can be used to combine them to make the code look
+cleaner. Note that in this case the `..` followed by string or bytes constant
+matches exact number of elements so its usage is not limited to once.
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:start-after: start array pattern 2
+:end-before: end array pattern 2
 ```
 
 ### Range Pattern
