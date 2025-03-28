@@ -15,16 +15,16 @@ fn run(codes : List[String]) -> Node {
   let codes = codes.map(parse_then_compile) + prelude_defs.map(compileSC)
   let codes = compiled_primitives + codes
   let (heap, globals) = build_initial_heap(codes)
+  // start init definition
   let initialState : GState = {
     heap : heap,
     stack : Nil,
-    // start init definition
     code : @immut/list.of([PushGlobal("main"), Eval]),
-    // end init definition
     globals : globals,
     stats : 0,
     dump : Nil
   }
+  // end init definition
   initialState.reify()
 }
 
