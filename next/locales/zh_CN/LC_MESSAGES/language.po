@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-28 18:19+0800\n"
+"POT-Creation-Date: 2025-03-28 16:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -13798,32 +13798,32 @@ msgstr ""
 "查看文档，例如 [MDN](https://developer.mozilla.org/en-US/docs/WebAssembly) "
 "或您用于嵌入 Wasm 的运行时的手册。"
 
-#: ../../language/ffi-and-wasm-host.md:118
+#: ../../language/ffi-and-wasm-host.md:117
 msgid ""
-"In order to passing closure to host, we need to add `make_closure` into "
-"`moonbit:ffi`. e.g. "
+"In order to passing closure to host (e.g. "
 "[onclick](https://html.spec.whatwg.org/multipage/webappapis.html#handler-"
-"onclick)"
-msgstr "为了将闭包传递给宿主，我们需要将 `make_closure` 添加到 `moonbit:ffi` 中。例如："
-"[onclick](https://html.spec.whatwg.org/multipage/webappapis.html#handler-onclick)"
+"onclick)), we need to add `moonbit:ffi.make_closure` to the import "
+"object."
+msgstr ""
+"为了将闭包传递给宿主（如：[onclick](https://html.spec.whatwg.org/multipage/webappapis.html"
+"#handler-onclick)），我们需要将 `moonbit:ffi.make_closure` 添加到导入对象中。"
 
-#: ../../language/ffi-and-wasm-host.md:121
+#: ../../language/ffi-and-wasm-host.md:119
 msgid ""
 "extern type MouseEvent\n"
-"extern type Window\n"
-"fn onclick(self : Window, e : (MouseEvent) -> Unit) = \"Window\" "
-"\"onclick\"\n"
-"pub fn print_hello(self : Window) -> Unit {\n"
-"  self.onclick(fn (_){ println(\"hello\")})\n"
+"extern type WindowObj\n"
+"fn onclick(self : WindowObj, e : (MouseEvent) -> Unit) = \"window\" "
+"\"set_onclick\"\n"
+"pub fn print_hello(self : WindowObj) -> Unit {\n"
+"  self.onclick(fn (_) { println(\"hello\")})\n"
 "}\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:130
+#: ../../language/ffi-and-wasm-host.md:128
 msgid ""
 "let importObject = { \n"
-"  Window : {\n"
-"    onclick : (w : Window, f : (e : MouseEvent) => void ) => w.onclick = "
-"f \n"
+"  window : {\n"
+"    set_onclick : (w, callback) => w.onclick = callback\n"
 "  },\n"
 "  spectest: {\n"
 "    print_char: log\n"
@@ -13832,19 +13832,13 @@ msgid ""
 "    make_closure: (funcref, closure) => funcref.bind(null, closure)\n"
 "  } \n"
 "}\n"
-"WebAssembly.instantiateStreaming(fetch(\"target/wasm-"
-"gc/release/build/lib/lib.wasm\"), importObject).then(\n"
-"  (obj) => {\n"
-"    obj.instance.exports[\"print_hello\"](window);\n"
-"  }\n"
-");\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:149
+#: ../../language/ffi-and-wasm-host.md:142
 msgid "Example: Smiling face"
 msgstr "示例：笑脸"
 
-#: ../../language/ffi-and-wasm-host.md:151
+#: ../../language/ffi-and-wasm-host.md:144
 msgid ""
 "Let's walk through a full example to draw a smiling face using Canvas API"
 " in MoonBit. Suppose you created a new project with `moon new draw`"
@@ -13852,7 +13846,7 @@ msgstr ""
 "让我们通过一个完整的示例来使用 Canvas API 在 MoonBit 中绘制一个笑脸。假设您使用 `moon new draw` "
 "创建了一个新项目"
 
-#: ../../language/ffi-and-wasm-host.md:153
+#: ../../language/ffi-and-wasm-host.md:146
 msgid ""
 "// We first declare a type representing the context of canvas\n"
 "extern type Canvas_ctx\n"
@@ -13919,7 +13913,7 @@ msgstr ""
 "  println(\"PI: \\{pi}\")\n"
 "}\n"
 
-#: ../../language/ffi-and-wasm-host.md:186
+#: ../../language/ffi-and-wasm-host.md:179
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -13933,7 +13927,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:199
+#: ../../language/ffi-and-wasm-host.md:192
 msgid ""
 "Build the project using `moon build`. We recommend using Wasm with GC "
 "integration whenever possible (which is the default). If the environment "
@@ -13942,11 +13936,11 @@ msgstr ""
 "使用 `moon build` 构建项目。我们建议尽可能使用 Wasm GC（这是默认值）。如果环境不支持 GC 特性，请改用 `--target"
 " wasm` 选项。"
 
-#: ../../language/ffi-and-wasm-host.md:201
+#: ../../language/ffi-and-wasm-host.md:194
 msgid "We now can use it from JavaScript."
 msgstr "现在我们可以从 JavaScript 中使用它。"
 
-#: ../../language/ffi-and-wasm-host.md:203
+#: ../../language/ffi-and-wasm-host.md:196
 msgid ""
 "<html lang=\"en\">\n"
 "  <body>\n"
@@ -14000,7 +13994,7 @@ msgstr ""
 "  </script>\n"
 "</html>\n"
 
-#: ../../language/ffi-and-wasm-host.md:230
+#: ../../language/ffi-and-wasm-host.md:223
 msgid ""
 "For import object, we need to provide all the FFI used in the previously "
 "defined program: the canvas rendering API, the math API and finally, an "
@@ -14010,7 +14004,7 @@ msgstr ""
 "对于导入对象，我们需要提供先前定义的程序中使用的所有 FFI：canvas 渲染 API、math API 和最后，用于 `println` 或 "
 "`print` 函数的打印到控制台的 API。"
 
-#: ../../language/ffi-and-wasm-host.md:232
+#: ../../language/ffi-and-wasm-host.md:225
 msgid ""
 "As of the canvas rendering API and the math API, we can use the following"
 " code to convert the methods of objects into function calls that accept "
@@ -14020,7 +14014,7 @@ msgstr ""
 "至于 canvas 渲染 API 和 math "
 "API，我们可以使用以下代码将对象的方法转换为接受对象作为第一个参数的函数调用，并将对象的常量属性转换为返回值的函数："
 
-#: ../../language/ffi-and-wasm-host.md:234
+#: ../../language/ffi-and-wasm-host.md:227
 msgid ""
 "function prototype_to_ffi(prototype) {\n"
 "  return Object.fromEntries(\n"
@@ -14044,14 +14038,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:256
+#: ../../language/ffi-and-wasm-host.md:249
 msgid ""
 "As of the printing service, we can provide the following closure so that "
 "it buffers the bytes of string until it needs to be logged to the "
 "console:"
 msgstr "至于打印服务，我们可以提供以下闭包，以便它缓冲字符串的字节，直到需要将其记录到控制台："
 
-#: ../../language/ffi-and-wasm-host.md:258
+#: ../../language/ffi-and-wasm-host.md:251
 msgid ""
 "const [log, flush] = (() => {\n"
 "  var buffer = [];\n"
@@ -14087,11 +14081,11 @@ msgid ""
 ");\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:291
+#: ../../language/ffi-and-wasm-host.md:284
 msgid "Now, we put them together, so this is our final complete `index.html`:"
 msgstr "现在，我们将它们放在一起，这是我们最终的完整 `index.html`："
 
-#: ../../language/ffi-and-wasm-host.md:293
+#: ../../language/ffi-and-wasm-host.md:286
 msgid ""
 "<!DOCTYPE html>\n"
 "<html>\n"
@@ -14159,17 +14153,17 @@ msgid ""
 "</html>\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:358
+#: ../../language/ffi-and-wasm-host.md:351
 msgid ""
 "Make sure that `draw.wasm` and `index.html` are in the same folder, then "
 "start a http server at this folder. For example, using Python:"
 msgstr "确保 `draw.wasm` 和 `index.html` 在同一个文件夹中，然后在此文件夹中启动一个 http 服务器。例如，使用 Python："
 
-#: ../../language/ffi-and-wasm-host.md:360
+#: ../../language/ffi-and-wasm-host.md:353
 msgid "python3 -m http.server 8080\n"
 msgstr ""
 
-#: ../../language/ffi-and-wasm-host.md:364
+#: ../../language/ffi-and-wasm-host.md:357
 msgid ""
 "Goto [http://localhost:8080](http://localhost:8080) in your browser, "
 "there should be a smile face on the screen and an output on the console:"
@@ -14177,13 +14171,13 @@ msgstr ""
 "在浏览器中转到 "
 "[http://localhost:8080](http://localhost:8080)，屏幕上应该有一个笑脸，控制台上应该有一个输出："
 
-#: ../../language/ffi-and-wasm-host.md:366
+#: ../../language/ffi-and-wasm-host.md:359
 msgid ""
 "![A smile face webpage with browser devtools "
 "open](../imgs/smile_face_with_log.png)"
 msgstr "![带有笑脸的浏览器开发工具的网页](../imgs/smile_face_with_log.png)"
 
-#: ../../language/ffi-and-wasm-host.md:366
+#: ../../language/ffi-and-wasm-host.md:359
 msgid "A smile face webpage with browser devtools open"
 msgstr "带有笑脸的浏览器开发工具的网页"
 
@@ -17091,10 +17085,10 @@ msgid ""
 "the elements are not needed. Arbitrary number of elements are allowed "
 "preceding and following the `..` part. Because `..` can match uncertain "
 "number of elements, it can appear at most once in an array pattern."
-msgstr "`[pa, ..rest, pb]`：匹配至少有两个元素的数组，并将第一个元素绑定到"
-"`pa`，最后一个元素绑定到 `pb`，其余元素绑定到 `rest`。如果不需要其余元素，可以省"
-"略绑定 `rest`。在 `..` 部分前后允许任意数量的元素。由于 `..` 可以匹配不确定数"
-"量的元素，因此在数组模式中最多只能出现一次。"
+msgstr ""
+"`[pa, ..rest, pb]`：匹配至少有两个元素的数组，并将第一个元素绑定到`pa`，最后一个元素绑定到 `pb`，其余元素绑定到 "
+"`rest`。如果不需要其余元素，可以省略绑定 `rest`。在 `..` 部分前后允许任意数量的元素。由于 `..` "
+"可以匹配不确定数量的元素，因此在数组模式中最多只能出现一次。"
 
 #: ../../language/fundamentals.md:1203
 msgid ""
@@ -17115,8 +17109,9 @@ msgid ""
 "Array patterns provide a unicode-safe way to manipulate strings, meaning "
 "that it respects the code unit boundaries. For example, we can check if a"
 " string is a  palindrome:"
-msgstr "数组模式提供了一种 Unicode 安全的方式来操作字符串，这意味着它在访问元素的时候不会跨"
-"越代码单元边界。例如，我们可以检查一个包含 Unicode 的字符串是否是回文："
+msgstr ""
+"数组模式提供了一种 Unicode 安全的方式来操作字符串，这意味着它在访问元素的时候不会跨越代码单元边界。例如，我们可以检查一个包含 "
+"Unicode 的字符串是否是回文："
 
 #: ../../language/fundamentals.md:1213
 msgid ""
@@ -17140,9 +17135,9 @@ msgid ""
 "code look cleaner. Note that in this case the `..` followed by string or "
 "bytes constant matches exact number of elements so its usage is not "
 "limited to once."
-msgstr "当数组模式中有连续的字符或字节常量时，可以使用模式展开 `..` 运算符将它们组合起来，"
-"使代码看起来更整洁。在这种情况下，`..` 后跟字符串或字节常量匹配确切数量的元素，"
-"因此它可以在数组模式中多次使用。"
+msgstr ""
+"当数组模式中有连续的字符或字节常量时，可以使用模式展开 `..` 运算符将它们组合起来，使代码看起来更整洁。在这种情况下，`..` "
+"后跟字符串或字节常量匹配确切数量的元素，因此它可以在数组模式中多次使用。"
 
 #: ../../language/fundamentals.md:1224
 msgid ""
@@ -19404,40 +19399,3 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
-
-#~ msgid ""
-#~ "For `Array`, `FixedArray` and `ArrayView`, "
-#~ "MoonBit allows using array pattern."
-#~ msgstr "对于 `Array`、`FixedArray` 和 `ArrayView`，MoonBit 允许使用数组模式。"
-
-#~ msgid ""
-#~ "`[pa, pb, pc]` : matching for "
-#~ "known number of elements, 3 in "
-#~ "this example"
-#~ msgstr "`[pa, pb, pc]`：匹配已知数量的元素，在此示例中为 3 个"
-
-#~ msgid ""
-#~ "`[pa, ..]` : matching for known "
-#~ "number of elements, followed by unknown"
-#~ " number of elements"
-#~ msgstr "`[pa, ..]`：匹配已知数量的元素，后跟未知数量的元素"
-
-#~ msgid ""
-#~ "`[.., pa]` : matching for known "
-#~ "number of elements, preceded by unknown"
-#~ " number of elements"
-#~ msgstr "`[.., pa]`：匹配已知数量的元素，前面是未知数量的元素"
-
-#~ msgid ""
-#~ "test {\n"
-#~ "  let ary = [1, 2, 3, 4]\n"
-#~ "  if ary is [a, b, ..] && a == 1 && b == 2 {\n"
-#~ "    inspect!(\"a = \\{a}, b = \\{b}\", content=\"a = 1, b = 2\")\n"
-#~ "  } else {\n"
-#~ "    fail!(\"\")\n"
-#~ "  }\n"
-#~ "  guard ary is [.., a, b] else { fail!(\"\") }\n"
-#~ "  inspect!(\"a = \\{a}, b = \\{b}\", content=\"a = 3, b = 4\")\n"
-#~ "}\n"
-#~ msgstr ""
-

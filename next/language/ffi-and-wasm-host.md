@@ -114,23 +114,21 @@ WebAssembly.instantiateStreaming(fetch("xxx.wasm"), {
 
 Check out the documentation such as [MDN](https://developer.mozilla.org/en-US/docs/WebAssembly) or the manual of runtime that you're using to embed the Wasm.
 
-
-In order to passing closure to host, we need to add `make_closure` into `moonbit:ffi`.
-e.g. [onclick](https://html.spec.whatwg.org/multipage/webappapis.html#handler-onclick)
+In order to passing closure to host (e.g. [onclick](https://html.spec.whatwg.org/multipage/webappapis.html#handler-onclick)), we need to add `moonbit:ffi.make_closure` to the import object.
 
 ```moonbit
 extern type MouseEvent
-extern type Window
-fn onclick(self : Window, e : (MouseEvent) -> Unit) = "Window" "onclick"
-pub fn print_hello(self : Window) -> Unit {
-  self.onclick(fn (_){ println("hello")})
+extern type WindowObj
+fn onclick(self : WindowObj, e : (MouseEvent) -> Unit) = "window" "set_onclick"
+pub fn print_hello(self : WindowObj) -> Unit {
+  self.onclick(fn (_) { println("hello")})
 }
 ```
 
-```typescript
+```javascript
 let importObject = { 
-  Window : {
-    onclick : (w : Window, f : (e : MouseEvent) => void ) => w.onclick = f 
+  window : {
+    set_onclick : (w, callback) => w.onclick = callback
   },
   spectest: {
     print_char: log
@@ -139,11 +137,6 @@ let importObject = {
     make_closure: (funcref, closure) => funcref.bind(null, closure)
   } 
 }
-WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/lib/lib.wasm"), importObject).then(
-  (obj) => {
-    obj.instance.exports["print_hello"](window);
-  }
-);
 ```
 
 ## Example: Smiling face
