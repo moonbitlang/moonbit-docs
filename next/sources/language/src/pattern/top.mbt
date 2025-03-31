@@ -165,3 +165,33 @@ fn match_point[T](p : Point[T]) -> Unit {
   }
 }
 // end simple pattern 2
+
+// start guard condition 1
+fn guard_cond(x : Int?) -> Int {
+  fn f(x : Int) -> Array[Int] {
+    [x, x + 42]
+  }
+
+  match x {
+    Some(a) if f(a) is [0, b] => a + b
+    Some(b) => b
+    None => -1
+  }
+}
+
+test {
+  assert_eq!(guard_cond(None), -1)
+  assert_eq!(guard_cond(Some(0)), 42)
+  assert_eq!(guard_cond(Some(1)), 1)
+}
+// end guard condition 1
+
+// start guard condition 2
+fn guard_check(x: Int?) -> Unit {
+  match x {
+    Some(a) if a >= 0 => ()
+    Some(a) if a < 0 => ()
+    None => ()
+  }
+}
+// end guard condition 2

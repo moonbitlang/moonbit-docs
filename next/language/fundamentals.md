@@ -1275,6 +1275,36 @@ When the matched value has type `Json`, literal patterns can be used directly, t
 :end-before: end pattern 6
 ```
 
+### Guard condition
+
+Each case in a pattern matching expression can have a guard condition. A guard
+condition is a boolean expression that must be true for the case to be matched.
+If the guard condition is false, the case is skipped and the next case is tried.
+For example:
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start guard condition 1
+:end-before: end guard condition 1
+```
+
+Note that the guard conditions will not be considered when checking if all
+patterns are covered by the match expression. So you will see a warning of
+partial match for the following case:
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start guard condition 2
+:end-before: end guard condition 2
+```
+
+``````{warning}
+It is not encouraged to call a function that mutates a part of the value being
+matched inside a guard condition. When such case happens, the part being mutated
+will not be re-evaluated in the subsequent patterns. Use it with caution.
+``````
+
 ## Generics
 
 Generics are supported in top-level function and data type definitions. Type parameters can be introduced within square brackets. We can rewrite the aforementioned data type `List` to add a type parameter `T` to obtain a generic version of lists. We can then define generic functions over lists like `map` and `reduce`.
