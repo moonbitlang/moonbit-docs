@@ -8676,7 +8676,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4061.md:59
 msgid "MoonBit will report an error."
-msgstr ""
+msgstr "Moonbit 会报告这个错误"
 
 #: ../../language/error_codes/E4061.md:63
 msgid ""
@@ -8684,7 +8684,7 @@ msgid ""
 "implementation is in. If that is not possible, you can create a new type "
 "over the type you wish to implement the trait for, and then implement the"
 " trait for the new type:"
-msgstr ""
+msgstr "您可以将trait或类型移动到“”实现所在的当前包中。如果这是不可能的，你可以在你希望实现trait的类型上创建一个新的类型“ ”，然后为这个新类型实现“ ” trait："
 
 #: ../../language/error_codes/E4061.md:70
 msgid ""
@@ -8703,13 +8703,13 @@ msgstr ""
 msgid ""
 "This `impl` shadows method previously defined. This will result in "
 "different implementations for trait inside and outside current package."
-msgstr ""
+msgstr "这个“impl”阴影方法之前定义过。这将导致当前包内部和外部trait的不同实现"
 
 #: ../../language/error_codes/E4062.md:6
 msgid ""
 "In MoonBit, you can implicitly implement a trait for a type by defining "
 "all the methods in that trait. For example, if you have trait like this:"
-msgstr ""
+msgstr "在MoonBit中，你可以通过定义trait中的所有方法来隐式地实现一个类型的trait。例如，如果你有这样的特质："
 
 #: ../../language/error_codes/E4062.md:9
 msgid ""
@@ -8722,7 +8722,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4062.md:16
 msgid "Then, for a type `Point`, you can implement the trait like this:"
-msgstr ""
+msgstr "然后，对于‘ Point ’类型，你可以这样实现trait："
 
 #: ../../language/error_codes/E4062.md:18
 msgid ""
@@ -8745,7 +8745,7 @@ msgid ""
 "However, as you can implement a trait for a type explicitly with `impl`, "
 "this may leads to inconsistent behavior when these two implementation "
 "have different visibility."
-msgstr ""
+msgstr "然而，当你可以用“impl”显式地实现一个类型的trait时，当这两个实现具有不同的可见性时，这可能会导致不一致的行为"
 
 #: ../../language/error_codes/E4062.md:39
 #, fuzzy
@@ -8779,7 +8779,7 @@ msgstr ""
 msgid ""
 "If these code were able to pass compilation, then for the function "
 "defined in another package:"
-msgstr ""
+msgstr "如果这些代码能够通过编译，那么对于定义在另一个包中的函数“ ”："
 
 #: ../../language/error_codes/E4062.md:65
 msgid ""
@@ -8792,7 +8792,7 @@ msgstr ""
 msgid ""
 "The output will be `A::f`. However, if the `probe` function is defined in"
 " the package `a`:"
-msgstr ""
+msgstr "输出将是‘ A::f ’。但是，如果‘ probe ’函数定义在包‘ a ’中："
 
 #: ../../language/error_codes/E4062.md:73
 msgid ""
@@ -8803,14 +8803,14 @@ msgstr ""
 
 #: ../../language/error_codes/E4062.md:79
 msgid "The output will be `impl T for A with f`."
-msgstr ""
+msgstr "输出将是‘ impl T for A with f ’"
 
 #: ../../language/error_codes/E4062.md:83
 msgid ""
 "To fix this error, you need to make sure both the implicitly (`A::f`) and"
 " explicitly implementation (`impl`) of the trait have the same "
 "visibility."
-msgstr ""
+msgstr "要修复这个错误，你需要确保trait的隐式实现（‘ A::f ‘）和显式实现（’ impl ’）具有相同的可见性"
 
 #: ../../language/error_codes/E4062.md:86
 msgid ""
@@ -8827,11 +8827,11 @@ msgstr ""
 
 #: ../../language/error_codes/E4063.md:3
 msgid "Type does not implement trait, although an `impl` is defined."
-msgstr ""
+msgstr "Type不实现trait，尽管定义了‘ impl ’。"
 
 #: ../../language/error_codes/E4063.md:5
 msgid "This error can be further divided into 5 cases:"
-msgstr ""
+msgstr "此误差可进一步分为5种情况："
 
 #: ../../language/error_codes/E4063.md:7 ../../language/error_codes/E4063.md:15
 #, fuzzy
@@ -8845,15 +8845,15 @@ msgstr "实现细节"
 
 #: ../../language/error_codes/E4063.md:9
 msgid "Method type mismatch"
-msgstr ""
+msgstr "方法类型不匹配"
 
 #: ../../language/error_codes/E4063.md:10
 msgid "Constraints are not satisfied"
-msgstr ""
+msgstr "不满足约束条件"
 
 #: ../../language/error_codes/E4063.md:11
 msgid "Method contains unresolved type parameters"
-msgstr ""
+msgstr "方法包含未解析的类型参数"
 
 #: ../../language/error_codes/E4063.md:17
 msgid ""
@@ -8880,7 +8880,7 @@ msgid ""
 "message. For the example above, you can add the missing method `to_float`"
 " to type `A`."
 msgstr ""
-
+"根据错误消息提供的提示修改代码。在上面的例子中，你可以将缺少的方法to_float添加到类型A中"
 #: ../../language/error_codes/E4063.md:39
 msgid ""
 "impl Number for A with to_float(self : A) -> Float {\n"
@@ -8894,7 +8894,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4064.md:3
 msgid "Invalid escape sequence in char/string literal."
-msgstr "字符或字符串字面量中包含不合法的转义序列。"
+msgstr "字符或字符串字面量中包含不合法的转义序列"
 
 #: ../../language/error_codes/E4064.md:7
 msgid ""
@@ -8924,7 +8924,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4064.md:23
 msgid "Only `\\x` and `\\o` escape sequences are supported in `Byte` literal."
-msgstr "在 `Byte` 字面量中，只能使用 `\\x` 和 `\\o` 形式的转义序列。"
+msgstr "在 `Byte` 字面量中，只能使用 `\\x` 和 `\\o` 形式的转义序列"
 
 #: ../../language/error_codes/E4065.md:1
 msgid "E4065"
@@ -8932,7 +8932,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4065.md:3
 msgid "Overloaded operator should accept the correct number of arguments."
-msgstr ""
+msgstr "重载操作符应接受正确数量的参数"
 
 #: ../../language/error_codes/E4065.md:5
 msgid ""
