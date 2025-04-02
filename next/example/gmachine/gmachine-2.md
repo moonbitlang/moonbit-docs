@@ -4,7 +4,7 @@ This article is the second in the series on implementing lazy evaluation in Moon
 
 ## let Expressions
 
-The `let` expression in coref differs slightly from that in MoonBit. A `let` expression can create multiple variables but can only be used within a limited scope. Here is an example:
+The `let` expression in coreF differs slightly from that in MoonBit. A `let` expression can create multiple variables but can only be used within a limited scope. Here is an example:
 
 ```moonbit
 {
@@ -14,7 +14,7 @@ The `let` expression in coref differs slightly from that in MoonBit. A `let` exp
 }
 ```
 
-Equivalent coref expression:
+Equivalent coreF expression:
 
 ```clojure
 (let ([x (add n m)]
@@ -22,7 +22,7 @@ Equivalent coref expression:
   (mul x y)) ;; xy can only be used within let
 ```
 
-It is important to note that coref's `let` expressions must follow a sequential order. For example, the following is not valid:
+It is important to note that coreF's `let` expressions must follow a sequential order. For example, the following is not valid:
 
 ```clojure
 (let ([y (add x 42)]

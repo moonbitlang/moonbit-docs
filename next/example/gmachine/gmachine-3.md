@@ -108,7 +108,7 @@ We first define a concept: bottom, which conceptually represents a value that ne
 
 > If this condition is not met, it does not necessarily mean that the argument is not needed at all; it may be used only in certain branches and its use is determined at runtime. Such an argument is a typical example of one that should be lazily evaluated.
 
-Let's consider bottom as `false` and non-bottom values as `true`. In this way, all functions in coref can be considered boolean functions. Take `abs` as an example:
+Let's consider bottom as `false` and non-bottom values as `true`. In this way, all functions in coreF can be considered boolean functions. Take `abs` as an example:
 
 ```clojure
 (defn abs[n]
