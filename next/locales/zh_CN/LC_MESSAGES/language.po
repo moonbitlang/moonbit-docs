@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-31 19:24+0800\n"
+"POT-Creation-Date: 2025-03-28 16:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -8722,7 +8722,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4062.md:16
 msgid "Then, for a type `Point`, you can implement the trait like this:"
-msgstr ""
+msgstr "然后，对于‘Point’类型，你可以这样实现 trait："
 
 #: ../../language/error_codes/E4062.md:18
 msgid ""
@@ -8745,7 +8745,7 @@ msgid ""
 "However, as you can implement a trait for a type explicitly with `impl`, "
 "this may leads to inconsistent behavior when these two implementation "
 "have different visibility."
-msgstr ""
+msgstr "然而，当你可以用“impl”显式地实现一个类型的 trait 时，当这两个实现具有不同的可见性时，这可能会导致不一致的行为"
 
 #: ../../language/error_codes/E4062.md:39
 #, fuzzy
@@ -8792,7 +8792,7 @@ msgstr ""
 msgid ""
 "The output will be `A::f`. However, if the `probe` function is defined in"
 " the package `a`:"
-msgstr ""
+msgstr "输出将是‘A::f’。但是，如果‘probe’函数定义在包‘a’中："
 
 #: ../../language/error_codes/E4062.md:73
 msgid ""
@@ -17295,75 +17295,10 @@ msgid ""
 msgstr ""
 
 #: ../../language/fundamentals.md:1278
-msgid "Guard condition"
-msgstr "守卫条件"
-
-#: ../../language/fundamentals.md:1280
-msgid ""
-"Each case in a pattern matching expression can have a guard condition. A "
-"guard condition is a boolean expression that must be true for the case to"
-" be matched. If the guard condition is false, the case is skipped and the"
-" next case is tried. For example:"
-msgstr ""
-"模式匹配表达式中的每个分支都可以有一个守卫条件。守卫条件是一个布尔表达式，只有当该条件为"
-"真时，对应的分支才会被匹配。如果守卫条件为假，则跳过该分支并尝试下一个分支。例如："
-
-
-#: ../../language/fundamentals.md:1284
-msgid ""
-"fn guard_cond(x : Int?) -> Int {\n"
-"  fn f(x : Int) -> Array[Int] {\n"
-"    [x, x + 42]\n"
-"  }\n"
-"\n"
-"  match x {\n"
-"    Some(a) if f(a) is [0, b] => a + b\n"
-"    Some(b) => b\n"
-"    None => -1\n"
-"  }\n"
-"}\n"
-"\n"
-"test {\n"
-"  assert_eq!(guard_cond(None), -1)\n"
-"  assert_eq!(guard_cond(Some(0)), 42)\n"
-"  assert_eq!(guard_cond(Some(1)), 1)\n"
-"}\n"
-msgstr ""
-
-#: ../../language/fundamentals.md:1291
-msgid ""
-"Note that the guard conditions will not be considered when checking if "
-"all patterns are covered by the match expression. So you will see a "
-"warning of partial match for the following case:"
-msgstr ""
-"注意，在检查所有模式是否都被匹配表达式覆盖时，不会考虑守卫条件。因此，您会看到以下情况的警告："
-
-#: ../../language/fundamentals.md:1295
-msgid ""
-"fn guard_check(x: Int?) -> Unit {\n"
-"  match x {\n"
-"    Some(a) if a >= 0 => ()\n"
-"    Some(a) if a < 0 => ()\n"
-"    None => ()\n"
-"  }\n"
-"}\n"
-msgstr ""
-
-#: ../../language/fundamentals.md:1303
-msgid ""
-"It is not encouraged to call a function that mutates a part of the value "
-"being matched inside a guard condition. When such case happens, the part "
-"being mutated will not be re-evaluated in the subsequent patterns. Use it"
-" with caution."
-msgstr ""
-"不鼓励在守卫条件中调用可能通过副作用改变被匹配的值的函数。在这种情况下，被改变的部分不会"
-"在后续模式中重新求值。请谨慎使用。"
-
-#: ../../language/fundamentals.md:1308
 msgid "Generics"
 msgstr "泛型"
 
-#: ../../language/fundamentals.md:1310
+#: ../../language/fundamentals.md:1280
 msgid ""
 "Generics are supported in top-level function and data type definitions. "
 "Type parameters can be introduced within square brackets. We can rewrite "
@@ -17374,7 +17309,7 @@ msgstr ""
 "泛型在顶层函数和数据类型定义中受支持。可以在方括号内引入类型参数。我们可以重写上述数据类型 `List`，添加类型参数 `T` "
 "以获得列表的通用版本。然后，我们可以定义列表上的通用函数，如 `map` 和 `reduce`。"
 
-#: ../../language/fundamentals.md:1312
+#: ../../language/fundamentals.md:1282
 msgid ""
 "enum List[T] {\n"
 "  Nil\n"
@@ -17396,21 +17331,21 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1316
+#: ../../language/fundamentals.md:1286
 msgid "Special Syntax"
 msgstr "特殊语法"
 
-#: ../../language/fundamentals.md:1318
+#: ../../language/fundamentals.md:1288
 msgid "Pipe operator"
 msgstr "管道运算符"
 
-#: ../../language/fundamentals.md:1320
+#: ../../language/fundamentals.md:1290
 msgid ""
 "MoonBit provides a convenient pipe operator `|>`, which can be used to "
 "chain regular function calls:"
 msgstr "moonbit 提供了一个方便的管道运算符`|>`，可以用于链接常规函数调用："
 
-#: ../../language/fundamentals.md:1322
+#: ../../language/fundamentals.md:1292
 msgid ""
 "5 |> ignore // <=> ignore(5)\n"
 "[] |> Array::push(5) // <=> Array::push([], 5)\n"
@@ -17419,25 +17354,25 @@ msgid ""
 "|> ignore // <=> ignore(add(1, 5))\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1329
+#: ../../language/fundamentals.md:1299
 msgid "Cascade Operator"
 msgstr "级联运算符"
 
-#: ../../language/fundamentals.md:1331
+#: ../../language/fundamentals.md:1301
 msgid ""
 "The cascade operator `..` is used to perform a series of mutable "
 "operations on the same value consecutively. The syntax is as follows:"
 msgstr "级联运算符`..`用于连续对同一值执行一系列可变操作。语法如下："
 
-#: ../../language/fundamentals.md:1334
+#: ../../language/fundamentals.md:1304
 msgid "x..f()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1341
+#: ../../language/fundamentals.md:1311
 msgid "`x..f()..g()` is equivalent to `{x.f(); x.g(); x}`."
 msgstr "`x..f()..g()` 等价于 `{x.f(); x.g(); x}`。"
 
-#: ../../language/fundamentals.md:1343
+#: ../../language/fundamentals.md:1313
 msgid ""
 "Consider the following scenario: for a `StringBuilder` type that has "
 "methods like `write_string`, `write_char`, `write_object`, etc., we often"
@@ -17445,7 +17380,7 @@ msgid ""
 "value:"
 msgstr "考虑以下情况：对于具有诸如`write_string`，`write_char`，`write_object`等方法的`StringBuilder`类型，我们经常需要对同一`StringBuilder`值执行一系列操作："
 
-#: ../../language/fundamentals.md:1347
+#: ../../language/fundamentals.md:1317
 msgid ""
 "let builder = StringBuilder::new()\n"
 "builder.write_char('a')\n"
@@ -17455,7 +17390,7 @@ msgid ""
 "let result = builder.to_string()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1354
+#: ../../language/fundamentals.md:1324
 msgid ""
 "To avoid repetitive typing of `builder`, its methods are often designed "
 "to return `self` itself, allowing operations to be chained using the `.` "
@@ -17467,7 +17402,7 @@ msgstr ""
 "为了避免重复输入`builder`，其方法通常设计为返回`self`本身，允许使用`.`运算符链接操作。为了区分不可变和可变操作，在 "
 "MoonBit 中，对于所有返回`Unit`的方法，可以使用级联运算符进行连续操作，而无需修改方法的返回类型。"
 
-#: ../../language/fundamentals.md:1360
+#: ../../language/fundamentals.md:1330
 msgid ""
 "let result = StringBuilder::new()\n"
 "  ..write_char('a')\n"
@@ -17477,18 +17412,18 @@ msgid ""
 "  .to_string()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1367
+#: ../../language/fundamentals.md:1337
 msgid "Is Expression"
 msgstr "Is 表达式"
 
-#: ../../language/fundamentals.md:1369
+#: ../../language/fundamentals.md:1339
 msgid ""
 "The `is` expression tests whether a value conforms to a specific pattern."
 " It returns a `Bool` value and can be used anywhere a boolean value is "
 "expected, for example:"
 msgstr "`is` 表达式测试值是否符合特定模式。它返回一个 `Bool` 值，并可以在期望布尔值的任何地方使用，例如："
 
-#: ../../language/fundamentals.md:1373
+#: ../../language/fundamentals.md:1343
 msgid ""
 "fn is_none[T](x : T?) -> Bool {\n"
 "  x is None\n"
@@ -17499,26 +17434,26 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1380
+#: ../../language/fundamentals.md:1350
 msgid ""
 "Pattern binders introduced by `is` expressions can be used in the "
 "following contexts:"
 msgstr "通过 `is` 表达式绑定的标识符可以在以下的上下文中使用："
 
-#: ../../language/fundamentals.md:1383
+#: ../../language/fundamentals.md:1353
 msgid ""
 "In boolean AND expressions (`&&`): binders introduced in the left-hand "
 "expression can be used in the right-hand expression"
 msgstr "在与表达式（`&&`）中：左侧表达式中绑定的标识符可以在右侧表达式中使用"
 
-#: ../../language/fundamentals.md:1387
+#: ../../language/fundamentals.md:1357
 msgid ""
 "fn f(x : Int?) -> Bool {\n"
 "  x is Some(v) && v >= 0\n"
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1394
+#: ../../language/fundamentals.md:1364
 msgid ""
 "In the first branch of `if` expression: if the condition is a sequence of"
 " boolean expressions `e1 && e2 && ...`, the binders introduced by the "
@@ -17528,7 +17463,7 @@ msgstr ""
 "在 `if` 的第一个分支中：如果条件是一系列布尔表达式 `e1 && e2 && ...`，则可以在条件为真的分支中使用 `is` "
 "表达式中绑定的标识符。"
 
-#: ../../language/fundamentals.md:1398
+#: ../../language/fundamentals.md:1368
 msgid ""
 "fn g(x : Array[Int?]) -> Unit {\n"
 "  if x is [v, .. rest] && v is Some(i) && i is 0..=10 {\n"
@@ -17539,11 +17474,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1405
+#: ../../language/fundamentals.md:1375
 msgid "In the following statements of a `guard` condition:"
 msgstr "下面举一个在 `guard` 中使用的情况："
 
-#: ../../language/fundamentals.md:1407
+#: ../../language/fundamentals.md:1377
 msgid ""
 "fn h(x : Int?) -> Unit {\n"
 "  guard x is Some(v) \n"
@@ -17551,11 +17486,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1414
+#: ../../language/fundamentals.md:1384
 msgid "In the body of a `while` loop:"
 msgstr "在 `while` 循环中的使用："
 
-#: ../../language/fundamentals.md:1416
+#: ../../language/fundamentals.md:1386
 msgid ""
 "fn i(x : Int?) -> Unit {\n"
 "  let mut m = x\n"
@@ -17566,18 +17501,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1423
+#: ../../language/fundamentals.md:1393
 msgid "TODO syntax"
 msgstr "TODO 语法"
 
-#: ../../language/fundamentals.md:1425
+#: ../../language/fundamentals.md:1395
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo`语法 (`...`) 是一种特殊构造，用于标记尚未实现或用于未来功能的占位符代码段。例如："
 
-#: ../../language/fundamentals.md:1427
+#: ../../language/fundamentals.md:1397
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"
@@ -19464,4 +19399,3 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
-
