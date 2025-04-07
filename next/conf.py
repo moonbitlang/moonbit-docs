@@ -28,7 +28,7 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path("_ext").resolve()))
 
-extensions = ['myst_parser', 'lexer', 'check', 'indent', 'sphinx_copybutton']
+extensions = ['myst_parser', 'lexer', 'check', 'indent', 'sphinx_copybutton', 'sphinx_design']
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README*.md", 'sources', 'download']
