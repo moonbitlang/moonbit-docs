@@ -42,8 +42,8 @@ test {
     }
   }
   inspect!(palindrome("abba"), content="true")
-  inspect!(palindrome("😭b😭"), content="true")
-  inspect!(palindrome("😭bb🤔"), content="false")
+  inspect!(palindrome("中b中"), content="true")
+  inspect!(palindrome("文bb中"), content="false")
 }
 // end array pattern 1
 

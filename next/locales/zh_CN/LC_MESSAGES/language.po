@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-31 19:24+0800\n"
+"POT-Creation-Date: 2025-04-07 17:18+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -71,13 +71,13 @@ msgstr "如果一个包需要动态链接外部 C 库，可以在它的 `moon.pk
 #: ../../language/C-ffi.md:22
 msgid ""
 "{\n"
-"  ...\n"
+"  // ...\n"
 "  \"link\": {\n"
 "    \"native\": {\n"
 "      \"cc-link-flags\": \"-l<c library>\"\n"
 "    }\n"
 "  },\n"
-"  ...\n"
+"  // ...\n"
 "}\n"
 msgstr ""
 
@@ -299,18 +299,22 @@ msgstr ""
 #: ../../language/C-ffi.md:127
 msgid ""
 "{\n"
-"  ...\n"
-"  \"native-stub\": [ <list of stub file names> ],\n"
-"  ...\n"
+"  // ...\n"
+"  \"native-stub\": [ \n"
+"    // list of stub file names\n"
+"  ],\n"
+"  // ...\n"
 "}\n"
 msgstr ""
 "{\n"
 "  ...\n"
-"  \"native-stub\": [ <包含胶水函数的 C 文件列表> ],\n"
+"  \"native-stub\": [ \n"
+"    // <包含胶水函数的 C 文件列表>\n"
+"  ],\n"
 "  ...\n"
 "}\n"
 
-#: ../../language/C-ffi.md:135
+#: ../../language/C-ffi.md:137
 msgid ""
 "Now, you can write your C wrappers in the listed C files and bind them in"
 " MoonBit. You would probably like to `#include \"moonbit.h\"`, which "
@@ -323,11 +327,11 @@ msgstr ""
 "接口中的类型定义和一些实用的辅助函数。这个头文件自身通常位于 `~/.moon/include`，如果想要了解 `moonbit.h` "
 "中有哪些可用的定义，可以直接查看它的内容。"
 
-#: ../../language/C-ffi.md:140
+#: ../../language/C-ffi.md:142
 msgid "Lifetime management of external object"
 msgstr "外部对象的生命周期管理"
 
-#: ../../language/C-ffi.md:141
+#: ../../language/C-ffi.md:143
 msgid ""
 "When handling foreign object/resource in MoonBit, it is important to free"
 " the object/resource in time to prevent memory/resource leak. `moonbit.h`"
@@ -339,7 +343,7 @@ msgstr ""
 "中提供了一个实用的函数 `moonbit_make_external_object`，它可以借助 MoonBit "
 "的自动内存管理系统来管理外部对象的生命周期："
 
-#: ../../language/C-ffi.md:146
+#: ../../language/C-ffi.md:148
 msgid ""
 "void *moonbit_make_external_object(\n"
 "  void (*finalize)(void *self),\n"
@@ -347,7 +351,7 @@ msgid ""
 ");\n"
 msgstr ""
 
-#: ../../language/C-ffi.md:153
+#: ../../language/C-ffi.md:155
 msgid ""
 "`moonbit_make_external_object` will create a new MoonBit object of size "
 "`payload_size + sizeof(finalize)`, the layout of the object is as "
@@ -356,7 +360,7 @@ msgstr ""
 "`moonbit_make_external_object` 会创建一个大小为 `payload_size + sizeof(finalize)`"
 " 的新的 MoonBit 对象，这个对象的内存布局如下："
 
-#: ../../language/C-ffi.md:156
+#: ../../language/C-ffi.md:158
 msgid ""
 "| MoonBit object header | ... payload | finalize function |\n"
 "                        ^\n"
@@ -371,7 +375,7 @@ msgstr ""
 "                 |_\n"
 "                    `moonbit_make_external_object` 返回的指针"
 
-#: ../../language/C-ffi.md:164
+#: ../../language/C-ffi.md:166
 msgid ""
 "so you can treat the object as a pointer to its payload directly. When "
 "MoonBit's automatic memory management system finds that an object created"
@@ -386,7 +390,7 @@ msgstr ""
 "返回的对象生命周期已经结束时，它会以对象自身为参数，调用创建对象时提供的 `finalize` "
 "函数来释放这个对象占有的外部资源。不过，`finalize` **一定不能** 释放对象自身，因为这部分工作是由 MoonBit 运行时负责的。"
 
-#: ../../language/C-ffi.md:171
+#: ../../language/C-ffi.md:173
 msgid ""
 "On the MoonBit side, objects returned by `moonbit_make_external_object` "
 "should be bind to an *abstract* type, declared using `type T`, so that "
@@ -395,11 +399,11 @@ msgstr ""
 "在 MoonBit 侧，`moonbit_make_external_object` 返回的对象应当被绑定到 *抽象* 类型，即用 `type "
 "T` 语法声明的类型。这样一来，MoonBit 的内存管理系统就不会无视这个对象。"
 
-#: ../../language/C-ffi.md:175
+#: ../../language/C-ffi.md:177
 msgid "Lifetime management of MoonBit object"
 msgstr "MoonBit 对象的生命周期管理"
 
-#: ../../language/C-ffi.md:176
+#: ../../language/C-ffi.md:178
 msgid "Design still evolving, TODO"
 msgstr "设计仍在演进中，待补充"
 
@@ -17123,8 +17127,8 @@ msgid ""
 "    }\n"
 "  }\n"
 "  inspect!(palindrome(\"abba\"), content=\"true\")\n"
-"  inspect!(palindrome(\"😭b😭\"), content=\"true\")\n"
-"  inspect!(palindrome(\"😭bb🤔\"), content=\"false\")\n"
+"  inspect!(palindrome(\"中b中\"), content=\"true\")\n"
+"  inspect!(palindrome(\"文bb中\"), content=\"false\")\n"
 "}\n"
 msgstr ""
 
@@ -17304,10 +17308,7 @@ msgid ""
 "guard condition is a boolean expression that must be true for the case to"
 " be matched. If the guard condition is false, the case is skipped and the"
 " next case is tried. For example:"
-msgstr ""
-"模式匹配表达式中的每个分支都可以有一个守卫条件。守卫条件是一个布尔表达式，只有当该条件为"
-"真时，对应的分支才会被匹配。如果守卫条件为假，则跳过该分支并尝试下一个分支。例如："
-
+msgstr "模式匹配表达式中的每个分支都可以有一个守卫条件。守卫条件是一个布尔表达式，只有当该条件为真时，对应的分支才会被匹配。如果守卫条件为假，则跳过该分支并尝试下一个分支。例如："
 
 #: ../../language/fundamentals.md:1284
 msgid ""
@@ -17335,8 +17336,7 @@ msgid ""
 "Note that the guard conditions will not be considered when checking if "
 "all patterns are covered by the match expression. So you will see a "
 "warning of partial match for the following case:"
-msgstr ""
-"注意，在检查所有模式是否都被匹配表达式覆盖时，不会考虑守卫条件。因此，您会看到以下情况的警告："
+msgstr "注意，在检查所有模式是否都被匹配表达式覆盖时，不会考虑守卫条件。因此，您会看到以下情况的警告："
 
 #: ../../language/fundamentals.md:1295
 msgid ""
@@ -17355,9 +17355,7 @@ msgid ""
 "being matched inside a guard condition. When such case happens, the part "
 "being mutated will not be re-evaluated in the subsequent patterns. Use it"
 " with caution."
-msgstr ""
-"不鼓励在守卫条件中调用可能通过副作用改变被匹配的值的函数。在这种情况下，被改变的部分不会"
-"在后续模式中重新求值。请谨慎使用。"
+msgstr "不鼓励在守卫条件中调用可能通过副作用改变被匹配的值的函数。在这种情况下，被改变的部分不会在后续模式中重新求值。请谨慎使用。"
 
 #: ../../language/fundamentals.md:1308
 msgid "Generics"
