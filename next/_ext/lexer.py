@@ -17,6 +17,7 @@ class MoonBitLexer(RegexLexer):
 
     tokens = {
         'root': [
+            (r"#.*$", token.Comment.Preproc),
             (r"//.*$", token.Comment.Single),
             (r"b?\'.*\'", token.Literal),
             (r"#\|.*$", token.String),

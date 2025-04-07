@@ -21,13 +21,13 @@ If a package needs to dynamically link with foreign C library, add the following
 
 ```json
 {
-  ...
+  // ...
   "link": {
     "native": {
       "cc-link-flags": "-l<c library>"
     }
   },
-  ...
+  // ...
 }
 ```
 
@@ -126,9 +126,11 @@ To add a C stub file to a package, add the following to the `moon.pkg.json` of t
 
 ```json
 {
-  ...
-  "native-stub": [ <list of stub file names> ],
-  ...
+  // ...
+  "native-stub": [ 
+    // list of stub file names
+  ],
+  // ...
 }
 ```
 
