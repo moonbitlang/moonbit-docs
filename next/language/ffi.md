@@ -323,6 +323,50 @@ fn register_callback(callback : () -> Unit) -> Unit {
 ``````
 `````````
 
+## Export Functions
+
+For public functions that are neither methods nor polymorphic, they can be exported by configuring the `exports` field in [link configuration](/toolchain/moon/package.md#link-options).
+
+```json
+{
+  "link": {
+    "<backend>": {
+      "exports": [ "add", "fib:test" ]
+    }
+  }
+}
+```
+
+The previous example exports functions `add` and `fib`, where `fib` will be exported as `test`.
+
+`````````{tab-set}
+``````{tab-item} Wasm & Wasm GC
+:sync: wasm1
+:sync: wasm-gc
+
+```{note}
+It is only effective for the package that configures it, i.e. it doesn't affect the downstream packages.
+```
+``````
+``````{tab-item} JavaScript
+:sync: js
+
+```{note}
+It is only effective for the package that configures it, i.e. it doesn't affect the downstream packages.
+
+There's another `format` option to export as CommonJS module (`cjs`), ES Module (`esm`), or `iife`.
+```
+``````
+``````{tab-item} C
+:sync: c
+```{note}
+It is only effective for the package that configures it, i.e. it doesn't affect the downstream packages.
+
+Renaming the exported function is not supported for now
+```
+``````
+`````````
+
 ## Lifetime management 
 
 MoonBit is a programming language with garbage collection. Thus when handling external object or passing MoonBit object to host, it is essential to keep in mind the lifetime management. Currently, MoonBit uses reference counting for Wasm backend and C backend. For Wasm GC backend and JavaScript backend, the runtime's GC is reused.
