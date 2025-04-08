@@ -65,6 +65,9 @@ latex_elements = {
 
 # -- Options for myst_parser -------------------------------------------------
 myst_heading_anchors = 3
+myst_enable_extensions = [
+    "attrs_inline"
+]
 
 # -- Options for gettext -----------------------------------------------------
 gettext_additional_targets = ["literal-block"]
