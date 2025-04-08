@@ -49,6 +49,7 @@ The table below shows the ABI of different kinds of MoonBit types:
 | external type (`extern type T`) | `void*` |
 | `FixedArray[Byte]`/`Bytes` | `uint8_t*` |
 | `FixedArray[T]` | `T*` |
+| newtype | same as underlying type |
 
 Types not mentioned above have an unstable ABI, so your code should not depend on their current representation.
 
@@ -175,4 +176,89 @@ should be bind to an *abstract* type, declared using `type T`,
 so that MoonBit's memory management system will not ignore the object.
 
 ## Lifetime management of MoonBit object
-Design still evolving, TODO
+MoonBit's native backend uses compiler-optimized reference counting to manage lifetime of objects.
+To avoid memory error or leak, FFI functions must properly maintain the reference count of MoonBit objects.
+
+### Which types are reference counted?
+The following types are always unboxed, so there is no need to manage their lifetime:
+
+- builtin number types, such as `Int` and `Double`
+- constant `enum` (`enum` where all constructors have no payload)
+
+The following types are always boxed and reference counted:
+
+- `FixedArray[T]`, `Bytes` and `String`
+- abstract types (`type T`)
+
+External types (`extern type T`) are also boxed, but they represent external pointers,
+so MoonBit will not perform any reference counting operations on them.
+
+The layout of `struct`/`enum` with payload is currently unstable.
+
+### The calling convention of reference counting
+By default, MoonBit uses an owned calling convention for reference counting.
+That is, callee (the function being invoked) is responsible for
+dropping its parameters using the `moonbit_decref` function.
+If the parameter is used more than once,
+the callee should increase the reference count using the `moonbit_incref` function.
+Here are the rules for the necessary operations to perform in different circumstances:
+
+| event | operation |
+|-------|-----------|
+| read field/element | nothing |
+| store into data structure | `incref` |
+| passed to MoonBit function | `incref` |
+| passed to other C function | nothing |
+| returned | nothing |
+| end of scope (not returned) | `decref` |
+
+For example, here's a lifetime-correct binding to the standard `open` function for opening a file:
+
+```moonbit
+extern "C" open(filename : Bytes, flags : Int) -> Int = "open_ffi"
+```
+
+```c
+int open_ffi(moonbit_bytes_t filename, int flags) {
+  int fd = open(filename, flags);
+  moonbit_decref(filename);
+  return fd;
+}
+```
+
+### The borrow attribute
+To properly maintain reference count, it is often necessary to write a stub C function just to perform `decref`.
+Fortunately, MoonBit provides a `#borrow` attribute to change the calling convention of C FFI to borrow based.
+The syntax of `#borrow` is as follows:
+
+```moonbit
+#borrow(params..)
+extern "C" fn c_ffi(..) -> .. = ..
+```
+
+where `params` is a subset of the parameters of `c_ffi`.
+Parameters of `#borrow` will be passed using borrow based calling convention,
+that is, the invoked function does not need to drop these parameters.
+If the FFI function only read its parameter locally (i.e. does not return its parameters or store them in data structures),
+there is no need to write a stub function using the `#borrow` attribute.
+For example, the `open` function mentioned above could be rewritten using `#borrow` as follows:
+
+```moonbit
+#borrow(filename)
+extern "C" fn open(filename : Bytes, flags : Int) -> Int = "open"
+```
+
+There is no need for a C stub anymore: we are binding to the original version of `open` here.
+With the `#borrow` attribute, this version is still lifetime-correct.
+
+Even if a C stub is still necessary for other reasons, `#borrow` can often simplify the lifetime management of the C stub.
+Here are the rules for the necessary operations to perform **on borrow parameters** in different circumstances:
+
+| event | operation |
+|-------|-----------|
+| read field/element | nothing |
+| store into data structure | `incref` |
+| passed to MoonBit function | `incref` |
+| passed to other C function/`#borrow` MoonBit function | nothing |
+| returned | `incref` |
+| end of scope (not returned) | nothing |
