@@ -133,7 +133,7 @@ There are two ways to declare a foreign function: importing a function or writin
 You can import a function given the module name and the function name, which will be interpreted as `module.function`. For example,
 
 ```moonbit
-fn cos(d : Double) -> Double = "Math" "cos
+fn cos(d : Double) -> Double = "Math" "cos"
 ```
 
 would refer to the function `const cos = (d) => Math.cos(d)`{l=javascript}
