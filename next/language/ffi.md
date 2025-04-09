@@ -237,8 +237,8 @@ The table below shows the underlying representation of some MoonBit types:
 | `Bool`       | `boolean`  |
 | `Int`        | `number`   |
 | `UInt`       | `number`   |
-| `Int64`      | not applicable       |
-| `UInt64`     | not applicable       |
+| `Float`      | `number`   |
+| `Double`     | `number`   |
 | constant `enum` | `number` |
 | external type (`extern type T`) | `any`   |
 | `String` | `string` |
@@ -256,6 +256,8 @@ The table below shows the underlying representation of some MoonBit types:
 | `UInt`       | `uint32_t` |
 | `Int64`      | `int64_t`  |
 | `UInt64`     | `uint64_t` |
+| `Float`      | `float`    |
+| `Double`     | `double`   |
 | constant `enum` | `int32_t` |
 | abstract type (`type T`) | pointer (must be valid MoonBit object) |
 | external type (`extern type T`) | `void*` |
