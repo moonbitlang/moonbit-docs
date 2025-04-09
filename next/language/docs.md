@@ -2,42 +2,54 @@
 
 ## Doc Comments
 
-Doc comments are comments prefix with `///` in each line in the leading of toplevel structure like `fn`,`let`,`enum`,`struct`,`type`. The doc comments contains a markdown text and several pragmas.
+Doc comments are comments prefix with `///` in each line in the leading of toplevel structure like `fn` , `let` , `enum` , `struct` , `type` . The doc comments contains a markdown text and several pragmas.
 
 ```{literalinclude} /sources/language/src/misc/top.mbt
 :language: moonbit
 :start-after: start doc string 1
 :end-before: end doc string 1
+
 ```
 
-### Pragmas
+## Attribute
 
-Pragmas are annotations inside doc comments. They all take the form `/// @word ...`. The _word_ indicates the type of pragma and is followed optionally by several _word_ or string literals. Pragmas do not normally affect the meaning of programs. Unrecognized pragmas will be reported as warnings.
+Attributes are annotations placed before the top-level structure. They take the form `#attribute ...`. 
+An attribute occupies the entire line, and newlines are not allowed within it. Attributes do not normally affect the meaning of programs. Unused attributes will be reported as warnings.
 
-- Alert Pragmas
+- Deprecated Attribute
 
-  Alert pragmas in doc comments of functions will be reported when those functions are referenced. This mechanism is a generalized way to mark functions as `deprecated` or `unsafe`.
+The deprecated attribute is used to mark a function, type or trait as deprecated. 
+MoonBit will emit a warning when the deprecated function or type is used. The message can be customized by passing a string literal to the attribute.
 
-  It takes the form `@alert category "alert message..."`.
+For example:
 
-  The category can be an arbitrary identifier. It allows configuration to decide which alerts are enabled or turned into errors.
+```{literalinclude} /sources/language/src/attributes/top.mbt
+:language: moonbit
+:start-after: start deprecated
+:end-before: end deprecated
+```
 
-  <!-- MANUAL CHECK -->
-  ```moonbit
-  /// @alert deprecated "Use foo2 instead"
-  pub fn foo() -> Unit {
-    ...
-  }
+- Visibility Change Attribute
 
-  /// @alert unsafe "Div will cause an error when y is zero"
-  pub fn div(x : Int, y : Int) -> Int {
-    ...
-  }
+The `#visibility` attribute is similar to the `#deprecated` attribute, but it is used to hint
+that a type will change its visibility in the future. For outside usages, if the usage will 
+be invalidated by the visibility change in future, a warning will be emitted. 
 
-  test {
-    // Warning (Alert deprecated): Use foo2 instead
-    foo()
-    // Warning (Alert unsafe): Div will cause an error when y is zero
-    div(1, 2) |> ignore
-  }
-  ```
+
+```{literalinclude} /sources/language/src/attributes/top.mbt
+:language: moonbit
+:start-after: start visibility
+:end-before: end visibility
+```
+
+The `visibility` attribute takes two arguments: `change_to` and `message`.
+
+- The `change_to` argument is a string that indicates the new visibility of the type. It can be either `abstract` or `readonly`.
+
+  | `change_to` | Invalidated Usages |
+  |-------------|--------------------|
+  | `readonly`  | Creating an instance of the type or mutating the fields of the instance. |
+  | `abstract`  | Creating an instance of the type, mutating the fields of the instance, pattern matching, or accessing fields by label. |
+
+- The `message` argument is a string that provides additional information about the visibility change.
+
