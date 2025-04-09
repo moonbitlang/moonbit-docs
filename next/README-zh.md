@@ -68,3 +68,14 @@ make markdown
 make gettext
 sphinx-intl update -p _build/gettext -l zh_CN
 ```
+
+你应该能够通过 Git 版本系统看到文件的变化。
+你会看到新增或修改的条目，每个条目由文档位置、`msgid` 和 `msgstr` 组成。
+`msgid` 是原始文本，`msgstr` 则是需要填写的翻译内容。
+
+如果有 `fuzzy` 标记，表示 gettext 尝试匹配了一个可能不正确的翻译。
+如果你已经验证了内容或者另外翻译了它，你应该删除包含该标记的行。
+
+要了解完整的格式说明，请查看 [GNU 手册](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html)
+
+要获得更好的编辑体验，请查看 GNU 网站上列出的[编辑器](https://www.gnu.org/software/gettext/manual/html_node/Editing.html)。

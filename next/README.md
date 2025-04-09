@@ -68,3 +68,14 @@ Execute task `Translate Document` in VSCode, or:
 make gettext
 sphinx-intl update -p _build/gettext -l zh_CN
 ```
+
+You should be able to see the file changed thanks to the Git version system.
+You should see new entries or modified entries each composed of a document position, a `msgid` and a `msgstr`.
+The `msgid` is the original text and `msgstr` would be the translation to be written.
+
+If there's a `fuzzy` flag, it means that gettext has tried to match a translation which might not be correct.
+If you have verified the content or translated it otherwise, you should remove the line containing the flag.
+
+For full format explanation, checkout [GNU's handbook](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html)
+
+For better editing experience, checkout [editors](https://www.gnu.org/software/gettext/manual/html_node/Editing.html) listed on GNU's website.
