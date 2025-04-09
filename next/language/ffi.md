@@ -195,10 +195,13 @@ The table below shows the underlying representation of some MoonBit types:
 
 `````````{tab-set}
 :sync-group: backends
+
 ``````{tab-item} Wasm
 :sync: wasm1
+
 | MoonBit type |   ABI      |
 |--------------|------------|
+| `Bool`       | `i32`   |
 | `Int`        | `i32`   |
 | `UInt`       | `i32`   |
 | `Int64`      | `i64`   |
@@ -211,8 +214,10 @@ The table below shows the underlying representation of some MoonBit types:
 
 ``````{tab-item} Wasm GC
 :sync: wasm-gc
+
 | MoonBit type |   ABI      |
 |--------------|------------|
+| `Bool`       | `i32`   |
 | `Int`        | `i32`   |
 | `UInt`       | `i32`   |
 | `Int64`      | `i64`   |
@@ -229,6 +234,7 @@ The table below shows the underlying representation of some MoonBit types:
 
 | MoonBit type |   ABI      |
 |--------------|------------|
+| `Bool`       | `boolean`  |
 | `Int`        | `number`   |
 | `UInt`       | `number`   |
 | `Int64`      | not applicable       |
@@ -245,6 +251,7 @@ The table below shows the underlying representation of some MoonBit types:
 
 | MoonBit type |   ABI      |
 |--------------|------------|
+| `Bool`       | `int32_t`  |
 | `Int`        | `int32_t`  |
 | `UInt`       | `uint32_t` |
 | `Int64`      | `int64_t`  |
