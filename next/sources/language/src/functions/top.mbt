@@ -181,3 +181,16 @@ fn f(_x : Int, loc~ : SourceLoc = _, args_loc~ : ArgsLoc = _) -> String {
   // loc of arguments: [Some(<filename>:7:5-7:6), Some(<filename>:7:8-7:9), None, None]
 }
 // end autofill arguments
+
+// start function alias
+// `hashmap_new` will become an alias of `@hashmap.new`
+fnalias @hashmap.new as hashmap_new
+fnalias @hashmap.new // same as `fnalias @hashmap.new as new`
+fnalias new as new_2 // local alias is also allowed
+
+// creating multiple alias in one package
+fnalias @hashmap.(
+  iter,
+  each as hashmap_each
+)
+// end function alias

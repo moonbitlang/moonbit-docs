@@ -507,6 +507,19 @@ and `ArgsLoc`, which is a array containing the source location of each argument,
 
 Autofill arguments are very useful for writing debugging and testing utilities.
 
+### Function alias
+MoonBit allows calling functions with alternative names via function alias. Function alias can be declared as follows:
+
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start function alias
+:end-before: end function alias
+```
+
+Function alias can be used to assign shorter name to foreign functions.
+You can also create public function alias with the syntax `pub fnalias`,
+which is useful for re-exporting functions from another package.
+
 ## Control Structures
 
 ### Conditional Expressions
