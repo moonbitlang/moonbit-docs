@@ -102,7 +102,7 @@ export function render(template: string, page: Page): string {
     .replace("%TOTAL%", page.total.toString())
     .replace("%LOCALE%", page.locale)
     .replace("%EN_HREF%", page.enHref)
-    .replace("%ZH_HREF%", page.zhHref)
+    .replaceAll("%ZH_HREF%", page.zhHref)
     .replace("%HOMEPAGE%", page.homePage)
     .replace("%HOMEPAGE_HREF%", page.homePageHref);
 }

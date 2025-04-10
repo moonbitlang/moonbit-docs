@@ -131,6 +131,16 @@
         document.querySelector("html").classList.add("dark");
         themeButton.innerHTML = sunSvg;
       }
+
+      const visited = localStorage.getItem("visited");
+      if (!visited) {
+        localStorage.setItem("visited", "true");
+        
+        const locale = navigator.language || navigator.userLanguage;
+        if (locale.startsWith("zh")) {
+          window.location.href = "%ZH_HREF%";
+        }
+      }
     </script>
   </body>
 </html>
