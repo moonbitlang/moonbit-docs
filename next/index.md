@@ -24,8 +24,8 @@ The IDE environment is available at [https://try.moonbitlang.com](https://try.mo
 - [Tour](https://tour.moonbitlang.com): Interactive language playground
 
 - [MoonCakes](https://mooncakes.io): Package registry along with API documents, including:
-  - [Standard library API](https://mooncakes.io/docs/#/moonbitlang/core/)
-  - [Experimental library API](https://mooncakes.io/docs/#/moonbitlang/x/)
+  - [Standard library API](https://mooncakes.io/docs/moonbitlang/core/)
+  - [Experimental library API](https://mooncakes.io/docs/moonbitlang/x/)
 
 ```{toctree}
 :hidden:

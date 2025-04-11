@@ -48,7 +48,7 @@ which will hide the field from the outside world completely.
 Note that `struct`s with private fields cannot be constructed directly outside,
 but you can update the public fields using the functional struct update syntax.
 
-Readonly types is a very useful feature, inspired by [private types](https://v2.ocaml.org/manual/privatetypes.html) in OCaml. In short, values of `pub` types can be destructed by pattern matching and the dot syntax, but cannot be constructed or mutated in other packages. Note that there is no restriction within the same package where `pub` types are defined.
+Readonly types is a very useful feature, inspired by [private types](https://ocaml.org/manual/5.3/privatetypes.html) in OCaml. In short, values of `pub` types can be destructed by pattern matching and the dot syntax, but cannot be constructed or mutated in other packages. Note that there is no restriction within the same package where `pub` types are defined.
 
 <!-- MANUAL CHECK -->
 
