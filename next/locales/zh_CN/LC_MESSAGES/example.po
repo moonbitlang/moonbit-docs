@@ -460,7 +460,7 @@ msgid ""
 "update the referenced mutable field and replace its content with the "
 "computed result. Therefore, there's no need to recompute it during the "
 "second execution of the `extract` method."
-msgstr "无论哪一方先执行 `extract` 方法，它都会更新引用的可变字段，并用计算结果替换其内容。"
+msgstr "无论哪一方先执行 `extract` 方法，它都会更新引用的可变字段，并用计算结果替换其内容。因此，在第二次执行 `extract` 方法时无需重新计算。"
 
 #: ../../example/gmachine/gmachine-1.md:157
 msgid "Conventions"
@@ -634,7 +634,7 @@ msgid ""
 msgstr ""
 "如果一个 redex 的参数比超组合子所需的参数——这在高阶函数中很常见——它就成为一个 `弱头部范式`（weak head normal "
 "form，通常缩写为 WHNF）。在这种情况下，即使它的子表达式包含 "
-"redex，也不需要采取任何行动。考虑一个对列表中的所有整数进行三倍化的例子。"
+"redex，也无需处理。以「对列表中的所有整数执行三倍化」为例。"
 
 #: ../../example/gmachine/gmachine-1.md:220
 msgid "(map (mul 3) list-of-int)\n"
@@ -696,7 +696,7 @@ msgid ""
 "interpreter for execution. Instead, it further transforms it into LLVM, C"
 " code, or machine code based on the selected backend."
 msgstr ""
-"它们是用于指导编译器实现的执行模型。重要的是要注意，与今天各种流行的虚拟机（如 JVM）不同，抽象机器更像是编译器的中间表示（IR）。以 "
+"这些执行模型用于指导编译器实现。需特别注意，与当下主流的虚拟机（如 JVM）不同，抽象机器更像是编译器的中间表示（IR）。以 "
 "Haskell 的编译器 GHC 为例，生成 STG 代码后，它不会直接将其传递给解释器执行。相反，它会根据所选的后端进一步将其转换为 "
 "LLVM、C 代码或机器代码。"
 
@@ -720,7 +720,7 @@ msgid ""
 "sequentially. Some key differences include:"
 msgstr ""
 "虽然 G-Machine "
-"是用于惰性函数式语言的抽象机器，但它的结构和概念与编写一般命令式语言时遇到的情况并没有显著不同。它也有堆和栈等结构，其指令是顺序执行的。一些关键的区别包括："
+"是用于惰性函数式语言的抽象机器，但其结构和概念与编写一般命令式语言时遇到的情况并无显著差异。它也有堆和栈等结构，其指令是顺序执行的。一些关键的区别包括："
 
 #: ../../example/gmachine/gmachine-1.md:247
 msgid "The basic unit of memory in the heap is not bytes, but graph nodes."
@@ -962,7 +962,7 @@ msgid ""
 " second instruction loads the corresponding code sequence of `main` into "
 "the current code sequence."
 msgstr ""
-"在机器的初始状态下，所有编译的超组合子都已经放在堆上的 `NGlobal` 节点中。此时，G-Machine "
+"在机器的初始状态下，所有已编译的超组合子均以 `NGlobal` 节点的形式分配在堆上。此时，G-Machine "
 "中的当前代码序列只包含两条指令。第一条指令将 `main` 节点的地址推送到栈上，第二条指令将 `main` 的对应代码序列加载到当前代码序列中。"
 
 #: ../../example/gmachine/gmachine-1.md:287
@@ -973,8 +973,8 @@ msgid ""
 "\"instantiating\" `main`. Once instantiation is complete, the address of "
 "the entry point of this graph is pushed onto the stack."
 msgstr ""
-"`main` 的对应代码序列在堆上实例化，分配节点并加载数据，最终在内存中构建一个图。这个过程被称为“实例化” "
-"`main`。一旦实例化完成，这个图的入口地址被推送到栈顶。"
+"`main` 对应的代码序列在堆上实例化，此时会分配节点并加载相应数据，最终在内存中构建一个图。该过程被称为“实例化” "
+"`main`。一旦实例化完成，该图的入口地址将被压入栈中。"
 
 #: ../../example/gmachine/gmachine-1.md:288
 msgid ""
@@ -982,7 +982,7 @@ msgid ""
 "updating graph nodes (since `main` has no parameters, there is no need to"
 " clean up residual unused addresses in the stack) and finding the next "
 "redex."
-msgstr "实例化完成后，进行清理工作，包括更新图节点（因为 `main` 没有参数，所以不需要清理栈中的未使用地址）并找到下一个 redex。"
+msgstr "实例化完成后，进行清理工作，包括更新图节点（因为 `main` 没有参数，所以不需要清理栈中残留的未使用地址）并找到下一个 redex。"
 
 #: ../../example/gmachine/gmachine-1.md:290
 msgid "All of these tasks have corresponding instruction implementations."
@@ -1013,7 +1013,7 @@ msgstr ""
 msgid ""
 "The `PushInt` instruction is the simplest. It allocates an `NNum` node on"
 " the heap and pushes its address onto the stack."
-msgstr "`PushInt` 指令是最简单的。它在堆上分配一个 `NNum` 节点，并将其地址推送到栈上。"
+msgstr "`PushInt` 指令是最简单的。它在堆上分配一个 `NNum` 节点，并将其地址压入栈中。"
 
 #: ../../example/gmachine/gmachine-1.md:304
 msgid ""
@@ -1028,7 +1028,7 @@ msgid ""
 "The `PushGlobal` instruction retrieves the address of the specified super"
 " combinator from the global table and then pushes the address onto the "
 "stack."
-msgstr "`PushGlobal` 指令从全局表中检索指定超组合子的地址，然后将地址推送到栈上。"
+msgstr "`PushGlobal` 指令从全局表中检索指定超组合子的地址，然后将地址压入栈中。"
 
 #: ../../example/gmachine/gmachine-1.md:312
 msgid ""
@@ -1072,7 +1072,7 @@ msgstr ""
 msgid ""
 "The `MkApp` instruction takes two addresses from the top of the stack, "
 "constructs an `NApp` node, and pushes its address onto the stack."
-msgstr "`MkApp` 指令从栈顶取出两个地址，构造一个 `NApp` 节点，并将其地址推送到栈上。"
+msgstr "`MkApp` 指令从栈顶取出两个地址，构造一个 `NApp` 节点，并将其地址压入栈中。"
 
 #: ../../example/gmachine/gmachine-1.md:328
 msgid ""
@@ -1096,7 +1096,7 @@ msgid ""
 msgstr ""
 "`Update` 指令假设栈上的第一个地址指向当前 redex 的求值结果。它跳过紧随其后的超组合子节点的地址，并用指向求值结果的间接节点替换第 "
 "N 个 `NApp` 节点。如果当前 redex 是一个 CAF，它直接替换堆上对应的 `NGlobal` "
-"节点。从这里我们可以看到，为什么在惰性函数式语言中，没有参数的函数和普通变量之间没有太大区别。"
+"节点。由此，我们可以看到为什么在惰性函数式语言中，无参函数和普通变量之间没有太大区别。"
 
 #: ../../example/gmachine/gmachine-1.md:336
 msgid ""
@@ -1112,7 +1112,7 @@ msgid ""
 "The `Unwind` instruction in the G-Machine is akin to an evaluation loop. "
 "It has several branching conditions based on the type of node "
 "corresponding to the address at the top of the stack:"
-msgstr "`Unwind` 指令在 G-Machine 中类似于一个求值循环。它有几个分支条件，根据栈顶地址对应的节点类型："
+msgstr "G-Machine 中的 `Unwind` 指令类似于一个求值循环。该指令根据栈顶地址对应的节点类型，存在多个分支条件："
 
 #: ../../example/gmachine/gmachine-1.md:344
 msgid "For `Nnum` nodes: Do nothing."
@@ -1212,7 +1212,7 @@ msgid ""
 "instantiation of a super combinator, the number of parameters N needs to "
 "be passed as well."
 msgstr ""
-"在编译超组合子时，我们需要维护一个环境，便于在编译过程中，通过名称找到参数在栈中的相对位置。此外，由于在完成超组合子的实例化后需要清除前面的 "
+"在编译超组合子时，我们需要维护一个环境，便于在编译过程中，通过名称找到参数在栈中的相对位置。此外，由于超组合子的实例化完成后需要清除前面的 "
 "N+1 个地址，所以需要传递参数数量 N。"
 
 #: ../../example/gmachine/gmachine-1.md:368
@@ -1325,7 +1325,7 @@ msgid ""
 "Once the super combinators are compiled, they need to be placed on the "
 "heap (along with adding their addresses to the global table). This can be"
 " done recursively."
-msgstr "一旦超组合子被编译，它们需要放在堆上（并将它们的地址添加到全局表中）。这可以递归完成。"
+msgstr "一旦超组合子被编译，需要将它们置于堆上（并将它们的地址添加到全局表中）。这可以递归完成。"
 
 #: ../../example/gmachine/gmachine-1.md:400
 msgid ""
@@ -1453,7 +1453,7 @@ msgid ""
 "covering the G-Machine."
 msgstr ""
 "到目前为止，我们构建的 G-Machine "
-"的功能太有限，无法运行一个像样的程序。在下一篇文章中，我们将逐步添加诸如原语和自定义数据结构等功能。最后，我们将在介绍 G-Machine "
+"的功能十分有限，甚至无法运行一个像样的程序。在下一篇文章中，我们将逐步添加诸如原生操作和自定义数据结构等功能。最后，我们将在介绍 G-Machine "
 "后引入惰性求值技术。"
 
 #: ../../example/gmachine/gmachine-1.md:434
@@ -1480,9 +1480,10 @@ msgid ""
 "previous article to support `let` expressions and basic arithmetic, "
 "comparison, and other operations."
 msgstr ""
-"在第一部分中我们探讨了惰性求值的目的，介绍了典型的惰性求值抽象机器 G-Machine 并实现它的一些基本指令。本章为“MoonBit "
-"中实现惰性求值”主题的第二部分，将延续并进一步扩展之前文章中 G-Machine 的实现来支持 `let` "
-"表达式和基础算术，比较，和其他相关操作。"
+"本文是 MoonBit 实现惰性求值系列的第二篇。"
+"在第一篇中，我们探讨了惰性求值的目的，介绍了典型的惰性求值抽象机器 G-Machine 并实现了它的一些基本指令。"
+"在本文中，我们将延续前文基础，进一步扩展 G-Machine 的实现以支持 `let` "
+"表达式及基础算术，比较等运算。"
 
 #: ../../example/gmachine/gmachine-2.md:5
 msgid "let Expressions"
@@ -1557,8 +1558,8 @@ msgid ""
 "supercombinator node is discarded, and the `rearrange` function is "
 "called."
 msgstr ""
-"调整是在执行 `Unwind` 指令的过程中完成的。如果超组合子没有参数，则与原始 `unwind` "
-"相同。当有参数时，超组合子节点的顶部地址会被丢弃，并开始调用 `rearrange` 函数。"
+"该调整在执行 `Unwind` 指令的过程中完成。如果超组合子没有参数，则与原始 `unwind` "
+"相同。当存在参数时，超组合子节点的顶部地址会被丢弃，并开始调用 `rearrange` 函数。"
 
 #: ../../example/gmachine/gmachine-2.md:39
 msgid ""
@@ -1603,7 +1604,7 @@ msgstr ""
 msgid ""
 "The next issue is that we need something to clean up. Consider the "
 "following expression:"
-msgstr "接下来我们需要清理一些不再使用的数据或状态，考虑以下表达式，"
+msgstr "接下来我们需要清理一些不再使用的数据或状态，考虑以下表达式："
 
 #: ../../example/gmachine/gmachine-2.md:57
 msgid ""
