@@ -1466,6 +1466,42 @@ contexts:
    :end-before: end is 5
    ```
 
+### Spread Operator
+
+MoonBit provides a spread operator to expand a sequence of elements when
+constructing `Array`, `String`, and `Bytes` using the array literal syntax. To
+expand such a sequence, it needs to be prefixed with `..`, and it must have
+`iter()` method that yields the corresponding type of element.
+
+For example, we can use the spread operator to construct an array:
+
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start spread 1
+:end-before: end spread 1
+```
+
+Similarly, we can use the spread operator to construct a string:
+
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start spread 2
+:end-before: end spread 2
+```
+
+The last example shows how the spread operator can be used to construct a bytes
+sequence.
+
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start spread 3
+:end-before: end spread 3
+```
+
+
 ### TODO syntax
 
 The `todo` syntax (`...`) is a special construct used to mark sections of code that are not yet implemented or are placeholders for future functionality. For example:
