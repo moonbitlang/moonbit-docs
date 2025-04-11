@@ -151,3 +151,37 @@ test {
   inspect!(data[2:5]._, content="[2, 5)")
 }
 // end view 2
+
+// start spread 1
+test {
+  let a1 : Array[Int] = [1, 2, 3]
+  let a2 : FixedArray[Int] = [4, 5, 6]
+  let a3 : @immut/list.T[Int] = @immut/list.from_array([7, 8, 9])
+  let a : Array[Int] = [..a1, ..a2, ..a3, 10]
+  inspect!(a, content="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
+}
+// end spread 1
+
+// start spread 2
+test {
+  let s1 : String = "Hello"
+  let s2 : @string.View = "World".view()
+  let s3 : Array[Char] = [..s1, ' ', ..s2, '!']
+  let s : String = [..s1, ' ', ..s2, '!', ..s3]
+  inspect!(s, content="Hello World!Hello World!")
+}
+// end spread 2
+
+// start spread 3
+test {
+  let b1 : Bytes = "hello"
+  let b2 : @bytes.View = b1[1:4]
+  let b : Bytes = [..b1, ..b2, 10]
+  inspect!(
+    b,
+    content=
+      #|b"\x68\x65\x6c\x6c\x6f\x65\x6c\x6c\x0a"
+    ,
+  )
+}
+// end spread 3

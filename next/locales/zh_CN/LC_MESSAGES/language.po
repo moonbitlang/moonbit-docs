@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-11 10:20+0800\n"
+"POT-Creation-Date: 2025-04-11 17:36+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -17371,17 +17371,83 @@ msgid ""
 msgstr ""
 
 #: ../../language/fundamentals.md:1436
+msgid "Spread Operator"
+msgstr "展开运算符"
+
+#: ../../language/fundamentals.md:1438
+msgid ""
+"MoonBit provides a spread operator to expand a sequence of elements when "
+"constructing `Array`, `String`, and `Bytes` using the array literal "
+"syntax. To expand such a sequence, it needs to be prefixed with `..`, and"
+" it must have `iter()` method that yields the corresponding type of "
+"element."
+msgstr "MoonBit 提供了展开运算符，用于在使用数组字面量语法构造 `Array`、`String` 和"
+"`Bytes` 时展开元素序列。要展开这样的序列，需要在其前面加上 `..` 前缀，并且该序列必须"
+"具有 `iter()` 方法，该方法能够产生相应类型的元素。"
+
+#: ../../language/fundamentals.md:1443
+msgid "For example, we can use the spread operator to construct an array:"
+msgstr "例如，我们可以使用展开运算符来构造一个数组："
+
+#: ../../language/fundamentals.md:1445
+msgid ""
+"test {\n"
+"  let a1 : Array[Int] = [1, 2, 3]\n"
+"  let a2 : FixedArray[Int] = [4, 5, 6]\n"
+"  let a3 : @immut/list.T[Int] = @immut/list.from_array([7, 8, 9])\n"
+"  let a : Array[Int] = [..a1, ..a2, ..a3, 10]\n"
+"  inspect!(a, content=\"[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1452
+msgid "Similarly, we can use the spread operator to construct a string:"
+msgstr "同样，我们可以使用展开运算符来构造一个字符串："
+
+#: ../../language/fundamentals.md:1454
+msgid ""
+"test {\n"
+"  let s1 : String = \"Hello\"\n"
+"  let s2 : @string.View = \"World\".view()\n"
+"  let s3 : Array[Char] = [..s1, ' ', ..s2, '!']\n"
+"  let s : String = [..s1, ' ', ..s2, '!', ..s3]\n"
+"  inspect!(s, content=\"Hello World!Hello World!\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1461
+msgid ""
+"The last example shows how the spread operator can be used to construct a"
+" bytes sequence."
+msgstr "最后一个例子展示了如何使用展开运算符来构造一个字节序列。"
+
+#: ../../language/fundamentals.md:1464
+msgid ""
+"test {\n"
+"  let b1 : Bytes = \"hello\"\n"
+"  let b2 : @bytes.View = b1[1:4]\n"
+"  let b : Bytes = [..b1, ..b2, 10]\n"
+"  inspect!(\n"
+"    b,\n"
+"    content=\n"
+"      #|b\"\\x68\\x65\\x6c\\x6c\\x6f\\x65\\x6c\\x6c\\x0a\"\n"
+"    ,\n"
+"  )\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1472
 msgid "TODO syntax"
 msgstr "TODO 语法"
 
-#: ../../language/fundamentals.md:1438
+#: ../../language/fundamentals.md:1474
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo`语法 (`...`) 是一种特殊构造，用于标记尚未实现或用于未来功能的占位符代码段。例如："
 
-#: ../../language/fundamentals.md:1440
+#: ../../language/fundamentals.md:1476
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"
