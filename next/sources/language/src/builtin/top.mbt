@@ -90,6 +90,14 @@ test "string 4" (t : @test.T) {
   t.snapshot!(filename="string_4")
 }
 
+// start string 5
+test {
+  let c : Char = '中'
+  let s : String = [c, '文']
+  inspect!(s, content="中文")
+}
+// end string 5
+
 let char : Unit = {
   // start char 1
   let a : Char = 'A'
@@ -99,6 +107,15 @@ let char : Unit = {
   // end char 1
 
 }
+
+// start char 2
+test {
+  let s : String = "hello"
+  // charcode_at has type Int 
+  let b = s.charcode_at(0) - 'a'
+  inspect!(b, content="7")
+}
+// end char 2
 
 test "byte 1" (t : @test.T) {
   let println = fn(show) { t.writeln(show) }
@@ -118,6 +135,16 @@ test {
   assert_eq!(b1, b2)
 }
 // end byte 2
+
+// start bytes 1
+test {
+  let b : Byte = '\xFF'
+  let bs : Bytes = [b, '\x01']
+  inspect!(bs, content=
+    #|b"\xff\x01"
+  )
+}
+// end bytes 1
 
 // start buffer 1
 test "buffer 1" {

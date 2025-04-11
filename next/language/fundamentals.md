@@ -150,6 +150,18 @@ Multi-line strings do not support interpolation by default, but you can enable i
 :caption: Output
 ```
 
+#### Overloaded literal
+
+When the expected type is `String`, the array literal syntax is overloaded to
+construct the `String` by specifying each character in the string.
+
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start string 5
+:end-before: end string 5
+```
+
 ### Char
 
 `Char` represents a Unicode code point.
@@ -159,6 +171,16 @@ Multi-line strings do not support interpolation by default, but you can enable i
 :dedent:
 :start-after: start char 1
 :end-before: end char 1
+```
+
+#### Overloaded literal
+
+Char literals can be overloaded to type `Int` when the expected type is `Int`:
+
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start char 2
+:end-before: end char 2
 ```
 
 ### Byte(s)
@@ -191,6 +213,17 @@ A `@buffer.T` is a constructor for bytes that comes with methods for writing dif
 :language: moonbit
 :start-after: start buffer 1
 :end-before: end buffer 1
+```
+
+#### Overloaded literal
+
+When the expected type is `Bytes`, the array literal syntax is overloaded to
+construct a `Bytes` by specifying each byte in the sequence.
+
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start bytes 1
+:end-before: end bytes 1
 ```
 
 ### Tuple
