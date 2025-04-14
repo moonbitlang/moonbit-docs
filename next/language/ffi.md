@@ -332,6 +332,26 @@ fn register_callback(callback : () -> Unit) -> Unit {
 ``````
 `````````
 
+### Customize integer value of constant enum
+In all backends of MoonBit, constant enum (`enum` where all constructors have no payload) are translated to integer.
+It is possible to customize the actual integer representation of each constructor,
+by adding `= <integer literal>` after constructor declaration:
+
+```moonbit
+enum SpecialNumbers {
+  Zero = 0
+  One
+  Two
+  Three
+  Ten = 10
+  FourtyTwo = 42
+}
+```
+
+If a constructor's integer value is unspecified,
+it defaults to one plus the value of the previous constructor (or zero for the first constructor).
+This feature is particular useful for binding flags of C libraries.
+
 ## Export Functions
 
 For public functions that are neither methods nor polymorphic, they can be exported by configuring the `exports` field in [link configuration](/toolchain/moon/package.md#link-options).
