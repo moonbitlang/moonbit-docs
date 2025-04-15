@@ -20,7 +20,7 @@ In short, since you are most likely a developer, **provide a ticket that you wou
 
 <img width="600" src="imgs/share_moonbit.png">
 
-- If you are using [moon build](https://www.moonbitlang.com/docs/build-system-tutorial/), please provide the output of `moon version` and your OS version.
+- If you are using [moon build](https://docs.moonbitlang.com/en/latest/toolchain/moon/tutorial.html), please provide the output of `moon version` and your OS version.
 
 ## :hammer: Contributing Code
 

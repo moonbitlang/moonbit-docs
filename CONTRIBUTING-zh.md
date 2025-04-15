@@ -19,11 +19,11 @@ _我们鼓励包括问题报告、拉取 PR，以及任何形式的贡献！_
 
 <img width="600" src="imgs/share_moonbit.png">
 
-- 如果你使用的是 [moon build](https://www.moonbitlang.com/docs/build-system-tutorial/)，请提供 `moon version` 和你的操作系统版本的输出。
+- 如果你使用的是 [moon build](https://docs.moonbitlang.com/zh-cn/latest/toolchain/moon/tutorial.html)，请提供 `moon version` 和你的操作系统版本的输出。
 
 ## :hammer: 贡献代码
 
-我们鼓励贡献者使用 [GitHub 的 Pull Request (PR)](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) 来提交他们的贡献，包括但不限于以下的贡献：
+我们鼓励贡献者使用 [GitHub 的 Pull Request (PR)](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) 来提交他们的贡献，包括但不限于以下的贡献：
 - 修正代码/文档中的错误
 - 提交缺失的中文翻译或改进翻译
 
