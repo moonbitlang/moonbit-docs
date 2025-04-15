@@ -404,7 +404,7 @@ MoonBit is a programming language with garbage collection. Thus when handling ex
 
 ### Lifetime management of external object
 
-When handling foreign object/resource in MoonBit, it is important to free the object/resource in time to prevent memory/resource leak.
+When handling external object/resource in MoonBit, it is important to destroy object or release resource in time to prevent memory/resource leak.
 
 ```{note}
 For C backend only
