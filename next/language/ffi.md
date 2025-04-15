@@ -285,8 +285,6 @@ Sometimes, we want to pass a MoonBit function to the foreign interface as callba
 
 In some cases, we would like to pass the callback function which doesn't capture any free variables. For this purpose, MoonBit provides a special type `FuncRef[T]`, which represents [closed](https://en.wikipedia.org/wiki/Lambda_calculus#Free_and_bound_variables) function of type `T`. Values of type `FuncRef[T]` must be closed function of type `T`, otherwise [a type error](/language/error_codes/E4151.md) would occur.
 
-> An expression that contains no free variables is said to be closed. [Lambda calculus](https://en.wikipedia.org/wiki/Lambda_calculus#Free_and_bound_variables)
-
 In other cases, a MoonBit function parameter would be represented as a function and an object containing the surrounding state.
 
 `````````{tab-set}
@@ -513,7 +511,7 @@ extern "C" fn c_ffi(..) -> .. = ..
 
 where `params` is a subset of the parameters of `c_ffi`.
 
-Parameters of `#borrow` will be passed using borrow based calling convention, that is, the invoked function does not need to `decref` these parameters. If the FFI function only read its parameter locally (i.e. does not return its parameters and does not store them in data structures), you can directly use the  using the `#borrow` attribute. For example, the `open` function mentioned above could be rewritten using `#borrow` as follows:
+Parameters of `#borrow` will be passed using borrow based calling convention, that is, the invoked function does not need to `decref` these parameters. If the FFI function only read its parameter locally (i.e. does not return its parameters and does not store them in data structures), you can directly use the `#borrow` attribute. For example, the `open` function mentioned above could be rewritten using `#borrow` as follows:
 
 ```moonbit
 #borrow(filename)
