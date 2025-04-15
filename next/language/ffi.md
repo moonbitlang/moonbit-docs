@@ -274,7 +274,9 @@ Sometimes, we want to pass a MoonBit function to the foreign interface as callba
 
 > A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives a function access to its outer scope. In JavaScript, closures are created every time a function is created, at function creation time.
 
-In some cases, we would like to pass the callback as a pure function. For this purpose, MoonBit provides a special type `FuncRef[T]`, which represents capture-free function of type `T`. Values of type `FuncRef[T]` must be capture free function of type `T`, otherwise [a type error](/language/error_codes/E4151.md) would occur.
+In some cases, we would like to pass the callback function which doesn't capture any free variables. For this purpose, MoonBit provides a special type `FuncRef[T]`, which represents [closed](https://en.wikipedia.org/wiki/Lambda_calculus#Free_and_bound_variables) function of type `T`. Values of type `FuncRef[T]` must be closed function of type `T`, otherwise [a type error](/language/error_codes/E4151.md) would occur.
+
+> An expression that contains no free variables is said to be closed. [Lambda calculus](https://en.wikipedia.org/wiki/Lambda_calculus#Free_and_bound_variables)
 
 In other cases, a MoonBit function parameter would be represented as a function and an object containing the surrounding state.
 
