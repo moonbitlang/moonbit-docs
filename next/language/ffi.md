@@ -210,6 +210,7 @@ The table below shows the underlying representation of some MoonBit types:
 | `Double`     | `f64`   |
 | constant `enum` | `i32` |
 | external type (`extern type T`) | `externref` |
+| `FuncRef[T]` | `funcref` |
 ``````
 
 ``````{tab-item} Wasm GC
@@ -226,7 +227,8 @@ The table below shows the underlying representation of some MoonBit types:
 | `Double`     | `f64`   |
 | constant `enum` | `i32` |
 | external type (`extern type T`) | `externref` |
-| `String` | `externref` iff JS string builtin is on | 
+| `String` | `externref` iff JS string builtin is on |
+| `FuncRef[T]` | `funcref` |
 ``````
 
 ``````{tab-item} JavaScript
@@ -244,6 +246,7 @@ The table below shows the underlying representation of some MoonBit types:
 | `String` | `string` |
 | `FixedArray[Byte]`/`Bytes` | `UInt8Array` |
 | `FixedArray[T]` / `Array[T]` | `T[]` |
+| `FuncRef[T]` | `Function` |
 ``````
 
 ``````{tab-item} C
@@ -263,6 +266,12 @@ The table below shows the underlying representation of some MoonBit types:
 | external type (`extern type T`) | `void*` |
 | `FixedArray[Byte]`/`Bytes` | `uint8_t*` |
 | `FixedArray[T]` | `T*` |
+| `FuncRef[T]` | Function pointer |
+
+```{note}
+If the return type of `T` in `FuncRef[T]` is `Unit`, then it points to a function that returns `void`.
+```
+
 ``````
 `````````
 
