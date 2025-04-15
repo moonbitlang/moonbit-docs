@@ -504,7 +504,7 @@ extern "C" fn c_ffi(..) -> .. = ..
 
 where `params` is a subset of the parameters of `c_ffi`.
 
-Parameters of `#borrow` will be passed using borrow based calling convention, that is, the invoked function does not need to drop these parameters. If the FFI function only read its parameter locally (i.e. does not return its parameters or store them in data structures), there is no need to write a stub function using the `#borrow` attribute. For example, the `open` function mentioned above could be rewritten using `#borrow` as follows:
+Parameters of `#borrow` will be passed using borrow based calling convention, that is, the invoked function does not need to `decref` these parameters. If the FFI function only read its parameter locally (i.e. does not return its parameters and does not store them in data structures), you can directly use the  using the `#borrow` attribute. For example, the `open` function mentioned above could be rewritten using `#borrow` as follows:
 
 ```moonbit
 #borrow(filename)
