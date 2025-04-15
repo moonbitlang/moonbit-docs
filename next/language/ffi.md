@@ -26,7 +26,7 @@ By Wasm we refer to WebAssembly with some post-MVP proposals including:
 For better compatibility, the `init` function will be compiled as [`start` function](https://webassembly.github.io/spec/core/syntax/modules.html#start-function), and the `main` function will be exported as `_start`.
 
 ```{note}
-For Wasm backends, all functions interacting with outside world relies on the host. For example, the `println` for Wasm and Wasm GC backend relies on importing a function `spectest.print_char` that prints a UTF16 char code for each call. The `env` package in standard library and some packages in `moonbitlang/x` relies on specific host function defined for MoonBit runtime. Avoid using them if you want to make the generated Wasm portable.
+For Wasm backends, all functions interacting with outside world relies on the host. For example, the `println` for Wasm and Wasm GC backend relies on importing a function `spectest.print_char` that prints a UTF-16 code unit for each call. The `env` package in standard library and some packages in `moonbitlang/x` relies on specific host function defined for MoonBit runtime. Avoid using them if you want to make the generated Wasm portable.
 ```
 ``````
 
@@ -39,7 +39,7 @@ By Wasm GC we refer to WebAssembly with Garbage Colleciton proposal, meaning tha
 For better compatibility, the `init` function will be compiled as [`start` function](https://webassembly.github.io/spec/core/syntax/modules.html#start-function), and the `main` function will be exported as `_start`.
 
 ```{note}
-For Wasm backends, all functions interacting with outside world relies on the host. For example, the `println` for Wasm and Wasm GC backend relies on importing a function `spectest.print_char` that prints a UTF16 char code for each call. The `env` package in standard library and some packages in `moonbitlang/x` relies on specific host function defined for MoonBit runtime. Avoid using them if you want to make the generated Wasm portable.
+For Wasm backends, all functions interacting with outside world relies on the host. For example, the `println` for Wasm and Wasm GC backend relies on importing a function `spectest.print_char` that prints a UTF-16 code unit for each call. The `env` package in standard library and some packages in `moonbitlang/x` relies on specific host function defined for MoonBit runtime. Avoid using them if you want to make the generated Wasm portable.
 ```
 ``````
 
