@@ -247,6 +247,11 @@ The table below shows the underlying representation of some MoonBit types:
 | `FixedArray[Byte]`/`Bytes` | `UInt8Array` |
 | `FixedArray[T]` / `Array[T]` | `T[]` |
 | `FuncRef[T]` | `Function` |
+
+```{note}
+The `FixedArray[T]` for numbers may migrate to `TypedArray` in the future.
+```
+
 ``````
 
 ``````{tab-item} C
