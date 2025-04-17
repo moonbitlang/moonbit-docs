@@ -234,7 +234,7 @@ an error-able function is usually called in 2 manners: `f!(...)` and `f?(...)`.
 function that calls `f`. We can either re-raising it without actually dealing
 with the error:
 
-```moonbit -e1001 -e1002
+```moonbit -E0001 -E0002
 // We have to match the error type of `div2` with `div`
 fn div2(x : Int, y : Int) -> Int!DivisionByZeroError {
   div!(x,y)
