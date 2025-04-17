@@ -297,6 +297,46 @@ When the expected type is known, MoonBit can automatically overload array, other
 :end-before: end array 3
 ```
 
+### Creating Arrays with `FixedArray::makei`
+
+`FixedArray::makei()` is a convenient method for creating a `FixedArray`, especially useful when you need to generate each array element dynamically based on its index. Unlike `FixedArray::make(len, initial_value)` (which fills all positions with the *same* initial value, potentially leading to unexpected shared references), `makei` ensures each element is generated independently.
+
+`makei` accepts two arguments:
+
+1. **`len: Int`**: The final length of the `FixedArray` you want to create.
+2. **`op: fn(Int) -> T`**: A generator function (a closure). This function is called once for each index `i` from `0` to `len - 1`. The function receives the current index `i` as its argument, and its return value becomes the element at index `i` in the new `FixedArray`.
+
+In the context of accurately converting a `Bytes` object to a `FixedArray[Byte]`, `makei` is particularly useful. This is because we know the required length beforehand (the length of the `Bytes`), and we can directly access each byte from the source `Bytes` object using its index. Therefore, we can provide a closure that takes an index `i` and returns `input_bytes[i]`, thereby constructing a new `FixedArray[Byte]` byte-by-byte with identical content.
+
+The `bytes_to_exact_fixed_array` function below demonstrates how to use `makei` for this conversion.
+
+```
+// Accurately converts Bytes to FixedArray[Byte] using makei.
+fn bytes_to_exact_fixed_array(input_bytes: Bytes) -> FixedArray[Byte] {
+  let len = input_bytes.length()
+  // For each index i (from 0 to len-1), call the closure to get the corresponding byte.
+  let fixed_array : FixedArray[Byte] = FixedArray::makei(len, fn(i : Int) -> Byte {
+    input_bytes[i] // Return the byte from the source Bytes at index i
+  })
+  fixed_array // Return the newly created FixedArray
+}
+
+// --- Example ---
+test "exact conversion" {
+  // Create Bytes from a byte string literal
+  let a: Bytes = b"hello"
+  let fa: FixedArray[Byte] = bytes_to_exact_fixed_array(a)
+
+  // Bytes type supports initialization and assignment using string literals. The string will be stored as Bytes in UTF-8 encoding. If it fails, please update your moonbit version.
+  let b: Bytes = "hello"
+  let fb: FixedArray[Byte] = bytes_to_exact_fixed_array(b)
+
+  // fa and fb now both contain the bytes corresponding to 'h','e','l','l','o'
+  println("From b\"hello\": \{fa}")
+  println("From  \"hello\": \{fb}")
+}
+```
+
 #### ArrayView
 
 Analogous to `slice` in other languages, the view is a reference to a
