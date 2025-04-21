@@ -13,7 +13,7 @@ Async functions can be declared with the `async` keyword:
 :end-before: end async function declaration
 ```
 
-Async functions must be called with the `!!` operator:
+Async functions must be called with the `!` operator:
 
 ```{literalinclude} /sources/async/src/async.mbt
 :language: moonbit
@@ -21,7 +21,7 @@ Async functions must be called with the `!!` operator:
 :end-before: end async function call syntax
 ```
 
-If the async function may throw error, `!!` will also rethrow the error.
+If the async function may throw error, `!` will also rethrow the error.
 
 Async functions can only be called in async functions. Currently, async functions cannot be called in the body of `for .. in` loops.
 
@@ -57,10 +57,10 @@ Here's an example of how these two primitives work:
 ```
 
 In `async_worker`, `suspend` will capture the rest of the current coroutine as two "continuation" functions, and pass them to a callback.
-In the callback, calling `resume_ok` will resume execution at the point of `suspend!!(...)`,
+In the callback, calling `resume_ok` will resume execution at the point of `suspend!(...)`,
 all the way until the `run_async` call that start this coroutine.
 calling `resume_err` will also resume execution of current coroutine,
-but it will make `suspend!!(...)` throw an error instead of returning normally.
+but it will make `suspend!(...)` throw an error instead of returning normally.
 
 Notice that `suspend` type may throw error, even if `suspend` itself never throw an error directly.
 This design makes coroutines cancellable at every `suspend` call: just call the corresponding `resume_err` callback.

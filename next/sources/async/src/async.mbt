@@ -20,8 +20,8 @@ async fn some_async_function() -> Unit! {
 }
 
 async fn another_async_function() -> Unit! {
-  // error will be rethrowed by `!!`
-  some_async_function!!()
+  // error will be rethrowed by `!`
+  some_async_function!()
 }
 // end async function call syntax
 
@@ -48,7 +48,7 @@ async fn suspend[T, E : Error](
 type! MyError derive(Show)
 
 async fn async_worker(throw_error~ : Bool) -> Unit!MyError {
-  suspend!!(fn (resume_ok, resume_err) {
+  suspend!(fn (resume_ok, resume_err) {
     if throw_error {
       resume_err(MyError)
     } else {
@@ -70,7 +70,7 @@ test {
   // the `async` keyword can be omitted
   run_async(fn () {
     try {
-      async_worker!!(throw_error=false)
+      async_worker!(throw_error=false)
       println("the worker finishes")
     } catch {
       err => println("caught: \{err}")
@@ -79,7 +79,7 @@ test {
   println("after the first coroutine finishes")
   run_async(fn () {
     try {
-      async_worker!!(throw_error=true)
+      async_worker!(throw_error=true)
       println("the worker finishes")
     } catch {
       err => println("caught: \{err}")
@@ -94,7 +94,7 @@ extern "js" fn js_set_timeout(f : () -> Unit, duration : Int) -> JSTimer =
   #| (f, duration) => setTimeout(f, duration)
 
 async fn sleep(duration : Int) -> Unit! {
-  suspend!!(fn (resume_ok, _resume_err) {
+  suspend!(fn (resume_ok, _resume_err) {
     let _ = js_set_timeout(fn () { resume_ok(()) }, duration)
   })
 }
@@ -102,21 +102,21 @@ async fn sleep(duration : Int) -> Unit! {
 test {
   run_async(fn () {
     try {
-      sleep!!(500)
+      sleep!(500)
       println("timer 1 tick")
-      sleep!!(1000)
+      sleep!(1000)
       println("timer 1 tick")
-      sleep!!(1500)
+      sleep!(1500)
       println("timer 1 tick")
     } catch { _ => panic() }
   })
   run_async(fn () {
     try {
-      sleep!!(600)
+      sleep!(600)
       println("timer 2 tick")
-      sleep!!(600)
+      sleep!(600)
       println("timer 2 tick")
-      sleep!!(600)
+      sleep!(600)
       println("timer 2 tick")
     } catch { _ => panic() }
   })
