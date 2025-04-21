@@ -162,6 +162,10 @@ construct the `String` by specifying each character in the string.
 :end-before: end string 5
 ```
 
+```{seealso}
+API: <https://mooncakes.io/docs/moonbitlang/core/string>
+```
+
 ### Char
 
 `Char` represents a Unicode code point.
@@ -181,6 +185,10 @@ Char literals can be overloaded to type `Int` when the expected type is `Int`:
 :language: moonbit
 :start-after: start char 2
 :end-before: end char 2
+```
+
+```{seealso}
+API: <https://mooncakes.io/docs/moonbitlang/core/char>
 ```
 
 ### Byte(s)
@@ -226,6 +234,12 @@ construct a `Bytes` by specifying each byte in the sequence.
 :end-before: end bytes 1
 ```
 
+```{seealso}
+API for `Byte`: <https://mooncakes.io/docs/moonbitlang/core/byte>  
+API for `Bytes`: <https://mooncakes.io/docs/moonbitlang/core/bytes>  
+API for `@buffer.T`: <https://mooncakes.io/docs/moonbitlang/core/buffer>
+```
+
 ### Tuple
 
 A tuple is a collection of finite values constructed using round brackets `()` with the elements separated by commas `,`. The order of elements matters; for example, `(1,true)` and `(true,1)` have different types. Here's an example:
@@ -262,6 +276,10 @@ It can be constructed using `{ val : x }`, and can be accessed using `ref.val`. 
 :end-before: end ref 1
 ```
 
+```{seealso}
+API: <https://mooncakes.io/docs/moonbitlang/core/ref>
+```
+
 ### Option and Result
 
 `Option` and `Result` are the most common types to represent a possible error or failure in MoonBit.
@@ -275,6 +293,11 @@ See [enum](#enum) for detailed explanation.
 :language: moonbit
 :start-after: start option result 1
 :end-before: end option result 1
+```
+
+```{seealso}
+API for `Option`: <https://mooncakes.io/docs/moonbitlang/core/option>  
+API for `Result`: <https://mooncakes.io/docs/moonbitlang/core/result>
 ```
 
 ### Array
@@ -343,6 +366,10 @@ Both `start` and `end` indices can be omitted.
 :end-before: end view 1
 ```
 
+```{seealso}
+API: <https://mooncakes.io/docs/moonbitlang/core/array>
+```
+
 ### Map
 
 MoonBit provides a hash map data structure that preserves insertion order called `Map` in its standard library.
@@ -356,6 +383,10 @@ MoonBit provides a hash map data structure that preserves insertion order called
 
 Currently keys in map literal syntax must be constant. `Map`s can also be destructed elegantly with pattern matching, see [Map Pattern](#map-pattern).
 
+```{seealso}
+API: <https://mooncakes.io/docs/moonbitlang/core/builtin#Map>
+```
+
 ### Json literal
 
 MoonBit supports convenient json handling by overloading literals.
@@ -368,6 +399,10 @@ When the expected type of an expression is `Json`, number, string, array and map
 ```
 
 Json values can be pattern matched too, see [Json Pattern](#json-pattern).
+
+```{seealso}
+API: <https://mooncakes.io/docs/moonbitlang/core/json>
+```
 
 ## Functions
 
