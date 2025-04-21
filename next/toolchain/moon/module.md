@@ -193,3 +193,20 @@ Disable user preset alerts.
   "alert-list": "-alert_1-alert_2"
 }
 ```
+
+## Scripts
+
+The `scripts` field is used to define custom scripts associated with the module.
+
+### postadd script
+
+The `postadd` script runs automatically after the module has been added.
+When executed, the script's current working directory (cwd) is set to the
+directory where the `moon.mod.json` file resides.
+
+```json
+{
+  "scripts": {
+    "postadd": "python3 build.py"
+  }
+}
