@@ -17,7 +17,7 @@ impl ToJson for Node with to_json(self) {
 }
 
 // start op_add definition
-fn op_add(self : Node, v : Node) -> Node {
+impl Add for Node with op_add(self : Node, v : Node) -> Node {
   match (self, v) {
     (Node(left, _, _), Node(right, _, _)) => Node(left + right, self, v)
     (Node(_), Nil) => self
