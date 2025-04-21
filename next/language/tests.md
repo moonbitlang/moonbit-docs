@@ -74,6 +74,8 @@ This will create a file under `__snapshot__` of that package with the given file
 
 This can also be used for applications to test the generated output, whether it were creating an image, a video or some custom data.
 
+Please note that `@test.T::snapshot` should be used at the end of a test block, as it always raises exception.
+
 ## BlackBox Tests and WhiteBox Tests
 
 When developing libraries, it is important to verify if the user can use it correctly. For example, one may forget to make a type or a function public. That's why MoonBit provides BlackBox tests, allowing developers to have a grasp of how others are feeling.
