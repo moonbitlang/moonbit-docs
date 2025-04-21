@@ -26,7 +26,7 @@ pub impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ... }
 // start trait 3
 pub(open) trait J {
   f(Self) -> Unit
-  f_twice(Self) -> Unit
+  f_twice(Self) -> Unit = _
 }
 
 impl J with f_twice(self) {
@@ -34,6 +34,22 @@ impl J with f_twice(self) {
   self.f()
 }
 // end trait 3
+
+// start trait 4
+impl J for Int with f(self) {
+  println(self)
+}
+
+impl J for String with f(self) {
+  println(self)
+}
+
+impl J for String with f_twice(self) {
+  println(self)
+  println(self)
+}
+
+// end trait 4
 
 // start trait 5
 fn contains[X : Eq](xs : Array[X], elem : X) -> Bool {
