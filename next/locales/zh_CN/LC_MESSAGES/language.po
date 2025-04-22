@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-21 14:40+0800\n"
+"POT-Creation-Date: 2025-04-21 15:23+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -19399,10 +19399,16 @@ msgid ""
 msgstr "这也可以用于测试应用程序的输出，无论是创建图像、视频还是一些自定义数据。"
 
 #: ../../language/tests.md:77
+msgid ""
+"Please note that `@test.T::snapshot` should be used at the end of a test "
+"block, as it always raises exception."
+msgstr "请注意，`@test.T::snapshot` 应该在测试块的末尾使用，因为它总是引发异常。"
+
+#: ../../language/tests.md:79
 msgid "BlackBox Tests and WhiteBox Tests"
 msgstr "黑盒测试和白盒测试"
 
-#: ../../language/tests.md:79
+#: ../../language/tests.md:81
 msgid ""
 "When developing libraries, it is important to verify if the user can use "
 "it correctly. For example, one may forget to make a type or a function "
@@ -19412,7 +19418,7 @@ msgstr ""
 "在开发库时，验证用户是否可以正确使用它是很重要的。例如，可能会忘记使类型或函数公开。这就是为什么 MoonBit "
 "提供了黑盒测试，允许开发人员了解其他人的感受。"
 
-#: ../../language/tests.md:81
+#: ../../language/tests.md:83
 msgid ""
 "A test that has access to all the members in a package is called a "
 "WhiteBox tests as we can see everything. Such tests can be defined inline"
@@ -19421,14 +19427,14 @@ msgstr ""
 "只能访问包中所有成员的测试称为白盒测试，因为我们可以看到一切。这样的测试可以内联定义，也可以在文件中定义，文件名以 `_wbtest.mbt` "
 "结尾。"
 
-#: ../../language/tests.md:83
+#: ../../language/tests.md:85
 msgid ""
 "A test that has access only to the public members in a package is called "
 "a BlackBox tests. Such tests need to be defined in a file whose name ends"
 " with `_test.mbt`."
 msgstr "只能访问包中公开成员的测试称为黑盒测试。这样的测试需要在文件中定义，文件名以 `_test.mbt` 结尾。"
 
-#: ../../language/tests.md:85
+#: ../../language/tests.md:87
 msgid ""
 "The WhiteBox test files (`_wbtest.mbt`) imports the packages defined in "
 "the `import` and `wbtest-import` sections of the package configuration "
@@ -19437,7 +19443,7 @@ msgstr ""
 "白盒测试文件（`_wbtest.mbt`）导入包配置（`moon.pkg.json`）中的 `import` 和 `wbtest-import` "
 "部分定义的包。"
 
-#: ../../language/tests.md:87
+#: ../../language/tests.md:89
 msgid ""
 "The BlackBox test files (`_test.mbt`) imports the current package and the"
 " packages defined in the `import` and `test-import` sections of the "

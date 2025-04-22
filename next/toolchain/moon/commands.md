@@ -14,6 +14,7 @@ This document contains the help content for the `moon` command-line program.
 * [`moon fmt`↴](#moon-fmt)
 * [`moon doc`↴](#moon-doc)
 * [`moon info`↴](#moon-info)
+* [`moon bench`↴](#moon-bench)
 * [`moon add`↴](#moon-add)
 * [`moon remove`↴](#moon-remove)
 * [`moon install`↴](#moon-install)
@@ -46,6 +47,7 @@ This document contains the help content for the `moon` command-line program.
 * `fmt` — Format source code
 * `doc` — Generate documentation
 * `info` — Generate public interface (`.mbti`) files for all packages in the module
+* `bench` — Run benchmarks in the current package
 * `add` — Add a dependency
 * `remove` — Remove a dependency
 * `install` — Install dependencies
@@ -305,6 +307,42 @@ Generate public interface (`.mbti`) files for all packages in the module
   Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`
 
 * `-p`, `--package <PACKAGE>` — only emit mbti files for the specified package
+
+
+
+## `moon bench`
+
+Run benchmarks in the current package
+
+**Usage:** `moon bench [OPTIONS]`
+
+**Options:**
+
+* `--std` — Enable the standard library (default)
+* `--nostd` — Disable the standard library
+* `-g`, `--debug` — Emit debug information
+* `--release` — Compile in release mode
+* `--strip` — Enable stripping debug information
+* `--no-strip` — Disable stripping debug information
+* `--target <TARGET>` — Select output target
+
+  Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`
+
+* `--serial` — Handle the selected targets sequentially
+* `--enable-coverage` — Enable coverage instrumentation
+* `--sort-input` — Sort input files
+* `--output-wat` — Output WAT instead of WASM
+* `-d`, `--deny-warn` — Treat all warnings as errors
+* `--no-render` — Don't render diagnostics from moonc (don't pass '-error-format json' to moonc)
+* `--warn-list <WARN_LIST>` — Warn list config
+* `--alert-list <ALERT_LIST>` — Alert list config
+* `-j`, `--jobs <JOBS>` — Set the max number of jobs to run in parallel
+* `-p`, `--package <PACKAGE>` — Run test in the specified package
+* `-f`, `--file <FILE>` — Run test in the specified file. Only valid when `--package` is also specified
+* `-i`, `--index <INDEX>` — Run only the index-th test in the file. Only valid when `--file` is also specified
+* `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
+* `--build-only` — Only build, do not bench
+* `--no-parallelize` — Run the benchmarks in a target backend sequentially
 
 
 
