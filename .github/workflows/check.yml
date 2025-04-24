@@ -22,7 +22,7 @@ jobs:
           - name: macos-14
             path: mac_m1
           - name: windows-latest
-        backend: [wasm, wasm-gc, js]
+        backend: [wasm, wasm-gc, js , native]
     runs-on: ${{ matrix.os.name }}
     continue-on-error: ${{ matrix.os.name == 'macos-14' }}
     steps:
