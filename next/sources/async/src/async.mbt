@@ -28,7 +28,7 @@ async fn another_async_function() -> Unit! {
 // start async primitive
 
 // `run_async` spawn a new coroutine and execute an async function in it
-fn run_async(f : async () -> Unit) -> Unit = "%async.run"
+fn run_async(f : () -> Unit!Async) -> Unit = "%async.run"
 
 // `suspend` will suspend the execution of the current coroutine.
 // The suspension will be handled by a callback passed to `suspend`
