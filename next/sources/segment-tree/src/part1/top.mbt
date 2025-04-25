@@ -11,7 +11,7 @@ impl ToJson for Node with to_json(self) {
     Node(value, left, right) => {
       let left_json = left.to_json()
       let right_json = right.to_json()
-      [Number(value.to_double()), left_json, right_json]
+      [Json::number(value.to_double()), left_json, right_json]
     }
   }
 }

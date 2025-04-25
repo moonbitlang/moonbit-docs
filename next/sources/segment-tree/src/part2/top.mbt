@@ -16,13 +16,13 @@ enum Node {
 
 impl ToJson for Data with to_json(data) {
   let Data(sum~, len~) = data
-  [Number(sum.to_double()), Number(len.to_double())]
+  [Json::number(sum.to_double()), Json::number(len.to_double())]
 }
 
 impl ToJson for LazyTag with to_json(tag) {
   match tag {
     Nil => "Nil"
-    Tag(value) => Number(value.to_double())
+    Tag(value) => Json::number(value.to_double())
   }
 }
 
