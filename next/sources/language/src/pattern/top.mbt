@@ -116,7 +116,7 @@ fn map() -> Unit {
 }
 
 fn json() -> Unit {
-  let json = Null
+  let json = Json::null()
   // start pattern 6
   match json {
     { "version": "1.0.0", "import": [..] as imports, .. } => ...
