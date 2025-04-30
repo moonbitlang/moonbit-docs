@@ -27,6 +27,7 @@ methods
 error-handling
 packages
 tests
+benchmarks
 docs
 ffi
 derive
