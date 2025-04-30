@@ -46,6 +46,6 @@ fn collect_bench() -> Unit {
     saved = fib(20)
   })
   println(saved)
-  println(summary.to_json().stringify())
+  println(summary.to_json().stringify(escape_slash=true, indent=4))
 }
 // end bench 4

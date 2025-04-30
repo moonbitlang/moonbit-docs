@@ -76,6 +76,7 @@ There is no `keep` function available as a standalone function; it is a method o
 The output may look like this:
 
 ```json
+6765
 {
     "name": "fib",
     "sum": 217.22039973878972,
