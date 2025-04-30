@@ -62,10 +62,10 @@ fast_fib     0.02 µs ±   0.00 µs     0.02 µs …   0.02 µs  in 10 × 100000
 ## Raw Benchmark Statistics
 
 Sometimes users may want to obtain raw benchmark statistics for further analysis.
-There is a method `@bench.single_bench` that returns an abstract `Summary` type, which can be serialized into JSON format. The stability of the `Summary` type is not guaranteed to be stable.
+There is a function `@bench.single_bench` that returns an abstract `Summary` type, which can be serialized into JSON format. The stability of the `Summary` type is not guaranteed to be stable.
 
-\In this case, users must ensure that the calculation is not optimized away, as there is no `keep` function available as a standalone function; it is a method of `@bench.T`.
-
+In this case, users must ensure that the calculation is not optimized away.
+There is no `keep` function available as a standalone function; it is a method of `@bench.T`.
 
 ```{literalinclude} /sources/language/src/benchmark/top.mbt
 :language: moonbit
