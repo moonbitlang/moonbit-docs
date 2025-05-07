@@ -5,7 +5,7 @@ pub fn foo() -> Unit {
 }
 
 #deprecated("Use Bar2 instead")
-pub enum Bar {
+pub(all) enum Bar {
   Ctor1
   Ctor2
 }
