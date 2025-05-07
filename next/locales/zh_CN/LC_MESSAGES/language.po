@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 14:26+0800\n"
+"POT-Creation-Date: 2025-05-07 16:04+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1308,11 +1308,11 @@ msgstr "文档注释"
 #: ../../language/docs.md:5
 msgid ""
 "Doc comments are comments prefix with `///` in each line in the leading "
-"of toplevel structure like `fn`,`let`,`enum`,`struct`,`type`. The doc "
-"comments contains a markdown text and several pragmas."
+"of toplevel structure like `fn`, `let`, `enum`, `struct` or `type`. The "
+"doc comments are written in markdown."
 msgstr ""
-"文档注释是在顶层结构（如 `fn`、`let`、`enum`、`struct`、`type`）的每一行前面加上 `///` "
-"的注释。文档注释包含一个 markdown 文本和几个注解。"
+"文档注释是在顶层结构（如 `fn`、`let`、`enum`、`struct`、`type`）的每一行前面加上 `///` 的注释。文档注释内包含"
+" markdown 文本。"
 
 #: ../../language/docs.md:7
 msgid ""
@@ -1338,61 +1338,249 @@ msgstr ""
 "  ...\n"
 "}\n"
 
-#: ../../language/docs.md:13
-msgid "Pragmas"
-msgstr "注解"
+#: ../../language/docs.md:14
+msgid "Attribute"
+msgstr "属性"
 
-#: ../../language/docs.md:15
+#: ../../language/docs.md:16
 msgid ""
-"Pragmas are annotations inside doc comments. They all take the form `/// "
-"@word ...`. The _word_ indicates the type of pragma and is followed "
-"optionally by several _word_ or string literals. Pragmas do not normally "
-"affect the meaning of programs. Unrecognized pragmas will be reported as "
+"Attributes are annotations placed before the top-level structure. They "
+"take the form `#attribute(...)`.  An attribute occupies the entire line, "
+"and newlines are not allowed within it.  Attributes do not normally "
+"affect the meaning of programs. Unused attributes will be reported as "
 "warnings."
 msgstr ""
-"注解是文档注释中的标记。它们都采用 `/// @word ...` 的形式。_word_ 表示注解的类型，后面可以跟几个 _word_ "
-"或字符串文字。注解通常不会影响程序的含义。未识别的注解将被报告为警告。"
+"属性是放置在顶层成员之前的标注。它们都采用 `#attribute(...)` "
+"的形式。一个属性标注占用整行的空间，其中不允许换行。属性一般不会影响程序的含义。无用的属性标注将会触发警告。"
 
-#: ../../language/docs.md:17
-msgid "Alert Pragmas"
-msgstr "警告注解"
+#: ../../language/docs.md:20
+msgid "The Deprecated Attribute"
+msgstr "“弃用”属性"
 
-#: ../../language/docs.md:19
+#: ../../language/docs.md:22
 msgid ""
-"Alert pragmas in doc comments of functions will be reported when those "
-"functions are referenced. This mechanism is a generalized way to mark "
-"functions as `deprecated` or `unsafe`."
-msgstr "函数文档注释中的警告注解将在引用这些函数时报告。这种机制是一种通用的方法，用于将函数标记为 `deprecated` 或 `unsafe`。"
-
-#: ../../language/docs.md:21
-msgid "It takes the form `@alert category \"alert message...\"`."
-msgstr "它采用 `@alert category \"alert message...\"` 的形式。"
-
-#: ../../language/docs.md:23
-msgid ""
-"The category can be an arbitrary identifier. It allows configuration to "
-"decide which alerts are enabled or turned into errors."
-msgstr "类别可以是任意标识符。它允许配置决定哪些警告是启用的或转换为错误。"
+"The `#deprecated` attribute is used to mark a function, type, or trait as"
+" deprecated.  MoonBit emits a warning when the deprecated function or "
+"type is used in other packages.  You can customize the warning message by"
+" passing a string to the attribute."
+msgstr "`#deprecated`属性用于标记一个函数、类型或者特征为弃用状态。当弃用的成员在其他包中被使用时，MoonBit 将会触发警告。你可以传递一个字符串参数给这个属性，来自定义警告中显示的消息。"
 
 #: ../../language/docs.md:26
+msgid "For example:"
+msgstr "例如："
+
+#: ../../language/docs.md:28
 msgid ""
-"/// @alert deprecated \"Use foo2 instead\"\n"
+"#deprecated\n"
 "pub fn foo() -> Unit {\n"
 "  ...\n"
 "}\n"
 "\n"
-"/// @alert unsafe \"Div will cause an error when y is zero\"\n"
-"pub fn div(x : Int, y : Int) -> Int {\n"
+"#deprecated(\"Use Bar2 instead\")\n"
+"pub enum Bar {\n"
+"  Ctor1\n"
+"  Ctor2\n"
+"}\n"
+msgstr ""
+"#deprecated\n"
+"pub fn foo() -> Unit {\n"
 "  ...\n"
 "}\n"
 "\n"
-"test {\n"
-"  // Warning (Alert deprecated): Use foo2 instead\n"
-"  foo()\n"
-"  // Warning (Alert unsafe): Div will cause an error when y is zero\n"
-"  div(1, 2) |> ignore\n"
+"#deprecated(\"使用Bar2代替\")\n"
+"pub enum Bar {\n"
+"  Ctor1\n"
+"  Ctor2\n"
+"}\n"
+
+#: ../../language/docs.md:34
+msgid "The Visibility Attribute"
+msgstr "“可见性”属性"
+
+#: ../../language/docs.md:37
+msgid ""
+"This topic does not covered the access control. To lean more about `pub`,"
+" `pub(all)` and `priv`, see [Access Control](./packages.md#access-"
+"control)."
+msgstr ""
+"这里的文档不涉及访问控制。关于如何使用`pub`、`pub(all)` 和 `priv`, 见 [访问控制](./packages.md"
+"#access-control)."
+
+#: ../../language/docs.md:40
+msgid ""
+"The `#visibility` attribute is similar to the `#deprecated` attribute, "
+"but it is used to hint that a type will change its visibility in the "
+"future.  For outside usages, if the usage will be invalidated by the "
+"visibility change in future, a warning will be emitted."
+msgstr "`#visibility`属性和`#deprecated`属性类似。但它用于提示用户一个类型未来将改变它的可见性。对于外部的包，如果使用这个类型的方式在未来改变可见性以后不再合法，它将会触发警告。"
+
+#: ../../language/docs.md:43
+msgid ""
+"// in @util package\n"
+"#visibility(change_to=\"readonly\", \"Point will be readonly in the "
+"future.\")\n"
+"pub(all) struct Point {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"#visibility(change_to=\"abstract\", \"Use new_text and new_binary "
+"instead.\")\n"
+"pub(all) enum Resource {\n"
+"  Text(String)\n"
+"  Binary(Bytes)\n"
+"}\n"
+"\n"
+"pub fn new_text(str : String) -> Resource {\n"
+"  ...\n"
+"}\n"
+"\n"
+"pub fn new_binary(bytes : Bytes) -> Resource {\n"
+"  ...\n"
+"}\n"
+"\n"
+"// in another package\n"
+"fn main {\n"
+"  let p = Point::{ x: 1, y: 2 } // warning \n"
+"  let { x, y } = p // ok\n"
+"  println(p.x) // ok\n"
+"  match Resource::Text(\"\") { // warning\n"
+"    Text(s) => ... // waning\n"
+"    Binary(b) => ... // warning\n"
+"  }\n"
+"}\n"
+"\n"
+msgstr ""
+"// 在包 @util 中\n"
+"#visibility(change_to=\"readonly\", \"Point将会变成只读的类型\")\n"
+"pub(all) struct Point {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"#visibility(change_to=\"abstract\", \"使用 new_text 和 new_binary 代替\")\n"
+"pub(all) enum Resource {\n"
+"  Text(String)\n"
+"  Binary(Bytes)\n"
+"}\n"
+"\n"
+"pub fn new_text(str : String) -> Resource {\n"
+"  ...\n"
+"}\n"
+"\n"
+"pub fn new_binary(bytes : Bytes) -> Resource {\n"
+"  ...\n"
+"}\n"
+"\n"
+"// 在另一个包中\n"
+"fn main {\n"
+"  let p = Point::{ x: 1, y: 2 } // 触发警告 \n"
+"  let { x, y } = p // ok\n"
+"  println(p.x) // ok\n"
+"  match Resource::Text(\"\") { // 触发警告\n"
+"    Text(s) => ... // 触发警告\n"
+"    Binary(b) => ... // 触发警告\n"
+"  }\n"
+"}\n"
+"\n"
+
+#: ../../language/docs.md:49
+msgid ""
+"The `#visibility` attribute takes two arguments: `change_to` and "
+"`message`."
+msgstr "`#visibility`属性接受两个参数：`change_to` 和 `message`。"
+
+#: ../../language/docs.md:51
+msgid ""
+"The `change_to` argument is a string that indicates the new visibility of"
+" the type. It can be either `\"abstract\"` or `\"readonly\"`."
+msgstr "`change_to`参数是一个表示该类型新的可见性的字符串，它可以是`\"abstract\"`或者`\"readonly\"`"
+
+#: ../../language/docs.md:43
+msgid "`change_to`"
+msgstr "`\"change_to\"`的值"
+
+#: ../../language/docs.md:43
+msgid "Invalidated Usages"
+msgstr "将要禁止的使用"
+
+#: ../../language/docs.md:43
+msgid "`\"readonly\"`"
+msgstr ""
+
+#: ../../language/docs.md:43
+msgid "Creating an instance of the type or mutating the fields of the instance."
+msgstr "创建该类型的实例，或者变更实例的字段的值。"
+
+#: ../../language/docs.md:43
+msgid "`\"abstract\"`"
+msgstr ""
+
+#: ../../language/docs.md:43
+msgid ""
+"Creating an instance of the type, mutating the fields of the instance, "
+"pattern matching, or accessing fields by label."
+msgstr "创建该类型的实例、变更实例的字段的值、对它的实例进行模式匹配或者访问实例的字段。"
+
+#: ../../language/docs.md:58
+msgid ""
+"The `message` argument is a string that provides additional information "
+"about the visibility change."
+msgstr "`message`参数用于提供额外的信息，告诉使用者关于可见性的变更。"
+
+#: ../../language/docs.md:60
+msgid "The Internal Attribute"
+msgstr "“内部”属性"
+
+#: ../../language/docs.md:62
+msgid ""
+"The `#internal` attribute is used to mark a function, type, or trait as "
+"internal.  Any usage of the internal function or type in other modules "
+"will emit an alert warning."
+msgstr "`#internal`属性用于标记一个函数、类型或者特征为内部的。所有在模块外的使用将会触发警告。"
+
+#: ../../language/docs.md:65
+msgid ""
+"#internal(unsafe, \"This is an unsafe function\")\n"
+"fn unsafe_get[A](arr : Array[A]) -> A {\n"
+"  ...\n"
 "}\n"
 msgstr ""
+"#internal(unsafe, \"这是个不安全的函数\")\n"
+"fn unsafe_get[A](arr : Array[A]) -> A {\n"
+"  ...\n"
+"}\n"
+
+#: ../../language/docs.md:72
+msgid ""
+"The internal attribute takes two arguments: `category` and `message`.  "
+"`category` is a identifier that indicates the category of the alert, and "
+"`message` is a string that provides additional message for the alert."
+msgstr ""
+"“内部”属性接受两个参数：`category` 和 `message`。`category` "
+"是一个标识符，表示警示对应的类别。`message` 是一个字符串，表示警示中额外的提示信息。"
+
+#: ../../language/docs.md:75
+msgid ""
+"The alert warnings can be turn off by setting the `alert-list` in "
+"`moon.pkg.json`. For more detail, see "
+"[Alert](../toolchain/moon/package.md#alert-list)."
+msgstr ""
+"警示可以通过配置`moon.pkg.json`中的`alert-"
+"list`选项来关闭。关于更多的细节，见 [警示列表](../toolchain/moon/package.md#alert-list)."
+
+#: ../../language/docs.md:78
+msgid "The Borrow Attribute"
+msgstr "“借用”属性"
+
+#: ../../language/docs.md:80
+msgid ""
+"The `#borrow` attribute is used to indicate that a FFI takes ownership of"
+" its arguments. For more detail, see [FFI](./ffi.md#The-borrow-"
+"attribute)."
+msgstr ""
+"`#borrow`属性用于表示一个外部接口是否获得参数的所有权。对于更多细节，见 [FFI](./ffi.md#The-borrow-"
+"attribute)。"
 
 #: ../../language/error-handling.md:1
 msgid "Error handling"
@@ -19875,4 +20063,47 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
+
+#~ msgid "Pragmas"
+#~ msgstr "注解"
+
+#~ msgid "Alert Pragmas"
+#~ msgstr "警告注解"
+
+#~ msgid ""
+#~ "Alert pragmas in doc comments of "
+#~ "functions will be reported when those"
+#~ " functions are referenced. This mechanism"
+#~ " is a generalized way to mark "
+#~ "functions as `deprecated` or `unsafe`."
+#~ msgstr "函数文档注释中的警告注解将在引用这些函数时报告。这种机制是一种通用的方法，用于将函数标记为 `deprecated` 或 `unsafe`。"
+
+#~ msgid "It takes the form `@alert category \"alert message...\"`."
+#~ msgstr "它采用 `@alert category \"alert message...\"` 的形式。"
+
+#~ msgid ""
+#~ "The category can be an arbitrary "
+#~ "identifier. It allows configuration to "
+#~ "decide which alerts are enabled or "
+#~ "turned into errors."
+#~ msgstr "类别可以是任意标识符。它允许配置决定哪些警告是启用的或转换为错误。"
+
+#~ msgid ""
+#~ "/// @alert deprecated \"Use foo2 instead\"\n"
+#~ "pub fn foo() -> Unit {\n"
+#~ "  ...\n"
+#~ "}\n"
+#~ "\n"
+#~ "/// @alert unsafe \"Div will cause an error when y is zero\"\n"
+#~ "pub fn div(x : Int, y : Int) -> Int {\n"
+#~ "  ...\n"
+#~ "}\n"
+#~ "\n"
+#~ "test {\n"
+#~ "  // Warning (Alert deprecated): Use foo2 instead\n"
+#~ "  foo()\n"
+#~ "  // Warning (Alert unsafe): Div will cause an error when y is zero\n"
+#~ "  div(1, 2) |> ignore\n"
+#~ "}\n"
+#~ msgstr ""
 
