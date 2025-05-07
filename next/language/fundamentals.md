@@ -471,6 +471,22 @@ The expression `add3(1, 2, 7)` returns `10`. Any expression that evaluates to a 
 :end-before: end function application 2
 ```
 
+### Partial Applications
+
+Partial application is a technique of applying a function to some of its arguments, resulting in a new function that takes the remaining arguments. In MoonBit, partial application is achieved by using the `_` operator in function application:
+
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start partial application 1
+:end-before: end partial application 1
+```
+
+The `_` operator represents the missing argument in parentheses. The partial application allows multiple `_` in the same parentheses.
+For example, `Array::fold(_, _, init=5)` is equivalent to `fn(x, y) { Array::fold(x, y, init=5) }`.
+
+The `_` operator can also be used in enum creation, dot style function calls and in the pipelines.
+
 ### Labelled arguments
 
 **Top-level** functions can declare labelled argument with the syntax `label~ : Type`. `label` will also serve as parameter name inside function body:
@@ -1396,9 +1412,9 @@ Generics are supported in top-level function and data type definitions. Type par
 
 ## Special Syntax
 
-### Pipe operator
+### Pipelines
 
-MoonBit provides a convenient pipe operator `|>`, which can be used to chain regular function calls:
+MoonBit provides a convenient pipe syntax `x |> f(y)`, which can be used to chain regular function calls:
 
 ```{literalinclude} /sources/language/src/operator/top.mbt
 :language: moonbit
@@ -1406,6 +1422,13 @@ MoonBit provides a convenient pipe operator `|>`, which can be used to chain reg
 :start-after: start operator 4
 :end-before: end operator 4
 ```
+
+The MoonBit code follows the *data-first* style, meaning the function places its "subject" as the first argument. 
+Thus, the pipe operator inserts the left-hand side value into the first argument of the right-hand side function call by default. 
+For example, `x |> f(y)` is equivalent to `f(x, y)`.
+
+You can use the `_` operator to insert `x` into any argument of the function `f`, such as `x |> f(y, _)`, which is equivalent to `f(y, x)`. Labeled arguments are also supported.
+
 
 ### Cascade Operator
 
