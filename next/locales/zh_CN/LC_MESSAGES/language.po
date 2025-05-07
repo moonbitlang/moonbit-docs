@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-30 15:56+0800\n"
+"POT-Creation-Date: 2025-05-06 14:26+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2217,7 +2217,7 @@ msgstr ""
 #: ../../language/error_codes/E0010.md:10 ../../language/error_codes/E0011.md:6
 #: ../../language/error_codes/E0012.md:7 ../../language/error_codes/E0013.md:18
 #: ../../language/error_codes/E0014.md:5 ../../language/error_codes/E0015.md:8
-#: ../../language/error_codes/E0018.md:12
+#: ../../language/error_codes/E0017.md:8 ../../language/error_codes/E0018.md:12
 #: ../../language/error_codes/E0019.md:11
 #: ../../language/error_codes/E0020.md:30 ../../language/error_codes/E0021.md:5
 #: ../../language/error_codes/E0022.md:8 ../../language/error_codes/E0023.md:5
@@ -2330,6 +2330,7 @@ msgstr ""
 #: ../../language/error_codes/E0013.md:59
 #: ../../language/error_codes/E0014.md:14
 #: ../../language/error_codes/E0015.md:18
+#: ../../language/error_codes/E0017.md:40
 #: ../../language/error_codes/E0018.md:25
 #: ../../language/error_codes/E0019.md:17
 #: ../../language/error_codes/E0020.md:40
@@ -3527,6 +3528,116 @@ msgstr ""
 #: ../../language/error_codes/E0016.md:3
 msgid "Parser consistency check failed."
 msgstr "解析器一致性检查失败。"
+
+#: ../../language/error_codes/E0017.md:1
+msgid "E0017"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:3
+msgid ""
+"The usage of identifier is ambiguous. If it refers to the loop variable, "
+"please use `as <id>` to bind it in the pattern. If it refers to the "
+"original value of the variable before entering the loop, please bind it "
+"to a new binder outside the loop."
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:10
+msgid ""
+"fn main {\n"
+"  let a : @string.View = \"asdf\"\n"
+"  loop a {\n"
+"    [_, .. d] => {\n"
+"      println(a)\n"
+"      //      ^\n"
+"      // Warning: The usage of 'a' is ambiguous. If it refers to the loop"
+"\n"
+"      // variable, please use `as a` to bind it in the pattern. If it "
+"refers to\n"
+"      // the original value of 'a' before entering the loop, please bind "
+"it to a\n"
+"      // new binder outside the loop.\n"
+"      continue d\n"
+"    }\n"
+"    [] => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:28
+#, fuzzy
+msgid "The output is:"
+msgstr "输出如下所示（仅供参考）："
+
+#: ../../language/error_codes/E0017.md:30
+#: ../../language/error_codes/E0017.md:86
+msgid ""
+"asdf\n"
+"asdf\n"
+"asdf\n"
+"asdf\n"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:37
+msgid ""
+"Because `a` refers to the value of `a` before entering the loop, "
+"therefore the value is always the same."
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:42
+msgid ""
+"It is often the case that you may want to refer to the loop variable that"
+" changes with loop iterations. If so, use `as <id>` to bind it in the "
+"pattern."
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:45
+msgid ""
+"fn main {\n"
+"  let a : @string.View = \"asdf\"\n"
+"  loop a {\n"
+"    [_, .. d] as a => {\n"
+"      println(a)\n"
+"      continue d\n"
+"    }\n"
+"    [] => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:58
+#: ../../language/error_codes/E0017.md:84
+#, fuzzy
+msgid "Output:"
+msgstr "输出"
+
+#: ../../language/error_codes/E0017.md:60
+msgid ""
+"asdf\n"
+"sdf\n"
+"df\n"
+"f\n"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:67
+msgid ""
+"Or, if you want to refer to the original value of the variable before "
+"entering the loop, explicitly bind it to another name outside the loop."
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:70
+msgid ""
+"fn main {\n"
+"  let a : @string.View = \"asdf\"\n"
+"  let b = a\n"
+"  loop a {\n"
+"    [_, .. d] => {\n"
+"      println(b)\n"
+"      continue d\n"
+"    }\n"
+"    [] => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E0018.md:1
 msgid "E0018"
