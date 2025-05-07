@@ -93,23 +93,23 @@ fn cascade() -> Unit {
 
 }
 
-fn land(self : T, other : T) -> T {
+impl BitAnd for T with land(self : T, other : T) -> T {
   { x: self.x & other.x }
 }
 
-fn lor(self : T, other : T) -> T {
+impl BitOr for T with lor(self : T, other : T) -> T {
   { x: self.x | other.x }
 }
 
-fn lxor(self : T, other : T) -> T {
+impl BitXOr for T with lxor(self : T, other : T) -> T {
   { x: self.x ^ other.x }
 }
 
-fn op_shl(self : T, other : Int) -> T {
+impl Shl for T with op_shl(self : T, other : Int) -> T {
   { x: self.x << other }
 }
 
-fn op_shr(self : T, other : Int) -> T {
+impl Shr for T with op_shr(self : T, other : Int) -> T {
   { x: self.x >> other }
 }
 
