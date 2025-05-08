@@ -33,6 +33,18 @@ test {
 }
 // end function application 2
 
+// start partial application 1
+fn add(x : Int, y : Int) -> Int {
+  x + y
+}
+
+test {
+  let add10 : (Int) -> Int = add(10, _)
+  println(add10(5)) // prints 15
+  println(add10(10)) // prints 20
+}
+// end partial application 1
+
 // start local functions 1
 fn local_1() -> Int {
   fn inc(x) { // named as `inc`
