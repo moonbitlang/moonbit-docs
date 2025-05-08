@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-07 17:57+0800\n"
+"POT-Creation-Date: 2025-05-08 10:02+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1363,7 +1363,9 @@ msgid ""
 " deprecated.  MoonBit emits a warning when the deprecated function or "
 "type is used in other packages.  You can customize the warning message by"
 " passing a string to the attribute."
-msgstr "`#deprecated`属性用于标记一个函数、类型或者特征为弃用状态。当弃用的成员在其他包中被使用时，MoonBit 将会触发警告。你可以传递一个字符串参数给这个属性，来自定义警告中显示的消息。"
+msgstr ""
+"`#deprecated`属性用于标记一个函数、类型或者特征为弃用状态。当弃用的成员在其他包中被使用时，MoonBit "
+"将会触发警告。你可以传递一个字符串参数给这个属性，来自定义警告中显示的消息。"
 
 #: ../../language/docs.md:26
 msgid "For example:"
@@ -1377,7 +1379,7 @@ msgid ""
 "}\n"
 "\n"
 "#deprecated(\"Use Bar2 instead\")\n"
-"pub enum Bar {\n"
+"pub(all) enum Bar {\n"
 "  Ctor1\n"
 "  Ctor2\n"
 "}\n"
@@ -1557,8 +1559,8 @@ msgid ""
 "`category` is a identifier that indicates the category of the alert, and "
 "`message` is a string that provides additional message for the alert."
 msgstr ""
-"“内部”属性接受两个参数：`category` 和 `message`。`category` "
-"是一个标识符，表示警示对应的类别。`message` 是一个字符串，表示警示中额外的提示信息。"
+"“内部”属性接受两个参数：`category` 和 `message`。`category` 是一个标识符，表示警示对应的类别。`message`"
+" 是一个字符串，表示警示中额外的提示信息。"
 
 #: ../../language/docs.md:75
 msgid ""
@@ -1566,8 +1568,8 @@ msgid ""
 "`moon.pkg.json`. For more detail, see "
 "[Alert](../toolchain/moon/package.md#alert-list)."
 msgstr ""
-"警示可以通过配置`moon.pkg.json`中的`alert-"
-"list`选项来关闭。关于更多的细节，见 [警示列表](../toolchain/moon/package.md#alert-list)."
+"警示可以通过配置`moon.pkg.json`中的`alert-list`选项来关闭。关于更多的细节，见 "
+"[警示列表](../toolchain/moon/package.md#alert-list)."
 
 #: ../../language/docs.md:78
 msgid "The Borrow Attribute"
@@ -2410,9 +2412,10 @@ msgstr ""
 #: ../../language/error_codes/E0020.md:30 ../../language/error_codes/E0021.md:5
 #: ../../language/error_codes/E0022.md:8 ../../language/error_codes/E0023.md:5
 #: ../../language/error_codes/E0024.md:5 ../../language/error_codes/E0026.md:8
-#: ../../language/error_codes/E0028.md:5 ../../language/error_codes/E0029.md:5
-#: ../../language/error_codes/E0030.md:5 ../../language/error_codes/E0031.md:7
-#: ../../language/error_codes/E0032.md:5 ../../language/error_codes/E0033.md:10
+#: ../../language/error_codes/E0027.md:8 ../../language/error_codes/E0028.md:5
+#: ../../language/error_codes/E0029.md:5 ../../language/error_codes/E0030.md:5
+#: ../../language/error_codes/E0031.md:7 ../../language/error_codes/E0032.md:5
+#: ../../language/error_codes/E0033.md:10
 #: ../../language/error_codes/E0035.md:29
 #: ../../language/error_codes/E0036.md:13 ../../language/error_codes/E0037.md:5
 #: ../../language/error_codes/E0038.md:13 ../../language/error_codes/E0040.md:7
@@ -2527,6 +2530,7 @@ msgstr ""
 #: ../../language/error_codes/E0023.md:17
 #: ../../language/error_codes/E0024.md:13
 #: ../../language/error_codes/E0026.md:34
+#: ../../language/error_codes/E0027.md:27
 #: ../../language/error_codes/E0028.md:13
 #: ../../language/error_codes/E0029.md:50
 #: ../../language/error_codes/E0030.md:19
@@ -4250,6 +4254,45 @@ msgid ""
 "The syntax is deprecated. Please refer to the warning message on the "
 "reason and potential fix."
 msgstr "语法已弃用。请参考警告消息，了解原因和潜在修复方法。"
+
+#: ../../language/error_codes/E0027.md:5
+msgid ""
+"For example, one of the deprecated usage is using constructors as "
+"functions. Instead, partial application should be used to create a "
+"function from a constructor."
+msgstr ""
+
+#: ../../language/error_codes/E0027.md:10
+msgid ""
+"enum Message {\n"
+"  Add(String)\n"
+"} derive(Show)\n"
+"\n"
+"fn perform[T](message : (T) -> Message, produce : () -> T) -> Message {\n"
+"  message(produce())\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  println(perform(Add, fn() { \"Hello, world!\" }))\n"
+"  //              ^^^\n"
+"  // Warning: Using constructor as function directly is\n"
+"  // deprecated. Use the partial application syntax instead\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0027.md:29
+msgid ""
+"Migrate the code according to the warning message. In this case, the code"
+" should be changed to use the partial application syntax."
+msgstr ""
+
+#: ../../language/error_codes/E0027.md:32
+msgid ""
+"// ...\n"
+"fn main {\n"
+"  println(perform(Add(_), fn() { \"Hello, world!\" }))\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E0028.md:1
 msgid "E0028"
@@ -15572,8 +15615,7 @@ msgid ""
 "arguments, resulting in a new function that takes the remaining "
 "arguments. In MoonBit, partial application is achieved by using the `_` "
 "operator in function application:"
-msgstr ""
-"部分应用允许函数调用时只提供部分的参数，生成一个接受被余下的参数并返回结果的函数。在MoonBit中，通过`_`操作符可以对函数进行部分应用："
+msgstr "部分应用允许函数调用时只提供部分的参数，生成一个接受被余下的参数并返回结果的函数。在MoonBit中，通过`_`操作符可以对函数进行部分应用："
 
 #: ../../language/fundamentals.md:478
 msgid ""
@@ -15595,15 +15637,14 @@ msgid ""
 "example, `Array::fold(_, _, init=5)` is equivalent to `fn(x, y) { "
 "Array::fold(x, y, init=5) }`."
 msgstr ""
-"`_`操作符表示括号中缺少的参数。部分应用允许在一对括号中使用多个`_`。例如，`Array::fold(_, _, init=5)`"
-"等价于`fn(x, y) { Array::fold(x, y, init=5) }`。"
+"`_`操作符表示括号中缺少的参数。部分应用允许在一对括号中使用多个`_`。例如，`Array::fold(_, _, "
+"init=5)`等价于`fn(x, y) { Array::fold(x, y, init=5) }`。"
 
 #: ../../language/fundamentals.md:488
 msgid ""
 "The `_` operator can also be used in enum creation, dot style function "
 "calls and in the pipelines."
-msgstr ""
-"`_`操作符也可以在创建枚举值、`self.f(args)`形式的函数调用和管道中使用。"
+msgstr "`_`操作符也可以在创建枚举值、`self.f(args)`形式的函数调用和管道中使用。"
 
 #: ../../language/fundamentals.md:490
 msgid "Labelled arguments"
@@ -17981,8 +18022,8 @@ msgid ""
 "hand side function call by default.  For example, `x |> f(y)` is "
 "equivalent to `f(x, y)`."
 msgstr ""
-"MoonBit代码遵循*数据优先*风格，也就是说，函数将它的“主题”放置在第一个参数的位置。所以，管道默认将左侧的值填入右侧的函数调用的第一个参数的位置。"
-"例如`x |> f(y)`等价于`f(x,y)`。"
+"MoonBit代码遵循*数据优先*风格，也就是说，函数将它的“主题”放置在第一个参数的位置。所以，管道默认将左侧的值填入右侧的函数调用的第一个参数的位置。例如`x"
+" |> f(y)`等价于`f(x,y)`。"
 
 #: ../../language/fundamentals.md:1430
 msgid ""
@@ -17990,7 +18031,8 @@ msgid ""
 "function `f`, such as `x |> f(y, _)`, which is equivalent to `f(y, x)`. "
 "Labeled arguments are also supported."
 msgstr ""
-"你也可以使用`_`操作符改变`x`在函数`f`的调用中的插入位置，例如`x |> f(y, _)`, 这等价于`f(y,x)`。带标签的参数也是支持的。"
+"你也可以使用`_`操作符改变`x`在函数`f`的调用中的插入位置，例如`x |> f(y, _)`, "
+"这等价于`f(y,x)`。带标签的参数也是支持的。"
 
 #: ../../language/fundamentals.md:1433
 msgid "Cascade Operator"
