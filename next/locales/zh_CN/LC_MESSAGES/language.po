@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-08 10:02+0800\n"
+"POT-Creation-Date: 2025-05-08 11:13+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2401,7 +2401,8 @@ msgstr ""
 
 #: ../../language/error_codes/E0001.md:12
 #: ../../language/error_codes/E0002.md:15
-#: ../../language/error_codes/E0003.md:16 ../../language/error_codes/E0005.md:9
+#: ../../language/error_codes/E0003.md:16
+#: ../../language/error_codes/E0004.md:15 ../../language/error_codes/E0005.md:9
 #: ../../language/error_codes/E0006.md:11 ../../language/error_codes/E0007.md:6
 #: ../../language/error_codes/E0008.md:6 ../../language/error_codes/E0009.md:5
 #: ../../language/error_codes/E0010.md:10 ../../language/error_codes/E0011.md:6
@@ -2510,6 +2511,7 @@ msgstr ""
 #: ../../language/error_codes/E0001.md:26
 #: ../../language/error_codes/E0002.md:31
 #: ../../language/error_codes/E0003.md:30
+#: ../../language/error_codes/E0004.md:29
 #: ../../language/error_codes/E0005.md:24
 #: ../../language/error_codes/E0006.md:28
 #: ../../language/error_codes/E0007.md:37
@@ -2938,12 +2940,68 @@ msgid "E0004"
 msgstr ""
 
 #: ../../language/error_codes/E0004.md:3
-msgid "Unused abstract type."
-msgstr "未使用的抽象类型。"
+msgid ""
+"The abstract type does not occur in public signature of current package, "
+"consider marking it as `priv`."
+msgstr ""
 
-#: ../../language/error_codes/E0004.md:5 ../../language/error_codes/E0016.md:5
-msgid "Currently, MoonBit won't emit this warning."
-msgstr "目前，MoonBit 不会发出这个警告。"
+#: ../../language/error_codes/E0004.md:6
+msgid ""
+"If an abstract type is not used elsewhere in the public interface of a "
+"package, then it is not possible for user to interact with the value of "
+"that type in any way. Therefore, it is highly probable that the type is "
+"part of the private implementation of the package. In this case, it is "
+"better to mark the type as `priv` to indicate that it is not part of the "
+"public interface of the package."
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:12
+msgid ""
+"It is also possible that, this abstract type is part of the public "
+"interface of the package, but relevant functions, methods, or types are "
+"not marked as `pub`."
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:17
+msgid ""
+"type Code Int derive(Show)\n"
+"\n"
+"fn Code::new(value : Int) -> Code {\n"
+"  return value\n"
+"}\n"
+"\n"
+"test {\n"
+"  inspect!(Code::new(1), content=\"Code(1)\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:31
+msgid ""
+"If the abstract type is not part of the public interface of the package, "
+"then it should be marked as `priv`:"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:34
+msgid ""
+"priv type Code Int derive(Show)\n"
+"\n"
+"// ...\n"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:40
+msgid ""
+"Or, if the abstract type is part of the public interface of the package, "
+"then make relevant definitions `pub`:"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:43
+msgid ""
+"type Code Int derive(Show)\n"
+"\n"
+"pub fn Code::new(value : Int) -> Code {\n"
+"  return value\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E0005.md:1
 msgid "E0005"
@@ -3720,6 +3778,10 @@ msgstr ""
 #: ../../language/error_codes/E0016.md:3
 msgid "Parser consistency check failed."
 msgstr "解析器一致性检查失败。"
+
+#: ../../language/error_codes/E0016.md:5
+msgid "Currently, MoonBit won't emit this warning."
+msgstr "目前，MoonBit 不会发出这个警告。"
 
 #: ../../language/error_codes/E0017.md:1
 msgid "E0017"
@@ -20225,4 +20287,7 @@ msgstr ""
 #~ "  println(add10(10)) // prints 20\n"
 #~ "}\n"
 #~ msgstr ""
+
+#~ msgid "Unused abstract type."
+#~ msgstr "未使用的抽象类型。"
 
