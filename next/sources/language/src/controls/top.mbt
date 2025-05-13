@@ -279,7 +279,7 @@ fn getProcessedText(
   resources : Map[String, Resource],
   path : String
 ) -> String!Error {
-  guard resources[path] is Some(resource) else {
+  guard resources.get(path) is Some(resource) else {
     fail!("\{path} not found")
   }
   guard resource is PlainText(text) else {
