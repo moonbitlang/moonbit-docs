@@ -7,7 +7,7 @@ fn main {
   println(map1 == map2)
 
   // Access a value by key
-  println(map1["key1"])
+  println(map1.get("key1"))
 
   // Update a value by key
   map1["key1"] = 10
