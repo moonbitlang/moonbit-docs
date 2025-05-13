@@ -21,12 +21,18 @@ fn lines(str : String) -> Array[Line] {
   }
 }
 
+///|
 test "lines" {
-  inspect!(lines(""), content="[]")
+  inspect!(
+    lines(""),
+    content=
+      #|[{number: 1, text: ""}]
+    ,
+  )
   inspect!(
     lines("\n"),
     content=
-      #|[{number: 1, text: ""}]
+      #|[{number: 1, text: ""}, {number: 2, text: ""}]
     ,
   )
   inspect!(
