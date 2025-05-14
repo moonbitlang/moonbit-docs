@@ -29,6 +29,7 @@ to download MoonBit language support.
 ### install from shell
 
 #### install in Linux & macOS 
+
 We also provide an installation script: Linux & macOS users can install via
 
 ```bash
