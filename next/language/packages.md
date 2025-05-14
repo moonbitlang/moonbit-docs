@@ -124,8 +124,8 @@ Implementing a sealed (abstract or readonly) trait outside its package result in
 
 Implementations have independent visibility, just like functions. The type will not be considered having fulfillled the trait outside current package unless the implementation is `pub`.
 
-```{note}
-Currently, you cannot implement an empty trait for a type.
+```{warning}
+Currently, an empty trait is implemented automatically.
 ```
 
 Here's an example of abstract trait:
