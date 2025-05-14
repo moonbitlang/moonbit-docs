@@ -10,6 +10,8 @@ delve into the language.
 
 ## Installation
 
+### install from VSCode
+
 **The extension**
 
 Currently, MoonBit development support is through the VS Code extension.
@@ -24,11 +26,16 @@ to download MoonBit language support.
 > and you may skip this part:
 > ![runtime-installation](/imgs/runtime-installation.png)
 
+### install from shell
+
+#### install in Linux & macOS 
 We also provide an installation script: Linux & macOS users can install via
 
 ```bash
 curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
 ```
+
+#### install in Windows
 
 For Windows users, PowerShell is used:
 
