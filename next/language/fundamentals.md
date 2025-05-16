@@ -600,7 +600,8 @@ MoonBit allows calling functions with alternative names via function alias. Func
 :end-before: end function alias
 ```
 
-Function alias can be used to assign shorter name to foreign functions.
+Function alias can be used to import functions from other packages.
+
 You can also create public function alias with the syntax `pub fnalias`,
 which is useful for re-exporting functions from another package.
 
