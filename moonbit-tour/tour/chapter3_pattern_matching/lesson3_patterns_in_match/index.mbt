@@ -24,8 +24,6 @@ let assets : Resource = Folder(
 )
 
 fn main {
-  let Folder(top_level) = assets
-  println("we have items in the root folder:\n \{top_level.keys()}")
   println("resource count: \{count(assets)}")
 }
 
