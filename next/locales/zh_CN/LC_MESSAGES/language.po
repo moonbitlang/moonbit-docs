@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-15 16:16+0800\n"
+"POT-Creation-Date: 2025-05-16 15:55+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2652,7 +2652,7 @@ msgstr ""
 #: ../../language/error_codes/E4094.md:56
 #: ../../language/error_codes/E4095.md:26
 #: ../../language/error_codes/E4096.md:14
-#: ../../language/error_codes/E4099.md:13
+#: ../../language/error_codes/E4099.md:14
 #: ../../language/error_codes/E4100.md:22
 #: ../../language/error_codes/E4101.md:33
 #: ../../language/error_codes/E4102.md:38
@@ -2670,6 +2670,7 @@ msgstr ""
 #: ../../language/error_codes/E4114.md:20
 #: ../../language/error_codes/E4115.md:17
 #: ../../language/error_codes/E4116.md:17
+#: ../../language/error_codes/E4117.md:26
 #: ../../language/error_codes/E4118.md:23
 #: ../../language/error_codes/E4119.md:15
 #: ../../language/error_codes/E4120.md:28
@@ -9455,7 +9456,10 @@ msgid ""
 "functionality to other packages. Main packages, on the other hand, are "
 "the entry points of the program. Therefore, main package should contains "
 "a `main` function serving as the entry point of the program."
-msgstr "在 MoonBit 中，软件包分为两种类型：主软件包和非主软件包。非主软件包通常用作库，为其他软件包提供功能。而主软件包则是程序的入口点。因此，主软件包应该包含一个 `main` 函数作为程序的入口点。"
+msgstr ""
+"在 MoonBit "
+"中，软件包分为两种类型：主软件包和非主软件包。非主软件包通常用作库，为其他软件包提供功能。而主软件包则是程序的入口点。因此，主软件包应该包含一个 "
+"`main` 函数作为程序的入口点。"
 
 #: ../../language/error_codes/E4067.md:13
 #: ../../language/error_codes/E4068.md:13
@@ -10986,19 +10990,27 @@ msgstr "一个特征被用在了需要类型的上下文里。"
 
 #: ../../language/error_codes/E4099.md:7
 msgid ""
-"// `Eq` is a trait, not a type\n"
-"fn f(_ : Eq) -> Unit {\n"
+"// `Show` is a trait, not a type\n"
+"fn f(_ : Show) -> Unit {\n"
+"  \n"
 "}\n"
 msgstr ""
-"// `Eq` 是一个特征，不是类型\n"
-"fn f(_ : Eq) -> Unit {\n"
+"// `Show` 是一个特征，不是类型\n"
+"fn f(_ : Show) -> Unit {\n"
 "}\n"
 
-#: ../../language/error_codes/E4099.md:14
+#: ../../language/error_codes/E4099.md:15
 msgid ""
 "If you want to refer to a trait object type, use the syntax `&Trait` "
 "instead."
 msgstr "如果想要指代特征对象类型，应当使用 `&Trait` 语法。"
+
+#: ../../language/error_codes/E4099.md:17
+msgid ""
+"fn f(_ : &Show) -> Unit {\n"
+"\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E4100.md:1
 msgid "E4100"
@@ -12074,19 +12086,33 @@ msgstr ""
 
 #: ../../language/error_codes/E4117.md:9
 msgid ""
-"pub fn func_takes_closure[F](f : F) -> Unit {\n"
-"  ...\n"
-"}\n"
-"\n"
+"///|\n"
 "pub fn accumulate(acc~ : Int, value : Int) -> Int {\n"
 "  acc + value\n"
 "}\n"
 "\n"
-"fn main {\n"
-"  func_takes_closure(accumulate)\n"
-"  //                 ^~~~~~~~~~\n"
+"///|\n"
+"test {\n"
+"  let xs = [1, 2, 3, 4, 5]\n"
+"  let sum = xs.fold(init=0, accumulate)\n"
+"  //                       ^~~~~~~~~~~~\n"
 "  // Error: Function with labelled arguments can only be applied "
 "directly.\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4117.md:24
+msgid ""
+"Use [Partial "
+"Applications](https://docs.moonbitlang.com/en/latest/language/fundamentals.html"
+"#partial-applications) to create non-labelled-arguments-function."
+msgstr ""
+
+#: ../../language/error_codes/E4117.md:28
+msgid ""
+"test {\n"
+"  let xs = [1, 2, 3, 4, 5]\n"
+"  let sum = xs.fold(init=0, accumulate(acc=_,_))\n"
 "}\n"
 msgstr ""
 
@@ -12740,7 +12766,9 @@ msgid "E4132"
 msgstr ""
 
 #: ../../language/error_codes/E4132.md:3
-msgid "Invalid test parameter. Only one parameter with type `@test.T` is allowed."
+msgid ""
+"Invalid test parameter. Only one parameter with type `@test.T` or "
+"`@bench.T` is allowed."
 msgstr ""
 
 #: ../../language/error_codes/E4132.md:7
@@ -12753,7 +12781,7 @@ msgstr ""
 #: ../../language/error_codes/E4132.md:15
 msgid ""
 "It is not yet possible to pass custom parameters to tests, and you have "
-"to use the predefined `@test.T` type."
+"to use the predefined `@test.T` type or `@bench.T` type."
 msgstr ""
 
 #: ../../language/error_codes/E4132.md:18
@@ -12761,13 +12789,17 @@ msgid ""
 "test (it : @test.T) {\n"
 "  ...\n"
 "}\n"
+"\n"
+"test (bm : @bench.T) {\n"
+"  ...\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4132.md:24
+#: ../../language/error_codes/E4132.md:28
 msgid "Or you can remove the parameter if it is not needed:"
 msgstr ""
 
-#: ../../language/error_codes/E4132.md:26
+#: ../../language/error_codes/E4132.md:30
 msgid ""
 "test {\n"
 "  ...\n"
@@ -13632,7 +13664,7 @@ msgid ""
 "}\n"
 "\n"
 "fn g() -> Int {\n"
-"  f!!()\n"
+"  f!()\n"
 "}\n"
 msgstr ""
 
@@ -13645,7 +13677,7 @@ msgstr "main 包中缺少 `main` 函数"
 #: ../../language/error_codes/E4150.md:25
 msgid ""
 "async fn g() -> Int {\n"
-"  f!!()\n"
+"  f!()\n"
 "}\n"
 msgstr ""
 
@@ -13654,14 +13686,13 @@ msgid "E4150"
 msgstr ""
 
 #: ../../language/error_codes/E4150.md:3
-#, fuzzy
-msgid "Async function call must be marked with `!!`."
-msgstr "调用异步函数时，必须用 `!!` 操作符来标记这是一次异步函数调用："
+msgid "Async function call must be marked with `!`."
+msgstr "调用异步函数时，必须用 `!` 操作符来标记这是一次异步函数调用："
 
 #: ../../language/error_codes/E4150.md:5
 msgid ""
-"MoonBit require all async function calls to be marked with `!!`, as a way"
-" to to inform the programmer that the function call is async and the "
+"MoonBit require all async function calls to be marked with `!`, as a way "
+"to to inform the programmer that the function call is async and the "
 "control flow will be suspended here."
 msgstr ""
 
@@ -13672,14 +13703,13 @@ msgid ""
 "}\n"
 "\n"
 "async fn g() -> Int {\n"
-"  f() // Error: async function call must be marked with `!!`\n"
+"  f() // Error: async function call must be marked with `!`\n"
 "}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4150.md:23
-#, fuzzy
-msgid "Mark the async function call with `!!`:"
-msgstr "调用异步函数时，必须用 `!!` 操作符来标记这是一次异步函数调用："
+msgid "Mark the async function call with `!`:"
+msgstr "调用异步函数时，必须用 `!` 操作符来标记这是一次异步函数调用："
 
 #: ../../language/error_codes/E4151.md:1
 msgid "E4151"
@@ -16125,7 +16155,7 @@ msgid ""
 "  resources : Map[String, Resource],\n"
 "  path : String\n"
 ") -> String!Error {\n"
-"  guard resources[path] is Some(resource) else {\n"
+"  guard resources.get(path) is Some(resource) else {\n"
 "    fail!(\"\\{path} not found\")\n"
 "  }\n"
 "  guard resource is PlainText(text) else {\n"
@@ -18084,7 +18114,8 @@ msgid ""
 "hand side function call by default.  For example, `x |> f(y)` is "
 "equivalent to `f(x, y)`."
 msgstr ""
-"MoonBit 代码遵循*数据优先*风格，也就是说，函数将它的“主题”放置在第一个参数的位置。所以，管道默认将左侧的值填入右侧的函数调用的第一个参数的位置。例如`x"
+"MoonBit "
+"代码遵循*数据优先*风格，也就是说，函数将它的“主题”放置在第一个参数的位置。所以，管道默认将左侧的值填入右侧的函数调用的第一个参数的位置。例如`x"
 " |> f(y)`等价于`f(x,y)`。"
 
 #: ../../language/fundamentals.md:1430
@@ -18248,8 +18279,7 @@ msgid ""
 "Note that `is` expression can only take a simple pattern. If you need to "
 "use `as` to bind the pattern to a variable, you have to add parentheses. "
 "For example:"
-msgstr "`is` 表达式只能接受一个简单模式，如果你需要通过 `as` 把模式绑定到某个变量上，"
-"需要加括号。比如："
+msgstr "`is` 表达式只能接受一个简单模式，如果你需要通过 `as` 把模式绑定到某个变量上，需要加括号。比如："
 
 #: ../../language/fundamentals.md:1530
 msgid ""
@@ -20250,65 +20280,3 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
-
-#~ msgid "Pragmas"
-#~ msgstr "注解"
-
-#~ msgid "Alert Pragmas"
-#~ msgstr "警告注解"
-
-#~ msgid ""
-#~ "Alert pragmas in doc comments of "
-#~ "functions will be reported when those"
-#~ " functions are referenced. This mechanism"
-#~ " is a generalized way to mark "
-#~ "functions as `deprecated` or `unsafe`."
-#~ msgstr "函数文档注释中的警告注解将在引用这些函数时报告。这种机制是一种通用的方法，用于将函数标记为 `deprecated` 或 `unsafe`。"
-
-#~ msgid "It takes the form `@alert category \"alert message...\"`."
-#~ msgstr "它采用 `@alert category \"alert message...\"` 的形式。"
-
-#~ msgid ""
-#~ "The category can be an arbitrary "
-#~ "identifier. It allows configuration to "
-#~ "decide which alerts are enabled or "
-#~ "turned into errors."
-#~ msgstr "类别可以是任意标识符。它允许配置决定哪些警告是启用的或转换为错误。"
-
-#~ msgid ""
-#~ "/// @alert deprecated \"Use foo2 instead\"\n"
-#~ "pub fn foo() -> Unit {\n"
-#~ "  ...\n"
-#~ "}\n"
-#~ "\n"
-#~ "/// @alert unsafe \"Div will cause an error when y is zero\"\n"
-#~ "pub fn div(x : Int, y : Int) -> Int {\n"
-#~ "  ...\n"
-#~ "}\n"
-#~ "\n"
-#~ "test {\n"
-#~ "  // Warning (Alert deprecated): Use foo2 instead\n"
-#~ "  foo()\n"
-#~ "  // Warning (Alert unsafe): Div will cause an error when y is zero\n"
-#~ "  div(1, 2) |> ignore\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid "Pipe operator"
-#~ msgstr "管道运算符"
-
-#~ msgid ""
-#~ "fn add(x : Int, y : Int) -> Int {\n"
-#~ "  x + y\n"
-#~ "}\n"
-#~ "\n"
-#~ "fn main {\n"
-#~ "  let add10 : (Int) -> Int = add(10, _)\n"
-#~ "  println(add10(5)) // prints 15\n"
-#~ "  println(add10(10)) // prints 20\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid "Unused abstract type."
-#~ msgstr "未使用的抽象类型。"
-
