@@ -111,11 +111,10 @@ fn push_int(self : GState, num : Int) -> Unit {
 
 // start push_global definition
 fn push_global(self : GState, name : String) -> Unit {
-  let sc = self.globals[name]
-  match sc {
-    None => abort("push_global(): cant find supercombinator \{name}")
-    Some(addr) => self.put_stack(addr)
+  guard self.globals.get(name) is Some(addr) else {
+    abort("push_global(): cant find supercombinator \{name}")
   }
+  self.put_stack(addr)
 }
 // end push_global definition
 

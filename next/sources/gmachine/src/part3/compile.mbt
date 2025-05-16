@@ -87,7 +87,7 @@ fn compileE(self : RawExpr[String], env : List[(String, Int)]) -> List[Instructi
     // end if_and_neg definition
     // start binop definition
     App(App(Var(op), e0), e1) => {
-      match builtinOpS[op] {
+      match builtinOpS.get(op) {
         None => compileC(self, env) + @immut/list.of([Eval])
         Some(instr) => {
           let code1 = compileE(e1, env)
