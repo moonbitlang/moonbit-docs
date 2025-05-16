@@ -1524,6 +1524,16 @@ contexts:
    :end-before: end is 5
    ```
 
+Note that `is` expression can only take a simple pattern. If you need to use
+`as` to bind the pattern to a variable, you have to add parentheses. For
+example:
+```{literalinclude} /sources/language/src/is/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start is 6
+:end-before: end is 6
+```
+
 ### Spread Operator
 
 MoonBit provides a spread operator to expand a sequence of elements when

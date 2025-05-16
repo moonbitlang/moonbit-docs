@@ -40,3 +40,15 @@ fn i(x : Int?) -> Unit {
   }
 }
 // end is 5
+
+// start is 6
+fn j(x : Int) -> Int? {
+  Some(x)
+}
+
+fn init {
+  guard j(42) is (Some(a) as b)
+  println(a)
+  println(b)
+}
+// end is 6

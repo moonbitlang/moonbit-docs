@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-08 11:13+0800\n"
+"POT-Creation-Date: 2025-05-15 16:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -18244,10 +18244,31 @@ msgid ""
 msgstr ""
 
 #: ../../language/fundamentals.md:1527
+msgid ""
+"Note that `is` expression can only take a simple pattern. If you need to "
+"use `as` to bind the pattern to a variable, you have to add parentheses. "
+"For example:"
+msgstr "`is` 表达式只能接受一个简单模式，如果你需要通过 `as` 把模式绑定到某个变量上，"
+"需要加括号。比如："
+
+#: ../../language/fundamentals.md:1530
+msgid ""
+"fn j(x : Int) -> Int? {\n"
+"  Some(x)\n"
+"}\n"
+"\n"
+"fn init {\n"
+"  guard j(42) is (Some(a) as b)\n"
+"  println(a)\n"
+"  println(b)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1537
 msgid "Spread Operator"
 msgstr "展开运算符"
 
-#: ../../language/fundamentals.md:1529
+#: ../../language/fundamentals.md:1539
 msgid ""
 "MoonBit provides a spread operator to expand a sequence of elements when "
 "constructing `Array`, `String`, and `Bytes` using the array literal "
@@ -18258,11 +18279,11 @@ msgstr ""
 "MoonBit 提供了一个展开运算符，用于在使用数组字面量语法构造 `Array`、`String`和 `Bytes` "
 "时展开元素序列。要展开这样的序列，需要在其前面加上 `..` 前缀，并且该序列必须具有 `iter()` 方法，并且该方法能够产生相应类型的元素。"
 
-#: ../../language/fundamentals.md:1534
+#: ../../language/fundamentals.md:1544
 msgid "For example, we can use the spread operator to construct an array:"
 msgstr "例如，我们可以使用展开运算符构造一个数组："
 
-#: ../../language/fundamentals.md:1536
+#: ../../language/fundamentals.md:1546
 msgid ""
 "test {\n"
 "  let a1 : Array[Int] = [1, 2, 3]\n"
@@ -18273,11 +18294,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1543
+#: ../../language/fundamentals.md:1553
 msgid "Similarly, we can use the spread operator to construct a string:"
 msgstr "同样，我们可以使用展开运算符构造一个字符串："
 
-#: ../../language/fundamentals.md:1545
+#: ../../language/fundamentals.md:1555
 msgid ""
 "test {\n"
 "  let s1 : String = \"Hello\"\n"
@@ -18288,13 +18309,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1552
+#: ../../language/fundamentals.md:1562
 msgid ""
 "The last example shows how the spread operator can be used to construct a"
 " bytes sequence."
 msgstr "最后一个例子展示了如何使用展开运算符构造一个字节序列。"
 
-#: ../../language/fundamentals.md:1555
+#: ../../language/fundamentals.md:1565
 msgid ""
 "test {\n"
 "  let b1 : Bytes = \"hello\"\n"
@@ -18309,18 +18330,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1563
+#: ../../language/fundamentals.md:1573
 msgid "TODO syntax"
 msgstr "TODO 语法"
 
-#: ../../language/fundamentals.md:1565
+#: ../../language/fundamentals.md:1575
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo`语法 (`...`) 是一种特殊构造，用于标记尚未实现或用于未来功能的占位符代码段。例如："
 
-#: ../../language/fundamentals.md:1567
+#: ../../language/fundamentals.md:1577
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"
