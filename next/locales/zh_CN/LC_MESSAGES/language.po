@@ -3226,7 +3226,7 @@ msgstr ""
 
 #: ../../language/error_codes/E0007.md:52
 msgid ""
-"If the fields in structs are unused, you can list them in record pattern,"
+"If the fields in structs are unused, you can list them in struct pattern,"
 " or use the dot-syntax to access them:"
 msgstr "如果结构体中的字段未使用，你可以在结构体模式中列出它们，或使用点语法访问它们："
 
@@ -5683,7 +5683,7 @@ msgid ""
 "  let { a, .., c } = s\n"
 "  //       ^^\n"
 "  // Error: Unexpected `..` here, add `, ..` behind the last field to "
-"ignore the rest of record.\n"
+"ignore the rest of struct.\n"
 "}\n"
 msgstr ""
 
@@ -5733,7 +5733,7 @@ msgid "E3009"
 msgstr ""
 
 #: ../../language/error_codes/E3009.md:3
-msgid "Record pattern cannot contain only `..`, use wildcard pattern `_` instead."
+msgid "Struct pattern cannot contain only `..`, use wildcard pattern `_` instead."
 msgstr "结构体模式不能仅包含 `..`，请使用通配符模式 `_`。"
 
 #: ../../language/error_codes/E3009.md:7
@@ -5747,7 +5747,7 @@ msgid ""
 "  match p {\n"
 "    { .. } => println(\"Got a point\")\n"
 "  //^~~~~~\n"
-"  // Error: Record pattern cannot contain only `..`, use wildcard pattern"
+"  // Error: Struct pattern cannot contain only `..`, use wildcard pattern"
 " `_` instead.\n"
 "  }\n"
 "}\n"
@@ -5882,8 +5882,8 @@ msgstr ""
 
 #: ../../language/error_codes/E3012.md:3
 msgid ""
-"Record pattern and map pattern cannot be mixed. The key in map pattern "
-"must be a literal, while the key in record pattern must be the field "
+"Struct pattern and map pattern cannot be mixed. The key in map pattern "
+"must be a literal, while the key in struct pattern must be the field "
 "name."
 msgstr "结构体模式和字典模式不能被混用。字典模式中的键必须是字面量，而结构体模式的键必须是字段名。"
 
@@ -5904,7 +5904,7 @@ msgid ""
 "  let s : S = { value: 42 }\n"
 "  match s {\n"
 "    { \"value\": value, value } => println(\"Value is: \\{value}\") // "
-"Error: Record pattern and map pattern cannot be mixed.\n"
+"Error: Struct pattern and map pattern cannot be mixed.\n"
 "    _ => println(\"No value\")\n"
 "  }\n"
 "}\n"
@@ -5912,7 +5912,7 @@ msgstr ""
 
 #: ../../language/error_codes/E3012.md:31
 msgid ""
-"Remove either the map pattern part or the record pattern part from the "
+"Remove either the map pattern part or the struct pattern part from the "
 "pattern."
 msgstr "从模式中移除字典模式部分或结构体模式部分。"
 
@@ -7395,14 +7395,14 @@ msgstr ""
 
 #: ../../language/error_codes/E4026.md:14
 msgid ""
-"The example above tries to create a record with a field `b`, but no "
-"record with such a field is found in the current scope, giving the above "
+"The example above tries to create a struct with a field `b`, but no "
+"struct with such a field is found in the current scope, giving the above "
 "error on line 3."
 msgstr "在上述例子中，试图创建一个带有字段 `b` 的结构体，但在当前作用域中找不到带有这样字段的结构体，在第 3 行报错。"
 
 #: ../../language/error_codes/E4026.md:20
 msgid ""
-"Make sure a record is available in the current scope, defined with the "
+"Make sure a struct is available in the current scope, defined with the "
 "correct field name:"
 msgstr "确保在当前作用域中有一个结构体，且其定义了正确的字段名称："
 
@@ -7454,7 +7454,7 @@ msgid "E4028"
 msgstr ""
 
 #: ../../language/error_codes/E4028.md:3
-msgid "This expression has a type which is not a record."
+msgid "This expression has a type which is not a struct."
 msgstr "这个表达式的类型不是一个结构体。"
 
 #: ../../language/error_codes/E4028.md:7
@@ -7465,12 +7465,12 @@ msgstr ""
 
 #: ../../language/error_codes/E4028.md:12
 msgid ""
-"The example above tries to assign a record to a variable `a` of type "
+"The example above tries to assign a struct to a variable `a` of type "
 "`Int`, which is not possible and gives the following error on line 2:"
 msgstr "在上述例子中，试图将一个结构体赋值给一个类型为 `Int` 的变量 `a`，这是不可能的，会在第 2 行报错："
 
 #: ../../language/error_codes/E4028.md:15
-msgid "This expression has type Int, which is a Int type and not a record.\n"
+msgid "This expression has type Int, which is a Int type and not a struct.\n"
 msgstr "这个表达式类型为 Int，是一个 Int 类型而不是一个结构体。\n"
 
 #: ../../language/error_codes/E4028.md:21
@@ -7535,7 +7535,7 @@ msgid "E4030"
 msgstr ""
 
 #: ../../language/error_codes/E4030.md:3
-msgid "The record type does not have the specified field."
+msgid "The struct type does not have the specified field."
 msgstr "结构体没有指定的字段。"
 
 #: ../../language/error_codes/E4030.md:7
@@ -7547,13 +7547,13 @@ msgstr ""
 
 #: ../../language/error_codes/E4030.md:13
 msgid ""
-"The example above tries to assign an updated record with a field `b` to a"
+"The example above tries to assign an updated struct with a field `b` to a"
 " variable `u` of type `T`, but this field doesn't exist, giving the "
 "following error on line 3:"
 msgstr "在上述例子中，试图将一个更新后的带有字段 `b` 的结构体赋值给一个类型为 `T` 的变量 `u`，但这个字段不存在 `T` 中，在第 3 行报错："
 
 #: ../../language/error_codes/E4030.md:17
-msgid "The record type T does not have the field b.\n"
+msgid "The struct type T does not have the field b.\n"
 msgstr ""
 
 #: ../../language/error_codes/E4030.md:23
@@ -7619,7 +7619,7 @@ msgid "E4033"
 msgstr ""
 
 #: ../../language/error_codes/E4033.md:3
-msgid "There is no record definition with the specified fields."
+msgid "There is no struct definition with the specified fields."
 msgstr "没有定义指定字段的结构体。"
 
 #: ../../language/error_codes/E4033.md:7
@@ -7632,13 +7632,13 @@ msgstr ""
 
 #: ../../language/error_codes/E4033.md:14
 msgid ""
-"The example above tries to assign a record with fields `x` and `w` to a "
-"variable `c`, but this field doesn't exist in any known record type, "
+"The example above tries to assign a struct with fields `x` and `w` to a "
+"variable `c`, but this field doesn't exist in any known struct type, "
 "giving the following error on line 3:"
 msgstr "在上述例子中，试图将一个带有字段 `x` 和 `w` 的结构体赋值给一个变量 `c`，但这个字段在任何已知的结构体类型中都不存在，在第 3 行报错："
 
 #: ../../language/error_codes/E4033.md:17
-msgid "There is no record definition with the fields: x, w.\n"
+msgid "There is no struct definition with the fields: x, w.\n"
 msgstr ""
 
 #: ../../language/error_codes/E4033.md:23
@@ -7658,7 +7658,7 @@ msgid "E4034"
 msgstr ""
 
 #: ../../language/error_codes/E4034.md:3
-msgid "Multiple possible record types detected, please add more annotation."
+msgid "Multiple possible struct types detected, please add more annotation."
 msgstr "发现多个可能的结构体类型，请添加更多注释。"
 
 #: ../../language/error_codes/E4034.md:7
@@ -7672,7 +7672,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4034.md:15
 msgid ""
-"The example above tries to assign a record with fields `x` and `y` to a "
+"The example above tries to assign a struct with fields `x` and `y` to a "
 "variable `c`, but this field combination matches both `S` and `T` types, "
 "giving the following error on line 4:"
 msgstr ""
@@ -7681,12 +7681,12 @@ msgstr ""
 
 #: ../../language/error_codes/E4034.md:18
 msgid ""
-"Multiple possible record types detected: T, S, please add more "
+"Multiple possible struct types detected: T, S, please add more "
 "annotation.\n"
 msgstr ""
 
 #: ../../language/error_codes/E4034.md:24
-msgid "Disambiguate the record type by adding a type annotation:"
+msgid "Disambiguate the struct type by adding a type annotation:"
 msgstr "通过添加类型注释来去歧义："
 
 #: ../../language/error_codes/E4034.md:26
@@ -8048,7 +8048,7 @@ msgid "E4043"
 msgstr ""
 
 #: ../../language/error_codes/E4043.md:3
-msgid "The record field is defined or matched multiple times."
+msgid "The struct field is defined or matched multiple times."
 msgstr "结构体字段被多次定义或匹配。"
 
 #: ../../language/error_codes/E4043.md:7
@@ -8065,11 +8065,11 @@ msgid "The example above tries to:"
 msgstr "上述例子中，试图："
 
 #: ../../language/error_codes/E4043.md:17
-msgid "Create a record with the field `a` defined multiple times."
+msgid "Create a struct with the field `a` defined multiple times."
 msgstr "创建一个多次定义字段 `a` 的结构体。"
 
 #: ../../language/error_codes/E4043.md:18
-msgid "Destructure a record with the field `a` matched multiple times."
+msgid "Destructure a struct with the field `a` matched multiple times."
 msgstr "通过多次匹配字段 `a` 解构结构体。"
 
 #: ../../language/error_codes/E4043.md:20
@@ -8077,7 +8077,7 @@ msgid "... giving the following error on line 2:"
 msgstr "在第 2 行给出了以下错误："
 
 #: ../../language/error_codes/E4043.md:22
-msgid "The record field a is defined several times.\n"
+msgid "The struct field a is defined several times.\n"
 msgstr ""
 
 #: ../../language/error_codes/E4043.md:26
@@ -8085,11 +8085,11 @@ msgid "... and the following error on line 3:"
 msgstr "在第 3 行给出了以下错误："
 
 #: ../../language/error_codes/E4043.md:28
-msgid "The record field a is matched several times in this pattern.\n"
+msgid "The struct field a is matched several times in this pattern.\n"
 msgstr ""
 
 #: ../../language/error_codes/E4043.md:34
-msgid "Make sure that the record field is defined or matched only once:"
+msgid "Make sure that the struct field is defined or matched only once:"
 msgstr "确保结构体字段只被定义或匹配一次："
 
 #: ../../language/error_codes/E4043.md:36
@@ -8106,7 +8106,7 @@ msgid "E4044"
 msgstr ""
 
 #: ../../language/error_codes/E4044.md:3
-msgid "Record fields are missing. Use `..` to ignore them in patterns."
+msgid "Struct fields are missing. Use `..` to ignore them in patterns."
 msgstr "结构体字段缺失。在模式中使用 `..` 忽略它们。"
 
 #: ../../language/error_codes/E4044.md:7
@@ -8120,12 +8120,12 @@ msgstr ""
 
 #: ../../language/error_codes/E4044.md:15
 msgid ""
-"The example above tries to match a record with a missing field `b`, "
+"The example above tries to match a struct with a missing field `b`, "
 "giving the following error on line 3:"
 msgstr "在上述例子中，试图匹配一个结构体但缺少字段 `b`，在第 3 行报错："
 
 #: ../../language/error_codes/E4044.md:18
-msgid "Record fields b are unmatched, use `..` to ignore them.\n"
+msgid "Struct fields b are unmatched, use `..` to ignore them.\n"
 msgstr ""
 
 #: ../../language/error_codes/E4044.md:24
@@ -8149,7 +8149,7 @@ msgid "E4045"
 msgstr ""
 
 #: ../../language/error_codes/E4045.md:3
-msgid "The field is not defined in the record type."
+msgid "The field is not defined in the struct type."
 msgstr "这个字段在结构体类型中未定义。"
 
 #: ../../language/error_codes/E4045.md:7
@@ -8163,12 +8163,12 @@ msgstr ""
 
 #: ../../language/error_codes/E4045.md:15
 msgid ""
-"The example above tries to match a record with a nonexistent field `c`, "
+"The example above tries to match a struct with a nonexistent field `c`, "
 "giving the following error on line 3:"
 msgstr "在上述例子中，试图匹配一个结构体的不存在的字段 `c`，在第 3 行报错："
 
 #: ../../language/error_codes/E4045.md:18
-msgid "The fields c is not defined in the record type S.\n"
+msgid "The fields c is not defined in the struct type S.\n"
 msgstr ""
 
 #: ../../language/error_codes/E4045.md:24
@@ -10513,13 +10513,13 @@ msgid "E4088"
 msgstr ""
 
 #: ../../language/error_codes/E4088.md:3
-msgid "The record field is immutable."
+msgid "The struct field is immutable."
 msgstr "记录字段是不可变的。"
 
 #: ../../language/error_codes/E4088.md:5
 msgid ""
 "MoonBit requires programmers to explicitly annotate which fields in a "
-"record they wish to be mutable. By default, all fields in a record are "
+"struct they wish to be mutable. By default, all fields in a struct are "
 "immutable. To make a field mutable, you need to add the `mut` keyword "
 "before the field."
 msgstr ""
@@ -10532,7 +10532,7 @@ msgid ""
 "\n"
 "fn main {\n"
 "  let s = { value: 42 }\n"
-"  s.value = 43 // Error: The record field value is immutable.\n"
+"  s.value = 43 // Error: The struct field value is immutable.\n"
 "  println(s.value)\n"
 "}\n"
 msgstr ""
@@ -10687,13 +10687,13 @@ msgid "E4092"
 msgstr ""
 
 #: ../../language/error_codes/E4092.md:3
-msgid "Missing annotation for this empty record."
+msgid "Missing annotation for this empty struct."
 msgstr "这个空记录缺少注释。"
 
 #: ../../language/error_codes/E4092.md:5
 msgid ""
 "Currently, the MoonBit compiler does not emit this error, as it is "
-"impossible to create an empty record without using `T::{ .. }` syntax."
+"impossible to create an empty struct without using `T::{ .. }` syntax."
 msgstr ""
 
 #: ../../language/error_codes/E4093.md:1
@@ -10701,7 +10701,7 @@ msgid "E4093"
 msgstr ""
 
 #: ../../language/error_codes/E4093.md:3
-msgid "The type is not a record type."
+msgid "The type is not a struct type."
 msgstr "该类型不是记录类型。"
 
 #: ../../language/error_codes/E4093.md:5
@@ -10720,7 +10720,7 @@ msgid ""
 "fn main {\n"
 "  let a = Point::{ x : 1.0, y : 2.0 }\n"
 "  //      ^~~~~\n"
-"  // Error: The type Point is not a record type\n"
+"  // Error: The type Point is not a struct type\n"
 "}\n"
 msgstr ""
 
@@ -13028,10 +13028,10 @@ msgid ""
 "fn main {\n"
 "  let outer : ErrorOuter = ErrorOuter(Inner::{ value: 1 })\n"
 "  println(outer.value) // Error: This expression has type ErrorOuter, "
-"which is a error type type and not a record.\n"
+"which is a error type type and not a struct.\n"
 "  let outer : EnumOuter = Outer(Inner::{ value: 2 })\n"
 "  println(outer.value) // Error: This expression has type EnumOuter, "
-"which is a variant type and not a record.\n"
+"which is a variant type and not a struct.\n"
 "}\n"
 msgstr ""
 
@@ -20194,22 +20194,22 @@ msgstr "快照任何内容"
 
 #: ../../language/tests.md:60
 msgid ""
-"Still, sometimes we want to not only record one data structure but the "
+"Still, sometimes we want to not only struct one data structure but the "
 "output of a whole process."
 msgstr "有时我们不仅要记录一个数据结构，还要记录整个过程的输出。"
 
 #: ../../language/tests.md:62
 msgid ""
-"A full snapshot test can be used to record anything using "
+"A full snapshot test can be used to struct anything using "
 "`@test.T::write` and `@test.T::writeln`:"
 msgstr "可以使用完整的快照测试使用 `@test.T::write` 和 `@test.T::writeln` 记录任何内容："
 
 #: ../../language/tests.md:64
 msgid ""
-"test \"record anything\" (t : @test.T) {\n"
+"test \"struct anything\" (t : @test.T) {\n"
 "  t.write(\"Hello, world!\")\n"
 "  t.writeln(\" And hello, MoonBit!\")\n"
-"  t.snapshot!(filename=\"record_anything.txt\")\n"
+"  t.snapshot!(filename=\"struct_anything.txt\")\n"
 "}\n"
 msgstr ""
 
