@@ -130,9 +130,7 @@ fn error() -> Unit {
   // end error 10
 
   // start error 11
-  let a = try {
-    div!(42, 0)
-  } catch {
+  let a = try div!(42, 0) catch {
     _ => 0
   }
   println(a)
