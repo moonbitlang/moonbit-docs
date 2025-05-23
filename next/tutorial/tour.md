@@ -111,10 +111,10 @@ The [basic data types](/language/fundamentals.md#built-in-data-structures) in Mo
 - `Array[T]`, ...
 - Tuples, and still others
 
-To represent a record containing a student ID and a score using a primitive
+To represent a struct containing a student ID and a score using a primitive
 type, we can use a 2-tuple containing a student ID (of type `String`) and a
 score (of type `Double`) as `(String, Double)`. However this is not very
-intuitive as we can't identify with other possible data types, such as a record
+intuitive as we can't identify with other possible data types, such as a struct
 containing a student ID and the height of the student.
 
 So we choose to declare our own data type using [struct](/language/fundamentals.md#struct):
@@ -168,7 +168,7 @@ fn count_qualified_students(
 ```
 
 In MoonBit, functions are first-classed, meaning that we can bind a function to a variable, pass a function as parameter or receiving a function as a result.
-This function takes an array of students' records and another function that will judge whether a student have passed an exam.
+This function takes an array of students' structs and another function that will judge whether a student have passed an exam.
 
 ### Writing tests
 
@@ -347,7 +347,7 @@ Let's move the `test` block we defined above into a new file `src/top_test.mbt`.
 Oops! Now there are errors complaining that:
 - `is_qualified` and `count_qualified_students` are unbound
 - `Fail` and `Pass` are undefined
-- `Student` is not a record type and the field `id` is not found, etc.
+- `Student` is not a struct type and the field `id` is not found, etc.
 
 All these come from the problem of visibility. By default, a function defined is not visible for other part of the program outside the current package (bound by the current folder).
 And by default, a type is viewed as an abstract type, i.e. we know only that there exists a type `Student` and a type `ExamResult`. By using the black box test, you can make sure that
