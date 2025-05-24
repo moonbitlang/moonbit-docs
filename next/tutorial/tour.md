@@ -10,7 +10,7 @@ delve into the language.
 
 ## Installation
 
-### install from VSCode
+### Install from VS Code
 
 **The extension**
 
