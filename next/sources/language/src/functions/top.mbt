@@ -205,4 +205,9 @@ fnalias @hashmap.(
   iter,
   each as hashmap_each
 )
+fnalias @list.T::fold // same as `fnalias @list.T::fold as fold`
+fnalias @list.T::fold as list_fold // list_fold is an alias of `@list.T::fold`
+
+// creating multiple alias in typename
+fnalias @list.T::(fold as foldl, rev_fold as foldr) 
 // end function alias
