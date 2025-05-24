@@ -26,9 +26,9 @@ to download MoonBit language support.
 > and you may skip this part:
 > ![runtime-installation](/imgs/runtime-installation.png)
 
-### install from shell
+### Install from shell
 
-#### install in Linux & macOS 
+#### Install in Linux & macOS 
 
 We also provide an installation script: Linux & macOS users can install via
 
@@ -36,7 +36,7 @@ We also provide an installation script: Linux & macOS users can install via
 curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
 ```
 
-#### install in Windows
+#### Install in Windows
 
 For Windows users, PowerShell is used:
 
