@@ -38,7 +38,7 @@ fn pprint_edit(edit : Edit) -> String {
 }
 
 fn pprint_diff(diff : Array[Edit]) -> String {
-  let buf = @buffer.new(size_hint = 100)
+  let buf = @buffer.new(size_hint=100)
   for i = 0; i < diff.length(); i = i + 1 {
     buf.write_string(pprint_edit(diff[i]))
     buf.write_char('\n')

@@ -5,9 +5,7 @@ async fn my_async_function() -> Unit {
 
 // anonymous/local function
 test {
-  let async_lambda = async fn () {
-    ...
-  }
+  let async_lambda = async fn() { ... }
   async fn local_async_function() {
     ...
   }
@@ -32,7 +30,7 @@ fn run_async(f : () -> Unit!Async) -> Unit = "%async.run"
 
 // `suspend` will suspend the execution of the current coroutine.
 // The suspension will be handled by a callback passed to `suspend`
-async fn suspend[T, E : Error](
+async fn[T, E : Error] suspend(
   // `f` is a callback for handling suspension
   f : (
     // the first parameter of `f` is used to resume the execution of the coroutine normally
@@ -45,10 +43,10 @@ async fn suspend[T, E : Error](
 // end async primitive
 
 // start async example
-type! MyError derive(Show)
+type! MyError  derive(Show)
 
 async fn async_worker(throw_error~ : Bool) -> Unit!MyError {
-  suspend!(fn (resume_ok, resume_err) {
+  suspend!(fn(resume_ok, resume_err) {
     if throw_error {
       resume_err(MyError)
     } else {
@@ -68,7 +66,7 @@ test {
   // when supplying an anonymous function
   // to a higher order function that expects async parameter,
   // the `async` keyword can be omitted
-  run_async(fn () {
+  run_async(fn() {
     try {
       async_worker!(throw_error=false)
       println("the worker finishes")
@@ -77,7 +75,7 @@ test {
     }
   })
   println("after the first coroutine finishes")
-  run_async(fn () {
+  run_async(fn() {
     try {
       async_worker!(throw_error=true)
       println("the worker finishes")
@@ -94,13 +92,13 @@ extern "js" fn js_set_timeout(f : () -> Unit, duration : Int) -> JSTimer =
   #| (f, duration) => setTimeout(f, duration)
 
 async fn sleep(duration : Int) -> Unit! {
-  suspend!(fn (resume_ok, _resume_err) {
-    let _ = js_set_timeout(fn () { resume_ok(()) }, duration)
+  suspend!(fn(resume_ok, _resume_err) {
+    let _ = js_set_timeout(fn() { resume_ok(()) }, duration)
   })
 }
 
 test {
-  run_async(fn () {
+  run_async(fn() {
     try {
       sleep!(500)
       println("timer 1 tick")
@@ -110,7 +108,7 @@ test {
       println("timer 1 tick")
     } catch { _ => panic() }
   })
-  run_async(fn () {
+  run_async(fn() {
     try {
       sleep!(600)
       println("timer 2 tick")

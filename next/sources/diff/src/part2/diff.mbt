@@ -1,4 +1,3 @@
-
 // start shortest_edit definition
 fn shortest_edit(
   old~ : Array[Line],
@@ -14,7 +13,7 @@ fn shortest_edit(
   }
   // v[1] = 0
   for d = 0; d < max + 1; d = d + 1 {
-    push(v.copy(), d) 
+    push(v.copy(), d)
     for k = -d; k < d + 1; k = k + 2 {
       let mut x = 0
       let mut y = 0
@@ -41,7 +40,6 @@ fn shortest_edit(
   }
 }
 // end shortest_edit definition
-
 
 // start backtrack_fst definition
 fn backtrack(

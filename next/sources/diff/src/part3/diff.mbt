@@ -26,6 +26,7 @@ fn size(self : Box) -> Int {
 fn delta(self : Box) -> Int {
   self.width() - self.height()
 }
+
 // end box definition
 fn is_odd(n : Int) -> Bool {
   (n & 1) == 1
@@ -70,7 +71,6 @@ fn forward(
   }
   return None
 }
-
 
 fn backward(
   self : Box,
@@ -124,9 +124,9 @@ fn midpoint(self : Box, old~ : Array[Line], new~ : Array[Line]) -> Snake? {
   let vb = BPArray::make(2 * max + 1, 0)
   vb[1] = self.bottom
   for d = 0; d < max + 1; d = d + 1 {
-    match self.forward(forward = vf, backward = vb, d, old~, new~) {
+    match self.forward(forward=vf, backward=vb, d, old~, new~) {
       None =>
-        match self.backward(forward = vf, backward = vb, d, old~, new~) {
+        match self.backward(forward=vf, backward=vb, d, old~, new~) {
           None => continue
           res => return res
         }
@@ -165,7 +165,6 @@ fn find_path(
 }
 // end findpath definition
 
-
 fn linear_diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit]? {
   let initial_box = Box::{
     left: 0,
@@ -181,32 +180,30 @@ fn linear_diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit]? {
   let edits = Array::new(capacity=old.length() + new.length())
   path
   .drop(1)
-  .each(
-    fn(xy) {
-      let x2 = xy.0
-      let y2 = xy.1
-      while x1 < x2 && y1 < y2 && old[x1].text == new[y1].text {
-        edits.push(Equal(old=old[x1], new=new[y1]))
-        x1 = x1 + 1
-        y1 = y1 + 1
-      }
-      if x2 - x1 < y2 - y1 {
-        edits.push(Insert(new=new[y1]))
-        y1 += 1
-      }
-      if x2 - x1 > y2 - y1 {
-        edits.push(Delete(old=old[x1]))
-        x1 += 1
-      }
-      while x1 < x2 && y1 < y2 && old[x1].text == new[y1].text {
-        edits.push(Equal(old=old[x1], new=new[y1]))
-        x1 = x1 + 1
-        y1 = y1 + 1
-      }
-      x1 = x2
-      y1 = y2
-    },
-  )
+  .each(fn(xy) {
+    let x2 = xy.0
+    let y2 = xy.1
+    while x1 < x2 && y1 < y2 && old[x1].text == new[y1].text {
+      edits.push(Equal(old=old[x1], new=new[y1]))
+      x1 = x1 + 1
+      y1 = y1 + 1
+    }
+    if x2 - x1 < y2 - y1 {
+      edits.push(Insert(new=new[y1]))
+      y1 += 1
+    }
+    if x2 - x1 > y2 - y1 {
+      edits.push(Delete(old=old[x1]))
+      x1 += 1
+    }
+    while x1 < x2 && y1 < y2 && old[x1].text == new[y1].text {
+      edits.push(Equal(old=old[x1], new=new[y1]))
+      x1 = x1 + 1
+      y1 = y1 + 1
+    }
+    x1 = x2
+    y1 = y2
+  })
   return Some(edits)
 }
 

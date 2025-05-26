@@ -1,7 +1,6 @@
-type BPArray[T] Array[T] // BiPolar Array 
-  
+type BPArray[T] Array[T] // BiPolar Array
 
-fn BPArray::make[T](capacity : Int, default : T) -> BPArray[T] {
+fn[T] BPArray::make(capacity : Int, default : T) -> BPArray[T] {
   let arr = Array::make(capacity, default)
   BPArray(arr)
 }
@@ -16,7 +15,7 @@ fn copy(self : BPArray[Int]) -> BPArray[Int] {
   }
 }
 
-fn op_get[T](self : BPArray[T], idx : Int) -> T {
+fn[T] op_get(self : BPArray[T], idx : Int) -> T {
   let BPArray(arr) = self
   if idx < 0 {
     arr[arr.length() + idx]
@@ -25,7 +24,7 @@ fn op_get[T](self : BPArray[T], idx : Int) -> T {
   }
 }
 
-fn op_set[T](self : BPArray[T], idx : Int, elem : T) -> Unit {
+fn[T] op_set(self : BPArray[T], idx : Int, elem : T) -> Unit {
   let BPArray(arr) = self
   if idx < 0 {
     arr[arr.length() + idx] = elem

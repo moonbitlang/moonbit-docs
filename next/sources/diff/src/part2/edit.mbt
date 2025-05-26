@@ -6,7 +6,6 @@ enum Edit {
 } derive(Show)
 // end edit definition
 
-
 // start pprint definition
 let line_width = 4
 
@@ -41,7 +40,7 @@ fn pprint_edit(edit : Edit) -> String {
 }
 
 fn pprint_diff(diff : Array[Edit]) -> String {
-  let buf = @buffer.new(size_hint = 100)
+  let buf = @buffer.new(size_hint=100)
   for i = diff.length(); i > 0; i = i - 1 {
     buf.write_string(pprint_edit(diff[i - 1]))
     buf.write_char('\n')

@@ -37,8 +37,8 @@ fn shortest_edit(old~ : Array[Line], new~ : Array[Line]) -> Int {
 test "shortest_edit" {
   let old = lines("aaa\naaa\naaa")
   let new = lines("bbb\nbbb\nbbb")
-  inspect!(shortest_edit(old~, new~), content = "6")
+  inspect!(shortest_edit(old~, new~), content="6")
   let old = lines("A\nB\nC\nA\nB\nB\nA")
   let new = lines("C\nB\nA\nB\nA\nC")
-  inspect!(shortest_edit(old~, new~), content = "5")
+  inspect!(shortest_edit(old~, new~), content="5")
 }
