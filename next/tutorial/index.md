@@ -12,3 +12,6 @@ Here are some tutorials that may help you learn the programming language:
 ```{toctree}
 :hidden:
 tour
+for-go-programmers/index
+```
+
