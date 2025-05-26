@@ -2,6 +2,21 @@
 
 ## Built-in Data Structures
 
+### Unit
+
+`Unit` is a built-in type in MoonBit that represents the absence of a meaningful value. It has only one value, written as `()`. `Unit` is similar to `void` in languages like C/C++/Java, but unlike `void`, it is a real type and can be used anywhere a type is expected.
+
+The `Unit` type is commonly used as the return type for functions that perform some action but do not produce a meaningful result:
+
+```{code-block} moonbit
+:class: top-level
+fn print_hello() -> Unit {
+  println("Hello, world!")
+}
+```
+
+Unlike some other languages, MoonBit treats `Unit` as a first-class type, allowing it to be used in generics, stored in data structures, and passed as function arguments.
+
 ### Boolean
 
 MoonBit has a built-in boolean type, which has two values: `true` and `false`. The boolean type is used in conditional expressions and control structures.

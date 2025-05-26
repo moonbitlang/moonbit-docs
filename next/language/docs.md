@@ -62,7 +62,8 @@ The `#visibility` attribute takes two arguments: `change_to` and `message`.
 The `#internal` attribute is used to mark a function, type, or trait as internal. 
 Any usage of the internal function or type in other modules will emit an alert warning.
 
-```
+```{code-block} moonbit
+:class: top-level
 #internal(unsafe, "This is an unsafe function")
 fn unsafe_get[A](arr : Array[A]) -> A {
   ...
