@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 14:09+0800\n"
+"POT-Creation-Date: 2025-05-26 14:26+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -18153,10 +18153,14 @@ msgid "x..f()\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:1446
-msgid "`x..f()..g()` is equivalent to `{x.f(); x.g(); x}`."
-msgstr "`x..f()..g()` 等价于 `{x.f(); x.g(); x}`。"
+msgid "`x..f()..g()` is equivalent to `{ x.f(); x.g(); }`."
+msgstr "`x..f()..g()` 等价于 `{x.f(); x.g(); }`。"
 
-#: ../../language/fundamentals.md:1448
+#: ../../language/fundamentals.md:1447
+msgid "`x..f().g()` is equivalent to `{ x.f(); x.g(); }`."
+msgstr "`x..f().g()` 等价于 `{x.f(); x.g(); }`。"
+
+#: ../../language/fundamentals.md:1450
 msgid ""
 "Consider the following scenario: for a `StringBuilder` type that has "
 "methods like `write_string`, `write_char`, `write_object`, etc., we often"
@@ -18164,7 +18168,7 @@ msgid ""
 "value:"
 msgstr "考虑以下情况：对于具有诸如`write_string`，`write_char`，`write_object`等方法的`StringBuilder`类型，我们经常需要对同一`StringBuilder`值执行一系列操作："
 
-#: ../../language/fundamentals.md:1452
+#: ../../language/fundamentals.md:1454
 msgid ""
 "let builder = StringBuilder::new()\n"
 "builder.write_char('a')\n"
@@ -18174,7 +18178,7 @@ msgid ""
 "let result = builder.to_string()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1459
+#: ../../language/fundamentals.md:1461
 msgid ""
 "To avoid repetitive typing of `builder`, its methods are often designed "
 "to return `self` itself, allowing operations to be chained using the `.` "
@@ -18186,7 +18190,7 @@ msgstr ""
 "为了避免重复输入`builder`，其方法通常设计为返回`self`本身，允许使用`.`运算符链接操作。为了区分不可变和可变操作，在 "
 "MoonBit 中，对于所有返回`Unit`的方法，可以使用级联运算符进行连续操作，而无需修改方法的返回类型。"
 
-#: ../../language/fundamentals.md:1465
+#: ../../language/fundamentals.md:1467
 msgid ""
 "let result = StringBuilder::new()\n"
 "  ..write_char('a')\n"
@@ -18196,18 +18200,18 @@ msgid ""
 "  .to_string()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1472
+#: ../../language/fundamentals.md:1474
 msgid "Is Expression"
 msgstr "Is 表达式"
 
-#: ../../language/fundamentals.md:1474
+#: ../../language/fundamentals.md:1476
 msgid ""
 "The `is` expression tests whether a value conforms to a specific pattern."
 " It returns a `Bool` value and can be used anywhere a boolean value is "
 "expected, for example:"
 msgstr "`is` 表达式测试值是否符合特定模式。它返回一个 `Bool` 值，并可以在期望布尔值的任何地方使用，例如："
 
-#: ../../language/fundamentals.md:1478
+#: ../../language/fundamentals.md:1480
 msgid ""
 "fn[T] is_none(x : T?) -> Bool {\n"
 "  x is None\n"
@@ -18218,26 +18222,26 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1485
+#: ../../language/fundamentals.md:1487
 msgid ""
 "Pattern binders introduced by `is` expressions can be used in the "
 "following contexts:"
 msgstr "通过 `is` 表达式绑定的标识符可以在以下的上下文中使用："
 
-#: ../../language/fundamentals.md:1488
+#: ../../language/fundamentals.md:1490
 msgid ""
 "In boolean AND expressions (`&&`): binders introduced in the left-hand "
 "expression can be used in the right-hand expression"
 msgstr "在与表达式（`&&`）中：左侧表达式中绑定的标识符可以在右侧表达式中使用"
 
-#: ../../language/fundamentals.md:1492
+#: ../../language/fundamentals.md:1494
 msgid ""
 "fn f(x : Int?) -> Bool {\n"
 "  x is Some(v) && v >= 0\n"
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1499
+#: ../../language/fundamentals.md:1501
 msgid ""
 "In the first branch of `if` expression: if the condition is a sequence of"
 " boolean expressions `e1 && e2 && ...`, the binders introduced by the "
@@ -18247,7 +18251,7 @@ msgstr ""
 "在 `if` 的第一个分支中：如果条件是一系列布尔表达式 `e1 && e2 && ...`，则可以在条件为真的分支中使用 `is` "
 "表达式中绑定的标识符。"
 
-#: ../../language/fundamentals.md:1503
+#: ../../language/fundamentals.md:1505
 msgid ""
 "fn g(x : Array[Int?]) -> Unit {\n"
 "  if x is [v, .. rest] && v is Some(i) && i is (0..=10) {\n"
@@ -18258,11 +18262,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1510
+#: ../../language/fundamentals.md:1512
 msgid "In the following statements of a `guard` condition:"
 msgstr "下面举一个在 `guard` 中使用的情况："
 
-#: ../../language/fundamentals.md:1512
+#: ../../language/fundamentals.md:1514
 msgid ""
 "fn h(x : Int?) -> Unit {\n"
 "  guard x is Some(v)\n"
@@ -18270,11 +18274,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1519
+#: ../../language/fundamentals.md:1521
 msgid "In the body of a `while` loop:"
 msgstr "在 `while` 循环中的使用："
 
-#: ../../language/fundamentals.md:1521
+#: ../../language/fundamentals.md:1523
 msgid ""
 "fn i(x : Int?) -> Unit {\n"
 "  let mut m = x\n"
@@ -18285,14 +18289,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1528
+#: ../../language/fundamentals.md:1530
 msgid ""
 "Note that `is` expression can only take a simple pattern. If you need to "
 "use `as` to bind the pattern to a variable, you have to add parentheses. "
 "For example:"
 msgstr "`is` 表达式只能接受一个简单模式，如果你需要通过 `as` 把模式绑定到某个变量上，需要加括号。比如："
 
-#: ../../language/fundamentals.md:1531
+#: ../../language/fundamentals.md:1533
 msgid ""
 "fn j(x : Int) -> Int? {\n"
 "  Some(x)\n"
@@ -18305,11 +18309,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1538
+#: ../../language/fundamentals.md:1540
 msgid "Spread Operator"
 msgstr "展开运算符"
 
-#: ../../language/fundamentals.md:1540
+#: ../../language/fundamentals.md:1542
 msgid ""
 "MoonBit provides a spread operator to expand a sequence of elements when "
 "constructing `Array`, `String`, and `Bytes` using the array literal "
@@ -18320,11 +18324,11 @@ msgstr ""
 "MoonBit 提供了一个展开运算符，用于在使用数组字面量语法构造 `Array`、`String`和 `Bytes` "
 "时展开元素序列。要展开这样的序列，需要在其前面加上 `..` 前缀，并且该序列必须具有 `iter()` 方法，并且该方法能够产生相应类型的元素。"
 
-#: ../../language/fundamentals.md:1545
+#: ../../language/fundamentals.md:1547
 msgid "For example, we can use the spread operator to construct an array:"
 msgstr "例如，我们可以使用展开运算符构造一个数组："
 
-#: ../../language/fundamentals.md:1547
+#: ../../language/fundamentals.md:1549
 msgid ""
 "test {\n"
 "  let a1 : Array[Int] = [1, 2, 3]\n"
@@ -18335,11 +18339,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1554
+#: ../../language/fundamentals.md:1556
 msgid "Similarly, we can use the spread operator to construct a string:"
 msgstr "同样，我们可以使用展开运算符构造一个字符串："
 
-#: ../../language/fundamentals.md:1556
+#: ../../language/fundamentals.md:1558
 msgid ""
 "test {\n"
 "  let s1 : String = \"Hello\"\n"
@@ -18350,13 +18354,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1563
+#: ../../language/fundamentals.md:1565
 msgid ""
 "The last example shows how the spread operator can be used to construct a"
 " bytes sequence."
 msgstr "最后一个例子展示了如何使用展开运算符构造一个字节序列。"
 
-#: ../../language/fundamentals.md:1566
+#: ../../language/fundamentals.md:1568
 msgid ""
 "test {\n"
 "  let b1 : Bytes = \"hello\"\n"
@@ -18371,18 +18375,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1574
+#: ../../language/fundamentals.md:1576
 msgid "TODO syntax"
 msgstr "TODO 语法"
 
-#: ../../language/fundamentals.md:1576
+#: ../../language/fundamentals.md:1578
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo`语法 (`...`) 是一种特殊构造，用于标记尚未实现或用于未来功能的占位符代码段。例如："
 
-#: ../../language/fundamentals.md:1578
+#: ../../language/fundamentals.md:1580
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"
@@ -19526,6 +19530,7 @@ msgid ""
 msgstr "用户可以为特征对象定义新方法，就像为结构体和枚举定义新方法一样："
 
 #: ../../language/methods.md:268
+#, fuzzy
 msgid ""
 "pub(open) trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
@@ -19549,7 +19554,7 @@ msgid ""
 "  ..write_object(a)\n"
 "  ..write_string(\", \")\n"
 "  ..write_object(b)\n"
-"  .write_string(\")\")\n"
+"  ..write_string(\")\")\n"
 "}\n"
 msgstr ""
 "pub(open) trait Logger {\n"
@@ -20295,3 +20300,4 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
+

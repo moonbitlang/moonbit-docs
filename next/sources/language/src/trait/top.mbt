@@ -213,6 +213,6 @@ pub impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {
   ..write_object(a)
   ..write_string(", ")
   ..write_object(b)
-  .write_string(")")
+  ..write_string(")")
 }
 // end trait object 2
