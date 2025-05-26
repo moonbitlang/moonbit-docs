@@ -23,7 +23,7 @@ let user : Unit = {
 // start pattern 2
 test {
   let ary = [1, 2, 3, 4]
-  if ary is [a, b, ..rest] && a == 1 && b == 2 && rest.length() == 2{
+  if ary is [a, b, .. rest] && a == 1 && b == 2 && rest.length() == 2 {
     inspect!("a = \{a}, b = \{b}", content="a = 1, b = 2")
   } else {
     fail!("")
@@ -35,12 +35,13 @@ test {
 
 // start array pattern 1
 test {
-  fn palindrome(s: String) -> Bool {
+  fn palindrome(s : String) -> Bool {
     loop s.view() {
       [] | [_] => true
-      [a, ..rest, b] => if a == b { continue rest } else { false }
+      [a,  .. rest,  b] => if a == b { continue rest } else { false }
     }
   }
+
   inspect!(palindrome("abba"), content="true")
   inspect!(palindrome("中b中"), content="true")
   inspect!(palindrome("文bb中"), content="false")
@@ -48,16 +49,18 @@ test {
 // end array pattern 1
 
 // start array pattern 2
-const NO: Bytes = "no"
+const NO : Bytes = "no"
+
 test {
-  fn match_string(s: String) -> Bool {
+  fn match_string(s : String) -> Bool {
     match s {
-      [.."yes", ..] => true // equivalent to ['y', 'e', 's', ..]
+      [.. "yes", ..] => true // equivalent to ['y', 'e', 's', ..]
     }
   }
-  fn match_bytes(b: Bytes) -> Bool {
+
+  fn match_bytes(b : Bytes) -> Bool {
     match b {
-      [..NO, ..] => false // equivalent to ['n', 'o', ..]
+      [.. NO, ..] => false // equivalent to ['n', 'o', ..]
     }
   }
 }
@@ -120,7 +123,7 @@ fn json() -> Unit {
   // start pattern 6
   match json {
     { "version": "1.0.0", "import": [..] as imports, .. } => ...
-    { "version": Number(i), "import": Array(imports), ..} => ...
+    { "version": Number(i), "import": Array(imports), .. } => ...
     _ => ...
   }
   // end pattern 6
@@ -153,10 +156,10 @@ fn match_point3D(p : Point3D) -> Unit {
 }
 
 enum Point[T] {
-  Point2D(Int, Int, name~: String, payload~ : T)
+  Point2D(Int, Int, name~ : String, payload~ : T)
 }
 
-fn match_point[T](p : Point[T]) -> Unit {
+fn[T] match_point(p : Point[T]) -> Unit {
   match p {
     //! Point2D(0, 0) => println("2D origin")
     Point2D(0, 0, ..) => println("2D origin")
@@ -187,7 +190,7 @@ test {
 // end guard condition 1
 
 // start guard condition 2
-fn guard_check(x: Int?) -> Unit {
+fn guard_check(x : Int?) -> Unit {
   match x {
     Some(a) if a >= 0 => ()
     Some(a) if a < 0 => ()

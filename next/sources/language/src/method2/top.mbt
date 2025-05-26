@@ -4,29 +4,29 @@ enum List[X] {
   Cons(X, List[X])
 }
 
-fn length[X](self : List[X]) -> Int {
+fn[X] length(self : List[X]) -> Int {
   ...
 }
 
-fn List::length_qualified[X](xs : List[X]) -> Int {
+fn[X] List::length_qualified(xs : List[X]) -> Int {
   ...
 }
 // end method declaration example
 
 fn _call_syntax_example() -> Unit {
-// start method call syntax example
+  // start method call syntax example
   let l : List[Int] = Nil
   println(length(l))
   println(List::length_qualified(l))
-// end method call syntax example
+  // end method call syntax example
 }
 
 fn f() -> Unit {
   let xs : @list.List[@list.List[Unit]] = Nil
-// start dot syntax example
+  // start dot syntax example
   // assume `xs` is a list of lists, all the following three lines are equivalent
   let _ = xs.concat()
   let _ = @list.List::concat(xs)
   let _ = @list.concat(xs)
-// end dot syntax example
+  // end dot syntax example
 }

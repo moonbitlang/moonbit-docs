@@ -66,7 +66,9 @@ trait Ignore {
   f(Self) -> Unit
 }
 
-impl Ignore for Unit with f(u) { u }
+impl Ignore for Unit with f(u) {
+  u
+}
 
 fn cascade() -> Unit {
   let x : Unit = ()

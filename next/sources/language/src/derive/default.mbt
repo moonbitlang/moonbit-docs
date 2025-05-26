@@ -1,7 +1,7 @@
 // start derive default struct
 struct DeriveDefault {
   x : Int
-  y : Option[String]
+  y : String?
 } derive(Default, Eq, Show)
 
 test "derive default struct" {

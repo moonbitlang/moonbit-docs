@@ -1,9 +1,9 @@
 // start is 1
-fn is_none[T](x : T?) -> Bool {
+fn[T] is_none(x : T?) -> Bool {
   x is None
 }
 
-fn start_with_lower_letter(s: String) -> Bool {
+fn start_with_lower_letter(s : String) -> Bool {
   s is ['a'..='z', ..]
 }
 // end is 1
@@ -16,7 +16,7 @@ fn f(x : Int?) -> Bool {
 
 // start is 3
 fn g(x : Array[Int?]) -> Unit {
-  if x is [v, .. rest] && v is Some(i) && i is 0..=10 {
+  if x is [v, .. rest] && v is Some(i) && i is (0..=10) {
     println(v)
     println(i)
     println(rest)
@@ -26,7 +26,7 @@ fn g(x : Array[Int?]) -> Unit {
 
 // start is 4
 fn h(x : Int?) -> Unit {
-  guard x is Some(v) 
+  guard x is Some(v)
   println(v)
 }
 // end is 4

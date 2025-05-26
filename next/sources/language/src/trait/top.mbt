@@ -1,7 +1,7 @@
 // start trait 1
 pub(open) trait I {
   method_(Int) -> Int
-  method_with_label(Int, label~: Int) -> Int
+  method_with_label(Int, label~ : Int) -> Int
   //! method_with_label(Int, label?: Int) -> Int
 }
 // end trait 1
@@ -13,14 +13,18 @@ pub(open) trait MyShow {
 
 struct MyType {}
 
-pub impl MyShow for MyType with to_string(self) { ... }
+pub impl MyShow for MyType with to_string(self) {
+  ...
+}
 
 struct MyContainer[T] {}
 
 // trait implementation with type parameters.
 // `[X : Show]` means the type parameter `X` must implement `Show`,
 // this will be covered later.
-pub impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) { ... }
+pub impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) {
+  ...
+}
 // end trait 2
 
 // start trait 3
@@ -52,7 +56,7 @@ impl J for String with f_twice(self) {
 // end trait 4
 
 // start trait 5
-fn contains[X : Eq](xs : Array[X], elem : X) -> Bool {
+fn[X : Eq] contains(xs : Array[X], elem : X) -> Bool {
   for x in xs {
     if x == elem {
       return true
@@ -74,9 +78,9 @@ impl Eq for Point with op_equal(p1, p2) {
 }
 
 test {
-  assert_false!(contains([ 1, 2, 3 ], 4))
-  assert_true!(contains([ 1.5, 2.25, 3.375 ], 2.25))
-  assert_false!(contains([ { x: 2, y: 3 } ], { x: 4, y: 9 }))
+  assert_false!(contains([1, 2, 3], 4))
+  assert_true!(contains([1.5, 2.25, 3.375], 2.25))
+  assert_false!(contains([{ x: 2, y: 3 }], { x: 4, y: 9 }))
 }
 // end trait 6
 
@@ -90,7 +94,9 @@ test {
 // start trait 8
 struct MyCustomType {}
 
-pub impl Show for MyCustomType with output(self, logger) { ... }
+pub impl Show for MyCustomType with output(self, logger) {
+  ...
+}
 
 fn f() -> Unit {
   let x = MyCustomType::{  }
@@ -119,11 +125,12 @@ test {
 pub(open) trait Position {
   pos(Self) -> (Int, Int)
 }
+
 pub(open) trait Draw {
   draw(Self, Int, Int) -> Unit
 }
 
-pub(open) trait Object : Position + Draw {}
+pub(open) trait Object: Position + Draw {}
 // end super trait 1
 
 // start super trait 2
@@ -135,7 +142,7 @@ impl Draw for Point with draw(self, x, y) {
   ()
 }
 
-pub fn draw_object[O : Object](obj : O) -> Unit {
+pub fn[O : Object] draw_object(obj : O) -> Unit {
   let (x, y) = obj.pos()
   obj.draw(x, y)
 }
@@ -175,7 +182,7 @@ test {
   let duck1 = Duck::make("duck1")
   let duck2 = Duck::make("duck2")
   let fox1 = Fox::make("fox1")
-  let animals : Array[&Animal] = [ duck1, duck2, fox1 ]
+  let animals : Array[&Animal] = [duck1, duck2, fox1]
   inspect!(
     animals.map(fn(animal) { animal.speak() }),
     content=
@@ -194,7 +201,7 @@ pub(open) trait CanLog {
   log(Self, &Logger) -> Unit
 }
 
-fn &Logger::write_object[Obj : CanLog](self : &Logger, obj : Obj) -> Unit {
+fn[Obj : CanLog] &Logger::write_object(self : &Logger, obj : Obj) -> Unit {
   obj.log(self)
 }
 

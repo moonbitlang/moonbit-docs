@@ -143,33 +143,20 @@ fn query(self : Node, l : Int, r : Int, query_l : Int, query_r : Int) -> Node {
 
 test {
   let tree = build([1, 2, 3, 4, 5][:])
-  @json.inspect!(
-    tree.modify(1, 5, 1, 3, Tag(1)).query(1, 5, 1, 3),
-    content={
+  @json.inspect!(tree.modify(1, 5, 1, 3, Tag(1)).query(1, 5, 1, 3), content={
+    "data": [9, 3],
+    "tag": "Nil",
+    "left": {
       "data": [9, 3],
-      "tag": "Nil",
+      "tag": 1,
       "left": {
-        "data": [9, 3],
-        "tag": 1,
-        "left": {
-          "data": [3, 2],
-          "tag": "Nil",
-          "left": {
-            "data": [1, 1],
-            "tag": "Nil",
-            "left": "Nil",
-            "right": "Nil",
-          },
-          "right": {
-            "data": [2, 1],
-            "tag": "Nil",
-            "left": "Nil",
-            "right": "Nil",
-          },
-        },
-        "right": { "data": [3, 1], "tag": "Nil", "left": "Nil", "right": "Nil" },
+        "data": [3, 2],
+        "tag": "Nil",
+        "left": { "data": [1, 1], "tag": "Nil", "left": "Nil", "right": "Nil" },
+        "right": { "data": [2, 1], "tag": "Nil", "left": "Nil", "right": "Nil" },
       },
-      "right": { "data": [0, 0], "tag": "Nil", "left": "Nil", "right": "Nil" },
+      "right": { "data": [3, 1], "tag": "Nil", "left": "Nil", "right": "Nil" },
     },
-  )
+    "right": { "data": [0, 0], "tag": "Nil", "left": "Nil", "right": "Nil" },
+  })
 }

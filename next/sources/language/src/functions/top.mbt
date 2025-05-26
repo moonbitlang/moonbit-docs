@@ -140,7 +140,7 @@ test {
 // end optional arguments 3
 
 // start optional arguments 4
-fn sub_array[X](
+fn[X] sub_array(
   xs : Array[X],
   offset~ : Int,
   len~ : Int = xs.length() - offset
@@ -197,8 +197,12 @@ fn f(_x : Int, loc~ : SourceLoc = _, args_loc~ : ArgsLoc = _) -> String {
 // start function alias
 // `hashmap_new` will become an alias of `@hashmap.new`
 fnalias @hashmap.new as hashmap_new
-fnalias @hashmap.new // same as `fnalias @hashmap.new as new`
-fnalias new as new_2 // local alias is also allowed
+
+// same as `fnalias @hashmap.new as new`
+fnalias @hashmap.new
+
+// local alias is also allowed
+fnalias new as new_2
 
 // creating multiple alias in one package
 fnalias @hashmap.(

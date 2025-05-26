@@ -140,8 +140,11 @@ test {
 test {
   let b : Byte = '\xFF'
   let bs : Bytes = [b, '\x01']
-  inspect!(bs, content=
-    #|b"\xff\x01"
+  inspect!(
+    bs,
+    content=
+      #|b"\xff\x01"
+    ,
   )
 }
 // end bytes 1
@@ -204,7 +207,9 @@ test {
 
 // start array 3
 let fixed_array_1 : FixedArray[Int] = [1, 2, 3]
+
 let fixed_array_2 = ([1, 2, 3] : FixedArray[Int])
+
 let array_3 = [1, 2, 3] // Array[Int]
 // end array 3
 
@@ -218,10 +223,9 @@ test {
 
 // start array pitfall solution
 test {
-  let two_dimension_array = FixedArray::makei(
-    10, 
-    fn (_i) { FixedArray::make(10, 0) }
-  )
+  let two_dimension_array = FixedArray::makei(10, fn(_i) {
+    FixedArray::make(10, 0)
+  })
   two_dimension_array[0][5] = 10
   assert_eq!(two_dimension_array[5][5], 0)
 }
@@ -239,7 +243,7 @@ let moon_pkg_json_example : Json = {
 // end json 1
 
 // start ref 1
-let a : Ref[Int] = { val : 100 }
+let a : Ref[Int] = { val: 100 }
 
 test {
   a.val = 200
@@ -251,7 +255,7 @@ test {
 
 // start option result 1
 test {
-  let a : Option[Int] = None
+  let a : Int? = None
   let b : Option[Int] = Some(42)
   let c : Result[Int, String] = Ok(42)
   let d : Result[Int, String] = Err("error")

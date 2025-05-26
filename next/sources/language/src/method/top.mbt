@@ -4,7 +4,7 @@ pub(all) enum List[X] {
   Cons(X, List[X])
 }
 
-pub fn concat[X](self : List[List[X]]) -> List[X] {
+pub fn[X] concat(self : List[List[X]]) -> List[X] {
   ...
 }
 // end method 1

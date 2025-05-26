@@ -18,7 +18,7 @@ test "derive eq_compare struct" {
   assert_eq!(p1 != p2, true)
   assert_eq!(p1 != p3, false)
   assert_eq!(p1 != p4, true)
-  
+
   // Compare
   assert_eq!(p1 < p2, true)
   assert_eq!(p1 < p3, false)

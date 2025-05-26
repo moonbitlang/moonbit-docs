@@ -26,8 +26,9 @@ let struct_3 : Unit = {
   let u = User::{ id: 0, name, email }
   // end struct 3
   // start struct 5
-  let u2 = { id : 0, name, email }
+  let u2 = { id: 0, name, email }
   // end struct 5
+
 }
 
 test "struct 4" (t : @test.T) {
@@ -221,7 +222,7 @@ struct Set[X] {
   mut root : Tree[X]
 }
 
-fn Set::insert[X : Compare](self : Set[X], x : X) -> Unit {
+fn[X : Compare] Set::insert(self : Set[X], x : X) -> Unit {
   self.root = self.root.insert(x, parent=Nil)
 }
 
@@ -239,7 +240,7 @@ enum Tree[X] {
 
 // In-place insert a new element to a binary search tree.
 // Return the new tree root
-fn Tree::insert[X : Compare](
+fn[X : Compare] Tree::insert(
   self : Tree[X],
   x : X,
   parent~ : Tree[X]
@@ -305,13 +306,13 @@ typealias MapString[X] = Map[String, X]
 // end typealias 1
 
 // start local-type 1
-fn toplevel[T: Show](x: T) -> Unit {
+fn[T : Show] toplevel(x : T) -> Unit {
   enum LocalEnum {
     A(T)
     B(Int)
   } derive(Show)
   struct LocalStruct {
-    a: (String, T)
+    a : (String, T)
   } derive(Show)
   type LocalNewtype T derive(Show)
   ...

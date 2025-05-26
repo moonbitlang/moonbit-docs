@@ -11,7 +11,6 @@ pub(all) enum Bar {
 }
 // end deprecated
 
-
 // start visibility
 // in @util package
 #visibility(change_to="readonly", "Point will be readonly in the future.")

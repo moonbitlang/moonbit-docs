@@ -6,7 +6,7 @@
 /// ```
 /// reverse([1,2,3,4]) |> println()
 /// ```
-fn reverse[T](xs : Array[T]) -> Array[T] {
+fn[T] reverse(xs : Array[T]) -> Array[T] {
   ...
 }
 // end doc string 1

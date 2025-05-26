@@ -60,7 +60,7 @@ fn g() -> Unit {
 
 // start error 5
 // Result::unwrap_or_error
-fn unwrap_or_error[T, E : Error](result : Result[T, E]) -> T!E {
+fn[T, E : Error] unwrap_or_error(result : Result[T, E]) -> T!E {
   match result {
     Ok(x) => x
     Err(e) => raise e
@@ -109,9 +109,7 @@ test {
 test "error 9" (t : @test.T) {
   let println = fn(show) { t.writeln(show) }
   // start error 9
-  try {
-    div!(42, 0)
-  } catch {
+  try div!(42, 0) catch {
     DivError(s) => println(s)
   } else {
     v => println(v)
@@ -122,9 +120,7 @@ test "error 9" (t : @test.T) {
 
 fn error() -> Unit {
   // start error 10
-  try {
-    println(div!(42, 0))
-  } catch {
+  try println(div!(42, 0)) catch {
     _ => println("Error")
   }
   // end error 10

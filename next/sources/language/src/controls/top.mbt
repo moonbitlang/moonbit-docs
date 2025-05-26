@@ -239,14 +239,13 @@ test "break label" {
 test "continue label" {
   let mut count = 0
   let init = 10
-  let res =outer~: loop init {
+  let res = outer~: loop init {
     0 => 42
-    i => {
+    i =>
       for {
         count = count + 1
         continue outer~ i - 1
       }
-    }
   }
   assert_eq!(res, 42)
   assert_eq!(count, 10)
@@ -282,9 +281,7 @@ fn getProcessedText(
   guard resources.get(path) is Some(resource) else {
     fail!("\{path} not found")
   }
-  guard resource is PlainText(text) else {
-    fail!("\{path} is not plain text")
-  }
+  guard resource is PlainText(text) else { fail!("\{path} is not plain text") }
   process(text)
 }
 // end guard 2

@@ -14,10 +14,12 @@ test "panic_test" {
 // end test 2
 
 // start snapshot test 1
-struct X { x : Int } derive(Show)
+struct X {
+  x : Int
+} derive(Show)
 
 test "show snapshot test" {
-  inspect!({x: 10}, content="{x: 10}")
+  inspect!({ x: 10 }, content="{x: 10}")
 }
 // end snapshot test 1
 
@@ -37,19 +39,16 @@ test "json snapshot test" {
     r,
     content="Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(End)))",
   )
-  @json.inspect!(
-    r,
-    content={
+  @json.inspect!(r, content={
+    "$tag": "Really_long_name_that_is_difficult_to_read",
+    "0": {
       "$tag": "Really_long_name_that_is_difficult_to_read",
       "0": {
         "$tag": "Really_long_name_that_is_difficult_to_read",
-        "0": {
-          "$tag": "Really_long_name_that_is_difficult_to_read",
-          "0": { "$tag": "End" },
-        },
+        "0": { "$tag": "End" },
       },
     },
-  )
+  })
 }
 // end snapshot test 2
 
