@@ -7,5 +7,5 @@ enum Instruction {
   MkApp
   Update(Int)
   Pop(Int)
-} derive (Eq, Show)
+} derive(Eq, Show)
 // end instr definition

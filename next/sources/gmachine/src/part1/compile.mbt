@@ -45,7 +45,9 @@ fn compileC(
       }
     Num(n) => @immut/list.of([PushInt(n)])
     App(e1, e2) =>
-      compileC(e2, env) + compileC(e1, argOffset(1, env)) + @immut/list.of([MkApp])
+      compileC(e2, env) +
+      compileC(e1, argOffset(1, env)) +
+      @immut/list.of([MkApp])
     _ => abort("not support yet")
   }
 }

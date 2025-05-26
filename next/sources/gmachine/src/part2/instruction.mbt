@@ -13,7 +13,7 @@ enum Instruction {
   Add
   Sub
   Mul
-  Div 
+  Div
   Neg
   Eq // ==
   Ne // !=
@@ -22,5 +22,5 @@ enum Instruction {
   Gt // >
   Ge // >=
   Cond(List[Instruction], List[Instruction])
-} derive (Eq, Show)
+} derive(Eq, Show)
 // end instr definition

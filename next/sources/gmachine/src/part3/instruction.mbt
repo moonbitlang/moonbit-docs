@@ -13,7 +13,7 @@ enum Instruction {
   Add
   Sub
   Mul
-  Div 
+  Div
   Neg
   Eq // ==
   Ne // !=
@@ -26,5 +26,5 @@ enum Instruction {
   CaseJump(List[(Int, List[Instruction])])
   Split
   Print
-} derive (Eq, Show)
+} derive(Eq, Show)
 // end instr definition

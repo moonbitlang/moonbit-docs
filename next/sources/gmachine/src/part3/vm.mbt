@@ -1,4 +1,3 @@
-
 // Use the 'type' keyword to encapsulate an address type.
 type Addr Int derive(Eq, Show)
 
@@ -45,7 +44,6 @@ fn alloc(self : GHeap, node : Node) -> Addr {
   return Addr(i)
 }
 
-
 fn op_get(self : GHeap, key : Addr) -> Node {
   let Addr(i) = key
   match self.memory[i] {
@@ -57,7 +55,6 @@ fn op_get(self : GHeap, key : Addr) -> Node {
 fn op_set(self : GHeap, key : Addr, val : Node) -> Unit {
   self.memory[key._] = Some(val)
 }
-
 
 struct GState {
   output : @buffer.T
@@ -79,7 +76,11 @@ fn put_stack(self : GState, addr : Addr) -> Unit {
   self.stack = Cons(addr, self.stack)
 }
 
-fn put_dump(self : GState, codes : List[Instruction], stack : List[Addr]) -> Unit {
+fn put_dump(
+  self : GState,
+  codes : List[Instruction],
+  stack : List[Addr]
+) -> Unit {
   self.dump = Cons((codes, stack), self.dump)
 }
 
@@ -120,7 +121,6 @@ fn push_global(self : GState, name : String) -> Unit {
   self.put_stack(addr)
 }
 
-
 fn push(self : GState, offset : Int) -> Unit {
   // Push(n) a0 : . . . : an : s
   //     =>  an : a0 : . . . : an : s
@@ -135,30 +135,29 @@ fn slide(self : GState, n : Int) -> Unit {
 
 fn rearrange(self : GState, n : Int) -> Unit {
   let appnodes = self.stack.take(n)
-  let args = appnodes.map(fn (addr) {
+  let args = appnodes.map(fn(addr) {
     guard self.heap[addr] is NApp(_, arg)
-    arg 
+    arg
   })
   self.stack = args + appnodes.drop(n - 1)
 }
-
 
 fn mk_apply(self : GState) -> Unit {
   let (a1, a2) = self.pop2()
   let appaddr = self.heap.alloc(NApp(a1, a2))
   self.put_stack(appaddr)
 }
+
 fn update(self : GState, n : Int) -> Unit {
   let addr = self.pop1()
   let dst = self.stack.unsafe_nth(n)
   self.heap[dst] = NInd(addr)
 }
 
-
 fn unwind(self : GState) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {
-    NNum(_) => {
+    NNum(_) =>
       match self.dump {
         Nil => self.put_stack(addr)
         Cons((instrs, stack), rest_dump) => {
@@ -168,7 +167,6 @@ fn unwind(self : GState) -> Unit {
           self.code = instrs
         }
       }
-    }
     NApp(a1, _) => {
       self.put_stack(addr)
       self.put_stack(a1)
@@ -203,7 +201,7 @@ fn unwind(self : GState) -> Unit {
       self.put_stack(a)
       self.put_code(@immut/list.of([Unwind]))
     }
-    NConstr(_, _) => {
+    NConstr(_, _) =>
       match self.dump {
         Nil => abort("Unwinding with too few arguments")
         Cons((i, s), rest) => {
@@ -213,7 +211,6 @@ fn unwind(self : GState) -> Unit {
           self.put_stack(addr)
         }
       }
-    }
   }
 }
 
@@ -232,17 +229,19 @@ fn eval(self : GState) -> Unit {
   self.code = @immut/list.of([Unwind])
 }
 
-fn condition(self : GState, i1 : List[Instruction], i2 : List[Instruction]) -> Unit {
+fn condition(
+  self : GState,
+  i1 : List[Instruction],
+  i2 : List[Instruction]
+) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {
-    NNum(0) => {
+    NNum(0) =>
       // false
       self.code = i2 + self.code
-    }
-    NNum(1) => {
+    NNum(1) =>
       // true
       self.code = i1 + self.code
-    }
     otherwise => abort("cond : \{addr} = \{otherwise}")
   }
 }
@@ -254,9 +253,8 @@ fn negate(self : GState) -> Unit {
       let addr = self.heap.alloc(NNum(-n))
       self.put_stack(addr)
     }
-    otherwise => {
+    otherwise =>
       abort("negate: wrong kind of node \{otherwise}, address \{addr}")
-    }
   }
 }
 
@@ -296,10 +294,9 @@ fn pack(self : GState, t : Int, n : Int) -> Unit {
 fn split(self : GState) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {
-    NConstr(_, addrs) => {
+    NConstr(_, addrs) =>
       // n == addrs.length()
       self.stack = addrs + self.stack
-    }
     _ => panic()
   }
 }
@@ -309,15 +306,14 @@ fn split(self : GState) -> Unit {
 fn casejump(self : GState, table : List[(Int, List[Instruction])]) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {
-    NConstr(t, _) => {
+    NConstr(t, _) =>
       match table.lookup(t) {
         None => abort("casejump")
-        Some(instrs) => { 
+        Some(instrs) => {
           self.code = instrs + self.code
           self.put_stack(addr)
         }
       }
-    }
     otherwise => abort("casejump(): addr = \{addr} node = \{otherwise}")
   }
 }
@@ -333,7 +329,8 @@ fn gprint(self : GState) -> Unit {
     }
     NConstr(0, Nil) => self.output.write_string("Nil")
     NConstr(1, Cons(addr1, Cons(addr2, Nil))) => {
-      self.code = @immut/list.of([Instruction::Eval, Print, Eval, Print]) + self.code
+      self.code = @immut/list.of([Instruction::Eval, Print, Eval, Print]) +
+        self.code
       self.put_stack(addr2)
       self.put_stack(addr1)
     }
@@ -341,7 +338,6 @@ fn gprint(self : GState) -> Unit {
   }
 }
 // end gprint definition
-
 
 fn build_initial_heap(
   scdefs : List[(String, Int, List[Instruction])]
@@ -358,8 +354,6 @@ fn build_initial_heap(
   }
   return (heap, globals)
 }
-
-
 
 fn step(self : GState) -> Bool {
   match self.code {
@@ -378,17 +372,17 @@ fn step(self : GState) -> Bool {
         Alloc(n) => self.alloc_nodes(n)
         Eval => self.eval()
         Slide(n) => self.slide(n)
-        Add => self.lift_arith2(fn (x, y) { x + y})
-        Sub => self.lift_arith2(fn (x, y) { x - y})
-        Mul => self.lift_arith2(fn (x, y) { x * y})
-        Div => self.lift_arith2(fn (x, y) { x / y})
+        Add => self.lift_arith2(fn(x, y) { x + y })
+        Sub => self.lift_arith2(fn(x, y) { x - y })
+        Mul => self.lift_arith2(fn(x, y) { x * y })
+        Div => self.lift_arith2(fn(x, y) { x / y })
         Neg => self.negate()
-        Eq => self.lift_cmp2(fn (x, y) { x == y })
-        Ne => self.lift_cmp2(fn (x, y) { x != y })
-        Lt => self.lift_cmp2(fn (x, y) { x < y })
-        Le => self.lift_cmp2(fn (x, y) { x <= y })
-        Gt => self.lift_cmp2(fn (x, y) { x > y })
-        Ge => self.lift_cmp2(fn (x, y) { x >= y })
+        Eq => self.lift_cmp2(fn(x, y) { x == y })
+        Ne => self.lift_cmp2(fn(x, y) { x != y })
+        Lt => self.lift_cmp2(fn(x, y) { x < y })
+        Le => self.lift_cmp2(fn(x, y) { x <= y })
+        Gt => self.lift_cmp2(fn(x, y) { x > y })
+        Ge => self.lift_cmp2(fn(x, y) { x >= y })
         Cond(i1, i2) => self.condition(i1, i2)
         Pack(tag, arity) => self.pack(tag, arity)
         CaseJump(alts) => self.casejump(alts)
@@ -400,8 +394,6 @@ fn step(self : GState) -> Bool {
   }
 }
 
-
-
 fn reify(self : GState) -> String {
   if self.step() {
     self.reify()
@@ -409,4 +401,3 @@ fn reify(self : GState) -> String {
     self.output.contents().to_unchecked_string()
   }
 }
-

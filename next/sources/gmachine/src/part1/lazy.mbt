@@ -8,7 +8,7 @@ struct LazyRef[T] {
   mut data : LazyData[T]
 }
 
-fn extract[T](self : LazyRef[T]) -> T {
+fn[T] extract(self : LazyRef[T]) -> T {
   match self.data {
     Waiting(thunk) => {
       let value = thunk()
