@@ -9,6 +9,13 @@ pub fn[X] concat(self : List[List[X]]) -> List[X] {
 }
 // end method 1
 
+pub fn[X, Y] List::map(self : List[X], f : (X) -> Y) -> List[Y] {
+  match self {
+    Nil => Nil
+    Cons(x, xs) => Cons(f(x), xs.map(f))
+  }
+}
+
 // start method overload example
 struct T1 {
   x1 : Int
@@ -32,3 +39,14 @@ test {
 
 }
 // end method overload example
+
+// start method alias
+// same as `fnalias List::map as map`
+fnalias List::map
+
+// list_concat is an alias of `List::concat`
+fnalias List::concat as list_concat
+
+// creating multiple alias in typename
+fnalias List::(concat as c, map as m)
+// end method alias

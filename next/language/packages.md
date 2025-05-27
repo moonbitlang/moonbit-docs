@@ -48,6 +48,15 @@ The visibility modifiers apply to functions, variables, types, and traits, allow
 By default, all function definitions and variable bindings are _invisible_ to other packages.
 You can use the `pub` modifier before toplevel `let`/`fn` to make them public.
 
+### Aliases
+
+By default, all aliases, i.e. [function alias](/language/fundamentals.md#function-alias), 
+[method alias](/language/methods.md#method-alias),
+[type alias](/language/fundamentals.md#type-alias),
+[trait alias](/language/methods.md#trait-alias), are _invisible_ to other packages.
+
+You can use the `pub` modifier before the definition to make them public.
+
 ### Types
 
 There are four different kinds of visibility for types in MoonBit:

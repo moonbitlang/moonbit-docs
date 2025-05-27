@@ -62,6 +62,18 @@ or if a method is intuitively unambiguous in the package,
 use the `fn f(self : T, ..)` syntax
 - otherwise, use the qualified `fn T::f(..)` syntax
 
+### Method alias
+
+MoonBit allows calling methods with alternative names via alias.
+
+The method alias will create a function with the corresponding name.
+
+```{literalinclude} /sources/language/src/method/top.mbt
+:language: moonbit
+:start-after: start method alias
+:end-before: end method alias
+```
+
 ## Operator Overloading
 
 MoonBit supports overloading infix operators of builtin operators via several builtin traits. For example:
@@ -239,6 +251,18 @@ Here's an example of calling trait `impl` with dot syntax:
 :language: moonbit
 :start-after: start trait 8
 :end-before: end trait 8
+```
+
+### Trait alias
+
+MoonBit allows using traits with alternative names via trait alias.
+
+Trait alias can be declared as follows:
+
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait alias
+:end-before: end trait alias
 ```
 
 ## Trait objects
