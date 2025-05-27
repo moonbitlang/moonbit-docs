@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-26 14:09+0800\n"
+"POT-Creation-Date: 2025-05-27 17:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -110,7 +110,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:36
+#: ../../example/gmachine/gmachine-1.md:35
 msgid ""
 "The only real difference between `Stream[T]` and `List[T]` is in the "
 "`Cons`: the place holding the rest of the list is replaced with a "
@@ -121,13 +121,13 @@ msgstr ""
 "`Stream[T]` 和 `List[T]` 之间唯一的真正区别在于 `Cons`：保存列表其余部分的位置被一个无参数函数（俗称为 "
 "thunk）替换。这是惰性求值的一个简单实现：将不想立即计算的东西包装在一个 thunk 中。"
 
-#: ../../example/gmachine/gmachine-1.md:38
+#: ../../example/gmachine/gmachine-1.md:37
 msgid "We also need a function to convert a regular list into a lazy list:"
 msgstr "我们还需要一个函数将常规列表转换为惰性列表："
 
-#: ../../example/gmachine/gmachine-1.md:40
+#: ../../example/gmachine/gmachine-1.md:39
 msgid ""
-"fn Stream::from_list[T](l : List[T]) -> Stream[T] {\n"
+"fn[T] Stream::from_list(l : List[T]) -> Stream[T] {\n"
 "  match l {\n"
 "    Nil => Empty\n"
 "    Cons(x, xs) => Cons(x, fn () { Stream::from_list(xs) })\n"
@@ -135,7 +135,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:49
+#: ../../example/gmachine/gmachine-1.md:45
 msgid ""
 "This function does not need to traverse the entire list to convert it "
 "into `Stream`. For operations that are not urgent (here, "
@@ -147,9 +147,9 @@ msgstr ""
 "`Stream::from_list(xs)`），我们直接将它们包装在一个 thunk 中并返回。下面的 `map` "
 "函数将采用这种方法（不过这里的 `xs` 已经是一个 thunk 了）。"
 
-#: ../../example/gmachine/gmachine-1.md:51
+#: ../../example/gmachine/gmachine-1.md:47
 msgid ""
-"fn map[X, Y](self : Stream[X], f : (X) -> Y) -> Stream[Y] {\n"
+"fn[X, Y] map(self : Stream[X], f : (X) -> Y) -> Stream[Y] {\n"
 "  match self {\n"
 "    Empty => Empty\n"
 "    Cons(x, xs) => Cons(f(x), fn () { xs().map(f) })\n"
@@ -157,15 +157,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:60
+#: ../../example/gmachine/gmachine-1.md:53
 msgid ""
 "The `take` function is responsible for performing computations, and it "
 "can extract n elements as needed."
 msgstr "`take` 函数负责执行计算，它可以根据需要提取 n 个元素。"
 
-#: ../../example/gmachine/gmachine-1.md:62
+#: ../../example/gmachine/gmachine-1.md:55
 msgid ""
-"fn take[T](self : Stream[T], n : Int) -> List[T] {\n"
+"fn[T] take(self : Stream[T], n : Int) -> List[T] {\n"
 "  if n == 0 {\n"
 "    Nil\n"
 "  } else {\n"
@@ -177,7 +177,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:75
+#: ../../example/gmachine/gmachine-1.md:61
 msgid ""
 "The implementation of lazy data structures using thunks is "
 "straightforward and effectively addresses the problems mentioned above. "
@@ -191,11 +191,11 @@ msgstr ""
 "使用 thunk "
 "实现惰性数据结构的方法很简单，有效地解决了上述问题。这种方法要求用户明确指示代码中应该延迟计算的位置，而惰性语言的策略则更加激进：它默认使用惰性求值来处理所有用户定义的函数！在接下来的章节中，我们将介绍一个惰性函数式语言的最小实现，并简要介绍其潜在的理论模型。"
 
-#: ../../example/gmachine/gmachine-1.md:77
+#: ../../example/gmachine/gmachine-1.md:63
 msgid "A Lazy Evaluation Language and Its Abstract Syntax Tree"
 msgstr "一种惰性求值语言及其抽象语法树"
 
-#: ../../example/gmachine/gmachine-1.md:79
+#: ../../example/gmachine/gmachine-1.md:65
 msgid ""
 "The example used in this article is a lazy evaluation language, "
 "deliberately made to resemble Clojure (a Lisp dialect) and named coreF. "
@@ -206,11 +206,11 @@ msgstr ""
 "本文中使用的示例是一种惰性求值语言，故意设计成类似 Clojure（一种 Lisp 方言）的语言，命名为 coreF。这是为了在 Markdown"
 " 中使用 Clojure 的语法高亮。请别担心，语法可能有点麻烦，但是绝对够简单。"
 
-#: ../../example/gmachine/gmachine-1.md:81
+#: ../../example/gmachine/gmachine-1.md:67
 msgid "Functions are defined using the `defn` keyword:"
 msgstr "使用 `defn` 关键字定义函数："
 
-#: ../../example/gmachine/gmachine-1.md:83
+#: ../../example/gmachine/gmachine-1.md:69
 msgid ""
 "(defn factorial[n] ;; n is the parameter, this function calculates the "
 "factorial of n\n"
@@ -224,7 +224,7 @@ msgstr ""
 "    1\n"
 "    (mul n (factorial (sub n 1)))))\n"
 
-#: ../../example/gmachine/gmachine-1.md:90
+#: ../../example/gmachine/gmachine-1.md:76
 msgid ""
 "Referring to it as a function in general conversation is acceptable. "
 "However, when discussing lazy functional languages, we must introduce a "
@@ -235,23 +235,23 @@ msgstr ""
 "在一般对话中，我们将它成为函数就好。但当我们讨论惰性函数式语言时，我们必须引入一个专门的术语：_超组合子_（Super Combinator "
 "）。在超组合子的定义中，所有自由变量都应该包含在一个初始的 `[]` 中。"
 
-#: ../../example/gmachine/gmachine-1.md:92
+#: ../../example/gmachine/gmachine-1.md:78
 msgid ""
 "Execution of a coreF program begins with `main`, calling a specific super"
 " combinator as if replacing it with its definition."
 msgstr "coreF 程序的执行从 `main` 开始，调用一个特定的超组合子，等价于用它的定义替换它。"
 
-#: ../../example/gmachine/gmachine-1.md:94
+#: ../../example/gmachine/gmachine-1.md:80
 msgid "(defn main[] (factorial 42))\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:98
+#: ../../example/gmachine/gmachine-1.md:84
 msgid ""
 "Super combinators without parameters, such as `main`, are referred to by "
 "a specific term: _Constant Applicative Forms (CAF)_."
 msgstr "没有参数的超组合子，如 `main`，有一个术语：_常量应用形式（Constant Applicative Forms，简称 CAF）_。"
 
-#: ../../example/gmachine/gmachine-1.md:100
+#: ../../example/gmachine/gmachine-1.md:86
 msgid ""
 "coreF also possesses several language features, including custom data "
 "structures, `case` expressions for dismantling structures, and `let` and "
@@ -263,7 +263,7 @@ msgstr ""
 "coreF 还具有几个语言特性，包括自定义数据结构、用于解构的 `case` 表达式，以及用于声明局部变量的 `let` 和 "
 "`letrec`。但是，本文的范围仅限于上述特性（实际上，甚至更少，因为像 `eq`、`mul`、`sub` 等内置函数之后才会实现）。"
 
-#: ../../example/gmachine/gmachine-1.md:102
+#: ../../example/gmachine/gmachine-1.md:88
 msgid ""
 "coreF excludes anonymous functions because anonymous functions introduce "
 "extra free variables. Removing them requires an additional transformation"
@@ -274,14 +274,14 @@ msgstr ""
 "coreF 不包括匿名函数，因为匿名函数会引入额外的自由变量。删除它们需要额外的转换步骤：lambda 提升。这种技术可以将 lambda "
 "表达式转换为外部超组合子，但这不是惰性求值的主要内容，因此在这里省略了。"
 
-#: ../../example/gmachine/gmachine-1.md:104
+#: ../../example/gmachine/gmachine-1.md:90
 msgid ""
 "Super combinators will eventually be parsed into `ScDef[String]`, but "
 "writing a parser is a tedious task. I will provide it along with the "
 "final code."
 msgstr "超组合子最终将被解析为 `ScDef[String]`，但编写解析器是一项繁琐的任务。我将在最终代码中提供它。"
 
-#: ../../example/gmachine/gmachine-1.md:106
+#: ../../example/gmachine/gmachine-1.md:92
 msgid ""
 "enum RawExpr[T] {\n"
 "  Var(T)\n"
@@ -299,11 +299,11 @@ msgid ""
 "} derive(Show)\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:112
+#: ../../example/gmachine/gmachine-1.md:98
 msgid "Additionally, some predefined coreF programs are required."
 msgstr "此外，还有一些预定义的 coreF 程序需要给出。"
 
-#: ../../example/gmachine/gmachine-1.md:114
+#: ../../example/gmachine/gmachine-1.md:100
 msgid ""
 "let prelude_defs : List[ScDef[String]] = {\n"
 "  let args : (FixedArray[String]) -> List[String] = @immut/list.of\n"
@@ -331,57 +331,57 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:120
+#: ../../example/gmachine/gmachine-1.md:106
 msgid "Why Graph"
 msgstr "为什么是图"
 
-#: ../../example/gmachine/gmachine-1.md:122
+#: ../../example/gmachine/gmachine-1.md:108
 msgid ""
 "In the coreF language, expressions (not `RawExpr[T]` mentioned earlier, "
 "but runtime expressions) are stored in memory in the form of a graph "
 "rather than a tree when being evaluated.)"
 msgstr "在 coreF 语言中，表达式（不是前面提到的 `RawExpr[T]`，而是运行时表达式）在被求值时，以图的形式存储在内存中，而不是树。"
 
-#: ../../example/gmachine/gmachine-1.md:124
+#: ../../example/gmachine/gmachine-1.md:110
 msgid "Why is this approach taken? Let's examine this through a program example:"
 msgstr "为什么要这样？看看这个程序："
 
-#: ../../example/gmachine/gmachine-1.md:126
+#: ../../example/gmachine/gmachine-1.md:112
 msgid ""
 "(defn square[x]  (mul x x))\n"
 "(defn main[] (square (square 3)))\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:131
+#: ../../example/gmachine/gmachine-1.md:117
 msgid ""
 "If we evaluate according to the conventional expression tree, it would be"
 " reduced to:"
 msgstr "如果我们按照一般的树形表达式来求值，表达式会被规约成："
 
-#: ../../example/gmachine/gmachine-1.md:133
+#: ../../example/gmachine/gmachine-1.md:119
 msgid "(mul (square 3) (square 3))\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:137
+#: ../../example/gmachine/gmachine-1.md:123
 msgid ""
 "In this case, `(square 3)` would be evaluated twice, which is certainly "
 "not desirable for lazy evaluation."
 msgstr "在这种情况下，`(square 3)` 将被计算两次，这对于惰性求值来说显然是不可取的。"
 
-#: ../../example/gmachine/gmachine-1.md:139
+#: ../../example/gmachine/gmachine-1.md:125
 msgid ""
 "To illustrate this more clearly, let's make a somewhat improper analogy "
 "using MoonBit code:"
 msgstr "为了更清楚地说明这一点，让我们用 MoonBit 代码做一个不太恰当的类比："
 
-#: ../../example/gmachine/gmachine-1.md:141
+#: ../../example/gmachine/gmachine-1.md:127
 msgid ""
 "fn square(thunk : () -> Int) -> Int {\n"
 "  thunk() * thunk()\n"
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:147
+#: ../../example/gmachine/gmachine-1.md:133
 msgid ""
 "To represent the program using a graph is to facilitate sharing of "
 "computation results and avoid redundant calculations. To achieve this "
@@ -392,7 +392,7 @@ msgstr ""
 "使用图来表示程序是为了方便共享计算结果，避免冗余计算。为了实现这个目的，在减少图时实现一个原地更新算法是至关重要的。关于原地更新，让我们用 "
 "MoonBit 代码来模拟它："
 
-#: ../../example/gmachine/gmachine-1.md:149
+#: ../../example/gmachine/gmachine-1.md:135
 msgid ""
 "enum LazyData[T] {\n"
 "  Waiting(() -> T)\n"
@@ -443,7 +443,7 @@ msgstr ""
 "}\n"
 "\n"
 
-#: ../../example/gmachine/gmachine-1.md:155
+#: ../../example/gmachine/gmachine-1.md:141
 msgid ""
 "Regardless of which side executes the `extract` method first, it will "
 "update the referenced mutable field and replace its content with the "
@@ -453,18 +453,18 @@ msgstr ""
 "无论哪一方先执行 `extract` 方法，它都会更新引用的可变字段，并用计算结果替换其内容。因此，在第二次执行 `extract` "
 "方法时无需重新计算。"
 
-#: ../../example/gmachine/gmachine-1.md:157
+#: ../../example/gmachine/gmachine-1.md:143
 msgid "Conventions"
 msgstr "约定"
 
-#: ../../example/gmachine/gmachine-1.md:159
+#: ../../example/gmachine/gmachine-1.md:145
 msgid ""
 "Before delving into how graph reduction works, let's establish some key "
 "terms and basic facts. We'll continue using the same program as an "
 "example:"
 msgstr "在讨论图规约如何进行之前，让我们先定义一些术语和基本事实。我们将继续使用相同的程序作为示例："
 
-#: ../../example/gmachine/gmachine-1.md:161
+#: ../../example/gmachine/gmachine-1.md:147
 msgid ""
 "(defn square[x]  (mul x x)) ;; multiplication\n"
 "(defn main[] (square (square 3)))\n"
@@ -472,17 +472,17 @@ msgstr ""
 "(defn square[x]  (mul x x)) ;; 乘法\n"
 "(defn main[] (square (square 3)))"
 
-#: ../../example/gmachine/gmachine-1.md:166
+#: ../../example/gmachine/gmachine-1.md:152
 msgid "Built-in primitives like `mul` are predefined operations."
 msgstr "内置的原语，如 `mul`，是预定义的操作。"
 
-#: ../../example/gmachine/gmachine-1.md:168
+#: ../../example/gmachine/gmachine-1.md:154
 msgid ""
 "Evaluating an expression (of course, lazy) and updating its corresponding"
 " node in the graph in place is called reduction."
 msgstr "对表达式进行求值（当然是惰性的），并原地更新图中对应的节点，这个过程称为规约。"
 
-#: ../../example/gmachine/gmachine-1.md:169
+#: ../../example/gmachine/gmachine-1.md:155
 msgid ""
 "`(square 3)` is a reducible expression (often abbreviated as redex), "
 "consisting of `square` and its argument. It can be reduced to `(mul 3 "
@@ -494,14 +494,14 @@ msgstr ""
 "和它的参数组成。它可以规约为 `(mul 3 3)`。`(mul 3 3)` 也是一个 redex，但与 `(square 3)` "
 "相比，它是一种不同类型的 redex，因为 `square` 是一个用户定义的组合子，而 `mul` 是一个实现的内置原语。"
 
-#: ../../example/gmachine/gmachine-1.md:170
+#: ../../example/gmachine/gmachine-1.md:156
 msgid ""
 "The reduction result of `(mul 3 3)` is the expression `9`, which cannot "
 "be further reduced. Such expressions that cannot be further reduced are "
 "called Normal forms."
 msgstr "`(mul 3 3)` 的规约结果是表达式 `9`，它不能进一步规约。这种不能进一步规约的表达式称为范式（normal form）。"
 
-#: ../../example/gmachine/gmachine-1.md:171
+#: ../../example/gmachine/gmachine-1.md:157
 msgid ""
 "An expression may contain multiple sub-expressions (e.g., `(mul (add 3 5)"
 " (mul 7 9))`). In such cases, the order of reduction of expressions is "
@@ -510,7 +510,7 @@ msgstr ""
 "一个表达式可能包含多个子表达式（例如 `(mul (add 3 5) (mul 7 "
 "9))`）。在这种情况下，表达式的规约顺序至关重要——有些程序只在特定的规约顺序下停机。"
 
-#: ../../example/gmachine/gmachine-1.md:173
+#: ../../example/gmachine/gmachine-1.md:159
 msgid ""
 "There's a special reduction order that always selects the outermost redex"
 " for reduction, known as _normal order reduction_. This reduction order "
@@ -519,11 +519,11 @@ msgstr ""
 "有一种特殊的规约顺序总是选择最外层的 redex 进行规约，称为 _正则序规约_（normal order "
 "reduction）。下文也将统一采用这种规约顺序。"
 
-#: ../../example/gmachine/gmachine-1.md:175
+#: ../../example/gmachine/gmachine-1.md:161
 msgid "So, the graph reduction can be described with the following pseudocode:"
 msgstr "因此，图规约可以用以下伪代码描述："
 
-#: ../../example/gmachine/gmachine-1.md:177
+#: ../../example/gmachine/gmachine-1.md:163
 msgid ""
 "While there exist reducible expressions in the graph {\n"
 "    Select the outermost reducible expression.\n"
@@ -537,44 +537,44 @@ msgstr ""
 "    用规约的结果更新图。\n"
 "}\n"
 
-#: ../../example/gmachine/gmachine-1.md:185
+#: ../../example/gmachine/gmachine-1.md:171
 msgid ""
 "Dizzy now? Let's find a few examples to demonstrate how to perform "
 "reductions on paper."
 msgstr "头晕了吗？让我们找一些例子来演示如何在纸上进行规约。"
 
-#: ../../example/gmachine/gmachine-1.md:187
+#: ../../example/gmachine/gmachine-1.md:173
 msgid "Step 1: Find the next redex"
 msgstr "第一步：找到下一个 redex"
 
-#: ../../example/gmachine/gmachine-1.md:189
+#: ../../example/gmachine/gmachine-1.md:175
 msgid "The execution of the entire program starts from the `main` function."
 msgstr "在整个程序中，执行从 `main` 函数开始。"
 
-#: ../../example/gmachine/gmachine-1.md:191
+#: ../../example/gmachine/gmachine-1.md:177
 msgid ""
 "(defn square[x]  (mul x x))\n"
 "(defn main[] (add 33 (square 3)))\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:196
+#: ../../example/gmachine/gmachine-1.md:182
 msgid ""
 "`main` itself is a CAF - the simplest kind of redex. If we perform the "
 "substitution, the current expression to be handled is:"
 msgstr "`main` 本身是一个 CAF - 最简单的 redex。如果我们进行替换，当前要处理的表达式是："
 
-#: ../../example/gmachine/gmachine-1.md:198
+#: ../../example/gmachine/gmachine-1.md:184
 msgid "(add 33 (square 3))\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:202
+#: ../../example/gmachine/gmachine-1.md:188
 msgid ""
 "According to the principle of finding the outermost redex, it seems like "
 "we've immediately found the redex formed by `add` and its two parameters "
 "(let's assume it for now)."
 msgstr "根据找到最外层 redex 的原则，我们似乎立即找到了由 `add` 和它的两个参数组成的 redex（暂时这么假设）。"
 
-#: ../../example/gmachine/gmachine-1.md:204
+#: ../../example/gmachine/gmachine-1.md:190
 msgid ""
 "But wait! Due to the presence of default currying, the abstract syntax "
 "tree corresponding to this expression is actually composed of multiple "
@@ -582,17 +582,17 @@ msgid ""
 "readability):"
 msgstr "但是稍等！由于存在默认的柯里化，这个表达式对应的抽象语法树实际上由多个 `App` 节点嵌套而成。它大致看起来是这样的（为了可读性而简化）："
 
-#: ../../example/gmachine/gmachine-1.md:206
+#: ../../example/gmachine/gmachine-1.md:192
 msgid "App(App(add, 33), App(square, 3))\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:210
+#: ../../example/gmachine/gmachine-1.md:196
 msgid ""
 "This chain-like structure from `add` to the outermost `App` node is "
 "called the \"Spine\""
 msgstr "这个从 `add` 到最外层 `App` 节点的链式结构称为“脊柱”（Spine）"
 
-#: ../../example/gmachine/gmachine-1.md:212
+#: ../../example/gmachine/gmachine-1.md:198
 msgid ""
 "Going back to check, `add` is an internally defined primitive. However, "
 "since its second argument `(square 3)` is not in normal form, we cannot "
@@ -605,17 +605,17 @@ msgstr ""
 "不是范式，我们不能对它进行规约（将一个未求值的表达式加到一个整数上似乎有点荒谬）。因此，我们不能明确地说 `(add 33 (square "
 "3))` 是一个 redex；它只是最外层的函数应用。要对它进行规约，我们必须先规约 `(square 3)`。"
 
-#: ../../example/gmachine/gmachine-1.md:214
+#: ../../example/gmachine/gmachine-1.md:200
 msgid "Step 2: Reduce"
 msgstr "第二步：规约"
 
-#: ../../example/gmachine/gmachine-1.md:216
+#: ../../example/gmachine/gmachine-1.md:202
 msgid ""
 "Since `square` is a user-defined super combinator, reducing `(square 3)` "
 "involves only parameter substitution."
 msgstr "因为 `square` 是一个用户定义的超组合子，所以对 `(square 3)` 进行规约只涉及参数替换。"
 
-#: ../../example/gmachine/gmachine-1.md:218
+#: ../../example/gmachine/gmachine-1.md:204
 msgid ""
 "If a redex has fewer arguments than required by the super combinator, "
 "which is common in higher-order functions, it becomes a `weak head normal"
@@ -626,57 +626,57 @@ msgstr ""
 "如果一个 redex 的参数比超组合子所需的参数——这在高阶函数中很常见——它就成为一个 `弱头部范式`（weak head normal "
 "form，通常缩写为 WHNF）。在这种情况下，即使它的子表达式包含 redex，也无需处理。以「对列表中的所有整数执行三倍化」为例。"
 
-#: ../../example/gmachine/gmachine-1.md:220
+#: ../../example/gmachine/gmachine-1.md:206
 msgid "(map (mul 3) list-of-int)\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:224
+#: ../../example/gmachine/gmachine-1.md:210
 msgid ""
 "Here, `(mul 3)` cannot be treated as a redex because it lacks sufficient "
 "arguments."
 msgstr "在这里，`(mul 3)` 不能被视为 redex，因为它缺少足够的参数。"
 
-#: ../../example/gmachine/gmachine-1.md:226
+#: ../../example/gmachine/gmachine-1.md:212
 msgid "Step 3: Update"
 msgstr "第三步：更新"
 
-#: ../../example/gmachine/gmachine-1.md:228
+#: ../../example/gmachine/gmachine-1.md:214
 msgid ""
 "This step only affects execution efficiency and can be skipped during "
 "paper deductions."
 msgstr "这一步只影响执行效率，在纸上推导时可以跳过。"
 
-#: ../../example/gmachine/gmachine-1.md:230
+#: ../../example/gmachine/gmachine-1.md:216
 msgid ""
 "These operations are easy to perform on paper (when the amount of code "
 "doesn't exceed half a sheet), but when we switch to computers, how do we "
 "translate these steps into executable code?"
 msgstr "这些操作在纸上执行很容易（当代码量不超过半张纸时），但当我们切换到计算机时，我们如何将这些步骤转换为可执行代码呢？"
 
-#: ../../example/gmachine/gmachine-1.md:232
+#: ../../example/gmachine/gmachine-1.md:218
 msgid ""
 "To answer this question, pioneers in the world of lazy evaluation "
 "programming languages have proposed various **abstract machines** for "
 "modeling lazy evaluation. These include:"
 msgstr "为了回答这个问题，惰性求值编程语言的先驱们提出了各种用于建模惰性求值的 **抽象机器**。这些包括："
 
-#: ../../example/gmachine/gmachine-1.md:234 ../../example/gmachine/index.md:1
+#: ../../example/gmachine/gmachine-1.md:220 ../../example/gmachine/index.md:1
 msgid "G-Machine"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:235
+#: ../../example/gmachine/gmachine-1.md:221
 msgid "Three Instruction Machine"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:236
+#: ../../example/gmachine/gmachine-1.md:222
 msgid "ABC Machine (used by the Clean language)"
 msgstr "ABC Machine（由 Clean 语言使用）"
 
-#: ../../example/gmachine/gmachine-1.md:237
+#: ../../example/gmachine/gmachine-1.md:223
 msgid "Spineless Tagless G-Machine (abbreviated as STG, used by Haskell language)"
 msgstr "Spineless Tagless G-Machine（简称 STG，由 Haskell 语言使用）"
 
-#: ../../example/gmachine/gmachine-1.md:239
+#: ../../example/gmachine/gmachine-1.md:225
 msgid ""
 "They are execution models used to guide compiler implementations. It's "
 "important to note that, unlike various popular virtual machines today "
@@ -690,18 +690,18 @@ msgstr ""
 "的编译器 GHC 为例，生成 STG 代码后，它不会直接将其传递给解释器执行。相反，它会根据所选的后端进一步将其转换为 LLVM、C "
 "代码或机器代码。"
 
-#: ../../example/gmachine/gmachine-1.md:241
+#: ../../example/gmachine/gmachine-1.md:227
 msgid ""
 "To simplify implementation, this article will directly use MoonBit to "
 "write an interpreter for G-Machine instructions, starting from a minimal "
 "example and gradually adding more features."
 msgstr "为了简化实现，本文将直接使用 MoonBit 为 G-Machine 指令编写解释器，从一个最小的示例开始，逐渐添加更多功能。"
 
-#: ../../example/gmachine/gmachine-1.md:243
+#: ../../example/gmachine/gmachine-1.md:229
 msgid "G-Machine Overview"
 msgstr "G-Machine 概述"
 
-#: ../../example/gmachine/gmachine-1.md:245
+#: ../../example/gmachine/gmachine-1.md:231
 msgid ""
 "While the G-Machine is an abstract machine for lazy functional languages,"
 " its structure and concepts are not significantly different from what one"
@@ -712,61 +712,61 @@ msgstr ""
 "虽然 G-Machine "
 "是用于惰性函数式语言的抽象机器，但其结构和概念与编写一般命令式语言时遇到的情况并无显著差异。它也有堆和栈等结构，其指令是顺序执行的。一些关键的区别包括："
 
-#: ../../example/gmachine/gmachine-1.md:247
+#: ../../example/gmachine/gmachine-1.md:233
 msgid "The basic unit of memory in the heap is not bytes, but graph nodes."
 msgstr "堆中的内存的基本单位不是字节，而是图节点。"
 
-#: ../../example/gmachine/gmachine-1.md:248
+#: ../../example/gmachine/gmachine-1.md:234
 msgid ""
 "The stack only contains pointers to addresses in the heap, not actual "
 "data."
 msgstr "栈只包含指向堆的指针，而不是实际数据。"
 
-#: ../../example/gmachine/gmachine-1.md:250
+#: ../../example/gmachine/gmachine-1.md:236
 msgid "This design may not be practical, but it's relatively simple."
 msgstr "这种设计可能不太实用，但相对简单。"
 
-#: ../../example/gmachine/gmachine-1.md:252
+#: ../../example/gmachine/gmachine-1.md:238
 msgid ""
 "In coreF, super combinators are compiled into a series of G-Machine "
 "instructions. These instructions can be roughly categorized as follows:"
 msgstr "coreF 中的超组合子被编译成一系列 G-Machine 指令。这些指令大致可以分为以下几类："
 
-#: ../../example/gmachine/gmachine-1.md:254
+#: ../../example/gmachine/gmachine-1.md:240
 msgid ""
 "Access Data Instructions, For example, `PushArg` (access function "
 "arguments), and `PushGlobal` (access other super combinators)."
 msgstr "访问数据指令，例如 `PushArg`（访问函数参数）和 `PushGlobal`（访问其他超组合子）。"
 
-#: ../../example/gmachine/gmachine-1.md:255
+#: ../../example/gmachine/gmachine-1.md:241
 msgid ""
 "Construct/update graph nodes in the heap, like `MkApp`, `PushInt`, "
 "`Update`"
 msgstr "在堆中构造/更新图节点，如 `MkApp`、`PushInt`、`Update`"
 
-#: ../../example/gmachine/gmachine-1.md:256
+#: ../../example/gmachine/gmachine-1.md:242
 msgid "The `Pop` instruction to cleanup the unused addresses from the stack."
 msgstr "用于清理栈中未使用的地址的 `Pop` 指令。"
 
-#: ../../example/gmachine/gmachine-1.md:257
+#: ../../example/gmachine/gmachine-1.md:243
 msgid "The `Unwind` instruction to express the control flow."
 msgstr "用于表示控制流的 `Unwind` 指令。"
 
-#: ../../example/gmachine/gmachine-1.md:259
+#: ../../example/gmachine/gmachine-1.md:245
 msgid "Dissecting the G-Machine State"
 msgstr "G-Machine 状态解析"
 
-#: ../../example/gmachine/gmachine-1.md:261
+#: ../../example/gmachine/gmachine-1.md:247
 msgid "In this simple version of the G-Machine, the state includes:"
 msgstr "在这个简单版本的 G-Machine 中，状态包括："
 
-#: ../../example/gmachine/gmachine-1.md:263
+#: ../../example/gmachine/gmachine-1.md:249
 msgid ""
 "Heap: This is where the expression graph and the sequences of "
 "instructions corresponding to super combinators are stored."
 msgstr "堆：这是存储表达式图和与超组合子对应的指令序列的地方。"
 
-#: ../../example/gmachine/gmachine-1.md:265
+#: ../../example/gmachine/gmachine-1.md:251
 #, python-format
 msgid ""
 "// Use the 'type' keyword to encapsulate an address type.\n"
@@ -861,13 +861,13 @@ msgstr ""
 "  return Addr(i)\n"
 "}\n"
 
-#: ../../example/gmachine/gmachine-1.md:271
+#: ../../example/gmachine/gmachine-1.md:257
 msgid ""
 "Stack: The stack only holds addresses pointing to the heap. A simple "
 "implementation can use `List[Addr]`."
 msgstr "栈：栈只保存指向堆的地址。一个简单的实现可以使用 `List[Addr]`。"
 
-#: ../../example/gmachine/gmachine-1.md:272
+#: ../../example/gmachine/gmachine-1.md:258
 msgid ""
 "Global Table: It's a mapping table that records the names of super "
 "combinators (including predefined and user-defined) and their "
@@ -877,21 +877,21 @@ msgstr ""
 "全局表：它是一个映射表，记录超组合子（包括预定义的和用户定义的）的名称及其对应的 `NGlobal` 节点的地址。这里我使用 Robin Hood"
 " 哈希表实现。"
 
-#: ../../example/gmachine/gmachine-1.md:273
+#: ../../example/gmachine/gmachine-1.md:259
 msgid "Current code sequence to be executed."
 msgstr "当前要执行的代码序列。"
 
-#: ../../example/gmachine/gmachine-1.md:274
+#: ../../example/gmachine/gmachine-1.md:260
 msgid ""
 "Execution status statistics: A simple implementation involves calculating"
 " how many instructions have been executed."
 msgstr "执行状态统计：一个简单的实现涉及计算已执行了多少条指令。"
 
-#: ../../example/gmachine/gmachine-1.md:276
+#: ../../example/gmachine/gmachine-1.md:262
 msgid "The entire state is represented using the type `GState`."
 msgstr "整个状态使用类型 `GState` 表示。"
 
-#: ../../example/gmachine/gmachine-1.md:278
+#: ../../example/gmachine/gmachine-1.md:264
 msgid ""
 "struct GState {\n"
 "  mut stack : List[Addr]\n"
@@ -937,13 +937,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:284
+#: ../../example/gmachine/gmachine-1.md:270
 msgid ""
 "Now, we can map each step of the graph reduction algorithm we deduced on "
 "paper to this abstract machine:"
 msgstr "现在，我们可以将我们在纸上推导的图规约算法一一对应到这个抽象机器："
 
-#: ../../example/gmachine/gmachine-1.md:286
+#: ../../example/gmachine/gmachine-1.md:272
 msgid ""
 "At the initial state of the machine, all compiled super combinators have "
 "been placed in `NGlobal` nodes on the heap. At this point, the current "
@@ -955,7 +955,7 @@ msgstr ""
 "在机器的初始状态下，所有已编译的超组合子均以 `NGlobal` 节点的形式分配在堆上。此时，G-Machine "
 "中的当前代码序列只包含两条指令。第一条指令将 `main` 节点的地址压入栈中，第二条指令将 `main` 的对应代码序列加载到当前代码序列中。"
 
-#: ../../example/gmachine/gmachine-1.md:287
+#: ../../example/gmachine/gmachine-1.md:273
 msgid ""
 "The corresponding code sequence of `main` is instantiated on the heap, "
 "where nodes are allocated and data is loaded accordingly, ultimately "
@@ -966,7 +966,7 @@ msgstr ""
 "`main` 对应的代码序列在堆上实例化，此时会分配节点并加载相应数据，最终在内存中构建一个图。该过程被称为“实例化” "
 "`main`。一旦实例化完成，该图的入口地址将被压入栈中。"
 
-#: ../../example/gmachine/gmachine-1.md:288
+#: ../../example/gmachine/gmachine-1.md:274
 msgid ""
 "After instantiation is finished, cleanup work is done, which involves "
 "updating graph nodes (since `main` has no parameters, there is no need to"
@@ -974,19 +974,19 @@ msgid ""
 "redex."
 msgstr "实例化完成后，进行清理工作，包括更新图节点（因为 `main` 没有参数，所以不需要清理栈中残留的未使用地址）并找到下一个 redex。"
 
-#: ../../example/gmachine/gmachine-1.md:290
+#: ../../example/gmachine/gmachine-1.md:276
 msgid "All of these tasks have corresponding instruction implementations."
 msgstr "所有这些任务都有对应的指令实现。"
 
-#: ../../example/gmachine/gmachine-1.md:292
+#: ../../example/gmachine/gmachine-1.md:278
 msgid "Corresponding Effect of Each Instruction"
 msgstr "每条指令的作用"
 
-#: ../../example/gmachine/gmachine-1.md:294
+#: ../../example/gmachine/gmachine-1.md:280
 msgid "The highly simplified G-Machine currently consists of 7 instructions."
 msgstr "目前，这个高度简化的 G-Machine 包含 7 条指令。"
 
-#: ../../example/gmachine/gmachine-1.md:296
+#: ../../example/gmachine/gmachine-1.md:282
 msgid ""
 "enum Instruction {\n"
 "  Unwind\n"
@@ -999,13 +999,13 @@ msgid ""
 "} derive(Eq, Show)\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:302
+#: ../../example/gmachine/gmachine-1.md:288
 msgid ""
 "The `PushInt` instruction is the simplest. It allocates an `NNum` node on"
 " the heap and pushes its address onto the stack."
 msgstr "`PushInt` 指令是最简单的。它在堆上分配一个 `NNum` 节点，并将其地址压入栈中。"
 
-#: ../../example/gmachine/gmachine-1.md:304
+#: ../../example/gmachine/gmachine-1.md:290
 msgid ""
 "fn push_int(self : GState, num : Int) -> Unit {\n"
 "  let addr = self.heap.alloc(NNum(num))\n"
@@ -1013,14 +1013,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:310
+#: ../../example/gmachine/gmachine-1.md:296
 msgid ""
 "The `PushGlobal` instruction retrieves the address of the specified super"
 " combinator from the global table and then pushes the address onto the "
 "stack."
 msgstr "`PushGlobal` 指令从全局表中检索指定超组合子的地址，然后将地址压入栈中。"
 
-#: ../../example/gmachine/gmachine-1.md:312
+#: ../../example/gmachine/gmachine-1.md:298
 msgid ""
 "fn push_global(self : GState, name : String) -> Unit {\n"
 "  guard self.globals.get(name) is Some(addr) else {\n"
@@ -1030,7 +1030,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:318
+#: ../../example/gmachine/gmachine-1.md:304
 msgid ""
 "The `PushArg` instruction is a bit more complex. It has specific "
 "requirements regarding the layout of addresses on the stack: the first "
@@ -1041,7 +1041,7 @@ msgstr ""
 "`PushArg` 指令稍微复杂一些。它对栈上地址的布局有特定要求：第一个地址应指向超组合子节点，接着是 n 个指向 N `NApp` "
 "节点的地址。`PushArg` 从 `offset + 1` 开始检索第 N 个参数。"
 
-#: ../../example/gmachine/gmachine-1.md:320
+#: ../../example/gmachine/gmachine-1.md:306
 msgid ""
 "fn push_arg(self : GState, offset : Int) -> Unit {\n"
 "  let appaddr = self.stack.unsafe_nth(offset + 1)\n"
@@ -1057,13 +1057,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:326
+#: ../../example/gmachine/gmachine-1.md:312
 msgid ""
 "The `MkApp` instruction takes two addresses from the top of the stack, "
 "constructs an `NApp` node, and pushes its address onto the stack."
 msgstr "`MkApp` 指令从栈顶取出两个地址，构造一个 `NApp` 节点，并将其地址压入栈中。"
 
-#: ../../example/gmachine/gmachine-1.md:328
+#: ../../example/gmachine/gmachine-1.md:314
 msgid ""
 "fn mk_apply(self : GState) -> Unit {\n"
 "  let (a1, a2) = self.pop2()\n"
@@ -1072,7 +1072,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:334
+#: ../../example/gmachine/gmachine-1.md:320
 msgid ""
 "The `Update` instruction assumes that the first address on the stack "
 "points to the current redex's evaluation result. It skips the addresses "
@@ -1087,7 +1087,7 @@ msgstr ""
 "N 个 `NApp` 节点。如果当前 redex 是一个 CAF，它直接替换堆上对应的 `NGlobal` "
 "节点。由此，我们可以看到为什么在惰性函数式语言中，无参函数和普通变量之间没有太大区别。"
 
-#: ../../example/gmachine/gmachine-1.md:336
+#: ../../example/gmachine/gmachine-1.md:322
 msgid ""
 "fn update(self : GState, n : Int) -> Unit {\n"
 "  let addr = self.pop1()\n"
@@ -1096,36 +1096,36 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:342
+#: ../../example/gmachine/gmachine-1.md:328
 msgid ""
 "The `Unwind` instruction in the G-Machine is akin to an evaluation loop. "
 "It has several branching conditions based on the type of node "
 "corresponding to the address at the top of the stack:"
 msgstr "G-Machine 中的 `Unwind` 指令类似于一个求值循环。该指令根据栈顶地址对应的节点类型，存在多个分支条件："
 
-#: ../../example/gmachine/gmachine-1.md:344
+#: ../../example/gmachine/gmachine-1.md:330
 msgid "For `Nnum` nodes: Do nothing."
 msgstr "`Nnum` 节点：什么也不做。"
 
-#: ../../example/gmachine/gmachine-1.md:345
+#: ../../example/gmachine/gmachine-1.md:331
 msgid ""
 "For `NApp` nodes: Push the address of the left node onto the stack and "
 "`Unwind` again."
 msgstr "`NApp` 节点：将左节点的地址推送到栈上，然后再次 `Unwind`。"
 
-#: ../../example/gmachine/gmachine-1.md:346
+#: ../../example/gmachine/gmachine-1.md:332
 msgid ""
 "For `NGlobal` nodes: If there are enough parameters on the stack, load "
 "this super combinator into the current code."
 msgstr "`NGlobal` 节点：如果栈上有足够的参数，将这个超组合子加载到当前代码中。"
 
-#: ../../example/gmachine/gmachine-1.md:347
+#: ../../example/gmachine/gmachine-1.md:333
 msgid ""
 "For `NInd` nodes: Push the address contained within this indirect node "
 "onto the stack and Unwind again."
 msgstr "`NInd` 节点：将这个间接节点中包含的地址推送到栈上，然后再次 `Unwind`。"
 
-#: ../../example/gmachine/gmachine-1.md:349
+#: ../../example/gmachine/gmachine-1.md:335
 msgid ""
 "fn unwind(self : GState) -> Unit {\n"
 "  let addr = self.pop1()\n"
@@ -1151,37 +1151,37 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:355
+#: ../../example/gmachine/gmachine-1.md:341
 msgid ""
 "The `Pop` instruction pops N addresses, eliminating the need for a "
 "separate function implementation."
 msgstr "`Pop` 指令弹出 N 个地址，无需单独的函数实现。"
 
-#: ../../example/gmachine/gmachine-1.md:357
+#: ../../example/gmachine/gmachine-1.md:343
 msgid "Compiling Super Combinators into Instruction Sequences"
 msgstr "将超组合子编译成指令序列"
 
-#: ../../example/gmachine/gmachine-1.md:359
+#: ../../example/gmachine/gmachine-1.md:345
 msgid ""
 "In the G-Machine Overview section, we roughly described the behavior of "
 "compiled super combinators. Now we can precisely describe the compilation"
 " process of super combinators."
 msgstr "在 G-Machine 概述部分，我们大致描述了编译超组合子的行为。现在我们可以精确地描述超组合子的编译过程。"
 
-#: ../../example/gmachine/gmachine-1.md:361
+#: ../../example/gmachine/gmachine-1.md:347
 msgid ""
 "Firstly, before the instruction sequence of a compiled super combinator "
 "is executed, there must be certain addresses already present in the "
 "stack:"
 msgstr "首先，在执行编译的超组合子的指令序列之前，栈中必须已经存在某些地址："
 
-#: ../../example/gmachine/gmachine-1.md:363
+#: ../../example/gmachine/gmachine-1.md:349
 msgid ""
 "The topmost address points to an `NGlobal` node (the super combinator "
 "itself)."
 msgstr "栈顶的地址指向一个 `NGlobal` 节点（超组合子本身）。"
 
-#: ../../example/gmachine/gmachine-1.md:364
+#: ../../example/gmachine/gmachine-1.md:350
 msgid ""
 "Following are N addresses (N being the number of parameters for this "
 "super combinator), pointing to a series of App nodes - corresponding "
@@ -1192,7 +1192,7 @@ msgstr ""
 "接下来是 N 个地址（N 是这个超组合子的参数数量），指向一系列 App 节点 - 正好对应一个 redex 的脊柱。栈底的地址指向表达式的最外层"
 " App 节点，其余的依次类推。"
 
-#: ../../example/gmachine/gmachine-1.md:366
+#: ../../example/gmachine/gmachine-1.md:352
 msgid ""
 "When compiling a super combinator, we need to maintain an environment "
 "that allows us to find the relative position of parameters in the stack "
@@ -1204,14 +1204,14 @@ msgstr ""
 "在编译超组合子时，我们需要维护一个环境，便于在编译过程中，通过名称找到参数在栈中的相对位置。此外，由于超组合子的实例化完成后需要清除前面的 N+1"
 " 个地址，所以需要传递参数数量 N。"
 
-#: ../../example/gmachine/gmachine-1.md:368
+#: ../../example/gmachine/gmachine-1.md:354
 msgid ""
 "Here, \"parameters\" refer to addresses pointing to App nodes on the "
 "heap, and the actual parameter addresses can be accessed through the "
 "`PushArg` instruction."
 msgstr "这里，“参数”指的是指向堆上 App 节点的地址，实际参数地址可以通过 `PushArg` 指令访问。"
 
-#: ../../example/gmachine/gmachine-1.md:370
+#: ../../example/gmachine/gmachine-1.md:356
 msgid ""
 "fn compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {\n"
 "  let name = self.name\n"
@@ -1232,28 +1232,28 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:376
+#: ../../example/gmachine/gmachine-1.md:362
 msgid ""
 "The `compileR` function generates code for instantiating super "
 "combinators by calling the `compileC` function, and then appends three "
 "instructions:"
 msgstr "`compileR` 函数通过调用 `compileC` 函数生成实例化超组合子的代码，然后附加三条指令："
 
-#: ../../example/gmachine/gmachine-1.md:378
+#: ../../example/gmachine/gmachine-1.md:364
 msgid ""
 "`Update(N)`: Updates the original redex in the heap to an `NInd` node, "
 "which then points to the newly instantiated super combinator."
 msgstr "`Update(N)`: 将堆中原始 redex 更新为一个 `NInd` 节点，然后指向新实例化的超组合子。"
 
-#: ../../example/gmachine/gmachine-1.md:379
+#: ../../example/gmachine/gmachine-1.md:365
 msgid "`Pop(N)`: Clears the stack of redundant addresses."
 msgstr "`Pop(N)`: 清除栈中多余的地址。"
 
-#: ../../example/gmachine/gmachine-1.md:380
+#: ../../example/gmachine/gmachine-1.md:366
 msgid "`Unwind`: Searches for the next redex to start the next reduction."
 msgstr "`Unwind`: 寻找下一个 redex，开始下一轮规约。"
 
-#: ../../example/gmachine/gmachine-1.md:382
+#: ../../example/gmachine/gmachine-1.md:368
 msgid ""
 "fn compileR(\n"
 "  self : RawExpr[String],\n"
@@ -1269,7 +1269,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:388
+#: ../../example/gmachine/gmachine-1.md:374
 msgid ""
 "When compiling the definition of super combinators, a rather crude "
 "approach is used: if a variable is not a parameter, it is treated as "
@@ -1284,7 +1284,7 @@ msgstr ""
 "在编译超组合子的定义时，使用了一种相当粗糙的方法：如果一个变量不是参数，那么它被视为另一个超组合子（写错了会导致运行时错误）。对于函数应用，首先编译右侧表达式，然后增加环境中对应参数的所有偏移量（因为栈顶增加了一个指向实例化的右侧表达式的额外地址），然后编译左侧表达式，最后添加"
 " `MkApp` 指令。"
 
-#: ../../example/gmachine/gmachine-1.md:390
+#: ../../example/gmachine/gmachine-1.md:376
 msgid ""
 "fn compileC(\n"
 "  self : RawExpr[String],\n"
@@ -1306,18 +1306,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:396
+#: ../../example/gmachine/gmachine-1.md:382
 msgid "Running the G-Machine"
 msgstr "运行 G-Machine"
 
-#: ../../example/gmachine/gmachine-1.md:398
+#: ../../example/gmachine/gmachine-1.md:384
 msgid ""
 "Once the super combinators are compiled, they need to be placed on the "
 "heap (along with adding their addresses to the global table). This can be"
 " done recursively."
 msgstr "一旦超组合子被编译，需要将它们置于堆上（并将它们的地址添加到全局表中）。这可以递归完成。"
 
-#: ../../example/gmachine/gmachine-1.md:400
+#: ../../example/gmachine/gmachine-1.md:386
 msgid ""
 "fn build_initial_heap(\n"
 "  scdefs : List[(String, Int, List[Instruction])]\n"
@@ -1336,13 +1336,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:406
+#: ../../example/gmachine/gmachine-1.md:392
 msgid ""
 "Define a function \"step\" that updates the state of the G-Machine by one"
 " step, returning false if the final state has been reached."
 msgstr "定义一个函数 \"step\"，它通过一步更新 G-Machine 的状态，如果已经到达最终状态，则返回 false。"
 
-#: ../../example/gmachine/gmachine-1.md:408
+#: ../../example/gmachine/gmachine-1.md:394
 msgid ""
 "fn step(self : GState) -> Bool {\n"
 "  match self.code {\n"
@@ -1365,13 +1365,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:414
+#: ../../example/gmachine/gmachine-1.md:400
 msgid ""
 "Additionally, define a function \"reify\" that continuously executes the "
 "\"step\" function until the final state is reached."
 msgstr "此外，定义一个函数 \"reify\"，它不断执行 \"step\" 函数，直到到达最终状态。"
 
-#: ../../example/gmachine/gmachine-1.md:416
+#: ../../example/gmachine/gmachine-1.md:402
 msgid ""
 "fn reify(self : GState) -> Node {\n"
 "  if self.step() {\n"
@@ -1389,11 +1389,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:422
+#: ../../example/gmachine/gmachine-1.md:408
 msgid "Combine the above components."
 msgstr "将上述各部分组合起来。"
 
-#: ../../example/gmachine/gmachine-1.md:424
+#: ../../example/gmachine/gmachine-1.md:410
 msgid ""
 "fn run(codes : List[String]) -> Node {\n"
 "  fn parse_then_compile(code : String) -> (String, Int, "
@@ -1422,7 +1422,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../example/gmachine/gmachine-1.md:430
+#: ../../example/gmachine/gmachine-1.md:416
 #: ../../example/gmachine/gmachine-2.md:214
 #: ../../example/myers-diff/myers-diff2.md:86
 #: ../../example/myers-diff/myers-diff3.md:113
@@ -1432,7 +1432,7 @@ msgstr ""
 msgid "Conclusion"
 msgstr "总结"
 
-#: ../../example/gmachine/gmachine-1.md:432
+#: ../../example/gmachine/gmachine-1.md:418
 msgid ""
 "The features of the G-Machine we've constructed so far are too limited to"
 " run even a somewhat decent program. In the next article, we will "
@@ -1444,11 +1444,11 @@ msgstr ""
 "的功能十分有限，甚至无法运行一个像样的程序。在下一篇文章中，我们将逐步添加诸如原语和自定义数据结构等功能。最后，我们将在介绍 G-Machine "
 "后引入惰性求值技术。"
 
-#: ../../example/gmachine/gmachine-1.md:434
+#: ../../example/gmachine/gmachine-1.md:420
 msgid "Reference"
 msgstr "参考"
 
-#: ../../example/gmachine/gmachine-1.md:436
+#: ../../example/gmachine/gmachine-1.md:422
 msgid ""
 "Peyton Jones, Simon & Lester, David. (2000). Implementing functional "
 "languages: a tutorial."

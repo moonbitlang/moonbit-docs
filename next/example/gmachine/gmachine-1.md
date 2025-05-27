@@ -26,50 +26,36 @@ The `List[T]` here is a `typealias` of `@immut/list.T[T]`
 
 First, let's define its type:
 
-```moonbit
-enum Stream[T] {
-  Empty
-  Cons(T, () -> Stream[T])
-}
+```{literalinclude} /sources/gmachine/src/lazylist/top.mbt
+:language: moonbit
+:start-after: start stream definition
+:end-before: end stream definition
 ```
 
 The only real difference between `Stream[T]` and `List[T]` is in the `Cons`: the place holding the rest of the list is replaced with a parameterless function (in jargon, called a thunk). This is a simple implementation of lazy evaluation: wrapping things you don't want to compute right away in a thunk.
 
 We also need a function to convert a regular list into a lazy list:
 
-```moonbit
-fn Stream::from_list[T](l : List[T]) -> Stream[T] {
-  match l {
-    Nil => Empty
-    Cons(x, xs) => Cons(x, fn () { Stream::from_list(xs) })
-  }
-}
+```{literalinclude} /sources/gmachine/src/lazylist/top.mbt
+:language: moonbit
+:start-after: start list conversion
+:end-before: end list conversion
 ```
 
 This function does not need to traverse the entire list to convert it into `Stream`. For operations that are not urgent (here, `Stream::from_list(xs)`), we wrap them directly in a thunk and return. The following `map` function will adopt this approach (though here, `xs` is already a thunk).
 
-```moonbit
-fn map[X, Y](self : Stream[X], f : (X) -> Y) -> Stream[Y] {
-  match self {
-    Empty => Empty
-    Cons(x, xs) => Cons(f(x), fn () { xs().map(f) })
-  }
-}
+```{literalinclude} /sources/gmachine/src/lazylist/top.mbt
+:language: moonbit
+:start-after: start map definition
+:end-before: end map definition
 ```
 
 The `take` function is responsible for performing computations, and it can extract n elements as needed.
 
-```moonbit
-fn take[T](self : Stream[T], n : Int) -> List[T] {
-  if n == 0 {
-    Nil
-  } else {
-    match self {
-      Empty => Nil
-      Cons(x, xs) => Cons(x, xs().take(n - 1))
-    }
-  }
-}
+```{literalinclude} /sources/gmachine/src/lazylist/top.mbt
+:language: moonbit
+:start-after: start take definition
+:end-before: end take definition
 ```
 
 The implementation of lazy data structures using thunks is straightforward and effectively addresses the problems mentioned above. This method requires users to explicitly indicate where in the code computation should be delayed, whereas the strategy of lazy languages is much more aggressive: it defaults to using lazy evaluation for all user-defined functions! In the following sections, we will present a minimal implementation of a lazy functional language and briefly introduce its underlying theoretical model.
