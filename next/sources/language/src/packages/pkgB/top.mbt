@@ -1,3 +1,3 @@
 pub fn add1(x : Int) -> Int {
-  @c.incr(@pkgA.incr(x))
+  @moonbitlang/core/int.abs(@c.incr(@pkgA.incr(x)))
 }

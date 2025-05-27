@@ -448,3 +448,45 @@ Disable user preset alerts.
   "alert-list": "-alert_1-alert_2"
 }
 ```
+
+## Virtual Package
+
+A virtual package serves as an interface of a package that can be replaced by actual implementations.
+
+### Declarations
+
+The `virtual` field is used to declare the current package as a virtual package.
+
+For example, the following declares a virtual package with default implementation:
+
+```json
+{
+  "virtual": {
+    "has-default": true
+  }
+}
+```
+
+### Implementations
+
+The `implement` field is used to declare the virtual package to be implemented by the current package.
+
+For example, the following implements a virtual package:
+
+```json
+{
+  "implement": "moonbitlang/core/abort"
+}
+```
+
+### Overriding implementations
+
+The `overrides` field is used to provide the implementations that fulfills an imported virtual package.
+
+For example, the following overrides the default implementation of the builtin abort package with another package:
+
+```json
+{
+  "overrides": ["moonbitlang/dummy_abort/abort_show_msg"]
+}
+```

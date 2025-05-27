@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-21 15:20+0800\n"
+"POT-Creation-Date: 2025-05-27 14:12+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2620,6 +2620,87 @@ msgstr ""
 msgid ""
 "{\n"
 "  \"warn-list\": \"-2\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:452
+msgid "Virtual Package"
+msgstr "虚拟包"
+
+#: ../../toolchain/moon/package.md:454
+msgid ""
+"A virtual package serves as an interface of a package that can be "
+"replaced by actual implementations."
+msgstr ""
+"一个虚拟包可以作为一个包的接口被实际的实现替换。"
+
+#: ../../toolchain/moon/package.md:456
+msgid "Declarations"
+msgstr "声明"
+
+#: ../../toolchain/moon/package.md:458
+msgid ""
+"The `virtual` field is used to declare the current package as a virtual "
+"package."
+msgstr "`virtual` 字段用于将当前包声明为虚拟包。"
+
+#: ../../toolchain/moon/package.md:460
+msgid ""
+"For example, the following declares a virtual package with default "
+"implementation:"
+msgstr ""
+"例如，以下配置声明了一个具有默认实现的虚拟包："
+
+#: ../../toolchain/moon/package.md:462
+msgid ""
+"{\n"
+"  \"virtual\": {\n"
+"    \"has-default\": true\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:470
+msgid "Implementations"
+msgstr "实现"
+
+#: ../../toolchain/moon/package.md:472
+msgid ""
+"The `implement` field is used to declare the virtual package to be "
+"implemented by the current package."
+msgstr "`implement` 字段用于指定当前包实现的虚拟包。"
+
+#: ../../toolchain/moon/package.md:474
+msgid "For example, the following implements a virtual package:"
+msgstr "例如，以下配置实现了一个虚拟包："
+
+#: ../../toolchain/moon/package.md:476
+msgid ""
+"{\n"
+"  \"implement\": \"moonbitlang/core/abort\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:482
+msgid "Overriding implementations"
+msgstr "覆盖实现"
+
+#: ../../toolchain/moon/package.md:484
+msgid ""
+"The `overrides` field is used to provide the implementations that "
+"fulfills an imported virtual package."
+msgstr "`overrides` 字段用于提供满足导入虚拟包的实现。"
+
+#: ../../toolchain/moon/package.md:486
+msgid ""
+"For example, the following overrides the default implementation of the "
+"builtin abort package with another package:"
+msgstr "例如，以下配置将内置的 abort 包的默认实现替换为另一个包："
+
+#: ../../toolchain/moon/package.md:488
+msgid ""
+"{\n"
+"  \"overrides\": [\"moonbitlang/dummy_abort/abort_show_msg\"]\n"
 "}\n"
 msgstr ""
 

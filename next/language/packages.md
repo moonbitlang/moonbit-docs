@@ -6,13 +6,20 @@ More often, it involves using other people's work: most noticeably is the [core]
 ## Packages and modules
 
 In MoonBit, the most important unit for code organization is a package, which consists of a number of source code files and a single `moon.pkg.json` configuration file.
-A package can either be a `main` package, consisting a `main` function, or a package that serves as a library. 
+A package can either be a `main` package, consisting a `main` function, or a package that serves as a library, identified by the [`is-main`](/toolchain/moon/package.md#is-main) field.
 
 A project, corresponding to a module, consists of multiple packages and a single `moon.mod.json` configuration file.
 
-When using things from another package, the dependency between modules should first be declared inside the `moon.mod.json`.
-The dependency between packages should then be declared inside the `moon.pkg.json`.
-Then it is possible to use `@pkg` to access the imported entities, where `pkg` is the last part of the imported package's path or the declared alias in `moon.pkg.json`:
+A module is identified by the [`name`](/toolchain/moon/module.md#name) field, which usually consists to parts, seperated by `/`: `user-name/project-name`.
+A package is identified by the relative path to the source root defined by the [`source`](/toolchain/moon/module.md#source-directory) field. The full identifier would be `user-name/project-name/path-to-pkg`.
+
+When using things from another package, the dependency between modules should first be declared inside the `moon.mod.json` by the [`deps`](/toolchain/moon/module.md#deps) field.
+The dependency between packages should then be declared in side the `moon.pkg.json` by the [`import`](/toolchain/moon/package.md#import) field.
+
+(default-alias)=
+The **default alias** of a package is the last part of the identifier split by `/`.
+One can use `@pkg_alias` to access the imported entities, where `pkg_alias` is either the full identifier or the default alias.
+A custom alias may also be defined with the [`import`](/toolchain/moon/package.md#import) field.
 
 ```{literalinclude} /sources/language/src/packages/pkgB/moon.pkg.json
 :language: json
@@ -166,3 +173,81 @@ impl Number for Double
 
 The author of `Number` can make use of the fact that only `Int` and `Double` can ever implement `Number`,
 because new implementations are not allowed outside.
+
+## Virtual Packages
+
+```{warning}
+Virtual package is an experimental feature. There may be bugs and undefined behaviors.
+```
+
+You can define virtual packages, which serves as an interface. They can be replaced by specific implementations at build time. Currently virtual packages can only contain plain functions.
+
+Virtual packages can be useful when swapping different implementations while keeping the code untouched.
+
+### Defining a virtual package
+
+You need to declare it to be a virtual package and define its interface in a MoonBit interface file.
+
+Within `moon.pkg.json`, you will need to add field [`virtual`](/toolchain/moon/package.md#declarations) :
+
+```{literalinclude} /sources/language/src/packages/virtual/moon.pkg.json
+:language: json
+```
+
+The `has-default` indicates whether the virtual package has a default implementation.
+
+Within the package, you will need to add an interface file `package-name.mbti` where the `package-name` is the same as [the default alias](#default-alias):
+
+```{literalinclude} /sources/language/src/packages/virtual/virtual.mbti
+:language: moonbit
+:caption: /src/packages/virtual/virtual.mbti
+```
+
+The first line of the interface file need to be `package "full-package-name"`. Then comes the declarations.
+The `pub` keyword for [access control](#access-control) and the function parameter names should be omitted.
+
+```{hint}
+If you are uncertain about how to define the interface, you can create a normal package, define the functions you need using [TODO syntax](/language/fundamentals.md#todo-syntax), and use `moon info` to help you generate the interface.
+```
+
+### Implementing a virtual package
+
+A virtual package can have a default implementation. By defining [`virtual.has-default`](/toolchain/moon/package.md#declarations) as `true`, you can implement the code as usual within the same package.
+
+```{literalinclude} /sources/language/src/packages/virtual/top.mbt
+:language: moonbit
+:caption: /src/packages/virtual/top.mbt
+```
+
+A virtual package can also be implemented by a third party. By defining [`implements`](/toolchain/moon/package.md#implementations) as the target package's full name, the compiler can warn you about the missing implementations or the mismatched implementations.
+
+```{literalinclude} /sources/language/src/packages/implement/moon.pkg.json
+:language: json
+```
+
+```{literalinclude} /sources/language/src/packages/implement/top.mbt
+:language: moonbit
+:caption: /src/packages/implement/top.mbt
+```
+
+### Using a virtual package
+
+To use a virtual package, it's the same as other packages: define [`import`](/toolchain/moon/package.md#import) field in the package where you want to use it.
+
+### Overriding a virtual package
+
+If a virtual package has a default implementation and that is your choice, there's no extra configurations.
+
+Otherwise, you may define the [`overrides`](/toolchain/moon/package.md#overriding-implementations) field by providing an array of implementations that you would like to use.
+
+```{literalinclude} /sources/language/src/packages/use_implement/moon.pkg.json
+:language: json
+:caption: /src/packages/use_implement/moon.pkg.json
+```
+
+You should reference the virtual package when using the entities.
+
+```{literalinclude} /sources/language/src/packages/use_implement/top.mbt
+:language: moonbit
+:caption: /src/packages/use_implement/top.mbt
+```
