@@ -1,6 +1,7 @@
 ---
 name: Internal Compiler Error
-description: Report an Internal Compiler Error (ICE) occuring in the MoonBit toolchain
+about: Report an Internal Compiler Error (ICE) occuring in the MoonBit toolchain
+title: 'ICE: '
 labels: bug, ICE
 ---
 
