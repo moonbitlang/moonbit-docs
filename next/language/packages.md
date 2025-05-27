@@ -39,8 +39,16 @@ Code in `a/b/c/internal/x/y/z` are only available to packages `a/b/c` and `a/b/c
 
 ## Access Control
 
+MoonBit features a comprehensive access control system that governs which parts of your code are accessible from other packages. 
+This system helps maintain encapsulation, information hiding, and clear API boundaries. 
+The visibility modifiers apply to functions, variables, types, and traits, allowing fine-grained control over how your code can be used by others.
+
+### Functions
+
 By default, all function definitions and variable bindings are _invisible_ to other packages.
 You can use the `pub` modifier before toplevel `let`/`fn` to make them public.
+
+### Types
 
 There are four different kinds of visibility for types in MoonBit:
 
@@ -105,7 +113,20 @@ pub fn f3(_x: T1) -> T1 { ... }
 pub let a: T3 = { ... } // ERROR: public variable has private type `T3`!
 ```
 
-## Access control of methods and trait implementations
+### Traits
+
+There are four visibility for traits, just like `struct` and `enum`: private, abstract, readonly and fully public.
+- Private traits are declared with `priv trait`, and they are completely invisible from outside.
+- Abstract trait is the default visibility. Only the name of the trait is visible from outside, and the methods in the trait are not exposed.
+- Readonly traits are declared with `pub trait`, their methods can be invoked from outside, but only the current package can add new implementation for readonly traits.
+- Fully public traits are declared with `pub(open) trait`, they are open to new implementations outside current package, and their methods can be freely used.
+
+Abstract and readonly traits are sealed, because only the package defining the trait can implement them.
+Implementing a sealed (abstract or readonly) trait outside its package result in compiler error.
+
+#### Trait Implementations
+
+Implementations have independent visibility, just like functions. The type will not be considered having fulfillled the trait outside current package unless the implementation is `pub`.
 
 To make the trait system coherent (i.e. there is a globally unique implementation for every `Type: Trait` pair),
 and prevent third-party packages from modifying behavior of existing programs by accident,
@@ -118,19 +139,6 @@ MoonBit employs the following restrictions on who can define methods/implement t
 The second rule above allows one to add new functionality to a foreign type by defining a new trait and implementing it.
 This makes MoonBit's trait & method system flexible while enjoying good coherence property.
 
-## Visibility of traits and sealed traits
-
-There are four visibility for traits, just like `struct` and `enum`: private, abstract, readonly and fully public.
-- Private traits are declared with `priv trait`, and they are completely invisible from outside.
-- Abstract trait is the default visibility. Only the name of the trait is visible from outside, and the methods in the trait are not exposed.
-- Readonly traits are declared with `pub trait`, their methods can be invoked from outside, but only the current package can add new implementation for readonly traits.
-- Fully public traits are declared with `pub(open) trait`, they are open to new implementations outside current package, and their methods can be freely used.
-
-Abstract and readonly traits are sealed, because only the package defining the trait can implement them.
-Implementing a sealed (abstract or readonly) trait outside its package result in compiler error.
-
-Implementations have independent visibility, just like functions. The type will not be considered having fulfillled the trait outside current package unless the implementation is `pub`.
-
 ```{warning}
 Currently, an empty trait is implemented automatically.
 ```
@@ -138,17 +146,18 @@ Currently, an empty trait is implemented automatically.
 Here's an example of abstract trait:
 
 <!-- MANUAL CHECK -->
-```moonbit
+```{code-block} moonbit
+:class: top-level
 trait Number {
  op_add(Self, Self) -> Self
  op_sub(Self, Self) -> Self
 }
 
-fn add[N : Number](x : N, y: N) -> N {
+fn[N : Number] add(x : N, y: N) -> N {
   Number::op_add(x, y)
 }
 
-fn sub[N : Number](x : N, y: N) -> N {
+fn[N : Number] sub(x : N, y: N) -> N {
   Number::op_sub(x, y)
 }
 
@@ -161,11 +170,11 @@ impl Number for Double with op_sub(x, y) { x - y }
 
 From outside this package, users can only see the following:
 
-```moonbit
+```{code-block} moonbit
 trait Number
 
-fn op_add[N : Number](x : N, y : N) -> N
-fn op_sub[N : Number](x : N, y : N) -> N
+fn[N : Number] op_add(x : N, y : N) -> N
+fn[N : Number] op_sub(x : N, y : N) -> N
 
 impl Number for Int
 impl Number for Double
