@@ -18,7 +18,7 @@ async fn some_async_function() -> Unit! {
 }
 
 async fn another_async_function() -> Unit! {
-  // error will be rethrowed by `!`
+  some_async_function()
   some_async_function!()
 }
 // end async function call syntax

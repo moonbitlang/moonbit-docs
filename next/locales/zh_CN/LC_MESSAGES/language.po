@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-27 16:36+0800\n"
+"POT-Creation-Date: 2025-05-27 16:52+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -68,8 +68,8 @@ msgstr ""
 "}\n"
 
 #: ../../language/async-experimental.md:16
-msgid "Async functions must be called with the `!` operator:"
-msgstr "调用异步函数时，必须用 `!` 操作符来标记这是一次异步函数调用："
+msgid "Async functions may be called with the `!` operator:"
+msgstr "调用异步函数时，可以用 `!` 操作符来标记这是一次异步函数调用："
 
 #: ../../language/async-experimental.md:18
 msgid ""
@@ -78,40 +78,28 @@ msgid ""
 "}\n"
 "\n"
 "async fn another_async_function() -> Unit! {\n"
-"  // error will be rethrowed by `!`\n"
+"  some_async_function()\n"
 "  some_async_function!()\n"
 "}\n"
 msgstr ""
-"async fn some_async_function() -> Unit! {\n"
-"  ...\n"
-"}\n"
-"\n"
-"async fn another_async_function() -> Unit! {\n"
-"  // 异步函数中的错误也会被 `!` 转发\n"
-"  some_async_function!()\n"
-"}\n"
 
 #: ../../language/async-experimental.md:24
-msgid "If the async function may throw error, `!` will also rethrow the error."
-msgstr "如果异步函数会抛出错误，`!` 也会把错误一并转发。"
-
-#: ../../language/async-experimental.md:26
 msgid ""
 "Async functions can only be called in async functions. Currently, async "
 "functions cannot be called in the body of `for .. in` loops."
 msgstr "异步函数只能在其他异步函数中被调用。目前，在 `for .. in` 循环中不能使用异步函数。"
 
-#: ../../language/async-experimental.md:28
+#: ../../language/async-experimental.md:26
 msgid "Async primitives for suspension"
 msgstr "用于中断异步函数的原语"
 
-#: ../../language/async-experimental.md:29
+#: ../../language/async-experimental.md:27
 msgid ""
 "MoonBit provides two core primitives for `%async.suspend` and "
 "`%async.run`:"
 msgstr "MoonBit 提供了两个用于异步编程的原语：`%async.suspend` 和 `%async.run`："
 
-#: ../../language/async-experimental.md:31
+#: ../../language/async-experimental.md:29
 msgid ""
 "\n"
 "// `run_async` spawn a new coroutine and execute an async function in it\n"
@@ -149,7 +137,7 @@ msgstr ""
 "  ) -> Unit\n"
 ") -> T!E = \"%async.suspend\"\n"
 
-#: ../../language/async-experimental.md:37
+#: ../../language/async-experimental.md:35
 msgid ""
 "There two primitives are not intended for direct use by end users. "
 "However, since MoonBit's standard library for async programming is still "
@@ -157,11 +145,11 @@ msgid ""
 "manually to do async programming."
 msgstr "这两个原语不应该让终端用户直接调用。但由于 MoonBit 的异步标准库仍在开发中，目前，用户需要手动绑定这两个原语，才能编写异步程序。"
 
-#: ../../language/async-experimental.md:41
+#: ../../language/async-experimental.md:39
 msgid "There are two ways of reading these primitives:"
 msgstr "可以用两种不同的方式来理解这两个原语："
 
-#: ../../language/async-experimental.md:43
+#: ../../language/async-experimental.md:41
 msgid ""
 "the coroutine reading: `%async.run` spawn a new coroutine, and "
 "`%async.suspend` suspend current coroutine. The main difference with "
@@ -172,7 +160,7 @@ msgstr ""
 "理解为协程：`%async.run` 创建一个新的协程，`%async.suspend` "
 "中断当前协程。和其他语言的协程的主要区别是：中断协程时，不是由创建协程的地方来负责恢复执行，而是在中断的地方通过一个回调函数就地处理中断后的协程"
 
-#: ../../language/async-experimental.md:48
+#: ../../language/async-experimental.md:46
 msgid ""
 "the delimited continuation reading: `%async.run` is the `reset` operator "
 "in delimited continuation, and `%async.suspend` is the `shift` operator "
@@ -181,11 +169,11 @@ msgstr ""
 "理解为 delimited continuation：`%async.run` 是 delimited continuation 中的 "
 "`reset` 操作符，`%async.suspend` 是 delimited continuation `shift` 操作符"
 
-#: ../../language/async-experimental.md:51
+#: ../../language/async-experimental.md:49
 msgid "Here's an example of how these two primitives work:"
 msgstr "以下是使用这两个原语的示例："
 
-#: ../../language/async-experimental.md:53
+#: ../../language/async-experimental.md:51
 msgid ""
 "type! MyError  derive(Show)\n"
 "\n"
@@ -270,7 +258,7 @@ msgstr ""
 "  })\n"
 "}\n"
 
-#: ../../language/async-experimental.md:59
+#: ../../language/async-experimental.md:57
 msgid ""
 "In `async_worker`, `suspend` will capture the rest of the current "
 "coroutine as two \"continuation\" functions, and pass them to a callback."
@@ -285,7 +273,7 @@ msgstr ""
 "正常返回，恢复协程的运行，一直运行到创建这个协程的 `run_async(...)` 为止。调用 `resume_err` "
 "也会恢复协程的运行，但它会在 `suspend!(...)` 的位置抛出一个错误。"
 
-#: ../../language/async-experimental.md:65
+#: ../../language/async-experimental.md:63
 msgid ""
 "Notice that `suspend` type may throw error, even if `suspend` itself "
 "never throw an error directly. This design makes coroutines cancellable "
@@ -295,11 +283,11 @@ msgstr ""
 "`suspend` 的类型表明它可能抛出错误。但 `suspend` "
 "自身不会直接产生任何错误。这一设计保证了协程在每一个的中断点都是可以取消的：调用对应的 `resume_err` 函数即可。"
 
-#: ../../language/async-experimental.md:68
+#: ../../language/async-experimental.md:66
 msgid "Integrating with JS Promise/callback based API"
 msgstr "和 JS 的 Promise/回调 API 整合"
 
-#: ../../language/async-experimental.md:69
+#: ../../language/async-experimental.md:67
 msgid ""
 "Since MoonBit's standard async library is still under development, so "
 "there is no ready-to-use implementation for event loop and IO operations "
@@ -312,7 +300,7 @@ msgstr ""
 "编写异步程序最简单的办法是使用 JS 后端，并复用 JavaScript 的事件循环和输入输出 API。下面是一个整合 MoonBit "
 "的异步编程支持和 JS 的回调 API 的例子："
 
-#: ../../language/async-experimental.md:75
+#: ../../language/async-experimental.md:73
 msgid ""
 "extern type JSTimer\n"
 "extern \"js\" fn js_set_timeout(f : () -> Unit, duration : Int) -> "
@@ -382,7 +370,7 @@ msgstr ""
 "  })\n"
 "}\n"
 
-#: ../../language/async-experimental.md:81
+#: ../../language/async-experimental.md:79
 msgid ""
 "Integrating with JS Promise is easy too: just pass `resume_ok` as the "
 "`resolve` callback and `resume_err` as the `reject` callback to a JS "
@@ -18566,8 +18554,7 @@ msgid "Method alias"
 msgstr "方法别名"
 
 #: ../../language/methods.md:67
-msgid ""
-"MoonBit allows calling methods with alternative names via alias."
+msgid "MoonBit allows calling methods with alternative names via alias."
 msgstr "MoonBit 允许用户用别名来调用一个方法。声明方法别名的语法如下："
 
 #: ../../language/methods.md:69
@@ -19513,8 +19500,10 @@ msgid ""
 "alias](/language/methods.md#trait-alias), are _invisible_ to other "
 "packages."
 msgstr ""
-"默认情况下，所有别名，即 [函数别名](/language/fundamentals.md#function-alias)、[方法别名](/language/methods.md#method-alias)、"
-"[类型别名](/language/fundamentals.md#type-alias)、[特征别名](/language/methods.md#trait-alias)，对其他包是 _不可见_ 的。"
+"默认情况下，所有别名，即 [函数别名](/language/fundamentals.md#function-"
+"alias)、[方法别名](/language/methods.md#method-"
+"alias)、[类型别名](/language/fundamentals.md#type-"
+"alias)、[特征别名](/language/methods.md#trait-alias)，对其他包是 _不可见_ 的。"
 
 #: ../../language/packages.md:58
 msgid "You can use the `pub` modifier before the definition to make them public."
@@ -20259,4 +20248,7 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
+
+#~ msgid "If the async function may throw error, `!` will also rethrow the error."
+#~ msgstr "如果异步函数会抛出错误，`!` 也会把错误一并转发。"
 

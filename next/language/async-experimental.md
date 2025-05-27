@@ -13,15 +13,13 @@ Async functions can be declared with the `async` keyword:
 :end-before: end async function declaration
 ```
 
-Async functions must be called with the `!` operator:
+Async functions may be called with the `!` operator:
 
 ```{literalinclude} /sources/async/src/async.mbt
 :language: moonbit
 :start-after: start async function call syntax
 :end-before: end async function call syntax
 ```
-
-If the async function may throw error, `!` will also rethrow the error.
 
 Async functions can only be called in async functions. Currently, async functions cannot be called in the body of `for .. in` loops.
 
