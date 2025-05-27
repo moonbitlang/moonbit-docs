@@ -143,7 +143,7 @@ In double quotes string, a backslash followed by certain special characters form
 | `\o102`              | Octal escape sequence                                |
 | `\u5154`,`\u{1F600}` | Unicode escape sequence                              |
 
-MoonBit supports string interpolation. It enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text. Variables used for string interpolation must support the `to_string` method.
+MoonBit supports string interpolation. It enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text. Variables used for string interpolation must implement the [`Show` trait](/language/methods.md#builtin-traits).
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
@@ -152,7 +152,11 @@ MoonBit supports string interpolation. It enables you to substitute variables wi
 :end-before: end string 3
 ```
 
-Multi-line strings do not support interpolation by default, but you can enable interpolation for a specific line by changing the leading `#|` to `$|`:
+```{note}
+The interpolated expression can not contain newline, `{}` or `"`.
+```
+
+Multi-line strings can be defined using the leading `#|` or `$|`, where the former will keep the raw string and the former will perform the escape and interpolation:
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
