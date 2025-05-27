@@ -45,7 +45,7 @@ For Wasm backends, all functions interacting with outside world relies on the ho
 
 ``````{tab-item} JavaScript
 :sync: js
-JavaScript backend will generate a JavaScript file, which may be a CommonJS module, an ES module or an IIFE based on the [configuration](/toolchain/moon/package.md#js-backend-link-options).
+JavaScript backend will generate a JavaScript file, which can be a CommonJS module, an ES module or an IIFE based on the [configuration](/toolchain/moon/package.md#js-backend-link-options).
 ``````
 
 ```{tab-item} C
