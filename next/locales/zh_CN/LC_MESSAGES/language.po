@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-27 14:12+0800\n"
+"POT-Creation-Date: 2025-05-27 15:35+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1598,17 +1598,23 @@ msgstr ""
 "错误处理一直是我们语言设计的核心。接下来我们将解释 MoonBit 中的错误处理。我们假设您对 MoonBit 有一些了解，如果没有，请查看 "
 "[MoonBit 之旅](../tutorial/tour.md)。"
 
-#: ../../language/error-handling.md:7
-msgid "Error types"
+#: ../../language/error-handling.md:8
+msgid "Error Types"
 msgstr "错误类型"
 
-#: ../../language/error-handling.md:9
+#: ../../language/error-handling.md:10
 msgid ""
-"The error values used in MoonBit must have an error type. An error type "
-"can be defined in the following forms:"
-msgstr "MoonBit 中使用的错误值必须具有错误类型。错误类型可以用以下形式定义："
+"In MoonBit, all the error values can be represented by the `Error` type, "
+"a generalized error type."
+msgstr "在 MoonBit 中，所有的错误类型都可以用 `Error`，一个通用的错误类型，来表示。"
 
-#: ../../language/error-handling.md:12
+#: ../../language/error-handling.md:13
+msgid ""
+"However, an `Error` cannot be constructed directly. A concrete error type"
+" must be defined, in the following forms:"
+msgstr "但是，`Error` 不能直接构造。必须定义一个具体的错误类型，形式如下："
+
+#: ../../language/error-handling.md:16
 msgid ""
 "type! E1 Int // error type E1 has one constructor E1 with an Int payload\n"
 "\n"
@@ -1629,14 +1635,88 @@ msgstr ""
 "  C(mut x~ : String, Char, y~ : Bool)\n"
 "}\n"
 
-#: ../../language/error-handling.md:19
+#: ../../language/error-handling.md:23
+msgid ""
+"The error types can be promoted to the `Error` type automatically, and "
+"pattern matched back:"
+msgstr ""
+"错误类型可以自动提升为 `Error` 类型，并且可以模式匹配回去："
+
+#: ../../language/error-handling.md:26
+msgid ""
+"type! CustomError UInt\n"
+"test {\n"
+"  let e : Error = CustomError(42)\n"
+"  guard e is CustomError(m)\n"
+"  assert_eq!(m, 42)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:32
+msgid ""
+"Since the type `Error` can include multiple error types, pattern matching"
+" on the `Error` type must use the wildcard `_` to match all error types. "
+"For example,"
+msgstr "由于 `Error` 类型可以包含多个错误类型，对 `Error` 类型进行模式匹配必须使用通配符 `_` 来匹配所有错误类型。例如："
+
+#: ../../language/error-handling.md:35
+msgid ""
+"fn f(e : Error) -> Unit {\n"
+"  match e {\n"
+"    E2 => println(\"E2\")\n"
+"    A => println(\"A\")\n"
+"    B(i, x~) => println(\"B(\\{i}, \\{x})\")\n"
+"    _ => println(\"unknown error\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:41
+msgid ""
+"The `Error` is meant to be used where no concrete error type is needed, "
+"or a catch-all for all kinds of sub-errors is needed."
+msgstr "`Error` 通常用于不需要具体错误类型的情况，或者简单地用来捕获所有的子错误。"
+
+#: ../../language/error-handling.md:44
+msgid "Failure"
+msgstr ""
+
+#: ../../language/error-handling.md:46
+msgid "A builtin error type is `Failure`."
+msgstr "一个内置的错误类型是 `Failure`。"
+
+#: ../../language/error-handling.md:48
+msgid ""
+"There's a handly `fail` function, which is merely a constructor with a "
+"pre-defined output template for showing both the error and the source "
+"location. In practice, `fail` is always preferred over `Failure`."
+msgstr "`fail` 是一个便利的函数，它只是一个带有预定义输出模板的构造函数，用于显示错误和源位置。在实践中，`fail!` 总是比 `Failure`更常用。"
+
+#: ../../language/error-handling.md:52
+msgid ""
+"pub fn fail[T](msg : String, loc~ : SourceLoc = _) -> T!Failure {\n"
+"  raise Failure(\"FAILED: \\{loc} \\{msg}\")\n"
+"}"
+msgstr ""
+
+#: ../../language/error-handling.md:59
+msgid "Throwing Errors"
+msgstr "抛出错误"
+
+#: ../../language/error-handling.md:61
+msgid ""
+"The keyword `raise` is used to interrupt the function execution and "
+"return an error."
+msgstr "关键字 `raise` 被用来中断函数执行并返回一个错误。"
+
+#: ../../language/error-handling.md:64
 msgid ""
 "The return type of a function can include an error type to indicate that "
 "the function might return an error. For example, the following function "
 "`div` might return an error of type `DivError`:"
 msgstr "函数的返回类型可以包含错误类型，以表明函数可能返回一个错误。例如，以下函数 `div` 可能返回一个类型为 `DivError` 的错误："
 
-#: ../../language/error-handling.md:23
+#: ../../language/error-handling.md:68
 msgid ""
 "type! DivError String\n"
 "\n"
@@ -1648,28 +1728,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:30
+#: ../../language/error-handling.md:75
 msgid ""
-"Here, the keyword `raise` is used to interrupt the function execution and"
-" return an error."
-msgstr "这里使用了关键字 `raise` 来中断函数执行并返回一个错误。"
-
-#: ../../language/error-handling.md:33
-msgid "The Default Error Type"
-msgstr "默认错误类型"
-
-#: ../../language/error-handling.md:35
-msgid ""
-"MoonBit provides a default error type `Error` that can be used when the "
-"concrete error type is not important. For convenience, you can annotate "
-"the function name or the return type with the suffix `!` to indicate that"
-" the `Error` type is used. For example, the following function signatures"
-" are equivalent:"
+"The `Error` can be used when the concrete error type is not important. "
+"For convenience, you can annotate the function name or the return type "
+"with the suffix `!` to indicate that the `Error` type is used. For "
+"example, the following function signatures are equivalent:"
 msgstr ""
-"MoonBit 提供了一个默认错误类型 `Error`，当具体的错误类型不重要时可以使用它。为了方便起见，您可以在函数名或返回类型后面加上后缀 "
+"`Error` 类型可以在具体的错误类型不重要时使用。为了方便起见，您可以在函数名或返回类型后面加上后缀 "
 "`!`，以表示使用了 `Error` 类型。例如，以下函数签名是等价的："
 
-#: ../../language/error-handling.md:40
+#: ../../language/error-handling.md:80
 msgid ""
 "fn f() -> Unit! {\n"
 "  ...\n"
@@ -1684,13 +1753,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:47
+#: ../../language/error-handling.md:87
 msgid ""
 "For anonymous function and matrix function, you can annotate the keyword "
 "`fn` with the `!` suffix to achieve that. For example,"
 msgstr "对于匿名函数和矩阵函数，您可以在关键字 `fn` 后面加上 `!` 后缀来实现这一点。例如："
 
-#: ../../language/error-handling.md:50
+#: ../../language/error-handling.md:90
 msgid ""
 "type! IntError Int\n"
 "\n"
@@ -1705,20 +1774,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:56
+#: ../../language/error-handling.md:96
 msgid ""
-"As shown in the above example, the error types defined by `type!` can be "
-"used as value of the type `Error` when the error is raised."
-msgstr "如上例所示，`type!` 定义的错误类型可以在引发错误时作为 `Error` 类型的值使用。"
+"For functions that are generic in the error type, you can use the `Error`"
+" bound to do that. For example,"
+msgstr "对于在错误类型上是泛型的函数，您可以使用 `Error` 约束来实现。例如："
 
-#: ../../language/error-handling.md:59
-msgid ""
-"Note that only error types or the type `Error` can be used as errors. For"
-" functions that are generic in the error type, you can use the `Error` "
-"bound to do that. For example,"
-msgstr "请注意，只有错误类型或 `Error` 类型可以用作错误。对于在错误类型上是泛型的函数，您可以使用 `Error` 约束来实现。例如："
-
-#: ../../language/error-handling.md:63
+#: ../../language/error-handling.md:99
 msgid ""
 "// Result::unwrap_or_error\n"
 "fn[T, E : Error] unwrap_or_error(result : Result[T, E]) -> T!E {\n"
@@ -1729,89 +1791,50 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:69
-msgid ""
-"Since the type `Error` can include multiple error types, pattern matching"
-" on the `Error` type must use the wildcard `_` to match all error types. "
-"For example,"
-msgstr "由于 `Error` 类型可以包含多个错误类型，对 `Error` 类型进行模式匹配必须使用通配符 `_` 来匹配所有错误类型。例如："
+#: ../../language/error-handling.md:105
+msgid "Handling Errors"
+msgstr "处理错误"
 
-#: ../../language/error-handling.md:72
+#: ../../language/error-handling.md:107
 msgid ""
-"type! E4\n"
-"\n"
-"type! E5\n"
-"\n"
-"fn f(e : Error) -> Unit {\n"
-"  match e {\n"
-"    E4 => println(\"E1\")\n"
-"    E5 => println(\"E2\")\n"
-"    _ => println(\"unknown error\")\n"
+"Applying the function normally will rethrow the error directly in case of"
+" an error. You may append `!` after the function name. For example:"
+msgstr "直接调用函数会在出现错误时直接重新跑出错误。你可以在函数应用中的函数名后面附加 `!`。例如："
+
+#: ../../language/error-handling.md:110
+msgid ""
+"fn div_reraise(x : Int, y : Int) -> Int!DivError {\n"
+"  div(x, y) + div!(x, y) // Rethrow the error if `div` raised an error\n"
+"}\n"
+msgstr ""
+"fn div_reraise(x : Int, y : Int) -> Int!DivError {\n"
+"  div(x, y) + div!(x, y) // 如果 `div` 引发错误，则重新抛出错误\n"
+"}\n"
+
+#: ../../language/error-handling.md:116
+msgid "However, you may want to handle the errors."
+msgstr "但是，你可能想要处理错误。"
+
+#: ../../language/error-handling.md:118
+msgid "Try ... Catch"
+msgstr ""
+
+#: ../../language/error-handling.md:120
+msgid "You can use `try` and `catch` to catch and handle errors, for example:"
+msgstr "你可以使用 `try` 和 `catch` 捕获和处理错误，例如："
+
+#: ../../language/error-handling.md:122
+msgid ""
+"fn main {\n"
+"  try div!(42, 0) catch {\n"
+"    DivError(s) => println(s)\n"
+"  } else {\n"
+"    v => println(v)\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:78
-msgid "Handling Errors"
-msgstr "处理错误"
-
-#: ../../language/error-handling.md:80
-msgid "There are three ways to handle errors:"
-msgstr "有三种方式可以处理错误："
-
-#: ../../language/error-handling.md:82
-msgid ""
-"Append `!` after the function name in a function application to rethrow "
-"the error directly in case of an error, for example:"
-msgstr "在函数应用中的函数名后面附加 `!`，以便在出现错误时直接重新抛出错误，例如："
-
-#: ../../language/error-handling.md:85
-msgid ""
-"fn div_reraise(x : Int, y : Int) -> Int!DivError {\n"
-"  div!(x, y) // Rethrow the error if `div` raised an error\n"
-"}\n"
-msgstr ""
-"fn div_reraise(x : Int, y : Int) -> Int!DivError {\n"
-"  div!(x, y) // 如果 `div` 引发错误，则重新抛出错误\n"
-"}\n"
-
-#: ../../language/error-handling.md:91
-msgid ""
-"Append `?` after the function name to convert the result into a first-"
-"class value of the `Result` type, for example:"
-msgstr "在函数名后面附加 `?`，将结果转换为 `Result` 类型的值，例如："
-
-#: ../../language/error-handling.md:94
-msgid ""
-"test {\n"
-"  let res = div?(6, 3)\n"
-"  inspect!(res, content=\"Ok(2)\")\n"
-"  let res = div?(6, 0)\n"
-"  inspect!(\n"
-"    res,\n"
-"    content=\n"
-"      #|Err(\"division by zero\")\n"
-"    ,\n"
-"  )\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:100
-msgid "Use `try` and `catch` to catch and handle errors, for example:"
-msgstr "使用 `try` 和 `catch` 捕获和处理错误，例如："
-
-#: ../../language/error-handling.md:102
-msgid ""
-"fn main {\n"
-"try div!(42, 0) catch {\n"
-"  DivError(s) => println(s)\n"
-"} else {\n"
-"  v => println(v)\n"
-"}\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:111 ../../language/fundamentals.md:132
+#: ../../language/error-handling.md:130 ../../language/fundamentals.md:132
 #: ../../language/fundamentals.md:164 ../../language/fundamentals.md:221
 #: ../../language/fundamentals.md:270 ../../language/fundamentals.md:712
 #: ../../language/fundamentals.md:726 ../../language/fundamentals.md:740
@@ -1826,11 +1849,11 @@ msgstr ""
 msgid "Output"
 msgstr "输出"
 
-#: ../../language/error-handling.md:111
+#: ../../language/error-handling.md:130
 msgid "division by zero\n"
 msgstr "除零"
 
-#: ../../language/error-handling.md:115
+#: ../../language/error-handling.md:134
 msgid ""
 "Here, `try` is used to call a function that might throw an error, and "
 "`catch` is used to match and handle the caught error. If no error is "
@@ -1840,26 +1863,26 @@ msgstr ""
 "这里，`try` 用于调用可能引发错误的函数，`catch` 用于匹配和处理捕获的错误。如果没有捕获到错误，`catch` 块将不会执行，而是执行"
 " `else` 块。"
 
-#: ../../language/error-handling.md:119
+#: ../../language/error-handling.md:138
 msgid ""
 "The `else` block can be omitted if no action is needed when no error is "
 "caught. For example:"
 msgstr "如果不需要在没有捕获到错误时执行任何操作，则可以省略 `else` 块。例如："
 
-#: ../../language/error-handling.md:122
+#: ../../language/error-handling.md:141
 msgid ""
 "try println(div!(42, 0)) catch {\n"
 "  _ => println(\"Error\")\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:129
+#: ../../language/error-handling.md:148
 msgid ""
-"The `catch` keyword is optional, and when the body of `try` is a simple "
-"expression, the curly braces can be omitted. For example:"
-msgstr "`catch` 关键字是可选的，当 `try` 的主体是一个简单表达式时，大括号可以省略。例如："
+"When the body of `try` is a simple expression, the curly braces can be "
+"omitted. For example:"
+msgstr "当 `try` 的主体是一个简单表达式时，大括号可以省略。例如："
 
-#: ../../language/error-handling.md:132
+#: ../../language/error-handling.md:151
 msgid ""
 "let a = try div!(42, 0) catch {\n"
 "  _ => 0\n"
@@ -1867,48 +1890,47 @@ msgid ""
 "println(a)\n"
 msgstr ""
 
-#: ../../language/error-handling.md:139
-msgid ""
-"The `!` and `?` attributes can also be used on method invocation and pipe"
-" operator. For example:"
-msgstr "`!` 和 `?` 符号也可以用于方法调用和管道运算符。例如："
+#: ../../language/error-handling.md:158
+msgid "Transforming to Result"
+msgstr "转换为 Result"
 
-#: ../../language/error-handling.md:142
+#: ../../language/error-handling.md:160
 msgid ""
-"type T Int\n"
-"\n"
-"type! E Int derive(Show)\n"
-"\n"
-"fn k(self : T) -> Unit!E {\n"
-"  ...\n"
-"}\n"
-"\n"
-"fn l() -> Unit!E {\n"
-"  let x = T(42)\n"
-"  k!(x)\n"
-"  x.k!()\n"
-"  x |> k!()\n"
+"You can also catch the potential error and transform into a first-class "
+"value of the [`Result`](/language/fundamentals.md#option-and-result) "
+"type, by:"
+msgstr ""
+"您还可以捕获潜在的错误，并将其转换为一等公民的 [`Result`](/language/fundamentals.md#option-and-result) "
+"type，方法是："
+
+#: ../../language/error-handling.md:163
+msgid "using `try?` before an expression that may throw error"
+msgstr "在可能引发错误的表达式前使用 `try?`"
+
+#: ../../language/error-handling.md:164
+msgid "appending `?` after the function name"
+msgstr "在函数名后添加 `?`"
+
+#: ../../language/error-handling.md:166
+msgid ""
+"test {\n"
+"  let res = div?(6, 3)\n"
+"  inspect!(res, content=\"Ok(2)\")\n"
+"  let res = try? div(6, 0) * div(6, 3)\n"
+"  inspect!(\n"
+"    res,\n"
+"    content=\n"
+"      #|Err(\"division by zero\")\n"
+"    ,\n"
+"  )\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:148
-msgid ""
-"However for infix operators such as `+` `*` that may raise an error, the "
-"original form has to be used, e.g. `x.op_add!(y)`, `x.op_mul!(y)`."
-msgstr "然而对于可能引发错误的中缀运算符，如 `+` `*`，必须使用原始形式，例如 `x.op_add!(y)`，`x.op_mul!(y)`。"
-
-#: ../../language/error-handling.md:151
-msgid ""
-"Additionally, if the return type of a function includes an error type, "
-"the function call must use `!` or `?` for error handling, otherwise the "
-"compiler will report an error."
-msgstr "此外，如果函数的返回类型包含错误类型，则函数调用必须使用 `!` 或 `?` 进行错误处理，否则编译器将报告错误。"
-
-#: ../../language/error-handling.md:155
+#: ../../language/error-handling.md:172
 msgid "Error Inference"
 msgstr "错误推导"
 
-#: ../../language/error-handling.md:157
+#: ../../language/error-handling.md:174
 msgid ""
 "Within a `try` block, several different kinds of errors can be raised. "
 "When that happens, the compiler will use the type `Error` as the common "
@@ -1918,7 +1940,7 @@ msgstr ""
 "在 `try` 块中，可能引发多种不同类型的错误。当发生这种情况时，编译器将使用 `Error` "
 "类型作为通用错误类型。因此，处理程序必须使用通配符 `_` 来确保捕获所有错误。例如："
 
-#: ../../language/error-handling.md:162
+#: ../../language/error-handling.md:179
 msgid ""
 "fn f1() -> Unit!E1 {\n"
 "  ...\n"
@@ -1938,14 +1960,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:169
+#: ../../language/error-handling.md:186
 msgid ""
 "You can also use `catch!` to rethrow the uncaught errors for convenience."
 " This is useful when you only want to handle a specific error and rethrow"
 " others. For example,"
 msgstr "您还可以使用 `catch!` 来重新抛出未捕获的错误，以方便处理。当您只想处理特定错误并重新抛出其他错误时，这很有用。例如："
 
-#: ../../language/error-handling.md:173
+#: ../../language/error-handling.md:190
 msgid ""
 "try {\n"
 "  f1!()\n"
@@ -1954,423 +1976,6 @@ msgid ""
 "  E1(_) => ...\n"
 "}\n"
 msgstr ""
-
-#: ../../language/error-handling.md:180
-msgid "Example: Division by Zero"
-msgstr "示例：除零"
-
-#: ../../language/error-handling.md:182
-msgid ""
-"We'll write a small example to demonstrate the basics of MoonBit's error "
-"handling system. Consider the following `div` function which'll raise an "
-"error on division by zero:"
-msgstr "我们将编写一个小例子来演示 MoonBit 错误处理系统的基础知识。考虑以下 `div` 函数，它将在除零时引发错误："
-
-#: ../../language/error-handling.md:186
-msgid ""
-"type! DivisionByZeroError String\n"
-"fn div(x : Int, y : Int) -> Int!DivisionByZeroError {\n"
-"  if y == 0 {\n"
-"    raise DivisionByZeroError(\"division by zero\")\n"
-"  }\n"
-"  x / y\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:196
-msgid ""
-"In before, we would typically use `type` to define a wrapper type which "
-"wraps around some existing foreign type. Here however, we append `type` "
-"with `!` to define a error type `DivisionByZeroError` which wraps around "
-"`String`."
-msgstr ""
-"在以前，我们通常使用 `type` 来定义一个包装器类型，该类型包装了某些现有的外部类型。然而，在这里，我们使用 `!` 将 `type` 附加到"
-" `DivisionByZeroError`，以定义一个错误类型，该类型包装了 `String`。"
-
-#: ../../language/error-handling.md:200
-msgid "`type! E S` construct a error type `E` from `S`"
-msgstr "`type! E S` 从 `S` 构造一个错误类型 `E`"
-
-#: ../../language/error-handling.md:202
-msgid ""
-"Just like `type`, `type!` may have a payload like the above "
-"`DivisionByZeroError`, or may not, or may even have multiple constructors"
-" like a normal `enum`:"
-msgstr ""
-"就像 `type` 一样，`type!` 可能有一个像上面的 `DivisionByZeroError` 那样的数据，也可能没有，甚至可能像普通的"
-" `enum` 一样有多个构造器："
-
-#: ../../language/error-handling.md:204
-msgid ""
-"type! ConnectionError {\n"
-"  BrokenPipe(Int,String)\n"
-"  ConnectionReset\n"
-"  ConnectionAbort\n"
-"  ConnectionRefused\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:213
-msgid ""
-"To utilize `DivisionByZeroError` type, we would usually define a function"
-" which may raise error by denoting its return type like `T ! E` in the "
-"signature, with `T` being the actual return type and `E` being the error "
-"type. In this case, it's `Int!DivisionByZeroError`. The error can be "
-"thrown using `raise e` where `e` is an instance of `E` which can be "
-"constructed using the default constructor of `S`."
-msgstr ""
-"要使用 `DivisionByZeroError` 类型，我们通常会定义一个函数，该函数通过在签名中定义返回类型为 `T ! E` "
-"来表示它会引发错误，其中 `T` 是实际的返回类型，`E` 是错误类型。在这个例子中，它是 "
-"`Int!DivisionByZeroError`。错误可以使用 `raise e` 抛出，其中 `e` 是 `E` 的实例，可以使用 `S` "
-"的默认构造器构造。"
-
-#: ../../language/error-handling.md:220
-msgid ""
-"Any instance of an error is a second class object. Meaning it may only "
-"appear in the return value. And if it does appear, the function signature"
-" has to be adjusted to match with the return type."
-msgstr "任何错误的实例都是一个二等公民对象。这意味着它只能出现在返回值中。如果返回值包含错误，函数签名必须调整以匹配返回类型。"
-
-#: ../../language/error-handling.md:224
-msgid ""
-"The `test` block in MoonBit may also be seen as a function, with a return"
-" type of `Unit!Error`."
-msgstr "MoonBit 中的 `test` 块也可以看作是一个函数，返回类型为 `Unit!Error`。"
-
-#: ../../language/error-handling.md:227
-msgid "Calling an error-able function"
-msgstr "调用一个可出错的函数"
-
-#: ../../language/error-handling.md:229
-msgid ""
-"an error-able function is usually called in 2 manners: `f!(...)` and "
-"`f?(...)`."
-msgstr "一个可出错的函数通常有两种调用方式：`f!(...)` 和 `f?(...)`。"
-
-#: ../../language/error-handling.md:231
-msgid "As-is calling"
-msgstr "直接调用"
-
-#: ../../language/error-handling.md:233
-msgid ""
-"`f!(...)` calls the function directly. The possible error must be dealt "
-"in the function that calls `f`. We can either re-raising it without "
-"actually dealing with the error:"
-msgstr "`f!(...)` 直接调用函数。可能的错误必须在调用 `f` 的函数中处理。我们可以重新抛出它，而不实际处理错误："
-
-#: ../../language/error-handling.md:237
-msgid ""
-"// We have to match the error type of `div2` with `div`\n"
-"fn div2(x : Int, y : Int) -> Int!DivisionByZeroError {\n"
-"  div!(x,y)\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:244
-msgid "or use `try...catch` block like in many other languages:"
-msgstr "或者像其他许多语言一样使用 `try...catch` 块："
-
-#: ../../language/error-handling.md:246
-msgid ""
-"fn div3(x : Int, y : Int) -> Unit {\n"
-"  try {\n"
-"    div!(x, y)\n"
-"  } catch { // `catch` and `except` works the same.\n"
-"    DivisionByZeroError(e) => println(\"inf: \\{e}\")\n"
-"  } else {\n"
-"    v => println(v)\n"
-"  }\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:258
-msgid ""
-"The `catch...` clause has similar semantics like pattern matching. We can"
-" unwrap the error to retrieve the underlying `String` and print it. "
-"Additionally, there's an `else` clause to handle the value of `try...` "
-"block."
-msgstr ""
-"`catch...` 子句的语义类似于模式匹配。我们可以解包错误以检索底层的 `String` 并打印它。此外，还有一个 `else` 子句来处理"
-" `try...` 块的值。"
-
-#: ../../language/error-handling.md:262
-msgid ""
-"fn test_try() -> Result[Int, Error] {\n"
-"  // compiler can figure out the type of a local error-able function.\n"
-"  fn f() -> _!_ {\n"
-"    raise Failure(\"err\")\n"
-"  }\n"
-"\n"
-"  try Ok(f!()) { err => Err(err) }\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:273
-msgid ""
-"Curly braces may be omitted if the body of try is a one-liner "
-"(expression). The `catch` keyword can also be omitted as well. In the "
-"case where a `try` body would raise different errors, the special "
-"`catch!` can be used to catch some of the errors, while re-raising other "
-"uncaught errors:"
-msgstr ""
-"如果 `try` 的主体是一行代码（表达式），则大括号可以省略。`catch` 关键字也可以省略。在 `try` "
-"主体可能引发不同错误的情况下，可以使用特殊的 `catch!` 来捕获一些错误，同时重新抛出其他未捕获的错误："
-
-#: ../../language/error-handling.md:277
-msgid ""
-"type! E1\n"
-"type! E2\n"
-"fn f1() -> Unit!E1 { raise E1 }\n"
-"fn f2() -> Unit!E2 { raise E2 }\n"
-"fn f() -> Unit! {\n"
-"  try {\n"
-"    f1!()\n"
-"    f2!()\n"
-"  } catch! {\n"
-"    E1 => println(\"E1\")\n"
-"    // E2 gets re-raised.\n"
-"  }\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:293
-msgid "Convert to Result"
-msgstr "转换为 Result"
-
-#: ../../language/error-handling.md:295
-msgid "Extracting values"
-msgstr "提取值"
-
-#: ../../language/error-handling.md:297
-msgid ""
-"A object of type `Result` is a first class value in MoonBit. `Result` has"
-" 2 constructors: `Ok(...)` and `Err(...)` where the former accept a first"
-" class object and the latter accept a error object."
-msgstr ""
-"`Result` 类型的对象是 MoonBit 中的一等公民。`Result` 有 2 个构造器：`Ok(...)` 和 "
-"`Err(...)`，前者接受一个一等公民对象，后者接受一个错误对象。"
-
-#: ../../language/error-handling.md:299
-msgid ""
-"With `f?(...)`, the return type `T!E` is turned into `Result[T,E]`. We "
-"may use pattern matching to extract value from it:"
-msgstr "使用 `f?(...)`，返回类型 `T!E` 被转换为 `Result[T,E]`。我们可以使用模式匹配从中提取值："
-
-#: ../../language/error-handling.md:301
-msgid ""
-"let res = div?(10, 0)\n"
-"match res {\n"
-"  Ok(x) => println(x)\n"
-"  Err(DivisionByZeroError(e)) => println(e)\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:309
-msgid "the `f?()` is basically a syntactic sugar for"
-msgstr "`f?()` 基本上是一个语法糖，等价于"
-
-#: ../../language/error-handling.md:311
-msgid ""
-"let res = try {\n"
-"  Ok(div!(10, 0))\n"
-"} catch {\n"
-"  s => Err(s)\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:319
-msgid ""
-"Note the difference between `T?` and `f?(...)`: `T` is a type and `T?` is"
-" equivalent to `Option[T]` whereas `f?(...)` is a call to an error-able "
-"function `f`."
-msgstr ""
-"注意 `T?` 和 `f?(...)` 之间的区别：`T` 是一个类型，`T?` 等价于 `Option[T]`，而 `f?(...)` "
-"是对可出错函数 `f` 的调用。"
-
-#: ../../language/error-handling.md:323
-msgid ""
-"Besides pattern matching, `Result` provides some useful methods to deal "
-"with possible error:"
-msgstr "除了模式匹配，`Result` 还提供了一些有用的方法来处理可能的错误："
-
-#: ../../language/error-handling.md:325
-msgid ""
-"let res1: Result[Int, String] = Err(\"error\")\n"
-"let value = res1.or(0) // 0\n"
-"\n"
-"let res2: Result[Int, String] = Ok(42)\n"
-"let value = res2.unwrap() // 42\n"
-msgstr ""
-
-#: ../../language/error-handling.md:333
-msgid ""
-"`or` returns the value if the result is `Ok` or a default value if it is "
-"`Err`"
-msgstr "`or` 如果结果是 `Ok`，则返回值，如果是 `Err`，则返回默认值"
-
-#: ../../language/error-handling.md:334
-msgid "`unwrap` panics if the result is `Err` and return the value if it is `Ok`"
-msgstr "`unwrap` 如果结果是 `Err`，则会崩溃，如果是 `Ok`，则返回值"
-
-#: ../../language/error-handling.md:336
-msgid "Mapping values"
-msgstr "映射值"
-
-#: ../../language/error-handling.md:338
-msgid ""
-"let res1: Result[Int, String] = Ok(42)\n"
-"let new_result = res1.map(fn(x) { x + 1 }) // Ok(43)\n"
-"\n"
-"let res2: Result[Int, String] = Err(\"error\")\n"
-"let new_result = res2.map_err(fn(x) { x + \"!\" }) // Err(\"error!\")\n"
-msgstr ""
-
-#: ../../language/error-handling.md:346
-msgid ""
-"`map` applies a function to the value within, except it doesn't nothing "
-"if result is `Err`."
-msgstr "`map` 将函数应用于内部的值；如果结果是 `Err`，则不执行任何操作"
-
-#: ../../language/error-handling.md:347
-msgid "`map_err` does the opposite."
-msgstr "`map_err` 则相反"
-
-#: ../../language/error-handling.md:349
-msgid ""
-"Unlike some languages, MoonBit treats error-able and nullable value "
-"differently. Although one might treat them analogously, as an `Err` "
-"result contains no value, only the error, which is like `null`. MoonBit "
-"knows that."
-msgstr ""
-"与一些语言不同，MoonBit 对可出错值和可空值进行了区分。尽管有些人可能将它们类比对待，因为一个不包含值的 `Err` 对象就像 "
-"`null`。MoonBit 知道这一点。"
-
-#: ../../language/error-handling.md:351
-msgid "`to_option` converts a `Result` to `Option`."
-msgstr "`to_option` 将 `Result` 转换为 `Option`"
-
-#: ../../language/error-handling.md:353
-msgid ""
-"let res1: Result[Int, String] = Ok(42)\n"
-"let option = res1.to_option() // Some(42)\n"
-"\n"
-"let res2: Result[Int, String] = Err(\"error\")\n"
-"let option1 = res2.to_option() // None\n"
-msgstr ""
-
-#: ../../language/error-handling.md:361
-msgid "Built-in error type and functions"
-msgstr "内置错误类型和相关函数"
-
-#: ../../language/error-handling.md:363
-msgid "In MoonBit, `Error` is a generalized error type:"
-msgstr "在 MoonBit 中，`Error` 是一个通用的错误类型："
-
-#: ../../language/error-handling.md:365
-msgid ""
-"// These signatures are equivalent. They all raise Error.\n"
-"fn f() -> Unit! { .. }\n"
-"fn f!() -> Unit { .. }\n"
-"fn f() -> Unit!Error { .. }\n"
-"\n"
-"fn test_error() -> Result[Int, Error] {\n"
-"  fn f() -> _!_ {\n"
-"    raise DivisionByZeroError(\"err\")\n"
-"  }\n"
-"\n"
-"  try {\n"
-"    Ok(f!())\n"
-"  } catch {\n"
-"    err => Err(err)\n"
-"  }\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:384
-msgid ""
-"Although the constructor `Err` expects a type of `Error`, we may still "
-"pass an error of type `DivisionByZeroError` to it."
-msgstr "尽管构造器 `Err` 期望一个 `Error` 类型，我们仍然可以将 `DivisionByZeroError` 类型的错误传递给它。"
-
-#: ../../language/error-handling.md:387
-msgid ""
-"But `Error` can't be constructed directly. It's meant to be passed "
-"around, not used directly:"
-msgstr "但是 `Error` 不能直接构造。它是用来传递的，而不是直接使用："
-
-#: ../../language/error-handling.md:389
-msgid ""
-"type! ArithmeticError\n"
-"\n"
-"fn what_error_is_this(e : Error) -> Unit {\n"
-"  match e {\n"
-"    DivisionByZeroError(_) => println(\"DivisionByZeroError\")\n"
-"    ArithmeticError => println(\"ArithmeticError\")\n"
-"    ... => println(\"...\")\n"
-"    _ => println(\"Error\")\n"
-"  }\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:402
-msgid ""
-"`Error` is typically used where concrete error type is not needed, or "
-"simply act as a catch-all for all kinds of sub-errors."
-msgstr "`Error` 通常用于不需要具体错误类型的情况，或者简单地用来捕获所有的子错误。"
-
-#: ../../language/error-handling.md:405
-msgid ""
-"As `Error` includes multiple error types, partial matching is not allowed"
-" here. We have to do exhaustive matching by providing a catch-"
-"all/wildcard case `_`."
-msgstr "由于 `Error` 包含多种错误类型，这里不允许部分匹配。我们必须通过提供一个通配符 `_` 来进行兜底匹配。"
-
-#: ../../language/error-handling.md:407
-msgid ""
-"We usually use the builtin `Failure` error type for a generalized error, "
-"and by generalized we mean using it for trivial errors that doesn't need "
-"a new error type."
-msgstr "我们通常使用内置的 `Failure` 错误类型来表示通用错误：通用意味着它用于不值得单独定义类型的错误。"
-
-#: ../../language/error-handling.md:410
-msgid ""
-"fn div_trivial(x : Int, y : Int) -> Int!Failure {\n"
-"  if y == 0 {\n"
-"    raise Failure(\"division by zero\")\n"
-"  }\n"
-"  x / y\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:419
-msgid ""
-"Besides using the constructor directly, the function `fail!` provides a "
-"shorthand to construct a `Failure`. And if we take a look at the source "
-"code:"
-msgstr "除了直接使用构造器，函数 `fail!` 提供了一个快捷方式来构造 `Failure`。如果我们查看源代码："
-
-#: ../../language/error-handling.md:422
-msgid ""
-"pub fn fail[T](msg : String, ~loc : SourceLoc = _) -> T!Failure {\n"
-"  raise Failure(\"FAILED: \\{loc} \\{msg}\")\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error-handling.md:428
-msgid ""
-"We can see that `fail` is merely a constructor with a pre-defined output "
-"template for showing both the error and the source location. In practice,"
-" `fail!` is always preferred over `Failure`."
-msgstr "我们可以看到 `fail` 只是一个带有预定义输出模板的构造函数，用于显示错误和源位置。在实践中，`fail!` 总是比 `Failure`更常用。"
-
-#: ../../language/error-handling.md:432
-msgid ""
-"Other functions used to break control flow are `abort` and `panic`. They "
-"are equivalent. An `panic` at any place will manually crash the program "
-"at that place, and prints out stack trace."
-msgstr ""
-"其他用于打破控制流的函数有 `abort` 和 `panic`。它们是等效的。在任何地方的 `panic` "
-"都会手动在那个地方崩溃程序，并打印出堆栈跟踪。"
 
 #: ../../language/error_codes/E0001.md:1
 msgid "E0001"
@@ -13961,7 +13566,7 @@ msgstr ""
 
 #: ../../language/ffi.md:48
 msgid ""
-"JavaScript backend will generate a JavaScript file, which may be a "
+"JavaScript backend will generate a JavaScript file, which can be a "
 "CommonJS module, an ES module or an IIFE based on the "
 "[configuration](/toolchain/moon/package.md#js-backend-link-options)."
 msgstr ""
@@ -19728,8 +19333,8 @@ msgid ""
 "main) field."
 msgstr ""
 "在 MoonBit 中，代码组织的最重要单元是包，它由多个源代码文件和一个单独的 `moon.pkg.json` 配置文件组成。包可以是一个 "
-"`main` 包，包含一个 `main` 函数，或者是一个用作库的包。这些由 [`is-main`](/toolchain/moon/package.md#is-"
-"main) 字段标识。"
+"`main` 包，包含一个 `main` 函数，或者是一个用作库的包。这些由 [`is-"
+"main`](/toolchain/moon/package.md#is-main) 字段标识。"
 
 #: ../../language/packages.md:11
 msgid ""
@@ -19746,10 +19351,10 @@ msgid ""
 "directory) field. The full identifier would be `user-name/project-name"
 "/path-to-pkg`."
 msgstr ""
-"一个模块由 [`name`](/toolchain/moon/module.md#name) 字段标识，通常由两部分组成，用 `/` 分隔：`user-name"
-"/project-name`。包由相对于源代码根目录的路径标识，该路径由 [`source`](/toolchain/moon/module.md#source-"
-"directory) 字段定义。完整标识符为 `user-name/project-name"
-"/path-to-pkg`。"
+"一个模块由 [`name`](/toolchain/moon/module.md#name) 字段标识，通常由两部分组成，用 `/` 分隔"
+"：`user-name/project-name`。包由相对于源代码根目录的路径标识，该路径由 "
+"[`source`](/toolchain/moon/module.md#source-directory) 字段定义。完整标识符为 `user-"
+"name/project-name/path-to-pkg`。"
 
 #: ../../language/packages.md:16
 msgid ""
@@ -19761,8 +19366,7 @@ msgid ""
 msgstr ""
 "在从另一个包中使用内容时，模块之间的依赖关系应首先在 `moon.mod.json` 中声明，使用 "
 "[`deps`](/toochain/moon/module.md#deps) 字段。然后在 `moon.pkg.json` "
-"中声明包之间的依赖关系，使用 "
-"[`import`](/toolchain/moon/package.md#import) 字段。"
+"中声明包之间的依赖关系，使用 [`import`](/toolchain/moon/package.md#import) 字段。"
 
 #: ../../language/packages.md:20
 msgid ""
@@ -19772,9 +19376,9 @@ msgid ""
 "custom alias may also be defined with the "
 "[`import`](/toolchain/moon/package.md#import) field."
 msgstr ""
-"包的**默认别名**是标识符中 `/` 分隔的最后一部分。可以使用 `@pkg_alias` "
-"访问导入的实体，其中 `pkg_alias` 可以是完整标识符或默认别名。也可以使用 "
-"[`import`](/toolchain/moon/package.md#import) 字段定义自定义别名。"
+"包的**默认别名**是标识符中 `/` 分隔的最后一部分。可以使用 `@pkg_alias` 访问导入的实体，其中 `pkg_alias` "
+"可以是完整标识符或默认别名。也可以使用 [`import`](/toolchain/moon/package.md#import) "
+"字段定义自定义别名。"
 
 #: ../../language/packages.md:24
 msgid "pkgB/moon.pkg.json"
@@ -20125,23 +19729,20 @@ msgstr "虚拟包"
 msgid ""
 "Virtual package is an experimental feature. There may be bugs and "
 "undefined behaviors."
-msgstr ""
-"虚拟包是一个实验性功能。可能存在错误和未定义的行为。"
+msgstr "虚拟包是一个实验性功能。可能存在错误和未定义的行为。"
 
 #: ../../language/packages.md:183
 msgid ""
 "You can define virtual packages, which serves as an interface. They can "
 "be replaced by specific implementations at build time. Currently virtual "
 "packages can only contain plain functions."
-msgstr ""
-"你可以定义虚拟包，它作为一个接口。它们可以在构建时被特定的实现替换。目前，虚拟包只能包含普通函数。"
+msgstr "你可以定义虚拟包，它作为一个接口。它们可以在构建时被特定的实现替换。目前，虚拟包只能包含普通函数。"
 
 #: ../../language/packages.md:185
 msgid ""
 "Virtual packages can be useful when swapping different implementations "
 "while keeping the code untouched."
-msgstr ""
-"虚拟包在保持代码不变的情况下，可以在不同的实现之间进行切换。"
+msgstr "虚拟包在保持代码不变的情况下，可以在不同的实现之间进行切换。"
 
 #: ../../language/packages.md:187
 msgid "Defining a virtual package"
@@ -20151,8 +19752,7 @@ msgstr "定义一个虚拟包"
 msgid ""
 "You need to declare it to be a virtual package and define its interface "
 "in a MoonBit interface file."
-msgstr ""
-"你需要声明它是一个虚拟包，并在 MoonBit 接口文件中定义其接口。"
+msgstr "你需要声明它是一个虚拟包，并在 MoonBit 接口文件中定义其接口。"
 
 #: ../../language/packages.md:191
 msgid ""
@@ -20175,8 +19775,7 @@ msgstr ""
 msgid ""
 "The `has-default` indicates whether the virtual package has a default "
 "implementation."
-msgstr ""
-"The `has-default` 表示虚拟包是否有默认实现。"
+msgstr "The `has-default` 表示虚拟包是否有默认实现。"
 
 #: ../../language/packages.md:199
 msgid ""
@@ -20184,8 +19783,8 @@ msgid ""
 "name.mbti` where the `package-name` is the same as [the default alias"
 "](#default-alias):"
 msgstr ""
-"在包内，你需要添加一个接口文件 `package-"
-"name.mbti`，其中 `package-name` 与 [默认别名](#default-alias) 相同："
+"在包内，你需要添加一个接口文件 `package-name.mbti`，其中 `package-name` 与 [默认别名](#default-"
+"alias) 相同："
 
 #: ../../language/packages.md:201
 msgid "/src/packages/virtual/virtual.mbti"
@@ -20205,8 +19804,8 @@ msgid ""
 "control](#access-control) and the function parameter names should be "
 "omitted."
 msgstr ""
-"The interface文件的第一行需要是 `package \"full-package-"
-"name\"`。接下来是声明。[访问控制](#access-control)的 `pub` 关键字和函数参数名称应该省略。"
+"The interface文件的第一行需要是 `package \"full-package-name\"`。接下来是声明。[访问控制"
+"](#access-control)的 `pub` 关键字和函数参数名称应该省略。"
 
 #: ../../language/packages.md:210
 msgid ""
@@ -20215,9 +19814,8 @@ msgid ""
 "syntax](/language/fundamentals.md#todo-syntax), and use `moon info` to "
 "help you generate the interface."
 msgstr ""
-"如果你不确定如何定义接口，可以创建一个普通包，使用 [TODO "
-"语法](/language/fundamentals.md#todo-syntax) 定义所需的函数，并使用 "
-"`moon info` 帮助你生成接口。"
+"如果你不确定如何定义接口，可以创建一个普通包，使用 [TODO 语法](/language/fundamentals.md#todo-"
+"syntax) 定义所需的函数，并使用 `moon info` 帮助你生成接口。"
 
 #: ../../language/packages.md:213
 msgid "Implementing a virtual package"
@@ -20228,8 +19826,7 @@ msgid ""
 "A virtual package can have a default implementation. By defining "
 "[`virtual.has-default`](/toolchain/moon/package.md#declarations) as "
 "`true`, you can implement the code as usual within the same package."
-msgstr ""
-"一个虚拟包可以有一个默认实现。通过将 `virtual.has-default` 设置为 `true`，你可以在同一包内照常实现代码。"
+msgstr "一个虚拟包可以有一个默认实现。通过将 [`virtual.has-default`](/toolchain/moon/package.md#declarations) 设置为 `true`，你可以在同一包内照常实现代码。"
 
 #: ../../language/packages.md:217
 msgid "/src/packages/virtual/top.mbt"
@@ -20249,7 +19846,8 @@ msgid ""
 "package's full name, the compiler can warn you about the missing "
 "implementations or the mismatched implementations."
 msgstr ""
-"A virtual package 也可以由第三方实现。通过将 `implements` 定义为目标包的完整名称，编译器可以警告你关于缺失的实现或不匹配的实现。"
+"虚拟包也可以由第三方实现。通过将 [`implements`](/toolchain/moon/package.md#implementations) "
+"定义为目标包的完整名称，编译器可以警告你关于缺失的实现或不匹配的实现。"
 
 #: ../../language/packages.md:224
 msgid ""
@@ -20279,7 +19877,8 @@ msgid ""
 "[`import`](/toolchain/moon/package.md#import) field in the package where "
 "you want to use it."
 msgstr ""
-"要使用虚拟包，与其他包一样：在你想要使用它的包中定义 [`import`](/toolchain/moon/package.md#import) 字段。"
+"要使用虚拟包，与其他包一样：在你想要使用它的包中定义 [`import`](/toolchain/moon/package.md#import) "
+"字段。"
 
 #: ../../language/packages.md:237
 msgid "Overriding a virtual package"
@@ -20289,8 +19888,7 @@ msgstr "覆盖虚拟包"
 msgid ""
 "If a virtual package has a default implementation and that is your "
 "choice, there's no extra configurations."
-msgstr ""
-"如果虚拟包有一个默认实现，并且是你想要的，则不需要额外的配置。"
+msgstr "如果虚拟包有一个默认实现，并且是你想要的，则不需要额外的配置。"
 
 #: ../../language/packages.md:241
 msgid ""
@@ -20298,8 +19896,8 @@ msgid ""
 "#overriding-implementations) field by providing an array of "
 "implementations that you would like to use."
 msgstr ""
-"否则，你可以通过提供一个实现数组来定义 [`overrides`](/toolchain/moon/package.md"
-"#overriding-implementations) 字段，指定你想要使用的实现。"
+"否则，你可以通过提供一个实现数组来定义 [`overrides`](/toolchain/moon/package.md#overriding-"
+"implementations) 字段，指定你想要使用的实现。"
 
 #: ../../language/packages.md:243
 msgid "/src/packages/use_implement/moon.pkg.json"
@@ -20359,14 +19957,15 @@ msgstr "MoonBit 提供测试代码块，用于编写内联测试用例。例如�
 #: ../../language/tests.md:17
 msgid ""
 "A test code block is essentially a function that returns a `Unit` but may"
-" throws a `String` on error, or `Unit!String` as one would see in its "
-"signature at the position of return type. It is called during the "
-"execution of `moon test` and outputs a test report through the build "
-"system. The `assert_eq` function is from the standard library; if the "
-"assertion fails, it prints an error message and terminates the test. The "
-"string `\"test_name\"` is used to identify the test case and is optional."
+" throws an [`Error`](/language/error-handling.md#error-types), or "
+"`Unit!Error` as one would see in its signature at the position of return "
+"type. It is called during the execution of `moon test` and outputs a test"
+" report through the build system. The `assert_eq` function is from the "
+"standard library; if the assertion fails, it prints an error message and "
+"terminates the test. The string `\"test_name\"` is used to identify the "
+"test case and is optional."
 msgstr ""
-"测试代码块本质上是一个返回 `Unit` 抛出 `String` 的函数。它在执行 `moon test` "
+"测试代码块本质上是一个返回 `Unit` 抛出 [`Error`](/language/error-handling.md#error-types) 的函数，或者说返回值签名为 `Unit!Error`。它在执行 `moon test` "
 "期间被调用，并通过构建系统输出测试报告。`assert_eq` 函数来自标准库；如果断言失败，它会打印错误消息并终止测试。字符串 "
 "`\"test_name\"` 用于标识测试用例，是可选的。"
 

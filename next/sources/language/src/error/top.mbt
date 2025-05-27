@@ -73,14 +73,11 @@ test {
 }
 
 // start error 6
-type! E4
-
-type! E5
-
 fn f(e : Error) -> Unit {
   match e {
-    E4 => println("E1")
-    E5 => println("E2")
+    E2 => println("E2")
+    A => println("A")
+    B(i, x~) => println("B(\{i}, \{x})")
     _ => println("unknown error")
   }
 }
@@ -88,7 +85,7 @@ fn f(e : Error) -> Unit {
 
 // start error 7
 fn div_reraise(x : Int, y : Int) -> Int!DivError {
-  div!(x, y) // Rethrow the error if `div` raised an error
+  div(x, y) + div!(x, y) // Rethrow the error if `div` raised an error
 }
 // end error 7
 
@@ -96,7 +93,7 @@ fn div_reraise(x : Int, y : Int) -> Int!DivError {
 test {
   let res = div?(6, 3)
   inspect!(res, content="Ok(2)")
-  let res = div?(6, 0)
+  let res = try? div(6, 0) * div(6, 3)
   inspect!(
     res,
     content=
@@ -133,23 +130,6 @@ fn error() -> Unit {
   // end error 11
 }
 
-// start error 12
-type T Int
-
-type! E Int derive(Show)
-
-fn k(self : T) -> Unit!E {
-  ...
-}
-
-fn l() -> Unit!E {
-  let x = T(42)
-  k!(x)
-  x.k!()
-  x |> k!()
-}
-// end error 12
-
 fn catch_() -> Unit! {
   // start error 13
   fn f1() -> Unit!E1 {
@@ -178,3 +158,12 @@ fn catch_() -> Unit! {
   }
   // end error 14
 }
+
+// start custom error conversion
+type! CustomError UInt
+test {
+  let e : Error = CustomError(42)
+  guard e is CustomError(m)
+  assert_eq!(m, 42)
+}
+// end custom error conversion
