@@ -1486,7 +1486,7 @@ consecutive operations without the need to modify the return type of the methods
 :end-before: end operator 7
 ```
 
-### Is Expression
+### is Expression
 
 The `is` expression tests whether a value conforms to a specific pattern. It
 returns a `Bool` value and can be used anywhere a boolean value is expected,
