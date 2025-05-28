@@ -35,8 +35,8 @@ function highlightCurrent() {
       if (i === openSectionIndex) {
         section.classList.remove("hidden");
       } else {
-            section.classList.add("hidden");
-          }
+        section.classList.add("hidden");
+      }
     }
   }
 }
@@ -71,7 +71,7 @@ export function init() {
     }
     tocVisible = targetVisible;
   };
-  
+
   if (isMd) {
     toc.classList.remove("hidden");
   }
