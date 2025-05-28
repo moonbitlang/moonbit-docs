@@ -30,8 +30,8 @@ function highlightCurrent() {
       if (i === openSectionIndex) {
         section.classList.remove("hidden");
       } else {
-        section.classList.add("hidden");
-      }
+            section.classList.add("hidden");
+          }
     }
   }
 }
@@ -40,10 +40,36 @@ const tocButton = document.getElementById("toc-button")!;
 const toc = document.getElementById("toc")!;
 const themeButton = document.querySelector<HTMLButtonElement>("#theme")!;
 
+let tocVisible = false;
+const isMd = window.matchMedia("(min-width: 768px)").matches;
+function showToc() {
+  if (isMd) {
+    toc.classList.remove("md:right-[-400px]");
+  } else {
+    toc.classList.toggle("hidden");
+  }
+}
+function hideToc() {
+  if (isMd) {
+    toc.classList.add("md:right-[-400px]");
+  } else {
+    toc.classList.toggle("hidden");
+  }
+}
 export function init() {
   tocButton.onclick = () => {
-    toc.classList.toggle("hidden");
+    const targetVisible = !tocVisible;
+    if (targetVisible) {
+      showToc();
+    } else {
+      hideToc();
+    }
+    tocVisible = targetVisible;
   };
+  
+  if (isMd) {
+    toc.classList.remove("hidden");
+  }
 
   for (const div of document.querySelectorAll<HTMLDivElement>(".toc-chapter")) {
     tocChapter(div);
@@ -59,8 +85,8 @@ export function init() {
         themeButton.contains(e.target)
       )
         return;
-      if (toc.classList.contains("hidden")) return;
-      toc.classList.add("hidden");
+      if (!tocVisible) return;
+      hideToc();
     },
     { capture: true },
   );
