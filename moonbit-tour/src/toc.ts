@@ -10,14 +10,19 @@ function highlightCurrent() {
   const sections =
     document.querySelectorAll<HTMLUListElement>(".toc-sections")!;
   let openSectionIndex = -1;
+  const highlightClass = ["font-bold", "border-l-2", "border-purple-500"];
   for (const [i, section] of sections.entries()) {
     const links = section.querySelectorAll<HTMLAnchorElement>(".toc-link")!;
     for (const link of links) {
       if (link.href === location.href) {
         openSectionIndex = i;
-        link.classList.add("font-bold");
+        for (const c of highlightClass) {
+          link.classList.add(c);
+        }
       } else {
-        link.classList.remove("font-bold");
+        for (const c of highlightClass) {
+          link.classList.remove(c);
+        }
       }
     }
   }

@@ -101,7 +101,7 @@ function renderTOC(chapters: Chapter[]): string {
     lines.push(`<ul class="toc-sections bg-gray-50 dark:bg-zinc-700">`);
     for (const l of c.lessons) {
       lines.push(
-        `<li><a class="toc-link text-base capitalize pl-2 py-1 block" href="/${slug(l)}/index.html">${l.title}</a></li>`,
+        `<li class="hover:bg-purple-100 dark:hover:bg-zinc-700"><a class="toc-link text-base capitalize pl-2 py-1 block" href="/${slug(l)}/index.html">${l.title}</a></li>`,
       );
     }
     lines.push(`</ul>`);
