@@ -61,19 +61,36 @@ You can use the `pub` modifier before the definition to make them public.
 
 There are four different kinds of visibility for types in MoonBit:
 
-- private type, declared with `priv`, completely invisible to the outside world
-- abstract type, which is the default visibility for types. Only the name of an abstract type is visible outside, the internal representation of the type is hidden
-- readonly types, declared with `pub`. The internal representation of readonly types are visible outside,
-but users can only read the values of these types from outside, construction and mutation are not allowed
-- fully public types, declared with `pub(all)`. The outside world can freely construct, modify and read values of these types
+- Private type: declared with `priv`, completely invisible to the outside world
+- Abstract type: which is the default visibility for types. 
+
+  Only the name of an abstract type is visible outside, the internal representation of the 
+  type is hidden. Making abstract type by default is a design choice to encourage 
+  encapsulation and information hiding.
+
+- Readonly types, declared with `pub`. 
+  
+  The internal representation of readonly types are visible outside,
+  but users can only read the values of these types from outside, construction and mutation are not allowed
+  This also applies to newtype, when declared with only `pub`, its underlying data can only be accessed from outside,
+  but user cannot create new values.
+
+- Fully public types, declared with `pub(all)`. 
+
+  The outside world can freely construct, read values of these types and modify them if possible.
 
 In addition to the visibility of the type itself, the fields of a public `struct` can be annotated with `priv`,
 which will hide the field from the outside world completely.
 Note that `struct`s with private fields cannot be constructed directly outside,
 but you can update the public fields using the functional struct update syntax.
 
-Readonly types is a very useful feature, inspired by [private types](https://ocaml.org/manual/5.3/privatetypes.html) in OCaml. In short, values of `pub` types can be destructed by pattern matching and the dot syntax, but cannot be constructed or mutated in other packages. Note that there is no restriction within the same package where `pub` types are defined.
+Readonly types is a very useful feature, inspired by [private types](https://ocaml.org/manual/5.3/privatetypes.html) in OCaml. 
+In short, values of `pub` types can be destructed by pattern matching and the dot syntax, but 
+cannot be constructed or mutated in other packages. 
 
+```{note}
+There is no restriction within the same package where `pub` types are defined.
+```
 <!-- MANUAL CHECK -->
 
 ```moonbit
