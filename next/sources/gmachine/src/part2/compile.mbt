@@ -1,4 +1,4 @@
-fn compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
+fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
   let name = self.name
   let body = self.body
   let mut arity = 0
@@ -13,22 +13,22 @@ fn compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
   }
 
   let env = gen_env(0, self.args)
-  (name, arity, compileR(body, env, arity))
+  (name, arity, body.compileR(env, arity))
 }
 
-fn compileR(
+fn RawExpr::compileR(
   self : RawExpr[String],
   env : List[(String, Int)],
   arity : Int
 ) -> List[Instruction] {
   if arity == 0 {
-    compileC(self, env) + @immut/list.of([Update(arity), Unwind])
+    self.compileC(env) + @immut/list.of([Update(arity), Unwind])
   } else {
-    compileC(self, env) + @immut/list.of([Update(arity), Pop(arity), Unwind])
+    self.compileC(env) + @immut/list.of([Update(arity), Pop(arity), Unwind])
   }
 }
 
-fn compileC(
+fn RawExpr::compileC(
   self : RawExpr[String],
   env : List[(String, Int)]
 ) -> List[Instruction] {
@@ -40,14 +40,14 @@ fn compileC(
       }
     Num(n) => @immut/list.of([PushInt(n)])
     App(e1, e2) =>
-      compileC(e2, env) +
-      compileC(e1, argOffset(1, env)) +
+      e2.compileC(env) +
+      e1.compileC(argOffset(1, env)) +
       @immut/list.of([MkApp])
     Let(rec, defs, e) =>
       if rec {
-        compileLetrec(compileC, defs, e, env)
+        compileLetrec(RawExpr::compileC, defs, e, env)
       } else {
-        compileLet(compileC, defs, e, env)
+        compileLet(RawExpr::compileC, defs, e, env)
       }
     _ => abort("not support yet")
   }
@@ -67,7 +67,7 @@ fn compileLet(
   let (env, codes) = loop env, List::Nil, defs {
     env, acc, Nil => (env, acc)
     env, acc, Cons((name, expr), rest) => {
-      let code = compileC(expr, env)
+      let code = expr.compileC(env)
       let env = List::Cons((name, 0), argOffset(1, env))
       continue env, acc + code, rest
     }
@@ -99,7 +99,7 @@ fn compileLetrec(
     match defs {
       Nil => comp(expr, env) + @immut/list.of([Slide(n)])
       Cons((_, expr), rest) =>
-        compileC(expr, env) +
+        expr.compileC(env) +
         Cons(Update(offset), compileDefs(rest, offset - 1))
     }
   }

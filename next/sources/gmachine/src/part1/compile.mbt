@@ -1,5 +1,5 @@
 // start compile_sc definition
-fn compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
+fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
   let name = self.name
   let body = self.body
   let mut arity = 0
@@ -14,26 +14,26 @@ fn compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
   }
 
   let env = gen_env(0, self.args)
-  (name, arity, compileR(body, env, arity))
+  (name, arity, body.compileR(env, arity))
 }
 // end compile_sc definition
 
 // start compile_r definition
-fn compileR(
+fn RawExpr::compileR(
   self : RawExpr[String],
   env : List[(String, Int)],
   arity : Int
 ) -> List[Instruction] {
   if arity == 0 {
-    compileC(self, env) + @immut/list.of([Update(arity), Unwind])
+    self.compileC(env) + @immut/list.of([Update(arity), Unwind])
   } else {
-    compileC(self, env) + @immut/list.of([Update(arity), Pop(arity), Unwind])
+    self.compileC(env) + @immut/list.of([Update(arity), Pop(arity), Unwind])
   }
 }
 // end compile_r definition
 
 // start compile_c definition
-fn compileC(
+fn RawExpr::compileC(
   self : RawExpr[String],
   env : List[(String, Int)]
 ) -> List[Instruction] {
@@ -45,8 +45,8 @@ fn compileC(
       }
     Num(n) => @immut/list.of([PushInt(n)])
     App(e1, e2) =>
-      compileC(e2, env) +
-      compileC(e1, argOffset(1, env)) +
+      e2.compileC(env) +
+      e1.compileC(argOffset(1, env)) +
       @immut/list.of([MkApp])
     _ => abort("not support yet")
   }

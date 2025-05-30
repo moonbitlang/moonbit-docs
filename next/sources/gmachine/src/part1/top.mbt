@@ -7,11 +7,11 @@ fn run(codes : List[String]) -> Node {
     } else {
       expr => expr
     }
-    let code = compileSC(code)
+    let code = code.compileSC()
     return code
   }
 
-  let codes = codes.map(parse_then_compile) + prelude_defs.map(compileSC)
+  let codes = codes.map(parse_then_compile) + prelude_defs.map(ScDef::compileSC)
   let (heap, globals) = build_initial_heap(codes)
   let initialState : GState = {
     heap,
@@ -20,7 +20,7 @@ fn run(codes : List[String]) -> Node {
     globals,
     stats: 0,
   }
-  initialState.reify()
+  GState::reify(initialState)
 }
 // end run definition
 

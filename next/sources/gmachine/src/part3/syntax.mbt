@@ -53,7 +53,7 @@ fn Tokens::new(tokens : Array[Token]) -> Tokens {
   Tokens::{ tokens, current: 0 }
 }
 
-fn peek(self : Tokens) -> Token {
+fn Tokens::peek(self : Tokens) -> Token {
   if self.current < self.tokens.length() {
     return self.tokens[self.current]
   } else {
@@ -63,14 +63,14 @@ fn peek(self : Tokens) -> Token {
 
 type! ParseError String
 
-fn next(self : Tokens, loc~ : SourceLoc = _) -> Unit {
+fn Tokens::next(self : Tokens, loc~ : SourceLoc = _) -> Unit {
   self.current = self.current + 1
   if self.current > self.tokens.length() {
     abort("Tokens::next(): \{loc}")
   }
 }
 
-fn eat(self : Tokens, tok : Token, loc~ : SourceLoc = _) -> Unit!ParseError {
+fn Tokens::eat(self : Tokens, tok : Token, loc~ : SourceLoc = _) -> Unit!ParseError {
   let __tok = self.peek()
   // assert tok_ != EOF
   if __tok != tok {
@@ -156,7 +156,7 @@ test "tokenize" {
   )
 }
 
-fn parse_num(self : Tokens) -> Int!ParseError {
+fn Tokens::parse_num(self : Tokens) -> Int!ParseError {
   match self.peek() {
     Number(n) => {
       self.next()
@@ -166,7 +166,7 @@ fn parse_num(self : Tokens) -> Int!ParseError {
   }
 }
 
-fn parse_var(self : Tokens) -> String!ParseError {
+fn Tokens::parse_var(self : Tokens) -> String!ParseError {
   match self.peek() {
     Id(s) => {
       self.next()
@@ -176,7 +176,7 @@ fn parse_var(self : Tokens) -> String!ParseError {
   }
 }
 
-fn parse_cons(self : Tokens) -> RawExpr[String]!ParseError {
+fn Tokens::parse_cons(self : Tokens) -> RawExpr[String]!ParseError {
   match self.peek() {
     CONS => {
       self.next()
@@ -188,7 +188,7 @@ fn parse_cons(self : Tokens) -> RawExpr[String]!ParseError {
   }
 }
 
-fn parse_let(self : Tokens) -> RawExpr[String]!ParseError {
+fn Tokens::parse_let(self : Tokens) -> RawExpr[String]!ParseError {
   self.eat!(Let)
   self.eat!(Open('('))
   let defs = self.parse_defs!()
@@ -197,7 +197,7 @@ fn parse_let(self : Tokens) -> RawExpr[String]!ParseError {
   Let(false, defs, exp)
 }
 
-fn parse_letrec(self : Tokens) -> RawExpr[String]!ParseError {
+fn Tokens::parse_letrec(self : Tokens) -> RawExpr[String]!ParseError {
   self.eat!(Letrec)
   self.eat!(Open('('))
   let defs = self.parse_defs!()
@@ -206,7 +206,7 @@ fn parse_letrec(self : Tokens) -> RawExpr[String]!ParseError {
   Let(true, defs, exp)
 }
 
-fn parse_case(self : Tokens) -> RawExpr[String]!ParseError {
+fn Tokens::parse_case(self : Tokens) -> RawExpr[String]!ParseError {
   self.eat!(Case)
   let exp = self.parse_expr!()
   let alts = self.parse_alts!()
@@ -245,7 +245,7 @@ fn parse_alts(
   }
 }
 
-fn parse_defs(self : Tokens) -> List[(String, RawExpr[String])]!ParseError {
+fn Tokens::parse_defs(self : Tokens) -> List[(String, RawExpr[String])]!ParseError {
   let acc : List[(String, RawExpr[String])] = Nil
   loop self.peek(), acc {
     Open('['), acc => {
@@ -259,7 +259,7 @@ fn parse_defs(self : Tokens) -> List[(String, RawExpr[String])]!ParseError {
   }
 }
 
-fn parse_apply(self : Tokens) -> RawExpr[String]!ParseError {
+fn Tokens::parse_apply(self : Tokens) -> RawExpr[String]!ParseError {
   let mut res = self.parse_expr!()
   while self.peek() != Close(')') {
     res = App(res, self.parse_expr!())
@@ -267,7 +267,7 @@ fn parse_apply(self : Tokens) -> RawExpr[String]!ParseError {
   return res
 }
 
-fn parse_expr(self : Tokens) -> RawExpr[String]!ParseError {
+fn Tokens::parse_expr(self : Tokens) -> RawExpr[String]!ParseError {
   match self.peek() {
     EOF =>
       raise ParseError(
@@ -303,7 +303,7 @@ fn parse_expr(self : Tokens) -> RawExpr[String]!ParseError {
   }
 }
 
-fn parse_sc(self : Tokens) -> ScDef[String]!ParseError {
+fn Tokens::parse_sc(self : Tokens) -> ScDef[String]!ParseError {
   self.eat!(Open('('))
   self.eat!(DefFn)
   let fn_name = self.parse_var!()

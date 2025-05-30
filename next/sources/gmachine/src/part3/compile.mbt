@@ -1,4 +1,4 @@
-fn compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
+fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
   let name = self.name
   let body = self.body
   let mut arity = 0
@@ -13,22 +13,22 @@ fn compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
   }
 
   let env = gen_env(0, self.args)
-  (name, arity, compileR(body, env, arity))
+  (name, arity, body.compileR(env, arity))
 }
 
-fn compileR(
+fn RawExpr::compileR(
   self : RawExpr[String],
   env : List[(String, Int)],
   arity : Int
 ) -> List[Instruction] {
   if arity == 0 {
-    compileE(self, env) + @immut/list.of([Update(arity), Unwind])
+    self.compileE(env) + @immut/list.of([Update(arity), Unwind])
   } else {
-    compileE(self, env) + @immut/list.of([Update(arity), Pop(arity), Unwind])
+    self.compileE(env) + @immut/list.of([Update(arity), Pop(arity), Unwind])
   }
 }
 
-fn compileC(
+fn RawExpr::compileC(
   self : RawExpr[String],
   env : List[(String, Int)]
 ) -> List[Instruction] {
@@ -42,27 +42,27 @@ fn compileC(
     // start c_constr definition
     App(App(Constructor(tag=1, arity=2), x), xs) =>
       // Cons(x, xs)
-      compileC(xs, env) +
-      compileC(x, argOffset(1, env)) +
+      xs.compileC(env) +
+      x.compileC(argOffset(1, env)) +
       @immut/list.of([Pack(1, 2)])
     // Nil
     Constructor(tag=0, arity=0) => @immut/list.of([Pack(0, 0)])
     // end c_constr definition
     App(e1, e2) =>
-      compileC(e2, env) +
-      compileC(e1, argOffset(1, env)) +
+      e2.compileC(env) +
+      e1.compileC(argOffset(1, env)) +
       @immut/list.of([MkApp])
     Let(rec, defs, e) =>
       if rec {
-        compileLetrec(compileC, defs, e, env)
+        compileLetrec(RawExpr::compileC, defs, e, env)
       } else {
-        compileLet(compileC, defs, e, env)
+        compileLet(RawExpr::compileC, defs, e, env)
       }
     _ => abort("not support yet")
   }
 }
 
-fn compileE(
+fn RawExpr::compileE(
   self : RawExpr[String],
   env : List[(String, Int)]
 ) -> List[Instruction] {
@@ -73,45 +73,45 @@ fn compileE(
     // start let definition
     Let(rec, defs, e) =>
       if rec {
-        compileLetrec(compileE, defs, e, env)
+        compileLetrec(RawExpr::compileE, defs, e, env)
       } else {
-        compileLet(compileE, defs, e, env)
+        compileLet(RawExpr::compileE, defs, e, env)
       }
     // end let definition
     // start if_and_neg definition
     App(App(App(Var("if"), b), e1), e2) => {
-      let condition = compileE(b, env)
-      let branch1 = compileE(e1, env)
-      let branch2 = compileE(e2, env)
+      let condition = b.compileE(env)
+      let branch1 = e1.compileE(env)
+      let branch2 = e2.compileE(env)
       condition + @immut/list.of([Cond(branch1, branch2)])
     }
-    App(Var("negate"), e) => compileE(e, env) + @immut/list.of([Neg])
+    App(Var("negate"), e) => e.compileE(env) + @immut/list.of([Neg])
     // end if_and_neg definition
     // start binop definition
     App(App(Var(op), e0), e1) =>
       match builtinOpS.get(op) {
-        None => compileC(self, env) + @immut/list.of([Eval])
+        None => self.compileC(env) + @immut/list.of([Eval])
         Some(instr) => {
-          let code1 = compileE(e1, env)
-          let code0 = compileE(e0, argOffset(1, env))
+          let code1 = e1.compileE(env)
+          let code0 = e0.compileE(argOffset(1, env))
           code1 + code0 + @immut/list.of([instr])
         }
       }
     // end binop definition
     // start e_constr_case definition
     Case(e, alts) =>
-      compileE(e, env) + @immut/list.of([CaseJump(compileAlts(alts, env))])
+      e.compileE(env) + @immut/list.of([CaseJump(compileAlts(alts, env))])
     Constructor(tag=0, arity=0) =>
       // Nil
       @immut/list.of([Pack(0, 0)])
     App(App(Constructor(tag=1, arity=2), x), xs) =>
       // Cons(x, xs)
-      compileC(xs, env) +
-      compileC(x, argOffset(1, env)) +
+      xs.compileC(env) +
+      x.compileC(argOffset(1, env)) +
       @immut/list.of([Pack(1, 2)])
     // end e_constr_case definition
     // start default definition
-    _ => compileC(self, env) + @immut/list.of([Eval])
+    _ => self.compileC(env) + @immut/list.of([Eval])
     // end default definition
   }
 }
@@ -137,7 +137,7 @@ fn compileAlts(
         let offset = variables.length()
         let env = buildenv(variables, 0) + argOffset(offset, env)
         let code = @immut/list.of([Split]) +
-          compileE(body, env) +
+          body.compileE(env) +
           @immut/list.of([Slide(offset)])
         Cons((tag, code), go(rest))
       }
@@ -160,7 +160,7 @@ fn compileLet(
   let (env, codes) = loop env, List::Nil, defs {
     env, acc, Nil => (env, acc)
     env, acc, Cons((name, expr), rest) => {
-      let code = compileC(expr, env)
+      let code = expr.compileC(env)
       let env = List::Cons((name, 0), argOffset(1, env))
       continue env, acc + code, rest
     }
@@ -190,8 +190,7 @@ fn compileLetrec(
     match defs {
       Nil => comp(expr, env) + @immut/list.of([Slide(n)])
       Cons((_, expr), rest) =>
-        compileC(expr, env) +
-        Cons(Update(offset), compileDefs(rest, offset - 1))
+        expr.compileC(env) + Cons(Update(offset), compileDefs(rest, offset - 1))
     }
   }
 

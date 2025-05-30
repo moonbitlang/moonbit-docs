@@ -6,11 +6,11 @@ fn run(codes : List[String]) -> Node {
     } else {
       expr => expr
     }
-    let code = compileSC(code)
+    let code = code.compileSC()
     return code
   }
 
-  let codes = codes.map(parse_then_compile) + prelude_defs.map(compileSC)
+  let codes = codes.map(parse_then_compile) + prelude_defs.map(ScDef::compileSC)
   let codes = compiled_primitives + codes
   let (heap, globals) = build_initial_heap(codes)
   // start init definition
@@ -23,7 +23,7 @@ fn run(codes : List[String]) -> Node {
     dump: Nil,
   }
   // end init definition
-  initialState.reify()
+  GState::reify(initialState)
 }
 
 test "basic eval" {
