@@ -205,8 +205,8 @@ fnalias @hashmap.new
 fnalias new as new_2
 
 // creating multiple alias in one package
-fnalias @hashmap.(
-  iter,
-  each as hashmap_each
+fnalias @moonbitlang/core/prelude.(
+  tap,
+  then as touch
 )
 // end function alias

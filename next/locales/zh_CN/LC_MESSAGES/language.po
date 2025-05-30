@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-27 17:25+0800\n"
+"POT-Creation-Date: 2025-05-30 14:23+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -38,8 +38,8 @@ msgid "Async function"
 msgstr "异步函数"
 
 #: ../../language/async-experimental.md:8
-msgid "Async functions can be declared with the `async` keyword:"
-msgstr "异步函数可以用 `async` 关键字声明："
+msgid "Async functions are declared with the `async` keyword:"
+msgstr "异步函数用 `async` 关键字声明："
 
 #: ../../language/async-experimental.md:10
 msgid ""
@@ -53,6 +53,8 @@ msgid ""
 "  async fn local_async_function() {\n"
 "    ...\n"
 "  }\n"
+"\n"
+"\n"
 "}\n"
 msgstr ""
 "async fn my_async_function() -> Unit {\n"
@@ -65,48 +67,69 @@ msgstr ""
 "  async fn local_async_function() {\n"
 "    ...\n"
 "  }\n"
+"\n"
+"\n"
 "}\n"
 
 #: ../../language/async-experimental.md:16
-msgid "Async functions may be called with the `!` operator:"
-msgstr "调用异步函数时，可以用 `!` 操作符来标记这是一次异步函数调用："
+msgid ""
+"Since MoonBit is a statically typed language, the compiler will track its"
+"  asyncness, so you can just call async functions like normal functions, "
+"the MoonBit IDE will highlight the async function call with a different "
+"style."
+msgstr ""
+"由于 MoonBit 是一门静态类型语言，编译器会跟踪异步函数的调用，因此你可以像调用普通函数一样调用异步函数。"
+"MoonBit IDE 会用不同的样式来高亮显示异步函数的调用。"
 
-#: ../../language/async-experimental.md:18
+#: ../../language/async-experimental.md:20
 msgid ""
 "async fn some_async_function() -> Unit! {\n"
 "  ...\n"
 "}\n"
 "\n"
 "async fn another_async_function() -> Unit! {\n"
-"  some_async_function()\n"
-"  some_async_function!()\n"
+"  some_async_function() // rendered in italic font\n"
 "}\n"
 msgstr ""
-
-#: ../../language/async-experimental.md:24
-msgid ""
-"Async functions can only be called in async functions. Currently, async "
-"functions cannot be called in the body of `for .. in` loops."
-msgstr "异步函数只能在其他异步函数中被调用。目前，在 `for .. in` 循环中不能使用异步函数。"
+"async fn some_async_function() -> Unit! {\n"
+"  ...\n"
+"}\n"
+"\n"
+"async fn another_async_function() -> Unit! {\n"
+"  some_async_function() // 使用斜体渲染\n"
+"}\n"
 
 #: ../../language/async-experimental.md:26
+#: ../../language/error_codes/E4149.md:5
+msgid "Async functions can only be called in async functions."
+msgstr "异步函数只能在异步函数中调用。"
+
+#: ../../language/async-experimental.md:29
+msgid ""
+"Currently, async functions  have not be supported in the body of `for .. "
+"in` loops yet, this  will be addressed in the future."
+msgstr ""
+"目前，异步函数还不支持在 `for .. in` 循环体中使用，这将在未来的版本中解决。"
+
+#: ../../language/async-experimental.md:34
 msgid "Async primitives for suspension"
 msgstr "用于中断异步函数的原语"
 
-#: ../../language/async-experimental.md:27
+#: ../../language/async-experimental.md:35
 msgid ""
 "MoonBit provides two core primitives for `%async.suspend` and "
 "`%async.run`:"
 msgstr "MoonBit 提供了两个用于异步编程的原语：`%async.suspend` 和 `%async.run`："
 
-#: ../../language/async-experimental.md:29
+#: ../../language/async-experimental.md:37
 msgid ""
 "\n"
-"// `run_async` spawn a new coroutine and execute an async function in it\n"
-"fn run_async(f : () -> Unit!Async) -> Unit = \"%async.run\"\n"
+"/// `run_async` spawn a new coroutine and execute an async function in it"
 "\n"
-"// `suspend` will suspend the execution of the current coroutine.\n"
-"// The suspension will be handled by a callback passed to `suspend`\n"
+"fn run_async(f : async () -> Unit) -> Unit = \"%async.run\"\n"
+"\n"
+"/// `suspend` will suspend the execution of the current coroutine.\n"
+"/// The suspension will be handled by a callback passed to `suspend`\n"
 "async fn[T, E : Error] suspend(\n"
 "  // `f` is a callback for handling suspension\n"
 "  f : (\n"
@@ -116,16 +139,16 @@ msgid ""
 "    // the second parameter of `f` is used to cancel the execution of the"
 " current coroutine\n"
 "    // by throwing an error at suspension point\n"
-"    (E) -> Unit\n"
+"    (E) -> Unit,\n"
 "  ) -> Unit\n"
 ") -> T!E = \"%async.suspend\"\n"
 msgstr ""
 "\n"
-"// `run_async` 会创建一个新的协程，并在其中运行一个异步函数\n"
-"fn run_async(f : () -> Unit!Async) -> Unit = \"%async.run\"\n"
+"/// `run_async` 会创建一个新的协程，并在其中运行一个异步函数\n"
+"fn run_async(f : async () -> Unit) -> Unit = \"%async.run\"\n"
 "\n"
-"// `suspend` 会中断当前协程的运行。\n"
-"// `suspend` 会接受一个回调函数，并让这个回调函数来操作中断的协程\n"
+"/// `suspend` 会中断当前协程的运行。\n"
+"/// `suspend` 会接受一个回调函数，并让这个回调函数来操作中断的协程\n"
 "async fn[T, E : Error] suspend(\n"
 "  // `f` 是负责操作中断的协程的回调函数\n"
 "  f : (\n"
@@ -133,11 +156,11 @@ msgstr ""
 "    (T) -> Unit,\n"
 "    // `f` 的第二个参数用于取消被中断的协程。\n"
 "    // 取消会被表示为在中断处抛出错误\n"
-"    (E) -> Unit\n"
+"    (E) -> Unit,\n"
 "  ) -> Unit\n"
 ") -> T!E = \"%async.suspend\"\n"
 
-#: ../../language/async-experimental.md:35
+#: ../../language/async-experimental.md:43
 msgid ""
 "There two primitives are not intended for direct use by end users. "
 "However, since MoonBit's standard library for async programming is still "
@@ -145,13 +168,13 @@ msgid ""
 "manually to do async programming."
 msgstr "这两个原语不应该让终端用户直接调用。但由于 MoonBit 的异步标准库仍在开发中，目前，用户需要手动绑定这两个原语，才能编写异步程序。"
 
-#: ../../language/async-experimental.md:39
+#: ../../language/async-experimental.md:47
 msgid "There are two ways of reading these primitives:"
 msgstr "可以用两种不同的方式来理解这两个原语："
 
-#: ../../language/async-experimental.md:41
+#: ../../language/async-experimental.md:49
 msgid ""
-"the coroutine reading: `%async.run` spawn a new coroutine, and "
+"The coroutine reading: `%async.run` spawn a new coroutine, and "
 "`%async.suspend` suspend current coroutine. The main difference with "
 "other languages here is: instead of yielding all the way to the caller of"
 " `%async.run`, resumption of the coroutine is handled by the callback "
@@ -160,25 +183,25 @@ msgstr ""
 "理解为协程：`%async.run` 创建一个新的协程，`%async.suspend` "
 "中断当前协程。和其他语言的协程的主要区别是：中断协程时，不是由创建协程的地方来负责恢复执行，而是在中断的地方通过一个回调函数就地处理中断后的协程"
 
-#: ../../language/async-experimental.md:46
+#: ../../language/async-experimental.md:54
 msgid ""
-"the delimited continuation reading: `%async.run` is the `reset` operator "
+"The delimited continuation reading: `%async.run` is the `reset` operator "
 "in delimited continuation, and `%async.suspend` is the `shift` operator "
 "in delimited continuation"
 msgstr ""
 "理解为 delimited continuation：`%async.run` 是 delimited continuation 中的 "
 "`reset` 操作符，`%async.suspend` 是 delimited continuation `shift` 操作符"
 
-#: ../../language/async-experimental.md:49
+#: ../../language/async-experimental.md:58
 msgid "Here's an example of how these two primitives work:"
 msgstr "以下是使用这两个原语的示例："
 
-#: ../../language/async-experimental.md:51
+#: ../../language/async-experimental.md:60
 msgid ""
-"type! MyError  derive(Show)\n"
+"type! MyError derive(Show)\n"
 "\n"
 "async fn async_worker(throw_error~ : Bool) -> Unit!MyError {\n"
-"  suspend!(fn(resume_ok, resume_err) {\n"
+"  suspend(fn(resume_ok, resume_err) {\n"
 "    if throw_error {\n"
 "      resume_err(MyError)\n"
 "    } else {\n"
@@ -200,7 +223,7 @@ msgid ""
 "  // the `async` keyword can be omitted\n"
 "  run_async(fn() {\n"
 "    try {\n"
-"      async_worker!(throw_error=false)\n"
+"      async_worker(throw_error=false)\n"
 "      println(\"the worker finishes\")\n"
 "    } catch {\n"
 "      err => println(\"caught: \\{err}\")\n"
@@ -209,7 +232,7 @@ msgid ""
 "  println(\"after the first coroutine finishes\")\n"
 "  run_async(fn() {\n"
 "    try {\n"
-"      async_worker!(throw_error=true)\n"
+"      async_worker(throw_error=true)\n"
 "      println(\"the worker finishes\")\n"
 "    } catch {\n"
 "      err => println(\"caught: \\{err}\")\n"
@@ -217,10 +240,10 @@ msgid ""
 "  })\n"
 "}\n"
 msgstr ""
-"type! MyError  derive(Show)\n"
+"type! MyError derive(Show)\n"
 "\n"
 "async fn async_worker(throw_error~ : Bool) -> Unit!MyError {\n"
-"  suspend!(fn(resume_ok, resume_err) {\n"
+"  suspend(fn(resume_ok, resume_err) {\n"
 "    if throw_error {\n"
 "      resume_err(MyError)\n"
 "    } else {\n"
@@ -241,7 +264,7 @@ msgstr ""
 "  // 如果参数是一个匿名函数，可以省略 `async` 关键字\n"
 "  run_async(fn() {\n"
 "    try {\n"
-"      async_worker!(throw_error=false)\n"
+"      async_worker(throw_error=false)\n"
 "      println(\"worker 函数返回了\")\n"
 "    } catch {\n"
 "      err => println(\"捕获到了 \\{err}\")\n"
@@ -250,7 +273,7 @@ msgstr ""
 "  println(\"第一个协程结束之后\")\n"
 "  run_async(fn() {\n"
 "    try {\n"
-"      async_worker!(throw_error=true)\n"
+"      async_worker(throw_error=true)\n"
 "      println(\"worker 函数返回了\")\n"
 "    } catch {\n"
 "      err => println(\"捕获到了 \\{err}\")\n"
@@ -258,22 +281,22 @@ msgstr ""
 "  })\n"
 "}\n"
 
-#: ../../language/async-experimental.md:57
+#: ../../language/async-experimental.md:66
 msgid ""
 "In `async_worker`, `suspend` will capture the rest of the current "
 "coroutine as two \"continuation\" functions, and pass them to a callback."
 " In the callback, calling `resume_ok` will resume execution at the point "
 "of `suspend!(...)`, all the way until the `run_async` call that start "
 "this coroutine. calling `resume_err` will also resume execution of "
-"current coroutine, but it will make `suspend!(...)` throw an error "
-"instead of returning normally."
+"current coroutine, but it will make `suspend(...)` throw an error instead"
+" of returning normally."
 msgstr ""
 "在 `async_worker` 里，`suspend` 会捕获当前协程剩下的部分，并将它们表示成两个函数，传递给 `suspend` 的参数。在"
 " `suspend` 的参数里，调用 `resume_ok` 会让 `suspend!(...)` "
 "正常返回，恢复协程的运行，一直运行到创建这个协程的 `run_async(...)` 为止。调用 `resume_err` "
 "也会恢复协程的运行，但它会在 `suspend!(...)` 的位置抛出一个错误。"
 
-#: ../../language/async-experimental.md:63
+#: ../../language/async-experimental.md:72
 msgid ""
 "Notice that `suspend` type may throw error, even if `suspend` itself "
 "never throw an error directly. This design makes coroutines cancellable "
@@ -283,11 +306,11 @@ msgstr ""
 "`suspend` 的类型表明它可能抛出错误。但 `suspend` "
 "自身不会直接产生任何错误。这一设计保证了协程在每一个的中断点都是可以取消的：调用对应的 `resume_err` 函数即可。"
 
-#: ../../language/async-experimental.md:66
+#: ../../language/async-experimental.md:75
 msgid "Integrating with JS Promise/callback based API"
 msgstr "和 JS 的 Promise/回调 API 整合"
 
-#: ../../language/async-experimental.md:67
+#: ../../language/async-experimental.md:76
 msgid ""
 "Since MoonBit's standard async library is still under development, so "
 "there is no ready-to-use implementation for event loop and IO operations "
@@ -300,77 +323,87 @@ msgstr ""
 "编写异步程序最简单的办法是使用 JS 后端，并复用 JavaScript 的事件循环和输入输出 API。下面是一个整合 MoonBit "
 "的异步编程支持和 JS 的回调 API 的例子："
 
-#: ../../language/async-experimental.md:73
+#: ../../language/async-experimental.md:82
 msgid ""
 "extern type JSTimer\n"
-"extern \"js\" fn js_set_timeout(f : () -> Unit, duration : Int) -> "
+"\n"
+"extern \"js\" fn js_set_timeout(f : () -> Unit, duration~ : Int) -> "
 "JSTimer =\n"
 "  #| (f, duration) => setTimeout(f, duration)\n"
 "\n"
 "async fn sleep(duration : Int) -> Unit! {\n"
-"  suspend!(fn(resume_ok, _resume_err) {\n"
-"    let _ = js_set_timeout(fn() { resume_ok(()) }, duration)\n"
+"  suspend(fn(resume_ok, _resume_err) {\n"
+"    js_set_timeout(duration~, fn() { resume_ok(()) }) |> ignore\n"
 "  })\n"
 "}\n"
 "\n"
 "test {\n"
 "  run_async(fn() {\n"
 "    try {\n"
-"      sleep!(500)\n"
+"      sleep(500)\n"
 "      println(\"timer 1 tick\")\n"
-"      sleep!(1000)\n"
+"      sleep(1000)\n"
 "      println(\"timer 1 tick\")\n"
-"      sleep!(1500)\n"
+"      sleep(1500)\n"
 "      println(\"timer 1 tick\")\n"
-"    } catch { _ => panic() }\n"
+"    } catch {\n"
+"      _ => panic()\n"
+"    }\n"
 "  })\n"
 "  run_async(fn() {\n"
 "    try {\n"
-"      sleep!(600)\n"
+"      sleep(600)\n"
 "      println(\"timer 2 tick\")\n"
-"      sleep!(600)\n"
+"      sleep(600)\n"
 "      println(\"timer 2 tick\")\n"
-"      sleep!(600)\n"
+"      sleep(600)\n"
 "      println(\"timer 2 tick\")\n"
-"    } catch { _ => panic() }\n"
+"    } catch {\n"
+"      _ => panic()\n"
+"    }\n"
 "  })\n"
 "}\n"
 msgstr ""
 "extern type JSTimer\n"
-"extern \"js\" fn js_set_timeout(f : () -> Unit, duration : Int) -> "
+"\n"
+"extern \"js\" fn js_set_timeout(f : () -> Unit, duration~ : Int) -> "
 "JSTimer =\n"
 "  #| (f, duration) => setTimeout(f, duration)\n"
 "\n"
 "async fn sleep(duration : Int) -> Unit! {\n"
-"  suspend!(fn(resume_ok, _resume_err) {\n"
-"    let _ = js_set_timeout(fn () { resume_ok(()) }, duration)\n"
+"  suspend(fn(resume_ok, _resume_err) {\n"
+"    js_set_timeout(duration~, fn () { resume_ok(()) }) |> ignore\n"
 "  })\n"
 "}\n"
 "\n"
 "test {\n"
 "  run_async(fn() {\n"
 "    try {\n"
-"      sleep!(500)\n"
+"      sleep(500)\n"
 "      println(\"timer 1 tick\")\n"
-"      sleep!(1000)\n"
+"      sleep(1000)\n"
 "      println(\"timer 1 tick\")\n"
-"      sleep!(1500)\n"
+"      sleep(1500)\n"
 "      println(\"timer 1 tick\")\n"
-"    } catch { _ => panic() }\n"
+"    } catch {\n"
+"      _ => panic()\n"
+"    }\n"
 "  })\n"
 "  run_async(fn() {\n"
 "    try {\n"
-"      sleep!(600)\n"
+"      sleep(600)\n"
 "      println(\"timer 2 tick\")\n"
-"      sleep!(600)\n"
+"      sleep(600)\n"
 "      println(\"timer 2 tick\")\n"
-"      sleep!(600)\n"
+"      sleep(600)\n"
 "      println(\"timer 2 tick\")\n"
-"    } catch { _ => panic() }\n"
+"    } catch {\n"
+"      _ => panic()\n"
+"    }\n"
 "  })\n"
 "}\n"
 
-#: ../../language/async-experimental.md:79
+#: ../../language/async-experimental.md:88
 msgid ""
 "Integrating with JS Promise is easy too: just pass `resume_ok` as the "
 "`resolve` callback and `resume_err` as the `reject` callback to a JS "
@@ -1834,7 +1867,7 @@ msgstr ""
 #: ../../language/fundamentals.md:1087 ../../language/fundamentals.md:1114
 #: ../../language/fundamentals.md:1143 ../../language/fundamentals.md:1163
 #: ../../language/fundamentals.md:1197 ../../language/fundamentals.md:1211
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "Output"
 msgstr "输出"
 
@@ -7565,8 +7598,8 @@ msgid "E4041"
 msgstr ""
 
 #: ../../language/error_codes/E4041.md:3
-msgid "Partial type is not allowed in toplevel declarations."
-msgstr "不完整的类型在顶层声明中是不允许的。"
+msgid "Partial type annotation is not allowed in toplevel declaration."
+msgstr "不完整的类型注释在顶层声明中是不允许的。"
 
 #: ../../language/error_codes/E4041.md:7
 msgid "let a : Option[_] = Some(3)\n"
@@ -7575,8 +7608,8 @@ msgstr ""
 #: ../../language/error_codes/E4041.md:11
 msgid ""
 "The example above tries to create a top-level instance of the `Option[_]`"
-" type. However, partial type annotations are not allowed in toplevel "
-"declarations, giving the aforementioned error on line 1."
+" type. However, partial type annotation is not allowed in toplevel "
+"declaration, giving the aforementioned error on line 1."
 msgstr "在上述例子中，试图创建一个顶层的 `Option[_]` 类型的实例。然而，不完整的类型注释在顶层声明中是不允许的，在第 1 行报错。"
 
 #: ../../language/error_codes/E4041.md:17
@@ -8837,7 +8870,7 @@ msgstr "方法名称"
 msgid "Number of Arguments"
 msgstr "自动填充参数"
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:103
+#: ../../language/error_codes/E4065.md ../../language/methods.md:104
 msgid "`+`"
 msgstr ""
 
@@ -8849,7 +8882,7 @@ msgstr ""
 msgid "2"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:103
+#: ../../language/error_codes/E4065.md ../../language/methods.md:104
 msgid "`-`"
 msgstr ""
 
@@ -8857,7 +8890,7 @@ msgstr ""
 msgid "`op_sub`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:103
+#: ../../language/error_codes/E4065.md ../../language/methods.md:104
 msgid "`*`"
 msgstr ""
 
@@ -8865,7 +8898,7 @@ msgstr ""
 msgid "`op_mul`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:103
+#: ../../language/error_codes/E4065.md ../../language/methods.md:104
 msgid "`/`"
 msgstr ""
 
@@ -8873,7 +8906,7 @@ msgstr ""
 msgid "`op_div`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:103
+#: ../../language/error_codes/E4065.md ../../language/methods.md:104
 msgid "`%`"
 msgstr ""
 
@@ -8881,7 +8914,7 @@ msgstr ""
 msgid "`op_mod`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:103
+#: ../../language/error_codes/E4065.md ../../language/methods.md:104
 msgid "`==`"
 msgstr ""
 
@@ -8889,7 +8922,7 @@ msgstr ""
 msgid "`op_equal`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:103
+#: ../../language/error_codes/E4065.md ../../language/methods.md:104
 msgid "`<<`"
 msgstr ""
 
@@ -8897,7 +8930,7 @@ msgstr ""
 msgid "`op_shl`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:103
+#: ../../language/error_codes/E4065.md ../../language/methods.md:104
 msgid "`>>`"
 msgstr ""
 
@@ -8905,7 +8938,7 @@ msgstr ""
 msgid "`op_shr`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:103
+#: ../../language/error_codes/E4065.md ../../language/methods.md:104
 msgid "`-` (unary)"
 msgstr "`-`（一元）"
 
@@ -8947,7 +8980,7 @@ msgstr "`_[_:_]`（视图）"
 msgid "`op_as_view`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:103
+#: ../../language/error_codes/E4065.md ../../language/methods.md:104
 msgid "`&`"
 msgstr ""
 
@@ -8955,7 +8988,7 @@ msgstr ""
 msgid "`land`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:103
+#: ../../language/error_codes/E4065.md ../../language/methods.md:104
 msgid "`|`"
 msgstr ""
 
@@ -8963,7 +8996,7 @@ msgstr ""
 msgid "`lor`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:103
+#: ../../language/error_codes/E4065.md ../../language/methods.md:104
 msgid "`^`"
 msgstr ""
 
@@ -13240,11 +13273,6 @@ msgstr ""
 msgid "Cannot call async function in this context."
 msgstr ""
 
-#: ../../language/error_codes/E4149.md:5
-#, fuzzy
-msgid "Async functions can only be called in async functions."
-msgstr "异步函数可以用 `async` 关键字声明："
-
 #: ../../language/error_codes/E4149.md:9
 msgid ""
 "async fn f() -> Int {\n"
@@ -14596,8 +14624,8 @@ msgstr "`String` 包含一系列 UTF-16 码点。您可以使用双引号创建�
 #: ../../language/fundamentals.md:125
 msgid ""
 "let a = \"兔rabbit\"\n"
-"println(a[0])\n"
-"println(a[1])\n"
+"println(a.char_at(0))\n"
+"println(a.char_at(1))\n"
 "let b =\n"
 "  #| Hello\n"
 "  #| MoonBit\\n\n"
@@ -14691,8 +14719,7 @@ msgid ""
 "Multi-line strings can be defined using the leading `#|` or `$|`, where "
 "the former will keep the raw string and the former will perform the "
 "escape and interpolation:"
-msgstr ""
-"多行字符串可以使用前缀 `#|` 或 `$|` 定义，其中前者将保留原始字符串，后者将执行转义和插值："
+msgstr "多行字符串可以使用前缀 `#|` 或 `$|` 定义，其中前者将保留原始字符串，后者将执行转义和插值："
 
 #: ../../language/fundamentals.md:161
 msgid ""
@@ -15628,9 +15655,9 @@ msgid ""
 "fnalias new as new_2\n"
 "\n"
 "// creating multiple alias in one package\n"
-"fnalias @hashmap.(\n"
-"  iter,\n"
-"  each as hashmap_each\n"
+"fnalias @moonbitlang/core/prelude.(\n"
+"  tap,\n"
+"  then as touch\n"
 ")\n"
 msgstr ""
 "// `hashmap_new` 会成为 `@hashmap.new` 的别名\n"
@@ -15642,9 +15669,9 @@ msgstr ""
 "fnalias new as new_2\n"
 "\n"
 "// 为同一个包里的多个函数批量定义别名\n"
-"fnalias @hashmap.(\n"
-"  iter,\n"
-"  each as hashmap_each\n"
+"fnalias @moonbitlang/core/prelude.(\n"
+"  tap,\n"
+"  then as touch\n"
 ")\n"
 
 #: ../../language/fundamentals.md:622
@@ -17716,14 +17743,14 @@ msgid ""
 "fn[S, T] map(self : List[S], f : (S) -> T) -> List[T] {\n"
 "  match self {\n"
 "    Nil => Nil\n"
-"    Cons(x, xs) => Cons(f(x), map(xs, f))\n"
+"    Cons(x, xs) => Cons(f(x), xs.map(f))\n"
 "  }\n"
 "}\n"
 "\n"
 "fn[S, T] reduce(self : List[S], op : (T, S) -> T, init : T) -> T {\n"
 "  match self {\n"
 "    Nil => init\n"
-"    Cons(x, xs) => reduce(xs, op, op(init, x))\n"
+"    Cons(x, xs) => xs.reduce(op, op(init, x))\n"
 "  }\n"
 "}\n"
 msgstr ""
@@ -18386,73 +18413,103 @@ msgstr "方法系统"
 msgid ""
 "MoonBit supports methods in a different way from traditional object-"
 "oriented languages. A method in MoonBit is just a toplevel function "
-"associated with a type constructor. There are two ways to define a "
-"method:"
-msgstr "MoonBit 支持方法的方式与传统的面向对象语言不同。MoonBit 中的方法只是与类型构造器关联的顶层函数。方法可以用两种方式来定义："
-
-#: ../../language/methods.md:8
-msgid ""
-"`fn method_name(self : SelfType, ..)`, where the method belongs to "
-"`SelfType`. The name of the first parameter must be `self` here"
-msgstr ""
-"`fn method_name(self : SelfType, ..)`，如此定义的方法属于类型 `SelfType`。方法的第一个参数必须叫作"
-" `self`"
+"associated with a type constructor. To define a method, prepend "
+"`SelfTypeName::` in front of the function name, such as `fn "
+"SelfTypeName::method_name(...)`, and the method belongs to "
+"`SelfTypeName`."
+msgstr "MoonBit 支持方法的方式与传统的面向对象语言不同。MoonBit 中的方法只是与类型构造器关联的顶层函数。"
+"定义方法时，在函数名之前添加 `SelfTypeName::` 前缀，例如 `fn "
+"SelfTypeName::method_name(...)`，这样方法就属于 `SelfTypeName`。"
 
 #: ../../language/methods.md:9
 msgid ""
-"`fn SelfTypeName::method_name(...)`, where the method belongs to "
-"`SelfTypeName`"
-msgstr "`fn SelfTypeName::method_name(...)`，如此定义的方法属于类型 `SelfTypeName`"
+"Defining a method using the following syntax will be deprecated, where "
+"the name of the first parameter is `self`."
+msgstr ""
+"使用以下语法定义方法将被弃用，其中第一个参数的名称是 `self`。"
 
 #: ../../language/methods.md:11
+msgid "fn method_name(self : SelfType) { ... }"
+msgstr ""
+
+#: ../../language/methods.md:16
+msgid ""
+"You should migrate to the new syntax, and add [method alias](#method-"
+"alias) to keep the behavior:"
+msgstr ""
+"你应该迁移到新的语法，并添加 [方法别名](#method-alias) 来保持行为："
+
+#: ../../language/methods.md:18
+msgid ""
+"fn method_name(a : SelfType) { ... }\n"
+"fnalias SelfType::method_name"
+msgstr ""
+
+#: ../../language/methods.md:25
 msgid ""
 "enum List[X] {\n"
 "  Nil\n"
 "  Cons(X, List[X])\n"
 "}\n"
 "\n"
-"fn[X] length(self : List[X]) -> Int {\n"
-"  ...\n"
-"}\n"
-"\n"
-"fn[X] List::length_qualified(xs : List[X]) -> Int {\n"
+"fn[X] List::length(xs : List[X]) -> Int {\n"
 "  ...\n"
 "}\n"
 msgstr ""
-"enum List[X] {\n"
+
+#: ../../language/methods.md:31
+msgid ""
+"To call a method, you can either invoke using qualified syntax "
+"`T::method_name(..)`, or using dot syntax where the first argument is the"
+" type of `T`:"
+msgstr ""
+"要调用一个方法，可以使用语法 `T::method_name(..)`，或者当其中第一个参数是 `T` 的类型时使用点调用："
+
+#: ../../language/methods.md:33
+msgid ""
+"let l : List[Int] = Nil\n"
+"println(l.length())\n"
+"println(List::length(l))\n"
+msgstr ""
+
+#: ../../language/methods.md:40
+msgid ""
+"When the first parameter of a method is also the type it belongs to, "
+"methods can be called using dot syntax `x.method(...)`. MoonBit "
+"automatically finds the correct method based on the type of `x`, there is"
+" no need to write the type name and even the package name of the method:"
+msgstr ""
+"当方法的第一个参数也是它所属的类型时，可以使用点语法 `x.method(...)` 调用方法。MoonBit 根据 `x` "
+"的类型自动找到正确的方法，无需编写方法的类型名称甚至包名称："
+
+#: ../../language/methods.md:42
+msgid ""
+"pub(all) enum List[X] {\n"
 "  Nil\n"
 "  Cons(X, List[X])\n"
 "}\n"
 "\n"
-"fn[X] length(self : List[X]) -> Int {\n"
+"pub fn[X] List::concat(list : List[List[X]]) -> List[X] {\n"
 "  ...\n"
 "}\n"
-"\n"
-"fn[X] List::length_qualified(xs : List[X]) -> Int {\n"
-"  ...\n"
-"}\n"
-
-#: ../../language/methods.md:17
-msgid ""
-"The difference between these two syntax is: the syntax `fn "
-"method_name(self : T, ..)` defines a regular function. So the defined "
-"method can be involked directly, just like regular functions. In the `fn "
-"T::method_name(..)` syntax, however, the method is defined in the small "
-"namespace `T`, and must be involked using qualified syntax "
-"`T::method_name(..)`:"
-msgstr ""
-"这两种定义方式的区别是：`fn method_name(self : T, ..)` "
-"定义出的方法是一个普通的函数，因此它可以像普通函数一样直接调用。`fn T::method_name(..)` 定义出的方法处在命名空间 `T` "
-"内，因此调用它时，必须使用 `T::method_name(..)` 的形式。"
-
-#: ../../language/methods.md:23
-msgid ""
-"  let l : List[Int] = Nil\n"
-"  println(length(l))\n"
-"  println(List::length_qualified(l))\n"
 msgstr ""
 
-#: ../../language/methods.md:29
+#: ../../language/methods.md:48
+msgid "using package with alias list"
+msgstr "以别名 list 使用包"
+
+#: ../../language/methods.md:48
+msgid ""
+"// assume `xs` is a list of lists, all the following two lines are "
+"equivalent\n"
+"let _ = xs.concat()\n"
+"let _ = @list.List::concat(xs)\n"
+msgstr ""
+"// 假设 `xs` 是一个列表的列表，那么下面两种写法是等价的：\n"
+"let _ = xs.concat()\n"
+"let _ = @list.List::concat(xs)\n"
+
+#: ../../language/methods.md:56
 msgid ""
 "Unlike regular functions, methods defined using the "
 "`TypeName::method_name` syntax support overloading: different types can "
@@ -18460,7 +18517,7 @@ msgid ""
 " name space:"
 msgstr "用 `TypeName::method_name` 形式定义出的方法支持重载：由于不同类型的方法处于不同的命名空间中，不同的类型可以定义同名的方法。"
 
-#: ../../language/methods.md:32
+#: ../../language/methods.md:59
 msgid ""
 "struct T1 {\n"
 "  x1 : Int\n"
@@ -18485,88 +18542,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:39
-msgid ""
-"When the first parameter of a method is also the type it belongs to, "
-"methods can be called using dot syntax `x.method(...)`. MoonBit "
-"automatically finds the correct method based on the type of `x`, there is"
-" no need to write the type name and even the package name of the method:"
-msgstr ""
-"当方法的第一个参数也是它所属的类型时，可以使用点语法 `x.method(...)` 调用方法。MoonBit 根据 `x` "
-"的类型自动找到正确的方法，无需编写方法的类型名称甚至包名称："
-
-#: ../../language/methods.md:41
-msgid ""
-"pub(all) enum List[X] {\n"
-"  Nil\n"
-"  Cons(X, List[X])\n"
-"}\n"
-"\n"
-"pub fn[X] concat(self : List[List[X]]) -> List[X] {\n"
-"  ...\n"
-"}\n"
-msgstr ""
-"pub(all) enum List[X] {\n"
-"  Nil\n"
-"  Cons(X, List[X])\n"
-"}\n"
-"\n"
-"pub fn[X] concat(self : List[List[X]]) -> List[X] {\n"
-"  ...\n"
-"}\n"
-
-#: ../../language/methods.md:47
-msgid "using package with alias list"
-msgstr "以别名 list 使用包"
-
-#: ../../language/methods.md:47
-msgid ""
-"  // assume `xs` is a list of lists, all the following three lines are "
-"equivalent\n"
-"  let _ = xs.concat()\n"
-"  let _ = @list.List::concat(xs)\n"
-"  let _ = @list.concat(xs)\n"
-msgstr ""
-"  // 假设 `xs` 是一个列表的列表，那么下面三种写法是等价的：\n"
-"  let _ = xs.concat()\n"
-"  let _ = @list.List::concat(xs)\n"
-"  let _ = @list.concat(xs)\n"
-
-#: ../../language/methods.md:54
-msgid "API design guideline"
-msgstr "接口设计指南"
-
-#: ../../language/methods.md:56
-msgid ""
-"Since there are two ways to define methods, and both allow dot syntax, a "
-"natural question is which syntax to choose when designing the API of a "
-"package. The rule here is:"
-msgstr "既然有两种不同的方式来定义方法，并且两种方式都能使用 `.` 语法调用，那么在设计一个包的接口时，应该如何选择呢？MoonBit 推荐的选择是："
-
-#: ../../language/methods.md:60
-msgid ""
-"if the package exports only one primary type, or if a method is "
-"intuitively unambiguous in the package, use the `fn f(self : T, ..)` "
-"syntax"
-msgstr "如果一个包只有一个主要的公开类型，或者某个方法在这个包的语境下没有歧义，使用 `fn f(self : T, ..)` 的形式来定义方法"
-
-#: ../../language/methods.md:63
-msgid "otherwise, use the qualified `fn T::f(..)` syntax"
-msgstr "否则，使用 `fn T::f(..)` 来定义方法，以显式消除歧义"
-
-#: ../../language/methods.md:65
+#: ../../language/methods.md:66
 msgid "Method alias"
 msgstr "方法别名"
 
-#: ../../language/methods.md:67
+#: ../../language/methods.md:68
 msgid "MoonBit allows calling methods with alternative names via alias."
 msgstr "MoonBit 允许用户用别名来调用一个方法。声明方法别名的语法如下："
 
-#: ../../language/methods.md:69
+#: ../../language/methods.md:70
 msgid "The method alias will create a function with the corresponding name."
 msgstr "方法别名将创建一个具有相应名称的函数。"
 
-#: ../../language/methods.md:71
+#: ../../language/methods.md:72
 msgid ""
 "// same as `fnalias List::map as map`\n"
 "fnalias List::map\n"
@@ -18584,17 +18572,17 @@ msgstr ""
 "// 给一个类型的多个方法创建别名\n"
 "fnalias List::(concat as c, map as m)\n"
 
-#: ../../language/methods.md:77
+#: ../../language/methods.md:78
 msgid "Operator Overloading"
 msgstr "运算符重载"
 
-#: ../../language/methods.md:79
+#: ../../language/methods.md:80
 msgid ""
 "MoonBit supports overloading infix operators of builtin operators via "
 "several builtin traits. For example:"
 msgstr "MoonBit 通过内建的特征支持中缀运算符的重载，例如："
 
-#: ../../language/methods.md:81
+#: ../../language/methods.md:82
 msgid ""
 "struct T {\n"
 "  x : Int\n"
@@ -18611,13 +18599,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:87
+#: ../../language/methods.md:88
 msgid ""
 "Other operators are overloaded via methods, for example `op_get` and "
 "`op_set`:"
 msgstr "此外，还可以用方法来重载一些其他运算符，例如 `op_get` 和 `op_set`："
 
-#: ../../language/methods.md:89
+#: ../../language/methods.md:90
 msgid ""
 "struct Coord {\n"
 "  mut x : Int\n"
@@ -18639,7 +18627,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:95
+#: ../../language/methods.md:96
 msgid ""
 "fn main {\n"
 "  let c = { x: 1, y: 2 }\n"
@@ -18651,7 +18639,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid ""
 "{x: 1, y: 2}\n"
 "2\n"
@@ -18659,117 +18647,117 @@ msgid ""
 "23\n"
 msgstr ""
 
-#: ../../language/methods.md:107
+#: ../../language/methods.md:108
 msgid "Currently, the following operators can be overloaded:"
 msgstr "目前，可以重载以下运算符："
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "Operator Name"
 msgstr "运算符名称"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "overloading mechanism"
 msgstr "重载方式"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "trait `Add`"
 msgstr "特征 `Add`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "trait `Sub`"
 msgstr "特征 `Sub`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "trait `Mul`"
 msgstr "特征 `Mul`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "trait `Div`"
 msgstr "特征 `Div`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "trait `Mod`"
 msgstr "特征 `Mod`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "trait `Eq`"
 msgstr "特征 `Eq`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "trait `Shl`"
 msgstr "特征 `Shl`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "trait `Shr`"
 msgstr "特征 `Shr`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "trait `Neg`"
 msgstr "特征 `Neg`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "`_[_]` (get item)"
 msgstr "`_[_]`（获取项）"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "method `op_get`"
 msgstr "方法 `op_get`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "`_[_] = _` (set item)"
 msgstr "`_[_] = _`（设置项）"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "method `op_set`"
 msgstr "方法 `op_set`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "`_[_:_]` (view)"
 msgstr "`_[_:_]`（视图）"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "method `op_as_view`"
 msgstr "方法 `op_as_view`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "trait `BitAnd`"
 msgstr "特征 `BitAnd`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "trait `BitOr`"
 msgstr "特征 `BitOr`"
 
-#: ../../language/methods.md:103
+#: ../../language/methods.md:104
 msgid "trait `BitXOr`"
 msgstr "特征 `BitXOr`"
 
-#: ../../language/methods.md:127
+#: ../../language/methods.md:128
 msgid ""
 "When overloading `op_get`/`op_set`/`op_as_view`, the method must have a "
 "correcnt signature:"
 msgstr "在重载 `op_get`/`op_set`/`op_as_view` 时，定义的方法需要有正确的类型签名："
 
-#: ../../language/methods.md:129
+#: ../../language/methods.md:130
 msgid "`op_get` should have signature `(Self, Index) -> Result`"
 msgstr "`op_get` 的签名应该形如 `(Self, Index) -> Result`"
 
-#: ../../language/methods.md:130
+#: ../../language/methods.md:131
 msgid "`op_set` should have signature `(Self, Index, Value) -> Result`"
 msgstr "`op_set` 的签名应该形如 `(Self, Index, Value) -> Result`"
 
-#: ../../language/methods.md:131
+#: ../../language/methods.md:132
 msgid ""
 "`op_as_view` should have signature `(Self, start? : Index, end? : Index) "
 "-> Result`"
 msgstr "`op_as_view` 的签名应当形如 `(Self, start? : Index, end? : Index) -> Result`"
 
-#: ../../language/methods.md:133
+#: ../../language/methods.md:134
 msgid ""
 "By implementing `op_as_view` method, you can create a view for a user-"
 "defined type. Here is an example:"
 msgstr "通过实现 `op_as_view` 方法，可以为用户定义的类型创建视图。以下是一个例子："
 
-#: ../../language/methods.md:135
+#: ../../language/methods.md:136
 msgid ""
 "type DataView String\n"
 "\n"
@@ -18789,18 +18777,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:141
+#: ../../language/methods.md:142
 msgid "Trait system"
 msgstr "Trait（特征）系统"
 
-#: ../../language/methods.md:143
+#: ../../language/methods.md:144
 msgid ""
 "MoonBit provides a trait system for overloading/ad-hoc polymorphism. "
 "Traits declare a list of operations, which must be supplied when a type "
 "wants to implement the trait. Traits can be declared as follows:"
 msgstr "MoonBit 具有用于重载/特殊多态的结构特征系统。特征声明一系列操作，当类型想要实现特征时，必须提供这些操作。特征可以如下声明："
 
-#: ../../language/methods.md:145
+#: ../../language/methods.md:146
 msgid ""
 "pub(open) trait I {\n"
 "  method_(Int) -> Int\n"
@@ -18809,21 +18797,21 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:151
+#: ../../language/methods.md:152
 msgid ""
 "In the body of a trait definition, a special type `Self` is used to refer"
 " to the type that implements the trait."
 msgstr "在特征定义的主体中，使用特殊类型 `Self` 来引用实现特征的类型。"
 
-#: ../../language/methods.md:153
+#: ../../language/methods.md:154
 msgid "Extending traits"
 msgstr "扩展特征"
 
-#: ../../language/methods.md:155
+#: ../../language/methods.md:156
 msgid "A trait can depend on other traits, for example:"
 msgstr "特征（子特征）可以依赖于其他特征（超特征），例如："
 
-#: ../../language/methods.md:157
+#: ../../language/methods.md:158
 msgid ""
 "pub(open) trait Position {\n"
 "  pos(Self) -> (Int, Int)\n"
@@ -18836,11 +18824,11 @@ msgid ""
 "pub(open) trait Object: Position + Draw {}\n"
 msgstr ""
 
-#: ../../language/methods.md:163
+#: ../../language/methods.md:164
 msgid "Implementing traits"
 msgstr "实现特征"
 
-#: ../../language/methods.md:165
+#: ../../language/methods.md:166
 msgid ""
 "To implement a trait, a type must explicitly provide all the methods "
 "required by the trait using the syntax `impl Trait for Type with "
@@ -18849,7 +18837,7 @@ msgstr ""
 "如果某类型想要实现一个特征，它需要显式地实现特征中的所有方法。实现特征方法的语法是 `impl Trait for Type with "
 "method_name(...) { ... }`，例如："
 
-#: ../../language/methods.md:168
+#: ../../language/methods.md:169
 msgid ""
 "pub(open) trait MyShow {\n"
 "  to_string(Self) -> String\n"
@@ -18889,20 +18877,20 @@ msgstr ""
 "  ...\n"
 "}\n"
 
-#: ../../language/methods.md:174
+#: ../../language/methods.md:175
 msgid ""
 "Type annotation can be omitted for trait `impl`: MoonBit will "
 "automatically infer the type based on the signature of `Trait::method` "
 "and the self type."
 msgstr "`impl` 实现的类型注释可以省略：MoonBit 将根据 `Trait::method` 的签名和 self 类型自动推断类型。"
 
-#: ../../language/methods.md:176
+#: ../../language/methods.md:177
 msgid ""
 "The author of the trait can also define **default implementations** for "
 "some methods in the trait, for example:"
 msgstr "特征的作者还可以为特征中的某些方法定义**默认实现**，例如："
 
-#: ../../language/methods.md:178
+#: ../../language/methods.md:179
 msgid ""
 "pub(open) trait J {\n"
 "  f(Self) -> Unit\n"
@@ -18915,7 +18903,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:184
+#: ../../language/methods.md:185
 msgid ""
 "Implementers of trait `J` don't have to provide an implementation for "
 "`f_twice`: to implement `J`, only `f` is necessary. They can always "
@@ -18925,7 +18913,7 @@ msgstr ""
 " `J` 的类型实现特征时不必为 `f_twice` 提供实现：要实现 `J`，只有 `f` 是必要的。如果需要，他们总是可以显式地用 `impl"
 " J for Type with f_twice` 覆盖默认实现。"
 
-#: ../../language/methods.md:187
+#: ../../language/methods.md:188
 msgid ""
 "impl J for Int with f(self) {\n"
 "  println(self)\n"
@@ -18942,13 +18930,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../language/methods.md:193
+#: ../../language/methods.md:194
 msgid ""
 "To implement the sub trait, one will have to implement the super traits, "
 "and the methods defined in the sub trait. For example:"
 msgstr "要实现子特征，必须实现超特征，以及子特征中的方法。"
 
-#: ../../language/methods.md:196
+#: ../../language/methods.md:197
 msgid ""
 "impl Position for Point with pos(self) {\n"
 "  (self.x, self.y)\n"
@@ -18969,22 +18957,22 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:203 ../../language/packages.md:152
+#: ../../language/methods.md:204 ../../language/packages.md:152
 msgid "Currently, an empty trait is implemented automatically."
 msgstr "目前，空特征会自动实现。"
 
-#: ../../language/methods.md:206
+#: ../../language/methods.md:207
 msgid "Using traits"
 msgstr "使用特征"
 
-#: ../../language/methods.md:208
+#: ../../language/methods.md:209
 msgid ""
 "When declaring a generic function, the type parameters can be annotated "
 "with the traits they should implement, allowing the definition of "
 "constrained generic functions. For example:"
 msgstr "在声明泛型函数时，可以使用特征注释类型参数，来定义受约束的泛型函数。例如："
 
-#: ../../language/methods.md:210
+#: ../../language/methods.md:211
 msgid ""
 "fn[X : Eq] contains(xs : Array[X], elem : X) -> Bool {\n"
 "  for x in xs {\n"
@@ -18997,7 +18985,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:216
+#: ../../language/methods.md:217
 msgid ""
 "Without the `Eq` requirement, the expression `x == elem` in `contains` "
 "will result in a type error. Now, the function `contains` can be called "
@@ -19006,7 +18994,7 @@ msgstr ""
 "如果没有 `Eq` 要求，`contains` 中的表达式 `x == elem` 将产生类型错误。现在，函数 `contains` "
 "可以使用任何实现 `Eq` 的类型调用，例如："
 
-#: ../../language/methods.md:218
+#: ../../language/methods.md:219
 msgid ""
 "struct Point {\n"
 "  x : Int\n"
@@ -19024,11 +19012,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:224
+#: ../../language/methods.md:225
 msgid "Invoke trait methods directly"
 msgstr "直接调用特征方法"
 
-#: ../../language/methods.md:226
+#: ../../language/methods.md:227
 msgid ""
 "Methods of a trait can be called directly via `Trait::method`. MoonBit "
 "will infer the type of `Self` and check if `Self` indeed implements "
@@ -19037,7 +19025,7 @@ msgstr ""
 "可以通过 `Trait::method` 直接调用特征的方法。MoonBit 将推断 `Self` 的类型，并检查 `Self` 是否确实实现了 "
 "`Trait`，例如："
 
-#: ../../language/methods.md:228
+#: ../../language/methods.md:229
 msgid ""
 "test {\n"
 "  assert_eq!(Show::to_string(42), \"42\")\n"
@@ -19045,44 +19033,44 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:234
+#: ../../language/methods.md:235
 msgid ""
 "Trait implementations can also be invoked via dot syntax, with the "
 "following restrictions:"
 msgstr "特征实现也可以通过点语法调用，但有以下限制："
 
-#: ../../language/methods.md:236
+#: ../../language/methods.md:237
 msgid ""
 "if a regular method is present, the regular method is always favored when"
 " using dot syntax"
 msgstr "如果存在常规方法，使用点语法时总是优先选择常规方法"
 
-#: ../../language/methods.md:237
+#: ../../language/methods.md:238
 msgid ""
 "only trait implementations that are located in the package of the self "
 "type can be invoked via dot syntax"
 msgstr "只有位于 self 类型的包中的特征实现才能通过点语法调用"
 
-#: ../../language/methods.md:238
+#: ../../language/methods.md:239
 msgid ""
 "if there are multiple trait methods (from different traits) with the same"
 " name available, an ambiguity error is reported"
 msgstr "如果有多个具有相同名称的特征方法（来自不同的特征）可用，将报告歧义错误"
 
-#: ../../language/methods.md:239
+#: ../../language/methods.md:240
 msgid ""
 "if neither of the above two rules apply, trait `impl`s in current package"
 " will also be searched for dot syntax. This allows extending a foreign "
 "type locally."
 msgstr "如果上述两条规则都不适用，还将在当前包中搜索特征 `impl` 以进行点语法。这允许在本地扩展外部类型。"
 
-#: ../../language/methods.md:241
+#: ../../language/methods.md:242
 msgid ""
 "these `impl`s can only be called via dot syntax locally, even if they are"
 " public."
 msgstr "这些 `impl` 只能在本地通过点语法调用，即使它们是公开的。"
 
-#: ../../language/methods.md:243
+#: ../../language/methods.md:244
 msgid ""
 "The above rules ensures that MoonBit's dot syntax enjoys good property "
 "while being flexible. For example, adding a new dependency never break "
@@ -19093,11 +19081,11 @@ msgstr ""
 "上述规则确保了 MoonBit 的点语法具有良好的特性，同时也具有灵活性。例如，由于歧义，添加新依赖关系永远不会破坏现有的点语法代码。这些规则还使"
 " MoonBit 的名称解析非常简单：通过点语法调用的方法必须始终来自当前包或类型的包！"
 
-#: ../../language/methods.md:248
+#: ../../language/methods.md:249
 msgid "Here's an example of calling trait `impl` with dot syntax:"
 msgstr "以下是使用点语法调用特征 `impl` 的示例："
 
-#: ../../language/methods.md:250
+#: ../../language/methods.md:251
 msgid ""
 "struct MyCustomType {}\n"
 "\n"
@@ -19112,19 +19100,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:256
+#: ../../language/methods.md:257
 msgid "Trait alias"
 msgstr "特征别名"
 
-#: ../../language/methods.md:258
+#: ../../language/methods.md:259
 msgid "MoonBit allows using traits with alternative names via trait alias."
 msgstr "MoonBit 允许用户用别名来使用一个特征。："
 
-#: ../../language/methods.md:260
+#: ../../language/methods.md:261
 msgid "Trait alias can be declared as follows:"
 msgstr "特征别名可以声明如下："
 
-#: ../../language/methods.md:262
+#: ../../language/methods.md:263
 msgid ""
 "// CanCompare is an alias of Compare\n"
 "traitalias @builtin.Compare as CanCompare\n"
@@ -19132,11 +19120,11 @@ msgstr ""
 "// CanCompare 是 Compare 的别名\n"
 "traitalias @builtin.Compare as CanCompare\n"
 
-#: ../../language/methods.md:268
+#: ../../language/methods.md:269
 msgid "Trait objects"
 msgstr "特征对象"
 
-#: ../../language/methods.md:270
+#: ../../language/methods.md:271
 msgid ""
 "MoonBit supports runtime polymorphism via trait objects. If `t` is of "
 "type `T`, which implements trait `I`, one can pack the methods of `T` "
@@ -19150,7 +19138,7 @@ msgstr ""
 "的 `T` 的方法与 `t` 一起打包到运行时对象中。如果从上下文可以知道某个表达式的类型是特征对象类型，则 `as &I` "
 "可以省略。特征对象擦除了值的具体类型，因此可以将从不同具体类型创建的对象放入相同的数据结构并统一处理："
 
-#: ../../language/methods.md:278
+#: ../../language/methods.md:279
 msgid ""
 "pub(open) trait Animal {\n"
 "  speak(Self) -> String\n"
@@ -19191,29 +19179,29 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:284
+#: ../../language/methods.md:285
 msgid ""
 "Not all traits can be used to create objects. \"object-safe\" traits' "
 "methods must satisfy the following conditions:"
 msgstr "并非所有特征都可以用于创建对象。“对象安全”特征的方法必须满足以下条件："
 
-#: ../../language/methods.md:287
+#: ../../language/methods.md:288
 msgid "`Self` must be the first parameter of a method"
 msgstr "`Self` 必须是方法的第一个参数"
 
-#: ../../language/methods.md:288
+#: ../../language/methods.md:289
 msgid ""
 "There must be only one occurrence of `Self` in the type of the method "
 "(i.e. the first parameter)"
 msgstr "方法的类型中只能出现一个 `Self`（即第一个参数）"
 
-#: ../../language/methods.md:290
+#: ../../language/methods.md:291
 msgid ""
 "Users can define new methods for trait objects, just like defining new "
 "methods for structs and enums:"
 msgstr "用户可以为特征对象定义新方法，就像为结构体和枚举定义新方法一样："
 
-#: ../../language/methods.md:292
+#: ../../language/methods.md:293
 msgid ""
 "pub(open) trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
@@ -19265,15 +19253,15 @@ msgstr ""
 "  ..write_string(\")\")\n"
 "}\n"
 
-#: ../../language/methods.md:298
+#: ../../language/methods.md:299
 msgid "Builtin traits"
 msgstr "内建特征"
 
-#: ../../language/methods.md:300
+#: ../../language/methods.md:301
 msgid "MoonBit provides the following useful builtin traits:"
 msgstr "MoonBit 提供了以下有用的内建特征："
 
-#: ../../language/methods.md:304
+#: ../../language/methods.md:305
 msgid ""
 "trait Eq {\n"
 "  op_equal(Self, Self) -> Bool\n"
@@ -19321,15 +19309,15 @@ msgstr ""
 "  default() -> Self\n"
 "}\n"
 
-#: ../../language/methods.md:329
+#: ../../language/methods.md:330
 msgid "Deriving builtin traits"
 msgstr "派生内建特征"
 
-#: ../../language/methods.md:331
+#: ../../language/methods.md:332
 msgid "MoonBit can automatically derive implementations for some builtin traits:"
 msgstr "MoonBit 可以自动为一些内建特征派生实现："
 
-#: ../../language/methods.md:333
+#: ../../language/methods.md:334
 msgid ""
 "struct T {\n"
 "  a : Int\n"
@@ -19346,7 +19334,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:339
+#: ../../language/methods.md:340
 msgid "See [Deriving](./derive.md) for more information about deriving traits."
 msgstr "参见 [派生](./derive.md) 了解有关派生特征的更多信息。"
 
@@ -19879,8 +19867,8 @@ msgid ""
 "control](#access-control) and the function parameter names should be "
 "omitted."
 msgstr ""
-"接口文件的第一行需要是 `package \"full-package-name\"`。接下来是声明。[访问控制"
-"](#access-control) 的 `pub` 关键字和函数参数名称应该省略。"
+"接口文件的第一行需要是 `package \"full-package-name\"`。接下来是声明。[访问控制](#access-"
+"control) 的 `pub` 关键字和函数参数名称应该省略。"
 
 #: ../../language/packages.md:228
 msgid ""
@@ -20253,15 +20241,3 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
-
-#~ msgid "If the async function may throw error, `!` will also rethrow the error."
-#~ msgstr "如果异步函数会抛出错误，`!` 也会把错误一并转发。"
-
-#~ msgid ""
-#~ "Multi-line strings do not support "
-#~ "interpolation by default, but you can"
-#~ " enable interpolation for a specific "
-#~ "line by changing the leading `#|` "
-#~ "to `$|`:"
-#~ msgstr "多行字符串默认不支持插值，但您可以通过将前导 `#|` 更改为 `$|` 来为特定行启用插值："
-

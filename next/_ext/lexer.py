@@ -35,7 +35,7 @@ class MoonBitLexer(RegexLexer):
             (r"\d(_|\d)*U?", token.Number.Integer),
             (r"\d+(.\d+)?", token.Number),
             (words(('type', 'type!', 'enum', 'struct', 'trait', 'typealias', 'traitalias'), suffix=r"\b"), token.Keyword.Declaration),
-            (words(('async', 'fn', 'const', 'let', 'mut', 'impl', 'with', 'derive'), suffix=r"\b"), token.Keyword.Declaration),
+            (words(('async', 'fn', 'const', 'let', 'mut', 'impl', 'with', 'derive', 'fnalias'), suffix=r"\b"), token.Keyword.Declaration),
             (words(('self', 'Self'), suffix=r"\b"), token.Keyword),
             (words(('guard', 'if', 'while', 'match', 'else', 'loop', 'for', 'in', 'is'), suffix=r"\b"), token.Keyword),
             (words(('return', 'break', 'continue'), suffix=r"\b"), token.Keyword),
@@ -49,6 +49,9 @@ class MoonBitLexer(RegexLexer):
             (words(('not', 'lsl', 'lsr', 'asr', 'op_add', 'op_sub', 'op_div', 'op_mul', 'op_mod', '...')), token.Operator.Word),
             # @namespace.
             (r"@[A-Za-z][A-Za-z0-9_/]*\.", token.Name.Namespace),
+            # Function alias
+            (r"([a-z][A-Za-z0-9_]*)(\s+)(as)(\s+)([a-z][A-Za-z0-9_]*)", bygroups(token.Name.Function, token.Whitespace, token.Punctuation, token.Whitespace, token.Name.Function)),
+            (r"([A-Za-z][A-Za-z0-9_]*)(::)([A-Za-z][A-Za-z0-9_]*)(\s+)(as)(\s+)([a-z][A-Za-z0-9_]*)", bygroups(token.Name.Class, token.Punctuation, token.Name.Function, token.Whitespace, token.Punctuation, token.Whitespace, token.Name.Function)),
             # Type::function
             (r"([A-Za-z][A-Za-z0-9_]*)(::)([A-Za-z][A-Za-z0-9_]*)", bygroups(token.Name.Class, token.Punctuation, token.Name.Function)),
             # function(

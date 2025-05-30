@@ -6,13 +6,13 @@ enum List[T] {
 fn[S, T] map(self : List[S], f : (S) -> T) -> List[T] {
   match self {
     Nil => Nil
-    Cons(x, xs) => Cons(f(x), map(xs, f))
+    Cons(x, xs) => Cons(f(x), xs.map(f))
   }
 }
 
 fn[S, T] reduce(self : List[S], op : (T, S) -> T, init : T) -> T {
   match self {
     Nil => init
-    Cons(x, xs) => reduce(xs, op, op(init, x))
+    Cons(x, xs) => xs.reduce(op, op(init, x))
   }
 }

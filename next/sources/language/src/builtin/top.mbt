@@ -58,8 +58,8 @@ test "string 1" (t : @test.T) {
   let println = fn(show) { t.writeln(show) }
   // start string 1
   let a = "兔rabbit"
-  println(a[0])
-  println(a[1])
+  println(a.char_at(0))
+  println(a.char_at(1))
   let b =
     #| Hello
     #| MoonBit\n

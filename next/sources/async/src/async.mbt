@@ -1,11 +1,9 @@
 // start async function declaration
-///|
 async fn my_async_function() -> Unit {
   ...
 }
 
 // anonymous/local function
-///|
 test {
   let async_lambda = async fn() { ... }
   async fn local_async_function() {
@@ -17,12 +15,10 @@ test {
 // end async function declaration
 
 // start async function call syntax
-///|
 async fn some_async_function() -> Unit! {
   ...
 }
 
-///|
 async fn another_async_function() -> Unit! {
   some_async_function() // rendered in italic font
 }
@@ -30,11 +26,9 @@ async fn another_async_function() -> Unit! {
 
 // start async primitive
 
-///|
 /// `run_async` spawn a new coroutine and execute an async function in it
 fn run_async(f : async () -> Unit) -> Unit = "%async.run"
 
-///|
 /// `suspend` will suspend the execution of the current coroutine.
 /// The suspension will be handled by a callback passed to `suspend`
 async fn[T, E : Error] suspend(
@@ -50,10 +44,8 @@ async fn[T, E : Error] suspend(
 // end async primitive
 
 // start async example
-///|
 type! MyError derive(Show)
 
-///|
 async fn async_worker(throw_error~ : Bool) -> Unit!MyError {
   suspend(fn(resume_ok, resume_err) {
     if throw_error {
@@ -71,7 +63,6 @@ async fn async_worker(throw_error~ : Bool) -> Unit!MyError {
 //   the end of the coroutine
 //   after the first coroutine finishes
 //   caught MyError
-///|
 test {
   // when supplying an anonymous function
   // to a higher order function that expects async parameter,
@@ -97,21 +88,17 @@ test {
 // end async example
 
 // start async timer example
-///|
 extern type JSTimer
 
-///|
 extern "js" fn js_set_timeout(f : () -> Unit, duration~ : Int) -> JSTimer =
   #| (f, duration) => setTimeout(f, duration)
 
-///|
 async fn sleep(duration : Int) -> Unit! {
   suspend(fn(resume_ok, _resume_err) {
     js_set_timeout(duration~, fn() { resume_ok(()) }) |> ignore
   })
 }
 
-///|
 test {
   run_async(fn() {
     try {

@@ -14,7 +14,7 @@ Async functions are declared with the `async` keyword:
 ```
 
 Since MoonBit is a statically typed language, the compiler will track its 
-asyncness, so you can just call async functions like normal functions, the 
+asyncness, so you can just call async functions like normal functions, the
 MoonBit IDE will highlight the async function call with a different style.
 
 ```{literalinclude} /sources/async/src/async.mbt
@@ -51,8 +51,8 @@ There are two ways of reading these primitives:
   The main difference with other languages here is:
   instead of yielding all the way to the caller of `%async.run`,
   resumption of the coroutine is handled by the callback passed to `%async.suspend`
-- The delimited continuation reading: `%async.run` is the `reset` operator in 
-  delimited continuation, and `%async.suspend` is the `shift` operator in 
+- The delimited continuation reading: `%async.run` is the `reset` operator in
+  delimited continuation, and `%async.suspend` is the `shift` operator in
   delimited continuation
 
 Here's an example of how these two primitives work:
