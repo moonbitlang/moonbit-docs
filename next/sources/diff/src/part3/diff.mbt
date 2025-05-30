@@ -11,19 +11,19 @@ struct Snake {
   end : (Int, Int)
 } derive(Show)
 
-fn width(self : Box) -> Int {
+fn Box::width(self : Box) -> Int {
   self.right - self.left
 }
 
-fn height(self : Box) -> Int {
+fn Box::height(self : Box) -> Int {
   self.bottom - self.top
 }
 
-fn size(self : Box) -> Int {
+fn Box::size(self : Box) -> Int {
   self.width() + self.height()
 }
 
-fn delta(self : Box) -> Int {
+fn Box::delta(self : Box) -> Int {
   self.width() - self.height()
 }
 
@@ -37,7 +37,7 @@ fn is_even(n : Int) -> Bool {
 }
 
 // start search definition
-fn forward(
+fn Box::forward(
   self : Box,
   forward~ : BPArray[Int],
   backward~ : BPArray[Int],
@@ -72,7 +72,7 @@ fn forward(
   return None
 }
 
-fn backward(
+fn Box::backward(
   self : Box,
   forward~ : BPArray[Int],
   backward~ : BPArray[Int],
@@ -107,7 +107,7 @@ fn backward(
 // end search definition
 
 // start midpoint definition
-fn midpoint(self : Box, old~ : Array[Line], new~ : Array[Line]) -> Snake? {
+fn Box::midpoint(self : Box, old~ : Array[Line], new~ : Array[Line]) -> Snake? {
   if self.size() == 0 {
     return None
   }
@@ -139,12 +139,12 @@ fn midpoint(self : Box, old~ : Array[Line], new~ : Array[Line]) -> Snake? {
 // end midpoint definition
 
 // start findpath definition
-fn find_path(
+fn Box::find_path(
   box : Box,
   old~ : Array[Line],
   new~ : Array[Line]
 ) -> Iter[(Int, Int)]? {
-  guard midpoint(box, old~, new~) is Some(snake) else { None }
+  guard box.midpoint(old~, new~) is Some(snake) else { None }
   let start = snake.start
   let end = snake.end
   let headbox = Box::{
@@ -159,8 +159,8 @@ fn find_path(
     right: box.right,
     bottom: box.bottom,
   }
-  let head = find_path(headbox, old~, new~).or(Iter::singleton(start))
-  let tail = find_path(tailbox, old~, new~).or(Iter::singleton(end))
+  let head = headbox.find_path(old~, new~).or(Iter::singleton(start))
+  let tail = tailbox.find_path(old~, new~).or(Iter::singleton(end))
   Some(head.concat(tail))
 }
 // end findpath definition
@@ -172,7 +172,7 @@ fn linear_diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit]? {
     right: old.length(),
     bottom: new.length(),
   }
-  guard find_path(initial_box, old~, new~) is Some(path) else { None }
+  guard initial_box.find_path(old~, new~) is Some(path) else { None }
   // path length >= 2
   let xy = path.take(1).collect()[0] // (0, 0)
   let mut x1 = xy.0
