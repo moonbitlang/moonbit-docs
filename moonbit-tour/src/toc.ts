@@ -10,14 +10,19 @@ function highlightCurrent() {
   const sections =
     document.querySelectorAll<HTMLUListElement>(".toc-sections")!;
   let openSectionIndex = -1;
+  const highlightClass = ["font-bold", "border-l-2", "border-purple-500"];
   for (const [i, section] of sections.entries()) {
     const links = section.querySelectorAll<HTMLAnchorElement>(".toc-link")!;
     for (const link of links) {
       if (link.href === location.href) {
         openSectionIndex = i;
-        link.classList.add("font-bold");
+        for (const c of highlightClass) {
+          link.classList.add(c);
+        }
       } else {
-        link.classList.remove("font-bold");
+        for (const c of highlightClass) {
+          link.classList.remove(c);
+        }
       }
     }
   }
@@ -40,10 +45,36 @@ const tocButton = document.getElementById("toc-button")!;
 const toc = document.getElementById("toc")!;
 const themeButton = document.querySelector<HTMLButtonElement>("#theme")!;
 
+let tocVisible = false;
+const isMd = window.matchMedia("(min-width: 768px)").matches;
+function showToc() {
+  if (isMd) {
+    toc.classList.remove("md:right-[-400px]");
+  } else {
+    toc.classList.toggle("hidden");
+  }
+}
+function hideToc() {
+  if (isMd) {
+    toc.classList.add("md:right-[-400px]");
+  } else {
+    toc.classList.toggle("hidden");
+  }
+}
 export function init() {
   tocButton.onclick = () => {
-    toc.classList.toggle("hidden");
+    const targetVisible = !tocVisible;
+    if (targetVisible) {
+      showToc();
+    } else {
+      hideToc();
+    }
+    tocVisible = targetVisible;
   };
+
+  if (isMd) {
+    toc.classList.remove("hidden");
+  }
 
   for (const div of document.querySelectorAll<HTMLDivElement>(".toc-chapter")) {
     tocChapter(div);
@@ -59,8 +90,8 @@ export function init() {
         themeButton.contains(e.target)
       )
         return;
-      if (toc.classList.contains("hidden")) return;
-      toc.classList.add("hidden");
+      if (!tocVisible) return;
+      hideToc();
     },
     { capture: true },
   );
