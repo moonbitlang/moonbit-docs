@@ -1,4 +1,5 @@
-// start shortest_edit definition
+///| start shortest_edit definition
+///
 fn shortest_edit(
   old~ : Array[Line],
   new~ : Array[Line]
@@ -41,7 +42,8 @@ fn shortest_edit(
 }
 // end shortest_edit definition
 
-// start backtrack_fst definition
+///| start backtrack_fst definition
+///
 fn backtrack(
   new~ : Array[Line],
   old~ : Array[Line],
@@ -81,17 +83,19 @@ fn backtrack(
   return edits
 }
 
-// start diff definition
+///| start diff definition
+///
 fn diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit] {
   let trace = shortest_edit(old~, new~)
   backtrack(old~, new~, trace)
 }
 // end diff definition
 
+///|
 test "myers diff" {
   let old = lines("A\nB\nC\nA\nB\nB\nA")
   let new = lines("C\nB\nA\nB\nA\nC")
-  inspect!(
+  inspect(
     pprint_diff(diff(old~, new~)),
     content=
       #|-    1         A
