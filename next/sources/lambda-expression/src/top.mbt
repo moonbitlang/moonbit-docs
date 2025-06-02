@@ -1,20 +1,24 @@
+///|
 enum Term {
   Var(String) // Variable
   Abs(String, Term) // Define lambda, variables represented by strings
   App(Term, Term) // Call lambda
 }
 
+///|
 struct Index {
   name : String
   depth : Int
 }
 
+///|
 enum TermDBI {
   Var(String, Int)
   Abs(String, TermDBI)
   App(TermDBI, TermDBI)
 }
 
+///|
 impl Show for TermDBI with output(self, logger) -> Unit {
   match self {
     Var(name, _) => logger.write_string(name)
@@ -23,13 +27,13 @@ impl Show for TermDBI with output(self, logger) -> Unit {
   }
 }
 
-/// https://bor0.wordpress.com/2019/03/19/writing-a-lambda-calculus-evaluator-in-haskell/
-fn Term::bruijn(self : Term) -> Result[TermDBI, String] {
+///| https://bor0.wordpress.com/2019/03/19/writing-a-lambda-calculus-evaluator-in-haskell/
+fn Term::bruijn(self : Self) -> Result[TermDBI, String] {
   // Find the depth corresponding to the first varname in the environment
-  fn find(map : @immut/list.T[Index], varname : String) -> Result[Int, String] {
+  fn find(map : @list.T[Index], varname : String) -> Result[Int, String] {
     match map {
-      Nil => Err(varname)
-      Cons(i, rest) =>
+      Empty => Err(varname)
+      More(i, tail=rest) =>
         if i.name == varname {
           Ok(i.depth)
         } else {
@@ -38,7 +42,7 @@ fn Term::bruijn(self : Term) -> Result[TermDBI, String] {
     }
   }
 
-  fn go(m : @immut/list.T[Index], term : Term) -> Result[TermDBI, String] {
+  fn go(m : @list.T[Index], term : Term) -> Result[TermDBI, String] {
     match term {
       Var(name) => {
         let idx = find(m, name)
@@ -48,10 +52,9 @@ fn Term::bruijn(self : Term) -> Result[TermDBI, String] {
         }
       }
       Abs(varname, body) => {
-        let m = @immut/list.Cons(
-          { name: varname, depth: 0 },
-          m.map(fn(index) { { name: index.name, depth: index.depth + 1 } }),
-        )
+        let m = m
+          .map(fn(index) { { name: index.name, depth: index.depth + 1 } })
+          .add({ name: varname, depth: 0 })
         let res = go(m, body)
         match res {
           Err(name) => Err(name)
@@ -67,9 +70,10 @@ fn Term::bruijn(self : Term) -> Result[TermDBI, String] {
     }
   }
 
-  go(Nil, self)
+  go(@list.empty(), self)
 }
 
+///|
 fn subst(t1 : TermDBI, t2 : TermDBI) -> TermDBI {
   fn go(t1 : TermDBI, t2 : TermDBI, depth : Int) -> TermDBI {
     match t1 {
@@ -82,6 +86,7 @@ fn subst(t1 : TermDBI, t2 : TermDBI) -> TermDBI {
   go(t1, t2, 0)
 }
 
+///|
 fn TermDBI::eval(self : TermDBI) -> TermDBI {
   match self {
     App(t1, t2) =>
@@ -95,21 +100,22 @@ fn TermDBI::eval(self : TermDBI) -> TermDBI {
   }
 }
 
+///|
 test {
   // (\x.x x) (\y.y)
   let exp : Term = App(Abs("x", App(Var("x"), Var("x"))), Abs("x", Var("x")))
   let exp = Term::bruijn(exp)
   match exp {
-    Err(name) => fail!("err on \{name}\n")
+    Err(name) => fail("err on \{name}\n")
     Ok(t) => {
-      inspect!(
+      inspect(
         t,
         content=
           #|(\x.x x) (\x.x)
         ,
       )
       let t = t.eval()
-      inspect!(
+      inspect(
         t,
         content=
           #|(\x.x)

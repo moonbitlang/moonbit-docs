@@ -1,4 +1,5 @@
-// start box definition
+///| start box definition
+///
 struct Box {
   left : Int
   right : Int
@@ -6,39 +7,47 @@ struct Box {
   bottom : Int
 } derive(Show)
 
+///|
 struct Snake {
   start : (Int, Int)
   end : (Int, Int)
 } derive(Show)
 
-fn Box::width(self : Box) -> Int {
+///|
+fn Box::width(self : Self) -> Int {
   self.right - self.left
 }
 
-fn Box::height(self : Box) -> Int {
+///|
+fn Box::height(self : Self) -> Int {
   self.bottom - self.top
 }
 
-fn Box::size(self : Box) -> Int {
+///|
+fn Box::size(self : Self) -> Int {
   self.width() + self.height()
 }
 
-fn Box::delta(self : Box) -> Int {
+///|
+fn Box::delta(self : Self) -> Int {
   self.width() - self.height()
 }
 
 // end box definition
+///|
 fn is_odd(n : Int) -> Bool {
   (n & 1) == 1
 }
 
+///|
 fn is_even(n : Int) -> Bool {
   (n & 1) == 0
 }
 
 // start search definition
+///|
 fn Box::forward(
-  self : Box,
+  self : Self,
   forward~ : BPArray[Int],
   backward~ : BPArray[Int],
   depth : Int,
@@ -72,8 +81,9 @@ fn Box::forward(
   return None
 }
 
+///|
 fn Box::backward(
-  self : Box,
+  self : Self,
   forward~ : BPArray[Int],
   backward~ : BPArray[Int],
   depth : Int,
@@ -107,7 +117,8 @@ fn Box::backward(
 // end search definition
 
 // start midpoint definition
-fn Box::midpoint(self : Box, old~ : Array[Line], new~ : Array[Line]) -> Snake? {
+///|
+fn Box::midpoint(self : Self, old~ : Array[Line], new~ : Array[Line]) -> Snake? {
   if self.size() == 0 {
     return None
   }
@@ -138,9 +149,10 @@ fn Box::midpoint(self : Box, old~ : Array[Line], new~ : Array[Line]) -> Snake? {
 }
 // end midpoint definition
 
-// start findpath definition
+///| start findpath definition
+///
 fn Box::find_path(
-  box : Box,
+  box : Self,
   old~ : Array[Line],
   new~ : Array[Line]
 ) -> Iter[(Int, Int)]? {
@@ -165,6 +177,7 @@ fn Box::find_path(
 }
 // end findpath definition
 
+///|
 fn linear_diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit]? {
   let initial_box = Box::{
     left: 0,
@@ -207,11 +220,12 @@ fn linear_diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit]? {
   return Some(edits)
 }
 
+///|
 test "myers diff" {
   let old = lines("A\nB\nC\nA\nB\nB\nA")
   let new = lines("C\nB\nA\nB\nA\nC")
   let r = linear_diff(old~, new~).unwrap()
-  inspect!(
+  inspect(
     pprint_diff(r),
     content=
       #|-    1         A
