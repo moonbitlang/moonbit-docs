@@ -19,8 +19,8 @@ Both Go and MoonBit are:
 | --------------------- | ------------------------------------------- | -------------------------------------------------------- |
 | **Paradigm**          | Imperative with certain functional features | Both functional and imperative                           |
 | **Memory Management** | Garbage collected                           | Reference counting/GC (backend dependent)                |
-| **Error Handling**    | Multiple return values                      | Error-throwing functions                                 |
-| **Generics**          | Interfaces and type parameters              | Full generic system with traits                          |
+| **Error Handling**    | Multiple return values                      | Checked error-throwing functions                         |
+| **Generics**          | Interfaces and type parameters              | Full generic system with traits (similar to Rust)        |
 | **Pattern Matching**  | Limited (`switch` statements)               | Comprehensive pattern matching                           |
 | **Target Platforms**  | Native binaries                             | WebAssembly, JavaScript, native binaries (via C or LLVM) |
 
@@ -51,7 +51,7 @@ category, and CamelCase for the latter:
 
 ```moonbit
 Enumeration::Variant(random_variable).do_something()
-impl[T : Trait] for Structure[T] with some_method(self, other) { .. }
+impl[T : Trait] for Structure[T] with some_method(self, other) { ... }
 ```
 
 ## Variable Bindings
@@ -77,6 +77,8 @@ let mut name : String = "MoonBit"
 let mut count = 25
 let pi = 3.14159 // Omit `mut` to create an immutable binding
 ```
+
+Note `mut` is only allowed in local bindings, and not allowed in global bindings.
 
 ## Newtypes
 
@@ -194,11 +196,11 @@ In addition, MoonBit's enumerations can also have payloads:
 
 ```moonbit
 enum IntList {
-  // `Nil` represents an empty list and has no payload.
+  /// `Nil` represents an empty list and has no payload.
   Nil
-  // `Cons` represents a non-empty list and has two payloads:
-  // 1. The first element of the list;
-  // 2. The remaining parts of the list.
+  /// `Cons` represents a non-empty list and has two payloads:
+  /// 1. The first element of the list;
+  /// 2. The remaining parts of the list.
   Cons(Int, IntList)
 }
 ```
@@ -409,23 +411,29 @@ func modifyMap(m map[string]int) {
 }
 ```
 
-MoonBit does not have pointer types, and which semantic is used when passing a value
-depends on its type: a value of an **immutable type** is passed by value, while that
-of a **mutable type** is passed by reference.
+MoonBit is semantically _always passed by reference_.
+But for immutable types and primitive types, they may be passed by value since
+this is semantically the same, this is purely an optimization.
 
-Notable **value types** in MoonBit include
+<!-- MoonBit does not have pointer types, and which semantic is used when passing a value
+depends on its type: a value of an **immutable type** is passed by value, while that
+of a **mutable type** is passed by reference. -->
+
+Notable **primitive types** in MoonBit include
 [`Unit`](../../language/fundamentals.md#unit)
 , [`Boolean`](../../language/fundamentals.md#boolean)
 , integers ([`Int`](../../language/fundamentals.md#number), [`Int64`](../../language/fundamentals.md#number), [`UInt`](../../language/fundamentals.md#number), etc.)
 , floating-point numbers ([`Double`](../../language/fundamentals.md#number), [`Float`](../../language/fundamentals.md#number), etc.)
 , [`String`](../../language/fundamentals.md#string)
 , [`Char`](../../language/fundamentals.md#char)
-, [`Byte`](../../language/fundamentals.md#bytes)
-, [tuples](../../language/fundamentals.md#tuple),
-immutable collections such as `@immut/hashset.T`,
+, [`Byte`](../../language/fundamentals.md#bytes).
+
+Notable **immutable collection types** in MoonBit include
+[tuples](../../language/fundamentals.md#tuple),
+immutable collections such as `@immut/hashset.T[A]`,
 and custom types with no `mut` fields.
 
-On the other hand, notable **reference types** include
+On the other hand, notable **mutable collection types** include
 mutable collections such as [`Array[T]`](../../language/fundamentals.md#array)
 , [`FixedArray[T]`](../../language/fundamentals.md#array)
 , and [`Map[K, V]`](../../language/fundamentals.md#map),
@@ -1051,7 +1059,6 @@ For example, `src/lib/moon.pkg.json` is minimally defined as follows:
 ```
 
 ... and `src/main/moon.pkg.json` as follows:
-
 
 ```json
 {
