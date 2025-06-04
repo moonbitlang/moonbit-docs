@@ -212,17 +212,17 @@ directory where the `moon.mod.json` file resides.
 }
 ```
 
-## \[Experimental\] Pre-build config script
+### \[Experimental\] Pre-build config script
 
-:::{info}
+```{warning}
 This feature is extremely experimental, and its API may change at any time.
 This documentation reflects the implementation as of 2025-06-03.
-:::
+```
 
-:::{important}
+```{important}
 Using this feature may execute arbitrary code in your computer.
 Please use with caution and only with trusted dependencies.
-:::
+```
 
 The pre-build config script is added in order to aid native target programming.
 To use such script, add your script in your `moon.mod.json`:
@@ -238,7 +238,7 @@ be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) executed with
 `node`, or a Python script (with extension `.py`) executed with `python3` or
 `python`.
 
-### Input
+#### Input
 
 The script will be provided with a JSON with the structure of
 `BuildScriptEnvironment`:
@@ -279,7 +279,7 @@ interface TargetInfo {
 }
 ```
 
-### Output
+#### Output
 
 The script is expected to print a JSON string in its stdout with the structure
 of `BuildScriptOutput`:
