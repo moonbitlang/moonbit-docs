@@ -469,7 +469,7 @@ The overloaded literals can be composed. If array literal can be overloaded to `
 | `3.14` | `Double` | `Float` , `Json` |
 | `false` , `true` | `Bool` | `Json` |
 | `[a, b, c]` (where the types of literals a, b, and c are E) | `Array[E]` | `FixedArray[E]`, `String`  (if E is of type Char), `Json` (if E is of type Json), `Bytes` (if E is of type Byte) |
-| `{k1 : v1, k2 : v2}` (where the types of literals k1 and k2 are K, and the types of literals v1 and v2 are V) | `Map[K, V]` | `Json` (if K is of type String and V is of type Json)       |
+| `{"s1" : v1, "s2" : v2}` (where the types of literals v1 and v2 are V) | `Map[String, V]` | `Json` (if V is of type Json)       |
 
 There are also some similar overloading rules in pattern. For more details, see [Pattern Matching](#pattern-matching).
 
