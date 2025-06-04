@@ -272,7 +272,7 @@ test {
 
 // start overloaded literal 1
 fn expect_double(x : Double) -> Unit {
-  ...
+  
 }
 
 test {

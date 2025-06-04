@@ -467,7 +467,6 @@ The overloaded literals can be composed. If array literal can be overloaded to `
 | `"str"` | `String` | `Bytes` |
 | `'c'` | `Char` | `Int` , `Byte` |
 | `3.14` | `Double` | `Float` |
-| `false` , `true` | `Bool` |
 | `[a, b, c]` (where the types of literals a, b, and c are E) | `Array[E]` | `FixedArray[E]`, `String`  (if E is of type Char), `Bytes` (if E is of type Byte) |
 
 There are also some similar overloading rules in pattern. For more details, see [Pattern Matching](#pattern-matching).
