@@ -463,13 +463,12 @@ The overloaded literals can be composed. If array literal can be overloaded to `
 
 | Overloaded literal             | Default type | Can be overloaded to                                                                      | 
 | ------------------------------ | ------------ | ----------------------------------------------------------------------------------------- |
-| `10` , `0xFF` , `0o377` , `10_000` | `Int` | `UInt` , `Int64` , `UInt64` , `Int16` , `UInt16` , `Byte` , `Double` , `Float` , `BigInt` , `Json` |
-| `"str"` | `String` | `Bytes` , `Json` |
+| `10`, `0xFF`, `0o377`, `10_000` | `Int` | `UInt`, `Int64`, `UInt64`, `Int16`, `UInt16`, `Byte`, `Double`, `Float`, `BigInt` |
+| `"str"` | `String` | `Bytes` |
 | `'c'` | `Char` | `Int` , `Byte` |
-| `3.14` | `Double` | `Float` , `Json` |
-| `false` , `true` | `Bool` | `Json` |
-| `[a, b, c]` (where the types of literals a, b, and c are E) | `Array[E]` | `FixedArray[E]`, `String`  (if E is of type Char), `Json` (if E is of type Json), `Bytes` (if E is of type Byte) |
-| `{"s1" : v1, "s2" : v2}` (where the types of literals v1 and v2 are V) | `Map[String, V]` | `Json` (if V is of type Json)       |
+| `3.14` | `Double` | `Float` |
+| `false` , `true` | `Bool` |
+| `[a, b, c]` (where the types of literals a, b, and c are E) | `Array[E]` | `FixedArray[E]`, `String`  (if E is of type Char), `Bytes` (if E is of type Byte) |
 
 There are also some similar overloading rules in pattern. For more details, see [Pattern Matching](#pattern-matching).
 
