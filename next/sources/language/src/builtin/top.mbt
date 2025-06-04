@@ -269,3 +269,15 @@ test {
   }
 }
 // end option result 1
+
+// start overloaded literal 1
+fn expect_double(x : Double) -> Unit {
+  
+}
+
+test {
+  let x = 1 // type of x is Int
+  let y : Double = 1 
+  expect_double(1) 
+}
+// end overloaded literal 1

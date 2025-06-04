@@ -107,8 +107,6 @@ To improve readability, you may place underscores in the middle of numeric liter
   :end-before: end number 7
   ```
 
-#### Overloaded literal
-
 When the expected type is known, MoonBit can automatically overload literal, and there is no need to specify the type of number via letter postfix:
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
@@ -116,6 +114,11 @@ When the expected type is known, MoonBit can automatically overload literal, and
 :dedent:
 :start-after: start number 5
 :end-before: end number 5
+
+```
+
+```{seealso}
+[Overloaded Literals](#overloaded-literals)
 ```
 
 ### String
@@ -137,11 +140,9 @@ In double quotes string, a backslash followed by certain special characters form
 
 | escape sequences     | description                                          |
 | -------------------- | ---------------------------------------------------- |
-| `\n`,`\r`,`\t`,`\b`  | New line, Carriage return, Horizontal tab, Backspace |
-| `\\`                 | Backslash                                            |
-| `\x41`               | Hexadecimal escape sequence                          |
-| `\o102`              | Octal escape sequence                                |
-| `\u5154`,`\u{1F600}` | Unicode escape sequence                              |
+| `\n`, `\r`, `\t`, `\b` | New line, Carriage return, Horizontal tab, Backspace |
+| `\\` | Backslash                                            |
+| `\u5154` , `\u{1F600}` | Unicode escape sequence                              |
 
 MoonBit supports string interpolation. It enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text. Variables used for string interpolation must implement the [`Show` trait](/language/methods.md#builtin-traits).
 
@@ -169,9 +170,7 @@ Multi-line strings can be defined using the leading `#|` or `$|`, where the form
 :caption: Output
 ```
 
-#### Overloaded literal
-
-When the expected type is `String`, the array literal syntax is overloaded to
+When the expected type is `String` , the array literal syntax is overloaded to
 construct the `String` by specifying each character in the string.
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
@@ -183,6 +182,8 @@ construct the `String` by specifying each character in the string.
 
 ```{seealso}
 API: <https://mooncakes.io/docs/moonbitlang/core/string>
+
+[Overloaded Literals](#overloaded-literals)
 ```
 
 ### Char
@@ -196,8 +197,6 @@ API: <https://mooncakes.io/docs/moonbitlang/core/string>
 :end-before: end char 1
 ```
 
-#### Overloaded literal
-
 Char literals can be overloaded to type `Int` when the expected type is `Int`:
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
@@ -208,11 +207,14 @@ Char literals can be overloaded to type `Int` when the expected type is `Int`:
 
 ```{seealso}
 API: <https://mooncakes.io/docs/moonbitlang/core/char>
+
+[Overloaded Literals](#overloaded-literals)
+
 ```
 
 ### Byte(s)
 
-A byte literal in MoonBit is either a single ASCII character or a single escape enclosed in single quotes `'`, and preceded by the character `b`. Byte literals are of type `Byte`. For example:
+A byte literal in MoonBit is either a single ASCII character or a single escape, have the form of `b'...'`. Byte literals are of type `Byte`. For example:
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
@@ -234,7 +236,18 @@ A `Bytes` is an immutable sequence of bytes. Similar to byte, bytes literals hav
 :end-before: end byte 2
 ```
 
-A `@buffer.T` is a constructor for bytes that comes with methods for writing different kinds of data. For example:
+The byte literal and bytes literal also support escape sequences, but different from those in string literals. The following table lists the supported escape sequences for byte and bytes literals:
+
+| escape sequences     | description                                          |
+| -------------------- | ---------------------------------------------------- |
+| `\n`, `\r`, `\t`, `\b` | New line, Carriage return, Horizontal tab, Backspace |
+| `\\` | Backslash                                            |
+| `\x41` | Hexadecimal escape sequence                          |
+| `\o102` | Octal escape sequence                                |
+
+
+``````{note}
+You can use `@buffer.T` to construct bytes by writing various types of data. For example:
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
@@ -242,10 +255,9 @@ A `@buffer.T` is a constructor for bytes that comes with methods for writing dif
 :end-before: end buffer 1
 ```
 
-#### Overloaded literal
+``````
 
-When the expected type is `Bytes`, the array literal syntax is overloaded to
-construct a `Bytes` by specifying each byte in the sequence.
+When the expected type is `Bytes`, the `b` prefix can be omitted. Array literals can also be overloaded to construct a `Bytes` sequence by specifying each byte in the sequence.
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
@@ -257,6 +269,8 @@ construct a `Bytes` by specifying each byte in the sequence.
 API for `Byte`: <https://mooncakes.io/docs/moonbitlang/core/byte>  
 API for `Bytes`: <https://mooncakes.io/docs/moonbitlang/core/bytes>  
 API for `@buffer.T`: <https://mooncakes.io/docs/moonbitlang/core/buffer>
+
+[Overloaded Literals](#overloaded-literals)
 ```
 
 ### Tuple
@@ -370,6 +384,13 @@ When the expected type is known, MoonBit can automatically overload array, other
 :language: moonbit
 :start-after: start array 3
 :end-before: end array 3
+
+```
+
+```{seealso}
+API: <https://mooncakes.io/docs/moonbitlang/core/array>
+
+[Overloaded Literals](#overloaded-literals)
 ```
 
 #### ArrayView
@@ -404,9 +425,11 @@ Currently keys in map literal syntax must be constant. `Map`s can also be destru
 
 ```{seealso}
 API: <https://mooncakes.io/docs/moonbitlang/core/builtin#Map>
+
+[Overloaded Literals](#overloaded-literals)
 ```
 
-### Json literal
+### Json 
 
 MoonBit supports convenient json handling by overloading literals.
 When the expected type of an expression is `Json`, number, string, array and map literals can be directly used to create json data:
@@ -421,7 +444,53 @@ Json values can be pattern matched too, see [Json Pattern](#json-pattern).
 
 ```{seealso}
 API: <https://mooncakes.io/docs/moonbitlang/core/json>
+
+[Overloaded Literals](#overloaded-literals)
 ```
+
+## Overloaded Literals
+
+Overloaded literals allow you to use the same syntax to represent different types of values. 
+For example, you can use `1` to represent `UInt` or `Double` depending on the expected type. If the expected type is not known, the literal will be interpreted as `Int` by default.
+
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start overloaded literal 1
+:end-before: end overloaded literal 1
+```
+
+The overloaded literals can be composed. If array literal can be overloaded to `Bytes` , and number literal can be overloaded to `Byte` , then you can overload `[1,2,3]` to `Bytes` as well. Here is a table of overloaded literals in MoonBit:
+
+| Overloaded literal             | Default type | Can be overloaded to                                                                      | 
+| ------------------------------ | ------------ | ----------------------------------------------------------------------------------------- |
+| `10`, `0xFF`, `0o377`, `10_000` | `Int` | `UInt`, `Int64`, `UInt64`, `Int16`, `UInt16`, `Byte`, `Double`, `Float`, `BigInt` |
+| `"str"` | `String` | `Bytes` |
+| `'c'` | `Char` | `Int` , `Byte` |
+| `3.14` | `Double` | `Float` |
+| `[a, b, c]` (where the types of literals a, b, and c are E) | `Array[E]` | `FixedArray[E]`, `String`  (if E is of type Char), `Bytes` (if E is of type Byte) |
+
+There are also some similar overloading rules in pattern. For more details, see [Pattern Matching](#pattern-matching).
+
+```{note}
+Literal overloading is not the same as value conversion. To convert a variable to a different type, you can use methods prefixed with `to_`, such as `to_int()`, `to_double()`, etc.
+
+```
+
+### Escape Sequences in Overloaded Literals
+
+Escape sequences can be used in overloaded `"..."` literals and `'...'` literals. The interpretation of escape sequences depends on the types they are overloaded to:
+
+- Simple escape sequences
+
+  Including `\n`, `\r`, `\t`, `\\`, and `\b`. These escape sequences are supported in any `"..."` or `'...'` literals. They are interpreted as their respective `Char` or `Byte` in `String` or `Bytes`.
+
+- Byte escape sequences 
+
+  The `\x41` and `\o102` escape sequences represent a Byte. These are supported in literals overloaded to `Bytes` and `Byte`. 
+
+- Unicode escape sequences
+
+  The `\u5154` and `\u{1F600}` escape sequences represent a `Char`. These are supported in literals of type `String` and `Char`.
 
 ## Functions
 
