@@ -241,7 +241,7 @@ be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) executed with
 #### Input
 
 The script will be provided with a JSON with the structure of
-`BuildScriptEnvironment`:
+`BuildScriptEnvironment` from standard input stream (stdin):
 
 ```ts
 /** Represents the environment a build script receives */
@@ -260,51 +260,21 @@ interface BuildInfo {
 interface TargetInfo {
   /** The actual backend we're using, e.g. `wasm32`, `wasmgc`, `js`, `c`, `llvm` */
   kind: string // TargetBackend
-
-  // The following fields are not properly populated now:
-
-  /** The architecture of the target. This is either the architecture in the
-   * target triple like `x86_64` and `aarch64`, or one of our other
-   * non-native backends like `js`, `wasm32` and `wasmgc`. */
-  arch: string
-  /** The vendor of the target. This is often `unknown`. */
-  vendor: string
-  /** The operating system of the target. This is often `linux`, `windows` or `macos`. */
-  os: string
-  /** The ABI of the target. Might be null, or something like `gnu`, `musl`,
-   * `msvc`, `eabi` and similar. */
-  abi?: string
-  /** The target triple, e.g. `x86_64-unknown-linux-gnu`. */
-  triplet: string
 }
 ```
 
 #### Output
 
-The script is expected to print a JSON string in its stdout with the structure
-of `BuildScriptOutput`:
+The script is expected to print a JSON string in its standard output stream
+(stdout) with the structure of `BuildScriptOutput`:
 
 ```ts
 interface BuildScriptOutput {
-  /** Rerun conditions. **DOES NOT WORK NOW** */
-  rerun_if?: RerunIfKind[]
-  // TODO: How much of these vars are useful? We don't fetch link flags from
-  // here any more. However, they might still be useful for future
-  // match-replace in code.
-  // TODO: what about array-like vars? like commandline args
+  /** Build variables */
   vars?: Record<string, string>
   /** Configurations to linking */
   link_configs?: LinkConfig[]
 }
-
-// Does not work now
-type RerunIfKind =
-  /** Rerun if the file at the given path changes. */
-  | { File: string }
-  /** Rerun if the directory at the given path changes. */
-  | { Dir: string }
-  /** Rerun if the environment variable with the given name changes. */
-  | { Env: string }
 
 interface LinkConfig {
   /** The name of the package to configure */
@@ -327,10 +297,10 @@ interface LinkConfig {
 }
 ```
 
-### Build variables
+#### Build variables
 
-You may use the variables emitted in `$.vars` in native linking arguments in
-`moon.pkg.json` as `${build.<var_name>}`.
+You may use the variables emitted in the `vars` fields in the native linking
+arguments in `moon.pkg.json` as `${build.<var_name>}`.
 
 For example, if your build script outputs:
 
