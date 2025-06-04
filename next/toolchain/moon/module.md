@@ -8,7 +8,7 @@ The `name` field is used to specify the name of the module, and it is required.
 
 ```json
 {
-  "name": "example",
+  "name": "example"
   // ...
 }
 ```
@@ -19,7 +19,7 @@ For modules published to [mooncakes.io](https://mooncakes.io), the module name m
 
 ```json
 {
-  "name": "moonbitlang/core",
+  "name": "moonbitlang/core"
   // ...
 }
 ```
@@ -33,7 +33,7 @@ This field is optional. For modules published to [mooncakes.io](https://mooncake
 ```json
 {
   "name": "example",
-  "version": "0.1.0",
+  "version": "0.1.0"
   // ...
 }
 ```
@@ -127,18 +127,18 @@ For example, in the following configuration, `-2` disables the warning number 2 
 
 ```json
 {
-  "warn-list": "-2",
+  "warn-list": "-2"
 }
 ```
 
 You can use `moonc build-package -warn-help` to see the list of preset compiler warning numbers.
 
 ```
-$ moonc -v                      
+$ moonc -v
 v0.1.20250318+35770a65e
 
 $ moonc build-package -warn-help
-Available warnings: 
+Available warnings:
   1 Unused function.
   2 Unused variable.
   3 Unused type declaration.
@@ -210,3 +210,124 @@ directory where the `moon.mod.json` file resides.
     "postadd": "python3 build.py"
   }
 }
+```
+
+### \[Experimental\] Pre-build config script
+
+```{warning}
+This feature is extremely experimental, and its API may change at any time.
+This documentation reflects the implementation as of 2025-06-03.
+```
+
+```{important}
+Using this feature may execute arbitrary code in your computer.
+Please use with caution and only with trusted dependencies.
+```
+
+The pre-build config script is added in order to aid native target programming.
+To use such script, add your script in your `moon.mod.json`:
+
+```json
+{
+  "--moonbit-unstable-prebuild": "<path/to/build-script>"
+}
+```
+
+The path is a relative path from the root of the project. The script may either
+be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) executed with
+`node`, or a Python script (with extension `.py`) executed with `python3` or
+`python`.
+
+#### Input
+
+The script will be provided with a JSON with the structure of
+`BuildScriptEnvironment` from standard input stream (stdin):
+
+```ts
+/** Represents the environment a build script receives */
+interface BuildScriptEnvironment {
+  env: Record<string, string>
+  paths: Paths
+}
+
+interface BuildInfo {
+  /** The target info for the build script currently being run. */
+  host: TargetInfo
+  /** The target info for the module being built. */
+  target: TargetInfo
+}
+
+interface TargetInfo {
+  /** The actual backend we're using, e.g. `wasm32`, `wasmgc`, `js`, `c`, `llvm` */
+  kind: string // TargetBackend
+}
+```
+
+#### Output
+
+The script is expected to print a JSON string in its standard output stream
+(stdout) with the structure of `BuildScriptOutput`:
+
+```ts
+interface BuildScriptOutput {
+  /** Build variables */
+  vars?: Record<string, string>
+  /** Configurations to linking */
+  link_configs?: LinkConfig[]
+}
+
+interface LinkConfig {
+  /** The name of the package to configure */
+  package: string
+
+  /** Link flags that needs to be propagated to dependents
+   *
+   * Reference: `cargo::rustc-link-arg=FLAG` */
+  link_flags?: string
+
+  /** Libraries that need linking, propagated to dependents
+   *
+   * Reference: `cargo::rustc-link-lib=LIB` */
+  link_libs?: string[]
+
+  /** Paths that needs to be searched during linking, propagated to dependents
+   *
+   * Reference: `cargo::rustc-link-search=[KIND=]PATH` */
+  link_search_paths?: string[]
+}
+```
+
+#### Build variables
+
+You may use the variables emitted in the `vars` fields in the native linking
+arguments in `moon.pkg.json` as `${build.<var_name>}`.
+
+For example, if your build script outputs:
+
+```json
+{ "vars": { "CC": "gcc" } }
+```
+
+and your `moon.pkg.json` is structured like:
+
+```json
+{
+  "link": {
+    "native": {
+      "cc": "${build.CC}"
+    }
+  }
+}
+```
+
+It will be transformed into
+
+```json
+{
+  "link": {
+    "native": {
+      "cc": "gcc"
+    }
+  }
+}
+```
