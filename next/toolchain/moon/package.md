@@ -389,8 +389,8 @@ For example, in the following configuration, `-2` disables the warning number 2 
 You can use `moonc build-package -warn-help` to see the list of preset compiler warning numbers.
 
 ```
-$ moonc -v                      
-v0.1.20250318+35770a65e
+$ moonc -v
+v0.1.20250606+a3f4966ca
 
 $ moonc build-package -warn-help
 Available warnings: 
@@ -435,7 +435,10 @@ Available warnings:
  42 Invalid attribute.
  43 Unused attribute.
  44 Invalid inline-wasm.
- 45 Type implements trait with regular methods.
+ 46 Useless `..` in pattern
+ 47 Invalid mbti file
+ 48 Trait method with default implementation not marked with `= _`
+ 49 Unused pub definition because it does not exist in mbti file.
   A all warnings
 ```
 

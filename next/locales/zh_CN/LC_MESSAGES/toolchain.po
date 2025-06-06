@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-27 14:12+0800\n"
+"POT-Creation-Date: 2025-06-06 18:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1580,7 +1580,7 @@ msgstr "`name` 字段用于指定模块的名称，它是必需的。"
 #: ../../toolchain/moon/module.md:9
 msgid ""
 "{\n"
-"  \"name\": \"example\",\n"
+"  \"name\": \"example\"\n"
 "  // ...\n"
 "}\n"
 msgstr ""
@@ -1598,7 +1598,7 @@ msgstr "对于发布到 [mooncakes.io](https://mooncakes.io) 的模块，模块�
 #: ../../toolchain/moon/module.md:20
 msgid ""
 "{\n"
-"  \"name\": \"moonbitlang/core\",\n"
+"  \"name\": \"moonbitlang/core\"\n"
 "  // ...\n"
 "}\n"
 msgstr ""
@@ -1625,7 +1625,7 @@ msgstr ""
 msgid ""
 "{\n"
 "  \"name\": \"example\",\n"
-"  \"version\": \"0.1.0\",\n"
+"  \"version\": \"0.1.0\"\n"
 "  // ...\n"
 "}\n"
 msgstr ""
@@ -1785,10 +1785,10 @@ msgid ""
 "number 2 (Unused variable)."
 msgstr "例如，在以下配置中，`-2` 禁用警告编号 2（未使用的变量）。"
 
-#: ../../toolchain/moon/module.md:128
+#: ../../toolchain/moon/module.md:128 ../../toolchain/moon/package.md:383
 msgid ""
 "{\n"
-"  \"warn-list\": \"-2\",\n"
+"  \"warn-list\": \"-2\"\n"
 "}\n"
 msgstr ""
 
@@ -1800,8 +1800,8 @@ msgstr "你可以使用 `moonc build-package -warn-help` 来查看预设编译�
 
 #: ../../toolchain/moon/module.md:136 ../../toolchain/moon/package.md:391
 msgid ""
-"$ moonc -v                      \n"
-"v0.1.20250318+35770a65e\n"
+"$ moonc -v\n"
+"v0.1.20250606+a3f4966ca\n"
 "\n"
 "$ moonc build-package -warn-help\n"
 "Available warnings: \n"
@@ -1846,51 +1846,261 @@ msgid ""
 " 42 Invalid attribute.\n"
 " 43 Unused attribute.\n"
 " 44 Invalid inline-wasm.\n"
-" 45 Type implements trait with regular methods.\n"
+" 46 Useless `..` in pattern\n"
+" 47 Invalid mbti file\n"
+" 48 Trait method with default implementation not marked with `= _`\n"
+" 49 Unused pub definition because it does not exist in mbti file.\n"
 "  A all warnings\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:187 ../../toolchain/moon/package.md:442
+#: ../../toolchain/moon/module.md:190 ../../toolchain/moon/package.md:445
 msgid "Alert List"
 msgstr "警示列表"
 
-#: ../../toolchain/moon/module.md:189 ../../toolchain/moon/package.md:444
+#: ../../toolchain/moon/module.md:192 ../../toolchain/moon/package.md:447
 msgid "Disable user preset alerts."
 msgstr "禁用用户预设警示。"
 
-#: ../../toolchain/moon/module.md:191 ../../toolchain/moon/package.md:446
+#: ../../toolchain/moon/module.md:194 ../../toolchain/moon/package.md:449
 msgid ""
 "{\n"
 "  \"alert-list\": \"-alert_1-alert_2\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:197
+#: ../../toolchain/moon/module.md:200
 msgid "Scripts"
 msgstr "脚本"
 
-#: ../../toolchain/moon/module.md:199
+#: ../../toolchain/moon/module.md:202
 msgid ""
 "The `scripts` field is used to define custom scripts associated with the "
 "module."
 msgstr "`scripts` 字段用于定义与模块关联的自定义脚本。"
 
-#: ../../toolchain/moon/module.md:201
+#: ../../toolchain/moon/module.md:204
 msgid "postadd script"
 msgstr "postadd 脚本"
 
-#: ../../toolchain/moon/module.md:203
+#: ../../toolchain/moon/module.md:206
 msgid ""
 "The `postadd` script runs automatically after the module has been added. "
 "When executed, the script's current working directory (cwd) is set to the"
 " directory where the `moon.mod.json` file resides."
 msgstr "`postadd` 脚本在模块添加后自动运行。执行时，脚本的当前工作目录（cwd）设置为 `moon.mod.json` 文件所在的目录。"
 
-#: ../../toolchain/moon/module.md:207
+#: ../../toolchain/moon/module.md:210
 msgid ""
 "{\n"
 "  \"scripts\": {\n"
 "    \"postadd\": \"python3 build.py\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:218
+msgid "\\[Experimental\\] Pre-build config script"
+msgstr "\\[实验性\\] 预构建配置脚本"
+
+#: ../../toolchain/moon/module.md:221
+msgid ""
+"This feature is extremely experimental, and its API may change at any "
+"time. This documentation reflects the implementation as of 2025-06-03."
+msgstr ""
+"这个功能是极其实验性的，其 API 可能随时发生变化。本文件反映了截至 2025-06-03 的实现。"
+
+#: ../../toolchain/moon/module.md:226
+msgid ""
+"Using this feature may execute arbitrary code in your computer. Please "
+"use with caution and only with trusted dependencies."
+msgstr "使用此功能可能会在您的计算机上执行任意代码。请谨慎使用，仅与受信任的依赖项一起使用。"
+
+#: ../../toolchain/moon/module.md:230
+msgid ""
+"The pre-build config script is added in order to aid native target "
+"programming. To use such script, add your script in your `moon.mod.json`:"
+msgstr ""
+"pre-build 配置脚本的添加是为了帮助本地目标编程。要使用此脚本，请在您的 `moon.mod.json` 中添加您的脚本："
+
+#: ../../toolchain/moon/module.md:233
+msgid ""
+"{\n"
+"  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:239
+msgid ""
+"The path is a relative path from the root of the project. The script may "
+"either be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) "
+"executed with `node`, or a Python script (with extension `.py`) executed "
+"with `python3` or `python`."
+msgstr ""
+"路径是相对于项目根目录的相对路径。脚本可以是 JavaScript 脚本（扩展名为 `.js`、`.cjs`、`.mjs`）"
+"使用 `node` 执行，或者是 Python 脚本（扩展名为 `.py`）使用 `python3` 或 `python` 执行。"
+
+#: ../../toolchain/moon/module.md:244
+msgid "Input"
+msgstr "输入"
+
+#: ../../toolchain/moon/module.md:246
+msgid ""
+"The script will be provided with a JSON with the structure of "
+"`BuildScriptEnvironment` from standard input stream (stdin):"
+msgstr ""
+"脚本将从标准输入流（stdin）接收一个具有 `BuildScriptEnvironment` 结构的 JSON："
+
+#: ../../toolchain/moon/module.md:249
+msgid ""
+"/** Represents the environment a build script receives */\n"
+"interface BuildScriptEnvironment {\n"
+"  env: Record<string, string>\n"
+"  paths: Paths\n"
+"}\n"
+"\n"
+"interface BuildInfo {\n"
+"  /** The target info for the build script currently being run. */\n"
+"  host: TargetInfo\n"
+"  /** The target info for the module being built. */\n"
+"  target: TargetInfo\n"
+"}\n"
+"\n"
+"interface TargetInfo {\n"
+"  /** The actual backend we're using, e.g. `wasm32`, `wasmgc`, `js`, `c`,"
+" `llvm` */\n"
+"  kind: string // TargetBackend\n"
+"}\n"
+msgstr ""
+"/** 表示构建脚本接收的环境 */\n"
+"interface BuildScriptEnvironment {\n"
+"  env: Record<string, string>\n"
+"  paths: Paths\n"
+"}\n"
+"\n"
+"interface BuildInfo {\n"
+"  /** 当前构建脚本正在运行的目标信息 */\n"
+"  host: TargetInfo\n"
+"  /** 正在构建的模块的目标信息 */\n"
+"  target: TargetInfo\n"
+"}\n"
+"\n"
+"interface TargetInfo {\n"
+"  /** 我们正在使用的实际后端，例如 `wasm32`、`wasmgc`、`js`、`c`、`llvm` */\n"
+"  kind: string // TargetBackend\n"
+"}\n"
+
+#: ../../toolchain/moon/module.md:269
+msgid "Output"
+msgstr "输出"
+
+#: ../../toolchain/moon/module.md:271
+msgid ""
+"The script is expected to print a JSON string in its standard output "
+"stream (stdout) with the structure of `BuildScriptOutput`:"
+msgstr ""
+"脚本预计将在其标准输出流（stdout）中打印一个具有 `BuildScriptOutput` 结构的 JSON 字符串："
+
+#: ../../toolchain/moon/module.md:274
+msgid ""
+"interface BuildScriptOutput {\n"
+"  /** Build variables */\n"
+"  vars?: Record<string, string>\n"
+"  /** Configurations to linking */\n"
+"  link_configs?: LinkConfig[]\n"
+"}\n"
+"\n"
+"interface LinkConfig {\n"
+"  /** The name of the package to configure */\n"
+"  package: string\n"
+"\n"
+"  /** Link flags that needs to be propagated to dependents\n"
+"   *\n"
+"   * Reference: `cargo::rustc-link-arg=FLAG` */\n"
+"  link_flags?: string\n"
+"\n"
+"  /** Libraries that need linking, propagated to dependents\n"
+"   *\n"
+"   * Reference: `cargo::rustc-link-lib=LIB` */\n"
+"  link_libs?: string[]\n"
+"\n"
+"  /** Paths that needs to be searched during linking, propagated to "
+"dependents\n"
+"   *\n"
+"   * Reference: `cargo::rustc-link-search=[KIND=]PATH` */\n"
+"  link_search_paths?: string[]\n"
+"}\n"
+msgstr ""
+"interface BuildScriptOutput {\n"
+"  /** 构建变量 */\n"
+"  vars?: Record<string, string>\n"
+"  /** 链接配置 */\n"
+"  link_configs?: LinkConfig[]\n"
+"}\n"
+"\n"
+"interface LinkConfig {\n"
+"  /** 要配置的包的名称 */\n"
+"  package: string\n"
+"\n"
+"  /** 需要传播到依赖项的链接标志\n"
+"   *\n"
+"   * 参考: `cargo::rustc-link-arg=FLAG` */\n"
+"  link_flags?: string\n"
+"\n"
+"  /** 需要链接的库，传播到依赖项\n"
+"   *\n"
+"   * 参考: `cargo::rustc-link-lib=LIB` */\n"
+"  link_libs?: string[]\n"
+"\n"
+"  /** 需要在链接期间搜索的路径，传播到依赖项\n"
+"   *\n"
+"   * 参考: `cargo::rustc-link-search=[KIND=]PATH` */\n"
+"  link_search_paths?: string[]\n"
+"}\n"
+
+#: ../../toolchain/moon/module.md:303
+msgid "Build variables"
+msgstr "构建变量"
+
+#: ../../toolchain/moon/module.md:305
+msgid ""
+"You may use the variables emitted in the `vars` fields in the native "
+"linking arguments in `moon.pkg.json` as `${build.<var_name>}`."
+msgstr "您可以在 `moon.pkg.json` 的本地链接参数中使用 `vars` 字段中发出的变量，格式为 `${build.<var_name>}`。"
+
+#: ../../toolchain/moon/module.md:308
+msgid "For example, if your build script outputs:"
+msgstr "例如，如果您的构建脚本输出："
+
+#: ../../toolchain/moon/module.md:310
+msgid "{ \"vars\": { \"CC\": \"gcc\" } }\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:314
+msgid "and your `moon.pkg.json` is structured like:"
+msgstr "并且您的 `moon.pkg.json` 结构如下："
+
+#: ../../toolchain/moon/module.md:316
+msgid ""
+"{\n"
+"  \"link\": {\n"
+"    \"native\": {\n"
+"      \"cc\": \"${build.CC}\"\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:326
+msgid "It will be transformed into"
+msgstr "它会被转换为"
+
+#: ../../toolchain/moon/module.md:328
+msgid ""
+"{\n"
+"  \"link\": {\n"
+"    \"native\": {\n"
+"      \"cc\": \"gcc\"\n"
+"    }\n"
 "  }\n"
 "}\n"
 msgstr ""
@@ -2616,42 +2826,33 @@ msgid ""
 "  #|\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:383
-msgid ""
-"{\n"
-"  \"warn-list\": \"-2\"\n"
-"}\n"
-msgstr ""
-
-#: ../../toolchain/moon/package.md:452
+#: ../../toolchain/moon/package.md:455
 msgid "Virtual Package"
 msgstr "虚拟包"
 
-#: ../../toolchain/moon/package.md:454
+#: ../../toolchain/moon/package.md:457
 msgid ""
 "A virtual package serves as an interface of a package that can be "
 "replaced by actual implementations."
-msgstr ""
-"一个虚拟包可以作为一个包的接口被实际的实现替换。"
+msgstr "一个虚拟包可以作为一个包的接口被实际的实现替换。"
 
-#: ../../toolchain/moon/package.md:456
+#: ../../toolchain/moon/package.md:459
 msgid "Declarations"
 msgstr "声明"
 
-#: ../../toolchain/moon/package.md:458
+#: ../../toolchain/moon/package.md:461
 msgid ""
 "The `virtual` field is used to declare the current package as a virtual "
 "package."
 msgstr "`virtual` 字段用于将当前包声明为虚拟包。"
 
-#: ../../toolchain/moon/package.md:460
+#: ../../toolchain/moon/package.md:463
 msgid ""
 "For example, the following declares a virtual package with default "
 "implementation:"
-msgstr ""
-"例如，以下配置声明了一个具有默认实现的虚拟包："
+msgstr "例如，以下配置声明了一个具有默认实现的虚拟包："
 
-#: ../../toolchain/moon/package.md:462
+#: ../../toolchain/moon/package.md:465
 msgid ""
 "{\n"
 "  \"virtual\": {\n"
@@ -2660,44 +2861,44 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:470
+#: ../../toolchain/moon/package.md:473
 msgid "Implementations"
 msgstr "实现"
 
-#: ../../toolchain/moon/package.md:472
+#: ../../toolchain/moon/package.md:475
 msgid ""
 "The `implement` field is used to declare the virtual package to be "
 "implemented by the current package."
 msgstr "`implement` 字段用于指定当前包实现的虚拟包。"
 
-#: ../../toolchain/moon/package.md:474
+#: ../../toolchain/moon/package.md:477
 msgid "For example, the following implements a virtual package:"
 msgstr "例如，以下配置实现了一个虚拟包："
 
-#: ../../toolchain/moon/package.md:476
+#: ../../toolchain/moon/package.md:479
 msgid ""
 "{\n"
 "  \"implement\": \"moonbitlang/core/abort\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:482
+#: ../../toolchain/moon/package.md:485
 msgid "Overriding implementations"
 msgstr "覆盖实现"
 
-#: ../../toolchain/moon/package.md:484
+#: ../../toolchain/moon/package.md:487
 msgid ""
 "The `overrides` field is used to provide the implementations that "
 "fulfills an imported virtual package."
 msgstr "`overrides` 字段用于提供满足导入虚拟包的实现。"
 
-#: ../../toolchain/moon/package.md:486
+#: ../../toolchain/moon/package.md:489
 msgid ""
 "For example, the following overrides the default implementation of the "
 "builtin abort package with another package:"
 msgstr "例如，以下配置将内置的 abort 包的默认实现替换为另一个包："
 
-#: ../../toolchain/moon/package.md:488
+#: ../../toolchain/moon/package.md:491
 msgid ""
 "{\n"
 "  \"overrides\": [\"moonbitlang/dummy_abort/abort_show_msg\"]\n"
@@ -3573,4 +3774,134 @@ msgid ""
 "test username/hello/lib/fib/fib_test.mbt::0 ok\n"
 "Total tests: 3, passed: 3, failed: 0.\n"
 msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"name\": \"example\",\n"
+#~ "  // ...\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"name\": \"moonbitlang/core\",\n"
+#~ "  // ...\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"name\": \"example\",\n"
+#~ "  \"version\": \"0.1.0\",\n"
+#~ "  // ...\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"warn-list\": \"-2\",\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "$ moonc -v\n"
+#~ "v0.1.20250318+35770a65e\n"
+#~ "\n"
+#~ "$ moonc build-package -warn-help\n"
+#~ "Available warnings:\n"
+#~ "  1 Unused function.\n"
+#~ "  2 Unused variable.\n"
+#~ "  3 Unused type declaration.\n"
+#~ "  4 Unused abstract type.\n"
+#~ "  5 Unused type variable.\n"
+#~ "  6 Unused constructor.\n"
+#~ "  7 Unused field or constructor argument.\n"
+#~ "  8 Redundant modifier.\n"
+#~ "  9 Unused function declaration.\n"
+#~ " 10 Struct never constructed.\n"
+#~ " 11 Partial pattern matching.\n"
+#~ " 12 Unreachable code.\n"
+#~ " 13 Unresolved type variable.\n"
+#~ " 14 Lowercase type name.\n"
+#~ " 15 Unused mutability.\n"
+#~ " 16 Parser inconsistency.\n"
+#~ " 18 Useless loop expression.\n"
+#~ " 19 Top-level declaration is not left aligned.\n"
+#~ " 20 Invalid pragma\n"
+#~ " 21 Some arguments of constructor are omitted in pattern.\n"
+#~ " 22 Ambiguous block.\n"
+#~ " 23 Useless try expression.\n"
+#~ " 24 Useless error type.\n"
+#~ " 26 Useless catch all.\n"
+#~ " 27 Deprecated syntax.\n"
+#~ " 28 Todo\n"
+#~ " 29 Unused package.\n"
+#~ " 30 Empty package alias.\n"
+#~ " 31 Optional argument never supplied.\n"
+#~ " 32 Default value of optional argument never used.\n"
+#~ " 33 Unused import value\n"
+#~ " 35 Reserved keyword.\n"
+#~ " 36 Loop label shadows another label.\n"
+#~ " 37 Unused loop label.\n"
+#~ " 38 Useless guard.\n"
+#~ " 39 Duplicated method.\n"
+#~ " 40 Call a qualified method using regular call syntax.\n"
+#~ " 41 Closed map pattern.\n"
+#~ " 42 Invalid attribute.\n"
+#~ " 43 Unused attribute.\n"
+#~ " 44 Invalid inline-wasm.\n"
+#~ " 45 Type implements trait with regular methods.\n"
+#~ "  A all warnings\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "$ moonc -v                      \n"
+#~ "v0.1.20250318+35770a65e\n"
+#~ "\n"
+#~ "$ moonc build-package -warn-help\n"
+#~ "Available warnings: \n"
+#~ "  1 Unused function.\n"
+#~ "  2 Unused variable.\n"
+#~ "  3 Unused type declaration.\n"
+#~ "  4 Unused abstract type.\n"
+#~ "  5 Unused type variable.\n"
+#~ "  6 Unused constructor.\n"
+#~ "  7 Unused field or constructor argument.\n"
+#~ "  8 Redundant modifier.\n"
+#~ "  9 Unused function declaration.\n"
+#~ " 10 Struct never constructed.\n"
+#~ " 11 Partial pattern matching.\n"
+#~ " 12 Unreachable code.\n"
+#~ " 13 Unresolved type variable.\n"
+#~ " 14 Lowercase type name.\n"
+#~ " 15 Unused mutability.\n"
+#~ " 16 Parser inconsistency.\n"
+#~ " 18 Useless loop expression.\n"
+#~ " 19 Top-level declaration is not left aligned.\n"
+#~ " 20 Invalid pragma\n"
+#~ " 21 Some arguments of constructor are omitted in pattern.\n"
+#~ " 22 Ambiguous block.\n"
+#~ " 23 Useless try expression.\n"
+#~ " 24 Useless error type.\n"
+#~ " 26 Useless catch all.\n"
+#~ " 27 Deprecated syntax.\n"
+#~ " 28 Todo\n"
+#~ " 29 Unused package.\n"
+#~ " 30 Empty package alias.\n"
+#~ " 31 Optional argument never supplied.\n"
+#~ " 32 Default value of optional argument never used.\n"
+#~ " 33 Unused import value\n"
+#~ " 35 Reserved keyword.\n"
+#~ " 36 Loop label shadows another label.\n"
+#~ " 37 Unused loop label.\n"
+#~ " 38 Useless guard.\n"
+#~ " 39 Duplicated method.\n"
+#~ " 40 Call a qualified method using regular call syntax.\n"
+#~ " 41 Closed map pattern.\n"
+#~ " 42 Invalid attribute.\n"
+#~ " 43 Unused attribute.\n"
+#~ " 44 Invalid inline-wasm.\n"
+#~ " 45 Type implements trait with regular methods.\n"
+#~ "  A all warnings\n"
+#~ msgstr ""
 
