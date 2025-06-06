@@ -167,3 +167,31 @@ test {
   assert_eq!(m, 42)
 }
 // end custom error conversion
+
+// start error polymorphism
+fn map[T](array : Array[T], f : (T) -> T!) -> Array[T]! {
+  let mut res = []
+  for x in array {
+    res.push(f(x))
+  }
+  res
+}
+// end error polymorphism
+
+// start error polymorphism 2
+fn map_with_polymorphism[T](array : Array[T], f : (T) -> T?Error) -> Array[T]?Error {
+  let mut res = []
+  for x in array {
+    res.push(f(x))
+  }
+  res
+}
+
+test {
+  let array = [1, 2, 3]
+  let res = try? map_with_polymorphism(array, fn(x) { x + 1 })
+
+  let res2 = try? map_with_polymorphism(array, fn(x) { fail!("") })
+  guard res2 is Err(_)
+}
+// end error polymorphism 2

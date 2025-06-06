@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 18:05+0800\n"
+"POT-Creation-Date: 2025-06-06 20:19+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1813,16 +1813,86 @@ msgid ""
 msgstr ""
 
 #: ../../language/error-handling.md:105
+msgid "Error Polymorphism"
+msgstr "错误多态"
+
+#: ../../language/error-handling.md:107
+msgid ""
+"It happens when a higher order function accepts another function as "
+"parameter. The function as parameter may or may not throw error, which in"
+" turn affects the behavior of this function."
+msgstr ""
+"一个高阶函数在接受另一个函数作为参数时，另一个函数可能会抛出错误，也可能不会抛出错误，这反过来又影响了这个高阶函数的行为。"
+
+#: ../../language/error-handling.md:109
+msgid "A notable example is `map` of `Array`:"
+msgstr "一个典型的例子是 `Array` 的 `map` 函数："
+
+#: ../../language/error-handling.md:111
+msgid ""
+"fn map[T](array : Array[T], f : (T) -> T!) -> Array[T]! {\n"
+"  let mut res = []\n"
+"  for x in array {\n"
+"    res.push(f(x))\n"
+"  }\n"
+"  res\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:117
+msgid ""
+"However, writing so would make the `map` function constantly having the "
+"possibility of throwing errors, which is not the case."
+msgstr ""
+"然而，这样写会使得 `map` 函数总是有可能抛出错误，这并不是我们想要的。"
+
+#: ../../language/error-handling.md:119
+msgid ""
+"Thus, the error polymorphism is introduced. You may use `?Error` to "
+"signify that an error may or may not be throw."
+msgstr ""
+"因此，引入了错误多态。您可以使用 `?Error` 来表示可能会抛出错误，也可能不会抛出错误。"
+
+#: ../../language/error-handling.md:121
+msgid ""
+"fn map_with_polymorphism[T](array : Array[T], f : (T) -> T?Error) -> "
+"Array[T]?Error {\n"
+"  let mut res = []\n"
+"  for x in array {\n"
+"    res.push(f(x))\n"
+"  }\n"
+"  res\n"
+"}\n"
+"\n"
+"test {\n"
+"  let array = [1, 2, 3]\n"
+"  let res = try? map_with_polymorphism(array, fn(x) { x + 1 })\n"
+"\n"
+"  let res2 = try? map_with_polymorphism(array, fn(x) { fail!(\"\") })\n"
+"  guard res2 is Err(_)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:127
+msgid ""
+"The signature of the `map_with_polymorphism` will be induced by the "
+"actual parameter. As a result, there will be a warning for the `try?` "
+"after `res` because no error will be thrown."
+msgstr ""
+"`map_with_polymorphism` 的签名将由实际参数推导而来。因此，在 `res` 后面的 `try?` "
+"将会有一个警告，因为不会抛出错误。"
+
+#: ../../language/error-handling.md:129
 msgid "Handling Errors"
 msgstr "处理错误"
 
-#: ../../language/error-handling.md:107
+#: ../../language/error-handling.md:131
 msgid ""
 "Applying the function normally will rethrow the error directly in case of"
 " an error. You may append `!` after the function name. For example:"
 msgstr "直接调用函数会在出现错误时直接重新跑出错误。你可以在函数应用中的函数名后面附加 `!`。例如："
 
-#: ../../language/error-handling.md:110
+#: ../../language/error-handling.md:134
 msgid ""
 "fn div_reraise(x : Int, y : Int) -> Int!DivError {\n"
 "  div(x, y) + div!(x, y) // Rethrow the error if `div` raised an error\n"
@@ -1832,19 +1902,19 @@ msgstr ""
 "  div(x, y) + div!(x, y) // 如果 `div` 引发错误，则重新抛出错误\n"
 "}\n"
 
-#: ../../language/error-handling.md:116
+#: ../../language/error-handling.md:140
 msgid "However, you may want to handle the errors."
 msgstr "但是，你可能想要处理错误。"
 
-#: ../../language/error-handling.md:118
+#: ../../language/error-handling.md:142
 msgid "Try ... Catch"
 msgstr ""
 
-#: ../../language/error-handling.md:120
+#: ../../language/error-handling.md:144
 msgid "You can use `try` and `catch` to catch and handle errors, for example:"
 msgstr "你可以使用 `try` 和 `catch` 捕获和处理错误，例如："
 
-#: ../../language/error-handling.md:122
+#: ../../language/error-handling.md:146
 msgid ""
 "fn main {\n"
 "  try div!(42, 0) catch {\n"
@@ -1855,7 +1925,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:130 ../../language/fundamentals.md:135
+#: ../../language/error-handling.md:154 ../../language/fundamentals.md:135
 #: ../../language/fundamentals.md:169 ../../language/fundamentals.md:227
 #: ../../language/fundamentals.md:288 ../../language/fundamentals.md:785
 #: ../../language/fundamentals.md:799 ../../language/fundamentals.md:813
@@ -1870,11 +1940,11 @@ msgstr ""
 msgid "Output"
 msgstr "输出"
 
-#: ../../language/error-handling.md:130
+#: ../../language/error-handling.md:154
 msgid "division by zero\n"
 msgstr "除零"
 
-#: ../../language/error-handling.md:134
+#: ../../language/error-handling.md:158
 msgid ""
 "Here, `try` is used to call a function that might throw an error, and "
 "`catch` is used to match and handle the caught error. If no error is "
@@ -1884,26 +1954,26 @@ msgstr ""
 "这里，`try` 用于调用可能引发错误的函数，`catch` 用于匹配和处理捕获的错误。如果没有捕获到错误，`catch` 块将不会执行，而是执行"
 " `else` 块。"
 
-#: ../../language/error-handling.md:138
+#: ../../language/error-handling.md:162
 msgid ""
 "The `else` block can be omitted if no action is needed when no error is "
 "caught. For example:"
 msgstr "如果不需要在没有捕获到错误时执行任何操作，则可以省略 `else` 块。例如："
 
-#: ../../language/error-handling.md:141
+#: ../../language/error-handling.md:165
 msgid ""
 "try println(div!(42, 0)) catch {\n"
 "  _ => println(\"Error\")\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:148
+#: ../../language/error-handling.md:172
 msgid ""
 "When the body of `try` is a simple expression, the curly braces can be "
 "omitted. For example:"
 msgstr "当 `try` 的主体是一个简单表达式时，大括号可以省略。例如："
 
-#: ../../language/error-handling.md:151
+#: ../../language/error-handling.md:175
 msgid ""
 "let a = try div!(42, 0) catch {\n"
 "  _ => 0\n"
@@ -1911,11 +1981,11 @@ msgid ""
 "println(a)\n"
 msgstr ""
 
-#: ../../language/error-handling.md:158
+#: ../../language/error-handling.md:182
 msgid "Transforming to Result"
 msgstr "转换为 Result"
 
-#: ../../language/error-handling.md:160
+#: ../../language/error-handling.md:184
 msgid ""
 "You can also catch the potential error and transform into a first-class "
 "value of the [`Result`](/language/fundamentals.md#option-and-result) "
@@ -1924,15 +1994,15 @@ msgstr ""
 "您还可以捕获潜在的错误，并将其转换为一等公民的 [`Result`](/language/fundamentals.md#option-and-"
 "result) type，方法是："
 
-#: ../../language/error-handling.md:163
+#: ../../language/error-handling.md:187
 msgid "using `try?` before an expression that may throw error"
 msgstr "在可能引发错误的表达式前使用 `try?`"
 
-#: ../../language/error-handling.md:164
+#: ../../language/error-handling.md:188
 msgid "appending `?` after the function name"
 msgstr "在函数名后添加 `?`"
 
-#: ../../language/error-handling.md:166
+#: ../../language/error-handling.md:190
 msgid ""
 "test {\n"
 "  let res = div?(6, 3)\n"
@@ -1947,11 +2017,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:172
+#: ../../language/error-handling.md:196
 msgid "Error Inference"
 msgstr "错误推导"
 
-#: ../../language/error-handling.md:174
+#: ../../language/error-handling.md:198
 msgid ""
 "Within a `try` block, several different kinds of errors can be raised. "
 "When that happens, the compiler will use the type `Error` as the common "
@@ -1961,7 +2031,7 @@ msgstr ""
 "在 `try` 块中，可能引发多种不同类型的错误。当发生这种情况时，编译器将使用 `Error` "
 "类型作为通用错误类型。因此，处理程序必须使用通配符 `_` 来确保捕获所有错误。例如："
 
-#: ../../language/error-handling.md:179
+#: ../../language/error-handling.md:203
 msgid ""
 "fn f1() -> Unit!E1 {\n"
 "  ...\n"
@@ -1981,14 +2051,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:186
+#: ../../language/error-handling.md:210
 msgid ""
 "You can also use `catch!` to rethrow the uncaught errors for convenience."
 " This is useful when you only want to handle a specific error and rethrow"
 " others. For example,"
 msgstr "您还可以使用 `catch!` 来重新抛出未捕获的错误，以方便处理。当您只想处理特定错误并重新抛出其他错误时，这很有用。例如："
 
-#: ../../language/error-handling.md:190
+#: ../../language/error-handling.md:214
 msgid ""
 "try {\n"
 "  f1!()\n"

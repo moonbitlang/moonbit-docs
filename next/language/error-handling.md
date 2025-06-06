@@ -102,6 +102,30 @@ to do that. For example,
 :end-before: end error 5
 ```
 
+### Error Polymorphism
+
+It happens when a higher order function accepts another function as parameter. The function as parameter may or may not throw error, which in turn affects the behavior of this function.
+
+A notable example is `map` of `Array`:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error polymorphism
+:end-before: end error polymorphism
+```
+
+However, writing so would make the `map` function constantly having the possibility of throwing errors, which is not the case.
+
+Thus, the error polymorphism is introduced. You may use `?Error` to signify that an error may or may not be throw.
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error polymorphism 2
+:end-before: end error polymorphism 2
+```
+
+The signature of the `map_with_polymorphism` will be induced by the actual parameter. As a result, there will be a warning for the `try?` after `res` because no error will be thrown.
+
 ## Handling Errors
 
 Applying the function normally will rethrow the error directly in case of an
