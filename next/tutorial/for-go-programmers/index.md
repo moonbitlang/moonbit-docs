@@ -913,8 +913,8 @@ There are a few requirements for a method of type `T` to be object-safe:
 - `self : T` should be the first parameter of the method;
 - Any other parameter of the method should not have the type `T`.
 
-For example, in the above `Name` trait, the `name()` method is object-safe because it does not
-have a `self` parameter, and thus `Name` can be used in the hypothetical `&Name` trait object.
+For example, in the above `Name` trait, the `name()` method is not object-safe because it does not
+have a `self` parameter, and thus `Name` cannot be used in the hypothetical `&Name` trait object.
 
 ### Trait Extensions
 
