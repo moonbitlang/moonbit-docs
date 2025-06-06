@@ -141,7 +141,7 @@ We take a clumsy approach to save variable names and their associated nesting de
 :end-at: }
 ```
 
-Then we write a helper function to find the corresponding `depth` based on a specific `name` from `@immut/list.T[Index]`:
+Then we write a helper function to find the corresponding `depth` based on a specific `name` from `@list.T[Index]`:
 
 ```{literalinclude} /sources/lambda-expression/src/top.mbt
 :language: moonbit
@@ -187,4 +187,4 @@ The full code: [GitHub repository](https://github.com/moonbitlang/moonbit-docs/t
 
 ## Improvement
 
-When mapping variable names to indices, we used the `@immut/list.T[Index]` type and updated the entire list every time we added a new Lambda. However, this is actually quite a clumsy method. I believe you can quickly realize that to store a `@immut/list.T[String]` should simply suffice. If you're interested, you can try it yourself.
+When mapping variable names to indices, we used the `@list.T[Index]` type and updated the entire list every time we added a new Lambda. However, this is actually quite a clumsy method. I believe you can quickly realize that to store a `@list.T[String]` should simply suffice. If you're interested, you can try it yourself.
