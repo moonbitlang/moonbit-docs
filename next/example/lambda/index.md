@@ -159,7 +159,7 @@ Now we can complete the `bruijn()` function.
 ```{literalinclude} /sources/lambda-expression/src/top.mbt
 :language: moonbit
 :start-at: fn go
-:end-at: go(Nil, self)
+:end-at: go(@list.empty(), self)
 :dedent:
 ```
 
@@ -169,8 +169,8 @@ Reduction mainly deals with App, i.e., calls:
 
 ```{literalinclude} /sources/lambda-expression/src/top.mbt
 :language: moonbit
-:start-at: fn eval
-:end-before: test
+:start-at: fn TermDBI::eval
+:end-before: ///|
 ```
 
 First, attempt reduction on both sub-items, then see if `eval(t1)` results in a Lambda. If so, perform one step of variable substitution (via the `subst` function) and then continue simplifying. For Lambdas (`Abs`), simply return them as they are.
@@ -180,7 +180,7 @@ The implementation of the `subst` function becomes much simpler when we don't ne
 ```{literalinclude} /sources/lambda-expression/src/top.mbt
 :language: moonbit
 :start-at: fn subst
-:end-before: fn eval
+:end-before: ///|
 ```
 
 The full code: [GitHub repository](https://github.com/moonbitlang/moonbit-docs/tree/main/next/sources/lambda-expression/src/top.mbt)
