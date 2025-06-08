@@ -234,7 +234,7 @@ Methods of a trait can be called directly via `Trait::method`. MoonBit will infe
 
 Trait implementations can also be invoked via dot syntax, with the following restrictions:
 
-1. if a regular method is present, the regular method is always favored when using dot syntax
+1. if a regular function is present, the regular function is always favored when using dot syntax
 2. only trait implementations that are located in the package of the self type can be invoked via dot syntax
    - if there are multiple trait methods (from different traits) with the same name available, an ambiguity error is reported
 3. if neither of the above two rules apply, trait `impl`s in current package will also be searched for dot syntax.
