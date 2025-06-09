@@ -267,7 +267,7 @@ MoonBit's loops can return values as well.
 
 Functional loops using the `loop` keyword are particularly powerful.
 The loop body is similar to that of a `match` expression, where each arm tries to
-match the loop variables and act on them accordingly:
+match the loop variables and act on them accordingly.
 You may use the `continue` keyword to start the next iteration of the loop with the given
 loop values, or use the `break` keyword to exit the loop with some given output value.
 At the trailing expression of each arm, the `break`ing is implicit and thus not required.
@@ -356,7 +356,32 @@ enum Result[T, E] {
 }
 ```
 
-## Value and Reference Semantics
+## Functions
+
+In Go, functions are defined using the `func` keyword followed by
+the function name, parameters, and return type.
+
+```go
+func add(a int, b int) int {
+    return a + b
+}
+```
+
+In MoonBit, function definitions use the `fn` keyword and a
+slightly different syntax:
+
+```moonbit
+fn add(a : Int, b : Int) -> Int {
+  a + b
+}
+```
+
+Note the use of the `:` token to specify types, and the `->` token
+to indicate the return type.
+Also, the function body is an expression that returns a value, so the
+`return` keyword is not required unless early exits are needed.
+
+### Value and Reference Semantics
 
 Understanding how data is passed and stored is crucial when moving between programming languages.
 Go and MoonBit, in particular, have different approaches to value and reference semantics.
@@ -468,7 +493,7 @@ fn modify_map(m : Map[String, Int]) -> Unit {
 }
 ```
 
-### The [`Ref[T]`](../../language/fundamentals.md#ref) Helper Type
+#### The [`Ref[T]`](../../language/fundamentals.md#ref) Helper Type
 
 When you need explicit mutable references to value types,
 MoonBit provides the [`Ref[T]`](../../language/fundamentals.md#ref) type
@@ -494,31 +519,6 @@ fn main {
   println(counter.val) // Prints 1
 }
 ```
-
-## Functions
-
-In Go, functions are defined using the `func` keyword followed by
-the function name, parameters, and return type.
-
-```go
-func add(a int, b int) int {
-    return a + b
-}
-```
-
-In MoonBit, function definitions use the `fn` keyword and a
-slightly different syntax:
-
-```moonbit
-fn add(a : Int, b : Int) -> Int {
-  a + b
-}
-```
-
-Note the use of the `:` token to specify types, and the `->` token
-to indicate the return type.
-Also, the function body is an expression that returns a value, so the
-`return` keyword is not required unless early exits are needed.
 
 ### Generic Functions
 
