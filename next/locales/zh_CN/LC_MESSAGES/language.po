@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 20:19+0800\n"
+"POT-Creation-Date: 2025-06-09 11:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1821,8 +1821,7 @@ msgid ""
 "It happens when a higher order function accepts another function as "
 "parameter. The function as parameter may or may not throw error, which in"
 " turn affects the behavior of this function."
-msgstr ""
-"一个高阶函数在接受另一个函数作为参数时，另一个函数可能会抛出错误，也可能不会抛出错误，这反过来又影响了这个高阶函数的行为。"
+msgstr "一个高阶函数在接受另一个函数作为参数时，另一个函数可能会抛出错误，也可能不会抛出错误，这反过来又影响了这个高阶函数的行为。"
 
 #: ../../language/error-handling.md:109
 msgid "A notable example is `map` of `Array`:"
@@ -1843,15 +1842,13 @@ msgstr ""
 msgid ""
 "However, writing so would make the `map` function constantly having the "
 "possibility of throwing errors, which is not the case."
-msgstr ""
-"然而，这样写会使得 `map` 函数总是有可能抛出错误，这并不是我们想要的。"
+msgstr "然而，这样写会使得 `map` 函数总是有可能抛出错误，这并不是我们想要的。"
 
 #: ../../language/error-handling.md:119
 msgid ""
 "Thus, the error polymorphism is introduced. You may use `?Error` to "
 "signify that an error may or may not be throw."
-msgstr ""
-"因此，引入了错误多态。您可以使用 `?Error` 来表示可能会抛出错误，也可能不会抛出错误。"
+msgstr "因此，引入了错误多态。您可以使用 `?Error` 来表示可能会抛出错误，也可能不会抛出错误。"
 
 #: ../../language/error-handling.md:121
 msgid ""
@@ -17408,15 +17405,15 @@ msgstr "MoonBit 支持使用语法 `typealias Name = TargetType` 定义类型别
 
 #: ../../language/fundamentals.md:1287
 msgid ""
-"pub typealias Index = Int\n"
+"pub typealias Int as Index\n"
 "\n"
 "// type alias are private by default\n"
-"typealias MapString[X] = Map[String, X]\n"
+"typealias @list.T as Lst\n"
 msgstr ""
-"pub typealias Index = Int\n"
+"pub typealias Int as Index\n"
 "\n"
 "// 类型别名默认为私有\n"
-"typealias MapString[X] = Map[String, X]\n"
+"typealias @list.T as Lst\n"
 
 #: ../../language/fundamentals.md:1293
 msgid ""
@@ -18038,7 +18035,7 @@ msgid ""
 msgstr "级联运算符`..`用于连续对同一值执行一系列可变操作。语法如下："
 
 #: ../../language/fundamentals.md:1527
-msgid "x..f()\n"
+msgid "[]..append([1])\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:1534
@@ -20579,5 +20576,8 @@ msgstr ""
 #~ "  let y : Double = 1 \n"
 #~ "  expect_double(1) \n"
 #~ "}\n"
+#~ msgstr ""
+
+#~ msgid "x..f()\n"
 #~ msgstr ""
 

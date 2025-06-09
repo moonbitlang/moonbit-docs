@@ -71,9 +71,8 @@ impl Ignore for Unit with f(u) {
 }
 
 fn cascade() -> Unit {
-  let x : Unit = ()
   // start operator 5
-  x..f()
+  []..append([1])
   // end operator 5
   // start operator 6
   let builder = StringBuilder::new()

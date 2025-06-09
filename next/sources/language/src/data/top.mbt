@@ -299,10 +299,10 @@ test "newtype 3" (t : @test.T) {
 }
 
 // start typealias 1
-pub typealias Index = Int
+pub typealias Int as Index
 
 // type alias are private by default
-typealias MapString[X] = Map[String, X]
+typealias @list.T as Lst
 // end typealias 1
 
 // start local-type 1
