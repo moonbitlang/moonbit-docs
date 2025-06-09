@@ -119,7 +119,7 @@ type Description = string
 In MoonBit, the `typealias` keyword is used instead:
 
 ```moonbit
-typealias Description = String
+typealias String as Description
 ```
 
 ## Structures
@@ -459,12 +459,12 @@ fn main {
 
 fn increment_array(nums : Array[Int]) -> Unit {
   for i = 0; i < nums.length(); i = i + 1 {
-    nums[i] += 1  // Modifies the original array
+    nums[i] += 1 // Modifies the original array
   }
 }
 
 fn modify_map(m : Map[String, Int]) -> Unit {
-  m["key"] = 42  // Modifies the original map
+  m["key"] = 42 // Modifies the original map
 }
 ```
 
@@ -491,7 +491,7 @@ fn increment_counter(counter : Ref[Int]) -> Unit {
 fn main {
   let counter = Ref::new(0)
   increment_counter(counter)
-  println(counter.val)  // Prints 1
+  println(counter.val) // Prints 1
 }
 ```
 
@@ -721,7 +721,8 @@ fn categorize_array(array : Array[Int]) -> String {
   match array {
     [] => "empty"
     [x] => "only=\{x}"
-    [first, .. middle, last] => "first=\{first} and last=\{last} with middle=\{middle}"
+    [first, .. middle, last] =>
+      "first=\{first} and last=\{last} with middle=\{middle}"
   }
 }
 
@@ -730,7 +731,7 @@ fn is_palindrome(s : @string.View) -> Bool {
     [] | [_] => true
     // `a` and `b` capture the first and last characters of the view, and
     // `.. rest` captures the middle part of the view as a new view.
-    [a,  .. rest,  b] if a == b => is_palindrome(rest)
+    [a, .. rest, b] if a == b => is_palindrome(rest)
     _ => false
   }
 }
@@ -861,16 +862,13 @@ impl Shape for Rectangle with perimeter(self) {
 
 // Static dispatch is possible using generic functions with type bounds
 fn[T : Shape] print_shape_info(shape : T) -> Unit {
-  println(
-    "Area: \{shape.area()}, Perimeter: \{shape.perimeter()}",
-  )
+  println("Area: \{shape.area()}, Perimeter: \{shape.perimeter()}")
 }
 
 // Dynamic dispatch is possible using the `&Shape` trait object type
 fn print_shape_info_dyn(shape : &Shape) -> Unit {
   print_shape_info(shape)
 }
-
 
 test {
   let rect = Rectangle::{ width: 10.0, height: 5.0 }
@@ -961,10 +959,7 @@ MoonBit supports operator overloading through built-in traits, which has no Go e
 
 ```moonbit
 impl Add for Rectangle with op_add(self, other) {
-  {
-    width: self.width + other.width,
-    height: self.height + other.height
-  }
+  { width: self.width + other.width, height: self.height + other.height }
 }
 
 // Now you can use + with rectangles
