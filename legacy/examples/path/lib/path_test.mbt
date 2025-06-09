@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 test {
   // Posix
   let posix_path = @lib.Path::new(
@@ -50,7 +51,12 @@ test {
     ,
   )
   rel_posix_path.append("hello")
-  inspect!(rel_posix_path.to_string(), content="./abc/de/f/hello")
+  inspect!(
+    rel_posix_path.to_string(),
+    content=
+      #|"./abc/de/f/hello"
+    ,
+  )
 
   // windows
   let win_path = @lib.Path::new(

@@ -12,12 +12,14 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 pub(all) struct Path {
   mut inner : String
   platform : Platform
   file_type : FileType
 }
 
+///|
 pub(all) enum FileType {
   File
   Directory
@@ -25,83 +27,107 @@ pub(all) enum FileType {
   Unknown
 }
 
+///|
 pub(all) enum Platform {
   Posix
   Windows
 }
 
+///|
 pub fn Path::new(s : String, platform : Platform, file_type : FileType) -> Path {
   { inner: s, platform, file_type }
 }
 
+///|
 pub fn parent(self : Path) -> String {
   match self.platform {
     Posix => {
-      let (parts, l) = split(self.inner, '/')
-      let mut parent = ""
-      let mut index = 0
-      let end = if parts[l] == "" { l - 1 } else { l }
-      while index < end {
-        parent = parent + parts[index] + "/"
-        index = index + 1
+      let parts = self.inner.split("/").collect()
+      let builder = StringBuilder::new()
+      match parts {
+        [.. parent, _, ""] =>
+          for p in parent {
+            builder..write_string(p.to_string())..write_char('/')
+          }
+        [.. parent, _] =>
+          for p in parent {
+            builder..write_string(p.to_string())..write_char('/')
+          }
+        _ => panic()
       }
-      parent
+      builder.to_string()
     }
     Windows => {
-      let (parts, l) = split(self.inner, '\\')
-      let mut parent = ""
-      let mut index = 0
-      let end = if parts[l] == "" { l - 1 } else { l }
-      while index < end {
-        parent = parent + parts[index] + "\\"
-        index = index + 1
+      let parts = self.inner.split("\\").collect()
+      let builder = StringBuilder::new()
+      match parts {
+        [.. parent, _, ""] =>
+          for p in parent {
+            builder..write_string(p.to_string())..write_char('\\')
+          }
+        [.. parent, _] =>
+          for p in parent {
+            builder..write_string(p.to_string())..write_char('\\')
+          }
+        _ => panic()
       }
-      parent
+      builder.to_string()
     }
   }
 }
 
+///|
 pub fn is_absolute(self : Path) -> Bool {
   self.has_root()
 }
 
+///|
 pub fn is_relative(self : Path) -> Bool {
   not(self.has_root())
 }
 
+///|
 pub fn has_root(self : Path) -> Bool {
   match self.platform {
-    Posix => self.inner[0] == '/'
+    Posix => self.inner.char_at(0) == '/'
     Windows =>
-      ((self.inner[0].compare('a') >= 0 && self.inner[0].compare('z') <= 0) || (self.inner[0].compare(
-        'A',
-      ) >= 0 && self.inner[0].compare('Z') <= 0)) && self.inner[1] == ':'
+      (
+        (
+          self.inner.char_at(0).compare('a') >= 0 &&
+          self.inner.char_at(0).compare('z') <= 0
+        ) ||
+        (
+          self.inner.char_at(0).compare('A') >= 0 &&
+          self.inner.char_at(0).compare('Z') <= 0
+        )
+      ) &&
+      self.inner.char_at(1) == ':'
   }
 }
 
+///|
 pub fn file_name(self : Path) -> String? {
   match self.file_type {
-    FileType::File => {
-      let (parts, l) = match self.platform {
-        Posix => split(self.inner, '/')
-        Windows => split(self.inner, '\\')
+    FileType::File =>
+      match self.platform {
+        Posix => self.inner.split("/").last().map(@string.View::to_string)
+        Windows => self.inner.split("\\").last().map(@string.View::to_string)
       }
-      Some(parts[l])
-    }
     _ => None
   }
 }
 
+///|
 pub fn append(self : Path, p : String) -> Unit {
   match self.platform {
     Posix => {
-      if self.inner[self.inner.length() - 1] != '/' {
+      if self.inner.char_at(self.inner.length() - 1) != '/' {
         self.inner = self.inner + "/"
       }
       self.inner = self.inner + p
     }
     Windows => {
-      if self.inner[self.inner.length() - 1] != '\\' {
+      if self.inner.char_at(self.inner.length() - 1) != '\\' {
         self.inner = self.inner + "\\"
       }
       self.inner = self.inner + p
@@ -109,10 +135,7 @@ pub fn append(self : Path, p : String) -> Unit {
   }
 }
 
-pub fn to_string(self : Path) -> String {
-  self.inner
-}
-
-pub fn output(self : Path, log : &Logger) -> Unit {
+///|
+pub impl Show for Path with output(self : Path, log : &Logger) -> Unit {
   self.inner.output(log)
 }
