@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 20:19+0800\n"
+"POT-Creation-Date: 2025-06-09 11:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -287,7 +287,7 @@ msgid "In MoonBit, the `typealias` keyword is used instead:"
 msgstr ""
 
 #: ../../tutorial/for-go-programmers/index.md:121
-msgid "typealias Description = String\n"
+msgid "typealias String as Description\n"
 msgstr ""
 
 #: ../../tutorial/for-go-programmers/index.md:125
@@ -768,12 +768,12 @@ msgid ""
 "\n"
 "fn increment_array(nums : Array[Int]) -> Unit {\n"
 "  for i = 0; i < nums.length(); i = i + 1 {\n"
-"    nums[i] += 1  // Modifies the original array\n"
+"    nums[i] += 1 // Modifies the original array\n"
 "  }\n"
 "}\n"
 "\n"
 "fn modify_map(m : Map[String, Int]) -> Unit {\n"
-"  m[\"key\"] = 42  // Modifies the original map\n"
+"  m[\"key\"] = 42 // Modifies the original map\n"
 "}\n"
 msgstr ""
 
@@ -810,7 +810,7 @@ msgid ""
 "fn main {\n"
 "  let counter = Ref::new(0)\n"
 "  increment_counter(counter)\n"
-"  println(counter.val)  // Prints 1\n"
+"  println(counter.val) // Prints 1\n"
 "}\n"
 msgstr ""
 
@@ -1133,8 +1133,8 @@ msgid ""
 "  match array {\n"
 "    [] => \"empty\"\n"
 "    [x] => \"only=\\{x}\"\n"
-"    [first, .. middle, last] => \"first=\\{first} and last=\\{last} with "
-"middle=\\{middle}\"\n"
+"    [first, .. middle, last] =>\n"
+"      \"first=\\{first} and last=\\{last} with middle=\\{middle}\"\n"
 "  }\n"
 "}\n"
 "\n"
@@ -1144,49 +1144,49 @@ msgid ""
 "    // `a` and `b` capture the first and last characters of the view, and"
 "\n"
 "    // `.. rest` captures the middle part of the view as a new view.\n"
-"    [a,  .. rest,  b] if a == b => is_palindrome(rest)\n"
+"    [a, .. rest, b] if a == b => is_palindrome(rest)\n"
 "    _ => false\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:739
+#: ../../tutorial/for-go-programmers/index.md:740
 msgid "Methods and Traits"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:741
+#: ../../tutorial/for-go-programmers/index.md:742
 msgid ""
 "Although both languages support methods and behavior sharing via "
 "traits/interfaces, MoonBit's approach to methods and traits/interfaces "
 "differs significantly from Go's."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:744
+#: ../../tutorial/for-go-programmers/index.md:745
 msgid ""
 "As we will see below, MoonBit allows for more flexibility and "
 "expressiveness in terms of trait methods than go, since in MoonBit:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:747
+#: ../../tutorial/for-go-programmers/index.md:748
 msgid "A trait must be explicitly implemented for each type;"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:749
+#: ../../tutorial/for-go-programmers/index.md:750
 msgid ""
 "A type's method is not necessarily object-safe (i.e. can be used in trait"
 " objects), in fact, they don't even need to have `self` as the first "
 "parameter at all."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:752
+#: ../../tutorial/for-go-programmers/index.md:753
 msgid "Methods"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:754
+#: ../../tutorial/for-go-programmers/index.md:755
 msgid "In Go, methods are defined on types using the receiver syntax:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:756
+#: ../../tutorial/for-go-programmers/index.md:757
 msgid ""
 "type Rectangle struct {\n"
 "    width, height float64\n"
@@ -1202,28 +1202,28 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:771
+#: ../../tutorial/for-go-programmers/index.md:772
 msgid "Methods can be called using the `.method()` syntax:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:773
+#: ../../tutorial/for-go-programmers/index.md:774
 msgid ""
 "rect := Rectangle{width: 10.0, height: 5.0}\n"
 "areaValue := rect.Area()\n"
 "rect.Scale(2.0) // NOTE: `.Scale()` modifies the rectangle in place.\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:779
+#: ../../tutorial/for-go-programmers/index.md:780
 msgid ""
 "In MoonBit, however, a type `T`'s methods are simply functions defined "
 "with the `T::` prefix."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:782
+#: ../../tutorial/for-go-programmers/index.md:783
 msgid "This is how you would recreate the above `Rectangle` example in MoonBit:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:784
+#: ../../tutorial/for-go-programmers/index.md:785
 msgid ""
 "struct Rectangle {\n"
 "  // `mut` allows these fields to be modified in-place.\n"
@@ -1243,26 +1243,26 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:802
+#: ../../tutorial/for-go-programmers/index.md:803
 msgid "... and you can call methods like this:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:804
+#: ../../tutorial/for-go-programmers/index.md:805
 msgid ""
 "let rect = Rectangle::{ width: 10.0, height: 5.0 }\n"
 "let area_value = rect.area()\n"
 "rect.scale(2.0) // NOTE: `.scale()` modifies the rectangle in place.\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:810
+#: ../../tutorial/for-go-programmers/index.md:811
 msgid "Traits"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:812
+#: ../../tutorial/for-go-programmers/index.md:813
 msgid "Go uses interfaces for polymorphism:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:814
+#: ../../tutorial/for-go-programmers/index.md:815
 #, python-format
 msgid ""
 "type Shape interface {\n"
@@ -1293,11 +1293,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:843
+#: ../../tutorial/for-go-programmers/index.md:844
 msgid "MoonBit has traits, which are similar to Go interfaces:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:845
+#: ../../tutorial/for-go-programmers/index.md:846
 msgid ""
 "trait Shape {\n"
 "  area(Self) -> Double\n"
@@ -1318,16 +1318,13 @@ msgid ""
 "\n"
 "// Static dispatch is possible using generic functions with type bounds\n"
 "fn[T : Shape] print_shape_info(shape : T) -> Unit {\n"
-"  println(\n"
-"    \"Area: \\{shape.area()}, Perimeter: \\{shape.perimeter()}\",\n"
-"  )\n"
+"  println(\"Area: \\{shape.area()}, Perimeter: \\{shape.perimeter()}\")\n"
 "}\n"
 "\n"
 "// Dynamic dispatch is possible using the `&Shape` trait object type\n"
 "fn print_shape_info_dyn(shape : &Shape) -> Unit {\n"
 "  print_shape_info(shape)\n"
 "}\n"
-"\n"
 "\n"
 "test {\n"
 "  let rect = Rectangle::{ width: 10.0, height: 5.0 }\n"
@@ -1336,18 +1333,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:882
+#: ../../tutorial/for-go-programmers/index.md:880
 msgid "Object Safety"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:884
+#: ../../tutorial/for-go-programmers/index.md:882
 msgid ""
 "MoonBit traits can also include certain kinds of methods not available in"
 " Go interfaces, such as the ones with no `self` parameter, as shown in "
 "the example below:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:887
+#: ../../tutorial/for-go-programmers/index.md:885
 msgid ""
 "trait Name {\n"
 "  name() -> String\n"
@@ -1371,43 +1368,43 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:909
+#: ../../tutorial/for-go-programmers/index.md:907
 msgid ""
 "However, for a trait to be usable in a trait object, it must only contain"
 " object-safe methods."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:911
+#: ../../tutorial/for-go-programmers/index.md:909
 msgid "There are a few requirements for a method of type `T` to be object-safe:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:913
+#: ../../tutorial/for-go-programmers/index.md:911
 msgid "`self : T` should be the first parameter of the method;"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:914
+#: ../../tutorial/for-go-programmers/index.md:912
 msgid "Any other parameter of the method should not have the type `T`."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:916
+#: ../../tutorial/for-go-programmers/index.md:914
 msgid ""
 "For example, in the above `Name` trait, the `name()` method is not "
 "object-safe because it does not have a `self` parameter, and thus `Name` "
 "cannot be used in the hypothetical `&Name` trait object."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:919
+#: ../../tutorial/for-go-programmers/index.md:917
 #, fuzzy
 msgid "Trait Extensions"
 msgstr "**语言扩展**"
 
-#: ../../tutorial/for-go-programmers/index.md:921
+#: ../../tutorial/for-go-programmers/index.md:919
 msgid ""
 "MoonBit traits can explicitly extend other traits, allowing you to build "
 "on existing functionality:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:923
+#: ../../tutorial/for-go-programmers/index.md:921
 msgid ""
 "pub(open) trait Position {\n"
 "  pos(Self) -> (Int, Int)\n"
@@ -1422,24 +1419,24 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:937
+#: ../../tutorial/for-go-programmers/index.md:935
 msgid ""
 "Since the `Object` trait extends two traits `Position` and `Draw`, the "
 "latter two are called the former's **supertrait**s."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:940
+#: ../../tutorial/for-go-programmers/index.md:938
 #, fuzzy
 msgid "Default Implementations"
 msgstr "通过定义一个显式实现："
 
-#: ../../tutorial/for-go-programmers/index.md:942
+#: ../../tutorial/for-go-programmers/index.md:940
 msgid ""
 "Unlike Go interfaces, MoonBit trait functions can have default "
 "implementations:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:944
+#: ../../tutorial/for-go-programmers/index.md:942
 msgid ""
 "trait Printable {\n"
 "  print(Self) -> Unit\n"
@@ -1455,62 +1452,60 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:958
+#: ../../tutorial/for-go-programmers/index.md:956
 msgid "Operator Overloading"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:960
+#: ../../tutorial/for-go-programmers/index.md:958
 msgid ""
 "MoonBit supports operator overloading through built-in traits, which has "
 "no Go equivalent:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:962
+#: ../../tutorial/for-go-programmers/index.md:960
 msgid ""
 "impl Add for Rectangle with op_add(self, other) {\n"
-"  {\n"
-"    width: self.width + other.width,\n"
-"    height: self.height + other.height\n"
-"  }\n"
+"  { width: self.width + other.width, height: self.height + other.height }"
+"\n"
 "}\n"
 "\n"
 "// Now you can use + with rectangles\n"
 "let combined = rect1 + rect2\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:974
+#: ../../tutorial/for-go-programmers/index.md:969
 msgid "Imports and Package Management"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:976
+#: ../../tutorial/for-go-programmers/index.md:971
 msgid "Package management and imports work differently between Go and MoonBit."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:978
+#: ../../tutorial/for-go-programmers/index.md:973
 msgid "Creating a Project"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:980
+#: ../../tutorial/for-go-programmers/index.md:975
 msgid "In Go, the first thing to do when creating a new project is running:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:982
+#: ../../tutorial/for-go-programmers/index.md:977
 msgid "$ go mod init example.com/my-project\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:986
+#: ../../tutorial/for-go-programmers/index.md:981
 msgid ""
 "This will initialize a `go.mod` file that tracks your project's "
 "dependencies."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:988
+#: ../../tutorial/for-go-programmers/index.md:983
 msgid ""
 "Then you can create a `main.go` file with the `package main` declaration "
 "and start writing your code:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:991
+#: ../../tutorial/for-go-programmers/index.md:986
 msgid ""
 "package main\n"
 "\n"
@@ -1519,21 +1514,21 @@ msgid ""
 "func main() { fmt.Println(\"Hello, 世界\") }\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:999
+#: ../../tutorial/for-go-programmers/index.md:994
 msgid ""
 "In MoonBit, creating a new project is much easier. Simply run the `moon "
 "new` command to set up your project:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1002
+#: ../../tutorial/for-go-programmers/index.md:997
 msgid "$ moon new my-project\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1006
+#: ../../tutorial/for-go-programmers/index.md:1001
 msgid "Project Structure"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1008
+#: ../../tutorial/for-go-programmers/index.md:1003
 msgid ""
 "The Go toolchain has few requirements for the project structure, apart "
 "from the `go.mod` file being in the root directory of the project. To "
@@ -1542,7 +1537,7 @@ msgid ""
 "structure, depending on the style you choose."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1014
+#: ../../tutorial/for-go-programmers/index.md:1009
 msgid ""
 "While organizing the source files, the key point is that Go's tooling "
 "doesn't distinguish between source files under a common directory, so you"
@@ -1552,13 +1547,13 @@ msgid ""
 "need to import them before they can be used."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1021
+#: ../../tutorial/for-go-programmers/index.md:1016
 msgid ""
 "In MoonBit, on the other hand, the default project structure provided by "
 "`moon new` is more organized, as shown below:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1024
+#: ../../tutorial/for-go-programmers/index.md:1019
 msgid ""
 "my-project\n"
 "├── LICENSE\n"
@@ -1574,27 +1569,27 @@ msgid ""
 "        └── moon.pkg.json\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1039
+#: ../../tutorial/for-go-programmers/index.md:1034
 msgid ""
 "This demonstrates a typical \"binary-and-library\" project structure in "
 "MoonBit, located in the `src` directory. This is declared in "
 "`moon.mod.json` like so (with irrelevant parts omitted):"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1043
+#: ../../tutorial/for-go-programmers/index.md:1038
 msgid ""
 "{\n"
 "  \"source\": \"src\"\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1049
+#: ../../tutorial/for-go-programmers/index.md:1044
 msgid ""
 "This is the module configuration file that also registers the project's "
 "basic information such as its name, version, and dependencies."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1052
+#: ../../tutorial/for-go-programmers/index.md:1047
 msgid ""
 "Each directory under the source directory (`src` in this example) is a "
 "package with its own `moon.pkg.json` file containing package-specific "
@@ -1603,15 +1598,15 @@ msgid ""
 "defined as follows:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1057
+#: ../../tutorial/for-go-programmers/index.md:1052
 msgid "{}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1061
+#: ../../tutorial/for-go-programmers/index.md:1056
 msgid "... and `src/main/moon.pkg.json` as follows:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1063
+#: ../../tutorial/for-go-programmers/index.md:1058
 msgid ""
 "{\n"
 "  \"is_main\": true,\n"
@@ -1619,7 +1614,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1070
+#: ../../tutorial/for-go-programmers/index.md:1065
 msgid ""
 "Similarly to Go, MoonBit treats all `.mbt` files under a same package "
 "directory as a whole. When creating a new directory for more source "
@@ -1627,37 +1622,37 @@ msgid ""
 "that directory."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1074
+#: ../../tutorial/for-go-programmers/index.md:1069
 msgid "Running the Project"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1076
+#: ../../tutorial/for-go-programmers/index.md:1071
 msgid "To run the aforementioned Go project, you would typically use:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1078
+#: ../../tutorial/for-go-programmers/index.md:1073
 msgid "$ go run main.go\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1082
+#: ../../tutorial/for-go-programmers/index.md:1077
 msgid "Running the previous MoonBit project with `moon run` is very similar:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1084
+#: ../../tutorial/for-go-programmers/index.md:1079
 msgid "$ moon run src/main/main.mbt\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1088
+#: ../../tutorial/for-go-programmers/index.md:1083
 msgid "Adding Imports"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1090
+#: ../../tutorial/for-go-programmers/index.md:1085
 msgid ""
 "In Go, you can add imports with the `import` clause followed by their "
 "module path:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1092
+#: ../../tutorial/for-go-programmers/index.md:1087
 msgid ""
 "package main\n"
 "\n"
@@ -1666,34 +1661,34 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1100
+#: ../../tutorial/for-go-programmers/index.md:1095
 msgid ""
 "MoonBit uses a different approach with `moon.mod.json` for module "
 "configuration and `moon.pkg.json` for package configuration."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1103
+#: ../../tutorial/for-go-programmers/index.md:1098
 msgid ""
 "First, declare dependencies in the `\"deps\"` section of your "
 "`moon.mod.json`. This is usually done with the `moon add <package>` "
 "command."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1106
+#: ../../tutorial/for-go-programmers/index.md:1101
 msgid "For example, to use `moonbitlang/x`, you would run:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1108
+#: ../../tutorial/for-go-programmers/index.md:1103
 msgid "$ moon add moonbitlang/x\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1112
+#: ../../tutorial/for-go-programmers/index.md:1107
 msgid ""
 "... which would result in a `moon.mod.json` file like so (with irrelevant"
 " parts omitted):"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1114
+#: ../../tutorial/for-go-programmers/index.md:1109
 msgid ""
 "{\n"
 "  \"deps\": {\n"
@@ -1702,75 +1697,75 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1122
+#: ../../tutorial/for-go-programmers/index.md:1117
 msgid ""
 "Then, in your package's `moon.pkg.json`, specify which packages to import"
 " in the `\"import\"` section:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1125
+#: ../../tutorial/for-go-programmers/index.md:1120
 msgid ""
 "{\n"
 "  \"import\": [\"moonbitlang/x/sys\"]\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1131
+#: ../../tutorial/for-go-programmers/index.md:1126
 msgid "Now you should be ready to use the `sys` package in this MoonBit package."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1133
+#: ../../tutorial/for-go-programmers/index.md:1128
 msgid "Using Imported Packages"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1135
+#: ../../tutorial/for-go-programmers/index.md:1130
 msgid ""
 "In Go, the above import allows you to access the `sys` package's APIs "
 "using the `<package-name>.` prefix (the actual API is hypothetical):"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1138
+#: ../../tutorial/for-go-programmers/index.md:1133
 msgid ""
 "func main() {\n"
 "    sys.SetEnvVar(\"MOONBIT\", \"Hello\")\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1144
+#: ../../tutorial/for-go-programmers/index.md:1139
 msgid "In MoonBit, you access imported APIs using the `@<package-name>.` prefix:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1146
+#: ../../tutorial/for-go-programmers/index.md:1141
 msgid ""
 "fn main {\n"
 "  @sys.set_env_var(\"MOONBIT\", \"Hello\")\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1152
+#: ../../tutorial/for-go-programmers/index.md:1147
 msgid "Package Aliases"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1154
+#: ../../tutorial/for-go-programmers/index.md:1149
 msgid ""
 "In Go, you can create aliases for imported packages using the `import` "
 "statement:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1156
+#: ../../tutorial/for-go-programmers/index.md:1151
 msgid ""
 "import (\n"
 "    system \"github.com/user/repo/sys\"\n"
 ")\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1162
+#: ../../tutorial/for-go-programmers/index.md:1157
 msgid ""
 "In MoonBit, you can create aliases for imported packages in "
 "`moon.pkg.json` using the `alias` field:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1164
+#: ../../tutorial/for-go-programmers/index.md:1159
 msgid ""
 "{\n"
 "  \"import\": [\n"
@@ -1782,131 +1777,131 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1175
+#: ../../tutorial/for-go-programmers/index.md:1170
 msgid "Then you may use the alias like so:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1177
+#: ../../tutorial/for-go-programmers/index.md:1172
 msgid ""
 "fn main {\n"
 "  @system.set_env_var(\"MOONBIT\", \"Hello\")\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1183
+#: ../../tutorial/for-go-programmers/index.md:1178
 msgid "Access Control"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1185
+#: ../../tutorial/for-go-programmers/index.md:1180
 msgid ""
 "In Go, visibility is determined by the case of the first letter of an "
 "identifier (uppercase for public, lowercase for private)."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1188
+#: ../../tutorial/for-go-programmers/index.md:1183
 msgid ""
 "MoonBit has more granular access control than Go, providing the following"
 " visibility levels:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1190
+#: ../../tutorial/for-go-programmers/index.md:1185
 msgid "`priv`: Completely private (like Go's lowercase identifiers)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1191
+#: ../../tutorial/for-go-programmers/index.md:1186
 msgid ""
 "Default (abstract): Only the type name is visible, implementation is "
 "hidden"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1192
+#: ../../tutorial/for-go-programmers/index.md:1187
 msgid "`pub`: Read-only access from outside the package"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1193
+#: ../../tutorial/for-go-programmers/index.md:1188
 msgid "`pub(all)`: Full public access (like Go's uppercase identifiers)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1195
+#: ../../tutorial/for-go-programmers/index.md:1190
 msgid ""
 "This gives you fine-grained control over what parts of your API are "
 "exposed and how they can be used."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1197
+#: ../../tutorial/for-go-programmers/index.md:1192
 msgid "Runtime Support"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1199
+#: ../../tutorial/for-go-programmers/index.md:1194
 msgid ""
 "The same MoonBit code can target multiple runtimes with different code "
 "generation backends, allowing you to choose the best fit for your "
 "particular application:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1202
+#: ../../tutorial/for-go-programmers/index.md:1197
 msgid "WebAssembly (for web and edge computing)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1203
+#: ../../tutorial/for-go-programmers/index.md:1198
 msgid "JavaScript (for Node.js integration)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1204
+#: ../../tutorial/for-go-programmers/index.md:1199
 msgid "C (for native performance)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1205
+#: ../../tutorial/for-go-programmers/index.md:1200
 msgid "LLVM (experimental)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1207
+#: ../../tutorial/for-go-programmers/index.md:1202
 msgid "Memory Management"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1209
+#: ../../tutorial/for-go-programmers/index.md:1204
 msgid ""
 "Go uses a garbage collector, while MoonBit uses different strategies "
 "depending on the code generation backend being used:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1212
+#: ../../tutorial/for-go-programmers/index.md:1207
 msgid "**Wasm/C backends**: Reference counting without cycle detection"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1213
+#: ../../tutorial/for-go-programmers/index.md:1208
 msgid "**Wasm GC/JavaScript backends**: Leverages the runtime's garbage collector"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1215
+#: ../../tutorial/for-go-programmers/index.md:1210
 msgid "Getting Started"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1217
+#: ../../tutorial/for-go-programmers/index.md:1212
 msgid "Visit [the online playground](https://try.moonbitlang.com)."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1219
+#: ../../tutorial/for-go-programmers/index.md:1214
 msgid "Check out our [installation guide](../tour.md#installation)."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1221
+#: ../../tutorial/for-go-programmers/index.md:1216
 #, fuzzy
 msgid "Create your first MoonBit project:"
 msgstr "恭喜您完成了第一个 MoonBit 库！"
 
-#: ../../tutorial/for-go-programmers/index.md:1222
+#: ../../tutorial/for-go-programmers/index.md:1217
 msgid ""
 "$ moon new hello-world\n"
 "$ cd hello-world\n"
 "$ moon run\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1228
+#: ../../tutorial/for-go-programmers/index.md:1223
 msgid "When to Choose MoonBit"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1230
+#: ../../tutorial/for-go-programmers/index.md:1225
 msgid ""
 "MoonBit offers a fresh take on systems programming with functional "
 "programming benefits and WebAssembly-first design. While different from "
@@ -1915,43 +1910,43 @@ msgid ""
 "option for your project if you embrace:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1234
+#: ../../tutorial/for-go-programmers/index.md:1229
 msgid "**WebAssembly targets** with minimal size and maximum performance"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1235
+#: ../../tutorial/for-go-programmers/index.md:1230
 msgid ""
 "**Functional programming** features like pattern matching and algebraic "
 "data types"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1236
+#: ../../tutorial/for-go-programmers/index.md:1231
 msgid ""
 "**Mathematical/algorithmic code** that benefits from immutability by "
 "default"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1237
+#: ../../tutorial/for-go-programmers/index.md:1232
 msgid "**Strong type safety** with comprehensive error handling"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1239
+#: ../../tutorial/for-go-programmers/index.md:1234
 msgid "Next Steps"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1241
+#: ../../tutorial/for-go-programmers/index.md:1236
 msgid "Explore the [Language Fundamentals](../../language/fundamentals.md)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1242
+#: ../../tutorial/for-go-programmers/index.md:1237
 msgid "Learn about [Error Handling](../../language/error-handling.md)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1243
+#: ../../tutorial/for-go-programmers/index.md:1238
 msgid "Understand [Methods and Traits](../../language/methods.md)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1244
+#: ../../tutorial/for-go-programmers/index.md:1239
 msgid "Check out [FFI capabilities](../../language/ffi.md) for interop"
 msgstr ""
 
@@ -2783,5 +2778,123 @@ msgstr ""
 #~ " `self` parameter, and thus `Name` "
 #~ "can be used in the hypothetical "
 #~ "`&Name` trait object."
+#~ msgstr ""
+
+#~ msgid "typealias Description = String\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "struct Point {\n"
+#~ "  mut x : Int\n"
+#~ "  mut y : Int\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn modify_point_ref(p : Point) -> Unit {\n"
+#~ "  p.x = 100 // Modifies the original struct\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  let point = Point::{ x: 10, y: 20 }\n"
+#~ "  modify_point_ref(point) // Passes the original struct by reference\n"
+#~ "  println(\"\\{point.x}\")   // Prints 100\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn increment_array(nums : Array[Int]) -> Unit {\n"
+#~ "  for i = 0; i < nums.length(); i = i + 1 {\n"
+#~ "    nums[i] += 1  // Modifies the original array\n"
+#~ "  }\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn modify_map(m : Map[String, Int]) -> Unit {\n"
+#~ "  m[\"key\"] = 42  // Modifies the original map\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn increment_counter(counter : Ref[Int]) -> Unit {\n"
+#~ "  counter.val = counter.val + 1\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  let counter = Ref::new(0)\n"
+#~ "  increment_counter(counter)\n"
+#~ "  println(counter.val)  // Prints 1\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn categorize_array(array : Array[Int]) -> String {\n"
+#~ "  match array {\n"
+#~ "    [] => \"empty\"\n"
+#~ "    [x] => \"only=\\{x}\"\n"
+#~ "    [first, .. middle, last] => "
+#~ "\"first=\\{first} and last=\\{last} with "
+#~ "middle=\\{middle}\"\n"
+#~ "  }\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn is_palindrome(s : @string.View) -> Bool {\n"
+#~ "  match s {\n"
+#~ "    [] | [_] => true\n"
+#~ "    // `a` and `b` capture the "
+#~ "first and last characters of the "
+#~ "view, and\n"
+#~ "    // `.. rest` captures the middle part of the view as a new view.\n"
+#~ "    [a,  .. rest,  b] if a == b => is_palindrome(rest)\n"
+#~ "    _ => false\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "trait Shape {\n"
+#~ "  area(Self) -> Double\n"
+#~ "  perimeter(Self) -> Double\n"
+#~ "}\n"
+#~ "\n"
+#~ "// Explicitly implement the `Shape` trait for `Rectangle`\n"
+#~ "impl Shape for Rectangle with area(self) {\n"
+#~ "  // NOTE: This is a method "
+#~ "call to the previously-defined "
+#~ "`Rectangle::area()`,\n"
+#~ "  // thus no recursion is involved.\n"
+#~ "  self.area()\n"
+#~ "}\n"
+#~ "\n"
+#~ "impl Shape for Rectangle with perimeter(self) {\n"
+#~ "  2.0 * (self.width + self.height)\n"
+#~ "}\n"
+#~ "\n"
+#~ "// Static dispatch is possible using "
+#~ "generic functions with type bounds\n"
+#~ "fn[T : Shape] print_shape_info(shape : T) -> Unit {\n"
+#~ "  println(\n"
+#~ "    \"Area: \\{shape.area()}, Perimeter: \\{shape.perimeter()}\",\n"
+#~ "  )\n"
+#~ "}\n"
+#~ "\n"
+#~ "// Dynamic dispatch is possible using the `&Shape` trait object type\n"
+#~ "fn print_shape_info_dyn(shape : &Shape) -> Unit {\n"
+#~ "  print_shape_info(shape)\n"
+#~ "}\n"
+#~ "\n"
+#~ "\n"
+#~ "test {\n"
+#~ "  let rect = Rectangle::{ width: 10.0, height: 5.0 }\n"
+#~ "  print_shape_info(rect)\n"
+#~ "  print_shape_info_dyn(rect)\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "impl Add for Rectangle with op_add(self, other) {\n"
+#~ "  {\n"
+#~ "    width: self.width + other.width,\n"
+#~ "    height: self.height + other.height\n"
+#~ "  }\n"
+#~ "}\n"
+#~ "\n"
+#~ "// Now you can use + with rectangles\n"
+#~ "let combined = rect1 + rect2\n"
 #~ msgstr ""
 
