@@ -191,18 +191,18 @@ test "for loop 8" (t : @test.T) {
   t.snapshot(filename="for_loop_8")
 }
 
-// start for loop 9
+// start functional loop
 test {
   fn sum(xs : @immut/list.T[Int]) -> Int {
-    loop xs, 0 {
-      Nil, acc => break acc // <=> Nil, acc => acc
-      Cons(x, rest), acc => continue rest, x + acc
+    loop (xs, 0) {
+      (Nil, acc) => break acc // <=> Nil, acc => acc
+      (Cons(x, rest), acc) => continue (rest, x + acc)
     }
   }
 
   assert_eq(sum(Cons(1, Cons(2, Cons(3, Nil)))), 6)
 }
-// end for loop 9
+// end functional loop
 
 // start for loop 10
 test {

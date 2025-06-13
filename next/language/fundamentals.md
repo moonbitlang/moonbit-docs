@@ -954,16 +954,16 @@ If a loop variable is unused, it can be ignored with `_`.
 
 Functional loop is a powerful feature in MoonBit that enables you to write loops in a functional style.
 
-A functional loop consumes arguments and returns a value. It is defined using the `loop` keyword, followed by its arguments and the loop body. The loop body is a sequence of clauses, each of which consists of a pattern and an expression. The clause whose pattern matches the input will be executed, and the loop will return the value of the expression. If no pattern matches, the loop will panic. Use the `continue` keyword with arguments to start the next iteration of the loop. Use the `break` keyword with arguments to return a value from the loop. The `break` keyword can be omitted if the value is the last expression in the loop body.
+A functional loop consumes an argument and returns a value. It is defined using the `loop` keyword, followed by its argument and the loop body. The loop body is a sequence of clauses, each of which consists of a pattern and an expression. The clause whose pattern matches the input will be executed, and the loop will return the value of the expression. If no pattern matches, the loop will panic. Use the `continue` keyword with arguments to start the next iteration of the loop. Use the `break` keyword with an argument to return a value from the loop. The `break` keyword can be omitted if the value is the last expression in the loop body.
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
-:start-after: start for loop 9
-:end-before: end for loop 9
+:start-after: start functional loop
+:end-before: end functional loop
 ```
 
-```{warning}
-Currently in `loop exprs { ... }`, `exprs` is nonempty list, while `for { ... }` is accepted for infinite loop.
+```{hint}
+Use `while true { ... }` or `for { ... }` for infinite loop.
 ```
 
 ### Labelled Continue/Break
