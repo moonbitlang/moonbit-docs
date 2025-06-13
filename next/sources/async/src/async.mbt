@@ -15,11 +15,11 @@ test {
 // end async function declaration
 
 // start async function call syntax
-async fn some_async_function() -> Unit! {
+async fn some_async_function() -> Unit raise {
   ...
 }
 
-async fn another_async_function() -> Unit! {
+async fn another_async_function() -> Unit raise {
   some_async_function() // rendered in italic font
 }
 // end async function call syntax
@@ -40,13 +40,13 @@ async fn[T, E : Error] suspend(
     // by throwing an error at suspension point
     (E) -> Unit,
   ) -> Unit
-) -> T!E = "%async.suspend"
+) -> T raise E = "%async.suspend"
 // end async primitive
 
 // start async example
-type! MyError derive(Show)
+suberror MyError derive(Show)
 
-async fn async_worker(throw_error~ : Bool) -> Unit!MyError {
+async fn async_worker(throw_error~ : Bool) -> Unit raise MyError {
   suspend(fn(resume_ok, resume_err) {
     if throw_error {
       resume_err(MyError)
@@ -88,12 +88,13 @@ test {
 // end async example
 
 // start async timer example
-extern type JSTimer
+#external
+type JSTimer
 
 extern "js" fn js_set_timeout(f : () -> Unit, duration~ : Int) -> JSTimer =
   #| (f, duration) => setTimeout(f, duration)
 
-async fn sleep(duration : Int) -> Unit! {
+async fn sleep(duration : Int) -> Unit raise {
   suspend(fn(resume_ok, _resume_err) {
     js_set_timeout(duration~, fn() { resume_ok(()) }) |> ignore
   })
