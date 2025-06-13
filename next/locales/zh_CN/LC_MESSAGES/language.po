@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-13 11:17+0800\n"
+"POT-Creation-Date: 2025-06-13 11:25+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2217,7 +2217,6 @@ msgstr ""
 #: ../../language/error_codes/E4013.md:21
 #: ../../language/error_codes/E4014.md:16
 #: ../../language/error_codes/E4015.md:18
-#: ../../language/error_codes/E4016.md:22
 #: ../../language/error_codes/E4017.md:26
 #: ../../language/error_codes/E4018.md:22
 #: ../../language/error_codes/E4019.md:20
@@ -6060,22 +6059,22 @@ msgstr "私有结构体和私有字段，虽然也会产生 [E0008](./E0008.md) 
 #: ../../language/error_codes/E4009.md:5 ../../language/error_codes/E4010.md:6
 #: ../../language/error_codes/E4011.md:5 ../../language/error_codes/E4012.md:5
 #: ../../language/error_codes/E4013.md:5 ../../language/error_codes/E4014.md:5
-#: ../../language/error_codes/E4015.md:5 ../../language/error_codes/E4016.md:5
-#: ../../language/error_codes/E4017.md:5 ../../language/error_codes/E4018.md:5
-#: ../../language/error_codes/E4019.md:5 ../../language/error_codes/E4020.md:5
-#: ../../language/error_codes/E4021.md:5 ../../language/error_codes/E4023.md:5
-#: ../../language/error_codes/E4024.md:5 ../../language/error_codes/E4026.md:5
-#: ../../language/error_codes/E4027.md:5 ../../language/error_codes/E4028.md:5
-#: ../../language/error_codes/E4029.md:5 ../../language/error_codes/E4030.md:5
-#: ../../language/error_codes/E4031.md:5 ../../language/error_codes/E4033.md:5
-#: ../../language/error_codes/E4034.md:5 ../../language/error_codes/E4036.md:5
-#: ../../language/error_codes/E4037.md:5 ../../language/error_codes/E4038.md:5
-#: ../../language/error_codes/E4039.md:5 ../../language/error_codes/E4040.md:5
-#: ../../language/error_codes/E4041.md:5 ../../language/error_codes/E4042.md:11
-#: ../../language/error_codes/E4043.md:5 ../../language/error_codes/E4044.md:5
-#: ../../language/error_codes/E4045.md:5 ../../language/error_codes/E4046.md:5
-#: ../../language/error_codes/E4081.md:9 ../../language/error_codes/E4082.md:9
-#: ../../language/error_codes/E4084.md:5 ../../language/error_codes/E4085.md:11
+#: ../../language/error_codes/E4015.md:5 ../../language/error_codes/E4017.md:5
+#: ../../language/error_codes/E4018.md:5 ../../language/error_codes/E4019.md:5
+#: ../../language/error_codes/E4020.md:5 ../../language/error_codes/E4021.md:5
+#: ../../language/error_codes/E4023.md:5 ../../language/error_codes/E4024.md:5
+#: ../../language/error_codes/E4026.md:5 ../../language/error_codes/E4027.md:5
+#: ../../language/error_codes/E4028.md:5 ../../language/error_codes/E4029.md:5
+#: ../../language/error_codes/E4030.md:5 ../../language/error_codes/E4031.md:5
+#: ../../language/error_codes/E4033.md:5 ../../language/error_codes/E4034.md:5
+#: ../../language/error_codes/E4036.md:5 ../../language/error_codes/E4037.md:5
+#: ../../language/error_codes/E4038.md:5 ../../language/error_codes/E4039.md:5
+#: ../../language/error_codes/E4040.md:5 ../../language/error_codes/E4041.md:5
+#: ../../language/error_codes/E4042.md:11 ../../language/error_codes/E4043.md:5
+#: ../../language/error_codes/E4044.md:5 ../../language/error_codes/E4045.md:5
+#: ../../language/error_codes/E4046.md:5 ../../language/error_codes/E4081.md:9
+#: ../../language/error_codes/E4082.md:9 ../../language/error_codes/E4084.md:5
+#: ../../language/error_codes/E4085.md:11
 #: ../../language/error_codes/E4087.md:10
 msgid "Erroneous Example"
 msgstr "错误示例："
@@ -6690,42 +6689,9 @@ msgid ""
 "operator."
 msgstr "请为类型实现所需的方法以使用中缀运算符。"
 
-#: ../../language/error_codes/E4016.md:7
-msgid ""
-"struct S { v : Int }\n"
-"\n"
-"let s : S = { v: 3 }\n"
-"let t = s + s\n"
-msgstr ""
-
-#: ../../language/error_codes/E4016.md:14
-msgid ""
-"The example above tries to use the infix operator `+` on a type `S` that "
-"does not implement the required method `op_add`, giving the following "
-"error on line 4:"
-msgstr "在上述例子中，试图在一个未实现所需方法 `op_add` 的类型 `S` 上使用中缀运算符 `+`，在第 4 行报错："
-
-#: ../../language/error_codes/E4016.md:18
-msgid ""
-"Please implement the method op_add for the type S to use the infix "
-"operator \"+\".\n"
-msgstr "请为类型 S 实现方法 op_add 以使用中缀运算符 \"+\"。"
-
-#: ../../language/error_codes/E4016.md:24
-msgid "Implement the required method for the type `S`:"
-msgstr "实现类型 `S` 所需的方法："
-
-#: ../../language/error_codes/E4016.md:26
-msgid ""
-"struct S { v : Int }\n"
-"\n"
-"let s : S = { v: 3 }\n"
-"let t = s + s\n"
-"\n"
-"fn S::op_add(self : S, other : S) -> S {\n"
-"  { v: self.v + other.v }\n"
-"}\n"
-msgstr ""
+#: ../../language/error_codes/E4016.md:5
+msgid "Currently, MoonBit doesn't emit this error."
+msgstr "目前，MoonBit 不会报告这个错误。"
 
 #: ../../language/error_codes/E4017.md:1
 msgid "E4017"
