@@ -11,23 +11,22 @@ test "derive eq_compare struct" {
   let p4 = DeriveEqCompare::{ x: 1, y: 3 }
 
   // Eq
-  assert_eq!(p1 == p2, false)
-  assert_eq!(p1 == p3, true)
-  assert_eq!(p1 == p4, false)
-
-  assert_eq!(p1 != p2, true)
-  assert_eq!(p1 != p3, false)
-  assert_eq!(p1 != p4, true)
+  assert_eq(p1 == p2, false)
+  assert_eq(p1 == p3, true)
+  assert_eq(p1 == p4, false)
+  assert_eq(p1 != p2, true)
+  assert_eq(p1 != p3, false)
+  assert_eq(p1 != p4, true)
 
   // Compare
-  assert_eq!(p1 < p2, true)
-  assert_eq!(p1 < p3, false)
-  assert_eq!(p1 < p4, true)
-  assert_eq!(p1 > p2, false)
-  assert_eq!(p1 > p3, false)
-  assert_eq!(p1 > p4, false)
-  assert_eq!(p1 <= p2, true)
-  assert_eq!(p1 >= p2, false)
+  assert_eq(p1 < p2, true)
+  assert_eq(p1 < p3, false)
+  assert_eq(p1 < p4, true)
+  assert_eq(p1 > p2, false)
+  assert_eq(p1 > p3, false)
+  assert_eq(p1 > p4, false)
+  assert_eq(p1 <= p2, true)
+  assert_eq(p1 >= p2, false)
 }
 // end derive eq_compare struct
 
@@ -48,20 +47,19 @@ test "derive eq_compare enum" {
   let p7 = DeriveEqCompareEnum::Case3
 
   // Eq
-  assert_eq!(p1 == p2, false)
-  assert_eq!(p1 == p3, true)
-  assert_eq!(p1 == p4, false)
-
-  assert_eq!(p1 != p2, true)
-  assert_eq!(p1 != p3, false)
-  assert_eq!(p1 != p4, true)
+  assert_eq(p1 == p2, false)
+  assert_eq(p1 == p3, true)
+  assert_eq(p1 == p4, false)
+  assert_eq(p1 != p2, true)
+  assert_eq(p1 != p3, false)
+  assert_eq(p1 != p4, true)
 
   // Compare
-  assert_eq!(p1 < p2, true) // 42 < 43
-  assert_eq!(p1 < p3, false)
-  assert_eq!(p1 < p4, true) // Case1 < Case2
-  assert_eq!(p4 < p5, true)
-  assert_eq!(p4 < p6, false)
-  assert_eq!(p4 < p7, true) // Case2 < Case3
+  assert_eq(p1 < p2, true) // 42 < 43
+  assert_eq(p1 < p3, false)
+  assert_eq(p1 < p4, true) // Case1 < Case2
+  assert_eq(p4 < p5, true)
+  assert_eq(p4 < p6, false)
+  assert_eq(p4 < p7, true) // Case2 < Case3
 }
 // end derive eq_compare enum

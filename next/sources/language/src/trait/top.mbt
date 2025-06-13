@@ -78,16 +78,16 @@ impl Eq for Point with op_equal(p1, p2) {
 }
 
 test {
-  assert_false!(contains([1, 2, 3], 4))
-  assert_true!(contains([1.5, 2.25, 3.375], 2.25))
-  assert_false!(contains([{ x: 2, y: 3 }], { x: 4, y: 9 }))
+  assert_false(contains([1, 2, 3], 4))
+  assert_true(contains([1.5, 2.25, 3.375], 2.25))
+  assert_false(contains([{ x: 2, y: 3 }], { x: 4, y: 9 }))
 }
 // end trait 6
 
 // start trait 7
 test {
-  assert_eq!(Show::to_string(42), "42")
-  assert_eq!(Compare::compare(1.0, 2.5), -1)
+  assert_eq(Show::to_string(42), "42")
+  assert_eq(Compare::compare(1.0, 2.5), -1)
 }
 // end trait 7
 
@@ -114,10 +114,10 @@ struct T {
 test {
   let t1 = T::default()
   let t2 = T::{ a: 1, b: 1 }
-  inspect!(t1, content="{a: 0, b: 0}")
-  inspect!(t2, content="{a: 1, b: 1}")
-  assert_not_eq!(t1, t2)
-  assert_true!(t1 < t2)
+  inspect(t1, content="{a: 0, b: 0}")
+  inspect(t2, content="{a: 1, b: 1}")
+  assert_not_eq(t1, t2)
+  assert_true(t1 < t2)
 }
 // end trait 9
 
@@ -183,7 +183,7 @@ test {
   let duck2 = Duck::make("duck2")
   let fox1 = Fox::make("fox1")
   let animals : Array[&Animal] = [duck1, duck2, fox1]
-  inspect!(
+  inspect(
     animals.map(fn(animal) { animal.speak() }),
     content=
       #|["duck1: quack!", "duck2: quack!", "What does the fox say?"]

@@ -24,12 +24,12 @@ let user : Unit = {
 test {
   let ary = [1, 2, 3, 4]
   if ary is [a, b, .. rest] && a == 1 && b == 2 && rest.length() == 2 {
-    inspect!("a = \{a}, b = \{b}", content="a = 1, b = 2")
+    inspect("a = \{a}, b = \{b}", content="a = 1, b = 2")
   } else {
-    fail!("")
+    fail("")
   }
-  guard ary is [.., a, b] else { fail!("") }
-  inspect!("a = \{a}, b = \{b}", content="a = 3, b = 4")
+  guard ary is [.., a, b] else { fail("") }
+  inspect("a = \{a}, b = \{b}", content="a = 3, b = 4")
 }
 // end pattern 2
 
@@ -38,13 +38,13 @@ test {
   fn palindrome(s : String) -> Bool {
     loop s.view() {
       [] | [_] => true
-      [a,  .. rest,  b] => if a == b { continue rest } else { false }
+      [a, .. rest, b] => if a == b { continue rest } else { false }
     }
   }
 
-  inspect!(palindrome("abba"), content="true")
-  inspect!(palindrome("中b中"), content="true")
-  inspect!(palindrome("文bb中"), content="false")
+  inspect(palindrome("abba"), content="true")
+  inspect(palindrome("中b中"), content="true")
+  inspect(palindrome("文bb中"), content="false")
 }
 // end array pattern 1
 
@@ -183,9 +183,9 @@ fn guard_cond(x : Int?) -> Int {
 }
 
 test {
-  assert_eq!(guard_cond(None), -1)
-  assert_eq!(guard_cond(Some(0)), 42)
-  assert_eq!(guard_cond(Some(1)), 1)
+  assert_eq(guard_cond(None), -1)
+  assert_eq(guard_cond(Some(0)), 42)
+  assert_eq(guard_cond(Some(1)), 1)
 }
 // end guard condition 1
 

@@ -10,7 +10,7 @@ impl Add for T with op_add(self : T, other : T) -> T {
 test {
   let a = { x: 0 }
   let b = { x: 2 }
-  assert_eq!((a + b).x, 2)
+  assert_eq((a + b).x, 2)
 }
 // end operator 1
 
@@ -45,7 +45,7 @@ test "operator 3" (t : @test.T) {
   println(c)
   println(c["x"])
   // end operator 3
-  t.snapshot!(filename="operator_3")
+  t.snapshot(filename="operator_3")
 }
 
 fn add(i : Int, j : Int) -> Int {
@@ -117,21 +117,21 @@ impl Shr for T with op_shr(self : T, other : Int) -> T {
 test {
   let a = { x: 0b1010 }
   let b = { x: 0b1100 }
-  assert_eq!((a & b).x, 0b1000)
-  assert_eq!((a | b).x, 0b1110)
-  assert_eq!((a ^ b).x, 0b0110)
-  assert_eq!((a << 2).x, 0b101000)
-  assert_eq!((b >> 2).x, 0b11)
+  assert_eq((a & b).x, 0b1000)
+  assert_eq((a | b).x, 0b1110)
+  assert_eq((a ^ b).x, 0b0110)
+  assert_eq((a << 2).x, 0b101000)
+  assert_eq((b >> 2).x, 0b11)
 }
 
 // start view 1
 test {
   let xs = [0, 1, 2, 3, 4, 5]
   let s1 : ArrayView[Int] = xs[2:]
-  inspect!(s1, content="[2, 3, 4, 5]")
-  inspect!(xs[:4], content="[0, 1, 2, 3]")
-  inspect!(xs[2:5], content="[2, 3, 4]")
-  inspect!(xs[:], content="[0, 1, 2, 3, 4, 5]")
+  inspect(s1, content="[2, 3, 4, 5]")
+  inspect(xs[:4], content="[0, 1, 2, 3]")
+  inspect(xs[2:5], content="[2, 3, 4]")
+  inspect(xs[:], content="[0, 1, 2, 3, 4, 5]")
 }
 // end view 1
 
@@ -146,10 +146,10 @@ fn Data::op_as_view(_self : Data, start~ : Int = 0, end? : Int) -> DataView {
 
 test {
   let data = Data::{  }
-  inspect!(data[:]._, content="[0, 100)")
-  inspect!(data[2:]._, content="[2, 100)")
-  inspect!(data[:5]._, content="[0, 5)")
-  inspect!(data[2:5]._, content="[2, 5)")
+  inspect(data[:]._, content="[0, 100)")
+  inspect(data[2:]._, content="[2, 100)")
+  inspect(data[:5]._, content="[0, 5)")
+  inspect(data[2:5]._, content="[2, 5)")
 }
 // end view 2
 
@@ -159,7 +159,7 @@ test {
   let a2 : FixedArray[Int] = [4, 5, 6]
   let a3 : @immut/list.T[Int] = @immut/list.from_array([7, 8, 9])
   let a : Array[Int] = [..a1, ..a2, ..a3, 10]
-  inspect!(a, content="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
+  inspect(a, content="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
 }
 // end spread 1
 
@@ -169,7 +169,7 @@ test {
   let s2 : @string.View = "World".view()
   let s3 : Array[Char] = [..s1, ' ', ..s2, '!']
   let s : String = [..s1, ' ', ..s2, '!', ..s3]
-  inspect!(s, content="Hello World!Hello World!")
+  inspect(s, content="Hello World!Hello World!")
 }
 // end spread 2
 
@@ -178,7 +178,7 @@ test {
   let b1 : Bytes = "hello"
   let b2 : @bytes.View = b1[1:4]
   let b : Bytes = [..b1, ..b2, 10]
-  inspect!(
+  inspect(
     b,
     content=
       #|b"\x68\x65\x6c\x6c\x6f\x65\x6c\x6c\x0a"

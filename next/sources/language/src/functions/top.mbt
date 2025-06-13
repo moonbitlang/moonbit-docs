@@ -20,7 +20,7 @@ fn add3(x : Int, y : Int, z : Int) -> Int {
 // start function application 1
 test {
   let add3 = fn(x, y, z) { x + y + z }
-  assert_eq!(add3(1, 2, 7), 10)
+  assert_eq(add3(1, 2, 7), 10)
 }
 // end function application 1
 
@@ -29,7 +29,7 @@ test {
   let f = fn(x) { x + 1 }
   let g = fn(x) { x + 2 }
   let w = (if true { f } else { g })(3)
-  assert_eq!(w, 4)
+  assert_eq(w, 4)
 }
 // end function application 2
 
@@ -55,7 +55,7 @@ fn local_1() -> Int {
 }
 
 test {
-  assert_eq!(local_1(), 9)
+  assert_eq(local_1(), 9)
 }
 // end local functions 1
 
@@ -75,7 +75,7 @@ fn local_2(x : Int) -> (Int, Int) {
 }
 
 test {
-  assert_eq!(local_2(3), (4, 4))
+  assert_eq(local_2(3), (4, 4))
 }
 // end local functions 2
 
@@ -95,7 +95,7 @@ fn labelled_1(arg1~ : Int, arg2~ : Int) -> Int {
 // start labelled arguments 2
 test {
   let arg1 = 1
-  assert_eq!(labelled_1(arg2=2, arg1~), 3)
+  assert_eq(labelled_1(arg2=2, arg1~), 3)
 }
 // end labelled arguments 2
 
@@ -105,8 +105,8 @@ fn optional(opt~ : Int = 42) -> Int {
 }
 
 test {
-  assert_eq!(optional(), 42)
-  assert_eq!(optional(opt=0), 0)
+  assert_eq(optional(), 42)
+  assert_eq(optional(opt=0), 0)
 }
 // end optional arguments 1
 
@@ -117,11 +117,11 @@ fn incr(counter~ : Ref[Int] = { val: 0 }) -> Ref[Int] {
 }
 
 test {
-  inspect!(incr(), content="{val: 1}")
-  inspect!(incr(), content="{val: 1}")
+  inspect(incr(), content="{val: 1}")
+  inspect(incr(), content="{val: 1}")
   let counter : Ref[Int] = { val: 0 }
-  inspect!(incr(counter~), content="{val: 1}")
-  inspect!(incr(counter~), content="{val: 2}")
+  inspect(incr(counter~), content="{val: 1}")
+  inspect(incr(counter~), content="{val: 2}")
 }
 // end optional arguments 2
 
@@ -134,8 +134,8 @@ fn incr_2(counter~ : Ref[Int] = default_counter) -> Int {
 }
 
 test {
-  assert_eq!(incr_2(), 1)
-  assert_eq!(incr_2(), 2)
+  assert_eq(incr_2(), 1)
+  assert_eq(incr_2(), 2)
 }
 // end optional arguments 3
 
@@ -149,8 +149,8 @@ fn[X] sub_array(
 }
 
 test {
-  assert_eq!(sub_array([1, 2, 3], offset=1), [2, 3])
-  assert_eq!(sub_array([1, 2, 3], offset=1, len=1), [2])
+  assert_eq(sub_array([1, 2, 3], offset=1), [2, 3])
+  assert_eq(sub_array([1, 2, 3], offset=1, len=1), [2])
 }
 // end optional arguments 4
 
@@ -205,8 +205,5 @@ fnalias @hashmap.new
 fnalias new as new_2
 
 // creating multiple alias in one package
-fnalias @moonbitlang/core/prelude.(
-  tap,
-  then as touch
-)
+fnalias @moonbitlang/core/prelude.(tap, then as touch)
 // end function alias

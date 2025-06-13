@@ -19,7 +19,6 @@ fn iter(data : Bytes) -> Iter[Byte] {
   Iter::new(fn(visit : (Byte) -> IterResult) -> IterResult {
     for byte in data {
       guard visit(byte) is IterContinue else { break IterEnd }
-
     } else {
       IterContinue
     }

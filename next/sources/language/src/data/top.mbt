@@ -16,7 +16,7 @@ test "struct 1" (t : @test.T) {
   println(u.name)
   println(u.email)
   // end struct 2
-  t.snapshot!(filename="struct_1")
+  t.snapshot(filename="struct_1")
 }
 
 let struct_3 : Unit = {
@@ -42,7 +42,7 @@ test "struct 4" (t : @test.T) {
     ,
   )
   // end struct 4
-  t.snapshot!(filename="struct_4")
+  t.snapshot(filename="struct_4")
 }
 
 // start enum 1
@@ -92,7 +92,7 @@ test "enum 3" (t : @test.T) {
   print_relation(compare_int(1, 1))
   print_relation(compare_int(2, 1))
   // end enum 3
-  t.snapshot!(filename="enum_3")
+  t.snapshot(filename="enum_3")
 }
 
 // start enum 4
@@ -144,7 +144,7 @@ test "enum 6" (t : @test.T) {
   println(is_singleton(l))
   print_list(l)
   // end enum 6
-  t.snapshot!(filename="enum_6")
+  t.snapshot(filename="enum_6")
 }
 
 // start enum 7
@@ -173,7 +173,7 @@ test "enum 9" (t : @test.T) {
   let x = 0
   f(C(x~, y=1)) // <=> C(x=x, y=1)
   // end enum 9
-  t.snapshot!(filename="enum_9")
+  t.snapshot(filename="enum_9")
 }
 
 // start enum 10
@@ -182,9 +182,12 @@ enum Object {
   Circle(x~ : Double, y~ : Double, radius~ : Double)
 }
 
-type! NotImplementedError  derive(Show)
+suberror NotImplementedError derive(Show)
 
-fn distance_with(self : Object, other : Object) -> Double!NotImplementedError {
+fn distance_with(
+  self : Object,
+  other : Object
+) -> Double raise NotImplementedError {
   match (self, other) {
     // For variables defined via `Point(..) as p`,
     // the compiler knows it must be of constructor `Point`,
@@ -207,13 +210,13 @@ test "enum 11" (t : @test.T) {
   let p2 : Object = Point(x=3, y=4)
   let c1 : Object = Circle(x=0, y=0, radius=2)
   try {
-    println(p1.distance_with!(p2))
-    println(p1.distance_with!(c1))
+    println(p1.distance_with(p2))
+    println(p1.distance_with(c1))
   } catch {
     e => println(e)
   }
   // end enum 11
-  t.snapshot!(filename="enum_11")
+  t.snapshot(filename="enum_11")
 }
 
 // start enum 12
@@ -285,7 +288,7 @@ test "newtype 2" (t : @test.T) {
   println(uid)
   println(uname)
   // end newtype 2
-  t.snapshot!(filename="newtype_2")
+  t.snapshot(filename="newtype_2")
 }
 
 test "newtype 3" (t : @test.T) {
@@ -295,7 +298,7 @@ test "newtype 3" (t : @test.T) {
   let uid : Int = id._
   println(uid)
   // end newtype 3
-  t.snapshot!(filename="newtype_3")
+  t.snapshot(filename="newtype_3")
 }
 
 // start typealias 1
