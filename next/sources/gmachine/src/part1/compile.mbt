@@ -5,11 +5,11 @@ fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
   let mut arity = 0
   fn gen_env(i : Int, args : List[String]) -> List[(String, Int)] {
     match args {
-      Nil => {
+      Empty => {
         arity = i
-        return Nil
+        return @list.empty()
       }
-      Cons(s, ss) => Cons((s, i), gen_env(i + 1, ss))
+      More(s, tail=ss) => gen_env(i + 1, ss).prepend((s, i))
     }
   }
 
@@ -25,9 +25,9 @@ fn RawExpr::compileR(
   arity : Int
 ) -> List[Instruction] {
   if arity == 0 {
-    self.compileC(env) + @immut/list.of([Update(arity), Unwind])
+    self.compileC(env) + @list.of([Update(arity), Unwind])
   } else {
-    self.compileC(env) + @immut/list.of([Update(arity), Pop(arity), Unwind])
+    self.compileC(env) + @list.of([Update(arity), Pop(arity), Unwind])
   }
 }
 // end compile_r definition
@@ -40,14 +40,14 @@ fn RawExpr::compileC(
   match self {
     Var(s) =>
       match env.lookup(s) {
-        None => @immut/list.of([PushGlobal(s)])
-        Some(n) => @immut/list.of([PushArg(n)])
+        None => @list.of([PushGlobal(s)])
+        Some(n) => @list.of([PushArg(n)])
       }
-    Num(n) => @immut/list.of([PushInt(n)])
+    Num(n) => @list.of([PushInt(n)])
     App(e1, e2) =>
       e2.compileC(env) +
       e1.compileC(argOffset(1, env)) +
-      @immut/list.of([MkApp])
+      @list.of([MkApp])
     _ => abort("not support yet")
   }
 }

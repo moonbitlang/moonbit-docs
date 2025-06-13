@@ -73,7 +73,7 @@ fn GState::stat_incr(self : GState) -> Unit {
 }
 
 fn GState::put_stack(self : GState, addr : Addr) -> Unit {
-  self.stack = Cons(addr, self.stack)
+  self.stack = self.stack.prepend(addr)
 }
 
 fn GState::put_code(self : GState, instrs : List[Instruction]) -> Unit {
@@ -82,18 +82,18 @@ fn GState::put_code(self : GState, instrs : List[Instruction]) -> Unit {
 
 fn GState::pop1(self : GState) -> Addr {
   match self.stack {
-    Cons(addr, reststack) => {
+    More(addr, tail=reststack) => {
       self.stack = reststack
       addr
     }
-    Nil => abort("pop1(): stack size smaller than 1")
+    Empty => abort("pop1(): stack size smaller than 1")
   }
 }
 
 // e1 e2 ..... -> (e1, e2) ......
 fn GState::pop2(self : GState) -> (Addr, Addr) {
   match self.stack {
-    Cons(addr1, Cons(addr2, reststack)) => {
+    More(addr1, tail=More(addr2, tail=reststack)) => {
       self.stack = reststack
       (addr1, addr2)
     }
@@ -156,7 +156,7 @@ fn GState::unwind(self : GState) -> Unit {
     NApp(a1, _) => {
       self.put_stack(addr)
       self.put_stack(a1)
-      self.put_code(Cons(Unwind, Nil))
+      self.put_code(@list.of([Unwind]))
     }
     NGlobal(_, n, c) =>
       if self.stack.length() < n {
@@ -167,7 +167,7 @@ fn GState::unwind(self : GState) -> Unit {
       }
     NInd(a) => {
       self.put_stack(a)
-      self.put_code(Cons(Unwind, Nil))
+      self.put_code(@list.of([Unwind]))
     }
   }
 }
@@ -180,8 +180,8 @@ fn build_initial_heap(
   let heap = { object_count: 0, memory: Array::make(10000, None) }
   let globals = @hashmap.new(capacity=50)
   loop scdefs {
-    Nil => ()
-    Cons((name, arity, instrs), rest) => {
+    Empty => ()
+    More((name, arity, instrs), tail=rest) => {
       let addr = heap.alloc(NGlobal(name, arity, instrs))
       globals[name] = addr
       continue rest
@@ -194,8 +194,8 @@ fn build_initial_heap(
 // start step definition
 fn GState::step(self : GState) -> Bool {
   match self.code {
-    Nil => return false
-    Cons(i, rest) => {
+    Empty => return false
+    More(i, tail=rest) => {
       self.code = rest
       self.stat_incr()
       match i {
@@ -220,7 +220,7 @@ fn GState::reify(self : GState) -> Node {
   } else {
     let stack = self.stack
     match stack {
-      Cons(addr, Nil) => {
+      More(addr, tail=Empty) => {
         let res = self.heap[addr]
         return res
       }

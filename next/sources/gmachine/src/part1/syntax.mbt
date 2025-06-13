@@ -244,7 +244,7 @@ fn Tokens::parse_case(self : Tokens) -> RawExpr[String] raise ParseError {
 fn parse_alts(
   self : Tokens
 ) -> List[(Int, List[String], RawExpr[String])] raise ParseError {
-  let acc : List[(Int, List[String], RawExpr[String])] = Nil
+  let acc : List[(Int, List[String], RawExpr[String])] = @list.empty()
   loop (self.peek(), acc) {
     (Open('['), acc) => {
       self.next()
@@ -252,13 +252,13 @@ fn parse_alts(
       let (tag, variables) = match self.peek() {
         NIL => {
           self.next()
-          (0, List::Nil)
+          (0, @list.empty())
         }
         CONS => {
           self.next()
           let x = self.parse_var()
           let xs = self.parse_var()
-          (1, @immut/list.of([x, xs]))
+          (1, @list.of([x, xs]))
         }
         other =>
           raise ParseError("parse_alts(): expect NIL or CONS but got \{other}")
@@ -267,7 +267,7 @@ fn parse_alts(
       let exp = self.parse_expr()
       let alt = (tag, variables, exp)
       self.eat(Close(']'))
-      continue (self.peek(), Cons(alt, acc))
+      continue (self.peek(), acc.prepend(alt))
     }
     (_, acc) => acc.rev()
   }
@@ -277,14 +277,14 @@ fn parse_alts(
 fn Tokens::parse_defs(
   self : Tokens
 ) -> List[(String, RawExpr[String])] raise ParseError {
-  let acc : List[(String, RawExpr[String])] = Nil
+  let acc : List[(String, RawExpr[String])] = @list.empty()
   loop (self.peek(), acc) {
     (Open('['), acc) => {
       self.next()
       let var = self.parse_var()
       let value = self.parse_expr()
       self.eat(Close(']'))
-      continue (self.peek(), Cons((var, value), acc))
+      continue (self.peek(), acc.prepend((var, value)))
     }
     (_, acc) => acc.rev()
   }
@@ -342,11 +342,11 @@ fn Tokens::parse_sc(self : Tokens) -> ScDef[String] raise ParseError {
   self.eat(DefFn)
   let fn_name = self.parse_var()
   self.eat(Open('['))
-  let args = loop (self.peek(), List::Nil) {
+  let args = loop (self.peek(), @list.empty()) {
     (tok, acc) =>
       if tok != Close(']') {
         let var = self.parse_var()
-        continue (self.peek(), Cons(var, acc))
+        continue (self.peek(), acc.prepend(var))
       } else {
         acc.rev()
       }

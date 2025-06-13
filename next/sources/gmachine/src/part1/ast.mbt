@@ -1,4 +1,4 @@
-typealias @immut/list.T as List
+typealias @list.T as List
 
 // start expr_and_scdef definition
 enum RawExpr[T] {
@@ -31,7 +31,7 @@ fn[T] ScDef::new(name : String, args : List[T], body : RawExpr[T]) -> ScDef[T] {
 
 // start prelude_defs definition
 let prelude_defs : List[ScDef[String]] = {
-  let args : (FixedArray[String]) -> List[String] = @immut/list.of
+  let args : (FixedArray[String]) -> List[String] = @list.of
   let id = ScDef::new("I", args(["x"]), Var("x")) // id x = x
   let k = ScDef::new("K", args(["x", "y"]), Var("x")) // K x y = x
   let k1 = ScDef::new("K1", args(["x", "y"]), Var("y")) // K1 x y = y
@@ -50,6 +50,6 @@ let prelude_defs : List[ScDef[String]] = {
     args(["f"]),
     App(App(Var("compose"), Var("f")), Var("f")),
   ) // twice f = compose f f
-  @immut/list.of([id, k, k1, s, compose, twice])
+  @list.of([id, k, k1, s, compose, twice])
 }
 // end prelude_defs definition

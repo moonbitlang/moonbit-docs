@@ -17,11 +17,11 @@ fn run(codes : List[String]) -> Node {
   // start init definition
   let initialState : GState = {
     heap,
-    stack: Nil,
-    code: @immut/list.of([PushGlobal("main"), Eval]),
+    stack: @list.empty(),
+    code: @list.of([PushGlobal("main"), Eval]),
     globals,
     stats: 0,
-    dump: Nil,
+    dump: @list.empty(),
   }
   // end init definition
   GState::reify(initialState)
@@ -30,7 +30,7 @@ fn run(codes : List[String]) -> Node {
 ///|
 test "basic eval" {
   let main = "(defn main[] (let ([add1 (add 1)]) (add1 1)))"
-  inspect(run(@immut/list.of([main])), content="NNum(2)")
+  inspect(run(@list.of([main])), content="NNum(2)")
   let main = "(defn main[] (let ([x 4] [y 5]) (sub x y)))"
-  inspect(run(@immut/list.of([main])), content="NNum(-1)")
+  inspect(run(@list.of([main])), content="NNum(-1)")
 }
