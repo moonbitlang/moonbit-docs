@@ -3,8 +3,8 @@ suberror E1 Int // error type E1 has one constructor E1 with an Int payload
 
 suberror E2 // error type E2 has one constructor E2 with no payload
 
-suberror E3 {
-  A // error type E3 has three constructors like a normal enum type
+suberror E3 { // error type E3 has three constructors like a normal enum type
+  A
   B(Int, x~ : String)
   C(mut x~ : String, Char, y~ : Bool)
 }
@@ -33,30 +33,11 @@ let signature : Unit = {
     ...
   }
 
-  fn g() -> Unit raise {
-    ...
-  }
-
-  fn h() -> Unit raise Error {
+  fn g() -> Unit raise Error {
     ...
   }
   // end error 3
-
 }
-
-// start error 4
-suberror IntError Int
-
-fn h(f : (Int) -> Int raise, x : Int) -> Unit {
-  ...
-}
-
-fn g() -> Unit {
-  let _ = h(fn! { x => raise IntError(x) }, 0)
-  let _ = h(fn(x) raise { raise IntError(x) }, 0)
-
-}
-// end error 4
 
 // start error 5
 // Result::unwrap_or_error
@@ -85,7 +66,7 @@ fn f(e : Error) -> Unit {
 
 // start error 7
 fn div_reraise(x : Int, y : Int) -> Int raise DivError {
-  div(x, y) + div(x, y) // Rethrow the error if `div` raised an error
+  div(x, y) // Rethrow the error if `div` raised an error
 }
 // end error 7
 
@@ -115,7 +96,7 @@ test "error 9" (t : @test.T) {
 
 fn error() -> Unit {
   // start error 10
-  println(div(42, 0)) catch {
+  try { println(div(42, 0)) } catch {
     _ => println("Error")
   }
   // end error 10
@@ -142,18 +123,9 @@ fn catch_() -> Unit raise {
   } catch {
     E1(_) => ...
     E2 => ...
-    _ => ...
-  }
-  // end error 13
-  // start error 14
-  try {
-    f1()
-    f2()
-  } catch {
-    E1(_) => ...
     e => raise e
   }
-  // end error 14
+  // end error 13
 }
 
 // start custom error conversion
