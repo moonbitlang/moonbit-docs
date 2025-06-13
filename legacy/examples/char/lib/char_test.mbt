@@ -13,14 +13,14 @@
 //  limitations under the License.
 
 test {
-  assert_true!(@lib.is_alpha('a'))
-  assert_false!(@lib.is_alpha('3'))
-  assert_true!(@lib.is_numeric('1'))
-  assert_false!(@lib.is_numeric('b'))
-  assert_true!(@lib.is_alphanumeric('a'))
-  assert_eq!(@lib.to_lower('H'), 'h')
-  assert_eq!(@lib.to_upper('c'), 'C')
-  assert_true!(@lib.is_whitespace(' '))
-  assert_eq!(@lib.next('Z'), Some('['))
-  assert_eq!(@lib.prev('A'), Some('@'))
+  assert_true(@lib.is_alpha('a'))
+  assert_false(@lib.is_alpha('3'))
+  assert_true(@lib.is_numeric('1'))
+  assert_false(@lib.is_numeric('b'))
+  assert_true(@lib.is_alphanumeric('a'))
+  assert_eq(@lib.to_lower('H'), 'h')
+  assert_eq(@lib.to_upper('c'), 'C')
+  assert_true(@lib.is_whitespace(' '))
+  assert_eq(@lib.next('Z'), Some('['))
+  assert_eq(@lib.prev('A'), Some('@'))
 }

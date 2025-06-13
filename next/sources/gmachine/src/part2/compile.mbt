@@ -1,3 +1,4 @@
+///|
 fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
   let name = self.name
   let body = self.body
@@ -16,6 +17,7 @@ fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
   (name, arity, body.compileR(env, arity))
 }
 
+///|
 fn RawExpr::compileR(
   self : RawExpr[String],
   env : List[(String, Int)],
@@ -28,6 +30,7 @@ fn RawExpr::compileR(
   }
 }
 
+///|
 fn RawExpr::compileC(
   self : RawExpr[String],
   env : List[(String, Int)]
@@ -53,30 +56,31 @@ fn RawExpr::compileC(
   }
 }
 
+///|
 fn argOffset(n : Int, env : List[(String, Int)]) -> List[(String, Int)] {
   env.map(fn { (name, offset) => (name, offset + n) })
 }
 
-// start compile_let definition
+///| start compile_let definition
 fn compileLet(
   comp : (RawExpr[String], List[(String, Int)]) -> List[Instruction],
   defs : List[(String, RawExpr[String])],
   expr : RawExpr[String],
   env : List[(String, Int)]
 ) -> List[Instruction] {
-  let (env, codes) = loop env, List::Nil, defs {
-    env, acc, Nil => (env, acc)
-    env, acc, Cons((name, expr), rest) => {
+  let (env, codes) = loop (env, List::Nil, defs) {
+    (env, acc, Nil) => (env, acc)
+    (env, acc, Cons((name, expr), rest)) => {
       let code = expr.compileC(env)
       let env = List::Cons((name, 0), argOffset(1, env))
-      continue env, acc + code, rest
+      continue (env, acc + code, rest)
     }
   }
   codes + comp(expr, env) + @immut/list.of([Slide(defs.length())])
 }
 // end compile_let definition
 
-// start compile_letrec definition
+///| start compile_letrec definition
 fn compileLetrec(
   comp : (RawExpr[String], List[(String, Int)]) -> List[Instruction],
   defs : List[(String, RawExpr[String])],
@@ -99,8 +103,7 @@ fn compileLetrec(
     match defs {
       Nil => comp(expr, env) + @immut/list.of([Slide(n)])
       Cons((_, expr), rest) =>
-        expr.compileC(env) +
-        Cons(Update(offset), compileDefs(rest, offset - 1))
+        expr.compileC(env) + Cons(Update(offset), compileDefs(rest, offset - 1))
     }
   }
 
@@ -108,7 +111,7 @@ fn compileLetrec(
 }
 // end compile_letrec definition
 
-// start prim definition
+///| start prim definition
 let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.of([
     // Arith
     (

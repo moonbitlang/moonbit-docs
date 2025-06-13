@@ -64,7 +64,7 @@ Here's an example of how these two primitives work:
 ```
 
 In `async_worker`, `suspend` will capture the rest of the current coroutine as two "continuation" functions, and pass them to a callback.
-In the callback, calling `resume_ok` will resume execution at the point of `suspend!(...)`,
+In the callback, calling `resume_ok` will resume execution at the point of `suspend(...)`,
 all the way until the `run_async` call that start this coroutine.
 calling `resume_err` will also resume execution of current coroutine,
 but it will make `suspend(...)` throw an error instead of returning normally.

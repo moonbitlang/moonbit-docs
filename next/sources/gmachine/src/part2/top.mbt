@@ -1,7 +1,8 @@
+///|
 fn run(codes : List[String]) -> Node {
   fn parse_then_compile(code : String) -> (String, Int, List[Instruction]) {
     let tokens = tokenize(code)
-    let code = try tokens.parse_sc!() catch {
+    let code = try tokens.parse_sc() catch {
       ParseError(s) => abort(s)
     } else {
       expr => expr
@@ -26,9 +27,10 @@ fn run(codes : List[String]) -> Node {
   GState::reify(initialState)
 }
 
+///|
 test "basic eval" {
   let main = "(defn main[] (let ([add1 (add 1)]) (add1 1)))"
-  inspect!(run(@immut/list.of([main])), content="NNum(2)")
+  inspect(run(@immut/list.of([main])), content="NNum(2)")
   let main = "(defn main[] (let ([x 4] [y 5]) (sub x y)))"
-  inspect!(run(@immut/list.of([main])), content="NNum(-1)")
+  inspect(run(@immut/list.of([main])), content="NNum(-1)")
 }

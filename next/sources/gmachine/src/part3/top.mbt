@@ -1,7 +1,8 @@
+///|
 fn run(codes : List[String]) -> String {
   fn parse_then_compile(code : String) -> (String, Int, List[Instruction]) {
     let tokens = tokenize(code)
-    let code = try tokens.parse_sc!() catch {
+    let code = try tokens.parse_sc() catch {
       ParseError(s) => abort(s)
     } else {
       expr => expr
@@ -27,6 +28,7 @@ fn run(codes : List[String]) -> String {
   GState::reify(initialState)
 }
 
+///|
 test "basic eval" {
   let basic = []
   for kv in programs.iter() {
@@ -35,7 +37,7 @@ test "basic eval" {
   }
   let basic = @immut/list.from_array(basic)
   let main = "(defn main[] (take 20 fibs))"
-  inspect!(
+  inspect(
     run(Cons(main, basic)),
     content="0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 Nil",
   )

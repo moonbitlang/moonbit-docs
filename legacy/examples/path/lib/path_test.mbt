@@ -20,16 +20,16 @@ test {
     @lib.Platform::Posix,
     @lib.FileType::File,
   )
-  inspect!(posix_path.is_absolute(), content="true")
-  inspect!(posix_path.parent(), content="/tmp/abc/f/")
-  inspect!(
+  inspect(posix_path.is_absolute(), content="true")
+  inspect(posix_path.parent(), content="/tmp/abc/f/")
+  inspect(
     posix_path.file_name(),
     content=
       #|Some("d")
     ,
   )
   posix_path.append("def")
-  inspect!(
+  inspect(
     posix_path,
     content=
       #|"/tmp/abc/f/d/def"
@@ -42,16 +42,16 @@ test {
     @lib.Platform::Posix,
     @lib.FileType::File,
   )
-  inspect!(rel_posix_path.is_relative(), content="true")
-  inspect!(rel_posix_path.parent(), content="./abc/de/")
-  inspect!(
+  inspect(rel_posix_path.is_relative(), content="true")
+  inspect(rel_posix_path.parent(), content="./abc/de/")
+  inspect(
     rel_posix_path.file_name(),
     content=
       #|Some("f")
     ,
   )
   rel_posix_path.append("hello")
-  inspect!(
+  inspect(
     rel_posix_path.to_string(),
     content=
       #|"./abc/de/f/hello"
@@ -64,8 +64,8 @@ test {
     @lib.Platform::Windows,
     @lib.FileType::File,
   )
-  inspect!(win_path.is_absolute(), content="true")
-  inspect!(
+  inspect(win_path.is_absolute(), content="true")
+  inspect(
     win_path.file_name(),
     content=
       #|Some("de")

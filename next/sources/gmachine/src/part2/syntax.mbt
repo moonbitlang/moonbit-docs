@@ -1,3 +1,4 @@
+///|
 enum Token {
   DefFn
   Let
@@ -12,47 +13,58 @@ enum Token {
   EOF
 } derive(Eq, Show)
 
+///|
 fn between(this : Char, lw : Char, up : Char) -> Bool {
   this >= lw && this <= up
 }
 
+///|
 fn isDigit(this : Char) -> Bool {
   between(this, '0', '9')
 }
 
+///|
 fn isAlpha(this : Char) -> Bool {
   between(this, 'A', 'Z') || between(this, 'a', 'z')
 }
 
+///|
 fn isIdChar(this : Char) -> Bool {
   isAlpha(this) || isDigit(this) || this == '_' || this == '-'
 }
 
+///|
 fn isWhiteSpace(this : Char) -> Bool {
   this == ' ' || this == '\t' || this == '\n'
 }
 
+///|
 fn to_number(this : Char) -> Int {
   this.to_int() - 48
 }
 
+///|
 fn isOpen(this : Char) -> Bool {
   this == '(' || this == '[' || this == '{'
 }
 
+///|
 fn isClose(this : Char) -> Bool {
   this == ')' || this == ']' || this == '}'
 }
 
+///|
 struct Tokens {
   tokens : Array[Token]
   mut current : Int
 } derive(Show)
 
+///|
 fn Tokens::new(tokens : Array[Token]) -> Tokens {
   Tokens::{ tokens, current: 0 }
 }
 
+///|
 fn Tokens::peek(self : Tokens) -> Token {
   if self.current < self.tokens.length() {
     return self.tokens[self.current]
@@ -61,8 +73,10 @@ fn Tokens::peek(self : Tokens) -> Token {
   }
 }
 
-type! ParseError String
+///|
+suberror ParseError String
 
+///|
 fn Tokens::next(self : Tokens, loc~ : SourceLoc = _) -> Unit {
   self.current = self.current + 1
   if self.current > self.tokens.length() {
@@ -70,7 +84,12 @@ fn Tokens::next(self : Tokens, loc~ : SourceLoc = _) -> Unit {
   }
 }
 
-fn Tokens::eat(self : Tokens, tok : Token, loc~ : SourceLoc = _) -> Unit!ParseError {
+///|
+fn Tokens::eat(
+  self : Tokens,
+  tok : Token,
+  loc~ : SourceLoc = _
+) -> Unit raise ParseError {
   let __tok = self.peek()
   // assert tok_ != EOF
   if __tok != tok {
@@ -80,6 +99,7 @@ fn Tokens::eat(self : Tokens, tok : Token, loc~ : SourceLoc = _) -> Unit!ParseEr
   }
 }
 
+///|
 fn tokenize(source : String) -> Tokens {
   let tokens : Array[Token] = Array::new(capacity=source.length() / 2)
   let mut current = 0
@@ -140,23 +160,25 @@ fn tokenize(source : String) -> Tokens {
   }
 }
 
+///|
 test "tokenize" {
-  inspect!(tokenize("").tokens, content="[]")
-  inspect!(tokenize("12345678").tokens, content="[Number(12345678)]")
-  inspect!(tokenize("1234 5678").tokens, content="[Number(1234), Number(5678)]")
-  inspect!(
+  inspect(tokenize("").tokens, content="[]")
+  inspect(tokenize("12345678").tokens, content="[Number(12345678)]")
+  inspect(tokenize("1234 5678").tokens, content="[Number(1234), Number(5678)]")
+  inspect(
     tokenize("a0 a_0 a-0").tokens,
     content=
       #|[Id("a0"), Id("a_0"), Id("a-0")]
     ,
   )
-  inspect!(
+  inspect(
     tokenize("(Cons 0 (Cons 1 Nil))").tokens,
     content="[Open('('), CONS, Number(0), Open('('), CONS, Number(1), NIL, Close(')'), Close(')')]",
   )
 }
 
-fn Tokens::parse_num(self : Tokens) -> Int!ParseError {
+///|
+fn Tokens::parse_num(self : Tokens) -> Int raise ParseError {
   match self.peek() {
     Number(n) => {
       self.next()
@@ -166,7 +188,8 @@ fn Tokens::parse_num(self : Tokens) -> Int!ParseError {
   }
 }
 
-fn Tokens::parse_var(self : Tokens) -> String!ParseError {
+///|
+fn Tokens::parse_var(self : Tokens) -> String raise ParseError {
   match self.peek() {
     Id(s) => {
       self.next()
@@ -176,51 +199,56 @@ fn Tokens::parse_var(self : Tokens) -> String!ParseError {
   }
 }
 
-fn Tokens::parse_cons(self : Tokens) -> RawExpr[String]!ParseError {
+///|
+fn Tokens::parse_cons(self : Tokens) -> RawExpr[String] raise ParseError {
   match self.peek() {
     CONS => {
       self.next()
-      let x = self.parse_expr!()
-      let xs = self.parse_expr!()
+      let x = self.parse_expr()
+      let xs = self.parse_expr()
       return App(App(Constructor(tag=1, arity=2), x), xs)
     }
     other => raise ParseError("parse_cons(): expect Cons but got \{other}")
   }
 }
 
-fn Tokens::parse_let(self : Tokens) -> RawExpr[String]!ParseError {
-  self.eat!(Let)
-  self.eat!(Open('('))
-  let defs = self.parse_defs!()
-  self.eat!(Close(')'))
-  let exp = self.parse_expr!()
+///|
+fn Tokens::parse_let(self : Tokens) -> RawExpr[String] raise ParseError {
+  self.eat(Let)
+  self.eat(Open('('))
+  let defs = self.parse_defs()
+  self.eat(Close(')'))
+  let exp = self.parse_expr()
   Let(false, defs, exp)
 }
 
-fn Tokens::parse_letrec(self : Tokens) -> RawExpr[String]!ParseError {
-  self.eat!(Letrec)
-  self.eat!(Open('('))
-  let defs = self.parse_defs!()
-  self.eat!(Close(')'))
-  let exp = self.parse_expr!()
+///|
+fn Tokens::parse_letrec(self : Tokens) -> RawExpr[String] raise ParseError {
+  self.eat(Letrec)
+  self.eat(Open('('))
+  let defs = self.parse_defs()
+  self.eat(Close(')'))
+  let exp = self.parse_expr()
   Let(true, defs, exp)
 }
 
-fn Tokens::parse_case(self : Tokens) -> RawExpr[String]!ParseError {
-  self.eat!(Case)
-  let exp = self.parse_expr!()
-  let alts = self.parse_alts!()
+///|
+fn Tokens::parse_case(self : Tokens) -> RawExpr[String] raise ParseError {
+  self.eat(Case)
+  let exp = self.parse_expr()
+  let alts = self.parse_alts()
   Case(exp, alts)
 }
 
+///|
 fn parse_alts(
   self : Tokens
-) -> List[(Int, List[String], RawExpr[String])]!ParseError {
+) -> List[(Int, List[String], RawExpr[String])] raise ParseError {
   let acc : List[(Int, List[String], RawExpr[String])] = Nil
-  loop self.peek(), acc {
-    Open('['), acc => {
+  loop (self.peek(), acc) {
+    (Open('['), acc) => {
       self.next()
-      self.eat!(Open('('))
+      self.eat(Open('('))
       let (tag, variables) = match self.peek() {
         NIL => {
           self.next()
@@ -228,46 +256,51 @@ fn parse_alts(
         }
         CONS => {
           self.next()
-          let x = self.parse_var!()
-          let xs = self.parse_var!()
+          let x = self.parse_var()
+          let xs = self.parse_var()
           (1, @immut/list.of([x, xs]))
         }
         other =>
           raise ParseError("parse_alts(): expect NIL or CONS but got \{other}")
       }
-      self.eat!(Close(')'))
-      let exp = self.parse_expr!()
+      self.eat(Close(')'))
+      let exp = self.parse_expr()
       let alt = (tag, variables, exp)
-      self.eat!(Close(']'))
-      continue self.peek(), Cons(alt, acc)
+      self.eat(Close(']'))
+      continue (self.peek(), Cons(alt, acc))
     }
-    _, acc => acc.rev()
+    (_, acc) => acc.rev()
   }
 }
 
-fn Tokens::parse_defs(self : Tokens) -> List[(String, RawExpr[String])]!ParseError {
+///|
+fn Tokens::parse_defs(
+  self : Tokens
+) -> List[(String, RawExpr[String])] raise ParseError {
   let acc : List[(String, RawExpr[String])] = Nil
-  loop self.peek(), acc {
-    Open('['), acc => {
+  loop (self.peek(), acc) {
+    (Open('['), acc) => {
       self.next()
-      let var = self.parse_var!()
-      let value = self.parse_expr!()
-      self.eat!(Close(']'))
-      continue self.peek(), Cons((var, value), acc)
+      let var = self.parse_var()
+      let value = self.parse_expr()
+      self.eat(Close(']'))
+      continue (self.peek(), Cons((var, value), acc))
     }
-    _, acc => acc.rev()
+    (_, acc) => acc.rev()
   }
 }
 
-fn Tokens::parse_apply(self : Tokens) -> RawExpr[String]!ParseError {
-  let mut res = self.parse_expr!()
+///|
+fn Tokens::parse_apply(self : Tokens) -> RawExpr[String] raise ParseError {
+  let mut res = self.parse_expr()
   while self.peek() != Close(')') {
-    res = App(res, self.parse_expr!())
+    res = App(res, self.parse_expr())
   }
   return res
 }
 
-fn Tokens::parse_expr(self : Tokens) -> RawExpr[String]!ParseError {
+///|
+fn Tokens::parse_expr(self : Tokens) -> RawExpr[String] raise ParseError {
   match self.peek() {
     EOF =>
       raise ParseError(
@@ -288,45 +321,47 @@ fn Tokens::parse_expr(self : Tokens) -> RawExpr[String]!ParseError {
     Open('(') => {
       self.next()
       let exp = match self.peek() {
-        Let => self.parse_let!()
-        Letrec => self.parse_letrec!()
-        Case => self.parse_case!()
-        CONS => self.parse_cons!()
-        Id(_) | Open('(') => self.parse_apply!()
+        Let => self.parse_let()
+        Letrec => self.parse_letrec()
+        Case => self.parse_case()
+        CONS => self.parse_cons()
+        Id(_) | Open('(') => self.parse_apply()
         other =>
           raise ParseError("parse_expr(): cant parse \{other} behind a '('")
       }
-      self.eat!(Close(')'))
+      self.eat(Close(')'))
       return exp
     }
     other => raise ParseError("parse_expr(): cant parse \{other}")
   }
 }
 
-fn Tokens::parse_sc(self : Tokens) -> ScDef[String]!ParseError {
-  self.eat!(Open('('))
-  self.eat!(DefFn)
-  let fn_name = self.parse_var!()
-  self.eat!(Open('['))
-  let args = loop self.peek(), List::Nil {
-    tok, acc =>
+///|
+fn Tokens::parse_sc(self : Tokens) -> ScDef[String] raise ParseError {
+  self.eat(Open('('))
+  self.eat(DefFn)
+  let fn_name = self.parse_var()
+  self.eat(Open('['))
+  let args = loop (self.peek(), List::Nil) {
+    (tok, acc) =>
       if tok != Close(']') {
-        let var = self.parse_var!()
-        continue self.peek(), Cons(var, acc)
+        let var = self.parse_var()
+        continue (self.peek(), Cons(var, acc))
       } else {
         acc.rev()
       }
   }
-  self.eat!(Close(']'))
-  let body = self.parse_expr!()
-  self.eat!(Close(')'))
+  self.eat(Close(']'))
+  let body = self.parse_expr()
+  self.eat(Close(')'))
   ScDef::{ name: fn_name, args, body }
 }
 
+///|
 test "parse scdef" {
-  let test_ = fn!(s) { ignore(tokenize(s).parse_sc!()) }
+  let test_ = fn(s) raise { ignore(tokenize(s).parse_sc()) }
   for p in programs {
     let (_, p) = p
-    test_!(p)
+    test_(p)
   }
 }

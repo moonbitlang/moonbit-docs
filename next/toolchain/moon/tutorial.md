@@ -115,7 +115,7 @@ The `username/hello/lib` package contains `hello.mbt` and `hello_test.mbt` files
   ```moonbit
   test "hello" {
     if @lib.hello() != "Hello, world!" {
-      fail!("@lib.hello() != \"Hello, world!\"")
+      fail("@lib.hello() != \"Hello, world!\"")
     }
   }
   ```
@@ -275,11 +275,11 @@ Let's add some tests to verify our fib implementation. Add the following content
 
 ```moonbit
 test {
-  assert_eq!(fib(1), 1)
-  assert_eq!(fib(2), 1)
-  assert_eq!(fib(3), 2)
-  assert_eq!(fib(4), 3)
-  assert_eq!(fib(5), 5)
+  assert_eq(fib(1), 1)
+  assert_eq(fib(2), 1)
+  assert_eq(fib(3), 2)
+  assert_eq(fib(4), 3)
+  assert_eq(fib(5), 5)
 }
 ```
 
@@ -295,11 +295,11 @@ Besides inline tests, MoonBit also supports stand-alone test files. Source files
 
 ```moonbit
 test {
-  assert_eq!(@fib.fib(1), 1)
-  assert_eq!(@fib.fib2(2), 1)
-  assert_eq!(@fib.fib(3), 2)
-  assert_eq!(@fib.fib2(4), 3)
-  assert_eq!(@fib.fib(5), 5)
+  assert_eq(@fib.fib(1), 1)
+  assert_eq(@fib.fib2(2), 1)
+  assert_eq(@fib.fib(3), 2)
+  assert_eq(@fib.fib2(4), 3)
+  assert_eq(@fib.fib(5), 5)
 }
 ```
 

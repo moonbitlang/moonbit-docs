@@ -1,3 +1,4 @@
+///|
 fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
   let name = self.name
   let body = self.body
@@ -16,6 +17,7 @@ fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
   (name, arity, body.compileR(env, arity))
 }
 
+///|
 fn RawExpr::compileR(
   self : RawExpr[String],
   env : List[(String, Int)],
@@ -28,6 +30,7 @@ fn RawExpr::compileR(
   }
 }
 
+///|
 fn RawExpr::compileC(
   self : RawExpr[String],
   env : List[(String, Int)]
@@ -62,6 +65,7 @@ fn RawExpr::compileC(
   }
 }
 
+///|
 fn RawExpr::compileE(
   self : RawExpr[String],
   env : List[(String, Int)]
@@ -116,6 +120,7 @@ fn RawExpr::compileE(
   }
 }
 
+///|
 fn compileAlts(
   alts : List[(Int, List[String], RawExpr[String])],
   env : List[(String, Int)]
@@ -147,27 +152,30 @@ fn compileAlts(
   go(alts)
 }
 
+///|
 fn argOffset(n : Int, env : List[(String, Int)]) -> List[(String, Int)] {
   env.map(fn { (name, offset) => (name, offset + n) })
 }
 
+///|
 fn compileLet(
   comp : (RawExpr[String], List[(String, Int)]) -> List[Instruction],
   defs : List[(String, RawExpr[String])],
   expr : RawExpr[String],
   env : List[(String, Int)]
 ) -> List[Instruction] {
-  let (env, codes) = loop env, List::Nil, defs {
-    env, acc, Nil => (env, acc)
-    env, acc, Cons((name, expr), rest) => {
+  let (env, codes) = loop (env, List::Nil, defs) {
+    (env, acc, Nil) => (env, acc)
+    (env, acc, Cons((name, expr), rest)) => {
       let code = expr.compileC(env)
       let env = List::Cons((name, 0), argOffset(1, env))
-      continue env, acc + code, rest
+      continue (env, acc + code, rest)
     }
   }
   codes + comp(expr, env) + @immut/list.of([Slide(defs.length())])
 }
 
+///|
 fn compileLetrec(
   comp : (RawExpr[String], List[(String, Int)]) -> List[Instruction],
   defs : List[(String, RawExpr[String])],
@@ -197,6 +205,7 @@ fn compileLetrec(
   Cons(Alloc(n), compileDefs(defs, n - 1))
 }
 
+///|
 let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.of([
     // Arith
     (
@@ -361,7 +370,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.o
   ],
 )
 
-// start builtin definition
+///| start builtin definition
 let builtinOpS : @hashmap.T[String, Instruction] = {
   let table = @hashmap.new(capacity=50)
   table["add"] = Add

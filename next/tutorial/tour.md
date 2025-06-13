@@ -177,9 +177,9 @@ We can define inline tests to define the expected behavior of the functions. Thi
 ```{code-block} moonbit
 :class: top-level
 test "is qualified" {
-  assert_eq!(is_qualified(Student::{ id : "0", score : 50.0 }, 60.0), Fail)
-  assert_eq!(is_qualified(Student::{ id : "1", score : 60.0 }, 60.0), Pass)
-  assert_eq!(is_qualified(Student::{ id : "2", score : 13.0 }, 7.0), Pass)
+  assert_eq(is_qualified(Student::{ id : "0", score : 50.0 }, 60.0), Fail)
+  assert_eq(is_qualified(Student::{ id : "1", score : 60.0 }, 60.0), Pass)
+  assert_eq(is_qualified(Student::{ id : "2", score : 13.0 }, 7.0), Pass)
 }
 ```
 
@@ -253,8 +253,8 @@ test "count qualified students" {
   ]
   let criteria1 = fn(student) { is_qualified(student, 10) }
   let criteria2 = fn(student) { is_qualified(student, 50) }
-  assert_eq!(count_qualified_students(students, criteria1), 3)
-  assert_eq!(count_qualified_students(students, criteria2), 2)
+  assert_eq(count_qualified_students(students, criteria1), 3)
+  assert_eq(count_qualified_students(students, criteria2), 2)
 }
 
 ```
@@ -369,8 +369,8 @@ test "count qualified students" {
   ]
   let criteria1 = fn(student) { @examine.is_qualified(student, 10) }
   let criteria2 = fn(student) { @examine.is_qualified(student, 50) }
-  assert_eq!(@examine.count_qualified_students(students, criteria1), 3)
-  assert_eq!(@examine.count_qualified_students(students, criteria2), 2)
+  assert_eq(@examine.count_qualified_students(students, criteria1), 3)
+  assert_eq(@examine.count_qualified_students(students, criteria2), 2)
 }
 ```
 

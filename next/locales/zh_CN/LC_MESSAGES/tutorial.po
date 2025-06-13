@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-09 11:17+0800\n"
+"POT-Creation-Date: 2025-06-13 11:02+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -696,24 +696,64 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:359
+#: ../../tutorial/for-go-programmers/index.md:359 ../../tutorial/tour.md:141
+msgid "Functions"
+msgstr "函数"
+
+#: ../../tutorial/for-go-programmers/index.md:361
+msgid ""
+"In Go, functions are defined using the `func` keyword followed by the "
+"function name, parameters, and return type."
+msgstr "在 Go 中，函数使用 `func` 关键字定义，后跟函数名、参数和返回类型。"
+
+#: ../../tutorial/for-go-programmers/index.md:364
+msgid ""
+"func add(a int, b int) int {\n"
+"    return a + b\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:370
+msgid ""
+"In MoonBit, function definitions use the `fn` keyword and a slightly "
+"different syntax:"
+msgstr "在 MoonBit 中，函数定义使用 `fn` 关键字和稍微不同的语法："
+
+#: ../../tutorial/for-go-programmers/index.md:373
+msgid ""
+"fn add(a : Int, b : Int) -> Int {\n"
+"  a + b\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:379
+msgid ""
+"Note the use of the `:` token to specify types, and the `->` token to "
+"indicate the return type. Also, the function body is an expression that "
+"returns a value, so the `return` keyword is not required unless early "
+"exits are needed."
+msgstr ""
+"注意使用 `:` 标记指定类型，使用 `->` 标记指示返回类型。此外，函数体是一个返回值的表达式，因此除非需要提前退出，否则不需要 "
+"`return` 关键字。"
+
+#: ../../tutorial/for-go-programmers/index.md:384
 msgid "Value and Reference Semantics"
 msgstr "值语义和引用语义"
 
-#: ../../tutorial/for-go-programmers/index.md:361
+#: ../../tutorial/for-go-programmers/index.md:386
 msgid ""
 "Understanding how data is passed and stored is crucial when moving "
 "between programming languages. Go and MoonBit, in particular, have "
 "different approaches to value and reference semantics."
 msgstr "在不同编程语言之间切换时，理解数据如何传递和存储至关重要。特别是 Go 和 MoonBit，因为两者在值语义和引用语义方面略有不同。"
 
-#: ../../tutorial/for-go-programmers/index.md:364
+#: ../../tutorial/for-go-programmers/index.md:389
 msgid ""
 "In Go, **the value semantics is the default**. That is, values are copied"
 " when passed to functions or assigned to variables:"
 msgstr "在 Go 中，**值语义是默认的**。也就是说，值在传递给函数或赋值给变量时会被复制："
 
-#: ../../tutorial/for-go-programmers/index.md:367
+#: ../../tutorial/for-go-programmers/index.md:392
 msgid ""
 "type Point struct {\n"
 "    X int\n"
@@ -745,13 +785,13 @@ msgstr ""
 "    fmt.Println(point.X) // 仍然打印 10，而不是 100\n"
 "}\n"
 
-#: ../../tutorial/for-go-programmers/index.md:384
+#: ../../tutorial/for-go-programmers/index.md:409
 msgid ""
 "To achieve **reference semantics** in Go, you often need to explicitly "
 "create and dereference pointers:"
 msgstr "为了在 Go 中实现**引用语义**，您通常需要显式创建和解引用指针："
 
-#: ../../tutorial/for-go-programmers/index.md:387
+#: ../../tutorial/for-go-programmers/index.md:412
 msgid ""
 "func modifyPointRef(p *Point) {\n"
 "    p.X = 100  // This modifies the original through the pointer\n"
@@ -773,14 +813,14 @@ msgstr ""
 "    fmt.Println(point.X)    // 打印 100\n"
 "}\n"
 
-#: ../../tutorial/for-go-programmers/index.md:399
+#: ../../tutorial/for-go-programmers/index.md:424
 msgid ""
 "Some other built-in types like slices and maps behave similarly to "
 "pointers in Go, but all these types are still technically passed by value"
 " (the value being a reference):"
 msgstr "Go 中的一些其他内置类型，如切片和映射，其行为类似于指针，但所有这些类型在技术上仍然是通过值传递的（值是一个引用）："
 
-#: ../../tutorial/for-go-programmers/index.md:402
+#: ../../tutorial/for-go-programmers/index.md:427
 msgid ""
 "func incrementSlice(nums []int) {\n"
 "    for i := range nums {\n"
@@ -802,14 +842,14 @@ msgstr ""
 "    m[\"key\"] = 42  // 修改原始映射\n"
 "}\n"
 
-#: ../../tutorial/for-go-programmers/index.md:414
+#: ../../tutorial/for-go-programmers/index.md:439
 msgid ""
 "MoonBit is semantically _always passed by reference_. But for immutable "
 "types and primitive types, they may be passed by value since this is "
 "semantically the same, this is purely an optimization."
 msgstr "MoonBit 在语义上**总是按引用传递**。但对于不可变类型和基本类型，它们可以按值传递，因为这在语义上是相同的，这纯粹是一种优化。"
 
-#: ../../tutorial/for-go-programmers/index.md:422
+#: ../../tutorial/for-go-programmers/index.md:447
 msgid ""
 "Notable **primitive types** in MoonBit include "
 "[`Unit`](../../language/fundamentals.md#unit) , "
@@ -830,17 +870,17 @@ msgstr ""
 " "
 "等）、[`String`](../../language/fundamentals.md#string)、[`Char`](../../language/fundamentals.md#char)、[`Byte`](../../language/fundamentals.md#bytes)。"
 
-#: ../../tutorial/for-go-programmers/index.md:431
+#: ../../tutorial/for-go-programmers/index.md:456
 msgid ""
 "Notable **immutable collection types** in MoonBit include "
 "[tuples](../../language/fundamentals.md#tuple), immutable collections "
 "such as `@immut/hashset.T[A]`, and custom types with no `mut` fields."
 msgstr ""
-"MoonBit "
-"中值得注意的**不可变集合类型**包括 [元组](../../language/fundamentals.md#tuple)、不可变集合（例如 "
+"MoonBit 中值得注意的**不可变集合类型**包括 "
+"[元组](../../language/fundamentals.md#tuple)、不可变集合（例如 "
 "`@immut/hashset.T[A]`）以及没有 `mut` 字段的自定义类型。"
 
-#: ../../tutorial/for-go-programmers/index.md:436
+#: ../../tutorial/for-go-programmers/index.md:461
 msgid ""
 "On the other hand, notable **mutable collection types** include mutable "
 "collections such as [`Array[T]`](../../language/fundamentals.md#array) , "
@@ -853,11 +893,11 @@ msgstr ""
 " 和 [`Map[K, V]`](../../language/fundamentals.md#map)）以及至少包含一个 `mut` "
 "字段的自定义类型。"
 
-#: ../../tutorial/for-go-programmers/index.md:442
+#: ../../tutorial/for-go-programmers/index.md:467
 msgid "For example, we can rewrite some of the above Go examples in MoonBit:"
 msgstr "例如，我们可以用 MoonBit 重写上面的 Go 示例代码："
 
-#: ../../tutorial/for-go-programmers/index.md:444
+#: ../../tutorial/for-go-programmers/index.md:469
 msgid ""
 "struct Point {\n"
 "  mut x : Int\n"
@@ -904,11 +944,11 @@ msgstr ""
 "    nums[i] += 1 // 修改原始数组\n"
 "  }\n"
 
-#: ../../tutorial/for-go-programmers/index.md:471
+#: ../../tutorial/for-go-programmers/index.md:496
 msgid "The [`Ref[T]`](../../language/fundamentals.md#ref) Helper Type"
 msgstr "[`Ref[T]`](../../language/fundamentals.md#ref) 辅助类型"
 
-#: ../../tutorial/for-go-programmers/index.md:473
+#: ../../tutorial/for-go-programmers/index.md:498
 msgid ""
 "When you need explicit mutable references to value types, MoonBit "
 "provides the [`Ref[T]`](../../language/fundamentals.md#ref) type which is"
@@ -917,20 +957,20 @@ msgstr ""
 "当您需要对值类型进行显式可变引用时，MoonBit 提供了 "
 "[`Ref[T]`](../../language/fundamentals.md#ref) 类型，其大致定义如下："
 
-#: ../../tutorial/for-go-programmers/index.md:477
+#: ../../tutorial/for-go-programmers/index.md:502
 msgid ""
 "struct Ref[T] {\n"
 "  mut val : T\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:483
+#: ../../tutorial/for-go-programmers/index.md:508
 msgid ""
 "With the help of `Ref[T]`, you can create mutable references to a value "
 "just like you would with pointers in Go:"
 msgstr "借助 `Ref[T]`，您可以像在 Go 中使用指针一样创建对值的可变引用："
 
-#: ../../tutorial/for-go-programmers/index.md:486
+#: ../../tutorial/for-go-programmers/index.md:511
 msgid ""
 "fn increment_counter(counter : Ref[Int]) -> Unit {\n"
 "  counter.val = counter.val + 1\n"
@@ -951,47 +991,6 @@ msgstr ""
 "  increment_counter(counter)\n"
 "  println(counter.val) // 打印 1\n"
 "}\n"
-
-#: ../../tutorial/for-go-programmers/index.md:498
-#: ../../tutorial/tour.md:141
-msgid "Functions"
-msgstr "函数"
-
-#: ../../tutorial/for-go-programmers/index.md:500
-msgid ""
-"In Go, functions are defined using the `func` keyword followed by the "
-"function name, parameters, and return type."
-msgstr "在 Go 中，函数使用 `func` 关键字定义，后跟函数名、参数和返回类型。"
-
-#: ../../tutorial/for-go-programmers/index.md:503
-msgid ""
-"func add(a int, b int) int {\n"
-"    return a + b\n"
-"}\n"
-msgstr ""
-
-#: ../../tutorial/for-go-programmers/index.md:509
-msgid ""
-"In MoonBit, function definitions use the `fn` keyword and a slightly "
-"different syntax:"
-msgstr "在 MoonBit 中，函数定义使用 `fn` 关键字和稍微不同的语法："
-
-#: ../../tutorial/for-go-programmers/index.md:512
-msgid ""
-"fn add(a : Int, b : Int) -> Int {\n"
-"  a + b\n"
-"}\n"
-msgstr ""
-
-#: ../../tutorial/for-go-programmers/index.md:518
-msgid ""
-"Note the use of the `:` token to specify types, and the `->` token to "
-"indicate the return type. Also, the function body is an expression that "
-"returns a value, so the `return` keyword is not required unless early "
-"exits are needed."
-msgstr ""
-"注意使用 `:` 标记指定类型，使用 `->` 标记指示返回类型。此外，函数体是一个返回值的表达式，因此除非需要提前退出，否则不需要 "
-"`return` 关键字。"
 
 #: ../../tutorial/for-go-programmers/index.md:523
 msgid "Generic Functions"
@@ -1762,8 +1761,7 @@ msgstr ""
 msgid ""
 "Since the `Object` trait extends two traits `Position` and `Draw`, the "
 "latter two are called the former's **supertrait**s."
-msgstr ""
-"由于 `Object` 特征扩展了 `Position` 和 `Draw` 这两个特征，因此后两者被称为前者的**超特征**。"
+msgstr "由于 `Object` 特征扩展了 `Position` 和 `Draw` 这两个特征，因此后两者被称为前者的**超特征**。"
 
 #: ../../tutorial/for-go-programmers/index.md:938
 msgid "Default Implementations"
@@ -1823,7 +1821,8 @@ msgid ""
 "let combined = rect1 + rect2\n"
 msgstr ""
 "impl Add for Rectangle with op_add(self, other) {\n"
-"  { width: self.width + other.width, height: self.height + other.height }\n"
+"  { width: self.width + other.width, height: self.height + other.height }"
+"\n"
 "}\n"
 "\n"
 "// 现在你可以对 `Rectangle` 使用 + 运算符了\n"
@@ -2050,8 +2049,7 @@ msgstr ""
 
 #: ../../tutorial/for-go-programmers/index.md:1107
 msgid ""
-"..."
-" which would result in a `moon.mod.json` file like so (with irrelevant"
+"... which would result in a `moon.mod.json` file like so (with irrelevant"
 " parts omitted):"
 msgstr "... 这将生成一个 `moon.mod.json` 文件，如下所示（省略了不相关的部分）："
 
@@ -2669,11 +2667,11 @@ msgstr "我们可以定义内联测试来定义函数的预期行为。这也有
 #: ../../tutorial/tour.md:177
 msgid ""
 "test \"is qualified\" {\n"
-"  assert_eq!(is_qualified(Student::{ id : \"0\", score : 50.0 }, 60.0), "
+"  assert_eq(is_qualified(Student::{ id : \"0\", score : 50.0 }, 60.0), "
 "Fail)\n"
-"  assert_eq!(is_qualified(Student::{ id : \"1\", score : 60.0 }, 60.0), "
+"  assert_eq(is_qualified(Student::{ id : \"1\", score : 60.0 }, 60.0), "
 "Pass)\n"
-"  assert_eq!(is_qualified(Student::{ id : \"2\", score : 13.0 }, 7.0), "
+"  assert_eq(is_qualified(Student::{ id : \"2\", score : 13.0 }, 7.0), "
 "Pass)\n"
 "}"
 msgstr ""
@@ -2791,8 +2789,8 @@ msgid ""
 "  ]\n"
 "  let criteria1 = fn(student) { is_qualified(student, 10) }\n"
 "  let criteria2 = fn(student) { is_qualified(student, 50) }\n"
-"  assert_eq!(count_qualified_students(students, criteria1), 3)\n"
-"  assert_eq!(count_qualified_students(students, criteria2), 2)\n"
+"  assert_eq(count_qualified_students(students, criteria1), 3)\n"
+"  assert_eq(count_qualified_students(students, criteria2), 2)\n"
 "}"
 msgstr ""
 
@@ -3002,8 +3000,8 @@ msgid ""
 "  ]\n"
 "  let criteria1 = fn(student) { @examine.is_qualified(student, 10) }\n"
 "  let criteria2 = fn(student) { @examine.is_qualified(student, 50) }\n"
-"  assert_eq!(@examine.count_qualified_students(students, criteria1), 3)\n"
-"  assert_eq!(@examine.count_qualified_students(students, criteria2), 2)\n"
+"  assert_eq(@examine.count_qualified_students(students, criteria1), 3)\n"
+"  assert_eq(@examine.count_qualified_students(students, criteria2), 2)\n"
 "}"
 msgstr ""
 
