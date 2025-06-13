@@ -24,6 +24,10 @@ if (os.getenv('READTHEDOCS_LANGUAGE') == 'zh-cn' or
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
+source_suffix = {
+    '.mbt.md': 'markdown'
+}
+
 import sys
 from pathlib import Path
 sys.path.append(str(Path("_ext").resolve()))
