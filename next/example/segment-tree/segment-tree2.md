@@ -135,4 +135,4 @@ With this, we have a segment tree that supports range modifications and is much 
 
 In the next lesson, we’ll add multiplication support to the segment tree and explore some use cases for immutable segment trees. Stay tuned!
 
-Full code is available [here](https://github.com/moonbitlang/moonbit-docs/tree/main/next/sources/segment-tree/src/part2/top.mbt).
+Full code is available [here](path:/sources/segment-tree/src/part2/top.mbt).

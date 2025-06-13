@@ -401,8 +401,6 @@ test {
 
 Running on [MoonBit online IDE](https://try.moonbitlang.com/), It takes only about 0.11 seconds to solve this Sudoku!
 
-Complete code here: [try.moonbitlang.com/#6806c2fe](https://try.moonbitlang.com/#6806c2fe)
-
 ## Conclusion
 
 The purpose of games is to relieve boredom and bring joy. If playing a game becomes more anxiety-inducing than exciting, it might go against the game designer's original intent. The article demonstrated that simple elimination methods and brute-force search can quickly solve some Sudoku puzzles. This does not mean that Sudoku is not worth playing; rather, it reveals that one should not be overly concerned with an unsolvable Sudoku puzzle.

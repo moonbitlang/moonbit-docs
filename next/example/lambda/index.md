@@ -183,7 +183,7 @@ The implementation of the `subst` function becomes much simpler when we don't ne
 :end-before: ///|
 ```
 
-The full code: [GitHub repository](https://github.com/moonbitlang/moonbit-docs/tree/main/next/sources/lambda-expression/src/top.mbt)
+Full code is available [here](path:/sources/lambda-expression/src/top.mbt)
 
 ## Improvement
 
