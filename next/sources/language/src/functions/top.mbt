@@ -139,21 +139,6 @@ test {
 }
 // end optional arguments 3
 
-// start optional arguments 4
-fn[X] sub_array(
-  xs : Array[X],
-  offset~ : Int,
-  len~ : Int = xs.length() - offset
-) -> Array[X] {
-  xs[offset:offset + len].iter().to_array()
-}
-
-test {
-  assert_eq(sub_array([1, 2, 3], offset=1), [2, 3])
-  assert_eq(sub_array([1, 2, 3], offset=1, len=1), [2])
-}
-// end optional arguments 4
-
 struct Image {
   width : Int
   height : Int

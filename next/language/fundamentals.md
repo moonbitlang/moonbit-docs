@@ -518,7 +518,7 @@ Local functions can be named or anonymous. Type annotations can be omitted for l
 :end-before: end local functions 1
 ```
 
-There's also a form called **matrix function** that make use of [pattern matching](#pattern-matching):
+There's also a form called **matrix function** (which can only be anonymous) that make use of [pattern matching](#pattern-matching):
 
 ```{literalinclude} /sources/language/src/functions/top.mbt
 :language: moonbit
@@ -621,18 +621,10 @@ If you want to share the result of default expression between different function
 :end-before: end optional arguments 3
 ```
 
-Default expression can depend on the value of previous arguments. For example:
-
-```{literalinclude} /sources/language/src/functions/top.mbt
-:language: moonbit
-:start-after: start optional arguments 4
-:end-before: end optional arguments 4
-:emphasize-lines: 4
-```
-
 #### Automatically insert `Some` when supplying optional arguments
 
 It is quite often optional arguments have type `T?` with `None` as default value.
+For example, you may have a default argument that depends on the values of the previous ones.
 In this case, passing the argument explicitly requires wrapping a `Some`,
 which is ugly:
 

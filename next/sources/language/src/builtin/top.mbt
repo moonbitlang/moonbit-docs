@@ -87,7 +87,7 @@ test "string 4" (t : @test.T) {
     #| ---
   println(str)
   // end string 4
-  t.snapshot!(filename="string_4")
+  t.snapshot(filename="string_4")
 }
 
 // start string 5
