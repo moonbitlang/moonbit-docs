@@ -1274,7 +1274,7 @@ Besides pattern matching, you can also use `._` to extract the internal represen
 ```
 
 ### Type alias
-MoonBit supports type alias via the syntax `typealias Name = TargetType`:
+MoonBit supports type alias via the syntax `typealias TargetType as Name`:
 
 ```{literalinclude} /sources/language/src/data/top.mbt
 :language: moonbit
