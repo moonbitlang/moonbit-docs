@@ -4,21 +4,16 @@
 
 MoonBit supports methods in a different way from traditional object-oriented languages. A method in MoonBit is just a toplevel function associated with a type constructor.
 To define a method, prepend `SelfTypeName::` in front of the function name, such as `fn SelfTypeName::method_name(...)`, and the method belongs to `SelfTypeName`.
+Within the signature of the method declaration, you can use `Self` to refer to `SelfTypeName`.
 
 ``````{warning}
-Defining a method using the following syntax will be deprecated, where the name of the first parameter is `self`.
+Currently, there is a shorthand syntax for defining methods.
+When the name of the first parameter is `self`, a function declaration will be considered a method for the type of `self`.
+This syntax may be deprecated in the future, and we do not recommend using it in new code.
 
 ```{code-block} moonbit
 :class: top-level
 fn method_name(self : SelfType) -> Unit { ... }
-```
-
-You should migrate to the new syntax, and add [method alias](#method-alias) to keep the behavior:
-
-```{code-block} moonbit
-:class: top-level
-fn SelfType::method_name(a : Self) -> Unit { ... }
-fnalias SelfType::method_name
 ```
 ``````
 
@@ -63,7 +58,21 @@ different types can define methods of the same name, because each method lives i
 :end-before: end method overload example
 ```
 
-### Method alias
+### Local method
+To ensure single source of truth in method resolution and avoid ambiguity,
+[methods can only be defined in the same package as its type](/language/packages.md#trait-implementations).
+However, there is one exception to this rule: MoonBit allows defining *private* methods for foreign types locally.
+These local methods can override methods from the type's own package (MoonBit will emit a warning in this case),
+and provide extension/complementary to upstream API:
+
+```{literalinclude} /sources/language/src/method/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start local method
+:end-before: end local method
+```
+
+### Alias methods as functions
 
 MoonBit allows calling methods with alternative names via alias.
 
@@ -182,6 +191,11 @@ The author of the trait can also define **default implementations** for some met
 :end-before: end trait 3
 ```
 
+Note that in addition to the actual default implementation `impl J with f_twice`,
+a mark `= _` is also required in the declaration of `f_twice` in `J`.
+The `= _` mark is an indicator that this method has default implementation,
+it enhances readability by allowing readers to know which methods have default implementation at first glance.
+
 Implementers of trait `J` don't have to provide an implementation for `f_twice`: to implement `J`, only `f` is necessary.
 They can always override the default implementation with an explicit `impl J for Type with f_twice`, if desired, though.
 
@@ -200,8 +214,18 @@ and the methods defined in the sub trait. For example:
 :end-before: end super trait 2
 ```
 
+For traits where all methods have default implementation,
+it is still necessary to explicitly implement them,
+in order to support features such as [abstract trait](/language/packages.md#traits).
+For this purpose, MoonBit provides the syntax `impl Trait for Type` (i.e. without the method part).
+`impl Trait for Type` ensures that `Type` implements `Trait`,
+MoonBit will automatically check if every method in `Trait` has corresponding implementation (custom or default).
+
+In addition to handling traits where every methods has a default implementation,
+the `impl Trait for Type` can also serve as documentation, or a TODO mark before filling actual implementation.
+
 ```{warning}
-Currently, an empty trait is implemented automatically.
+Currently, an empty trait without any method is implemented automatically.
 ```
 
 ### Using traits
@@ -237,9 +261,6 @@ Trait implementations can also be invoked via dot syntax, with the following res
 1. if a regular method is present, the regular method is always favored when using dot syntax
 2. only trait implementations that are located in the package of the self type can be invoked via dot syntax
    - if there are multiple trait methods (from different traits) with the same name available, an ambiguity error is reported
-3. if neither of the above two rules apply, trait `impl`s in current package will also be searched for dot syntax.
-   This allows extending a foreign type locally.
-   - these `impl`s can only be called via dot syntax locally, even if they are public.
 
 The above rules ensures that MoonBit's dot syntax enjoys good property while being flexible.
 For example, adding a new dependency never break existing code with dot syntax due to ambiguity.

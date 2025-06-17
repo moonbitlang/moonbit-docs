@@ -51,7 +51,7 @@ You can use the `pub` modifier before toplevel `let`/`fn` to make them public.
 ### Aliases
 
 By default, all aliases, i.e. [function alias](/language/fundamentals.md#function-alias), 
-[method alias](/language/methods.md#method-alias),
+[method alias](/language/methods.md#alias-methods-as-functions),
 [type alias](/language/fundamentals.md#type-alias),
 [trait alias](/language/methods.md#trait-alias), are _invisible_ to other packages.
 
@@ -159,6 +159,7 @@ and prevent third-party packages from modifying behavior of existing programs by
 MoonBit employs the following restrictions on who can define methods/implement traits for types:
 
 - _only the package that defines a type can define methods for it_. So one cannot define new methods or override old methods for builtin and foreign types.
+    - there is an exception to this rule: [local methods](/language/methods.md#local-method). Local methods are always private though, so they do not break coherence properties of MoonBit's type system
 - _only the package of the type or the package of the trait can define an implementation_.
   For example, only `@pkg1` and `@pkg2` are allowed to write `impl @pkg1.Trait for @pkg2.Type`.
 
