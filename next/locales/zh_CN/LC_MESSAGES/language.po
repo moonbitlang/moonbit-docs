@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-13 14:43+0800\n"
+"POT-Creation-Date: 2025-06-17 14:10+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1909,7 +1909,7 @@ msgstr ""
 #: ../../language/fundamentals.md:1148 ../../language/fundamentals.md:1175
 #: ../../language/fundamentals.md:1204 ../../language/fundamentals.md:1224
 #: ../../language/fundamentals.md:1258 ../../language/fundamentals.md:1272
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "Output"
 msgstr "输出"
 
@@ -8850,7 +8850,7 @@ msgstr "方法名称"
 msgid "Number of Arguments"
 msgstr "自动填充参数"
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:104
+#: ../../language/error_codes/E4065.md ../../language/methods.md:113
 msgid "`+`"
 msgstr ""
 
@@ -8862,7 +8862,7 @@ msgstr ""
 msgid "2"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:104
+#: ../../language/error_codes/E4065.md ../../language/methods.md:113
 msgid "`-`"
 msgstr ""
 
@@ -8870,7 +8870,7 @@ msgstr ""
 msgid "`op_sub`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:104
+#: ../../language/error_codes/E4065.md ../../language/methods.md:113
 msgid "`*`"
 msgstr ""
 
@@ -8878,7 +8878,7 @@ msgstr ""
 msgid "`op_mul`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:104
+#: ../../language/error_codes/E4065.md ../../language/methods.md:113
 msgid "`/`"
 msgstr ""
 
@@ -8886,7 +8886,7 @@ msgstr ""
 msgid "`op_div`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:104
+#: ../../language/error_codes/E4065.md ../../language/methods.md:113
 msgid "`%`"
 msgstr ""
 
@@ -8894,7 +8894,7 @@ msgstr ""
 msgid "`op_mod`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:104
+#: ../../language/error_codes/E4065.md ../../language/methods.md:113
 msgid "`==`"
 msgstr ""
 
@@ -8902,7 +8902,7 @@ msgstr ""
 msgid "`op_equal`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:104
+#: ../../language/error_codes/E4065.md ../../language/methods.md:113
 msgid "`<<`"
 msgstr ""
 
@@ -8910,7 +8910,7 @@ msgstr ""
 msgid "`op_shl`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:104
+#: ../../language/error_codes/E4065.md ../../language/methods.md:113
 msgid "`>>`"
 msgstr ""
 
@@ -8918,7 +8918,7 @@ msgstr ""
 msgid "`op_shr`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:104
+#: ../../language/error_codes/E4065.md ../../language/methods.md:113
 msgid "`-` (unary)"
 msgstr "`-`（一元）"
 
@@ -8960,7 +8960,7 @@ msgstr "`_[_:_]`（视图）"
 msgid "`op_as_view`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:104
+#: ../../language/error_codes/E4065.md ../../language/methods.md:113
 msgid "`&`"
 msgstr ""
 
@@ -8968,7 +8968,7 @@ msgstr ""
 msgid "`land`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:104
+#: ../../language/error_codes/E4065.md ../../language/methods.md:113
 msgid "`|`"
 msgstr ""
 
@@ -8976,7 +8976,7 @@ msgstr ""
 msgid "`lor`"
 msgstr ""
 
-#: ../../language/error_codes/E4065.md ../../language/methods.md:104
+#: ../../language/error_codes/E4065.md ../../language/methods.md:113
 msgid "`^`"
 msgstr ""
 
@@ -17292,8 +17292,8 @@ msgid "Type alias"
 msgstr "类型别名"
 
 #: ../../language/fundamentals.md:1277
-msgid "MoonBit supports type alias via the syntax `typealias Name = TargetType`:"
-msgstr "MoonBit 支持使用语法 `typealias Name = TargetType` 定义类型别名："
+msgid "MoonBit supports type alias via the syntax `typealias TargetType as Name`:"
+msgstr "MoonBit 支持使用语法 `typealias TargetType as Name` 定义类型别名："
 
 #: ../../language/fundamentals.md:1279
 msgid ""
@@ -18533,35 +18533,30 @@ msgid ""
 "associated with a type constructor. To define a method, prepend "
 "`SelfTypeName::` in front of the function name, such as `fn "
 "SelfTypeName::method_name(...)`, and the method belongs to "
-"`SelfTypeName`."
+"`SelfTypeName`. Within the signature of the method declaration, you can "
+"use `Self` to refer to `SelfTypeName`."
 msgstr ""
 "MoonBit 支持方法的方式与传统的面向对象语言不同。MoonBit 中的方法只是与类型构造器关联的顶层函数。定义方法时，在函数名之前添加 "
 "`SelfTypeName::` 前缀，例如 `fn SelfTypeName::method_name(...)`，这样方法就属于 "
-"`SelfTypeName`。"
+"`SelfTypeName`。在方法的签名内，可以用 `Self` 来指代 `SelfTypeName`。"
 
-#: ../../language/methods.md:9
+#: ../../language/methods.md:10
 msgid ""
-"Defining a method using the following syntax will be deprecated, where "
-"the name of the first parameter is `self`."
-msgstr "使用以下语法定义方法将被弃用，其中第一个参数的名称是 `self`。"
+"Currently, there is a shorthand syntax for defining methods. When the "
+"name of the first parameter is `self`, a function declaration will be "
+"considered a method for the type of `self`. This syntax may be deprecated"
+" in the future, and we do not recommend using it in new code."
+msgstr ""
+"目前，MoonBit 支持一种定义方法的简短语法。"
+"当某个函数定义的第一个参数的名字是 `self` 时，"
+"它会被视作 `self` 的类型上的方法定义。"
+"这一语法在未来可能会被废弃，我们不鼓励在新代码中使用这一写法。"
 
-#: ../../language/methods.md:11
-msgid "fn method_name(self : SelfType) { ... }"
+#: ../../language/methods.md:14
+msgid "fn method_name(self : SelfType) -> Unit { ... }"
 msgstr ""
 
-#: ../../language/methods.md:16
-msgid ""
-"You should migrate to the new syntax, and add [method alias](#method-"
-"alias) to keep the behavior:"
-msgstr "你应该迁移到新的语法，并添加 [方法别名](#method-alias) 来保持行为："
-
-#: ../../language/methods.md:18
-msgid ""
-"fn method_name(a : SelfType) { ... }\n"
-"fnalias SelfType::method_name"
-msgstr ""
-
-#: ../../language/methods.md:25
+#: ../../language/methods.md:20
 msgid ""
 "enum List[X] {\n"
 "  Nil\n"
@@ -18573,21 +18568,21 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:31
+#: ../../language/methods.md:26
 msgid ""
 "To call a method, you can either invoke using qualified syntax "
 "`T::method_name(..)`, or using dot syntax where the first argument is the"
 " type of `T`:"
 msgstr "要调用一个方法，可以使用语法 `T::method_name(..)`，或者当其中第一个参数是 `T` 的类型时使用点调用："
 
-#: ../../language/methods.md:33
+#: ../../language/methods.md:28
 msgid ""
 "let l : List[Int] = Nil\n"
 "println(l.length())\n"
 "println(List::length(l))\n"
 msgstr ""
 
-#: ../../language/methods.md:40
+#: ../../language/methods.md:35
 msgid ""
 "When the first parameter of a method is also the type it belongs to, "
 "methods can be called using dot syntax `x.method(...)`. MoonBit "
@@ -18597,7 +18592,7 @@ msgstr ""
 "当方法的第一个参数也是它所属的类型时，可以使用点语法 `x.method(...)` 调用方法。MoonBit 根据 `x` "
 "的类型自动找到正确的方法，无需编写方法的类型名称甚至包名称："
 
-#: ../../language/methods.md:42
+#: ../../language/methods.md:37
 msgid ""
 "pub(all) enum List[X] {\n"
 "  Nil\n"
@@ -18609,11 +18604,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:48
+#: ../../language/methods.md:43
 msgid "using package with alias list"
 msgstr "以别名 list 使用包"
 
-#: ../../language/methods.md:48
+#: ../../language/methods.md:43
 msgid ""
 "// assume `xs` is a list of lists, all the following two lines are "
 "equivalent\n"
@@ -18624,7 +18619,7 @@ msgstr ""
 "let _ = xs.concat()\n"
 "let _ = @list.List::concat(xs)\n"
 
-#: ../../language/methods.md:56
+#: ../../language/methods.md:51
 msgid ""
 "Unlike regular functions, methods defined using the "
 "`TypeName::method_name` syntax support overloading: different types can "
@@ -18632,7 +18627,7 @@ msgid ""
 " name space:"
 msgstr "用 `TypeName::method_name` 形式定义出的方法支持重载：由于不同类型的方法处于不同的命名空间中，不同的类型可以定义同名的方法。"
 
-#: ../../language/methods.md:59
+#: ../../language/methods.md:54
 msgid ""
 "struct T1 {\n"
 "  x1 : Int\n"
@@ -18657,24 +18652,58 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:66
-msgid "Method alias"
-msgstr "方法别名"
+#: ../../language/methods.md:61
+msgid "Local method"
+msgstr "本地方法"
+
+#: ../../language/methods.md:62
+msgid ""
+"To ensure single source of truth in method resolution and avoid "
+"ambiguity, [methods can only be defined in the same package as its "
+"type](/language/packages.md#trait-implementations). However, there is one"
+" exception to this rule: MoonBit allows defining *private* methods for "
+"foreign types locally. These local methods can override methods from the "
+"type's own package (MoonBit will emit a warning in this case), and "
+"provide extension/complementary to upstream API:"
+msgstr ""
+"为了保证方法定义只有单一来源并规避歧义，"
+"[只能在类型所在的包里定义方法](/language/packages.md#trait-implementations)。"
+"然而，这条规则有一个例外：MoonBit 允许给来自外部的类型定义 *私有* 方法。"
+"这些本地方法可以覆盖来自类型自己的包的方法（但此时 MoonBit 会报一个警告），"
+"为上游包的 API 提供拓展和补充："
 
 #: ../../language/methods.md:68
+msgid ""
+"fn Int::my_int_method(self : Int) -> Int {\n"
+"  self * self + self\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq((6).my_int_method(), 42)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/methods.md:75
+msgid "Alias methods as functions"
+msgstr "通过别名把方法变成函数"
+
+#: ../../language/methods.md:77
 msgid "MoonBit allows calling methods with alternative names via alias."
 msgstr "MoonBit 允许用户用别名来调用一个方法。声明方法别名的语法如下："
 
-#: ../../language/methods.md:70
+#: ../../language/methods.md:79
 msgid "The method alias will create a function with the corresponding name."
 msgstr "方法别名将创建一个具有相应名称的函数。"
 
-#: ../../language/methods.md:72
+#: ../../language/methods.md:81
 msgid ""
 "// same as `fnalias List::map as map`\n"
 "fnalias List::map\n"
 "\n"
-"// list_concat is an alias of `List::concat`\n"
+"// `list_concat` is an alias of `List::concat`.\n"
+"// Note that the created alias is a function, not a method of list.\n"
+"// So you should call it with `list_concat(xx)` instead of "
+"`xx.list_concat()`\n"
 "fnalias List::concat as list_concat\n"
 "\n"
 "// creating multiple alias in typename\n"
@@ -18683,21 +18712,23 @@ msgstr ""
 "// 等同于 `fnalias List::map as map`\n"
 "fnalias List::map\n"
 "// list_concat 是 `List::concat` 的别名\n"
+"// 注意这里的别名创建的是一个函数，而不是 `List` 的方法。\n"
+"// 所以需要用 `list_concat(xx)` 而非 `xx.list_concat()` 来调用它\n"
 "fnalias List::concat as list_concat\n"
 "// 给一个类型的多个方法创建别名\n"
 "fnalias List::(concat as c, map as m)\n"
 
-#: ../../language/methods.md:78
+#: ../../language/methods.md:87
 msgid "Operator Overloading"
 msgstr "运算符重载"
 
-#: ../../language/methods.md:80
+#: ../../language/methods.md:89
 msgid ""
 "MoonBit supports overloading infix operators of builtin operators via "
 "several builtin traits. For example:"
 msgstr "MoonBit 通过内建的特征支持中缀运算符的重载，例如："
 
-#: ../../language/methods.md:82
+#: ../../language/methods.md:91
 msgid ""
 "struct T {\n"
 "  x : Int\n"
@@ -18714,13 +18745,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:88
+#: ../../language/methods.md:97
 msgid ""
 "Other operators are overloaded via methods, for example `op_get` and "
 "`op_set`:"
 msgstr "此外，还可以用方法来重载一些其他运算符，例如 `op_get` 和 `op_set`："
 
-#: ../../language/methods.md:90
+#: ../../language/methods.md:99
 msgid ""
 "struct Coord {\n"
 "  mut x : Int\n"
@@ -18742,7 +18773,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:96
+#: ../../language/methods.md:105
 msgid ""
 "fn main {\n"
 "  let c = { x: 1, y: 2 }\n"
@@ -18754,7 +18785,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid ""
 "{x: 1, y: 2}\n"
 "2\n"
@@ -18762,117 +18793,117 @@ msgid ""
 "23\n"
 msgstr ""
 
-#: ../../language/methods.md:108
+#: ../../language/methods.md:117
 msgid "Currently, the following operators can be overloaded:"
 msgstr "目前，可以重载以下运算符："
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "Operator Name"
 msgstr "运算符名称"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "overloading mechanism"
 msgstr "重载方式"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "trait `Add`"
 msgstr "特征 `Add`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "trait `Sub`"
 msgstr "特征 `Sub`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "trait `Mul`"
 msgstr "特征 `Mul`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "trait `Div`"
 msgstr "特征 `Div`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "trait `Mod`"
 msgstr "特征 `Mod`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "trait `Eq`"
 msgstr "特征 `Eq`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "trait `Shl`"
 msgstr "特征 `Shl`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "trait `Shr`"
 msgstr "特征 `Shr`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "trait `Neg`"
 msgstr "特征 `Neg`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "`_[_]` (get item)"
 msgstr "`_[_]`（获取项）"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "method `op_get`"
 msgstr "方法 `op_get`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "`_[_] = _` (set item)"
 msgstr "`_[_] = _`（设置项）"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "method `op_set`"
 msgstr "方法 `op_set`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "`_[_:_]` (view)"
 msgstr "`_[_:_]`（视图）"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "method `op_as_view`"
 msgstr "方法 `op_as_view`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "trait `BitAnd`"
 msgstr "特征 `BitAnd`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "trait `BitOr`"
 msgstr "特征 `BitOr`"
 
-#: ../../language/methods.md:104
+#: ../../language/methods.md:113
 msgid "trait `BitXOr`"
 msgstr "特征 `BitXOr`"
 
-#: ../../language/methods.md:128
+#: ../../language/methods.md:137
 msgid ""
 "When overloading `op_get`/`op_set`/`op_as_view`, the method must have a "
 "correcnt signature:"
 msgstr "在重载 `op_get`/`op_set`/`op_as_view` 时，定义的方法需要有正确的类型签名："
 
-#: ../../language/methods.md:130
+#: ../../language/methods.md:139
 msgid "`op_get` should have signature `(Self, Index) -> Result`"
 msgstr "`op_get` 的签名应该形如 `(Self, Index) -> Result`"
 
-#: ../../language/methods.md:131
+#: ../../language/methods.md:140
 msgid "`op_set` should have signature `(Self, Index, Value) -> Result`"
 msgstr "`op_set` 的签名应该形如 `(Self, Index, Value) -> Result`"
 
-#: ../../language/methods.md:132
+#: ../../language/methods.md:141
 msgid ""
 "`op_as_view` should have signature `(Self, start? : Index, end? : Index) "
 "-> Result`"
 msgstr "`op_as_view` 的签名应当形如 `(Self, start? : Index, end? : Index) -> Result`"
 
-#: ../../language/methods.md:134
+#: ../../language/methods.md:143
 msgid ""
 "By implementing `op_as_view` method, you can create a view for a user-"
 "defined type. Here is an example:"
 msgstr "通过实现 `op_as_view` 方法，可以为用户定义的类型创建视图。以下是一个例子："
 
-#: ../../language/methods.md:136
+#: ../../language/methods.md:145
 msgid ""
 "type DataView String\n"
 "\n"
@@ -18892,18 +18923,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:142
+#: ../../language/methods.md:151
 msgid "Trait system"
 msgstr "Trait（特征）系统"
 
-#: ../../language/methods.md:144
+#: ../../language/methods.md:153
 msgid ""
 "MoonBit provides a trait system for overloading/ad-hoc polymorphism. "
 "Traits declare a list of operations, which must be supplied when a type "
 "wants to implement the trait. Traits can be declared as follows:"
 msgstr "MoonBit 具有用于重载/特殊多态的结构特征系统。特征声明一系列操作，当类型想要实现特征时，必须提供这些操作。特征可以如下声明："
 
-#: ../../language/methods.md:146
+#: ../../language/methods.md:155
 msgid ""
 "pub(open) trait I {\n"
 "  method_(Int) -> Int\n"
@@ -18912,21 +18943,21 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:152
+#: ../../language/methods.md:161
 msgid ""
 "In the body of a trait definition, a special type `Self` is used to refer"
 " to the type that implements the trait."
 msgstr "在特征定义的主体中，使用特殊类型 `Self` 来引用实现特征的类型。"
 
-#: ../../language/methods.md:154
+#: ../../language/methods.md:163
 msgid "Extending traits"
 msgstr "扩展特征"
 
-#: ../../language/methods.md:156
+#: ../../language/methods.md:165
 msgid "A trait can depend on other traits, for example:"
 msgstr "特征（子特征）可以依赖于其他特征（超特征），例如："
 
-#: ../../language/methods.md:158
+#: ../../language/methods.md:167
 msgid ""
 "pub(open) trait Position {\n"
 "  pos(Self) -> (Int, Int)\n"
@@ -18939,11 +18970,11 @@ msgid ""
 "pub(open) trait Object: Position + Draw {}\n"
 msgstr ""
 
-#: ../../language/methods.md:164
+#: ../../language/methods.md:173
 msgid "Implementing traits"
 msgstr "实现特征"
 
-#: ../../language/methods.md:166
+#: ../../language/methods.md:175
 msgid ""
 "To implement a trait, a type must explicitly provide all the methods "
 "required by the trait using the syntax `impl Trait for Type with "
@@ -18952,7 +18983,7 @@ msgstr ""
 "如果某类型想要实现一个特征，它需要显式地实现特征中的所有方法。实现特征方法的语法是 `impl Trait for Type with "
 "method_name(...) { ... }`，例如："
 
-#: ../../language/methods.md:169
+#: ../../language/methods.md:178
 msgid ""
 "pub(open) trait MyShow {\n"
 "  to_string(Self) -> String\n"
@@ -18992,20 +19023,20 @@ msgstr ""
 "  ...\n"
 "}\n"
 
-#: ../../language/methods.md:175
+#: ../../language/methods.md:184
 msgid ""
 "Type annotation can be omitted for trait `impl`: MoonBit will "
 "automatically infer the type based on the signature of `Trait::method` "
 "and the self type."
 msgstr "`impl` 实现的类型注释可以省略：MoonBit 将根据 `Trait::method` 的签名和 self 类型自动推断类型。"
 
-#: ../../language/methods.md:177
+#: ../../language/methods.md:186
 msgid ""
 "The author of the trait can also define **default implementations** for "
 "some methods in the trait, for example:"
 msgstr "特征的作者还可以为特征中的某些方法定义**默认实现**，例如："
 
-#: ../../language/methods.md:179
+#: ../../language/methods.md:188
 msgid ""
 "pub(open) trait J {\n"
 "  f(Self) -> Unit\n"
@@ -19018,7 +19049,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:185
+#: ../../language/methods.md:194
+msgid ""
+"Note that in addition to the actual default implementation `impl J with "
+"f_twice`, a mark `= _` is also required in the declaration of `f_twice` "
+"in `J`. The `= _` mark is an indicator that this method has default "
+"implementation, it enhances readability by allowing readers to know which"
+" methods have default implementation at first glance."
+msgstr ""
+"注意除了实际的默认实现 `impl J with f_twice` 外，"
+"在 `J` 中、`f_twice` 的声明里，还需要提供一个 `= _` 标记。"
+"这一标记能让代码的读者一眼知道哪些方法有默认实现，改善可读性。"
+
+#: ../../language/methods.md:199
 msgid ""
 "Implementers of trait `J` don't have to provide an implementation for "
 "`f_twice`: to implement `J`, only `f` is necessary. They can always "
@@ -19028,7 +19071,7 @@ msgstr ""
 " `J` 的类型实现特征时不必为 `f_twice` 提供实现：要实现 `J`，只有 `f` 是必要的。如果需要，他们总是可以显式地用 `impl"
 " J for Type with f_twice` 覆盖默认实现。"
 
-#: ../../language/methods.md:188
+#: ../../language/methods.md:202
 msgid ""
 "impl J for Int with f(self) {\n"
 "  println(self)\n"
@@ -19045,13 +19088,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../language/methods.md:194
+#: ../../language/methods.md:208
 msgid ""
 "To implement the sub trait, one will have to implement the super traits, "
 "and the methods defined in the sub trait. For example:"
 msgstr "要实现子特征，必须实现超特征，以及子特征中的方法。"
 
-#: ../../language/methods.md:197
+#: ../../language/methods.md:211
 msgid ""
 "impl Position for Point with pos(self) {\n"
 "  (self.x, self.y)\n"
@@ -19072,22 +19115,48 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:204 ../../language/packages.md:169
-msgid "Currently, an empty trait is implemented automatically."
-msgstr "目前，空特征会自动实现。"
+#: ../../language/methods.md:217
+msgid ""
+"For traits where all methods have default implementation, it is still "
+"necessary to explicitly implement them, in order to support features such"
+" as [abstract trait](/language/packages.md#traits). For this purpose, "
+"MoonBit provides the syntax `impl Trait for Type` (i.e. without the "
+"method part). `impl Trait for Type` ensures that `Type` implements "
+"`Trait`, MoonBit will automatically check if every method in `Trait` has "
+"corresponding implementation (custom or default)."
+msgstr ""
+"即使一个特征的每个方法都有默认实现，也依然需要显式实现它，"
+"否则 [抽象特征](/language/packages.md#traits) 等功能无法工作。"
+"为此，MoonBit 提供了 `impl Trait for Type` 语法"
+"（去除了方法部分，除此之外与前面的 `impl` 相同）"
+"`impl Trait for Type` 保证了 `Type` 会实现 `Trait`，"
+"MoonBit 会自动检查 `Trait` 中的每个方法是否都有对应的实现。"
 
-#: ../../language/methods.md:207
+#: ../../language/methods.md:224
+msgid ""
+"In addition to handling traits where every methods has a default "
+"implementation, the `impl Trait for Type` can also serve as "
+"documentation, or a TODO mark before filling actual implementation."
+msgstr ""
+"除了用于处理每个方法都有默认实现的特征，`impl Trait for Type` 还可以用作文档，"
+"或是在实际完成实现之前的一个待办标记。"
+
+#: ../../language/methods.md:228
+msgid "Currently, an empty trait without any method is implemented automatically."
+msgstr "目前，没有任何方法的空特征会自动实现。"
+
+#: ../../language/methods.md:231
 msgid "Using traits"
 msgstr "使用特征"
 
-#: ../../language/methods.md:209
+#: ../../language/methods.md:233
 msgid ""
 "When declaring a generic function, the type parameters can be annotated "
 "with the traits they should implement, allowing the definition of "
 "constrained generic functions. For example:"
 msgstr "在声明泛型函数时，可以使用特征注释类型参数，来定义受约束的泛型函数。例如："
 
-#: ../../language/methods.md:211
+#: ../../language/methods.md:235
 msgid ""
 "fn[X : Eq] contains(xs : Array[X], elem : X) -> Bool {\n"
 "  for x in xs {\n"
@@ -19100,7 +19169,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:217
+#: ../../language/methods.md:241
 msgid ""
 "Without the `Eq` requirement, the expression `x == elem` in `contains` "
 "will result in a type error. Now, the function `contains` can be called "
@@ -19109,7 +19178,7 @@ msgstr ""
 "如果没有 `Eq` 要求，`contains` 中的表达式 `x == elem` 将产生类型错误。现在，函数 `contains` "
 "可以使用任何实现 `Eq` 的类型调用，例如："
 
-#: ../../language/methods.md:219
+#: ../../language/methods.md:243
 msgid ""
 "struct Point {\n"
 "  x : Int\n"
@@ -19127,11 +19196,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:225
+#: ../../language/methods.md:249
 msgid "Invoke trait methods directly"
 msgstr "直接调用特征方法"
 
-#: ../../language/methods.md:227
+#: ../../language/methods.md:251
 msgid ""
 "Methods of a trait can be called directly via `Trait::method`. MoonBit "
 "will infer the type of `Self` and check if `Self` indeed implements "
@@ -19140,7 +19209,7 @@ msgstr ""
 "可以通过 `Trait::method` 直接调用特征的方法。MoonBit 将推断 `Self` 的类型，并检查 `Self` 是否确实实现了 "
 "`Trait`，例如："
 
-#: ../../language/methods.md:229
+#: ../../language/methods.md:253
 msgid ""
 "test {\n"
 "  assert_eq(Show::to_string(42), \"42\")\n"
@@ -19148,44 +19217,31 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:235
+#: ../../language/methods.md:259
 msgid ""
 "Trait implementations can also be invoked via dot syntax, with the "
 "following restrictions:"
 msgstr "特征实现也可以通过点语法调用，但有以下限制："
 
-#: ../../language/methods.md:237
+#: ../../language/methods.md:261
 msgid ""
 "if a regular method is present, the regular method is always favored when"
 " using dot syntax"
 msgstr "如果存在常规方法，使用点语法时总是优先选择常规方法"
 
-#: ../../language/methods.md:238
+#: ../../language/methods.md:262
 msgid ""
 "only trait implementations that are located in the package of the self "
 "type can be invoked via dot syntax"
 msgstr "只有位于 self 类型的包中的特征实现才能通过点语法调用"
 
-#: ../../language/methods.md:239
+#: ../../language/methods.md:263
 msgid ""
 "if there are multiple trait methods (from different traits) with the same"
 " name available, an ambiguity error is reported"
 msgstr "如果有多个具有相同名称的特征方法（来自不同的特征）可用，将报告歧义错误"
 
-#: ../../language/methods.md:240
-msgid ""
-"if neither of the above two rules apply, trait `impl`s in current package"
-" will also be searched for dot syntax. This allows extending a foreign "
-"type locally."
-msgstr "如果上述两条规则都不适用，还将在当前包中搜索特征 `impl` 以进行点语法。这允许在本地扩展外部类型。"
-
-#: ../../language/methods.md:242
-msgid ""
-"these `impl`s can only be called via dot syntax locally, even if they are"
-" public."
-msgstr "这些 `impl` 只能在本地通过点语法调用，即使它们是公开的。"
-
-#: ../../language/methods.md:244
+#: ../../language/methods.md:265
 msgid ""
 "The above rules ensures that MoonBit's dot syntax enjoys good property "
 "while being flexible. For example, adding a new dependency never break "
@@ -19196,11 +19252,11 @@ msgstr ""
 "上述规则确保了 MoonBit 的点语法具有良好的特性，同时也具有灵活性。例如，由于歧义，添加新依赖关系永远不会破坏现有的点语法代码。这些规则还使"
 " MoonBit 的名称解析非常简单：通过点语法调用的方法必须始终来自当前包或类型的包！"
 
-#: ../../language/methods.md:249
+#: ../../language/methods.md:270
 msgid "Here's an example of calling trait `impl` with dot syntax:"
 msgstr "以下是使用点语法调用特征 `impl` 的示例："
 
-#: ../../language/methods.md:251
+#: ../../language/methods.md:272
 msgid ""
 "struct MyCustomType {}\n"
 "\n"
@@ -19215,19 +19271,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:257
+#: ../../language/methods.md:278
 msgid "Trait alias"
 msgstr "特征别名"
 
-#: ../../language/methods.md:259
+#: ../../language/methods.md:280
 msgid "MoonBit allows using traits with alternative names via trait alias."
 msgstr "MoonBit 允许用户用别名来使用一个特征。："
 
-#: ../../language/methods.md:261
+#: ../../language/methods.md:282
 msgid "Trait alias can be declared as follows:"
 msgstr "特征别名可以声明如下："
 
-#: ../../language/methods.md:263
+#: ../../language/methods.md:284
 msgid ""
 "// CanCompare is an alias of Compare\n"
 "traitalias @builtin.Compare as CanCompare\n"
@@ -19235,11 +19291,11 @@ msgstr ""
 "// CanCompare 是 Compare 的别名\n"
 "traitalias @builtin.Compare as CanCompare\n"
 
-#: ../../language/methods.md:269
+#: ../../language/methods.md:290
 msgid "Trait objects"
 msgstr "特征对象"
 
-#: ../../language/methods.md:271
+#: ../../language/methods.md:292
 msgid ""
 "MoonBit supports runtime polymorphism via trait objects. If `t` is of "
 "type `T`, which implements trait `I`, one can pack the methods of `T` "
@@ -19253,7 +19309,7 @@ msgstr ""
 "的 `T` 的方法与 `t` 一起打包到运行时对象中。如果从上下文可以知道某个表达式的类型是特征对象类型，则 `as &I` "
 "可以省略。特征对象擦除了值的具体类型，因此可以将从不同具体类型创建的对象放入相同的数据结构并统一处理："
 
-#: ../../language/methods.md:279
+#: ../../language/methods.md:300
 msgid ""
 "pub(open) trait Animal {\n"
 "  speak(Self) -> String\n"
@@ -19294,29 +19350,29 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:285
+#: ../../language/methods.md:306
 msgid ""
 "Not all traits can be used to create objects. \"object-safe\" traits' "
 "methods must satisfy the following conditions:"
 msgstr "并非所有特征都可以用于创建对象。“对象安全”特征的方法必须满足以下条件："
 
-#: ../../language/methods.md:288
+#: ../../language/methods.md:309
 msgid "`Self` must be the first parameter of a method"
 msgstr "`Self` 必须是方法的第一个参数"
 
-#: ../../language/methods.md:289
+#: ../../language/methods.md:310
 msgid ""
 "There must be only one occurrence of `Self` in the type of the method "
 "(i.e. the first parameter)"
 msgstr "方法的类型中只能出现一个 `Self`（即第一个参数）"
 
-#: ../../language/methods.md:291
+#: ../../language/methods.md:312
 msgid ""
 "Users can define new methods for trait objects, just like defining new "
 "methods for structs and enums:"
 msgstr "用户可以为特征对象定义新方法，就像为结构体和枚举定义新方法一样："
 
-#: ../../language/methods.md:293
+#: ../../language/methods.md:314
 msgid ""
 "pub(open) trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
@@ -19368,15 +19424,15 @@ msgstr ""
 "  ..write_string(\")\")\n"
 "}\n"
 
-#: ../../language/methods.md:299
+#: ../../language/methods.md:320
 msgid "Builtin traits"
 msgstr "内建特征"
 
-#: ../../language/methods.md:301
+#: ../../language/methods.md:322
 msgid "MoonBit provides the following useful builtin traits:"
 msgstr "MoonBit 提供了以下有用的内建特征："
 
-#: ../../language/methods.md:305
+#: ../../language/methods.md:326
 msgid ""
 "trait Eq {\n"
 "  op_equal(Self, Self) -> Bool\n"
@@ -19424,15 +19480,15 @@ msgstr ""
 "  default() -> Self\n"
 "}\n"
 
-#: ../../language/methods.md:330
+#: ../../language/methods.md:351
 msgid "Deriving builtin traits"
 msgstr "派生内建特征"
 
-#: ../../language/methods.md:332
+#: ../../language/methods.md:353
 msgid "MoonBit can automatically derive implementations for some builtin traits:"
 msgstr "MoonBit 可以自动为一些内建特征派生实现："
 
-#: ../../language/methods.md:334
+#: ../../language/methods.md:355
 msgid ""
 "struct T {\n"
 "  a : Int\n"
@@ -19449,7 +19505,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:340
+#: ../../language/methods.md:361
 msgid "See [Deriving](./derive.md) for more information about deriving traits."
 msgstr "参见 [派生](./derive.md) 了解有关派生特征的更多信息。"
 
@@ -19855,6 +19911,15 @@ msgstr "**只有定义类型的包才能为其定义方法**。因此，不能�
 
 #: ../../language/packages.md:162
 msgid ""
+"there is an exception to this rule: [local methods](/language/methods.md"
+"#local-method). Local methods are always private though, so they do not "
+"break coherence properties of MoonBit's type system"
+msgstr ""
+"这条规则有一个例外：[本地方法](/language/methods.md#local-method)。"
+"不过，本地方法永远是私有的，因此它们不会破坏 MoonBit 类型系统的一致性。"
+
+#: ../../language/packages.md:163
+msgid ""
 "_only the package of the type or the package of the trait can define an "
 "implementation_. For example, only `@pkg1` and `@pkg2` are allowed to "
 "write `impl @pkg1.Trait for @pkg2.Type`."
@@ -19862,18 +19927,22 @@ msgstr ""
 "**只有类型的包或特征的包才能定义实现**。例如，只有 `@pkg1` 和 `@pkg2` 允许编写 `impl @pkg1.Trait for "
 "@pkg2.Type`。"
 
-#: ../../language/packages.md:165
+#: ../../language/packages.md:166
 msgid ""
 "The second rule above allows one to add new functionality to a foreign "
 "type by defining a new trait and implementing it. This makes MoonBit's "
 "trait & method system flexible while enjoying good coherence property."
 msgstr "上述第二条规则允许通过定义新特征并实现它来为外部类型添加新功能。这使 MoonBit 的特征和方法系统灵活，同时享有良好的一致性属性。"
 
-#: ../../language/packages.md:172
+#: ../../language/packages.md:170
+msgid "Currently, an empty trait is implemented automatically."
+msgstr "目前，空特征会自动实现。"
+
+#: ../../language/packages.md:173
 msgid "Here's an example of abstract trait:"
 msgstr "以下是抽象特征的示例："
 
-#: ../../language/packages.md:175
+#: ../../language/packages.md:176
 msgid ""
 "trait Number {\n"
 " op_add(Self, Self) -> Self\n"
@@ -19895,11 +19964,11 @@ msgid ""
 "impl Number for Double with op_sub(x, y) { x - y }"
 msgstr ""
 
-#: ../../language/packages.md:197
+#: ../../language/packages.md:198
 msgid "From outside this package, users can only see the following:"
 msgstr "从包外，用户只能看到以下内容："
 
-#: ../../language/packages.md:199
+#: ../../language/packages.md:200
 msgid ""
 "trait Number\n"
 "\n"
@@ -19910,47 +19979,47 @@ msgid ""
 "impl Number for Double"
 msgstr ""
 
-#: ../../language/packages.md:209
+#: ../../language/packages.md:210
 msgid ""
 "The author of `Number` can make use of the fact that only `Int` and "
 "`Double` can ever implement `Number`, because new implementations are not"
 " allowed outside."
 msgstr "`Number` 的作者可以利用只有 `Int` 和 `Double` 可以实现 `Number` 这一事实，因为在外部不允许新的实现。"
 
-#: ../../language/packages.md:212
+#: ../../language/packages.md:213
 msgid "Virtual Packages"
 msgstr "虚拟包"
 
-#: ../../language/packages.md:215
+#: ../../language/packages.md:216
 msgid ""
 "Virtual package is an experimental feature. There may be bugs and "
 "undefined behaviors."
 msgstr "虚拟包是一个实验性功能。可能存在错误和未定义的行为。"
 
-#: ../../language/packages.md:218
+#: ../../language/packages.md:219
 msgid ""
 "You can define virtual packages, which serves as an interface. They can "
 "be replaced by specific implementations at build time. Currently virtual "
 "packages can only contain plain functions."
 msgstr "你可以定义虚拟包，它作为一个接口。它们可以在构建时被特定的实现替换。目前，虚拟包只能包含普通函数。"
 
-#: ../../language/packages.md:220
+#: ../../language/packages.md:221
 msgid ""
 "Virtual packages can be useful when swapping different implementations "
 "while keeping the code untouched."
 msgstr "虚拟包在保持代码不变的情况下，可以在不同的实现之间进行切换。"
 
-#: ../../language/packages.md:222
+#: ../../language/packages.md:223
 msgid "Defining a virtual package"
 msgstr "定义一个虚拟包"
 
-#: ../../language/packages.md:224
+#: ../../language/packages.md:225
 msgid ""
 "You need to declare it to be a virtual package and define its interface "
 "in a MoonBit interface file."
 msgstr "你需要声明它是一个虚拟包，并在 MoonBit 接口文件中定义其接口。"
 
-#: ../../language/packages.md:226
+#: ../../language/packages.md:227
 msgid ""
 "Within `moon.pkg.json`, you will need to add field "
 "[`virtual`](/toolchain/moon/package.md#declarations) :"
@@ -19958,7 +20027,7 @@ msgstr ""
 "在 `moon.pkg.json` 中，你需要添加字段 "
 "[`virtual`](/toolchain/moon/package.md#declarations) :"
 
-#: ../../language/packages.md:228
+#: ../../language/packages.md:229
 msgid ""
 "{\n"
 "  \"virtual\": {\n"
@@ -19967,13 +20036,13 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../language/packages.md:232
+#: ../../language/packages.md:233
 msgid ""
 "The `has-default` indicates whether the virtual package has a default "
 "implementation."
 msgstr "The `has-default` 表示虚拟包是否有默认实现。"
 
-#: ../../language/packages.md:234
+#: ../../language/packages.md:235
 msgid ""
 "Within the package, you will need to add an interface file `package-"
 "name.mbti` where the `package-name` is the same as [the default alias"
@@ -19982,18 +20051,18 @@ msgstr ""
 "在包内，你需要添加一个接口文件 `package-name.mbti`，其中 `package-name` 与 [默认别名](#default-"
 "alias) 相同："
 
-#: ../../language/packages.md:236
+#: ../../language/packages.md:237
 msgid "/src/packages/virtual/virtual.mbti"
 msgstr ""
 
-#: ../../language/packages.md:236
+#: ../../language/packages.md:237
 msgid ""
 "package \"moonbit-community/language/packages/virtual\"\n"
 "\n"
 "fn log(String) -> Unit"
 msgstr ""
 
-#: ../../language/packages.md:241
+#: ../../language/packages.md:242
 msgid ""
 "The first line of the interface file need to be `package \"full-package-"
 "name\"`. Then comes the declarations. The `pub` keyword for [access "
@@ -20003,7 +20072,7 @@ msgstr ""
 "接口文件的第一行需要是 `package \"full-package-name\"`。接下来是声明。[访问控制](#access-"
 "control) 的 `pub` 关键字和函数参数名称应该省略。"
 
-#: ../../language/packages.md:245
+#: ../../language/packages.md:246
 msgid ""
 "If you are uncertain about how to define the interface, you can create a "
 "normal package, define the functions you need using [TODO "
@@ -20013,11 +20082,11 @@ msgstr ""
 "如果你不确定如何定义接口，可以创建一个普通包，使用 [TODO 语法](/language/fundamentals.md#todo-"
 "syntax) 定义所需的函数，并使用 `moon info` 帮助你生成接口。"
 
-#: ../../language/packages.md:248
+#: ../../language/packages.md:249
 msgid "Implementing a virtual package"
 msgstr "实现虚拟包"
 
-#: ../../language/packages.md:250
+#: ../../language/packages.md:251
 msgid ""
 "A virtual package can have a default implementation. By defining "
 "[`virtual.has-default`](/toolchain/moon/package.md#declarations) as "
@@ -20027,18 +20096,18 @@ msgstr ""
 "default`](/toolchain/moon/package.md#declarations) 设置为 "
 "`true`，你可以在同一包内照常实现代码。"
 
-#: ../../language/packages.md:252
+#: ../../language/packages.md:253
 msgid "/src/packages/virtual/top.mbt"
 msgstr ""
 
-#: ../../language/packages.md:252
+#: ../../language/packages.md:253
 msgid ""
 "pub fn log(s : String) -> Unit {\n"
 "  println(s)\n"
 "}"
 msgstr ""
 
-#: ../../language/packages.md:257
+#: ../../language/packages.md:258
 msgid ""
 "A virtual package can also be implemented by a third party. By defining "
 "[`implements`](/toolchain/moon/package.md#implementations) as the target "
@@ -20049,29 +20118,29 @@ msgstr ""
 "[`implements`](/toolchain/moon/package.md#implementations) "
 "定义为目标包的完整名称，编译器可以警告你关于缺失的实现或不匹配的实现。"
 
-#: ../../language/packages.md:259
+#: ../../language/packages.md:260
 msgid ""
 "{\n"
 "  \"implement\": \"moonbit-community/language/packages/virtual\"\n"
 "}"
 msgstr ""
 
-#: ../../language/packages.md:263
+#: ../../language/packages.md:264
 msgid "/src/packages/implement/top.mbt"
 msgstr ""
 
-#: ../../language/packages.md:263
+#: ../../language/packages.md:264
 msgid ""
 "pub fn log(string : String) -> Unit {\n"
 "  ignore(string)\n"
 "}"
 msgstr ""
 
-#: ../../language/packages.md:268
+#: ../../language/packages.md:269
 msgid "Using a virtual package"
 msgstr "使用虚拟包"
 
-#: ../../language/packages.md:270
+#: ../../language/packages.md:271
 msgid ""
 "To use a virtual package, it's the same as other packages: define "
 "[`import`](/toolchain/moon/package.md#import) field in the package where "
@@ -20080,17 +20149,17 @@ msgstr ""
 "要使用虚拟包，与其他包一样：在你想要使用它的包中定义 [`import`](/toolchain/moon/package.md#import) "
 "字段。"
 
-#: ../../language/packages.md:272
+#: ../../language/packages.md:273
 msgid "Overriding a virtual package"
 msgstr "覆盖虚拟包"
 
-#: ../../language/packages.md:274
+#: ../../language/packages.md:275
 msgid ""
 "If a virtual package has a default implementation and that is your "
 "choice, there's no extra configurations."
 msgstr "如果虚拟包有一个默认实现，并且是你想要的，则不需要额外的配置。"
 
-#: ../../language/packages.md:276
+#: ../../language/packages.md:277
 msgid ""
 "Otherwise, you may define the [`overrides`](/toolchain/moon/package.md"
 "#overriding-implementations) field by providing an array of "
@@ -20099,11 +20168,11 @@ msgstr ""
 "否则，你可以通过提供一个实现数组来定义 [`overrides`](/toolchain/moon/package.md#overriding-"
 "implementations) 字段，指定你想要使用的实现。"
 
-#: ../../language/packages.md:278
+#: ../../language/packages.md:279
 msgid "/src/packages/use_implement/moon.pkg.json"
 msgstr ""
 
-#: ../../language/packages.md:278
+#: ../../language/packages.md:279
 msgid ""
 "{\n"
 "  \"overrides\": [\"moonbit-community/language/packages/implement\"],\n"
@@ -20114,15 +20183,15 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../language/packages.md:283
+#: ../../language/packages.md:284
 msgid "You should reference the virtual package when using the entities."
 msgstr "在使用实体时，你应该引用虚拟包。"
 
-#: ../../language/packages.md:285
+#: ../../language/packages.md:286
 msgid "/src/packages/use_implement/top.mbt"
 msgstr ""
 
-#: ../../language/packages.md:285
+#: ../../language/packages.md:286
 msgid ""
 "fn main {\n"
 "  @virtual.log(\"Hello\")\n"
