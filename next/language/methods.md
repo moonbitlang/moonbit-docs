@@ -10,14 +10,14 @@ Defining a method using the following syntax will be deprecated, where the name 
 
 ```{code-block} moonbit
 :class: top-level
-fn method_name(self : SelfType) { ... }
+fn method_name(self : SelfType) -> Unit { ... }
 ```
 
 You should migrate to the new syntax, and add [method alias](#method-alias) to keep the behavior:
 
 ```{code-block} moonbit
 :class: top-level
-fn method_name(a : SelfType) { ... }
+fn SelfType::method_name(a : Self) -> Unit { ... }
 fnalias SelfType::method_name
 ```
 ``````
