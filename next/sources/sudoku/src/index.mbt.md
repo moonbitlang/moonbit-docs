@@ -114,13 +114,13 @@ fn[T] Grid::new(val : T) -> Grid[T] {
 
 ///|
 fn[T] Grid::copy(self : Grid[T]) -> Grid[T] {
-  if self._.length() == 0 {
+  if self.inner().length() == 0 {
     return []
   }
-  let arr = FixedArray::make(81, self._[0])
+  let arr = FixedArray::make(81, self.inner()[0])
   let mut i = 0
   while i < 81 {
-    arr[i] = self._[i]
+    arr[i] = self.inner()[i]
     i = i + 1
   }
   return arr
@@ -129,13 +129,13 @@ fn[T] Grid::copy(self : Grid[T]) -> Grid[T] {
 ///|
 fn[T] Grid::op_get(self : Grid[T], square : String) -> T {
   let i = square_to_int(square)
-  self._[i]
+  self.inner()[i]
 }
 
 ///|
 fn[T] Grid::op_set(self : Grid[T], square : String, x : T) -> Unit {
   let i = square_to_int(square)
-  self._[i] = x
+  self.inner()[i] = x
 }
 ```
 
