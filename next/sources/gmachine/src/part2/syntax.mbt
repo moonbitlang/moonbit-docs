@@ -281,10 +281,10 @@ fn Tokens::parse_defs(
   loop (self.peek(), acc) {
     (Open('['), acc) => {
       self.next()
-      let var = self.parse_var()
+      let name = self.parse_var()
       let value = self.parse_expr()
       self.eat(Close(']'))
-      continue (self.peek(), acc.prepend((var, value)))
+      continue (self.peek(), acc.prepend((name, value)))
     }
     (_, acc) => acc.rev()
   }
@@ -345,8 +345,8 @@ fn Tokens::parse_sc(self : Tokens) -> ScDef[String] raise ParseError {
   let args = loop (self.peek(), @list.empty()) {
     (tok, acc) =>
       if tok != Close(']') {
-        let var = self.parse_var()
-        continue (self.peek(), acc.prepend(var))
+        let name = self.parse_var()
+        continue (self.peek(), acc.prepend(name))
       } else {
         acc.rev()
       }
