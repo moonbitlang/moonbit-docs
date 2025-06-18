@@ -178,17 +178,6 @@ test "tokenize" {
 }
 
 ///|
-fn Tokens::parse_num(self : Tokens) -> Int raise ParseError {
-  match self.peek() {
-    Number(n) => {
-      self.next()
-      return n
-    }
-    other => raise ParseError("parse_num(): expect a number but got \{other}")
-  }
-}
-
-///|
 fn Tokens::parse_var(self : Tokens) -> String raise ParseError {
   match self.peek() {
     Id(s) => {
