@@ -17,14 +17,6 @@ struct ScDef[T] {
 } derive(Show)
 // end expr_and_scdef definition
 
-fn[T] is_atom(self : RawExpr[T]) -> Bool {
-  match self {
-    Var(_) => true
-    Num(_) => true
-    _ => false
-  }
-}
-
 fn[T] ScDef::new(name : String, args : List[T], body : RawExpr[T]) -> ScDef[T] {
   { name, args, body }
 }
