@@ -518,7 +518,7 @@ Local functions can be named or anonymous. Type annotations can be omitted for l
 :end-before: end local functions 1
 ```
 
-There's also a form called **matrix function** (which can only be anonymous) that make use of [pattern matching](#pattern-matching):
+For simple anonymous function, MoonBit provides a very concise syntax called arrow function:
 
 ```{literalinclude} /sources/language/src/functions/top.mbt
 :language: moonbit
@@ -532,6 +532,15 @@ Functions, whether named or anonymous, are _lexical closures_: any identifiers w
 :language: moonbit
 :start-after: start local functions 2
 :end-before: end local functions 2
+```
+
+A local function can only refer to itself and other previously defined local functions.
+To define  mutually recursive local functions, use the syntax `letrec f = .. and g = ..` instead:
+
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start local functions 4
+:end-before: end local functions 4
 ```
 
 ### Function Applications

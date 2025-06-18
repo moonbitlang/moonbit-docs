@@ -22,7 +22,7 @@ fn cross(x : String, y : String, pred : (String) -> Bool) -> Squares {
 }
 
 ///|
-let squares : Squares = cross(rows, cols, fn { _ => true })
+let squares : Squares = cross(rows, cols, _ => true)
 
 ///|
 fn unit_of(square : String) -> Squares {
@@ -40,7 +40,7 @@ fn unit_of(square : String) -> Squares {
     '7'..='9' => "789"
     _ => abort("unitOf: invalid col \{col}")
   }
-  cross(rows, cols, fn { s => s != square })
+  cross(rows, cols, s => s != square)
 }
 
 ///|

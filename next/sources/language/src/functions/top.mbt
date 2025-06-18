@@ -79,12 +79,13 @@ test {
 }
 // end local functions 2
 
+test {
 // start local functions 3
-let extract : (Int?, Int) -> Int = fn {
-  Some(x), _ => x
-  None, default => default
-}
+  [ 1, 2, 3 ].eachi((i, x) => println("\{i} => \{x}"))
+  // parenthesis can be omitted when there is only one parameter
+  [ 1, 2, 3 ].each(x => println(x * x))
 // end local functions 3
+}
 
 // start labelled arguments 1
 fn labelled_1(arg1~ : Int, arg2~ : Int) -> Int {
@@ -192,3 +193,19 @@ fnalias new as new_2
 // creating multiple alias in one package
 fnalias @moonbitlang/core/prelude.(tap, then as touch)
 // end function alias
+
+test {
+// start local functions 4
+  fn f(x) {
+    // `f` can refer to itself here, but cannot use `g`
+    if x > 0 { f(x - 1) }
+  }
+  fn g(x) {
+    // `g` can refer to `f` and `g` itself
+    if x < 0 { f(-x) } else { f(x) }
+  }
+  // mutually recursive local functions
+  letrec even = x => x == 0 || odd(x - 1)
+  and odd = x => x != 0 && even(x - 1)
+// end local functions 4
+}

@@ -2,7 +2,7 @@
 ///|
 fn filter_even(l : Array[Int]) -> Array[Int] {
   let l_iter : Iter[Int] = l.iter()
-  l_iter.filter(fn { x => (x & 1) == 0 }).collect()
+  l_iter.filter(x => (x & 1) == 0).collect()
 }
 
 ///|
