@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-18 11:25+0800\n"
+"POT-Creation-Date: 2025-06-19 14:10+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1335,32 +1335,83 @@ msgstr ""
 #: ../../language/docs.md:7
 msgid ""
 "/// Return a new array with reversed elements.\n"
-"///\n"
-"/// # Example\n"
-"///\n"
-"/// ```\n"
-"/// reverse([1,2,3,4]) |> println()\n"
-"/// ```\n"
 "fn[T] reverse(xs : Array[T]) -> Array[T] {\n"
 "  ...\n"
 "}\n"
 msgstr ""
 "/// 返回一个新数组，其中元素被反转。\n"
-"///\n"
-"/// # 示例\n"
-"///\n"
-"/// ```\n"
-"/// reverse([1,2,3,4]) |> println()\n"
-"/// ```\n"
 "fn[T] reverse(xs : Array[T]) -> Array[T] {\n"
 "  ...\n"
 "}\n"
 
 #: ../../language/docs.md:14
+msgid ""
+"Markdown code block inside docstring will be considered document test, "
+"`moon check` and `moon test` will automatically check and run these "
+"tests, so that examples in docstring are always up-to-date. MoonBit will "
+"automatically wrap a test block around document test, so there is no need"
+" to wrap `test { .. }` around document test:"
+msgstr ""
+"文档注释中的 markdown 代码块会被视作文档测试，`moon check` 和 `moon test` "
+"会自动检查并运行这些测试，这能保证文档注释中的代码示例永远不会过时。MoonBit 会自动给在文档注释的内容周围裹上一层 `test` "
+"块，所以编写文档测试时无需手动包裹 `test { .. }` 块："
+
+#: ../../language/docs.md:19
+msgid ""
+"/// Increment an integer by one,\n"
+"///\n"
+"/// Example:\n"
+"/// ```\n"
+"/// inspect(incr(41), content=\"42\")\n"
+"/// ```\n"
+"pub fn incr(x : Int) -> Int {\n"
+"  x + 1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/docs.md:25
+msgid ""
+"If you want to prevent a code snippet from being treated as document "
+"test, mark it with a language id other than `mbt` on the markdown code "
+"block:"
+msgstr "如果想要阻止一段代码被当作文档测试，只需要在它的 markdown 代码块上标记一个 `mbt` 以外的语言名字："
+
+#: ../../language/docs.md:28
+msgid ""
+"/// `c_incr(x)` is the same as the following C code:\n"
+"/// ```c\n"
+"/// x++\n"
+"/// ```\n"
+"pub fn c_incr(x : Ref[Int]) -> Int {\n"
+"  let old = x.val\n"
+"  x.val += 1\n"
+"  old\n"
+"}\n"
+msgstr ""
+"/// `c_incr(x)` 等价于下面的 C 代码：\n"
+"/// ```c\n"
+"/// x++\n"
+"/// ```\n"
+"pub fn c_incr(x : Ref[Int]) -> Int {\n"
+"  let old = x.val\n"
+"  x.val += 1\n"
+"  old\n"
+"}\n"
+
+#: ../../language/docs.md:34
+msgid ""
+"Currently, document tests are always [blackbox tests](/language/tests.md"
+"#blackbox-tests-and-writebox-tests). So private definitions cannot have "
+"document test."
+msgstr ""
+"目前，文档测试都是 [黑盒测试](/language/tests.md#blackbox-tests-and-writebox-tests)。"
+"所以私有定义目前不能有文档测试。"
+
+#: ../../language/docs.md:37
 msgid "Attribute"
 msgstr "属性"
 
-#: ../../language/docs.md:16
+#: ../../language/docs.md:39
 msgid ""
 "Attributes are annotations placed before the top-level structure. They "
 "take the form `#attribute(...)`.  An attribute occupies the entire line, "
@@ -1371,11 +1422,11 @@ msgstr ""
 "属性是放置在顶层成员之前的标注。它们都采用 `#attribute(...)` "
 "的形式。一个属性标注占用整行的空间，其中不允许换行。属性一般不会影响程序的含义。无用的属性标注将会触发警告。"
 
-#: ../../language/docs.md:20
+#: ../../language/docs.md:43
 msgid "The Deprecated Attribute"
 msgstr "“弃用”属性"
 
-#: ../../language/docs.md:22
+#: ../../language/docs.md:45
 msgid ""
 "The `#deprecated` attribute is used to mark a function, type, or trait as"
 " deprecated.  MoonBit emits a warning when the deprecated function or "
@@ -1385,11 +1436,11 @@ msgstr ""
 "`#deprecated`属性用于标记一个函数、类型或者特征为弃用状态。当弃用的成员在其他包中被使用时，MoonBit "
 "将会触发警告。你可以传递一个字符串参数给这个属性，来自定义警告中显示的消息。"
 
-#: ../../language/docs.md:26
+#: ../../language/docs.md:49
 msgid "For example:"
 msgstr "例如："
 
-#: ../../language/docs.md:28
+#: ../../language/docs.md:51
 msgid ""
 "#deprecated\n"
 "pub fn foo() -> Unit {\n"
@@ -1413,11 +1464,11 @@ msgstr ""
 "  Ctor2\n"
 "}\n"
 
-#: ../../language/docs.md:34
+#: ../../language/docs.md:57
 msgid "The Visibility Attribute"
 msgstr "“可见性”属性"
 
-#: ../../language/docs.md:37
+#: ../../language/docs.md:60
 msgid ""
 "This topic does not covered the access control. To lean more about `pub`,"
 " `pub(all)` and `priv`, see [Access Control](./packages.md#access-"
@@ -1426,7 +1477,7 @@ msgstr ""
 "这里的文档不涉及访问控制。关于如何使用`pub`、`pub(all)` 和 `priv`, 见 [访问控制](./packages.md"
 "#access-control)."
 
-#: ../../language/docs.md:40
+#: ../../language/docs.md:63
 msgid ""
 "The `#visibility` attribute is similar to the `#deprecated` attribute, "
 "but it is used to hint that a type will change its visibility in the "
@@ -1434,7 +1485,7 @@ msgid ""
 "visibility change in future, a warning will be emitted."
 msgstr "`#visibility`属性和`#deprecated`属性类似。但它用于提示用户一个类型未来将改变它的可见性。对于外部的包，如果使用这个类型的方式在未来改变可见性以后不再合法，它将会触发警告。"
 
-#: ../../language/docs.md:43
+#: ../../language/docs.md:66
 msgid ""
 "// in @util package\n"
 "#visibility(change_to=\"readonly\", \"Point will be readonly in the "
@@ -1504,62 +1555,62 @@ msgstr ""
 "}\n"
 "\n"
 
-#: ../../language/docs.md:49
+#: ../../language/docs.md:72
 msgid ""
 "The `#visibility` attribute takes two arguments: `change_to` and "
 "`message`."
 msgstr "`#visibility`属性接受两个参数：`change_to` 和 `message`。"
 
-#: ../../language/docs.md:51
+#: ../../language/docs.md:74
 msgid ""
 "The `change_to` argument is a string that indicates the new visibility of"
 " the type. It can be either `\"abstract\"` or `\"readonly\"`."
 msgstr "`change_to`参数是一个表示该类型新的可见性的字符串，它可以是`\"abstract\"`或者`\"readonly\"`"
 
-#: ../../language/docs.md:43
+#: ../../language/docs.md:66
 msgid "`change_to`"
 msgstr "`\"change_to\"`的值"
 
-#: ../../language/docs.md:43
+#: ../../language/docs.md:66
 msgid "Invalidated Usages"
 msgstr "将要禁止的使用"
 
-#: ../../language/docs.md:43
+#: ../../language/docs.md:66
 msgid "`\"readonly\"`"
 msgstr ""
 
-#: ../../language/docs.md:43
+#: ../../language/docs.md:66
 msgid "Creating an instance of the type or mutating the fields of the instance."
 msgstr "创建该类型的实例，或者变更实例的字段的值。"
 
-#: ../../language/docs.md:43
+#: ../../language/docs.md:66
 msgid "`\"abstract\"`"
 msgstr ""
 
-#: ../../language/docs.md:43
+#: ../../language/docs.md:66
 msgid ""
 "Creating an instance of the type, mutating the fields of the instance, "
 "pattern matching, or accessing fields by label."
 msgstr "创建该类型的实例、变更实例的字段的值、对它的实例进行模式匹配或者访问实例的字段。"
 
-#: ../../language/docs.md:58
+#: ../../language/docs.md:81
 msgid ""
 "The `message` argument is a string that provides additional information "
 "about the visibility change."
 msgstr "`message`参数用于提供额外的信息，告诉使用者关于可见性的变更。"
 
-#: ../../language/docs.md:60
+#: ../../language/docs.md:83
 msgid "The Internal Attribute"
 msgstr "“内部”属性"
 
-#: ../../language/docs.md:62
+#: ../../language/docs.md:85
 msgid ""
 "The `#internal` attribute is used to mark a function, type, or trait as "
 "internal.  Any usage of the internal function or type in other modules "
 "will emit an alert warning."
 msgstr "`#internal`属性用于标记一个函数、类型或者特征为内部的。所有在模块外的使用将会触发警告。"
 
-#: ../../language/docs.md:65
+#: ../../language/docs.md:88
 msgid ""
 "#internal(unsafe, \"This is an unsafe function\")\n"
 "fn unsafe_get[A](arr : Array[A]) -> A {\n"
@@ -1571,7 +1622,7 @@ msgstr ""
 "  ...\n"
 "}"
 
-#: ../../language/docs.md:73
+#: ../../language/docs.md:96
 msgid ""
 "The internal attribute takes two arguments: `category` and `message`.  "
 "`category` is a identifier that indicates the category of the alert, and "
@@ -1580,7 +1631,7 @@ msgstr ""
 "“内部”属性接受两个参数：`category` 和 `message`。`category` 是一个标识符，表示警示对应的类别。`message`"
 " 是一个字符串，表示警示中额外的提示信息。"
 
-#: ../../language/docs.md:76
+#: ../../language/docs.md:99
 msgid ""
 "The alert warnings can be turn off by setting the `alert-list` in "
 "`moon.pkg.json`. For more detail, see "
@@ -1589,11 +1640,11 @@ msgstr ""
 "警示可以通过配置`moon.pkg.json`中的`alert-list`选项来关闭。关于更多的细节，见 "
 "[警示列表](../toolchain/moon/package.md#alert-list)."
 
-#: ../../language/docs.md:79
+#: ../../language/docs.md:102
 msgid "The Borrow Attribute"
 msgstr "“借用”属性"
 
-#: ../../language/docs.md:81
+#: ../../language/docs.md:104
 msgid ""
 "The `#borrow` attribute is used to indicate that a FFI takes ownership of"
 " its arguments. For more detail, see [FFI](./ffi.md#The-borrow-"
