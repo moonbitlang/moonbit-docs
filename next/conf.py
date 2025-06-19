@@ -68,7 +68,7 @@ latex_elements = {
 }
 
 # -- Options for myst_parser -------------------------------------------------
-myst_heading_anchors = 3
+myst_heading_anchors = 4
 myst_enable_extensions = [
     "attrs_inline"
 ]

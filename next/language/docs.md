@@ -31,7 +31,7 @@ mark it with a language id other than `mbt` on the markdown code block:
 :end-before: end doc test 2
 ```
 
-Currently, document tests are always [blackbox tests](/language/tests.md#blackbox-tests-and-writebox-tests).
+Currently, document tests are always [blackbox tests](/language/tests.md#blackbox-tests-and-whitebox-tests).
 So private definitions cannot have document test.
 
 ## Attribute
@@ -101,6 +101,6 @@ For more detail, see [Alert](../toolchain/moon/package.md#alert-list).
 
 ### The Borrow Attribute
 
-The `#borrow` attribute is used to indicate that a FFI takes ownership of its arguments. For more detail, see [FFI](./ffi.md#The-borrow-attribute).
+The `#borrow` attribute is used to indicate that a FFI takes ownership of its arguments. For more detail, see [FFI](./ffi.md#the-borrow-attribute).
 
 
