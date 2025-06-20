@@ -78,3 +78,6 @@ gettext_additional_targets = ["literal-block"]
 
 # -- Options for sphinx_copybutton -------------------------------------------------
 copybutton_prompt_text = "$ "
+
+# -- Options for link check -------------------------------------------------
+linkcheck_anchors_ignore_for_url = [ 'https://mooncakes.io/docs' ]
