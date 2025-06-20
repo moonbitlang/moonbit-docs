@@ -54,5 +54,8 @@ fn RawExpr::compileC(
 // end compile_c definition
 
 fn argOffset(n : Int, env : List[(String, Int)]) -> List[(String, Int)] {
-  env.map(fn { (name, offset) => (name, offset + n) })
+  env.map(fn (entry) {
+    let (name, offset) = entry
+    (name, offset + n)
+  })
 }

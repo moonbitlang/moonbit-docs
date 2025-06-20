@@ -68,7 +68,7 @@ latex_elements = {
 }
 
 # -- Options for myst_parser -------------------------------------------------
-myst_heading_anchors = 3
+myst_heading_anchors = 4
 myst_enable_extensions = [
     "attrs_inline"
 ]
@@ -78,3 +78,6 @@ gettext_additional_targets = ["literal-block"]
 
 # -- Options for sphinx_copybutton -------------------------------------------------
 copybutton_prompt_text = "$ "
+
+# -- Options for link check -------------------------------------------------
+linkcheck_anchors_ignore_for_url = [ 'https://mooncakes.io/docs' ]

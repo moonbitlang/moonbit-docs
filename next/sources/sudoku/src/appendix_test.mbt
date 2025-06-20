@@ -22,7 +22,7 @@ fn cross(x : String, y : String, pred : (String) -> Bool) -> Squares {
 }
 
 ///|
-let squares : Squares = cross(rows, cols, fn { _ => true })
+let squares : Squares = cross(rows, cols, _ => true)
 
 ///|
 fn unit_of(square : String) -> Squares {
@@ -40,7 +40,7 @@ fn unit_of(square : String) -> Squares {
     '7'..='9' => "789"
     _ => abort("unitOf: invalid col \{col}")
   }
-  cross(rows, cols, fn { s => s != square })
+  cross(rows, cols, s => s != square)
 }
 
 ///|
@@ -108,7 +108,7 @@ fn Grid::format(self : Grid[@immut/sorted_set.T[Char]]) -> String {
   let mut i = 0
   let mut maxWidth = 0
   while i < 81 {
-    rep[i] = self._[i].fold(init="", fn(acc, ch) { acc + ch.to_string() })
+    rep[i] = self.inner()[i].fold(init="", fn(acc, ch) { acc + ch.to_string() })
     maxWidth = @math.maximum(rep[i].length(), maxWidth)
     i = i + 1
   }
@@ -141,8 +141,8 @@ fn Grid::format(self : Grid[@immut/sorted_set.T[Char]]) -> String {
 ///|
 fn[T] Grid::contains(self : Grid[T], pred : (T) -> Bool) -> Bool {
   let mut result = false
-  for i = 0; i < self._.length(); i = i + 1 {
-    result = result || pred(self._[i])
+  for i = 0; i < self.inner().length(); i = i + 1 {
+    result = result || pred(self.inner()[i])
     if result {
       break
     }

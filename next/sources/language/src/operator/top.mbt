@@ -146,10 +146,10 @@ fn Data::op_as_view(_self : Data, start~ : Int = 0, end? : Int) -> DataView {
 
 test {
   let data = Data::{  }
-  inspect(data[:]._, content="[0, 100)")
-  inspect(data[2:]._, content="[2, 100)")
-  inspect(data[:5]._, content="[0, 5)")
-  inspect(data[2:5]._, content="[2, 5)")
+  inspect(data[:].inner(), content="[0, 100)")
+  inspect(data[2:].inner(), content="[2, 100)")
+  inspect(data[:5].inner(), content="[0, 5)")
+  inspect(data[2:5].inner(), content="[2, 5)")
 }
 // end view 2
 

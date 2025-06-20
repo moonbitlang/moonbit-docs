@@ -52,7 +52,7 @@ fn GHeap::op_get(self : GHeap, key : Addr) -> Node {
 }
 
 fn GHeap::op_set(self : GHeap, key : Addr, val : Node) -> Unit {
-  self.memory[key._] = Some(val)
+  self.memory[key.inner()] = Some(val)
 }
 
 struct GState {
@@ -67,7 +67,7 @@ struct GState {
 type GStats Int
 
 fn GState::stat_incr(self : GState) -> Unit {
-  self.stats = self.stats._ + 1
+  self.stats = self.stats.inner() + 1
 }
 
 fn GState::put_stack(self : GState, addr : Addr) -> Unit {
