@@ -1,8 +1,8 @@
 fn main {
   let array = [1, 2, 3, 4, 5, 6]
-  let [a, b, ..] = array
-  let [.., c, d] = array
-  let [e,  ..,  f] = array
+  guard array is [a, b, ..]
+  guard array is [.., c, d]
+  guard array is [e,  ..,  f]
   println("a: \{a}, b: \{b}")
   println("c: \{c}, d: \{d}")
   println("e: \{e}, f: \{f}")
@@ -12,6 +12,6 @@ fn main {
 fn sum(array : ArrayView[Int]) -> Int {
   match array {
     [] => 0
-    [x, .. as xs] => x + sum(xs)
+    [x, .. xs] => x + sum(xs)
   }
 }
