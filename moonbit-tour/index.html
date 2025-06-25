@@ -9,71 +9,73 @@
     <link rel="stylesheet" crossorigin href="/main.css" />
   </head>
   <body class="flex flex-col font-sans md:h-screen">
-    <header class="flex h-8 items-center gap-4 bg-purple-200 px-2 py-6 md:px-6">
+    <header
+      class="flex items-center py-1 gap-4 bg-purple-200 px-2 transition-all duration-300 ease-in-out dark:bg-[#6a51a3] md:px-6"
+    >
       <a class="py-2 text-base" href="%HOMEPAGE_HREF%" id="homepage"
         >%HOMEPAGE%</a
       >
-      <a class="ml-auto py-2" href="https://www.moonbitlang.com" target="_blank"
-        >MoonBit</a
-      >
-      <button class="relative cursor-pointer py-2" id="locale-button">
-        <span id="locale-text">%LOCALE%</span>
-        <ul
-          class="absolute right-0 top-[2.125rem] z-50 flex hidden flex-col gap-1 rounded bg-white p-2 shadow-md dark:bg-zinc-800 dark:text-gray-100"
-          id="locales"
-        >
-          <li>
-            <a
-              class="block w-full rounded px-3 py-2 text-left hover:bg-zinc-100 dark:hover:bg-zinc-700"
-              href="%EN_HREF%"
-              id="en-href"
-              >English</a
-            >
-          </li>
-          <li>
-            <a
-              class="block w-full rounded px-3 py-2 text-left hover:bg-zinc-100 dark:hover:bg-zinc-700"
-              href="%ZH_HREF%"
-              id="zh-href"
-              >中文</a
-            >
-          </li>
-        </ul>
-      </button>
-      <button class="cursor-pointer py-2" id="toc-button">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#000000"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <line x1="3" y1="12" x2="21" y2="12" />
-          <line x1="3" y1="18" x2="21" y2="18" />
-        </svg>
-      </button>
-      <button class="cursor-pointer py-2" id="theme">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          width="24"
-          height="24"
-        >
-          <path
+      <div class="flex flex-1 items-center justify-end md:gap-6 gap-3">
+        <a href="https://www.moonbitlang.com" target="_blank">MoonBit</a>
+        <button class="relative cursor-pointer py-2" id="locale-button">
+          <span id="locale-text">%LOCALE%</span>
+          <ul
+            class="absolute right-0 top-[2.125rem] z-50 hidden flex-col gap-1 rounded bg-white p-2 shadow-md transition-all duration-300 ease-in-out dark:bg-zinc-800 dark:text-gray-100"
+            id="locales"
+          >
+            <li>
+              <a
+                class="block w-full rounded px-3 py-2 text-left hover:bg-zinc-100 dark:hover:bg-zinc-700"
+                href="%EN_HREF%"
+                id="en-href"
+                >English</a
+              >
+            </li>
+            <li>
+              <a
+                class="block w-full rounded px-3 py-2 text-left hover:bg-zinc-100 dark:hover:bg-zinc-700"
+                href="%ZH_HREF%"
+                id="zh-href"
+                >中文</a
+              >
+            </li>
+          </ul>
+        </button>
+        <button class="cursor-pointer" id="toc-button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#000000"
+            stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
-          />
-        </svg>
-      </button>
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <button class="cursor-pointer py-2" id="theme">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            width="24"
+            height="24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
+            />
+          </svg>
+        </button>
+      </div>
     </header>
     <div
       id="toc"
@@ -82,7 +84,7 @@
       %TOC%
     </div>
     <main
-      class="flex flex-grow flex-col bg-gray-100 dark:bg-zinc-800 md:h-[calc(100vh-4rem)] md:flex-row"
+      class="flex flex-grow flex-col bg-gray-100 transition-all duration-300 ease-in-out dark:bg-zinc-800 md:h-[calc(100vh-4rem)] md:flex-row"
     >
       <section
         class="prose flex max-w-none flex-1 flex-col items-center gap-4 p-2 dark:prose-invert prose-h2:capitalize md:justify-between md:overflow-auto md:p-6"
@@ -135,7 +137,7 @@
       const visited = localStorage.getItem("visited");
       if (!visited) {
         localStorage.setItem("visited", "true");
-        
+
         const locale = navigator.language || navigator.userLanguage;
         if (locale.startsWith("zh")) {
           window.location.href = "%ZH_HREF%";
