@@ -4,7 +4,7 @@ pub(all) enum List[X] {
   Cons(X, List[X])
 }
 
-pub fn[X] concat(self : List[List[X]]) -> List[X] {
+pub fn[X] List::concat(list : List[List[X]]) -> List[X] {
   ...
 }
 // end method 1
@@ -44,9 +44,21 @@ test {
 // same as `fnalias List::map as map`
 fnalias List::map
 
-// list_concat is an alias of `List::concat`
+// `list_concat` is an alias of `List::concat`.
+// Note that the created alias is a function, not a method of list.
+// So you should call it with `list_concat(xx)` instead of `xx.list_concat()`
 fnalias List::concat as list_concat
 
 // creating multiple alias in typename
 fnalias List::(concat as c, map as m)
 // end method alias
+
+// start local method
+fn Int::my_int_method(self : Int) -> Int {
+  self * self + self
+}
+
+test {
+  assert_eq((6).my_int_method(), 42)
+}
+// end local method

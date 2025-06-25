@@ -22,7 +22,7 @@ struct GHeap {
 }
 
 // Allocate heap space for nodes.
-fn alloc(self : GHeap, node : Node) -> Addr {
+fn GHeap::alloc(self : GHeap, node : Node) -> Addr {
   let heap = self
   fn next(n : Int) -> Int {
     (n + 1) % heap.memory.length()
@@ -45,7 +45,7 @@ fn alloc(self : GHeap, node : Node) -> Addr {
 }
 // end heap definition
 
-fn op_get(self : GHeap, key : Addr) -> Node {
+fn GHeap::op_get(self : GHeap, key : Addr) -> Node {
   let Addr(i) = key
   match self.memory[i] {
     Some(node) => node
@@ -53,8 +53,8 @@ fn op_get(self : GHeap, key : Addr) -> Node {
   }
 }
 
-fn op_set(self : GHeap, key : Addr, val : Node) -> Unit {
-  self.memory[key._] = Some(val)
+fn GHeap::op_set(self : GHeap, key : Addr, val : Node) -> Unit {
+  self.memory[key.inner()] = Some(val)
 }
 
 // start state definition
@@ -68,32 +68,32 @@ struct GState {
 
 type GStats Int
 
-fn stat_incr(self : GState) -> Unit {
-  self.stats = self.stats._ + 1
+fn GState::stat_incr(self : GState) -> Unit {
+  self.stats = self.stats.inner() + 1
 }
 
-fn put_stack(self : GState, addr : Addr) -> Unit {
-  self.stack = Cons(addr, self.stack)
+fn GState::put_stack(self : GState, addr : Addr) -> Unit {
+  self.stack = self.stack.prepend(addr)
 }
 
-fn put_code(self : GState, instrs : List[Instruction]) -> Unit {
+fn GState::put_code(self : GState, instrs : List[Instruction]) -> Unit {
   self.code = instrs + self.code
 }
 
-fn pop1(self : GState) -> Addr {
+fn GState::pop1(self : GState) -> Addr {
   match self.stack {
-    Cons(addr, reststack) => {
+    More(addr, tail=reststack) => {
       self.stack = reststack
       addr
     }
-    Nil => abort("pop1(): stack size smaller than 1")
+    Empty => abort("pop1(): stack size smaller than 1")
   }
 }
 
 // e1 e2 ..... -> (e1, e2) ......
-fn pop2(self : GState) -> (Addr, Addr) {
+fn GState::pop2(self : GState) -> (Addr, Addr) {
   match self.stack {
-    Cons(addr1, Cons(addr2, reststack)) => {
+    More(addr1, tail=More(addr2, tail=reststack)) => {
       self.stack = reststack
       (addr1, addr2)
     }
@@ -103,14 +103,14 @@ fn pop2(self : GState) -> (Addr, Addr) {
 // end state definition
 
 // start push_int definition
-fn push_int(self : GState, num : Int) -> Unit {
+fn GState::push_int(self : GState, num : Int) -> Unit {
   let addr = self.heap.alloc(NNum(num))
   self.put_stack(addr)
 }
 // end push_int definition
 
 // start push_global definition
-fn push_global(self : GState, name : String) -> Unit {
+fn GState::push_global(self : GState, name : String) -> Unit {
   guard self.globals.get(name) is Some(addr) else {
     abort("push_global(): cant find supercombinator \{name}")
   }
@@ -119,7 +119,7 @@ fn push_global(self : GState, name : String) -> Unit {
 // end push_global definition
 
 // start push_arg definition
-fn push_arg(self : GState, offset : Int) -> Unit {
+fn GState::push_arg(self : GState, offset : Int) -> Unit {
   let appaddr = self.stack.unsafe_nth(offset + 1)
   let arg = match self.heap[appaddr] {
     NApp(_, arg) => arg
@@ -133,7 +133,7 @@ fn push_arg(self : GState, offset : Int) -> Unit {
 // end push_arg definition
 
 // start mk_apply definition
-fn mk_apply(self : GState) -> Unit {
+fn GState::mk_apply(self : GState) -> Unit {
   let (a1, a2) = self.pop2()
   let appaddr = self.heap.alloc(NApp(a1, a2))
   self.put_stack(appaddr)
@@ -141,7 +141,7 @@ fn mk_apply(self : GState) -> Unit {
 // end mk_apply definition
 
 // start update definition
-fn update(self : GState, n : Int) -> Unit {
+fn GState::update(self : GState, n : Int) -> Unit {
   let addr = self.pop1()
   let dst = self.stack.unsafe_nth(n)
   self.heap[dst] = NInd(addr)
@@ -149,14 +149,14 @@ fn update(self : GState, n : Int) -> Unit {
 // end update definition
 
 // start unwind definition
-fn unwind(self : GState) -> Unit {
+fn GState::unwind(self : GState) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {
     NNum(_) => self.put_stack(addr)
     NApp(a1, _) => {
       self.put_stack(addr)
       self.put_stack(a1)
-      self.put_code(Cons(Unwind, Nil))
+      self.put_code(@list.of([Unwind]))
     }
     NGlobal(_, n, c) =>
       if self.stack.length() < n {
@@ -167,7 +167,7 @@ fn unwind(self : GState) -> Unit {
       }
     NInd(a) => {
       self.put_stack(a)
-      self.put_code(Cons(Unwind, Nil))
+      self.put_code(@list.of([Unwind]))
     }
   }
 }
@@ -180,8 +180,8 @@ fn build_initial_heap(
   let heap = { object_count: 0, memory: Array::make(10000, None) }
   let globals = @hashmap.new(capacity=50)
   loop scdefs {
-    Nil => ()
-    Cons((name, arity, instrs), rest) => {
+    Empty => ()
+    More((name, arity, instrs), tail=rest) => {
       let addr = heap.alloc(NGlobal(name, arity, instrs))
       globals[name] = addr
       continue rest
@@ -192,10 +192,10 @@ fn build_initial_heap(
 // end build_ih definition
 
 // start step definition
-fn step(self : GState) -> Bool {
+fn GState::step(self : GState) -> Bool {
   match self.code {
-    Nil => return false
-    Cons(i, rest) => {
+    Empty => return false
+    More(i, tail=rest) => {
       self.code = rest
       self.stat_incr()
       match i {
@@ -214,13 +214,13 @@ fn step(self : GState) -> Bool {
 // end step definition
 
 // start reify definition
-fn reify(self : GState) -> Node {
+fn GState::reify(self : GState) -> Node {
   if self.step() {
     self.reify()
   } else {
     let stack = self.stack
     match stack {
-      Cons(addr, Nil) => {
+      More(addr, tail=Empty) => {
         let res = self.heap[addr]
         return res
       }

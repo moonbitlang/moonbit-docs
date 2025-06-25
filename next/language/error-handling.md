@@ -49,9 +49,11 @@ There's a handly `fail` function, which is merely a constructor with a
 pre-defined output template for showing both the error and the source location.
 In practice, `fail` is always preferred over `Failure`.
 
+<!-- MANUAL CHECK -->
+
 ```{code-block} moonbit
 :class: top-level
-pub fn fail[T](msg : String, loc~ : SourceLoc = _) -> T!Failure {
+pub fn[T] fail(msg : String, loc~ : SourceLoc = _) -> T raise Failure {
   raise Failure("FAILED: \{loc} \{msg}")
 }
 ```
@@ -73,24 +75,15 @@ return an error of type `DivError`:
 ```
 
 The `Error` can be used when the concrete error type is not important. For
-convenience, you can annotate the function name or the return type with the
-suffix `!` to indicate that the `Error` type is used. For example, the following
-function signatures are equivalent:
+convenience, you can omit the error type after the `raise` to indicate that the
+`Error` type is used. For example, the following function signatures are
+equivalent:
 
 ```{literalinclude} /sources/language/src/error/top.mbt
 :language: moonbit
 :dedent:
 :start-after: start error 3
 :end-before: end error 3
-```
-
-For anonymous function and matrix function, you can annotate the keyword `fn`
-with the `!` suffix to achieve that. For example,
-
-```{literalinclude} /sources/language/src/error/top.mbt
-:language: moonbit
-:start-after: start error 4
-:end-before: end error 4
 ```
 
 For functions that are generic in the error type, you can use the `Error` bound
@@ -102,10 +95,40 @@ to do that. For example,
 :end-before: end error 5
 ```
 
+### Error Polymorphism
+
+It happens when a higher order function accepts another function as parameter.
+The function as parameter may or may not throw error, which in turn affects the
+behavior of this function.
+
+A notable example is `map` of `Array`:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error polymorphism
+:end-before: end error polymorphism
+```
+
+However, writing so would make the `map` function constantly having the
+possibility of throwing errors, which is not the case.
+
+Thus, the error polymorphism is introduced. You may use `raise?` to signify that
+an error may or may not be throw.
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error polymorphism 2
+:end-before: end error polymorphism 2
+```
+
+The signature of the `map_with_polymorphism` will be induced by the actual
+parameter. As a result, there will be a warning for the `try?` after `res`
+because no error will be thrown.
+
 ## Handling Errors
 
 Applying the function normally will rethrow the error directly in case of an
-error. You may append `!` after the function name. For example:
+error. For example:
 
 ```{literalinclude} /sources/language/src/error/top.mbt
 :language: moonbit
@@ -145,8 +168,8 @@ For example:
 :end-before: end error 10
 ```
 
-When the body of `try` is a simple expression, the curly braces can be omitted.
-For example:
+When the body of `try` is a simple expression, the curly braces, and even the
+`try` keyword can be omitted. For example:
 
 ```{literalinclude} /sources/language/src/error/top.mbt
 :language: moonbit
@@ -157,11 +180,9 @@ For example:
 
 ### Transforming to Result
 
-You can also catch the potential error and transform into a first-class value of the
-[`Result`](/language/fundamentals.md#option-and-result) type, by:
-
-- using `try?` before an expression that may throw error
-- appending `?` after the function name
+You can also catch the potential error and transform into a first-class value of
+the [`Result`](/language/fundamentals.md#option-and-result) type, by using
+`try?` before an expression that may throw error:
 
 ```{literalinclude} /sources/language/src/error/top.mbt
 :language: moonbit
@@ -174,22 +195,11 @@ You can also catch the potential error and transform into a first-class value of
 Within a `try` block, several different kinds of errors can be raised. When that
 happens, the compiler will use the type `Error` as the common error type.
 Accordingly, the handler must use the wildcard `_` to make sure all errors are
-caught. For example,
+caught, and `e => raise e` to reraise the other errors. For example,
 
 ```{literalinclude} /sources/language/src/error/top.mbt
 :language: moonbit
 :dedent:
 :start-after: start error 13
 :end-before: end error 13
-```
-
-You can also use `catch!` to rethrow the uncaught errors for convenience. This
-is useful when you only want to handle a specific error and rethrow others. For
-example,
-
-```{literalinclude} /sources/language/src/error/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start error 14
-:end-before: end error 14
 ```

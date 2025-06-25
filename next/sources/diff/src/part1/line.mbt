@@ -1,15 +1,18 @@
-// start line definition
+///| start line definition
+///
 struct Line {
   number : Int // Line number
   text : String // Does not include newline
-} derive(Show)
+} derive(Show, ToJson)
 
+///|
 fn Line::new(number : Int, text : String) -> Line {
   Line::{ number, text }
 }
 // end line definition
 
-// start lines definition
+///| start lines definition
+///
 fn lines(str : String) -> Array[Line] {
   let lines = Array::new(capacity=50)
   let mut line_number = 0
@@ -22,29 +25,30 @@ fn lines(str : String) -> Array[Line] {
 }
 // end lines definition
 
+///|
 test "lines" {
-  inspect!(
+  @json.inspect(
     lines(""),
     content=
-      #|[{number: 1, text: ""}]
+      [{"number":1,"text":""}]
     ,
   )
-  inspect!(
+  @json.inspect(
     lines("\n"),
     content=
-      #|[{number: 1, text: ""}, {number: 2, text: ""}]
+      [{"number":1,"text":""},{"number":2,"text":""}]
     ,
   )
-  inspect!(
+  @json.inspect(
     lines("aaa"),
     content=
-      #|[{number: 1, text: "aaa"}]
+      [{"number":1,"text":"aaa"}]
     ,
   )
-  inspect!(
+  @json.inspect(
     lines("aaa\nbbb"),
     content=
-      #|[{number: 1, text: "aaa"}, {number: 2, text: "bbb"}]
+      [{"number":1,"text":"aaa"},{"number":2,"text":"bbb"}]
     ,
   )
 }

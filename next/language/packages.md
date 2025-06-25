@@ -51,7 +51,7 @@ You can use the `pub` modifier before toplevel `let`/`fn` to make them public.
 ### Aliases
 
 By default, all aliases, i.e. [function alias](/language/fundamentals.md#function-alias), 
-[method alias](/language/methods.md#method-alias),
+[method alias](/language/methods.md#alias-methods-as-functions),
 [type alias](/language/fundamentals.md#type-alias),
 [trait alias](/language/methods.md#trait-alias), are _invisible_ to other packages.
 
@@ -61,19 +61,36 @@ You can use the `pub` modifier before the definition to make them public.
 
 There are four different kinds of visibility for types in MoonBit:
 
-- private type, declared with `priv`, completely invisible to the outside world
-- abstract type, which is the default visibility for types. Only the name of an abstract type is visible outside, the internal representation of the type is hidden
-- readonly types, declared with `pub`. The internal representation of readonly types are visible outside,
-but users can only read the values of these types from outside, construction and mutation are not allowed
-- fully public types, declared with `pub(all)`. The outside world can freely construct, modify and read values of these types
+- Private type: declared with `priv`, completely invisible to the outside world
+- Abstract type: which is the default visibility for types. 
+
+  Only the name of an abstract type is visible outside, the internal representation of the 
+  type is hidden. Making abstract type by default is a design choice to encourage 
+  encapsulation and information hiding.
+
+- Readonly types, declared with `pub`. 
+  
+  The internal representation of readonly types are visible outside,
+  but users can only read the values of these types from outside, construction and mutation are not allowed
+  This also applies to newtype, when declared with only `pub`, its underlying data can only be accessed from outside,
+  but user cannot create new values.
+
+- Fully public types, declared with `pub(all)`. 
+
+  The outside world can freely construct, read values of these types and modify them if possible.
 
 In addition to the visibility of the type itself, the fields of a public `struct` can be annotated with `priv`,
 which will hide the field from the outside world completely.
 Note that `struct`s with private fields cannot be constructed directly outside,
 but you can update the public fields using the functional struct update syntax.
 
-Readonly types is a very useful feature, inspired by [private types](https://ocaml.org/manual/5.3/privatetypes.html) in OCaml. In short, values of `pub` types can be destructed by pattern matching and the dot syntax, but cannot be constructed or mutated in other packages. Note that there is no restriction within the same package where `pub` types are defined.
+Readonly types is a very useful feature, inspired by [private types](https://ocaml.org/manual/5.3/privatetypes.html) in OCaml. 
+In short, values of `pub` types can be destructed by pattern matching and the dot syntax, but 
+cannot be constructed or mutated in other packages. 
 
+```{note}
+There is no restriction within the same package where `pub` types are defined.
+```
 <!-- MANUAL CHECK -->
 
 ```moonbit
@@ -142,6 +159,7 @@ and prevent third-party packages from modifying behavior of existing programs by
 MoonBit employs the following restrictions on who can define methods/implement traits for types:
 
 - _only the package that defines a type can define methods for it_. So one cannot define new methods or override old methods for builtin and foreign types.
+    - there is an exception to this rule: [local methods](/language/methods.md#local-method). Local methods are always private though, so they do not break coherence properties of MoonBit's type system
 - _only the package of the type or the package of the trait can define an implementation_.
   For example, only `@pkg1` and `@pkg2` are allowed to write `impl @pkg1.Trait for @pkg2.Type`.
 

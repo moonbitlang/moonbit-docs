@@ -6,7 +6,7 @@ struct DeriveDefault {
 
 test "derive default struct" {
   let p = DeriveDefault::default()
-  assert_eq!(p, DeriveDefault::{ x: 0, y: None })
+  assert_eq(p, DeriveDefault::{ x: 0, y: None })
 }
 // end derive default struct
 
@@ -18,6 +18,6 @@ enum DeriveDefaultEnum {
 } derive(Default, Eq, Show)
 
 test "derive default enum" {
-  assert_eq!(DeriveDefaultEnum::default(), DeriveDefaultEnum::Case3)
+  assert_eq(DeriveDefaultEnum::default(), DeriveDefaultEnum::Case3)
 }
 // end derive default enum

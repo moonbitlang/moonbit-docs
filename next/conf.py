@@ -9,7 +9,7 @@
 project = 'MoonBit'
 author = 'International Digital Economy Academy'
 copyright = '%Y, {author}'.format(author=author)
-release = 'v0.1.20250416'
+release = 'v0.1.20250612'
 
 # I18N based on Readthedocs Environment
 # https://docs.readthedocs.io/en/stable/reference/environment-variables.html
@@ -23,6 +23,10 @@ if (os.getenv('READTHEDOCS_LANGUAGE') == 'zh-cn' or
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+
+source_suffix = {
+    '.mbt.md': 'markdown'
+}
 
 import sys
 from pathlib import Path
@@ -64,7 +68,7 @@ latex_elements = {
 }
 
 # -- Options for myst_parser -------------------------------------------------
-myst_heading_anchors = 3
+myst_heading_anchors = 4
 myst_enable_extensions = [
     "attrs_inline"
 ]
@@ -74,3 +78,6 @@ gettext_additional_targets = ["literal-block"]
 
 # -- Options for sphinx_copybutton -------------------------------------------------
 copybutton_prompt_text = "$ "
+
+# -- Options for link check -------------------------------------------------
+linkcheck_anchors_ignore_for_url = [ 'https://mooncakes.io/docs' ]

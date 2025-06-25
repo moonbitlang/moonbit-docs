@@ -1,82 +1,89 @@
-fn compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
+///|
+fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
   let name = self.name
   let body = self.body
   let mut arity = 0
   fn gen_env(i : Int, args : List[String]) -> List[(String, Int)] {
     match args {
-      Nil => {
+      Empty => {
         arity = i
-        return Nil
+        return @list.empty()
       }
-      Cons(s, ss) => Cons((s, i), gen_env(i + 1, ss))
+      More(s, tail=ss) => gen_env(i + 1, ss).prepend((s, i))
     }
   }
 
   let env = gen_env(0, self.args)
-  (name, arity, compileR(body, env, arity))
+  (name, arity, body.compileR(env, arity))
 }
 
-fn compileR(
+///|
+fn RawExpr::compileR(
   self : RawExpr[String],
   env : List[(String, Int)],
   arity : Int
 ) -> List[Instruction] {
   if arity == 0 {
-    compileC(self, env) + @immut/list.of([Update(arity), Unwind])
+    self.compileC(env) + @list.of([Update(arity), Unwind])
   } else {
-    compileC(self, env) + @immut/list.of([Update(arity), Pop(arity), Unwind])
+    self.compileC(env) + @list.of([Update(arity), Pop(arity), Unwind])
   }
 }
 
-fn compileC(
+///|
+fn RawExpr::compileC(
   self : RawExpr[String],
   env : List[(String, Int)]
 ) -> List[Instruction] {
   match self {
     Var(s) =>
       match env.lookup(s) {
-        None => @immut/list.of([PushGlobal(s)])
-        Some(n) => @immut/list.of([Push(n)])
+        None => @list.of([PushGlobal(s)])
+        Some(n) => @list.of([Push(n)])
       }
-    Num(n) => @immut/list.of([PushInt(n)])
+    Num(n) => @list.of([PushInt(n)])
     App(e1, e2) =>
-      compileC(e2, env) +
-      compileC(e1, argOffset(1, env)) +
-      @immut/list.of([MkApp])
+      e2.compileC(env) +
+      e1.compileC(argOffset(1, env)) +
+      @list.of([MkApp])
     Let(rec, defs, e) =>
       if rec {
-        compileLetrec(compileC, defs, e, env)
+        compileLetrec(RawExpr::compileC, defs, e, env)
       } else {
-        compileLet(compileC, defs, e, env)
+        compileLet(RawExpr::compileC, defs, e, env)
       }
     _ => abort("not support yet")
   }
 }
 
+///|
 fn argOffset(n : Int, env : List[(String, Int)]) -> List[(String, Int)] {
-  env.map(fn { (name, offset) => (name, offset + n) })
+  env.map(fn (entry) {
+    let (name, offset) = entry
+    (name, offset + n)
+  })
 }
 
-// start compile_let definition
+///| start compile_let definition
 fn compileLet(
   comp : (RawExpr[String], List[(String, Int)]) -> List[Instruction],
   defs : List[(String, RawExpr[String])],
   expr : RawExpr[String],
   env : List[(String, Int)]
 ) -> List[Instruction] {
-  let (env, codes) = loop env, List::Nil, defs {
-    env, acc, Nil => (env, acc)
-    env, acc, Cons((name, expr), rest) => {
-      let code = compileC(expr, env)
-      let env = List::Cons((name, 0), argOffset(1, env))
-      continue env, acc + code, rest
+  let (env, codes) = loop (env, @list.empty(), defs) {
+    (env, acc, Empty) => (env, acc)
+    (env, acc, More((name, expr), tail=rest)) => {
+      let code = expr.compileC(env)
+      let env = argOffset(1, env).prepend((name, 0))
+      continue (env, acc + code, rest)
     }
   }
-  codes + comp(expr, env) + @immut/list.of([Slide(defs.length())])
+  codes + comp(expr, env) + @list.of([Slide(defs.length())])
 }
 // end compile_let definition
 
-// start compile_letrec definition
+///| start compile_letrec definition
 fn compileLetrec(
   comp : (RawExpr[String], List[(String, Int)]) -> List[Instruction],
   defs : List[(String, RawExpr[String])],
@@ -85,9 +92,9 @@ fn compileLetrec(
 ) -> List[Instruction] {
   let mut env = env
   loop defs {
-    Nil => ()
-    Cons((name, _), rest) => {
-      env = Cons((name, 0), argOffset(1, env))
+    Empty => ()
+    More((name, _), tail=rest) => {
+      env = argOffset(1, env).prepend((name, 0))
       continue rest
     }
   }
@@ -97,24 +104,23 @@ fn compileLetrec(
     offset : Int
   ) -> List[Instruction] {
     match defs {
-      Nil => comp(expr, env) + @immut/list.of([Slide(n)])
-      Cons((_, expr), rest) =>
-        compileC(expr, env) +
-        Cons(Update(offset), compileDefs(rest, offset - 1))
+      Empty => comp(expr, env) + @list.of([Slide(n)])
+      More((_, expr), tail=rest) =>
+        expr.compileC(env) + compileDefs(rest, offset - 1).prepend(Update(offset))
     }
   }
 
-  Cons(Alloc(n), compileDefs(defs, n - 1))
+  compileDefs(defs, n - 1).prepend(Alloc(n))
 }
 // end compile_letrec definition
 
-// start prim definition
-let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.of([
+///| start prim definition
+let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
     // Arith
     (
       "add",
       2,
-      @immut/list.of([
+      @list.of([
         Push(1),
         Eval,
         Push(1),
@@ -128,7 +134,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.o
     (
       "sub",
       2,
-      @immut/list.of([
+      @list.of([
         Push(1),
         Eval,
         Push(1),
@@ -142,7 +148,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.o
     (
       "mul",
       2,
-      @immut/list.of([
+      @list.of([
         Push(1),
         Eval,
         Push(1),
@@ -156,7 +162,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.o
     (
       "div",
       2,
-      @immut/list.of([
+      @list.of([
         Push(1),
         Eval,
         Push(1),
@@ -171,7 +177,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.o
     (
       "eq",
       2,
-      @immut/list.of([
+      @list.of([
         Push(1),
         Eval,
         Push(1),
@@ -185,7 +191,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.o
     (
       "neq",
       2,
-      @immut/list.of([
+      @list.of([
         Push(1),
         Eval,
         Push(1),
@@ -199,7 +205,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.o
     (
       "ge",
       2,
-      @immut/list.of([
+      @list.of([
         Push(1),
         Eval,
         Push(1),
@@ -213,7 +219,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.o
     (
       "gt",
       2,
-      @immut/list.of([
+      @list.of([
         Push(1),
         Eval,
         Push(1),
@@ -227,7 +233,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.o
     (
       "le",
       2,
-      @immut/list.of([
+      @list.of([
         Push(1),
         Eval,
         Push(1),
@@ -241,7 +247,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.o
     (
       "lt",
       2,
-      @immut/list.of([
+      @list.of([
         Push(1),
         Eval,
         Push(1),
@@ -256,15 +262,15 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @immut/list.o
     (
       "negate",
       1,
-      @immut/list.of([Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),
+      @list.of([Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),
     ),
     (
       "if",
       3,
-      @immut/list.of([
+      @list.of([
         Push(0),
         Eval,
-        Cond(@immut/list.of([Push(1)]), @immut/list.of([Push(2)])),
+        Cond(@list.of([Push(1)]), @list.of([Push(2)])),
         Update(3),
         Pop(3),
         Unwind,

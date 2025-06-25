@@ -1,5 +1,5 @@
 ///|
-pub fn safe_add(i : Int, j : Int) -> Int! {
+pub fn safe_add(i : Int, j : Int) -> Int raise {
   let signum_i = i & 0x80000000
   let signum_j = j & 0x80000000
   let result = i + j
@@ -8,7 +8,7 @@ pub fn safe_add(i : Int, j : Int) -> Int! {
   } else {
     let result_signum = result & 0x80000000
     if result_signum != signum_i {
-      fail!("overflow")
+      fail("overflow")
     } else {
       result
     }
@@ -18,17 +18,17 @@ pub fn safe_add(i : Int, j : Int) -> Int! {
 ///|
 fn main {
   let a = try {
-    safe_add!(1, 2)
+    safe_add(1, 2)
   } catch {
     _ => panic()
   }
   try {
-    let result = safe_add!(@int.max_value, @int.max_value)
+    let result = safe_add(@int.max_value, @int.max_value)
 
   } catch {
     Failure(error_message) => println(error_message)
     _ => panic()
   }
-  let result = safe_add?(@int.max_value, @int.max_value)
+  let result = try? safe_add(@int.max_value, @int.max_value)
 
 }

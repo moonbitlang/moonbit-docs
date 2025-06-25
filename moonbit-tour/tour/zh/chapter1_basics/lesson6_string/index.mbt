@@ -1,7 +1,7 @@
 fn main {
   let str = "Hello, World!"
   // Access a character by index.
-  let c : Char = str[4]
+  let c : Char = str.char_at(4)
   println(c)
   let c2 = 'o'
   println(c == c2)

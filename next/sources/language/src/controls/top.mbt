@@ -32,7 +32,7 @@ test "while loop 1" (t : @test.T) {
     i = i - 1
   }
   // end while loop 1
-  t.snapshot!(filename="while_loop_1")
+  t.snapshot(filename="while_loop_1")
 }
 
 test "while loop 2" (t : @test.T) {
@@ -50,7 +50,7 @@ test "while loop 2" (t : @test.T) {
     println(i)
   }
   // end while loop 2
-  t.snapshot!(filename="while_loop_2")
+  t.snapshot(filename="while_loop_2")
 }
 
 test "while loop 3" (t : @test.T) {
@@ -64,7 +64,7 @@ test "while loop 3" (t : @test.T) {
     println(i)
   }
   // end while loop 3
-  t.snapshot!(filename="while_loop_3")
+  t.snapshot(filename="while_loop_3")
 }
 
 test "while loop 4" (t : @test.T) {
@@ -81,7 +81,7 @@ test "while loop 4" (t : @test.T) {
   }
   println(r)
   // end while loop 4
-  t.snapshot!(filename="while_loop_4")
+  t.snapshot(filename="while_loop_4")
 }
 
 test "while loop 5" (t : @test.T) {
@@ -95,7 +95,7 @@ test "while loop 5" (t : @test.T) {
   }
   println(r)
   // end while loop 5
-  t.snapshot!(filename="while_loop_5")
+  t.snapshot(filename="while_loop_5")
 }
 
 test "for loop 1" (t : @test.T) {
@@ -105,7 +105,7 @@ test "for loop 1" (t : @test.T) {
     println(i)
   }
   // end for loop 1
-  t.snapshot!(filename="for_loop_1")
+  t.snapshot(filename="for_loop_1")
 }
 
 fn d() -> Unit {
@@ -140,7 +140,7 @@ test "for loop 4" (t : @test.T) {
   }
   println(sum)
   // end for loop 4
-  t.snapshot!(filename="for_loop_4")
+  t.snapshot(filename="for_loop_4")
 }
 
 fn e() -> Unit {
@@ -171,7 +171,7 @@ test "for loop 7" (t : @test.T) {
     println("The \{i}-th element of the array is \{elem}")
   }
   // end for loop 7
-  t.snapshot!(filename="for_loop_7")
+  t.snapshot(filename="for_loop_7")
 }
 
 test "for loop 8" (t : @test.T) {
@@ -188,21 +188,21 @@ test "for loop 8" (t : @test.T) {
     }
   }
   // end for loop 8
-  t.snapshot!(filename="for_loop_8")
+  t.snapshot(filename="for_loop_8")
 }
 
-// start for loop 9
+// start functional loop
 test {
   fn sum(xs : @immut/list.T[Int]) -> Int {
-    loop xs, 0 {
-      Nil, acc => break acc // <=> Nil, acc => acc
-      Cons(x, rest), acc => continue rest, x + acc
+    loop (xs, 0) {
+      (Nil, acc) => break acc // <=> Nil, acc => acc
+      (Cons(x, rest), acc) => continue (rest, x + acc)
     }
   }
 
-  assert_eq!(sum(Cons(1, Cons(2, Cons(3, Nil)))), 6)
+  assert_eq(sum(Cons(1, Cons(2, Cons(3, Nil)))), 6)
 }
-// end for loop 9
+// end functional loop
 
 // start for loop 10
 test {
@@ -210,12 +210,12 @@ test {
   for j in 0..<10 {
     i += j
   }
-  assert_eq!(i, 45)
+  assert_eq(i, 45)
   let mut k = 0
   for l in 0..=10 {
     k += l
   }
-  assert_eq!(k, 55)
+  assert_eq(k, 55)
 }
 // end for loop 10
 
@@ -232,8 +232,8 @@ test "break label" {
   } else {
     -1
   }
-  assert_eq!(res, 4)
-  assert_eq!(count, 1)
+  assert_eq(res, 4)
+  assert_eq(count, 1)
 }
 
 test "continue label" {
@@ -247,8 +247,8 @@ test "continue label" {
         continue outer~ i - 1
       }
   }
-  assert_eq!(res, 42)
-  assert_eq!(count, 10)
+  assert_eq(res, 42)
+  assert_eq(count, 10)
 }
 // end loop label
 
@@ -259,7 +259,7 @@ fn guarded_get(array : Array[Int], index : Int) -> Int? {
 }
 
 test {
-  inspect!(guarded_get([1, 2, 3], -1), content="None")
+  inspect(guarded_get([1, 2, 3], -1), content="None")
 }
 // end guard 1
 
@@ -277,11 +277,9 @@ enum Resource {
 fn getProcessedText(
   resources : Map[String, Resource],
   path : String
-) -> String!Error {
-  guard resources.get(path) is Some(resource) else {
-    fail!("\{path} not found")
-  }
-  guard resource is PlainText(text) else { fail!("\{path} is not plain text") }
+) -> String raise Error {
+  guard resources.get(path) is Some(resource) else { fail("\{path} not found") }
+  guard resource is PlainText(text) else { fail("\{path} is not plain text") }
   process(text)
 }
 // end guard 2
@@ -306,6 +304,6 @@ fn decide_sport(weather : String, humidity : Int) -> String {
 }
 
 test {
-  assert_eq!(decide_sport("sunny", 0), "tennis")
+  assert_eq(decide_sport("sunny", 0), "tennis")
 }
 // end match 1

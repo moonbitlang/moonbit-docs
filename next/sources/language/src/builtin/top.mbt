@@ -58,15 +58,15 @@ test "string 1" (t : @test.T) {
   let println = fn(show) { t.writeln(show) }
   // start string 1
   let a = "兔rabbit"
-  println(a[0])
-  println(a[1])
+  println(a.char_at(0))
+  println(a.char_at(1))
   let b =
     #| Hello
     #| MoonBit\n
     #|
   println(b)
   // end string 1
-  t.snapshot!(filename="string_1")
+  t.snapshot(filename="string_1")
 }
 
 let string : Unit = {
@@ -87,14 +87,14 @@ test "string 4" (t : @test.T) {
     #| ---
   println(str)
   // end string 4
-  t.snapshot!(filename="string_4")
+  t.snapshot(filename="string_4")
 }
 
 // start string 5
 test {
   let c : Char = '中'
   let s : String = [c, '文']
-  inspect!(s, content="中文")
+  inspect(s, content="中文")
 }
 // end string 5
 
@@ -113,7 +113,7 @@ test {
   let s : String = "hello"
   // charcode_at has type Int 
   let b = s.charcode_at(0) - 'a'
-  inspect!(b, content="7")
+  inspect(b, content="7")
 }
 // end char 2
 
@@ -125,14 +125,14 @@ test "byte 1" (t : @test.T) {
   let b2 = b'\xff'
   println(b2.to_int())
   // end byte 1
-  t.snapshot!(filename="byte_1")
+  t.snapshot(filename="byte_1")
 }
 
 // start byte 2
 test {
   let b1 : Bytes = b"abcd"
   let b2 = b"\x61\x62\x63\x64"
-  assert_eq!(b1, b2)
+  assert_eq(b1, b2)
 }
 // end byte 2
 
@@ -140,7 +140,7 @@ test {
 test {
   let b : Byte = '\xFF'
   let bs : Bytes = [b, '\x01']
-  inspect!(
+  inspect(
     bs,
     content=
       #|b"\xff\x01"
@@ -154,7 +154,7 @@ test "buffer 1" {
   let buf : @buffer.T = @buffer.new()
   buf.write_bytes(b"Hello")
   buf.write_byte(b'!')
-  assert_eq!(buf.contents(), b"Hello!")
+  assert_eq(buf.contents(), b"Hello!")
 }
 // end buffer 1
 
@@ -174,7 +174,7 @@ test "tuple 1" (t : @test.T) {
   let (bool_val, int_val, str, float_val) = quad
   println("\{bool_val} \{int_val} \{str} \{float_val}")
   // end tuple 1
-  t.snapshot!(filename="tuple_1")
+  t.snapshot(filename="tuple_1")
 }
 
 // start tuple 2
@@ -183,8 +183,8 @@ test {
   let (x1, y1) = t
   let x2 = t.0
   let y2 = t.1
-  assert_eq!(x1, x2)
-  assert_eq!(y1, y2)
+  assert_eq(x1, x2)
+  assert_eq(y1, y2)
 }
 // end tuple 2
 
@@ -201,7 +201,7 @@ test {
   let a = numbers[2]
   numbers[3] = 5
   let b = a + numbers[3]
-  assert_eq!(b, 8)
+  assert_eq(b, 8)
 }
 // end array 2
 
@@ -217,7 +217,7 @@ let array_3 = [1, 2, 3] // Array[Int]
 test {
   let two_dimension_array = FixedArray::make(10, FixedArray::make(10, 0))
   two_dimension_array[0][5] = 10
-  assert_eq!(two_dimension_array[5][5], 10)
+  assert_eq(two_dimension_array[5][5], 10)
 }
 // end array pitfall
 
@@ -227,7 +227,7 @@ test {
     FixedArray::make(10, 0)
   })
   two_dimension_array[0][5] = 10
-  assert_eq!(two_dimension_array[5][5], 0)
+  assert_eq(two_dimension_array[5][5], 0)
 }
 // end array pitfall solution
 
@@ -247,9 +247,9 @@ let a : Ref[Int] = { val: 100 }
 
 test {
   a.val = 200
-  assert_eq!(a.val, 200)
+  assert_eq(a.val, 200)
   a.val += 1
-  assert_eq!(a.val, 201)
+  assert_eq(a.val, 201)
 }
 // end ref 1
 
@@ -260,12 +260,24 @@ test {
   let c : Result[Int, String] = Ok(42)
   let d : Result[Int, String] = Err("error")
   match a {
-    Some(_) => assert_true!(false)
-    None => assert_true!(true)
+    Some(_) => assert_true(false)
+    None => assert_true(true)
   }
   match d {
-    Ok(_) => assert_true!(false)
-    Err(_) => assert_true!(true)
+    Ok(_) => assert_true(false)
+    Err(_) => assert_true(true)
   }
 }
 // end option result 1
+
+// start overloaded literal 1
+fn expect_double(x : Double) -> Unit {
+
+}
+
+test {
+  let x = 1 // type of x is Int
+  let y : Double = 1
+  expect_double(1)
+}
+// end overloaded literal 1

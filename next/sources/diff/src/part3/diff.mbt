@@ -1,4 +1,5 @@
-// start box definition
+///| start box definition
+///
 struct Box {
   left : Int
   right : Int
@@ -6,39 +7,47 @@ struct Box {
   bottom : Int
 } derive(Show)
 
+///|
 struct Snake {
   start : (Int, Int)
   end : (Int, Int)
 } derive(Show)
 
-fn width(self : Box) -> Int {
+///|
+fn Box::width(self : Self) -> Int {
   self.right - self.left
 }
 
-fn height(self : Box) -> Int {
+///|
+fn Box::height(self : Self) -> Int {
   self.bottom - self.top
 }
 
-fn size(self : Box) -> Int {
+///|
+fn Box::size(self : Self) -> Int {
   self.width() + self.height()
 }
 
-fn delta(self : Box) -> Int {
+///|
+fn Box::delta(self : Self) -> Int {
   self.width() - self.height()
 }
 
 // end box definition
+///|
 fn is_odd(n : Int) -> Bool {
   (n & 1) == 1
 }
 
+///|
 fn is_even(n : Int) -> Bool {
   (n & 1) == 0
 }
 
 // start search definition
-fn forward(
-  self : Box,
+///|
+fn Box::forward(
+  self : Self,
   forward~ : BPArray[Int],
   backward~ : BPArray[Int],
   depth : Int,
@@ -72,8 +81,9 @@ fn forward(
   return None
 }
 
-fn backward(
-  self : Box,
+///|
+fn Box::backward(
+  self : Self,
   forward~ : BPArray[Int],
   backward~ : BPArray[Int],
   depth : Int,
@@ -107,7 +117,8 @@ fn backward(
 // end search definition
 
 // start midpoint definition
-fn midpoint(self : Box, old~ : Array[Line], new~ : Array[Line]) -> Snake? {
+///|
+fn Box::midpoint(self : Self, old~ : Array[Line], new~ : Array[Line]) -> Snake? {
   if self.size() == 0 {
     return None
   }
@@ -138,13 +149,14 @@ fn midpoint(self : Box, old~ : Array[Line], new~ : Array[Line]) -> Snake? {
 }
 // end midpoint definition
 
-// start findpath definition
-fn find_path(
-  box : Box,
+///| start findpath definition
+///
+fn Box::find_path(
+  box : Self,
   old~ : Array[Line],
   new~ : Array[Line]
 ) -> Iter[(Int, Int)]? {
-  guard midpoint(box, old~, new~) is Some(snake) else { None }
+  guard box.midpoint(old~, new~) is Some(snake) else { None }
   let start = snake.start
   let end = snake.end
   let headbox = Box::{
@@ -159,12 +171,13 @@ fn find_path(
     right: box.right,
     bottom: box.bottom,
   }
-  let head = find_path(headbox, old~, new~).or(Iter::singleton(start))
-  let tail = find_path(tailbox, old~, new~).or(Iter::singleton(end))
+  let head = headbox.find_path(old~, new~).or(Iter::singleton(start))
+  let tail = tailbox.find_path(old~, new~).or(Iter::singleton(end))
   Some(head.concat(tail))
 }
 // end findpath definition
 
+///|
 fn linear_diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit]? {
   let initial_box = Box::{
     left: 0,
@@ -172,7 +185,7 @@ fn linear_diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit]? {
     right: old.length(),
     bottom: new.length(),
   }
-  guard find_path(initial_box, old~, new~) is Some(path) else { None }
+  guard initial_box.find_path(old~, new~) is Some(path) else { None }
   // path length >= 2
   let xy = path.take(1).collect()[0] // (0, 0)
   let mut x1 = xy.0
@@ -207,11 +220,12 @@ fn linear_diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit]? {
   return Some(edits)
 }
 
+///|
 test "myers diff" {
   let old = lines("A\nB\nC\nA\nB\nB\nA")
   let new = lines("C\nB\nA\nB\nA\nC")
   let r = linear_diff(old~, new~).unwrap()
-  inspect!(
+  inspect(
     pprint_diff(r),
     content=
       #|-    1         A

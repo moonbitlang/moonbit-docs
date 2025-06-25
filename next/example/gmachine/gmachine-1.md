@@ -19,7 +19,7 @@ Lazy evaluation is a technique that can reduce unnecessary costs to some extent 
 Let's first explore how lazy lists (`Stream`) can avoid multiple traversals in such cases.
 
 ```{note}
-The `List[T]` here is a `typealias` of `@immut/list.T[T]`
+The `List[T]` here is a `typealias` of `@list.T[T]`
 ```
 
 ## Lazy List Implementation

@@ -1,24 +1,29 @@
 // start data definition
+///|
 enum Data {
   Data(sum~ : Int, len~ : Int)
 }
 
+///|
 enum LazyTag {
   Nil
   Tag(Int)
 }
 
+///|
 enum Node {
   Nil
   Node(data~ : Data, tag~ : LazyTag, left~ : Node, right~ : Node)
 }
 // end data definition
 
+///|
 impl ToJson for Data with to_json(data) {
   let Data(sum~, len~) = data
   [Json::number(sum.to_double()), Json::number(len.to_double())]
 }
 
+///|
 impl ToJson for LazyTag with to_json(tag) {
   match tag {
     Nil => "Nil"
@@ -26,6 +31,7 @@ impl ToJson for LazyTag with to_json(tag) {
   }
 }
 
+///|
 impl ToJson for Node with to_json(node) {
   match node {
     Nil => "Nil"
@@ -45,6 +51,7 @@ impl ToJson for Node with to_json(node) {
 }
 
 // start op_add definition
+///|
 impl Add for Data with op_add(self : Data, v : Data) -> Data {
   match (self, v) {
     (Data(sum=a, len=len_a), Data(sum=b, len=len_b)) =>
@@ -52,6 +59,7 @@ impl Add for Data with op_add(self : Data, v : Data) -> Data {
   }
 }
 
+///|
 impl Add for Node with op_add(self : Node, v : Node) -> Node {
   match (self, v) {
     (Node(data=l, ..), Node(data=r, ..)) =>
@@ -64,6 +72,7 @@ impl Add for Node with op_add(self : Node, v : Node) -> Node {
 // end op_add definition
 
 // start lazytag definition
+///|
 impl Add for LazyTag with op_add(self : LazyTag, v : LazyTag) -> LazyTag {
   match (self, v) {
     (Tag(a), Tag(b)) => Tag(a + b)
@@ -71,6 +80,7 @@ impl Add for LazyTag with op_add(self : LazyTag, v : LazyTag) -> LazyTag {
   }
 }
 
+///|
 fn apply(self : Node, v : LazyTag) -> Node {
   match (self, v) {
     (Node(data=Data(sum=a, len=length), tag~, left~, right~), Tag(v) as new_tag) =>
@@ -87,6 +97,7 @@ fn apply(self : Node, v : LazyTag) -> Node {
 // end lazytag definition
 
 // start build definition
+///|
 fn build(data : ArrayView[Int]) -> Node {
   if data.length() == 1 {
     Node(data=Data(sum=data[0], len=1), tag=Nil, left=Nil, right=Nil)
@@ -98,6 +109,7 @@ fn build(data : ArrayView[Int]) -> Node {
 // end build definition
 
 // start modify definition
+///|
 fn modify(
   self : Node,
   l : Int,
@@ -120,6 +132,7 @@ fn modify(
 // end modify definition
 
 // start query definition
+///|
 let empty_node : Node = Node(
   data=Data(sum=0, len=0),
   tag=Nil,
@@ -127,6 +140,7 @@ let empty_node : Node = Node(
   right=Nil,
 )
 
+///|
 fn query(self : Node, l : Int, r : Int, query_l : Int, query_r : Int) -> Node {
   if query_l > r || l > query_r {
     empty_node
@@ -141,9 +155,10 @@ fn query(self : Node, l : Int, r : Int, query_l : Int, query_r : Int) -> Node {
 }
 // end query definition
 
+///|
 test {
   let tree = build([1, 2, 3, 4, 5][:])
-  @json.inspect!(tree.modify(1, 5, 1, 3, Tag(1)).query(1, 5, 1, 3), content={
+  @json.inspect(tree.modify(1, 5, 1, 3, Tag(1)).query(1, 5, 1, 3), content={
     "data": [9, 3],
     "tag": "Nil",
     "left": {

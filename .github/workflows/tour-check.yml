@@ -10,10 +10,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
-      - name: install
-        run: |
-          pnpm install
+        with:
+          package_json_file: moonbit-tour/package.json
       - name: check
         run: |
           cd moonbit-tour
+          pnpm install
           pnpm build

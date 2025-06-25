@@ -11,6 +11,29 @@ Doc comments are comments prefix with `///` in each line in the leading of tople
 
 ```
 
+Markdown code block inside docstring will be considered document test,
+`moon check` and `moon test` will automatically check and run these tests, so that examples in docstring are always up-to-date.
+MoonBit will automatically wrap a test block around document test,
+so there is no need to wrap `test { .. }` around document test:
+
+```{literalinclude} /sources/language/src/misc/top.mbt
+:language: moonbit
+:start-after: start doc test 1
+:end-before: end doc test 1
+```
+
+If you want to prevent a code snippet from being treated as document test,
+mark it with a language id other than `mbt` on the markdown code block:
+
+```{literalinclude} /sources/language/src/misc/top.mbt
+:language: moonbit
+:start-after: start doc test 2
+:end-before: end doc test 2
+```
+
+Currently, document tests are always [blackbox tests](/language/tests.md#blackbox-tests-and-whitebox-tests).
+So private definitions cannot have document test.
+
 ## Attribute
 
 Attributes are annotations placed before the top-level structure. They take the form `#attribute(...)`. 
@@ -78,6 +101,6 @@ For more detail, see [Alert](../toolchain/moon/package.md#alert-list).
 
 ### The Borrow Attribute
 
-The `#borrow` attribute is used to indicate that a FFI takes ownership of its arguments. For more detail, see [FFI](./ffi.md#The-borrow-attribute).
+The `#borrow` attribute is used to indicate that a FFI takes ownership of its arguments. For more detail, see [FFI](./ffi.md#the-borrow-attribute).
 
 

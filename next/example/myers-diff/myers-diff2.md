@@ -1,6 +1,6 @@
 # Myers diff 2
 
-This is the second post in the diff series. In the [previous one](https://www.moonbitlang.com/docs/examples/myers-diff), we learned how to transform the process of computing diffs into a graph search problem and how to search for the shortest edit distance. In this article, we will learn how to extend the search process from the previous post to obtain the complete edit sequence.
+This is the second post in the diff series. In the [previous one](/example/myers-diff/myers-diff.md), we learned how to transform the process of computing diffs into a graph search problem and how to search for the shortest edit distance. In this article, we will learn how to extend the search process from the previous post to obtain the complete edit sequence.
 
 ## Recording the Search Process
 

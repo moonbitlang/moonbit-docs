@@ -5,7 +5,7 @@ But the design and API is still highly unstable, and may receive big breaking ch
 This page documents the current design, and we highly appreciate any feedback or experiment with current design.
 
 ## Async function
-Async functions can be declared with the `async` keyword:
+Async functions are declared with the `async` keyword:
 
 ```{literalinclude} /sources/async/src/async.mbt
 :language: moonbit
@@ -13,7 +13,9 @@ Async functions can be declared with the `async` keyword:
 :end-before: end async function declaration
 ```
 
-Async functions may be called with the `!` operator:
+Since MoonBit is a statically typed language, the compiler will track its 
+asyncness, so you can just call async functions like normal functions, the
+MoonBit IDE will highlight the async function call with a different style.
 
 ```{literalinclude} /sources/async/src/async.mbt
 :language: moonbit
@@ -21,7 +23,13 @@ Async functions may be called with the `!` operator:
 :end-before: end async function call syntax
 ```
 
-Async functions can only be called in async functions. Currently, async functions cannot be called in the body of `for .. in` loops.
+Async functions can only be called in async functions. 
+
+```{warning}
+Currently, async functions 
+have not be supported in the body of `for .. in` loops yet, this 
+will be addressed in the future.
+```
 
 ## Async primitives for suspension
 MoonBit provides two core primitives for `%async.suspend` and `%async.run`:
@@ -38,13 +46,14 @@ currently users need to bind these two primitives manually to do async programmi
 
 There are two ways of reading these primitives:
 
-- the coroutine reading: `%async.run` spawn a new coroutine,
+- The coroutine reading: `%async.run` spawn a new coroutine,
   and `%async.suspend` suspend current coroutine.
   The main difference with other languages here is:
   instead of yielding all the way to the caller of `%async.run`,
   resumption of the coroutine is handled by the callback passed to `%async.suspend`
-- the delimited continuation reading: `%async.run` is the `reset` operator in delimited continuation,
-  and `%async.suspend` is the `shift` operator in delimited continuation
+- The delimited continuation reading: `%async.run` is the `reset` operator in
+  delimited continuation, and `%async.suspend` is the `shift` operator in
+  delimited continuation
 
 Here's an example of how these two primitives work:
 
@@ -55,10 +64,10 @@ Here's an example of how these two primitives work:
 ```
 
 In `async_worker`, `suspend` will capture the rest of the current coroutine as two "continuation" functions, and pass them to a callback.
-In the callback, calling `resume_ok` will resume execution at the point of `suspend!(...)`,
+In the callback, calling `resume_ok` will resume execution at the point of `suspend(...)`,
 all the way until the `run_async` call that start this coroutine.
 calling `resume_err` will also resume execution of current coroutine,
-but it will make `suspend!(...)` throw an error instead of returning normally.
+but it will make `suspend(...)` throw an error instead of returning normally.
 
 Notice that `suspend` type may throw error, even if `suspend` itself never throw an error directly.
 This design makes coroutines cancellable at every `suspend` call: just call the corresponding `resume_err` callback.

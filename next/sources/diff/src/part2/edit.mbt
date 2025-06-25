@@ -1,4 +1,5 @@
-// start edit definition
+///| start edit definition
+///
 enum Edit {
   Insert(new~ : Line)
   Delete(old~ : Line)
@@ -6,13 +7,16 @@ enum Edit {
 } derive(Show)
 // end edit definition
 
-// start pprint definition
+///| start pprint definition
+///
 let line_width = 4
 
+///|
 fn pad_right(s : String, width : Int) -> String {
   String::make(width - s.length(), ' ') + s
 }
 
+///|
 fn pprint_edit(edit : Edit) -> String {
   match edit {
     Insert(_) as edit => {
@@ -39,6 +43,7 @@ fn pprint_edit(edit : Edit) -> String {
   }
 }
 
+///|
 fn pprint_diff(diff : Array[Edit]) -> String {
   let buf = @buffer.new(size_hint=100)
   for i = diff.length(); i > 0; i = i - 1 {

@@ -31,7 +31,7 @@ All of which can be inserted or updated automatically using `moon test --update`
 
 ### Snapshotting `Show`
 
-We can use `inspect!(x, content="x")` to inspect anything that implements `Show` trait. 
+We can use `inspect(x, content="x")` to inspect anything that implements `Show` trait. 
 As we mentioned before, `Show` is a builtin trait that can be derived, providing `to_string` that will print the content of the data structures. 
 The labelled argument `content` can be omitted as `moon test --update` will insert it for you:
 
@@ -45,7 +45,7 @@ The labelled argument `content` can be omitted as `moon test --update` will inse
 
 The problem with the derived `Show` trait is that it does not perform pretty printing, resulting in extremely long output.
 
-The solution is to use `@json.inspect!(x, content=x)`. The benefit is that the resulting content is a JSON structure, which can be more readable after being formatted.
+The solution is to use `@json.inspect(x, content=x)`. The benefit is that the resulting content is a JSON structure, which can be more readable after being formatted.
 
 ```{literalinclude} /sources/language/src/test/top.mbt
 :language: moonbit

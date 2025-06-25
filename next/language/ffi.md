@@ -65,7 +65,8 @@ LLVM backend will generate an object file. The backend is experimental and does 
 You can declare a foreign type using the `extern` keyword like this:
 
 ```moonbit
-extern type ExternalRef
+#external
+type ExternalRef
 ```
 
 ``````{tab-set}
@@ -209,7 +210,7 @@ The table below shows the underlying representation of some MoonBit types:
 | `Float`      | `f32`   |
 | `Double`     | `f64`   |
 | constant `enum` | `i32` |
-| external type (`extern type T`) | `externref` |
+| external type (`#external type T`) | `externref` |
 | `FuncRef[T]` | `funcref` |
 ``````
 
@@ -226,7 +227,7 @@ The table below shows the underlying representation of some MoonBit types:
 | `Float`      | `f32`   |
 | `Double`     | `f64`   |
 | constant `enum` | `i32` |
-| external type (`extern type T`) | `externref` |
+| external type (`#external type T`) | `externref` |
 | `String` | `externref` iff JS string builtin is on |
 | `FuncRef[T]` | `funcref` |
 ``````
@@ -242,7 +243,7 @@ The table below shows the underlying representation of some MoonBit types:
 | `Float`      | `number`   |
 | `Double`     | `number`   |
 | constant `enum` | `number` |
-| external type (`extern type T`) | `any`   |
+| external type (`#external type T`) | `any`   |
 | `String` | `string` |
 | `FixedArray[Byte]`/`Bytes` | `UInt8Array` |
 | `FixedArray[T]` / `Array[T]` | `T[]` |
@@ -268,7 +269,7 @@ The `FixedArray[T]` for numbers may migrate to `TypedArray` in the future.
 | `Double`     | `double`   |
 | constant `enum` | `int32_t` |
 | abstract type (`type T`) | pointer (must be valid MoonBit object) |
-| external type (`extern type T`) | `void*` |
+| external type (`#external type T`) | `void*` |
 | `FixedArray[Byte]`/`Bytes` | `uint8_t*` |
 | `FixedArray[T]` | `T*` |
 | `FuncRef[T]` | Function pointer |
@@ -500,7 +501,7 @@ The following types are always boxed and reference counted:
 - `FixedArray[T]`, `Bytes` and `String`
 - abstract types (`type T`)
 
-External types (`extern type T`) are also boxed, but they represent external pointers,
+External types (`#external type T`) are also boxed, but they represent external pointers,
 so MoonBit will not perform any reference counting operations on them.
 
 The layout of `struct`/`enum` with payload is currently unstable.
