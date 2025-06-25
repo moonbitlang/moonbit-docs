@@ -3599,8 +3599,7 @@ msgid ""
 msgstr ""
 "当使用一个不包含 `continue` 语句的 `loop` 表达式时，将会出现这个错误。在 MoonBit 中，一个不包含任何 "
 "`continue` 语句的 `loop` 相当于一个只执行一次的块表达式，使得在这种情况下 `loop` "
-"关键字是多余的。如果你需要从头重新开始循环，你应该添加一个 `continue` 语句，或者使用一个更简单的控制流结构，如 `match` 或 "
-"`if`。"
+"关键字是多余的。如果你需要从头重新开始循环，你应该添加一个 `continue` 语句，或者使用一个更简单的控制流结构，如 `match` 或 `if`。"
 
 #: ../../language/error_codes/E0018.md:14
 msgid ""
@@ -4706,8 +4705,7 @@ msgid ""
 "via name(..) is deprecated, use qualified syntax `T::f(..)`, or declare "
 "the method as `fn f(self : A, ..)` instead."
 msgstr ""
-"这个方法被声明为 `T::f`，直接通过名称 (..) 调用的语法被废弃了，使用限定语法 `T::f(..)`，或者将方法声明为 `fn "
-"f(self : A, ..)`。"
+"这个方法被声明为 `T::f`，直接通过名称 (..) 调用的语法被废弃了，使用限定语法 `T::f(..)`，或者将方法声明为 `fn f(self : A, ..)`。"
 
 #: ../../language/error_codes/E0040.md:9
 msgid ""
@@ -8462,8 +8460,7 @@ msgid ""
 "Labelled arguments with different order: `(a~ : Int, b~ : Int) -> Unit` "
 "and `(b~ : Int, a~ : Int) -> Unit`."
 msgstr ""
-"标记参数顺序不同：如 `(a~ : Int, b~ : Int) -> Unit` 和 `(b~ : Int, a~ : Int) -> "
-"Unit`。"
+"标记参数顺序不同：如 `(a~ : Int, b~ : Int) -> Unit` 和 `(b~ : Int, a~ : Int) -> Unit`。"
 
 #: ../../language/error_codes/E4060.md:11
 msgid "Optional arguments: `(a : Int, b? : Int) -> Unit` and `(a : Int) -> Unit`."
@@ -8885,6 +8882,7 @@ msgid ""
 "overloading) section for a list of operators that can be overloaded, and "
 "here is a list of number of arguments that each operator should accept:"
 msgstr ""
+"你可以参考 [操作符重载](../methods.md#operator-overloading) 部分，获取可以重载的操作符列表，下面是每个操作符应该接受的参数数量列表："
 
 #: ../../language/error_codes/E4065.md
 #, fuzzy
@@ -9078,6 +9076,7 @@ msgid ""
 "overloading) section for a list of operators that can be overloaded, and "
 "respectively their expected signature."
 msgstr ""
+"您可以参考 [操作符重载](../methods.md#operator-overloading) 一节，了解可以重载的操作符列表，以及它们各自的签名。"
 
 #: ../../language/error_codes/E4066.md:11
 msgid ""
@@ -9093,6 +9092,7 @@ msgid ""
 "If you use the name for overloaded operators by accident, you can rename "
 "the method to a different name."
 msgstr ""
+"修改方法以匹配操作符的预期参数类型。如果意外使用了重载操作符的名称，可以将方法重命名为不同的名称。"
 
 #: ../../language/error_codes/E4067.md:1
 msgid "E4067"
@@ -9117,7 +9117,7 @@ msgstr ""
 #: ../../language/error_codes/E4067.md:13
 #: ../../language/error_codes/E4068.md:13
 msgid "Suppose in package `main`:"
-msgstr ""
+msgstr "假设在包 `main` 中："
 
 #: ../../language/error_codes/E4067.md:17
 #, fuzzy
@@ -9137,9 +9137,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4067.md:35
-#, fuzzy
 msgid "You can add a `main` function to the main package:"
-msgstr "main 包中缺少 `main` 函数"
+msgstr "你可以在 main 包中添加一个 `main` 函数："
 
 #: ../../language/error_codes/E4067.md:39
 msgid ""
@@ -9155,6 +9154,7 @@ msgid ""
 "Alternatively, you can set the package to be a non-main package by "
 "setting `\"is-main\"` to `false` in the package configuration file."
 msgstr ""
+"或者，您可以通过在包配置文件中将 `\"is-main\"` 设置为 `false` 来将包设置为非主包。"
 
 #: ../../language/error_codes/E4067.md:52
 msgid ""
@@ -9169,7 +9169,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4068.md:3
 msgid "Main function is already defined."
-msgstr ""
+msgstr "Main 函数已经定义。"
 
 #: ../../language/error_codes/E4068.md:5
 msgid ""
@@ -9179,6 +9179,9 @@ msgid ""
 "multiple programs to be built as separate binaries, you can use multiple "
 "`main` packages within the same module."
 msgstr ""
+"在 MoonBit 中，一个 `main` 包包含一个 `main` 函数，作为程序的入口点。"
+"因此，您不能在 `main` 包中定义多个 `main` 函数。"
+"如果您希望将多个程序构建为单独的二进制文件，则可以在同一个模块中使用多个 `main` 包。"
 
 #: ../../language/error_codes/E4068.md:25
 msgid ""
@@ -9193,7 +9196,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4068.md:37
 msgid "You can either remove the extra `main` function:"
-msgstr ""
+msgstr "你可以删除额外的 `main` 函数："
 
 #: ../../language/error_codes/E4068.md:39
 msgid ""
@@ -9211,6 +9214,7 @@ msgid ""
 "Or you can move the extra `main` function to a different package, say "
 "`main2`:"
 msgstr ""
+"或者你可以将额外的 `main` 函数移到另一个包中，比如 `main2`:"
 
 #: ../../language/error_codes/E4068.md:51
 msgid "`main2/moon.pkg.json`:"
@@ -9229,7 +9233,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4068.md:67
 msgid "while keeping the `main/main.mbt` contains only one main function:"
-msgstr ""
+msgstr "同时保留 `main/main.mbt` 只包含一个 `main` 函数："
 
 #: ../../language/error_codes/E4068.md:69
 msgid ""
@@ -9254,6 +9258,9 @@ msgid ""
 "the entry points of the program. Therefore, non-main packages should not "
 "contain a `main` function."
 msgstr ""
+"在 MoonBit 中，包分为两类：主包和非主包。"
+"非主包通常用作库，为其他包提供功能。"
+"另一方面，主包是程序的入口点。因此，非主包不应该包含 `main` 函数。"
 
 #: ../../language/error_codes/E4069.md:10
 msgid ""
@@ -9262,10 +9269,14 @@ msgid ""
 "`main` function. See the [test](../introduction.md#test) section of the "
 "MoonBit documentation for more information."
 msgstr ""
+"有时，人们使用 `main` 函数进行测试。"
+"在这种情况下，我们建议使用测试块来编写测试，而不是使用 `main` 函数。"
+"有关更多信息，请参阅 MoonBit 文档的 [测试部分](../introduction.md#test)。"
+
 
 #: ../../language/error_codes/E4069.md:17
 msgid "Suppose in package `lib`:"
-msgstr ""
+msgstr "假设在包 `lib` 中："
 
 #: ../../language/error_codes/E4069.md:21
 msgid "{} // \"is-main\" is by default false\n"
@@ -9281,12 +9292,11 @@ msgid ""
 "fn main { // Error: Unexpected main function in the non-main package.\n"
 "  println(\"Hello, world!\")\n"
 "}\n"
-msgstr "非 main 包中出现 `main` 函数。"
+msgstr ""
 
 #: ../../language/error_codes/E4069.md:35
-#, fuzzy
 msgid "You can remove the `main` function from the non-main package:"
-msgstr "非 main 包中出现 `main` 函数。"
+msgstr "您可以从非主包中删除 `main` 函数："
 
 #: ../../language/error_codes/E4069.md:37
 msgid ""
@@ -9301,10 +9311,11 @@ msgid ""
 "Alternatively, you can set the package to be a main package by setting "
 "`\"is-main\"` to `true` in the package configuration file."
 msgstr ""
+"或者，您可以通过在包配置文件中将 `\"is-main\"` 设置为 `true` 来将包设置为主包。"
 
 #: ../../language/error_codes/E4069.md:55
 msgid "You can also move the `main` function to a different package, say `main`:"
-msgstr ""
+msgstr "你也可以将 `main` 函数移动到另一个包中，比如 `main`："
 
 #: ../../language/error_codes/E4070.md:1
 msgid "E4070"
@@ -9312,7 +9323,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4070.md:3
 msgid "Unknown intrinsic. This intrinsic is not known to the MoonBit compiler."
-msgstr ""
+msgstr "未知的内建指令。MoonBit 编译器不知道这种内建指令。"
 
 #: ../../language/error_codes/E4070.md:5 ../../language/error_codes/E4071.md:6
 msgid ""
@@ -9320,6 +9331,8 @@ msgid ""
 "`moonbitlang/core` and is subject to change without notice, and we highly"
 " recommend **against** using them."
 msgstr ""
+"请注意，所有内建指令不是为在 `moonbitlang/core` 之外使用准备的，"
+"并且可能会在不通知的情况下进行更改，我们强烈建议 **不要使用它们** 。"
 
 #: ../../language/error_codes/E4070.md:11
 msgid ""
@@ -9332,11 +9345,10 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4070.md:22
-#, fuzzy
 msgid ""
 "You may probably want to use the `abort` function from the "
 "`moonbitlang/core`:"
-msgstr "非 main 包中出现 `main` 函数。"
+msgstr "您可能需要使用 `moonbitlang/core` 中的 `abort` 函数："
 
 #: ../../language/error_codes/E4070.md:24
 msgid ""
@@ -9350,6 +9362,7 @@ msgid ""
 "If you really need to use the intrinsic, you can check the source code of"
 " `moonbitlang/core` for further usage of the corresponding intrinsic."
 msgstr ""
+"如果您确实需要使用内建指令，您可以查看 `moonbitlang/core` 的源代码，以进一步使用相应的内建指令。"
 
 #: ../../language/error_codes/E4071.md:1
 msgid "E4071"
@@ -9359,7 +9372,7 @@ msgstr ""
 msgid ""
 "Multiple intrinsic is not supported. You have defined a function to use "
 "multiple intrinsics."
-msgstr ""
+msgstr "不支持多重内建指令。您定义了一个使用多重内建指令的函数。"
 
 #: ../../language/error_codes/E4071.md:12
 #, python-format
@@ -9376,7 +9389,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4071.md:24
 msgid "Remove the extra intrinsic and use only one intrinsic:"
-msgstr ""
+msgstr "删除额外的内建指令，只使用一个内建指令："
 
 #: ../../language/error_codes/E4071.md:26
 msgid ""
@@ -9393,6 +9406,8 @@ msgid ""
 "can check the source code of `moonbitlang/core` for further usage of the "
 "corresponding intrinsic."
 msgstr ""
+"尽可能避免直接使用内建指令，因为我们可能会在将来更改或删除它们。"
+"如果您确实需要使用内建指令，您可以查看 `moonbitlang/core` 的源代码，以进一步使用相应的内建指令。"
 
 #: ../../language/error_codes/E4072.md:1
 msgid "E4072"
@@ -9400,7 +9415,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4072.md:3
 msgid "Method of trait already has a default implementation."
-msgstr ""
+msgstr "特征的方法已经有一个默认实现。"
 
 #: ../../language/error_codes/E4072.md:7
 msgid ""
@@ -9421,9 +9436,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4072.md:25
-#, fuzzy
 msgid "Remove the duplicated default implementation of the trait."
-msgstr "不能为外来特征定义默认实现。"
+msgstr "删除重复的特征的默认实现。"
 
 #: ../../language/error_codes/E4072.md:27
 msgid ""
@@ -9442,7 +9456,6 @@ msgid "E4073"
 msgstr ""
 
 #: ../../language/error_codes/E4073.md:3
-#, fuzzy
 msgid "Cannot provide default implementation for traits from other packages."
 msgstr "不能为外来特征定义默认实现。"
 
@@ -9455,12 +9468,17 @@ msgid ""
 " possible for default implementation to be defined in the package of the "
 "trait, otherwise it would violate the orphan rules."
 msgstr ""
+"这是 Moonbit 中 [特质和类型的孤儿规则](../packages.md#trait-implementations) 的推论。"
+"默认实现可以看作是针对所有可能类型的特征，包括当前软件包内部或外部定义的类型。"
+"因此，只有在特征的包装包中定义默认实现，否则它将违反孤儿规则。"
+
 
 #: ../../language/error_codes/E4073.md:14
 msgid ""
 "Suppose you have a trait `T` defined in package `a` in module "
 "`username/hello`:"
 msgstr ""
+"假设你在模块 `username/hello` 下的包 `a` 中定义了一个特征 `T`："
 
 #: ../../language/error_codes/E4073.md:18
 msgid ""
@@ -9476,6 +9494,7 @@ msgid ""
 "And when you want to define a default implementation for the trait in "
 "another package, say `b`:"
 msgstr ""
+"当你想在另一个包中为特征定义默认实现时，命名为 `b`："
 
 #: ../../language/error_codes/E4073.md:40
 msgid ""
@@ -9494,6 +9513,8 @@ msgid ""
 "default implementation of this trait into the same package. Say you can "
 "move the trait definition into package `b`:"
 msgstr ""
+"要修复这个错误，您可以将 `trait` 的定义和它的默认实现移到同一个包中。"
+"假设你可以把 `trait` 的定义移到包 `b` 中："
 
 #: ../../language/error_codes/E4073.md:57
 msgid ""
@@ -9513,21 +9534,22 @@ msgstr ""
 
 #: ../../language/error_codes/E4074.md:3
 msgid "This error code is shared by the following two error messages:"
-msgstr ""
+msgstr "此错误代码由以下两个错误消息共享："
 
 #: ../../language/error_codes/E4074.md:5
 msgid "Cannot infer the type of variable, please add more type annotation."
-msgstr ""
+msgstr "无法推断变量的类型，请添加更多类型注释。"
 
 #: ../../language/error_codes/E4074.md:6
 msgid "Public definition a must be annotated with its type."
-msgstr ""
+msgstr "公开定义 a 必须用它的类型进行注释。"
 
 #: ../../language/error_codes/E4074.md:8
 msgid ""
 "When defining a toplevel variable using `let`, MoonBit will try to infer "
 "its type when the value is literal:"
 msgstr ""
+"当使用 `let` 定义一个顶层变量时，当值是字面量时，MoonBit 将尝试推断其类型："
 
 #: ../../language/error_codes/E4074.md:11
 msgid ""
@@ -9542,6 +9564,7 @@ msgid ""
 "For \"Cannot infer the type of variable a, please add more type "
 "annotation\":"
 msgstr ""
+"对于错误 1：“无法推断变量 a 的类型，请添加更多类型注释”："
 
 #: ../../language/error_codes/E4074.md:22
 msgid ""
@@ -9554,15 +9577,15 @@ msgid ""
 "The other error message is more subtle. Say if you have module "
 "`username/hello` and package `a`:"
 msgstr ""
+"另一条错误信息更加微妙。假设你有模块 `username/hello` 和包 `a`："
 
 #: ../../language/error_codes/E4074.md:31
 msgid "pub let value = 1.0\n"
 msgstr ""
 
 #: ../../language/error_codes/E4074.md:35
-#, fuzzy
 msgid "And package `b`:"
-msgstr "例如，对于一个枚举"
+msgstr "和包 `b`："
 
 #: ../../language/error_codes/E4074.md:49
 msgid ""
@@ -9574,7 +9597,7 @@ msgstr ""
 msgid ""
 "These two error can be fixed by explicitly annotating the type of the "
 "variable:"
-msgstr ""
+msgstr "这两个错误可以通过显式注释变量的类型来修复："
 
 #: ../../language/error_codes/E4074.md:57
 msgid "let a : Int = 1 + 1\n"
@@ -9593,7 +9616,6 @@ msgid "Missing type annotation for the parameter."
 msgstr "缺少参数的类型注释。"
 
 #: ../../language/error_codes/E4075.md:5
-#, fuzzy
 msgid "MoonBit requires all toplevel function to have full type annotation."
 msgstr "只有顶层函数可以有带标签的参数。"
 
@@ -9735,13 +9757,14 @@ msgstr ""
 
 #: ../../language/error_codes/E4079.md:3
 msgid "Cannot derive trait: method is already defined."
-msgstr ""
+msgstr "不能派生特征：方法已经定义。"
 
 #: ../../language/error_codes/E4079.md:5
 msgid ""
 "This error occurs when you try to derive a trait for a type that already "
 "has a implementation for the trait."
 msgstr ""
+"当您尝试为已经具有该特征实现的类型派生特征时，会发生此错误。"
 
 #: ../../language/error_codes/E4079.md:10
 msgid ""
@@ -9758,10 +9781,11 @@ msgid ""
 "You can pick either the manual implementation or the derived "
 "implementation for the type by removing the other one."
 msgstr ""
+"您可以通过删除另一个来选择该类型的手动实现或派生实现。"
 
 #: ../../language/error_codes/E4079.md:23
 msgid "To use the derived implementation:"
-msgstr ""
+msgstr "要使用派生的实现："
 
 #: ../../language/error_codes/E4079.md:25
 msgid ""
@@ -9775,7 +9799,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4079.md:34
 msgid "Or to use the manual implementation:"
-msgstr ""
+msgstr "或者使用手动实现："
 
 #: ../../language/error_codes/E4079.md:36
 msgid ""
@@ -9792,11 +9816,11 @@ msgstr ""
 
 #: ../../language/error_codes/E4080.md:3
 msgid "Arity mismatch: incorrect number of arguments provided."
-msgstr ""
+msgstr "参数数不匹配：提供的参数数不正确。"
 
 #: ../../language/error_codes/E4080.md:7 ../../language/error_codes/E4080.md:37
 msgid "Function arity mismatch:"
-msgstr ""
+msgstr "函数形状不匹配："
 
 #: ../../language/error_codes/E4080.md:9
 msgid ""
@@ -9813,7 +9837,7 @@ msgstr ""
 #: ../../language/error_codes/E4080.md:19
 #: ../../language/error_codes/E4080.md:45
 msgid "Constructor arity mismatch:"
-msgstr ""
+msgstr "构造函数形状不匹配："
 
 #: ../../language/error_codes/E4080.md:21
 msgid ""
@@ -9831,9 +9855,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4080.md:35
-#, fuzzy
 msgid "Provide the correct number of arguments."
-msgstr "自动填充参数"
+msgstr "提供正确数量的参数。"
 
 #: ../../language/error_codes/E4080.md:39
 msgid ""
@@ -9857,7 +9880,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4081.md:3
 msgid "The identifier is bound more than once in the same pattern."
-msgstr ""
+msgstr "标识符在同一个模式绑定多次。"
 
 #: ../../language/error_codes/E4081.md:5
 msgid ""
@@ -9865,6 +9888,8 @@ msgid ""
 "might have different values. If you want to shadow the first identifier, "
 "you can use `_` to discard it."
 msgstr ""
+"不可能将值绑定到一个标识符中，"
+"因为它们可能具有不同的值。如果想要遮蔽第一个标识符，可以使用 `_` 来丢弃它。"
 
 #: ../../language/error_codes/E4081.md:11
 msgid ""
@@ -9880,7 +9905,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4081.md:23
 msgid "Use a different name for the second identifier."
-msgstr ""
+msgstr "对第二个标识符使用不同的名称。"
 
 #: ../../language/error_codes/E4081.md:25
 msgid ""
@@ -9897,6 +9922,7 @@ msgid ""
 "If you want a shadow-like behavior here, you can explicitly discard the "
 "first `a` using `_`:"
 msgstr ""
+"如果你想要一个类似遮蔽的行为，你可以显式地放弃第一个 `a` 使用 `_`："
 
 #: ../../language/error_codes/E4081.md:37
 msgid ""
@@ -9914,7 +9940,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4082.md:3
 msgid "Variable is not bound in all patterns."
-msgstr ""
+msgstr "变量并非在所有模式中都是绑定的。"
 
 #: ../../language/error_codes/E4082.md:5
 msgid ""
@@ -9922,6 +9948,8 @@ msgid ""
 "all patterns. If a variable were not bound in all patterns, it would be "
 "free variable when the pattern is matched, which is not allowed."
 msgstr ""
+"在模式中使用 `|` 操作符时，必须在所有模式中绑定所有变量。"
+"如果一个变量在所有模式中都没有被绑定，则在匹配模式时，它将是自由变量，这是不允许的。"
 
 #: ../../language/error_codes/E4082.md:11
 msgid ""
@@ -9953,7 +9981,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4083.md:3
 msgid "The type does not implement `op_as_view` method."
-msgstr ""
+msgstr "该类型没有实现 `op_as_view` 方法。"
 
 #: ../../language/error_codes/E4083.md:5
 msgid ""
@@ -9961,6 +9989,7 @@ msgid ""
 " library. If you see this error, please report it as a bug to the core "
 "library here:"
 msgstr ""
+"当您不开发标准库 `moonbitlang/core` 时，不应发出此错误代码。如果您看到此错误，请将其作为错误报告给 `moonbitlang/core`："
 
 #: ../../language/error_codes/E4083.md:9
 msgid "<https://github.com/moonbitlang/core/issues/new>"
@@ -9974,7 +10003,7 @@ msgstr ""
 msgid ""
 "The label is supplied twice when calling a function with labelled "
 "parameters."
-msgstr ""
+msgstr "当调用带有带标签参数的函数时，同一个标签被提供了两次。"
 
 #: ../../language/error_codes/E4084.md:7
 msgid ""
@@ -9991,7 +10020,7 @@ msgstr ""
 msgid ""
 "As there is only one labelled parameter in the function call, you can "
 "simply provide a single value."
-msgstr ""
+msgstr "由于在函数调用中只有一个带标签的参数，因此您可以简单地提供一个值。"
 
 #: ../../language/error_codes/E4084.md:22
 msgid ""
@@ -10006,6 +10035,8 @@ msgid ""
 " made a typo to make this error, then you can change the name of the "
 "label supplied to the correct one."
 msgstr ""
+"如果在函数调用中有多个带标签的参数，并且由于输入错误而导致此错误，"
+"则可以将提供的标签名称更改为正确的名称。"
 
 #: ../../language/error_codes/E4084.md:32
 msgid ""
@@ -10028,12 +10059,11 @@ msgstr "这个错误发生在："
 
 #: ../../language/error_codes/E4085.md:7
 msgid "You made a typo in the label name;"
-msgstr "你在标签名称上打了个错字；"
+msgstr "您在标签名称上打了个错字；"
 
 #: ../../language/error_codes/E4085.md:8
-#, fuzzy
 msgid "You mistakenly treat a positional argument as a labelled argument."
-msgstr "只有顶层函数可以有带标签的参数。"
+msgstr "您错误地将位置参数视为标记参数。"
 
 #: ../../language/error_codes/E4085.md:9
 msgid "You provided extra labelled arguments to the function."
@@ -10082,14 +10112,16 @@ msgid ""
 " as a positional argument. There are some common functions that require "
 "labelled arguments, such as:"
 msgstr ""
+"有时，当您错误地将带标签的参数视为位置参数时，会发生此错误。"
+"一些常用的函数需要带标签的参数，例如："
 
 #: ../../language/error_codes/E4086.md:9
 msgid "`@test.snapshot`. Remember to supply `filename` as a labelled argument."
-msgstr ""
+msgstr "`@test.snapshot` 请提供 `filename` 作为带标签的参数。"
 
 #: ../../language/error_codes/E4086.md:10
 msgid "`@test.inspect`. Remember to supply `content` as a labelled argument."
-msgstr ""
+msgstr "`@test.inspect` 请提供 `content` 作为带标签的参数。"
 
 #: ../../language/error_codes/E4086.md:14
 msgid ""
@@ -10107,7 +10139,7 @@ msgstr ""
 msgid ""
 "Check the signature of the function and provide the correct labelled "
 "argument."
-msgstr "检查函数的签名并提供正确的标记参数。"
+msgstr "检查函数的签名并提供正确的带标签参数。"
 
 #: ../../language/error_codes/E4086.md:28
 msgid ""
@@ -10135,6 +10167,9 @@ msgid ""
 " the value it holds. This means for `Array[T]`, `Ref[T]`, and mutable "
 "fields in `struct`, you don't have to declare them as mutable."
 msgstr ""
+"MoonBit 要求程序员明确声明可变变量。"
+"请注意，MoonBit 中的可变性仅指变量本身，而不是它持有的值。"
+"这意味着对于 `Array[T]`、`Ref[T]` 和 `struct` 中的可变字段，您无需声明它们为可变的。"
 
 #: ../../language/error_codes/E4087.md:12
 msgid ""
@@ -10150,6 +10185,7 @@ msgid ""
 "To fix this error, you need to declare the variable as mutable by adding "
 "the `mut` keyword before the variable name."
 msgstr ""
+"为了修复此错误，您需要将变量声明为可变的，方法是在变量名前添加 `mut` 关键字。"
 
 #: ../../language/error_codes/E4087.md:25
 msgid ""
@@ -10175,6 +10211,9 @@ msgid ""
 "immutable. To make a field mutable, you need to add the `mut` keyword "
 "before the field."
 msgstr ""
+"MoonBit 要求程序员明确注释记录中哪些字段是可变的。"
+"默认情况下，记录中的所有字段都是不可变的。"
+"要使字段可变，您需要在字段前添加 `mut` 关键字。"
 
 #: ../../language/error_codes/E4088.md:11
 msgid ""
@@ -10194,6 +10233,7 @@ msgid ""
 "To fix this error, you need to declare the field as mutable by adding the"
 " `mut` keyword before the field name."
 msgstr ""
+"为了修复此错误，您需要将字段声明为可变的，方法是在字段名前添加 `mut` 关键字。"
 
 #: ../../language/error_codes/E4088.md:28
 msgid ""
@@ -10224,6 +10264,10 @@ msgid ""
 "does not exist in the tuple, for example, accessing the third element "
 "(`tuple.2`) in a tuple with only two elements."
 msgstr ""
+"在 MoonBit 中，可以使用索引访问器访问元组中的元素，"
+"例如 `tuple.0`、`tuple.1` 等。**索引从 0 开始**，"
+"如果尝试访问元组中不存在的元素"
+"(例如访问元组中只有两个元素的第三个元素 `tuple.2`)，则编译器会报错。"
 
 #: ../../language/error_codes/E4089.md:13
 msgid ""
@@ -10238,6 +10282,7 @@ msgid ""
 "To fix this error, you need to access the element within the tuple that "
 "exists."
 msgstr ""
+"为了修复此错误，您需要访问元组中存在的元素。"
 
 #: ../../language/error_codes/E4089.md:24
 msgid ""
@@ -10256,6 +10301,7 @@ msgid ""
 "Tuples are not mutable. You cannot change the value of a field in a tuple"
 " using assignment."
 msgstr ""
+"元组不可变。您不能使用赋值更改元组中字段的值。"
 
 #: ../../language/error_codes/E4090.md:8
 msgid ""
@@ -10270,7 +10316,7 @@ msgstr ""
 msgid ""
 "If you need to change the value of a field in a tuple, you should use a "
 "struct instead."
-msgstr "如果需要更改元组中字段的值，则应使用结构体。"
+msgstr "如果需要更改元组中字段的值，应该使用结构体而不是元组。"
 
 #: ../../language/error_codes/E4090.md:21
 msgid ""
@@ -10318,7 +10364,7 @@ msgstr ""
 msgid ""
 "You can either add the missing field to the struct, or use an existing "
 "field to access the struct."
-msgstr ""
+msgstr "您可以向结构体添加缺失的字段，或者使用现有字段来访问结构体。"
 
 #: ../../language/error_codes/E4091.md:27
 msgid ""
@@ -10346,7 +10392,7 @@ msgstr "这个空记录缺少注释。"
 msgid ""
 "Currently, the MoonBit compiler does not emit this error, as it is "
 "impossible to create an empty struct without using `T::{ .. }` syntax."
-msgstr ""
+msgstr "当前 MoonBit 编译器不会发出此错误，因为它是不可能不使用 `T::{ .. }` 语法以创建空结构体。"
 
 #: ../../language/error_codes/E4093.md:1
 msgid "E4093"
@@ -10360,7 +10406,7 @@ msgstr "该类型不是记录类型。"
 msgid ""
 "This error occurs when you try to construct a type that is not a `struct`"
 " using the `T::{ .. }` syntax."
-msgstr ""
+msgstr "当您尝试使用 `T::{ .. }` 语法构造不是结构体的类型时会发生此错误。"
 
 #: ../../language/error_codes/E4093.md:10
 msgid ""
@@ -10399,11 +10445,11 @@ msgstr "不能修改只读字段。"
 msgid ""
 "For a read-only `struct`, you cannot modify the value of a field using "
 "assignment outside of the package where the type is defined."
-msgstr ""
+msgstr "对于只读结构体，您不能使用赋值在定义类型的包之外修改字段的值。"
 
 #: ../../language/error_codes/E4094.md:10
 msgid "Suppose you have a package `a` in module `username/hello`:"
-msgstr "假设你在模块 `username/hello` 中有一个包 `a`："
+msgstr "假设您在模块 `username/hello` 中有一个包 `a`："
 
 #: ../../language/error_codes/E4094.md:20
 msgid ""
@@ -10422,7 +10468,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4094.md:34
 msgid "And you have another package `b` in the same module:"
-msgstr ""
+msgstr "您在相同模块中还有另一个包 `b`："
 
 #: ../../language/error_codes/E4094.md:38
 msgid ""
@@ -10446,10 +10492,10 @@ msgstr ""
 msgid ""
 "If you have control over the package where the type is defined, you can "
 "simply make the struct has `pub(all)` visibility."
-msgstr ""
+msgstr "如果您有控制定义类型的包，您可以简单地使结构体具有 `pub(all)` 可见性。"
 
 #: ../../language/error_codes/E4094.md:61
-msgid "`a/a.mbt"
+msgid "`a/a.mbt`"
 msgstr ""
 
 #: ../../language/error_codes/E4094.md:63
@@ -10458,7 +10504,7 @@ msgid ""
 "pub(all) struct T {\n"
 "  mut value : Int\n"
 "}\n"
-msgstr "对于结构体字段"
+msgstr ""
 
 #: ../../language/error_codes/E4094.md:69
 msgid ""
@@ -10467,6 +10513,8 @@ msgid ""
 "struct. We recommend using getter/setter pattern to guard the access to "
 "the struct fields."
 msgstr ""
+"然而，这可能不是隐藏结构体实现细节或保护结构体不变量的最佳解决方案。"
+"我们建议使用 `getter/setter` 模式来保护对结构体字段的访问。"
 
 #: ../../language/error_codes/E4094.md:75
 msgid ""
@@ -10482,7 +10530,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4095.md:3
 msgid "Integer literal is out of range."
-msgstr ""
+msgstr "整数字面量超出范围。"
 
 #: ../../language/error_codes/E4095.md:5
 msgid ""
@@ -10490,6 +10538,8 @@ msgid ""
 "`Int64` and their unsigned variants. The range of these types are as "
 "follows:"
 msgstr ""
+"整数字面量可以用来初始化 `Byte`、`Int16`、`Int`、`Int64` "
+"及其无符号变体。这些类型的范围如下："
 
 #: ../../language/error_codes/E4095.md ../../language/fundamentals.md:1360
 msgid "Type"
@@ -10587,6 +10637,7 @@ msgid ""
 "You should either use a value that falls into the range of corresponding "
 "type, or adjust the type to accommodate the value."
 msgstr ""
+"您应该使用对应类型范围内的值，或者调整类型以适应值。"
 
 #: ../../language/error_codes/E4095.md:30
 msgid ""
@@ -10668,7 +10719,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4100.md:3
 msgid "The type is not a trait."
-msgstr ""
+msgstr "该类型不是一个特征。"
 
 #: ../../language/error_codes/E4100.md:5
 msgid ""
@@ -10676,6 +10727,8 @@ msgid ""
 "alias for a type and use it as a trait. As it is impossible to use a type"
 " as a trait, this error might hint at a typo in your code."
 msgstr ""
+"该错误发生在您尝试使用 `typealias` 语法定义一个类型的别名，"
+"并将其用作特征时。由于无法将类型用作特征，因此该错误可能会提示您代码中的错误。"
 
 #: ../../language/error_codes/E4100.md:11
 msgid ""
@@ -10694,6 +10747,7 @@ msgid ""
 "If there is a typo, the use a correct trait or alias of trait at where "
 "the error occurs."
 msgstr ""
+"如果代码中存在拼写错误，应当使用正确的特征或特征别名。"
 
 #: ../../language/error_codes/E4100.md:27
 msgid ""
@@ -10713,6 +10767,7 @@ msgid ""
 "We recommend using `traitalias` for defining aliases for traits, as this "
 "will detect errors like this earlier."
 msgstr ""
+"我们建议使用 `traitalias` 定义特征的别名，这样可以更早地检测到此类错误。"
 
 #: ../../language/error_codes/E4101.md:1
 msgid "E4101"
@@ -10720,7 +10775,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4101.md:3
 msgid "Unsupported expression after the pipe operator."
-msgstr ""
+msgstr "管道运算符右侧不支持该表达式。"
 
 #: ../../language/error_codes/E4101.md:5
 msgid ""
@@ -10729,28 +10784,29 @@ msgid ""
 "calls in a more readable way, but only supports specific forms on its "
 "right-hand side."
 msgstr ""
+"该错误发生在管道运算符右侧的表达式不是一个支持的形式。"
+"管道运算符允许您以更易读的方式链式调用函数，"
+"但它的右侧只支持特定的形式。"
 
 #: ../../language/error_codes/E4101.md:9
 msgid "The following forms are allowed after the pipe operator:"
-msgstr ""
+msgstr "管道运算符右侧允许以下形式："
 
 #: ../../language/error_codes/E4101.md:11
 msgid "A single identifier (function name)"
-msgstr ""
+msgstr "一个标识符（函数名）"
 
 #: ../../language/error_codes/E4101.md:12
 msgid "A regular function application (but not method calls)"
-msgstr ""
+msgstr "一个普通的函数应用（但不是方法调用）"
 
 #: ../../language/error_codes/E4101.md:13
-#, fuzzy
 msgid "A constructor name"
-msgstr "运算符名称"
+msgstr "构造函数名"
 
 #: ../../language/error_codes/E4101.md:14
-#, fuzzy
 msgid "A constructor application"
-msgstr "函数应用"
+msgstr "构造函数应用"
 
 #: ../../language/error_codes/E4101.md:18
 msgid ""
@@ -10774,6 +10830,7 @@ msgid ""
 "To fix this error, you can change the invalid pipe expression to normal "
 "function or method application."
 msgstr ""
+"要修复此错误，您可以将无效的管道表达式改为普通的函数或方法应用。"
 
 #: ../../language/error_codes/E4101.md:38
 msgid ""
@@ -10795,7 +10852,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4102.md:3
 msgid "Outside of a loop."
-msgstr ""
+msgstr "不在循环中。"
 
 #: ../../language/error_codes/E4102.md:5
 msgid ""
@@ -10803,20 +10860,22 @@ msgid ""
 "a loop construct. These control flow statements can only be used within "
 "loops."
 msgstr ""
+"该错误发生在使用 `break` 或 `continue` 语句时，它们只能在循环中使用。"
 
 #: ../../language/error_codes/E4102.md:8
 msgid "`break` is used to exit a loop early"
-msgstr ""
+msgstr "`break` 用于提前退出循环。"
 
 #: ../../language/error_codes/E4102.md:9
 msgid "`continue` is used to skip to the next iteration of a loop"
-msgstr ""
+msgstr "`continue` 用于跳过循环的下一次迭代。"
 
 #: ../../language/error_codes/E4102.md:11
 msgid ""
 "Using these statements outside of a loop context is invalid since there "
 "is no loop to break from or continue to the next iteration."
 msgstr ""
+"在没有循环可跳出或继续到下一次迭代的情况下，使用这些语句是无效的。"
 
 #: ../../language/error_codes/E4102.md:16
 msgid ""
@@ -10846,6 +10905,7 @@ msgid ""
 "To fix this error, ensure that `break` and `continue` are used within a "
 "loop construct."
 msgstr ""
+"要修复此错误，请确保 `break` 和 `continue` 在循环构造中使用。"
 
 #: ../../language/error_codes/E4103.md:1
 msgid "E4103"
@@ -10853,7 +10913,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4103.md:3
 msgid "This loop has incorrect number of patterns supplied."
-msgstr ""
+msgstr "此循环提供了错误的模式数量。"
 
 #: ../../language/error_codes/E4103.md:5
 msgid ""
@@ -10861,6 +10921,7 @@ msgid ""
 "match the number of loop arguments. In a loop construct, each arm must "
 "have the same number of patterns as there are loop arguments."
 msgstr ""
+"这个错误发生在循环中的模式数量与循环参数数量不匹配时。在循环构造中，每一个都必须有与循环参数数量相同的模式数量。"
 
 #: ../../language/error_codes/E4103.md:9
 msgid ""
@@ -10868,6 +10929,7 @@ msgid ""
 "patterns to match against those arguments. Having too few or too many "
 "patterns will trigger this error."
 msgstr ""
+"例如，如果一个循环有 2 个参数，那么每一个都必须有 2 个模式来匹配这些参数。模式数量不足或过多都会触发此错误。"
 
 #: ../../language/error_codes/E4103.md:15
 msgid ""
@@ -10885,6 +10947,7 @@ msgid ""
 "To fix this error, ensure that each arm in the loop has the correct "
 "number of patterns to match the loop arguments. For example,"
 msgstr ""
+"要修复此错误，请确保循环中的每一个都有正确数量的模式来匹配循环参数。例如："
 
 #: ../../language/error_codes/E4103.md:30
 msgid ""
@@ -10904,7 +10967,7 @@ msgstr ""
 msgid ""
 "Current loop expects different number of arguments than supplied with "
 "`continue`."
-msgstr ""
+msgstr "当前循环的参数数量与 `continue` 提供的参数数量不同。"
 
 #: ../../language/error_codes/E4104.md:5
 msgid ""
@@ -10913,6 +10976,8 @@ msgid ""
 " a `loop` construct, when using `continue`, you must provide the same "
 "number of arguments as declared in the loop header."
 msgstr ""
+"此错误发生在 `continue` 语句提供的参数数量与循环所期望的参数数量不匹配时。"
+"在 `loop` 构造中，使用 `continue` 时，必须提供与循环头中声明的相同数量的参数。"
 
 #: ../../language/error_codes/E4104.md:10
 msgid ""
@@ -10920,6 +10985,8 @@ msgid ""
 "within that `loop` must also provide exactly 2 arguments. Providing too "
 "few or too many arguments will trigger this error."
 msgstr ""
+"例如，如果一个 `loop` 有 2 个参数，那么任何在该 `loop` 中"
+"使用 `continue` 的语句都必须提供 2 个参数。参数数量不足或过多都会触发此错误。"
 
 #: ../../language/error_codes/E4104.md:14
 msgid ""
@@ -10929,22 +10996,25 @@ msgid ""
 "`continue`, the number of arguments must match the number of loop "
 "variables."
 msgstr ""
+"请注意，在 `for` 循环中，你可以省略 `continue` 语句中的所有参数。"
+"在这种情况下，循环将使用循环头中指定的默认更新表达式。"
+"但是，如果你提供了参数给 `continue`，那么参数数量必须与循环变量数量匹配。"
 
 #: ../../language/error_codes/E4104.md:19
 msgid "For example, in a `for` loop with two variables:"
-msgstr ""
+msgstr "例如，在一个有两个变量的 `for` 循环中："
 
 #: ../../language/error_codes/E4104.md:21
 msgid "`continue` (with no arguments) will use the default updates"
-msgstr ""
+msgstr "`continue`（没有参数）将使用默认更新"
 
 #: ../../language/error_codes/E4104.md:22
 msgid "`continue x, y` (with two arguments) is valid"
-msgstr ""
+msgstr "`continue x, y`（有两个参数）是有效的"
 
 #: ../../language/error_codes/E4104.md:23
 msgid "`continue x` or `continue x, y, z` will trigger this error"
-msgstr ""
+msgstr "`continue x` 或 `continue x, y, z` 会触发此错误"
 
 #: ../../language/error_codes/E4104.md:27
 msgid ""
@@ -10978,6 +11048,7 @@ msgid ""
 "To fix this error, ensure that the number of arguments provided to "
 "`continue` matches the number of loop variables. For example,"
 msgstr ""
+"要修复此错误，请确保 `continue` 提供的参数数量与循环变量数量匹配。例如："
 
 #: ../../language/error_codes/E4104.md:55
 msgid ""
@@ -11007,7 +11078,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4105.md:3
 msgid "Current loop has result type mismatch with `break` argument."
-msgstr ""
+msgstr "当前循环的结果类型与 `break` 参数的类型不匹配。"
 
 #: ../../language/error_codes/E4105.md:5
 msgid ""
@@ -11017,22 +11088,25 @@ msgid ""
 "argument, that argument's type must match the loop's result type. When an"
 " argument is not provided, the loop's result type must be `Unit`."
 msgstr ""
+"当提供给 `break` 语句的参数类型与循环的预期结果类型不匹配时，"
+"会发生此错误。在 MoonBit 中，循环可以有结果类型，当使用带有参数的 `break` 时，"
+"该参数的类型必须与循环的结果类型匹配。当没有提供参数时，循环的结果类型必须是 `Unit`。"
 
 #: ../../language/error_codes/E4105.md:11
 msgid "This mismatch can happen in two ways:"
-msgstr ""
+msgstr "此不匹配可能发生在两种方式中："
 
 #: ../../language/error_codes/E4105.md:13
 msgid ""
 "The loop expects a value of a certain type, but `break` is called with no"
 " argument"
-msgstr ""
+msgstr "循环期望一个特定类型的值，但 `break` 没有提供参数"
 
 #: ../../language/error_codes/E4105.md:15
 msgid ""
 "The loop expects a value of type A, but `break` is called with an "
 "argument of type B"
-msgstr ""
+msgstr "循环期望一个类型为 A 的值，但 `break` 提供了类型为 B 的参数"
 
 #: ../../language/error_codes/E4105.md:18
 msgid "For loops with result types, you must ensure that:"
@@ -11066,13 +11140,13 @@ msgstr ""
 #: ../../language/error_codes/E4108.md:45
 #: ../../language/error_codes/E4110.md:35
 msgid "To fix this error, you can:"
-msgstr ""
+msgstr "要修复此错误，您可以："
 
 #: ../../language/error_codes/E4105.md:43
 msgid ""
 "Add an argument to the `break` statement that matches the loop's result "
 "type. For example,"
-msgstr "向 `break` 语句添加一个与循环结果类型匹配的参数。例如，"
+msgstr "向 `break` 语句添加一个与循环结果类型匹配的参数。例如："
 
 #: ../../language/error_codes/E4105.md:46
 msgid ""
@@ -11143,8 +11217,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4106.md:29
-msgid "To fix this error, you can"
-msgstr ""
+msgid "To fix this error, you can:"
+msgstr "要修复此错误，您可以："
 
 #: ../../language/error_codes/E4106.md:31
 msgid ""
@@ -11193,6 +11267,8 @@ msgid ""
 "initialization, each variable must have a unique name to avoid ambiguity "
 "about which value should be used."
 msgstr ""
+"当在 for 循环的初始化块中多次声明相同的变量名时，会发生此错误。"
+"在 for 循环的初始化中，每个变量必须有一个唯一的名称，以避免应该使用哪个值的歧义。"
 
 #: ../../language/error_codes/E4107.md:12
 msgid ""
@@ -11243,6 +11319,8 @@ msgid ""
 "loop must have an `else` branch that specifies what value to return when "
 "the loop completes normally. This is because:"
 msgstr ""
+"在 MoonBit 中，当 for 循环用于需要值的上下文中（例如，当函数返回非 Unit 类型时），循环必须有一个 `else` 分支，"
+"指定当循环正常完成时应该返回什么值。这是因为："
 
 #: ../../language/error_codes/E4108.md:14
 msgid "The loop body itself cannot yield a value (unlike `loop` expressions)"
@@ -11253,6 +11331,7 @@ msgid ""
 "Without an `else` branch, there's no way to determine what value should "
 "be returned when the loop finishes without breaking"
 msgstr ""
+"如果没有 `else` 分支，就没有办法确定当循环正常完成而没有中断时应该返回什么值。"
 
 #: ../../language/error_codes/E4108.md:18
 msgid "This commonly occurs in two situations:"
@@ -11292,7 +11371,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4108.md:47
 msgid "add an `else` branch to the for-loop:"
-msgstr ""
+msgstr "添加一个 `else` 分支到 for 循环："
 
 #: ../../language/error_codes/E4108.md:49
 msgid ""
@@ -11308,7 +11387,7 @@ msgstr ""
 msgid ""
 "change the function's return type to `Unit` if you don't need to return a"
 " value from the loop:"
-msgstr ""
+msgstr "如果您不需要从循环中返回值，请将函数的返回类型更改为 `Unit`："
 
 #: ../../language/error_codes/E4108.md:61
 msgid ""
@@ -11324,13 +11403,15 @@ msgstr ""
 
 #: ../../language/error_codes/E4109.md:3
 msgid "Return must be inside a function."
-msgstr ""
+msgstr "`return` 必须在函数体内。"
 
 #: ../../language/error_codes/E4109.md:5
 msgid ""
 "This error occurs when a `return` statement is used outside of a "
 "function. In MoonBit, `return` statements must be inside a function body."
 msgstr ""
+"当 `return` 语句用于函数外部时，就会发生此错误。"
+"在 MoonBit 中，`return` 语句必须在函数体内。"
 
 #: ../../language/error_codes/E4109.md:10
 msgid ""
@@ -11350,7 +11431,7 @@ msgstr ""
 msgid ""
 "To fix this error, you can remove the return statement from the let "
 "binding:"
-msgstr ""
+msgstr "要修复此错误，您可以从 `let` 绑定中删除 `return` 语句："
 
 #: ../../language/error_codes/E4109.md:27
 msgid ""
@@ -11373,24 +11454,25 @@ msgid ""
 "The loop is not expected to yield a value, please remove the argument of "
 "the `break` or add an `else` branch."
 msgstr ""
+"该循环不应该返回值，请从 `break` 语句中删除参数，或添加 `else` 分支。"
 
 #: ../../language/error_codes/E4110.md:6
 msgid ""
 "This error occurs when using a `break` statement with an argument in a "
 "loop that is not expected to yield a value. This applies to:"
 msgstr ""
+"当在不应该返回值的循环中使用带有参数的 `break` 语句时，就会发生此错误。"
+"此错误适用于以下循环："
 
 #: ../../language/error_codes/E4110.md:9
-#, fuzzy
 msgid "`while` loops"
 msgstr "While 循环"
 
 #: ../../language/error_codes/E4110.md:10
 msgid "`for` loops with update expressions"
-msgstr ""
+msgstr "带有更新表达式 `for` 循环"
 
 #: ../../language/error_codes/E4110.md:11
-#, fuzzy
 msgid "`for .. in ..` iteration loops"
 msgstr "`for .. in` 循环"
 
@@ -11399,18 +11481,22 @@ msgid ""
 "These loop constructs do not have a mechanism to return a value from the "
 "loop body. If you need to break with a value, you must either:"
 msgstr ""
+"这些循环结构没有从循环体返回值的机制。"
+"如果您需要使用值中断循环，您必须："
 
 #: ../../language/error_codes/E4110.md:16
 msgid ""
 "Remove the argument from the `break` statement if you don't need to "
 "return a value, or"
 msgstr ""
+"如果您不需要从循环中返回值，请从 `break` 语句中删除参数，或"
 
 #: ../../language/error_codes/E4110.md:18
 msgid ""
 "Add an `else` branch to handle the case when the loop completes normally "
 "and provide a return value"
 msgstr ""
+"添加一个 `else` 分支，用于处理循环正常完成时返回值的情况"
 
 #: ../../language/error_codes/E4110.md:23
 msgid ""
@@ -11427,7 +11513,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4110.md:37
 msgid "Remove the argument from the `break` statement. For example,"
-msgstr ""
+msgstr "从 `break` 语句中删除参数。例如："
 
 #: ../../language/error_codes/E4110.md:39
 msgid ""
@@ -11443,6 +11529,7 @@ msgid ""
 "Add an `else` branch to handle the case when the loop completes normally "
 "and provide a return value. For example,"
 msgstr ""
+"添加一个 `else` 分支，用于处理循环正常完成时返回值的情况。例如："
 
 #: ../../language/error_codes/E4110.md:50
 msgid ""
@@ -11461,13 +11548,14 @@ msgstr ""
 
 #: ../../language/error_codes/E4111.md:3
 msgid "The usage of break statement is invalid."
-msgstr ""
+msgstr "break 语句的使用无效。"
 
 #: ../../language/error_codes/E4111.md:5
 msgid ""
 "This error happens when you use a `break` statement in the "
 "initialization, condition, or update statement of a loop."
 msgstr ""
+"当您在循环的初始化、条件或更新语句中使用 `break` 语句时，就会发生此错误。"
 
 #: ../../language/error_codes/E4111.md:10
 msgid ""
@@ -11486,6 +11574,7 @@ msgid ""
 "Do not write `break` statement in the initialization, condition, or "
 "update statement of a loop."
 msgstr ""
+"不要在循环的初始化、条件或更新语句中编写 `break` 语句。"
 
 #: ../../language/error_codes/E4112.md:1
 msgid "E4112"
@@ -11500,6 +11589,7 @@ msgid ""
 "This error happens when you use a `continue` statement in the "
 "initialization, condition, or update statement of a loop."
 msgstr ""
+"当您在循环的初始化、条件或更新语句中使用 `continue` 语句时，就会发生此错误。"
 
 #: ../../language/error_codes/E4112.md:10
 msgid ""
@@ -11519,6 +11609,7 @@ msgid ""
 "Do not write `continue` statement in the initialization, condition, or "
 "update statement of a loop."
 msgstr ""
+"不要在循环的初始化、条件或更新语句中编写 `continue` 语句。"
 
 #: ../../language/error_codes/E4113.md:1
 msgid "E4113"
@@ -11535,10 +11626,12 @@ msgid ""
 "that have named fields, you can only access fields that were defined in "
 "the constructor's declaration."
 msgstr ""
+"当试图访问构造函数模式中不存在的字段时，会发生此错误。"
+"在 MoonBit 中，当与具有命名字段的构造函数进行模式匹配时，您只能访问在构造函数声明中定义的字段。"
 
 #: ../../language/error_codes/E4113.md:10
 msgid "This commonly happens when:"
-msgstr ""
+msgstr "此情况通常发生在："
 
 #: ../../language/error_codes/E4113.md:12
 msgid "Misspelling a field name"
@@ -11553,6 +11646,7 @@ msgid ""
 "Trying to access a field that was removed or renamed in the type "
 "definition"
 msgstr ""
+"试图访问已从类型定义中删除或重命名的字段"
 
 #: ../../language/error_codes/E4113.md:18
 msgid ""
@@ -11574,7 +11668,7 @@ msgstr ""
 #: ../../language/error_codes/E4113.md:36
 #: ../../language/error_codes/E4114.md:22
 msgid "To fix this error, you can either:"
-msgstr ""
+msgstr "要修复此错误，您可以执行以下操作："
 
 #: ../../language/error_codes/E4113.md:38
 msgid "add the missing field to the constructor"
@@ -11613,6 +11707,7 @@ msgid ""
 "This error occurs when trying to use labelled arguments in a local "
 "function or anonymous function."
 msgstr ""
+"当尝试在本地函数或匿名函数中使用带标签的参数时，就会发生此错误。"
 
 #: ../../language/error_codes/E4114.md:10
 msgid ""
@@ -11641,9 +11736,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4114.md:36
-#, fuzzy
 msgid "Remove the labelled arguments"
-msgstr "带标签的参数"
+msgstr "移除带标签的参数"
 
 #: ../../language/error_codes/E4114.md:38
 msgid ""
@@ -11669,6 +11763,8 @@ msgid ""
 " functions. Leaving the default value of parameter of other types will "
 "result in this error."
 msgstr ""
+"MoonBit 支持自动填充 `SourceLoc` 和 `ArgsLoc` 参数的函数。"
+"将其他类型参数的默认值留空将导致出现此错误。"
 
 #: ../../language/error_codes/E4115.md:11
 msgid ""
@@ -11679,7 +11775,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4115.md:19
 msgid "Use a default value for the parameter:"
-msgstr ""
+msgstr "为参数使用默认值："
 
 #: ../../language/error_codes/E4115.md:21
 msgid ""
@@ -11693,7 +11789,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4116.md:3
 msgid "Found hole _."
-msgstr ""
+msgstr "发现未完成的代码 _。"
 
 #: ../../language/error_codes/E4116.md:5
 msgid ""
@@ -11701,6 +11797,8 @@ msgid ""
 "instead. Using `...` allows the program to be compiled and run, while `_`"
 " will cause a compilation error."
 msgstr ""
+"如果要表示未完成的代码，建议使用 `...` 代替。使用 `...` 允许程序编译并运行，而 `_`"
+"将导致编译错误。"
 
 #: ../../language/error_codes/E4116.md:11
 msgid ""
@@ -11711,7 +11809,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4116.md:19
 msgid "Use `...` instead:"
-msgstr ""
+msgstr "改用 `...` 代替："
 
 #: ../../language/error_codes/E4116.md:21
 msgid ""
@@ -11726,13 +11824,14 @@ msgstr ""
 
 #: ../../language/error_codes/E4117.md:3
 msgid "Function with labelled arguments can only be applied directly."
-msgstr ""
+msgstr "只能直接应用带标签的函数。"
 
 #: ../../language/error_codes/E4117.md:5
 msgid ""
 "This means you cannot pass a function with labelled arguments as an "
 "argument to another function."
 msgstr ""
+"这意味着您不能将带标签的函数作为参数传递给另一个函数。"
 
 #: ../../language/error_codes/E4117.md:9
 msgid ""
@@ -11772,13 +11871,14 @@ msgstr ""
 
 #: ../../language/error_codes/E4118.md:3
 msgid "Cannot match type with map pattern."
-msgstr ""
+msgstr "不能用映射模式匹配此类型。"
 
 #: ../../language/error_codes/E4118.md:5
 msgid ""
 "You can use map patterns on custom types, as long as they have a method "
 "`op_get` that returns an optional value for a given key."
 msgstr ""
+"您可以在自定义类型上使用映射模式，只要它们有一个方法 `op_get`，该方法返回给定键的可选值即可。"
 
 #: ../../language/error_codes/E4118.md:10
 msgid ""
@@ -11797,7 +11897,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4118.md:25
 msgid "Implement the `op_get` method as suggested in the error message."
-msgstr ""
+msgstr "请根据错误消息中的建议实现 `op_get` 方法。"
 
 #: ../../language/error_codes/E4118.md:27
 msgid ""
@@ -11830,7 +11930,7 @@ msgstr ""
 msgid ""
 "You can either remove the labelled argument, using positional argument "
 "instead:"
-msgstr ""
+msgstr "您可以删除带标签的参数，改用位置参数代替："
 
 #: ../../language/error_codes/E4119.md:19
 msgid ""
@@ -11843,9 +11943,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4119.md:28
-#, fuzzy
 msgid "Or you can make the function a toplevel function:"
-msgstr "main 包中缺少 `main` 函数"
+msgstr "或者您可以将函数设为顶层函数："
 
 #: ../../language/error_codes/E4119.md:30
 msgid ""
@@ -11867,6 +11966,7 @@ msgid ""
 "The application might raise errors, but it's not handled. Try adding an "
 "infix operator `!` or `?` to the application."
 msgstr ""
+"应用可能会引发错误，但没有处理。请在应用中添加一个中缀运算符 `!` 或 `?`。"
 
 #: ../../language/error_codes/E4120.md:6
 msgid ""
@@ -11875,6 +11975,9 @@ msgid ""
 " the function application. The `!` operator to re-raise the error, and "
 "the `?` operator is to materialize the error to a `Result[T, E]` type."
 msgstr ""
+"在 MoonBit 中，我们要求程序员明确标注哪些函数可能引发错误。"
+"这是通过在函数应用中添加中缀运算符 `!` 或 `?` 来完成的。"
+"运算符 `!` 用于重新引发错误，运算符 `?` 用于将错误物化为 `Result[T, E]` 类型。"
 
 #: ../../language/error_codes/E4120.md:13
 msgid ""
@@ -11896,7 +11999,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4120.md:30
 msgid "You can either re-raise the error:"
-msgstr ""
+msgstr "您可以重新引发错误："
 
 #: ../../language/error_codes/E4120.md:32
 msgid ""
@@ -11911,7 +12014,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4120.md:42
 msgid "Or materialize the error to a `Result[T, E]` type:"
-msgstr ""
+msgstr "或者将错误物化为 `Result[T, E]` 类型："
 
 #: ../../language/error_codes/E4120.md:44
 msgid ""
@@ -11927,29 +12030,30 @@ msgstr ""
 
 #: ../../language/error_codes/E4121.md:3
 msgid "The attribute (`!`, `?`, `!!` mark) cannot be used on this application."
-msgstr ""
+msgstr "这个应用中不允许使用 `!`、`?` 或 `!!` 标记。"
 
 #: ../../language/error_codes/E4121.md:5
 msgid "This error occurs when:"
-msgstr ""
+msgstr "这个错误发生在以下情况："
 
 #: ../../language/error_codes/E4121.md:7
 msgid "The attribute (`!`, `?`, `!!` mark) is used on a constructor."
-msgstr ""
+msgstr "`!`、`?` 或 `!!` 标记用于构造函数。"
 
 #: ../../language/error_codes/E4121.md:8
 msgid "The attribute (`!`, `?`, `!!` mark) is used on a function that does fit."
-msgstr ""
+msgstr "`!`、`?` 或 `!!` 标记用于不适合的函数。"
 
 #: ../../language/error_codes/E4121.md:9
 msgid "`!` and `?` must be annotated on a function that may raise errors."
-msgstr ""
+msgstr "`!` 和 `?` 必须用于可能引发错误的函数。"
 
 #: ../../language/error_codes/E4121.md:10
 msgid ""
 "`!!` must be annotated on an async function (this will be reported as "
 "[E4150](E4150.md) though)."
 msgstr ""
+"在异步函数上使用 `!!` 标记（这将被报告为 [E4150](E4150.md)）。"
 
 #: ../../language/error_codes/E4121.md:15
 msgid ""
@@ -11977,7 +12081,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4121.md:35
 msgid "Remove the attribute (`!`, `?`, `!!` mark) from the application."
-msgstr ""
+msgstr "从应用中移除 `!`、`?` 或 `!!` 标记。"
 
 #: ../../language/error_codes/E4121.md:37
 msgid ""
@@ -11999,12 +12103,14 @@ msgid ""
 "Invalid raise operation. Can only be used inside a function with error "
 "types in its signature."
 msgstr ""
+"只能在具有错误类型签名的函数中抛出错误。"
 
 #: ../../language/error_codes/E4122.md:6
 msgid ""
 "There are 3 raise operations in MoonBit, and they must be used inside a "
 "function with error types in its signature or a try block."
 msgstr ""
+"MoonBit 中有 3 个抛出错误操作，它们必须在具有错误类型签名的函数或 try 块中使用。"
 
 #: ../../language/error_codes/E4122.md:9
 msgid "Use the `raise` keyword to raise an error directly."
@@ -12014,7 +12120,7 @@ msgstr "使用 `raise` 关键字直接引发错误。"
 msgid ""
 "Re-raise an error by annotating the function application with the `!` "
 "operator."
-msgstr ""
+msgstr "使用 `!` 运算符重新抛出错误。"
 
 #: ../../language/error_codes/E4122.md:11
 msgid ""
@@ -12022,11 +12128,11 @@ msgid ""
 "`catch!` means re-raise all the errors that are not handled in the catch "
 "block."
 msgstr ""
+"使用 `try ... catch! ...` 块显式处理错误。`catch!` 意味着重新抛出 catch 块中未处理的所有错误。"
 
 #: ../../language/error_codes/E4122.md:16
-#, fuzzy
 msgid "Raise the error directly:"
-msgstr "默认错误类型"
+msgstr "直接抛出错误："
 
 #: ../../language/error_codes/E4122.md:18
 msgid ""
@@ -12043,9 +12149,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4122.md:31
-#, fuzzy
 msgid "Re-raise the error:"
-msgstr "默认错误类型"
+msgstr "重新抛出错误："
 
 #: ../../language/error_codes/E4122.md:33
 msgid ""
@@ -12057,7 +12162,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4122.md:39
 msgid "Catch all errors using `catch!`:"
-msgstr ""
+msgstr "使用 `catch!` 捕获所有错误："
 
 #: ../../language/error_codes/E4122.md:41
 msgid ""
@@ -12092,9 +12197,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4122.md:69
-#, fuzzy
 msgid "Or use the `try ... catch ...` block to handle the error:"
-msgstr "或者像其他许多语言一样使用 `try...catch` 块："
+msgstr "或者像使用 `try...catch` 块来处理错误："
 
 #: ../../language/error_codes/E4122.md:71
 msgid ""
@@ -12143,7 +12247,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4124.md:27
 msgid "Add `T::` before the constructor:"
-msgstr ""
+msgstr "在构造函数前添加 `T::`："
 
 #: ../../language/error_codes/E4124.md:29
 msgid ""
@@ -12158,7 +12262,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4125.md:3
 msgid "`?` operator cannot be used with `..`."
-msgstr ""
+msgstr "`?` 运算符不能与 `..` 一起使用。"
 
 #: ../../language/error_codes/E4125.md:5
 msgid ""
@@ -12166,6 +12270,8 @@ msgid ""
 " especially useful when the method performs side-effects, like modifying "
 "the object itself, and thus returns `Unit`."
 msgstr ""
+"`..` 运算符允许链接返回 `Unit` 的方法调用。"
+"这在方法执行副作用（如修改自身）时特别有用，因为它返回 `Unit`。"
 
 #: ../../language/error_codes/E4125.md:9
 msgid ""
@@ -12174,6 +12280,8 @@ msgid ""
 "return `Result[T, E]` instead of `Unit`, which is not allowed by the `..`"
 " operator."
 msgstr ""
+"如果将 `?` 与 `..` 结合使用，方法调用将返回 `Result[T, E]`，"
+"而不是 `Unit`，这不符合 `..` 运算符的要求。"
 
 #: ../../language/error_codes/E4125.md:15
 msgid ""
@@ -12224,6 +12332,7 @@ msgid ""
 "MoonBit only allow error types (defined with `type!` keyword) to appear "
 "after the exclamation mark (`!`) in the return type of a function."
 msgstr ""
+"MoonBit 仅允许在函数返回类型中的感叹号 (`!`) 之后出现错误类型（使用 `type!` 关键字定义）。"
 
 #: ../../language/error_codes/E4127.md:10
 msgid ""
@@ -12236,7 +12345,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4127.md:20
 msgid "You can wrap the type you wish to raise in a error type:"
-msgstr "可以将希望引发错误的类型包装在错误类型中："
+msgstr "您可以将希望抛出的类型包装在错误类型中："
 
 #: ../../language/error_codes/E4127.md:22
 msgid ""
@@ -12271,7 +12380,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4129.md:3
 msgid "Found cycle in type alias."
-msgstr ""
+msgstr "在类型别名中发现循环。"
 
 #: ../../language/error_codes/E4129.md:7
 msgid ""
@@ -12281,7 +12390,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4129.md:14
 msgid "You can break cycle using new type:"
-msgstr ""
+msgstr "您可以使用新类型打破循环："
 
 #: ../../language/error_codes/E4129.md:16
 msgid ""
@@ -12291,18 +12400,17 @@ msgstr ""
 
 #: ../../language/error_codes/E4129.md:21
 msgid "However, this is equivalent to writing"
-msgstr ""
+msgstr "然而，这相当于写："
 
 #: ../../language/error_codes/E4129.md:23
-#, fuzzy
 msgid "type A A\n"
-msgstr "类型别名"
+msgstr ""
 
 #: ../../language/error_codes/E4129.md:27
 msgid ""
 "And this might not be want to want to do. Therefore, we recommend using "
 "newtypes instead of typealiases in most of times:"
-msgstr ""
+msgstr "但这可能不是您想要的。因此，我们建议在大多数情况下使用新类型而不是类型别名："
 
 #: ../../language/error_codes/E4129.md:30
 msgid ""
@@ -12316,7 +12424,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4130.md:3
 msgid "`derive` is not allowed for type alias."
-msgstr ""
+msgstr "`derive` 不允许为类型别名派生特征。"
 
 #: ../../language/error_codes/E4130.md:5
 msgid ""
@@ -12326,6 +12434,8 @@ msgid ""
 "for type aliases. Instead, one should derive the traits for the type "
 "itself."
 msgstr ""
+"类型的别名可以与类型本身互换使用，因此不可能为别名派生特征而不为其别名的类型派生特征。"
+"因此，MoonBit 不允许为类型别名派生特征。相反，应该为类型本身派生特征。"
 
 #: ../../language/error_codes/E4130.md:12
 msgid ""
@@ -12339,7 +12449,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4130.md:22
 msgid "Move the `derive` attribute to the type itself:"
-msgstr ""
+msgstr "将 `derive` 属性移动到类型本身："
 
 #: ../../language/error_codes/E4130.md:24
 msgid ""
@@ -12358,6 +12468,8 @@ msgid ""
 "case if you were using a type alias in the first place. In this case, you"
 " will need to implement the trait manually."
 msgstr ""
+"如果你没有控制类型，你可以创建一个新类型，它包装原始类型。然而，为新类型派生特征需要"
+"被包装类型也实现特征，这通常不是使用类型别名的情况。在这种情况下，您需要手动实现特征。"
 
 #: ../../language/error_codes/E4130.md:38
 msgid ""
@@ -12374,7 +12486,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4131.md:3
 msgid "The type alias is a function type, not a type constructor."
-msgstr ""
+msgstr "类型别名是一个函数类型，不是一个类型构造器。"
 
 #: ../../language/error_codes/E4131.md:5
 msgid ""
@@ -12383,6 +12495,8 @@ msgid ""
 "it is not possible to define method for function types. Therefore, "
 "MoonBit disallows defining methods for type aliases of function types."
 msgstr ""
+"当您尝试为类型别名定义方法时，会发生此错误。类型的别名可以与类型本身互换使用，"
+"不能为函数类型定义方法。因此，MoonBit 禁止为函数类型的类型别名定义方法。"
 
 #: ../../language/error_codes/E4131.md:12
 msgid ""
@@ -12401,6 +12515,7 @@ msgid ""
 "If you want to define a method for a function type, you should define a "
 "new type that wraps the function type:"
 msgstr ""
+"如果您想为函数类型定义方法，您应该定义一个新类型，它包装函数类型："
 
 #: ../../language/error_codes/E4131.md:27
 msgid ""
@@ -12420,6 +12535,7 @@ msgid ""
 "Invalid test parameter. Only one parameter with type `@test.T` or "
 "`@bench.T` is allowed."
 msgstr ""
+"测试参数无效。只允许一个类型为 `@test.T` 或 `@bench.T` 的参数。"
 
 #: ../../language/error_codes/E4132.md:7
 msgid ""
@@ -12433,6 +12549,7 @@ msgid ""
 "It is not yet possible to pass custom parameters to tests, and you have "
 "to use the predefined `@test.T` type or `@bench.T` type."
 msgstr ""
+"目前还不支持将自定义参数传递给测试，您只能使用预定义的 `@test.T` 类型或 `@bench.T` 类型。"
 
 #: ../../language/error_codes/E4132.md:18
 msgid ""
@@ -12447,7 +12564,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4132.md:28
 msgid "Or you can remove the parameter if it is not needed:"
-msgstr ""
+msgstr "或者您可以删除不需要的参数："
 
 #: ../../language/error_codes/E4132.md:30
 msgid ""
@@ -12462,21 +12579,21 @@ msgstr ""
 
 #: ../../language/error_codes/E4133.md:3
 msgid "This `for .. in` loop has incorrect number of loop variables."
-msgstr ""
+msgstr "此 `for .. in` 循环有错误的循环变量数量。"
 
 #: ../../language/error_codes/E4133.md:5
 msgid "MoonBit supports only one or two loop variables in `for .. in` loop."
-msgstr ""
+msgstr "MoonBit 仅支持 `for .. in` 循环中的一个或两个循环变量。"
 
 #: ../../language/error_codes/E4133.md:7
 msgid "One loop variable is used for the content of the iterable."
-msgstr ""
+msgstr "一个循环变量用于可迭代内容。"
 
 #: ../../language/error_codes/E4133.md:8
 msgid ""
 "Two loop variables are used for the index and the content of the iterable"
 " respectively."
-msgstr ""
+msgstr "两个循环变量分别用于索引和可迭代内容。"
 
 #: ../../language/error_codes/E4133.md:13
 msgid ""
@@ -12492,7 +12609,7 @@ msgstr ""
 msgid ""
 "If you want to iterate over the index and the content of the iterable, "
 "you can use two loop variables:"
-msgstr ""
+msgstr "如果您想同时迭代索引和可迭代内容，您可以使用两个循环变量："
 
 #: ../../language/error_codes/E4133.md:26
 msgid ""
@@ -12507,7 +12624,7 @@ msgstr ""
 msgid ""
 "If you want to iterate over a iterable of tuples, then you need to "
 "explicitly destructure the tuple inside the loop body:"
-msgstr ""
+msgstr "如果您想迭代元组的可迭代内容，那么您需要在循环体中显式解构元组："
 
 #: ../../language/error_codes/E4133.md:37
 msgid ""
@@ -12529,6 +12646,7 @@ msgid ""
 "error type. Please add the error type to the return type annotation or "
 "use `fn!` instead."
 msgstr ""
+"此匿名函数的返回类型期望包含错误类型。请将错误类型添加到返回类型注释或改用 `fn!`。"
 
 #: ../../language/error_codes/E4134.md:8
 msgid ""
@@ -12555,7 +12673,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4134.md:30
 msgid "Add the error type to the return type annotation:"
-msgstr ""
+msgstr "将错误类型添加到返回类型注释："
 
 #: ../../language/error_codes/E4134.md:32
 msgid ""
@@ -12580,7 +12698,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4135.md:3
 msgid "Inconsistent `impl` of trait: implementations have different constraints."
-msgstr ""
+msgstr "不一致的 `impl` 实现：实现具有不同的约束。"
 
 #: ../../language/error_codes/E4135.md:5
 msgid ""
@@ -12589,6 +12707,8 @@ msgid ""
 "be unclear which implementation to use for types that satisfy both "
 "constraints."
 msgstr ""
+"当实现一个特征为类型时，所有实现都必须具有相同的约束。"
+"如果两个约束有交集，那么对于满足这两个约束的类型，使用哪个实现是不清楚的。"
 
 #: ../../language/error_codes/E4135.md:11
 msgid ""
@@ -12618,7 +12738,7 @@ msgstr ""
 msgid ""
 "One way to resolve this issue is to pick one of the implementations and "
 "remove the other:"
-msgstr ""
+msgstr "解决这个问题的一种方法是选择其中一个实现并删除另一个："
 
 #: ../../language/error_codes/E4135.md:39
 msgid ""
@@ -12632,7 +12752,7 @@ msgstr ""
 msgid ""
 "If you want to implementation for both constraints, you can create a new "
 "trait that combines the constraints:"
-msgstr ""
+msgstr "如果要为两个约束实现特征，您可以创建一个新特征，将这两个约束组合在一起："
 
 #: ../../language/error_codes/E4135.md:49
 msgid ""
@@ -12646,7 +12766,7 @@ msgstr ""
 msgid ""
 "And manually implement the trait for all the types that satisfy the "
 "constraints (`ByteSize` or `WordSize`)."
-msgstr ""
+msgstr "并手动为满足约束 (`ByteSize` 或 `WordSize`) 的所有类型实现特征。"
 
 #: ../../language/error_codes/E4136.md:1
 msgid "E4136"
@@ -12654,7 +12774,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4136.md:3
 msgid "This expression has type that is not a newtype."
-msgstr ""
+msgstr "此表达式的类型不是新类型。"
 
 #: ../../language/error_codes/E4136.md:5
 msgid ""
@@ -12662,6 +12782,8 @@ msgid ""
 " using the dot access operator (`.`). However, you cannot access the "
 "field of a struct if it is not wrapped in a newtype."
 msgstr ""
+"在 MoonBit 中，您可以使用点访问运算符 (`.`) 访问新类型的底层结构体的字段。"
+"但是，如果结构体未包装在新类型中，则无法访问该字段。"
 
 #: ../../language/error_codes/E4136.md:11
 msgid ""
@@ -12690,6 +12812,7 @@ msgid ""
 "If you want to access the field of the underlying struct, you should wrap"
 " the in a newtype:"
 msgstr ""
+"如果要访问底层结构体的字段，您应该将其包装在新类型中："
 
 #: ../../language/error_codes/E4136.md:35
 msgid ""
@@ -12707,13 +12830,14 @@ msgstr ""
 
 #: ../../language/error_codes/E4137.md:3
 msgid "Range operators are currently only supported in `for .. in` loops."
-msgstr ""
+msgstr "范围运算符目前仅在 `for .. in` 循环中受支持。"
 
 #: ../../language/error_codes/E4137.md:5
 msgid ""
 "This means you cannot save the range operator in a variable or use it "
 "later in other contexts."
 msgstr ""
+"这意味着您不能将范围运算符保存到变量中或以其他方式使用它。"
 
 #: ../../language/error_codes/E4137.md:10
 msgid ""
@@ -12725,7 +12849,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4137.md:18
 msgid "One can use the `until` method to generate a range of numbers:"
-msgstr ""
+msgstr "可以使用 `until` 方法生成数字范围："
 
 #: ../../language/error_codes/E4137.md:20
 msgid ""
@@ -12746,10 +12870,11 @@ msgid ""
 "Range operators only support builtin integer types, they cannot be used "
 "on this type."
 msgstr ""
+"范围运算符仅支持内置整数类型，不能在此类型上使用。"
 
 #: ../../language/error_codes/E4138.md:8
 msgid "For example, you cannot use `Float` nor `Double` with range operators."
-msgstr ""
+msgstr "例如，您不能使用 `Float` 或 `Double` 与范围运算符一起使用。"
 
 #: ../../language/error_codes/E4138.md:10
 msgid ""
@@ -12763,7 +12888,7 @@ msgstr ""
 msgid ""
 "Use integer types for the range operators, and genearte floats from these"
 " integers instead:"
-msgstr ""
+msgstr "使用整数类型的范围运算符，并且这些整数生成浮点数："
 
 #: ../../language/error_codes/E4138.md:22
 msgid ""
@@ -12776,7 +12901,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4138.md:30
 msgid "You can also use `until` to construct a range of numbers:"
-msgstr ""
+msgstr "您还可以使用 `until` 构造数字范围："
 
 #: ../../language/error_codes/E4138.md:32
 msgid ""
@@ -12796,16 +12921,15 @@ msgstr ""
 msgid ""
 "This expression has type that cannot be implicitly ignored. Use "
 "`ignore(...)` or `let _ = ...` to explicitly ignore it."
-msgstr ""
+msgstr "此表达式的类型不能隐式忽略。请使用 `ignore(...)` 或 `let _ = ...` 显式忽略它。"
 
 #: ../../language/error_codes/E4139.md:6
 msgid "`Unit` type can be implicitly ignored."
-msgstr ""
+msgstr "`Unit` 类型可以隐式忽略。"
 
 #: ../../language/error_codes/E4139.md:10
-#, fuzzy
 msgid "For example,"
-msgstr "示例"
+msgstr "例如，"
 
 #: ../../language/error_codes/E4139.md:12
 msgid ""
@@ -12820,12 +12944,14 @@ msgid ""
 "The code here show a deeper problem of the logic of the code: discarding "
 "the result makes the computation useless."
 msgstr ""
+"此处显示的代码更深层次的问题是代码逻辑的问题：丢弃结果使计算无意义。"
 
 #: ../../language/error_codes/E4139.md:23
 msgid ""
 "If you do want to discard the result, use `ignore(..)` or `let _ =` to "
 "explicitly discard the value."
 msgstr ""
+"如果您确实希望丢弃结果，请使用 `ignore(..)` 或 `let _ =` 明确丢弃该值。"
 
 #: ../../language/error_codes/E4139.md:26
 msgid ""
@@ -12840,7 +12966,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4140.md:3
 msgid "Invalid C function name in extern \"C\" declaration."
-msgstr ""
+msgstr "extern \"C\" 声明中的无效 C 函数名称。"
 
 #: ../../language/error_codes/E4140.md:5
 msgid ""
@@ -12848,6 +12974,8 @@ msgid ""
 "function name must be a valid C identifier. This means that the name must"
 " satisfy the following regex:"
 msgstr ""
+"当使用 `extern \"C\"` 声明绑定 C 函数时，函数名称必须是有效的 C 标识符。"
+"这意味着名称必须满足以下正则表达式："
 
 #: ../../language/error_codes/E4140.md:9
 msgid "[a-zA-Z_$][a-zA-Z0-9_$]*\n"
@@ -12861,7 +12989,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4140.md:21
 msgid "Change the function name to a valid C identifier:"
-msgstr ""
+msgstr "将函数名更改为有效的 C 标识符："
 
 #: ../../language/error_codes/E4140.md:23
 msgid "extern \"C\" fn f1() = \"f1\"\n"
@@ -12875,7 +13003,7 @@ msgstr ""
 msgid ""
 "This form of application is invalid for the argument, because it is not "
 "declared as optional."
-msgstr ""
+msgstr "此应用形式对于该参数无效，因为它未声明为可选。"
 
 #: ../../language/error_codes/E4141.md:6
 msgid ""
@@ -12885,6 +13013,9 @@ msgid ""
 "labelled argument with default value, it is not allowed to forward an "
 "optional value to it."
 msgstr ""
+"当您尝试将可选值转发给函数的参数时，会发生此错误。"
+"只有当参数被声明为可选参数时才允许这样做。"
+"即使将参数声明为带有默认值的标记参数，也不允许将可选值转发给它。"
 
 #: ../../language/error_codes/E4141.md:13
 msgid ""
@@ -12903,7 +13034,7 @@ msgstr ""
 msgid ""
 "If you have control over the function you wish to call, you can change "
 "the argument to be optional."
-msgstr ""
+msgstr "如果您有权控制要调用的函数，您可以将参数更改为可选参数。"
 
 #: ../../language/error_codes/E4141.md:29
 msgid ""
@@ -12920,7 +13051,7 @@ msgstr ""
 msgid ""
 "However, if you does not have control over the function, you can unwrap "
 "the optional value before passing it to the function."
-msgstr ""
+msgstr "但是，如果您没有控制权，您可以在将其传递给函数之前解包可选值。"
 
 #: ../../language/error_codes/E4141.md:42
 msgid ""
@@ -12940,21 +13071,22 @@ msgstr ""
 
 #: ../../language/error_codes/E4142.md:3
 msgid "This 'const' declaration is not constant."
-msgstr ""
+msgstr "此 'const' 声明不是常量。"
 
 #: ../../language/error_codes/E4142.md:5 ../../language/error_codes/E4143.md:5
 msgid ""
 "In MoonBit, you can use `const` to declare a constant value. Only literal"
 " value of immutable primitive types can be assigned to `const`."
 msgstr ""
+"在 MoonBit 中，您可以使用 `const` 声明常量值。只有不可变原语类型的字面量才能分配给 `const`。"
 
 #: ../../language/error_codes/E4142.md:8
 msgid "These are constant values: `1`, `\"String\"`, `1.0`, `true`, `false`, etc."
-msgstr ""
+msgstr "这些是常量值：`1`、`\"String\"`、`1.0`、`true`、`false` 等。"
 
 #: ../../language/error_codes/E4142.md:9
 msgid "These are not constant values: `[1, 2, 3]`, `1 + 1`, `fn() { 1 }`, etc."
-msgstr ""
+msgstr "这些不是常量值：`[1, 2, 3]`、`1 + 1`、`fn() { 1 }` 等。"
 
 #: ../../language/error_codes/E4142.md:13
 msgid ""
@@ -12968,6 +13100,7 @@ msgid ""
 "the result to a `const`, you can use a `let` declaration to calculate "
 "these result at initialization time instead."
 msgstr ""
+"如果无法在编译时运行计算并将结果分配给 `const`，您可以使用 `let` 声明在初始化时间计算这些结果。"
 
 #: ../../language/error_codes/E4142.md:23
 msgid "let a : Int = 1 + 1 // These will be computed at initialization time.\n"
@@ -12978,6 +13111,7 @@ msgid ""
 "If you can compute the value yourself by using, say a calculator, you can"
 " simply assign the result to the `const`."
 msgstr ""
+"如果您可以使用计算器自行计算值，您只需将结果分配给 `const` 即可。"
 
 #: ../../language/error_codes/E4142.md:30
 msgid "const A : Int = 2 // This is a constant value.\n"
@@ -12989,19 +13123,20 @@ msgstr ""
 
 #: ../../language/error_codes/E4143.md:3
 msgid "Not a valid constant type, only immutable primitive types are allowed."
-msgstr ""
+msgstr "不是有效的常量类型，只允许不可变原语类型。"
 
 #: ../../language/error_codes/E4143.md:8
 msgid ""
 "These are valid constant types: `Int`, `String`, `Byte`, `Char`, `Float`,"
 " `Bool`, etc."
-msgstr ""
+msgstr "这些是有效的常量类型：`Int`、`String`、`Byte`、`Char`、`Float`、`Bool` 等。"
 
 #: ../../language/error_codes/E4143.md:10
 msgid ""
 "These are not valid constant types: `Array[Int]`, `(Int) -> Int`, "
 "`Ref[Int]`, etc."
 msgstr ""
+"这些不是有效的常量类型：`Array[Int]`、`(Int) -> Int`、`Ref[Int]` 等。"
 
 #: ../../language/error_codes/E4143.md:15
 msgid ""
@@ -13010,9 +13145,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4143.md:21
-#, fuzzy
 msgid "You can bind the value to a variable using `let` instead."
-msgstr "不能是可变的（使用 `Ref` 代替）"
+msgstr "您可以使用 `let` 将值绑定到变量。"
 
 #: ../../language/error_codes/E4143.md:23
 msgid "let a : Array[Int] = [1, 2, 3]\n"
@@ -13024,7 +13158,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4144.md:3
 msgid "This is a constant, not a constructor, it cannot be applied to arguments."
-msgstr ""
+msgstr "这是一个常量，不是构造函数，不能应用于参数。"
 
 #: ../../language/error_codes/E4144.md:5
 msgid ""
@@ -13034,6 +13168,9 @@ msgid ""
 "such case you need to either use qualified name or type annotations to "
 "disambiguate."
 msgstr ""
+"当你尝试使用常量作为其他包中的构造函数的参数时，会发生此错误。"
+"可能的原因是你有一个与其他包中的构造函数同名的常量，"
+"在这种情况下，您需要使用限定名或类型注释来消除歧义。"
 
 #: ../../language/error_codes/E4144.md:12
 msgid ""
@@ -13054,6 +13191,7 @@ msgid ""
 "If you want to match against the constant, you can remove the playload "
 "from the pattern."
 msgstr ""
+"如果要匹配常量，您可以从模式中删除负载。"
 
 #: ../../language/error_codes/E4144.md:29
 msgid ""
@@ -13069,6 +13207,7 @@ msgid ""
 "Or if the constant has the same name as a constructor from some other "
 "packages, you can use qualified name or type annotations to disambiguate."
 msgstr ""
+"或者，如果常量与其他包中的构造函数同名，您可以使用限定名或类型注释来消除歧义。"
 
 #: ../../language/error_codes/E4144.md:40
 msgid ""
@@ -13085,7 +13224,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4145.md:3
 msgid "Cannot implement trait because it is sealed."
-msgstr ""
+msgstr "无法实现封闭特征。"
 
 #: ../../language/error_codes/E4145.md:5
 msgid ""
@@ -13093,10 +13232,12 @@ msgid ""
 "packages. Use `pub(open)` to make the trait open to be implemented by "
 "other packages."
 msgstr ""
+"封闭的特征不允许在其他包中实现。"
+"使用 `pub(open)` 使该特性对其他包开放，以便实现。"
 
 #: ../../language/error_codes/E4145.md:10
 msgid "Suppose there is a package `a` in module `username/hello`:"
-msgstr ""
+msgstr "例如，在模块 `username/hello` 中存在一个包 `a`："
 
 #: ../../language/error_codes/E4145.md:20
 msgid ""
@@ -13106,9 +13247,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:26
-#, fuzzy
 msgid "While in package `b`:"
-msgstr "例如，对于一个枚举"
+msgstr "而在包 `b` 中："
 
 #: ../../language/error_codes/E4145.md:40
 msgid ""
@@ -13125,6 +13265,7 @@ msgid ""
 "You can change the visibility of the trait to `pub(open)`, so that it can"
 " be implemented by other packages."
 msgstr ""
+"您可以将该特性的可见性更改为 `pub(open)`，以便其他包可以实现它。"
 
 #: ../../language/error_codes/E4145.md:53
 msgid ""
@@ -13139,13 +13280,15 @@ msgstr ""
 
 #: ../../language/error_codes/E4146.md:3
 msgid "Type is not supported by range pattern."
-msgstr ""
+msgstr "范围模式不支持该类型。"
 
 #: ../../language/error_codes/E4146.md:5
 msgid ""
 "MoonBit only support range pattern for integer types. This error occurs "
 "when you try to use a type that is not an integer in a range pattern."
 msgstr ""
+"MoonBit 仅支持整数类型的范围模式。"
+"当您尝试在范围模式中使用非整数类型时，会发生此错误。"
 
 #: ../../language/error_codes/E4146.md:10
 msgid ""
@@ -13164,6 +13307,7 @@ msgid ""
 "For type that is not an integer but implements the `Compare` trait, you "
 "can use multiple `if-else` expression to achieve the same effect."
 msgstr ""
+"对于未实现整数但实现 `Compare` 特征的类型，您可以使用多个 `if-else` 表达式来实现相同的效果。"
 
 #: ../../language/error_codes/E4146.md:25
 msgid ""
@@ -13183,17 +13327,15 @@ msgstr ""
 
 #: ../../language/error_codes/E4147.md:3
 msgid "Range pattern bounds must satisfy the ordering constraints:"
-msgstr ""
+msgstr "范围模式边界必须满足排序约束："
 
 #: ../../language/error_codes/E4147.md
-#, fuzzy
 msgid "Pattern"
-msgstr "Map 模式"
+msgstr "模式"
 
 #: ../../language/error_codes/E4147.md
-#, fuzzy
 msgid "Constraint"
-msgstr "常量"
+msgstr "约束"
 
 #: ../../language/error_codes/E4147.md
 msgid "`a..=b`"
@@ -13229,6 +13371,8 @@ msgid ""
 "Make sure the range pattern bounds satisfy the ordering constraints. This"
 " can be usually achieved by swapping the bounds."
 msgstr ""
+"请确保范围模式边界满足排序约束。"
+"这通常可以通过交换边界来实现。"
 
 #: ../../language/error_codes/E4147.md:29
 msgid ""
@@ -13246,9 +13390,8 @@ msgid "E4148"
 msgstr ""
 
 #: ../../language/error_codes/E4148.md:3
-#, fuzzy
 msgid "The loop label is undeclared."
-msgstr "可选参数未被提供"
+msgstr "循环标签未声明。"
 
 #: ../../language/error_codes/E4148.md:5
 msgid ""
@@ -13256,6 +13399,8 @@ msgid ""
 "label. The label must be declared at the beginning of one of the loops "
 "the `continue` or `break` statement is in."
 msgstr ""
+"MoonBit 允许程序员使用标签继续或跳出循环。"
+"标签必须在 `continue` 或 `break` 语句所在的循环之一的开头声明。"
 
 #: ../../language/error_codes/E4148.md:11
 msgid ""
@@ -13283,6 +13428,7 @@ msgid ""
 "Make sure the label is declared at the beginning of the loop the "
 "`continue` or `break` statement is in."
 msgstr ""
+"请确保标签在 `continue` 或 `break` 语句所在的循环之一的开头声明。"
 
 #: ../../language/error_codes/E4148.md:35
 msgid ""
@@ -13300,7 +13446,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4149.md:3
 msgid "Cannot call async function in this context."
-msgstr ""
+msgstr "不能在当前上下文调用异步函数。"
 
 #: ../../language/error_codes/E4149.md:9
 msgid ""
@@ -13314,9 +13460,8 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4149.md:21
-#, fuzzy
 msgid "You can change the containing function to an async function:"
-msgstr "main 包中缺少 `main` 函数"
+msgstr "您可以将包含函数改为异步函数："
 
 #: ../../language/error_codes/E4149.md:23
 #: ../../language/error_codes/E4150.md:25
@@ -13332,7 +13477,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4150.md:3
 msgid "Async function call must be marked with `!`."
-msgstr "调用异步函数时，必须用 `!` 操作符来标记这是一次异步函数调用："
+msgstr "异步函数调用必须用 `!` 操作符标记。"
 
 #: ../../language/error_codes/E4150.md:5
 msgid ""
@@ -13340,6 +13485,8 @@ msgid ""
 "to to inform the programmer that the function call is async and the "
 "control flow will be suspended here."
 msgstr ""
+"MoonBit 要求所有异步函数调用都必须用 `!` 操作符标记，"
+"以便告知程序员这是一次异步函数调用，并且控制流将在这里暂停。"
 
 #: ../../language/error_codes/E4150.md:11
 msgid ""
@@ -13354,7 +13501,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4150.md:23
 msgid "Mark the async function call with `!`:"
-msgstr "调用异步函数时，必须用 `!` 操作符来标记这是一次异步函数调用："
+msgstr "请用 `!` 操作符标记异步函数调用："
 
 #: ../../language/error_codes/E4151.md:1
 msgid "E4151"
@@ -13394,7 +13541,7 @@ msgstr ""
 msgid ""
 "If your callback function really needs to have captures, consider adding "
 "the captures as extra parameters to the function."
-msgstr "如果你的回调函数真的需要捕获局部变量，可以把局部变量变成回调函数的额外参数。"
+msgstr "如果您的回调函数真的需要捕获局部变量，可以把局部变量变成回调函数的额外参数。"
 
 #: ../../language/error_codes/E4153.md:1
 msgid "E4153"
@@ -13402,13 +13549,14 @@ msgstr ""
 
 #: ../../language/error_codes/E4153.md:3
 msgid "Duplicated tag in `enum` with custom tag value."
-msgstr "自定义枚举构造器的整数值时有重复。"
+msgstr "在带有自定义标记值的 `enum` 中重复标记"
 
 #: ../../language/error_codes/E4153.md:5
 msgid ""
 "For constant `enum`, where all constructors have no payload, MoonBit "
 "supports customizing the integer representation of constructors:"
-msgstr "对于一个常量枚举，即所有构造器都没有参数的枚举，MoonBit 允许自定义它的整数表示："
+msgstr ""
+"对于所有构造器都没有参数的常量 `enum`，MoonBit 支持自定义枚举构造器的整数表示："
 
 #: ../../language/error_codes/E4153.md:8 ../../language/error_codes/E4154.md:7
 msgid ""
@@ -13445,7 +13593,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4154.md:3
 msgid "Non-constant `enum` with custom tag value."
-msgstr "给非常量枚举指定了构造器的自定义整数值。"
+msgstr "自定义标记值的非常量枚举 `enum`。"
 
 #: ../../language/error_codes/E4154.md:5
 msgid "MoonBit supports customizing the integer representation of constructors:"
@@ -13562,15 +13710,15 @@ msgstr "Wasm 是指包含一些 MVP 之后的提案的 WebAssembly，包括："
 
 #: ../../language/ffi.md:22
 msgid "bulk-memory-operations"
-msgstr ""
+msgstr "批量内存操作"
 
 #: ../../language/ffi.md:23 ../../language/ffi.md:36
 msgid "multi-value"
-msgstr ""
+msgstr "多值"
 
 #: ../../language/ffi.md:24
 msgid "reference-types"
-msgstr ""
+msgstr "引用类型"
 
 #: ../../language/ffi.md:26 ../../language/ffi.md:39
 msgid ""
@@ -13665,7 +13813,7 @@ msgid ""
 msgstr ""
 "这将被解释为一个 "
 "[`externref`](https://webassembly.github.io/spec/core/syntax/types.html"
-"#reference-types)。"
+"#reference-types)."
 
 #: ../../language/ffi.md:83
 msgid "This will be interpreted as a JavaScript value."
@@ -17527,7 +17675,7 @@ msgid ""
 "pattern](#array-pattern))."
 msgstr ""
 "我们可以使用 `_` 作为我们不关心的值的通配符，并使用 `..` 忽略结构体或枚举的剩余字段，或数组（参见 [数组模式](#array-"
-"pattern)）。"
+"pattern））。"
 
 #: ../../language/fundamentals.md:1351
 msgid ""
