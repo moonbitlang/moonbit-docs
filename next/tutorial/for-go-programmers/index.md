@@ -105,7 +105,7 @@ value requires slightly different syntax:
 type Age Int
 
 let age = Age(25)
-let age_int = age._
+let age_int = age.inner()
 ```
 
 ## Type Aliases
@@ -274,9 +274,9 @@ At the trailing expression of each arm, the `break`ing is implicit and thus not 
 
 ```moonbit
 // Calculates the sum of all elements in an `xs : IntList`.
-let sum = loop xs, 0 {
-  Nil, acc => acc
-  Cons(x, rest), acc => continue rest, x + acc
+let sum = loop (xs, 0) {
+  (Nil, acc) => acc
+  (Cons(x, rest), acc) => continue (rest, x + acc)
 }
 ```
 
@@ -615,14 +615,14 @@ func useDivide() error {
 }
 ```
 
-In MoonBit, fallible functions are declared a bit differently.
-To indicate that the function might throw an error, write `T!E` at the return type position,
-where `E` is an error type declared with `type!`:
+In MoonBit, fallible functions are declared a bit differently. To indicate that
+the function might throw an error, write `T raise E` at the return type
+position, where `E` is an error type declared with `suberror`:
 
 ```moonbit
-type! ValueError String
+suberror ValueError String
 
-fn divide(a : Int, b : Int) -> Int!ValueError {
+fn divide(a : Int, b : Int) -> Int raise ValueError {
   if b == 0 {
     raise ValueError("division by zero")
   }
@@ -634,15 +634,18 @@ There are different ways to handle the error when calling such a throwing functi
 
 ```moonbit
 // Option 1: Propagate the error directly.
-fn use_divide_propagate() -> Unit!ValueError {
+fn use_divide_propagate() -> Unit raise ValueError {
   let q = divide(10, 2) // Rethrow the error if it occurs
   println(q) // Use the quotient
 }
 
 // Option 2: Use `try?` to convert the error to a `Result[T, E]` type.
-fn use_divide_try() -> Unit!ValueError {
-  let mq : Result[Int, ValueError] = // The type annotation is optional
-    try? divide(10, 2)
+fn use_divide_try() -> Unit raise ValueError {
+  // The type annotation is optional
+  let mq : Result[
+    Int,
+    ValueError,
+  ] = try? divide(10, 2)
   match mq { // Refer to the section on pattern matching for more details
     Err(e) => raise e
     Ok(q) => println(q) // Use the quotient
@@ -650,7 +653,7 @@ fn use_divide_try() -> Unit!ValueError {
 }
 
 // Option 3: Use the `try { .. } catch { .. }` syntax to handle the error.
-fn use_divide_try_catch() -> Unit!ValueError {
+fn use_divide_try_catch() -> Unit raise ValueError {
   try {
     let q = divide(10, 2)
     println(q) // Use the quotient
