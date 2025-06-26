@@ -3,7 +3,7 @@ fn main {
   let b = 20 
   println(a + b)
 
-  let mut  c = 10 
+  let mut c = 10 
   c = c + 1
   println(c)
 
