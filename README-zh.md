@@ -1,6 +1,6 @@
 # MoonBit 文档网站
 
-查看 [README.md](./README.md) 获取英文版本。
+> 中文 | [English](README.md)
 
 此存储库托管了 MoonBit 的文档网站 [docs.moonbitlang.com](https://docs.moonbitlang.com)。
 

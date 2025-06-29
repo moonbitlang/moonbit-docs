@@ -1,6 +1,6 @@
 # MoonBit Docs Website
 
-view [README-zh.md](./README-zh.md) for Chinese version.
+> English | [中文](README-zh.md)
 
 This repository hosts the documentation website for MoonBit [docs.moonbitlang.com](https://docs.moonbitlang.com).
 
