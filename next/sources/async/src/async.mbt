@@ -103,42 +103,65 @@ test {
 // end async example
 
 // start async timer example
-#external
+
+///|
 type JSTimer
 
+///|
 extern "js" fn js_set_timeout(f : () -> Unit, duration~ : Int) -> JSTimer =
   #| (f, duration) => setTimeout(f, duration)
 
+///|
 async fn sleep(duration : Int) -> Unit raise {
   suspend(fn(resume_ok, _resume_err) {
     js_set_timeout(duration~, fn() { resume_ok(()) }) |> ignore
   })
 }
 
+///|
 test {
-  run_async(fn() {
-    try {
-      sleep(500)
-      println("timer 1 tick")
-      sleep(1000)
-      println("timer 1 tick")
-      sleep(1500)
-      println("timer 1 tick")
-    } catch {
-      _ => panic()
-    }
-  })
-  run_async(fn() {
-    try {
-      sleep(600)
-      println("timer 2 tick")
-      sleep(600)
-      println("timer 2 tick")
-      sleep(600)
-      println("timer 2 tick")
-    } catch {
-      _ => panic()
-    }
-  })
+  let logger = StringBuilder::new()
+  fn println(s : String) {
+    logger.write_string(s)
+    logger.write_string("\n")
+  }
+
+  fn local_test() {
+    run_async(fn() {
+      println("start 1")
+      try {
+        sleep(500)
+        println("timer 1 tick")
+        sleep(1000)
+        println("timer 1 tick")
+        sleep(1500)
+        println("timer 1 tick")
+      } catch {
+        _ => panic()
+      }
+    })
+    run_async(fn() {
+      println("start 2")
+      try {
+        sleep(600)
+        println("timer 2 tick")
+        sleep(600)
+        println("timer 2 tick")
+        sleep(600)
+        println("timer 2 tick")
+      } catch {
+        _ => panic()
+      }
+    })
+  }
+
+  local_test()
+  inspect(logger, content=
+    #|start 1
+    #|start 2
+    #|
+
+
+  )
 }
 // end async timer example
