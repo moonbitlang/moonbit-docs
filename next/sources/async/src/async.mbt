@@ -1,9 +1,9 @@
-// start async function declaration
+///| start async function declaration
 async fn my_async_function() -> Unit {
   ...
 }
 
-// anonymous/local function
+///| anonymous/local function
 test {
   let async_lambda = async fn() { ... }
   async fn local_async_function() {
@@ -15,10 +15,13 @@ test {
 // end async function declaration
 
 // start async function call syntax
+
+///|
 async fn some_async_function() -> Unit raise {
   ...
 }
 
+///|
 async fn another_async_function() -> Unit raise {
   some_async_function() // rendered in italic font
 }
@@ -26,10 +29,10 @@ async fn another_async_function() -> Unit raise {
 
 // start async primitive
 
-/// `run_async` spawn a new coroutine and execute an async function in it
+///| `run_async` spawn a new coroutine and execute an async function in it
 fn run_async(f : async () -> Unit) -> Unit = "%async.run"
 
-/// `suspend` will suspend the execution of the current coroutine.
+///| `suspend` will suspend the execution of the current coroutine.
 /// The suspension will be handled by a callback passed to `suspend`
 async fn[T, E : Error] suspend(
   // `f` is a callback for handling suspension
@@ -44,46 +47,58 @@ async fn[T, E : Error] suspend(
 // end async primitive
 
 // start async example
+
+///|
 suberror MyError derive(Show)
 
-async fn async_worker(throw_error~ : Bool) -> Unit raise MyError {
+///|
+async fn async_worker(
+  logger~ : &Logger,
+  throw_error~ : Bool
+) -> Unit raise MyError {
   suspend(fn(resume_ok, resume_err) {
     if throw_error {
       resume_err(MyError)
     } else {
       resume_ok(())
-      println("the end of the coroutine")
+      logger.write_string("the end of the coroutine\n")
     }
   })
 }
 
-// the program below should print:
-//
-//   the worker finishes
-//   the end of the coroutine
-//   after the first coroutine finishes
-//   caught MyError
+///|
 test {
   // when supplying an anonymous function
   // to a higher order function that expects async parameter,
   // the `async` keyword can be omitted
-  run_async(fn() {
-    try {
-      async_worker(throw_error=false)
-      println("the worker finishes")
+  let logger = StringBuilder::new()
+  fn local_test() {
+    run_async(() => try {
+      async_worker(logger~, throw_error=false)
+      logger.write_string("the worker finishes\n")
     } catch {
-      err => println("caught: \{err}")
-    }
-  })
-  println("after the first coroutine finishes")
-  run_async(fn() {
-    try {
-      async_worker(throw_error=true)
-      println("the worker finishes")
+      err => logger.write_string("caught: \{err}\n")
+    })
+    logger.write_string("after the first coroutine finishes\n")
+    run_async(() => try {
+      async_worker(logger~, throw_error=true)
+      logger.write_string("the worker finishes\n")
     } catch {
-      err => println("caught: \{err}")
-    }
-  })
+      err => logger.write_string("caught: \{err}\n")
+    })
+  }
+
+  local_test()
+  inspect(
+    logger,
+    content=
+      #|the worker finishes
+      #|the end of the coroutine
+      #|after the first coroutine finishes
+      #|caught: MyError
+      #|
+    ,
+  )
 }
 // end async example
 
