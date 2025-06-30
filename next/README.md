@@ -6,6 +6,11 @@ A new MoonBit docs framework based on Sphinx.
 
 ## Develop
 
+You can just run `./autobuild.sh` to start the development server, it will
+install the dependencies if they are not installed, and start the server on watch mode.
+
+Below are the instructions for manual setup.
+
 ### Install
 
 - For Python Environment, execute command `> Python: Create Environment` for `next` using `requirement.txt` in VSCode, or:
