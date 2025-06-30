@@ -1,8 +1,9 @@
-# Experimental async programming support
+# Async programming support
 
-MoonBit is providing experimental support for async programming.
-But the design and API is still highly unstable, and may receive big breaking change in the future.
-This page documents the current design, and we highly appreciate any feedback or experiment with current design.
+MoonBit adopts a coroutine based approach to async programming which is similar to [Kotlin](https://kotlinlang.org/docs/coroutines-overview.html).
+The compiler support and concrete syntax is stable while the async library is still under development and considered experimental.
+
+<!-- We highly appreciate any feedback or experiment with current design. -->
 
 ## Async function
 Async functions are declared with the `async` keyword:
@@ -23,7 +24,7 @@ MoonBit IDE will highlight the async function call with a different style.
 :end-before: end async function call syntax
 ```
 
-Async functions can only be called in async functions. 
+Async functions can only be called inside async functions. 
 
 ```{warning}
 Currently, async functions 
@@ -46,8 +47,8 @@ currently users need to bind these two primitives manually to do async programmi
 
 There are two ways of reading these primitives:
 
-- The coroutine reading: `%async.run` spawn a new coroutine,
-  and `%async.suspend` suspend current coroutine.
+- The coroutine reading: `%async.run` spawns a new coroutine,
+  and `%async.suspend` suspends the current coroutine.
   The main difference with other languages here is:
   instead of yielding all the way to the caller of `%async.run`,
   resumption of the coroutine is handled by the callback passed to `%async.suspend`
