@@ -478,7 +478,7 @@ By default, MoonBit uses an owned calling convention for reference counting. Tha
 For example, here's a lifetime-correct binding to the standard `open` function for opening a file:
 
 ```moonbit
-extern "C" open(filename : Bytes, flags : Int) -> Int = "open_ffi"
+extern "C" fn open(filename : Bytes, flags : Int) -> Int = "open_ffi"
 ```
 
 ```c
