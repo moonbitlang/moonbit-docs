@@ -58,6 +58,10 @@ html_theme_options = {
 }
 html_logo = "_static/logo.png"
 html_favicon = "_static/favicon.ico"
+# For Chinese searching
+html_search_options = {
+    "dict": ""
+}
 
 # -- Options for LaTeX output ------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-latex-output
