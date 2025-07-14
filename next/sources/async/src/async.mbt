@@ -91,13 +91,13 @@ test {
   local_test()
   inspect(
     logger,
-    content=
+    content=(
       #|the worker finishes
       #|the end of the coroutine
       #|after the first coroutine finishes
       #|caught: MyError
       #|
-    ,
+    ),
   )
 }
 // end async example

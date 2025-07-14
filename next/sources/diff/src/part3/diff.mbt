@@ -171,8 +171,8 @@ fn Box::find_path(
     right: box.right,
     bottom: box.bottom,
   }
-  let head = headbox.find_path(old~, new~).or(Iter::singleton(start))
-  let tail = tailbox.find_path(old~, new~).or(Iter::singleton(end))
+  let head = headbox.find_path(old~, new~).unwrap_or(Iter::singleton(start))
+  let tail = tailbox.find_path(old~, new~).unwrap_or(Iter::singleton(end))
   Some(head.concat(tail))
 }
 // end findpath definition
@@ -227,7 +227,7 @@ test "myers diff" {
   let r = linear_diff(old~, new~).unwrap()
   inspect(
     pprint_diff(r),
-    content=
+    content=(
       #|-    1         A
       #|-    2         B
       #|     3    1    C
@@ -238,6 +238,6 @@ test "myers diff" {
       #|     7    5    A
       #|+         6    C
       #|
-    ,
+    ),
   )
 }

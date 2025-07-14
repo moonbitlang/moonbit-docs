@@ -56,9 +56,9 @@ let units : Grid[Squares] = {
 test {
   inspect(
     units["A1"].to_array(),
-    content=
+    content=(
       #|["A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3"]
-    ,
+    ),
   )
 }
 
@@ -109,7 +109,7 @@ fn Grid::format(self : Grid[@immut/sorted_set.T[Char]]) -> String {
   let mut maxWidth = 0
   while i < 81 {
     rep[i] = self.inner()[i].fold(init="", fn(acc, ch) { acc + ch.to_string() })
-    maxWidth = @math.maximum(rep[i].length(), maxWidth)
+    maxWidth = @cmp.maximum(rep[i].length(), maxWidth)
     i = i + 1
   }
   let buf = StringBuilder::new(size_hint=1000)

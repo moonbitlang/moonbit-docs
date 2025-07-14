@@ -167,9 +167,9 @@ test "tokenize" {
   inspect(tokenize("1234 5678").tokens, content="[Number(1234), Number(5678)]")
   inspect(
     tokenize("a0 a_0 a-0").tokens,
-    content=
+    content=(
       #|[Id("a0"), Id("a_0"), Id("a-0")]
-    ,
+    ),
   )
   inspect(
     tokenize("(Cons 0 (Cons 1 Nil))").tokens,

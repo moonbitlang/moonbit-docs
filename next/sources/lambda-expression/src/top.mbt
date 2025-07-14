@@ -110,16 +110,16 @@ test {
     Ok(t) => {
       inspect(
         t,
-        content=
+        content=(
           #|(\x.x x) (\x.x)
-        ,
+        ),
       )
       let t = t.eval()
       inspect(
         t,
-        content=
+        content=(
           #|(\x.x)
-        ,
+        ),
       )
     }
   }

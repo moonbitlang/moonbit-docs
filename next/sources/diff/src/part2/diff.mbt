@@ -97,7 +97,7 @@ test "myers diff" {
   let new = lines("C\nB\nA\nB\nA\nC")
   inspect(
     pprint_diff(diff(old~, new~)),
-    content=
+    content=(
       #|-    1         A
       #|-    2         B
       #|     3    1    C
@@ -108,6 +108,6 @@ test "myers diff" {
       #|     7    5    A
       #|+         6    C
       #|
-    ,
+    ),
   )
 }
