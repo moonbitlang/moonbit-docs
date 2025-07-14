@@ -20,6 +20,11 @@ if (os.getenv('READTHEDOCS_LANGUAGE') == 'zh-cn' or
     author = '粤港澳大湾区数字经济院'
     copyright = '%Y, {author}'.format(author=author)
     language = 'zh_CN'
+    import jieba
+    # For Chinese searching
+    html_search_options = {
+        "dict": jieba.DEFAULT_DICT
+    }
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -58,10 +63,6 @@ html_theme_options = {
 }
 html_logo = "_static/logo.png"
 html_favicon = "_static/favicon.ico"
-# For Chinese searching
-html_search_options = {
-    "dict": ""
-}
 
 # -- Options for LaTeX output ------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-latex-output
