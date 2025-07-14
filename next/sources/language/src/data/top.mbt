@@ -37,9 +37,10 @@ test "struct 4" (t : @test.T) {
   let user = { id: 0, name: "John Doe", email: "john@doe.com" }
   let updated_user = { ..user, email: "john@doe.name" }
   println(
-    $|{ id: \{user.id}, name: \{user.name}, email: \{user.email} }
-    $|{ id: \{updated_user.id}, name: \{updated_user.name}, email: \{updated_user.email} }
-    ,
+    (
+      $|{ id: \{user.id}, name: \{user.name}, email: \{user.email} }
+      $|{ id: \{updated_user.id}, name: \{updated_user.name}, email: \{updated_user.email} }
+    ),
   )
   // end struct 4
   t.snapshot(filename="struct_4")

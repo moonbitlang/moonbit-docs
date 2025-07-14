@@ -142,9 +142,9 @@ test {
   let bs : Bytes = [b, '\x01']
   inspect(
     bs,
-    content=
+    content=(
       #|b"\xff\x01"
-    ,
+    ),
   )
 }
 // end bytes 1

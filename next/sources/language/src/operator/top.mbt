@@ -141,7 +141,7 @@ type DataView String
 struct Data {}
 
 fn Data::op_as_view(_self : Data, start~ : Int = 0, end? : Int) -> DataView {
-  "[\{start}, \{end.or(100)})"
+  "[\{start}, \{end.unwrap_or(100)})"
 }
 
 test {
@@ -180,9 +180,9 @@ test {
   let b : Bytes = [..b1, ..b2, 10]
   inspect(
     b,
-    content=
+    content=(
       #|b"\x68\x65\x6c\x6c\x6f\x65\x6c\x6c\x0a"
-    ,
+    ),
   )
 }
 // end spread 3

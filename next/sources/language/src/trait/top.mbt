@@ -185,9 +185,9 @@ test {
   let animals : Array[&Animal] = [duck1, duck2, fox1]
   inspect(
     animals.map(fn(animal) { animal.speak() }),
-    content=
+    content=(
       #|["duck1: quack!", "duck2: quack!", "What does the fox say?"]
-    ,
+    ),
   )
 }
 // end trait object 1

@@ -75,9 +75,9 @@ test {
   let res = try? (div(6, 0) * div(6, 3))
   inspect(
     res,
-    content=
+    content=(
       #|Err("division by zero")
-    ,
+    ),
   )
 }
 // end error 8

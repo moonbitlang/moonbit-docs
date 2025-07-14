@@ -173,8 +173,10 @@ fn fixed_width_image(height? : Int) -> Image {
 
 // start autofill arguments
 fn f(_x : Int, loc~ : SourceLoc = _, args_loc~ : ArgsLoc = _) -> String {
-  $|loc of whole function call: \{loc}
-  $|loc of arguments: \{args_loc}
+  (
+    $|loc of whole function call: \{loc}
+    $|loc of arguments: \{args_loc}
+  )
   // loc of whole function call: <filename>:7:3-7:10
   // loc of arguments: [Some(<filename>:7:5-7:6), Some(<filename>:7:8-7:9), None, None]
 }
