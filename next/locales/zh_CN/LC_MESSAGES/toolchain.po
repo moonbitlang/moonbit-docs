@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-13 11:02+0800\n"
+"POT-Creation-Date: 2025-07-18 21:42+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1794,11 +1794,37 @@ msgstr ""
 
 #: ../../toolchain/moon/module.md:134 ../../toolchain/moon/package.md:389
 msgid ""
+"If multiple warnings need to be disabled, they can be directly connected "
+"and combined."
+msgstr "如果需要禁用多种警告，可以直接连接起来进行组合。"
+
+#: ../../toolchain/moon/module.md:136 ../../toolchain/moon/package.md:391
+msgid ""
+"{\n"
+"  \"warn-list\": \"-2-4\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:142 ../../toolchain/moon/package.md:397
+msgid ""
+"If it is necessary to activate certain warnings that were originally "
+"prohibited, use the plus sign."
+msgstr "如果需要激活某种原来未启用的警告，则使用加号。"
+
+#: ../../toolchain/moon/module.md:144 ../../toolchain/moon/package.md:399
+msgid ""
+"{\n"
+"  \"warn-list\": \"+31\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:150 ../../toolchain/moon/package.md:405
+msgid ""
 "You can use `moonc build-package -warn-help` to see the list of preset "
 "compiler warning numbers."
 msgstr "你可以使用 `moonc build-package -warn-help` 来查看预设编译器警告编号列表。"
 
-#: ../../toolchain/moon/module.md:136 ../../toolchain/moon/package.md:391
+#: ../../toolchain/moon/module.md:152 ../../toolchain/moon/package.md:407
 msgid ""
 "$ moonc -v\n"
 "v0.1.20250606+a3f4966ca\n"
@@ -1853,43 +1879,43 @@ msgid ""
 "  A all warnings\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:190 ../../toolchain/moon/package.md:445
+#: ../../toolchain/moon/module.md:206 ../../toolchain/moon/package.md:461
 msgid "Alert List"
 msgstr "警示列表"
 
-#: ../../toolchain/moon/module.md:192 ../../toolchain/moon/package.md:447
+#: ../../toolchain/moon/module.md:208 ../../toolchain/moon/package.md:463
 msgid "Disable user preset alerts."
 msgstr "禁用用户预设警示。"
 
-#: ../../toolchain/moon/module.md:194 ../../toolchain/moon/package.md:449
+#: ../../toolchain/moon/module.md:210 ../../toolchain/moon/package.md:465
 msgid ""
 "{\n"
 "  \"alert-list\": \"-alert_1-alert_2\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:200
+#: ../../toolchain/moon/module.md:216
 msgid "Scripts"
 msgstr "脚本"
 
-#: ../../toolchain/moon/module.md:202
+#: ../../toolchain/moon/module.md:218
 msgid ""
 "The `scripts` field is used to define custom scripts associated with the "
 "module."
 msgstr "`scripts` 字段用于定义与模块关联的自定义脚本。"
 
-#: ../../toolchain/moon/module.md:204
+#: ../../toolchain/moon/module.md:220
 msgid "postadd script"
 msgstr "postadd 脚本"
 
-#: ../../toolchain/moon/module.md:206
+#: ../../toolchain/moon/module.md:222
 msgid ""
 "The `postadd` script runs automatically after the module has been added. "
 "When executed, the script's current working directory (cwd) is set to the"
 " directory where the `moon.mod.json` file resides."
 msgstr "`postadd` 脚本在模块添加后自动运行。执行时，脚本的当前工作目录（cwd）设置为 `moon.mod.json` 文件所在的目录。"
 
-#: ../../toolchain/moon/module.md:210
+#: ../../toolchain/moon/module.md:226
 msgid ""
 "{\n"
 "  \"scripts\": {\n"
@@ -1898,36 +1924,36 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:218
+#: ../../toolchain/moon/module.md:234
 msgid "\\[Experimental\\] Pre-build config script"
 msgstr "\\[实验性\\] 预构建配置脚本"
 
-#: ../../toolchain/moon/module.md:221
+#: ../../toolchain/moon/module.md:237
 msgid ""
 "This feature is extremely experimental, and its API may change at any "
 "time. This documentation reflects the implementation as of 2025-06-03."
 msgstr "这个功能是极其实验性的，其 API 可能随时发生变化。本文件反映了截至 2025-06-03 的实现。"
 
-#: ../../toolchain/moon/module.md:226
+#: ../../toolchain/moon/module.md:242
 msgid ""
 "Using this feature may execute arbitrary code in your computer. Please "
 "use with caution and only with trusted dependencies."
 msgstr "使用此功能可能会在您的计算机上执行任意代码。请谨慎使用，仅与受信任的依赖项一起使用。"
 
-#: ../../toolchain/moon/module.md:230
+#: ../../toolchain/moon/module.md:246
 msgid ""
 "The pre-build config script is added in order to aid native target "
 "programming. To use such script, add your script in your `moon.mod.json`:"
 msgstr "pre-build 配置脚本的添加是为了帮助本地目标编程。要使用此脚本，请在您的 `moon.mod.json` 中添加您的脚本："
 
-#: ../../toolchain/moon/module.md:233
+#: ../../toolchain/moon/module.md:249
 msgid ""
 "{\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:239
+#: ../../toolchain/moon/module.md:255
 msgid ""
 "The path is a relative path from the root of the project. The script may "
 "either be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) "
@@ -1937,17 +1963,17 @@ msgstr ""
 "路径是相对于项目根目录的相对路径。脚本可以是 JavaScript 脚本（扩展名为 `.js`、`.cjs`、`.mjs`）使用 `node` "
 "执行，或者是 Python 脚本（扩展名为 `.py`）使用 `python3` 或 `python` 执行。"
 
-#: ../../toolchain/moon/module.md:244
+#: ../../toolchain/moon/module.md:260
 msgid "Input"
 msgstr "输入"
 
-#: ../../toolchain/moon/module.md:246
+#: ../../toolchain/moon/module.md:262
 msgid ""
 "The script will be provided with a JSON with the structure of "
 "`BuildScriptEnvironment` from standard input stream (stdin):"
 msgstr "脚本将从标准输入流（stdin）接收一个具有 `BuildScriptEnvironment` 结构的 JSON："
 
-#: ../../toolchain/moon/module.md:249
+#: ../../toolchain/moon/module.md:265
 msgid ""
 "/** Represents the environment a build script receives */\n"
 "interface BuildScriptEnvironment {\n"
@@ -1986,17 +2012,17 @@ msgstr ""
 "  kind: string // TargetBackend\n"
 "}\n"
 
-#: ../../toolchain/moon/module.md:269
+#: ../../toolchain/moon/module.md:285
 msgid "Output"
 msgstr "输出"
 
-#: ../../toolchain/moon/module.md:271
+#: ../../toolchain/moon/module.md:287
 msgid ""
 "The script is expected to print a JSON string in its standard output "
 "stream (stdout) with the structure of `BuildScriptOutput`:"
 msgstr "脚本预计将在其标准输出流（stdout）中打印一个具有 `BuildScriptOutput` 结构的 JSON 字符串："
 
-#: ../../toolchain/moon/module.md:274
+#: ../../toolchain/moon/module.md:290
 msgid ""
 "interface BuildScriptOutput {\n"
 "  /** Build variables */\n"
@@ -2053,29 +2079,29 @@ msgstr ""
 "  link_search_paths?: string[]\n"
 "}\n"
 
-#: ../../toolchain/moon/module.md:303
+#: ../../toolchain/moon/module.md:319
 msgid "Build variables"
 msgstr "构建变量"
 
-#: ../../toolchain/moon/module.md:305
+#: ../../toolchain/moon/module.md:321
 msgid ""
 "You may use the variables emitted in the `vars` fields in the native "
 "linking arguments in `moon.pkg.json` as `${build.<var_name>}`."
 msgstr "您可以在 `moon.pkg.json` 的本地链接参数中使用 `vars` 字段中发出的变量，格式为 `${build.<var_name>}`。"
 
-#: ../../toolchain/moon/module.md:308
+#: ../../toolchain/moon/module.md:324
 msgid "For example, if your build script outputs:"
 msgstr "例如，如果您的构建脚本输出："
 
-#: ../../toolchain/moon/module.md:310
+#: ../../toolchain/moon/module.md:326
 msgid "{ \"vars\": { \"CC\": \"gcc\" } }\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:314
+#: ../../toolchain/moon/module.md:330
 msgid "and your `moon.pkg.json` is structured like:"
 msgstr "并且您的 `moon.pkg.json` 结构如下："
 
-#: ../../toolchain/moon/module.md:316
+#: ../../toolchain/moon/module.md:332
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -2086,11 +2112,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:326
+#: ../../toolchain/moon/module.md:342
 msgid "It will be transformed into"
 msgstr "它会被转换为"
 
-#: ../../toolchain/moon/module.md:328
+#: ../../toolchain/moon/module.md:344
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -2822,33 +2848,33 @@ msgid ""
 "  #|\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:455
+#: ../../toolchain/moon/package.md:471
 msgid "Virtual Package"
 msgstr "虚拟包"
 
-#: ../../toolchain/moon/package.md:457
+#: ../../toolchain/moon/package.md:473
 msgid ""
 "A virtual package serves as an interface of a package that can be "
 "replaced by actual implementations."
 msgstr "一个虚拟包可以作为一个包的接口被实际的实现替换。"
 
-#: ../../toolchain/moon/package.md:459
+#: ../../toolchain/moon/package.md:475
 msgid "Declarations"
 msgstr "声明"
 
-#: ../../toolchain/moon/package.md:461
+#: ../../toolchain/moon/package.md:477
 msgid ""
 "The `virtual` field is used to declare the current package as a virtual "
 "package."
 msgstr "`virtual` 字段用于将当前包声明为虚拟包。"
 
-#: ../../toolchain/moon/package.md:463
+#: ../../toolchain/moon/package.md:479
 msgid ""
 "For example, the following declares a virtual package with default "
 "implementation:"
 msgstr "例如，以下配置声明了一个具有默认实现的虚拟包："
 
-#: ../../toolchain/moon/package.md:465
+#: ../../toolchain/moon/package.md:481
 msgid ""
 "{\n"
 "  \"virtual\": {\n"
@@ -2857,44 +2883,44 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:473
+#: ../../toolchain/moon/package.md:489
 msgid "Implementations"
 msgstr "实现"
 
-#: ../../toolchain/moon/package.md:475
+#: ../../toolchain/moon/package.md:491
 msgid ""
 "The `implement` field is used to declare the virtual package to be "
 "implemented by the current package."
 msgstr "`implement` 字段用于指定当前包实现的虚拟包。"
 
-#: ../../toolchain/moon/package.md:477
+#: ../../toolchain/moon/package.md:493
 msgid "For example, the following implements a virtual package:"
 msgstr "例如，以下配置实现了一个虚拟包："
 
-#: ../../toolchain/moon/package.md:479
+#: ../../toolchain/moon/package.md:495
 msgid ""
 "{\n"
 "  \"implement\": \"moonbitlang/core/abort\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:485
+#: ../../toolchain/moon/package.md:501
 msgid "Overriding implementations"
 msgstr "覆盖实现"
 
-#: ../../toolchain/moon/package.md:487
+#: ../../toolchain/moon/package.md:503
 msgid ""
 "The `overrides` field is used to provide the implementations that "
 "fulfills an imported virtual package."
 msgstr "`overrides` 字段用于提供满足导入虚拟包的实现。"
 
-#: ../../toolchain/moon/package.md:489
+#: ../../toolchain/moon/package.md:505
 msgid ""
 "For example, the following overrides the default implementation of the "
 "builtin abort package with another package:"
 msgstr "例如，以下配置将内置的 abort 包的默认实现替换为另一个包："
 
-#: ../../toolchain/moon/package.md:491
+#: ../../toolchain/moon/package.md:507
 msgid ""
 "{\n"
 "  \"overrides\": [\"moonbitlang/dummy_abort/abort_show_msg\"]\n"
