@@ -1306,7 +1306,7 @@ The type alias can be removed after all uses of `@pkgA.T` is migrated to `@pkgB.
 
 ### Local types
 
-Moonbit supports declaring structs/enums/newtypes at the top of a toplevel
+MoonBit supports declaring structs/enums/newtypes at the top of a toplevel
 function, which are only visible within the current toplevel function. These
 local types can use the generic parameters of the toplevel function but cannot
 introduce additional generic parameters themselves. Local types can derive
