@@ -1,5 +1,5 @@
 # Number
-Use Moonbit to implement string tools.
+Use MoonBit to implement string tools.
 ## API
 ```
 pub fn max[T : Compare](a : T, b : T) -> T

@@ -1,5 +1,5 @@
 # Char
-Use Moonbit to implement string tools.
+Use MoonBit to implement string tools.
 
 ## API
 This function is used to check whether the given character c is a valid character. It returns a boolean value indicating whether the character is valid or not.

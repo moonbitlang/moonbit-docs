@@ -1,6 +1,6 @@
-## Moonbit's Cloudflare Worker Demo
+## MoonBit's Cloudflare Worker Demo
 
-This project showcases how to generate a compact WebAssembly (Wasm) by Moonbit, and invoke it from JavaScript in a Cloudflare worker environment. It is an implementation of the [Invoke Wasm from JavaScript](https://developers.cloudflare.com/workers/runtime-apis/webassembly/javascript/) guide.
+This project showcases how to generate a compact WebAssembly (Wasm) by MoonBit, and invoke it from JavaScript in a Cloudflare worker environment. It is an implementation of the [Invoke Wasm from JavaScript](https://developers.cloudflare.com/workers/runtime-apis/webassembly/javascript/) guide.
 
 ## Setup Wrangler
 
