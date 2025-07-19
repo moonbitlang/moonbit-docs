@@ -1,3 +1,3 @@
-## Moonbit Unicode
+## MoonBit Unicode
 
-We can use emoji in Moonbit now :)
+We can use emoji in MoonBit now :)
