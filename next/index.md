@@ -11,6 +11,7 @@ The IDE environment is available at [https://try.moonbitlang.com](https://try.mo
 - [Language](/language/index.md): Introduction to detailed language specifications
 
 - [Toolchains](/toolchain/index.md): Introduction to all the toolchains making developing MoonBit a unique experience.
+
 - [MoonPilot](/pilot/index.md): Introduction to MoonBit's code agent.
 
 **Useful Sources**
