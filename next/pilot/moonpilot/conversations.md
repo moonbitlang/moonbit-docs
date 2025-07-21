@@ -1,4 +1,4 @@
-# Conversation Management
+# Conversations
 
 ## Background
 
@@ -84,62 +84,16 @@ I will run the `echo hello` command for you. This is a simple command that shoul
 
 **Result:**
 
-```
+
 Command executed successfully.
 === STDOUT ===
 hello
 
 === STDERR ===
 
+...
 ```
 
-**Call ID:** toolu_vr...
-
-**Timestamp:** 7/8/2025, 2:48:06 PM
-
----
-
-## 🤖 Assistant
-
-### Content
-
-The command `echo hello` has been executed successfully, outputting "hello" with no errors. The command has completed and no error fixes are needed.
-
-**🔧 Tool Call:** Complete task (attempt_completion)
-
-**Parameters:**
-- **result:** The command `echo hello` has been executed successfully with output "hello". No errors were found, so no fixes are needed. The command has completed normally.
-
-**Timestamp:** 7/8/2025, 2:48:12 PM
-
----
-
-## 🔧 Tool
-
-### Content
-
-**🔧 Tool:** Complete task (attempt_completion)
-
-**Result:**
-
-```
-The user is satisfied with the result.
-```
-
-**Call ID:** toolu_vr...
-
-**Timestamp:** 7/8/2025, 2:48:25 PM
-
----
-
-## 🤖 Assistant
-
-### Content
-
-I am pleased you are satisfied with the result. Do you have a new task for me?
-
-**Timestamp:** 7/8/2025, 2:48:25 PM
-```
 
 ## Export to JSON Format
 
@@ -161,36 +115,7 @@ The output result is as follows:
       "role": "user",
       "timestamp": 1751957281111
     },
-    {
-      "content": "{\"content\":\"I will run the `echo hello` command for you. This is a simple command that should not produce any errors.\",\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"toolu_vrtx_019Fj5tSLLHHZSqY7nhB4whK\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"execute_command\",\"arguments\":\"{\\\"command\\\": \\\"echo hello\\\", \\\"timeout\\\": 5000}\"}}]}",
-      "id": "79a684eb-a60b-4b0a-8664-318592861bb8",
-      "role": "assistant",
-      "timestamp": 1751957286228
-    },
-    {
-      "content": "{\"content\":\"Command executed successfully.\\n=== STDOUT ===\\nhello\\n\\n=== STDERR ===\\n\",\"name\":\"execute_command\",\"role\":\"tool\",\"tool_call_id\":\"toolu_vrtx_019Fj5tSLLHHZSqY7nhB4whK\"}",
-      "id": "0bfbeff8-b108-4943-a6c2-55a8458c893f",
-      "role": "tool",
-      "timestamp": 1751957286343
-    },
-    {
-      "content": "{\"content\":\"The command `echo hello` has been executed successfully, outputting \\\"hello\\\" with no errors. The command has completed and no error fixes are needed.\",\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"toolu_vrtx_012ZEdGdGRChxeM6B4nTq3kK\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"attempt_completion\",\"arguments\":\"{\\\"result\\\": \\\"The command `echo hello` has been executed successfully with output \\\\\\\"hello\\\\\\\". No errors were found, so no fixes are needed. The command has completed normally.\\\"}\"}}]}",
-      "id": "cd51173e-dcc6-48bf-9f46-d629c814cf18",
-      "role": "assistant",
-      "timestamp": 1751957292182
-    },
-    {
-      "content": "{\"content\":\"The user is satisfied with the result.\",\"name\":\"attempt_completion\",\"role\":\"tool\",\"tool_call_id\":\"toolu_vrtx_012ZEdGdGRChxeM6B4nTq3kK\"}",
-      "id": "b3c884e2-574c-4930-aa0c-f0b85cd1bb5f",
-      "role": "tool",
-      "timestamp": 1751957305412
-    },
-    {
-      "content": "{\"content\":\"I am pleased you are satisfied with the result. Do you have a new task for me?\",\"role\":\"assistant\",\"tool_calls\":[]}",
-      "id": "ff74b13f-6c2a-4fb5-a0ee-bda245105885",
-      "role": "assistant",
-      "timestamp": 1751957305413
-    }
+    ....
   ],
   "name": "Session 7/8/2025, 2:47:46 PM",
   "updated_at": 1751957305413
