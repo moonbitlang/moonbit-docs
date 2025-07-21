@@ -1,4 +1,4 @@
-# Moon Pilot
+# Pilot
 
 Here are some manuals that may help you use the pilot tools of the programming language:
 
