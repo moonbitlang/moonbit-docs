@@ -1,4 +1,4 @@
-# Getting Started with MoonPilot
+# Getting Started
 
 ## MoonPilot
 
