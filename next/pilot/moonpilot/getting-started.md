@@ -4,7 +4,7 @@
 
 ![Image: MoonPilot interface overview](/imgs/pilot/pilot-01.png)
 
-Unleash MoonBit language's raw power directly in your terminal. Search million-line codebases instantly. Turn hours-long workflows into a single command. Your tools. Your workflow. Your codebase, evolving at thought speed.
+Unleash MoonBit language's raw power directly in your terminal. Refactor your code in parallel. Turn hours-long workflows into a single command. Your tools. Your workflow. Your codebase, evolving at thought speed.
 
 ## Model Configuration
 
