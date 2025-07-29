@@ -386,6 +386,22 @@ For example, in the following configuration, `-2` disables the warning number 2 
 }
 ```
 
+If multiple warnings need to be disabled, they can be directly connected and combined.
+
+```json
+{
+  "warn-list": "-2-4"
+}
+```
+
+If it is necessary to activate certain warnings that were originally prohibited, use the plus sign.
+
+```json
+{
+  "warn-list": "+31"
+}
+```
+
 You can use `moonc build-package -warn-help` to see the list of preset compiler warning numbers.
 
 ```
