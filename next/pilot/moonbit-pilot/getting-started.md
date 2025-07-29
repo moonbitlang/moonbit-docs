@@ -1,14 +1,14 @@
 # Getting Started
 
-## MoonPilot
+## MoonBit Pilot
 
-![Image: MoonPilot interface overview](/imgs/pilot/pilot-01.png)
+![Image: MoonBit Pilot interface overview](/imgs/pilot/pilot-01.png)
 
 Unleash MoonBit language's raw power directly in your terminal. Refactor your code in parallel. Turn hours-long workflows into a single command. Your tools. Your workflow. Your codebase, evolving at thought speed.
 
 ## Model Configuration
 
-Before using MoonPilot, you need to configure at least one model by creating a configuration file at `~/.moonpilot/models/models.json`:
+Before using MoonBit Pilot, you need to configure at least one model by creating a configuration file at `~/.moonagent/models/models.json`:
 
 ```json
 [
@@ -89,7 +89,7 @@ moon pilot
 
 ## Usage
 
-MoonPilot will automatically use the first model in your configuration file (in this case, "sonnet4"). You can configure multiple models and they can be specified by `--model` parameter when you start MoonPilot.
+MoonBit Pilot will automatically use the first model in your configuration file (in this case, "sonnet4"). You can configure multiple models and they can be specified by `--model` parameter when you start MoonBit Pilot.
 
 ## Interactive Mode
 
@@ -109,7 +109,7 @@ moon pilot --model k2
 
 ### Interactive Commands
 
-Once in interactive mode, you can input your requirements normally and MoonPilot will respond and execute tasks for you.
+Once in interactive mode, you can input your requirements normally and MoonBit Pilot will respond and execute tasks for you.
 
 ```bash
 act ▶ what does this project do?

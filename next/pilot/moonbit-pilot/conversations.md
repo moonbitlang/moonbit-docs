@@ -2,7 +2,7 @@
 
 ## Background
 
-If you encounter particularly good conversations (such as those that solved big problems for you, or when MoonPilot performed exceptionally well and you want to share), or if they don't meet expectations and you want to analyze why they weren't good afterward, then conversation management and export become very useful. Let's see how to use them specifically.
+If you encounter particularly good conversations (such as those that solved big problems for you, or when MoonBit Pilot performed exceptionally well and you want to share), or if they don't meet expectations and you want to analyze why they weren't good afterward, then conversation management and export become very useful. Let's see how to use them specifically.
 
 ## List All Conversations in Current Project
 
@@ -127,7 +127,7 @@ The output result is as follows:
 Conversation export is useful for:
 
 - **Documentation**: Save successful problem-solving sessions for future reference
-- **Sharing**: Share impressive MoonPilot interactions with your team
+- **Sharing**: Share impressive MoonBit Pilot interactions with your team
 - **Analysis**: Review conversations that didn't meet expectations to understand what went wrong
 - **Training**: Use successful patterns to improve future interactions
 - **Debugging**: Export detailed logs when reporting issues or seeking support 

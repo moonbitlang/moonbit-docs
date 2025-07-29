@@ -2,7 +2,7 @@
 
 ## Model Management
 
-Before using MoonPilot, you need to configure at least one model by creating a configuration file at `~/.moonpilot/models/models.json`:
+Before using MoonBit Pilot, you need to configure at least one model by creating a configuration file at `~/.moonagent/models/models.json`:
 
 ```json
 [
@@ -73,7 +73,7 @@ The configuration above includes two popular models:
 
 ## Supported Models
 
-MoonPilot supports the following models through various API providers:
+MoonBit Pilot supports the following models through various API providers:
 
 | Model | Provider | Model Name | Base URL | Notes |
 |-------|----------|------------|----------|-------|
@@ -168,7 +168,7 @@ To use these models, you'll need to obtain API keys from the respective provider
 
 ## Usage
 
-After configuring your models, you can use them with MoonPilot:
+After configuring your models, you can use them with MoonBit Pilot:
 
 ```bash
 # Use the first model in your configuration (default)

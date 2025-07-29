@@ -1,4 +1,4 @@
-# MoonPilot
+# MoonBit Pilot
 
 ```{toctree}
 :maxdepth: 2

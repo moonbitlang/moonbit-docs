@@ -2,7 +2,7 @@
 
 ## Markdown Files as Executables
 
-Markdown files are executable, and the runtime environment is MoonPilot!
+Markdown files are executable, and the runtime environment is MoonBit Pilot!
 
 ## Background
 
@@ -13,7 +13,7 @@ If you frequently have repetitive commands to execute, such as:
 Run `pnpm lint --fix` until all errors are fixed
 ```
 
-Copy-pasting this phrase every time becomes tedious, especially when you have many prompts to execute. MoonPilot provides a solution to make managing your daily work prompts simple.
+Copy-pasting this phrase every time becomes tedious, especially when you have many prompts to execute. MoonBit Pilot provides a solution to make managing your daily work prompts simple.
 
 ## Final Effect
 
@@ -27,7 +27,7 @@ Here, you only need to run a `/lint_fix` command to complete the execution of th
 
 ## Implementation
 
-In your project's `.moonpilot/commands` directory, create a `lint_fix.md` file with the following content:
+In your project's `.moonagent/commands` directory, create a `lint_fix.md` file with the following content:
 
 ```markdown
 Run pnpm lint --fix until all errors are fixed
