@@ -193,14 +193,14 @@ test "for loop 8" (t : @test.T) {
 
 // start functional loop
 test {
-  fn sum(xs : @immut/list.T[Int]) -> Int {
+  fn sum(xs : @list.T[Int]) -> Int {
     loop (xs, 0) {
-      (Nil, acc) => break acc // <=> Nil, acc => acc
-      (Cons(x, rest), acc) => continue (rest, x + acc)
+      (Empty, acc) => break acc // <=> Nil, acc => acc
+      (More(x, tail=rest), acc) => continue (rest, x + acc)
     }
   }
 
-  assert_eq(sum(Cons(1, Cons(2, Cons(3, Nil)))), 6)
+  assert_eq(sum(@list.from_array([1, 2, 3])), 6)
 }
 // end functional loop
 

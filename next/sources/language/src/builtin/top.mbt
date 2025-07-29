@@ -58,8 +58,8 @@ test "string 1" (t : @test.T) {
   let println = fn(show) { t.writeln(show) }
   // start string 1
   let a = "兔rabbit"
-  println(a.char_at(0))
-  println(a.char_at(1))
+  println(a[0].to_char())
+  println(a[1].to_char())
   let b =
     #| Hello
     #| MoonBit\n
@@ -111,8 +111,8 @@ let char : Unit = {
 // start char 2
 test {
   let s : String = "hello"
-  // charcode_at has type Int 
-  let b = s.charcode_at(0) - 'a'
+  // op_get has type Int, and char constant can be used as Int
+  let b = s[0] - 'a'
   inspect(b, content="7")
 }
 // end char 2
