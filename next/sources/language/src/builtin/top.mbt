@@ -111,7 +111,7 @@ let char : Unit = {
 // start char 2
 test {
   let s : String = "hello"
-  // op_get has type Int, and char constant can be used as Int
+  // op_get returns type Int, and char literal can be used as Int
   let b = s[0] - 'a'
   inspect(b, content="7")
 }
