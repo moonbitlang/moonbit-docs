@@ -12,6 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 test {
   inspect(@lib.pi, content="3.141592653589793")
   inspect(@lib.max(4, 2), content="4")

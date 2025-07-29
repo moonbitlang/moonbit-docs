@@ -12,30 +12,38 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 pub let pi = 3.141592653589793
 
+///|
 pub let tau = 6.283185307179586
 
+///|
 pub let e = 2.718281828459045
 
+///|
 pub let int_min = -2147483648
 
+///|
 pub let int_max = 2147483647
 
-pub fn max[T : Compare](a : T, b : T) -> T {
+///|
+pub fn[T : Compare] max(a : T, b : T) -> T {
   if a.compare(b) >= 0 {
     return a
   }
   return b
 }
 
-pub fn min[T : Compare](a : T, b : T) -> T {
+///|
+pub fn[T : Compare] min(a : T, b : T) -> T {
   if a.compare(b) >= 0 {
     return b
   }
   return a
 }
 
+///|
 pub fn abs_int(n : Int) -> Int {
   if n.compare(0) >= 0 {
     return n
@@ -43,6 +51,7 @@ pub fn abs_int(n : Int) -> Int {
   return -n
 }
 
+///|
 pub fn factorial(n : Int) -> Int? {
   fn factorial_helper(n : Int, acc : Int) -> Int? {
     match n {
@@ -54,6 +63,7 @@ pub fn factorial(n : Int) -> Int? {
   factorial_helper(n, 1)
 }
 
+///|
 pub fn parse_int(s : String) -> Int? {
   let char_0 = 0x30
   let char_u_a = 0x41
@@ -84,11 +94,11 @@ pub fn parse_int(s : String) -> Int? {
       continue
     }
     let digit = if c.compare('0') >= 0 && c.compare('9') <= 0 {
-      c.to_int() - char_0
-    } else if c.to_int() - char_a < 26 {
-      c.to_int() - char_a + 10
-    } else if c.to_int() - char_u_a < 26 {
-      c.to_int() - char_u_a + 10
+      c - char_0
+    } else if c - char_a < 26 {
+      c - char_a + 10
+    } else if c - char_u_a < 26 {
+      c - char_u_a + 10
     } else {
       break
     }
@@ -97,7 +107,8 @@ pub fn parse_int(s : String) -> Int? {
     } else {
       result_digit * radix + digit
     }
-    if (not(is_negative) && result_digit < 0) || (is_negative && result_digit > 0) {
+    if (not(is_negative) && result_digit < 0) ||
+      (is_negative && result_digit > 0) {
       return None
     }
     index = index + 1
