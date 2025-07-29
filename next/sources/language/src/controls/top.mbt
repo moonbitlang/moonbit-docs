@@ -307,3 +307,16 @@ test {
   assert_eq(decide_sport("sunny", 0), "tennis")
 }
 // end match 1
+
+test {
+  // start defer 1
+  defer println("perform resource cleanup")
+  println("do things with the resource")
+  // end defer 1
+
+  // start defer 2
+  defer println("first defer")
+  defer println("second defer")
+  println("do things")
+  // end defer 2
+}

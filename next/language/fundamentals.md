@@ -986,6 +986,43 @@ within a nested loop. For example:
 :end-before: end loop label
 ```
 
+### `defer` expression
+
+`defer` expression can be used to perform reliable resource cleanup.
+The syntax for `defer` is as follows:
+
+```moonbit
+defer <expr>
+<body>
+```
+
+Whenever the program leaves `body`, `expr` will be executed.
+For example, the following program:
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start defer 1
+:end-before: end defer 1
+```
+
+will first print `do things with the resource`, and then `perform resource cleanup`.
+`defer` expression will always get executed no matter how its body exits.
+It can handle [error](/language/error-handling.md),
+as well as control flow constructs including `return`, `break` and `continue`.
+
+Consecutive `defer` will be executed in reverse order, for example, the following:
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start defer 2
+:end-before: end defer 2
+```
+
+will output first `do things`, then `second defer`, and finally `first defer`.
+
+`return`, `break` and `continue` are disallowed in the right hand side of `defer`.
+Currently, raising error or calling `async` function is also disallowed in the right hand side of `defer`.
+
 ## Iterator
 
 An iterator is an object that traverse through a sequence while providing access
