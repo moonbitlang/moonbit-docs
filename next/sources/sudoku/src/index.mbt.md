@@ -84,16 +84,16 @@ We need a data type, `Grid[T]`, to store the 81 squares and the information asso
 ```moonbit
 // A1 => 0, A2 => 1
 fn square_to_int(s : String) -> Int {
-  if s.charcode_at(0) is ('A'..='I') && s.charcode_at(1) is ('1'..='9') {
-    let row = s.charcode_at(0) - 65 // 'A' <=> 0
-    let col = s.charcode_at(1) - 49 // '1' <=> 0
+  if s[0] is ('A'..='I') && s[1] is ('1'..='9') {
+    let row = s[0] - 'A'.to_int() // 'A' <=> 0
+    let col = s[1] - '1'.to_int() // '1' <=> 0
     return row * 9 + col
   } else {
     abort("Grid_to_int(): \{s} is not a Grid")
   }
 }
 
-///|
+///
 test {
   inspect(square_to_int("A1"), content="0")
   inspect(square_to_int("A7"), content="6")
