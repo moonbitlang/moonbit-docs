@@ -2,9 +2,9 @@
 
 ## Ignoring Files and Directories
 
-If you have directories or files that you want MoonPilot to ignore, you can configure this by placing a `.moonagentignore` file in your project root directory. The format is identical to `.gitignore`.
+If you have directories or files that you want MoonBit Pilot to ignore, you can configure this by placing a `.moonagentignore` file in your project root directory. The format is identical to `.gitignore`.
 
-If no `.moonagentignore` file is set, MoonPilot will use the project's `.gitignore` as the default. Files excluded by either ignore file will not be monitored by MoonPilot.
+If no `.moonagentignore` file is set, MoonBit Pilot will use the project's `.gitignore` as the default. Files excluded by either ignore file will not be monitored by MoonBit Pilot.
 
 ### .moonagentignore Format
 
@@ -36,10 +36,10 @@ docs/**/*.draft.md
 
 ### moonagent.yml
 
-Create a `.moonagent/moonagent.yml` file in your project root to configure MoonPilot behavior:
+Create a `.moonagent/moonagent.yml` file in your project root to configure MoonBit Pilot's behavior:
 
 ```yaml
-# MoonPilot Project Configuration
+# MoonBit Pilot Project Configuration
 # This configuration file controls moon pilot behavior for this project
 
 # Enable automatic commits when files are modified
@@ -50,5 +50,5 @@ auto_commit: true
 
 ### Available Configuration Options
 
-- **auto_commit**: When set to `true`, MoonPilot will automatically create git commits before and after making changes to your code
+- **auto_commit**: When set to `true`, MoonBit Pilot will automatically create git commits before and after making changes to your code
 - Additional configuration options may be added in future versions 

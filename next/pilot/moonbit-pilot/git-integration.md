@@ -2,7 +2,7 @@
 
 ## Background
 
-Currently, there are two approaches to managing AI modifications: git-based solutions and checkpoint-based solutions. We believe the git approach is superior, as it can effectively utilize existing IDE review tools, provides a clear timeline, and has good rollback characteristics. Therefore, we decided to have MoonPilot use git to manage both manual user modifications and agent modifications.
+Currently, there are two approaches to managing AI modifications: git-based solutions and checkpoint-based solutions. We believe the git approach is superior, as it can effectively utilize existing IDE review tools, provides a clear timeline, and has good rollback characteristics. Therefore, we decided to have MoonBit Pilot use git to manage both manual user modifications and agent modifications.
 
 You no longer need to fear AI making chaotic code changes!
 
@@ -11,7 +11,7 @@ You no longer need to fear AI making chaotic code changes!
 We introduce a configuration file for the first time. Create a file `.moonagent/moonagent.yml` in your current project with the following content:
 
 ```yaml
-# MoonPilot Project Configuration
+# MoonBit Pilot Project Configuration
 # This configuration file controls moon pilot behavior for this project
 
 # Enable automatic commits when files are modified
@@ -22,23 +22,23 @@ After this, restart and enter moon pilot for the changes to take effect.
 
 ## How It Works
 
-MoonPilot follows a structured git workflow to ensure clean separation between user and agent modifications:
+MoonBit Pilot follows a structured git workflow to ensure clean separation between user and agent modifications:
 
 ### Detection Phase
-When you submit a requirement, MoonPilot first analyzes the current git state to detect any uncommitted changes. This includes:
+When you submit a requirement, MoonBit Pilot first analyzes the current git state to detect any uncommitted changes. This includes:
 - Modified files in the working directory
 - Staged changes ready for commit
 - New untracked files that may be relevant to your project
 
 ### User Work Preservation
-If MoonPilot detects that you have previously modified code, it will automatically create a commit for your work before making any modifications. This ensures your changes are safely preserved with a clear commit message like:
+If MoonBit Pilot detects that you have previously modified code, it will automatically create a commit for your work before making any modifications. This ensures your changes are safely preserved with a clear commit message like:
 
 ```markdown
 moonagent_pre_user work before implementing authentication
 ```
 
 ### Agent Modifications
-After preserving your work, MoonPilot proceeds with its own modifications. It analyzes your requirements, implements the necessary changes, and creates a separate commit with a descriptive message:
+After preserving your work, MoonBit Pilot proceeds with its own modifications. It analyzes your requirements, implements the necessary changes, and creates a separate commit with a descriptive message:
 
 ```markdown
 moonagent_post_implemented JWT authentication with tests
@@ -70,6 +70,6 @@ This approach provides several benefits:
 ## Best Practices
 
 - Review agent commits before merging to main branches
-- Use meaningful branch names when working with MoonPilot
+- Use meaningful branch names when working with MoonBit Pilot
 - Combine related commits before creating pull requests
 - Keep the git history clean for better collaboration 
