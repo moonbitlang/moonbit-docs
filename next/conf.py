@@ -86,3 +86,4 @@ copybutton_prompt_text = "$ "
 
 # -- Options for link check -------------------------------------------------
 linkcheck_anchors_ignore_for_url = [ 'https://mooncakes.io/docs' ]
+linkcheck_ignore = ["https://platform.deepseek.com"]
