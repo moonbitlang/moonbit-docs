@@ -21,7 +21,7 @@ msgstr ""
 
 #: ../../pilot/index.md:7 ../../pilot/moonbit-pilot/index.md:3
 msgid "Contents:"
-msgstr ""
+msgstr "目录："
 
 #: ../../pilot/index.md:1
 msgid "Pilot"
@@ -31,41 +31,43 @@ msgstr ""
 msgid ""
 "Here are some manuals that may help you use the pilot tools of the "
 "programming language:"
-msgstr ""
+msgstr "这里有一些手册，可以帮助你使用该编程语言的 pilot 工具："
 
 #: ../../pilot/index.md:5
 msgid ""
 "[MoonBit Pilot](./moonbit-pilot/index.md): AI-powered development "
 "assistant for MoonBit projects."
 msgstr ""
+"[MoonBit Pilot](./moonbit-pilot/index.md)：为 MoonBit 项目提供的人工智能开发"
+"助手。"
 
 #: ../../pilot/moonbit-pilot/commands.md:1
 msgid "Commands"
-msgstr ""
+msgstr "命令"
 
 #: ../../pilot/moonbit-pilot/commands.md:3
 msgid "Markdown Files as Executables"
-msgstr ""
+msgstr "将 Markdown 文件作为可执行文件"
 
 #: ../../pilot/moonbit-pilot/commands.md:5
 msgid ""
 "Markdown files are executable, and the runtime environment is MoonBit "
 "Pilot!"
-msgstr ""
+msgstr "Markdown 文件是可执行的，其运行时环境是 MoonBit Pilot！"
 
 #: ../../pilot/moonbit-pilot/commands.md:7
 #: ../../pilot/moonbit-pilot/conversations.md:3
 #: ../../pilot/moonbit-pilot/git-integration.md:3
 msgid "Background"
-msgstr ""
+msgstr "背景"
 
 #: ../../pilot/moonbit-pilot/commands.md:9
 msgid "If you frequently have repetitive commands to execute, such as:"
-msgstr ""
+msgstr "如果你经常需要执行重复的命令，例如："
 
 #: ../../pilot/moonbit-pilot/commands.md:12
 msgid "Run `pnpm lint --fix` until all errors are fixed\n"
-msgstr ""
+msgstr "运行 `pnpm lint --fix` 直到所有错误都修复完毕\n"
 
 #: ../../pilot/moonbit-pilot/commands.md:16
 msgid ""
@@ -73,98 +75,100 @@ msgid ""
 "have many prompts to execute. MoonBit Pilot provides a solution to make "
 "managing your daily work prompts simple."
 msgstr ""
+"每次都复制粘贴这个短语会变得很繁琐，特别是当你有许多提示需要执行时。MoonBit "
+"Pilot 提供了一个解决方案，使管理你的日常工作提示变得简单。"
 
 #: ../../pilot/moonbit-pilot/commands.md:18
 msgid "Final Effect"
-msgstr ""
+msgstr "最终效果"
 
 #: ../../pilot/moonbit-pilot/commands.md:20
 msgid "Let's look at the final way to run the prompt:"
-msgstr ""
+msgstr "让我们看看运行提示的最终方式："
 
 #: ../../pilot/moonbit-pilot/commands.md:22
 msgid "/lint_fix\n"
-msgstr ""
+msgstr "/lint_fix\n"
 
 #: ../../pilot/moonbit-pilot/commands.md:26
 msgid ""
 "Here, you only need to run a `/lint_fix` command to complete the "
 "execution of the above prompt."
-msgstr ""
+msgstr "在这里，你只需要运行一个 `/lint_fix` 命令就可以完成上述提示的执行。"
 
 #: ../../pilot/moonbit-pilot/commands.md:28
 msgid "Implementation"
-msgstr ""
+msgstr "实现"
 
 #: ../../pilot/moonbit-pilot/commands.md:30
 msgid ""
 "In your project's `.moonagent/commands` directory, create a `lint_fix.md`"
 " file with the following content:"
-msgstr ""
+msgstr "在你的项目的 `.moonagent/commands` 目录下，创建一个 `lint_fix.md` 文件，内容如下："
 
 #: ../../pilot/moonbit-pilot/commands.md:32
 msgid "Run pnpm lint --fix until all errors are fixed\n"
-msgstr ""
+msgstr "运行 pnpm lint --fix 直到所有错误都修复完毕\n"
 
 #: ../../pilot/moonbit-pilot/commands.md:36
 msgid ""
 "Then you can use `lint_fix` as a command in the moon pilot command line, "
 "with auto-completion support."
-msgstr ""
+msgstr "然后你就可以在 moon pilot 命令行中将 `lint_fix` 作为一个命令来使用，并支持自动补全。"
 
 #: ../../pilot/moonbit-pilot/commands.md:38
 msgid "Handling Dynamic Prompts"
-msgstr ""
+msgstr "处理动态提示"
 
 #: ../../pilot/moonbit-pilot/commands.md:40
 msgid ""
 "What if you want the command to be changeable? You can modify the file "
 "content like this:"
-msgstr ""
+msgstr "如果你希望命令是可变的怎么办？你可以像这样修改文件内容："
 
 #: ../../pilot/moonbit-pilot/commands.md:42
 msgid "Run {{args[0] or \"pnpm lint --fix\"}} until all errors are fixed\n"
-msgstr ""
+msgstr "运行 {{args[0] or \"pnpm lint --fix\"}} 直到所有错误都修复完毕\n"
 
 #: ../../pilot/moonbit-pilot/commands.md:46
 msgid "Explanation:"
-msgstr ""
+msgstr "解释："
 
 #: ../../pilot/moonbit-pilot/commands.md:48
 msgid ""
 "`args` represents positional arguments, which can be referenced using "
 "`[index]`"
-msgstr ""
+msgstr "`args` 代表位置参数，可以使用 `[index]` 来引用"
 
 #: ../../pilot/moonbit-pilot/commands.md:49
 msgid ""
 "`kwargs` represents key-value pair arguments, which can be referenced "
 "using `kwargs.<key>`"
-msgstr ""
+msgstr "`kwargs` 代表键值对参数，可以使用 `kwargs.<key>` 来引用"
 
 #: ../../pilot/moonbit-pilot/commands.md:50
 msgid "`{{}}` is used to render a value"
-msgstr ""
+msgstr "`{{}}` 用于渲染一个值"
 
 #: ../../pilot/moonbit-pilot/commands.md:52
 msgid "Let's see how to use it:"
-msgstr ""
+msgstr "让我们看看如何使用它："
 
 #: ../../pilot/moonbit-pilot/commands.md:54
 msgid "act ▶ /lint_fix \"echo hello\"\n"
-msgstr ""
+msgstr "act ▶ /lint_fix \"echo hello\"\n"
 
 #: ../../pilot/moonbit-pilot/commands.md:58
 msgid "You can also use named parameters:"
-msgstr ""
+msgstr "你也可以使用命名参数："
 
 #: ../../pilot/moonbit-pilot/commands.md:60
 msgid "Run {{kwargs.command or \"pnpm lint --fix\"}} until all errors are fixed\n"
-msgstr ""
+msgstr "运行 {{kwargs.command or \"pnpm lint --fix\"}} 直到所有错误都修复完毕\n"
 
 #: ../../pilot/moonbit-pilot/commands.md:64
 msgid "Then use it like this:"
-msgstr ""
+msgstr "然后像这样使用它："
 
 #: ../../pilot/moonbit-pilot/commands.md:66
 msgid "act ▶ /lint_fix command=\"echo hello\"\n"
@@ -172,17 +176,17 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/commands.md:70
 msgid "Notice that the value should be quote with `\"`."
-msgstr ""
+msgstr "注意，值应该用 `\"` 引起来。"
 
 #: ../../pilot/moonbit-pilot/commands.md:72
 msgid "Complex Scripts"
-msgstr ""
+msgstr "复杂脚本"
 
 #: ../../pilot/moonbit-pilot/commands.md:74
 msgid ""
 "Here's an example of a more complex script to help you quickly complete "
 "complex engineering requirements:"
-msgstr ""
+msgstr "这里有一个更复杂脚本的例子，可以帮助你快速完成复杂的工程需求："
 
 #: ../../pilot/moonbit-pilot/commands.md:76
 #, python-format
@@ -206,16 +210,34 @@ msgid ""
 "Total tasks: {{ args|length }}\n"
 "Total parameters: {{ kwargs|length }}\n"
 msgstr ""
+"# {{ kwargs.title or \"开发计划\" }}\n"
+"\n"
+"## 目标\n"
+"{{ kwargs.objective or \"在此处定义主要目标\" }}\n"
+"\n"
+"## 任务\n"
+"{% for task in args %}\n"
+"- {{ task }}\n"
+"{% endfor %}\n"
+"\n"
+"## 参数\n"
+"{% for key, value in kwargs %}\n"
+"- **{{ key }}**: {{ value }}\n"
+"{% endfor %}\n"
+"\n"
+"## 总结\n"
+"总任务数: {{ args|length }}\n"
+"总参数数: {{ kwargs|length }}\n"
 
 #: ../../pilot/moonbit-pilot/commands.md:97
 msgid ""
 "Of course, for convenience, it's reasonable to minimize the number of "
 "parameters."
-msgstr ""
+msgstr "当然，为了方便起见，尽量减少参数的数量是合理的。"
 
 #: ../../pilot/moonbit-pilot/commands.md:99
 msgid "Additional Benefits"
-msgstr ""
+msgstr "额外的好处"
 
 #: ../../pilot/moonbit-pilot/commands.md:101
 msgid ""
@@ -223,14 +245,16 @@ msgid ""
 "this actually means you can better use IDE editors to write complex "
 "prompts and make debugging easier."
 msgstr ""
+"除了完成提示管理和提高执行效率外，这实际上意味着你可以更好地使用 IDE 编辑器来编写复杂的提"
+"示，并使调试更容易。"
 
 #: ../../pilot/moonbit-pilot/configuration.md:1
 msgid "Configuration"
-msgstr ""
+msgstr "配置"
 
 #: ../../pilot/moonbit-pilot/configuration.md:3
 msgid "Ignoring Files and Directories"
-msgstr ""
+msgstr "忽略文件和目录"
 
 #: ../../pilot/moonbit-pilot/configuration.md:5
 msgid ""
@@ -238,6 +262,8 @@ msgid ""
 "you can configure this by placing a `.moonagentignore` file in your "
 "project root directory. The format is identical to `.gitignore`."
 msgstr ""
+"如果你有希望 MoonBit Pilot 忽略的目录或文件，可以通过在项目根目录中放置一个 "
+"`.moonagentignore` 文件来进行配置。其格式与 `.gitignore` 完全相同。"
 
 #: ../../pilot/moonbit-pilot/configuration.md:7
 msgid ""
@@ -245,14 +271,16 @@ msgid ""
 "project's `.gitignore` as the default. Files excluded by either ignore "
 "file will not be monitored by MoonBit Pilot."
 msgstr ""
+"如果未设置 `.moonagentignore` 文件，MoonBit Pilot 将使用项目的 `.gitignore` "
+"作为默认配置。被任一忽略文件排除的文件将不会被 MoonBit Pilot 监控。"
 
 #: ../../pilot/moonbit-pilot/configuration.md:9
 msgid ".moonagentignore Format"
-msgstr ""
+msgstr ".moonagentignore 格式"
 
 #: ../../pilot/moonbit-pilot/configuration.md:11
 msgid "The `.moonagentignore` file follows the same syntax as `.gitignore`:"
-msgstr ""
+msgstr "`.moonagentignore` 文件遵循与 `.gitignore` 相同的语法："
 
 #: ../../pilot/moonbit-pilot/configuration.md:13
 msgid ""
@@ -276,20 +304,39 @@ msgid ""
 "# Use ! to negate (include) previously ignored patterns\n"
 "!important.log\n"
 msgstr ""
+"# 忽略特定文件\n"
+"secret.txt\n"
+"config.local.json\n"
+"\n"
+"# 忽略目录\n"
+"node_modules/\n"
+".vscode/\n"
+"dist/\n"
+"\n"
+"# 忽略文件模式\n"
+"*.log\n"
+"*.tmp\n"
+"temp_*\n"
+"\n"
+"# 忽略嵌套模式\n"
+"docs/**/*.draft.md\n"
+"\n"
+"# 使用 ! 来否定（包含）先前忽略的模式\n"
+"!important.log\n"
 
 #: ../../pilot/moonbit-pilot/configuration.md:35
 msgid "Project Configuration"
-msgstr ""
+msgstr "项目配置"
 
 #: ../../pilot/moonbit-pilot/configuration.md:37
 msgid "moonagent.yml"
-msgstr ""
+msgstr "moonagent.yml"
 
 #: ../../pilot/moonbit-pilot/configuration.md:39
 msgid ""
 "Create a `.moonagent/moonagent.yml` file in your project root to "
 "configure MoonBit Pilot's behavior:"
-msgstr ""
+msgstr "在你的项目根目录下创建一个 `.moonagent/moonagent.yml` 文件来配置 MoonBit Pilot 的行为："
 
 #: ../../pilot/moonbit-pilot/configuration.md:41
 msgid ""
@@ -301,24 +348,32 @@ msgid ""
 "\n"
 "# Additional configuration options can be added here\n"
 msgstr ""
+"# MoonBit Pilot 项目配置\n"
+"# 此配置文件控制此项目的 moon pilot 行为\n"
+"\n"
+"# 文件修改时启用自动提交\n"
+"auto_commit: true\n"
+"\n"
+"# 可在此处添加其他配置选项\n"
 
 #: ../../pilot/moonbit-pilot/configuration.md:51
 msgid "Available Configuration Options"
-msgstr ""
+msgstr "可用配置选项"
 
 #: ../../pilot/moonbit-pilot/configuration.md:53
 msgid ""
 "**auto_commit**: When set to `true`, MoonBit Pilot will automatically "
 "create git commits before and after making changes to your code"
 msgstr ""
+"**auto_commit**: 当设置为 `true` 时，MoonBit Pilot 将在修改你的代码前后自动创建 git 提交"
 
 #: ../../pilot/moonbit-pilot/configuration.md:54
 msgid "Additional configuration options may be added in future versions"
-msgstr ""
+msgstr "未来版本中可能会添加其他配置选项"
 
 #: ../../pilot/moonbit-pilot/conversations.md:1
 msgid "Conversations"
-msgstr ""
+msgstr "对话"
 
 #: ../../pilot/moonbit-pilot/conversations.md:5
 msgid ""
@@ -329,15 +384,18 @@ msgid ""
 "then conversation management and export become very useful. Let's see how"
 " to use them specifically."
 msgstr ""
+"如果你遇到特别好的对话（比如那些为你解决了大问题的对话，或者 MoonBit Pilot "
+"表现得特别出色而你想要分享），或者它们不符合预期而你想要事后分析为什么不好，那么对话管理和"
+"导出就变得非常有用。让我们具体看看如何使用它们。"
 
 #: ../../pilot/moonbit-pilot/conversations.md:7
 msgid "List All Conversations in Current Project"
-msgstr ""
+msgstr "列出当前项目中的所有对话"
 
 #: ../../pilot/moonbit-pilot/conversations.md:9
 #: ../../pilot/moonbit-pilot/getting-started.md:144
 msgid "moon pilot conversations\n"
-msgstr ""
+msgstr "moon pilot conversations\n"
 
 #: ../../pilot/moonbit-pilot/conversations.md:13
 #: ../../pilot/moonbit-pilot/getting-started.md:148
@@ -359,15 +417,15 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/conversations.md:29
 msgid "View Conversation Details"
-msgstr ""
+msgstr "查看对话详情"
 
 #: ../../pilot/moonbit-pilot/conversations.md:31
 msgid "moon pilot conversation 2b2fda32\n"
-msgstr ""
+msgstr "moon pilot conversation 2b2fda32\n"
 
 #: ../../pilot/moonbit-pilot/conversations.md:36
 msgid "Export to Markdown Format"
-msgstr ""
+msgstr "导出为 Markdown 格式"
 
 #: ../../pilot/moonbit-pilot/conversations.md:38
 msgid "moon pilot conversation 2b2fda32 --output conversation.md\n"
@@ -375,7 +433,7 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/conversations.md:42
 msgid "Opening the file shows the following result:"
-msgstr ""
+msgstr "打开文件会显示以下结果："
 
 #: ../../pilot/moonbit-pilot/conversations.md:44
 msgid ""
@@ -434,15 +492,15 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/conversations.md:98
 msgid "Export to JSON Format"
-msgstr ""
+msgstr "导出为 JSON 格式"
 
 #: ../../pilot/moonbit-pilot/conversations.md:100
 msgid "moon pilot conversation 2b2fda32 --output conversation.json\n"
-msgstr ""
+msgstr "moon pilot conversation 2b2fda32 --output conversation.json\n"
 
 #: ../../pilot/moonbit-pilot/conversations.md:104
 msgid "The output result is as follows:"
-msgstr ""
+msgstr "输出结果如下："
 
 #: ../../pilot/moonbit-pilot/conversations.md:106
 msgid ""
@@ -467,41 +525,41 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/conversations.md:125
 msgid "Use Cases"
-msgstr ""
+msgstr "使用场景"
 
 #: ../../pilot/moonbit-pilot/conversations.md:127
 msgid "Conversation export is useful for:"
-msgstr ""
+msgstr "对话导出在以下方面很有用："
 
 #: ../../pilot/moonbit-pilot/conversations.md:129
 msgid ""
 "**Documentation**: Save successful problem-solving sessions for future "
 "reference"
-msgstr ""
+msgstr "**文档记录**：保存成功解决问题的会话以备将来参考"
 
 #: ../../pilot/moonbit-pilot/conversations.md:130
 msgid "**Sharing**: Share impressive MoonBit Pilot interactions with your team"
-msgstr ""
+msgstr "**分享**：与你的团队分享令人印象深刻的 MoonBit Pilot 互动"
 
 #: ../../pilot/moonbit-pilot/conversations.md:131
 msgid ""
 "**Analysis**: Review conversations that didn't meet expectations to "
 "understand what went wrong"
-msgstr ""
+msgstr "**分析**：回顾未达到预期的对话，以了解问题所在"
 
 #: ../../pilot/moonbit-pilot/conversations.md:132
 msgid "**Training**: Use successful patterns to improve future interactions"
-msgstr ""
+msgstr "**培训**：使用成功的模式来改善未来的互动"
 
 #: ../../pilot/moonbit-pilot/conversations.md:133
 msgid ""
 "**Debugging**: Export detailed logs when reporting issues or seeking "
 "support"
-msgstr ""
+msgstr "**调试**：在报告问题或寻求支持时导出详细日志"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:1
 msgid "Getting Started"
-msgstr ""
+msgstr "入门指南"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:3
 #: ../../pilot/moonbit-pilot/index.md:1
@@ -510,11 +568,11 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/getting-started.md:5
 msgid "![Image: MoonBit Pilot interface overview](/imgs/pilot/pilot-01.png)"
-msgstr ""
+msgstr "![图片：MoonBit Pilot 界面概览](/imgs/pilot/pilot-01.png)"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:5
 msgid "Image: MoonBit Pilot interface overview"
-msgstr ""
+msgstr "图片：MoonBit Pilot 界面概览"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:7
 msgid ""
@@ -522,11 +580,13 @@ msgid ""
 "your code in parallel. Turn hours-long workflows into a single command. "
 "Your tools. Your workflow. Your codebase, evolving at thought speed."
 msgstr ""
+"在你的终端中直接释放 MoonBit 语言的原始力量。并行重构你的代码。将数小时的工作流程转变为"
+"一个单一的命令。你的工具。你的工作流程。你的代码库，以思想的速度进化。"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:9
 #: ../../pilot/moonbit-pilot/model-configuration.md:1
 msgid "Model Configuration"
-msgstr ""
+msgstr "模型配置"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:11
 #: ../../pilot/moonbit-pilot/model-configuration.md:5
@@ -534,6 +594,8 @@ msgid ""
 "Before using MoonBit Pilot, you need to configure at least one model by "
 "creating a configuration file at `~/.moonagent/models/models.json`:"
 msgstr ""
+"在使用 MoonBit Pilot 之前，你需要通过在 `~/.moonagent/models/models.json` "
+"创建一个配置文件来配置至少一个模型："
 
 #: ../../pilot/moonbit-pilot/getting-started.md:13
 msgid ""
@@ -569,101 +631,101 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/getting-started.md:44
 msgid "Configuration Fields Explanation"
-msgstr ""
+msgstr "配置字段说明"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:46
 msgid "**name**: A unique identifier for the model (used for reference)"
-msgstr ""
+msgstr "**name**: 模型的唯一标识符（用于参考）"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:47
 msgid "**description**: Human-readable description of the model"
-msgstr ""
+msgstr "**description**: 模型的可读描述"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:48
 msgid "**model_name**: The actual model identifier used by the API provider"
-msgstr ""
+msgstr "**model_name**: API 提供商使用的实际模型标识符"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:49
 msgid "**model_type**: Type of API interface (currently supports \"saas/openai\")"
-msgstr ""
+msgstr "**model_type**: API 接口类型（目前支持 \"saas/openai\"）"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:50
 msgid "**base_url**: API endpoint URL for the model provider"
-msgstr ""
+msgstr "**base_url**: 模型提供商的 API 端点 URL"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:51
 msgid ""
 "**is_reasoning**: Whether this is a reasoning model (affects token "
 "counting)"
-msgstr ""
+msgstr "**is_reasoning**: 是否为推理模型（影响 token 计数）"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:52
 msgid "**input_price**: Cost per million input tokens (in USD)"
-msgstr ""
+msgstr "**input_price**: 每百万输入 token 的成本（美元）"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:53
 msgid "**output_price**: Cost per million output tokens (in USD)"
-msgstr ""
+msgstr "**output_price**: 每百万输出 token 的成本（美元）"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:54
 msgid "**max_output_tokens**: Maximum number of tokens the model can output"
-msgstr ""
+msgstr "**max_output_tokens**: 模型可以输出的最大 token 数"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:55
 msgid "**context_window**: Total context window size in tokens"
-msgstr ""
+msgstr "**context_window**: 总上下文窗口大小（以 token 为单位）"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:56
 msgid "**api_key**: Your API key for this provider"
-msgstr ""
+msgstr "**api_key**: 您此提供商的 API 密钥"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:58
 msgid "About the Example Models"
-msgstr ""
+msgstr "关于示例模型"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:60
 #: ../../pilot/moonbit-pilot/model-configuration.md:58
 msgid "The configuration above includes two popular models:"
-msgstr ""
+msgstr "以上配置包括两个流行的模型："
 
 #: ../../pilot/moonbit-pilot/getting-started.md:62
 msgid ""
 "**Claude Sonnet 4** (`sonnet4`): Anthropic's latest high-performance "
 "model via OpenRouter"
-msgstr ""
+msgstr "**Claude Sonnet 4** (`sonnet4`): Anthropic 通过 OpenRouter 提供的最新高性能模型"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:63
 msgid "High context window (200k tokens) for complex tasks"
-msgstr ""
+msgstr "高上下文窗口（20 万 token）适用于复杂任务"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:64
 msgid "Premium pricing but excellent quality"
-msgstr ""
+msgstr "价格较高但质量卓越"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:66
 msgid "**Kimi K2** (`k2`): Moonshot's cost-effective model"
-msgstr ""
+msgstr "**Kimi K2** (`k2`): Moonshot 的高性价比模型"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:67
 msgid "Good performance with lower pricing"
-msgstr ""
+msgstr "性能良好，价格较低"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:68
 msgid "120k token context window"
-msgstr ""
+msgstr "12 万 token 上下文窗口"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:69
 msgid "Great for everyday development tasks"
-msgstr ""
+msgstr "非常适合日常开发任务"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:71
 #: ../../pilot/moonbit-pilot/model-configuration.md:144
 msgid "Getting API Keys"
-msgstr ""
+msgstr "获取 API 密钥"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:73
 msgid "To use these models, you'll need to obtain API keys:"
-msgstr ""
+msgstr "要使用这些模型，你需要获取 API 密钥："
 
 #: ../../pilot/moonbit-pilot/getting-started.md:75
 msgid ""
@@ -671,6 +733,8 @@ msgid ""
 "[openrouter.ai](https://openrouter.ai) to create an account and get your "
 "API key"
 msgstr ""
+"**OpenRouter** (用于 Claude Sonnet 4): 访问 "
+"[openrouter.ai](https://openrouter.ai) 创建账户并获取你的 API 密钥"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:76
 msgid ""
@@ -678,31 +742,33 @@ msgid ""
 "[moonshot.cn](https://platform.moonshot.cn) to register and obtain your "
 "API key"
 msgstr ""
+"**Moonshot** (用于 Kimi K2): 访问 [moonshot.cn](https://platform.moonshot.cn) "
+"注册并获取你的 API 密钥"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:78
 msgid ""
 "Replace `\"your-api-key-here\"` with your actual API keys in the "
 "configuration."
-msgstr ""
+msgstr "在配置中将 `\"your-api-key-here\"` 替换为你的实际 API 密钥。"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:81
 #: ../../pilot/moonbit-pilot/git-integration.md:9
 msgid "Setup"
-msgstr ""
+msgstr "设置"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:83
 msgid "Install Node.js [v22.16.0](https://nodejs.org/en/download) then run:"
-msgstr ""
+msgstr "安装 Node.js [v22.16.0](https://nodejs.org/en/download) 然后运行："
 
 #: ../../pilot/moonbit-pilot/getting-started.md:85
 #: ../../pilot/moonbit-pilot/getting-started.md:98
 msgid "moon pilot\n"
-msgstr ""
+msgstr "moon pilot\n"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:90
 #: ../../pilot/moonbit-pilot/model-configuration.md:169
 msgid "Usage"
-msgstr ""
+msgstr "用法"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:92
 msgid ""
@@ -711,62 +777,64 @@ msgid ""
 "multiple models and they can be specified by `--model` parameter when you"
 " start MoonBit Pilot."
 msgstr ""
+"MoonBit Pilot 将自动使用你配置文件中的第一个模型（在本例中为 \"sonnet4\"）。你可以配置多个"
+"模型，并在启动 MoonBit Pilot 时通过 `--model` 参数指定它们。"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:94
 msgid "Interactive Mode"
-msgstr ""
+msgstr "交互模式"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:96
 msgid "Start interactive mode using the first model specified in preview section."
-msgstr ""
+msgstr "使用预览部分指定的第一个模型启动交互模式。"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:103
 msgid "Or specify a particular model:"
-msgstr ""
+msgstr "或者指定一个特定的模型："
 
 #: ../../pilot/moonbit-pilot/getting-started.md:105
 msgid "moon pilot --model k2\n"
-msgstr ""
+msgstr "moon pilot --model k2\n"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:110
 msgid "Interactive Commands"
-msgstr ""
+msgstr "交互式命令"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:112
 msgid ""
 "Once in interactive mode, you can input your requirements normally and "
 "MoonBit Pilot will respond and execute tasks for you."
-msgstr ""
+msgstr "进入交互模式后，你可以正常输入你的需求，MoonBit Pilot 会为你响应并执行任务。"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:114
 msgid "act ▶ what does this project do?\n"
-msgstr ""
+msgstr "act ▶ 这个项目是做什么的？\n"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:118
 msgid "Exiting Interactive Mode"
-msgstr ""
+msgstr "退出交互模式"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:120
 msgid "Use `:exit` or `Ctrl+D` to exit the application"
-msgstr ""
+msgstr "使用 `:exit` 或 `Ctrl+D` 退出应用程序"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:121
 msgid "Use `Ctrl+C` to stop the current request and clear the current input"
-msgstr ""
+msgstr "使用 `Ctrl+C` 停止当前请求并清除当前输入"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:125
 msgid "Print/Non-Interactive Mode"
-msgstr ""
+msgstr "打印/非交互模式"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:127
 msgid ""
 "You can execute one-time commands through the `-p` flag. Non-interactive "
 "mode supports piping:"
-msgstr ""
+msgstr "你可以通过 `-p` 标志执行一次性命令。非交互模式支持管道："
 
 #: ../../pilot/moonbit-pilot/getting-started.md:129
 msgid "echo \"What does this project do\" | moon pilot -p\n"
-msgstr ""
+msgstr "echo \"这个项目是做什么的\" | moon pilot -p\n"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:132
 msgid ""
@@ -774,43 +842,45 @@ msgid ""
 "for programmatic calls (through subprocess forking in programming "
 "languages or shell script invocation)."
 msgstr ""
+"该命令将在完成后自动退出，非常适合程序化调用（通过编程语言中的子进程派生或 shell "
+"脚本调用）。"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:134
 msgid "You can also use it with `cat`:"
-msgstr ""
+msgstr "你也可以将它与 `cat` 一起使用："
 
 #: ../../pilot/moonbit-pilot/getting-started.md:136
 msgid "cat prompt.md | moon pilot -p\n"
-msgstr ""
+msgstr "cat prompt.md | moon pilot -p\n"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:140
 msgid ""
 "Additionally, non-interactive mode also has session concepts. The "
 "previous commands each create a new session, which can be simply "
 "understood as stateless."
-msgstr ""
+msgstr "此外，非交互模式也有会话概念。之前的命令每个都会创建一个新会话，可以简单地理解为无状态的。"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:142
 msgid ""
 "You can view recently executed non-interactive commands through "
 "`conversations`:"
-msgstr ""
+msgstr "你可以通过 `conversations` 查看最近执行的非交互式命令："
 
 #: ../../pilot/moonbit-pilot/getting-started.md:165
 msgid "You can view details through session ID:"
-msgstr ""
+msgstr "你可以通过会话 ID 查看详情："
 
 #: ../../pilot/moonbit-pilot/getting-started.md:167
 msgid "moon pilot conversation 0ada20c9\n"
-msgstr ""
+msgstr "moon pilot conversation 0ada20c9\n"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:171
 msgid "or you can export the conversation to makrdown file:"
-msgstr ""
+msgstr "或者你可以将会话导出到 markdown 文件："
 
 #: ../../pilot/moonbit-pilot/getting-started.md:173
 msgid "moon pilot conversation 0ada20c9 --output conversation.md\n"
-msgstr ""
+msgstr "moon pilot conversation 0ada20c9 --output conversation.md\n"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:177
 msgid ""
@@ -819,10 +889,12 @@ msgid ""
 "`--continue` to continue the last session. This way, both commands will "
 "share the same conversation list:"
 msgstr ""
+"如果你想从上一个命令执行处继续，让这次修改拥有上次的上下文，你可以使用 `--continue` "
+"来继续上一个会话。这样，两个命令将共享同一个对话列表："
 
 #: ../../pilot/moonbit-pilot/getting-started.md:179
 msgid "echo \"What did I ask you before?\" | moon pilot -p --continue\n"
-msgstr ""
+msgstr "echo \"我之前问了你什么？\" | moon pilot -p --continue\n"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:183
 msgid ""
@@ -833,24 +905,27 @@ msgid ""
 "languages to use `moon pilot` to create interactive interfaces and "
 "implement package migration work."
 msgstr ""
+"这允许你通过多次 `moon pilot` 调用来完成对话。这意味着任何第三方应用程序都可以通过简单的"
+"命令行调用轻松地与 `moon pilot` 集成。未来，我们还可以为各种语言提供 SDK，方便其他语言使"
+"用 `moon pilot` 创建交互式界面并实现包迁移工作。"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:185
 msgid ""
 "Of course, you can also resume to a specific session using the `--resume`"
 " parameter, which will switch to that session:"
-msgstr ""
+msgstr "当然，你也可以使用 `--resume` 参数恢复到特定会话，这将切换到该会话："
 
 #: ../../pilot/moonbit-pilot/getting-started.md:187
 msgid "echo \"What did I ask you before?\" | moon pilot -p --resume ed19c993\n"
-msgstr ""
+msgstr "echo \"我之前问了你什么？\" | moon pilot -p --resume ed19c993\n"
 
 #: ../../pilot/moonbit-pilot/getting-started.md:191
 msgid "This provides excellent controllability."
-msgstr ""
+msgstr "这提供了出色的可控性。"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:1
 msgid "Git Integration"
-msgstr ""
+msgstr "Git 集成"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:5
 msgid ""
@@ -861,17 +936,20 @@ msgid ""
 "Therefore, we decided to have MoonBit Pilot use git to manage both manual"
 " user modifications and agent modifications."
 msgstr ""
+"目前，管理 AI 修改有两种方法：基于 git 的解决方案和基于检查点的解决方案。我们认为 git "
+"方法更优，因为它可以有效利用现有的 IDE 审查工具，提供清晰的时间线，并具有良好的回滚特性。"
+"因此，我们决定让 MoonBit Pilot 使用 git 来管理手动用户修改和 agent 修改。"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:7
 msgid "You no longer need to fear AI making chaotic code changes!"
-msgstr ""
+msgstr "你再也不用担心 AI 会对代码进行混乱的修改了！"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:11
 msgid ""
 "We introduce a configuration file for the first time. Create a file "
 "`.moonagent/moonagent.yml` in your current project with the following "
 "content:"
-msgstr ""
+msgstr "我们首次引入一个配置文件。在你当前的项目中创建一个文件 `.moonagent/moonagent.yml`，内容如下："
 
 #: ../../pilot/moonbit-pilot/git-integration.md:13
 msgid ""
@@ -881,46 +959,51 @@ msgid ""
 "# Enable automatic commits when files are modified\n"
 "auto_commit: true\n"
 msgstr ""
+"# MoonBit Pilot 项目配置\n"
+"# 此配置文件控制此项目的 moon pilot 行为\n"
+"\n"
+"# 文件修改时启用自动提交\n"
+"auto_commit: true\n"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:21
 msgid "After this, restart and enter moon pilot for the changes to take effect."
-msgstr ""
+msgstr "之后，重启并进入 moon pilot，使更改生效。"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:23
 msgid "How It Works"
-msgstr ""
+msgstr "工作原理"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:25
 msgid ""
 "MoonBit Pilot follows a structured git workflow to ensure clean "
 "separation between user and agent modifications:"
-msgstr ""
+msgstr "MoonBit Pilot 遵循结构化的 git 工作流程，以确保用户和 agent 修改之间的清晰分离："
 
 #: ../../pilot/moonbit-pilot/git-integration.md:27
 msgid "Detection Phase"
-msgstr ""
+msgstr "检测阶段"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:28
 msgid ""
 "When you submit a requirement, MoonBit Pilot first analyzes the current "
 "git state to detect any uncommitted changes. This includes:"
-msgstr ""
+msgstr "当你提交一个需求时，MoonBit Pilot 首先会分析当前的 git 状态，以检测任何未提交的更改。这包括："
 
 #: ../../pilot/moonbit-pilot/git-integration.md:29
 msgid "Modified files in the working directory"
-msgstr ""
+msgstr "工作目录中已修改的文件"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:30
 msgid "Staged changes ready for commit"
-msgstr ""
+msgstr "已暂存准备提交的更改"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:31
 msgid "New untracked files that may be relevant to your project"
-msgstr ""
+msgstr "可能与你的项目相关的新未跟踪文件"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:33
 msgid "User Work Preservation"
-msgstr ""
+msgstr "用户工作保存"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:34
 msgid ""
@@ -929,14 +1012,16 @@ msgid ""
 "modifications. This ensures your changes are safely preserved with a "
 "clear commit message like:"
 msgstr ""
+"如果 MoonBit Pilot 检测到你之前修改过代码，它会在进行任何修改之前自动为你的工作创建一个提"
+"交。这确保了你的更改被安全地保存下来，并附有一条清晰的提交信息，例如："
 
 #: ../../pilot/moonbit-pilot/git-integration.md:36
 msgid "moonagent_pre_user work before implementing authentication\n"
-msgstr ""
+msgstr "moonagent_pre_user work before implementing authentication\n"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:40
 msgid "Agent Modifications"
-msgstr ""
+msgstr "Agent 修改"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:41
 msgid ""
@@ -944,104 +1029,106 @@ msgid ""
 "modifications. It analyzes your requirements, implements the necessary "
 "changes, and creates a separate commit with a descriptive message:"
 msgstr ""
+"在保存你的工作之后，MoonBit Pilot 会继续进行自己的修改。它会分析你的需求，实现必要的更"
+"改，并创建一个带有描述性信息的独立提交："
 
 #: ../../pilot/moonbit-pilot/git-integration.md:43
 msgid "moonagent_post_implemented JWT authentication with tests\n"
-msgstr ""
+msgstr "moonagent_post_implemented JWT authentication with tests\n"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:47
 msgid "Workflow Benefits"
-msgstr ""
+msgstr "工作流优势"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:48
 msgid "This two-commit approach provides:"
-msgstr ""
+msgstr "这种双提交方法提供了："
 
 #: ../../pilot/moonbit-pilot/git-integration.md:49
 msgid "**Clear Attribution**: Distinguishes between user and agent contributions"
-msgstr ""
+msgstr "**清晰归属**：区分用户和 agent 的贡献"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:50
 msgid ""
 "**Safe Experimentation**: Your work is always preserved before agent "
 "modifications"
-msgstr ""
+msgstr "**安全实验**：在 agent 修改之前，你的工作总是被保存的"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:51
 msgid ""
 "**Granular Control**: Each change set can be reviewed, modified, or "
 "reverted independently"
-msgstr ""
+msgstr "**粒度控制**：每个变更集都可以独立地进行审查、修改或恢复"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:52
 msgid ""
 "**Conflict Resolution**: Reduces merge conflicts by maintaining clean "
 "commit boundaries"
-msgstr ""
+msgstr "**冲突解决**：通过维护清晰的提交边界来减少合并冲突"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:55
 msgid "Managing Commit History"
-msgstr ""
+msgstr "管理提交历史"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:57
 msgid "If you don't like these commit messages, you can:"
-msgstr ""
+msgstr "如果你不喜欢这些提交信息，你可以："
 
 #: ../../pilot/moonbit-pilot/git-integration.md:59
 msgid "**Rebase**: Merge multiple commits into one using interactive rebase"
-msgstr ""
+msgstr "**变基**：使用交互式变基将多个提交合并为一个"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:60
 msgid "**Rewrite**: Add your preferred commit message"
-msgstr ""
+msgstr "**重写**：添加你偏好的提交信息"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:61
 msgid "**Submit**: Create a proper PR for submission"
-msgstr ""
+msgstr "**提交**：创建一个合适的 PR 进行提交"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:63
 msgid "This approach provides several benefits:"
-msgstr ""
+msgstr "这种方法有几个好处："
 
 #: ../../pilot/moonbit-pilot/git-integration.md:65
 msgid "**Clear history**: Each change is tracked with timestamps and attribution"
-msgstr ""
+msgstr "**清晰的历史记录**：每个更改都带有时间戳和归属信息"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:66
 msgid "**Easy review**: Use familiar git tools to review changes"
-msgstr ""
+msgstr "**轻松审查**：使用熟悉的 git 工具审查更改"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:67
 msgid "**Safe rollback**: Easily revert specific changes if needed"
-msgstr ""
+msgstr "**安全回滚**：如果需要，可以轻松地恢复特定更改"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:68
 msgid "**Collaboration**: Share and discuss changes using standard git workflows"
-msgstr ""
+msgstr "**协作**：使用标准的 git 工作流程共享和讨论更改"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:70
 msgid "Best Practices"
-msgstr ""
+msgstr "最佳实践"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:72
 msgid "Review agent commits before merging to main branches"
-msgstr ""
+msgstr "在合并到主分支之前审查 agent 的提交"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:73
 msgid "Use meaningful branch names when working with MoonBit Pilot"
-msgstr ""
+msgstr "在使用 MoonBit Pilot 时使用有意义的分支名称"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:74
 msgid "Combine related commits before creating pull requests"
-msgstr ""
+msgstr "在创建拉取请求之前合并相关的提交"
 
 #: ../../pilot/moonbit-pilot/git-integration.md:75
 msgid "Keep the git history clean for better collaboration"
-msgstr ""
+msgstr "保持 git 历史记录的整洁以便更好地协作"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:3
 msgid "Model Management"
-msgstr ""
+msgstr "模型管理"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:7
 msgid ""
@@ -1077,27 +1164,27 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:38
 msgid "Configuration Parameters"
-msgstr ""
+msgstr "配置参数"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:40
 msgid "The following table describes all available configuration parameters:"
-msgstr ""
+msgstr "下表描述了所有可用的配置参数："
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Parameter"
-msgstr ""
+msgstr "参数"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Required"
-msgstr ""
+msgstr "必需"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`name`"
@@ -1105,29 +1192,29 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "String"
-msgstr ""
+msgstr "字符串"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Yes"
-msgstr ""
+msgstr "是"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid ""
 "A unique identifier for the model (used for reference with `--model` "
 "parameter)"
-msgstr ""
+msgstr "模型的唯一标识符（用于通过 `--model` 参数引用）"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`description`"
-msgstr ""
+msgstr "`description`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "No"
-msgstr ""
+msgstr "否"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Human-readable description of the model"
-msgstr ""
+msgstr "模型的可读描述"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`model_name`"
@@ -1135,7 +1222,7 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "The actual model identifier used by the API provider"
-msgstr ""
+msgstr "API 提供商使用的实际模型标识符"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`model_type`"
@@ -1143,7 +1230,7 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Type of API interface (currently supports \"saas/openai\")"
-msgstr ""
+msgstr "API 接口类型（目前支持 \"saas/openai\"）"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`base_url`"
@@ -1151,7 +1238,7 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "API endpoint URL for the model provider"
-msgstr ""
+msgstr "模型提供商的 API 端点 URL"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`is_reasoning`"
@@ -1159,11 +1246,11 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Boolean"
-msgstr ""
+msgstr "布尔值"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Whether this is a reasoning model (affects token counting)"
-msgstr ""
+msgstr "是否为推理模型（影响 token 计数）"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`input_price`"
@@ -1171,11 +1258,11 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Number"
-msgstr ""
+msgstr "数字"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Cost per million input tokens (in USD)"
-msgstr ""
+msgstr "每百万输入 token 的成本（美元）"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`output_price`"
@@ -1183,7 +1270,7 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Cost per million output tokens (in USD)"
-msgstr ""
+msgstr "每百万输出 token 的成本（美元）"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`max_output_tokens`"
@@ -1191,7 +1278,7 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Maximum number of tokens the model can output"
-msgstr ""
+msgstr "模型可以输出的最大 token 数"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`context_window`"
@@ -1199,7 +1286,7 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Total context window size in tokens"
-msgstr ""
+msgstr "总上下文窗口大小（以 token 为单位）"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`api_key`"
@@ -1207,35 +1294,35 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Your API key for this provider"
-msgstr ""
+msgstr "您此提供商的 API 密钥"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:56
 msgid "Example Models"
-msgstr ""
+msgstr "示例模型"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:60
 msgid "Claude Sonnet 4 (`sonnet4`)"
-msgstr ""
+msgstr "Claude Sonnet 4 (`sonnet4`)"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:61
 msgid "**Provider**: Anthropic via OpenRouter"
-msgstr ""
+msgstr "**提供商**：Anthropic via OpenRouter"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:62
 msgid "**Performance**: High-performance model with excellent quality"
-msgstr ""
+msgstr "**性能**：高性能模型，质量卓越"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:63
 msgid "**Context Window**: 200,000 tokens for complex tasks"
-msgstr ""
+msgstr "**上下文窗口**：200,000 token，适用于复杂任务"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:64
 msgid "**Pricing**: Premium pricing but excellent quality"
-msgstr ""
+msgstr "**定价**：价格较高但质量卓越"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:65
 msgid "**Best For**: Complex reasoning, large codebases, high-quality outputs"
-msgstr ""
+msgstr "**最适用于**：复杂推理、大型代码库、高质量输出"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:67
 msgid "Kimi K2 (`k2`)"
@@ -1243,51 +1330,51 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:68
 msgid "**Provider**: Moonshot AI"
-msgstr ""
+msgstr "**提供商**：Moonshot AI"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:69
 msgid "**Performance**: Good performance with cost-effective pricing"
-msgstr ""
+msgstr "**性能**：性能良好，价格经济实惠"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:70
 msgid "**Context Window**: 120,000 tokens"
-msgstr ""
+msgstr "**上下文窗口**：120,000 token"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:71
 msgid "**Pricing**: Budget-friendly option"
-msgstr ""
+msgstr "**定价**：经济实惠的选择"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:72
 msgid "**Best For**: Everyday development tasks, cost-conscious projects"
-msgstr ""
+msgstr "**最适用于**：日常开发任务，注重成本的项目"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:74
 msgid "Supported Models"
-msgstr ""
+msgstr "支持的模型"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:76
 msgid "MoonBit Pilot supports the following models through various API providers:"
-msgstr ""
+msgstr "MoonBit Pilot 通过各种 API 提供商支持以下模型："
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Model"
-msgstr ""
+msgstr "模型"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Provider"
-msgstr ""
+msgstr "提供商"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Model Name"
-msgstr ""
+msgstr "模型名称"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Base URL"
-msgstr ""
+msgstr "基础 URL"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Notes"
-msgstr ""
+msgstr "备注"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "**Kimi K2**"
@@ -1307,123 +1394,119 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Cost-effective, 120k context"
-msgstr ""
+msgstr "性价比高，120k 上下文"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "**DeepSeek V3**"
-msgstr ""
+msgstr "**DeepSeek V3**"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "DeepSeek"
-msgstr ""
+msgstr "DeepSeek"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`deepseek-chat`"
-msgstr ""
+msgstr "`deepseek-chat`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`https://api.deepseek.com/v1`"
-msgstr ""
+msgstr "`https://api.deepseek.com/v1`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "High performance reasoning"
-msgstr ""
+msgstr "高性能推理"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "**DeepSeek R1**"
-msgstr ""
+msgstr "**DeepSeek R1**"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`deepseek-reasoner`"
-msgstr ""
+msgstr "`deepseek-reasoner`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Advanced reasoning model"
-msgstr ""
+msgstr "高级推理模型"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "**Claude Sonnet 4.0**"
-msgstr ""
+msgstr "**Claude Sonnet 4.0**"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Anthropic/OpenRouter"
-msgstr ""
+msgstr "Anthropic/OpenRouter"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`anthropic/claude-sonnet-4`"
-msgstr ""
+msgstr "`anthropic/claude-sonnet-4`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`https://openrouter.ai/api/v1`"
-msgstr ""
+msgstr "`https://openrouter.ai/api/v1`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Latest high-performance"
-msgstr ""
+msgstr "最新的高性能"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "**Claude Sonnet 3.7**"
-msgstr ""
+msgstr "**Claude Sonnet 3.7**"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`anthropic/claude-3.7-sonnet`"
-msgstr ""
+msgstr "`anthropic/claude-3.7-sonnet`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "**Claude Opus 4.0**"
-msgstr ""
+msgstr "**Claude Opus 4.0**"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`anthropic/claude-opus-4`"
-msgstr ""
+msgstr "`anthropic/claude-opus-4`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Premium quality"
-msgstr ""
+msgstr "顶级质量"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "**Gemini 2.5 Pro**"
-msgstr ""
+msgstr "**Gemini 2.5 Pro**"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Google/OpenRouter"
-msgstr ""
+msgstr "Google/OpenRouter"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`google/gemini-2.5-pro`"
-msgstr ""
+msgstr "`google/gemini-2.5-pro`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "Google's latest model"
-msgstr ""
+msgstr "Google 最新模型"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "**GPT-4.1**"
-msgstr ""
+msgstr "**GPT-4.1**"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "OpenAI/OpenRouter"
-msgstr ""
+msgstr "OpenAI/OpenRouter"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md
 msgid "`openai/gpt-4.1`"
-msgstr ""
-
-#: ../../pilot/moonbit-pilot/model-configuration.md
-msgid "OpenAI's advanced model"
-msgstr ""
+msgstr "`openai/gpt-4.1`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:89
 msgid "Configuration Examples"
-msgstr ""
+msgstr "配置示例"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:91
 msgid "Here are configuration examples for some of the supported models:"
-msgstr ""
+msgstr "以下是一些支持的模型的配置示例："
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:93
 msgid "DeepSeek V3"
-msgstr ""
+msgstr "DeepSeek V3"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:94
 msgid ""
@@ -1444,7 +1527,7 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:110
 msgid "Claude Sonnet 3.7"
-msgstr ""
+msgstr "Claude Sonnet 3.7"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:111
 msgid ""
@@ -1465,7 +1548,7 @@ msgstr ""
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:127
 msgid "Gemini 2.5 Pro"
-msgstr ""
+msgstr "Gemini 2.5 Pro"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:128
 msgid ""
@@ -1488,74 +1571,74 @@ msgstr ""
 msgid ""
 "To use these models, you'll need to obtain API keys from the respective "
 "providers:"
-msgstr ""
+msgstr "要使用这些模型，你需要从各自的提供商处获取 API 密钥："
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:148
 msgid "OpenRouter (for Claude Sonnet 4)"
-msgstr ""
+msgstr "OpenRouter (用于 Claude Sonnet 4)"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:149
 msgid "Visit [openrouter.ai](https://openrouter.ai)"
-msgstr ""
+msgstr "访问 [openrouter.ai](https://openrouter.ai)"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:150
 #: ../../pilot/moonbit-pilot/model-configuration.md:164
 msgid "Create an account"
-msgstr ""
+msgstr "创建一个账户"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:151
 msgid "Navigate to your API keys section"
-msgstr ""
+msgstr "导航到你的 API 密钥部分"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:152
 #: ../../pilot/moonbit-pilot/model-configuration.md:159
 #: ../../pilot/moonbit-pilot/model-configuration.md:166
 msgid "Generate a new API key"
-msgstr ""
+msgstr "生成一个新的 API 密钥"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:153
 msgid "Replace `\"your-api-key-here\"` in the `sonnet4` configuration"
-msgstr ""
+msgstr "在 `sonnet4` 配置中替换 `\"your-api-key-here\"`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:155
 msgid "Moonshot (for Kimi K2)"
-msgstr ""
+msgstr "Moonshot (用于 Kimi K2)"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:156
 msgid "Visit [platform.moonshot.cn](https://platform.moonshot.cn)"
-msgstr ""
+msgstr "访问 [platform.moonshot.cn](https://platform.moonshot.cn)"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:157
 msgid "Register for an account"
-msgstr ""
+msgstr "注册一个账户"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:158
 msgid "Access your API keys in the dashboard"
-msgstr ""
+msgstr "在仪表板中访问你的 API 密钥"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:160
 msgid "Replace `\"your-api-key-here\"` in the `k2` configuration"
-msgstr ""
+msgstr "在 `k2` 配置中替换 `\"your-api-key-here\"`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:162
 msgid "DeepSeek (for DeepSeek V3/R1)"
-msgstr ""
+msgstr "DeepSeek (用于 DeepSeek V3/R1)"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:163
 msgid "Visit [platform.deepseek.com](https://platform.deepseek.com)"
-msgstr ""
+msgstr "访问 [platform.deepseek.com](https://platform.deepseek.com)"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:165
 msgid "Navigate to API keys section"
-msgstr ""
+msgstr "导航到 API 密钥部分"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:167
 msgid "Replace `\"your-deepseek-api-key\"` in your DeepSeek model configuration"
-msgstr ""
+msgstr "在你的 DeepSeek 模型配置中替换 `\"your-deepseek-api-key\"`"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:171
 msgid "After configuring your models, you can use them with MoonBit Pilot:"
-msgstr ""
+msgstr "配置好你的模型后，你就可以在 MoonBit Pilot 中使用它们了："
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:173
 msgid ""
@@ -1569,10 +1652,19 @@ msgid ""
 "moon pilot --model sonnet-3.5\n"
 "moon pilot --model gemini-2.5-pro\n"
 msgstr ""
+"# 使用你配置中的第一个模型（默认）\n"
+"moon pilot\n"
+"\n"
+"# 指定一个特定的模型\n"
+"moon pilot --model k2\n"
+"moon pilot --model sonnet4\n"
+"moon pilot --model deepseek-v3\n"
+"moon pilot --model sonnet-3.5\n"
+"moon pilot --model gemini-2.5-pro\n"
 
 #: ../../pilot/moonbit-pilot/model-configuration.md:185
 msgid ""
 "You can add multiple models to the configuration and specify the model "
 "name using the `--model` parameter."
-msgstr ""
+msgstr "你可以向配置中添加多个模型，并使用 `--model` 参数指定模型名称。"
 
