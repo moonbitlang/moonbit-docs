@@ -65,10 +65,9 @@ The configuration above includes two popular models:
   - High context window (200k tokens) for complex tasks
   - Premium pricing but excellent quality
   
-- **Kimi K2** (`k2`): Moonshot's cost-effective model
-  - Good performance with lower pricing
-  - 120k token context window
-  - Great for everyday development tasks
+- [Unstable]**Kimi K2** (`k2`): Moonshot's cost-effective model
+  - Lower pricing
+  - 120k token context window  
 
 ### Getting API Keys
 
