@@ -12,17 +12,17 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 test {
   let arr = @lib.split("a.b.c.e.f.g.h.i.j.k.l.m.n", '.')
-  assert_eq(
-    arr,
-    ["a", "b", "c", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n"],
-  )
+  assert_eq(arr, [
+    "a", "b", "c", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+  ])
   inspect(
     @lib.sub_string("Hello World", 3, 7),
-    content=
+    content=(
       #|Some("lo W")
-    ,
+    ),
   )
   "Hello World" |> @lib.index_of("Wo") |> assert_eq(Some(6))
   "Hello World World Hello" |> @lib.last_index_of("Wo") |> assert_eq(Some(12))

@@ -9,7 +9,7 @@
 project = 'MoonBit'
 author = 'International Digital Economy Academy'
 copyright = '%Y, {author}'.format(author=author)
-release = 'v0.1.20250612'
+release = 'v0.6.22'
 
 # I18N based on Readthedocs Environment
 # https://docs.readthedocs.io/en/stable/reference/environment-variables.html
@@ -86,3 +86,4 @@ copybutton_prompt_text = "$ "
 
 # -- Options for link check -------------------------------------------------
 linkcheck_anchors_ignore_for_url = [ 'https://mooncakes.io/docs' ]
+linkcheck_ignore = ["https://platform.deepseek.com"]

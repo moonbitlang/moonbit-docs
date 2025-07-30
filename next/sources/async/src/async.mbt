@@ -1,12 +1,12 @@
 ///| start async function declaration
-async fn my_async_function() -> Unit {
+async fn my_async_function() -> Unit noraise {
   ...
 }
 
 ///| anonymous/local function
 test {
-  let async_lambda = async fn() { ... }
-  async fn local_async_function() {
+  let async_lambda = async fn() noraise { ... }
+  async fn local_async_function() noraise {
     ...
   }
 
@@ -30,7 +30,7 @@ async fn another_async_function() -> Unit raise {
 // start async primitive
 
 ///| `run_async` spawn a new coroutine and execute an async function in it
-fn run_async(f : async () -> Unit) -> Unit = "%async.run"
+fn run_async(f : async () -> Unit noraise) -> Unit = "%async.run"
 
 ///| `suspend` will suspend the execution of the current coroutine.
 /// The suspension will be handled by a callback passed to `suspend`
@@ -42,7 +42,7 @@ async fn[T, E : Error] suspend(
     // the second parameter of `f` is used to cancel the execution of the current coroutine
     // by throwing an error at suspension point
     (E) -> Unit,
-  ) -> Unit
+  ) -> Unit,
 ) -> T raise E = "%async.suspend"
 // end async primitive
 
@@ -54,7 +54,7 @@ suberror MyError derive(Show)
 ///|
 async fn async_worker(
   logger~ : &Logger,
-  throw_error~ : Bool
+  throw_error~ : Bool,
 ) -> Unit raise MyError {
   suspend(fn(resume_ok, resume_err) {
     if throw_error {
@@ -102,19 +102,22 @@ test {
 }
 // end async example
 
-// start async timer example
+///| start async timer example
 #external
 type JSTimer
 
+///|
 extern "js" fn js_set_timeout(f : () -> Unit, duration~ : Int) -> JSTimer =
   #| (f, duration) => setTimeout(f, duration)
 
+///|
 async fn sleep(duration : Int) -> Unit raise {
   suspend(fn(resume_ok, _resume_err) {
     js_set_timeout(duration~, fn() { resume_ok(()) }) |> ignore
   })
 }
 
+///|
 test {
   run_async(fn() {
     try {

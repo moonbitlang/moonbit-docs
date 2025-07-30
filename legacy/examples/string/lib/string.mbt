@@ -12,58 +12,30 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 pub fn split(s : String, sep : Char) -> Array[String] {
-  let mut index = 0
-  let result = []
-  let it = iter(s)
-  while it.index != it.length {
-    let c = match it.next() {
-      Some(c) => c
-      None => return result
-    }
-    if c == sep {
-      let sub = match sub_string(s, index, it.index - 1) {
-        Some(sub) => sub
-        None => return result
-      }
-      result.push(sub)
-      index = it.index
-    }
-  }
-  let sub = match sub_string(s, index, it.length) {
-    Some(sub) => sub
-    None => return result
-  }
-  result.push(sub)
-  result
+  s.split(sep.to_string()).map(_.to_string()).collect()
 }
 
+///|
 pub fn sub_string(s : String, start : Int, end : Int) -> String? {
   if start > end || start < 0 || end > s.length() {
     return None
   }
-  let it = iter(s)
-  let mut result : String = ""
-  while it.index != it.length {
-    let c = match it.next() {
-      Some(c) => c
-      None => return None
-    }
-    if it.index - 1 >= start && it.index - 1 < end {
-      result = result + c.to_string()
-    }
+  Some(s[start:end].to_string()) catch {
+    _ => return None
   }
-  Some(result)
 }
 
+///|
 pub fn trim(s : String, removed : Char) -> String {
   let l = s.length()
   let mut start = 0
   let mut end = l - 1
-  while start < l && s[start] == removed {
+  while start < l && s[start] == removed.to_int() {
     start = start + 1
   }
-  while end >= 0 && s[end] == removed {
+  while end >= 0 && s[end] == removed.to_int() {
     end = end - 1
   }
   if start <= end {
@@ -75,6 +47,7 @@ pub fn trim(s : String, removed : Char) -> String {
   s
 }
 
+///|
 pub fn index_of(s : String, pattern : String) -> Int? {
   let prefix_func = prefix_function(pattern)
   let mut s_index = 0
@@ -82,7 +55,9 @@ pub fn index_of(s : String, pattern : String) -> Int? {
   let l = s.length()
   while s_index < l {
     if s[s_index] == pattern[p_index] {
-      while p_index < pattern.length() && s_index < l && s[s_index] == pattern[p_index] {
+      while p_index < pattern.length() &&
+            s_index < l &&
+            s[s_index] == pattern[p_index] {
         s_index = s_index + 1
         p_index = p_index + 1
       }
@@ -99,6 +74,7 @@ pub fn index_of(s : String, pattern : String) -> Int? {
   None
 }
 
+///|
 pub fn last_index_of(s : String, pattern : String) -> Int? {
   let prefix_func = prefix_function(pattern)
   let mut s_index = 0
@@ -107,7 +83,9 @@ pub fn last_index_of(s : String, pattern : String) -> Int? {
   let l = s.length()
   while s_index < l {
     if s[s_index] == pattern[p_index] {
-      while p_index < pattern.length() && s_index < l && s[s_index] == pattern[p_index] {
+      while p_index < pattern.length() &&
+            s_index < l &&
+            s[s_index] == pattern[p_index] {
         s_index = s_index + 1
         p_index = p_index + 1
       }
@@ -130,6 +108,7 @@ pub fn last_index_of(s : String, pattern : String) -> Int? {
   }
 }
 
+///|
 pub fn contains(s : String, sub : String) -> Bool {
   match index_of(s, sub) {
     Some(v) => v != -1
@@ -137,6 +116,7 @@ pub fn contains(s : String, sub : String) -> Bool {
   }
 }
 
+///|
 fn prefix_function(pattern : String) -> Array[Int] {
   let result = Array::make(pattern.length(), 0)
   let n = pattern.length()
@@ -155,39 +135,33 @@ fn prefix_function(pattern : String) -> Array[Int] {
   result
 }
 
+///|
 pub fn char_at(s : String, pos : Int) -> Char? {
-  if pos >= 0 && pos < s.length() {
-    return Some(s.get(pos))
-  }
-  None
+  s.get_char(pos)
 }
 
+///|
 pub fn to_char_array(s : String) -> Array[Char] {
-  let l = s.length()
-  let array = Array::make(l, ' ')
-  let mut index = 0
-  while index < l {
-    array[index] = s.get(index)
-    index = index + 1
-  }
-  array
+  s.iter().collect()
 }
 
+///|
 pub struct Iterator {
-  mut index : Int
-  length : Int
-  data : String
+  mut data : @string.View
 }
 
+///|
 pub fn iter(s : String) -> Iterator {
-  { index: 0, length: s.length(), data: s }
+  { data: s[:] }
 }
 
+///|
 pub fn next(self : Iterator) -> Char? {
-  if self.index == self.length {
-    return None
+  match self.data {
+    [] => return None
+    [ch, .. rest] => {
+      self.data = rest
+      return Some(ch)
+    }
   }
-  let c = self.data[self.index]
-  self.index = self.index + 1
-  Some(c)
 }
