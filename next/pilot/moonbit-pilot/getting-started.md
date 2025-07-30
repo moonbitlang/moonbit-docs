@@ -41,6 +41,8 @@ Before using MoonBit Pilot, you need to configure at least one model by creating
 ]
 ```
 
+We strongly recommend you use sonnet4 and place it in the first position.
+
 ### Configuration Fields Explanation
 
 - **name**: A unique identifier for the model (used for reference)
@@ -59,14 +61,13 @@ Before using MoonBit Pilot, you need to configure at least one model by creating
 
 The configuration above includes two popular models:
 
-- **Claude Sonnet 4** (`sonnet4`): Anthropic's latest high-performance model via OpenRouter
+- [Recommend]**Claude Sonnet 4** (`sonnet4`): Anthropic's latest high-performance model via OpenRouter
   - High context window (200k tokens) for complex tasks
   - Premium pricing but excellent quality
   
-- **Kimi K2** (`k2`): Moonshot's cost-effective model
-  - Good performance with lower pricing
-  - 120k token context window
-  - Great for everyday development tasks
+- [Unstable]**Kimi K2** (`k2`): Moonshot's cost-effective model
+  - Lower pricing
+  - 120k token context window  
 
 ### Getting API Keys
 
