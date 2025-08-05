@@ -237,7 +237,7 @@ The `link` option is used to specify link options, and its value can be either a
 - The `format` option is used to specify the output format of the JavaScript module.
 
   The currently supported formats are:
-  - `esm`
+  - `esm` (default)
   - `cjs`
   - `iife`
 
