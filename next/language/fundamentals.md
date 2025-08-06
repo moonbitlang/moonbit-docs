@@ -1278,7 +1278,7 @@ It is also possible to define mutable fields for constructor. This is especially
 :end-before: end enum 12
 ```
 
-### Newtype
+### Tuple Struct
 
 MoonBit supports a special kind of struct called tuple struct:
 
@@ -1339,7 +1339,7 @@ The type alias can be removed after all uses of `@pkgA.T` is migrated to `@pkgB.
 
 ### Local types
 
-MoonBit supports declaring structs/enums/newtypes at the top of a toplevel
+MoonBit supports declaring structs/enums at the top of a toplevel
 function, which are only visible within the current toplevel function. These
 local types can use the generic parameters of the toplevel function but cannot
 introduce additional generic parameters themselves. Local types can derive

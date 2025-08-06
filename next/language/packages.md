@@ -71,9 +71,7 @@ There are four different kinds of visibility for types in MoonBit:
 - Readonly types, declared with `pub`. 
   
   The internal representation of readonly types are visible outside,
-  but users can only read the values of these types from outside, construction and mutation are not allowed
-  This also applies to newtype, when declared with only `pub`, its underlying data can only be accessed from outside,
-  but user cannot create new values.
+  but users can only read the values of these types from outside, construction and mutation are not allowed.
 
 - Fully public types, declared with `pub(all)`. 
 

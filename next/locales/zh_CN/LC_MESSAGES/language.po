@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-06 15:58+0800\n"
+"POT-Creation-Date: 2025-08-06 16:03+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -8223,7 +8223,7 @@ msgstr "无法为类型和特征（trait）都定义在其他包中的情况实�
 msgid "MoonBit follows the orphan rule, which means that you can only:"
 msgstr "MoonBit 遵循孤儿规则（orphan rule），这意味着你只能在以下情况下实现特征（trait）："
 
-#: ../../language/error_codes/E4061.md ../../language/packages.md:142
+#: ../../language/error_codes/E4061.md ../../language/packages.md:140
 msgid "Traits"
 msgstr "特征（trait）"
 
@@ -16694,8 +16694,8 @@ msgstr ""
 "}\n"
 
 #: ../../language/fundamentals.md:1281
-msgid "Newtype"
-msgstr "Newtype"
+msgid "Tuple Struct"
+msgstr "元组结构体"
 
 #: ../../language/fundamentals.md:1283
 msgid "MoonBit supports a special kind of struct called tuple struct:"
@@ -16714,9 +16714,7 @@ msgid ""
 "same name as the tuple struct itself). So, you can use the constructor to"
 " create values, or use pattern matching to extract the underlying "
 "representation:"
-msgstr ""
-"元组结构体类似于只有一个构造函数的枚举（与元组结构体本身的名称相同）。因此，可以使用构造函数创建"
-"或使用模式匹配提取底层表示："
+msgstr "元组结构体类似于只有一个构造函数的枚举（与元组结构体本身的名称相同）。因此，可以使用构造函数创建或使用模式匹配提取底层表示："
 
 #: ../../language/fundamentals.md:1293
 msgid ""
@@ -16740,8 +16738,7 @@ msgstr ""
 msgid ""
 "Besides pattern matching, you can also use index to access the elements "
 "similar to tuple:"
-msgstr ""
-"除了模式匹配之外，还可以使用索引访问元素，类似于元组："
+msgstr "除了模式匹配之外，还可以使用索引访问元素，类似于元组："
 
 #: ../../language/fundamentals.md:1307
 msgid ""
@@ -16808,17 +16805,16 @@ msgid "Local types"
 msgstr "本地类型"
 
 #: ../../language/fundamentals.md:1342
-#, fuzzy
 msgid ""
-"MoonBit supports declaring structs/enums/newtypes at the top of a "
-"toplevel function, which are only visible within the current toplevel "
-"function. These local types can use the generic parameters of the "
-"toplevel function but cannot introduce additional generic parameters "
-"themselves. Local types can derive methods using derive, but no "
-"additional methods can be defined manually. For  example:"
+"MoonBit supports declaring structs/enums at the top of a toplevel "
+"function, which are only visible within the current toplevel function. "
+"These local types can use the generic parameters of the toplevel function"
+" but cannot introduce additional generic parameters themselves. Local "
+"types can derive methods using derive, but no additional methods can be "
+"defined manually. For  example:"
 msgstr ""
 "MoonBit "
-"支持在顶层函数的顶部声明结构体/枚举/newtype，这些类型仅在当前顶层函数中可见。这些本地类型可以使用顶层函数的泛型参数，但不能引入额外的泛型参数。本地类型可以使用"
+"支持在顶层函数的顶部声明结构体/枚举，这些类型仅在当前顶层函数中可见。这些本地类型可以使用顶层函数的泛型参数，但不能引入额外的泛型参数。本地类型可以使用"
 " derive 派生方法，但不能手动定义额外的方法。例如："
 
 #: ../../language/fundamentals.md:1349
@@ -16831,7 +16827,7 @@ msgid ""
 "  struct LocalStruct {\n"
 "    a : (String, T)\n"
 "  } derive(Show)\n"
-"  struct LocalNewtype(T) derive(Show)\n"
+"  struct LocalStructTuple(T) derive(Show)\n"
 "  ...\n"
 "}\n"
 msgstr ""
@@ -19168,22 +19164,20 @@ msgstr "使用 `const` 声明的常量"
 msgid ""
 "The internal representation of readonly types are visible outside, but "
 "users can only read the values of these types from outside, construction "
-"and mutation are not allowed This also applies to newtype, when declared "
-"with only `pub`, its underlying data can only be accessed from outside, "
-"but user cannot create new values."
+"and mutation are not allowed."
 msgstr "只读类型，使用 `pub` 声明。只读类型的内部表示对外部可见，但用户只能从外部读取这些类型的值，不允许构造和修改"
 
-#: ../../language/packages.md:78
+#: ../../language/packages.md:76
 msgid "Fully public types, declared with `pub(all)`."
 msgstr ""
 
-#: ../../language/packages.md:80
+#: ../../language/packages.md:78
 msgid ""
 "The outside world can freely construct, read values of these types and "
 "modify them if possible."
 msgstr "完全公开类型，使用 `pub(all)` 声明。外部世界可以自由构造、修改和读取这些类型的值"
 
-#: ../../language/packages.md:82
+#: ../../language/packages.md:80
 msgid ""
 "In addition to the visibility of the type itself, the fields of a public "
 "`struct` can be annotated with `priv`, which will hide the field from the"
@@ -19194,7 +19188,7 @@ msgstr ""
 "除了类型本身的可见性外，公开的结构体的字段可以用 `priv` 注释，这将对外部世界完全隐藏字段。请注意，具有私有字段的 `struct` "
 "不能直接在外部构造，但可以使用函数式 `struct` 更新语法更新公开字段。"
 
-#: ../../language/packages.md:87
+#: ../../language/packages.md:85
 msgid ""
 "Readonly types is a very useful feature, inspired by [private "
 "types](https://ocaml.org/manual/5.3/privatetypes.html) in OCaml.  In "
@@ -19205,13 +19199,13 @@ msgstr ""
 "[私有类型](https://ocaml.org/manual/5.3/privatetypes.html) 的启发。简而言之，`pub` "
 "类型的值可以通过模式匹配和点语法解构，但不能在其他包中构造或修改。请注意，在定义 `pub` 类型的同一包中没有限制。"
 
-#: ../../language/packages.md:92
+#: ../../language/packages.md:90
 msgid ""
 "There is no restriction within the same package where `pub` types are "
 "defined."
 msgstr ""
 
-#: ../../language/packages.md:96
+#: ../../language/packages.md:94
 msgid ""
 "// Package A\n"
 "pub struct RO {\n"
@@ -19255,7 +19249,7 @@ msgstr ""
 "  let r = { ..r, field: 8 }  // 错误：不能修改公开只读字段！\n"
 "}\n"
 
-#: ../../language/packages.md:118
+#: ../../language/packages.md:116
 msgid ""
 "Access control in MoonBit adheres to the principle that a `pub` type, "
 "function, or variable cannot be defined in terms of a private type. This "
@@ -19267,7 +19261,7 @@ msgstr ""
 "中的访问控制遵循一个原则，即公开的类型、函数或变量不能以私有类型定义。这是因为私有类型可能无法在使用公开的实体的所有地方访问。MoonBit "
 "包含了健全性检查，以防止违反这一原则的用例发生。"
 
-#: ../../language/packages.md:121
+#: ../../language/packages.md:119
 msgid ""
 "pub(all) type T1\n"
 "pub(all) type T2\n"
@@ -19307,57 +19301,57 @@ msgstr ""
 "\n"
 "pub let a: T3 = { ... } // 错误：公开变量的类型是私有类型 `T3`！\n"
 
-#: ../../language/packages.md:144
+#: ../../language/packages.md:142
 msgid ""
 "There are four visibility for traits, just like `struct` and `enum`: "
 "private, abstract, readonly and fully public."
 msgstr "特征有四种可见性，就像 `struct` 和 `enum`：私有、抽象、只读和完全公开。"
 
-#: ../../language/packages.md:145
+#: ../../language/packages.md:143
 msgid ""
 "Private traits are declared with `priv trait`, and they are completely "
 "invisible from outside."
 msgstr "私有类型，使用 `priv` 声明，对外部世界完全不可见"
 
-#: ../../language/packages.md:146
+#: ../../language/packages.md:144
 msgid ""
 "Abstract trait is the default visibility. Only the name of the trait is "
 "visible from outside, and the methods in the trait are not exposed."
 msgstr "特征默认是抽象的。只有特征类型的名称对外部可见，特征的方法被隐藏"
 
-#: ../../language/packages.md:147
+#: ../../language/packages.md:145
 msgid ""
 "Readonly traits are declared with `pub trait`, their methods can be "
 "invoked from outside, but only the current package can add new "
 "implementation for readonly traits."
 msgstr "只读特征，使用 `pub trait` 声明，它们的方法可以从外部调用，但只有当前包可以为只读特征添加新实现"
 
-#: ../../language/packages.md:148
+#: ../../language/packages.md:146
 msgid ""
 "Fully public traits are declared with `pub(open) trait`, they are open to"
 " new implementations outside current package, and their methods can be "
 "freely used."
 msgstr "完全公开的特征，使用 `pub(open) trait` 声明，在外部包也可以增加实现，其方法可以自由使用"
 
-#: ../../language/packages.md:150
+#: ../../language/packages.md:148
 msgid ""
 "Abstract and readonly traits are sealed, because only the package "
 "defining the trait can implement them. Implementing a sealed (abstract or"
 " readonly) trait outside its package result in compiler error."
 msgstr "抽象特征和只读特征是封闭的，因为只有定义特征的包才能实现它们。在包外实现封闭（抽象或只读）特征会导致编译器错误。"
 
-#: ../../language/packages.md:153
+#: ../../language/packages.md:151
 msgid "Trait Implementations"
 msgstr "特征的实现"
 
-#: ../../language/packages.md:155
+#: ../../language/packages.md:153
 msgid ""
 "Implementations have independent visibility, just like functions. The "
 "type will not be considered having fulfillled the trait outside current "
 "package unless the implementation is `pub`."
 msgstr "实现本身有独立的可见性，就像函数一样。除非实现是 `pub`，否则在当前包之外，类型不会被认为已经实现了特征。"
 
-#: ../../language/packages.md:157
+#: ../../language/packages.md:155
 msgid ""
 "To make the trait system coherent (i.e. there is a globally unique "
 "implementation for every `Type: Trait` pair), and prevent third-party "
@@ -19368,14 +19362,14 @@ msgstr ""
 "为了使特征系统一致（即每个 `Type: Trait` 对都有全局唯一的实现），并防止第三方包意外地修改现有程序的行为，MoonBit "
 "对谁可以定义方法/实现类型的特征采用了以下限制："
 
-#: ../../language/packages.md:161
+#: ../../language/packages.md:159
 msgid ""
 "_only the package that defines a type can define methods for it_. So one "
 "cannot define new methods or override old methods for builtin and foreign"
 " types."
 msgstr "**只有定义类型的包才能为其定义方法**。因此，不能为内建和外部类型定义新方法或覆盖旧方法。"
 
-#: ../../language/packages.md:162
+#: ../../language/packages.md:160
 msgid ""
 "there is an exception to this rule: [local methods](/language/methods.md"
 "#local-method). Local methods are always private though, so they do not "
@@ -19384,7 +19378,7 @@ msgstr ""
 "这条规则有一个例外：[本地方法](/language/methods.md#local-"
 "method)。不过，本地方法永远是私有的，因此它们不会破坏 MoonBit 类型系统的一致性。"
 
-#: ../../language/packages.md:163
+#: ../../language/packages.md:161
 msgid ""
 "_only the package of the type or the package of the trait can define an "
 "implementation_. For example, only `@pkg1` and `@pkg2` are allowed to "
@@ -19393,22 +19387,22 @@ msgstr ""
 "**只有类型的包或特征的包才能定义实现**。例如，只有 `@pkg1` 和 `@pkg2` 允许编写 `impl @pkg1.Trait for "
 "@pkg2.Type`。"
 
-#: ../../language/packages.md:166
+#: ../../language/packages.md:164
 msgid ""
 "The second rule above allows one to add new functionality to a foreign "
 "type by defining a new trait and implementing it. This makes MoonBit's "
 "trait & method system flexible while enjoying good coherence property."
 msgstr "上述第二条规则允许通过定义新特征并实现它来为外部类型添加新功能。这使 MoonBit 的特征和方法系统灵活，同时享有良好的一致性属性。"
 
-#: ../../language/packages.md:170
+#: ../../language/packages.md:168
 msgid "Currently, an empty trait is implemented automatically."
 msgstr "目前，空特征会自动实现。"
 
-#: ../../language/packages.md:173
+#: ../../language/packages.md:171
 msgid "Here's an example of abstract trait:"
 msgstr "以下是抽象特征的示例："
 
-#: ../../language/packages.md:176
+#: ../../language/packages.md:174
 msgid ""
 "trait Number {\n"
 " op_add(Self, Self) -> Self\n"
@@ -19430,11 +19424,11 @@ msgid ""
 "impl Number for Double with op_sub(x, y) { x - y }"
 msgstr ""
 
-#: ../../language/packages.md:198
+#: ../../language/packages.md:196
 msgid "From outside this package, users can only see the following:"
 msgstr "从包外，用户只能看到以下内容："
 
-#: ../../language/packages.md:200
+#: ../../language/packages.md:198
 msgid ""
 "trait Number\n"
 "\n"
@@ -19445,47 +19439,47 @@ msgid ""
 "impl Number for Double"
 msgstr ""
 
-#: ../../language/packages.md:210
+#: ../../language/packages.md:208
 msgid ""
 "The author of `Number` can make use of the fact that only `Int` and "
 "`Double` can ever implement `Number`, because new implementations are not"
 " allowed outside."
 msgstr "`Number` 的作者可以利用只有 `Int` 和 `Double` 可以实现 `Number` 这一事实，因为在外部不允许新的实现。"
 
-#: ../../language/packages.md:213
+#: ../../language/packages.md:211
 msgid "Virtual Packages"
 msgstr "虚拟包"
 
-#: ../../language/packages.md:216
+#: ../../language/packages.md:214
 msgid ""
 "Virtual package is an experimental feature. There may be bugs and "
 "undefined behaviors."
 msgstr "虚拟包是一个实验性功能。可能存在错误和未定义的行为。"
 
-#: ../../language/packages.md:219
+#: ../../language/packages.md:217
 msgid ""
 "You can define virtual packages, which serves as an interface. They can "
 "be replaced by specific implementations at build time. Currently virtual "
 "packages can only contain plain functions."
 msgstr "你可以定义虚拟包，它作为一个接口。它们可以在构建时被特定的实现替换。目前，虚拟包只能包含普通函数。"
 
-#: ../../language/packages.md:221
+#: ../../language/packages.md:219
 msgid ""
 "Virtual packages can be useful when swapping different implementations "
 "while keeping the code untouched."
 msgstr "虚拟包在保持代码不变的情况下，可以在不同的实现之间进行切换。"
 
-#: ../../language/packages.md:223
+#: ../../language/packages.md:221
 msgid "Defining a virtual package"
 msgstr "定义一个虚拟包"
 
-#: ../../language/packages.md:225
+#: ../../language/packages.md:223
 msgid ""
 "You need to declare it to be a virtual package and define its interface "
 "in a MoonBit interface file."
 msgstr "你需要声明它是一个虚拟包，并在 MoonBit 接口文件中定义其接口。"
 
-#: ../../language/packages.md:227
+#: ../../language/packages.md:225
 msgid ""
 "Within `moon.pkg.json`, you will need to add field "
 "[`virtual`](/toolchain/moon/package.md#declarations) :"
@@ -19493,7 +19487,7 @@ msgstr ""
 "在 `moon.pkg.json` 中，你需要添加字段 "
 "[`virtual`](/toolchain/moon/package.md#declarations) :"
 
-#: ../../language/packages.md:229
+#: ../../language/packages.md:227
 msgid ""
 "{\n"
 "  \"virtual\": {\n"
@@ -19502,13 +19496,13 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../language/packages.md:233
+#: ../../language/packages.md:231
 msgid ""
 "The `has-default` indicates whether the virtual package has a default "
 "implementation."
 msgstr "The `has-default` 表示虚拟包是否有默认实现。"
 
-#: ../../language/packages.md:235
+#: ../../language/packages.md:233
 msgid ""
 "Within the package, you will need to add an interface file `package-"
 "name.mbti` where the `package-name` is the same as [the default alias"
@@ -19517,18 +19511,18 @@ msgstr ""
 "在包内，你需要添加一个接口文件 `package-name.mbti`，其中 `package-name` 与 [默认别名](#default-"
 "alias) 相同："
 
-#: ../../language/packages.md:237
+#: ../../language/packages.md:235
 msgid "/src/packages/virtual/virtual.mbti"
 msgstr ""
 
-#: ../../language/packages.md:237
+#: ../../language/packages.md:235
 msgid ""
 "package \"moonbit-community/language/packages/virtual\"\n"
 "\n"
 "fn log(String) -> Unit"
 msgstr ""
 
-#: ../../language/packages.md:242
+#: ../../language/packages.md:240
 msgid ""
 "The first line of the interface file need to be `package \"full-package-"
 "name\"`. Then comes the declarations. The `pub` keyword for [access "
@@ -19538,7 +19532,7 @@ msgstr ""
 "接口文件的第一行需要是 `package \"full-package-name\"`。接下来是声明。[访问控制](#access-"
 "control) 的 `pub` 关键字和函数参数名称应该省略。"
 
-#: ../../language/packages.md:246
+#: ../../language/packages.md:244
 msgid ""
 "If you are uncertain about how to define the interface, you can create a "
 "normal package, define the functions you need using [TODO "
@@ -19548,11 +19542,11 @@ msgstr ""
 "如果你不确定如何定义接口，可以创建一个普通包，使用 [TODO 语法](/language/fundamentals.md#todo-"
 "syntax) 定义所需的函数，并使用 `moon info` 帮助你生成接口。"
 
-#: ../../language/packages.md:249
+#: ../../language/packages.md:247
 msgid "Implementing a virtual package"
 msgstr "实现虚拟包"
 
-#: ../../language/packages.md:251
+#: ../../language/packages.md:249
 msgid ""
 "A virtual package can have a default implementation. By defining "
 "[`virtual.has-default`](/toolchain/moon/package.md#declarations) as "
@@ -19562,18 +19556,18 @@ msgstr ""
 "default`](/toolchain/moon/package.md#declarations) 设置为 "
 "`true`，你可以在同一包内照常实现代码。"
 
-#: ../../language/packages.md:253
+#: ../../language/packages.md:251
 msgid "/src/packages/virtual/top.mbt"
 msgstr ""
 
-#: ../../language/packages.md:253
+#: ../../language/packages.md:251
 msgid ""
 "pub fn log(s : String) -> Unit {\n"
 "  println(s)\n"
 "}"
 msgstr ""
 
-#: ../../language/packages.md:258
+#: ../../language/packages.md:256
 msgid ""
 "A virtual package can also be implemented by a third party. By defining "
 "[`implements`](/toolchain/moon/package.md#implementations) as the target "
@@ -19584,29 +19578,29 @@ msgstr ""
 "[`implements`](/toolchain/moon/package.md#implementations) "
 "定义为目标包的完整名称，编译器可以警告你关于缺失的实现或不匹配的实现。"
 
-#: ../../language/packages.md:260
+#: ../../language/packages.md:258
 msgid ""
 "{\n"
 "  \"implement\": \"moonbit-community/language/packages/virtual\"\n"
 "}"
 msgstr ""
 
-#: ../../language/packages.md:264
+#: ../../language/packages.md:262
 msgid "/src/packages/implement/top.mbt"
 msgstr ""
 
-#: ../../language/packages.md:264
+#: ../../language/packages.md:262
 msgid ""
 "pub fn log(string : String) -> Unit {\n"
 "  ignore(string)\n"
 "}"
 msgstr ""
 
-#: ../../language/packages.md:269
+#: ../../language/packages.md:267
 msgid "Using a virtual package"
 msgstr "使用虚拟包"
 
-#: ../../language/packages.md:271
+#: ../../language/packages.md:269
 msgid ""
 "To use a virtual package, it's the same as other packages: define "
 "[`import`](/toolchain/moon/package.md#import) field in the package where "
@@ -19615,17 +19609,17 @@ msgstr ""
 "要使用虚拟包，与其他包一样：在你想要使用它的包中定义 [`import`](/toolchain/moon/package.md#import) "
 "字段。"
 
-#: ../../language/packages.md:273
+#: ../../language/packages.md:271
 msgid "Overriding a virtual package"
 msgstr "覆盖虚拟包"
 
-#: ../../language/packages.md:275
+#: ../../language/packages.md:273
 msgid ""
 "If a virtual package has a default implementation and that is your "
 "choice, there's no extra configurations."
 msgstr "如果虚拟包有一个默认实现，并且是你想要的，则不需要额外的配置。"
 
-#: ../../language/packages.md:277
+#: ../../language/packages.md:275
 msgid ""
 "Otherwise, you may define the [`overrides`](/toolchain/moon/package.md"
 "#overriding-implementations) field by providing an array of "
@@ -19634,11 +19628,11 @@ msgstr ""
 "否则，你可以通过提供一个实现数组来定义 [`overrides`](/toolchain/moon/package.md#overriding-"
 "implementations) 字段，指定你想要使用的实现。"
 
-#: ../../language/packages.md:279
+#: ../../language/packages.md:277
 msgid "/src/packages/use_implement/moon.pkg.json"
 msgstr ""
 
-#: ../../language/packages.md:279
+#: ../../language/packages.md:277
 msgid ""
 "{\n"
 "  \"overrides\": [\"moonbit-community/language/packages/implement\"],\n"
@@ -19649,15 +19643,15 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../language/packages.md:284
+#: ../../language/packages.md:282
 msgid "You should reference the virtual package when using the entities."
 msgstr "在使用实体时，你应该引用虚拟包。"
 
-#: ../../language/packages.md:286
+#: ../../language/packages.md:284
 msgid "/src/packages/use_implement/top.mbt"
 msgstr ""
 
-#: ../../language/packages.md:286
+#: ../../language/packages.md:284
 msgid ""
 "fn main {\n"
 "  @virtual.log(\"Hello\")\n"

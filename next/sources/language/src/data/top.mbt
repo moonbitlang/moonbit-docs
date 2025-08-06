@@ -285,7 +285,7 @@ fn[T : Show] toplevel(x : T) -> Unit {
   struct LocalStruct {
     a : (String, T)
   } derive(Show)
-  struct LocalNewtype(T) derive(Show)
+  struct LocalStructTuple(T) derive(Show)
   ...
 }
 // end local-type 1
