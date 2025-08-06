@@ -269,39 +269,6 @@ fn[X : Compare] Tree::insert(
 }
 // end enum 12
 
-// start newtype 1
-// `UserId` is a fresh new type different from `Int`, 
-// and you can define new methods for `UserId`, etc.
-// But at the same time, the internal representation of `UserId` 
-// is exactly the same as `Int`
-struct UserId(Int)
-
-struct UserName(String)
-// end newtype 1
-
-test "newtype 2" (t : @test.T) {
-  let println = fn(show) { t.writeln(show) }
-  // start newtype 2
-  let id : UserId = UserId(1)
-  let name : UserName = UserName("John Doe")
-  let UserId(uid) = id // uid : Int
-  let UserName(uname) = name // uname: String
-  println(uid)
-  println(uname)
-  // end newtype 2
-  t.snapshot(filename="newtype_2")
-}
-
-test "newtype 3" (t : @test.T) {
-  let println = fn(show) { t.writeln(show) }
-  // start newtype 3
-  let id : UserId = UserId(1)
-  let uid : Int = id.0
-  println(uid)
-  // end newtype 3
-  t.snapshot(filename="newtype_3")
-}
-
 // start typealias 1
 pub typealias Int as Index
 
