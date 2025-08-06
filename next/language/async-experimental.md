@@ -6,7 +6,7 @@ The compiler support and concrete syntax is stable while the async library is st
 <!-- We highly appreciate any feedback or experiment with current design. -->
 
 ## Async function
-Async functions are declared with the `async` keyword:
+Async functions are declared with the `async` keyword, and explicit [`raise` or `noraise`](/language/error-handling.md#throwing-errors):
 
 ```{literalinclude} /sources/async/src/async.mbt
 :language: moonbit

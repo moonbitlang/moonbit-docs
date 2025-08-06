@@ -34,6 +34,7 @@ let signature : Unit = {
   }
 
   fn g() -> Unit raise Error {
+    let h : () -> Unit raise = fn() raise { fail("fail") }
     ...
   }
   // end error 3
@@ -48,6 +49,12 @@ fn[T, E : Error] unwrap_or_error(result : Result[T, E]) -> T raise E {
   }
 }
 // end error 5
+
+// start noraise
+fn add(a : Int, b : Int) -> Int noraise {
+  a + b
+}
+// end noraise
 
 test {
   (Ok(1) : Result[Int, Error]).unwrap_or_error() |> ignore
@@ -87,7 +94,7 @@ test "error 9" (t : @test.T) {
   // start error 9
   try div(42, 0) catch {
     DivError(s) => println(s)
-  } else {
+  } noraise {
     v => println(v)
   }
   // end error 9
@@ -160,10 +167,11 @@ fn[T] map_with_polymorphism(
   res
 }
 
-test {
-  let array = [1, 2, 3]
-  let res = try? map_with_polymorphism(array, fn(x) { x + 1 })
-  let res2 = try? map_with_polymorphism(array, fn(x) { fail("") })
-  guard res2 is Err(_)
+fn[T] map_without_error(array : Array[T], f : (T) -> T noraise) -> Array[T] noraise {
+  map_with_polymorphism(array, f)
+}
+
+fn[T] map_with_error(array : Array[T], f : (T) -> T raise) -> Array[T] raise {
+  map_with_polymorphism(array, f)
 }
 // end error polymorphism 2

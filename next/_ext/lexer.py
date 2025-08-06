@@ -39,7 +39,7 @@ class MoonBitLexer(RegexLexer):
             (words(('self', 'Self'), suffix=r"\b"), token.Keyword),
             (words(('guard', 'if', 'while', 'match', 'else', 'loop', 'for', 'in', 'is'), suffix=r"\b"), token.Keyword),
             (words(('return', 'break', 'continue'), suffix=r"\b"), token.Keyword),
-            (words(('try', 'catch', 'catch!', 'raise'), suffix=r"\b"), token.Keyword),
+            (words(('try', 'catch', 'raise', 'noraise'), suffix=r"\b"), token.Keyword),
             (r"\bas\b", token.Keyword),
             (words(('extern', 'pub', 'priv', 'pub(all)', 'pub(readonly)', 'pub(open)', 'test'), suffix=r"\b"), token.Keyword),
             (words(('true', 'false'), suffix=r"\b"), token.Keyword.Constant),

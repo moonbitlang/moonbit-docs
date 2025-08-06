@@ -53,7 +53,8 @@ In practice, `fail` is always preferred over `Failure`.
 
 ```{code-block} moonbit
 :class: top-level
-pub fn[T] fail(msg : String, loc~ : SourceLoc = _) -> T raise Failure {
+#callsite(autofill(loc))
+pub fn[T] fail(msg : String, loc~ : SourceLoc) -> T raise Failure {
   raise Failure("FAILED: \{loc} \{msg}")
 }
 ```
@@ -63,9 +64,9 @@ pub fn[T] fail(msg : String, loc~ : SourceLoc = _) -> T raise Failure {
 The keyword `raise` is used to interrupt the function execution and return an
 error.
 
-The return type of a function can include an error type to indicate that the
-function might return an error. For example, the following function `div` might
-return an error of type `DivError`:
+The type declaration of a function can use `raise` with an Error type to
+indicate that the function might raise an error during an execution. For
+example, the following function `div` might return an error of type `DivError`:
 
 ```{literalinclude} /sources/language/src/error/top.mbt
 :language: moonbit
@@ -95,6 +96,15 @@ to do that. For example,
 :end-before: end error 5
 ```
 
+For functions that do not raise an error, you can add `noraise` in the
+signature. For example:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start noraise
+:end-before: end noraise
+```
+
 ### Error Polymorphism
 
 It happens when a higher order function accepts another function as parameter.
@@ -121,9 +131,8 @@ an error may or may not be throw.
 :end-before: end error polymorphism 2
 ```
 
-The signature of the `map_with_polymorphism` will be induced by the actual
-parameter. As a result, there will be a warning for the `try?` after `res`
-because no error will be thrown.
+The signature of the `map_with_polymorphism` will be determined by the actual
+parameter.
 
 ## Handling Errors
 
@@ -156,10 +165,10 @@ You can use `try` and `catch` to catch and handle errors, for example:
 
 Here, `try` is used to call a function that might throw an error, and `catch` is
 used to match and handle the caught error. If no error is caught, the catch
-block will not be executed and the `else` block will be executed instead.
+block will not be executed and the `noraise` block will be executed instead.
 
-The `else` block can be omitted if no action is needed when no error is caught.
-For example:
+The `noraise` block can be omitted if no action is needed when no error is
+caught. For example:
 
 ```{literalinclude} /sources/language/src/error/top.mbt
 :language: moonbit
