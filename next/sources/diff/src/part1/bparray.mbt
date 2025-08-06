@@ -1,6 +1,6 @@
 ///| start bparray definition
 ///
-type BPArray[T] Array[T] // BiPolar Array
+struct BPArray[T](Array[T]) // BiPolar Array
 
 ///|
 fn[T] BPArray::make(capacity : Int, default : T) -> BPArray[T] {
