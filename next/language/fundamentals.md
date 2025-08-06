@@ -666,7 +666,7 @@ MoonBit provides a syntax `label?=value` for this, with `label?` being an abbrev
 ### Autofill arguments
 
 MoonBit supports filling specific types of arguments automatically at different call site, such as the source location of a function call.
-To declare an autofill argument, simply declare an optional argument with `_` as default value.
+To declare an autofill argument, simply declare a labelled argument, and add a function attribute `#callsite(autofill(param_a, param_b))`.
 Now if the argument is not explicitly supplied, MoonBit will automatically fill it at the call site.
 
 Currently MoonBit supports two types of autofill arguments, `SourceLoc`, which is the source location of the whole function call,
