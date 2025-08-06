@@ -606,7 +606,7 @@ Labelled function can be supplied in any order. The evaluation order of argument
 
 ### Optional arguments
 
-A labelled argument can be made optional by supplying a default expression with the syntax `label~ : Type = default_expr`. If this argument is not supplied at call site, the default expression will be used:
+An argument can be made optional by supplying a default expression with the syntax `label?: Type = default_expr`, where the `default_expr` may be omitted. If this argument is not supplied at call site, the default expression will be used:
 
 ```{literalinclude} /sources/language/src/functions/top.mbt
 :language: moonbit
@@ -630,22 +630,19 @@ If you want to share the result of default expression between different function
 :end-before: end optional arguments 3
 ```
 
-#### Automatically insert `Some` when supplying optional arguments
-
-It is quite often optional arguments have type `T?` with `None` as default value.
-For example, you may have a default argument that depends on the values of the previous ones.
-In this case, passing the argument explicitly requires wrapping a `Some`,
-which is ugly:
+The default expression can depend on previous arguments, such as:
 
 ```{literalinclude} /sources/language/src/functions/top.mbt
 :language: moonbit
-:start-after: start optional arguments 5
-:end-before: end optional arguments 5
+:start-after: start optional arguments 4
+:end-before: end optional arguments 4
 ```
 
-Fortunately, MoonBit provides a special kind of optional arguments to solve this problem.
-Optional arguments declared with `label? : T` has type `T?` and `None` as default value.
-When supplying this kind of optional argument directly, MoonBit will automatically insert a `Some`:
+#### Optional arguments without default values
+
+It is quite common to have different semantics when a user does not provide a value.
+Optional arguments without default values have type `T?` and `None` as the default value.
+When supplying this kind of optional argument directly, MoonBit will automatically wrap the value with `Some`:
 
 ```{literalinclude} /sources/language/src/functions/top.mbt
 :language: moonbit

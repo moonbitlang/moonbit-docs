@@ -101,7 +101,7 @@ test {
 // end labelled arguments 2
 
 // start optional arguments 1
-fn optional(opt~ : Int = 42) -> Int {
+fn optional(opt? : Int = 42) -> Int {
   opt
 }
 
@@ -112,7 +112,7 @@ test {
 // end optional arguments 1
 
 // start optional arguments 2
-fn incr(counter~ : Ref[Int] = { val: 0 }) -> Ref[Int] {
+fn incr(counter? : Ref[Int] = { val: 0 }) -> Ref[Int] {
   counter.val = counter.val + 1
   counter
 }
@@ -129,7 +129,7 @@ test {
 // start optional arguments 3
 let default_counter : Ref[Int] = { val: 0 }
 
-fn incr_2(counter~ : Ref[Int] = default_counter) -> Int {
+fn incr_2(counter? : Ref[Int] = default_counter) -> Int {
   counter.val = counter.val + 1
   counter.val
 }
@@ -140,25 +140,30 @@ test {
 }
 // end optional arguments 3
 
+// start optional arguments 4
+fn create_rectangle(a : Int, b? : Int = a) -> (Int, Int) {
+  (a, b)
+}
+
+test {
+  inspect(create_rectangle(10), content="(10, 10)")
+}
+// end optional arguments 4
+
 struct Image {
   width : Int
   height : Int
 }
 
-// start optional arguments 5
-fn ugly_constructor(width~ : Int? = None, height~ : Int? = None) -> Image {
-  ...
-}
-
-let img : Image = ugly_constructor(width=Some(1920), height=Some(1080))
-// end optional arguments 5
-
 // start optional arguments 6
-fn nice_constructor(width? : Int, height? : Int) -> Image {
+fn new_image(width? : Int, height? : Int) -> Image {
+  if width is Some(w) {
+    ...
+  }
   ...
 }
 
-let img2 : Image = nice_constructor(width=1920, height=1080)
+let img2 : Image = new_image(width=1920, height=1080)
 // end optional arguments 6
 
 // start optional arguments 7
