@@ -158,7 +158,7 @@ pub(open) trait Animal {
   speak(Self) -> String
 }
 
-type Duck String
+struct Duck(String)
 
 fn Duck::make(name : String) -> Duck {
   Duck(name)
@@ -168,7 +168,7 @@ impl Animal for Duck with speak(self) {
   "\{self.inner()}: quack!"
 }
 
-type Fox String
+struct Fox(String)
 
 fn Fox::make(name : String) -> Fox {
   Fox(name)
