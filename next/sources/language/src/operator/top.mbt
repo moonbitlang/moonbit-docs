@@ -136,7 +136,7 @@ test {
 // end view 1
 
 // start view 2
-type DataView String
+struct DataView(String)
 
 struct Data {}
 

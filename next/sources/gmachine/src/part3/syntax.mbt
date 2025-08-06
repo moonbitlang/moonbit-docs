@@ -77,7 +77,8 @@ fn Tokens::peek(self : Tokens) -> Token {
 suberror ParseError String
 
 ///|
-fn Tokens::next(self : Tokens, loc~ : SourceLoc = _) -> Unit {
+#callsite(autofill(loc))
+fn Tokens::next(self : Tokens, loc~ : SourceLoc) -> Unit {
   self.current = self.current + 1
   if self.current > self.tokens.length() {
     abort("Tokens::next(): \{loc}")
@@ -85,10 +86,11 @@ fn Tokens::next(self : Tokens, loc~ : SourceLoc = _) -> Unit {
 }
 
 ///|
+#callsite(autofill(loc))
 fn Tokens::eat(
   self : Tokens,
   tok : Token,
-  loc~ : SourceLoc = _
+  loc~ : SourceLoc
 ) -> Unit raise ParseError {
   let __tok = self.peek()
   // assert tok_ != EOF

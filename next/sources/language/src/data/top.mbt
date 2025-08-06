@@ -274,9 +274,9 @@ fn[X : Compare] Tree::insert(
 // and you can define new methods for `UserId`, etc.
 // But at the same time, the internal representation of `UserId` 
 // is exactly the same as `Int`
-type UserId Int
+struct UserId(Int)
 
-type UserName String
+struct UserName(String)
 // end newtype 1
 
 test "newtype 2" (t : @test.T) {
@@ -318,7 +318,7 @@ fn[T : Show] toplevel(x : T) -> Unit {
   struct LocalStruct {
     a : (String, T)
   } derive(Show)
-  type LocalNewtype T derive(Show)
+  struct LocalNewtype(T) derive(Show)
   ...
 }
 // end local-type 1

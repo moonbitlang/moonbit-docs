@@ -105,7 +105,7 @@ Then we wrap the array and provide operations for creating, accessing, assigning
 
 ```moonbit
 ///|
-type Grid[T] FixedArray[T]
+struct Grid[T](FixedArray[T])
 
 ///|
 fn[T] Grid::new(val : T) -> Grid[T] {

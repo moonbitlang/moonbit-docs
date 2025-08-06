@@ -172,7 +172,8 @@ fn fixed_width_image(height? : Int) -> Image {
 // end optional arguments 7
 
 // start autofill arguments
-fn f(_x : Int, loc~ : SourceLoc = _, args_loc~ : ArgsLoc = _) -> String {
+#callsite(autofill(loc, args_loc))
+fn f(_x : Int, loc~ : SourceLoc, args_loc~ : ArgsLoc) -> String {
   (
     $|loc of whole function call: \{loc}
     $|loc of arguments: \{args_loc}

@@ -1,5 +1,5 @@
 // Use the 'type' keyword to encapsulate an address type.
-type Addr Int derive(Eq, Show)
+struct Addr(Int) derive(Eq, Show)
 
 // Describe graph nodes with an enumeration type.
 enum Node {
@@ -66,7 +66,7 @@ struct GState {
   mut stats : GStats
 }
 
-type GStats Int
+struct GStats(Int)
 
 fn GState::stat_incr(self : GState) -> Unit {
   self.stats = self.stats.inner() + 1
