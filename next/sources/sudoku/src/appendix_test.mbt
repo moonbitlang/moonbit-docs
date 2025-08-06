@@ -104,7 +104,7 @@ fn Grid::format(self : Grid[@immut/sorted_set.T[Char]]) -> String {
   let mut i = 0
   let mut maxWidth = 0
   while i < 81 {
-    rep[i] = self.inner()[i].fold(init="", fn(acc, ch) { acc + ch.to_string() })
+    rep[i] = self.0[i].fold(init="", fn(acc, ch) { acc + ch.to_string() })
     maxWidth = @cmp.maximum(rep[i].length(), maxWidth)
     i = i + 1
   }
@@ -137,8 +137,8 @@ fn Grid::format(self : Grid[@immut/sorted_set.T[Char]]) -> String {
 ///|
 fn[T] Grid::contains(self : Grid[T], pred : (T) -> Bool) -> Bool {
   let mut result = false
-  for i = 0; i < self.inner().length(); i = i + 1 {
-    result = result || pred(self.inner()[i])
+  for i = 0; i < self.0.length(); i = i + 1 {
+    result = result || pred(self.0[i])
     if result {
       break
     }

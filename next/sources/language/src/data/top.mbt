@@ -296,7 +296,7 @@ test "newtype 3" (t : @test.T) {
   let println = fn(show) { t.writeln(show) }
   // start newtype 3
   let id : UserId = UserId(1)
-  let uid : Int = id.inner()
+  let uid : Int = id.0
   println(uid)
   // end newtype 3
   t.snapshot(filename="newtype_3")

@@ -77,7 +77,8 @@ fn Tokens::peek(self : Tokens) -> Token {
 suberror ParseError String
 
 ///|
-fn Tokens::next(self : Tokens, loc~ : SourceLoc = _) -> Unit {
+#callsite(autofill(loc))
+fn Tokens::next(self : Tokens, loc~ : SourceLoc) -> Unit {
   self.current = self.current + 1
   if self.current > self.tokens.length() {
     abort("Tokens::next(): \{loc}")
@@ -85,10 +86,12 @@ fn Tokens::next(self : Tokens, loc~ : SourceLoc = _) -> Unit {
 }
 
 ///|
+/// 
+#callsite(autofill(loc))
 fn Tokens::eat(
   self : Tokens,
   tok : Token,
-  loc~ : SourceLoc = _
+  loc~ : SourceLoc,
 ) -> Unit raise ParseError {
   let __tok = self.peek()
   // assert tok_ != EOF
@@ -231,7 +234,7 @@ fn Tokens::parse_case(self : Tokens) -> RawExpr[String] raise ParseError {
 
 ///|
 fn parse_alts(
-  self : Tokens
+  self : Tokens,
 ) -> List[(Int, List[String], RawExpr[String])] raise ParseError {
   let acc : List[(Int, List[String], RawExpr[String])] = @list.empty()
   loop (self.peek(), acc) {
@@ -264,7 +267,7 @@ fn parse_alts(
 
 ///|
 fn Tokens::parse_defs(
-  self : Tokens
+  self : Tokens,
 ) -> List[(String, RawExpr[String])] raise ParseError {
   let acc : List[(String, RawExpr[String])] = @list.empty()
   loop (self.peek(), acc) {

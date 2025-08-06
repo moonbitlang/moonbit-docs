@@ -114,13 +114,13 @@ fn[T] Grid::new(val : T) -> Grid[T] {
 
 ///|
 fn[T] Grid::copy(self : Grid[T]) -> Grid[T] {
-  if self.inner().length() == 0 {
+  if self.0.length() == 0 {
     return []
   }
-  let arr = FixedArray::make(81, self.inner()[0])
+  let arr = FixedArray::make(81, self.0[0])
   let mut i = 0
   while i < 81 {
-    arr[i] = self.inner()[i]
+    arr[i] = self.0[i]
     i = i + 1
   }
   return arr
@@ -129,25 +129,24 @@ fn[T] Grid::copy(self : Grid[T]) -> Grid[T] {
 ///|
 fn[T] Grid::op_get(self : Grid[T], square : String) -> T {
   let i = square_to_int(square)
-  self.inner()[i]
+  self.0[i]
 }
 
 ///|
 fn[T] Grid::op_set(self : Grid[T], square : String, x : T) -> Unit {
   let i = square_to_int(square)
-  self.inner()[i] = x
+  self.0[i] = x
 }
 ```
 
 Next, we prepare some constants:
 
 ```moonbit skip
-
 let rows = "ABCDEFGHI"
 
 let cols = "123456789"
 
-typealias Squares = @immut/sorted_set.T[String]
+typealias @immut/sorted_set.T[String] as Squares
 
 // squares contains the coordinates of each square
 let squares : Squares = ......

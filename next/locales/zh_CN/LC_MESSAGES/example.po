@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-06 10:54+0800\n"
+"POT-Creation-Date: 2025-08-06 12:03+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -91,8 +91,8 @@ msgid ""
 msgstr "首先，让我们探讨一下惰性列表（`Stream`）如何避免在这种情况下多次遍历。"
 
 #: ../../example/gmachine/gmachine-1.md:22
-msgid "The `List[T]` here is a `typealias` of `@list.T[T]`"
-msgstr "这里的 `List[T]` 是 `@list.T[T]` 的 `typealias`"
+msgid "The `List[T]` here is a `typealias` of `@list.List[T]`"
+msgstr "这里的 `List[T]` 是 `@list.List[T]` 的 `typealias`"
 
 #: ../../example/gmachine/gmachine-1.md:25
 msgid "Lazy List Implementation"
@@ -771,10 +771,9 @@ msgid ""
 msgstr "堆：这是存储表达式图和与超组合子对应的指令序列的地方。"
 
 #: ../../example/gmachine/gmachine-1.md:251
-#, fuzzy, python-format
 msgid ""
-"// Use the 'type' keyword to encapsulate an address type.\n"
-"type Addr Int derive(Eq, Show)\n"
+"// Use the struct tuple to encapsulate an address type.\n"
+"struct Addr(Int) derive(Eq, Show)\n"
 "\n"
 "// Describe graph nodes with an enumeration type.\n"
 "enum Node {\n"
@@ -820,8 +819,8 @@ msgid ""
 "  return Addr(i)\n"
 "}\n"
 msgstr ""
-"// 使用 'type' 关键字封装地址类型。\n"
-"type Addr Int derive(Eq, Show)\n"
+"// 使用结构体多元组封装地址类型。\n"
+"struct Addr(Int) derive(Eq, Show)\n"
 "\n"
 "// 用枚举类型描述图节点。\n"
 "enum Node {\n"
@@ -905,10 +904,10 @@ msgid ""
 "  mut stats : GStats\n"
 "}\n"
 "\n"
-"type GStats Int\n"
+"struct GStats(Int)\n"
 "\n"
 "fn GState::stat_incr(self : GState) -> Unit {\n"
-"  self.stats = self.stats.inner() + 1\n"
+"  self.stats = self.stats.0 + 1\n"
 "}\n"
 "\n"
 "fn GState::put_stack(self : GState, addr : Addr) -> Unit {\n"
@@ -1432,7 +1431,7 @@ msgstr ""
 #: ../../example/myers-diff/myers-diff3.md:113
 #: ../../example/segment-tree/segment-tree.md:141
 #: ../../example/segment-tree/segment-tree2.md:132
-#: ../../sources/sudoku/src/index.mbt.md:405
+#: ../../sources/sudoku/src/index.mbt.md:404
 msgid "Conclusion"
 msgstr "总结"
 
@@ -5811,13 +5810,13 @@ msgid ""
 "\n"
 "///|\n"
 "fn[T] Grid::copy(self : Grid[T]) -> Grid[T] {\n"
-"  if self.inner().length() == 0 {\n"
+"  if self.0.length() == 0 {\n"
 "    return []\n"
 "  }\n"
-"  let arr = FixedArray::make(81, self.inner()[0])\n"
+"  let arr = FixedArray::make(81, self.0[0])\n"
 "  let mut i = 0\n"
 "  while i < 81 {\n"
-"    arr[i] = self.inner()[i]\n"
+"    arr[i] = self.0[i]\n"
 "    i = i + 1\n"
 "  }\n"
 "  return arr\n"
@@ -5826,13 +5825,13 @@ msgid ""
 "///|\n"
 "fn[T] Grid::op_get(self : Grid[T], square : String) -> T {\n"
 "  let i = square_to_int(square)\n"
-"  self.inner()[i]\n"
+"  self.0[i]\n"
 "}\n"
 "\n"
 "///|\n"
 "fn[T] Grid::op_set(self : Grid[T], square : String, x : T) -> Unit {\n"
 "  let i = square_to_int(square)\n"
-"  self.inner()[i] = x\n"
+"  self.0[i] = x\n"
 "}\n"
 msgstr ""
 
@@ -5842,12 +5841,11 @@ msgstr "接下来我们准备一些常量："
 
 #: ../../sources/sudoku/src/index.mbt.md:145
 msgid ""
-"\n"
 "let rows = \"ABCDEFGHI\"\n"
 "\n"
 "let cols = \"123456789\"\n"
 "\n"
-"typealias Squares = @immut/sorted_set.T[String]\n"
+"typealias @immut/sorted_set.T[String] as Squares\n"
 "\n"
 "// squares contains the coordinates of each square\n"
 "let squares : Squares = ......\n"
@@ -5863,24 +5861,24 @@ msgid ""
 "let peers : Grid[Squares] = ......\n"
 msgstr ""
 
-#: ../../sources/sudoku/src/index.mbt.md:165
+#: ../../sources/sudoku/src/index.mbt.md:164
 msgid ""
 "The process of constructing the units and peers tables is tedious, so it "
 "will not be detailed here."
 msgstr "构建单元和同级表的过程非常繁琐，因此这里不再详述。"
 
-#: ../../sources/sudoku/src/index.mbt.md:167
+#: ../../sources/sudoku/src/index.mbt.md:166
 msgid "Preprocessing the Grid"
 msgstr "预处理网格"
 
-#: ../../sources/sudoku/src/index.mbt.md:169
+#: ../../sources/sudoku/src/index.mbt.md:168
 msgid ""
 "We use a string to represent the initial Sudoku grid. Various formats are"
 " acceptable; both `.` and `0` represent empty squares, and other "
 "characters like spaces and newlines are ignored."
 msgstr "我们使用字符串来表示初始数独网格。各种格式均可接受；. 和 0 均表示空方块，其他字符（如空格和换行符）将被忽略。"
 
-#: ../../sources/sudoku/src/index.mbt.md:171
+#: ../../sources/sudoku/src/index.mbt.md:170
 msgid ""
 "#|400000805\n"
 "#|030000000\n"
@@ -5905,7 +5903,7 @@ msgid ""
 "#|1 . 4   . . .   . . .\n"
 msgstr ""
 
-#: ../../sources/sudoku/src/index.mbt.md:195
+#: ../../sources/sudoku/src/index.mbt.md:194
 msgid ""
 "For now, let's not consider game rules too much. If we only consider the "
 "digits that can be filled in each square, then 1-9 are all possible. "
@@ -5915,7 +5913,7 @@ msgstr ""
 "暂时先不考虑太多游戏规则，如果只考虑每个方格能填入的数字，那么 1-9 都是有可能的，因此我们初始将所有方格的内容设置为`['1', '2', "
 "'3', '4', '5', '6', '7', '8', '9']` (a List)。"
 
-#: ../../sources/sudoku/src/index.mbt.md:197
+#: ../../sources/sudoku/src/index.mbt.md:196
 msgid ""
 "fn Grid::parse(s : String) -> Grid[@immut/sorted_set.T[Char]] {\n"
 "  let digits = @immut/sorted_set.from_array(cols.to_array())\n"
@@ -5924,7 +5922,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../sources/sudoku/src/index.mbt.md:205
+#: ../../sources/sudoku/src/index.mbt.md:204
 msgid ""
 "Next, we need to assign values to the squares with known digits from the "
 "input. This process can be implemented with the function `assign(values, "
@@ -5934,7 +5932,7 @@ msgstr ""
 "接下来，我们需要将输入中已知数字的方块赋值。这个过程可以用函数 `assign(values, key, val)` 来实现，其中 `key` "
 "是一个字符串，比如 `A6`，`val` 是一个字符。这样的代码写起来很容易。"
 
-#: ../../sources/sudoku/src/index.mbt.md:207
+#: ../../sources/sudoku/src/index.mbt.md:206
 msgid ""
 "fn assign(values : Grid[@immut/sorted_set.T[Char]], key : String, val : "
 "Char) -> Unit {\n"
@@ -5942,11 +5940,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../sources/sudoku/src/index.mbt.md:213
+#: ../../sources/sudoku/src/index.mbt.md:212
 msgid "This implementation is simple and precise, but we can do more."
 msgstr "这个实现简单而精确，但我们可以做得更多。"
 
-#: ../../sources/sudoku/src/index.mbt.md:215
+#: ../../sources/sudoku/src/index.mbt.md:214
 msgid ""
 "Now, we can reintroduce the rules that we set aside earlier. However, the"
 " rules themselves do not tell us what to do. We need heuristic strategies"
@@ -5954,7 +5952,7 @@ msgid ""
 "paper. Let's start with the elimination method:"
 msgstr "现在，我们可以重新引入之前搁置的规则。但是，规则本身并没有告诉我们该做什么。我们需要启发式策略来从规则中获得见解，类似于用笔和纸解决数独。让我们从消除法开始："
 
-#: ../../sources/sudoku/src/index.mbt.md:217
+#: ../../sources/sudoku/src/index.mbt.md:216
 msgid ""
 "**Strategy 1**: If a square `key` is assigned a value `val`, then its "
 "peers (peers[key]) should not contain `val` in their lists of possible "
@@ -5964,14 +5962,14 @@ msgstr ""
 "**策略 1**：如果为一个方块 `key` 分配了一个值 `val`，则其对同级（'peers[key]'）的可能值列表中不应该包含 "
 "`val'，因为这会违反同一单元、行或列中没有两个方块可以具有相同数字的规则。"
 
-#: ../../sources/sudoku/src/index.mbt.md:219
+#: ../../sources/sudoku/src/index.mbt.md:218
 msgid ""
 "**Strategy 2**: If there is only one square in a unit that can hold a "
 "specific digit (possibly happen after applying the above rule several "
 "times), then that digit should be assigned to that square."
 msgstr "**策略 2**：如果一个单元中只有一个方格可以容纳特定的数字（在多次应用上述规则后可能发生），则应将该数字分配给该方格。"
 
-#: ../../sources/sudoku/src/index.mbt.md:221
+#: ../../sources/sudoku/src/index.mbt.md:220
 msgid ""
 "We adjust the code by defining an `eliminate` function, which removes a "
 "digit from the possible values of a square. After performing the "
@@ -5983,7 +5981,7 @@ msgstr ""
 "我们通过定义一个消除函数 `eliminate` 来调整代码，该函数从正方形的可能值中删除一个数字。执行消除任务后，它将上述策略应用于 `key`"
 " 和 `val` 以尝试进一步消除。请注意，它包含一个布尔返回值来处理可能的矛盾。如果方格的可能值列表为空，则出现问题，我们返回 `false`。"
 
-#: ../../sources/sudoku/src/index.mbt.md:223
+#: ../../sources/sudoku/src/index.mbt.md:222
 msgid ""
 "fn eliminate(\n"
 "  values : Grid[@immut/sorted_set.T[Char]],\n"
@@ -6025,13 +6023,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../sources/sudoku/src/index.mbt.md:262
+#: ../../sources/sudoku/src/index.mbt.md:261
 msgid ""
 "Next, we define `assign(values, key, val)` to remove all values except "
 "`val` from the possible values of `key`."
 msgstr "接下来，我们定义 `assign(values, key, val)` 来从 `key` 的可能值中删除除 `val` 之外的所有值。"
 
-#: ../../sources/sudoku/src/index.mbt.md:264
+#: ../../sources/sudoku/src/index.mbt.md:263
 msgid ""
 "///|\n"
 "fn assign(\n"
@@ -6048,7 +6046,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../sources/sudoku/src/index.mbt.md:280
+#: ../../sources/sudoku/src/index.mbt.md:279
 msgid ""
 "These two functions apply heuristic strategies to each square they "
 "access. A successful heuristic application introduces new squares to "
@@ -6057,7 +6055,7 @@ msgid ""
 "preprocessing can already solve some simple Sudoku puzzles."
 msgstr "这两个函数将启发式策略应用于它们访问的每个方格。成功的启发式应用会引入新的方格供考虑，从而使这些策略在整个网格中广泛传播。这是快速消除无效选项的关键。事实上，这种预处理已经可以解决一些简单的数独难题。"
 
-#: ../../sources/sudoku/src/index.mbt.md:282
+#: ../../sources/sudoku/src/index.mbt.md:281
 msgid ""
 "let grid2 =\n"
 "  #|0 0 3   0 2 0   6 0 0\n"
@@ -6093,7 +6091,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../sources/sudoku/src/index.mbt.md:317
+#: ../../sources/sudoku/src/index.mbt.md:316
 msgid ""
 "If you are interested in artificial intelligence, you might recognize "
 "this as a Constraint Satisfaction Problem (CSP), and `assign` and "
@@ -6104,11 +6102,11 @@ msgstr ""
 "如果您对人工智能感兴趣，您可能会将其视为约束满足问题 (CSP)，而'分配'和'消除'是专门的弧一致性算法。有关此主题的更多信息，请参阅 "
 "Artificial Intelligence: A Modern Approach 第 6 章"
 
-#: ../../sources/sudoku/src/index.mbt.md:319
+#: ../../sources/sudoku/src/index.mbt.md:318
 msgid "Search"
 msgstr "搜索"
 
-#: ../../sources/sudoku/src/index.mbt.md:321
+#: ../../sources/sudoku/src/index.mbt.md:320
 msgid ""
 "After preprocessing, we can boldly use brute-force enumeration to search "
 "for all feasible combinations. However, we can still use the heuristic "
@@ -6119,7 +6117,7 @@ msgstr ""
 "经过预处理后，我们可以大胆地使用蛮力枚举来搜索所有可行的组合。但是，在搜索过程中，我们仍然可以使用启发式策略。当尝试为某个方块赋值时，我们仍然使用"
 " `assign`，这使我们能够应用先前的优化来消除搜索过程中的许多无效分支。"
 
-#: ../../sources/sudoku/src/index.mbt.md:323
+#: ../../sources/sudoku/src/index.mbt.md:322
 msgid ""
 "Another point to note is that conflicts may arise during the search (when"
 " a square's possible values are exhausted). Since mutable structures make"
@@ -6127,7 +6125,7 @@ msgid ""
 "value."
 msgstr "另外需要注意的是，搜索过程中可能会发生冲突（当一个方格的可能值耗尽时）。由于可变结构使回溯变得麻烦，因此我们每次分配值时都直接复制值。"
 
-#: ../../sources/sudoku/src/index.mbt.md:325
+#: ../../sources/sudoku/src/index.mbt.md:324
 msgid ""
 "fn search(\n"
 "  values : Grid[@immut/sorted_set.T[Char]]\n"
@@ -6169,7 +6167,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../sources/sudoku/src/index.mbt.md:366
+#: ../../sources/sudoku/src/index.mbt.md:365
 msgid ""
 "Let's run the the example taken from "
 "[magictour](http://magictour.free.fr/top95), a list of difficult Sudoku "
@@ -6178,7 +6176,7 @@ msgstr ""
 "我们运行一个来自 [magictour](http://magictour.free.fr/top95) "
 "（一个困难数独谜题列表，对人类来说并不容易）的例子"
 
-#: ../../sources/sudoku/src/index.mbt.md:368
+#: ../../sources/sudoku/src/index.mbt.md:367
 msgid ""
 "let grid1 =\n"
 "  #|4 . .   . . .   8 . 5\n"
@@ -6214,7 +6212,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../sources/sudoku/src/index.mbt.md:403
+#: ../../sources/sudoku/src/index.mbt.md:402
 msgid ""
 "Running on [MoonBit online IDE](https://try.moonbitlang.com/), It takes "
 "only about 0.11 seconds to solve this Sudoku!"
@@ -6222,7 +6220,7 @@ msgstr ""
 "在 [MoonBit online IDE](https://try.moonbitlang.com/) 上运行，仅需大约 0.11 "
 "秒即可解决这个数独！"
 
-#: ../../sources/sudoku/src/index.mbt.md:407
+#: ../../sources/sudoku/src/index.mbt.md:406
 msgid ""
 "The purpose of games is to relieve boredom and bring joy. If playing a "
 "game becomes more anxiety-inducing than exciting, it might go against the"
@@ -6233,15 +6231,122 @@ msgid ""
 " puzzle."
 msgstr "游戏的目的是为了缓解无聊并带来快乐。如果玩游戏让人感到焦虑而不是兴奋，那么它可能违背了游戏设计师的初衷。本文表明，简单的消除法和强力搜索可以快速解决一些数独难题。这并不意味着数独不值得玩；相反，它表明人们不应该过分担心无法解决的数独难题。"
 
-#: ../../sources/sudoku/src/index.mbt.md:409
+#: ../../sources/sudoku/src/index.mbt.md:408
 msgid "Let's play with MoonBit with ease!"
 msgstr "让我们轻松玩转 MoonBit 吧！"
 
-#: ../../sources/sudoku/src/index.mbt.md:411
+#: ../../sources/sudoku/src/index.mbt.md:410
 msgid ""
 "This tutorial references Norvig's blog: "
 "[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)"
 msgstr ""
 "本教程参考了 Norvig "
 "的博客：[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)"
+
+#~ msgid ""
+#~ "struct GState {\n"
+#~ "  mut stack : List[Addr]\n"
+#~ "  heap : GHeap\n"
+#~ "  globals : @hashmap.T[String, Addr]\n"
+#~ "  mut code : List[Instruction]\n"
+#~ "  mut stats : GStats\n"
+#~ "}\n"
+#~ "\n"
+#~ "type GStats Int\n"
+#~ "\n"
+#~ "fn GState::stat_incr(self : GState) -> Unit {\n"
+#~ "  self.stats = self.stats.inner() + 1\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn GState::put_stack(self : GState, addr : Addr) -> Unit {\n"
+#~ "  self.stack = self.stack.prepend(addr)\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn GState::put_code(self : GState, instrs "
+#~ ": List[Instruction]) -> Unit {\n"
+#~ "  self.code = instrs + self.code\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn GState::pop1(self : GState) -> Addr {\n"
+#~ "  match self.stack {\n"
+#~ "    More(addr, tail=reststack) => {\n"
+#~ "      self.stack = reststack\n"
+#~ "      addr\n"
+#~ "    }\n"
+#~ "    Empty => abort(\"pop1(): stack size smaller than 1\")\n"
+#~ "  }\n"
+#~ "}\n"
+#~ "\n"
+#~ "// e1 e2 ..... -> (e1, e2) ......\n"
+#~ "fn GState::pop2(self : GState) -> (Addr, Addr) {\n"
+#~ "  match self.stack {\n"
+#~ "    More(addr1, tail=More(addr2, tail=reststack)) => {\n"
+#~ "      self.stack = reststack\n"
+#~ "      (addr1, addr2)\n"
+#~ "    }\n"
+#~ "    _ => abort(\"pop2(): stack size smaller than 2\")\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "struct Grid[T](FixedArray[T])\n"
+#~ "\n"
+#~ "///|\n"
+#~ "fn[T] Grid::new(val : T) -> Grid[T] {\n"
+#~ "  FixedArray::make(81, val)\n"
+#~ "}\n"
+#~ "\n"
+#~ "///|\n"
+#~ "fn[T] Grid::copy(self : Grid[T]) -> Grid[T] {\n"
+#~ "  if self.inner().length() == 0 {\n"
+#~ "    return []\n"
+#~ "  }\n"
+#~ "  let arr = FixedArray::make(81, self.inner()[0])\n"
+#~ "  let mut i = 0\n"
+#~ "  while i < 81 {\n"
+#~ "    arr[i] = self.inner()[i]\n"
+#~ "    i = i + 1\n"
+#~ "  }\n"
+#~ "  return arr\n"
+#~ "}\n"
+#~ "\n"
+#~ "///|\n"
+#~ "fn[T] Grid::op_get(self : Grid[T], square : String) -> T {\n"
+#~ "  let i = square_to_int(square)\n"
+#~ "  self.inner()[i]\n"
+#~ "}\n"
+#~ "\n"
+#~ "///|\n"
+#~ "fn[T] Grid::op_set(self : Grid[T], square : String, x : T) -> Unit {\n"
+#~ "  let i = square_to_int(square)\n"
+#~ "  self.inner()[i] = x\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "\n"
+#~ "let rows = \"ABCDEFGHI\"\n"
+#~ "\n"
+#~ "let cols = \"123456789\"\n"
+#~ "\n"
+#~ "typealias Squares = @immut/sorted_set.T[String]\n"
+#~ "\n"
+#~ "// squares contains the coordinates of each square\n"
+#~ "let squares : Squares = ......\n"
+#~ "\n"
+#~ "// units[coord] contains the other "
+#~ "squares in the unit of the square"
+#~ " at coord\n"
+#~ "// for example：units[\"A3\"] => [C3, C2, C1, B3, B2, B1, A2, A1]\n"
+#~ "let units : Grid[Squares] = ......\n"
+#~ "\n"
+#~ "// peers[coord] contains all the peers of the square at coord\n"
+#~ "// for example：peers[\"A3\"] => [A1, A2,"
+#~ " A4, A5, A6, A7, A8, A9, B1,"
+#~ " B2, B3, C1, C2, C3, D3, E3,"
+#~ " F3, G3, H3, I3]\n"
+#~ "let peers : Grid[Squares] = ......\n"
+#~ msgstr ""
 

@@ -1,6 +1,6 @@
 // start heap definition
-// Use the 'type' keyword to encapsulate an address type.
-type Addr Int derive(Eq, Show)
+// Use the struct tuple to encapsulate an address type.
+struct Addr(Int) derive(Eq, Show)
 
 // Describe graph nodes with an enumeration type.
 enum Node {
@@ -54,7 +54,7 @@ fn GHeap::op_get(self : GHeap, key : Addr) -> Node {
 }
 
 fn GHeap::op_set(self : GHeap, key : Addr, val : Node) -> Unit {
-  self.memory[key.inner()] = Some(val)
+  self.memory[key.0] = Some(val)
 }
 
 // start state definition
@@ -66,10 +66,10 @@ struct GState {
   mut stats : GStats
 }
 
-type GStats Int
+struct GStats(Int)
 
 fn GState::stat_incr(self : GState) -> Unit {
-  self.stats = self.stats.inner() + 1
+  self.stats = self.stats.0 + 1
 }
 
 fn GState::put_stack(self : GState, addr : Addr) -> Unit {

@@ -165,7 +165,7 @@ fn Duck::make(name : String) -> Duck {
 }
 
 impl Animal for Duck with speak(self) {
-  "\{self.inner()}: quack!"
+  "\{self.0}: quack!"
 }
 
 struct Fox(String)
