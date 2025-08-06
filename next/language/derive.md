@@ -94,8 +94,9 @@ for example `HashMap`s and `HashSet`s.
 
 ## FromJson and ToJson
 
-`derive(FromJson)` and `derive(ToJson)` will generate methods that deserializes/serializes the given type from/to
-JSON files correspondingly.
+`derive(FromJson)` and `derive(ToJson)` automatically derives round-trippable method implementations
+used for serializing the type to and from JSON.
+The implementation is mainly for debugging and storing the types in a human-readable format.
 
 ```{literalinclude} /sources/language/src/derive/json.mbt
 :language: moonbit
@@ -109,101 +110,56 @@ Both derive directives accept a number of arguments to configure the exact behav
 The actual behavior of JSON serialization arguments is unstable.
 ```
 
+```{warning}
+JSON derivation arguments are only for coarse-grained control of the derived format.
+If you need to precisely control how the types are laid out,
+consider **directly implementing the two traits instead**.
+
+We have recently deprecated a large number of advanced layout tweaking arguments.
+For such usage and future usage of them, please manually implement the traits.
+The arguments include: `repr`, `case_repr`, `default`, `rename_all`, etc.
+```
+
 ```{literalinclude} /sources/language/src/derive/json.mbt
 :language: moonbit
 :start-after: start json args
 :end-before: end json args
 ```
 
-### Enum representations
+### Enum styles
 
-Enums can be represented in JSON in a number of styles.
-There are two aspects of the representation:
-
-- **Tag position** determines where the name of the enum tag (i.e. case or constructor name) is stored.
-- **Case representation** determines how to represent the payload of the enum.
-
-Let's consider the following enum definition:
+There are currently two styles of enum serialization: `legacy` and `flat`,
+which the user must select one using the `style` argument.
+Considering the following enum definition:
 
 ```moonbit
 enum E {
-    Uniform(Int)
-    Axes(x~: Int, y~: Int)
+  One
+  Uniform(Int)
+  Axes(x~: Int, y~: Int)
 }
 ```
 
-For tag position, there are 4 variants:
+With `derive(ToJson(style="legacy"))`, the enum is formatted into:
 
-- **Internally tagged** puts the tag alongside the payload values:
+```
+E::One              => { "$tag": "One" }
+E::Uniform(2)       => { "$tag": "Uniform", "0": 2 }
+E::Axes(x=-1, y=1)  => { "$tag": "Axes", "x": -1, "y": 1 }
+```
 
-  `{ "$tag": "Uniform", "0": 1 }`, `{ "$tag": "Axes", "x": 2, "y": 3 }`
+With `derive(ToJson(style="flat"))`, the enum is formatted into:
 
-- **Externally tagged** puts the tag as the JSON object key outside the payload values:
-
-  `{ "Uniform": { "0": 1 } }`, `{ "Axes": { "x": 2, "y": 3 } }`
-
-- **Adjacently tagged** puts the tag payload in two adjacent keys in a JSON object:
-
-  `{ "t": "Uniform", "c": { "0": 1 } }`, `{ "t": "Axes", "c": { "x": 2, "y": 3 } }`
-
-- **Untagged** has no explicit tag identifying which case the data is:
-
-  `{ "0": 1 }`, `{ "x": 2, "y": 3 }`.
-
-  The JSON deserializer will try to deserialize each case in order and return the first one succeeding.
-
-For case representation, there are 2 variants:
-
-- **Object-like** representation serializes enum payloads into a JSON object,
-  whose key is either the tag name or the string of the positional index within the struct.
-
-  `{ "0": 1 }`, `{ "x": 2, "y": 3 }`
-
-- **Tuple-like** representation serializes enum payloads into a tuple (jSON array),
-  in the same order as the type declaration.
-  Labels are omitted in tuple-like representations.
-
-  `[1]`, `[2, 3]`
-
-The two aspects can be combined freely, except one case:
-_internally tagged_ enums cannot use _tuple-like_ representation.
+```
+E::One              => "One"
+E::Uniform(2)       => [ "Uniform", 2 ]
+E::Axes(x=-1, y=1)  => [ "Axes", -1, 1 ]
+```
 
 ### Container arguments
 
-- `repr(...)` configures the representation of the container.
-  This controls the tag position of enums.
-  For structs, the tag is assumed to be the type of the type.
-
-  There are 4 representations available for selection:
-
-  - `repr(tag = "tag")` –
-    Use internally tagged representation,
-    with the tag's object key name as specified.
-  - `repr(untagged)` –
-    Use untagged representation.
-  - `repr(ext_tagged)` –
-    Use externally tagged representation.
-  - `repr(tag = "tag", contents = "contents")` –
-    Use adjacently tagged representation,
-    with the tag and contents key names as specified.
-
-  The default representation for struct is `repr(untagged)`.
-
-  The default representation for enums is `repr(tag = "$tag")`
-
-- `case_repr(...)` (enum only) configures the case representation of the container.
-  This option is only available on enums.
-
-  - `case_repr(struct)` –
-    Use struct-like representation of enums.
-
-  - `case_repr(tuple)` –
-    Use tuple-like representation of enums.
-
-- `rename_fields`, `rename_cases` (enum only), `rename_struct` (struct only), `rename_all`
-  renames fields, case names, struct name and all names correspondingly,
-  into a specific style.
-
+- `rename_fields` and `rename_cases` (enum only)
+  batch renames fields (for enums and structs) and enum cases to the given format.
   Available parameters are:
 
   - `lowercase`
@@ -224,6 +180,10 @@ _internally tagged_ enums cannot use _tuple-like_ representation.
 
 - `cases(...)` (enum only) controls the layout of enum cases.
 
+  ```{warning}
+  This might be replaced with case attributes in the future.
+  ```
+
   For example, for an enum
 
   ```moonbit
@@ -238,6 +198,10 @@ _internally tagged_ enums cannot use _tuple-like_ representation.
   See [Case arguments](#case-arguments) below for details.
 
 - `fields(...)` (struct only) controls the layout of struct fields.
+
+  ```{warning}
+  This might be replaced with field attributes in the future.
+  ```
 
   For example, for a struct
 
