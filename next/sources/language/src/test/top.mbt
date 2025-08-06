@@ -27,7 +27,7 @@ test "show snapshot test" {
 enum Rec {
   End
   Really_long_name_that_is_difficult_to_read(Rec)
-} derive(Show, ToJson)
+} derive(Show, ToJson(style="legacy"))
 
 test "json snapshot test" {
   let r = Really_long_name_that_is_difficult_to_read(

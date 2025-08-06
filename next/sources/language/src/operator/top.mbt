@@ -157,7 +157,7 @@ test {
 test {
   let a1 : Array[Int] = [1, 2, 3]
   let a2 : FixedArray[Int] = [4, 5, 6]
-  let a3 : @list.T[Int] = @list.from_array([7, 8, 9])
+  let a3 : @list.List[Int] = @list.from_array([7, 8, 9])
   let a : Array[Int] = [..a1, ..a2, ..a3, 10]
   inspect(a, content="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
 }

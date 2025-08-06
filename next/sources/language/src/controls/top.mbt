@@ -193,7 +193,7 @@ test "for loop 8" (t : @test.T) {
 
 // start functional loop
 test {
-  fn sum(xs : @list.T[Int]) -> Int {
+  fn sum(xs : @list.List[Int]) -> Int {
     loop (xs, 0) {
       (Empty, acc) => break acc // <=> Nil, acc => acc
       (More(x, tail=rest), acc) => continue (rest, x + acc)

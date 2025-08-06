@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-06 11:15+0800\n"
+"POT-Creation-Date: 2025-08-06 11:25+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -931,12 +931,15 @@ msgstr "从/到 Json"
 
 #: ../../language/derive.md:97
 msgid ""
-"`derive(FromJson)` and `derive(ToJson)` will generate methods that "
-"deserializes/serializes the given type from/to JSON files "
-"correspondingly."
-msgstr "`derive(FromJson)` 和 `derive(ToJson)` 将分别生成从/到 JSON 文件反序列化/序列化给定类型的方法。"
+"`derive(FromJson)` and `derive(ToJson)` automatically derives round-"
+"trippable method implementations used for serializing the type to and "
+"from JSON. The implementation is mainly for debugging and storing the "
+"types in a human-readable format."
+msgstr ""
+"`derive(FromJson)` 和 `derive(ToJson)` 会自动派生可往返的方法实现，"
+"用于将类型序列化为 JSON 以及从 JSON 反序列化。该实现主要用于调试和以人类可读的格式存储类型。"
 
-#: ../../language/derive.md:100
+#: ../../language/derive.md:101
 msgid ""
 "struct JsonTest1 {\n"
 "  x : Int\n"
@@ -946,7 +949,7 @@ msgid ""
 "enum JsonTest2 {\n"
 "  A(x~ : Int)\n"
 "  B(x~ : Int, y~ : Int)\n"
-"} derive(FromJson, ToJson, Eq, Show)\n"
+"} derive(FromJson(style=\"legacy\"), ToJson(style=\"legacy\"), Eq, Show)\n"
 "\n"
 "test \"json basic\" {\n"
 "  let input = JsonTest1::{ x: 123, y: 456 }\n"
@@ -960,17 +963,35 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:106
+#: ../../language/derive.md:107
 msgid ""
 "Both derive directives accept a number of arguments to configure the "
 "exact behavior of serialization and deserialization."
 msgstr "这两个派生指令都接受一些参数来配置序列化和反序列化的确切行为。"
 
-#: ../../language/derive.md:109
+#: ../../language/derive.md:110
 msgid "The actual behavior of JSON serialization arguments is unstable."
 msgstr "JSON 序列化参数的实际行为是不稳定的。"
 
-#: ../../language/derive.md:112
+#: ../../language/derive.md:114
+msgid ""
+"JSON derivation arguments are only for coarse-grained control of the "
+"derived format. If you need to precisely control how the types are laid "
+"out, consider **directly implementing the two traits instead**."
+msgstr ""
+"JSON 派生参数仅用于粗粒度控制派生格式。如果你需要精确控制类型的布局，请考虑 **直接实现这两个特征**。"
+
+#: ../../language/derive.md:118
+msgid ""
+"We have recently deprecated a large number of advanced layout tweaking "
+"arguments. For such usage and future usage of them, please manually "
+"implement the traits. The arguments include: `repr`, `case_repr`, "
+"`default`, `rename_all`, etc."
+msgstr ""
+"我们最近弃用了大量高级布局调整参数。对于这种用法和将来对它们的使用，"
+"请手动实现这些特征。这些参数包括：`repr`、`case_repr`、`default`、`rename_all` 等。"
+
+#: ../../language/derive.md:123
 msgid ""
 "struct JsonTest3 {\n"
 "  x : Int\n"
@@ -986,8 +1007,8 @@ msgid ""
 "  A(x~ : Int)\n"
 "  B(x~ : Int, y~ : Int)\n"
 "} derive (\n"
-"  FromJson(rename_fields=\"SCREAMING_SNAKE_CASE\", repr(ext_tagged)),\n"
-"  ToJson(rename_fields=\"SCREAMING_SNAKE_CASE\", repr(ext_tagged)),\n"
+"  FromJson(style=\"flat\"),\n"
+"  ToJson(style=\"flat\"),\n"
 "  Eq,\n"
 "  Show,\n"
 ")\n"
@@ -998,231 +1019,100 @@ msgid ""
 "  assert_eq(input.to_json(), expected)\n"
 "  assert_eq(@json.from_json(expected), input)\n"
 "  let input = JsonTest4::A(x=123)\n"
-"  let expected : Json = { \"A\": { \"X\": 123 } }\n"
+"  let expected : Json = [ \"A\", 123 ]\n"
 "  assert_eq(input.to_json(), expected)\n"
 "  assert_eq(@json.from_json(expected), input)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:118
-msgid "Enum representations"
-msgstr "枚举表示"
+#: ../../language/derive.md:129
+msgid "Enum styles"
+msgstr "枚举样式"
 
-#: ../../language/derive.md:120
+#: ../../language/derive.md:131
 msgid ""
-"Enums can be represented in JSON in a number of styles. There are two "
-"aspects of the representation:"
-msgstr "枚举表示为 JSON 有多种风格。表示有两个方面："
+"There are currently two styles of enum serialization: `legacy` and "
+"`flat`, which the user must select one using the `style` argument. "
+"Considering the following enum definition:"
+msgstr ""
+"目前有两种枚举序列化样式：`legacy` 和 `flat`，用户必须使用 `style` 参数选择其中一种。"
 
-#: ../../language/derive.md:123
-msgid ""
-"**Tag position** determines where the name of the enum tag (i.e. case or "
-"constructor name) is stored."
-msgstr "**标签位置** 决定枚举标签（即构造器名称）的名称存储在哪里。"
-
-#: ../../language/derive.md:124
-msgid ""
-"**Case representation** determines how to represent the payload of the "
-"enum."
-msgstr "**构造器表示** 决定如何表示枚举的负载。"
-
-#: ../../language/derive.md:126
-msgid "Let's consider the following enum definition:"
-msgstr "让我们考虑以下枚举定义："
-
-#: ../../language/derive.md:128
+#: ../../language/derive.md:135
 msgid ""
 "enum E {\n"
-"    Uniform(Int)\n"
-"    Axes(x~: Int, y~: Int)\n"
+"  One\n"
+"  Uniform(Int)\n"
+"  Axes(x~: Int, y~: Int)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:135
-msgid "For tag position, there are 4 variants:"
-msgstr "对于标签位置，有 4 个变体："
-
-#: ../../language/derive.md:137
-msgid "**Internally tagged** puts the tag alongside the payload values:"
-msgstr "**内部标记** 将标签与负载值一起放置："
-
-#: ../../language/derive.md:139
-msgid ""
-"`{ \"$tag\": \"Uniform\", \"0\": 1 }`, `{ \"$tag\": \"Axes\", \"x\": 2, "
-"\"y\": 3 }`"
-msgstr ""
-
-#: ../../language/derive.md:141
-msgid ""
-"**Externally tagged** puts the tag as the JSON object key outside the "
-"payload values:"
-msgstr "**外部标记** 将标签作为 JSON 对象键放置在负载值之外："
-
 #: ../../language/derive.md:143
-msgid "`{ \"Uniform\": { \"0\": 1 } }`, `{ \"Axes\": { \"x\": 2, \"y\": 3 } }`"
-msgstr ""
+msgid "With `derive(ToJson(style=\"legacy\"))`, the enum is formatted into:"
+msgstr "使用 `derive(ToJson(style=\"legacy\"))`，枚举格式化为："
 
 #: ../../language/derive.md:145
 msgid ""
-"**Adjacently tagged** puts the tag payload in two adjacent keys in a JSON"
-" object:"
-msgstr "**相邻标记** 将标签负载放置在 JSON 对象中的两个相邻键中："
-
-#: ../../language/derive.md:147
-msgid ""
-"`{ \"t\": \"Uniform\", \"c\": { \"0\": 1 } }`, `{ \"t\": \"Axes\", \"c\":"
-" { \"x\": 2, \"y\": 3 } }`"
+"E::One              => { \"$tag\": \"One\" }\n"
+"E::Uniform(2)       => { \"$tag\": \"Uniform\", \"0\": 2 }\n"
+"E::Axes(x=-1, y=1)  => { \"$tag\": \"Axes\", \"x\": -1, \"y\": 1 }\n"
 msgstr ""
-
-#: ../../language/derive.md:149
-msgid "**Untagged** has no explicit tag identifying which case the data is:"
-msgstr "**无标记** 没有明确的标记标识数据属于哪个构造器："
 
 #: ../../language/derive.md:151
-msgid "`{ \"0\": 1 }`, `{ \"x\": 2, \"y\": 3 }`."
-msgstr ""
+msgid "With `derive(ToJson(style=\"flat\"))`, the enum is formatted into:"
+msgstr "使用 `derive(ToJson(style=\"flat\"))`，枚举格式化为："
 
 #: ../../language/derive.md:153
 msgid ""
-"The JSON deserializer will try to deserialize each case in order and "
-"return the first one succeeding."
-msgstr "JSON 反序列化器将尝试按顺序反序列化每个构造器，并返回第一个成功的构造器。"
-
-#: ../../language/derive.md:155
-msgid "For case representation, there are 2 variants:"
-msgstr "对于构造器表示，有 2 个变体："
-
-#: ../../language/derive.md:157
-msgid ""
-"**Object-like** representation serializes enum payloads into a JSON "
-"object, whose key is either the tag name or the string of the positional "
-"index within the struct."
-msgstr "**对象式** 表示将枚举负载序列化为 JSON 对象，其键是标签名称或结构体中的位置索引的字符串。"
-
-#: ../../language/derive.md:160
-msgid "`{ \"0\": 1 }`, `{ \"x\": 2, \"y\": 3 }`"
+"E::One              => \"One\"\n"
+"E::Uniform(2)       => [ \"Uniform\", 2 ]\n"
+"E::Axes(x=-1, y=1)  => [ \"Axes\", -1, 1 ]\n"
 msgstr ""
 
-#: ../../language/derive.md:162
-msgid ""
-"**Tuple-like** representation serializes enum payloads into a tuple (jSON"
-" array), in the same order as the type declaration. Labels are omitted in"
-" tuple-like representations."
-msgstr "**元组式** 表示将枚举负载序列化为元组（JSON 数组），顺序与类型声明相同。标签在元组式表示中被省略。"
-
-#: ../../language/derive.md:166
-msgid "`[1]`, `[2, 3]`"
-msgstr ""
-
-#: ../../language/derive.md:168
-msgid ""
-"The two aspects can be combined freely, except one case: _internally "
-"tagged_ enums cannot use _tuple-like_ representation."
-msgstr "这两个方面可以自由组合，除了一个情况：_内部标记_ 枚举不能使用 _元组式_ 表示。"
-
-#: ../../language/derive.md:171
+#: ../../language/derive.md:159
 msgid "Container arguments"
 msgstr "容器参数"
 
-#: ../../language/derive.md:173
+#: ../../language/derive.md:161
 msgid ""
-"`repr(...)` configures the representation of the container. This controls"
-" the tag position of enums. For structs, the tag is assumed to be the "
-"type of the type."
-msgstr "`repr(...)` 配置容器的表示。这控制枚举的标签位置。对于结构体，假定标签是类型的类型。"
-
-#: ../../language/derive.md:177
-msgid "There are 4 representations available for selection:"
-msgstr "有 4 种可供选择的表示："
-
-#: ../../language/derive.md:179
-msgid ""
-"`repr(tag = \"tag\")` – Use internally tagged representation, with the "
-"tag's object key name as specified."
-msgstr "`repr(tag = \"tag\")` – 使用内部标记表示，标记的对象键名称如指定。"
-
-#: ../../language/derive.md:182
-msgid "`repr(untagged)` – Use untagged representation."
-msgstr "`repr(untagged)` – 使用无标记表示。"
-
-#: ../../language/derive.md:184
-msgid "`repr(ext_tagged)` – Use externally tagged representation."
-msgstr "`repr(ext_tagged)` – 使用外部标记表示。"
-
-#: ../../language/derive.md:186
-msgid ""
-"`repr(tag = \"tag\", contents = \"contents\")` – Use adjacently tagged "
-"representation, with the tag and contents key names as specified."
-msgstr "`repr(tag = \"tag\", contents = \"contents\")` – 使用相邻标记表示，标记和内容键名称如指定。"
-
-#: ../../language/derive.md:190
-msgid "The default representation for struct is `repr(untagged)`."
-msgstr "结构体的默认表示为 `repr(untagged)`。"
-
-#: ../../language/derive.md:192
-msgid "The default representation for enums is `repr(tag = \"$tag\")`"
-msgstr "枚举的默认表示为 `repr(tag = \"$tag\")`"
-
-#: ../../language/derive.md:194
-msgid ""
-"`case_repr(...)` (enum only) configures the case representation of the "
-"container. This option is only available on enums."
-msgstr "`case_repr(...)`（仅枚举）配置容器的构造器表示。此选项仅适用于枚举。"
-
-#: ../../language/derive.md:197
-msgid "`case_repr(struct)` – Use struct-like representation of enums."
-msgstr "`case_repr(struct)` – 使用结构体式表示的枚举。"
-
-#: ../../language/derive.md:200
-msgid "`case_repr(tuple)` – Use tuple-like representation of enums."
-msgstr "`case_repr(tuple)` – 使用元组式表示的枚举。"
-
-#: ../../language/derive.md:203
-msgid ""
-"`rename_fields`, `rename_cases` (enum only), `rename_struct` (struct "
-"only), `rename_all` renames fields, case names, struct name and all names"
-" correspondingly, into a specific style."
+"`rename_fields` and `rename_cases` (enum only) batch renames fields (for "
+"enums and structs) and enum cases to the given format. Available "
+"parameters are:"
 msgstr ""
-"`rename_fields`、`rename_cases`（仅枚举）、`rename_struct`（仅结构体）、`rename_all` "
-"分别将字段、构造器名称、结构体名称和所有名称重命名为特定风格。"
+"`rename_fields` 和 `rename_cases`（仅适用于枚举）分别批量重命名字段（对于枚举和结构体）和枚举构造器为给定格式。可用的参数有："
 
-#: ../../language/derive.md:207
-msgid "Available parameters are:"
-msgstr "可选的参数有："
-
-#: ../../language/derive.md:209
+#: ../../language/derive.md:165
 msgid "`lowercase`"
 msgstr ""
 
-#: ../../language/derive.md:210
+#: ../../language/derive.md:166
 msgid "`UPPERCASE`"
 msgstr ""
 
-#: ../../language/derive.md:211
+#: ../../language/derive.md:167
 msgid "`camelCase`"
 msgstr ""
 
-#: ../../language/derive.md:212
+#: ../../language/derive.md:168
 msgid "`PascalCase`"
 msgstr ""
 
-#: ../../language/derive.md:213
+#: ../../language/derive.md:169
 msgid "`snake_case`"
 msgstr ""
 
-#: ../../language/derive.md:214
+#: ../../language/derive.md:170
 msgid "`SCREAMING_SNAKE_CASE`"
 msgstr ""
 
-#: ../../language/derive.md:215
+#: ../../language/derive.md:171
 msgid "`kebab-case`"
 msgstr ""
 
-#: ../../language/derive.md:216
+#: ../../language/derive.md:172
 msgid "`SCREAMING-KEBAB-CASE`"
 msgstr ""
 
-#: ../../language/derive.md:218
+#: ../../language/derive.md:174
 msgid ""
 "Example: `rename_fields = \"PascalCase\"` for a field named "
 "`my_long_field_name` results in `MyLongFieldName`."
@@ -1230,21 +1120,25 @@ msgstr ""
 "例如：`rename_fields = \"PascalCase\"` 用于名为 `my_long_field_name` 的字段将得到 "
 "`MyLongFieldName`。"
 
-#: ../../language/derive.md:222
+#: ../../language/derive.md:178
 msgid ""
 "Renaming assumes the name of fields in `snake_case` and the name of "
 "structs/enum cases in `PascalCase`."
 msgstr "重命名假定字段的名称为 `snake_case`，结构体/枚举构造器的名称为 `PascalCase`。"
 
-#: ../../language/derive.md:225
+#: ../../language/derive.md:181
 msgid "`cases(...)` (enum only) controls the layout of enum cases."
 msgstr "`cases(...)`（仅枚举）控制枚举构造器的布局。"
 
-#: ../../language/derive.md:227
+#: ../../language/derive.md:184
+msgid "This might be replaced with case attributes in the future."
+msgstr "这可能在未来会被构造器属性替换。"
+
+#: ../../language/derive.md:187
 msgid "For example, for an enum"
 msgstr "例如，对于一个枚举"
 
-#: ../../language/derive.md:229
+#: ../../language/derive.md:189
 msgid ""
 "enum E {\n"
 "  A(...)\n"
@@ -1252,23 +1146,27 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:236
+#: ../../language/derive.md:196
 msgid "you are able to control each case using `cases(A(...), B(...))`."
 msgstr "您可以使用 `cases(A(...), B(...))` 控制每个构造器。"
 
-#: ../../language/derive.md:238
+#: ../../language/derive.md:198
 msgid "See [Case arguments](#case-arguments) below for details."
 msgstr "有关详细信息，请参见下面的 [构造器参数](#case-arguments)。"
 
-#: ../../language/derive.md:240
+#: ../../language/derive.md:200
 msgid "`fields(...)` (struct only) controls the layout of struct fields."
 msgstr "`fields(...)`（仅结构体）控制结构体字段的布局。"
 
-#: ../../language/derive.md:242
+#: ../../language/derive.md:203
+msgid "This might be replaced with field attributes in the future."
+msgstr "这可能在未来会被字段属性替换。"
+
+#: ../../language/derive.md:206
 msgid "For example, for a struct"
 msgstr "例如，对于一个结构体"
 
-#: ../../language/derive.md:244
+#: ../../language/derive.md:208
 msgid ""
 "struct S {\n"
 "  x: Int\n"
@@ -1276,35 +1174,35 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:251
+#: ../../language/derive.md:215
 msgid "you are able to control each field using `fields(x(...), y(...))`"
 msgstr "您可以使用 `fields(x(...), y(...))` 控制每个字段。"
 
-#: ../../language/derive.md:253 ../../language/derive.md:263
+#: ../../language/derive.md:217 ../../language/derive.md:227
 msgid "See [Field arguments](#field-arguments) below for details."
 msgstr "有关详细信息，请参见下面的 [字段参数](#field-arguments)。"
 
-#: ../../language/derive.md:255
+#: ../../language/derive.md:219
 msgid "Case arguments"
 msgstr "构造器参数"
 
-#: ../../language/derive.md:257
+#: ../../language/derive.md:221
 msgid ""
 "`rename = \"...\"` renames this specific case, overriding existing "
 "container-wide rename directive if any."
 msgstr "`rename = \"...\"` 重命名此特定构造器，覆盖现有的容器范围重命名指令（如果有的话）。"
 
-#: ../../language/derive.md:260
+#: ../../language/derive.md:224
 msgid ""
 "`fields(...)` controls the layout of the payload of this case. Note that "
 "renaming positional fields are not possible currently."
 msgstr "`fields(...)` 控制此构造器的负载布局。请注意，目前无法重命名位置字段。"
 
-#: ../../language/derive.md:265
+#: ../../language/derive.md:229
 msgid "Field arguments"
 msgstr "字段参数"
 
-#: ../../language/derive.md:267
+#: ../../language/derive.md:231
 msgid ""
 "`rename = \"...\"` renames this specific field, overriding existing "
 "container-wide rename directives if any."
@@ -15869,7 +15767,7 @@ msgstr ""
 #: ../../language/fundamentals.md:968
 msgid ""
 "test {\n"
-"  fn sum(xs : @list.T[Int]) -> Int {\n"
+"  fn sum(xs : @list.List[Int]) -> Int {\n"
 "    loop (xs, 0) {\n"
 "      (Empty, acc) => break acc // <=> Nil, acc => acc\n"
 "      (More(x, tail=rest), acc) => continue (rest, x + acc)\n"
@@ -17674,7 +17572,7 @@ msgid ""
 "test {\n"
 "  let a1 : Array[Int] = [1, 2, 3]\n"
 "  let a2 : FixedArray[Int] = [4, 5, 6]\n"
-"  let a3 : @list.T[Int] = @list.from_array([7, 8, 9])\n"
+"  let a3 : @list.List[Int] = @list.from_array([7, 8, 9])\n"
 "  let a : Array[Int] = [..a1, ..a2, ..a3, 10]\n"
 "  inspect(a, content=\"[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\")\n"
 "}\n"
@@ -19870,7 +19768,7 @@ msgid ""
 "enum Rec {\n"
 "  End\n"
 "  Really_long_name_that_is_difficult_to_read(Rec)\n"
-"} derive(Show, ToJson)\n"
+"} derive(Show, ToJson(style=\"legacy\"))\n"
 "\n"
 "test \"json snapshot test\" {\n"
 "  let r = Really_long_name_that_is_difficult_to_read(\n"
@@ -19997,44 +19895,3 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
-
-#~ msgid ""
-#~ "pub(open) trait Animal {\n"
-#~ "  speak(Self) -> String\n"
-#~ "}\n"
-#~ "\n"
-#~ "type Duck String\n"
-#~ "\n"
-#~ "fn Duck::make(name : String) -> Duck {\n"
-#~ "  Duck(name)\n"
-#~ "}\n"
-#~ "\n"
-#~ "impl Animal for Duck with speak(self) {\n"
-#~ "  \"\\{self.inner()}: quack!\"\n"
-#~ "}\n"
-#~ "\n"
-#~ "type Fox String\n"
-#~ "\n"
-#~ "fn Fox::make(name : String) -> Fox {\n"
-#~ "  Fox(name)\n"
-#~ "}\n"
-#~ "\n"
-#~ "impl Animal for Fox with speak(_self) {\n"
-#~ "  \"What does the fox say?\"\n"
-#~ "}\n"
-#~ "\n"
-#~ "test {\n"
-#~ "  let duck1 = Duck::make(\"duck1\")\n"
-#~ "  let duck2 = Duck::make(\"duck2\")\n"
-#~ "  let fox1 = Fox::make(\"fox1\")\n"
-#~ "  let animals : Array[&Animal] = [duck1, duck2, fox1]\n"
-#~ "  inspect(\n"
-#~ "    animals.map(fn(animal) { animal.speak() }),\n"
-#~ "    content=(\n"
-#~ "      #|[\"duck1: quack!\", \"duck2: quack!\","
-#~ " \"What does the fox say?\"]\n"
-#~ "    ),\n"
-#~ "  )\n"
-#~ "}\n"
-#~ msgstr ""
-
