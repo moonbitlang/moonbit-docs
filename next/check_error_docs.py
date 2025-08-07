@@ -8,6 +8,7 @@ import re
 from pathlib import Path
 
 ERROR_CODES_DIR = 'language/error_codes'
+ERROR_CODES_SOURCE_DIR = 'sources/error_codes'
 
 
 def run_moon_test(file_path, error_code=None):
@@ -47,8 +48,8 @@ def run_moon_test(file_path, error_code=None):
 
 def check_error_code(error_code):
     """Check specific error code documentation"""
-    error_path = Path(ERROR_CODES_DIR) / f"{error_code}_error"
-    fixed_path = Path(ERROR_CODES_DIR) / f"{error_code}_fixed"
+    error_path = Path(ERROR_CODES_SOURCE_DIR) / f"{error_code}_error"
+    fixed_path = Path(ERROR_CODES_SOURCE_DIR) / f"{error_code}_fixed"
 
     if not error_path.exists() or not fixed_path.exists():
         return False
