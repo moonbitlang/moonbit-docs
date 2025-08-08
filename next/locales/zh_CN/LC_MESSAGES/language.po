@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-06 16:03+0800\n"
+"POT-Creation-Date: 2025-08-07 15:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2003,8 +2003,9 @@ msgstr ""
 
 #: ../../language/error_codes/E0001.md:12
 #: ../../language/error_codes/E0002.md:15
-#: ../../language/error_codes/E0003.md:16
-#: ../../language/error_codes/E0004.md:15 ../../language/error_codes/E0005.md:9
+#: ../../language/error_codes/E0003.md:17
+#: ../../language/error_codes/E0004.md:20
+#: ../../language/error_codes/E0005.md:10
 #: ../../language/error_codes/E0006.md:11 ../../language/error_codes/E0007.md:6
 #: ../../language/error_codes/E0008.md:6 ../../language/error_codes/E0009.md:5
 #: ../../language/error_codes/E0010.md:10 ../../language/error_codes/E0011.md:6
@@ -2095,29 +2096,33 @@ msgstr "错误示例"
 
 #: ../../language/error_codes/E0001.md:14
 msgid ""
+"///|\n"
 "fn greeting() -> String {\n"
 "  \"Hello!\"\n"
 "}\n"
 "\n"
-"fn main {\n"
+"///|\n"
+"test {\n"
 "  fn local_greeting() -> String {\n"
 "    \"Hello, world!\"\n"
 "  }\n"
+"\n"
+"\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0001.md:26
-#: ../../language/error_codes/E0002.md:31
-#: ../../language/error_codes/E0003.md:30
-#: ../../language/error_codes/E0004.md:29
-#: ../../language/error_codes/E0005.md:24
-#: ../../language/error_codes/E0006.md:28
-#: ../../language/error_codes/E0007.md:37
-#: ../../language/error_codes/E0008.md:22
-#: ../../language/error_codes/E0009.md:23
-#: ../../language/error_codes/E0010.md:21
+#: ../../language/error_codes/E0001.md:18
+#: ../../language/error_codes/E0002.md:21
+#: ../../language/error_codes/E0003.md:23
+#: ../../language/error_codes/E0004.md:26
+#: ../../language/error_codes/E0005.md:16
+#: ../../language/error_codes/E0006.md:17
+#: ../../language/error_codes/E0007.md:12
+#: ../../language/error_codes/E0008.md:12
+#: ../../language/error_codes/E0009.md:11
+#: ../../language/error_codes/E0010.md:16
 #: ../../language/error_codes/E0011.md:17
-#: ../../language/error_codes/E0012.md:16
+#: ../../language/error_codes/E0012.md:25
 #: ../../language/error_codes/E0013.md:59
 #: ../../language/error_codes/E0014.md:14
 #: ../../language/error_codes/E0015.md:18
@@ -2291,62 +2296,66 @@ msgstr ""
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0001.md:28
-#: ../../language/error_codes/E0002.md:33
-#: ../../language/error_codes/E0003.md:32
+#: ../../language/error_codes/E0001.md:20
+#: ../../language/error_codes/E0002.md:23
+#: ../../language/error_codes/E0003.md:25
 msgid "There are multiple ways to fix this warning:"
 msgstr "有几种方式可以修复这个警告："
 
-#: ../../language/error_codes/E0001.md:30
+#: ../../language/error_codes/E0001.md:22
 msgid ""
 "If the function is indeed useless, you can remove the definition of the "
 "function."
 msgstr "如果这个函数确实没有用，你可以移除函数的定义"
 
-#: ../../language/error_codes/E0001.md:32
+#: ../../language/error_codes/E0001.md:24
 msgid ""
 "If this function is at the toplevel (i.e., not local), and is part of the"
 " public API of your module, you can add the `pub` keyword to the "
 "function."
 msgstr "如果这个函数是在顶层（即不是局部的），并且是你模块的公开 API 的一部分，你可以给函数添加 `pub` 关键字。"
 
-#: ../../language/error_codes/E0001.md:35
+#: ../../language/error_codes/E0001.md:26
 msgid ""
+"\n"
+"///|\n"
 "pub fn greeting() -> String {\n"
 "  \"Hello!\"\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0001.md:41
+#: ../../language/error_codes/E0001.md:32
 msgid ""
 "If you made a typo in the function name, you can rename the function to "
 "the correct name at the call site."
 msgstr "如果你在函数名上犯了拼写错误，你可以在调用的地方将函数重命名为正确的名字。"
 
-#: ../../language/error_codes/E0001.md:44
+#: ../../language/error_codes/E0001.md:35
 msgid ""
 "There are some cases where you might want to keep the function private "
 "and unused at the same time. In this case, you can call `ignore()` on the"
 " function to force the use of it."
 msgstr "在某些情况下，你可能想要保持函数为私有且同时不使用。在这种情况下，你可以对该函数调用 `ignore()` 以强制使用它。"
 
-#: ../../language/error_codes/E0001.md:48
+#: ../../language/error_codes/E0001.md:39
 msgid ""
-"fn greeting() -> String {\n"
+"\n"
+"///| \n"
+"fn unused() -> String {\n"
 "  \"Hello, world!\"\n"
 "}\n"
 "\n"
-"fn init {\n"
-"  ignore(greeting)\n"
+"///|\n"
+"test {\n"
+"  ignore(unused)\n"
 "}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0001.md:58
-msgid ""
-"fn main {\n"
+"\n"
+"///|\n"
+"test {\n"
 "  fn local_greeting() -> String {\n"
 "    \"Hello, world!\"\n"
 "  }\n"
+"\n"
 "  ignore(local_greeting)\n"
 "}\n"
 msgstr ""
@@ -2380,74 +2389,85 @@ msgstr "具体来说，如果变量是在顶层，并且模块的主体包含副
 
 #: ../../language/error_codes/E0002.md:17
 msgid ""
+"///|\n"
 "let p : Int = {\n"
-"//  ^ Warning: Unused toplevel variable 'p'.\n"
-"//             Note if the body contains side effect, it will not happen."
-"\n"
-"//             Use `fn init { .. }` to wrap the effect.\n"
-"  println(\"Side effect\")\n"
+"  side_effect.val = 42\n"
 "  42\n"
 "}\n"
 "\n"
-"fn main {\n"
-"  let x = 42 // Warning: Unused variable 'x'\n"
+"///|\n"
+"let side_effect : Ref[Int] = { val: 0 }\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let x = 42\n"
+"\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0002.md:35
+#: ../../language/error_codes/E0002.md:25
 msgid ""
 "If the variable is indeed useless, you can remove the definition of the "
 "variable."
 msgstr "如果这个变量确实没有用，你可以移除变量的定义。"
 
-#: ../../language/error_codes/E0002.md:37
+#: ../../language/error_codes/E0002.md:27
 msgid ""
 "If this variable is at the toplevel (i.e., not local), and is part of the"
 " public API of your module, you can add the `pub` keyword to the "
 "variable."
 msgstr "如果这个变量是在顶层（即不是局部的），并且是你模块的公开 API 的一部分，你可以给变量添加 `pub` 关键字。"
 
-#: ../../language/error_codes/E0002.md:40
-msgid "pub let p = 42\n"
+#: ../../language/error_codes/E0002.md:30
+msgid ""
+"\n"
+"///|\n"
+"pub let p = 42\n"
 msgstr ""
 
-#: ../../language/error_codes/E0002.md:44
+#: ../../language/error_codes/E0002.md:36
 msgid ""
 "If you made a typo in the variable name, you can rename the variable to "
 "the correct name at the use site."
 msgstr "如果你在变量名上犯了拼写错误，你可以在使用的地方将变量重命名为正确的名字。"
 
-#: ../../language/error_codes/E0002.md:46
+#: ../../language/error_codes/E0002.md:38
 msgid ""
 "If your code depends on the side-effect of the variable, you can wrap the"
 " side-effect in a `fn init` block."
 msgstr "如果你的代码依赖于变量的副作用，你可以将副作用包装在 `fn init` 块中。"
 
-#: ../../language/error_codes/E0002.md:49
+#: ../../language/error_codes/E0002.md:41
 msgid ""
+"\n"
+"///|\n"
+"let side_effect : Ref[Int] = { val: 0 }\n"
+"\n"
+"///|\n"
 "fn init {\n"
-"  println(\"Side effect\")\n"
+"  side_effect.val = 42\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0002.md:55
+#: ../../language/error_codes/E0002.md:47
 msgid ""
 "There are some cases where you might want to keep the variable private "
 "and unused at the same time. In this case, you can call `ignore()` on the"
 " variable to force the use of it."
 msgstr "在某些情况下，你可能想要保持变量为私有且同时不使用。在这种情况下，你可以对该变量调用 `ignore()` 以强制使用它。"
 
-#: ../../language/error_codes/E0002.md:59
+#: ../../language/error_codes/E0002.md:51
 msgid ""
-"let p : Int = {\n"
-"  println(\"Side effect\")\n"
-"  42\n"
+"\n"
+"///|\n"
+"let p_unused : Int = 42\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(p_unused)\n"
 "}\n"
 "\n"
-"fn init {\n"
-"  ignore(p)\n"
-"}\n"
-"\n"
+"///|\n"
 "fn main {\n"
 "  let x = 42\n"
 "  ignore(x)\n"
@@ -2464,58 +2484,65 @@ msgstr "未使用的类型声明。"
 
 #: ../../language/error_codes/E0003.md:5
 msgid ""
-"This type is not used by any other part of your code, and it is private. "
-"Type declaration is by default abstract, which means it is publicly "
-"visible to users of this package, but they cannot see the implementation "
-"of the type, nor can create instances of it directly. Therefore, this "
-"warning is only shown if the type is marked with `priv` visibility, and "
-"is not used by any other part of this package."
+"This type is not used by any other part of your code, which means it's "
+"not constructed nor consumed, and others can't construct nor consume due "
+"to visibility. Type declaration is by default abstract, which means it is"
+" publicly visible to users of this package, but they cannot construct nor"
+" destruct the type. Therefore, this warning is only shown if the type has"
+" abstract or private visibility, and is not constructed nor consumed by "
+"any other part of this package."
 msgstr ""
-"这个类型没有被代码的其他部分使用，而且它是私有的。类型声明默认是抽象的，这意味着它对这个包的用户是公开可见的，但他们不能看到类型的实现，也不能直接创建它的实例。因此，只有当类型标记为"
-" `priv` 可见性，并且没有被这个包的其他部分使用时，才会显示这个警告。"
+"此类型未被代码的任何其他部分使用，这意味着它既没有被构造也没有被消费，并且由于可见性，其他类型也无法构造或消费它。"
+"类型声明默认为抽象类型，这意味着它对此包的用户是公开可见的，但他们无法构造或解析该类型。"
+"因此，仅当类型具有抽象或私有可见性，并且没有被此包的任何其他部分构造或消费时，才会显示此警告。"
 
-#: ../../language/error_codes/E0003.md:12
+#: ../../language/error_codes/E0003.md:13
 msgid ""
 "Note that this warning might uncover other bugs in your code. For "
 "example, if there are two types in the package that has similar name, you"
 " might just use the other type by mistake."
 msgstr "请注意，这个警告可能会揭示你代码中的其他错误。例如，如果包中有两个类型名称相似，你可能会错误地使用另一个类型。"
 
-#: ../../language/error_codes/E0003.md:18
+#: ../../language/error_codes/E0003.md:19
 msgid ""
-"priv struct Foo { // Warning: Unused type 'Foo'.\n"
-"  bar : Int\n"
-"}\n"
-"\n"
-"fn main {\n"
-"  struct Bar { // Warning: Unused type 'Bar'.\n"
-"    foot : Int\n"
-"  }\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0003.md:34
-msgid "If the type is indeed useless, you can remove the definition of the type."
-msgstr "如果这个类型确实没有用，你可以移除类型的定义。"
-
-#: ../../language/error_codes/E0003.md:35
-msgid ""
-"If this type is not local, and is part of the public API of your module, "
-"you can remove the `priv` visibility keyword from the type."
-msgstr "如果这个类型不是局部的，并且是你模块的公开 API 的一部分，你可以移除 `priv` 可见性关键字。"
-
-#: ../../language/error_codes/E0003.md:38
-msgid ""
+"///|\n"
 "struct Foo {\n"
 "  bar : Int\n"
 "}\n"
+"\n"
+"///|\n"
+"pub fn f() -> Unit {\n"
+"  struct Bar {\n"
+"    foot : Int\n"
+"  }\n"
+"\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0003.md:44
+#: ../../language/error_codes/E0003.md:27
+msgid "If the type is indeed useless, you can remove the definition of the type."
+msgstr "如果这个类型确实没有用，你可以移除类型的定义。"
+
+#: ../../language/error_codes/E0003.md:28
+msgid ""
+"If this type is not local, and is part of the public API of your module, "
+"you can add `pub` or `pub(all)` visibility keyword from the type."
+msgstr "如果这个类型不是局部的，并且是你模块的公开 API 的一部分，你可以添加 `pub` 或 `pub(all)` 可见性关键字。"
+
+#: ../../language/error_codes/E0003.md:31
+msgid ""
+"\n"
+"///|\n"
+"pub struct Foo {\n"
+"  bar : Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0003.md:37
 msgid "Check if you are referencing the type with a correct name."
 msgstr "检查你是否以正确的名称引用该类型。"
 
-#: ../../language/error_codes/E0003.md:46
+#: ../../language/error_codes/E0003.md:39
 msgid ""
 "It is rather rare to have a type that is private and unused at the same "
 "time; therefore, we suggest you remove the type if it is not used."
@@ -2548,43 +2575,60 @@ msgid ""
 "not marked as `pub`."
 msgstr ""
 
-#: ../../language/error_codes/E0004.md:17
+#: ../../language/error_codes/E0004.md:15
 msgid ""
-"type Code Int derive(Show)\n"
+"This warning is not emitted inside `main` packages which are usually not "
+"intended to be used by others anyway. Likewise, it is not emitted inside "
+"[whitebox test and blackbox test](/language/tests.md#blackbox-tests-and-"
+"whitebox-tests) files."
+msgstr "这个警告不会在 `main` 包中发出，因为它们通常不打算被其他人使用。"
+"同样地，它也不会在 [白盒测试和黑盒测试](/language/tests.md#blackbox-tests-and-whitebox-tests) 文件中发出。"
+
+#: ../../language/error_codes/E0004.md:22
+msgid ""
+"///|\n"
+"struct Code(Int)\n"
 "\n"
-"fn Code::new(value : Int) -> Code {\n"
-"  return value\n"
+"///|\n"
+"fn Code::new(code : Int) -> Code {\n"
+"  Code(code)\n"
 "}\n"
 "\n"
+"///|\n"
 "test {\n"
-"  inspect(Code::new(1), content=\"Code(1)\")\n"
+"  let Code(_) = Code::new(42)\n"
+"\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0004.md:31
+#: ../../language/error_codes/E0004.md:28
 msgid ""
 "If the abstract type is not part of the public interface of the package, "
 "then it should be marked as `priv`:"
 msgstr ""
 
-#: ../../language/error_codes/E0004.md:34
+#: ../../language/error_codes/E0004.md:31
 msgid ""
-"priv type Code Int derive(Show)\n"
 "\n"
-"// ...\n"
+"///|\n"
+"priv struct Code(Int)\n"
+"\n"
 msgstr ""
 
-#: ../../language/error_codes/E0004.md:40
+#: ../../language/error_codes/E0004.md:37
 msgid ""
 "Or, if the abstract type is part of the public interface of the package, "
 "then make relevant definitions `pub`:"
 msgstr ""
 
-#: ../../language/error_codes/E0004.md:43
+#: ../../language/error_codes/E0004.md:40
 msgid ""
-"type Code Int derive(Show)\n"
 "\n"
-"pub fn Code::new(value : Int) -> Code {\n"
+"///|\n"
+"struct Code2(Int) derive(Show)\n"
+"\n"
+"///|\n"
+"pub fn Code2::new(value : Int) -> Code2 {\n"
 "  return value\n"
 "}\n"
 msgstr ""
@@ -2601,46 +2645,50 @@ msgstr "未使用的泛型类型变量。"
 msgid ""
 "In some cases, using types with unused generic type variables will make "
 "it impossible for the type checker to infer the type of the unused "
-"variable. This might lead to cryptic error messages, even unexpected "
-"runtime behavior."
-msgstr "在某些情况下，使用带有未使用的泛型类型变量的类型将使类型检查器无法推断未使用变量的类型。这可能导致难以理解的错误信息，甚至是意想不到的运行时行为。"
+"variable, leading to [E0013](./E0013.md). This might lead to cryptic "
+"error messages, even unexpected runtime behavior."
+msgstr "在某些情况下，使用带有未使用的泛型类型变量的类型将使类型检查器无法推断未使用变量的类型，从而导致 [E0013](./E0013.md)。"
+"这可能导致难以理解的错误信息，甚至是意想不到的运行时行为。"
 
-#: ../../language/error_codes/E0005.md:11
+#: ../../language/error_codes/E0005.md:12
 msgid ""
-"struct Foo[T] { // Warning: Unused type variable 'T'.\n"
+"///|\n"
+"priv struct Foo[T] {\n"
 "  bar : Int\n"
 "}\n"
 "\n"
-"fn main {\n"
-"  let foo : Foo[Int] = { bar : 42 }\n"
-"  let baz = { bar : 42 } // Warning: The type of this expression is "
-"Foo[_/0]\n"
-"  println(foo.bar)\n"
-"  println(baz.bar)\n"
+"///|\n"
+"test {\n"
+"  let bar : Foo[Int] = { bar: 42 }\n"
+"  inspect(bar.bar, content=\"42\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0005.md:18
+msgid "If the type variable is indeed useless, remove the unused type variable."
+msgstr "如果类型变量确实没有用，移除未使用的类型变量。"
+
+#: ../../language/error_codes/E0005.md:20
+msgid ""
+"\n"
+"///|\n"
+"priv struct Foo {\n"
+"  bar : Int\n"
 "}\n"
 msgstr ""
 
 #: ../../language/error_codes/E0005.md:26
-msgid "If the type variable is indeed useless, remove the unused type variable."
-msgstr "如果类型变量确实没有用，移除未使用的类型变量。"
-
-#: ../../language/error_codes/E0005.md:28
-msgid ""
-"struct Foo { // Remove the unused type variable.\n"
-"  bar : Int\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0005.md:34
 msgid ""
 "If you wish to keep the type variable, you can use `_` to indicate that "
 "the type variable is intentionally unused."
 msgstr "如果你希望保留类型变量，你可以使用 `_` 来表示类型变量是有意未使用的。"
 
-#: ../../language/error_codes/E0005.md:37
+#: ../../language/error_codes/E0005.md:29
 msgid ""
-"struct Foo[_] {\n"
-"  bar : Int\n"
+"\n"
+"///|\n"
+"priv struct Foo2[_] {\n"
+"  bar2 : Int\n"
 "}\n"
 msgstr ""
 
@@ -2669,13 +2717,15 @@ msgstr "如果枚举值未使用，意味着它既没有被构造也没有被读
 
 #: ../../language/error_codes/E0006.md:13
 msgid ""
+"///|\n"
 "priv enum T {\n"
-"  A // Warning: Variant 'A' is never read\n"
-"  B // Warning: Variant 'B' is never constructed\n"
-"  C // Warning: Variant 'C' is unused\n"
+"  A\n"
+"  B\n"
+"  C\n"
 "}\n"
 "\n"
-"fn main {\n"
+"///|\n"
+"pub fn f() -> Unit {\n"
 "  match T::A {\n"
 "    B => ()\n"
 "    _ => ()\n"
@@ -2683,16 +2733,25 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0006.md:30
+#: ../../language/error_codes/E0006.md:19
 msgid ""
 "If some variants are never read, while others are read, this means that "
 "you have use wildcard pattern (`_`) in your code. You can expand the "
 "wildcard pattern to include the unused variants."
 msgstr "如果有一些枚举值从未被读取，而其他枚举值被读取，这意味着你在代码中使用了通配符模式（`_`）。你可以展开通配符模式以包含未使用的枚举值。"
 
-#: ../../language/error_codes/E0006.md:34
+#: ../../language/error_codes/E0006.md:23
 msgid ""
-"fn main {\n"
+"\n"
+"///|\n"
+"priv enum T {\n"
+"  A\n"
+"  B\n"
+"  C\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn f() -> Unit {\n"
 "  match T::A {\n"
 "    B => ()\n"
 "    C => ()\n"
@@ -2701,7 +2760,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0006.md:44
+#: ../../language/error_codes/E0006.md:29
 msgid ""
 "If all variants are never read, and you need to read these variants "
 "outside of current package, you can add `pub` keyword to the enum "
@@ -2709,39 +2768,60 @@ msgid ""
 "visible to the users of the package."
 msgstr "如果所有枚举值从未被读取，而你需要在当前包之外读取这些枚举值，你可以给枚举定义添加 `pub` 关键字。注意这将使枚举值的实现对包的用户可见。"
 
-#: ../../language/error_codes/E0006.md:49
+#: ../../language/error_codes/E0006.md:34
 msgid ""
-"pub enum T {\n"
+"\n"
+"///|\n"
+"pub enum T2 {\n"
 "  A\n"
 "  B\n"
 "  C\n"
 "}\n"
+"\n"
+"///|\n"
+"pub fn T2::new(value : Int) -> T2 {\n"
+"  match value {\n"
+"    0 => T2::A\n"
+"    1 => T2::B\n"
+"    _ => T2::C\n"
+"  }\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0006.md:57
+#: ../../language/error_codes/E0006.md:40
 msgid ""
 "If you need to construct the \"never constructed\" variant outside of the"
 " current package, you can add `pub(all)` keyword to the variant."
 msgstr "如果你需要在当前包之外构造“从未被构造”的枚举值，你可以给枚举值添加 `pub(all)` 关键字。"
 
-#: ../../language/error_codes/E0006.md:60
+#: ../../language/error_codes/E0006.md:43
 msgid ""
-"pub(all) enum T {\n"
+"\n"
+"///|\n"
+"pub(all) enum T3 {\n"
 "  A\n"
 "  B\n"
 "  C\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0006.md:68
+#: ../../language/error_codes/E0006.md:49
 msgid "If some variants are indeed useless, you can remove the unused variants."
 msgstr "如果有一些枚举值确实没有用，你可以移除未使用的枚举值。"
 
-#: ../../language/error_codes/E0006.md:70
+#: ../../language/error_codes/E0006.md:51
 msgid ""
-"enum T {\n"
+"\n"
+"///|\n"
+"priv enum T4 {\n"
 "  A\n"
-"  B\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn g() -> Unit {\n"
+"  match T4::A {\n"
+"    A => ()\n"
+"  }\n"
 "}\n"
 msgstr ""
 
@@ -2756,69 +2836,57 @@ msgid ""
 msgstr "字段从未被读取。这包括结构体中的字段和枚举构造器中的字段。"
 
 #: ../../language/error_codes/E0007.md:8
-msgid "For enum constructor fields:"
-msgstr "对于枚举构造器字段"
-
-#: ../../language/error_codes/E0007.md:10
 msgid ""
-"enum E {\n"
-"  A(Int) // Warning: The 1st positional argument of constructor 'A' is "
-"unused.\n"
-"  B(value~ : Int) // Warning: Field 'value' of constructor 'B' is unused."
-"\n"
+"///|\n"
+"priv enum E {\n"
+"  A(Int)\n"
+"  B(value~ : Int)\n"
 "}\n"
 "\n"
-"fn main {\n"
+"///|\n"
+"priv struct S {\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
 "  ignore(B(value=1))\n"
 "  match A(1) {\n"
 "    A(_) => println(\"A\")\n"
 "    B(_) => println(\"B\")\n"
 "  }\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0007.md:25
-msgid "For struct fields:"
-msgstr "对于结构体字段"
-
-#: ../../language/error_codes/E0007.md:27
-msgid ""
-"struct S {\n"
-"  value : Int // Warning: Field 'value' is never read\n"
-"}\n"
-"\n"
-"fn main {\n"
 "  ignore(S::{ value : 1 })\n"
-"}\n"
+"}"
 msgstr ""
 
-#: ../../language/error_codes/E0007.md:39
+#: ../../language/error_codes/E0007.md:14
 msgid ""
 "If the fields in enum constructors are unused, you can expand them in the"
 " pattern to use them:"
 msgstr "如果枚举构造器中的字段未使用，你可以在模式中展开它们以使用它们："
 
-#: ../../language/error_codes/E0007.md:42
+#: ../../language/error_codes/E0007.md:17
 msgid ""
-"fn main {\n"
-"  // ...\n"
-"  match A(1) {\n"
-"    A(x) => println(\"A(\\{x})\")\n"
-"    B(value~) => println(\"B(\\{value})\")\n"
-"  }\n"
+"\n"
+"///|\n"
+"priv enum E {\n"
+"  A(Int)\n"
+"  B(value~ : Int)\n"
 "}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0007.md:52
-msgid ""
-"If the fields in structs are unused, you can list them in a struct "
-"pattern, or use the dot-syntax to access them:"
-msgstr "如果结构体中的字段未使用，你可以在结构体模式中列出它们，或使用点语法访问它们："
-
-#: ../../language/error_codes/E0007.md:55
-msgid ""
-"fn main {\n"
-"  let s = S::{ value : 1 }\n"
+"\n"
+"///|\n"
+"priv struct S {\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(B(value=1))\n"
+"  match A(1) {\n"
+"    A(x) => inspect(\"A(\\{x})\", content=\"A(1)\")\n"
+"    B(value~) => inspect(\"B(\\{value})\")\n"
+"  }\n"
+"  let s = S::{ value: 1 }\n"
 "  match s {\n"
 "    { value } => println(\"S(\\{value})\")\n"
 "  }\n"
@@ -2826,23 +2894,53 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0007.md:65
+#: ../../language/error_codes/E0007.md:23
 msgid ""
-"Or, if the fields are indeed useless, you can remove the field from the "
+"If the fields are indeed useless, you can remove the field from the "
 "constructor:"
-msgstr "或者，如果字段确实没有用，你可以从构造器中移除字段："
+msgstr "如果字段确实没有用，你可以从构造器中移除字段："
 
-#: ../../language/error_codes/E0007.md:68
+#: ../../language/error_codes/E0007.md:26
 msgid ""
-"enum E {\n"
-"  A\n"
-"  B\n"
+"\n"
+"///|\n"
+"priv enum E2 {\n"
+"  A2\n"
+"  B2\n"
+"}\n"
+"\n"
+"///|\n"
+"priv struct S2 {}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(E2::B2)\n"
+"  match E2::A2 {\n"
+"    A2 => println(\"A\")\n"
+"    B2 => println(\"B\")\n"
+"  }\n"
+"  ignore(S2::{  })\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0007.md:75
+#: ../../language/error_codes/E0007.md:32
 msgid ""
-"struct S {\n"
+"If the fields are expected to be used by the others, you can mark the "
+"type as `pub` or `pub(all)`."
+msgstr "如果字段预计会被其他人使用，你可以将类型标记为 `pub` 或 `pub(all)`。"
+
+#: ../../language/error_codes/E0007.md:35
+msgid ""
+"\n"
+"///|\n"
+"pub enum E3 {\n"
+"  A3(Int)\n"
+"  B3(value~ : Int)\n"
+"}\n"
+"\n"
+"///|\n"
+"pub struct S3 {\n"
+"  value : Int\n"
 "}\n"
 msgstr ""
 
@@ -2858,29 +2956,31 @@ msgstr "修饰符（`pub`/`priv`）在这里是多余的，因为这个字段默
 
 #: ../../language/error_codes/E0008.md:8
 msgid ""
+"///|\n"
 "struct A {\n"
 "  priv value : Int\n"
-"  // Warning: The private modifier is redundant here\n"
-"  //          since field value is private by default\n"
+"  //^^\n"
 "}\n"
 "\n"
+"///|\n"
 "pub struct B {\n"
 "  pub value : Int\n"
-"  // Warning: The public modifier is redundant here\n"
-"  //          since field value is public by default\n"
+"  //^\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0008.md:24
+#: ../../language/error_codes/E0008.md:14
 msgid "Remove the visibility modifier on the field."
 msgstr "移除字段上的可见性修饰符。"
 
-#: ../../language/error_codes/E0008.md:26
+#: ../../language/error_codes/E0008.md:16
 msgid ""
+"///|\n"
 "struct A {\n"
 "  value : Int\n"
 "}\n"
 "\n"
+"///|\n"
 "pub struct B {\n"
 "  value : Int\n"
 "}\n"
@@ -2896,23 +2996,23 @@ msgstr "结构体从未被构造。"
 
 #: ../../language/error_codes/E0009.md:7
 msgid ""
-"pub struct A { // Warning: The struct A is never constructed\n"
-"  value : Int\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0009.md:13
-msgid ""
-"priv struct A { // Warning: The struct A is never constructed\n"
+"///|\n"
+"pub struct A { // Warning: the struct A is never constructed\n"
 "  value : Int\n"
 "}\n"
 "\n"
-"fn f(a : A) -> Int {\n"
+"///|\n"
+"priv struct B { // Warning: the struct B is never constructed\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"fn B::get(a : B) -> Int {\n"
 "  a.value\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0009.md:25
+#: ../../language/error_codes/E0009.md:13
 msgid ""
 "The `pub` visibility modifier only allows other packages to access the "
 "struct, by dot-syntax (`a.value`), or by pattern matching. Therefore, if "
@@ -2922,50 +3022,51 @@ msgstr ""
 "`pub` 可见性修饰符只允许其他包通过点语法（`a.value`）或模式匹配来访问结构体。因此，如果你希望其他包能够构造结构体，你应该使用 "
 "`pub(all)` 可见性修饰符。"
 
-#: ../../language/error_codes/E0009.md:30
+#: ../../language/error_codes/E0009.md:18
 msgid ""
+"\n"
+"///|\n"
 "pub(all) struct A {\n"
 "  value : Int\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0009.md:36
+#: ../../language/error_codes/E0009.md:24
 msgid ""
 "However, if you do not want other packages to construct the struct, this "
 "might be due to incompleteness or bugs in your code. There are some "
 "common cases:"
 msgstr "然而，如果你不希望其他包构造结构体，这可能是由于你代码的不完整或错误。以下是一些常见情况："
 
-#: ../../language/error_codes/E0009.md:39
+#: ../../language/error_codes/E0009.md:27
 msgid ""
 "You planned to use smart constructors or factory functions to construct "
 "the struct, but you forgot or have not implemented them."
 msgstr "你计划使用智能构造器或工厂函数来构造结构体，但你忘记了或尚未实现它们。"
 
-#: ../../language/error_codes/E0009.md:41
+#: ../../language/error_codes/E0009.md:29
 msgid ""
-"You intend to keep the struct private to control its instantiation but "
+"You intended to keep the struct private to control its instantiation but "
 "may have forgotten to provide a way to do so within its own package."
 msgstr "你打算保持结构体私有以控制其实例化，但可能忘记了在其自己的包中提供这样的方法。"
 
-#: ../../language/error_codes/E0009.md:44
+#: ../../language/error_codes/E0009.md:32
 msgid ""
 "In these cases, you should consider providing a way to construct the "
 "struct within its own package."
 msgstr "在这些情况下，你应该考虑在自己的包内提供构造结构体的方法。"
 
-#: ../../language/error_codes/E0009.md:47
+#: ../../language/error_codes/E0009.md:35
 msgid ""
-"priv struct A {\n"
+"\n"
+"///|\n"
+"priv struct B {\n"
 "  value : Int\n"
 "}\n"
 "\n"
-"fn A::new(value : Int) -> A {\n"
-"  A::{ value }\n"
-"}\n"
-"\n"
-"fn A::value(self : A) -> Int {\n"
-"  self.value\n"
+"///|\n"
+"fn B::new(value : Int) -> B {\n"
+"  B::{ value, }\n"
 "}\n"
 msgstr ""
 
@@ -2991,46 +3092,34 @@ msgstr ""
 
 #: ../../language/error_codes/E0010.md:12
 msgid ""
-"fn main {\n"
+"///|\n"
+"test {\n"
 "  match Some(1) {\n"
-"    _ => println(\"_\")\n"
-"    Some(a) => println(\"Some(\\{a})\") // Warning: Unused pattern\n"
+"    Some(1) | Some(1) => ()\n"
+"    Some(2..<_) | Some(2) => ()\n"
+"    _ | None => ()\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0010.md:23
+#: ../../language/error_codes/E0010.md:18
 msgid ""
-"This warning can be usually fixed by swapping the order of the branches "
-"in the pattern matching. If the order of the branches is important, then "
-"you may want to refine the first pattern so that it excludes what the "
-"second pattern covers."
-msgstr "这个警告通常可以通过交换模式匹配中分支的顺序来修复。如果分支的顺序很重要，那么你可能希望完善第一个模式，使其排除第二个模式覆盖的内容。"
-
-#: ../../language/error_codes/E0010.md:27
-msgid ""
-"fn main {\n"
-"  match Some(1) {\n"
-"    Some(a) => println(\"Some(\\{a})\")\n"
-"    _ => println(\"_\")\n"
-"  }\n"
-"}\n"
+"This warning can usually be fixed by removing the patterns that are "
+"covered."
 msgstr ""
 
-#: ../../language/error_codes/E0010.md:36
-#: ../../language/error_codes/E3012.md:43
-#: ../../language/error_codes/E3016.md:39
-msgid "Or,"
-msgstr "或者，"
-
-#: ../../language/error_codes/E0010.md:38
+#: ../../language/error_codes/E0010.md:20
 msgid ""
-"fn main {\n"
+"\n"
+"///|\n"
+"test {\n"
 "  match Some(1) {\n"
-"    None => println(\"_\")\n"
-"    Some(a) => println(\"Some(\\{a})\")\n"
+"    Some(1) => ()\n"
+"    Some(2..<_) => ()\n"
+"    _ => ()\n"
 "  }\n"
 "}\n"
+"\n"
 msgstr ""
 
 #: ../../language/error_codes/E0011.md:1
@@ -3110,21 +3199,62 @@ msgstr "不可达代码。这通常发生在 `return` 语句后面跟着更多�
 msgid ""
 "fn main {\n"
 "  return\n"
-"  println(\"Hello, World!\")\n"
+"  println(\"Hello, World!\") // Warning: Unreachable code\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0012.md:18
+#: ../../language/error_codes/E0012.md:16
 msgid ""
-"Remove the unreachable code, or move it before the `return` statement if "
-"you want the code to be executed."
-msgstr "移除不可达代码，或者如果你希望代码被执行，将其移动到 `return` 语句之前。"
+"fn main {\n"
+"  match Some(1) {\n"
+"    _ => println(\"_\")\n"
+"    Some(a) => println(\"Some(\\{a})\") // Warning: Unreachable code\n"
+"  }\n"
+"}\n"
+msgstr ""
 
-#: ../../language/error_codes/E0012.md:21
+#: ../../language/error_codes/E0012.md:27
+msgid "Remove the unreachable code. Or adjust the branching statements."
+msgstr "移除不可达代码，或者如果你希望代码被执行，将其移动到分支语句之后。"
+
+#: ../../language/error_codes/E0012.md:29
 msgid ""
 "fn main {\n"
 "  println(\"Hello, World!\")\n"
 "  return\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0012.md:36
+msgid ""
+"You can also swap the order of the branches in the pattern matching. If "
+"the order of the branches is important, then you may want to refine the "
+"first pattern so that it excludes what the second pattern covers."
+msgstr "你也可以交换模式匹配中分支的顺序。如果分支的顺序很重要，那么你可能希望完善第一个模式，使其排除第二个模式覆盖的内容。"
+
+#: ../../language/error_codes/E0012.md:40
+msgid ""
+"fn main {\n"
+"  match Some(1) {\n"
+"    Some(a) => println(\"Some(\\{a})\")\n"
+"    _ => println(\"_\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0012.md:49
+#: ../../language/error_codes/E3012.md:43
+#: ../../language/error_codes/E3016.md:39
+msgid "Or,"
+msgstr "或者，"
+
+#: ../../language/error_codes/E0012.md:51
+msgid ""
+"fn main {\n"
+"  match Some(1) {\n"
+"    None => println(\"_\")\n"
+"    Some(a) => println(\"Some(\\{a})\")\n"
+"  }\n"
 "}\n"
 msgstr ""
 
