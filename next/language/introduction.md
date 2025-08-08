@@ -79,6 +79,39 @@ It is recommended to name them with snake_case.
 Constants, types should start with uppercase letters `A-Z` and can contain letters, numbers, underscore, and other non-ascii unicode chars.
 It is recommended to name them with PascalCase or SCREAMING_SNAKE_CASE.
 
+### Keywords
+
+The following are the keywords and should not be used:
+
+```json
+[
+  "as", "else", "extern", "fn", "fnalias", "if", "let", "const", "match", "using",
+  "mut", "type", "typealias", "struct", "enum", "trait", "traitalias", "derive",
+  "while", "break", "continue", "import", "return", "throw", "raise", "try", "catch",
+  "pub", "priv", "readonly", "true", "false", "_", "test", "loop", "for", "in", "impl",
+  "with", "guard", "async", "is", "suberror", "and", "letrec", "enumview", "noraise",
+  "defer",
+]
+```
+
+### Reserved Keywords
+
+The following are the reserved keywords. Using them would introduce a warning.
+They might be turned into keywords in the future.
+
+```json
+[
+  "module", "move", "ref", "static", "super", "unsafe", "use", "where", "await",
+  "dyn", "abstract", "do", "final", "macro", "override", "typeof", "virtual", "yield",
+  "local", "method", "alias", "assert", "package", "recur", "using", "enumview",
+  "isnot", "define", "downcast", "inherit", "member", "namespace", "static", "upcast",
+  "use", "void", "lazy", "include", "mixin", "protected", "sealed", "constructor",
+  "atomic", "volatile", "anyframe", "anytype", "asm", "await", "comptime", "errdefer",
+  "export", "opaque", "orelse", "resume", "threadlocal", "unreachable", "dynclass",
+  "dynobj", "dynrec", "var", "finally", "noasync",
+]
+```
+
 ## Program entrance
 
 ### `init` and `main`

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-07 15:34+0800\n"
+"POT-Creation-Date: 2025-08-08 14:06+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2019,8 +2019,7 @@ msgstr ""
 #: ../../language/error_codes/E0027.md:8 ../../language/error_codes/E0028.md:5
 #: ../../language/error_codes/E0029.md:5 ../../language/error_codes/E0030.md:5
 #: ../../language/error_codes/E0031.md:7 ../../language/error_codes/E0032.md:5
-#: ../../language/error_codes/E0033.md:10
-#: ../../language/error_codes/E0035.md:29
+#: ../../language/error_codes/E0033.md:10 ../../language/error_codes/E0035.md:8
 #: ../../language/error_codes/E0036.md:13 ../../language/error_codes/E0037.md:5
 #: ../../language/error_codes/E0038.md:13 ../../language/error_codes/E0040.md:7
 #: ../../language/error_codes/E0041.md:9 ../../language/error_codes/E0042.md:8
@@ -2142,7 +2141,7 @@ msgstr ""
 #: ../../language/error_codes/E0031.md:33
 #: ../../language/error_codes/E0032.md:30
 #: ../../language/error_codes/E0033.md:51
-#: ../../language/error_codes/E0035.md:37
+#: ../../language/error_codes/E0035.md:16
 #: ../../language/error_codes/E0036.md:29
 #: ../../language/error_codes/E0037.md:24
 #: ../../language/error_codes/E0038.md:28
@@ -2491,10 +2490,7 @@ msgid ""
 " destruct the type. Therefore, this warning is only shown if the type has"
 " abstract or private visibility, and is not constructed nor consumed by "
 "any other part of this package."
-msgstr ""
-"此类型未被代码的任何其他部分使用，这意味着它既没有被构造也没有被消费，并且由于可见性，其他类型也无法构造或消费它。"
-"类型声明默认为抽象类型，这意味着它对此包的用户是公开可见的，但他们无法构造或解析该类型。"
-"因此，仅当类型具有抽象或私有可见性，并且没有被此包的任何其他部分构造或消费时，才会显示此警告。"
+msgstr "此类型未被代码的任何其他部分使用，这意味着它既没有被构造也没有被消费，并且由于可见性，其他类型也无法构造或消费它。类型声明默认为抽象类型，这意味着它对此包的用户是公开可见的，但他们无法构造或解析该类型。因此，仅当类型具有抽象或私有可见性，并且没有被此包的任何其他部分构造或消费时，才会显示此警告。"
 
 #: ../../language/error_codes/E0003.md:13
 msgid ""
@@ -2581,8 +2577,9 @@ msgid ""
 "intended to be used by others anyway. Likewise, it is not emitted inside "
 "[whitebox test and blackbox test](/language/tests.md#blackbox-tests-and-"
 "whitebox-tests) files."
-msgstr "这个警告不会在 `main` 包中发出，因为它们通常不打算被其他人使用。"
-"同样地，它也不会在 [白盒测试和黑盒测试](/language/tests.md#blackbox-tests-and-whitebox-tests) 文件中发出。"
+msgstr ""
+"这个警告不会在 `main` 包中发出，因为它们通常不打算被其他人使用。同样地，它也不会在 "
+"[白盒测试和黑盒测试](/language/tests.md#blackbox-tests-and-whitebox-tests) 文件中发出。"
 
 #: ../../language/error_codes/E0004.md:22
 msgid ""
@@ -2647,8 +2644,9 @@ msgid ""
 "it impossible for the type checker to infer the type of the unused "
 "variable, leading to [E0013](./E0013.md). This might lead to cryptic "
 "error messages, even unexpected runtime behavior."
-msgstr "在某些情况下，使用带有未使用的泛型类型变量的类型将使类型检查器无法推断未使用变量的类型，从而导致 [E0013](./E0013.md)。"
-"这可能导致难以理解的错误信息，甚至是意想不到的运行时行为。"
+msgstr ""
+"在某些情况下，使用带有未使用的泛型类型变量的类型将使类型检查器无法推断未使用变量的类型，从而导致 "
+"[E0013](./E0013.md)。这可能导致难以理解的错误信息，甚至是意想不到的运行时行为。"
 
 #: ../../language/error_codes/E0005.md:12
 msgid ""
@@ -4457,94 +4455,12 @@ msgid ""
 msgstr "这个词被保留以备将来使用。请使用其他名称。"
 
 #: ../../language/error_codes/E0035.md:5
-msgid "Here is a list of reserved name:"
-msgstr "这里有一个保留名称的列表："
-
-#: ../../language/error_codes/E0035.md:7
-msgid "`module`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:8
-msgid "`move`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:9
-msgid "`ref`"
-msgstr ""
+msgid ""
+"Check [here](/language/introduction.md#reserved-keywords) for the full "
+"list of reserved keywords"
+msgstr "在 [这里](/language/introduction.md#reserved-keywords) 查看保留关键字的完整列表"
 
 #: ../../language/error_codes/E0035.md:10
-msgid "`static`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:11
-msgid "`super`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:12
-msgid "`unsafe`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:13
-msgid "`use`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:14
-msgid "`where`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:15
-msgid "`await`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:16
-msgid "`dyn`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:17
-msgid "`abstract`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:18
-msgid "`do`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:19
-msgid "`final`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:20
-msgid "`macro`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:21
-msgid "`override`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:22
-msgid "`typeof`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:23
-msgid "`virtual`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:24
-msgid "`yield`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:25
-msgid "`local`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:26
-msgid "`method`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:27
-msgid "`alias`"
-msgstr ""
-
-#: ../../language/error_codes/E0035.md:31
 msgid ""
 "fn module() -> Int { // Warning: The word `module` is reserved for "
 "possible future use. Please consider using another name.\n"
@@ -4552,7 +4468,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0035.md:39
+#: ../../language/error_codes/E0035.md:18
 msgid ""
 "fn module_() -> Int {\n"
 "  3\n"
@@ -18010,28 +17926,84 @@ msgstr ""
 " 或 SCREAMING_SNAKE_CASE 命名。"
 
 #: ../../language/introduction.md:82
+msgid "Keywords"
+msgstr "关键字"
+
+#: ../../language/introduction.md:84
+msgid "The following are the keywords and should not be used:"
+msgstr "以下是关键字，不应使用："
+
+#: ../../language/introduction.md:86
+msgid ""
+"[\n"
+"  \"as\", \"else\", \"extern\", \"fn\", \"fnalias\", \"if\", \"let\", "
+"\"const\", \"match\", \"using\",\n"
+"  \"mut\", \"type\", \"typealias\", \"struct\", \"enum\", \"trait\", "
+"\"traitalias\", \"derive\",\n"
+"  \"while\", \"break\", \"continue\", \"import\", \"return\", \"throw\", "
+"\"raise\", \"try\", \"catch\",\n"
+"  \"pub\", \"priv\", \"readonly\", \"true\", \"false\", \"_\", \"test\", "
+"\"loop\", \"for\", \"in\", \"impl\",\n"
+"  \"with\", \"guard\", \"async\", \"is\", \"suberror\", \"and\", "
+"\"letrec\", \"enumview\", \"noraise\",\n"
+"  \"defer\",\n"
+"]\n"
+msgstr ""
+
+#: ../../language/introduction.md:97
+msgid "Reserved Keywords"
+msgstr "保留关键字"
+
+#: ../../language/introduction.md:99
+msgid ""
+"The following are the reserved keywords. Using them would introduce a "
+"warning. They might be turned into keywords in the future."
+msgstr "以下是保留关键字。使用它们会引入警告。它们可能在将来变成关键字。"
+
+#: ../../language/introduction.md:102
+msgid ""
+"[\n"
+"  \"module\", \"move\", \"ref\", \"static\", \"super\", \"unsafe\", "
+"\"use\", \"where\", \"await\",\n"
+"  \"dyn\", \"abstract\", \"do\", \"final\", \"macro\", \"override\", "
+"\"typeof\", \"virtual\", \"yield\",\n"
+"  \"local\", \"method\", \"alias\", \"assert\", \"package\", \"recur\", "
+"\"using\", \"enumview\",\n"
+"  \"isnot\", \"define\", \"downcast\", \"inherit\", \"member\", "
+"\"namespace\", \"static\", \"upcast\",\n"
+"  \"use\", \"void\", \"lazy\", \"include\", \"mixin\", \"protected\", "
+"\"sealed\", \"constructor\",\n"
+"  \"atomic\", \"volatile\", \"anyframe\", \"anytype\", \"asm\", "
+"\"await\", \"comptime\", \"errdefer\",\n"
+"  \"export\", \"opaque\", \"orelse\", \"resume\", \"threadlocal\", "
+"\"unreachable\", \"dynclass\",\n"
+"  \"dynobj\", \"dynrec\", \"var\", \"finally\", \"noasync\",\n"
+"]\n"
+msgstr ""
+
+#: ../../language/introduction.md:115
 msgid "Program entrance"
 msgstr "程序入口"
 
-#: ../../language/introduction.md:84
+#: ../../language/introduction.md:117
 msgid "`init` and `main`"
 msgstr "`init` 和 `main`"
 
-#: ../../language/introduction.md:85
+#: ../../language/introduction.md:118
 msgid ""
 "There is a specialized function called `init` function. The `init` "
 "function is special:"
 msgstr "有一个专门的函数称为 `init` 函数。`init` 函数是特殊的："
 
-#: ../../language/introduction.md:87
+#: ../../language/introduction.md:120
 msgid "It has no parameter list nor return type."
 msgstr "它没有参数列表也没有返回类型。"
 
-#: ../../language/introduction.md:88
+#: ../../language/introduction.md:121
 msgid "There can be multiple `init` functions in the same package."
 msgstr "同一个包中可以有多个 `init` 函数。"
 
-#: ../../language/introduction.md:89
+#: ../../language/introduction.md:122
 msgid ""
 "An `init` function can't be explicitly called or referred to by other "
 "functions.  Instead, all `init` functions will be implicitly called when "
@@ -18039,7 +18011,7 @@ msgid ""
 "of statements."
 msgstr "`init` 函数不能被显式调用或被其他函数引用。相反，所有 `init` 函数将在初始化包时隐式调用。因此，`init` 函数应该只包含语句。"
 
-#: ../../language/introduction.md:92
+#: ../../language/introduction.md:125
 msgid ""
 "fn init {\n"
 "  let x = 1\n"
@@ -18047,18 +18019,18 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../language/introduction.md:100
+#: ../../language/introduction.md:133
 msgid ""
 "There is another specialized function called `main` function. The `main` "
 "function is the main entrance of the program, and it will be executed "
 "after the initialization stage."
 msgstr "还有另一个专门的函数称为 `main` 函数。`main` 函数是程序的主入口，它将在初始化阶段之后执行。"
 
-#: ../../language/introduction.md:102
+#: ../../language/introduction.md:135
 msgid "Same as the `init` function, it has no parameter list nor return type."
 msgstr "与 `init` 函数相同，它没有参数列表也没有返回类型。"
 
-#: ../../language/introduction.md:104
+#: ../../language/introduction.md:137
 msgid ""
 "fn main {\n"
 "  let x = 2\n"
@@ -18066,44 +18038,44 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../language/introduction.md:112
+#: ../../language/introduction.md:145
 msgid "The previous two code snippets will print the following at runtime:"
 msgstr "前两个代码片段将在运行时打印以下内容："
 
-#: ../../language/introduction.md:114
+#: ../../language/introduction.md:147
 msgid ""
 "1\n"
 "2\n"
 msgstr ""
 
-#: ../../language/introduction.md:119
+#: ../../language/introduction.md:152
 msgid ""
 "Only packages that are `main` packages can define such `main` function. "
 "Check out [build system tutorial](/toolchain/moon/tutorial) for detail."
 msgstr "只有 `main` 包的包才能定义这样的 `main` 函数。查看 [构建系统教程](/toolchain/moon/tutorial) 了解详情。"
 
-#: ../../language/introduction.md:121
+#: ../../language/introduction.md:154
 msgid "moon.pkg.json"
 msgstr ""
 
-#: ../../language/introduction.md:121
+#: ../../language/introduction.md:154
 msgid ""
 "{\n"
 "  \"is-main\": true\n"
 "}"
 msgstr ""
 
-#: ../../language/introduction.md:126
+#: ../../language/introduction.md:159
 msgid "`test`"
 msgstr ""
 
-#: ../../language/introduction.md:128
+#: ../../language/introduction.md:161
 msgid ""
 "There's also a top-level structure called `test` block. A `test` block "
 "defines inline tests, such as:"
 msgstr "还有一个称为 `test` 块的顶级结构。`test` 块定义内联测试，例如："
 
-#: ../../language/introduction.md:130 ../../language/tests.md:11
+#: ../../language/introduction.md:163 ../../language/tests.md:11
 msgid ""
 "test \"test_name\" {\n"
 "  assert_eq(1 + 1, 2)\n"
@@ -18112,7 +18084,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/introduction.md:136
+#: ../../language/introduction.md:169
 msgid ""
 "The following contents will use `test` block and `main` function to "
 "demonstrate the execution result, and we assume that all the `test` "
@@ -20033,4 +20005,70 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
+
+#~ msgid "Here is a list of reserved name:"
+#~ msgstr "这里有一个保留名称的列表："
+
+#~ msgid "`module`"
+#~ msgstr ""
+
+#~ msgid "`move`"
+#~ msgstr ""
+
+#~ msgid "`ref`"
+#~ msgstr ""
+
+#~ msgid "`static`"
+#~ msgstr ""
+
+#~ msgid "`super`"
+#~ msgstr ""
+
+#~ msgid "`unsafe`"
+#~ msgstr ""
+
+#~ msgid "`use`"
+#~ msgstr ""
+
+#~ msgid "`where`"
+#~ msgstr ""
+
+#~ msgid "`await`"
+#~ msgstr ""
+
+#~ msgid "`dyn`"
+#~ msgstr ""
+
+#~ msgid "`abstract`"
+#~ msgstr ""
+
+#~ msgid "`do`"
+#~ msgstr ""
+
+#~ msgid "`final`"
+#~ msgstr ""
+
+#~ msgid "`macro`"
+#~ msgstr ""
+
+#~ msgid "`override`"
+#~ msgstr ""
+
+#~ msgid "`typeof`"
+#~ msgstr ""
+
+#~ msgid "`virtual`"
+#~ msgstr ""
+
+#~ msgid "`yield`"
+#~ msgstr ""
+
+#~ msgid "`local`"
+#~ msgstr ""
+
+#~ msgid "`method`"
+#~ msgstr ""
+
+#~ msgid "`alias`"
+#~ msgstr ""
 
