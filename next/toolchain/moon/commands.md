@@ -2,6 +2,10 @@
 
 This document contains the help content for the `moon` command-line program.
 
+```{hint}
+For the up-to-date manual, please check out [moon's repository](https://github.com/moonbitlang/moon/blob/main/docs/manual/src/commands.md)
+```
+
 **Command Overview:**
 
 * [`moon`↴](#moon)
@@ -25,6 +29,7 @@ This document contains the help content for the `moon` command-line program.
 * [`moon package`↴](#moon-package)
 * [`moon update`↴](#moon-update)
 * [`moon coverage`↴](#moon-coverage)
+* [`moon coverage analyze`↴](#moon-coverage-analyze)
 * [`moon coverage report`↴](#moon-coverage-report)
 * [`moon coverage clean`↴](#moon-coverage-clean)
 * [`moon generate-build-matrix`↴](#moon-generate-build-matrix)
@@ -106,7 +111,6 @@ Build the current package
 
   Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`
 
-* `--serial` — Handle the selected targets sequentially
 * `--enable-coverage` — Enable coverage instrumentation
 * `--sort-input` — Sort input files
 * `--output-wat` — Output WAT instead of WASM
@@ -115,6 +119,12 @@ Build the current package
 * `--warn-list <WARN_LIST>` — Warn list config
 * `--alert-list <ALERT_LIST>` — Alert list config
 * `-j`, `--jobs <JOBS>` — Set the max number of jobs to run in parallel
+* `--render-no-loc <MIN_LEVEL>` — Render no-location diagnostics starting from a certain level
+
+  Default value: `error`
+
+  Possible values: `info`, `warn`, `error`
+
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `-w`, `--watch` — Monitor the file system and automatically build artifacts
 
@@ -124,11 +134,11 @@ Build the current package
 
 Check the current package, but don't build object files
 
-**Usage:** `moon check [OPTIONS] [PACKAGE_PATH]`
+**Usage:** `moon check [OPTIONS] [SINGLE_FILE]`
 
 **Arguments:**
 
-* `<PACKAGE_PATH>` — The package(and it's deps) to check
+* `<SINGLE_FILE>` — Check single file (.mbt or .mbt.md)
 
 **Options:**
 
@@ -142,7 +152,6 @@ Check the current package, but don't build object files
 
   Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`
 
-* `--serial` — Handle the selected targets sequentially
 * `--enable-coverage` — Enable coverage instrumentation
 * `--sort-input` — Sort input files
 * `--output-wat` — Output WAT instead of WASM
@@ -151,9 +160,16 @@ Check the current package, but don't build object files
 * `--warn-list <WARN_LIST>` — Warn list config
 * `--alert-list <ALERT_LIST>` — Alert list config
 * `-j`, `--jobs <JOBS>` — Set the max number of jobs to run in parallel
+* `--render-no-loc <MIN_LEVEL>` — Render no-location diagnostics starting from a certain level
+
+  Default value: `error`
+
+  Possible values: `info`, `warn`, `error`
+
 * `--output-json` — Output in json format
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `-w`, `--watch` — Monitor the file system and automatically check files
+* `-p`, `--package-path <PACKAGE_PATH>` — The package(and it's deps) to check
 * `--patch-file <PATCH_FILE>` — The patch file to check, Only valid when checking specified package
 * `--no-mi` — Whether to skip the mi generation, Only valid when checking specified package
 * `--explain` — Whether to explain the error code with details
@@ -183,7 +199,6 @@ Run a main package
 
   Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`
 
-* `--serial` — Handle the selected targets sequentially
 * `--enable-coverage` — Enable coverage instrumentation
 * `--sort-input` — Sort input files
 * `--output-wat` — Output WAT instead of WASM
@@ -192,6 +207,12 @@ Run a main package
 * `--warn-list <WARN_LIST>` — Warn list config
 * `--alert-list <ALERT_LIST>` — Alert list config
 * `-j`, `--jobs <JOBS>` — Set the max number of jobs to run in parallel
+* `--render-no-loc <MIN_LEVEL>` — Render no-location diagnostics starting from a certain level
+
+  Default value: `error`
+
+  Possible values: `info`, `warn`, `error`
+
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `--build-only` — Only build, do not run the code
 
@@ -201,7 +222,11 @@ Run a main package
 
 Test the current package
 
-**Usage:** `moon test [OPTIONS]`
+**Usage:** `moon test [OPTIONS] [SINGLE_FILE]`
+
+**Arguments:**
+
+* `<SINGLE_FILE>` — Run test in single file (.mbt or .mbt.md)
 
 **Options:**
 
@@ -215,7 +240,6 @@ Test the current package
 
   Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`
 
-* `--serial` — Handle the selected targets sequentially
 * `--enable-coverage` — Enable coverage instrumentation
 * `--sort-input` — Sort input files
 * `--output-wat` — Output WAT instead of WASM
@@ -224,9 +248,16 @@ Test the current package
 * `--warn-list <WARN_LIST>` — Warn list config
 * `--alert-list <ALERT_LIST>` — Alert list config
 * `-j`, `--jobs <JOBS>` — Set the max number of jobs to run in parallel
+* `--render-no-loc <MIN_LEVEL>` — Render no-location diagnostics starting from a certain level
+
+  Default value: `error`
+
+  Possible values: `info`, `warn`, `error`
+
 * `-p`, `--package <PACKAGE>` — Run test in the specified package
 * `-f`, `--file <FILE>` — Run test in the specified file. Only valid when `--package` is also specified
 * `-i`, `--index <INDEX>` — Run only the index-th test in the file. Only valid when `--file` is also specified
+* `--doc-index <DOC_INDEX>` — Run only the index-th doc test in the file. Only valid when `--file` is also specified
 * `-u`, `--update` — Update the test snapshot
 * `-l`, `--limit <LIMIT>` — Limit of expect test update passes to run, in order to avoid infinite loops
 
@@ -237,12 +268,8 @@ Test the current package
 * `--test-failure-json` — Print failure message in JSON format
 * `--patch-file <PATCH_FILE>` — Path to the patch file
 * `--doc` — Run doc test
-* `--md` — Run test in markdown file
 
-If the target is `native`, the `--release` option is not used, and no `stub-cc*`
-options are specified in `moon.pkg.json` for any dependencies,
-the fast-debugging-test feature will be enabled.
-It will attempt to use `tcc -run` to execute the tests.
+
 
 ## `moon clean`
 
@@ -328,7 +355,6 @@ Run benchmarks in the current package
 
   Possible values: `wasm`, `wasm-gc`, `js`, `native`, `llvm`, `all`
 
-* `--serial` — Handle the selected targets sequentially
 * `--enable-coverage` — Enable coverage instrumentation
 * `--sort-input` — Sort input files
 * `--output-wat` — Output WAT instead of WASM
@@ -337,6 +363,12 @@ Run benchmarks in the current package
 * `--warn-list <WARN_LIST>` — Warn list config
 * `--alert-list <ALERT_LIST>` — Alert list config
 * `-j`, `--jobs <JOBS>` — Set the max number of jobs to run in parallel
+* `--render-no-loc <MIN_LEVEL>` — Render no-location diagnostics starting from a certain level
+
+  Default value: `error`
+
+  Possible values: `info`, `warn`, `error`
+
 * `-p`, `--package <PACKAGE>` — Run test in the specified package
 * `-f`, `--file <FILE>` — Run test in the specified file. Only valid when `--package` is also specified
 * `-i`, `--index <INDEX>` — Run only the index-th test in the file. Only valid when `--file` is also specified
@@ -447,8 +479,25 @@ Code coverage utilities
 
 **Subcommands:**
 
+* `analyze` — Run test with instrumentation and report coverage
 * `report` — Generate code coverage report
 * `clean` — Clean up coverage artifacts
+
+
+
+## `moon coverage analyze`
+
+Run test with instrumentation and report coverage
+
+**Usage:** `moon coverage analyze [OPTIONS] [-- <EXTRA_FLAGS>...]`
+
+**Arguments:**
+
+* `<EXTRA_FLAGS>` — Extra flags passed directly to `moon_cove_report`
+
+**Options:**
+
+* `-p`, `--package <PACKAGE>` — Analyze coverage for a specific package
 
 
 
