@@ -1,6 +1,10 @@
 # Module Configuration
 
-moon uses the `moon.mod.json` file to identify and describe a module. For full JSON schema, please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json).
+moon uses the `moon.mod.json` file to identify and describe a module. 
+
+```{hint}
+For the most up-to-date and complete JSON schema, please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json).
+```
 
 ## Name
 
@@ -38,7 +42,7 @@ This field is optional. For modules published to [mooncakes.io](https://mooncake
 }
 ```
 
-## Deps
+## Dependency Management
 
 The `deps` field is used to specify the dependencies of the module.
 
@@ -53,15 +57,30 @@ It is automatically managed by commands like `moon add` and `moon remove`.
 }
 ```
 
-## README
+You may also specify a local dependency, such as:
+
+```json
+{
+  "name": "username/hello",
+  "deps": {
+    "username/other": {
+      "path": "../other"
+    }
+  }
+}
+```
+
+## Meta Information
+
+### README
 
 The `readme` field is used to specify the path to the module's README file.
 
-## Repository
+### Repository
 
 The `repository` field is used to specify the URL of the module's repository.
 
-## License
+### License
 
 The `license` field is used to specify the license of the module. The license type must comply with the [SPDX License List](https://spdx.org/licenses/).
 
@@ -71,7 +90,7 @@ The `license` field is used to specify the license of the module. The license ty
 }
 ```
 
-## Keywords
+### Keywords
 
 The `keywords` field is used to specify the keywords for the module.
 
@@ -81,13 +100,42 @@ The `keywords` field is used to specify the keywords for the module.
 }
 ```
 
-## Description
+### Description
 
 The `description` field is used to specify the description of the module.
 
 ```json
 {
   "description": "This is a description of the module."
+}
+```
+
+## Include and Exclude
+
+The `include` and `exclude` fields are used to include or exclude specific directories or files during publishing process.
+
+It follows the gitignore syntax, and include follows the exclude. 
+For example, the following configuration will include the `build/assets` 
+but exclude anything else in the `build` directory.
+
+```json
+{
+  "exclude": ["build"],
+  "include": ["build/assets"]
+}
+```
+
+You may use [`moon package --list`](commands#moon-package) to verify if the packaged result is expected.
+
+## Preferred Target
+
+The `preferred-target` field allows the `moon` and the language server to know which target
+should be used as the default target, avoiding the necessity to write `--target`
+when developing a project targeting other backends than Wasm GC.
+
+```json
+{
+  "preferred-target": "js"
 }
 ```
 
