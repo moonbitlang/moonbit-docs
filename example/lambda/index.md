@@ -145,7 +145,7 @@ Then we write a helper function to find the corresponding `depth` based on a spe
 
 ```moonbit
 // Find the depth corresponding to the first varname in the environment
-fn find(map : @list.T[Index], varname : String) -> Result[Int, String] {
+fn find(map : @list.List[Index], varname : String) -> Result[Int, String] {
   match map {
     Empty => Err(varname)
     More(i, tail=rest) =>
@@ -166,7 +166,7 @@ Now we can complete the `bruijn()` function.
 - `App` succeeds when both sub-items can be converted; otherwise, it returns an `Err`.
 
 ```moonbit
-fn go(m : @list.T[Index], term : Term) -> Result[TermDBI, String] {
+fn go(m : @list.List[Index], term : Term) -> Result[TermDBI, String] {
   match term {
     Var(name) => {
       let idx = find(m, name)
