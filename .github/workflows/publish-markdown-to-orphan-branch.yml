@@ -1,0 +1,119 @@
+name: Build and Publish Sphinx to Markdown
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch full history for orphan branch creation
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('next/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        cd next
+        pip install -r requirements.txt
+    
+    - name: Build Sphinx documentation to markdown
+      run: |
+        cd next
+        make markdown
+        
+    - name: Prepare markdown output
+      run: |
+        # Create a temporary directory for the output
+        mkdir -p /tmp/markdown-output
+        
+        # Copy the built markdown files
+        if [ -d "next/_build/markdown" ]; then
+          cp -r next/_build/markdown/* /tmp/markdown-output/
+        else
+          echo "Error: Markdown build directory not found"
+          exit 1
+        fi
+        
+        # Add a README to explain the branch purpose
+        cat > /tmp/markdown-output/README.md << 'EOF'
+        # MoonBit Documentation (Markdown Build)
+        
+        This branch contains the automatically generated markdown files from the Sphinx documentation.
+        
+        **Do not edit files in this branch directly** - they will be overwritten on the next build.
+        
+        Source: https://github.com/moonbitlang/moonbit-docs
+        Built from commit: ${{ github.sha }}
+        Built at: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        EOF
+    
+    - name: Configure Git
+      run: |
+        git config --global user.name 'GitHub Actions Bot'
+        git config --global user.email 'actions@github.com'
+    
+    - name: Create and push to orphan branch
+      run: |
+        # Create a new orphan branch
+        BRANCH_NAME="markdown-build"
+        
+        # Check if remote branch exists
+        if git ls-remote --heads origin $BRANCH_NAME | grep -q $BRANCH_NAME; then
+          # Branch exists, check it out and clean it
+          git fetch origin $BRANCH_NAME
+          git checkout -B $BRANCH_NAME origin/$BRANCH_NAME
+          # Remove all existing files
+          git rm -rf . || true
+        else
+          # Branch doesn't exist, create new orphan branch
+          git checkout --orphan $BRANCH_NAME
+          # Remove all files from the working directory
+          git rm -rf . || true
+        fi
+        
+        # Copy our markdown files
+        cp -r /tmp/markdown-output/* .
+        
+        # Add all files
+        git add .
+        
+        # Check if there are any changes to commit
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          # Commit
+          git commit -m "Auto-build markdown from commit ${{ github.sha }}
+        
+        Built at: $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+        Source commit: ${{ github.sha }}
+        Workflow run: ${{ github.run_id }}"
+          
+          # Push to remote
+          git push origin $BRANCH_NAME
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Summary
+      run: |
+        echo "✅ Successfully built and published Sphinx documentation to markdown"
+        echo "📝 Markdown files are available in the 'markdown-build' branch"
+        echo "🔗 View at: https://github.com/${{ github.repository }}/tree/markdown-build"
