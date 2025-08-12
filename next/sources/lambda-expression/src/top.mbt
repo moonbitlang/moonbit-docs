@@ -30,7 +30,7 @@ impl Show for TermDBI with output(self, logger) -> Unit {
 ///| https://bor0.wordpress.com/2019/03/19/writing-a-lambda-calculus-evaluator-in-haskell/
 fn Term::bruijn(self : Self) -> Result[TermDBI, String] {
   // Find the depth corresponding to the first varname in the environment
-  fn find(map : @list.T[Index], varname : String) -> Result[Int, String] {
+  fn find(map : @list.List[Index], varname : String) -> Result[Int, String] {
     match map {
       Empty => Err(varname)
       More(i, tail=rest) =>
@@ -42,7 +42,7 @@ fn Term::bruijn(self : Self) -> Result[TermDBI, String] {
     }
   }
 
-  fn go(m : @list.T[Index], term : Term) -> Result[TermDBI, String] {
+  fn go(m : @list.List[Index], term : Term) -> Result[TermDBI, String] {
     match term {
       Var(name) => {
         let idx = find(m, name)

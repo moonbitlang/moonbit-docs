@@ -27,6 +27,9 @@ def main():
         if not dir_path.is_dir():
             continue
 
+        # Skip error codes; they should be handled with another script
+        if dir_path.name == "error_codes":
+            continue
         # Skip async for non-js backends
         if dir_path.name == "async" and args.backend != "js":
             continue
