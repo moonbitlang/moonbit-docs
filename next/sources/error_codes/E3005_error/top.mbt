@@ -1,0 +1,1 @@
+priv let value = 3 // Error: No 'priv' visibility for value.

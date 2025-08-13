@@ -1,0 +1,1 @@
+extern "C" fn f1() = "f1"

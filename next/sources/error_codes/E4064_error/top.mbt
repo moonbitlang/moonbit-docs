@@ -1,0 +1,3 @@
+test {
+  println('\uD800')
+}

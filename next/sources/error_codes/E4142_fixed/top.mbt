@@ -1,0 +1,1 @@
+let a : Int = 1 + 1 // These will be computed at initialization time.

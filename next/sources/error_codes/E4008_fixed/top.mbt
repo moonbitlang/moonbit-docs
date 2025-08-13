@@ -1,0 +1,1 @@
+extern "js" fn int_id(x: Int) -> Int = "(x) => x"

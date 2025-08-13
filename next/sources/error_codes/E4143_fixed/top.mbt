@@ -1,0 +1,1 @@
+let a : Array[Int] = [1, 2, 3]

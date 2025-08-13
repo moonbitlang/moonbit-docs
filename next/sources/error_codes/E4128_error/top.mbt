@@ -1,0 +1,1 @@
+typealias Wrap[T] = T // Error: Target of type alias must not be a type parameter.

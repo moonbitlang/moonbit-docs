@@ -1,0 +1,1 @@
+extern "C" fn f1() = "1" // Error: Invalid C function name in extern "C" declaration
