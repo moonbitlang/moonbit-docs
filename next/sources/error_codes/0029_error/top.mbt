@@ -1,3 +1,4 @@
-pub fn greeting() -> String {
-  "Hello, world!"
+///|
+fn main {
+
 }

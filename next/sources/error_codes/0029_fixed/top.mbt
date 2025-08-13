@@ -1,3 +1,4 @@
-{
-  "is-main": true
+///|
+fn main {
+
 }
