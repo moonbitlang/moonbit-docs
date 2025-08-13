@@ -3,6 +3,9 @@ enum Message {
 } derive(Show)
 
 fn perform[T](message : (T) -> Message, produce : () -> T) -> Message {
+  //
+  // Warning: The syntax fn f[..] for declaring polymorphic function is 
+  // deprecated. Use fn[..] f instead.
   message(produce())
 }
 
