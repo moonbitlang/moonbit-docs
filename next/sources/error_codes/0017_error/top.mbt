@@ -1,4 +1,7 @@
-fn main {
+///|
+test (ctx : @test.T) {
+  let println = ctx.writeln(_)
+  // start example
   let a : @string.View = "asdf"
   loop a {
     [_, .. d] => {
@@ -12,4 +15,6 @@ fn main {
     }
     [] => ()
   }
+  // end example
+  ctx.snapshot(filename="snapshot")
 }
