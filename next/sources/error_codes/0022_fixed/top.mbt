@@ -1,5 +1,4 @@
-fn main {
-  let value = 3
-  let s = { value, }
-  ignore(s)
+///|
+struct S {
+  value : Int
 }
