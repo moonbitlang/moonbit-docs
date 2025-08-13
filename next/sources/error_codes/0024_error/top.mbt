@@ -1,3 +1,4 @@
-fn greet() -> Unit! {
+///|
+fn greet() -> Unit raise {
   println("Hello, world!")
 }
