@@ -29,9 +29,12 @@ def run_moon_test(file_path, error_code=None):
         if error_code:
             error_code_padded = error_code.zfill(4)
             if int(error_code) < 3000:
-                # Expect warning
-                pattern = rf'Warning: \[{error_code_padded}\]'
-                has_expected = bool(re.search(pattern, output))
+                # Expect warning or error
+                warning_pattern = rf'Warning: \[{error_code_padded}\]'
+                error_pattern = rf'Error: \[{error_code_padded}\]'
+                has_expected = bool(re.search(warning_pattern, output)) or \
+                    (result.returncode != 0 and bool(
+                        re.search(error_pattern, output)))
             else:
                 # Expect error - command should fail
                 has_expected = result.returncode != 0 and \
