@@ -1,4 +1,5 @@
+///|
 struct Point {
-  x: Int
-  y: Int
+  x : Int
+  y : Int
 }
