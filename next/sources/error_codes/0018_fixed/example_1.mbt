@@ -3,10 +3,10 @@ test (ctx : @test.T) {
   let println = ctx.writeln(_)
   // start example
   let count = 2
-  loop count {
-    _..<0 => break
+  match count {
+    _..<0 => ()
     _ => println(count)
   }
   // end example
-  ctx.snapshot(filename="snapshot")
+  ctx.snapshot(filename="snapshot_1")
 }
