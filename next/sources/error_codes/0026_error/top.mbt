@@ -1,21 +1,21 @@
-type! E
+///|
+suberror E
 
-fn f() -> Unit!E {
+///|
+fn f() -> Unit raise E {
   raise E
 }
 
-fn g() -> Unit! {
-  try {
-    f!()
-  } catch! {
+///|
+fn g() -> Unit raise {
+  f() catch! {
     E => raise E
   }
 }
 
+///|
 fn main {
-  try {
-    g!()
-  } catch {
+  g() catch {
     _ => println("Error")
   }
 }
