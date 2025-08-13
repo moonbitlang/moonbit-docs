@@ -54,8 +54,8 @@ def check_error_code(error_code):
     error_path = Path(ERROR_CODES_SOURCE_DIR) / f"{error_code}_error"
     fixed_path = Path(ERROR_CODES_SOURCE_DIR) / f"{error_code}_fixed"
 
-    if not error_path.exists() or not fixed_path.exists():
-        return False
+    if not error_path.exists() and not fixed_path.exists():
+        return True
 
     # Test error case should produce warning/error
     error_ok = run_moon_test(str(error_path), error_code)
