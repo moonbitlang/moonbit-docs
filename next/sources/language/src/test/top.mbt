@@ -27,7 +27,7 @@ test "show snapshot test" {
 enum Rec {
   End
   Really_long_name_that_is_difficult_to_read(Rec)
-} derive(Show, ToJson(style="legacy"))
+} derive(Show, ToJson(style="flat"))
 
 test "json snapshot test" {
   let r = Really_long_name_that_is_difficult_to_read(
@@ -39,16 +39,13 @@ test "json snapshot test" {
     r,
     content="Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(End)))",
   )
-  @json.inspect(r, content={
-    "$tag": "Really_long_name_that_is_difficult_to_read",
-    "0": {
-      "$tag": "Really_long_name_that_is_difficult_to_read",
-      "0": {
-        "$tag": "Really_long_name_that_is_difficult_to_read",
-        "0": { "$tag": "End" },
-      },
-    },
-  })
+  @json.inspect(r, content=[
+    "Really_long_name_that_is_difficult_to_read",
+    [
+      "Really_long_name_that_is_difficult_to_read",
+      ["Really_long_name_that_is_difficult_to_read", "End"],
+    ],
+  ])
 }
 // end snapshot test 2
 
