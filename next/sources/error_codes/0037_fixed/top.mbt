@@ -1,10 +1,13 @@
+///|
 fn main {
-  let mut bytes = []
-  loop {
-    let bs = read()
-    if bs == [] {
-      break
+  let mut sum = 0
+  let input = [1, 2, 3]
+  loop input[:] {
+    [] => break
+    [head, .. tail] => {
+      sum += head
+      continue tail
     }
-    bytes = [..bytes, ..bs]
   }
+  println(sum)
 }

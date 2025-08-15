@@ -1,14 +1,13 @@
-fn read() -> BytesView {
-  ...
-}
-
+///|
 fn main {
-  let mut bytes = []
-  read~: loop read() {
+  let mut sum = 0
+  let input = [1, 2, 3]
+  read~: loop input[:] {
     [] => break
-    bs => {
-      bytes = [..bytes, ..bs]
-      continue read()
+    [head, .. tail] => {
+      sum += head
+      continue tail
     }
   }
+  println(sum)
 }
