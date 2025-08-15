@@ -14,6 +14,7 @@ ERROR_CODES_SOURCE_DIR = 'sources/error_codes'
 def run_moon_test(file_path, error_code=None):
     """Execute moon test command and return results"""
     try:
+        subprocess.run(['moon', 'clean', '-C', file_path],)
         result = subprocess.run(
             ['moon', 'test', '-C', file_path],
             capture_output=True,
