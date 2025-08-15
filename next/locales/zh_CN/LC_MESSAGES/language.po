@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-13 14:25+0800\n"
+"POT-Creation-Date: 2025-08-15 18:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2012,19 +2012,16 @@ msgstr ""
 #: ../../language/error_codes/E0012.md:7 ../../language/error_codes/E0013.md:18
 #: ../../language/error_codes/E0014.md:5 ../../language/error_codes/E0015.md:8
 #: ../../language/error_codes/E0017.md:8 ../../language/error_codes/E0018.md:12
-#: ../../language/error_codes/E0019.md:11
-#: ../../language/error_codes/E0020.md:30 ../../language/error_codes/E0021.md:5
+#: ../../language/error_codes/E0019.md:11 ../../language/error_codes/E0021.md:5
 #: ../../language/error_codes/E0022.md:8 ../../language/error_codes/E0023.md:5
-#: ../../language/error_codes/E0024.md:5 ../../language/error_codes/E0026.md:8
+#: ../../language/error_codes/E0024.md:5 ../../language/error_codes/E0026.md:12
 #: ../../language/error_codes/E0027.md:8 ../../language/error_codes/E0028.md:5
 #: ../../language/error_codes/E0029.md:5 ../../language/error_codes/E0030.md:5
 #: ../../language/error_codes/E0031.md:7 ../../language/error_codes/E0032.md:5
-#: ../../language/error_codes/E0033.md:10 ../../language/error_codes/E0035.md:8
-#: ../../language/error_codes/E0036.md:13 ../../language/error_codes/E0037.md:5
-#: ../../language/error_codes/E0038.md:13 ../../language/error_codes/E0040.md:7
-#: ../../language/error_codes/E0041.md:9 ../../language/error_codes/E0042.md:8
-#: ../../language/error_codes/E0043.md:8 ../../language/error_codes/E0044.md:7
-#: ../../language/error_codes/E0045.md:13
+#: ../../language/error_codes/E0035.md:8 ../../language/error_codes/E0036.md:13
+#: ../../language/error_codes/E0037.md:5 ../../language/error_codes/E0041.md:9
+#: ../../language/error_codes/E0042.md:8 ../../language/error_codes/E0043.md:8
+#: ../../language/error_codes/E0044.md:7 ../../language/error_codes/E0045.md:13
 #: ../../language/error_codes/E0046.md:10
 #: ../../language/error_codes/E2000.md:17 ../../language/error_codes/E3001.md:5
 #: ../../language/error_codes/E3002.md:5 ../../language/error_codes/E3003.md:5
@@ -2126,26 +2123,22 @@ msgstr ""
 #: ../../language/error_codes/E0014.md:11
 #: ../../language/error_codes/E0015.md:14
 #: ../../language/error_codes/E0017.md:26
-#: ../../language/error_codes/E0018.md:18
+#: ../../language/error_codes/E0018.md:27
 #: ../../language/error_codes/E0019.md:17
-#: ../../language/error_codes/E0020.md:36
 #: ../../language/error_codes/E0021.md:11
 #: ../../language/error_codes/E0022.md:14
 #: ../../language/error_codes/E0023.md:11
 #: ../../language/error_codes/E0024.md:11
-#: ../../language/error_codes/E0026.md:14
+#: ../../language/error_codes/E0026.md:18
 #: ../../language/error_codes/E0027.md:14
 #: ../../language/error_codes/E0028.md:11
-#: ../../language/error_codes/E0029.md:47
-#: ../../language/error_codes/E0030.md:19
-#: ../../language/error_codes/E0031.md:25
-#: ../../language/error_codes/E0032.md:22
-#: ../../language/error_codes/E0033.md:47
+#: ../../language/error_codes/E0029.md:24
+#: ../../language/error_codes/E0030.md:11
+#: ../../language/error_codes/E0031.md:21
+#: ../../language/error_codes/E0032.md:18
 #: ../../language/error_codes/E0035.md:14
 #: ../../language/error_codes/E0036.md:19
 #: ../../language/error_codes/E0037.md:11
-#: ../../language/error_codes/E0038.md:19
-#: ../../language/error_codes/E0040.md:13
 #: ../../language/error_codes/E0041.md:14
 #: ../../language/error_codes/E0042.md:13
 #: ../../language/error_codes/E0044.md:12
@@ -3148,9 +3141,11 @@ msgstr "警告消息通常包含有关缺失模式的提示。添加缺失的情
 
 #: ../../language/error_codes/E0011.md:16
 msgid ""
+"///|\n"
 "fn main {\n"
 "  match Some(1) {\n"
 "    Some(x) => println(x)\n"
+"    None => println(\"None\")\n"
 "  }\n"
 "}\n"
 msgstr ""
@@ -3161,11 +3156,13 @@ msgstr ""
 
 #: ../../language/error_codes/E0011.md:22
 msgid ""
-"fn main {\n"
+"///|\n"
+"/// Example using `is` syntax for conditional pattern matching\n"
+"pub fn example_with_is() -> Unit {\n"
 "  if Some(1) is Some(x) {\n"
 "    println(x)\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E0011.md:26
@@ -3174,12 +3171,14 @@ msgstr "或者，你可以添加一个通配符模式来捕获所有剩余的情
 
 #: ../../language/error_codes/E0011.md:28
 msgid ""
-"fn main {\n"
+"///|\n"
+"/// Example using wildcard pattern to catch all remaining cases\n"
+"pub fn example_with_wildcard() -> Unit {\n"
 "  match Some(1) {\n"
 "    Some(x) => println(x)\n"
 "    _ => println(\"Other\")\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E0012.md:1
@@ -3195,7 +3194,9 @@ msgstr "不可达代码。这通常发生在 `return` 语句后面跟着更多�
 
 #: ../../language/error_codes/E0012.md:9
 msgid ""
-"fn main {\n"
+"///|\n"
+"/// Example function showing unreachable code after an early return\n"
+"fn unreachable_early_return() -> Unit {\n"
 "  return\n"
 "  println(\"Hello, World!\") // Warning: Unreachable code\n"
 "}\n"
@@ -3203,7 +3204,9 @@ msgstr ""
 
 #: ../../language/error_codes/E0012.md:13
 msgid ""
-"fn main {\n"
+"///|\n"
+"// Example function showing unreachable pattern matching\n"
+"fn unreachable_match_pattern() -> Unit {\n"
 "  match Some(1) {\n"
 "    _ => println(\"_\")\n"
 "    Some(a) => println(\"Some(\\{a})\") // Warning: Unreachable code\n"
@@ -3217,11 +3220,11 @@ msgstr "移除不可达代码，或者如果你希望代码被执行，将其移
 
 #: ../../language/error_codes/E0012.md:21
 msgid ""
-"fn main {\n"
-"  println(\"Hello, World!\")\n"
+"///|\n"
+"fn example_execute_before_return() -> Unit {\n"
+"  println(\"Hello World!\")\n"
 "  return\n"
 "}\n"
-"\n"
 msgstr ""
 
 #: ../../language/error_codes/E0012.md:25
@@ -3233,7 +3236,8 @@ msgstr "你也可以交换模式匹配中分支的顺序。如果分支的顺序
 
 #: ../../language/error_codes/E0012.md:29
 msgid ""
-"fn main {\n"
+"///|\n"
+"fn example_proper_order() -> Unit {\n"
 "  match Some(1) {\n"
 "    Some(a) => println(\"Some(\\{a})\")\n"
 "    _ => println(\"_\")\n"
@@ -3249,7 +3253,8 @@ msgstr "或者，"
 
 #: ../../language/error_codes/E0012.md:35
 msgid ""
-"fn main {\n"
+"///|\n"
+"fn example_specific_pattern() -> Unit {\n"
 "  match Some(1) {\n"
 "    None => println(\"_\")\n"
 "    Some(a) => println(\"Some(\\{a})\")\n"
@@ -3350,20 +3355,24 @@ msgstr "为局部类型函数参数添加类型注释。例如："
 
 #: ../../language/error_codes/E0013.md:30
 msgid ""
+"///|\n"
 "pub fn f1() -> Unit {\n"
-"  fn f(x: Option[Int]) {\n"
+"  fn f(x : Int?) {\n"
 "    match x {\n"
 "      None => ()\n"
 "      Some(a) => println(a)\n"
 "    }\n"
 "  }\n"
+"\n"
 "  f(None)\n"
 "}\n"
 "\n"
+"///|\n"
 "pub fn f2() -> Unit {\n"
 "  fn f(x : Array[Int]) -> Int {\n"
 "    x.length()\n"
 "  }\n"
+"\n"
 "  println(f([]))\n"
 "}\n"
 msgstr ""
@@ -3376,10 +3385,11 @@ msgstr "显式指定变量或集合元素的类型。"
 
 #: ../../language/error_codes/E0013.md:36
 msgid ""
-"fn main {\n"
+"///|\n"
+"fn example_explicit_variable_types() -> Unit {\n"
 "  let a : Array[Int] = []\n"
 "  println(a.length())\n"
-"  let b : Option[Int] = None\n"
+"  let b : Int? = None\n"
 "  println(b.is_empty())\n"
 "}\n"
 msgstr ""
@@ -3390,10 +3400,11 @@ msgstr "或者，等效地，在集合创建时添加类型注释。"
 
 #: ../../language/error_codes/E0013.md:42
 msgid ""
-"fn main {\n"
+"///|\n"
+"fn example_annotated_collections() -> Unit {\n"
 "  let a = ([] : Array[Int])\n"
 "  println(a.length())\n"
-"  let b = (None : Option[Int])\n"
+"  let b = (None : Int?)\n"
 "  println(b.is_empty())\n"
 "}\n"
 msgstr ""
@@ -3404,16 +3415,18 @@ msgstr "通过使用提供足够的上下文。"
 
 #: ../../language/error_codes/E0013.md:48
 msgid ""
-"pub fn f1() -> Unit {\n"
+"///|\n"
+"fn example_context_usage() -> Unit {\n"
 "  fn f(x) {\n"
 "    match x {\n"
 "      None => ()\n"
 "      Some(a) => println(a + 1)\n"
-"//                       ^^^^^ through this usage, the compiler can infer"
-" the\n"
-"//                             type of `x` is `Option[Int]`.\n"
+"      //                ^^^^^ through this usage, the compiler can infer "
+"the\n"
+"      //                      type of `x` is `Option[Int]`.\n"
 "    }\n"
 "  }\n"
+"\n"
 "  f(None)\n"
 "}\n"
 msgstr ""
@@ -3432,9 +3445,10 @@ msgstr "类型名称应该大写。在 MoonBit 中，我们建议对所有类型
 
 #: ../../language/error_codes/E0014.md:7
 msgid ""
+"///|\n"
 "struct point {\n"
-"  x: Int\n"
-"  y: Int\n"
+"  x : Int\n"
+"  y : Int\n"
 "}\n"
 msgstr ""
 
@@ -3444,9 +3458,10 @@ msgstr "将类型名称大写。"
 
 #: ../../language/error_codes/E0014.md:15
 msgid ""
+"///|\n"
 "struct Point {\n"
-"  x: Int\n"
-"  y: Int\n"
+"  x : Int\n"
+"  y : Int\n"
 "}\n"
 msgstr ""
 
@@ -3479,6 +3494,7 @@ msgstr "移除变量声明中的 `mut` 关键字。"
 
 #: ../../language/error_codes/E0015.md:18
 msgid ""
+"///|\n"
 "fn main {\n"
 "  let x = [1, 2, 3]\n"
 "  x[0] = 0\n"
@@ -3508,10 +3524,14 @@ msgid ""
 "please use `as <id>` to bind it in the pattern. If it refers to the "
 "original value of the variable before entering the loop, please bind it "
 "to a new binder outside the loop."
-msgstr "标识符的使用存在歧义。如果它指的是循环变量，请使用 `as <id>` 在模式中绑定它。如果它指的是变量在进入循环前的原始值，请在循环外部将其绑定到一个新的绑定器。"
+msgstr ""
+"标识符的使用存在歧义。如果它指的是循环变量，请使用 `as <id>` "
+"在模式中绑定它。如果它指的是变量在进入循环前的原始值，请在循环外部将其绑定到一个新的绑定器。"
 
 #: ../../language/error_codes/E0017.md:10
+#, fuzzy
 msgid ""
+"///|\n"
 "fn main {\n"
 "  let a : @string.View = \"asdf\"\n"
 "  loop a {\n"
@@ -3531,14 +3551,21 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+"标识符的使用存在歧义。如果它指的是循环变量，请使用 `as <id>` "
+"在模式中绑定它。如果它指的是变量在进入循环前的原始值，请在循环外部将其绑定到一个新的绑定器。"
 
-#: ../../language/error_codes/E0017.md:14
+#: ../../language/error_codes/E0017.md:18
+#: ../../language/error_codes/E0017.md:39
+#: ../../language/error_codes/E0017.md:55
+#: ../../language/error_codes/E0018.md:22
+#: ../../language/error_codes/E0018.md:39
+#: ../../language/error_codes/E0018.md:54
 #, fuzzy
-msgid "The output is:"
-msgstr "输出如下所示（仅供参考）："
+msgid "Output:"
+msgstr "输出"
 
-#: ../../language/error_codes/E0017.md:16
-#: ../../language/error_codes/E0017.md:53
+#: ../../language/error_codes/E0017.md:20
+#: ../../language/error_codes/E0017.md:57
 msgid ""
 "asdf\n"
 "asdf\n"
@@ -3561,6 +3588,7 @@ msgstr "在许多情况下，您可能需要引用随循环迭代而变化的循
 
 #: ../../language/error_codes/E0017.md:31
 msgid ""
+"///|\n"
 "fn main {\n"
 "  let a : @string.View = \"asdf\"\n"
 "  loop a {\n"
@@ -3573,13 +3601,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0017.md:35
-#: ../../language/error_codes/E0017.md:51
-#, fuzzy
-msgid "Output:"
-msgstr "输出"
-
-#: ../../language/error_codes/E0017.md:37
+#: ../../language/error_codes/E0017.md:41
 msgid ""
 "asdf\n"
 "sdf\n"
@@ -3595,6 +3617,7 @@ msgstr "或者，如果你想在进入循环之前引用变量的原始值，可
 
 #: ../../language/error_codes/E0017.md:47
 msgid ""
+"///|\n"
 "fn main {\n"
 "  let a : @string.View = \"asdf\"\n"
 "  let b = a\n"
@@ -3633,47 +3656,60 @@ msgstr ""
 
 #: ../../language/error_codes/E0018.md:14
 msgid ""
-"fn countdown(n : Int) -> Int {\n"
-"  let mut count = n\n"
+"///|\n"
+"fn main {\n"
+"  let count = 2\n"
 "  loop count {\n"
 "    _..<0 => break\n"
-"    _ => count = count - 1\n"
+"    _ => println(count)\n"
 "  }\n"
-"  return count\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0018.md:20
+#: ../../language/error_codes/E0018.md:24
+#: ../../language/error_codes/E0018.md:56
+msgid "2\n"
+msgstr ""
+
+#: ../../language/error_codes/E0018.md:29
 msgid "Either add a `continue` statement if you need to restart the loop:"
 msgstr "如果你需要重新开始循环，添加一个 `continue` 语句："
 
-#: ../../language/error_codes/E0018.md:22
+#: ../../language/error_codes/E0018.md:31
 msgid ""
-"fn countdown(n : Int) -> Int {\n"
-"  let mut count = n\n"
+"///|\n"
+"fn main {\n"
+"  let count = 2\n"
 "  loop count {\n"
 "    _..<0 => break\n"
-"    _ => {\n"
+"    count => {\n"
+"      println(count)\n"
 "      continue count - 1\n"
 "    }\n"
 "  }\n"
-"  return count\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0018.md:26
+#: ../../language/error_codes/E0018.md:41 ../../language/fundamentals.md:811
+msgid ""
+"2\n"
+"1\n"
+"0\n"
+msgstr ""
+
+#: ../../language/error_codes/E0018.md:44
 msgid "Or use `if`/`match` you don't need to use `continue`:"
 msgstr "或者如果不需要使用 `continue`，使用 `if`/`match`："
 
-#: ../../language/error_codes/E0018.md:28
+#: ../../language/error_codes/E0018.md:46
 msgid ""
-"fn countdown(n : Int) -> Int {\n"
-"  let mut count = n\n"
+"///|\n"
+"fn main {\n"
+"  let count = 2\n"
 "  match count {\n"
 "    _..<0 => ()\n"
-"    _ => count = count - 1\n"
+"    _ => println(count)\n"
 "  }\n"
-"  return count\n"
 "}\n"
 msgstr ""
 
@@ -3713,68 +3749,14 @@ msgid "E0020"
 msgstr ""
 
 #: ../../language/error_codes/E0020.md:3
-msgid ""
-"Invalid pragma. The pragma either has invalid id, or has invalid "
-"properties."
-msgstr "无效的编译器指令。编译器指令的 id 不合法，或者有不合法的属性。"
+#, fuzzy
+msgid "Invalid pragma."
+msgstr "将要禁止的使用"
 
 #: ../../language/error_codes/E0020.md:5
-msgid "MoonBit compiler support the following pragmas:"
-msgstr "MoonBit 编译器支持以下编译器指令："
-
-#: ../../language/error_codes/E0020.md:7
 msgid ""
-"`@alert`. This pragma is used to emit a warning message. It has the "
-"following format: `@alert <category> \"message\"`. For example:"
-msgstr "`@alert`。这个编译器指令用于发出警告消息。它有以下格式：`@alert <category> \"message\"`。例如："
-
-#: ../../language/error_codes/E0020.md:10
-msgid ""
-"///|\n"
-"/// @alert deprecated \"This function is deprecated\"\n"
-"fn deprecated_function() {\n"
-"  // ...\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0020.md:18
-msgid ""
-"`@coverage.skip`. This pragma indicates that the following declaration "
-"should be skipped when calculating code coverage. It has the following "
-"format: `@coverage.skip`. For example:"
-msgstr "`@coverage.skip`。这个编译器指令表示在计算代码覆盖率时应跳过以下声明。它有以下格式：`@coverage.skip`。例如："
-
-#: ../../language/error_codes/E0020.md:22
-msgid ""
-"///|\n"
-"/// @coverage.skip\n"
-"fn function_to_skip() {\n"
-"  // ...\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0020.md:32
-msgid ""
-"///|\n"
-"/// @deprecated \"This function is deprecated\"\n"
-"fn f() {\n"
-"  // ...\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0020.md:38
-msgid ""
-"Depending on the pragma you want to use, you should either remove the "
-"invalid pragma, or replace it with a valid one."
-msgstr "根据你想使用的编译器指令，你应该移除无效的编译器指令，或者替换为有效的编译器指令。"
-
-#: ../../language/error_codes/E0020.md:41
-msgid ""
-"///|\n"
-"/// @alert deprecated \"This function is deprecated\"\n"
-"fn f() {\n"
-"  // ...\n"
-"}\n"
+"Currently, MoonBit won't emit this warning. MoonBit no longer supports "
+"pragma. Attributes should be used instead."
 msgstr ""
 
 #: ../../language/error_codes/E0021.md:1
@@ -3810,6 +3792,7 @@ msgstr "如果你想省略一些参数，在模式的末尾添加 `..`："
 
 #: ../../language/error_codes/E0021.md:15
 msgid ""
+"///|\n"
 "fn main {\n"
 "  match A(0, w=1, h=2) {\n"
 "    A(v, w~, ..) => {\n"
@@ -3820,12 +3803,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0021.md:19
+#: ../../language/error_codes/E0021.md:21
 msgid "Or, you can match all arguments:"
 msgstr "或者，你可以匹配所有参数："
 
-#: ../../language/error_codes/E0021.md:21
+#: ../../language/error_codes/E0021.md:23
 msgid ""
+"///|\n"
 "fn main {\n"
 "  match A(0, w=1, h=2) {\n"
 "    A(v, w~, h~) => {\n"
@@ -3853,10 +3837,12 @@ msgstr ""
 
 #: ../../language/error_codes/E0022.md:10
 msgid ""
+"///|\n"
 "struct S {\n"
 "  value : Int\n"
 "}\n"
 "\n"
+"///|\n"
 "fn main {\n"
 "  let value = 3\n"
 "  let s = { value }\n"
@@ -3873,6 +3859,7 @@ msgstr "如果你想使用结构体字面量构造结构体，你可以在结构
 
 #: ../../language/error_codes/E0022.md:20
 msgid ""
+"///|\n"
 "fn main {\n"
 "  let value = 3\n"
 "  let s = { value, }\n"
@@ -3880,14 +3867,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0022.md:24
+#: ../../language/error_codes/E0022.md:26
 msgid ""
 "If you are using it as a block expression, please remove the braces as it"
 " has only one expression and is equivalent to the expression `value`:"
 msgstr "如果你将其用作块表达式，请移除大括号，因为它只有一个表达式，等效于表达式 `value`："
 
-#: ../../language/error_codes/E0022.md:27
+#: ../../language/error_codes/E0022.md:29
 msgid ""
+"///|\n"
 "fn main {\n"
 "  let value = 3\n"
 "  let s = value\n"
@@ -3905,11 +3893,16 @@ msgstr "这个 try 表达式的主体从未引发任何错误。"
 
 #: ../../language/error_codes/E0023.md:7
 msgid ""
+"///|\n"
 "fn main {\n"
-"  try {\n"
-"    println(\"Hello, world!\")\n"
-"  } catch {\n"
+"  println(\"Hello, world!\") catch { // `try` is omitted here\n"
 "    _ => println(\"Error\")\n"
+"  }\n"
+"  try {\n"
+"    println(\"Hello, \")\n"
+"    println(\"world!\")\n"
+"  } catch {\n"
+"    _ => println(\"Error in try block\")\n"
 "  }\n"
 "}\n"
 msgstr ""
@@ -3920,6 +3913,7 @@ msgstr "移除 `try` 表达式："
 
 #: ../../language/error_codes/E0023.md:15
 msgid ""
+"///|\n"
 "fn main {\n"
 "  println(\"Hello, world!\")\n"
 "}\n"
@@ -3935,7 +3929,8 @@ msgstr "这个函数的错误类型从未被使用。"
 
 #: ../../language/error_codes/E0024.md:7
 msgid ""
-"fn greet() -> Unit! {\n"
+"///|\n"
+"fn greet() -> Unit raise {\n"
 "  println(\"Hello, world!\")\n"
 "}\n"
 msgstr ""
@@ -3946,6 +3941,7 @@ msgstr "移除错误类型"
 
 #: ../../language/error_codes/E0024.md:15
 msgid ""
+"///|\n"
 "fn greet() -> Unit {\n"
 "  println(\"Hello, world!\")\n"
 "}\n"
@@ -3955,7 +3951,11 @@ msgstr ""
 msgid "E0026"
 msgstr ""
 
-#: ../../language/error_codes/E0026.md:3
+#: ../../language/error_codes/E0026.md:4
+msgid "The syntax of `catch!` is deprecated."
+msgstr ""
+
+#: ../../language/error_codes/E0026.md:7
 msgid ""
 "The patterns are complete so the usage of `catch!` is useless. In "
 "MoonBit, when there is only one error type that will be raised in a try "
@@ -3965,55 +3965,55 @@ msgstr ""
 "模式匹配是完整的，因此使用 `catch!` 是无用的。在 MoonBit 中，当在 try "
 "块中只会引发一个错误类型时，编译器将知道这个错误类型是唯一会被捕获的。因此，在这种情况下，不需要使用 `catch!`。"
 
-#: ../../language/error_codes/E0026.md:10
+#: ../../language/error_codes/E0026.md:14
 msgid ""
-"type! E\n"
+"///|\n"
+"suberror E\n"
 "\n"
-"fn f() -> Unit!E {\n"
+"///|\n"
+"fn f() -> Unit raise E {\n"
 "  raise E\n"
 "}\n"
 "\n"
-"fn g() -> Unit! {\n"
-"  try {\n"
-"    f!()\n"
-"  } catch! {\n"
+"///|\n"
+"fn g() -> Unit raise {\n"
+"  f() catch! {\n"
 "    E => raise E\n"
 "  }\n"
 "}\n"
 "\n"
+"///|\n"
 "fn main {\n"
-"  try {\n"
-"    g!()\n"
-"  } catch {\n"
+"  g() catch {\n"
 "    _ => println(\"Error\")\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0026.md:16
+#: ../../language/error_codes/E0026.md:20
 msgid "Remove the `!` in the `catch!`:"
 msgstr "移除 `catch!` 中的 `!`："
 
-#: ../../language/error_codes/E0026.md:18
+#: ../../language/error_codes/E0026.md:22
 msgid ""
-"type! E\n"
+"///|\n"
+"suberror E\n"
 "\n"
-"fn f() -> Unit!E {\n"
+"///|\n"
+"fn f() -> Unit raise E {\n"
 "  raise E\n"
 "}\n"
 "\n"
-"fn g() -> Unit! {\n"
-"  try {\n"
-"    f!()\n"
-"  } catch {\n"
+"///|\n"
+"fn g() -> Unit raise {\n"
+"  f() catch {\n"
 "    E => raise E\n"
 "  }\n"
 "}\n"
 "\n"
+"///|\n"
 "fn main {\n"
-"  try {\n"
-"    g!()\n"
-"  } catch {\n"
+"  g() catch {\n"
 "    _ => println(\"Error\")\n"
 "  }\n"
 "}\n"
@@ -4043,6 +4043,9 @@ msgid ""
 "} derive(Show)\n"
 "\n"
 "fn perform[T](message : (T) -> Message, produce : () -> T) -> Message {\n"
+"  //\n"
+"  // Warning: The syntax fn f[..] for declaring polymorphic function is \n"
+"  // deprecated. Use fn[..] f instead.\n"
 "  message(produce())\n"
 "}\n"
 "\n"
@@ -4062,7 +4065,17 @@ msgstr "根据警告信息迁移代码。在这种情况下，应将代码修改
 
 #: ../../language/error_codes/E0027.md:19
 msgid ""
-"// ...\n"
+"///|\n"
+"enum Message {\n"
+"  Add(String)\n"
+"} derive(Show)\n"
+"\n"
+"///|\n"
+"fn[T] perform(message : (T) -> Message, produce : () -> T) -> Message {\n"
+"  message(produce())\n"
+"}\n"
+"\n"
+"///|\n"
 "fn main {\n"
 "  println(perform(Add(_), fn() { \"Hello, world!\" }))\n"
 "}\n"
@@ -4081,6 +4094,7 @@ msgstr "未完成的代码。在 MoonBit 中，你可以使用 `...` 标记一�
 
 #: ../../language/error_codes/E0028.md:7
 msgid ""
+"///|\n"
 "fn f() -> Unit {\n"
 "  ...\n"
 "}\n"
@@ -4092,6 +4106,7 @@ msgstr "完成代码："
 
 #: ../../language/error_codes/E0028.md:15
 msgid ""
+"///|\n"
 "fn f() -> Unit {\n"
 "  println(\"Hello, world!\")\n"
 "}\n"
@@ -4106,87 +4121,59 @@ msgid "Unused package."
 msgstr "未使用的包。"
 
 #: ../../language/error_codes/E0029.md:7
-msgid "`moon.mod.json`:"
+msgid "moon.mod.json"
 msgstr ""
 
-#: ../../language/error_codes/E0029.md:9
+#: ../../language/error_codes/E0029.md:7
 msgid ""
 "{\n"
-"  \"name\": \"username/hello\",\n"
-"  \"version\": \"0.1.0\",\n"
-"  \"readme\": \"README.md\",\n"
-"  \"source\": \"src\"\n"
+"  \"name\": \"moonbit-community/E0029\"\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0029.md:18
-#: ../../language/error_codes/E0033.md:12
-#: ../../language/error_codes/E4069.md:19
-#: ../../language/error_codes/E4069.md:42
-msgid "`lib/moon.pkg.json`:"
+#: ../../language/error_codes/E0029.md:11
+msgid "lib/moon.pkg.json"
 msgstr ""
 
-#: ../../language/error_codes/E0029.md:20
-#: ../../language/error_codes/E0033.md:14
-#: ../../language/error_codes/E4061.md:30
-#: ../../language/error_codes/E4094.md:14
-msgid "{}\n"
+#: ../../language/error_codes/E0029.md:11
+#: ../../language/error_codes/E4145.md:14
+msgid "{}"
 msgstr ""
 
-#: ../../language/error_codes/E0029.md:24
-msgid "`lib/hello.mbt`:"
+#: ../../language/error_codes/E0029.md:15
+#: ../../language/error_codes/E0029.md:28 ../../language/error_codes/E0030.md:7
+#: ../../language/error_codes/E0030.md:15
+#: ../../language/error_codes/E0031.md:12 ../../language/error_codes/E0032.md:9
+#: ../../language/introduction.md:154
+msgid "moon.pkg.json"
+msgstr ""
+
+#: ../../language/error_codes/E0029.md:15
+msgid ""
+"{\n"
+"  \"is_main\": true,\n"
+"  \"import\": [\"moonbit-community/E0029/lib\"] // Warning: Unused "
+"package\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0029.md:19
+msgid "top.mbt"
+msgstr ""
+
+#: ../../language/error_codes/E0029.md:19
+msgid ""
+"///|\n"
+"fn main {\n"
+"\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E0029.md:26
-#: ../../language/error_codes/E0033.md:20
-msgid ""
-"pub fn greeting() -> String {\n"
-"  \"Hello, world!\"\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0029.md:30
-#: ../../language/error_codes/E0029.md:51
-#: ../../language/error_codes/E0033.md:24
-#: ../../language/error_codes/E0033.md:52
-#: ../../language/error_codes/E4067.md:15
-#: ../../language/error_codes/E4067.md:42
-#: ../../language/error_codes/E4068.md:15
-#: ../../language/error_codes/E4069.md:52
-msgid "`main/moon.pkg.json`:"
-msgstr ""
-
-#: ../../language/error_codes/E0029.md:32
-msgid ""
-"{\n"
-"  \"is-main\": true,\n"
-"  \"import\": [\n"
-"    \"username/hello/lib\" // Unused package 'username/hello/lib'\n"
-"  ]\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0029.md:41
-#: ../../language/error_codes/E0033.md:41
-#: ../../language/error_codes/E0033.md:68
-#: ../../language/error_codes/E4067.md:23
-#: ../../language/error_codes/E4067.md:33
-#: ../../language/error_codes/E4068.md:23
-#: ../../language/error_codes/E4069.md:60
-msgid "`main/main.mbt`:"
-msgstr ""
-
-#: ../../language/error_codes/E0029.md:43
-msgid ""
-"fn main {\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0029.md:49
 msgid "Remove the unused package:"
 msgstr "移除未使用的包："
 
-#: ../../language/error_codes/E0029.md:53
+#: ../../language/error_codes/E0029.md:28
 #: ../../language/error_codes/E4068.md:17
 #: ../../language/error_codes/E4068.md:41
 #: ../../language/error_codes/E4069.md:44
@@ -4210,32 +4197,29 @@ msgstr "包别名为空。将使用默认包别名。"
 #: ../../language/error_codes/E0030.md:7
 msgid ""
 "{\n"
-"  \"is-main\": true,\n"
 "  \"import\": [\n"
 "    {\n"
-"      \"path\": \"username/hello/lib\",\n"
-"      \"alias\": \"\" // Warning: The package alias is empty. The default"
-" package alias will be used instead.\n"
+"      \"path\": \"moonbit-community/E0030/lib\",\n"
+"      \"alias\": \"\"\n"
 "    }\n"
 "  ]\n"
-"}\n"
+"}"
 msgstr ""
 
-#: ../../language/error_codes/E0030.md:21
+#: ../../language/error_codes/E0030.md:13
 msgid "Use a non-empty alias for the package:"
 msgstr "为包使用非空别名："
 
-#: ../../language/error_codes/E0030.md:23
+#: ../../language/error_codes/E0030.md:15
 msgid ""
 "{\n"
-"  \"is-main\": true,\n"
 "  \"import\": [\n"
 "    {\n"
-"      \"path\": \"username/hello/lib\",\n"
+"      \"path\": \"moonbit-community/E0030-fixed/lib\",\n"
 "      \"alias\": \"hello\"\n"
 "    }\n"
 "  ]\n"
-"}\n"
+"}"
 msgstr ""
 
 #: ../../language/error_codes/E0031.md:1
@@ -4258,43 +4242,47 @@ msgstr "注意，默认情况下，此警告是关闭的。要启用此警告，
 #: ../../language/error_codes/E0031.md:12
 msgid ""
 "{\n"
-"  // ...\n"
+"  \"is_main\": true,\n"
 "  \"warn-list\": \"+31\"\n"
-"}\n"
+"}"
 msgstr ""
 
-#: ../../language/error_codes/E0031.md:19
-#: ../../language/error_codes/E0032.md:16
-msgid "`main.mbt`:"
+#: ../../language/error_codes/E0031.md:16
+#: ../../language/error_codes/E0032.md:13
+msgid "main.mbt"
 msgstr ""
 
-#: ../../language/error_codes/E0031.md:21
+#: ../../language/error_codes/E0031.md:16
 msgid ""
+"///|\n"
 "fn f(opt~ : Int = 4) -> Int {\n"
 "  ignore(opt)\n"
 "  0\n"
 "}\n"
 "\n"
+"///|\n"
 "fn main {\n"
 "  println(f())\n"
 "  println(f())\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0031.md:27
+#: ../../language/error_codes/E0031.md:23
 msgid ""
 "You can remove the optional argument, and use a local variable definition"
 " instead:"
 msgstr "你可以移除可选参数，并使用局部变量定义代替："
 
-#: ../../language/error_codes/E0031.md:30
+#: ../../language/error_codes/E0031.md:26
 msgid ""
+"///|\n"
 "fn f() -> Int {\n"
 "  let opt = 4\n"
 "  ignore(opt)\n"
 "  0\n"
 "}\n"
 "\n"
+"///|\n"
 "fn main {\n"
 "  println(f())\n"
 "  println(f())\n"
@@ -4322,122 +4310,52 @@ msgstr "注意，默认情况下，此警告是关闭的。要启用此警告，
 #: ../../language/error_codes/E0032.md:9
 msgid ""
 "{\n"
-"  // ...\n"
+"  \"is_main\": true,\n"
 "  \"warn-list\": \"+32\"\n"
-"}\n"
+"}"
 msgstr ""
 
-#: ../../language/error_codes/E0032.md:18
+#: ../../language/error_codes/E0032.md:13
 msgid ""
+"///|\n"
 "fn f(opt~ : Int = 4) -> Int {\n"
 "  ignore(opt)\n"
 "  0\n"
 "}\n"
 "\n"
+"///|\n"
 "fn main {\n"
 "  println(f(opt=3))\n"
 "  println(f(opt=3))\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0032.md:24
+#: ../../language/error_codes/E0032.md:20
 msgid "Turn the optional argument into a labelled argument:"
 msgstr "将可选参数转换为带标签的参数："
 
-#: ../../language/error_codes/E0032.md:26
+#: ../../language/error_codes/E0032.md:22
 msgid ""
+"///|\n"
 "fn f(opt~ : Int) -> Int {\n"
 "  ignore(opt)\n"
 "  0\n"
 "}\n"
 "\n"
+"///|\n"
 "fn main {\n"
 "  println(f(opt=3))\n"
 "  println(f(opt=3))\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0033.md:1
-msgid "E0033"
-msgstr ""
-
-#: ../../language/error_codes/E0033.md:3
-msgid "The import value is never used directly."
-msgstr "导入的值从未被直接使用。"
-
-#: ../../language/error_codes/E0033.md:5
-msgid ""
-"In MoonBit, you can import a value (say `f`) from another package into "
-"current package, so that you don't have to use `@pkg.f` to qualify the "
-"value, and you can just use `f` as if it were defined in this package. "
-"However, if `f` is not used in current package, this warning will be "
-"emitted."
-msgstr "在 MoonBit 中，你可以从另一个包中导入一个值（比如 `f`）到当前包中，这样你就不必使用 `@pkg.f` 来限定值，"
-
-#: ../../language/error_codes/E0033.md:18
-msgid "`lib/main.mbt`:"
-msgstr ""
-
-#: ../../language/error_codes/E0033.md:26
-msgid ""
-"{\n"
-"  \"is-main\": true,\n"
-"  \"import\": [\n"
-"    {\n"
-"      \"path\": \"username/hello/lib\",\n"
-"      \"alias\": \"hello\",\n"
-"      \"value\": [\n"
-"        \"greeting\" // Warning: The import value greeting is never used "
-"directly.\n"
-"      ]\n"
-"    }\n"
-"  ]\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0033.md:43
-msgid ""
-"fn main {\n"
-"  println(@hello.greeting())\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0033.md:49
-msgid ""
-"It is possible that you still use qualified name to access the imported "
-"value. In this case, either remove the imported value from "
-"`moon.pkg.json`."
-msgstr "你可能仍然使用限定名称来访问导入的值。在这种情况下，要么从 `moon.pkg.json` 中删除导入的值。"
-
-#: ../../language/error_codes/E0033.md:54
-msgid ""
-"{\n"
-"  // ...\n"
-"  \"import\": [\n"
-"    {\n"
-"      \"path\": \"username/hello/lib\",\n"
-"      \"alias\": \"hello\"\n"
-"    }\n"
-"  ]\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0033.md:66
-msgid "Or remove the qualified package name from your code:"
-msgstr "或者从你的代码中移除限定的包名："
-
-#: ../../language/error_codes/E0033.md:70
-msgid ""
-"fn main {\n"
-"  println(greeting())\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0034.md:1
+#: ../../language/error_codes/E0033.md:1 ../../language/error_codes/E0034.md:1
 msgid "E0034"
 msgstr ""
 
-#: ../../language/error_codes/E0034.md:3 ../../language/error_codes/E0039.md:3
+#: ../../language/error_codes/E0033.md:3 ../../language/error_codes/E0034.md:3
+#: ../../language/error_codes/E0038.md:3 ../../language/error_codes/E0039.md:3
+#: ../../language/error_codes/E0040.md:3
 msgid "No longer emitted."
 msgstr "MoonBit 已不再使用此错误码。"
 
@@ -4458,15 +4376,19 @@ msgid ""
 msgstr "在 [这里](/language/introduction.md#reserved-keywords) 查看保留关键字的完整列表"
 
 #: ../../language/error_codes/E0035.md:10
+#, fuzzy
 msgid ""
-"fn module() -> Int { // Warning: The word `module` is reserved for "
-"possible future use. Please consider using another name.\n"
+"///| \n"
+"/// Warning: The word `module` is reserved for possible future use. \n"
+"/// Please consider using another name.\n"
+"fn module() -> Int {\n"
 "  3\n"
 "}\n"
-msgstr ""
+msgstr "这个词被保留以备将来使用。请使用其他名称。"
 
 #: ../../language/error_codes/E0035.md:16
 msgid ""
+"///|\n"
 "fn module_() -> Int {\n"
 "  3\n"
 "}\n"
@@ -4500,12 +4422,12 @@ msgstr "此警告有助于防止由于标签遮蔽而导致错误地中断或继
 
 #: ../../language/error_codes/E0036.md:15
 msgid ""
+"///|\n"
 "fn f(xss : Array[Array[Int]]) -> Unit {\n"
 "  l~: for xs in xss {\n"
+"    // Warning: The label name `l` shadows a label name that is already "
+"in scope.\n"
 "    l~: for x in xs {\n"
-"//  ^^  Warning: The label name `l` shadows a label name that is already "
-"in\n"
-"//               scope.\n"
 "      if x > 0 {\n"
 "        break l~\n"
 "      }\n"
@@ -4520,6 +4442,20 @@ msgid ""
 "code's intent clear."
 msgstr "为不同的循环使用不同的、描述性的标签名称，以使代码的意图清晰。"
 
+#: ../../language/error_codes/E0036.md:24
+msgid ""
+"///|\n"
+"fn f(xss : Array[Array[Int]]) -> Unit {\n"
+"  outer~: for xs in xss {\n"
+"    inner~: for x in xs {\n"
+"      if x > 0 {\n"
+"        break inner~\n"
+"      }\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
 #: ../../language/error_codes/E0037.md:1
 msgid "E0037"
 msgstr ""
@@ -4530,19 +4466,18 @@ msgstr "循环标签名称从未被使用。"
 
 #: ../../language/error_codes/E0037.md:7
 msgid ""
-"fn read() -> BytesView {\n"
-"  ...\n"
-"}\n"
-"\n"
+"///|\n"
 "fn main {\n"
-"  let mut bytes = []\n"
-"  read~: loop read() {\n"
+"  let mut sum = 0\n"
+"  let input = [1, 2, 3]\n"
+"  read~: loop input[:] {\n"
 "    [] => break\n"
-"    bs => {\n"
-"      bytes = [..bytes, ..bs]\n"
-"      continue read()\n"
+"    [head, .. tail] => {\n"
+"      sum += head\n"
+"      continue tail\n"
 "    }\n"
 "  }\n"
+"  println(sum)\n"
 "}\n"
 msgstr ""
 
@@ -4552,86 +4487,23 @@ msgstr "移除未使用的循环标签。"
 
 #: ../../language/error_codes/E0037.md:15
 msgid ""
+"///|\n"
 "fn main {\n"
-"  let mut bytes = []\n"
-"  loop {\n"
-"    let bs = read()\n"
-"    if bs == [] {\n"
-"      break\n"
+"  let mut sum = 0\n"
+"  let input = [1, 2, 3]\n"
+"  loop input[:] {\n"
+"    [] => break\n"
+"    [head, .. tail] => {\n"
+"      sum += head\n"
+"      continue tail\n"
 "    }\n"
-"    bytes = [..bytes, ..bs]\n"
 "  }\n"
+"  println(sum)\n"
 "}\n"
 msgstr ""
 
 #: ../../language/error_codes/E0038.md:1
 msgid "E0038"
-msgstr ""
-
-#: ../../language/error_codes/E0038.md:3
-msgid ""
-"Useless guard because the pattern is irrefutable. A pattern is "
-"irrefutable means it accepts all possible input. If a pattern in guard "
-"let accepts all possible input, then it will always continue on, making "
-"the guard useless."
-msgstr ""
-"无用的 guard，因为模式是不可反驳的。不可反驳的模式意味着它接受所有可能的输入。如果 guard let "
-"中的模式接受所有可能的输入，那么它将总是继续执行，使 guard 无用。"
-
-#: ../../language/error_codes/E0038.md:7
-msgid ""
-"One common mistake is, say if you want to return early on some condition,"
-" and continues otherwise. However, since the pattern matching is "
-"evaluated from first to last, the pattern after `guard let` will be first"
-" evaluated and will always be success. Therefore, such code will not work"
-" since all control will continue on and never returns early."
-msgstr ""
-"一个常见的错误是，比如你想在某些条件下提前返回，否则继续。然而，由于模式匹配是从前到后评估的，`guard let` "
-"后的模式将首先被评估，并且总是成功。因此，这样的代码将不起作用，因为所有控制都将继续执行，并且永远不会提前返回。"
-
-#: ../../language/error_codes/E0038.md:15
-msgid ""
-"fn f(input : Int?) -> Int {\n"
-"  guard let _ = input else {\n"
-"    Some(_..<0) => abort(\"Invalid input\")\n"
-"  }\n"
-"  3\n"
-"}\n"
-"\n"
-"fn main {\n"
-"  ignore(f(None))\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0038.md:21
-msgid ""
-"If you want all possible control flows goes through, then you can remove "
-"the guard and just use let expression."
-msgstr "如果你希望所有可能的控制流都通过，那么你可以移除 guard，只使用 let 表达式。"
-
-#: ../../language/error_codes/E0038.md:24
-msgid ""
-"fn f(input : Int?) -> Int {\n"
-"  let _ = input\n"
-"  3\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0038.md:28
-msgid ""
-"If you fail into the early return mistake, you can switch to `match` "
-"expression:"
-msgstr "如果你陷入了提前返回的错误，你可以切换到 `match` 表达式："
-
-#: ../../language/error_codes/E0038.md:30
-msgid ""
-"fn f(input : Int?) -> Int {\n"
-"  match input {\n"
-"    Some(_..<0) => abort(\"Invalid input\")\n"
-"    _ => ()\n"
-"  }\n"
-"  3\n"
-"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E0039.md:1
@@ -4640,60 +4512,6 @@ msgstr ""
 
 #: ../../language/error_codes/E0040.md:1
 msgid "E0040"
-msgstr ""
-
-#: ../../language/error_codes/E0040.md:3
-msgid ""
-"This method is declared as `T::f`, Calling this kind of method directly "
-"via name(..) is deprecated, use qualified syntax `T::f(..)`, or declare "
-"the method as `fn f(self : A, ..)` instead."
-msgstr ""
-"这个方法被声明为 `T::f`，直接通过名称 (..) 调用的语法被废弃了，使用限定语法 `T::f(..)`，或者将方法声明为 `fn "
-"f(self : A, ..)`。"
-
-#: ../../language/error_codes/E0040.md:9
-msgid ""
-"type A Int\n"
-"\n"
-"fn A::f(self : A) -> Int {\n"
-"  self._\n"
-"}\n"
-"\n"
-"fn main {\n"
-"  let _ = f(A(1))\n"
-"  // Warning:\n"
-"  // This method is declared as A::f, calling this kind of method "
-"directly via\n"
-"  // f(..) is deprecated, use qualified syntax A::f(..), or declare the "
-"method\n"
-"  // as `fn f(self : A, ..)` instead.\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0040.md:15
-msgid "You can either modify the calling of this function at call sites:"
-msgstr "你可以在调用点修改这个函数的调用："
-
-#: ../../language/error_codes/E0040.md:17
-msgid ""
-"fn main {\n"
-"  let _ = A::f(A(1))\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0040.md:21
-msgid "Or you can define the method as:"
-msgstr "或者你可以将方法定义为："
-
-#: ../../language/error_codes/E0040.md:23
-msgid ""
-"fn f(self : A) -> Int {\n"
-"  self._\n"
-"}\n"
-"\n"
-"fn main {\n"
-"  let _ = f(A(1))\n"
-"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E0041.md:1
@@ -4715,18 +4533,21 @@ msgstr ""
 "来忽略余下的字段，否则编译器会发出一个警告。"
 
 #: ../../language/error_codes/E0041.md:10
+#, fuzzy
 msgid ""
-"fn f(map : Map[String, Int]) -> Unit {\n"
+"///|\n"
+"fn f(map : Map[String, Int]) -> Bool {\n"
 "  match map {\n"
-"    // the pattern still matches if `map` contain elements other than "
-"\"x\" and \"y\"\n"
-"    { \"x\": x, \"y\": y } => println(x + y)\n"
-"    _ => ()\n"
+"    // the pattern still matches \n"
+"    // if `map` contain elements other than \"x\" and \"y\"\n"
+"    { \"x\": x, \"y\": y } => true\n"
+"    _ => false\n"
 "  }\n"
 "}\n"
 "\n"
+"///|\n"
 "test {\n"
-" f({ \"x\": 1, \"y\": 2, \"z\": 3 })\n"
+"  inspect(f({ \"x\": 1, \"y\": 2, \"z\": 3 }), content=\"true\")\n"
 "}\n"
 msgstr ""
 "fn f(map : Map[String, Int]) -> Unit {\n"
@@ -4752,14 +4573,32 @@ msgid "If the intended semantic is closed matching, use pattern guard instead:"
 msgstr "如果预期的语义是闭合的匹配，可以用模式匹配中的卫语句来实现："
 
 #: ../../language/error_codes/E0041.md:18
+#, fuzzy
 msgid ""
+"///|\n"
+"fn f(map : Map[String, Int]) -> Bool {\n"
+"  match map {\n"
+"    { \"x\": x, \"y\": y, .. } if map.size() == 2 => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(f({ \"x\": 1, \"y\": 2, \"z\": 3 }), content=\"false\")\n"
+"}\n"
+msgstr ""
 "fn f(map : Map[String, Int]) -> Unit {\n"
 "  match map {\n"
-"    { \"x\": x, \"y\": y, .. } if map.size() == 2 => println(x + y)\n"
+"    // 这一行会匹配字典中包含 \"x\" 和 \"y\" 以外的字段的情况\n"
+"    { \"x\": x, \"y\": y } => println(x + y)\n"
 "    _ => ()\n"
 "  }\n"
 "}\n"
-msgstr ""
+"\n"
+"test {\n"
+" f({ \"x\": 1, \"y\": 2, \"z\": 3 })\n"
+"}\n"
 
 #: ../../language/error_codes/E0042.md:1
 msgid "E0042"
@@ -4776,14 +4615,19 @@ msgid ""
 msgstr "如果程序中包含 MoonBit 不支持的属性标注，或者属性标注的参数数量、类型不正确，编译器就会产生这一警告。"
 
 #: ../../language/error_codes/E0042.md:9
+#, fuzzy
 msgid ""
-"// unrecognized attribute\n"
+"///| unrecognized attribute\n"
 "#unrecognized\n"
-"fn f() -> Unit {}\n"
+"fn f() -> Unit {\n"
 "\n"
-"// `#deprecated` can accept at most one message\n"
+"}\n"
+"\n"
+"///| `#deprecated` can accept at most one message\n"
 "#deprecated(\"multiple\", \"message\")\n"
-"fn g() -> Unit {}\n"
+"fn g() -> Unit {\n"
+"\n"
+"}\n"
 msgstr ""
 "// 未知的属性\n"
 "#unrecognized\n"
@@ -8338,6 +8182,11 @@ msgstr ""
 msgid "`a/moon.pkg.json`:"
 msgstr ""
 
+#: ../../language/error_codes/E4061.md:30
+#: ../../language/error_codes/E4094.md:14
+msgid "{}\n"
+msgstr ""
+
 #: ../../language/error_codes/E4061.md:34
 msgid "Now, if you want to implement trait `@a.B` for type `@a.A`:"
 msgstr ""
@@ -8757,6 +8606,13 @@ msgstr ""
 msgid "Suppose in package `main`:"
 msgstr "假设在包 `main` 中："
 
+#: ../../language/error_codes/E4067.md:15
+#: ../../language/error_codes/E4067.md:42
+#: ../../language/error_codes/E4068.md:15
+#: ../../language/error_codes/E4069.md:52
+msgid "`main/moon.pkg.json`:"
+msgstr ""
+
 #: ../../language/error_codes/E4067.md:17
 #, fuzzy
 msgid ""
@@ -8764,6 +8620,13 @@ msgid ""
 "  \"is-main\": true\n"
 "}\n"
 msgstr "main 包中缺少 `main` 函数"
+
+#: ../../language/error_codes/E4067.md:23
+#: ../../language/error_codes/E4067.md:33
+#: ../../language/error_codes/E4068.md:23
+#: ../../language/error_codes/E4069.md:60
+msgid "`main/main.mbt`:"
+msgstr ""
 
 #: ../../language/error_codes/E4067.md:25
 msgid ""
@@ -8909,6 +8772,11 @@ msgstr ""
 #: ../../language/error_codes/E4069.md:17
 msgid "Suppose in package `lib`:"
 msgstr "假设在包 `lib` 中："
+
+#: ../../language/error_codes/E4069.md:19
+#: ../../language/error_codes/E4069.md:42
+msgid "`lib/moon.pkg.json`:"
+msgstr ""
 
 #: ../../language/error_codes/E4069.md:21
 msgid "{} // \"is-main\" is by default false\n"
@@ -12478,10 +12346,6 @@ msgstr "封闭的特征不允许在其他包中实现。使用 `pub(open)` 使�
 msgid "Suppose there is a package `a` in module `username/hello`:"
 msgstr "例如，在模块 `username/hello` 中存在一个包 `a`："
 
-#: ../../language/error_codes/E4145.md:14
-msgid "{}"
-msgstr ""
-
 #: ../../language/error_codes/E4145.md:20
 msgid ""
 "pub trait Sealed {\n"
@@ -15517,13 +15381,6 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:811
-msgid ""
-"2\n"
-"1\n"
-"0\n"
-msgstr ""
-
 #: ../../language/fundamentals.md:815
 msgid ""
 "When there is an `else` clause, the `while` loop can also return a value."
@@ -18062,10 +17919,6 @@ msgid ""
 msgstr "只有 `main` 包的包才能定义这样的 `main` 函数。查看 [构建系统教程](/toolchain/moon/tutorial) 了解详情。"
 
 #: ../../language/introduction.md:154
-msgid "moon.pkg.json"
-msgstr ""
-
-#: ../../language/introduction.md:154
 msgid ""
 "{\n"
 "  \"is-main\": true\n"
@@ -19885,7 +19738,7 @@ msgid ""
 "enum Rec {\n"
 "  End\n"
 "  Really_long_name_that_is_difficult_to_read(Rec)\n"
-"} derive(Show, ToJson(style=\"legacy\"))\n"
+"} derive(Show, ToJson(style=\"flat\"))\n"
 "\n"
 "test \"json snapshot test\" {\n"
 "  let r = Really_long_name_that_is_difficult_to_read(\n"
@@ -19899,16 +19752,13 @@ msgid ""
 "content=\"Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(End)))\","
 "\n"
 "  )\n"
-"  @json.inspect(r, content={\n"
-"    \"$tag\": \"Really_long_name_that_is_difficult_to_read\",\n"
-"    \"0\": {\n"
-"      \"$tag\": \"Really_long_name_that_is_difficult_to_read\",\n"
-"      \"0\": {\n"
-"        \"$tag\": \"Really_long_name_that_is_difficult_to_read\",\n"
-"        \"0\": { \"$tag\": \"End\" },\n"
-"      },\n"
-"    },\n"
-"  })\n"
+"  @json.inspect(r, content=[\n"
+"    \"Really_long_name_that_is_difficult_to_read\",\n"
+"    [\n"
+"      \"Really_long_name_that_is_difficult_to_read\",\n"
+"      [\"Really_long_name_that_is_difficult_to_read\", \"End\"],\n"
+"    ],\n"
+"  ])\n"
 "}\n"
 msgstr ""
 
@@ -20012,4 +19862,889 @@ msgid ""
 msgstr ""
 "黑盒测试文件（`_test.mbt`）导入当前包和包配置（`moon.pkg.json`）中的 `import` 和 `test-import` "
 "部分定义的包。"
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  match Some(1) {\n"
+#~ "    Some(x) => println(x)\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  if Some(1) is Some(x) {\n"
+#~ "    println(x)\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  match Some(1) {\n"
+#~ "    Some(x) => println(x)\n"
+#~ "    _ => println(\"Other\")\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  return\n"
+#~ "  println(\"Hello, World!\") // Warning: Unreachable code\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  match Some(1) {\n"
+#~ "    _ => println(\"_\")\n"
+#~ "    Some(a) => println(\"Some(\\{a})\") // Warning: Unreachable code\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(\"Hello, World!\")\n"
+#~ "  return\n"
+#~ "}\n"
+#~ "\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  match Some(1) {\n"
+#~ "    Some(a) => println(\"Some(\\{a})\")\n"
+#~ "    _ => println(\"_\")\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  match Some(1) {\n"
+#~ "    None => println(\"_\")\n"
+#~ "    Some(a) => println(\"Some(\\{a})\")\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn f1() -> Unit {\n"
+#~ "  fn f(x: Option[Int]) {\n"
+#~ "    match x {\n"
+#~ "      None => ()\n"
+#~ "      Some(a) => println(a)\n"
+#~ "    }\n"
+#~ "  }\n"
+#~ "  f(None)\n"
+#~ "}\n"
+#~ "\n"
+#~ "pub fn f2() -> Unit {\n"
+#~ "  fn f(x : Array[Int]) -> Int {\n"
+#~ "    x.length()\n"
+#~ "  }\n"
+#~ "  println(f([]))\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let a : Array[Int] = []\n"
+#~ "  println(a.length())\n"
+#~ "  let b : Option[Int] = None\n"
+#~ "  println(b.is_empty())\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let a = ([] : Array[Int])\n"
+#~ "  println(a.length())\n"
+#~ "  let b = (None : Option[Int])\n"
+#~ "  println(b.is_empty())\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn f1() -> Unit {\n"
+#~ "  fn f(x) {\n"
+#~ "    match x {\n"
+#~ "      None => ()\n"
+#~ "      Some(a) => println(a + 1)\n"
+#~ "//                       ^^^^^ through this "
+#~ "usage, the compiler can infer the\n"
+#~ ""
+#~ "//                             type of `x` is `Option[Int]`.\n"
+#~ "    }\n"
+#~ "  }\n"
+#~ "  f(None)\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "struct point {\n"
+#~ "  x: Int\n"
+#~ "  y: Int\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "struct Point {\n"
+#~ "  x: Int\n"
+#~ "  y: Int\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let x = [1, 2, 3]\n"
+#~ "  x[0] = 0\n"
+#~ "  println(x)\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let a : @string.View = \"asdf\"\n"
+#~ "  loop a {\n"
+#~ "    [_, .. d] => {\n"
+#~ "      println(a)\n"
+#~ "      //      ^\n"
+#~ "      // Warning: The usage of 'a'"
+#~ " is ambiguous. If it refers to "
+#~ "the loop\n"
+#~ "      // variable, please use `as "
+#~ "a` to bind it in the pattern. "
+#~ "If it refers to\n"
+#~ "      // the original value of 'a'"
+#~ " before entering the loop, please "
+#~ "bind it to a\n"
+#~ "      // new binder outside the loop.\n"
+#~ "      continue d\n"
+#~ "    }\n"
+#~ "    [] => ()\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "The output is:"
+#~ msgstr "输出如下所示（仅供参考）："
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let a : @string.View = \"asdf\"\n"
+#~ "  loop a {\n"
+#~ "    [_, .. d] as a => {\n"
+#~ "      println(a)\n"
+#~ "      continue d\n"
+#~ "    }\n"
+#~ "    [] => ()\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let a : @string.View = \"asdf\"\n"
+#~ "  let b = a\n"
+#~ "  loop a {\n"
+#~ "    [_, .. d] => {\n"
+#~ "      println(b)\n"
+#~ "      continue d\n"
+#~ "    }\n"
+#~ "    [] => ()\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn countdown(n : Int) -> Int {\n"
+#~ "  let mut count = n\n"
+#~ "  loop count {\n"
+#~ "    _..<0 => break\n"
+#~ "    _ => count = count - 1\n"
+#~ "  }\n"
+#~ "  return count\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn countdown(n : Int) -> Int {\n"
+#~ "  let mut count = n\n"
+#~ "  loop count {\n"
+#~ "    _..<0 => break\n"
+#~ "    _ => {\n"
+#~ "      continue count - 1\n"
+#~ "    }\n"
+#~ "  }\n"
+#~ "  return count\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn countdown(n : Int) -> Int {\n"
+#~ "  let mut count = n\n"
+#~ "  match count {\n"
+#~ "    _..<0 => ()\n"
+#~ "    _ => count = count - 1\n"
+#~ "  }\n"
+#~ "  return count\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Invalid pragma. The pragma either has"
+#~ " invalid id, or has invalid "
+#~ "properties."
+#~ msgstr "无效的编译器指令。编译器指令的 id 不合法，或者有不合法的属性。"
+
+#~ msgid "MoonBit compiler support the following pragmas:"
+#~ msgstr "MoonBit 编译器支持以下编译器指令："
+
+#~ msgid ""
+#~ "`@alert`. This pragma is used to "
+#~ "emit a warning message. It has the"
+#~ " following format: `@alert <category> "
+#~ "\"message\"`. For example:"
+#~ msgstr "`@alert`。这个编译器指令用于发出警告消息。它有以下格式：`@alert <category> \"message\"`。例如："
+
+#~ msgid ""
+#~ "///|\n"
+#~ "/// @alert deprecated \"This function is deprecated\"\n"
+#~ "fn deprecated_function() {\n"
+#~ "  // ...\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`@coverage.skip`. This pragma indicates that"
+#~ " the following declaration should be "
+#~ "skipped when calculating code coverage. "
+#~ "It has the following format: "
+#~ "`@coverage.skip`. For example:"
+#~ msgstr "`@coverage.skip`。这个编译器指令表示在计算代码覆盖率时应跳过以下声明。它有以下格式：`@coverage.skip`。例如："
+
+#~ msgid ""
+#~ "///|\n"
+#~ "/// @coverage.skip\n"
+#~ "fn function_to_skip() {\n"
+#~ "  // ...\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "/// @deprecated \"This function is deprecated\"\n"
+#~ "fn f() {\n"
+#~ "  // ...\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Depending on the pragma you want "
+#~ "to use, you should either remove "
+#~ "the invalid pragma, or replace it "
+#~ "with a valid one."
+#~ msgstr "根据你想使用的编译器指令，你应该移除无效的编译器指令，或者替换为有效的编译器指令。"
+
+#~ msgid ""
+#~ "///|\n"
+#~ "/// @alert deprecated \"This function is deprecated\"\n"
+#~ "fn f() {\n"
+#~ "  // ...\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  match A(0, w=1, h=2) {\n"
+#~ "    A(v, w~, ..) => {\n"
+#~ "      println(v)\n"
+#~ "      println(w)\n"
+#~ "    }\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  match A(0, w=1, h=2) {\n"
+#~ "    A(v, w~, h~) => {\n"
+#~ "      println(v)\n"
+#~ "      println(w)\n"
+#~ "      println(h)\n"
+#~ "    }\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "struct S {\n"
+#~ "  value : Int\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  let value = 3\n"
+#~ "  let s = { value }\n"
+#~ "  ignore(s)\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let value = 3\n"
+#~ "  let s = { value, }\n"
+#~ "  ignore(s)\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let value = 3\n"
+#~ "  let s = value\n"
+#~ "  ignore(s)\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  try {\n"
+#~ "    println(\"Hello, world!\")\n"
+#~ "  } catch {\n"
+#~ "    _ => println(\"Error\")\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(\"Hello, world!\")\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn greet() -> Unit! {\n"
+#~ "  println(\"Hello, world!\")\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn greet() -> Unit {\n"
+#~ "  println(\"Hello, world!\")\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "type! E\n"
+#~ "\n"
+#~ "fn f() -> Unit!E {\n"
+#~ "  raise E\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn g() -> Unit! {\n"
+#~ "  try {\n"
+#~ "    f!()\n"
+#~ "  } catch! {\n"
+#~ "    E => raise E\n"
+#~ "  }\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  try {\n"
+#~ "    g!()\n"
+#~ "  } catch {\n"
+#~ "    _ => println(\"Error\")\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "type! E\n"
+#~ "\n"
+#~ "fn f() -> Unit!E {\n"
+#~ "  raise E\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn g() -> Unit! {\n"
+#~ "  try {\n"
+#~ "    f!()\n"
+#~ "  } catch {\n"
+#~ "    E => raise E\n"
+#~ "  }\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  try {\n"
+#~ "    g!()\n"
+#~ "  } catch {\n"
+#~ "    _ => println(\"Error\")\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "enum Message {\n"
+#~ "  Add(String)\n"
+#~ "} derive(Show)\n"
+#~ "\n"
+#~ "fn perform[T](message : (T) -> Message,"
+#~ " produce : () -> T) -> Message"
+#~ " {\n"
+#~ "  message(produce())\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  println(perform(Add, fn() { \"Hello, world!\" }))\n"
+#~ "  //              ^^^\n"
+#~ "  // Warning: Using constructor as function directly is\n"
+#~ "  // deprecated. Use the partial application syntax instead\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "// ...\n"
+#~ "fn main {\n"
+#~ "  println(perform(Add(_), fn() { \"Hello, world!\" }))\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f() -> Unit {\n"
+#~ "  ...\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f() -> Unit {\n"
+#~ "  println(\"Hello, world!\")\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "`moon.mod.json`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"name\": \"username/hello\",\n"
+#~ "  \"version\": \"0.1.0\",\n"
+#~ "  \"readme\": \"README.md\",\n"
+#~ "  \"source\": \"src\"\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "`lib/hello.mbt`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn greeting() -> String {\n"
+#~ "  \"Hello, world!\"\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"is-main\": true,\n"
+#~ "  \"import\": [\n"
+#~ "    \"username/hello/lib\" // Unused package 'username/hello/lib'\n"
+#~ "  ]\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"is-main\": true,\n"
+#~ "  \"import\": [\n"
+#~ "    {\n"
+#~ "      \"path\": \"username/hello/lib\",\n"
+#~ "      \"alias\": \"\" // Warning: The"
+#~ " package alias is empty. The default"
+#~ " package alias will be used instead."
+#~ "\n"
+#~ "    }\n"
+#~ "  ]\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"is-main\": true,\n"
+#~ "  \"import\": [\n"
+#~ "    {\n"
+#~ "      \"path\": \"username/hello/lib\",\n"
+#~ "      \"alias\": \"hello\"\n"
+#~ "    }\n"
+#~ "  ]\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  // ...\n"
+#~ "  \"warn-list\": \"+31\"\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "`main.mbt`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f(opt~ : Int = 4) -> Int {\n"
+#~ "  ignore(opt)\n"
+#~ "  0\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  println(f())\n"
+#~ "  println(f())\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f() -> Int {\n"
+#~ "  let opt = 4\n"
+#~ "  ignore(opt)\n"
+#~ "  0\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  println(f())\n"
+#~ "  println(f())\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  // ...\n"
+#~ "  \"warn-list\": \"+32\"\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f(opt~ : Int = 4) -> Int {\n"
+#~ "  ignore(opt)\n"
+#~ "  0\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  println(f(opt=3))\n"
+#~ "  println(f(opt=3))\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f(opt~ : Int) -> Int {\n"
+#~ "  ignore(opt)\n"
+#~ "  0\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  println(f(opt=3))\n"
+#~ "  println(f(opt=3))\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "E0033"
+#~ msgstr ""
+
+#~ msgid "The import value is never used directly."
+#~ msgstr "导入的值从未被直接使用。"
+
+#~ msgid ""
+#~ "In MoonBit, you can import a value"
+#~ " (say `f`) from another package into"
+#~ " current package, so that you don't"
+#~ " have to use `@pkg.f` to qualify "
+#~ "the value, and you can just use"
+#~ " `f` as if it were defined in"
+#~ " this package. However, if `f` is "
+#~ "not used in current package, this "
+#~ "warning will be emitted."
+#~ msgstr "在 MoonBit 中，你可以从另一个包中导入一个值（比如 `f`）到当前包中，这样你就不必使用 `@pkg.f` 来限定值，"
+
+#~ msgid "`lib/main.mbt`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"is-main\": true,\n"
+#~ "  \"import\": [\n"
+#~ "    {\n"
+#~ "      \"path\": \"username/hello/lib\",\n"
+#~ "      \"alias\": \"hello\",\n"
+#~ "      \"value\": [\n"
+#~ "        \"greeting\" // Warning: The "
+#~ "import value greeting is never used "
+#~ "directly.\n"
+#~ "      ]\n"
+#~ "    }\n"
+#~ "  ]\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(@hello.greeting())\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "It is possible that you still use"
+#~ " qualified name to access the "
+#~ "imported value. In this case, either "
+#~ "remove the imported value from "
+#~ "`moon.pkg.json`."
+#~ msgstr "你可能仍然使用限定名称来访问导入的值。在这种情况下，要么从 `moon.pkg.json` 中删除导入的值。"
+
+#~ msgid ""
+#~ "{\n"
+#~ "  // ...\n"
+#~ "  \"import\": [\n"
+#~ "    {\n"
+#~ "      \"path\": \"username/hello/lib\",\n"
+#~ "      \"alias\": \"hello\"\n"
+#~ "    }\n"
+#~ "  ]\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "Or remove the qualified package name from your code:"
+#~ msgstr "或者从你的代码中移除限定的包名："
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(greeting())\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn module() -> Int { // Warning:"
+#~ " The word `module` is reserved for"
+#~ " possible future use. Please consider "
+#~ "using another name.\n"
+#~ "  3\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn module_() -> Int {\n"
+#~ "  3\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f(xss : Array[Array[Int]]) -> Unit {\n"
+#~ "  l~: for xs in xss {\n"
+#~ "    l~: for x in xs {\n"
+#~ "//  ^^  Warning: The label name "
+#~ "`l` shadows a label name that is"
+#~ " already in\n"
+#~ "//               scope.\n"
+#~ "      if x > 0 {\n"
+#~ "        break l~\n"
+#~ "      }\n"
+#~ "    }\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn read() -> BytesView {\n"
+#~ "  ...\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  let mut bytes = []\n"
+#~ "  read~: loop read() {\n"
+#~ "    [] => break\n"
+#~ "    bs => {\n"
+#~ "      bytes = [..bytes, ..bs]\n"
+#~ "      continue read()\n"
+#~ "    }\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let mut bytes = []\n"
+#~ "  loop {\n"
+#~ "    let bs = read()\n"
+#~ "    if bs == [] {\n"
+#~ "      break\n"
+#~ "    }\n"
+#~ "    bytes = [..bytes, ..bs]\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Useless guard because the pattern is "
+#~ "irrefutable. A pattern is irrefutable "
+#~ "means it accepts all possible input. "
+#~ "If a pattern in guard let accepts"
+#~ " all possible input, then it will "
+#~ "always continue on, making the guard "
+#~ "useless."
+#~ msgstr ""
+#~ "无用的 guard，因为模式是不可反驳的。不可反驳的模式意味着它接受所有可能的输入。如果 guard "
+#~ "let 中的模式接受所有可能的输入，那么它将总是继续执行，使 guard 无用。"
+
+#~ msgid ""
+#~ "One common mistake is, say if you"
+#~ " want to return early on some "
+#~ "condition, and continues otherwise. However,"
+#~ " since the pattern matching is "
+#~ "evaluated from first to last, the "
+#~ "pattern after `guard let` will be "
+#~ "first evaluated and will always be "
+#~ "success. Therefore, such code will not"
+#~ " work since all control will continue"
+#~ " on and never returns early."
+#~ msgstr ""
+#~ "一个常见的错误是，比如你想在某些条件下提前返回，否则继续。然而，由于模式匹配是从前到后评估的，`guard let` "
+#~ "后的模式将首先被评估，并且总是成功。因此，这样的代码将不起作用，因为所有控制都将继续执行，并且永远不会提前返回。"
+
+#~ msgid ""
+#~ "fn f(input : Int?) -> Int {\n"
+#~ "  guard let _ = input else {\n"
+#~ "    Some(_..<0) => abort(\"Invalid input\")\n"
+#~ "  }\n"
+#~ "  3\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  ignore(f(None))\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you want all possible control "
+#~ "flows goes through, then you can "
+#~ "remove the guard and just use let"
+#~ " expression."
+#~ msgstr "如果你希望所有可能的控制流都通过，那么你可以移除 guard，只使用 let 表达式。"
+
+#~ msgid ""
+#~ "fn f(input : Int?) -> Int {\n"
+#~ "  let _ = input\n"
+#~ "  3\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If you fail into the early return"
+#~ " mistake, you can switch to `match`"
+#~ " expression:"
+#~ msgstr "如果你陷入了提前返回的错误，你可以切换到 `match` 表达式："
+
+#~ msgid ""
+#~ "fn f(input : Int?) -> Int {\n"
+#~ "  match input {\n"
+#~ "    Some(_..<0) => abort(\"Invalid input\")\n"
+#~ "    _ => ()\n"
+#~ "  }\n"
+#~ "  3\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This method is declared as `T::f`, "
+#~ "Calling this kind of method directly "
+#~ "via name(..) is deprecated, use "
+#~ "qualified syntax `T::f(..)`, or declare "
+#~ "the method as `fn f(self : A, "
+#~ "..)` instead."
+#~ msgstr ""
+#~ "这个方法被声明为 `T::f`，直接通过名称 (..) 调用的语法被废弃了，使用限定语法 "
+#~ "`T::f(..)`，或者将方法声明为 `fn f(self : A, "
+#~ "..)`。"
+
+#~ msgid ""
+#~ "type A Int\n"
+#~ "\n"
+#~ "fn A::f(self : A) -> Int {\n"
+#~ "  self._\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  let _ = f(A(1))\n"
+#~ "  // Warning:\n"
+#~ "  // This method is declared as"
+#~ " A::f, calling this kind of method"
+#~ " directly via\n"
+#~ "  // f(..) is deprecated, use "
+#~ "qualified syntax A::f(..), or declare "
+#~ "the method\n"
+#~ "  // as `fn f(self : A, ..)` instead.\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "You can either modify the calling of this function at call sites:"
+#~ msgstr "你可以在调用点修改这个函数的调用："
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let _ = A::f(A(1))\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "Or you can define the method as:"
+#~ msgstr "或者你可以将方法定义为："
+
+#~ msgid ""
+#~ "fn f(self : A) -> Int {\n"
+#~ "  self._\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  let _ = f(A(1))\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f(map : Map[String, Int]) -> Unit {\n"
+#~ "  match map {\n"
+#~ "    { \"x\": x, \"y\": y, .. } if map.size() == 2 => println(x + y)\n"
+#~ "    _ => ()\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "enum Rec {\n"
+#~ "  End\n"
+#~ "  Really_long_name_that_is_difficult_to_read(Rec)\n"
+#~ "} derive(Show, ToJson(style=\"legacy\"))\n"
+#~ "\n"
+#~ "test \"json snapshot test\" {\n"
+#~ "  let r = Really_long_name_that_is_difficult_to_read(\n"
+#~ "    Really_long_name_that_is_difficult_to_read(\n"
+#~ "      Really_long_name_that_is_difficult_to_read(End),\n"
+#~ "    ),\n"
+#~ "  )\n"
+#~ "  inspect(\n"
+#~ "    r,\n"
+#~ "    "
+#~ "content=\"Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(End)))\","
+#~ "\n"
+#~ "  )\n"
+#~ "  @json.inspect(r, content={\n"
+#~ "    \"$tag\": \"Really_long_name_that_is_difficult_to_read\",\n"
+#~ "    \"0\": {\n"
+#~ "      \"$tag\": \"Really_long_name_that_is_difficult_to_read\",\n"
+#~ "      \"0\": {\n"
+#~ "        \"$tag\": \"Really_long_name_that_is_difficult_to_read\",\n"
+#~ "        \"0\": { \"$tag\": \"End\" },\n"
+#~ "      },\n"
+#~ "    },\n"
+#~ "  })\n"
+#~ "}\n"
+#~ msgstr ""
 
