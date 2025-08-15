@@ -1,7 +1,11 @@
-// unrecognized attribute
+///| unrecognized attribute
 #unrecognized
-fn f() -> Unit {}
+fn f() -> Unit {
 
-// `#deprecated` can accept at most one message
+}
+
+///| `#deprecated` can accept at most one message
 #deprecated("multiple", "message")
-fn g() -> Unit {}
+fn g() -> Unit {
+
+}
