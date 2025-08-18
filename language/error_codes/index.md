@@ -219,3 +219,7 @@ This page lists all error codes produced by the MoonBit compiler.
 * [E4153](E4153.md)
 * [E4154](E4154.md)
 * [E4155](E4155.md)
+* [E4156](E4156.md)
+* [E4157](E4157.md)
+* [E4158](E4158.md)
+* [E4159](E4159.md)
