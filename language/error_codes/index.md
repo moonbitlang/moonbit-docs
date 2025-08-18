@@ -54,6 +54,8 @@ This page lists all error codes produced by the MoonBit compiler.
 * [E0044](E0044.md)
 * [E0045](E0045.md)
 * [E0046](E0046.md)
+* [E0049](E0049.md)
+* [E0050](E0050.md)
 * [E1001](E1001.md)
 * [E2000](E2000.md)
 * [E3001](E3001.md)
