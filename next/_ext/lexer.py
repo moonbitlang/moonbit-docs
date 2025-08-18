@@ -50,8 +50,8 @@ class MoonBitLexer(RegexLexer):
             # @namespace.
             (r"@[A-Za-z][A-Za-z0-9_/]*\.", token.Name.Namespace),
             # Function alias
-            (r"([a-z][A-Za-z0-9_]*)(\s+)(as)(\s+)([a-z][A-Za-z0-9_]*)", bygroups(token.Name.Function, token.Whitespace, token.Punctuation, token.Whitespace, token.Name.Function)),
-            (r"([A-Za-z][A-Za-z0-9_]*)(::)([A-Za-z][A-Za-z0-9_]*)(\s+)(as)(\s+)([a-z][A-Za-z0-9_]*)", bygroups(token.Name.Class, token.Punctuation, token.Name.Function, token.Whitespace, token.Punctuation, token.Whitespace, token.Name.Function)),
+            (r"([a-z][A-Za-z0-9_]*)(\s+)(as)(\s+)([a-z][A-Za-z0-9_]*)", bygroups(token.Name.Function, token.Whitespace, token.Keyword, token.Whitespace, token.Name.Function)),
+            (r"([A-Za-z][A-Za-z0-9_]*)(::)([A-Za-z][A-Za-z0-9_]*)(\s+)(as)(\s+)([a-z][A-Za-z0-9_]*)", bygroups(token.Name.Class, token.Punctuation, token.Name.Function, token.Whitespace, token.Keyword, token.Whitespace, token.Name.Function)),
             # Type::function
             (r"([A-Za-z][A-Za-z0-9_]*)(::)([A-Za-z][A-Za-z0-9_]*)", bygroups(token.Name.Class, token.Punctuation, token.Name.Function)),
             # function(
