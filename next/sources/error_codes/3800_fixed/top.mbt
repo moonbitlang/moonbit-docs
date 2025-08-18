@@ -1,11 +1,14 @@
+///|
 enum V {
   A
 }
 
+///|
 struct S {
   a : Int
 }
 
-type! E {
+///|
+suberror E {
   A
 }
