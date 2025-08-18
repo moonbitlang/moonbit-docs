@@ -1,8 +1,8 @@
-fn main {
-  let opt = Some(42)
+///|
+fn f(opt? : Int) -> Unit {
   let opt = match opt {
     Some(opt) => opt
     None => 4
   }
-  f(opt~)
+  println("opt: \{opt}")
 }
