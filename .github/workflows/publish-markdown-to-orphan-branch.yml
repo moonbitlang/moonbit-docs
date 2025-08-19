@@ -94,6 +94,14 @@ jobs:
         # Copy our markdown files
         cp -r /tmp/markdown-output/* .
         
+        # Create .gitignore to ignore build artifacts
+        cat > .gitignore << 'EOF'
+        _build/
+        __pycache__/
+        *.pyc
+        *.pyo
+        EOF
+        
         # Add all files
         git add .
         
