@@ -9,7 +9,6 @@ See [the General Introduction](../language/index.md) if you want to straight
 delve into the language.
 
 ## Installation
-
 **The extension**
 
 Currently, MoonBit development support is through the VS Code extension.
@@ -88,6 +87,58 @@ my-project
 
 In this tutorial, we will work with the `lib` mode project, and we assume the
 project name is `examine`.
+
+**NixOS**
+
+For NixOS users, you may want to install MoonBit and its plugins declaratively. Since MoonBit and its VS Code plugin have not yet been added to the official Nixpkgs, you can use a package from a community member's NUR (Nix User Repository) and use `nix-vscode-extensions` to install the plugin.
+
+In your `flake.nix`, add the following to the `inputs` attribute:
+
+```nix
+{
+  inputs = {
+    # ... your other inputs
+    moonbit = {
+      url = "github:DzmingLi/nur-packages";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # ...
+  };
+}
+```
+
+In `configuration.nix` or any other system-level module, add the following to the `nixpkgs.overlays` option:
+
+```nix
+{
+  nixpkgs.overlays = [
+    # ... your other overlays
+    moonbit.overlays.default
+    nix-vscode-extensions.overlays.default
+    # ...
+  ];
+}
+```
+
+In your `home-manager` configuration, add the following to the `programs.vscode.profiles.default.extensions` list:
+
+```nix
+{
+  programs.vscode.profiles.default = {
+    # ...
+    extensions = with pkgs; [
+      # ... your other extensions
+      vscode-marketplace.moonbit.moonbit-lang
+      # ...
+    ];
+    # ...
+  };
+}
+```
 
 ## Example: Finding those who passed
 
