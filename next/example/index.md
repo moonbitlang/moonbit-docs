@@ -14,3 +14,5 @@ lambda/index
 gmachine/index
 myers-diff/index
 segment-tree/index
+native-ffi/index
+```
