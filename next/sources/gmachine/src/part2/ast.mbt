@@ -1,4 +1,4 @@
-typealias @list.T as List
+typealias @list.List
 
 enum RawExpr[T] {
   Var(T)

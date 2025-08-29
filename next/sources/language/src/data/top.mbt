@@ -273,7 +273,7 @@ fn[X : Compare] Tree::insert(
 pub typealias Int as Index
 
 // type alias are private by default
-typealias @list.T as Lst
+typealias @list.List as Lst
 // end typealias 1
 
 // start local-type 1

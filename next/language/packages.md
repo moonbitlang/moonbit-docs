@@ -232,9 +232,9 @@ The `has-default` indicates whether the virtual package has a default implementa
 
 Within the package, you will need to add an interface file `package-name.mbti` where the `package-name` is the same as [the default alias](#default-alias):
 
-```{literalinclude} /sources/language/src/packages/virtual/virtual.mbti
+```{literalinclude} /sources/language/src/packages/virtual/pkg.mbti
 :language: moonbit
-:caption: /src/packages/virtual/virtual.mbti
+:caption: /src/packages/virtual/pkg.mbti
 ```
 
 The first line of the interface file need to be `package "full-package-name"`. Then comes the declarations.

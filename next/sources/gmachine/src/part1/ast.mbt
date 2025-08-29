@@ -1,4 +1,4 @@
-typealias @list.T as List
+typealias @list.List
 
 // start expr_and_scdef definition
 enum RawExpr[T] {
