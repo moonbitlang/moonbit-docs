@@ -1742,7 +1742,7 @@ MoonBit supports type alias via the syntax `typealias TargetType as Name`:
 pub typealias Int as Index
 
 // type alias are private by default
-typealias @list.T as Lst
+typealias @list.List as Lst
 ```
 
 Unlike all other kinds of type declaration above, type alias does not define a new type,
