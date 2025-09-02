@@ -1,16 +1,16 @@
 ///|
-typealias  @list.T as List
+typealias @list.List
 
-///| start stream definition
-///
+///|
+/// start stream definition
 enum Stream[T] {
   Empty
   Cons(T, () -> Stream[T])
 }
 // end stream definition
 
-///| start list conversion
-///
+///|
+/// start list conversion
 fn[T] Stream::from_list(l : List[T]) -> Self[T] {
   match l {
     Empty => Empty
@@ -19,8 +19,8 @@ fn[T] Stream::from_list(l : List[T]) -> Self[T] {
 }
 // end list conversion
 
-///| start map definition
-///
+///|
+/// start map definition
 fn[X, Y] map(self : Stream[X], f : (X) -> Y) -> Stream[Y] {
   match self {
     Empty => Empty
@@ -29,8 +29,8 @@ fn[X, Y] map(self : Stream[X], f : (X) -> Y) -> Stream[Y] {
 }
 // end map definition
 
-///| start take definition
-///
+///|
+/// start take definition
 fn[T] take(self : Stream[T], n : Int) -> List[T] {
   if n == 0 {
     @list.empty()
