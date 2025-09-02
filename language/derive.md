@@ -254,7 +254,7 @@ test "json args" {
   assert_eq(input.to_json(), expected)
   assert_eq(@json.from_json(expected), input)
   let input = JsonTest4::A(x=123)
-  let expected : Json = [ "A", 123 ]
+  let expected : Json = [ "A", { "x": 123 } ]
   assert_eq(input.to_json(), expected)
   assert_eq(@json.from_json(expected), input)
 }
