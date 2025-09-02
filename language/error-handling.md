@@ -247,6 +247,20 @@ test {
 }
 ```
 
+### Panic on Errors
+
+You can also panic directly when an unexpected error occurs:
+
+```moonbit
+fn remainder(a : Int, b : Int) -> Int raise DivError {
+  if b == 0 {
+    raise DivError("division by zero")
+  }
+  let div = try! div(a, b)
+  a - b * div
+}
+```
+
 ### Error Inference
 
 Within a `try` block, several different kinds of errors can be raised. When that
