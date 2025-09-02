@@ -1,3 +1,0 @@
-pub fn rethrow() -> Unit {
-  fail!("throwing") // Error: `!` operator will rethrow the error raised in the function application, and can only be used inside ...
-}
