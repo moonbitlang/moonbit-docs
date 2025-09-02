@@ -1,9 +1,10 @@
 # Toolchains
 
-Here are some manuals that may help you use the toolchains of the programming language:
+[MoonBit's Build System](moon/index.md): full manual of `moon` build system.
 
-- [MoonBit's Build System](moon/index.md): full manual of `moon` build system.
-- VSCode extension
+**Other toolchains**
+
+- [WebAssembly Toolchain](wasm/index.md): how to use Wasm with MoonBit.
 - ...
 
 # Contents:
@@ -15,3 +16,7 @@ Here are some manuals that may help you use the toolchains of the programming la
   * [Module Configuration](moon/module.md)
   * [Package Configuration](moon/package.md)
   * [Measuring code coverage](moon/coverage.md)
+* [WebAssembly Integration](wasm/index.md)
+  * [Component Model](wasm/index.md#component-model)
+  * [Custom Export and Import](wasm/index.md#custom-export-and-import)
+  * [Q&A](wasm/index.md#q-a)
