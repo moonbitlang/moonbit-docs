@@ -199,6 +199,16 @@ the [`Result`](/language/fundamentals.md#option-and-result) type, by using
 :end-before: end error 8
 ```
 
+### Panic on Errors
+
+You can also panic directly when an unexpected error occurs:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start error 14
+:end-before: end error 14
+```
+
 ### Error Inference
 
 Within a `try` block, several different kinds of errors can be raised. When that

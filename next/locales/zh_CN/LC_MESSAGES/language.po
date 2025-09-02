@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-28 16:38+0800\n"
+"POT-Creation-Date: 2025-09-02 10:47+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1946,10 +1946,29 @@ msgid ""
 msgstr ""
 
 #: ../../language/error-handling.md:202
+msgid "Panic on Errors"
+msgstr "出错时崩溃"
+
+#: ../../language/error-handling.md:204
+msgid "You can also panic directly when an unexpected error occurs:"
+msgstr "如果发生意外错误，您也可以直接引发崩溃："
+
+#: ../../language/error-handling.md:206
+msgid ""
+"fn remainder(a : Int, b : Int) -> Int raise DivError {\n"
+"  if b == 0 {\n"
+"    raise DivError(\"division by zero\")\n"
+"  }\n"
+"  let div = try! div(a, b)\n"
+"  a - b * div\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:212
 msgid "Error Inference"
 msgstr "错误推导"
 
-#: ../../language/error-handling.md:204
+#: ../../language/error-handling.md:214
 msgid ""
 "Within a `try` block, several different kinds of errors can be raised. "
 "When that happens, the compiler will use the type `Error` as the common "
@@ -1960,7 +1979,7 @@ msgstr ""
 "在 `try` 块中，可能引发多种不同类型的错误。当发生这种情况时，编译器将使用 `Error` "
 "类型作为通用错误类型。因此，处理程序必须使用通配符 `_` 来确保捕获所有错误，并且通过 `e => raise e` 来抛出其他错误。例如："
 
-#: ../../language/error-handling.md:209
+#: ../../language/error-handling.md:219
 msgid ""
 "fn f1() -> Unit raise E1 {\n"
 "  ...\n"

@@ -135,6 +135,16 @@ fn catch_() -> Unit raise {
   // end error 13
 }
 
+// start error 14
+fn remainder(a : Int, b : Int) -> Int raise DivError {
+  if b == 0 {
+    raise DivError("division by zero")
+  }
+  let div = try! div(a, b)
+  a - b * div
+}
+// end error 14
+
 // start custom error conversion
 suberror CustomError UInt
 
