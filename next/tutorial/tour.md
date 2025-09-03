@@ -47,47 +47,31 @@ development. To update MoonBit, just run the commands above again.
 Running `moon help` gives us a bunch of subcommands. But right now the only
 commands we need are `build`, `run`, and `new`.
 
-To create a project (or module, more formally), run `moon new`. You will be
-greeted with a creation wizard.
-
-If you choose to create an `exec` mode project, you will get:
+To create a project (or module, more formally), run `moon new <path>`, where path
+is the place you would like to place the project. For example, if you execute
+`moon new examine`, you will get:
 
 ```
-my-project
+examine
+├── Agents.md
+├── cmd
+│   └── main
+│       ├── main.mbt
+│       └── moon.pkg.json
 ├── LICENSE
 ├── moon.mod.json
-├── README.md
-└── src
-    ├── lib
-    │   ├── hello.mbt
-    │   ├── hello_test.mbt
-    │   └── moon.pkg.json
-    └── main
-        ├── main.mbt
-        └── moon.pkg.json
+├── moon.pkg.json
+├── my_project_test.mbt
+├── my_project.mbt
+├── README.mbt.md
+└── README.md -> README.mbt.md
 ```
 
-which contains a `main` lib containing a `fn main` that serves as the entrance
-of the program. Try running `moon run src/main`.
+which contains a `cmd/main` lib containing a `fn main` that serves as the entrance
+of the program. Try running `cd my_project && moon run cmd/main`.
 
-If you choose to create a `lib` mode project, you will get:
-
-```
-my-project
-├── LICENSE
-├── moon.mod.json
-├── README.md
-└── src
-    ├── lib
-    │   ├── hello.mbt
-    │   ├── hello_test.mbt
-    │   └── moon.pkg.json
-    ├── moon.pkg.json
-    └── top.mbt
-```
-
-In this tutorial, we will work with the `lib` mode project, and we assume the
-project name is `examine`.
+In this tutorial, we assume the project name is `examine`, 
+and the current working directory is also `examine`.
 
 ## Example: Finding those who passed
 
@@ -342,7 +326,7 @@ But before that, you have some other things to do.
 
 To see how other people may use our program, MoonBit provides a mechanism called ["black box test"](/language/tests.md#blackbox-tests-and-whitebox-tests).
 
-Let's move the `test` block we defined above into a new file `src/top_test.mbt`.
+Let's move the `test` block we defined above into a new file `top_test.mbt`.
 
 Oops! Now there are errors complaining that:
 - `is_qualified` and `count_qualified_students` are unbound

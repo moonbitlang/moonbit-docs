@@ -74,22 +74,16 @@ For the up-to-date manual, please check out [moon's repository](https://github.c
 
 Create a new MoonBit module
 
-**Usage:** `moon new [OPTIONS] [PACKAGE_NAME]`
+**Usage:** `moon new [OPTIONS] <PATH>`
 
 **Arguments:**
 
-* `<PACKAGE_NAME>` — The name of the package
+* `<PATH>` — The path of the new project
 
 **Options:**
 
-* `--lib` — Create a library package instead of an executable
-* `--path <PATH>` — Output path of the package
-* `--user <USER>` — The user name of the package
-* `--name <NAME>` — The name part of the package
-* `--license <LICENSE>` — The license of the package
-
-  Default value: `Apache-2.0`
-* `--no-license` — Do not set a license for the package
+* `--user <USER>` — The username of the module. Default to the logged-in username
+* `--name <NAME>` — The name of the module. Default to the last part of the path
 
 
 
