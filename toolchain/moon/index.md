@@ -10,7 +10,6 @@
   * [Package Importing](tutorial.md#package-importing)
   * [Creating and Using a New Package](tutorial.md#creating-and-using-a-new-package)
   * [Adding Tests](tutorial.md#adding-tests)
-  * [Stand-alone test files for blackbox tests](tutorial.md#stand-alone-test-files-for-blackbox-tests)
 * [MoonBit's Package Manager Tutorial](package-manage-tour.md)
   * [Overview](package-manage-tour.md#overview)
   * [Setup mooncakes.io account](package-manage-tour.md#setup-mooncakes-io-account)

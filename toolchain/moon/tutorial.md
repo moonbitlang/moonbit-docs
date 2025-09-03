@@ -19,118 +19,124 @@ Once you have these prerequisites fulfilled, let's start by creating a new MoonB
 
 ## Creating a New Module
 
-To create a new module, enter the `moon new` command in the terminal, and you will see the module creation wizard. By using all the default values, you can create a new module named `username/hello` in the `my-project` directory.
+To create a new module, enter the `moon new <path>` command in the terminal, where the path is the directory that you'd like to put the project, and you will see the module being created. By using all the default values, you can create a new module named `username/my_project` in the `my_project` directory.
 
 ```bash
-$ moon new
-Enter the path to create the project (. for current directory): my-project
-Select the create mode: exec
-Enter your username: username
-Enter your project name: hello
-Enter your license: Apache-2.0
-Created my-project
+$ moon new my_project
+Initialized empty Git repository in my_project/.git/
+Created username/my_project at my_project
 ```
 
-> If you want to use all default values, you can use `moon new my-project` to create a new module named `username/hello` in the `my-project` directory.
+You may also specify the username and module name by using the `--user` option and `--name` option respectively.
+If you have logged-in, the username will default to your username.
 
 ## Understanding the Module Directory Structure
 
 After creating the new module, your directory structure should resemble the following:
 
 ```bash
-my-project
+my_project
+├── Agents.md
+├── cmd
+│   └── main
+│       ├── main.mbt
+│       └── moon.pkg.json
 ├── LICENSE
-├── README.md
 ├── moon.mod.json
-└── src
-    ├── lib
-    │   ├── hello.mbt
-    │   ├── hello_test.mbt
-    │   └── moon.pkg.json
-    └── main
-        ├── main.mbt
-        └── moon.pkg.json
+├── moon.pkg.json
+├── my_project_test.mbt
+├── my_project.mbt
+├── README.mbt.md
+└── README.md -> README.mbt.md
 ```
+
+#### NOTE
+On Windows system, you need administrator priviledge or the developer mode enabled to create the symbolic link.
 
 Here's a brief explanation of the directory structure:
 
-- `moon.mod.json` is used to identify a directory as a MoonBit module. It contains the module's metadata, such as the module name, version, etc. `source` specifies the source directory of the module. The default value is `src`.
+- `moon.mod.json` is used to identify a directory as a MoonBit module. It contains the module's metadata, such as the module name, version, etc.
   ```json
   {
-    "name": "username/hello",
+    "name": "username/my_project",
     "version": "0.1.0",
     "readme": "README.md",
     "repository": "",
     "license": "Apache-2.0",
     "keywords": [],
-    "description": "",
-    "source": "src"
+    "description": ""
   }
   ```
-- `lib` and `main` directories: These are the packages within the module. Each package can contain multiple `.mbt` files, which are the source code files for the MoonBit language. However, regardless of how many `.mbt` files a package has, they all share a common `moon.pkg.json` file. `lib/*_test.mbt` are separate test files in the `lib` package, these files are for blackbox test, so private members of the `lib` package cannot be accessed directly.
+- `.` and `cmd/main` directories: These are the packages within the module. Each package can contain multiple `.mbt` files, which are the source code files for the MoonBit language. However, regardless of how many `.mbt` files a package has, they all share a common `moon.pkg.json` file. `*_test.mbt` are separate test files in the package, these files are for blackbox test, so private members of the same package cannot be accessed directly.
 - `moon.pkg.json` is package descriptor. It defines the properties of the package, such as whether it is the main package and the packages it imports.
-  - `main/moon.pkg.json`:
+  - `cmd/main/moon.pkg.json`:
     ```json
     {
-      "is_main": true,
+      "is-main": true,
       "import": [
-        "username/hello/lib"
+        {
+          "path": "username/my_project",
+          "alias": "lib"
+        }
       ]
     }
     ```
 
-  Here, `"is_main: true"` declares that the package needs to be linked by the build system into a wasm file.
-  - `lib/moon.pkg.json`:
+    Here, `"is-main: true"` declares that the package contains an entry for the `moon run` command.
+  - `moon.pkg.json`:
     ```json
     {}
     ```
 
-  This file is empty. Its purpose is simply to inform the build system that this folder is a package.
+    This file is empty. Its purpose is simply to inform the build system that this folder is a package.
+- `README.mbt.md` is the README file. The code blocks written inside will be type checked and tested by `moon check` and `moon test`.
 
 ## Working with Packages
 
-Our `username/hello` module contains two packages: `username/hello/lib` and `username/hello/main`.
+Our `username/my_project` module contains two packages: `username/my_project` and `username/my_project/cmd/main`.
 
-The `username/hello/lib` package contains `hello.mbt` and `hello_test.mbt` files:
-
-`hello.mbt`
+The `username/my_project` package contains `my_project.mbt` and `my_project_test.mbt` files:
 
 ```moonbit
-pub fn hello() -> String {
-    "Hello, world!"
-}
-```
+///|
+pub fn fib(n : Int) -> Int64 {
+  for i = 0, a = 0L, b = 1L; i < n; i = i + 1, a = b, b = a + b {
 
-`hello_test.mbt`
-
-```moonbit
-test "hello" {
-  if @lib.hello() != "Hello, world!" {
-    fail("@lib.hello() != \"Hello, world!\"")
+  } else {
+    b
   }
 }
 ```
 
-The `username/hello/main` package contains a `main.mbt` file:
-
 ```moonbit
-fn main {
-  println(@lib.hello())
+///|
+test "fib" {
+  let array = [1, 2, 3, 4, 5].map(fib(_))
+
+  // `inspect` is used to check the output of the function
+  // Just write `inspect(value)` and execute `moon test --update`
+  // to update the expected output, and verify them afterwards
+  inspect(array, content="[1, 2, 3, 5, 8]")
 }
 ```
 
-To execute the program, specify the file system's path to the `username/hello/main` package in the `moon run` command:
+#### NOTE
+The generated file name will depend on the package name.
 
-```bash
-$ moon run ./src/main
-Hello, world!
+The `username/my_project/cmd/main` package contains a `main.mbt` file:
+
+```moonbit
+///|
+fn main {
+  println(@lib.fib(10))
+}
 ```
 
-You can also omit `./`
+To execute the program, specify the file system's path to the `username/my_project/cmd/main` package in the `moon run` command:
 
 ```bash
-$ moon run src/main
-Hello, world!
+$ moon run cmd/main
+89
 ```
 
 You can test using the `moon test` command:
@@ -142,48 +148,45 @@ Total tests: 1, passed: 1, failed: 0.
 
 ## Package Importing
 
-In the MoonBit's build system, a module's name is used to reference its internal packages.
-To import the `username/hello/lib` package in `src/main/main.mbt`, you need to specify it in `src/main/moon.pkg.json`:
+In the MoonBit's build system, the dependency is declared at the package level.
+To import the `username/my_project` package in `username/my_project/cmd/main`, you need to specify it in `cmd/main/moon.pkg.json`:
 
 ```json
 {
-  "is_main": true,
+  "is-main": true,
   "import": [
-    "username/hello/lib"
+    {
+      "path": "username/my_project",
+      "alias": "lib"
+    }
   ]
 }
 ```
 
-Here, `username/hello/lib` specifies importing the `username/hello/lib` package from the `username/hello` module, so you can use `@lib.hello()` in `main/main.mbt`.
-
-Note that the package name imported in `src/main/moon.pkg.json` is `username/hello/lib`, and `@lib` is used to refer to this package in `src/main/main.mbt`. The import here actually generates a default alias for the package name `username/hello/lib`. In the following sections, you will learn how to customize the alias for a package.
+Here, `"username/my_project` specifies importing the root package and having an alias of `lib`, so you can use `@lib.fib(10)` in `cmd/main/main.mbt`.
 
 ## Creating and Using a New Package
 
 First, create a new directory named `fib` under `lib`:
 
 ```bash
-mkdir src/lib/fib
+mkdir fib
 ```
 
-Now, you can create new files under `src/lib/fib`:
-
-`a.mbt`:
+Now, you can create new files under `fib`:
 
 ```moonbit
-pub fn fib(n : Int) -> Int {
+pub fn fib_slow(n : Int) -> Int {
   match n {
     0 => 0
     1 => 1
-    _ => fib(n - 1) + fib(n - 2)
+    _ => fib_slow(n - 1) + fib_slow(n - 2)
   }
 }
 ```
 
-`b.mbt`:
-
 ```moonbit
-pub fn fib2(num : Int) -> Int {
+pub fn fib_fast(num : Int) -> Int {
   fn aux(n, acc1, acc2) {
     match n {
       0 => acc1
@@ -196,8 +199,6 @@ pub fn fib2(num : Int) -> Int {
 }
 ```
 
-`moon.pkg.json`:
-
 ```json
 {}
 ```
@@ -205,105 +206,88 @@ pub fn fib2(num : Int) -> Int {
 After creating these files, your directory structure should look like this:
 
 ```bash
-my-project
+.
+├── Agents.md
+├── cmd
+│   └── main
+│       ├── main.mbt
+│       └── moon.pkg.json
+├── fib
+│   ├── fast.mbt
+│   ├── moon.pkg.json
+│   └── slow.mbt
 ├── LICENSE
-├── README.md
 ├── moon.mod.json
-└── src
-    ├── lib
-    │   ├── fib
-    │   │   ├── a.mbt
-    │   │   ├── b.mbt
-    │   │   └── moon.pkg.json
-    │   ├── hello.mbt
-    │   ├── hello_test.mbt
-    │   └── moon.pkg.json
-    └── main
-        ├── main.mbt
-        └── moon.pkg.json
+├── moon.pkg.json
+├── my_project_test.mbt
+├── my_project.mbt
+├── README.mbt.md
+└── README.md -> README.mbt.md
 ```
 
-In the `src/main/moon.pkg.json` file, import the `username/hello/lib/fib` package and customize its alias to `my_awesome_fibonacci`:
+In the `cmd/main/moon.pkg.json` file, import the `username/my_project/fib` package and customize its alias to `my_awesome_fibonacci`:
 
 ```json
 {
   "is_main": true,
   "import": [
-    "username/hello/lib",
     {
-      "path": "username/hello/lib/fib",
+      "path": "username/my_project/fib",
       "alias": "my_awesome_fibonacci"
     }
   ]
 }
 ```
 
-This line imports the `fib` package, which is part of the `lib` package in the `hello` module. After doing this, you can use the `fib` package in `main/main.mbt`. Replace the file content of `main/main.mbt` to:
+This imports the `fib` package. After doing this, you can use the `fib` package in `cmd/main/main.mbt`. Replace the file content of `cmd/main/main.mbt` to:
 
 ```moonbit
 fn main {
-  let a = @my_awesome_fibonacci.fib(10)
-  let b = @my_awesome_fibonacci.fib2(11)
+  let a = @my_awesome_fibonacci.fib_slow(10)
+  let b = @my_awesome_fibonacci.fib_fast(11)
   println("fib(10) = \{a}, fib(11) = \{b}")
-
-  println(@lib.hello())
 }
 ```
 
 To execute your program, specify the path to the `main` package:
 
 ```bash
-$ moon run ./src/main
+$ moon run cmd/main
 fib(10) = 55, fib(11) = 89
-Hello, world!
 ```
 
 ## Adding Tests
 
-Let's add some tests to verify our fib implementation. Add the following content in `src/lib/fib/a.mbt`:
-
-`src/lib/fib/a.mbt`
+Let's add some tests to verify our fib implementation. Add the following content in `fib/fib_test.mbt`:
 
 ```moonbit
 test {
-  assert_eq(fib(1), 1)
-  assert_eq(fib(2), 1)
-  assert_eq(fib(3), 2)
-  assert_eq(fib(4), 3)
-  assert_eq(fib(5), 5)
+  inspect(fib_slow(0))
+  inspect(fib_slow(1))
+  inspect(fib_slow(2))
 }
 ```
 
-This code tests the first five terms of the Fibonacci sequence. `test { ... }` defines an inline test block. The code inside an inline test block is executed in test mode.
+This code tests the first three terms of the Fibonacci sequence. `test { ... }` defines an inline test block. The code inside an inline test block is executed in test mode.
 
 Inline test blocks are discarded in non-test compilation modes (`moon build` and `moon run`), so they won't cause the generated code size to bloat.
 
-## Stand-alone test files for blackbox tests
-
-Besides inline tests, MoonBit also supports stand-alone test files. Source files ending in `_test.mbt` are considered test files for blackbox tests. For example, inside the `src/lib/fib` directory, create a file named `fib_test.mbt` and paste the following code:
-
-`src/lib/fib/fib_test.mbt`
+Here we are using the snapshot test. Execute `moon test --update`, and the file should be changed to:
 
 ```moonbit
 test {
-  assert_eq(@fib.fib(1), 1)
-  assert_eq(@fib.fib2(2), 1)
-  assert_eq(@fib.fib(3), 2)
-  assert_eq(@fib.fib2(4), 3)
-  assert_eq(@fib.fib(5), 5)
+  inspect(@fib.fib_slow(0), content="0")
+  inspect(@fib.fib_slow(1), content="1")
+  inspect(@fib.fib_slow(2), content="1")
 }
 ```
 
-Notice that the test code uses `@fib` to refer to the `username/hello/lib/fib` package. The build system automatically creates a new package for blackbox tests by using the files that end with `_test.mbt`. This new package will import the current package automatically, allowing you to use `@lib` in the test code.
+Notice that the test code uses `@fib` to refer to the `fib` package. The build system automatically creates a new package for blackbox tests by using the files that end with `_test.mbt`.
 
-Finally, use the `moon test` command, which scans the entire project, identifies, and runs all inline tests as well as files ending with `_test.mbt`. If everything is normal, you will see:
+Finally, reuse the `moon test` command, which scans the entire project, identifies, and runs all the tests.
+If everything is normal, you will see:
 
 ```bash
 $ moon test
-Total tests: 3, passed: 3, failed: 0.
-$ moon test -v
-test username/hello/lib/hello_test.mbt::hello ok
-test username/hello/lib/fib/a.mbt::0 ok
-test username/hello/lib/fib/fib_test.mbt::0 ok
-Total tests: 3, passed: 3, failed: 0.
+Total tests: 2, passed: 2, failed: 0.
 ```
