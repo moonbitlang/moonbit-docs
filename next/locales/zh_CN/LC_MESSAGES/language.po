@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-03 11:11+0800\n"
+"POT-Creation-Date: 2025-09-03 17:13+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -39,13 +39,13 @@ msgstr "异步函数"
 
 #: ../../language/async-experimental.md:9
 msgid ""
-"Async functions are declared with the `async` keyword, and explicit "
-"[`raise` or `noraise`](/language/error-handling.md#throwing-errors):"
+"Async functions are declared with the `async` keyword.  They implicitly "
+"[`raise`](/language/error-handling.md#throwing-errors) errors  and need "
+"to declare `noraise` explicitly if otherwise."
 msgstr ""
-"异步函数用 `async` 关键字，以及显式的 [`raise` 或 `noraise`](/language/error-handling.md"
-"#throwing-errors)："
+"异步函数用 `async` 关键字定义。他们隐式地 [抛出错误](/language/error-handling.md#throwing-errors) ，而如果不抛出错误则需要显式地声明 `noraise`。"
 
-#: ../../language/async-experimental.md:11
+#: ../../language/async-experimental.md:13
 msgid ""
 "async fn my_async_function() -> Unit noraise {\n"
 "  ...\n"
@@ -75,7 +75,7 @@ msgstr ""
 "\n"
 "}\n"
 
-#: ../../language/async-experimental.md:17
+#: ../../language/async-experimental.md:19
 msgid ""
 "Since MoonBit is a statically typed language, the compiler will track its"
 "  asyncness, so you can just call async functions like normal functions, "
@@ -85,7 +85,7 @@ msgstr ""
 "由于 MoonBit 是一门静态类型语言，编译器会跟踪异步函数的调用，因此你可以像调用普通函数一样调用异步函数。MoonBit IDE "
 "会用不同的样式来高亮显示异步函数的调用。"
 
-#: ../../language/async-experimental.md:21
+#: ../../language/async-experimental.md:23
 msgid ""
 "\n"
 "///|\n"
@@ -109,27 +109,27 @@ msgstr ""
 "  some_async_function() // 使用斜体渲染\n"
 "}\n"
 
-#: ../../language/async-experimental.md:27
+#: ../../language/async-experimental.md:29
 msgid "Async functions can only be called inside async functions."
 msgstr "异步函数只能在异步函数中调用。"
 
-#: ../../language/async-experimental.md:30
+#: ../../language/async-experimental.md:32
 msgid ""
 "Currently, async functions  have not be supported in the body of `for .. "
 "in` loops yet, this  will be addressed in the future."
 msgstr "目前，异步函数还不支持在 `for .. in` 循环体中使用，这将在未来的版本中解决。"
 
-#: ../../language/async-experimental.md:35
+#: ../../language/async-experimental.md:37
 msgid "Async primitives for suspension"
 msgstr "用于中断异步函数的原语"
 
-#: ../../language/async-experimental.md:36
+#: ../../language/async-experimental.md:38
 msgid ""
 "MoonBit provides two core primitives for `%async.suspend` and "
 "`%async.run`:"
 msgstr "MoonBit 提供了两个用于异步编程的原语：`%async.suspend` 和 `%async.run`："
 
-#: ../../language/async-experimental.md:38
+#: ../../language/async-experimental.md:40
 msgid ""
 "\n"
 "///| `run_async` spawn a new coroutine and execute an async function in "
@@ -168,7 +168,7 @@ msgstr ""
 "  ) -> Unit\n"
 ") -> T raise E = \"%async.suspend\"\n"
 
-#: ../../language/async-experimental.md:44
+#: ../../language/async-experimental.md:46
 msgid ""
 "There two primitives are not intended for direct use by end users. "
 "However, since MoonBit's standard library for async programming is still "
@@ -176,11 +176,11 @@ msgid ""
 "manually to do async programming."
 msgstr "这两个原语不应该让终端用户直接调用。但由于 MoonBit 的异步标准库仍在开发中，目前，用户需要手动绑定这两个原语，才能编写异步程序。"
 
-#: ../../language/async-experimental.md:48
+#: ../../language/async-experimental.md:50
 msgid "There are two ways of reading these primitives:"
 msgstr "可以用两种不同的方式来理解这两个原语："
 
-#: ../../language/async-experimental.md:50
+#: ../../language/async-experimental.md:52
 msgid ""
 "The coroutine reading: `%async.run` spawns a new coroutine, and "
 "`%async.suspend` suspends the current coroutine. The main difference with"
@@ -192,7 +192,7 @@ msgstr ""
 "暂停当前协程。和其他语言的协程的主要区别是：协程暂停后，不是由调用 `%async.run` 的地方来负责恢复执行，而是通过传递给 "
 "`%async.suspend` 的回调函数来处理协程的恢复。"
 
-#: ../../language/async-experimental.md:55
+#: ../../language/async-experimental.md:57
 msgid ""
 "The delimited continuation reading: `%async.run` is the `reset` operator "
 "in delimited continuation, and `%async.suspend` is the `shift` operator "
@@ -201,11 +201,11 @@ msgstr ""
 "理解为 delimited continuation：`%async.run` 是 delimited continuation 中的 "
 "`reset` 操作符，`%async.suspend` 是 delimited continuation `shift` 操作符"
 
-#: ../../language/async-experimental.md:59
+#: ../../language/async-experimental.md:61
 msgid "Here's an example of how these two primitives work:"
 msgstr "以下是使用这两个原语的示例："
 
-#: ../../language/async-experimental.md:61
+#: ../../language/async-experimental.md:63
 msgid ""
 "\n"
 "///|\n"
@@ -315,7 +315,7 @@ msgstr ""
 "  )\n"
 "}\n"
 
-#: ../../language/async-experimental.md:67
+#: ../../language/async-experimental.md:69
 msgid ""
 "In `async_worker`, `suspend` will capture the rest of the current "
 "coroutine as two \"continuation\" functions, and pass them to a callback."
@@ -330,7 +330,7 @@ msgstr ""
 "正常返回，恢复协程的运行，一直运行到创建这个协程的 `run_async(...)` 为止。调用 `resume_err` "
 "也会恢复协程的运行，但它会在 `suspend(...)` 的位置抛出一个错误。"
 
-#: ../../language/async-experimental.md:73
+#: ../../language/async-experimental.md:75
 msgid ""
 "Notice that `suspend` type may throw error, even if `suspend` itself "
 "never throw an error directly. This design makes coroutines cancellable "
@@ -340,11 +340,11 @@ msgstr ""
 "`suspend` 的类型表明它可能抛出错误。但 `suspend` "
 "自身不会直接产生任何错误。这一设计保证了协程在每一个的中断点都是可以取消的：调用对应的 `resume_err` 函数即可。"
 
-#: ../../language/async-experimental.md:76
+#: ../../language/async-experimental.md:78
 msgid "Integrating with JS Promise/callback based API"
 msgstr "和 JS 的 Promise/回调 API 整合"
 
-#: ../../language/async-experimental.md:77
+#: ../../language/async-experimental.md:79
 msgid ""
 "Since MoonBit's standard async library is still under development, so "
 "there is no ready-to-use implementation for event loop and IO operations "
@@ -357,7 +357,7 @@ msgstr ""
 "编写异步程序最简单的办法是使用 JS 后端，并复用 JavaScript 的事件循环和输入输出 API。下面是一个整合 MoonBit "
 "的异步编程支持和 JS 的回调 API 的例子："
 
-#: ../../language/async-experimental.md:83
+#: ../../language/async-experimental.md:85
 msgid ""
 "#external\n"
 "type JSTimer\n"
@@ -403,7 +403,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/async-experimental.md:89
+#: ../../language/async-experimental.md:91
 msgid ""
 "Integrating with JS Promise is easy too: just pass `resume_ok` as the "
 "`resolve` callback and `resume_err` as the `reject` callback to a JS "
@@ -2040,29 +2040,27 @@ msgstr ""
 #: ../../language/error_codes/E0035.md:8 ../../language/error_codes/E0036.md:13
 #: ../../language/error_codes/E0037.md:5 ../../language/error_codes/E0041.md:9
 #: ../../language/error_codes/E0042.md:8 ../../language/error_codes/E0043.md:9
-#: ../../language/error_codes/E0044.md:7 ../../language/error_codes/E0045.md:13
-#: ../../language/error_codes/E0046.md:10
+#: ../../language/error_codes/E0044.md:7 ../../language/error_codes/E0046.md:10
 #: ../../language/error_codes/E0049.md:10 ../../language/error_codes/E0050.md:9
 #: ../../language/error_codes/E0051.md:8 ../../language/error_codes/E0052.md:8
-#: ../../language/error_codes/E0053.md:9 ../../language/error_codes/E0054.md:11
-#: ../../language/error_codes/E0055.md:10 ../../language/error_codes/E0056.md:9
-#: ../../language/error_codes/E0057.md:8 ../../language/error_codes/E2000.md:17
-#: ../../language/error_codes/E3001.md:5 ../../language/error_codes/E3002.md:5
-#: ../../language/error_codes/E3003.md:10 ../../language/error_codes/E3004.md:6
-#: ../../language/error_codes/E3005.md:11 ../../language/error_codes/E3006.md:7
-#: ../../language/error_codes/E3007.md:5 ../../language/error_codes/E3008.md:5
-#: ../../language/error_codes/E3009.md:5 ../../language/error_codes/E3010.md:5
-#: ../../language/error_codes/E3011.md:6 ../../language/error_codes/E3012.md:6
-#: ../../language/error_codes/E3014.md:8 ../../language/error_codes/E3016.md:5
-#: ../../language/error_codes/E3017.md:9 ../../language/error_codes/E3018.md:5
-#: ../../language/error_codes/E3019.md:10 ../../language/error_codes/E3020.md:6
-#: ../../language/error_codes/E3800.md:10 ../../language/error_codes/E4000.md:5
-#: ../../language/error_codes/E4005.md:5 ../../language/error_codes/E4007.md:6
-#: ../../language/error_codes/E4050.md:9 ../../language/error_codes/E4051.md:15
-#: ../../language/error_codes/E4052.md:7 ../../language/error_codes/E4053.md:18
-#: ../../language/error_codes/E4055.md:5 ../../language/error_codes/E4056.md:5
-#: ../../language/error_codes/E4057.md:5 ../../language/error_codes/E4059.md:8
-#: ../../language/error_codes/E4061.md:17
+#: ../../language/error_codes/E0053.md:9 ../../language/error_codes/E0055.md:10
+#: ../../language/error_codes/E0056.md:9 ../../language/error_codes/E0057.md:8
+#: ../../language/error_codes/E2000.md:17 ../../language/error_codes/E3001.md:5
+#: ../../language/error_codes/E3002.md:5 ../../language/error_codes/E3003.md:10
+#: ../../language/error_codes/E3004.md:6 ../../language/error_codes/E3005.md:11
+#: ../../language/error_codes/E3006.md:7 ../../language/error_codes/E3007.md:5
+#: ../../language/error_codes/E3008.md:5 ../../language/error_codes/E3009.md:5
+#: ../../language/error_codes/E3010.md:5 ../../language/error_codes/E3011.md:6
+#: ../../language/error_codes/E3012.md:6 ../../language/error_codes/E3014.md:8
+#: ../../language/error_codes/E3016.md:5 ../../language/error_codes/E3017.md:9
+#: ../../language/error_codes/E3018.md:5 ../../language/error_codes/E3019.md:10
+#: ../../language/error_codes/E3020.md:6 ../../language/error_codes/E3800.md:10
+#: ../../language/error_codes/E4000.md:5 ../../language/error_codes/E4005.md:5
+#: ../../language/error_codes/E4007.md:6 ../../language/error_codes/E4050.md:9
+#: ../../language/error_codes/E4051.md:15 ../../language/error_codes/E4052.md:7
+#: ../../language/error_codes/E4053.md:18 ../../language/error_codes/E4055.md:5
+#: ../../language/error_codes/E4056.md:5 ../../language/error_codes/E4057.md:5
+#: ../../language/error_codes/E4059.md:8 ../../language/error_codes/E4061.md:17
 #: ../../language/error_codes/E4063.md:13 ../../language/error_codes/E4064.md:5
 #: ../../language/error_codes/E4065.md:27 ../../language/error_codes/E4066.md:9
 #: ../../language/error_codes/E4067.md:11
@@ -2170,13 +2168,11 @@ msgstr ""
 #: ../../language/error_codes/E0042.md:13
 #: ../../language/error_codes/E0043.md:15
 #: ../../language/error_codes/E0044.md:13
-#: ../../language/error_codes/E0045.md:19
 #: ../../language/error_codes/E0049.md:27
 #: ../../language/error_codes/E0050.md:15
 #: ../../language/error_codes/E0051.md:14
 #: ../../language/error_codes/E0052.md:14
 #: ../../language/error_codes/E0053.md:15
-#: ../../language/error_codes/E0054.md:17
 #: ../../language/error_codes/E0055.md:16
 #: ../../language/error_codes/E0056.md:15
 #: ../../language/error_codes/E0057.md:14
@@ -2216,7 +2212,7 @@ msgstr ""
 #: ../../language/error_codes/E4014.md:16
 #: ../../language/error_codes/E4015.md:18
 #: ../../language/error_codes/E4017.md:26
-#: ../../language/error_codes/E4018.md:22
+#: ../../language/error_codes/E4018.md:25
 #: ../../language/error_codes/E4019.md:20
 #: ../../language/error_codes/E4020.md:19
 #: ../../language/error_codes/E4021.md:19
@@ -4411,7 +4407,8 @@ msgstr ""
 
 #: ../../language/error_codes/E0033.md:3 ../../language/error_codes/E0034.md:3
 #: ../../language/error_codes/E0038.md:3 ../../language/error_codes/E0039.md:3
-#: ../../language/error_codes/E0040.md:3 ../../language/error_codes/E3015.md:3
+#: ../../language/error_codes/E0040.md:3 ../../language/error_codes/E0045.md:3
+#: ../../language/error_codes/E0054.md:3 ../../language/error_codes/E3015.md:3
 #: ../../language/error_codes/E4105.md:3
 msgid "No longer emitted."
 msgstr "MoonBit 已不再使用此错误码。"
@@ -4799,59 +4796,6 @@ msgstr ""
 msgid "E0045"
 msgstr ""
 
-#: ../../language/error_codes/E0045.md:3
-msgid ""
-"Traits with only default implementation need to be explicit implemented "
-"with `impl Trait for Type`."
-msgstr "所有方法都有默认实现的特征必须用 `impl Trait for Type` 显式实现。"
-
-#: ../../language/error_codes/E0045.md:6
-msgid ""
-"Initially, if all methods of a trait have default implementations, "
-"MoonBit allowed **any** types to implicitly implement that trait without "
-"an explicit `impl` declaration. This behavior is now deprecated, and you "
-"should explicitly implement traits using the `impl Trait for Type` "
-"syntax. Currently, this deprecation is going through a \"graceful "
-"migration\" period, and this warning will be emitted if your code uses "
-"implicit trait implementation."
-msgstr ""
-"最初，如果一个特征的每个方法都有默认实现，MoonBit 允许 **任何** 类型隐式地实现这个特征，无需显式地写 "
-"`impl`。这一行为目前一倍废弃，用户应该通过 `impl Trait for Type` "
-"语法显式实现这些特征。声明来实现特征。目前，这一废弃处于迁移阶段，MoonBit "
-"依然支持旧的语义，但如果程序使用了普通方法来隐式地实现特征，编译器就会产生该警告。"
-
-#: ../../language/error_codes/E0045.md:15
-msgid ""
-"///|\n"
-"pub(open) trait Foo {\n"
-"  foo(Self) -> Unit = _\n"
-"}\n"
-"\n"
-"///|\n"
-"impl Foo with foo(_) {\n"
-"\n"
-"}\n"
-"\n"
-"///|\n"
-"test {\n"
-"  let x : Int = 0\n"
-"  Foo::foo(x)\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0045.md:21
-msgid ""
-"Add an explicit `impl` declaration for types that you wish to implement "
-"the trait for."
-msgstr "为想要实现对应特征的类型添加显式的 `impl` 声明。"
-
-#: ../../language/error_codes/E0045.md:24
-msgid ""
-"\n"
-"///|\n"
-"impl Foo for Int\n"
-msgstr ""
-
 #: ../../language/error_codes/E0046.md:1
 msgid "E0046"
 msgstr ""
@@ -5164,40 +5108,6 @@ msgstr ""
 
 #: ../../language/error_codes/E0054.md:1
 msgid "E0054"
-msgstr ""
-
-#: ../../language/error_codes/E0054.md:3
-msgid "Async function or method is missing the error annotation."
-msgstr ""
-
-#: ../../language/error_codes/E0054.md:5
-msgid ""
-"Asynchronous functions and methods are expected to specify the errors "
-"they can raise.If an async function or method is guaranteed **not** to "
-"raise any errors, it must be explicitly marked with the "
-"[`noraise`](/language/error-handling.md#throwing-errors) annotation. This"
-" clarifies the function's behavior for anyone using it."
-msgstr ""
-
-#: ../../language/error_codes/E0054.md:13
-msgid ""
-"///|\n"
-"pub async fn println(str : String) -> Unit {\n"
-"  ...\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0054.md:19
-#, fuzzy
-msgid "Add `noraise` or `raise E` to the function signature."
-msgstr "在函数名后添加 `()`。"
-
-#: ../../language/error_codes/E0054.md:21
-msgid ""
-"///|\n"
-"pub async fn println(str : String) -> Unit noraise {\n"
-"  ...\n"
-"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E0055.md:1
@@ -7087,37 +6997,60 @@ msgstr "无法为给定类型解析特征。"
 
 #: ../../language/error_codes/E4018.md:7
 msgid ""
-"struct S { v : Int }\n"
+"///|\n"
+"trait HasDefault {\n"
+"  f(Self) -> Unit = _\n"
+"}\n"
 "\n"
-"let s : S = { v: 3 }\n"
-"let t = Show::to_string(s)\n"
+"///|\n"
+"impl HasDefault with f(_) {\n"
+"\n"
+"}\n"
+"\n"
+"///|\n"
+"struct S(Int)\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let s : S = S(3)\n"
+"  let _ = Show::to_string(s)\n"
+"  HasDefault::f(s)\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4018.md:14
+#: ../../language/error_codes/E4018.md:11
 msgid ""
 "The example above tries to call the method `to_string` from the `Show` "
-"trait on a type `S`, but since `S` does not implement that trait, it "
-"gives the following error on line 4:"
-msgstr "在上述例子中，试图在类型 `S` 上调用 `Show` 特征的方法 `to_string`，但由于 `S` 没有实现该特征，会在第 4 行报错："
+"trait and the method `f` from the `HasDefault` trait on type `S`, but "
+"since `S` does not implement those traits, it gives the following error:"
+msgstr "在上述例子中，试图在类型 `S` 上调用 `Show` 特征的方法 `to_string` 以及 `HasDefault` 特征的方法 `f`，但由于 `S` 没有实现这些特征，会有如下错误："
 
-#: ../../language/error_codes/E4018.md:18
-msgid "Type S does not implement trait Show: method output is missing\n"
+#: ../../language/error_codes/E4018.md:15
+msgid ""
+"Type S does not implement trait Show: no `impl` is defined\n"
+"Type S does not implement trait HasDefault: no `impl` is defined\n"
 msgstr ""
 
-#: ../../language/error_codes/E4018.md:24
-msgid "Implement the `Show` trait for the type `S`:"
-msgstr "给类型 `S` 实现 `Show` 特征："
-
-#: ../../language/error_codes/E4018.md:26
+#: ../../language/error_codes/E4018.md:21
 msgid ""
-"struct S { v : Int }\n"
+"For a trait that has default implementations for all its methods, an "
+"explicit implementation declaration is still needed."
+msgstr ""
+"对于一个所有方法均有默认实现的特征，依然需要一个显示的实现声明。"
+
+#: ../../language/error_codes/E4018.md:27
+msgid "Implement the `Show` trait and the `HasDefault` trait for the type `S`:"
+msgstr "给类型 `S` 实现 `Show` 特征和 `HasDefault` 特征："
+
+#: ../../language/error_codes/E4018.md:29
+msgid ""
+"///|\n"
+"impl HasDefault for S\n"
 "\n"
-"let s : S = { v: 3 }\n"
-"let t = Show::to_string(s)\n"
-"\n"
-"impl Show for S with output(self, logger) {\n"
-"  logger.write_object(self.v)\n"
-"}"
+"///|\n"
+"impl Show for S with output(s, logger) {\n"
+"  s.0.output(logger)\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4019.md:1
@@ -11722,8 +11655,7 @@ msgstr "使用 `try ... catch! ...` 块显式处理错误。`catch!` 意味着�
 msgid ""
 "The `catch!` syntax is deprecated. Use `catch {e => raise e}` to reraise "
 "explicitly."
-msgstr ""
-"`catch!` 语法已被弃用。请使用 `catch {e => raise e}` 显式重新抛出错误。"
+msgstr "`catch!` 语法已被弃用。请使用 `catch {e => raise e}` 显式重新抛出错误。"
 
 #: ../../language/error_codes/E4122.md:20
 msgid "Raise the error directly:"
@@ -20776,6 +20708,115 @@ msgstr ""
 #~ "      @double.not_a_number\n"
 #~ "    }\n"
 #~ "  }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Traits with only default implementation "
+#~ "need to be explicit implemented with "
+#~ "`impl Trait for Type`."
+#~ msgstr "所有方法都有默认实现的特征必须用 `impl Trait for Type` 显式实现。"
+
+#~ msgid ""
+#~ "Initially, if all methods of a "
+#~ "trait have default implementations, MoonBit"
+#~ " allowed **any** types to implicitly "
+#~ "implement that trait without an explicit"
+#~ " `impl` declaration. This behavior is "
+#~ "now deprecated, and you should "
+#~ "explicitly implement traits using the "
+#~ "`impl Trait for Type` syntax. Currently,"
+#~ " this deprecation is going through a"
+#~ " \"graceful migration\" period, and this"
+#~ " warning will be emitted if your "
+#~ "code uses implicit trait implementation."
+#~ msgstr ""
+#~ "最初，如果一个特征的每个方法都有默认实现，MoonBit 允许 **任何** "
+#~ "类型隐式地实现这个特征，无需显式地写 `impl`。这一行为目前一倍废弃，用户应该通过 `impl "
+#~ "Trait for Type` "
+#~ "语法显式实现这些特征。声明来实现特征。目前，这一废弃处于迁移阶段，MoonBit "
+#~ "依然支持旧的语义，但如果程序使用了普通方法来隐式地实现特征，编译器就会产生该警告。"
+
+#~ msgid ""
+#~ "///|\n"
+#~ "pub(open) trait Foo {\n"
+#~ "  foo(Self) -> Unit = _\n"
+#~ "}\n"
+#~ "\n"
+#~ "///|\n"
+#~ "impl Foo with foo(_) {\n"
+#~ "\n"
+#~ "}\n"
+#~ "\n"
+#~ "///|\n"
+#~ "test {\n"
+#~ "  let x : Int = 0\n"
+#~ "  Foo::foo(x)\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Add an explicit `impl` declaration for"
+#~ " types that you wish to implement "
+#~ "the trait for."
+#~ msgstr "为想要实现对应特征的类型添加显式的 `impl` 声明。"
+
+#~ msgid ""
+#~ "\n"
+#~ "///|\n"
+#~ "impl Foo for Int\n"
+#~ msgstr ""
+
+#~ msgid "Async function or method is missing the error annotation."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Asynchronous functions and methods are "
+#~ "expected to specify the errors they "
+#~ "can raise.If an async function or "
+#~ "method is guaranteed **not** to raise"
+#~ " any errors, it must be explicitly"
+#~ " marked with the [`noraise`](/language/error-"
+#~ "handling.md#throwing-errors) annotation. This "
+#~ "clarifies the function's behavior for "
+#~ "anyone using it."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "pub async fn println(str : String) -> Unit {\n"
+#~ "  ...\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "Add `noraise` or `raise E` to the function signature."
+#~ msgstr "在函数名后添加 `()`。"
+
+#~ msgid ""
+#~ "///|\n"
+#~ "pub async fn println(str : String) -> Unit noraise {\n"
+#~ "  ...\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "struct S { v : Int }\n"
+#~ "\n"
+#~ "let s : S = { v: 3 }\n"
+#~ "let t = Show::to_string(s)\n"
+#~ msgstr ""
+
+#~ msgid "Type S does not implement trait Show: method output is missing\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "struct S { v : Int }\n"
+#~ "\n"
+#~ "let s : S = { v: 3 }\n"
+#~ "let t = Show::to_string(s)\n"
+#~ "\n"
+#~ "impl Show for S with output(self, logger) {\n"
+#~ "  logger.write_object(self.v)\n"
 #~ "}"
 #~ msgstr ""
 
