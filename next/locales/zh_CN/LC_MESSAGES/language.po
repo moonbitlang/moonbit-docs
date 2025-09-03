@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 10:54+0800\n"
+"POT-Creation-Date: 2025-09-03 11:11+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2091,7 +2091,7 @@ msgstr ""
 #: ../../language/error_codes/E4118.md:8 ../../language/error_codes/E4119.md:5
 #: ../../language/error_codes/E4120.md:11
 #: ../../language/error_codes/E4121.md:13
-#: ../../language/error_codes/E4122.md:14 ../../language/error_codes/E4124.md:5
+#: ../../language/error_codes/E4122.md:18 ../../language/error_codes/E4124.md:5
 #: ../../language/error_codes/E4125.md:13 ../../language/error_codes/E4127.md:8
 #: ../../language/error_codes/E4128.md:5 ../../language/error_codes/E4130.md:10
 #: ../../language/error_codes/E4131.md:10 ../../language/error_codes/E4132.md:5
@@ -2294,7 +2294,7 @@ msgstr ""
 #: ../../language/error_codes/E4119.md:11
 #: ../../language/error_codes/E4120.md:28
 #: ../../language/error_codes/E4121.md:19
-#: ../../language/error_codes/E4122.md:34
+#: ../../language/error_codes/E4122.md:38
 #: ../../language/error_codes/E4124.md:11
 #: ../../language/error_codes/E4125.md:19
 #: ../../language/error_codes/E4127.md:14
@@ -11708,10 +11708,8 @@ msgid "Use the `raise` keyword to raise an error directly."
 msgstr "使用 `raise` 关键字直接引发错误。"
 
 #: ../../language/error_codes/E4122.md:10
-msgid ""
-"Re-raise an error by annotating the function application with the `!` "
-"operator."
-msgstr "使用 `!` 运算符重新抛出错误。"
+msgid "Re-raise an error by simply applying a function that raises an error."
+msgstr "调用一个抛出错误的函数来重新抛出错误。"
 
 #: ../../language/error_codes/E4122.md:11
 msgid ""
@@ -11720,91 +11718,110 @@ msgid ""
 "block."
 msgstr "使用 `try ... catch! ...` 块显式处理错误。`catch!` 意味着重新抛出 catch 块中未处理的所有错误。"
 
-#: ../../language/error_codes/E4122.md:16
+#: ../../language/error_codes/E4122.md:15
+msgid ""
+"The `catch!` syntax is deprecated. Use `catch {e => raise e}` to reraise "
+"explicitly."
+msgstr ""
+"`catch!` 语法已被弃用。请使用 `catch {e => raise e}` 显式重新抛出错误。"
+
+#: ../../language/error_codes/E4122.md:20
 msgid "Raise the error directly:"
 msgstr "直接抛出错误："
 
-#: ../../language/error_codes/E4122.md:18
+#: ../../language/error_codes/E4122.md:22
 msgid ""
-"type! ArithmeticError {\n"
+"///|\n"
+"priv suberror ArithmeticError {\n"
 "  DivisionByZero\n"
 "}\n"
 "\n"
+"///|\n"
 "pub fn checked_div(a : Double, b : Double) -> Double {\n"
 "  if b == 0.0 {\n"
 "    raise DivisionByZero // Error: raise can only be used inside ...\n"
 "  }\n"
 "  return a / b\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4122.md:22
+#: ../../language/error_codes/E4122.md:26
 msgid "Re-raise the error:"
 msgstr "重新抛出错误："
 
-#: ../../language/error_codes/E4122.md:24
+#: ../../language/error_codes/E4122.md:28
 msgid ""
+"///|\n"
 "pub fn rethrow() -> Unit {\n"
-"  fail!(\"throwing\") // Error: `!` operator will rethrow the error "
-"raised in the function application, and can only be used inside ...\n"
-"}"
+"  // Error: Function with error can only be used \n"
+"  // inside a function with error types in its signature\n"
+"  fail(\"throwing\")\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4122.md:28
+#: ../../language/error_codes/E4122.md:32
 msgid "Catch all errors using `catch!`:"
 msgstr "使用 `catch!` 捕获所有错误："
 
-#: ../../language/error_codes/E4122.md:30
+#: ../../language/error_codes/E4122.md:34
 msgid ""
+"///|\n"
 "pub fn catch_all() -> Double {\n"
-"  try {\n"
-"    fail!(\"Failed\") // Error: catch! will rethrow unhandled error, and "
-"can only be used inside ...\n"
-"  } catch! {\n"
+"  // Error: catch! will rethrow unhandled error, and can only be used "
+"inside ...\n"
+"  fail(\"Failed\") catch! {\n"
+"\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4122.md:36
+#: ../../language/error_codes/E4122.md:40
 msgid ""
 "You can either modify the surrounding function to have error types in its"
 " signature:"
 msgstr "您可以修改周围的函数以在其签名中包含错误类型："
 
-#: ../../language/error_codes/E4122.md:39
+#: ../../language/error_codes/E4122.md:43
 msgid ""
-"pub fn checked_div(a : Double, b : Double) -> Double!ArithmeticError {\n"
+"///|\n"
+"suberror ArithmeticError {\n"
+"  DivisionByZero\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn checked_div(a : Double, b : Double) -> Double raise "
+"ArithmeticError {\n"
 "  ...\n"
 "}\n"
 "\n"
-"pub fn rethrow() -> Unit! {\n"
+"///|\n"
+"pub fn rethrow() -> Unit raise {\n"
 "  ...\n"
 "}\n"
 "\n"
-"pub fn catch_all() -> Double! {\n"
+"///|\n"
+"pub fn catch_all() -> Double raise {\n"
 "  ...\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4122.md:43
+#: ../../language/error_codes/E4122.md:47
 msgid "Or use the `try ... catch ...` block to handle the error:"
 msgstr "或者像使用 `try...catch` 块来处理错误："
 
-#: ../../language/error_codes/E4122.md:45
+#: ../../language/error_codes/E4122.md:49
 msgid ""
-"pub fn checked_div(a : Double, b : Double) -> Double {\n"
+"///|\n"
+"pub fn checked_div_noraise(a : Double, b : Double) -> Double noraise {\n"
 "  try {\n"
 "    if b == 0.0 {\n"
-"      raise DivisionByZero // Error: raise can only be used inside ...\n"
+"      raise DivisionByZero\n"
 "    }\n"
 "    return a / b\n"
 "  } catch {\n"
-"    _ => {\n"
-"      println(\"DivisionByZero\")\n"
-"      @double.not_a_number\n"
-"    }\n"
+"    DivisionByZero => @double.not_a_number\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4124.md:1
@@ -20694,5 +20711,71 @@ msgstr ""
 #~ "  assert_eq(input.to_json(), expected)\n"
 #~ "  assert_eq(@json.from_json(expected), input)\n"
 #~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "type! ArithmeticError {\n"
+#~ "  DivisionByZero\n"
+#~ "}\n"
+#~ "\n"
+#~ "pub fn checked_div(a : Double, b : Double) -> Double {\n"
+#~ "  if b == 0.0 {\n"
+#~ "    raise DivisionByZero // Error: raise can only be used inside ...\n"
+#~ "  }\n"
+#~ "  return a / b\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn rethrow() -> Unit {\n"
+#~ "  fail!(\"throwing\") // Error: `!` "
+#~ "operator will rethrow the error raised"
+#~ " in the function application, and can"
+#~ " only be used inside ...\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn catch_all() -> Double {\n"
+#~ "  try {\n"
+#~ "    fail!(\"Failed\") // Error: catch! "
+#~ "will rethrow unhandled error, and can"
+#~ " only be used inside ...\n"
+#~ "  } catch! {\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn checked_div(a : Double, b :"
+#~ " Double) -> Double!ArithmeticError {\n"
+#~ "  ...\n"
+#~ "}\n"
+#~ "\n"
+#~ "pub fn rethrow() -> Unit! {\n"
+#~ "  ...\n"
+#~ "}\n"
+#~ "\n"
+#~ "pub fn catch_all() -> Double! {\n"
+#~ "  ...\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn checked_div(a : Double, b : Double) -> Double {\n"
+#~ "  try {\n"
+#~ "    if b == 0.0 {\n"
+#~ "      raise DivisionByZero // Error: "
+#~ "raise can only be used inside ..."
+#~ "\n"
+#~ "    }\n"
+#~ "    return a / b\n"
+#~ "  } catch {\n"
+#~ "    _ => {\n"
+#~ "      println(\"DivisionByZero\")\n"
+#~ "      @double.not_a_number\n"
+#~ "    }\n"
+#~ "  }\n"
+#~ "}"
 #~ msgstr ""
 

@@ -164,7 +164,7 @@ Total tests: 1, passed: 1, failed: 0.
 ## Package Importing
 
 In the MoonBit's build system, the dependency is declared at the package level.
-To import the `username/my_project` package in `username_my_project/cmd/main`, you need to specify it in `cmd/main/moon.pkg.json`:
+To import the `username/my_project` package in `username/my_project/cmd/main`, you need to specify it in `cmd/main/moon.pkg.json`:
 
 ```json
 {
