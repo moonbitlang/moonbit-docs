@@ -273,7 +273,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
 ])
 
 ///| start builtin definition
-let builtinOpS : @hashmap.T[String, Instruction] = {
+let builtinOpS : @hashmap.HashMap[String, Instruction] = {
   let table = @hashmap.new(capacity=50)
   table["add"] = Add
   table["mul"] = Mul

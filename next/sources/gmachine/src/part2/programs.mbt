@@ -1,4 +1,4 @@
-let programs : @hashmap.T[String, String] = {
+let programs : @hashmap.HashMap[String, String] = {
   let programs = @hashmap.new(capacity=40)
   programs["square"] = (
     #| (defn square[x] (mul x x))

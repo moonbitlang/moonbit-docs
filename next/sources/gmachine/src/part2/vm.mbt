@@ -58,7 +58,7 @@ fn GHeap::op_set(self : GHeap, key : Addr, val : Node) -> Unit {
 struct GState {
   mut stack : List[Addr]
   heap : GHeap
-  globals : @hashmap.T[String, Addr]
+  globals : @hashmap.HashMap[String, Addr]
   mut dump : List[(List[Instruction], List[Addr])]
   mut code : List[Instruction]
   mut stats : GStats
@@ -275,7 +275,7 @@ fn GState::lift_cmp2(self : GState, op : (Int, Int) -> Bool) -> Unit {
 
 fn build_initial_heap(
   scdefs : List[(String, Int, List[Instruction])]
-) -> (GHeap, @hashmap.T[String, Addr]) {
+) -> (GHeap, @hashmap.HashMap[String, Addr]) {
   let heap = { object_count: 0, memory: Array::make(10000, None) }
   let globals = @hashmap.new(capacity=50)
   loop scdefs {
