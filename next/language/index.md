@@ -24,13 +24,13 @@ When MoonBit reaches beta, it means any backwards-incompatible changes will be s
 introduction
 fundamentals
 methods
+derive
 error-handling
 packages
 tests
 benchmarks
 docs
 ffi
-derive
 async-experimental
 error_codes/index
 ```

@@ -53,3 +53,27 @@ test "json args" {
   assert_eq(@json.from_json(expected), input)
 }
 // end json args
+
+// start json optional
+struct A {
+  x : Int?
+  y : Int??
+  z : (Int?, Int??)
+} derive(ToJson)
+
+test {
+  @json.inspect({ x: None, y: None, z: (None, None) }, content={
+    "z": [null, null],
+  })
+  @json.inspect({ x: Some(1), y: Some(None), z: (Some(1), Some(None)) }, content={
+    "x": 1,
+    "y": null,
+    "z": [[1], [null]],
+  })
+  @json.inspect({ x: Some(1), y: Some(Some(1)), z: (Some(1), Some(Some(1))) }, content={
+    "x": 1,
+    "y": [1],
+    "z": [[1], [[1]]],
+  })
+}
+// end json optional
