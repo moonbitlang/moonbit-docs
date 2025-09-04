@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-03 17:13+0800\n"
+"POT-Creation-Date: 2025-09-04 10:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -43,7 +43,8 @@ msgid ""
 "[`raise`](/language/error-handling.md#throwing-errors) errors  and need "
 "to declare `noraise` explicitly if otherwise."
 msgstr ""
-"异步函数用 `async` 关键字定义。他们隐式地 [抛出错误](/language/error-handling.md#throwing-errors) ，而如果不抛出错误则需要显式地声明 `noraise`。"
+"异步函数用 `async` 关键字定义。他们隐式地 [抛出错误](/language/error-handling.md#throwing-"
+"errors) ，而如果不抛出错误则需要显式地声明 `noraise`。"
 
 #: ../../language/async-experimental.md:13
 msgid ""
@@ -1071,10 +1072,58 @@ msgid ""
 msgstr ""
 
 #: ../../language/derive.md:159
+msgid "Deriving `Option`"
+msgstr "派生 `Option`"
+
+#: ../../language/derive.md:161
+msgid ""
+"A notable exception is the builtin type `Option[T]`. Ideally, it would be"
+" interpreted as `T | undefined`, but the issue is that it would be  "
+"impossible to distinguish `Some(None)` and `None` for "
+"`Option[Option[T]]`."
+msgstr ""
+"一个特例是内建类型 `Option[T]`。理想情况下，它会被解释为 `T | undefined`，但问题是对于 "
+"`Option[Option[T]]` 来说，无法区分 `Some(None)` 和 `None`。"
+
+#: ../../language/derive.md:165
+msgid ""
+"As a result, it interpreted as `T | undefined` iff it is a direct field "
+"of a struct, and `[T] | null` otherwise:"
+msgstr ""
+"因此，当且仅当它是结构体的直接字段时，它被解释为 `T | undefined`，否则解释为 `[T] | null`："
+
+#: ../../language/derive.md:168
+msgid ""
+"struct A {\n"
+"  x : Int?\n"
+"  y : Int??\n"
+"  z : (Int?, Int??)\n"
+"} derive(ToJson)\n"
+"\n"
+"test {\n"
+"  @json.inspect({ x: None, y: None, z: (None, None) }, content={\n"
+"    \"z\": [null, null],\n"
+"  })\n"
+"  @json.inspect({ x: Some(1), y: Some(None), z: (Some(1), Some(None)) }, "
+"content={\n"
+"    \"x\": 1,\n"
+"    \"y\": null,\n"
+"    \"z\": [[1], [null]],\n"
+"  })\n"
+"  @json.inspect({ x: Some(1), y: Some(Some(1)), z: (Some(1), "
+"Some(Some(1))) }, content={\n"
+"    \"x\": 1,\n"
+"    \"y\": [1],\n"
+"    \"z\": [[1], [[1]]],\n"
+"  })\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:174
 msgid "Container arguments"
 msgstr "容器参数"
 
-#: ../../language/derive.md:161
+#: ../../language/derive.md:176
 msgid ""
 "`rename_fields` and `rename_cases` (enum only) batch renames fields (for "
 "enums and structs) and enum cases to the given format. Available "
@@ -1083,39 +1132,39 @@ msgstr ""
 "`rename_fields` 和 "
 "`rename_cases`（仅适用于枚举）分别批量重命名字段（对于枚举和结构体）和枚举构造器为给定格式。可用的参数有："
 
-#: ../../language/derive.md:165
+#: ../../language/derive.md:180
 msgid "`lowercase`"
 msgstr ""
 
-#: ../../language/derive.md:166
+#: ../../language/derive.md:181
 msgid "`UPPERCASE`"
 msgstr ""
 
-#: ../../language/derive.md:167
+#: ../../language/derive.md:182
 msgid "`camelCase`"
 msgstr ""
 
-#: ../../language/derive.md:168
+#: ../../language/derive.md:183
 msgid "`PascalCase`"
 msgstr ""
 
-#: ../../language/derive.md:169
+#: ../../language/derive.md:184
 msgid "`snake_case`"
 msgstr ""
 
-#: ../../language/derive.md:170
+#: ../../language/derive.md:185
 msgid "`SCREAMING_SNAKE_CASE`"
 msgstr ""
 
-#: ../../language/derive.md:171
+#: ../../language/derive.md:186
 msgid "`kebab-case`"
 msgstr ""
 
-#: ../../language/derive.md:172
+#: ../../language/derive.md:187
 msgid "`SCREAMING-KEBAB-CASE`"
 msgstr ""
 
-#: ../../language/derive.md:174
+#: ../../language/derive.md:189
 msgid ""
 "Example: `rename_fields = \"PascalCase\"` for a field named "
 "`my_long_field_name` results in `MyLongFieldName`."
@@ -1123,25 +1172,25 @@ msgstr ""
 "例如：`rename_fields = \"PascalCase\"` 用于名为 `my_long_field_name` 的字段将得到 "
 "`MyLongFieldName`。"
 
-#: ../../language/derive.md:178
+#: ../../language/derive.md:193
 msgid ""
 "Renaming assumes the name of fields in `snake_case` and the name of "
 "structs/enum cases in `PascalCase`."
 msgstr "重命名假定字段的名称为 `snake_case`，结构体/枚举构造器的名称为 `PascalCase`。"
 
-#: ../../language/derive.md:181
+#: ../../language/derive.md:196
 msgid "`cases(...)` (enum only) controls the layout of enum cases."
 msgstr "`cases(...)`（仅枚举）控制枚举构造器的布局。"
 
-#: ../../language/derive.md:184
+#: ../../language/derive.md:199
 msgid "This might be replaced with case attributes in the future."
 msgstr "这可能在未来会被构造器属性替换。"
 
-#: ../../language/derive.md:187
+#: ../../language/derive.md:202
 msgid "For example, for an enum"
 msgstr "例如，对于一个枚举"
 
-#: ../../language/derive.md:189
+#: ../../language/derive.md:204
 msgid ""
 "enum E {\n"
 "  A(...)\n"
@@ -1149,27 +1198,27 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:196
+#: ../../language/derive.md:211
 msgid "you are able to control each case using `cases(A(...), B(...))`."
 msgstr "您可以使用 `cases(A(...), B(...))` 控制每个构造器。"
 
-#: ../../language/derive.md:198
+#: ../../language/derive.md:213
 msgid "See [Case arguments](#case-arguments) below for details."
 msgstr "有关详细信息，请参见下面的 [构造器参数](#case-arguments)。"
 
-#: ../../language/derive.md:200
+#: ../../language/derive.md:215
 msgid "`fields(...)` (struct only) controls the layout of struct fields."
 msgstr "`fields(...)`（仅结构体）控制结构体字段的布局。"
 
-#: ../../language/derive.md:203
+#: ../../language/derive.md:218
 msgid "This might be replaced with field attributes in the future."
 msgstr "这可能在未来会被字段属性替换。"
 
-#: ../../language/derive.md:206
+#: ../../language/derive.md:221
 msgid "For example, for a struct"
 msgstr "例如，对于一个结构体"
 
-#: ../../language/derive.md:208
+#: ../../language/derive.md:223
 msgid ""
 "struct S {\n"
 "  x: Int\n"
@@ -1177,35 +1226,35 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:215
+#: ../../language/derive.md:230
 msgid "you are able to control each field using `fields(x(...), y(...))`"
 msgstr "您可以使用 `fields(x(...), y(...))` 控制每个字段。"
 
-#: ../../language/derive.md:217 ../../language/derive.md:227
+#: ../../language/derive.md:232 ../../language/derive.md:242
 msgid "See [Field arguments](#field-arguments) below for details."
 msgstr "有关详细信息，请参见下面的 [字段参数](#field-arguments)。"
 
-#: ../../language/derive.md:219
+#: ../../language/derive.md:234
 msgid "Case arguments"
 msgstr "构造器参数"
 
-#: ../../language/derive.md:221
+#: ../../language/derive.md:236
 msgid ""
 "`rename = \"...\"` renames this specific case, overriding existing "
 "container-wide rename directive if any."
 msgstr "`rename = \"...\"` 重命名此特定构造器，覆盖现有的容器范围重命名指令（如果有的话）。"
 
-#: ../../language/derive.md:224
+#: ../../language/derive.md:239
 msgid ""
 "`fields(...)` controls the layout of the payload of this case. Note that "
 "renaming positional fields are not possible currently."
 msgstr "`fields(...)` 控制此构造器的负载布局。请注意，目前无法重命名位置字段。"
 
-#: ../../language/derive.md:229
+#: ../../language/derive.md:244
 msgid "Field arguments"
 msgstr "字段参数"
 
-#: ../../language/derive.md:231
+#: ../../language/derive.md:246
 msgid ""
 "`rename = \"...\"` renames this specific field, overriding existing "
 "container-wide rename directives if any."
@@ -7023,7 +7072,9 @@ msgid ""
 "The example above tries to call the method `to_string` from the `Show` "
 "trait and the method `f` from the `HasDefault` trait on type `S`, but "
 "since `S` does not implement those traits, it gives the following error:"
-msgstr "在上述例子中，试图在类型 `S` 上调用 `Show` 特征的方法 `to_string` 以及 `HasDefault` 特征的方法 `f`，但由于 `S` 没有实现这些特征，会有如下错误："
+msgstr ""
+"在上述例子中，试图在类型 `S` 上调用 `Show` 特征的方法 `to_string` 以及 `HasDefault` 特征的方法 "
+"`f`，但由于 `S` 没有实现这些特征，会有如下错误："
 
 #: ../../language/error_codes/E4018.md:15
 msgid ""
@@ -7035,8 +7086,7 @@ msgstr ""
 msgid ""
 "For a trait that has default implementations for all its methods, an "
 "explicit implementation declaration is still needed."
-msgstr ""
-"对于一个所有方法均有默认实现的特征，依然需要一个显示的实现声明。"
+msgstr "对于一个所有方法均有默认实现的特征，依然需要一个显示的实现声明。"
 
 #: ../../language/error_codes/E4018.md:27
 msgid "Implement the `Show` trait and the `HasDefault` trait for the type `S`:"
@@ -14888,7 +14938,7 @@ msgstr "你可以通过向`@buffer.T`写入不同类型的数据来构造一个`
 #: ../../language/fundamentals.md:252
 msgid ""
 "test \"buffer 1\" {\n"
-"  let buf : @buffer.T = @buffer.new()\n"
+"  let buf : @buffer.Buffer = @buffer.new()\n"
 "  buf.write_bytes(b\"Hello\")\n"
 "  buf.write_byte(b'!')\n"
 "  assert_eq(buf.contents(), b\"Hello!\")\n"
@@ -18921,7 +18971,7 @@ msgid ""
 "  x : Int\n"
 "}\n"
 "\n"
-"impl Add for T with op_add(self : T, other : T) -> T {\n"
+"impl Add for T with add(self : T, other : T) -> T {\n"
 "  { x: self.x + other.x }\n"
 "}\n"
 "\n"
@@ -19096,7 +19146,7 @@ msgid ""
 "\n"
 "struct Data {}\n"
 "\n"
-"fn Data::op_as_view(_self : Data, start~ : Int = 0, end? : Int) -> "
+"fn Data::op_as_view(_self : Data, start? : Int = 0, end? : Int) -> "
 "DataView {\n"
 "  \"[\\{start}, \\{end.unwrap_or(100)})\"\n"
 "}\n"
@@ -19367,7 +19417,7 @@ msgid ""
 "  y : Int\n"
 "}\n"
 "\n"
-"impl Eq for Point with op_equal(p1, p2) {\n"
+"impl Eq for Point with equal(p1, p2) {\n"
 "  p1.x == p2.x && p1.y == p2.y\n"
 "}\n"
 "\n"
@@ -20818,5 +20868,67 @@ msgstr ""
 #~ "impl Show for S with output(self, logger) {\n"
 #~ "  logger.write_object(self.v)\n"
 #~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "test \"buffer 1\" {\n"
+#~ "  let buf : @buffer.T = @buffer.new()\n"
+#~ "  buf.write_bytes(b\"Hello\")\n"
+#~ "  buf.write_byte(b'!')\n"
+#~ "  assert_eq(buf.contents(), b\"Hello!\")\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "struct T {\n"
+#~ "  x : Int\n"
+#~ "}\n"
+#~ "\n"
+#~ "impl Add for T with op_add(self : T, other : T) -> T {\n"
+#~ "  { x: self.x + other.x }\n"
+#~ "}\n"
+#~ "\n"
+#~ "test {\n"
+#~ "  let a = { x: 0 }\n"
+#~ "  let b = { x: 2 }\n"
+#~ "  assert_eq((a + b).x, 2)\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "struct DataView(String)\n"
+#~ "\n"
+#~ "struct Data {}\n"
+#~ "\n"
+#~ "fn Data::op_as_view(_self : Data, start~ "
+#~ ": Int = 0, end? : Int) ->"
+#~ " DataView {\n"
+#~ "  \"[\\{start}, \\{end.unwrap_or(100)})\"\n"
+#~ "}\n"
+#~ "\n"
+#~ "test {\n"
+#~ "  let data = Data::{  }\n"
+#~ "  inspect(data[:].0, content=\"[0, 100)\")\n"
+#~ "  inspect(data[2:].0, content=\"[2, 100)\")\n"
+#~ "  inspect(data[:5].0, content=\"[0, 5)\")\n"
+#~ "  inspect(data[2:5].0, content=\"[2, 5)\")\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "struct Point {\n"
+#~ "  x : Int\n"
+#~ "  y : Int\n"
+#~ "}\n"
+#~ "\n"
+#~ "impl Eq for Point with op_equal(p1, p2) {\n"
+#~ "  p1.x == p2.x && p1.y == p2.y\n"
+#~ "}\n"
+#~ "\n"
+#~ "test {\n"
+#~ "  assert_false(contains([1, 2, 3], 4))\n"
+#~ "  assert_true(contains([1.5, 2.25, 3.375], 2.25))\n"
+#~ "  assert_false(contains([{ x: 2, y: 3 }], { x: 4, y: 9 }))\n"
+#~ "}\n"
 #~ msgstr ""
 
