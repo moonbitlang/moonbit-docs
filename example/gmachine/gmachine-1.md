@@ -367,7 +367,7 @@ The entire state is represented using the type `GState`.
 struct GState {
   mut stack : List[Addr]
   heap : GHeap
-  globals : @hashmap.T[String, Addr]
+  globals : @hashmap.HashMap[String, Addr]
   mut code : List[Instruction]
   mut stats : GStats
 }
@@ -604,7 +604,7 @@ Once the super combinators are compiled, they need to be placed on the heap (alo
 ```moonbit
 fn build_initial_heap(
   scdefs : List[(String, Int, List[Instruction])]
-) -> (GHeap, @hashmap.T[String, Addr]) {
+) -> (GHeap, @hashmap.HashMap[String, Addr]) {
   let heap = { object_count: 0, memory: Array::make(10000, None) }
   let globals = @hashmap.new(capacity=50)
   loop scdefs {

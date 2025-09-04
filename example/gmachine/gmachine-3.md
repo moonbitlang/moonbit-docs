@@ -226,7 +226,7 @@ App(Var("negate"), e) => e.compileE(env) + @list.of([Neg])
 Basic binary operations can be handled uniformly through a lookup table. First, construct a hash table called `builtinOpS` to query the corresponding instructions by the name of the primitive.
 
 ```moonbit
-let builtinOpS : @hashmap.T[String, Instruction] = {
+let builtinOpS : @hashmap.HashMap[String, Instruction] = {
   let table = @hashmap.new(capacity=50)
   table["add"] = Add
   table["mul"] = Mul
