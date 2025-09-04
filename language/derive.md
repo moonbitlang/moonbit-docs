@@ -290,6 +290,39 @@ E::Uniform(2)       => [ "Uniform", 2 ]
 E::Axes(x=-1, y=1)  => [ "Axes", -1, 1 ]
 ```
 
+#### Deriving `Option`
+
+A notable exception is the builtin type `Option[T]`.
+Ideally, it would be interpreted as `T | undefined`, but the issue is that it would be
+impossible to distinguish `Some(None)` and `None` for `Option[Option[T]]`.
+
+As a result, it interpreted as `T | undefined` iff it is a direct field
+of a struct, and `[T] | null` otherwise:
+
+```moonbit
+struct A {
+  x : Int?
+  y : Int??
+  z : (Int?, Int??)
+} derive(ToJson)
+
+test {
+  @json.inspect({ x: None, y: None, z: (None, None) }, content={
+    "z": [null, null],
+  })
+  @json.inspect({ x: Some(1), y: Some(None), z: (Some(1), Some(None)) }, content={
+    "x": 1,
+    "y": null,
+    "z": [[1], [null]],
+  })
+  @json.inspect({ x: Some(1), y: Some(Some(1)), z: (Some(1), Some(Some(1))) }, content={
+    "x": 1,
+    "y": [1],
+    "z": [[1], [[1]]],
+  })
+}
+```
+
 ### Container arguments
 
 - `rename_fields` and `rename_cases` (enum only)

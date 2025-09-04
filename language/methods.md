@@ -126,7 +126,7 @@ struct T {
   x : Int
 }
 
-impl Add for T with op_add(self : T, other : T) -> T {
+impl Add for T with add(self : T, other : T) -> T {
   { x: self.x + other.x }
 }
 
@@ -211,7 +211,7 @@ struct DataView(String)
 
 struct Data {}
 
-fn Data::op_as_view(_self : Data, start~ : Int = 0, end? : Int) -> DataView {
+fn Data::op_as_view(_self : Data, start? : Int = 0, end? : Int) -> DataView {
   "[\{start}, \{end.unwrap_or(100)})"
 }
 
@@ -380,7 +380,7 @@ struct Point {
   y : Int
 }
 
-impl Eq for Point with op_equal(p1, p2) {
+impl Eq for Point with equal(p1, p2) {
   p1.x == p2.x && p1.y == p2.y
 }
 

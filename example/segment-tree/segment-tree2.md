@@ -68,7 +68,7 @@ Similar to the last lesson, before building the tree, we need to define the addi
 
 ```moonbit
 ///|
-impl Add for Data with op_add(self : Data, v : Data) -> Data {
+impl Add for Data with add(self : Data, v : Data) -> Data {
   match (self, v) {
     (Data(sum=a, len=len_a), Data(sum=b, len=len_b)) =>
       Data(sum=a + b, len=len_a + len_b)
@@ -76,7 +76,7 @@ impl Add for Data with op_add(self : Data, v : Data) -> Data {
 }
 
 ///|
-impl Add for Node with op_add(self : Node, v : Node) -> Node {
+impl Add for Node with add(self : Node, v : Node) -> Node {
   match (self, v) {
     (Node(data=l, ..), Node(data=r, ..)) =>
       Node(data=l + r, tag=Nil, left=self, right=v)
@@ -111,7 +111,7 @@ A decent implementation is to define a new addition operation to merge LazyTags,
 
 ```moonbit
 ///|
-impl Add for LazyTag with op_add(self : LazyTag, v : LazyTag) -> LazyTag {
+impl Add for LazyTag with add(self : LazyTag, v : LazyTag) -> LazyTag {
   match (self, v) {
     (Tag(a), Tag(b)) => Tag(a + b)
     (Nil, t) | (t, Nil) => t
