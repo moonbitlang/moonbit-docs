@@ -73,7 +73,7 @@ struct Point {
   y : Int
 }
 
-impl Eq for Point with op_equal(p1, p2) {
+impl Eq for Point with equal(p1, p2) {
   p1.x == p2.x && p1.y == p2.y
 }
 

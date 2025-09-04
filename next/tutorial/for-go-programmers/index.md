@@ -961,7 +961,7 @@ impl Printable with print_twice(self) {
 MoonBit supports operator overloading through built-in traits, which has no Go equivalent:
 
 ```moonbit
-impl Add for Rectangle with op_add(self, other) {
+impl Add for Rectangle with add(self, other) {
   { width: self.width + other.width, height: self.height + other.height }
 }
 

@@ -48,7 +48,7 @@ Here, `Nil` represents an empty tree, while a `Node` contains the stored data (o
 
 Building the tree refers to the process of abstracting a linear sequence into a Segment Tree, commonly referred to as `build`.
 
-To start, we should write an overloaded `op_add` function for the `Node` type to assist with the tree-building process:
+To start, we should write an overloaded `add` function for the `Node` type to assist with the tree-building process:
 
 ```{literalinclude} /sources/segment-tree/src/part1/top.mbt
 :language: moonbit
@@ -117,7 +117,7 @@ guard let Node(x, y) = z
 ### Q&A
 
 - **Q:** Why use `Node` as the return value? Can't I destructure and sum the values directly?
-- **A:** We have defined an addition operation for `Node`. Consider a scenario where we need to maintain not just the sum but also the minimum value of a range. In that case, we can modify the `op_add` logic to maintain the minimum while the `query` function remains unaffected. It ultimately returns a `Node` that can contain all necessary information, so let's stick with using `Node`!
+- **A:** We have defined an addition operation for `Node`. Consider a scenario where we need to maintain not just the sum but also the minimum value of a range. In that case, we can modify the `add` logic to maintain the minimum while the `query` function remains unaffected. It ultimately returns a `Node` that can contain all necessary information, so let's stick with using `Node`!
 
 - **Q:** Shouldn't the `empty_node` change in this case?
 - **A:** Yes, the `empty_node` ensures that it doesn’t affect the result when added to any other `Node`. It's a zero-contribution node, akin to how 0 contributes nothing in sum operations. For minimum value maintenance, it can represent a value that won't affect the outcome, making the process flexible!

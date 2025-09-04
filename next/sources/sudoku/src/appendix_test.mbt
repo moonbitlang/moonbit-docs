@@ -5,7 +5,7 @@ let rows = "ABCDEFGHI"
 let cols = "123456789"
 
 ///|
-typealias @immut/sorted_set.T[String] as Squares
+typealias @immut/sorted_set.SortedSet[String] as Squares
 
 ///|
 fn cross(x : String, y : String, pred : (String) -> Bool) -> Squares {
@@ -78,7 +78,7 @@ let peers : Grid[Squares] = {
 }
 
 ///|
-fn Grid::parse(s : String) -> Grid[@immut/sorted_set.T[Char]] {
+fn Grid::parse(s : String) -> Grid[@immut/sorted_set.SortedSet[Char]] {
   let digits = @immut/sorted_set.from_array(cols.to_array())
   let values = Grid::new(digits)
   let chars = s
@@ -99,7 +99,7 @@ fn Grid::parse(s : String) -> Grid[@immut/sorted_set.T[Char]] {
 }
 
 ///|
-fn Grid::format(self : Grid[@immut/sorted_set.T[Char]]) -> String {
+fn Grid::format(self : Grid[@immut/sorted_set.SortedSet[Char]]) -> String {
   let rep = Array::make(81, "")
   let mut i = 0
   let mut maxWidth = 0

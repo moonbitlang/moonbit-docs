@@ -52,7 +52,7 @@ impl ToJson for Node with to_json(node) {
 
 // start op_add definition
 ///|
-impl Add for Data with op_add(self : Data, v : Data) -> Data {
+impl Add for Data with add(self : Data, v : Data) -> Data {
   match (self, v) {
     (Data(sum=a, len=len_a), Data(sum=b, len=len_b)) =>
       Data(sum=a + b, len=len_a + len_b)
@@ -60,7 +60,7 @@ impl Add for Data with op_add(self : Data, v : Data) -> Data {
 }
 
 ///|
-impl Add for Node with op_add(self : Node, v : Node) -> Node {
+impl Add for Node with add(self : Node, v : Node) -> Node {
   match (self, v) {
     (Node(data=l, ..), Node(data=r, ..)) =>
       Node(data=l + r, tag=Nil, left=self, right=v)
@@ -73,7 +73,7 @@ impl Add for Node with op_add(self : Node, v : Node) -> Node {
 
 // start lazytag definition
 ///|
-impl Add for LazyTag with op_add(self : LazyTag, v : LazyTag) -> LazyTag {
+impl Add for LazyTag with add(self : LazyTag, v : LazyTag) -> LazyTag {
   match (self, v) {
     (Tag(a), Tag(b)) => Tag(a + b)
     (Nil, t) | (t, Nil) => t

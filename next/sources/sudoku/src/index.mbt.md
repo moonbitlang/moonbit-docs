@@ -220,7 +220,7 @@ We adjust the code by defining an `eliminate` function, which removes a digit fr
 
 ```moonbit
 fn eliminate(
-  values : Grid[@immut/sorted_set.T[Char]],
+  values : Grid[@immut/sorted_set.SortedSet[Char]],
   key : String,
   val : Char
 ) -> Bool {
@@ -262,7 +262,7 @@ Next, we define `assign(values, key, val)` to remove all values except `val` fro
 ```moonbit
 ///|
 fn assign(
-  values : Grid[@immut/sorted_set.T[Char]],
+  values : Grid[@immut/sorted_set.SortedSet[Char]],
   key : String,
   val : Char
 ) -> Bool {
@@ -322,8 +322,8 @@ Another point to note is that conflicts may arise during the search (when a squa
 
 ```moonbit
 fn search(
-  values : Grid[@immut/sorted_set.T[Char]]
-) -> Grid[@immut/sorted_set.T[Char]]? {
+  values : Grid[@immut/sorted_set.SortedSet[Char]],
+) -> Grid[@immut/sorted_set.SortedSet[Char]]? {
   if values.contains(fn(digits) { not(digits.size() == 1) }) {
     let mut minsq = ""
     let mut n = 10

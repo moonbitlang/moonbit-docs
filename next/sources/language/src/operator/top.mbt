@@ -3,7 +3,7 @@ struct T {
   x : Int
 }
 
-impl Add for T with op_add(self : T, other : T) -> T {
+impl Add for T with add(self : T, other : T) -> T {
   { x: self.x + other.x }
 }
 
@@ -106,11 +106,11 @@ impl BitXOr for T with lxor(self : T, other : T) -> T {
   { x: self.x ^ other.x }
 }
 
-impl Shl for T with op_shl(self : T, other : Int) -> T {
+impl Shl for T with shl(self : T, other : Int) -> T {
   { x: self.x << other }
 }
 
-impl Shr for T with op_shr(self : T, other : Int) -> T {
+impl Shr for T with shr(self : T, other : Int) -> T {
   { x: self.x >> other }
 }
 
@@ -140,7 +140,7 @@ struct DataView(String)
 
 struct Data {}
 
-fn Data::op_as_view(_self : Data, start~ : Int = 0, end? : Int) -> DataView {
+fn Data::op_as_view(_self : Data, start? : Int = 0, end? : Int) -> DataView {
   "[\{start}, \{end.unwrap_or(100)})"
 }
 
