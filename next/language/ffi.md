@@ -245,7 +245,7 @@ The table below shows the underlying representation of some MoonBit types:
 | constant `enum` | `number` |
 | external type (`#external type T`) | `any`   |
 | `String` | `string` |
-| `FixedArray[Byte]`/`Bytes` | `UInt8Array` |
+| `FixedArray[Byte]`/`Bytes` | `Uint8Array` |
 | `FixedArray[T]` / `Array[T]` | `T[]` |
 | `FuncRef[T]` | `Function` |
 
