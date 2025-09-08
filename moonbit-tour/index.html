@@ -77,7 +77,7 @@
     </header>
     <div
       id="toc"
-      class="fixed bottom-0 right-0 z-10 hidden h-[calc(100vh-3rem)] w-screen overflow-auto bg-purple-100 text-lg dark:bg-zinc-800 dark:text-gray-100 md:right-[-400px] md:w-[400px] md:transition-all md:duration-500 md:ease-in-out"
+      class="fixed bottom-0 right-0 top-[3rem] z-10 hidden h-[calc(100vh-3rem)] w-screen overflow-auto bg-purple-100 text-lg dark:bg-zinc-800 dark:text-gray-100 md:right-[-400px] md:w-[400px] md:transition-all md:duration-500 md:ease-in-out"
     >
       %TOC%
     </div>
@@ -135,7 +135,7 @@
       const visited = localStorage.getItem("visited");
       if (!visited) {
         localStorage.setItem("visited", "true");
-        
+
         const locale = navigator.language || navigator.userLanguage;
         if (locale.startsWith("zh")) {
           window.location.href = "%ZH_HREF%";
