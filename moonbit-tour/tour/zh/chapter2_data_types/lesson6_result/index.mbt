@@ -2,7 +2,7 @@ fn first_char(s : String) -> Result[Char, String] {
   if s.length() == 0 {
     Err("empty string")
   } else {
-    Ok(s.char_at(0))
+    Ok(s.get_char(0).unwrap())
   }
 }
 
