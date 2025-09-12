@@ -2,7 +2,7 @@ fn first_char(s : String) -> Option[Char] {
   if s.length() == 0 {
     None
   } else {
-    Some(s.char_at(0))
+    Some(s.get_char(0).unwrap())
   }
 }
 
