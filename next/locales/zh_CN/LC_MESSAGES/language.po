@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-04 10:22+0800\n"
+"POT-Creation-Date: 2025-09-15 13:47+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2077,8 +2077,8 @@ msgstr ""
 #: ../../language/error_codes/E0008.md:6 ../../language/error_codes/E0009.md:5
 #: ../../language/error_codes/E0010.md:10 ../../language/error_codes/E0011.md:6
 #: ../../language/error_codes/E0012.md:7 ../../language/error_codes/E0013.md:18
-#: ../../language/error_codes/E0014.md:5 ../../language/error_codes/E0015.md:8
-#: ../../language/error_codes/E0017.md:8 ../../language/error_codes/E0018.md:12
+#: ../../language/error_codes/E0015.md:8 ../../language/error_codes/E0017.md:8
+#: ../../language/error_codes/E0018.md:12
 #: ../../language/error_codes/E0019.md:11 ../../language/error_codes/E0021.md:5
 #: ../../language/error_codes/E0022.md:8 ../../language/error_codes/E0023.md:5
 #: ../../language/error_codes/E0024.md:5 ../../language/error_codes/E0026.md:12
@@ -2193,7 +2193,6 @@ msgstr ""
 #: ../../language/error_codes/E0011.md:12
 #: ../../language/error_codes/E0012.md:17
 #: ../../language/error_codes/E0013.md:24
-#: ../../language/error_codes/E0014.md:11
 #: ../../language/error_codes/E0015.md:14
 #: ../../language/error_codes/E0017.md:26
 #: ../../language/error_codes/E0018.md:27
@@ -3525,34 +3524,9 @@ msgid "E0014"
 msgstr ""
 
 #: ../../language/error_codes/E0014.md:3
-msgid ""
-"Type name should be capitalized. In MoonBit, we recommend using a "
-"capitalized type name for all types, including built-in types and user-"
-"defined types. This is a convention that is followed by the standard "
-"library and most of the community code."
-msgstr "类型名称应该大写。在 MoonBit 中，我们建议对所有类型使用大写类型名称，包括内置类型和用户定义类型。这是一个标准库和大多数社区代码遵循的约定。"
-
-#: ../../language/error_codes/E0014.md:7
-msgid ""
-"///|\n"
-"struct point {\n"
-"  x : Int\n"
-"  y : Int\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0014.md:13
-msgid "Capitalize the type name."
-msgstr "将类型名称大写。"
-
-#: ../../language/error_codes/E0014.md:15
-msgid ""
-"///|\n"
-"struct Point {\n"
-"  x : Int\n"
-"  y : Int\n"
-"}\n"
-msgstr ""
+#, fuzzy
+msgid "No longer emitted"
+msgstr "MoonBit 已不再使用此错误码。"
 
 #: ../../language/error_codes/E0015.md:1
 msgid "E0015"
@@ -13308,13 +13282,17 @@ msgstr ""
 msgid ""
 "///|\n"
 "#locals(f)\n"
-"pub fn[A] map_inline(arr : ArrayView[A], f : (A) -> A) -> Unit {\n"
+"pub fn[A, B] map(\n"
+"  arr : ArrayView[A],\n"
+"  f : (A) -> B,\n"
+"  target? : Array[B] = [],\n"
+") -> Array[B] {\n"
 "  match arr {\n"
 "    [hd, .. tl] => {\n"
-"      arr[0] = f(hd)\n"
-"      map_inline(tl, f) // The parameter is not local: it escapes.\n"
+"      target.push(f(hd))\n"
+"      map(tl, f, target~) // The parameter is not local: it escapes.\n"
 "    }\n"
-"    [] => ()\n"
+"    [] => target\n"
 "  }\n"
 "}\n"
 msgstr ""
@@ -13323,9 +13301,17 @@ msgstr ""
 msgid ""
 "///|\n"
 "#locals(f)\n"
-"pub fn[A] map_inline(arr : ArrayView[A], f : (A) -> A) -> Unit {\n"
-"  for i = 0; i < arr.length(); i = i + 1 {\n"
-"    arr[i] = f(arr[i])\n"
+"pub fn[A, B] map(\n"
+"  arr : ArrayView[A],\n"
+"  f : (A) -> B,\n"
+"  target? : Array[B] = [],\n"
+") -> Array[B] {\n"
+"  loop arr {\n"
+"    [hd, .. tl] => {\n"
+"      target.push(f(hd))\n"
+"      continue tl\n"
+"    }\n"
+"    [] => target\n"
 "  }\n"
 "}\n"
 msgstr ""
@@ -20940,4 +20926,60 @@ msgstr ""
 #~ "can rename the method to a "
 #~ "different name."
 #~ msgstr "修改方法以匹配操作符的预期参数类型。如果意外使用了重载操作符的名称，可以将方法重命名为不同的名称。"
+
+#~ msgid ""
+#~ "Type name should be capitalized. In "
+#~ "MoonBit, we recommend using a "
+#~ "capitalized type name for all types, "
+#~ "including built-in types and user-"
+#~ "defined types. This is a convention "
+#~ "that is followed by the standard "
+#~ "library and most of the community "
+#~ "code."
+#~ msgstr ""
+#~ "类型名称应该大写。在 MoonBit "
+#~ "中，我们建议对所有类型使用大写类型名称，包括内置类型和用户定义类型。这是一个标准库和大多数社区代码遵循的约定。"
+
+#~ msgid ""
+#~ "///|\n"
+#~ "struct point {\n"
+#~ "  x : Int\n"
+#~ "  y : Int\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "Capitalize the type name."
+#~ msgstr "将类型名称大写。"
+
+#~ msgid ""
+#~ "///|\n"
+#~ "struct Point {\n"
+#~ "  x : Int\n"
+#~ "  y : Int\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "#locals(f)\n"
+#~ "pub fn[A] map_inline(arr : ArrayView[A], f : (A) -> A) -> Unit {\n"
+#~ "  match arr {\n"
+#~ "    [hd, .. tl] => {\n"
+#~ "      arr[0] = f(hd)\n"
+#~ "      map_inline(tl, f) // The parameter is not local: it escapes.\n"
+#~ "    }\n"
+#~ "    [] => ()\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "#locals(f)\n"
+#~ "pub fn[A] map_inline(arr : ArrayView[A], f : (A) -> A) -> Unit {\n"
+#~ "  for i = 0; i < arr.length(); i = i + 1 {\n"
+#~ "    arr[i] = f(arr[i])\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
 

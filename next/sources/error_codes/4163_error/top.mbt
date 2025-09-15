@@ -1,11 +1,15 @@
 ///|
 #locals(f)
-pub fn[A] map_inline(arr : ArrayView[A], f : (A) -> A) -> Unit {
+pub fn[A, B] map(
+  arr : ArrayView[A],
+  f : (A) -> B,
+  target? : Array[B] = [],
+) -> Array[B] {
   match arr {
     [hd, .. tl] => {
-      arr[0] = f(hd)
-      map_inline(tl, f) // The parameter is not local: it escapes.
+      target.push(f(hd))
+      map(tl, f, target~) // The parameter is not local: it escapes.
     }
-    [] => ()
+    [] => target
   }
 }
