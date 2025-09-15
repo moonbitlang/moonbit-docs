@@ -89,19 +89,8 @@ pub fn is_relative(self : Path) -> Bool {
 ///|
 pub fn has_root(self : Path) -> Bool {
   match self.platform {
-    Posix => self.inner.char_at(0) == '/'
-    Windows =>
-      (
-        (
-          self.inner.char_at(0).compare('a') >= 0 &&
-          self.inner.char_at(0).compare('z') <= 0
-        ) ||
-        (
-          self.inner.char_at(0).compare('A') >= 0 &&
-          self.inner.char_at(0).compare('Z') <= 0
-        )
-      ) &&
-      self.inner.char_at(1) == ':'
+    Posix => self.inner is ['/', ..]
+    Windows => self.inner is ['a'..='z' | 'A'..='Z', ':', ..]
   }
 }
 
@@ -121,13 +110,13 @@ pub fn file_name(self : Path) -> String? {
 pub fn append(self : Path, p : String) -> Unit {
   match self.platform {
     Posix => {
-      if self.inner.char_at(self.inner.length() - 1) != '/' {
+      if self.inner[self.inner.length() - 1] != '/' {
         self.inner = self.inner + "/"
       }
       self.inner = self.inner + p
     }
     Windows => {
-      if self.inner.char_at(self.inner.length() - 1) != '\\' {
+      if self.inner[self.inner.length() - 1] != '\\' {
         self.inner = self.inner + "\\"
       }
       self.inner = self.inner + p

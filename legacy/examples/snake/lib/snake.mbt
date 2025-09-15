@@ -24,13 +24,14 @@ pub(all) enum Direction {
   Default
 } derive(Eq)
 
-enum GridType {
+priv enum GridType {
   Body
   Food
   None
 } derive(Eq)
 
-fn dir_posi(self : Direction) -> Position {
+#as_free_fn
+fn Direction::dir_posi(self : Direction) -> Position {
   match self {
     Up => { x: 0, y: -1 }
     Down => { x: 0, y: 1 }
@@ -40,18 +41,19 @@ fn dir_posi(self : Direction) -> Position {
   }
 }
 
-struct Position {
+priv struct Position {
   x : Int
   y : Int
 }
 
 struct GameState {
   grid : FixedArray[GridType]
-  body : @deque.T[Position]
+  body : @deque.Deque[Position]
   mut dir : Direction
 }
 
-fn initialize(self : GameState) -> Unit {
+#as_free_fn
+fn GameState::initialize(self : GameState) -> Unit {
   self.grid.fill(None)
   self.dir = Up
   self.body.clear()
@@ -68,7 +70,8 @@ fn random() -> Double = "Math" "random"
 
 fn floor(i : Double) -> Int = "Math" "floor"
 
-fn generate_Food(self : GameState) -> Unit {
+#as_free_fn
+fn GameState::generate_Food(self : GameState) -> Unit {
   while true {
     let i : Int = floor(random() * 20.0)
     let j : Int = floor(random() * 20.0)
@@ -103,7 +106,8 @@ fn go_step(self : GameState) -> Unit {
   }
 }
 
-pub fn step(self : GameState, action : Direction) -> Unit {
+#as_free_fn
+pub fn GameState::step(self : Self, action : Direction) -> Unit {
   match (action, self.dir) {
     (Up, Down) | (Left, Right) | (Right, Left) | (Down, Up) =>
       if self.body.length() == 1 {

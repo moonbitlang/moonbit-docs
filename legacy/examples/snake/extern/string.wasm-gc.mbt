@@ -12,18 +12,27 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-priv extern type JsArray
+///|
+#external
+priv type JsArray
 
+///|
 fn JsArray::new() -> JsArray = "array" "new"
 
+///|
 fn push(self : JsArray, charCode : Int) = "array" "push"
 
-pub(all) extern type JsString
+///|
+#external
+pub(all) type JsString
 
+///|
 fn JsString::from_code_point(charCode : JsArray) -> JsString = "string" "fromCodePoint"
 
+///|
 fn iter(self : JsString, f : (Int) -> Unit) -> Unit = "string" "iter"
 
+///|
 pub fn JsString::from_string(str : String) -> JsString {
   str
   .iter()
@@ -37,8 +46,9 @@ pub fn JsString::from_string(str : String) -> JsString {
   |> JsString::from_code_point
 }
 
+///|
 pub fn JsString::to_string(str : JsString) -> String {
   let buffer = StringBuilder::new()
-  str.iter(fn(i : Int) { buffer.write_char(Char::from_int(i)) })
+  str.iter(fn(i : Int) { buffer.write_char(i.unsafe_to_char()) })
   buffer.to_string()
 }

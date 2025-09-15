@@ -12,20 +12,24 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-type T😯 Int
+///|
+priv struct T😯(Int)
 
+///|
 fn 😀(self : T😯) -> Int {
-  self._
+  self.inner()
 }
 
-pub(all) enum 😆😆 {
+///|
+pub(all) enum E😆😆 {
   A
   B
 } derive(Show)
 
+///|
 test {
   let 🤣 = T😯::T😯(3)
-  inspect!(🤣.😀(), content="3")
-  let 😆 = 😆😆::A
-  inspect!(😆, content="A")
+  inspect(🤣.😀(), content="3")
+  let 😆 = E😆😆::A
+  inspect(😆, content="A")
 }

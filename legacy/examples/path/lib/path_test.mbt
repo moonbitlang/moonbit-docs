@@ -24,16 +24,16 @@ test {
   inspect(posix_path.parent(), content="/tmp/abc/f/")
   inspect(
     posix_path.file_name(),
-    content=
+    content=(
       #|Some("d")
-    ,
+    ),
   )
   posix_path.append("def")
   inspect(
     posix_path,
-    content=
+    content=(
       #|"/tmp/abc/f/d/def"
-    ,
+    ),
   )
 
   // Relative Posix
@@ -46,16 +46,16 @@ test {
   inspect(rel_posix_path.parent(), content="./abc/de/")
   inspect(
     rel_posix_path.file_name(),
-    content=
+    content=(
       #|Some("f")
-    ,
+    ),
   )
   rel_posix_path.append("hello")
   inspect(
     rel_posix_path.to_string(),
-    content=
+    content=(
       #|"./abc/de/f/hello"
-    ,
+    ),
   )
 
   // windows
@@ -67,8 +67,8 @@ test {
   inspect(win_path.is_absolute(), content="true")
   inspect(
     win_path.file_name(),
-    content=
+    content=(
       #|Some("de")
-    ,
+    ),
   )
 }
