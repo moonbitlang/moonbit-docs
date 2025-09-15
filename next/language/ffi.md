@@ -506,9 +506,16 @@ so MoonBit will not perform any reference counting operations on them.
 
 The layout of `struct`/`enum` with payload is currently unstable.
 
-#### The borrow attribute
+#### The borrow and owned attribute
 
-To properly maintain reference count, it is often necessary to write foreign functions just to perform `decref`. Fortunately, MoonBit provides a `#borrow` attribute to change the calling convention of FFI to borrow based. The syntax of `#borrow` is as follows:
+When passing a parameter through the FFI, its ownership may or may not be kept.
+The `#borrow` and `#owned` attributes can be used to specify these two conditions.
+
+```{warning}
+We are in the process of migrating the default semantics to `#borrow` instead of `#owned`
+```
+
+The syntax of `#borrow` and `#owned` are as follows:
 
 ```moonbit
 #borrow(params..)
@@ -536,3 +543,6 @@ Even if a stub function is still necessary for other reasons, `#borrow` can ofte
 | passed to other C function / `#borrow` MoonBit function | nothing |
 | returned | `incref` |
 | end of scope (not returned) | nothing |
+
+The opposite is the `#owned` semantic, where the parameter is stored by the FFI function, and the `decref` needs to be executed manually later.
+One use case is registering the callback where the closure would be **owned**.

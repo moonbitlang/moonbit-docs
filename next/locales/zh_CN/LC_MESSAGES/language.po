@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-15 13:47+0800\n"
+"POT-Creation-Date: 2025-09-15 15:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1585,17 +1585,141 @@ msgstr ""
 "[警示列表](../toolchain/moon/package.md#alert-list)."
 
 #: ../../language/docs.md:102
-msgid "The Borrow Attribute"
-msgstr "“借用”属性"
+msgid "The External Attribute"
+msgstr "外部属性"
 
 #: ../../language/docs.md:104
 msgid ""
-"The `#borrow` attribute is used to indicate that a FFI takes ownership of"
-" its arguments. For more detail, see [FFI](./ffi.md#the-borrow-"
-"attribute)."
+"The `#external` attribute is used to mark an abstract type as external "
+"type."
 msgstr ""
-"`#borrow`属性用于表示一个外部接口是否获得参数的所有权。对于更多细节，见 [FFI](./ffi.md#the-borrow-"
+"`#external`属性用于标记一个抽象类型为外部类型。"
+
+#: ../../language/docs.md:106
+msgid "For Wasm(GC) backends, it would be interpreted as `anyref`."
+msgstr "对于Wasm(GC)后端，它将被解释为`anyref`。"
+
+#: ../../language/docs.md:107
+msgid "For JavaScript backend, it would be interpreted as `any`."
+msgstr "对于JavaScript后端，它将被解释为`any`。"
+
+#: ../../language/docs.md:108
+msgid "For native backends, it would be interpreted as `void*`."
+msgstr "对于原生后端，它将被解释为`void*`。"
+
+#: ../../language/docs.md:110
+msgid ""
+"#external\n"
+"type Ptr"
+msgstr ""
+
+#: ../../language/docs.md:116
+msgid "The Borrow and Owned Attribute"
+msgstr "Borrow 和 Owned 属性"
+
+#: ../../language/docs.md:118
+
+msgid ""
+"The `#borrow` and `#owned` attribute is used to indicate that a FFI takes"
+" ownership of its arguments. For more detail, see [FFI](./ffi.md#the-"
+"borrow-attribute)."
+msgstr ""
+"`#borrow` 和 `#owned` 属性用于表示一个外部接口是否获得参数的所有权。对于更多细节，见 [FFI](./ffi.md#the-borrow-"
 "attribute)。"
+
+#: ../../language/docs.md:120
+msgid "The As Free Function Attribute"
+msgstr "As Free Function 属性"
+
+#: ../../language/docs.md:122
+msgid ""
+"The `#as_free_fn` attribute is used to mark a method that it is declared "
+"as a free function as well. It can also change the visibility of the free"
+" function, the name of the free function, and provide separate "
+"deprecation warning."
+msgstr ""
+"`#as_free_fn` 属性用于标记一个方法，同时它也被声明为一个自由函数。它还可以改变自由函数的可见性、自由函数的名字，"
+"并且提供单独的弃用警告。"
+
+#: ../../language/docs.md:125
+msgid ""
+"#as_free_fn(dec, visibility=\"pub\", deprecated=\"use `Int::decrement` "
+"instead\")\n"
+"#as_free_fn(visibility=\"pub\")\n"
+"fn Int::decrement(i : Self) -> Self {\n"
+"  i - 1\n"
+"}\n"
+"\n"
+"test {\n"
+"  let _ = decrement(10)\n"
+"  let _ = (10).decrement()\n"
+"}\n"
+msgstr ""
+
+#: ../../language/docs.md:131
+msgid "The Callsite Attribute"
+msgstr "调用位置属性"
+
+#: ../../language/docs.md:133
+msgid ""
+"The `#callsite` attribute is used to mark properties that happen at "
+"callsite."
+msgstr "`#callsite` 属性用于标记发生在调用位置的属性。"
+
+#: ../../language/docs.md:135
+msgid ""
+"It could be `autofill`, which is to autofill the arguments [SourceLoc and"
+" ArgLoc](/language/fundamentals.md#autofill-arguments) at callsite."
+msgstr ""
+"它可以是 `autofill`，用于在调用位置自动填充参数 [SourceLoc 和 ArgLoc](/language/fundamentals.md#autofill-arguments)。"
+
+#: ../../language/docs.md:138
+msgid ""
+"It could also be used for migration, letting the downstream user adapt to"
+" the new calling convention:"
+msgstr ""
+"它也可以用于迁移，帮助下游用户适应新的调用约定："
+
+#: ../../language/docs.md:140
+msgid ""
+"#callsite(migration(y, fill=true, msg=\"must fill y for migration\"), "
+"migration(z, fill=false, msg=\"cannot fill z for migration\"))\n"
+"fn f(x~ : Int, y? : Int = 42, z? : Int) -> Unit {\n"
+"  ...\n"
+"}"
+msgstr ""
+
+#: ../../language/docs.md:148
+msgid "The Skip Attribute"
+msgstr "跳过属性"
+
+#: ../../language/docs.md:150
+msgid ""
+"The `#skip` attribute is used to skip a single test block. The type "
+"checking will still be performed."
+msgstr ""
+"`#skip` 属性用于跳过一个测试块。类型检查仍然会被执行。"
+
+#: ../../language/docs.md:152
+msgid "The Configuration attribute"
+msgstr "配置属性"
+
+#: ../../language/docs.md:154
+msgid ""
+"The `#cfg` attribute is used to perform conditional compilation. Examples"
+" are:"
+msgstr ""
+"`#cfg` 属性用于执行条件编译。例子有："
+
+#: ../../language/docs.md:158
+msgid ""
+"#cfg(true)\n"
+"#cfg(false)\n"
+"#cfg(target=\"wasm\")\n"
+"#cfg(not(target=\"wasm\"))\n"
+"#cfg(all(target=\"wasm\", true))\n"
+"#cfg(any(target=\"wasm\", target=\"native\"))\n"
+msgstr ""
 
 #: ../../language/error-handling.md:1
 msgid "Error handling"
@@ -14060,11 +14184,11 @@ msgstr ""
 "函数来释放它的参数。如果参数被多次使用，被调用的函数需要调用 `moonbit_incref` "
 "函数来增加引用计数。下面是不同场合下维护正确引用计数需要做的操作："
 
-#: ../../language/ffi.md:461
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
 msgid "event"
 msgstr "场合"
 
-#: ../../language/ffi.md:461
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
 msgid "operation"
 msgstr "操作"
 
@@ -14072,19 +14196,19 @@ msgstr "操作"
 msgid "read field/element"
 msgstr "读取字段/元素"
 
-#: ../../language/ffi.md:461
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
 msgid "nothing"
 msgstr "什么都不做"
 
-#: ../../language/ffi.md:461
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
 msgid "store into data structure"
 msgstr "存储进数据结构"
 
-#: ../../language/ffi.md:461
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
 msgid "`incref`"
 msgstr "调用 `incref`"
 
-#: ../../language/ffi.md:461
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
 msgid "passed to MoonBit function"
 msgstr "作为参数传递给 MoonBit 函数"
 
@@ -14092,11 +14216,11 @@ msgstr "作为参数传递给 MoonBit 函数"
 msgid "passed to other foreign function"
 msgstr "作为参数传递给其他外部函数"
 
-#: ../../language/ffi.md:461
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
 msgid "returned"
 msgstr "作为返回值被返回"
 
-#: ../../language/ffi.md:461
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
 msgid "end of scope (not returned)"
 msgstr "作用域结束（且没有返回）"
 
@@ -14167,30 +14291,40 @@ msgid "The layout of `struct`/`enum` with payload is currently unstable."
 msgstr "`struct`/有参数的 `enum` 的内存表示是不稳定的。"
 
 #: ../../language/ffi.md:509
-msgid "The borrow attribute"
-msgstr "borrow 标记"
+msgid "The borrow and owned attribute"
+msgstr "borrow 和 owned 标记"
 
 #: ../../language/ffi.md:511
 msgid ""
-"To properly maintain reference count, it is often necessary to write "
-"foreign functions just to perform `decref`. Fortunately, MoonBit provides"
-" a `#borrow` attribute to change the calling convention of FFI to borrow "
-"based. The syntax of `#borrow` is as follows:"
+"When passing a parameter through the FFI, its ownership may or may not be"
+" kept. The `#borrow` and `#owned` attributes can be used to specify these"
+" two conditions."
 msgstr ""
-"为了正确维护引用计数，往往需要写一个胶水 C 函数来调用 `moonbit_decref`。对这种情况，MoonBit 提供了 `#borrow`"
-" 标记来改变 C FFI 的调用约定，把引用计数的调用约定改为传递借用。`#borrow` 标记的语法是："
+"通过 FFI 传递参数时，参数的所有权可能会被保留，也可能不会。`#borrow` 和 `#owned` 标记可以用来指定这两种情况。"
 
-#: ../../language/ffi.md:513
+#: ../../language/ffi.md:515
+msgid ""
+"We are in the process of migrating the default semantics to `#borrow` "
+"instead of `#owned`"
+msgstr ""
+"我们正在将默认语义从 `#owned` 迁移到 `#borrow`。"
+
+#: ../../language/ffi.md:518
+msgid "The syntax of `#borrow` and `#owned` are as follows:"
+msgstr ""
+" `#borrow` 和 `#owned` 的语法如下："
+
+#: ../../language/ffi.md:520
 msgid ""
 "#borrow(params..)\n"
 "extern \"C\" fn c_ffi(..) -> .. = ..\n"
 msgstr ""
 
-#: ../../language/ffi.md:518
+#: ../../language/ffi.md:525
 msgid "where `params` is a subset of the parameters of `c_ffi`."
 msgstr "其中，`params` 是 `c_ffi` 的参数列表的一个子集。"
 
-#: ../../language/ffi.md:520
+#: ../../language/ffi.md:527
 msgid ""
 "Parameters of `#borrow` will be passed using borrow based calling "
 "convention, that is, the invoked function does not need to `decref` these"
@@ -14204,20 +14338,20 @@ msgstr ""
 "函数只会在运行期间读取它的参数（不会返回它的参数或把它们存进数据结构），那么使用 `#borrow` 标记可以直接绑定 FFI 函数。上面的 "
 "`open` 的例子可以使用 `#borrow` 标记来简化："
 
-#: ../../language/ffi.md:522
+#: ../../language/ffi.md:529
 msgid ""
 "#borrow(filename)\n"
 "extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open\"\n"
 msgstr ""
 
-#: ../../language/ffi.md:527
+#: ../../language/ffi.md:534
 msgid ""
 "There is no need for a stub function anymore: we are binding to the "
 "original version of `open` here. With the `#borrow` attribute, this "
 "version is still lifetime-correct."
 msgstr "这里不再需要 C 胶水函数：我们直接绑定到了原版 `open`。`#borrow` 标记保证了这个简化的版本依然能正确维护引用计数。"
 
-#: ../../language/ffi.md:529
+#: ../../language/ffi.md:536
 msgid ""
 "Even if a stub function is still necessary for other reasons, `#borrow` "
 "can often simplify the lifetime management. Here are the rules for the "
@@ -14227,13 +14361,23 @@ msgstr ""
 "即使由于某些其他原因依然需要写 C 胶水函数，`#borrow` 标记也可以用于简化 C 胶水内部的生命周期管理。下面是不同场合下，正确维护 "
 "**借用参数** 的引用计数需要做的操作："
 
-#: ../../language/ffi.md:461
+#: ../../language/ffi.md:514
 msgid "read field / element"
 msgstr "读取字段/元素"
 
-#: ../../language/ffi.md:461
+#: ../../language/ffi.md:514
 msgid "passed to other C function / `#borrow` MoonBit function"
 msgstr "传递给其他 C 函数 / `#borrow` MoonBit 函数"
+
+#: ../../language/ffi.md:547
+msgid ""
+"The opposite is the `#owned` semantic, where the parameter is stored by "
+"the FFI function, and the `decref` needs to be executed manually later. "
+"One use case is registering the callback where the closure would be "
+"**owned**."
+msgstr ""
+"`#owned` 语义与之相反，表示参数会被 FFI 函数存储，并且需要在稍后手动调用 `decref`。"
+"一个使用场景是注册回调函数，其中闭包会被 **持有所有权**。"
 
 #: ../../language/fundamentals.md:1
 msgid "Fundamentals"
@@ -20982,4 +21126,21 @@ msgstr ""
 #~ "  }\n"
 #~ "}\n"
 #~ msgstr ""
+
+#~ msgid "The Borrow Attribute"
+#~ msgstr "“借用”属性"
+
+#~ msgid ""
+#~ "To properly maintain reference count, it"
+#~ " is often necessary to write foreign"
+#~ " functions just to perform `decref`. "
+#~ "Fortunately, MoonBit provides a `#borrow` "
+#~ "attribute to change the calling "
+#~ "convention of FFI to borrow based. "
+#~ "The syntax of `#borrow` is as "
+#~ "follows:"
+#~ msgstr ""
+#~ "为了正确维护引用计数，往往需要写一个胶水 C 函数来调用 "
+#~ "`moonbit_decref`。对这种情况，MoonBit 提供了 `#borrow` 标记来改变"
+#~ " C FFI 的调用约定，把引用计数的调用约定改为传递借用。`#borrow` 标记的语法是："
 
