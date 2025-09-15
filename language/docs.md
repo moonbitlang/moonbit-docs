@@ -144,6 +144,71 @@ The internal attribute takes two arguments: `category` and `message`.
 The alert warnings can be turn off by setting the `alert-list` in `moon.pkg.json`.
 For more detail, see [Alert](../toolchain/moon/package.md#alert-list).
 
-### The Borrow Attribute
+### The External Attribute
 
-The `#borrow` attribute is used to indicate that a FFI takes ownership of its arguments. For more detail, see [FFI](ffi.md#the-borrow-attribute).
+The `#external` attribute is used to mark an abstract type as external type.
+
+- For Wasm(GC) backends, it would be interpreted as `anyref`.
+- For JavaScript backend, it would be interpreted as `any`.
+- For native backends, it would be interpreted as `void*`.
+
+```moonbit
+#external
+type Ptr
+```
+
+### The Borrow and Owned Attribute
+
+The `#borrow` and `#owned` attribute is used to indicate that a FFI takes ownership of its arguments. For more detail, see [FFI](ffi.md#the-borrow-attribute).
+
+### The As Free Function Attribute
+
+The `#as_free_fn` attribute is used to mark a method that it is declared as a free function as well.
+It can also change the visibility of the free function, the name of the free function, and provide separate deprecation warning.
+
+```moonbit
+#as_free_fn(dec, visibility="pub", deprecated="use `Int::decrement` instead")
+#as_free_fn(visibility="pub")
+fn Int::decrement(i : Self) -> Self {
+  i - 1
+}
+
+test {
+  let _ = decrement(10)
+  let _ = (10).decrement()
+}
+```
+
+### The Callsite Attribute
+
+The `#callsite` attribute is used to mark properties that happen at callsite.
+
+It could be `autofill`, which is to autofill the arguments [SourceLoc and ArgLoc](fundamentals.md#autofill-arguments)
+at callsite.
+
+It could also be used for migration, letting the downstream user adapt to the new calling convention:
+
+```moonbit
+#callsite(migration(y, fill=true, msg="must fill y for migration"), migration(z, fill=false, msg="cannot fill z for migration"))
+fn f(x~ : Int, y? : Int = 42, z? : Int) -> Unit {
+  ...
+}
+```
+
+### The Skip Attribute
+
+The `#skip` attribute is used to skip a single test block. The type checking will still be performed.
+
+### The Configuration attribute
+
+The `#cfg` attribute is used to perform conditional compilation. Examples are:
+
+<!-- MANUAL CHECK -->
+```moonbit
+#cfg(true)
+#cfg(false)
+#cfg(target="wasm")
+#cfg(not(target="wasm"))
+#cfg(all(target="wasm", true))
+#cfg(any(target="wasm", target="native"))
+```
