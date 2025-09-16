@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-03 11:11+0800\n"
+"POT-Creation-Date: 2025-09-16 13:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: ../../toolchain/index.md:14 ../../toolchain/moon/index.md:3
+#: ../../toolchain/index.md:15 ../../toolchain/moon/index.md:3
 msgid "Contents:"
 msgstr "内容："
 
@@ -33,20 +33,23 @@ msgid ""
 "system."
 msgstr "[MoonBit 的构建系统](./moon/index.md)：`moon`构建系统的完整手册。"
 
-#: ../../toolchain/index.md:5
-#, fuzzy
-msgid "**Other toolchains**"
-msgstr "工具链"
+#: ../../toolchain/index.md:4
+msgid "[MoonBit's VSCode Plugin](./vscode/index.md): hint on VSCode plugin."
+msgstr "[MoonBit 的 VSCode 插件](./vscode/index.md)：关于 VSCode 插件的提示。"
 
-#: ../../toolchain/index.md:7
-msgid "[WebAssembly Toolchain](./wasm/index.md): how to use Wasm with MoonBit."
-msgstr ""
+#: ../../toolchain/index.md:6
+msgid "**Other toolchains**"
+msgstr "其他工具链"
 
 #: ../../toolchain/index.md:8
+msgid "[WebAssembly Toolchain](./wasm/index.md): how to use Wasm with MoonBit."
+msgstr "[WebAssembly 工具链](./wasm/index.md)：如何在 MoonBit 中使用 Wasm。"
+
+#: ../../toolchain/index.md:9
 msgid "..."
 msgstr ""
 
-#: ../../toolchain/index.md:11
+#: ../../toolchain/index.md:12
 msgid "[Download this section in Markdown](path:/download/toolchain/summary.md)"
 msgstr "[下载本章节的 Markdown 版本](path:/download/toolchain/summary.md)"
 
@@ -3431,8 +3434,9 @@ msgid ""
 "default values, you can create a new module named `username/my_project` "
 "in the `my_project` directory."
 msgstr ""
-"要创建一个新模块，在终端中输入 `moon new <path>` 命令，其中 path 是你想要创建项目的文件夹目录，之后项目会被创建。"
-"使用默认值，你会在 `my_project` 目录中创建一个名为 `username/my_project` 的新模块。"
+"要创建一个新模块，在终端中输入 `moon new <path>` 命令，其中 path "
+"是你想要创建项目的文件夹目录，之后项目会被创建。使用默认值，你会在 `my_project` 目录中创建一个名为 "
+"`username/my_project` 的新模块。"
 
 #: ../../toolchain/moon/tutorial.md:26
 msgid ""
@@ -3446,8 +3450,7 @@ msgid ""
 "You may also specify the username and module name by using the `--user` "
 "option and `--name` option respectively. If you have logged-in, the "
 "username will default to your username."
-msgstr ""
-"你也可以通过使用 `--user` 选项和 `--name` 选项分别指定用户名和模块名称。如果你已经登录，用户名将默认为你的用户名。"
+msgstr "你也可以通过使用 `--user` 选项和 `--name` 选项分别指定用户名和模块名称。如果你已经登录，用户名将默认为你的用户名。"
 
 #: ../../toolchain/moon/tutorial.md:35
 msgid "Understanding the Module Directory Structure"
@@ -3480,8 +3483,7 @@ msgstr ""
 msgid ""
 "On Windows system, you need administrator priviledge or the developer "
 "mode enabled to create the symbolic link."
-msgstr ""
-"在 Windows 系统上，你需要管理员权限或启用开发者模式才能创建符号链接。"
+msgstr "在 Windows 系统上，你需要管理员权限或启用开发者模式才能创建符号链接。"
 
 #: ../../toolchain/moon/tutorial.md:59
 msgid "Here's a brief explanation of the directory structure:"
@@ -3491,8 +3493,7 @@ msgstr "以下是目录结构的简要说明："
 msgid ""
 "`moon.mod.json` is used to identify a directory as a MoonBit module. It "
 "contains the module's metadata, such as the module name, version, etc."
-msgstr ""
-"`moon.mod.json` 用于标识目录为 MoonBit 模块。它包含模块的元数据，如模块名称、版本等。"
+msgstr "`moon.mod.json` 用于标识目录为 MoonBit 模块。它包含模块的元数据，如模块名称、版本等。"
 
 #: ../../toolchain/moon/tutorial.md:63
 msgid ""
@@ -3518,8 +3519,8 @@ msgid ""
 " directly."
 msgstr ""
 "`.` 和 `cmd/main` 目录：这些是模块中的包。每个包可以包含多个 `.mbt` 文件，这些文件是 MoonBit "
-"语言的源代码文件。但是，无论一个包有多少 `.mbt` 文件，它们都共享一个公共的 `moon.pkg.json` "
-"文件。`*_test.mbt` 是独立测试文件，这些文件用于黑盒测试，因此同一个包的私有成员不能直接访问。"
+"语言的源代码文件。但是，无论一个包有多少 `.mbt` 文件，它们都共享一个公共的 `moon.pkg.json` 文件。`*_test.mbt`"
+" 是独立测试文件，这些文件用于黑盒测试，因此同一个包的私有成员不能直接访问。"
 
 #: ../../toolchain/moon/tutorial.md:77
 msgid ""
@@ -3570,7 +3571,8 @@ msgid ""
 "`README.mbt.md` is the README file. The code blocks written inside will "
 "be type checked and tested by `moon check` and `moon test`."
 msgstr ""
-"`README.mbt.md` 是 README 文件。内部编写的代码块将通过 `moon check` 和 `moon test` 进行类型检查和测试。"
+"`README.mbt.md` 是 README 文件。内部编写的代码块将通过 `moon check` 和 `moon test` "
+"进行类型检查和测试。"
 
 #: ../../toolchain/moon/tutorial.md:105
 msgid "Working with Packages"
@@ -3580,7 +3582,9 @@ msgstr "使用包"
 msgid ""
 "Our `username/my_project` module contains two packages: "
 "`username/my_project` and `username/my_project/cmd/main`."
-msgstr "我们的 `username/my_project` 模块包含两个包：`username/my_project` 和 `username/my_project/cmd/main`。"
+msgstr ""
+"我们的 `username/my_project` 模块包含两个包：`username/my_project` 和 "
+"`username/my_project/cmd/main`。"
 
 #: ../../toolchain/moon/tutorial.md:109
 msgid ""
@@ -3679,8 +3683,9 @@ msgid ""
 "having an alias of `lib`, so you can use `@lib.fib(10)` in "
 "`cmd/main/main.mbt`."
 msgstr ""
-"这里，`username/my_project` 指定从 `username/my_project` 模块导入 `username/my_project` "
-"包，并且有别名 `lib`，所以你可以在 `cmd/main/main.mbt` 中使用 `@lib.fib(10)`。"
+"这里，`username/my_project` 指定从 `username/my_project` 模块导入 "
+"`username/my_project` 包，并且有别名 `lib`，所以你可以在 `cmd/main/main.mbt` 中使用 "
+"`@lib.fib(10)`。"
 
 #: ../../toolchain/moon/tutorial.md:183
 msgid "Creating and Using a New Package"
@@ -3795,8 +3800,8 @@ msgid ""
 "package in `cmd/main/main.mbt`. Replace the file content of "
 "`cmd/main/main.mbt` to:"
 msgstr ""
-"这一行导入了 `fib` 包，它是 `username/my_project` 模块中 `fib` 包的一部分。在这样做之后，你可以在 `cmd/main/main.mbt` 中使用"
-" `fib` 包。"
+"这一行导入了 `fib` 包，它是 `username/my_project` 模块中 `fib` 包的一部分。在这样做之后，你可以在 "
+"`cmd/main/main.mbt` 中使用 `fib` 包。"
 
 #: ../../toolchain/moon/tutorial.md:262
 msgid ""
@@ -3870,17 +3875,14 @@ msgid ""
 "Notice that the test code uses `@fib` to refer to the `fib` package. The "
 "build system automatically creates a new package for blackbox tests by "
 "using the files that end with `_test.mbt`."
-msgstr ""
-"注意，测试代码使用 `@fib` 来引用 `fib` 包。构建系统通过使用以 `_test.mbt` "
-"结尾的文件自动为黑盒测试创建一个新包。"
+msgstr "注意，测试代码使用 `@fib` 来引用 `fib` 包。构建系统通过使用以 `_test.mbt` 结尾的文件自动为黑盒测试创建一个新包。"
 
 #: ../../toolchain/moon/tutorial.md:305
 msgid ""
 "Finally, reuse the `moon test` command, which scans the entire project, "
 "identifies, and runs all the tests. If everything is normal, you will "
 "see:"
-msgstr ""
-"最后，使用 `moon test` 命令，它会扫描整个项目，识别并运行所有测试。如果一切正常，你将看到："
+msgstr "最后，使用 `moon test` 命令，它会扫描整个项目，识别并运行所有测试。如果一切正常，你将看到："
 
 #: ../../toolchain/moon/tutorial.md:308
 msgid ""
@@ -3888,9 +3890,127 @@ msgid ""
 "Total tests: 2, passed: 2, failed: 0.\n"
 msgstr ""
 
+#: ../../toolchain/vscode/index.md:1
+msgid "MoonBit VSCode Plugin"
+msgstr "MoonBit VSCode 插件"
+
+#: ../../toolchain/vscode/index.md:3
+msgid ""
+"MoonBit provides a plugin for Visual Studio Code, available in the "
+"[Visual Studio "
+"MarketPlace](https://marketplace.visualstudio.com/items?itemName=moonbit"
+".moonbit-lang) and [Open VSX Registry](https://open-"
+"vsx.org/extension/moonbit/moonbit-lang)."
+msgstr ""
+"MoonBit 为 Visual Studio Code 提供了一个插件，可以在 [Visual Studio "
+"市场](https://marketplace.visualstudio.com/items?itemName=moonbit.moonbit-lang) "
+"和 [Open VSX 仓库](https://open-vsx.org/extension/moonbit/moonbit-lang) 中找到。"
+
+#: ../../toolchain/vscode/index.md:7
+msgid "Commands"
+msgstr "命令"
+
+#: ../../toolchain/vscode/index.md:9
+msgid ""
+"The plugin provides several commands, available through [command "
+"palettes](https://code.visualstudio.com/docs/getstarted/userinterface"
+"#_command-palette)"
+msgstr ""
+"该插件提供了几个命令，可以通过 [命令面板](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) 访问"
+
+#: ../../toolchain/vscode/index.md:12
+msgid "Select backend: It allows you to switch between several backends"
+msgstr "选择后端：它允许你在多个后端之间切换"
+
+#: ../../toolchain/vscode/index.md:13
+msgid ""
+"Restart MoonBit language server: It allows you to restart the language "
+"server, in case it's unresponsive or has some stale state."
+msgstr "重启 MoonBit 语言服务器：它允许你重启语言服务器，以防它无响应或有一些过时的状态。"
+
+#: ../../toolchain/vscode/index.md:15
+msgid ""
+"Install MoonBit toolchain: Manually triggers the installation process. "
+"The extension will check if the installed MoonBit toolchain matches the "
+"extension's version."
+msgstr "安装 MoonBit 工具链：手动触发安装过程。该扩展将检查已安装的 MoonBit 工具链是否与扩展的版本匹配。"
+
+#: ../../toolchain/vscode/index.md:18
+msgid ""
+"Get lsp's compiler version: It will display the MoonBit compiler version "
+"used by the extension."
+msgstr "获取 LSP 的编译器版本：它将显示扩展使用的 MoonBit 编译器版本。"
+
+#: ../../toolchain/vscode/index.md:20
+msgid ""
+"Toggle multiline string: It can help switching the chosen text between a "
+"plain text and the MoonBit's [multiline string "
+"syntax](/language/fundamentals.md#string)"
+msgstr "切换多行字符串：它可以帮助在纯文本和 MoonBit 的 [多行字符串语法](/language/fundamentals.md#string) 之间切换所选文本"
+
+#: ../../toolchain/vscode/index.md:24
+msgid "Actions"
+msgstr "操作"
+
+#: ../../toolchain/vscode/index.md:26
+msgid ""
+"The plugin also provides several actions, available through [quick "
+"fix](https://code.visualstudio.com/docs/editing/refactoring#_code-"
+"actions-quick-fixes-and-refactorings)"
+msgstr ""
+"该插件还提供了几个操作，可以通过 [快速修复](https://code.visualstudio.com/docs/editing/refactoring#_code-actions-quick-fixes-and-refactorings) 访问"
+
+#: ../../toolchain/vscode/index.md:29
+msgid ""
+"Add missing arms: It allows you to fill up the branches of a `match` "
+"expression when encountering [Error 0011](/language/error_codes/E0011.md)"
+msgstr ""
+"添加缺失的分支：当遇到 [错误 0011](/language/error_codes/E0011.md) 时，它允许你填充 `match` 表达式的分支"
+
+#: ../../toolchain/vscode/index.md:32
+msgid "Code Lens"
+msgstr "代码透镜"
+
+#: ../../toolchain/vscode/index.md:34
+msgid ""
+"The plugin provides code lens for each top-level code block, especially "
+"test blocks."
+msgstr ""
+"该插件为每个顶级代码块，特别是测试块，提供代码透镜。"
+
+#: ../../toolchain/vscode/index.md:37
+msgid "The provided functionalities are:"
+msgstr "提供的功能包括："
+
+#: ../../toolchain/vscode/index.md:39
+msgid "Format: format the code block"
+msgstr "格式化：格式化代码块"
+
+#: ../../toolchain/vscode/index.md:40
+msgid "Test / Bench: test or bench the test block"
+msgstr "测试 / 基准：测试或基准测试代码块"
+
+#: ../../toolchain/vscode/index.md:41
+msgid "Debug (JavaScript backend only): test the test block with debugger"
+msgstr "调试（仅限 JavaScript 后端）：使用调试器测试测试块"
+
+#: ../../toolchain/vscode/index.md:42
+msgid ""
+"Update: update the [snapshot tests](/language/tests.md#snapshot-tests) in"
+" the code block"
+msgstr ""
+"更新：更新代码块中的 [快照测试](/language/tests.md#snapshot-tests)"
+
+#: ../../toolchain/vscode/index.md:44
+msgid ""
+"Trace: turn on/off the tracing of the test block where each assignment "
+"will have the value rendered next to it"
+msgstr ""
+"跟踪：打开/关闭测试块的跟踪，其中每个赋值将在其旁边呈现值"
+
 #: ../../toolchain/wasm/component-model-tutorial.md:1
 msgid "MoonBit for Component Model"
-msgstr ""
+msgstr "MoonBit 与组件模型"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:3
 msgid ""
@@ -3898,6 +4018,8 @@ msgid ""
 "MoonBit, leveraging WIT (WebAssembly Interface Types) for interface "
 "definitions and the `wit-bindgen` toolchain for code generation."
 msgstr ""
+"本指南演示了如何使用 MoonBit 构建 WebAssembly 组件，利用 WIT（WebAssembly 接口类型）进行接口定义，并使用 "
+"`wit-bindgen` 工具链进行代码生成。"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:7
 msgid ""
@@ -3906,14 +4028,16 @@ msgid ""
 "component will export an `add` interface containing an `add` function "
 "that sums two numbers."
 msgstr ""
+"本教程将演示如何构建一个实现 `docs:adder` 包中定义的 "
+"[`adder` world][adder-wit] 的组件。该组件将导出一个包含两个数字求和的 `add` 函数的 `add` 接口。"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:14
 msgid "1. Install the Tools"
-msgstr ""
+msgstr "1. 安装工具"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:16
 msgid "Installing MoonBit"
-msgstr ""
+msgstr "安装 MoonBit"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:18
 msgid ""
@@ -3921,12 +4045,14 @@ msgid ""
 "installation instructions from the [MoonBit download "
 "page](https://www.moonbitlang.com/download)."
 msgstr ""
+"首先，安装 MoonBit 编译器和工具链。请按照 [MoonBit 下载页面](https://www.moonbitlang.cn/download) 的说明进行操作。"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:22
 msgid ""
 "Verify your MoonBit installation (below are the versions at the time of "
 "writing):"
 msgstr ""
+"验证你的 MoonBit 安装（以下是撰写本文时的版本）："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:25
 msgid ""
@@ -3939,13 +4065,14 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:33
 msgid "Installing Wasm toolchain"
-msgstr ""
+msgstr "安装 Wasm 工具链"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:35
 msgid ""
 "Install the `wit-bindgen` CLI tool, which generates MoonBit bindings from"
 " WIT files:"
 msgstr ""
+"安装 `wit-bindgen` CLI 工具，它可以从 WIT 文件生成 MoonBit 绑定："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:38
 msgid "$ cargo install wit-bindgen-cli\n"
@@ -3953,7 +4080,7 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:42
 msgid "Install `wasm-tools` for working with WebAssembly components:"
-msgstr ""
+msgstr "为了使用 WebAssembly 组件，安装 `wasm-tools`："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:44
 msgid "$ cargo install wasm-tools\n"
@@ -3961,7 +4088,7 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:48
 msgid "Verify the installations (below are the versions at the time of writing):"
-msgstr ""
+msgstr "验证安装（以下是撰写本文时的版本）："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:50
 msgid ""
@@ -3973,7 +4100,7 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:57
 msgid "2. Define the Interface (WIT)"
-msgstr ""
+msgstr "2. 定义接口（WIT）"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:59
 msgid ""
@@ -3981,6 +4108,7 @@ msgid ""
 "interface using WIT. Create a directory for your project and define the "
 "WIT file:"
 msgstr ""
+"在生成 MoonBit 项目之前，你需要使用 WIT 定义组件接口。为你的项目创建一个目录并定义 WIT 文件："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:63
 msgid ""
@@ -3990,7 +4118,7 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:68
 msgid "Create `wit/world.wit` with the following content:"
-msgstr ""
+msgstr "创建 `wit/world.wit`，内容如下："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:70
 msgid ""
@@ -4007,30 +4135,29 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:82
 msgid "This WIT definition:"
-msgstr ""
+msgstr "此 WIT 定义："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:84
 msgid "Declares a package `docs:adder` with version `0.1.0`"
-msgstr ""
+msgstr "声明一个包 `docs:adder`，版本为 `0.1.0`"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:85
 msgid ""
 "Defines an `add` interface with a single function that takes two `u32` "
 "parameters and returns a `u32`"
-msgstr ""
+msgstr "定义一个 `add` 接口，包含一个接受两个 `u32` 参数并返回一个 `u32` 的函数"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:87
 msgid "Creates an `adder` world that exports the `add` interface"
-msgstr ""
+msgstr "创建一个 `adder` 世界，导出 `add` 接口"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:89
-#, fuzzy
 msgid "3. Generate MoonBit Project Structure"
-msgstr "设置 MoonBit 项目"
+msgstr "3. 生成 MoonBit 项目结构"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:91
 msgid "Use `wit-bindgen` to generate the MoonBit project structure and bindings:"
-msgstr ""
+msgstr "使用 `wit-bindgen` 生成 MoonBit 项目结构和绑定："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:93
 msgid ""
@@ -4041,9 +4168,8 @@ msgid ""
 msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:100
-#, fuzzy
 msgid "This command generates the following directory structure:"
-msgstr "理解模块目录结构"
+msgstr "此命令生成以下目录结构："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:102
 msgid ""
@@ -4080,40 +4206,39 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:134
 msgid "The generated files include:"
-msgstr ""
+msgstr "生成的文件包括："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:136
-#, fuzzy
 msgid "`moon.mod.json`: MoonBit module configuration"
-msgstr "模块配置"
+msgstr "`moon.mod.json`: MoonBit 模块配置"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:137
 msgid "`gen/`: Generated export bindings"
-msgstr ""
+msgstr "`gen/`: 生成的导出绑定"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:138
 msgid "`interface/`: Generated export interface bindings"
-msgstr ""
+msgstr "`interface/`: 生成的导出接口绑定"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:139
 msgid "`world/`: Generated export world bindings"
-msgstr ""
+msgstr "`world/`: 生成的导出世界绑定"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:140
 msgid "`stub.mbt`: Main implementation file"
-msgstr ""
+msgstr "`stub.mbt`: 主实现文件"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:141
 msgid "`interface/`: Generated import interface bindings"
-msgstr ""
+msgstr "`interface/`: 生成的导入接口绑定"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:142
 msgid "`world/`: Generated import world bindings"
-msgstr ""
+msgstr "`world/`: 生成的导入世界绑定"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:144
 msgid "4. Examine the Generated Code"
-msgstr ""
+msgstr "4. 检查生成的代码"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:146
 msgid ""
@@ -4121,6 +4246,8 @@ msgid ""
 "WebAssembly component interface. Let's examine the generated "
 "`gen/interface/docs/adder/add/stub.mbt`:"
 msgstr ""
+"`wit-bindgen` 工具生成了处理 WebAssembly 组件接口的 MoonBit 绑定。让我们检查生成的 "
+"`gen/interface/docs/adder/add/stub.mbt`："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:150
 msgid ""
@@ -4136,16 +4263,18 @@ msgid ""
 "The `...` is the placeholder syntax in MoonBit. When executing `moon "
 "check --target wasm`, 'unfinished code' warnings will appear."
 msgstr ""
+"`...` 是 MoonBit 中的占位符语法。当执行 `moon check --target wasm` 时，会出现“未完成代码”警告。"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:161
 msgid "5. Implement the Component Logic"
-msgstr ""
+msgstr "5. 实现组件逻辑"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:163
 msgid ""
 "Now implement the `add` function in "
 "`gen/interface/docs/adder/add/stub.mbt`:"
 msgstr ""
+"现在在 `gen/interface/docs/adder/add/stub.mbt` 中实现 `add` 函数："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:165
 msgid ""
@@ -4159,13 +4288,14 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:174
 msgid "6. Configure the Build"
-msgstr ""
+msgstr "6. 配置构建"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:176
 msgid ""
 "Ensure your `gen/moon.pkg.json` is properly configured for WebAssembly "
 "target:"
 msgstr ""
+"确保你的 `gen/moon.pkg.json` 已正确配置为 WebAssembly 目标："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:178
 msgid ""
@@ -4198,22 +4328,22 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:206
 msgid "7. Build the WebAssembly Component"
-msgstr ""
+msgstr "7. 构建 WebAssembly 组件"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:208
 msgid "Build the MoonBit code to WebAssembly:"
-msgstr ""
+msgstr "将 MoonBit 代码构建为 WebAssembly："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:210
-#, fuzzy
 msgid "$ moon build --target wasm\n"
-msgstr "Moon 构建系统"
+msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:214
 msgid ""
 "This generates a WebAssembly module. To create a proper WebAssembly "
 "component, use `wasm-tools`:"
 msgstr ""
+"这将生成一个 WebAssembly 模块。为了创建一个合适的 WebAssembly 组件，使用 `wasm-tools`："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:217
 msgid ""
@@ -4226,7 +4356,7 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:224
 msgid "You can verify the component's interface using `wasm-tools`:"
-msgstr ""
+msgstr "你可以使用 `wasm-tools` 验证组件的接口："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:226
 msgid "$ wasm-tools component wit adder.component.wasm\n"
@@ -4234,7 +4364,7 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:230
 msgid "Expected output for both commands:"
-msgstr ""
+msgstr "期待的两个命令输出："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:232
 msgid ""
@@ -4252,17 +4382,17 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:245
 msgid "8. Testing the Component"
-msgstr ""
+msgstr "8. 测试组件"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:247
 msgid "Using the Example Host"
-msgstr ""
+msgstr "使用示例宿主"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:249
 msgid ""
 "To test your component, use the [`example-host`][example-host] provided "
 "in this repository:"
-msgstr ""
+msgstr "要测试你的组件，请使用本存储库中提供的 [`example-host`][example-host]："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:252
 msgid ""
@@ -4274,7 +4404,7 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:259
 msgid "Expected output:"
-msgstr ""
+msgstr "期待的输出："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:261
 msgid "5 + 3 = 8\n"
@@ -4282,11 +4412,11 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:267
 msgid "Using Wasmtime"
-msgstr ""
+msgstr "使用 Wasmtime"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:269
 msgid "You can also test the component directly with `wasmtime`:"
-msgstr ""
+msgstr "你也可以直接使用 `wasmtime` 测试组件："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:271
 msgid ""
@@ -4295,9 +4425,8 @@ msgid ""
 msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:276
-#, fuzzy
 msgid "9. Configurations"
-msgstr "模块配置"
+msgstr "9. 配置"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:278
 msgid "--derive-eq --derive-show"
@@ -4308,6 +4437,7 @@ msgid ""
 "These two options will add `derive(Eq)` and / or `derive(Show)` for all "
 "the generated types."
 msgstr ""
+"这两个选项将为所有生成的类型添加 `derive(Eq)` 和 / 或 `derive(Show)`。"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:283
 msgid "--derive-error"
@@ -4320,11 +4450,11 @@ msgid ""
 "handling.html#error-types). This allows you to integrate the MoonBit's "
 "error handling easier."
 msgstr ""
+"此选项将生成名称中包含“Error”的变体/枚举作为 [suberrors](https://docs.moonbitlang.com/en/latest/language/error-handling.html#error-types)。这使你能够更轻松地集成 MoonBit 的错误处理。"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:289
-#, fuzzy
 msgid "For example, for the following interface:"
-msgstr "例如，以下配置实现了一个虚拟包："
+msgstr "例如，对于以下接口："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:291
 msgid ""
@@ -4344,7 +4474,7 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:306
 msgid "Will generate the following type and function:"
-msgstr ""
+msgstr "将生成以下类型和函数："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:308
 msgid ""
@@ -4363,7 +4493,7 @@ msgstr ""
 
 #: ../../toolchain/wasm/component-model-tutorial.md:322
 msgid "which you may use it as:"
-msgstr ""
+msgstr "你可以这样使用它："
 
 #: ../../toolchain/wasm/component-model-tutorial.md:324
 msgid ""
@@ -4387,6 +4517,7 @@ msgid ""
 "updated interface, but you don't want the `stub` file to be touched. You "
 "may use `--ignore-stub` option to avoid such modifications."
 msgstr ""
+"当你想要由于更新接口而重新生成项目时，但又不想修改 `stub` 文件时，就会发生这种情况。你可以使用 `--ignore-stub` 选项来避免这种修改。"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:341
 msgid "--project-name"
@@ -4399,6 +4530,7 @@ msgid ""
 " It can also be used if you are generating the project as part of a "
 "larger project."
 msgstr ""
+"默认情况下，项目名称是根据 MoonBit 文件中定义的名称生成的。你可以使用此选项来指定项目的名称。如果你正在将项目作为更大项目的一部分生成，它也可以使用。"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:347
 msgid "--gen-dir"
@@ -4409,10 +4541,11 @@ msgid ""
 "By default, the exportation parts are generated under `gen`. You may use "
 "this option to specify another directory."
 msgstr ""
+"默认情况下，导出部分生成在 `gen` 下。你可以使用此选项指定另一个目录。"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:352
 msgid "10. References and Further Reading"
-msgstr ""
+msgstr "10. 参考文献和进一步阅读"
 
 #: ../../toolchain/wasm/component-model-tutorial.md:354
 msgid ""
@@ -4452,11 +4585,11 @@ msgstr ""
 msgid ""
 "MoonBit is a programming language that provides first-class support for "
 "WebAssembly."
-msgstr ""
+msgstr "MoonBit 是一种提供对 WebAssembly 进行一流支持的编程语言。"
 
 #: ../../toolchain/wasm/index.md:6
 msgid "Component Model"
-msgstr ""
+msgstr "组件模型"
 
 #: ../../toolchain/wasm/index.md:8
 msgid ""
@@ -4464,24 +4597,26 @@ msgid ""
 "with [component model](https://component-model.bytecodealliance.org/) in "
 "MoonBit."
 msgstr ""
+"查看 [本教程](component-model-tutorial.md) 了解如何在 MoonBit 中使用 [组件模型](https://component-model.bytecodealliance.org/)。"
 
 #: ../../toolchain/wasm/index.md:11
 msgid "Custom Export and Import"
-msgstr ""
+msgstr "自定义导出和导入"
 
 #: ../../toolchain/wasm/index.md:13
 msgid ""
 "Check out [FFI](/language/ffi.md) section on how to import or export "
 "functions."
 msgstr ""
+"查看 [FFI](/language/ffi.md) 部分，了解如何导入或导出函数。"
 
 #: ../../toolchain/wasm/index.md:15
 msgid "Q&A"
-msgstr ""
+msgstr "问答"
 
 #: ../../toolchain/wasm/index.md:17
 msgid "Q: What is `spectest.print_char`"
-msgstr ""
+msgstr "问：什么是 `spectest.print_char`"
 
 #: ../../toolchain/wasm/index.md:19
 msgid ""
@@ -4490,308 +4625,6 @@ msgid ""
 "result, consider using [`wasm-"
 "merge`](https://github.com/WebAssembly/binaryen) or similar tools."
 msgstr ""
-
-#~ msgid "`esm`"
-#~ msgstr ""
-
-#~ msgid "`--serial` — Handle the selected targets sequentially"
-#~ msgstr "`--serial` — 顺序处理所选目标"
-
-#~ msgid "`--md` — Run test in markdown file"
-#~ msgstr "`--md` — 运行 markdown 文件中的测试"
-
-#~ msgid ""
-#~ "If the target is `native`, the "
-#~ "`--release` option is not used, and "
-#~ "no `stub-cc*` options are specified "
-#~ "in `moon.pkg.json` for any dependencies, "
-#~ "the fast-debugging-test feature will "
-#~ "be enabled. It will attempt to use"
-#~ " `tcc -run` to execute the tests."
-#~ msgstr ""
-
-#~ msgid "Deps"
-#~ msgstr "依赖"
-
-#~ msgid ""
-#~ "Here are some manuals that may "
-#~ "help you use the toolchains of the"
-#~ " programming language:"
-#~ msgstr "这里有一些手册，可以帮助您使用编程语言的工具链："
-
-#~ msgid "VSCode extension"
-#~ msgstr "VSCode 扩展"
-
-#~ msgid "**Usage:** `moon new [OPTIONS] [PACKAGE_NAME]`"
-#~ msgstr "**用法：** `moon new [选项] [包名]`"
-
-#~ msgid "`<PACKAGE_NAME>` — The name of the package"
-#~ msgstr "`<包名>` — 包的名称"
-
-#~ msgid "`--lib` — Create a library package instead of an executable"
-#~ msgstr "`--lib` — 创建一个库包而不是可执行文件"
-
-#~ msgid "`--license <LICENSE>` — The license of the package"
-#~ msgstr "`--license <许可证>` — 包的许可证"
-
-#~ msgid "Default value: `Apache-2.0`"
-#~ msgstr "默认值：`Apache-2.0`"
-
-#~ msgid "`--no-license` — Do not set a license for the package"
-#~ msgstr "`--no-license` — 不为包设置许可证"
-
-#~ msgid ""
-#~ "$ moon new\n"
-#~ "Enter the path to create the "
-#~ "project (. for current directory): "
-#~ "my-project\n"
-#~ "Select the create mode: exec\n"
-#~ "Enter your username: username\n"
-#~ "Enter your project name: hello\n"
-#~ "Enter your license: Apache-2.0\n"
-#~ "Created my-project\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "If you want to use all default "
-#~ "values, you can use `moon new "
-#~ "my-project` to create a new module"
-#~ " named `username/hello` in the `my-"
-#~ "project` directory."
-#~ msgstr ""
-#~ "如果你想使用所有默认值，你可以使用 `moon new my-project` "
-#~ "在 `my-project` 目录中创建一个名为 `username/hello` "
-#~ "的新模块。"
-
-#~ msgid ""
-#~ "my-project\n"
-#~ "├── LICENSE\n"
-#~ "├── README.md\n"
-#~ "├── moon.mod.json\n"
-#~ "└── src\n"
-#~ "    ├── lib\n"
-#~ "    │   ├── hello.mbt\n"
-#~ "    │   ├── hello_test.mbt\n"
-#~ "    │   └── moon.pkg.json\n"
-#~ "    └── main\n"
-#~ "        ├── main.mbt\n"
-#~ "        └── moon.pkg.json\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "{\n"
-#~ "  \"name\": \"username/hello\",\n"
-#~ "  \"version\": \"0.1.0\",\n"
-#~ "  \"readme\": \"README.md\",\n"
-#~ "  \"repository\": \"\",\n"
-#~ "  \"license\": \"Apache-2.0\",\n"
-#~ "  \"keywords\": [],\n"
-#~ "  \"description\": \"\",\n"
-#~ "  \"source\": \"src\"\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid "`main/moon.pkg.json`:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "{\n"
-#~ "  \"is_main\": true,\n"
-#~ "  \"import\": [\n"
-#~ "    \"username/hello/lib\"\n"
-#~ "  ]\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid "`lib/moon.pkg.json`:"
-#~ msgstr ""
-
-#~ msgid "`hello.mbt`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "pub fn hello() -> String {\n"
-#~ "    \"Hello, world!\"\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid "`hello_test.mbt`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "test \"hello\" {\n"
-#~ "  if @lib.hello() != \"Hello, world!\" {\n"
-#~ "    fail(\"@lib.hello() != \\\"Hello, world!\\\"\")\n"
-#~ "  }\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "fn main {\n"
-#~ "  println(@lib.hello())\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "$ moon run ./src/main\n"
-#~ "Hello, world!\n"
-#~ msgstr ""
-
-#~ msgid "You can also omit `./`"
-#~ msgstr "你也可以省略 `./`"
-
-#~ msgid ""
-#~ "$ moon run src/main\n"
-#~ "Hello, world!\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Note that the package name imported "
-#~ "in `src/main/moon.pkg.json` is `username/hello/lib`,"
-#~ " and `@lib` is used to refer to"
-#~ " this package in `src/main/main.mbt`. The"
-#~ " import here actually generates a "
-#~ "default alias for the package name "
-#~ "`username/hello/lib`. In the following "
-#~ "sections, you will learn how to "
-#~ "customize the alias for a package."
-#~ msgstr ""
-#~ "请注意，`src/main/moon.pkg.json` 中导入的包名是 "
-#~ "`username/hello/lib`，在 `src/main/main.mbt` 中使用 "
-#~ "`@lib` 来引用这个包。这里的导入实际上为包名 `username/hello/lib` "
-#~ "生成了一个默认别名。在接下来的章节中，你将学习如何为包定制别名。"
-
-#~ msgid "mkdir src/lib/fib\n"
-#~ msgstr ""
-
-#~ msgid "`a.mbt`:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "pub fn fib(n : Int) -> Int {\n"
-#~ "  match n {\n"
-#~ "    0 => 0\n"
-#~ "    1 => 1\n"
-#~ "    _ => fib(n - 1) + fib(n - 2)\n"
-#~ "  }\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid "`b.mbt`:"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "pub fn fib2(num : Int) -> Int {\n"
-#~ "  fn aux(n, acc1, acc2) {\n"
-#~ "    match n {\n"
-#~ "      0 => acc1\n"
-#~ "      1 => acc2\n"
-#~ "      _ => aux(n - 1, acc2, acc1 + acc2)\n"
-#~ "    }\n"
-#~ "  }\n"
-#~ "\n"
-#~ "  aux(num, 0, 1)\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "my-project\n"
-#~ "├── LICENSE\n"
-#~ "├── README.md\n"
-#~ "├── moon.mod.json\n"
-#~ "└── src\n"
-#~ "    ├── lib\n"
-#~ "    │   ├── fib\n"
-#~ "    │   │   ├── a.mbt\n"
-#~ "    │   │   ├── b.mbt\n"
-#~ "    │   │   └── moon.pkg.json\n"
-#~ "    │   ├── hello.mbt\n"
-#~ "    │   ├── hello_test.mbt\n"
-#~ "    │   └── moon.pkg.json\n"
-#~ "    └── main\n"
-#~ "        ├── main.mbt\n"
-#~ "        └── moon.pkg.json\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "{\n"
-#~ "  \"is_main\": true,\n"
-#~ "  \"import\": [\n"
-#~ "    \"username/hello/lib\",\n"
-#~ "    {\n"
-#~ "      \"path\": \"username/hello/lib/fib\",\n"
-#~ "      \"alias\": \"my_awesome_fibonacci\"\n"
-#~ "    }\n"
-#~ "  ]\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "fn main {\n"
-#~ "  let a = @my_awesome_fibonacci.fib(10)\n"
-#~ "  let b = @my_awesome_fibonacci.fib2(11)\n"
-#~ "  println(\"fib(10) = \\{a}, fib(11) = \\{b}\")\n"
-#~ "\n"
-#~ "  println(@lib.hello())\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "$ moon run ./src/main\n"
-#~ "fib(10) = 55, fib(11) = 89\n"
-#~ "Hello, world!\n"
-#~ msgstr ""
-
-#~ msgid "`src/lib/fib/a.mbt`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "test {\n"
-#~ "  assert_eq(fib(1), 1)\n"
-#~ "  assert_eq(fib(2), 1)\n"
-#~ "  assert_eq(fib(3), 2)\n"
-#~ "  assert_eq(fib(4), 3)\n"
-#~ "  assert_eq(fib(5), 5)\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid "Stand-alone test files for blackbox tests"
-#~ msgstr "黑盒测试的独立测试文件"
-
-#~ msgid ""
-#~ "Besides inline tests, MoonBit also "
-#~ "supports stand-alone test files. Source"
-#~ " files ending in `_test.mbt` are "
-#~ "considered test files for blackbox "
-#~ "tests. For example, inside the "
-#~ "`src/lib/fib` directory, create a file "
-#~ "named `fib_test.mbt` and paste the "
-#~ "following code:"
-#~ msgstr ""
-#~ "除了内联测试，MoonBit 还支持独立测试文件。以 `_test.mbt` "
-#~ "结尾的源文件被视为黑盒测试的测试文件。例如，在 `src/lib/fib` 目录中，创建一个名为 "
-#~ "`fib_test.mbt` 的文件，并粘贴以下代码："
-
-#~ msgid "`src/lib/fib/fib_test.mbt`"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "test {\n"
-#~ "  assert_eq(@fib.fib(1), 1)\n"
-#~ "  assert_eq(@fib.fib2(2), 1)\n"
-#~ "  assert_eq(@fib.fib(3), 2)\n"
-#~ "  assert_eq(@fib.fib2(4), 3)\n"
-#~ "  assert_eq(@fib.fib(5), 5)\n"
-#~ "}\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "$ moon test\n"
-#~ "Total tests: 3, passed: 3, failed: 0.\n"
-#~ "$ moon test -v\n"
-#~ "test username/hello/lib/hello_test.mbt::hello ok\n"
-#~ "test username/hello/lib/fib/a.mbt::0 ok\n"
-#~ "test username/hello/lib/fib/fib_test.mbt::0 ok\n"
-#~ "Total tests: 3, passed: 3, failed: 0.\n"
-#~ msgstr ""
+"A: 这是 MoonBit 打印的方式。它一次打印一个 UTF-16 Unicode 代码。为了可移植性，避免使用 `println`。"
+"如果这确实出现在最终结果中，请考虑使用 [`wasm-merge`](https://github.com/WebAssembly/binaryen) 或类似工具。"
 

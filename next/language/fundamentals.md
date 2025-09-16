@@ -170,6 +170,8 @@ Multi-line strings can be defined using the leading `#|` or `$|`, where the form
 :caption: Output
 ```
 
+The [VSCode extension](/toolchain/vscode/index.md#actions) can help you switch between a plain text and the MoonBit's multiline string.
+
 When the expected type is `String` , the array literal syntax is overloaded to
 construct the `String` by specifying each character in the string.
 

@@ -1,6 +1,7 @@
 # Toolchains
 
-[MoonBit's Build System](./moon/index.md): full manual of `moon` build system.
+- [MoonBit's Build System](./moon/index.md): full manual of `moon` build system.
+- [MoonBit's VSCode Plugin](./vscode/index.md): hint on VSCode plugin.
 
 **Other toolchains**
 
@@ -15,5 +16,6 @@
 :maxdepth: 2
 :caption: Contents:
 moon/index
+vscode/index
 wasm/index
 ```
