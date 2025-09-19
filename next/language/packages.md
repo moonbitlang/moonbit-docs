@@ -230,7 +230,7 @@ Within `moon.pkg.json`, you will need to add field [`virtual`](/toolchain/moon/p
 
 The `has-default` indicates whether the virtual package has a default implementation.
 
-Within the package, you will need to add an interface file `package-name.mbti` where the `package-name` is the same as [the default alias](#default-alias):
+Within the package, you will need to add an interface file `pkg.mbti`:
 
 ```{literalinclude} /sources/language/src/packages/virtual/pkg.mbti
 :language: moonbit
