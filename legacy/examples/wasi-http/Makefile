@@ -1,7 +1,7 @@
 .DEFAULT_GOAL = build
 
 serve: build
-	@wasmtime serve target/wasm/debug/build/gen/gen.wasm
+	@wasmtime serve -S cli=y target/wasm/debug/build/gen/gen.wasm
 
 build:
 	@moon build --target wasm -g
