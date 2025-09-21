@@ -13,11 +13,13 @@
 以下是你需要了解的一些基本信息：
 
 * 模块（module）
+
     模块是可以作为依赖引入到程序中的最小单元。  
     一个模块可以包含多个包，并且可以发布到 mooncakes.io。  
     每个模块都有唯一的路径，例如 `moonbitlang/core` 或 `moonbitlang/x` 。
 
 * 包（package）
+
     包是模块的一部分。它隐藏实现细节，并向外部暴露有用的 API。  
     每个包也有唯一的路径，以其模块路径为前缀，例如 `moonbitlang/core/math` 。
 
