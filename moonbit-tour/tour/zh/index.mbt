@@ -1,3 +1,4 @@
 fn main {
-  println("hello")
+  let a = "hello"
+  println(a)
 }
