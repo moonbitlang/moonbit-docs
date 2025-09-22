@@ -2,7 +2,7 @@
 
 MoonBit 为类映射数据结构提供了便捷的模式匹配。在映射模式 `{ key1: pattern1, key2?: pattern2, .. }` 中：
 
-* `key1: pattern1` 部分要求`key1`存在于映射中, 且与之关联的值能够匹配指定的`pattern1`。
+* `key1: pattern1` 部分要求`key1`存在于映射中，且与之关联的值能够匹配指定的`pattern1`。
 
 * `key2?: pattern2` 部分无论 `key2` 是否存在都会匹配；在这种情况下，`pattern2` 将匹配一个`Option`类型的值，如果 `key2` 在映射中存在，这个值会是`Some(value)`, 否则为`None`。
 
