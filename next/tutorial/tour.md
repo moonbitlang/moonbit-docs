@@ -81,7 +81,7 @@ many of them have passed the test?
 To do so, we will start with defining our data types, identify our functions,
 and write our tests. Then we will implement our functions.
 
-Unless specified, the following will be defined under the file `src/top.mbt`.
+Unless specified, the following will be defined under the file `top.mbt`.
 
 ### Data types
 
