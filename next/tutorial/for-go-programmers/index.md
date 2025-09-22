@@ -98,14 +98,13 @@ age := Age(25)
 ageInt := int(age)
 ```
 
-Newtypes are defined the same way in MoonBit, but getting the underlying
-value requires slightly different syntax:
+Newtypes are defined as tuple struct in MoonBit:
 
 ```moonbit
-type Age Int
+struct Age(Int)
 
 let age = Age(25)
-let age_int = age.inner()
+let age_int = age.0
 ```
 
 ## Type Aliases
@@ -545,10 +544,10 @@ fn[T : Show] double_string(t : T) -> String {
 ### Named Parameters
 
 MoonBit functions also support named arguments with an optional
-default value using the `label~ : Type` syntax:
+default value using the `label? : Type` syntax:
 
 ```moonbit
-fn named_args(named~ : Int, optional~ : Int = 42) -> Int {
+fn named_args(named~ : Int, optional? : Int = 42) -> Int {
   named + optional
 }
 
