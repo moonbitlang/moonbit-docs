@@ -12,7 +12,7 @@
 
 ## 带标签的参数和可选参数
 
-MoonBit支持带标签的参数，语法是 `label~ : Type`。`print_position`声明了`x`和`y`两个带标签的参数，调用时，需要以`label=value`的形式提供它们的值。
+MoonBit 支持带标签的参数，语法是 `label~ : Type`。`print_position`声明了`x`和`y`两个带标签的参数，调用时，需要以`label=value`的形式提供它们的值。
 
 参数也可以是可选的，同时提供一个默认值。语法为`label? : Type = default_value`。以`print_greeting`函数为例，当调用`print_greeting`并且不提供`name`参数时，`name`将使用默认值`"guest"`。传递可选参数时必须在调用处提供标签名。
 
