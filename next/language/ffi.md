@@ -464,7 +464,7 @@ For C backend and for Wasm backend only.
 
 #### The calling convention of reference counting
 
-By default, MoonBit uses an owned calling convention for reference counting. That is, callee (the function being invoked) is responsible for dropping its parameters using the `moonbit_decref` / `$moonbit.decref` function. If the parameter is used more than once, the callee should increase the reference count using the `moonbit_incref` / `$moonbit.incref` function. Here are the rules for the necessary operations to perform in different circumstances:
+By default, MoonBit uses an owned calling convention for reference counting. That is, callee (the function being invoked) is responsible for dropping its parameters using the `moonbit_incref` / `moonbit_decref` function. If the parameter is used more than once, the callee should increase the reference count using the `moonbit_incref` / `$moonbit.incref` function. Here are the rules for the necessary operations to perform in different circumstances:
 
 | event | operation |
 |-------|-----------|
