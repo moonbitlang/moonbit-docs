@@ -121,7 +121,7 @@ but exclude anything else in the `build` directory.
 }
 ```
 
-You may use [`moon package --list`]() to verify if the packaged result is expected.
+You may use [`moon package --list`](commands.md#moon-package) to verify if the packaged result is expected.
 
 ## Preferred Target
 
