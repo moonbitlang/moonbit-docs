@@ -1,7 +1,7 @@
 ///|
 fn f(map : Map[String, Int]) -> Bool {
   match map {
-    { "x": x, "y": y, .. } if map.size() == 2 => true
+    { "x": x, "y": y, .. } if map.length() == 2 => true
     _ => false
   }
 }

@@ -2,7 +2,7 @@
 test (ctx : @test.T) {
   let println = ctx.writeln(_)
   // start example
-  let a : @string.View = "asdf"
+  let a : StringView = "asdf"
   loop a {
     [_, .. d] => {
       println(a)
