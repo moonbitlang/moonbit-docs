@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-19 15:03+0800\n"
+"POT-Creation-Date: 2025-10-14 10:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1620,10 +1620,10 @@ msgstr "Borrow 和 Owned 属性"
 msgid ""
 "The `#borrow` and `#owned` attribute is used to indicate that a FFI takes"
 " ownership of its arguments. For more detail, see [FFI](./ffi.md#the-"
-"borrow-attribute)."
+"borrow-and-owned-attribute)."
 msgstr ""
 "`#borrow` 和 `#owned` 属性用于表示一个外部接口是否获得参数的所有权。对于更多细节，见 [FFI](./ffi.md#the-"
-"borrow-attribute)。"
+"borrow-and-owned-attribute)。"
 
 #: ../../language/docs.md:120
 msgid "The As Free Function Attribute"
@@ -2256,7 +2256,7 @@ msgstr ""
 #: ../../language/error_codes/E4116.md:9 ../../language/error_codes/E4117.md:7
 #: ../../language/error_codes/E4118.md:8 ../../language/error_codes/E4119.md:5
 #: ../../language/error_codes/E4120.md:11
-#: ../../language/error_codes/E4121.md:13
+#: ../../language/error_codes/E4121.md:12
 #: ../../language/error_codes/E4122.md:18 ../../language/error_codes/E4124.md:5
 #: ../../language/error_codes/E4125.md:13 ../../language/error_codes/E4127.md:8
 #: ../../language/error_codes/E4128.md:5 ../../language/error_codes/E4130.md:10
@@ -2455,7 +2455,7 @@ msgstr ""
 #: ../../language/error_codes/E4118.md:14
 #: ../../language/error_codes/E4119.md:11
 #: ../../language/error_codes/E4120.md:28
-#: ../../language/error_codes/E4121.md:19
+#: ../../language/error_codes/E4121.md:18
 #: ../../language/error_codes/E4122.md:38
 #: ../../language/error_codes/E4124.md:11
 #: ../../language/error_codes/E4125.md:19
@@ -3348,8 +3348,11 @@ msgid ""
 "fix](https://code.visualstudio.com/docs/editing/refactoring#_code-"
 "actions-quick-fixes-and-refactorings) when using [VSCode "
 "Plugin](/toolchain/vscode/index.md#actions)."
-msgstr "警告消息通常包含有关缺失模式的提示。添加缺失的情况以避免不完整的匹配。"
-"使用 [VSCode 插件](/toolchain/vscode/index.md#actions) 时，你可以使用 [快速修复](https://code.visualstudio.com/docs/editing/refactoring#_code-actions-quick-fixes-and-refactorings)。"
+msgstr ""
+"警告消息通常包含有关缺失模式的提示。添加缺失的情况以避免不完整的匹配。使用 [VSCode "
+"插件](/toolchain/vscode/index.md#actions) 时，你可以使用 "
+"[快速修复](https://code.visualstudio.com/docs/editing/refactoring#_code-"
+"actions-quick-fixes-and-refactorings)。"
 
 #: ../../language/error_codes/E0011.md:18
 msgid ""
@@ -5268,9 +5271,11 @@ msgid ""
 "The FFI parameter of pointer type should be annotated with either "
 "`#borrow` or\\ `#owned`, the default calling convention is currently "
 "`#owned` and it will be\\ changed in the future. For the detailed "
-"meaning, checkout [FFI documentation](/language/ffi.md#the-borrow-"
-"attribute)."
+"meaning, checkout [FFI documentation](/language/ffi.md#the-borrow-and-"
+"owned-attribute)."
 msgstr ""
+"指针类型的 FFI 参数应使用 `#borrow` 或 `#owned` 进行注释，当前的默认调用约定是 `#owned`，将来会更改。有关详细含义，请查看 "
+"[FFI 文档](/language/ffi.md#the-borrow-and-owned-attribute)。"
 
 #: ../../language/error_codes/E0055.md:12
 msgid ""
@@ -11595,12 +11600,10 @@ msgid "`!` and `?` must be annotated on a function that may raise errors."
 msgstr "`!` 和 `?` 必须用于可能引发错误的函数。"
 
 #: ../../language/error_codes/E4121.md:10
-msgid ""
-"`!!` must be annotated on an async function (this will be reported as "
-"[E4150](E4150.md) though)."
-msgstr "在异步函数上使用 `!!` 标记（这将被报告为 [E4150](E4150.md)）。"
+msgid "`!!` must be annotated on an async function."
+msgstr "`!!` 必须用于异步函数。"
 
-#: ../../language/error_codes/E4121.md:15
+#: ../../language/error_codes/E4121.md:14
 msgid ""
 "enum Err {\n"
 "  IntErr(Int)\n"
@@ -11624,11 +11627,11 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../language/error_codes/E4121.md:21
+#: ../../language/error_codes/E4121.md:20
 msgid "Remove the attribute (`!`, `?`, `!!` mark) from the application."
 msgstr "从应用中移除 `!`、`?` 或 `!!` 标记。"
 
-#: ../../language/error_codes/E4121.md:23
+#: ../../language/error_codes/E4121.md:22
 msgid ""
 "fn main {\n"
 "  IntErr(1) |> ignore()\n"
@@ -14805,7 +14808,8 @@ msgid ""
 "The [VSCode extension](/toolchain/vscode/index.md#actions) can help you "
 "switch between a plain text and the MoonBit's multiline string."
 msgstr ""
-"[VSCode 扩展](/toolchain/vscode/index.md#actions) 可以帮助您在纯文本和 MoonBit 的多行字符串之间切换。"
+"[VSCode 扩展](/toolchain/vscode/index.md#actions) 可以帮助您在纯文本和 MoonBit "
+"的多行字符串之间切换。"
 
 #: ../../language/fundamentals.md:175
 msgid ""
@@ -18371,24 +18375,29 @@ msgstr "MoonBit（月兔）编程语言"
 
 #: ../../language/index.md:3
 msgid ""
-"MoonBit is an end-to-end programming language toolchain for cloud and "
-"edge computing using WebAssembly. The IDE environment is available at "
+"MoonBit is an AI native programming language toolchain for cloud and edge"
+" computing. It compiles to WebAssembly, JavaScript, and C."
+msgstr ""
+"MoonBit 是一个用于云和边缘计算的 AI 原生编程语言工具链。它可以编译为 WebAssembly、JavaScript 和 C 代码。"
+
+#: ../../language/index.md:5
+msgid ""
+"The IDE environment is available at "
 "[https://try.moonbitlang.com](https://try.moonbitlang.com) without any "
 "installation; it does not rely on any server either."
 msgstr ""
-"MoonBit 是一个用于云和边缘计算的 WebAssembly 端到端编程语言工具链。无需安装即可在 "
-"[https://try.moonbitlang.cn](https://try.moonbitlang.cn) 上使用 IDE "
+"无需安装即可在 [https://try.moonbitlang.cn](https://try.moonbitlang.cn) 上使用 IDE "
 "环境；它也不依赖任何服务器。"
 
-#: ../../language/index.md:5
+#: ../../language/index.md:7
 msgid "**Status and aimed timeline**"
 msgstr "**状态**"
 
-#: ../../language/index.md:7
+#: ../../language/index.md:9
 msgid "MoonBit is currently in beta-preview. We expect to reach 1.0 in 2025."
 msgstr "MoonBit 目前处于 beta-preview 阶段。我们预计在 2025 年达到 1.0 版本。"
 
-#: ../../language/index.md:9
+#: ../../language/index.md:11
 msgid ""
 "When MoonBit reaches beta, it means any backwards-incompatible changes "
 "will be seriously evaluated and MoonBit _can_ be used in production(very "
@@ -18402,27 +18411,27 @@ msgstr ""
 "由一支才华横溢的全职团队开发，他们在构建语言工具链方面拥有丰富的经验，因此我们将比典型的语言生态系统发展得更快，您不必等太久就可以在生产中使用 "
 "MoonBit。"
 
-#: ../../language/index.md:11
+#: ../../language/index.md:13
 msgid "**Main advantages**"
 msgstr "**主要优势**"
 
-#: ../../language/index.md:13
+#: ../../language/index.md:15
 msgid "Generate significantly smaller WASM output than any existing solutions."
 msgstr "生成比现有解决方案明显更小的 Wasm 文件。"
 
-#: ../../language/index.md:14
+#: ../../language/index.md:16
 msgid "Much faster runtime performance."
 msgstr "更高的运行时性能。"
 
-#: ../../language/index.md:15
+#: ../../language/index.md:17
 msgid "State of the art compile-time performance."
 msgstr "先进的编译时性能。"
 
-#: ../../language/index.md:16
+#: ../../language/index.md:18
 msgid "Simple but practical, data-oriented language design."
 msgstr "简单且实用的数据导向语言设计。"
 
-#: ../../language/index.md:19
+#: ../../language/index.md:21
 msgid "[Download this section in Markdown](path:/download/language/summary.md)"
 msgstr "[下载本章节的 Markdown 版本](path:/download/language/summary.md)"
 
@@ -19850,12 +19859,13 @@ msgstr ""
 msgid ""
 "When using things from another package, the dependency between modules "
 "should first be declared inside the `moon.mod.json` by the "
-"[`deps`](/toolchain/moon/module.md#deps) field. The dependency between "
-"packages should then be declared in side the `moon.pkg.json` by the "
-"[`import`](/toolchain/moon/package.md#import) field."
+"[`deps`](/toolchain/moon/module.md#dependency-management) field. The "
+"dependency between packages should then be declared in side the "
+"`moon.pkg.json` by the [`import`](/toolchain/moon/package.md#import) "
+"field."
 msgstr ""
 "在从另一个包中使用内容时，模块之间的依赖关系应首先在 `moon.mod.json` 中声明，使用 "
-"[`deps`](/toochain/moon/module.md#deps) 字段。然后在 `moon.pkg.json` "
+"[`deps`](/toochain/moon/module.md#dependency-management) 字段。然后在 `moon.pkg.json` "
 "中声明包之间的依赖关系，使用 [`import`](/toolchain/moon/package.md#import) 字段。"
 
 #: ../../language/packages.md:20
@@ -20317,10 +20327,8 @@ msgid ""
 msgstr "The `has-default` 表示虚拟包是否有默认实现。"
 
 #: ../../language/packages.md:233
-msgid ""
-"Within the package, you will need to add an interface file `pkg.mbti`:"
-msgstr ""
-"在包内，你需要添加一个接口文件 `pkg.mbti`："
+msgid "Within the package, you will need to add an interface file `pkg.mbti`:"
+msgstr "在包内，你需要添加一个接口文件 `pkg.mbti`："
 
 #: ../../language/packages.md:235
 msgid "/src/packages/virtual/pkg.mbti"
@@ -21151,4 +21159,21 @@ msgstr ""
 #~ " the missing cases to avoid "
 #~ "incomplete matches."
 #~ msgstr "警告消息通常包含有关缺失模式的提示。添加缺失的情况以避免不完整的匹配。"
+
+#~ msgid ""
+#~ "The FFI parameter of pointer type "
+#~ "should be annotated with either "
+#~ "`#borrow` or\\ `#owned`, the default "
+#~ "calling convention is currently `#owned` "
+#~ "and it will be\\ changed in the"
+#~ " future. For the detailed meaning, "
+#~ "checkout [FFI documentation](/language/ffi.md#the-"
+#~ "borrow-attribute)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`!!` must be annotated on an async"
+#~ " function (this will be reported as"
+#~ " [E4150](E4150.md) though)."
+#~ msgstr "在异步函数上使用 `!!` 标记（这将被报告为 [E4150](E4150.md)）。"
 
