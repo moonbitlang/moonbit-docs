@@ -1404,12 +1404,12 @@ We can use `as` to give a name to some pattern, and we can use `|` to match seve
 Array patterns can be used to match on the following types to obtain their
 corresponding elements or views:
 
-| Type                     | Element | View           |
-|--------------------------|---------|----------------|
-| Array[T], @array.View[T] | T       | @array.View[T] |
-| Bytes, @bytes.View       | Byte    | @bytes.View    |
-| String, @string.View     | Char    | @string.View   |
-| FixedArray[T]            | T       | N/A            |
+| Type                                   | Element | View           |
+|----------------------------------------|---------|----------------|
+| Array[T], ArrayView[T],FixedArray[T]   | T       | ArrayView[T]   |
+| Bytes, BytesView                       | Byte    | BytesView      |
+| String, StringView                     | Char    | StringView     |
+
 
 Array patterns have the following forms:
 
