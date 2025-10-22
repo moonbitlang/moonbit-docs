@@ -137,7 +137,7 @@ test {
 }
 ```
 
-Other operators are overloaded via methods, for example `op_get` and `op_set`:
+Other operators are overloaded via methods with annotations, for example `_[_]` and `_[_]=_`:
 
 ```moonbit
 struct Coord {
@@ -145,17 +145,19 @@ struct Coord {
   mut y : Int
 } derive(Show)
 
-fn op_get(self : Coord, key : String) -> Int {
+#alias("_[_]")
+fn Coord::get(coord : Self, key : String) -> Int {
   match key {
-    "x" => self.x
-    "y" => self.y
+    "x" => coord.x
+    "y" => coord.y
   }
 }
 
-fn op_set(self : Coord, key : String, val : Int) -> Unit {
+#alias("_[_]=_")
+fn Coord::set(coord : Self, key : String, val : Int) -> Unit {
   match key {
-    "x" => self.x = val
-    "y" => self.y = val
+    "x" => coord.x = val
+    "y" => coord.y = val
   }
 }
 ```
@@ -191,27 +193,28 @@ Currently, the following operators can be overloaded:
 | `<<`                  | trait `Shl`             |
 | `>>`                  | trait `Shr`             |
 | `-` (unary)           | trait `Neg`             |
-| `_[_]` (get item)     | method `op_get`         |
-| `_[_] = _` (set item) | method `op_set`         |
-| `_[_:_]` (view)       | method `op_as_view`     |
+| `_[_]` (get item)     | method + alias `_[_]`   |
+| `_[_] = _` (set item) | method + alias `_[_]=_` |
+| `_[_:_]` (view)       | method + alias `_[_:_]` |
 | `&`                   | trait `BitAnd`          |
 | `|`                   | trait `BitOr`           |
 | `^`                   | trait `BitXOr`          |
 
-When overloading `op_get`/`op_set`/`op_as_view`, the method must have a correcnt signature:
+When overloading `_[_]`/`_[_] = _`/`_[_:_]`, the method must have a correcnt signature:
 
-- `op_get` should have signature `(Self, Index) -> Result`
-- `op_set` should have signature `(Self, Index, Value) -> Result`
-- `op_as_view` should have signature `(Self, start? : Index, end? : Index) -> Result`
+- `_[_]` should have signature `(Self, Index) -> Result`, used as `let result = self[index]`
+- `_[_]=_` should have signature `(Self, Index, Value) -> Unit`, used as `self[index] = value`
+- `_[_:_]` should have signature `(Self, start? : Index, end? : Index) -> Result`, used as `let result = self[start:end]`
 
-By implementing `op_as_view` method, you can create a view for a user-defined type. Here is an example:
+By implementing `_[_:_]` method, you can create a view for a user-defined type. Here is an example:
 
 ```moonbit
 struct DataView(String)
 
 struct Data {}
 
-fn Data::op_as_view(_self : Data, start? : Int = 0, end? : Int) -> DataView {
+#alias("_[_:_]")
+fn Data::as_view(_self : Data, start? : Int = 0, end? : Int) -> DataView {
   "[\{start}, \{end.unwrap_or(100)})"
 }
 

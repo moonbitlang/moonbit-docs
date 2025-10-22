@@ -228,7 +228,7 @@ fn eliminate(
   }
   values[key] = values[key].remove(val)
   // If `key` has only one possible value left, remove this value from its peers
-  match values[key].size() {
+  match values[key].length() {
     1 => {
       let val = values[key].min()
       let mut res = true
@@ -245,7 +245,7 @@ fn eliminate(
   //  If there is only one square in the unit of `key` that can hold `val`, assign `val` to that square
   let unit = units[key]
   let places = unit.filter(fn(sq) { values[sq].contains(val) })
-  match places.size() {
+  match places.length() {
     1 => {
       let key = places.min()
       return assign(values, key, val)
@@ -323,11 +323,11 @@ Another point to note is that conflicts may arise during the search (when a squa
 fn search(
   values : Grid[@immut/sorted_set.SortedSet[Char]],
 ) -> Grid[@immut/sorted_set.SortedSet[Char]]? {
-  if values.contains(fn(digits) { not(digits.size() == 1) }) {
+  if values.contains(fn(digits) { not(digits.length() == 1) }) {
     let mut minsq = ""
     let mut n = 10
     for sq in squares {
-      let len = values[sq].size()
+      let len = values[sq].length()
       if len > 1 {
         if len < n {
           n = len

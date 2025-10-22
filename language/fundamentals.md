@@ -440,6 +440,10 @@ specific segment of collections. You can use `data[start:end]` to create a
 view of array `data`, referencing elements from `start` to `end` (exclusive).
 Both `start` and `end` indices can be omitted.
 
+#### NOTE
+`ArrayView` is an immutable data structure on its own, but the underlying `Array` or `FixedArray`
+could be modified.
+
 ```moonbit
 test {
   let xs = [0, 1, 2, 3, 4, 5]
@@ -1290,7 +1294,7 @@ fn filter_even(l : Array[Int]) -> Array[Int] {
 fn fact(n : Int) -> Int {
   let start = 1
   let range : Iter[Int] = start.until(n)
-  range.fold(Int::op_mul, init=start)
+  range.fold(Int::mul, init=start)
 }
 ```
 
@@ -2221,7 +2225,7 @@ Similarly, we can use the spread operator to construct a string:
 ```moonbit
 test {
   let s1 : String = "Hello"
-  let s2 : @string.View = "World".view()
+  let s2 : StringView = "World".view()
   let s3 : Array[Char] = [..s1, ' ', ..s2, '!']
   let s : String = [..s1, ' ', ..s2, '!', ..s3]
   inspect(s, content="Hello World!Hello World!")
@@ -2234,12 +2238,12 @@ sequence.
 ```moonbit
 test {
   let b1 : Bytes = "hello"
-  let b2 : @bytes.View = b1[1:4]
+  let b2 : BytesView = b1[1:4]
   let b : Bytes = [..b1, ..b2, 10]
   inspect(
     b,
     content=(
-      #|b"\x68\x65\x6c\x6c\x6f\x65\x6c\x6c\x0a"
+      #|b"helloell\x0a"
     ),
   )
 }
