@@ -13,20 +13,21 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 pub fn check_collision(
   grid : @immut/list.T[Array[Int]],
   shap : Array[Array[Int]],
-  offset : (Int, Int)
+  offset : (Int, Int),
 ) -> Bool {
   let len_r = shap.length()
   let len_c = shap[0].length()
   if offset.1 + len_r > grid_row_count {
     return true
   }
-  loop grid, 0 {
-    Cons(v, n), r => {
+  loop (grid, 0) {
+    (Cons(v, n), r) => {
       if r < offset.1 {
-        continue n, r + 1
+        continue (n, r + 1)
       }
       if r >= offset.1 + len_r {
         return false
@@ -39,16 +40,17 @@ pub fn check_collision(
           return true
         }
       }
-      continue n, r + 1
+      continue (n, r + 1)
     }
-    Nil, _ => false
+    (Nil, _) => false
   }
 }
 
+///|
 pub fn get_effective_height(
   grid : @immut/list.T[Array[Int]],
   shap : Array[Array[Int]],
-  offset : (Int, Int)
+  offset : (Int, Int),
 ) -> Int {
   let x = offset.0
   let mut y = offset.1
