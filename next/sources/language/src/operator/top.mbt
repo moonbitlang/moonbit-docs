@@ -20,17 +20,19 @@ struct Coord {
   mut y : Int
 } derive(Show)
 
-fn op_get(self : Coord, key : String) -> Int {
+#alias("_[_]")
+fn Coord::get(coord : Self, key : String) -> Int {
   match key {
-    "x" => self.x
-    "y" => self.y
+    "x" => coord.x
+    "y" => coord.y
   }
 }
 
-fn op_set(self : Coord, key : String, val : Int) -> Unit {
+#alias("_[_]=_")
+fn Coord::set(coord : Self, key : String, val : Int) -> Unit {
   match key {
-    "x" => self.x = val
-    "y" => self.y = val
+    "x" => coord.x = val
+    "y" => coord.y = val
   }
 }
 // end operator 2
@@ -140,7 +142,8 @@ struct DataView(String)
 
 struct Data {}
 
-fn Data::op_as_view(_self : Data, start? : Int = 0, end? : Int) -> DataView {
+#alias("_[_:_]")
+fn Data::as_view(_self : Data, start? : Int = 0, end? : Int) -> DataView {
   "[\{start}, \{end.unwrap_or(100)})"
 }
 
@@ -166,7 +169,7 @@ test {
 // start spread 2
 test {
   let s1 : String = "Hello"
-  let s2 : @string.View = "World".view()
+  let s2 : StringView = "World".view()
   let s3 : Array[Char] = [..s1, ' ', ..s2, '!']
   let s : String = [..s1, ' ', ..s2, '!', ..s3]
   inspect(s, content="Hello World!Hello World!")
@@ -176,12 +179,12 @@ test {
 // start spread 3
 test {
   let b1 : Bytes = "hello"
-  let b2 : @bytes.View = b1[1:4]
+  let b2 : BytesView = b1[1:4]
   let b : Bytes = [..b1, ..b2, 10]
   inspect(
     b,
     content=(
-      #|b"\x68\x65\x6c\x6c\x6f\x65\x6c\x6c\x0a"
+      #|b"helloell\x0a"
     ),
   )
 }

@@ -94,7 +94,7 @@ MoonBit supports overloading infix operators of builtin operators via several bu
 :end-before: end operator 1
 ```
 
-Other operators are overloaded via methods, for example `op_get` and `op_set`:
+Other operators are overloaded via methods with annotations, for example `_[_]` and `_[_]=_`:
 
 ```{literalinclude} /sources/language/src/operator/top.mbt
 :language: moonbit
@@ -116,31 +116,31 @@ Other operators are overloaded via methods, for example `op_get` and `op_set`:
 
 Currently, the following operators can be overloaded:
 
-| Operator Name         | overloading mechanism |
-| --------------------- | --------------------- |
-| `+`                   | trait `Add`           |
-| `-`                   | trait `Sub`           |
-| `*`                   | trait `Mul`           |
-| `/`                   | trait `Div`           |
-| `%`                   | trait `Mod`           |
-| `==`                  | trait `Eq`            |
-| `<<`                  | trait `Shl`           |
-| `>>`                  | trait `Shr`           |
-| `-` (unary)           | trait `Neg`           |
-| `_[_]` (get item)     | method `op_get`       |
-| `_[_] = _` (set item) | method `op_set`       |
-| `_[_:_]` (view)       | method `op_as_view`   |
-| `&`                   | trait `BitAnd`        |
-| `\|`                  | trait `BitOr`         |
-| `^`                   | trait `BitXOr`        |
+| Operator Name         | overloading mechanism   |
+| --------------------- | ----------------------- |
+| `+`                   | trait `Add`             |
+| `-`                   | trait `Sub`             |
+| `*`                   | trait `Mul`             |
+| `/`                   | trait `Div`             |
+| `%`                   | trait `Mod`             |
+| `==`                  | trait `Eq`              |
+| `<<`                  | trait `Shl`             |
+| `>>`                  | trait `Shr`             |
+| `-` (unary)           | trait `Neg`             |
+| `_[_]` (get item)     | method + alias `_[_]`   |
+| `_[_] = _` (set item) | method + alias `_[_]=_` |
+| `_[_:_]` (view)       | method + alias `_[_:_]` |
+| `&`                   | trait `BitAnd`          |
+| `\|`                  | trait `BitOr`           |
+| `^`                   | trait `BitXOr`          |
 
-When overloading `op_get`/`op_set`/`op_as_view`, the method must have a correcnt signature:
+When overloading `_[_]`/`_[_] = _`/`_[_:_]`, the method must have a correcnt signature:
 
-- `op_get` should have signature `(Self, Index) -> Result`
-- `op_set` should have signature `(Self, Index, Value) -> Result`
-- `op_as_view` should have signature `(Self, start? : Index, end? : Index) -> Result`
+- `_[_]` should have signature `(Self, Index) -> Result`, used as `let result = self[index]`
+- `_[_]=_` should have signature `(Self, Index, Value) -> Unit`, used as `self[index] = value`
+- `_[_:_]` should have signature `(Self, start? : Index, end? : Index) -> Result`, used as `let result = self[start:end]`
 
-By implementing `op_as_view` method, you can create a view for a user-defined type. Here is an example:
+By implementing `_[_:_]` method, you can create a view for a user-defined type. Here is an example:
 
 ```{literalinclude} /sources/language/src/operator/top.mbt
 :language: moonbit

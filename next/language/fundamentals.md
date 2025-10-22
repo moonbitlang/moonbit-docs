@@ -402,6 +402,11 @@ specific segment of collections. You can use `data[start:end]` to create a
 view of array `data`, referencing elements from `start` to `end` (exclusive).
 Both `start` and `end` indices can be omitted.
 
+```{note}
+`ArrayView` is an immutable data structure on its own, but the underlying `Array` or `FixedArray`
+could be modified.
+```
+
 ```{literalinclude} /sources/language/src/operator/top.mbt
 :language: moonbit
 :start-after: start view 1

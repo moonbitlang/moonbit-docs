@@ -9,7 +9,7 @@ fn filter_even(l : Array[Int]) -> Array[Int] {
 fn fact(n : Int) -> Int {
   let start = 1
   let range : Iter[Int] = start.until(n)
-  range.fold(Int::op_mul, init=start)
+  range.fold(Int::mul, init=start)
 }
 // end iter 1
 
