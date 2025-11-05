@@ -97,11 +97,11 @@ test "enum 3" (t : @test.T) {
 }
 
 // start enum 4
-enum List {
+enum Lst {
   Nil
   // constructor `Cons` carries additional payload: the first element of the list,
   // and the remaining parts of the list
-  Cons(Int, List)
+  Cons(Int, Lst)
 }
 // end enum 4
 
@@ -111,7 +111,7 @@ test "enum 6" (t : @test.T) {
   // In addition to binding payload to variables,
   // you can also continue matching payload data inside constructors.
   // Here's a function that decides if a list contains only one element
-  fn is_singleton(l : List) -> Bool {
+  fn is_singleton(l : Lst) -> Bool {
     match l {
       // This branch only matches values of shape `Cons(_, Nil)`, 
       // i.e. lists of length 1
@@ -121,7 +121,7 @@ test "enum 6" (t : @test.T) {
     }
   }
 
-  fn print_list(l : List) -> Unit {
+  fn print_list(l : Lst) -> Unit {
     // when pattern-matching an enum with payload,
     // in additional to deciding which case a value belongs to
     // you can extract the payload data inside that case
@@ -141,7 +141,7 @@ test "enum 6" (t : @test.T) {
   // end enum 5
   // start enum 6
   // when creating values using `Cons`, the payload of by `Cons` must be provided
-  let l : List = Cons(1, Cons(2, Nil))
+  let l : Lst = Cons(1, Cons(2, Nil))
   println(is_singleton(l))
   print_list(l)
   // end enum 6
@@ -185,9 +185,9 @@ enum Object {
 
 suberror NotImplementedError derive(Show)
 
-fn distance_with(
+fn Object::distance_with(
   self : Object,
-  other : Object
+  other : Object,
 ) -> Double raise NotImplementedError {
   match (self, other) {
     // For variables defined via `Point(..) as p`,
@@ -247,7 +247,7 @@ enum Tree[X] {
 fn[X : Compare] Tree::insert(
   self : Tree[X],
   x : X,
-  parent~ : Tree[X]
+  parent~ : Tree[X],
 ) -> Tree[X] {
   match self {
     Nil => Node(value=x, left=Nil, right=Nil, parent~)
@@ -273,7 +273,7 @@ fn[X : Compare] Tree::insert(
 pub typealias Int as Index
 
 // type alias are private by default
-typealias @list.List as Lst
+using @list {type List}
 // end typealias 1
 
 // start local-type 1

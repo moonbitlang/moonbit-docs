@@ -41,16 +41,13 @@ test {
 // end method overload example
 
 // start method alias
-// same as `fnalias List::map as map`
-fnalias List::map
-
-// `list_concat` is an alias of `List::concat`.
-// Note that the created alias is a function, not a method of list.
-// So you should call it with `list_concat(xx)` instead of `xx.list_concat()`
-fnalias List::concat as list_concat
-
-// creating multiple alias in typename
-fnalias List::(concat as c, map as m)
+#alias(m)
+fn List::f() -> Bool {
+  true
+}
+test {
+  assert_eq(List::f(), List::m())
+}
 // end method alias
 
 // start local method

@@ -81,9 +81,9 @@ test {
 
 test {
 // start local functions 3
-  [ 1, 2, 3 ].eachi((i, x) => println("\{i} => \{x}"))
+  [1, 2, 3].eachi((i, x) => println("\{i} => \{x}"))
   // parenthesis can be omitted when there is only one parameter
-  [ 1, 2, 3 ].each(x => println(x * x))
+  [1, 2, 3].each(x => println(x * x))
 // end local functions 3
 }
 
@@ -189,28 +189,28 @@ fn f(_x : Int, loc~ : SourceLoc, args_loc~ : ArgsLoc) -> String {
 // end autofill arguments
 
 // start function alias
-// `hashmap_new` will become an alias of `@hashmap.new`
-fnalias @hashmap.new as hashmap_new
-
-// same as `fnalias @hashmap.new as new`
-fnalias @hashmap.new
-
-// local alias is also allowed
-fnalias new as new_2
+using @hashmap { new }
 
 // creating multiple alias in one package
-fnalias @moonbitlang/core/prelude.(tap, then as touch)
+using @moonbitlang/core/prelude { tap, then }
 // end function alias
 
 test {
 // start local functions 4
   fn f(x) {
     // `f` can refer to itself here, but cannot use `g`
-    if x > 0 { f(x - 1) }
+    if x > 0 {
+      f(x - 1)
+    }
   }
+
   fn g(x) {
     // `g` can refer to `f` and `g` itself
-    if x < 0 { f(-x) } else { f(x) }
+    if x < 0 {
+      f(-x)
+    } else {
+      f(x)
+    }
   }
   // mutually recursive local functions
   letrec even = x => x == 0 || odd(x - 1)

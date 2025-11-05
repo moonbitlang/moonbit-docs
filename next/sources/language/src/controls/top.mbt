@@ -276,7 +276,7 @@ enum Resource {
 
 fn getProcessedText(
   resources : Map[String, Resource],
-  path : String
+  path : String,
 ) -> String raise Error {
   guard resources.get(path) is Some(resource) else { fail("\{path} not found") }
   guard resource is PlainText(text) else { fail("\{path} is not plain text") }

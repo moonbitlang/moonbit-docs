@@ -177,7 +177,10 @@ fn[T] map_with_polymorphism(
   res
 }
 
-fn[T] map_without_error(array : Array[T], f : (T) -> T noraise) -> Array[T] noraise {
+fn[T] map_without_error(
+  array : Array[T],
+  f : (T) -> T noraise,
+) -> Array[T] noraise {
   map_with_polymorphism(array, f)
 }
 
