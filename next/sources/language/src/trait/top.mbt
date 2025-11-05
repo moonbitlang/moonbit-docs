@@ -218,6 +218,5 @@ pub impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {
 // end trait object 2
 
 // start trait alias
-// CanCompare is an alias of Compare
-using @builtin {trait Compare}
+traitalias @builtin.Compare as CanCompare
 // end trait alias
