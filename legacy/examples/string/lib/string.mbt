@@ -147,7 +147,7 @@ pub fn to_char_array(s : String) -> Array[Char] {
 
 ///|
 pub struct Iterator {
-  mut data : @string.View
+  mut data : StringView
 }
 
 ///|
@@ -156,7 +156,7 @@ pub fn iter(s : String) -> Iterator {
 }
 
 ///|
-pub fn next(self : Iterator) -> Char? {
+pub fn Iterator::next(self : Iterator) -> Char? {
   match self.data {
     [] => return None
     [ch, .. rest] => {

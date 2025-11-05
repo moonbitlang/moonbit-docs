@@ -12,9 +12,10 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 pub fn fib(n : Int) -> Int64 {
-  loop 0L, 1L, n {
-    a, _, 0 => a
-    a, b, n => continue b, a + b, n - 1
+  loop (0L, 1L, n) {
+    (a, _, 0) => a
+    (a, b, n) => continue (b, a + b, n - 1)
   }
 }

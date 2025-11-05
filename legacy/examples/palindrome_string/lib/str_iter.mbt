@@ -12,14 +12,11 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 pub fn is_palindrome(chars : String) -> Bool {
-  let n = chars.length()
-  let mut i = 0
-  while i < n / 2 {
-    if chars[i] != chars[n - i - 1] {
-      return false
-    }
-    i = i + 1
+  loop chars[:] {
+    [] | [_] => true
+    [hd, .. mid, tl] if hd == tl => continue mid
+    _ => false
   }
-  return true
 }

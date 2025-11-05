@@ -16,8 +16,8 @@
 priv struct T😯(Int)
 
 ///|
-fn 😀(self : T😯) -> Int {
-  self.inner()
+fn T😯::😀(self : T😯) -> Int {
+  self.0
 }
 
 ///|

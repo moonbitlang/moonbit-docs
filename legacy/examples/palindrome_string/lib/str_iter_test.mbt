@@ -12,11 +12,14 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 test {
   let test1 = "abc"
   let test2 = "aba"
   let test3 = "上海自来水来自海上"
-  test1 |> @lib.is_palindrome |> assert_false()
-  test2 |> @lib.is_palindrome |> assert_true()
-  test3 |> @lib.is_palindrome |> assert_true()
+  let test4 = "😊a😊"
+  inspect(@lib.is_palindrome(test1), content="false")
+  inspect(@lib.is_palindrome(test2), content="true")
+  inspect(@lib.is_palindrome(test3), content="true")
+  inspect(@lib.is_palindrome(test4), content="true")
 }
