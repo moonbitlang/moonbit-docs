@@ -1,4 +1,5 @@
-///| start shortest_edit definition
+///|
+/// start shortest_edit definition
 ///
 fn shortest_edit(old~ : Array[Line], new~ : Array[Line]) -> Int {
   let n = old.length()

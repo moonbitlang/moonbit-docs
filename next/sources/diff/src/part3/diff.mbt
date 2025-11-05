@@ -1,4 +1,5 @@
-///| start box definition
+///|
+/// start box definition
 ///
 struct Box {
   left : Int
@@ -34,6 +35,7 @@ fn Box::delta(self : Self) -> Int {
 }
 
 // end box definition
+
 ///|
 fn is_odd(n : Int) -> Bool {
   (n & 1) == 1
@@ -45,6 +47,7 @@ fn is_even(n : Int) -> Bool {
 }
 
 // start search definition
+
 ///|
 fn Box::forward(
   self : Self,
@@ -52,7 +55,7 @@ fn Box::forward(
   backward~ : BPArray[Int],
   depth : Int,
   old~ : Array[Line],
-  new~ : Array[Line]
+  new~ : Array[Line],
 ) -> Snake? {
   for k = depth; k >= -depth; k = k - 2 {
     let c = k - self.delta()
@@ -88,7 +91,7 @@ fn Box::backward(
   backward~ : BPArray[Int],
   depth : Int,
   old~ : Array[Line],
-  new~ : Array[Line]
+  new~ : Array[Line],
 ) -> Snake? {
   for c = depth; c >= -depth; c = c - 2 {
     let k = c + self.delta()
@@ -117,6 +120,7 @@ fn Box::backward(
 // end search definition
 
 // start midpoint definition
+
 ///|
 fn Box::midpoint(self : Self, old~ : Array[Line], new~ : Array[Line]) -> Snake? {
   if self.size() == 0 {
@@ -149,12 +153,13 @@ fn Box::midpoint(self : Self, old~ : Array[Line], new~ : Array[Line]) -> Snake? 
 }
 // end midpoint definition
 
-///| start findpath definition
+///|
+/// start findpath definition
 ///
 fn Box::find_path(
   box : Self,
   old~ : Array[Line],
-  new~ : Array[Line]
+  new~ : Array[Line],
 ) -> Iter[(Int, Int)]? {
   guard box.midpoint(old~, new~) is Some(snake) else { None }
   let start = snake.start

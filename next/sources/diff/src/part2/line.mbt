@@ -23,28 +23,14 @@ fn lines(str : String) -> Array[Line] {
 
 ///|
 test "lines" {
-  @json.inspect(
-    lines(""),
-    content=
-      [{"number":1,"text":""}]
-    ,
-  )
-  @json.inspect(
-    lines("\n"),
-    content=
-      [{"number":1,"text":""},{"number":2,"text":""}]
-    ,
-  )
-  @json.inspect(
-    lines("aaa"),
-    content=
-      [{"number":1,"text":"aaa"}]
-    ,
-  )
-  @json.inspect(
-    lines("aaa\nbbb"),
-    content=
-      [{"number":1,"text":"aaa"},{"number":2,"text":"bbb"}]
-    ,
-  )
+  @json.inspect(lines(""), content=[{ "number": 1, "text": "" }])
+  @json.inspect(lines("\n"), content=[
+    { "number": 1, "text": "" },
+    { "number": 2, "text": "" },
+  ])
+  @json.inspect(lines("aaa"), content=[{ "number": 1, "text": "aaa" }])
+  @json.inspect(lines("aaa\nbbb"), content=[
+    { "number": 1, "text": "aaa" },
+    { "number": 2, "text": "bbb" },
+  ])
 }

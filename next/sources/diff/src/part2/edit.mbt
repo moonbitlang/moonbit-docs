@@ -1,4 +1,5 @@
-///| start edit definition
+///|
+/// start edit definition
 ///
 enum Edit {
   Insert(new~ : Line)
@@ -7,7 +8,8 @@ enum Edit {
 } derive(Show)
 // end edit definition
 
-///| start pprint definition
+///|
+/// start pprint definition
 ///
 let line_width = 4
 

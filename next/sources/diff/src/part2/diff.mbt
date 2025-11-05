@@ -1,8 +1,9 @@
-///| start shortest_edit definition
+///|
+/// start shortest_edit definition
 ///
 fn shortest_edit(
   old~ : Array[Line],
-  new~ : Array[Line]
+  new~ : Array[Line],
 ) -> Array[(BPArray[Int], Int)] {
   let n = old.length()
   let m = new.length()
@@ -42,12 +43,13 @@ fn shortest_edit(
 }
 // end shortest_edit definition
 
-///| start backtrack_fst definition
+///|
+/// start backtrack_fst definition
 ///
 fn backtrack(
   new~ : Array[Line],
   old~ : Array[Line],
-  trace : Array[(BPArray[Int], Int)]
+  trace : Array[(BPArray[Int], Int)],
 ) -> Array[Edit] {
   let mut x = old.length()
   let mut y = new.length()
@@ -83,7 +85,8 @@ fn backtrack(
   return edits
 }
 
-///| start diff definition
+///|
+/// start diff definition
 ///
 fn diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit] {
   let trace = shortest_edit(old~, new~)

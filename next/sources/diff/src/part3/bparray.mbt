@@ -8,7 +8,7 @@ fn[T] BPArray::make(capacity : Int, default : T) -> BPArray[T] {
 }
 
 ///|
-fn[T] copy(self : BPArray[T]) -> BPArray[T] {
+fn[T] BPArray::copy(self : BPArray[T]) -> BPArray[T] {
   let BPArray(arr) = self
   BPArray(arr.copy())
 }

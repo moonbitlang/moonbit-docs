@@ -5,7 +5,8 @@ enum Edit {
   Equal(old~ : Line, new~ : Line) // old, new
 } derive(Show)
 
-///| start pprint definition
+///|
+/// start pprint definition
 ///
 let line_width = 4
 
