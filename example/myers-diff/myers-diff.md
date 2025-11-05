@@ -246,13 +246,13 @@ fn[T] BPArray::make(capacity : Int, default : T) -> BPArray[T] {
 }
 
 ///|
-fn[T] copy(self : BPArray[T]) -> BPArray[T] {
+fn[T] BPArray::copy(self : BPArray[T]) -> BPArray[T] {
   let BPArray(arr) = self
   BPArray(arr.copy())
 }
 
 ///|
-fn[T] op_get(self : BPArray[T], idx : Int) -> T {
+fn[T] BPArray::op_get(self : BPArray[T], idx : Int) -> T {
   let BPArray(arr) = self
   if idx < 0 {
     arr[arr.length() + idx]
@@ -262,7 +262,7 @@ fn[T] op_get(self : BPArray[T], idx : Int) -> T {
 }
 
 ///|
-fn[T] op_set(self : BPArray[T], idx : Int, elem : T) -> Unit {
+fn[T] BPArray::op_set(self : BPArray[T], idx : Int, elem : T) -> Unit {
   let BPArray(arr) = self
   if idx < 0 {
     arr[arr.length() + idx] = elem

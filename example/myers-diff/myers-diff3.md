@@ -115,7 +115,7 @@ To avoid getting bogged down in details too early, let's assume we already have 
 fn Box::find_path(
   box : Self,
   old~ : Array[Line],
-  new~ : Array[Line]
+  new~ : Array[Line],
 ) -> Iter[(Int, Int)]? {
   guard box.midpoint(old~, new~) is Some(snake) else { None }
   let start = snake.start
@@ -146,6 +146,7 @@ The implementation of `find_path` is straightforward, but `midpoint` is a bit mo
 - Alternate between forward and backward searches, returning `None` if no result is found.
 
 ```moonbit
+
 ///|
 fn Box::midpoint(self : Self, old~ : Array[Line], new~ : Array[Line]) -> Snake? {
   if self.size() == 0 {
@@ -185,6 +186,7 @@ The forward and backward searches have some modifications compared to the origin
 - The backward search minimizes `y` as a heuristic strategy, but minimizing `x` would also work.
 
 ```moonbit
+
 ///|
 fn Box::forward(
   self : Self,
@@ -192,7 +194,7 @@ fn Box::forward(
   backward~ : BPArray[Int],
   depth : Int,
   old~ : Array[Line],
-  new~ : Array[Line]
+  new~ : Array[Line],
 ) -> Snake? {
   for k = depth; k >= -depth; k = k - 2 {
     let c = k - self.delta()
@@ -228,7 +230,7 @@ fn Box::backward(
   backward~ : BPArray[Int],
   depth : Int,
   old~ : Array[Line],
-  new~ : Array[Line]
+  new~ : Array[Line],
 ) -> Snake? {
   for c = depth; c >= -depth; c = c - 2 {
     let k = c + self.delta()

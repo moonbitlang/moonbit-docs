@@ -58,7 +58,7 @@ The solution is to use `@json.inspect(x, content=x)`. The benefit is that the re
 enum Rec {
   End
   Really_long_name_that_is_difficult_to_read(Rec)
-} derive(Show, ToJson(style="flat"))
+} derive(Show, ToJson)
 
 test "json snapshot test" {
   let r = Really_long_name_that_is_difficult_to_read(

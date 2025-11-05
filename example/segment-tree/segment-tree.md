@@ -107,7 +107,13 @@ Next, we need to implement the query function. Since the nodes of our Segment Tr
 let empty_node : Node = Node(0, Nil, Nil)
 
 ///|
-fn query(self : Node, l : Int, r : Int, query_l : Int, query_r : Int) -> Node {
+fn Node::query(
+  self : Node,
+  l : Int,
+  r : Int,
+  query_l : Int,
+  query_r : Int,
+) -> Node {
   if query_l > r || l > query_r {
     empty_node
   } else if query_l <= l && query_r >= r {

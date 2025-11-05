@@ -576,9 +576,9 @@ test {
 For simple anonymous function, MoonBit provides a very concise syntax called arrow function:
 
 ```moonbit
-  [ 1, 2, 3 ].eachi((i, x) => println("\{i} => \{x}"))
+  [1, 2, 3].eachi((i, x) => println("\{i} => \{x}"))
   // parenthesis can be omitted when there is only one parameter
-  [ 1, 2, 3 ].each(x => println(x * x))
+  [1, 2, 3].each(x => println(x * x))
 ```
 
 Functions, whether named or anonymous, are *lexical closures*: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
@@ -609,11 +609,18 @@ To define  mutually recursive local functions, use the syntax `letrec f = .. and
 ```moonbit
   fn f(x) {
     // `f` can refer to itself here, but cannot use `g`
-    if x > 0 { f(x - 1) }
+    if x > 0 {
+      f(x - 1)
+    }
   }
+
   fn g(x) {
     // `g` can refer to `f` and `g` itself
-    if x < 0 { f(-x) } else { f(x) }
+    if x < 0 {
+      f(-x)
+    } else {
+      f(x)
+    }
   }
   // mutually recursive local functions
   letrec even = x => x == 0 || odd(x - 1)
@@ -809,23 +816,14 @@ Autofill arguments are very useful for writing debugging and testing utilities.
 MoonBit allows calling functions with alternative names via function alias. Function alias can be declared as follows:
 
 ```moonbit
-// `hashmap_new` will become an alias of `@hashmap.new`
-fnalias @hashmap.new as hashmap_new
-
-// same as `fnalias @hashmap.new as new`
-fnalias @hashmap.new
-
-// local alias is also allowed
-fnalias new as new_2
-
-// creating multiple alias in one package
-fnalias @moonbitlang/core/prelude.(tap, then as touch)
+#alias(g)
+#alias(h, visibility="pub")
+fn k() -> Bool {
+  true
+}
 ```
 
-Function alias can be used to import functions from other [packages](packages.md).
-
-You can also create public function alias with the syntax `pub fnalias`,
-which is useful for re-exporting functions from another package.
+You can also create function alias that has different visibility with the field `visibility`.
 
 ## Control Structures
 
@@ -908,7 +906,7 @@ enum Resource {
 
 fn getProcessedText(
   resources : Map[String, Resource],
-  path : String
+  path : String,
 ) -> String raise Error {
   guard resources.get(path) is Some(resource) else { fail("\{path} not found") }
   guard resource is PlainText(text) else { fail("\{path} is not plain text") }
@@ -1499,11 +1497,11 @@ greater!
 Enum cases can also carry payload data. Here's an example of defining an integer list type using enum:
 
 ```moonbit
-enum List {
+enum Lst {
   Nil
   // constructor `Cons` carries additional payload: the first element of the list,
   // and the remaining parts of the list
-  Cons(Int, List)
+  Cons(Int, Lst)
 }
 ```
 
@@ -1511,7 +1509,7 @@ enum List {
 // In addition to binding payload to variables,
 // you can also continue matching payload data inside constructors.
 // Here's a function that decides if a list contains only one element
-fn is_singleton(l : List) -> Bool {
+fn is_singleton(l : Lst) -> Bool {
   match l {
     // This branch only matches values of shape `Cons(_, Nil)`, 
     // i.e. lists of length 1
@@ -1521,7 +1519,7 @@ fn is_singleton(l : List) -> Bool {
   }
 }
 
-fn print_list(l : List) -> Unit {
+fn print_list(l : Lst) -> Unit {
   // when pattern-matching an enum with payload,
   // in additional to deciding which case a value belongs to
   // you can extract the payload data inside that case
@@ -1543,7 +1541,7 @@ fn print_list(l : List) -> Unit {
 ```moonbit
 fn main {
   // when creating values using `Cons`, the payload of by `Cons` must be provided
-  let l : List = Cons(1, Cons(2, Nil))
+  let l : Lst = Cons(1, Cons(2, Nil))
   println(is_singleton(l))
   print_list(l)
 }
@@ -1603,9 +1601,9 @@ enum Object {
 
 suberror NotImplementedError derive(Show)
 
-fn distance_with(
+fn Object::distance_with(
   self : Object,
-  other : Object
+  other : Object,
 ) -> Double raise NotImplementedError {
   match (self, other) {
     // For variables defined via `Point(..) as p`,
@@ -1672,7 +1670,7 @@ enum Tree[X] {
 fn[X : Compare] Tree::insert(
   self : Tree[X],
   x : X,
-  parent~ : Tree[X]
+  parent~ : Tree[X],
 ) -> Tree[X] {
   match self {
     Nil => Node(value=x, left=Nil, right=Nil, parent~)
@@ -1742,13 +1740,15 @@ John Doe
 
 ### Type alias
 
-MoonBit supports type alias via the syntax `typealias TargetType as Name`:
+MoonBit supports type alias via the syntax `type NewType = OldType`:
+
+#### WARNING
+The old syntax `typealias OldType as NewType` may be removed in the future.
 
 ```moonbit
 pub typealias Int as Index
-
-// type alias are private by default
-typealias @list.List as Lst
+pub type MyIndex = Int
+pub type MyMap = Map[Int, String]
 ```
 
 Unlike all other kinds of type declaration above, type alias does not define a new type,
@@ -1847,7 +1847,7 @@ match expr {
   //! Add(e1, e2) | Lit(e1) => ...
   Lit(n) as a => ...
   Add(e1, e2) | Mul(e1, e2) => ...
-  _ => ...
+  ...
 }
 ```
 
@@ -1856,11 +1856,11 @@ match expr {
 Array patterns can be used to match on the following types to obtain their
 corresponding elements or views:
 
-| Type                                 | Element   | View         |
-|--------------------------------------|-----------|--------------|
-| Array[T], ArrayView[T],FixedArray[T] | T         | ArrayView[T] |
-| Bytes, BytesView                     | Byte      | BytesView    |
-| String, StringView                   | Char      | StringView   |
+| Type                                  | Element   | View         |
+|---------------------------------------|-----------|--------------|
+| Array[T], ArrayView[T], FixedArray[T] | T         | ArrayView[T] |
+| Bytes, BytesView                      | Byte      | BytesView    |
+| String, StringView                    | Char      | StringView   |
 
 Array patterns have the following forms:
 
@@ -1993,7 +1993,7 @@ When the matched value has type `Json`, literal patterns can be used directly, t
 match json {
   { "version": "1.0.0", "import": [..] as imports, .. } => ...
   { "version": Number(i, ..), "import": Array(imports), .. } => ...
-  _ => ...
+  ...
 }
 ```
 
@@ -2048,19 +2048,22 @@ will not be re-evaluated in the subsequent patterns. Use it with caution.
 Generics are supported in top-level function and data type definitions. Type parameters can be introduced within square brackets. We can rewrite the aforementioned data type `List` to add a type parameter `T` to obtain a generic version of lists. We can then define generic functions over lists like `map` and `reduce`.
 
 ```moonbit
+///|
 enum List[T] {
   Nil
   Cons(T, List[T])
 }
 
-fn[S, T] map(self : List[S], f : (S) -> T) -> List[T] {
+///|
+fn[S, T] List::map(self : List[S], f : (S) -> T) -> List[T] {
   match self {
     Nil => Nil
     Cons(x, xs) => Cons(f(x), xs.map(f))
   }
 }
 
-fn[S, T] reduce(self : List[S], op : (T, S) -> T, init : T) -> T {
+///|
+fn[S, T] List::reduce(self : List[S], op : (T, S) -> T, init : T) -> T {
   match self {
     Nil => init
     Cons(x, xs) => xs.reduce(op, op(init, x))

@@ -42,6 +42,7 @@ Let’s dive into the code!
 In the previous code, we defined the segment tree using `enum`. However, none of the elements were clearly named, which was manageable when the data size was small. Now, we need to add **Tag** and **Length** attributes, so it makes sense to use labeled arguments in the `enum` definition:
 
 ```moonbit
+
 ///|
 enum Data {
   Data(sum~ : Int, len~ : Int)
@@ -67,6 +68,7 @@ This allows for clearer initialization and pattern matching, making the code eas
 Similar to the last lesson, before building the tree, we need to define the addition operations between `Node` types. However, since we’ve abstracted `Data`, we must account for its addition too:
 
 ```moonbit
+
 ///|
 impl Add for Data with add(self : Data, v : Data) -> Data {
   match (self, v) {
@@ -92,6 +94,7 @@ Here, we’ve ignored merging LazyTags for now and set the resulting tag to `Nil
 Now, we can implement the tree-building function:
 
 ```moonbit
+
 ///|
 fn build(data : ArrayView[Int]) -> Node {
   if data.length() == 1 {
@@ -110,6 +113,7 @@ We define a node receiving a LazyTag as `apply`. The key logic lies in here: the
 A decent implementation is to define a new addition operation to merge LazyTags, and define an `apply` function for Node to receive it.
 
 ```moonbit
+
 ///|
 impl Add for LazyTag with add(self : LazyTag, v : LazyTag) -> LazyTag {
   match (self, v) {
@@ -119,7 +123,7 @@ impl Add for LazyTag with add(self : LazyTag, v : LazyTag) -> LazyTag {
 }
 
 ///|
-fn apply(self : Node, v : LazyTag) -> Node {
+fn Node::apply(self : Node, v : LazyTag) -> Node {
   match (self, v) {
     (Node(data=Data(sum=a, len=length), tag~, left~, right~), Tag(v) as new_tag) =>
       Node(
@@ -139,14 +143,15 @@ Here is the core part of this section: compute the correct node's value with the
 Then how do we implement range modifications?
 
 ```moonbit
+
 ///|
-fn modify(
+fn Node::modify(
   self : Node,
   l : Int,
   r : Int,
   modify_l : Int,
   modify_r : Int,
-  tag : LazyTag
+  tag : LazyTag,
 ) -> Node {
   if modify_l > r || l > modify_r {
     self
@@ -192,6 +197,7 @@ GC is really interesting!
 For queries, we need to remember to push the LazyTag downwards:
 
 ```moonbit
+
 ///|
 let empty_node : Node = Node(
   data=Data(sum=0, len=0),
@@ -201,7 +207,13 @@ let empty_node : Node = Node(
 )
 
 ///|
-fn query(self : Node, l : Int, r : Int, query_l : Int, query_r : Int) -> Node {
+fn Node::query(
+  self : Node,
+  l : Int,
+  r : Int,
+  query_l : Int,
+  query_r : Int,
+) -> Node {
   if query_l > r || l > query_r {
     empty_node
   } else if query_l <= l && query_r >= r {

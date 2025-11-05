@@ -10,7 +10,7 @@ The first step to obtaining the complete edit sequence is to save the entire edi
 ///
 fn shortest_edit(
   old~ : Array[Line],
-  new~ : Array[Line]
+  new~ : Array[Line],
 ) -> Array[(BPArray[Int], Int)] {
   let n = old.length()
   let m = new.length()
@@ -70,7 +70,7 @@ Next, let's perform the backtracking.
 fn backtrack(
   new~ : Array[Line],
   old~ : Array[Line],
-  trace : Array[(BPArray[Int], Int)]
+  trace : Array[(BPArray[Int], Int)],
 ) -> Array[Edit] {
   let mut x = old.length()
   let mut y = new.length()

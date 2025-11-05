@@ -48,7 +48,7 @@ fn[T] Stream::from_list(l : List[T]) -> Self[T] {
 This function does not need to traverse the entire list to convert it into `Stream`. For operations that are not urgent (here, `Stream::from_list(xs)`), we wrap them directly in a thunk and return. The following `map` function will adopt this approach (though here, `xs` is already a thunk).
 
 ```moonbit
-fn[X, Y] map(self : Stream[X], f : (X) -> Y) -> Stream[Y] {
+fn[X, Y] Stream::map(self : Stream[X], f : (X) -> Y) -> Stream[Y] {
   match self {
     Empty => Empty
     Cons(x, xs) => Cons(f(x), fn() { xs().map(f) })
@@ -59,7 +59,7 @@ fn[X, Y] map(self : Stream[X], f : (X) -> Y) -> Stream[Y] {
 The `take` function is responsible for performing computations, and it can extract n elements as needed.
 
 ```moonbit
-fn[T] take(self : Stream[T], n : Int) -> List[T] {
+fn[T] Stream::take(self : Stream[T], n : Int) -> List[T] {
   if n == 0 {
     @list.empty()
   } else {
@@ -123,7 +123,7 @@ Additionally, some predefined coreF programs are required.
 
 ```moonbit
 let prelude_defs : List[ScDef[String]] = {
-  let args : (FixedArray[String]) -> List[String] = @list.of
+  let args : (FixedArray[String]) -> List[String] = @list.from_array(_)
   let id = ScDef::new("I", args(["x"]), Var("x")) // id x = x
   let k = ScDef::new("K", args(["x", "y"]), Var("x")) // K x y = x
   let k1 = ScDef::new("K1", args(["x", "y"]), Var("y")) // K1 x y = y
@@ -142,7 +142,7 @@ let prelude_defs : List[ScDef[String]] = {
     args(["f"]),
     App(App(Var("compose"), Var("f")), Var("f")),
   ) // twice f = compose f f
-  @list.of([id, k, k1, s, compose, twice])
+  @list.from_array([id, k, k1, s, compose, twice])
 }
 ```
 
@@ -176,16 +176,19 @@ fn square(thunk : () -> Int) -> Int {
 To represent the program using a graph is to facilitate sharing of computation results and avoid redundant calculations. To achieve this purpose, it's crucial to implement an in-place update algorithm when reducing the graph. Regarding in-place update, let's simulate it using MoonBit code:
 
 ```moonbit
+///|
 enum LazyData[T] {
   Waiting(() -> T)
   Done(T)
 }
 
+///|
 struct LazyRef[T] {
   mut data : LazyData[T]
 }
 
-fn[T] extract(self : LazyRef[T]) -> T {
+///|
+fn[T] LazyRef::extract(self : LazyRef[T]) -> T {
   match self.data {
     Waiting(thunk) => {
       let value = thunk()
@@ -196,6 +199,7 @@ fn[T] extract(self : LazyRef[T]) -> T {
   }
 }
 
+///|
 fn square(x : LazyRef[Int]) -> Int {
   x.extract() * x.extract()
 }
@@ -503,7 +507,7 @@ fn GState::unwind(self : GState) -> Unit {
     NApp(a1, _) => {
       self.put_stack(addr)
       self.put_stack(a1)
-      self.put_code(@list.of([Unwind]))
+      self.put_code(@list.from_array([Unwind]))
     }
     NGlobal(_, n, c) =>
       if self.stack.length() < n {
@@ -514,7 +518,7 @@ fn GState::unwind(self : GState) -> Unit {
       }
     NInd(a) => {
       self.put_stack(a)
-      self.put_code(@list.of([Unwind]))
+      self.put_code(@list.from_array([Unwind]))
     }
   }
 }
@@ -567,9 +571,9 @@ fn RawExpr::compileR(
   arity : Int
 ) -> List[Instruction] {
   if arity == 0 {
-    self.compileC(env) + @list.of([Update(arity), Unwind])
+    self.compileC(env) + @list.from_array([Update(arity), Unwind])
   } else {
-    self.compileC(env) + @list.of([Update(arity), Pop(arity), Unwind])
+    self.compileC(env) + @list.from_array([Update(arity), Pop(arity), Unwind])
   }
 }
 ```
@@ -584,14 +588,14 @@ fn RawExpr::compileC(
   match self {
     Var(s) =>
       match env.lookup(s) {
-        None => @list.of([PushGlobal(s)])
-        Some(n) => @list.of([PushArg(n)])
+        None => @list.from_array([PushGlobal(s)])
+        Some(n) => @list.from_array([PushArg(n)])
       }
-    Num(n) => @list.of([PushInt(n)])
+    Num(n) => @list.from_array([PushInt(n)])
     App(e1, e2) =>
       e2.compileC(env) +
       e1.compileC(argOffset(1, env)) +
-      @list.of([MkApp])
+      @list.from_array([MkApp])
     _ => abort("not support yet")
   }
 }
@@ -682,7 +686,7 @@ fn run(codes : List[String]) -> Node {
   let initialState : GState = {
     heap,
     stack: @list.empty(),
-    code: @list.of([PushGlobal("main"), Unwind]),
+    code: @list.from_array([PushGlobal("main"), Unwind]),
     globals,
     stats: 0,
   }

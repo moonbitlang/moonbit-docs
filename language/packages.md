@@ -35,6 +35,7 @@ A custom alias may also be defined with the [`import`](../toolchain/moon/package
 ```
 
 ```moonbit
+///|
 pub fn add1(x : Int) -> Int {
   @moonbitlang/core/int.abs(@c.incr(@pkgA.incr(x)))
 }
@@ -45,6 +46,17 @@ pub fn add1(x : Int) -> Int {
 You can define internal packages that are only available for certain packages.
 
 Code in `a/b/c/internal/x/y/z` are only available to packages `a/b/c` and `a/b/c/**`.
+
+### Using
+
+You can use `using` syntax to import symbols defined in another package.
+
+```moonbit
+///|
+pub using @pkgA {incr, trait Trait, type Type}
+```
+
+By having `pub` modifier, it is considered as reexportation.
 
 ## Access Control
 
@@ -59,12 +71,15 @@ You can use the `pub` modifier before toplevel `let`/`fn` to make them public.
 
 ### Aliases
 
-By default, all aliases, i.e. [function alias](fundamentals.md#function-alias),
-[method alias](methods.md#alias-methods-as-functions),
+By default, [function alias](fundamentals.md#function-alias) and
+[method alias](methods.md#alias-methods-as-functions) follow the
+visibility of the original definition, while
 [type alias](fundamentals.md#type-alias),
-[trait alias](methods.md#trait-alias), are *invisible* to other packages.
+[trait alias](methods.md#trait-alias), [using]() are *invisible* to other
+packages.
 
-You can use the `pub` modifier before the definition to make them public.
+You can add the `pub` modifier before the definition or fill in the `visibility`
+field within the annotation.
 
 ### Types
 
@@ -254,6 +269,7 @@ The `pub` keyword for [access control]() and the function parameter names should
 A virtual package can have a default implementation. By defining [`virtual.has-default`](../toolchain/moon/package.md#declarations) as `true`, you can implement the code as usual within the same package.
 
 ```moonbit
+///|
 pub fn log(s : String) -> Unit {
   println(s)
 }
@@ -268,6 +284,7 @@ A virtual package can also be implemented by a third party. By defining [`implem
 ```
 
 ```moonbit
+///|
 pub fn log(string : String) -> Unit {
   ignore(string)
 }
@@ -296,6 +313,7 @@ Otherwise, you may define the [`overrides`](../toolchain/moon/package.md#overrid
 You should reference the virtual package when using the entities.
 
 ```moonbit
+///|
 fn main {
   @virtual.log("Hello")
 }

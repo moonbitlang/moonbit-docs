@@ -21,6 +21,7 @@ enum List[X] {
   Cons(X, List[X])
 }
 
+///|
 fn[X] List::length(xs : List[X]) -> Int {
   ...
 }
@@ -102,19 +103,22 @@ test {
 
 MoonBit allows calling methods with alternative names via alias.
 
-The method alias will create a function with the corresponding name.
+The method alias will create a method with the corresponding name.
+You can also choose to create a function with the corresponding name.
+The visibility can also be controlled.
 
 ```moonbit
-// same as `fnalias List::map as map`
-fnalias List::map
-
-// `list_concat` is an alias of `List::concat`.
-// Note that the created alias is a function, not a method of list.
-// So you should call it with `list_concat(xx)` instead of `xx.list_concat()`
-fnalias List::concat as list_concat
-
-// creating multiple alias in typename
-fnalias List::(concat as c, map as m)
+#alias(m)
+#alias(n, visibility="priv")
+#as_free_fn(m)
+#as_free_fn(n, visibility="pub")
+fn List::f() -> Bool {
+  true
+}
+test {
+  assert_eq(List::f(), List::m())
+  assert_eq(List::m(), m())
+}
 ```
 
 ## Operator Overloading
@@ -436,11 +440,14 @@ fn f() -> Unit {
 
 MoonBit allows using traits with alternative names via trait alias.
 
+#### WARNING
+This feature may be removed in the future.
+
 Trait alias can be declared as follows:
 
 ```moonbit
 // CanCompare is an alias of Compare
-traitalias @builtin.Compare as CanCompare
+using @builtin {trait Compare}
 ```
 
 ## Trait objects
