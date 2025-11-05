@@ -1,5 +1,5 @@
 ///|
-typealias @list.List
+using @list {type List}
 
 ///|
 /// start stream definition
@@ -21,7 +21,7 @@ fn[T] Stream::from_list(l : List[T]) -> Self[T] {
 
 ///|
 /// start map definition
-fn[X, Y] map(self : Stream[X], f : (X) -> Y) -> Stream[Y] {
+fn[X, Y] Stream::map(self : Stream[X], f : (X) -> Y) -> Stream[Y] {
   match self {
     Empty => Empty
     Cons(x, xs) => Cons(f(x), fn() { xs().map(f) })
@@ -31,7 +31,7 @@ fn[X, Y] map(self : Stream[X], f : (X) -> Y) -> Stream[Y] {
 
 ///|
 /// start take definition
-fn[T] take(self : Stream[T], n : Int) -> List[T] {
+fn[T] Stream::take(self : Stream[T], n : Int) -> List[T] {
   if n == 0 {
     @list.empty()
   } else {

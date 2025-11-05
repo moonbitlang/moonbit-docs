@@ -1411,7 +1411,7 @@ corresponding elements or views:
 
 | Type                                   | Element | View           |
 |----------------------------------------|---------|----------------|
-| Array[T], ArrayView[T],FixedArray[T]   | T       | ArrayView[T]   |
+| Array[T], ArrayView[T], FixedArray[T]   | T       | ArrayView[T]   |
 | Bytes, BytesView                       | Byte    | BytesView      |
 | String, StringView                     | Char    | StringView     |
 

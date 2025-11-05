@@ -16,7 +16,7 @@ fn run(codes : List[String]) -> Node {
   let initialState : GState = {
     heap,
     stack: @list.empty(),
-    code: @list.of([PushGlobal("main"), Unwind]),
+    code: @list.from_array([PushGlobal("main"), Unwind]),
     globals,
     stats: 0,
   }
@@ -28,11 +28,11 @@ fn run(codes : List[String]) -> Node {
 test "basic eval" {
   // S K K x => ((K x (K x)) => x
   let main = "(defn main[] (S K K 3))"
-  inspect(run(@list.of([main])), content="NNum(3)")
+  inspect(run(@list.from_array([main])), content="NNum(3)")
   let main = "(defn main[] (K 0 1))"
-  inspect(run(@list.of([main])), content="NNum(0)")
+  inspect(run(@list.from_array([main])), content="NNum(0)")
   let main = "(defn main[] (K1 0 1))"
-  inspect(run(@list.of([main])), content="NNum(1)")
+  inspect(run(@list.from_array([main])), content="NNum(1)")
   let r = LazyRef::{ data: Waiting(fn() { 3 + 4 }) }
   inspect(square(r), content="49")
 }

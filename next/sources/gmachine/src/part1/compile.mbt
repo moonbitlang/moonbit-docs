@@ -25,9 +25,9 @@ fn RawExpr::compileR(
   arity : Int
 ) -> List[Instruction] {
   if arity == 0 {
-    self.compileC(env) + @list.of([Update(arity), Unwind])
+    self.compileC(env) + @list.from_array([Update(arity), Unwind])
   } else {
-    self.compileC(env) + @list.of([Update(arity), Pop(arity), Unwind])
+    self.compileC(env) + @list.from_array([Update(arity), Pop(arity), Unwind])
   }
 }
 // end compile_r definition
@@ -40,14 +40,14 @@ fn RawExpr::compileC(
   match self {
     Var(s) =>
       match env.lookup(s) {
-        None => @list.of([PushGlobal(s)])
-        Some(n) => @list.of([PushArg(n)])
+        None => @list.from_array([PushGlobal(s)])
+        Some(n) => @list.from_array([PushArg(n)])
       }
-    Num(n) => @list.of([PushInt(n)])
+    Num(n) => @list.from_array([PushInt(n)])
     App(e1, e2) =>
       e2.compileC(env) +
       e1.compileC(argOffset(1, env)) +
-      @list.of([MkApp])
+      @list.from_array([MkApp])
     _ => abort("not support yet")
   }
 }

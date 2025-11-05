@@ -19,7 +19,7 @@ fn run(codes : List[String]) -> String {
     output: @buffer.new(size_hint=60),
     heap,
     stack: @list.empty(),
-    code: @list.of([PushGlobal("main"), Eval, Print]),
+    code: @list.from_array([PushGlobal("main"), Eval, Print]),
     globals,
     stats: 0,
     dump: @list.empty(),

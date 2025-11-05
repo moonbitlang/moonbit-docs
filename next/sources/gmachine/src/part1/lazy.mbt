@@ -1,14 +1,17 @@
 // start lazy definition
+///|
 enum LazyData[T] {
   Waiting(() -> T)
   Done(T)
 }
 
+///|
 struct LazyRef[T] {
   mut data : LazyData[T]
 }
 
-fn[T] extract(self : LazyRef[T]) -> T {
+///|
+fn[T] LazyRef::extract(self : LazyRef[T]) -> T {
   match self.data {
     Waiting(thunk) => {
       let value = thunk()
@@ -19,6 +22,7 @@ fn[T] extract(self : LazyRef[T]) -> T {
   }
 }
 
+///|
 fn square(x : LazyRef[Int]) -> Int {
   x.extract() * x.extract()
 }

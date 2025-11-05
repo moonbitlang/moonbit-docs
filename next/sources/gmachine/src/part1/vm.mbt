@@ -156,7 +156,7 @@ fn GState::unwind(self : GState) -> Unit {
     NApp(a1, _) => {
       self.put_stack(addr)
       self.put_stack(a1)
-      self.put_code(@list.of([Unwind]))
+      self.put_code(@list.from_array([Unwind]))
     }
     NGlobal(_, n, c) =>
       if self.stack.length() < n {
@@ -167,7 +167,7 @@ fn GState::unwind(self : GState) -> Unit {
       }
     NInd(a) => {
       self.put_stack(a)
-      self.put_code(@list.of([Unwind]))
+      self.put_code(@list.from_array([Unwind]))
     }
   }
 }

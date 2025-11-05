@@ -233,7 +233,7 @@ fn Tokens::parse_case(self : Tokens) -> RawExpr[String] raise ParseError {
 }
 
 ///|
-fn parse_alts(
+fn Tokens::parse_alts(
   self : Tokens,
 ) -> List[(Int, List[String], RawExpr[String])] raise ParseError {
   let acc : List[(Int, List[String], RawExpr[String])] = @list.empty()
@@ -250,7 +250,7 @@ fn parse_alts(
           self.next()
           let x = self.parse_var()
           let xs = self.parse_var()
-          (1, @list.of([x, xs]))
+          (1, @list.from_array([x, xs]))
         }
         other =>
           raise ParseError("parse_alts(): expect NIL or CONS but got \{other}")

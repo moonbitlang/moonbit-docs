@@ -24,9 +24,9 @@ fn RawExpr::compileR(
   arity : Int
 ) -> List[Instruction] {
   if arity == 0 {
-    self.compileC(env) + @list.of([Update(arity), Unwind])
+    self.compileC(env) + @list.from_array([Update(arity), Unwind])
   } else {
-    self.compileC(env) + @list.of([Update(arity), Pop(arity), Unwind])
+    self.compileC(env) + @list.from_array([Update(arity), Pop(arity), Unwind])
   }
 }
 
@@ -38,14 +38,14 @@ fn RawExpr::compileC(
   match self {
     Var(s) =>
       match env.lookup(s) {
-        None => @list.of([PushGlobal(s)])
-        Some(n) => @list.of([Push(n)])
+        None => @list.from_array([PushGlobal(s)])
+        Some(n) => @list.from_array([Push(n)])
       }
-    Num(n) => @list.of([PushInt(n)])
+    Num(n) => @list.from_array([PushInt(n)])
     App(e1, e2) =>
       e2.compileC(env) +
       e1.compileC(argOffset(1, env)) +
-      @list.of([MkApp])
+      @list.from_array([MkApp])
     Let(rec, defs, e) =>
       if rec {
         compileLetrec(RawExpr::compileC, defs, e, env)
@@ -79,7 +79,7 @@ fn compileLet(
       continue (env, acc + code, rest)
     }
   }
-  codes + comp(expr, env) + @list.of([Slide(defs.length())])
+  codes + comp(expr, env) + @list.from_array([Slide(defs.length())])
 }
 // end compile_let definition
 
@@ -104,7 +104,7 @@ fn compileLetrec(
     offset : Int
   ) -> List[Instruction] {
     match defs {
-      Empty => comp(expr, env) + @list.of([Slide(n)])
+      Empty => comp(expr, env) + @list.from_array([Slide(n)])
       More((_, expr), tail=rest) =>
         expr.compileC(env) + compileDefs(rest, offset - 1).prepend(Update(offset))
     }
@@ -115,12 +115,12 @@ fn compileLetrec(
 // end compile_letrec definition
 
 ///| start prim definition
-let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
+let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_array([
     // Arith
     (
       "add",
       2,
-      @list.of([
+      @list.from_array([
         Push(1),
         Eval,
         Push(1),
@@ -134,7 +134,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
     (
       "sub",
       2,
-      @list.of([
+      @list.from_array([
         Push(1),
         Eval,
         Push(1),
@@ -148,7 +148,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
     (
       "mul",
       2,
-      @list.of([
+      @list.from_array([
         Push(1),
         Eval,
         Push(1),
@@ -162,7 +162,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
     (
       "div",
       2,
-      @list.of([
+      @list.from_array([
         Push(1),
         Eval,
         Push(1),
@@ -177,7 +177,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
     (
       "eq",
       2,
-      @list.of([
+      @list.from_array([
         Push(1),
         Eval,
         Push(1),
@@ -191,7 +191,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
     (
       "neq",
       2,
-      @list.of([
+      @list.from_array([
         Push(1),
         Eval,
         Push(1),
@@ -205,7 +205,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
     (
       "ge",
       2,
-      @list.of([
+      @list.from_array([
         Push(1),
         Eval,
         Push(1),
@@ -219,7 +219,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
     (
       "gt",
       2,
-      @list.of([
+      @list.from_array([
         Push(1),
         Eval,
         Push(1),
@@ -233,7 +233,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
     (
       "le",
       2,
-      @list.of([
+      @list.from_array([
         Push(1),
         Eval,
         Push(1),
@@ -247,7 +247,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
     (
       "lt",
       2,
-      @list.of([
+      @list.from_array([
         Push(1),
         Eval,
         Push(1),
@@ -262,15 +262,15 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.of([
     (
       "negate",
       1,
-      @list.of([Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),
+      @list.from_array([Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),
     ),
     (
       "if",
       3,
-      @list.of([
+      @list.from_array([
         Push(0),
         Eval,
-        Cond(@list.of([Push(1)]), @list.of([Push(2)])),
+        Cond(@list.from_array([Push(1)]), @list.from_array([Push(2)])),
         Update(3),
         Pop(3),
         Unwind,
