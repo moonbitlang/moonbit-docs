@@ -189,10 +189,11 @@ fn f(_x : Int, loc~ : SourceLoc, args_loc~ : ArgsLoc) -> String {
 // end autofill arguments
 
 // start function alias
-using @hashmap { new }
-
-// creating multiple alias in one package
-using @moonbitlang/core/prelude { tap, then }
+#alias(g)
+#alias(h, visibility="pub")
+fn k() -> Bool {
+  true
+}
 // end function alias
 
 test {

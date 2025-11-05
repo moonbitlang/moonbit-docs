@@ -37,6 +37,17 @@ You can define internal packages that are only available for certain packages.
 
 Code in `a/b/c/internal/x/y/z` are only available to packages `a/b/c` and `a/b/c/**`.
 
+### Using
+
+You can use `using` syntax to import symbols defined in another package.
+
+```{literalinclude} /sources/language/src/packages/pkgC/top.mbt
+:language: moonbit
+:caption: pkgC/top.mbt
+```
+
+By having `pub` modifier, it is considered as reexportation.
+
 ## Access Control
 
 MoonBit features a comprehensive access control system that governs which parts of your code are accessible from other packages. 
@@ -50,12 +61,15 @@ You can use the `pub` modifier before toplevel `let`/`fn` to make them public.
 
 ### Aliases
 
-By default, all aliases, i.e. [function alias](/language/fundamentals.md#function-alias), 
-[method alias](/language/methods.md#alias-methods-as-functions),
+By default, [function alias](/language/fundamentals.md#function-alias) and
+[method alias](/language/methods.md#alias-methods-as-functions) follow the
+visibility of the original definition, while 
 [type alias](/language/fundamentals.md#type-alias),
-[trait alias](/language/methods.md#trait-alias), are _invisible_ to other packages.
+[trait alias](/language/methods.md#trait-alias), [using](#using) are _invisible_ to other
+packages.
 
-You can use the `pub` modifier before the definition to make them public.
+You can add the `pub` modifier before the definition or fill in the `visibility`
+field within the annotation.
 
 ### Types
 

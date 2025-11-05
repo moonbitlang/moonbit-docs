@@ -42,11 +42,15 @@ test {
 
 // start method alias
 #alias(m)
+#alias(n, visibility="priv")
+#as_free_fn(m)
+#as_free_fn(n, visibility="pub")
 fn List::f() -> Bool {
   true
 }
 test {
   assert_eq(List::f(), List::m())
+  assert_eq(List::m(), m())
 }
 // end method alias
 

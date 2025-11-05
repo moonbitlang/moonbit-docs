@@ -693,10 +693,7 @@ MoonBit allows calling functions with alternative names via function alias. Func
 :end-before: end function alias
 ```
 
-Function alias can be used to import functions from other [packages](/language/packages.md).
-
-You can also create public function alias with the syntax `pub fnalias`,
-which is useful for re-exporting functions from another package.
+You can also create function alias that has different visibility with the field `visibility`.
 
 ## Control Structures
 
@@ -1324,7 +1321,11 @@ Besides pattern matching, you can also use index to access the elements similar 
 ```
 
 ### Type alias
-MoonBit supports type alias via the syntax `typealias TargetType as Name`:
+MoonBit supports type alias via the syntax `type NewType = OldType`:
+
+```{warning}
+The old syntax `typealias OldType as NewType` may be removed in the future.
+```
 
 ```{literalinclude} /sources/language/src/data/top.mbt
 :language: moonbit
@@ -1340,7 +1341,7 @@ So for example one cannot define new methods or implement traits for a type alia
 Type alias can be used to perform incremental code refactor.
 
 For example, if you want to move a type `T` from `@pkgA` to `@pkgB`,
-you can leave a type alias `typealias T = @pkgB.T` in `@pkgA`, and **incrementally** port uses of `@pkgA.T` to `@pkgB.T`.
+you can leave a type alias `type T = @pkgB.T` in `@pkgA`, and **incrementally** port uses of `@pkgA.T` to `@pkgB.T`.
 The type alias can be removed after all uses of `@pkgA.T` is migrated to `@pkgB.T`.
 ```
 

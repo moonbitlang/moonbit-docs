@@ -271,9 +271,8 @@ fn[X : Compare] Tree::insert(
 
 // start typealias 1
 pub typealias Int as Index
-
-// type alias are private by default
-using @list {type List}
+pub type MyIndex = Int
+pub type MyMap = Map[Int, String]
 // end typealias 1
 
 // start local-type 1

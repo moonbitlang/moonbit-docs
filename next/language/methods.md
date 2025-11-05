@@ -76,7 +76,9 @@ and provide extension/complementary to upstream API:
 
 MoonBit allows calling methods with alternative names via alias.
 
-The method alias will create a function with the corresponding name.
+The method alias will create a method with the corresponding name.
+You can also choose to create a function with the corresponding name.
+The visibility can also be controlled.
 
 ```{literalinclude} /sources/language/src/method/top.mbt
 :language: moonbit
@@ -278,6 +280,10 @@ Here's an example of calling trait `impl` with dot syntax:
 ### Trait alias
 
 MoonBit allows using traits with alternative names via trait alias.
+
+```{warning}
+This feature may be removed in the future.
+```
 
 Trait alias can be declared as follows:
 
