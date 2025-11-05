@@ -1,4 +1,5 @@
 // start data definition
+
 ///|
 enum Data {
   Data(sum~ : Int, len~ : Int)
@@ -51,6 +52,7 @@ impl ToJson for Node with to_json(node) {
 }
 
 // start op_add definition
+
 ///|
 impl Add for Data with add(self : Data, v : Data) -> Data {
   match (self, v) {
@@ -72,6 +74,7 @@ impl Add for Node with add(self : Node, v : Node) -> Node {
 // end op_add definition
 
 // start lazytag definition
+
 ///|
 impl Add for LazyTag with add(self : LazyTag, v : LazyTag) -> LazyTag {
   match (self, v) {
@@ -81,7 +84,7 @@ impl Add for LazyTag with add(self : LazyTag, v : LazyTag) -> LazyTag {
 }
 
 ///|
-fn apply(self : Node, v : LazyTag) -> Node {
+fn Node::apply(self : Node, v : LazyTag) -> Node {
   match (self, v) {
     (Node(data=Data(sum=a, len=length), tag~, left~, right~), Tag(v) as new_tag) =>
       Node(
@@ -97,6 +100,7 @@ fn apply(self : Node, v : LazyTag) -> Node {
 // end lazytag definition
 
 // start build definition
+
 ///|
 fn build(data : ArrayView[Int]) -> Node {
   if data.length() == 1 {
@@ -109,14 +113,15 @@ fn build(data : ArrayView[Int]) -> Node {
 // end build definition
 
 // start modify definition
+
 ///|
-fn modify(
+fn Node::modify(
   self : Node,
   l : Int,
   r : Int,
   modify_l : Int,
   modify_r : Int,
-  tag : LazyTag
+  tag : LazyTag,
 ) -> Node {
   if modify_l > r || l > modify_r {
     self
@@ -132,6 +137,7 @@ fn modify(
 // end modify definition
 
 // start query definition
+
 ///|
 let empty_node : Node = Node(
   data=Data(sum=0, len=0),
@@ -141,7 +147,13 @@ let empty_node : Node = Node(
 )
 
 ///|
-fn query(self : Node, l : Int, r : Int, query_l : Int, query_r : Int) -> Node {
+fn Node::query(
+  self : Node,
+  l : Int,
+  r : Int,
+  query_l : Int,
+  query_r : Int,
+) -> Node {
   if query_l > r || l > query_r {
     empty_node
   } else if query_l <= l && query_r >= r {

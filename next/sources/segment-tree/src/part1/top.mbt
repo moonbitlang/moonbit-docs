@@ -1,4 +1,5 @@
-///|  start node definition
+///|
+///  start node definition
 enum Node {
   Nil
   Node(Int, Node, Node)
@@ -17,7 +18,8 @@ impl ToJson for Node with to_json(self) {
   }
 }
 
-///| start op_add definition
+///|
+/// start op_add definition
 impl Add for Node with add(self : Node, v : Node) -> Node {
   match (self, v) {
     (Node(left, _, _), Node(right, _, _)) => Node(left + right, self, v)
@@ -28,7 +30,8 @@ impl Add for Node with add(self : Node, v : Node) -> Node {
 }
 // end op_add definition
 
-///| start build definition
+///|
+/// start build definition
 fn build(data : ArrayView[Int]) -> Node {
   if data.length() == 1 {
     Node(data[0], Nil, Nil)
@@ -39,7 +42,8 @@ fn build(data : ArrayView[Int]) -> Node {
 }
 // end build definition
 
-///| start build test
+///|
+/// start build test
 test {
   let tree = build([1, 2, 3, 4, 5][:])
   @json.inspect(tree, content=[
@@ -50,11 +54,18 @@ test {
 }
 // end build test
 
-///| start query definition
+///|
+/// start query definition
 let empty_node : Node = Node(0, Nil, Nil)
 
 ///|
-fn query(self : Node, l : Int, r : Int, query_l : Int, query_r : Int) -> Node {
+fn Node::query(
+  self : Node,
+  l : Int,
+  r : Int,
+  query_l : Int,
+  query_r : Int,
+) -> Node {
   if query_l > r || l > query_r {
     empty_node
   } else if query_l <= l && query_r >= r {
@@ -68,7 +79,8 @@ fn query(self : Node, l : Int, r : Int, query_l : Int, query_r : Int) -> Node {
 }
 // end query definition
 
-///| start query test
+///|
+/// start query test
 test {
   let tree = build([1, 2, 3, 4, 5][:])
   let sum = match tree.query(1, 5, 1, 3) {
