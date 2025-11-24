@@ -216,7 +216,7 @@ The internal attribute takes two arguments: `category` and `message`.
 `category` is a identifier that indicates the category of the alert, and `message` is a string that provides additional message for the alert.
 
 The alert warnings can be turn off by setting the `warn-list` in `moon.pkg.json`.
-For more detail, see [Alert](../toolchain/moon/package.md#alert-list).
+For more detail, see [alert warning](../toolchain/moon/package.md#alert-warning).
 
 ## External Attribute
 
