@@ -32,6 +32,7 @@ packages
 tests
 benchmarks
 docs
+attributes
 ffi
 async-experimental
 error_codes/index
