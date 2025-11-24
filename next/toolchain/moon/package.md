@@ -376,13 +376,18 @@ let resource : String =
 
 ## Warning List
 
-This is used to disable specific preset compiler warning numbers.
+Used to disable warnings, enable warnings, or treat a warning as a fatal error.
+The warning list is a string composed of multiple warning name, each prefixed with a sign:
 
-For example, in the following configuration, `-2` disables the warning number 2 (Unused variable).
+- `-` to disable the warning
+- `+` to enable the warning
+- `@` to treat the enabled warning as a fatal error
+
+For example, in the following configuration, `-unused_value` disables the unused functions and variables warning.
 
 ```json
 {
-  "warn-list": "-2"
+  "warn-list": "-unused_value"
 }
 ```
 
@@ -390,7 +395,7 @@ If multiple warnings need to be disabled, they can be directly connected and com
 
 ```json
 {
-  "warn-list": "-2-4"
+  "warn-list": "-unused_value-unreachable_code"
 }
 ```
 
@@ -398,73 +403,101 @@ If it is necessary to activate certain warnings that were originally prohibited,
 
 ```json
 {
-  "warn-list": "+31"
+  "warn-list": "+unused_optional_argument"
 }
 ```
 
-You can use `moonc build-package -warn-help` to see the list of preset compiler warning numbers.
-
-```
-$ moonc -v
-v0.1.20250606+a3f4966ca
-
-$ moonc build-package -warn-help
-Available warnings: 
-  1 Unused function.
-  2 Unused variable.
-  3 Unused type declaration.
-  4 Unused abstract type.
-  5 Unused type variable.
-  6 Unused constructor.
-  7 Unused field or constructor argument.
-  8 Redundant modifier.
-  9 Unused function declaration.
- 10 Struct never constructed.
- 11 Partial pattern matching.
- 12 Unreachable code.
- 13 Unresolved type variable.
- 14 Lowercase type name.
- 15 Unused mutability.
- 16 Parser inconsistency.
- 18 Useless loop expression.
- 19 Top-level declaration is not left aligned.
- 20 Invalid pragma
- 21 Some arguments of constructor are omitted in pattern.
- 22 Ambiguous block.
- 23 Useless try expression.
- 24 Useless error type.
- 26 Useless catch all.
- 27 Deprecated syntax.
- 28 Todo
- 29 Unused package.
- 30 Empty package alias.
- 31 Optional argument never supplied.
- 32 Default value of optional argument never used.
- 33 Unused import value
- 35 Reserved keyword.
- 36 Loop label shadows another label.
- 37 Unused loop label.
- 38 Useless guard.
- 39 Duplicated method.
- 40 Call a qualified method using regular call syntax.
- 41 Closed map pattern.
- 42 Invalid attribute.
- 43 Unused attribute.
- 44 Invalid inline-wasm.
- 46 Useless `..` in pattern
- 47 Invalid mbti file
- 48 Trait method with default implementation not marked with `= _`
- 49 Unused pub definition because it does not exist in mbti file.
-  A all warnings
-```
-
-## Alert List
-
-Disable user preset alerts.
+To treat a warning as a fatal error, use the `@`.
 
 ```json
 {
-  "alert-list": "-alert_1-alert_2"
+  "warn-list": "@deprecated"
+}
+```
+
+You can also use warnings number in warning list. Here is the full list of warning names:
+
+```
+Available warnings:                       
+    name                           description
+  1 unused_value                   Unused variable or function.
+  2 unused_value                   Unused variable.
+  3 unused_type_declaration        Unused type declaration.
+  4 missing_priv                   Unused abstract type.
+  5 unused_type_variable           Unused type variable.
+  6 unused_constructor             Unused constructor.
+  7 unused_field                   Unused field or constructor argument.
+  8 redundant_modifier             Redundant modifier.
+  9 struct_never_constructed       Struct never constructed.
+ 10 unused_pattern                 Unused pattern.
+ 11 partial_match                  Partial pattern matching.
+ 12 unreachable_code               Unreachable code.
+ 13 unresolved_type_variable       Unresolved type variable.
+ 14 alert or alert_<category>      All alerts or alerts with specific category.
+ 15 unused_mut                     Unused mutability.
+ 16 parser_inconsistency           Parser inconsistency check.
+ 17 ambiguous_loop_argument        Ambiguous usage of loop argument.
+ 18 useless_loop                   Useless loop expression.
+ 19 toplevel_not_left_aligned      Top_level declaration is not left aligned.
+ 20 deprecated                     Deprecated API usage.
+ 21 missing_pattern_arguments      Some arguments of constructor are omitted in pattern.
+ 22 ambiguous_block                Ambiguous block.
+ 23 unused_try                     Useless try expression.
+ 24 unused_error_type              Useless error type.
+ 26 unused_catch_all               Useless catch all.
+ 27 deprecated_syntax              Deprecated syntax.
+ 28 todo                           Todo
+ 29 unused_package                 Unused package.
+ 30 missing_package_alias          Empty package alias.
+ 31 unused_optional_argument       Optional argument never supplied.
+ 32 unused_default_value           Default value of optional argument never used.
+ 35 reserved_keyword               Reserved keyword.
+ 36 loop_label_shadowing           Loop label shadows another label.
+ 37 unused_loop_label              Unused loop label.
+ 41 missing_rest_mark              Missing `..` in map pattern.
+ 42 invalid_attribute              Invalid attribute.
+ 43 unused_attribute               Unused attribute.
+ 44 invalid_inline_wasm            Invalid inline-wasm.
+ 46 unused_rest_mark               Useless `..` in pattern
+ 47 invalid_mbti                   Invalid mbti file
+ 48 missing_default_impl_mark      Trait method with default implementation not marked with `= _`
+ 49 missing_definition             Unused pub definition because it does not exist in mbti file.
+ 50 method_shadowing               Local method shadows upstream method
+ 51 ambiguous_precedence           Ambiguous operator precedence
+ 52 unused_loop_variable           Loop variable not updated in loop
+ 53 unused_trait_bound             Unused trait bound
+ 55 unannotated_ffi                Unannotated FFI param type
+ 56 missing_pattern_field          Missing field in struct pattern
+ 57 missing_pattern_payload        Constructor pattern expect payload
+ 58 unused_non_capturing           Unnecessary non-capturing group in regex
+ 59 unaligned_byte_access          Unaligned byte access in bits pattern
+ 60 unused_struct_update           Unused struct update
+ 61 duplicate_test                 Duplicate test name
+ 62 invalid_cascade                Calling method with non-unit return type via `..`
+ 63 syntax_lint                    Syntax lint warning
+ 64 unannotated_toplevel_array     Unannotated toplevel array
+  A                                all warnings
+```
+
+```{note}
+Use `moonc build-package -warn-help` to see the list of preset compiler warnings.
+```
+
+### Alert Warning
+
+Alerts are special warnings that indicate the usage of API marked with 
+[`#internal` attribute](../../language/attributes.md#internal-attribute).
+
+All alerts has a category associated with it, which is customized by the author of the API.
+You can enable or disable specific alert categories using the `alert_<category>` warning name,
+or use `alert` to control all alert warnings at once.
+
+For example, in the following configuration, all warnings for alerts are treated 
+as fatal errors, except for the `unsafe` category, which is disabled.
+
+```json
+{
+  "warn-list": "@alert-alert_unsafe" 
 }
 ```
 
