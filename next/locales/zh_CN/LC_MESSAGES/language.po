@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-24 16:48+0800\n"
+"POT-Creation-Date: 2025-11-25 10:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -482,7 +482,9 @@ msgid ""
 "abuse, making it impossible for toolchains (e.g., the compiler) to catch "
 "errors at compile time, which makes code harder to maintain. It also "
 "negatively impacts performance optimization."
-msgstr "MoonBit 在设计上有意不支持运行时反射。允许时反射容易被滥用，使得工具链（例如编译器）在编译时不可能捕获到错误，让代码的维护变得更困难。它也会对性能优化产生负面影响。"
+msgstr ""
+"MoonBit "
+"在设计上有意不支持运行时反射。运行时反射容易被滥用，使得工具链（例如编译器）在编译时不可能捕获到错误，让代码的维护变得更困难。它也会对性能优化产生负面影响。"
 
 #: ../../language/attributes.md:39
 msgid ""
@@ -610,7 +612,7 @@ msgstr "`_[_]=_`：数组索引赋值操作符"
 
 #: ../../language/attributes.md:84
 msgid "`_[_:_]`: for the as view operator"
-msgstr "`_[_]`：数组索引操作符"
+msgstr "`_[_:_]`：op_as_view 操作符"
 
 #: ../../language/attributes.md:86
 msgid "`#alias(id)`: where `id` is a identifier representing the alias name."
@@ -629,7 +631,9 @@ msgid ""
 "A labeled property, changes the visibility of the alias. The `modifier` "
 "can be `pub` or `priv`. If not specified, the alias will have the same "
 "visibility as the original function or variable."
-msgstr "一个带标签的参数，用于改变别名的可见性。`modifier` 可以是 `pub` 或者 `priv`，如果没有声明，别名会和原始的函数或者变量有一样的可见性。"
+msgstr ""
+"一个带标签的参数，用于改变别名的可见性。`modifier` 可以是 `pub` 或者 "
+"`priv`，如果没有声明，别名会和原始的函数或者变量有一样的可见性。"
 
 #: ../../language/attributes.md:94
 msgid "`deprecated` or `deprecated=\"message\"`"
@@ -680,7 +684,9 @@ msgid ""
 "parameter. You can use `fill=true` when you want to eventually make an "
 "optional  parameter required. You can use `fill=false` when you want to "
 "eventually  remove an optional parameter."
-msgstr "当你想重构一个可选参数时，可以设置`fill`。当 `fill=true` 时，这代表最终这个参数将变成必选的；当 `fill=false` 时，这代表最终这个参数会被移除。"
+msgstr ""
+"当你想重构一个可选参数时，可以设置`fill`。当 `fill=true` 时，这代表最终这个参数将变成必选的；当 `fill=false` "
+"时，这代表最终这个参数会被移除。"
 
 #: ../../language/attributes.md:123 ../../language/attributes.md:143
 #: ../../language/attributes.md:162
@@ -711,7 +717,9 @@ msgid ""
 "parameter is used positionally  (without a label), the compiler reports a"
 " warning. This is useful when you want to change a positional parameter "
 "to a labelled parameter without breaking the downstream code."
-msgstr "当你希望带标签的参数可以在不提供标签的情况下使用时，可以设置 `allow_positional`。当参数按位置使用（没有标签）时，编译器会报告警告。这在你想要将位置参数更改为带标签参数，并且不破坏下游代码时非常有用。"
+msgstr ""
+"当你希望带标签的参数可以在不提供标签的情况下使用时，可以设置 "
+"`allow_positional`。当参数按位置使用（没有标签）时，编译器会报告警告。这在你想要将位置参数更改为带标签参数，并且不破坏下游代码时非常有用。"
 
 #: ../../language/attributes.md:145
 msgid ""
@@ -734,7 +742,9 @@ msgid ""
 "backward  compatibility. If a warning message is provided, the compiler "
 "warns when  using the alias; otherwise, the alias can be used without "
 "warnings."
-msgstr "`alias` 注解允许为带标签的参数提供替代名称。这在重命名参数以保持向后兼容性时很有用。如果提供了警告消息，编译器在使用别名时会发出警告；否则，可以在不发出警告的情况下使用别名。"
+msgstr ""
+"`alias` "
+"注解允许为带标签的参数提供替代名称。这在重命名参数以保持向后兼容性时很有用。如果提供了警告消息，编译器在使用别名时会发出警告；否则，可以在不发出警告的情况下使用别名。"
 
 #: ../../language/attributes.md:164
 msgid ""
@@ -912,17 +922,17 @@ msgid ""
 "`category` is a identifier that indicates the category of the alert, and "
 "`message` is a string that provides additional message for the alert."
 msgstr ""
-"“internal”注解接受两个参数：`category` 和 `message`。`category` 是一个标识符，表示警示对应的类别。`message`"
-" 是一个字符串，表示警示中额外的提示信息。"
+"“internal”注解接受两个参数：`category` 和 `message`。`category` "
+"是一个标识符，表示警示对应的类别。`message` 是一个字符串，表示警示中额外的提示信息。"
 
 #: ../../language/attributes.md:218
 msgid ""
 "The alert warnings can be turn off by setting the `warn-list` in "
-"`moon.pkg.json`. For more detail, see "
-"[Alert](../toolchain/moon/package.md#alert-list)."
+"`moon.pkg.json`. For more detail, see [alert "
+"warning](../toolchain/moon/package.md#alert-warning)."
 msgstr ""
-"警示可以通过配置`moon.pkg.json`中的`warn-list`选项来关闭。关于更多的细节，见 "
-"[警示列表](../toolchain/moon/package.md#alert-list)."
+"`alert`警告可以通过配置`moon.pkg.json`中的`warn-list`选项来关闭。关于更多的细节，见 "
+"[alert 警告](../toolchain/moon/package.md#alert-list)."
 
 #: ../../language/attributes.md:221
 msgid "External Attribute"
@@ -957,7 +967,6 @@ msgid "Borrow and Owned Attribute"
 msgstr "`borrow` 和 `owned` 注解"
 
 #: ../../language/attributes.md:237
-#, fuzzy
 msgid ""
 "The `#borrow` and `#owned` attribute is used to indicate that a FFI takes"
 " ownership of its arguments. For more detail, see [FFI](./ffi.md#the-"

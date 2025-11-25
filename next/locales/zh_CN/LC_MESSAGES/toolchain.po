@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-14 10:32+0800\n"
+"POT-Creation-Date: 2025-11-25 10:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1894,56 +1894,56 @@ msgstr ""
 msgid "Warning List"
 msgstr "警告列表"
 
-#: ../../toolchain/moon/module.md:172 ../../toolchain/moon/package.md:379
+#: ../../toolchain/moon/module.md:172
 msgid "This is used to disable specific preset compiler warning numbers."
 msgstr "这用于禁用特定的预设编译器警告编号。"
 
-#: ../../toolchain/moon/module.md:174 ../../toolchain/moon/package.md:381
+#: ../../toolchain/moon/module.md:174
 msgid ""
 "For example, in the following configuration, `-2` disables the warning "
 "number 2 (Unused variable)."
 msgstr "例如，在以下配置中，`-2` 禁用警告编号 2（未使用的变量）。"
 
-#: ../../toolchain/moon/module.md:176 ../../toolchain/moon/package.md:383
+#: ../../toolchain/moon/module.md:176
 msgid ""
 "{\n"
 "  \"warn-list\": \"-2\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:182 ../../toolchain/moon/package.md:389
+#: ../../toolchain/moon/module.md:182 ../../toolchain/moon/package.md:394
 msgid ""
 "If multiple warnings need to be disabled, they can be directly connected "
 "and combined."
 msgstr "如果需要禁用多种警告，可以直接连接起来进行组合。"
 
-#: ../../toolchain/moon/module.md:184 ../../toolchain/moon/package.md:391
+#: ../../toolchain/moon/module.md:184
 msgid ""
 "{\n"
 "  \"warn-list\": \"-2-4\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:190 ../../toolchain/moon/package.md:397
+#: ../../toolchain/moon/module.md:190 ../../toolchain/moon/package.md:402
 msgid ""
 "If it is necessary to activate certain warnings that were originally "
 "prohibited, use the plus sign."
 msgstr "如果需要激活某种原来未启用的警告，则使用加号。"
 
-#: ../../toolchain/moon/module.md:192 ../../toolchain/moon/package.md:399
+#: ../../toolchain/moon/module.md:192
 msgid ""
 "{\n"
 "  \"warn-list\": \"+31\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:198 ../../toolchain/moon/package.md:405
+#: ../../toolchain/moon/module.md:198
 msgid ""
 "You can use `moonc build-package -warn-help` to see the list of preset "
 "compiler warning numbers."
 msgstr "你可以使用 `moonc build-package -warn-help` 来查看预设编译器警告编号列表。"
 
-#: ../../toolchain/moon/module.md:200 ../../toolchain/moon/package.md:407
+#: ../../toolchain/moon/module.md:200
 msgid ""
 "$ moonc -v\n"
 "v0.1.20250606+a3f4966ca\n"
@@ -1998,15 +1998,15 @@ msgid ""
 "  A all warnings\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:254 ../../toolchain/moon/package.md:461
+#: ../../toolchain/moon/module.md:254
 msgid "Alert List"
 msgstr "警示列表"
 
-#: ../../toolchain/moon/module.md:256 ../../toolchain/moon/package.md:463
+#: ../../toolchain/moon/module.md:256
 msgid "Disable user preset alerts."
 msgstr "禁用用户预设警示。"
 
-#: ../../toolchain/moon/module.md:258 ../../toolchain/moon/package.md:465
+#: ../../toolchain/moon/module.md:258
 msgid ""
 "{\n"
 "  \"alert-list\": \"-alert_1-alert_2\"\n"
@@ -2967,33 +2967,206 @@ msgid ""
 "  #|\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:471
+#: ../../toolchain/moon/package.md:379
+msgid ""
+"Used to disable warnings, enable warnings, or treat a warning as a fatal "
+"error. The warning list is a string composed of multiple warning name, "
+"each prefixed with a sign:"
+msgstr "用于关闭警告，启用警告，或者把一个启用的警告视为错误。警告列表是由多个警告名组成的字符串，每个警告名前有一个符号前缀："
+
+#: ../../toolchain/moon/package.md:382
+#, fuzzy
+msgid "`-` to disable the warning"
+msgstr "`-`用于关闭警告"
+
+#: ../../toolchain/moon/package.md:383
+msgid "`+` to enable the warning"
+msgstr "`+`用于启用警告"
+
+#: ../../toolchain/moon/package.md:384
+msgid "`@` to treat the enabled warning as a fatal error"
+msgstr "`@`用于把一个已经启用的警告视为错误"
+
+#: ../../toolchain/moon/package.md:386
+msgid ""
+"For example, in the following configuration, `-unused_value` disables the"
+" unused functions and variables warning."
+msgstr "例如，在以下配置中，`-unused_value` 禁用函数或者变量未使用警告。"
+
+#: ../../toolchain/moon/package.md:388
+msgid ""
+"{\n"
+"  \"warn-list\": \"-unused_value\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:396
+msgid ""
+"{\n"
+"  \"warn-list\": \"-unused_value-unreachable_code\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:404
+msgid ""
+"{\n"
+"  \"warn-list\": \"+unused_optional_argument\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:410
+msgid "To treat a warning as a fatal error, use the `@`."
+msgstr "要把一个警告视为错误，使用`@`。"
+
+#: ../../toolchain/moon/package.md:412
+msgid ""
+"{\n"
+"  \"warn-list\": \"@deprecated\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:418
+msgid ""
+"You can also use warnings number in warning list. Here is the full list "
+"of warning names:"
+msgstr "你也可以在警告列表中使用警告编号。这里是完整的警告名和编号："
+
+#: ../../toolchain/moon/package.md:420
+msgid ""
+"Available warnings:                       \n"
+"    name                           description\n"
+"  1 unused_value                   Unused variable or function.\n"
+"  2 unused_value                   Unused variable.\n"
+"  3 unused_type_declaration        Unused type declaration.\n"
+"  4 missing_priv                   Unused abstract type.\n"
+"  5 unused_type_variable           Unused type variable.\n"
+"  6 unused_constructor             Unused constructor.\n"
+"  7 unused_field                   Unused field or constructor argument.\n"
+"  8 redundant_modifier             Redundant modifier.\n"
+"  9 struct_never_constructed       Struct never constructed.\n"
+" 10 unused_pattern                 Unused pattern.\n"
+" 11 partial_match                  Partial pattern matching.\n"
+" 12 unreachable_code               Unreachable code.\n"
+" 13 unresolved_type_variable       Unresolved type variable.\n"
+" 14 alert or alert_<category>      All alerts or alerts with specific "
+"category.\n"
+" 15 unused_mut                     Unused mutability.\n"
+" 16 parser_inconsistency           Parser inconsistency check.\n"
+" 17 ambiguous_loop_argument        Ambiguous usage of loop argument.\n"
+" 18 useless_loop                   Useless loop expression.\n"
+" 19 toplevel_not_left_aligned      Top_level declaration is not left "
+"aligned.\n"
+" 20 deprecated                     Deprecated API usage.\n"
+" 21 missing_pattern_arguments      Some arguments of constructor are "
+"omitted in pattern.\n"
+" 22 ambiguous_block                Ambiguous block.\n"
+" 23 unused_try                     Useless try expression.\n"
+" 24 unused_error_type              Useless error type.\n"
+" 26 unused_catch_all               Useless catch all.\n"
+" 27 deprecated_syntax              Deprecated syntax.\n"
+" 28 todo                           Todo\n"
+" 29 unused_package                 Unused package.\n"
+" 30 missing_package_alias          Empty package alias.\n"
+" 31 unused_optional_argument       Optional argument never supplied.\n"
+" 32 unused_default_value           Default value of optional argument "
+"never used.\n"
+" 35 reserved_keyword               Reserved keyword.\n"
+" 36 loop_label_shadowing           Loop label shadows another label.\n"
+" 37 unused_loop_label              Unused loop label.\n"
+" 41 missing_rest_mark              Missing `..` in map pattern.\n"
+" 42 invalid_attribute              Invalid attribute.\n"
+" 43 unused_attribute               Unused attribute.\n"
+" 44 invalid_inline_wasm            Invalid inline-wasm.\n"
+" 46 unused_rest_mark               Useless `..` in pattern\n"
+" 47 invalid_mbti                   Invalid mbti file\n"
+" 48 missing_default_impl_mark      Trait method with default "
+"implementation not marked with `= _`\n"
+" 49 missing_definition             Unused pub definition because it does "
+"not exist in mbti file.\n"
+" 50 method_shadowing               Local method shadows upstream method\n"
+" 51 ambiguous_precedence           Ambiguous operator precedence\n"
+" 52 unused_loop_variable           Loop variable not updated in loop\n"
+" 53 unused_trait_bound             Unused trait bound\n"
+" 55 unannotated_ffi                Unannotated FFI param type\n"
+" 56 missing_pattern_field          Missing field in struct pattern\n"
+" 57 missing_pattern_payload        Constructor pattern expect payload\n"
+" 58 unused_non_capturing           Unnecessary non-capturing group in "
+"regex\n"
+" 59 unaligned_byte_access          Unaligned byte access in bits pattern\n"
+" 60 unused_struct_update           Unused struct update\n"
+" 61 duplicate_test                 Duplicate test name\n"
+" 62 invalid_cascade                Calling method with non-unit return "
+"type via `..`\n"
+" 63 syntax_lint                    Syntax lint warning\n"
+" 64 unannotated_toplevel_array     Unannotated toplevel array\n"
+"  A                                all warnings\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:483
+msgid ""
+"Use `moonc build-package -warn-help` to see the list of preset compiler "
+"warnings."
+msgstr "你可以使用 `moonc build-package -warn-help` 来查看预设编译器警告编号列表。"
+
+#: ../../toolchain/moon/package.md:486
+msgid "Alert Warning"
+msgstr "`alert`警告"
+
+#: ../../toolchain/moon/package.md:488
+msgid ""
+"Alerts are special warnings that indicate the usage of API marked with  "
+"[`#internal` attribute](../../language/attributes.md#internal-attribute)."
+msgstr "`alert`是一种特殊的警告，表示使用了某些被[`#internal`注解](../../language/attributes.md#internal-attribute)标记了的 API。 "
+
+#: ../../toolchain/moon/package.md:491
+msgid ""
+"All alerts has a category associated with it, which is customized by the "
+"author of the API. You can enable or disable specific alert categories "
+"using the `alert_<category>` warning name, or use `alert` to control all "
+"alert warnings at once."
+msgstr "所有`alert`都附有一个类别，这是由 API 的作者定义的。你可以通过`alert_<类别>`这样的警告名来启用或者关闭特定的`alert`类别，或者用`alert`一次性控制所有`alert`警告。"
+
+#: ../../toolchain/moon/package.md:495
+msgid ""
+"For example, in the following configuration, all warnings for alerts are "
+"treated  as fatal errors, except for the `unsafe` category, which is "
+"disabled."
+msgstr "例如，在下面的配置中，所有`alert`警告都被视为错误，除了`unsafe`类别——只有它被关闭。"
+
+#: ../../toolchain/moon/package.md:498
+msgid ""
+"{\n"
+"  \"warn-list\": \"@alert-alert_unsafe\" \n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:504
 msgid "Virtual Package"
 msgstr "虚拟包"
 
-#: ../../toolchain/moon/package.md:473
+#: ../../toolchain/moon/package.md:506
 msgid ""
 "A virtual package serves as an interface of a package that can be "
 "replaced by actual implementations."
 msgstr "一个虚拟包可以作为一个包的接口被实际的实现替换。"
 
-#: ../../toolchain/moon/package.md:475
+#: ../../toolchain/moon/package.md:508
 msgid "Declarations"
 msgstr "声明"
 
-#: ../../toolchain/moon/package.md:477
+#: ../../toolchain/moon/package.md:510
 msgid ""
 "The `virtual` field is used to declare the current package as a virtual "
 "package."
 msgstr "`virtual` 字段用于将当前包声明为虚拟包。"
 
-#: ../../toolchain/moon/package.md:479
+#: ../../toolchain/moon/package.md:512
 msgid ""
 "For example, the following declares a virtual package with default "
 "implementation:"
 msgstr "例如，以下配置声明了一个具有默认实现的虚拟包："
 
-#: ../../toolchain/moon/package.md:481
+#: ../../toolchain/moon/package.md:514
 msgid ""
 "{\n"
 "  \"virtual\": {\n"
@@ -3002,44 +3175,44 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:489
+#: ../../toolchain/moon/package.md:522
 msgid "Implementations"
 msgstr "实现"
 
-#: ../../toolchain/moon/package.md:491
+#: ../../toolchain/moon/package.md:524
 msgid ""
 "The `implement` field is used to declare the virtual package to be "
 "implemented by the current package."
 msgstr "`implement` 字段用于指定当前包实现的虚拟包。"
 
-#: ../../toolchain/moon/package.md:493
+#: ../../toolchain/moon/package.md:526
 msgid "For example, the following implements a virtual package:"
 msgstr "例如，以下配置实现了一个虚拟包："
 
-#: ../../toolchain/moon/package.md:495
+#: ../../toolchain/moon/package.md:528
 msgid ""
 "{\n"
 "  \"implement\": \"moonbitlang/core/abort\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:501
+#: ../../toolchain/moon/package.md:534
 msgid "Overriding implementations"
 msgstr "覆盖实现"
 
-#: ../../toolchain/moon/package.md:503
+#: ../../toolchain/moon/package.md:536
 msgid ""
 "The `overrides` field is used to provide the implementations that "
 "fulfills an imported virtual package."
 msgstr "`overrides` 字段用于提供满足导入虚拟包的实现。"
 
-#: ../../toolchain/moon/package.md:505
+#: ../../toolchain/moon/package.md:538
 msgid ""
 "For example, the following overrides the default implementation of the "
 "builtin abort package with another package:"
 msgstr "例如，以下配置将内置的 abort 包的默认实现替换为另一个包："
 
-#: ../../toolchain/moon/package.md:507
+#: ../../toolchain/moon/package.md:540
 msgid ""
 "{\n"
 "  \"overrides\": [\"moonbitlang/dummy_abort/abort_show_msg\"]\n"
