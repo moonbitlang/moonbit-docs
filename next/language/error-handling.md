@@ -222,3 +222,20 @@ caught, and `e => raise e` to reraise the other errors. For example,
 :start-after: start error 13
 :end-before: end error 13
 ```
+
+## Memory Layout for Suberrors
+
+For experienced users who need to understand the underlying implementation,
+suberror values in MoonBit are always represented as pointers. The memory
+allocation strategy depends on whether the error constructor has a payload:
+
+- **Constructors without payload**: These are statically allocated. The pointer
+  references a pre-allocated constructor that exists for the lifetime of the
+  program.
+
+- **Constructors with payload**: These are dynamically allocated each time the
+  error is raised. The pointer references heap-allocated memory containing both
+  the constructor tag and the payload data.
+
+This design ensures efficient memory usage while maintaining type safety and
+performance for error handling operations.

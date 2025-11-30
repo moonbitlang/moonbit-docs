@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-05 17:45+0800\n"
+"POT-Creation-Date: 2025-11-30 22:57+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -2163,6 +2163,38 @@ msgid ""
 "  e => raise e\n"
 "}\n"
 msgstr ""
+
+#: ../../language/error-handling.md:226
+msgid "Memory Layout for Suberrors"
+msgstr "错误类型的内存布局"
+
+#: ../../language/error-handling.md:228
+msgid ""
+"For experienced users who need to understand the underlying "
+"implementation, suberror values in MoonBit are always represented as "
+"pointers. The memory allocation strategy depends on whether the error "
+"constructor has a payload:"
+msgstr "对于需要了解底层实现的有经验用户，MoonBit 中的错误值始终表示为指针，内存分配策略取决于错误构造器是否带有参数。"
+
+#: ../../language/error-handling.md:232
+msgid ""
+"**Constructors without payload**: These are statically allocated. The "
+"pointer references a pre-allocated constructor that exists for the "
+"lifetime of the program."
+msgstr "构造器常量：这些是静态分配的。指针引用一个预分配的构造器，该构造器在程序的整个生命周期内存在。"
+
+#: ../../language/error-handling.md:236
+msgid ""
+"**Constructors with payload**: These are dynamically allocated each time "
+"the error is raised. The pointer references heap-allocated memory "
+"containing both the constructor tag and the payload data."
+msgstr "带参数的构造器：这些在每次错误抛出时动态分配。指针引用堆分配的内存，其中包含构造器标签和参数。"
+
+#: ../../language/error-handling.md:240
+msgid ""
+"This design ensures efficient memory usage while maintaining type safety "
+"and performance for error handling operations."
+msgstr "这种设计在保持类型安全和错误处理操作性能的同时，确保了高效的内存使用。"
 
 #: ../../language/error_codes/E0001.md:1
 msgid "E0001"
@@ -19968,8 +20000,8 @@ msgid ""
 msgstr ""
 "默认情况下，[函数别名](/language/fundamentals.md#function-alias) 和 "
 "[方法别名](/language/methods.md#alias-methods-as-functions) 遵循原始定义的可见性，而 "
-"[类型别名](/language/fundamentals.md#type-alias)、[特征别名](/language/methods.md#trait-alias)、"
-"[using](#using) 对其他包是 _不可见_ 的。"
+"[类型别名](/language/fundamentals.md#type-alias)、[特征别名](/language/methods.md"
+"#trait-alias)、[using](#using) 对其他包是 _不可见_ 的。"
 
 #: ../../language/packages.md:71
 msgid ""
