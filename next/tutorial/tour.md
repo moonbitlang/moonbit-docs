@@ -377,7 +377,7 @@ too.
    others to use.
 
 By default, the project will be shared under [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html), 
-which is a permissive license allowing everyone to use. You can also use other licenses, such as the [MulanPSL 2.0](https://license.coscl.org.cn/MulanPSL2),
+which is a permissive license allowing everyone to use. You can also use other licenses, such as the [MulanPSL 2.0](https://spdx.org/licenses/MulanPSL-2.0.html),
 by changing the field `license` in `moon.mod.json` and the content of `LICENSE`.
 
 ### Closing
