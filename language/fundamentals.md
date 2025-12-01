@@ -795,7 +795,7 @@ To declare an autofill argument, simply declare a labelled argument, and add a f
 Now if the argument is not explicitly supplied, MoonBit will automatically fill it at the call site.
 
 Currently MoonBit supports two types of autofill arguments, `SourceLoc`, which is the source location of the whole function call,
-and `ArgsLoc`, which is a array containing the source location of each argument, if any:
+and `ArgsLoc`, which is an array containing the source location of each argument, if any:
 
 ```moonbit
 #callsite(autofill(loc, args_loc))

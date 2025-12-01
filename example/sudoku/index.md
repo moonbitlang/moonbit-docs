@@ -360,7 +360,7 @@ fn solve(g : String) -> String {
 }
 ```
 
-Let's run the the example taken from [magictour](http://magictour.free.fr/top95), a list of difficult Sudoku puzzles, which is not easy for humans.
+Let's run the example taken from [magictour](http://magictour.free.fr/top95), a list of difficult Sudoku puzzles, which is not easy for humans.
 
 ```moonbit
 let grid1 =

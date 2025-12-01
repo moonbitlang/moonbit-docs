@@ -29,7 +29,7 @@ For Wasm backends, all functions interacting with outside world relies on the ho
 
 ### Wasm GC
 
-By Wasm GC we refer to WebAssembly with Garbage Colleciton proposal, meaning that data structures will be represented with reference types such as `struct` `array` and the linear memory would not be used by default. It also supports other post-MVP proposals including:
+By Wasm GC we refer to WebAssembly with Garbage Collection proposal, meaning that data structures will be represented with reference types such as `struct` `array` and the linear memory would not be used by default. It also supports other post-MVP proposals including:
 
 - multi-value
 - JS string builtins
