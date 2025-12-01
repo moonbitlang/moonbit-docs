@@ -7,4 +7,4 @@ The immutable set has two variants:
 
 The first one is hash based and hence unordered while the second one require its key
 to be ordered.
-<!-- Thus behavors differently and have different APIs. -->
+<!-- Thus behaves differently and have different APIs. -->

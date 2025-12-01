@@ -112,7 +112,7 @@ fn GState::push_int(self : GState, num : Int) -> Unit {
 // start push_global definition
 fn GState::push_global(self : GState, name : String) -> Unit {
   guard self.globals.get(name) is Some(addr) else {
-    abort("push_global(): cant find supercombinator \{name}")
+    abort("push_global(): can't find supercombinator \{name}")
   }
   self.put_stack(addr)
 }
