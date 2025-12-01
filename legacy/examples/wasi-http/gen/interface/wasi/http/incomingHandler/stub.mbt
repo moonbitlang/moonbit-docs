@@ -24,7 +24,7 @@ pub fn handle(
       // Get the body
       guard response.body() is Ok(body)
       defer body.finish(None).unwrap()
-      // Establish the conncetion
+      // Establish the connection
       response_out.set(Ok(response))
       // Write to the body
       guard body.write() is Ok(stream)

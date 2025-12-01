@@ -53,7 +53,7 @@ my_project
 ```
 
 ```{note}
-On Windows system, you need administrator priviledge or the developer mode enabled to create the symbolic link.
+On Windows system, you need administrator privilege or the developer mode enabled to create the symbolic link.
 ```
 
 Here's a brief explanation of the directory structure:

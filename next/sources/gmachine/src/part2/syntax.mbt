@@ -318,12 +318,12 @@ fn Tokens::parse_expr(self : Tokens) -> RawExpr[String] raise ParseError {
         CONS => self.parse_cons()
         Id(_) | Open('(') => self.parse_apply()
         other =>
-          raise ParseError("parse_expr(): cant parse \{other} behind a '('")
+          raise ParseError("parse_expr(): can't parse \{other} behind a '('")
       }
       self.eat(Close(')'))
       return exp
     }
-    other => raise ParseError("parse_expr(): cant parse \{other}")
+    other => raise ParseError("parse_expr(): can't parse \{other}")
   }
 }
 
