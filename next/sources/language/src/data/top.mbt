@@ -270,7 +270,7 @@ fn[X : Compare] Tree::insert(
 // end enum 12
 
 // start typealias 1
-pub typealias Int as Index
+pub type Index = Int
 pub type MyIndex = Int
 pub type MyMap = Map[Int, String]
 // end typealias 1
