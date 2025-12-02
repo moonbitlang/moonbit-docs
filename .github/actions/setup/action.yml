@@ -1,0 +1,35 @@
+name: "Setup MoonBit"
+description: "Setup MoonBit CLI in your GitHub Actions workflow"
+inputs:
+  version:
+    description: "The version of MoonBit CLI to install (default: latest). Other option: nightly"
+    required: false
+    default: "latest"
+runs:
+  using: "composite"
+  steps:
+    - name: Install MoonBit CLI on *nix
+      if: runner.os != 'Windows'
+      shell: bash
+      run: |
+        curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash -s "${{ inputs.version }}"
+        echo "$HOME/.moon/bin" >> $GITHUB_PATH
+
+    - name: Install MoonBit CLI on Windows
+      if: runner.os == 'Windows'
+      shell: powershell
+      env:
+        MOONBIT_INSTALL_VERSION: ${{ inputs.version }}
+      run: |
+        Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang.com/install/powershell.ps1 | iex
+        "C:\Users\runneradmin\.moon\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+
+    - name: Verify installation
+      shell: bash
+      run: |
+        moon version --all
+
+    - name: Update Registry
+      shell: bash
+      run: |
+        moon update

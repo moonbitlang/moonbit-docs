@@ -15,38 +15,19 @@ jobs:
     strategy:
       matrix:
         os: 
-          - name: ubuntu-latest
-            path: ubuntu_x86_64
-          - name: macos-latest
-            path: mac_intel
-          - name: macos-14
-            path: mac_m1
-          - name: windows-latest
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
         backend: [wasm, wasm-gc, js]
-    runs-on: ${{ matrix.os.name }}
-    continue-on-error: ${{ matrix.os.name == 'macos-14' }}
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
 
       - name: install
-        if: ${{ matrix.os.name != 'windows-latest' }}
-        run: |
-          /bin/bash -c "$(curl -fsSL https://cli.moonbitlang.com/install/unix.sh)"
-          echo "$HOME/.moon/bin" >> $GITHUB_PATH
-
-      - name: install on windows
-        if: ${{ matrix.os.name == 'windows-latest' }}
-        run: |
-          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang.com/install/powershell.ps1 | iex
-          "C:\Users\runneradmin\.moon\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
-      
-      - name: moon version
-        run: |
-          moon version --all
-          moonrun --version
+        uses: ./.github/actions/setup
 
       - name: moon check and test
-        if: ${{ matrix.os.name != 'windows-latest' }}
+        if: ${{ runner.os != 'Windows' }}
         run: |
           moon update
           failed_directories=()
@@ -72,13 +53,13 @@ jobs:
           fi
       
       - name: check result size
-        if: ${{ matrix.os.name != 'windows-latest' }}
+        if: ${{ runner.os != 'Windows' }}
         run: |
           find ./target -name '*.wasm' | xargs ls -lh
           find ./target -name '*.js' | xargs ls -lh
 
       - name: moon check and test on windows
-        if: ${{ matrix.os.name == 'windows-latest' }}
+        if: ${{ runner.os == 'Windows' }}
         run: |
           moon update
           $failed_directories = @()
@@ -103,7 +84,7 @@ jobs:
           }
 
       - name: check result size on windows
-        if: ${{ matrix.os.name == 'windows-latest' }}
+        if: ${{ runner.os == 'Windows' }}
         run: |
           Get-ChildItem -Path ".\target" -Recurse -Filter "*.wasm" | ForEach-Object { "{0} ({1} bytes)" -f $_.FullName, $_.Length }
           Get-ChildItem -Path ".\target" -Recurse -Filter "*.js" | ForEach-Object { "{0} ({1} bytes)" -f $_.FullName, $_.Length }

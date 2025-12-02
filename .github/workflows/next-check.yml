@@ -15,32 +15,16 @@ jobs:
     strategy:
       matrix:
         os: 
-          - name: ubuntu-latest
-          - name: macos-latest
-          - name: macos-14
-          - name: windows-latest
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
         backend: [wasm, wasm-gc, js]
-    runs-on: ${{ matrix.os.name }}
-    continue-on-error: ${{ matrix.os.name == 'macos-14' }}
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
 
       - name: install
-        if: ${{ matrix.os.name != 'windows-latest' }}
-        run: |
-          /bin/bash -c "$(curl -fsSL https://cli.moonbitlang.com/install/unix.sh)"
-          echo "$HOME/.moon/bin" >> $GITHUB_PATH
-
-      - name: install on windows
-        if: ${{ matrix.os.name == 'windows-latest' }}
-        run: |
-          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang.com/install/powershell.ps1 | iex
-          "C:\Users\runneradmin\.moon\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
-      
-      - name: moon version
-        run: |
-          moon version --all
-          moonrun --version
+        uses: ./.github/actions/setup
 
       - name: Set up Python
         uses: actions/setup-python@v4
