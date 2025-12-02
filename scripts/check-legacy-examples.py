@@ -5,11 +5,9 @@ from pathlib import Path
 
 
 def main():
-    root = Path(__file__).parent.parent
-    examples_dir = root / "legacy" / "examples"
 
     failed = []
-    for example in sorted(examples_dir.iterdir()):
+    for example in sorted(Path("legacy/examples").iterdir()):
         if not example.is_dir() or example.name.startswith('.') or example.name == "target":
             continue
 
@@ -25,9 +23,9 @@ def main():
                            targets], cwd=example, check=True)
             subprocess.run(["moon", "test", "--target", targets],
                            cwd=example, check=True)
-            print(f"✓ {example.name}")
+            print(f"OK: {example.name}")
         except subprocess.CalledProcessError:
-            print(f"✗ {example.name}")
+            print(f"FAIL: {example.name}")
             failed.append(example.name)
 
     if failed:

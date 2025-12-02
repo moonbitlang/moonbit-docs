@@ -7,7 +7,7 @@ from pathlib import Path
 def main():
     # Process directories
     failed = []
-    for dir_path in Path("next/sources").iterdir():
+    for dir_path in sorted(Path("next/sources").iterdir()):
         if not dir_path.is_dir() or dir_path.name.startswith('.') or dir_path.name == "target":
             continue
 
@@ -29,9 +29,9 @@ def main():
                            targets], cwd=dir_path, check=True)
             subprocess.run(["moon", "test", "--target", targets],
                            cwd=dir_path, check=True)
-            print(f"✓ {dir_path.name}")
+            print(f"OK: {dir_path.name}")
         except subprocess.CalledProcessError:
-            print(f"✗ {dir_path.name}")
+            print(f"FAIL: {dir_path.name}")
             failed.append(dir_path.name)
 
     # Report results
