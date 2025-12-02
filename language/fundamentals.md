@@ -425,7 +425,7 @@ let fixed_array_1 : FixedArray[Int] = [1, 2, 3]
 
 let fixed_array_2 = ([1, 2, 3] : FixedArray[Int])
 
-let array_3 = [1, 2, 3] // Array[Int]
+let array_3 : Array[Int] = [1, 2, 3] // Array[Int]
 ```
 
 #### SEE ALSO
@@ -1746,7 +1746,7 @@ MoonBit supports type alias via the syntax `type NewType = OldType`:
 The old syntax `typealias OldType as NewType` may be removed in the future.
 
 ```moonbit
-pub typealias Int as Index
+pub type Index = Int
 pub type MyIndex = Int
 pub type MyMap = Map[Int, String]
 ```

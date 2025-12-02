@@ -446,7 +446,7 @@ This feature may be removed in the future.
 Trait alias can be declared as follows:
 
 ```moonbit
-traitalias @builtin.Compare as CanCompare
+using @builtin { trait Compare as CanCompare }
 ```
 
 ## Trait objects

@@ -89,7 +89,7 @@ Still, sometimes we want to not only record one data structure but the output of
 A full snapshot test can be used to record anything using `@test.T::write` and `@test.T::writeln`:
 
 ```moonbit
-test "record anything" (t : @test.T) {
+test "record anything" (t : @test.Test) {
   t.write("Hello, world!")
   t.writeln(" And hello, MoonBit!")
   t.snapshot(filename="record_anything.txt")
