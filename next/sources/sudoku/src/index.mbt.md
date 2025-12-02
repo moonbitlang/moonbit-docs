@@ -146,7 +146,7 @@ let rows = "ABCDEFGHI"
 
 let cols = "123456789"
 
-typealias @immut/sorted_set.T[String] as Squares
+type Squares =  @immut/sorted_set.SortedSet[String] 
 
 // squares contains the coordinates of each square
 let squares : Squares = ......

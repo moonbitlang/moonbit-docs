@@ -5,7 +5,7 @@ let rows = "ABCDEFGHI"
 let cols = "123456789"
 
 ///|
-typealias @immut/sorted_set.SortedSet[String] as Squares
+type Squares = @immut/sorted_set.SortedSet[String]
 
 ///|
 fn cross(x : String, y : String, pred : (String) -> Bool) -> Squares {

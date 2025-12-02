@@ -54,7 +54,7 @@ let number : Unit = {
 
 }
 
-test "string 1" (t : @test.T) {
+test "string 1" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start string 1
   let a = "兔rabbit"
@@ -76,7 +76,7 @@ let string : Unit = {
   // end string 3
 }
 
-test "string 4" (t : @test.T) {
+test "string 4" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start string 4
   let lang = "MoonBit"
@@ -117,7 +117,7 @@ test {
 }
 // end char 2
 
-test "byte 1" (t : @test.T) {
+test "byte 1" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start byte 1
   let b1 : Byte = b'a'
@@ -158,7 +158,7 @@ test "buffer 1" {
 }
 // end buffer 1
 
-test "tuple 1" (t : @test.T) {
+test "tuple 1" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start tuple 1
   fn pack(
@@ -210,7 +210,7 @@ let fixed_array_1 : FixedArray[Int] = [1, 2, 3]
 
 let fixed_array_2 = ([1, 2, 3] : FixedArray[Int])
 
-let array_3 = [1, 2, 3] // Array[Int]
+let array_3 : Array[Int] = [1, 2, 3] // Array[Int]
 // end array 3
 
 // start array pitfall

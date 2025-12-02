@@ -89,7 +89,7 @@ test {
 }
 // end error 8
 
-test "error 9" (t : @test.T) {
+test "error 9" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start error 9
   try div(42, 0) catch {
