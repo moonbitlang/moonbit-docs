@@ -1,3 +1,5 @@
+///|
+#external
 //  Copyright 2024 International Digital Economy Academy
 // 
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,18 +14,25 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-priv extern type JsArray
+priv type JsArray
 
+///|
 fn JsArray::new() -> JsArray = "array" "new"
 
-fn push(self : JsArray, charCode : Int) = "array" "push"
+///|
+fn JsArray::push(self : JsArray, charCode : Int) = "array" "push"
 
-pub(all) extern type JsString
+///|
+#external
+pub(all) type JsString
 
+///|
 fn JsString::from_char_code(charCode : JsArray) -> JsString = "string" "fromCharCode"
 
-fn iter(self : JsString, f : (Int) -> Unit) -> Unit = "string" "iter"
+///|
+fn JsString::iter(self : JsString, f : (Int) -> Unit) -> Unit = "string" "iter"
 
+///|
 pub fn JsString::from_string(str : String) -> JsString {
   str
   .iter()
@@ -37,8 +46,9 @@ pub fn JsString::from_string(str : String) -> JsString {
   |> JsString::from_char_code
 }
 
+///|
 pub fn JsString::to_string(str : JsString) -> String {
   let buffer = StringBuilder::new()
-  str.iter(fn(i : Int) { buffer.write_char(Char::from_int(i)) })
+  str.iter(fn(i : Int) { buffer.write_char(i.unsafe_to_char()) })
   buffer.to_string()
 }

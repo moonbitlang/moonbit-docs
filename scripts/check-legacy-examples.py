@@ -15,6 +15,10 @@ def main():
         targets = "all"
         if example.name == "wasi-http":
             targets = "wasm"
+        elif example.name in ["tetris", "mandelbrot", "koch_snowflake", "game_of_life"]:
+            targets="wasm-gc"
+        elif example.name == "snake":
+            targets="wasm,wasm-gc,js"
 
         print(f"Processing {example.name}")
         try:

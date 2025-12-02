@@ -12,18 +12,21 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 enum Cell {
   Dead
   Alive
 }
 
+///|
 struct Universe {
   width : Int
   height : Int
   mut cells : Array[Cell]
 }
 
-fn get_index(self : Universe, row : Int, column : Int) -> Int {
+///|
+fn Universe::get_index(self : Universe, row : Int, column : Int) -> Int {
   if row * self.width + column < self.width * self.height {
     row * self.width + column
   } else {
@@ -31,6 +34,7 @@ fn get_index(self : Universe, row : Int, column : Int) -> Int {
   }
 }
 
+///|
 pub fn new() -> Universe {
   let width = 64
   let height = 64
@@ -47,26 +51,35 @@ pub fn new() -> Universe {
   { width, height, cells }
 }
 
-pub fn get_width(self : Universe) -> Int {
+///|
+pub fn Universe::get_width(self : Universe) -> Int {
   self.width
 }
 
-pub fn get_height(self : Universe) -> Int {
+///|
+pub fn Universe::get_height(self : Universe) -> Int {
   self.height
 }
 
-pub fn get_cells(self : Universe) -> Array[Cell] {
+///|
+pub fn Universe::get_cells(self : Universe) -> Array[Cell] {
   self.cells
 }
 
-pub fn get_cell(self : Universe, idx : Int) -> Int {
+///|
+pub fn Universe::get_cell(self : Universe, idx : Int) -> Int {
   match self.cells[idx] {
     Alive => 1
     Dead => 0
   }
 }
 
-fn live_neighbor_count(self : Universe, row : Int, column : Int) -> Int {
+///|
+fn Universe::live_neighbor_count(
+  self : Universe,
+  row : Int,
+  column : Int,
+) -> Int {
   let mut count = 0
   let delta_rows = [self.height - 1, 0, 1]
   let delta_cols = [self.width - 1, 0, 1]
@@ -89,7 +102,8 @@ fn live_neighbor_count(self : Universe, row : Int, column : Int) -> Int {
   count
 }
 
-pub fn tick(self : Universe) -> Unit {
+///|
+pub fn Universe::tick(self : Universe) -> Unit {
   let next : Array[Cell] = Array::make(self.width * self.height, Dead)
   let mut r = 0
   while r < self.height {
@@ -118,7 +132,8 @@ pub fn tick(self : Universe) -> Unit {
   self.cells = next
 }
 
-pub fn to_string(self : Universe) -> String {
+///|
+pub fn Universe::to_string(self : Universe) -> String {
   let mut r = 0
   let mut cells = ""
   while r < self.height {

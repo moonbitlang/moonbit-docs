@@ -12,28 +12,50 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 #external
 type Canvas_ctx
 
-fn begin_path(self : Canvas_ctx) = "canvas" "begin_path"
+///|
+fn Canvas_ctx::begin_path(self : Canvas_ctx) = "canvas" "begin_path"
 
-fn clear_rect(self : Canvas_ctx, x : Double, y : Double, w : Double,
-        h : Double) = "canvas" "clear_rect"
+///|
+fn Canvas_ctx::clear_rect(
+  self : Canvas_ctx,
+  x : Double,
+  y : Double,
+  w : Double,
+  h : Double,
+) = "canvas" "clear_rect"
 
-fn move_to(self : Canvas_ctx, x : Double, y : Double) = "canvas" "move_to"
+///|
+fn Canvas_ctx::move_to(self : Canvas_ctx, x : Double, y : Double) = "canvas" "move_to"
 
-fn line_to(self : Canvas_ctx, x : Double, y : Double) = "canvas" "line_to"
+///|
+fn Canvas_ctx::line_to(self : Canvas_ctx, x : Double, y : Double) = "canvas" "line_to"
 
-fn stroke(self : Canvas_ctx) = "canvas" "stroke"
+///|
+fn Canvas_ctx::stroke(self : Canvas_ctx) = "canvas" "stroke"
 
+///|
 fn sqrt(x : Double) -> Double = "canvas" "sqrt"
 
+///|
 fn cos(x : Double) -> Double = "canvas" "cos"
 
+///|
 fn get_pi() -> Double = "canvas" "get_pi"
 
-fn koch(ctx : Canvas_ctx, x1 : Double, y1 : Double, x2 : Double,
-        y2 : Double, n : Double, m : Double) -> Unit {
+///|
+fn koch(
+  ctx : Canvas_ctx,
+  x1 : Double,
+  y1 : Double,
+  x2 : Double,
+  y2 : Double,
+  n : Double,
+  m : Double,
+) -> Unit {
   ctx.clear_rect(0.0, 0.0, 400.0, 400.0)
   let x3 = (x2 - x1) / 3.0 + x1
   let y3 = (y2 - y1) / 3.0 + y1
@@ -57,6 +79,7 @@ fn koch(ctx : Canvas_ctx, x1 : Double, y1 : Double, x2 : Double,
   koch(ctx, x4, y4, x2, y2, n, m)
 }
 
+///|
 pub fn draw(ctx : Canvas_ctx, deep : Double) -> Unit {
   ctx.begin_path()
   let y = 80.0 + cos(get_pi() / 6.0) * 200.0
@@ -64,4 +87,3 @@ pub fn draw(ctx : Canvas_ctx, deep : Double) -> Unit {
   koch(ctx, 250.0, 80.0, 50.0, 80.0, 0.0, deep)
   koch(ctx, 50.0, 80.0, 150.0, y, 0.0, deep)
 }
-

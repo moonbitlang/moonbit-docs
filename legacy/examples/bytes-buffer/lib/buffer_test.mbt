@@ -18,11 +18,13 @@ test {
   buf.append_int(256)
   buf.append_int(255)
   let content = buf.to_bytes()
-  inspect(content[:].to_int_be(), content="256")
-  inspect(content[4:].to_int_be(), content="255")
+  guard content is [i32_be(a), i32_be(b)]
+  inspect(a, content="256")
+  inspect(b, content="255")
   let buf1 = @lib.Buffer::new(4)
   buf1.append_int(257)
   buf.truncate(buf1)
   let content = buf.to_bytes()
-  inspect(content[8:].to_int_be(), content="257")
+  guard content[8:] is [i32_be(c)]
+  inspect(c, content="257")
 }

@@ -12,10 +12,13 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 let grid_row_count = 20
 
+///|
 let grid_col_count = 20
 
+///|
 pub(all) enum Direction {
   Up
   Down
@@ -24,12 +27,14 @@ pub(all) enum Direction {
   Default
 } derive(Eq)
 
+///|
 priv enum GridType {
   Body
   Food
   None
 } derive(Eq)
 
+///|
 #as_free_fn
 fn Direction::dir_posi(self : Direction) -> Position {
   match self {
@@ -41,17 +46,20 @@ fn Direction::dir_posi(self : Direction) -> Position {
   }
 }
 
+///|
 priv struct Position {
   x : Int
   y : Int
 }
 
+///|
 struct GameState {
   grid : FixedArray[GridType]
   body : @deque.Deque[Position]
   mut dir : Direction
 }
 
+///|
 #as_free_fn
 fn GameState::initialize(self : GameState) -> Unit {
   self.grid.fill(None)
@@ -62,14 +70,18 @@ fn GameState::initialize(self : GameState) -> Unit {
   self.generate_Food()
 }
 
-fn setGridType(self : GameState, p : Position, t : GridType) -> Unit {
+///|
+fn GameState::setGridType(self : GameState, p : Position, t : GridType) -> Unit {
   self.grid[p.y * grid_col_count + p.x] = t
 }
 
+///|
 fn random() -> Double = "Math" "random"
 
+///|
 fn floor(i : Double) -> Int = "Math" "floor"
 
+///|
 #as_free_fn
 fn GameState::generate_Food(self : GameState) -> Unit {
   while true {
@@ -82,7 +94,8 @@ fn GameState::generate_Food(self : GameState) -> Unit {
   }
 }
 
-fn go_step(self : GameState) -> Unit {
+///|
+fn GameState::go_step(self : GameState) -> Unit {
   // if (prev == Up && self.dir == Down) ||  (prev == Down && self.dir == Up) || (prev == Left && self.dir == Right) || (prev == Right && self.dir == Left){
   //   self.dir = prev
   // }
@@ -106,6 +119,7 @@ fn go_step(self : GameState) -> Unit {
   }
 }
 
+///|
 #as_free_fn
 pub fn GameState::step(self : Self, action : Direction) -> Unit {
   match (action, self.dir) {
@@ -123,6 +137,7 @@ pub fn GameState::step(self : Self, action : Direction) -> Unit {
   }
 }
 
+///|
 pub fn new() -> GameState {
   let game : GameState = {
     grid: FixedArray::make(grid_row_count * grid_col_count, None),

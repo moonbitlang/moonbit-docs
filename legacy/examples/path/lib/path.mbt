@@ -39,7 +39,7 @@ pub fn Path::new(s : String, platform : Platform, file_type : FileType) -> Path 
 }
 
 ///|
-pub fn parent(self : Path) -> String {
+pub fn Path::parent(self : Path) -> String {
   match self.platform {
     Posix => {
       let parts = self.inner.split("/").collect()
@@ -77,17 +77,17 @@ pub fn parent(self : Path) -> String {
 }
 
 ///|
-pub fn is_absolute(self : Path) -> Bool {
+pub fn Path::is_absolute(self : Path) -> Bool {
   self.has_root()
 }
 
 ///|
-pub fn is_relative(self : Path) -> Bool {
+pub fn Path::is_relative(self : Path) -> Bool {
   not(self.has_root())
 }
 
 ///|
-pub fn has_root(self : Path) -> Bool {
+pub fn Path::has_root(self : Path) -> Bool {
   match self.platform {
     Posix => self.inner is ['/', ..]
     Windows => self.inner is ['a'..='z' | 'A'..='Z', ':', ..]
@@ -95,19 +95,19 @@ pub fn has_root(self : Path) -> Bool {
 }
 
 ///|
-pub fn file_name(self : Path) -> String? {
+pub fn Path::file_name(self : Path) -> String? {
   match self.file_type {
     FileType::File =>
       match self.platform {
-        Posix => self.inner.split("/").last().map(@string.View::to_string)
-        Windows => self.inner.split("\\").last().map(@string.View::to_string)
+        Posix => self.inner.split("/").last().map(StringView::to_string)
+        Windows => self.inner.split("\\").last().map(StringView::to_string)
       }
     _ => None
   }
 }
 
 ///|
-pub fn append(self : Path, p : String) -> Unit {
+pub fn Path::append(self : Path, p : String) -> Unit {
   match self.platform {
     Posix => {
       if self.inner[self.inner.length() - 1] != '/' {

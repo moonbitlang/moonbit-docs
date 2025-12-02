@@ -20,7 +20,7 @@ priv type JsArray
 fn JsArray::new() -> JsArray = "array" "new"
 
 ///|
-fn push(self : JsArray, charCode : Int) = "array" "push"
+fn JsArray::push(self : JsArray, charCode : Int) = "array" "push"
 
 ///|
 #external
@@ -30,7 +30,7 @@ pub(all) type JsString
 fn JsString::from_code_point(charCode : JsArray) -> JsString = "string" "fromCodePoint"
 
 ///|
-fn iter(self : JsString, f : (Int) -> Unit) -> Unit = "string" "iter"
+fn JsString::iter(self : JsString, f : (Int) -> Unit) -> Unit = "string" "iter"
 
 ///|
 pub fn JsString::from_string(str : String) -> JsString {

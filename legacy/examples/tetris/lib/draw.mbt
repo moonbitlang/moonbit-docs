@@ -13,20 +13,41 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-extern type Canvas_ctx
+///|
+#external
+type Canvas_ctx
 
-fn set_stroke_color(self : Canvas_ctx, color : Int) = "canvas" "set_stroke_color"
+///|
+fn Canvas_ctx::set_stroke_color(self : Canvas_ctx, color : Int) = "canvas" "set_stroke_color"
 
-fn set_line_width(self : Canvas_ctx, width : Double) = "canvas" "set_line_width"
+///|
+fn Canvas_ctx::set_line_width(self : Canvas_ctx, width : Double) = "canvas" "set_line_width"
 
-fn stroke_rect(self : Canvas_ctx, x : Int, y : Int, width : Int, height : Int) = "canvas" "stroke_rect"
+///|
+fn Canvas_ctx::stroke_rect(
+  self : Canvas_ctx,
+  x : Int,
+  y : Int,
+  width : Int,
+  height : Int,
+) = "canvas" "stroke_rect"
 
-fn fill_rect(self : Canvas_ctx, x : Int, y : Int, width : Int, height : Int) = "canvas" "fill_rect"
+///|
+fn Canvas_ctx::fill_rect(
+  self : Canvas_ctx,
+  x : Int,
+  y : Int,
+  width : Int,
+  height : Int,
+) = "canvas" "fill_rect"
 
-fn set_fill_style(self : Canvas_ctx, color : Int) = "canvas" "set_fill_style"
+///|
+fn Canvas_ctx::set_fill_style(self : Canvas_ctx, color : Int) = "canvas" "set_fill_style"
 
-fn draw_game_over(self : Canvas_ctx) = "canvas" "draw_game_over"
+///|
+fn Canvas_ctx::draw_game_over(self : Canvas_ctx) = "canvas" "draw_game_over"
 
+///|
 pub fn draw(canvas : Canvas_ctx, tetris : Tetris) -> Unit {
   // draw background
   for c = 0; c < grid_col_count; c = c + 1 {
@@ -37,7 +58,7 @@ pub fn draw(canvas : Canvas_ctx, tetris : Tetris) -> Unit {
   draw_piece(canvas, tetris.grid, (0, 0))
   draw_piece(
     canvas,
-    @immut/list.from_array(tetris.piece_shape),
+    @list.from_array(tetris.piece_shape),
     (tetris.piece_x, tetris.piece_y),
   )
   if tetris.dead {
@@ -45,24 +66,20 @@ pub fn draw(canvas : Canvas_ctx, tetris : Tetris) -> Unit {
   }
 }
 
+///|
 pub fn draw_piece(
   canvas : Canvas_ctx,
-  matrix : @immut/list.T[Array[Int]],
-  offset : (Int, Int)
+  matrix : @list.List[Array[Int]],
+  offset : (Int, Int),
 ) -> Unit {
   canvas.set_stroke_color(0)
   canvas.set_line_width(0.1)
-  matrix.eachi(
-    fn {
-      r, v =>
-        for c = 0; c < v.length(); c = c + 1 {
-          if v[c] == 0 {
-            continue c + 1
-          }
-          canvas.set_fill_style(v[c] + 1)
-          canvas.fill_rect(offset.0 + c, offset.1 + r, 1, 1)
-          canvas.stroke_rect(offset.0 + c, offset.1 + r, 1, 1)
-        }
-    },
-  )
+  matrix.eachi((r, v) => for c = 0; c < v.length(); c = c + 1 {
+    if v[c] == 0 {
+      continue c + 1
+    }
+    canvas.set_fill_style(v[c] + 1)
+    canvas.fill_rect(offset.0 + c, offset.1 + r, 1, 1)
+    canvas.stroke_rect(offset.0 + c, offset.1 + r, 1, 1)
+  })
 }

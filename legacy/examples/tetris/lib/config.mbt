@@ -13,10 +13,13 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+///|
 let grid_row_count = 20
 
+///|
 let grid_col_count = 10
 
+///|
 enum PIECE {
   I
   L
@@ -27,7 +30,8 @@ enum PIECE {
   O
 }
 
-pub fn piece_shape(self : PIECE) -> Array[Array[Int]] {
+///|
+pub fn PIECE::piece_shape(self : PIECE) -> Array[Array[Int]] {
   match self {
     I => [[1, 1, 1, 1]]
     L => [[0, 0, 2], [2, 2, 2]]

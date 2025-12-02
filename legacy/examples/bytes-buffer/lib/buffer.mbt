@@ -24,7 +24,7 @@ pub fn Buffer::new(size : Int) -> Buffer {
 }
 
 ///|
-pub fn op_get(self : Buffer, i : Int) -> Byte? {
+pub fn Buffer::op_get(self : Buffer, i : Int) -> Byte? {
   if i < self.data.length() {
     Some(self.data[i])
   } else {
@@ -33,17 +33,17 @@ pub fn op_get(self : Buffer, i : Int) -> Byte? {
 }
 
 ///|
-pub fn capacity(self : Buffer) -> Int {
+pub fn Buffer::capacity(self : Buffer) -> Int {
   self.data.length()
 }
 
 ///|
-pub fn length(self : Buffer) -> Int {
+pub fn Buffer::length(self : Buffer) -> Int {
   self.len
 }
 
 ///|
-fn expand_size(self : Buffer) -> Unit {
+fn Buffer::expand_size(self : Buffer) -> Unit {
   let new_capacity = if self.data.length() != 0 {
     self.data.length() * 2
   } else {
@@ -59,7 +59,7 @@ fn expand_size(self : Buffer) -> Unit {
 }
 
 ///|
-pub fn append_int(self : Buffer, value : Int) -> Unit {
+pub fn Buffer::append_int(self : Buffer, value : Int) -> Unit {
   if self.len + 4 >= self.data.length() {
     self.expand_size()
   }
@@ -72,7 +72,7 @@ pub fn append_int(self : Buffer, value : Int) -> Unit {
 }
 
 ///|
-pub fn truncate(self : Buffer, another : Buffer) -> Unit {
+pub fn Buffer::truncate(self : Buffer, another : Buffer) -> Unit {
   let mut index = 0
   while index < another.len {
     if self.len >= self.data.length() {
@@ -85,7 +85,7 @@ pub fn truncate(self : Buffer, another : Buffer) -> Unit {
 }
 
 ///|
-pub fn clear(self : Buffer) -> Unit {
+pub fn Buffer::clear(self : Buffer) -> Unit {
   let mut index = 0
   while index < self.len {
     self.data[index] = b'\x00'
@@ -95,12 +95,12 @@ pub fn clear(self : Buffer) -> Unit {
 }
 
 ///|
-pub fn reset(self : Buffer, capacity : Int) -> Unit {
+pub fn Buffer::reset(self : Buffer, capacity : Int) -> Unit {
   self.len = 0
   self.data = FixedArray::make(capacity, b'\x00')
 }
 
 ///|
-pub fn to_bytes(self : Buffer) -> Bytes {
-  self.data |> Bytes::from_fixedarray
+pub fn Buffer::to_bytes(self : Buffer) -> Bytes {
+  self.data[:self.len] |> Bytes::from_array
 }

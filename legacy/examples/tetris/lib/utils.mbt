@@ -15,7 +15,7 @@
 
 ///|
 pub fn check_collision(
-  grid : @immut/list.T[Array[Int]],
+  grid : @list.List[Array[Int]],
   shap : Array[Array[Int]],
   offset : (Int, Int),
 ) -> Bool {
@@ -25,7 +25,7 @@ pub fn check_collision(
     return true
   }
   loop (grid, 0) {
-    (Cons(v, n), r) => {
+    (More(v, tail=n), r) => {
       if r < offset.1 {
         continue (n, r + 1)
       }
@@ -42,13 +42,13 @@ pub fn check_collision(
       }
       continue (n, r + 1)
     }
-    (Nil, _) => false
+    (Empty, _) => false
   }
 }
 
 ///|
 pub fn get_effective_height(
-  grid : @immut/list.T[Array[Int]],
+  grid : @list.List[Array[Int]],
   shap : Array[Array[Int]],
   offset : (Int, Int),
 ) -> Int {
