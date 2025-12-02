@@ -1,4 +1,4 @@
-name: check document examples
+name: check legacy examples
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
   pull_request:
     paths:
-      - next/sources/**
+      - legacy/examples
   schedule:
     - cron: "0 10 * * 2"
 
@@ -31,5 +31,4 @@ jobs:
           python-version: "3.x"
 
       - name: moon check and test
-        run: |
-          python scripts/check-document.py
+        run: python scripts/check-legacy-examples.py
