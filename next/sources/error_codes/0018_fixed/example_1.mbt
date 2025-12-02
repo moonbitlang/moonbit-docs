@@ -1,5 +1,5 @@
 ///|
-test (ctx : @test.T) {
+test (ctx : @test.Test) {
   let println = ctx.writeln(_)
   // start example
   let count = 2
