@@ -277,7 +277,7 @@ pub impl MyShow for MyType with to_string(self) {
   ...
 }
 
-struct MyContainer[T] {}
+struct MyContainer[_] {}
 
 // trait implementation with type parameters.
 // `[X : Show]` means the type parameter `X` must implement `Show`,
