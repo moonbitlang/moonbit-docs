@@ -126,7 +126,7 @@ remove an optional parameter.
   :class: top-level
   #label_migration(x, fill=true)
   #label_migration(y, fill=false)
-  fn f(x~: Int = 0, y~: Int = 1) -> Unit { ... }
+  fn f(x?: Int = 0, y?: Int = 1) -> Unit { ... }
   fn main {
     f(x=1, y=1) // warn on y being filled
     f()         // warn on x not being filled
@@ -176,7 +176,7 @@ using the alias; otherwise, the alias can be used without warnings.
 ## Visibility Attribute
 
 ```{note}
-This topic does not covered the access control. To lean more about `pub`, `pub(all)` and `priv`, see [Access Control](./packages.md#access-control).
+This topic does not covered the access control. To learn more about `pub`, `pub(all)` and `priv`, see [Access Control](./packages.md#access-control).
 ```
 
 The `#visibility` attribute is similar to the `#deprecated` attribute, but it is used to hint that a type will change its visibility in the future. 
@@ -253,7 +253,6 @@ The `#callsite` attribute is used to mark properties that happen at callsite.
 
 It could be `autofill`, which is to autofill the arguments [SourceLoc and ArgLoc](/language/fundamentals.md#autofill-arguments)
 at callsite.
-
 
 ## Skip Attribute
 
