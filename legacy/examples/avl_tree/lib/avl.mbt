@@ -27,7 +27,7 @@ pub(all) enum T[U] {
 /// `height[U](self: T[U])`
 ///
 /// Calculate the height of a tree-like structure.
-pub fn[U] height(self : T[U]) -> Int {
+pub fn[U] T::height(self : T[U]) -> Int {
   match self {
     Empty => 0
     Node(_, _, _, h) => h
@@ -95,7 +95,7 @@ fn[U] bal(l : T[U], v : U, r : T[U]) -> T[U] {
 /// `add[U:Compare](self: T[U], x: U)`
 ///
 /// Add a value to a tree-like structure.
-pub fn[U : Compare] add(self : T[U], x : U) -> T[U] {
+pub fn[U : Compare] T::add(self : T[U], x : U) -> T[U] {
   match self {
     Empty => Node(Empty, x, Empty, 1)
     Node(l, v, r, _) as t => {
@@ -115,7 +115,7 @@ pub fn[U : Compare] add(self : T[U], x : U) -> T[U] {
 /// `min_elt[U](self: T[U], default: U)`
 ///
 /// Find the minimum element in a tree-like data structure.
-fn[U] min_elt(self : T[U], default : U) -> U {
+fn[U] T::min_elt(self : T[U], default : U) -> U {
   match self {
     Empty => default
     Node(Empty, v, _, _) => v
@@ -138,7 +138,7 @@ fn[U] remove_min_elt(l : T[U], v : U, r : T[U]) -> T[U] {
 /// `internal_merge[U](self: T[U], other: T[U])`
 ///
 /// Merge two AVL trees of the same user-defined type `U` into a new AVL tree.
-fn[U] internal_merge(self : T[U], other : T[U]) -> T[U] {
+fn[U] T::internal_merge(self : T[U], other : T[U]) -> T[U] {
   match (self, other) {
     (Empty, t) => t
     (t, Empty) => t
@@ -151,7 +151,7 @@ fn[U] internal_merge(self : T[U], other : T[U]) -> T[U] {
 /// `remove[U:Compare](self: T[U], x: U)`
 ///
 /// Removes a value from the AVL tree while maintaining balance
-pub fn[U : Compare] remove(self : T[U], x : U) -> T[U] {
+pub fn[U : Compare] T::remove(self : T[U], x : U) -> T[U] {
   match self {
     Empty => Empty
     Node(l, v, r, _) => {
@@ -183,7 +183,7 @@ pub impl[U : Show] Show for T[U] with output(self : T[U], logger) -> Unit {
 /// `mem[U:Compare](self: T[U], x: U)`
 ///
 /// Check if a given element exists in an AVL tree.
-pub fn[U : Compare] mem(self : T[U], x : U) -> Bool {
+pub fn[U : Compare] T::mem(self : T[U], x : U) -> Bool {
   match self {
     Empty => false
     Node(l, v, r, _) => {
@@ -209,7 +209,7 @@ fn repeat_str(s : String, n : Int) -> String {
 /// `print_tree[U:Show](self: T[U])`
 ///
 /// Print the AVL tree
-pub fn[U : Show] print_tree(self : T[U]) -> Unit {
+pub fn[U : Show] T::print_tree(self : T[U]) -> Unit {
   let buffer = StringBuilder::new()
   fn helper(node : T[U], level : Int) {
     match node {

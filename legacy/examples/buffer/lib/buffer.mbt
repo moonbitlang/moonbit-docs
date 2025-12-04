@@ -25,17 +25,17 @@ pub fn[T : Default] SBuffer::new(capacity : Int) -> SBuffer[T] {
 }
 
 ///|
-pub fn[T] capacity(self : SBuffer[T]) -> Int {
+pub fn[T] SBuffer::capacity(self : SBuffer[T]) -> Int {
   self.cap
 }
 
 ///|
-pub fn[T] length(self : SBuffer[T]) -> Int {
+pub fn[T] SBuffer::length(self : SBuffer[T]) -> Int {
   self.len
 }
 
 ///|
-pub fn[T] op_get(self : SBuffer[T], i : Int) -> T? {
+pub fn[T] SBuffer::op_get(self : SBuffer[T], i : Int) -> T? {
   if i < self.cap {
     Some(self.data[i])
   } else {
@@ -44,7 +44,7 @@ pub fn[T] op_get(self : SBuffer[T], i : Int) -> T? {
 }
 
 ///|
-fn[T : Default] expand_size(self : SBuffer[T]) -> Unit {
+fn[T : Default] SBuffer::expand_size(self : SBuffer[T]) -> Unit {
   let new_capacity = if self.cap != 0 {
     self.cap * 2
   } else {
@@ -61,7 +61,7 @@ fn[T : Default] expand_size(self : SBuffer[T]) -> Unit {
 }
 
 ///|
-pub fn[T : Default] append(self : SBuffer[T], value : T) -> Unit {
+pub fn[T : Default] SBuffer::append(self : SBuffer[T], value : T) -> Unit {
   if self.len >= self.cap {
     self.expand_size()
   }
@@ -70,7 +70,10 @@ pub fn[T : Default] append(self : SBuffer[T], value : T) -> Unit {
 }
 
 ///|
-pub fn[T : Default] truncate(self : SBuffer[T], another : SBuffer[T]) -> Unit {
+pub fn[T : Default] SBuffer::truncate(
+  self : SBuffer[T],
+  another : SBuffer[T],
+) -> Unit {
   let mut index = 0
   while index < another.len {
     if self.len >= self.cap {
@@ -83,7 +86,7 @@ pub fn[T : Default] truncate(self : SBuffer[T], another : SBuffer[T]) -> Unit {
 }
 
 ///|
-pub fn[T : Default] clear(self : SBuffer[T]) -> Unit {
+pub fn[T : Default] SBuffer::clear(self : SBuffer[T]) -> Unit {
   let mut index = 0
   while index < self.len {
     self.data[index] = T::default()
@@ -93,7 +96,7 @@ pub fn[T : Default] clear(self : SBuffer[T]) -> Unit {
 }
 
 ///|
-pub fn[T : Default] reset(self : SBuffer[T], capacity : Int) -> Unit {
+pub fn[T : Default] SBuffer::reset(self : SBuffer[T], capacity : Int) -> Unit {
   self.cap = capacity
   self.len = 0
   self.data = Array::make(capacity, T::default())
