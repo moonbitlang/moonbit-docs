@@ -2,10 +2,11 @@
 {
       "link": {
             "wasm": {
-                  "exports": ["cabi_realloc:cabi_realloc", "wasmExportHandle:wasi:http/incoming-handler@0.2.1#handle"],
+                  "exports": ["mbt_ffi_cabi_realloc:cabi_realloc", "wasmExportHandle:wasi:http/incoming-handler@0.2.1#handle"],
                   "export-memory-name": "memory",
                   "heap-start-address": 16
             }
       }
-      ,"import": [{ "path" : "moonbit-community/wasi-http/ffi", "alias" : "ffi" }, { "path" : "moonbit-community/wasi-http/gen/interface/wasi/http/incomingHandler", "alias" : "incomingHandler" }, { "path" : "moonbit-community/wasi-http/interface/wasi/http/types", "alias" : "types" }]
+      ,"import": [{ "path" : "moonbit-community/wasi-http/gen/interface/wasi/http/incomingHandler", "alias" : "incomingHandler" }, { "path" : "moonbit-community/wasi-http/interface/wasi/http/types", "alias" : "types" }]
+      , "warn-list": "-44"
 }
