@@ -67,7 +67,6 @@
   * [Link Options](package.md#link-options)
   * [Pre-build](package.md#pre-build)
   * [Warning List](package.md#warning-list)
-  * [Alert List](package.md#alert-list)
   * [Virtual Package](package.md#virtual-package)
 * [Measuring code coverage](coverage.md)
   * [Running code coverage in tests](coverage.md#running-code-coverage-in-tests)
