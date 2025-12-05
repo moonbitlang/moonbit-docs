@@ -8,18 +8,18 @@ The syntax of attributes is defined as follows:
 
 ```plaintext
 attribute ::= '#' attribute-name
-            | '#' attribute-name '(' properties ')' 
+            | '#' attribute-name '(' attribute-arguments ')' 
 
 attribute-name ::= LIDENT | LIDENT '.' LIDENT
 
-properties ::= property (',' property)*
+attribute-arguments ::= attribute-argument (',' attribute-argument )*
 
-property ::= expr | LIDENT '=' expr 
+attribute-argument ::= expr | LIDENT '=' expr 
 
 expr ::= LIDENT | UIDENT | STRING | 'true' | 'false'
        | LIDENT '.' LIDENT
-       | LIDENT '(' properties ')'
-       | LIDENT '.' LIDENT '(' properties ')'
+       | LIDENT '(' attribute-arguments ')'
+       | LIDENT '.' LIDENT '(' attribute-arguments ')'
 ```
 
 
@@ -85,11 +85,11 @@ The `alias` attribute is used to overload operators related to indexing, or to c
 
 - `#alias(id)`: where `id` is a identifier representing the alias name.
 
-Both forms allowed additional properties:
+Both forms allowed additional arguments:
 
 - `visibility="modifier"` 
 
-  A labeled property, changes the visibility of the alias. The `modifier` can be `pub` or `priv`. If not specified, the alias will have the same visibility as the original function or variable.
+  A labeled argument, changes the visibility of the alias. The `modifier` can be `pub` or `priv`. If not specified, the alias will have the same visibility as the original function or variable.
 
 - `deprecated` or `deprecated="message"`
 
@@ -115,12 +115,12 @@ It has three following forms:
 
 - `#label_migration(id, fill=true, msg="message")`
 
-  The `fill` property is used when you want to refactor an optional parameter.
+  The `fill` argument is used when you want to refactor an optional parameter.
 You can use `fill=true` when you want to eventually make an optional 
 parameter required. You can use `fill=false` when you want to eventually 
 remove an optional parameter.
   
-  The `msg` property is an string that provides additional information about the migration.
+  The `msg` argument is an string that provides additional information about the migration.
 
   ```{code-block} moonbit
   :class: top-level
@@ -135,12 +135,12 @@ remove an optional parameter.
 
 - `#label_migration(id, allow_positional=true, msg="message")`
 
-  The `allow_positional` property is used when you want a labelled parameter to be 
+  The `allow_positional` argument is used when you want a labelled parameter to be 
 used without its label being provided. When the parameter is used positionally 
 (without a label), the compiler reports a warning. This is useful when you want to change a positional parameter
 to a labelled parameter without breaking the downstream code.
 
-  The `msg` property is an string that provides additional information about the migration.
+  The `msg` argument is an string that provides additional information about the migration.
 
   ```{code-block} moonbit
   :class: top-level
@@ -154,12 +154,12 @@ to a labelled parameter without breaking the downstream code.
 
 - `#label_migration(id, alias=new_id, msg="message")`
 
-  The alias property allows you to provide an alternative name to a labelled
+  The alias argument allows you to provide an alternative name to a labelled
 parameter. This is useful when renaming a parameter to maintain backward 
 compatibility. If a warning message is provided, the compiler warns when 
 using the alias; otherwise, the alias can be used without warnings.
 
-  The `msg` property is an string that provides additional information about the migration.
+  The `msg` argument is an string that provides additional information about the migration.
 
   ```{code-block} moonbit
   :class: top-level
@@ -217,6 +217,32 @@ The internal attribute takes two arguments: `category` and `message`.
 
 The alert warnings can be turn off by setting the `warn-list` in `moon.pkg.json`.
 For more detail, see [alert warning](../toolchain/moon/package.md#alert-warning).
+
+## Warnings Attribute
+
+The `#warnings` attribute is used to configure warning settings for a specific 
+top-level declaration. It can enable, disable or treat an enabled warning as error 
+for specific warnings in that declaration.
+
+The argument is a string that specifies the warning list. It can contain multiple 
+warning names, each prefixed with a sign:
+
+```{code-block} moonbit
+#warning("-unused_value@deprecated")
+fn f() -> Unit {
+  let x = 42 
+}
+```
+
+The prefixes have the following meanings:
+
+- `+warning_name`: enable the warning
+- `-warning_name`: disable the warning
+- `@warning_name`: treat a enabled warning as an error
+
+Currently this attribute only works with some specific warnings.
+
+To learn more about warning names, see [warning list](../toolchain/moon/package.md#warning-list).
 
 ## External Attribute
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-04 18:14+0800\n"
+"POT-Creation-Date: 2025-12-05 10:03+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -415,7 +415,7 @@ msgstr ""
 
 #: ../../language/attributes.md:1
 msgid "Attribute"
-msgstr "注解"
+msgstr "属性"
 
 #: ../../language/attributes.md:3
 msgid ""
@@ -425,35 +425,35 @@ msgid ""
 "affect the meaning of programs. Unused attributes will be reported as "
 "warnings."
 msgstr ""
-"注解是放置在源码中的结构之前的信息。它们都采用 `#attribute(...)` "
-"的形式。一个注解占用整行的空间，其中不允许换行。注解一般不会影响程序的含义。无用的注解将会触发警告。"
+"属性是放置在源码中的结构之前的信息。它们都采用 `#attribute(...)` "
+"的形式。一个属性占用整行的空间，其中不允许换行。属性一般不会影响程序的含义。无用的属性将会触发警告。"
 
 #: ../../language/attributes.md:7
 msgid "The syntax of attributes is defined as follows:"
-msgstr "注解的语法如下所示："
+msgstr "属性的语法如下所示："
 
 #: ../../language/attributes.md:9
 msgid ""
 "attribute ::= '#' attribute-name\n"
-"            | '#' attribute-name '(' properties ')' \n"
+"            | '#' attribute-name '(' attribute-arguments ')' \n"
 "\n"
 "attribute-name ::= LIDENT | LIDENT '.' LIDENT\n"
 "\n"
-"properties ::= property (',' property)*\n"
+"attribute-arguments ::= attribute-argument (',' attribute-argument )*\n"
 "\n"
-"property ::= expr | LIDENT '=' expr \n"
+"attribute-argument ::= expr | LIDENT '=' expr \n"
 "\n"
 "expr ::= LIDENT | UIDENT | STRING | 'true' | 'false'\n"
 "       | LIDENT '.' LIDENT\n"
-"       | LIDENT '(' properties ')'\n"
-"       | LIDENT '.' LIDENT '(' properties ')'\n"
+"       | LIDENT '(' attribute-arguments ')'\n"
+"       | LIDENT '.' LIDENT '(' attribute-arguments ')'\n"
 msgstr ""
 
 #: ../../language/attributes.md:26
 msgid ""
 "Attributes have two categories: the built-in attributes and user-defined "
 "attributes. For example:"
-msgstr "注解有两种类别：内建注解和用户自定义注解。例如："
+msgstr "属性有两种类别：内建属性和用户自定义属性。例如："
 
 #: ../../language/attributes.md:28
 msgid ""
@@ -466,7 +466,7 @@ msgid ""
 "The first attribute is a built-in attribute; it does not have a namespace"
 " prefix in the attribute name. Built-in attributes are recognized by the "
 "MoonBit compiler and have specific meanings."
-msgstr "第一个注解是一个内建的注解，在注解名中，它没有命名空间前缀。内建注解会被 MoonBit 编译器检查，并且有特殊的含义。"
+msgstr "第一个属性是一个内建的属性，在属性名中，它没有命名空间前缀。内建属性会被 MoonBit 编译器检查，并且有特殊的含义。"
 
 #: ../../language/attributes.md:34
 msgid ""
@@ -474,7 +474,7 @@ msgid ""
 "prefix `custom.` in the attribute name. User-defined attributes are "
 "ignored by the compiler, but can be used by external tools via parsing "
 "the source code."
-msgstr "第二个注解是用户自定义注解，它的名字中包含命名空间前缀。用户自定义注解会被编译器忽略，通过解析源码，它能够被外部的工具使用。"
+msgstr "第二个属性是用户自定义属性，它的名字中包含命名空间前缀。用户自定义属性会被编译器忽略，通过解析源码，它能够被外部的工具使用。"
 
 #: ../../language/attributes.md:37
 msgid ""
@@ -495,7 +495,7 @@ msgstr "我们更倾向于使用编译时的代码生成，维持静态类型分
 
 #: ../../language/attributes.md:42
 msgid "Deprecated Attribute"
-msgstr "`deprecated` 注解"
+msgstr "`deprecated` 属性"
 
 #: ../../language/attributes.md:44
 msgid ""
@@ -504,7 +504,7 @@ msgid ""
 "listed in completion,  it will be shown with a strikethrough style. For "
 "example:"
 msgstr ""
-"`#deprecated`注解用于标记一个 API 为弃用状态。当弃用的 API 在其他包中被使用时，MoonBit 将会触发警告，而且如果 "
+"`#deprecated`属性用于标记一个 API 为弃用状态。当弃用的 API 在其他包中被使用时，MoonBit 将会触发警告，而且如果 "
 "API 出现补全列表中，它会被加上删除线的样式。例如："
 
 #: ../../language/attributes.md:48
@@ -533,7 +533,7 @@ msgstr ""
 
 #: ../../language/attributes.md:54
 msgid "The `#deprecated` attribute can be used in the following contexts:"
-msgstr "`#deprecated` 注解能够在如下上下文中使用："
+msgstr "`#deprecated` 属性能够在如下上下文中使用："
 
 #: ../../language/attributes.md:56
 msgid "Top-level value declarations (including `fn`, `let`, and `const`)"
@@ -587,14 +587,14 @@ msgstr "将 API 标记为弃用的同时自定义警告信息，但是当 API �
 
 #: ../../language/attributes.md:75
 msgid "Alias Attribute"
-msgstr "`alias` 注解"
+msgstr "`alias` 属性"
 
 #: ../../language/attributes.md:77
 msgid ""
 "The `alias` attribute is used to overload operators related to indexing, "
 "or to create an alias name for a top-level function or variable. It has "
 "two forms:"
-msgstr "`alias` 注解用于重载一个和索引操作相关的运算符，或者为一个顶层函数与变量创建别名。它有两种形式："
+msgstr "`alias` 属性用于重载一个和索引操作相关的运算符，或者为一个顶层函数与变量创建别名。它有两种形式："
 
 #: ../../language/attributes.md:80
 msgid ""
@@ -619,7 +619,7 @@ msgid "`#alias(id)`: where `id` is a identifier representing the alias name."
 msgstr "`#alias(id)`: 其中 `id` 是一个代表别名的标识符"
 
 #: ../../language/attributes.md:88
-msgid "Both forms allowed additional properties:"
+msgid "Both forms allowed additional arguments:"
 msgstr "所有形式都支持额外的参数："
 
 #: ../../language/attributes.md:90
@@ -628,7 +628,7 @@ msgstr ""
 
 #: ../../language/attributes.md:92
 msgid ""
-"A labeled property, changes the visibility of the alias. The `modifier` "
+"A labeled argument, changes the visibility of the alias. The `modifier` "
 "can be `pub` or `priv`. If not specified, the alias will have the same "
 "visibility as the original function or variable."
 msgstr ""
@@ -662,13 +662,13 @@ msgstr ""
 
 #: ../../language/attributes.md:109
 msgid "`label_migration` Attribute"
-msgstr "`label_migration` 注解"
+msgstr "`label_migration` 属性"
 
 #: ../../language/attributes.md:111
 msgid ""
 "The `#label_migration` attribute is used to help you safely evolve your "
 "API  by warning users during the transition period."
-msgstr "`#label_migration` 注解用于帮助你安全地演进 API，在迁移期间给下游的用户警告。"
+msgstr "`#label_migration` 属性用于帮助你安全地演进 API，在迁移期间给下游的用户警告。"
 
 #: ../../language/attributes.md:114
 msgid "It has three following forms:"
@@ -680,7 +680,7 @@ msgstr ""
 
 #: ../../language/attributes.md:118
 msgid ""
-"The `fill` property is used when you want to refactor an optional "
+"The `fill` argument is used when you want to refactor an optional "
 "parameter. You can use `fill=true` when you want to eventually make an "
 "optional  parameter required. You can use `fill=false` when you want to "
 "eventually  remove an optional parameter."
@@ -691,7 +691,7 @@ msgstr ""
 #: ../../language/attributes.md:123 ../../language/attributes.md:143
 #: ../../language/attributes.md:162
 msgid ""
-"The `msg` property is an string that provides additional information "
+"The `msg` argument is an string that provides additional information "
 "about the migration."
 msgstr "`msg`参数是一个字符串，用于提供额外的信息，告诉使用者关于可见性的变更。"
 
@@ -712,7 +712,7 @@ msgstr ""
 
 #: ../../language/attributes.md:138
 msgid ""
-"The `allow_positional` property is used when you want a labelled "
+"The `allow_positional` argument is used when you want a labelled "
 "parameter to be  used without its label being provided. When the "
 "parameter is used positionally  (without a label), the compiler reports a"
 " warning. This is useful when you want to change a positional parameter "
@@ -737,14 +737,14 @@ msgstr ""
 
 #: ../../language/attributes.md:157
 msgid ""
-"The alias property allows you to provide an alternative name to a "
+"The alias argument allows you to provide an alternative name to a "
 "labelled parameter. This is useful when renaming a parameter to maintain "
 "backward  compatibility. If a warning message is provided, the compiler "
 "warns when  using the alias; otherwise, the alias can be used without "
 "warnings."
 msgstr ""
 "`alias` "
-"注解允许为带标签的参数提供替代名称。这在重命名参数以保持向后兼容性时很有用。如果提供了警告消息，编译器在使用别名时会发出警告；否则，可以在不发出警告的情况下使用别名。"
+"属性允许为带标签的参数提供替代名称。这在重命名参数以保持向后兼容性时很有用。如果提供了警告消息，编译器在使用别名时会发出警告；否则，可以在不发出警告的情况下使用别名。"
 
 #: ../../language/attributes.md:164
 msgid ""
@@ -760,7 +760,7 @@ msgstr ""
 
 #: ../../language/attributes.md:176
 msgid "Visibility Attribute"
-msgstr "`visibility` 注解"
+msgstr "`visibility` 属性"
 
 #: ../../language/attributes.md:179
 msgid ""
@@ -777,7 +777,7 @@ msgid ""
 "but it is used to hint that a type will change its visibility in the "
 "future.  For outside usages, if the usage will be invalidated by the "
 "visibility change in future, a warning will be emitted."
-msgstr "`#visibility`注解和`#deprecated`注解类似。但它用于提示用户一个类型未来将改变它的可见性。对于外部的包，如果使用这个类型的方式在未来改变可见性以后不再合法，它将会触发警告。"
+msgstr "`#visibility`属性和`#deprecated`属性类似。但它用于提示用户一个类型未来将改变它的可见性。对于外部的包，如果使用这个类型的方式在未来改变可见性以后不再合法，它将会触发警告。"
 
 #: ../../language/attributes.md:185
 msgid ""
@@ -853,7 +853,7 @@ msgstr ""
 msgid ""
 "The `#visibility` attribute takes two arguments: `change_to` and "
 "`message`."
-msgstr "`#visibility`注解接受两个参数：`change_to` 和 `message`。"
+msgstr "`#visibility`属性接受两个参数：`change_to` 和 `message`。"
 
 #: ../../language/attributes.md:193
 msgid ""
@@ -895,14 +895,14 @@ msgstr "`message`参数用于提供额外的信息，告诉使用者关于可见
 
 #: ../../language/attributes.md:202
 msgid "Internal Attribute"
-msgstr "`internal` 注解"
+msgstr "`internal` 属性"
 
 #: ../../language/attributes.md:204
 msgid ""
 "The `#internal` attribute is used to mark a function, type, or trait as "
 "internal.  Any usage of the internal function or type in other modules "
 "will emit an alert warning."
-msgstr "`#internal`注解用于标记一个函数、类型或者特征为内部的。所有在模块外的使用将会触发警告。"
+msgstr "`#internal`属性用于标记一个函数、类型或者特征为内部的。所有在模块外的使用将会触发警告。"
 
 #: ../../language/attributes.md:207
 msgid ""
@@ -922,7 +922,7 @@ msgid ""
 "`category` is a identifier that indicates the category of the alert, and "
 "`message` is a string that provides additional message for the alert."
 msgstr ""
-"“internal”注解接受两个参数：`category` 和 `message`。`category` "
+"“internal”属性接受两个参数：`category` 和 `message`。`category` "
 "是一个标识符，表示警示对应的类别。`message` 是一个字符串，表示警示中额外的提示信息。"
 
 #: ../../language/attributes.md:218
@@ -935,51 +935,102 @@ msgstr ""
 "警告](../toolchain/moon/package.md#alert-list)."
 
 #: ../../language/attributes.md:221
-msgid "External Attribute"
-msgstr "`external` 注解"
+msgid "Warnings Attribute"
+msgstr "`warnings` 属性"
 
 #: ../../language/attributes.md:223
 msgid ""
+"The `#warnings` attribute is used to configure warning settings for a "
+"specific  top-level declaration. It can enable, disable or treat an "
+"enabled warning as error  for specific warnings in that declaration."
+msgstr "`#warnings`属性用于配置单个顶层的声明的警告。在声明内，它能够启用、关闭警告，或者将一个已经启用的警告配置为错误。"
+
+#: ../../language/attributes.md:227
+msgid ""
+"The argument is a string that specifies the warning list. It can contain "
+"multiple  warning names, each prefixed with a sign:"
+msgstr "它的参数是一个声明了警告列表的字符串。字符串包含多个警告名，每个名字以符号开头："
+
+#: ../../language/attributes.md:230
+msgid ""
+"#warning(\"-unused_value@deprecated\")\n"
+"fn f() -> Unit {\n"
+"  let x = 42 \n"
+"}"
+msgstr ""
+
+#: ../../language/attributes.md:237
+msgid "The prefixes have the following meanings:"
+msgstr "这些前缀有以下含义："
+
+#: ../../language/attributes.md:239
+msgid "`+warning_name`: enable the warning"
+msgstr "`+warning_name`: 启用这个警告"
+
+#: ../../language/attributes.md:240
+msgid "`-warning_name`: disable the warning"
+msgstr "`-warning_name`: 关闭这个警告"
+
+#: ../../language/attributes.md:241
+msgid "`@warning_name`: treat a enabled warning as an error"
+msgstr "`@warning_name`: 如果这个警告已经启用，转换为错误"
+
+#: ../../language/attributes.md:243
+msgid "Currently this attribute only works with some specific warnings."
+msgstr "目前这个属性只对部分特定的警告工作。"
+
+#: ../../language/attributes.md:245
+msgid ""
+"To learn more about warning names, see [warning "
+"list](../toolchain/moon/package.md#warning-list)."
+msgstr "要了解更多关于警告名的信息，见 [警告列表](../toolchain/moon/package.md#warning-list)"
+
+#: ../../language/attributes.md:247
+msgid "External Attribute"
+msgstr "`external` 属性"
+
+#: ../../language/attributes.md:249
+msgid ""
 "The `#external` attribute is used to mark an abstract type as external "
 "type."
-msgstr "`#external`注解用于标记一个抽象类型为外部类型。"
+msgstr "`#external`属性用于标记一个抽象类型为外部类型。"
 
-#: ../../language/attributes.md:225
+#: ../../language/attributes.md:251
 msgid "For Wasm(GC) backends, it would be interpreted as `anyref`."
 msgstr "对于 Wasm(GC) 后端，它将被解释为`anyref`。"
 
-#: ../../language/attributes.md:226
+#: ../../language/attributes.md:252
 msgid "For JavaScript backend, it would be interpreted as `any`."
 msgstr "对于 JavaScript 后端，它将被解释为`any`。"
 
-#: ../../language/attributes.md:227
+#: ../../language/attributes.md:253
 msgid "For native backends, it would be interpreted as `void*`."
 msgstr "对于原生后端，它将被解释为`void*`。"
 
-#: ../../language/attributes.md:229
+#: ../../language/attributes.md:255
 msgid ""
 "#external\n"
 "type Ptr"
 msgstr ""
 
-#: ../../language/attributes.md:235
+#: ../../language/attributes.md:261
 msgid "Borrow and Owned Attribute"
-msgstr "`borrow` 和 `owned` 注解"
+msgstr "`borrow` 和 `owned` 属性"
 
-#: ../../language/attributes.md:237
+#: ../../language/attributes.md:263
 msgid ""
 "The `#borrow` and `#owned` attribute is used to indicate that a FFI takes"
 " ownership of its arguments. For more detail, see [FFI](./ffi.md#the-"
 "borrow-attribute)."
 msgstr ""
-"`#borrow` 和 `#owned` 注解用于表示一个外部接口是否获得参数的所有权。对于更多细节，见 [FFI](./ffi.md#the-"
+"`#borrow` 和 `#owned` 属性用于表示一个外部接口是否获得参数的所有权。对于更多细节，见 [FFI](./ffi.md#the-"
 "borrow-and-owned-attribute)。"
 
-#: ../../language/attributes.md:239
+#: ../../language/attributes.md:265
 msgid "`as_free_fn` Attribute"
-msgstr "`as_free_fn` 注解"
+msgstr "`as_free_fn` 属性"
 
-#: ../../language/attributes.md:241
+#: ../../language/attributes.md:267
 msgid ""
 "The `#as_free_fn` attribute is used to mark a method that it is declared "
 "as a free function as well. It can also change the visibility of the free"
@@ -987,9 +1038,9 @@ msgid ""
 "deprecation warning."
 msgstr ""
 "`#as_free_fn` "
-"注解用于标记一个方法，同时它也被声明为一个自由函数。它还可以改变自由函数的可见性、自由函数的名字，并且提供单独的弃用警告。"
+"属性用于标记一个方法，同时它也被声明为一个自由函数。它还可以改变自由函数的可见性、自由函数的名字，并且提供单独的弃用警告。"
 
-#: ../../language/attributes.md:244
+#: ../../language/attributes.md:270
 msgid ""
 "#as_free_fn(dec, visibility=\"pub\", deprecated=\"use `Int::decrement` "
 "instead\")\n"
@@ -1004,17 +1055,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/attributes.md:250
+#: ../../language/attributes.md:276
 msgid "Callsite Attribute"
-msgstr "`callsite` 注解"
+msgstr "`callsite` 属性"
 
-#: ../../language/attributes.md:252
+#: ../../language/attributes.md:278
 msgid ""
 "The `#callsite` attribute is used to mark properties that happen at "
 "callsite."
-msgstr "`#callsite` 注解用于标记发生在调用位置的注解。"
+msgstr "`#callsite` 属性用于标记发生在调用位置的属性。"
 
-#: ../../language/attributes.md:254
+#: ../../language/attributes.md:280
 msgid ""
 "It could be `autofill`, which is to autofill the arguments [SourceLoc and"
 " ArgLoc](/language/fundamentals.md#autofill-arguments) at callsite."
@@ -1022,27 +1073,27 @@ msgstr ""
 "它可以是 `autofill`，用于在调用位置自动填充参数 [SourceLoc 和 "
 "ArgLoc](/language/fundamentals.md#autofill-arguments)。"
 
-#: ../../language/attributes.md:257
+#: ../../language/attributes.md:283
 msgid "Skip Attribute"
-msgstr "`skip` 注解"
+msgstr "`skip` 属性"
 
-#: ../../language/attributes.md:259
+#: ../../language/attributes.md:285
 msgid ""
 "The `#skip` attribute is used to skip a single test block. The type "
 "checking will still be performed."
-msgstr "`#skip` 注解用于跳过一个测试块。类型检查仍然会被执行。"
+msgstr "`#skip` 属性用于跳过一个测试块。类型检查仍然会被执行。"
 
-#: ../../language/attributes.md:261
+#: ../../language/attributes.md:287
 msgid "Configuration attribute"
-msgstr "`cfg` 注解"
+msgstr "`cfg` 属性"
 
-#: ../../language/attributes.md:263
+#: ../../language/attributes.md:289
 msgid ""
 "The `#cfg` attribute is used to perform conditional compilation. Examples"
 " are:"
-msgstr "`#cfg` 注解用于执行条件编译。例子有："
+msgstr "`#cfg` 属性用于执行条件编译。例子有："
 
-#: ../../language/attributes.md:267
+#: ../../language/attributes.md:293
 msgid ""
 "#cfg(true)\n"
 "#cfg(false)\n"
@@ -1817,7 +1868,7 @@ msgstr "`cases(...)`（仅枚举）控制枚举构造器的布局。"
 
 #: ../../language/derive.md:199
 msgid "This might be replaced with case attributes in the future."
-msgstr "这可能在未来会被构造器注解替换。"
+msgstr "这可能在未来会被构造器属性替换。"
 
 #: ../../language/derive.md:202
 msgid "For example, for an enum"
@@ -1845,7 +1896,7 @@ msgstr "`fields(...)`（仅结构体）控制结构体字段的布局。"
 
 #: ../../language/derive.md:218
 msgid "This might be replaced with field attributes in the future."
-msgstr "这可能在未来会被字段注解替换。"
+msgstr "这可能在未来会被字段属性替换。"
 
 #: ../../language/derive.md:221
 msgid "For example, for a struct"
@@ -3875,7 +3926,7 @@ msgid ""
 "  let a : Array[Int] = []\n"
 "  println(a.length())\n"
 "  let b : Int? = None\n"
-"  println(b.is_empty())\n"
+"  println(b is None)\n"
 "}\n"
 msgstr ""
 
@@ -3890,7 +3941,7 @@ msgid ""
 "  let a = ([] : Array[Int])\n"
 "  println(a.length())\n"
 "  let b = (None : Int?)\n"
-"  println(b.is_empty())\n"
+"  println(b is None)\n"
 "}\n"
 msgstr ""
 
@@ -5063,13 +5114,13 @@ msgstr ""
 
 #: ../../language/error_codes/E0042.md:3
 msgid "Invalid attribute."
-msgstr "不合法的注解。"
+msgstr "不合法的属性。"
 
 #: ../../language/error_codes/E0042.md:5
 msgid ""
 "This warning will be emitted when the program contain attribute "
 "unrecognized by MoonBit, or the syntax of attribute has incorrect shape."
-msgstr "如果程序中包含 MoonBit 不支持的注解标注，或者注解标注的参数数量、类型不正确，编译器就会产生这一警告。"
+msgstr "如果程序中包含 MoonBit 不支持的属性标注，或者属性标注的参数数量、类型不正确，编译器就会产生这一警告。"
 
 #: ../../language/error_codes/E0042.md:9
 #, fuzzy
@@ -5086,7 +5137,7 @@ msgid ""
 "\n"
 "}\n"
 msgstr ""
-"// 未知的注解\n"
+"// 未知的属性\n"
 "#unrecognized\n"
 "fn f() -> Unit {}\n"
 "\n"
@@ -5102,8 +5153,8 @@ msgid ""
 "name is `#xxx.yyy`, such as `#coverage.skip`, so that MoonBit will treat "
 "it as a foreign attribute and ignore it."
 msgstr ""
-"检查注解标注中是否有拼写错误，并检查该注解的文档以确认它接受哪些参数。如果想要写一个供外部工具使用的注解标注，确保注解的名字形如 "
-"`#xxx.yyy`，例如 `#coverage.skip`，这样 MoonBit 就会把该注解视作外部注解并无视它。"
+"检查属性标注中是否有拼写错误，并检查该属性的文档以确认它接受哪些参数。如果想要写一个供外部工具使用的属性标注，确保属性的名字形如 "
+"`#xxx.yyy`，例如 `#coverage.skip`，这样 MoonBit 就会把该属性视作外部属性并无视它。"
 
 #: ../../language/error_codes/E0043.md:1
 msgid "E0043"
@@ -5111,14 +5162,14 @@ msgstr ""
 
 #: ../../language/error_codes/E0043.md:3
 msgid "Unused attribute."
-msgstr "无用的注解标注。"
+msgstr "无用的属性标注。"
 
 #: ../../language/error_codes/E0043.md:5
 msgid ""
 "An attribute will not take effect due to reasons such as being duplicated"
 " while it should be unique, being applied to an entity that it has no "
 "effect, or being misused"
-msgstr "注解可能因以下原因失效：本应唯一却存在重复，应用于无效实体，或被误用。"
+msgstr "属性可能因以下原因失效：本应唯一却存在重复，应用于无效实体，或被误用。"
 
 #: ../../language/error_codes/E0043.md:11
 msgid ""
@@ -5318,7 +5369,7 @@ msgstr ""
 
 #: ../../language/error_codes/E0050.md:17
 #, fuzzy
-msgid "Use distince names for local methods to make the code's intent clear."
+msgid "Use distinct names for local methods to make the code's intent clear."
 msgstr "为不同的循环使用不同的、描述性的标签名称，以使代码的意图清晰。"
 
 #: ../../language/error_codes/E0050.md:19
@@ -5428,7 +5479,7 @@ msgstr ""
 #: ../../language/error_codes/E0053.md:3
 #, fuzzy
 msgid "Unused trait bound."
-msgstr "无用的注解标注。"
+msgstr "无用的属性标注。"
 
 #: ../../language/error_codes/E0053.md:5
 msgid ""
@@ -12217,7 +12268,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4130.md:18
 msgid "Move the `derive` attribute to the type itself:"
-msgstr "将 `derive` 注解移动到类型本身："
+msgstr "将 `derive` 属性移动到类型本身："
 
 #: ../../language/error_codes/E4130.md:20
 msgid ""
@@ -12641,7 +12692,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4138.md:16
 msgid ""
-"Use integer types for the range operators, and genearte floats from these"
+"Use integer types for the range operators, and generate floats from these"
 " integers instead:"
 msgstr "使用整数类型的范围运算符，并且这些整数生成浮点数："
 
@@ -13216,10 +13267,9 @@ msgstr ""
 
 #: ../../language/error_codes/E4151.md:3
 msgid ""
-"Values of type `FuncRef[T]` must be "
-"[closed](https://en.wikipedia.org/wiki/Lambda_calculus#Free_and_bound_variables)"
-" function."
-msgstr "`FuncRef[T]` 类型的值必须是无捕获的函数。"
+"Values of type `FuncRef[T]` must be closed function -- it should not "
+"capture any local variables."
+msgstr "`FuncRef[T]` 类型的值必须是闭合函数——它不应该捕获任何局部变量。"
 
 #: ../../language/error_codes/E4151.md:5
 msgid ""
@@ -13880,7 +13930,7 @@ msgstr ""
 
 #: ../../language/ffi.md:35
 msgid ""
-"By Wasm GC we refer to WebAssembly with Garbage Colleciton proposal, "
+"By Wasm GC we refer to WebAssembly with Garbage Collection proposal, "
 "meaning that data structures will be represented with reference types "
 "such as `struct` `array` and the linear memory would not be used by "
 "default. It also supports other post-MVP proposals including:"
@@ -13926,7 +13976,7 @@ msgstr "声明外部类型"
 
 #: ../../language/ffi.md:65
 msgid "You can declare a foreign type using the `#extern` attribute like this:"
-msgstr "您可以利用 `extern` 注解，像这样声明一个外部类型："
+msgstr "您可以利用 `extern` 属性，像这样声明一个外部类型："
 
 #: ../../language/ffi.md:67
 msgid ""
@@ -14142,16 +14192,15 @@ msgstr ""
 "中，闭包会随着函数的创建而同时创建。"
 
 #: ../../language/ffi.md:292
+#, fuzzy
 msgid ""
 "In some cases, we would like to pass the callback function which doesn't "
-"capture any free variables. For this purpose, MoonBit provides a special "
-"type `FuncRef[T]`, which represents "
-"[closed](https://en.wikipedia.org/wiki/Lambda_calculus#Free_and_bound_variables)"
-" function of type `T`. Values of type `FuncRef[T]` must be closed "
-"function of type `T`, otherwise [a type "
-"error](/language/error_codes/E4151.md) would occur."
+"capture any local free variables. For this purpose, MoonBit provides a "
+"special type `FuncRef[T]`, which represents closed function of type `T`. "
+"Values of type `FuncRef[T]` must be closed function of type `T`, "
+"otherwise [a type error](/language/error_codes/E4151.md) would occur."
 msgstr ""
-"在一些场合，我们希望将传递一个回调函数，其不捕获任何自由变量。为此，MoonBit 提供了一个特殊的类型 `FuncRef[T]`，它表示类型为 "
+"在一些场合，我们希望将传递一个回调函数，其不捕获任何局部变量。为此，MoonBit 提供了一个特殊的类型 `FuncRef[T]`，它表示类型为 "
 "`T` 的无捕获函数。类型为 `FuncRef[T]` 的值必须是类型为 `T` 的无捕获函数，否则会产生 "
 "[类型错误](/language/error_codes/E4151.md) 。"
 
@@ -15464,7 +15513,7 @@ msgid ""
 "\n"
 "let fixed_array_2 = ([1, 2, 3] : FixedArray[Int])\n"
 "\n"
-"let array_3 = [1, 2, 3] // Array[Int]\n"
+"let array_3 : Array[Int] = [1, 2, 3] // Array[Int]\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:393 ../../language/fundamentals.md:417
@@ -16145,14 +16194,15 @@ msgid ""
 "at the call site."
 msgstr ""
 "MoonBit "
-"支持在不同的调用位置自动填充特定类型的参数，例如函数调用的源位置。要声明一个自动填充参数，只需声明一个带标签的参数，并添加一个函数注解 "
+"支持在不同的调用位置自动填充特定类型的参数，例如函数调用的源位置。要声明一个自动填充参数，只需声明一个带标签的参数，并添加一个函数属性 "
 "`#callsite(autofill(param_a, param_b))`。现在，如果未显式提供参数，MoonBit 将在调用时自动填充它。"
 
 #: ../../language/fundamentals.md:676
 msgid ""
 "Currently MoonBit supports two types of autofill arguments, `SourceLoc`, "
 "which is the source location of the whole function call, and `ArgsLoc`, "
-"which is a array containing the source location of each argument, if any:"
+"which is an array containing the source location of each argument, if "
+"any:"
 msgstr ""
 "目前 MoonBit 支持两种类型的自动填充参数，`SourceLoc`，它是整个函数调用的源位置，以及 "
 "`ArgsLoc`，它是一个数组，包含每个参数的源位置（如果有）："
@@ -17754,7 +17804,7 @@ msgstr "旧语法 `typealias OldType as NewType` 可能会在将来被移除。"
 
 #: ../../language/fundamentals.md:1330
 msgid ""
-"pub typealias Int as Index\n"
+"pub type Index = Int\n"
 "pub type MyIndex = Int\n"
 "pub type MyMap = Map[Int, String]\n"
 msgstr ""
@@ -19244,7 +19294,7 @@ msgstr ""
 msgid ""
 "Other operators are overloaded via methods with annotations, for example "
 "`_[_]` and `_[_]=_`:"
-msgstr "其他运算符通过带有注解的方法重载，例如 `_[_]` 和 `_[_]=_`："
+msgstr "其他运算符通过带有属性的方法重载，例如 `_[_]` 和 `_[_]=_`："
 
 #: ../../language/methods.md:101
 msgid ""
@@ -19538,6 +19588,7 @@ msgstr ""
 "method_name(...) { ... }`，例如："
 
 #: ../../language/methods.md:180
+#, fuzzy
 msgid ""
 "pub(open) trait MyShow {\n"
 "  to_string(Self) -> String\n"
@@ -19549,7 +19600,7 @@ msgid ""
 "  ...\n"
 "}\n"
 "\n"
-"struct MyContainer[T] {}\n"
+"struct MyContainer[_] {}\n"
 "\n"
 "// trait implementation with type parameters.\n"
 "// `[X : Show]` means the type parameter `X` must implement `Show`,\n"
@@ -19568,7 +19619,7 @@ msgstr ""
 "  ...\n"
 "}\n"
 "\n"
-"struct MyContainer[T] {}\n"
+"struct MyContainer[_] {}\n"
 "\n"
 "// 使用类型参数实现特征。\n"
 "// `[X : Show]` 意味着类型参数 `X` 必须实现 `Show`，\n"
@@ -19837,7 +19888,7 @@ msgid "Trait alias can be declared as follows:"
 msgstr "特征别名可以声明如下："
 
 #: ../../language/methods.md:290
-msgid "traitalias @builtin.Compare as CanCompare\n"
+msgid "using @builtin { trait Compare as CanCompare }\n"
 msgstr ""
 
 #: ../../language/methods.md:296
@@ -20099,7 +20150,7 @@ msgstr "一个项目对应一个模块，由多个包和一个单独的 `moon.mo
 #: ../../language/packages.md:13
 msgid ""
 "A module is identified by the [`name`](/toolchain/moon/module.md#name) "
-"field, which usually consists to parts, seperated by `/`: `user-name"
+"field, which usually consists of two parts, separated by `/`: `user-name"
 "/project-name`. A package is identified by the relative path to the "
 "source root defined by the [`source`](/toolchain/moon/module.md#source-"
 "directory) field. The full identifier would be `user-name/project-name"
@@ -20928,7 +20979,7 @@ msgstr "可以使用完整的快照测试使用 `@test.T::write` 和 `@test.T::w
 
 #: ../../language/tests.md:64
 msgid ""
-"test \"record anything\" (t : @test.T) {\n"
+"test \"record anything\" (t : @test.Test) {\n"
 "  t.write(\"Hello, world!\")\n"
 "  t.writeln(\" And hello, MoonBit!\")\n"
 "  t.snapshot(filename=\"record_anything.txt\")\n"
@@ -21009,7 +21060,7 @@ msgstr ""
 #~ msgstr "例如："
 
 #~ msgid "The Borrow and Owned Attribute"
-#~ msgstr "Borrow 和 Owned 注解"
+#~ msgstr "Borrow 和 Owned 属性"
 
 #~ msgid ""
 #~ "It could also be used for "
@@ -21038,5 +21089,78 @@ msgstr ""
 #~ "  f(x=1, y=1) // warn on y being filled\n"
 #~ "  f()         // warn on x not being filled\n"
 #~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "attribute ::= '#' attribute-name\n"
+#~ "            | '#' attribute-name '(' properties ')' \n"
+#~ "\n"
+#~ "attribute-name ::= LIDENT | LIDENT '.' LIDENT\n"
+#~ "\n"
+#~ "properties ::= property (',' property)*\n"
+#~ "\n"
+#~ "property ::= expr | LIDENT '=' expr \n"
+#~ "\n"
+#~ "expr ::= LIDENT | UIDENT | STRING | 'true' | 'false'\n"
+#~ "       | LIDENT '.' LIDENT\n"
+#~ "       | LIDENT '(' properties ')'\n"
+#~ "       | LIDENT '.' LIDENT '(' properties ')'\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "fn example_explicit_variable_types() -> Unit {\n"
+#~ "  let a : Array[Int] = []\n"
+#~ "  println(a.length())\n"
+#~ "  let b : Int? = None\n"
+#~ "  println(b.is_empty())\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "fn example_annotated_collections() -> Unit {\n"
+#~ "  let a = ([] : Array[Int])\n"
+#~ "  println(a.length())\n"
+#~ "  let b = (None : Int?)\n"
+#~ "  println(b.is_empty())\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Values of type `FuncRef[T]` must be "
+#~ "[closed](https://en.wikipedia.org/wiki/Lambda_calculus#Free_and_bound_variables)"
+#~ " function."
+#~ msgstr "`FuncRef[T]` 类型的值必须是无捕获的函数。"
+
+#~ msgid ""
+#~ "let fixed_array_1 : FixedArray[Int] = [1, 2, 3]\n"
+#~ "\n"
+#~ "let fixed_array_2 = ([1, 2, 3] : FixedArray[Int])\n"
+#~ "\n"
+#~ "let array_3 = [1, 2, 3] // Array[Int]\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub typealias Int as Index\n"
+#~ "pub type MyIndex = Int\n"
+#~ "pub type MyMap = Map[Int, String]\n"
+#~ msgstr ""
+
+#~ msgid "traitalias @builtin.Compare as CanCompare\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "test \"record anything\" (t : @test.T) {\n"
+#~ "  t.write(\"Hello, world!\")\n"
+#~ "  t.writeln(\" And hello, MoonBit!\")\n"
+#~ "  t.snapshot(filename=\"record_anything.txt\")\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "`-warning_name`: 关闭这个警告"
+#~ msgstr ""
+
+#~ msgid "`@warning_name`: 将一个启用的警告转换为错误"
 #~ msgstr ""
 
