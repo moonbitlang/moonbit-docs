@@ -436,19 +436,6 @@ fn f() -> Unit {
 }
 ```
 
-### Trait alias
-
-MoonBit allows using traits with alternative names via trait alias.
-
-#### WARNING
-This feature may be removed in the future.
-
-Trait alias can be declared as follows:
-
-```moonbit
-using @builtin { trait Compare as CanCompare }
-```
-
 ## Trait objects
 
 MoonBit supports runtime polymorphism via trait objects.

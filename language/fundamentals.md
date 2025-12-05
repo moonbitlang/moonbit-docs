@@ -108,8 +108,8 @@ let bigint : BigInt = 42
 
 ```moonbit
 let a = "兔rabbit"
-println(a[0].to_char())
-println(a[1].to_char())
+println(a.code_unit_at(0).to_char())
+println(a.code_unit_at(1).to_char())
 let b =
   #| Hello
   #| MoonBit\n
@@ -192,14 +192,16 @@ let zero = '\u{30}'
 let zero = '\u0030'
 ```
 
-Char literals can be overloaded to type `Int` when the expected type is `Int`:
+Char literals can be overloaded to type `Int` or `UInt16` when it is the expected type:
 
 ```moonbit
 test {
   let s : String = "hello"
-  // op_get returns type Int, and char literal can be used as Int
-  let b = s[0] - 'a'
-  inspect(b, content="7")
+  let b : UInt16 = s.code_unit_at(0) // 'h'
+  assert_eq(b, 'h') // 'h' is overloaded to UInt16
+  let c : Int = '兔'
+  // Not ok : exceed range
+  // let d : UInt16 = '𠮷'
 }
 ```
 

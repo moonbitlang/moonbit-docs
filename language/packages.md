@@ -37,7 +37,7 @@ A custom alias may also be defined with the [`import`](../toolchain/moon/package
 ```moonbit
 ///|
 pub fn add1(x : Int) -> Int {
-  @moonbitlang/core/int.abs(@c.incr(@pkgA.incr(x)))
+  @moonbitlang/core/builtin.Add::add(0, @c.incr(@pkgA.incr(x)))
 }
 ```
 
