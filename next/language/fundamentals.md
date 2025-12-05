@@ -199,7 +199,7 @@ API: <https://mooncakes.io/docs/moonbitlang/core/string>
 :end-before: end char 1
 ```
 
-Char literals can be overloaded to type `Int` when the expected type is `Int`:
+Char literals can be overloaded to type `Int` or `UInt16` when it is the expected type:
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit

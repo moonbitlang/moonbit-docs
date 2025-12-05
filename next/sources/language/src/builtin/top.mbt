@@ -58,8 +58,8 @@ test "string 1" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start string 1
   let a = "兔rabbit"
-  println(a[0].to_char())
-  println(a[1].to_char())
+  println(a.code_unit_at(0).to_char())
+  println(a.code_unit_at(1).to_char())
   let b =
     #| Hello
     #| MoonBit\n
@@ -111,9 +111,11 @@ let char : Unit = {
 // start char 2
 test {
   let s : String = "hello"
-  // op_get returns type Int, and char literal can be used as Int
-  let b = s[0] - 'a'
-  inspect(b, content="7")
+  let b : UInt16 = s.code_unit_at(0) // 'h'
+  assert_eq(b, 'h') // 'h' is overloaded to UInt16
+  let c : Int = '兔'
+  // Not ok : exceed range
+  // let d : UInt16 = '𠮷'
 }
 // end char 2
 
