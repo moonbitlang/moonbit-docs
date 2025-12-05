@@ -1,11 +1,20 @@
 # Sudoku Solver
 
-Sudoku is a logic-based puzzle game that originated in 1979. It was well-suited for print media like newspapers, and even in the digital age, many Sudoku game programs are available for computers and smartphones. Despite the variety of entertainment options today, Sudoku enthusiasts continue to form active communities (online forum such as: [enjoysudoku](http://forum.enjoysudoku.com/)). This article will demonstrate how to write a suitable program to solve Sudoku using MoonBit.
+Sudoku is a logic-based puzzle game that originated in 1979. It was well-suited
+for print media like newspapers, and even in the digital age, many Sudoku game
+programs are available for computers and smartphones. Despite the variety of
+entertainment options today, Sudoku enthusiasts continue to form active
+communities (online forum such as:
+[enjoysudoku](http://forum.enjoysudoku.com/)). This article will demonstrate how
+to write a suitable program to solve Sudoku using MoonBit.
 ![sudoku example](/imgs/sudoku.jpg)
 
 ## Squares, Units, and Peers
 
-The most common form of Sudoku is played on a 9x9 grid. We label the rows from top to bottom as A-I, and the columns from left to right as 1-9. This gives each square in the grid a coordinate, for example, the square containing the number 0 in the grid below has the coordinate C3.
+The most common form of Sudoku is played on a 9x9 grid. We label the rows from
+top to bottom as A-I, and the columns from left to right as 1-9. This gives each
+square in the grid a coordinate, for example, the square containing the number 0
+in the grid below has the coordinate C3.
 
 ```
   1 2 3 4 5 6 7 8 9
@@ -20,7 +29,9 @@ H . . . . . . . . .
 I . . . . . . . . .
 ```
 
-This 9x9 grid has a total of 9 units, and each unit contains squares that must have unique digits from 1 to 9. However, in the initial state of the game, most squares do not contain any digits.
+This 9x9 grid has a total of 9 units, and each unit contains squares that must
+have unique digits from 1 to 9. However, in the initial state of the game, most
+squares do not contain any digits.
 
 ```
  4  1  7 | 3  6  9 | 8  2  5
@@ -36,10 +47,11 @@ This 9x9 grid has a total of 9 units, and each unit contains squares that must h
  1  6  4 | 8  7  5 | 2  9  3
 ```
 
-Beyond the units, another important concept is peers. A square's peers include other squares in the same row, column, and unit. For example, the peers of C2 include these squares:
+Beyond the units, another important concept is peers. A square's peers include
+other squares in the same row, column, and unit. For example, the peers of C2
+include these squares:
 
 ```
-
     A2   |         |
     B2   |         |
     C2   |         |
@@ -79,14 +91,17 @@ Beyond the units, another important concept is peers. A square's peers include o
 
 No two squares that are peers can contain the same digit.
 
-We need a data type, `Grid[T]`, to store the 81 squares and the information associated with each square. This can be implemented using a hashtable, but using an array would be more compact and simple. First, we write a function to convert coordinates A1-I9 to indices 0-80:
+We need a data type, `Grid[T]`, to store the 81 squares and the information
+associated with each square. This can be implemented using a hashtable, but
+using an array would be more compact and simple. First, we write a function to
+convert coordinates A1-I9 to indices 0-80:
 
-```moonbit
+```moonbit check
 // A1 => 0, A2 => 1
 fn square_to_int(s : String) -> Int {
-  if s[0] is ('A'..='I') && s[1] is ('1'..='9') {
-    let row = s[0] - 'A'.to_int() // 'A' <=> 0
-    let col = s[1] - '1'.to_int() // '1' <=> 0
+  if s is [('A'..='I') as a, ('1'..='9') as b, ..] {
+    let row = a.to_int() - 'A'.to_int() // 'A' <=> 0
+    let col = b.to_int() - '1'.to_int() // '1' <=> 0
     return row * 9 + col
   } else {
     abort("Grid_to_int(): \{s} is not a Grid")
@@ -101,9 +116,12 @@ test {
 }
 ```
 
-Then we wrap the array and provide operations for creating, accessing, assigning values to specific coordinates, and copying `Grid[T]`. By overloading the op_get and op_set methods, we can write convenient code like `table["A2"]` and `table["C3"] = ...`.
+Then we wrap the array and provide operations for creating, accessing, assigning
+values to specific coordinates, and copying `Grid[T]`. By overloading the op_get
+and op_set methods, we can write convenient code like `table["A2"]` and
+`table["C3"] = ...`.
 
-```moonbit
+```moonbit check
 ///|
 struct Grid[T](FixedArray[T])
 
@@ -127,13 +145,15 @@ fn[T] Grid::copy(self : Grid[T]) -> Grid[T] {
 }
 
 ///|
-fn[T] Grid::op_get(self : Grid[T], square : String) -> T {
+#alias("_[_]")
+fn[T] Grid::at(self : Grid[T], square : String) -> T {
   let i = square_to_int(square)
   self.0[i]
 }
 
 ///|
-fn[T] Grid::op_set(self : Grid[T], square : String, x : T) -> Unit {
+#alias("_[_]=_")
+fn[T] Grid::set(self : Grid[T], square : String, x : T) -> Unit {
   let i = square_to_int(square)
   self.0[i] = x
 }
@@ -160,11 +180,14 @@ let units : Grid[Squares] = ......
 let peers : Grid[Squares] = ......
 ```
 
-The process of constructing the units and peers tables is tedious, so it will not be detailed here.
+The process of constructing the units and peers tables is tedious, so it will
+not be detailed here.
 
 ## Preprocessing the Grid
 
-We use a string to represent the initial Sudoku grid. Various formats are acceptable; both `.` and `0` represent empty squares, and other characters like spaces and newlines are ignored.
+We use a string to represent the initial Sudoku grid. Various formats are
+acceptable; both `.` and `0` represent empty squares, and other characters like
+spaces and newlines are ignored.
 
 ```
 #|400000805
@@ -190,7 +213,10 @@ We use a string to represent the initial Sudoku grid. Various formats are accept
 #|1 . 4   . . .   . . .
 ```
 
-For now, let's not consider game rules too much. If we only consider the digits that can be filled in each square, then 1-9 are all possible. Therefore, we initially set the content of all squares to `['1', '2', '3', '4', '5', '6', '7', '8', '9']` (a List).
+For now, let's not consider game rules too much. If we only consider the digits
+that can be filled in each square, then 1-9 are all possible. Therefore, we
+initially set the content of all squares to
+`['1', '2', '3', '4', '5', '6', '7', '8', '9']` (a List).
 
 ```moonbit skip
 fn Grid::parse(s : String) -> Grid[@immut/sorted_set.T[Char]] {
@@ -200,7 +226,10 @@ fn Grid::parse(s : String) -> Grid[@immut/sorted_set.T[Char]] {
 }
 ```
 
-Next, we need to assign values to the squares with known digits from the input. This process can be implemented with the function `assign(values, key, val)`, where `key` is a string like `A6` and `val` is a character. It is easy to write such code.
+Next, we need to assign values to the squares with known digits from the input.
+This process can be implemented with the function `assign(values, key, val)`,
+where `key` is a string like `A6` and `val` is a character. It is easy to write
+such code.
 
 ```moonbit skip
 fn assign(values : Grid[@immut/sorted_set.T[Char]], key : String, val : Char) -> Unit {
@@ -210,15 +239,28 @@ fn assign(values : Grid[@immut/sorted_set.T[Char]], key : String, val : Char) ->
 
 This implementation is simple and precise, but we can do more.
 
-Now, we can reintroduce the rules that we set aside earlier. However, the rules themselves do not tell us what to do. We need heuristic strategies to gain insights from the rules, similar to solving Sudoku with pen and paper. Let's start with the elimination method:
+Now, we can reintroduce the rules that we set aside earlier. However, the rules
+themselves do not tell us what to do. We need heuristic strategies to gain
+insights from the rules, similar to solving Sudoku with pen and paper. Let's
+start with the elimination method:
 
-- **Strategy 1**: If a square `key` is assigned a value `val`, then its peers (peers[key]) should not contain `val` in their lists of possible values, as this would violate the rule that no two squares in the same unit, row, or column can have the same digit.
+- **Strategy 1**: If a square `key` is assigned a value `val`, then its peers
+  (peers[key]) should not contain `val` in their lists of possible values, as
+  this would violate the rule that no two squares in the same unit, row, or
+  column can have the same digit.
 
-- **Strategy 2**: If there is only one square in a unit that can hold a specific digit (possibly happen after applying the above rule several times), then that digit should be assigned to that square.
+- **Strategy 2**: If there is only one square in a unit that can hold a specific
+  digit (possibly happen after applying the above rule several times), then that
+  digit should be assigned to that square.
 
-We adjust the code by defining an `eliminate` function, which removes a digit from the possible values of a square. After performing the elimination task, it applies the above strategies to `key` and `val` to attempt further eliminations. Note that it includes a boolean return value to handle possible contradictions. If the list of possible values for a square becomes empty, something went wrong, and we return `false`.
+We adjust the code by defining an `eliminate` function, which removes a digit
+from the possible values of a square. After performing the elimination task, it
+applies the above strategies to `key` and `val` to attempt further eliminations.
+Note that it includes a boolean return value to handle possible contradictions.
+If the list of possible values for a square becomes empty, something went wrong,
+and we return `false`.
 
-```moonbit
+```moonbit check
 fn eliminate(
   values : Grid[@immut/sorted_set.SortedSet[Char]],
   key : String,
@@ -257,9 +299,10 @@ fn eliminate(
 }
 ```
 
-Next, we define `assign(values, key, val)` to remove all values except `val` from the possible values of `key`.
+Next, we define `assign(values, key, val)` to remove all values except `val`
+from the possible values of `key`.
 
-```moonbit
+```moonbit check
 ///|
 fn assign(
   values : Grid[@immut/sorted_set.SortedSet[Char]],
@@ -275,9 +318,13 @@ fn assign(
 }
 ```
 
-These two functions apply heuristic strategies to each square they access. A successful heuristic application introduces new squares to consider, allowing these strategies to propagate widely across the grid. This is key to quickly eliminating invalid options. In fact, this preprocessing can already solve some simple Sudoku puzzles.
+These two functions apply heuristic strategies to each square they access. A
+successful heuristic application introduces new squares to consider, allowing
+these strategies to propagate widely across the grid. This is key to quickly
+eliminating invalid options. In fact, this preprocessing can already solve some
+simple Sudoku puzzles.
 
-```moonbit
+```moonbit check
 let grid2 =
   #|0 0 3   0 2 0   6 0 0
   #|9 0 0   3 0 5   0 0 1
@@ -312,15 +359,24 @@ test {
 }
 ```
 
-If you are interested in artificial intelligence, you might recognize this as a Constraint Satisfaction Problem (CSP), and `assign` and `eliminate` are specialized arc consistency algorithms. For more on this topic, refer to Chapter 6 of _Artificial Intelligence: A Modern Approach_.
+If you are interested in artificial intelligence, you might recognize this as a
+Constraint Satisfaction Problem (CSP), and `assign` and `eliminate` are
+specialized arc consistency algorithms. For more on this topic, refer to Chapter
+6 of _Artificial Intelligence: A Modern Approach_.
 
 ## Search
 
-After preprocessing, we can boldly use brute-force enumeration to search for all feasible combinations. However, we can still use the heuristic strategies during the search process. When trying to assign a value to a square, we still use `assign`, which allows us to apply previous optimizations to eliminate many invalid branches during the search.
+After preprocessing, we can boldly use brute-force enumeration to search for all
+feasible combinations. However, we can still use the heuristic strategies during
+the search process. When trying to assign a value to a square, we still use
+`assign`, which allows us to apply previous optimizations to eliminate many
+invalid branches during the search.
 
-Another point to note is that conflicts may arise during the search (when a square's possible values are exhausted). Since mutable structures make backtracking troublesome, we directly copy values each time we assign a value.
+Another point to note is that conflicts may arise during the search (when a
+square's possible values are exhausted). Since mutable structures make
+backtracking troublesome, we directly copy values each time we assign a value.
 
-```moonbit
+```moonbit check
 fn search(
   values : Grid[@immut/sorted_set.SortedSet[Char]],
 ) -> Grid[@immut/sorted_set.SortedSet[Char]]? {
@@ -361,9 +417,10 @@ fn solve(g : String) -> String {
 }
 ```
 
-Let's run the example taken from [magictour](http://magictour.free.fr/top95), a list of difficult Sudoku puzzles, which is not easy for humans.
+Let's run the example taken from [magictour](http://magictour.free.fr/top95), a
+list of difficult Sudoku puzzles, which is not easy for humans.
 
-```moonbit
+```moonbit check
 let grid1 =
   #|4 . .   . . .   8 . 5
   #|. 3 .   . . .   . . .
@@ -398,12 +455,19 @@ test {
 }
 ```
 
-Running on [MoonBit online IDE](https://try.moonbitlang.com/), It takes only about 0.11 seconds to solve this Sudoku!
+Running on [MoonBit online IDE](https://try.moonbitlang.com/), It takes only
+about 0.11 seconds to solve this Sudoku!
 
 ## Conclusion
 
-The purpose of games is to relieve boredom and bring joy. If playing a game becomes more anxiety-inducing than exciting, it might go against the game designer's original intent. The article demonstrated that simple elimination methods and brute-force search can quickly solve some Sudoku puzzles. This does not mean that Sudoku is not worth playing; rather, it reveals that one should not be overly concerned with an unsolvable Sudoku puzzle.
+The purpose of games is to relieve boredom and bring joy. If playing a game
+becomes more anxiety-inducing than exciting, it might go against the game
+designer's original intent. The article demonstrated that simple elimination
+methods and brute-force search can quickly solve some Sudoku puzzles. This does
+not mean that Sudoku is not worth playing; rather, it reveals that one should
+not be overly concerned with an unsolvable Sudoku puzzle.
 
 Let's play with MoonBit with ease!
 
-This tutorial references Norvig's blog: [http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)
+This tutorial references Norvig's blog:
+[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)

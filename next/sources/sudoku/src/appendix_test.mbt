@@ -26,8 +26,7 @@ let squares : Squares = cross(rows, cols, _ => true)
 
 ///|
 fn unit_of(square : String) -> Squares {
-  let row = square[0]
-  let col = square[1]
+  guard square is [row, col, ..]
   let rows = match row {
     'A'..='C' => "ABC"
     'D'..='F' => "DEF"
@@ -65,7 +64,11 @@ test {
 ///|
 fn is_peer(this : String, other : String) -> Bool {
   this != other &&
-  (this[0] == other[0] || this[1] == other[1] || units[other].contains(this))
+  (
+    this.code_unit_at(0) == other.code_unit_at(0) ||
+    this.code_unit_at(1) == other.code_unit_at(1) ||
+    units[other].contains(this)
+  )
 }
 
 ///|
