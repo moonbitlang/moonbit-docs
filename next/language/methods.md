@@ -277,22 +277,6 @@ Here's an example of calling trait `impl` with dot syntax:
 :end-before: end trait 8
 ```
 
-### Trait alias
-
-MoonBit allows using traits with alternative names via trait alias.
-
-```{warning}
-This feature may be removed in the future.
-```
-
-Trait alias can be declared as follows:
-
-```{literalinclude} /sources/language/src/trait/top.mbt
-:language: moonbit
-:start-after: start trait alias
-:end-before: end trait alias
-```
-
 ## Trait objects
 
 MoonBit supports runtime polymorphism via trait objects.

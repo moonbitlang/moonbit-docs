@@ -216,7 +216,3 @@ pub impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {
   ..write_string(")")
 }
 // end trait object 2
-
-// start trait alias
-using @builtin { trait Compare as CanCompare }
-// end trait alias
