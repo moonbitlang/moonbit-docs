@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-05 10:03+0800\n"
+"POT-Creation-Date: 2025-12-24 17:14+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1101,6 +1101,30 @@ msgid ""
 "#cfg(not(target=\"wasm\"))\n"
 "#cfg(all(target=\"wasm\", true))\n"
 "#cfg(any(target=\"wasm\", target=\"native\"))\n"
+msgstr ""
+
+#: ../../language/attributes.md:302
+msgid "Module attribute"
+msgstr "模块属性"
+
+#: ../../language/attributes.md:304
+msgid ""
+"The `module` attribute is used to declare the module dependency for "
+"JavaScript backend."
+msgstr ""
+"`module` 属性用于为 JavaScript 后端声明模块依赖。"
+
+#: ../../language/attributes.md:306
+msgid ""
+"In `cjs` format, it is interpreted as `require`, and in `esm` format, it "
+"is interpreted as `import`."
+msgstr ""
+"在 `cjs` 格式中，它被解释为 `require`，而在 `esm` 格式中，它被解释为 `import`。"
+
+#: ../../language/attributes.md:309
+msgid ""
+"#module(\"node:fs\")\n"
+"pub fn write_file_sync(file : String, data : String) = \"writeFileSync\"\n"
 msgstr ""
 
 #: ../../language/benchmarks.md:1
@@ -15007,8 +15031,8 @@ msgstr "`String` 包含一系列 UTF-16 码点。您可以使用双引号创建�
 #: ../../language/fundamentals.md:128
 msgid ""
 "let a = \"兔rabbit\"\n"
-"println(a[0].to_char())\n"
-"println(a[1].to_char())\n"
+"println(a.code_unit_at(0).to_char())\n"
+"println(a.code_unit_at(1).to_char())\n"
 "let b =\n"
 "  #| Hello\n"
 "  #| MoonBit\\n\n"
@@ -15154,25 +15178,21 @@ msgstr ""
 
 #: ../../language/fundamentals.md:202
 msgid ""
-"Char literals can be overloaded to type `Int` when the expected type is "
-"`Int`:"
-msgstr "当期望类型是 `Int` 时，字符字面量可以重载为类型 `Int`："
+"Char literals can be overloaded to type `Int` or `UInt16` when it is the "
+"expected type:"
+msgstr "当期望类型是 `Int` 或 `UInt16` 时，字符字面量可以重载为对应类型："
 
 #: ../../language/fundamentals.md:204
 msgid ""
 "test {\n"
 "  let s : String = \"hello\"\n"
-"  // op_get returns type Int, and char literal can be used as Int\n"
-"  let b = s[0] - 'a'\n"
-"  inspect(b, content=\"7\")\n"
+"  let b : UInt16 = s.code_unit_at(0) // 'h'\n"
+"  assert_eq(b, 'h') // 'h' is overloaded to UInt16\n"
+"  let c : Int = '兔'\n"
+"  // Not ok : exceed range\n"
+"  // let d : UInt16 = '𠮷'\n"
 "}\n"
 msgstr ""
-"test {\n"
-"  let s : String = \"hello\"\n"
-"  // op_get 返回类型 Int, 而字符串字面量可以被重载为类型 `Int`\n"
-"  let b = s[0] - 'a'\n"
-"  inspect(b, content=\"7\")\n"
-"}\n"
 
 #: ../../language/fundamentals.md:211
 msgid "API: <https://mooncakes.io/docs/moonbitlang/core/char>"
@@ -19872,30 +19892,10 @@ msgid ""
 msgstr ""
 
 #: ../../language/methods.md:280
-msgid "Trait alias"
-msgstr "特征别名"
-
-#: ../../language/methods.md:282
-msgid "MoonBit allows using traits with alternative names via trait alias."
-msgstr "MoonBit 允许用户用别名来使用一个特征。："
-
-#: ../../language/methods.md:285
-msgid "This feature may be removed in the future."
-msgstr "这个特性未来可能会被移除。"
-
-#: ../../language/methods.md:288
-msgid "Trait alias can be declared as follows:"
-msgstr "特征别名可以声明如下："
-
-#: ../../language/methods.md:290
-msgid "using @builtin { trait Compare as CanCompare }\n"
-msgstr ""
-
-#: ../../language/methods.md:296
 msgid "Trait objects"
 msgstr "特征对象"
 
-#: ../../language/methods.md:298
+#: ../../language/methods.md:282
 msgid ""
 "MoonBit supports runtime polymorphism via trait objects. If `t` is of "
 "type `T`, which implements trait `I`, one can pack the methods of `T` "
@@ -19909,7 +19909,7 @@ msgstr ""
 "的 `T` 的方法与 `t` 一起打包到运行时对象中。如果从上下文可以知道某个表达式的类型是特征对象类型，则 `as &I` "
 "可以省略。特征对象擦除了值的具体类型，因此可以将从不同具体类型创建的对象放入相同的数据结构并统一处理："
 
-#: ../../language/methods.md:306
+#: ../../language/methods.md:290
 msgid ""
 "pub(open) trait Animal {\n"
 "  speak(Self) -> String\n"
@@ -19950,29 +19950,29 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:312
+#: ../../language/methods.md:296
 msgid ""
 "Not all traits can be used to create objects. \"object-safe\" traits' "
 "methods must satisfy the following conditions:"
 msgstr "并非所有特征都可以用于创建对象。“对象安全”特征的方法必须满足以下条件："
 
-#: ../../language/methods.md:315
+#: ../../language/methods.md:299
 msgid "`Self` must be the first parameter of a method"
 msgstr "`Self` 必须是方法的第一个参数"
 
-#: ../../language/methods.md:316
+#: ../../language/methods.md:300
 msgid ""
 "There must be only one occurrence of `Self` in the type of the method "
 "(i.e. the first parameter)"
 msgstr "方法的类型中只能出现一个 `Self`（即第一个参数）"
 
-#: ../../language/methods.md:318
+#: ../../language/methods.md:302
 msgid ""
 "Users can define new methods for trait objects, just like defining new "
 "methods for structs and enums:"
 msgstr "用户可以为特征对象定义新方法，就像为结构体和枚举定义新方法一样："
 
-#: ../../language/methods.md:320
+#: ../../language/methods.md:304
 msgid ""
 "pub(open) trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
@@ -20024,15 +20024,15 @@ msgstr ""
 "  ..write_string(\")\")\n"
 "}\n"
 
-#: ../../language/methods.md:326
+#: ../../language/methods.md:310
 msgid "Builtin traits"
 msgstr "内建特征"
 
-#: ../../language/methods.md:328
+#: ../../language/methods.md:312
 msgid "MoonBit provides the following useful builtin traits:"
 msgstr "MoonBit 提供了以下有用的内建特征："
 
-#: ../../language/methods.md:332
+#: ../../language/methods.md:316
 msgid ""
 "trait Eq {\n"
 "  op_equal(Self, Self) -> Bool\n"
@@ -20080,15 +20080,15 @@ msgstr ""
 "  default() -> Self\n"
 "}\n"
 
-#: ../../language/methods.md:357
+#: ../../language/methods.md:341
 msgid "Deriving builtin traits"
 msgstr "派生内建特征"
 
-#: ../../language/methods.md:359
+#: ../../language/methods.md:343
 msgid "MoonBit can automatically derive implementations for some builtin traits:"
 msgstr "MoonBit 可以自动为一些内建特征派生实现："
 
-#: ../../language/methods.md:361
+#: ../../language/methods.md:345
 msgid ""
 "struct T {\n"
 "  a : Int\n"
@@ -20105,7 +20105,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:367
+#: ../../language/methods.md:351
 msgid "See [Deriving](./derive.md) for more information about deriving traits."
 msgstr "参见 [派生](./derive.md) 了解有关派生特征的更多信息。"
 
@@ -20212,7 +20212,7 @@ msgstr ""
 msgid ""
 "///|\n"
 "pub fn add1(x : Int) -> Int {\n"
-"  @moonbitlang/core/int.abs(@c.incr(@pkgA.incr(x)))\n"
+"  @moonbitlang/core/builtin.Add::add(0, @c.incr(@pkgA.incr(x)))\n"
 "}\n"
 msgstr ""
 
@@ -21162,5 +21162,53 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "`@warning_name`: 将一个启用的警告转换为错误"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "let a = \"兔rabbit\"\n"
+#~ "println(a[0].to_char())\n"
+#~ "println(a[1].to_char())\n"
+#~ "let b =\n"
+#~ "  #| Hello\n"
+#~ "  #| MoonBit\\n\n"
+#~ "  #|\n"
+#~ "println(b)\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "test {\n"
+#~ "  let s : String = \"hello\"\n"
+#~ "  // op_get returns type Int, and char literal can be used as Int\n"
+#~ "  let b = s[0] - 'a'\n"
+#~ "  inspect(b, content=\"7\")\n"
+#~ "}\n"
+#~ msgstr ""
+#~ "test {\n"
+#~ "  let s : String = \"hello\"\n"
+#~ "  // op_get 返回类型 Int, 而字符串字面量可以被重载为类型 `Int`\n"
+#~ "  let b = s[0] - 'a'\n"
+#~ "  inspect(b, content=\"7\")\n"
+#~ "}\n"
+
+#~ msgid "Trait alias"
+#~ msgstr "特征别名"
+
+#~ msgid "MoonBit allows using traits with alternative names via trait alias."
+#~ msgstr "MoonBit 允许用户用别名来使用一个特征。："
+
+#~ msgid "This feature may be removed in the future."
+#~ msgstr "这个特性未来可能会被移除。"
+
+#~ msgid "Trait alias can be declared as follows:"
+#~ msgstr "特征别名可以声明如下："
+
+#~ msgid "using @builtin { trait Compare as CanCompare }\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "pub fn add1(x : Int) -> Int {\n"
+#~ "  @moonbitlang/core/int.abs(@c.incr(@pkgA.incr(x)))\n"
+#~ "}\n"
 #~ msgstr ""
 
