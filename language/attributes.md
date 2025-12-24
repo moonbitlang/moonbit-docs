@@ -320,3 +320,15 @@ The `#cfg` attribute is used to perform conditional compilation. Examples are:
 #cfg(all(target="wasm", true))
 #cfg(any(target="wasm", target="native"))
 ```
+
+## Module attribute
+
+The `module` attribute is used to declare the module dependency for JavaScript backend.
+
+In `cjs` format, it is interpreted as `require`, and in `esm` format, it is interpreted as `import`.
+
+<!-- MANUAL CHECK -->
+```moonbit
+#module("node:fs")
+pub fn write_file_sync(file : String, data : String) = "writeFileSync"
+```
