@@ -32,10 +32,10 @@ pub fn trim(s : String, removed : Char) -> String {
   let l = s.length()
   let mut start = 0
   let mut end = l - 1
-  while start < l && s[start] == removed.to_int() {
+  while start < l && s[start].to_char() == Some(removed) {
     start = start + 1
   }
-  while end >= 0 && s[end] == removed.to_int() {
+  while end >= 0 && s[end].to_char() == Some(removed) {
     end = end - 1
   }
   if start <= end {

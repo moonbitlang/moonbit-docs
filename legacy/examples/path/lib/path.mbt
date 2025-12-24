@@ -110,13 +110,13 @@ pub fn Path::file_name(self : Path) -> String? {
 pub fn Path::append(self : Path, p : String) -> Unit {
   match self.platform {
     Posix => {
-      if self.inner[self.inner.length() - 1] != '/' {
+      if !(self.inner is [.., '/']) {
         self.inner = self.inner + "/"
       }
       self.inner = self.inner + p
     }
     Windows => {
-      if self.inner[self.inner.length() - 1] != '\\' {
+      if !(self.inner is [.., '\\']) {
         self.inner = self.inner + "\\"
       }
       self.inner = self.inner + p

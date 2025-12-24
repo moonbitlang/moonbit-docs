@@ -88,7 +88,7 @@ pub fn parse_int(s : String) -> Int? {
     10
   }
   while index < s.length() {
-    let c = s[index]
+    let c = s[index].to_int()
     if c == '_' {
       index = index + 1
       continue
