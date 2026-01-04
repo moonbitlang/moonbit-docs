@@ -363,6 +363,14 @@ msgid ""
 "  f(y=42)  // warning\n"
 "}"
 msgstr ""
+"#label_migration(x, alias=xx)\n"
+"#label_migration(x, alias=y, msg=\"warning\")\n"
+"fn f(x~: Int) -> Unit { ... }\n"
+"\n"
+"fn main {\n"
+"  f(xx=42) // 无警告\n"
+"  f(y=42)  // 警告\n"
+"}"
 
 #: ../../language/attributes.md:176
 msgid "Visibility Attribute"
@@ -672,7 +680,6 @@ msgid ""
 msgstr "`#callsite` 属性用于标记发生在调用位置的属性。"
 
 #: ../../language/attributes.md:280
-#, fuzzy
 msgid ""
 "It could be `autofill`, which is to autofill the arguments [SourceLoc and"
 " ArgLoc](/language/fundamentals.md#autofill-arguments) at "
