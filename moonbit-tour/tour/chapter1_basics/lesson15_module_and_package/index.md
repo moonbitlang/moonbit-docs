@@ -27,3 +27,41 @@ Here is some essential information you need to know:
 After you introduce a module as a dependency (for example, `moonbitlang/x`) and import the package you want to use (such as `moonbitlang/x/fs`), you can access its functions using the `@path/to/pkg.func` syntax. For instance, use `@moonbitlang/x/fs.create_dir` (or `@fs.create_dir` if you assigned an alias) to call the `create_dir` function.
 
 **Note**: The `moonbitlang/core` module is special—it's added as a dependency and its packages are imported by default.
+
+## Local Module Dependencies
+
+In addition to modules from mooncakes.io, you can also use local modules as dependencies. This is particularly useful when:
+
+- Developing multiple related modules on your local machine
+- Working with modules that are not yet published
+- Testing changes across multiple modules
+
+To add a local dependency, edit the `deps` field in your `moon.mod.json` file:
+
+```json
+{
+  "name": "username/hello",
+  "deps": {
+    "foo/bar": {
+      "path": "../../path/to/foo-module"
+    }
+  }
+}
+```
+
+The `path` should be a relative path to the directory containing the local module's `moon.mod.json` file.
+
+Once declared, you can import packages from the local module in your `moon.pkg.json`, just like any other module:
+
+```json
+{
+  "import": [
+    {
+      "path": "foo/bar",
+      "alias": "bar"
+    }
+  ]
+}
+```
+
+Now you can use the local module's functions with `@bar.function_name()`.

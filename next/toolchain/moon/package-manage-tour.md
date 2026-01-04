@@ -42,6 +42,40 @@ For example, to add the latest version of the `Yoorkin/example/list` module:
 
 ![add deps](/imgs/add-deps.png)
 
+### Add local dependencies
+
+In addition to modules from mooncakes.io, you can also add local modules as dependencies. This is useful when developing multiple related modules on your local machine or when working with modules that are not published to the registry.
+
+To add a local dependency, manually edit the `deps` field in `moon.mod.json` and specify the relative path to the local module:
+
+```json
+{
+  "name": "username/hello",
+  "deps": {
+    "foo/bar": {
+      "path": "../../path/to/foo-module"
+    }
+  }
+}
+```
+
+The `path` should be a relative path from your current module to the target module's directory (the directory containing the target module's `moon.mod.json` file).
+
+Once you've declared the local dependency, you can import packages from it in your `moon.pkg.json` file, just like you would with modules from mooncakes.io:
+
+```json
+{
+  "import": [
+    {
+      "path": "foo/bar",
+      "alias": "bar"
+    }
+  ]
+}
+```
+
+Now you can use the local module's functions in your code with `@bar.function_name()`.
+
 ## Import packages from module
 
 Modify the configuration file `moon.pkg.json` and declare the packages that need to be imported in the `import` field.
@@ -54,10 +88,8 @@ You can also give an alias to the imported package:
 
 ```json
 {
-    "is_main": true,
-    "import": [
-        { "path": "Yoorkin/example/list", "alias": "ls" }
-    ]
+  "is_main": true,
+  "import": [{ "path": "Yoorkin/example/list", "alias": "ls" }]
 }
 ```
 
@@ -105,7 +137,7 @@ mooncakes.io will generate documentation for each module automatically.
 The leading `///` comments of each toplevel will be recognized as documentation.
 You can write markdown inside.
 
-```moonbit
+````moonbit
 /// Get the largest element of a non-empty `Array`.
 ///
 /// # Example
@@ -121,6 +153,6 @@ You can write markdown inside.
 pub fn maximum[T : Compare](xs : Array[T]) -> T {
   // TODO ...
 }
-```
+````
 
 You can also use `moon doc --serve` to generate and view documentation locally.
