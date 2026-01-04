@@ -1,0 +1,450 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 16:08+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../toolchain/moonide/index.md:1
+msgid "MoonBit Agent IDE"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:3
+msgid "Overview"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:5
+msgid ""
+"`moon ide` is a specialized CLI toolset for navigating, understanding, "
+"and exploring MoonBit codebases. It provides semantic-aware tools for "
+"code discovery using the compiler's knowledge of your project structure."
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:7
+msgid ""
+"These commands use semantic analysis rather than text matching, making "
+"them more precise than grep-based searching for code navigation tasks."
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:9
+msgid "Available Commands"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:11
+msgid "**`moon ide peek-def`**: Locate symbol definitions with inline context"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:12
+msgid ""
+"**`moon ide find-references`**: Locate all usages of a symbol across the "
+"project"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:13
+msgid "**`moon ide outline`**: Get a structural overview of files or packages"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:14
+msgid "**`moon ide doc`**: Discover and explore APIs with documentation"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:16
+msgid "Symbol Syntax"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:18
+msgid ""
+"All `moon ide` subcommands accept a `<symbol>` argument using these "
+"patterns:"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:20
+msgid "**Basic symbols:**"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:22
+msgid "`[@pkg.]symbol` - Symbol in a package (e.g. `parse_int`, `Array`)"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:23
+msgid "If `@pkg.` is omitted, searches current package and prelude"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:25
+msgid "**Type members:**"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:27
+msgid ""
+"`[@pkg.]Type::member` - Type methods, struct fields, enum variants, trait"
+" methods"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:28
+msgid "Examples: `Array::length`, `@http.Request::new`, `Option::None`"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:30
+msgid ""
+"Package prefix `@pkg.` is optional for symbols in the current package and"
+" standard library."
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:32
+msgid "`moon ide peek-def` - View Symbol Definitions"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:34
+msgid ""
+"Quickly locate symbol definitions with surrounding context. This is "
+"faster and more precise than grepping for declarations."
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:36 ../../toolchain/moonide/index.md:82
+#: ../../toolchain/moonide/index.md:117 ../../toolchain/moonide/index.md:164
+msgid "Usage"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:38
+msgid "moon ide peek-def <symbol> [-loc filename:line[:col]]\n"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:42
+msgid "**Two modes:**"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:44
+msgid ""
+"**Global search** (no `-loc`): Searches the entire project using the "
+"symbol syntax described above"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:45
+msgid ""
+"**Contextual search** (`-loc` provided): Matches `<symbol>` as a "
+"substring at the specified location"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:46
+msgid "Line number must be precise; column is optional (used as a hint)"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:47
+msgid ""
+"The `<symbol>` argument is matched as plain text, not parsed as symbol "
+"syntax"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:48
+msgid "Useful when a symbol name is ambiguous or appears in multiple contexts"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:50 ../../toolchain/moonide/index.md:128
+#: ../../toolchain/moonide/index.md:200
+msgid "Examples"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:52
+msgid ""
+"$ moon ide peek-def Agent\n"
+"Found 1 symbols matching 'Agent':\n"
+"\n"
+"`pub (all) struct Agent` in package moonbitlang/maria/agent at "
+"./agent/agent.mbt:17-47\n"
+"\n"
+"17 | ///|\n"
+"   | /// Represents an AI agent that interacts with language models and "
+"executes tools.\n"
+"...|\n"
+"   | pub(all) struct Agent {\n"
+"...|\n"
+"...| }\n"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:66
+msgid ""
+"$ moon ide peek-def Agent -loc ./maria.mbt:7\n"
+"Definition found at file ./maria/agent/agent.mbt\n"
+"   | ///\n"
+"   | /// The `Agent` struct encapsulates the complete state and behavior "
+"of an AI agent,\n"
+"...|\n"
+"24 | pub(all) struct Agent {\n"
+"   |                 ^^^^^\n"
+"   |   /// UUID generator for creating unique identifiers.\n"
+"...|\n"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:78
+msgid "`moon ide find-references` - Track All Usages"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:80
+msgid "Discover where and how a symbol is used throughout your codebase."
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:84
+msgid "moon ide find-references <symbol>\n"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:88
+msgid "Note: The `-loc` argument is not yet supported. Always searches globally."
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:90
+msgid "Example"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:92
+msgid ""
+"$ moon ide find-references Agent\n"
+"`pub (all) struct Agent` in package moonbitlang/maria/agent at "
+"./agent/agent.mbt:17-47\n"
+"17 | ///|\n"
+"   | /// Represents an AI agent that interacts with language models and "
+"executes tools.\n"
+"...|\n"
+"   | pub(all) struct Agent {\n"
+"...|\n"
+"...| }\n"
+"Found 98 references of this symbol:\n"
+"./agent/agent_tool.mbt:41:8-41:13:\n"
+"   | /// * `agent` : The agent instance whose tools will be enabled or "
+"disabled.\n"
+"   | /// * `tool_names` : A set containing the names of tools that should"
+" be enabled.\n"
+"   | ///   Tools not in this set will be disabled.\n"
+"41 | pub fn Agent::set_enabled_tools(\n"
+"   |        ^^^^^\n"
+"   |   agent : Agent,\n"
+"   |   tool_names : Set[String],\n"
+"...\n"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:113
+msgid "`moon ide outline` - Get Structural Overview"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:115
+msgid ""
+"Quickly scan the structure of a file or package to understand its "
+"organization."
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:119
+msgid "moon ide outline <path/to/file_or_directory>\n"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:123
+msgid "Two modes:"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:125
+msgid "`moon ide outline path/to/file.mbt` - Outline a specific file"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:126
+msgid ""
+"`moon ide outline path/to/directory` - Outline all `.mbt` files in the "
+"package"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:130
+msgid "**Package outline** - See all files and their top-level symbols:"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:132
+msgid ""
+"moon ide outline .\n"
+"maria.mbt:\n"
+" L05 | pub struct Maria {\n"
+"       ...\n"
+" L71 | pub fn Maria::close(self : Maria) -> Unit {\n"
+"       ...\n"
+" L84 | pub async fn Maria::start(self : Maria, prompt? : String) -> Unit "
+"{\n"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:142
+msgid "**File outline** - Detailed view of a single file:"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:144
+msgid ""
+"$ moon ide outline ./internal/readline/readline.mbt\n"
+" L0002 | priv struct Edit {\n"
+"         ...\n"
+" L0008 | pub enum KeyName {\n"
+"         ...\n"
+" L0045 | pub struct Key {\n"
+"         ...\n"
+" L1369 | pub async fn Interface::start(self : Interface) -> Unit {\n"
+"         ...\n"
+" L1383 | pub async fn Interface::read_line(self : Interface) -> String {\n"
+"         ...\n"
+" L1390 | pub async fn Interface::read_key(self : Interface) -> Key {\n"
+"         ...\n"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:160
+msgid "`moon ide doc` - Discover and Explore APIs"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:162
+msgid "Query documentation and discover available symbols, packages, and APIs."
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:166
+msgid "moon ide doc '<query>'\n"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:170
+msgid "Query Syntax"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:172
+msgid "The query syntax is specialized for symbol and package discovery:"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:174
+msgid "**Empty query** - List available packages or symbols:"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:176
+msgid "`moon ide doc ''`"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:177
+msgid ""
+"In a module: Shows all available packages (including dependencies and "
+"`moonbitlang/core`)"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:178
+msgid "In a package: Shows all symbols in current package"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:179
+msgid "Outside package: Shows all available packages"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:181
+msgid "**Lookup by name:**"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:183
+msgid "`moon ide doc \"[@pkg.]function_name\"` - Find functions or values"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:184
+msgid ""
+"`moon ide doc \"[@pkg.]TypeName\"` - Find types (builtin types don't need"
+" prefix)"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:185 ../../toolchain/moonide/index.md:187
+msgid "`moon ide doc \"[@pkg.]Type::member\"` - Find type methods or fields"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:189
+msgid "**Package exploration:**"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:191
+msgid "`moon ide doc \"@pkg\"` - List all exported symbols in a package"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:192
+msgid "`moon ide doc \"@encoding/utf8\"` - Works with nested packages"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:193
+msgid "Examples: `moon ide doc \"@json\"`, `moon ide doc \"@buffer\"`"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:195
+msgid "**Globbing** - Use `*` wildcard for partial matches:"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:197
+msgid ""
+"`moon ide doc \"String::*rev*\"` - Find all String methods containing "
+"\"rev\""
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:198
+msgid "`moon ide doc \"*parse*\"` - Find all symbols with \"parse\" in the name"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:202
+msgid "**Search for type methods:**"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:204
+msgid ""
+"# Search for String methods in standard library:\n"
+"$ moon ide doc \"String\"\n"
+"\n"
+"type String\n"
+"\n"
+"  pub fn String::add(String, String) -> String\n"
+"  # ... more methods omitted ...\n"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:214
+msgid "**Explore a package:**"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:216
+msgid ""
+"$ moon ide doc \"@buffer\"\n"
+"moonbitlang/core/buffer\n"
+"\n"
+"fn from_array(ArrayView[Byte]) -> Buffer\n"
+"# ... omitted ...\n"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:224
+msgid "**Query a specific function:**"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:226
+msgid ""
+"$ moon ide doc \"@buffer.new\"\n"
+"package \"moonbitlang/core/buffer\"\n"
+"\n"
+"pub fn new(size_hint? : Int) -> Buffer\n"
+"  Creates ... omitted ...\n"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:234
+msgid "**Use globbing to find related functions:**"
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:236
+msgid ""
+"$ moon ide doc \"String::*rev*\"\n"
+"package \"moonbitlang/core/string\"\n"
+"\n"
+"pub fn String::rev(String) -> String\n"
+"  Returns ... omitted ...\n"
+"  # ... more\n"
+"\n"
+"pub fn String::rev_find(String, StringView) -> Int?\n"
+"  Returns ... omitted ...\n"
+msgstr ""
+
