@@ -1,0 +1,148 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0007.md:1
+msgid "E0007"
+msgstr ""
+
+#: ../../language/error_codes/E0007.md:3
+msgid ""
+"Field is never read. This include fields in structs and fields in enum "
+"constructors."
+msgstr "字段从未被读取。这包括结构体中的字段和枚举构造器中的字段。"
+
+#: ../../language/error_codes/E0007.md:6
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0007.md:8
+msgid ""
+"///|\n"
+"priv enum E {\n"
+"  A(Int)\n"
+"  B(value~ : Int)\n"
+"}\n"
+"\n"
+"///|\n"
+"priv struct S {\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(B(value=1))\n"
+"  match A(1) {\n"
+"    A(_) => println(\"A\")\n"
+"    B(_) => println(\"B\")\n"
+"  }\n"
+"  ignore(S::{ value : 1 })\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E0007.md:12
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0007.md:14
+msgid ""
+"If the fields in enum constructors are unused, you can expand them in the "
+"pattern to use them:"
+msgstr "如果枚举构造器中的字段未使用，你可以在模式中展开它们以使用它们："
+
+#: ../../language/error_codes/E0007.md:17
+msgid ""
+"\n"
+"///|\n"
+"priv enum E {\n"
+"  A(Int)\n"
+"  B(value~ : Int)\n"
+"}\n"
+"\n"
+"///|\n"
+"priv struct S {\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(B(value=1))\n"
+"  match A(1) {\n"
+"    A(x) => inspect(\"A(\\{x})\", content=\"A(1)\")\n"
+"    B(value~) => inspect(\"B(\\{value})\")\n"
+"  }\n"
+"  let s = S::{ value: 1 }\n"
+"  match s {\n"
+"    { value } => println(\"S(\\{value})\")\n"
+"  }\n"
+"  println(\"S(\\{s.value})\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0007.md:23
+msgid ""
+"If the fields are indeed useless, you can remove the field from the "
+"constructor:"
+msgstr "如果字段确实没有用，你可以从构造器中移除字段："
+
+#: ../../language/error_codes/E0007.md:26
+msgid ""
+"\n"
+"///|\n"
+"priv enum E2 {\n"
+"  A2\n"
+"  B2\n"
+"}\n"
+"\n"
+"///|\n"
+"priv struct S2 {}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(E2::B2)\n"
+"  match E2::A2 {\n"
+"    A2 => println(\"A\")\n"
+"    B2 => println(\"B\")\n"
+"  }\n"
+"  ignore(S2::{  })\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0007.md:32
+msgid ""
+"If the fields are expected to be used by the others, you can mark the type "
+"as `pub` or `pub(all)`."
+msgstr "如果字段预计会被其他人使用，你可以将类型标记为 `pub` 或 `pub(all)`。"
+
+#: ../../language/error_codes/E0007.md:35
+msgid ""
+"\n"
+"///|\n"
+"pub enum E3 {\n"
+"  A3(Int)\n"
+"  B3(value~ : Int)\n"
+"}\n"
+"\n"
+"///|\n"
+"pub struct S3 {\n"
+"  value : Int\n"
+"}\n"
+msgstr ""
+

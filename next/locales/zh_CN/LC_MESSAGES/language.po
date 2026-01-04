@@ -1066,12 +1066,13 @@ msgid ""
 msgstr "`#callsite` 属性用于标记发生在调用位置的属性。"
 
 #: ../../language/attributes.md:280
+#, fuzzy
 msgid ""
 "It could be `autofill`, which is to autofill the arguments [SourceLoc and"
-" ArgLoc](/language/fundamentals.md#autofill-arguments) at callsite."
+" ArgLoc](/language/fundamentals/functions.md#autofill-arguments) at callsite."
 msgstr ""
 "它可以是 `autofill`，用于在调用位置自动填充参数 [SourceLoc 和 "
-"ArgLoc](/language/fundamentals.md#autofill-arguments)。"
+"ArgLoc](/language/fundamentals/functions.md#autofill-arguments)。"
 
 #: ../../language/attributes.md:283
 msgid "Skip Attribute"
@@ -1111,15 +1112,13 @@ msgstr "模块属性"
 msgid ""
 "The `module` attribute is used to declare the module dependency for "
 "JavaScript backend."
-msgstr ""
-"`module` 属性用于为 JavaScript 后端声明模块依赖。"
+msgstr "`module` 属性用于为 JavaScript 后端声明模块依赖。"
 
 #: ../../language/attributes.md:306
 msgid ""
 "In `cjs` format, it is interpreted as `require`, and in `esm` format, it "
 "is interpreted as `import`."
-msgstr ""
-"在 `cjs` 格式中，它被解释为 `require`，而在 `esm` 格式中，它被解释为 `import`。"
+msgstr "在 `cjs` 格式中，它被解释为 `require`，而在 `esm` 格式中，它被解释为 `import`。"
 
 #: ../../language/attributes.md:309
 msgid ""
@@ -2437,13 +2436,14 @@ msgid "Transforming to Result"
 msgstr "转换为 Result"
 
 #: ../../language/error-handling.md:192
+#, fuzzy
 msgid ""
 "You can also catch the potential error and transform into a first-class "
-"value of the [`Result`](/language/fundamentals.md#option-and-result) "
+"value of the [`Result`](/language/fundamentals/builtins.md#option-and-result) "
 "type, by using `try?` before an expression that may throw error:"
 msgstr ""
-"您还可以捕获潜在的错误，并将其转换为一等公民的 [`Result`](/language/fundamentals.md#option-and-"
-"result) type，方法是在可能引发错误的表达式前使用 `try?`："
+"您还可以捕获潜在的错误，并将其转换为一等公民的 [`Result`](/language/fundamentals/builtins.md"
+"#option-and-result) type，方法是在可能引发错误的表达式前使用 `try?`："
 
 #: ../../language/error-handling.md:196
 msgid ""
@@ -5637,7 +5637,7 @@ msgstr "将缺少的字段添加到构造函数中"
 #: ../../language/error_codes/E0056.md:5
 msgid ""
 "The warning is emitted when pattern matching on a [struct "
-"pattern](/language/fundamentals.md#simple-patterns) and having missing "
+"pattern](/language/fundamentals/pattern-matching.md#simple-patterns) and having missing "
 "fields."
 msgstr ""
 
@@ -20282,18 +20282,20 @@ msgid "Aliases"
 msgstr "别名"
 
 #: ../../language/packages.md:64
+#, fuzzy
 msgid ""
-"By default, [function alias](/language/fundamentals.md#function-alias) "
+"By default, [function alias](/language/fundamentals/functions.md#function-alias) "
 "and [method alias](/language/methods.md#alias-methods-as-functions) "
 "follow the visibility of the original definition, while  [type "
-"alias](/language/fundamentals.md#type-alias), [trait "
+"alias](/language/fundamentals/custom-data-types.md#type-alias), [trait "
 "alias](/language/methods.md#trait-alias), [using](#using) are _invisible_"
 " to other packages."
 msgstr ""
-"默认情况下，[函数别名](/language/fundamentals.md#function-alias) 和 "
+"默认情况下，[函数别名](/language/fundamentals/functions.md#function-alias) 和 "
 "[方法别名](/language/methods.md#alias-methods-as-functions) 遵循原始定义的可见性，而 "
-"[类型别名](/language/fundamentals.md#type-alias)、[特征别名](/language/methods.md"
-"#trait-alias)、[using](#using) 对其他包是 _不可见_ 的。"
+"[类型别名](/language/fundamentals/custom-data-types.md#type-"
+"alias)、[特征别名](/language/methods.md#trait-alias)、[using](#using) 对其他包是 "
+"_不可见_ 的。"
 
 #: ../../language/packages.md:71
 msgid ""
@@ -20685,14 +20687,15 @@ msgstr ""
 "control) 的 `pub` 关键字和函数参数名称应该省略。"
 
 #: ../../language/packages.md:258
+#, fuzzy
 msgid ""
 "If you are uncertain about how to define the interface, you can create a "
 "normal package, define the functions you need using [TODO "
-"syntax](/language/fundamentals.md#todo-syntax), and use `moon info` to "
+"syntax](/language/fundamentals/special-syntax.md#todo-syntax), and use `moon info` to "
 "help you generate the interface."
 msgstr ""
-"如果你不确定如何定义接口，可以创建一个普通包，使用 [TODO 语法](/language/fundamentals.md#todo-"
-"syntax) 定义所需的函数，并使用 `moon info` 帮助你生成接口。"
+"如果你不确定如何定义接口，可以创建一个普通包，使用 [TODO 语法](/language/fundamentals/special-"
+"syntax.md#todo-syntax) 定义所需的函数，并使用 `moon info` 帮助你生成接口。"
 
 #: ../../language/packages.md:261
 msgid "Implementing a virtual package"
@@ -21210,5 +21213,12 @@ msgstr ""
 #~ "pub fn add1(x : Int) -> Int {\n"
 #~ "  @moonbitlang/core/int.abs(@c.incr(@pkgA.incr(x)))\n"
 #~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The warning is emitted when pattern "
+#~ "matching on a [struct "
+#~ "pattern](/language/fundamentals/pattern-matching.md#simple-"
+#~ "patterns) and having missing fields."
 #~ msgstr ""
 

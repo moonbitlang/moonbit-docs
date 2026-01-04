@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4042.md:1
+msgid "E4042"
+msgstr ""
+
+#: ../../language/error_codes/E4042.md:3
+msgid "Invalid stub type."
+msgstr "不合法的桩类型。"
+
+#: ../../language/error_codes/E4042.md:5
+msgid ""
+"When defineing a FFI, the stub type must be a valid type, namely they can be"
+" represented natively at corresponding backends."
+msgstr "在定义 FFI 时，桩类型必须是一个有效的类型，即它们可以在相应的后端原生地表示。"
+
+#: ../../language/error_codes/E4042.md:8
+msgid ""
+"For example, you cannot use `FixedArray[T]` and `String` in FFI definition "
+"on WASM linear backend."
+msgstr "例如，在 WASM 线性后端的 FFI 定义中，不能使用 `FixedArray[T]` 和 `String`。"
+
+#: ../../language/error_codes/E4042.md:11
+msgid "Erroneous Example"
+msgstr "错误示例："
+
+#: ../../language/error_codes/E4042.md:13
+msgid "On WASM linear backend:"
+msgstr "在 WASM 线性后端："
+
+#: ../../language/error_codes/E4042.md:15
+msgid ""
+"fn ffi(array : FixedArray[Int]) -> Unit = \"mod\" \"ffi\"\n"
+"//             ^~~~~~~~~~~~~~~ Error: Invalid stub type.\n"
+msgstr ""
+
+#: ../../language/error_codes/E4042.md:20
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4042.md:22
+msgid ""
+"The way to pass non-native types through the FFI interface depends on both "
+"the backend of the MoonBit compiler and the runtime you are using. For "
+"example, if you wish to pass an array of int to the JS host with the WASM "
+"linear backend, you can pass the int one by one to the host function and "
+"store the array on the JS side."
+msgstr ""
+"将非原生类型通过 FFI 接口传递的方式取决于 MoonBit 编译器的后端和您使用的运行时。例如，如果你希望在 Wasm "
+"线性内存后端将一个整数数组传递给 JS 宿主，可以将整数一个一个地传递给宿主函数，并在 JS 端存储数组。"
+
+#: ../../language/error_codes/E4042.md:28
+msgid ""
+"extern type JsArray\n"
+"fn make_js_array() -> JsArray = \"mod\" \"make_js_array\"\n"
+"fn push_js_array(array : JsArray, value : Int) -> Unit = \"mod\" "
+"\"push_js_array\""
+msgstr ""
+

@@ -1,0 +1,102 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4135.md:1
+msgid "E4135"
+msgstr ""
+
+#: ../../language/error_codes/E4135.md:3
+msgid "Inconsistent `impl` of trait: implementations have different constraints."
+msgstr "不一致的 `impl` 实现：实现具有不同的约束。"
+
+#: ../../language/error_codes/E4135.md:5
+msgid ""
+"When implementing a trait for a type, all implementations must have the same"
+" constraints. If the two constraints has intersection, then it would be "
+"unclear which implementation to use for types that satisfy both constraints."
+msgstr "当实现一个特征为类型时，所有实现都必须具有相同的约束。如果两个约束有交集，那么对于满足这两个约束的类型，使用哪个实现是不清楚的。"
+
+#: ../../language/error_codes/E4135.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4135.md:11
+msgid ""
+"trait ByteSize { byte_size() -> Int}\n"
+"impl ByteSize for Byte with byte_size() { 1 }\n"
+"impl ByteSize for Int with byte_size() { 4 }\n"
+"\n"
+"trait WordSize { word_size() -> Int }\n"
+"impl WordSize for Float with word_size() { 1 }\n"
+"impl WordSize for Double with word_size() { 2 }\n"
+"\n"
+"trait Size { size(Self) -> Int }\n"
+"\n"
+"impl[T : ByteSize] Size for Array[T] with size(self) {\n"
+"  self.length() * T::byte_size()\n"
+"}\n"
+"\n"
+"impl[T : WordSize] Size for Array[T] with size(self) {\n"
+"//<~~~~~~~~~~~~~~~\n"
+"// Error: Inconsistent `impl` of trait Size for Array at 11:1 and 15:1:\n"
+"//   type parameters of implementations have different constraints\n"
+"  self.length() * T::word_size() * 4\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4135.md:15
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4135.md:17
+msgid ""
+"One way to resolve this issue is to pick one of the implementations and "
+"remove the other:"
+msgstr "解决这个问题的一种方法是选择其中一个实现并删除另一个："
+
+#: ../../language/error_codes/E4135.md:20
+msgid ""
+"// Remove the implementation for WordSize\n"
+"// impl[T : WordSize] Size for Array[T] with size(self) {\n"
+"//   self.length() * T::word_size() * 4\n"
+"// }"
+msgstr ""
+
+#: ../../language/error_codes/E4135.md:24
+msgid ""
+"If you want to implementation for both constraints, you can create a new "
+"trait that combines the constraints:"
+msgstr "如果要为两个约束实现特征，您可以创建一个新特征，将这两个约束组合在一起："
+
+#: ../../language/error_codes/E4135.md:27
+msgid ""
+"trait ByteWordSize {\n"
+"  byte_size() -> Int\n"
+"  word_size() -> Int\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4135.md:31
+msgid ""
+"And manually implement the trait for all the types that satisfy the "
+"constraints (`ByteSize` or `WordSize`)."
+msgstr "并手动为满足约束 (`ByteSize` 或 `WordSize`) 的所有类型实现特征。"
+

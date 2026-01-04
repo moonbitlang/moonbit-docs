@@ -1,0 +1,143 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../pilot/moonbit-pilot/configuration.md:1
+msgid "Configuration"
+msgstr "配置"
+
+#: ../../pilot/moonbit-pilot/configuration.md:3
+msgid "Ignoring Files and Directories"
+msgstr "忽略文件和目录"
+
+#: ../../pilot/moonbit-pilot/configuration.md:5
+msgid ""
+"If you have directories or files that you want MoonBit Pilot to ignore, you "
+"can configure this by placing a `.moonagentignore` file in your project root"
+" directory. The format is identical to `.gitignore`."
+msgstr ""
+"如果你有希望 MoonBit Pilot 忽略的目录或文件，可以通过在项目根目录中放置一个 `.moonagentignore` "
+"文件来进行配置。其格式与 `.gitignore` 完全相同。"
+
+#: ../../pilot/moonbit-pilot/configuration.md:7
+msgid ""
+"If no `.moonagentignore` file is set, MoonBit Pilot will use the project's "
+"`.gitignore` as the default. Files excluded by either ignore file will not "
+"be monitored by MoonBit Pilot."
+msgstr ""
+"如果未设置 `.moonagentignore` 文件，MoonBit Pilot 将使用项目的 `.gitignore` "
+"作为默认配置。被任一忽略文件排除的文件将不会被 MoonBit Pilot 监控。"
+
+#: ../../pilot/moonbit-pilot/configuration.md:9
+msgid ".moonagentignore Format"
+msgstr ".moonagentignore 格式"
+
+#: ../../pilot/moonbit-pilot/configuration.md:11
+msgid "The `.moonagentignore` file follows the same syntax as `.gitignore`:"
+msgstr "`.moonagentignore` 文件遵循与 `.gitignore` 相同的语法："
+
+#: ../../pilot/moonbit-pilot/configuration.md:13
+msgid ""
+"# Ignore specific files\n"
+"secret.txt\n"
+"config.local.json\n"
+"\n"
+"# Ignore directories\n"
+"node_modules/\n"
+".vscode/\n"
+"dist/\n"
+"\n"
+"# Ignore file patterns\n"
+"*.log\n"
+"*.tmp\n"
+"temp_*\n"
+"\n"
+"# Ignore nested patterns\n"
+"docs/**/*.draft.md\n"
+"\n"
+"# Use ! to negate (include) previously ignored patterns\n"
+"!important.log\n"
+msgstr ""
+"# 忽略特定文件\n"
+"secret.txt\n"
+"config.local.json\n"
+"\n"
+"# 忽略目录\n"
+"node_modules/\n"
+".vscode/\n"
+"dist/\n"
+"\n"
+"# 忽略文件模式\n"
+"*.log\n"
+"*.tmp\n"
+"temp_*\n"
+"\n"
+"# 忽略嵌套模式\n"
+"docs/**/*.draft.md\n"
+"\n"
+"# 使用 ! 来否定（包含）先前忽略的模式\n"
+"!important.log\n"
+
+#: ../../pilot/moonbit-pilot/configuration.md:35
+msgid "Project Configuration"
+msgstr "项目配置"
+
+#: ../../pilot/moonbit-pilot/configuration.md:37
+msgid "moonagent.yml"
+msgstr "moonagent.yml"
+
+#: ../../pilot/moonbit-pilot/configuration.md:39
+msgid ""
+"Create a `.moonagent/moonagent.yml` file in your project root to configure "
+"MoonBit Pilot's behavior:"
+msgstr "在你的项目根目录下创建一个 `.moonagent/moonagent.yml` 文件来配置 MoonBit Pilot 的行为："
+
+#: ../../pilot/moonbit-pilot/configuration.md:41
+msgid ""
+"# MoonBit Pilot Project Configuration\n"
+"# This configuration file controls moon pilot behavior for this project\n"
+"\n"
+"# Enable automatic commits when files are modified\n"
+"auto_commit: true\n"
+"\n"
+"# Additional configuration options can be added here\n"
+msgstr ""
+"# MoonBit Pilot 项目配置\n"
+"# 此配置文件控制此项目的 moon pilot 行为\n"
+"\n"
+"# 文件修改时启用自动提交\n"
+"auto_commit: true\n"
+"\n"
+"# 可在此处添加其他配置选项\n"
+
+#: ../../pilot/moonbit-pilot/configuration.md:51
+msgid "Available Configuration Options"
+msgstr "可用配置选项"
+
+#: ../../pilot/moonbit-pilot/configuration.md:53
+msgid ""
+"**auto_commit**: When set to `true`, MoonBit Pilot will automatically create"
+" git commits before and after making changes to your code"
+msgstr "**auto_commit**: 当设置为 `true` 时，MoonBit Pilot 将在修改你的代码前后自动创建 git 提交"
+
+#: ../../pilot/moonbit-pilot/configuration.md:54
+msgid "Additional configuration options may be added in future versions"
+msgstr "未来版本中可能会添加其他配置选项"
+

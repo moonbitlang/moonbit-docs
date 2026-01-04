@@ -1,0 +1,108 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4113.md:1
+msgid "E4113"
+msgstr ""
+
+#: ../../language/error_codes/E4113.md:3
+msgid "Constructor has no field with the given name."
+msgstr "构造函数没有给定名称的字段。"
+
+#: ../../language/error_codes/E4113.md:5
+msgid ""
+"This error occurs when trying to access a field that doesn't exist in a "
+"constructor pattern. In MoonBit, when pattern matching with constructors "
+"that have named fields, you can only access fields that were defined in the "
+"constructor's declaration."
+msgstr ""
+"当试图访问构造函数模式中不存在的字段时，会发生此错误。在 MoonBit "
+"中，当与具有命名字段的构造函数进行模式匹配时，您只能访问在构造函数声明中定义的字段。"
+
+#: ../../language/error_codes/E4113.md:10
+msgid "This commonly happens when:"
+msgstr "此情况通常发生在："
+
+#: ../../language/error_codes/E4113.md:12
+msgid "Misspelling a field name"
+msgstr "拼错字段名"
+
+#: ../../language/error_codes/E4113.md:13
+msgid "Trying to access a field that exists in a different constructor"
+msgstr "试图访问存在于其他构造函数中的字段"
+
+#: ../../language/error_codes/E4113.md:14
+msgid "Trying to access a field that was removed or renamed in the type definition"
+msgstr "试图访问已从类型定义中删除或重命名的字段"
+
+#: ../../language/error_codes/E4113.md:16
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4113.md:18
+msgid ""
+"pub enum E {\n"
+"  A(a~: Int)\n"
+"}\n"
+"\n"
+"pub fn f(x: E) -> Unit {\n"
+"  match x {\n"
+"    A(..) as a => {\n"
+"      println(a.a)\n"
+"      println(a.b)\n"
+"//            ^^^ Error: Constructor A of type E has no field b.\n"
+"    }\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4113.md:22
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4113.md:24
+msgid "To fix this error, you can either:"
+msgstr "要修复此错误，您可以执行以下操作："
+
+#: ../../language/error_codes/E4113.md:26
+msgid "add the missing field to the constructor"
+msgstr "将缺少的字段添加到构造函数中"
+
+#: ../../language/error_codes/E4113.md:28
+msgid ""
+"pub enum E {\n"
+"  A(a~: Int, b~: Bool)\n"
+"}\n"
+"\n"
+"pub fn f(x: E) -> Unit {\n"
+"  match x {\n"
+"    A(..) as a => {\n"
+"      println(a.a)\n"
+"      println(a.b)\n"
+"    }\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4113.md:32
+msgid "remove the incorrect field access"
+msgstr "删除不正确的字段访问"
+

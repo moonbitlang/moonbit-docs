@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4155.md:1
+msgid "E4155"
+msgstr ""
+
+#: ../../language/error_codes/E4155.md:3
+msgid "Cycle in `const`, `fnalias`, `typealias` or `traitalias` declaration."
+msgstr "`const`，`fnalias`，`typealias` 或 `traitalias` 声明里有循环定义。"
+
+#: ../../language/error_codes/E4155.md:5
+msgid ""
+"`const` declaration can refer to other constants defined in the same "
+"package, and `fnalias` can alias other function alias in the same package, "
+"too. `typealias` and `traitalias` can also refer to other "
+"`typealias`/`traitalias` in current package. But these definitions must not "
+"form cycle, otherwise this error will be reported."
+msgstr ""
+"`const` 声明中可以使用同一个包内定义的其他常量。`fnalias` 也可以指代同一个包内的其他函数别名。`typealias` 和 "
+"`traitalias` 也可以指代同一个包内的其他 "
+"`typealias`/`traitalias`。但如果这些声明中有循环定义，编译器就会产生本错误。"
+
+#: ../../language/error_codes/E4155.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4155.md:11
+msgid ""
+"///|\n"
+"const A : Int = B + 1\n"
+"\n"
+"///|\n"
+"const B : Int = A + 1\n"
+"\n"
+"///|\n"
+"fnalias f as g\n"
+"\n"
+"///|\n"
+"fnalias g as f\n"
+"\n"
+"///|\n"
+"typealias T1 as T2\n"
+"\n"
+"///|\n"
+"typealias T2 as T1\n"
+"\n"
+"///|\n"
+"traitalias I1 as I2\n"
+"\n"
+"///|\n"
+"traitalias I2 as I1\n"
+msgstr ""
+

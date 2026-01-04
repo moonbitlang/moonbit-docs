@@ -1,0 +1,112 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/docs.md:1
+msgid "Documentation"
+msgstr "文档"
+
+#: ../../language/docs.md:3
+msgid "Doc Comments"
+msgstr "文档注释"
+
+#: ../../language/docs.md:5
+msgid ""
+"Doc comments are comments prefix with `///` in each line in the leading of "
+"toplevel structure like `fn`, `let`, `enum`, `struct` or `type`. The doc "
+"comments are written in markdown."
+msgstr ""
+"文档注释是在顶层结构（如 `fn`、`let`、`enum`、`struct`、`type`）的每一行前面加上 `///` 的注释。文档注释内包含 "
+"markdown 文本。"
+
+#: ../../language/docs.md:7
+msgid ""
+"/// Return a new array with reversed elements.\n"
+"fn[T] reverse(xs : Array[T]) -> Array[T] {\n"
+"  ...\n"
+"}\n"
+msgstr ""
+"/// 返回一个新数组，其中元素被反转。\n"
+"fn[T] reverse(xs : Array[T]) -> Array[T] {\n"
+"  ...\n"
+"}\n"
+
+#: ../../language/docs.md:14
+msgid ""
+"Markdown code block inside docstring will be considered document test, `moon"
+" check` and `moon test` will automatically check and run these tests, so "
+"that examples in docstring are always up-to-date. MoonBit will automatically"
+" wrap a test block around document test, so there is no need to wrap `test {"
+" .. }` around document test:"
+msgstr ""
+"文档注释中的 markdown 代码块会被视作文档测试，`moon check` 和 `moon test` "
+"会自动检查并运行这些测试，这能保证文档注释中的代码示例永远不会过时。MoonBit 会自动给在文档注释的内容周围裹上一层 `test` "
+"块，所以编写文档测试时无需手动包裹 `test { .. }` 块："
+
+#: ../../language/docs.md:19
+msgid ""
+"/// Increment an integer by one,\n"
+"///\n"
+"/// Example:\n"
+"/// ```\n"
+"/// inspect(incr(41), content=\"42\")\n"
+"/// ```\n"
+"pub fn incr(x : Int) -> Int {\n"
+"  x + 1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/docs.md:25
+msgid ""
+"If you want to prevent a code snippet from being treated as document test, "
+"mark it with a language id other than `mbt` on the markdown code block:"
+msgstr "如果想要阻止一段代码被当作文档测试，只需要在它的 markdown 代码块上标记一个 `mbt` 以外的语言名字："
+
+#: ../../language/docs.md:28
+msgid ""
+"/// `c_incr(x)` is the same as the following C code:\n"
+"/// ```c\n"
+"/// x++\n"
+"/// ```\n"
+"pub fn c_incr(x : Ref[Int]) -> Int {\n"
+"  let old = x.val\n"
+"  x.val += 1\n"
+"  old\n"
+"}\n"
+msgstr ""
+"/// `c_incr(x)` 等价于下面的 C 代码：\n"
+"/// ```c\n"
+"/// x++\n"
+"/// ```\n"
+"pub fn c_incr(x : Ref[Int]) -> Int {\n"
+"  let old = x.val\n"
+"  x.val += 1\n"
+"  old\n"
+"}\n"
+
+#: ../../language/docs.md:34
+msgid ""
+"Currently, document tests are always [blackbox tests](/language/tests.md"
+"#blackbox-tests-and-whitebox-tests). So private definitions cannot have "
+"document test."
+msgstr ""
+"目前，文档测试都是 [黑盒测试](/language/tests.md#blackbox-tests-and-whitebox-"
+"tests)。所以私有定义目前不能有文档测试。"
+

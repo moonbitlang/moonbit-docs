@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0042.md:1
+msgid "E0042"
+msgstr ""
+
+#: ../../language/error_codes/E0042.md:3
+msgid "Invalid attribute."
+msgstr "不合法的属性。"
+
+#: ../../language/error_codes/E0042.md:5
+msgid ""
+"This warning will be emitted when the program contain attribute unrecognized"
+" by MoonBit, or the syntax of attribute has incorrect shape."
+msgstr "如果程序中包含 MoonBit 不支持的属性标注，或者属性标注的参数数量、类型不正确，编译器就会产生这一警告。"
+
+#: ../../language/error_codes/E0042.md:8
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0042.md:9
+msgid ""
+"///| unrecognized attribute\n"
+"#unrecognized\n"
+"fn f() -> Unit {\n"
+"\n"
+"}\n"
+"\n"
+"///| `#deprecated` can accept at most one message\n"
+"#deprecated(\"multiple\", \"message\")\n"
+"fn g() -> Unit {\n"
+"\n"
+"}\n"
+msgstr ""
+"// 未知的属性\n"
+"#unrecognized\n"
+"fn f() -> Unit {}\n"
+"\n"
+"// `#deprecated` 最多接受一个字符串作为参数\n"
+"#deprecated(\"multiple\", \"message\")\n"
+"fn g() -> Unit {}\n"
+
+#: ../../language/error_codes/E0042.md:13
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0042.md:14
+msgid ""
+"Check if there is typo in the attribute declaration, and check the document "
+"of the attribute for the arguments it accept. If you intend to write a "
+"attribute for use by foreign tools, make sure the attribute's name is "
+"`#xxx.yyy`, such as `#coverage.skip`, so that MoonBit will treat it as a "
+"foreign attribute and ignore it."
+msgstr ""
+"检查属性标注中是否有拼写错误，并检查该属性的文档以确认它接受哪些参数。如果想要写一个供外部工具使用的属性标注，确保属性的名字形如 "
+"`#xxx.yyy`，例如 `#coverage.skip`，这样 MoonBit 就会把该属性视作外部属性并无视它。"
+

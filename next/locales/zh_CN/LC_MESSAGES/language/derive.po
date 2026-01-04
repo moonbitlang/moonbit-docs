@@ -1,0 +1,590 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/derive.md:1
+msgid "Deriving traits"
+msgstr "派生内建特征"
+
+#: ../../language/derive.md:3
+msgid ""
+"MoonBit supports deriving a number of builtin traits automatically from the "
+"type definition."
+msgstr "MoonBit 支持从类型定义中自动派生一些内建特征。"
+
+#: ../../language/derive.md:5
+msgid ""
+"To derive a trait `T`, it is required that all fields used in the type "
+"implements `T`. For example, deriving `Show` for a struct `struct A { x: T1;"
+" y: T2 }` requires both `T1: Show` and `T2: Show`"
+msgstr ""
+"要派生特征 `T`，需要类型中使用的所有字段都实现了 `T`。例如，为结构体 `struct A { x: T1; y: T2 }` 派生 `Show`"
+" 需要 `T1: Show` 和 `T2: Show`。"
+
+#: ../../language/derive.md:8
+msgid "Show"
+msgstr "输出"
+
+#: ../../language/derive.md:10
+msgid ""
+"`derive(Show)` will generate a pretty-printing method for the type. The "
+"derived format is similar to how the type can be constructed in code."
+msgstr "`derive(Show)` 将为类型生成一个漂亮的打印方法。派生的格式类似于代码中构造类型的方式。"
+
+#: ../../language/derive.md:13
+msgid ""
+"struct MyStruct {\n"
+"  x : Int\n"
+"  y : Int\n"
+"} derive(Show)\n"
+"\n"
+"test \"derive show struct\" {\n"
+"  let p = MyStruct::{ x: 1, y: 2 }\n"
+"  assert_eq(Show::to_string(p), \"{x: 1, y: 2}\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:19
+msgid ""
+"enum MyEnum {\n"
+"  Case1(Int)\n"
+"  Case2(label~ : String)\n"
+"  Case3\n"
+"} derive(Show)\n"
+"\n"
+"test \"derive show enum\" {\n"
+"  assert_eq(Show::to_string(MyEnum::Case1(42)), \"Case1(42)\")\n"
+"  assert_eq(\n"
+"    Show::to_string(MyEnum::Case2(label=\"hello\")),\n"
+"    \"Case2(label=\\\"hello\\\")\",\n"
+"  )\n"
+"  assert_eq(Show::to_string(MyEnum::Case3), \"Case3\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:25
+msgid "Eq and Compare"
+msgstr "相等和比较"
+
+#: ../../language/derive.md:27
+msgid ""
+"`derive(Eq)` and `derive(Compare)` will generate the corresponding method "
+"for testing equality and comparison. Fields are compared in the same order "
+"as their definitions. For enums, the order between cases ascends in the "
+"order of definition."
+msgstr ""
+"`derive(Eq)` 和 `derive(Compare)` "
+"将为测试相等性和比较生成相应的方法。字段按照它们的定义顺序进行比较。对于枚举，构造器的顺序按照定义的顺序升序。"
+
+#: ../../language/derive.md:31
+msgid ""
+"struct DeriveEqCompare {\n"
+"  x : Int\n"
+"  y : Int\n"
+"} derive(Eq, Compare)\n"
+"\n"
+"test \"derive eq_compare struct\" {\n"
+"  let p1 = DeriveEqCompare::{ x: 1, y: 2 }\n"
+"  let p2 = DeriveEqCompare::{ x: 2, y: 1 }\n"
+"  let p3 = DeriveEqCompare::{ x: 1, y: 2 }\n"
+"  let p4 = DeriveEqCompare::{ x: 1, y: 3 }\n"
+"\n"
+"  // Eq\n"
+"  assert_eq(p1 == p2, false)\n"
+"  assert_eq(p1 == p3, true)\n"
+"  assert_eq(p1 == p4, false)\n"
+"  assert_eq(p1 != p2, true)\n"
+"  assert_eq(p1 != p3, false)\n"
+"  assert_eq(p1 != p4, true)\n"
+"\n"
+"  // Compare\n"
+"  assert_eq(p1 < p2, true)\n"
+"  assert_eq(p1 < p3, false)\n"
+"  assert_eq(p1 < p4, true)\n"
+"  assert_eq(p1 > p2, false)\n"
+"  assert_eq(p1 > p3, false)\n"
+"  assert_eq(p1 > p4, false)\n"
+"  assert_eq(p1 <= p2, true)\n"
+"  assert_eq(p1 >= p2, false)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:37
+msgid ""
+"enum DeriveEqCompareEnum {\n"
+"  Case1(Int)\n"
+"  Case2(label~ : String)\n"
+"  Case3\n"
+"} derive(Eq, Compare)\n"
+"\n"
+"test \"derive eq_compare enum\" {\n"
+"  let p1 = DeriveEqCompareEnum::Case1(42)\n"
+"  let p2 = DeriveEqCompareEnum::Case1(43)\n"
+"  let p3 = DeriveEqCompareEnum::Case1(42)\n"
+"  let p4 = DeriveEqCompareEnum::Case2(label=\"hello\")\n"
+"  let p5 = DeriveEqCompareEnum::Case2(label=\"world\")\n"
+"  let p6 = DeriveEqCompareEnum::Case2(label=\"hello\")\n"
+"  let p7 = DeriveEqCompareEnum::Case3\n"
+"\n"
+"  // Eq\n"
+"  assert_eq(p1 == p2, false)\n"
+"  assert_eq(p1 == p3, true)\n"
+"  assert_eq(p1 == p4, false)\n"
+"  assert_eq(p1 != p2, true)\n"
+"  assert_eq(p1 != p3, false)\n"
+"  assert_eq(p1 != p4, true)\n"
+"\n"
+"  // Compare\n"
+"  assert_eq(p1 < p2, true) // 42 < 43\n"
+"  assert_eq(p1 < p3, false)\n"
+"  assert_eq(p1 < p4, true) // Case1 < Case2\n"
+"  assert_eq(p4 < p5, true)\n"
+"  assert_eq(p4 < p6, false)\n"
+"  assert_eq(p4 < p7, true) // Case2 < Case3\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:43
+msgid "Default"
+msgstr "默认值"
+
+#: ../../language/derive.md:45
+msgid ""
+"`derive(Default)` will generate a method that returns the default value of "
+"the type."
+msgstr "`derive(Default)` 将生成一个返回类型的默认值的方法。"
+
+#: ../../language/derive.md:47
+msgid ""
+"For structs, the default value is the struct with all fields set as their "
+"default value."
+msgstr "对于结构体，默认值是所有字段设置为它们的默认值的结构体。"
+
+#: ../../language/derive.md:49
+msgid ""
+"struct DeriveDefault {\n"
+"  x : Int\n"
+"  y : String?\n"
+"} derive(Default, Eq, Show)\n"
+"\n"
+"test \"derive default struct\" {\n"
+"  let p = DeriveDefault::default()\n"
+"  assert_eq(p, DeriveDefault::{ x: 0, y: None })\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:55
+msgid "For enums, the default value is the only case that has no parameters."
+msgstr "对于枚举，默认值是唯一没有参数的构造器。"
+
+#: ../../language/derive.md:57
+msgid ""
+"enum DeriveDefaultEnum {\n"
+"  Case1(Int)\n"
+"  Case2(label~ : String)\n"
+"  Case3\n"
+"} derive(Default, Eq, Show)\n"
+"\n"
+"test \"derive default enum\" {\n"
+"  assert_eq(DeriveDefaultEnum::default(), DeriveDefaultEnum::Case3)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:63
+msgid ""
+"Enums that has no cases or more than one cases without parameters cannot "
+"derive `Default`."
+msgstr "没有构造器或有多个没有参数的构造器的枚举不能派生 `Default`。"
+
+#: ../../language/derive.md:67
+msgid ""
+"enum CannotDerive1 {\n"
+"    Case1(String)\n"
+"    Case2(Int)\n"
+"} derive(Default) // cannot find a constant constructor as default\n"
+"\n"
+"enum CannotDerive2 {\n"
+"    Case1\n"
+"    Case2\n"
+"} derive(Default) // Case1 and Case2 are both candidates as default "
+"constructor\n"
+msgstr ""
+
+#: ../../language/derive.md:79
+msgid "Hash"
+msgstr "哈希值"
+
+#: ../../language/derive.md:81
+msgid ""
+"`derive(Hash)` will generate a hash implementation for the type. This will "
+"allow the type to be used in places that expects a `Hash` implementation, "
+"for example `HashMap`s and `HashSet`s."
+msgstr ""
+"`derive(Hash)` 将为类型生成一个哈希实现。这将允许类型在期望 `Hash` 实现的地方使用，例如 `HashMap` 和 "
+"`HashSet`。"
+
+#: ../../language/derive.md:85
+msgid ""
+"struct DeriveHash {\n"
+"  x : Int\n"
+"  y : String?\n"
+"} derive(Hash, Eq, Show)\n"
+"\n"
+"test \"derive hash struct\" {\n"
+"  let hs = @hashset.new()\n"
+"  hs.add(DeriveHash::{ x: 123, y: None })\n"
+"  hs.add(DeriveHash::{ x: 123, y: None })\n"
+"  assert_eq(hs.length(), 1)\n"
+"  hs.add(DeriveHash::{ x: 123, y: Some(\"456\") })\n"
+"  assert_eq(hs.length(), 2)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:91
+msgid "Arbitrary"
+msgstr "任意值"
+
+#: ../../language/derive.md:93
+msgid "`derive(Arbitrary)` will generate random values of the given type."
+msgstr "`derive(Arbitrary)` 将生成给定类型的随机值。"
+
+#: ../../language/derive.md:95
+msgid "FromJson and ToJson"
+msgstr "从/到 Json"
+
+#: ../../language/derive.md:97
+msgid ""
+"`derive(FromJson)` and `derive(ToJson)` automatically derives round-"
+"trippable method implementations used for serializing the type to and from "
+"JSON. The implementation is mainly for debugging and storing the types in a "
+"human-readable format."
+msgstr ""
+"`derive(FromJson)` 和 `derive(ToJson)` 会自动派生可往返的方法实现，用于将类型序列化为 JSON 以及从 JSON "
+"反序列化。该实现主要用于调试和以人类可读的格式存储类型。"
+
+#: ../../language/derive.md:101
+msgid ""
+"struct JsonTest1 {\n"
+"  x : Int\n"
+"  y : Int\n"
+"} derive(FromJson, ToJson, Eq, Show)\n"
+"\n"
+"enum JsonTest2 {\n"
+"  A(x~ : Int)\n"
+"  B(x~ : Int, y~ : Int)\n"
+"} derive(FromJson(style=\"legacy\"), ToJson(style=\"legacy\"), Eq, Show)\n"
+"\n"
+"test \"json basic\" {\n"
+"  let input = JsonTest1::{ x: 123, y: 456 }\n"
+"  let expected : Json = { \"x\": 123, \"y\": 456 }\n"
+"  assert_eq(input.to_json(), expected)\n"
+"  assert_eq(@json.from_json(expected), input)\n"
+"  let input = JsonTest2::A(x=123)\n"
+"  let expected : Json = { \"$tag\": \"A\", \"x\": 123 }\n"
+"  assert_eq(input.to_json(), expected)\n"
+"  assert_eq(@json.from_json(expected), input)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:107
+msgid ""
+"Both derive directives accept a number of arguments to configure the exact "
+"behavior of serialization and deserialization."
+msgstr "这两个派生指令都接受一些参数来配置序列化和反序列化的确切行为。"
+
+#: ../../language/derive.md:110
+msgid "The actual behavior of JSON serialization arguments is unstable."
+msgstr "JSON 序列化参数的实际行为是不稳定的。"
+
+#: ../../language/derive.md:114
+msgid ""
+"JSON derivation arguments are only for coarse-grained control of the derived"
+" format. If you need to precisely control how the types are laid out, "
+"consider **directly implementing the two traits instead**."
+msgstr "JSON 派生参数仅用于粗粒度控制派生格式。如果你需要精确控制类型的布局，请考虑 **直接实现这两个特征**。"
+
+#: ../../language/derive.md:118
+msgid ""
+"We have recently deprecated a large number of advanced layout tweaking "
+"arguments. For such usage and future usage of them, please manually "
+"implement the traits. The arguments include: `repr`, `case_repr`, `default`,"
+" `rename_all`, etc."
+msgstr ""
+"我们最近弃用了大量高级布局调整参数。对于这种用法和将来对它们的使用，请手动实现这些特征。这些参数包括：`repr`、`case_repr`、`default`、`rename_all`"
+" 等。"
+
+#: ../../language/derive.md:123
+msgid ""
+"struct JsonTest3 {\n"
+"  x : Int\n"
+"  y : Int\n"
+"} derive (\n"
+"  FromJson(fields(x(rename=\"renamedX\"))),\n"
+"  ToJson(fields(x(rename=\"renamedX\"))),\n"
+"  Eq,\n"
+"  Show,\n"
+")\n"
+"\n"
+"enum JsonTest4 {\n"
+"  A(x~ : Int)\n"
+"  B(x~ : Int, y~ : Int)\n"
+"} derive(FromJson, ToJson, Eq, Show)\n"
+"\n"
+"test \"json args\" {\n"
+"  let input = JsonTest3::{ x: 123, y: 456 }\n"
+"  let expected : Json = { \"renamedX\": 123, \"y\": 456 }\n"
+"  assert_eq(input.to_json(), expected)\n"
+"  assert_eq(@json.from_json(expected), input)\n"
+"  let input = JsonTest4::A(x=123)\n"
+"  let expected : Json = [\"A\", { \"x\": 123 }]\n"
+"  assert_eq(input.to_json(), expected)\n"
+"  assert_eq(@json.from_json(expected), input)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:129
+msgid "Enum styles"
+msgstr "枚举样式"
+
+#: ../../language/derive.md:131
+msgid ""
+"There are currently two styles of enum serialization: `legacy` and `flat`, "
+"which the user must select one using the `style` argument. Considering the "
+"following enum definition:"
+msgstr "目前有两种枚举序列化样式：`legacy` 和 `flat`，用户必须使用 `style` 参数选择其中一种。"
+
+#: ../../language/derive.md:135
+msgid ""
+"enum E {\n"
+"  One\n"
+"  Uniform(Int)\n"
+"  Axes(x~: Int, y~: Int)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:143
+msgid "With `derive(ToJson(style=\"legacy\"))`, the enum is formatted into:"
+msgstr "使用 `derive(ToJson(style=\"legacy\"))`，枚举格式化为："
+
+#: ../../language/derive.md:145
+msgid ""
+"E::One              => { \"$tag\": \"One\" }\n"
+"E::Uniform(2)       => { \"$tag\": \"Uniform\", \"0\": 2 }\n"
+"E::Axes(x=-1, y=1)  => { \"$tag\": \"Axes\", \"x\": -1, \"y\": 1 }\n"
+msgstr ""
+
+#: ../../language/derive.md:151
+msgid "With `derive(ToJson(style=\"flat\"))`, the enum is formatted into:"
+msgstr "使用 `derive(ToJson(style=\"flat\"))`，枚举格式化为："
+
+#: ../../language/derive.md:153
+msgid ""
+"E::One              => \"One\"\n"
+"E::Uniform(2)       => [ \"Uniform\", 2 ]\n"
+"E::Axes(x=-1, y=1)  => [ \"Axes\", -1, 1 ]\n"
+msgstr ""
+
+#: ../../language/derive.md:159
+msgid "Deriving `Option`"
+msgstr "派生 `Option`"
+
+#: ../../language/derive.md:161
+msgid ""
+"A notable exception is the builtin type `Option[T]`. Ideally, it would be "
+"interpreted as `T | undefined`, but the issue is that it would be  "
+"impossible to distinguish `Some(None)` and `None` for `Option[Option[T]]`."
+msgstr ""
+"一个特例是内建类型 `Option[T]`。理想情况下，它会被解释为 `T | undefined`，但问题是对于 "
+"`Option[Option[T]]` 来说，无法区分 `Some(None)` 和 `None`。"
+
+#: ../../language/derive.md:165
+msgid ""
+"As a result, it interpreted as `T | undefined` iff it is a direct field of a"
+" struct, and `[T] | null` otherwise:"
+msgstr "因此，当且仅当它是结构体的直接字段时，它被解释为 `T | undefined`，否则解释为 `[T] | null`："
+
+#: ../../language/derive.md:168
+msgid ""
+"struct A {\n"
+"  x : Int?\n"
+"  y : Int??\n"
+"  z : (Int?, Int??)\n"
+"} derive(ToJson)\n"
+"\n"
+"test {\n"
+"  @json.inspect({ x: None, y: None, z: (None, None) }, content={\n"
+"    \"z\": [null, null],\n"
+"  })\n"
+"  @json.inspect({ x: Some(1), y: Some(None), z: (Some(1), Some(None)) }, "
+"content={\n"
+"    \"x\": 1,\n"
+"    \"y\": null,\n"
+"    \"z\": [[1], [null]],\n"
+"  })\n"
+"  @json.inspect({ x: Some(1), y: Some(Some(1)), z: (Some(1), Some(Some(1))) "
+"}, content={\n"
+"    \"x\": 1,\n"
+"    \"y\": [1],\n"
+"    \"z\": [[1], [[1]]],\n"
+"  })\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:174
+msgid "Container arguments"
+msgstr "容器参数"
+
+#: ../../language/derive.md:176
+msgid ""
+"`rename_fields` and `rename_cases` (enum only) batch renames fields (for "
+"enums and structs) and enum cases to the given format. Available parameters "
+"are:"
+msgstr ""
+"`rename_fields` 和 "
+"`rename_cases`（仅适用于枚举）分别批量重命名字段（对于枚举和结构体）和枚举构造器为给定格式。可用的参数有："
+
+#: ../../language/derive.md:180
+msgid "`lowercase`"
+msgstr ""
+
+#: ../../language/derive.md:181
+msgid "`UPPERCASE`"
+msgstr ""
+
+#: ../../language/derive.md:182
+msgid "`camelCase`"
+msgstr ""
+
+#: ../../language/derive.md:183
+msgid "`PascalCase`"
+msgstr ""
+
+#: ../../language/derive.md:184
+msgid "`snake_case`"
+msgstr ""
+
+#: ../../language/derive.md:185
+msgid "`SCREAMING_SNAKE_CASE`"
+msgstr ""
+
+#: ../../language/derive.md:186
+msgid "`kebab-case`"
+msgstr ""
+
+#: ../../language/derive.md:187
+msgid "`SCREAMING-KEBAB-CASE`"
+msgstr ""
+
+#: ../../language/derive.md:189
+msgid ""
+"Example: `rename_fields = \"PascalCase\"` for a field named "
+"`my_long_field_name` results in `MyLongFieldName`."
+msgstr ""
+"例如：`rename_fields = \"PascalCase\"` 用于名为 `my_long_field_name` 的字段将得到 "
+"`MyLongFieldName`。"
+
+#: ../../language/derive.md:193
+msgid ""
+"Renaming assumes the name of fields in `snake_case` and the name of "
+"structs/enum cases in `PascalCase`."
+msgstr "重命名假定字段的名称为 `snake_case`，结构体/枚举构造器的名称为 `PascalCase`。"
+
+#: ../../language/derive.md:196
+msgid "`cases(...)` (enum only) controls the layout of enum cases."
+msgstr "`cases(...)`（仅枚举）控制枚举构造器的布局。"
+
+#: ../../language/derive.md:199
+msgid "This might be replaced with case attributes in the future."
+msgstr "这可能在未来会被构造器属性替换。"
+
+#: ../../language/derive.md:202
+msgid "For example, for an enum"
+msgstr "例如，对于一个枚举"
+
+#: ../../language/derive.md:204
+msgid ""
+"enum E {\n"
+"  A(...)\n"
+"  B(...)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:211
+msgid "you are able to control each case using `cases(A(...), B(...))`."
+msgstr "您可以使用 `cases(A(...), B(...))` 控制每个构造器。"
+
+#: ../../language/derive.md:213
+msgid "See [Case arguments](#case-arguments) below for details."
+msgstr "有关详细信息，请参见下面的 [构造器参数](#case-arguments)。"
+
+#: ../../language/derive.md:215
+msgid "`fields(...)` (struct only) controls the layout of struct fields."
+msgstr "`fields(...)`（仅结构体）控制结构体字段的布局。"
+
+#: ../../language/derive.md:218
+msgid "This might be replaced with field attributes in the future."
+msgstr "这可能在未来会被字段属性替换。"
+
+#: ../../language/derive.md:221
+msgid "For example, for a struct"
+msgstr "例如，对于一个结构体"
+
+#: ../../language/derive.md:223
+msgid ""
+"struct S {\n"
+"  x: Int\n"
+"  y: Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:230
+msgid "you are able to control each field using `fields(x(...), y(...))`"
+msgstr "您可以使用 `fields(x(...), y(...))` 控制每个字段。"
+
+#: ../../language/derive.md:232 ../../language/derive.md:242
+msgid "See [Field arguments](#field-arguments) below for details."
+msgstr "有关详细信息，请参见下面的 [字段参数](#field-arguments)。"
+
+#: ../../language/derive.md:234
+msgid "Case arguments"
+msgstr "构造器参数"
+
+#: ../../language/derive.md:236
+msgid ""
+"`rename = \"...\"` renames this specific case, overriding existing "
+"container-wide rename directive if any."
+msgstr "`rename = \"...\"` 重命名此特定构造器，覆盖现有的容器范围重命名指令（如果有的话）。"
+
+#: ../../language/derive.md:239
+msgid ""
+"`fields(...)` controls the layout of the payload of this case. Note that "
+"renaming positional fields are not possible currently."
+msgstr "`fields(...)` 控制此构造器的负载布局。请注意，目前无法重命名位置字段。"
+
+#: ../../language/derive.md:244
+msgid "Field arguments"
+msgstr "字段参数"
+
+#: ../../language/derive.md:246
+msgid ""
+"`rename = \"...\"` renames this specific field, overriding existing "
+"container-wide rename directives if any."
+msgstr "`rename = \"...\"` 重命名此特定字段，覆盖现有的容器范围重命名指令（如果有的话）。"
+

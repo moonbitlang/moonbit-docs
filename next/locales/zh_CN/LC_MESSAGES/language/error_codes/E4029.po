@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4029.md:1
+msgid "E4029"
+msgstr ""
+
+#: ../../language/error_codes/E4029.md:3
+msgid "This expression has a type which is not a variant."
+msgstr "这个表达式的类型不是一个枚举值。"
+
+#: ../../language/error_codes/E4029.md:5
+msgid "Erroneous Example"
+msgstr "错误示例："
+
+#: ../../language/error_codes/E4029.md:7
+msgid ""
+"fn main {\n"
+"  fn f {\n"
+"    (a, b) => a + b\n"
+"  }\n"
+"  let a = f(None)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4029.md:16
+msgid ""
+"The example above tries to call a function `f` with a value `None`, which is"
+" a variant of the `Option[_]` type, but `f` only accepts a tuple, giving the"
+" following error on line 5:"
+msgstr "在上述例子中，试图对 `None` 值调用函数 `f`，这是 `Option[_]` 类型的一个枚举值，但 `f` 只接受一个元组，在第 5 行报错："
+
+#: ../../language/error_codes/E4029.md:20
+msgid ""
+"This expression has type (Int, Int), which is a tuple type and not a "
+"variant.\n"
+msgstr ""
+
+#: ../../language/error_codes/E4029.md:24
+msgid "Suggestions"
+msgstr "建议"
+
+#: ../../language/error_codes/E4029.md:26
+msgid "Make sure to use a value of the correct type instead:"
+msgstr "确保使用正确类型的值："
+
+#: ../../language/error_codes/E4029.md:28
+msgid ""
+"fn main {\n"
+"  fn f {\n"
+"    (a, b) => a + b\n"
+"  }\n"
+"  let a = f((3, 4))\n"
+"}"
+msgstr ""
+

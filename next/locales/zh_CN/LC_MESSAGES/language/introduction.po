@@ -1,0 +1,361 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/introduction.md:1
+msgid "Introduction"
+msgstr "介绍"
+
+#: ../../language/introduction.md:3
+msgid "A MoonBit program consists of top-level definitions including:"
+msgstr "一个 MoonBit 程序由顶层定义组成，包括："
+
+#: ../../language/introduction.md:5
+msgid "type definitions"
+msgstr "类型定义"
+
+#: ../../language/introduction.md:6
+msgid "function definitions"
+msgstr "函数定义"
+
+#: ../../language/introduction.md:7
+msgid "constant definitions and variable bindings"
+msgstr "常数定义和变量绑定"
+
+#: ../../language/introduction.md:8
+msgid "`init` functions, `main` function and/or `test` blocks."
+msgstr "`init` 函数，`main` 函数和/或 `test` 块。"
+
+#: ../../language/introduction.md:10
+msgid "Expressions and Statements"
+msgstr "表达式和语句"
+
+#: ../../language/introduction.md:12
+msgid ""
+"MoonBit distinguishes between statements and expressions. In a function "
+"body, only the last clause should be an expression, which serves as a return"
+" value. For example:"
+msgstr "MoonBit 区分语句和表达式。在函数体中，只有最后一个子句应该是一个表达式，它作为返回值。例如："
+
+#: ../../language/introduction.md:14
+msgid ""
+"fn foo() -> Int {\n"
+"  let x = 1\n"
+"  x + 1\n"
+"}\n"
+"\n"
+"fn bar() -> Int {\n"
+"  let x = 1\n"
+"  //! x + 1\n"
+"  x + 2\n"
+"}"
+msgstr ""
+
+#: ../../language/introduction.md:28
+msgid "Expressions include:"
+msgstr "表达式包括："
+
+#: ../../language/introduction.md:30
+msgid ""
+"Value literals (e.g. Boolean values, numbers, characters, strings, arrays, "
+"tuples, structs)"
+msgstr "值字面量（例如布尔值、数字、字符、字符串、数组、元组、结构体）"
+
+#: ../../language/introduction.md:31
+msgid "Arithmetical, logical, or comparison operations"
+msgstr "算术、逻辑或比较操作"
+
+#: ../../language/introduction.md:32
+msgid ""
+"Accesses to array elements (e.g. `a[0]`), struct fields (e.g `r.x`), tuple "
+"components (e.g. `t.0`), etc."
+msgstr "访问数组元素（例如 `a[0]`），结构体字段（例如 `r.x`），元组组件（例如 `t.0`）等"
+
+#: ../../language/introduction.md:33
+msgid "Variables and (capitalized) enum constructors"
+msgstr "变量和枚举构造器"
+
+#: ../../language/introduction.md:34
+msgid "Anonymous local function definitions"
+msgstr "匿名本地函数定义"
+
+#: ../../language/introduction.md:35
+msgid "`match`, `if`, `loop` expressions, etc."
+msgstr "`match`，`if`，`loop` 表达式等。"
+
+#: ../../language/introduction.md:37
+msgid "Statements include:"
+msgstr "语句包括："
+
+#: ../../language/introduction.md:39
+msgid "Named local function definitions"
+msgstr "命名本地函数定义"
+
+#: ../../language/introduction.md:40
+msgid "Local variable bindings"
+msgstr "本地变量绑定"
+
+#: ../../language/introduction.md:41
+msgid "Assignments"
+msgstr "赋值"
+
+#: ../../language/introduction.md:42
+msgid "`return` statements"
+msgstr "`return` 语句"
+
+#: ../../language/introduction.md:43
+msgid "Any expression whose return type is `Unit`, (e.g. `ignore`)"
+msgstr "任何返回类型为 `Unit` 的表达式（例如 `ignore`）"
+
+#: ../../language/introduction.md:45
+msgid ""
+"A code block can contain multiple statements and one expression, and the "
+"value of the expression is the value of the code block."
+msgstr "代码块可以包含多个语句和一个表达式，表达式的值是代码块的值。"
+
+#: ../../language/introduction.md:47
+msgid "Variable Binding"
+msgstr "变量绑定"
+
+#: ../../language/introduction.md:49
+msgid ""
+"A variable can be declared as mutable or immutable using `let mut` or `let`,"
+" respectively. A mutable variable can be reassigned to a new value, while an"
+" immutable one cannot."
+msgstr "变量可以使用 `let mut` 或 `let` 声明为可变或不可变。可变变量可以重新赋值为新值，而不可变变量则不能。"
+
+#: ../../language/introduction.md:51
+msgid "A constant can only be declared at top level and cannot be changed."
+msgstr "常量只能在顶层声明，不能更改。"
+
+#: ../../language/introduction.md:53
+msgid ""
+"let zero = 0\n"
+"\n"
+"const ZERO = 0\n"
+"\n"
+"fn main {\n"
+"  //! const ZERO = 0 \n"
+"  let mut i = 10\n"
+"  i = 20\n"
+"  println(i + zero + ZERO)\n"
+"}"
+msgstr ""
+
+#: ../../language/introduction.md:68
+msgid "A top level variable binding"
+msgstr "顶层变量绑定"
+
+#: ../../language/introduction.md:69
+msgid ""
+"requires **explicit** type annotation (unless defined using literals such as"
+" string, byte or numbers)"
+msgstr "需要 **显式** 类型注释（除非使用字符串、字节或数字等字面量定义）"
+
+#: ../../language/introduction.md:70
+msgid "can't be mutable (use `Ref` instead)"
+msgstr "不能是可变的（使用 `Ref` 代替）"
+
+#: ../../language/introduction.md:74
+msgid "Naming conventions"
+msgstr "命名约定"
+
+#: ../../language/introduction.md:76
+msgid ""
+"Variables, functions should start with lowercase letters `a-z` and can "
+"contain letters, numbers, underscore, and other non-ascii unicode chars. It "
+"is recommended to name them with snake_case."
+msgstr "变量、函数应以小写字母 `a-z` 开头，可以包含字母、数字、下划线和其他非 ASCII 的 Unicode 字符。建议使用 snake_case 命名。"
+
+#: ../../language/introduction.md:79
+msgid ""
+"Constants, types should start with uppercase letters `A-Z` and can contain "
+"letters, numbers, underscore, and other non-ascii unicode chars. It is "
+"recommended to name them with PascalCase or SCREAMING_SNAKE_CASE."
+msgstr ""
+"常量、类型应以大写字母 `A-Z` 开头，可以包含字母、数字、下划线和其他非 ASCII 的 Unicode 字符。建议使用 PascalCase 或 "
+"SCREAMING_SNAKE_CASE 命名。"
+
+#: ../../language/introduction.md:82
+msgid "Keywords"
+msgstr "关键字"
+
+#: ../../language/introduction.md:84
+msgid "The following are the keywords and should not be used:"
+msgstr "以下是关键字，不应使用："
+
+#: ../../language/introduction.md:86
+msgid ""
+"[\n"
+"  \"as\", \"else\", \"extern\", \"fn\", \"fnalias\", \"if\", \"let\", "
+"\"const\", \"match\", \"using\",\n"
+"  \"mut\", \"type\", \"typealias\", \"struct\", \"enum\", \"trait\", "
+"\"traitalias\", \"derive\",\n"
+"  \"while\", \"break\", \"continue\", \"import\", \"return\", \"throw\", "
+"\"raise\", \"try\", \"catch\",\n"
+"  \"pub\", \"priv\", \"readonly\", \"true\", \"false\", \"_\", \"test\", "
+"\"loop\", \"for\", \"in\", \"impl\",\n"
+"  \"with\", \"guard\", \"async\", \"is\", \"suberror\", \"and\", \"letrec\","
+" \"enumview\", \"noraise\",\n"
+"  \"defer\",\n"
+"]\n"
+msgstr ""
+
+#: ../../language/introduction.md:97
+msgid "Reserved Keywords"
+msgstr "保留关键字"
+
+#: ../../language/introduction.md:99
+msgid ""
+"The following are the reserved keywords. Using them would introduce a "
+"warning. They might be turned into keywords in the future."
+msgstr "以下是保留关键字。使用它们会引入警告。它们可能在将来变成关键字。"
+
+#: ../../language/introduction.md:102
+msgid ""
+"[\n"
+"  \"module\", \"move\", \"ref\", \"static\", \"super\", \"unsafe\", \"use\","
+" \"where\", \"await\",\n"
+"  \"dyn\", \"abstract\", \"do\", \"final\", \"macro\", \"override\", "
+"\"typeof\", \"virtual\", \"yield\",\n"
+"  \"local\", \"method\", \"alias\", \"assert\", \"package\", \"recur\", "
+"\"using\", \"enumview\",\n"
+"  \"isnot\", \"define\", \"downcast\", \"inherit\", \"member\", "
+"\"namespace\", \"static\", \"upcast\",\n"
+"  \"use\", \"void\", \"lazy\", \"include\", \"mixin\", \"protected\", "
+"\"sealed\", \"constructor\",\n"
+"  \"atomic\", \"volatile\", \"anyframe\", \"anytype\", \"asm\", \"await\", "
+"\"comptime\", \"errdefer\",\n"
+"  \"export\", \"opaque\", \"orelse\", \"resume\", \"threadlocal\", "
+"\"unreachable\", \"dynclass\",\n"
+"  \"dynobj\", \"dynrec\", \"var\", \"finally\", \"noasync\",\n"
+"]\n"
+msgstr ""
+
+#: ../../language/introduction.md:115
+msgid "Program entrance"
+msgstr "程序入口"
+
+#: ../../language/introduction.md:117
+msgid "`init` and `main`"
+msgstr "`init` 和 `main`"
+
+#: ../../language/introduction.md:118
+msgid ""
+"There is a specialized function called `init` function. The `init` function "
+"is special:"
+msgstr "有一个专门的函数称为 `init` 函数。`init` 函数是特殊的："
+
+#: ../../language/introduction.md:120
+msgid "It has no parameter list nor return type."
+msgstr "它没有参数列表也没有返回类型。"
+
+#: ../../language/introduction.md:121
+msgid "There can be multiple `init` functions in the same package."
+msgstr "同一个包中可以有多个 `init` 函数。"
+
+#: ../../language/introduction.md:122
+msgid ""
+"An `init` function can't be explicitly called or referred to by other "
+"functions.  Instead, all `init` functions will be implicitly called when "
+"initializing a package. Therefore, `init` functions should only consist of "
+"statements."
+msgstr "`init` 函数不能被显式调用或被其他函数引用。相反，所有 `init` 函数将在初始化包时隐式调用。因此，`init` 函数应该只包含语句。"
+
+#: ../../language/introduction.md:125
+msgid ""
+"fn init {\n"
+"  let x = 1\n"
+"  println(x)\n"
+"}"
+msgstr ""
+
+#: ../../language/introduction.md:133
+msgid ""
+"There is another specialized function called `main` function. The `main` "
+"function is the main entrance of the program, and it will be executed after "
+"the initialization stage."
+msgstr "还有另一个专门的函数称为 `main` 函数。`main` 函数是程序的主入口，它将在初始化阶段之后执行。"
+
+#: ../../language/introduction.md:135
+msgid "Same as the `init` function, it has no parameter list nor return type."
+msgstr "与 `init` 函数相同，它没有参数列表也没有返回类型。"
+
+#: ../../language/introduction.md:137
+msgid ""
+"fn main {\n"
+"  let x = 2\n"
+"  println(x)\n"
+"}"
+msgstr ""
+
+#: ../../language/introduction.md:145
+msgid "The previous two code snippets will print the following at runtime:"
+msgstr "前两个代码片段将在运行时打印以下内容："
+
+#: ../../language/introduction.md:147
+msgid ""
+"1\n"
+"2\n"
+msgstr ""
+
+#: ../../language/introduction.md:152
+msgid ""
+"Only packages that are `main` packages can define such `main` function. "
+"Check out [build system tutorial](/toolchain/moon/tutorial) for detail."
+msgstr "只有 `main` 包的包才能定义这样的 `main` 函数。查看 [构建系统教程](/toolchain/moon/tutorial) 了解详情。"
+
+#: ../../language/introduction.md:154
+msgid "moon.pkg.json"
+msgstr ""
+
+#: ../../language/introduction.md:154
+msgid ""
+"{\n"
+"  \"is-main\": true\n"
+"}"
+msgstr ""
+
+#: ../../language/introduction.md:159
+msgid "`test`"
+msgstr ""
+
+#: ../../language/introduction.md:161
+msgid ""
+"There's also a top-level structure called `test` block. A `test` block "
+"defines inline tests, such as:"
+msgstr "还有一个称为 `test` 块的顶级结构。`test` 块定义内联测试，例如："
+
+#: ../../language/introduction.md:163
+msgid ""
+"test \"test_name\" {\n"
+"  assert_eq(1 + 1, 2)\n"
+"  assert_eq(2 + 2, 4)\n"
+"  inspect([1, 2, 3], content=\"[1, 2, 3]\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/introduction.md:169
+msgid ""
+"The following contents will use `test` block and `main` function to "
+"demonstrate the execution result, and we assume that all the `test` blocks "
+"pass unless stated otherwise."
+msgstr "以下内容将使用 `test` 块和 `main` 函数来演示执行结果。我们假设所有 `test` 块都通过测试，除非另有说明。"
+

@@ -1,0 +1,69 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4118.md:1
+msgid "E4118"
+msgstr ""
+
+#: ../../language/error_codes/E4118.md:3
+msgid "Cannot match type with map pattern."
+msgstr "不能用映射模式匹配此类型。"
+
+#: ../../language/error_codes/E4118.md:5
+msgid ""
+"You can use map patterns on custom types, as long as they have a method "
+"`op_get` that returns an optional value for a given key."
+msgstr "您可以在自定义类型上使用映射模式，只要它们有一个方法 `op_get`，该方法返回给定键的可选值即可。"
+
+#: ../../language/error_codes/E4118.md:8
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4118.md:10
+msgid ""
+"type MyMap[K, V] Map[K, V]\n"
+"\n"
+"fn main {\n"
+"  let map : MyMap[String, Int] = { \"a\": 1, \"b\": 2, \"c\": 3 }\n"
+"  match map {\n"
+"    { \"a\": a, .. } => println(\"a: \\{a}\")\n"
+"  //^~~~~~~~~~~~~~\n"
+"  // Error: Please implement method `op_get` for type MyMap[String, Int] to "
+"match it with map pattern.\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4118.md:14
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4118.md:16
+msgid "Implement the `op_get` method as suggested in the error message."
+msgstr "请根据错误消息中的建议实现 `op_get` 方法。"
+
+#: ../../language/error_codes/E4118.md:18
+msgid ""
+"pub fn MyMap::op_get[K: Eq + Hash, V](self : MyMap[K, V], key : K) -> V? {\n"
+"  self._[key]\n"
+"}"
+msgstr ""
+

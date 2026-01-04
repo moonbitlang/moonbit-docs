@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4127.md:1
+msgid "E4127"
+msgstr ""
+
+#: ../../language/error_codes/E4127.md:3
+msgid "Type is not an error type."
+msgstr "类型不是错误类型。"
+
+#: ../../language/error_codes/E4127.md:5
+msgid ""
+"MoonBit only allow error types (defined with `type!` keyword) to appear "
+"after the exclamation mark (`!`) in the return type of a function."
+msgstr "MoonBit 仅允许在函数返回类型中的感叹号 (`!`) 之后出现错误类型（使用 `type!` 关键字定义）。"
+
+#: ../../language/error_codes/E4127.md:8
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4127.md:10
+msgid ""
+"pub fn may_raise_error() -> Unit!String {\n"
+"  //                             ^~~~~~\n"
+"  // Error: Type String is not an error type.\n"
+"  raise \"Failed\" // Error: Type String is not an error type.\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4127.md:14
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4127.md:16
+msgid "You can wrap the type you wish to raise in a error type:"
+msgstr "您可以将希望抛出的类型包装在错误类型中："
+
+#: ../../language/error_codes/E4127.md:18
+msgid ""
+"type! StringError String\n"
+"\n"
+"pub fn may_raise_error() -> Unit!StringError {\n"
+"  raise StringError(\"Failed\")\n"
+"}"
+msgstr ""
+

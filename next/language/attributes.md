@@ -277,7 +277,7 @@ It can also change the visibility of the free function, the name of the free fun
 
 The `#callsite` attribute is used to mark properties that happen at callsite.
 
-It could be `autofill`, which is to autofill the arguments [SourceLoc and ArgLoc](/language/fundamentals.md#autofill-arguments)
+It could be `autofill`, which is to autofill the arguments [SourceLoc and ArgLoc](/language/fundamentals/functions.md#autofill-arguments)
 at callsite.
 
 ## Skip Attribute

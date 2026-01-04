@@ -1,0 +1,90 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4038.md:1
+msgid "E4038"
+msgstr ""
+
+#: ../../language/error_codes/E4038.md:3
+msgid "Trait object for the type is not allowed."
+msgstr "该类型的特征对象是不允许的。"
+
+#: ../../language/error_codes/E4038.md:5
+msgid "Erroneous Example"
+msgstr "错误示例："
+
+#: ../../language/error_codes/E4038.md:7
+msgid ""
+"fn main {\n"
+"  let a = 3 as &Eq\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4038.md:13
+msgid ""
+"The example above tries to create an object of the `Eq` trait. This is not "
+"allowed, as the trait is not object safe."
+msgstr "在上述例子中，试图创建一个 `Eq` 特征的对象。这是不允许的，因为这个特征不是对象安全的。"
+
+#: ../../language/error_codes/E4038.md:16
+msgid "The `Eq` trait is defined as follows:"
+msgstr "`Eq` 特征定义如下："
+
+#: ../../language/error_codes/E4038.md:18
+msgid ""
+"pub(open) trait Eq {\n"
+"  op_equal(Self, Self) -> Bool\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4038.md:24
+msgid "... which is why the following error is given on line 2:"
+msgstr "因此在第 2 行报错："
+
+#: ../../language/error_codes/E4038.md:26
+msgid ""
+"Trait object for Eq is not allowed: `Self` occur multiple times in the type "
+"of method op_equal\n"
+msgstr ""
+
+#: ../../language/error_codes/E4038.md:30
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4038.md:32
+msgid "Use an object-safe trait to create a trait object."
+msgstr "使用一个对象安全的特征来创建一个特征对象。"
+
+#: ../../language/error_codes/E4038.md:34
+msgid ""
+"For a trait to be object-safe, its dispatchable functions must use and only "
+"use the `Self` type as the first parameter. For example, `Show` is such a "
+"trait:"
+msgstr "一个特征要是类型安全的，它的可调用函数必须使用并且只能使用 `Self` 类型作为第一个参数。例如，`Show` 就是这样一个特征："
+
+#: ../../language/error_codes/E4038.md:37
+msgid ""
+"pub(open) trait Show {\n"
+"  output(Self, &Logger) -> Unit\n"
+"  to_string(Self) -> String\n"
+"}"
+msgstr ""
+

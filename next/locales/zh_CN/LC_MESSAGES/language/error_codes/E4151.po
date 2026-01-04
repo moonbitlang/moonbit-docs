@@ -1,0 +1,67 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4151.md:1
+msgid "E4151"
+msgstr ""
+
+#: ../../language/error_codes/E4151.md:3
+msgid ""
+"Values of type `FuncRef[T]` must be closed function -- it should not capture"
+" any local variables."
+msgstr "`FuncRef[T]` 类型的值必须是闭合函数——它不应该捕获任何局部变量。"
+
+#: ../../language/error_codes/E4151.md:5
+msgid ""
+"MoonBit provides a builtin type `FuncRef[T]`, which represents closed "
+"function of type `T`. In MoonBit's native backend, `FuncRef[T]` corresponds "
+"to function pointer type, so `FuncRef[T]` can be passed to C FFI functions "
+"requiring a callback directly, for example setting UNIX signal handler. "
+"Values of type `FuncRef[T]` must be closed function type, if a function "
+"which captures free variables or a non-function is supplied, an error will "
+"be reported."
+msgstr ""
+"MoonBit 提供了一个内建类型 `FuncRef[T]`，用于表示类型为 `T` 的无捕获的函数。在 MoonBit "
+"的原生后端，`FuncRef[T]` 直接对应函数指针类型，因此 `FuncRef[T]` 可以作为回调函数直接被传递给 C FFI，例如 UNIX "
+"的信号处理回调。`FuncRef[T]` 类型的值必须是无捕获的函数，因此如果提供了一个有捕获的函数或一个非函数的值，编译器就会产生本错误。"
+
+#: ../../language/error_codes/E4151.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4151.md:12
+msgid ""
+"test {\n"
+"  let x : Int = 42\n"
+"  let _ : FuncRef[() -> Unit] = fn () { println(x) }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4151.md:16
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4151.md:17
+msgid ""
+"If your callback function really needs to have captures, consider adding the"
+" captures as extra parameters to the function."
+msgstr "如果您的回调函数真的需要捕获局部变量，可以把局部变量变成回调函数的额外参数。"
+

@@ -444,23 +444,23 @@ depends on its type: a value of an **immutable type** is passed by value, while 
 of a **mutable type** is passed by reference. -->
 
 Notable **primitive types** in MoonBit include
-[`Unit`](../../language/fundamentals.md#unit)
-, [`Boolean`](../../language/fundamentals.md#boolean)
-, integers ([`Int`](../../language/fundamentals.md#number), [`Int64`](../../language/fundamentals.md#number), [`UInt`](../../language/fundamentals.md#number), etc.)
-, floating-point numbers ([`Double`](../../language/fundamentals.md#number), [`Float`](../../language/fundamentals.md#number), etc.)
-, [`String`](../../language/fundamentals.md#string)
-, [`Char`](../../language/fundamentals.md#char)
-, [`Byte`](../../language/fundamentals.md#bytes).
+[`Unit`](../../language/fundamentals/builtins.md#unit)
+, [`Boolean`](../../language/fundamentals/builtins.md#boolean)
+, integers ([`Int`](../../language/fundamentals/builtins.md#number), [`Int64`](../../language/fundamentals/builtins.md#number), [`UInt`](../../language/fundamentals/builtins.md#number), etc.)
+, floating-point numbers ([`Double`](../../language/fundamentals/builtins.md#number), [`Float`](../../language/fundamentals/builtins.md#number), etc.)
+, [`String`](../../language/fundamentals/builtins.md#string)
+, [`Char`](../../language/fundamentals/builtins.md#char)
+, [`Byte`](../../language/fundamentals/builtins.md#bytes).
 
 Notable **immutable collection types** in MoonBit include
-[tuples](../../language/fundamentals.md#tuple),
+[tuples](../../language/fundamentals/builtins.md#tuple),
 immutable collections such as `@immut/hashset.T[A]`,
 and custom types with no `mut` fields.
 
 On the other hand, notable **mutable collection types** include
-mutable collections such as [`Array[T]`](../../language/fundamentals.md#array)
-, [`FixedArray[T]`](../../language/fundamentals.md#array)
-, and [`Map[K, V]`](../../language/fundamentals.md#map),
+mutable collections such as [`Array[T]`](../../language/fundamentals/builtins.md#array)
+, [`FixedArray[T]`](../../language/fundamentals/builtins.md#array)
+, and [`Map[K, V]`](../../language/fundamentals/builtins.md#map),
 as well as custom types with at least one `mut` field.
 
 For example, we can rewrite some of the above Go examples in MoonBit:
@@ -492,10 +492,10 @@ fn modify_map(m : Map[String, Int]) -> Unit {
 }
 ```
 
-#### The [`Ref[T]`](../../language/fundamentals.md#ref) Helper Type
+#### The [`Ref[T]`](../../language/fundamentals/builtins.md#ref) Helper Type
 
 When you need explicit mutable references to value types,
-MoonBit provides the [`Ref[T]`](../../language/fundamentals.md#ref) type
+MoonBit provides the [`Ref[T]`](../../language/fundamentals/builtins.md#ref) type
 which is roughly defined as follows:
 
 ```moonbit

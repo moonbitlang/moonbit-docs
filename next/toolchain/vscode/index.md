@@ -19,7 +19,7 @@ The plugin provides several commands, available through
   by the extension.
 - Toggle multiline string: It can help switching the chosen text between a plain
   text and the MoonBit's
-  [multiline string syntax](/language/fundamentals.md#string)
+  [multiline string syntax](/language/fundamentals/builtins.md#string)
 
 ## Actions
 

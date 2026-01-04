@@ -1,0 +1,660 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../example/myers-diff/myers-diff.md:1
+msgid "Myers diff"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:3
+msgid ""
+"Have you ever used the Unix tool `diff`? In short, it is a tool for "
+"comparing the differences between two text files. What's more, Unix has a "
+"tool called `patch`."
+msgstr ""
+"你是否曾经使用过 Unix 系统中的 'diff' 工具？简单来说，它是一种用于比较两个文本文件之间差异的工具。此外，Unix 系统中还有名为 "
+"'patch' 的工具。"
+
+#: ../../example/myers-diff/myers-diff.md:5
+msgid ""
+"Nowadays, few people manually apply patches to software packages, but `diff`"
+" still retains its usefulness in another area: version control systems. It's"
+" quite handy to have the function of being able to see what changes have "
+"been made to source code files after a particular commit (and highlighted "
+"with different colors). Take the most popular version control system today, "
+"git, as an example:"
+msgstr ""
+"现在很少有人手动应用软件包的修补，但 'diff' "
+"在另一个领域中仍然非常有用：版本控制系统。你有看到特定提交后代码文件所做更改（并以不同的颜色突出显示）的函数是非常方便的。例如，最受欢迎的版本控制系统之一，git，就是一个很好的例子。"
+
+#: ../../example/myers-diff/myers-diff.md:7
+msgid ""
+"diff --git a/main/main.mbt b/main/main.mbt\n"
+"index 99f4c4c..52b1388 100644\n"
+"--- a/main/main.mbt\n"
+"+++ b/main/main.mbt\n"
+"@@ -3,7 +3,7 @@\n"
+"\n"
+" fn main {\n"
+"   let a = lines(\"A\\nB\\nC\\nA\\nB\\nB\\nA\")\n"
+"-  let b = lines(\"C\\nB\\nA\\nB\\nA\\nC\")\n"
+"+  let b = lines(\"C\\nB\\nA\\nB\\nA\\nA\")\n"
+"   let r = shortst_edit(a, b)\n"
+"   println(r)\n"
+" }\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:23
+msgid "But how exactly do we calculate the differences between two text files?"
+msgstr "但我们具体怎么计算两个文本文件之间的差异呢？"
+
+#: ../../example/myers-diff/myers-diff.md:25
+msgid ""
+"git's default diff algorithm was proposed by _Eugene W. Myers_ in his paper "
+"**An O(ND) Difference Algorithm and Its Variations**. This paper mainly "
+"focuses on proving the correctness of the algorithm. In the following text, "
+"we will understand the basic framework of this algorithm in a less rigorous "
+"way and use MoonBit to write a simple implementation."
+msgstr ""
+"Git 的默认比较差异算法由 Eugene W. Myers 在他的论文**一个 O(ND) "
+"的差分算法及其变体**中提出。这篇论文主要聚焦于证明该算法的正确性。接下来，我们将以一种不那么严谨的方式理解其基本架构，并使用 MoonBit "
+"编写一个简单的实现。"
+
+#: ../../example/myers-diff/myers-diff.md:27
+msgid "Defining \"Difference\" and Its Measurement Criteria"
+msgstr "“差异”的定义及其度量标准"
+
+#: ../../example/myers-diff/myers-diff.md:29
+msgid ""
+"When we talk about the \"difference\" between two text files, what we are "
+"actually referring to is a series of editing steps that can transform text a"
+" into text b."
+msgstr "当我们讨论两个文本文件之间的“差异”时，我们实际上是在指能将文本 a 变成文本 b 的一系列编辑步骤。"
+
+#: ../../example/myers-diff/myers-diff.md:31
+msgid "Assume the content of text a is"
+msgstr "假设文本 a 的内容是"
+
+#: ../../example/myers-diff/myers-diff.md:33
+msgid ""
+"A\n"
+"B\n"
+"C\n"
+"A\n"
+"B\n"
+"B\n"
+"A\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:43
+msgid "Assume the content of text b is"
+msgstr "假设文本 b 的内容是"
+
+#: ../../example/myers-diff/myers-diff.md:45
+msgid ""
+"C\n"
+"B\n"
+"A\n"
+"B\n"
+"A\n"
+"C\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:54
+msgid ""
+"To transform text a into text b, the simplest edit sequence is to delete "
+"each character in a (indicated with a minus sign) and then insert each "
+"character in b (indicated with a plus sign)."
+msgstr "为了把文本 a 转变为文本 b，最简单的编辑序列是删除所有 a 中的字符（用减号表示），然后插入文本 b 中的每个字符（用加号表示）。"
+
+#: ../../example/myers-diff/myers-diff.md:56
+msgid ""
+"- A\n"
+"- B\n"
+"- C\n"
+"- A\n"
+"- B\n"
+"- B\n"
+"- A\n"
+"+ C\n"
+"+ B\n"
+"+ A\n"
+"+ B\n"
+"+ A\n"
+"+ C\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:72
+msgid ""
+"But such a result might not be very helpful for programmers reading the "
+"code. The following edit sequence is much better, at least it is shorter."
+msgstr "但是这样的结果可能对程序员阅读程序来说并没有太大帮助。接下来的编辑序列会好很多，至少它更短。"
+
+#: ../../example/myers-diff/myers-diff.md:74
+msgid ""
+"- A\n"
+"- B\n"
+"  C\n"
+"+ B\n"
+"  A\n"
+"  B\n"
+"- B\n"
+"  A\n"
+"+ C\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:86
+msgid ""
+"In fact, it is one of the shortest edit sequences that can transform text a "
+"into text b, with 5 operations. If we only measure the length of the edit "
+"sequence, this result is satisfactory. But when we look at the various "
+"programming languages, we find that there are other metrics that are equally"
+" important for user experience. Let's look at the following examples:"
+msgstr ""
+"实际上，这是实现文本 a 转换为文本 b 所需的最简编辑序列，仅需要 5 "
+"个操作。如果我们只考虑编辑序列的长度，这一结果已经令人满意。但在探索多种编程语言时，我们发现除了编辑序列长度外，还有其他度量指标对用户体验同样重要。让我们来看看以下例子："
+
+#: ../../example/myers-diff/myers-diff.md:88
+msgid ""
+"// good quality\n"
+"  struct RHSet[T] {\n"
+"    set : RHTable[T, Unit]\n"
+"  }\n"
+"+\n"
+"+ fn RHSet::new[T](capacity : Int) -> RHSet[T] {\n"
+"+  let set : RHTable[T, Unit]= RHTable::new(capacity)\n"
+"+  { set : set }\n"
+"+ }\n"
+"\n"
+"\n"
+"// bad quality\n"
+"  struct RHSet[T] {\n"
+"    set : RHTable[T, Unit]\n"
+"+ }\n"
+"+\n"
+"+ fn RHSet::new[T](capacity : Int) -> RHSet[T] {\n"
+"+  let set : RHTable[T, Unit]= RHTable::new(capacity)\n"
+"+  { set : set }\n"
+"  }\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:111
+msgid ""
+"When we insert a new function definition at the end of a file, the "
+"calculated edit sequence should ideally locate the changes at the end. In "
+"similar cases, when there are both deletions and insertions, it is best not "
+"to calculate an edit sequence that interleaves these two operations. Here's "
+"another example."
+msgstr "当我们在文件末尾插入一个新函数定义时，理想的编辑序列应将所做的更改置于文件末尾。同样，在有删除和插入操作的情况下，不应该将这两个操作交替进行计算。这是另一个例子。"
+
+#: ../../example/myers-diff/myers-diff.md:113
+msgid ""
+"Good:   - one         Bad:    - one\n"
+"        - two                 + four\n"
+"        - three               - two\n"
+"        + four                + five\n"
+"        + five                + six\n"
+"        + six                 - three\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:122
+msgid ""
+"Myers' diff algorithm can fulfill all those requirements. It is a greedy "
+"algorithm that skips over matching lines whenever possible (avoiding "
+"inserting text before `{`), and it also tries to place deletions before "
+"insertions, avoiding the latter situation."
+msgstr ""
+"Myers 的 diff "
+"算法可以满足所有这些需求。它是一种贪婪算法，每次都尽可能地跳过匹配行（避免在出现'{'之前插入文本），同时也会尝试将删除操作置于插入操作之前，避免后者发生。"
+
+#: ../../example/myers-diff/myers-diff.md:124
+msgid "Algorithm Overview"
+msgstr "算法概述"
+
+#: ../../example/myers-diff/myers-diff.md:126
+msgid ""
+"The basic idea in Myers' paper is to construct a grid graph of edit "
+"sequences and then search for the shortest path on this graph. Using the "
+"previous example `a = ABCABBA` and `b = CBABAC`, we create an `(x, y)` "
+"coordinate grid."
+msgstr ""
+"Myers 的论文中的基本思路是构建一个编辑操作的网格图，并在该网格上搜索最短路径。以之前的例子 'a = ABCABBA' 和 'b = "
+"CBABAC' 为例，我们创建一个 '(x, y)' 坐标网格。"
+
+#: ../../example/myers-diff/myers-diff.md:128
+msgid ""
+"    0     1     2     3     4     5     6     7\n"
+"\n"
+"0   o-----o-----o-----o-----o-----o-----o-----o\n"
+"    |     |     | \\   |     |     |     |     |\n"
+"    |     |     |  \\  |     |     |     |     |   C\n"
+"    |     |     |   \\ |     |     |     |     |\n"
+"1   o-----o-----o-----o-----o-----o-----o-----o\n"
+"    |     | \\   |     |     | \\   | \\   |     |\n"
+"    |     |  \\  |     |     |  \\  |  \\  |     |   B\n"
+"    |     |   \\ |     |     |   \\ |   \\ |     |\n"
+"2   o-----o-----o-----o-----o-----o-----o-----o\n"
+"    | \\   |     |     | \\   |     |     | \\   |\n"
+"    |  \\  |     |     |  \\  |     |     |  \\  |   A\n"
+"    |   \\ |     |     |   \\ |     |     |   \\ |\n"
+"3   o-----o-----o-----o-----o-----o-----o-----o\n"
+"    |     | \\   |     |     | \\   | \\   |     |\n"
+"    |     |  \\  |     |     |  \\  |  \\  |     |   B\n"
+"    |     |   \\ |     |     |   \\ |   \\ |     |\n"
+"4   o-----o-----o-----o-----o-----o-----o-----o\n"
+"    | \\   |     |     | \\   |     |     | \\   |\n"
+"    |  \\  |     |     |  \\  |     |     |  \\  |   A\n"
+"    |   \\ |     |     |   \\ |     |     |   \\ |\n"
+"5   o-----o-----o-----o-----o-----o-----o-----o\n"
+"    |     |     | \\   |     |     |     |     |\n"
+"    |     |     |  \\  |     |     |     |     |   C\n"
+"    |     |     |   \\ |     |     |     |     |\n"
+"6   o-----o-----o-----o-----o-----o-----o-----o\n"
+"\n"
+"\n"
+"       A     B     C     A     B     B     A\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:161
+msgid ""
+"The upper left of this grid is the starting point `(0, 0)`, and the lower "
+"right is the endpoint `(7, 6)`. Moving one step right along the x-axis "
+"deletes the corresponding character in a, moving one step down along the "
+"y-axis inserts the corresponding character in b, and diagonal lines indicate"
+" matching characters that can be skipped without triggering any edits."
+msgstr ""
+"该网格的左上角是起始点 '(0, 0)'，右下角是终点 '(7, 6)'。沿着 x 轴移动一个单位右侧删除 a 中的对应字符，沿 y "
+"轴向下移动一个单位插入 b 中的对应字符。斜线表示匹配字符，可跳过而不触发编辑。"
+
+#: ../../example/myers-diff/myers-diff.md:163
+msgid ""
+"Before writing the actual search code, let's manually perform two rounds of "
+"searching:"
+msgstr "在编写实际搜索代码之前，我们手动执行两轮搜索。"
+
+#: ../../example/myers-diff/myers-diff.md:165
+msgid ""
+"The first round starts at `(0, 0)` and moves one step to reach `(0,1)` and "
+"`(1,0)`."
+msgstr "第一轮从 '(0, 0)' 开始，移动一步到达 '(0,1)' 和 '(1,0)'。"
+
+#: ../../example/myers-diff/myers-diff.md:167
+msgid ""
+"The second round starts at `(0,1)` and `(1,0)`. From `(0,1)`, moving down "
+"reaches `(0,2)`, but there is a diagonal line leading to `(1,3)`, so the "
+"final point is `(1,3)`."
+msgstr ""
+"第二轮从 '(0,1)' 和 '(1, 0)' 开始。从 '(0,1)' 向下移动到 '(0,2)'，但有一条斜线指向 '(1,3)'，因此最终点是 "
+"'(1,3)'。"
+
+#: ../../example/myers-diff/myers-diff.md:169
+msgid "The entire Myers algorithm is based on this kind of breadth-first search."
+msgstr "Myers 算法的整个原理基于这种广度优先搜索。"
+
+#: ../../example/myers-diff/myers-diff.md:171
+msgid "Implementation"
+msgstr "实现"
+
+#: ../../example/myers-diff/myers-diff.md:173
+msgid ""
+"We have outlined the basic idea, now it's time to consider the design in "
+"detail. The input to the algorithm is two strings, but the search needs to "
+"be conducted on a graph. It's a waste of both memory and time to construct "
+"the graph and then search it."
+msgstr "我们已经概述了基本思想，现在是详细考虑设计的时候了。算法的输入是两个字符串，但是搜索需要在一个图上进行。而构造图然后再去搜索它是浪费内存和时间成本的。"
+
+#: ../../example/myers-diff/myers-diff.md:175
+msgid ""
+"The implementation of the Myers algorithm adopts a clever approach by "
+"defining a new coordinate `k = x - y`."
+msgstr "Myers 算法的实现采用了一种聪明的方法，定义了一个新的坐标 `k = x - y`。"
+
+#: ../../example/myers-diff/myers-diff.md:177
+msgid "Moving right increases `k` by one."
+msgstr "向右移动会使 `k` 增加 1。"
+
+#: ../../example/myers-diff/myers-diff.md:179
+msgid "Moving left decreases `k` by one."
+msgstr "向左移动会使 `k` 减少 1"
+
+#: ../../example/myers-diff/myers-diff.md:181
+msgid "Moving diagonally down-left keeps `k` unchanged."
+msgstr "沿对角线向左下方移动保持 `k` 不变"
+
+#: ../../example/myers-diff/myers-diff.md:183
+msgid ""
+"Let's define another coordinate `d` to represent the depth of the search. "
+"Using `d` as the horizontal axis and `k` as the vertical axis, we can draw a"
+" tree diagram of the search process."
+msgstr "让我们定义另一个坐标 `d` 来表示搜索的深度。以 `d` 为横轴，`k` 为纵轴，我们可以画出搜索过程的树状图。"
+
+#: ../../example/myers-diff/myers-diff.md:185
+msgid ""
+"    |      0     1     2     3     4     5\n"
+"----+--------------------------------------\n"
+"    |\n"
+" 4  |                             7,3\n"
+"    |                           /\n"
+" 3  |                       5,2\n"
+"    |                     /\n"
+" 2  |                 3,1         7,5\n"
+"    |               /     \\     /     \\\n"
+" 1  |           1,0         5,4         7,6\n"
+"    |         /     \\           \\\n"
+" 0  |     0,0         2,2         5,5\n"
+"    |         \\                       \\\n"
+"-1  |           0,1         4,5         5,6\n"
+"    |               \\     /     \\\n"
+"-2  |                 2,4         4,6\n"
+"    |                     \\\n"
+"-3  |                       3,6\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:206
+msgid ""
+"You can see that in each round of searching, `k` is strictly within the "
+"range `[-d, d]` (because in one move, it can at most increase or decrease by"
+" one from the previous round), and the `k` values between points have an "
+"interval of 2. The basic idea of Myers' algorithm comes from this idea: "
+"searching by iterating over `d` and `k`. Of course, it also needs to save "
+"the `x` coordinates of each round for use in the next round of searching."
+msgstr ""
+"你可以看到，在每一轮搜索中，`k` 严格地在 `[-d, d]` 范围内（因为在一次移动中，它最多可以比前一轮增加或减少 1），并且点之间的 `k` "
+"值的间隔为 2。Myers 算法的基本思想来自于这样一个思想：通过遍历 `d` 和 `k` 来进行搜索。当然，它还需要保存每一轮的 `x` "
+"坐标，以便在下一轮搜索中使用。"
+
+#: ../../example/myers-diff/myers-diff.md:208
+msgid "Let's first define the `Line` struct, which represents a line in the text."
+msgstr "让我们首先定义 `Line` 结构，它代表文本中的一行。"
+
+#: ../../example/myers-diff/myers-diff.md:210
+msgid ""
+"///\n"
+"struct Line {\n"
+"  number : Int // Line number\n"
+"  text : String // Does not include newline\n"
+"} derive(Show, ToJson)\n"
+"\n"
+"///|\n"
+"fn Line::new(number : Int, text : String) -> Line {\n"
+"  Line::{ number, text }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:216
+msgid ""
+"Then, define a helper function that splits a string into `Array[Line]` based"
+" on newline characters. Note that line numbers start from 1."
+msgstr "然后，定义一个辅助函数，根据换行符将字符串拆分为 `Array[Line]`。注意，行号从 1 开始。"
+
+#: ../../example/myers-diff/myers-diff.md:218
+msgid ""
+"///\n"
+"fn lines(str : String) -> Array[Line] {\n"
+"  let lines = Array::new(capacity=50)\n"
+"  let mut line_number = 0\n"
+"  for line in str.split(\"\\n\") {\n"
+"    line_number = line_number + 1\n"
+"    lines.push(Line::new(line_number, line.to_string()))\n"
+"  } else {\n"
+"    return lines\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:224
+msgid ""
+"Next, we need to wrap the array so that it supports negative indexing "
+"because we will use the value of `k` as an index."
+msgstr "接下来，我们需要包装数组，以便它支持负索引，因为我们将使用 `k` 的值作为索引。"
+
+#: ../../example/myers-diff/myers-diff.md:226
+msgid ""
+"///\n"
+"struct BPArray[T](Array[T]) // BiPolar Array\n"
+"\n"
+"///|\n"
+"fn[T] BPArray::make(capacity : Int, default : T) -> BPArray[T] {\n"
+"  let arr = Array::make(capacity, default)\n"
+"  BPArray(arr)\n"
+"}\n"
+"\n"
+"///|\n"
+"fn[T] BPArray::copy(self : BPArray[T]) -> BPArray[T] {\n"
+"  let BPArray(arr) = self\n"
+"  BPArray(arr.copy())\n"
+"}\n"
+"\n"
+"///|\n"
+"fn[T] BPArray::op_get(self : BPArray[T], idx : Int) -> T {\n"
+"  let BPArray(arr) = self\n"
+"  if idx < 0 {\n"
+"    arr[arr.length() + idx]\n"
+"  } else {\n"
+"    arr[idx]\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"fn[T] BPArray::op_set(self : BPArray[T], idx : Int, elem : T) -> Unit {\n"
+"  let BPArray(arr) = self\n"
+"  if idx < 0 {\n"
+"    arr[arr.length() + idx] = elem\n"
+"  } else {\n"
+"    arr[idx] = elem\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:232
+msgid ""
+"Now we can start writing the search function. Before searching for the "
+"complete path, let's start with our first goal to find the length of the "
+"shortest path (equal to the search depth). Here is the basic framework:"
+msgstr "现在我们可以开始编写搜索函数了。在搜索完整路径之前，让我们从第一个目标开始，即找到最短路径的长度（等于搜索深度）。以下是基本框架："
+
+#: ../../example/myers-diff/myers-diff.md:235
+msgid ""
+"fn shortest_edit(old~ : Array[Line], new~ : Array[Line]) -> Int {\n"
+"  let n = old.length()\n"
+"  let m = new.length()\n"
+"  let max = n + m\n"
+"  let v = BPArray::make(2 * max + 1, 0)\n"
+"  for d = 0; d < max + 1; d = d + 1 {\n"
+"    for k = -d; k < d + 1; k = k + 2 {\n"
+"    ......\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:249
+msgid ""
+"In the most extreme case (the two texts have no matching lines), it can be "
+"inferred that the maximum number of steps needed is `n + m`, and the minimum"
+" is 0. Therefore, set the variable `max = n + m`. The array `v` uses `k` as "
+"an index to store the historical record of `x` values. Since `k` ranges from"
+" `[-d, d]`, the size of this array is set to `2 * max + 1`."
+msgstr ""
+"在最极端的情况下（两个文本没有匹配的行），可以推断所需的最大步数为 `n + m`，最小步数为 0。因此，设置变量 `max = n + m`。数组 "
+"`v` 使用 `k` 作为索引来存储 `x` 值的历史记录。因为 `k` 的范围是从 `[-d, d]`，所以这个数组的大小被设置为 `2 * max "
+"+ 1`。"
+
+#: ../../example/myers-diff/myers-diff.md:251
+msgid ""
+"But even at this point, it is still difficult to figure out what to do next,"
+" so let's only consider the case `d = 0; k = 0` for now. At this point, it "
+"must be at `(0, 0)`. Also, if the beginnings of the two texts are the same, "
+"they can be skipped directly. We write the final coordinates of this round "
+"into the array `v`."
+msgstr ""
+"但即使在这一点上，仍然很难弄清楚下一步该怎么做，所以我们只考虑 `d = 0; k = 0` 的情况，在这一点，它一定在 `(0, 0)` "
+"处。此外，如果两篇文本的开头相同，可以直接跳过。我们将这一轮的最终坐标写入数组 `v`。"
+
+#: ../../example/myers-diff/myers-diff.md:254
+msgid ""
+"if d == 0 { // When d equals 0, k must also equal 0\n"
+"  x = 0\n"
+"  y = x - k\n"
+"  while x < n && y < m && old[x].text == new[y].text {\n"
+"    // Skip all matching lines\n"
+"    x = x + 1\n"
+"    y = y + 1\n"
+"  }\n"
+"  v[k] = x\n"
+"}\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:267
+msgid ""
+"When `d > 0`, the coordinate information stored from the previous round is "
+"required. When we know the `k` value of a point and the coordinates of the "
+"points from the previous round of searching, the value of `v[k]` is easy to "
+"deduce. Because with each step k can only increase or decrease by one, "
+"`v[k]` in the search tree must extend from either `v[k - 1]` or `v[k + 1]`. "
+"The next question is: how to choose between the two paths ending at `v[k - "
+"1]` and `v[k + 1]`?"
+msgstr ""
+"当 `d > 0` 时，需要前一轮存储的坐标信息。当我们知道一个点的 `k` 值和前一轮搜索中点的坐标时，就很容易推导出 `v[k]` 的值。因为每一步"
+" k 只能增加或减少 1，所以搜索树中的 `v[k]` 必须从 `v[k - 1]` 或`v[k + 1]` 扩展。而下一个问题是：如何在以 `v[k "
+"- 1]` 和 `v[k + 1]` 结尾的两条路径之间做出选择？"
+
+#: ../../example/myers-diff/myers-diff.md:269
+msgid "There are two boundary cases: `k == -d` and `k == d`."
+msgstr "有两种边界情况:`k == -d` 和 `k == d`。"
+
+#: ../../example/myers-diff/myers-diff.md:271
+msgid "When `k == -d`, you can only choose `v[k + 1]`."
+msgstr "当 `k == -d` 时，只能选择 `v[k + 1]`。"
+
+#: ../../example/myers-diff/myers-diff.md:273
+msgid "When `k == d`, you can only choose `v[k - 1]`."
+msgstr "当 `k == d` 时，只能选择 `v[k - 1]`。"
+
+#: ../../example/myers-diff/myers-diff.md:275
+msgid ""
+"Recalling the requirement mentioned earlier: arranging deletions before "
+"insertions as much as possible, this essentially means choosing the position"
+" with the largest `x` value from the previous position."
+msgstr "而回顾前面提到的要求：尽可能在插入之前删除，这本质上意味着从前一个位置选择具有最大 `x` 值的位置。"
+
+#: ../../example/myers-diff/myers-diff.md:278
+msgid ""
+"if k == -d {\n"
+"  x = v[k + 1]\n"
+"} else if k == d {\n"
+"  x = v[k - 1] + 1 // add 1 to move horizontally\n"
+"} else if v[k - 1] < v[k + 1] {\n"
+"  x = v[k + 1]\n"
+"} else {\n"
+"  x = v[k - 1] + 1\n"
+"}\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:290
+msgid "Merging these four branches, we get the following code:"
+msgstr "合并这四个分支，我们得到以下代码："
+
+#: ../../example/myers-diff/myers-diff.md:293
+msgid ""
+"if k == -d || (k != d && v[k - 1] < v[k + 1]) {\n"
+"  x = v[k + 1]\n"
+"} else {\n"
+"  x = v[k - 1] + 1\n"
+"}\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:301
+msgid "Combining all the steps above, we get the following code:"
+msgstr "结合上述所有步骤，我们得到以下代码："
+
+#: ../../example/myers-diff/myers-diff.md:303
+msgid ""
+"///\n"
+"fn shortest_edit(old~ : Array[Line], new~ : Array[Line]) -> Int {\n"
+"  let n = old.length()\n"
+"  let m = new.length()\n"
+"  let max = n + m\n"
+"  let v = BPArray::make(2 * max + 1, 0)\n"
+"  // v[1] = 0\n"
+"  for d = 0; d < max + 1; d = d + 1 {\n"
+"    for k = -d; k < d + 1; k = k + 2 {\n"
+"      let mut x = 0\n"
+"      let mut y = 0\n"
+"      // if d == 0 {\n"
+"      //   x = 0\n"
+"      // }\n"
+"      if k == -d || (k != d && v[k - 1] < v[k + 1]) {\n"
+"        x = v[k + 1]\n"
+"      } else {\n"
+"        x = v[k - 1] + 1\n"
+"      }\n"
+"      y = x - k\n"
+"      while x < n && y < m && old[x].text == new[y].text {\n"
+"        // Skip all matching lines\n"
+"        x = x + 1\n"
+"        y = y + 1\n"
+"      }\n"
+"      v[k] = x\n"
+"      if x >= n && y >= m {\n"
+"        return d\n"
+"      }\n"
+"    }\n"
+"  } else {\n"
+"    abort(\"impossible\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff.md:309
+msgid ""
+"Since the initial value of the array is 0, we can omit the branch for `d == "
+"0`."
+msgstr "由于数组的初始值为 0，我们可以省略 `d == 0` 的分支。"
+
+#: ../../example/myers-diff/myers-diff.md:311
+msgid "Epilogue"
+msgstr "结语"
+
+#: ../../example/myers-diff/myers-diff.md:313
+msgid ""
+"We have implemented an incomplete version of Myers' algorithm, which "
+"completes the forward path search. In the next article, we will implement "
+"the backtracking to restore the complete edit path and write a function to "
+"output a colored diff."
+msgstr "我们已经实现了 Myers 算法的一个不完整版本，它完成了正向路径搜索。在下一篇文章中，我们将实现回溯以恢复完整的编辑路径，并编写一个函数来输出彩色差值。"
+
+#: ../../example/myers-diff/myers-diff.md:315
+msgid "This article references:"
+msgstr "本文引用："
+
+#: ../../example/myers-diff/myers-diff.md:317
+msgid ""
+"[https://blog.jcoglan.com/2017/02/15/the-myers-diff-algorithm-"
+"part-2/](https://blog.jcoglan.com/2017/02/15/the-myers-diff-algorithm-"
+"part-2/)"
+msgstr ""
+"[The Myers diff algorithm](https://blog.jcoglan.com/2017/02/15/the-myers-"
+"diff-algorithm-part-2/)"
+
+#: ../../example/myers-diff/myers-diff.md:319
+msgid "Thanks to the author James Coglan."
+msgstr "感谢作者 James Coglan。"
+

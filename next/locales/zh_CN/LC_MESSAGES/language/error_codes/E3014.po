@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E3014.md:1
+msgid "E3014"
+msgstr ""
+
+#: ../../language/error_codes/E3014.md:3
+msgid ""
+"Inline wasm syntax error. MoonBit will check if the inline wasm syntax is "
+"correct, including:"
+msgstr "内联 Wasm 语法错误。MoonBit 会检查内联 Wasm 是否正确，包括："
+
+#: ../../language/error_codes/E3014.md:5
+msgid "If the parenthesis are correctly matched."
+msgstr "括号是否正确配对。"
+
+#: ../../language/error_codes/E3014.md:6
+msgid "If the wasm instructions are correctly formatted."
+msgstr "Wasm 指令是否正确格式化。"
+
+#: ../../language/error_codes/E3014.md:8
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E3014.md:10
+msgid ""
+"extern \"wasm\" fn i32_load(addr : Int) -> Int = // Error: Inline wasm "
+"syntax error: unmatched parenthesis at 1:1-1:57\n"
+"  #|(func (param i32) (result i32)\n"
+"  #| (i32.load (local.get 0))"
+msgstr ""
+
+#: ../../language/error_codes/E3014.md:14
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E3014.md:16
+msgid "Fix the inline wasm syntax as suggested by the warning message."
+msgstr "根据错误信息的建议修正内联 Wasm。"
+
+#: ../../language/error_codes/E3014.md:18
+msgid ""
+"extern \"wasm\" fn i32_load(addr : Int) -> Int =\n"
+"  #|(func (param i32) (result i32)\n"
+"  #| (i32.load (local.get 0)))"
+msgstr ""
+

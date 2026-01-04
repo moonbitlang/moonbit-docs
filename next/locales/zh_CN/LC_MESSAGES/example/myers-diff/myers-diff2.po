@@ -1,0 +1,298 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../example/myers-diff/myers-diff2.md:1
+msgid "Myers diff 2"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff2.md:3
+msgid ""
+"This is the second post in the diff series. In the [previous one](/example"
+"/myers-diff/myers-diff.md), we learned how to transform the process of "
+"computing diffs into a graph search problem and how to search for the "
+"shortest edit distance. In this article, we will learn how to extend the "
+"search process from the previous post to obtain the complete edit sequence."
+msgstr ""
+"这是 diff 系列的第二篇文章。在上一篇 [myers-diff](/example/myers-diff/myers-diff.md) "
+"中，我们学习了如何将计算差分的过程转化为图搜索问题，以及如何搜索最短的编辑距离。在本文中，我们将学习如何扩展前一篇文章中的搜索过程，以获得完整的编辑序列。"
+
+#: ../../example/myers-diff/myers-diff2.md:5
+msgid "Recording the Search Process"
+msgstr "记录搜索过程"
+
+#: ../../example/myers-diff/myers-diff2.md:7
+msgid ""
+"The first step to obtaining the complete edit sequence is to save the entire"
+" editing process. This step is relatively simple; we just need to save the "
+"current search depth `d` and the graph node with depth `d` at the beginning "
+"of each search round."
+msgstr "获得完整编辑序列的第一步是保存整个编辑过程。这一步相对简单：我们只需要保存当前搜索深度 `d` 和每个搜索轮开始时深度 `d` 的图节点。"
+
+#: ../../example/myers-diff/myers-diff2.md:9
+msgid ""
+"///\n"
+"fn shortest_edit(\n"
+"  old~ : Array[Line],\n"
+"  new~ : Array[Line],\n"
+") -> Array[(BPArray[Int], Int)] {\n"
+"  let n = old.length()\n"
+"  let m = new.length()\n"
+"  let max = n + m\n"
+"  let v = BPArray::make(2 * max + 1, 0)\n"
+"  let trace = []\n"
+"  fn push(v : BPArray[Int], d : Int) -> Unit {\n"
+"    trace.push((v, d))\n"
+"  }\n"
+"  // v[1] = 0\n"
+"  for d = 0; d < max + 1; d = d + 1 {\n"
+"    push(v.copy(), d)\n"
+"    for k = -d; k < d + 1; k = k + 2 {\n"
+"      let mut x = 0\n"
+"      let mut y = 0\n"
+"      // if d == 0 {\n"
+"      //   x = 0\n"
+"      // }\n"
+"      if k == -d || (k != d && v[k - 1] < v[k + 1]) {\n"
+"        x = v[k + 1]\n"
+"      } else {\n"
+"        x = v[k - 1] + 1\n"
+"      }\n"
+"      y = x - k\n"
+"      while x < n && y < m && old[x].text == new[y].text {\n"
+"        x = x + 1\n"
+"        y = y + 1\n"
+"      }\n"
+"      v[k] = x\n"
+"      if x >= n && y >= m {\n"
+"        return trace\n"
+"      }\n"
+"    }\n"
+"  } else {\n"
+"    abort(\"impossible\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff2.md:15
+msgid "Backtracking the Edit Path"
+msgstr "回溯编辑路径"
+
+#: ../../example/myers-diff/myers-diff2.md:17
+msgid ""
+"After recording the entire search process, the next step is to walk back "
+"from the endpoint to find the path taken. But before we do that, let's first"
+" define the `Edit` type."
+msgstr "在记录了整个搜索过程之后，下一步是从端点返回以查找所使用的路径。但在我们这样做之前，让我们先定义 `Edit` 类型。"
+
+#: ../../example/myers-diff/myers-diff2.md:19
+msgid ""
+"///\n"
+"enum Edit {\n"
+"  Insert(new~ : Line)\n"
+"  Delete(old~ : Line)\n"
+"  Equal(old~ : Line, new~ : Line) // old, new\n"
+"} derive(Show)\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff2.md:25
+msgid "Next, let's perform the backtracking."
+msgstr "接下来，让我们执行回溯。"
+
+#: ../../example/myers-diff/myers-diff2.md:27
+msgid ""
+"///\n"
+"fn backtrack(\n"
+"  new~ : Array[Line],\n"
+"  old~ : Array[Line],\n"
+"  trace : Array[(BPArray[Int], Int)],\n"
+") -> Array[Edit] {\n"
+"  let mut x = old.length()\n"
+"  let mut y = new.length()\n"
+"  let edits = Array::new(capacity=trace.length())\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff2.md:33
+msgid ""
+"The method of backtracking is essentially the same as forward search, just "
+"in reverse."
+msgstr "回溯的方法本质上与正向搜索相同，只是方向相反。"
+
+#: ../../example/myers-diff/myers-diff2.md:35
+msgid "Calculate the current `k` value using `x` and `y`."
+msgstr "使用 `x` 和 `y` 计算当前 `k` 值。"
+
+#: ../../example/myers-diff/myers-diff2.md:37
+msgid ""
+"Access the historical records and use the same judgment criteria as in "
+"forward search to find the `k` value at the previous search round."
+msgstr "访问历史记录并使用与前向搜索相同的判断标准来查找前一轮搜索中的 `k` 值。"
+
+#: ../../example/myers-diff/myers-diff2.md:39
+msgid "Restore the coordinates of the previous search round."
+msgstr "恢复上一轮搜索的坐标。"
+
+#: ../../example/myers-diff/myers-diff2.md:41
+msgid "Try free movement and record the corresponding edit actions."
+msgstr "尝试自由移动并记录相应的编辑动作。"
+
+#: ../../example/myers-diff/myers-diff2.md:43
+msgid "Determine the type of edit that caused the change in `k` value."
+msgstr "确定导致 `k` 值更改的编辑类型。"
+
+#: ../../example/myers-diff/myers-diff2.md:45
+msgid "Continue iterating."
+msgstr "继续迭代。"
+
+#: ../../example/myers-diff/myers-diff2.md:47
+msgid ""
+"for i = trace.length() - 1; i >= 0; i = i - 1 {\n"
+"  let (v, d) = trace[i]\n"
+"  let k = x - y\n"
+"  let prev_k = if k == -d || (k != d && v[k - 1] < v[k + 1]) {\n"
+"    k + 1\n"
+"  } else {\n"
+"    k - 1\n"
+"  }\n"
+"  let prev_x = v[prev_k]\n"
+"  let prev_y = prev_x - prev_k\n"
+"  while x > prev_x && y > prev_y {\n"
+"    x = x - 1\n"
+"    y = y - 1\n"
+"    edits.push(Equal(old=old[x], new=new[y]))\n"
+"  }\n"
+"  if d > 0 {\n"
+"    if x == prev_x {\n"
+"      edits.push(Insert(new=new[prev_y]))\n"
+"    } else if y == prev_y {\n"
+"      edits.push(Delete(old=old[prev_x]))\n"
+"    }\n"
+"    x = prev_x\n"
+"    y = prev_y\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff2.md:54
+msgid "Combining the two functions, we get a complete `diff` implementation."
+msgstr "结合这两个函数，我们得到了一个完整的 `diff` 实现。"
+
+#: ../../example/myers-diff/myers-diff2.md:56
+msgid ""
+"///\n"
+"fn diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit] {\n"
+"  let trace = shortest_edit(old~, new~)\n"
+"  backtrack(old~, new~, trace)\n"
+"}\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff2.md:62
+msgid "Printing the Diff"
+msgstr "打印 diff"
+
+#: ../../example/myers-diff/myers-diff2.md:64
+msgid ""
+"To print a neat diff, we need to left-align the text. Also, due to the order"
+" issue during backtracking, we need to print from back to front."
+msgstr "要打印整齐的 diff，我们需要左对齐文本。另外，由于回溯过程中的顺序问题，我们需要从后往前打印。"
+
+#: ../../example/myers-diff/myers-diff2.md:66
+msgid ""
+"///\n"
+"let line_width = 4\n"
+"\n"
+"///|\n"
+"fn pad_right(s : String, width : Int) -> String {\n"
+"  String::make(width - s.length(), ' ') + s\n"
+"}\n"
+"\n"
+"///|\n"
+"fn pprint_edit(edit : Edit) -> String {\n"
+"  match edit {\n"
+"    Insert(_) as edit => {\n"
+"      let tag = \"+\"\n"
+"      let old_line = pad_right(\"\", line_width)\n"
+"      let new_line = pad_right(edit.new.number.to_string(), line_width)\n"
+"      let text = edit.new.text\n"
+"      \"\\{tag} \\{old_line} \\{new_line}    \\{text}\"\n"
+"    }\n"
+"    Delete(_) as edit => {\n"
+"      let tag = \"-\"\n"
+"      let old_line = pad_right(edit.old.number.to_string(), line_width)\n"
+"      let new_line = pad_right(\"\", line_width)\n"
+"      let text = edit.old.text\n"
+"      \"\\{tag} \\{old_line} \\{new_line}    \\{text}\"\n"
+"    }\n"
+"    Equal(_) as edit => {\n"
+"      let tag = \" \"\n"
+"      let old_line = pad_right(edit.old.number.to_string(), line_width)\n"
+"      let new_line = pad_right(edit.new.number.to_string(), line_width)\n"
+"      let text = edit.old.text\n"
+"      \"\\{tag} \\{old_line} \\{new_line}    \\{text}\"\n"
+"    }\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"fn pprint_diff(diff : Array[Edit]) -> String {\n"
+"  let buf = @buffer.new(size_hint=100)\n"
+"  for i = diff.length(); i > 0; i = i - 1 {\n"
+"    buf.write_string(pprint_edit(diff[i - 1]))\n"
+"    buf.write_char('\\n')\n"
+"  } else {\n"
+"    buf.contents().to_unchecked_string()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff2.md:72
+msgid "The result is as follows:"
+msgstr "结果如下："
+
+#: ../../example/myers-diff/myers-diff2.md:74
+msgid ""
+"-    1         A\n"
+"-    2         B\n"
+"     3    1    C\n"
+"+         2    B\n"
+"     4    3    A\n"
+"     5    4    B\n"
+"-    6         B\n"
+"     7    5    A\n"
+"+         6    C\n"
+msgstr ""
+
+#: ../../example/myers-diff/myers-diff2.md:86
+msgid "Conclusion"
+msgstr "总结"
+
+#: ../../example/myers-diff/myers-diff2.md:88
+msgid ""
+"The Myers algorithm demonstrated above is complete, but due to the frequent "
+"copying of arrays, it has a very large space overhead. Therefore, most "
+"software like Git uses a linear variant of the diff algorithm (found in the "
+"appendix of the original paper). This variant may sometimes produce diffs of"
+" lower quality (harder for humans to read) than the standard Myers algorithm"
+" but can still ensure the shortest edit sequence."
+msgstr ""
+"上面演示的 Myers 算法是完整的，但是由于频繁地复制数组，它有非常大的空间开销。因此，像 Git 这样的大多数软件使用 diff "
+"算法的线性变体（在原始论文的附录中找到）。这种变体有时可能会产生比标准 Myers 算法质量更低的 "
+"diffs（对人类来说更难阅读），但仍然可以确保最短的编辑序列。"
+

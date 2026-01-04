@@ -1,0 +1,116 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4037.md:1
+msgid "E4037"
+msgstr ""
+
+#: ../../language/error_codes/E4037.md:3
+msgid "Cannot perform action: package is not imported."
+msgstr "无法完成操作：包未导入。"
+
+#: ../../language/error_codes/E4037.md:5
+msgid "Erroneous Example"
+msgstr "错误示例："
+
+#: ../../language/error_codes/E4037.md:7
+msgid "In `main/main.mbt`, we try to call a function from `@middle`:"
+msgstr "在 `main/main.mbt` 中，我们试图调用 `@middle` 中的一个函数："
+
+#: ../../language/error_codes/E4037.md:9
+msgid ""
+"fn main {\n"
+"  let a = @middle.return_Obj().m()\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4037.md:15
+msgid ""
+"In `middle/middle.mbt`, we define a function that returns an object of a "
+"trait `Obj` defined in `@ty`:"
+msgstr "在 `middle/middle.mbt` 中，我们定义了一个函数，返回了一个在 `@ty` 中定义的特征 `Obj` 的对象："
+
+#: ../../language/error_codes/E4037.md:18
+msgid ""
+"pub fn return_Obj() -> &@ty.Obj {\n"
+"  @ty.T(42)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4037.md:24
+msgid "In `ty/ty.mbt`, we define a trait `Obj` and a type `T` that implements it:"
+msgstr "在 `ty/ty.mbt` 中，我们定义了一个特征 `Obj` 和一个实现它的类型 `T`："
+
+#: ../../language/error_codes/E4037.md:27
+msgid ""
+"pub(all) type T Int\n"
+"\n"
+"pub fn f(self: T) -> Unit {\n"
+"  println(self._)\n"
+"}\n"
+"\n"
+"pub(open) trait Obj {\n"
+"  f(Self) -> Unit\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4037.md:39
+msgid "... but in `main/moon.pkg.json` there is no mention of `@ty`:"
+msgstr "但是在 `main/moon.pkg.json` 中没有提到 `@ty`："
+
+#: ../../language/error_codes/E4037.md:41
+msgid ""
+"{\n"
+"  \"import\": [\"<PACKAGE>/middle\"]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4037.md:47
+msgid "This gives the following error on line 2 of `main/main.mbt`:"
+msgstr "这会在 `main/main.mbt` 的第 2 行报错："
+
+#: ../../language/error_codes/E4037.md:49
+msgid ""
+"Cannot call method of type &@<PACKAGE>/ty.Obj: package @<PACKAGE>/ty is not "
+"imported.\n"
+msgstr "无法调用类型为 &@<PACKAGE>/ty.Obj 的方法：包 @<PACKAGE>/ty 未导入。\n"
+
+#: ../../language/error_codes/E4037.md:53
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4037.md:55
+msgid "Make sure that all relevant packages are imported."
+msgstr "确保所有相关的包都已经导入。"
+
+#: ../../language/error_codes/E4037.md:57
+msgid ""
+"In the above example, this means importing both `@middle` and `@ty` in "
+"`main/moon.pkg.json`:"
+msgstr "在上面的示例中，这意味着在 `main/moon.pkg.json` 中导入 `@middle` 和 `@ty`："
+
+#: ../../language/error_codes/E4037.md:59
+msgid ""
+"{\n"
+"  \"import\": [\"<PACKAGE>/middle\", \"<PACKAGE>/ty\"]\n"
+"}\n"
+msgstr ""
+

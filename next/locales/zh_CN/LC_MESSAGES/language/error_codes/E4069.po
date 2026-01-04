@@ -1,0 +1,125 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4069.md:1
+msgid "E4069"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:3
+msgid "Unexpected main function in the non-main package."
+msgstr "非 main 包中出现 `main` 函数。"
+
+#: ../../language/error_codes/E4069.md:5
+msgid ""
+"In MoonBit, packages are divided into two types: main packages and non-main "
+"packages. Non-main packages are often used as libraries to provide "
+"functionality to other packages. Main packages, on the other hand, are the "
+"entry points of the program. Therefore, non-main packages should not contain"
+" a `main` function."
+msgstr ""
+"在 MoonBit 中，包分为两类：主包和非主包。非主包通常用作库，为其他包提供功能。另一方面，主包是程序的入口点。因此，非主包不应该包含 `main`"
+" 函数。"
+
+#: ../../language/error_codes/E4069.md:10
+msgid ""
+"Sometimes, people use the main function for testing. In such cases, we "
+"recommend using the `test` block to write tests, instead of using the `main`"
+" function. See the [test](../introduction.md#test) section of the MoonBit "
+"documentation for more information."
+msgstr ""
+"有时，人们使用 `main` 函数进行测试。在这种情况下，我们建议使用测试块来编写测试，而不是使用 `main` 函数。有关更多信息，请参阅 "
+"MoonBit 文档的 [测试部分](../introduction.md#test)。"
+
+#: ../../language/error_codes/E4069.md:15
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4069.md:17
+msgid "Suppose in package `lib`:"
+msgstr "假设在包 `lib` 中："
+
+#: ../../language/error_codes/E4069.md:19 ../../language/error_codes/E4069.md:42
+msgid "`lib/moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:21
+msgid "{} // \"is-main\" is by default false\n"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:25
+msgid "`lib/lib.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:27
+msgid ""
+"fn main { // Error: Unexpected main function in the non-main package.\n"
+"  println(\"Hello, world!\")\n"
+"}"
+msgstr "main 包中缺少 `main` 函数"
+
+#: ../../language/error_codes/E4069.md:31
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4069.md:33
+msgid "You can remove the `main` function from the non-main package:"
+msgstr "您可以从非主包中删除 `main` 函数："
+
+#: ../../language/error_codes/E4069.md:35
+msgid ""
+"// Remove the main function\n"
+"//- fn main {\n"
+"//-   println(\"Hello, world!\")\n"
+"//- }"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:39
+msgid ""
+"Alternatively, you can set the package to be a main package by setting "
+"`\"is-main\"` to `true` in the package configuration file."
+msgstr "或者，您可以通过在包配置文件中将 `\"is-main\"` 设置为 `true` 来将包设置为主包。"
+
+#: ../../language/error_codes/E4069.md:44 ../../language/error_codes/E4069.md:54
+msgid ""
+"{\n"
+"  \"is-main\": true\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:50
+msgid "You can also move the `main` function to a different package, say `main`:"
+msgstr "你也可以将 `main` 函数移动到另一个包中，比如 `main`："
+
+#: ../../language/error_codes/E4069.md:52
+msgid "`main/moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:60
+msgid "`main/main.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:62
+msgid ""
+"fn main {\n"
+"  println(\"Hello, world!\")\n"
+"}"
+msgstr ""
+

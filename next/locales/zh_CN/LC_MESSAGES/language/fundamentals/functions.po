@@ -1,0 +1,514 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/fundamentals/functions.md:1
+msgid "Functions"
+msgstr "函数"
+
+#: ../../language/fundamentals/functions.md:3
+msgid ""
+"Functions take arguments and produce a result. In MoonBit, functions are "
+"first-class, which means that functions can be arguments or return values of"
+" other functions. MoonBit's naming convention requires that function names "
+"should not begin with uppercase letters (A-Z). Compare for constructors in "
+"the `enum` section below."
+msgstr ""
+"函数接受参数并产生结果。在 MoonBit 中，函数是一等公民，这意味着函数可以是其他函数的参数或返回值。MoonBit "
+"的命名约定要求函数名不应以大写字母（A-Z）开头。请参见下面的 `enum` 部分中的构造器。"
+
+#: ../../language/fundamentals/functions.md:5
+msgid "Top-Level Functions"
+msgstr "顶层函数"
+
+#: ../../language/fundamentals/functions.md:7
+msgid ""
+"Functions can be defined as top-level or local. We can use the `fn` keyword "
+"to define a top-level function that sums three integers and returns the "
+"result, as follows:"
+msgstr "函数可以定义为顶级或局部。我们可以使用 `fn` 关键字定义一个顶级函数，它将三个整数相加并返回结果，如下所示："
+
+#: ../../language/fundamentals/functions.md:9
+msgid ""
+"fn add3(x : Int, y : Int, z : Int) -> Int {\n"
+"  x + y + z\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:15
+msgid ""
+"Note that the arguments and return value of top-level functions require "
+"**explicit** type annotations."
+msgstr "请注意，顶级函数的参数和返回值需要**显式**类型注释。"
+
+#: ../../language/fundamentals/functions.md:17
+msgid "Local Functions"
+msgstr "局部函数"
+
+#: ../../language/fundamentals/functions.md:19
+msgid ""
+"Local functions can be named or anonymous. Type annotations can be omitted "
+"for local function definitions: they can be automatically inferred in most "
+"cases. For example:"
+msgstr "局部函数可以是命名的或匿名的。局部函数定义可以省略类型注释：在大多数情况下，它们可以自动推断。例如："
+
+#: ../../language/fundamentals/functions.md:21
+msgid ""
+"fn local_1() -> Int {\n"
+"  fn inc(x) { // named as `inc`\n"
+"    x + 1\n"
+"  }\n"
+"  // anonymous, instantly applied to integer literal 6\n"
+"  (fn(x) { x + inc(2) })(6)\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq(local_1(), 9)\n"
+"}\n"
+msgstr ""
+"fn local_1() -> Int {\n"
+"  fn inc(x) { // 命名为 `inc`\n"
+"    x + 1\n"
+"  }\n"
+"  // 匿名，立即应用于整数字面量 6\n"
+"  (fn(x) { x + inc(2) })(6)\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq(local_1(), 9)\n"
+"}\n"
+
+#: ../../language/fundamentals/functions.md:27
+msgid ""
+"For simple anonymous function, MoonBit provides a very concise syntax called"
+" arrow function:"
+msgstr "MoonBit 为简单的匿名函数提供了一个非常简洁的箭头函数语法："
+
+#: ../../language/fundamentals/functions.md:29
+msgid ""
+"  [1, 2, 3].eachi((i, x) => println(\"\\{i} => \\{x}\"))\n"
+"  // parenthesis can be omitted when there is only one parameter\n"
+"  [1, 2, 3].each(x => println(x * x))\n"
+msgstr ""
+"  [1, 2, 3].eachi((i, x) => println(\"\\{i} => \\{x}\"))\n"
+"  // 只有一个参数时可以省略括号\n"
+"  [1, 2, 3].each(x => println(x * x))\n"
+
+#: ../../language/fundamentals/functions.md:35
+msgid ""
+"Functions, whether named or anonymous, are _lexical closures_: any "
+"identifiers without a local binding must refer to bindings from a "
+"surrounding lexical scope. For example:"
+msgstr "函数，无论是命名的还是匿名的，都是 _词法闭包_：没有局部绑定的任何标识符必须引用来自周围词法范围的绑定。例如："
+
+#: ../../language/fundamentals/functions.md:37
+msgid ""
+"let global_y = 3\n"
+"\n"
+"fn local_2(x : Int) -> (Int, Int) {\n"
+"  fn inc() {\n"
+"    x + 1\n"
+"  }\n"
+"\n"
+"  fn four() {\n"
+"    global_y + 1\n"
+"  }\n"
+"\n"
+"  (inc(), four())\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq(local_2(3), (4, 4))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:43
+msgid ""
+"A local function can only refer to itself and other previously defined local"
+" functions. To define  mutually recursive local functions, use the syntax "
+"`letrec f = .. and g = ..` instead:"
+msgstr ""
+"局部函数的定义内，可以使用这个函数自己或者之前定义的其他局部函数。如果要定义多个互相递归的局部函数，需要使用 `letrec f = .. and g "
+"= ..` 语法："
+
+#: ../../language/fundamentals/functions.md:46
+msgid ""
+"  fn f(x) {\n"
+"    // `f` can refer to itself here, but cannot use `g`\n"
+"    if x > 0 {\n"
+"      f(x - 1)\n"
+"    }\n"
+"  }\n"
+"\n"
+"  fn g(x) {\n"
+"    // `g` can refer to `f` and `g` itself\n"
+"    if x < 0 {\n"
+"      f(-x)\n"
+"    } else {\n"
+"      f(x)\n"
+"    }\n"
+"  }\n"
+"  // mutually recursive local functions\n"
+"  letrec even = x => x == 0 || odd(x - 1)\n"
+"  and odd = x => x != 0 && even(x - 1)\n"
+msgstr ""
+"  fn f(x) {\n"
+"    // `f` 可以调用它自己，但不能调用 `g`\n"
+"    if x > 0 {\n"
+"      f(x - 1)\n"
+"    }\n"
+"  }\n"
+"\n"
+"  fn g(x) {\n"
+"    // `g` 可以调用 `f` 和 `g` 自身\n"
+"    if x < 0 {\n"
+"      f(-x)\n"
+"    } else {\n"
+"      f(x)\n"
+"    }\n"
+"  }\n"
+"  // 互递归的局部函数\n"
+"  letrec even = x => x == 0 || odd(x - 1)\n"
+"  and odd = x => x != 0 && even(x - 1)\n"
+
+#: ../../language/fundamentals/functions.md:52
+msgid "Function Applications"
+msgstr "函数应用"
+
+#: ../../language/fundamentals/functions.md:54
+msgid "A function can be applied to a list of arguments in parentheses:"
+msgstr "函数可以应用于括号中的参数列表："
+
+#: ../../language/fundamentals/functions.md:56
+msgid "add3(1, 2, 7)\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:60
+msgid ""
+"This works whether `add3` is a function defined with a name (as in the "
+"previous example), or a variable bound to a function value, as shown below:"
+msgstr "无论 `add3` 是一个使用名称定义的函数（如前面的示例）还是绑定到函数值的变量，都可以工作，如下所示："
+
+#: ../../language/fundamentals/functions.md:62
+msgid ""
+"test {\n"
+"  let add3 = fn(x, y, z) { x + y + z }\n"
+"  assert_eq(add3(1, 2, 7), 10)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:68
+msgid ""
+"The expression `add3(1, 2, 7)` returns `10`. Any expression that evaluates "
+"to a function value is applicable:"
+msgstr "表达式 `add3(1, 2, 7)` 返回 `10`。任何求值为函数值的表达式都是可应用的："
+
+#: ../../language/fundamentals/functions.md:70
+msgid ""
+"test {\n"
+"  let f = fn(x) { x + 1 }\n"
+"  let g = fn(x) { x + 2 }\n"
+"  let w = (if true { f } else { g })(3)\n"
+"  assert_eq(w, 4)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:77
+msgid "Partial Applications"
+msgstr "部分应用"
+
+#: ../../language/fundamentals/functions.md:79
+msgid ""
+"Partial application is a technique of applying a function to some of its "
+"arguments, resulting in a new function that takes the remaining arguments. "
+"In MoonBit, partial application is achieved by using the `_` operator in "
+"function application:"
+msgstr "部分应用允许函数调用时只提供部分的参数，生成一个接受被余下的参数并返回结果的函数。在 MoonBit 中，通过`_`操作符可以对函数进行部分应用："
+
+#: ../../language/fundamentals/functions.md:81
+msgid ""
+"fn add(x : Int, y : Int) -> Int {\n"
+"  x + y\n"
+"}\n"
+"\n"
+"test {\n"
+"  let add10 : (Int) -> Int = add(10, _)\n"
+"  println(add10(5)) // prints 15\n"
+"  println(add10(10)) // prints 20\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:88
+msgid ""
+"The `_` operator represents the missing argument in parentheses. The partial"
+" application allows multiple `_` in the same parentheses. For example, "
+"`Array::fold(_, _, init=5)` is equivalent to `fn(x, y) { Array::fold(x, y, "
+"init=5) }`."
+msgstr ""
+"`_`操作符表示括号中缺少的参数。部分应用允许在一对括号中使用多个`_`。例如，`Array::fold(_, _, init=5)`等价于`fn(x,"
+" y) { Array::fold(x, y, init=5) }`。"
+
+#: ../../language/fundamentals/functions.md:91
+msgid ""
+"The `_` operator can also be used in enum creation, dot style function calls"
+" and in the pipelines."
+msgstr "`_`操作符也可以在创建枚举值、`self.f(args)`形式的函数调用和管道中使用。"
+
+#: ../../language/fundamentals/functions.md:93
+msgid "Labelled arguments"
+msgstr "带标签的参数"
+
+#: ../../language/fundamentals/functions.md:95
+msgid ""
+"**Top-level** functions can declare labelled argument with the syntax "
+"`label~ : Type`. `label` will also serve as parameter name inside function "
+"body:"
+msgstr "**顶层**函数可以使用语法 `label~ : Type` 声明带标签的参数。`label` 也将作为函数体内的参数名："
+
+#: ../../language/fundamentals/functions.md:97
+msgid ""
+"fn labelled_1(arg1~ : Int, arg2~ : Int) -> Int {\n"
+"  arg1 + arg2\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:103
+msgid ""
+"Labelled arguments can be supplied via the syntax `label=arg`. `label=label`"
+" can be abbreviated as `label~`:"
+msgstr "可以通过语法 `label=arg` 提供带标签的参数。`label=label` 可以缩写为 `label~`："
+
+#: ../../language/fundamentals/functions.md:105
+msgid ""
+"test {\n"
+"  let arg1 = 1\n"
+"  assert_eq(labelled_1(arg2=2, arg1~), 3)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:111
+msgid ""
+"Labelled function can be supplied in any order. The evaluation order of "
+"arguments is the same as the order of parameters in function declaration."
+msgstr "带标签的函数可以以任何顺序提供。参数的求值顺序与函数声明中参数的顺序相同。"
+
+#: ../../language/fundamentals/functions.md:113
+msgid "Optional arguments"
+msgstr "可选参数"
+
+#: ../../language/fundamentals/functions.md:115
+msgid ""
+"An argument can be made optional by supplying a default expression with the "
+"syntax `label?: Type = default_expr`, where the `default_expr` may be "
+"omitted. If this argument is not supplied at call site, the default "
+"expression will be used:"
+msgstr ""
+"可以通过语法 `label? : Type = default_expr` 使参数变为可选，其中 `default_expr` "
+"可以省略。如果在调用处未提供该参数，则将使用默认表达式："
+
+#: ../../language/fundamentals/functions.md:117
+msgid ""
+"fn optional(opt? : Int = 42) -> Int {\n"
+"  opt\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq(optional(), 42)\n"
+"  assert_eq(optional(opt=0), 0)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:123
+msgid ""
+"The default expression will be evaluated every time it is used. And the side"
+" effect in the default expression, if any, will also be triggered. For "
+"example:"
+msgstr "默认表达式每次使用时都会被求值。并且默认表达式中的副作用（如果有）也会被触发。例如："
+
+#: ../../language/fundamentals/functions.md:125
+msgid ""
+"fn incr(counter? : Ref[Int] = { val: 0 }) -> Ref[Int] {\n"
+"  counter.val = counter.val + 1\n"
+"  counter\n"
+"}\n"
+"\n"
+"test {\n"
+"  inspect(incr(), content=\"{val: 1}\")\n"
+"  inspect(incr(), content=\"{val: 1}\")\n"
+"  let counter : Ref[Int] = { val: 0 }\n"
+"  inspect(incr(counter~), content=\"{val: 1}\")\n"
+"  inspect(incr(counter~), content=\"{val: 2}\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:131
+msgid ""
+"If you want to share the result of default expression between different "
+"function calls, you can lift the default expression to a toplevel `let` "
+"declaration:"
+msgstr "如果要在不同的函数调用之间共享默认表达式的结果，可以将默认表达式提升到顶层 `let` 声明："
+
+#: ../../language/fundamentals/functions.md:133
+msgid ""
+"let default_counter : Ref[Int] = { val: 0 }\n"
+"\n"
+"fn incr_2(counter? : Ref[Int] = default_counter) -> Int {\n"
+"  counter.val = counter.val + 1\n"
+"  counter.val\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq(incr_2(), 1)\n"
+"  assert_eq(incr_2(), 2)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:139
+msgid "The default expression can depend on previous arguments, such as:"
+msgstr "默认表达式可以依赖于之前的参数，例如："
+
+#: ../../language/fundamentals/functions.md:141
+msgid ""
+"fn create_rectangle(a : Int, b? : Int = a) -> (Int, Int) {\n"
+"  (a, b)\n"
+"}\n"
+"\n"
+"test {\n"
+"  inspect(create_rectangle(10), content=\"(10, 10)\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:147
+msgid "Optional arguments without default values"
+msgstr "没有默认值的可选参数"
+
+#: ../../language/fundamentals/functions.md:149
+msgid ""
+"It is quite common to have different semantics when a user does not provide "
+"a value. Optional arguments without default values have type `T?` and `None`"
+" as the default value. When supplying this kind of optional argument "
+"directly, MoonBit will automatically wrap the value with `Some`:"
+msgstr ""
+"当用户未提供值时，具有不同语义的情况是很常见的。没有默认值的可选参数的类型为 `T?`，默认值为 `None`。在直接提供这种可选参数时，MoonBit"
+" 将自动用 `Some` 包装该值："
+
+#: ../../language/fundamentals/functions.md:153
+msgid ""
+"fn new_image(width? : Int, height? : Int) -> Image {\n"
+"  if width is Some(w) {\n"
+"    ...\n"
+"  }\n"
+"  ...\n"
+"}\n"
+"\n"
+"let img2 : Image = new_image(width=1920, height=1080)\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:159
+msgid ""
+"Sometimes, it is also useful to pass a value of type `T?` directly, for "
+"example when forwarding optional argument. MoonBit provides a syntax "
+"`label?=value` for this, with `label?` being an abbreviation of "
+"`label?=label`:"
+msgstr ""
+"有时，直接传递类型为 `T?` 的值也很有用，例如在转发可选参数时。MoonBit 为此提供了一个语法 `label?=value`，并且 "
+"`label?` 是 `label?=label` 的缩写："
+
+#: ../../language/fundamentals/functions.md:163
+msgid ""
+"fn image(width? : Int, height? : Int) -> Image {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn fixed_width_image(height? : Int) -> Image {\n"
+"  image(width=1920, height?)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:169
+msgid "Autofill arguments"
+msgstr "自动填充参数"
+
+#: ../../language/fundamentals/functions.md:171
+msgid ""
+"MoonBit supports filling specific types of arguments automatically at "
+"different call site, such as the source location of a function call. To "
+"declare an autofill argument, simply declare a labelled argument, and add a "
+"function attribute `#callsite(autofill(param_a, param_b))`. Now if the "
+"argument is not explicitly supplied, MoonBit will automatically fill it at "
+"the call site."
+msgstr ""
+"MoonBit 支持在不同的调用位置自动填充特定类型的参数，例如函数调用的源位置。要声明一个自动填充参数，只需声明一个带标签的参数，并添加一个函数属性 "
+"`#callsite(autofill(param_a, param_b))`。现在，如果未显式提供参数，MoonBit 将在调用时自动填充它。"
+
+#: ../../language/fundamentals/functions.md:175
+msgid ""
+"Currently MoonBit supports two types of autofill arguments, `SourceLoc`, "
+"which is the source location of the whole function call, and `ArgsLoc`, "
+"which is an array containing the source location of each argument, if any:"
+msgstr ""
+"目前 MoonBit 支持两种类型的自动填充参数，`SourceLoc`，它是整个函数调用的源位置，以及 "
+"`ArgsLoc`，它是一个数组，包含每个参数的源位置（如果有）："
+
+#: ../../language/fundamentals/functions.md:178
+msgid ""
+"#callsite(autofill(loc, args_loc))\n"
+"fn f(_x : Int, loc~ : SourceLoc, args_loc~ : ArgsLoc) -> String {\n"
+"  (\n"
+"    $|loc of whole function call: \\{loc}\n"
+"    $|loc of arguments: \\{args_loc}\n"
+"  )\n"
+"  // loc of whole function call: <filename>:7:3-7:10\n"
+"  // loc of arguments: [Some(<filename>:7:5-7:6), Some(<filename>:7:8-7:9), "
+"None, None]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:184
+msgid ""
+"Autofill arguments are very useful for writing debugging and testing "
+"utilities."
+msgstr "自动填充参数非常有用，用于编写调试和测试工具。"
+
+#: ../../language/fundamentals/functions.md:186
+msgid "Function alias"
+msgstr "函数别名"
+
+#: ../../language/fundamentals/functions.md:187
+msgid ""
+"MoonBit allows calling functions with alternative names via function alias. "
+"Function alias can be declared as follows:"
+msgstr "MoonBit 允许用户用别名来调用一个函数。声明函数别名的语法如下："
+
+#: ../../language/fundamentals/functions.md:189
+msgid ""
+"#alias(g)\n"
+"#alias(h, visibility=\"pub\")\n"
+"fn k() -> Bool {\n"
+"  true\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals/functions.md:195
+msgid ""
+"You can also create function alias that has different visibility with the "
+"field `visibility`."
+msgstr "你也可以通过字段 `visibility` 创建具有不同可见性的函数别名。"
+

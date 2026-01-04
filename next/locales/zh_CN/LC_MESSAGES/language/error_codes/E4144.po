@@ -1,0 +1,89 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4144.md:1
+msgid "E4144"
+msgstr ""
+
+#: ../../language/error_codes/E4144.md:3
+msgid "This is a constant, not a constructor, it cannot be applied to arguments."
+msgstr "这是一个常量，不是构造函数，不能应用于参数。"
+
+#: ../../language/error_codes/E4144.md:5
+msgid ""
+"This error occurs when you try to use a constant as a constructor in "
+"pattern. One possible reason for this error is that you have a constant with"
+" the same name as an constructor from some other packages, and in such case "
+"you need to either use qualified name or type annotations to disambiguate."
+msgstr "当你尝试使用常量作为其他包中的构造函数的参数时，会发生此错误。可能的原因是你有一个与其他包中的构造函数同名的常量，在这种情况下，您需要使用限定名或类型注释来消除歧义。"
+
+#: ../../language/error_codes/E4144.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4144.md:12
+msgid ""
+"pub const Value : Int = 1\n"
+"\n"
+"fn main {\n"
+"  match { ... } {\n"
+"    Value(_) => println(\"Value\")\n"
+"  //^~~~~\n"
+"  // Error: 'Value' is a constant, not a constructor, it cannot be applied "
+"to arguments.\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4144.md:16
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4144.md:18
+msgid ""
+"If you want to match against the constant, you can remove the playload from "
+"the pattern."
+msgstr "如果要匹配常量，您可以从模式中删除负载。"
+
+#: ../../language/error_codes/E4144.md:21
+msgid ""
+"fn main {\n"
+"  match { ... } {\n"
+"    Value => println(\"Value\")\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4144.md:25
+msgid ""
+"Or if the constant has the same name as a constructor from some other "
+"packages, you can use qualified name or type annotations to disambiguate."
+msgstr "或者，如果常量与其他包中的构造函数同名，您可以使用限定名或类型注释来消除歧义。"
+
+#: ../../language/error_codes/E4144.md:28
+msgid ""
+"fn main {\n"
+"  match { ... } {\n"
+"    @a.Value(_) => println(\"Value\")\n"
+"  }\n"
+"}"
+msgstr ""
+

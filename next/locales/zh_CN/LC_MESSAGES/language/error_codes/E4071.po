@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4071.md:1
+msgid "E4071"
+msgstr ""
+
+#: ../../language/error_codes/E4071.md:3
+msgid ""
+"Multiple intrinsic is not supported. You have defined a function to use "
+"multiple intrinsics."
+msgstr "不支持多重内建指令。您定义了一个使用多重内建指令的函数。"
+
+#: ../../language/error_codes/E4071.md:6
+msgid ""
+"Note all intrinsic is not intended for usage outside of `moonbitlang/core` "
+"and is subject to change without notice, and we highly recommend **against**"
+" using them."
+msgstr ""
+"请注意，所有内建指令不是为在 `moonbitlang/core` 之外使用准备的，并且可能会在不通知的情况下进行更改，我们强烈建议 "
+"**不要使用它们** 。"
+
+#: ../../language/error_codes/E4071.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4071.md:12
+#, python-format
+msgid ""
+"type MyArray[T] Array[T]\n"
+"\n"
+"/// @intrinsic %array.get\n"
+"/// @intrinsic %fixedarray.get\n"
+"fn MyArray::get[T](self : MyArray[T], index : Int) -> T { // Error: Multiple"
+" intrinsic is not unsupported.\n"
+"  return self._[index]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4071.md:22
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4071.md:24
+msgid "Remove the extra intrinsic and use only one intrinsic:"
+msgstr "删除额外的内建指令，只使用一个内建指令："
+
+#: ../../language/error_codes/E4071.md:26
+msgid ""
+"/// @intrinsic %array.get\n"
+"fn MyArray::get[T](self : MyArray[T], index : Int) -> T {\n"
+"  return self._[index]\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4071.md:30
+msgid ""
+"Avoid directly using intrinsics as much as possible, as we may change or "
+"remove them in the future. If you really need to use the intrinsic, you can "
+"check the source code of `moonbitlang/core` for further usage of the "
+"corresponding intrinsic."
+msgstr ""
+"尽可能避免直接使用内建指令，因为我们可能会在将来更改或删除它们。如果您确实需要使用内建指令，您可以查看 `moonbitlang/core` "
+"的源代码，以进一步使用相应的内建指令。"
+

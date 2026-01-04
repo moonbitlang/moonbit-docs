@@ -1,0 +1,68 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4033.md:1
+msgid "E4033"
+msgstr ""
+
+#: ../../language/error_codes/E4033.md:3
+msgid "There is no struct definition with the specified fields."
+msgstr "没有定义指定字段的结构体。"
+
+#: ../../language/error_codes/E4033.md:5
+msgid "Erroneous Example"
+msgstr "错误示例："
+
+#: ../../language/error_codes/E4033.md:7
+msgid ""
+"fn main {\n"
+"  struct S { x : Int; y : Int }\n"
+"  let c = { x: 2, w: 1 }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4033.md:14
+msgid ""
+"The example above tries to assign a struct with fields `x` and `w` to a "
+"variable `c`, but this field doesn't exist in any known struct type, giving "
+"the following error on line 3:"
+msgstr "在上述例子中，试图将一个带有字段 `x` 和 `w` 的结构体赋值给一个变量 `c`，但这个字段在任何已知的结构体类型中都不存在，在第 3 行报错："
+
+#: ../../language/error_codes/E4033.md:17
+msgid "There is no struct definition with the fields: x, w.\n"
+msgstr ""
+
+#: ../../language/error_codes/E4033.md:21
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4033.md:23
+msgid "Make sure to use the correct field identifiers instead:"
+msgstr "确保使用正确的字段标识符："
+
+#: ../../language/error_codes/E4033.md:25
+msgid ""
+"fn main {\n"
+"  struct S { x : Int; y : Int }\n"
+"  let c = { x: 2, y: 1 }\n"
+"}"
+msgstr ""
+

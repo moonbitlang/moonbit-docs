@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit Document \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-04 18:34+0800\n"
+"POT-Creation-Date: 2025-12-24 17:14+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -849,48 +849,51 @@ msgid ""
 msgstr "MoonBit 在语义上**总是按引用传递**。但对于不可变类型和基本类型，它们可以按值传递，因为这在语义上是相同的，这纯粹是一种优化。"
 
 #: ../../tutorial/for-go-programmers/index.md:446
+#, fuzzy
 msgid ""
 "Notable **primitive types** in MoonBit include "
-"[`Unit`](../../language/fundamentals.md#unit) , "
-"[`Boolean`](../../language/fundamentals.md#boolean) , integers "
-"([`Int`](../../language/fundamentals.md#number), "
-"[`Int64`](../../language/fundamentals.md#number), "
-"[`UInt`](../../language/fundamentals.md#number), etc.) , floating-point "
-"numbers ([`Double`](../../language/fundamentals.md#number), "
-"[`Float`](../../language/fundamentals.md#number), etc.) , "
-"[`String`](../../language/fundamentals.md#string) , "
-"[`Char`](../../language/fundamentals.md#char) , "
-"[`Byte`](../../language/fundamentals.md#bytes)."
+"[`Unit`](../../language/fundamentals/builtins.md#unit) , "
+"[`Boolean`](../../language/fundamentals/builtins.md#boolean) , integers "
+"([`Int`](../../language/fundamentals/builtins.md#number), "
+"[`Int64`](../../language/fundamentals/builtins.md#number), "
+"[`UInt`](../../language/fundamentals/builtins.md#number), etc.) , floating-point "
+"numbers ([`Double`](../../language/fundamentals/builtins.md#number), "
+"[`Float`](../../language/fundamentals/builtins.md#number), etc.) , "
+"[`String`](../../language/fundamentals/builtins.md#string) , "
+"[`Char`](../../language/fundamentals/builtins.md#char) , "
+"[`Byte`](../../language/fundamentals/builtins.md#bytes)."
 msgstr ""
 "MoonBit 中值得注意的**基本类型**包括 "
-"[`Unit`](../../language/fundamentals.md#unit)、[`Boolean`](../../language/fundamentals.md#boolean)、整数（[`Int`](../../language/fundamentals.md#number)、[`Int64`](../../language/fundamentals.md#number)、[`UInt`](../../language/fundamentals.md#number)"
+"[`Unit`](../../language/fundamentals/builtins.md#unit)、[`Boolean`](../../language/fundamentals/builtins.md#boolean)、整数（[`Int`](../../language/fundamentals/builtins.md#number)、[`Int64`](../../language/fundamentals/builtins.md#number)、[`UInt`](../../language/fundamentals/builtins.md#number)"
 " "
-"等）、浮点数（[`Double`](../../language/fundamentals.md#number)、[`Float`](../../language/fundamentals.md#number)"
+"等）、浮点数（[`Double`](../../language/fundamentals/builtins.md#number)、[`Float`](../../language/fundamentals/builtins.md#number)"
 " "
-"等）、[`String`](../../language/fundamentals.md#string)、[`Char`](../../language/fundamentals.md#char)、[`Byte`](../../language/fundamentals.md#bytes)。"
+"等）、[`String`](../../language/fundamentals/builtins.md#string)、[`Char`](../../language/fundamentals/builtins.md#char)、[`Byte`](../../language/fundamentals/builtins.md#bytes)。"
 
 #: ../../tutorial/for-go-programmers/index.md:455
+#, fuzzy
 msgid ""
 "Notable **immutable collection types** in MoonBit include "
-"[tuples](../../language/fundamentals.md#tuple), immutable collections "
+"[tuples](../../language/fundamentals/builtins.md#tuple), immutable collections "
 "such as `@immut/hashset.T[A]`, and custom types with no `mut` fields."
 msgstr ""
 "MoonBit 中值得注意的**不可变集合类型**包括 "
-"[元组](../../language/fundamentals.md#tuple)、不可变集合（例如 "
+"[元组](../../language/fundamentals/builtins.md#tuple)、不可变集合（例如 "
 "`@immut/hashset.T[A]`）以及没有 `mut` 字段的自定义类型。"
 
 #: ../../tutorial/for-go-programmers/index.md:460
+#, fuzzy
 msgid ""
 "On the other hand, notable **mutable collection types** include mutable "
-"collections such as [`Array[T]`](../../language/fundamentals.md#array) , "
-"[`FixedArray[T]`](../../language/fundamentals.md#array) , and [`Map[K, "
-"V]`](../../language/fundamentals.md#map), as well as custom types with at"
+"collections such as [`Array[T]`](../../language/fundamentals/builtins.md#array) , "
+"[`FixedArray[T]`](../../language/fundamentals/builtins.md#array) , and [`Map[K, "
+"V]`](../../language/fundamentals/builtins.md#map), as well as custom types with at"
 " least one `mut` field."
 msgstr ""
 "另一方面，值得注意的**可变集合类型**包括可变集合（例如 "
-"[`Array[T]`](../../language/fundamentals.md#array)、[`FixedArray[T]`](../../language/fundamentals.md#array)"
-" 和 [`Map[K, V]`](../../language/fundamentals.md#map)）以及至少包含一个 `mut` "
-"字段的自定义类型。"
+"[`Array[T]`](../../language/fundamentals/builtins.md#array)、[`FixedArray[T]`](../../language/fundamentals/builtins.md#array)"
+" 和 [`Map[K, V]`](../../language/fundamentals/builtins.md#map)）以及至少包含一个 "
+"`mut` 字段的自定义类型。"
 
 #: ../../tutorial/for-go-programmers/index.md:466
 msgid "For example, we can rewrite some of the above Go examples in MoonBit:"
@@ -944,17 +947,19 @@ msgstr ""
 "  }\n"
 
 #: ../../tutorial/for-go-programmers/index.md:495
-msgid "The [`Ref[T]`](../../language/fundamentals.md#ref) Helper Type"
-msgstr "[`Ref[T]`](../../language/fundamentals.md#ref) 辅助类型"
+#, fuzzy
+msgid "The [`Ref[T]`](../../language/fundamentals/builtins.md#ref) Helper Type"
+msgstr "[`Ref[T]`](../../language/fundamentals/builtins.md#ref) 辅助类型"
 
 #: ../../tutorial/for-go-programmers/index.md:497
+#, fuzzy
 msgid ""
 "When you need explicit mutable references to value types, MoonBit "
-"provides the [`Ref[T]`](../../language/fundamentals.md#ref) type which is"
+"provides the [`Ref[T]`](../../language/fundamentals/builtins.md#ref) type which is"
 " roughly defined as follows:"
 msgstr ""
 "当您需要对值类型进行显式可变引用时，MoonBit 提供了 "
-"[`Ref[T]`](../../language/fundamentals.md#ref) 类型，其大致定义如下："
+"[`Ref[T]`](../../language/fundamentals/builtins.md#ref) 类型，其大致定义如下："
 
 #: ../../tutorial/for-go-programmers/index.md:501
 msgid ""
@@ -2508,12 +2513,13 @@ msgid "Data types"
 msgstr "数据类型"
 
 #: ../../tutorial/tour.md:88
+#, fuzzy
 msgid ""
-"The [basic data types](/language/fundamentals.md#built-in-data-"
+"The [basic data types](/language/fundamentals/builtins.md#built-in-data-"
 "structures) in MoonBit includes the following:"
 msgstr ""
-"MoonBit 中的 [基本数据类型](/language/fundamentals.md#built-in-data-structures) "
-"包括以下内容："
+"MoonBit 中的 [基本数据类型](/language/fundamentals/builtins.md#built-in-data-"
+"structures) 包括以下内容："
 
 #: ../../tutorial/tour.md:90
 msgid "`Unit`"
@@ -2557,10 +2563,13 @@ msgstr ""
 "和学生身高的记录。"
 
 #: ../../tutorial/tour.md:104
+#, fuzzy
 msgid ""
 "So we choose to declare our own data type using "
-"[struct](/language/fundamentals.md#struct):"
-msgstr "因此，我们选择使用 [结构体](/language/fundamentals.md#struct) 声明我们自己的数据类型："
+"[struct](/language/fundamentals/custom-data-types.md#struct):"
+msgstr ""
+"因此，我们选择使用 [结构体](/language/fundamentals/custom-data-types.md#struct) "
+"声明我们自己的数据类型："
 
 #: ../../tutorial/tour.md:106
 msgid ""
@@ -2571,10 +2580,13 @@ msgid ""
 msgstr ""
 
 #: ../../tutorial/tour.md:114
+#, fuzzy
 msgid ""
 "One can either pass or fail an exam, so the judgement result can be "
-"defined using [enum](/language/fundamentals.md#enum):"
-msgstr "一个人可以通过或者不通过考试，因此判断结果可以使用 [枚举类型](/language/fundamentals.md#enum) 定义："
+"defined using [enum](/language/fundamentals/custom-data-types.md#enum):"
+msgstr ""
+"一个人可以通过或者不通过考试，因此判断结果可以使用 [枚举类型](/language/fundamentals/custom-data-"
+"types.md#enum) 定义："
 
 #: ../../tutorial/tour.md:117
 msgid ""
@@ -2585,10 +2597,11 @@ msgid ""
 msgstr ""
 
 #: ../../tutorial/tour.md:127
+#, fuzzy
 msgid ""
-"[Function](/language/fundamentals.md#functions) is a piece of code that "
+"[Function](/language/fundamentals/functions.md#functions) is a piece of code that "
 "takes some inputs and produces a result."
-msgstr "[函数](/language/fundamentals.md#functions) 是一段代码，它接受一些输入并产生一个结果。"
+msgstr "[函数](/language/fundamentals/functions.md#functions) 是一段代码，它接受一些输入并产生一个结果。"
 
 #: ../../tutorial/tour.md:129
 msgid "In our example, we need to judge whether a student have passed an exam:"
@@ -2736,12 +2749,13 @@ msgid ""
 msgstr ""
 
 #: ../../tutorial/tour.md:216
+#, fuzzy
 msgid ""
-"Here we use [pattern matching](/language/fundamentals.md#pattern-"
+"Here we use [pattern matching](/language/fundamentals/pattern-matching.md#pattern-"
 "matching) to check the cases of the `ExamResult`."
 msgstr ""
-"在这里，我们使用 [模式匹配](/language/fundamentals.md#pattern-matching) 来检查 "
-"`ExamResult` 的情况。"
+"在这里，我们使用 [模式匹配](/language/fundamentals/pattern-matching.md#pattern-"
+"matching) 来检查 `ExamResult` 的情况。"
 
 #: ../../tutorial/tour.md:218
 msgid ""
@@ -2782,13 +2796,14 @@ msgid ""
 msgstr ""
 
 #: ../../tutorial/tour.md:246
+#, fuzzy
 msgid ""
-"Here we use [lambda expressions](/language/fundamentals.md#local-"
+"Here we use [lambda expressions](/language/fundamentals/functions.md#local-"
 "functions) to reuse the previously defined `is_qualified` to create "
 "different criteria."
 msgstr ""
-"在这里，我们使用 [lambda 表达式](/language/fundamentals.md#local-functions) 来重用先前定义的"
-" `is_qualified` 来创建不同的标准。"
+"在这里，我们使用 [lambda 表达式](/language/fundamentals/functions.md#local-"
+"functions) 来重用先前定义的 `is_qualified` 来创建不同的标准。"
 
 #: ../../tutorial/tour.md:248
 msgid "We can run `moon test` to see whether the tests succeed or not."
@@ -2827,10 +2842,13 @@ msgid ""
 msgstr "对于 `count_qualified_students` 函数，我们需要遍历数组，检查每个学生是否通过。"
 
 #: ../../tutorial/tour.md:269
+#, fuzzy
 msgid ""
 "A naive version is by using a mutable value and a [`for` "
-"loop](/language/fundamentals.md#for-loop):"
-msgstr "一个简单的版本是使用一个可变值和一个 [`for` 循环](/language/fundamentals.md#for-loop)："
+"loop](/language/fundamentals/control-structures.md#for-loop):"
+msgstr ""
+"一个简单的版本是使用一个可变值和一个 [`for` 循环](/language/fundamentals/control-"
+"structures.md#for-loop)："
 
 #: ../../tutorial/tour.md:271
 msgid ""
@@ -2849,13 +2867,14 @@ msgid ""
 msgstr ""
 
 #: ../../tutorial/tour.md:287
+#, fuzzy
 msgid ""
 "However, this is neither efficient (due to the border check) nor "
 "intuitive, so we can replace the `for` loop with a [`for .. in` "
-"loop](/language/fundamentals.md#for--in-loop):"
+"loop](/language/fundamentals/control-structures.md#for--in-loop):"
 msgstr ""
-"然而，这既不高效（由于边界检查）也不直观，所以我们可以用 [`for .. in`  "
-"循环](/language/fundamentals.md#for--in-loop) 替换 `for` loop："
+"然而，这既不高效（由于边界检查）也不直观，所以我们可以用 [`for .. in`  循环](/language/fundamentals"
+"/control-structures.md#for--in-loop) 替换 `for` loop："
 
 #: ../../tutorial/tour.md:289
 msgid ""
@@ -2872,10 +2891,11 @@ msgid ""
 msgstr ""
 
 #: ../../tutorial/tour.md:303
+#, fuzzy
 msgid ""
 "Still another way is use the functions defined for "
-"[iterator](/language/fundamentals.md#iterator):"
-msgstr "还有另一种方法是使用为 [迭代器](/language/fundamentals.md#iterator) "
+"[iterator](/language/fundamentals/iterator.md#iterator):"
+msgstr "还有另一种方法是使用为 [迭代器](/language/fundamentals/iterator.md#iterator) "
 
 #: ../../tutorial/tour.md:305
 msgid ""

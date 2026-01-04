@@ -1,0 +1,73 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4146.md:1
+msgid "E4146"
+msgstr ""
+
+#: ../../language/error_codes/E4146.md:3
+msgid "Type is not supported by range pattern."
+msgstr "范围模式不支持该类型。"
+
+#: ../../language/error_codes/E4146.md:5
+msgid ""
+"MoonBit only support range pattern for integer types. This error occurs when"
+" you try to use a type that is not an integer in a range pattern."
+msgstr "MoonBit 仅支持整数类型的范围模式。当您尝试在范围模式中使用非整数类型时，会发生此错误。"
+
+#: ../../language/error_codes/E4146.md:8
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4146.md:10
+msgid ""
+"fn main {\n"
+"  let value = 1.0\n"
+"  match value {\n"
+"    _..<0.0 => println(\"negative\") // Error: Type Double is not supported "
+"by range pattern.\n"
+"    _ => println(\"zero or positive\")\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4146.md:14
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4146.md:16
+msgid ""
+"For type that is not an integer but implements the `Compare` trait, you can "
+"use multiple `if-else` expression to achieve the same effect."
+msgstr "对于未实现整数但实现 `Compare` 特征的类型，您可以使用多个 `if-else` 表达式来实现相同的效果。"
+
+#: ../../language/error_codes/E4146.md:19
+msgid ""
+"fn main {\n"
+"  let value = 1.0\n"
+"  if value < 0.0 {\n"
+"    println(\"negative\")\n"
+"  } else {\n"
+"    println(\"zero or positive\")\n"
+"  }\n"
+"}"
+msgstr ""
+

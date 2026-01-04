@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4017.md:1
+msgid "E4017"
+msgstr ""
+
+#: ../../language/error_codes/E4017.md:3
+msgid "Method of type is ambiguous, it may come from multiple traits."
+msgstr "方法的类型有歧义，可能来自多个特征。"
+
+#: ../../language/error_codes/E4017.md:5
+msgid "Erroneous Example"
+msgstr "错误示例："
+
+#: ../../language/error_codes/E4017.md:7
+msgid ""
+"struct S { v : Int } derive(Show)\n"
+"\n"
+"trait Tee { to_string(Self) -> String }\n"
+"\n"
+"impl Tee for S with to_string(_self) { \"Tee\" }\n"
+"\n"
+"let s : S = { v: 3 }\n"
+"let t = s.to_string()\n"
+msgstr ""
+
+#: ../../language/error_codes/E4017.md:18
+msgid ""
+"The example above tries to call the method `to_string` on a type `S`, but "
+"the method name comes from both `Show` and `Tee` traits, giving the "
+"following error on line 8:"
+msgstr "上述例子中，试图在类型 `S` 上调用方法 `to_string`，但方法名称来自 `Show` 和 `Tee` 两个特征，会在第 8 行报错："
+
+#: ../../language/error_codes/E4017.md:22
+msgid "Method to_string of type S is ambiguous, it may come from trait Tee or Show\n"
+msgstr ""
+
+#: ../../language/error_codes/E4017.md:26
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4017.md:28
+msgid "Disambiguate the method by specifying the trait it comes from:"
+msgstr "通过指明具体的特征对方法去歧义："
+
+#: ../../language/error_codes/E4017.md:30
+msgid ""
+"struct S { v : Int } derive(Show)\n"
+"\n"
+"trait Tee { to_string(Self) -> String }\n"
+"\n"
+"impl Tee for S with to_string(_self) { \"Tee\" }\n"
+"\n"
+"let s : S = { v: 3 }\n"
+"let t = Tee::to_string(s)"
+msgstr ""
+

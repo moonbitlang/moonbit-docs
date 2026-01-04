@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4110.md:1
+msgid "E4110"
+msgstr ""
+
+#: ../../language/error_codes/E4110.md:3
+msgid ""
+"The loop is not expected to yield a value, please remove the argument of the"
+" `break` or add an `else` branch."
+msgstr "该循环不应该返回值，请从 `break` 语句中删除参数，或添加 `else` 分支。"
+
+#: ../../language/error_codes/E4110.md:6
+msgid ""
+"This error occurs when using a `break` statement with an argument in a loop "
+"that is not expected to yield a value. This applies to:"
+msgstr "当在不应该返回值的循环中使用带有参数的 `break` 语句时，就会发生此错误。此错误适用于以下循环："
+
+#: ../../language/error_codes/E4110.md:9
+msgid "`while` loops"
+msgstr "While 循环"
+
+#: ../../language/error_codes/E4110.md:10
+msgid "`for` loops with update expressions"
+msgstr "带有更新表达式 `for` 循环"
+
+#: ../../language/error_codes/E4110.md:11
+msgid "`for .. in ..` iteration loops"
+msgstr "`for .. in` 循环"
+
+#: ../../language/error_codes/E4110.md:13
+msgid ""
+"These loop constructs do not have a mechanism to return a value from the "
+"loop body. If you need to break with a value, you must either:"
+msgstr "这些循环结构没有从循环体返回值的机制。如果您需要使用值中断循环，您必须："
+
+#: ../../language/error_codes/E4110.md:16
+msgid ""
+"Remove the argument from the `break` statement if you don't need to return a"
+" value, or"
+msgstr "如果您不需要从循环中返回值，请从 `break` 语句中删除参数，或"
+
+#: ../../language/error_codes/E4110.md:18
+msgid ""
+"Add an `else` branch to handle the case when the loop completes normally and"
+" provide a return value"
+msgstr "添加一个 `else` 分支，用于处理循环正常完成时返回值的情况"
+
+#: ../../language/error_codes/E4110.md:21
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4110.md:23
+msgid ""
+"pub fn f(x: Int) -> Unit {\n"
+"  for i in 0..=x {\n"
+"    break i\n"
+"//  ^^^^^^^^ Error: The for loop is not expected to yield a value, please\n"
+"//                  remove the argument of the `break` or add an `else` "
+"branch.\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4110.md:27
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4110.md:29
+msgid "To fix this error, you can:"
+msgstr "要修复此错误，您可以："
+
+#: ../../language/error_codes/E4110.md:31
+msgid "Remove the argument from the `break` statement. For example,"
+msgstr "从 `break` 语句中删除参数。例如："
+
+#: ../../language/error_codes/E4110.md:33
+msgid ""
+"pub fn f(x: Int) -> Unit {\n"
+"  for i in 0..=x {\n"
+"    break\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4110.md:37
+msgid ""
+"Add an `else` branch to handle the case when the loop completes normally and"
+" provide a return value. For example,"
+msgstr "添加一个 `else` 分支，用于处理循环正常完成时返回值的情况。例如："
+
+#: ../../language/error_codes/E4110.md:40
+msgid ""
+"pub fn f(x: Int) -> Int {\n"
+"  for i in 0..=x {\n"
+"    break i\n"
+"  } else {\n"
+"    42\n"
+"  }\n"
+"}"
+msgstr ""
+

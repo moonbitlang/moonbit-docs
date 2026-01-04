@@ -1,0 +1,61 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/fundamentals/generics.md:1
+msgid "Generics"
+msgstr "泛型"
+
+#: ../../language/fundamentals/generics.md:3
+msgid ""
+"Generics are supported in top-level function and data type definitions. Type"
+" parameters can be introduced within square brackets. We can rewrite the "
+"aforementioned data type `List` to add a type parameter `T` to obtain a "
+"generic version of lists. We can then define generic functions over lists "
+"like `map` and `reduce`."
+msgstr ""
+"泛型在顶层函数和数据类型定义中受支持。可以在方括号内引入类型参数。我们可以重写上述数据类型 `List`，添加类型参数 `T` "
+"以获得列表的通用版本。然后，我们可以定义列表上的通用函数，如 `map` 和 `reduce`。"
+
+#: ../../language/fundamentals/generics.md:5
+msgid ""
+"///|\n"
+"enum List[T] {\n"
+"  Nil\n"
+"  Cons(T, List[T])\n"
+"}\n"
+"\n"
+"///|\n"
+"fn[S, T] List::map(self : List[S], f : (S) -> T) -> List[T] {\n"
+"  match self {\n"
+"    Nil => Nil\n"
+"    Cons(x, xs) => Cons(f(x), xs.map(f))\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"fn[S, T] List::reduce(self : List[S], op : (T, S) -> T, init : T) -> T {\n"
+"  match self {\n"
+"    Nil => init\n"
+"    Cons(x, xs) => xs.reduce(op, op(init, x))\n"
+"  }\n"
+"}\n"
+msgstr ""
+

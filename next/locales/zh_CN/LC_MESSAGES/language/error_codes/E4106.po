@@ -1,0 +1,102 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4106.md:1
+msgid "E4106"
+msgstr ""
+
+#: ../../language/error_codes/E4106.md:3
+msgid ""
+"Unknown binder in the for-loop steps. Binders in the steps must be declared "
+"in the initialization block of the for-loop."
+msgstr "for 循环步骤中存在未知绑定器。这些步骤中的绑定器必须在 for 循环的初始化块中声明。"
+
+#: ../../language/error_codes/E4106.md:6
+msgid ""
+"This error occurs when a variable name used in the update expressions "
+"(steps) of a for-loop is not declared in the initialization block of that "
+"loop. In a for-loop, you can only use variables in the update expressions "
+"that were previously declared when initializing the loop."
+msgstr ""
+"如果 for 循环的更新表达式（步骤）中使用的变量名未在该循环的初始化块中声明，则会发生此错误。在 for "
+"循环中，您只能在更新表达式中使用先前在初始化循环时声明的变量。"
+
+#: ../../language/error_codes/E4106.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4106.md:13
+msgid ""
+"pub fn f(x: Int) -> Unit {\n"
+"  let mut j = 0\n"
+"  for i = 0; i < x; i = i + 1, j = j + 1 {\n"
+"//                             ^ --- Error: Unknown binder j in the for-loop"
+"\n"
+"//                                          steps. Binders in the steps must"
+" be\n"
+"//                                          declared in the initialization\n"
+"//                                          block of the for-loop.\n"
+"    println(i)\n"
+"    println(j)\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4106.md:17
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4106.md:19
+msgid "To fix this error, you can"
+msgstr "要修复此错误，您可以："
+
+#: ../../language/error_codes/E4106.md:21
+msgid ""
+"declare the variable `j` in the initialization block of the for-loop. For "
+"example,"
+msgstr "在 for 循环的初始化块中声明变量 `j`。例如，"
+
+#: ../../language/error_codes/E4106.md:24
+msgid ""
+"pub fn f(x: Int) -> Unit {\n"
+"   for i = 0, j = 0; i < x; i = i + 1, j = j + 1 {\n"
+"    println(i)\n"
+"    println(j)\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4106.md:28
+msgid "remove the variable `j` from the update expressions. For example,"
+msgstr "从更新表达式中删除变量 `j`。例如，"
+
+#: ../../language/error_codes/E4106.md:30
+msgid ""
+"pub fn f(x: Int) -> Unit {\n"
+"  let mut j = 0\n"
+"  for i = 0; i < x; i = i + 1 {\n"
+"    println(i)\n"
+"    println(j)\n"
+"    j = j + 1\n"
+"  }\n"
+"}"
+msgstr ""
+

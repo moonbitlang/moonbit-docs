@@ -1,0 +1,539 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../toolchain/moon/tutorial.md:1
+msgid "MoonBit's Build System Tutorial"
+msgstr "MoonBit 构建系统教程"
+
+#: ../../toolchain/moon/tutorial.md:3
+msgid ""
+"Moon is the build system for the MoonBit language, currently based on the "
+"[n2](https://github.com/evmar/n2) project. Moon supports parallel and "
+"incremental builds. Additionally, moon also supports managing and building "
+"third-party packages on [mooncakes.io](https://mooncakes.io/)"
+msgstr ""
+"Moon 是 MoonBit 语言的构建系统，目前基于 [n2](https://github.com/evmar/n2) 项目。Moon "
+"支持并行和增量构建。此外，moon 还在 [mooncakes.io](https://mooncakes.io/) 上管理和构建第三方包。"
+
+#: ../../toolchain/moon/tutorial.md:5
+msgid "Prerequisites"
+msgstr "先决条件"
+
+#: ../../toolchain/moon/tutorial.md:7
+msgid ""
+"Before you begin with this tutorial, make sure you have installed the "
+"following:"
+msgstr "在开始本教程之前，请确保你已安装以下内容："
+
+#: ../../toolchain/moon/tutorial.md:9
+msgid ""
+"**MoonBit CLI Tools**: Download it from the "
+"<https://www.moonbitlang.com/download/>. This command line tool is needed "
+"for creating and managing MoonBit projects."
+msgstr ""
+"**MoonBit CLI 工具**：从 <https://www.moonbitlang.cn/download/> "
+"下载。这个命令行工具用于创建和管理 MoonBit 项目。"
+
+#: ../../toolchain/moon/tutorial.md:11
+msgid "Use `moon help` to view the usage instructions."
+msgstr "使用 `moon help` 查看使用说明。"
+
+#: ../../toolchain/moon/tutorial.md:13
+msgid ""
+"$ moon help\n"
+"...\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:18
+msgid ""
+"**MoonBit Language** plugin in Visual Studio Code: You can install it from "
+"the VS Code marketplace. This plugin provides a rich development environment"
+" for MoonBit, including functionalities like syntax highlighting, code "
+"completion, and more."
+msgstr ""
+"Visual Studio Code 中的 **MoonBit 语言** 插件：你可以从 VS Code 市场安装。此插件为 MoonBit "
+"提供了丰富的开发环境，包括语法高亮、代码补全等功能。"
+
+#: ../../toolchain/moon/tutorial.md:20
+msgid ""
+"Once you have these prerequisites fulfilled, let's start by creating a new "
+"MoonBit module."
+msgstr "一旦你满足了这些先决条件，我们就可以开始创建一个新的 MoonBit 模块。"
+
+#: ../../toolchain/moon/tutorial.md:22
+msgid "Creating a New Module"
+msgstr "创建一个新模块"
+
+#: ../../toolchain/moon/tutorial.md:24
+msgid ""
+"To create a new module, enter the `moon new <path>` command in the terminal,"
+" where the path is the directory that you'd like to put the project, and you"
+" will see the module being created. By using all the default values, you can"
+" create a new module named `username/my_project` in the `my_project` "
+"directory."
+msgstr ""
+"要创建一个新模块，在终端中输入 `moon new <path>` 命令，其中 path "
+"是你想要创建项目的文件夹目录，之后项目会被创建。使用默认值，你会在 `my_project` 目录中创建一个名为 "
+"`username/my_project` 的新模块。"
+
+#: ../../toolchain/moon/tutorial.md:26
+msgid ""
+"$ moon new my_project\n"
+"Initialized empty Git repository in my_project/.git/\n"
+"Created username/my_project at my_project\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:32
+msgid ""
+"You may also specify the username and module name by using the `--user` "
+"option and `--name` option respectively. If you have logged-in, the username"
+" will default to your username."
+msgstr "你也可以通过使用 `--user` 选项和 `--name` 选项分别指定用户名和模块名称。如果你已经登录，用户名将默认为你的用户名。"
+
+#: ../../toolchain/moon/tutorial.md:35
+msgid "Understanding the Module Directory Structure"
+msgstr "理解模块目录结构"
+
+#: ../../toolchain/moon/tutorial.md:37
+msgid ""
+"After creating the new module, your directory structure should resemble the "
+"following:"
+msgstr "创建新模块后，你的目录结构应该如下："
+
+#: ../../toolchain/moon/tutorial.md:39
+msgid ""
+"my_project\n"
+"├── Agents.md\n"
+"├── cmd\n"
+"│   └── main\n"
+"│       ├── main.mbt\n"
+"│       └── moon.pkg.json\n"
+"├── LICENSE\n"
+"├── moon.mod.json\n"
+"├── moon.pkg.json\n"
+"├── my_project_test.mbt\n"
+"├── my_project.mbt\n"
+"├── README.mbt.md\n"
+"└── README.md -> README.mbt.md\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:56
+msgid ""
+"On Windows system, you need administrator privilege or the developer mode "
+"enabled to create the symbolic link."
+msgstr "在 Windows 系统上，你需要管理员权限或启用开发者模式才能创建符号链接。"
+
+#: ../../toolchain/moon/tutorial.md:59
+msgid "Here's a brief explanation of the directory structure:"
+msgstr "以下是目录结构的简要说明："
+
+#: ../../toolchain/moon/tutorial.md:61
+msgid ""
+"`moon.mod.json` is used to identify a directory as a MoonBit module. It "
+"contains the module's metadata, such as the module name, version, etc."
+msgstr "`moon.mod.json` 用于标识目录为 MoonBit 模块。它包含模块的元数据，如模块名称、版本等。"
+
+#: ../../toolchain/moon/tutorial.md:63
+msgid ""
+"{\n"
+"  \"name\": \"username/my_project\",\n"
+"  \"version\": \"0.1.0\",\n"
+"  \"readme\": \"README.md\",\n"
+"  \"repository\": \"\",\n"
+"  \"license\": \"Apache-2.0\",\n"
+"  \"keywords\": [],\n"
+"  \"description\": \"\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:75
+msgid ""
+"`.` and `cmd/main` directories: These are the packages within the module. "
+"Each package can contain multiple `.mbt` files, which are the source code "
+"files for the MoonBit language. However, regardless of how many `.mbt` files"
+" a package has, they all share a common `moon.pkg.json` file. `*_test.mbt` "
+"are separate test files in the package, these files are for blackbox test, "
+"so private members of the same package cannot be accessed directly."
+msgstr ""
+"`.` 和 `cmd/main` 目录：这些是模块中的包。每个包可以包含多个 `.mbt` 文件，这些文件是 MoonBit "
+"语言的源代码文件。但是，无论一个包有多少 `.mbt` 文件，它们都共享一个公共的 `moon.pkg.json` 文件。`*_test.mbt` "
+"是独立测试文件，这些文件用于黑盒测试，因此同一个包的私有成员不能直接访问。"
+
+#: ../../toolchain/moon/tutorial.md:77
+msgid ""
+"`moon.pkg.json` is package descriptor. It defines the properties of the "
+"package, such as whether it is the main package and the packages it imports."
+msgstr "`moon.pkg.json` 是包描述符。它定义了包的属性，例如它是否是 main 包以及它导入的包。"
+
+#: ../../toolchain/moon/tutorial.md:79
+msgid "`cmd/main/moon.pkg.json`:"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:81 ../../toolchain/moon/tutorial.md:169
+msgid ""
+"{\n"
+"  \"is-main\": true,\n"
+"  \"import\": [\n"
+"    {\n"
+"      \"path\": \"username/my_project\",\n"
+"      \"alias\": \"lib\"\n"
+"    }\n"
+"  ]\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:93
+msgid ""
+"Here, `\"is-main: true\"` declares that the package contains an entry for "
+"the `moon run` command."
+msgstr "这里，`\"is_main: true\"` 声明该包包含 `moon run `指令的入口。"
+
+#: ../../toolchain/moon/tutorial.md:95
+msgid "`moon.pkg.json`:"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:97
+msgid "{}\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:101
+msgid ""
+"This file is empty. Its purpose is simply to inform the build system that "
+"this folder is a package."
+msgstr "此文件为空。它的目的只是告诉构建系统这个文件夹是一个包。"
+
+#: ../../toolchain/moon/tutorial.md:103
+msgid ""
+"`README.mbt.md` is the README file. The code blocks written inside will be "
+"type checked and tested by `moon check` and `moon test`."
+msgstr "`README.mbt.md` 是 README 文件。内部编写的代码块将通过 `moon check` 和 `moon test` 进行类型检查和测试。"
+
+#: ../../toolchain/moon/tutorial.md:105
+msgid "Working with Packages"
+msgstr "使用包"
+
+#: ../../toolchain/moon/tutorial.md:107
+msgid ""
+"Our `username/my_project` module contains two packages: "
+"`username/my_project` and `username/my_project/cmd/main`."
+msgstr ""
+"我们的 `username/my_project` 模块包含两个包：`username/my_project` 和 "
+"`username/my_project/cmd/main`。"
+
+#: ../../toolchain/moon/tutorial.md:109
+msgid ""
+"The `username/my_project` package contains `my_project.mbt` and "
+"`my_project_test.mbt` files:"
+msgstr "`username/my_project` 包包含 `my_project.mbt` 和 `my_project_test.mbt` 文件："
+
+#: ../../toolchain/moon/tutorial.md:112
+msgid "my_project.mbt"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:112
+msgid ""
+"///|\n"
+"pub fn fib(n : Int) -> Int64 {\n"
+"  for i = 0, a = 0L, b = 1L; i < n; i = i + 1, a = b, b = a + b {\n"
+"\n"
+"  } else {\n"
+"    b\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:124
+msgid "my_project_test.mbt"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:124
+msgid ""
+"///|\n"
+"test \"fib\" {\n"
+"  let array = [1, 2, 3, 4, 5].map(fib(_))\n"
+"\n"
+"  // `inspect` is used to check the output of the function\n"
+"  // Just write `inspect(value)` and execute `moon test --update`\n"
+"  // to update the expected output, and verify them afterwards\n"
+"  inspect(array, content=\"[1, 2, 3, 5, 8]\")\n"
+"}"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:138
+msgid "The generated file name will depend on the package name."
+msgstr "生成的文件名取决于包名。"
+
+#: ../../toolchain/moon/tutorial.md:141
+msgid "The `username/my_project/cmd/main` package contains a `main.mbt` file:"
+msgstr "`username/my_project/cmd/main` 包包含一个 `main.mbt` 文件："
+
+#: ../../toolchain/moon/tutorial.md:143
+msgid ""
+"///|\n"
+"fn main {\n"
+"  println(@lib.fib(10))\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:150
+msgid ""
+"To execute the program, specify the file system's path to the "
+"`username/my_project/cmd/main` package in the `moon run` command:"
+msgstr "要执行程序，在 `moon run` 命令中指定文件系统路径到 `username/my_project/cmd/main` 包："
+
+#: ../../toolchain/moon/tutorial.md:152
+msgid ""
+"$ moon run cmd/main\n"
+"89\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:157
+msgid "You can test using the `moon test` command:"
+msgstr "你可以使用 `moon test` 命令进行测试："
+
+#: ../../toolchain/moon/tutorial.md:159
+msgid ""
+"$ moon test\n"
+"Total tests: 1, passed: 1, failed: 0.\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:164
+msgid "Package Importing"
+msgstr "包导入"
+
+#: ../../toolchain/moon/tutorial.md:166
+msgid ""
+"In the MoonBit's build system, the dependency is declared at the package "
+"level. To import the `username/my_project` package in "
+"`username/my_project/cmd/main`, you need to specify it in "
+"`cmd/main/moon.pkg.json`:"
+msgstr ""
+"在 MoonBit 的构建系统中，模块的依赖被定义在包级别。要在 `username/my_project/cmd/main` 中导入 "
+"`username/my_project` 包，你需要在 `cmd/main/moon.pkg.json` 中指定："
+
+#: ../../toolchain/moon/tutorial.md:181
+msgid ""
+"Here, `\"username/my_project` specifies importing the root package and "
+"having an alias of `lib`, so you can use `@lib.fib(10)` in "
+"`cmd/main/main.mbt`."
+msgstr ""
+"这里，`username/my_project` 指定从 `username/my_project` 模块导入 "
+"`username/my_project` 包，并且有别名 `lib`，所以你可以在 `cmd/main/main.mbt` 中使用 "
+"`@lib.fib(10)`。"
+
+#: ../../toolchain/moon/tutorial.md:183
+msgid "Creating and Using a New Package"
+msgstr "创建和使用新包"
+
+#: ../../toolchain/moon/tutorial.md:185
+msgid "First, create a new directory named `fib` under `lib`:"
+msgstr "首先，在 `lib` 下创建一个名为 `fib` 的新目录："
+
+#: ../../toolchain/moon/tutorial.md:187
+msgid "mkdir fib\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:191
+msgid "Now, you can create new files under `fib`:"
+msgstr "现在，你可以在 `fib` 下创建新文件："
+
+#: ../../toolchain/moon/tutorial.md:193
+msgid "slow.mbt"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:193
+msgid ""
+"pub fn fib_slow(n : Int) -> Int {\n"
+"  match n {\n"
+"    0 => 0\n"
+"    1 => 1\n"
+"    _ => fib_slow(n - 1) + fib_slow(n - 2)\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:204
+msgid "fast.mbt"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:204
+msgid ""
+"pub fn fib_fast(num : Int) -> Int {\n"
+"  fn aux(n, acc1, acc2) {\n"
+"    match n {\n"
+"      0 => acc1\n"
+"      1 => acc2\n"
+"      _ => aux(n - 1, acc2, acc1 + acc2)\n"
+"    }\n"
+"  }\n"
+"\n"
+"  aux(num, 0, 1)\n"
+"}"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:219
+msgid "moon.pkg.json"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:219
+msgid "{}"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:224
+msgid "After creating these files, your directory structure should look like this:"
+msgstr "在创建这些文件后，你的目录结构应该如下："
+
+#: ../../toolchain/moon/tutorial.md:226
+msgid ""
+".\n"
+"├── Agents.md\n"
+"├── cmd\n"
+"│   └── main\n"
+"│       ├── main.mbt\n"
+"│       └── moon.pkg.json\n"
+"├── fib\n"
+"│   ├── fast.mbt\n"
+"│   ├── moon.pkg.json\n"
+"│   └── slow.mbt\n"
+"├── LICENSE\n"
+"├── moon.mod.json\n"
+"├── moon.pkg.json\n"
+"├── my_project_test.mbt\n"
+"├── my_project.mbt\n"
+"├── README.mbt.md\n"
+"└── README.md -> README.mbt.md\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:246
+msgid ""
+"In the `cmd/main/moon.pkg.json` file, import the `username/my_project/fib` "
+"package and customize its alias to `my_awesome_fibonacci`:"
+msgstr ""
+"在 `cmd/main/moon.pkg.json` 文件中，导入 `username/my_project/fib` 包并将其别名定制为 "
+"`my_awesome_fibonacci`："
+
+#: ../../toolchain/moon/tutorial.md:248
+msgid ""
+"{\n"
+"  \"is_main\": true,\n"
+"  \"import\": [\n"
+"    {\n"
+"      \"path\": \"username/my_project/fib\",\n"
+"      \"alias\": \"my_awesome_fibonacci\"\n"
+"    }\n"
+"  ]\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:260
+msgid ""
+"This imports the `fib` package. After doing this, you can use the `fib` "
+"package in `cmd/main/main.mbt`. Replace the file content of "
+"`cmd/main/main.mbt` to:"
+msgstr ""
+"这一行导入了 `fib` 包，它是 `username/my_project` 模块中 `fib` 包的一部分。在这样做之后，你可以在 "
+"`cmd/main/main.mbt` 中使用 `fib` 包。"
+
+#: ../../toolchain/moon/tutorial.md:262
+msgid ""
+"fn main {\n"
+"  let a = @my_awesome_fibonacci.fib_slow(10)\n"
+"  let b = @my_awesome_fibonacci.fib_fast(11)\n"
+"  println(\"fib(10) = \\{a}, fib(11) = \\{b}\")\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:270
+msgid "To execute your program, specify the path to the `main` package:"
+msgstr "为了执行你的程序，指定 main 包的路径："
+
+#: ../../toolchain/moon/tutorial.md:272
+msgid ""
+"$ moon run cmd/main\n"
+"fib(10) = 55, fib(11) = 89\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:277
+msgid "Adding Tests"
+msgstr "添加测试"
+
+#: ../../toolchain/moon/tutorial.md:279
+msgid ""
+"Let's add some tests to verify our fib implementation. Add the following "
+"content in `fib/fib_test.mbt`:"
+msgstr "让我们添加一些测试来验证我们的 fib 实现。在 `fib/fib_test.mbt` 中添加以下内容："
+
+#: ../../toolchain/moon/tutorial.md:281
+msgid ""
+"test {\n"
+"  inspect(fib_slow(0))\n"
+"  inspect(fib_slow(1))\n"
+"  inspect(fib_slow(2))\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:289
+msgid ""
+"This code tests the first three terms of the Fibonacci sequence. `test { ..."
+" }` defines an inline test block. The code inside an inline test block is "
+"executed in test mode."
+msgstr "这段代码测试斐波那契数列的前三项。`test { ... }` 定义了一个内联测试块。内联测试块中的代码在测试模式下执行。"
+
+#: ../../toolchain/moon/tutorial.md:291
+msgid ""
+"Inline test blocks are discarded in non-test compilation modes (`moon build`"
+" and `moon run`), so they won't cause the generated code size to bloat."
+msgstr "内联测试块在非测试编译模式（`moon build` 和 `moon run`）中被丢弃，因此它们不会导致生成的代码大小膨胀。"
+
+#: ../../toolchain/moon/tutorial.md:293
+msgid ""
+"Here we are using the snapshot test. Execute `moon test --update`, and the "
+"file should be changed to:"
+msgstr "这里我们使用了快照测试。执行 `moon test --update`，文件应该被更改为："
+
+#: ../../toolchain/moon/tutorial.md:295
+msgid ""
+"test {\n"
+"  inspect(@fib.fib_slow(0), content=\"0\")\n"
+"  inspect(@fib.fib_slow(1), content=\"1\")\n"
+"  inspect(@fib.fib_slow(2), content=\"1\")\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/tutorial.md:303
+msgid ""
+"Notice that the test code uses `@fib` to refer to the `fib` package. The "
+"build system automatically creates a new package for blackbox tests by using"
+" the files that end with `_test.mbt`."
+msgstr "注意，测试代码使用 `@fib` 来引用 `fib` 包。构建系统通过使用以 `_test.mbt` 结尾的文件自动为黑盒测试创建一个新包。"
+
+#: ../../toolchain/moon/tutorial.md:305
+msgid ""
+"Finally, reuse the `moon test` command, which scans the entire project, "
+"identifies, and runs all the tests. If everything is normal, you will see:"
+msgstr "最后，使用 `moon test` 命令，它会扫描整个项目，识别并运行所有测试。如果一切正常，你将看到："
+
+#: ../../toolchain/moon/tutorial.md:308
+msgid ""
+"$ moon test\n"
+"Total tests: 2, passed: 2, failed: 0.\n"
+msgstr ""
+

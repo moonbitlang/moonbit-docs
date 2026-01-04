@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0056.md:1
+msgid "E0056"
+msgstr ""
+
+#: ../../language/error_codes/E0056.md:3
+msgid "Missing field in struct pattern."
+msgstr "将缺少的字段添加到构造函数中"
+
+#: ../../language/error_codes/E0056.md:5
+msgid ""
+"The warning is emitted when pattern matching on a [struct "
+"pattern](/language/fundamentals/pattern-matching.md#simple-patterns) and "
+"having missing fields."
+msgstr ""
+
+#: ../../language/error_codes/E0056.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0056.md:11
+msgid ""
+"///|\n"
+"struct Point {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn quadrant(p : Point) -> String {\n"
+"  match p {\n"
+"    { x: _..<0 } => \"Third or Fourth Quadrant\"\n"
+"    { x: 0..<_ } => \"First or Second Quadrant\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0056.md:15
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0056.md:17
+msgid "Add `..` if you want to omit the other fields, or use them."
+msgstr "如果要省略其他字段，请添加 `..`，或者使用它们。"
+
+#: ../../language/error_codes/E0056.md:19
+msgid ""
+"///|\n"
+"struct Point {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn quadrant(p : Point) -> String {\n"
+"  match p {\n"
+"    { x: _..<0, .. } => \"Third or Fourth Quadrant\"\n"
+"    { x: 0..<_, y: 0..<_ } => \"First Quadrant\"\n"
+"    { x: 0..<_, y: _..<0 } => \"Second Quadrant\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+

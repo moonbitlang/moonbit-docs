@@ -1,0 +1,229 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:1
+msgid "Git Integration"
+msgstr "Git 集成"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:3
+msgid "Background"
+msgstr "背景"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:5
+msgid ""
+"Currently, there are two approaches to managing AI modifications: git-based "
+"solutions and checkpoint-based solutions. We believe the git approach is "
+"superior, as it can effectively utilize existing IDE review tools, provides "
+"a clear timeline, and has good rollback characteristics. Therefore, we "
+"decided to have MoonBit Pilot use git to manage both manual user "
+"modifications and agent modifications."
+msgstr ""
+"目前，管理 AI 修改有两种方法：基于 git 的解决方案和基于检查点的解决方案。我们认为 git 方法更优，因为它可以有效利用现有的 IDE "
+"审查工具，提供清晰的时间线，并具有良好的回滚特性。因此，我们决定让 MoonBit Pilot 使用 git 来管理手动用户修改和 agent 修改。"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:7
+msgid "You no longer need to fear AI making chaotic code changes!"
+msgstr "你再也不用担心 AI 会对代码进行混乱的修改了！"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:9
+msgid "Setup"
+msgstr "设置"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:11
+msgid ""
+"We introduce a configuration file for the first time. Create a file "
+"`.moonagent/moonagent.yml` in your current project with the following "
+"content:"
+msgstr "我们首次引入一个配置文件。在你当前的项目中创建一个文件 `.moonagent/moonagent.yml`，内容如下："
+
+#: ../../pilot/moonbit-pilot/git-integration.md:13
+msgid ""
+"# MoonBit Pilot Project Configuration\n"
+"# This configuration file controls moon pilot behavior for this project\n"
+"\n"
+"# Enable automatic commits when files are modified\n"
+"auto_commit: true\n"
+msgstr ""
+"# MoonBit Pilot 项目配置\n"
+"# 此配置文件控制此项目的 moon pilot 行为\n"
+"\n"
+"# 文件修改时启用自动提交\n"
+"auto_commit: true\n"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:21
+msgid "After this, restart and enter moon pilot for the changes to take effect."
+msgstr "之后，重启并进入 moon pilot，使更改生效。"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:23
+msgid "How It Works"
+msgstr "工作原理"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:25
+msgid ""
+"MoonBit Pilot follows a structured git workflow to ensure clean separation "
+"between user and agent modifications:"
+msgstr "MoonBit Pilot 遵循结构化的 git 工作流程，以确保用户和 agent 修改之间的清晰分离："
+
+#: ../../pilot/moonbit-pilot/git-integration.md:27
+msgid "Detection Phase"
+msgstr "检测阶段"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:28
+msgid ""
+"When you submit a requirement, MoonBit Pilot first analyzes the current git "
+"state to detect any uncommitted changes. This includes:"
+msgstr "当你提交一个需求时，MoonBit Pilot 首先会分析当前的 git 状态，以检测任何未提交的更改。这包括："
+
+#: ../../pilot/moonbit-pilot/git-integration.md:29
+msgid "Modified files in the working directory"
+msgstr "工作目录中已修改的文件"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:30
+msgid "Staged changes ready for commit"
+msgstr "已暂存准备提交的更改"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:31
+msgid "New untracked files that may be relevant to your project"
+msgstr "可能与你的项目相关的新未跟踪文件"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:33
+msgid "User Work Preservation"
+msgstr "用户工作保存"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:34
+msgid ""
+"If MoonBit Pilot detects that you have previously modified code, it will "
+"automatically create a commit for your work before making any modifications."
+" This ensures your changes are safely preserved with a clear commit message "
+"like:"
+msgstr ""
+"如果 MoonBit Pilot "
+"检测到你之前修改过代码，它会在进行任何修改之前自动为你的工作创建一个提交。这确保了你的更改被安全地保存下来，并附有一条清晰的提交信息，例如："
+
+#: ../../pilot/moonbit-pilot/git-integration.md:36
+msgid "moonagent_pre_user work before implementing authentication\n"
+msgstr "moonagent_pre_user work before implementing authentication\n"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:40
+msgid "Agent Modifications"
+msgstr "Agent 修改"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:41
+msgid ""
+"After preserving your work, MoonBit Pilot proceeds with its own "
+"modifications. It analyzes your requirements, implements the necessary "
+"changes, and creates a separate commit with a descriptive message:"
+msgstr "在保存你的工作之后，MoonBit Pilot 会继续进行自己的修改。它会分析你的需求，实现必要的更改，并创建一个带有描述性信息的独立提交："
+
+#: ../../pilot/moonbit-pilot/git-integration.md:43
+msgid "moonagent_post_implemented JWT authentication with tests\n"
+msgstr "moonagent_post_implemented JWT authentication with tests\n"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:47
+msgid "Workflow Benefits"
+msgstr "工作流优势"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:48
+msgid "This two-commit approach provides:"
+msgstr "这种双提交方法提供了："
+
+#: ../../pilot/moonbit-pilot/git-integration.md:49
+msgid "**Clear Attribution**: Distinguishes between user and agent contributions"
+msgstr "**清晰归属**：区分用户和 agent 的贡献"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:50
+msgid ""
+"**Safe Experimentation**: Your work is always preserved before agent "
+"modifications"
+msgstr "**安全实验**：在 agent 修改之前，你的工作总是被保存的"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:51
+msgid ""
+"**Granular Control**: Each change set can be reviewed, modified, or reverted"
+" independently"
+msgstr "**粒度控制**：每个变更集都可以独立地进行审查、修改或恢复"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:52
+msgid ""
+"**Conflict Resolution**: Reduces merge conflicts by maintaining clean commit"
+" boundaries"
+msgstr "**冲突解决**：通过维护清晰的提交边界来减少合并冲突"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:55
+msgid "Managing Commit History"
+msgstr "管理提交历史"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:57
+msgid "If you don't like these commit messages, you can:"
+msgstr "如果你不喜欢这些提交信息，你可以："
+
+#: ../../pilot/moonbit-pilot/git-integration.md:59
+msgid "**Rebase**: Merge multiple commits into one using interactive rebase"
+msgstr "**变基**：使用交互式变基将多个提交合并为一个"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:60
+msgid "**Rewrite**: Add your preferred commit message"
+msgstr "**重写**：添加你偏好的提交信息"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:61
+msgid "**Submit**: Create a proper PR for submission"
+msgstr "**提交**：创建一个合适的 PR 进行提交"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:63
+msgid "This approach provides several benefits:"
+msgstr "这种方法有几个好处："
+
+#: ../../pilot/moonbit-pilot/git-integration.md:65
+msgid "**Clear history**: Each change is tracked with timestamps and attribution"
+msgstr "**清晰的历史记录**：每个更改都带有时间戳和归属信息"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:66
+msgid "**Easy review**: Use familiar git tools to review changes"
+msgstr "**轻松审查**：使用熟悉的 git 工具审查更改"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:67
+msgid "**Safe rollback**: Easily revert specific changes if needed"
+msgstr "**安全回滚**：如果需要，可以轻松地恢复特定更改"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:68
+msgid "**Collaboration**: Share and discuss changes using standard git workflows"
+msgstr "**协作**：使用标准的 git 工作流程共享和讨论更改"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:70
+msgid "Best Practices"
+msgstr "最佳实践"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:72
+msgid "Review agent commits before merging to main branches"
+msgstr "在合并到主分支之前审查 agent 的提交"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:73
+msgid "Use meaningful branch names when working with MoonBit Pilot"
+msgstr "在使用 MoonBit Pilot 时使用有意义的分支名称"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:74
+msgid "Combine related commits before creating pull requests"
+msgstr "在创建拉取请求之前合并相关的提交"
+
+#: ../../pilot/moonbit-pilot/git-integration.md:75
+msgid "Keep the git history clean for better collaboration"
+msgstr "保持 git 历史记录的整洁以便更好地协作"
+

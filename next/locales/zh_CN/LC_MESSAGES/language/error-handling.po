@@ -1,0 +1,457 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error-handling.md:1
+msgid "Error handling"
+msgstr "错误处理"
+
+#: ../../language/error-handling.md:3
+msgid ""
+"Error handling has always been at core of our language design. In the "
+"following we'll be explaining how error handling is done in MoonBit. We "
+"assume you have some prior knowledge of MoonBit, if not, please checkout [A "
+"tour of MoonBit](../tutorial/tour.md)."
+msgstr ""
+"错误处理一直是我们语言设计的核心。接下来我们将解释 MoonBit 中的错误处理。我们假设您对 MoonBit 有一些了解，如果没有，请查看 "
+"[MoonBit 之旅](../tutorial/tour.md)。"
+
+#: ../../language/error-handling.md:8
+msgid "Error Types"
+msgstr "错误类型"
+
+#: ../../language/error-handling.md:10
+msgid ""
+"In MoonBit, all the error values can be represented by the `Error` type, a "
+"generalized error type."
+msgstr "在 MoonBit 中，所有的错误类型都可以用 `Error`，一个通用的错误类型，来表示。"
+
+#: ../../language/error-handling.md:13
+msgid ""
+"However, an `Error` cannot be constructed directly. A concrete error type "
+"must be defined, in the following forms:"
+msgstr "但是，`Error` 不能直接构造。必须定义一个具体的错误类型，形式如下："
+
+#: ../../language/error-handling.md:16
+msgid ""
+"suberror E1 Int // error type E1 has one constructor E1 with an Int payload\n"
+"\n"
+"suberror E2 // error type E2 has one constructor E2 with no payload\n"
+"\n"
+"suberror E3 { // error type E3 has three constructors like a normal enum "
+"type\n"
+"  A\n"
+"  B(Int, x~ : String)\n"
+"  C(mut x~ : String, Char, y~ : Bool)\n"
+"}\n"
+msgstr ""
+"suberror E1 Int  // 错误类型 E1 具有一个构造器 E1，并带有一个 Int 负载\n"
+"suberror E2      // 错误类型 E2 具有一个没有负载的构造器 E2\n"
+"suberror E3 {    // 错误类型 E3 类似于普通的枚举类型，有三个构造器\n"
+"  A\n"
+"  B(Int, x~ : String)\n"
+"  C(mut x~ : String, Char, y~ : Bool)\n"
+"}\n"
+
+#: ../../language/error-handling.md:23
+msgid ""
+"The error types can be promoted to the `Error` type automatically, and "
+"pattern matched back:"
+msgstr "错误类型可以自动提升为 `Error` 类型，并且可以模式匹配回去："
+
+#: ../../language/error-handling.md:26
+msgid ""
+"suberror CustomError UInt\n"
+"\n"
+"test {\n"
+"  let e : Error = CustomError(42)\n"
+"  guard e is CustomError(m)\n"
+"  assert_eq(m, 42)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:32
+msgid ""
+"Since the type `Error` can include multiple error types, pattern matching on"
+" the `Error` type must use the wildcard `_` to match all error types. For "
+"example,"
+msgstr "由于 `Error` 类型可以包含多个错误类型，对 `Error` 类型进行模式匹配必须使用通配符 `_` 来匹配所有错误类型。例如："
+
+#: ../../language/error-handling.md:35
+msgid ""
+"fn f(e : Error) -> Unit {\n"
+"  match e {\n"
+"    E2 => println(\"E2\")\n"
+"    A => println(\"A\")\n"
+"    B(i, x~) => println(\"B(\\{i}, \\{x})\")\n"
+"    _ => println(\"unknown error\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:41
+msgid ""
+"The `Error` is meant to be used where no concrete error type is needed, or a"
+" catch-all for all kinds of sub-errors is needed."
+msgstr "`Error` 通常用于不需要具体错误类型的情况，或者简单地用来捕获所有的子错误。"
+
+#: ../../language/error-handling.md:44
+msgid "Failure"
+msgstr ""
+
+#: ../../language/error-handling.md:46
+msgid "A builtin error type is `Failure`."
+msgstr "一个内置的错误类型是 `Failure`。"
+
+#: ../../language/error-handling.md:48
+msgid ""
+"There's a handly `fail` function, which is merely a constructor with a pre-"
+"defined output template for showing both the error and the source location. "
+"In practice, `fail` is always preferred over `Failure`."
+msgstr "`fail` 是一个便利的函数，它只是一个带有预定义输出模板的构造函数，用于显示错误和源位置。在实践中，`fail!` 总是比 `Failure`更常用。"
+
+#: ../../language/error-handling.md:54
+msgid ""
+"#callsite(autofill(loc))\n"
+"pub fn[T] fail(msg : String, loc~ : SourceLoc) -> T raise Failure {\n"
+"  raise Failure(\"FAILED: \\{loc} \\{msg}\")\n"
+"}"
+msgstr ""
+
+#: ../../language/error-handling.md:62
+msgid "Throwing Errors"
+msgstr "抛出错误"
+
+#: ../../language/error-handling.md:64
+msgid ""
+"The keyword `raise` is used to interrupt the function execution and return "
+"an error."
+msgstr "关键字 `raise` 被用来中断函数执行并返回一个错误。"
+
+#: ../../language/error-handling.md:67
+msgid ""
+"The type declaration of a function can use `raise` with an Error type to "
+"indicate that the function might raise an error during an execution. For "
+"example, the following function `div` might return an error of type "
+"`DivError`:"
+msgstr ""
+"函数的类型签名可以用 `raise` 和一个错误类型来表明函数可能抛出一个错误。例如，以下函数 `div` 可能返回一个类型为 `DivError` "
+"的错误："
+
+#: ../../language/error-handling.md:71
+msgid ""
+"suberror DivError String\n"
+"\n"
+"fn div(x : Int, y : Int) -> Int raise DivError {\n"
+"  if y == 0 {\n"
+"    raise DivError(\"division by zero\")\n"
+"  }\n"
+"  x / y\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:78
+msgid ""
+"The `Error` can be used when the concrete error type is not important. For "
+"convenience, you can omit the error type after the `raise` to indicate that "
+"the `Error` type is used. For example, the following function signatures are"
+" equivalent:"
+msgstr ""
+"`Error` 类型可以在具体的错误类型不重要时使用。为了方便起见，您可以在 `raise` 之后省略错误类型，以表示使用了 `Error` "
+"类型。例如，以下函数签名是等价的："
+
+#: ../../language/error-handling.md:83
+msgid ""
+"fn f() -> Unit raise {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn g() -> Unit raise Error {\n"
+"  let h : () -> Unit raise = fn() raise { fail(\"fail\") }\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:90
+msgid ""
+"For functions that are generic in the error type, you can use the `Error` "
+"bound to do that. For example,"
+msgstr "对于在错误类型上是泛型的函数，您可以使用 `Error` 约束来实现。例如："
+
+#: ../../language/error-handling.md:93
+msgid ""
+"// Result::unwrap_or_error\n"
+"fn[T, E : Error] unwrap_or_error(result : Result[T, E]) -> T raise E {\n"
+"  match result {\n"
+"    Ok(x) => x\n"
+"    Err(e) => raise e\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:99
+msgid ""
+"For functions that do not raise an error, you can add `noraise` in the "
+"signature. For example:"
+msgstr "对于不抛出错误的函数，您可以在签名中添加 `noraise`。例如："
+
+#: ../../language/error-handling.md:102
+msgid ""
+"fn add(a : Int, b : Int) -> Int noraise {\n"
+"  a + b\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:108
+msgid "Error Polymorphism"
+msgstr "错误多态"
+
+#: ../../language/error-handling.md:110
+msgid ""
+"It happens when a higher order function accepts another function as "
+"parameter. The function as parameter may or may not throw error, which in "
+"turn affects the behavior of this function."
+msgstr "一个高阶函数在接受另一个函数作为参数时，另一个函数可能会抛出错误，也可能不会抛出错误，这反过来又影响了这个高阶函数的行为。"
+
+#: ../../language/error-handling.md:114
+msgid "A notable example is `map` of `Array`:"
+msgstr "一个典型的例子是 `Array` 的 `map` 函数："
+
+#: ../../language/error-handling.md:116
+msgid ""
+"fn[T] map(array : Array[T], f : (T) -> T raise) -> Array[T] raise {\n"
+"  let mut res = []\n"
+"  for x in array {\n"
+"    res.push(f(x))\n"
+"  }\n"
+"  res\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:122
+msgid ""
+"However, writing so would make the `map` function constantly having the "
+"possibility of throwing errors, which is not the case."
+msgstr "然而，这样写会使得 `map` 函数总是有可能抛出错误，这并不是我们想要的。"
+
+#: ../../language/error-handling.md:125
+msgid ""
+"Thus, the error polymorphism is introduced. You may use `raise?` to signify "
+"that an error may or may not be throw."
+msgstr "因此，引入了错误多态。您可以使用 `raise?` 来表示可能会抛出错误，也可能不会抛出错误。"
+
+#: ../../language/error-handling.md:128
+msgid ""
+"fn[T] map_with_polymorphism(\n"
+"  array : Array[T],\n"
+"  f : (T) -> T raise?\n"
+") -> Array[T] raise? {\n"
+"  let mut res = []\n"
+"  for x in array {\n"
+"    res.push(f(x))\n"
+"  }\n"
+"  res\n"
+"}\n"
+"\n"
+"fn[T] map_without_error(\n"
+"  array : Array[T],\n"
+"  f : (T) -> T noraise,\n"
+") -> Array[T] noraise {\n"
+"  map_with_polymorphism(array, f)\n"
+"}\n"
+"\n"
+"fn[T] map_with_error(array : Array[T], f : (T) -> T raise) -> Array[T] raise"
+" {\n"
+"  map_with_polymorphism(array, f)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:134
+msgid ""
+"The signature of the `map_with_polymorphism` will be determined by the "
+"actual parameter."
+msgstr "`map_with_polymorphism` 的签名将由实际参数推导而来。因此，在 `res` 后面的 `try?` 将会有一个警告，因为不会抛出错误。"
+
+#: ../../language/error-handling.md:137
+msgid "Handling Errors"
+msgstr "处理错误"
+
+#: ../../language/error-handling.md:139
+msgid ""
+"Applying the function normally will rethrow the error directly in case of an"
+" error. For example:"
+msgstr "直接调用函数会在出现错误时直接重新抛出错误。例如："
+
+#: ../../language/error-handling.md:142
+msgid ""
+"fn div_reraise(x : Int, y : Int) -> Int raise DivError {\n"
+"  div(x, y) // Rethrow the error if `div` raised an error\n"
+"}\n"
+msgstr ""
+"fn div_reraise(x : Int, y : Int) -> Int raise DivError {\n"
+"  div(x, y) // 如果 `div` 引发错误，则重新抛出错误\n"
+"}\n"
+
+#: ../../language/error-handling.md:148
+msgid "However, you may want to handle the errors."
+msgstr "但是，你可能想要处理错误。"
+
+#: ../../language/error-handling.md:150
+msgid "Try ... Catch"
+msgstr ""
+
+#: ../../language/error-handling.md:152
+msgid "You can use `try` and `catch` to catch and handle errors, for example:"
+msgstr "你可以使用 `try` 和 `catch` 捕获和处理错误，例如："
+
+#: ../../language/error-handling.md:154
+msgid ""
+"fn main {\n"
+"  try div(42, 0) catch {\n"
+"    DivError(s) => println(s)\n"
+"  } noraise {\n"
+"    v => println(v)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:162
+msgid "Output"
+msgstr "输出"
+
+#: ../../language/error-handling.md:162
+msgid "division by zero\n"
+msgstr "除零"
+
+#: ../../language/error-handling.md:166
+msgid ""
+"Here, `try` is used to call a function that might throw an error, and "
+"`catch` is used to match and handle the caught error. If no error is caught,"
+" the catch block will not be executed and the `noraise` block will be "
+"executed instead."
+msgstr ""
+"这里，`try` 用于调用可能引发错误的函数，`catch` 用于匹配和处理捕获的错误。如果没有捕获到错误，`catch` 块将不会执行，而是执行 "
+"`noraise` 块。"
+
+#: ../../language/error-handling.md:170
+msgid ""
+"The `noraise` block can be omitted if no action is needed when no error is "
+"caught. For example:"
+msgstr "如果不需要在没有捕获到错误时执行任何操作，则可以省略 `noraise` 块。例如："
+
+#: ../../language/error-handling.md:173
+msgid ""
+"try { println(div(42, 0)) } catch {\n"
+"  _ => println(\"Error\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:180
+msgid ""
+"When the body of `try` is a simple expression, the curly braces, and even "
+"the `try` keyword can be omitted. For example:"
+msgstr "当 `try` 的主体是一个简单表达式时，大括号，甚至 `try` 关键字，都可以省略。例如："
+
+#: ../../language/error-handling.md:183
+msgid ""
+"let a = div(42, 0) catch { _ => 0 }\n"
+"println(a)\n"
+msgstr ""
+
+#: ../../language/error-handling.md:190
+msgid "Transforming to Result"
+msgstr "转换为 Result"
+
+#: ../../language/error-handling.md:192
+msgid ""
+"You can also catch the potential error and transform into a first-class "
+"value of the [`Result`](/language/fundamentals/builtins.md#option-and-"
+"result) type, by using `try?` before an expression that may throw error:"
+msgstr ""
+"您还可以捕获潜在的错误，并将其转换为一等公民的 [`Result`](/language/fundamentals/builtins.md"
+"#option-and-result) type，方法是在可能引发错误的表达式前使用 `try?`："
+
+#: ../../language/error-handling.md:196
+msgid ""
+"test {\n"
+"  let res = try? (div(6, 0) * div(6, 3))\n"
+"  inspect(\n"
+"    res,\n"
+"    content=(\n"
+"      #|Err(\"division by zero\")\n"
+"    ),\n"
+"  )\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:202
+msgid "Panic on Errors"
+msgstr "出错时崩溃"
+
+#: ../../language/error-handling.md:204
+msgid "You can also panic directly when an unexpected error occurs:"
+msgstr "如果发生意外错误，您也可以直接引发崩溃："
+
+#: ../../language/error-handling.md:206
+msgid ""
+"fn remainder(a : Int, b : Int) -> Int raise DivError {\n"
+"  if b == 0 {\n"
+"    raise DivError(\"division by zero\")\n"
+"  }\n"
+"  let div = try! div(a, b)\n"
+"  a - b * div\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:212
+msgid "Error Inference"
+msgstr "错误推导"
+
+#: ../../language/error-handling.md:214
+msgid ""
+"Within a `try` block, several different kinds of errors can be raised. When "
+"that happens, the compiler will use the type `Error` as the common error "
+"type. Accordingly, the handler must use the wildcard `_` to make sure all "
+"errors are caught, and `e => raise e` to reraise the other errors. For "
+"example,"
+msgstr ""
+"在 `try` 块中，可能引发多种不同类型的错误。当发生这种情况时，编译器将使用 `Error` 类型作为通用错误类型。因此，处理程序必须使用通配符 "
+"`_` 来确保捕获所有错误，并且通过 `e => raise e` 来抛出其他错误。例如："
+
+#: ../../language/error-handling.md:219
+msgid ""
+"fn f1() -> Unit raise E1 {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn f2() -> Unit raise E2 {\n"
+"  ...\n"
+"}\n"
+"\n"
+"try {\n"
+"  f1()\n"
+"  f2()\n"
+"} catch {\n"
+"  E1(_) => ...\n"
+"  E2 => ...\n"
+"  e => raise e\n"
+"}\n"
+msgstr ""
+
