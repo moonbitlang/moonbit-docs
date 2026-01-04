@@ -26,9 +26,10 @@ msgstr "属性"
 #: ../../language/attributes.md:3
 msgid ""
 "Attributes are annotations placed before structures in source code. They "
-"take the form `#attribute(...)`. An attribute occupies the entire line, and "
-"newlines are not allowed within it.  Attributes do not normally affect the "
-"meaning of programs. Unused attributes will be reported as warnings."
+"take the form `#attribute(...)`. An attribute occupies the entire line, "
+"and newlines are not allowed within it.  Attributes do not normally "
+"affect the meaning of programs. Unused attributes will be reported as "
+"warnings."
 msgstr ""
 "属性是放置在源码中的结构之前的信息。它们都采用 `#attribute(...)` "
 "的形式。一个属性占用整行的空间，其中不允许换行。属性一般不会影响程序的含义。无用的属性将会触发警告。"
@@ -68,24 +69,25 @@ msgstr ""
 
 #: ../../language/attributes.md:32
 msgid ""
-"The first attribute is a built-in attribute; it does not have a namespace "
-"prefix in the attribute name. Built-in attributes are recognized by the "
+"The first attribute is a built-in attribute; it does not have a namespace"
+" prefix in the attribute name. Built-in attributes are recognized by the "
 "MoonBit compiler and have specific meanings."
 msgstr "第一个属性是一个内建的属性，在属性名中，它没有命名空间前缀。内建属性会被 MoonBit 编译器检查，并且有特殊的含义。"
 
 #: ../../language/attributes.md:34
 msgid ""
-"The second attribute is a user-defined attribute; it has a namespace prefix "
-"`custom.` in the attribute name. User-defined attributes are ignored by the "
-"compiler, but can be used by external tools via parsing the source code."
+"The second attribute is a user-defined attribute; it has a namespace "
+"prefix `custom.` in the attribute name. User-defined attributes are "
+"ignored by the compiler, but can be used by external tools via parsing "
+"the source code."
 msgstr "第二个属性是用户自定义属性，它的名字中包含命名空间前缀。用户自定义属性会被编译器忽略，通过解析源码，它能够被外部的工具使用。"
 
 #: ../../language/attributes.md:37
 msgid ""
-"MoonBit is designed not to support runtime reflection. It's easy to abuse, "
-"making it impossible for toolchains (e.g., the compiler) to catch errors at "
-"compile time, which makes code harder to maintain. It also negatively "
-"impacts performance optimization."
+"MoonBit is designed not to support runtime reflection. It's easy to "
+"abuse, making it impossible for toolchains (e.g., the compiler) to catch "
+"errors at compile time, which makes code harder to maintain. It also "
+"negatively impacts performance optimization."
 msgstr ""
 "MoonBit "
 "在设计上有意不支持运行时反射。运行时反射容易被滥用，使得工具链（例如编译器）在编译时不可能捕获到错误，让代码的维护变得更困难。它也会对性能优化产生负面影响。"
@@ -103,12 +105,13 @@ msgstr "`deprecated` 属性"
 
 #: ../../language/attributes.md:44
 msgid ""
-"The `#deprecated` attribute is used to mark an API as deprecated. MoonBit "
-"emits  a warning when the deprecated API is used, and if the API is listed "
-"in completion,  it will be shown with a strikethrough style. For example:"
+"The `#deprecated` attribute is used to mark an API as deprecated. MoonBit"
+" emits  a warning when the deprecated API is used, and if the API is "
+"listed in completion,  it will be shown with a strikethrough style. For "
+"example:"
 msgstr ""
-"`#deprecated`属性用于标记一个 API 为弃用状态。当弃用的 API 在其他包中被使用时，MoonBit 将会触发警告，而且如果 API "
-"出现补全列表中，它会被加上删除线的样式。例如："
+"`#deprecated`属性用于标记一个 API 为弃用状态。当弃用的 API 在其他包中被使用时，MoonBit 将会触发警告，而且如果 "
+"API 出现补全列表中，它会被加上删除线的样式。例如："
 
 #: ../../language/attributes.md:48
 msgid ""
@@ -172,8 +175,9 @@ msgstr "`#deprecated(\"使用 new_function 代替\")`"
 
 #: ../../language/attributes.md:69
 msgid ""
-"Marks the item as deprecated with a custom warning message. Every time the "
-"deprecated API is used, the provided message will be displayed as a warning."
+"Marks the item as deprecated with a custom warning message. Every time "
+"the deprecated API is used, the provided message will be displayed as a "
+"warning."
 msgstr "将 API 标记为弃用，并自定义一个警告信息。每当这个弃用的 API 被使用时，自定义信息将会显示在警告中。"
 
 #: ../../language/attributes.md:71
@@ -183,7 +187,8 @@ msgstr "`#deprecated(\"使用 new_function 代替\", skip_current_package=true)`
 #: ../../language/attributes.md:73
 msgid ""
 "Marks the item as deprecated with a custom warning message, but skips "
-"emitting warnings when the deprecated API is used within the same package."
+"emitting warnings when the deprecated API is used within the same "
+"package."
 msgstr "将 API 标记为弃用的同时自定义警告信息，但是当 API 在同一个包内使用时不触发警告。"
 
 #: ../../language/attributes.md:75
@@ -192,15 +197,15 @@ msgstr "`alias` 属性"
 
 #: ../../language/attributes.md:77
 msgid ""
-"The `alias` attribute is used to overload operators related to indexing, or "
-"to create an alias name for a top-level function or variable. It has two "
-"forms:"
+"The `alias` attribute is used to overload operators related to indexing, "
+"or to create an alias name for a top-level function or variable. It has "
+"two forms:"
 msgstr "`alias` 属性用于重载一个和索引操作相关的运算符，或者为一个顶层函数与变量创建别名。它有两种形式："
 
 #: ../../language/attributes.md:80
 msgid ""
-"`#alias(\"op\")`: where `op` is one of the following strings representing "
-"the indexing operators:"
+"`#alias(\"op\")`: where `op` is one of the following strings representing"
+" the indexing operators:"
 msgstr "`#alias(\"op\")`: `op` 是下面其中一个字符串，表示对应的索引操作："
 
 #: ../../language/attributes.md:82
@@ -229,8 +234,8 @@ msgstr ""
 
 #: ../../language/attributes.md:92
 msgid ""
-"A labeled argument, changes the visibility of the alias. The `modifier` can "
-"be `pub` or `priv`. If not specified, the alias will have the same "
+"A labeled argument, changes the visibility of the alias. The `modifier` "
+"can be `pub` or `priv`. If not specified, the alias will have the same "
 "visibility as the original function or variable."
 msgstr ""
 "一个带标签的参数，用于改变别名的可见性。`modifier` 可以是 `pub` 或者 "
@@ -248,9 +253,9 @@ msgstr "将别名标记为弃用的。如果提供了 `message` 信息，当别�
 
 #: ../../language/attributes.md:98
 msgid ""
-"To graceful migration from old API to new API, you can rename the old API "
-"directly, and create an alias with the old name, mark it as deprecated. For"
-"  example:"
+"To graceful migration from old API to new API, you can rename the old API"
+" directly, and create an alias with the old name, mark it as deprecated. "
+"For  example:"
 msgstr "如果要优雅地将一个旧的 API 迁移到新的 API，可以直接将旧的 API 重命名成新的名字；然后，使用旧名字创建一个别名，同时将它标记成弃用的。"
 
 #: ../../language/attributes.md:101
@@ -267,8 +272,8 @@ msgstr "`label_migration` 属性"
 
 #: ../../language/attributes.md:111
 msgid ""
-"The `#label_migration` attribute is used to help you safely evolve your API"
-"  by warning users during the transition period."
+"The `#label_migration` attribute is used to help you safely evolve your "
+"API  by warning users during the transition period."
 msgstr "`#label_migration` 属性用于帮助你安全地演进 API，在迁移期间给下游的用户警告。"
 
 #: ../../language/attributes.md:114
@@ -281,10 +286,10 @@ msgstr ""
 
 #: ../../language/attributes.md:118
 msgid ""
-"The `fill` argument is used when you want to refactor an optional parameter."
-" You can use `fill=true` when you want to eventually make an optional  "
-"parameter required. You can use `fill=false` when you want to eventually  "
-"remove an optional parameter."
+"The `fill` argument is used when you want to refactor an optional "
+"parameter. You can use `fill=true` when you want to eventually make an "
+"optional  parameter required. You can use `fill=false` when you want to "
+"eventually  remove an optional parameter."
 msgstr ""
 "当你想重构一个可选参数时，可以设置`fill`。当 `fill=true` 时，这代表最终这个参数将变成必选的；当 `fill=false` "
 "时，这代表最终这个参数会被移除。"
@@ -292,8 +297,8 @@ msgstr ""
 #: ../../language/attributes.md:123 ../../language/attributes.md:143
 #: ../../language/attributes.md:162
 msgid ""
-"The `msg` argument is an string that provides additional information about "
-"the migration."
+"The `msg` argument is an string that provides additional information "
+"about the migration."
 msgstr "`msg`参数是一个字符串，用于提供额外的信息，告诉使用者关于可见性的变更。"
 
 #: ../../language/attributes.md:125
@@ -313,11 +318,11 @@ msgstr ""
 
 #: ../../language/attributes.md:138
 msgid ""
-"The `allow_positional` argument is used when you want a labelled parameter "
-"to be  used without its label being provided. When the parameter is used "
-"positionally  (without a label), the compiler reports a warning. This is "
-"useful when you want to change a positional parameter to a labelled "
-"parameter without breaking the downstream code."
+"The `allow_positional` argument is used when you want a labelled "
+"parameter to be  used without its label being provided. When the "
+"parameter is used positionally  (without a label), the compiler reports a"
+" warning. This is useful when you want to change a positional parameter "
+"to a labelled parameter without breaking the downstream code."
 msgstr ""
 "当你希望带标签的参数可以在不提供标签的情况下使用时，可以设置 "
 "`allow_positional`。当参数按位置使用（没有标签）时，编译器会报告警告。这在你想要将位置参数更改为带标签参数，并且不破坏下游代码时非常有用。"
@@ -338,10 +343,11 @@ msgstr ""
 
 #: ../../language/attributes.md:157
 msgid ""
-"The alias argument allows you to provide an alternative name to a labelled "
-"parameter. This is useful when renaming a parameter to maintain backward  "
-"compatibility. If a warning message is provided, the compiler warns when  "
-"using the alias; otherwise, the alias can be used without warnings."
+"The alias argument allows you to provide an alternative name to a "
+"labelled parameter. This is useful when renaming a parameter to maintain "
+"backward  compatibility. If a warning message is provided, the compiler "
+"warns when  using the alias; otherwise, the alias can be used without "
+"warnings."
 msgstr ""
 "`alias` "
 "属性允许为带标签的参数提供替代名称。这在重命名参数以保持向后兼容性时很有用。如果提供了警告消息，编译器在使用别名时会发出警告；否则，可以在不发出警告的情况下使用别名。"
@@ -364,18 +370,19 @@ msgstr "`visibility` 属性"
 
 #: ../../language/attributes.md:179
 msgid ""
-"This topic does not covered the access control. To learn more about `pub`, "
-"`pub(all)` and `priv`, see [Access Control](./packages.md#access-control)."
-msgstr ""
-"这里的文档不涉及访问控制。关于如何使用`pub`、`pub(all)` 和 `priv`, 见 [访问控制](./packages.md#access-"
+"This topic does not covered the access control. To learn more about "
+"`pub`, `pub(all)` and `priv`, see [Access Control](./packages.md#access-"
 "control)."
+msgstr ""
+"这里的文档不涉及访问控制。关于如何使用`pub`、`pub(all)` 和 `priv`, 见 [访问控制](./packages.md"
+"#access-control)."
 
 #: ../../language/attributes.md:182
 msgid ""
-"The `#visibility` attribute is similar to the `#deprecated` attribute, but "
-"it is used to hint that a type will change its visibility in the future.  "
-"For outside usages, if the usage will be invalidated by the visibility "
-"change in future, a warning will be emitted."
+"The `#visibility` attribute is similar to the `#deprecated` attribute, "
+"but it is used to hint that a type will change its visibility in the "
+"future.  For outside usages, if the usage will be invalidated by the "
+"visibility change in future, a warning will be emitted."
 msgstr "`#visibility`属性和`#deprecated`属性类似。但它用于提示用户一个类型未来将改变它的可见性。对于外部的包，如果使用这个类型的方式在未来改变可见性以后不再合法，它将会触发警告。"
 
 #: ../../language/attributes.md:185
@@ -449,13 +456,15 @@ msgstr ""
 "\n"
 
 #: ../../language/attributes.md:191
-msgid "The `#visibility` attribute takes two arguments: `change_to` and `message`."
+msgid ""
+"The `#visibility` attribute takes two arguments: `change_to` and "
+"`message`."
 msgstr "`#visibility`属性接受两个参数：`change_to` 和 `message`。"
 
 #: ../../language/attributes.md:193
 msgid ""
-"The `change_to` argument is a string that indicates the new visibility of "
-"the type. It can be either `\"abstract\"` or `\"readonly\"`."
+"The `change_to` argument is a string that indicates the new visibility of"
+" the type. It can be either `\"abstract\"` or `\"readonly\"`."
 msgstr "`change_to`参数是一个表示该类型新的可见性的字符串，它可以是`\"abstract\"`或者`\"readonly\"`"
 
 #: ../../language/attributes.md:185
@@ -497,8 +506,8 @@ msgstr "`internal` 属性"
 #: ../../language/attributes.md:204
 msgid ""
 "The `#internal` attribute is used to mark a function, type, or trait as "
-"internal.  Any usage of the internal function or type in other modules will "
-"emit an alert warning."
+"internal.  Any usage of the internal function or type in other modules "
+"will emit an alert warning."
 msgstr "`#internal`属性用于标记一个函数、类型或者特征为内部的。所有在模块外的使用将会触发警告。"
 
 #: ../../language/attributes.md:207
@@ -538,8 +547,8 @@ msgstr "`warnings` 属性"
 #: ../../language/attributes.md:223
 msgid ""
 "The `#warnings` attribute is used to configure warning settings for a "
-"specific  top-level declaration. It can enable, disable or treat an enabled "
-"warning as error  for specific warnings in that declaration."
+"specific  top-level declaration. It can enable, disable or treat an "
+"enabled warning as error  for specific warnings in that declaration."
 msgstr "`#warnings`属性用于配置单个顶层的声明的警告。在声明内，它能够启用、关闭警告，或者将一个已经启用的警告配置为错误。"
 
 #: ../../language/attributes.md:227
@@ -587,7 +596,9 @@ msgid "External Attribute"
 msgstr "`external` 属性"
 
 #: ../../language/attributes.md:249
-msgid "The `#external` attribute is used to mark an abstract type as external type."
+msgid ""
+"The `#external` attribute is used to mark an abstract type as external "
+"type."
 msgstr "`#external`属性用于标记一个抽象类型为外部类型。"
 
 #: ../../language/attributes.md:251
@@ -614,9 +625,9 @@ msgstr "`borrow` 和 `owned` 属性"
 
 #: ../../language/attributes.md:263
 msgid ""
-"The `#borrow` and `#owned` attribute is used to indicate that a FFI takes "
-"ownership of its arguments. For more detail, see [FFI](./ffi.md#the-borrow-"
-"attribute)."
+"The `#borrow` and `#owned` attribute is used to indicate that a FFI takes"
+" ownership of its arguments. For more detail, see [FFI](./ffi.md#the-"
+"borrow-attribute)."
 msgstr ""
 "`#borrow` 和 `#owned` 属性用于表示一个外部接口是否获得参数的所有权。对于更多细节，见 [FFI](./ffi.md#the-"
 "borrow-and-owned-attribute)。"
@@ -627,11 +638,13 @@ msgstr "`as_free_fn` 属性"
 
 #: ../../language/attributes.md:267
 msgid ""
-"The `#as_free_fn` attribute is used to mark a method that it is declared as "
-"a free function as well. It can also change the visibility of the free "
-"function, the name of the free function, and provide separate deprecation "
-"warning."
-msgstr "`#as_free_fn` 属性用于标记一个方法，同时它也被声明为一个自由函数。它还可以改变自由函数的可见性、自由函数的名字，并且提供单独的弃用警告。"
+"The `#as_free_fn` attribute is used to mark a method that it is declared "
+"as a free function as well. It can also change the visibility of the free"
+" function, the name of the free function, and provide separate "
+"deprecation warning."
+msgstr ""
+"`#as_free_fn` "
+"属性用于标记一个方法，同时它也被声明为一个自由函数。它还可以改变自由函数的可见性、自由函数的名字，并且提供单独的弃用警告。"
 
 #: ../../language/attributes.md:270
 msgid ""
@@ -653,16 +666,20 @@ msgid "Callsite Attribute"
 msgstr "`callsite` 属性"
 
 #: ../../language/attributes.md:278
-msgid "The `#callsite` attribute is used to mark properties that happen at callsite."
+msgid ""
+"The `#callsite` attribute is used to mark properties that happen at "
+"callsite."
 msgstr "`#callsite` 属性用于标记发生在调用位置的属性。"
 
 #: ../../language/attributes.md:280
+#, fuzzy
 msgid ""
-"It could be `autofill`, which is to autofill the arguments [SourceLoc and "
-"ArgLoc](/language/fundamentals/functions.md#autofill-arguments) at callsite."
+"It could be `autofill`, which is to autofill the arguments [SourceLoc and"
+" ArgLoc](/language/fundamentals.md#autofill-arguments) at "
+"callsite."
 msgstr ""
 "它可以是 `autofill`，用于在调用位置自动填充参数 [SourceLoc 和 "
-"ArgLoc](/language/fundamentals/functions.md#autofill-arguments)。"
+"ArgLoc](/language/fundamentals.md#autofill-arguments)。"
 
 #: ../../language/attributes.md:283
 msgid "Skip Attribute"
@@ -670,8 +687,8 @@ msgstr "`skip` 属性"
 
 #: ../../language/attributes.md:285
 msgid ""
-"The `#skip` attribute is used to skip a single test block. The type checking"
-" will still be performed."
+"The `#skip` attribute is used to skip a single test block. The type "
+"checking will still be performed."
 msgstr "`#skip` 属性用于跳过一个测试块。类型检查仍然会被执行。"
 
 #: ../../language/attributes.md:287
@@ -680,8 +697,8 @@ msgstr "`cfg` 属性"
 
 #: ../../language/attributes.md:289
 msgid ""
-"The `#cfg` attribute is used to perform conditional compilation. Examples "
-"are:"
+"The `#cfg` attribute is used to perform conditional compilation. Examples"
+" are:"
 msgstr "`#cfg` 属性用于执行条件编译。例子有："
 
 #: ../../language/attributes.md:293
@@ -706,8 +723,8 @@ msgstr "`module` 属性用于为 JavaScript 后端声明模块依赖。"
 
 #: ../../language/attributes.md:306
 msgid ""
-"In `cjs` format, it is interpreted as `require`, and in `esm` format, it is "
-"interpreted as `import`."
+"In `cjs` format, it is interpreted as `require`, and in `esm` format, it "
+"is interpreted as `import`."
 msgstr "在 `cjs` 格式中，它被解释为 `require`，而在 `esm` 格式中，它被解释为 `import`。"
 
 #: ../../language/attributes.md:309

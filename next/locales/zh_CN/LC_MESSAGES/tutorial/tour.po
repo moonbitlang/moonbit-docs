@@ -1,0 +1,733 @@
+# Translations template for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../tutorial/tour.md:1
+msgid "A Tour of MoonBit for Beginners"
+msgstr "MoonBit：新手之旅"
+
+#: ../../tutorial/tour.md:3
+msgid ""
+"This guide is intended for newcomers, and it's not meant to be a 5-minute "
+"quick tour. This article tries to be a succinct yet easy to understand guide"
+" for those who haven't programmed in a way that MoonBit enables them to, "
+"that is, in a more modern, functional way."
+msgstr ""
+"本指南面向初学者，且并不打算作为一个几分钟就能读完的小文章。本文旨在为那些对 MoonBit 的编程思路 "
+"（更加现代化，函数式的）不甚了解的用户提供一个简洁而不失易懂性的指南。"
+
+#: ../../tutorial/tour.md:8
+msgid ""
+"See [the General Introduction](../language/index.md) if you want to straight"
+" delve into the language."
+msgstr "如果您想直接深入了解语言，请参阅 [总体介绍](../language/index.md)。"
+
+#: ../../tutorial/tour.md:11
+msgid "Installation"
+msgstr "安装"
+
+#: ../../tutorial/tour.md:13
+msgid "**The extension**"
+msgstr "**语言扩展**"
+
+#: ../../tutorial/tour.md:15
+msgid ""
+"Currently, MoonBit development support is through the VS Code extension. "
+"Navigate to [VS Code "
+"Marketplace](https://marketplace.visualstudio.com/items?itemName=moonbit"
+".moonbit-lang) to download MoonBit language support."
+msgstr ""
+"目前，MoonBit 的开发支持是通过 VS Code 扩展实现的。请前往 [VS Code "
+"Marketplace](https://marketplace.visualstudio.com/items?itemName=moonbit"
+".moonbit-lang) 下载 MoonBit 语言支持。"
+
+#: ../../tutorial/tour.md:20
+msgid "**The toolchain**"
+msgstr "**工具链**"
+
+#: ../../tutorial/tour.md:22
+msgid ""
+"(Recommended) If you've installed the extension above, the runtime can be "
+"directly installed by running 'Install moonbit toolchain' in the action menu"
+" and you may skip this part: ![runtime-installation](/imgs/runtime-"
+"installation.png)"
+msgstr ""
+"（推荐）如果您已安装了上面的扩展，运行操作菜单中的“Install moonbit toolchain” "
+"即可直接安装运行时并跳过这部分介绍：![安装运行时](/imgs/runtime-installation.png)"
+
+#: ../../tutorial/tour.md:22
+msgid "runtime-installation"
+msgstr "安装运行时"
+
+#: ../../tutorial/tour.md:27
+msgid "We also provide an installation script: Linux & macOS users can install via"
+msgstr "我们还提供了一个安装脚本：Linux 和 macOS 用户可以通过以下方式安装："
+
+#: ../../tutorial/tour.md:29
+msgid "curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash\n"
+msgstr ""
+
+#: ../../tutorial/tour.md:33
+msgid "For Windows users, PowerShell is used:"
+msgstr "对于 Windows 用户，使用 Powershell："
+
+#: ../../tutorial/tour.md:35
+msgid ""
+"Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm "
+"https://cli.moonbitlang.com/install/powershell.ps1 | iex\n"
+msgstr ""
+
+#: ../../tutorial/tour.md:39
+msgid ""
+"This automatically installs MoonBit in `$HOME/.moon` and adds it to your "
+"`PATH`."
+msgstr "这将自动安装 MoonBit 到 `$HOME/.moon` 并将其添加到您的 `PATH`。"
+
+#: ../../tutorial/tour.md:41
+msgid ""
+"If you encounter `moon` not found after installation, try restarting your "
+"terminal or VS Code to let the environment variable take effect."
+msgstr "如果安装后遇到 `moon` 未找到的情况，请尝试重新启动终端或 VSCode 以使环境变量生效。"
+
+#: ../../tutorial/tour.md:44
+msgid ""
+"Do notice that MoonBit is not production-ready at the moment, it's under "
+"active development. To update MoonBit, just run the commands above again."
+msgstr "请注意，目前 MoonBit 还不适用于生产环境：它正在积极开发中。要更新 MoonBit，只需再次运行上面的命令即可。"
+
+#: ../../tutorial/tour.md:47
+msgid ""
+"Running `moon help` gives us a bunch of subcommands. But right now the only "
+"commands we need are `build`, `run`, and `new`."
+msgstr "运行 `moon help` 可以看到一堆子命令。但是现在我们只需要 `build` `run` 和 `new` 这三个命令。"
+
+#: ../../tutorial/tour.md:50
+msgid ""
+"To create a project (or module, more formally), run `moon new <path>`, where"
+" path is the place you would like to place the project. For example, if you "
+"execute `moon new examine`, you will get:"
+msgstr ""
+"要创建一个项目（或者说模块），运行 `moon new <path>`，其中 <path> 是您希望放置项目的位置。例如，如果您执行 `moon new"
+" examine`，您将得到："
+
+#: ../../tutorial/tour.md:54
+msgid ""
+"examine\n"
+"├── Agents.md\n"
+"├── cmd\n"
+"│   └── main\n"
+"│       ├── main.mbt\n"
+"│       └── moon.pkg.json\n"
+"├── LICENSE\n"
+"├── moon.mod.json\n"
+"├── moon.pkg.json\n"
+"├── my_project_test.mbt\n"
+"├── my_project.mbt\n"
+"├── README.mbt.md\n"
+"└── README.md -> README.mbt.md\n"
+msgstr ""
+
+#: ../../tutorial/tour.md:70
+msgid ""
+"which contains a `cmd/main` lib containing a `fn main` that serves as the "
+"entrance of the program. Try running `cd my_project && moon run cmd/main`."
+msgstr "其中包含一个 `cmd/main` 包，内有一个 `fn main` 作为程序的入口。尝试运行 `moon run cmd/main`。"
+
+#: ../../tutorial/tour.md:73
+msgid ""
+"In this tutorial, we assume the project name is `examine`,  and the current "
+"working directory is also `examine`."
+msgstr "在这个教程中，我们假设项目名称为 `examine`，当前工作目录也是 `examine`。"
+
+#: ../../tutorial/tour.md:76
+msgid "Example: Finding those who passed"
+msgstr "示例：找到通过考试的人"
+
+#: ../../tutorial/tour.md:78
+msgid ""
+"In this example, we will try to find out, given the scores of some students,"
+" how many of them have passed the test?"
+msgstr "在这个例子中，我们将尝试找出，给定一些学生的分数，有多少人通过了考试？"
+
+#: ../../tutorial/tour.md:81
+msgid ""
+"To do so, we will start with defining our data types, identify our "
+"functions, and write our tests. Then we will implement our functions."
+msgstr "为此，我们将从定义数据类型开始，确定我们的函数，并编写我们的测试。然后我们将实现我们的函数。"
+
+#: ../../tutorial/tour.md:84
+msgid "Unless specified, the following will be defined under the file `top.mbt`."
+msgstr "除非另有说明，以下内容将在文件 `top.mbt` 中定义。"
+
+#: ../../tutorial/tour.md:86
+msgid "Data types"
+msgstr "数据类型"
+
+#: ../../tutorial/tour.md:88
+msgid ""
+"The [basic data types](/language/fundamentals.md#built-in-data-structures) "
+"in MoonBit includes the following:"
+msgstr ""
+"MoonBit 中的 [基本数据类型](/language/fundamentals.md#built-in-data-structures) "
+"包括以下内容："
+
+#: ../../tutorial/tour.md:90
+msgid "`Unit`"
+msgstr ""
+
+#: ../../tutorial/tour.md:91
+msgid "`Bool`"
+msgstr ""
+
+#: ../../tutorial/tour.md:92
+msgid "`Int`, `UInt`, `Int64`, `UInt64`, `Byte`, ..."
+msgstr ""
+
+#: ../../tutorial/tour.md:93
+msgid "`Float`, `Double`"
+msgstr ""
+
+#: ../../tutorial/tour.md:94
+msgid "`Char`, `String`, ..."
+msgstr ""
+
+#: ../../tutorial/tour.md:95
+msgid "`Array[T]`, ..."
+msgstr ""
+
+#: ../../tutorial/tour.md:96
+msgid "Tuples, and still others"
+msgstr "元组，和其他类型"
+
+#: ../../tutorial/tour.md:98
+msgid ""
+"To represent a struct containing a student ID and a score using a primitive "
+"type, we can use a 2-tuple containing a student ID (of type `String`) and a "
+"score (of type `Double`) as `(String, Double)`. However this is not very "
+"intuitive as we can't identify with other possible data types, such as a "
+"struct containing a student ID and the height of the student."
+msgstr ""
+"要使用原始类型表示包含学生 ID 和分数的记录，我们可以使用一个包含学生 ID（类型为 `String`）和分数（类型为 `Double`）的 "
+"2-元组，如 `(String, Double)`。然而，这并不是很直观，因为我们无法区分其他可能的数据类型，例如包含学生 ID 和学生身高的记录。"
+
+#: ../../tutorial/tour.md:104
+msgid ""
+"So we choose to declare our own data type using "
+"[struct](/language/fundamentals.md#struct):"
+msgstr "因此，我们选择使用 [结构体](/language/fundamentals.md#struct) 声明我们自己的数据类型："
+
+#: ../../tutorial/tour.md:106
+msgid ""
+"struct Student {\n"
+"  id : String\n"
+"  score : Double\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:114
+msgid ""
+"One can either pass or fail an exam, so the judgement result can be defined "
+"using [enum](/language/fundamentals.md#enum):"
+msgstr "一个人可以通过或者不通过考试，因此判断结果可以使用 [枚举类型](/language/fundamentals.md#enum) 定义："
+
+#: ../../tutorial/tour.md:117
+msgid ""
+"enum ExamResult {\n"
+"  Pass\n"
+"  Fail\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:125
+msgid "Functions"
+msgstr "函数"
+
+#: ../../tutorial/tour.md:127
+msgid ""
+"[Function](/language/fundamentals.md#functions) is a piece of code that "
+"takes some inputs and produces a result."
+msgstr "[函数](/language/fundamentals.md#functions) 是一段代码，它接受一些输入并产生一个结果。"
+
+#: ../../tutorial/tour.md:129
+msgid "In our example, we need to judge whether a student have passed an exam:"
+msgstr "在我们的例子中，我们需要判断一个学生是否通过了考试："
+
+#: ../../tutorial/tour.md:131
+msgid ""
+"fn is_qualified(student : Student, criteria: Double) -> ExamResult {\n"
+"  ...\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:138
+msgid ""
+"This function takes an input `student` of type `Student` that we've just "
+"defined, an input `criteria` of type `Double` as the criteria may be "
+"different for each course or different in each country, and returns an "
+"`ExamResult`."
+msgstr ""
+"这个函数接受一个类型为 `Student` 的输入 `student`，一个类型为 `Double` 的输入 "
+"`criteria`（因为每门课程的标准可能不同，每个国家的标准可能不同）然后返回一个 `ExamResult`。"
+
+#: ../../tutorial/tour.md:140
+msgid "The `...` syntax allows us to leave functions unimplemented for now."
+msgstr "使用 `...` 语法可以让我们暂时不实现函数。"
+
+#: ../../tutorial/tour.md:142
+msgid "We also need to find out how many students have passed an exam:"
+msgstr "我们还需要找出有多少学生通过了考试："
+
+#: ../../tutorial/tour.md:144
+msgid ""
+"fn count_qualified_students(\n"
+"  students : Array[Student],\n"
+"  is_qualified : (Student) -> ExamResult\n"
+") -> Int {\n"
+"  ...\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:154
+msgid ""
+"In MoonBit, functions are first-classed, meaning that we can bind a function"
+" to a variable, pass a function as parameter or receiving a function as a "
+"result. This function takes an array of students' structs and another "
+"function that will judge whether a student have passed an exam."
+msgstr ""
+"在 MoonBit "
+"中，函数是一等公民，这意味着我们可以将一个函数绑定到一个变量，将一个函数作为参数传递或将一个函数作为结果接收。这个函数接受一个学生记录数组和另一个函数，判断学生是否通过了考试。"
+
+#: ../../tutorial/tour.md:157
+msgid "Writing tests"
+msgstr "编写测试"
+
+#: ../../tutorial/tour.md:159
+msgid ""
+"We can define inline tests to define the expected behavior of the functions."
+" This is also helpful to make sure that there'll be no regressions when we "
+"refactor the program."
+msgstr "我们可以定义内联测试来定义函数的预期行为。这也有助于确保在重构程序时不会出现回归（破坏现有行为）。"
+
+#: ../../tutorial/tour.md:161
+msgid ""
+"test \"is qualified\" {\n"
+"  assert_eq(is_qualified(Student::{ id : \"0\", score : 50.0 }, 60.0), Fail)"
+"\n"
+"  assert_eq(is_qualified(Student::{ id : \"1\", score : 60.0 }, 60.0), Pass)"
+"\n"
+"  assert_eq(is_qualified(Student::{ id : \"2\", score : 13.0 }, 7.0), Pass)\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:170
+msgid ""
+"We will get an error message, reminding us that `Show` and `Eq` are not "
+"implemented for `ExamResult`."
+msgstr "我们会收到报错信息，提醒我们 `ExamResult` 没有实现 `Show` 和 `Eq`。"
+
+#: ../../tutorial/tour.md:172
+msgid ""
+"`Show` and `Eq` are **traits**. A trait in MoonBit defines some common "
+"operations that a type should be able to perform."
+msgstr "`Show` 和 `Eq` 是 **traits**。在 MoonBit 中，trait 定义了一个类型应该能够执行的一些常见操作。"
+
+#: ../../tutorial/tour.md:174
+msgid ""
+"For example, `Eq` defines that there should be a way to compare two values "
+"of the same type with a function called `op_equal`:"
+msgstr "例如，`Eq` 定义了应该有一种方法来比较两个相同类型的值，这个方法叫做 `op_equal`："
+
+#: ../../tutorial/tour.md:176
+msgid ""
+"trait Eq {\n"
+"  op_equal(Self, Self) -> Bool\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:183
+msgid ""
+"and `Show` defines that there should be a way to either convert a value of a"
+" type into `String` or write it using a `Logger`:"
+msgstr "`Show` 定义了应该有一种方法，要么将一个类型的值转换为 `String`，要么使用 `Logger` 写入："
+
+#: ../../tutorial/tour.md:185
+msgid ""
+"trait Show {\n"
+"  output(Self, &Logger) -> Unit\n"
+"  to_string(Self) -> String\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:193
+msgid ""
+"And the `assert_eq` uses them to constraint the passed parameters so that it"
+" can compare the two values and print them when they are not equal:"
+msgstr "`assert_eq` 使用它们来约束传递的参数，以便比较两个值并在它们不相等时打印它们："
+
+#: ../../tutorial/tour.md:195
+msgid ""
+"fn assert_eq![A : Eq + Show](value : A, other : A) -> Unit {\n"
+"  ...\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:202
+msgid ""
+"We need to implement `Eq` and `Show` for our `ExamResult`. There are two "
+"ways to do so."
+msgstr "我们需要为我们的 `ExamResult` 实现 `Eq` 和 `Show`。有两种方法可以实现。"
+
+#: ../../tutorial/tour.md:204
+msgid "By defining an explicit implementation:"
+msgstr "通过定义一个显式实现："
+
+#: ../../tutorial/tour.md:206
+msgid ""
+"impl Eq for ExamResult with op_equal(self, other) {\n"
+"  match (self, other) {\n"
+"    (Pass, Pass) | (Fail, Fail) => true\n"
+"    _ => false\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:216
+msgid ""
+"Here we use [pattern matching](/language/fundamentals.md#pattern-matching) "
+"to check the cases of the `ExamResult`."
+msgstr ""
+"在这里，我们使用 [模式匹配](/language/fundamentals.md#pattern-matching) 来检查 `ExamResult`"
+" 的情况。"
+
+#: ../../tutorial/tour.md:218
+msgid ""
+"Other is by [deriving](/language/derive.md) since `Eq` and `Show` are "
+"[builtin traits](/language/methods.md#builtin-traits) and the output for "
+"`ExamResult` is quite straightforward:"
+msgstr ""
+"另一种方法是通过 [派生](/language/derive.md) ，因为 `Eq` 和 `Show` 是 [内置 "
+"traits](/language/methods.md#builtin-traits) 并且 `ExamResult` 的输出非常直接："
+
+#: ../../tutorial/tour.md:220
+msgid ""
+"enum ExamResult {\n"
+"  Pass\n"
+"  Fail\n"
+"} derive(Show)"
+msgstr ""
+
+#: ../../tutorial/tour.md:228
+msgid ""
+"Now that we've implemented the traits, we can continue with our test "
+"implementations:"
+msgstr "现在我们已经实现了 traits，我们可以继续实现我们的测试："
+
+#: ../../tutorial/tour.md:230
+msgid ""
+"test \"count qualified students\" {\n"
+"  let students = [\n"
+"    { id: \"0\", score: 10.0 },\n"
+"    { id: \"1\", score: 50.0 },\n"
+"    { id: \"2\", score: 61.0 },\n"
+"  ]\n"
+"  let criteria1 = fn(student) { is_qualified(student, 10) }\n"
+"  let criteria2 = fn(student) { is_qualified(student, 50) }\n"
+"  assert_eq(count_qualified_students(students, criteria1), 3)\n"
+"  assert_eq(count_qualified_students(students, criteria2), 2)\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:246
+msgid ""
+"Here we use [lambda expressions](/language/fundamentals.md#local-functions) "
+"to reuse the previously defined `is_qualified` to create different criteria."
+msgstr ""
+"在这里，我们使用 [lambda 表达式](/language/fundamentals.md#local-functions) 来重用先前定义的 "
+"`is_qualified` 来创建不同的标准。"
+
+#: ../../tutorial/tour.md:248
+msgid "We can run `moon test` to see whether the tests succeed or not."
+msgstr "我们可以运行 `moon test` 来查看测试是否成功。"
+
+#: ../../tutorial/tour.md:250
+msgid "Implementing the functions"
+msgstr "实现函数"
+
+#: ../../tutorial/tour.md:252
+msgid "For the `is_qualified` function, it is as easy as a simple comparison:"
+msgstr "对于 `is_qualified` 函数，只需要简单的比较："
+
+#: ../../tutorial/tour.md:254
+msgid ""
+"fn is_qualified(student : Student, criteria : Double) -> ExamResult {\n"
+"  if student.score >= criteria {\n"
+"    Pass\n"
+"  } else {\n"
+"    Fail\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:265
+msgid ""
+"In MoonBit, the result of the last expression is the return value of the "
+"function, and the result of each branch is the value of the `if` expression."
+msgstr "在 MoonBit 中，最后一个表达式的结果是函数的返回值，每个分支的结果是 `if` 表达式的值。"
+
+#: ../../tutorial/tour.md:267
+msgid ""
+"For the `count_qualified_students` function, we need to iterate through the "
+"array to check if each student has passed or not."
+msgstr "对于 `count_qualified_students` 函数，我们需要遍历数组，检查每个学生是否通过。"
+
+#: ../../tutorial/tour.md:269
+msgid ""
+"A naive version is by using a mutable value and a [`for` "
+"loop](/language/fundamentals.md#for-loop):"
+msgstr "一个简单的版本是使用一个可变值和一个 [`for` 循环](/language/fundamentals.md#for-loop)："
+
+#: ../../tutorial/tour.md:271
+msgid ""
+"fn count_qualified_students(\n"
+"  students : Array[Student],\n"
+"  is_qualified : (Student) -> ExamResult\n"
+") -> Int {\n"
+"  let mut count = 0\n"
+"  for i = 0; i < students.length(); i = i + 1 {\n"
+"    if is_qualified(students[i]) == Pass {\n"
+"      count += 1\n"
+"    }\n"
+"  }\n"
+"  count\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:287
+msgid ""
+"However, this is neither efficient (due to the border check) nor intuitive, "
+"so we can replace the `for` loop with a [`for .. in` "
+"loop](/language/fundamentals.md#for--in-loop):"
+msgstr ""
+"然而，这既不高效（由于边界检查）也不直观，所以我们可以用 [`for .. in`  循环](/language/fundamentals.md#for"
+"--in-loop) 替换 `for` loop："
+
+#: ../../tutorial/tour.md:289
+msgid ""
+"fn count_qualified_students(\n"
+"  students : Array[Student],\n"
+"  is_qualified : (Student) -> ExamResult\n"
+") -> Int {\n"
+"  let mut count = 0\n"
+"  for student in students {\n"
+"    if is_qualified(student) == Pass { count += 1}\n"
+"  }\n"
+"  count\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:303
+msgid ""
+"Still another way is use the functions defined for "
+"[iterator](/language/fundamentals.md#iterator):"
+msgstr "还有另一种方法是使用为 [迭代器](/language/fundamentals.md#iterator) "
+
+#: ../../tutorial/tour.md:305
+msgid ""
+"fn count_qualified_students(\n"
+"  students : Array[Student],\n"
+"  is_qualified : (Student) -> ExamResult\n"
+") -> Int {\n"
+"  students.iter().filter(fn(student) { is_qualified(student) == Pass "
+"}).count()\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:315
+msgid "Now the tests defined before should pass."
+msgstr "现在之前定义的测试应该通过了。"
+
+#: ../../tutorial/tour.md:317
+msgid "Making the library available"
+msgstr "公开库"
+
+#: ../../tutorial/tour.md:319
+msgid "Congratulation on your first MoonBit library!"
+msgstr "恭喜您完成了第一个 MoonBit 库！"
+
+#: ../../tutorial/tour.md:321
+msgid ""
+"You can now share it with other developers so that they don't need to repeat"
+" what you have done."
+msgstr "您现在可以与其他开发人员分享它，这样他们就不需要重复您所做的工作。"
+
+#: ../../tutorial/tour.md:323
+msgid "But before that, you have some other things to do."
+msgstr "但在此之前，您还有一些其他事情要做。"
+
+#: ../../tutorial/tour.md:325
+msgid "Adjusting the visibility"
+msgstr "调整可见性"
+
+#: ../../tutorial/tour.md:327
+msgid ""
+"To see how other people may use our program, MoonBit provides a mechanism "
+"called [\"black box test\"](/language/tests.md#blackbox-tests-and-whitebox-"
+"tests)."
+msgstr ""
+"为了看到其他人如何使用我们的程序，MoonBit 提供了一种称为 [“黑盒测试”](/language/tests.md#blackbox-tests-"
+"and-whitebox-tests) 的机制。"
+
+#: ../../tutorial/tour.md:329
+msgid "Let's move the `test` block we defined above into a new file `top_test.mbt`."
+msgstr "让我们将上面定义的 `test` 块移动到一个新文件 `top_test.mbt` 中。"
+
+#: ../../tutorial/tour.md:331
+msgid "Oops! Now there are errors complaining that:"
+msgstr "糟糕！现在有错误抱怨："
+
+#: ../../tutorial/tour.md:332
+msgid "`is_qualified` and `count_qualified_students` are unbound"
+msgstr "`is_qualified` 和 `count_qualified_students` 未绑定"
+
+#: ../../tutorial/tour.md:333
+msgid "`Fail` and `Pass` are undefined"
+msgstr "`Fail` 和 `Pass` 未定义"
+
+#: ../../tutorial/tour.md:334
+msgid "`Student` is not a struct type and the field `id` is not found, etc."
+msgstr "`Student` 不是一个记录类型，字段 `id` 未找到，等等。"
+
+#: ../../tutorial/tour.md:336
+msgid ""
+"All these come from the problem of visibility. By default, a function "
+"defined is not visible for other part of the program outside the current "
+"package (bound by the current folder). And by default, a type is viewed as "
+"an abstract type, i.e. we know only that there exists a type `Student` and a"
+" type `ExamResult`. By using the black box test, you can make sure that "
+"everything you'd like others to have is indeed decorated with the intended "
+"visibility."
+msgstr ""
+"所有这些问题都来自于可见性问题。默认情况下，定义的函数对当前包（由当前文件夹绑定）之外的程序的其他部分不可见。默认情况下，类型被视为抽象类型，即我们只知道存在类型"
+" `Student` 和类型 `ExamResult`。通过使用黑盒测试，您可以确保您希望其他人拥有的一切确实被赋予了预期的可见性。"
+
+#: ../../tutorial/tour.md:340
+msgid ""
+"In order for others to use the functions, we need to add `pub` before the "
+"`fn` to make the function public."
+msgstr "为了让其他人使用这些函数，我们需要在 `fn` 前添加 `pub` 使函数公开。"
+
+#: ../../tutorial/tour.md:342
+msgid ""
+"In order for others to construct the types and read the content, we need to "
+"add `pub(all)` before the `struct` and `enum` to make the types public."
+msgstr "为了让其他人构造类型和读取内容，我们需要在 `struct` 和 `enum` 前添加 `pub(all)` 使类型公开。"
+
+#: ../../tutorial/tour.md:344
+msgid ""
+"We also need to slightly modify the test of `count qualified students` to "
+"add type annotation:"
+msgstr "我们还需要稍微修改 `count qualified students` 的测试，添加类型注释："
+
+#: ../../tutorial/tour.md:346
+msgid ""
+"test \"count qualified students\" {\n"
+"  let students: Array[@examine.Student] = [\n"
+"    { id: \"0\", score: 10.0 },\n"
+"    { id: \"1\", score: 50.0 },\n"
+"    { id: \"2\", score: 61.0 },\n"
+"  ]\n"
+"  let criteria1 = fn(student) { @examine.is_qualified(student, 10) }\n"
+"  let criteria2 = fn(student) { @examine.is_qualified(student, 50) }\n"
+"  assert_eq(@examine.count_qualified_students(students, criteria1), 3)\n"
+"  assert_eq(@examine.count_qualified_students(students, criteria2), 2)\n"
+"}"
+msgstr ""
+
+#: ../../tutorial/tour.md:361
+msgid ""
+"Note that we access the type and the functions with `@examine`, the name of "
+"your package. This is how others use your package, but you can omit them in "
+"the black box tests."
+msgstr "请注意，我们使用 `@examine` 访问类型和函数，这是您的包的名称。这是其他人使用您的包的方式，但您可以在黑盒测试中省略它们。"
+
+#: ../../tutorial/tour.md:363
+msgid "And now, the compilation should work and the tests should pass again."
+msgstr "现在，编译应该可以正常工作，测试应该再次通过。"
+
+#: ../../tutorial/tour.md:365
+msgid "Publishing the library"
+msgstr "发布库"
+
+#: ../../tutorial/tour.md:367
+msgid ""
+"Now that you've ready, you can publish this project to "
+"[mooncakes.io](https://mooncakes.io), the module registry of MoonBit. You "
+"can find other interesting projects there too."
+msgstr ""
+"现在您已经准备好了，您可以将这个项目发布到 [mooncakes.io](https://mooncakes.io)，MoonBit "
+"的模块注册中心。您也可以在那里找到其他有趣的项目。"
+
+#: ../../tutorial/tour.md:371
+msgid ""
+"Execute `moon login` and follow the instruction to create your account with "
+"an existing GitHub account."
+msgstr "执行 `moon login` 并按照说明使用现有的 GitHub 账户创建您的账户。"
+
+#: ../../tutorial/tour.md:373
+msgid ""
+"Modify the project name in `moon.mod.json` to `<your github account "
+"name>/<project name>`. Run `moon check` to see if there's any other affected"
+" places in `moon.pkg.json`."
+msgstr ""
+"在 `moon.mod.json` 中修改项目名称为 `<您的 GitHub 账户名>/<项目名称>`。运行 `moon check` 查看 "
+"`moon.pkg.json` 中是否有其他受影响的地方。"
+
+#: ../../tutorial/tour.md:376
+msgid ""
+"Execute `moon publish` and your done. Your project will be available for "
+"others to use."
+msgstr "执行 `moon publish`，您就完成了。您的项目将可供他人使用。"
+
+#: ../../tutorial/tour.md:379
+msgid ""
+"By default, the project will be shared under [Apache "
+"2.0](https://www.apache.org/licenses/LICENSE-2.0.html),  which is a "
+"permissive license allowing everyone to use. You can also use other "
+"licenses, such as the [MulanPSL "
+"2.0](https://spdx.org/licenses/MulanPSL-2.0.html), by changing the field "
+"`license` in `moon.mod.json` and the content of `LICENSE`."
+msgstr ""
+"默认情况下，项目将在 [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html) "
+"下共享，这是一种宽松的许可证，允许每个人使用。您还可以通过更改 `moon.mod.json` 中的 `license` 字段和 `LICENSE` "
+"的内容，使用其他许可证，例如 [MulanPSL 2.0](https://license.coscl.org.cn/MulanPSL2)。"
+
+#: ../../tutorial/tour.md:383
+msgid "Closing"
+msgstr "结束语"
+
+#: ../../tutorial/tour.md:385
+msgid ""
+"At this point, we've learned about the very basic and most not-so-trivial "
+"features of MoonBit, yet MoonBit is a feature-rich, multi-paradigm "
+"programming language. Visit [language tours](https://tour.moonbitlang.com) "
+"for more information in grammar and basic types, and other documents to get "
+"a better hold of MoonBit."
+msgstr ""
+"到目前为止，我们已经了解了 MoonBit 的基本特性和一些不那么简单的特性，然而 MoonBit 是一个功能丰富的、多范式的编程语言。访问 "
+"[语言导览](https://tour.moonbitlang.com) 了解更多语法和基本类型的信息，以及其他文档，更好地掌握 MoonBit。"
+

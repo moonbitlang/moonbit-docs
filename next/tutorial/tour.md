@@ -85,7 +85,7 @@ Unless specified, the following will be defined under the file `top.mbt`.
 
 ### Data types
 
-The [basic data types](/language/fundamentals/builtins.md#built-in-data-structures) in MoonBit includes the following:
+The [basic data types](/language/fundamentals.md#built-in-data-structures) in MoonBit includes the following:
 
 - `Unit`
 - `Bool`
@@ -101,7 +101,7 @@ score (of type `Double`) as `(String, Double)`. However this is not very
 intuitive as we can't identify with other possible data types, such as a struct
 containing a student ID and the height of the student.
 
-So we choose to declare our own data type using [struct](/language/fundamentals/custom-data-types.md#struct):
+So we choose to declare our own data type using [struct](/language/fundamentals.md#struct):
 
 ```{code-block} moonbit
 :class: top-level
@@ -112,7 +112,7 @@ struct Student {
 ```
 
 One can either pass or fail an exam, so the judgement result can be defined
-using [enum](/language/fundamentals/custom-data-types.md#enum):
+using [enum](/language/fundamentals.md#enum):
 
 ```{code-block} moonbit
 :class: top-level
@@ -124,7 +124,7 @@ enum ExamResult {
 
 ### Functions
 
-[Function](/language/fundamentals/functions.md#functions) is a piece of code that takes some inputs and produces a result.
+[Function](/language/fundamentals.md#functions) is a piece of code that takes some inputs and produces a result.
 
 In our example, we need to judge whether a student have passed an exam:
 
@@ -213,7 +213,7 @@ We need to implement `Eq` and `Show` for our `ExamResult`. There are two ways to
     }
     ```
 
-    Here we use [pattern matching](/language/fundamentals/pattern-matching.md#pattern-matching) to check the cases of the `ExamResult`.
+    Here we use [pattern matching](/language/fundamentals.md#pattern-matching) to check the cases of the `ExamResult`.
 
 2. Other is by [deriving](/language/derive.md) since `Eq` and `Show` are [builtin traits](/language/methods.md#builtin-traits) and the output for `ExamResult` is quite straightforward:
 
@@ -243,7 +243,7 @@ test "count qualified students" {
 
 ```
 
-Here we use [lambda expressions](/language/fundamentals/functions.md#local-functions) to reuse the previously defined `is_qualified` to create different criteria.
+Here we use [lambda expressions](/language/fundamentals.md#local-functions) to reuse the previously defined `is_qualified` to create different criteria.
 
 We can run `moon test` to see whether the tests succeed or not.
 
@@ -266,7 +266,7 @@ In MoonBit, the result of the last expression is the return value of the functio
 
 For the `count_qualified_students` function, we need to iterate through the array to check if each student has passed or not.
 
-A naive version is by using a mutable value and a [`for` loop](/language/fundamentals/control-structures.md#for-loop):
+A naive version is by using a mutable value and a [`for` loop](/language/fundamentals.md#for-loop):
 
 ```{code-block} moonbit
 :class: top-level
@@ -284,7 +284,7 @@ fn count_qualified_students(
 }
 ```
 
-However, this is neither efficient (due to the border check) nor intuitive, so we can replace the `for` loop with a [`for .. in` loop](/language/fundamentals/control-structures.md#for--in-loop):
+However, this is neither efficient (due to the border check) nor intuitive, so we can replace the `for` loop with a [`for .. in` loop](/language/fundamentals.md#for--in-loop):
 
 ```{code-block} moonbit
 :class: top-level
@@ -300,7 +300,7 @@ fn count_qualified_students(
 }
 ```
 
-Still another way is use the functions defined for [iterator](/language/fundamentals/iterator.md#iterator):
+Still another way is use the functions defined for [iterator](/language/fundamentals.md#iterator):
 
 ```{code-block} moonbit
 :class: top-level
