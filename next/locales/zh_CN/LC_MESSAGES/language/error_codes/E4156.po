@@ -1,0 +1,93 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4156.md:1
+msgid "E4156"
+msgstr ""
+
+#: ../../language/error_codes/E4156.md:3
+msgid "extern \"A\" is unsupported in B backend."
+msgstr ""
+
+#: ../../language/error_codes/E4156.md:5
+msgid ""
+"This error happens when an FFI function written for a specific backend is "
+"discovered during the compilation of a different backend."
+msgstr ""
+
+#: ../../language/error_codes/E4156.md:8
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4156.md:10 ../../language/error_codes/E4156.md:24
+msgid ""
+"///|\n"
+"pub extern \"C\" fn getchar() -> Int = \"getchar\"\n"
+msgstr ""
+
+#: ../../language/error_codes/E4156.md:14
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4156.md:16
+msgid ""
+"You can use conditional compilation to control when the function is "
+"available."
+msgstr ""
+
+#: ../../language/error_codes/E4156.md:18
+msgid ""
+"If you want a file level conditional compilation, configure the "
+"[targets](/toolchain/moon/package.md#conditional-compilation) field."
+msgstr ""
+
+#: ../../language/error_codes/E4156.md:21
+msgid "moon.pkg.json"
+msgstr ""
+
+#: ../../language/error_codes/E4156.md:21
+msgid ""
+"{\n"
+"  \"targets\": {\n"
+"    \"top.mbt\": [\"native\"]\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4156.md:24
+msgid "top.mbt"
+msgstr ""
+
+#: ../../language/error_codes/E4156.md:29
+msgid "If you want a function level conditional compilation, add the cfg attribute."
+msgstr ""
+
+#: ../../language/error_codes/E4156.md:31
+msgid "other.mbt"
+msgstr ""
+
+#: ../../language/error_codes/E4156.md:31
+msgid ""
+"///|\n"
+"#cfg(target=\"native\")\n"
+"pub extern \"C\" fn getchar2() -> Int = \"getchar\"\n"
+msgstr ""
+

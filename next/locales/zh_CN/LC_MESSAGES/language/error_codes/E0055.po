@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0055.md:1
+msgid "E0055"
+msgstr ""
+
+#: ../../language/error_codes/E0055.md:3
+msgid "Unannotated FFI param type."
+msgstr "未注释的 FFI 参数类型。"
+
+#: ../../language/error_codes/E0055.md:5
+msgid ""
+"The FFI parameter of pointer type should be annotated with either `#borrow` "
+"or\\ `#owned`, the default calling convention is currently `#owned` and it "
+"will be\\ changed in the future. For the detailed meaning, checkout [FFI "
+"documentation](/language/ffi.md#the-borrow-and-owned-attribute)."
+msgstr ""
+"指针类型的 FFI 参数应使用 `#borrow` 或 `#owned` 进行注释，当前的默认调用约定是 "
+"`#owned`，将来会更改。有关详细含义，请查看 [FFI 文档](/language/ffi.md#the-borrow-and-owned-"
+"attribute)。"
+
+#: ../../language/error_codes/E0055.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0055.md:12
+msgid ""
+"///|\n"
+"extern \"c\" fn _f(p : Bytes) -> Unit = \"free\"\n"
+msgstr ""
+
+#: ../../language/error_codes/E0055.md:16
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0055.md:18
+msgid "Add the missing `#borrow` or `#owned` annotation."
+msgstr "添加缺少的 `#borrow` 或 `#owned` 注释。"
+
+#: ../../language/error_codes/E0055.md:20
+msgid ""
+"///|\n"
+"#borrow(p)\n"
+"extern \"c\" fn _f(p : Bytes) -> Unit = \"free\"\n"
+msgstr ""
+

@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E3020.md:1
+msgid "E3020"
+msgstr ""
+
+#: ../../language/error_codes/E3020.md:3
+msgid ""
+"Unexpected `=` in struct expression. The correct syntax for struct "
+"expression is `{ field: expression }`."
+msgstr "结构体表达式中出现了意外的 `=`。结构体表达式的正确语法是 `{ field: expression }`。"
+
+#: ../../language/error_codes/E3020.md:6
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E3020.md:8
+msgid ""
+"struct S {\n"
+"  a : Int\n"
+"  b : Int\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let s : S = { a : 1, b : 2 }\n"
+"  let ss = { ..s, a = 1 } // Error: Unexpected `=` in struct expression.\n"
+"  ignore(ss)\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E3020.md:12
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E3020.md:14
+msgid "Change the struct expression to use the correct syntax:"
+msgstr "更改结构体表达式，使用正确的语法："
+
+#: ../../language/error_codes/E3020.md:16
+msgid ""
+"struct S {\n"
+"  a : Int\n"
+"  b : Int\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let s : S = { a : 1, b : 2 }\n"
+"  let ss = { ..s, a : 1 }\n"
+"  ignore(ss)\n"
+"}"
+msgstr ""
+

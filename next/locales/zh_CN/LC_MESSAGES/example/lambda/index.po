@@ -1,0 +1,529 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../example/lambda/index.md:1
+msgid "Lambda calculus"
+msgstr "Lambda 演算"
+
+#: ../../example/lambda/index.md:3
+msgid ""
+"Functional programming rises with the fall of Moore's Law. The full "
+"utilization of multi-core processors has become an increasingly important "
+"optimization method, while functional programming also becomes more "
+"popularized with its affinity for parallel computation. The reasons behind "
+"this trend can be traced back to one of its theoretical ancestors—Lambda "
+"calculus."
+msgstr ""
+"相信点开这篇文章的您或多或少地听说过函数式编程这个名词。在摩尔定律失效的今天，对多核处理器的充分利用成为了一种越发重要的程序优化方法，而函数式编程也因为其并行运算亲和的特点在大众视野中越发频繁地出现。究其原因，离不开它从其理论上的祖先之一"
+" - lambda 演算那里所继承的特征。"
+
+#: ../../example/lambda/index.md:5
+msgid ""
+"Lambda calculus originated from the 1930s. Created by Turing's mentor Alonzo"
+" Church, formal systems have now evolved a vast and flourishing family tree."
+" This article will illustrate one of its most fundamental forms: untyped "
+"Lambda calculus (which was also one of the earliest forms proposed by Alonzo"
+" Church)."
+msgstr ""
+"而 lambda 演算这一起源于 20 世纪 30 "
+"年代，出自图灵导师阿隆佐·邱奇之手的形式系统如今已经发展成了蔚为大观的一个大家族，本文将展示其中最基础的一种：无类型 lambda 演算 "
+"(这也是最早阿隆佐·邱奇提出的那种)"
+
+#: ../../example/lambda/index.md:7
+msgid "Basic rules of untyped Lambda calculus"
+msgstr "无类型 lambda 演算的基本规则"
+
+#: ../../example/lambda/index.md:9
+msgid ""
+"The only actions allowed in untyped Lambda calculus are defining Lambdas "
+"(often referred to as Abstraction) and calling Lambdas (often referred to as"
+" Application). These actions constitute the basic expressions in Lambda "
+"calculus."
+msgstr ""
+"无类型 lambda 演算中能做的事情只有定义 lambda (经常称为 Abstraction) 和调用 lambda (经常称为 "
+"Application)，它们也是 lambda 演算中的基础表达式。"
+
+#: ../../example/lambda/index.md:11
+msgid ""
+"Most programmers are no strange to the name \"Lambda expression\" as most "
+"mainstream programming languages are hugely influenced by functional "
+"language paradigm. Lambdas in untyped Lambda calculus are simpler than those"
+" in mainstream programming languages. A Lambda typically looks like this: "
+"`λx.x x`, where `x` is its parameter (each Lambda can only have one "
+"parameter), `.` is the separator between the parameter and the expression "
+"defining it, and `x x` is its definition."
+msgstr ""
+"由于函数式编程范式对主流编程语言的影响，大多数程序员对 lambda 表达式这个名字已经不会感到陌生了，不过，无类型 lambda 演算中的 "
+"lambda 要比主流编程语言简单一些。一个 lambda 通常看起来就像这样：`λx.x x`, 其中 x 是它的参数 (每个 lambda "
+"只能有一个参数)，`.`是分隔参数与表达式具体定义的分隔符，后面的`x x`便是它的定义了。"
+
+#: ../../example/lambda/index.md:14
+msgid ""
+"Some materials may omit spaces, so the above example can be rewritten as "
+"`λx.xx`."
+msgstr "也有些材料的记法不写空格，上面的例子要改写成 `λx.xx`"
+
+#: ../../example/lambda/index.md:17
+msgid ""
+"If we replace `x x` with `x(x)`, it might be more in line with the function "
+"calls we see in general languages. However, in the more common notation of "
+"Lambda calculus, calling a Lambda only requires a space between it and its "
+"parameter. Here, we call the parameter given by `x`, which is `x` itself."
+msgstr ""
+"上面的 `x x` 如果换成 `x(x)`, 可能更符合我们在一般语言中见到的函数调用。但在 lambda 演算较常见的写法中，调用一个 lambda "
+"只需要在它和它的参数中间写个空格。此处我们调用 `x` 所给出的参数就是 `x` 自己。"
+
+#: ../../example/lambda/index.md:19
+msgid ""
+"The combination of the above two expressions and the variables introduced "
+"when defining Lambdas are collectively referred to as the Lambda term. In "
+"MoonBit, we use an enum type to represent it:"
+msgstr "以上两种表达式和定义 lambda 时引入的变量加在一起合称 lambda 项，我们在 MoonBit 里用一个 enum 类型来表示它："
+
+#: ../../example/lambda/index.md:21
+msgid ""
+"enum Term {\n"
+"  Var(String) // Variable\n"
+"  Abs(String, Term) // Define lambda, variables represented by strings\n"
+"  App(Term, Term) // Call lambda\n"
+"}\n"
+msgstr ""
+"enum Term {\n"
+"  Var(String) // 变量\n"
+"  Abs(String, Term) // 定义 lambda，变量用字符串表示\n"
+"  App(Term, Term) // 调用 lambda\n"
+"}\n"
+
+#: ../../example/lambda/index.md:27
+msgid ""
+"Concepts encountered in daily programming such as boolean values, if "
+"expressions, natural number arithmetic, and even recursion can all be "
+"implemented using Lambda expressions. However, this is not the focus of this"
+" article."
+msgstr "我们在日常编程中所接触的概念诸如布尔值，if 表达式，自然数算术乃至递归都可以通过 lambda 表达式实现，但这并非本文内容的重心所在。"
+
+#: ../../example/lambda/index.md:30
+msgid ""
+"Interested readers can refer to: [Programming with "
+"Nothing](https://tomstu.art/programming-with-nothing)"
+msgstr ""
+"有兴趣的读者可以参阅 [Programming with Nothing](https://tomstu.art/programming-with-"
+"nothing) 这篇博客。"
+
+#: ../../example/lambda/index.md:33
+msgid ""
+"To implement an interpreter for untyped Lambda calculus, the basic things we"
+" need to understand are just two rules: Alpha conversion and Beta reduction."
+msgstr "要实现一个无类型 lambda 演算的解释器，我们所需要了解的基本就只有两条规则：Alpha 转换与 Beta 规约。"
+
+#: ../../example/lambda/index.md:35
+msgid ""
+"**Alpha conversion** describes the fact that the structure of Lambda is "
+"crucial, and the names of variables are not that important. `λx.x` and "
+"`λfoo.foo` can be interchanged. For certain nested Lambdas with repeated "
+"variable names, such as `λx.(λx.x) x`, when renaming, the inner variables "
+"cannot be renamed. For example, the above example can be rewritten using "
+"Alpha conversion as `λy.(λx.x) y`."
+msgstr ""
+"Alpha 转换所描述的事实是，lambda 的结构是重点，变量名叫什么没那么重要。`λx.x` 和 `λfoo.foo` "
+"可以互相替换。对于某些有重复变量名的嵌套 lambda 例如 `λx.(λx.x) x`，重命名时不能把内层的变量也重命名了，例如上面的例子可以通过 "
+"Alpha 转换写成 `λy.(λx.x) y`。"
+
+#: ../../example/lambda/index.md:37
+msgid "**Beta reduction** focuses on handling Lambda calls. Let's take an example:"
+msgstr "Beta 规约则专注于处理 lambda 的调用，还是举一个例子："
+
+#: ../../example/lambda/index.md:39
+msgid "(λx.(λy.x)) (λs.(λz.z))\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:43
+msgid ""
+"In untyped Lambda calculus, all that needs to be done after calling a Lambda"
+" is to substitute the parameter. In the example above, we need to replace "
+"the variable `x` with `(λs.(λz.z))`, resulting in:"
+msgstr ""
+"在无类型 lambda 演算中，调用 lambda 之后所需要作的事情仅仅是对参数进行替换 (substitution)，上面这个例子里就需要把变量 "
+"`x` 替换成 `(λs.(λz.z))`，得到的结果是"
+
+#: ../../example/lambda/index.md:45
+msgid "(λy.(λs.(λz.z)))\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:49
+msgid "Free Variables and Variable Capture"
+msgstr "自由变量与变量捕获"
+
+#: ../../example/lambda/index.md:51
+msgid ""
+"If a variable in a Lambda term is not defined in its context, we call it a "
+"free variable. For example, in the Lambda term `(λx.(λy.fgv h))`, the "
+"variables `fgv` and `h` do not have corresponding Lambda definitions."
+msgstr ""
+"一个 lambda 项中的变量如果在它所处的上下文中没有定义，那么我们叫它自由变量。例如 `(λx.(λy.fgv h))` 这个 lambda "
+"项中变量 `fgv` 和 `h` 就没有对应的 lambda 定义。"
+
+#: ../../example/lambda/index.md:53
+msgid ""
+"During Beta reduction, if the Lambda term used for variable substitution "
+"contains free variables, it may lead to a behavior called \"variable "
+"capture\":"
+msgstr "在进行 Beta 规约时，如果用于替换变量的那个 lambda 项中含有自由变量，可能会导致一种被称为“变量捕获”的行为"
+
+#: ../../example/lambda/index.md:55
+msgid "(λx.(λy.x)) (λz.y)\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:59
+msgid "After substitution:"
+msgstr "上面这个表达式在替换后会变成"
+
+#: ../../example/lambda/index.md:61
+msgid "λy.λz.y\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:65
+msgid ""
+"The free variable in `λz.y` is treated as a parameter of some Lambda, which "
+"is obviously not what we want."
+msgstr "`λz.y` 中的自由变量被当成了某个 lambda 的参数，这显然不是我们想要的。"
+
+#: ../../example/lambda/index.md:67
+msgid ""
+"A common solution to the variable capture problem when writing interpreters "
+"is to traverse the expression before substitution to obtain a set of free "
+"variables. When encountering an inner Lambda during substitution, check if "
+"the variable name is in this set of free variables:"
+msgstr ""
+"变量捕获问题在编写解释器时的常见解决方案是在替换前遍历表达式得到一个自由变量的集合，做替换时遇到内层 lambda "
+"就判断一下变量名在不在这个自由变量集合里面"
+
+#: ../../example/lambda/index.md:71
+msgid ""
+"// (λx.E) T => E.subst(x, T)\n"
+"fn subst(self : Term, var : String, term : Term) -> Term {\n"
+"  let freeVars : Set[String] = term.get_free_vars()\n"
+"  match self {\n"
+"    Abs(variable, body) => {\n"
+"      if freeVars.contains(variable) {\n"
+"        // The variable name is in the set of free variables \n"
+"        // of the current inner Lambda, indicating variable capture\n"
+"        abort(\"subst(): error while encountering \\{variable}\")\n"
+"      } else {\n"
+"        ...\n"
+"      }\n"
+"    }\n"
+"    ...\n"
+"  }\n"
+"}\n"
+msgstr ""
+"// (λx.E) T => E.subst(x, T)\n"
+"fn subst(self : Term, var : String, term : Term) -> Term {\n"
+"  let freeVars : Set[String] = term.get_free_vars()\n"
+"  match self {\n"
+"    Abs(variable, body) => {\n"
+"      if freeVars.contains(variable) {\n"
+"        //自由变量集合中有当前这个内层 lambda 的参数名，即会发生变量捕获\n"
+"        abort(\"subst(): error while encountering \\{variable}\")\n"
+"      } else {\n"
+"        ...\n"
+"      }\n"
+"    }\n"
+"    ...\n"
+"  }\n"
+"}\n"
+
+#: ../../example/lambda/index.md:90
+msgid ""
+"Next, I'll introduce a less popular but somewhat convenient method: de "
+"Bruijn index."
+msgstr "此处我们介绍一种较少见但具有一定便利性的方法：德布朗指数（de Bruijn index）。"
+
+#: ../../example/lambda/index.md:92
+msgid "De Bruijn Index"
+msgstr "德布朗指数"
+
+#: ../../example/lambda/index.md:94
+msgid ""
+"De Bruijn index is a technique for representing variables in Lambda terms "
+"using integers. Specifically, it replaces specific variables with Lambdas "
+"between the variable and its original imported position."
+msgstr "德布朗指数是一种用整数表示 lambda 项中变量的技术，具体地说，它用变量所在位置和原先引入它的位置中间有几层 lambda 来替换特定变量。"
+
+#: ../../example/lambda/index.md:96
+msgid ""
+"λx.(λy.x (λz.z z))\n"
+"\n"
+"λ.(λ.1 (λ.0 0))\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:102
+msgid ""
+"In the example above, there is one Lambda `λy` between the variable `x` and "
+"its introduction position `λx`, so `x` is replaced with `1`. For variable "
+"`z`, there are no other Lambdas between its introduction position and its "
+"usage, so it is directly replaced with `0`. In a sense, the value of the de "
+"Bruijn index describes the relative distance between the variable and its "
+"corresponding Lambda. Here, the distance is measured by the number of nested"
+" Lambdas."
+msgstr ""
+"上面的例子中，变量 `x` 和引入它的地方 `λx` 中间有一个 `λy`, 于是将 `x` 替换为 `1`，而 `z` "
+"和定义它的位置中间没有夹杂其他的 lambda，于是直接用 `0` 替换。某种程度上说，德布朗指数的值描述的是变量与对应 lambda "
+"的相对距离，此处的距离衡量标注就是中间嵌套的 lambda 层数。"
+
+#: ../../example/lambda/index.md:105
+msgid ""
+"The same variable may be replaced with different integers in different "
+"positions."
+msgstr "同一个变量在不同的地方可能会用不同的整数来替换。"
+
+#: ../../example/lambda/index.md:108
+msgid ""
+"We define a new type `TermDBI` to represent Lambda terms using de Bruijn "
+"indices:"
+msgstr "我们定义一个新类型 `TermDBI` 来表示使用德布朗指数的 lambda 项："
+
+#: ../../example/lambda/index.md:110
+msgid ""
+"enum TermDBI {\n"
+"  Var(String, Int)\n"
+"  Abs(String, TermDBI)\n"
+"  App(TermDBI, TermDBI)\n"
+"}\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:116
+msgid ""
+"However, directly writing and reading Lambda terms in de Bruijn index form "
+"is painful, so we need to write a function `bruijn()` to convert `Term` to "
+"`TermDBI`. This is also why there is still a `String` in the definition of "
+"the `TermDBI` type, so that the original variable name can be used for its "
+"`Show` implementation, making it easy to print and view the evaluation "
+"results with `println`."
+msgstr ""
+"不过直接编写以及阅读德布朗指数形式的 lambda 很痛苦，所以我们需要编写一个将 `Term` 转换成 `TermDBI` 的函数 "
+"`debruijn()` - 这也是 `TermDBI` 类型定义中仍有 `String` 的原因，保留原变量名可用于它的 `Show` "
+"的实现，这样就可以方便地用 `println` 打印求值结果查看了。"
+
+#: ../../example/lambda/index.md:118
+msgid ""
+"impl Show for TermDBI with output(self, logger) -> Unit {\n"
+"  match self {\n"
+"    Var(name, _) => logger.write_string(name)\n"
+"    Abs(name, body) => logger.write_string(\"(\\\\\\{name}.\\{body})\")\n"
+"    App(t1, t2) => logger.write_string(\"\\{t1} \\{t2}\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:125
+msgid ""
+"To simplify implementation, if the input `Term` contains free variables, the"
+" `bruijn()` function will report an error directly. MoonBit provides a "
+"`Result[V, E]` type in the standard library, which has two constructors, "
+"`Ok(V)` and `Err(E)`, representing success and failure in computation, "
+"respectively."
+msgstr ""
+"为了简化实现，如果输入的 Term 中含有自由变量，`debruijn()` 函数会直接报错。MoonBit 中一般用 `Result[V, E]` "
+"类型表示可能会出错的计算，它有 `Ok(V)` 和 `Err(E)` 两个值构造子，分别代表计算成功与失败。"
+
+#: ../../example/lambda/index.md:128
+msgid "Readers familiar with Rust should find this familiar."
+msgstr "使用过 Rust 语言的读者应该会感到熟悉。"
+
+#: ../../example/lambda/index.md:132
+msgid "fn bruijn(self : Term) -> Result[TermDBI, String]\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:136
+msgid ""
+"We take a clumsy approach to save variable names and their associated "
+"nesting depth. First, we define the `Index` type:"
+msgstr "我们采取一种笨办法来保存变量名与相关联的嵌套深度，首先定义 `Index` 类型"
+
+#: ../../example/lambda/index.md:138
+msgid ""
+"struct Index {\n"
+"  name : String\n"
+"  depth : Int\n"
+"}\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:144
+msgid ""
+"Then we write a helper function to find the corresponding `depth` based on a"
+" specific `name` from `@list.T[Index]`:"
+msgstr "然后写一个从 `@list.T[Index]` 中根据特定 `name` 查找对应 `depth` 的辅助函数"
+
+#: ../../example/lambda/index.md:146
+msgid ""
+"// Find the depth corresponding to the first varname in the environment\n"
+"fn find(map : @list.List[Index], varname : String) -> Result[Int, String] {\n"
+"  match map {\n"
+"    Empty => Err(varname)\n"
+"    More(i, tail=rest) =>\n"
+"      if i.name == varname {\n"
+"        Ok(i.depth)\n"
+"      } else {\n"
+"        find(rest, varname)\n"
+"      }\n"
+"  }\n"
+"}\n"
+"\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:153
+msgid "Now we can complete the `bruijn()` function."
+msgstr "现在可以补全 `debruijn()` 函数了。"
+
+#: ../../example/lambda/index.md:155
+msgid ""
+"Handling `Var` is the simplest, just look up the table to find the "
+"corresponding `depth`."
+msgstr "`Var` 的处理最简单，只需要查表寻找对应 `depth` 即可。"
+
+#: ../../example/lambda/index.md:156
+msgid ""
+"`Abs` is a bit more complicated. First, add one to the `depth` of all "
+"`index` in the list (because the Lambda nesting depth has increased by one),"
+" and then add `{ name : varname, depth : 0 }` to the beginning of the list."
+msgstr ""
+"`Abs` 稍微复杂一点，首先对列表中所有 `index` 的 `depth` 加一 (因为 lambda 嵌套加深了一层)，然后在列表的开头加上 `{"
+" name : varname, depth : 0 }`。"
+
+#: ../../example/lambda/index.md:157
+msgid ""
+"`App` succeeds when both sub-items can be converted; otherwise, it returns "
+"an `Err`."
+msgstr "`App` 在两个子项都能转换时成功，否则返回一个 `Err`"
+
+#: ../../example/lambda/index.md:159
+msgid ""
+"fn go(m : @list.List[Index], term : Term) -> Result[TermDBI, String] {\n"
+"  match term {\n"
+"    Var(name) => {\n"
+"      let idx = find(m, name)\n"
+"      match idx {\n"
+"        Err(name) => Err(name)\n"
+"        Ok(idx) => Ok(Var(name, idx))\n"
+"      }\n"
+"    }\n"
+"    Abs(varname, body) => {\n"
+"      let m = m\n"
+"        .map(fn(index) { { name: index.name, depth: index.depth + 1 } })\n"
+"        .add({ name: varname, depth: 0 })\n"
+"      let res = go(m, body)\n"
+"      match res {\n"
+"        Err(name) => Err(name)\n"
+"        Ok(term) => Ok(Abs(varname, term))\n"
+"      }\n"
+"    }\n"
+"    App(e1, e2) =>\n"
+"      match (go(m, e1), go(m, e2)) {\n"
+"        (Ok(e1), Ok(e2)) => Ok(App(e1, e2))\n"
+"        (Err(name), _) => Err(name)\n"
+"        (_, Err(name)) => Err(name)\n"
+"      }\n"
+"  }\n"
+"}\n"
+"\n"
+"go(@list.empty(), self)\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:166
+msgid "Reduce on TermDBI"
+msgstr "在 `TermDBI` 上做规约"
+
+#: ../../example/lambda/index.md:168
+msgid "Reduction mainly deals with App, i.e., calls:"
+msgstr "规约主要处理的是 `App`，即调用："
+
+#: ../../example/lambda/index.md:170
+msgid ""
+"fn TermDBI::eval(self : TermDBI) -> TermDBI {\n"
+"  match self {\n"
+"    App(t1, t2) =>\n"
+"      match (t1.eval(), t2.eval()) {\n"
+"        (Abs(_, t1), t2) => subst(t1, t2).eval()\n"
+"        (t1, t2) => App(t1, t2)\n"
+"      }\n"
+"    Abs(_) => self\n"
+"    // Eval should not encounter any free variables\n"
+"    _ => panic()\n"
+"  }\n"
+"}\n"
+"\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:176
+msgid ""
+"First, attempt reduction on both sub-items, then see if `eval(t1)` results "
+"in a Lambda. If so, perform one step of variable substitution (via the "
+"`subst` function) and then continue simplifying. For Lambdas (`Abs`), simply"
+" return them as they are."
+msgstr ""
+"首先对两个子项尝试规约，然后看 `eval(t1)` 得到的是否是一个 lambda，如果是，就执行一步变量替换 (通过 `subst` 函数) "
+"然后继续化简。对于 lambda (即 `Abs`), 直接原样返回即可。"
+
+#: ../../example/lambda/index.md:178
+msgid ""
+"The implementation of the `subst` function becomes much simpler when we "
+"don't need to consider free variables. We just need to keep track of the "
+"current depth recursively and compare it with the encountered variables. If "
+"they match, it's the variable to be replaced."
+msgstr "`subst` 函数的实现在不用考虑自由变量的情况下简单了许多，只要记录递归到当前位置的深度并且与遇到的变量进行比对，大小相等就是需要替换的目标变量。"
+
+#: ../../example/lambda/index.md:180
+msgid ""
+"fn subst(t1 : TermDBI, t2 : TermDBI) -> TermDBI {\n"
+"  fn go(t1 : TermDBI, t2 : TermDBI, depth : Int) -> TermDBI {\n"
+"    match t1 {\n"
+"      Var(_, d) => if d == depth { t2 } else { t1 }\n"
+"      Abs(name, t) => Abs(name, go(t, t2, depth + 1))\n"
+"      App(tl, tr) => App(go(tl, t2, depth), go(tr, t2, depth))\n"
+"    }\n"
+"  }\n"
+"\n"
+"  go(t1, t2, 0)\n"
+"}\n"
+"\n"
+msgstr ""
+
+#: ../../example/lambda/index.md:186
+msgid "Full code is available [here](path:/sources/lambda-expression/src/top.mbt)"
+msgstr "完整代码在 [这里](path:/sources/lambda-expression/src/top.mbt)"
+
+#: ../../example/lambda/index.md:188
+msgid "Improvement"
+msgstr "改进"
+
+#: ../../example/lambda/index.md:190
+msgid ""
+"When mapping variable names to indices, we used the `@list.T[Index]` type "
+"and updated the entire list every time we added a new Lambda. However, this "
+"is actually quite a clumsy method. I believe you can quickly realize that to"
+" store a `@list.T[String]` should simply suffice. If you're interested, you "
+"can try it yourself."
+msgstr ""
+"笔者在保存变量名到索引的对应关系时使用了 `@list.T[Index]` 类型，并且在每增加一层 lambda "
+"时更新整个列表，但是这其实是个很笨的办法。相信聪明且注意力集中的读者很快就能发现，其实只需要保存一个 `@list.T[String]` "
+"就够了，有兴趣的读者可以自己试着做一做。"
+

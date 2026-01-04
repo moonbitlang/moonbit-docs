@@ -1,0 +1,89 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0021.md:1
+msgid "E0021"
+msgstr ""
+
+#: ../../language/error_codes/E0021.md:3
+msgid "Some arguments of constructor are omitted in pattern."
+msgstr "一些构造器的参数在模式中被省略。"
+
+#: ../../language/error_codes/E0021.md:5
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0021.md:7
+msgid ""
+"enum E {\n"
+"  A(Int, w~ : Int, h~ : Int)\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  match A(0, w=1, h=2) {\n"
+"    A(v, w~) => { // Warning: The argument(s) h of constructor A are "
+"omitted.\n"
+"      println(v)\n"
+"      println(w)\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0021.md:11
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0021.md:13
+msgid "If you want to omit some arguments, add the `..` to the end of the pattern:"
+msgstr "如果你想省略一些参数，在模式的末尾添加 `..`："
+
+#: ../../language/error_codes/E0021.md:15
+msgid ""
+"///|\n"
+"fn main {\n"
+"  match A(0, w=1, h=2) {\n"
+"    A(v, w~, ..) => {\n"
+"      println(v)\n"
+"      println(w)\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0021.md:21
+msgid "Or, you can match all arguments:"
+msgstr "或者，你可以匹配所有参数："
+
+#: ../../language/error_codes/E0021.md:23
+msgid ""
+"///|\n"
+"fn main {\n"
+"  match A(0, w=1, h=2) {\n"
+"    A(v, w~, h~) => {\n"
+"      println(v)\n"
+"      println(w)\n"
+"      println(h)\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+

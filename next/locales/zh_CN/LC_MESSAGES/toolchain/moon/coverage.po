@@ -1,0 +1,292 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../toolchain/moon/coverage.md:1
+msgid "Measuring code coverage"
+msgstr "测量代码覆盖率"
+
+#: ../../toolchain/moon/coverage.md:3
+msgid ""
+"We have included tooling for you to measure the code coverage of test and "
+"program runs. The measurement is currently based on branch coverage. In "
+"other words, it measures whether each program branch was executed, and how "
+"many times if they were."
+msgstr "我们为您提供了工具，用于测量测试和程序运行的代码覆盖率。目前的测量基于分支覆盖率。换句话说，它测量了每个程序分支是否被执行，以及如果执行了多少次。"
+
+#: ../../toolchain/moon/coverage.md:8
+msgid "Running code coverage in tests"
+msgstr "在测试中运行代码覆盖率"
+
+#: ../../toolchain/moon/coverage.md:10
+msgid ""
+"To enable coverage instrumentation in tests, you need to pass the `--enable-"
+"coverage` argument to `moon test`."
+msgstr "要在测试中启用覆盖率仪器，您需要将 `--enable-coverage` 参数传递给 `moon test`。"
+
+#: ../../toolchain/moon/coverage.md:13
+msgid ""
+"$ moon test --enable-coverage\n"
+"...\n"
+"Total tests: 3077, passed: 3077, failed: 0.\n"
+msgstr ""
+
+#: ../../toolchain/moon/coverage.md:19
+msgid ""
+"This will recompile the project if they weren't previously compiled with "
+"coverage enabled. The execution process will look the same, but new coverage"
+" result files will be generated under the `target` directory."
+msgstr "如果之前没有使用覆盖率启用编译项目，这将重新编译项目。执行过程看起来是一样的，但是新的覆盖率结果文件将在 `target` 目录下生成。"
+
+#: ../../toolchain/moon/coverage.md:24
+msgid ""
+"$ ls target/wasm-gc/debug/test/ -w1\n"
+"array\n"
+"...\n"
+"moonbit_coverage_1735628238436873.txt\n"
+"moonbit_coverage_1735628238436883.txt\n"
+"...\n"
+"moonbit_coverage_1735628238514678.txt\n"
+"option/\n"
+"...\n"
+msgstr ""
+
+#: ../../toolchain/moon/coverage.md:36
+msgid ""
+"These files contain the information for the toolchain to determine which "
+"parts of the program were executed, and which parts weren't."
+msgstr "这些文件包含了工具链用于确定程序的哪些部分被执行，哪些部分没有被执行的信息。"
+
+#: ../../toolchain/moon/coverage.md:40
+msgid "Visualizing the coverage results"
+msgstr "可视化覆盖率结果"
+
+#: ../../toolchain/moon/coverage.md:42
+msgid ""
+"To visualize the result of coverage instrumentation, you'll need to use the "
+"`moon coverage report` subcommand."
+msgstr "要可视化覆盖率仪器的结果，您需要使用 `moon coverage report` 子命令。"
+
+#: ../../toolchain/moon/coverage.md:45
+msgid ""
+"The subcommand can export the coverage in a number of formats, controlled by"
+" the `-f` flag:"
+msgstr "子命令可以以多种格式导出覆盖率，由 `-f` 标志控制："
+
+#: ../../toolchain/moon/coverage.md:48
+msgid "Text summary: `summary`"
+msgstr "文字摘要：`summary`"
+
+#: ../../toolchain/moon/coverage.md:49
+msgid "OCaml Bisect format: `bisect` (default)"
+msgstr "OCaml Bisect 格式：`bisect`（默认）"
+
+#: ../../toolchain/moon/coverage.md:50
+msgid "Coveralls JSON format: `coveralls`"
+msgstr "Coveralls JSON 格式：`coveralls`"
+
+#: ../../toolchain/moon/coverage.md:51
+msgid "Cobertura XML format: `cobertura`"
+msgstr "Coberura XML 格式：`cobertura`"
+
+#: ../../toolchain/moon/coverage.md:52
+msgid "HTML pages: `html`"
+msgstr "HTML 页面：`html`"
+
+#: ../../toolchain/moon/coverage.md:54
+msgid "Text summary"
+msgstr "文字摘要"
+
+#: ../../toolchain/moon/coverage.md:56
+msgid ""
+"`moon coverage report -f summary` exports the coverage data into stdout, "
+"printing the covered points and total coverage point count for each file."
+msgstr "`moon coverage report -f summary` 将覆盖率数据导出到 stdout，打印每个文件的覆盖点和总覆盖点计数。"
+
+#: ../../toolchain/moon/coverage.md:59
+msgid ""
+"$ moon coverage report -f summary\n"
+"array/array.mbt: 21/22\n"
+"array/array_nonjs.mbt: 3/3\n"
+"array/blit.mbt: 3/3\n"
+"array/deprecated.mbt: 0/0\n"
+"array/fixedarray.mbt: 115/115\n"
+"array/fixedarray_sort.mbt: 110/116\n"
+"array/fixedarray_sort_by.mbt: 58/61\n"
+"array/slice.mbt: 6/6\n"
+"array/sort.mbt: 70/70\n"
+"array/sort_by.mbt: 56/61\n"
+"...\n"
+msgstr ""
+
+#: ../../toolchain/moon/coverage.md:74
+msgid "OCaml Bisect format"
+msgstr "OCaml Bisect 格式"
+
+#: ../../toolchain/moon/coverage.md:76
+msgid "This is the default format to export, if `-f` is not specified."
+msgstr "这是未指定 `-f` 时的默认导出格式。"
+
+#: ../../toolchain/moon/coverage.md:78
+msgid ""
+"`moon coverage report -f bisect` exports the coverage data into a file "
+"`bisect.coverage` which can be read by [OCaml Bisect][bisect] tool."
+msgstr ""
+"`moon coverage report -f bisect` 将覆盖率数据导出到一个文件 `bisect.coverage`，可以被 [OCaml "
+"Bisect][bisect] 工具读取。"
+
+#: ../../toolchain/moon/coverage.md:83
+msgid "Coveralls JSON format"
+msgstr "Coveralls JSON 格式"
+
+#: ../../toolchain/moon/coverage.md:85
+msgid ""
+"`moon coverage report -f coveralls` exports the coverage data into "
+"Coverall's JSON format. This format is line-based, and can be read by both "
+"Coveralls and CodeCov. You can find its specification "
+"[here](https://docs.coveralls.io/api-introduction#json-format-web-data)."
+msgstr ""
+"`moon coverage report -f coveralls` 将覆盖率数据导出到 Coveralls 的 JSON "
+"格式。这种格式是基于行的，可以被 Coveralls 和 CodeCov 读取。您可以在 [这里](https://docs.coveralls.io"
+"/api-introduction#json-format-web-data) 找到其规范。"
+
+#: ../../toolchain/moon/coverage.md:89
+msgid ""
+"$ moon coverage report -f coveralls\n"
+"$ cat coveralls.json\n"
+"{\n"
+"    \"source_files\": [\n"
+"        {\n"
+"            \"name\": \"builtin/console.mbt\",\n"
+"            \"source_digest\": \"1c24532e12ac5bdf34b7618c9f38bd82\",\n"
+"            \"coverage\": [null,null,...,null,null]\n"
+"        },\n"
+"        {\n"
+"            \"name\": \"immut/array/array.mbt\",\n"
+"            \"source_digest\": \"bcf1fb1d2f143ebf4423565d5a57e84f\",\n"
+"            \"coverage\": [null,null,null,...\n"
+msgstr ""
+
+#: ../../toolchain/moon/coverage.md:105
+msgid ""
+"You can directly send this coverage report to Coveralls or CodeCov using the"
+" `--send-to` argument. The following is an example of using it in GitHub "
+"Actions:"
+msgstr ""
+"您可以使用 `--send-to` 参数直接将此覆盖率报告发送到 Coveralls 或 CodeCov。以下是在 GitHub Actions "
+"中使用它的示例："
+
+#: ../../toolchain/moon/coverage.md:108
+msgid ""
+"moon coverage report \\\n"
+"    -f coveralls \\\n"
+"    -o codecov_report.json \\\n"
+"    --service-name github \\\n"
+"    --service-job-id \"$GITHUB_RUN_NUMBER\" \\\n"
+"    --service-pull-request \"${{ github.event.number }}\" \\\n"
+"    --send-to coveralls\n"
+"\n"
+"env:\n"
+"    COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}\n"
+msgstr ""
+
+#: ../../toolchain/moon/coverage.md:121
+msgid "More information can be found in `moon coverage report --help`."
+msgstr "更多信息可以在 `moon coverage report --help` 中找到。"
+
+#: ../../toolchain/moon/coverage.md:123
+msgid "Cobertura XML format"
+msgstr "Cobertura XML 格式"
+
+#: ../../toolchain/moon/coverage.md:125
+msgid ""
+"`moon coverage report -f cobertura` exports the coverage data into a format "
+"that can be read by [Cobertura](https://cobertura.github.io/cobertura/)."
+msgstr ""
+"`moon coverage report -f cobertura` 将覆盖率数据导出到可以被 "
+"[Cobertura](https://cobertura.github.io/cobertura/) 读取的格式。"
+
+#: ../../toolchain/moon/coverage.md:127
+msgid "HTML"
+msgstr ""
+
+#: ../../toolchain/moon/coverage.md:129
+msgid ""
+"`moon coverage report -f html` export the coverage data into a series of "
+"human-readable HTML files. The default export location is the folder named "
+"`_coverage`."
+msgstr ""
+"`moon coverage report -f html` 将覆盖率数据导出到一系列易于阅读的 HTML 文件中。默认的导出位置是名为 "
+"`_coverage` 的文件夹。"
+
+#: ../../toolchain/moon/coverage.md:132
+msgid ""
+"The `index.html` in the folder shows a list of all source files, as well as "
+"the coverage percentage in them:"
+msgstr "文件夹中的 `index.html` 显示了所有源文件的列表，以及其中的覆盖率百分比："
+
+#: ../../toolchain/moon/coverage.md:135
+msgid "![Index of the HTML](/imgs/coverage_html_index.png)"
+msgstr "![HTML 的索引](/imgs/coverage_html_index.png)"
+
+#: ../../toolchain/moon/coverage.md:135
+msgid "Index of the HTML"
+msgstr "HTML 的索引"
+
+#: ../../toolchain/moon/coverage.md:137
+msgid ""
+"Clicking on each file shows the coverage detail within each file. Each "
+"coverage point (start of branch) is represented by a highlighted character "
+"in the source code: Red means the point is not covered among all runs, and "
+"green means the point is covered in at least one run."
+msgstr "单击每个文件会显示每个文件中的覆盖率详细信息。每个覆盖点（分支的开始）在源代码中由一个突出显示的字符表示：红色表示该点在所有运行中都没有被执行，绿色表示该点至少被执行一次。"
+
+#: ../../toolchain/moon/coverage.md:143
+msgid ""
+"Each line is also highlighted by the coverage information, with the same "
+"color coding. Additionally, yellow lines are those which has partial "
+"coverage: some points in the line are covered, while others aren't."
+msgstr "每行也通过覆盖率信息进行突出显示，具有相同的颜色编码。此外，黄色行是那些具有部分覆盖率的行：该行中的某些点被执行，而其他点没有被执行。"
+
+#: ../../toolchain/moon/coverage.md:149
+msgid ""
+"Some lines will not have any highlight. This does not mean the line has not "
+"been executed at all, just the line is not a start of a branch. Such a line "
+"shares the coverage of closest covered the line before it."
+msgstr "有些行不会有任何突出显示。这并不意味着该行根本没有被执行，只是该行不是分支的开始。这样的行共享其前面最近被执行的行的覆盖率。"
+
+#: ../../toolchain/moon/coverage.md:154
+msgid "![Detailed coverage data](/imgs/coverage_html_page.png)"
+msgstr "![详细覆盖率数据](/imgs/coverage_html_page.png)"
+
+#: ../../toolchain/moon/coverage.md:154
+msgid "Detailed coverage data"
+msgstr "详细覆盖率数据"
+
+#: ../../toolchain/moon/coverage.md:156
+msgid "Skipping coverage"
+msgstr "跳过覆盖检查"
+
+#: ../../toolchain/moon/coverage.md:158
+msgid ""
+"Adding the pragma `/// @coverage.skip` skips all coverage operations within "
+"the function. Additionally, all deprecated functions will not be covered."
+msgstr "添加 `/// @coverage.skip` 指示符会跳过函数内的所有覆盖操作。此外，所有已弃用的函数都不会被检查。"
+

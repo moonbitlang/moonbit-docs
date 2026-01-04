@@ -1,0 +1,102 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4101.md:1
+msgid "E4101"
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:3
+msgid "Unsupported expression after the pipe operator."
+msgstr "管道运算符右侧不支持该表达式。"
+
+#: ../../language/error_codes/E4101.md:5
+msgid ""
+"This error occurs when the expression after the pipe operator (`|>`) is not "
+"in a supported form. The pipe operator allows you to chain function calls in"
+" a more readable way, but only supports specific forms on its right-hand "
+"side."
+msgstr "该错误发生在管道运算符右侧的表达式不是一个支持的形式。管道运算符允许您以更易读的方式链式调用函数，但它的右侧只支持特定的形式。"
+
+#: ../../language/error_codes/E4101.md:9
+msgid "The following forms are allowed after the pipe operator:"
+msgstr "管道运算符右侧允许以下形式："
+
+#: ../../language/error_codes/E4101.md:11
+msgid "A single identifier (function name)"
+msgstr "一个标识符（函数名）"
+
+#: ../../language/error_codes/E4101.md:12
+msgid "A regular function application (but not method calls)"
+msgstr "一个普通的函数应用（但不是方法调用）"
+
+#: ../../language/error_codes/E4101.md:13
+msgid "A constructor name"
+msgstr "构造函数名"
+
+#: ../../language/error_codes/E4101.md:14
+msgid "A constructor application"
+msgstr "构造函数应用"
+
+#: ../../language/error_codes/E4101.md:16
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4101.md:18
+msgid ""
+"type T Int\n"
+"\n"
+"fn m(self: T, x: Int) -> Unit {\n"
+"  println(self._ + x)\n"
+"}\n"
+"\n"
+"pub fn f(t: T, x: Int) -> Unit {\n"
+"  x |> fn(x: Int) { println(x)}\n"
+"//     ^^^^^^^^^^^^^^^^^^^^^^^^ Error: Unsupported expression after the pipe"
+" operator.\n"
+"  x |> t.m()\n"
+"//     ^^^^ Error: Unsupported expression after the pipe operator.\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:22
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4101.md:24
+msgid ""
+"To fix this error, you can change the invalid pipe expression to normal "
+"function or method application."
+msgstr "要修复此错误，您可以将无效的管道表达式改为普通的函数或方法应用。"
+
+#: ../../language/error_codes/E4101.md:27
+msgid ""
+"type T Int\n"
+"\n"
+"fn m(self: T, x: Int) -> Unit {\n"
+"  println(self._ + x)\n"
+"}\n"
+"\n"
+"pub fn f(t: T, x: Int) -> Unit {\n"
+"  fn(x: Int) { println(x)}(x)\n"
+"  t.m(x)\n"
+"}"
+msgstr ""
+

@@ -1,0 +1,835 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../example/gmachine/gmachine-3.md:1
+msgid "G-Machine 3"
+msgstr "G-Machine 第三部分"
+
+#: ../../example/gmachine/gmachine-3.md:3
+msgid ""
+"This article is the third in a series on implementing Haskell's lazy "
+"evaluation in MoonBit. In the previous article, we learned how to compile "
+"`let` expressions and how to implement basic arithmetic and comparison "
+"operations. In this article, we will implement a context-based optimization "
+"method and add support for data structures."
+msgstr ""
+"本文是关于在 MoonBit 中实现 Haskell 懒惰求值的系列文章中的第三篇。在上一篇文章中，我们学习了如何编译 `let` "
+"表达式以及如何实现基本的算术和比较操作。在本文中，我们将实现一种基于上下文的优化方法，并添加对数据结构的支持。"
+
+#: ../../example/gmachine/gmachine-3.md:5
+msgid "Tracking Context"
+msgstr "追踪上下文"
+
+#: ../../example/gmachine/gmachine-3.md:7
+msgid ""
+"Let's review how we implemented primitives in the [last "
+"tutorial](gmachine-2.md)."
+msgstr "让我们回顾一下我们在 [上一篇教程](gmachine-2.md) 中如何实现原语的。"
+
+#: ../../example/gmachine/gmachine-3.md:9
+msgid ""
+"let compiled_primitives : List[(String, Int, List[Instruction])] = "
+"@list.from_array([\n"
+"    // Arith\n"
+"    (\n"
+"      \"add\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Add,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"sub\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Sub,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"mul\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Mul,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"div\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Div,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    // Compare\n"
+"    (\n"
+"      \"eq\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Eq,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"neq\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Ne,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"ge\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Ge,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"gt\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Gt,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"le\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Le,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"lt\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Lt,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    // MISC\n"
+"    (\n"
+"      \"negate\",\n"
+"      1,\n"
+"      @list.from_array([Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),\n"
+"    ),\n"
+"    (\n"
+"      \"if\",\n"
+"      3,\n"
+"      @list.from_array([\n"
+"        Push(0),\n"
+"        Eval,\n"
+"        Cond(@list.from_array([Push(1)]), @list.from_array([Push(2)])),\n"
+"        Update(3),\n"
+"        Pop(3),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"  ],\n"
+")\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:15
+msgid ""
+"This implementation introduces many `Eval` instructions, but they are not "
+"always necessary. For example:"
+msgstr "这个实现引入了许多 `Eval` 指令，但它们并不总是必要的。例如："
+
+#: ../../example/gmachine/gmachine-3.md:17
+msgid "(add 3 (mul 4 5))\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:21
+msgid ""
+"The two arguments of `add` are already in WHNF (Weak Head Normal Form) "
+"before executing `Eval`. Therefore, the `Eval` instructions here are "
+"redundant."
+msgstr "add` 的两个参数在执行 `Eval` 之前已经处于 WHNF（弱头正常形式），因此，这里的 `Eval` 指令是多余的。"
+
+#: ../../example/gmachine/gmachine-3.md:23
+msgid ""
+"One feasible optimization method is to consider the context when compiling "
+"expressions. For example, `add` requires its arguments to be evaluated to "
+"WHNF, so its arguments are in a strict context during compilation. By doing "
+"this, we can identify some expressions that can be safely compiled with "
+"strict evaluation (only a subset)."
+msgstr ""
+"一种可行的优化方法是在编译表达式时考虑上下文。例如，`add` 需要其参数被求值到 "
+"WHNF，因此它的参数在编译过程中处于严格上下文。通过这种方式，我们可以识别出一些可以安全地使用严格求值编译的表达式（仅为其中的一部分）。"
+
+#: ../../example/gmachine/gmachine-3.md:25
+msgid "An expression in a supercombinator definition is in a strict context."
+msgstr "超级组合子定义中的表达式处于严格上下文中。"
+
+#: ../../example/gmachine/gmachine-3.md:27
+msgid ""
+"If `(op e1 e2)` is in a strict context (where `op` is a primitive), then "
+"`e1` and `e2` are also in a strict context."
+msgstr "如果 `(op e1 e2)` 处于严格上下文中（其中 `op` 是一个原语），那么 `e1` 和 `e2` 也处于严格上下文中。"
+
+#: ../../example/gmachine/gmachine-3.md:29
+msgid ""
+"If `(let (.....) e)` is in a strict context, then `e` is also in a strict "
+"context (but the expressions corresponding to the local variables are not, "
+"as `e` may not need their results)."
+msgstr ""
+"如果 `(let (.....) e)` 处于严格上下文中，那么 `e` 也处于严格上下文中（但与局部变量对应的表达式不一定是严格的，因为 `e` "
+"可能不需要它们的结果）。"
+
+#: ../../example/gmachine/gmachine-3.md:31
+msgid ""
+"We use the `compileE` function to implement compilation in a strict context,"
+" ensuring that _the value at the top of the stack is always in WHNF_."
+msgstr "我们使用 `compileE` 函数在严格上下文中实现编译，确保_栈顶的值始终处于 WHNF_。"
+
+#: ../../example/gmachine/gmachine-3.md:33
+msgid ""
+"For the default branch, we simply add an `Eval` instruction after the result"
+" of `compileC`."
+msgstr "对于默认分支，我们仅在 `compileC` 的结果后添加一个 `Eval` 指令。"
+
+#: ../../example/gmachine/gmachine-3.md:35
+msgid "_ => self.compileC(env) + @list.from_array([Eval])\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:42
+msgid "Constants are pushed directly."
+msgstr "常量被直接推入。"
+
+#: ../../example/gmachine/gmachine-3.md:44
+msgid "Num(n) => @list.from_array([PushInt(n)])\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:51
+msgid ""
+"For `let/letrec` expressions, the specially designed `compileLet` and "
+"`compileLetrec` become useful. Compiling a `let/letrec` expression in a "
+"strict context only requires using `compileE` to compile its main "
+"expression."
+msgstr ""
+"对于 `let/letrec` 表达式，专门设计的 `compileLet` 和 `compileLetrec` 变得非常有用。在严格上下文中编译 "
+"`let/letrec` 表达式时，只需要使用 `compileE` 来编译它的主要表达式。"
+
+#: ../../example/gmachine/gmachine-3.md:53
+msgid ""
+"Let(rec, defs, e) =>\n"
+"  if rec {\n"
+"    compileLetrec(RawExpr::compileE, defs, e, env)\n"
+"  } else {\n"
+"    compileLet(RawExpr::compileE, defs, e, env)\n"
+"  }\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:60
+msgid ""
+"The `if` and `negate` functions, with 3 and 1 arguments respectively, "
+"require special handling."
+msgstr "`if` 和 `negate` 函数分别需要 3 和 1 个参数，需要特殊处理。"
+
+#: ../../example/gmachine/gmachine-3.md:62
+msgid ""
+"App(App(App(Var(\"if\"), b), e1), e2) => {\n"
+"  let condition = b.compileE(env)\n"
+"  let branch1 = e1.compileE(env)\n"
+"  let branch2 = e2.compileE(env)\n"
+"  condition + @list.from_array([Cond(branch1, branch2)])\n"
+"}\n"
+"App(Var(\"negate\"), e) => e.compileE(env) + @list.from_array([Neg])\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:69
+msgid ""
+"Basic binary operations can be handled uniformly through a lookup table. "
+"First, construct a hash table called `builtinOpS` to query the corresponding"
+" instructions by the name of the primitive."
+msgstr "基本的二元操作可以通过查找表统一处理。首先，构建一个名为 `builtinOpS` 的哈希表，通过原语的名称查询相应的指令。"
+
+#: ../../example/gmachine/gmachine-3.md:71
+msgid ""
+"let builtinOpS : @hashmap.HashMap[String, Instruction] = {\n"
+"  let table = @hashmap.new(capacity=50)\n"
+"  table[\"add\"] = Add\n"
+"  table[\"mul\"] = Mul\n"
+"  table[\"sub\"] = Sub\n"
+"  table[\"div\"] = Div\n"
+"  table[\"eq\"] = Eq\n"
+"  table[\"neq\"] = Ne\n"
+"  table[\"ge\"] = Ge\n"
+"  table[\"gt\"] = Gt\n"
+"  table[\"le\"] = Le\n"
+"  table[\"lt\"] = Lt\n"
+"  table\n"
+"}\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:77
+msgid "The rest of the handling is not much different."
+msgstr "其余的处理没有太大区别。"
+
+#: ../../example/gmachine/gmachine-3.md:79
+msgid ""
+"App(App(Var(op), e0), e1) =>\n"
+"  match builtinOpS.get(op) {\n"
+"    None => self.compileC(env) + @list.from_array([Eval])\n"
+"    Some(instr) => {\n"
+"      let code1 = e1.compileE(env)\n"
+"      let code0 = e0.compileE(argOffset(1, env))\n"
+"      code1 + code0 + @list.from_array([instr])\n"
+"    }\n"
+"  }\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:86
+msgid ""
+"Are we done? It seems so, but there's another WHNF besides integers: "
+"partially applied functions."
+msgstr "我们完成了吗？看起来是的，但除了整数之外，还有另一种 WHNF：部分应用函数。"
+
+#: ../../example/gmachine/gmachine-3.md:88
+msgid ""
+"A partial application is when the number of arguments is insufficient. This "
+"situation is common in higher-order functions, for example:"
+msgstr "部分应用是指参数数量不足的情况。这种情况在高阶函数中很常见，例如："
+
+#: ../../example/gmachine/gmachine-3.md:90
+msgid "(map (add 1) listofnumbers)\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:94
+msgid "Here, `(add 1)` is a partial application."
+msgstr "这里，`(add 1)` 是一个部分应用。"
+
+#: ../../example/gmachine/gmachine-3.md:96
+msgid ""
+"To ensure that the code generated by the new compilation strategy works "
+"correctly, we need to modify the implementation of the `Unwind` instruction "
+"for the `NGlobal` branch. When the number of arguments is insufficient and "
+"the dump has saved stacks, we should only retain the original redex and "
+"restore the stack."
+msgstr ""
+"为了确保新编译策略生成的代码正常工作，我们需要修改 `NGlobal` 分支的 `Unwind` "
+"指令实现。当参数不足且转储保存了堆栈时，我们应仅保留原始的红 ex 并恢复堆栈。"
+
+#: ../../example/gmachine/gmachine-3.md:98
+msgid ""
+"NGlobal(_, n, c) => {\n"
+"  let k = self.stack.length()\n"
+"  if k < n {\n"
+"    match self.dump {\n"
+"      Empty => abort(\"Unwinding with too few arguments\")\n"
+"      More((i, s), tail=rest) => {\n"
+"        // a1 : ...... : ak\n"
+"        // ||\n"
+"        // ak : s\n"
+"        self.stack = self.stack.drop(k - 1) + s\n"
+"        self.dump = rest\n"
+"        self.code = i\n"
+"      }\n"
+"    }\n"
+"  } else {\n"
+"    if n != 0 {\n"
+"      self.rearrange(n)\n"
+"    } else {\n"
+"      self.put_stack(addr)\n"
+"    }\n"
+"    self.put_code(c)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:105
+msgid ""
+"This context-based strictness analysis technique is useful but cannot do "
+"anything with supercombinator calls. Here we briefly introduce a strictness "
+"analysis technique based on boolean operations, which can analyze which "
+"arguments of a supercombinator call should be compiled using strict mode."
+msgstr "这种基于上下文的严格性分析技术很有用，但不能处理超级组合子调用。在这里，我们简要介绍一种基于布尔运算的严格性分析技术，它可以分析超级组合子调用的哪些参数应该使用严格模式编译。"
+
+#: ../../example/gmachine/gmachine-3.md:107
+msgid ""
+"We first define a concept: bottom, which conceptually represents a value "
+"that never terminates or causes an exception. For a supercombinator `f a[1] "
+"...... a[n]`, if one argument `a[i]` satisfies `a[i] = bottom`, then `f a[1]"
+" .... a[i] .... a[n] = bottom` (other arguments are not bottom). This "
+"indicates that no matter how complex the internal control flow of `f` is, it"
+" **must** need the result of argument `a[i]` to get the final result. "
+"Therefore, a`[i]` should be strictly evaluated."
+msgstr ""
+"我们首先定义一个概念：bottom，它在概念上代表一个永不终止或引发异常的值。对于一个超级组合子 `f a[1] ...... "
+"a[n]`，如果其中一个参数 `a[i]` 满足 `a[i] = bottom`，那么 `f a[1] .... a[i] .... a[n] = "
+"bottom`（其他参数不是 bottom）。这表明，无论 `f` 的内部控制流多么复杂，它**必须**需要参数 `a[i]` "
+"的结果才能得到最终结果。因此，`a[i]` 应该被严格求值。"
+
+#: ../../example/gmachine/gmachine-3.md:109
+msgid ""
+"If this condition is not met, it does not necessarily mean that the argument"
+" is not needed at all; it may be used only in certain branches and its use "
+"is determined at runtime. Such an argument is a typical example of one that "
+"should be lazily evaluated."
+msgstr "如果此条件不满足，并不一定意味着该参数完全不需要；它可能只在某些分支中使用，其使用在运行时确定。这样的参数是应该延迟求值的典型例子。"
+
+#: ../../example/gmachine/gmachine-3.md:111
+msgid ""
+"Let's consider bottom as `false` and non-bottom values as `true`. In this "
+"way, all functions in coreF can be considered boolean functions. Take `abs` "
+"as an example:"
+msgstr ""
+"我们将 bottom 视为 `false`，非 bottom 值视为 `true`。这样，coreF 中的所有函数都可以视为布尔函数。以 `abs` "
+"为例："
+
+#: ../../example/gmachine/gmachine-3.md:113
+msgid ""
+"(defn abs[n]\n"
+"  (if (lt n 0) (negate n) n))\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:118
+msgid "We analyze how to translate it into a boolean function from top to bottom:"
+msgstr "我们分析如何将其从上到下转换为布尔函数："
+
+#: ../../example/gmachine/gmachine-3.md:120
+msgid ""
+"For an expression like `(if x y z)`, x must be evaluated, but only one of "
+"`y` or `z` needs to be evaluated. This can be translated into `x and (y or "
+"z)`. Taking the example of the function above, if `n` is bottom, then the "
+"condition `(lt n 0)` is also bottom, and thus the result of the entire "
+"expression is also bottom."
+msgstr ""
+"对于像 `(if x y z)` 这样的表达式，`x` 必须被求值，但只需要评估 `y` 或 `z` 之一。这可以转换为 `x and (y or "
+"z)`。以上面的函数为例，如果 `n` 是 bottom，那么条件 `(lt n 0)` 也是 bottom，因此整个表达式的结果也是 bottom。"
+
+#: ../../example/gmachine/gmachine-3.md:122
+msgid "For primitive expressions, using `and` for all parts is sufficient."
+msgstr "对于原始表达式，使用 `and` 连接所有部分即可。"
+
+#: ../../example/gmachine/gmachine-3.md:124
+msgid ""
+"To determine whether a parameter needs to be compiled strictly, you can "
+"convert the above condition into a Boolean function: `a[i] = false` implies "
+"`f a[1] .... a[i] .... a[n] = false` (with all other parameters being true)."
+msgstr ""
+"为了确定一个参数是否需要严格编译，可以将上述条件转换为布尔函数：`a[i] = false` 表示 `f a[1] .... a[i] .... "
+"a[n] = false`（其他所有参数为 true）。"
+
+#: ../../example/gmachine/gmachine-3.md:126
+msgid ""
+"This is essentially a method of program analysis called \"abstract "
+"interpretation.\""
+msgstr "这本质上是一种名为“抽象解释”的程序分析方法。"
+
+#: ../../example/gmachine/gmachine-3.md:128
+msgid "Custom Data Structures"
+msgstr "自定义数据结构"
+
+#: ../../example/gmachine/gmachine-3.md:130
+msgid ""
+"The data structure type definition in Haskell is similar to the `enum` in "
+"MoonBit. However, since CoreF is a simple toy language used to demonstrate "
+"lazy evaluation, it does not allow custom data types. The only built-in data"
+" structure is the lazy list."
+msgstr ""
+"Haskell 中的数据结构类型定义类似于 MoonBit 中的 `enum`。然而，由于 CoreF "
+"是一种简单的玩具语言，用于演示懒惰求值，它不允许自定义数据类型。唯一的内置数据结构是懒惰列表。"
+
+#: ../../example/gmachine/gmachine-3.md:132
+msgid ""
+"(defn take[n l]\n"
+"  (case l\n"
+"    [(Nil) Nil]\n"
+"    [(Cons x xs)\n"
+"      (if (le n 0)\n"
+"        Nil\n"
+"        (Cons x (take (sub n 1) xs)))]))\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:142
+msgid ""
+"As shown above, you can use the `case` expression for simple pattern "
+"matching on lists."
+msgstr "如上所示，可以使用 `case` 表达式进行列表的简单模式匹配。"
+
+#: ../../example/gmachine/gmachine-3.md:144
+msgid ""
+"The corresponding graph node for a list is `NConstr(Int, List[Addr])`, which"
+" consists of two parts:"
+msgstr "列表的对应图节点是 `NConstr(Int, List[Addr])`，由两部分组成："
+
+#: ../../example/gmachine/gmachine-3.md:146
+msgid ""
+"A tag for different value constructors: the tag for `Nil` is 0, and the tag "
+"for `Cons` is 1."
+msgstr "不同值构造器的标签：`Nil` 的标签是 0，`Cons` 的标签是 1。"
+
+#: ../../example/gmachine/gmachine-3.md:147
+msgid ""
+"A list of addresses for storing substructures, whose length corresponds to "
+"the number of parameters (arity) of a value constructor."
+msgstr "用于存储子结构的地址列表，其长度对应于值构造器的参数数量（元数）。"
+
+#: ../../example/gmachine/gmachine-3.md:149
+msgid ""
+"This graph node structure can be used to implement various data structures, "
+"but CoreF does not have a type system. For demonstration purposes, only lazy"
+" lists are implemented."
+msgstr "该图节点结构可用于实现各种数据结构，但 CoreF 没有类型系统。为了演示目的，仅实现了懒惰列表。"
+
+#: ../../example/gmachine/gmachine-3.md:151
+msgid ""
+"We need to add two instructions, `Split` and `Pack`, to deconstruct and "
+"construct lists."
+msgstr "我们需要添加两个指令，`Split` 和 `Pack`，来解构和构建列表。"
+
+#: ../../example/gmachine/gmachine-3.md:153
+msgid ""
+"fn GState::pack(self : GState, t : Int, n : Int) -> Unit {\n"
+"  let addrs = self.stack.take(n)\n"
+"  self.stack = self.stack.drop(n)\n"
+"  let addr = self.heap.alloc(NConstr(t, addrs))\n"
+"  self.put_stack(addr)\n"
+"}\n"
+"\n"
+"fn GState::split(self : GState) -> Unit {\n"
+"  let addr = self.pop1()\n"
+"  match self.heap[addr] {\n"
+"    NConstr(_, addrs) =>\n"
+"      // n == addrs.length()\n"
+"      self.stack = addrs + self.stack\n"
+"    _ => panic()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:160
+msgid ""
+"Additionally, a `CaseJump` instruction is needed to implement the `case` "
+"expression."
+msgstr "此外，需要一个 `CaseJump` 指令来实现 `case` 表达式。"
+
+#: ../../example/gmachine/gmachine-3.md:162
+msgid ""
+"fn GState::casejump(self : GState, table : List[(Int, List[Instruction])]) "
+"-> Unit {\n"
+"  let addr = self.pop1()\n"
+"  match self.heap[addr] {\n"
+"    NConstr(t, _) =>\n"
+"      match table.lookup(t) {\n"
+"        None => abort(\"casejump\")\n"
+"        Some(instrs) => {\n"
+"          self.code = instrs + self.code\n"
+"          self.put_stack(addr)\n"
+"        }\n"
+"      }\n"
+"    otherwise => abort(\"casejump(): addr = \\{addr} node = \\{otherwise}\")"
+"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:168
+msgid ""
+"After adding the above instructions, we need to modify the `compileC` and "
+"`compileE` functions. Since the object matched by the `case` expression "
+"needs to be evaluated to WHNF, only the `compileE` function can compile it."
+msgstr ""
+"在添加上述指令之后，我们需要修改 `compileC` 和 `compileE` 函数。由于 `case` 表达式匹配的对象需要被求值到 "
+"WHNF，因此只能通过 `compileE` 函数来编译它。"
+
+#: ../../example/gmachine/gmachine-3.md:170
+msgid ""
+"App(App(Constructor(tag=1, arity=2), x), xs) =>\n"
+"  // Cons(x, xs)\n"
+"  xs.compileC(env) + x.compileC(argOffset(1, env)) + "
+"@list.from_array([Pack(1, 2)])\n"
+"// Empty\n"
+"Constructor(tag=0, arity=0) => @list.from_array([Pack(0, 0)])\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:177
+msgid ""
+"Case(e, alts) =>\n"
+"  e.compileE(env) + @list.from_array([CaseJump(compileAlts(alts, env))])\n"
+"Constructor(tag=0, arity=0) =>\n"
+"  // Empty\n"
+"  @list.from_array([Pack(0, 0)])\n"
+"App(App(Constructor(tag=1, arity=2), x), xs) =>\n"
+"  // Cons(x, xs)\n"
+"  xs.compileC(env) + x.compileC(argOffset(1, env)) + "
+"@list.from_array([Pack(1, 2)])\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:184
+msgid ""
+"At this point, a new problem arises. Previously, printing the evaluation "
+"result only needed to handle simple `NNum` nodes, but `NConstr` nodes have "
+"substructures. When the list itself is evaluated to WHNF, its substructures "
+"are mostly unevaluated `NApp` nodes. We need to add a `Print` instruction, "
+"which will recursively evaluate and write the result into the `output` "
+"component of `GState`."
+msgstr ""
+"此时，出现了一个新问题。以前，打印求值结果只需要处理简单的 `NNum` 节点，但 `NConstr` 节点有子结构。当列表本身被求值到 WHNF "
+"时，它的子结构大多是未求值的 `NApp` 节点。我们需要添加一个 `Print` 指令，它将递归地求值并将结果写入 `GState` 的 "
+"`output` 组件。"
+
+#: ../../example/gmachine/gmachine-3.md:186
+msgid ""
+"fn GState::gprint(self : GState) -> Unit {\n"
+"  let addr = self.pop1()\n"
+"  match self.heap[addr] {\n"
+"    NNum(n) => {\n"
+"      self.output.write_string(n.to_string())\n"
+"      self.output.write_char(' ')\n"
+"    }\n"
+"    NConstr(0, Empty) => self.output.write_string(\"Nil\")\n"
+"    NConstr(1, More(addr1, tail=More(addr2, tail=Empty))) => {\n"
+"      self.code = @list.from_array([Instruction::Eval, Print, Eval, Print]) "
+"+\n"
+"        self.code\n"
+"      self.put_stack(addr2)\n"
+"      self.put_stack(addr1)\n"
+"    }\n"
+"    _ => panic()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:192
+msgid "Finally, change the initial code of the G-Machine to:"
+msgstr "最后，将 G-Machine 的初始代码修改为："
+
+#: ../../example/gmachine/gmachine-3.md:194
+msgid ""
+"let initialState : GState = {\n"
+"  output: @buffer.new(size_hint=60),\n"
+"  heap,\n"
+"  stack: @list.empty(),\n"
+"  code: @list.from_array([PushGlobal(\"main\"), Eval, Print]),\n"
+"  globals,\n"
+"  stats: 0,\n"
+"  dump: @list.empty(),\n"
+"}\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:201
+msgid ""
+"Now, we can write some classic functional programs using lazy lists, such as"
+" the infinite Fibonacci sequence:"
+msgstr "现在，我们可以使用懒惰列表编写一些经典的函数式程序，例如无限斐波那契数列："
+
+#: ../../example/gmachine/gmachine-3.md:203
+msgid "(defn fibs[] (Cons 0 (Cons 1 (zipWith add fibs (tail fibs)))))\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:207
+msgid ""
+"After introducing data structures, strictness analysis becomes more complex."
+" For lazy lists, there are various evaluation modes:"
+msgstr "引入数据结构后，严格性分析变得更加复杂。对于懒惰列表，有几种评估模式："
+
+#: ../../example/gmachine/gmachine-3.md:209
+msgid ""
+"Fully strict (requires the list to be finite and all elements to be non-"
+"bottom)."
+msgstr "完全严格（要求列表是有限的，且所有元素都不能是底值）。"
+
+#: ../../example/gmachine/gmachine-3.md:210
+msgid "Fully lazy."
+msgstr "完全懒惰。"
+
+#: ../../example/gmachine/gmachine-3.md:211
+msgid "Head strict (the list can be infinite, but its elements cannot be bottom)."
+msgstr "头部严格（列表可以是无限的，但其元素不能是底值）。"
+
+#: ../../example/gmachine/gmachine-3.md:212
+msgid "Tail strict (the list must be finite, but its elements can be bottom)."
+msgstr "尾部严格（列表必须是有限的，但其元素可以是底值）。"
+
+#: ../../example/gmachine/gmachine-3.md:214
+msgid ""
+"Moreover, the context in which a function is used can change the evaluation "
+"mode of its parameters (it cannot be analyzed in isolation and requires "
+"cross-function analysis). Such complex strictness analysis usually employs "
+"projection analysis techniques. Relevant literature includes:"
+msgstr "此外，函数使用的上下文可以改变其参数的评估模式（不能孤立分析，需要跨函数分析）。这种复杂的严格性分析通常采用投影分析技术。相关文献包括："
+
+#: ../../example/gmachine/gmachine-3.md:216
+msgid "Projections for Strictness Analysis"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:218
+msgid "Static Analysis and Code Optimizations in Glasgow Haskell Compiler"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:220
+msgid "Implementing Projection-based Strictness Analysis"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:222
+msgid "Theory and Practice of Demand Analysis in Haskell"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:224
+msgid "Epilogue"
+msgstr "结语"
+
+#: ../../example/gmachine/gmachine-3.md:226
+msgid ""
+"Lazy evaluation can reduce runtime redundant calculations, but it also "
+"introduces new problems, such as:"
+msgstr "懒惰求值可以减少运行时冗余计算，但它也引入了一些新问题，例如："
+
+#: ../../example/gmachine/gmachine-3.md:228
+msgid "The notorious side effect order issue."
+msgstr "臭名昭著的副作用顺序问题。"
+
+#: ../../example/gmachine/gmachine-3.md:230
+msgid ""
+"Excessive redundant nodes. Some computations that are not shared still store"
+" their results on the heap, which is detrimental to utilizing the CPU's "
+"caching mechanism."
+msgstr "过多的冗余节点。一些未共享的计算仍然将结果存储在堆中，这不利于利用 CPU 的缓存机制。"
+
+#: ../../example/gmachine/gmachine-3.md:232
+msgid ""
+"The representative of lazy evaluation languages, Haskell, offers a "
+"controversial solution to the side effect order problem: Monads. This "
+"solution has some value for eagerly evaluated languages as well, but many "
+"online tutorials emphasize its mathematical background too much and fail to "
+"explain how to use it effectively."
+msgstr ""
+"懒惰求值语言的代表 Haskell "
+"提出了一个有争议的解决方案来解决副作用顺序问题：单子（Monads）。这个解决方案对急切求值语言也有一定价值，但许多在线教程过于强调其数学背景，未能有效解释如何使用它。"
+
+#: ../../example/gmachine/gmachine-3.md:234
+msgid ""
+"Idris2, Haskell's successor (which is no longer a lazy language), retains "
+"Monads and introduces another mechanism for handling side effects: Algebraic"
+" Effects."
+msgstr "Idris2，Haskell 的继任者（不再是懒惰语言），保留了单子并引入了另一种处理副作用的机制：代数效应（Algebraic Effects）。"
+
+#: ../../example/gmachine/gmachine-3.md:236
+msgid ""
+"The Spineless G-Machine designed by SPJ improved the problem of excessive "
+"redundant nodes, and its successor, the STG, unified the data layout of "
+"different types of nodes."
+msgstr "由 SPJ 设计的无脊柱 G-Machine 改善了过多冗余节点的问题，它的继任者 STG 统一了不同类型节点的数据布局。"
+
+#: ../../example/gmachine/gmachine-3.md:238
+msgid ""
+"In addition to improvements in abstract machine models, GHC's optimization "
+"of Haskell programs heavily relies on inline-based optimizations and "
+"projection analysis-based strictness analysis techniques."
+msgstr "除了抽象机器模型的改进外，GHC 对 Haskell 程序的优化还大量依赖于基于内联的优化和基于投影分析的严格性分析技术。"
+
+#: ../../example/gmachine/gmachine-3.md:240
+msgid ""
+"In 2004, several GHC designers discovered that the previous push-enter "
+"model, where parameters are pushed onto the stack and then a function is "
+"called, was less effective than the eval-apply model, where the "
+"responsibility is handed to the caller. They published a paper titled "
+"\"Making a Fast Curry: Push/Enter vs. Eval/Apply for Higher-order "
+"Languages.\""
+msgstr ""
+"2004 年，几位 GHC 设计者发现，之前的 push-enter 模型（参数被推入栈中，然后调用函数）比 eval-apply "
+"模型效果差，后者将责任交给了调用者。他们发表了一篇题为《Making a Fast Curry: Push/Enter vs. Eval/Apply "
+"for Higher-order Languages》的论文。"
+
+#: ../../example/gmachine/gmachine-3.md:242
+msgid ""
+"In 2007, Simon Marlow found that jump and execute code in the tagless design"
+" significantly affected the performance of modern CPU branch predictors. The"
+" paper \"_Faster laziness using dynamic pointer tagging_\" described several"
+" solutions."
+msgstr ""
+"2007 年，Simon Marlow 发现 tagless 设计中的跳转和执行代码显著影响了现代 CPU 分支预测器的性能。论文《Faster "
+"laziness using dynamic pointer tagging》描述了几种解决方案。"
+
+#: ../../example/gmachine/gmachine-3.md:244
+msgid ""
+"Lazy purely functional languages have shown many interesting possibilities, "
+"but they have also faced much criticism and reflection. Nevertheless, it is "
+"undoubtedly an intriguing technology!"
+msgstr "懒惰的纯函数式语言展现了许多有趣的可能性，但也面临着许多批评和反思。尽管如此，它无疑是一项引人入胜的技术！"
+

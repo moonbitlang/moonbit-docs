@@ -1,0 +1,139 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4104.md:1
+msgid "E4104"
+msgstr ""
+
+#: ../../language/error_codes/E4104.md:3
+msgid ""
+"Current loop expects different number of arguments than supplied with "
+"`continue`."
+msgstr "当前循环的参数数量与 `continue` 提供的参数数量不同。"
+
+#: ../../language/error_codes/E4104.md:5
+msgid ""
+"This error occurs when the number of arguments provided to a `continue` "
+"statement does not match the number of arguments expected by the loop. In a "
+"`loop` construct, when using `continue`, you must provide the same number of"
+" arguments as declared in the loop header."
+msgstr ""
+"此错误发生在 `continue` 语句提供的参数数量与循环所期望的参数数量不匹配时。在 `loop` 构造中，使用 `continue` "
+"时，必须提供与循环头中声明的相同数量的参数。"
+
+#: ../../language/error_codes/E4104.md:10
+msgid ""
+"For example, if a `loop` takes 2 arguments, any `continue` statement within "
+"that `loop` must also provide exactly 2 arguments. Providing too few or too "
+"many arguments will trigger this error."
+msgstr ""
+"例如，如果一个 `loop` 有 2 个参数，那么任何在该 `loop` 中使用 `continue` 的语句都必须提供 2 "
+"个参数。参数数量不足或过多都会触发此错误。"
+
+#: ../../language/error_codes/E4104.md:14
+msgid ""
+"Note that in a `for` loop, you can omit all arguments in a `continue` "
+"statement. In this case, the loop will use the default update expressions "
+"specified in the loop header. However, if you do provide arguments to "
+"`continue`, the number of arguments must match the number of loop variables."
+msgstr ""
+"请注意，在 `for` 循环中，你可以省略 `continue` "
+"语句中的所有参数。在这种情况下，循环将使用循环头中指定的默认更新表达式。但是，如果你提供了参数给 "
+"`continue`，那么参数数量必须与循环变量数量匹配。"
+
+#: ../../language/error_codes/E4104.md:19
+msgid "For example, in a `for` loop with two variables:"
+msgstr "例如，在一个有两个变量的 `for` 循环中："
+
+#: ../../language/error_codes/E4104.md:21
+msgid "`continue` (with no arguments) will use the default updates"
+msgstr "`continue`（没有参数）将使用默认更新"
+
+#: ../../language/error_codes/E4104.md:22
+msgid "`continue x, y` (with two arguments) is valid"
+msgstr "`continue x, y`（有两个参数）是有效的"
+
+#: ../../language/error_codes/E4104.md:23
+msgid "`continue x` or `continue x, y, z` will trigger this error"
+msgstr "`continue x` 或 `continue x, y, z` 会触发此错误"
+
+#: ../../language/error_codes/E4104.md:25
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4104.md:27
+msgid ""
+"pub fn f(x: Int, y: Int) -> Int {\n"
+"  loop x, y {\n"
+"    0, 0 => 0\n"
+"    a, _ => continue a - 1\n"
+"//          ^^^^^^^^^^^^^^ Error: Current loop expects 2 arguments, but\n"
+"//                                `continue` is supplied with 1 arguments\n"
+"  }\n"
+"}\n"
+"\n"
+"pub fn g(x : Int, y : Int) -> Int {\n"
+"  for i = x, j = y; i + j < 10; i = i + 1, j = j + 1 {\n"
+"    if i < j {\n"
+"      continue i + 2, j + 1, i + j\n"
+"//    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Error: Current loop expects 2 arguments, "
+"but\n"
+"//                                       `continue` is supplied with 3 "
+"arguments\n"
+"    }\n"
+"  } else {\n"
+"    42\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4104.md:31
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4104.md:33
+msgid ""
+"To fix this error, ensure that the number of arguments provided to "
+"`continue` matches the number of loop variables. For example,"
+msgstr "要修复此错误，请确保 `continue` 提供的参数数量与循环变量数量匹配。例如："
+
+#: ../../language/error_codes/E4104.md:36
+msgid ""
+"pub fn f(x: Int, y: Int) -> Int {\n"
+"  loop x, y {\n"
+"    0, 0 => 0\n"
+"    a, b => continue a - 1, b - 1\n"
+"  }\n"
+"}\n"
+"\n"
+"pub fn g(x : Int, y : Int) -> Int {\n"
+"  for i = x, j = y; i + j < 10; i = i + 1, j = j + 1 {\n"
+"    if i < j {\n"
+"      continue i + 2, j + 1\n"
+"    } else {\n"
+"      continue\n"
+"    }\n"
+"  } else {\n"
+"    42\n"
+"  }\n"
+"}"
+msgstr ""
+

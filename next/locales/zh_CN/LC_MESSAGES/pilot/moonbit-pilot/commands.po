@@ -1,0 +1,220 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../pilot/moonbit-pilot/commands.md:1
+msgid "Commands"
+msgstr "命令"
+
+#: ../../pilot/moonbit-pilot/commands.md:3
+msgid "Markdown Files as Executables"
+msgstr "将 Markdown 文件作为可执行文件"
+
+#: ../../pilot/moonbit-pilot/commands.md:5
+msgid "Markdown files are executable, and the runtime environment is MoonBit Pilot!"
+msgstr "Markdown 文件是可执行的，其运行时环境是 MoonBit Pilot！"
+
+#: ../../pilot/moonbit-pilot/commands.md:7
+msgid "Background"
+msgstr "背景"
+
+#: ../../pilot/moonbit-pilot/commands.md:9
+msgid "If you frequently have repetitive commands to execute, such as:"
+msgstr "如果你经常需要执行重复的命令，例如："
+
+#: ../../pilot/moonbit-pilot/commands.md:12
+msgid "Run `pnpm lint --fix` until all errors are fixed\n"
+msgstr "运行 `pnpm lint --fix` 直到所有错误都修复完毕\n"
+
+#: ../../pilot/moonbit-pilot/commands.md:16
+msgid ""
+"Copy-pasting this phrase every time becomes tedious, especially when you "
+"have many prompts to execute. MoonBit Pilot provides a solution to make "
+"managing your daily work prompts simple."
+msgstr "每次都复制粘贴这个短语会变得很繁琐，特别是当你有许多提示需要执行时。MoonBit Pilot 提供了一个解决方案，使管理你的日常工作提示变得简单。"
+
+#: ../../pilot/moonbit-pilot/commands.md:18
+msgid "Final Effect"
+msgstr "最终效果"
+
+#: ../../pilot/moonbit-pilot/commands.md:20
+msgid "Let's look at the final way to run the prompt:"
+msgstr "让我们看看运行提示的最终方式："
+
+#: ../../pilot/moonbit-pilot/commands.md:22
+msgid "/lint_fix\n"
+msgstr "/lint_fix\n"
+
+#: ../../pilot/moonbit-pilot/commands.md:26
+msgid ""
+"Here, you only need to run a `/lint_fix` command to complete the execution "
+"of the above prompt."
+msgstr "在这里，你只需要运行一个 `/lint_fix` 命令就可以完成上述提示的执行。"
+
+#: ../../pilot/moonbit-pilot/commands.md:28
+msgid "Implementation"
+msgstr "实现"
+
+#: ../../pilot/moonbit-pilot/commands.md:30
+msgid ""
+"In your project's `.moonagent/commands` directory, create a `lint_fix.md` "
+"file with the following content:"
+msgstr "在你的项目的 `.moonagent/commands` 目录下，创建一个 `lint_fix.md` 文件，内容如下："
+
+#: ../../pilot/moonbit-pilot/commands.md:32
+msgid "Run pnpm lint --fix until all errors are fixed\n"
+msgstr "运行 pnpm lint --fix 直到所有错误都修复完毕\n"
+
+#: ../../pilot/moonbit-pilot/commands.md:36
+msgid ""
+"Then you can use `lint_fix` as a command in the moon pilot command line, "
+"with auto-completion support."
+msgstr "然后你就可以在 moon pilot 命令行中将 `lint_fix` 作为一个命令来使用，并支持自动补全。"
+
+#: ../../pilot/moonbit-pilot/commands.md:38
+msgid "Handling Dynamic Prompts"
+msgstr "处理动态提示"
+
+#: ../../pilot/moonbit-pilot/commands.md:40
+msgid ""
+"What if you want the command to be changeable? You can modify the file "
+"content like this:"
+msgstr "如果你希望命令是可变的怎么办？你可以像这样修改文件内容："
+
+#: ../../pilot/moonbit-pilot/commands.md:42
+msgid "Run {{args[0] or \"pnpm lint --fix\"}} until all errors are fixed\n"
+msgstr "运行 {{args[0] or \"pnpm lint --fix\"}} 直到所有错误都修复完毕\n"
+
+#: ../../pilot/moonbit-pilot/commands.md:46
+msgid "Explanation:"
+msgstr "解释："
+
+#: ../../pilot/moonbit-pilot/commands.md:48
+msgid ""
+"`args` represents positional arguments, which can be referenced using "
+"`[index]`"
+msgstr "`args` 代表位置参数，可以使用 `[index]` 来引用"
+
+#: ../../pilot/moonbit-pilot/commands.md:49
+msgid ""
+"`kwargs` represents key-value pair arguments, which can be referenced using "
+"`kwargs.<key>`"
+msgstr "`kwargs` 代表键值对参数，可以使用 `kwargs.<key>` 来引用"
+
+#: ../../pilot/moonbit-pilot/commands.md:50
+msgid "`{{}}` is used to render a value"
+msgstr "`{{}}` 用于渲染一个值"
+
+#: ../../pilot/moonbit-pilot/commands.md:52
+msgid "Let's see how to use it:"
+msgstr "让我们看看如何使用它："
+
+#: ../../pilot/moonbit-pilot/commands.md:54
+msgid "act ▶ /lint_fix \"echo hello\"\n"
+msgstr "act ▶ /lint_fix \"echo hello\"\n"
+
+#: ../../pilot/moonbit-pilot/commands.md:58
+msgid "You can also use named parameters:"
+msgstr "你也可以使用命名参数："
+
+#: ../../pilot/moonbit-pilot/commands.md:60
+msgid "Run {{kwargs.command or \"pnpm lint --fix\"}} until all errors are fixed\n"
+msgstr "运行 {{kwargs.command or \"pnpm lint --fix\"}} 直到所有错误都修复完毕\n"
+
+#: ../../pilot/moonbit-pilot/commands.md:64
+msgid "Then use it like this:"
+msgstr "然后像这样使用它："
+
+#: ../../pilot/moonbit-pilot/commands.md:66
+msgid "act ▶ /lint_fix command=\"echo hello\"\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:70
+msgid "Notice that the value should be quote with `\"`."
+msgstr "注意，值应该用 `\"` 引起来。"
+
+#: ../../pilot/moonbit-pilot/commands.md:72
+msgid "Complex Scripts"
+msgstr "复杂脚本"
+
+#: ../../pilot/moonbit-pilot/commands.md:74
+msgid ""
+"Here's an example of a more complex script to help you quickly complete "
+"complex engineering requirements:"
+msgstr "这里有一个更复杂脚本的例子，可以帮助你快速完成复杂的工程需求："
+
+#: ../../pilot/moonbit-pilot/commands.md:76
+#, python-format
+msgid ""
+"# {{ kwargs.title or \"Development Plan\" }}\n"
+"\n"
+"## Objective\n"
+"{{ kwargs.objective or \"Define the main objective here\" }}\n"
+"\n"
+"## Tasks\n"
+"{% for task in args %}\n"
+"- {{ task }}\n"
+"{% endfor %}\n"
+"\n"
+"## Parameters\n"
+"{% for key, value in kwargs %}\n"
+"- **{{ key }}**: {{ value }}\n"
+"{% endfor %}\n"
+"\n"
+"## Summary\n"
+"Total tasks: {{ args|length }}\n"
+"Total parameters: {{ kwargs|length }}\n"
+msgstr ""
+"# {{ kwargs.title or \"开发计划\" }}\n"
+"\n"
+"## 目标\n"
+"{{ kwargs.objective or \"在此处定义主要目标\" }}\n"
+"\n"
+"## 任务\n"
+"{% for task in args %}\n"
+"- {{ task }}\n"
+"{% endfor %}\n"
+"\n"
+"## 参数\n"
+"{% for key, value in kwargs %}\n"
+"- **{{ key }}**: {{ value }}\n"
+"{% endfor %}\n"
+"\n"
+"## 总结\n"
+"总任务数：{{ args|length }}\n"
+"总参数数：{{ kwargs|length }}\n"
+
+#: ../../pilot/moonbit-pilot/commands.md:97
+msgid ""
+"Of course, for convenience, it's reasonable to minimize the number of "
+"parameters."
+msgstr "当然，为了方便起见，尽量减少参数的数量是合理的。"
+
+#: ../../pilot/moonbit-pilot/commands.md:99
+msgid "Additional Benefits"
+msgstr "额外的好处"
+
+#: ../../pilot/moonbit-pilot/commands.md:101
+msgid ""
+"Besides completing prompt management and improving execution efficiency, "
+"this actually means you can better use IDE editors to write complex prompts "
+"and make debugging easier."
+msgstr "除了完成提示管理和提高执行效率外，这实际上意味着你可以更好地使用 IDE 编辑器来编写复杂的提示，并使调试更容易。"
+

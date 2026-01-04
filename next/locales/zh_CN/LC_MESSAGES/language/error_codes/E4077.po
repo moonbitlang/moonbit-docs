@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4077.md:1
+msgid "E4077"
+msgstr ""
+
+#: ../../language/error_codes/E4077.md:3
+msgid "Don't know how to derive trait for type."
+msgstr "不知道如何导出类型的特征。"
+
+#: ../../language/error_codes/E4077.md:5
+msgid ""
+"MoonBit allows you to derive implementation of some pre-defined traits for "
+"your types. It means that you cannot have MoonBit automatically derive a "
+"trait that you defined yourself."
+msgstr "MoonBit 允许你为你的类型派生一些预定义特征的实现。这意味着你无法让 MoonBit 自动派生你自定义的特征。"
+
+#: ../../language/error_codes/E4077.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4077.md:11
+msgid ""
+"trait T {\n"
+"  f(Self) -> Int\n"
+"}\n"
+"\n"
+"type A Int derive(T) // Error: Don't know how to derive trait T for type A"
+msgstr ""
+
+#: ../../language/error_codes/E4077.md:15
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4077.md:17
+msgid "You can implement the trait manually:"
+msgstr "您可以手动实现该特性："
+
+#: ../../language/error_codes/E4077.md:19
+msgid ""
+"trait T {\n"
+"  f(Self) -> Int\n"
+"}\n"
+"\n"
+"// Remove derive(T)\n"
+"type A Int\n"
+"\n"
+"impl T for A with f(self : A) -> Int {\n"
+"  0\n"
+"}"
+msgstr ""
+

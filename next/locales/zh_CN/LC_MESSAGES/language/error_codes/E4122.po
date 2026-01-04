@@ -1,0 +1,165 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4122.md:1
+msgid "E4122"
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:3
+msgid ""
+"Invalid raise operation. Can only be used inside a function with error types"
+" in its signature."
+msgstr "只能在具有错误类型签名的函数中抛出错误。"
+
+#: ../../language/error_codes/E4122.md:6
+msgid ""
+"There are 3 raise operations in MoonBit, and they must be used inside a "
+"function with error types in its signature or a try block."
+msgstr "MoonBit 中有 3 个抛出错误操作，它们必须在具有错误类型签名的函数或 try 块中使用。"
+
+#: ../../language/error_codes/E4122.md:9
+msgid "Use the `raise` keyword to raise an error directly."
+msgstr "使用 `raise` 关键字直接引发错误。"
+
+#: ../../language/error_codes/E4122.md:10
+msgid "Re-raise an error by simply applying a function that raises an error."
+msgstr "调用一个抛出错误的函数来重新抛出错误。"
+
+#: ../../language/error_codes/E4122.md:11
+msgid ""
+"Explicitly handle the error using the `try ... catch! ...` block. The "
+"`catch!` means re-raise all the errors that are not handled in the catch "
+"block."
+msgstr "使用 `try ... catch! ...` 块显式处理错误。`catch!` 意味着重新抛出 catch 块中未处理的所有错误。"
+
+#: ../../language/error_codes/E4122.md:15
+msgid ""
+"The `catch!` syntax is deprecated. Use `catch {e => raise e}` to reraise "
+"explicitly."
+msgstr "`catch!` 语法已被弃用。请使用 `catch {e => raise e}` 显式重新抛出错误。"
+
+#: ../../language/error_codes/E4122.md:18
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4122.md:20
+msgid "Raise the error directly:"
+msgstr "直接抛出错误："
+
+#: ../../language/error_codes/E4122.md:22
+msgid ""
+"///|\n"
+"priv suberror ArithmeticError {\n"
+"  DivisionByZero\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn checked_div(a : Double, b : Double) -> Double {\n"
+"  if b == 0.0 {\n"
+"    raise DivisionByZero // Error: raise can only be used inside ...\n"
+"  }\n"
+"  return a / b\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:26
+msgid "Re-raise the error:"
+msgstr "重新抛出错误："
+
+#: ../../language/error_codes/E4122.md:28
+msgid ""
+"///|\n"
+"pub fn rethrow() -> Unit {\n"
+"  // Error: Function with error can only be used \n"
+"  // inside a function with error types in its signature\n"
+"  fail(\"throwing\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:32
+msgid "Catch all errors using `catch!`:"
+msgstr "使用 `catch!` 捕获所有错误："
+
+#: ../../language/error_codes/E4122.md:34
+msgid ""
+"///|\n"
+"pub fn catch_all() -> Double {\n"
+"  // Error: catch! will rethrow unhandled error, and can only be used inside"
+" ...\n"
+"  fail(\"Failed\") catch! {\n"
+"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:38
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4122.md:40
+msgid ""
+"You can either modify the surrounding function to have error types in its "
+"signature:"
+msgstr "您可以修改周围的函数以在其签名中包含错误类型："
+
+#: ../../language/error_codes/E4122.md:43
+msgid ""
+"///|\n"
+"suberror ArithmeticError {\n"
+"  DivisionByZero\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn checked_div(a : Double, b : Double) -> Double raise ArithmeticError {"
+"\n"
+"  ...\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn rethrow() -> Unit raise {\n"
+"  ...\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn catch_all() -> Double raise {\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4122.md:47
+msgid "Or use the `try ... catch ...` block to handle the error:"
+msgstr "或者像使用 `try...catch` 块来处理错误："
+
+#: ../../language/error_codes/E4122.md:49
+msgid ""
+"///|\n"
+"pub fn checked_div_noraise(a : Double, b : Double) -> Double noraise {\n"
+"  try {\n"
+"    if b == 0.0 {\n"
+"      raise DivisionByZero\n"
+"    }\n"
+"    return a / b\n"
+"  } catch {\n"
+"    DivisionByZero => @double.not_a_number\n"
+"  }\n"
+"}\n"
+msgstr ""
+

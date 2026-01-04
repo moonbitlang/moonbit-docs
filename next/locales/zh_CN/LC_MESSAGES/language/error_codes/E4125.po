@@ -1,0 +1,88 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4125.md:1
+msgid "E4125"
+msgstr ""
+
+#: ../../language/error_codes/E4125.md:3
+msgid "`?` operator cannot be used with `..`."
+msgstr "`?` 运算符不能与 `..` 一起使用。"
+
+#: ../../language/error_codes/E4125.md:5
+msgid ""
+"`..` operator allows chaining of method call that returns `Unit`. This is "
+"especially useful when the method performs side-effects, like modifying the "
+"object itself, and thus returns `Unit`."
+msgstr "`..` 运算符允许链接返回 `Unit` 的方法调用。这在方法执行副作用（如修改自身）时特别有用，因为它返回 `Unit`。"
+
+#: ../../language/error_codes/E4125.md:9
+msgid ""
+"Using `?` materializes the error that will be raised by the method to "
+"`Result[T, E]`. If one combine the `?` with `..`, the method call will "
+"return `Result[T, E]` instead of `Unit`, which is not allowed by the `..` "
+"operator."
+msgstr "如果将 `?` 与 `..` 结合使用，方法调用将返回 `Result[T, E]`，而不是 `Unit`，这不符合 `..` 运算符的要求。"
+
+#: ../../language/error_codes/E4125.md:13
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4125.md:15
+msgid ""
+"type A Double derive(Show)\n"
+"\n"
+"pub fn A::check(self : A) -> Unit! {\n"
+"  if self._.is_nan() {\n"
+"    fail!(\"NaN\")\n"
+"  }\n"
+"}\n"
+"\n"
+"pub fn A::div(self : A, other : A) -> A {\n"
+"  A(self._ / other._)\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let a : A = 1.0\n"
+"  let b : A = 2.0\n"
+"  println(a.div(b)..check?())\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4125.md:19
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4125.md:21
+msgid ""
+"Use the single dot syntax to call the method, and store the result in a "
+"variable."
+msgstr "使用单点语法调用方法，并将结果存储在变量中。"
+
+#: ../../language/error_codes/E4125.md:24
+msgid ""
+"fn main {\n"
+"  let a : A = 1.0\n"
+"  let b : A = 2.0\n"
+"  println(a.div(b).check?())\n"
+"}"
+msgstr ""
+

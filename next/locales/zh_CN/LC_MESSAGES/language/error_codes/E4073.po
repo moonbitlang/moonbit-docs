@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4073.md:1
+msgid "E4073"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:3
+msgid "Cannot provide default implementation for traits from other packages."
+msgstr "不能为外来特征定义默认实现。"
+
+#: ../../language/error_codes/E4073.md:5
+msgid ""
+"This is a corollary of the [orphan rules of traits and types in "
+"MoonBit](../packages.md#trait-implementations). Default implementation can "
+"be seen as implementing the trait for all possible types, including types "
+"defined within or outside of current package. Therefore, it is only possible"
+" for default implementation to be defined in the package of the trait, "
+"otherwise it would violate the orphan rules."
+msgstr ""
+"这是 MoonBit 中 [特质和类型的孤儿规则](../packages.md#trait-implementations) "
+"的推论。默认实现可以看作是针对所有可能类型的特征，包括当前软件包内部或外部定义的类型。因此，只有在特征的包装包中定义默认实现，否则它将违反孤儿规则。"
+
+#: ../../language/error_codes/E4073.md:12
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4073.md:14
+msgid ""
+"Suppose you have a trait `T` defined in package `a` in module "
+"`username/hello`:"
+msgstr "假设你在模块 `username/hello` 下的包 `a` 中定义了一个特征 `T`："
+
+#: ../../language/error_codes/E4073.md:16
+msgid "`a/a.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:18
+msgid ""
+"// We need the trait to be pub(open) so that it can be implemented from "
+"outside.\n"
+"pub(open) trait T {\n"
+"  f(Self) -> Int\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:22
+msgid ""
+"And when you want to define a default implementation for the trait in "
+"another package, say `b`:"
+msgstr "当你想在另一个包中为特征定义默认实现时，命名为 `b`："
+
+#: ../../language/error_codes/E4073.md:25
+msgid "`b/moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:27
+msgid ""
+"{\n"
+"  \"import\": [\n"
+"    \"username/hello/a\"\n"
+"  ]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:35 ../../language/error_codes/E4073.md:47
+msgid "`b/b.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:37
+msgid ""
+"impl @a.T with f(self : Self) -> Int {\n"
+"  //           ^\n"
+"  // Error: Cannot provide default implementation for trait @a.T from "
+"package a\n"
+"  ignore(self)\n"
+"  0\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:41
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4073.md:43
+msgid ""
+"To fix this error, you can move the definition of the trait and the default "
+"implementation of this trait into the same package. Say you can move the "
+"trait definition into package `b`:"
+msgstr "要修复这个错误，您可以将 `trait` 的定义和它的默认实现移到同一个包中。假设你可以把 `trait` 的定义移到包 `b` 中："
+
+#: ../../language/error_codes/E4073.md:49
+msgid ""
+"pub(open) trait T {\n"
+"  f(Self) -> Int\n"
+"}\n"
+"\n"
+"impl T with f(self : Self) -> Int {\n"
+"  ignore(self)\n"
+"  0\n"
+"}"
+msgstr ""
+

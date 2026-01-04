@@ -1,0 +1,113 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0009.md:1
+msgid "E0009"
+msgstr ""
+
+#: ../../language/error_codes/E0009.md:3
+msgid "The struct is never constructed."
+msgstr "结构体从未被构造。"
+
+#: ../../language/error_codes/E0009.md:5
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0009.md:7
+msgid ""
+"///|\n"
+"pub struct A { // Warning: the struct A is never constructed\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"priv struct B { // Warning: the struct B is never constructed\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"fn B::get(a : B) -> Int {\n"
+"  a.value\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0009.md:11
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0009.md:13
+msgid ""
+"The `pub` visibility modifier only allows other packages to access the "
+"struct, by dot-syntax (`a.value`), or by pattern matching. Therefore, if you"
+" expect other packages to be able to construct the struct, you should use "
+"the `pub(all)` visibility modifier."
+msgstr ""
+"`pub` 可见性修饰符只允许其他包通过点语法（`a.value`）或模式匹配来访问结构体。因此，如果你希望其他包能够构造结构体，你应该使用 "
+"`pub(all)` 可见性修饰符。"
+
+#: ../../language/error_codes/E0009.md:18
+msgid ""
+"\n"
+"///|\n"
+"pub(all) struct A {\n"
+"  value : Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0009.md:24
+msgid ""
+"However, if you do not want other packages to construct the struct, this "
+"might be due to incompleteness or bugs in your code. There are some common "
+"cases:"
+msgstr "然而，如果你不希望其他包构造结构体，这可能是由于你代码的不完整或错误。以下是一些常见情况："
+
+#: ../../language/error_codes/E0009.md:27
+msgid ""
+"You planned to use smart constructors or factory functions to construct the "
+"struct, but you forgot or have not implemented them."
+msgstr "你计划使用智能构造器或工厂函数来构造结构体，但你忘记了或尚未实现它们。"
+
+#: ../../language/error_codes/E0009.md:29
+msgid ""
+"You intended to keep the struct private to control its instantiation but may"
+" have forgotten to provide a way to do so within its own package."
+msgstr "你打算保持结构体私有以控制其实例化，但可能忘记了在其自己的包中提供这样的方法。"
+
+#: ../../language/error_codes/E0009.md:32
+msgid ""
+"In these cases, you should consider providing a way to construct the struct "
+"within its own package."
+msgstr "在这些情况下，你应该考虑在自己的包内提供构造结构体的方法。"
+
+#: ../../language/error_codes/E0009.md:35
+msgid ""
+"\n"
+"///|\n"
+"priv struct B {\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"fn B::new(value : Int) -> B {\n"
+"  B::{ value, }\n"
+"}\n"
+msgstr ""
+

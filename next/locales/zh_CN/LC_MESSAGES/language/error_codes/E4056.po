@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4056.md:1
+msgid "E4056"
+msgstr ""
+
+#: ../../language/error_codes/E4056.md:3
+msgid "Method has already been defined."
+msgstr "方法已被定义。"
+
+#: ../../language/error_codes/E4056.md:5
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4056.md:7
+msgid ""
+"struct Point {\n"
+"  x: Int\n"
+"  y: Int\n"
+"}\n"
+"\n"
+"fn Point::to_string(self : Point) -> String {\n"
+"  \"(\" + self.x.to_string() + \",\" + self.y.to_string() + \")\"\n"
+"}\n"
+"\n"
+"fn Point::to_string(self : Point) -> String {\n"
+"  \"<\" + self.x.to_string() + \",\" + self.y.to_string() + \">\"\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4056.md:11
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4056.md:13
+msgid "Remove the duplicate method and keep only one method:"
+msgstr "请删除重复的方法，只保留一个："
+
+#: ../../language/error_codes/E4056.md:15
+msgid ""
+"struct Point {\n"
+"  x: Int\n"
+"  y: Int\n"
+"}\n"
+"\n"
+"fn Point::to_string(self : Point) -> String {\n"
+"  \"(\" + self.x.to_string() + \",\" + self.y.to_string() + \")\"\n"
+"}\n"
+"\n"
+"// Remove the second Point::to_string method"
+msgstr ""
+

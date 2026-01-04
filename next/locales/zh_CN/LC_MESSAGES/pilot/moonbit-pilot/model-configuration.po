@@ -1,0 +1,591 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:1
+msgid "Model Configuration"
+msgstr "模型配置"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:3
+msgid "Model Management"
+msgstr "模型管理"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:5
+msgid ""
+"Before using MoonBit Pilot, you need to configure at least one model by "
+"creating a configuration file at `~/.moonagent/models/models.json`:"
+msgstr ""
+"在使用 MoonBit Pilot 之前，你需要通过在 `~/.moonagent/models/models.json` "
+"创建一个配置文件来配置至少一个模型："
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:7
+msgid ""
+"[\n"
+"  {\n"
+"    \"name\": \"sonnet4\",\n"
+"    \"description\": \"Claude Sonnet model for general tasks\",\n"
+"    \"model_name\": \"anthropic/claude-sonnet-4\",\n"
+"    \"model_type\": \"saas/openai\",\n"
+"    \"base_url\": \"https://openrouter.ai/api/v1\",    \n"
+"    \"is_reasoning\": false,\n"
+"    \"input_price\": 3.0,\n"
+"    \"output_price\": 15.0,    \n"
+"    \"max_output_tokens\": 8096,\n"
+"    \"context_window\": 200000,\n"
+"    \"api_key\": \"your-api-key-here\"\n"
+"  },\n"
+"  {\n"
+"    \"name\": \"k2\",\n"
+"    \"description\": \"Moonshot Kimi model for cost-effective tasks\",\n"
+"    \"model_name\": \"kimi-k2-0711-preview\",\n"
+"    \"model_type\": \"saas/openai\",\n"
+"    \"base_url\": \"https://api.moonshot.cn/v1\",\n"
+"    \"is_reasoning\": false,\n"
+"    \"input_price\": 0.28,\n"
+"    \"output_price\": 2.28,\n"
+"    \"max_output_tokens\": 8096,\n"
+"    \"context_window\": 120000,    \n"
+"    \"api_key\": \"your-api-key-here\"\n"
+"  }\n"
+"]\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:38
+msgid "Configuration Parameters"
+msgstr "配置参数"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:40
+msgid "The following table describes all available configuration parameters:"
+msgstr "下表描述了所有可用的配置参数："
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Parameter"
+msgstr "参数"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Type"
+msgstr "类型"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Required"
+msgstr "必需"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Description"
+msgstr "描述"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`name`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "String"
+msgstr "字符串"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Yes"
+msgstr "是"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid ""
+"A unique identifier for the model (used for reference with `--model` "
+"parameter)"
+msgstr "模型的唯一标识符（用于通过 `--model` 参数引用）"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`description`"
+msgstr "`description`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "No"
+msgstr "否"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Human-readable description of the model"
+msgstr "模型的可读描述"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`model_name`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "The actual model identifier used by the API provider"
+msgstr "API 提供商使用的实际模型标识符"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`model_type`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Type of API interface (currently supports \"saas/openai\")"
+msgstr "API 接口类型（目前支持 \"saas/openai\"）"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`base_url`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "API endpoint URL for the model provider"
+msgstr "模型提供商的 API 端点 URL"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`is_reasoning`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Boolean"
+msgstr "布尔值"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Whether this is a reasoning model (affects token counting)"
+msgstr "是否为推理模型（影响 token 计数）"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`input_price`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Number"
+msgstr "数字"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Cost per million input tokens (in USD)"
+msgstr "每百万输入 token 的成本（美元）"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`output_price`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Cost per million output tokens (in USD)"
+msgstr "每百万输出 token 的成本（美元）"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`max_output_tokens`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Maximum number of tokens the model can output"
+msgstr "模型可以输出的最大 token 数"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`context_window`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Total context window size in tokens"
+msgstr "总上下文窗口大小（以 token 为单位）"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`api_key`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Your API key for this provider"
+msgstr "您此提供商的 API 密钥"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:56
+msgid "Example Models"
+msgstr "示例模型"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:58
+msgid "The configuration above includes two popular models:"
+msgstr "以上配置包括两个流行的模型："
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:60
+msgid "Claude Sonnet 4 (`sonnet4`)"
+msgstr "Claude Sonnet 4 (`sonnet4`)"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:61
+msgid "**Provider**: Anthropic via OpenRouter"
+msgstr "**提供商**：Anthropic via OpenRouter"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:62
+msgid "**Performance**: High-performance model with excellent quality"
+msgstr "**性能**：高性能模型，质量卓越"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:63
+msgid "**Context Window**: 200,000 tokens for complex tasks"
+msgstr "**上下文窗口**：200,000 token，适用于复杂任务"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:64
+msgid "**Pricing**: Premium pricing but excellent quality"
+msgstr "**定价**：价格较高但质量卓越"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:65
+msgid "**Best For**: Complex reasoning, large codebases, high-quality outputs"
+msgstr "**最适用于**：复杂推理、大型代码库、高质量输出"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:67
+msgid "Kimi K2 (`k2`)"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:68
+msgid "**Provider**: Moonshot AI"
+msgstr "**提供商**：Moonshot AI"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:69
+msgid "**Performance**: Good performance with cost-effective pricing"
+msgstr "**性能**：性能良好，价格经济实惠"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:70
+msgid "**Context Window**: 120,000 tokens"
+msgstr "**上下文窗口**：120,000 token"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:71
+msgid "**Pricing**: Budget-friendly option"
+msgstr "**定价**：经济实惠的选择"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:72
+msgid "**Best For**: Everyday development tasks, cost-conscious projects"
+msgstr "**最适用于**：日常开发任务，注重成本的项目"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:74
+msgid "Supported Models"
+msgstr "支持的模型"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:76
+msgid "MoonBit Pilot supports the following models through various API providers:"
+msgstr "MoonBit Pilot 通过各种 API 提供商支持以下模型："
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Model"
+msgstr "模型"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Provider"
+msgstr "提供商"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Model Name"
+msgstr "模型名称"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Base URL"
+msgstr "基础 URL"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Notes"
+msgstr "备注"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "**Kimi K2**"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Moonshot"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`kimi-k2-0711-preview`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`https://api.moonshot.cn/v1`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Cost-effective, 120k context"
+msgstr "性价比高，120k 上下文"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "**DeepSeek V3**"
+msgstr "**DeepSeek V3**"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "DeepSeek"
+msgstr "DeepSeek"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`deepseek-chat`"
+msgstr "`deepseek-chat`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`https://api.deepseek.com/v1`"
+msgstr "`https://api.deepseek.com/v1`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "High performance reasoning"
+msgstr "高性能推理"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "**DeepSeek R1**"
+msgstr "**DeepSeek R1**"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`deepseek-reasoner`"
+msgstr "`deepseek-reasoner`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Advanced reasoning model"
+msgstr "高级推理模型"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "**Claude Sonnet 4.0**"
+msgstr "**Claude Sonnet 4.0**"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Anthropic/OpenRouter"
+msgstr "Anthropic/OpenRouter"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`anthropic/claude-sonnet-4`"
+msgstr "`anthropic/claude-sonnet-4`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`https://openrouter.ai/api/v1`"
+msgstr "`https://openrouter.ai/api/v1`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Latest high-performance"
+msgstr "最新的高性能"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "**Claude Sonnet 3.7**"
+msgstr "**Claude Sonnet 3.7**"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`anthropic/claude-3.7-sonnet`"
+msgstr "`anthropic/claude-3.7-sonnet`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "**Claude Opus 4.0**"
+msgstr "**Claude Opus 4.0**"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`anthropic/claude-opus-4`"
+msgstr "`anthropic/claude-opus-4`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Premium quality"
+msgstr "顶级质量"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "**Gemini 2.5 Pro**"
+msgstr "**Gemini 2.5 Pro**"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Google/OpenRouter"
+msgstr "Google/OpenRouter"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`google/gemini-2.5-pro`"
+msgstr "`google/gemini-2.5-pro`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "Google's latest model"
+msgstr "Google 最新模型"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "**GPT-4.1**"
+msgstr "**GPT-4.1**"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "OpenAI/OpenRouter"
+msgstr "OpenAI/OpenRouter"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "`openai/gpt-4.1`"
+msgstr "`openai/gpt-4.1`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md
+msgid "OpenAI's advanced model"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:89
+msgid "Configuration Examples"
+msgstr "配置示例"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:91
+msgid "Here are configuration examples for some of the supported models:"
+msgstr "以下是一些支持的模型的配置示例："
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:93
+msgid "DeepSeek V3"
+msgstr "DeepSeek V3"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:94
+msgid ""
+"{\n"
+"  \"name\": \"deepseek-v3\",\n"
+"  \"description\": \"DeepSeek V3 for high performance reasoning\",\n"
+"  \"model_name\": \"deepseek-chat\",\n"
+"  \"model_type\": \"saas/openai\",\n"
+"  \"base_url\": \"https://api.deepseek.com\",\n"
+"  \"is_reasoning\": false,\n"
+"  \"input_price\": 0.25,\n"
+"  \"output_price\": 0.85,\n"
+"  \"max_output_tokens\": 8000,\n"
+"  \"context_window\": 128000,\n"
+"  \"api_key\": \"your-deepseek-api-key\"\n"
+"}\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:110
+msgid "Claude Sonnet 3.7"
+msgstr "Claude Sonnet 3.7"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:111
+msgid ""
+"{\n"
+"  \"name\": \"sonnet-3.7\",\n"
+"  \"description\": \"Claude Sonnet 3.7 for balanced performance\",\n"
+"  \"model_name\": \"anthropic/claude-3.7-sonnet\",\n"
+"  \"model_type\": \"saas/openai\",\n"
+"  \"base_url\": \"https://openrouter.ai/api/v1\",\n"
+"  \"is_reasoning\": false,\n"
+"  \"input_price\": 3.0,\n"
+"  \"output_price\": 15.0,\n"
+"  \"max_output_tokens\": 8192,\n"
+"  \"context_window\": 200000,\n"
+"  \"api_key\": \"your-openrouter-api-key\"\n"
+"}\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:127
+msgid "Gemini 2.5 Pro"
+msgstr "Gemini 2.5 Pro"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:128
+msgid ""
+"{\n"
+"  \"name\": \"gemini-2.5-pro\",\n"
+"  \"description\": \"Google Gemini 2.5 Pro\",\n"
+"  \"model_name\": \"google/gemini-2.5-pro\",\n"
+"  \"model_type\": \"saas/openai\",\n"
+"  \"base_url\": \"https://openrouter.ai/api/v1\",\n"
+"  \"is_reasoning\": false,\n"
+"  \"input_price\": 1.25,\n"
+"  \"output_price\": 10,\n"
+"  \"max_output_tokens\": 16192,\n"
+"  \"context_window\": 1048576,\n"
+"  \"api_key\": \"your-openrouter-api-key\"\n"
+"}\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:144
+msgid "Getting API Keys"
+msgstr "获取 API 密钥"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:146
+msgid ""
+"To use these models, you'll need to obtain API keys from the respective "
+"providers:"
+msgstr "要使用这些模型，你需要从各自的提供商处获取 API 密钥："
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:148
+msgid "OpenRouter (for Claude Sonnet 4)"
+msgstr "OpenRouter (用于 Claude Sonnet 4)"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:149
+msgid "Visit [openrouter.ai](https://openrouter.ai)"
+msgstr "访问 [openrouter.ai](https://openrouter.ai)"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:150
+#: ../../pilot/moonbit-pilot/model-configuration.md:164
+msgid "Create an account"
+msgstr "创建一个账户"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:151
+msgid "Navigate to your API keys section"
+msgstr "导航到你的 API 密钥部分"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:152
+#: ../../pilot/moonbit-pilot/model-configuration.md:159
+#: ../../pilot/moonbit-pilot/model-configuration.md:166
+msgid "Generate a new API key"
+msgstr "生成一个新的 API 密钥"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:153
+msgid "Replace `\"your-api-key-here\"` in the `sonnet4` configuration"
+msgstr "在 `sonnet4` 配置中替换 `\"your-api-key-here\"`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:155
+msgid "Moonshot (for Kimi K2)"
+msgstr "Moonshot (用于 Kimi K2)"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:156
+msgid "Visit [platform.moonshot.cn](https://platform.moonshot.cn)"
+msgstr "访问 [platform.moonshot.cn](https://platform.moonshot.cn)"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:157
+msgid "Register for an account"
+msgstr "注册一个账户"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:158
+msgid "Access your API keys in the dashboard"
+msgstr "在仪表板中访问你的 API 密钥"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:160
+msgid "Replace `\"your-api-key-here\"` in the `k2` configuration"
+msgstr "在 `k2` 配置中替换 `\"your-api-key-here\"`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:162
+msgid "DeepSeek (for DeepSeek V3/R1)"
+msgstr "DeepSeek (用于 DeepSeek V3/R1)"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:163
+msgid "Visit [platform.deepseek.com](https://platform.deepseek.com)"
+msgstr "访问 [platform.deepseek.com](https://platform.deepseek.com)"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:165
+msgid "Navigate to API keys section"
+msgstr "导航到 API 密钥部分"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:167
+msgid "Replace `\"your-deepseek-api-key\"` in your DeepSeek model configuration"
+msgstr "在你的 DeepSeek 模型配置中替换 `\"your-deepseek-api-key\"`"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:169
+msgid "Usage"
+msgstr "用法"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:171
+msgid "After configuring your models, you can use them with MoonBit Pilot:"
+msgstr "配置好你的模型后，你就可以在 MoonBit Pilot 中使用它们了："
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:173
+msgid ""
+"# Use the first model in your configuration (default)\n"
+"moon pilot\n"
+"\n"
+"# Specify a particular model\n"
+"moon pilot --model k2\n"
+"moon pilot --model sonnet4\n"
+"moon pilot --model deepseek-v3\n"
+"moon pilot --model sonnet-3.5\n"
+"moon pilot --model gemini-2.5-pro\n"
+msgstr ""
+"# 使用你配置中的第一个模型（默认）\n"
+"moon pilot\n"
+"\n"
+"# 指定一个特定的模型\n"
+"moon pilot --model k2\n"
+"moon pilot --model sonnet4\n"
+"moon pilot --model deepseek-v3\n"
+"moon pilot --model sonnet-3.5\n"
+"moon pilot --model gemini-2.5-pro\n"
+
+#: ../../pilot/moonbit-pilot/model-configuration.md:185
+msgid ""
+"You can add multiple models to the configuration and specify the model name "
+"using the `--model` parameter."
+msgstr "你可以向配置中添加多个模型，并使用 `--model` 参数指定模型名称。"
+

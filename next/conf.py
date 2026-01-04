@@ -80,6 +80,7 @@ myst_enable_extensions = [
 
 # -- Options for gettext -----------------------------------------------------
 gettext_additional_targets = ["literal-block"]
+gettext_compact = False
 
 # -- Options for sphinx_copybutton -------------------------------------------------
 copybutton_prompt_text = "$ "

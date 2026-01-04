@@ -1,0 +1,101 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4087.md:1
+msgid "E4087"
+msgstr ""
+
+#: ../../language/error_codes/E4087.md:3
+msgid "Mutating something immutable, such as variable or struct field."
+msgstr "尝试修改不可变的对象，例如变量或结构体的字段。"
+
+#: ../../language/error_codes/E4087.md:5
+msgid ""
+"MoonBit requires programmers to explicitly declare mutable variables and "
+"struct fields. Notice that in MoonBit, mutability of variable only refers to"
+" the variable itself, not the value it holds. So when you declare an "
+"immutable `let` value of type `Array[T]`, `Ref[T]`, and `struct` with "
+"mutable field, you can still mutate the inner structure, but cannot replace "
+"the value of the whole variable."
+msgstr ""
+"MoonBit 要求程序员明确声明可变的变量和结构体字段。请注意，MoonBit "
+"中变量的可变性仅指变量本身，而不是它持有的值。如果您声明了一个不可变的变量，但变量的类型是 `Array[T]`、`Ref[T]` 或有可变字段的 "
+"`struct`，您依然可以修改变量的内部结构，只是不能整个替换变量的值。"
+
+#: ../../language/error_codes/E4087.md:11
+msgid ""
+"Tuples are always immutable. If you want mutability, use a `struct` with "
+"mutable field instead."
+msgstr "元组永远是不可变的，如果想要可变性，应当使用有可变字段的 `struct`。"
+
+#: ../../language/error_codes/E4087.md:13
+msgid "Erroneous Example"
+msgstr "错误示例："
+
+#: ../../language/error_codes/E4087.md:15
+msgid ""
+"test {\n"
+"  let a = @ref.new(0)\n"
+"  a = @ref.new(1) // Error: The variable a is not mutable.\n"
+"  a.val = 1 // This is valid, because the mutability come from `Ref` type "
+"itself\n"
+"  println(a)\n"
+"}\n"
+"\n"
+"struct S {\n"
+"  x : Int\n"
+"}\n"
+"\n"
+"test {\n"
+"  let s = { x: 1 }\n"
+"  s.x = 2 // Error: The field `x` is not mutable.\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4087.md:33
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4087.md:35
+msgid ""
+"To fix this error, you need to declare the variable as mutable by adding the"
+" `mut` keyword before the variable name or struct field name."
+msgstr "为了修复此错误，您需要将变量或结构体字段声明为可变的，方法是在变量名前添加 `mut` 关键字。"
+
+#: ../../language/error_codes/E4087.md:38
+msgid ""
+"test {\n"
+"  let mut a = 0\n"
+"  a = 1\n"
+"  println(a)\n"
+"}\n"
+"\n"
+"struct S {\n"
+"  mut x : Int\n"
+"//^^^\n"
+"}\n"
+"\n"
+"test {\n"
+"  let s = { x: 1 }\n"
+"  s.x = 2\n"
+"}"
+msgstr ""
+

@@ -1,0 +1,87 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4043.md:1
+msgid "E4043"
+msgstr ""
+
+#: ../../language/error_codes/E4043.md:3
+msgid "The struct field is defined or matched multiple times."
+msgstr "结构体字段被多次定义或匹配。"
+
+#: ../../language/error_codes/E4043.md:5
+msgid "Erroneous Example"
+msgstr "错误示例："
+
+#: ../../language/error_codes/E4043.md:7
+msgid ""
+"struct S { a : Int }\n"
+"let a : Int = match S::{ a: 2, a: 3 } {\n"
+"  { a: 2, a: 3 } => 4\n"
+"  _ => 5\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4043.md:15
+msgid "The example above tries to:"
+msgstr "上述例子中，试图："
+
+#: ../../language/error_codes/E4043.md:17
+msgid "Create a struct with the field `a` defined multiple times."
+msgstr "创建一个多次定义字段 `a` 的结构体。"
+
+#: ../../language/error_codes/E4043.md:18
+msgid "Destructure a struct with the field `a` matched multiple times."
+msgstr "通过多次匹配字段 `a` 解构结构体。"
+
+#: ../../language/error_codes/E4043.md:20
+msgid "... giving the following error on line 2:"
+msgstr "在第 2 行给出了以下错误："
+
+#: ../../language/error_codes/E4043.md:22
+msgid "The struct field a is defined several times.\n"
+msgstr ""
+
+#: ../../language/error_codes/E4043.md:26
+msgid "... and the following error on line 3:"
+msgstr "在第 3 行给出了以下错误："
+
+#: ../../language/error_codes/E4043.md:28
+msgid "The struct field a is matched several times in this pattern.\n"
+msgstr ""
+
+#: ../../language/error_codes/E4043.md:32
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4043.md:34
+msgid "Make sure that the struct field is defined or matched only once:"
+msgstr "确保结构体字段只被定义或匹配一次："
+
+#: ../../language/error_codes/E4043.md:36
+msgid ""
+"struct S { a : Int }\n"
+"let a : Int = match S::{ a: 2 } {\n"
+"  { a: 2 } => 4\n"
+"  _ => 5\n"
+"}"
+msgstr ""
+

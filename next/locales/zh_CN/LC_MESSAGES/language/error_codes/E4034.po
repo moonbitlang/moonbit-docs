@@ -1,0 +1,73 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4034.md:1
+msgid "E4034"
+msgstr ""
+
+#: ../../language/error_codes/E4034.md:3
+msgid "Multiple possible struct types detected, please add more annotation."
+msgstr "发现多个可能的结构体类型，请添加更多注释。"
+
+#: ../../language/error_codes/E4034.md:5
+msgid "Erroneous Example"
+msgstr "错误示例："
+
+#: ../../language/error_codes/E4034.md:7
+msgid ""
+"fn main {\n"
+"  struct S { x : Int; y : Int }\n"
+"  struct T { x : Int; y : Int }\n"
+"  let c = { x: 2, y: 1 }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4034.md:15
+msgid ""
+"The example above tries to assign a struct with fields `x` and `y` to a "
+"variable `c`, but this field combination matches both `S` and `T` types, "
+"giving the following error on line 4:"
+msgstr ""
+"在上述例子中，试图将一个带有字段 `x` 和 `y` 的结构体赋值给一个变量 `c`，但这个字段组合同时匹配了 `S` 和 `T` 两种类型，会在第 4"
+" 行报错："
+
+#: ../../language/error_codes/E4034.md:18
+msgid "Multiple possible struct types detected: T, S, please add more annotation.\n"
+msgstr ""
+
+#: ../../language/error_codes/E4034.md:22
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4034.md:24
+msgid "Disambiguate the struct type by adding a type annotation:"
+msgstr "通过添加类型注释来去歧义："
+
+#: ../../language/error_codes/E4034.md:26
+msgid ""
+"fn main {\n"
+"  struct S { x : Int; y : Int }\n"
+"  struct T { x : Int; y : Int }\n"
+"  let c : S = { x: 2, y: 1 }\n"
+"  let c2 = S::{ x : 2, y : 1 }\n"
+"}"
+msgstr ""
+

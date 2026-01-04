@@ -1,0 +1,173 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4053.md:1
+msgid "E4053"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:3
+msgid "Invalid type for \"self\": must be a type constructor."
+msgstr "无效的 \"self\" 类型：必须是类型构造器。"
+
+#: ../../language/error_codes/E4053.md:5
+msgid ""
+"This error happens when you want to define a method for implement a trait "
+"for a type that is not a type constructor."
+msgstr "当你试图为一个不是类型构造器的类型定义方法或实现 trait 时，会出现这个错误。"
+
+#: ../../language/error_codes/E4053.md:8
+msgid "Types that **are** type constructors:"
+msgstr "属于类型构造器的类型："
+
+#: ../../language/error_codes/E4053.md:10
+msgid "Tuple: `(Int, Bool)`"
+msgstr "元组：`(Int, Bool)`"
+
+#: ../../language/error_codes/E4053.md:11
+msgid "`enum`s, `struct`s, `trait`s, new types (`type`), and error types (`type!`)."
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:13
+msgid "Types that **are not** type constructors:"
+msgstr "不属于类型构造器的类型："
+
+#: ../../language/error_codes/E4053.md:15
+msgid "Function: `(Int) -> Bool`"
+msgstr "函数类型：`(Int) -> Bool`"
+
+#: ../../language/error_codes/E4053.md:16
+msgid "Type parameter: `T` in `fn f[T](x : T) -> T`"
+msgstr "类型参数：如 `fn f[T](x : T) -> T` 中的 `T`"
+
+#: ../../language/error_codes/E4053.md:18
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4053.md:20
+msgid "Defining a method for a type that is not type constructor."
+msgstr "为非类型构造器的类型定义方法。"
+
+#: ../../language/error_codes/E4053.md:22
+msgid ""
+"fn f[T](self : T) -> Int { // Error: Invalid type for \"self\": must be a "
+"type constructor.\n"
+"  ignore(self)\n"
+"  0\n"
+"}\n"
+"\n"
+"fn g(self : (Int) -> Unit) -> Unit { // Error: Invalid type for \"self\": "
+"must be a type constructor.\n"
+"  self(0)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:33
+msgid "Implementing a method for a type that is not a type constructor."
+msgstr "为非类型构造器的类型实现方法。"
+
+#: ../../language/error_codes/E4053.md:35
+msgid ""
+"pub trait A {\n"
+"  f(Self) -> Int\n"
+"}\n"
+"\n"
+"// Without constraints\n"
+"impl[X] A for X with f(self : X) -> Int { // Error: Invalid type for "
+"\"self\": must be a type constructor.\n"
+"  ignore(self)\n"
+"  0\n"
+"}\n"
+"\n"
+"// With constraints\n"
+"impl[X: Default] A for X with f(self : X) -> Int { // Error: Invalid type "
+"for \"self\": must be a type constructor.\n"
+"  ignore(self)\n"
+"  0\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:53
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4053.md:55
+msgid ""
+"When you want to define a method for a type that is not a type constructor, "
+"you may use new type to wrap the type."
+msgstr "当你希望为一个非类型构造器的类型定义方法时，可以使用新类型将其包装起来。"
+
+#: ../../language/error_codes/E4053.md:58
+msgid ""
+"pub(all) type Wrap[T] T\n"
+"\n"
+"fn f[T](self : Wrap[T]) -> Int {\n"
+"  ignore(self)\n"
+"  0\n"
+"}\n"
+"\n"
+"fn g(self : Wrap[(Int) -> Unit]) -> Unit {\n"
+"  (self._)(0)\n"
+"}\n"
+"\n"
+"impl[X] A for Wrap[X] with f(self : Wrap[X]) -> Int {\n"
+"  ignore(self)\n"
+"  0\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:62
+msgid ""
+"However, this means you may have to wrap the value with `Wrap` every time "
+"you want to call the method."
+msgstr "但这样一来，每次调用方法时你都需要用 `Wrap` 来包装该值。"
+
+#: ../../language/error_codes/E4053.md:65
+msgid ""
+"If you find yourself implementing a trait for a type parameter, you may also"
+" want to consider using default implementation for the trait."
+msgstr "如果你需要为类型参数实现特征（trait），也可以考虑使用特征（trait）的默认实现。"
+
+#: ../../language/error_codes/E4053.md:68
+msgid ""
+"impl A with f(self : Self) -> Int {\n"
+"  ignore(self)\n"
+"  0\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4053.md:72
+msgid ""
+"If you want to provide the implementation for types with specific "
+"constraints, you can add these constraints to the trait definition."
+msgstr "如果你希望只为满足特定约束的类型提供实现，可以将这些约束添加到特征（trait）的定义中。"
+
+#: ../../language/error_codes/E4053.md:75
+msgid ""
+"trait A: Default {\n"
+"  f(Self) -> Int\n"
+"}\n"
+"\n"
+"impl A with f(self : Self) -> Int {\n"
+"  ignore(self)\n"
+"  0\n"
+"}"
+msgstr ""
+

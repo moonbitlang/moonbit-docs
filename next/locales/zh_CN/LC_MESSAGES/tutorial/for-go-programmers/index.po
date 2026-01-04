@@ -1,0 +1,2305 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../tutorial/for-go-programmers/index.md:1
+msgid "MoonBit for Go Programmers"
+msgstr "MoonBit：Go 开发者入门指南"
+
+#: ../../tutorial/for-go-programmers/index.md:3
+msgid ""
+"MoonBit is a modern programming language designed for cloud and edge "
+"computing. If you're coming from Go, you'll find some familiar concepts "
+"alongside powerful new features that make MoonBit a simple yet expressive "
+"and performant language."
+msgstr ""
+"MoonBit 是一种为云和边缘计算设计的现代编程语言。如果您是 Go 开发者，您会发现一些熟悉的概念以及强大的新特性，这些特性使 MoonBit "
+"成为一种简单、富有表现力且高性能的语言。"
+
+#: ../../tutorial/for-go-programmers/index.md:7
+msgid "Key Similarities"
+msgstr "共通之处"
+
+#: ../../tutorial/for-go-programmers/index.md:9
+msgid "Both Go and MoonBit are:"
+msgstr "Go 和 MoonBit 都具有以下特点："
+
+#: ../../tutorial/for-go-programmers/index.md:11
+msgid "**Statically typed** with type inference"
+msgstr "**静态类型**，支持类型推断"
+
+#: ../../tutorial/for-go-programmers/index.md:12
+msgid "**Compiled languages** with fast compilation"
+msgstr "**编译型语言**，编译速度快"
+
+#: ../../tutorial/for-go-programmers/index.md:13
+msgid "**Memory safe**, though through slightly different mechanisms"
+msgstr "**内存安全**，尽管机制略有不同"
+
+#: ../../tutorial/for-go-programmers/index.md:14
+msgid "**Designed for modern computing** with excellent tooling"
+msgstr "**为现代计算设计**，拥有出色的工具链"
+
+#: ../../tutorial/for-go-programmers/index.md:16
+msgid "Major Differences at a Glance"
+msgstr "区别一览"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Aspect"
+msgstr "方面"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Go"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "MoonBit"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "**Paradigm**"
+msgstr "**范式**"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Imperative with certain functional features"
+msgstr "命令式，带有一些函数式特性"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Both functional and imperative"
+msgstr "函数式和命令式兼备"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "**Memory Management**"
+msgstr "**内存管理**"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Garbage collected"
+msgstr "垃圾回收"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Reference counting/GC (backend dependent)"
+msgstr "引用计数/垃圾回收（取决于后端）"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "**Error Handling**"
+msgstr "**错误处理**"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Multiple return values"
+msgstr "多返回值"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Checked error-throwing functions"
+msgstr "带检查的抛出错误的函数"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "**Generics**"
+msgstr "**泛型**"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Interfaces and type parameters"
+msgstr "接口和类型参数"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Full generic system with traits (similar to Rust)"
+msgstr "完整的泛型系统，支持特征（类似于 Rust）"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "**Pattern Matching**"
+msgstr "**模式匹配**"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Limited (`switch` statements)"
+msgstr "有限（`switch` 语句）"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Comprehensive pattern matching"
+msgstr "全面的模式匹配"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "**Target Platforms**"
+msgstr "**目标平台**"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "Native binaries"
+msgstr "原生二进制文件"
+
+#: ../../tutorial/for-go-programmers/index.md
+msgid "WebAssembly, JavaScript, native binaries (via C or LLVM)"
+msgstr "WebAssembly、JavaScript、原生二进制文件（通过 C 或 LLVM）"
+
+#: ../../tutorial/for-go-programmers/index.md:27
+msgid "Identifiers and Naming Conventions"
+msgstr "标识符和命名约定"
+
+#: ../../tutorial/for-go-programmers/index.md:29
+msgid ""
+"In Go, identifiers are case-sensitive and must start with a Unicode letter "
+"or an underscore, followed by any number of Unicode letters, Unicode digits,"
+" or underscores."
+msgstr "在 Go 中，标识符区分大小写，必须以 Unicode 字母或下划线开头，后跟任意数量的 Unicode 字母、Unicode 数字或下划线。"
+
+#: ../../tutorial/for-go-programmers/index.md:33
+msgid ""
+"Since the first letter of a Go identifier dictates its visibility (uppercase"
+" for public, lowercase for private), the convention is to use camelCase for "
+"private items, and PascalCase for public ones:"
+msgstr ""
+"由于 Go 标识符的首字母决定了其可见性（大写表示公共，小写表示私有），因此约定使用 camelCase 表示私有项，使用 PascalCase "
+"表示公共项："
+
+#: ../../tutorial/for-go-programmers/index.md:37
+msgid ""
+"type privateType int\n"
+"var PublicVariable PublicType = PublicFunction()\n"
+"privateVariable := privateFunction()\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:43
+msgid ""
+"In MoonBit, identifiers are also case-sensitive and follow a very similar "
+"set of rules as Go, but the casing of the initial letter has no effect on "
+"visibility. Instead, lowercase initial letters should be used for variables "
+"and functions, while uppercase ones are reserved for types, traits, "
+"enumeration variants, etc."
+msgstr ""
+"在 MoonBit 中，标识符也区分大小写，并且遵循与 Go "
+"非常相似的规则集，但首字母的大小写对可见性没有影响。相反，小写首字母应用于变量和函数，而大写首字母保留用于类型、特征、枚举变体等。"
+
+#: ../../tutorial/for-go-programmers/index.md:49
+msgid ""
+"As a result, the MoonBit convention is to use snake_case for the former "
+"category, and CamelCase for the latter:"
+msgstr "因此，MoonBit 的约定是前者使用 snake_case，后者使用 CamelCase："
+
+#: ../../tutorial/for-go-programmers/index.md:52
+msgid ""
+"Enumeration::Variant(random_variable).do_something()\n"
+"impl[T : Trait] for Structure[T] with some_method(self, other) { ... }\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:57
+msgid "Variable Bindings"
+msgstr "变量绑定"
+
+#: ../../tutorial/for-go-programmers/index.md:59
+msgid ""
+"In Go, new bindings are created using `var` or `:=`. Type inference is "
+"activated by the `:=` syntax or the omission of type annotation when using "
+"`var`. There is no way to mark a variable as immutable."
+msgstr ""
+"在 Go 中，使可用 `var` 或 `:=` 创建新的绑定。类型推断通过 `:=` 语法或使用 `var` "
+"时省略类型注解来激活。无法将变量标记为不可变。"
+
+#: ../../tutorial/for-go-programmers/index.md:64
+msgid ""
+"var name string = \"MoonBit\"\n"
+"var count = 25 // Or `count := 25`\n"
+"// There are no immutable variables in Go\n"
+msgstr ""
+"var name string = \"MoonBit\"\n"
+"var count = 25 // 或 `count := 25`\n"
+"// Go 中没有不可变变量\n"
+
+#: ../../tutorial/for-go-programmers/index.md:70
+msgid ""
+"In MoonBit, new bindings are created with the `let` keyword. They are "
+"immutable by default, and you can use `let mut` to create mutable ones. "
+"Types can be optionally specified with `:` after the variable name, and type"
+" inference is used in the absent case."
+msgstr ""
+"在 MoonBit 中，使用 `let` 关键字创建新的绑定。它们默认是不可变的，您可以使用 `let mut` 创建可变绑定。类型可以在变量名后使用 "
+"`:` 可选地指定，省略时使用类型推断。"
+
+#: ../../tutorial/for-go-programmers/index.md:75
+msgid ""
+"let mut name : String = \"MoonBit\"\n"
+"let mut count = 25\n"
+"let pi = 3.14159 // Omit `mut` to create an immutable binding\n"
+msgstr ""
+"let mut name : String = \"MoonBit\"\n"
+"let mut count = 25\n"
+"let pi = 3.14159 // 省略 `mut` 创建不可变绑定\n"
+
+#: ../../tutorial/for-go-programmers/index.md:81
+msgid ""
+"Note `mut` is only allowed in local bindings, and not allowed in global "
+"bindings."
+msgstr "注意 `mut` 只允许用于局部绑定，不允许用于全局绑定。"
+
+#: ../../tutorial/for-go-programmers/index.md:83
+msgid "Newtypes"
+msgstr "Newtype"
+
+#: ../../tutorial/for-go-programmers/index.md:85
+msgid ""
+"Newtypes are used to create type-safe wrappers around existing types, so "
+"that you can define domain-specific types with the same underlying "
+"representation as the original type, but with a different set of available "
+"operations."
+msgstr "Newtype 用于创建现有类型的类型安全包装器，以便您可以定义具有与原始类型相同底层表示但具有不同可用操作集的领域特定类型。"
+
+#: ../../tutorial/for-go-programmers/index.md:90
+msgid ""
+"In Go, newtypes can be created using the `type` keyword. A round trip from "
+"the underlying value to the newtype-wrapped one is possible via the `T()` "
+"conversion syntax:"
+msgstr "在 Go 中，可以使用 `type` 关键字创建 newtype。通过 `T()` 转换语法，可以在底层值和 newtype 包装值之间进行往返转换："
+
+#: ../../tutorial/for-go-programmers/index.md:94
+msgid ""
+"type Age int\n"
+"\n"
+"age := Age(25)\n"
+"ageInt := int(age)\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:101
+msgid "Newtypes are defined as tuple struct in MoonBit:"
+msgstr "在 MoonBit 中，newtype 被定义为元组结构体："
+
+#: ../../tutorial/for-go-programmers/index.md:103
+msgid ""
+"struct Age(Int)\n"
+"\n"
+"let age = Age(25)\n"
+"let age_int = age.0\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:110
+msgid "Type Aliases"
+msgstr "类型别名"
+
+#: ../../tutorial/for-go-programmers/index.md:112
+msgid "Type aliases can be created using the `type ... = ...` syntax in Go:"
+msgstr "在 Go 中，您可以使用 `type ... = ...` 语法创建类型别名："
+
+#: ../../tutorial/for-go-programmers/index.md:114
+msgid "type Description = string\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:118
+msgid "In MoonBit, the `typealias` keyword is used instead:"
+msgstr "在 MoonBit 中，使用 `typealias` 关键字代替："
+
+#: ../../tutorial/for-go-programmers/index.md:120
+msgid "typealias String as Description\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:124
+msgid "Structures"
+msgstr "结构体"
+
+#: ../../tutorial/for-go-programmers/index.md:126
+msgid ""
+"In Go, named structures are newtypes of anonymous structures `struct { ... "
+"}`, hence the common `type ... struct { ... }` idiom:"
+msgstr ""
+"在 Go 中，命名结构体是匿名结构体 `struct { ... }` 的 newtype，因此常见的用法是 `type ... struct { "
+"... }`："
+
+#: ../../tutorial/for-go-programmers/index.md:129
+msgid ""
+"type Person struct {\n"
+"    Name string\n"
+"    Age  int\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:136
+#: ../../tutorial/for-go-programmers/index.md:158
+msgid "The `Person` structure can be created using literals like so:"
+msgstr "可以使用字面量创建 `Person` 结构体，如下所示："
+
+#: ../../tutorial/for-go-programmers/index.md:138
+msgid ""
+"john := Person{\n"
+"    Name: \"John Doe\",\n"
+"    Age:  30,\n"
+"}\n"
+"\n"
+"// Field names can be omitted if the field order is respected:\n"
+"alice := Person{\"Alice Smith\", 25}\n"
+msgstr ""
+"john := Person{\n"
+"    Name: \"John Doe\",\n"
+"    Age:  30,\n"
+"}\n"
+"\n"
+"// 如果字段顺序一致，可以省略字段名：\n"
+"alice := Person{\"Alice Smith\", 25}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:148
+msgid ""
+"In MoonBit, all structures must be named, and they are defined using the "
+"`struct` keyword:"
+msgstr "在 MoonBit 中，所有结构体都必须命名，并使用 `struct` 关键字定义："
+
+#: ../../tutorial/for-go-programmers/index.md:151
+msgid ""
+"struct Person {\n"
+"  name : String\n"
+"  age : Int\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:160
+msgid ""
+"let john = Person::{ name: \"John Doe\", age: 30 }\n"
+"\n"
+"// Type name can be omitted if the type can be inferred:\n"
+"let alice : Person = { name: \"Alice Smith\", age: 25 }\n"
+msgstr ""
+"let john = Person::{ name: \"John Doe\", age: 30 }\n"
+"\n"
+"// 如果可以推断类型，可以省略类型名：\n"
+"let alice : Person = { name: \"Alice Smith\", age: 25 }\n"
+
+#: ../../tutorial/for-go-programmers/index.md:167
+msgid "Enumerations"
+msgstr "枚举"
+
+#: ../../tutorial/for-go-programmers/index.md:169
+msgid "Enumerations allow you to define a type with a fixed set of values."
+msgstr "枚举允许您定义具有固定值集合的类型。"
+
+#: ../../tutorial/for-go-programmers/index.md:171
+msgid ""
+"In Go, enumeration is not a language feature, but rather an idiom of using "
+"`iota` to create a sequence of constants:"
+msgstr "在 Go 中，枚举不是语言特性，而是使用 `iota` 创建一系列常量的惯用法："
+
+#: ../../tutorial/for-go-programmers/index.md:174
+msgid ""
+"type Ordering int\n"
+"const (\n"
+"    Less Ordering = iota\n"
+"    Equal\n"
+"    Greater\n"
+")\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:183
+msgid ""
+"On the other hand, MoonBit has a built-in `enum` keyword for defining "
+"enumerations:"
+msgstr "另一方面，MoonBit 内置了 `enum` 关键字用于定义枚举："
+
+#: ../../tutorial/for-go-programmers/index.md:186
+msgid ""
+"enum Ordering {\n"
+"  Less\n"
+"  Equal\n"
+"  Greater\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:194
+msgid "In addition, MoonBit's enumerations can also have payloads:"
+msgstr "此外，MoonBit 的枚举还可以携带载荷："
+
+#: ../../tutorial/for-go-programmers/index.md:196
+msgid ""
+"enum IntList {\n"
+"  /// `Nil` represents an empty list and has no payload.\n"
+"  Nil\n"
+"  /// `Cons` represents a non-empty list and has two payloads:\n"
+"  /// 1. The first element of the list;\n"
+"  /// 2. The remaining parts of the list.\n"
+"  Cons(Int, IntList)\n"
+"}\n"
+msgstr ""
+"enum IntList {\n"
+"  /// `Nil` 表示空列表，没有载荷。\n"
+"  Nil\n"
+"  /// `Cons` 表示非空列表，有两个载荷：\n"
+"  /// 1. 列表的第一个元素；\n"
+"  /// 2. 列表的其余部分。\n"
+"  Cons(Int, IntList)\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:207
+msgid "Control Flow"
+msgstr "控制流"
+
+#: ../../tutorial/for-go-programmers/index.md:209
+msgid ""
+"One of MoonBit's key differences from Go is that lots of control structures "
+"have actual return values instead of simply being statements that execute "
+"code. This expression-centered approach allows for more concise and "
+"functional programming patterns compared to Go's statement-based control "
+"flow."
+msgstr ""
+"MoonBit 与 Go 的一个主要区别在于，许多控制结构具有实际返回值，而不仅仅是执行代码的语句。这种以表达式为中心的方法与 Go "
+"基于语句的控制流相比，允许更简洁和函数式的编程模式。"
+
+#: ../../tutorial/for-go-programmers/index.md:214
+msgid "`if` Expressions"
+msgstr "`if` 表达式"
+
+#: ../../tutorial/for-go-programmers/index.md:216
+msgid ""
+"In Go, `if` statements don't return values. As a result, you often need to "
+"write:"
+msgstr "在 Go 中，`if` 语句不返回值。因此，您通常需要这样写："
+
+#: ../../tutorial/for-go-programmers/index.md:218
+msgid ""
+"var result string\n"
+"if condition {\n"
+"    result = \"true case\"\n"
+"} else {\n"
+"    result = \"false case\"\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:227
+msgid "In MoonBit, `if` is an expression that returns a value:"
+msgstr "在 MoonBit 中，`if` 是一个返回值的表达式："
+
+#: ../../tutorial/for-go-programmers/index.md:229
+msgid ""
+"let result = if condition {\n"
+"  \"true case\"\n"
+"} else {\n"
+"  \"false case\"\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:237
+msgid "`match` Expressions"
+msgstr "`match` 表达式"
+
+#: ../../tutorial/for-go-programmers/index.md:239
+msgid ""
+"In Go, `switch` statements can be used to match against values, but they "
+"don't return values directly:"
+msgstr "在 Go 中，`switch` 语句可用于匹配值，但它们不直接返回值："
+
+#: ../../tutorial/for-go-programmers/index.md:242
+#, python-format
+msgid ""
+"var description string\n"
+"switch err {\n"
+"case nil:\n"
+"    description = fmt.Sprintf(\"Success: %v\", value)\n"
+"default:\n"
+"    description = fmt.Sprintf(\"Error: %s\", err)\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:252
+msgid "On the other hand, `match` expressions in MoonBit can actually return values:"
+msgstr "另一方面，MoonBit 中的 `match` 表达式可以返回值："
+
+#: ../../tutorial/for-go-programmers/index.md:254
+msgid ""
+"let description = match status {\n"
+"  Ok(value) => \"Success: \\{value}\"\n"
+"  Err(error) => \"Error: \\{error}\"\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:261
+msgid ""
+"For more details on `match` expressions, please refer to [Pattern Matching"
+"](#pattern-matching)."
+msgstr "有关 `match` 表达式的更多详细信息，请参阅 [模式匹配](#pattern-matching)。"
+
+#: ../../tutorial/for-go-programmers/index.md:263
+msgid "`loop` Expressions"
+msgstr "`loop` 表达式"
+
+#: ../../tutorial/for-go-programmers/index.md:265
+msgid "MoonBit's loops can return values as well."
+msgstr "MoonBit 的循环也可以返回值。"
+
+#: ../../tutorial/for-go-programmers/index.md:267
+msgid ""
+"Functional loops using the `loop` keyword are particularly powerful. The "
+"loop body is similar to that of a `match` expression, where each arm tries "
+"to match the loop variables and act on them accordingly. You may use the "
+"`continue` keyword to start the next iteration of the loop with the given "
+"loop values, or use the `break` keyword to exit the loop with some given "
+"output value. At the trailing expression of each arm, the `break`ing is "
+"implicit and thus not required."
+msgstr ""
+"使用 `loop` 关键字的函数式循环功能强大。循环体类似于 `match` 表达式，每个分支尝试匹配循环变量并执行对应操作。您可以使用 "
+"`continue` 关键字以给定的循环值开始下一次迭代，或者使用 `break` "
+"关键字以给定的输出值退出循环。在每个分支的尾部表达式中，`break` 是隐式的，因此不需要写出。"
+
+#: ../../tutorial/for-go-programmers/index.md:274
+msgid ""
+"// Calculates the sum of all elements in an `xs : IntList`.\n"
+"let sum = loop (xs, 0) {\n"
+"  (Nil, acc) => acc\n"
+"  (Cons(x, rest), acc) => continue (rest, x + acc)\n"
+"}\n"
+msgstr ""
+"// 计算 `xs : IntList` 中所有元素的总和。\n"
+"let sum = loop xs, 0 {\n"
+"  Nil, acc => acc\n"
+"  Cons(x, rest), acc => continue rest, x + acc\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:282
+msgid "`for` and `while` Expressions"
+msgstr "`for` 和 `while` 表达式"
+
+#: ../../tutorial/for-go-programmers/index.md:284
+msgid "MoonBit's `for` and `while` loops are also expressions that return values."
+msgstr "MoonBit 的 `for` 和 `while` 循环也是返回值的表达式。"
+
+#: ../../tutorial/for-go-programmers/index.md:286
+msgid ""
+"The `for` loop is similar to Go's `for` loop, with a variable "
+"initialization, condition, and update clause respectively:"
+msgstr "`for` 循环类似于 Go 的 `for` 循环，分别包含变量初始化、条件和更新子句："
+
+#: ../../tutorial/for-go-programmers/index.md:289
+msgid ""
+"// Iterates from 1 to 6, summing even numbers.\n"
+"let sum = for i = 1, acc = 0; i <= 6; i = i + 1 {\n"
+"  if i % 2 == 0 {\n"
+"    continue i + 1, acc + i\n"
+"  }\n"
+"} else {\n"
+"  acc\n"
+"}\n"
+msgstr ""
+"// 对从 1 到 6 的偶数求和。\n"
+"let sum = for i = 1, acc = 0; i <= 6; i = i + 1 {\n"
+"  if i % 2 == 0 {\n"
+"    continue i + 1, acc + i\n"
+"  }\n"
+"} else {\n"
+"  acc\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:300
+msgid "There are a few distinct features of the `for` loop in MoonBit, however:"
+msgstr "然而，MoonBit 的 `for` 循环有一些独特的特性："
+
+#: ../../tutorial/for-go-programmers/index.md:302
+msgid ""
+"The update clause is not in-place, but rather are used to assign new values "
+"to the loop variables."
+msgstr "更新子句不是就地进行的，而是用于为循环变量分配新值。"
+
+#: ../../tutorial/for-go-programmers/index.md:303
+msgid ""
+"`continue` can (optionally) be used to start the next iteration with new "
+"input values. In that case, the update clause is skipped."
+msgstr "`continue` 可以（可选地）用于使用新的输入值开始下一次迭代。在这种情况下，更新子句将被跳过。"
+
+#: ../../tutorial/for-go-programmers/index.md:305
+msgid ""
+"The `else` clause is used to return the final value of the loop when it "
+"normally exits. If the loop is exited early with the `break` keyword, the "
+"value from the `break` clause is returned instead."
+msgstr "`else` 子句用于在循环正常退出时返回循环的最终值。如果循环使用 `break` 关键字提前退出，则返回 `break` 子句中的值。"
+
+#: ../../tutorial/for-go-programmers/index.md:308
+msgid ""
+"The `while` loop is equivalent to the `for` loop with a condition clause "
+"only, and it can also return a value:"
+msgstr "`while` 循环等同于只有条件子句的 `for` 循环，它也可以返回值："
+
+#: ../../tutorial/for-go-programmers/index.md:311
+msgid ""
+"let result = while condition {\n"
+"  // loop body\n"
+"  if should_break {\n"
+"    break \"early exit value\"\n"
+"  }\n"
+"} else {\n"
+"  \"normal completion value\"\n"
+"}\n"
+msgstr ""
+"let result = while condition {\n"
+"  // 循环体\n"
+"  if should_break {\n"
+"    break \"early exit value\"\n"
+"  }\n"
+"} else {\n"
+"  \"normal completion value\"\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:322
+msgid "Generic Types"
+msgstr "泛型类型"
+
+#: ../../tutorial/for-go-programmers/index.md:324
+msgid ""
+"In Go, you can define a generic named structure using type parameters "
+"delimited by square brackets `[]`:"
+msgstr "在 Go 中，您可以使用方括号 `[]` 界定的类型参数定义泛型命名结构体："
+
+#: ../../tutorial/for-go-programmers/index.md:327
+msgid ""
+"type ListNode[T any] struct {\n"
+"    val  T\n"
+"    next *ListNode[T]\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:334
+msgid "In MoonBit, you would define a generic structure very similarly:"
+msgstr "在 MoonBit 中，您会以非常相似的方式定义泛型结构体："
+
+#: ../../tutorial/for-go-programmers/index.md:336
+msgid ""
+"struct ListNode[T] {\n"
+"  val : T\n"
+"  next : ListNode[T]?\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:343
+msgid ""
+"In addition, you can also define a generic MoonBit enumeration. Below are "
+"two common generic enumerations available in MoonBit's standard library:"
+msgstr "此外，您还可以定义泛型 MoonBit 枚举。以下是 MoonBit 标准库中提供的两个常见的泛型枚举："
+
+#: ../../tutorial/for-go-programmers/index.md:346
+msgid ""
+"enum Option[T] {\n"
+"  None\n"
+"  Some(T)\n"
+"}\n"
+"\n"
+"enum Result[T, E] {\n"
+"  Ok(T)\n"
+"  Err(E)\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:358
+msgid "Functions"
+msgstr "函数"
+
+#: ../../tutorial/for-go-programmers/index.md:360
+msgid ""
+"In Go, functions are defined using the `func` keyword followed by the "
+"function name, parameters, and return type."
+msgstr "在 Go 中，函数使用 `func` 关键字定义，后跟函数名、参数和返回类型。"
+
+#: ../../tutorial/for-go-programmers/index.md:363
+msgid ""
+"func add(a int, b int) int {\n"
+"    return a + b\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:369
+msgid ""
+"In MoonBit, function definitions use the `fn` keyword and a slightly "
+"different syntax:"
+msgstr "在 MoonBit 中，函数定义使用 `fn` 关键字和稍微不同的语法："
+
+#: ../../tutorial/for-go-programmers/index.md:372
+msgid ""
+"fn add(a : Int, b : Int) -> Int {\n"
+"  a + b\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:378
+msgid ""
+"Note the use of the `:` token to specify types, and the `->` token to "
+"indicate the return type. Also, the function body is an expression that "
+"returns a value, so the `return` keyword is not required unless early exits "
+"are needed."
+msgstr ""
+"注意使用 `:` 标记指定类型，使用 `->` 标记指示返回类型。此外，函数体是一个返回值的表达式，因此除非需要提前退出，否则不需要 `return` "
+"关键字。"
+
+#: ../../tutorial/for-go-programmers/index.md:383
+msgid "Value and Reference Semantics"
+msgstr "值语义和引用语义"
+
+#: ../../tutorial/for-go-programmers/index.md:385
+msgid ""
+"Understanding how data is passed and stored is crucial when moving between "
+"programming languages. Go and MoonBit, in particular, have different "
+"approaches to value and reference semantics."
+msgstr "在不同编程语言之间切换时，理解数据如何传递和存储至关重要。特别是 Go 和 MoonBit，因为两者在值语义和引用语义方面略有不同。"
+
+#: ../../tutorial/for-go-programmers/index.md:388
+msgid ""
+"In Go, **the value semantics is the default**. That is, values are copied "
+"when passed to functions or assigned to variables:"
+msgstr "在 Go 中，**值语义是默认的**。也就是说，值在传递给函数或赋值给变量时会被复制："
+
+#: ../../tutorial/for-go-programmers/index.md:391
+msgid ""
+"type Point struct {\n"
+"    X int\n"
+"    Y int\n"
+"}\n"
+"\n"
+"func modifyPointVal(p Point) {\n"
+"    p.X = 100  // This modifies a copy, not the original\n"
+"}\n"
+"\n"
+"func main() {\n"
+"    point := Point{X: 10, Y: 20}\n"
+"    modifyPointVal(point)\n"
+"    fmt.Println(point.X) // Still prints 10, not 100\n"
+"}\n"
+msgstr ""
+"type Point struct {\n"
+"    X int\n"
+"    Y int\n"
+"}\n"
+"\n"
+"func modifyPointVal(p Point) {\n"
+"    p.X = 100  // 这修改的是副本，不是原始值\n"
+"}\n"
+"\n"
+"func main() {\n"
+"    point := Point{X: 10, Y: 20}\n"
+"    modifyPointVal(point)\n"
+"    fmt.Println(point.X) // 仍然打印 10，而不是 100\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:408
+msgid ""
+"To achieve **reference semantics** in Go, you often need to explicitly "
+"create and dereference pointers:"
+msgstr "为了在 Go 中实现**引用语义**，您通常需要显式创建和解引用指针："
+
+#: ../../tutorial/for-go-programmers/index.md:411
+msgid ""
+"func modifyPointRef(p *Point) {\n"
+"    p.X = 100  // This modifies the original through the pointer\n"
+"}\n"
+"\n"
+"func main() {\n"
+"    point := Point{X: 10, Y: 20}\n"
+"    modifyPointRef(&point)  // Create a pointer with the `&` operator\n"
+"    fmt.Println(point.X)    // Now prints 100\n"
+"}\n"
+msgstr ""
+"func modifyPointRef(p *Point) {\n"
+"    p.X = 100  // 这通过指针修改原始值\n"
+"}\n"
+"\n"
+"func main() {\n"
+"    point := Point{X: 10, Y: 20}\n"
+"    modifyPointRef(&point)  // 使用 `&` 运算符创建指针\n"
+"    fmt.Println(point.X)    // 打印 100\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:423
+msgid ""
+"Some other built-in types like slices and maps behave similarly to pointers "
+"in Go, but all these types are still technically passed by value (the value "
+"being a reference):"
+msgstr "Go 中的一些其他内置类型，如切片和映射，其行为类似于指针，但所有这些类型在技术上仍然是通过值传递的（值是一个引用）："
+
+#: ../../tutorial/for-go-programmers/index.md:426
+msgid ""
+"func incrementSlice(nums []int) {\n"
+"    for i := range nums {\n"
+"        nums[i]++  // Modifies original slice\n"
+"    }\n"
+"}\n"
+"\n"
+"func modifyMap(m map[string]int) {\n"
+"    m[\"key\"] = 42  // Modifies original map\n"
+"}\n"
+msgstr ""
+"func incrementSlice(nums []int) {\n"
+"    for i := range nums {\n"
+"        nums[i]++  // 修改原始切片\n"
+"    }\n"
+"}\n"
+"\n"
+"func modifyMap(m map[string]int) {\n"
+"    m[\"key\"] = 42  // 修改原始映射\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:438
+msgid ""
+"MoonBit is semantically _always passed by reference_. But for immutable "
+"types and primitive types, they may be passed by value since this is "
+"semantically the same, this is purely an optimization."
+msgstr "MoonBit 在语义上**总是按引用传递**。但对于不可变类型和基本类型，它们可以按值传递，因为这在语义上是相同的，这纯粹是一种优化。"
+
+#: ../../tutorial/for-go-programmers/index.md:446
+msgid ""
+"Notable **primitive types** in MoonBit include "
+"[`Unit`](../../language/fundamentals/builtins.md#unit) , "
+"[`Boolean`](../../language/fundamentals/builtins.md#boolean) , integers "
+"([`Int`](../../language/fundamentals/builtins.md#number), "
+"[`Int64`](../../language/fundamentals/builtins.md#number), "
+"[`UInt`](../../language/fundamentals/builtins.md#number), etc.) , floating-"
+"point numbers ([`Double`](../../language/fundamentals/builtins.md#number), "
+"[`Float`](../../language/fundamentals/builtins.md#number), etc.) , "
+"[`String`](../../language/fundamentals/builtins.md#string) , "
+"[`Char`](../../language/fundamentals/builtins.md#char) , "
+"[`Byte`](../../language/fundamentals/builtins.md#bytes)."
+msgstr ""
+"MoonBit 中值得注意的**基本类型**包括 "
+"[`Unit`](../../language/fundamentals/builtins.md#unit)、[`Boolean`](../../language/fundamentals/builtins.md#boolean)、整数（[`Int`](../../language/fundamentals/builtins.md#number)、[`Int64`](../../language/fundamentals/builtins.md#number)、[`UInt`](../../language/fundamentals/builtins.md#number)"
+" "
+"等）、浮点数（[`Double`](../../language/fundamentals/builtins.md#number)、[`Float`](../../language/fundamentals/builtins.md#number)"
+" "
+"等）、[`String`](../../language/fundamentals/builtins.md#string)、[`Char`](../../language/fundamentals/builtins.md#char)、[`Byte`](../../language/fundamentals/builtins.md#bytes)。"
+
+#: ../../tutorial/for-go-programmers/index.md:455
+msgid ""
+"Notable **immutable collection types** in MoonBit include "
+"[tuples](../../language/fundamentals/builtins.md#tuple), immutable "
+"collections such as `@immut/hashset.T[A]`, and custom types with no `mut` "
+"fields."
+msgstr ""
+"MoonBit 中值得注意的**不可变集合类型**包括 "
+"[元组](../../language/fundamentals/builtins.md#tuple)、不可变集合（例如 "
+"`@immut/hashset.T[A]`）以及没有 `mut` 字段的自定义类型。"
+
+#: ../../tutorial/for-go-programmers/index.md:460
+msgid ""
+"On the other hand, notable **mutable collection types** include mutable "
+"collections such as "
+"[`Array[T]`](../../language/fundamentals/builtins.md#array) , "
+"[`FixedArray[T]`](../../language/fundamentals/builtins.md#array) , and "
+"[`Map[K, V]`](../../language/fundamentals/builtins.md#map), as well as "
+"custom types with at least one `mut` field."
+msgstr ""
+"另一方面，值得注意的**可变集合类型**包括可变集合（例如 "
+"[`Array[T]`](../../language/fundamentals/builtins.md#array)、[`FixedArray[T]`](../../language/fundamentals/builtins.md#array)"
+" 和 [`Map[K, V]`](../../language/fundamentals/builtins.md#map)）以及至少包含一个 `mut`"
+" 字段的自定义类型。"
+
+#: ../../tutorial/for-go-programmers/index.md:466
+msgid "For example, we can rewrite some of the above Go examples in MoonBit:"
+msgstr "例如，我们可以用 MoonBit 重写上面的 Go 示例代码："
+
+#: ../../tutorial/for-go-programmers/index.md:468
+msgid ""
+"struct Point {\n"
+"  mut x : Int\n"
+"  mut y : Int\n"
+"}\n"
+"\n"
+"fn modify_point_ref(p : Point) -> Unit {\n"
+"  p.x = 100 // Modifies the original struct\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let point = Point::{ x: 10, y: 20 }\n"
+"  modify_point_ref(point) // Passes the original struct by reference\n"
+"  println(\"\\{point.x}\")   // Prints 100\n"
+"}\n"
+"\n"
+"fn increment_array(nums : Array[Int]) -> Unit {\n"
+"  for i = 0; i < nums.length(); i = i + 1 {\n"
+"    nums[i] += 1 // Modifies the original array\n"
+"  }\n"
+"}\n"
+"\n"
+"fn modify_map(m : Map[String, Int]) -> Unit {\n"
+"  m[\"key\"] = 42 // Modifies the original map\n"
+"}\n"
+msgstr ""
+"struct Point {\n"
+"  mut x : Int\n"
+"  mut y : Int\n"
+"}\n"
+"\n"
+"fn modify_point_ref(p : Point) -> Unit {\n"
+"  p.x = 100 // 修改原始结构体\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let point = Point::{ x: 10, y: 20 }\n"
+"  modify_point_ref(point) // 通过引用传递原始结构体\n"
+"  println(\"\\{point.x}\")   // 打印 100\n"
+"}\n"
+"\n"
+"fn increment_array(nums : Array[Int]) -> Unit {\n"
+"  for i = 0; i < nums.length(); i = i + 1 {\n"
+"    nums[i] += 1 // 修改原始数组\n"
+"  }\n"
+
+#: ../../tutorial/for-go-programmers/index.md:495
+msgid "The [`Ref[T]`](../../language/fundamentals/builtins.md#ref) Helper Type"
+msgstr "[`Ref[T]`](../../language/fundamentals/builtins.md#ref) 辅助类型"
+
+#: ../../tutorial/for-go-programmers/index.md:497
+msgid ""
+"When you need explicit mutable references to value types, MoonBit provides "
+"the [`Ref[T]`](../../language/fundamentals/builtins.md#ref) type which is "
+"roughly defined as follows:"
+msgstr ""
+"当您需要对值类型进行显式可变引用时，MoonBit 提供了 "
+"[`Ref[T]`](../../language/fundamentals/builtins.md#ref) 类型，其大致定义如下："
+
+#: ../../tutorial/for-go-programmers/index.md:501
+msgid ""
+"struct Ref[T] {\n"
+"  mut val : T\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:507
+msgid ""
+"With the help of `Ref[T]`, you can create mutable references to a value just"
+" like you would with pointers in Go:"
+msgstr "借助 `Ref[T]`，您可以像在 Go 中使用指针一样创建对值的可变引用："
+
+#: ../../tutorial/for-go-programmers/index.md:510
+msgid ""
+"fn increment_counter(counter : Ref[Int]) -> Unit {\n"
+"  counter.val = counter.val + 1\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let counter = Ref::new(0)\n"
+"  increment_counter(counter)\n"
+"  println(counter.val) // Prints 1\n"
+"}\n"
+msgstr ""
+"fn increment_counter(counter : Ref[Int]) -> Unit {\n"
+"  counter.val = counter.val + 1\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let counter = Ref::new(0)\n"
+"  increment_counter(counter)\n"
+"  println(counter.val) // 打印 1\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:522
+msgid "Generic Functions"
+msgstr "泛型函数"
+
+#: ../../tutorial/for-go-programmers/index.md:524
+msgid "In Go, you can define a generic function using type parameters:"
+msgstr "在 Go 中，您可以使用类型参数定义泛型函数："
+
+#: ../../tutorial/for-go-programmers/index.md:526
+msgid ""
+"// `T` is a type parameter that must implement the `fmt.Stringer` interface."
+"\n"
+"func DoubleString[T fmt.Stringer](t T) string {\n"
+"    s := t.String()\n"
+"    return s + s\n"
+"}\n"
+msgstr ""
+"// `T` 是一个类型参数，必须实现 `fmt.Stringer` 接口。\n"
+"func DoubleString[T fmt.Stringer](t T) string {\n"
+"    s := t.String()\n"
+"    return s + s\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:534
+msgid "The same is true for MoonBit:"
+msgstr "MoonBit 也是如此："
+
+#: ../../tutorial/for-go-programmers/index.md:536
+msgid ""
+"// `T` is a type parameter that must implement the `Show` trait.\n"
+"fn[T : Show] double_string(t : T) -> String {\n"
+"  let s = t.to_string()\n"
+"  s + s\n"
+"}\n"
+msgstr ""
+"// `T` 是一个类型参数，必须实现 `Show` 特征。\n"
+"fn[T : Show] double_string(t : T) -> String {\n"
+"  let s = t.to_string()\n"
+"  s + s\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:544
+msgid "Named Parameters"
+msgstr "命名参数"
+
+#: ../../tutorial/for-go-programmers/index.md:546
+msgid ""
+"MoonBit functions also support named arguments with an optional default "
+"value using the `label? : Type` syntax:"
+msgstr "MoonBit 函数还支持使用 `label~ : Type` 语法定义带有可选默认值的命名参数："
+
+#: ../../tutorial/for-go-programmers/index.md:549
+msgid ""
+"fn named_args(named~ : Int, optional? : Int = 42) -> Int {\n"
+"  named + optional\n"
+"}\n"
+"\n"
+"// This can be called like so:\n"
+"named_args(named=10)               // optional defaults to 42\n"
+"named_args(named=10, optional=20)  // optional is set to 20\n"
+"named_args(optional=20, named=10)  // order doesn't matter\n"
+"let named = 10\n"
+"named_args(named~)                 // `label~` is a shorthand for "
+"`label=label`\n"
+msgstr ""
+"fn named_args(named~ : Int, optional~ : Int = 42) -> Int {\n"
+"  named + optional\n"
+"}\n"
+"\n"
+"// 可以这样调用：\n"
+"named_args(named=10)               // optional 默认为 42\n"
+"named_args(named=10, optional=20)  // optional 被设置为 20\n"
+"named_args(optional=20, named=10)  // 顺序无关紧要\n"
+"let named = 10\n"
+"named_args(named~)                 // `label~` 是 `label=label` 的简写\n"
+
+#: ../../tutorial/for-go-programmers/index.md:562
+msgid "Optional Return Values"
+msgstr "可选返回值"
+
+#: ../../tutorial/for-go-programmers/index.md:564
+msgid ""
+"For functions that may or may not logically return a value of type `T`, Go "
+"encourages the use of multiple return values:"
+msgstr "对于可能或可能不逻辑返回类型 `T` 值的函数，Go 鼓励使用多返回值："
+
+#: ../../tutorial/for-go-programmers/index.md:567
+msgid ""
+"In particular, `(res T, ok bool)` is used to indicate an optional return "
+"value:"
+msgstr "特别是，`(res T, ok bool)` 用于指示可选返回值："
+
+#: ../../tutorial/for-go-programmers/index.md:569
+msgid ""
+"func maybeDivide(a int, b int) (quotient int, ok bool) {\n"
+"    if b == 0 {\n"
+"        return 0, false\n"
+"    }\n"
+"    return a / b, true\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:578
+msgid ""
+"In MoonBit, to return an optional value, you will simply need to return `T?`"
+" (shorthand for `Option[T]`):"
+msgstr "在 MoonBit 中，要返回可选值，您只需返回 `T?`（`Option[T]` 的简写）："
+
+#: ../../tutorial/for-go-programmers/index.md:581
+msgid ""
+"fn maybe_divide(a : Int, b : Int) -> Int? {\n"
+"  if b == 0 {\n"
+"    None\n"
+"  } else {\n"
+"    Some(a / b)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:591
+msgid "Fallible Functions"
+msgstr "可能失败的函数"
+
+#: ../../tutorial/for-go-programmers/index.md:593
+msgid ""
+"For functions that may return an error, Go uses `(res T, err error)` at the "
+"return position:"
+msgstr "对于可能返回错误的函数，Go 在返回位置使用 `(res T, err error)`："
+
+#: ../../tutorial/for-go-programmers/index.md:595
+msgid ""
+"func divide(a int, b int) (quotient int, err error) {\n"
+"    if b == 0 {\n"
+"        return 0, errors.New(\"division by zero\")\n"
+"    }\n"
+"    return a / b, nil\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:604
+msgid ""
+"You can then use the above `divide` function with the common `if err != nil`"
+" idiom:"
+msgstr "然后您可以使用上述 `divide` 函数和常见的 `if err != nil` 惯用法："
+
+#: ../../tutorial/for-go-programmers/index.md:606
+msgid ""
+"func useDivide() error {\n"
+"    q, err := divide(10, 2)\n"
+"    if err != nil {\n"
+"        return err\n"
+"    }\n"
+"    fmt.Println(q) // Use the quotient\n"
+"    return nil\n"
+"}\n"
+msgstr ""
+"func useDivide() error {\n"
+"    q, err := divide(10, 2)\n"
+"    if err != nil {\n"
+"        return err\n"
+"    }\n"
+"    fmt.Println(q) // 使用商\n"
+"    return nil\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:617
+msgid ""
+"In MoonBit, fallible functions are declared a bit differently. To indicate "
+"that the function might throw an error, write `T raise E` at the return type"
+" position, where `E` is an error type declared with `suberror`:"
+msgstr ""
+"在 MoonBit 中，可能失败的函数的声明方式略有不同。要指示函数可能抛出错误，请在返回类型位置写入 `T!E`，其中 `E` 是使用 `type!`"
+" 声明的错误类型："
+
+#: ../../tutorial/for-go-programmers/index.md:621
+msgid ""
+"suberror ValueError String\n"
+"\n"
+"fn divide(a : Int, b : Int) -> Int raise ValueError {\n"
+"  if b == 0 {\n"
+"    raise ValueError(\"division by zero\")\n"
+"  }\n"
+"  a / b\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:632
+msgid ""
+"There are different ways to handle the error when calling such a throwing "
+"function:"
+msgstr "调用此类抛出错误的函数时，有不同的错误处理方式："
+
+#: ../../tutorial/for-go-programmers/index.md:634
+msgid ""
+"// Option 1: Propagate the error directly.\n"
+"fn use_divide_propagate() -> Unit raise ValueError {\n"
+"  let q = divide(10, 2) // Rethrow the error if it occurs\n"
+"  println(q) // Use the quotient\n"
+"}\n"
+"\n"
+"// Option 2: Use `try?` to convert the error to a `Result[T, E]` type.\n"
+"fn use_divide_try() -> Unit raise ValueError {\n"
+"  // The type annotation is optional\n"
+"  let mq : Result[\n"
+"    Int,\n"
+"    ValueError,\n"
+"  ] = try? divide(10, 2)\n"
+"  match mq { // Refer to the section on pattern matching for more details\n"
+"    Err(e) => raise e\n"
+"    Ok(q) => println(q) // Use the quotient\n"
+"  }\n"
+"}\n"
+"\n"
+"// Option 3: Use the `try { .. } catch { .. }` syntax to handle the error.\n"
+"fn use_divide_try_catch() -> Unit raise ValueError {\n"
+"  try {\n"
+"    let q = divide(10, 2)\n"
+"    println(q) // Use the quotient\n"
+"  } catch {\n"
+"    e => raise e\n"
+"  }\n"
+"}\n"
+msgstr ""
+"// 选项 1：直接传播错误。\n"
+"fn use_divide_propagate() -> Unit!ValueError {\n"
+"  let q = divide(10, 2) // 如果发生错误，重新抛出\n"
+"  println(q) // 使用商\n"
+"}\n"
+"\n"
+"// 选项 2：使用 `try?` 将错误转换为 `Result[T, E]` 类型。\n"
+"fn use_divide_try() -> Unit!ValueError {\n"
+"  let mq : Result[Int, ValueError] = // 类型注解是可选的\n"
+"    try? divide(10, 2)\n"
+"  match mq { // 有关模式匹配的更多详细信息，请参阅相关章节\n"
+"    Err(e) => raise e\n"
+"    Ok(q) => println(q) // 使用商\n"
+"  }\n"
+"}\n"
+"\n"
+"// 选项 3：使用 `try { .. } catch { .. }` 语法处理错误。\n"
+"fn use_divide_try_catch() -> Unit!ValueError {\n"
+"  try {\n"
+"    let q = divide(10, 2)\n"
+"    println(q) // 使用商\n"
+"  } catch {\n"
+"    e => raise e\n"
+"  }\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:665
+msgid "Pattern Matching"
+msgstr "模式匹配"
+
+#: ../../tutorial/for-go-programmers/index.md:667
+msgid ""
+"Go has no builtin support for pattern matching. In certain cases, you can "
+"use the `switch` statement to achieve similar functionality:"
+msgstr "Go 没有内置的模式匹配支持。在某些情况下，您可以使用 `switch` 语句实现类似的功能："
+
+#: ../../tutorial/for-go-programmers/index.md:670
+msgid ""
+"func fibonacci(n int) int {\n"
+"    switch n {\n"
+"    case 0:\n"
+"        return 0\n"
+"    case 1, 2:\n"
+"        return 1\n"
+"    default:\n"
+"        return fibonacci(n-1) + fibonacci(n-2)\n"
+"    }\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:683
+msgid ""
+"MoonBit, on the other hand, offers comprehensive pattern matching with the "
+"`match` keyword."
+msgstr "另一方面，MoonBit 使用 `match` 关键字提供了全面的模式匹配。"
+
+#: ../../tutorial/for-go-programmers/index.md:685
+msgid ""
+"You can match against literal values such as booleans, integers, strings, "
+"etc.:"
+msgstr "您可以匹配布尔值、整数、字符串等字面量："
+
+#: ../../tutorial/for-go-programmers/index.md:687
+msgid ""
+"fn fibonacci(n : Int) -> Int {\n"
+"  match n {\n"
+"    0 => 0\n"
+"    // `|` combines multiple patterns\n"
+"    1 | 2 => 1\n"
+"    // `_` is a wildcard pattern that matches anything\n"
+"    _ => fibonacci(n - 1) + fibonacci(n - 2)\n"
+"  }\n"
+"}\n"
+msgstr ""
+"fn fibonacci(n : Int) -> Int {\n"
+"  match n {\n"
+"    0 => 0\n"
+"    // `|` 组合多个模式\n"
+"    1 | 2 => 1\n"
+"    // `_` 是匹配任何内容的通配符模式\n"
+"    _ => fibonacci(n - 1) + fibonacci(n - 2)\n"
+"  }\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:699
+msgid ""
+"In addition, it is possible to perform destructuring of structures and "
+"tuples:"
+msgstr "此外，还可以对结构体和元组进行解构："
+
+#: ../../tutorial/for-go-programmers/index.md:701
+msgid ""
+"struct Point3D {\n"
+"  x : Int\n"
+"  y : Int\n"
+"  z : Int\n"
+"}\n"
+"\n"
+"fn use_point3d(p : Point3D) -> Unit {\n"
+"  match p {\n"
+"    { x: 0, .. } => println(\"x == 0\")\n"
+"    // The `if` guard allows you to add additional conditions\n"
+"    // for this arm to match.\n"
+"    { y, z, .. } if y == z => println(\"x != 0, y == z\")\n"
+"    _ => println(\"uncategorized\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+"struct Point3D {\n"
+"  x : Int\n"
+"  y : Int\n"
+"  z : Int\n"
+"}\n"
+"\n"
+"fn use_point3d(p : Point3D) -> Unit {\n"
+"  match p {\n"
+"    { x: 0, .. } => println(\"x == 0\")\n"
+"    // `if` 守卫允许您添加额外条件\n"
+"    // 以匹配此分支。\n"
+"    { y, z, .. } if y == z => println(\"x != 0, y == z\")\n"
+"    _ => println(\"uncategorized\")\n"
+"  }\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:719
+msgid ""
+"Finally, array patterns allow you to easily destructure arrays, bytes, "
+"strings, and views:"
+msgstr "最后，数组模式允许您轻松解构数组、字节、字符串和视图："
+
+#: ../../tutorial/for-go-programmers/index.md:721
+msgid ""
+"fn categorize_array(array : Array[Int]) -> String {\n"
+"  match array {\n"
+"    [] => \"empty\"\n"
+"    [x] => \"only=\\{x}\"\n"
+"    [first, .. middle, last] =>\n"
+"      \"first=\\{first} and last=\\{last} with middle=\\{middle}\"\n"
+"  }\n"
+"}\n"
+"\n"
+"fn is_palindrome(s : @string.View) -> Bool {\n"
+"  match s {\n"
+"    [] | [_] => true\n"
+"    // `a` and `b` capture the first and last characters of the view, and\n"
+"    // `.. rest` captures the middle part of the view as a new view.\n"
+"    [a, .. rest, b] if a == b => is_palindrome(rest)\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""
+"fn categorize_array(array : Array[Int]) -> String {\n"
+"  match array {\n"
+"    [] => \"empty\"\n"
+"    [x] => \"only=\\{x}\"\n"
+"    [first, .. middle, last] =>\n"
+"      \"first=\\{first} and last=\\{last} with middle=\\{middle}\"\n"
+"  }\n"
+"}\n"
+"\n"
+"fn is_palindrome(s : @string.View) -> Bool {\n"
+"  match s {\n"
+"    [] | [_] => true\n"
+"    // `a` 和 `b` 捕获视图的第一个和最后一个字符，并且\n"
+"    // `.. rest` 将视图的中间部分捕获为一个新视图。\n"
+"    [a, .. rest, b] if a == b => is_palindrome(rest)\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:742
+msgid "Methods and Traits"
+msgstr "方法和特征"
+
+#: ../../tutorial/for-go-programmers/index.md:744
+msgid ""
+"Although both languages support methods and behavior sharing via "
+"traits/interfaces, MoonBit's approach to methods and traits/interfaces "
+"differs significantly from Go's."
+msgstr "尽管两种语言都支持通过特征/接口实现方法和行为共享，但 MoonBit 处理方法和特征/接口的方式与 Go 显著不同。"
+
+#: ../../tutorial/for-go-programmers/index.md:747
+msgid ""
+"As we will see below, MoonBit allows for more flexibility and expressiveness"
+" in terms of trait methods than go, since in MoonBit:"
+msgstr "如下所示，MoonBit 在特征方法方面比 Go 具有更大的灵活性和表达能力，因为在 MoonBit 中："
+
+#: ../../tutorial/for-go-programmers/index.md:750
+msgid "A trait must be explicitly implemented for each type;"
+msgstr "每个类型必须显式实现特征；"
+
+#: ../../tutorial/for-go-programmers/index.md:752
+msgid ""
+"A type's method is not necessarily object-safe (i.e. can be used in trait "
+"objects), in fact, they don't even need to have `self` as the first "
+"parameter at all."
+msgstr "类型的 method 不一定是对象安全的（即可以在特征对象中使用），实际上，它们甚至不需要将 `self` 作为第一个参数。"
+
+#: ../../tutorial/for-go-programmers/index.md:755
+msgid "Methods"
+msgstr "方法"
+
+#: ../../tutorial/for-go-programmers/index.md:757
+msgid "In Go, methods are defined on types using the receiver syntax:"
+msgstr "在 Go 中，方法使用接收者语法在类型上定义："
+
+#: ../../tutorial/for-go-programmers/index.md:759
+msgid ""
+"type Rectangle struct {\n"
+"    width, height float64\n"
+"}\n"
+"\n"
+"func (r *Rectangle) Area() float64 {\n"
+"    return r.width * r.height\n"
+"}\n"
+"\n"
+"func (r *Rectangle) Scale(factor float64) {\n"
+"    r.width *= factor\n"
+"    r.height *= factor\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:774
+msgid "Methods can be called using the `.method()` syntax:"
+msgstr "可以使用 `.method()` 语法调用方法："
+
+#: ../../tutorial/for-go-programmers/index.md:776
+msgid ""
+"rect := Rectangle{width: 10.0, height: 5.0}\n"
+"areaValue := rect.Area()\n"
+"rect.Scale(2.0) // NOTE: `.Scale()` modifies the rectangle in place.\n"
+msgstr ""
+"rect := Rectangle{width: 10.0, height: 5.0}\n"
+"areaValue := rect.Area()\n"
+"rect.Scale(2.0) // 注意：`.Scale()` 会就地修改 `rect`。\n"
+
+#: ../../tutorial/for-go-programmers/index.md:782
+msgid ""
+"In MoonBit, however, a type `T`'s methods are simply functions defined with "
+"the `T::` prefix."
+msgstr "然而，在 MoonBit 中，类型 `T` 的方法只是使用 `T::` 前缀定义的函数。"
+
+#: ../../tutorial/for-go-programmers/index.md:785
+msgid "This is how you would recreate the above `Rectangle` example in MoonBit:"
+msgstr "以下是如何在 MoonBit 中重新创建上面的 `Rectangle` 示例："
+
+#: ../../tutorial/for-go-programmers/index.md:787
+msgid ""
+"struct Rectangle {\n"
+"  // `mut` allows these fields to be modified in-place.\n"
+"  mut width : Double\n"
+"  mut height : Double\n"
+"}\n"
+"\n"
+"fn Rectangle::area(self : Rectangle) -> Double {\n"
+"  self.width * self.height\n"
+"}\n"
+"\n"
+"fn Rectangle::scale(self : Rectangle, factor : Double) -> Unit {\n"
+"  // NOTE: `self` have reference semantics here, since `Rectangle` is "
+"mutable.\n"
+"  self.width *= factor\n"
+"  self.height *= factor\n"
+"}\n"
+msgstr ""
+"struct Rectangle {\n"
+"  // `mut` 允许这些字段就地修改。\n"
+"  mut width : Double\n"
+"  mut height : Double\n"
+"}\n"
+"\n"
+"fn Rectangle::area(self : Rectangle) -> Double {\n"
+"  self.width * self.height\n"
+"}\n"
+"\n"
+"fn Rectangle::scale(self : Rectangle, factor : Double) -> Unit {\n"
+"  // 注意：此处 `self` 具有引用语义，因为 `Rectangle` 是可变的。\n"
+"  self.width *= factor\n"
+"  self.height *= factor\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:805
+msgid "... and you can call methods like this:"
+msgstr "... 您可以像这样调用方法："
+
+#: ../../tutorial/for-go-programmers/index.md:807
+msgid ""
+"let rect = Rectangle::{ width: 10.0, height: 5.0 }\n"
+"let area_value = rect.area()\n"
+"rect.scale(2.0) // NOTE: `.scale()` modifies the rectangle in place.\n"
+msgstr ""
+"let rect = Rectangle::{ width: 10.0, height: 5.0 }\n"
+"let area_value = rect.area()\n"
+"rect.scale(2.0) // 注意：`.scale()` 会就地修改 `rect`。\n"
+
+#: ../../tutorial/for-go-programmers/index.md:813
+msgid "Traits"
+msgstr "特征"
+
+#: ../../tutorial/for-go-programmers/index.md:815
+msgid "Go uses interfaces for polymorphism:"
+msgstr "Go 使用接口实现多态："
+
+#: ../../tutorial/for-go-programmers/index.md:817
+#, python-format
+msgid ""
+"type Shape interface {\n"
+"    Area() float64\n"
+"    Perimeter() float64\n"
+"}\n"
+"\n"
+"// Implicitly implements the `Shape` interface for `Rectangle`\n"
+"// `func (r *Rectangle) Area() float64` already exists\n"
+"func (r *Rectangle) Perimeter() float64 {\n"
+"    return 2 * (r.width + r.height)\n"
+"}\n"
+"\n"
+"// Static dispatch is possible using generic functions with type bounds\n"
+"func PrintShapeInfo[T Shape](s T) {\n"
+"    fmt.Printf(\"Area: %f, Perimeter: %f\\n\", s.Area(), s.Perimeter())\n"
+"}\n"
+"\n"
+"// Dynamic dispatch is possible using the interface type\n"
+"func PrintShapeInfoDyn(s Shape) {\n"
+"    PrintShapeInfo(s)\n"
+"}\n"
+"\n"
+"func TestRectangle(t *testing.T) {\n"
+"    rect := &Rectangle{10, 5}\n"
+"    PrintShapeInfo(rect)\n"
+"    PrintShapeInfoDyn(rect)\n"
+"}\n"
+msgstr ""
+"type Shape interface {\n"
+"    Area() float64\n"
+"    Perimeter() float64\n"
+"}\n"
+"\n"
+"// 为 `Rectangle` 隐式实现 `Shape` 接口\n"
+"// `func (r *Rectangle) Area() float64` 已存在\n"
+"func (r *Rectangle) Perimeter() float64 {\n"
+"    return 2 * (r.width + r.height)\n"
+"}\n"
+"\n"
+"// 使用带有类型约束的泛型函数可以实现静态分派\n"
+"func PrintShapeInfo[T Shape](s T) {\n"
+"    fmt.Printf(\"Area: %f, Perimeter: %f\\n\", s.Area(), s.Perimeter())\n"
+"}\n"
+"\n"
+"// 使用接口类型可以实现动态分派\n"
+"func PrintShapeInfoDyn(s Shape) {\n"
+"    PrintShapeInfo(s)\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:846
+msgid "MoonBit has traits, which are similar to Go interfaces:"
+msgstr "MoonBit 拥有特征，类似于 Go 接口："
+
+#: ../../tutorial/for-go-programmers/index.md:848
+msgid ""
+"trait Shape {\n"
+"  area(Self) -> Double\n"
+"  perimeter(Self) -> Double\n"
+"}\n"
+"\n"
+"// Explicitly implement the `Shape` trait for `Rectangle`\n"
+"impl Shape for Rectangle with area(self) {\n"
+"  // NOTE: This is a method call to the previously-defined "
+"`Rectangle::area()`,\n"
+"  // thus no recursion is involved.\n"
+"  self.area()\n"
+"}\n"
+"\n"
+"impl Shape for Rectangle with perimeter(self) {\n"
+"  2.0 * (self.width + self.height)\n"
+"}\n"
+"\n"
+"// Static dispatch is possible using generic functions with type bounds\n"
+"fn[T : Shape] print_shape_info(shape : T) -> Unit {\n"
+"  println(\"Area: \\{shape.area()}, Perimeter: \\{shape.perimeter()}\")\n"
+"}\n"
+"\n"
+"// Dynamic dispatch is possible using the `&Shape` trait object type\n"
+"fn print_shape_info_dyn(shape : &Shape) -> Unit {\n"
+"  print_shape_info(shape)\n"
+"}\n"
+"\n"
+"test {\n"
+"  let rect = Rectangle::{ width: 10.0, height: 5.0 }\n"
+"  print_shape_info(rect)\n"
+"  print_shape_info_dyn(rect)\n"
+"}\n"
+msgstr ""
+"trait Shape {\n"
+"  area(Self) -> Double\n"
+"  perimeter(Self) -> Double\n"
+"}\n"
+"\n"
+"// 为 `Rectangle` 显式实现 `Shape` 特征\n"
+"impl Shape for Rectangle with area(self) {\n"
+"  // 注意：这是对先前定义的 `Rectangle::area()` 的方法调用，\n"
+"  // 因此不涉及递归。\n"
+"  self.area()\n"
+"}\n"
+"\n"
+"impl Shape for Rectangle with perimeter(self) {\n"
+"  2.0 * (self.width + self.height)\n"
+"}\n"
+"\n"
+"// 使用带有类型约束的泛型函数可以实现静态分派\n"
+"fn[T : Shape] print_shape_info(shape : T) -> Unit {\n"
+"  println(\"Area: \\{shape.area()}, Perimeter: \\{shape.perimeter()}\")\n"
+"}\n"
+"\n"
+"// 使用 `&Shape` 特征对象类型可以实现动态分派\n"
+"fn print_shape_info_dyn(shape : &Shape) -> Unit {\n"
+"  print_shape_info(shape)\n"
+"}\n"
+"\n"
+"test {\n"
+"  let rect = Rectangle::{ width: 10.0, height: 5.0 }\n"
+"  print_shape_info(rect)\n"
+"  print_shape_info_dyn(rect)\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:882
+msgid "Object Safety"
+msgstr "对象安全"
+
+#: ../../tutorial/for-go-programmers/index.md:884
+msgid ""
+"MoonBit traits can also include certain kinds of methods not available in Go"
+" interfaces, such as the ones with no `self` parameter, as shown in the "
+"example below:"
+msgstr "MoonBit 的特征还可以包含 Go 接口中没有的某些类型的方法，例如下面示例中所示的没有 `self` 参数的方法："
+
+#: ../../tutorial/for-go-programmers/index.md:887
+msgid ""
+"trait Name {\n"
+"  name() -> String\n"
+"}\n"
+"\n"
+"impl Name for Rectangle with name() {\n"
+"  \"Rectangle\"\n"
+"}\n"
+"\n"
+"// `T : Shape + Name` is a bound that requires the type `T` to\n"
+"// implement both `Shape` and `Name`.\n"
+"fn[T : Shape + Name] print_shape_name_and_info(shape : T) -> Unit {\n"
+"  println(\n"
+"    \"\\{T::name()}, Area: \\{shape.area()}, Perimeter: "
+"\\{shape.perimeter()}\",\n"
+"  )\n"
+"}\n"
+"\n"
+"test {\n"
+"  print_shape_name_and_info(Rectangle::{ width: 10.0, height: 5.0 })\n"
+"}\n"
+msgstr ""
+"trait Name {\n"
+"  name() -> String\n"
+"}\n"
+"\n"
+"impl Name for Rectangle with name() {\n"
+"  \"Rectangle\"\n"
+"}\n"
+"\n"
+"// `T : Shape + Name` 是一个约束，要求类型 `T` 实现 `Shape` 和 `Name`。\n"
+"fn[T : Shape + Name] print_shape_name_and_info(shape : T) -> Unit {\n"
+"  println(\n"
+"    \"\\{T::name()}, Area: \\{shape.area()}, Perimeter: "
+"\\{shape.perimeter()}\",\n"
+"  )\n"
+"}\n"
+"\n"
+"test {\n"
+"  print_shape_name_and_info(Rectangle::{ width: 10.0, height: 5.0 })\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:909
+msgid ""
+"However, for a trait to be usable in a trait object, it must only contain "
+"object-safe methods."
+msgstr "然而，要使特征可以在特征对象中使用，它必须只包含对象安全的方法。"
+
+#: ../../tutorial/for-go-programmers/index.md:911
+msgid "There are a few requirements for a method of type `T` to be object-safe:"
+msgstr "类型 `T` 的方法要实现对象安全，需要满足以下几个要求："
+
+#: ../../tutorial/for-go-programmers/index.md:913
+msgid "`self : T` should be the first parameter of the method;"
+msgstr "`self : T` 应该是方法的第一个参数；"
+
+#: ../../tutorial/for-go-programmers/index.md:914
+msgid "Any other parameter of the method should not have the type `T`."
+msgstr "方法的任何其他参数不应具有类型 `T`。"
+
+#: ../../tutorial/for-go-programmers/index.md:916
+msgid ""
+"For example, in the above `Name` trait, the `name()` method is not object-"
+"safe because it does not have a `self` parameter, and thus `Name` cannot be "
+"used in the hypothetical `&Name` trait object."
+msgstr ""
+"例如，在上面的 `Name` 特征中，`name()` 方法不是对象安全的，因为它没有 `self` 参数，因此 `Name` "
+"不能在特征对象中使用，即不存在 `&Name` 类型。"
+
+#: ../../tutorial/for-go-programmers/index.md:919
+msgid "Trait Extensions"
+msgstr "特征扩展"
+
+#: ../../tutorial/for-go-programmers/index.md:921
+msgid ""
+"MoonBit traits can explicitly extend other traits, allowing you to build on "
+"existing functionality:"
+msgstr "MoonBit 的特征可以显式地扩展其他特征，从而允许您在现有功能的基础上进行构建："
+
+#: ../../tutorial/for-go-programmers/index.md:923
+msgid ""
+"pub(open) trait Position {\n"
+"  pos(Self) -> (Int, Int)\n"
+"}\n"
+"\n"
+"pub(open) trait Draw {\n"
+"  draw(Self, Int, Int) -> Unit\n"
+"}\n"
+"\n"
+"pub(open) trait Object: Position + Draw {\n"
+"  // You can add more required methods here...\n"
+"}\n"
+msgstr ""
+"pub(open) trait Position {\n"
+"  pos(Self) -> (Int, Int)\n"
+"}\n"
+"\n"
+"pub(open) trait Draw {\n"
+"  draw(Self, Int, Int) -> Unit\n"
+"}\n"
+"\n"
+"pub(open) trait Object: Position + Draw {\n"
+"  // 你可以在这里添加更多必需的方法...\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:937
+msgid ""
+"Since the `Object` trait extends two traits `Position` and `Draw`, the "
+"latter two are called the former's **supertrait**s."
+msgstr "由于 `Object` 特征扩展了 `Position` 和 `Draw` 这两个特征，因此后两者被称为前者的**超特征**。"
+
+#: ../../tutorial/for-go-programmers/index.md:940
+msgid "Default Implementations"
+msgstr "默认实现"
+
+#: ../../tutorial/for-go-programmers/index.md:942
+msgid ""
+"Unlike Go interfaces, MoonBit trait functions can have default "
+"implementations:"
+msgstr "与 Go 接口不同，MoonBit 的特征函数可以有默认实现："
+
+#: ../../tutorial/for-go-programmers/index.md:944
+msgid ""
+"trait Printable {\n"
+"  print(Self) -> Unit\n"
+"  // `= _` marks the method as having a default implementation\n"
+"  print_twice(Self) -> Unit = _\n"
+"}\n"
+"\n"
+"// The default implementation of `print_twice()` is provided individually:\n"
+"impl Printable with print_twice(self) {\n"
+"  self.print()\n"
+"  self.print()\n"
+"}\n"
+msgstr ""
+"trait Printable {\n"
+"  print(Self) -> Unit\n"
+"  // `= _` 标记该方法具有默认实现\n"
+"  print_twice(Self) -> Unit = _\n"
+"}\n"
+"\n"
+"// `print_twice()` 的默认实现单独提供：\n"
+"impl Printable with print_twice(self) {\n"
+"  self.print()\n"
+"  self.print()\n"
+"}\n"
+
+#: ../../tutorial/for-go-programmers/index.md:958
+msgid "Operator Overloading"
+msgstr "运算符重载"
+
+#: ../../tutorial/for-go-programmers/index.md:960
+msgid ""
+"MoonBit supports operator overloading through built-in traits, which has no "
+"Go equivalent:"
+msgstr "MoonBit 通过内置特征支持运算符重载，这在 Go 中没有对应的功能："
+
+#: ../../tutorial/for-go-programmers/index.md:962
+msgid ""
+"impl Add for Rectangle with add(self, other) {\n"
+"  { width: self.width + other.width, height: self.height + other.height }\n"
+"}\n"
+"\n"
+"// Now you can use + with rectangles\n"
+"let combined = rect1 + rect2\n"
+msgstr ""
+"impl Add for Rectangle with add(self, other) {\n"
+"  { width: self.width + other.width, height: self.height + other.height }\n"
+"}\n"
+"\n"
+"// 现在你可以对 `Rectangle` 使用 + 运算符了\n"
+"let combined = rect1 + rect2\n"
+
+#: ../../tutorial/for-go-programmers/index.md:971
+msgid "Imports and Package Management"
+msgstr "导入和包管理"
+
+#: ../../tutorial/for-go-programmers/index.md:973
+msgid "Package management and imports work differently between Go and MoonBit."
+msgstr "Go 和 MoonBit 的包管理和导入方式不同。"
+
+#: ../../tutorial/for-go-programmers/index.md:975
+msgid "Creating a Project"
+msgstr "创建项目"
+
+#: ../../tutorial/for-go-programmers/index.md:977
+msgid "In Go, the first thing to do when creating a new project is running:"
+msgstr "在 Go 中，创建新项目的第一件事是运行："
+
+#: ../../tutorial/for-go-programmers/index.md:979
+msgid "$ go mod init example.com/my-project\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:983
+msgid "This will initialize a `go.mod` file that tracks your project's dependencies."
+msgstr "这将初始化一个 `go.mod` 文件，用于跟踪项目的依赖关系。"
+
+#: ../../tutorial/for-go-programmers/index.md:985
+msgid ""
+"Then you can create a `main.go` file with the `package main` declaration and"
+" start writing your code:"
+msgstr "然后您可以创建一个包含 `package main` 声明的 `main.go` 文件并开始编写代码："
+
+#: ../../tutorial/for-go-programmers/index.md:988
+msgid ""
+"package main\n"
+"\n"
+"import \"fmt\"\n"
+"\n"
+"func main() { fmt.Println(\"Hello, 世界\") }\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:996
+msgid ""
+"In MoonBit, creating a new project is much easier. Simply run the `moon new`"
+" command to set up your project:"
+msgstr "在 MoonBit 中，创建新项目要容易得多。只需运行 `moon new` 命令即可设置项目："
+
+#: ../../tutorial/for-go-programmers/index.md:999
+msgid "$ moon new my-project\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1003
+msgid "Project Structure"
+msgstr "项目结构"
+
+#: ../../tutorial/for-go-programmers/index.md:1005
+msgid ""
+"The Go toolchain has few requirements for the project structure, apart from "
+"the `go.mod` file being in the root directory of the project. To scale up "
+"from a single `main.go` file to a larger project, you would typically add "
+"more files and directories, resulting in a flat or nested structure, "
+"depending on the style you choose."
+msgstr ""
+"Go 工具链对项目结构的要求很少，除了 `go.mod` 文件必须位于项目的根目录。要从单个 `main.go` "
+"文件扩展到更大的项目，您通常会添加更多文件和目录，形成扁平或嵌套结构，具体取决于您选择的风格。"
+
+#: ../../tutorial/for-go-programmers/index.md:1011
+msgid ""
+"While organizing the source files, the key point is that Go's tooling "
+"doesn't distinguish between source files under a common directory, so you "
+"can freely create multiple `.go` files in the same package directory, "
+"knowing that they will be treated as a whole by the toolchain. For "
+"definitions within source files of another directory, however, you would "
+"need to import them before they can be used."
+msgstr ""
+"在组织源文件时，关键在于 Go 的工具链不区分同一目录下的源文件，因此您可以在同一个包目录中自由创建多个 `.go` "
+"文件，因为工具链会将它们视为一个整体。但是，对于另一个目录的源文件中的定义，您需要在导入它们后才能使用。"
+
+#: ../../tutorial/for-go-programmers/index.md:1018
+msgid ""
+"In MoonBit, on the other hand, the default project structure provided by "
+"`moon new` is more organized, as shown below:"
+msgstr "另一方面，MoonBit 中 `moon new` 提供的默认项目结构更加有组织，如下所示："
+
+#: ../../tutorial/for-go-programmers/index.md:1021
+msgid ""
+"my-project\n"
+"├── LICENSE\n"
+"├── README.md\n"
+"├── moon.mod.json\n"
+"└── src\n"
+"    ├── lib\n"
+"    │   ├── hello.mbt\n"
+"    │   ├── hello_test.mbt\n"
+"    │   └── moon.pkg.json\n"
+"    └── main\n"
+"        ├── main.mbt\n"
+"        └── moon.pkg.json\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1036
+msgid ""
+"This demonstrates a typical \"binary-and-library\" project structure in "
+"MoonBit, located in the `src` directory. This is declared in `moon.mod.json`"
+" like so (with irrelevant parts omitted):"
+msgstr ""
+"这展示了 MoonBit 中典型的“二进制和库”项目结构，位于 `src` 目录中。这在 `moon.mod.json` "
+"中声明如下（省略了不相关的部分）："
+
+#: ../../tutorial/for-go-programmers/index.md:1040
+msgid ""
+"{\n"
+"  \"source\": \"src\"\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1046
+msgid ""
+"This is the module configuration file that also registers the project's "
+"basic information such as its name, version, and dependencies."
+msgstr "这是模块配置文件，也注册了项目的基本信息，例如名称、版本和依赖项。"
+
+#: ../../tutorial/for-go-programmers/index.md:1049
+msgid ""
+"Each directory under the source directory (`src` in this example) is a "
+"package with its own `moon.pkg.json` file containing package-specific "
+"metadata, such as its imports, and whether it should be regarded as a main "
+"binary package. For example, `src/lib/moon.pkg.json` is minimally defined as"
+" follows:"
+msgstr ""
+"源目录（本例中为 `src`）下的每个目录都是一个包，拥有自己的 `moon.pkg.pkg.json` "
+"文件，其中包含包特定的元数据，例如其导入以及是否应将其视为主要二进制包。例如，`src/lib/moon.pkg.json` 的最小定义如下："
+
+#: ../../tutorial/for-go-programmers/index.md:1054
+msgid "{}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1058
+msgid "... and `src/main/moon.pkg.json` as follows:"
+msgstr "... `src/main/moon.pkg.json` 如下所示："
+
+#: ../../tutorial/for-go-programmers/index.md:1060
+msgid ""
+"{\n"
+"  \"is_main\": true,\n"
+"  \"import\": [\"username/hello/lib\"]\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1067
+msgid ""
+"Similarly to Go, MoonBit treats all `.mbt` files under a same package "
+"directory as a whole. When creating a new directory for more source files, "
+"however, a corresponding `moon.pkg.json` file is required under that "
+"directory."
+msgstr ""
+"与 Go 类似，MoonBit 将同一包目录下的所有 `.mbt` 文件视为一个整体。但是，当为更多源文件创建新目录时，该目录下需要相应的 "
+"`moon.pkg.json` 文件。"
+
+#: ../../tutorial/for-go-programmers/index.md:1071
+msgid "Running the Project"
+msgstr "运行项目"
+
+#: ../../tutorial/for-go-programmers/index.md:1073
+msgid "To run the aforementioned Go project, you would typically use:"
+msgstr "要运行上述 Go 项目，您通常会使用："
+
+#: ../../tutorial/for-go-programmers/index.md:1075
+msgid "$ go run main.go\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1079
+msgid "Running the previous MoonBit project with `moon run` is very similar:"
+msgstr "使用 `moon run` 运行之前的 MoonBit 项目非常相似："
+
+#: ../../tutorial/for-go-programmers/index.md:1081
+msgid "$ moon run src/main/main.mbt\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1085
+msgid "Adding Imports"
+msgstr "添加导入"
+
+#: ../../tutorial/for-go-programmers/index.md:1087
+msgid ""
+"In Go, you can add imports with the `import` clause followed by their module"
+" path:"
+msgstr "在 Go 中，您可以使用 `import` 子句后跟模块路径来添加导入："
+
+#: ../../tutorial/for-go-programmers/index.md:1089
+msgid ""
+"package main\n"
+"\n"
+"import (\n"
+"    \"github.com/user/repo/sys\"\n"
+")\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1097
+msgid ""
+"MoonBit uses a different approach with `moon.mod.json` for module "
+"configuration and `moon.pkg.json` for package configuration."
+msgstr "MoonBit 使用不同的方法，`moon.mod.json` 用于模块配置，`moon.pkg.json` 用于包配置。"
+
+#: ../../tutorial/for-go-programmers/index.md:1100
+msgid ""
+"First, declare dependencies in the `\"deps\"` section of your "
+"`moon.mod.json`. This is usually done with the `moon add <package>` command."
+msgstr "首先，在 `moon.mod.json` 的 `\"deps\"` 部分声明依赖项。这通常通过 `moon add <package>` 命令完成。"
+
+#: ../../tutorial/for-go-programmers/index.md:1103
+msgid "For example, to use `moonbitlang/x`, you would run:"
+msgstr "例如，要使用 `moonbitlang/x`，您可以运行："
+
+#: ../../tutorial/for-go-programmers/index.md:1105
+msgid "$ moon add moonbitlang/x\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1109
+msgid ""
+"... which would result in a `moon.mod.json` file like so (with irrelevant "
+"parts omitted):"
+msgstr "... 这将生成一个 `moon.mod.json` 文件，如下所示（省略了不相关的部分）："
+
+#: ../../tutorial/for-go-programmers/index.md:1111
+msgid ""
+"{\n"
+"  \"deps\": {\n"
+"    \"moonbitlang/x\": \"*\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1119
+msgid ""
+"Then, in your package's `moon.pkg.json`, specify which packages to import in"
+" the `\"import\"` section:"
+msgstr "然后，在您的包的 `moon.pkg.json` 中，在 `\"import\"` 部分指定要导入的包："
+
+#: ../../tutorial/for-go-programmers/index.md:1122
+msgid ""
+"{\n"
+"  \"import\": [\"moonbitlang/x/sys\"]\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1128
+msgid "Now you should be ready to use the `sys` package in this MoonBit package."
+msgstr "现在您应该可以在此 MoonBit 包中使用 `sys` 包了。"
+
+#: ../../tutorial/for-go-programmers/index.md:1130
+msgid "Using Imported Packages"
+msgstr "使用导入的包"
+
+#: ../../tutorial/for-go-programmers/index.md:1132
+msgid ""
+"In Go, the above import allows you to access the `sys` package's APIs using "
+"the `<package-name>.` prefix (the actual API is hypothetical):"
+msgstr "在 Go 中，上述导入允许您使用 `<package-name>.` 前缀访问 `sys` 包的 API（实际 API 是假设的）："
+
+#: ../../tutorial/for-go-programmers/index.md:1135
+msgid ""
+"func main() {\n"
+"    sys.SetEnvVar(\"MOONBIT\", \"Hello\")\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1141
+msgid "In MoonBit, you access imported APIs using the `@<package-name>.` prefix:"
+msgstr "在 MoonBit 中，您使用 `@<package-name>.` 前缀访问导入的 API："
+
+#: ../../tutorial/for-go-programmers/index.md:1143
+msgid ""
+"fn main {\n"
+"  @sys.set_env_var(\"MOONBIT\", \"Hello\")\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1149
+msgid "Package Aliases"
+msgstr "包别名"
+
+#: ../../tutorial/for-go-programmers/index.md:1151
+msgid ""
+"In Go, you can create aliases for imported packages using the `import` "
+"statement:"
+msgstr "在 Go 中，您可以使用 `import` 语句为导入的包创建别名："
+
+#: ../../tutorial/for-go-programmers/index.md:1153
+msgid ""
+"import (\n"
+"    system \"github.com/user/repo/sys\"\n"
+")\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1159
+msgid ""
+"In MoonBit, you can create aliases for imported packages in `moon.pkg.json` "
+"using the `alias` field:"
+msgstr "在 MoonBit 中，您可以在 `moon.pkg.json` 中使用 `alias` 字段为导入的包创建别名："
+
+#: ../../tutorial/for-go-programmers/index.md:1161
+msgid ""
+"{\n"
+"  \"import\": [\n"
+"    {\n"
+"      \"path\": \"moonbitlang/x/sys\"\n"
+"      \"alias\": \"system\"\n"
+"    }\n"
+"  ]\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1172
+msgid "Then you may use the alias like so:"
+msgstr "然后您可以使用别名，如下所示："
+
+#: ../../tutorial/for-go-programmers/index.md:1174
+msgid ""
+"fn main {\n"
+"  @system.set_env_var(\"MOONBIT\", \"Hello\")\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1180
+msgid "Access Control"
+msgstr "访问控制"
+
+#: ../../tutorial/for-go-programmers/index.md:1182
+msgid ""
+"In Go, visibility is determined by the case of the first letter of an "
+"identifier (uppercase for public, lowercase for private)."
+msgstr "在 Go 中，可见性由标识符首字母的大小写决定（大写表示公共，小写表示私有）。"
+
+#: ../../tutorial/for-go-programmers/index.md:1185
+msgid ""
+"MoonBit has more granular access control than Go, providing the following "
+"visibility levels:"
+msgstr "MoonBit 比 Go 具有更细粒度的访问控制，提供以下可见性级别："
+
+#: ../../tutorial/for-go-programmers/index.md:1187
+msgid "`priv`: Completely private (like Go's lowercase identifiers)"
+msgstr "`priv`：完全私有（类似于 Go 的小写标识符）"
+
+#: ../../tutorial/for-go-programmers/index.md:1188
+msgid "Default (abstract): Only the type name is visible, implementation is hidden"
+msgstr "默认（抽象）：只有类型名称可见，实现隐藏"
+
+#: ../../tutorial/for-go-programmers/index.md:1189
+msgid "`pub`: Read-only access from outside the package"
+msgstr "`pub`：包外部只读访问"
+
+#: ../../tutorial/for-go-programmers/index.md:1190
+msgid "`pub(all)`: Full public access (like Go's uppercase identifiers)"
+msgstr "`pub(all)`：完全公共访问（类似于 Go 的大写标识符）"
+
+#: ../../tutorial/for-go-programmers/index.md:1192
+msgid ""
+"This gives you fine-grained control over what parts of your API are exposed "
+"and how they can be used."
+msgstr "这使您可以精细控制 API 的哪些部分暴露以及如何使用它们。"
+
+#: ../../tutorial/for-go-programmers/index.md:1194
+msgid "Runtime Support"
+msgstr "运行时支持"
+
+#: ../../tutorial/for-go-programmers/index.md:1196
+msgid ""
+"The same MoonBit code can target multiple runtimes with different code "
+"generation backends, allowing you to choose the best fit for your particular"
+" application:"
+msgstr "相同的 MoonBit 代码可以针对具有不同代码生成后端的多个运行时，从而允许您为特定应用程序选择最合适的后端："
+
+#: ../../tutorial/for-go-programmers/index.md:1199
+msgid "WebAssembly (for web and edge computing)"
+msgstr "WebAssembly（用于 Web 和边缘计算）"
+
+#: ../../tutorial/for-go-programmers/index.md:1200
+msgid "JavaScript (for Node.js integration)"
+msgstr "JavaScript（用于 Node.js 集成）"
+
+#: ../../tutorial/for-go-programmers/index.md:1201
+msgid "C (for native performance)"
+msgstr "C（用于原生性能）"
+
+#: ../../tutorial/for-go-programmers/index.md:1202
+msgid "LLVM (experimental)"
+msgstr "LLVM（实验性）"
+
+#: ../../tutorial/for-go-programmers/index.md:1204
+msgid "Memory Management"
+msgstr "内存管理"
+
+#: ../../tutorial/for-go-programmers/index.md:1206
+msgid ""
+"Go uses a garbage collector, while MoonBit uses different strategies "
+"depending on the code generation backend being used:"
+msgstr "Go 使用垃圾回收器，而 MoonBit 根据所使用的代码生成后端采用不同的策略："
+
+#: ../../tutorial/for-go-programmers/index.md:1209
+msgid "**Wasm/C backends**: Reference counting without cycle detection"
+msgstr "**Wasm/C 后端**：引用计数，不带循环检测"
+
+#: ../../tutorial/for-go-programmers/index.md:1210
+msgid "**Wasm GC/JavaScript backends**: Leverages the runtime's garbage collector"
+msgstr "**Wasm GC/JavaScript 后端**：利用运行时的垃圾回收器"
+
+#: ../../tutorial/for-go-programmers/index.md:1212
+msgid "Getting Started"
+msgstr "入门指南"
+
+#: ../../tutorial/for-go-programmers/index.md:1214
+msgid "Visit [the online playground](https://try.moonbitlang.com)."
+msgstr "访问 [在线演练场](https://try.moonbitlang.com)。"
+
+#: ../../tutorial/for-go-programmers/index.md:1216
+msgid "Check out our [installation guide](../tour.md#installation)."
+msgstr "查看我们的 [安装指南](../tour.md#installation)。"
+
+#: ../../tutorial/for-go-programmers/index.md:1218
+msgid "Create your first MoonBit project:"
+msgstr "创建你的第一个 MoonBit 项目："
+
+#: ../../tutorial/for-go-programmers/index.md:1219
+msgid ""
+"$ moon new hello-world\n"
+"$ cd hello-world\n"
+"$ moon run\n"
+msgstr ""
+
+#: ../../tutorial/for-go-programmers/index.md:1225
+msgid "When to Choose MoonBit"
+msgstr "何时选择 MoonBit"
+
+#: ../../tutorial/for-go-programmers/index.md:1227
+msgid ""
+"MoonBit offers a fresh take on systems programming with functional "
+"programming benefits and WebAssembly-first design. While different from Go's"
+" philosophy, it provides powerful tools for building efficient, safe, and "
+"maintainable applications. Thus, MoonBit will be an interesting option for "
+"your project if you embrace:"
+msgstr ""
+"MoonBit 以函数式编程优势和 WebAssembly 优先设计为系统编程带来了新的视角。虽然与 Go "
+"的理念不同，但它提供了强大的工具来构建高效、安全和可维护的应用程序。因此，如果您重视以下几个方面，MoonBit 将是您构建项目的不二之选："
+
+#: ../../tutorial/for-go-programmers/index.md:1231
+msgid "**WebAssembly targets** with minimal size and maximum performance"
+msgstr "**WebAssembly 目标**，具有最小的体积和最大的性能"
+
+#: ../../tutorial/for-go-programmers/index.md:1232
+msgid ""
+"**Functional programming** features like pattern matching and algebraic data"
+" types"
+msgstr "**函数式编程**特性，如模式匹配和代数数据类型"
+
+#: ../../tutorial/for-go-programmers/index.md:1233
+msgid "**Mathematical/algorithmic code** that benefits from immutability by default"
+msgstr "**数学/算法代码**，得益于默认的不可变性"
+
+#: ../../tutorial/for-go-programmers/index.md:1234
+msgid "**Strong type safety** with comprehensive error handling"
+msgstr "**强类型安全**，以及全面的错误处理机制"
+
+#: ../../tutorial/for-go-programmers/index.md:1236
+msgid "Next Steps"
+msgstr "下一步"
+
+#: ../../tutorial/for-go-programmers/index.md:1238
+msgid "Explore the [Language Fundamentals](../../language/fundamentals.md)"
+msgstr "探索 [语言基础](../../language/fundamentals.md)"
+
+#: ../../tutorial/for-go-programmers/index.md:1239
+msgid "Learn about [Error Handling](../../language/error-handling.md)"
+msgstr "了解 [错误处理](../../language/error-handling.md)"
+
+#: ../../tutorial/for-go-programmers/index.md:1240
+msgid "Understand [Methods and Traits](../../language/methods.md)"
+msgstr "理解 [方法和特征](../../language/methods.md)"
+
+#: ../../tutorial/for-go-programmers/index.md:1241
+msgid "Check out [FFI capabilities](../../language/ffi.md) for interop"
+msgstr "查看 [FFI 功能](../../language/ffi.md) 以实现互操作"
+

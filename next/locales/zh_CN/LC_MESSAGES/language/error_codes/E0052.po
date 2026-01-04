@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0052.md:1
+msgid "E0052"
+msgstr ""
+
+#: ../../language/error_codes/E0052.md:3
+msgid "A loop variable is not updated in loop."
+msgstr "变量并非在所有模式中都是绑定的。"
+
+#: ../../language/error_codes/E0052.md:5
+msgid ""
+"When a loop variable is not updated, this could be a potential bug that you "
+"have forgotten to update it, leading to an infinite loop."
+msgstr "当循环变量未更新时，这可能是一个潜在的错误，您忘记更新它，从而导致无限循环。"
+
+#: ../../language/error_codes/E0052.md:8
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0052.md:10
+msgid ""
+"///|\n"
+"pub fn f() -> Unit {\n"
+"  for i = 0, radix = 10; i < 10; {\n"
+"    println(i.to_string(radix~))\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0052.md:14
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0052.md:16
+msgid "There are multiple ways to fix this warning:"
+msgstr "有几种方式可以修复这个警告："
+
+#: ../../language/error_codes/E0052.md:18
+msgid ""
+"If this variable is indeed constant during the loop, you can remove it from "
+"the initialization and make it constant"
+msgstr "如果这个变量确实没有用，你可以移除变量的定义。"
+
+#: ../../language/error_codes/E0052.md:20
+msgid ""
+"If your code depends on change of the variable, you should update it "
+"somewhere in the loop."
+msgstr "如果您的代码依赖于变量的变化，您应该在循环中的某个地方更新它。"
+
+#: ../../language/error_codes/E0052.md:23
+msgid ""
+"///|\n"
+"pub fn f() -> Unit {\n"
+"  let radix = 10\n"
+"  for i = 0; i < 10; i = i + 1 {\n"
+"    println(i.to_string(radix~))\n"
+"  }\n"
+"}\n"
+msgstr ""
+

@@ -1,0 +1,84 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4074.md:1
+msgid "E4074"
+msgstr ""
+
+#: ../../language/error_codes/E4074.md:3
+msgid ""
+"This error code is generated when a toplevel declaration is missing "
+"necessary type annotation. MoonBit requires toplevel variables and functions"
+" to have fully annotated types, because types are important documentation "
+"for toplevel definitions."
+msgstr "本错误代码会在顶层声明缺少类型标注时出现。MoonBit 要求顶层的变量声明和函数定义都有完整的类型标注，因为顶层定义的类型标注是重要的文档。"
+
+#: ../../language/error_codes/E4074.md:7
+msgid "There are two exception to this rule:"
+msgstr "上述要求有两个例外："
+
+#: ../../language/error_codes/E4074.md:9
+msgid ""
+"if the value of a toplevel `let` is just a simple literal value, type "
+"annotation can be omitted:"
+msgstr "如果顶层 `let` 定义的值是一个简单的字面量，可以省略类型标注："
+
+#: ../../language/error_codes/E4074.md:10
+msgid ""
+"pub let forty_two = 42\n"
+"pub let float = 1.0\n"
+"pub let string = \"Hello, world!\"\n"
+"pub let array = [1, 2, 3]\n"
+msgstr ""
+
+#: ../../language/error_codes/E4074.md:17
+msgid ""
+"if the value is a private alias of a foreign value.   In this case, the type"
+" can be easily inferred.   However, for public `let`, MoonBit still requires"
+" annotation for documentation sake."
+msgstr ""
+"如果顶层 `let` 是某个来自外部的函数的私有别名，也可以省略标注。此时，值的类型可以轻松被推导出。但是，对于 `pub let`，MoonBit "
+"依然要求类型标注，因为这种类型标注是重要的文档。"
+
+#: ../../language/error_codes/E4074.md:21
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4074.md:23
+msgid ""
+"let a = 1 + 1 // Error: Cannot infer the type of variable a, please add more"
+" type annotation."
+msgstr ""
+
+#: ../../language/error_codes/E4074.md:27
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4074.md:29
+msgid ""
+"These two error can be fixed by explicitly annotating the type of the "
+"variable:"
+msgstr "这两个错误可以通过显式注释变量的类型来修复："
+
+#: ../../language/error_codes/E4074.md:31
+msgid "let a : Int = 1 + 1"
+msgstr ""
+

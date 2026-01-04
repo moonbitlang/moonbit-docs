@@ -1,0 +1,61 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4012.md:1
+msgid "E4012"
+msgstr ""
+
+#: ../../language/error_codes/E4012.md:3
+msgid "Mutable constructor fields are only allowed on labelled arguments."
+msgstr "只有带标签的构造器字段可以是可变的。"
+
+#: ../../language/error_codes/E4012.md:5
+msgid "Erroneous Example"
+msgstr "错误示例："
+
+#: ../../language/error_codes/E4012.md:7
+msgid ""
+"enum E {\n"
+"  F(mut x : Int)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4012.md:13
+msgid ""
+"The example above declares an unlabeled mutable field `x` in the constructor"
+" of the `F` variant of the `E` enum, which is not allowed."
+msgstr "上述示例在 `E` 枚举的 `F` 变体构造函数中声明了一个未标记的可变字段 `x`，这是不允许的。"
+
+#: ../../language/error_codes/E4012.md:16
+msgid "Suggestions"
+msgstr "建议"
+
+#: ../../language/error_codes/E4012.md:18
+msgid "Add a label to the mutable field:"
+msgstr "为可变字段添加标签："
+
+#: ../../language/error_codes/E4012.md:20
+msgid ""
+"enum E {\n"
+"  F(mut x~ : Int)\n"
+"}"
+msgstr ""
+

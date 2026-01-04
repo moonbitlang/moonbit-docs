@@ -1,0 +1,68 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4093.md:1
+msgid "E4093"
+msgstr ""
+
+#: ../../language/error_codes/E4093.md:3
+msgid "The type is not a struct type."
+msgstr "该类型不是记录类型。"
+
+#: ../../language/error_codes/E4093.md:5
+msgid ""
+"This error occurs when you try to construct a type that is not a `struct` "
+"using the `T::{ .. }` syntax."
+msgstr "当您尝试使用 `T::{ .. }` 语法构造不是结构体的类型时会发生此错误。"
+
+#: ../../language/error_codes/E4093.md:8
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4093.md:10
+msgid ""
+"enum Point {\n"
+"  D2(Double, Double)\n"
+"  D3(Double, Double, Double)\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let a = Point::{ x : 1.0, y : 2.0 }\n"
+"  //      ^~~~~\n"
+"  // Error: The type Point is not a struct type\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4093.md:14
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4093.md:16
+msgid "You should use the correct syntax to construct the type."
+msgstr "您应该使用正确的语法来构造类型。"
+
+#: ../../language/error_codes/E4093.md:18
+msgid ""
+"fn main {\n"
+"  let a = Point::D2(1.0, 2.0)\n"
+"}"
+msgstr ""
+

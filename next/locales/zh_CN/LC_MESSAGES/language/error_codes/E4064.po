@@ -1,0 +1,59 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4064.md:1
+msgid "E4064"
+msgstr ""
+
+#: ../../language/error_codes/E4064.md:3
+msgid "Invalid escape sequence in char/string literal."
+msgstr "字符或字符串字面量中包含不合法的转义序列。"
+
+#: ../../language/error_codes/E4064.md:5
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4064.md:7
+msgid "Using escape sequence with invalid unicode code point result in this error:"
+msgstr "如果转义序列中包含不合法的 unicode code point，编译器就会产生本错误："
+
+#: ../../language/error_codes/E4064.md:9
+msgid ""
+"test {\n"
+"  println('\\uD800')\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4064.md:13
+msgid "Another case is using unsupported escape sequence in char literal for `Byte`:"
+msgstr "此外，用字符字面量创建 `Byte` 类型的值时，如果使用了 `Byte` 不支持的转义序列，编译器也会产生本错误："
+
+#: ../../language/error_codes/E4064.md:15
+msgid ""
+"test {\n"
+"  let _ : Byte = '\\uD000'\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4064.md:19
+msgid "Only `\\x` and `\\o` escape sequences are supported in `Byte` literal."
+msgstr "在 `Byte` 字面量中，只能使用 `\\x` 和 `\\o` 形式的转义序列。"
+

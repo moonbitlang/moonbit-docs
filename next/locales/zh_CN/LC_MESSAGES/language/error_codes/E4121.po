@@ -1,0 +1,96 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4121.md:1
+msgid "E4121"
+msgstr ""
+
+#: ../../language/error_codes/E4121.md:3
+msgid "The attribute (`!`, `?`, `!!` mark) cannot be used on this application."
+msgstr "这个应用中不允许使用 `!`、`?` 或 `!!` 标记。"
+
+#: ../../language/error_codes/E4121.md:5
+msgid "This error occurs when:"
+msgstr "这个错误发生在以下情况："
+
+#: ../../language/error_codes/E4121.md:7
+msgid "The attribute (`!`, `?`, `!!` mark) is used on a constructor."
+msgstr "`!`、`?` 或 `!!` 标记用于构造函数。"
+
+#: ../../language/error_codes/E4121.md:8
+msgid "The attribute (`!`, `?`, `!!` mark) is used on a function that does fit."
+msgstr "`!`、`?` 或 `!!` 标记用于不适合的函数。"
+
+#: ../../language/error_codes/E4121.md:9
+msgid "`!` and `?` must be annotated on a function that may raise errors."
+msgstr "`!` 和 `?` 必须用于可能引发错误的函数。"
+
+#: ../../language/error_codes/E4121.md:10
+msgid "`!!` must be annotated on an async function."
+msgstr "`!!` 必须用于异步函数。"
+
+#: ../../language/error_codes/E4121.md:12
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4121.md:14
+msgid ""
+"enum Err {\n"
+"  IntErr(Int)\n"
+"}\n"
+"\n"
+"fn square(x: Int) -> Int {\n"
+"  x * x\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  IntErr!(1) |> ignore() // Error: The attribute `!` cannot be used on "
+"constructors.\n"
+"  IntErr?(2) |> ignore() // Error: The attribute `?` cannot be used on "
+"constructors.\n"
+"  IntErr!!(3) |> ignore() // Error: The attribute `!!` cannot be used on "
+"constructors.\n"
+"  square!(1) |> ignore() // Error: The attribute `!` cannot be used on "
+"application that does not raise errors\n"
+"  square?(2) |> ignore() // Error: The attribute `?` cannot be used on "
+"application that does not raise errors\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4121.md:18
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4121.md:20
+msgid "Remove the attribute (`!`, `?`, `!!` mark) from the application."
+msgstr "从应用中移除 `!`、`?` 或 `!!` 标记。"
+
+#: ../../language/error_codes/E4121.md:22
+msgid ""
+"fn main {\n"
+"  IntErr(1) |> ignore()\n"
+"  IntErr(2) |> ignore()\n"
+"  IntErr(3) |> ignore()\n"
+"  square(1) |> ignore()\n"
+"  square(2) |> ignore()\n"
+"}"
+msgstr ""
+

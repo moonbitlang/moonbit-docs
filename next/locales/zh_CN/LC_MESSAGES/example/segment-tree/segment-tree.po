@@ -1,0 +1,461 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../example/segment-tree/segment-tree.md:1
+msgid "Segment Trees (Part 1)"
+msgstr "线段树（第一部分）"
+
+#: ../../example/segment-tree/segment-tree.md:3
+msgid "What is a Segment Tree?"
+msgstr "线段树是什么？"
+
+#: ../../example/segment-tree/segment-tree.md:5
+msgid ""
+"This section focuses on concepts and theory. If you're already familiar with"
+" Segment Trees and their principles, feel free to skip to the next section."
+msgstr "本节是纯粹的概念、理论内容，如果读者已经了解并且熟悉线段树的构成与其原理，可以直接阅读下一节内容。"
+
+#: ../../example/segment-tree/segment-tree.md:7
+msgid ""
+"As mentioned in the introduction, Segment Trees address a class of range "
+"problems, but what do they look like, and what is the principle behind their"
+" excellent complexity?"
+msgstr "就像引言当中所说的，线段树可以解决一类区间问题，但他长什么样子，能做到如此优秀复杂度的原理又是什么呢？"
+
+#: ../../example/segment-tree/segment-tree.md:9
+msgid ""
+"Let's consider a linear sequence of numbers as an example. If we want to "
+"build a Segment Tree from it, it will look like this:"
+msgstr "我们以下图一个线性的数字序列为例，如果我们希望以它建立一棵线段树，那么它将会长这个样子："
+
+#: ../../example/segment-tree/segment-tree.md:11
+msgid "![build segment tree](/imgs/segment-tree-build.png)"
+msgstr "![构建线段树](/imgs/segment-tree-build.png)"
+
+#: ../../example/segment-tree/segment-tree.md:11
+msgid "build segment tree"
+msgstr "构建线段树"
+
+#: ../../example/segment-tree/segment-tree.md:13
+msgid ""
+"We can see that we recursively divide the linear sequence into two equal "
+"parts (with one side having an extra element if the length is odd) until we "
+"reach segments of length one. During this process, we compute the sum of "
+"each segment (shown in parentheses), thereby creating a Segment Tree that "
+"supports range sum queries from a linear sequence."
+msgstr "可以看到我们把一个线性序列的区间层层分而治之，每次分割为两个对等（如果是奇数则一边多一个）的两个区间（区间范围下标在图示中），最终直到分割为长度为一的区间，并且在此过程中计算了其中每个区间元素的加和（在括号中），这样就从一个线性序列创建了一棵支持查询区间和线段树。"
+
+#: ../../example/segment-tree/segment-tree.md:15
+msgid ""
+"So, how does it work when querying a range sum? Let's take the example of "
+"querying the sum from index 1 to 6:"
+msgstr "那么在查询区间和的时候，它如何工作呢？我们以查询区间 1-6 的和为例："
+
+#: ../../example/segment-tree/segment-tree.md:17
+msgid "![query segment tree](/imgs/segment-tree-query.png)"
+msgstr "![查询线段树](/imgs/segment-tree-query.png)"
+
+#: ../../example/segment-tree/segment-tree.md:17
+msgid "query segment tree"
+msgstr "查询线段树"
+
+#: ../../example/segment-tree/segment-tree.md:19
+msgid ""
+"The highlighted parts in the diagram sum up to the total for the range 1-6, "
+"and we didn't have to consider all elements; we simply selected the minimum "
+"number of segments needed to obtain our result and combined them. We can "
+"traverse the Segment Tree from top to bottom to determine the intersections "
+"and containment relationships between segments to select the appropriate "
+"ranges."
+msgstr ""
+"可以发现图中的标红部分加起来就等于区间 1-6 "
+"的区间和，而我们并没有统计到所有元素，只是选取了最少的区间来频出我们需要求解的区间，并且把我们要求的结果（此处为和）合并起来即可得到最终解。而我们只需要从上到下遍历这棵线段树来判断区间之间的交集/包含关系即可选择到符合条件的区间。"
+
+#: ../../example/segment-tree/segment-tree.md:21
+msgid "Specifically:"
+msgstr "具体来说："
+
+#: ../../example/segment-tree/segment-tree.md:23
+msgid ""
+"First, we check the relationship between the ranges 1-7 and 1-6. The latter "
+"is a subset of the former, so the data from 1-7 cannot be used in our "
+"calculation, and we proceed to explore its two child nodes."
+msgstr "首先询问区间 1-7 与 1-6 的关系，显然后者为前者的子集，当前 1-7 的数据不能用于统计，因此继续向下遍历两个子节点。"
+
+#: ../../example/segment-tree/segment-tree.md:24
+msgid ""
+"Next, we check the relationship between 1-3 and 1-6. The former is a subset "
+"of the latter, contributing to our result."
+msgstr "再询问 1-3 与 1-6 的关系，前者为后者的子集，可以作为解的一部分，统计入当前结果中。"
+
+#: ../../example/segment-tree/segment-tree.md:25
+msgid ""
+"Then, we examine the relationship between 4-7 and 1-6, which overlap, "
+"requiring us to explore both child nodes further."
+msgstr "接下来询问 4-7 与 1-6 的关系，二者有交集，因此要继续向下遍历两个子节点。"
+
+#: ../../example/segment-tree/segment-tree.md:26
+msgid "And we examine the relationship between 4-5 and 1-6, just as the third step."
+msgstr "然后询问 4-5 与 1-6 的关系，此处与第三条一致。"
+
+#: ../../example/segment-tree/segment-tree.md:27
+msgid "We repeat this process..."
+msgstr "以此类推..."
+
+#: ../../example/segment-tree/segment-tree.md:29
+msgid ""
+"Based on binary decomposition, we will query at most Log N segments for any "
+"range of length N, ensuring guaranteed complexity."
+msgstr "根据二进制分解的知识，我们对任何长度为 N 的区间最多只会求解 Log N 个区间，因此复杂度是可以保证的。"
+
+#: ../../example/segment-tree/segment-tree.md:31
+msgid ""
+"This section only discusses the query operation; we will elaborate on the "
+"principles and implementation of modification operations in the next "
+"section."
+msgstr "这里仅聊到查询操作，关于线段树上的修改操作的原理和实现我们将会在下一节详细说明。"
+
+#: ../../example/segment-tree/segment-tree.md:33
+msgid "Implementation"
+msgstr "实现"
+
+#: ../../example/segment-tree/segment-tree.md:35
+msgid "Basic Definition"
+msgstr "基础定义"
+
+#: ../../example/segment-tree/segment-tree.md:37
+msgid "We use a classic approach to represent the Segment Tree:"
+msgstr "我们采用一个非常经典的方法来表达线段树："
+
+#: ../../example/segment-tree/segment-tree.md:39
+msgid ""
+"enum Node {\n"
+"  Nil\n"
+"  Node(Int, Node, Node)\n"
+"}\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:45
+msgid ""
+"Here, `Nil` represents an empty tree, while a `Node` contains the stored "
+"data (of type Int) and its left and right children."
+msgstr "其中 `Nil` 代表空树，而一个 `Node` 则包含一个它所储存的数据（为 Int 类型）和左右两个节点。"
+
+#: ../../example/segment-tree/segment-tree.md:47
+msgid "Building the Tree"
+msgstr "建树"
+
+#: ../../example/segment-tree/segment-tree.md:49
+msgid ""
+"Building the tree refers to the process of abstracting a linear sequence "
+"into a Segment Tree, commonly referred to as `build`."
+msgstr "建树是指将一个线性序列抽象为线段树的过程，一般将其称为 `build`。"
+
+#: ../../example/segment-tree/segment-tree.md:51
+msgid ""
+"To start, we should write an overloaded `add` function for the `Node` type "
+"to assist with the tree-building process:"
+msgstr "作为前置，我们应该根据需求为 `Node` 类型编写一个 `add` 的重载来配合下面建树的过程："
+
+#: ../../example/segment-tree/segment-tree.md:53
+msgid ""
+"impl Add for Node with add(self : Node, v : Node) -> Node {\n"
+"  match (self, v) {\n"
+"    (Node(left, _, _), Node(right, _, _)) => Node(left + right, self, v)\n"
+"    (Node(_), Nil) => self\n"
+"    (Nil, Node(_)) => v\n"
+"    (Nil, Nil) => Nil\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:59
+msgid ""
+"With this operation defined, we can easily merge two `Node` instances while "
+"maintaining the segment sums, laying the foundation for building the tree. "
+"In some descriptions of Segment Trees, this process is also called `pushup`."
+msgstr ""
+"定义这一运算之后就可以轻松的向上合并两个 `Node` 节点，并在此过程中维护区间的和，为我们建树打下了基础，在有些线段树的叙述当中，这个过程也叫做 "
+"`pushup`。"
+
+#: ../../example/segment-tree/segment-tree.md:61
+msgid ""
+"We can leverage MoonBit's `ArrayView` feature (known as `slice` in some "
+"languages) to recursively build the tree from a segment of a linear "
+"structure at a low cost, achieving O(Log N) complexity:"
+msgstr ""
+"我们可以用 MoonBit 的 `ArrayView` 特性（某些语言当中也叫做 `slice` "
+"）作为参数来低成本的取出一个线性结构的一段进行递归建树，这个过程是 `O(N Log N)` 的："
+
+#: ../../example/segment-tree/segment-tree.md:63
+msgid ""
+"fn build(data : ArrayView[Int]) -> Node {\n"
+"  if data.length() == 1 {\n"
+"    Node(data[0], Nil, Nil)\n"
+"  } else {\n"
+"    let mid = (data.length() + 1) >> 1\n"
+"    build(data[0:mid]) + build(data[mid:])\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:69
+msgid "Let’s analyze this code:"
+msgstr "分析一下这段代码："
+
+#: ../../example/segment-tree/segment-tree.md:71
+msgid ""
+"If the current length is 1, the segment does not need further subdivision, "
+"so we return a leaf node with empty left and right branches."
+msgstr "首先如果当前长度已经为 1，就证明该区间不再需要细分，直接返回左右分支为空的叶子节点。"
+
+#: ../../example/segment-tree/segment-tree.md:72
+msgid ""
+"Otherwise, we split the segment at the midpoint and recursively build the "
+"left and right segments, then merge the results."
+msgstr "否则就证明该区间还可被分割，则求其中间值将其分割为两个区间分而治之的建树再通过 `Node` 之间的加法合并。"
+
+#: ../../example/segment-tree/segment-tree.md:74
+msgid ""
+"This code is concise, highly readable, and optimization-friendly, serving as"
+" a great learning paradigm for other data structures."
+msgstr "这段代码是非常简洁、可读性非常高的，而且对优化非常友好，可以作为后续其他数据结构的范式学习。"
+
+#: ../../example/segment-tree/segment-tree.md:76
+msgid "Now, let's build a tree and test it:"
+msgstr "让我们来建立一棵树并测试看看："
+
+#: ../../example/segment-tree/segment-tree.md:78
+msgid ""
+"test {\n"
+"  let tree = build([1, 2, 3, 4, 5][:])\n"
+"  @json.inspect(tree, content=[\n"
+"    15,\n"
+"    [6, [3, [1, \"Nil\", \"Nil\"], [2, \"Nil\", \"Nil\"]], [3, \"Nil\", "
+"\"Nil\"]],\n"
+"    [9, [4, \"Nil\", \"Nil\"], [5, \"Nil\", \"Nil\"]],\n"
+"  ])\n"
+"}\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:84
+msgid "Great! We've successfully built the tree!"
+msgstr "漂亮，我们已经成功完成了建树的过程！"
+
+#: ../../example/segment-tree/segment-tree.md:86
+msgid "Querying"
+msgstr "查询"
+
+#: ../../example/segment-tree/segment-tree.md:88
+msgid ""
+"Next, we need to implement the query function. Since the nodes of our "
+"Segment Tree maintain segment sums, we can write a `query` function to "
+"retrieve these sums:"
+msgstr "接下来我们要编写查询，因为这棵线段树的节点向上合并时维护的是区间和，因此我们可以编写一个 `query` 函数来查询它："
+
+#: ../../example/segment-tree/segment-tree.md:90
+msgid ""
+"let empty_node : Node = Node(0, Nil, Nil)\n"
+"\n"
+"///|\n"
+"fn Node::query(\n"
+"  self : Node,\n"
+"  l : Int,\n"
+"  r : Int,\n"
+"  query_l : Int,\n"
+"  query_r : Int,\n"
+") -> Node {\n"
+"  if query_l > r || l > query_r {\n"
+"    empty_node\n"
+"  } else if query_l <= l && query_r >= r {\n"
+"    self\n"
+"  } else {\n"
+"    guard self is Node(_, left, right)\n"
+"    let mid = (l + r) >> 1\n"
+"    left.query(l, mid, query_l, query_r) +\n"
+"    right.query(mid + 1, r, query_l, query_r)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:97
+msgid ""
+"Here, `l` and `r` represent the currently queried range, while `query_l` and"
+" `query_r` denote the range we need to query. Let's break down this "
+"implementation:"
+msgstr "首先，`l` 与 `r` 是当前函数中已经查询到的区间，`query_l` 与 `query_r` 是需要查询的区间，让我们来尝试解析一下这段实现："
+
+#: ../../example/segment-tree/segment-tree.md:99
+msgid ""
+"If the queried range does not overlap with the current range, it contributes"
+" nothing to the result. We define an `empty_node` to represent a zero-"
+"contribution node and return it."
+msgstr "如果需查询的区间和当前的区间状态为互不相交，则对解没有贡献，我们定义了一个 `empty_node` 来表示 0 贡献节点，将其返回则为无贡献。"
+
+#: ../../example/segment-tree/segment-tree.md:100
+msgid ""
+"If the current range is a subset of the queried range, it fully contributes "
+"to the result, so we return it directly."
+msgstr "如果当前区间就是需查询区间的子集，那么实际上对解的贡献就是它自己，直接返回它即可。"
+
+#: ../../example/segment-tree/segment-tree.md:101
+msgid ""
+"If the current range overlaps with the queried range, we continue searching "
+"downwards to find the exact covering ranges, merging the results of the left"
+" and right nodes."
+msgstr "如果当前区间和需要查询的区间存在交集关系，那么需要继续向下搜索来确定准确的覆盖，因此继续求出中间值向下搜索并且合并两边的 `Node` 结果。"
+
+#: ../../example/segment-tree/segment-tree.md:103
+msgid "Before We Continue"
+msgstr "在继续之前"
+
+#: ../../example/segment-tree/segment-tree.md:105
+msgid ""
+"Notice the highlighted line. When using the `let` to destructure `Node`, we "
+"could be sure that the enum being destructured wasn’t `Nil`. However, the "
+"compiler couldn't guarantee this, so we would have received a warning for "
+"using:"
+msgstr ""
+"注意被高亮的行。在使用 let 解构 Node 时，我们是可以确定要解构的 enum 一定不是 "
+"Nil，但编译器是不能确定这一点的的，所以如果我们尝试这样去解构它："
+
+#: ../../example/segment-tree/segment-tree.md:107
+msgid "let Node(x, y) = z\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:111
+msgid ""
+"Although it didn’t affect execution, it was somewhat misleading. With "
+"MoonBit’s newly introduced `guard` statement, we can now handle this better "
+"using:"
+msgstr ""
+"会发现编译器实际上给我们了一个警告。尽管不影响运行，但有些误导。因此我们可以用，MoonBit 的 guard 语句，用 guard let "
+"这种方法来更好的解决这种需求："
+
+#: ../../example/segment-tree/segment-tree.md:113
+msgid "guard let Node(x, y) = z\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:117
+msgid "Q&A"
+msgstr "问与答"
+
+#: ../../example/segment-tree/segment-tree.md:119
+msgid ""
+"**Q:** Why use `Node` as the return value? Can't I destructure and sum the "
+"values directly?"
+msgstr "问：为什么要用 `Node` 作为返回值，我用相同的逻辑也可以直接把 `Node` 当中的值给解构出来相加呀？"
+
+#: ../../example/segment-tree/segment-tree.md:120
+msgid ""
+"**A:** We have defined an addition operation for `Node`. Consider a scenario"
+" where we need to maintain not just the sum but also the minimum value of a "
+"range. In that case, we can modify the `add` logic to maintain the minimum "
+"while the `query` function remains unaffected. It ultimately returns a "
+"`Node` that can contain all necessary information, so let's stick with using"
+" `Node`!"
+msgstr ""
+"答：首先，我们为 `Node` 已经编写了加和运算，不妨考虑一种情况，我们不止要维护区间和，而是要同时维护区间和还有区间最小值，这时候我们只需要更改 "
+"`Node` 的 `add` 逻辑来维护最小值即可，而 `query` 函数和我们要维护的数据没有关系，它最终返回的是一个 `Node` "
+"，它可以求出所有信息！所以不妨就让我们使用 `Node`！"
+
+#: ../../example/segment-tree/segment-tree.md:122
+msgid "**Q:** Shouldn't the `empty_node` change in this case?"
+msgstr "问：你说的这种情况 `empty_node` 是不是也要改变？"
+
+#: ../../example/segment-tree/segment-tree.md:123
+msgid ""
+"**A:** Yes, the `empty_node` ensures that it doesn’t affect the result when "
+"added to any other `Node`. It's a zero-contribution node, akin to how 0 "
+"contributes nothing in sum operations. For minimum value maintenance, it can"
+" represent a value that won't affect the outcome, making the process "
+"flexible!"
+msgstr ""
+"答：对，`empty_node` 是用来保证它和任何其他 `Node` 相加都不会产生改变的元素，是一个零贡献的`Node` "
+"，类比在维护区间和的时候零贡献是 0，那么其实对于维护最小值来说你的值是当前可以取到的最大值，那就是零贡献的，这个过程处理的其实很灵活！"
+
+#: ../../example/segment-tree/segment-tree.md:125
+msgid "Now, let's test the query process:"
+msgstr "让我们来测试一下这个查询过程："
+
+#: ../../example/segment-tree/segment-tree.md:127
+msgid ""
+"test {\n"
+"  let tree = build([1, 2, 3, 4, 5][:])\n"
+"  let sum = match tree.query(1, 5, 1, 3) {\n"
+"    Node(sum, _, _) => sum\n"
+"    _ => fail(\"Expected Node\")\n"
+"  }\n"
+"  inspect(sum, content=\"6\")\n"
+"}\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:133
+msgid "The output is `6`."
+msgstr "输出是：`6`。"
+
+#: ../../example/segment-tree/segment-tree.md:135
+msgid "Fantastic! We've obtained the correct output!"
+msgstr "太好了，我们得到了正确的输出！"
+
+#: ../../example/segment-tree/segment-tree.md:137
+msgid "Code"
+msgstr "代码"
+
+#: ../../example/segment-tree/segment-tree.md:139
+msgid ""
+"For the complete code, please check the [GitHub "
+"repository](https://github.com/moonbitlang/moonbit-"
+"docs/tree/main/next/sources/segment-tree/src/part1/top.mbt)."
+msgstr ""
+"完整代码请查看 [GitHub 代码仓库](https://github.com/moonbitlang/moonbit-"
+"docs/tree/main/next/sources/segment-tree/src/part1/top.mbt)。"
+
+#: ../../example/segment-tree/segment-tree.md:141
+msgid "Conclusion"
+msgstr "总结"
+
+#: ../../example/segment-tree/segment-tree.md:143
+msgid ""
+"Today, we learned how to build and query a simple Segment Tree. In the next "
+"lesson, we will explore more complex principles and implementations of "
+"Segment Trees. Interested readers can solidify their knowledge and expand on"
+" it by implementing the following:"
+msgstr "今天我们学习了如何编写一棵简单的线段树的构建和查询操作的编写，下一节课我们将会学习更加复杂的线段树的原理和实现，感兴趣的读者可以在阅读文章之后自行实现下面内容来巩固知识和拓展更多内容："
+
+#: ../../example/segment-tree/segment-tree.md:145
+msgid ""
+"Try implementing a Segment Tree that maintains multiple pieces of "
+"information (e.g., range sum, maximum, and minimum)."
+msgstr "尝试实现一个可以维护多个信息（如区间和、区间最大值最小值）的线段树。"
+
+#: ../../example/segment-tree/segment-tree.md:146
+msgid ""
+"Understand how to implement point query/modification operations for Segment "
+"Trees."
+msgstr "自行了解如何实现线段树的单点查询/修改操作并实现。"
+
+#: ../../example/segment-tree/segment-tree.md:147
+msgid ""
+"Explore range modification operations for Segment Trees and related Lazy "
+"Tags."
+msgstr "自行了解线段树的区间修改操作以及 LazyTag 的相关知识。"
+

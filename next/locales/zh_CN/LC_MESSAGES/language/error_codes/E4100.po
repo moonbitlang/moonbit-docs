@@ -1,0 +1,81 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4100.md:1
+msgid "E4100"
+msgstr ""
+
+#: ../../language/error_codes/E4100.md:3
+msgid "The type is not a trait."
+msgstr "该类型不是一个特征。"
+
+#: ../../language/error_codes/E4100.md:5
+msgid ""
+"This error occurs when you try to use the `typealias` syntax to define a "
+"alias for a type and use it as a trait. As it is impossible to use a type as"
+" a trait, this error might hint at a typo in your code."
+msgstr "该错误发生在您尝试使用 `typealias` 语法定义一个类型的别名，并将其用作特征时。由于无法将类型用作特征，因此该错误可能会提示您代码中的错误。"
+
+#: ../../language/error_codes/E4100.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4100.md:11
+msgid ""
+"type Original Int\n"
+"\n"
+"typealias Alias = Original\n"
+"\n"
+"trait Trait: Alias {\n"
+"  //         ^~~~~\n"
+"  // Error: The type Alias is not a trait\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4100.md:15
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4100.md:17
+msgid ""
+"If there is a typo, the use a correct trait or alias of trait at where the "
+"error occurs."
+msgstr "如果代码中存在拼写错误，应当使用正确的特征或特征别名。"
+
+#: ../../language/error_codes/E4100.md:20
+msgid ""
+"trait Original {\n"
+"  to_int(Self) -> Int\n"
+"}\n"
+"\n"
+"typealias Alias = Original\n"
+"\n"
+"trait Trait: Alias {\n"
+"  to_int(Self) -> Int\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4100.md:24
+msgid ""
+"We recommend using `traitalias` for defining aliases for traits, as this "
+"will detect errors like this earlier."
+msgstr "我们建议使用 `traitalias` 定义特征的别名，这样可以更早地检测到此类错误。"
+

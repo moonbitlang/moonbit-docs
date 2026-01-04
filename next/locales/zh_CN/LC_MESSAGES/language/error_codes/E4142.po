@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4142.md:1
+msgid "E4142"
+msgstr ""
+
+#: ../../language/error_codes/E4142.md:3
+msgid "This 'const' declaration is not constant."
+msgstr "此 'const' 声明不是常量。"
+
+#: ../../language/error_codes/E4142.md:5
+msgid ""
+"In MoonBit, you can use `const` to declare a constant value. Only literal "
+"value of immutable primitive types can be assigned to `const`."
+msgstr "在 MoonBit 中，您可以使用 `const` 声明常量值。只有不可变原语类型的字面量才能分配给 `const`。"
+
+#: ../../language/error_codes/E4142.md:8
+msgid "These are constant values: `1`, `\"String\"`, `1.0`, `true`, `false`, etc."
+msgstr "这些是常量值：`1`、`\"String\"`、`1.0`、`true`、`false` 等。"
+
+#: ../../language/error_codes/E4142.md:9
+msgid "These are not constant values: `[1, 2, 3]`, `1 + 1`, `fn() { 1 }`, etc."
+msgstr "这些不是常量值：`[1, 2, 3]`、`1 + 1`、`fn() { 1 }` 等。"
+
+#: ../../language/error_codes/E4142.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4142.md:13
+msgid "const A : Int = 1 + 1 // Error: This 'const' declaration is not constant."
+msgstr ""
+
+#: ../../language/error_codes/E4142.md:17
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4142.md:19
+msgid ""
+"As it is not possible to run the computation at compile time and assign the "
+"result to a `const`, you can use a `let` declaration to calculate these "
+"result at initialization time instead."
+msgstr "如果无法在编译时运行计算并将结果分配给 `const`，您可以使用 `let` 声明在初始化时间计算这些结果。"
+
+#: ../../language/error_codes/E4142.md:23
+msgid "let a : Int = 1 + 1 // These will be computed at initialization time."
+msgstr ""
+
+#: ../../language/error_codes/E4142.md:27
+msgid ""
+"If you can compute the value yourself by using, say a calculator, you can "
+"simply assign the result to the `const`."
+msgstr "如果您可以使用计算器自行计算值，您只需将结果分配给 `const` 即可。"
+
+#: ../../language/error_codes/E4142.md:30
+msgid "const A : Int = 2 // This is a constant value."
+msgstr ""
+

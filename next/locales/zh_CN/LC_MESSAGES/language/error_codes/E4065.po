@@ -1,0 +1,123 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4065.md:1
+msgid "E4065"
+msgstr ""
+
+#: ../../language/error_codes/E4065.md:3
+msgid "Overloaded operator should accept the correct number of arguments."
+msgstr "重载操作符应接受正确数量的参数。"
+
+#: ../../language/error_codes/E4065.md:5
+msgid ""
+"You can refer to the [Operator Overloading](../methods.md#operator-"
+"overloading) section for a list of operators that can be overloaded, and "
+"here is a list of number of arguments that each operator should accept:"
+msgstr ""
+"你可以参考 [操作符重载](../methods.md#operator-overloading) "
+"部分，获取可以重载的操作符列表，下面是每个操作符应该接受的参数数量列表："
+
+#: ../../language/error_codes/E4065.md
+msgid "Operator"
+msgstr "运算符"
+
+#: ../../language/error_codes/E4065.md
+msgid "Method Name"
+msgstr "方法名称"
+
+#: ../../language/error_codes/E4065.md
+msgid "Number of Arguments"
+msgstr "参数数量"
+
+#: ../../language/error_codes/E4065.md
+msgid "`_[_]`"
+msgstr ""
+
+#: ../../language/error_codes/E4065.md
+msgid "`op_get`"
+msgstr ""
+
+#: ../../language/error_codes/E4065.md
+msgid "2"
+msgstr ""
+
+#: ../../language/error_codes/E4065.md
+msgid "`_[_] = _`"
+msgstr "`_[_] = _`"
+
+#: ../../language/error_codes/E4065.md
+msgid "`op_set`"
+msgstr ""
+
+#: ../../language/error_codes/E4065.md
+msgid "3"
+msgstr ""
+
+#: ../../language/error_codes/E4065.md
+msgid "`_[_:_]`"
+msgstr "`_[_:_]`"
+
+#: ../../language/error_codes/E4065.md
+msgid "`op_as_view`"
+msgstr ""
+
+#: ../../language/error_codes/E4065.md:15
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4065.md:17
+msgid ""
+"///|\n"
+"struct A(Array[Int])\n"
+"\n"
+"///|\n"
+"fn A::op_get(self : A, idx : Int, offset? : Int) -> Int {\n"
+"  //  ^~~~~~\n"
+"  // Error: overloaded operator \"op_get\" should accept 2 arguments, but it"
+" accepts 3 arguments\n"
+"  let idx = match offset {\n"
+"    None => idx\n"
+"    Some(offset) => idx + offset\n"
+"  }\n"
+"  return self.0[idx]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4065.md:21
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4065.md:23
+msgid "Modify the method to match the expected number of arguments of the operator."
+msgstr "修改该方法以匹配操作符的预期参数数。"
+
+#: ../../language/error_codes/E4065.md:25
+msgid ""
+"///|\n"
+"struct A(Array[Int])\n"
+"\n"
+"///|\n"
+"fn A::op_get(self : A, idx : Int) -> Int {\n"
+"  return self.0[idx]\n"
+"}\n"
+msgstr ""
+

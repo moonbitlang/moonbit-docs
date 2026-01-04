@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0032.md:1
+msgid "E0032"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:3
+msgid ""
+"Default value of optional argument is unused. This implies at every call "
+"site of this function, the optional argument is always explicitly supplied "
+"with a value. This means the optional argument can be refactored into a "
+"labelled argument."
+msgstr "可选参数的默认值未被使用。这意味着在这个函数的每个调用点，可选参数总是显式地提供一个值。这意味着可选参数可以重构为带标签的参数。"
+
+#: ../../language/error_codes/E0032.md:5
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0032.md:7
+msgid ""
+"Note, this warning is turned off by default. To enable this warning, you "
+"need to modify the `\"warn-list\"` of `moon.pkg.json`:"
+msgstr "注意，默认情况下，此警告是关闭的。要启用此警告，你需要修改 `moon.pkg.json` 的 `\"warn-list\"`："
+
+#: ../../language/error_codes/E0032.md:9
+msgid "moon.pkg.json"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:9
+msgid ""
+"{\n"
+"  \"is_main\": true,\n"
+"  \"warn-list\": \"+32\"\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:13
+msgid "main.mbt"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:13
+msgid ""
+"///|\n"
+"fn f(opt~ : Int = 4) -> Int {\n"
+"  ignore(opt)\n"
+"  0\n"
+"}\n"
+"\n"
+"///|\n"
+"fn main {\n"
+"  println(f(opt=3))\n"
+"  println(f(opt=3))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:18
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0032.md:20
+msgid "Turn the optional argument into a labelled argument:"
+msgstr "将可选参数转换为带标签的参数："
+
+#: ../../language/error_codes/E0032.md:22
+msgid ""
+"///|\n"
+"fn f(opt~ : Int) -> Int {\n"
+"  ignore(opt)\n"
+"  0\n"
+"}\n"
+"\n"
+"///|\n"
+"fn main {\n"
+"  println(f(opt=3))\n"
+"  println(f(opt=3))\n"
+"}\n"
+msgstr ""
+

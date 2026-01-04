@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4120.md:1
+msgid "E4120"
+msgstr ""
+
+#: ../../language/error_codes/E4120.md:3
+msgid ""
+"The application might raise errors, but it's not handled. Try adding an "
+"infix operator `!` or `?` to the application."
+msgstr "应用可能会引发错误，但没有处理。请在应用中添加一个中缀运算符 `!` 或 `?`。"
+
+#: ../../language/error_codes/E4120.md:6
+msgid ""
+"In MoonBit, we require programmers to explicitly annotate which functions "
+"may raise errors. This is done by adding an infix operator `!` or `?` to the"
+" function application. The `!` operator to re-raise the error, and the `?` "
+"operator is to materialize the error to a `Result[T, E]` type."
+msgstr ""
+"在 MoonBit 中，我们要求程序员明确标注哪些函数可能引发错误。这是通过在函数应用中添加中缀运算符 `!` 或 `?` 来完成的。运算符 `!` "
+"用于重新引发错误，运算符 `?` 用于将错误物化为 `Result[T, E]` 类型。"
+
+#: ../../language/error_codes/E4120.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4120.md:13
+msgid ""
+"fn may_raise_error(input : Int) -> Unit! {\n"
+"  if input == 42 {\n"
+"    return\n"
+"  }\n"
+"  fail!(\"failed\")\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  may_raise_error(42)\n"
+"  // Error: The application might raise errors of type Error, but it's not "
+"handled.\n"
+"  // Try adding a infix operator `!` or `?` to the application, so that it "
+"looks like `...!(...)` or `...?(...)`.\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4120.md:28
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4120.md:30
+msgid "You can either re-raise the error:"
+msgstr "您可以重新引发错误："
+
+#: ../../language/error_codes/E4120.md:32
+msgid ""
+"fn main {\n"
+"  try {\n"
+"    may_raise_error!(42)\n"
+"  } catch {\n"
+"    error => println(\"Error: \\{error}\")\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4120.md:36
+msgid "Or materialize the error to a `Result[T, E]` type:"
+msgstr "或者将错误物化为 `Result[T, E]` 类型："
+
+#: ../../language/error_codes/E4120.md:38
+msgid ""
+"fn main {\n"
+"  let result = may_raise_error?(42)\n"
+"  println(\"Result: \\{result}\")\n"
+"}"
+msgstr ""
+
