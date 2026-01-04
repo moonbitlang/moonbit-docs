@@ -23,6 +23,9 @@ jobs:
 
       - name: Check lint errors
         uses: huacnlee/autocorrect-action@v2
+      - name: Report Review Dog
+        if: failure()
+        uses: huacnlee/autocorrect-action@v2
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
