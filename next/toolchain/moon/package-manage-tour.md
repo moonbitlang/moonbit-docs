@@ -88,8 +88,10 @@ You can also give an alias to the imported package:
 
 ```json
 {
-  "is_main": true,
-  "import": [{ "path": "Yoorkin/example/list", "alias": "ls" }]
+    "is_main": true,
+    "import": [
+        { "path": "Yoorkin/example/list", "alias": "ls" }
+    ]
 }
 ```
 
@@ -137,7 +139,7 @@ mooncakes.io will generate documentation for each module automatically.
 The leading `///` comments of each toplevel will be recognized as documentation.
 You can write markdown inside.
 
-````moonbit
+```moonbit
 /// Get the largest element of a non-empty `Array`.
 ///
 /// # Example
@@ -153,6 +155,6 @@ You can write markdown inside.
 pub fn maximum[T : Compare](xs : Array[T]) -> T {
   // TODO ...
 }
-````
+```
 
 You can also use `moon doc --serve` to generate and view documentation locally.
