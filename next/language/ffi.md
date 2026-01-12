@@ -98,6 +98,10 @@ To interact with the outside world, you can declare foreign functions.
 MoonBit does not support polymorphic foreign functions.
 ```
 
+```{important}
+When declaring functions, you need to make sure that the signature corresponds to the actual foreign function. **When a function returns nothing (e.g. `void`), omit the return type annotation in the function declaration.**
+```
+
 `````````{tab-set}
 :sync-group: backends
 
@@ -190,8 +194,6 @@ You would probably like to `#include "moonbit.h"`, which contains type definitio
 
 ### Types
 
-When declaring functions, you need to make sure that the signature corresponds to the actual foreign function.
-When a function returns nothing (e.g. `void`), ignore the return type annotation in the function declaration.
 The table below shows the underlying representation of some MoonBit types:
 
 `````````{tab-set}
