@@ -64,8 +64,7 @@ You can use the `pub` modifier before toplevel `let`/`fn` to make them public.
 By default, [function alias](/language/fundamentals.md#function-alias) and
 [method alias](/language/methods.md#alias-methods-as-functions) follow the
 visibility of the original definition, while 
-[type alias](/language/fundamentals.md#type-alias),
-[trait alias](/language/methods.md#trait-alias), [using](#using) are _invisible_ to other
+[type alias](/language/fundamentals.md#type-alias), [using](#using) are _invisible_ to other
 packages.
 
 You can add the `pub` modifier before the definition or fill in the `visibility`

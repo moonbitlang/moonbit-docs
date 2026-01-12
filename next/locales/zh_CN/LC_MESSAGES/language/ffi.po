@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-01-12 10:41+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -27,8 +27,8 @@ msgstr "外部函数接口 (FFI)"
 msgid ""
 "What we've introduced is about describing pure computation. In reality, "
 "you'll need to interact with the real world. However, the \"world\" is "
-"different for each backend (C, JS, Wasm, WasmGC) and is sometimes based on "
-"runtime ([Wasmtime](https://wasmtime.dev/), Deno, Browser, etc.)."
+"different for each backend (C, JS, Wasm, WasmGC) and is sometimes based "
+"on runtime ([Wasmtime](https://wasmtime.dev/), Deno, Browser, etc.)."
 msgstr "我们已经介绍的是纯粹的计算。在现实中，需要与真实世界互动。然而，对于每个后端（C、JS、Wasm、WasmGC），“世界”是不同的，并且基于运行时（[Wasmtime](https://wasmtime.dev/)、Deno、浏览器等）。"
 
 #: ../../language/ffi.md:7
@@ -77,33 +77,35 @@ msgstr "引用类型"
 
 #: ../../language/ffi.md:26 ../../language/ffi.md:39
 msgid ""
-"For better compatibility, the `init` function will be compiled as [`start` "
-"function](https://webassembly.github.io/spec/core/syntax/modules.html#start-"
-"function), and the `main` function will be exported as `_start`."
+"For better compatibility, the `init` function will be compiled as "
+"[`start` "
+"function](https://webassembly.github.io/spec/core/syntax/modules.html"
+"#start-function), and the `main` function will be exported as `_start`."
 msgstr ""
 "为了更好的兼容性，`init` 函数会被编译成 [start "
-"function](https://webassembly.github.io/spec/core/syntax/modules.html#start-"
-"function)，而 `main` 函数会被导出为 `_start`。"
+"function](https://webassembly.github.io/spec/core/syntax/modules.html"
+"#start-function)，而 `main` 函数会被导出为 `_start`。"
 
 #: ../../language/ffi.md:29 ../../language/ffi.md:42
 msgid ""
-"For Wasm backends, all functions interacting with outside world relies on "
-"the host. For example, the `println` for Wasm and Wasm GC backend relies on "
-"importing a function `spectest.print_char` that prints a UTF-16 code unit "
-"for each call. The `env` package in standard library and some packages in "
-"`moonbitlang/x` relies on specific host function defined for MoonBit "
-"runtime. Avoid using them if you want to make the generated Wasm portable."
+"For Wasm backends, all functions interacting with outside world relies on"
+" the host. For example, the `println` for Wasm and Wasm GC backend relies"
+" on importing a function `spectest.print_char` that prints a UTF-16 code "
+"unit for each call. The `env` package in standard library and some "
+"packages in `moonbitlang/x` relies on specific host function defined for "
+"MoonBit runtime. Avoid using them if you want to make the generated Wasm "
+"portable."
 msgstr ""
-"对于 Wasm 后端，所有与外部世界交互的函数都依赖于宿主环境。例如，Wasm 和 Wasm GC 后端的 `println` 函数依赖于导入一个函数 "
-"`spectest.print_char`，它在每次调用时打印一个 UTF-16 码元。标准库中的 `env` 包和一些 `moonbitlang/x`"
-" 包依赖于 MoonBit 运行时定义的特定宿主函数。如果您想让生成的 Wasm 可移植，请避免使用它们。"
+"对于 Wasm 后端，所有与外部世界交互的函数都依赖于宿主环境。例如，Wasm 和 Wasm GC 后端的 `println` "
+"函数依赖于导入一个函数 `spectest.print_char`，它在每次调用时打印一个 UTF-16 码元。标准库中的 `env` 包和一些 "
+"`moonbitlang/x` 包依赖于 MoonBit 运行时定义的特定宿主函数。如果您想让生成的 Wasm 可移植，请避免使用它们。"
 
 #: ../../language/ffi.md:35
 msgid ""
-"By Wasm GC we refer to WebAssembly with Garbage Collection proposal, meaning"
-" that data structures will be represented with reference types such as "
-"`struct` `array` and the linear memory would not be used by default. It also"
-" supports other post-MVP proposals including:"
+"By Wasm GC we refer to WebAssembly with Garbage Collection proposal, "
+"meaning that data structures will be represented with reference types "
+"such as `struct` `array` and the linear memory would not be used by "
+"default. It also supports other post-MVP proposals including:"
 msgstr ""
 "Wasm GC 指的是使用垃圾回收提案的 WebAssembly，这意味着数据结构将使用引用类型（例如 `struct` 和 "
 "`array`）表示，线性内存不会被默认使用。它还支持其他 MVP 之后的提案，包括："
@@ -114,8 +116,8 @@ msgstr ""
 
 #: ../../language/ffi.md:48
 msgid ""
-"JavaScript backend will generate a JavaScript file, which can be a CommonJS "
-"module, an ES module or an IIFE based on the "
+"JavaScript backend will generate a JavaScript file, which can be a "
+"CommonJS module, an ES module or an IIFE based on the "
 "[configuration](/toolchain/moon/package.md#js-backend-link-options)."
 msgstr ""
 "JavaScript 后端会生成一个 JavaScript 文件，这个文件可以是一个 CommonJS 模块、ES 模块或 IIFE，具体取决于 "
@@ -123,12 +125,12 @@ msgstr ""
 
 #: ../../language/ffi.md:53
 msgid ""
-"C backend will generate a C file. The MoonBit toolchain will also compile "
-"the project and generate an executable based on the "
+"C backend will generate a C file. The MoonBit toolchain will also compile"
+" the project and generate an executable based on the "
 "[configuration](/toolchain/moon/package.md#native-backend-link-options)."
 msgstr ""
-"C 后端会生成一个 C 文件。MoonBit 工具链还会编译项目并根据 [配置](/toolchain/moon/package.md#native-"
-"backend-link-options) 生成可执行文件。"
+"C 后端会生成一个 C 文件。MoonBit 工具链还会编译项目并根据 [配置](/toolchain/moon/package.md"
+"#native-backend-link-options) 生成可执行文件。"
 
 #: ../../language/ffi.md
 msgid "LLVM"
@@ -136,8 +138,8 @@ msgstr ""
 
 #: ../../language/ffi.md:58
 msgid ""
-"LLVM backend will generate an object file. The backend is experimental and "
-"does not support FFIs."
+"LLVM backend will generate an object file. The backend is experimental "
+"and does not support FFIs."
 msgstr "LLVM 后端会生成一个对象文件。该后端是实验性的，不支持 FFI。"
 
 #: ../../language/ffi.md:63
@@ -145,8 +147,8 @@ msgid "Declare Foreign Type"
 msgstr "声明外部类型"
 
 #: ../../language/ffi.md:65
-msgid "You can declare a foreign type using the `#extern` attribute like this:"
-msgstr "您可以利用 `extern` 属性，像这样声明一个外部类型："
+msgid "You can declare a foreign type using the `#external` attribute like this:"
+msgstr "您可以利用 `#external` 属性，像这样声明一个外部类型："
 
 #: ../../language/ffi.md:67
 msgid ""
@@ -190,14 +192,14 @@ msgstr "MoonBit 不支持多态外部函数。"
 
 #: ../../language/ffi.md:109 ../../language/ffi.md:132
 msgid ""
-"There are two ways to declare a foreign function: importing a function or "
-"writing an inline function."
+"There are two ways to declare a foreign function: importing a function or"
+" writing an inline function."
 msgstr "声明外部函数有两种方式：导入一个函数或编写一个内联函数。"
 
 #: ../../language/ffi.md:111
 msgid ""
-"You can import a function given the module name and the function name from "
-"the runtime host:"
+"You can import a function given the module name and the function name "
+"from the runtime host:"
 msgstr "您可以通过模块名和函数名导入一个函数："
 
 #: ../../language/ffi.md:113
@@ -220,8 +222,8 @@ msgstr "编写内联函数时，请不要提供函数名称。"
 
 #: ../../language/ffi.md:134
 msgid ""
-"You can import a function given the module name and the function name, which"
-" will be interpreted as `module.function`. For example,"
+"You can import a function given the module name and the function name, "
+"which will be interpreted as `module.function`. For example,"
 msgstr "您可以通过模块名和函数名导入一个函数，它会被解读为 `{模块名}.{函数名}`。例如，"
 
 #: ../../language/ffi.md:136
@@ -254,9 +256,12 @@ msgstr ""
 
 #: ../../language/ffi.md:159
 msgid ""
-"If a package needs to dynamically link with foreign C library, add `cc-link-"
-"flags` to `moon.pkg.json`. It would be passed to C compiler directly."
-msgstr "如果一个包需要动态链接外部 C 库，可以在它的 `moon.pkg.json` 里添加 `cc-link-flags`。它会被直接传递给 C 编译器。"
+"If a package needs to dynamically link with foreign C library, add `cc-"
+"link-flags` to `moon.pkg.json`. It would be passed to C compiler "
+"directly."
+msgstr ""
+"如果一个包需要动态链接外部 C 库，可以在它的 `moon.pkg.json` 里添加 `cc-link-flags`。它会被直接传递给 C "
+"编译器。"
 
 #: ../../language/ffi.md:161
 msgid ""
@@ -273,8 +278,8 @@ msgstr ""
 
 #: ../../language/ffi.md:175
 msgid ""
-"To define wrapper functions, you can add a C stub file to a package, and add"
-" the following to the `moon.pkg.json` of the package:"
+"To define wrapper functions, you can add a C stub file to a package, and "
+"add the following to the `moon.pkg.json` of the package:"
 msgstr "要定义 C 胶水函数来连接 C 与 MoonBit，可以在一个包中引入一些 C 胶水文件，并向 `moon.pkg.json` 文件加入下面的内容："
 
 #: ../../language/ffi.md:177
@@ -312,8 +317,8 @@ msgstr "类型"
 #: ../../language/ffi.md:193
 msgid ""
 "When declaring functions, you need to make sure that the signature "
-"corresponds to the actual foreign function. When a function returns nothing "
-"(e.g. `void`), ignore the return type annotation in the function "
+"corresponds to the actual foreign function. When a function returns "
+"nothing (e.g. `void`), ignore the return type annotation in the function "
 "declaration. The table below shows the underlying representation of some "
 "MoonBit types:"
 msgstr ""
@@ -332,8 +337,8 @@ msgstr "如果 `FuncRef[T]` 中的 `T` 的返回类型是 `Unit`，那么它指�
 
 #: ../../language/ffi.md:284
 msgid ""
-"Types not mentioned above do not have a stable ABI, so your code should not "
-"depend on their representations."
+"Types not mentioned above do not have a stable ABI, so your code should "
+"not depend on their representations."
 msgstr "上表中未提及的类型不具有稳定的二进制接口，请尽量避免依赖它们的实际二进制表示。"
 
 #: ../../language/ffi.md:286
@@ -342,8 +347,8 @@ msgstr "回调"
 
 #: ../../language/ffi.md:288
 msgid ""
-"Sometimes, we want to pass a MoonBit function to the foreign interface as "
-"callback. In MoonBit, it is possible to have closures. Per [MDN "
+"Sometimes, we want to pass a MoonBit function to the foreign interface as"
+" callback. In MoonBit, it is possible to have closures. Per [MDN "
 "glossary](https://developer.mozilla.org/en-"
 "US/docs/Web/JavaScript/Guide/Closures):"
 msgstr ""
@@ -353,11 +358,11 @@ msgstr ""
 
 #: ../../language/ffi.md:290
 msgid ""
-"A closure is the combination of a function bundled together (enclosed) with "
-"references to its surrounding state (the lexical environment). In other "
-"words, a closure gives a function access to its outer scope. In JavaScript, "
-"closures are created every time a function is created, at function creation "
-"time."
+"A closure is the combination of a function bundled together (enclosed) "
+"with references to its surrounding state (the lexical environment). In "
+"other words, a closure gives a function access to its outer scope. In "
+"JavaScript, closures are created every time a function is created, at "
+"function creation time."
 msgstr ""
 "闭包是由捆绑起来（封闭的）的函数和函数周围状态（词法环境）的引用组合而成。换言之，闭包让函数能访问它的外部作用域。在 JavaScript "
 "中，闭包会随着函数的创建而同时创建。"
@@ -367,11 +372,11 @@ msgid ""
 "In some cases, we would like to pass the callback function which doesn't "
 "capture any local free variables. For this purpose, MoonBit provides a "
 "special type `FuncRef[T]`, which represents closed function of type `T`. "
-"Values of type `FuncRef[T]` must be closed function of type `T`, otherwise "
-"[a type error](/language/error_codes/E4151.md) would occur."
+"Values of type `FuncRef[T]` must be closed function of type `T`, "
+"otherwise [a type error](/language/error_codes/E4151.md) would occur."
 msgstr ""
-"在一些场合，我们希望将传递一个回调函数，其不捕获任何局部变量。为此，MoonBit 提供了一个特殊的类型 `FuncRef[T]`，它表示类型为 `T`"
-" 的无捕获函数。类型为 `FuncRef[T]` 的值必须是类型为 `T` 的无捕获函数，否则会产生 "
+"在一些场合，我们希望将传递一个回调函数，其不捕获任何局部变量。为此，MoonBit 提供了一个特殊的类型 `FuncRef[T]`，它表示类型为 "
+"`T` 的无捕获函数。类型为 `FuncRef[T]` 的值必须是类型为 `T` 的无捕获函数，否则会产生 "
 "[类型错误](/language/error_codes/E4151.md) 。"
 
 #: ../../language/ffi.md:294
@@ -383,16 +388,16 @@ msgstr "在其他情况下，MoonBit 函数参数会被表示为一个函数和�
 #: ../../language/ffi.md:302
 msgid ""
 "For Wasm backends, the callbacks will be passed as `externref`, which "
-"represents a function of the host. However, it is essential to convert the "
-"function together with the captured data to the host's function."
+"represents a function of the host. However, it is essential to convert "
+"the function together with the captured data to the host's function."
 msgstr "对于 Wasm 后端，回调函数会被传递为 `externref`，它表示宿主的一个函数。然而，将函数和捕获的数据转换为宿主的函数是非常重要的。"
 
 #: ../../language/ffi.md:304
 msgid ""
 "To do so, the Wasm module will import a function under the module "
 "`moonbit:ffi` and function name `make_closure`. This function takes a "
-"function and an object, where the function's first parameter should be the "
-"object, and should return a host's function. That is, the host is "
+"function and an object, where the function's first parameter should be "
+"the object, and should return a host's function. That is, the host is "
 "responsible for doing the partial application. A possible implementation "
 "would be:"
 msgstr ""
@@ -423,7 +428,9 @@ msgid "void register_callback(void (*callback)(void*), void *data);\n"
 msgstr ""
 
 #: ../../language/ffi.md:332
-msgid "we can bind this C function and pass closure to it using the following trick:"
+msgid ""
+"we can bind this C function and pass closure to it using the following "
+"trick:"
 msgstr "通过一个小技巧，我们可以向这个 C 函数传递 MoonBit 中的闭包："
 
 #: ../../language/ffi.md:334
@@ -448,9 +455,9 @@ msgstr "自定义常量枚举的整数表示"
 #: ../../language/ffi.md:351
 msgid ""
 "In all backends of MoonBit, constant enum (`enum` where all constructors "
-"have no payload) are translated to integer. It is possible to customize the "
-"actual integer representation of each constructor, by adding `= <integer "
-"literal>` after constructor declaration:"
+"have no payload) are translated to integer. It is possible to customize "
+"the actual integer representation of each constructor, by adding `= "
+"<integer literal>` after constructor declaration:"
 msgstr ""
 "在所有后端，常量枚举（所有构造器都没有参数的枚举）都会被编译成整数。在此基础上，MoonBit "
 "允许用户自定义常量枚举的构造器的整数表达式。只需在构造器的声明后加上 `= <整数字面量>` 即可："
@@ -469,12 +476,13 @@ msgstr ""
 
 #: ../../language/ffi.md:366
 msgid ""
-"If a constructor's integer value is unspecified, it defaults to one plus the"
-" value of the previous constructor (or zero for the first constructor). This"
-" feature is particular useful for binding flags of C libraries."
+"If a constructor's integer value is unspecified, it defaults to one plus "
+"the value of the previous constructor (or zero for the first "
+"constructor). This feature is particular useful for binding flags of C "
+"libraries."
 msgstr ""
-"如果一个构造器没有用户指定的整数值，默认的值是上一个构造器的值加一。（第一个构造器的默认值是 `0`）。自定义整数表示的功能在绑定一些 C 库里的 "
-"flag 是很有用。"
+"如果一个构造器没有用户指定的整数值，默认的值是上一个构造器的值加一。（第一个构造器的默认值是 `0`）。自定义整数表示的功能在绑定一些 C 库里的"
+" flag 是很有用。"
 
 #: ../../language/ffi.md:370
 msgid "Export Functions"
@@ -482,12 +490,12 @@ msgstr "导出函数"
 
 #: ../../language/ffi.md:372
 msgid ""
-"For public functions that are neither methods nor polymorphic, they can be "
-"exported by configuring the `exports` field in [link "
+"For public functions that are neither methods nor polymorphic, they can "
+"be exported by configuring the `exports` field in [link "
 "configuration](/toolchain/moon/package.md#link-options)."
 msgstr ""
-"对于既不是方法也不是多态的公开函数，可以通过配置 [链接选项](/toolchain/moon/package.md#link-options) 中的 "
-"`exports` 字段来导出它们。"
+"对于既不是方法也不是多态的公开函数，可以通过配置 [链接选项](/toolchain/moon/package.md#link-options) "
+"中的 `exports` 字段来导出它们。"
 
 #: ../../language/ffi.md:374
 msgid ""
@@ -502,11 +510,12 @@ msgstr ""
 
 #: ../../language/ffi.md:384
 msgid ""
-"The previous example exports functions `add` and `fib`, where `fib` will be "
-"exported as `test`."
+"The previous example exports functions `add` and `fib`, where `fib` will "
+"be exported as `test`."
 msgstr "上述例子中导出函数 `add` 和 `fib`，其中 `fib` 会被导出为 `test`。"
 
-#: ../../language/ffi.md:392 ../../language/ffi.md:399 ../../language/ffi.md:407
+#: ../../language/ffi.md:392 ../../language/ffi.md:399
+#: ../../language/ffi.md:407
 msgid ""
 "It is only effective for the package that configures it, i.e. it doesn't "
 "affect the downstream packages."
@@ -529,13 +538,13 @@ msgstr "生命周期管理"
 #: ../../language/ffi.md:416
 msgid ""
 "MoonBit is a programming language with garbage collection. Thus when "
-"handling external object or passing MoonBit object to host, it is essential "
-"to keep in mind the lifetime management. Currently, MoonBit uses reference "
-"counting for Wasm backend and C backend. For Wasm GC backend and JavaScript "
-"backend, the runtime's GC is reused."
+"handling external object or passing MoonBit object to host, it is "
+"essential to keep in mind the lifetime management. Currently, MoonBit "
+"uses reference counting for Wasm backend and C backend. For Wasm GC "
+"backend and JavaScript backend, the runtime's GC is reused."
 msgstr ""
-"MoonBit 是一门具有垃圾回收的编程语言。因此在处理外部对象或将 MoonBit 对象传递给宿主时，必须牢记生命周期管理。目前，MoonBit 对 "
-"Wasm 后端和 C 后端使用引用计数。对于 Wasm GC 后端和 JavaScript 后端，复用运行时的垃圾回收机制。"
+"MoonBit 是一门具有垃圾回收的编程语言。因此在处理外部对象或将 MoonBit 对象传递给宿主时，必须牢记生命周期管理。目前，MoonBit"
+" 对 Wasm 后端和 C 后端使用引用计数。对于 Wasm GC 后端和 JavaScript 后端，复用运行时的垃圾回收机制。"
 
 #: ../../language/ffi.md:418
 msgid "Lifetime management of external object"
@@ -544,7 +553,8 @@ msgstr "外部对象的生命周期管理"
 #: ../../language/ffi.md:420
 msgid ""
 "When handling external object/resource in MoonBit, it is important to "
-"destroy object or release resource in time to prevent memory/resource leak."
+"destroy object or release resource in time to prevent memory/resource "
+"leak."
 msgstr "在 MoonBit 中处理来自外部的对象和资源时，需要及时释放这些外部对象占用的内存和资源以避免泄漏。"
 
 #: ../../language/ffi.md:423
@@ -554,8 +564,8 @@ msgstr "仅限 C 后端"
 #: ../../language/ffi.md:426
 msgid ""
 "`moonbit.h` provides an API `moonbit_make_external_object` for handling "
-"lifetime of external object/resource using MoonBit's own automatic memory "
-"management system:"
+"lifetime of external object/resource using MoonBit's own automatic memory"
+" management system:"
 msgstr ""
 "`moonbit.h` 中提供了一个实用的函数 `moonbit_make_external_object`，它可以借助 MoonBit "
 "的自动内存管理系统来管理外部对象的生命周期："
@@ -571,10 +581,11 @@ msgstr ""
 #: ../../language/ffi.md:435
 msgid ""
 "`moonbit_make_external_object` will create a new MoonBit object of size "
-"`payload_size + sizeof(finalize)`, the layout of the object is as follows:"
+"`payload_size + sizeof(finalize)`, the layout of the object is as "
+"follows:"
 msgstr ""
-"`moonbit_make_external_object` 会创建一个大小为 `payload_size + sizeof(finalize)` "
-"的新的 MoonBit 对象，这个对象的内存布局如下："
+"`moonbit_make_external_object` 会创建一个大小为 `payload_size + sizeof(finalize)`"
+" 的新的 MoonBit 对象，这个对象的内存布局如下："
 
 #: ../../language/ffi.md:438
 msgid ""
@@ -594,10 +605,10 @@ msgstr ""
 #: ../../language/ffi.md:446
 msgid ""
 "so you can treat the object as a pointer to its payload directly. When "
-"MoonBit's automatic memory management system finds that an object created by"
-" `moonbit_make_external_object` is no longer alive, it will invoke the "
-"function `finalize` with the object itself as argument. Now, `finalize` can "
-"release external resource/memory held by the object's payload."
+"MoonBit's automatic memory management system finds that an object created"
+" by `moonbit_make_external_object` is no longer alive, it will invoke the"
+" function `finalize` with the object itself as argument. Now, `finalize` "
+"can release external resource/memory held by the object's payload."
 msgstr ""
 "因此，`moonbit_make_external_object` 返回的指针可以直接当作指向外部数据的指针使用。当 MoonBit "
 "的自动内存管理系统发现 `moonbit_make_external_object` "
@@ -615,8 +626,8 @@ msgid ""
 "should be bind to an *abstract* type, declared using `type T`, so that "
 "MoonBit's memory management system will not ignore the object."
 msgstr ""
-"在 MoonBit 侧，`moonbit_make_external_object` 返回的对象应当被绑定到 *抽象* 类型，即用 `type T` "
-"语法声明的类型。这样一来，MoonBit 的内存管理系统就不会无视这个对象。"
+"在 MoonBit 侧，`moonbit_make_external_object` 返回的对象应当被绑定到 *抽象* 类型，即用 `type "
+"T` 语法声明的类型。这样一来，MoonBit 的内存管理系统就不会无视这个对象。"
 
 #: ../../language/ffi.md:457
 msgid "Lifetime management of MoonBit object"
@@ -624,15 +635,15 @@ msgstr "MoonBit 对象的生命周期管理"
 
 #: ../../language/ffi.md:459
 msgid ""
-"When passing MoonBit objects to the host through functions, it is essential "
-"to take care of the lifetime management of MoonBit itself. As mentioned "
-"before, MoonBit's Wasm backend and C backend uses compiler-optimized "
-"reference counting to manage lifetime of objects. To avoid memory error or "
-"leak, FFI functions must properly maintain the reference count of MoonBit "
-"objects."
+"When passing MoonBit objects to the host through functions, it is "
+"essential to take care of the lifetime management of MoonBit itself. As "
+"mentioned before, MoonBit's Wasm backend and C backend uses compiler-"
+"optimized reference counting to manage lifetime of objects. To avoid "
+"memory error or leak, FFI functions must properly maintain the reference "
+"count of MoonBit objects."
 msgstr ""
-"当通过函数将 MoonBit 对象传递给宿主时，必须注意 MoonBit 对象本身的生命周期管理。如前所述，MoonBit 的 Wasm 后端和 C "
-"后端使用编译器优化的引用计数来管理对象的生命周期。为了避免内存错误或泄漏，FFI 函数必须正确维护 MoonBit 对象的引用计数。"
+"当通过函数将 MoonBit 对象传递给宿主时，必须注意 MoonBit 对象本身的生命周期管理。如前所述，MoonBit 的 Wasm 后端和 "
+"C 后端使用编译器优化的引用计数来管理对象的生命周期。为了避免内存错误或泄漏，FFI 函数必须正确维护 MoonBit 对象的引用计数。"
 
 #: ../../language/ffi.md:462
 msgid "For C backend and for Wasm backend only."
@@ -644,13 +655,13 @@ msgstr "引用计数的调用约定"
 
 #: ../../language/ffi.md:467
 msgid ""
-"By default, MoonBit uses an owned calling convention for reference counting."
-" That is, callee (the function being invoked) is responsible for dropping "
-"its parameters using the `moonbit_decref` / `$moonbit.decref` function. If "
-"the parameter is used more than once, the callee should increase the "
-"reference count using the `moonbit_incref` / `$moonbit.incref` function. "
-"Here are the rules for the necessary operations to perform in different "
-"circumstances:"
+"By default, MoonBit uses an owned calling convention for reference "
+"counting. That is, callee (the function being invoked) is responsible for"
+" dropping its parameters using the `moonbit_decref` / `$moonbit.decref` "
+"function. If the parameter is used more than once, the callee should "
+"increase the reference count using the `moonbit_incref` / "
+"`$moonbit.incref` function. Here are the rules for the necessary "
+"operations to perform in different circumstances:"
 msgstr ""
 "MoonBit 的引用计数默认使用被调用者持有所有权的调用约定。也就是说，被调用的函数需要调用 `moonbit_decref` "
 "函数来释放它的参数。如果参数被多次使用，被调用的函数需要调用 `moonbit_incref` "
@@ -707,7 +718,9 @@ msgid ""
 msgstr "下面的例子是一个正确维护引用计数的、标准的打开文件的 `open` 函数的绑定："
 
 #: ../../language/ffi.md:480
-msgid "extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open_ffi\"\n"
+msgid ""
+"extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open_ffi\""
+"\n"
 msgstr ""
 
 #: ../../language/ffi.md:484
@@ -725,8 +738,8 @@ msgstr "被管理的类型"
 
 #: ../../language/ffi.md:494
 msgid ""
-"The following types are always unboxed, so there is no need to manage their "
-"lifetime:"
+"The following types are always unboxed, so there is no need to manage "
+"their lifetime:"
 msgstr "下面的类型不是分配在堆上的，不需要管理生命周期："
 
 #: ../../language/ffi.md:496
@@ -766,9 +779,9 @@ msgstr "borrow 和 owned 标记"
 
 #: ../../language/ffi.md:511
 msgid ""
-"When passing a parameter through the FFI, its ownership may or may not be "
-"kept. The `#borrow` and `#owned` attributes can be used to specify these two"
-" conditions."
+"When passing a parameter through the FFI, its ownership may or may not be"
+" kept. The `#borrow` and `#owned` attributes can be used to specify these"
+" two conditions."
 msgstr "通过 FFI 传递参数时，参数的所有权可能会被保留，也可能不会。`#borrow` 和 `#owned` 标记可以用来指定这两种情况。"
 
 #: ../../language/ffi.md:515
@@ -794,11 +807,12 @@ msgstr "其中，`params` 是 `c_ffi` 的参数列表的一个子集。"
 #: ../../language/ffi.md:527
 msgid ""
 "Parameters of `#borrow` will be passed using borrow based calling "
-"convention, that is, the invoked function does not need to `decref` these "
-"parameters. If the FFI function only read its parameter locally (i.e. does "
-"not return its parameters and does not store them in data structures), you "
-"can directly use the `#borrow` attribute. For example, the `open` function "
-"mentioned above could be rewritten using `#borrow` as follows:"
+"convention, that is, the invoked function does not need to `decref` these"
+" parameters. If the FFI function only read its parameter locally (i.e. "
+"does not return its parameters and does not store them in data "
+"structures), you can directly use the `#borrow` attribute. For example, "
+"the `open` function mentioned above could be rewritten using `#borrow` as"
+" follows:"
 msgstr ""
 "被 `#borrow` 标记的参数会使用基于借用的调用约定，也就是说，被调用的函数不需要对这些参数调用 `decref`。如果 FFI "
 "函数只会在运行期间读取它的参数（不会返回它的参数或把它们存进数据结构），那么使用 `#borrow` 标记可以直接绑定 FFI 函数。上面的 "
@@ -812,16 +826,17 @@ msgstr ""
 
 #: ../../language/ffi.md:534
 msgid ""
-"There is no need for a stub function anymore: we are binding to the original"
-" version of `open` here. With the `#borrow` attribute, this version is still"
-" lifetime-correct."
+"There is no need for a stub function anymore: we are binding to the "
+"original version of `open` here. With the `#borrow` attribute, this "
+"version is still lifetime-correct."
 msgstr "这里不再需要 C 胶水函数：我们直接绑定到了原版 `open`。`#borrow` 标记保证了这个简化的版本依然能正确维护引用计数。"
 
 #: ../../language/ffi.md:536
 msgid ""
-"Even if a stub function is still necessary for other reasons, `#borrow` can "
-"often simplify the lifetime management. Here are the rules for the necessary"
-" operations to perform **on borrow parameters** in different circumstances:"
+"Even if a stub function is still necessary for other reasons, `#borrow` "
+"can often simplify the lifetime management. Here are the rules for the "
+"necessary operations to perform **on borrow parameters** in different "
+"circumstances:"
 msgstr ""
 "即使由于某些其他原因依然需要写 C 胶水函数，`#borrow` 标记也可以用于简化 C 胶水内部的生命周期管理。下面是不同场合下，正确维护 "
 "**借用参数** 的引用计数需要做的操作："
@@ -836,10 +851,11 @@ msgstr "传递给其他 C 函数 / `#borrow` MoonBit 函数"
 
 #: ../../language/ffi.md:547
 msgid ""
-"The opposite is the `#owned` semantic, where the parameter is stored by the "
-"FFI function, and the `decref` needs to be executed manually later. One use "
-"case is registering the callback where the closure would be **owned**."
+"The opposite is the `#owned` semantic, where the parameter is stored by "
+"the FFI function, and the `decref` needs to be executed manually later. "
+"One use case is registering the callback where the closure would be "
+"**owned**."
 msgstr ""
-"`#owned` 语义与之相反，表示参数会被 FFI 函数存储，并且需要在稍后手动调用 `decref`。一个使用场景是注册回调函数，其中闭包会被 "
-"**持有所有权**。"
+"`#owned` 语义与之相反，表示参数会被 FFI 函数存储，并且需要在稍后手动调用 `decref`。一个使用场景是注册回调函数，其中闭包会被"
+" **持有所有权**。"
 
