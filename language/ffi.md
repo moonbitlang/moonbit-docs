@@ -53,7 +53,7 @@ LLVM backend will generate an object file. The backend is experimental and does 
 
 ## Declare Foreign Type
 
-You can declare a foreign type using the `#extern` attribute like this:
+You can declare a foreign type using the `#external` attribute like this:
 
 ```moonbit
 #external
