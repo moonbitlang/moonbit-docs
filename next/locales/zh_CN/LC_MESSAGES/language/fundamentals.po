@@ -3746,6 +3746,7 @@ msgid ""
 "[] |> Array::push(5) // <=> Array::push([], 5)\n"
 "1\n"
 "|> add(5) // <=> add(1, 5)\n"
+"|> x => { x + 1 }\n"
 "|> ignore // <=> ignore(add(1, 5))\n"
 msgstr ""
 
@@ -3769,6 +3770,15 @@ msgid ""
 msgstr "你也可以使用`_`操作符改变`x`在函数`f`的调用中的插入位置，例如`x |> f(y, _)`, 这等价于`f(y,x)`。带标签的参数也是支持的。"
 
 #: ../../language/fundamentals.md:1565
+msgid ""
+"The pipe operator can also connect to an arrow function. When piping into an"
+" arrow function, the function body must be wrapped in curly braces, for "
+"example `value |> x => { x + 1 }`."
+msgstr ""
+"管道操作符也可以连接到箭头函数。通过管道传入箭头函数时，函数体必须用花括号包裹，例如 "
+"`value |> x => { x + 1 }`。"
+
+#: ../../language/fundamentals.md:1567
 msgid "Cascade Operator"
 msgstr "级联运算符"
 
@@ -4026,4 +4036,3 @@ msgstr ""
 #~ "concepts, split into smaller pages for "
 #~ "easier navigation and translation."
 #~ msgstr ""
-

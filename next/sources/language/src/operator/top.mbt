@@ -60,6 +60,7 @@ fn pipe() -> Unit {
   [] |> Array::push(5) // <=> Array::push([], 5)
   1
   |> add(5) // <=> add(1, 5)
+  |> x => { x + 1 }
   |> ignore // <=> ignore(add(1, 5))
   // end operator 4
 }
