@@ -4,7 +4,8 @@ let boolean : Unit = {
   let b = false
   let c = a && b
   let d = a || b
-  let e = not(a)
+  let e = !a
+  let f = not(a)
   // end boolean 1
 
 }

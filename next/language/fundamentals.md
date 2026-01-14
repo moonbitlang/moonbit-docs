@@ -19,7 +19,7 @@ Unlike some other languages, MoonBit treats `Unit` as a first-class type, allowi
 
 ### Boolean
 
-MoonBit has a built-in boolean type, which has two values: `true` and `false`. The boolean type is used in conditional expressions and control structures.
+MoonBit has a built-in boolean type, which has two values: `true` and `false`. The boolean type is used in conditional expressions and control structures. Use `!` to negate a boolean value; `not(x)` is equivalent.
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
@@ -1646,6 +1646,29 @@ example:
 :dedent:
 :start-after: start is 6
 :end-before: end is 6
+```
+
+### Lexmatch
+
+`lexmatch` matches a `String` against a regex pattern and lets you bind the
+pieces of a match. The pattern is a parenthesized sequence of regex pieces.
+To capture the text before or after the match, bind the first or last piece
+(often named `before` and `after`), and omit either side when you do not need
+it. The regex itself is written as a sequence of string literals, so you can
+split it across lines or insert comments between parts. You can also bind a
+matched sub-pattern using `as`, such as `("b*" as b)`.
+
+`lexmatch?` is a boolean check similar to `is`, and it can introduce binders
+for use in the same contexts as `is` expressions.
+
+Regex literals do not support `\\b`, `\\s`, or `\\w`. Use POSIX character
+classes like `[:digit:]` inside ranges (for example, `[[:digit:]]`).
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start lexmatch 1
+:end-before: end lexmatch 1
 ```
 
 ### Spread Operator
