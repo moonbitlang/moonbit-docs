@@ -74,7 +74,7 @@ fn Tokens::peek(self : Tokens) -> Token {
 }
 
 ///|
-suberror ParseError String
+suberror ParseError { ParseError(String) }
 
 ///|
 #callsite(autofill(loc))
