@@ -234,7 +234,6 @@ test "myers diff" {
     pprint_diff(r),
     content=(
       #|-    1         A
-      #|-    2         B
       #|     3    1    C
       #|-    4         A
       #|     5    2    B

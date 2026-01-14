@@ -1,5 +1,5 @@
 // start error 1
-suberror E1 Int // error type E1 has one constructor E1 with an Int payload
+suberror E1 { E1(Int) } // error type E1 has one constructor E1 with an Int payload
 
 suberror E2 // error type E2 has one constructor E2 with no payload
 
@@ -11,7 +11,7 @@ suberror E3 { // error type E3 has three constructors like a normal enum type
 // end error 1
 
 // start error 2
-suberror DivError String
+suberror DivError { DivError(String) }
 
 fn div(x : Int, y : Int) -> Int raise DivError {
   if y == 0 {
@@ -146,7 +146,7 @@ fn remainder(a : Int, b : Int) -> Int raise DivError {
 // end error 14
 
 // start custom error conversion
-suberror CustomError UInt
+suberror CustomError { CustomError(UInt) }
 
 test {
   let e : Error = CustomError(42)
