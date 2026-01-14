@@ -14,7 +14,7 @@ However, an `Error` cannot be constructed directly. A concrete error type must
 be defined, in the following forms:
 
 ```moonbit
-suberror E1 Int // error type E1 has one constructor E1 with an Int payload
+suberror E1 { E1(Int) } // error type E1 has one constructor E1 with an Int payload
 
 suberror E2 // error type E2 has one constructor E2 with no payload
 
@@ -25,11 +25,14 @@ suberror E3 { // error type E3 has three constructors like a normal enum type
 }
 ```
 
+#### WARNING
+The older `suberror A B` syntax is deprecated. Use `suberror A { A(B) }` instead.
+
 The error types can be promoted to the `Error` type automatically, and pattern
 matched back:
 
 ```moonbit
-suberror CustomError UInt
+suberror CustomError { CustomError(UInt) }
 
 test {
   let e : Error = CustomError(42)
@@ -81,7 +84,7 @@ indicate that the function might raise an error during an execution. For
 example, the following function `div` might return an error of type `DivError`:
 
 ```moonbit
-suberror DivError String
+suberror DivError { DivError(String) }
 
 fn div(x : Int, y : Int) -> Int raise DivError {
   if y == 0 {
