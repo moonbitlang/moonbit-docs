@@ -1036,7 +1036,9 @@ takes an operation and a sequence then consumes the sequence with that operation
 being applied to the sequence. The former is called _external iterator_ (visible
 to user) and the latter is called _internal iterator_ (invisible to user).
 
-The built-in type `Iter[T]` is MoonBit's internal iterator implementation.
+The built-in type `Iter[T]` is MoonBit's external iterator implementation. It
+exposes `next()` to pull the next value: it returns `Some(value)` and advances
+the iterator, or `None` when the iteration is finished.
 Almost all built-in sequential data structures have implemented `Iter`:
 
 ```{literalinclude} /sources/language/src/iter/top.mbt
@@ -1055,7 +1057,7 @@ Commonly used methods include:
 - `map`: _lazy_ Transforms the elements of the iterator using a mapping function.
 - `concat`: _lazy_ Combines two iterators into one by appending the elements of the second iterator to the first.
 
-Methods like `filter` `map` are very common on a sequence object e.g. Array.
+Methods like `filter` and `map` are very common on a sequence object e.g. Array.
 But what makes `Iter` special is that any method that constructs a new `Iter` is
 _lazy_ (i.e. iteration doesn't start on call because it's wrapped inside a
 function), as a result of no allocation for intermediate value. That's what
@@ -1074,36 +1076,10 @@ an `Iter[S]`. Take `Bytes` as an example:
 :end-before: end iter 2
 ```
 
-Almost all `Iter` implementations are identical to that of `Bytes`, the only
-main difference being the code block that actually does the iteration.
-
-### Implementation details
-
-The type `Iter[T]` is basically a type alias for `((T) -> IterResult) -> IterResult`,
-a higher-order function that takes an operation and `IterResult` is an enum
-object that tracks the state of current iteration which consists any of the 2
-states:
-
-- `IterEnd`: marking the end of an iteration
-- `IterContinue`: marking the end of an iteration is yet to be reached, implying the iteration will still continue at this state.
-
-To put it simply, `Iter[T]` takes a function `(T) -> IterResult` and use it to
-transform `Iter[T]` itself to a new state of type `IterResult`. Whether that
-state being `IterEnd` `IterContinue` depends on the function.
-
-Iterator provides a unified way to iterate through data structures, and they
-can be constructed at basically no cost: as long as `fn(yield)` doesn't
-execute, the iteration process doesn't start.
-
-Internally a `Iter::run()` is used to trigger the iteration. Chaining all sorts
-of `Iter` methods might be visually pleasing, but do notice the heavy work
-underneath the abstraction.
-
-Thus, unlike an external iterator, once the iteration starts
-there's no way to stop unless the end is reached. Methods such as `count()`
-which counts the number of elements in a iterator looks like an `O(1)` operation
-but actually has linear time complexity. Carefully use iterators or
-performance issue might occur.
+Iterators are single-pass: once you call `next()` or consume them with methods
+like `each`, `fold`, or `collect`, their internal state advances and cannot be
+reset. If you need to traverse the sequence again, request a new `Iter` from
+the source.
 
 ## Custom Data Types
 

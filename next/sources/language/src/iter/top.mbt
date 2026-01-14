@@ -16,11 +16,14 @@ fn fact(n : Int) -> Int {
 // start iter 2
 ///|
 fn iter(data : Bytes) -> Iter[Byte] {
-  Iter::new(fn(visit : (Byte) -> IterResult) -> IterResult {
-    for byte in data {
-      guard visit(byte) is IterContinue else { break IterEnd }
+  let mut index = 0
+  Iter::new(fn() -> Byte? {
+    if index < data.length() {
+      let byte = data[index]
+      index += 1
+      Some(byte)
     } else {
-      IterContinue
+      None
     }
   })
 }
