@@ -1651,15 +1651,19 @@ example:
 ### Lexmatch
 
 `lexmatch` matches a `String` against a regex pattern and lets you bind the
-pieces of a match. The pattern is a parenthesized sequence of regex pieces.
-To capture the text before or after the match, bind the first or last piece
-(often named `before` and `after`), and omit either side when you do not need
-it. The regex itself is written as a sequence of string literals, so you can
-split it across lines or insert comments between parts. You can also bind a
-matched sub-pattern using `as`, such as `("b*" as b)`.
+pieces of a match. The search-mode pattern is `(before, regex pieces, after)`,
+where `before` and `after` are optional bindings for the unmatched prefix and
+suffix, separated by commas. The regex pieces in the middle are separated by
+whitespace only. The regex itself is written as a sequence of string literals,
+so you can split it across lines or insert comments between parts. You can
+also bind a matched sub-pattern using `as`, such as `("b*" as b)`.
 
 `lexmatch?` is a boolean check similar to `is`, and it can introduce binders
 for use in the same contexts as `is` expressions.
+
+`lexmatch` also supports a lexer-style mode: `lexmatch <expr> with longest`,
+which picks the longest match among alternatives (for example, `if|[a-z]*`
+matches `iff` as `iff` in longest mode, while search mode matches `if` first).
 
 Regex literals do not support `\\b`, `\\s`, or `\\w`. Use POSIX character
 classes like `[:digit:]` inside ranges (for example, `[[:digit:]]`).

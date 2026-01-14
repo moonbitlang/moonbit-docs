@@ -203,7 +203,7 @@ fn guard_check(x : Int?) -> Unit {
 test {
   let text = "xxabbbcyy"
   lexmatch text {
-    (("[^a]*" as before) "a" ("b*" as b) "c" (".*" as after)) => {
+    (before, "a" ("b*" as b) "c", after) => {
       inspect(before, content="xx")
       inspect(b, content="bbb")
       inspect(after, content="yy")
@@ -213,6 +213,12 @@ test {
 
   if text lexmatch? ("a" ("b*" as b) "c") && b.length() > 0 {
     inspect(b, content="bbb")
+  }
+
+  let keyword = "iff"
+  lexmatch keyword with longest {
+    ("if|[a-z]*" as ident) => inspect(ident, content="iff")
+    _ => fail("")
   }
 }
 // end lexmatch 1
