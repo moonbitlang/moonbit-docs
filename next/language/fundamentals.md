@@ -1561,6 +1561,8 @@ For example, `x |> f(y)` is equivalent to `f(x, y)`.
 
 You can use the `_` operator to insert `x` into any argument of the function `f`, such as `x |> f(y, _)`, which is equivalent to `f(y, x)`. Labeled arguments are also supported.
 
+The pipe operator can also connect to an arrow function. When piping into an arrow function, the function body must be wrapped in curly braces, for example `value |> x => { x + 1 }`.
+
 
 ### Cascade Operator
 
