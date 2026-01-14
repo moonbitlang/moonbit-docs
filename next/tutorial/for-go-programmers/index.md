@@ -619,7 +619,7 @@ the function might throw an error, write `T raise E` at the return type
 position, where `E` is an error type declared with `suberror`:
 
 ```moonbit
-suberror ValueError String
+suberror ValueError { ValueError(String) }
 
 fn divide(a : Int, b : Int) -> Int raise ValueError {
   if b == 0 {

@@ -20,6 +20,10 @@ be defined, in the following forms:
 :end-before: end error 1
 ```
 
+```{warning}
+The older `suberror A B` syntax is deprecated. Use `suberror A { A(B) }` instead.
+```
+
 The error types can be promoted to the `Error` type automatically, and pattern
 matched back:
 
