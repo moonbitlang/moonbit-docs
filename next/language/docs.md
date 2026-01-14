@@ -11,10 +11,10 @@ Doc comments are comments prefix with `///` in each line in the leading of tople
 
 ```
 
-Markdown code block inside docstring will be considered document test,
-`moon check` and `moon test` will automatically check and run these tests, so that examples in docstring are always up-to-date.
-MoonBit will automatically wrap a test block around document test,
-so there is no need to wrap `test { .. }` around document test:
+Markdown code blocks inside docstrings marked with `mbt check` are treated as
+document tests. `moon check` and `moon test` will automatically check and run
+these tests, so that examples in docstring are always up-to-date.
+Wrap the snippet in `test { .. }` when you want a test block:
 
 ```{literalinclude} /sources/language/src/misc/top.mbt
 :language: moonbit
@@ -22,8 +22,12 @@ so there is no need to wrap `test { .. }` around document test:
 :end-before: end doc test 1
 ```
 
-If you want to prevent a code snippet from being treated as document test,
-mark it with a language id other than `mbt` on the markdown code block:
+Doc tests also apply to literate `.mbt.md` files. For a standalone file, run
+`moon check README.mbt.md` and `moon test README.mbt.md`. Inside a project, use
+the package-level `moon check` and `moon test` instead.
+
+If you want to prevent a code snippet from being treated as a document test,
+mark it with a language id other than `mbt check` on the markdown code block:
 
 ```{literalinclude} /sources/language/src/misc/top.mbt
 :language: moonbit

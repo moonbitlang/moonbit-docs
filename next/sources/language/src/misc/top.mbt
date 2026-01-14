@@ -15,8 +15,10 @@ fn todo_in_func() -> Int {
 /// Increment an integer by one,
 ///
 /// Example:
-/// ```
-/// inspect(incr(41), content="42")
+/// ```mbt check
+/// test {
+///   inspect(incr(41), content="42")
+/// }
 /// ```
 pub fn incr(x : Int) -> Int {
   x + 1
