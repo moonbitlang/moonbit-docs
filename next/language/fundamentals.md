@@ -357,7 +357,8 @@ You can use `numbers[x]` to refer to the xth element. The index starts from zero
 :end-before: end array 2
 ```
 
-There are `Array[T]` and `FixedArray[T]`:
+There are `Array[T]` and `FixedArray[T]`. Views are provided by `ArrayView[T]`
+and `MutArrayView[T]` (see below).
 
 `Array[T]` can grow in size, while `FixedArray[T]` has a fixed size, thus it needs to be created with initial value.
 
@@ -405,8 +406,9 @@ view of array `data`, referencing elements from `start` to `end` (exclusive).
 Both `start` and `end` indices can be omitted.
 
 ```{note}
-`ArrayView` is an immutable data structure on its own, but the underlying `Array` or `FixedArray`
-could be modified.
+`ArrayView` is an immutable data structure on its own, but the underlying
+`Array` or `FixedArray` could be modified. For a mutable view, use
+`MutArrayView[T]` via `data.mut_view(...)`.
 ```
 
 ```{literalinclude} /sources/language/src/operator/top.mbt

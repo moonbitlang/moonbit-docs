@@ -135,6 +135,9 @@ test {
   inspect(xs[:4], content="[0, 1, 2, 3]")
   inspect(xs[2:5], content="[2, 3, 4]")
   inspect(xs[:], content="[0, 1, 2, 3, 4, 5]")
+  let mv : MutArrayView[Int] = xs.mut_view(start=1, end=3)
+  mv[0] = 99
+  inspect(xs[1], content="99")
 }
 // end view 1
 
