@@ -80,12 +80,18 @@ test "string 4" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start string 4
   let lang = "MoonBit"
-  let str =
+  let raw =
     #| Hello
     #| ---
-    $| \{lang}\n
+    #| \{lang}
     #| ---
-  println(str)
+  let interp =
+    $| Hello
+    $| ---
+    $| \{lang}
+    $| ---
+  println(raw)
+  println(interp)
   // end string 4
   t.snapshot(filename="string_4")
 }
