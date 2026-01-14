@@ -157,7 +157,7 @@ MoonBit supports string interpolation. It enables you to substitute variables wi
 The interpolated expression can not contain newline, `{}` or `"`.
 ```
 
-Multi-line strings can be defined using the leading `#|` or `$|`, where the former will keep the raw string and the former will perform the escape and interpolation:
+Multi-line strings can be defined using the leading `#|` or `$|`, where the former will keep the raw string and the latter will perform the escape and interpolation:
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
@@ -170,7 +170,9 @@ Multi-line strings can be defined using the leading `#|` or `$|`, where the form
 :caption: Output
 ```
 
-The [VSCode extension](/toolchain/vscode/index.md#actions) can help you switch between a plain text and the MoonBit's multiline string.
+Avoid mixing `$|` and `#|` within the same multi-line string; pick one style for the whole block.
+
+The [VSCode extension](/toolchain/vscode/index.md#actions) includes an action that can turn pasted documents into a plain multi-line string and switch between plain text and MoonBit multi-line strings.
 
 When the expected type is `String` , the array literal syntax is overloaded to
 construct the `String` by specifying each character in the string.
