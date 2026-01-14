@@ -192,13 +192,13 @@ fn linear_diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit]? {
   }
   guard initial_box.find_path(old~, new~) is Some(path) else { None }
   // path length >= 2
-  let xy = path.take(1).collect()[0] // (0, 0)
+  let points = path.collect()
+  let xy = points[0] // (0, 0)
   let mut x1 = xy.0
   let mut y1 = xy.1
   let edits = Array::new(capacity=old.length() + new.length())
-  path
-  .drop(1)
-  .each(fn(xy) {
+  for i = 1; i < points.length(); i = i + 1 {
+    let xy = points[i]
     let x2 = xy.0
     let y2 = xy.1
     while x1 < x2 && y1 < y2 && old[x1].text == new[y1].text {
@@ -221,7 +221,7 @@ fn linear_diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit]? {
     }
     x1 = x2
     y1 = y2
-  })
+  }
   return Some(edits)
 }
 
@@ -234,6 +234,7 @@ test "myers diff" {
     pprint_diff(r),
     content=(
       #|-    1         A
+      #|-    2         B
       #|     3    1    C
       #|-    4         A
       #|     5    2    B
