@@ -69,8 +69,8 @@ msgstr "布尔值"
 msgid ""
 "MoonBit has a built-in boolean type, which has two values: `true` and "
 "`false`. The boolean type is used in conditional expressions and control "
-"structures."
-msgstr "MoonBit 有一个内置的布尔类型，它有两个值：`true` 和 `false`。布尔类型用于条件表达式和控制结构。"
+"structures. Use `!` to negate a boolean value; `not(x)` is equivalent."
+msgstr "MoonBit 有一个内置的布尔类型，它有两个值：`true` 和 `false`。布尔类型用于条件表达式和控制结构。可以使用 `!` 对布尔值取反；`not(x)` 等价。"
 
 #: ../../language/fundamentals.md:24
 msgid ""
@@ -78,7 +78,8 @@ msgid ""
 "let b = false\n"
 "let c = a && b\n"
 "let d = a || b\n"
-"let e = not(a)\n"
+"let e = !a\n"
+"let f = not(a)\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:31
@@ -3974,6 +3975,55 @@ msgid ""
 msgstr ""
 
 #: ../../language/fundamentals.md:1671
+msgid "Lexmatch"
+msgstr "Lexmatch"
+
+#: ../../language/fundamentals.md:1673
+msgid ""
+"`lexmatch` matches a `String` against a regex pattern and lets you bind the "
+"pieces of a match. The pattern is a parenthesized sequence of regex pieces. "
+"To capture the text before or after the match, bind the first or last piece "
+"(often named `before` and `after`), and omit either side when you do not "
+"need it. The regex itself is written as a sequence of string literals, so "
+"you can split it across lines or insert comments between parts. You can also "
+"bind a matched sub-pattern using `as`, such as `(\"b*\" as b)`."
+msgstr ""
+"`lexmatch` 用正则模式匹配 `String`，并让你绑定匹配到的各个片段。模式是由正则片段组成的括号序列。要捕获匹配前后的文本，可以绑定首段或末段（通常命名为 `before` 和 `after`），不需要的一侧可以省略。正则本身由一串字符串字面量组成，因此可以拆成多行或在各部分之间插入注释。你也可以用 `as` 绑定子模式，例如 `(\"b*\" as b)`。"
+
+#: ../../language/fundamentals.md:1678
+msgid ""
+"`lexmatch?` is a boolean check similar to `is`, and it can introduce binders"
+" for use in the same contexts as `is` expressions."
+msgstr "`lexmatch?` 是类似 `is` 的布尔检查，并且可以在与 `is` 表达式相同的上下文中引入绑定。"
+
+#: ../../language/fundamentals.md:1681
+msgid ""
+"Regex literals do not support `\\\\b`, `\\\\s`, or `\\\\w`. Use POSIX "
+"character classes like `[:digit:]` inside ranges (for example, "
+"`[[:digit:]]`)."
+msgstr ""
+"正则字面量不支持 `\\\\b`、`\\\\s` 或 `\\\\w`。请在范围中使用 POSIX 字符类，例如 `[:digit:]`（如 `[[:digit:]]`）。"
+
+#: ../../language/fundamentals.md:1684
+msgid ""
+"test {\n"
+"  let text = \"xxabbbcyy\"\n"
+"  lexmatch text {\n"
+"    ((\"[^a]*\" as before) \"a\" (\"b*\" as b) \"c\" (\".*\" as after)) => {\n"
+"      inspect(before, content=\"xx\")\n"
+"      inspect(b, content=\"bbb\")\n"
+"      inspect(after, content=\"yy\")\n"
+"    }\n"
+"    _ => fail(\"\")\n"
+"  }\n"
+"\n"
+"  if text lexmatch? (\"a\" (\"b*\" as b) \"c\") && b.length() > 0 {\n"
+"    inspect(b, content=\"bbb\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1696
 msgid "Spread Operator"
 msgstr "展开运算符"
 

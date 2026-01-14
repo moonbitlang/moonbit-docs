@@ -198,3 +198,21 @@ fn guard_check(x : Int?) -> Unit {
   }
 }
 // end guard condition 2
+
+// start lexmatch 1
+test {
+  let text = "xxabbbcyy"
+  lexmatch text {
+    (("[^a]*" as before) "a" ("b*" as b) "c" (".*" as after)) => {
+      inspect(before, content="xx")
+      inspect(b, content="bbb")
+      inspect(after, content="yy")
+    }
+    _ => fail("")
+  }
+
+  if text lexmatch? ("a" ("b*" as b) "c") && b.length() > 0 {
+    inspect(b, content="bbb")
+  }
+}
+// end lexmatch 1
