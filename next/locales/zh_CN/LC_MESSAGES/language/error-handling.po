@@ -51,7 +51,7 @@ msgstr "但是，`Error` 不能直接构造。必须定义一个具体的错误�
 
 #: ../../language/error-handling.md:16
 msgid ""
-"suberror E1 Int // error type E1 has one constructor E1 with an Int "
+"suberror E1 { E1(Int) } // error type E1 has one constructor E1 with an Int "
 "payload\n"
 "\n"
 "suberror E2 // error type E2 has one constructor E2 with no payload\n"
@@ -63,9 +63,9 @@ msgid ""
 "  C(mut x~ : String, Char, y~ : Bool)\n"
 "}\n"
 msgstr ""
-"suberror E1 Int  // 错误类型 E1 具有一个构造器 E1，并带有一个 Int 负载\n"
-"suberror E2      // 错误类型 E2 具有一个没有负载的构造器 E2\n"
-"suberror E3 {    // 错误类型 E3 类似于普通的枚举类型，有三个构造器\n"
+"suberror E1 { E1(Int) }  // 错误类型 E1 具有一个构造器 E1，并带有一个 Int 负载\n"
+"suberror E2              // 错误类型 E2 具有一个没有负载的构造器 E2\n"
+"suberror E3 {            // 错误类型 E3 类似于普通的枚举类型，有三个构造器\n"
 "  A\n"
 "  B(Int, x~ : String)\n"
 "  C(mut x~ : String, Char, y~ : Bool)\n"
@@ -73,13 +73,19 @@ msgstr ""
 
 #: ../../language/error-handling.md:23
 msgid ""
+"The older `suberror A B` syntax is deprecated. Use `suberror A { A(B) }` "
+"instead."
+msgstr "旧的 `suberror A B` 语法已弃用。请改用 `suberror A { A(B) }`。"
+
+#: ../../language/error-handling.md:27
+msgid ""
 "The error types can be promoted to the `Error` type automatically, and "
 "pattern matched back:"
 msgstr "错误类型可以自动提升为 `Error` 类型，并且可以模式匹配回去："
 
-#: ../../language/error-handling.md:26
+#: ../../language/error-handling.md:30
 msgid ""
-"suberror CustomError UInt\n"
+"suberror CustomError { CustomError(UInt) }\n"
 "\n"
 "test {\n"
 "  let e : Error = CustomError(42)\n"
@@ -158,9 +164,9 @@ msgstr ""
 "函数的类型签名可以用 `raise` 和一个错误类型来表明函数可能抛出一个错误。例如，以下函数 `div` 可能返回一个类型为 "
 "`DivError` 的错误："
 
-#: ../../language/error-handling.md:71
+#: ../../language/error-handling.md:75
 msgid ""
-"suberror DivError String\n"
+"suberror DivError { DivError(String) }\n"
 "\n"
 "fn div(x : Int, y : Int) -> Int raise DivError {\n"
 "  if y == 0 {\n"
@@ -460,4 +466,3 @@ msgid ""
 "  e => raise e\n"
 "}\n"
 msgstr ""
-
