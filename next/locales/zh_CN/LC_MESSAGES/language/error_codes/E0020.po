@@ -24,12 +24,57 @@ msgid "E0020"
 msgstr ""
 
 #: ../../language/error_codes/E0020.md:3
-msgid "Invalid pragma."
-msgstr "无效的 pragma。"
+msgid "Deprecated API usage."
+msgstr "使用了已弃用的 API。"
 
 #: ../../language/error_codes/E0020.md:5
 msgid ""
-"Currently, MoonBit won't emit this warning. MoonBit no longer supports "
-"pragma. Attributes should be used instead."
+"This warning is emitted when code uses APIs marked as deprecated."
+msgstr "当代码使用被标记为弃用的 API 时，会发出此警告。"
+
+#: ../../language/error_codes/E0020.md:9
+msgid "lib/top.mbt"
 msgstr ""
 
+#: ../../language/error_codes/E0020.md:9
+msgid ""
+"///|\n"
+"#deprecated(\"Use `greet` instead\")\n"
+"pub fn greeting() -> String {\n"
+"  \"Hello!\"\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn greet() -> String {\n"
+"  \"Hello!\"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:14 ../../language/error_codes/E0020.md:23
+msgid "top.mbt"
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:14
+msgid ""
+"///|\n"
+"fn main {\n"
+"  println(@lib.greeting())\n"
+"  //      ^~~~~~~~ Warning (deprecated): Use `greet` instead\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:19
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0020.md:21
+msgid "Migrate to the suggested APIs:"
+msgstr "迁移到建议使用的 API："
+
+#: ../../language/error_codes/E0020.md:23
+msgid ""
+"///|\n"
+"fn main {\n"
+"  println(@lib.greet())\n"
+"}\n"
+msgstr ""
