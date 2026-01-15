@@ -646,14 +646,10 @@ expressions that may raise errors or call async functions when in a `raise` or
 For async functions, optional argument expressions can call async functions as
 usual:
 
-```moonbit
-async fn fetch_default() -> Int raise { ... }
-
-async fn build(x? : Int = fetch_default()) -> Int raise { ... }
-
-async fn use_value() -> Int raise {
-  build(x=fetch_default())
-}
+```{literalinclude} /sources/async/src/async.mbt
+:language: moonbit
+:start-after: start optional arguments async
+:end-before: end optional arguments async
 ```
 
 If you want to share the result of default expression between different function calls, you can lift the default expression to a toplevel `let` declaration:

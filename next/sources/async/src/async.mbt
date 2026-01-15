@@ -27,6 +27,16 @@ async fn another_async_function() -> Unit raise {
 }
 // end async function call syntax
 
+// start optional arguments async
+async fn fetch_default() -> Int raise { ... }
+
+async fn build(x? : Int = fetch_default()) -> Int raise { ... }
+
+async fn use_value() -> Int raise {
+  build(x=fetch_default())
+}
+// end optional arguments async
+
 // start async primitive
 
 ///| `run_async` spawn a new coroutine and execute an async function in it
