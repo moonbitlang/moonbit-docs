@@ -25,113 +25,16 @@ msgstr ""
 
 #: ../../language/error_codes/E2000.md:3
 msgid ""
-"The usage of function (type, trait, etc.) is flagged with alert. Usually, "
-"alert message comes with a alert kind and a detailed description of the "
-"alert. If you are using the function from a library, these alerts are set by"
-" the library author to provide some more information on the usage of the "
-"function"
-msgstr "函数（类型、特征等）的使用被标记为警告。通常，警告消息会带有警告类型和警告的详细描述。如果你正在使用来自库的函数，这些警告是由库作者设置的，以提供有关函数使用的更多信息。"
-
-#: ../../language/error_codes/E2000.md:8
-msgid "There are some common alerts that you may encounter:"
-msgstr "以下是一些常见的警告："
-
-#: ../../language/error_codes/E2000.md:10
-msgid ""
-"`deprecated`: indicates the function (or type, trait, etc.) is deprecated "
-"and should not be used. You should migrate to new APIs."
-msgstr "`deprecated`: 表示函数（类型、特征等）已被弃用，不应该使用。你应迁移到新的 API。"
-
-#: ../../language/error_codes/E2000.md:12
-msgid ""
-"`unsafe`: indicates this API may panic, have internal invariants, or have "
-"undefined behavior under some circumstances. The concrete semantics of this "
-"kind of alerts may be different across packages, and please consult the "
-"documentation or the author of these packages for further details."
+"Alerts are special warnings that indicate the usage of API marked with the\n"
+"[`#internal` attribute](../attributes.md#internal-attribute)."
 msgstr ""
-"`unsafe`: 表示该 API 可能会导致 "
-"panic、具有内部不变式，或在某些情况下具有未定义的行为。对于这类警告的具体语义可能会因软件包而异，请咨询相关文档或软件包的作者以获得更多详细信息。"
+"Alerts 是一种特殊的警告，用于提示你正在使用被 [`#internal` "
+"attribute](../attributes.md#internal-attribute) 标记的 API。"
 
-#: ../../language/error_codes/E2000.md:17
-msgid "Erroneous example"
-msgstr "错误示例"
-
-#: ../../language/error_codes/E2000.md:19
-msgid "lib/top.mbt"
-msgstr ""
-
-#: ../../language/error_codes/E2000.md:19
+#: ../../language/error_codes/E2000.md:7
 msgid ""
-"///| \n"
-"#deprecated(\"Use `greet` instead\")\n"
-"pub fn greeting() -> String {\n"
-"  \"Hello!\"\n"
-"}\n"
-"\n"
-"///|\n"
-"pub fn greet(name~ : String = \"\") -> String {\n"
-"  if name != \"\" {\n"
-"    \"Hello!\"\n"
-"  } else {\n"
-"    \"Hello, \\{name}!\"\n"
-"  }\n"
-"}\n"
+"Currently, MoonBit won't emit this error code. See [alert warning](../../toolchain/moon/package.md#alert-warning)\n"
+"for how alerts are reported and configured."
 msgstr ""
-
-#: ../../language/error_codes/E2000.md:24 ../../language/error_codes/E2000.md:33
-msgid "top.mbt"
-msgstr ""
-
-#: ../../language/error_codes/E2000.md:24
-msgid ""
-"///|\n"
-"fn main {\n"
-"  println(@lib.greeting())\n"
-"  //      ^~~~~~~~ Warning (Alert deprecated): Use `greet` instead(2000)\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E2000.md:29
-msgid "Suggestion"
-msgstr "建议"
-
-#: ../../language/error_codes/E2000.md:31
-msgid ""
-"One way to fix the alert, is to change your code as suggested by the message"
-" (like `deprecated`):"
-msgstr "修复警告的一种方法是按照消息中的建议更改代码（如 `deprecated`）："
-
-#: ../../language/error_codes/E2000.md:33
-msgid ""
-"///|\n"
-"fn main {\n"
-"  println(@lib.greet())\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E2000.md:38
-msgid ""
-"If you clearly know what you are doing and would like to suppress the alert,"
-" you can change the `moon.pkg.json` file for packages where you would like "
-"to disable **this kind of alert**. For example:"
-msgstr "如果你清楚知道自己在做什么，并且想要抑制警告，你可以更改 `moon.pkg.json` 文件，以禁用**这种类型的警告**。例如："
-
-#: ../../language/error_codes/E2000.md:40
-msgid "moon.pkg.json"
-msgstr ""
-
-#: ../../language/error_codes/E2000.md:40
-msgid ""
-"{\n"
-"  \"is-main\": true,\n"
-"  \"import\": [\n"
-"    \"moonbit-community/E2000-fixed/lib\"\n"
-"  ],\n"
-"  \"alert-list\": \"-deprecated\"\n"
-"}"
-msgstr ""
-
-#: ../../language/error_codes/E2000.md:47
-msgid "There is no way to disable alerts for a line/file."
-msgstr "无法为一行/文件禁用警告。"
-
+"目前，MoonBit 不会发出此错误码。关于 alerts 的报告与配置方式，请参见 "
+"[alert warning](../../toolchain/moon/package.md#alert-warning)。"
