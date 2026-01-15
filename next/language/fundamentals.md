@@ -633,6 +633,29 @@ The default expression will be evaluated every time it is used. And the side eff
 :end-before: end optional arguments 2
 ```
 
+Optional argument values are regular expressions at the call site. You can pass
+expressions that may raise errors or call async functions when in a `raise` or
+`async` context:
+
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start optional arguments 5
+:end-before: end optional arguments 5
+```
+
+For async functions, optional argument expressions can call async functions as
+usual:
+
+```moonbit
+async fn fetch_default() -> Int raise { ... }
+
+async fn build(x? : Int = fetch_default()) -> Int raise { ... }
+
+async fn use_value() -> Int raise {
+  build(x=fetch_default())
+}
+```
+
 If you want to share the result of default expression between different function calls, you can lift the default expression to a toplevel `let` declaration:
 
 ```{literalinclude} /sources/language/src/functions/top.mbt

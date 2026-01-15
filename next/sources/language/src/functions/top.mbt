@@ -150,6 +150,23 @@ test {
 }
 // end optional arguments 4
 
+// start optional arguments 5
+fn may_fail(x : Int) -> Int raise Failure {
+  if x < 0 {
+    fail("negative")
+  }
+  x
+}
+
+fn add_with_optional(base : Int, extra? : Int = 1) -> Int {
+  base + extra
+}
+
+test {
+  inspect(add_with_optional(1, extra=may_fail(2)), content="3")
+}
+// end optional arguments 5
+
 struct Image {
   width : Int
   height : Int
