@@ -404,7 +404,8 @@ test {
 }
 ```
 
-There are `Array[T]` and `FixedArray[T]`:
+There are `Array[T]` and `FixedArray[T]`. Views are provided by `ArrayView[T]`
+and `MutArrayView[T]` (see below).
 
 `Array[T]` can grow in size, while `FixedArray[T]` has a fixed size, thus it needs to be created with initial value.
 
@@ -455,8 +456,9 @@ view of array `data`, referencing elements from `start` to `end` (exclusive).
 Both `start` and `end` indices can be omitted.
 
 #### NOTE
-`ArrayView` is an immutable data structure on its own, but the underlying `Array` or `FixedArray`
-could be modified.
+`ArrayView` is an immutable data structure on its own, but the underlying
+`Array` or `FixedArray` could be modified. For a mutable view, use
+`MutArrayView[T]` via `data.mut_view(...)`.
 
 ```moonbit
 test {
@@ -466,6 +468,9 @@ test {
   inspect(xs[:4], content="[0, 1, 2, 3]")
   inspect(xs[2:5], content="[2, 3, 4]")
   inspect(xs[:], content="[0, 1, 2, 3, 4, 5]")
+  let mv : MutArrayView[Int] = xs.mut_view(start=1, end=3)
+  mv[0] = 99
+  inspect(xs[1], content="99")
 }
 ```
 
@@ -740,6 +745,40 @@ test {
   let counter : Ref[Int] = { val: 0 }
   inspect(incr(counter~), content="{val: 1}")
   inspect(incr(counter~), content="{val: 2}")
+}
+```
+
+Optional argument values are regular expressions at the call site. You can pass
+expressions that may raise errors or call async functions when in a `raise` or
+`async` context:
+
+```moonbit
+fn may_fail(x : Int) -> Int raise Failure {
+  if x < 0 {
+    fail("negative")
+  }
+  x
+}
+
+fn add_with_optional(base : Int, extra? : Int = 1) -> Int {
+  base + extra
+}
+
+test {
+  inspect(add_with_optional(1, extra=may_fail(2)), content="3")
+}
+```
+
+For async functions, optional argument expressions can call async functions as
+usual:
+
+```moonbit
+async fn fetch_default() -> Int raise { ... }
+
+async fn build(x? : Int = fetch_default()) -> Int raise { ... }
+
+async fn use_value() -> Int raise {
+  build(x=fetch_default())
 }
 ```
 
