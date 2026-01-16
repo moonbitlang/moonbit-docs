@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-16 15:45+0800\n"
+"POT-Creation-Date: 2026-01-16 15:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,6 +28,50 @@ msgid "Warning name: `missing_reasoning`"
 msgstr ""
 
 #: ../../language/error_codes/E0039.md:5
-msgid "No longer emitted."
-msgstr "MoonBit 已不再使用此错误码。"
+msgid "Erroneous example"
+msgstr "错误案例"
+
+#: ../../language/error_codes/E0039.md:7
+msgid "The loop does not have `reasoning` clause."
+msgstr "循环缺少推理（reasoning）子句。"
+
+#: ../../language/error_codes/E0039.md:9
+msgid ""
+"///|\n"
+"fn fib(n : Int) -> UInt64 {\n"
+"  for i = 0, a = 0UL, b = 1UL; i < n; i = i + 1, a = b, b = a + b {\n"
+"\n"
+"  } else {\n"
+"    b\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0039.md:13
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0039.md:15
+msgid "Add some reasoning."
+msgstr "添加一些推理。"
+
+#: ../../language/error_codes/E0039.md:17
+msgid ""
+"///|\n"
+"fn fib(n : Int) -> UInt64 {\n"
+"  for i = 0, a = 0UL, b = 1UL; i < n; i = i + 1, a = b, b = a + b {\n"
+"\n"
+"  } else {\n"
+"    b\n"
+"  } where {\n"
+"    reasoning: (\n"
+"      #|The variables `a` and `b` represent consecutive Fibonacci "
+"numbers, \n"
+"      #|so `a` is always less than or equal to `b`.\n"
+"      #|\n"
+"    ),\n"
+"  }\n"
+"}\n"
+msgstr ""
+
 
