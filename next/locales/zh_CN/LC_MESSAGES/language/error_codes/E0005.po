@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-01-16 15:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,24 +24,28 @@ msgid "E0005"
 msgstr ""
 
 #: ../../language/error_codes/E0005.md:3
+msgid "Warning name: `unused_type_variable`"
+msgstr ""
+
+#: ../../language/error_codes/E0005.md:5
 msgid "Unused generic type variable."
 msgstr "未使用的泛型类型变量。"
 
-#: ../../language/error_codes/E0005.md:5
+#: ../../language/error_codes/E0005.md:7
 msgid ""
-"In some cases, using types with unused generic type variables will make it "
-"impossible for the type checker to infer the type of the unused variable, "
-"leading to [E0013](./E0013.md). This might lead to cryptic error messages, "
-"even unexpected runtime behavior."
+"In some cases, using types with unused generic type variables will make "
+"it impossible for the type checker to infer the type of the unused "
+"variable, leading to [E0013](./E0013.md). This might lead to cryptic "
+"error messages, even unexpected runtime behavior."
 msgstr ""
 "在某些情况下，使用带有未使用的泛型类型变量的类型将使类型检查器无法推断未使用变量的类型，从而导致 "
 "[E0013](./E0013.md)。这可能导致难以理解的错误信息，甚至是意想不到的运行时行为。"
 
-#: ../../language/error_codes/E0005.md:10
+#: ../../language/error_codes/E0005.md:12
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0005.md:12
+#: ../../language/error_codes/E0005.md:14
 msgid ""
 "///|\n"
 "priv struct Foo[T] {\n"
@@ -55,15 +59,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0005.md:16
+#: ../../language/error_codes/E0005.md:18
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0005.md:18
+#: ../../language/error_codes/E0005.md:20
 msgid "If the type variable is indeed useless, remove the unused type variable."
 msgstr "如果类型变量确实没有用，移除未使用的类型变量。"
 
-#: ../../language/error_codes/E0005.md:20
+#: ../../language/error_codes/E0005.md:22
 msgid ""
 "\n"
 "///|\n"
@@ -72,13 +76,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0005.md:26
+#: ../../language/error_codes/E0005.md:28
 msgid ""
-"If you wish to keep the type variable, you can use `_` to indicate that the "
-"type variable is intentionally unused."
+"If you wish to keep the type variable, you can use `_` to indicate that "
+"the type variable is intentionally unused."
 msgstr "如果你希望保留类型变量，你可以使用 `_` 来表示类型变量是有意未使用的。"
 
-#: ../../language/error_codes/E0005.md:29
+#: ../../language/error_codes/E0005.md:31
 msgid ""
 "\n"
 "///|\n"

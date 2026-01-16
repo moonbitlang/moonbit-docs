@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-01-16 15:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,29 +24,33 @@ msgid "E0006"
 msgstr ""
 
 #: ../../language/error_codes/E0006.md:3
+msgid "Warning name: `unused_constructor`"
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:5
 msgid "Variant is never read, never constructed, or both."
 msgstr "枚举值从未被读取，从未被构造，或两者都是。"
 
-#: ../../language/error_codes/E0006.md:5
+#: ../../language/error_codes/E0006.md:7
 msgid ""
-"If a variant is never read, it means it is defined but never destructed in a"
-" pattern matching expression (`match`, `let`, `guard let`, loop function, "
-"etc.)."
+"If a variant is never read, it means it is defined but never destructed "
+"in a pattern matching expression (`match`, `let`, `guard let`, loop "
+"function, etc.)."
 msgstr "如果枚举值从未被读取，意味着它被定义但从未在模式匹配表达式中析构（`match`、`let`、`guard let`、循环函数等）。"
 
-#: ../../language/error_codes/E0006.md:8
+#: ../../language/error_codes/E0006.md:10
 msgid "If a variant `A` is never constructed, it means there is no `A(...)`."
 msgstr "如果枚举值 `A` 从未被构造，意味着没有 `A(...)`。"
 
-#: ../../language/error_codes/E0006.md:9
+#: ../../language/error_codes/E0006.md:11
 msgid "If a variant is unused, it means it is never constructed and never read."
 msgstr "如果枚举值未使用，意味着它既没有被构造也没有被读取。"
 
-#: ../../language/error_codes/E0006.md:11
+#: ../../language/error_codes/E0006.md:13
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0006.md:13
+#: ../../language/error_codes/E0006.md:15
 msgid ""
 "///|\n"
 "priv enum T {\n"
@@ -64,18 +68,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0006.md:17
+#: ../../language/error_codes/E0006.md:19
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0006.md:19
+#: ../../language/error_codes/E0006.md:21
 msgid ""
-"If some variants are never read, while others are read, this means that you "
-"have use wildcard pattern (`_`) in your code. You can expand the wildcard "
-"pattern to include the unused variants."
+"If some variants are never read, while others are read, this means that "
+"you have use wildcard pattern (`_`) in your code. You can expand the "
+"wildcard pattern to include the unused variants."
 msgstr "如果有一些枚举值从未被读取，而其他枚举值被读取，这意味着你在代码中使用了通配符模式（`_`）。你可以展开通配符模式以包含未使用的枚举值。"
 
-#: ../../language/error_codes/E0006.md:23
+#: ../../language/error_codes/E0006.md:25
 msgid ""
 "\n"
 "///|\n"
@@ -95,15 +99,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0006.md:29
+#: ../../language/error_codes/E0006.md:31
 msgid ""
-"If all variants are never read, and you need to read these variants outside "
-"of current package, you can add `pub` keyword to the enum definition. Notice"
-" this will make the implementation of the variant visible to the users of "
-"the package."
+"If all variants are never read, and you need to read these variants "
+"outside of current package, you can add `pub` keyword to the enum "
+"definition. Notice this will make the implementation of the variant "
+"visible to the users of the package."
 msgstr "如果所有枚举值从未被读取，而你需要在当前包之外读取这些枚举值，你可以给枚举定义添加 `pub` 关键字。注意这将使枚举值的实现对包的用户可见。"
 
-#: ../../language/error_codes/E0006.md:34
+#: ../../language/error_codes/E0006.md:36
 msgid ""
 "\n"
 "///|\n"
@@ -123,13 +127,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0006.md:40
+#: ../../language/error_codes/E0006.md:42
 msgid ""
-"If you need to construct the \"never constructed\" variant outside of the "
-"current package, you can add `pub(all)` keyword to the variant."
+"If you need to construct the \"never constructed\" variant outside of the"
+" current package, you can add `pub(all)` keyword to the variant."
 msgstr "如果你需要在当前包之外构造“从未被构造”的枚举值，你可以给枚举值添加 `pub(all)` 关键字。"
 
-#: ../../language/error_codes/E0006.md:43
+#: ../../language/error_codes/E0006.md:45
 msgid ""
 "\n"
 "///|\n"
@@ -140,11 +144,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0006.md:49
+#: ../../language/error_codes/E0006.md:51
 msgid "If some variants are indeed useless, you can remove the unused variants."
 msgstr "如果有一些枚举值确实没有用，你可以移除未使用的枚举值。"
 
-#: ../../language/error_codes/E0006.md:51
+#: ../../language/error_codes/E0006.md:53
 msgid ""
 "\n"
 "///|\n"

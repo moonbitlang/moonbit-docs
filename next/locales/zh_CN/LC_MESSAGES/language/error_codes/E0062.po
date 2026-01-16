@@ -1,0 +1,75 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-16 15:45+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0062.md:1
+msgid "E0062"
+msgstr ""
+
+#: ../../language/error_codes/E0062.md:3
+msgid "Warning name: `invalid_cascade`"
+msgstr ""
+
+#: ../../language/error_codes/E0062.md:5
+msgid "Calling method with non-unit return type via `..`."
+msgstr ""
+
+#: ../../language/error_codes/E0062.md:7
+msgid ""
+"The cascade operator `..` is intended for chaining methods that return "
+"`Unit`. Using it with a method that returns a non-`Unit` value emits this"
+" warning."
+msgstr ""
+
+#: ../../language/error_codes/E0062.md:10
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0062.md:12
+msgid ""
+"test {\n"
+"  ignore(\n"
+"    StringBuilder::new()\n"
+"      ..write_string(\"a\")\n"
+"      ..to_string(),\n"
+"  )\n"
+"}\n"
+"\n"
+msgstr ""
+
+#: ../../language/error_codes/E0062.md:16
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0062.md:18
+msgid "Call non-`Unit` methods with `.` instead:"
+msgstr ""
+
+#: ../../language/error_codes/E0062.md:20
+msgid ""
+"test {\n"
+"  let s = StringBuilder::new()\n"
+"    ..write_string(\"a\")\n"
+"    .to_string()\n"
+"  inspect(s, content=\"a\")\n"
+"}\n"
+"\n"
+msgstr ""
+

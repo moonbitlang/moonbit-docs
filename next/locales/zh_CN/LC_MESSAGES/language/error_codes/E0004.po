@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-01-16 15:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,43 +24,47 @@ msgid "E0004"
 msgstr ""
 
 #: ../../language/error_codes/E0004.md:3
+msgid "Warning name: `missing_priv`"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:5
 msgid ""
 "The abstract type does not occur in public signature of current package, "
 "consider marking it as `priv`."
 msgstr ""
 
-#: ../../language/error_codes/E0004.md:6
+#: ../../language/error_codes/E0004.md:8
 msgid ""
 "If an abstract type is not used elsewhere in the public interface of a "
-"package, then it is not possible for user to interact with the value of that"
-" type in any way. Therefore, it is highly probable that the type is part of "
-"the private implementation of the package. In this case, it is better to "
-"mark the type as `priv` to indicate that it is not part of the public "
-"interface of the package."
+"package, then it is not possible for user to interact with the value of "
+"that type in any way. Therefore, it is highly probable that the type is "
+"part of the private implementation of the package. In this case, it is "
+"better to mark the type as `priv` to indicate that it is not part of the "
+"public interface of the package."
 msgstr ""
 
-#: ../../language/error_codes/E0004.md:12
+#: ../../language/error_codes/E0004.md:14
 msgid ""
-"It is also possible that, this abstract type is part of the public interface"
-" of the package, but relevant functions, methods, or types are not marked as"
-" `pub`."
+"It is also possible that, this abstract type is part of the public "
+"interface of the package, but relevant functions, methods, or types are "
+"not marked as `pub`."
 msgstr ""
 
-#: ../../language/error_codes/E0004.md:15
+#: ../../language/error_codes/E0004.md:17
 msgid ""
 "This warning is not emitted inside `main` packages which are usually not "
 "intended to be used by others anyway. Likewise, it is not emitted inside "
 "[whitebox test and blackbox test](/language/tests.md#blackbox-tests-and-"
 "whitebox-tests) files."
 msgstr ""
-"这个警告不会在 `main` 包中发出，因为它们通常不打算被其他人使用。同样地，它也不会在 [白盒测试和黑盒测试](/language/tests.md"
-"#blackbox-tests-and-whitebox-tests) 文件中发出。"
+"这个警告不会在 `main` 包中发出，因为它们通常不打算被其他人使用。同样地，它也不会在 "
+"[白盒测试和黑盒测试](/language/tests.md#blackbox-tests-and-whitebox-tests) 文件中发出。"
 
-#: ../../language/error_codes/E0004.md:20
+#: ../../language/error_codes/E0004.md:22
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0004.md:22
+#: ../../language/error_codes/E0004.md:24
 msgid ""
 "///|\n"
 "struct Code(Int)\n"
@@ -77,17 +81,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0004.md:26
+#: ../../language/error_codes/E0004.md:28
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0004.md:28
+#: ../../language/error_codes/E0004.md:30
 msgid ""
 "If the abstract type is not part of the public interface of the package, "
 "then it should be marked as `priv`:"
 msgstr ""
 
-#: ../../language/error_codes/E0004.md:31
+#: ../../language/error_codes/E0004.md:33
 msgid ""
 "\n"
 "///|\n"
@@ -95,13 +99,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../language/error_codes/E0004.md:37
+#: ../../language/error_codes/E0004.md:39
 msgid ""
 "Or, if the abstract type is part of the public interface of the package, "
 "then make relevant definitions `pub`:"
 msgstr ""
 
-#: ../../language/error_codes/E0004.md:40
+#: ../../language/error_codes/E0004.md:42
 msgid ""
 "\n"
 "///|\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-01-16 15:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,32 +24,37 @@ msgid "E0003"
 msgstr ""
 
 #: ../../language/error_codes/E0003.md:3
-msgid "Unused type declaration."
+#, fuzzy
+msgid "Warning name: `unused_type_declaration`"
 msgstr "未使用的类型声明。"
 
 #: ../../language/error_codes/E0003.md:5
+msgid "Unused type declaration."
+msgstr "未使用的类型声明。"
+
+#: ../../language/error_codes/E0003.md:7
 msgid ""
-"This type is not used by any other part of your code, which means it's not "
-"constructed nor consumed, and others can't construct nor consume due to "
-"visibility. Type declaration is by default abstract, which means it is "
-"publicly visible to users of this package, but they cannot construct nor "
-"destruct the type. Therefore, this warning is only shown if the type has "
-"abstract or private visibility, and is not constructed nor consumed by any "
-"other part of this package."
+"This type is not used by any other part of your code, which means it's "
+"not constructed nor consumed, and others can't construct nor consume due "
+"to visibility. Type declaration is by default abstract, which means it is"
+" publicly visible to users of this package, but they cannot construct nor"
+" destruct the type. Therefore, this warning is only shown if the type has"
+" abstract or private visibility, and is not constructed nor consumed by "
+"any other part of this package."
 msgstr "此类型未被代码的任何其他部分使用，这意味着它既没有被构造也没有被消费，并且由于可见性，其他类型也无法构造或消费它。类型声明默认为抽象类型，这意味着它对此包的用户是公开可见的，但他们无法构造或解析该类型。因此，仅当类型具有抽象或私有可见性，并且没有被此包的任何其他部分构造或消费时，才会显示此警告。"
 
-#: ../../language/error_codes/E0003.md:13
+#: ../../language/error_codes/E0003.md:15
 msgid ""
-"Note that this warning might uncover other bugs in your code. For example, "
-"if there are two types in the package that has similar name, you might just "
-"use the other type by mistake."
+"Note that this warning might uncover other bugs in your code. For "
+"example, if there are two types in the package that has similar name, you"
+" might just use the other type by mistake."
 msgstr "请注意，这个警告可能会揭示你代码中的其他错误。例如，如果包中有两个类型名称相似，你可能会错误地使用另一个类型。"
 
-#: ../../language/error_codes/E0003.md:17
+#: ../../language/error_codes/E0003.md:19
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0003.md:19
+#: ../../language/error_codes/E0003.md:21
 msgid ""
 "///|\n"
 "struct Foo {\n"
@@ -65,25 +70,25 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0003.md:23
+#: ../../language/error_codes/E0003.md:25
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0003.md:25
+#: ../../language/error_codes/E0003.md:27
 msgid "There are multiple ways to fix this warning:"
 msgstr "有几种方式可以修复这个警告："
 
-#: ../../language/error_codes/E0003.md:27
+#: ../../language/error_codes/E0003.md:29
 msgid "If the type is indeed useless, you can remove the definition of the type."
 msgstr "如果这个类型确实没有用，你可以移除类型的定义。"
 
-#: ../../language/error_codes/E0003.md:28
+#: ../../language/error_codes/E0003.md:30
 msgid ""
-"If this type is not local, and is part of the public API of your module, you"
-" can add `pub` or `pub(all)` visibility keyword from the type."
+"If this type is not local, and is part of the public API of your module, "
+"you can add `pub` or `pub(all)` visibility keyword from the type."
 msgstr "如果这个类型不是局部的，并且是你模块的公开 API 的一部分，你可以添加 `pub` 或 `pub(all)` 可见性关键字。"
 
-#: ../../language/error_codes/E0003.md:31
+#: ../../language/error_codes/E0003.md:33
 msgid ""
 "\n"
 "///|\n"
@@ -92,11 +97,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0003.md:37
+#: ../../language/error_codes/E0003.md:39
 msgid "Check if you are referencing the type with a correct name."
 msgstr "检查你是否以正确的名称引用该类型。"
 
-#: ../../language/error_codes/E0003.md:39
+#: ../../language/error_codes/E0003.md:41
 msgid ""
 "It is rather rare to have a type that is private and unused at the same "
 "time; therefore, we suggest you remove the type if it is not used."

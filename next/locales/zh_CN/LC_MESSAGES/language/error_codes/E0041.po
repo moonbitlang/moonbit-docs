@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-01-16 15:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,24 +24,28 @@ msgid "E0041"
 msgstr ""
 
 #: ../../language/error_codes/E0041.md:3
+msgid "Warning name: `missing_rest_mark`"
+msgstr ""
+
+#: ../../language/error_codes/E0041.md:5
 msgid "Closed map pattern."
 msgstr "闭合的字典模式"
 
-#: ../../language/error_codes/E0041.md:5
+#: ../../language/error_codes/E0041.md:7
 msgid ""
-"MoonBit's map pattern syntax does not support closed pattern (i.e. asserting"
-" that the map does not contain any other unmatched elements). So map "
-"patterns must always contain a `..`, otherwise this warning will be "
+"MoonBit's map pattern syntax does not support closed pattern (i.e. "
+"asserting that the map does not contain any other unmatched elements). So"
+" map patterns must always contain a `..`, otherwise this warning will be "
 "reported."
 msgstr ""
 "MoonBit 的字典模式匹配语法不支持闭合的模式（即要求字典中不能包含其他未被匹配的字段）。所以字典模式必须包含 `..` "
 "来忽略余下的字段，否则编译器会发出一个警告。"
 
-#: ../../language/error_codes/E0041.md:9
+#: ../../language/error_codes/E0041.md:11
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0041.md:10
+#: ../../language/error_codes/E0041.md:12
 msgid ""
 "///|\n"
 "fn f(map : Map[String, Int]) -> Bool {\n"
@@ -70,21 +74,21 @@ msgstr ""
 " f({ \"x\": 1, \"y\": 2, \"z\": 3 })\n"
 "}\n"
 
-#: ../../language/error_codes/E0041.md:14
+#: ../../language/error_codes/E0041.md:16
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0041.md:15
+#: ../../language/error_codes/E0041.md:17
 msgid ""
-"If the intended semantic is open matching (i.e. allow existence of unmatched"
-" elements), just add `..` to the map pattern."
+"If the intended semantic is open matching (i.e. allow existence of "
+"unmatched elements), just add `..` to the map pattern."
 msgstr "如果预期的语义是开放的匹配（允许存在其他未被匹配的字段），那么向模式中添加 `..` 即可。"
 
-#: ../../language/error_codes/E0041.md:17
+#: ../../language/error_codes/E0041.md:19
 msgid "If the intended semantic is closed matching, use pattern guard instead:"
 msgstr "如果预期的语义是闭合的匹配，可以用模式匹配中的卫语句来实现："
 
-#: ../../language/error_codes/E0041.md:18
+#: ../../language/error_codes/E0041.md:20
 msgid ""
 "///|\n"
 "fn f(map : Map[String, Int]) -> Bool {\n"

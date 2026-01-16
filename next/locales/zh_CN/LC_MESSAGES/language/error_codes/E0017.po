@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-01-16 15:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,20 +24,24 @@ msgid "E0017"
 msgstr ""
 
 #: ../../language/error_codes/E0017.md:3
+msgid "Warning name: `ambiguous_loop_argument`"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:5
 msgid ""
 "The usage of identifier is ambiguous. If it refers to the loop variable, "
-"please use `as <id>` to bind it in the pattern. If it refers to the original"
-" value of the variable before entering the loop, please bind it to a new "
-"binder outside the loop."
+"please use `as <id>` to bind it in the pattern. If it refers to the "
+"original value of the variable before entering the loop, please bind it "
+"to a new binder outside the loop."
 msgstr ""
 "标识符的使用存在歧义。如果它指的是循环变量，请使用 `as <id>` "
 "在模式中绑定它。如果它指的是变量在进入循环前的原始值，请在循环外部将其绑定到一个新的绑定器。"
 
-#: ../../language/error_codes/E0017.md:8
+#: ../../language/error_codes/E0017.md:10
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0017.md:10
+#: ../../language/error_codes/E0017.md:12
 msgid ""
 "///|\n"
 "fn main {\n"
@@ -46,11 +50,12 @@ msgid ""
 "    [_, .. d] => {\n"
 "      println(a)\n"
 "      //      ^\n"
-"      // Warning: The usage of 'a' is ambiguous. If it refers to the loop\n"
-"      // variable, please use `as a` to bind it in the pattern. If it refers"
-" to\n"
-"      // the original value of 'a' before entering the loop, please bind it "
-"to a\n"
+"      // Warning: The usage of 'a' is ambiguous. If it refers to the loop"
+"\n"
+"      // variable, please use `as a` to bind it in the pattern. If it "
+"refers to\n"
+"      // the original value of 'a' before entering the loop, please bind "
+"it to a\n"
 "      // new binder outside the loop.\n"
 "      continue d\n"
 "    }\n"
@@ -61,12 +66,14 @@ msgstr ""
 "标识符的使用存在歧义。如果它指的是循环变量，请使用 `as <id>` "
 "在模式中绑定它。如果它指的是变量在进入循环前的原始值，请在循环外部将其绑定到一个新的绑定器。"
 
-#: ../../language/error_codes/E0017.md:18 ../../language/error_codes/E0017.md:39
-#: ../../language/error_codes/E0017.md:55
+#: ../../language/error_codes/E0017.md:20
+#: ../../language/error_codes/E0017.md:41
+#: ../../language/error_codes/E0017.md:57
 msgid "Output:"
 msgstr "输出："
 
-#: ../../language/error_codes/E0017.md:20 ../../language/error_codes/E0017.md:57
+#: ../../language/error_codes/E0017.md:22
+#: ../../language/error_codes/E0017.md:59
 msgid ""
 "asdf\n"
 "asdf\n"
@@ -74,24 +81,24 @@ msgid ""
 "asdf\n"
 msgstr ""
 
-#: ../../language/error_codes/E0017.md:23
+#: ../../language/error_codes/E0017.md:25
 msgid ""
-"Because `a` refers to the value of `a` before entering the loop, therefore "
-"the value is always the same."
+"Because `a` refers to the value of `a` before entering the loop, "
+"therefore the value is always the same."
 msgstr "因为 `a` 指的是进入循环前的 `a` 的值，因此该值始终相同。"
 
-#: ../../language/error_codes/E0017.md:26
+#: ../../language/error_codes/E0017.md:28
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0017.md:28
+#: ../../language/error_codes/E0017.md:30
 msgid ""
-"It is often the case that you may want to refer to the loop variable that "
-"changes with loop iterations. If so, use `as <id>` to bind it in the "
+"It is often the case that you may want to refer to the loop variable that"
+" changes with loop iterations. If so, use `as <id>` to bind it in the "
 "pattern."
 msgstr "在许多情况下，您可能需要引用随循环迭代而变化的循环变量。如果需要，请使用 `as <id>` 将其绑定到模式中。"
 
-#: ../../language/error_codes/E0017.md:31
+#: ../../language/error_codes/E0017.md:33
 msgid ""
 "///|\n"
 "fn main {\n"
@@ -106,7 +113,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0017.md:41
+#: ../../language/error_codes/E0017.md:43
 msgid ""
 "asdf\n"
 "sdf\n"
@@ -114,13 +121,13 @@ msgid ""
 "f\n"
 msgstr ""
 
-#: ../../language/error_codes/E0017.md:44
+#: ../../language/error_codes/E0017.md:46
 msgid ""
 "Or, if you want to refer to the original value of the variable before "
 "entering the loop, explicitly bind it to another name outside the loop."
 msgstr "或者，如果你想在进入循环之前引用变量的原始值，可以显式地将其绑定到循环外的另一个名称。"
 
-#: ../../language/error_codes/E0017.md:47
+#: ../../language/error_codes/E0017.md:49
 msgid ""
 "///|\n"
 "fn main {\n"

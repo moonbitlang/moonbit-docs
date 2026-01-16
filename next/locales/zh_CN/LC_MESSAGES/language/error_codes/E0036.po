@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-01-16 15:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,38 +24,42 @@ msgid "E0036"
 msgstr ""
 
 #: ../../language/error_codes/E0036.md:3
+msgid "Warning name: `loop_label_shadowing`"
+msgstr ""
+
+#: ../../language/error_codes/E0036.md:5
 msgid "The loop label name shadows a label that is already in scope."
 msgstr "循环标签名称隐藏了已经在作用域中的标签。"
 
-#: ../../language/error_codes/E0036.md:5
+#: ../../language/error_codes/E0036.md:7
 msgid ""
-"Loop labels must be unique within their scope. When a label name is reused "
-"within a nested scope, it shadows the outer label, which can lead to "
-"confusion about which loop is being referenced by `break` or `continue` "
-"statements."
+"Loop labels must be unique within their scope. When a label name is "
+"reused within a nested scope, it shadows the outer label, which can lead "
+"to confusion about which loop is being referenced by `break` or "
+"`continue` statements."
 msgstr ""
-"循环标签在它们的作用域内必须是唯一的。当标签名在嵌套作用域内被重复使用时，它会遮蔽外部标签，这可能导致对 `break` 或 `continue` "
-"语句所引用的循环产生混淆。"
+"循环标签在它们的作用域内必须是唯一的。当标签名在嵌套作用域内被重复使用时，它会遮蔽外部标签，这可能导致对 `break` 或 `continue`"
+" 语句所引用的循环产生混淆。"
 
-#: ../../language/error_codes/E0036.md:9
+#: ../../language/error_codes/E0036.md:11
 msgid ""
-"This warning helps prevent bugs that could occur when breaking or continuing"
-" to the wrong loop level due to label shadowing. It's recommended to use "
-"distinct, descriptive label names for different loops to make the code's "
-"intent clear."
+"This warning helps prevent bugs that could occur when breaking or "
+"continuing to the wrong loop level due to label shadowing. It's "
+"recommended to use distinct, descriptive label names for different loops "
+"to make the code's intent clear."
 msgstr "此警告有助于防止由于标签遮蔽而导致错误地中断或继续到错误的循环级别。建议为不同的循环使用不同的、描述性的标签名称，以使代码的意图清晰。"
 
-#: ../../language/error_codes/E0036.md:13
+#: ../../language/error_codes/E0036.md:15
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0036.md:15
+#: ../../language/error_codes/E0036.md:17
 msgid ""
 "///|\n"
 "fn f(xss : Array[Array[Int]]) -> Unit {\n"
 "  l~: for xs in xss {\n"
-"    // Warning: The label name `l` shadows a label name that is already in "
-"scope.\n"
+"    // Warning: The label name `l` shadows a label name that is already "
+"in scope.\n"
 "    l~: for x in xs {\n"
 "      if x > 0 {\n"
 "        break l~\n"
@@ -65,17 +69,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0036.md:19
+#: ../../language/error_codes/E0036.md:21
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0036.md:21
+#: ../../language/error_codes/E0036.md:23
 msgid ""
-"Use distinct, descriptive label names for different loops to make the code's"
-" intent clear."
+"Use distinct, descriptive label names for different loops to make the "
+"code's intent clear."
 msgstr "为不同的循环使用不同的、描述性的标签名称，以使代码的意图清晰。"
 
-#: ../../language/error_codes/E0036.md:24
+#: ../../language/error_codes/E0036.md:26
 msgid ""
 "///|\n"
 "fn f(xss : Array[Array[Int]]) -> Unit {\n"
