@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-01-16 15:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,27 +24,33 @@ msgid "E0018"
 msgstr ""
 
 #: ../../language/error_codes/E0018.md:3
+msgid "Warning name: `useless_loop`"
+msgstr ""
+
+#: ../../language/error_codes/E0018.md:5
 msgid "There is no `continue` in this loop expression, so `loop` is useless here."
 msgstr "在这个循环表达式中没有 `continue`，因此 `loop` 在这里是无用的。"
 
-#: ../../language/error_codes/E0018.md:5
+#: ../../language/error_codes/E0018.md:7
 msgid ""
-"This error occurs when using a `loop` expression that contains no `continue`"
-" statement. In MoonBit, a `loop` without any `continue` statements is "
-"equivalent to an block expression that will be executed only once, making "
-"the `loop` keyword redundant in such cases. You should either add a "
-"`continue` statement if you need to restart the loop from the beginning, or "
-"use a simpler control flow construct like `match` or `if`."
+"This error occurs when using a `loop` expression that contains no "
+"`continue` statement. In MoonBit, a `loop` without any `continue` "
+"statements is equivalent to an block expression that will be executed "
+"only once, making the `loop` keyword redundant in such cases. You should "
+"either add a `continue` statement if you need to restart the loop from "
+"the beginning, or use a simpler control flow construct like `match` or "
+"`if`."
 msgstr ""
-"当使用一个不包含 `continue` 语句的 `loop` 表达式时，将会出现这个错误。在 MoonBit 中，一个不包含任何 `continue` "
-"语句的 `loop` 相当于一个只执行一次的块表达式，使得在这种情况下 `loop` 关键字是多余的。如果你需要从头重新开始循环，你应该添加一个 "
-"`continue` 语句，或者使用一个更简单的控制流结构，如 `match` 或 `if`。"
+"当使用一个不包含 `continue` 语句的 `loop` 表达式时，将会出现这个错误。在 MoonBit 中，一个不包含任何 "
+"`continue` 语句的 `loop` 相当于一个只执行一次的块表达式，使得在这种情况下 `loop` "
+"关键字是多余的。如果你需要从头重新开始循环，你应该添加一个 `continue` 语句，或者使用一个更简单的控制流结构，如 `match` 或 "
+"`if`。"
 
-#: ../../language/error_codes/E0018.md:12
+#: ../../language/error_codes/E0018.md:14
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0018.md:14
+#: ../../language/error_codes/E0018.md:16
 msgid ""
 "///|\n"
 "fn main {\n"
@@ -56,24 +62,26 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0018.md:22 ../../language/error_codes/E0018.md:39
-#: ../../language/error_codes/E0018.md:54
+#: ../../language/error_codes/E0018.md:24
+#: ../../language/error_codes/E0018.md:41
+#: ../../language/error_codes/E0018.md:56
 msgid "Output:"
 msgstr "输出："
 
-#: ../../language/error_codes/E0018.md:24 ../../language/error_codes/E0018.md:56
+#: ../../language/error_codes/E0018.md:26
+#: ../../language/error_codes/E0018.md:58
 msgid "2\n"
 msgstr ""
 
-#: ../../language/error_codes/E0018.md:27
+#: ../../language/error_codes/E0018.md:29
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0018.md:29
+#: ../../language/error_codes/E0018.md:31
 msgid "Either add a `continue` statement if you need to restart the loop:"
 msgstr "如果你需要重新开始循环，添加一个 `continue` 语句："
 
-#: ../../language/error_codes/E0018.md:31
+#: ../../language/error_codes/E0018.md:33
 msgid ""
 "///|\n"
 "fn main {\n"
@@ -88,18 +96,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0018.md:41
+#: ../../language/error_codes/E0018.md:43
 msgid ""
 "2\n"
 "1\n"
 "0\n"
 msgstr ""
 
-#: ../../language/error_codes/E0018.md:44
+#: ../../language/error_codes/E0018.md:46
 msgid "Or use `if`/`match` you don't need to use `continue`:"
 msgstr "或者如果不需要使用 `continue`，使用 `if`/`match`："
 
-#: ../../language/error_codes/E0018.md:46
+#: ../../language/error_codes/E0018.md:48
 msgid ""
 "///|\n"
 "fn main {\n"

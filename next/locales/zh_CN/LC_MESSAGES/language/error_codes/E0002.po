@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-01-16 15:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,33 +24,37 @@ msgid "E0002"
 msgstr ""
 
 #: ../../language/error_codes/E0002.md:3
+msgid "Warning name: `unused_value`"
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:5
 msgid "Unused variable."
 msgstr "未使用的变量。"
 
-#: ../../language/error_codes/E0002.md:5
+#: ../../language/error_codes/E0002.md:7
 msgid ""
 "This variable is unused by any other part of your code, nor marked with "
 "`pub` visibility."
 msgstr "这个变量未被代码的其他部分使用，也没有标记 `pub` 可见性。"
 
-#: ../../language/error_codes/E0002.md:8
+#: ../../language/error_codes/E0002.md:10
 msgid ""
-"Note that this warning might uncover other bugs in your code. For example, "
-"if there are two variables in your codebase that has similar name, you might"
-" just use the other variable by mistake."
+"Note that this warning might uncover other bugs in your code. For "
+"example, if there are two variables in your codebase that has similar "
+"name, you might just use the other variable by mistake."
 msgstr "请注意，这个警告可能会揭示你代码中的其他错误。例如，如果你的代码库中有两个变量名称相似，你可能会错误地使用另一个变量。"
 
-#: ../../language/error_codes/E0002.md:12
+#: ../../language/error_codes/E0002.md:14
 msgid ""
-"Specifically, if the variable is at the toplevel, and the body of the module"
-" contains side effects, the side effects will not happen."
+"Specifically, if the variable is at the toplevel, and the body of the "
+"module contains side effects, the side effects will not happen."
 msgstr "具体来说，如果变量是在顶层，并且模块的主体包含副作用，则这些副作用将不会发生。"
 
-#: ../../language/error_codes/E0002.md:15
+#: ../../language/error_codes/E0002.md:17
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0002.md:17
+#: ../../language/error_codes/E0002.md:19
 msgid ""
 "///|\n"
 "let p : Int = {\n"
@@ -68,46 +72,47 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0002.md:21
+#: ../../language/error_codes/E0002.md:23
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0002.md:23
+#: ../../language/error_codes/E0002.md:25
 msgid "There are multiple ways to fix this warning:"
 msgstr "有几种方式可以修复这个警告："
 
-#: ../../language/error_codes/E0002.md:25
+#: ../../language/error_codes/E0002.md:27
 msgid ""
 "If the variable is indeed useless, you can remove the definition of the "
 "variable."
 msgstr "如果这个变量确实没有用，你可以移除变量的定义。"
 
-#: ../../language/error_codes/E0002.md:27
+#: ../../language/error_codes/E0002.md:29
 msgid ""
-"If this variable is at the toplevel (i.e., not local), and is part of the "
-"public API of your module, you can add the `pub` keyword to the variable."
+"If this variable is at the toplevel (i.e., not local), and is part of the"
+" public API of your module, you can add the `pub` keyword to the "
+"variable."
 msgstr "如果这个变量是在顶层（即不是局部的），并且是你模块的公开 API 的一部分，你可以给变量添加 `pub` 关键字。"
 
-#: ../../language/error_codes/E0002.md:30
+#: ../../language/error_codes/E0002.md:32
 msgid ""
 "\n"
 "///|\n"
 "pub let p = 42\n"
 msgstr ""
 
-#: ../../language/error_codes/E0002.md:36
-msgid ""
-"If you made a typo in the variable name, you can rename the variable to the "
-"correct name at the use site."
-msgstr "如果你在变量名上犯了拼写错误，你可以在使用的地方将变量重命名为正确的名字。"
-
 #: ../../language/error_codes/E0002.md:38
 msgid ""
-"If your code depends on the side-effect of the variable, you can wrap the "
-"side-effect in a `fn init` block."
+"If you made a typo in the variable name, you can rename the variable to "
+"the correct name at the use site."
+msgstr "如果你在变量名上犯了拼写错误，你可以在使用的地方将变量重命名为正确的名字。"
+
+#: ../../language/error_codes/E0002.md:40
+msgid ""
+"If your code depends on the side-effect of the variable, you can wrap the"
+" side-effect in a `fn init` block."
 msgstr "如果你的代码依赖于变量的副作用，你可以将副作用包装在 `fn init` 块中。"
 
-#: ../../language/error_codes/E0002.md:41
+#: ../../language/error_codes/E0002.md:43
 msgid ""
 "\n"
 "///|\n"
@@ -119,14 +124,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0002.md:47
+#: ../../language/error_codes/E0002.md:49
 msgid ""
-"There are some cases where you might want to keep the variable private and "
-"unused at the same time. In this case, you can call `ignore()` on the "
-"variable to force the use of it."
+"There are some cases where you might want to keep the variable private "
+"and unused at the same time. In this case, you can call `ignore()` on the"
+" variable to force the use of it."
 msgstr "在某些情况下，你可能想要保持变量为私有且同时不使用。在这种情况下，你可以对该变量调用 `ignore()` 以强制使用它。"
 
-#: ../../language/error_codes/E0002.md:51
+#: ../../language/error_codes/E0002.md:53
 msgid ""
 "\n"
 "///|\n"

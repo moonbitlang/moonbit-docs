@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-01-16 15:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,20 +24,24 @@ msgid "E0015"
 msgstr ""
 
 #: ../../language/error_codes/E0015.md:3
+msgid "Warning name: `unused_mut`"
+msgstr ""
+
+#: ../../language/error_codes/E0015.md:5
 msgid ""
-"The mutability is never used. It is a common mistake to declare an array to "
-"be mutable when it is not necessary. Setting the value of an element in an "
-"array does not require the array to be mutable. For example, `a[0] = 0` does"
-" not require `a` to be mutable, but `a = [0, 1, 2]` does."
+"The mutability is never used. It is a common mistake to declare an array "
+"to be mutable when it is not necessary. Setting the value of an element "
+"in an array does not require the array to be mutable. For example, `a[0] "
+"= 0` does not require `a` to be mutable, but `a = [0, 1, 2]` does."
 msgstr ""
 "数据从未被修改。一个常见错误是在不必要的情况下声明数组为可变。设置数组中元素的值并不需要数组是可变的。例如，`a[0] = 0` 不需要 `a` "
 "是可变的，但 `a = [0, 1, 2]` 需要。"
 
-#: ../../language/error_codes/E0015.md:8
+#: ../../language/error_codes/E0015.md:10
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0015.md:10
+#: ../../language/error_codes/E0015.md:12
 msgid ""
 "fn main {\n"
 "  let mut x = [1, 2, 3] // Warning: The mutability of 'x' is never used.\n"
@@ -46,15 +50,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0015.md:14
+#: ../../language/error_codes/E0015.md:16
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0015.md:16
+#: ../../language/error_codes/E0015.md:18
 msgid "Remove the `mut` keyword from the variable declaration."
 msgstr "移除变量声明中的 `mut` 关键字。"
 
-#: ../../language/error_codes/E0015.md:18
+#: ../../language/error_codes/E0015.md:20
 msgid ""
 "///|\n"
 "fn main {\n"

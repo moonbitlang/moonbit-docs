@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-01-16 15:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,48 +24,52 @@ msgid "E0013"
 msgstr ""
 
 #: ../../language/error_codes/E0013.md:3
+msgid "Warning name: `unresolved_type_variable`"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:5
 msgid "The type of this expression contains unresolved type variables."
 msgstr "这个表达式的类型包含未解析的类型变量。"
 
-#: ../../language/error_codes/E0013.md:5
+#: ../../language/error_codes/E0013.md:7
 msgid ""
 "This error occurs when the compiler encounters a type that contains type "
-"variables which cannot be determined from the context. Type variables are "
-"placeholders for types that should be inferred by the compiler."
+"variables which cannot be determined from the context. Type variables are"
+" placeholders for types that should be inferred by the compiler."
 msgstr "当编译器遇到无法从上下文确定的类型变量时，将会出现此错误。类型变量是应由编译器推断的类型的占位符。"
 
-#: ../../language/error_codes/E0013.md:9
+#: ../../language/error_codes/E0013.md:11
 msgid "Common cases where this happens:"
 msgstr "常见情况："
 
-#: ../../language/error_codes/E0013.md:11
+#: ../../language/error_codes/E0013.md:13
 msgid "Writing local functions without explicit type annotations"
 msgstr "编写没有明确类型注释的局部函数"
 
-#: ../../language/error_codes/E0013.md:12
+#: ../../language/error_codes/E0013.md:14
 msgid ""
 "Creating empty collections (Arrays, Options) without specifying their "
 "element type"
 msgstr "创建空集合（数组，选项），而未指定其元素类型。"
 
-#: ../../language/error_codes/E0013.md:15
+#: ../../language/error_codes/E0013.md:17
 msgid ""
-"When the compiler cannot resolve these type variables, it defaults them to "
-"`Unit` type, which may not be what you intended."
+"When the compiler cannot resolve these type variables, it defaults them "
+"to `Unit` type, which may not be what you intended."
 msgstr "当编译器无法解析这些类型变量时，它将其默认为 `Unit` 类型，这可能并不是你所期望的。"
 
-#: ../../language/error_codes/E0013.md:18
+#: ../../language/error_codes/E0013.md:20
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0013.md:20
+#: ../../language/error_codes/E0013.md:22
 msgid ""
 "pub fn f1() -> Unit {\n"
 "  fn f(x) {\n"
-"//     ^ Warning: The type of this expression is Option[_/0], which contains"
-"\n"
-"//                unresolved type variables. The type variable is default to"
-"\n"
+"//     ^ Warning: The type of this expression is Option[_/0], which "
+"contains\n"
+"//                unresolved type variables. The type variable is default"
+" to\n"
 "//                Unit.\n"
 "    match x {\n"
 "      None => ()\n"
@@ -78,9 +82,10 @@ msgid ""
 "\n"
 "pub fn f2() -> Unit {\n"
 "  fn f(x : Array[_]) -> Int {\n"
-"//     ^ Warning: The type of this expression is Array[_/0], which contains\n"
-"//                unresolved type variables. The type variable is default to"
-"\n"
+"//     ^ Warning: The type of this expression is Array[_/0], which "
+"contains\n"
+"//                unresolved type variables. The type variable is default"
+" to\n"
 "//                Unit.\n"
 "    x.length()\n"
 "  }\n"
@@ -105,19 +110,19 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../language/error_codes/E0013.md:24
+#: ../../language/error_codes/E0013.md:26
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0013.md:26
+#: ../../language/error_codes/E0013.md:28
 msgid "To fix this warning, you can:"
 msgstr "要修复这个警告，你可以："
 
-#: ../../language/error_codes/E0013.md:28
+#: ../../language/error_codes/E0013.md:30
 msgid "Add type annotations to local function parameters. For example,"
 msgstr "为局部类型函数参数添加类型注释。例如："
 
-#: ../../language/error_codes/E0013.md:30
+#: ../../language/error_codes/E0013.md:32
 msgid ""
 "///|\n"
 "pub fn f1() -> Unit {\n"
@@ -141,11 +146,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0013.md:34
-msgid "Explicitly specify the type of the variable or the collection element type."
+#: ../../language/error_codes/E0013.md:36
+msgid ""
+"Explicitly specify the type of the variable or the collection element "
+"type."
 msgstr "显式指定变量或集合元素的类型。"
 
-#: ../../language/error_codes/E0013.md:36
+#: ../../language/error_codes/E0013.md:38
 msgid ""
 "///|\n"
 "fn example_explicit_variable_types() -> Unit {\n"
@@ -156,11 +163,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0013.md:40
+#: ../../language/error_codes/E0013.md:42
 msgid "Or equivalently, add annotations on the collection creation."
 msgstr "或者，等效地，在集合创建时添加类型注释。"
 
-#: ../../language/error_codes/E0013.md:42
+#: ../../language/error_codes/E0013.md:44
 msgid ""
 "///|\n"
 "fn example_annotated_collections() -> Unit {\n"
@@ -171,11 +178,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0013.md:46
+#: ../../language/error_codes/E0013.md:48
 msgid "Provide enough context through usage."
 msgstr "通过使用提供足够的上下文。"
 
-#: ../../language/error_codes/E0013.md:48
+#: ../../language/error_codes/E0013.md:50
 msgid ""
 "///|\n"
 "fn example_context_usage() -> Unit {\n"
@@ -183,8 +190,8 @@ msgid ""
 "    match x {\n"
 "      None => ()\n"
 "      Some(a) => println(a + 1)\n"
-"      //                ^^^^^ through this usage, the compiler can infer the"
-"\n"
+"      //                ^^^^^ through this usage, the compiler can infer "
+"the\n"
 "      //                      type of `x` is `Option[Int]`.\n"
 "    }\n"
 "  }\n"
