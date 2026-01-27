@@ -8,7 +8,7 @@ MoonBit comes with test support to make the writing easier and simpler.
 
 MoonBit provides the test code block for writing inline test cases. For example:
 
-```{literalinclude} /sources/language/src/test/top.mbt
+```{literalinclude} /sources/language/src/testing/top.mbt
 :language: moonbit
 :start-after: start test 1
 :end-before: end test 1
@@ -18,7 +18,7 @@ A test code block is essentially a function that returns a `Unit` but may throws
 
 If a test name starts with `"panic"`, it indicates that the expected behavior of the test is to trigger a panic, and the test will only pass if the panic is triggered. For example:
 
-```{literalinclude} /sources/language/src/test/top.mbt
+```{literalinclude} /sources/language/src/testing/top.mbt
 :language: moonbit
 :start-after: start test 2
 :end-before: end test 2
@@ -35,7 +35,7 @@ We can use `inspect(x, content="x")` to inspect anything that implements `Show` 
 As we mentioned before, `Show` is a builtin trait that can be derived, providing `to_string` that will print the content of the data structures. 
 The labelled argument `content` can be omitted as `moon test --update` will insert it for you:
 
-```{literalinclude} /sources/language/src/test/top.mbt
+```{literalinclude} /sources/language/src/testing/top.mbt
 :language: moonbit
 :start-after: start snapshot test 1
 :end-before: end snapshot test 1
@@ -47,7 +47,7 @@ The problem with the derived `Show` trait is that it does not perform pretty pri
 
 The solution is to use `@json.inspect(x, content=x)`. The benefit is that the resulting content is a JSON structure, which can be more readable after being formatted.
 
-```{literalinclude} /sources/language/src/test/top.mbt
+```{literalinclude} /sources/language/src/testing/top.mbt
 :language: moonbit
 :start-after: start snapshot test 2
 :end-before: end snapshot test 2
@@ -61,7 +61,7 @@ Still, sometimes we want to not only record one data structure but the output of
 
 A full snapshot test can be used to record anything using `@test.T::write` and `@test.T::writeln`:
 
-```{literalinclude} /sources/language/src/test/top.mbt
+```{literalinclude} /sources/language/src/testing/top.mbt
 :language: moonbit
 :start-after: start snapshot test 3
 :end-before: end snapshot test 3
@@ -69,7 +69,7 @@ A full snapshot test can be used to record anything using `@test.T::write` and `
 
 This will create a file under `__snapshot__` of that package with the given filename:
 
-```{literalinclude} /sources/language/src/test/__snapshot__/record_anything.txt
+```{literalinclude} /sources/language/src/testing/__snapshot__/record_anything.txt
 ```
 
 This can also be used for applications to test the generated output, whether it were creating an image, a video or some custom data.

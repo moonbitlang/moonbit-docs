@@ -57,15 +57,15 @@ struct A {
 } derive(ToJson)
 
 test {
-  @json.inspect({ x: None, y: None, z: (None, None) }, content={
+  json_inspect({ x: None, y: None, z: (None, None) }, content={
     "z": [null, null],
   })
-  @json.inspect({ x: Some(1), y: Some(None), z: (Some(1), Some(None)) }, content={
+  json_inspect({ x: Some(1), y: Some(None), z: (Some(1), Some(None)) }, content={
     "x": 1,
     "y": null,
     "z": [[1], [null]],
   })
-  @json.inspect({ x: Some(1), y: Some(Some(1)), z: (Some(1), Some(Some(1))) }, content={
+  json_inspect({ x: Some(1), y: Some(Some(1)), z: (Some(1), Some(Some(1))) }, content={
     "x": 1,
     "y": [1],
     "z": [[1], [[1]]],

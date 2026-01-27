@@ -85,7 +85,16 @@ msgstr ""
 "`moon.pkg.json` 中声明包之间的依赖关系，使用 "
 "[`import`](/toolchain/moon/package.md#import) 字段。"
 
-#: ../../language/packages.md:20
+#: ../../language/packages.md:19
+msgid ""
+"This also applies to core packages: if you use `@json`, `@test`, or other "
+"core aliases, add the corresponding `moonbitlang/core/...` package to "
+"`import` to avoid `core_package_not_imported` warnings."
+msgstr ""
+"这也适用于核心包：如果你使用 `@json`、`@test` 或其他核心别名，请将对应的 "
+"`moonbitlang/core/...` 包加入 `import`，以避免 `core_package_not_imported` 警告。"
+
+#: ../../language/packages.md:22
 msgid ""
 "The **default alias** of a package is the last part of the identifier "
 "split by `/`. One can use `@pkg_alias` to access the imported entities, "
@@ -97,11 +106,11 @@ msgstr ""
 "可以是完整标识符或默认别名。也可以使用 [`import`](/toolchain/moon/package.md#import) "
 "字段定义自定义别名。"
 
-#: ../../language/packages.md:24
+#: ../../language/packages.md:26
 msgid "pkgB/moon.pkg.json"
 msgstr ""
 
-#: ../../language/packages.md:24
+#: ../../language/packages.md:26
 msgid ""
 "{\n"
 "    \"import\": [\n"
@@ -741,4 +750,3 @@ msgid ""
 "  @virtual.log(\"Hello\")\n"
 "}\n"
 msgstr ""
-

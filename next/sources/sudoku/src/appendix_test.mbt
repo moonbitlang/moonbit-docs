@@ -5,11 +5,11 @@ let rows = "ABCDEFGHI"
 let cols = "123456789"
 
 ///|
-type Squares = @immut/sorted_set.SortedSet[String]
+type Squares = @sorted_set.SortedSet[String]
 
 ///|
 fn cross(x : String, y : String, pred : (String) -> Bool) -> Squares {
-  let mut result = @immut/sorted_set.new()
+  let mut result = @sorted_set.new()
   for chx in x {
     for chy in y {
       let res = chx.to_string() + chy.to_string()
@@ -44,7 +44,7 @@ fn unit_of(square : String) -> Squares {
 
 ///|
 let units : Grid[Squares] = {
-  let table = Grid::new(@immut/sorted_set.new())
+  let table = Grid::new(@sorted_set.new())
   for square in squares {
     table[square] = unit_of(square)
   }
@@ -73,7 +73,7 @@ fn is_peer(this : String, other : String) -> Bool {
 
 ///|
 let peers : Grid[Squares] = {
-  let table = Grid::new(@immut/sorted_set.new())
+  let table = Grid::new(@sorted_set.new())
   for square in squares {
     table[square] = squares.filter(fn(sq) { is_peer(sq, square) })
   }
@@ -81,8 +81,8 @@ let peers : Grid[Squares] = {
 }
 
 ///|
-fn Grid::parse(s : String) -> Grid[@immut/sorted_set.SortedSet[Char]] {
-  let digits = @immut/sorted_set.from_array(cols.to_array())
+fn Grid::parse(s : String) -> Grid[@sorted_set.SortedSet[Char]] {
+  let digits = @sorted_set.from_array(cols.to_array())
   let values = Grid::new(digits)
   let chars = s
     .iter()
@@ -102,7 +102,7 @@ fn Grid::parse(s : String) -> Grid[@immut/sorted_set.SortedSet[Char]] {
 }
 
 ///|
-fn Grid::format(self : Grid[@immut/sorted_set.SortedSet[Char]]) -> String {
+fn Grid::format(self : Grid[@sorted_set.SortedSet[Char]]) -> String {
   let rep = Array::make(81, "")
   let mut i = 0
   let mut maxWidth = 0

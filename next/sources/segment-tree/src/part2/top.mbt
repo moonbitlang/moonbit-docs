@@ -170,7 +170,7 @@ fn Node::query(
 ///|
 test {
   let tree = build([1, 2, 3, 4, 5][:])
-  @json.inspect(tree.modify(1, 5, 1, 3, Tag(1)).query(1, 5, 1, 3), content={
+  json_inspect(tree.modify(1, 5, 1, 3, Tag(1)).query(1, 5, 1, 3), content={
     "data": [9, 3],
     "tag": "Nil",
     "left": {

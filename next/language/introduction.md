@@ -160,7 +160,7 @@ Only packages that are `main` packages can define such `main` function. Check ou
 
 There's also a top-level structure called `test` block. A `test` block defines inline tests, such as:
 
-```{literalinclude} /sources/language/src/test/top.mbt
+```{literalinclude} /sources/language/src/testing/top.mbt
 :language: moonbit
 :start-after: start test 1
 :end-before: end test 1
