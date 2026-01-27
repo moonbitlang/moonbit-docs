@@ -66,6 +66,94 @@ test {
 }
 // end array pattern 2
 
+// start bit pattern 1
+test {
+  let packet : Bytes = b"\xD2\x10\x7F"
+  let header : BytesView = packet[0:2]
+  let (flag, kind, version, length) = match header {
+    [u1be(flag), u3be(kind), u4be(version), u8be(length)] => (flag, kind, version, length)
+    _ => fail("bad header")
+  }
+  assert_eq(flag, 1)
+  assert_eq(kind, 0b101)
+  assert_eq(version, 0b0010)
+  assert_eq(length, 16)
+}
+// end bit pattern 1
+
+// start bit pattern 2
+test {
+  let data : Bytes = b"\xF1\xAA\xBB"
+  let view : BytesView = data[0:]
+  let tag = match view {
+    [u4be(0b1111), u4be(tag), ..rest] => {
+      assert_eq(rest, b"\xAA\xBB"[0:])
+      tag
+    }
+    _ => fail("bad prefix")
+  }
+  assert_eq(tag, 0b0001)
+}
+// end bit pattern 2
+
+// start bit pattern sources
+test {
+  let b : Bytes = b"\x80"
+  guard b is [u1be(1), ..] else { fail("Bytes") }
+
+  let a : Array[Byte] = [b'\x80']
+  guard a is [u1be(1), ..] else { fail("Array[Byte]") }
+
+  let f : FixedArray[Byte] = [b'\x80']
+  guard f is [u1be(1), ..] else { fail("FixedArray[Byte]") }
+
+  let r : ReadOnlyArray[Byte] = [b'\x80']
+  guard r is [u1be(1), ..] else { fail("ReadOnlyArray[Byte]") }
+
+  let v : ArrayView[Byte] = a[:]
+  guard v is [u1be(1), ..] else { fail("ArrayView[Byte]") }
+
+  let mv : MutArrayView[Byte] = a.mut_view()
+  guard mv[:] is [u1be(1), ..] else { fail("MutArrayView[Byte]") }
+}
+// end bit pattern sources
+
+// start bit pattern signed
+test {
+  let bytes = b"\x80"
+  let u : UInt = match bytes[:] {
+    [u1be(u), ..] => u
+    _ => fail("u1be")
+  }
+  let i : Int = match bytes[:] {
+    [i1be(i), ..] => i
+    _ => fail("i1be")
+  }
+  assert_eq(u, 1U)
+  assert_eq(i, -1)
+}
+// end bit pattern signed
+
+// start bit pattern types
+test {
+  let bytes = b"\x80\x00\x00\x00\x00"
+  let big : UInt64 = match bytes[:] {
+    [u33be(x), ..] => x
+    _ => fail("u33be")
+  }
+  assert_eq(big, 0x1_0000_0000UL)
+}
+
+test {
+  let bytes = b"\x01\x02"
+  let le : UInt = match bytes[:] {
+    [u16le(x), ..] => x
+    _ => fail("u16le")
+  }
+  assert_eq(le, 0x0201U)
+}
+// end bit pattern types
+
 enum Arith {
   Lit(Int)
   Add(Arith, Arith)

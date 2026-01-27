@@ -3574,6 +3574,75 @@ msgid ""
 msgstr ""
 
 #: ../../language/fundamentals.md:1458
+msgid "Bitstring Pattern"
+msgstr "位串模式"
+
+#: ../../language/fundamentals.md:1460
+msgid ""
+"Bitstring patterns can match packed bit fields from byte containers. They are "
+"supported on `BytesView`, `Bytes`, `Array[Byte]`, `FixedArray[Byte]`, "
+"`ReadOnlyArray[Byte]`, and `ArrayView[Byte]`. Use explicit widths with "
+"`be`/`le` suffixes to make endianness clear. `be` supports widths 1..64; `le` "
+"is only defined for byte-aligned widths (8 * n), since little-endian order is "
+"defined on bytes. Without `..`, the pattern must consume the entire view."
+msgstr ""
+"位串模式可用于匹配字节容器中的打包比特字段。它们支持 `BytesView`、`Bytes`、`Array[Byte]`、"
+"`FixedArray[Byte]`、`ReadOnlyArray[Byte]` 和 `ArrayView[Byte]`。使用带 "
+"`be`/`le` 后缀的显式位宽以明确端序。`be` 支持 1..64 位；`le` 仅支持按字节对齐的宽度（8 * n），因为小端只对字节序有明确意义。没有 `..` 时，模式必须消费整个视图。"
+
+#: ../../language/fundamentals.md:1472
+msgid ""
+"Use literal bit patterns to validate headers, and `..` to capture the "
+"remaining data for the next parse step."
+msgstr "使用字面量位模式验证头部，并用 `..` 捕获剩余数据以供下一步解析。"
+
+#: ../../language/fundamentals.md:1481
+msgid "Examples over common byte containers (note the `MutArrayView` slice):"
+msgstr "常见字节容器示例（注意 `MutArrayView` 需要切片）："
+
+#: ../../language/fundamentals.md:1491
+msgid ""
+"Signed patterns use two's-complement semantics. For example, `u1be` yields "
+"`0` or `1`, while `i1be` yields `0` or `-1`:"
+msgstr "有符号模式使用二进制补码语义。例如，`u1be` 产生 `0` 或 `1`，而 `i1be` 产生 `0` 或 `-1`："
+
+#: ../../language/fundamentals.md:1500
+msgid "Result types depend on width:"
+msgstr "结果类型取决于位宽："
+
+#: ../../language/fundamentals.md:1502
+msgid "Width"
+msgstr "位宽"
+
+#: ../../language/fundamentals.md:1502
+msgid "Result type"
+msgstr "结果类型"
+
+#: ../../language/fundamentals.md:1504
+msgid "1..32 bits (`u`/`i`)"
+msgstr "1..32 位（`u`/`i`）"
+
+#: ../../language/fundamentals.md:1504
+msgid "`UInt` / `Int`"
+msgstr "`UInt` / `Int`"
+
+#: ../../language/fundamentals.md:1505
+msgid "33..64 bits (`u`)"
+msgstr "33..64 位（`u`）"
+
+#: ../../language/fundamentals.md:1505
+msgid "`UInt64`"
+msgstr "`UInt64`"
+
+#: ../../language/fundamentals.md:1506
+msgid "33..64 bits (`i`)"
+msgstr "33..64 位（`i`）"
+
+#: ../../language/fundamentals.md:1506
+msgid "`Int64`"
+msgstr "`Int64`"
+
+#: ../../language/fundamentals.md:1508
 msgid "Range Pattern"
 msgstr "范围模式"
 
@@ -4263,4 +4332,3 @@ msgstr ""
 #~ "因此，与外部迭代器不同，一旦迭代开始，除非到达末尾，否则无法停止。诸如 `count()` "
 #~ "这样的方法，它计算迭代器中元素的数量看起来像是一个 `O(1)` "
 #~ "操作，但实际上具有线性时间复杂度。请谨慎使用迭代器，否则可能会出现性能问题。"
-

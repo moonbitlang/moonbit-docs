@@ -1455,6 +1455,56 @@ matches exact number of elements so its usage is not limited to once.
 :end-before: end array pattern 2
 ```
 
+### Bitstring Pattern
+
+Bitstring patterns can match packed bit fields from byte containers. They are
+supported on `BytesView`, `Bytes`, `Array[Byte]`, `FixedArray[Byte]`,
+`ReadOnlyArray[Byte]`, and `ArrayView[Byte]`. Use explicit widths with
+`be`/`le` suffixes to make endianness clear.
+`be` supports widths 1..64; `le` is only defined for byte-aligned widths (8 *
+n), since little-endian order is defined on bytes. Without `..`, the pattern
+must consume the entire view.
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:start-after: start bit pattern 1
+:end-before: end bit pattern 1
+```
+
+Use literal bit patterns to validate headers, and `..` to capture the remaining
+data for the next parse step.
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:start-after: start bit pattern 2
+:end-before: end bit pattern 2
+```
+
+Examples over common byte containers (note the `MutArrayView` slice):
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:start-after: start bit pattern sources
+:end-before: end bit pattern sources
+```
+
+Signed patterns use two's-complement semantics. For example, `u1be` yields `0`
+or `1`, while `i1be` yields `0` or `-1`:
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:start-after: start bit pattern signed
+:end-before: end bit pattern signed
+```
+
+Result types depend on width:
+
+| Width                        | Result type   |
+|-----------------------------|---------------|
+| 1..32 bits (`u`/`i`)        | `UInt` / `Int` |
+| 33..64 bits (`u`)           | `UInt64`       |
+| 33..64 bits (`i`)           | `Int64`        |
+
 ### Range Pattern
 For builtin integer types and `Char`, MoonBit allows matching whether the value falls in a specific range.
 
