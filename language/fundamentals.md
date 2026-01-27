@@ -1961,6 +1961,100 @@ test {
 }
 ```
 
+### Bitstring Pattern
+
+Bitstring patterns can match packed bit fields from byte containers. They are
+supported on `BytesView`, `Bytes`, `Array[Byte]`, `FixedArray[Byte]`,
+`ReadOnlyArray[Byte]`, and `ArrayView[Byte]`. Use explicit widths with
+`be`/`le` suffixes to make endianness clear.
+`be` supports widths 1..64; `le` is only defined for byte-aligned widths (8 \*
+n), since little-endian order is defined on bytes. Without `..`, the pattern
+must consume the entire view.
+
+```moonbit
+test {
+  let packet : Bytes = b"\xD2\x10\x7F"
+  let header : BytesView = packet[0:2]
+  let (flag, kind, version, length) = match header {
+    [u1be(flag), u3be(kind), u4be(version), u8be(length)] => (flag, kind, version, length)
+    _ => fail("bad header")
+  }
+  assert_eq(flag, 1)
+  assert_eq(kind, 0b101)
+  assert_eq(version, 0b0010)
+  assert_eq(length, 16)
+}
+```
+
+Use literal bit patterns to validate headers, and `..` to capture the remaining
+data for the next parse step.
+
+```moonbit
+test {
+  let data : Bytes = b"\xF1\xAA\xBB"
+  let view : BytesView = data[0:]
+  let tag = match view {
+    [u4be(0b1111), u4be(tag), ..rest] => {
+      assert_eq(rest, b"\xAA\xBB"[0:])
+      tag
+    }
+    _ => fail("bad prefix")
+  }
+  assert_eq(tag, 0b0001)
+}
+```
+
+Examples over common byte containers (note the `MutArrayView` slice):
+
+```moonbit
+test {
+  let b : Bytes = b"\x80"
+  guard b is [u1be(1), ..] else { fail("Bytes") }
+
+  let a : Array[Byte] = [b'\x80']
+  guard a is [u1be(1), ..] else { fail("Array[Byte]") }
+
+  let f : FixedArray[Byte] = [b'\x80']
+  guard f is [u1be(1), ..] else { fail("FixedArray[Byte]") }
+
+  let r : ReadOnlyArray[Byte] = [b'\x80']
+  guard r is [u1be(1), ..] else { fail("ReadOnlyArray[Byte]") }
+
+  let v : ArrayView[Byte] = a[:]
+  guard v is [u1be(1), ..] else { fail("ArrayView[Byte]") }
+
+  let mv : MutArrayView[Byte] = a.mut_view()
+  guard mv[:] is [u1be(1), ..] else { fail("MutArrayView[Byte]") }
+}
+```
+
+Signed patterns use two's-complement semantics. For example, `u1be` yields `0`
+or `1`, while `i1be` yields `0` or `-1`:
+
+```moonbit
+test {
+  let bytes = b"\x80"
+  let u : UInt = match bytes[:] {
+    [u1be(u), ..] => u
+    _ => fail("u1be")
+  }
+  let i : Int = match bytes[:] {
+    [i1be(i), ..] => i
+    _ => fail("i1be")
+  }
+  assert_eq(u, 1U)
+  assert_eq(i, -1)
+}
+```
+
+Result types depend on width:
+
+| Width                | Result type    |
+|----------------------|----------------|
+| 1..32 bits (`u`/`i`) | `UInt` / `Int` |
+| 33..64 bits (`u`)    | `UInt64`       |
+| 33..64 bits (`i`)    | `Int64`        |
+
 ### Range Pattern
 
 For builtin integer types and `Char`, MoonBit allows matching whether the value falls in a specific range.
