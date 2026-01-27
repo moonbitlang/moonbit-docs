@@ -25,15 +25,108 @@ msgstr "包配置"
 
 #: ../../toolchain/moon/package.md:3
 msgid ""
-"moon uses the `moon.pkg.json` file to identify and describe a package. For "
-"full JSON schema, please check [moon's "
+"moon uses a package file to identify and describe a package. The legacy "
+"format is `moon.pkg.json`, and the new format is `moon.pkg`. For full JSON "
+"schema, please check [moon's "
 "repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/pkg.schema.json)."
 msgstr ""
-"moon 使用 `moon.pkg.json` 文件来标识和描述一个包。访问 [moon "
-"的仓库](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/pkg.schema.json)"
+"moon 使用包配置文件来标识和描述一个包。旧格式是 `moon.pkg.json`，新格式是 `moon.pkg`。访问 "
+"[moon 的仓库](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/pkg.schema.json)"
 " 查看完整的 JSON 模式。"
 
-#: ../../toolchain/moon/package.md:5
+#: ../../toolchain/moon/package.md:6
+msgid "New format (`moon.pkg`)"
+msgstr "新格式（`moon.pkg`）"
+
+#: ../../toolchain/moon/package.md:8
+msgid ""
+"The new format is a concise DSL. You can generate or reformat it from an "
+"existing `moon.pkg.json` with:"
+msgstr "新格式是简洁的 DSL。你可以通过以下命令从现有 `moon.pkg.json` 生成或重新格式化："
+
+#: ../../toolchain/moon/package.md:12
+msgid "NEW_MOON_PKG=1 moon fmt -C <module_dir>"
+msgstr "NEW_MOON_PKG=1 moon fmt -C <module_dir>"
+
+#: ../../toolchain/moon/package.md:16
+msgid "Example:"
+msgstr "示例："
+
+#: ../../toolchain/moon/package.md:18
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/json\",\n"
+"  \"moonbitlang/core/test\",\n"
+"  \"moonbit-community/foo/bar\" as @bar,\n"
+"}\n"
+"\n"
+"options(\n"
+"  \"warn-list\": \"-1-2\",\n"
+")\n"
+msgstr ""
+"import {\n"
+"  \"moonbitlang/core/json\",\n"
+"  \"moonbitlang/core/test\",\n"
+"  \"moonbit-community/foo/bar\" as @bar,\n"
+"}\n"
+"\n"
+"options(\n"
+"  \"warn-list\": \"-1-2\",\n"
+")\n"
+
+#: ../../toolchain/moon/package.md:22
+msgid "Import and options"
+msgstr "导入与选项"
+
+#: ../../toolchain/moon/package.md:24
+msgid ""
+"In `moon.pkg`, dependencies are declared in an `import { ... }` block. Use\n"
+"`as @alias` to set a custom alias:"
+msgstr ""
+"在 `moon.pkg` 中，依赖通过 `import { ... }` 块声明。使用 `as @alias` 设置自定义别名："
+
+#: ../../toolchain/moon/package.md:28
+msgid ""
+"import {\n"
+"  \"moonbit-community/foo/bar\" as @bar,\n"
+"}\n"
+msgstr ""
+"import {\n"
+"  \"moonbit-community/foo/bar\" as @bar,\n"
+"}\n"
+
+#: ../../toolchain/moon/package.md:34
+msgid ""
+"All other fields from `moon.pkg.json` move into a single `options(...)` block.\n"
+"The key names and value shapes are unchanged; keys that contain `-` must be\n"
+"quoted."
+msgstr ""
+"`moon.pkg.json` 的其他字段都放入一个 `options(...)` 块中。\n"
+"键名和值的形状保持不变；包含 `-` 的键需要加引号。"
+
+#: ../../toolchain/moon/package.md:38
+msgid ""
+"options(\n"
+"  \"is-main\": true,\n"
+"  \"warn-list\": \"-1-2\",\n"
+"  targets: { \"only_js.mbt\": [ \"js\" ] },\n"
+"  \"supported-targets\": [ \"js\" ],\n"
+"  implement: \"moonbit-community/language/packages/virtual\",\n"
+"  overrides: [ \"moonbit-community/language/packages/implement\" ],\n"
+"  virtual: { \"has-default\": true },\n"
+")\n"
+msgstr ""
+"options(\n"
+"  \"is-main\": true,\n"
+"  \"warn-list\": \"-1-2\",\n"
+"  targets: { \"only_js.mbt\": [ \"js\" ] },\n"
+"  \"supported-targets\": [ \"js\" ],\n"
+"  implement: \"moonbit-community/language/packages/virtual\",\n"
+"  overrides: [ \"moonbit-community/language/packages/implement\" ],\n"
+"  virtual: { \"has-default\": true },\n"
+")\n"
+
+#: ../../toolchain/moon/package.md:22
 msgid "Name"
 msgstr "名称"
 
@@ -85,13 +178,28 @@ msgstr "`import` 字段用于指定包依赖的其他包。"
 
 #: ../../toolchain/moon/package.md:24
 msgid ""
-"For example, the following imports `moonbitlang/quickcheck` and "
-"`moonbitlang/x/encoding`,  aliasing the latter to `lib` and importing the "
-"function `encode` from the latter. User can write `@lib.encode` instead of "
-"`encode`."
+"For example, the following imports `pkgA` and `pkgC`, aliasing `pkgC` to `c`."
+"\n"
+"User can write `@c` to access definitions from `pkgC`."
 msgstr ""
-"例如，以下导入了 `moonbitlang/quickcheck` 和 `moonbitlang/x/encoding`，将后者别名为 `lib` "
-"并从后者导入函数 `encode`。用户可以使用 `@lib.encode` 代替 `encode`。"
+"例如，以下导入 `pkgA` 和 `pkgC`，将 `pkgC` 别名为 `c`。\n"
+"用户可以使用 `@c` 访问 `pkgC` 中的定义。"
+
+#: ../../toolchain/moon/package.md:28
+msgid "In `moon.pkg`, the equivalent is:"
+msgstr "在 `moon.pkg` 中，对应写法是："
+
+#: ../../toolchain/moon/package.md:30
+msgid ""
+"import {\n"
+"  \"moonbitlang/quickcheck\",\n"
+"  \"moonbitlang/x/encoding\" as @lib,\n"
+"}\n"
+msgstr ""
+"import {\n"
+"  \"moonbitlang/quickcheck\",\n"
+"  \"moonbitlang/x/encoding\" as @lib,\n"
+"}\n"
 
 #: ../../toolchain/moon/package.md:28
 msgid ""

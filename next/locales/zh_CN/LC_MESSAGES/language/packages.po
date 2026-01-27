@@ -41,14 +41,14 @@ msgstr "包和模块"
 #: ../../language/packages.md:8
 msgid ""
 "In MoonBit, the most important unit for code organization is a package, "
-"which consists of a number of source code files and a single "
-"`moon.pkg.json` configuration file. A package can either be a `main` "
-"package, consisting a `main` function, or a package that serves as a "
-"library, identified by the [`is-main`](/toolchain/moon/package.md#is-"
-"main) field."
+"which consists of a number of source code files and a single package "
+"configuration file (`moon.pkg.json` legacy, or the new `moon.pkg` format). "
+"A package can either be a `main` package, consisting a `main` function, or "
+"a package that serves as a library, identified by the "
+"[`is-main`](/toolchain/moon/package.md#is-main) field."
 msgstr ""
-"在 MoonBit 中，代码组织的最重要单元是包，它由多个源代码文件和一个单独的 `moon.pkg.json` 配置文件组成。包可以是一个 "
-"`main` 包，包含一个 `main` 函数，或者是一个用作库的包。这些由 [`is-"
+"在 MoonBit 中，代码组织的最重要单元是包，它由多个源代码文件和一个包配置文件组成（旧格式为 `moon.pkg.json`，新格式为 "
+"`moon.pkg`）。包可以是一个 `main` 包，包含一个 `main` 函数，或者是一个用作库的包。这些由 [`is-"
 "main`](/toolchain/moon/package.md#is-main) 字段标识。"
 
 #: ../../language/packages.md:11
@@ -76,13 +76,12 @@ msgid ""
 "When using things from another package, the dependency between modules "
 "should first be declared inside the `moon.mod.json` by the "
 "[`deps`](/toolchain/moon/module.md#dependency-management) field. The "
-"dependency between packages should then be declared in side the "
-"`moon.pkg.json` by the [`import`](/toolchain/moon/package.md#import) "
-"field."
+"dependency between packages should then be declared in the package file "
+"(`moon.pkg.json` or `moon.pkg`) by the "
+"[`import`](/toolchain/moon/package.md#import) field."
 msgstr ""
 "在从另一个包中使用内容时，模块之间的依赖关系应首先在 `moon.mod.json` 中声明，使用 "
-"[`deps`](/toochain/moon/module.md#dependency-management) 字段。然后在 "
-"`moon.pkg.json` 中声明包之间的依赖关系，使用 "
+"[`deps`](/toochain/moon/module.md#dependency-management) 字段。然后在包配置文件中声明包之间的依赖关系（`moon.pkg.json` 或 `moon.pkg`），使用 "
 "[`import`](/toolchain/moon/package.md#import) 字段。"
 
 #: ../../language/packages.md:19
@@ -107,6 +106,20 @@ msgstr ""
 "字段定义自定义别名。"
 
 #: ../../language/packages.md:26
+msgid "In `moon.pkg`, a custom alias is written as:"
+msgstr "在 `moon.pkg` 中，自定义别名写法为："
+
+#: ../../language/packages.md:28
+msgid ""
+"import {\n"
+"  \"moonbit-community/language/packages/pkgC\" as @c,\n"
+"}\n"
+msgstr ""
+"import {\n"
+"  \"moonbit-community/language/packages/pkgC\" as @c,\n"
+"}\n"
+
+#: ../../language/packages.md:33
 msgid "pkgB/moon.pkg.json"
 msgstr ""
 

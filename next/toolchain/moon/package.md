@@ -1,6 +1,40 @@
 # Package Configuration
 
-moon uses the `moon.pkg.json` file to identify and describe a package. For full JSON schema, please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/pkg.schema.json).
+moon uses a package file to identify and describe a package. The legacy format
+is `moon.pkg.json`, and the new format is `moon.pkg`. For full JSON schema,
+please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/pkg.schema.json).
+
+## New format (`moon.pkg`)
+
+The new format is a concise DSL. You can generate or reformat it from an
+existing `moon.pkg.json` with:
+
+```bash
+NEW_MOON_PKG=1 moon fmt -C <module_dir>
+```
+
+Example:
+
+```{literalinclude} /sources/language/src/packages/use_implement/moon.pkg
+:language: text
+```
+
+### Import and options
+
+In `moon.pkg`, dependencies are declared in an `import { ... }` block. Use
+`as @alias` to set a custom alias:
+
+```{literalinclude} /sources/language/src/packages/pkgB/moon.pkg
+:language: text
+```
+
+All other fields from `moon.pkg.json` move into a single `options(...)` block.
+The key names and value shapes are unchanged; keys that contain `-` must be
+quoted.
+
+```{literalinclude} /sources/language/src/packages/virtual/moon.pkg
+:language: text
+```
 
 ## Name
 
@@ -21,17 +55,17 @@ The output of the linking process depends on the backend. When this field is set
 
 The `import` field is used to specify other packages that a package depends on.
 
-For example, the following imports `moonbitlang/quickcheck` and `moonbitlang/x/encoding`, 
-aliasing the latter to `lib` and importing the function `encode` from the latter.
-User can write `@lib.encode` instead of `encode`.
+For example, the following imports `pkgA` and `pkgC`, aliasing `pkgC` to `c`.
+User can write `@c` to access definitions from `pkgC`.
 
-```json
-{
-  "import": [
-    "moonbitlang/quickcheck",
-    { "path" : "moonbitlang/x/encoding", "alias": "lib", "value": ["encode"] }
-  ]
-}
+In `moon.pkg`, the equivalent is:
+
+```{literalinclude} /sources/language/src/packages/pkgB/moon.pkg
+:language: text
+```
+
+```{literalinclude} /sources/language/src/packages/pkgB/moon.pkg.json
+:language: json
 ```
 
 Core packages are not special here: if you use `@json`, `@test`, or other core
