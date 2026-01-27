@@ -70,7 +70,7 @@ test "json snapshot test" {
     r,
     content="Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(End)))",
   )
-  @json.inspect(r, content=[
+  json_inspect(r, content=[
     "Really_long_name_that_is_difficult_to_read",
     [
       "Really_long_name_that_is_difficult_to_read",

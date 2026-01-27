@@ -261,7 +261,7 @@ and we return `false`.
 
 ```moonbit
 fn eliminate(
-  values : Grid[@immut/sorted_set.SortedSet[Char]],
+  values : Grid[@sorted_set.SortedSet[Char]],
   key : String,
   val : Char
 ) -> Bool {
@@ -304,7 +304,7 @@ from the possible values of `key`.
 ```moonbit
 ///|
 fn assign(
-  values : Grid[@immut/sorted_set.SortedSet[Char]],
+  values : Grid[@sorted_set.SortedSet[Char]],
   key : String,
   val : Char
 ) -> Bool {
@@ -377,8 +377,8 @@ backtracking troublesome, we directly copy values each time we assign a value.
 
 ```moonbit
 fn search(
-  values : Grid[@immut/sorted_set.SortedSet[Char]],
-) -> Grid[@immut/sorted_set.SortedSet[Char]]? {
+  values : Grid[@sorted_set.SortedSet[Char]],
+) -> Grid[@sorted_set.SortedSet[Char]]? {
   if values.contains(fn(digits) { not(digits.length() == 1) }) {
     let mut minsq = ""
     let mut n = 10

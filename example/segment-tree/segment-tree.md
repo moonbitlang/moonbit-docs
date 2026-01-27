@@ -89,7 +89,7 @@ Now, let's build a tree and test it:
 ```moonbit
 test {
   let tree = build([1, 2, 3, 4, 5][:])
-  @json.inspect(tree, content=[
+  json_inspect(tree, content=[
     15,
     [6, [3, [1, "Nil", "Nil"], [2, "Nil", "Nil"]], [3, "Nil", "Nil"]],
     [9, [4, "Nil", "Nil"], [5, "Nil", "Nil"]],

@@ -15,6 +15,9 @@ A package is identified by the relative path to the source root defined by the [
 
 When using things from another package, the dependency between modules should first be declared inside the `moon.mod.json` by the [`deps`](../toolchain/moon/module.md#dependency-management) field.
 The dependency between packages should then be declared in side the `moon.pkg.json` by the [`import`](../toolchain/moon/package.md#import) field.
+This also applies to core packages: if you use `@json`, `@test`, or other core
+aliases, add the corresponding `moonbitlang/core/...` package to `import` to
+avoid `core_package_not_imported` warnings.
 
 <a id="default-alias"></a>
 
@@ -29,7 +32,8 @@ A custom alias may also be defined with the [`import`](../toolchain/moon/package
         {
             "path": "moonbit-community/language/packages/pkgC",
             "alias": "c"
-        }
+        },
+        "moonbitlang/core/builtin"
     ]
 }
 ```

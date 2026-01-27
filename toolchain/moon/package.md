@@ -34,6 +34,10 @@ User can write `@lib.encode` instead of `encode`.
 }
 ```
 
+Core packages are not special here: if you use `@json`, `@test`, or other core
+aliases, add the corresponding `moonbitlang/core/...` package to `import` to
+avoid `core_package_not_imported` warnings.
+
 ### test-import
 
 The `test-import` field is used to specify other packages that the black-box test package of this package depends on,
