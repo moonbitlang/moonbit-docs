@@ -60,6 +60,7 @@
   * [Alert List](module.md#alert-list)
   * [Scripts](module.md#scripts)
 * [Package Configuration](package.md)
+  * [New format (`moon.pkg`)](package.md#new-format-moon-pkg)
   * [Name](package.md#name)
   * [is-main](package.md#is-main)
   * [Importing dependencies](package.md#importing-dependencies)
