@@ -61,14 +61,14 @@ examine
 ├── LICENSE
 ├── moon.mod.json
 ├── moon.pkg.json
-├── my_project_test.mbt
-├── my_project.mbt
+├── examine_test.mbt
+├── examine.mbt
 ├── README.mbt.md
 └── README.md -> README.mbt.md
 ```
 
 which contains a `cmd/main` lib containing a `fn main` that serves as the entrance
-of the program. Try running `cd my_project && moon run cmd/main`.
+of the program. Try running `cd examine && moon run cmd/main`.
 
 In this tutorial, we assume the project name is `examine`, 
 and the current working directory is also `examine`.
