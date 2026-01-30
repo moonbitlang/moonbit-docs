@@ -11,14 +11,14 @@ We implement `Equal` for the built‑in `Int` type and for a user‑defined `Pos
 
 In `main`, calling `Equal::is_equal()` invokes the trait method; based on the types of `a` and `b`, different implementations are chosen:
 
-- When `a` and `b` are `Int`, the code in `impl Int for Equal with is_equal` runs.
-- When `a` and `b` are `Pos`, the code in `impl Pos for Equal with is_equal` runs.
+- When `a` and `b` are `Int`, the code in `impl Equal for Int with is_equal` runs.
+- When `a` and `b` are `Pos`, the code in `impl Equal for Pos with is_equal` runs.
 
 The choice is resolved statically, there is no runtime dynamic dispatch overhead.
 
 ## Limitations
 
-MoonBit follows the orphan rule: an `impl Type for Trait ...` must be in the same package as either the `Type` or the `Trait`; it cannot exist in isolation. This restriction guarantees uniqueness of trait implementations and prevents conflicts caused by duplicate impls in different packages or behavior changes due to external package modifications.
+MoonBit follows the orphan rule: an `impl Trait for Type ...` must be in the same package as either the `Type` or the `Trait`; it cannot exist in isolation. This restriction guarantees uniqueness of trait implementations and prevents conflicts caused by duplicate impls in different packages or behavior changes due to external package modifications.
 
 ## Uses
 
