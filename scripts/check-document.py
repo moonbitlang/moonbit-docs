@@ -18,7 +18,7 @@ def main():
         # Skip async for non-js backends
         targets = "all"
         if dir_path.name == "async":
-            targets = "js"
+            targets = "native"
 
         print(f"Processing {dir_path}")
 
