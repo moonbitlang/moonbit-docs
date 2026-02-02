@@ -61,19 +61,19 @@ examine
 ├── LICENSE
 ├── moon.mod.json
 ├── moon.pkg.json
-├── my_project_test.mbt
-├── my_project.mbt
+├── examine_test.mbt
+├── examine.mbt
 ├── README.mbt.md
 └── README.md -> README.mbt.md
 ```
 
 which contains a `cmd/main` lib containing a `fn main` that serves as the entrance
-of the program. Try running `cd my_project && moon run cmd/main`.
+of the program. Try running `cd examine && moon run cmd/main`.
 
 In this tutorial, we assume the project name is `examine`,
 and the current working directory is also `examine`.
 
-## Example: Finding those who passed
+## Example: Finding students who passed the test
 
 In this example, we will try to find out, given the scores of some students, how
 many of them have passed the test?
@@ -85,7 +85,7 @@ Unless specified, the following will be defined under the file `top.mbt`.
 
 ### Data types
 
-The [basic data types](../language/fundamentals.md#built-in-data-structures) in MoonBit includes the following:
+The [basic data types](../language/fundamentals.md#built-in-data-structures) in MoonBit include the following:
 
 - `Unit`
 - `Bool`
@@ -98,7 +98,7 @@ The [basic data types](../language/fundamentals.md#built-in-data-structures) in 
 To represent a struct containing a student ID and a score using a primitive
 type, we can use a 2-tuple containing a student ID (of type `String`) and a
 score (of type `Double`) as `(String, Double)`. However this is not very
-intuitive as we can't identify with other possible data types, such as a struct
+intuitive as we can't distinguish with other possible data types, such as a struct
 containing a student ID and the height of the student.
 
 So we choose to declare our own data type using [struct](../language/fundamentals.md#struct):
@@ -122,9 +122,9 @@ enum ExamResult {
 
 ### Functions
 
-[Function](../language/fundamentals.md#functions) is a piece of code that takes some inputs and produces a result.
+A [Function](../language/fundamentals.md#functions) is a piece of code that takes some inputs and produces a result.
 
-In our example, we need to judge whether a student have passed an exam:
+In our example, we need to judge whether a student has passed an exam:
 
 ```moonbit
 fn is_qualified(student : Student, criteria: Double) -> ExamResult {
@@ -147,8 +147,8 @@ fn count_qualified_students(
 }
 ```
 
-In MoonBit, functions are first-classed, meaning that we can bind a function to a variable, pass a function as parameter or receiving a function as a result.
-This function takes an array of students' structs and another function that will judge whether a student have passed an exam.
+In MoonBit, functions are first-class, meaning that we can bind a function to a variable, pass a function as parameter or receive a function as a result.
+This function takes an array of students' structs and another function that will judge whether a student has passed an exam.
 
 ### Writing tests
 
@@ -195,7 +195,7 @@ We need to implement `Eq` and `Show` for our `ExamResult`. There are two ways to
 
 1. By defining an explicit implementation:
    ```moonbit
-   impl Eq for ExamResult with op_equal(self, other) {
+   impl Eq for ExamResult with equal(self, other) {
      match (self, other) {
        (Pass, Pass) | (Fail, Fail) => true
        _ => false
@@ -204,7 +204,7 @@ We need to implement `Eq` and `Show` for our `ExamResult`. There are two ways to
    ```
 
    Here we use [pattern matching](../language/fundamentals.md#pattern-matching) to check the cases of the `ExamResult`.
-2. Other is by [deriving](../language/derive.md) since `Eq` and `Show` are [builtin traits](../language/methods.md#builtin-traits) and the output for `ExamResult` is quite straightforward:
+2. An alternative way is by [deriving](../language/derive.md) since `Eq` and `Show` are [builtin traits](../language/methods.md#builtin-traits) and the output for `ExamResult` is quite straightforward:
    ```moonbit
    enum ExamResult {
      Pass
@@ -345,7 +345,7 @@ And now, the compilation should work and the tests should pass again.
 
 ### Publishing the library
 
-Now that you've ready, you can publish this project to [mooncakes.io](https://mooncakes.io),
+Now that you're ready, you can publish this project to [mooncakes.io](https://mooncakes.io),
 the module registry of MoonBit. You can find other interesting projects there
 too.
 
