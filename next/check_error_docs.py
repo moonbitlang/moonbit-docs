@@ -22,12 +22,13 @@ def run_moon_test(file_path, error_code=None):
     try:
         if not is_moon_project(Path(file_path)):
             return True
-        subprocess.run(['moon', 'clean', '-C', file_path],)
+        subprocess.run(['moon', 'clean'], cwd=file_path)
         result = subprocess.run(
-            ['moon', 'check', '-C', file_path],
+            ['moon', 'check'],
             capture_output=True,
             text=True,
-            env={**os.environ, 'NO_COLOR': '1'}
+            env={**os.environ, 'NO_COLOR': '1'},
+            cwd=file_path,
         )
 
         output = result.stdout + result.stderr
