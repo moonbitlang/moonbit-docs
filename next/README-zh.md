@@ -69,6 +69,19 @@ make gettext
 sphinx-intl update -p _build/gettext -l zh_CN
 ```
 
+也可以使用辅助脚本（需要 gettext 工具 `msgmerge` 和 `msguniq`）：
+
+```bash
+python3 scripts/i18n.py all
+```
+
+其他子命令：
+
+```bash
+python3 scripts/i18n.py gettext
+python3 scripts/i18n.py sync
+```
+
 你应该能够通过 Git 版本系统看到文件的变化。
 你会看到新增或修改的条目，每个条目由文档位置、`msgid` 和 `msgstr` 组成。
 `msgid` 是原始文本，`msgstr` 则是需要填写的翻译内容。

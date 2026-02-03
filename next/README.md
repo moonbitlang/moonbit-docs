@@ -74,6 +74,20 @@ make gettext
 sphinx-intl update -p _build/gettext -l zh_CN
 ```
 
+You can also use the helper script (requires gettext tools `msgmerge` and
+`msguniq`):
+
+```bash
+python3 scripts/i18n.py all
+```
+
+Other subcommands:
+
+```bash
+python3 scripts/i18n.py gettext
+python3 scripts/i18n.py sync
+```
+
 You should be able to see the file changed thanks to the Git version system.
 You should see new entries or modified entries each composed of a document position, a `msgid` and a `msgstr`.
 The `msgid` is the original text and `msgstr` would be the translation to be written.
