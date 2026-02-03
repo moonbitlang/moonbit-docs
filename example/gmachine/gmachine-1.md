@@ -123,7 +123,7 @@ Additionally, some predefined coreF programs are required.
 
 ```moonbit
 let prelude_defs : List[ScDef[String]] = {
-  let args : (FixedArray[String]) -> List[String] = @list.from_array(_)
+  let args : (FixedArray[String]) -> List[String] = x => @list.from_array(x)
   let id = ScDef::new("I", args(["x"]), Var("x")) // id x = x
   let k = ScDef::new("K", args(["x", "y"]), Var("x")) // K x y = x
   let k1 = ScDef::new("K1", args(["x", "y"]), Var("y")) // K1 x y = y
