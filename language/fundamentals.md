@@ -773,11 +773,19 @@ For async functions, optional argument expressions can call async functions as
 usual:
 
 ```moonbit
-async fn fetch_default() -> Int raise { ... }
 
-async fn build(x? : Int = fetch_default()) -> Int raise { ... }
+///|
+async fn fetch_default() -> Int {
+  ...
+}
 
-async fn use_value() -> Int raise {
+///|
+async fn build(x? : Int = fetch_default()) -> Int {
+  ...
+}
+
+///|
+async fn use_value() -> Int {
   build(x=fetch_default())
 }
 ```
