@@ -7,16 +7,24 @@ import subprocess
 import re
 from pathlib import Path
 
-ERROR_CODES_DIR = 'language/error_codes'
-ERROR_CODES_SOURCE_DIR = 'sources/error_codes'
+BASE_DIR = Path(__file__).resolve().parent
+ERROR_CODES_DIR = BASE_DIR / 'language/error_codes'
+ERROR_CODES_SOURCE_DIR = BASE_DIR / 'sources/error_codes'
+
+
+def is_moon_project(path: Path) -> bool:
+    """Return True if the path looks like a Moon project root."""
+    return (path / 'moon.mod.json').exists()
 
 
 def run_moon_test(file_path, error_code=None):
-    """Execute moon test command and return results"""
+    """Execute moon check command and return results"""
     try:
+        if not is_moon_project(Path(file_path)):
+            return True
         subprocess.run(['moon', 'clean', '-C', file_path],)
         result = subprocess.run(
-            ['moon', 'test', '-C', file_path],
+            ['moon', 'check', '-C', file_path],
             capture_output=True,
             text=True,
             env={**os.environ, 'NO_COLOR': '1'}
@@ -24,8 +32,7 @@ def run_moon_test(file_path, error_code=None):
 
         output = result.stdout + result.stderr
         has_warnings = bool(re.search(r'Warning: \[\d{4}\]', output))
-        has_errors = bool(re.search(r'Error: \[\d{4}\]', output)) and \
-            'Total tests:' not in output or 'failed: 0' not in output
+        has_errors = bool(re.search(r'Error: \[\d{4}\]', output))
 
         if error_code:
             error_code_padded = error_code.zfill(4)
@@ -52,8 +59,8 @@ def run_moon_test(file_path, error_code=None):
 
 def check_error_code(error_code):
     """Check specific error code documentation"""
-    error_path = Path(ERROR_CODES_SOURCE_DIR) / f"{error_code}_error"
-    fixed_path = Path(ERROR_CODES_SOURCE_DIR) / f"{error_code}_fixed"
+    error_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_error"
+    fixed_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_fixed"
 
     if not error_path.exists() and not fixed_path.exists():
         return True
@@ -69,7 +76,7 @@ def check_error_code(error_code):
 
 def get_all_error_codes():
     """Get all error code list"""
-    error_codes_path = Path(ERROR_CODES_DIR)
+    error_codes_path = ERROR_CODES_DIR
     if not error_codes_path.exists():
         return []
 

@@ -10,5 +10,5 @@ fn[T] perform(message : (T) -> Message, produce : () -> T) -> Message {
 
 ///|
 fn main {
-  println(perform(Add(_), fn() { "Hello, world!" }))
+  println(perform(x => Add(x), fn() { "Hello, world!" }))
 }
