@@ -21,19 +21,54 @@ msgstr ""
 
 #: ../../language/error_codes/E0069.md:1
 msgid "E0069"
-msgstr ""
+msgstr "E0069"
 
 #: ../../language/error_codes/E0069.md:3
 msgid "Warning name: `declaration_implemented`"
-msgstr ""
+msgstr "警告名称：`declaration_implemented`"
 
 #: ../../language/error_codes/E0069.md:5
 msgid "Declaration is already implemented."
-msgstr ""
+msgstr "声明已实现。"
 
 #: ../../language/error_codes/E0069.md:7
 msgid ""
 "This warning is emitted when a declaration is implemented more than once."
 " Remove the redundant implementation."
-msgstr ""
+msgstr "当同一声明被实现多次时发出此警告。移除多余的实现。"
 
+#: ../../language/error_codes/E0069.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0069.md:12
+msgid ""
+"declare fn f() -> Unit\n"
+"\n"
+"fn f() -> Unit {\n"
+"  println(\"only\")\n"
+"}\n"
+msgstr ""
+"declare fn f() -> Unit\n"
+"\n"
+"fn f() -> Unit {\n"
+"  println(\"only\")\n"
+"}\n"
+
+#: ../../language/error_codes/E0069.md:16
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0069.md:18
+msgid "Remove the redundant declaration:"
+msgstr "移除多余的声明："
+
+#: ../../language/error_codes/E0069.md:20
+msgid ""
+"fn f() -> Unit {\n"
+"  println(\"only\")\n"
+"}\n"
+msgstr ""
+"fn f() -> Unit {\n"
+"  println(\"only\")\n"
+"}\n"

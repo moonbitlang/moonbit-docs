@@ -21,15 +21,15 @@ msgstr ""
 
 #: ../../language/error_codes/E0060.md:1
 msgid "E0060"
-msgstr ""
+msgstr "E0060"
 
 #: ../../language/error_codes/E0060.md:3
 msgid "Warning name: `unused_struct_update`"
-msgstr ""
+msgstr "警告名称：`unused_struct_update`"
 
 #: ../../language/error_codes/E0060.md:5
 msgid "Unused struct update."
-msgstr ""
+msgstr "结构体更新结果未使用。"
 
 #: ../../language/error_codes/E0060.md:7
 msgid ""
@@ -37,4 +37,67 @@ msgid ""
 "its result is not used. Use the updated value, or remove the update if it"
 " is unnecessary."
 msgstr ""
+"当结构体更新表达式被计算但结果未使用时发出此警告。使用更新后的值，或"
+"删除不必要的更新。"
 
+#: ../../language/error_codes/E0060.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0060.md:12
+msgid ""
+"priv struct User {\n"
+"  id : Int\n"
+"  name : String\n"
+"  email : String\n"
+"}\n"
+"\n"
+"test {\n"
+"  let user : User = { id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
+"  let _ = { ..user, id: 1, name: \"Jane\", email: \"jane@doe.com\" }\n"
+"}\n"
+msgstr ""
+"priv struct User {\n"
+"  id : Int\n"
+"  name : String\n"
+"  email : String\n"
+"}\n"
+"\n"
+"test {\n"
+"  let user : User = { id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
+"  let _ = { ..user, id: 1, name: \"Jane\", email: \"jane@doe.com\" }\n"
+"}\n"
+
+#: ../../language/error_codes/E0060.md:16
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0060.md:18
+msgid "Use the updated value, or remove the struct update:"
+msgstr "使用更新后的值，或删除结构体更新："
+
+#: ../../language/error_codes/E0060.md:20
+msgid ""
+"priv struct User {\n"
+"  id : Int\n"
+"  name : String\n"
+"  email : String\n"
+"}\n"
+"\n"
+"test {\n"
+"  let user : User = { id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
+"  let updated = { ..user, email: \"john@doe.name\" }\n"
+"  ignore(updated)\n"
+"}\n"
+msgstr ""
+"priv struct User {\n"
+"  id : Int\n"
+"  name : String\n"
+"  email : String\n"
+"}\n"
+"\n"
+"test {\n"
+"  let user : User = { id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
+"  let updated = { ..user, email: \"john@doe.name\" }\n"
+"  ignore(updated)\n"
+"}\n"

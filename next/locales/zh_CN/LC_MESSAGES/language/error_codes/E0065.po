@@ -21,15 +21,15 @@ msgstr ""
 
 #: ../../language/error_codes/E0065.md:1
 msgid "E0065"
-msgstr ""
+msgstr "E0065"
 
 #: ../../language/error_codes/E0065.md:3
 msgid "Warning name: `prefer_readonly_array`"
-msgstr ""
+msgstr "警告名称：`prefer_readonly_array`"
 
 #: ../../language/error_codes/E0065.md:5
 msgid "Suggest `ReadOnlyArray` for read-only array literal."
-msgstr ""
+msgstr "对只读数组字面量建议使用 `ReadOnlyArray`。"
 
 #: ../../language/error_codes/E0065.md:7
 msgid ""
@@ -37,4 +37,41 @@ msgid ""
 " is used in a read-only way. Consider using `ReadOnlyArray` to better "
 "express intent."
 msgstr ""
+"当编译器推断数组字面量只读使用时发出此警告。建议使用 `ReadOnlyArray` "
+"更清晰表达意图。"
 
+#: ../../language/error_codes/E0065.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0065.md:12
+msgid ""
+"test {\n"
+"  let xs = [1, 2, 3]\n"
+"  inspect(xs[0], content=\"1\")\n"
+"}\n"
+msgstr ""
+"test {\n"
+"  let xs = [1, 2, 3]\n"
+"  inspect(xs[0], content=\"1\")\n"
+"}\n"
+
+#: ../../language/error_codes/E0065.md:16
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0065.md:18
+msgid "Annotate the array literal as `ReadOnlyArray`:"
+msgstr "将数组字面量注解为 `ReadOnlyArray`："
+
+#: ../../language/error_codes/E0065.md:20
+msgid ""
+"test {\n"
+"  let xs : ReadOnlyArray[Int] = [1, 2, 3]\n"
+"  inspect(xs[0], content=\"1\")\n"
+"}\n"
+msgstr ""
+"test {\n"
+"  let xs : ReadOnlyArray[Int] = [1, 2, 3]\n"
+"  inspect(xs[0], content=\"1\")\n"
+"}\n"

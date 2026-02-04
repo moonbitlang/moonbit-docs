@@ -21,15 +21,15 @@ msgstr ""
 
 #: ../../language/error_codes/E0059.md:1
 msgid "E0059"
-msgstr ""
+msgstr "E0059"
 
 #: ../../language/error_codes/E0059.md:3
 msgid "Warning name: `unaligned_byte_access`"
-msgstr ""
+msgstr "警告名称：`unaligned_byte_access`"
 
 #: ../../language/error_codes/E0059.md:5
 msgid "Unaligned byte access in bits pattern."
-msgstr ""
+msgstr "位串模式中的字节访问未对齐。"
 
 #: ../../language/error_codes/E0059.md:7
 msgid ""
@@ -37,4 +37,49 @@ msgid ""
 "access. Consider adjusting the layout or using bit-level fields to keep "
 "accesses aligned."
 msgstr ""
+"当位串模式进行未对齐的字节访问时发出此警告。可调整布局或使用按位字段"
+"以保持对齐。"
 
+#: ../../language/error_codes/E0059.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0059.md:12
+msgid ""
+"fn f(x: Bytes) -> Unit {\n"
+"  match x {\n"
+"    [0x12, u1be(_), 0x34, ..] => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+"fn f(x: Bytes) -> Unit {\n"
+"  match x {\n"
+"    [0x12, u1be(_), 0x34, ..] => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+
+#: ../../language/error_codes/E0059.md:16
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0059.md:18
+msgid "Pad to the next byte boundary:"
+msgstr "填充到下一个字节边界："
+
+#: ../../language/error_codes/E0059.md:20
+msgid ""
+"fn f(x: Bytes) -> Unit {\n"
+"  match x {\n"
+"    [0x12, u1be(_), u7be(_), 0x34, ..] => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+"fn f(x: Bytes) -> Unit {\n"
+"  match x {\n"
+"    [0x12, u1be(_), u7be(_), 0x34, ..] => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"

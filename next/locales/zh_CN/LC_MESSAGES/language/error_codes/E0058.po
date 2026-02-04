@@ -21,15 +21,15 @@ msgstr ""
 
 #: ../../language/error_codes/E0058.md:1
 msgid "E0058"
-msgstr ""
+msgstr "E0058"
 
 #: ../../language/error_codes/E0058.md:3
 msgid "Warning name: `unused_non_capturing`"
-msgstr ""
+msgstr "警告名称：`unused_non_capturing`"
 
 #: ../../language/error_codes/E0058.md:5
 msgid "Unnecessary non-capturing group in regex."
-msgstr ""
+msgstr "正则表达式中存在不必要的非捕获分组。"
 
 #: ../../language/error_codes/E0058.md:7
 msgid ""
@@ -37,4 +37,65 @@ msgid ""
 "is not needed. Consider simplifying the regex by removing the redundant "
 "group."
 msgstr ""
+"当正则表达式包含不需要的非捕获分组时发出此警告。可删除多余分组以简化"
+"正则。"
 
+#: ../../language/error_codes/E0058.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0058.md:12
+msgid ""
+"test {\n"
+"  let text = \"xxabcyy\"\n"
+"  lexmatch text {\n"
+"    (before, \"a\" \"(?:b)\" \"c\", after) => {\n"
+"      inspect(before, content=\"xx\")\n"
+"      inspect(after, content=\"yy\")\n"
+"    }\n"
+"    _ => fail(\"\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+"test {\n"
+"  let text = \"xxabcyy\"\n"
+"  lexmatch text {\n"
+"    (before, \"a\" \"(?:b)\" \"c\", after) => {\n"
+"      inspect(before, content=\"xx\")\n"
+"      inspect(after, content=\"yy\")\n"
+"    }\n"
+"    _ => fail(\"\")\n"
+"  }\n"
+"}\n"
+
+#: ../../language/error_codes/E0058.md:16
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0058.md:18
+msgid "Remove the redundant non-capturing group:"
+msgstr "移除多余的非捕获分组："
+
+#: ../../language/error_codes/E0058.md:20
+msgid ""
+"test {\n"
+"  let text = \"xxabcyy\"\n"
+"  lexmatch text {\n"
+"    (before, \"a\" \"b\" \"c\", after) => {\n"
+"      inspect(before, content=\"xx\")\n"
+"      inspect(after, content=\"yy\")\n"
+"    }\n"
+"    _ => fail(\"\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+"test {\n"
+"  let text = \"xxabcyy\"\n"
+"  lexmatch text {\n"
+"    (before, \"a\" \"b\" \"c\", after) => {\n"
+"      inspect(before, content=\"xx\")\n"
+"      inspect(after, content=\"yy\")\n"
+"    }\n"
+"    _ => fail(\"\")\n"
+"  }\n"
+"}\n"

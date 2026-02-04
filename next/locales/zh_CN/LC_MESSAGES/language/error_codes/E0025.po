@@ -21,15 +21,15 @@ msgstr ""
 
 #: ../../language/error_codes/E0025.md:1
 msgid "E0025"
-msgstr ""
+msgstr "E0025"
 
 #: ../../language/error_codes/E0025.md:3
 msgid "Warning name: `test_unqualified_package`"
-msgstr ""
+msgstr "警告名称：`test_unqualified_package`"
 
 #: ../../language/error_codes/E0025.md:5
 msgid "Using implicitly imported API in test."
-msgstr ""
+msgstr "在测试中使用隐式导入的 API。"
 
 #: ../../language/error_codes/E0025.md:7
 msgid ""
@@ -37,4 +37,57 @@ msgid ""
 "imported. Prefer adding an explicit import or qualifying the name to make"
 " the dependency clear."
 msgstr ""
+"当测试使用隐式导入的 API 时发出此警告。建议显式导入或限定名称以明确"
+"依赖。"
 
+#: ../../language/error_codes/E0025.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0025.md:13
+msgid ""
+"// blackbox test (no import, unqualified use)\n"
+"\n"
+"test {\n"
+"  inspect(add(1, 2), content=\"3\")\n"
+"}\n"
+"pub fn add(a : Int, b : Int) -> Int {\n"
+"  a + b\n"
+"}\n"
+msgstr ""
+"// blackbox test (no import, unqualified use)\n"
+"\n"
+"test {\n"
+"  inspect(add(1, 2), content=\"3\")\n"
+"}\n"
+"pub fn add(a : Int, b : Int) -> Int {\n"
+"  a + b\n"
+"}\n"
+
+#: ../../language/error_codes/E0025.md:17
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0025.md:19
+msgid "Use a qualified package name in blackbox tests:"
+msgstr "在黑盒测试中使用限定包名："
+
+#: ../../language/error_codes/E0025.md:21
+msgid ""
+"// blackbox test with qualified package use\n"
+"\n"
+"test {\n"
+"  inspect(@E0025.add(1, 2), content=\"3\")\n"
+"}\n"
+"pub fn add(a : Int, b : Int) -> Int {\n"
+"  a + b\n"
+"}\n"
+msgstr ""
+"// blackbox test with qualified package use\n"
+"\n"
+"test {\n"
+"  inspect(@E0025.add(1, 2), content=\"3\")\n"
+"}\n"
+"pub fn add(a : Int, b : Int) -> Int {\n"
+"  a + b\n"
+"}\n"
