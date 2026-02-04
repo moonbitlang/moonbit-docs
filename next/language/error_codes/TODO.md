@@ -6,9 +6,6 @@ This list tracks error codes without concrete examples yet.
 
 - E0033 text_segment_excceed: requires very large file or extremely long line (skip for now).
 - E0034 implicit_use_builtin: likely using builtin items without explicit `@moonbitlang/core/builtin` import.
-- E0058 unused_non_capturing: regex has a non-capturing group that is never needed; see lexmatch docs.
-- E0059 unaligned_byte_access: bitstring pattern with unaligned access, e.g. `[u1be(value), ..rest]`.
-- E0063 syntax_lint: anti-pattern like `match (try? fail("failure")) { ... }`; prefer `try ... catch ... noraise ...`.
 
 ## Likely no example needed (docs say not emitted / no longer emitted)
 
