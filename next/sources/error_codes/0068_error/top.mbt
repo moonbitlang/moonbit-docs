@@ -1,0 +1,1 @@
+declare fn f() -> Unit
