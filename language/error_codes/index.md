@@ -241,3 +241,4 @@ This page lists all error codes produced by the MoonBit compiler.
 * [E4163](E4163.md)
 * [E4164](E4164.md)
 * [E4167](E4167.md)
+* [E4177](E4177.md)
