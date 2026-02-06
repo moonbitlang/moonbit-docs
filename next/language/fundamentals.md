@@ -1654,8 +1654,7 @@ the same value consecutively. The syntax is as follows:
 :end-before: end operator 5
 ```
 
-- `x..f()..g()` is equivalent to `{ x.f(); x.g(); }`.
-- `x..f().g()` is equivalent to `{ x.f(); x.g(); }`.
+Here, `x..f()` is equivalent to `{ x.f(); x }`.
 
 
 Consider the following scenario: for a `StringBuilder` type that has methods
