@@ -1193,6 +1193,53 @@ It's useful to create a new struct based on an existing one, but with some field
 :caption: Output
 ```
 
+#### Custom constructor for struct
+
+MoonBit also supports defining a custom constructor for every `struct` type.
+The constructor for a `struct` is a special function that can be used to
+create value for the `struct` using the name of the struct,
+it can be declared as follows:
+
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start struct constructor 1
+:end-before: end struct constructor 1
+```
+
+Here, the return value of the constructor must be the struct itself.
+The constructor should then be implemented by a `new` method (the name cannot be changed here)
+with exactly the same type:
+
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start struct constructor 2
+:end-before: end struct constructor 2
+```
+
+If a `struct` declares a constructor, it can be constructed by name directly:
+
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start struct constructor 3
+:end-before: end struct constructor 3
+```
+
+Creating value via `struct` constructor has exactly the same semantic as
+[enum constructors](#Enum),
+except that `struct` constructors cannot be used for pattern matching.
+For example, when creating a foreign `struct` using constructors,
+the package name can be omitted if the expected type of the expression is known.
+
+Since `struct` constructors are implemented by normal functions,
+they may [raise error](/language/error-handling.md) or [perform asynchronous operations](/language/async-experimental.md).
+`struct` constructors also support [optional arguments](#Optional-arguments).
+Notice that the default value of optional arguments should be defined at the implementation of struct constructors,
+the declaration inside the `struct` should only contain a `label? : T` signature.
+
+For `struct` with type parameters, constructors may specialize the type arguments or
+require [trait bounds](/language/methods.mbt:#Using-traits) on the type parameters.
+The syntax is the same as a normal toplevel function declaration.
+
 ### Enum
 
 Enum types are similar to algebraic data types in functional languages. Users familiar with C/C++ may prefer calling it tagged union.
