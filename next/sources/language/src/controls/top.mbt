@@ -191,6 +191,16 @@ test "for loop 8" (t : @test.Test) {
   t.snapshot(filename="for_loop_8")
 }
 
+test "for loop 9" (t : @test.Test) {
+  let println = fn(show) { t.writeln(show) }
+  // start for loop 9
+  for x in 0..<5 {
+    println(x)
+  }
+  // end for loop 9
+  t.snapshot(filename="for_loop_9")
+}
+
 // start functional loop
 test {
   fn sum(xs : @list.List[Int]) -> Int {
