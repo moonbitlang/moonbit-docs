@@ -46,6 +46,28 @@ test "struct 4" (t : @test.Test) {
   t.snapshot(filename="struct_4")
 }
 
+// start struct constructor 1
+struct StructWithConstr {
+  x : Int
+  y : Int
+
+  fn new(x~ : Int, y? : Int) -> StructWithConstr
+} derive(Show)
+// end struct constructor 1
+
+// start struct constructor 2
+fn StructWithConstr::new(x~ : Int, y? : Int = x) -> StructWithConstr {
+  { x, y }
+}
+// end struct constructor 2
+
+test "struct constructor" {
+  // start struct constructor 3
+  let s = StructWithConstr(x=1)
+  inspect(s, content="{x: 1, y: 1}")
+  // end struct constructor 3
+}
+
 // start enum 1
 /// An enum type that represents the ordering relation between two values,
 /// with three cases "Smaller", "Greater" and "Equal"
