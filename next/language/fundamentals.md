@@ -983,6 +983,29 @@ Control flow operations such as `return`, `break` and error handling are support
 
 If a loop variable is unused, it can be ignored with `_`.
 
+### Range expression in `for .. in` loop
+
+`for .. in` loops can also be used with range expressions for iterating over a number range:
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start for loop 9
+:end-before: end for loop 9
+:prepend: "fn main {"
+:append: "}"
+```
+
+```{literalinclude} /sources/language/src/controls/__snapshot__/for_loop_9
+:caption: Output
+```
+
+There are four kinds of range expressions available in `for .. in` loop:
+
+- `a..<b`: iterate from `a` to `b` in increasing order, excluding `b`
+- `a..<=b`: iterate from `a` to `b` in increasing order, including `b`
+- `a>..b`: iterate from `a` to `b` in decreasing order, excluding `a`
+- `a>=..b`: iterate from `a` to `b` in decreasing  order, including `a`
+
 ### Functional loop
 
 Functional loop is a powerful feature in MoonBit that enables you to write loops in a functional style.
