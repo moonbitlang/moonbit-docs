@@ -215,7 +215,7 @@ This generates a WebAssembly module. To create a proper WebAssembly component,
 use `wasm-tools`:
 
 ```console
-$ wasm-tools component embed wit target/wasm/release/build/gen/gen.wasm \
+$ wasm-tools component embed wit _build/wasm/release/build/gen/gen.wasm \
     --encoding utf16 \
     --output adder.wasm
 $ wasm-tools component new adder.wasm --output adder.component.wasm

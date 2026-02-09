@@ -22,7 +22,7 @@ The execution process will look the same,
 but new coverage result files will be generated under the `target` directory.
 
 ```
-$ ls target/wasm-gc/debug/test/ -w1
+$ ls _build/wasm-gc/debug/test/ -w1
 array
 ...
 moonbit_coverage_1735628238436873.txt
