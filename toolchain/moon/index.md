@@ -67,7 +67,7 @@
   * [Conditional Compilation](package.md#conditional-compilation)
   * [Link Options](package.md#link-options)
   * [Pre-build](package.md#pre-build)
-  * [Warning List](package.md#warning-list)
+  * [Warnings List](package.md#warnings-list)
   * [Virtual Package](package.md#virtual-package)
 * [Measuring code coverage](coverage.md)
   * [Running code coverage in tests](coverage.md#running-code-coverage-in-tests)
