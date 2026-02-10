@@ -61,7 +61,7 @@ fn[X : Eq] contains(xs : Array[X], elem : X) -> Bool {
     if x == elem {
       return true
     }
-  } else {
+  } nobreak {
     false
   }
 }

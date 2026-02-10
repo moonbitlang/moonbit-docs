@@ -147,7 +147,7 @@ fn Box::midpoint(self : Self, old~ : Array[Line], new~ : Array[Line]) -> Snake? 
         }
       res => return res
     }
-  } else {
+  } nobreak {
     None
   }
 }

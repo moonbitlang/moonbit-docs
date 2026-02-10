@@ -37,7 +37,7 @@ fn shortest_edit(
         return trace
       }
     }
-  } else {
+  } nobreak {
     abort("impossible")
   }
 }

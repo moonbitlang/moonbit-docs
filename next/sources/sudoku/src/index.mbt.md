@@ -401,7 +401,7 @@ fn search(
           Some(v) => return Some(v)
         }
       }
-    } else {
+    } nobreak {
       return None
     }
   } else {
