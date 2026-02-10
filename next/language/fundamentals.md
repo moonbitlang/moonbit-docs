@@ -831,7 +831,7 @@ The loop body supports `break` and `continue`. Using `break` allows you to exit 
 :caption: Output
 ```
 
-The `while` loop also supports an optional `else` clause. When the loop condition becomes false, the `else` clause will be executed, and then the loop will end.
+The `while` loop also supports an optional `nobreak` clause. When the loop condition becomes false, the `nobreak` clause will be executed, and then the loop will end.
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
@@ -845,7 +845,7 @@ The `while` loop also supports an optional `else` clause. When the loop conditio
 :caption: Output
 ```
 
-When there is an `else` clause, the `while` loop can also return a value. The return value is the evaluation result of the `else` clause. In this case, if you use `break` to exit the loop, you need to provide a return value after `break`, which should be of the same type as the return value of the `else` clause.
+When there is an `nobreak` clause, the `while` loop can also return a value. The return value is the evaluation result of the `nobreak` clause. In this case, if you use `break` to exit the loop, you need to provide a return value after `break`, which should be of the same type as the return value of the `nobreak` clause.
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
@@ -908,7 +908,7 @@ Variable initialization clauses, loop conditions, and update clauses are all opt
 :end-before: end for loop 3
 ```
 
-The `for` loop also supports `continue`, `break`, and `else` clauses. Like the `while` loop, the `for` loop can also return a value using the `break` and `else` clauses.
+The `for` loop also supports `continue`, `break`, and `nobreak` clauses. Like the `while` loop, the `for` loop can also return a value using the `break` and `nobreak` clauses.
 
 The `continue` statement skips the remaining part of the current iteration of the `for` loop (including the update clause) and proceeds to the next iteration. The `continue` statement can also update the binding variables of the `for` loop, as long as it is followed by expressions that match the number of binding variables, separated by commas.
 

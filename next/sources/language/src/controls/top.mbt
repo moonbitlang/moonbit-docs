@@ -60,7 +60,7 @@ test "while loop 3" (t : @test.Test) {
   while i > 0 {
     println(i)
     i = i - 1
-  } else {
+  } nobreak {
     println(i)
   }
   // end while loop 3
@@ -76,7 +76,7 @@ test "while loop 4" (t : @test.Test) {
     if i % 2 == 0 {
       break 5
     }
-  } else {
+  } nobreak {
     7
   }
   println(r)
@@ -90,7 +90,7 @@ test "while loop 5" (t : @test.Test) {
   let mut i = 10
   let r = while i > 0 {
     i = i - 1
-  } else {
+  } nobreak {
     7
   }
   println(r)
@@ -135,7 +135,7 @@ test "for loop 4" (t : @test.Test) {
       println("even: \{i}")
       continue i + 1, acc + i
     }
-  } else {
+  } nobreak {
     acc
   }
   println(sum)
@@ -239,7 +239,7 @@ test "break label" {
       count = count + i
       break outer~ j
     }
-  } else {
+  } nobreak {
     -1
   }
   assert_eq(res, 4)

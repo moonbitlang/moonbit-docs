@@ -157,7 +157,7 @@ fn tokenize(source : String) -> Tokens {
     } else {
       abort("error : invalid Character '\{ch}' in [\{current}]")
     }
-  } else {
+  } nobreak {
     return Tokens::new(tokens)
   }
 }

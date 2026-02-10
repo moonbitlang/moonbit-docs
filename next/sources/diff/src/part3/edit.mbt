@@ -48,7 +48,7 @@ fn pprint_diff(diff : Array[Edit]) -> String {
   for i = 0; i < diff.length(); i = i + 1 {
     buf.write_string(pprint_edit(diff[i]))
     buf.write_char('\n')
-  } else {
+  } nobreak {
     buf.contents().to_unchecked_string()
   }
 }

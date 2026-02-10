@@ -21,7 +21,7 @@ fn lines(str : String) -> Array[Line] {
   for line in str.split("\n") {
     line_number = line_number + 1
     lines.push(Line::new(line_number, line.to_string()))
-  } else {
+  } nobreak {
     return lines
   }
 }
