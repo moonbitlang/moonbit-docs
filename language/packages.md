@@ -30,7 +30,7 @@ In `moon.pkg`, a custom alias is written as:
 ```text
 import {
   "moonbit-community/language/packages/pkgA",
-  "moonbit-community/language/packages/pkgC" as @c,
+  "moonbit-community/language/packages/pkgC" @c,
   "moonbitlang/core/builtin",
 }
 ```

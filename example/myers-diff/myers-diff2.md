@@ -44,7 +44,7 @@ fn shortest_edit(
         return trace
       }
     }
-  } else {
+  } nobreak {
     abort("impossible")
   }
 }
@@ -170,7 +170,7 @@ fn pprint_diff(diff : Array[Edit]) -> String {
   for i = diff.length(); i > 0; i = i - 1 {
     buf.write_string(pprint_edit(diff[i - 1]))
     buf.write_char('\n')
-  } else {
+  } nobreak {
     buf.contents().to_unchecked_string()
   }
 }

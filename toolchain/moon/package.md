@@ -34,7 +34,7 @@ In `moon.pkg`, dependencies are declared in an `import { ... }` block. Use
 ```text
 import {
   "moonbit-community/language/packages/pkgA",
-  "moonbit-community/language/packages/pkgC" as @c,
+  "moonbit-community/language/packages/pkgC" @c,
   "moonbitlang/core/builtin",
 }
 ```
@@ -45,7 +45,7 @@ quoted.
 
 ```text
 options(
-  virtual: { "has-default": true },
+  "virtual": { "has-default": true },
 )
 ```
 
@@ -76,7 +76,7 @@ In `moon.pkg`, the equivalent is:
 ```text
 import {
   "moonbit-community/language/packages/pkgA",
-  "moonbit-community/language/packages/pkgC" as @c,
+  "moonbit-community/language/packages/pkgC" @c,
   "moonbitlang/core/builtin",
 }
 ```

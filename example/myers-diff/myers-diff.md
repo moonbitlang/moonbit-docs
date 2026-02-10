@@ -227,7 +227,7 @@ fn lines(str : String) -> Array[Line] {
   for line in str.split("\n") {
     line_number = line_number + 1
     lines.push(Line::new(line_number, line.to_string()))
-  } else {
+  } nobreak {
     return lines
   }
 }
@@ -373,7 +373,7 @@ fn shortest_edit(old~ : Array[Line], new~ : Array[Line]) -> Int {
         return d
       }
     }
-  } else {
+  } nobreak {
     abort("impossible")
   }
 }

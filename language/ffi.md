@@ -287,6 +287,8 @@ fn register_callback(callback : () -> Unit) -> Unit {
 }
 ```
 
+Values of type `FuncRef[_]` can be called directly from MoonBit too. This is useful for dynamic loading functions via symbol name or implementing JIT in native backend.
+
 ### Customize integer value of constant enum
 
 In all backends of MoonBit, constant enum (`enum` where all constructors have no payload) are translated to integer.

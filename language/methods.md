@@ -373,7 +373,7 @@ fn[X : Eq] contains(xs : Array[X], elem : X) -> Bool {
     if x == elem {
       return true
     }
-  } else {
+  } nobreak {
     false
   }
 }
@@ -514,7 +514,7 @@ pub impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {
   ..write_object(a)
   ..write_string(", ")
   ..write_object(b)
-  ..write_string(")")
+  .write_string(")")
 }
 ```
 

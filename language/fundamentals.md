@@ -600,6 +600,12 @@ For simple anonymous function, MoonBit provides a very concise syntax called arr
   [1, 2, 3].each(x => println(x * x))
 ```
 
+Although local function supports type inference for types of parameters and return value,
+*effect inference* is only supported for the arrow function syntax.
+If a `fn` may [raise error](error-handling.md)
+or [perform asynchronous operations](async-experimental.md),
+it must be explicitly annotated with `raise` or `async`.
+
 Functions, whether named or anonymous, are *lexical closures*: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
 
 ```moonbit
@@ -1029,7 +1035,7 @@ fn main {
 2
 ```
 
-The `while` loop also supports an optional `else` clause. When the loop condition becomes false, the `else` clause will be executed, and then the loop will end.
+The `while` loop also supports an optional `nobreak` clause. When the loop condition becomes false, the `nobreak` clause will be executed, and then the loop will end.
 
 ```moonbit
 fn main {
@@ -1037,7 +1043,7 @@ fn main {
   while i > 0 {
     println(i)
     i = i - 1
-  } else {
+  } nobreak {
     println(i)
   }
 }
@@ -1049,7 +1055,7 @@ fn main {
 0
 ```
 
-When there is an `else` clause, the `while` loop can also return a value. The return value is the evaluation result of the `else` clause. In this case, if you use `break` to exit the loop, you need to provide a return value after `break`, which should be of the same type as the return value of the `else` clause.
+When there is an `nobreak` clause, the `while` loop can also return a value. The return value is the evaluation result of the `nobreak` clause. In this case, if you use `break` to exit the loop, you need to provide a return value after `break`, which should be of the same type as the return value of the `nobreak` clause.
 
 ```moonbit
 fn main {
@@ -1059,7 +1065,7 @@ fn main {
     if i % 2 == 0 {
       break 5
     }
-  } else {
+  } nobreak {
     7
   }
   println(r)
@@ -1075,7 +1081,7 @@ fn main {
   let mut i = 10
   let r = while i > 0 {
     i = i - 1
-  } else {
+  } nobreak {
     7
   }
   println(r)
@@ -1128,7 +1134,7 @@ for {
 }
 ```
 
-The `for` loop also supports `continue`, `break`, and `else` clauses. Like the `while` loop, the `for` loop can also return a value using the `break` and `else` clauses.
+The `for` loop also supports `continue`, `break`, and `nobreak` clauses. Like the `while` loop, the `for` loop can also return a value using the `break` and `nobreak` clauses.
 
 The `continue` statement skips the remaining part of the current iteration of the `for` loop (including the update clause) and proceeds to the next iteration. The `continue` statement can also update the binding variables of the `for` loop, as long as it is followed by expressions that match the number of binding variables, separated by commas.
 
@@ -1141,7 +1147,7 @@ fn main {
       println("even: \{i}")
       continue i + 1, acc + i
     }
-  } else {
+  } nobreak {
     acc
   }
   println(sum)
@@ -1236,6 +1242,33 @@ z, 3
 
 If a loop variable is unused, it can be ignored with `_`.
 
+### Range expression in `for .. in` loop
+
+`for .. in` loops can also be used with range expressions for iterating over a number range:
+
+```moonbit
+fn main {
+  for x in 0..<5 {
+    println(x)
+  }
+}
+```
+
+```default
+0
+1
+2
+3
+4
+```
+
+There are four kinds of range expressions available in `for .. in` loop:
+
+- `a..<b`: iterate from `a` to `b` in increasing order, excluding `b`
+- `a..<=b`: iterate from `a` to `b` in increasing order, including `b`
+- `a>..b`: iterate from `a` to `b` in decreasing order, excluding `a`
+- `a>=..b`: iterate from `a` to `b` in decreasing  order, including `a`
+
 ### Functional loop
 
 Functional loop is a powerful feature in MoonBit that enables you to write loops in a functional style.
@@ -1270,7 +1303,7 @@ test "break label" {
       count = count + i
       break outer~ j
     }
-  } else {
+  } nobreak {
     -1
   }
   assert_eq(res, 4)
@@ -1472,6 +1505,55 @@ fn main {
 { id: 0, name: John Doe, email: john@doe.com }
 { id: 0, name: John Doe, email: john@doe.name }
 ```
+
+#### Custom constructor for struct
+
+MoonBit also supports defining a custom constructor for every `struct` type.
+The constructor for a `struct` is a special function that can be used to
+create value for the `struct` using the name of the struct,
+it can be declared as follows:
+
+```moonbit
+struct StructWithConstr {
+  x : Int
+  y : Int
+
+  fn new(x~ : Int, y? : Int) -> StructWithConstr
+} derive(Show)
+```
+
+Here, the return value of the constructor must be the struct itself.
+The constructor should then be implemented by a `new` method (the name cannot be changed here)
+with exactly the same type:
+
+```moonbit
+fn StructWithConstr::new(x~ : Int, y? : Int = x) -> StructWithConstr {
+  { x, y }
+}
+```
+
+If a `struct` declares a constructor, it can be constructed by name directly:
+
+```moonbit
+  let s = StructWithConstr(x=1)
+  inspect(s, content="{x: 1, y: 1}")
+```
+
+Creating value via `struct` constructor has exactly the same semantic as
+[enum constructors](),
+except that `struct` constructors cannot be used for pattern matching.
+For example, when creating a foreign `struct` using constructors,
+the package name can be omitted if the expected type of the expression is known.
+
+Since `struct` constructors are implemented by normal functions,
+they may [raise error](error-handling.md) or [perform asynchronous operations](async-experimental.md).
+`struct` constructors also support [optional arguments]().
+Notice that the default value of optional arguments should be defined at the implementation of struct constructors,
+the declaration inside the `struct` should only contain a `label? : T` signature.
+
+For `struct` with type parameters, constructors may specialize the type arguments or
+require [trait bounds]() on the type parameters.
+The syntax is the same as a normal toplevel function declaration.
 
 ### Enum
 
@@ -2234,11 +2316,10 @@ The cascade operator `..` is used to perform a series of mutable operations on
 the same value consecutively. The syntax is as follows:
 
 ```moonbit
-[]..append([1])
+let arr = []..append([1])
 ```
 
-- `x..f()..g()` is equivalent to `{ x.f(); x.g(); }`.
-- `x..f().g()` is equivalent to `{ x.f(); x.g(); }`.
+Here, `x..f()` is equivalent to `{ x.f(); x }`.
 
 Consider the following scenario: for a `StringBuilder` type that has methods
 like `write_string`, `write_char`, `write_object`, etc., we often need to perform
