@@ -2,8 +2,14 @@
 
 Here are some tutorials that may help you learn the programming language:
 
+## General
+
 - [An interactive tour with language basics](https://tour.moonbitlang.com)
 - [Tour for Beginners](./tour.md)
+
+## Language Transition Guides
+
+- [MoonBit for Go Programmers](./for-go-programmers/index.md)
 
 ```{only} html
 [Download this section in Markdown](path:/download/tutorial/summary.md)
@@ -12,6 +18,4 @@ Here are some tutorials that may help you learn the programming language:
 ```{toctree}
 :hidden:
 tour
-for-go-programmers/index
 ```
-

@@ -1,3 +1,7 @@
+---
+orphan: true
+---
+
 # MoonBit for Go Programmers
 
 MoonBit is a modern programming language designed for cloud and edge computing.
