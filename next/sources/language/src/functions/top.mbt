@@ -39,7 +39,7 @@ fn add(x : Int, y : Int) -> Int {
 }
 
 test {
-  let add10 : (Int) -> Int = add(10, _)
+  let add10 : (Int) -> Int = x => add(10, x)
   println(add10(5)) // prints 15
   println(add10(10)) // prints 20
 }
