@@ -18,7 +18,9 @@
 ///
 /// The set of functions which can "downcast" an `error` into a more
 /// concrete type is open.
-pub(all) suberror Error_ Int derive(Show, Eq)
+pub(all) suberror Error_ {
+  Error_(Int)
+} derive(Show, Eq)
 
 ///|
 /// Drops a resource handle.

@@ -36,7 +36,7 @@ pub fn Tetris::reset_game(self : Tetris) -> Unit {
                       grid,
                     ) {
 
-  } else {
+  } nobreak {
     grid
   }
   self.dead = self.generate_piece()
@@ -126,7 +126,7 @@ pub fn Tetris::on_piece_collision(self : Tetris) -> Unit {
                       new_grid,
                     ) {
 
-  } else {
+  } nobreak {
     new_grid
   }
   self.dead = self.generate_piece()

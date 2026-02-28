@@ -14,7 +14,7 @@
 
 ///|
 pub fn split(s : String, sep : Char) -> Array[String] {
-  s.split(sep.to_string()).map(_.to_string()).collect()
+  s.split(sep.to_string()).map(x => x.to_string()).collect()
 }
 
 ///|

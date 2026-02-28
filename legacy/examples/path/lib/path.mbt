@@ -47,11 +47,11 @@ pub fn Path::parent(self : Path) -> String {
       match parts {
         [.. parent, _, ""] =>
           for p in parent {
-            builder..write_string(p.to_string())..write_char('/')
+            builder..write_string(p.to_string()).write_char('/')
           }
         [.. parent, _] =>
           for p in parent {
-            builder..write_string(p.to_string())..write_char('/')
+            builder..write_string(p.to_string()).write_char('/')
           }
         _ => panic()
       }
@@ -63,11 +63,11 @@ pub fn Path::parent(self : Path) -> String {
       match parts {
         [.. parent, _, ""] =>
           for p in parent {
-            builder..write_string(p.to_string())..write_char('\\')
+            builder..write_string(p.to_string()).write_char('\\')
           }
         [.. parent, _] =>
           for p in parent {
-            builder..write_string(p.to_string())..write_char('\\')
+            builder..write_string(p.to_string()).write_char('\\')
           }
         _ => panic()
       }
