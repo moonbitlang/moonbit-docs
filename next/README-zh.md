@@ -69,7 +69,7 @@ make gettext
 sphinx-intl update -p _build/gettext -l zh_CN
 ```
 
-也可以使用辅助脚本（需要 gettext 工具 `msgmerge` 和 `msguniq`）：
+也可以使用辅助脚本（内部走同样的 `make gettext` + `sphinx-intl update` 流程）：
 
 ```bash
 python3 scripts/i18n.py all

@@ -74,8 +74,8 @@ make gettext
 sphinx-intl update -p _build/gettext -l zh_CN
 ```
 
-You can also use the helper script (requires gettext tools `msgmerge` and
-`msguniq`):
+You can also use the helper script (uses the same `make gettext` +
+`sphinx-intl update` flow):
 
 ```bash
 python3 scripts/i18n.py all
