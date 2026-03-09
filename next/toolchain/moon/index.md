@@ -4,6 +4,7 @@
 :maxdepth: 2
 :caption: Contents:
 tutorial
+script-mode
 package-manage-tour
 commands
 module

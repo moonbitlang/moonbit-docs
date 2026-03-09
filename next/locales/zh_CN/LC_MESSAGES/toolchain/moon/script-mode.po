@@ -1,0 +1,144 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-09 16:26+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../toolchain/moon/script-mode.md:1
+msgid "Running `.mbtx` Scripts"
+msgstr "运行 `.mbtx` 脚本"
+
+#: ../../toolchain/moon/script-mode.md:3
+msgid ""
+"The Moon build system lets you write script files in MoonBit without any "
+"module or package configuration files. Script files use the special "
+"`.mbtx` extension."
+msgstr ""
+"Moon 构建系统支持直接编写 MoonBit 脚本，无需模块或包配置文件。脚本文件使用 `.mbtx` 扩展名。"
+
+#: ../../toolchain/moon/script-mode.md:6
+msgid "Run a `.mbtx` file"
+msgstr "运行 `.mbtx` 文件"
+
+#: ../../toolchain/moon/script-mode.md:8
+msgid "Write a script `script.mbtx`:"
+msgstr "编写脚本 `script.mbtx`："
+
+#: ../../toolchain/moon/script-mode.md:10
+msgid ""
+"///|\n"
+"import {\n"
+"  \"moonbitlang/core/list\" @ls\n"
+"}\n"
+"\n"
+"///|\n"
+"async fn main {\n"
+"  let xs = @ls.from_array([\"1\", \"2\", \"3\"])\n"
+"  debug(xs)\n"
+"}\n"
+msgstr ""
+"///|\n"
+"import {\n"
+"  \"moonbitlang/core/list\" @ls\n"
+"}\n"
+"\n"
+"///|\n"
+"async fn main {\n"
+"  let xs = @ls.from_array([\"1\", \"2\", \"3\"])\n"
+"  debug(xs)\n"
+"}\n"
+
+#: ../../toolchain/moon/script-mode.md:23
+msgid "Then run this script directly:"
+msgstr "然后直接运行该脚本："
+
+#: ../../toolchain/moon/script-mode.md:25
+msgid "moon run script.mbtx\n"
+msgstr "moon run script.mbtx\n"
+
+#: ../../toolchain/moon/script-mode.md:29
+msgid ""
+"In `.mbtx`, you can declare imports at the top of the file using the same"
+" syntax as package configuration. There is one difference: import paths "
+"can optionally include a version `@version` after the module name:"
+msgstr ""
+"在 `.mbtx` 中，你可以在文件顶部声明导入，语法与包配置相同。不同之处在于：导入路径可以在模块名后可选地"
+"包含版本 `@version`："
+
+#: ../../toolchain/moon/script-mode.md:33
+msgid ""
+"///|\n"
+"import {\n"
+"  \"moonbitlang/async@0.16.5/fs\",\n"
+"  \"moonbitlang/async@0.16.5\",\n"
+"}\n"
+"\n"
+"///|\n"
+"async fn main {\n"
+"  ...\n"
+"}\n"
+msgstr ""
+"///|\n"
+"import {\n"
+"  \"moonbitlang/async@0.16.5/fs\",\n"
+"  \"moonbitlang/async@0.16.5\",\n"
+"}\n"
+"\n"
+"///|\n"
+"async fn main {\n"
+"  ...\n"
+"}\n"
+
+#: ../../toolchain/moon/script-mode.md:46
+msgid "All imported packages from the same module must use the same version."
+msgstr "来自同一模块的所有导入包必须使用相同版本。"
+
+#: ../../toolchain/moon/script-mode.md:48
+msgid ""
+"If the import path is not explicitly versioned, it uses the latest "
+"version in the local registry index."
+msgstr "如果导入路径没有显式指定版本，则会使用本地索引中的最新版本。"
+
+#: ../../toolchain/moon/script-mode.md:52
+msgid "Run a `.mbtx` script from stdin"
+msgstr "从 stdin 运行 `.mbtx` 脚本"
+
+#: ../../toolchain/moon/script-mode.md:54
+msgid "Moon supports running a `.mbtx` script from stdin:"
+msgstr "Moon 支持从 stdin 运行 `.mbtx` 脚本："
+
+#: ../../toolchain/moon/script-mode.md:56
+msgid "cat script.mbtx | moon run -\n"
+msgstr "cat script.mbtx | moon run -\n"
+
+#: ../../toolchain/moon/script-mode.md:60
+msgid "You can also use a heredoc, a feature provided by the shell:"
+msgstr "你也可以使用 heredoc（由 shell 提供的一项功能）："
+
+#: ../../toolchain/moon/script-mode.md:62
+msgid ""
+"moon run - <<EOF\n"
+"fn main {\n"
+"  println(\"hello\")\n"
+"}\n"
+"EOF\n"
+msgstr ""
+"moon run - <<EOF\n"
+"fn main {\n"
+"  println(\"hello\")\n"
+"}\n"
+"EOF\n"
