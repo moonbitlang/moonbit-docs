@@ -13,6 +13,7 @@
 
 * [Moon Build System](moon/index.md)
   * [MoonBit's Build System Tutorial](moon/tutorial.md)
+  * [Running `.mbtx` Scripts](moon/script-mode.md)
   * [MoonBit's Package Manager Tutorial](moon/package-manage-tour.md)
   * [Command-Line Help for `moon`](moon/commands.md)
   * [Module Configuration](moon/module.md)
