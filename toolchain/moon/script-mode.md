@@ -23,7 +23,7 @@ async fn main {
 Then run this script directly:
 
 ```default
-moon run script.mbtx
+$ moon run script.mbtx
 ```
 
 In `.mbtx`, you can declare imports at the top of the file using the same syntax as package
@@ -53,13 +53,13 @@ in the local registry index.
 Moon supports running a `.mbtx` script from stdin:
 
 ```default
-cat script.mbtx | moon run -
+$ cat script.mbtx | moon run -
 ```
 
 You can also use a heredoc, a feature provided by the shell:
 
 ```default
-moon run - <<EOF
+$ moon run - <<EOF
 fn main {
   println("hello")
 }
