@@ -3,403 +3,517 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-12 10:45+0800\n"
+"POT-Creation-Date: 2026-03-10 15:12+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../../toolchain/moon/package-manage-tour.md:1
-msgid "MoonBit's Package Manager Tutorial"
-msgstr "MoonBit 包管理教程"
+msgid "Use and publish packages"
+msgstr "使用与发布包"
 
 #: ../../toolchain/moon/package-manage-tour.md:3
-msgid "Overview"
-msgstr "概述"
-
-#: ../../toolchain/moon/package-manage-tour.md:5
 msgid ""
 "MoonBit's build system seamlessly integrates package management and "
-"documentation generation tools, allowing users to easily fetch "
-"dependencies from mooncakes.io, access module documentation, and publish "
-"new modules."
-msgstr "MoonBit 的构建系统无缝集成了包管理和文档生成工具，使用户可以轻松从 mooncakes.io 获取依赖项，访问模块文档，并发布新模块。"
+"documentation  generation tools, allowing users to easily fetch dependencies "
+"from [mooncakes.io](https://mooncakes.io),  access module documentation, and "
+"publish new modules."
+msgstr ""
+"MoonBit 的构建系统无缝集成了包管理与文档生成工具，让用户可以轻松从 "
+"[mooncakes.io](https://mooncakes.io) 获取依赖、访问模块文档并发布新模块。"
 
 #: ../../toolchain/moon/package-manage-tour.md:7
 msgid ""
-"[mooncakes.io](https://mooncakes.io/) is a centralized package management"
-" platform. Each module has a corresponding configuration file "
-"`moon.mod.json`, which is the smallest unit for publishing. Under the "
-"module's path, there can be multiple packages, each corresponding to a "
-"`moon.pkg.json` configuration file. The `.mbt` files at the same level as"
-" `moon.pkg.json` belong to this package."
+"Before getting started, make sure you have installed [moon](https://"
+"www.moonbitlang.com/download/)."
 msgstr ""
-"[mooncakes.io](https://mooncakes.io/) "
-"是一个集中式包管理平台。模块是发布的最小单元。每个模块都有一个对应的配置文件 "
-"`moon.mod.json`，在模块的路径下，可以有多个包，每个包对应一个 `moon.pkg.json` 配置文件。与 "
-"`moon.pkg.json` 同级的 `.mbt` 文件属于此包。"
+"在开始之前，请确保你已经安装了 [moon](https://www.moonbitlang.com/"
+"download/)。"
 
 #: ../../toolchain/moon/package-manage-tour.md:9
-msgid ""
-"Before getting started, make sure you have installed "
-"[moon](https://www.moonbitlang.com/download/)."
-msgstr "在开始之前，请确保你已经安装了 [moon](https://www.moonbitlang.com/download/)。"
-
-#: ../../toolchain/moon/package-manage-tour.md:11
 msgid "Setup mooncakes.io account"
 msgstr "设置 mooncakes.io 账户"
 
-#: ../../toolchain/moon/package-manage-tour.md:14
+#: ../../toolchain/moon/package-manage-tour.md:12
 msgid "If you don't want to publish, you can skip this step."
 msgstr "如果你不需要发布，可以跳过此步骤。"
 
-#: ../../toolchain/moon/package-manage-tour.md:17
+#: ../../toolchain/moon/package-manage-tour.md:15
 msgid ""
-"If you don't have an account on mooncakes.io, run `moon register` and "
-"follow the guide. If you have previously registered an account, you can "
-"use `moon login` to log in."
+"If you don't have an account on mooncakes.io, run `moon register` and follow "
+"the  guide. If you have previously registered an account, you can use `moon "
+"login` to log in."
 msgstr ""
-"如果你没有 mooncakes.io 账户，请运行 `moon register` 并按照指南操作。如果你之前注册过账户，可以使用 `moon "
-"login` 登录。"
+"如果你没有 mooncakes.io 账户，请运行 `moon register` 并按照指南操作。如果你之"
+"前注册过账户，可以使用 `moon login` 登录。"
 
-#: ../../toolchain/moon/package-manage-tour.md:19
+#: ../../toolchain/moon/package-manage-tour.md:18
 msgid ""
-"When you see the following message, it means you have successfully logged"
-" in:"
+"When you see the following message, it means you have successfully logged in:"
 msgstr "当你看到以下消息时，表示你已成功登录："
 
-#: ../../toolchain/moon/package-manage-tour.md:21
+#: ../../toolchain/moon/package-manage-tour.md:20
 msgid "API token saved to ~/.moon/credentials.json\n"
-msgstr "API 令牌已保存到 ~/.moon/credentials.json\n"
+msgstr "API token saved to ~/.moon/credentials.json\n"
 
-#: ../../toolchain/moon/package-manage-tour.md:25
-msgid "Update index"
-msgstr "更新索引"
-
-#: ../../toolchain/moon/package-manage-tour.md:27
-msgid "Use `moon update` to update the mooncakes.io index."
-msgstr "使用 `moon update` 来更新 mooncakes.io 索引。"
-
-#: ../../toolchain/moon/package-manage-tour.md:29
-msgid "![moon update cli](/imgs/moon-update.png)"
-msgstr ""
-
-#: ../../toolchain/moon/package-manage-tour.md:29
-msgid "moon update cli"
-msgstr "moon update 命令行"
-
-#: ../../toolchain/moon/package-manage-tour.md:31
+#: ../../toolchain/moon/package-manage-tour.md:24
 msgid "Setup MoonBit project"
 msgstr "设置 MoonBit 项目"
 
+#: ../../toolchain/moon/package-manage-tour.md:26
+msgid ""
+"Open an existing project or create a new project via `moon new <PATH>`. For "
+"example:"
+msgstr "打开现有项目，或通过 `moon new <PATH>` 创建新项目。例如："
+
+#: ../../toolchain/moon/package-manage-tour.md:28
+msgid ""
+"$ moon new .\n"
+"Created username/myapp at .\n"
+msgstr ""
+"$ moon new .\n"
+"Created username/myapp at .\n"
+
 #: ../../toolchain/moon/package-manage-tour.md:33
-msgid "Open an existing project or create a new project via `moon new`:"
-msgstr "打开现有项目或通过 `moon new` 创建一个新项目："
+msgid "It will generate template files in the path:"
+msgstr "它会在该路径下生成模板文件："
 
 #: ../../toolchain/moon/package-manage-tour.md:35
-msgid "![moon new](/imgs/moon-new.png)"
-msgstr ""
-
-#: ../../toolchain/moon/package-manage-tour.md:35
-msgid "moon new"
-msgstr "moon new"
-
-#: ../../toolchain/moon/package-manage-tour.md:37
-msgid "Add dependencies"
-msgstr "添加依赖"
-
-#: ../../toolchain/moon/package-manage-tour.md:39
 msgid ""
-"You can browse all available modules on mooncakes.io. Use `moon add` to "
-"add the dependencies you need, or manually edit the `deps` field in "
-"`moon.mod.json`."
+"├── AGENTS.md                    # Collaboration guide for agents\n"
+"├── LICENSE                      # Open-source license \n"
+"├── README.mbt.md                # README file with type checking support "
+"for moonbit \n"
+"├── README.md -> README.mbt.md   # Symlink for platforms that expect "
+"README.md\n"
+"├── cmd                           \n"
+"│   └── main                     \n"
+"│       ├── main.mbt             # MoonBit source file \n"
+"│       └── moon.pkg             # Package configuration for username/myapp/"
+"cmd/main package\n"
+"├── moon.mod.json                # Module configuration for username/myapp "
+"module\n"
+"├── moon.pkg                     # Package configuration for username/myapp "
+"package\n"
+"├── myapp.mbt                    # MoonBit source file\n"
+"├── myapp_test.mbt               # Black-box test\n"
+"└── myapp_wbtest.mbt             # White-box test\n"
 msgstr ""
-"你可以在 mooncakes.io 上浏览所有可用的模块。使用 `moon add` 来添加你需要的依赖，或手动编辑 "
-"`moon.mod.json` 中的 `deps` "
-
-#: ../../toolchain/moon/package-manage-tour.md:41
-msgid ""
-"For example, to add the latest version of the `Yoorkin/example/list` "
-"module:"
-msgstr "例如，要添加 `Yoorkin/example/list` 模块的最新版本："
-
-#: ../../toolchain/moon/package-manage-tour.md:43
-msgid "![add deps](/imgs/add-deps.png)"
-msgstr ""
-
-#: ../../toolchain/moon/package-manage-tour.md:43
-msgid "add deps"
-msgstr "添加依赖"
-
-#: ../../toolchain/moon/package-manage-tour.md:45
-msgid "Add local dependencies"
-msgstr "添加本地依赖"
-
-#: ../../toolchain/moon/package-manage-tour.md:47
-msgid ""
-"In addition to modules from mooncakes.io, you can also add local modules "
-"as dependencies. This is useful when developing multiple related modules "
-"on your local machine or when working with modules that are not published"
-" to the registry."
-msgstr ""
-"除了来自 mooncakes.io 的模块，您还可以添加本地模块作为依赖项。这在本地机器上开发多个相关模块时很有用，或者在使用未发布到注册表的模块时。"
-
-#: ../../toolchain/moon/package-manage-tour.md:49
-msgid ""
-"To add a local dependency, manually edit the `deps` field in "
-"`moon.mod.json` and specify the relative path to the local module:"
-msgstr ""
-"要添加本地依赖，请手动编辑 `moon.mod.json` 中的 `deps` 字段，并指定到本地模块的相对路径："
+"├── AGENTS.md                    # Agent 协作指南\n"
+"├── LICENSE                      # 开源许可证 \n"
+"├── README.mbt.md                # 带 MoonBit 类型检查支持的 README 文件 \n"
+"├── README.md -> README.mbt.md   # 为需要 README.md 的平台提供的符号链接\n"
+"├── cmd                           \n"
+"│   └── main                     \n"
+"│       ├── main.mbt             # MoonBit 源文件 \n"
+"│       └── moon.pkg             # username/myapp/cmd/main 包的配置文件\n"
+"├── moon.mod.json                # username/myapp 模块配置\n"
+"├── moon.pkg                     # username/myapp 包配置文件\n"
+"├── myapp.mbt                    # MoonBit 源文件\n"
+"├── myapp_test.mbt               # 黑盒测试\n"
+"└── myapp_wbtest.mbt             # 白盒测试\n"
 
 #: ../../toolchain/moon/package-manage-tour.md:51
 msgid ""
-"{\n"
-"  \"name\": \"username/hello\",\n"
-"  \"deps\": {\n"
-"    \"foo/bar\": {\n"
-"      \"path\": \"../../path/to/foo-module\"\n"
-"    }\n"
-"  }\n"
-"}\n"
+"`moon new <PATH>` generates a starter module with two packages. A module is "
+"a  publishing unit that contains multiple packages. A package represents a "
+"namespace  and a compilation unit, is defined by a package configuration "
+"file, and includes  the `.mbt` files in the same directory."
 msgstr ""
+"`moon new <PATH>` 会生成一个包含两个包的起始模块。模块是包含多个包的发布单"
+"元。包表示一个命名空间和编译单元，由包配置文件定义，并包含同目录下的 `.mbt` "
+"文件。"
 
-#: ../../toolchain/moon/package-manage-tour.md:62
+#: ../../toolchain/moon/package-manage-tour.md:56
 msgid ""
-"The `path` should be a relative path from your current module to the "
-"target module's directory (the directory containing the target module's "
-"`moon.mod.json` file)."
+"Modules and packages are identified by a special path (not the file path in "
+"the file system). For example:"
+msgstr "模块和包通过一种特殊路径标识（不是文件系统路径）。例如："
+
+#: ../../toolchain/moon/package-manage-tour.md:59
+msgid ""
+"username/myapp/cmd/main\n"
+"─────────────────┬─────\n"
+"────────┬─────   │\n"
+"        │        │\n"
+"        │        └─ package `username/myapp/cmd/main` within the `username/"
+"myapp` module\n"
+"        │\n"
+"        └────────── module path. It also defines the package `username/"
+"myapp`\n"
 msgstr ""
-"`path` 应该是从当前模块到目标模块目录的相对路径（包含目标模块的 `moon.mod.json` 文件的目录）。"
+"username/myapp/cmd/main\n"
+"─────────────────┬─────\n"
+"────────┬─────   │\n"
+"        │        │\n"
+"        │        └─ 位于 `username/myapp` 模块下的包 `username/myapp/cmd/"
+"main`\n"
+"        │\n"
+"        └────────── 模块路径，同时也定义了包 `username/myapp`\n"
 
-#: ../../toolchain/moon/package-manage-tour.md:64
+#: ../../toolchain/moon/package-manage-tour.md:69
 msgid ""
-"Once you've declared the local dependency, you can import packages from "
-"it in your `moon.pkg.json` file, just like you would with modules from "
-"mooncakes.io:"
+"The template contains test files, documentation, and collaboration metadata "
+"by default.  You can safely remove any template files you do not need.  The "
+"following is also a valid MoonBit project:"
 msgstr ""
-"一旦声明了本地依赖，您就可以在 `moon.pkg.json` 文件中从它导入包，就像从 mooncakes.io 导入模块一样："
+"默认模板包含测试文件、文档和协作元数据。你可以安全删除任何不需要的模板文件。"
+"下面同样是一个有效的 MoonBit 项目："
 
-#: ../../toolchain/moon/package-manage-tour.md:66
+#: ../../toolchain/moon/package-manage-tour.md:73
 msgid ""
-"{\n"
-"  \"import\": [\n"
-"    {\n"
-"      \"path\": \"foo/bar\",\n"
-"      \"alias\": \"bar\"\n"
-"    }\n"
-"  ]\n"
-"}\n"
+"├── moon.mod.json\n"
+"├── moon.pkg\n"
+"└── source.mbt\n"
 msgstr ""
-
-#: ../../toolchain/moon/package-manage-tour.md:77
-msgid ""
-"Now you can use the local module's functions in your code with "
-"`@bar.function_name()`."
-msgstr "现在你可以在代码中使用本地模块的函数，使用 `@bar.function_name()`。"
+"├── moon.mod.json\n"
+"├── moon.pkg\n"
+"└── source.mbt\n"
 
 #: ../../toolchain/moon/package-manage-tour.md:79
-msgid "Import packages from module"
-msgstr "从模块导入包"
+msgid "Add dependencies"
+msgstr "添加依赖"
 
 #: ../../toolchain/moon/package-manage-tour.md:81
 msgid ""
-"Modify the configuration file `moon.pkg.json` and declare the packages "
-"that need to be imported in the `import` field."
-msgstr "修改配置文件 `moon.pkg.json` 并在 `import` 字段中声明需要导入的包。"
+"You can browse all available modules on [mooncakes.io](https://"
+"mooncakes.io). Use `moon add` to add the dependencies you need, or manually "
+"edit the `deps` field in `moon.mod.json`."
+msgstr ""
+"你可以在 [mooncakes.io](https://mooncakes.io) 浏览所有可用模块。使用 "
+"`moon add` 添加所需依赖，或手动编辑 `moon.mod.json` 中的 `deps` 字段。"
 
-#: ../../toolchain/moon/package-manage-tour.md:83
+#: ../../toolchain/moon/package-manage-tour.md:85
 msgid ""
-"For example, in the image below, the `hello/main/moon.pkg.json` file is "
-"modified to declare the import of `Yoorkin/example/list` in the `main` "
-"package. Now, you can call the functions of the third-party package in "
-"the `main` package using `@list`."
+"For example, to add the latest version of the [moonbit-community/starter]"
+"(https://mooncakes.io/docs/moonbit-community/starter) module:"
 msgstr ""
-"例如，在下面的图片中，`hello/main/moon.pkg.json` 文件被修改，声明了在 `main` 包中导入 "
-"`Yoorkin/example/list`。现在，你可以在 `main` 包中使用 `@list` 调用第三方包的函数。"
-
-#: ../../toolchain/moon/package-manage-tour.md:85
-msgid "![import package](/imgs/import.png)"
-msgstr ""
-
-#: ../../toolchain/moon/package-manage-tour.md:85
-msgid "import package"
-msgstr "导入包"
+"例如，要添加 [moonbit-community/starter](https://mooncakes.io/docs/moonbit-"
+"community/starter) 模块的最新版本："
 
 #: ../../toolchain/moon/package-manage-tour.md:87
+msgid "$ moon add moonbit-community/starter\n"
+msgstr "$ moon add moonbit-community/starter\n"
+
+#: ../../toolchain/moon/package-manage-tour.md:92
+msgid ""
+"Moon also supports local dependencies. See [Dependency Management](/"
+"toolchain/moon/module.md#dependency-management) for more details."
+msgstr ""
+"Moon 也支持本地依赖。详见 [依赖管理](/toolchain/moon/module.md#dependency-"
+"management)。"
+
+#: ../../toolchain/moon/package-manage-tour.md:95
+msgid "Import packages from module"
+msgstr "从模块导入包"
+
+#: ../../toolchain/moon/package-manage-tour.md:97
+msgid ""
+"The `moonbit-community/starter` module contains a `moonbit-community/starter/"
+"rabbit` package."
+msgstr ""
+"`moonbit-community/starter` 模块包含一个 `moonbit-community/starter/rabbit` "
+"包。"
+
+#: ../../toolchain/moon/package-manage-tour.md:99
+msgid ""
+"After adding the [moonbit-community/starter](https://mooncakes.io/docs/"
+"moonbit-community/starter) module to your dependencies, to use the `moonbit-"
+"community/starter/rabbit` package in the `username/myapp/cmd/main` package, "
+"you need to import the package first:"
+msgstr ""
+"把 [moonbit-community/starter](https://mooncakes.io/docs/moonbit-community/"
+"starter) 模块添加为依赖后，如果要在 `username/myapp/cmd/main` 包中使用 "
+"`moonbit-community/starter/rabbit` 包，你需要先导入它："
+
+#: ../../toolchain/moon/package-manage-tour.md:101
+msgid ""
+"// add this import to `cmd/main/moon.pkg`\n"
+"import {\n"
+"  \"moonbit-community/starter/rabbit\"\n"
+"}\n"
+"\n"
+"options(\n"
+"  \"is-main\": true\n"
+")\n"
+msgstr ""
+"// 在 `cmd/main/moon.pkg` 中添加此导入\n"
+"import {\n"
+"  \"moonbit-community/starter/rabbit\"\n"
+"}\n"
+"\n"
+"options(\n"
+"  \"is-main\": true\n"
+")\n"
+
+#: ../../toolchain/moon/package-manage-tour.md:113
 msgid "You can also give an alias to the imported package:"
 msgstr "你还可以给导入的包起一个别名："
 
-#: ../../toolchain/moon/package-manage-tour.md:89
+#: ../../toolchain/moon/package-manage-tour.md:115
 msgid ""
-"{\n"
-"    \"is_main\": true,\n"
-"    \"import\": [\n"
-"        { \"path\": \"Yoorkin/example/list\", \"alias\": \"ls\" }\n"
-"    ]\n"
+"import {\n"
+"  \"moonbit-community/starter/rabbit\" @alias\n"
 "}\n"
 msgstr ""
+"import {\n"
+"  \"moonbit-community/starter/rabbit\" @alias\n"
+"}\n"
 
-#: ../../toolchain/moon/package-manage-tour.md:98
+#: ../../toolchain/moon/package-manage-tour.md:122
+msgid "Now you can call the function `hello` in `rabbit` package:"
+msgstr "现在你可以调用 `rabbit` 包中的 `hello` 函数："
+
+#: ../../toolchain/moon/package-manage-tour.md:124
 msgid ""
-"Read the documentation of this module on mooncakes.io, we can use its "
-"`of_array` and `reverse` functions to implement a new function "
-"`reverse_array`."
+"// in `cmd/main/main.mbt`\n"
+"fn main {\n"
+"  // println(\"hello\")\n"
+"  @rabbit.hello()\n"
+"}\n"
 msgstr ""
-"在 mooncakes.io 上阅读此模块的文档，我们可以使用其 `of_array` 和 `reverse` 函数来实现一个新函数 "
-"`reverse_array`。"
+"// 在 `cmd/main/main.mbt` 中\n"
+"fn main {\n"
+"  // println(\"hello\")\n"
+"  @rabbit.hello()\n"
+"}\n"
 
-#: ../../toolchain/moon/package-manage-tour.md:100
-msgid "![reverse array](/imgs/reverse-array.png)"
-msgstr ""
+#: ../../toolchain/moon/package-manage-tour.md:132
+msgid "Run your main package and see what happens in the terminal."
+msgstr "运行你的主包，查看终端输出。"
 
-#: ../../toolchain/moon/package-manage-tour.md:100
-msgid "reverse array"
-msgstr "反转数组"
+#: ../../toolchain/moon/package-manage-tour.md:134
+msgid "$ moon run cmd/main\n"
+msgstr "$ moon run cmd/main\n"
 
-#: ../../toolchain/moon/package-manage-tour.md:102
+#: ../../toolchain/moon/package-manage-tour.md:138
 msgid "Remove dependencies"
 msgstr "移除依赖"
 
-#: ../../toolchain/moon/package-manage-tour.md:104
+#: ../../toolchain/moon/package-manage-tour.md:140
 msgid "You can remove dependencies via `moon remove <module name>`."
 msgstr "你可以通过 `moon remove <模块名>` 移除依赖。"
 
-#: ../../toolchain/moon/package-manage-tour.md:106
+#: ../../toolchain/moon/package-manage-tour.md:142
 msgid "Publish your module"
 msgstr "发布你的模块"
 
-#: ../../toolchain/moon/package-manage-tour.md:108
+#: ../../toolchain/moon/package-manage-tour.md:144
 msgid ""
-"If you are ready to share your module, use `moon publish` to push a "
-"module to mooncakes.io. There are some important considerations to keep "
-"in mind before publishing:"
-msgstr "如果你准备分享你的模块，使用 `moon publish` 将模块推送到 mooncakes.io。在发布之前有一些重要的注意事项需要记住："
+"If you are ready to share your module, use `moon publish` to push a module "
+"to mooncakes.io. There are some important considerations to keep in mind "
+"before publishing:"
+msgstr ""
+"如果你准备分享你的模块，使用 `moon publish` 将模块推送到 mooncakes.io。在发布"
+"之前有一些重要的注意事项需要记住："
 
-#: ../../toolchain/moon/package-manage-tour.md:111
+#: ../../toolchain/moon/package-manage-tour.md:147
 msgid "Semantic versioning convention"
 msgstr "语义化版本约定"
 
-#: ../../toolchain/moon/package-manage-tour.md:113
+#: ../../toolchain/moon/package-manage-tour.md:149
 msgid ""
-"MoonBit's package management follows the convention of [Semantic "
-"Versioning](https://semver.org/). Each module must define a version "
-"number in the format `MAJOR.MINOR.PATCH`. With each push, the module must"
-" increment the:"
+"MoonBit's package management follows the convention of [Semantic Versioning]"
+"(https://semver.org/). Each module must define a version number in the "
+"format `MAJOR.MINOR.PATCH`. With each push, the module must increment the:"
 msgstr ""
 "MoonBit 的包管理遵循 [语义化版本](https://semver.org/) 约定。每个模块必须以 "
 "`MAJOR.MINOR.PATCH` 格式定义一个版本号。每次推送，模块必须递增："
 
-#: ../../toolchain/moon/package-manage-tour.md:115
+#: ../../toolchain/moon/package-manage-tour.md:151
 msgid "MAJOR version when you make incompatible API changes"
 msgstr "当你进行不兼容的 API 更改时，递增 MAJOR 版本"
 
-#: ../../toolchain/moon/package-manage-tour.md:116
-msgid "MINOR version when you add functionality in a backward compatible manner"
+#: ../../toolchain/moon/package-manage-tour.md:152
+msgid ""
+"MINOR version when you add functionality in a backward compatible manner"
 msgstr "在向后兼容的方式下添加功能时，递增 MINOR 版本"
 
-#: ../../toolchain/moon/package-manage-tour.md:117
+#: ../../toolchain/moon/package-manage-tour.md:153
 msgid "PATCH version when you make backward compatible bug fixes"
 msgstr "在进行向后兼容的错误修复时，递增 PATCH 版本"
 
-#: ../../toolchain/moon/package-manage-tour.md:119
+#: ../../toolchain/moon/package-manage-tour.md:155
 msgid ""
 "Additional labels for pre-release and build metadata are available as "
 "extensions to the `MAJOR.MINOR.PATCH` format."
 msgstr "附加的预发布和构建元数据标签可作为 `MAJOR.MINOR.PATCH` 格式的扩展。"
 
-#: ../../toolchain/moon/package-manage-tour.md:121
+#: ../../toolchain/moon/package-manage-tour.md:157
 msgid ""
-"moon implements the [minimal version "
-"selection](https://research.swtch.com/vgo-mvs), which automatically "
-"handles and installs dependencies based on the module's semantic "
-"versioning information. Minimal version selection assumes that each "
-"module declares its own dependency requirements and follows semantic "
-"versioning convention, aiming to make the user's dependency graph as "
-"close as possible to the author's development-time dependencies."
+"moon implements the [minimal version selection](https://research.swtch.com/"
+"vgo-mvs), which automatically handles and installs dependencies based on the "
+"module's semantic versioning information. Minimal version selection assumes "
+"that each module declares its own dependency requirements and follows "
+"semantic versioning convention, aiming to make the user's dependency graph "
+"as close as possible to the author's development-time dependencies."
 msgstr ""
-"moon 实现了 [最小版本选择](https://research.swtch.com/vgo-"
-"mvs)，根据模块的语义化版本信息自动处理和安装依赖。最小版本选择假定每个模块声明自己的依赖要求，并遵循语义化版本约定，旨在使用户的依赖图尽可能接近作者的开发时依赖。"
+"moon 实现了 [最小版本选择](https://research.swtch.com/vgo-mvs)，根据模块的语"
+"义化版本信息自动处理和安装依赖。最小版本选择假定每个模块声明自己的依赖要求，"
+"并遵循语义化版本约定，旨在使用户的依赖图尽可能接近作者的开发时依赖。"
 
-#: ../../toolchain/moon/package-manage-tour.md:123
+#: ../../toolchain/moon/package-manage-tour.md:159
 msgid "Readme & metadata"
 msgstr "自述文件 & 元数据"
 
-#: ../../toolchain/moon/package-manage-tour.md:125
-msgid "Metadata in `moon.mod.json` and `README.md` will be shown in mooncakes.io."
+#: ../../toolchain/moon/package-manage-tour.md:161
+msgid ""
+"Metadata in `moon.mod.json` and `README.md` will be shown in mooncakes.io."
 msgstr "`moon.mod.json` 和 `README.md` 中的元数据将显示在 mooncakes.io 上。"
 
-#: ../../toolchain/moon/package-manage-tour.md:127
+#: ../../toolchain/moon/package-manage-tour.md:163
 msgid "Metadata consist of the following sections:"
 msgstr "元数据包括以下部分："
 
-#: ../../toolchain/moon/package-manage-tour.md:129
+#: ../../toolchain/moon/package-manage-tour.md:165
 msgid ""
-"`license`: license of this module, it following the "
-"[SPDX](https://spdx.dev/about/overview/) convention"
-msgstr "`license`：此模块的许可证，遵循 [SPDX](https://spdx.dev/about/overview/) 约定"
+"`license`: license of this module, it following the [SPDX](https://spdx.dev/"
+"about/overview/) convention"
+msgstr ""
+"`license`：此模块的许可证，遵循 [SPDX](https://spdx.dev/about/overview/) 约定"
 
-#: ../../toolchain/moon/package-manage-tour.md:130
+#: ../../toolchain/moon/package-manage-tour.md:166
 msgid "`keywords`: keywords of this module"
 msgstr "`keywords`：此模块的关键字"
 
-#: ../../toolchain/moon/package-manage-tour.md:131
+#: ../../toolchain/moon/package-manage-tour.md:167
 msgid "`repository`: URL of the package source repository"
 msgstr "`repository`：包源代码仓库的 URL"
 
-#: ../../toolchain/moon/package-manage-tour.md:132
+#: ../../toolchain/moon/package-manage-tour.md:168
 msgid "`description`: short description to this module"
 msgstr "`description`：此模块的简短描述"
 
-#: ../../toolchain/moon/package-manage-tour.md:133
+#: ../../toolchain/moon/package-manage-tour.md:169
 msgid "`homepage`: URL of the module homepage"
 msgstr "`homepage`：模块主页的 URL"
 
-#: ../../toolchain/moon/package-manage-tour.md:135
-msgid "Moondoc"
-msgstr "Moondoc"
+#~ msgid "MoonBit's Package Manager Tutorial"
+#~ msgstr "MoonBit 包管理教程"
 
-#: ../../toolchain/moon/package-manage-tour.md:137
-msgid "mooncakes.io will generate documentation for each module automatically."
-msgstr "mooncakes.io 将自动生成每个模块的文档。"
+#~ msgid "Overview"
+#~ msgstr "概述"
 
-#: ../../toolchain/moon/package-manage-tour.md:139
-msgid ""
-"The leading `///` comments of each toplevel will be recognized as "
-"documentation. You can write markdown inside."
-msgstr "每个顶级的 `///` 注释将被识别为文档。你可以在其中写 markdown。"
+#~ msgid ""
+#~ "[mooncakes.io](https://mooncakes.io/) is a centralized package management "
+#~ "platform. Each module has a corresponding configuration file "
+#~ "`moon.mod.json`, which is the smallest unit for publishing. Under the "
+#~ "module's path, there can be multiple packages, each corresponding to a "
+#~ "`moon.pkg.json` configuration file. The `.mbt` files at the same level as "
+#~ "`moon.pkg.json` belong to this package."
+#~ msgstr ""
+#~ "[mooncakes.io](https://mooncakes.io/) 是一个集中式包管理平台。模块是发布的"
+#~ "最小单元。每个模块都有一个对应的配置文件 `moon.mod.json`，在模块的路径下，"
+#~ "可以有多个包，每个包对应一个 `moon.pkg.json` 配置文件。与 `moon.pkg.json` "
+#~ "同级的 `.mbt` 文件属于此包。"
 
-#: ../../toolchain/moon/package-manage-tour.md:142
-msgid ""
-"/// Get the largest element of a non-empty `Array`.\n"
-"///\n"
-"/// # Example\n"
-"///\n"
-"/// ```\n"
-"/// maximum([1,2,3,4,5,6]) = 6\n"
-"/// ```\n"
-"///\n"
-"/// # Panics\n"
-"///\n"
-"/// Panics if the `xs` is empty.\n"
-"///\n"
-"pub fn maximum[T : Compare](xs : Array[T]) -> T {\n"
-"  // TODO ...\n"
-"}\n"
-msgstr ""
+#~ msgid "Update index"
+#~ msgstr "更新索引"
 
-#: ../../toolchain/moon/package-manage-tour.md:160
-msgid ""
-"You can also use `moon doc --serve` to generate and view documentation "
-"locally."
-msgstr "你也可以使用 `moon doc --serve` 来生成并在本地查看文档。"
+#~ msgid "Use `moon update` to update the mooncakes.io index."
+#~ msgstr "使用 `moon update` 来更新 mooncakes.io 索引。"
 
+#~ msgid "moon update cli"
+#~ msgstr "moon update 命令行"
+
+#~ msgid "moon new"
+#~ msgstr "moon new"
+
+#~ msgid "add deps"
+#~ msgstr "添加依赖"
+
+#~ msgid "Add local dependencies"
+#~ msgstr "添加本地依赖"
+
+#~ msgid ""
+#~ "In addition to modules from mooncakes.io, you can also add local modules "
+#~ "as dependencies. This is useful when developing multiple related modules "
+#~ "on your local machine or when working with modules that are not published "
+#~ "to the registry."
+#~ msgstr ""
+#~ "除了来自 mooncakes.io 的模块，您还可以添加本地模块作为依赖项。这在本地机器"
+#~ "上开发多个相关模块时很有用，或者在使用未发布到注册表的模块时。"
+
+#~ msgid ""
+#~ "To add a local dependency, manually edit the `deps` field in "
+#~ "`moon.mod.json` and specify the relative path to the local module:"
+#~ msgstr ""
+#~ "要添加本地依赖，请手动编辑 `moon.mod.json` 中的 `deps` 字段，并指定到本地"
+#~ "模块的相对路径："
+
+#~ msgid ""
+#~ "The `path` should be a relative path from your current module to the "
+#~ "target module's directory (the directory containing the target module's "
+#~ "`moon.mod.json` file)."
+#~ msgstr ""
+#~ "`path` 应该是从当前模块到目标模块目录的相对路径（包含目标模块的 "
+#~ "`moon.mod.json` 文件的目录）。"
+
+#~ msgid ""
+#~ "Once you've declared the local dependency, you can import packages from "
+#~ "it in your `moon.pkg.json` file, just like you would with modules from "
+#~ "mooncakes.io:"
+#~ msgstr ""
+#~ "一旦声明了本地依赖，您就可以在 `moon.pkg.json` 文件中从它导入包，就像从 "
+#~ "mooncakes.io 导入模块一样："
+
+#~ msgid ""
+#~ "Now you can use the local module's functions in your code with "
+#~ "`@bar.function_name()`."
+#~ msgstr "现在你可以在代码中使用本地模块的函数，使用 `@bar.function_name()`。"
+
+#~ msgid ""
+#~ "Modify the configuration file `moon.pkg.json` and declare the packages "
+#~ "that need to be imported in the `import` field."
+#~ msgstr "修改配置文件 `moon.pkg.json` 并在 `import` 字段中声明需要导入的包。"
+
+#~ msgid ""
+#~ "For example, in the image below, the `hello/main/moon.pkg.json` file is "
+#~ "modified to declare the import of `Yoorkin/example/list` in the `main` "
+#~ "package. Now, you can call the functions of the third-party package in "
+#~ "the `main` package using `@list`."
+#~ msgstr ""
+#~ "例如，在下面的图片中，`hello/main/moon.pkg.json` 文件被修改，声明了在 "
+#~ "`main` 包中导入 `Yoorkin/example/list`。现在，你可以在 `main` 包中使用 "
+#~ "`@list` 调用第三方包的函数。"
+
+#~ msgid "import package"
+#~ msgstr "导入包"
+
+#~ msgid ""
+#~ "Read the documentation of this module on mooncakes.io, we can use its "
+#~ "`of_array` and `reverse` functions to implement a new function "
+#~ "`reverse_array`."
+#~ msgstr ""
+#~ "在 mooncakes.io 上阅读此模块的文档，我们可以使用其 `of_array` 和 "
+#~ "`reverse` 函数来实现一个新函数 `reverse_array`。"
+
+#~ msgid "reverse array"
+#~ msgstr "反转数组"
+
+#~ msgid "Moondoc"
+#~ msgstr "Moondoc"
+
+#~ msgid ""
+#~ "mooncakes.io will generate documentation for each module automatically."
+#~ msgstr "mooncakes.io 将自动生成每个模块的文档。"
+
+#~ msgid ""
+#~ "The leading `///` comments of each toplevel will be recognized as "
+#~ "documentation. You can write markdown inside."
+#~ msgstr "每个顶级的 `///` 注释将被识别为文档。你可以在其中写 markdown。"
+
+#~ msgid ""
+#~ "You can also use `moon doc --serve` to generate and view documentation "
+#~ "locally."
+#~ msgstr "你也可以使用 `moon doc --serve` 来生成并在本地查看文档。"
