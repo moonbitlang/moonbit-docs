@@ -1,10 +1,8 @@
-# MoonBit's Package Manager Tutorial
+# Use and publish packages
 
-## Overview
-
-MoonBit's build system seamlessly integrates package management and documentation generation tools, allowing users to easily fetch dependencies from mooncakes.io, access module documentation, and publish new modules.
-
-[mooncakes.io](https://mooncakes.io/) is a centralized package management platform. Each module has a corresponding configuration file `moon.mod.json`, which is the smallest unit for publishing. Under the module's path, there can be multiple packages, each corresponding to a `moon.pkg.json` configuration file. The `.mbt` files at the same level as `moon.pkg.json` belong to this package.
+MoonBit's build system seamlessly integrates package management and documentation 
+generation tools, allowing users to easily fetch dependencies from [mooncakes.io](https://mooncakes.io), 
+access module documentation, and publish new modules.
 
 Before getting started, make sure you have installed [moon](https://www.moonbitlang.com/download/).
 
@@ -14,7 +12,8 @@ Before getting started, make sure you have installed [moon](https://www.moonbitl
 If you don't want to publish, you can skip this step.
 ```
 
-If you don't have an account on mooncakes.io, run `moon register` and follow the guide. If you have previously registered an account, you can use `moon login` to log in.
+If you don't have an account on mooncakes.io, run `moon register` and follow the 
+guide. If you have previously registered an account, you can use `moon login` to log in.
 
 When you see the following message, it means you have successfully logged in:
 
@@ -22,82 +21,119 @@ When you see the following message, it means you have successfully logged in:
 API token saved to ~/.moon/credentials.json
 ```
 
-## Update index
-
-Use `moon update` to update the mooncakes.io index.
-
-![moon update cli](/imgs/moon-update.png)
-
 ## Setup MoonBit project
 
-Open an existing project or create a new project via `moon new`:
+Open an existing project or create a new project via `moon new <PATH>`. For example:
 
-![moon new](/imgs/moon-new.png)
+```shell
+$ moon new .
+Created username/myapp at .
+```
+
+It will generate template files in the path:
+
+```
+├── AGENTS.md                    # Collaboration guide for agents
+├── LICENSE                      # Open-source license 
+├── README.mbt.md                # README file with type checking support for moonbit 
+├── README.md -> README.mbt.md   # Symlink for platforms that expect README.md
+├── cmd                           
+│   └── main                     
+│       ├── main.mbt             # MoonBit source file 
+│       └── moon.pkg             # Package configuration for username/myapp/cmd/main package
+├── moon.mod.json                # Module configuration for username/myapp module
+├── moon.pkg                     # Package configuration for username/myapp package
+├── myapp.mbt                    # MoonBit source file
+├── myapp_test.mbt               # Black-box test
+└── myapp_wbtest.mbt             # White-box test
+```
+
+`moon new <PATH>` generates a starter module with two packages. A module is a 
+publishing unit that contains multiple packages. A package represents a namespace 
+and a compilation unit, is defined by a package configuration file, and includes 
+the `.mbt` files in the same directory.
+
+Modules and packages are identified by a special path (not the file path in the file system).
+For example:
+
+```
+username/myapp/cmd/main
+─────────────────┬─────
+────────┬─────   │
+        │        │
+        │        └─ package `username/myapp/cmd/main` within the `username/myapp` module
+        │
+        └────────── module path. It also defines the package `username/myapp`
+```
+
+The template contains test files, documentation, and collaboration metadata by default. 
+You can safely remove any template files you do not need. 
+The following is also a valid MoonBit project:
+
+```
+├── moon.mod.json
+├── moon.pkg
+└── source.mbt
+```
 
 ## Add dependencies
 
-You can browse all available modules on mooncakes.io. Use `moon add` to add the dependencies you need, or manually edit the `deps` field in `moon.mod.json`.
+You can browse all available modules on [mooncakes.io](https://mooncakes.io).
+Use `moon add` to add the dependencies you need, or manually edit the `deps`
+field in `moon.mod.json`.
 
-For example, to add the latest version of the `Yoorkin/example/list` module:
+For example, to add the latest version of the [moonbit-community/starter](https://mooncakes.io/docs/moonbit-community/starter) module:
 
-![add deps](/imgs/add-deps.png)
-
-### Add local dependencies
-
-In addition to modules from mooncakes.io, you can also add local modules as dependencies. This is useful when developing multiple related modules on your local machine or when working with modules that are not published to the registry.
-
-To add a local dependency, manually edit the `deps` field in `moon.mod.json` and specify the relative path to the local module:
-
-```json
-{
-  "name": "username/hello",
-  "deps": {
-    "foo/bar": {
-      "path": "../../path/to/foo-module"
-    }
-  }
-}
+```shell
+$ moon add moonbit-community/starter
 ```
 
-The `path` should be a relative path from your current module to the target module's directory (the directory containing the target module's `moon.mod.json` file).
-
-Once you've declared the local dependency, you can import packages from it in your `moon.pkg.json` file, just like you would with modules from mooncakes.io:
-
-```json
-{
-  "import": [
-    {
-      "path": "foo/bar",
-      "alias": "bar"
-    }
-  ]
-}
+```{note}
+Moon also supports local dependencies. See [Dependency Management](/toolchain/moon/module.md#dependency-management) for more details.
 ```
-
-Now you can use the local module's functions in your code with `@bar.function_name()`.
 
 ## Import packages from module
 
-Modify the configuration file `moon.pkg.json` and declare the packages that need to be imported in the `import` field.
+The `moonbit-community/starter` module contains a `moonbit-community/starter/rabbit` package.
 
-For example, in the image below, the `hello/main/moon.pkg.json` file is modified to declare the import of `Yoorkin/example/list` in the `main` package. Now, you can call the functions of the third-party package in the `main` package using `@list`.
+After adding the [moonbit-community/starter](https://mooncakes.io/docs/moonbit-community/starter) module to your dependencies, to use the `moonbit-community/starter/rabbit` package in the `username/myapp/cmd/main` package, you need to import the package first:
 
-![import package](/imgs/import.png)
+```moonbit
+// add this import to `cmd/main/moon.pkg`
+import {
+  "moonbit-community/starter/rabbit"
+}
 
+options(
+  "is-main": true
+)
+```
+
+``````{note}
 You can also give an alias to the imported package:
 
-```json
-{
-    "is_main": true,
-    "import": [
-        { "path": "Yoorkin/example/list", "alias": "ls" }
-    ]
+```moonbit
+import {
+  "moonbit-community/starter/rabbit" @alias
+}
+```
+``````
+
+Now you can call the function `hello` in `rabbit` package:
+
+```moonbit
+// in `cmd/main/main.mbt`
+fn main {
+  // println("hello")
+  @rabbit.hello()
 }
 ```
 
-Read the documentation of this module on mooncakes.io, we can use its `of_array` and `reverse` functions to implement a new function `reverse_array`.
+Run your main package and see what happens in the terminal.
 
-![reverse array](/imgs/reverse-array.png)
+```shell
+$ moon run cmd/main
+```
 
 ## Remove dependencies
 
@@ -131,30 +167,3 @@ Metadata consist of the following sections:
 - `repository`: URL of the package source repository
 - `description`: short description to this module
 - `homepage`: URL of the module homepage
-
-### Moondoc
-
-mooncakes.io will generate documentation for each module automatically.
-
-The leading `///` comments of each toplevel will be recognized as documentation.
-You can write markdown inside.
-
-```moonbit
-/// Get the largest element of a non-empty `Array`.
-///
-/// # Example
-///
-/// ```
-/// maximum([1,2,3,4,5,6]) = 6
-/// ```
-///
-/// # Panics
-///
-/// Panics if the `xs` is empty.
-///
-pub fn maximum[T : Compare](xs : Array[T]) -> T {
-  // TODO ...
-}
-```
-
-You can also use `moon doc --serve` to generate and view documentation locally.
