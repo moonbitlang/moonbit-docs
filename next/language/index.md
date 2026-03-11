@@ -4,11 +4,11 @@ MoonBit is an AI native programming language toolchain for cloud and edge comput
 
 The IDE environment is available at [https://try.moonbitlang.com](https://try.moonbitlang.com) without any installation; it does not rely on any server either.
 
-**Status and aimed timeline**
+**Status**
 
-MoonBit is currently in beta-preview. We expect to reach 1.0 in 2025.
+MoonBit is currently in beta-preview.
 
-When MoonBit reaches beta, it means any backwards-incompatible changes will be seriously evaluated and MoonBit _can_ be used in production(very rare compiler bugs). MoonBit is developed by a talented full time team who had extensive experience in building language toolchains, so we will grow much faster than the typical language ecosystem, you won't wait long to use MoonBit in your production.
+MoonBit can already be used in production, with backwards-incompatible changes evaluated seriously and compiler bugs expected to be rare. MoonBit is developed by a full-time team with deep language-toolchain experience, so the ecosystem is moving quickly.
 
 **Main advantages**
 

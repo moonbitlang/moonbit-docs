@@ -15,9 +15,9 @@ def main():
         if dir_path.name == "error_codes":
             continue
 
-        # Skip async for non-js backends
+        # These examples require the native backend.
         targets = "all"
-        if dir_path.name == "async":
+        if dir_path.name in {"async", "cli-quickstart"}:
             targets = "native"
 
         print(f"Processing {dir_path}")
