@@ -15,6 +15,7 @@ to add `moonbitlang/async` as a dependency of your project.
 You may also want to set `"preferred-target": "native"` in `moon.mod.json`.
 Now, import `moonbitlang/async` and other packages in the `moonbitlang/async` library in `moon.pkg`,
 and the asynchronous programming API should be available in your packages.
+If you want a workflow-first example, see the [Native CLI Quickstart](../tutorial/cli-quickstart.md).
 
 The list of packages in `moonbitlang/async` and their detailed documentation
 can be found on [mooncakes.io](https://mooncakes.io/docs/moonbitlang/async),
