@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-03-11 16:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -20,23 +19,52 @@ msgstr ""
 "Generated-By: Babel 2.16.0\n"
 
 #: ../../language/docs.md:1
-msgid "Documentation"
-msgstr "文档"
+msgid "Comments and Documentation"
+msgstr "注释与文档"
 
 #: ../../language/docs.md:3
+msgid "Comments"
+msgstr "注释"
+
+#: ../../language/docs.md:5
+msgid "Use `//` for ordinary comments inside code:"
+msgstr "在代码内部使用 `//` 编写普通注释："
+
+#: ../../language/docs.md:7
+msgid ""
+"// Explain why this branch exists.\n"
+"let retries = 3\n"
+msgstr ""
+"// Explain why this branch exists.\n"
+"let retries = 3\n"
+
+#: ../../language/docs.md:12
+msgid ""
+"You will also often see `///|` at the start of top-level blocks. It is an"
+" empty doc-comment line used to split top-level items explicitly. This "
+"matters for documentation tooling today, and it also preserves clear top-"
+"level block boundaries for future caching and other tooling purposes. In "
+"practice, `///|` is useful in ordinary MoonBit code as well as in "
+"documentation sources."
+msgstr ""
+"你也会经常在顶层代码块开头看到 "
+"`///|`。它是一条空的文档注释行，用来显式分隔顶层条目。这对于当前的文档工具链很重要，也能为未来的缓存和其他工具用途保留清晰的顶层块边界。实际使用中，`///|`"
+" 不仅适用于文档源码，在普通的 MoonBit 代码里也很有用。"
+
+#: ../../language/docs.md:18
 msgid "Doc Comments"
 msgstr "文档注释"
 
-#: ../../language/docs.md:5
+#: ../../language/docs.md:20
 msgid ""
-"Doc comments are comments prefix with `///` in each line in the leading of "
-"toplevel structure like `fn`, `let`, `enum`, `struct` or `type`. The doc "
-"comments are written in markdown."
+"Doc comments use `///` on each line immediately before a top-level item "
+"such as `fn`, `let`, `enum`, `struct`, or `type`. Doc comments are "
+"written in Markdown."
 msgstr ""
-"文档注释是在顶层结构（如 `fn`、`let`、`enum`、`struct`、`type`）的每一行前面加上 `///` 的注释。文档注释内包含 "
-"markdown 文本。"
+"文档注释使用 `///`，逐行写在 `fn`、`let`、`enum`、`struct`、`type` 等顶层条目前面。文档注释内容使用 "
+"Markdown 编写。"
 
-#: ../../language/docs.md:7
+#: ../../language/docs.md:24
 msgid ""
 "/// Return a new array with reversed elements.\n"
 "fn[T] reverse(xs : Array[T]) -> Array[T] {\n"
@@ -48,17 +76,18 @@ msgstr ""
 "  ...\n"
 "}\n"
 
-#: ../../language/docs.md:14
+#: ../../language/docs.md:31
 msgid ""
-"Markdown code blocks inside docstrings marked with `mbt check` are treated "
-"as document tests. `moon check` and `moon test` will automatically check and"
-" run these tests, so that examples in docstring are always up-to-date. Wrap "
-"the snippet in `test { .. }` when you want a test block:"
+"Markdown code blocks inside doc comments marked with `mbt check` are "
+"treated as document tests. `moon check` and `moon test` will "
+"automatically check and run these tests, so that examples in doc comments"
+" are always up-to-date. Wrap the snippet in `test { .. }` when you want a"
+" test block:"
 msgstr ""
-"文档注释中的 markdown 代码块如果标记为 `mbt check`，就会被视作文档测试；`moon check` 和 `moon test` "
-"会自动检查并运行这些测试，从而保证文档注释中的示例始终是最新的。需要测试块时，请将代码包在 `test { .. }` 中："
+"文档注释中的 Markdown 代码块如果标记为 `mbt check`，就会被视作文档测试；`moon check` 和 `moon test`"
+" 会自动检查并运行这些测试，从而保证文档注释中的示例始终是最新的。需要测试块时，请将代码包在 `test { .. }` 中："
 
-#: ../../language/docs.md:19
+#: ../../language/docs.md:36
 msgid ""
 "/// Increment an integer by one,\n"
 "///\n"
@@ -72,23 +101,35 @@ msgid ""
 "  x + 1\n"
 "}\n"
 msgstr ""
+"/// 将一个整数加一，\n"
+"///\n"
+"/// 示例：\n"
+"/// ```mbt check\n"
+"/// test {\n"
+"///   inspect(incr(41), content=\"42\")\n"
+"/// }\n"
+"/// ```\n"
+"pub fn incr(x : Int) -> Int {\n"
+"  x + 1\n"
+"}\n"
 
-#: ../../language/docs.md:25
+#: ../../language/docs.md:42
 msgid ""
 "Doc tests also apply to literate `.mbt.md` files. For a standalone file, "
 "run `moon check README.mbt.md` and `moon test README.mbt.md`. Inside a "
 "project, use the package-level `moon check` and `moon test` instead."
 msgstr ""
-"文档测试同样适用于 `.mbt.md` 这样的文学化文件。对于独立文件，可以运行 `moon check README.mbt.md` 和 `moon test README.mbt.md`。在项目内请使用包级别的 `moon check` 和 `moon test`。"
+"文档测试同样适用于 `.mbt.md` 这样的文学化文件。对于独立文件，可以运行 `moon check README.mbt.md` 和 "
+"`moon test README.mbt.md`。在项目内请使用包级别的 `moon check` 和 `moon test`。"
 
-#: ../../language/docs.md:28
+#: ../../language/docs.md:46
 msgid ""
-"If you want to prevent a code snippet from being treated as a document test,"
-" mark it with a language id other than `mbt check` on the markdown code "
-"block:"
+"If you want to prevent a code snippet from being treated as a document "
+"test, mark it with a language id other than `mbt check` on the markdown "
+"code block:"
 msgstr "如果想要阻止一段代码被当作文档测试，只需要在它的 markdown 代码块上标记一个 `mbt check` 以外的语言名字："
 
-#: ../../language/docs.md:28
+#: ../../language/docs.md:49
 msgid ""
 "/// `c_incr(x)` is the same as the following C code:\n"
 "/// ```c\n"
@@ -110,7 +151,7 @@ msgstr ""
 "  old\n"
 "}\n"
 
-#: ../../language/docs.md:34
+#: ../../language/docs.md:55
 msgid ""
 "Currently, document tests are always [blackbox tests](/language/tests.md"
 "#blackbox-tests-and-whitebox-tests). So private definitions cannot have "

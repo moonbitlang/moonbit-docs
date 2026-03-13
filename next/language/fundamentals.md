@@ -277,6 +277,31 @@ API for `@buffer.T`: <https://mooncakes.io/docs/moonbitlang/core/buffer>
 [Overloaded Literals](#overloaded-literals)
 ```
 
+#### Choosing a Byte Container
+
+MoonBit has several byte-oriented container types. They are related, but they
+serve different jobs:
+
+| Type | Ownership / mutability | Resizable | Typical use |
+| ---- | ---- | ---- | ---- |
+| `Bytes` | owned, immutable | no | final byte payloads, API boundaries, serialized data |
+| `BytesView` | borrowed, immutable view | no | slicing or parsing existing bytes without copying |
+| `Array[Byte]` | owned, mutable | yes | general-purpose mutable byte storage |
+| `FixedArray[Byte]` | owned, mutable | no | fixed-size working buffers |
+| `ArrayView[Byte]` | borrowed array view | no | passing slices of array-backed byte storage without ownership |
+| `MutArrayView[Byte]` | borrowed, mutable view | no | mutating borrowed array-backed byte storage in place |
+| `@buffer.Buffer` | owned, mutable builder | yes | incrementally constructing bytes, then calling `contents()` |
+
+Two common distinctions matter:
+
+- `Bytes` versus `BytesView`: owned immutable data versus a borrowed immutable slice.
+- `Array[Byte]` versus `ArrayView[Byte]` / `MutArrayView[Byte]`: owned mutable storage versus borrowed readonly or mutable views over it.
+
+`ReadOnlyArray[Byte]` and `MutArrayView[Byte]` are the corresponding read-only
+and mutable view types when you need to express those constraints explicitly.
+Pattern matching and bitstring parsing also work on these byte containers; see
+[Array Pattern](#array-pattern) and [Bitstring Pattern](#bitstring-pattern).
+
 ### Tuple
 
 A tuple is a collection of finite values constructed using round brackets `()` with the elements separated by commas `,`. The order of elements matters; for example, `(1,true)` and `(true,1)` have different types. Here's an example:

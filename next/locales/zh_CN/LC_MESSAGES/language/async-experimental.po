@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-30 18:00+0800\n"
+"POT-Creation-Date: 2026-03-11 16:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -34,15 +33,11 @@ msgid ""
 "not support WebAssembly backend yet. The API of `moonbitlang/async` is "
 "not considered stable, and may change in the future."
 msgstr ""
-"MoonBit 采用了一种类似 "
-"[Kotlin](https://kotlinlang.org/docs/coroutines-overview.html) 的、"
-"基于协程的方式来支持异步编程。"
-"MoonBit 的异步编程支持由两部分组成："
-"MoonBit 编译器中对 `async` 函数的支持，"
-"以及 MoonBit 的官方异步运行时 `moonbitlang/async`。"
-"目前，`moonbitlang/async` 对 native 后端有最好的支持，"
-"对 JavaScript 有有限的支持，暂时不支持 WebAssembly 后端。"
-"`moonbitlang/async` 的 API 仍在开发中，可能在未来有变动。"
+"MoonBit 采用了一种类似 [Kotlin](https://kotlinlang.org/docs/coroutines-"
+"overview.html) 的、基于协程的方式来支持异步编程。MoonBit 的异步编程支持由两部分组成：MoonBit 编译器中对 "
+"`async` 函数的支持，以及 MoonBit 的官方异步运行时 "
+"`moonbitlang/async`。目前，`moonbitlang/async` 对 native 后端有最好的支持，对 JavaScript"
+" 有有限的支持，暂时不支持 WebAssembly 后端。`moonbitlang/async` 的 API 仍在开发中，可能在未来有变动。"
 
 #: ../../language/async-experimental.md:10
 msgid "Getting started"
@@ -56,17 +51,17 @@ msgid ""
 " set `\"preferred-target\": \"native\"` in `moon.mod.json`. Now, import "
 "`moonbitlang/async` and other packages in the `moonbitlang/async` library"
 " in `moon.pkg`, and the asynchronous programming API should be available "
-"in your packages."
+"in your packages. If you want a workflow-first example, see the [Native "
+"CLI Quickstart](/tutorial/cli-quickstart.md)."
 msgstr ""
-"要在 MoonBit 中使用 `moonbitlang/async` 异步编程，"
-"首先需要运行 `moon add moonbitlang/async` 来把 `moonbitlang/async`"
-"添加到当前项目的依赖中。"
-"可以在 `moon.mod.json` 中添加 `\"preferred-target\": \"native\"`"
-"来默认使用 `moonbitlang/async` 支持最好的 native 后端。"
-"这之后，只需要在 `moon.pkg` 的 `import` 中添加 `moonbitlang/async` 的各个包，"
-"就能使用 `moonbitlang/async` 中的各种异步编程 API 了。"
+"要在 MoonBit 中使用 `moonbitlang/async` 异步编程，首先需要运行 `moon add "
+"moonbitlang/async` 来把 `moonbitlang/async`添加到当前项目的依赖中。可以在 `moon.mod.json` "
+"中添加 `\"preferred-target\": \"native\"`来默认使用 `moonbitlang/async` 支持最好的 "
+"native 后端。这之后，只需要在 `moon.pkg` 的 `import` 中添加 `moonbitlang/async` "
+"的各个包，就能使用 `moonbitlang/async` 中的各种异步编程 API 了。如果你想看一个以工作流为主线的示例，可以参考"
+"[原生 CLI 快速开始](/tutorial/cli-quickstart.md)。"
 
-#: ../../language/async-experimental.md:18
+#: ../../language/async-experimental.md:19
 msgid ""
 "The list of packages in `moonbitlang/async` and their detailed "
 "documentation can be found on "
@@ -77,17 +72,16 @@ msgid ""
 "of the basic concept of `moonbitlang/async` and some of the most "
 "important API."
 msgstr ""
-"可以在 [mooncakes.io](https://mooncakes.io/docs/moonbitlang/async) 查询"
-"`moonbitlang/async` 中的包列表以及它们各自的详细文档，"
-"还可以在 `moonbitlang/async` 的 GitHub 仓库中找到一些简单的"
-"[例子](https://github.com/moonbitlang/async/tree/main/examples)。"
-"这篇文章会介绍 `moonbitlang/async` 的基本概念和其中最重要的一些 API。"
+"可以在 [mooncakes.io](https://mooncakes.io/docs/moonbitlang/async) "
+"查询`moonbitlang/async` 中的包列表以及它们各自的详细文档，还可以在 `moonbitlang/async` 的 GitHub "
+"仓库中找到一些简单的[例子](https://github.com/moonbitlang/async/tree/main/examples)。这篇文章会介绍"
+" `moonbitlang/async` 的基本概念和其中最重要的一些 API。"
 
-#: ../../language/async-experimental.md:23
+#: ../../language/async-experimental.md:24
 msgid "Async function"
 msgstr "异步函数"
 
-#: ../../language/async-experimental.md:24
+#: ../../language/async-experimental.md:25
 msgid ""
 "Async functions are declared with the `async` keyword.  They implicitly "
 "[`raise`](/language/error-handling.md#throwing-errors) errors  and need "
@@ -96,7 +90,7 @@ msgstr ""
 "异步函数用 `async` 关键字定义。他们隐式地 [抛出错误](/language/error-handling.md#throwing-"
 "errors) ，而如果不抛出错误则需要显式地声明 `noraise`。"
 
-#: ../../language/async-experimental.md:28
+#: ../../language/async-experimental.md:29
 msgid ""
 "async fn my_async_function() -> String {\n"
 "  let (response, body) = @http.get(\"https://www.moonbitlang.com\")\n"
@@ -116,30 +110,27 @@ msgstr ""
 "  body.text()\n"
 "}\n"
 
-#: ../../language/async-experimental.md:34
+#: ../../language/async-experimental.md:35
 msgid ""
 "Since MoonBit is a statically typed language, the compiler will track its"
 "  asyncness, so you can just call async functions like normal functions, "
 "the MoonBit IDE will highlight the async function call with a different "
 "style. If you open the above code snippet with the MoonBit IDE, you "
-"should see the `@http.get` function rendered in italic style with an underline."
+"should see the `@http.get` function rendered in italic style with an "
+"underline."
 msgstr ""
 "由于 MoonBit 是一门静态类型语言，编译器会跟踪异步函数的调用，因此你可以像调用普通函数一样调用异步函数。MoonBit IDE "
-"会用不同的样式来高亮显示异步函数的调用。"
-"例如，如果在 MoonBit IDE 中打开上面的代码片段，"
-"就会看到 `@http.get` 函数被渲染成了斜体 + 下划线的效果。"
+"会用不同的样式来高亮显示异步函数的调用。例如，如果在 MoonBit IDE 中打开上面的代码片段，就会看到 `@http.get` "
+"函数被渲染成了斜体 + 下划线的效果。"
 
-#: ../../language/async-experimental.md:46
+#: ../../language/async-experimental.md:47
 msgid ""
 "Async functions can only be called inside async functions. Calling "
 "`async` function will result in the caller being blocked and waiting for "
 "the callee to return, similar to `await` in many other languages."
-msgstr ""
-"异步函数只能在异步函数中被调用。"
-"调用一个 `async` 函数会使调用者阻塞并等待被调用的函数返回，"
-"类似其他语言中的 `await`。"
+msgstr "异步函数只能在异步函数中被调用。调用一个 `async` 函数会使调用者阻塞并等待被调用的函数返回，类似其他语言中的 `await`。"
 
-#: ../../language/async-experimental.md:50
+#: ../../language/async-experimental.md:51
 msgid ""
 "MoonBit has first-class support for asynchronous programming. You can use"
 " `async fn main` to declare an asynchronous program entry, or use `async "
@@ -148,18 +139,15 @@ msgid ""
 "`moonbitlang/async` in your package to use `async fn main` and `async "
 "test`."
 msgstr ""
-"MoonBit 对异步编程有原生的支持。"
-"可以用 `async fn main` 来声明异步的程序入口，"
-"或者用 `async test` 来编写异步测试。"
-"默认情况下，多个异步测试可以并行地同时运行。"
-"注意使用 `async fn main` 或 `async test` 需要"
-"在 `moon.pkg` 中添加 `moonbitlang/async` 作为依赖。"
+"MoonBit 对异步编程有原生的支持。可以用 `async fn main` 来声明异步的程序入口，或者用 `async test` "
+"来编写异步测试。默认情况下，多个异步测试可以并行地同时运行。注意使用 `async fn main` 或 `async test` 需要在 "
+"`moon.pkg` 中添加 `moonbitlang/async` 作为依赖。"
 
-#: ../../language/async-experimental.md:56
+#: ../../language/async-experimental.md:57
 msgid "Structured concurrency and task group"
 msgstr "结构化并发与任务组"
 
-#: ../../language/async-experimental.md:57
+#: ../../language/async-experimental.md:58
 msgid ""
 "If an asynchronous program only call async function directly (i.e. "
 "`await`), then the control flow of the program is linear, and the program"
@@ -169,15 +157,9 @@ msgid ""
 "ability also brings the new challenge of how to manage tasks robustly, as"
 " the control flow of programs become much more complex due to concurrent "
 "tasks."
-msgstr ""
-"如果一段异步程序除了直接调用其他异步函数没有做别的事情，"
-"那么它的控制流会是线性的，和普通的同步程序没有区别。"
-"异步程序和同步程序最本质的不同，在于异步程序能同时创建多个任务，"
-"并让它们同时运行。"
-"由于多个异步任务可以同时运行，异步程序的控制流会复杂许多"
-"因此，创建多个任务的能力也带来了新的挑战：如何健壮地管理任务。"
+msgstr "如果一段异步程序除了直接调用其他异步函数没有做别的事情，那么它的控制流会是线性的，和普通的同步程序没有区别。异步程序和同步程序最本质的不同，在于异步程序能同时创建多个任务，并让它们同时运行。由于多个异步任务可以同时运行，异步程序的控制流会复杂许多因此，创建多个任务的能力也带来了新的挑战：如何健壮地管理任务。"
 
-#: ../../language/async-experimental.md:65
+#: ../../language/async-experimental.md:66
 msgid ""
 "The `moonbitlang/async` library adapts the *structured concurrency* "
 "paradigm to solve the task management problem and improve robustness of "
@@ -185,12 +167,11 @@ msgid ""
 " inside a *task group*, while task groups can only be created via the "
 "`@async.with_task_group` function:"
 msgstr ""
-"`moonbitlang/async` 采用了 *结构化并发* 这一编程范式来解决任务管理的问题，"
-"并提升异步程序的健壮性。"
-"在 `moonbitlang/async` 中，新任务只能在一个 *任务组* 中被创建。"
-"而任务组必须通过 `@async.with_task_group` 函数创建："
+"`moonbitlang/async` 采用了 *结构化并发* 这一编程范式来解决任务管理的问题，并提升异步程序的健壮性。在 "
+"`moonbitlang/async` 中，新任务只能在一个 *任务组* 中被创建。而任务组必须通过 "
+"`@async.with_task_group` 函数创建："
 
-#: ../../language/async-experimental.md:70
+#: ../../language/async-experimental.md:71
 msgid ""
 "async fn[Result] with_task_group(\n"
 "  f : async (@async.TaskGroup[Result]) -> Result,\n"
@@ -200,18 +181,17 @@ msgstr ""
 "  f : async (@async.TaskGroup[Result]) -> Result,\n"
 ") -> Result\n"
 
-#: ../../language/async-experimental.md:76
+#: ../../language/async-experimental.md:77
 msgid ""
 "The `with_task_group` function creates a new task group, spawn a new task"
 " inside the task group, and run `f` inside the new task with the group "
 "itself as argument. `f` can then use the group to spawn more new tasks, "
 "using various methods such as `spawn_bg`:"
 msgstr ""
-"`with_task_group` 函数会创建一个新的任务组，在其中创建一个新的任务，"
-"并在这个任务中以任务组自己为参数运行 `f`。"
-"`f` 可以通过 `spawn_bg` 等方法来使用任务组创建更多任务："
+"`with_task_group` 函数会创建一个新的任务组，在其中创建一个新的任务，并在这个任务中以任务组自己为参数运行 `f`。`f` "
+"可以通过 `spawn_bg` 等方法来使用任务组创建更多任务："
 
-#: ../../language/async-experimental.md:81
+#: ../../language/async-experimental.md:82
 msgid ""
 "/// Spawn a new task in the group and let it run in the background\n"
 "fn[Result] @async.TaskGroup::spawn_bg(\n"
@@ -227,21 +207,19 @@ msgstr ""
 "  ...\n"
 ") -> Unit\n"
 
-#: ../../language/async-experimental.md:90
+#: ../../language/async-experimental.md:91
 msgid ""
 "The magic of structured concurrency lies in the following rule for "
 "`with_task_group`:"
-msgstr ""
-"结构化并发范式的“魔法”就在 `with_task_group` 需要遵守的一条规则之中："
+msgstr "结构化并发范式的“魔法”就在 `with_task_group` 需要遵守的一条规则之中："
 
-#: ../../language/async-experimental.md:92
+#: ../../language/async-experimental.md:93
 msgid ""
 "`with_task_group` will only return after all tasks inside the group has "
 "terminated"
-msgstr ""
-"只有当任务组中的所有任务都结束了，`with_task_group` 才会返回"
+msgstr "只有当任务组中的所有任务都结束了，`with_task_group` 才会返回"
 
-#: ../../language/async-experimental.md:94
+#: ../../language/async-experimental.md:95
 msgid ""
 "`with_task_group` will ensure the above property in all conditions. "
 "Normaly, `with_task_group` will just wait for tasks to complete normally."
@@ -254,24 +232,19 @@ msgid ""
 "because the program forget to cancel it) can never exist in "
 "`moonbitlang/async`."
 msgstr ""
-"`with_task_group` 会保证上述规则在所有情况下都成立。"
-"正常情况下，`with_task_group` 会等待所有任务正常结束。"
-"如果 `with_task_group` 因为某些原因需要提前结束，"
-"例如某个任务失败了（默认情况下，如果任务组中的某个任务失败了，"
-"`with_task_group` 也会立刻失败，从而确保错误不会被不小心忽略），"
-"它会取消所有还在运行的任务，并等待它们的清理工作完成。"
-"结果上看，`with_task_group` 的规则保证了 *孤儿任务*"
-"（由于忘记被取消，明明已经没用了但仍在运行的任务）"
-"在 `moonbitlang/async` 中不可能出现。"
+"`with_task_group` 会保证上述规则在所有情况下都成立。正常情况下，`with_task_group` 会等待所有任务正常结束。如果"
+" `with_task_group` "
+"因为某些原因需要提前结束，例如某个任务失败了（默认情况下，如果任务组中的某个任务失败了，`with_task_group` "
+"也会立刻失败，从而确保错误不会被不小心忽略），它会取消所有还在运行的任务，并等待它们的清理工作完成。结果上看，`with_task_group` "
+"的规则保证了 *孤儿任务*（由于忘记被取消，明明已经没用了但仍在运行的任务）在 `moonbitlang/async` 中不可能出现。"
 
-#: ../../language/async-experimental.md:104
+#: ../../language/async-experimental.md:105
 msgid ""
 "Here's a simple example of using `with_task_group` to create multiple "
 "tasks and let them run in parallel:"
-msgstr ""
-"下面是一个使用 `with_task_group` 创建多个任务，并让它们同时运行的例子："
+msgstr "下面是一个使用 `with_task_group` 创建多个任务，并让它们同时运行的例子："
 
-#: ../../language/async-experimental.md:106
+#: ../../language/async-experimental.md:107
 msgid ""
 "async test \"with_task_group\" {\n"
 "  let log = []\n"
@@ -317,18 +290,16 @@ msgstr ""
 "  ])\n"
 "}\n"
 
-#: ../../language/async-experimental.md:112
+#: ../../language/async-experimental.md:113
 msgid ""
 "`with_task_group` is a very powerful construct. It can be used to "
 "simulate many async control flow operation. For example, here's a "
 "function that run an async function with a timeout:"
 msgstr ""
-"`with_task_group` 是一个非常强大的构造。"
-"它能模拟许多其他异步控制流原语。"
-"例如，下面是一个使用 `with_task_group` 实现的、"
-"给一个异步函数添加超时限制的辅助函数："
+"`with_task_group` 是一个非常强大的构造。它能模拟许多其他异步控制流原语。例如，下面是一个使用 `with_task_group`"
+" 实现的、给一个异步函数添加超时限制的辅助函数："
 
-#: ../../language/async-experimental.md:116
+#: ../../language/async-experimental.md:117
 msgid ""
 "async fn with_timeout(timeout : Int, f : async () -> Unit) -> Unit {\n"
 "  @async.with_task_group(group => {\n"
@@ -350,16 +321,14 @@ msgstr ""
 "  })\n"
 "}\n"
 
-#: ../../language/async-experimental.md:122
+#: ../../language/async-experimental.md:123
 msgid ""
 "The code itself is very simple, but the semantic of `with_task_group` "
 "ensures that this simple function will work properly in every corner "
 "case:"
-msgstr ""
-"这段代码非常简短。但是 `with_task_group` 的语义保证了"
-"这个简单的小函数在所有边界情况上都能有正确的行为："
+msgstr "这段代码非常简短。但是 `with_task_group` 的语义保证了这个简单的小函数在所有边界情况上都能有正确的行为："
 
-#: ../../language/async-experimental.md:124
+#: ../../language/async-experimental.md:125
 msgid ""
 "if `f` return successfully before the timeout, since the sleep task is "
 "spawned with `no_wait=true`, `with_task_group` will not wait for the "
@@ -367,33 +336,28 @@ msgid ""
 "task immediately. So `with_timeout(.., f)` will return immediately after "
 "`f` returns, without unnecessary delay."
 msgstr ""
-"如果 `f` 在超时之前顺利返回，由于创建负责计时的任务时设置了 `no_wait=true`，"
-"`with_task_group` 不会等待计时任务完成，会立即准备结束。"
-"为了维护 `with_task_group` 的性质，计时任务会立即被取消并结束。"
-"因此，`with_timeout(.., f)` 会在 `f` 返回时立刻返回，不会有不必要的延迟。"
+"如果 `f` 在超时之前顺利返回，由于创建负责计时的任务时设置了 `no_wait=true`，`with_task_group` "
+"不会等待计时任务完成，会立即准备结束。为了维护 `with_task_group` "
+"的性质，计时任务会立即被取消并结束。因此，`with_timeout(.., f)` 会在 `f` 返回时立刻返回，不会有不必要的延迟。"
 
-#: ../../language/async-experimental.md:128
+#: ../../language/async-experimental.md:129
 msgid ""
 "if `f` fails, the error will propagate to the whole `with_task_group`. "
 "The sleep task will again get cancelled automatically in this case."
-msgstr ""
-"如果 `f` 失败了，它抛出的错误会传播到整个 `with_task_group` 上。"
-"此时，计时任务同样会被自动取消。"
+msgstr "如果 `f` 失败了，它抛出的错误会传播到整个 `with_task_group` 上。此时，计时任务同样会被自动取消。"
 
-#: ../../language/async-experimental.md:130
+#: ../../language/async-experimental.md:131
 msgid ""
 "if `f` is still running when the timeout expires, the sleep task will "
 "raise a fatal timeout error, aborting the whole group. `f` will also get "
 "cancelled automatically in this case."
-msgstr ""
-"如果 `f` 超时了，计时任务会抛出一个错误，终止整个任务组。"
-"此时，`f` 会被自动取消，因此不会有资源泄漏。"
+msgstr "如果 `f` 超时了，计时任务会抛出一个错误，终止整个任务组。此时，`f` 会被自动取消，因此不会有资源泄漏。"
 
-#: ../../language/async-experimental.md:134
+#: ../../language/async-experimental.md:135
 msgid "Cancellation makes asynchronous program modular"
 msgstr "通过取消机制实现模块化的异步程序"
 
-#: ../../language/async-experimental.md:135
+#: ../../language/async-experimental.md:136
 msgid ""
 "In the previous section, \"cancellation\" has been mentioned multiple "
 "times. Indeed, cancellation is a very important part in asynchronous "
@@ -402,14 +366,11 @@ msgid ""
 "these basic asynchronous operations into bigger program, no matter how "
 "complex your program is, it is automatically cancellable."
 msgstr ""
-"在前面的章节中，我们多次提到了“取消”这一概念。"
-"在异步编程中，能够取消一个正在运行的任务是非常重要的。"
-"在 `moonbitlang/async` 中，包括 `with_task_group` 在内的"
-"所有异步操作默认都是可取消的。"
-"所以，当用户使用这些基础操作组合出大规模的异步程序时，"
-"无论最终得到的程序有多复杂，它依然自动是可取消的。"
+"在前面的章节中，我们多次提到了“取消”这一概念。在异步编程中，能够取消一个正在运行的任务是非常重要的。在 `moonbitlang/async` "
+"中，包括 `with_task_group` "
+"在内的所有异步操作默认都是可取消的。所以，当用户使用这些基础操作组合出大规模的异步程序时，无论最终得到的程序有多复杂，它依然自动是可取消的。"
 
-#: ../../language/async-experimental.md:141
+#: ../../language/async-experimental.md:142
 msgid ""
 "When a piece of asynchronous code is cancelled, the cancellation signal "
 "is represented as an error raised at the point where the code previously "
@@ -417,12 +378,10 @@ msgid ""
 "cancellation signal will automically propagate through the program, "
 "triggering cleanup operations in `defer` and error handlers."
 msgstr ""
-"当一段异步代码被取消时，取消信号会变成从这段代码中断的地方抛出的错误。"
-"所以，用户的程序无需对取消进行特殊处理："
-"取消信号会通过错误处理机制自动传播，"
-"并触发 `defer` 表达式和 `catch` 中的各种清理代码。"
+"当一段异步代码被取消时，取消信号会变成从这段代码中断的地方抛出的错误。所以，用户的程序无需对取消进行特殊处理：取消信号会通过错误处理机制自动传播，并触发"
+" `defer` 表达式和 `catch` 中的各种清理代码。"
 
-#: ../../language/async-experimental.md:147
+#: ../../language/async-experimental.md:148
 msgid ""
 "The ability to cancel arbitrary async code makes async programs highly "
 "modular in MoonBit. The `moonbitlang/async` package provides many useful "
@@ -431,13 +390,11 @@ msgid ""
 "For example, the following program try to make a HTTP request with a "
 "timeout, and allow at most three retry attempts:"
 msgstr ""
-"取消任意异步代码的能力使 MoonBit 中的异步程序变得高度模块化。"
-"`moonbitlang/async` 包提供了许多使用的异步辅助函数，"
-"例如给一段异步代码加上超时、自动重试等。"
-"这些辅助函数都依赖于取消机制。"
-"例如，下面是一段尝试在时限内进行一次 HTTP 请求，并允许至多三次重试的程序："
+"取消任意异步代码的能力使 MoonBit 中的异步程序变得高度模块化。`moonbitlang/async` "
+"包提供了许多使用的异步辅助函数，例如给一段异步代码加上超时、自动重试等。这些辅助函数都依赖于取消机制。例如，下面是一段尝试在时限内进行一次 "
+"HTTP 请求，并允许至多三次重试的程序："
 
-#: ../../language/async-experimental.md:154
+#: ../../language/async-experimental.md:155
 msgid ""
 "async fn make_request() -> String {\n"
 "  @async.retry(Immediate, max_retry=3, () => @async.with_timeout(1000, ()"
@@ -461,11 +418,11 @@ msgstr ""
 "  }))\n"
 "}\n"
 
-#: ../../language/async-experimental.md:160
+#: ../../language/async-experimental.md:161
 msgid "Interacting with the world"
 msgstr "和外部世界交互"
 
-#: ../../language/async-experimental.md:161
+#: ../../language/async-experimental.md:162
 msgid ""
 "In addition to asynchronous programming primitives, `moonbitlang/async` "
 "also provides an event loop for performing async IO operations, as well "
@@ -479,17 +436,15 @@ msgid ""
 "repo](https://github.com/moonbitlang/async/tree/main/examples). here's a "
 "quick taste of some of the most common features:"
 msgstr ""
-"除了各种异步编程原语，`moonbitlang/async` 还提供了一个"
-"[性能优秀](https://www.moonbitlang.com/blog/moonbit-async#performance-"
-"comparison) 的 IO 事件循环，"
-"以及一系列丰富的异步 IO 操作，包括 `http`/`https`、文件 IO、网络 IO "
-"和创建外部进程。"
-"可以在 [mooncakes.io](https://mooncakes.io/docs/moonbitlang/async)"
-"找到完整的 API 列表和它们的详细文档，也可以在 `moonbitlang/async` 的"
-"[GitHub 仓库](https://github.com/moonbitlang/async/tree/main/examples)"
-"找到一些简单示例。下面是一个小例子："
+"除了各种异步编程原语，`moonbitlang/async` "
+"还提供了一个[性能优秀](https://www.moonbitlang.com/blog/moonbit-async#performance-"
+"comparison) 的 IO 事件循环，以及一系列丰富的异步 IO 操作，包括 `http`/`https`、文件 IO、网络 IO "
+"和创建外部进程。可以在 "
+"[mooncakes.io](https://mooncakes.io/docs/moonbitlang/async)找到完整的 API "
+"列表和它们的详细文档，也可以在 `moonbitlang/async` 的[GitHub "
+"仓库](https://github.com/moonbitlang/async/tree/main/examples)找到一些简单示例。下面是一个小例子："
 
-#: ../../language/async-experimental.md:170
+#: ../../language/async-experimental.md:171
 msgid ""
 "async fn download_file(url : String, file_name : String) -> Unit {\n"
 "  // perform the transfer lazily to save memory\n"
@@ -509,31 +464,27 @@ msgstr ""
 "  out_file.write_reader(body)\n"
 "}\n"
 
-#: ../../language/async-experimental.md:176
+#: ../../language/async-experimental.md:177
 msgid "JavaScript support"
 msgstr "JavaScript 支持"
 
-#: ../../language/async-experimental.md:177
+#: ../../language/async-experimental.md:178
 msgid ""
 "Although `moonbitlang/async` supports native backend best, it also has "
 "basic support for JavaScript backend:"
-msgstr ""
-"虽然 `moonbitlang/async` 对 native 后端支持最好，"
-"它也对 JavaScript 后端有基本的支持："
+msgstr "虽然 `moonbitlang/async` 对 native 后端支持最好，它也对 JavaScript 后端有基本的支持："
 
-#: ../../language/async-experimental.md:180
+#: ../../language/async-experimental.md:181
 msgid "all IO independent API, such as task group and timeout, are available"
 msgstr "所有 IO 无关的 API，例如任务组、超时等，都可以在 JavaScript 后端使用"
 
-#: ../../language/async-experimental.md:181
+#: ../../language/async-experimental.md:182
 msgid ""
 "IO related API are not available, because not all JavaScript environment "
 "(for example browsers) support them"
-msgstr ""
-"JavaScript 后端无法使用 IO 相关的 API，因为不是所有 JavaScript 环境"
-"（例如浏览器）都支持这些 IO 操作"
+msgstr "JavaScript 后端无法使用 IO 相关的 API，因为不是所有 JavaScript 环境（例如浏览器）都支持这些 IO 操作"
 
-#: ../../language/async-experimental.md:182
+#: ../../language/async-experimental.md:183
 msgid ""
 "the `moonbitlang/async/js_async` provides support for integration with "
 "JavaScript promise, including waiting for an external JavaScript promise "
@@ -541,16 +492,15 @@ msgid ""
 "allows interaction with native asynchronous operations of the JavaScript "
 "host."
 msgstr ""
-"`moonbitlang/async/js_async` 包可以用来和 JavaScript promise 互动。"
-"它提供了等待一个 JavaScript promise 和把一个 MoonBit `async` 函数"
-"包装成一个 JavaScript promise 的功能。"
-"利用这个功能，用户可以自行绑定目标 JavaScript 环境中支持的异步操作。"
+"`moonbitlang/async/js_async` 包可以用来和 JavaScript promise 互动。它提供了等待一个 "
+"JavaScript promise 和把一个 MoonBit `async` 函数包装成一个 JavaScript promise "
+"的功能。利用这个功能，用户可以自行绑定目标 JavaScript 环境中支持的异步操作。"
 
-#: ../../language/async-experimental.md:186
+#: ../../language/async-experimental.md:187
 msgid ""
 "See [the mooncakes.io page for "
 "`moonbitlang/async/js_async`](https://mooncakes.io/docs/moonbitlang/async/js_async)"
 " fore more details."
 msgstr ""
-"关于和 JavaScript 互动的更多信息，可以参考 `moonbitlang/async/js` 的 "
-"[mooncakes.io 页面](https://mooncakes.io/docs/moonbitlang/async/js_async)。"
+"关于和 JavaScript 互动的更多信息，可以参考 `moonbitlang/async/js` 的 [mooncakes.io "
+"页面](https://mooncakes.io/docs/moonbitlang/async/js_async)。"

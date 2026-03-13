@@ -1,8 +1,25 @@
-# Documentation
+# Comments and Documentation
+
+## Comments
+
+Use `//` for ordinary comments inside code:
+
+```moonbit
+// Explain why this branch exists.
+let retries = 3
+```
+
+You will also often see `///|` at the start of top-level blocks. It is an
+empty doc-comment line used to split top-level items explicitly. This matters
+for documentation tooling today, and it also preserves clear top-level block
+boundaries for future caching and other tooling purposes. In practice, `///|`
+is useful in ordinary MoonBit code as well as in documentation sources.
 
 ## Doc Comments
 
-Doc comments are comments prefix with `///` in each line in the leading of toplevel structure like `fn`, `let`, `enum`, `struct` or `type`. The doc comments are written in markdown.
+Doc comments use `///` on each line immediately before a top-level item such as
+`fn`, `let`, `enum`, `struct`, or `type`. Doc comments are written in
+Markdown.
 
 ```{literalinclude} /sources/language/src/misc/top.mbt
 :language: moonbit
@@ -11,9 +28,9 @@ Doc comments are comments prefix with `///` in each line in the leading of tople
 
 ```
 
-Markdown code blocks inside docstrings marked with `mbt check` are treated as
+Markdown code blocks inside doc comments marked with `mbt check` are treated as
 document tests. `moon check` and `moon test` will automatically check and run
-these tests, so that examples in docstring are always up-to-date.
+these tests, so that examples in doc comments are always up-to-date.
 Wrap the snippet in `test { .. }` when you want a test block:
 
 ```{literalinclude} /sources/language/src/misc/top.mbt
