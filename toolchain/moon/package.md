@@ -251,6 +251,73 @@ options(
 }
 ```
 
+## Supported Targets
+
+The `supported-targets` option declares which backends a package is intended to support.
+It uses a target-set expression, not an array:
+
+### moon.pkg
+
+```moonbit
+options(
+  "supported-targets": "js",
+)
+```
+
+### moon.pkg.json
+
+```json
+{
+  "supported-targets": "js"
+}
+```
+
+Examples:
+
+- `js` for a single backend
+- `+js+wasm-gc` for an explicit set of backends
+- `+all-js` for all backends except `js`
+
+Legacy array syntax is still accepted for compatibility:
+
+```json
+{
+  "supported-targets": ["js", "native"]
+}
+```
+
+This is package metadata, not a conditional compilation rule:
+
+- use `supported-targets` to declare the package's supported backend set
+- use `targets` to include or exclude individual files for different backends
+- use `preferred-target` in `moon.mod.json` to choose the default backend for commands such as `moon check`, `moon run`, and `moon build`
+
+When both the module and the package declare `supported-targets`, the effective backend set is
+their intersection.
+
+Command behavior follows the selected backend:
+
+- `moon check`, `moon build`, `moon test`, and `moon bench` keep only packages that support the selected backend
+- `moon run` requires the selected package to support the selected backend
+- `moon info` skips unsupported selected packages with a warning
+- `moon bundle` skips package targets that do not support the selected backend
+
+After root selection, Moon also checks reachable required dependencies. If a required dependency
+does not support the selected backend, the command fails with a normal user-facing error.
+
+Notes:
+
+- omitting `supported-targets` means all backends are supported
+- `--target all` expands to `wasm`, `wasm-gc`, `js`, and `native`, but not `llvm`
+- `llvm` is still a valid `supported-targets` value
+- legacy array syntax is deprecated, but still accepted for compatibility
+
+A common setup is:
+
+- mark a native-only package with `"supported-targets": "native"`
+- set `"preferred-target": "native"` in `moon.mod.json`
+- use `targets` only when some files inside the package differ by backend
+
 ## Link Options
 
 By default, moon only links packages where `is-main` is set to `true`. If you need to link other packages, you can specify this with the `link` option.

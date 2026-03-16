@@ -135,6 +135,45 @@ when developing a project targeting other backends than Wasm GC.
 }
 ```
 
+## Supported Targets
+
+The `supported-targets` field declares which backends this module is intended to support.
+Unlike `preferred-target`, it does not choose a default target for commands. Use it to record
+the module's compatibility surface in metadata.
+
+`supported-targets` uses a compact target-set syntax:
+
+- `js` for a single backend
+- `+js+wasm-gc` for an explicit set of backends
+- `+all-js` for all backends except `js`
+
+For example:
+
+```json
+{
+  "supported-targets": "+js+wasm-gc"
+}
+```
+
+Legacy array syntax is still accepted for compatibility:
+
+```json
+{
+  "supported-targets": ["js", "native"]
+}
+```
+
+`preferred-target` and `supported-targets` are often used together:
+
+- `preferred-target` says which backend `moon` should use by default
+- `supported-targets` says which backends the module claims to support
+
+When a package also defines `supported-targets`, the effective backend set is the intersection
+of the module-level and package-level declarations.
+
+For per-file conditional compilation inside a package, use [`targets`](package.md#conditional-compilation)
+in `moon.pkg` / `moon.pkg.json` instead.
+
 ## Source directory
 
 The `source` field is used to specify the source directory of the module.

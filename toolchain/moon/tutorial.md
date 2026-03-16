@@ -146,6 +146,29 @@ $ moon test
 Total tests: 1, passed: 1, failed: 0.
 ```
 
+## Choosing a Target
+
+Moon has three different target-related knobs, and they serve different jobs:
+
+- `--target` on the command line chooses which backend the current command uses
+- `preferred-target` in `moon.mod.json` chooses the default backend for `moon` and the language server
+- `supported-targets` declares which backends a module or package is intended to support
+
+For example, a native-first CLI project may set:
+
+```json
+{
+  "preferred-target": "native",
+  "supported-targets": "native"
+}
+```
+
+`supported-targets` uses target-set syntax such as `js`, `+js+wasm-gc`, or `+all-js`.
+
+If only some files are backend-specific, keep the module or package metadata broad and use
+[`targets`](package.md#conditional-compilation) in `moon.pkg` / `moon.pkg.json` to select files
+per backend.
+
 ## Package Importing
 
 In the MoonBit's build system, the dependency is declared at the package level.
