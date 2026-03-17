@@ -400,7 +400,7 @@ interface LinkConfig {
 #### Build variables
 
 You may use the variables emitted in the `vars` fields in the native linking
-arguments in `moon.pkg.json` as `${build.<var_name>}`.
+arguments in `moon.pkg` as `${build.<var_name>}`.
 
 For example, if your build script outputs:
 
@@ -408,16 +408,16 @@ For example, if your build script outputs:
 { "vars": { "CC": "gcc" } }
 ```
 
-and your `moon.pkg.json` is structured like:
+and your `moon.pkg` is structured like:
 
-```json
-{
-  "link": {
+```text
+options(
+  link: {
     "native": {
-      "cc": "${build.CC}"
-    }
-  }
-}
+      "cc": "${build.CC}",
+    },
+  },
+)
 ```
 
 It will be transformed into

@@ -26,7 +26,7 @@ let b = false
 let c = a && b
 let d = a || b
 let e = !a
-let f = not(a)
+let f = !(a && b)
 ```
 
 ### Number
@@ -1154,7 +1154,7 @@ Variable initialization clauses, loop conditions, and update clauses are all opt
 for i = 1; ; i = i + 1 {
   println(i)
 }
-for {
+for ;; {
   println("loop forever")
 }
 ```
@@ -1341,7 +1341,7 @@ test "continue label" {
   let res = outer~: loop init {
     0 => 42
     i =>
-      for {
+      for ;; {
         count = count + 1
         continue outer~ i - 1
       }

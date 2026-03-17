@@ -97,7 +97,7 @@ This command generates the following directory structure:
 ```default
 .
 ├── ffi
-│   ├── moon.pkg.json
+│   ├── moon.pkg
 │   └── top.mbt
 ├── gen
 │   ├── ffi.mbt
@@ -106,13 +106,13 @@ This command generates the following directory structure:
 │   │   └── docs
 │   │       └── adder
 │   │           └── add
-│   │               ├── moon.pkg.json
+│   │               ├── moon.pkg
 │   │               ├── stub.mbt
 │   │               └── top.mbt
-│   ├── moon.pkg.json
+│   ├── moon.pkg
 │   ├── world
 │   │   └── adder
-│   │       ├── moon.pkg.json
+│   │       ├── moon.pkg
 │   │       └── stub.mbt
 │   └── world_adder_export.mbt
 ├── moon.mod.json
@@ -122,7 +122,7 @@ This command generates the following directory structure:
     └── adder
         ├── ffi_import.mbt
         ├── import.mbt
-        ├── moon.pkg.json
+        ├── moon.pkg
         └── top.mbt
 ```
 
@@ -168,34 +168,26 @@ pub fn add(x : UInt, y : UInt) -> UInt {
 
 ## 6. Configure the Build
 
-Ensure your `gen/moon.pkg.json` is properly configured for WebAssembly target:
+Ensure your `gen/moon.pkg` is properly configured for WebAssembly target:
 
-```json
-{
-  // link configuration for Wasm backend
-  "link": {
+```text
+import {
+  "docs/adder/ffi" @ffi,
+  "docs/adder/gen/interface/docs/adder/add" @add,
+}
+
+options(
+  link: {
     "wasm": {
       "exports": [
-        // Export for cabi_realloc
         "cabi_realloc:cabi_realloc",
-        // Export per the interface definition
-        "wasmExportAdd:docs:adder/add@0.1.0#add"
+        "wasmExportAdd:docs:adder/add@0.1.0#add",
       ],
       "export-memory-name": "memory",
-      "heap-start-address": 16
-    }
-  },
-  "import": [
-    {
-      "path": "docs/adder/ffi",
-      "alias": "ffi"
+      "heap-start-address": 16,
     },
-    {
-      "path": "docs/adder/gen/interface/docs/adder/add",
-      "alias": "add"
-    }
-  ]
-}
+  },
+)
 ```
 
 ## 7. Build the WebAssembly Component

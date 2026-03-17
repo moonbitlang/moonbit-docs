@@ -339,6 +339,8 @@ impl Draw for Point with draw(self, x, y) {
   ()
 }
 
+impl Object for Point
+
 pub fn[O : Object] draw_object(obj : O) -> Unit {
   let (x, y) = obj.pos()
   obj.draw(x, y)

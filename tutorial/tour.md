@@ -57,10 +57,10 @@ examine
 ├── cmd
 │   └── main
 │       ├── main.mbt
-│       └── moon.pkg.json
+│       └── moon.pkg
 ├── LICENSE
 ├── moon.mod.json
-├── moon.pkg.json
+├── moon.pkg
 ├── examine_test.mbt
 ├── examine.mbt
 ├── README.mbt.md
@@ -353,7 +353,7 @@ too.
    an existing GitHub account.
 2. Modify the project name in `moon.mod.json` to
    `<your github account name>/<project name>`. Run `moon check` to see if
-   there's any other affected places in `moon.pkg.json`.
+   there's any other affected places in `moon.pkg`.
 3. Execute `moon publish` and your done. Your project will be available for
    others to use.
 
