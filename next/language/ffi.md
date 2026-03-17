@@ -160,32 +160,28 @@ You can declare a foreign function by importing a function given the function na
 extern "C" fn put_char(ch : UInt) = "function_name"
 ```
 
-If a package needs to dynamically link with foreign C library, add `cc-link-flags` to `moon.pkg.json`. It would be passed to C compiler directly.
+If a package needs to dynamically link with foreign C library, add `cc-link-flags` to `moon.pkg`. It would be passed to C compiler directly.
 
-```json
-{
-  // ...
+```moonbit
+options(
   "link": {
     "native": {
       "cc-link-flags": "-l<c library>"
     }
   },
-  // ...
-}
+)
 ```
 
 
 
-To define wrapper functions, you can add a C stub file to a package, and add the following to the `moon.pkg.json` of the package:
+To define wrapper functions, you can add a C stub file to a package, and add the following to the `moon.pkg` of the package:
 
-```json
-{
-  // ...
+```moonbit
+options(
   "native-stub": [ 
     // list of stub file names
   ],
-  // ...
-}
+)
 ```
 
 You would probably like to `#include "moonbit.h"`, which contains type definitions and handy utilities for MoonBit's C interface. The header is located in `~/.moon/include`, check its content for more details.
@@ -375,14 +371,14 @@ This feature is particular useful for binding flags of C libraries.
 
 For public functions that are neither methods nor polymorphic, they can be exported by configuring the `exports` field in [link configuration](/toolchain/moon/package.md#link-options).
 
-```json
-{
+```moonbit
+options(
   "link": {
     "<backend>": {
       "exports": [ "add", "fib:test" ]
     }
   }
-}
+)
 ```
 
 The previous example exports functions `add` and `fib`, where `fib` will be exported as `test`.
