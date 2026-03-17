@@ -40,10 +40,10 @@ my_project
 ├── cmd
 │   └── main
 │       ├── main.mbt
-│       └── moon.pkg.json
+│       └── moon.pkg
 ├── LICENSE
 ├── moon.mod.json
-├── moon.pkg.json
+├── moon.pkg
 ├── my_project_test.mbt
 ├── my_project.mbt
 ├── README.mbt.md
@@ -67,29 +67,24 @@ Here's a brief explanation of the directory structure:
     "description": ""
   }
   ```
-- `.` and `cmd/main` directories: These are the packages within the module. Each package can contain multiple `.mbt` files, which are the source code files for the MoonBit language. However, regardless of how many `.mbt` files a package has, they all share a common `moon.pkg.json` file. `*_test.mbt` are separate test files in the package, these files are for blackbox test, so private members of the same package cannot be accessed directly.
-- `moon.pkg.json` is package descriptor. It defines the properties of the package, such as whether it is the main package and the packages it imports.
-  - `cmd/main/moon.pkg.json`:
-    ```json
-    {
-      "is-main": true,
-      "import": [
-        {
-          "path": "username/my_project",
-          "alias": "lib"
-        }
-      ]
+- `.` and `cmd/main` directories: These are the packages within the module. Each package can contain multiple `.mbt` files, which are the source code files for the MoonBit language. However, regardless of how many `.mbt` files a package has, they all share a common `moon.pkg` file. Older projects may still use the legacy `moon.pkg.json` format. `*_test.mbt` are separate test files in the package, these files are for blackbox tests, so private members of the same package cannot be accessed directly.
+- `moon.pkg` is the package descriptor. It defines the properties of the package, such as whether it is the main package and the packages it imports.
+  - `cmd/main/moon.pkg`:
+    ```moonbit
+    import {
+      "username/my_project" @lib,
     }
+
+    options(
+      "is-main": true,
+    )
     ```
 
-    Here, `"is-main: true"` declares that the package contains an entry for the `moon run` command.
-  - `moon.pkg.json`:
-    ```json
-    {}
-    ```
+    Here, `"is-main": true` declares that the package contains an entry for the `moon run` command.
+  - `moon.pkg`:
 
-    This file is empty. Its purpose is simply to inform the build system that this folder is a package.
-- `README.mbt.md` is the README file. The code blocks written inside will be type checked and tested by `moon check` and `moon test`.
+    This file may be empty. Its purpose is simply to inform the build system that this folder is a package.
+- `README.mbt.md` is the README file. In this file, `mbt check` code blocks are checked and run by `moon check` and `moon test`.
 
 ## Working with Packages
 
@@ -166,31 +161,29 @@ For example, a native-first CLI project may set:
 `supported-targets` uses target-set syntax such as `js`, `+js+wasm-gc`, or `+all-js`.
 
 If only some files are backend-specific, keep the module or package metadata broad and use
-[`targets`](package.md#conditional-compilation) in `moon.pkg` / `moon.pkg.json` to select files
+[`targets`](package.md#conditional-compilation) in `moon.pkg` or legacy `moon.pkg.json` to select files
 per backend.
 
 ## Package Importing
 
-In the MoonBit's build system, the dependency is declared at the package level.
-To import the `username/my_project` package in `username/my_project/cmd/main`, you need to specify it in `cmd/main/moon.pkg.json`:
+In the MoonBit build system, dependencies are declared at the package level.
+To import the `username/my_project` package in `username/my_project/cmd/main`, you need to specify it in `cmd/main/moon.pkg`:
 
-```json
-{
-  "is-main": true,
-  "import": [
-    {
-      "path": "username/my_project",
-      "alias": "lib"
-    }
-  ]
+```moonbit
+import {
+  "username/my_project" @lib,
 }
+
+options(
+  "is-main": true,
+)
 ```
 
-Here, `"username/my_project` specifies importing the root package and having an alias of `lib`, so you can use `@lib.fib(10)` in `cmd/main/main.mbt`.
+Here, `"username/my_project"` specifies importing the root package and having an alias of `lib`, so you can use `@lib.fib(10)` in `cmd/main/main.mbt`.
 
 ## Creating and Using a New Package
 
-First, create a new directory named `fib` under `lib`:
+First, create a new directory named `fib` in the module root:
 
 ```bash
 mkdir fib
@@ -222,8 +215,8 @@ pub fn fib_fast(num : Int) -> Int {
 }
 ```
 
-```json
-{}
+```moonbit
+// This package does not need extra options yet.
 ```
 
 After creating these files, your directory structure should look like this:
@@ -234,32 +227,30 @@ After creating these files, your directory structure should look like this:
 ├── cmd
 │   └── main
 │       ├── main.mbt
-│       └── moon.pkg.json
+│       └── moon.pkg
 ├── fib
 │   ├── fast.mbt
-│   ├── moon.pkg.json
+│   ├── moon.pkg
 │   └── slow.mbt
 ├── LICENSE
 ├── moon.mod.json
-├── moon.pkg.json
+├── moon.pkg
 ├── my_project_test.mbt
 ├── my_project.mbt
 ├── README.mbt.md
 └── README.md -> README.mbt.md
 ```
 
-In the `cmd/main/moon.pkg.json` file, import the `username/my_project/fib` package and customize its alias to `my_awesome_fibonacci`:
+In the `cmd/main/moon.pkg` file, import the `username/my_project/fib` package and customize its alias to `my_awesome_fibonacci`:
 
-```json
-{
-  "is_main": true,
-  "import": [
-    {
-      "path": "username/my_project/fib",
-      "alias": "my_awesome_fibonacci"
-    }
-  ]
+```moonbit
+import {
+  "username/my_project/fib" @my_awesome_fibonacci,
 }
+
+options(
+  "is-main": true,
+)
 ```
 
 This imports the `fib` package. After doing this, you can use the `fib` package in `cmd/main/main.mbt`. Replace the file content of `cmd/main/main.mbt` to:
@@ -285,9 +276,9 @@ Let's add some tests to verify our fib implementation. Add the following content
 
 ```moonbit
 test {
-  inspect(fib_slow(0))
-  inspect(fib_slow(1))
-  inspect(fib_slow(2))
+  inspect(@fib.fib_slow(0))
+  inspect(@fib.fib_slow(1))
+  inspect(@fib.fib_slow(2))
 }
 ```
 
