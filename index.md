@@ -10,7 +10,6 @@ The IDE environment is available at [https://try.moonbitlang.com](https://try.mo
 - [**Language**](language/index.md): Introduction to detailed language specifications
 - [**Standard library**](https://mooncakes.io/docs/moonbitlang/core/): documentation of the standard library `moonbitlang/core`
 - [**Toolchains**](toolchain/index.md): Introduction to all the toolchains making developing MoonBit a unique experience.
-- [**MoonPilot**](pilot/index.md): Introduction to MoonBit's code agent.
 
 ## Useful Sources
 
@@ -20,5 +19,6 @@ The IDE environment is available at [https://try.moonbitlang.com](https://try.mo
   - [Updates](https://www.moonbitlang.com/weekly-updates/): Changelogs to language features
 - [Document (this site)](https://docs.moonbitlang.com/en/): The complete and up to date document for MoonBit, including the sections mentioned before
 - [Tour](https://tour.moonbitlang.com): Interactive language playground
+- [MoonBit Skills](https://github.com/moonbitlang/skills): Install skills from this repository before using MoonBit code agents.
 - [mooncakes.io](https://mooncakes.io): Package registry along with API documents, including:
   - [Experimental library API](https://mooncakes.io/docs/moonbitlang/x/)
