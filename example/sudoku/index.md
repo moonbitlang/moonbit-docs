@@ -454,8 +454,8 @@ test {
 }
 ```
 
-Running on [MoonBit online IDE](https://try.moonbitlang.com/), It takes only
-about 0.11 seconds to solve this Sudoku!
+On a regular development machine, it takes only about 0.11 seconds to solve
+this Sudoku.
 
 ## Conclusion
 

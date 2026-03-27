@@ -1201,9 +1201,8 @@ code generation backend being used:
 
 ## Getting Started
 
-1. Visit [the online playground](https://try.moonbitlang.com).
-2. Check out our [installation guide](../tour.md#installation).
-3. Create your first MoonBit project:
+1. Check out our [installation guide](../tour.md#installation).
+2. Create your first MoonBit project:
    ```console
    $ moon new hello-world
    $ cd hello-world
