@@ -1,0 +1,73 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4146.md:1
+msgid "E4146"
+msgstr ""
+
+#: ../../language/error_codes/E4146.md:3
+msgid "Type is not supported by range pattern."
+msgstr ""
+
+#: ../../language/error_codes/E4146.md:5
+msgid ""
+"MoonBit only support range pattern for integer types. This error occurs "
+"when you try to use a type that is not an integer in a range pattern."
+msgstr ""
+
+#: ../../language/error_codes/E4146.md:8
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4146.md:10
+msgid ""
+"fn main {\n"
+"  let value = 1.0\n"
+"  match value {\n"
+"    _..<0.0 => println(\"negative\") // Error: Type Double is not "
+"supported by range pattern.\n"
+"    _ => println(\"zero or positive\")\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4146.md:14
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4146.md:16
+msgid ""
+"For type that is not an integer but implements the `Compare` trait, you "
+"can use multiple `if-else` expression to achieve the same effect."
+msgstr ""
+
+#: ../../language/error_codes/E4146.md:19
+msgid ""
+"fn main {\n"
+"  let value = 1.0\n"
+"  if value < 0.0 {\n"
+"    println(\"negative\")\n"
+"  } else {\n"
+"    println(\"zero or positive\")\n"
+"  }\n"
+"}"
+msgstr ""
+

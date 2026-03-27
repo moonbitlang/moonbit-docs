@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E3018.md:1
+msgid "E3018"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:3
+msgid "Bounds of range pattern must be constant, named constant or wildcard."
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:5
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:7
+msgid ""
+"fn main {\n"
+"  let a = 3\n"
+"  match 0 {\n"
+"    0..<a => println(\"Between 0 and 3\") // Error: Bounds of range "
+"pattern must be constant, named constant or wildcard.\n"
+"    _ => println(\"Not between 0 and 3\")\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:11
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:13
+msgid "You can either lift the variable `a` to a named constant:"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:15
+msgid ""
+"const A = 3\n"
+"fn main {\n"
+"  match 0 {\n"
+"    0..<A => println(\"Between 0 and 3\")\n"
+"    _ => println(\"Not between 0 and 3\")\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:19
+msgid "Or, you can use the constant value directly:"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:21
+msgid ""
+"fn main {\n"
+"  match 0 {\n"
+"    0..<3 => println(\"Between 0 and 3\")\n"
+"    _ => println(\"Not between 0 and 3\")\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:25
+msgid "Or, you can use a wildcard:"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:27
+msgid ""
+"fn main {\n"
+"  let a = 3\n"
+"  match 0 {\n"
+"    0..<_ => println(\"Big than or equal to 0\")\n"
+"    _ => println(\"Less than 0\")\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E3018.md:31
+msgid "Notice, using wildcard alters the meaning of this range pattern."
+msgstr ""
+

@@ -1,0 +1,130 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4108.md:1
+msgid "E4108"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:3
+msgid "The loop is expected to yield a value, please add an `else` branch."
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:5
+msgid ""
+"This error occurs when the compiler infers that a for-loop is expected to"
+" yield a non-Unit value based on its context (such as the function's "
+"return type), but the loop lacks an `else` branch to provide that value."
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:9
+msgid ""
+"In MoonBit, when a for-loop is used in a context where a value is "
+"expected (for example, when the function returns a non-Unit type), the "
+"loop must have an `else` branch that specifies what value to return when "
+"the loop completes normally. This is because:"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:14
+msgid "The loop body itself cannot yield a value (unlike `loop` expressions)"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:15
+msgid ""
+"Without an `else` branch, there's no way to determine what value should "
+"be returned when the loop finishes without breaking"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:18
+msgid "This commonly occurs in two situations:"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:20
+msgid ""
+"When the for-loop is the last expression in a function that returns a "
+"non-Unit type"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:22
+msgid ""
+"When the for-loop's result is assigned to a variable or used in an "
+"expression that expects a non-Unit value"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:25
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:27
+msgid ""
+"pub fn f(x: Int) -> Int {\n"
+"  for i = 0, acc = 0; i < x; i = i + 1, acc = acc + i {\n"
+"//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Error: The for "
+"loop is\n"
+"//                                                      not expected to "
+"yield a\n"
+"//                                                      value, please add"
+" an\n"
+"//                                                      `else` branch.\n"
+"  }\n"
+"}\n"
+"\n"
+"pub fn g(x: Int) -> Int {\n"
+"  for i in 0..=x {\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:31
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:33
+msgid "To fix this error, you can:"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:35
+msgid "add an `else` branch to the for-loop:"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:37
+msgid ""
+"pub fn f(x: Int) -> Int {\n"
+"  for i = 0, acc = 0; i < x; i = i + 1, acc = acc + i {\n"
+"  } else {\n"
+"    acc\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:41
+msgid ""
+"change the function's return type to `Unit` if you don't need to return a"
+" value from the loop:"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:44
+msgid ""
+"pub fn g(x: Int) -> Unit {\n"
+"  for i in 0..=x {\n"
+"  }\n"
+"}"
+msgstr ""
+

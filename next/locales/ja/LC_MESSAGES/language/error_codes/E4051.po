@@ -1,0 +1,134 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4051.md:1
+msgid "E4051"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:3
+msgid "The identifier is declared twice."
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:5
+msgid ""
+"Mutually recursive definitions in MoonBit shall not have the same "
+"identifier. This include:"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:8
+msgid ""
+"All toplevel definitions, including variables, functions, types, traits, "
+"etc."
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:9
+msgid "Locally named functions. (Reported as [E4006](E4006))"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:10
+msgid "Local types."
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:12
+msgid ""
+"Note, locally defined variables are not mutually recursive, so they can "
+"have the same identifier, and the later definition shadows the previous "
+"one."
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:15
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:17
+msgid "Toplevel variable definition:"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:19
+msgid ""
+"pub let a = 0\n"
+"pub let a = 1 // Error: The toplevel identifier a is declared twice: it "
+"was previously defined at ...\n"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:24
+msgid "Toplevel function definition:"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:26
+msgid ""
+"pub fn f() -> Unit {}\n"
+"pub fn f() -> Unit {} // Error: The toplevel identifier f is declared "
+"twice: it was previously defined at ...\n"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:31
+msgid "Toplevel type definition:"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:33
+msgid ""
+"pub enum A {}\n"
+"pub struct A {} // Error: The type A is declared twice: it was previously"
+" defined at ...\n"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:38
+msgid "Local type definition:"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:40
+msgid ""
+"pub fn g() -> Unit {\n"
+"  struct A {}\n"
+"  struct A {} // Error: The local type A is declared twice: it was "
+"previously defined at ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:47
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:49
+msgid "Rename the identifier to a different name."
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:51
+msgid ""
+"pub let a = 0\n"
+"pub let b = 1"
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:55
+msgid ""
+"If you want to shadow the previous definition, you can use a block and "
+"put the definition in the block."
+msgstr ""
+
+#: ../../language/error_codes/E4051.md:58
+msgid ""
+"pub let a = {\n"
+"  let a = 0\n"
+"  1\n"
+"}"
+msgstr ""
+

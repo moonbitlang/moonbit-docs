@@ -1,0 +1,204 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../pilot/moonbit-pilot/commands.md:1
+msgid "Commands"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:3
+msgid "Markdown Files as Executables"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:5
+msgid ""
+"Markdown files are executable, and the runtime environment is MoonBit "
+"Pilot!"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:7
+msgid "Background"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:9
+msgid "If you frequently have repetitive commands to execute, such as:"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:12
+msgid "Run `pnpm lint --fix` until all errors are fixed\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:16
+msgid ""
+"Copy-pasting this phrase every time becomes tedious, especially when you "
+"have many prompts to execute. MoonBit Pilot provides a solution to make "
+"managing your daily work prompts simple."
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:18
+msgid "Final Effect"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:20
+msgid "Let's look at the final way to run the prompt:"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:22
+msgid "/lint_fix\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:26
+msgid ""
+"Here, you only need to run a `/lint_fix` command to complete the "
+"execution of the above prompt."
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:28
+msgid "Implementation"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:30
+msgid ""
+"In your project's `.moonagent/commands` directory, create a `lint_fix.md`"
+" file with the following content:"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:32
+msgid "Run pnpm lint --fix until all errors are fixed\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:36
+msgid ""
+"Then you can use `lint_fix` as a command in the moon pilot command line, "
+"with auto-completion support."
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:38
+msgid "Handling Dynamic Prompts"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:40
+msgid ""
+"What if you want the command to be changeable? You can modify the file "
+"content like this:"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:42
+msgid "Run {{args[0] or \"pnpm lint --fix\"}} until all errors are fixed\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:46
+msgid "Explanation:"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:48
+msgid ""
+"`args` represents positional arguments, which can be referenced using "
+"`[index]`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:49
+msgid ""
+"`kwargs` represents key-value pair arguments, which can be referenced "
+"using `kwargs.<key>`"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:50
+msgid "`{{}}` is used to render a value"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:52
+msgid "Let's see how to use it:"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:54
+msgid "act ▶ /lint_fix \"echo hello\"\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:58
+msgid "You can also use named parameters:"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:60
+msgid "Run {{kwargs.command or \"pnpm lint --fix\"}} until all errors are fixed\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:64
+msgid "Then use it like this:"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:66
+msgid "act ▶ /lint_fix command=\"echo hello\"\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:70
+msgid "Notice that the value should be quote with `\"`."
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:72
+msgid "Complex Scripts"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:74
+msgid ""
+"Here's an example of a more complex script to help you quickly complete "
+"complex engineering requirements:"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:76
+#, python-format
+msgid ""
+"# {{ kwargs.title or \"Development Plan\" }}\n"
+"\n"
+"## Objective\n"
+"{{ kwargs.objective or \"Define the main objective here\" }}\n"
+"\n"
+"## Tasks\n"
+"{% for task in args %}\n"
+"- {{ task }}\n"
+"{% endfor %}\n"
+"\n"
+"## Parameters\n"
+"{% for key, value in kwargs %}\n"
+"- **{{ key }}**: {{ value }}\n"
+"{% endfor %}\n"
+"\n"
+"## Summary\n"
+"Total tasks: {{ args|length }}\n"
+"Total parameters: {{ kwargs|length }}\n"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:97
+msgid ""
+"Of course, for convenience, it's reasonable to minimize the number of "
+"parameters."
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:99
+msgid "Additional Benefits"
+msgstr ""
+
+#: ../../pilot/moonbit-pilot/commands.md:101
+msgid ""
+"Besides completing prompt management and improving execution efficiency, "
+"this actually means you can better use IDE editors to write complex "
+"prompts and make debugging easier."
+msgstr ""
+

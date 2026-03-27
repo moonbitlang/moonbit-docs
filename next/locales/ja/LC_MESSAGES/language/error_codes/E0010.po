@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0010.md:1
+msgid "E0010"
+msgstr ""
+
+#: ../../language/error_codes/E0010.md:3
+msgid "Warning name: `unused_pattern`"
+msgstr ""
+
+#: ../../language/error_codes/E0010.md:5
+msgid ""
+"This pattern is unused. This usually happens in pattern matching, and "
+"this pattern is completely covered by a prior pattern."
+msgstr ""
+
+#: ../../language/error_codes/E0010.md:8
+msgid ""
+"Pattern matching in MoonBit is executed sequentially, from the first "
+"branch to the last. If a pattern is covered by a prior pattern, it will "
+"never be reached, since all control flow will be directed to the first "
+"matching branch."
+msgstr ""
+
+#: ../../language/error_codes/E0010.md:12
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0010.md:14
+msgid ""
+"///|\n"
+"test {\n"
+"  match Some(1) {\n"
+"    Some(1) | Some(1) => ()\n"
+"    Some(2..<_) | Some(2) => ()\n"
+"    _ | None => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0010.md:18
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0010.md:20
+msgid ""
+"This warning can usually be fixed by removing the patterns that are "
+"covered."
+msgstr ""
+
+#: ../../language/error_codes/E0010.md:22
+msgid ""
+"\n"
+"///|\n"
+"test {\n"
+"  match Some(1) {\n"
+"    Some(1) => ()\n"
+"    Some(2..<_) => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+"\n"
+msgstr ""
+

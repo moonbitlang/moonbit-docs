@@ -1,0 +1,575 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-28 13:08+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/derive.md:1
+msgid "Deriving traits"
+msgstr ""
+
+#: ../../language/derive.md:3
+msgid ""
+"MoonBit supports deriving a number of builtin traits automatically from "
+"the type definition."
+msgstr ""
+
+#: ../../language/derive.md:5
+msgid ""
+"To derive a trait `T`, it is required that all fields used in the type "
+"implements `T`. For example, deriving `Show` for a struct `struct A { x: "
+"T1; y: T2 }` requires both `T1: Show` and `T2: Show`"
+msgstr ""
+
+#: ../../language/derive.md:8
+msgid "Show"
+msgstr ""
+
+#: ../../language/derive.md:10
+msgid ""
+"`derive(Show)` will generate a pretty-printing method for the type. The "
+"derived format is similar to how the type can be constructed in code."
+msgstr ""
+
+#: ../../language/derive.md:13
+msgid ""
+"struct MyStruct {\n"
+"  x : Int\n"
+"  y : Int\n"
+"} derive(Show)\n"
+"\n"
+"test \"derive show struct\" {\n"
+"  let p = MyStruct::{ x: 1, y: 2 }\n"
+"  assert_eq(Show::to_string(p), \"{x: 1, y: 2}\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:19
+msgid ""
+"enum MyEnum {\n"
+"  Case1(Int)\n"
+"  Case2(label~ : String)\n"
+"  Case3\n"
+"} derive(Show)\n"
+"\n"
+"test \"derive show enum\" {\n"
+"  assert_eq(Show::to_string(MyEnum::Case1(42)), \"Case1(42)\")\n"
+"  assert_eq(\n"
+"    Show::to_string(MyEnum::Case2(label=\"hello\")),\n"
+"    \"Case2(label=\\\"hello\\\")\",\n"
+"  )\n"
+"  assert_eq(Show::to_string(MyEnum::Case3), \"Case3\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:25
+msgid "Eq and Compare"
+msgstr ""
+
+#: ../../language/derive.md:27
+msgid ""
+"`derive(Eq)` and `derive(Compare)` will generate the corresponding method"
+" for testing equality and comparison. Fields are compared in the same "
+"order as their definitions. For enums, the order between cases ascends in"
+" the order of definition."
+msgstr ""
+
+#: ../../language/derive.md:31
+msgid ""
+"struct DeriveEqCompare {\n"
+"  x : Int\n"
+"  y : Int\n"
+"} derive(Eq, Compare)\n"
+"\n"
+"test \"derive eq_compare struct\" {\n"
+"  let p1 = DeriveEqCompare::{ x: 1, y: 2 }\n"
+"  let p2 = DeriveEqCompare::{ x: 2, y: 1 }\n"
+"  let p3 = DeriveEqCompare::{ x: 1, y: 2 }\n"
+"  let p4 = DeriveEqCompare::{ x: 1, y: 3 }\n"
+"\n"
+"  // Eq\n"
+"  assert_eq(p1 == p2, false)\n"
+"  assert_eq(p1 == p3, true)\n"
+"  assert_eq(p1 == p4, false)\n"
+"  assert_eq(p1 != p2, true)\n"
+"  assert_eq(p1 != p3, false)\n"
+"  assert_eq(p1 != p4, true)\n"
+"\n"
+"  // Compare\n"
+"  assert_eq(p1 < p2, true)\n"
+"  assert_eq(p1 < p3, false)\n"
+"  assert_eq(p1 < p4, true)\n"
+"  assert_eq(p1 > p2, false)\n"
+"  assert_eq(p1 > p3, false)\n"
+"  assert_eq(p1 > p4, false)\n"
+"  assert_eq(p1 <= p2, true)\n"
+"  assert_eq(p1 >= p2, false)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:37
+msgid ""
+"enum DeriveEqCompareEnum {\n"
+"  Case1(Int)\n"
+"  Case2(label~ : String)\n"
+"  Case3\n"
+"} derive(Eq, Compare)\n"
+"\n"
+"test \"derive eq_compare enum\" {\n"
+"  let p1 = DeriveEqCompareEnum::Case1(42)\n"
+"  let p2 = DeriveEqCompareEnum::Case1(43)\n"
+"  let p3 = DeriveEqCompareEnum::Case1(42)\n"
+"  let p4 = DeriveEqCompareEnum::Case2(label=\"hello\")\n"
+"  let p5 = DeriveEqCompareEnum::Case2(label=\"world\")\n"
+"  let p6 = DeriveEqCompareEnum::Case2(label=\"hello\")\n"
+"  let p7 = DeriveEqCompareEnum::Case3\n"
+"\n"
+"  // Eq\n"
+"  assert_eq(p1 == p2, false)\n"
+"  assert_eq(p1 == p3, true)\n"
+"  assert_eq(p1 == p4, false)\n"
+"  assert_eq(p1 != p2, true)\n"
+"  assert_eq(p1 != p3, false)\n"
+"  assert_eq(p1 != p4, true)\n"
+"\n"
+"  // Compare\n"
+"  assert_eq(p1 < p2, true) // 42 < 43\n"
+"  assert_eq(p1 < p3, false)\n"
+"  assert_eq(p1 < p4, true) // Case1 < Case2\n"
+"  assert_eq(p4 < p5, true)\n"
+"  assert_eq(p4 < p6, false)\n"
+"  assert_eq(p4 < p7, true) // Case2 < Case3\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:43
+msgid "Default"
+msgstr ""
+
+#: ../../language/derive.md:45
+msgid ""
+"`derive(Default)` will generate a method that returns the default value "
+"of the type."
+msgstr ""
+
+#: ../../language/derive.md:47
+msgid ""
+"For structs, the default value is the struct with all fields set as their"
+" default value."
+msgstr ""
+
+#: ../../language/derive.md:49
+msgid ""
+"struct DeriveDefault {\n"
+"  x : Int\n"
+"  y : String?\n"
+"} derive(Default, Eq, Show)\n"
+"\n"
+"test \"derive default struct\" {\n"
+"  let p = DeriveDefault::default()\n"
+"  assert_eq(p, DeriveDefault::{ x: 0, y: None })\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:55
+msgid "For enums, the default value is the only case that has no parameters."
+msgstr ""
+
+#: ../../language/derive.md:57
+msgid ""
+"enum DeriveDefaultEnum {\n"
+"  Case1(Int)\n"
+"  Case2(label~ : String)\n"
+"  Case3\n"
+"} derive(Default, Eq, Show)\n"
+"\n"
+"test \"derive default enum\" {\n"
+"  assert_eq(DeriveDefaultEnum::default(), DeriveDefaultEnum::Case3)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:63
+msgid ""
+"Enums that has no cases or more than one cases without parameters cannot "
+"derive `Default`."
+msgstr ""
+
+#: ../../language/derive.md:67
+msgid ""
+"enum CannotDerive1 {\n"
+"    Case1(String)\n"
+"    Case2(Int)\n"
+"} derive(Default) // cannot find a constant constructor as default\n"
+"\n"
+"enum CannotDerive2 {\n"
+"    Case1\n"
+"    Case2\n"
+"} derive(Default) // Case1 and Case2 are both candidates as default "
+"constructor\n"
+msgstr ""
+
+#: ../../language/derive.md:79
+msgid "Hash"
+msgstr ""
+
+#: ../../language/derive.md:81
+msgid ""
+"`derive(Hash)` will generate a hash implementation for the type. This "
+"will allow the type to be used in places that expects a `Hash` "
+"implementation, for example `HashMap`s and `HashSet`s."
+msgstr ""
+
+#: ../../language/derive.md:85
+msgid ""
+"struct DeriveHash {\n"
+"  x : Int\n"
+"  y : String?\n"
+"} derive(Hash, Eq, Show)\n"
+"\n"
+"test \"derive hash struct\" {\n"
+"  let hs = @hashset.new()\n"
+"  hs.add(DeriveHash::{ x: 123, y: None })\n"
+"  hs.add(DeriveHash::{ x: 123, y: None })\n"
+"  assert_eq(hs.length(), 1)\n"
+"  hs.add(DeriveHash::{ x: 123, y: Some(\"456\") })\n"
+"  assert_eq(hs.length(), 2)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:91
+msgid "Arbitrary"
+msgstr ""
+
+#: ../../language/derive.md:93
+msgid "`derive(Arbitrary)` will generate random values of the given type."
+msgstr ""
+
+#: ../../language/derive.md:95
+msgid "FromJson and ToJson"
+msgstr ""
+
+#: ../../language/derive.md:97
+msgid ""
+"`derive(FromJson)` and `derive(ToJson)` automatically derives round-"
+"trippable method implementations used for serializing the type to and "
+"from JSON. The implementation is mainly for debugging and storing the "
+"types in a human-readable format."
+msgstr ""
+
+#: ../../language/derive.md:101
+msgid ""
+"struct JsonTest1 {\n"
+"  x : Int\n"
+"  y : Int\n"
+"} derive(FromJson, ToJson, Eq, Show)\n"
+"\n"
+"enum JsonTest2 {\n"
+"  A(x~ : Int)\n"
+"  B(x~ : Int, y~ : Int)\n"
+"} derive(FromJson(style=\"legacy\"), ToJson(style=\"legacy\"), Eq, Show)\n"
+"\n"
+"test \"json basic\" {\n"
+"  let input = JsonTest1::{ x: 123, y: 456 }\n"
+"  let expected : Json = { \"x\": 123, \"y\": 456 }\n"
+"  assert_eq(input.to_json(), expected)\n"
+"  assert_eq(@json.from_json(expected), input)\n"
+"  let input = JsonTest2::A(x=123)\n"
+"  let expected : Json = { \"$tag\": \"A\", \"x\": 123 }\n"
+"  assert_eq(input.to_json(), expected)\n"
+"  assert_eq(@json.from_json(expected), input)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:107
+msgid ""
+"Both derive directives accept a number of arguments to configure the "
+"exact behavior of serialization and deserialization."
+msgstr ""
+
+#: ../../language/derive.md:110
+msgid "The actual behavior of JSON serialization arguments is unstable."
+msgstr ""
+
+#: ../../language/derive.md:114
+msgid ""
+"JSON derivation arguments are only for coarse-grained control of the "
+"derived format. If you need to precisely control how the types are laid "
+"out, consider **directly implementing the two traits instead**."
+msgstr ""
+
+#: ../../language/derive.md:118
+msgid ""
+"We have recently deprecated a large number of advanced layout tweaking "
+"arguments. For such usage and future usage of them, please manually "
+"implement the traits. The arguments include: `repr`, `case_repr`, "
+"`default`, `rename_all`, etc."
+msgstr ""
+
+#: ../../language/derive.md:123
+msgid ""
+"struct JsonTest3 {\n"
+"  x : Int\n"
+"  y : Int\n"
+"} derive (\n"
+"  FromJson(fields(x(rename=\"renamedX\"))),\n"
+"  ToJson(fields(x(rename=\"renamedX\"))),\n"
+"  Eq,\n"
+"  Show,\n"
+")\n"
+"\n"
+"enum JsonTest4 {\n"
+"  A(x~ : Int)\n"
+"  B(x~ : Int, y~ : Int)\n"
+"} derive(FromJson, ToJson, Eq, Show)\n"
+"\n"
+"test \"json args\" {\n"
+"  let input = JsonTest3::{ x: 123, y: 456 }\n"
+"  let expected : Json = { \"renamedX\": 123, \"y\": 456 }\n"
+"  assert_eq(input.to_json(), expected)\n"
+"  assert_eq(@json.from_json(expected), input)\n"
+"  let input = JsonTest4::A(x=123)\n"
+"  let expected : Json = [\"A\", { \"x\": 123 }]\n"
+"  assert_eq(input.to_json(), expected)\n"
+"  assert_eq(@json.from_json(expected), input)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:129
+msgid "Enum styles"
+msgstr ""
+
+#: ../../language/derive.md:131
+msgid ""
+"There are currently two styles of enum serialization: `legacy` and "
+"`flat`, which the user must select one using the `style` argument. "
+"Considering the following enum definition:"
+msgstr ""
+
+#: ../../language/derive.md:135
+msgid ""
+"enum E {\n"
+"  One\n"
+"  Uniform(Int)\n"
+"  Axes(x~: Int, y~: Int)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:143
+msgid "With `derive(ToJson(style=\"legacy\"))`, the enum is formatted into:"
+msgstr ""
+
+#: ../../language/derive.md:145
+msgid ""
+"E::One              => { \"$tag\": \"One\" }\n"
+"E::Uniform(2)       => { \"$tag\": \"Uniform\", \"0\": 2 }\n"
+"E::Axes(x=-1, y=1)  => { \"$tag\": \"Axes\", \"x\": -1, \"y\": 1 }\n"
+msgstr ""
+
+#: ../../language/derive.md:151
+msgid "With `derive(ToJson(style=\"flat\"))`, the enum is formatted into:"
+msgstr ""
+
+#: ../../language/derive.md:153
+msgid ""
+"E::One              => \"One\"\n"
+"E::Uniform(2)       => [ \"Uniform\", 2 ]\n"
+"E::Axes(x=-1, y=1)  => [ \"Axes\", -1, 1 ]\n"
+msgstr ""
+
+#: ../../language/derive.md:159
+msgid "Deriving `Option`"
+msgstr ""
+
+#: ../../language/derive.md:161
+msgid ""
+"A notable exception is the builtin type `Option[T]`. Ideally, it would be"
+" interpreted as `T | undefined`, but the issue is that it would be  "
+"impossible to distinguish `Some(None)` and `None` for "
+"`Option[Option[T]]`."
+msgstr ""
+
+#: ../../language/derive.md:165
+msgid ""
+"As a result, it interpreted as `T | undefined` iff it is a direct field "
+"of a struct, and `[T] | null` otherwise:"
+msgstr ""
+
+#: ../../language/derive.md:168
+msgid ""
+"struct A {\n"
+"  x : Int?\n"
+"  y : Int??\n"
+"  z : (Int?, Int??)\n"
+"} derive(ToJson)\n"
+"\n"
+"test {\n"
+"  json_inspect({ x: None, y: None, z: (None, None) }, content={\n"
+"    \"z\": [null, null],\n"
+"  })\n"
+"  json_inspect({ x: Some(1), y: Some(None), z: (Some(1), Some(None)) }, "
+"content={\n"
+"    \"x\": 1,\n"
+"    \"y\": null,\n"
+"    \"z\": [[1], [null]],\n"
+"  })\n"
+"  json_inspect({ x: Some(1), y: Some(Some(1)), z: (Some(1), "
+"Some(Some(1))) }, content={\n"
+"    \"x\": 1,\n"
+"    \"y\": [1],\n"
+"    \"z\": [[1], [[1]]],\n"
+"  })\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:174
+msgid "Container arguments"
+msgstr ""
+
+#: ../../language/derive.md:176
+msgid ""
+"`rename_fields` and `rename_cases` (enum only) batch renames fields (for "
+"enums and structs) and enum cases to the given format. Available "
+"parameters are:"
+msgstr ""
+
+#: ../../language/derive.md:180
+msgid "`lowercase`"
+msgstr ""
+
+#: ../../language/derive.md:181
+msgid "`UPPERCASE`"
+msgstr ""
+
+#: ../../language/derive.md:182
+msgid "`camelCase`"
+msgstr ""
+
+#: ../../language/derive.md:183
+msgid "`PascalCase`"
+msgstr ""
+
+#: ../../language/derive.md:184
+msgid "`snake_case`"
+msgstr ""
+
+#: ../../language/derive.md:185
+msgid "`SCREAMING_SNAKE_CASE`"
+msgstr ""
+
+#: ../../language/derive.md:186
+msgid "`kebab-case`"
+msgstr ""
+
+#: ../../language/derive.md:187
+msgid "`SCREAMING-KEBAB-CASE`"
+msgstr ""
+
+#: ../../language/derive.md:189
+msgid ""
+"Example: `rename_fields = \"PascalCase\"` for a field named "
+"`my_long_field_name` results in `MyLongFieldName`."
+msgstr ""
+
+#: ../../language/derive.md:193
+msgid ""
+"Renaming assumes the name of fields in `snake_case` and the name of "
+"structs/enum cases in `PascalCase`."
+msgstr ""
+
+#: ../../language/derive.md:196
+msgid "`cases(...)` (enum only) controls the layout of enum cases."
+msgstr ""
+
+#: ../../language/derive.md:199
+msgid "This might be replaced with case attributes in the future."
+msgstr ""
+
+#: ../../language/derive.md:202
+msgid "For example, for an enum"
+msgstr ""
+
+#: ../../language/derive.md:204
+msgid ""
+"enum E {\n"
+"  A(...)\n"
+"  B(...)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:211
+msgid "you are able to control each case using `cases(A(...), B(...))`."
+msgstr ""
+
+#: ../../language/derive.md:213
+msgid "See [Case arguments](#case-arguments) below for details."
+msgstr ""
+
+#: ../../language/derive.md:215
+msgid "`fields(...)` (struct only) controls the layout of struct fields."
+msgstr ""
+
+#: ../../language/derive.md:218
+msgid "This might be replaced with field attributes in the future."
+msgstr ""
+
+#: ../../language/derive.md:221
+msgid "For example, for a struct"
+msgstr ""
+
+#: ../../language/derive.md:223
+msgid ""
+"struct S {\n"
+"  x: Int\n"
+"  y: Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:230
+msgid "you are able to control each field using `fields(x(...), y(...))`"
+msgstr ""
+
+#: ../../language/derive.md:232 ../../language/derive.md:242
+msgid "See [Field arguments](#field-arguments) below for details."
+msgstr ""
+
+#: ../../language/derive.md:234
+msgid "Case arguments"
+msgstr ""
+
+#: ../../language/derive.md:236
+msgid ""
+"`rename = \"...\"` renames this specific case, overriding existing "
+"container-wide rename directive if any."
+msgstr ""
+
+#: ../../language/derive.md:239
+msgid ""
+"`fields(...)` controls the layout of the payload of this case. Note that "
+"renaming positional fields are not possible currently."
+msgstr ""
+
+#: ../../language/derive.md:244
+msgid "Field arguments"
+msgstr ""
+
+#: ../../language/derive.md:246
+msgid ""
+"`rename = \"...\"` renames this specific field, overriding existing "
+"container-wide rename directives if any."
+msgstr ""
+

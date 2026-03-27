@@ -1,0 +1,322 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-11 16:40+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../tutorial/cli-quickstart.md:1
+msgid "Native CLI Quickstart"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:3
+msgid "This quickstart shows a simple but proper MoonBit CLI layout:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:5
+msgid "keep argument parsing and business logic in a library package"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:6
+msgid "keep `cmd/main` small"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:7
+msgid "use `moonbitlang/async` for native IO"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:8
+msgid "test the pure parts without touching the network"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:10
+msgid ""
+"This example uses `moonbitlang/async`, which currently supports the "
+"native backend best."
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:12
+msgid "Create the project"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:14
+msgid "Start with a normal MoonBit module:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:16
+msgid ""
+"moon new download_cli\n"
+"cd download_cli\n"
+"moon add moonbitlang/async\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:22
+msgid ""
+"`argparse` is already part of the standard library, so this quickstart "
+"only adds `moonbitlang/async`."
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:24
+msgid ""
+"Set the preferred target to native in `moon.mod.json` so `moon run` and "
+"`moon build` default to the backend that `moonbitlang/async` supports "
+"best:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:26
+msgid ""
+"{\n"
+"  \"name\": \"username/download_cli\",\n"
+"  \"version\": \"0.1.0\",\n"
+"  \"deps\": {\n"
+"    \"moonbitlang/async\": \"0.16.6\"\n"
+"  },\n"
+"  \"preferred-target\": \"native\"\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:37
+msgid "The final layout will look like this:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:39
+msgid ""
+"download_cli\n"
+"├── cmd\n"
+"│   └── main\n"
+"│       ├── main.mbt\n"
+"│       └── moon.pkg\n"
+"├── cli_test.mbt\n"
+"├── config.mbt\n"
+"├── download.mbt\n"
+"├── moon.mod.json\n"
+"└── moon.pkg\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:52
+msgid "Keep parsing in the library package"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:54
+msgid ""
+"The root package defines the CLI contract. It owns the command shape and "
+"turns argv into a typed config value:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:56
+msgid ""
+"pub struct Config {\n"
+"  url : String\n"
+"  output : String?\n"
+"} derive(Show, Eq)\n"
+"\n"
+"///|\n"
+"pub fn command() -> @argparse.Command {\n"
+"  @argparse.Command::new(\n"
+"    \"moon-fetch\",\n"
+"    about=\"Download a URL to stdout or a file\",\n"
+"    options=[\n"
+"      @argparse.OptionArg::new(\n"
+"        \"output\",\n"
+"        short='o',\n"
+"        about=\"Write the response body to this file\",\n"
+"      ),\n"
+"    ],\n"
+"    positionals=[\n"
+"      @argparse.PositionArg::new(\"url\", about=\"HTTP or HTTPS URL to "
+"download\"),\n"
+"    ],\n"
+"  )\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn parse_config(argv : Array[String]) -> Config raise {\n"
+"  let matches = @argparse.parse(command(), argv~)\n"
+"  let values : Map[String, Array[String]] = matches.values\n"
+"  guard values is { \"url\": [url, ..], \"output\"? : output_paths, .. } "
+"else {\n"
+"    fail(\"missing url\")\n"
+"  }\n"
+"  let output = match output_paths {\n"
+"    Some([output, ..]) => Some(output)\n"
+"    _ => None\n"
+"  }\n"
+"  { url, output }\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:62
+msgid ""
+"The package descriptor imports `argparse` from `moonbitlang/core` and the"
+" async libraries used by the implementation:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:64
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/argparse\",\n"
+"  \"moonbitlang/async/fs\",\n"
+"  \"moonbitlang/async/http\",\n"
+"  \"moonbitlang/async/stdio\",\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:68
+msgid "Put async IO behind one function"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:70
+msgid ""
+"`run` performs the actual download. If `-o` is passed, it streams the "
+"body into a file. Otherwise it writes directly to stdout:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:72
+msgid ""
+"pub async fn run(config : Config) -> Unit {\n"
+"  let (response, body) = @http.get_stream(config.url)\n"
+"  defer body.close()\n"
+"\n"
+"  guard response.code is (200..<300) else {\n"
+"    fail(\"download failed: \\{response.code} \\{response.reason}\")\n"
+"  }\n"
+"\n"
+"  match config.output {\n"
+"    Some(path) => {\n"
+"      let file = @fs.create(path, permission=0o644)\n"
+"      defer file.close()\n"
+"      file.write_reader(body)\n"
+"      @stdio.stderr.write(\"saved \\{config.url} to \\{path}\\n\")\n"
+"    }\n"
+"    None => @stdio.stdout.write_reader(body)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:78
+msgid "Keep `main` thin"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:80
+msgid ""
+"`cmd/main` should usually do only wiring: read argv, build config, and "
+"call the library entrypoint."
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:82
+msgid ""
+"import {\n"
+"  \"moonbit-community/cli-quickstart-doc\" @app,\n"
+"  \"moonbitlang/core/env\",\n"
+"  \"moonbitlang/async\",\n"
+"}\n"
+"\n"
+"options(\n"
+"  \"is-main\": true,\n"
+")\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:86
+msgid ""
+"async fn main {\n"
+"  let config = @app.parse_config(@env.args())\n"
+"  @app.run(config)\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:92
+msgid "Run the command"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:94
+msgid "Write the response body to stdout:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:96
+msgid "moon run cmd/main https://example.com/feed.xml\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:100
+msgid "Write it to a file:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:102
+msgid "moon run cmd/main https://example.com/feed.xml -o feed.xml\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:106
+msgid "Build a native binary:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:108
+msgid "moon build --target native\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:112
+msgid "Test the pure part"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:114
+msgid ""
+"The parser and config shaping logic stay easy to test because they do not"
+" perform IO:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:116
+msgid ""
+"///|\n"
+"test \"parse config for stdout\" {\n"
+"  let config = parse_config([\"https://example.com/feed.xml\"])\n"
+"  assert_eq(config.url, \"https://example.com/feed.xml\")\n"
+"  assert_eq(config.output, None)\n"
+"}\n"
+"\n"
+"///|\n"
+"test \"parse config for file output\" {\n"
+"  let config = parse_config([\"https://example.com/feed.xml\", \"-o\", "
+"\"feed.xml\"])\n"
+"  assert_eq(config.url, \"https://example.com/feed.xml\")\n"
+"  guard config.output is Some(path) else { fail(\"expected an output "
+"path\") }\n"
+"  assert_eq(path, \"feed.xml\")\n"
+"}\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:120
+msgid "Run the tests with:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:122
+msgid "moon test\n"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:126
+msgid "When the CLI grows, keep following the same split:"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:128
+msgid "parse and validate inputs in the library package"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:129
+msgid "keep side effects in a small number of async functions"
+msgstr ""
+
+#: ../../tutorial/cli-quickstart.md:130
+msgid "keep `cmd/main` focused on wiring"
+msgstr ""
+

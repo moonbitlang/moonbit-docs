@@ -1,0 +1,696 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-17 17:13+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../toolchain/moon/module.md:1
+msgid "Module Configuration"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:3
+msgid "moon uses the `moon.mod.json` file to identify and describe a module."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:6
+msgid ""
+"For the most up-to-date and complete JSON schema, please check [moon's "
+"repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json)."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:9
+msgid "Name"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:11
+msgid ""
+"The `name` field is used to specify the name of the module, and it is "
+"required."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:13
+msgid ""
+"{\n"
+"  \"name\": \"example\"\n"
+"  // ...\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:20
+msgid "The module name can contain letters, numbers, `_`, `-`, and `/`."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:22
+msgid ""
+"For modules published to [mooncakes.io](https://mooncakes.io), the module"
+" name must begin with the username. For example:"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:24
+msgid ""
+"{\n"
+"  \"name\": \"moonbitlang/core\"\n"
+"  // ...\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:31
+msgid "Version"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:33
+msgid "The `version` field is used to specify the version of the module."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:35
+msgid ""
+"This field is optional. For modules published to "
+"[mooncakes.io](https://mooncakes.io), the version number must follow the "
+"[Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) "
+"specification."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:37
+msgid ""
+"{\n"
+"  \"name\": \"example\",\n"
+"  \"version\": \"0.1.0\"\n"
+"  // ...\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:45
+msgid "Dependency Management"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:47
+msgid "The `deps` field is used to specify the dependencies of the module."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:49
+msgid "It is automatically managed by commands like `moon add` and `moon remove`."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:51
+msgid ""
+"{\n"
+"  \"name\": \"username/hello\",\n"
+"  \"deps\": {\n"
+"    \"moonbitlang/x\": \"0.4.6\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:60
+msgid "You may also specify a local dependency, such as:"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:62
+msgid ""
+"{\n"
+"  \"name\": \"username/hello\",\n"
+"  \"deps\": {\n"
+"    \"username/other\": {\n"
+"      \"path\": \"../other\"\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:73
+msgid "Meta Information"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:75
+msgid "README"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:77
+msgid ""
+"The `readme` field is used to specify the path to the module's README "
+"file."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:79
+msgid "Repository"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:81
+msgid ""
+"The `repository` field is used to specify the URL of the module's "
+"repository."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:83
+msgid "License"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:85
+msgid ""
+"The `license` field is used to specify the license of the module. The "
+"license type must comply with the [SPDX License "
+"List](https://spdx.org/licenses/)."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:87
+msgid ""
+"{\n"
+"  \"license\": \"MIT\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:93
+msgid "Keywords"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:95
+msgid "The `keywords` field is used to specify the keywords for the module."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:97
+msgid ""
+"{\n"
+"  \"keywords\": [\"example\", \"test\"]\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:103
+msgid "Description"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:105
+msgid "The `description` field is used to specify the description of the module."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:107
+msgid ""
+"{\n"
+"  \"description\": \"This is a description of the module.\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:113
+msgid "Include and Exclude"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:115
+msgid ""
+"The `include` and `exclude` fields are used to include or exclude "
+"specific directories or files during publishing process."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:117
+msgid ""
+"It follows the gitignore syntax, and include follows the exclude.  For "
+"example, the following configuration will include the `build/assets`  but"
+" exclude anything else in the `build` directory."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:121
+msgid ""
+"{\n"
+"  \"exclude\": [\"build\"],\n"
+"  \"include\": [\"build/assets\"]\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:128
+msgid ""
+"You may use [`moon package --list`](commands.md#moon-package) to verify "
+"if the packaged result is expected."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:130
+msgid "Preferred Target"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:132
+msgid ""
+"The `preferred-target` field allows the `moon` and the language server to"
+" know which target should be used as the default target, avoiding the "
+"necessity to write `--target` when developing a project targeting other "
+"backends than Wasm GC."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:136
+msgid ""
+"{\n"
+"  \"preferred-target\": \"js\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:142
+msgid "Supported Targets"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:144
+msgid ""
+"The `supported-targets` field declares which backends this module is "
+"intended to support. Unlike `preferred-target`, it does not choose a "
+"default target for commands. Use it to record the module's compatibility "
+"surface in metadata."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:148
+msgid "`supported-targets` uses a compact target-set syntax:"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:150
+msgid "`js` for a single backend"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:151
+msgid "`+js+wasm-gc` for an explicit set of backends"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:152
+msgid "`+all-js` for all backends except `js`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:154
+msgid "For example:"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:156
+msgid ""
+"{\n"
+"  \"supported-targets\": \"+js+wasm-gc\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:162
+msgid "Legacy array syntax is still accepted for compatibility:"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:164
+msgid ""
+"{\n"
+"  \"supported-targets\": [\"js\", \"native\"]\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:170
+msgid "`preferred-target` and `supported-targets` are often used together:"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:172
+msgid "`preferred-target` says which backend `moon` should use by default"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:173
+msgid "`supported-targets` says which backends the module claims to support"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:175
+msgid ""
+"When a package also defines `supported-targets`, the effective backend "
+"set is the intersection of the module-level and package-level "
+"declarations."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:178
+msgid ""
+"For per-file conditional compilation inside a package, use "
+"[`targets`](package.md#conditional-compilation) in `moon.pkg` / "
+"`moon.pkg.json` instead."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:181
+msgid "Source directory"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:183
+msgid "The `source` field is used to specify the source directory of the module."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:185
+msgid ""
+"It must be a subdirectory of the directory where the `moon.mod.json` file"
+" is located and must be a relative path."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:187
+msgid ""
+"When creating a module using the `moon new` command, a `src` directory "
+"will be automatically generated, and the default value of the `source` "
+"field will be `src`."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:189
+msgid ""
+"{\n"
+"  \"source\": \"src\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:195
+msgid ""
+"When the `source` field does not exist, or its value is `null` or an "
+"empty string `\"\"`, it is equivalent to setting `\"source\": \".\"`. "
+"This means that the source directory is the same as the directory where "
+"the `moon.mod.json` file is located."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:197
+msgid ""
+"{\n"
+"  \"source\": null\n"
+"}\n"
+"{\n"
+"  \"source\": \"\"\n"
+"}\n"
+"{\n"
+"  \"source\": \".\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:209
+msgid "Warning List"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:211
+msgid "This is used to disable specific preset compiler warning numbers."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:213
+msgid ""
+"For example, in the following configuration, `-2` disables the warning "
+"number 2 (Unused variable)."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:215
+msgid ""
+"{\n"
+"  \"warn-list\": \"-2\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:221
+msgid ""
+"If multiple warnings need to be disabled, they can be directly connected "
+"and combined."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:223
+msgid ""
+"{\n"
+"  \"warn-list\": \"-2-4\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:229
+msgid ""
+"If it is necessary to activate certain warnings that were originally "
+"prohibited, use the plus sign."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:231
+msgid ""
+"{\n"
+"  \"warn-list\": \"+31\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:237
+msgid ""
+"You can use `moonc build-package -warn-help` to see the list of preset "
+"compiler warning numbers."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:239
+msgid ""
+"$ moonc -v\n"
+"v0.1.20250606+a3f4966ca\n"
+"\n"
+"$ moonc build-package -warn-help\n"
+"Available warnings: \n"
+"  1 Unused function.\n"
+"  2 Unused variable.\n"
+"  3 Unused type declaration.\n"
+"  4 Unused abstract type.\n"
+"  5 Unused type variable.\n"
+"  6 Unused constructor.\n"
+"  7 Unused field or constructor argument.\n"
+"  8 Redundant modifier.\n"
+"  9 Unused function declaration.\n"
+" 10 Struct never constructed.\n"
+" 11 Partial pattern matching.\n"
+" 12 Unreachable code.\n"
+" 13 Unresolved type variable.\n"
+" 14 Lowercase type name.\n"
+" 15 Unused mutability.\n"
+" 16 Parser inconsistency.\n"
+" 18 Useless loop expression.\n"
+" 19 Top-level declaration is not left aligned.\n"
+" 20 Invalid pragma\n"
+" 21 Some arguments of constructor are omitted in pattern.\n"
+" 22 Ambiguous block.\n"
+" 23 Useless try expression.\n"
+" 24 Useless error type.\n"
+" 26 Useless catch all.\n"
+" 27 Deprecated syntax.\n"
+" 28 Todo\n"
+" 29 Unused package.\n"
+" 30 Empty package alias.\n"
+" 31 Optional argument never supplied.\n"
+" 32 Default value of optional argument never used.\n"
+" 33 Unused import value\n"
+" 35 Reserved keyword.\n"
+" 36 Loop label shadows another label.\n"
+" 37 Unused loop label.\n"
+" 38 Useless guard.\n"
+" 39 Duplicated method.\n"
+" 40 Call a qualified method using regular call syntax.\n"
+" 41 Closed map pattern.\n"
+" 42 Invalid attribute.\n"
+" 43 Unused attribute.\n"
+" 44 Invalid inline-wasm.\n"
+" 46 Useless `..` in pattern\n"
+" 47 Invalid mbti file\n"
+" 48 Trait method with default implementation not marked with `= _`\n"
+" 49 Unused pub definition because it does not exist in mbti file.\n"
+"  A all warnings\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:293
+msgid "Alert List"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:295
+msgid "Disable user preset alerts."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:297
+msgid ""
+"{\n"
+"  \"alert-list\": \"-alert_1-alert_2\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:303
+msgid "Scripts"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:305
+msgid ""
+"The `scripts` field is used to define custom scripts associated with the "
+"module."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:307
+msgid "postadd script"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:309
+msgid ""
+"The `postadd` script runs automatically after the module has been added. "
+"When executed, the script's current working directory (cwd) is set to the"
+" directory where the `moon.mod.json` file resides."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:313
+msgid ""
+"{\n"
+"  \"scripts\": {\n"
+"    \"postadd\": \"python3 build.py\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:321
+msgid "\\[Experimental\\] Pre-build config script"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:324
+msgid ""
+"This feature is extremely experimental, and its API may change at any "
+"time. This documentation reflects the implementation as of 2025-06-03."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:329
+msgid ""
+"Using this feature may execute arbitrary code in your computer. Please "
+"use with caution and only with trusted dependencies."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:333
+msgid ""
+"The pre-build config script is added in order to aid native target "
+"programming. To use such script, add your script in your `moon.mod.json`:"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:336
+msgid ""
+"{\n"
+"  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\"\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:342
+msgid ""
+"The path is a relative path from the root of the project. The script may "
+"either be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) "
+"executed with `node`, or a Python script (with extension `.py`) executed "
+"with `python3` or `python`."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:347
+msgid "Input"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:349
+msgid ""
+"The script will be provided with a JSON with the structure of "
+"`BuildScriptEnvironment` from standard input stream (stdin):"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:352
+msgid ""
+"/** Represents the environment a build script receives */\n"
+"interface BuildScriptEnvironment {\n"
+"  env: Record<string, string>\n"
+"  paths: Paths\n"
+"}\n"
+"\n"
+"interface BuildInfo {\n"
+"  /** The target info for the build script currently being run. */\n"
+"  host: TargetInfo\n"
+"  /** The target info for the module being built. */\n"
+"  target: TargetInfo\n"
+"}\n"
+"\n"
+"interface TargetInfo {\n"
+"  /** The actual backend we're using, e.g. `wasm32`, `wasmgc`, `js`, `c`,"
+" `llvm` */\n"
+"  kind: string // TargetBackend\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:372
+msgid "Output"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:374
+msgid ""
+"The script is expected to print a JSON string in its standard output "
+"stream (stdout) with the structure of `BuildScriptOutput`:"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:377
+msgid ""
+"interface BuildScriptOutput {\n"
+"  /** Build variables */\n"
+"  vars?: Record<string, string>\n"
+"  /** Configurations to linking */\n"
+"  link_configs?: LinkConfig[]\n"
+"}\n"
+"\n"
+"interface LinkConfig {\n"
+"  /** The name of the package to configure */\n"
+"  package: string\n"
+"\n"
+"  /** Link flags that needs to be propagated to dependents\n"
+"   *\n"
+"   * Reference: `cargo::rustc-link-arg=FLAG` */\n"
+"  link_flags?: string\n"
+"\n"
+"  /** Libraries that need linking, propagated to dependents\n"
+"   *\n"
+"   * Reference: `cargo::rustc-link-lib=LIB` */\n"
+"  link_libs?: string[]\n"
+"\n"
+"  /** Paths that needs to be searched during linking, propagated to "
+"dependents\n"
+"   *\n"
+"   * Reference: `cargo::rustc-link-search=[KIND=]PATH` */\n"
+"  link_search_paths?: string[]\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:406
+msgid "Build variables"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:408
+msgid ""
+"You may use the variables emitted in the `vars` fields in the native "
+"linking arguments in `moon.pkg` as `${build.<var_name>}`."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:411
+msgid "For example, if your build script outputs:"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:413
+msgid "{ \"vars\": { \"CC\": \"gcc\" } }\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:417
+msgid "and your `moon.pkg` is structured like:"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:419
+msgid "moon.pkg"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:419
+msgid ""
+"options(\n"
+"  link: {\n"
+"    \"native\": {\n"
+"      \"cc\": \"${build.CC}\",\n"
+"    },\n"
+"  },\n"
+")\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:424
+msgid "It will be transformed into"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:426
+msgid ""
+"{\n"
+"  \"link\": {\n"
+"    \"native\": {\n"
+"      \"cc\": \"gcc\"\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+

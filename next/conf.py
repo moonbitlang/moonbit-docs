@@ -14,8 +14,9 @@ release = 'v0.8.3'
 # I18N based on Readthedocs Environment
 # https://docs.readthedocs.io/en/stable/reference/environment-variables.html
 import os
-if (os.getenv('READTHEDOCS_LANGUAGE') == 'zh-cn' or
-    os.getenv('LANGUAGE') == 'zh_CN'): # For local build
+rtd_language = (os.getenv('READTHEDOCS_LANGUAGE') or '').lower()
+local_language = (os.getenv('LANGUAGE') or '').split('.')[0]
+if rtd_language == 'zh-cn' or local_language == 'zh_CN':  # For local build
     project = 'MoonBit 月兔'
     author = '粤港澳大湾区数字经济院'
     copyright = '%Y, {author}'.format(author=author)
@@ -25,6 +26,8 @@ if (os.getenv('READTHEDOCS_LANGUAGE') == 'zh-cn' or
     html_search_options = {
         "dict": jieba.DEFAULT_DICT
     }
+elif rtd_language == 'ja' or local_language in ('ja', 'ja_JP'):
+    language = 'ja'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

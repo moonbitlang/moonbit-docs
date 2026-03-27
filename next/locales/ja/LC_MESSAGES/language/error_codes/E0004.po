@@ -1,0 +1,117 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0004.md:1
+msgid "E0004"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:3
+msgid "Warning name: `missing_priv`"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:5
+msgid ""
+"The abstract type does not occur in public signature of current package, "
+"consider marking it as `priv`."
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:8
+msgid ""
+"If an abstract type is not used elsewhere in the public interface of a "
+"package, then it is not possible for user to interact with the value of "
+"that type in any way. Therefore, it is highly probable that the type is "
+"part of the private implementation of the package. In this case, it is "
+"better to mark the type as `priv` to indicate that it is not part of the "
+"public interface of the package."
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:14
+msgid ""
+"It is also possible that, this abstract type is part of the public "
+"interface of the package, but relevant functions, methods, or types are "
+"not marked as `pub`."
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:17
+msgid ""
+"This warning is not emitted inside `main` packages which are usually not "
+"intended to be used by others anyway. Likewise, it is not emitted inside "
+"[whitebox test and blackbox test](/language/tests.md#blackbox-tests-and-"
+"whitebox-tests) files."
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:22
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:24
+msgid ""
+"///|\n"
+"struct Code(Int)\n"
+"\n"
+"///|\n"
+"fn Code::new(code : Int) -> Code {\n"
+"  Code(code)\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let Code(_) = Code::new(42)\n"
+"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:28
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:30
+msgid ""
+"If the abstract type is not part of the public interface of the package, "
+"then it should be marked as `priv`:"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:33
+msgid ""
+"\n"
+"///|\n"
+"priv struct Code(Int)\n"
+"\n"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:39
+msgid ""
+"Or, if the abstract type is part of the public interface of the package, "
+"then make relevant definitions `pub`:"
+msgstr ""
+
+#: ../../language/error_codes/E0004.md:42
+msgid ""
+"\n"
+"///|\n"
+"struct Code2(Int) derive(Show)\n"
+"\n"
+"///|\n"
+"pub fn Code2::new(value : Int) -> Code2 {\n"
+"  return value\n"
+"}\n"
+msgstr ""
+

@@ -1,0 +1,333 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-11 16:40+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../toolchain/moon/package-manage-tour.md:1
+msgid "Use and publish packages"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:3
+msgid ""
+"MoonBit's build system seamlessly integrates package management and "
+"documentation  generation tools, allowing users to easily fetch "
+"dependencies from [mooncakes.io](https://mooncakes.io),  access module "
+"documentation, and publish new modules."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:7
+msgid ""
+"Before getting started, make sure you have installed "
+"[moon](https://www.moonbitlang.com/download/)."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:9
+msgid "Setup mooncakes.io account"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:12
+msgid "If you don't want to publish, you can skip this step."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:15
+msgid ""
+"If you don't have an account on mooncakes.io, run `moon register` and "
+"follow the  guide. If you have previously registered an account, you can "
+"use `moon login` to log in."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:18
+msgid ""
+"When you see the following message, it means you have successfully logged"
+" in:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:20
+msgid "API token saved to ~/.moon/credentials.json\n"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:24
+msgid "Setup MoonBit project"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:26
+msgid ""
+"Open an existing project or create a new project via `moon new <PATH>`. "
+"For example:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:28
+msgid ""
+"$ moon new .\n"
+"Created username/myapp at .\n"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:33
+msgid "It will generate template files in the path:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:35
+msgid ""
+"├── AGENTS.md                    # Collaboration guide for agents\n"
+"├── LICENSE                      # Open-source license \n"
+"├── README.mbt.md                # README file with type checking support"
+" for moonbit \n"
+"├── README.md -> README.mbt.md   # Symlink for platforms that expect "
+"README.md\n"
+"├── cmd                           \n"
+"│   └── main                     \n"
+"│       ├── main.mbt             # MoonBit source file \n"
+"│       └── moon.pkg             # Package configuration for "
+"username/myapp/cmd/main package\n"
+"├── moon.mod.json                # Module configuration for "
+"username/myapp module\n"
+"├── moon.pkg                     # Package configuration for "
+"username/myapp package\n"
+"├── myapp.mbt                    # MoonBit source file\n"
+"├── myapp_test.mbt               # Black-box test\n"
+"└── myapp_wbtest.mbt             # White-box test\n"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:51
+msgid ""
+"`moon new <PATH>` generates a starter module with two packages. A module "
+"is a  publishing unit that contains multiple packages. A package "
+"represents a namespace  and a compilation unit, is defined by a package "
+"configuration file, and includes  the `.mbt` files in the same directory."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:56
+msgid ""
+"Modules and packages are identified by a special path (not the file path "
+"in the file system). For example:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:59
+msgid ""
+"username/myapp/cmd/main\n"
+"─────────────────┬─────\n"
+"────────┬─────   │\n"
+"        │        │\n"
+"        │        └─ package `username/myapp/cmd/main` within the "
+"`username/myapp` module\n"
+"        │\n"
+"        └────────── module path. It also defines the package "
+"`username/myapp`\n"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:69
+msgid ""
+"The template contains test files, documentation, and collaboration "
+"metadata by default.  You can safely remove any template files you do not"
+" need.  The following is also a valid MoonBit project:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:73
+msgid ""
+"├── moon.mod.json\n"
+"├── moon.pkg\n"
+"└── source.mbt\n"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:79
+msgid "Add dependencies"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:81
+msgid ""
+"You can browse all available modules on "
+"[mooncakes.io](https://mooncakes.io). Use `moon add` to add the "
+"dependencies you need, or manually edit the `deps` field in "
+"`moon.mod.json`."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:85
+msgid ""
+"For example, to add the latest version of the [moonbit-"
+"community/starter](https://mooncakes.io/docs/moonbit-community/starter) "
+"module:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:87
+msgid "$ moon add moonbit-community/starter\n"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:92
+msgid ""
+"Moon also supports local dependencies. See [Dependency "
+"Management](/toolchain/moon/module.md#dependency-management) for more "
+"details."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:95
+msgid "Import packages from module"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:97
+msgid ""
+"The `moonbit-community/starter` module contains a `moonbit-"
+"community/starter/rabbit` package."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:99
+msgid ""
+"After adding the [moonbit-community/starter](https://mooncakes.io/docs"
+"/moonbit-community/starter) module to your dependencies, to use the "
+"`moonbit-community/starter/rabbit` package in the "
+"`username/myapp/cmd/main` package, you need to import the package first:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:101
+msgid ""
+"// add this import to `cmd/main/moon.pkg`\n"
+"import {\n"
+"  \"moonbit-community/starter/rabbit\"\n"
+"}\n"
+"\n"
+"options(\n"
+"  \"is-main\": true\n"
+")\n"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:113
+msgid "You can also give an alias to the imported package:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:115
+msgid ""
+"import {\n"
+"  \"moonbit-community/starter/rabbit\" @alias\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:122
+msgid "Now you can call the function `hello` in `rabbit` package:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:124
+msgid ""
+"// in `cmd/main/main.mbt`\n"
+"fn main {\n"
+"  // println(\"hello\")\n"
+"  @rabbit.hello()\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:132
+msgid "Run your main package and see what happens in the terminal."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:134
+msgid "$ moon run cmd/main\n"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:138
+msgid "Remove dependencies"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:140
+msgid "You can remove dependencies via `moon remove <module name>`."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:142
+msgid "Publish your module"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:144
+msgid ""
+"If you are ready to share your module, use `moon publish` to push a "
+"module to mooncakes.io. There are some important considerations to keep "
+"in mind before publishing:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:147
+msgid "Semantic versioning convention"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:149
+msgid ""
+"MoonBit's package management follows the convention of [Semantic "
+"Versioning](https://semver.org/). Each module must define a version "
+"number in the format `MAJOR.MINOR.PATCH`. With each push, the module must"
+" increment the:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:151
+msgid "MAJOR version when you make incompatible API changes"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:152
+msgid "MINOR version when you add functionality in a backward compatible manner"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:153
+msgid "PATCH version when you make backward compatible bug fixes"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:155
+msgid ""
+"Additional labels for pre-release and build metadata are available as "
+"extensions to the `MAJOR.MINOR.PATCH` format."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:157
+msgid ""
+"moon implements the [minimal version "
+"selection](https://research.swtch.com/vgo-mvs), which automatically "
+"handles and installs dependencies based on the module's semantic "
+"versioning information. Minimal version selection assumes that each "
+"module declares its own dependency requirements and follows semantic "
+"versioning convention, aiming to make the user's dependency graph as "
+"close as possible to the author's development-time dependencies."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:159
+msgid "Readme & metadata"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:161
+msgid "Metadata in `moon.mod.json` and `README.md` will be shown in mooncakes.io."
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:163
+msgid "Metadata consist of the following sections:"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:165
+msgid ""
+"`license`: license of this module, it following the "
+"[SPDX](https://spdx.dev/about/overview/) convention"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:166
+msgid "`keywords`: keywords of this module"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:167
+msgid "`repository`: URL of the package source repository"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:168
+msgid "`description`: short description to this module"
+msgstr ""
+
+#: ../../toolchain/moon/package-manage-tour.md:169
+msgid "`homepage`: URL of the module homepage"
+msgstr ""
+

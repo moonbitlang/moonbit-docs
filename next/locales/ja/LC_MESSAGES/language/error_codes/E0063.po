@@ -1,0 +1,91 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-28 13:08+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0063.md:1
+msgid "E0063"
+msgstr ""
+
+#: ../../language/error_codes/E0063.md:3
+msgid "Warning name: `syntax_lint`"
+msgstr ""
+
+#: ../../language/error_codes/E0063.md:5
+msgid "Syntax lint warning."
+msgstr ""
+
+#: ../../language/error_codes/E0063.md:7
+msgid ""
+"This warning is emitted for code patterns that are valid but discouraged "
+"by the compiler's syntax lints."
+msgstr ""
+
+#: ../../language/error_codes/E0063.md:10
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0063.md:12
+msgid ""
+"suberror DivError { DivError(String) }\n"
+"\n"
+"fn div(x : Int, y : Int) -> Int raise DivError {\n"
+"  if y == 0 {\n"
+"    raise DivError(\"division by zero\")\n"
+"  }\n"
+"  x / y\n"
+"}\n"
+"\n"
+"test {\n"
+"  let res = match (try? div(6, 0)) {\n"
+"    Ok(v) => v\n"
+"    Err(_) => 0\n"
+"  }\n"
+"  inspect(res, content=\"0\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0063.md:16
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0063.md:18
+msgid "Follow the suggestion in the compiler lint message."
+msgstr ""
+
+#: ../../language/error_codes/E0063.md:20
+msgid ""
+"suberror DivError { DivError(String) }\n"
+"\n"
+"fn div(x : Int, y : Int) -> Int raise DivError {\n"
+"  if y == 0 {\n"
+"    raise DivError(\"division by zero\")\n"
+"  }\n"
+"  x / y\n"
+"}\n"
+"\n"
+"test {\n"
+"  try div(6, 0) catch {\n"
+"    DivError(_) => inspect(0, content=\"0\")\n"
+"  } noraise {\n"
+"    v => inspect(v, content=\"0\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+

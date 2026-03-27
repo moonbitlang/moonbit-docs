@@ -1,0 +1,151 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0002.md:1
+msgid "E0002"
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:3
+msgid "Warning name: `unused_value`"
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:5
+msgid "Unused variable."
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:7
+msgid ""
+"This variable is unused by any other part of your code, nor marked with "
+"`pub` visibility."
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:10
+msgid ""
+"Note that this warning might uncover other bugs in your code. For "
+"example, if there are two variables in your codebase that has similar "
+"name, you might just use the other variable by mistake."
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:14
+msgid ""
+"Specifically, if the variable is at the toplevel, and the body of the "
+"module contains side effects, the side effects will not happen."
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:17
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:19
+msgid ""
+"///|\n"
+"let p : Int = {\n"
+"  side_effect.val = 42\n"
+"  42\n"
+"}\n"
+"\n"
+"///|\n"
+"let side_effect : Ref[Int] = { val: 0 }\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let x = 42\n"
+"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:23
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:25
+msgid "There are multiple ways to fix this warning:"
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:27
+msgid ""
+"If the variable is indeed useless, you can remove the definition of the "
+"variable."
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:29
+msgid ""
+"If this variable is at the toplevel (i.e., not local), and is part of the"
+" public API of your module, you can add the `pub` keyword to the "
+"variable."
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:32
+msgid ""
+"\n"
+"///|\n"
+"pub let p = 42\n"
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:38
+msgid ""
+"If you made a typo in the variable name, you can rename the variable to "
+"the correct name at the use site."
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:40
+msgid ""
+"If your code depends on the side-effect of the variable, you can wrap the"
+" side-effect in a `fn init` block."
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:43
+msgid ""
+"\n"
+"///|\n"
+"let side_effect : Ref[Int] = { val: 0 }\n"
+"\n"
+"///|\n"
+"fn init {\n"
+"  side_effect.val = 42\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:49
+msgid ""
+"There are some cases where you might want to keep the variable private "
+"and unused at the same time. In this case, you can call `ignore()` on the"
+" variable to force the use of it."
+msgstr ""
+
+#: ../../language/error_codes/E0002.md:53
+msgid ""
+"\n"
+"///|\n"
+"let p_unused : Int = 42\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(p_unused)\n"
+"}\n"
+"\n"
+"///|\n"
+"fn main {\n"
+"  let x = 42\n"
+"  ignore(x)\n"
+"}\n"
+msgstr ""
+

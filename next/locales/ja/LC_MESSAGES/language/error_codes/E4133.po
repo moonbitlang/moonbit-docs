@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4133.md:1
+msgid "E4133"
+msgstr ""
+
+#: ../../language/error_codes/E4133.md:3
+msgid "This `for .. in` loop has incorrect number of loop variables."
+msgstr ""
+
+#: ../../language/error_codes/E4133.md:5
+msgid "MoonBit supports only one or two loop variables in `for .. in` loop."
+msgstr ""
+
+#: ../../language/error_codes/E4133.md:7
+msgid "One loop variable is used for the content of the iterable."
+msgstr ""
+
+#: ../../language/error_codes/E4133.md:8
+msgid ""
+"Two loop variables are used for the index and the content of the iterable"
+" respectively."
+msgstr ""
+
+#: ../../language/error_codes/E4133.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4133.md:13
+msgid ""
+"fn main {\n"
+"  for a, b, c in [1, 2, 3] { // Error: This `for .. in` loop has 3 loop "
+"variables, but at most 2 is expected.\n"
+"    ...\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4133.md:17
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4133.md:19
+msgid ""
+"If you want to iterate over the index and the content of the iterable, "
+"you can use two loop variables:"
+msgstr ""
+
+#: ../../language/error_codes/E4133.md:22
+msgid ""
+"fn main {\n"
+"  for i, v in [1, 2, 3] {\n"
+"    ...\n"
+"  }\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4133.md:26
+msgid ""
+"If you want to iterate over a iterable of tuples, then you need to "
+"explicitly destructure the tuple inside the loop body:"
+msgstr ""
+
+#: ../../language/error_codes/E4133.md:29
+msgid ""
+"fn main {\n"
+"  for v in [(1, 2, 3), (4, 5, 6)] {\n"
+"    let (a, b, c) = v\n"
+"    ...\n"
+"  }\n"
+"}"
+msgstr ""
+

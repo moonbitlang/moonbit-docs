@@ -1,0 +1,101 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-28 13:08+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0032.md:1
+msgid "E0032"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:3
+msgid "Warning name: `unused_default_value`"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:5
+msgid ""
+"Default value of optional argument is unused. This implies at every call "
+"site of this function, the optional argument is always explicitly "
+"supplied with a value. This means the optional argument can be refactored"
+" into a labelled argument."
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:7
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:9
+msgid ""
+"Note, this warning is turned off by default. To enable this warning, you "
+"need to modify the `\"warn-list\"` of `moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:11
+msgid "moon.pkg.json"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:11
+msgid ""
+"{\n"
+"  \"is_main\": true,\n"
+"  \"warn-list\": \"+unused_default_value\"\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:15
+msgid "main.mbt"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:15
+msgid ""
+"///|\n"
+"fn f(opt~ : Int = 4) -> Int {\n"
+"  ignore(opt)\n"
+"  0\n"
+"}\n"
+"\n"
+"///|\n"
+"fn main {\n"
+"  println(f(opt=3))\n"
+"  println(f(opt=3))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:20
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:22
+msgid "Turn the optional argument into a labelled argument:"
+msgstr ""
+
+#: ../../language/error_codes/E0032.md:24
+msgid ""
+"///|\n"
+"fn f(opt~ : Int) -> Int {\n"
+"  ignore(opt)\n"
+"  0\n"
+"}\n"
+"\n"
+"///|\n"
+"fn main {\n"
+"  println(f(opt=3))\n"
+"  println(f(opt=3))\n"
+"}\n"
+msgstr ""
+

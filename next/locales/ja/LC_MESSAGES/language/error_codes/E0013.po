@@ -1,0 +1,202 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0013.md:1
+msgid "E0013"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:3
+msgid "Warning name: `unresolved_type_variable`"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:5
+msgid "The type of this expression contains unresolved type variables."
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:7
+msgid ""
+"This error occurs when the compiler encounters a type that contains type "
+"variables which cannot be determined from the context. Type variables are"
+" placeholders for types that should be inferred by the compiler."
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:11
+msgid "Common cases where this happens:"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:13
+msgid "Writing local functions without explicit type annotations"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:14
+msgid ""
+"Creating empty collections (Arrays, Options) without specifying their "
+"element type"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:17
+msgid ""
+"When the compiler cannot resolve these type variables, it defaults them "
+"to `Unit` type, which may not be what you intended."
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:20
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:22
+msgid ""
+"pub fn f1() -> Unit {\n"
+"  fn f(x) {\n"
+"//     ^ Warning: The type of this expression is Option[_/0], which "
+"contains\n"
+"//                unresolved type variables. The type variable is default"
+" to\n"
+"//                Unit.\n"
+"    match x {\n"
+"      None => ()\n"
+"      Some(a) => println(a)\n"
+"    }\n"
+"  }\n"
+"\n"
+"  f(None)\n"
+"}\n"
+"\n"
+"pub fn f2() -> Unit {\n"
+"  fn f(x : Array[_]) -> Int {\n"
+"//     ^ Warning: The type of this expression is Array[_/0], which "
+"contains\n"
+"//                unresolved type variables. The type variable is default"
+" to\n"
+"//                Unit.\n"
+"    x.length()\n"
+"  }\n"
+"\n"
+"  println(f([]))\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  let a = []\n"
+"//        ^^ Warning: The type of this expression is Array[_/0], which "
+"contains\n"
+"//           unresolved type variables. The type variable is default to "
+"Unit.\n"
+"  println(a.length())\n"
+"  let b = None\n"
+"//        ^^ Warning: The type of this expression is Option[_/0], which "
+"contains\n"
+"//           unresolved type variables. The type variable is default to "
+"Unit.\n"
+"  println(b.is_empty())\n"
+"}\n"
+"\n"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:26
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:28
+msgid "To fix this warning, you can:"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:30
+msgid "Add type annotations to local function parameters. For example,"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:32
+msgid ""
+"///|\n"
+"pub fn f1() -> Unit {\n"
+"  fn f(x : Int?) {\n"
+"    match x {\n"
+"      None => ()\n"
+"      Some(a) => println(a)\n"
+"    }\n"
+"  }\n"
+"\n"
+"  f(None)\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn f2() -> Unit {\n"
+"  fn f(x : Array[Int]) -> Int {\n"
+"    x.length()\n"
+"  }\n"
+"\n"
+"  println(f([]))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:36
+msgid ""
+"Explicitly specify the type of the variable or the collection element "
+"type."
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:38
+msgid ""
+"///|\n"
+"fn example_explicit_variable_types() -> Unit {\n"
+"  let a : Array[Int] = []\n"
+"  println(a.length())\n"
+"  let b : Int? = None\n"
+"  println(b is None)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:42
+msgid "Or equivalently, add annotations on the collection creation."
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:44
+msgid ""
+"///|\n"
+"fn example_annotated_collections() -> Unit {\n"
+"  let a = ([] : Array[Int])\n"
+"  println(a.length())\n"
+"  let b = (None : Int?)\n"
+"  println(b is None)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:48
+msgid "Provide enough context through usage."
+msgstr ""
+
+#: ../../language/error_codes/E0013.md:50
+msgid ""
+"///|\n"
+"fn example_context_usage() -> Unit {\n"
+"  fn f(x) {\n"
+"    match x {\n"
+"      None => ()\n"
+"      Some(a) => println(a + 1)\n"
+"      //                ^^^^^ through this usage, the compiler can infer "
+"the\n"
+"      //                      type of `x` is `Option[Int]`.\n"
+"    }\n"
+"  }\n"
+"\n"
+"  f(None)\n"
+"}\n"
+msgstr ""
+

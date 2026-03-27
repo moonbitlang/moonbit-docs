@@ -1,0 +1,793 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-17 16:57+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/ffi.md:1
+msgid "Foreign Function Interface (FFI)"
+msgstr ""
+
+#: ../../language/ffi.md:3
+msgid ""
+"What we've introduced is about describing pure computation. In reality, "
+"you'll need to interact with the real world. However, the \"world\" is "
+"different for each backend (C, JS, Wasm, WasmGC) and is sometimes based "
+"on runtime ([Wasmtime](https://wasmtime.dev/), Deno, Browser, etc.)."
+msgstr ""
+
+#: ../../language/ffi.md:7
+msgid "Backends"
+msgstr ""
+
+#: ../../language/ffi.md:9
+msgid "MoonBit currently have five backends:"
+msgstr ""
+
+#: ../../language/ffi.md ../../language/ffi.md:11
+msgid "Wasm"
+msgstr ""
+
+#: ../../language/ffi.md ../../language/ffi.md:12
+msgid "Wasm GC"
+msgstr ""
+
+#: ../../language/ffi.md ../../language/ffi.md:13
+msgid "JavaScript"
+msgstr ""
+
+#: ../../language/ffi.md ../../language/ffi.md:14
+msgid "C"
+msgstr ""
+
+#: ../../language/ffi.md:15
+msgid "LLVM (experimental)"
+msgstr ""
+
+#: ../../language/ffi.md:21
+msgid "By Wasm we refer to WebAssembly with some post-MVP proposals including:"
+msgstr ""
+
+#: ../../language/ffi.md:22
+msgid "bulk-memory-operations"
+msgstr ""
+
+#: ../../language/ffi.md:23 ../../language/ffi.md:36
+msgid "multi-value"
+msgstr ""
+
+#: ../../language/ffi.md:24
+msgid "reference-types"
+msgstr ""
+
+#: ../../language/ffi.md:26 ../../language/ffi.md:39
+msgid ""
+"For better compatibility, the `init` function will be compiled as "
+"[`start` "
+"function](https://webassembly.github.io/spec/core/syntax/modules.html"
+"#start-function), and the `main` function will be exported as `_start`."
+msgstr ""
+
+#: ../../language/ffi.md:29 ../../language/ffi.md:42
+msgid ""
+"For Wasm backends, all functions interacting with outside world relies on"
+" the host. For example, the `println` for Wasm and Wasm GC backend relies"
+" on importing a function `spectest.print_char` that prints a UTF-16 code "
+"unit for each call. The `env` package in standard library and some "
+"packages in `moonbitlang/x` relies on specific host function defined for "
+"MoonBit runtime. Avoid using them if you want to make the generated Wasm "
+"portable."
+msgstr ""
+
+#: ../../language/ffi.md:35
+msgid ""
+"By Wasm GC we refer to WebAssembly with Garbage Collection proposal, "
+"meaning that data structures will be represented with reference types "
+"such as `struct` `array` and the linear memory would not be used by "
+"default. It also supports other post-MVP proposals including:"
+msgstr ""
+
+#: ../../language/ffi.md:37
+msgid "JS string builtins"
+msgstr ""
+
+#: ../../language/ffi.md:48
+msgid ""
+"JavaScript backend will generate a JavaScript file, which can be a "
+"CommonJS module, an ES module or an IIFE based on the "
+"[configuration](/toolchain/moon/package.md#js-backend-link-options)."
+msgstr ""
+
+#: ../../language/ffi.md:53
+msgid ""
+"C backend will generate a C file. The MoonBit toolchain will also compile"
+" the project and generate an executable based on the "
+"[configuration](/toolchain/moon/package.md#native-backend-link-options)."
+msgstr ""
+
+#: ../../language/ffi.md
+msgid "LLVM"
+msgstr ""
+
+#: ../../language/ffi.md:58
+msgid ""
+"LLVM backend will generate an object file. The backend is experimental "
+"and does not support FFIs."
+msgstr ""
+
+#: ../../language/ffi.md:63
+msgid "Declare Foreign Type"
+msgstr ""
+
+#: ../../language/ffi.md:65
+msgid "You can declare a foreign type using the `#external` attribute like this:"
+msgstr ""
+
+#: ../../language/ffi.md:67
+msgid ""
+"#external\n"
+"type ExternalRef\n"
+msgstr ""
+
+#: ../../language/ffi.md
+msgid "Wasm & Wasm GC"
+msgstr ""
+
+#: ../../language/ffi.md:77
+msgid ""
+"This will be interpreted as an "
+"[`externref`](https://webassembly.github.io/spec/core/syntax/types.html"
+"#reference-types)."
+msgstr ""
+
+#: ../../language/ffi.md:83
+msgid "This will be interpreted as a JavaScript value."
+msgstr ""
+
+#: ../../language/ffi.md:89
+msgid "This will be interpreted as `void*`."
+msgstr ""
+
+#: ../../language/ffi.md:93
+msgid "Declare Foreign Function"
+msgstr ""
+
+#: ../../language/ffi.md:95
+msgid "To interact with the outside world, you can declare foreign functions."
+msgstr ""
+
+#: ../../language/ffi.md:98
+msgid "MoonBit does not support polymorphic foreign functions."
+msgstr ""
+
+#: ../../language/ffi.md:102
+msgid ""
+"When declaring functions, you need to make sure that the signature "
+"corresponds to the actual foreign function. **When a function returns "
+"nothing (e.g. `void`), omit the return type annotation in the function "
+"declaration.**"
+msgstr ""
+
+#: ../../language/ffi.md:113 ../../language/ffi.md:136
+msgid ""
+"There are two ways to declare a foreign function: importing a function or"
+" writing an inline function."
+msgstr ""
+
+#: ../../language/ffi.md:115
+msgid ""
+"You can import a function given the module name and the function name "
+"from the runtime host:"
+msgstr ""
+
+#: ../../language/ffi.md:117
+msgid "fn cos(d : Double) -> Double = \"math\" \"cos\"\n"
+msgstr ""
+
+#: ../../language/ffi.md:121
+msgid "Or you can write an inline function using Wasm syntax:"
+msgstr ""
+
+#: ../../language/ffi.md:123
+msgid ""
+"extern \"wasm\" fn identity(d : Double) -> Double =\n"
+"  #|(func (param f64) (result f64))\n"
+msgstr ""
+
+#: ../../language/ffi.md:129
+msgid "When writing the inline function, do not provide a function name."
+msgstr ""
+
+#: ../../language/ffi.md:138
+msgid ""
+"You can import a function given the module name and the function name, "
+"which will be interpreted as `module.function`. For example,"
+msgstr ""
+
+#: ../../language/ffi.md:140
+msgid "fn cos(d : Double) -> Double = \"Math\" \"cos\"\n"
+msgstr ""
+
+#: ../../language/ffi.md:144
+msgid "would refer to the function `const cos = (d) => Math.cos(d)`{l=javascript}"
+msgstr ""
+
+#: ../../language/ffi.md:146
+msgid "Or you can write an inline function defining a JavaScript lambda:"
+msgstr ""
+
+#: ../../language/ffi.md:148
+msgid ""
+"extern \"js\" fn cos(d : Double) -> Double =\n"
+"  #|(d) => Math.cos(d)\n"
+msgstr ""
+
+#: ../../language/ffi.md:157
+msgid ""
+"You can declare a foreign function by importing a function given the "
+"function name:"
+msgstr ""
+
+#: ../../language/ffi.md:159
+msgid "extern \"C\" fn put_char(ch : UInt) = \"function_name\"\n"
+msgstr ""
+
+#: ../../language/ffi.md:163
+msgid ""
+"If a package needs to dynamically link with foreign C library, add `cc-"
+"link-flags` to `moon.pkg`. It would be passed to C compiler directly."
+msgstr ""
+
+#: ../../language/ffi.md:165
+msgid ""
+"options(\n"
+"  \"link\": {\n"
+"    \"native\": {\n"
+"      \"cc-link-flags\": \"-l<c library>\"\n"
+"    }\n"
+"  },\n"
+")\n"
+msgstr ""
+
+#: ../../language/ffi.md:177
+msgid ""
+"To define wrapper functions, you can add a C stub file to a package, and "
+"add the following to the `moon.pkg` of the package:"
+msgstr ""
+
+#: ../../language/ffi.md:179
+msgid ""
+"options(\n"
+"  \"native-stub\": [ \n"
+"    // list of stub file names\n"
+"  ],\n"
+")\n"
+msgstr ""
+
+#: ../../language/ffi.md:187
+msgid ""
+"You would probably like to `#include \"moonbit.h\"`, which contains type "
+"definitions and handy utilities for MoonBit's C interface. The header is "
+"located in `~/.moon/include`, check its content for more details."
+msgstr ""
+
+#: ../../language/ffi.md:191
+msgid "Types"
+msgstr ""
+
+#: ../../language/ffi.md:193
+msgid "The table below shows the underlying representation of some MoonBit types:"
+msgstr ""
+
+#: ../../language/ffi.md:252
+msgid "The `FixedArray[T]` for numbers may migrate to `TypedArray` in the future."
+msgstr ""
+
+#: ../../language/ffi.md:277
+msgid ""
+"If the return type of `T` in `FuncRef[T]` is `Unit`, then it points to a "
+"function that returns `void`."
+msgstr ""
+
+#: ../../language/ffi.md:282
+msgid ""
+"Types not mentioned above do not have a stable ABI, so your code should "
+"not depend on their representations."
+msgstr ""
+
+#: ../../language/ffi.md:284
+msgid "Callbacks"
+msgstr ""
+
+#: ../../language/ffi.md:286
+msgid ""
+"Sometimes, we want to pass a MoonBit function to the foreign interface as"
+" callback. In MoonBit, it is possible to have closures. Per [MDN "
+"glossary](https://developer.mozilla.org/en-"
+"US/docs/Web/JavaScript/Guide/Closures):"
+msgstr ""
+
+#: ../../language/ffi.md:288
+msgid ""
+"A closure is the combination of a function bundled together (enclosed) "
+"with references to its surrounding state (the lexical environment). In "
+"other words, a closure gives a function access to its outer scope. In "
+"JavaScript, closures are created every time a function is created, at "
+"function creation time."
+msgstr ""
+
+#: ../../language/ffi.md:290
+msgid ""
+"In some cases, we would like to pass the callback function which doesn't "
+"capture any local free variables. For this purpose, MoonBit provides a "
+"special type `FuncRef[T]`, which represents closed function of type `T`. "
+"Values of type `FuncRef[T]` must be closed function of type `T`, "
+"otherwise [a type error](/language/error_codes/E4151.md) would occur."
+msgstr ""
+
+#: ../../language/ffi.md:292
+msgid ""
+"In other cases, a MoonBit function parameter would be represented as a "
+"function and an object containing the surrounding state."
+msgstr ""
+
+#: ../../language/ffi.md:300
+msgid ""
+"For Wasm backends, the callbacks will be passed as `externref`, which "
+"represents a function of the host. However, it is essential to convert "
+"the function together with the captured data to the host's function."
+msgstr ""
+
+#: ../../language/ffi.md:302
+msgid ""
+"To do so, the Wasm module will import a function under the module "
+"`moonbit:ffi` and function name `make_closure`. This function takes a "
+"function and an object, where the function's first parameter should be "
+"the object, and should return a host's function. That is, the host is "
+"responsible for doing the partial application. A possible implementation "
+"would be:"
+msgstr ""
+
+#: ../../language/ffi.md:304
+msgid ""
+"{ \n"
+"  \"moonbit:ffi\": {\n"
+"    \"make_closure\": (funcref, closure) => funcref.bind(null, closure)\n"
+"  } \n"
+"}\n"
+msgstr ""
+
+#: ../../language/ffi.md:316
+msgid "JavaScript supports closure, so there's nothing special to be done here."
+msgstr ""
+
+#: ../../language/ffi.md:323
+msgid ""
+"Some C library functions allow supplying extra data in addition to the "
+"callback function. Assume we have the following C library function:"
+msgstr ""
+
+#: ../../language/ffi.md:326
+msgid "void register_callback(void (*callback)(void*), void *data);\n"
+msgstr ""
+
+#: ../../language/ffi.md:330
+msgid ""
+"we can bind this C function and pass closure to it using the following "
+"trick:"
+msgstr ""
+
+#: ../../language/ffi.md:332
+msgid ""
+"extern \"C\" fn register_callback_ffi(\n"
+"  call_closure : FuncRef[(() -> Unit) -> Unit],\n"
+"  closure : () -> Unit\n"
+") = \"register_callback\"\n"
+"\n"
+"fn register_callback(callback : () -> Unit) -> Unit {\n"
+"  register_callback_ffi(\n"
+"    fn (f) { f() },\n"
+"    callback\n"
+"  )\n"
+"}\n"
+msgstr ""
+
+#: ../../language/ffi.md:348
+msgid ""
+"Values of type `FuncRef[_]` can be called directly from MoonBit too. This"
+" is useful for dynamic loading functions via symbol name or implementing "
+"JIT in native backend."
+msgstr ""
+
+#: ../../language/ffi.md:350
+msgid "Customize integer value of constant enum"
+msgstr ""
+
+#: ../../language/ffi.md:351
+msgid ""
+"In all backends of MoonBit, constant enum (`enum` where all constructors "
+"have no payload) are translated to integer. It is possible to customize "
+"the actual integer representation of each constructor, by adding `= "
+"<integer literal>` after constructor declaration:"
+msgstr ""
+
+#: ../../language/ffi.md:355
+msgid ""
+"enum SpecialNumbers {\n"
+"  Zero = 0\n"
+"  One\n"
+"  Two\n"
+"  Three\n"
+"  Ten = 10\n"
+"  FourtyTwo = 42\n"
+"}\n"
+msgstr ""
+
+#: ../../language/ffi.md:366
+msgid ""
+"If a constructor's integer value is unspecified, it defaults to one plus "
+"the value of the previous constructor (or zero for the first "
+"constructor). This feature is particular useful for binding flags of C "
+"libraries."
+msgstr ""
+
+#: ../../language/ffi.md:370
+msgid "Export Functions"
+msgstr ""
+
+#: ../../language/ffi.md:372
+msgid ""
+"For public functions that are neither methods nor polymorphic, they can "
+"be exported by configuring the `exports` field in [link "
+"configuration](/toolchain/moon/package.md#link-options)."
+msgstr ""
+
+#: ../../language/ffi.md:374
+msgid ""
+"options(\n"
+"  \"link\": {\n"
+"    \"<backend>\": {\n"
+"      \"exports\": [ \"add\", \"fib:test\" ]\n"
+"    }\n"
+"  }\n"
+")\n"
+msgstr ""
+
+#: ../../language/ffi.md:384
+msgid ""
+"The previous example exports functions `add` and `fib`, where `fib` will "
+"be exported as `test`."
+msgstr ""
+
+#: ../../language/ffi.md:392 ../../language/ffi.md:399
+#: ../../language/ffi.md:407
+msgid ""
+"It is only effective for the package that configures it, i.e. it doesn't "
+"affect the downstream packages."
+msgstr ""
+
+#: ../../language/ffi.md:401
+msgid ""
+"There's another `format` option to export as CommonJS module (`cjs`), ES "
+"Module (`esm`), or `iife`."
+msgstr ""
+
+#: ../../language/ffi.md:409
+msgid "Renaming the exported function is not supported for now"
+msgstr ""
+
+#: ../../language/ffi.md:414
+msgid "Lifetime management"
+msgstr ""
+
+#: ../../language/ffi.md:416
+msgid ""
+"MoonBit is a programming language with garbage collection. Thus when "
+"handling external object or passing MoonBit object to host, it is "
+"essential to keep in mind the lifetime management. Currently, MoonBit "
+"uses reference counting for Wasm backend and C backend. For Wasm GC "
+"backend and JavaScript backend, the runtime's GC is reused."
+msgstr ""
+
+#: ../../language/ffi.md:418
+msgid "Lifetime management of external object"
+msgstr ""
+
+#: ../../language/ffi.md:420
+msgid ""
+"When handling external object/resource in MoonBit, it is important to "
+"destroy object or release resource in time to prevent memory/resource "
+"leak."
+msgstr ""
+
+#: ../../language/ffi.md:423
+msgid "For C backend only"
+msgstr ""
+
+#: ../../language/ffi.md:426
+msgid ""
+"`moonbit.h` provides an API `moonbit_make_external_object` for handling "
+"lifetime of external object/resource using MoonBit's own automatic memory"
+" management system:"
+msgstr ""
+
+#: ../../language/ffi.md:428
+msgid ""
+"void *moonbit_make_external_object(\n"
+"  void (*finalize)(void *self),\n"
+"  uint32_t payload_size\n"
+");\n"
+msgstr ""
+
+#: ../../language/ffi.md:435
+msgid ""
+"`moonbit_make_external_object` will create a new MoonBit object of size "
+"`payload_size + sizeof(finalize)`, the layout of the object is as "
+"follows:"
+msgstr ""
+
+#: ../../language/ffi.md:438
+msgid ""
+"| MoonBit object header | ... payload | finalize function |\n"
+"                        ^\n"
+"                        |\n"
+"                        |_\n"
+"                           pointer returned by "
+"`moonbit_make_external_object`\n"
+msgstr ""
+
+#: ../../language/ffi.md:446
+msgid ""
+"so you can treat the object as a pointer to its payload directly. When "
+"MoonBit's automatic memory management system finds that an object created"
+" by `moonbit_make_external_object` is no longer alive, it will invoke the"
+" function `finalize` with the object itself as argument. Now, `finalize` "
+"can release external resource/memory held by the object's payload."
+msgstr ""
+
+#: ../../language/ffi.md:449
+msgid ""
+"`finalize` **must not** drop the object itself, as this is handled by "
+"MoonBit runtime."
+msgstr ""
+
+#: ../../language/ffi.md:452
+msgid ""
+"On the MoonBit side, objects returned by `moonbit_make_external_object` "
+"should be bind to an *abstract* type, declared using `type T`, so that "
+"MoonBit's memory management system will not ignore the object."
+msgstr ""
+
+#: ../../language/ffi.md:457
+msgid "Lifetime management of MoonBit object"
+msgstr ""
+
+#: ../../language/ffi.md:459
+msgid ""
+"When passing MoonBit objects to the host through functions, it is "
+"essential to take care of the lifetime management of MoonBit itself. As "
+"mentioned before, MoonBit's Wasm backend and C backend uses compiler-"
+"optimized reference counting to manage lifetime of objects. To avoid "
+"memory error or leak, FFI functions must properly maintain the reference "
+"count of MoonBit objects."
+msgstr ""
+
+#: ../../language/ffi.md:462
+msgid "For C backend and for Wasm backend only."
+msgstr ""
+
+#: ../../language/ffi.md:465
+msgid "The calling convention of reference counting"
+msgstr ""
+
+#: ../../language/ffi.md:467
+msgid ""
+"By default, MoonBit uses an owned calling convention for reference "
+"counting. That is, callee (the function being invoked) is responsible for"
+" dropping its parameters using the `moonbit_decref` / `$moonbit.decref` "
+"function. If the parameter is used more than once, the callee should "
+"increase the reference count using the `moonbit_incref` / "
+"`$moonbit.incref` function. Here are the rules for the necessary "
+"operations to perform in different circumstances:"
+msgstr ""
+
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
+msgid "event"
+msgstr ""
+
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
+msgid "operation"
+msgstr ""
+
+#: ../../language/ffi.md:461
+msgid "read field/element"
+msgstr ""
+
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
+msgid "nothing"
+msgstr ""
+
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
+msgid "store into data structure"
+msgstr ""
+
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
+msgid "`incref`"
+msgstr ""
+
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
+msgid "passed to MoonBit function"
+msgstr ""
+
+#: ../../language/ffi.md:461
+msgid "passed to other foreign function"
+msgstr ""
+
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
+msgid "returned"
+msgstr ""
+
+#: ../../language/ffi.md:461 ../../language/ffi.md:514
+msgid "end of scope (not returned)"
+msgstr ""
+
+#: ../../language/ffi.md:461
+msgid "`decref`"
+msgstr ""
+
+#: ../../language/ffi.md:478
+msgid ""
+"For example, here's a lifetime-correct binding to the standard `open` "
+"function for opening a file:"
+msgstr ""
+
+#: ../../language/ffi.md:480
+msgid ""
+"extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open_ffi\""
+"\n"
+msgstr ""
+
+#: ../../language/ffi.md:484
+msgid ""
+"int open_ffi(moonbit_bytes_t filename, int flags) {\n"
+"  int fd = open(filename, flags);\n"
+"  moonbit_decref(filename);\n"
+"  return fd;\n"
+"}\n"
+msgstr ""
+
+#: ../../language/ffi.md:492
+msgid "The managed types"
+msgstr ""
+
+#: ../../language/ffi.md:494
+msgid ""
+"The following types are always unboxed, so there is no need to manage "
+"their lifetime:"
+msgstr ""
+
+#: ../../language/ffi.md:496
+msgid "builtin number types, such as `Int` and `Double`"
+msgstr ""
+
+#: ../../language/ffi.md:497
+msgid "constant `enum` (`enum` where all constructors have no payload)"
+msgstr ""
+
+#: ../../language/ffi.md:499
+msgid "The following types are always boxed and reference counted:"
+msgstr ""
+
+#: ../../language/ffi.md:501
+msgid "`FixedArray[T]`, `Bytes` and `String`"
+msgstr ""
+
+#: ../../language/ffi.md:502
+msgid "abstract types (`type T`)"
+msgstr ""
+
+#: ../../language/ffi.md:504
+msgid ""
+"External types (`#external type T`) are also boxed, but they represent "
+"external pointers, so MoonBit will not perform any reference counting "
+"operations on them."
+msgstr ""
+
+#: ../../language/ffi.md:507
+msgid "The layout of `struct`/`enum` with payload is currently unstable."
+msgstr ""
+
+#: ../../language/ffi.md:509
+msgid "The borrow and owned attribute"
+msgstr ""
+
+#: ../../language/ffi.md:511
+msgid ""
+"When passing a parameter through the FFI, its ownership may or may not be"
+" kept. The `#borrow` and `#owned` attributes can be used to specify these"
+" two conditions."
+msgstr ""
+
+#: ../../language/ffi.md:515
+msgid ""
+"We are in the process of migrating the default semantics to `#borrow` "
+"instead of `#owned`"
+msgstr ""
+
+#: ../../language/ffi.md:518
+msgid "The syntax of `#borrow` and `#owned` are as follows:"
+msgstr ""
+
+#: ../../language/ffi.md:520
+msgid ""
+"#borrow(params..)\n"
+"extern \"C\" fn c_ffi(..) -> .. = ..\n"
+msgstr ""
+
+#: ../../language/ffi.md:525
+msgid "where `params` is a subset of the parameters of `c_ffi`."
+msgstr ""
+
+#: ../../language/ffi.md:527
+msgid ""
+"Parameters of `#borrow` will be passed using borrow based calling "
+"convention, that is, the invoked function does not need to `decref` these"
+" parameters. If the FFI function only read its parameter locally (i.e. "
+"does not return its parameters and does not store them in data "
+"structures), you can directly use the `#borrow` attribute. For example, "
+"the `open` function mentioned above could be rewritten using `#borrow` as"
+" follows:"
+msgstr ""
+
+#: ../../language/ffi.md:529
+msgid ""
+"#borrow(filename)\n"
+"extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open\"\n"
+msgstr ""
+
+#: ../../language/ffi.md:534
+msgid ""
+"There is no need for a stub function anymore: we are binding to the "
+"original version of `open` here. With the `#borrow` attribute, this "
+"version is still lifetime-correct."
+msgstr ""
+
+#: ../../language/ffi.md:536
+msgid ""
+"Even if a stub function is still necessary for other reasons, `#borrow` "
+"can often simplify the lifetime management. Here are the rules for the "
+"necessary operations to perform **on borrow parameters** in different "
+"circumstances:"
+msgstr ""
+
+#: ../../language/ffi.md:514
+msgid "read field / element"
+msgstr ""
+
+#: ../../language/ffi.md:514
+msgid "passed to other C function / `#borrow` MoonBit function"
+msgstr ""
+
+#: ../../language/ffi.md:547
+msgid ""
+"The opposite is the `#owned` semantic, where the parameter is stored by "
+"the FFI function, and the `decref` needs to be executed manually later. "
+"One use case is registering the callback where the closure would be "
+"**owned**."
+msgstr ""
+

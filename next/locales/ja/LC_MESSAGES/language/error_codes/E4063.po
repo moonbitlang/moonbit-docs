@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4063.md:1
+msgid "E4063"
+msgstr ""
+
+#: ../../language/error_codes/E4063.md:3
+msgid "Type does not implement trait, although an `impl` is defined."
+msgstr ""
+
+#: ../../language/error_codes/E4063.md:5
+msgid "This error can be further divided into 5 cases:"
+msgstr ""
+
+#: ../../language/error_codes/E4063.md:7 ../../language/error_codes/E4063.md:15
+msgid "Method is missing"
+msgstr ""
+
+#: ../../language/error_codes/E4063.md:8
+msgid "Implementation is private"
+msgstr ""
+
+#: ../../language/error_codes/E4063.md:9
+msgid "Method type mismatch"
+msgstr ""
+
+#: ../../language/error_codes/E4063.md:10
+msgid "Constraints are not satisfied"
+msgstr ""
+
+#: ../../language/error_codes/E4063.md:11
+msgid "Method contains unresolved type parameters"
+msgstr ""
+
+#: ../../language/error_codes/E4063.md:13
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4063.md:17
+msgid ""
+"trait Number {\n"
+"  to_int(Self) -> Int\n"
+"  to_float(Self) -> Float\n"
+"}\n"
+"\n"
+"type A Int\n"
+"\n"
+"impl Number for A with to_int(self : A) -> Int {\n"
+"//^~~~~~~~~~~~~~~\n"
+"// Error: Type A does not implement trait Number, although an `impl` is "
+"defined.\n"
+"// hint:\n"
+"//   method to_float is missing.\n"
+"  self.inner()\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4063.md:21
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4063.md:23
+msgid ""
+"Modify the code according to the hint provided along with the error "
+"message. For the example above, you can add the missing method `to_float`"
+" to type `A`."
+msgstr ""
+
+#: ../../language/error_codes/E4063.md:26
+msgid ""
+"impl Number for A with to_float(self : A) -> Float {\n"
+"  self.inner().to_float()\n"
+"}"
+msgstr ""
+

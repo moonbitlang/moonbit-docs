@@ -1,0 +1,84 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0052.md:1
+msgid "E0052"
+msgstr ""
+
+#: ../../language/error_codes/E0052.md:3
+msgid "Warning name: `unused_loop_variable`"
+msgstr ""
+
+#: ../../language/error_codes/E0052.md:5
+msgid "A loop variable is not updated in loop."
+msgstr ""
+
+#: ../../language/error_codes/E0052.md:7
+msgid ""
+"When a loop variable is not updated, this could be a potential bug that "
+"you have forgotten to update it, leading to an infinite loop."
+msgstr ""
+
+#: ../../language/error_codes/E0052.md:10
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0052.md:12
+msgid ""
+"///|\n"
+"pub fn f() -> Unit {\n"
+"  for i = 0, radix = 10; i < 10; {\n"
+"    println(i.to_string(radix~))\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0052.md:16
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0052.md:18
+msgid "There are multiple ways to fix this warning:"
+msgstr ""
+
+#: ../../language/error_codes/E0052.md:20
+msgid ""
+"If this variable is indeed constant during the loop, you can remove it "
+"from the initialization and make it constant"
+msgstr ""
+
+#: ../../language/error_codes/E0052.md:22
+msgid ""
+"If your code depends on change of the variable, you should update it "
+"somewhere in the loop."
+msgstr ""
+
+#: ../../language/error_codes/E0052.md:25
+msgid ""
+"///|\n"
+"pub fn f() -> Unit {\n"
+"  let radix = 10\n"
+"  for i = 0; i < 10; i = i + 1 {\n"
+"    println(i.to_string(radix~))\n"
+"  }\n"
+"}\n"
+msgstr ""
+

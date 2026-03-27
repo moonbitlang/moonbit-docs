@@ -1,0 +1,360 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-17 17:13+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/introduction.md:1
+msgid "Introduction"
+msgstr ""
+
+#: ../../language/introduction.md:3
+msgid "A MoonBit program consists of top-level definitions including:"
+msgstr ""
+
+#: ../../language/introduction.md:5
+msgid "type definitions"
+msgstr ""
+
+#: ../../language/introduction.md:6
+msgid "function definitions"
+msgstr ""
+
+#: ../../language/introduction.md:7
+msgid "constant definitions and variable bindings"
+msgstr ""
+
+#: ../../language/introduction.md:8
+msgid "`init` functions, `main` function and/or `test` blocks."
+msgstr ""
+
+#: ../../language/introduction.md:10
+msgid "Expressions and Statements"
+msgstr ""
+
+#: ../../language/introduction.md:12
+msgid ""
+"MoonBit distinguishes between statements and expressions. In a function "
+"body, only the last clause should be an expression, which serves as a "
+"return value. For example:"
+msgstr ""
+
+#: ../../language/introduction.md:14
+msgid ""
+"fn foo() -> Int {\n"
+"  let x = 1\n"
+"  x + 1\n"
+"}\n"
+"\n"
+"fn bar() -> Int {\n"
+"  let x = 1\n"
+"  //! x + 1\n"
+"  x + 2\n"
+"}"
+msgstr ""
+
+#: ../../language/introduction.md:28
+msgid "Expressions include:"
+msgstr ""
+
+#: ../../language/introduction.md:30
+msgid ""
+"Value literals (e.g. Boolean values, numbers, characters, strings, "
+"arrays, tuples, structs)"
+msgstr ""
+
+#: ../../language/introduction.md:31
+msgid "Arithmetical, logical, or comparison operations"
+msgstr ""
+
+#: ../../language/introduction.md:32
+msgid ""
+"Accesses to array elements (e.g. `a[0]`), struct fields (e.g `r.x`), "
+"tuple components (e.g. `t.0`), etc."
+msgstr ""
+
+#: ../../language/introduction.md:33
+msgid "Variables and (capitalized) enum constructors"
+msgstr ""
+
+#: ../../language/introduction.md:34
+msgid "Anonymous local function definitions"
+msgstr ""
+
+#: ../../language/introduction.md:35
+msgid "`match`, `if`, `loop` expressions, etc."
+msgstr ""
+
+#: ../../language/introduction.md:37
+msgid "Statements include:"
+msgstr ""
+
+#: ../../language/introduction.md:39
+msgid "Named local function definitions"
+msgstr ""
+
+#: ../../language/introduction.md:40
+msgid "Local variable bindings"
+msgstr ""
+
+#: ../../language/introduction.md:41
+msgid "Assignments"
+msgstr ""
+
+#: ../../language/introduction.md:42
+msgid "`return` statements"
+msgstr ""
+
+#: ../../language/introduction.md:43
+msgid "Any expression whose return type is `Unit`, (e.g. `ignore`)"
+msgstr ""
+
+#: ../../language/introduction.md:45
+msgid ""
+"A code block can contain multiple statements and one expression, and the "
+"value of the expression is the value of the code block."
+msgstr ""
+
+#: ../../language/introduction.md:47
+msgid "Variable Binding"
+msgstr ""
+
+#: ../../language/introduction.md:49
+msgid ""
+"A variable can be declared as mutable or immutable using `let mut` or "
+"`let`, respectively. A mutable variable can be reassigned to a new value,"
+" while an immutable one cannot."
+msgstr ""
+
+#: ../../language/introduction.md:51
+msgid "A constant can only be declared at top level and cannot be changed."
+msgstr ""
+
+#: ../../language/introduction.md:53
+msgid ""
+"let zero = 0\n"
+"\n"
+"const ZERO = 0\n"
+"\n"
+"fn main {\n"
+"  //! const ZERO = 0 \n"
+"  let mut i = 10\n"
+"  i = 20\n"
+"  println(i + zero + ZERO)\n"
+"}"
+msgstr ""
+
+#: ../../language/introduction.md:68
+msgid "A top level variable binding"
+msgstr ""
+
+#: ../../language/introduction.md:69
+msgid ""
+"requires **explicit** type annotation (unless defined using literals such"
+" as string, byte or numbers)"
+msgstr ""
+
+#: ../../language/introduction.md:70
+msgid "can't be mutable (use `Ref` instead)"
+msgstr ""
+
+#: ../../language/introduction.md:74
+msgid "Naming conventions"
+msgstr ""
+
+#: ../../language/introduction.md:76
+msgid ""
+"Variables, functions should start with lowercase letters `a-z` and can "
+"contain letters, numbers, underscore, and other non-ascii unicode chars. "
+"It is recommended to name them with snake_case."
+msgstr ""
+
+#: ../../language/introduction.md:79
+msgid ""
+"Constants, types should start with uppercase letters `A-Z` and can "
+"contain letters, numbers, underscore, and other non-ascii unicode chars. "
+"It is recommended to name them with PascalCase or SCREAMING_SNAKE_CASE."
+msgstr ""
+
+#: ../../language/introduction.md:82
+msgid "Keywords"
+msgstr ""
+
+#: ../../language/introduction.md:84
+msgid "The following are the keywords and should not be used:"
+msgstr ""
+
+#: ../../language/introduction.md:86
+msgid ""
+"[\n"
+"  \"as\", \"else\", \"extern\", \"fn\", \"fnalias\", \"if\", \"let\", "
+"\"const\", \"match\", \"using\",\n"
+"  \"mut\", \"type\", \"typealias\", \"struct\", \"enum\", \"trait\", "
+"\"traitalias\", \"derive\",\n"
+"  \"while\", \"break\", \"continue\", \"import\", \"return\", \"throw\", "
+"\"raise\", \"try\", \"catch\",\n"
+"  \"pub\", \"priv\", \"readonly\", \"true\", \"false\", \"_\", \"test\", "
+"\"loop\", \"for\", \"in\", \"impl\",\n"
+"  \"with\", \"guard\", \"async\", \"is\", \"suberror\", \"and\", "
+"\"letrec\", \"enumview\", \"noraise\",\n"
+"  \"defer\",\n"
+"]\n"
+msgstr ""
+
+#: ../../language/introduction.md:97
+msgid "Reserved Keywords"
+msgstr ""
+
+#: ../../language/introduction.md:99
+msgid ""
+"The following are the reserved keywords. Using them would introduce a "
+"warning. They might be turned into keywords in the future."
+msgstr ""
+
+#: ../../language/introduction.md:102
+msgid ""
+"[\n"
+"  \"module\", \"move\", \"ref\", \"static\", \"super\", \"unsafe\", "
+"\"use\", \"where\", \"await\",\n"
+"  \"dyn\", \"abstract\", \"do\", \"final\", \"macro\", \"override\", "
+"\"typeof\", \"virtual\", \"yield\",\n"
+"  \"local\", \"method\", \"alias\", \"assert\", \"package\", \"recur\", "
+"\"using\", \"enumview\",\n"
+"  \"isnot\", \"define\", \"downcast\", \"inherit\", \"member\", "
+"\"namespace\", \"static\", \"upcast\",\n"
+"  \"use\", \"void\", \"lazy\", \"include\", \"mixin\", \"protected\", "
+"\"sealed\", \"constructor\",\n"
+"  \"atomic\", \"volatile\", \"anyframe\", \"anytype\", \"asm\", "
+"\"await\", \"comptime\", \"errdefer\",\n"
+"  \"export\", \"opaque\", \"orelse\", \"resume\", \"threadlocal\", "
+"\"unreachable\", \"dynclass\",\n"
+"  \"dynobj\", \"dynrec\", \"var\", \"finally\", \"noasync\",\n"
+"]\n"
+msgstr ""
+
+#: ../../language/introduction.md:115
+msgid "Program entrance"
+msgstr ""
+
+#: ../../language/introduction.md:117
+msgid "`init` and `main`"
+msgstr ""
+
+#: ../../language/introduction.md:118
+msgid ""
+"There is a specialized function called `init` function. The `init` "
+"function is special:"
+msgstr ""
+
+#: ../../language/introduction.md:120
+msgid "It has no parameter list nor return type."
+msgstr ""
+
+#: ../../language/introduction.md:121
+msgid "There can be multiple `init` functions in the same package."
+msgstr ""
+
+#: ../../language/introduction.md:122
+msgid ""
+"An `init` function can't be explicitly called or referred to by other "
+"functions.  Instead, all `init` functions will be implicitly called when "
+"initializing a package. Therefore, `init` functions should only consist "
+"of statements."
+msgstr ""
+
+#: ../../language/introduction.md:125
+msgid ""
+"fn init {\n"
+"  let x = 1\n"
+"  println(x)\n"
+"}"
+msgstr ""
+
+#: ../../language/introduction.md:133
+msgid ""
+"There is another specialized function called `main` function. The `main` "
+"function is the main entrance of the program, and it will be executed "
+"after the initialization stage."
+msgstr ""
+
+#: ../../language/introduction.md:135
+msgid "Same as the `init` function, it has no parameter list nor return type."
+msgstr ""
+
+#: ../../language/introduction.md:137
+msgid ""
+"fn main {\n"
+"  let x = 2\n"
+"  println(x)\n"
+"}"
+msgstr ""
+
+#: ../../language/introduction.md:145
+msgid "The previous two code snippets will print the following at runtime:"
+msgstr ""
+
+#: ../../language/introduction.md:147
+msgid ""
+"1\n"
+"2\n"
+msgstr ""
+
+#: ../../language/introduction.md:152
+msgid ""
+"Only packages that are `main` packages can define such `main` function. "
+"Check out [build system tutorial](/toolchain/moon/tutorial) for detail. "
+"In current projects, this is configured in `moon.pkg`:"
+msgstr ""
+
+#: ../../language/introduction.md:154
+msgid "moon.pkg"
+msgstr ""
+
+#: ../../language/introduction.md:154
+msgid ""
+"options(\n"
+"  \"is-main\": true,\n"
+")\n"
+msgstr ""
+
+#: ../../language/introduction.md:159
+msgid "`test`"
+msgstr ""
+
+#: ../../language/introduction.md:161
+msgid ""
+"There's also a top-level structure called `test` block. A `test` block "
+"defines inline tests, such as:"
+msgstr ""
+
+#: ../../language/introduction.md:163
+msgid ""
+"test \"test_name\" {\n"
+"  assert_eq(1 + 1, 2)\n"
+"  assert_eq(2 + 2, 4)\n"
+"  inspect([1, 2, 3], content=\"[1, 2, 3]\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/introduction.md:169
+msgid ""
+"The following contents will use `test` block and `main` function to "
+"demonstrate the execution result, and we assume that all the `test` "
+"blocks pass unless stated otherwise."
+msgstr ""
+

@@ -1,0 +1,93 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0022.md:1
+msgid "E0022"
+msgstr ""
+
+#: ../../language/error_codes/E0022.md:3
+msgid "Warning name: `ambiguous_block`"
+msgstr ""
+
+#: ../../language/error_codes/E0022.md:5
+msgid ""
+"Ambiguous block expression. In MoonBit, the expression `{ value }` is "
+"ambiguous because it could be interpreted as a block expression or a "
+"struct literal. For now, we treat it as a struct literal, but writing "
+"such expressions is discouraged."
+msgstr ""
+
+#: ../../language/error_codes/E0022.md:10
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0022.md:12
+msgid ""
+"///|\n"
+"struct S {\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"fn main {\n"
+"  let value = 3\n"
+"  let s = { value }\n"
+"  ignore(s)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0022.md:16
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0022.md:18
+msgid ""
+"If you want to construct a struct using the struct literal, you can add a"
+" comma to the end of the struct literal. Or you can call formatter on "
+"this buffer to have the comma added automatically."
+msgstr ""
+
+#: ../../language/error_codes/E0022.md:22
+msgid ""
+"///|\n"
+"fn main {\n"
+"  let value = 3\n"
+"  let s = { value, }\n"
+"  ignore(s)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0022.md:28
+msgid ""
+"If you are using it as a block expression, please remove the braces as it"
+" has only one expression and is equivalent to the expression `value`:"
+msgstr ""
+
+#: ../../language/error_codes/E0022.md:31
+msgid ""
+"///|\n"
+"fn main {\n"
+"  let value = 3\n"
+"  let s = value\n"
+"  ignore(s)\n"
+"}\n"
+msgstr ""
+

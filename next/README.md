@@ -51,6 +51,13 @@ LANGUAGE="zh_CN" make html
 python3 -m http.server -d _build/html
 ```
 
+For Japanese version:
+
+```bash
+LANGUAGE="ja" make html
+python3 -m http.server -d _build/html
+```
+
 For PDF:
 
 ```bash
@@ -79,6 +86,12 @@ You can also use the helper script (uses the same `make gettext` +
 
 ```bash
 python3 scripts/i18n.py all
+```
+
+For Japanese locale catalog updates:
+
+```bash
+python3 scripts/i18n.py all --locale ja
 ```
 
 Other subcommands:

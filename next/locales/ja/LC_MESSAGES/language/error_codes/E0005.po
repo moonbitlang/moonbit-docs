@@ -1,0 +1,91 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0005.md:1
+msgid "E0005"
+msgstr ""
+
+#: ../../language/error_codes/E0005.md:3
+msgid "Warning name: `unused_type_variable`"
+msgstr ""
+
+#: ../../language/error_codes/E0005.md:5
+msgid "Unused generic type variable."
+msgstr ""
+
+#: ../../language/error_codes/E0005.md:7
+msgid ""
+"In some cases, using types with unused generic type variables will make "
+"it impossible for the type checker to infer the type of the unused "
+"variable, leading to [E0013](./E0013.md). This might lead to cryptic "
+"error messages, even unexpected runtime behavior."
+msgstr ""
+
+#: ../../language/error_codes/E0005.md:12
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0005.md:14
+msgid ""
+"///|\n"
+"priv struct Foo[T] {\n"
+"  bar : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let bar : Foo[Int] = { bar: 42 }\n"
+"  inspect(bar.bar, content=\"42\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0005.md:18
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0005.md:20
+msgid "If the type variable is indeed useless, remove the unused type variable."
+msgstr ""
+
+#: ../../language/error_codes/E0005.md:22
+msgid ""
+"\n"
+"///|\n"
+"priv struct Foo {\n"
+"  bar : Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0005.md:28
+msgid ""
+"If you wish to keep the type variable, you can use `_` to indicate that "
+"the type variable is intentionally unused."
+msgstr ""
+
+#: ../../language/error_codes/E0005.md:31
+msgid ""
+"\n"
+"///|\n"
+"priv struct Foo2[_] {\n"
+"  bar2 : Int\n"
+"}\n"
+msgstr ""
+

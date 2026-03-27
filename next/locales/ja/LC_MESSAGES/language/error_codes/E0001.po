@@ -1,0 +1,133 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0001.md:1
+msgid "E0001"
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:3
+msgid "Warning name: `unused_value`"
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:5
+msgid "Unused function."
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:7
+msgid ""
+"This function is not used by any other part of your code, nor marked with"
+" `pub` visibility."
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:10
+msgid ""
+"Note that this warning might uncover other bugs in your code. For "
+"example, if there are two functions in your codebase that has similar "
+"name, you might just call the other function by mistake."
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:14
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:16
+msgid ""
+"///|\n"
+"fn greeting() -> String {\n"
+"  \"Hello!\"\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  fn local_greeting() -> String {\n"
+"    \"Hello, world!\"\n"
+"  }\n"
+"\n"
+"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:20
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:22
+msgid "There are multiple ways to fix this warning:"
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:24
+msgid ""
+"If the function is indeed useless, you can remove the definition of the "
+"function."
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:26
+msgid ""
+"If this function is at the toplevel (i.e., not local), and is part of the"
+" public API of your module, you can add the `pub` keyword to the "
+"function."
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:28
+msgid ""
+"\n"
+"///|\n"
+"pub fn greeting() -> String {\n"
+"  \"Hello!\"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:34
+msgid ""
+"If you made a typo in the function name, you can rename the function to "
+"the correct name at the call site."
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:37
+msgid ""
+"There are some cases where you might want to keep the function private "
+"and unused at the same time. In this case, you can call `ignore()` on the"
+" function to force the use of it."
+msgstr ""
+
+#: ../../language/error_codes/E0001.md:41
+msgid ""
+"\n"
+"///| \n"
+"fn unused() -> String {\n"
+"  \"Hello, world!\"\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(unused)\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  fn local_greeting() -> String {\n"
+"    \"Hello, world!\"\n"
+"  }\n"
+"\n"
+"  ignore(local_greeting)\n"
+"}\n"
+msgstr ""
+

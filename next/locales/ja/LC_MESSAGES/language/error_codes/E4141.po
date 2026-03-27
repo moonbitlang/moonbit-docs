@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4141.md:1
+msgid "E4141"
+msgstr ""
+
+#: ../../language/error_codes/E4141.md:3
+msgid ""
+"This form of application is invalid for the argument, because it is not "
+"declared as optional."
+msgstr ""
+
+#: ../../language/error_codes/E4141.md:6
+msgid ""
+"This error happens when you try to forward an optional value to an "
+"argument to a function. This is only allowed when the argument is "
+"declared as optional argument. Even if the argument is declared as a "
+"labelled argument with default value, it is not allowed to forward an "
+"optional value to it."
+msgstr ""
+
+#: ../../language/error_codes/E4141.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4141.md:13
+msgid ""
+"///|\n"
+"fn f(opt~ : Int) -> Unit {\n"
+"  println(\"opt: \\{opt}\")\n"
+"}\n"
+"\n"
+"///|\n"
+"fn main {\n"
+"  let opt = Some(42)\n"
+"  // Error: This form of application is invalid for argument opt~, "
+"because it is not declared with opt? : _.\n"
+"  f(opt?)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4141.md:17
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4141.md:19
+msgid ""
+"If you have control over the function you wish to call, you can change "
+"the argument to be optional."
+msgstr ""
+
+#: ../../language/error_codes/E4141.md:22
+msgid ""
+"///|\n"
+"fn f(opt? : Int) -> Unit {\n"
+"  let opt = match opt {\n"
+"    Some(opt) => opt\n"
+"    None => 4\n"
+"  }\n"
+"  println(\"opt: \\{opt}\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4141.md:26
+msgid ""
+"However, if you does not have control over the function, you can unwrap "
+"the optional value before passing it to the function."
+msgstr ""
+
+#: ../../language/error_codes/E4141.md:29
+msgid ""
+"///|\n"
+"fn main {\n"
+"  let opt = Some(42).unwrap_or(4)\n"
+"  f(opt~)\n"
+"}\n"
+msgstr ""
+

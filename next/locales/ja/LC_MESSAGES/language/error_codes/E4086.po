@@ -1,0 +1,81 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4086.md:1
+msgid "E4086"
+msgstr ""
+
+#: ../../language/error_codes/E4086.md:3
+msgid "The labels are required by this function, but not supplied."
+msgstr ""
+
+#: ../../language/error_codes/E4086.md:5
+msgid ""
+"Sometimes this error occurs when you mistakenly treat a labelled argument"
+" as a positional argument. There are some common functions that require "
+"labelled arguments, such as:"
+msgstr ""
+
+#: ../../language/error_codes/E4086.md:9
+msgid "`@test.snapshot`. Remember to supply `filename` as a labelled argument."
+msgstr ""
+
+#: ../../language/error_codes/E4086.md:10
+msgid "`@test.inspect`. Remember to supply `content` as a labelled argument."
+msgstr ""
+
+#: ../../language/error_codes/E4086.md:12
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4086.md:14
+msgid ""
+"pub fn f(name~ : String) -> Unit {\n"
+"  println(\"Hello, \\{name}\")\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  f(\"John\") // Error: The labels name~ are required by this function, "
+"but not supplied.\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4086.md:18
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4086.md:20
+msgid ""
+"Check the signature of the function and provide the correct labelled "
+"argument."
+msgstr ""
+
+#: ../../language/error_codes/E4086.md:22
+msgid ""
+"pub fn f(name~ : String) -> Unit {\n"
+"  println(\"Hello, \\{name}\")\n"
+"}\n"
+"\n"
+"fn main {\n"
+"  f(name=\"John\")\n"
+"}"
+msgstr ""
+

@@ -1,0 +1,123 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0053.md:1
+msgid "E0053"
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:3
+msgid "Warning name: `unused_trait_bound`"
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:5
+msgid "Unused trait bound."
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:7
+msgid ""
+"The polymorphic function or method has a trait bound that is not used. "
+"This could be a potential bug that you have forgotten to apply the "
+"methods from the trait."
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:13
+msgid ""
+"///|\n"
+"trait Any {}\n"
+"\n"
+"///|\n"
+"pub fn[T : Any] check(_ : T) -> Unit {\n"
+"  println(\"Hello\")\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn[T : Compare] shortlex(a : Array[T], b : Array[T]) -> Int {\n"
+"  Int::compare(a.length(), b.length())\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:17
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:19
+msgid "There are multiple ways to fix this warning:"
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:21
+msgid "If this trait bound is unnecessary, you can remove it"
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:22
+msgid ""
+"\n"
+"///|\n"
+"pub fn[T] check(_ : T) -> Unit {\n"
+"  println(\"Hello\")\n"
+"}\n"
+"\n"
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:27
+msgid "You can cast the variable to a trait object"
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:28
+msgid ""
+"\n"
+"///|\n"
+"pub fn[T : Any] check_any(t : T) -> Unit {\n"
+"  let _ = t as &Any\n"
+"  println(\"Hello\")\n"
+"}\n"
+"\n"
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:33
+msgid "You can use the methods defined in the Trait"
+msgstr ""
+
+#: ../../language/error_codes/E0053.md:34
+msgid ""
+"\n"
+"///|\n"
+"pub fn[T : Compare] shortlex(a : Array[T], b : Array[T]) -> Int {\n"
+"  match Int::compare(a.length(), b.length()) {\n"
+"    _..<0 => -1\n"
+"    1..<_ => 1\n"
+"    0 =>\n"
+"      for i = 0; i < a.length(); i = i + 1 {\n"
+"        match T::compare(a[i], b[i]) {\n"
+"          _..<0 => return -1\n"
+"          1..<_ => return 1\n"
+"          0 => ()\n"
+"        }\n"
+"      } else {\n"
+"        return 0\n"
+"      }\n"
+"  }\n"
+"}\n"
+msgstr ""
+

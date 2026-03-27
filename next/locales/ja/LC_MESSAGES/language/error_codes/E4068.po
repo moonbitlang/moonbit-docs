@@ -1,0 +1,124 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4068.md:1
+msgid "E4068"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:3
+msgid "Main function is already defined."
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:5
+msgid ""
+"In MoonBit, a `main` package contains a single `main` function that "
+"serves as the entry point of the program. Therefore, you cannot define "
+"more than one `main` function in the main package. If you want to have "
+"multiple programs to be built as separate binaries, you can use multiple "
+"`main` packages within the same module."
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:13
+msgid "Suppose in package `main`:"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:15
+msgid "`main/moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:17
+#: ../../language/error_codes/E4068.md:41
+msgid ""
+"{\n"
+"  \"is-main\": true\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:23
+msgid "`main/main.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:25
+msgid ""
+"fn main {\n"
+"  println(\"Hello, World!\")\n"
+"}\n"
+"\n"
+"fn main { // Error: Main function is already defined at ...\n"
+"  println(\"Hello, World! Again!\")\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:29
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:31
+msgid "You can either remove the extra `main` function:"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:33
+msgid ""
+"fn main {\n"
+"  println(\"Hello, World!\")\n"
+"}\n"
+"// Remove the extra main function\n"
+"//- fn main {\n"
+"//-   println(\"Hello, World! Again!\")\n"
+"//- }"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:37
+msgid ""
+"Or you can move the extra `main` function to a different package, say "
+"`main2`:"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:39
+msgid "`main2/moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:47
+msgid "`main2/main.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:49
+msgid ""
+"fn main {\n"
+"  println(\"Hello, World! Again!\")\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:53
+msgid "while keeping the `main/main.mbt` contains only one main function:"
+msgstr ""
+
+#: ../../language/error_codes/E4068.md:55
+msgid ""
+"fn main {\n"
+"  println(\"Hello, World!\")\n"
+"}"
+msgstr ""
+

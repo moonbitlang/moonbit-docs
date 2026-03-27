@@ -1,0 +1,120 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4073.md:1
+msgid "E4073"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:3
+msgid "Cannot provide default implementation for traits from other packages."
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:5
+msgid ""
+"This is a corollary of the [orphan rules of traits and types in "
+"MoonBit](../packages.md#trait-implementations). Default implementation "
+"can be seen as implementing the trait for all possible types, including "
+"types defined within or outside of current package. Therefore, it is only"
+" possible for default implementation to be defined in the package of the "
+"trait, otherwise it would violate the orphan rules."
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:12
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:14
+msgid ""
+"Suppose you have a trait `T` defined in package `a` in module "
+"`username/hello`:"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:16
+msgid "`a/a.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:18
+msgid ""
+"// We need the trait to be pub(open) so that it can be implemented from "
+"outside.\n"
+"pub(open) trait T {\n"
+"  f(Self) -> Int\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:22
+msgid ""
+"And when you want to define a default implementation for the trait in "
+"another package, say `b`:"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:25
+msgid "`b/moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:27
+msgid ""
+"{\n"
+"  \"import\": [\n"
+"    \"username/hello/a\"\n"
+"  ]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:35
+#: ../../language/error_codes/E4073.md:47
+msgid "`b/b.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:37
+msgid ""
+"impl @a.T with f(self : Self) -> Int {\n"
+"  //           ^\n"
+"  // Error: Cannot provide default implementation for trait @a.T from "
+"package a\n"
+"  ignore(self)\n"
+"  0\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:41
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:43
+msgid ""
+"To fix this error, you can move the definition of the trait and the "
+"default implementation of this trait into the same package. Say you can "
+"move the trait definition into package `b`:"
+msgstr ""
+
+#: ../../language/error_codes/E4073.md:49
+msgid ""
+"pub(open) trait T {\n"
+"  f(Self) -> Int\n"
+"}\n"
+"\n"
+"impl T with f(self : Self) -> Int {\n"
+"  ignore(self)\n"
+"  0\n"
+"}"
+msgstr ""
+

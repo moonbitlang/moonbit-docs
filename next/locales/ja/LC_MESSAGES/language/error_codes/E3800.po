@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E3800.md:1
+msgid "E3800"
+msgstr ""
+
+#: ../../language/error_codes/E3800.md:3
+msgid "Expecting a newline or `;` here, but encountered another delimiter."
+msgstr ""
+
+#: ../../language/error_codes/E3800.md:5
+msgid ""
+"Constructors in `enum` definition, fields in `struct` definition, and "
+"constructors in error type `type!` definition, should be separated by a "
+"newline or a `;`. It is so common for AI to generate code with a wrong "
+"delimiter `,` that we specifically catch this error to help you and AI "
+"fix it."
+msgstr ""
+
+#: ../../language/error_codes/E3800.md:10
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E3800.md:12
+msgid ""
+"///|\n"
+"enum V {\n"
+"  // Error: Expecting a newline or `;` here, but encountered `,`.\n"
+"  A,\n"
+"}\n"
+"\n"
+"///|\n"
+"struct S {\n"
+"  // Error: Expecting a newline or `;` here, but encountered `,`.\n"
+"  a : Int,\n"
+"}\n"
+"\n"
+"///|\n"
+"suberror E {\n"
+"  // Error: Expecting a newline or `;` here, but encountered `,`.\n"
+"  A,\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3800.md:16
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E3800.md:18
+msgid ""
+"Replace `,` with a newline or `;` as appropriate. We suggest using a "
+"newline since it conforms to the MoonBit style suggested by the MoonBit "
+"formatter."
+msgstr ""
+
+#: ../../language/error_codes/E3800.md:21
+msgid ""
+"///|\n"
+"enum V {\n"
+"  A\n"
+"}\n"
+"\n"
+"///|\n"
+"struct S {\n"
+"  a : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"suberror E {\n"
+"  A\n"
+"}\n"
+msgstr ""
+

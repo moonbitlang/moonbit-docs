@@ -1,0 +1,442 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error-handling.md:1
+msgid "Error handling"
+msgstr ""
+
+#: ../../language/error-handling.md:3
+msgid ""
+"Error handling has always been at core of our language design. In the "
+"following we'll be explaining how error handling is done in MoonBit. We "
+"assume you have some prior knowledge of MoonBit, if not, please checkout "
+"[A tour of MoonBit](../tutorial/tour.md)."
+msgstr ""
+
+#: ../../language/error-handling.md:8
+msgid "Error Types"
+msgstr ""
+
+#: ../../language/error-handling.md:10
+msgid ""
+"In MoonBit, all the error values can be represented by the `Error` type, "
+"a generalized error type."
+msgstr ""
+
+#: ../../language/error-handling.md:13
+msgid ""
+"However, an `Error` cannot be constructed directly. A concrete error type"
+" must be defined, in the following forms:"
+msgstr ""
+
+#: ../../language/error-handling.md:16
+msgid ""
+"suberror E1 { E1(Int) } // error type E1 has one constructor E1 with an "
+"Int payload\n"
+"\n"
+"suberror E2 // error type E2 has one constructor E2 with no payload\n"
+"\n"
+"suberror E3 { // error type E3 has three constructors like a normal enum "
+"type\n"
+"  A\n"
+"  B(Int, x~ : String)\n"
+"  C(mut x~ : String, Char, y~ : Bool)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:24
+msgid ""
+"The older `suberror A B` syntax is deprecated. Use `suberror A { A(B) }` "
+"instead."
+msgstr ""
+
+#: ../../language/error-handling.md:27
+msgid ""
+"The error types can be promoted to the `Error` type automatically, and "
+"pattern matched back:"
+msgstr ""
+
+#: ../../language/error-handling.md:30
+msgid ""
+"suberror CustomError { CustomError(UInt) }\n"
+"\n"
+"test {\n"
+"  let e : Error = CustomError(42)\n"
+"  guard e is CustomError(m)\n"
+"  assert_eq(m, 42)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:36
+msgid ""
+"Since the type `Error` can include multiple error types, pattern matching"
+" on the `Error` type must use the wildcard `_` to match all error types. "
+"For example,"
+msgstr ""
+
+#: ../../language/error-handling.md:39
+msgid ""
+"fn f(e : Error) -> Unit {\n"
+"  match e {\n"
+"    E2 => println(\"E2\")\n"
+"    A => println(\"A\")\n"
+"    B(i, x~) => println(\"B(\\{i}, \\{x})\")\n"
+"    _ => println(\"unknown error\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:45
+msgid ""
+"The `Error` is meant to be used where no concrete error type is needed, "
+"or a catch-all for all kinds of sub-errors is needed."
+msgstr ""
+
+#: ../../language/error-handling.md:48
+msgid "Failure"
+msgstr ""
+
+#: ../../language/error-handling.md:50
+msgid "A builtin error type is `Failure`."
+msgstr ""
+
+#: ../../language/error-handling.md:52
+msgid ""
+"There's a handly `fail` function, which is merely a constructor with a "
+"pre-defined output template for showing both the error and the source "
+"location. In practice, `fail` is always preferred over `Failure`."
+msgstr ""
+
+#: ../../language/error-handling.md:58
+msgid ""
+"#callsite(autofill(loc))\n"
+"pub fn[T] fail(msg : String, loc~ : SourceLoc) -> T raise Failure {\n"
+"  raise Failure(\"FAILED: \\{loc} \\{msg}\")\n"
+"}"
+msgstr ""
+
+#: ../../language/error-handling.md:66
+msgid "Throwing Errors"
+msgstr ""
+
+#: ../../language/error-handling.md:68
+msgid ""
+"The keyword `raise` is used to interrupt the function execution and "
+"return an error."
+msgstr ""
+
+#: ../../language/error-handling.md:71
+msgid ""
+"The type declaration of a function can use `raise` with an Error type to "
+"indicate that the function might raise an error during an execution. For "
+"example, the following function `div` might return an error of type "
+"`DivError`:"
+msgstr ""
+
+#: ../../language/error-handling.md:75
+msgid ""
+"suberror DivError { DivError(String) }\n"
+"\n"
+"fn div(x : Int, y : Int) -> Int raise DivError {\n"
+"  if y == 0 {\n"
+"    raise DivError(\"division by zero\")\n"
+"  }\n"
+"  x / y\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:82
+msgid ""
+"The `Error` can be used when the concrete error type is not important. "
+"For convenience, you can omit the error type after the `raise` to "
+"indicate that the `Error` type is used. For example, the following "
+"function signatures are equivalent:"
+msgstr ""
+
+#: ../../language/error-handling.md:87
+msgid ""
+"fn f() -> Unit raise {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn g() -> Unit raise Error {\n"
+"  let h : () -> Unit raise = fn() raise { fail(\"fail\") }\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:94
+msgid ""
+"For functions that are generic in the error type, you can use the `Error`"
+" bound to do that. For example,"
+msgstr ""
+
+#: ../../language/error-handling.md:97
+msgid ""
+"// Result::unwrap_or_error\n"
+"fn[T, E : Error] unwrap_or_error(result : Result[T, E]) -> T raise E {\n"
+"  match result {\n"
+"    Ok(x) => x\n"
+"    Err(e) => raise e\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:103
+msgid ""
+"For functions that do not raise an error, you can add `noraise` in the "
+"signature. For example:"
+msgstr ""
+
+#: ../../language/error-handling.md:106
+msgid ""
+"fn add(a : Int, b : Int) -> Int noraise {\n"
+"  a + b\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:112
+msgid "Error Polymorphism"
+msgstr ""
+
+#: ../../language/error-handling.md:114
+msgid ""
+"It happens when a higher order function accepts another function as "
+"parameter. The function as parameter may or may not throw error, which in"
+" turn affects the behavior of this function."
+msgstr ""
+
+#: ../../language/error-handling.md:118
+msgid "A notable example is `map` of `Array`:"
+msgstr ""
+
+#: ../../language/error-handling.md:120
+msgid ""
+"fn[T] map(array : Array[T], f : (T) -> T raise) -> Array[T] raise {\n"
+"  let mut res = []\n"
+"  for x in array {\n"
+"    res.push(f(x))\n"
+"  }\n"
+"  res\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:126
+msgid ""
+"However, writing so would make the `map` function constantly having the "
+"possibility of throwing errors, which is not the case."
+msgstr ""
+
+#: ../../language/error-handling.md:129
+msgid ""
+"Thus, the error polymorphism is introduced. You may use `raise?` to "
+"signify that an error may or may not be throw."
+msgstr ""
+
+#: ../../language/error-handling.md:132
+msgid ""
+"fn[T] map_with_polymorphism(\n"
+"  array : Array[T],\n"
+"  f : (T) -> T raise?\n"
+") -> Array[T] raise? {\n"
+"  let mut res = []\n"
+"  for x in array {\n"
+"    res.push(f(x))\n"
+"  }\n"
+"  res\n"
+"}\n"
+"\n"
+"fn[T] map_without_error(\n"
+"  array : Array[T],\n"
+"  f : (T) -> T noraise,\n"
+") -> Array[T] noraise {\n"
+"  map_with_polymorphism(array, f)\n"
+"}\n"
+"\n"
+"fn[T] map_with_error(array : Array[T], f : (T) -> T raise) -> Array[T] "
+"raise {\n"
+"  map_with_polymorphism(array, f)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:138
+msgid ""
+"The signature of the `map_with_polymorphism` will be determined by the "
+"actual parameter."
+msgstr ""
+
+#: ../../language/error-handling.md:141
+msgid "Handling Errors"
+msgstr ""
+
+#: ../../language/error-handling.md:143
+msgid ""
+"Applying the function normally will rethrow the error directly in case of"
+" an error. For example:"
+msgstr ""
+
+#: ../../language/error-handling.md:146
+msgid ""
+"fn div_reraise(x : Int, y : Int) -> Int raise DivError {\n"
+"  div(x, y) // Rethrow the error if `div` raised an error\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:152
+msgid "However, you may want to handle the errors."
+msgstr ""
+
+#: ../../language/error-handling.md:154
+msgid "Try ... Catch"
+msgstr ""
+
+#: ../../language/error-handling.md:156
+msgid "You can use `try` and `catch` to catch and handle errors, for example:"
+msgstr ""
+
+#: ../../language/error-handling.md:158
+msgid ""
+"fn main {\n"
+"  try div(42, 0) catch {\n"
+"    DivError(s) => println(s)\n"
+"  } noraise {\n"
+"    v => println(v)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:166
+msgid "Output"
+msgstr ""
+
+#: ../../language/error-handling.md:166
+msgid "division by zero\n"
+msgstr ""
+
+#: ../../language/error-handling.md:170
+msgid ""
+"Here, `try` is used to call a function that might throw an error, and "
+"`catch` is used to match and handle the caught error. If no error is "
+"caught, the catch block will not be executed and the `noraise` block will"
+" be executed instead."
+msgstr ""
+
+#: ../../language/error-handling.md:174
+msgid ""
+"The `noraise` block can be omitted if no action is needed when no error "
+"is caught. For example:"
+msgstr ""
+
+#: ../../language/error-handling.md:177
+msgid ""
+"try { println(div(42, 0)) } catch {\n"
+"  _ => println(\"Error\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:184
+msgid ""
+"When the body of `try` is a simple expression, the curly braces, and even"
+" the `try` keyword can be omitted. For example:"
+msgstr ""
+
+#: ../../language/error-handling.md:187
+msgid ""
+"let a = div(42, 0) catch { _ => 0 }\n"
+"println(a)\n"
+msgstr ""
+
+#: ../../language/error-handling.md:194
+msgid "Transforming to Result"
+msgstr ""
+
+#: ../../language/error-handling.md:196
+msgid ""
+"You can also catch the potential error and transform into a first-class "
+"value of the [`Result`](/language/fundamentals.md#option-and-result) "
+"type, by using `try?` before an expression that may throw error:"
+msgstr ""
+
+#: ../../language/error-handling.md:200
+msgid ""
+"test {\n"
+"  let res = try? (div(6, 0) * div(6, 3))\n"
+"  inspect(\n"
+"    res,\n"
+"    content=(\n"
+"      #|Err(\"division by zero\")\n"
+"    ),\n"
+"  )\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:206
+msgid "Panic on Errors"
+msgstr ""
+
+#: ../../language/error-handling.md:208
+msgid "You can also panic directly when an unexpected error occurs:"
+msgstr ""
+
+#: ../../language/error-handling.md:210
+msgid ""
+"fn remainder(a : Int, b : Int) -> Int raise DivError {\n"
+"  if b == 0 {\n"
+"    raise DivError(\"division by zero\")\n"
+"  }\n"
+"  let div = try! div(a, b)\n"
+"  a - b * div\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error-handling.md:216
+msgid "Error Inference"
+msgstr ""
+
+#: ../../language/error-handling.md:218
+msgid ""
+"Within a `try` block, several different kinds of errors can be raised. "
+"When that happens, the compiler will use the type `Error` as the common "
+"error type. Accordingly, the handler must use the wildcard `_` to make "
+"sure all errors are caught, and `e => raise e` to reraise the other "
+"errors. For example,"
+msgstr ""
+
+#: ../../language/error-handling.md:223
+msgid ""
+"fn f1() -> Unit raise E1 {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn f2() -> Unit raise E2 {\n"
+"  ...\n"
+"}\n"
+"\n"
+"try {\n"
+"  f1()\n"
+"  f2()\n"
+"} catch {\n"
+"  E1(_) => ...\n"
+"  E2 => ...\n"
+"  e => raise e\n"
+"}\n"
+msgstr ""
+

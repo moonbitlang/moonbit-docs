@@ -46,6 +46,13 @@ LANGUAGE="zh_CN" make html
 python3 -m http.server -d _build/html
 ```
 
+对于日文版本：
+
+```bash
+LANGUAGE="ja" make html
+python3 -m http.server -d _build/html
+```
+
 对于 PDF：
 
 ```bash
@@ -73,6 +80,12 @@ sphinx-intl update -p _build/gettext -l zh_CN
 
 ```bash
 python3 scripts/i18n.py all
+```
+
+更新日文翻译模板：
+
+```bash
+python3 scripts/i18n.py all --locale ja
 ```
 
 其他子命令：

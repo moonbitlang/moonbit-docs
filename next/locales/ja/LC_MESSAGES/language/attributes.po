@@ -1,0 +1,661 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-17 16:57+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes.md:1
+msgid "Attribute"
+msgstr ""
+
+#: ../../language/attributes.md:3
+msgid ""
+"Attributes are annotations placed before structures in source code. They "
+"take the form `#attribute(...)`. An attribute occupies the entire line, "
+"and newlines are not allowed within it.  Attributes do not normally "
+"affect the meaning of programs. Unused attributes will be reported as "
+"warnings."
+msgstr ""
+
+#: ../../language/attributes.md:7
+msgid "The syntax of attributes is defined as follows:"
+msgstr ""
+
+#: ../../language/attributes.md:9
+msgid ""
+"attribute ::= '#' attribute-name\n"
+"            | '#' attribute-name '(' attribute-arguments ')' \n"
+"\n"
+"attribute-name ::= LIDENT | LIDENT '.' LIDENT\n"
+"\n"
+"attribute-arguments ::= attribute-argument (',' attribute-argument )*\n"
+"\n"
+"attribute-argument ::= expr | LIDENT '=' expr \n"
+"\n"
+"expr ::= LIDENT | UIDENT | STRING | 'true' | 'false'\n"
+"       | LIDENT '.' LIDENT\n"
+"       | LIDENT '(' attribute-arguments ')'\n"
+"       | LIDENT '.' LIDENT '(' attribute-arguments ')'\n"
+msgstr ""
+
+#: ../../language/attributes.md:26
+msgid ""
+"Attributes have two categories: the built-in attributes and user-defined "
+"attributes. For example:"
+msgstr ""
+
+#: ../../language/attributes.md:28
+msgid ""
+"#deprecated(\"message\")\n"
+"#custom.attribute(key=\"value\", flag=true)\n"
+msgstr ""
+
+#: ../../language/attributes.md:32
+msgid ""
+"The first attribute is a built-in attribute; it does not have a namespace"
+" prefix in the attribute name. Built-in attributes are recognized by the "
+"MoonBit compiler and have specific meanings."
+msgstr ""
+
+#: ../../language/attributes.md:34
+msgid ""
+"The second attribute is a user-defined attribute; it has a namespace "
+"prefix `custom.` in the attribute name. User-defined attributes are "
+"ignored by the compiler, but can be used by external tools via parsing "
+"the source code."
+msgstr ""
+
+#: ../../language/attributes.md:37
+msgid ""
+"MoonBit is designed not to support runtime reflection. It's easy to "
+"abuse, making it impossible for toolchains (e.g., the compiler) to catch "
+"errors at compile time, which makes code harder to maintain. It also "
+"negatively impacts performance optimization."
+msgstr ""
+
+#: ../../language/attributes.md:39
+msgid ""
+"We perfer to use compile-time code generation, keeping the benefits of "
+"static typing and performance (should also be used judiciously to avoid "
+"unnecessary complexity)."
+msgstr ""
+
+#: ../../language/attributes.md:42
+msgid "Deprecated Attribute"
+msgstr ""
+
+#: ../../language/attributes.md:44
+msgid ""
+"The `#deprecated` attribute is used to mark an API as deprecated. MoonBit"
+" emits  a warning when the deprecated API is used, and if the API is "
+"listed in completion,  it will be shown with a strikethrough style. For "
+"example:"
+msgstr ""
+
+#: ../../language/attributes.md:48
+msgid ""
+"#deprecated\n"
+"pub fn foo() -> Unit {\n"
+"  ...\n"
+"}\n"
+"\n"
+"#deprecated(\"Use Bar2 instead\")\n"
+"pub(all) enum Bar {\n"
+"  Ctor1\n"
+"  Ctor2\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes.md:54
+msgid "The `#deprecated` attribute can be used in the following contexts:"
+msgstr ""
+
+#: ../../language/attributes.md:56
+msgid "Top-level value declarations (including `fn`, `let`, and `const`)"
+msgstr ""
+
+#: ../../language/attributes.md:57
+msgid "Top-level type declarations (including `type`, `struct`, and `enum`)"
+msgstr ""
+
+#: ../../language/attributes.md:58
+msgid "Trait method declarations"
+msgstr ""
+
+#: ../../language/attributes.md:59
+msgid "Trait default implementations"
+msgstr ""
+
+#: ../../language/attributes.md:61
+msgid "It has three forms:"
+msgstr ""
+
+#: ../../language/attributes.md:63
+msgid "`#deprecated`"
+msgstr ""
+
+#: ../../language/attributes.md:65
+msgid "Marks the item as deprecated with a default warning message."
+msgstr ""
+
+#: ../../language/attributes.md:67
+msgid "`#deprecated(\"Use new_function instead\")`"
+msgstr ""
+
+#: ../../language/attributes.md:69
+msgid ""
+"Marks the item as deprecated with a custom warning message. Every time "
+"the deprecated API is used, the provided message will be displayed as a "
+"warning."
+msgstr ""
+
+#: ../../language/attributes.md:71
+msgid "`#deprecated(\"Use new_function instead\", skip_current_package=true)`"
+msgstr ""
+
+#: ../../language/attributes.md:73
+msgid ""
+"Marks the item as deprecated with a custom warning message, but skips "
+"emitting warnings when the deprecated API is used within the same "
+"package."
+msgstr ""
+
+#: ../../language/attributes.md:75
+msgid "Alias Attribute"
+msgstr ""
+
+#: ../../language/attributes.md:77
+msgid ""
+"The `alias` attribute is used to overload operators related to indexing, "
+"or to create an alias name for a top-level function or variable. It has "
+"two forms:"
+msgstr ""
+
+#: ../../language/attributes.md:80
+msgid ""
+"`#alias(\"op\")`: where `op` is one of the following strings representing"
+" the indexing operators:"
+msgstr ""
+
+#: ../../language/attributes.md:82
+msgid "`_[_]`: for the indexing operator"
+msgstr ""
+
+#: ../../language/attributes.md:83
+msgid "`_[_]=_`: for the indexing assignment operator"
+msgstr ""
+
+#: ../../language/attributes.md:84
+msgid "`_[_:_]`: for the as view operator"
+msgstr ""
+
+#: ../../language/attributes.md:86
+msgid "`#alias(id)`: where `id` is a identifier representing the alias name."
+msgstr ""
+
+#: ../../language/attributes.md:88
+msgid "Both forms allowed additional arguments:"
+msgstr ""
+
+#: ../../language/attributes.md:90
+msgid "`visibility=\"modifier\"`"
+msgstr ""
+
+#: ../../language/attributes.md:92
+msgid ""
+"A labeled argument, changes the visibility of the alias. The `modifier` "
+"can be `pub` or `priv`. If not specified, the alias will have the same "
+"visibility as the original function or variable."
+msgstr ""
+
+#: ../../language/attributes.md:94
+msgid "`deprecated` or `deprecated=\"message\"`"
+msgstr ""
+
+#: ../../language/attributes.md:96
+msgid ""
+"Marks the alias as deprecated. If a message is provided, it will be "
+"displayed as a warning when the alias is used."
+msgstr ""
+
+#: ../../language/attributes.md:98
+msgid ""
+"To graceful migration from old API to new API, you can rename the old API"
+" directly, and create an alias with the old name, mark it as deprecated. "
+"For  example:"
+msgstr ""
+
+#: ../../language/attributes.md:101
+msgid ""
+"#alias(\"old_name\", deprecated)\n"
+"fn new_name() -> Unit {\n"
+"  ...\n"
+"}"
+msgstr ""
+
+#: ../../language/attributes.md:109
+msgid "`label_migration` Attribute"
+msgstr ""
+
+#: ../../language/attributes.md:111
+msgid ""
+"The `#label_migration` attribute is used to help you safely evolve your "
+"API  by warning users during the transition period."
+msgstr ""
+
+#: ../../language/attributes.md:114
+msgid "It has three following forms:"
+msgstr ""
+
+#: ../../language/attributes.md:116
+msgid "`#label_migration(id, fill=true, msg=\"message\")`"
+msgstr ""
+
+#: ../../language/attributes.md:118
+msgid ""
+"The `fill` argument is used when you want to refactor an optional "
+"parameter. You can use `fill=true` when you want to eventually make an "
+"optional  parameter required. You can use `fill=false` when you want to "
+"eventually  remove an optional parameter."
+msgstr ""
+
+#: ../../language/attributes.md:123 ../../language/attributes.md:143
+#: ../../language/attributes.md:162
+msgid ""
+"The `msg` argument is an string that provides additional information "
+"about the migration."
+msgstr ""
+
+#: ../../language/attributes.md:125
+msgid ""
+"#label_migration(x, fill=true)\n"
+"#label_migration(y, fill=false)\n"
+"fn f(x?: Int = 0, y?: Int = 1) -> Unit { ... }\n"
+"fn main {\n"
+"  f(x=1, y=1) // warn on y being filled\n"
+"  f()         // warn on x not being filled\n"
+"}"
+msgstr ""
+
+#: ../../language/attributes.md:136
+msgid "`#label_migration(id, allow_positional=true, msg=\"message\")`"
+msgstr ""
+
+#: ../../language/attributes.md:138
+msgid ""
+"The `allow_positional` argument is used when you want a labelled "
+"parameter to be  used without its label being provided. When the "
+"parameter is used positionally  (without a label), the compiler reports a"
+" warning. This is useful when you want to change a positional parameter "
+"to a labelled parameter without breaking the downstream code."
+msgstr ""
+
+#: ../../language/attributes.md:145
+msgid ""
+"#label_migration(x, allow_positional=true)\n"
+"fn f(x~: Int) -> Unit { ... }\n"
+"\n"
+"fn main {\n"
+"  f(42) // warn on positional argument 42 used without label\n"
+"}"
+msgstr ""
+
+#: ../../language/attributes.md:155
+msgid "`#label_migration(id, alias=new_id, msg=\"message\")`"
+msgstr ""
+
+#: ../../language/attributes.md:157
+msgid ""
+"The alias argument allows you to provide an alternative name to a "
+"labelled parameter. This is useful when renaming a parameter to maintain "
+"backward  compatibility. If a warning message is provided, the compiler "
+"warns when  using the alias; otherwise, the alias can be used without "
+"warnings."
+msgstr ""
+
+#: ../../language/attributes.md:164
+msgid ""
+"#label_migration(x, alias=xx)\n"
+"#label_migration(x, alias=y, msg=\"warning\")\n"
+"fn f(x~: Int) -> Unit { ... }\n"
+"\n"
+"fn main {\n"
+"  f(xx=42) // no warning\n"
+"  f(y=42)  // warning\n"
+"}"
+msgstr ""
+
+#: ../../language/attributes.md:176
+msgid "Visibility Attribute"
+msgstr ""
+
+#: ../../language/attributes.md:179
+msgid ""
+"This topic does not covered the access control. To learn more about "
+"`pub`, `pub(all)` and `priv`, see [Access Control](./packages.md#access-"
+"control)."
+msgstr ""
+
+#: ../../language/attributes.md:182
+msgid ""
+"The `#visibility` attribute is similar to the `#deprecated` attribute, "
+"but it is used to hint that a type will change its visibility in the "
+"future.  For outside usages, if the usage will be invalidated by the "
+"visibility change in future, a warning will be emitted."
+msgstr ""
+
+#: ../../language/attributes.md:185
+msgid ""
+"// in @util package\n"
+"#visibility(change_to=\"readonly\", \"Point will be readonly in the "
+"future.\")\n"
+"pub(all) struct Point {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"#visibility(change_to=\"abstract\", \"Use new_text and new_binary "
+"instead.\")\n"
+"pub(all) enum Resource {\n"
+"  Text(String)\n"
+"  Binary(Bytes)\n"
+"}\n"
+"\n"
+"pub fn new_text(str : String) -> Resource {\n"
+"  ...\n"
+"}\n"
+"\n"
+"pub fn new_binary(bytes : Bytes) -> Resource {\n"
+"  ...\n"
+"}\n"
+"\n"
+"// in another package\n"
+"fn main {\n"
+"  let p = Point::{ x: 1, y: 2 } // warning \n"
+"  let { x, y } = p // ok\n"
+"  println(p.x) // ok\n"
+"  match Resource::Text(\"\") { // warning\n"
+"    Text(s) => ... // waning\n"
+"    Binary(b) => ... // warning\n"
+"  }\n"
+"}\n"
+"\n"
+msgstr ""
+
+#: ../../language/attributes.md:191
+msgid ""
+"The `#visibility` attribute takes two arguments: `change_to` and "
+"`message`."
+msgstr ""
+
+#: ../../language/attributes.md:193
+msgid ""
+"The `change_to` argument is a string that indicates the new visibility of"
+" the type. It can be either `\"abstract\"` or `\"readonly\"`."
+msgstr ""
+
+#: ../../language/attributes.md:185
+msgid "`change_to`"
+msgstr ""
+
+#: ../../language/attributes.md:185
+msgid "Invalidated Usages"
+msgstr ""
+
+#: ../../language/attributes.md:185
+msgid "`\"readonly\"`"
+msgstr ""
+
+#: ../../language/attributes.md:185
+msgid "Creating an instance of the type or mutating the fields of the instance."
+msgstr ""
+
+#: ../../language/attributes.md:185
+msgid "`\"abstract\"`"
+msgstr ""
+
+#: ../../language/attributes.md:185
+msgid ""
+"Creating an instance of the type, mutating the fields of the instance, "
+"pattern matching, or accessing fields by label."
+msgstr ""
+
+#: ../../language/attributes.md:200
+msgid ""
+"The `message` argument is a string that provides additional information "
+"about the visibility change."
+msgstr ""
+
+#: ../../language/attributes.md:202
+msgid "Internal Attribute"
+msgstr ""
+
+#: ../../language/attributes.md:204
+msgid ""
+"The `#internal` attribute is used to mark a function, type, or trait as "
+"internal.  Any usage of the internal function or type in other modules "
+"will emit an alert warning."
+msgstr ""
+
+#: ../../language/attributes.md:207
+msgid ""
+"#internal(unsafe, \"This is an unsafe function\")\n"
+"fn unsafe_get[A](arr : Array[A]) -> A {\n"
+"  ...\n"
+"}"
+msgstr ""
+
+#: ../../language/attributes.md:215
+msgid ""
+"The internal attribute takes two arguments: `category` and `message`.  "
+"`category` is a identifier that indicates the category of the alert, and "
+"`message` is a string that provides additional message for the alert."
+msgstr ""
+
+#: ../../language/attributes.md:218
+msgid ""
+"The alert warnings can be turn off by setting the `warn-list` in "
+"`moon.pkg`. For more detail, see [alert "
+"warning](../toolchain/moon/package.md#alert-warning)."
+msgstr ""
+
+#: ../../language/attributes.md:221
+msgid "Warnings Attribute"
+msgstr ""
+
+#: ../../language/attributes.md:223
+msgid ""
+"The `#warnings` attribute is used to configure warning settings for a "
+"specific  top-level declaration. It can enable, disable or treat an "
+"enabled warning as error  for specific warnings in that declaration."
+msgstr ""
+
+#: ../../language/attributes.md:227
+msgid ""
+"The argument is a string that specifies the warning list. It can contain "
+"multiple  warning names, each prefixed with a sign:"
+msgstr ""
+
+#: ../../language/attributes.md:230
+msgid ""
+"#warning(\"-unused_value@deprecated\")\n"
+"fn f() -> Unit {\n"
+"  let x = 42 \n"
+"}"
+msgstr ""
+
+#: ../../language/attributes.md:237
+msgid "The prefixes have the following meanings:"
+msgstr ""
+
+#: ../../language/attributes.md:239
+msgid "`+warning_name`: enable the warning"
+msgstr ""
+
+#: ../../language/attributes.md:240
+msgid "`-warning_name`: disable the warning"
+msgstr ""
+
+#: ../../language/attributes.md:241
+msgid "`@warning_name`: treat a enabled warning as an error"
+msgstr ""
+
+#: ../../language/attributes.md:243
+msgid "Currently this attribute only works with some specific warnings."
+msgstr ""
+
+#: ../../language/attributes.md:245
+msgid ""
+"To learn more about warning names, see [warning "
+"list](../toolchain/moon/package.md#warning-list)."
+msgstr ""
+
+#: ../../language/attributes.md:247
+msgid "External Attribute"
+msgstr ""
+
+#: ../../language/attributes.md:249
+msgid ""
+"The `#external` attribute is used to mark an abstract type as external "
+"type."
+msgstr ""
+
+#: ../../language/attributes.md:251
+msgid "For Wasm(GC) backends, it would be interpreted as `anyref`."
+msgstr ""
+
+#: ../../language/attributes.md:252
+msgid "For JavaScript backend, it would be interpreted as `any`."
+msgstr ""
+
+#: ../../language/attributes.md:253
+msgid "For native backends, it would be interpreted as `void*`."
+msgstr ""
+
+#: ../../language/attributes.md:255
+msgid ""
+"#external\n"
+"type Ptr"
+msgstr ""
+
+#: ../../language/attributes.md:261
+msgid "Borrow and Owned Attribute"
+msgstr ""
+
+#: ../../language/attributes.md:263
+msgid ""
+"The `#borrow` and `#owned` attribute is used to indicate that a FFI takes"
+" ownership of its arguments. For more detail, see [FFI](./ffi.md#the-"
+"borrow-and-owned-attribute)."
+msgstr ""
+
+#: ../../language/attributes.md:265
+msgid "`as_free_fn` Attribute"
+msgstr ""
+
+#: ../../language/attributes.md:267
+msgid ""
+"The `#as_free_fn` attribute is used to mark a method that it is declared "
+"as a free function as well. It can also change the visibility of the free"
+" function, the name of the free function, and provide separate "
+"deprecation warning."
+msgstr ""
+
+#: ../../language/attributes.md:270
+msgid ""
+"#as_free_fn(dec, visibility=\"pub\", deprecated=\"use `Int::decrement` "
+"instead\")\n"
+"#as_free_fn(visibility=\"pub\")\n"
+"fn Int::decrement(i : Self) -> Self {\n"
+"  i - 1\n"
+"}\n"
+"\n"
+"test {\n"
+"  let _ = decrement(10)\n"
+"  let _ = (10).decrement()\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes.md:276
+msgid "Callsite Attribute"
+msgstr ""
+
+#: ../../language/attributes.md:278
+msgid ""
+"The `#callsite` attribute is used to mark properties that happen at "
+"callsite."
+msgstr ""
+
+#: ../../language/attributes.md:280
+msgid ""
+"It could be `autofill`, which is to autofill the arguments [SourceLoc and"
+" ArgLoc](/language/fundamentals.md#autofill-arguments) at callsite."
+msgstr ""
+
+#: ../../language/attributes.md:283
+msgid "Skip Attribute"
+msgstr ""
+
+#: ../../language/attributes.md:285
+msgid ""
+"The `#skip` attribute is used to skip a single test block. The type "
+"checking will still be performed."
+msgstr ""
+
+#: ../../language/attributes.md:287
+msgid "Configuration attribute"
+msgstr ""
+
+#: ../../language/attributes.md:289
+msgid ""
+"The `#cfg` attribute is used to perform conditional compilation. Examples"
+" are:"
+msgstr ""
+
+#: ../../language/attributes.md:293
+msgid ""
+"#cfg(true)\n"
+"#cfg(false)\n"
+"#cfg(target=\"wasm\")\n"
+"#cfg(not(target=\"wasm\"))\n"
+"#cfg(all(target=\"wasm\", true))\n"
+"#cfg(any(target=\"wasm\", target=\"native\"))\n"
+msgstr ""
+
+#: ../../language/attributes.md:302
+msgid "Module attribute"
+msgstr ""
+
+#: ../../language/attributes.md:304
+msgid ""
+"The `module` attribute is used to declare the module dependency for "
+"JavaScript backend."
+msgstr ""
+
+#: ../../language/attributes.md:306
+msgid ""
+"In `cjs` format, it is interpreted as `require`, and in `esm` format, it "
+"is interpreted as `import`."
+msgstr ""
+
+#: ../../language/attributes.md:309
+msgid ""
+"#module(\"node:fs\")\n"
+"pub fn write_file_sync(file : String, data : String) = \"writeFileSync\"\n"
+msgstr ""
+

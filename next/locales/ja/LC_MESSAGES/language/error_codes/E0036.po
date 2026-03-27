@@ -1,0 +1,93 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0036.md:1
+msgid "E0036"
+msgstr ""
+
+#: ../../language/error_codes/E0036.md:3
+msgid "Warning name: `loop_label_shadowing`"
+msgstr ""
+
+#: ../../language/error_codes/E0036.md:5
+msgid "The loop label name shadows a label that is already in scope."
+msgstr ""
+
+#: ../../language/error_codes/E0036.md:7
+msgid ""
+"Loop labels must be unique within their scope. When a label name is "
+"reused within a nested scope, it shadows the outer label, which can lead "
+"to confusion about which loop is being referenced by `break` or "
+"`continue` statements."
+msgstr ""
+
+#: ../../language/error_codes/E0036.md:11
+msgid ""
+"This warning helps prevent bugs that could occur when breaking or "
+"continuing to the wrong loop level due to label shadowing. It's "
+"recommended to use distinct, descriptive label names for different loops "
+"to make the code's intent clear."
+msgstr ""
+
+#: ../../language/error_codes/E0036.md:15
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0036.md:17
+msgid ""
+"///|\n"
+"fn f(xss : Array[Array[Int]]) -> Unit {\n"
+"  l~: for xs in xss {\n"
+"    // Warning: The label name `l` shadows a label name that is already "
+"in scope.\n"
+"    l~: for x in xs {\n"
+"      if x > 0 {\n"
+"        break l~\n"
+"      }\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0036.md:21
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0036.md:23
+msgid ""
+"Use distinct, descriptive label names for different loops to make the "
+"code's intent clear."
+msgstr ""
+
+#: ../../language/error_codes/E0036.md:26
+msgid ""
+"///|\n"
+"fn f(xss : Array[Array[Int]]) -> Unit {\n"
+"  outer~: for xs in xss {\n"
+"    inner~: for x in xs {\n"
+"      if x > 0 {\n"
+"        break inner~\n"
+"      }\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+

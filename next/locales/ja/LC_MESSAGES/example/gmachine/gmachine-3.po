@@ -1,0 +1,807 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../example/gmachine/gmachine-3.md:1
+msgid "G-Machine 3"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:3
+msgid ""
+"This article is the third in a series on implementing Haskell's lazy "
+"evaluation in MoonBit. In the previous article, we learned how to compile"
+" `let` expressions and how to implement basic arithmetic and comparison "
+"operations. In this article, we will implement a context-based "
+"optimization method and add support for data structures."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:5
+msgid "Tracking Context"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:7
+msgid ""
+"Let's review how we implemented primitives in the [last "
+"tutorial](gmachine-2.md)."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:9
+msgid ""
+"let compiled_primitives : List[(String, Int, List[Instruction])] = "
+"@list.from_array([\n"
+"    // Arith\n"
+"    (\n"
+"      \"add\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Add,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"sub\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Sub,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"mul\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Mul,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"div\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Div,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    // Compare\n"
+"    (\n"
+"      \"eq\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Eq,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"neq\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Ne,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"ge\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Ge,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"gt\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Gt,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"le\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Le,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    (\n"
+"      \"lt\",\n"
+"      2,\n"
+"      @list.from_array([\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Push(1),\n"
+"        Eval,\n"
+"        Lt,\n"
+"        Update(2),\n"
+"        Pop(2),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"    // MISC\n"
+"    (\n"
+"      \"negate\",\n"
+"      1,\n"
+"      @list.from_array([Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),\n"
+"    ),\n"
+"    (\n"
+"      \"if\",\n"
+"      3,\n"
+"      @list.from_array([\n"
+"        Push(0),\n"
+"        Eval,\n"
+"        Cond(@list.from_array([Push(1)]), @list.from_array([Push(2)])),\n"
+"        Update(3),\n"
+"        Pop(3),\n"
+"        Unwind,\n"
+"      ]),\n"
+"    ),\n"
+"  ],\n"
+")\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:15
+msgid ""
+"This implementation introduces many `Eval` instructions, but they are not"
+" always necessary. For example:"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:17
+msgid "(add 3 (mul 4 5))\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:21
+msgid ""
+"The two arguments of `add` are already in WHNF (Weak Head Normal Form) "
+"before executing `Eval`. Therefore, the `Eval` instructions here are "
+"redundant."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:23
+msgid ""
+"One feasible optimization method is to consider the context when "
+"compiling expressions. For example, `add` requires its arguments to be "
+"evaluated to WHNF, so its arguments are in a strict context during "
+"compilation. By doing this, we can identify some expressions that can be "
+"safely compiled with strict evaluation (only a subset)."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:25
+msgid "An expression in a supercombinator definition is in a strict context."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:27
+msgid ""
+"If `(op e1 e2)` is in a strict context (where `op` is a primitive), then "
+"`e1` and `e2` are also in a strict context."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:29
+msgid ""
+"If `(let (.....) e)` is in a strict context, then `e` is also in a strict"
+" context (but the expressions corresponding to the local variables are "
+"not, as `e` may not need their results)."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:31
+msgid ""
+"We use the `compileE` function to implement compilation in a strict "
+"context, ensuring that _the value at the top of the stack is always in "
+"WHNF_."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:33
+msgid ""
+"For the default branch, we simply add an `Eval` instruction after the "
+"result of `compileC`."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:35
+msgid "_ => self.compileC(env) + @list.from_array([Eval])\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:42
+msgid "Constants are pushed directly."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:44
+msgid "Num(n) => @list.from_array([PushInt(n)])\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:51
+msgid ""
+"For `let/letrec` expressions, the specially designed `compileLet` and "
+"`compileLetrec` become useful. Compiling a `let/letrec` expression in a "
+"strict context only requires using `compileE` to compile its main "
+"expression."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:53
+msgid ""
+"Let(rec, defs, e) =>\n"
+"  if rec {\n"
+"    compileLetrec(RawExpr::compileE, defs, e, env)\n"
+"  } else {\n"
+"    compileLet(RawExpr::compileE, defs, e, env)\n"
+"  }\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:60
+msgid ""
+"The `if` and `negate` functions, with 3 and 1 arguments respectively, "
+"require special handling."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:62
+msgid ""
+"App(App(App(Var(\"if\"), b), e1), e2) => {\n"
+"  let condition = b.compileE(env)\n"
+"  let branch1 = e1.compileE(env)\n"
+"  let branch2 = e2.compileE(env)\n"
+"  condition + @list.from_array([Cond(branch1, branch2)])\n"
+"}\n"
+"App(Var(\"negate\"), e) => e.compileE(env) + @list.from_array([Neg])\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:69
+msgid ""
+"Basic binary operations can be handled uniformly through a lookup table. "
+"First, construct a hash table called `builtinOpS` to query the "
+"corresponding instructions by the name of the primitive."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:71
+msgid ""
+"let builtinOpS : @hashmap.HashMap[String, Instruction] = {\n"
+"  let table = @hashmap.new(capacity=50)\n"
+"  table[\"add\"] = Add\n"
+"  table[\"mul\"] = Mul\n"
+"  table[\"sub\"] = Sub\n"
+"  table[\"div\"] = Div\n"
+"  table[\"eq\"] = Eq\n"
+"  table[\"neq\"] = Ne\n"
+"  table[\"ge\"] = Ge\n"
+"  table[\"gt\"] = Gt\n"
+"  table[\"le\"] = Le\n"
+"  table[\"lt\"] = Lt\n"
+"  table\n"
+"}\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:77
+msgid "The rest of the handling is not much different."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:79
+msgid ""
+"App(App(Var(op), e0), e1) =>\n"
+"  match builtinOpS.get(op) {\n"
+"    None => self.compileC(env) + @list.from_array([Eval])\n"
+"    Some(instr) => {\n"
+"      let code1 = e1.compileE(env)\n"
+"      let code0 = e0.compileE(argOffset(1, env))\n"
+"      code1 + code0 + @list.from_array([instr])\n"
+"    }\n"
+"  }\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:86
+msgid ""
+"Are we done? It seems so, but there's another WHNF besides integers: "
+"partially applied functions."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:88
+msgid ""
+"A partial application is when the number of arguments is insufficient. "
+"This situation is common in higher-order functions, for example:"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:90
+msgid "(map (add 1) listofnumbers)\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:94
+msgid "Here, `(add 1)` is a partial application."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:96
+msgid ""
+"To ensure that the code generated by the new compilation strategy works "
+"correctly, we need to modify the implementation of the `Unwind` "
+"instruction for the `NGlobal` branch. When the number of arguments is "
+"insufficient and the dump has saved stacks, we should only retain the "
+"original redex and restore the stack."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:98
+msgid ""
+"NGlobal(_, n, c) => {\n"
+"  let k = self.stack.length()\n"
+"  if k < n {\n"
+"    match self.dump {\n"
+"      Empty => abort(\"Unwinding with too few arguments\")\n"
+"      More((i, s), tail=rest) => {\n"
+"        // a1 : ...... : ak\n"
+"        // ||\n"
+"        // ak : s\n"
+"        self.stack = self.stack.drop(k - 1) + s\n"
+"        self.dump = rest\n"
+"        self.code = i\n"
+"      }\n"
+"    }\n"
+"  } else {\n"
+"    if n != 0 {\n"
+"      self.rearrange(n)\n"
+"    } else {\n"
+"      self.put_stack(addr)\n"
+"    }\n"
+"    self.put_code(c)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:105
+msgid ""
+"This context-based strictness analysis technique is useful but cannot do "
+"anything with supercombinator calls. Here we briefly introduce a "
+"strictness analysis technique based on boolean operations, which can "
+"analyze which arguments of a supercombinator call should be compiled "
+"using strict mode."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:107
+msgid ""
+"We first define a concept: bottom, which conceptually represents a value "
+"that never terminates or causes an exception. For a supercombinator `f "
+"a[1] ...... a[n]`, if one argument `a[i]` satisfies `a[i] = bottom`, then"
+" `f a[1] .... a[i] .... a[n] = bottom` (other arguments are not bottom). "
+"This indicates that no matter how complex the internal control flow of "
+"`f` is, it **must** need the result of argument `a[i]` to get the final "
+"result. Therefore, a`[i]` should be strictly evaluated."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:109
+msgid ""
+"If this condition is not met, it does not necessarily mean that the "
+"argument is not needed at all; it may be used only in certain branches "
+"and its use is determined at runtime. Such an argument is a typical "
+"example of one that should be lazily evaluated."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:111
+msgid ""
+"Let's consider bottom as `false` and non-bottom values as `true`. In this"
+" way, all functions in coreF can be considered boolean functions. Take "
+"`abs` as an example:"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:113
+msgid ""
+"(defn abs[n]\n"
+"  (if (lt n 0) (negate n) n))\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:118
+msgid "We analyze how to translate it into a boolean function from top to bottom:"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:120
+msgid ""
+"For an expression like `(if x y z)`, x must be evaluated, but only one of"
+" `y` or `z` needs to be evaluated. This can be translated into `x and (y "
+"or z)`. Taking the example of the function above, if `n` is bottom, then "
+"the condition `(lt n 0)` is also bottom, and thus the result of the "
+"entire expression is also bottom."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:122
+msgid "For primitive expressions, using `and` for all parts is sufficient."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:124
+msgid ""
+"To determine whether a parameter needs to be compiled strictly, you can "
+"convert the above condition into a Boolean function: `a[i] = false` "
+"implies `f a[1] .... a[i] .... a[n] = false` (with all other parameters "
+"being true)."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:126
+msgid ""
+"This is essentially a method of program analysis called \"abstract "
+"interpretation.\""
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:128
+msgid "Custom Data Structures"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:130
+msgid ""
+"The data structure type definition in Haskell is similar to the `enum` in"
+" MoonBit. However, since CoreF is a simple toy language used to "
+"demonstrate lazy evaluation, it does not allow custom data types. The "
+"only built-in data structure is the lazy list."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:132
+msgid ""
+"(defn take[n l]\n"
+"  (case l\n"
+"    [(Nil) Nil]\n"
+"    [(Cons x xs)\n"
+"      (if (le n 0)\n"
+"        Nil\n"
+"        (Cons x (take (sub n 1) xs)))]))\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:142
+msgid ""
+"As shown above, you can use the `case` expression for simple pattern "
+"matching on lists."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:144
+msgid ""
+"The corresponding graph node for a list is `NConstr(Int, List[Addr])`, "
+"which consists of two parts:"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:146
+msgid ""
+"A tag for different value constructors: the tag for `Nil` is 0, and the "
+"tag for `Cons` is 1."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:147
+msgid ""
+"A list of addresses for storing substructures, whose length corresponds "
+"to the number of parameters (arity) of a value constructor."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:149
+msgid ""
+"This graph node structure can be used to implement various data "
+"structures, but CoreF does not have a type system. For demonstration "
+"purposes, only lazy lists are implemented."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:151
+msgid ""
+"We need to add two instructions, `Split` and `Pack`, to deconstruct and "
+"construct lists."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:153
+msgid ""
+"fn GState::pack(self : GState, t : Int, n : Int) -> Unit {\n"
+"  let addrs = self.stack.take(n)\n"
+"  self.stack = self.stack.drop(n)\n"
+"  let addr = self.heap.alloc(NConstr(t, addrs))\n"
+"  self.put_stack(addr)\n"
+"}\n"
+"\n"
+"fn GState::split(self : GState) -> Unit {\n"
+"  let addr = self.pop1()\n"
+"  match self.heap[addr] {\n"
+"    NConstr(_, addrs) =>\n"
+"      // n == addrs.length()\n"
+"      self.stack = addrs + self.stack\n"
+"    _ => panic()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:160
+msgid ""
+"Additionally, a `CaseJump` instruction is needed to implement the `case` "
+"expression."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:162
+msgid ""
+"fn GState::casejump(self : GState, table : List[(Int, "
+"List[Instruction])]) -> Unit {\n"
+"  let addr = self.pop1()\n"
+"  match self.heap[addr] {\n"
+"    NConstr(t, _) =>\n"
+"      match table.lookup(t) {\n"
+"        None => abort(\"casejump\")\n"
+"        Some(instrs) => {\n"
+"          self.code = instrs + self.code\n"
+"          self.put_stack(addr)\n"
+"        }\n"
+"      }\n"
+"    otherwise => abort(\"casejump(): addr = \\{addr} node = "
+"\\{otherwise}\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:168
+msgid ""
+"After adding the above instructions, we need to modify the `compileC` and"
+" `compileE` functions. Since the object matched by the `case` expression "
+"needs to be evaluated to WHNF, only the `compileE` function can compile "
+"it."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:170
+msgid ""
+"App(App(Constructor(tag=1, arity=2), x), xs) =>\n"
+"  // Cons(x, xs)\n"
+"  xs.compileC(env) + x.compileC(argOffset(1, env)) + "
+"@list.from_array([Pack(1, 2)])\n"
+"// Empty\n"
+"Constructor(tag=0, arity=0) => @list.from_array([Pack(0, 0)])\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:177
+msgid ""
+"Case(e, alts) =>\n"
+"  e.compileE(env) + @list.from_array([CaseJump(compileAlts(alts, env))])\n"
+"Constructor(tag=0, arity=0) =>\n"
+"  // Empty\n"
+"  @list.from_array([Pack(0, 0)])\n"
+"App(App(Constructor(tag=1, arity=2), x), xs) =>\n"
+"  // Cons(x, xs)\n"
+"  xs.compileC(env) + x.compileC(argOffset(1, env)) + "
+"@list.from_array([Pack(1, 2)])\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:184
+msgid ""
+"At this point, a new problem arises. Previously, printing the evaluation "
+"result only needed to handle simple `NNum` nodes, but `NConstr` nodes "
+"have substructures. When the list itself is evaluated to WHNF, its "
+"substructures are mostly unevaluated `NApp` nodes. We need to add a "
+"`Print` instruction, which will recursively evaluate and write the result"
+" into the `output` component of `GState`."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:186
+msgid ""
+"fn GState::gprint(self : GState) -> Unit {\n"
+"  let addr = self.pop1()\n"
+"  match self.heap[addr] {\n"
+"    NNum(n) => {\n"
+"      self.output.write_string(n.to_string())\n"
+"      self.output.write_char(' ')\n"
+"    }\n"
+"    NConstr(0, Empty) => self.output.write_string(\"Nil\")\n"
+"    NConstr(1, More(addr1, tail=More(addr2, tail=Empty))) => {\n"
+"      self.code = @list.from_array([Instruction::Eval, Print, Eval, "
+"Print]) +\n"
+"        self.code\n"
+"      self.put_stack(addr2)\n"
+"      self.put_stack(addr1)\n"
+"    }\n"
+"    _ => panic()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:192
+msgid "Finally, change the initial code of the G-Machine to:"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:194
+msgid ""
+"let initialState : GState = {\n"
+"  output: @buffer.new(size_hint=60),\n"
+"  heap,\n"
+"  stack: @list.empty(),\n"
+"  code: @list.from_array([PushGlobal(\"main\"), Eval, Print]),\n"
+"  globals,\n"
+"  stats: 0,\n"
+"  dump: @list.empty(),\n"
+"}\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:201
+msgid ""
+"Now, we can write some classic functional programs using lazy lists, such"
+" as the infinite Fibonacci sequence:"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:203
+msgid "(defn fibs[] (Cons 0 (Cons 1 (zipWith add fibs (tail fibs)))))\n"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:207
+msgid ""
+"After introducing data structures, strictness analysis becomes more "
+"complex. For lazy lists, there are various evaluation modes:"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:209
+msgid ""
+"Fully strict (requires the list to be finite and all elements to be non-"
+"bottom)."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:210
+msgid "Fully lazy."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:211
+msgid "Head strict (the list can be infinite, but its elements cannot be bottom)."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:212
+msgid "Tail strict (the list must be finite, but its elements can be bottom)."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:214
+msgid ""
+"Moreover, the context in which a function is used can change the "
+"evaluation mode of its parameters (it cannot be analyzed in isolation and"
+" requires cross-function analysis). Such complex strictness analysis "
+"usually employs projection analysis techniques. Relevant literature "
+"includes:"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:216
+msgid "Projections for Strictness Analysis"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:218
+msgid "Static Analysis and Code Optimizations in Glasgow Haskell Compiler"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:220
+msgid "Implementing Projection-based Strictness Analysis"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:222
+msgid "Theory and Practice of Demand Analysis in Haskell"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:224
+msgid "Epilogue"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:226
+msgid ""
+"Lazy evaluation can reduce runtime redundant calculations, but it also "
+"introduces new problems, such as:"
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:228
+msgid "The notorious side effect order issue."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:230
+msgid ""
+"Excessive redundant nodes. Some computations that are not shared still "
+"store their results on the heap, which is detrimental to utilizing the "
+"CPU's caching mechanism."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:232
+msgid ""
+"The representative of lazy evaluation languages, Haskell, offers a "
+"controversial solution to the side effect order problem: Monads. This "
+"solution has some value for eagerly evaluated languages as well, but many"
+" online tutorials emphasize its mathematical background too much and fail"
+" to explain how to use it effectively."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:234
+msgid ""
+"Idris2, Haskell's successor (which is no longer a lazy language), retains"
+" Monads and introduces another mechanism for handling side effects: "
+"Algebraic Effects."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:236
+msgid ""
+"The Spineless G-Machine designed by SPJ improved the problem of excessive"
+" redundant nodes, and its successor, the STG, unified the data layout of "
+"different types of nodes."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:238
+msgid ""
+"In addition to improvements in abstract machine models, GHC's "
+"optimization of Haskell programs heavily relies on inline-based "
+"optimizations and projection analysis-based strictness analysis "
+"techniques."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:240
+msgid ""
+"In 2004, several GHC designers discovered that the previous push-enter "
+"model, where parameters are pushed onto the stack and then a function is "
+"called, was less effective than the eval-apply model, where the "
+"responsibility is handed to the caller. They published a paper titled "
+"\"Making a Fast Curry: Push/Enter vs. Eval/Apply for Higher-order "
+"Languages.\""
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:242
+msgid ""
+"In 2007, Simon Marlow found that jump and execute code in the tagless "
+"design significantly affected the performance of modern CPU branch "
+"predictors. The paper \"_Faster laziness using dynamic pointer tagging_\""
+" described several solutions."
+msgstr ""
+
+#: ../../example/gmachine/gmachine-3.md:244
+msgid ""
+"Lazy purely functional languages have shown many interesting "
+"possibilities, but they have also faced much criticism and reflection. "
+"Nevertheless, it is undoubtedly an intriguing technology!"
+msgstr ""
+

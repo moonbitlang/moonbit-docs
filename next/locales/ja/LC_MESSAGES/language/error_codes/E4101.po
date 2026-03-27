@@ -1,0 +1,102 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4101.md:1
+msgid "E4101"
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:3
+msgid "Unsupported expression after the pipe operator."
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:5
+msgid ""
+"This error occurs when the expression after the pipe operator (`|>`) is "
+"not in a supported form. The pipe operator allows you to chain function "
+"calls in a more readable way, but only supports specific forms on its "
+"right-hand side."
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:9
+msgid "The following forms are allowed after the pipe operator:"
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:11
+msgid "A single identifier (function name)"
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:12
+msgid "A regular function application (but not method calls)"
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:13
+msgid "A constructor name"
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:14
+msgid "A constructor application"
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:16
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:18
+msgid ""
+"type T Int\n"
+"\n"
+"fn m(self: T, x: Int) -> Unit {\n"
+"  println(self._ + x)\n"
+"}\n"
+"\n"
+"pub fn f(t: T, x: Int) -> Unit {\n"
+"  x |> fn(x: Int) { println(x)}\n"
+"//     ^^^^^^^^^^^^^^^^^^^^^^^^ Error: Unsupported expression after the "
+"pipe operator.\n"
+"  x |> t.m()\n"
+"//     ^^^^ Error: Unsupported expression after the pipe operator.\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:22
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:24
+msgid ""
+"To fix this error, you can change the invalid pipe expression to normal "
+"function or method application."
+msgstr ""
+
+#: ../../language/error_codes/E4101.md:27
+msgid ""
+"type T Int\n"
+"\n"
+"fn m(self: T, x: Int) -> Unit {\n"
+"  println(self._ + x)\n"
+"}\n"
+"\n"
+"pub fn f(t: T, x: Int) -> Unit {\n"
+"  fn(x: Int) { println(x)}(x)\n"
+"  t.m(x)\n"
+"}"
+msgstr ""
+

@@ -1,0 +1,448 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-28 13:08+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../example/segment-tree/segment-tree.md:1
+msgid "Segment Trees (Part 1)"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:3
+msgid "What is a Segment Tree?"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:5
+msgid ""
+"This section focuses on concepts and theory. If you're already familiar "
+"with Segment Trees and their principles, feel free to skip to the next "
+"section."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:7
+msgid ""
+"As mentioned in the introduction, Segment Trees address a class of range "
+"problems, but what do they look like, and what is the principle behind "
+"their excellent complexity?"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:9
+msgid ""
+"Let's consider a linear sequence of numbers as an example. If we want to "
+"build a Segment Tree from it, it will look like this:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:11
+msgid "![build segment tree](/imgs/segment-tree-build.png)"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:11
+msgid "build segment tree"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:13
+msgid ""
+"We can see that we recursively divide the linear sequence into two equal "
+"parts (with one side having an extra element if the length is odd) until "
+"we reach segments of length one. During this process, we compute the sum "
+"of each segment (shown in parentheses), thereby creating a Segment Tree "
+"that supports range sum queries from a linear sequence."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:15
+msgid ""
+"So, how does it work when querying a range sum? Let's take the example of"
+" querying the sum from index 1 to 6:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:17
+msgid "![query segment tree](/imgs/segment-tree-query.png)"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:17
+msgid "query segment tree"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:19
+msgid ""
+"The highlighted parts in the diagram sum up to the total for the range "
+"1-6, and we didn't have to consider all elements; we simply selected the "
+"minimum number of segments needed to obtain our result and combined them."
+" We can traverse the Segment Tree from top to bottom to determine the "
+"intersections and containment relationships between segments to select "
+"the appropriate ranges."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:21
+msgid "Specifically:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:23
+msgid ""
+"First, we check the relationship between the ranges 1-7 and 1-6. The "
+"latter is a subset of the former, so the data from 1-7 cannot be used in "
+"our calculation, and we proceed to explore its two child nodes."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:24
+msgid ""
+"Next, we check the relationship between 1-3 and 1-6. The former is a "
+"subset of the latter, contributing to our result."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:25
+msgid ""
+"Then, we examine the relationship between 4-7 and 1-6, which overlap, "
+"requiring us to explore both child nodes further."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:26
+msgid ""
+"And we examine the relationship between 4-5 and 1-6, just as the third "
+"step."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:27
+msgid "We repeat this process..."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:29
+msgid ""
+"Based on binary decomposition, we will query at most Log N segments for "
+"any range of length N, ensuring guaranteed complexity."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:31
+msgid ""
+"This section only discusses the query operation; we will elaborate on the"
+" principles and implementation of modification operations in the next "
+"section."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:33
+msgid "Implementation"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:35
+msgid "Basic Definition"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:37
+msgid "We use a classic approach to represent the Segment Tree:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:39
+msgid ""
+"enum Node {\n"
+"  Nil\n"
+"  Node(Int, Node, Node)\n"
+"}\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:45
+msgid ""
+"Here, `Nil` represents an empty tree, while a `Node` contains the stored "
+"data (of type Int) and its left and right children."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:47
+msgid "Building the Tree"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:49
+msgid ""
+"Building the tree refers to the process of abstracting a linear sequence "
+"into a Segment Tree, commonly referred to as `build`."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:51
+msgid ""
+"To start, we should write an overloaded `add` function for the `Node` "
+"type to assist with the tree-building process:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:53
+msgid ""
+"impl Add for Node with add(self : Node, v : Node) -> Node {\n"
+"  match (self, v) {\n"
+"    (Node(left, _, _), Node(right, _, _)) => Node(left + right, self, v)\n"
+"    (Node(_), Nil) => self\n"
+"    (Nil, Node(_)) => v\n"
+"    (Nil, Nil) => Nil\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:59
+msgid ""
+"With this operation defined, we can easily merge two `Node` instances "
+"while maintaining the segment sums, laying the foundation for building "
+"the tree. In some descriptions of Segment Trees, this process is also "
+"called `pushup`."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:61
+msgid ""
+"We can leverage MoonBit's `ArrayView` feature (known as `slice` in some "
+"languages) to recursively build the tree from a segment of a linear "
+"structure at a low cost, achieving O(Log N) complexity:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:63
+msgid ""
+"fn build(data : ArrayView[Int]) -> Node {\n"
+"  if data.length() == 1 {\n"
+"    Node(data[0], Nil, Nil)\n"
+"  } else {\n"
+"    let mid = (data.length() + 1) >> 1\n"
+"    build(data[0:mid]) + build(data[mid:])\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:69
+msgid "Let’s analyze this code:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:71
+msgid ""
+"If the current length is 1, the segment does not need further "
+"subdivision, so we return a leaf node with empty left and right branches."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:72
+msgid ""
+"Otherwise, we split the segment at the midpoint and recursively build the"
+" left and right segments, then merge the results."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:74
+msgid ""
+"This code is concise, highly readable, and optimization-friendly, serving"
+" as a great learning paradigm for other data structures."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:76
+msgid "Now, let's build a tree and test it:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:78
+msgid ""
+"test {\n"
+"  let tree = build([1, 2, 3, 4, 5][:])\n"
+"  json_inspect(tree, content=[\n"
+"    15,\n"
+"    [6, [3, [1, \"Nil\", \"Nil\"], [2, \"Nil\", \"Nil\"]], [3, \"Nil\", "
+"\"Nil\"]],\n"
+"    [9, [4, \"Nil\", \"Nil\"], [5, \"Nil\", \"Nil\"]],\n"
+"  ])\n"
+"}\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:84
+msgid "Great! We've successfully built the tree!"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:86
+msgid "Querying"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:88
+msgid ""
+"Next, we need to implement the query function. Since the nodes of our "
+"Segment Tree maintain segment sums, we can write a `query` function to "
+"retrieve these sums:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:90
+msgid ""
+"let empty_node : Node = Node(0, Nil, Nil)\n"
+"\n"
+"///|\n"
+"fn Node::query(\n"
+"  self : Node,\n"
+"  l : Int,\n"
+"  r : Int,\n"
+"  query_l : Int,\n"
+"  query_r : Int,\n"
+") -> Node {\n"
+"  if query_l > r || l > query_r {\n"
+"    empty_node\n"
+"  } else if query_l <= l && query_r >= r {\n"
+"    self\n"
+"  } else {\n"
+"    guard self is Node(_, left, right)\n"
+"    let mid = (l + r) >> 1\n"
+"    left.query(l, mid, query_l, query_r) +\n"
+"    right.query(mid + 1, r, query_l, query_r)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:97
+msgid ""
+"Here, `l` and `r` represent the currently queried range, while `query_l` "
+"and `query_r` denote the range we need to query. Let's break down this "
+"implementation:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:99
+msgid ""
+"If the queried range does not overlap with the current range, it "
+"contributes nothing to the result. We define an `empty_node` to represent"
+" a zero-contribution node and return it."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:100
+msgid ""
+"If the current range is a subset of the queried range, it fully "
+"contributes to the result, so we return it directly."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:101
+msgid ""
+"If the current range overlaps with the queried range, we continue "
+"searching downwards to find the exact covering ranges, merging the "
+"results of the left and right nodes."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:103
+msgid "Before We Continue"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:105
+msgid ""
+"Notice the highlighted line. When using the `let` to destructure `Node`, "
+"we could be sure that the enum being destructured wasn’t `Nil`. However, "
+"the compiler couldn't guarantee this, so we would have received a warning"
+" for using:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:107
+msgid "let Node(x, y) = z\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:111
+msgid ""
+"Although it didn’t affect execution, it was somewhat misleading. With "
+"MoonBit’s newly introduced `guard` statement, we can now handle this "
+"better using:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:113
+msgid "guard let Node(x, y) = z\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:117
+msgid "Q&A"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:119
+msgid ""
+"**Q:** Why use `Node` as the return value? Can't I destructure and sum "
+"the values directly?"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:120
+msgid ""
+"**A:** We have defined an addition operation for `Node`. Consider a "
+"scenario where we need to maintain not just the sum but also the minimum "
+"value of a range. In that case, we can modify the `add` logic to maintain"
+" the minimum while the `query` function remains unaffected. It ultimately"
+" returns a `Node` that can contain all necessary information, so let's "
+"stick with using `Node`!"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:122
+msgid "**Q:** Shouldn't the `empty_node` change in this case?"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:123
+msgid ""
+"**A:** Yes, the `empty_node` ensures that it doesn’t affect the result "
+"when added to any other `Node`. It's a zero-contribution node, akin to "
+"how 0 contributes nothing in sum operations. For minimum value "
+"maintenance, it can represent a value that won't affect the outcome, "
+"making the process flexible!"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:125
+msgid "Now, let's test the query process:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:127
+msgid ""
+"test {\n"
+"  let tree = build([1, 2, 3, 4, 5][:])\n"
+"  let sum = match tree.query(1, 5, 1, 3) {\n"
+"    Node(sum, _, _) => sum\n"
+"    _ => fail(\"Expected Node\")\n"
+"  }\n"
+"  inspect(sum, content=\"6\")\n"
+"}\n"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:133
+msgid "The output is `6`."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:135
+msgid "Fantastic! We've obtained the correct output!"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:137
+msgid "Code"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:139
+msgid ""
+"For the complete code, please check the [GitHub "
+"repository](https://github.com/moonbitlang/moonbit-"
+"docs/tree/main/next/sources/segment-tree/src/part1/top.mbt)."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:141
+msgid "Conclusion"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:143
+msgid ""
+"Today, we learned how to build and query a simple Segment Tree. In the "
+"next lesson, we will explore more complex principles and implementations "
+"of Segment Trees. Interested readers can solidify their knowledge and "
+"expand on it by implementing the following:"
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:145
+msgid ""
+"Try implementing a Segment Tree that maintains multiple pieces of "
+"information (e.g., range sum, maximum, and minimum)."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:146
+msgid ""
+"Understand how to implement point query/modification operations for "
+"Segment Trees."
+msgstr ""
+
+#: ../../example/segment-tree/segment-tree.md:147
+msgid ""
+"Explore range modification operations for Segment Trees and related Lazy "
+"Tags."
+msgstr ""
+

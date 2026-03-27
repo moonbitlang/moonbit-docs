@@ -1,0 +1,123 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4069.md:1
+msgid "E4069"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:3
+msgid "Unexpected main function in the non-main package."
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:5
+msgid ""
+"In MoonBit, packages are divided into two types: main packages and non-"
+"main packages. Non-main packages are often used as libraries to provide "
+"functionality to other packages. Main packages, on the other hand, are "
+"the entry points of the program. Therefore, non-main packages should not "
+"contain a `main` function."
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:10
+msgid ""
+"Sometimes, people use the main function for testing. In such cases, we "
+"recommend using the `test` block to write tests, instead of using the "
+"`main` function. See the [test](../introduction.md#test) section of the "
+"MoonBit documentation for more information."
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:15
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:17
+msgid "Suppose in package `lib`:"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:19
+#: ../../language/error_codes/E4069.md:42
+msgid "`lib/moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:21
+msgid "{} // \"is-main\" is by default false\n"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:25
+msgid "`lib/lib.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:27
+msgid ""
+"fn main { // Error: Unexpected main function in the non-main package.\n"
+"  println(\"Hello, world!\")\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:31
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:33
+msgid "You can remove the `main` function from the non-main package:"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:35
+msgid ""
+"// Remove the main function\n"
+"//- fn main {\n"
+"//-   println(\"Hello, world!\")\n"
+"//- }"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:39
+msgid ""
+"Alternatively, you can set the package to be a main package by setting "
+"`\"is-main\"` to `true` in the package configuration file."
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:44
+#: ../../language/error_codes/E4069.md:54
+msgid ""
+"{\n"
+"  \"is-main\": true\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:50
+msgid "You can also move the `main` function to a different package, say `main`:"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:52
+msgid "`main/moon.pkg.json`:"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:60
+msgid "`main/main.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:62
+msgid ""
+"fn main {\n"
+"  println(\"Hello, world!\")\n"
+"}"
+msgstr ""
+

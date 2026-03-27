@@ -1,0 +1,166 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0006.md:1
+msgid "E0006"
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:3
+msgid "Warning name: `unused_constructor`"
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:5
+msgid "Variant is never read, never constructed, or both."
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:7
+msgid ""
+"If a variant is never read, it means it is defined but never destructed "
+"in a pattern matching expression (`match`, `let`, `guard let`, loop "
+"function, etc.)."
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:10
+msgid "If a variant `A` is never constructed, it means there is no `A(...)`."
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:11
+msgid "If a variant is unused, it means it is never constructed and never read."
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:13
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:15
+msgid ""
+"///|\n"
+"priv enum T {\n"
+"  A\n"
+"  B\n"
+"  C\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn f() -> Unit {\n"
+"  match T::A {\n"
+"    B => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:19
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:21
+msgid ""
+"If some variants are never read, while others are read, this means that "
+"you have use wildcard pattern (`_`) in your code. You can expand the "
+"wildcard pattern to include the unused variants."
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:25
+msgid ""
+"\n"
+"///|\n"
+"priv enum T {\n"
+"  A\n"
+"  B\n"
+"  C\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn f() -> Unit {\n"
+"  match T::A {\n"
+"    B => ()\n"
+"    C => ()\n"
+"    A => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:31
+msgid ""
+"If all variants are never read, and you need to read these variants "
+"outside of current package, you can add `pub` keyword to the enum "
+"definition. Notice this will make the implementation of the variant "
+"visible to the users of the package."
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:36
+msgid ""
+"\n"
+"///|\n"
+"pub enum T2 {\n"
+"  A\n"
+"  B\n"
+"  C\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn T2::new(value : Int) -> T2 {\n"
+"  match value {\n"
+"    0 => T2::A\n"
+"    1 => T2::B\n"
+"    _ => T2::C\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:42
+msgid ""
+"If you need to construct the \"never constructed\" variant outside of the"
+" current package, you can add `pub(all)` keyword to the variant."
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:45
+msgid ""
+"\n"
+"///|\n"
+"pub(all) enum T3 {\n"
+"  A\n"
+"  B\n"
+"  C\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:51
+msgid "If some variants are indeed useless, you can remove the unused variants."
+msgstr ""
+
+#: ../../language/error_codes/E0006.md:53
+msgid ""
+"\n"
+"///|\n"
+"priv enum T4 {\n"
+"  A\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn g() -> Unit {\n"
+"  match T4::A {\n"
+"    A => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+

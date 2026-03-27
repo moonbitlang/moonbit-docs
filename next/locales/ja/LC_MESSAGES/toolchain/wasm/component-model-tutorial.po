@@ -1,0 +1,565 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-17 17:13+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../toolchain/wasm/component-model-tutorial.md:1
+msgid "MoonBit for Component Model"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:3
+msgid ""
+"This guide demonstrates how to build WebAssembly components using "
+"MoonBit, leveraging WIT (WebAssembly Interface Types) for interface "
+"definitions and the `wit-bindgen` toolchain for code generation."
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:7
+msgid ""
+"This tutorial walks through building a component that implements the "
+"[`adder` world][adder-wit] defined in the `docs:adder` package. The "
+"component will export an `add` interface containing an `add` function "
+"that sums two numbers."
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:14
+msgid "1. Install the Tools"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:16
+msgid "Installing MoonBit"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:18
+msgid ""
+"First, install the MoonBit compiler and toolchain. Follow the "
+"installation instructions from the [MoonBit download "
+"page](https://www.moonbitlang.com/download)."
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:22
+msgid ""
+"Verify your MoonBit installation (below are the versions at the time of "
+"writing):"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:25
+msgid ""
+"$ moon version --all\n"
+"moon 0.1.20250826 (8ab6c9e 2025-08-26) ~/.moon/bin/moon\n"
+"moonc v0.6.25+d6913262c (2025-08-27) ~/.moon/bin/moonc\n"
+"moonrun 0.1.20250826 (8ab6c9e 2025-08-26) ~/.moon/bin/moonrun\n"
+"moon-pilot 0.0.1-95f12db ~/.moon/bin/moon-pilot\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:33
+msgid "Installing Wasm toolchain"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:35
+msgid ""
+"Install the `wit-bindgen` CLI tool, which generates MoonBit bindings from"
+" WIT files:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:38
+msgid "$ cargo install wit-bindgen-cli\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:42
+msgid "Install `wasm-tools` for working with WebAssembly components:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:44
+msgid "$ cargo install wasm-tools\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:48
+msgid "Verify the installations (below are the versions at the time of writing):"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:50
+msgid ""
+"$ wit-bindgen --version\n"
+"wit-bindgen-cli 0.45.0\n"
+"$ wasm-tools --version\n"
+"wasm-tools 1.238.0\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:57
+msgid "2. Define the Interface (WIT)"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:59
+msgid ""
+"Before generating the MoonBit project, you need to define the component "
+"interface using WIT. Create a directory for your project and define the "
+"WIT file:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:63
+msgid ""
+"$ mkdir moonbit-adder && cd moonbit-adder\n"
+"$ mkdir wit\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:68
+msgid "Create `wit/world.wit` with the following content:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:70
+msgid ""
+"package docs:adder@0.1.0;\n"
+"\n"
+"interface add {\n"
+"    add: func(x: u32, y: u32) -> u32;\n"
+"}\n"
+"\n"
+"world adder {\n"
+"    export add;\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:82
+msgid "This WIT definition:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:84
+msgid "Declares a package `docs:adder` with version `0.1.0`"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:85
+msgid ""
+"Defines an `add` interface with a single function that takes two `u32` "
+"parameters and returns a `u32`"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:87
+msgid "Creates an `adder` world that exports the `add` interface"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:89
+msgid "3. Generate MoonBit Project Structure"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:91
+msgid "Use `wit-bindgen` to generate the MoonBit project structure and bindings:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:93
+msgid ""
+"$ wit-bindgen moonbit wit/world.wit --out-dir . \\\n"
+"    --derive-eq \\\n"
+"    --derive-show \\\n"
+"    --derive-error\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:100
+msgid "This command generates the following directory structure:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:102
+msgid ""
+".\n"
+"├── ffi\n"
+"│   ├── moon.pkg\n"
+"│   └── top.mbt\n"
+"├── gen\n"
+"│   ├── ffi.mbt\n"
+"│   ├── gen_interface_docs_adder_add_export.mbt\n"
+"│   ├── interface\n"
+"│   │   └── docs\n"
+"│   │       └── adder\n"
+"│   │           └── add\n"
+"│   │               ├── moon.pkg\n"
+"│   │               ├── stub.mbt\n"
+"│   │               └── top.mbt\n"
+"│   ├── moon.pkg\n"
+"│   ├── world\n"
+"│   │   └── adder\n"
+"│   │       ├── moon.pkg\n"
+"│   │       └── stub.mbt\n"
+"│   └── world_adder_export.mbt\n"
+"├── moon.mod.json\n"
+"├── wit\n"
+"│   └── world.wit\n"
+"└── world\n"
+"    └── adder\n"
+"        ├── ffi_import.mbt\n"
+"        ├── import.mbt\n"
+"        ├── moon.pkg\n"
+"        └── top.mbt\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:134
+msgid "The generated files include:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:136
+msgid "`moon.mod.json`: MoonBit module configuration"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:137
+msgid "`gen/`: Generated export bindings"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:138
+msgid "`interface/`: Generated export interface bindings"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:139
+msgid "`world/`: Generated export world bindings"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:140
+msgid "`stub.mbt`: Main implementation file"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:141
+msgid "`interface/`: Generated import interface bindings"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:142
+msgid "`world/`: Generated import world bindings"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:144
+msgid "4. Examine the Generated Code"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:146
+msgid ""
+"The `wit-bindgen` tool generates MoonBit bindings that handle the "
+"WebAssembly component interface. Let's examine the generated "
+"`gen/interface/docs/adder/add/stub.mbt`:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:150
+msgid ""
+"// Generated by `wit-bindgen` 0.45.0.\n"
+"\n"
+"pub fn add(_x : UInt, _y : UInt) -> UInt {\n"
+"      ...\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:158
+msgid ""
+"The `...` is the placeholder syntax in MoonBit. When executing `moon "
+"check --target wasm`, 'unfinished code' warnings will appear."
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:161
+msgid "5. Implement the Component Logic"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:163
+msgid ""
+"Now implement the `add` function in "
+"`gen/interface/docs/adder/add/stub.mbt`:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:165
+msgid ""
+"// Generated by `wit-bindgen` 0.45.0.\n"
+"\n"
+"///|\n"
+"pub fn add(x : UInt, y : UInt) -> UInt {\n"
+"  x + y\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:174
+msgid "6. Configure the Build"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:176
+msgid "Ensure your `gen/moon.pkg` is properly configured for WebAssembly target:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:178
+msgid "gen/moon.pkg"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:178
+msgid ""
+"import {\n"
+"  \"docs/adder/ffi\" @ffi,\n"
+"  \"docs/adder/gen/interface/docs/adder/add\" @add,\n"
+"}\n"
+"\n"
+"options(\n"
+"  link: {\n"
+"    \"wasm\": {\n"
+"      \"exports\": [\n"
+"        \"cabi_realloc:cabi_realloc\",\n"
+"        \"wasmExportAdd:docs:adder/add@0.1.0#add\",\n"
+"      ],\n"
+"      \"export-memory-name\": \"memory\",\n"
+"      \"heap-start-address\": 16,\n"
+"    },\n"
+"  },\n"
+")\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:183
+msgid "7. Build the WebAssembly Component"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:185
+msgid "Build the MoonBit code to WebAssembly:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:187
+msgid "$ moon build --target wasm\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:191
+msgid ""
+"This generates a WebAssembly module. To create a proper WebAssembly "
+"component, use `wasm-tools`:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:194
+msgid ""
+"$ wasm-tools component embed wit _build/wasm/release/build/gen/gen.wasm "
+"\\\n"
+"    --encoding utf16 \\\n"
+"    --output adder.wasm\n"
+"$ wasm-tools component new adder.wasm --output adder.component.wasm\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:201
+msgid "You can verify the component's interface using `wasm-tools`:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:203
+msgid "$ wasm-tools component wit adder.component.wasm\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:207
+msgid "Expected output for both commands:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:209
+msgid ""
+"package root:component;\n"
+"\n"
+"world root {\n"
+"  export docs:adder/add@0.1.0;\n"
+"}\n"
+"package docs:adder@0.1.0 {\n"
+"  interface add {\n"
+"    add: func(x: u32, y: u32) -> u32;\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:222
+msgid "8. Testing the Component"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:224
+msgid "Using the Example Host"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:226
+msgid ""
+"To test your component, use the [`example-host`][example-host] provided "
+"in this repository:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:229
+msgid ""
+"$ git clone https://github.com/bytecodealliance/component-docs.git\n"
+"$ cd component-docs/component-model/examples/example-host\n"
+"$ cp /path/to/adder.component.wasm .\n"
+"$ cargo run --release -- 5 3 adder.component.wasm\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:236
+msgid "Expected output:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:238
+msgid "5 + 3 = 8\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:244
+msgid "Using Wasmtime"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:246
+msgid "You can also test the component directly with `wasmtime`:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:248
+msgid ""
+"$ wasmtime run --invoke 'add(10, 20)' adder.component.wasm\n"
+"30\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:253
+msgid "9. Configurations"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:255
+msgid "--derive-eq --derive-show"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:257
+msgid ""
+"These two options will add `derive(Eq)` and / or `derive(Show)` for all "
+"the generated types."
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:260
+msgid "--derive-error"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:262
+msgid ""
+"This option will generate variants / enums whose names containing 'Error'"
+" as [suberrors](https://docs.moonbitlang.com/en/latest/language/error-"
+"handling.html#error-types). This allows you to integrate the MoonBit's "
+"error handling easier."
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:266
+msgid "For example, for the following interface:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:268
+msgid ""
+"package docs:adder@0.1.0;\n"
+"\n"
+"interface add {\n"
+"    variant computation-error {\n"
+"        overflow\n"
+"    }\n"
+"    add: func(x: u32, y: u32) -> result<u32, computation-error>;\n"
+"}\n"
+"\n"
+"world adder {\n"
+"    import add;\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:283
+msgid "Will generate the following type and function:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:285
+msgid ""
+"// Generated by `wit-bindgen` 0.45.0. DO NOT EDIT!\n"
+"\n"
+"///|\n"
+"pub(all) suberror ComputationError {\n"
+"  Overflow\n"
+"} derive(Show, Eq)\n"
+"\n"
+"///|\n"
+"pub fn add(x : UInt, y : UInt) -> Result[UInt, ComputationError] {\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:299
+msgid "which you may use it as:"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:301
+msgid ""
+"// Generated by `wit-bindgen` 0.45.0.\n"
+"\n"
+"///|\n"
+"fn init {\n"
+"  let _ = @add.add(1, 2).unwrap_or_error() catch { Overflow => ... }\n"
+"\n"
+"}\n"
+"\n"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:312
+msgid "--ignore-stub"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:314
+msgid ""
+"It happens when you would like to regenerate the project due to the "
+"updated interface, but you don't want the `stub` file to be touched. You "
+"may use `--ignore-stub` option to avoid such modifications."
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:318
+msgid "--project-name"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:320
+msgid ""
+"By default, the project name is generated per the name defined in the "
+"MoonBit file. You may use this option to specify the name of the project."
+" It can also be used if you are generating the project as part of a "
+"larger project."
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:324
+msgid "--gen-dir"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:326
+msgid ""
+"By default, the exportation parts are generated under `gen`. You may use "
+"this option to specify another directory."
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:329
+msgid "10. References and Further Reading"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:331
+msgid ""
+"[WebAssembly Component Model](https://component-"
+"model.bytecodealliance.org/)"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:332
+msgid ""
+"[Component Model Examples](https://github.com/bytecodealliance/component-"
+"docs/tree/main/component-model/examples)"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:333
+msgid ""
+"[WIT Format Specification](https://component-"
+"model.bytecodealliance.org/design/wit.html)"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:334
+msgid "[`wit-bindgen`](https://github.com/bytecodealliance/wit-bindgen)"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:335
+msgid "[WebAssembly Tools](https://github.com/bytecodealliance/wasm-tools)"
+msgstr ""
+
+#: ../../toolchain/wasm/component-model-tutorial.md:336
+msgid "[Wasmtime Runtime](https://wasmtime.dev/)"
+msgstr ""
+

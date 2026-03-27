@@ -1,0 +1,698 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-17 16:57+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/packages.md:1
+msgid "Managing Projects with Packages"
+msgstr ""
+
+#: ../../language/packages.md:3
+msgid ""
+"When developing projects at large scale, the project usually needs to be "
+"divided into smaller modular unit that depends on each other.  More "
+"often, it involves using other people's work: most noticeably is the "
+"[core](https://github.com/moonbitlang/core), the standard library of "
+"MoonBit."
+msgstr ""
+
+#: ../../language/packages.md:6
+msgid "Packages and modules"
+msgstr ""
+
+#: ../../language/packages.md:8
+msgid ""
+"In MoonBit, the most important unit for code organization is a package, "
+"which consists of a number of source code files and a single package "
+"configuration file (`moon.pkg`, or the legacy `moon.pkg.json` format). A "
+"package can either be a `main` package, consisting a `main` function, or "
+"a package that serves as a library, identified by the [`is-"
+"main`](/toolchain/moon/package.md#is-main) field."
+msgstr ""
+
+#: ../../language/packages.md:11
+msgid ""
+"A project, corresponding to a module, consists of multiple packages and a"
+" single `moon.mod.json` configuration file."
+msgstr ""
+
+#: ../../language/packages.md:13
+msgid ""
+"A module is identified by the [`name`](/toolchain/moon/module.md#name) "
+"field, which usually consists of two parts, separated by `/`: `user-name"
+"/project-name`. A package is identified by the relative path to the "
+"source root defined by the [`source`](/toolchain/moon/module.md#source-"
+"directory) field. The full identifier would be `user-name/project-name"
+"/path-to-pkg`."
+msgstr ""
+
+#: ../../language/packages.md:16
+msgid ""
+"When using things from another package, the dependency between modules "
+"should first be declared inside the `moon.mod.json` by the "
+"[`deps`](/toolchain/moon/module.md#dependency-management) field. The "
+"dependency between packages should then be declared in the package file "
+"(`moon.pkg`, or legacy `moon.pkg.json`) by the "
+"[`import`](/toolchain/moon/package.md#import) field. Most core packages "
+"follow the same rule: if you use `@json`, `@test`, or other ordinary core"
+" aliases, add the corresponding `moonbitlang/core/...` package to "
+"`import` to avoid `core_package_not_imported` warnings."
+msgstr ""
+
+#: ../../language/packages.md:23
+msgid ""
+"The **default alias** of a package is the last part of the identifier "
+"split by `/`. One can use `@pkg_alias` to access the imported entities, "
+"where `pkg_alias` is either the full identifier or the default alias. A "
+"custom alias may also be defined with the "
+"[`import`](/toolchain/moon/package.md#import) field."
+msgstr ""
+
+#: ../../language/packages.md:27
+msgid "In `moon.pkg`, a custom alias is written as:"
+msgstr ""
+
+#: ../../language/packages.md:29
+msgid ""
+"import {\n"
+"  \"moonbit-community/language/packages/pkgA\",\n"
+"  \"moonbit-community/language/packages/pkgC\" @c,\n"
+"  \"moonbitlang/core/builtin\",\n"
+"}\n"
+msgstr ""
+
+#: ../../language/packages.md:33
+msgid "pkgB/top.mbt"
+msgstr ""
+
+#: ../../language/packages.md:33
+msgid ""
+"///|\n"
+"pub fn add1(x : Int) -> Int {\n"
+"  @moonbitlang/core/builtin.Add::add(0, @c.incr(@pkgA.incr(x)))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/packages.md:38
+msgid "Prelude and builtin names"
+msgstr ""
+
+#: ../../language/packages.md:40
+msgid ""
+"If `@pkg.` is omitted, MoonBit resolves an unqualified name in the "
+"current package and the prelude. A local definition with the same name "
+"therefore shadows the prelude definition."
+msgstr ""
+
+#: ../../language/packages.md:44
+msgid ""
+"fn println(msg : String) -> String {\n"
+"  \"log: \\{msg}\"\n"
+"}\n"
+"\n"
+"///|\n"
+"fn shadowed_println() -> String {\n"
+"  println(\"hello\")\n"
+"}\n"
+"\n"
+"///|\n"
+"fn builtin_answer() -> Int {\n"
+"  let answer : Int = 42\n"
+"  answer\n"
+"}\n"
+msgstr ""
+
+#: ../../language/packages.md:50
+msgid ""
+"`prelude` is a special package: it is available by default, and names "
+"exposed through it participate in normal unqualified name resolution "
+"without an explicit `import`."
+msgstr ""
+
+#: ../../language/packages.md:54
+msgid ""
+"Compiler builtins are a separate category. Types such as `Int` are built "
+"into the language itself, not imported from any package, so there is no "
+"`@builtin.Int`. The same distinction applies to other compiler-known "
+"names such as `String`, `Bool`, and `Unit`."
+msgstr ""
+
+#: ../../language/packages.md:59
+msgid "Internal Packages"
+msgstr ""
+
+#: ../../language/packages.md:61
+msgid ""
+"You can define internal packages that are only available for certain "
+"packages."
+msgstr ""
+
+#: ../../language/packages.md:63
+msgid ""
+"Code in `a/b/c/internal/x/y/z` are only available to packages `a/b/c` and"
+" `a/b/c/**`."
+msgstr ""
+
+#: ../../language/packages.md:65
+msgid "Using"
+msgstr ""
+
+#: ../../language/packages.md:67
+msgid "You can use `using` syntax to import symbols defined in another package."
+msgstr ""
+
+#: ../../language/packages.md:69
+msgid "pkgC/top.mbt"
+msgstr ""
+
+#: ../../language/packages.md:69
+msgid ""
+"///|\n"
+"pub using @pkgA {incr, trait Trait, type Type}\n"
+msgstr ""
+
+#: ../../language/packages.md:74
+msgid "By having `pub` modifier, it is considered as reexportation."
+msgstr ""
+
+#: ../../language/packages.md:76
+msgid "Access Control"
+msgstr ""
+
+#: ../../language/packages.md:78
+msgid ""
+"MoonBit features a comprehensive access control system that governs which"
+" parts of your code are accessible from other packages.  This system "
+"helps maintain encapsulation, information hiding, and clear API "
+"boundaries.  The visibility modifiers apply to functions, variables, "
+"types, and traits, allowing fine-grained control over how your code can "
+"be used by others."
+msgstr ""
+
+#: ../../language/packages.md:82
+msgid "Functions"
+msgstr ""
+
+#: ../../language/packages.md:84
+msgid ""
+"By default, all function definitions and variable bindings are "
+"_invisible_ to other packages. You can use the `pub` modifier before "
+"toplevel `let`/`fn` to make them public."
+msgstr ""
+
+#: ../../language/packages.md:87
+msgid "Aliases"
+msgstr ""
+
+#: ../../language/packages.md:89
+msgid ""
+"By default, [function alias](/language/fundamentals.md#function-alias) "
+"and [method alias](/language/methods.md#alias-methods-as-functions) "
+"follow the visibility of the original definition, while  [type "
+"alias](/language/fundamentals.md#type-alias), [using](#using) are "
+"_invisible_ to other packages."
+msgstr ""
+
+#: ../../language/packages.md:95
+msgid ""
+"You can add the `pub` modifier before the definition or fill in the "
+"`visibility` field within the annotation."
+msgstr ""
+
+#: ../../language/packages.md:98
+msgid "Types"
+msgstr ""
+
+#: ../../language/packages.md:100
+msgid "There are four different kinds of visibility for types in MoonBit:"
+msgstr ""
+
+#: ../../language/packages.md:102
+msgid ""
+"Private type: declared with `priv`, completely invisible to the outside "
+"world"
+msgstr ""
+
+#: ../../language/packages.md:103
+msgid "Abstract type: which is the default visibility for types."
+msgstr ""
+
+#: ../../language/packages.md:105
+msgid ""
+"Only the name of an abstract type is visible outside, the internal "
+"representation of the  type is hidden. Making abstract type by default is"
+" a design choice to encourage  encapsulation and information hiding."
+msgstr ""
+
+#: ../../language/packages.md:109
+msgid "Readonly types, declared with `pub`."
+msgstr ""
+
+#: ../../language/packages.md:111
+msgid ""
+"The internal representation of readonly types are visible outside, but "
+"users can only read the values of these types from outside, construction "
+"and mutation are not allowed."
+msgstr ""
+
+#: ../../language/packages.md:114
+msgid "Fully public types, declared with `pub(all)`."
+msgstr ""
+
+#: ../../language/packages.md:116
+msgid ""
+"The outside world can freely construct, read values of these types and "
+"modify them if possible."
+msgstr ""
+
+#: ../../language/packages.md:118
+msgid ""
+"In addition to the visibility of the type itself, the fields of a public "
+"`struct` can be annotated with `priv`, which will hide the field from the"
+" outside world completely. Note that `struct`s with private fields cannot"
+" be constructed directly outside, but you can update the public fields "
+"using the functional struct update syntax."
+msgstr ""
+
+#: ../../language/packages.md:123
+msgid ""
+"Readonly types is a very useful feature, inspired by [private "
+"types](https://ocaml.org/manual/5.3/privatetypes.html) in OCaml.  In "
+"short, values of `pub` types can be destructed by pattern matching and "
+"the dot syntax, but  cannot be constructed or mutated in other packages."
+msgstr ""
+
+#: ../../language/packages.md:128
+msgid ""
+"There is no restriction within the same package where `pub` types are "
+"defined."
+msgstr ""
+
+#: ../../language/packages.md:132
+msgid ""
+"// Package A\n"
+"pub struct RO {\n"
+"  field: Int\n"
+"}\n"
+"test {\n"
+"  let r = { field: 4 }       // OK\n"
+"  let r = { ..r, field: 8 }  // OK\n"
+"}\n"
+"\n"
+"// Package B\n"
+"fn println(r : RO) -> Unit {\n"
+"  println(\"{ field: \")\n"
+"  println(r.field)  // OK\n"
+"  println(\" }\")\n"
+"}\n"
+"test {\n"
+"  let r : RO = { field: 4 }  // ERROR: Cannot create values of the public"
+" read-only type RO!\n"
+"  let r = { ..r, field: 8 }  // ERROR: Cannot mutate a public read-only "
+"field!\n"
+"}\n"
+msgstr ""
+
+#: ../../language/packages.md:154
+msgid ""
+"Access control in MoonBit adheres to the principle that a `pub` type, "
+"function, or variable cannot be defined in terms of a private type. This "
+"is because the private type may not be accessible everywhere that the "
+"`pub` entity is used. MoonBit incorporates sanity checks to prevent the "
+"occurrence of use cases that violate this principle."
+msgstr ""
+
+#: ../../language/packages.md:157
+msgid ""
+"pub(all) type T1\n"
+"pub(all) type T2\n"
+"priv type T3\n"
+"\n"
+"pub(all) struct S {\n"
+"  x: T1  // OK\n"
+"  y: T2  // OK\n"
+"  z: T3  // ERROR: public field has private type `T3`!\n"
+"}\n"
+"\n"
+"// ERROR: public function has private parameter type `T3`!\n"
+"pub fn f1(_x: T3) -> T1 { ... }\n"
+"// ERROR: public function has private return type `T3`!\n"
+"pub fn f2(_x: T1) -> T3 { ... }\n"
+"// OK\n"
+"pub fn f3(_x: T1) -> T1 { ... }\n"
+"\n"
+"pub let a: T3 = { ... } // ERROR: public variable has private type `T3`!\n"
+msgstr ""
+
+#: ../../language/packages.md:178
+msgid "Traits"
+msgstr ""
+
+#: ../../language/packages.md:180
+msgid ""
+"There are four visibility for traits, just like `struct` and `enum`: "
+"private, abstract, readonly and fully public."
+msgstr ""
+
+#: ../../language/packages.md:181
+msgid ""
+"Private traits are declared with `priv trait`, and they are completely "
+"invisible from outside."
+msgstr ""
+
+#: ../../language/packages.md:182
+msgid ""
+"Abstract trait is the default visibility. Only the name of the trait is "
+"visible from outside, and the methods in the trait are not exposed."
+msgstr ""
+
+#: ../../language/packages.md:183
+msgid ""
+"Readonly traits are declared with `pub trait`, their methods can be "
+"invoked from outside, but only the current package can add new "
+"implementation for readonly traits."
+msgstr ""
+
+#: ../../language/packages.md:184
+msgid ""
+"Fully public traits are declared with `pub(open) trait`, they are open to"
+" new implementations outside current package, and their methods can be "
+"freely used."
+msgstr ""
+
+#: ../../language/packages.md:186
+msgid ""
+"Abstract and readonly traits are sealed, because only the package "
+"defining the trait can implement them. Implementing a sealed (abstract or"
+" readonly) trait outside its package result in compiler error."
+msgstr ""
+
+#: ../../language/packages.md:189
+msgid "Trait Implementations"
+msgstr ""
+
+#: ../../language/packages.md:191
+msgid ""
+"Implementations have independent visibility, just like functions. The "
+"type will not be considered having fulfillled the trait outside current "
+"package unless the implementation is `pub`."
+msgstr ""
+
+#: ../../language/packages.md:193
+msgid ""
+"To make the trait system coherent (i.e. there is a globally unique "
+"implementation for every `Type: Trait` pair), and prevent third-party "
+"packages from modifying behavior of existing programs by accident, "
+"MoonBit employs the following restrictions on who can define "
+"methods/implement traits for types:"
+msgstr ""
+
+#: ../../language/packages.md:197
+msgid ""
+"_only the package that defines a type can define methods for it_. So one "
+"cannot define new methods or override old methods for builtin and foreign"
+" types."
+msgstr ""
+
+#: ../../language/packages.md:198
+msgid ""
+"there is an exception to this rule: [local methods](/language/methods.md"
+"#local-method). Local methods are always private though, so they do not "
+"break coherence properties of MoonBit's type system"
+msgstr ""
+
+#: ../../language/packages.md:199
+msgid ""
+"_only the package of the type or the package of the trait can define an "
+"implementation_. For example, only `@pkg1` and `@pkg2` are allowed to "
+"write `impl @pkg1.Trait for @pkg2.Type`."
+msgstr ""
+
+#: ../../language/packages.md:202
+msgid ""
+"The second rule above allows one to add new functionality to a foreign "
+"type by defining a new trait and implementing it. This makes MoonBit's "
+"trait & method system flexible while enjoying good coherence property."
+msgstr ""
+
+#: ../../language/packages.md:206
+msgid "Currently, an empty trait is implemented automatically."
+msgstr ""
+
+#: ../../language/packages.md:209
+msgid "Here's an example of abstract trait:"
+msgstr ""
+
+#: ../../language/packages.md:212
+msgid ""
+"trait Number {\n"
+" op_add(Self, Self) -> Self\n"
+" op_sub(Self, Self) -> Self\n"
+"}\n"
+"\n"
+"fn[N : Number] add(x : N, y: N) -> N {\n"
+"  Number::op_add(x, y)\n"
+"}\n"
+"\n"
+"fn[N : Number] sub(x : N, y: N) -> N {\n"
+"  Number::op_sub(x, y)\n"
+"}\n"
+"\n"
+"impl Number for Int with op_add(x, y) { x + y }\n"
+"impl Number for Int with op_sub(x, y) { x - y }\n"
+"\n"
+"impl Number for Double with op_add(x, y) { x + y }\n"
+"impl Number for Double with op_sub(x, y) { x - y }"
+msgstr ""
+
+#: ../../language/packages.md:234
+msgid "From outside this package, users can only see the following:"
+msgstr ""
+
+#: ../../language/packages.md:236
+msgid ""
+"trait Number\n"
+"\n"
+"fn[N : Number] op_add(x : N, y : N) -> N\n"
+"fn[N : Number] op_sub(x : N, y : N) -> N\n"
+"\n"
+"impl Number for Int\n"
+"impl Number for Double"
+msgstr ""
+
+#: ../../language/packages.md:246
+msgid ""
+"The author of `Number` can make use of the fact that only `Int` and "
+"`Double` can ever implement `Number`, because new implementations are not"
+" allowed outside."
+msgstr ""
+
+#: ../../language/packages.md:249
+msgid "Virtual Packages"
+msgstr ""
+
+#: ../../language/packages.md:252
+msgid ""
+"Virtual package is an experimental feature. There may be bugs and "
+"undefined behaviors."
+msgstr ""
+
+#: ../../language/packages.md:255
+msgid ""
+"You can define virtual packages, which serves as an interface. They can "
+"be replaced by specific implementations at build time. Currently virtual "
+"packages can only contain plain functions."
+msgstr ""
+
+#: ../../language/packages.md:257
+msgid ""
+"Virtual packages can be useful when swapping different implementations "
+"while keeping the code untouched."
+msgstr ""
+
+#: ../../language/packages.md:259
+msgid "Defining a virtual package"
+msgstr ""
+
+#: ../../language/packages.md:261
+msgid ""
+"You need to declare it to be a virtual package and define its interface "
+"in a MoonBit interface file."
+msgstr ""
+
+#: ../../language/packages.md:263
+msgid ""
+"Within `moon.pkg`, you will need to add field "
+"[`virtual`](/toolchain/moon/package.md#declarations) :"
+msgstr ""
+
+#: ../../language/packages.md:265
+msgid ""
+"options(\n"
+"  \"virtual\": { \"has-default\": true },\n"
+")\n"
+msgstr ""
+
+#: ../../language/packages.md:269
+msgid ""
+"The `has-default` indicates whether the virtual package has a default "
+"implementation."
+msgstr ""
+
+#: ../../language/packages.md:271
+msgid "Within the package, you will need to add an interface file `pkg.mbti`:"
+msgstr ""
+
+#: ../../language/packages.md:273
+msgid "/src/packages/virtual/pkg.mbti"
+msgstr ""
+
+#: ../../language/packages.md:273
+msgid ""
+"package \"moonbit-community/language/packages/virtual\"\n"
+"\n"
+"fn log(String) -> Unit"
+msgstr ""
+
+#: ../../language/packages.md:278
+msgid ""
+"The first line of the interface file need to be `package \"full-package-"
+"name\"`. Then comes the declarations. The `pub` keyword for [access "
+"control](#access-control) and the function parameter names should be "
+"omitted."
+msgstr ""
+
+#: ../../language/packages.md:282
+msgid ""
+"If you are uncertain about how to define the interface, you can create a "
+"normal package, define the functions you need using [TODO "
+"syntax](/language/fundamentals.md#todo-syntax), and use `moon info` to "
+"help you generate the interface."
+msgstr ""
+
+#: ../../language/packages.md:285
+msgid "Implementing a virtual package"
+msgstr ""
+
+#: ../../language/packages.md:287
+msgid ""
+"A virtual package can have a default implementation. By defining "
+"[`virtual.has-default`](/toolchain/moon/package.md#declarations) as "
+"`true`, you can implement the code as usual within the same package."
+msgstr ""
+
+#: ../../language/packages.md:289
+msgid "/src/packages/virtual/top.mbt"
+msgstr ""
+
+#: ../../language/packages.md:289
+msgid ""
+"///|\n"
+"pub fn log(s : String) -> Unit {\n"
+"  println(s)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/packages.md:294
+msgid ""
+"A virtual package can also be implemented by a third party. By defining "
+"[`implements`](/toolchain/moon/package.md#implementations) as the target "
+"package's full name, the compiler can warn you about the missing "
+"implementations or the mismatched implementations."
+msgstr ""
+
+#: ../../language/packages.md:296
+msgid ""
+"options(\n"
+"  implement: \"moonbit-community/language/packages/virtual\",\n"
+")\n"
+msgstr ""
+
+#: ../../language/packages.md:300
+msgid "/src/packages/implement/top.mbt"
+msgstr ""
+
+#: ../../language/packages.md:300
+msgid ""
+"///|\n"
+"pub fn log(string : String) -> Unit {\n"
+"  ignore(string)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/packages.md:305
+msgid "Using a virtual package"
+msgstr ""
+
+#: ../../language/packages.md:307
+msgid ""
+"To use a virtual package, it's the same as other packages: define "
+"[`import`](/toolchain/moon/package.md#import) field in the package where "
+"you want to use it."
+msgstr ""
+
+#: ../../language/packages.md:309
+msgid "Overriding a virtual package"
+msgstr ""
+
+#: ../../language/packages.md:311
+msgid ""
+"If a virtual package has a default implementation and that is your "
+"choice, there's no extra configurations."
+msgstr ""
+
+#: ../../language/packages.md:313
+msgid ""
+"Otherwise, you may define the [`overrides`](/toolchain/moon/package.md"
+"#overriding-implementations) field by providing an array of "
+"implementations that you would like to use."
+msgstr ""
+
+#: ../../language/packages.md:315
+msgid "/src/packages/use_implement/moon.pkg"
+msgstr ""
+
+#: ../../language/packages.md:315
+msgid ""
+"import {\n"
+"  \"moonbit-community/language/packages/virtual\",\n"
+"}\n"
+"\n"
+"options(\n"
+"  \"is-main\": true,\n"
+"  overrides: [ \"moonbit-community/language/packages/implement\" ],\n"
+")\n"
+msgstr ""
+
+#: ../../language/packages.md:320
+msgid "You should reference the virtual package when using the entities."
+msgstr ""
+
+#: ../../language/packages.md:322
+msgid "/src/packages/use_implement/top.mbt"
+msgstr ""
+
+#: ../../language/packages.md:322
+msgid ""
+"///|\n"
+"fn main {\n"
+"  @virtual.log(\"Hello\")\n"
+"}\n"
+msgstr ""
+

@@ -1,0 +1,93 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0041.md:1
+msgid "E0041"
+msgstr ""
+
+#: ../../language/error_codes/E0041.md:3
+msgid "Warning name: `missing_rest_mark`"
+msgstr ""
+
+#: ../../language/error_codes/E0041.md:5
+msgid "Closed map pattern."
+msgstr ""
+
+#: ../../language/error_codes/E0041.md:7
+msgid ""
+"MoonBit's map pattern syntax does not support closed pattern (i.e. "
+"asserting that the map does not contain any other unmatched elements). So"
+" map patterns must always contain a `..`, otherwise this warning will be "
+"reported."
+msgstr ""
+
+#: ../../language/error_codes/E0041.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0041.md:12
+msgid ""
+"///|\n"
+"fn f(map : Map[String, Int]) -> Bool {\n"
+"  match map {\n"
+"    // the pattern still matches \n"
+"    // if `map` contain elements other than \"x\" and \"y\"\n"
+"    { \"x\": x, \"y\": y } => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(f({ \"x\": 1, \"y\": 2, \"z\": 3 }), content=\"true\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0041.md:16
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0041.md:17
+msgid ""
+"If the intended semantic is open matching (i.e. allow existence of "
+"unmatched elements), just add `..` to the map pattern."
+msgstr ""
+
+#: ../../language/error_codes/E0041.md:19
+msgid "If the intended semantic is closed matching, use pattern guard instead:"
+msgstr ""
+
+#: ../../language/error_codes/E0041.md:20
+msgid ""
+"///|\n"
+"fn f(map : Map[String, Int]) -> Bool {\n"
+"  match map {\n"
+"    { \"x\": x, \"y\": y, .. } if map.length() == 2 => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(f({ \"x\": 1, \"y\": 2, \"z\": 3 }), content=\"false\")\n"
+"}\n"
+msgstr ""
+

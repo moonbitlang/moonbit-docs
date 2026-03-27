@@ -1,0 +1,79 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4071.md:1
+msgid "E4071"
+msgstr ""
+
+#: ../../language/error_codes/E4071.md:3
+msgid ""
+"Multiple intrinsic is not supported. You have defined a function to use "
+"multiple intrinsics."
+msgstr ""
+
+#: ../../language/error_codes/E4071.md:6
+msgid ""
+"Note all intrinsic is not intended for usage outside of "
+"`moonbitlang/core` and is subject to change without notice, and we highly"
+" recommend **against** using them."
+msgstr ""
+
+#: ../../language/error_codes/E4071.md:10
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4071.md:12
+#, python-format
+msgid ""
+"type MyArray[T] Array[T]\n"
+"\n"
+"/// @intrinsic %array.get\n"
+"/// @intrinsic %fixedarray.get\n"
+"fn MyArray::get[T](self : MyArray[T], index : Int) -> T { // Error: "
+"Multiple intrinsic is not unsupported.\n"
+"  return self._[index]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4071.md:22
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4071.md:24
+msgid "Remove the extra intrinsic and use only one intrinsic:"
+msgstr ""
+
+#: ../../language/error_codes/E4071.md:26
+msgid ""
+"/// @intrinsic %array.get\n"
+"fn MyArray::get[T](self : MyArray[T], index : Int) -> T {\n"
+"  return self._[index]\n"
+"}"
+msgstr ""
+
+#: ../../language/error_codes/E4071.md:30
+msgid ""
+"Avoid directly using intrinsics as much as possible, as we may change or "
+"remove them in the future. If you really need to use the intrinsic, you "
+"can check the source code of `moonbitlang/core` for further usage of the "
+"corresponding intrinsic."
+msgstr ""
+

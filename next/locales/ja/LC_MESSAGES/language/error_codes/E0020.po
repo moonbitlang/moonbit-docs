@@ -1,0 +1,92 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0020.md:1
+msgid "E0020"
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:3
+msgid "Warning name: `deprecated`"
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:5
+msgid "Deprecated API usage."
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:7
+msgid "This warning is emitted when code uses APIs marked as deprecated."
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:9
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:11
+msgid "lib/top.mbt"
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:11
+msgid ""
+"///|\n"
+"#deprecated(\"Use `greet` instead\")\n"
+"pub fn greeting() -> String {\n"
+"  \"Hello!\"\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn greet() -> String {\n"
+"  \"Hello!\"\n"
+"}\n"
+"\n"
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:16
+#: ../../language/error_codes/E0020.md:25
+msgid "top.mbt"
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:16
+msgid ""
+"///|\n"
+"fn main {\n"
+"  println(@lib.greeting())\n"
+"  //      ^~~~~~~~ Warning (deprecated): Use `greet` instead\n"
+"}\n"
+"\n"
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:21
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:23
+msgid "Migrate to the suggested APIs:"
+msgstr ""
+
+#: ../../language/error_codes/E0020.md:25
+msgid ""
+"///|\n"
+"fn main {\n"
+"  println(@lib.greet())\n"
+"}\n"
+"\n"
+msgstr ""
+

@@ -1,0 +1,141 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0017.md:1
+msgid "E0017"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:3
+msgid "Warning name: `ambiguous_loop_argument`"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:5
+msgid ""
+"The usage of identifier is ambiguous. If it refers to the loop variable, "
+"please use `as <id>` to bind it in the pattern. If it refers to the "
+"original value of the variable before entering the loop, please bind it "
+"to a new binder outside the loop."
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:10
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:12
+msgid ""
+"///|\n"
+"fn main {\n"
+"  let a : StringView = \"asdf\"\n"
+"  loop a {\n"
+"    [_, .. d] => {\n"
+"      println(a)\n"
+"      //      ^\n"
+"      // Warning: The usage of 'a' is ambiguous. If it refers to the loop"
+"\n"
+"      // variable, please use `as a` to bind it in the pattern. If it "
+"refers to\n"
+"      // the original value of 'a' before entering the loop, please bind "
+"it to a\n"
+"      // new binder outside the loop.\n"
+"      continue d\n"
+"    }\n"
+"    [] => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:20
+#: ../../language/error_codes/E0017.md:41
+#: ../../language/error_codes/E0017.md:57
+msgid "Output:"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:22
+#: ../../language/error_codes/E0017.md:59
+msgid ""
+"asdf\n"
+"asdf\n"
+"asdf\n"
+"asdf\n"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:25
+msgid ""
+"Because `a` refers to the value of `a` before entering the loop, "
+"therefore the value is always the same."
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:28
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:30
+msgid ""
+"It is often the case that you may want to refer to the loop variable that"
+" changes with loop iterations. If so, use `as <id>` to bind it in the "
+"pattern."
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:33
+msgid ""
+"///|\n"
+"fn main {\n"
+"  let a : StringView = \"asdf\"\n"
+"  loop a {\n"
+"    [_, .. d] as a => {\n"
+"      println(a)\n"
+"      continue d\n"
+"    }\n"
+"    [] => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:43
+msgid ""
+"asdf\n"
+"sdf\n"
+"df\n"
+"f\n"
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:46
+msgid ""
+"Or, if you want to refer to the original value of the variable before "
+"entering the loop, explicitly bind it to another name outside the loop."
+msgstr ""
+
+#: ../../language/error_codes/E0017.md:49
+msgid ""
+"///|\n"
+"fn main {\n"
+"  let a : StringView = \"asdf\"\n"
+"  let b = a\n"
+"  loop a {\n"
+"    [_, .. d] => {\n"
+"      println(b)\n"
+"      continue d\n"
+"    }\n"
+"    [] => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+

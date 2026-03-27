@@ -1,0 +1,4175 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-17 16:57+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/fundamentals.md:1
+msgid "Fundamentals"
+msgstr ""
+
+#: ../../language/fundamentals.md:3
+msgid "Built-in Data Structures"
+msgstr ""
+
+#: ../../language/fundamentals.md:5
+msgid "Unit"
+msgstr ""
+
+#: ../../language/fundamentals.md:7
+msgid ""
+"`Unit` is a built-in type in MoonBit that represents the absence of a "
+"meaningful value. It has only one value, written as `()`. `Unit` is "
+"similar to `void` in languages like C/C++/Java, but unlike `void`, it is "
+"a real type and can be used anywhere a type is expected."
+msgstr ""
+
+#: ../../language/fundamentals.md:9
+msgid ""
+"The `Unit` type is commonly used as the return type for functions that "
+"perform some action but do not produce a meaningful result:"
+msgstr ""
+
+#: ../../language/fundamentals.md:11
+msgid ""
+"fn print_hello() -> Unit {\n"
+"  println(\"Hello, world!\")\n"
+"}"
+msgstr ""
+
+#: ../../language/fundamentals.md:18
+msgid ""
+"Unlike some other languages, MoonBit treats `Unit` as a first-class type,"
+" allowing it to be used in generics, stored in data structures, and "
+"passed as function arguments."
+msgstr ""
+
+#: ../../language/fundamentals.md:20
+msgid "Boolean"
+msgstr ""
+
+#: ../../language/fundamentals.md:22
+msgid ""
+"MoonBit has a built-in boolean type, which has two values: `true` and "
+"`false`. The boolean type is used in conditional expressions and control "
+"structures. Use `!` to negate a boolean value; `not(x)` is equivalent."
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid ""
+"let a = true\n"
+"let b = false\n"
+"let c = a && b\n"
+"let d = a || b\n"
+"let e = !a\n"
+"let f = !(a && b)\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:31
+msgid "Number"
+msgstr ""
+
+#: ../../language/fundamentals.md:33
+msgid "MoonBit have integer type and floating point type:"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "type"
+msgstr ""
+
+#: ../../language/fundamentals.md:24 ../../language/fundamentals.md:135
+#: ../../language/fundamentals.md:237
+msgid "description"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "example"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "`Int16`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "16-bit signed integer"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "`(42 : Int16)`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24 ../../language/fundamentals.md:492
+msgid "`Int`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "32-bit signed integer"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "`42`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24 ../../language/fundamentals.md:1595
+msgid "`Int64`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "64-bit signed integer"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "`1000L`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "`UInt16`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "16-bit unsigned integer"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "`(14 : UInt16)`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "`UInt`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "32-bit unsigned integer"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "`14U`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24 ../../language/fundamentals.md:1595
+msgid "`UInt64`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "64-bit unsigned integer"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "`14UL`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24 ../../language/fundamentals.md:492
+msgid "`Double`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "64-bit floating point, defined by IEEE754"
+msgstr ""
+
+#: ../../language/fundamentals.md:24 ../../language/fundamentals.md:492
+msgid "`3.14`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24 ../../language/fundamentals.md:492
+msgid "`Float`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "32-bit floating point"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "`(3.14 : Float)`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "`BigInt`"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "represents numeric values larger than other types"
+msgstr ""
+
+#: ../../language/fundamentals.md:24
+msgid "`10000000000000000000000N`"
+msgstr ""
+
+#: ../../language/fundamentals.md:47
+msgid ""
+"MoonBit also supports numeric literals, including decimal, binary, octal,"
+" and hexadecimal numbers."
+msgstr ""
+
+#: ../../language/fundamentals.md:49
+msgid ""
+"To improve readability, you may place underscores in the middle of "
+"numeric literals such as `1_000_000`. Note that underscores can be placed"
+" anywhere within a number, not just every three digits."
+msgstr ""
+
+#: ../../language/fundamentals.md:51
+msgid "Decimal numbers can have underscore between the numbers."
+msgstr ""
+
+#: ../../language/fundamentals.md:53
+msgid ""
+"By default, an int literal is signed 32-bit number. For unsigned numbers,"
+" a postfix `U` is needed; for 64-bit numbers, a postfix `L` is needed."
+msgstr ""
+
+#: ../../language/fundamentals.md:55
+msgid ""
+"let a = 1234\n"
+"let b : Int = 1_000_000 + a\n"
+"let unsigned_num       : UInt   = 4_294_967_295U\n"
+"let large_num          : Int64  = 9_223_372_036_854_775_807L\n"
+"let unsigned_large_num : UInt64 = 18_446_744_073_709_551_615UL\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:62
+msgid ""
+"A binary number has a leading zero followed by a letter \"B\", i.e. "
+"`0b`/`0B`. Note that the digits after `0b`/`0B` must be `0` or `1`."
+msgstr ""
+
+#: ../../language/fundamentals.md:65
+msgid ""
+"let bin = 0b110010\n"
+"let another_bin = 0B110010\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:72
+msgid ""
+"An octal number has a leading zero followed by a letter \"O\", i.e. "
+"`0o`/`0O`. Note that the digits after `0o`/`0O` must be in the range from"
+" `0` through `7`:"
+msgstr ""
+
+#: ../../language/fundamentals.md:75
+msgid ""
+"let octal = 0o1234\n"
+"let another_octal = 0O1234\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:82
+msgid ""
+"A hexadecimal number has a leading zero followed by a letter \"X\", i.e. "
+"`0x`/`0X`. Note that the digits after the `0x`/`0X` must be in the range "
+"`0123456789ABCDEF`."
+msgstr ""
+
+#: ../../language/fundamentals.md:85
+msgid ""
+"let hex = 0XA\n"
+"let another_hex = 0xA_B_C\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:92
+msgid ""
+"A floating-point number literal is 64-bit floating-point number. To "
+"define a float, type annotation is needed."
+msgstr ""
+
+#: ../../language/fundamentals.md:94
+msgid ""
+"let double = 3.14 // Double\n"
+"let float : Float = 3.14\n"
+"let float2 = (3.14 : Float)\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:101
+msgid ""
+"A 64-bit floating-point number can also be defined using hexadecimal "
+"format:"
+msgstr ""
+
+#: ../../language/fundamentals.md:103
+msgid "let hex_double = 0x1.2P3 // (1.0 + 2 / 16) * 2^(+3) == 9\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:110
+msgid ""
+"When the expected type is known, MoonBit can automatically overload "
+"literal, and there is no need to specify the type of number via letter "
+"postfix:"
+msgstr ""
+
+#: ../../language/fundamentals.md:112
+msgid ""
+"let int : Int = 42\n"
+"let uint : UInt = 42\n"
+"let int64 : Int64 = 42\n"
+"let double : Double = 42\n"
+"let float : Float = 42\n"
+"let bigint : BigInt = 42\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:121 ../../language/fundamentals.md:190
+#: ../../language/fundamentals.md:215 ../../language/fundamentals.md:277
+#: ../../language/fundamentals.md:423 ../../language/fundamentals.md:465
+#: ../../language/fundamentals.md:484
+msgid "[Overloaded Literals](#overloaded-literals)"
+msgstr ""
+
+#: ../../language/fundamentals.md:124
+msgid "String"
+msgstr ""
+
+#: ../../language/fundamentals.md:126
+msgid ""
+"`String` holds a sequence of UTF-16 code units. You can use double quotes"
+" to create a string, or use `#|` to write a multi-line string."
+msgstr ""
+
+#: ../../language/fundamentals.md:128
+msgid ""
+"let a = \"兔rabbit\"\n"
+"println(a.code_unit_at(0).to_char())\n"
+"println(a.code_unit_at(1).to_char())\n"
+"let b =\n"
+"  #| Hello\n"
+"  #| MoonBit\\n\n"
+"  #|\n"
+"println(b)\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:135 ../../language/fundamentals.md:169
+#: ../../language/fundamentals.md:231 ../../language/fundamentals.md:317
+#: ../../language/fundamentals.md:841 ../../language/fundamentals.md:855
+#: ../../language/fundamentals.md:869 ../../language/fundamentals.md:883
+#: ../../language/fundamentals.md:895 ../../language/fundamentals.md:912
+#: ../../language/fundamentals.md:950 ../../language/fundamentals.md:997
+#: ../../language/fundamentals.md:1011 ../../language/fundamentals.md:1029
+#: ../../language/fundamentals.md:1181 ../../language/fundamentals.md:1217
+#: ../../language/fundamentals.md:1295 ../../language/fundamentals.md:1322
+#: ../../language/fundamentals.md:1351 ../../language/fundamentals.md:1371
+#: ../../language/fundamentals.md:1405 ../../language/fundamentals.md:1419
+msgid "Output"
+msgstr ""
+
+#: ../../language/fundamentals.md:135
+msgid ""
+"Some('兔')\n"
+"Some('r')\n"
+" Hello\n"
+" MoonBit\\n\n"
+"\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:139
+msgid ""
+"In double quotes string, a backslash followed by certain special "
+"characters forms an escape sequence:"
+msgstr ""
+
+#: ../../language/fundamentals.md:135 ../../language/fundamentals.md:237
+msgid "escape sequences"
+msgstr ""
+
+#: ../../language/fundamentals.md:135 ../../language/fundamentals.md:237
+msgid "`\\n`, `\\r`, `\\t`, `\\b`"
+msgstr ""
+
+#: ../../language/fundamentals.md:135 ../../language/fundamentals.md:237
+msgid "New line, Carriage return, Horizontal tab, Backspace"
+msgstr ""
+
+#: ../../language/fundamentals.md:135 ../../language/fundamentals.md:237
+msgid "`\\\\`"
+msgstr ""
+
+#: ../../language/fundamentals.md:135 ../../language/fundamentals.md:237
+msgid "Backslash"
+msgstr ""
+
+#: ../../language/fundamentals.md:135
+msgid "`\\u5154` , `\\u{1F600}`"
+msgstr ""
+
+#: ../../language/fundamentals.md:135
+msgid "Unicode escape sequence"
+msgstr ""
+
+#: ../../language/fundamentals.md:147
+msgid ""
+"MoonBit supports string interpolation. It enables you to substitute "
+"variables within interpolated strings. This feature simplifies the "
+"process of constructing dynamic strings by directly embedding variable "
+"values into the text. Variables used for string interpolation must "
+"implement the [`Show` trait](/language/methods.md#builtin-traits)."
+msgstr ""
+
+#: ../../language/fundamentals.md:149
+msgid ""
+"let x = 42\n"
+"println(\"The answer is \\{x}\")\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:157
+msgid "The interpolated expression can not contain newline, `{}` or `\"`."
+msgstr ""
+
+#: ../../language/fundamentals.md:160
+msgid ""
+"Multi-line strings can be defined using the leading `#|` or `$|`, where "
+"the former will keep the raw string and the latter will perform the "
+"escape and interpolation:"
+msgstr ""
+
+#: ../../language/fundamentals.md:162
+msgid ""
+"let lang = \"MoonBit\"\n"
+"let raw =\n"
+"  #| Hello\n"
+"  #| ---\n"
+"  #| \\{lang}\n"
+"  #| ---\n"
+"let interp =\n"
+"  $| Hello\n"
+"  $| ---\n"
+"  $| \\{lang}\n"
+"  $| ---\n"
+"println(raw)\n"
+"println(interp)\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:169
+msgid ""
+" Hello\n"
+" ---\n"
+" \\{lang}\n"
+" ---\n"
+" Hello\n"
+" ---\n"
+" MoonBit\n"
+" ---\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:173
+msgid ""
+"Avoid mixing `$|` and `#|` within the same multi-line string; pick one "
+"style for the whole block."
+msgstr ""
+
+#: ../../language/fundamentals.md:175
+msgid ""
+"The [VSCode extension](/toolchain/vscode/index.md#actions) includes an "
+"action that can turn pasted documents into a plain multi-line string and "
+"switch between plain text and MoonBit multi-line strings."
+msgstr ""
+
+#: ../../language/fundamentals.md:177
+msgid ""
+"When the expected type is `String` , the array literal syntax is "
+"overloaded to construct the `String` by specifying each character in the "
+"string."
+msgstr ""
+
+#: ../../language/fundamentals.md:180
+msgid ""
+"test {\n"
+"  let c : Char = '中'\n"
+"  let s : String = [c, '文']\n"
+"  inspect(s, content=\"中文\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:188
+msgid "API: <https://mooncakes.io/docs/moonbitlang/core/string>"
+msgstr ""
+
+#: ../../language/fundamentals.md:193 ../../language/fundamentals.md:1501
+msgid "Char"
+msgstr ""
+
+#: ../../language/fundamentals.md:195
+msgid "`Char` represents a Unicode code point."
+msgstr ""
+
+#: ../../language/fundamentals.md:197
+msgid ""
+"let a : Char = 'A'\n"
+"let b = '兔'\n"
+"let zero = '\\u{30}'\n"
+"let zero = '\\u0030'\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:204
+msgid ""
+"Char literals can be overloaded to type `Int` or `UInt16` when it is the "
+"expected type:"
+msgstr ""
+
+#: ../../language/fundamentals.md:206
+msgid ""
+"test {\n"
+"  let s : String = \"hello\"\n"
+"  let b : UInt16 = s.code_unit_at(0) // 'h'\n"
+"  assert_eq(b, 'h') // 'h' is overloaded to UInt16\n"
+"  let c : Int = '兔'\n"
+"  // Not ok : exceed range\n"
+"  // let d : UInt16 = '𠮷'\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:213
+msgid "API: <https://mooncakes.io/docs/moonbitlang/core/char>"
+msgstr ""
+
+#: ../../language/fundamentals.md:219
+msgid "Byte(s)"
+msgstr ""
+
+#: ../../language/fundamentals.md:221
+msgid ""
+"A byte literal in MoonBit is either a single ASCII character or a single "
+"escape, have the form of `b'...'`. Byte literals are of type `Byte`. For "
+"example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:223
+msgid ""
+"fn main {\n"
+"  let b1 : Byte = b'a'\n"
+"  println(b1.to_int())\n"
+"  let b2 = b'\\xff'\n"
+"  println(b2.to_int())\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:231
+msgid ""
+"97\n"
+"255\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:235
+msgid ""
+"A `Bytes` is an immutable sequence of bytes. Similar to byte, bytes "
+"literals have the form of `b\"...\"`. For example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:237
+msgid ""
+"test {\n"
+"  let b1 : Bytes = b\"abcd\"\n"
+"  let b2 = b\"\\x61\\x62\\x63\\x64\"\n"
+"  assert_eq(b1, b2)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:243
+msgid ""
+"The byte literal and bytes literal also support escape sequences, but "
+"different from those in string literals. The following table lists the "
+"supported escape sequences for byte and bytes literals:"
+msgstr ""
+
+#: ../../language/fundamentals.md:237
+msgid "`\\x41`"
+msgstr ""
+
+#: ../../language/fundamentals.md:237
+msgid "Hexadecimal escape sequence"
+msgstr ""
+
+#: ../../language/fundamentals.md:237
+msgid "`\\o102`"
+msgstr ""
+
+#: ../../language/fundamentals.md:237
+msgid "Octal escape sequence"
+msgstr ""
+
+#: ../../language/fundamentals.md:254
+msgid ""
+"You can use `@buffer.T` to construct bytes by writing various types of "
+"data. For example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:256
+msgid ""
+"test \"buffer 1\" {\n"
+"  let buf : @buffer.Buffer = @buffer.new()\n"
+"  buf.write_bytes(b\"Hello\")\n"
+"  buf.write_byte(b'!')\n"
+"  assert_eq(buf.contents(), b\"Hello!\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:264
+msgid ""
+"When the expected type is `Bytes`, the `b` prefix can be omitted. Array "
+"literals can also be overloaded to construct a `Bytes` sequence by "
+"specifying each byte in the sequence."
+msgstr ""
+
+#: ../../language/fundamentals.md:266
+msgid ""
+"test {\n"
+"  let b : Byte = '\\xFF'\n"
+"  let bs : Bytes = [b, '\\x01']\n"
+"  inspect(\n"
+"    bs,\n"
+"    content=(\n"
+"      #|b\"\\xff\\x01\"\n"
+"    ),\n"
+"  )\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:273
+msgid ""
+"API for `Byte`: <https://mooncakes.io/docs/moonbitlang/core/byte>   API "
+"for `Bytes`: <https://mooncakes.io/docs/moonbitlang/core/bytes>   API for"
+" `@buffer.T`: <https://mooncakes.io/docs/moonbitlang/core/buffer>"
+msgstr ""
+
+#: ../../language/fundamentals.md:280
+msgid "Choosing a Byte Container"
+msgstr ""
+
+#: ../../language/fundamentals.md:282
+msgid ""
+"MoonBit has several byte-oriented container types. They are related, but "
+"they serve different jobs:"
+msgstr ""
+
+#: ../../language/fundamentals.md:272 ../../language/fundamentals.md:1501
+msgid "Type"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "Ownership / mutability"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "Resizable"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "Typical use"
+msgstr ""
+
+#: ../../language/fundamentals.md:272 ../../language/fundamentals.md:492
+msgid "`Bytes`"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "owned, immutable"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "no"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "final byte payloads, API boundaries, serialized data"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "`BytesView`"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "borrowed, immutable view"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "slicing or parsing existing bytes without copying"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "`Array[Byte]`"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "owned, mutable"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "yes"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "general-purpose mutable byte storage"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "`FixedArray[Byte]`"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "fixed-size working buffers"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "`ArrayView[Byte]`"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "borrowed array view"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "passing slices of array-backed byte storage without ownership"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "`MutArrayView[Byte]`"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "borrowed, mutable view"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "mutating borrowed array-backed byte storage in place"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "`@buffer.Buffer`"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "owned, mutable builder"
+msgstr ""
+
+#: ../../language/fundamentals.md:272
+msgid "incrementally constructing bytes, then calling `contents()`"
+msgstr ""
+
+#: ../../language/fundamentals.md:295
+msgid "Two common distinctions matter:"
+msgstr ""
+
+#: ../../language/fundamentals.md:297
+msgid ""
+"`Bytes` versus `BytesView`: owned immutable data versus a borrowed "
+"immutable slice."
+msgstr ""
+
+#: ../../language/fundamentals.md:298
+msgid ""
+"`Array[Byte]` versus `ArrayView[Byte]` / `MutArrayView[Byte]`: owned "
+"mutable storage versus borrowed readonly or mutable views over it."
+msgstr ""
+
+#: ../../language/fundamentals.md:300
+msgid ""
+"`ReadOnlyArray[Byte]` and `MutArrayView[Byte]` are the corresponding "
+"read-only and mutable view types when you need to express those "
+"constraints explicitly. Pattern matching and bitstring parsing also work "
+"on these byte containers; see [Array Pattern](#array-pattern) and "
+"[Bitstring Pattern](#bitstring-pattern)."
+msgstr ""
+
+#: ../../language/fundamentals.md:305
+msgid "Tuple"
+msgstr ""
+
+#: ../../language/fundamentals.md:307
+msgid ""
+"A tuple is a collection of finite values constructed using round brackets"
+" `()` with the elements separated by commas `,`. The order of elements "
+"matters; for example, `(1,true)` and `(true,1)` have different types. "
+"Here's an example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:309
+msgid ""
+"fn main {\n"
+"  fn pack(\n"
+"    a : Bool,\n"
+"    b : Int,\n"
+"    c : String,\n"
+"    d : Double\n"
+"  ) -> (Bool, Int, String, Double) {\n"
+"    (a, b, c, d)\n"
+"  }\n"
+"\n"
+"  let quad = pack(false, 100, \"text\", 3.14)\n"
+"  let (bool_val, int_val, str, float_val) = quad\n"
+"  println(\"\\{bool_val} \\{int_val} \\{str} \\{float_val}\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:317
+msgid "false 100 text 3.14\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:321
+msgid "Tuples can be accessed via pattern matching or index:"
+msgstr ""
+
+#: ../../language/fundamentals.md:323
+msgid ""
+"test {\n"
+"  let t = (1, 2)\n"
+"  let (x1, y1) = t\n"
+"  let x2 = t.0\n"
+"  let y2 = t.1\n"
+"  assert_eq(x1, x2)\n"
+"  assert_eq(y1, y2)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:329
+msgid "Ref"
+msgstr ""
+
+#: ../../language/fundamentals.md:331
+msgid "A `Ref[T]` is a mutable reference containing a value `val` of type `T`."
+msgstr ""
+
+#: ../../language/fundamentals.md:333
+msgid ""
+"It can be constructed using `{ val : x }`, and can be accessed using "
+"`ref.val`. See [struct](#struct) for detailed explanation."
+msgstr ""
+
+#: ../../language/fundamentals.md:335
+msgid ""
+"let a : Ref[Int] = { val: 100 }\n"
+"\n"
+"test {\n"
+"  a.val = 200\n"
+"  assert_eq(a.val, 200)\n"
+"  a.val += 1\n"
+"  assert_eq(a.val, 201)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:342
+msgid "API: <https://mooncakes.io/docs/moonbitlang/core/ref>"
+msgstr ""
+
+#: ../../language/fundamentals.md:345
+msgid "Option and Result"
+msgstr ""
+
+#: ../../language/fundamentals.md:347
+msgid ""
+"`Option` and `Result` are the most common types to represent a possible "
+"error or failure in MoonBit."
+msgstr ""
+
+#: ../../language/fundamentals.md:349
+msgid ""
+"`Option[T]` represents a possibly missing value of type `T`. It can be "
+"abbreviated as `T?`."
+msgstr ""
+
+#: ../../language/fundamentals.md:350
+msgid ""
+"`Result[T, E]` represents either a value of type `T` or an error of type "
+"`E`."
+msgstr ""
+
+#: ../../language/fundamentals.md:352
+msgid "See [enum](#enum) for detailed explanation."
+msgstr ""
+
+#: ../../language/fundamentals.md:354
+msgid ""
+"test {\n"
+"  let a : Int? = None\n"
+"  let b : Option[Int] = Some(42)\n"
+"  let c : Result[Int, String] = Ok(42)\n"
+"  let d : Result[Int, String] = Err(\"error\")\n"
+"  match a {\n"
+"    Some(_) => assert_true(false)\n"
+"    None => assert_true(true)\n"
+"  }\n"
+"  match d {\n"
+"    Ok(_) => assert_true(false)\n"
+"    Err(_) => assert_true(true)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:361
+msgid ""
+"API for `Option`: <https://mooncakes.io/docs/moonbitlang/core/option>   "
+"API for `Result`: <https://mooncakes.io/docs/moonbitlang/core/result>"
+msgstr ""
+
+#: ../../language/fundamentals.md:365
+msgid "Array"
+msgstr ""
+
+#: ../../language/fundamentals.md:367
+msgid ""
+"An array is a finite sequence of values constructed using square brackets"
+" `[]`, with elements separated by commas `,`. For example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:369
+msgid "let numbers = [1, 2, 3, 4]\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:376
+msgid ""
+"You can use `numbers[x]` to refer to the xth element. The index starts "
+"from zero."
+msgstr ""
+
+#: ../../language/fundamentals.md:378
+msgid ""
+"test {\n"
+"  let numbers = [1, 2, 3, 4]\n"
+"  let a = numbers[2]\n"
+"  numbers[3] = 5\n"
+"  let b = a + numbers[3]\n"
+"  assert_eq(b, 8)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:385
+msgid ""
+"There are `Array[T]` and `FixedArray[T]`. Views are provided by "
+"`ArrayView[T]` and `MutArrayView[T]` (see below)."
+msgstr ""
+
+#: ../../language/fundamentals.md:388
+msgid ""
+"`Array[T]` can grow in size, while `FixedArray[T]` has a fixed size, thus"
+" it needs to be created with initial value."
+msgstr ""
+
+#: ../../language/fundamentals.md:391
+msgid "A common pitfall is creating `FixedArray` with the same initial value:"
+msgstr ""
+
+#: ../../language/fundamentals.md:393
+msgid ""
+"test {\n"
+"  let two_dimension_array = FixedArray::make(10, FixedArray::make(10, 0))"
+"\n"
+"  two_dimension_array[0][5] = 10\n"
+"  assert_eq(two_dimension_array[5][5], 10)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:400
+msgid ""
+"This is because all the cells reference to the same object (the "
+"`FixedArray[Int]` in this case). One should use `FixedArray::makei()` "
+"instead which creates an object for each index."
+msgstr ""
+
+#: ../../language/fundamentals.md:402
+msgid ""
+"test {\n"
+"  let two_dimension_array = FixedArray::makei(10, fn(_i) {\n"
+"    FixedArray::make(10, 0)\n"
+"  })\n"
+"  two_dimension_array[0][5] = 10\n"
+"  assert_eq(two_dimension_array[5][5], 0)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:410
+msgid ""
+"When the expected type is known, MoonBit can automatically overload "
+"array, otherwise `Array[T]` is created:"
+msgstr ""
+
+#: ../../language/fundamentals.md:413
+msgid ""
+"let fixed_array_1 : FixedArray[Int] = [1, 2, 3]\n"
+"\n"
+"let fixed_array_2 = ([1, 2, 3] : FixedArray[Int])\n"
+"\n"
+"let array_3 : Array[Int] = [1, 2, 3] // Array[Int]\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:421 ../../language/fundamentals.md:446
+msgid "API: <https://mooncakes.io/docs/moonbitlang/core/array>"
+msgstr ""
+
+#: ../../language/fundamentals.md:426
+msgid "ArrayView"
+msgstr ""
+
+#: ../../language/fundamentals.md:428
+msgid ""
+"Analogous to `slice` in other languages, the view is a reference to a "
+"specific segment of collections. You can use `data[start:end]` to create "
+"a view of array `data`, referencing elements from `start` to `end` "
+"(exclusive). Both `start` and `end` indices can be omitted."
+msgstr ""
+
+#: ../../language/fundamentals.md:434
+msgid ""
+"`ArrayView` is an immutable data structure on its own, but the underlying"
+" `Array` or `FixedArray` could be modified. For a mutable view, use "
+"`MutArrayView[T]` via `data.mut_view(...)`."
+msgstr ""
+
+#: ../../language/fundamentals.md:439
+msgid ""
+"test {\n"
+"  let xs = [0, 1, 2, 3, 4, 5]\n"
+"  let s1 : ArrayView[Int] = xs[2:]\n"
+"  inspect(s1, content=\"[2, 3, 4, 5]\")\n"
+"  inspect(xs[:4], content=\"[0, 1, 2, 3]\")\n"
+"  inspect(xs[2:5], content=\"[2, 3, 4]\")\n"
+"  inspect(xs[:], content=\"[0, 1, 2, 3, 4, 5]\")\n"
+"  let mv : MutArrayView[Int] = xs.mut_view(start=1, end=3)\n"
+"  mv[0] = 99\n"
+"  inspect(xs[1], content=\"99\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:449
+msgid "Map"
+msgstr ""
+
+#: ../../language/fundamentals.md:451
+msgid ""
+"MoonBit provides a hash map data structure that preserves insertion order"
+" called `Map` in its standard library. `Map`s can be created via a "
+"convenient literal syntax:"
+msgstr ""
+
+#: ../../language/fundamentals.md:454
+msgid "let map : Map[String, Int] = { \"x\": 1, \"y\": 2, \"z\": 3 }\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:460
+msgid ""
+"Currently keys in map literal syntax must be constant. `Map`s can also be"
+" destructed elegantly with pattern matching, see [Map Pattern](#map-"
+"pattern)."
+msgstr ""
+
+#: ../../language/fundamentals.md:463
+msgid "API: <https://mooncakes.io/docs/moonbitlang/core/builtin#Map>"
+msgstr ""
+
+#: ../../language/fundamentals.md:468
+msgid "Json"
+msgstr ""
+
+#: ../../language/fundamentals.md:470
+msgid ""
+"MoonBit supports convenient json handling by overloading literals. When "
+"the expected type of an expression is `Json`, number, string, array and "
+"map literals can be directly used to create json data:"
+msgstr ""
+
+#: ../../language/fundamentals.md:473
+msgid ""
+"let moon_pkg_json_example : Json = {\n"
+"  \"import\": [\"moonbitlang/core/builtin\", "
+"\"moonbitlang/core/coverage\"],\n"
+"  \"test-import\": [\"moonbitlang/core/random\"],\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:479
+msgid "Json values can be pattern matched too, see [Json Pattern](#json-pattern)."
+msgstr ""
+
+#: ../../language/fundamentals.md:482
+msgid "API: <https://mooncakes.io/docs/moonbitlang/core/json>"
+msgstr ""
+
+#: ../../language/fundamentals.md:487
+msgid "Overloaded Literals"
+msgstr ""
+
+#: ../../language/fundamentals.md:489
+msgid ""
+"Overloaded literals allow you to use the same syntax to represent "
+"different types of values.  For example, you can use `1` to represent "
+"`UInt` or `Double` depending on the expected type. If the expected type "
+"is not known, the literal will be interpreted as `Int` by default."
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid ""
+"fn expect_double(x : Double) -> Unit {\n"
+"\n"
+"}\n"
+"\n"
+"test {\n"
+"  let x = 1 // type of x is Int\n"
+"  let y : Double = 1\n"
+"  expect_double(1)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:498
+msgid ""
+"The overloaded literals can be composed. If array literal can be "
+"overloaded to `Bytes` , and number literal can be overloaded to `Byte` , "
+"then you can overload `[1,2,3]` to `Bytes` as well. Here is a table of "
+"overloaded literals in MoonBit:"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid "Overloaded literal"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid "Default type"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid "Can be overloaded to"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid "`10`, `0xFF`, `0o377`, `10_000`"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid ""
+"`UInt`, `Int64`, `UInt64`, `Int16`, `UInt16`, `Byte`, `Double`, `Float`, "
+"`BigInt`"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid "`\"str\"`"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid "`String`"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid "`'c'`"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid "`Char`"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid "`Int` , `Byte`"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid "`[a, b, c]` (where the types of literals a, b, and c are E)"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid "`Array[E]`"
+msgstr ""
+
+#: ../../language/fundamentals.md:492
+msgid ""
+"`FixedArray[E]`, `String`  (if E is of type Char), `Bytes` (if E is of "
+"type Byte)"
+msgstr ""
+
+#: ../../language/fundamentals.md:508
+msgid ""
+"There are also some similar overloading rules in pattern. For more "
+"details, see [Pattern Matching](#pattern-matching)."
+msgstr ""
+
+#: ../../language/fundamentals.md:511
+msgid ""
+"Literal overloading is not the same as value conversion. To convert a "
+"variable to a different type, you can use methods prefixed with `to_`, "
+"such as `to_int()`, `to_double()`, etc."
+msgstr ""
+
+#: ../../language/fundamentals.md:515
+msgid "Escape Sequences in Overloaded Literals"
+msgstr ""
+
+#: ../../language/fundamentals.md:517
+msgid ""
+"Escape sequences can be used in overloaded `\"...\"` literals and `'...'`"
+" literals. The interpretation of escape sequences depends on the types "
+"they are overloaded to:"
+msgstr ""
+
+#: ../../language/fundamentals.md:519
+msgid "Simple escape sequences"
+msgstr ""
+
+#: ../../language/fundamentals.md:521
+msgid ""
+"Including `\\n`, `\\r`, `\\t`, `\\\\`, and `\\b`. These escape sequences "
+"are supported in any `\"...\"` or `'...'` literals. They are interpreted "
+"as their respective `Char` or `Byte` in `String` or `Bytes`."
+msgstr ""
+
+#: ../../language/fundamentals.md:523
+msgid "Byte escape sequences"
+msgstr ""
+
+#: ../../language/fundamentals.md:525
+msgid ""
+"The `\\x41` and `\\o102` escape sequences represent a Byte. These are "
+"supported in literals overloaded to `Bytes` and `Byte`."
+msgstr ""
+
+#: ../../language/fundamentals.md:527
+msgid "Unicode escape sequences"
+msgstr ""
+
+#: ../../language/fundamentals.md:529
+msgid ""
+"The `\\u5154` and `\\u{1F600}` escape sequences represent a `Char`. These"
+" are supported in literals of type `String` and `Char`."
+msgstr ""
+
+#: ../../language/fundamentals.md:531
+msgid "Functions"
+msgstr ""
+
+#: ../../language/fundamentals.md:533
+msgid ""
+"Functions take arguments and produce a result. In MoonBit, functions are "
+"first-class, which means that functions can be arguments or return values"
+" of other functions. MoonBit's naming convention requires that function "
+"names should not begin with uppercase letters (A-Z). Compare for "
+"constructors in the `enum` section below."
+msgstr ""
+
+#: ../../language/fundamentals.md:535
+msgid "Top-Level Functions"
+msgstr ""
+
+#: ../../language/fundamentals.md:537
+msgid ""
+"Functions can be defined as top-level or local. We can use the `fn` "
+"keyword to define a top-level function that sums three integers and "
+"returns the result, as follows:"
+msgstr ""
+
+#: ../../language/fundamentals.md:539
+msgid ""
+"fn add3(x : Int, y : Int, z : Int) -> Int {\n"
+"  x + y + z\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:545
+msgid ""
+"Note that the arguments and return value of top-level functions require "
+"**explicit** type annotations."
+msgstr ""
+
+#: ../../language/fundamentals.md:547
+msgid "Local Functions"
+msgstr ""
+
+#: ../../language/fundamentals.md:549
+msgid ""
+"Local functions can be named or anonymous. Type annotations can be "
+"omitted for local function definitions: they can be automatically "
+"inferred in most cases. For example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:551
+msgid ""
+"fn local_1() -> Int {\n"
+"  fn inc(x) { // named as `inc`\n"
+"    x + 1\n"
+"  }\n"
+"  // anonymous, instantly applied to integer literal 6\n"
+"  (fn(x) { x + inc(2) })(6)\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq(local_1(), 9)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:557
+msgid ""
+"For simple anonymous function, MoonBit provides a very concise syntax "
+"called arrow function:"
+msgstr ""
+
+#: ../../language/fundamentals.md:559
+msgid ""
+"  [1, 2, 3].eachi((i, x) => println(\"\\{i} => \\{x}\"))\n"
+"  // parenthesis can be omitted when there is only one parameter\n"
+"  [1, 2, 3].each(x => println(x * x))\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:565
+msgid ""
+"Although local function supports type inference for types of parameters "
+"and return value, *effect inference* is only supported for the arrow "
+"function syntax. If a `fn` may [raise error](/language/error-handling.md)"
+" or [perform asynchronous operations](/language/async-experimental.md), "
+"it must be explicitly annotated with `raise` or `async`."
+msgstr ""
+
+#: ../../language/fundamentals.md:571
+msgid ""
+"Functions, whether named or anonymous, are _lexical closures_: any "
+"identifiers without a local binding must refer to bindings from a "
+"surrounding lexical scope. For example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:573
+msgid ""
+"let global_y = 3\n"
+"\n"
+"fn local_2(x : Int) -> (Int, Int) {\n"
+"  fn inc() {\n"
+"    x + 1\n"
+"  }\n"
+"\n"
+"  fn four() {\n"
+"    global_y + 1\n"
+"  }\n"
+"\n"
+"  (inc(), four())\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq(local_2(3), (4, 4))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:579
+msgid ""
+"A local function can only refer to itself and other previously defined "
+"local functions. To define  mutually recursive local functions, use the "
+"syntax `letrec f = .. and g = ..` instead:"
+msgstr ""
+
+#: ../../language/fundamentals.md:582
+msgid ""
+"  fn f(x) {\n"
+"    // `f` can refer to itself here, but cannot use `g`\n"
+"    if x > 0 {\n"
+"      f(x - 1)\n"
+"    }\n"
+"  }\n"
+"\n"
+"  fn g(x) {\n"
+"    // `g` can refer to `f` and `g` itself\n"
+"    if x < 0 {\n"
+"      f(-x)\n"
+"    } else {\n"
+"      f(x)\n"
+"    }\n"
+"  }\n"
+"  // mutually recursive local functions\n"
+"  letrec even = x => x == 0 || odd(x - 1)\n"
+"  and odd = x => x != 0 && even(x - 1)\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:588
+msgid "Function Applications"
+msgstr ""
+
+#: ../../language/fundamentals.md:590
+msgid "A function can be applied to a list of arguments in parentheses:"
+msgstr ""
+
+#: ../../language/fundamentals.md:592
+msgid "add3(1, 2, 7)\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:596
+msgid ""
+"This works whether `add3` is a function defined with a name (as in the "
+"previous example), or a variable bound to a function value, as shown "
+"below:"
+msgstr ""
+
+#: ../../language/fundamentals.md:598
+msgid ""
+"test {\n"
+"  let add3 = fn(x, y, z) { x + y + z }\n"
+"  assert_eq(add3(1, 2, 7), 10)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:604
+msgid ""
+"The expression `add3(1, 2, 7)` returns `10`. Any expression that "
+"evaluates to a function value is applicable:"
+msgstr ""
+
+#: ../../language/fundamentals.md:606
+msgid ""
+"test {\n"
+"  let f = fn(x) { x + 1 }\n"
+"  let g = fn(x) { x + 2 }\n"
+"  let w = (if true { f } else { g })(3)\n"
+"  assert_eq(w, 4)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:613
+msgid "Partial Applications"
+msgstr ""
+
+#: ../../language/fundamentals.md:615
+msgid ""
+"Partial application is a technique of applying a function to some of its "
+"arguments, resulting in a new function that takes the remaining "
+"arguments. In MoonBit, partial application is achieved by using the `_` "
+"operator in function application:"
+msgstr ""
+
+#: ../../language/fundamentals.md:617
+msgid ""
+"fn add(x : Int, y : Int) -> Int {\n"
+"  x + y\n"
+"}\n"
+"\n"
+"test {\n"
+"  let add10 : (Int) -> Int = x => add(10, x)\n"
+"  println(add10(5)) // prints 15\n"
+"  println(add10(10)) // prints 20\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:624
+msgid ""
+"The `_` operator represents the missing argument in parentheses. The "
+"partial application allows multiple `_` in the same parentheses. For "
+"example, `Array::fold(_, _, init=5)` is equivalent to `fn(x, y) { "
+"Array::fold(x, y, init=5) }`."
+msgstr ""
+
+#: ../../language/fundamentals.md:627
+msgid ""
+"The `_` operator can also be used in enum creation, dot style function "
+"calls and in the pipelines."
+msgstr ""
+
+#: ../../language/fundamentals.md:629
+msgid "Labelled arguments"
+msgstr ""
+
+#: ../../language/fundamentals.md:631
+msgid ""
+"**Top-level** functions can declare labelled argument with the syntax "
+"`label~ : Type`. `label` will also serve as parameter name inside "
+"function body:"
+msgstr ""
+
+#: ../../language/fundamentals.md:633
+msgid ""
+"fn labelled_1(arg1~ : Int, arg2~ : Int) -> Int {\n"
+"  arg1 + arg2\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:639
+msgid ""
+"Labelled arguments can be supplied via the syntax `label=arg`. "
+"`label=label` can be abbreviated as `label~`:"
+msgstr ""
+
+#: ../../language/fundamentals.md:641
+msgid ""
+"test {\n"
+"  let arg1 = 1\n"
+"  assert_eq(labelled_1(arg2=2, arg1~), 3)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:647
+msgid ""
+"Labelled function can be supplied in any order. The evaluation order of "
+"arguments is the same as the order of parameters in function declaration."
+msgstr ""
+
+#: ../../language/fundamentals.md:649
+msgid "Optional arguments"
+msgstr ""
+
+#: ../../language/fundamentals.md:651
+msgid ""
+"An argument can be made optional by supplying a default expression with "
+"the syntax `label?: Type = default_expr`, where the `default_expr` may be"
+" omitted. If this argument is not supplied at call site, the default "
+"expression will be used:"
+msgstr ""
+
+#: ../../language/fundamentals.md:653
+msgid ""
+"fn optional(opt? : Int = 42) -> Int {\n"
+"  opt\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq(optional(), 42)\n"
+"  assert_eq(optional(opt=0), 0)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:659
+msgid ""
+"The default expression will be evaluated every time it is used. And the "
+"side effect in the default expression, if any, will also be triggered. "
+"For example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:661
+msgid ""
+"fn incr(counter? : Ref[Int] = { val: 0 }) -> Ref[Int] {\n"
+"  counter.val = counter.val + 1\n"
+"  counter\n"
+"}\n"
+"\n"
+"test {\n"
+"  inspect(incr(), content=\"{val: 1}\")\n"
+"  inspect(incr(), content=\"{val: 1}\")\n"
+"  let counter : Ref[Int] = { val: 0 }\n"
+"  inspect(incr(counter~), content=\"{val: 1}\")\n"
+"  inspect(incr(counter~), content=\"{val: 2}\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:667
+msgid ""
+"Optional argument values are regular expressions at the call site. You "
+"can pass expressions that may raise errors or call async functions when "
+"in a `raise` or `async` context:"
+msgstr ""
+
+#: ../../language/fundamentals.md:671
+msgid ""
+"fn may_fail(x : Int) -> Int raise Failure {\n"
+"  if x < 0 {\n"
+"    fail(\"negative\")\n"
+"  }\n"
+"  x\n"
+"}\n"
+"\n"
+"fn add_with_optional(base : Int, extra? : Int = 1) -> Int {\n"
+"  base + extra\n"
+"}\n"
+"\n"
+"test {\n"
+"  inspect(add_with_optional(1, extra=may_fail(2)), content=\"3\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:677
+msgid ""
+"For async functions, optional argument expressions can call async "
+"functions as usual:"
+msgstr ""
+
+#: ../../language/fundamentals.md:680
+msgid ""
+"\n"
+"///|\n"
+"async fn fetch_default() -> Int {\n"
+"  ...\n"
+"}\n"
+"\n"
+"///|\n"
+"async fn build(x? : Int = fetch_default()) -> Int {\n"
+"  ...\n"
+"}\n"
+"\n"
+"///|\n"
+"async fn use_value() -> Int {\n"
+"  build(x=fetch_default())\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:686
+msgid ""
+"If you want to share the result of default expression between different "
+"function calls, you can lift the default expression to a toplevel `let` "
+"declaration:"
+msgstr ""
+
+#: ../../language/fundamentals.md:688
+msgid ""
+"let default_counter : Ref[Int] = { val: 0 }\n"
+"\n"
+"fn incr_2(counter? : Ref[Int] = default_counter) -> Int {\n"
+"  counter.val = counter.val + 1\n"
+"  counter.val\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq(incr_2(), 1)\n"
+"  assert_eq(incr_2(), 2)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:694
+msgid "The default expression can depend on previous arguments, such as:"
+msgstr ""
+
+#: ../../language/fundamentals.md:696
+msgid ""
+"fn create_rectangle(a : Int, b? : Int = a) -> (Int, Int) {\n"
+"  (a, b)\n"
+"}\n"
+"\n"
+"test {\n"
+"  inspect(create_rectangle(10), content=\"(10, 10)\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:702
+msgid "Optional arguments without default values"
+msgstr ""
+
+#: ../../language/fundamentals.md:704
+msgid ""
+"It is quite common to have different semantics when a user does not "
+"provide a value. Optional arguments without default values have type `T?`"
+" and `None` as the default value. When supplying this kind of optional "
+"argument directly, MoonBit will automatically wrap the value with `Some`:"
+msgstr ""
+
+#: ../../language/fundamentals.md:708
+msgid ""
+"fn new_image(width? : Int, height? : Int) -> Image {\n"
+"  if width is Some(w) {\n"
+"    ...\n"
+"  }\n"
+"  ...\n"
+"}\n"
+"\n"
+"let img2 : Image = new_image(width=1920, height=1080)\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:714
+msgid ""
+"Sometimes, it is also useful to pass a value of type `T?` directly, for "
+"example when forwarding optional argument. MoonBit provides a syntax "
+"`label?=value` for this, with `label?` being an abbreviation of "
+"`label?=label`:"
+msgstr ""
+
+#: ../../language/fundamentals.md:718
+msgid ""
+"fn image(width? : Int, height? : Int) -> Image {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn fixed_width_image(height? : Int) -> Image {\n"
+"  image(width=1920, height?)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:724
+msgid "Autofill arguments"
+msgstr ""
+
+#: ../../language/fundamentals.md:726
+msgid ""
+"MoonBit supports filling specific types of arguments automatically at "
+"different call site, such as the source location of a function call. To "
+"declare an autofill argument, simply declare a labelled argument, and add"
+" a function attribute `#callsite(autofill(param_a, param_b))`. Now if the"
+" argument is not explicitly supplied, MoonBit will automatically fill it "
+"at the call site."
+msgstr ""
+
+#: ../../language/fundamentals.md:730
+msgid ""
+"Currently MoonBit supports two types of autofill arguments, `SourceLoc`, "
+"which is the source location of the whole function call, and `ArgsLoc`, "
+"which is an array containing the source location of each argument, if "
+"any:"
+msgstr ""
+
+#: ../../language/fundamentals.md:733
+msgid ""
+"#callsite(autofill(loc, args_loc))\n"
+"fn f(_x : Int, loc~ : SourceLoc, args_loc~ : ArgsLoc) -> String {\n"
+"  (\n"
+"    $|loc of whole function call: \\{loc}\n"
+"    $|loc of arguments: \\{args_loc}\n"
+"  )\n"
+"  // loc of whole function call: <filename>:7:3-7:10\n"
+"  // loc of arguments: [Some(<filename>:7:5-7:6), "
+"Some(<filename>:7:8-7:9), None, None]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:739
+msgid ""
+"Autofill arguments are very useful for writing debugging and testing "
+"utilities."
+msgstr ""
+
+#: ../../language/fundamentals.md:741
+msgid "Function alias"
+msgstr ""
+
+#: ../../language/fundamentals.md:742
+msgid ""
+"MoonBit allows calling functions with alternative names via function "
+"alias. Function alias can be declared as follows:"
+msgstr ""
+
+#: ../../language/fundamentals.md:744
+msgid ""
+"#alias(g)\n"
+"#alias(h, visibility=\"pub\")\n"
+"fn k() -> Bool {\n"
+"  true\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:750
+msgid ""
+"You can also create function alias that has different visibility with the"
+" field `visibility`."
+msgstr ""
+
+#: ../../language/fundamentals.md:752
+msgid "Control Structures"
+msgstr ""
+
+#: ../../language/fundamentals.md:754
+msgid "Conditional Expressions"
+msgstr ""
+
+#: ../../language/fundamentals.md:756
+msgid ""
+"A conditional expression consists of a condition, a consequent, and an "
+"optional `else` clause or `else if` clause."
+msgstr ""
+
+#: ../../language/fundamentals.md:758
+msgid ""
+"if x == y {\n"
+"  expr1\n"
+"} else if x == z {\n"
+"  expr2\n"
+"} else {\n"
+"  expr3\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:765
+msgid "The curly brackets around the consequent are required."
+msgstr ""
+
+#: ../../language/fundamentals.md:767
+msgid ""
+"Note that a conditional expression always returns a value in MoonBit, and"
+" the return values of the consequent and the else clause must be of the "
+"same type. Here is an example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:769
+msgid "let initial = if size < 1 { 1 } else { size }\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:776
+msgid "The `else` clause can only be omitted if the return value has type `Unit`."
+msgstr ""
+
+#: ../../language/fundamentals.md:778
+msgid "Match Expression"
+msgstr ""
+
+#: ../../language/fundamentals.md:780
+msgid ""
+"The `match` expression is similar to conditional expression, but it uses "
+"[pattern matching](#pattern-matching) to decide which consequent to "
+"evaluate and extracting variables at the same time."
+msgstr ""
+
+#: ../../language/fundamentals.md:782
+msgid ""
+"fn decide_sport(weather : String, humidity : Int) -> String {\n"
+"  match weather {\n"
+"    \"sunny\" => \"tennis\"\n"
+"    \"rainy\" => if humidity > 80 { \"swimming\" } else { \"football\" }\n"
+"    _ => \"unknown\"\n"
+"  }\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq(decide_sport(\"sunny\", 0), \"tennis\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:789
+msgid ""
+"If a possible condition is omitted, the compiler will issue a warning, "
+"and the program will terminate if that case were reached."
+msgstr ""
+
+#: ../../language/fundamentals.md:791
+msgid "Guard Statement"
+msgstr ""
+
+#: ../../language/fundamentals.md:793
+msgid ""
+"The `guard` statement is used to check a specified invariant. If the "
+"condition of the invariant is satisfied, the program continues executing "
+"the subsequent statements and returns. If the condition is not satisfied "
+"(i.e., false), the code in the `else` block is executed and its "
+"evaluation result is returned (the subsequent statements are skipped)."
+msgstr ""
+
+#: ../../language/fundamentals.md:798
+msgid ""
+"fn guarded_get(array : Array[Int], index : Int) -> Int? {\n"
+"  guard index >= 0 && index < array.length() else { None }\n"
+"  Some(array[index])\n"
+"}\n"
+"\n"
+"test {\n"
+"  inspect(guarded_get([1, 2, 3], -1), content=\"None\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:805
+msgid "Guard statement and is expression"
+msgstr ""
+
+#: ../../language/fundamentals.md:807
+msgid ""
+"The `let` statement can be used with [pattern matching](#pattern-"
+"matching). However, `let` statement can only handle one case. And using "
+"[is expression](#is-expression) with `guard` statement can solve this "
+"issue."
+msgstr ""
+
+#: ../../language/fundamentals.md:809
+msgid ""
+"In the following example, `getProcessedText` assumes that the input "
+"`path` points to resources that are all plain text, and it uses the "
+"`guard` statement to ensure this invariant while extracting the plain "
+"text resource. Compared to using a `match` statement, the subsequent "
+"processing of `text` can have one less level of indentation."
+msgstr ""
+
+#: ../../language/fundamentals.md:813
+msgid ""
+"enum Resource {\n"
+"  Folder(Array[String])\n"
+"  PlainText(String)\n"
+"  JsonConfig(Json)\n"
+"}\n"
+"\n"
+"fn getProcessedText(\n"
+"  resources : Map[String, Resource],\n"
+"  path : String,\n"
+") -> String raise Error {\n"
+"  guard resources.get(path) is Some(resource) else { fail(\"\\{path} not "
+"found\") }\n"
+"  guard resource is PlainText(text) else { fail(\"\\{path} is not plain "
+"text\") }\n"
+"  process(text)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:819
+msgid ""
+"When the `else` part is omitted, the program terminates if the condition "
+"specified in the `guard` statement is not true or cannot be matched."
+msgstr ""
+
+#: ../../language/fundamentals.md:822
+msgid ""
+"guard condition  // <=> guard condition else { panic() }\n"
+"guard expr is Some(x)\n"
+"// <=> guard expr is Some(x) else { _ => panic() }\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:829
+msgid "While loop"
+msgstr ""
+
+#: ../../language/fundamentals.md:831
+msgid ""
+"In MoonBit, `while` loop can be used to execute a block of code "
+"repeatedly as long as a condition is true. The condition is evaluated "
+"before executing the block of code. The `while` loop is defined using the"
+" `while` keyword, followed by a condition and the loop body. The loop "
+"body is a sequence of statements. The loop body is executed as long as "
+"the condition is true."
+msgstr ""
+
+#: ../../language/fundamentals.md:833
+msgid ""
+"fn main {\n"
+"  let mut i = 5\n"
+"  while i > 0 {\n"
+"    println(i)\n"
+"    i = i - 1\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:841
+msgid ""
+"5\n"
+"4\n"
+"3\n"
+"2\n"
+"1\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:845
+msgid ""
+"The loop body supports `break` and `continue`. Using `break` allows you "
+"to exit the current loop, while using `continue` skips the remaining part"
+" of the current iteration and proceeds to the next iteration."
+msgstr ""
+
+#: ../../language/fundamentals.md:847
+msgid ""
+"fn main {\n"
+"  let mut i = 5\n"
+"  while i > 0 {\n"
+"    i = i - 1\n"
+"    if i == 4 {\n"
+"      continue\n"
+"    }\n"
+"    if i == 1 {\n"
+"      break\n"
+"    }\n"
+"    println(i)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:855
+msgid ""
+"3\n"
+"2\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:859
+msgid ""
+"The `while` loop also supports an optional `nobreak` clause. When the "
+"loop condition becomes false, the `nobreak` clause will be executed, and "
+"then the loop will end."
+msgstr ""
+
+#: ../../language/fundamentals.md:861
+msgid ""
+"fn main {\n"
+"  let mut i = 2\n"
+"  while i > 0 {\n"
+"    println(i)\n"
+"    i = i - 1\n"
+"  } nobreak {\n"
+"    println(i)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:869
+msgid ""
+"2\n"
+"1\n"
+"0\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:873
+msgid ""
+"When there is an `nobreak` clause, the `while` loop can also return a "
+"value. The return value is the evaluation result of the `nobreak` clause."
+" In this case, if you use `break` to exit the loop, you need to provide a"
+" return value after `break`, which should be of the same type as the "
+"return value of the `nobreak` clause."
+msgstr ""
+
+#: ../../language/fundamentals.md:875
+msgid ""
+"fn main {\n"
+"  let mut i = 10\n"
+"  let r = while i > 0 {\n"
+"    i = i - 1\n"
+"    if i % 2 == 0 {\n"
+"      break 5\n"
+"    }\n"
+"  } nobreak {\n"
+"    7\n"
+"  }\n"
+"  println(r)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:883
+msgid "5\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:887
+msgid ""
+"fn main {\n"
+"  let mut i = 10\n"
+"  let r = while i > 0 {\n"
+"    i = i - 1\n"
+"  } nobreak {\n"
+"    7\n"
+"  }\n"
+"  println(r)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:895
+msgid "7\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:899
+msgid "For Loop"
+msgstr ""
+
+#: ../../language/fundamentals.md:901
+msgid ""
+"MoonBit also supports C-style For loops. The keyword `for` is followed by"
+" variable initialization clauses, loop conditions, and update clauses "
+"separated by semicolons. They do not need to be enclosed in parentheses. "
+"For example, the code below creates a new variable binding `i`, which has"
+" a scope throughout the entire loop and is immutable. This makes it "
+"easier to write clear code and reason about it:"
+msgstr ""
+
+#: ../../language/fundamentals.md:904
+msgid ""
+"fn main {\n"
+"  for i = 0; i < 5; i = i + 1 {\n"
+"    println(i)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:912 ../../language/fundamentals.md:1029
+msgid ""
+"0\n"
+"1\n"
+"2\n"
+"3\n"
+"4\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:916
+msgid "The variable initialization clause can create multiple bindings:"
+msgstr ""
+
+#: ../../language/fundamentals.md:918
+msgid ""
+"for i = 0, j = 0; i + j < 100; i = i + 1, j = j + 1 {\n"
+"  println(i)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:925
+msgid ""
+"It should be noted that in the update clause, when there are multiple "
+"binding variables, the semantics are to update them simultaneously. In "
+"other words, in the example above, the update clause does not execute `i "
+"= i + 1`, `j = j + 1` sequentially, but rather increments `i` and `j` at "
+"the same time. Therefore, when reading the values of the binding "
+"variables in the update clause, you will always get the values updated in"
+" the previous iteration."
+msgstr ""
+
+#: ../../language/fundamentals.md:927
+msgid ""
+"Variable initialization clauses, loop conditions, and update clauses are "
+"all optional. For example, the following two are infinite loops:"
+msgstr ""
+
+#: ../../language/fundamentals.md:929
+msgid ""
+"for i = 1; ; i = i + 1 {\n"
+"  println(i)\n"
+"}\n"
+"for ;; {\n"
+"  println(\"loop forever\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:936
+msgid ""
+"The `for` loop also supports `continue`, `break`, and `nobreak` clauses. "
+"Like the `while` loop, the `for` loop can also return a value using the "
+"`break` and `nobreak` clauses."
+msgstr ""
+
+#: ../../language/fundamentals.md:938
+msgid ""
+"The `continue` statement skips the remaining part of the current "
+"iteration of the `for` loop (including the update clause) and proceeds to"
+" the next iteration. The `continue` statement can also update the binding"
+" variables of the `for` loop, as long as it is followed by expressions "
+"that match the number of binding variables, separated by commas."
+msgstr ""
+
+#: ../../language/fundamentals.md:940
+msgid ""
+"For example, the following program calculates the sum of even numbers "
+"from 1 to 6:"
+msgstr ""
+
+#: ../../language/fundamentals.md:942
+msgid ""
+"fn main {\n"
+"  let sum = for i = 1, acc = 0; i <= 6; i = i + 1 {\n"
+"    if i % 2 == 0 {\n"
+"      println(\"even: \\{i}\")\n"
+"      continue i + 1, acc + i\n"
+"    }\n"
+"  } nobreak {\n"
+"    acc\n"
+"  }\n"
+"  println(sum)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:950
+msgid ""
+"even: 2\n"
+"even: 4\n"
+"even: 6\n"
+"12\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:954
+msgid "`for .. in` loop"
+msgstr ""
+
+#: ../../language/fundamentals.md:956
+msgid ""
+"MoonBit supports traversing elements of different data structures and "
+"sequences via the `for .. in` loop syntax:"
+msgstr ""
+
+#: ../../language/fundamentals.md:958
+msgid ""
+"for x in [1, 2, 3] {\n"
+"  println(x)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:965
+msgid ""
+"`for .. in` loop is translated to the use of `Iter` in MoonBit's standard"
+" library. Any type with a method `.iter() : Iter[T]` can be traversed "
+"using `for .. in`. For more information of the `Iter` type, see "
+"[Iterator](#iterator) below."
+msgstr ""
+
+#: ../../language/fundamentals.md:968
+msgid ""
+"`for .. in` loop also supports iterating through a sequence of integers, "
+"such as:"
+msgstr ""
+
+#: ../../language/fundamentals.md:970
+msgid ""
+"test {\n"
+"  let mut i = 0\n"
+"  for j in 0..<10 {\n"
+"    i += j\n"
+"  }\n"
+"  assert_eq(i, 45)\n"
+"  let mut k = 0\n"
+"  for l in 0..=10 {\n"
+"    k += l\n"
+"  }\n"
+"  assert_eq(k, 55)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:977
+msgid ""
+"In addition to sequences of a single value, MoonBit also supports "
+"traversing sequences of two values, such as `Map`, via the `Iter2` type "
+"in MoonBit's standard library. Any type with method `.iter2() : Iter2[A, "
+"B]` can be traversed using `for .. in` with two loop variables:"
+msgstr ""
+
+#: ../../language/fundamentals.md:980
+msgid ""
+"for k, v in { \"x\": 1, \"y\": 2, \"z\": 3 } {\n"
+"  println(k)\n"
+"  println(v)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:987
+msgid ""
+"Another example of `for .. in` with two loop variables is traversing an "
+"array while keeping track of array index:"
+msgstr ""
+
+#: ../../language/fundamentals.md:989
+msgid ""
+"fn main {\n"
+"  for index, elem in [4, 5, 6] {\n"
+"    let i = index + 1\n"
+"    println(\"The \\{i}-th element of the array is \\{elem}\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:997
+msgid ""
+"The 1-th element of the array is 4\n"
+"The 2-th element of the array is 5\n"
+"The 3-th element of the array is 6\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1001
+msgid ""
+"Control flow operations such as `return`, `break` and error handling are "
+"supported in the body of `for .. in` loop:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1003
+msgid ""
+"fn main {\n"
+"  let map = { \"x\": 1, \"y\": 2, \"z\": 3, \"w\": 4 }\n"
+"  for k, v in map {\n"
+"    if k == \"y\" {\n"
+"      continue\n"
+"    }\n"
+"    println(\"\\{k}, \\{v}\")\n"
+"    if k == \"z\" {\n"
+"      break\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1011
+msgid ""
+"x, 1\n"
+"z, 3\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1015
+msgid "If a loop variable is unused, it can be ignored with `_`."
+msgstr ""
+
+#: ../../language/fundamentals.md:1017
+msgid "Range expression in `for .. in` loop"
+msgstr ""
+
+#: ../../language/fundamentals.md:1019
+msgid ""
+"`for .. in` loops can also be used with range expressions for iterating "
+"over a number range:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1021
+msgid ""
+"fn main {\n"
+"  for x in 0..<5 {\n"
+"    println(x)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1033
+msgid "There are four kinds of range expressions available in `for .. in` loop:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1035
+msgid "`a..<b`: iterate from `a` to `b` in increasing order, excluding `b`"
+msgstr ""
+
+#: ../../language/fundamentals.md:1036
+msgid "`a..<=b`: iterate from `a` to `b` in increasing order, including `b`"
+msgstr ""
+
+#: ../../language/fundamentals.md:1037
+msgid "`a>..b`: iterate from `a` to `b` in decreasing order, excluding `a`"
+msgstr ""
+
+#: ../../language/fundamentals.md:1038
+msgid "`a>=..b`: iterate from `a` to `b` in decreasing  order, including `a`"
+msgstr ""
+
+#: ../../language/fundamentals.md:1040
+msgid "Functional loop"
+msgstr ""
+
+#: ../../language/fundamentals.md:1042
+msgid ""
+"Functional loop is a powerful feature in MoonBit that enables you to "
+"write loops in a functional style."
+msgstr ""
+
+#: ../../language/fundamentals.md:1044
+msgid ""
+"A functional loop consumes an argument and returns a value. It is defined"
+" using the `loop` keyword, followed by its argument and the loop body. "
+"The loop body is a sequence of clauses, each of which consists of a "
+"pattern and an expression. The clause whose pattern matches the input "
+"will be executed, and the loop will return the value of the expression. "
+"If no pattern matches, the loop will panic. Use the `continue` keyword "
+"with arguments to start the next iteration of the loop. Use the `break` "
+"keyword with an argument to return a value from the loop. The `break` "
+"keyword can be omitted if the value is the last expression in the loop "
+"body."
+msgstr ""
+
+#: ../../language/fundamentals.md:1046
+msgid ""
+"test {\n"
+"  fn sum(xs : @list.List[Int]) -> Int {\n"
+"    loop (xs, 0) {\n"
+"      (Empty, acc) => break acc // <=> Nil, acc => acc\n"
+"      (More(x, tail=rest), acc) => continue (rest, x + acc)\n"
+"    }\n"
+"  }\n"
+"\n"
+"  assert_eq(sum(@list.from_array([1, 2, 3])), 6)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1053
+msgid "Use `while true { ... }` or `for { ... }` for infinite loop."
+msgstr ""
+
+#: ../../language/fundamentals.md:1056
+msgid "Labelled Continue/Break"
+msgstr ""
+
+#: ../../language/fundamentals.md:1058
+msgid ""
+"When a loop is labelled, it can be referenced from a `break` or "
+"`continue` from within a nested loop. For example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1061
+msgid ""
+"test \"break label\" {\n"
+"  let mut count = 0\n"
+"  let xs = [1, 2, 3]\n"
+"  let ys = [4, 5, 6]\n"
+"  let res = outer~: for i in xs {\n"
+"    for j in ys {\n"
+"      count = count + i\n"
+"      break outer~ j\n"
+"    }\n"
+"  } nobreak {\n"
+"    -1\n"
+"  }\n"
+"  assert_eq(res, 4)\n"
+"  assert_eq(count, 1)\n"
+"}\n"
+"\n"
+"test \"continue label\" {\n"
+"  let mut count = 0\n"
+"  let init = 10\n"
+"  let res = outer~: loop init {\n"
+"    0 => 42\n"
+"    i =>\n"
+"      for ;; {\n"
+"        count = count + 1\n"
+"        continue outer~ i - 1\n"
+"      }\n"
+"  }\n"
+"  assert_eq(res, 42)\n"
+"  assert_eq(count, 10)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1067
+msgid "`defer` expression"
+msgstr ""
+
+#: ../../language/fundamentals.md:1069
+msgid ""
+"`defer` expression can be used to perform reliable resource cleanup. The "
+"syntax for `defer` is as follows:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1072
+msgid ""
+"defer <expr>\n"
+"<body>\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1077
+msgid ""
+"Whenever the program leaves `body`, `expr` will be executed. For example,"
+" the following program:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1080
+msgid ""
+"  defer println(\"perform resource cleanup\")\n"
+"  println(\"do things with the resource\")\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1086
+msgid ""
+"will first print `do things with the resource`, and then `perform "
+"resource cleanup`. `defer` expression will always get executed no matter "
+"how its body exits. It can handle [error](/language/error-handling.md), "
+"as well as control flow constructs including `return`, `break` and "
+"`continue`."
+msgstr ""
+
+#: ../../language/fundamentals.md:1091
+msgid ""
+"Consecutive `defer` will be executed in reverse order, for example, the "
+"following:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1093
+msgid ""
+"  defer println(\"first defer\")\n"
+"  defer println(\"second defer\")\n"
+"  println(\"do things\")\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1099
+msgid ""
+"will output first `do things`, then `second defer`, and finally `first "
+"defer`."
+msgstr ""
+
+#: ../../language/fundamentals.md:1101
+msgid ""
+"`return`, `break` and `continue` are disallowed in the right hand side of"
+" `defer`. Currently, raising error or calling `async` function is also "
+"disallowed in the right hand side of `defer`."
+msgstr ""
+
+#: ../../language/fundamentals.md:1104
+msgid "Iterator"
+msgstr ""
+
+#: ../../language/fundamentals.md:1106
+msgid ""
+"An iterator is an object that traverse through a sequence while providing"
+" access to its elements. Traditional OO languages like Java's "
+"`Iterator<T>` use `next()` `hasNext()` to step through the iteration "
+"process, whereas functional languages (JavaScript's `forEach`, Lisp's "
+"`mapcar`) provides a high-order function which takes an operation and a "
+"sequence then consumes the sequence with that operation being applied to "
+"the sequence. The former is called _external iterator_ (visible to user) "
+"and the latter is called _internal iterator_ (invisible to user)."
+msgstr ""
+
+#: ../../language/fundamentals.md:1114
+msgid ""
+"The built-in type `Iter[T]` is MoonBit's external iterator "
+"implementation. It exposes `next()` to pull the next value: it returns "
+"`Some(value)` and advances the iterator, or `None` when the iteration is "
+"finished. Almost all built-in sequential data structures have implemented"
+" `Iter`:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1119
+msgid ""
+"///|\n"
+"fn filter_even(l : Array[Int]) -> Array[Int] {\n"
+"  let l_iter : Iter[Int] = l.iter()\n"
+"  l_iter.filter(x => (x & 1) == 0).collect()\n"
+"}\n"
+"\n"
+"///|\n"
+"fn fact(n : Int) -> Int {\n"
+"  let start = 1\n"
+"  let range : Iter[Int] = start.until(n)\n"
+"  range.fold(Int::mul, init=start)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1125
+msgid "Commonly used methods include:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1127
+msgid ""
+"`each`: Iterates over each element in the iterator, applying some "
+"function to each element."
+msgstr ""
+
+#: ../../language/fundamentals.md:1128
+msgid ""
+"`fold`: Folds the elements of the iterator using the given function, "
+"starting with the given initial value."
+msgstr ""
+
+#: ../../language/fundamentals.md:1129
+msgid "`collect`: Collects the elements of the iterator into an array."
+msgstr ""
+
+#: ../../language/fundamentals.md:1131
+msgid ""
+"`filter`: _lazy_ Filters the elements of the iterator based on a "
+"predicate function."
+msgstr ""
+
+#: ../../language/fundamentals.md:1132
+msgid ""
+"`map`: _lazy_ Transforms the elements of the iterator using a mapping "
+"function."
+msgstr ""
+
+#: ../../language/fundamentals.md:1133
+msgid ""
+"`concat`: _lazy_ Combines two iterators into one by appending the "
+"elements of the second iterator to the first."
+msgstr ""
+
+#: ../../language/fundamentals.md:1135
+msgid ""
+"Methods like `filter` and `map` are very common on a sequence object e.g."
+" Array. But what makes `Iter` special is that any method that constructs "
+"a new `Iter` is _lazy_ (i.e. iteration doesn't start on call because it's"
+" wrapped inside a function), as a result of no allocation for "
+"intermediate value. That's what makes `Iter` superior for traversing "
+"through sequence: no extra cost. MoonBit encourages user to pass an "
+"`Iter` across functions instead of the sequence object itself."
+msgstr ""
+
+#: ../../language/fundamentals.md:1143
+msgid ""
+"Pre-defined sequence structures like `Array` and its iterators should be "
+"enough to use. But to take advantages of these methods when used with a "
+"custom sequence with elements of type `S`, we will need to implement "
+"`Iter`, namely, a function that returns an `Iter[S]`. Take `Bytes` as an "
+"example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1148
+msgid ""
+"///|\n"
+"fn iter(data : Bytes) -> Iter[Byte] {\n"
+"  let mut index = 0\n"
+"  Iter::new(fn() -> Byte? {\n"
+"    if index < data.length() {\n"
+"      let byte = data[index]\n"
+"      index += 1\n"
+"      Some(byte)\n"
+"    } else {\n"
+"      None\n"
+"    }\n"
+"  })\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1154
+msgid ""
+"Iterators are single-pass: once you call `next()` or consume them with "
+"methods like `each`, `fold`, or `collect`, their internal state advances "
+"and cannot be reset. If you need to traverse the sequence again, request "
+"a new `Iter` from the source."
+msgstr ""
+
+#: ../../language/fundamentals.md:1159
+msgid "Custom Data Types"
+msgstr ""
+
+#: ../../language/fundamentals.md:1161
+msgid "There are two ways to create new data types: `struct` and `enum`."
+msgstr ""
+
+#: ../../language/fundamentals.md:1163
+msgid "Struct"
+msgstr ""
+
+#: ../../language/fundamentals.md:1165
+msgid ""
+"In MoonBit, structs are similar to tuples, but their fields are indexed "
+"by field names. A struct can be constructed using a struct literal, which"
+" is composed of a set of labeled values and delimited with curly "
+"brackets. The type of a struct literal can be automatically inferred if "
+"its fields exactly match the type definition. A field can be accessed "
+"using the dot syntax `s.f`. If a field is marked as mutable using the "
+"keyword `mut`, it can be assigned a new value."
+msgstr ""
+
+#: ../../language/fundamentals.md:1167
+msgid ""
+"struct User {\n"
+"  id : Int\n"
+"  name : String\n"
+"  mut email : String\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1173
+msgid ""
+"fn main {\n"
+"  let u = User::{ id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
+"  u.email = \"john@doe.name\"\n"
+"  //! u.id = 10\n"
+"  println(u.id)\n"
+"  println(u.name)\n"
+"  println(u.email)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1181
+msgid ""
+"0\n"
+"John Doe\n"
+"john@doe.name\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1185
+msgid "Constructing Struct with Shorthand"
+msgstr ""
+
+#: ../../language/fundamentals.md:1187
+msgid ""
+"If you already have some variable like `name` and `email`, it's redundant"
+" to repeat those names when constructing a struct. You can use shorthand "
+"instead, it behaves exactly the same:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1189
+msgid ""
+"let name = \"john\"\n"
+"let email = \"john@doe.com\"\n"
+"let u = User::{ id: 0, name, email }\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1196
+msgid ""
+"If there's no other struct that has the same fields, it's redundant to "
+"add the struct's name when constructing it:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1198
+msgid "let u2 = { id: 0, name, email }\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1205
+msgid "Struct Update Syntax"
+msgstr ""
+
+#: ../../language/fundamentals.md:1207
+msgid ""
+"It's useful to create a new struct based on an existing one, but with "
+"some fields updated."
+msgstr ""
+
+#: ../../language/fundamentals.md:1209
+msgid ""
+"fn main {\n"
+"  let user = { id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
+"  let updated_user = { ..user, email: \"john@doe.name\" }\n"
+"  println(\n"
+"    (\n"
+"      $|{ id: \\{user.id}, name: \\{user.name}, email: \\{user.email} }\n"
+"      $|{ id: \\{updated_user.id}, name: \\{updated_user.name}, email: "
+"\\{updated_user.email} }\n"
+"    ),\n"
+"  )\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1217
+msgid ""
+"{ id: 0, name: John Doe, email: john@doe.com }\n"
+"{ id: 0, name: John Doe, email: john@doe.name }\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1221
+msgid "Custom constructor for struct"
+msgstr ""
+
+#: ../../language/fundamentals.md:1223
+msgid ""
+"MoonBit also supports defining a custom constructor for every `struct` "
+"type. The constructor for a `struct` is a special function that can be "
+"used to create value for the `struct` using the name of the struct, it "
+"can be declared as follows:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1228
+msgid ""
+"struct StructWithConstr {\n"
+"  x : Int\n"
+"  y : Int\n"
+"\n"
+"  fn new(x~ : Int, y? : Int) -> StructWithConstr\n"
+"} derive(Show)\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1234
+msgid ""
+"Here, the return value of the constructor must be the struct itself. The "
+"constructor should then be implemented by a `new` method (the name cannot"
+" be changed here) with exactly the same type:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1238
+msgid ""
+"fn StructWithConstr::new(x~ : Int, y? : Int = x) -> StructWithConstr {\n"
+"  { x, y }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1244
+msgid ""
+"If a `struct` declares a constructor, it can be constructed by name "
+"directly:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1246
+msgid ""
+"  let s = StructWithConstr(x=1)\n"
+"  inspect(s, content=\"{x: 1, y: 1}\")\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1252
+msgid ""
+"Creating value via `struct` constructor has exactly the same semantic as "
+"[enum constructors](#Enum), except that `struct` constructors cannot be "
+"used for pattern matching. For example, when creating a foreign `struct` "
+"using constructors, the package name can be omitted if the expected type "
+"of the expression is known."
+msgstr ""
+
+#: ../../language/fundamentals.md:1258
+msgid ""
+"Since `struct` constructors are implemented by normal functions, they may"
+" [raise error](/language/error-handling.md) or [perform asynchronous "
+"operations](/language/async-experimental.md). `struct` constructors also "
+"support [optional arguments](#Optional-arguments). Notice that the "
+"default value of optional arguments should be defined at the "
+"implementation of struct constructors, the declaration inside the "
+"`struct` should only contain a `label? : T` signature."
+msgstr ""
+
+#: ../../language/fundamentals.md:1264
+msgid ""
+"For `struct` with type parameters, constructors may specialize the type "
+"arguments or require [trait bounds](/language/methods.mbt:#Using-traits) "
+"on the type parameters. The syntax is the same as a normal toplevel "
+"function declaration."
+msgstr ""
+
+#: ../../language/fundamentals.md:1268
+msgid "Enum"
+msgstr ""
+
+#: ../../language/fundamentals.md:1270
+msgid ""
+"Enum types are similar to algebraic data types in functional languages. "
+"Users familiar with C/C++ may prefer calling it tagged union."
+msgstr ""
+
+#: ../../language/fundamentals.md:1272
+msgid ""
+"An enum can have a set of cases (constructors). Constructor names must "
+"start with capitalized letter. You can use these names to construct "
+"corresponding cases of an enum, or checking which branch an enum value "
+"belongs to in pattern matching:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1274
+msgid ""
+"/// An enum type that represents the ordering relation between two "
+"values,\n"
+"/// with three cases \"Smaller\", \"Greater\" and \"Equal\"\n"
+"enum Relation {\n"
+"  Smaller\n"
+"  Greater\n"
+"  Equal\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1280
+msgid ""
+"/// compare the ordering relation between two integers\n"
+"fn compare_int(x : Int, y : Int) -> Relation {\n"
+"  if x < y {\n"
+"    // when creating an enum, if the target type is known, \n"
+"    // you can write the constructor name directly\n"
+"    Smaller\n"
+"  } else if x > y {\n"
+"    // but when the target type is not known,\n"
+"    // you can always use `TypeName::Constructor` to create an enum "
+"unambiguously\n"
+"    Relation::Greater\n"
+"  } else {\n"
+"    Equal\n"
+"  }\n"
+"}\n"
+"\n"
+"/// output a value of type `Relation`\n"
+"fn print_relation(r : Relation) -> Unit {\n"
+"  // use pattern matching to decide which case `r` belongs to\n"
+"  match r {\n"
+"    // during pattern matching, if the type is known, \n"
+"    // writing the name of constructor is sufficient\n"
+"    Smaller => println(\"smaller!\")\n"
+"    // but you can use the `TypeName::Constructor` syntax \n"
+"    // for pattern matching as well\n"
+"    Relation::Greater => println(\"greater!\")\n"
+"    Equal => println(\"equal!\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1287
+msgid ""
+"fn main {\n"
+"  print_relation(compare_int(0, 1))\n"
+"  print_relation(compare_int(1, 1))\n"
+"  print_relation(compare_int(2, 1))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1295
+msgid ""
+"smaller!\n"
+"equal!\n"
+"greater!\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1299
+msgid ""
+"Enum cases can also carry payload data. Here's an example of defining an "
+"integer list type using enum:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1301
+msgid ""
+"enum Lst {\n"
+"  Nil\n"
+"  // constructor `Cons` carries additional payload: the first element of "
+"the list,\n"
+"  // and the remaining parts of the list\n"
+"  Cons(Int, Lst)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1307
+msgid ""
+"// In addition to binding payload to variables,\n"
+"// you can also continue matching payload data inside constructors.\n"
+"// Here's a function that decides if a list contains only one element\n"
+"fn is_singleton(l : Lst) -> Bool {\n"
+"  match l {\n"
+"    // This branch only matches values of shape `Cons(_, Nil)`, \n"
+"    // i.e. lists of length 1\n"
+"    Cons(_, Nil) => true\n"
+"    // Use `_` to match everything else\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+"\n"
+"fn print_list(l : Lst) -> Unit {\n"
+"  // when pattern-matching an enum with payload,\n"
+"  // in additional to deciding which case a value belongs to\n"
+"  // you can extract the payload data inside that case\n"
+"  match l {\n"
+"    Nil => println(\"nil\")\n"
+"    // Here `x` and `xs` are defining new variables \n"
+"    // instead of referring to existing variables,\n"
+"    // if `l` is a `Cons`, then the payload of `Cons` \n"
+"    // (the first element and the rest of the list)\n"
+"    // will be bind to `x` and `xs\n"
+"    Cons(x, xs) => {\n"
+"      println(\"\\{x},\")\n"
+"      print_list(xs)\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1314
+msgid ""
+"fn main {\n"
+"  // when creating values using `Cons`, the payload of by `Cons` must be "
+"provided\n"
+"  let l : Lst = Cons(1, Cons(2, Nil))\n"
+"  println(is_singleton(l))\n"
+"  print_list(l)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1322
+msgid ""
+"false\n"
+"1,\n"
+"2,\n"
+"nil\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1326
+msgid "Constructor with labelled arguments"
+msgstr ""
+
+#: ../../language/fundamentals.md:1328
+msgid "Enum constructors can have labelled argument:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1330
+msgid ""
+"enum E {\n"
+"  // `x` and `y` are labelled argument\n"
+"  C(x~ : Int, y~ : Int)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1336
+msgid ""
+"// pattern matching constructor with labelled arguments\n"
+"fn f(e : E) -> Unit {\n"
+"  match e {\n"
+"    // `label=pattern`\n"
+"    C(x=0, y=0) => println(\"0!\")\n"
+"    // `x~` is an abbreviation for `x=x`\n"
+"    // Unmatched labelled arguments can be omitted via `..`\n"
+"    C(x~, ..) => println(x)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1343
+msgid ""
+"fn main {\n"
+"  f(C(x=0, y=0))\n"
+"  let x = 0\n"
+"  f(C(x~, y=1)) // <=> C(x=x, y=1)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1351
+msgid ""
+"0!\n"
+"0\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1355
+msgid ""
+"It is also possible to access labelled arguments of constructors like "
+"accessing struct fields in pattern matching:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1357
+msgid ""
+"enum Object {\n"
+"  Point(x~ : Double, y~ : Double)\n"
+"  Circle(x~ : Double, y~ : Double, radius~ : Double)\n"
+"}\n"
+"\n"
+"suberror NotImplementedError derive(Show)\n"
+"\n"
+"fn Object::distance_with(\n"
+"  self : Object,\n"
+"  other : Object,\n"
+") -> Double raise NotImplementedError {\n"
+"  match (self, other) {\n"
+"    // For variables defined via `Point(..) as p`,\n"
+"    // the compiler knows it must be of constructor `Point`,\n"
+"    // so you can access fields of `Point` directly via `p.x`, `p.y` etc."
+"\n"
+"    (Point(_) as p1, Point(_) as p2) => {\n"
+"      let dx = p2.x - p1.x\n"
+"      let dy = p2.y - p1.y\n"
+"      (dx * dx + dy * dy).sqrt()\n"
+"    }\n"
+"    (Point(_), Circle(_)) | (Circle(_), Point(_)) | (Circle(_), "
+"Circle(_)) =>\n"
+"      raise NotImplementedError\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1363
+msgid ""
+"fn main {\n"
+"  let p1 : Object = Point(x=0, y=0)\n"
+"  let p2 : Object = Point(x=3, y=4)\n"
+"  let c1 : Object = Circle(x=0, y=0, radius=2)\n"
+"  try {\n"
+"    println(p1.distance_with(p2))\n"
+"    println(p1.distance_with(c1))\n"
+"  } catch {\n"
+"    e => println(e)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1371
+msgid ""
+"5\n"
+"NotImplementedError\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1375
+msgid "Constructor with mutable fields"
+msgstr ""
+
+#: ../../language/fundamentals.md:1377
+msgid ""
+"It is also possible to define mutable fields for constructor. This is "
+"especially useful for defining imperative data structures:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1379
+msgid ""
+"// A set implemented using mutable binary search tree.\n"
+"struct Set[X] {\n"
+"  mut root : Tree[X]\n"
+"}\n"
+"\n"
+"fn[X : Compare] Set::insert(self : Set[X], x : X) -> Unit {\n"
+"  self.root = self.root.insert(x, parent=Nil)\n"
+"}\n"
+"\n"
+"// A mutable binary search tree with parent pointer\n"
+"enum Tree[X] {\n"
+"  Nil\n"
+"  // only labelled arguments can be mutable\n"
+"  Node(\n"
+"    mut value~ : X,\n"
+"    mut left~ : Tree[X],\n"
+"    mut right~ : Tree[X],\n"
+"    mut parent~ : Tree[X]\n"
+"  )\n"
+"}\n"
+"\n"
+"// In-place insert a new element to a binary search tree.\n"
+"// Return the new tree root\n"
+"fn[X : Compare] Tree::insert(\n"
+"  self : Tree[X],\n"
+"  x : X,\n"
+"  parent~ : Tree[X],\n"
+") -> Tree[X] {\n"
+"  match self {\n"
+"    Nil => Node(value=x, left=Nil, right=Nil, parent~)\n"
+"    Node(_) as node => {\n"
+"      let order = x.compare(node.value)\n"
+"      if order == 0 {\n"
+"        // mutate the field of a constructor\n"
+"        node.value = x\n"
+"      } else if order < 0 {\n"
+"        // cycle between `node` and `node.left` created here\n"
+"        node.left = node.left.insert(x, parent=node)\n"
+"      } else {\n"
+"        node.right = node.right.insert(x, parent=node)\n"
+"      }\n"
+"      // The tree is non-empty, so the new root is just the original tree"
+"\n"
+"      node\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1385
+msgid "Tuple Struct"
+msgstr ""
+
+#: ../../language/fundamentals.md:1387
+msgid "MoonBit supports a special kind of struct called tuple struct:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1389
+msgid ""
+"struct UserId(Int)\n"
+"\n"
+"struct UserInfo(UserId, String)\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1395
+msgid ""
+"Tuple structs are similar to enum with only one constructor (with the "
+"same name as the tuple struct itself). So, you can use the constructor to"
+" create values, or use pattern matching to extract the underlying "
+"representation:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1397
+msgid ""
+"fn main {\n"
+"  let id : UserId = UserId(1)\n"
+"  let name : UserInfo = UserInfo(id, \"John Doe\")\n"
+"  let UserId(uid) = id // uid : Int\n"
+"  let UserInfo(_, uname) = name // uname: String\n"
+"  println(uid)\n"
+"  println(uname)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1405 ../../language/fundamentals.md:1419
+msgid ""
+"1\n"
+"John Doe\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1409
+msgid ""
+"Besides pattern matching, you can also use index to access the elements "
+"similar to tuple:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1411
+msgid ""
+"fn main {\n"
+"  let id : UserId = UserId(1)\n"
+"  let info : UserInfo = UserInfo(id, \"John Doe\")\n"
+"  let uid : Int = id.0\n"
+"  let uname : String = info.1\n"
+"  println(uid)\n"
+"  println(uname)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1423
+msgid "Type alias"
+msgstr ""
+
+#: ../../language/fundamentals.md:1424
+msgid "MoonBit supports type alias via the syntax `type NewType = OldType`:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1427
+msgid ""
+"The old syntax `typealias OldType as NewType` may be removed in the "
+"future."
+msgstr ""
+
+#: ../../language/fundamentals.md:1430
+msgid ""
+"pub type Index = Int\n"
+"pub type MyIndex = Int\n"
+"pub type MyMap = Map[Int, String]\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1436
+msgid ""
+"Unlike all other kinds of type declaration above, type alias does not "
+"define a new type, it is merely a type macro that behaves exactly the "
+"same as its definition. So for example one cannot define new methods or "
+"implement traits for a type alias."
+msgstr ""
+
+#: ../../language/fundamentals.md:1441
+msgid "Type alias can be used to perform incremental code refactor."
+msgstr ""
+
+#: ../../language/fundamentals.md:1443
+msgid ""
+"For example, if you want to move a type `T` from `@pkgA` to `@pkgB`, you "
+"can leave a type alias `type T = @pkgB.T` in `@pkgA`, and "
+"**incrementally** port uses of `@pkgA.T` to `@pkgB.T`. The type alias can"
+" be removed after all uses of `@pkgA.T` is migrated to `@pkgB.T`."
+msgstr ""
+
+#: ../../language/fundamentals.md:1448
+msgid "Local types"
+msgstr ""
+
+#: ../../language/fundamentals.md:1450
+msgid ""
+"MoonBit supports declaring structs/enums at the top of a toplevel "
+"function, which are only visible within the current toplevel function. "
+"These local types can use the generic parameters of the toplevel function"
+" but cannot introduce additional generic parameters themselves. Local "
+"types can derive methods using derive, but no additional methods can be "
+"defined manually. For  example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1457
+msgid ""
+"fn[T : Show] toplevel(x : T) -> Unit {\n"
+"  enum LocalEnum {\n"
+"    A(T)\n"
+"    B(Int)\n"
+"  } derive(Show)\n"
+"  struct LocalStruct {\n"
+"    a : (String, T)\n"
+"  } derive(Show)\n"
+"  struct LocalStructTuple(T) derive(Show)\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1463
+msgid "Currently, local types do not support being declared as error types."
+msgstr ""
+
+#: ../../language/fundamentals.md:1465
+msgid "Pattern Matching"
+msgstr ""
+
+#: ../../language/fundamentals.md:1467
+msgid ""
+"Pattern matching allows us to match on specific pattern and bind data "
+"from data structures."
+msgstr ""
+
+#: ../../language/fundamentals.md:1469
+msgid "Simple Patterns"
+msgstr ""
+
+#: ../../language/fundamentals.md:1471
+msgid "We can pattern match expressions against"
+msgstr ""
+
+#: ../../language/fundamentals.md:1473
+msgid "literals, such as boolean values, numbers, chars, strings, etc"
+msgstr ""
+
+#: ../../language/fundamentals.md:1474
+msgid "constants"
+msgstr ""
+
+#: ../../language/fundamentals.md:1475
+msgid "structs"
+msgstr ""
+
+#: ../../language/fundamentals.md:1476
+msgid "enums"
+msgstr ""
+
+#: ../../language/fundamentals.md:1477
+msgid "arrays"
+msgstr ""
+
+#: ../../language/fundamentals.md:1478
+msgid "maps"
+msgstr ""
+
+#: ../../language/fundamentals.md:1479
+msgid "JSONs"
+msgstr ""
+
+#: ../../language/fundamentals.md:1481
+msgid ""
+"and so on. We can define identifiers to bind the matched values so that "
+"they can be used later."
+msgstr ""
+
+#: ../../language/fundamentals.md:1483
+msgid ""
+"const ONE = 1\n"
+"\n"
+"fn match_int(x : Int) -> Unit {\n"
+"  match x {\n"
+"    0 => println(\"zero\")\n"
+"    ONE => println(\"one\")\n"
+"    value => println(value)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1490
+msgid ""
+"We can use `_` as wildcards for the values we don't care about, and use "
+"`..` to ignore remaining fields of struct or enum, or array (see [array "
+"pattern](#array-pattern))."
+msgstr ""
+
+#: ../../language/fundamentals.md:1492
+msgid ""
+"struct Point3D {\n"
+"  x : Int\n"
+"  y : Int\n"
+"  z : Int\n"
+"}\n"
+"\n"
+"fn match_point3D(p : Point3D) -> Unit {\n"
+"  match p {\n"
+"    { x: 0, .. } => println(\"on yz-plane\")\n"
+"    _ => println(\"not on yz-plane\")\n"
+"  }\n"
+"}\n"
+"\n"
+"enum Point[T] {\n"
+"  Point2D(Int, Int, name~ : String, payload~ : T)\n"
+"}\n"
+"\n"
+"fn[T] match_point(p : Point[T]) -> Unit {\n"
+"  match p {\n"
+"    //! Point2D(0, 0) => println(\"2D origin\")\n"
+"    Point2D(0, 0, ..) => println(\"2D origin\")\n"
+"    Point2D(_) => println(\"2D point\")\n"
+"    _ => panic()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1499
+msgid ""
+"We can use `as` to give a name to some pattern, and we can use `|` to "
+"match several cases at once. A variable name can only be bound once in a "
+"single pattern, and the same set of variables should be bound on both "
+"sides of `|` patterns."
+msgstr ""
+
+#: ../../language/fundamentals.md:1501
+msgid ""
+"match expr {\n"
+"  //! Add(e1, e2) | Lit(e1) => ...\n"
+"  Lit(n) as a => ...\n"
+"  Add(e1, e2) | Mul(e1, e2) => ...\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1508
+msgid "Array Pattern"
+msgstr ""
+
+#: ../../language/fundamentals.md:1510
+msgid ""
+"Array patterns can be used to match on the following types to obtain "
+"their corresponding elements or views:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1501
+msgid "Element"
+msgstr ""
+
+#: ../../language/fundamentals.md:1501
+msgid "View"
+msgstr ""
+
+#: ../../language/fundamentals.md:1501
+msgid "Array[T], ArrayView[T], FixedArray[T]"
+msgstr ""
+
+#: ../../language/fundamentals.md:1501
+msgid "T"
+msgstr ""
+
+#: ../../language/fundamentals.md:1501
+msgid "ArrayView[T]"
+msgstr ""
+
+#: ../../language/fundamentals.md:1501
+msgid "Bytes, BytesView"
+msgstr ""
+
+#: ../../language/fundamentals.md:1501
+msgid "Byte"
+msgstr ""
+
+#: ../../language/fundamentals.md:1501
+msgid "BytesView"
+msgstr ""
+
+#: ../../language/fundamentals.md:1501
+msgid "String, StringView"
+msgstr ""
+
+#: ../../language/fundamentals.md:1501
+msgid "StringView"
+msgstr ""
+
+#: ../../language/fundamentals.md:1520
+msgid "Array patterns have the following forms:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1522
+msgid "`[]` : matching for empty array"
+msgstr ""
+
+#: ../../language/fundamentals.md:1523
+msgid ""
+"`[pa, pb, pc]` : matching for array of length three, and bind `pa`, `pb`,"
+" `pc` to the three elements"
+msgstr ""
+
+#: ../../language/fundamentals.md:1525
+msgid ""
+"`[pa, ..rest, pb]` : matching for array with at least two elements, and "
+"bind `pa` to the first element, `pb` to the last element, and `rest` to "
+"the remaining elements. the binder `rest` can be omitted if the rest of "
+"the elements are not needed. Arbitrary number of elements are allowed "
+"preceding and following the `..` part. Because `..` can match uncertain "
+"number of elements, it can appear at most once in an array pattern."
+msgstr ""
+
+#: ../../language/fundamentals.md:1532
+msgid ""
+"test {\n"
+"  let ary = [1, 2, 3, 4]\n"
+"  if ary is [a, b, .. rest] && a == 1 && b == 2 && rest.length() == 2 {\n"
+"    inspect(\"a = \\{a}, b = \\{b}\", content=\"a = 1, b = 2\")\n"
+"  } else {\n"
+"    fail(\"\")\n"
+"  }\n"
+"  guard ary is [.., a, b] else { fail(\"\") }\n"
+"  inspect(\"a = \\{a}, b = \\{b}\", content=\"a = 3, b = 4\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1538
+msgid ""
+"Array patterns provide a unicode-safe way to manipulate strings, meaning "
+"that it respects the code unit boundaries. For example, we can check if a"
+" string is a  palindrome:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1542
+msgid ""
+"test {\n"
+"  fn palindrome(s : String) -> Bool {\n"
+"    loop s.view() {\n"
+"      [] | [_] => true\n"
+"      [a, .. rest, b] => if a == b { continue rest } else { false }\n"
+"    }\n"
+"  }\n"
+"\n"
+"  inspect(palindrome(\"abba\"), content=\"true\")\n"
+"  inspect(palindrome(\"中b中\"), content=\"true\")\n"
+"  inspect(palindrome(\"文bb中\"), content=\"false\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1548
+msgid ""
+"When there are consecutive char or byte constants in an array pattern, "
+"the pattern spread `..` operator can be used to combine them to make the "
+"code look cleaner. Note that in this case the `..` followed by string or "
+"bytes constant matches exact number of elements so its usage is not "
+"limited to once."
+msgstr ""
+
+#: ../../language/fundamentals.md:1553
+msgid ""
+"const NO : Bytes = \"no\"\n"
+"\n"
+"test {\n"
+"  fn match_string(s : String) -> Bool {\n"
+"    match s {\n"
+"      [.. \"yes\", ..] => true // equivalent to ['y', 'e', 's', ..]\n"
+"    }\n"
+"  }\n"
+"\n"
+"  fn match_bytes(b : Bytes) -> Bool {\n"
+"    match b {\n"
+"      [.. NO, ..] => false // equivalent to ['n', 'o', ..]\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1559
+msgid "Bitstring Pattern"
+msgstr ""
+
+#: ../../language/fundamentals.md:1561
+msgid ""
+"Bitstring patterns can match packed bit fields from byte containers. They"
+" are supported on `BytesView`, `Bytes`, `Array[Byte]`, "
+"`FixedArray[Byte]`, `ReadOnlyArray[Byte]`, and `ArrayView[Byte]`. Use "
+"explicit widths with `be`/`le` suffixes to make endianness clear. `be` "
+"supports widths 1..64; `le` is only defined for byte-aligned widths (8 * "
+"n), since little-endian order is defined on bytes. Without `..`, the "
+"pattern must consume the entire view."
+msgstr ""
+
+#: ../../language/fundamentals.md:1569
+msgid ""
+"test {\n"
+"  let packet : Bytes = b\"\\xD2\\x10\\x7F\"\n"
+"  let header : BytesView = packet[0:2]\n"
+"  let (flag, kind, version, length) = match header {\n"
+"    [u1be(flag), u3be(kind), u4be(version), u8be(length)] => (flag, kind,"
+" version, length)\n"
+"    _ => fail(\"bad header\")\n"
+"  }\n"
+"  assert_eq(flag, 1)\n"
+"  assert_eq(kind, 0b101)\n"
+"  assert_eq(version, 0b0010)\n"
+"  assert_eq(length, 16)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1575
+msgid ""
+"Use literal bit patterns to validate headers, and `..` to capture the "
+"remaining data for the next parse step."
+msgstr ""
+
+#: ../../language/fundamentals.md:1578
+msgid ""
+"test {\n"
+"  let data : Bytes = b\"\\xF1\\xAA\\xBB\"\n"
+"  let view : BytesView = data[0:]\n"
+"  let tag = match view {\n"
+"    [u4be(0b1111), u4be(tag), ..rest] => {\n"
+"      assert_eq(rest, b\"\\xAA\\xBB\"[0:])\n"
+"      tag\n"
+"    }\n"
+"    _ => fail(\"bad prefix\")\n"
+"  }\n"
+"  assert_eq(tag, 0b0001)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1584
+msgid "Examples over common byte containers (note the `MutArrayView` slice):"
+msgstr ""
+
+#: ../../language/fundamentals.md:1586
+msgid ""
+"test {\n"
+"  let b : Bytes = b\"\\x80\"\n"
+"  guard b is [u1be(1), ..] else { fail(\"Bytes\") }\n"
+"\n"
+"  let a : Array[Byte] = [b'\\x80']\n"
+"  guard a is [u1be(1), ..] else { fail(\"Array[Byte]\") }\n"
+"\n"
+"  let f : FixedArray[Byte] = [b'\\x80']\n"
+"  guard f is [u1be(1), ..] else { fail(\"FixedArray[Byte]\") }\n"
+"\n"
+"  let r : ReadOnlyArray[Byte] = [b'\\x80']\n"
+"  guard r is [u1be(1), ..] else { fail(\"ReadOnlyArray[Byte]\") }\n"
+"\n"
+"  let v : ArrayView[Byte] = a[:]\n"
+"  guard v is [u1be(1), ..] else { fail(\"ArrayView[Byte]\") }\n"
+"\n"
+"  let mv : MutArrayView[Byte] = a.mut_view()\n"
+"  guard mv[:] is [u1be(1), ..] else { fail(\"MutArrayView[Byte]\") }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1592
+msgid ""
+"Signed patterns use two's-complement semantics. For example, `u1be` "
+"yields `0` or `1`, while `i1be` yields `0` or `-1`:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1595
+msgid ""
+"test {\n"
+"  let bytes = b\"\\x80\"\n"
+"  let u : UInt = match bytes[:] {\n"
+"    [u1be(u), ..] => u\n"
+"    _ => fail(\"u1be\")\n"
+"  }\n"
+"  let i : Int = match bytes[:] {\n"
+"    [i1be(i), ..] => i\n"
+"    _ => fail(\"i1be\")\n"
+"  }\n"
+"  assert_eq(u, 1U)\n"
+"  assert_eq(i, -1)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1601
+msgid "Result types depend on width:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1595
+msgid "Width"
+msgstr ""
+
+#: ../../language/fundamentals.md:1595
+msgid "Result type"
+msgstr ""
+
+#: ../../language/fundamentals.md:1595
+msgid "1..32 bits (`u`/`i`)"
+msgstr ""
+
+#: ../../language/fundamentals.md:1595
+msgid "`UInt` / `Int`"
+msgstr ""
+
+#: ../../language/fundamentals.md:1595
+msgid "33..64 bits (`u`)"
+msgstr ""
+
+#: ../../language/fundamentals.md:1595
+msgid "33..64 bits (`i`)"
+msgstr ""
+
+#: ../../language/fundamentals.md:1609
+msgid "Range Pattern"
+msgstr ""
+
+#: ../../language/fundamentals.md:1610
+msgid ""
+"For builtin integer types and `Char`, MoonBit allows matching whether the"
+" value falls in a specific range."
+msgstr ""
+
+#: ../../language/fundamentals.md:1612
+msgid ""
+"Range patterns have the form `a..<b` or `a..=b`, where `..<` means the "
+"upper bound is exclusive, and `..=` means inclusive upper bound. `a` and "
+"`b` can be one of:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1615
+msgid "literal"
+msgstr ""
+
+#: ../../language/fundamentals.md:1616
+msgid "named constant declared with `const`"
+msgstr ""
+
+#: ../../language/fundamentals.md:1617
+msgid "`_`, meaning the pattern has no restriction on this side"
+msgstr ""
+
+#: ../../language/fundamentals.md:1619
+msgid "Here are some examples:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1621
+msgid ""
+"const Zero = 0\n"
+"\n"
+"fn sign(x : Int) -> Int {\n"
+"  match x {\n"
+"    _..<Zero => -1\n"
+"    Zero => 0\n"
+"    1..<_ => 1\n"
+"  }\n"
+"}\n"
+"\n"
+"fn classify_char(c : Char) -> String {\n"
+"  match c {\n"
+"    'a'..='z' => \"lowercase\"\n"
+"    'A'..='Z' => \"uppercase\"\n"
+"    '0'..='9' => \"digit\"\n"
+"    _ => \"other\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1628
+msgid "Map Pattern"
+msgstr ""
+
+#: ../../language/fundamentals.md:1630
+msgid ""
+"MoonBit allows convenient matching on map-like data structures. Inside a "
+"map pattern, the `key : value` syntax will match if `key` exists in the "
+"map, and match the value of `key` with pattern `value`. The `key? : "
+"value` syntax will match no matter `key` exists or not, and `value` will "
+"be matched against `map[key]` (an optional)."
+msgstr ""
+
+#: ../../language/fundamentals.md:1634
+msgid ""
+"match map {\n"
+"  // matches if any only if \"b\" exists in `map`\n"
+"  { \"b\": _, .. } => ...\n"
+"  // matches if and only if \"b\" does not exist in `map` and \"a\" "
+"exists in `map`.\n"
+"  // When matches, bind the value of \"a\" in `map` to `x`\n"
+"  { \"b\"? : None, \"a\": x, .. } => ...\n"
+"  // compiler reports missing case: { \"b\"? : None, \"a\"? : None }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1641
+msgid ""
+"To match a data type `T` using map pattern, `T` must have a method "
+"`op_get(Self, K) -> Option[V]` for some type `K` and `V` (see [method and"
+" trait](./methods.md))."
+msgstr ""
+
+#: ../../language/fundamentals.md:1642
+msgid "Currently, the key part of map pattern must be a literal or constant"
+msgstr ""
+
+#: ../../language/fundamentals.md:1643
+msgid ""
+"Map patterns are always open: the unmatched keys are silently ignored, "
+"and `..` needs to be added to identify this nature"
+msgstr ""
+
+#: ../../language/fundamentals.md:1644
+msgid ""
+"Map pattern will be compiled to efficient code: every key will be fetched"
+" at most once"
+msgstr ""
+
+#: ../../language/fundamentals.md:1646
+msgid "Json Pattern"
+msgstr ""
+
+#: ../../language/fundamentals.md:1648
+msgid ""
+"When the matched value has type `Json`, literal patterns can be used "
+"directly, together with constructors:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1650
+msgid ""
+"match json {\n"
+"  { \"version\": \"1.0.0\", \"import\": [..] as imports, .. } => ...\n"
+"  { \"version\": Number(i, ..), \"import\": Array(imports), .. } => ...\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1657
+msgid "Guard condition"
+msgstr ""
+
+#: ../../language/fundamentals.md:1659
+msgid ""
+"Each case in a pattern matching expression can have a guard condition. A "
+"guard condition is a boolean expression that must be true for the case to"
+" be matched. If the guard condition is false, the case is skipped and the"
+" next case is tried. For example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1663
+msgid ""
+"fn guard_cond(x : Int?) -> Int {\n"
+"  fn f(x : Int) -> Array[Int] {\n"
+"    [x, x + 42]\n"
+"  }\n"
+"\n"
+"  match x {\n"
+"    Some(a) if f(a) is [0, b] => a + b\n"
+"    Some(b) => b\n"
+"    None => -1\n"
+"  }\n"
+"}\n"
+"\n"
+"test {\n"
+"  assert_eq(guard_cond(None), -1)\n"
+"  assert_eq(guard_cond(Some(0)), 42)\n"
+"  assert_eq(guard_cond(Some(1)), 1)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1670
+msgid ""
+"Note that the guard conditions will not be considered when checking if "
+"all patterns are covered by the match expression. So you will see a "
+"warning of partial match for the following case:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1674
+msgid ""
+"fn guard_check(x : Int?) -> Unit {\n"
+"  match x {\n"
+"    Some(a) if a >= 0 => ()\n"
+"    Some(a) if a < 0 => ()\n"
+"    None => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1682
+msgid ""
+"It is not encouraged to call a function that mutates a part of the value "
+"being matched inside a guard condition. When such case happens, the part "
+"being mutated will not be re-evaluated in the subsequent patterns. Use it"
+" with caution."
+msgstr ""
+
+#: ../../language/fundamentals.md:1687
+msgid "Generics"
+msgstr ""
+
+#: ../../language/fundamentals.md:1689
+msgid ""
+"Generics are supported in top-level function and data type definitions. "
+"Type parameters can be introduced within square brackets. We can rewrite "
+"the aforementioned data type `List` to add a type parameter `T` to obtain"
+" a generic version of lists. We can then define generic functions over "
+"lists like `map` and `reduce`."
+msgstr ""
+
+#: ../../language/fundamentals.md:1691
+msgid ""
+"///|\n"
+"enum List[T] {\n"
+"  Nil\n"
+"  Cons(T, List[T])\n"
+"}\n"
+"\n"
+"///|\n"
+"fn[S, T] List::map(self : List[S], f : (S) -> T) -> List[T] {\n"
+"  match self {\n"
+"    Nil => Nil\n"
+"    Cons(x, xs) => Cons(f(x), xs.map(f))\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"fn[S, T] List::reduce(self : List[S], op : (T, S) -> T, init : T) -> T {\n"
+"  match self {\n"
+"    Nil => init\n"
+"    Cons(x, xs) => xs.reduce(op, op(init, x))\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1695
+msgid "Special Syntax"
+msgstr ""
+
+#: ../../language/fundamentals.md:1697
+msgid "Pipelines"
+msgstr ""
+
+#: ../../language/fundamentals.md:1699
+msgid ""
+"MoonBit provides a convenient pipe syntax `x |> f(y)`, which can be used "
+"to chain regular function calls:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1701
+msgid ""
+"5 |> ignore // <=> ignore(5)\n"
+"[] |> Array::push(5) // <=> Array::push([], 5)\n"
+"1\n"
+"|> add(5) // <=> add(1, 5)\n"
+"|> x => { x + 1 }\n"
+"|> ignore // <=> ignore(add(1, 5))\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1708
+msgid ""
+"The MoonBit code follows the *data-first* style, meaning the function "
+"places its \"subject\" as the first argument.  Thus, the pipe operator "
+"inserts the left-hand side value into the first argument of the right-"
+"hand side function call by default.  For example, `x |> f(y)` is "
+"equivalent to `f(x, y)`."
+msgstr ""
+
+#: ../../language/fundamentals.md:1712
+msgid ""
+"You can use the `_` operator to insert `x` into any argument of the "
+"function `f`, such as `x |> f(y, _)`, which is equivalent to `f(y, x)`. "
+"Labeled arguments are also supported."
+msgstr ""
+
+#: ../../language/fundamentals.md:1714
+msgid ""
+"The pipe operator can also connect to an arrow function. When piping into"
+" an arrow function, the function body must be wrapped in curly braces, "
+"for example `value |> x => { x + 1 }`."
+msgstr ""
+
+#: ../../language/fundamentals.md:1717
+msgid "Cascade Operator"
+msgstr ""
+
+#: ../../language/fundamentals.md:1719
+msgid ""
+"The cascade operator `..` is used to perform a series of mutable "
+"operations on the same value consecutively. The syntax is as follows:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1722
+msgid "let arr = []..append([1])\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1729
+msgid "Here, `x..f()` is equivalent to `{ x.f(); x }`."
+msgstr ""
+
+#: ../../language/fundamentals.md:1732
+msgid ""
+"Consider the following scenario: for a `StringBuilder` type that has "
+"methods like `write_string`, `write_char`, `write_object`, etc., we often"
+" need to perform a series of operations on the same `StringBuilder` "
+"value:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1736
+msgid ""
+"let builder = StringBuilder::new()\n"
+"builder.write_char('a')\n"
+"builder.write_char('a')\n"
+"builder.write_object(1001)\n"
+"builder.write_string(\"abcdef\")\n"
+"let result = builder.to_string()\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1743
+msgid ""
+"To avoid repetitive typing of `builder`, its methods are often designed "
+"to return `self` itself, allowing operations to be chained using the `.` "
+"operator. To distinguish between immutable and mutable operations, in "
+"MoonBit, for all methods that return `Unit`, cascade operator can be used"
+" for consecutive operations without the need to modify the return type of"
+" the methods."
+msgstr ""
+
+#: ../../language/fundamentals.md:1749
+msgid ""
+"let result = StringBuilder::new()\n"
+"  ..write_char('a')\n"
+"  ..write_char('a')\n"
+"  ..write_object(1001)\n"
+"  ..write_string(\"abcdef\")\n"
+"  .to_string()\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1756
+msgid "is Expression"
+msgstr ""
+
+#: ../../language/fundamentals.md:1758
+msgid ""
+"The `is` expression tests whether a value conforms to a specific pattern."
+" It returns a `Bool` value and can be used anywhere a boolean value is "
+"expected, for example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1762
+msgid ""
+"fn[T] is_none(x : T?) -> Bool {\n"
+"  x is None\n"
+"}\n"
+"\n"
+"fn start_with_lower_letter(s : String) -> Bool {\n"
+"  s is ['a'..='z', ..]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1769
+msgid ""
+"Pattern binders introduced by `is` expressions can be used in the "
+"following contexts:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1772
+msgid ""
+"In boolean AND expressions (`&&`): binders introduced in the left-hand "
+"expression can be used in the right-hand expression"
+msgstr ""
+
+#: ../../language/fundamentals.md:1776
+msgid ""
+"fn f(x : Int?) -> Bool {\n"
+"  x is Some(v) && v >= 0\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1783
+msgid ""
+"In the first branch of `if` expression: if the condition is a sequence of"
+" boolean expressions `e1 && e2 && ...`, the binders introduced by the "
+"`is` expression can be used in the branch where the condition evaluates "
+"to `true`."
+msgstr ""
+
+#: ../../language/fundamentals.md:1787
+msgid ""
+"fn g(x : Array[Int?]) -> Unit {\n"
+"  if x is [v, .. rest] && v is Some(i) && i is (0..=10) {\n"
+"    println(v)\n"
+"    println(i)\n"
+"    println(rest)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1794
+msgid "In the following statements of a `guard` condition:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1796
+msgid ""
+"fn h(x : Int?) -> Unit {\n"
+"  guard x is Some(v)\n"
+"  println(v)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1803
+msgid "In the body of a `while` loop:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1805
+msgid ""
+"fn i(x : Int?) -> Unit {\n"
+"  let mut m = x\n"
+"  while m is Some(v) {\n"
+"    println(v)\n"
+"    m = None\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1812
+msgid ""
+"Note that `is` expression can only take a simple pattern. If you need to "
+"use `as` to bind the pattern to a variable, you have to add parentheses. "
+"For example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1815
+msgid ""
+"fn j(x : Int) -> Int? {\n"
+"  Some(x)\n"
+"}\n"
+"\n"
+"fn init {\n"
+"  guard j(42) is (Some(a) as b)\n"
+"  println(a)\n"
+"  println(b)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1822
+msgid "Lexmatch"
+msgstr ""
+
+#: ../../language/fundamentals.md:1824
+msgid ""
+"`lexmatch` matches a `String` against a regex pattern and lets you bind "
+"the pieces of a match. The search-mode pattern is `(before, regex pieces,"
+" after)`, where `before` and `after` are optional bindings for the "
+"unmatched prefix and suffix, separated by commas. The regex pieces in the"
+" middle are separated by whitespace only. The regex itself is written as "
+"a sequence of string literals, so you can split it across lines or insert"
+" comments between parts. You can also bind a matched sub-pattern using "
+"`as`, such as `(\"b*\" as b)`."
+msgstr ""
+
+#: ../../language/fundamentals.md:1832
+msgid ""
+"`lexmatch?` is a boolean check similar to `is`, and it can introduce "
+"binders for use in the same contexts as `is` expressions."
+msgstr ""
+
+#: ../../language/fundamentals.md:1835
+msgid ""
+"`lexmatch` also supports a lexer-style mode: `lexmatch <expr> with "
+"longest`, which picks the longest match among alternatives (for example, "
+"`if|[a-z]*` matches `iff` as `iff` in longest mode, while search mode "
+"matches `if` first)."
+msgstr ""
+
+#: ../../language/fundamentals.md:1839
+msgid ""
+"Regex literals do not support `\\\\b`, `\\\\s`, or `\\\\w`. Use POSIX "
+"character classes like `[:digit:]` inside ranges (for example, "
+"`[[:digit:]]`)."
+msgstr ""
+
+#: ../../language/fundamentals.md:1842
+msgid ""
+"test {\n"
+"  let text = \"xxabbbcyy\"\n"
+"  lexmatch text {\n"
+"    (before, \"a\" (\"b*\" as b) \"c\", after) => {\n"
+"      inspect(before, content=\"xx\")\n"
+"      inspect(b, content=\"bbb\")\n"
+"      inspect(after, content=\"yy\")\n"
+"    }\n"
+"    _ => fail(\"\")\n"
+"  }\n"
+"\n"
+"  if text lexmatch? (\"a\" (\"b*\" as b) \"c\") && b.length() > 0 {\n"
+"    inspect(b, content=\"bbb\")\n"
+"  }\n"
+"\n"
+"  let keyword = \"iff\"\n"
+"  lexmatch keyword with longest {\n"
+"    (\"if|[a-z]*\" as ident) => inspect(ident, content=\"iff\")\n"
+"    _ => fail(\"\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1849
+msgid "Spread Operator"
+msgstr ""
+
+#: ../../language/fundamentals.md:1851
+msgid ""
+"MoonBit provides a spread operator to expand a sequence of elements when "
+"constructing `Array`, `String`, and `Bytes` using the array literal "
+"syntax. To expand such a sequence, it needs to be prefixed with `..`, and"
+" it must have `iter()` method that yields the corresponding type of "
+"element."
+msgstr ""
+
+#: ../../language/fundamentals.md:1856
+msgid "For example, we can use the spread operator to construct an array:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1858
+msgid ""
+"test {\n"
+"  let a1 : Array[Int] = [1, 2, 3]\n"
+"  let a2 : FixedArray[Int] = [4, 5, 6]\n"
+"  let a3 : @list.List[Int] = @list.from_array([7, 8, 9])\n"
+"  let a : Array[Int] = [..a1, ..a2, ..a3, 10]\n"
+"  inspect(a, content=\"[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1865
+msgid "Similarly, we can use the spread operator to construct a string:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1867
+msgid ""
+"test {\n"
+"  let s1 : String = \"Hello\"\n"
+"  let s2 : StringView = \"World\".view()\n"
+"  let s3 : Array[Char] = [..s1, ' ', ..s2, '!']\n"
+"  let s : String = [..s1, ' ', ..s2, '!', ..s3]\n"
+"  inspect(s, content=\"Hello World!Hello World!\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1874
+msgid ""
+"The last example shows how the spread operator can be used to construct a"
+" bytes sequence."
+msgstr ""
+
+#: ../../language/fundamentals.md:1877
+msgid ""
+"test {\n"
+"  let b1 : Bytes = \"hello\"\n"
+"  let b2 : BytesView = b1[1:4]\n"
+"  let b : Bytes = [..b1, ..b2, 10]\n"
+"  inspect(\n"
+"    b,\n"
+"    content=(\n"
+"      #|b\"helloell\\x0a\"\n"
+"    ),\n"
+"  )\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1885
+msgid "TODO syntax"
+msgstr ""
+
+#: ../../language/fundamentals.md:1887
+msgid ""
+"The `todo` syntax (`...`) is a special construct used to mark sections of"
+" code that are not yet implemented or are placeholders for future "
+"functionality. For example:"
+msgstr ""
+
+#: ../../language/fundamentals.md:1889
+msgid ""
+"fn todo_in_func() -> Int {\n"
+"  ...\n"
+"}\n"
+msgstr ""
+

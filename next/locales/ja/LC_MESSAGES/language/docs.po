@@ -1,0 +1,235 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-17 16:57+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/docs.md:1
+msgid "Comments and Documentation"
+msgstr ""
+
+#: ../../language/docs.md:3
+msgid "Comments"
+msgstr ""
+
+#: ../../language/docs.md:5
+msgid "Use `//` for ordinary comments inside code:"
+msgstr ""
+
+#: ../../language/docs.md:7
+msgid ""
+"// Explain why this branch exists.\n"
+"let retries = 3\n"
+msgstr ""
+
+#: ../../language/docs.md:12
+msgid ""
+"You will also often see `///|` at the start of top-level blocks. It is an"
+" empty doc-comment line used to split top-level items explicitly. This "
+"matters for documentation tooling today, and it also preserves clear top-"
+"level block boundaries for future caching and other tooling purposes. In "
+"practice, `///|` is useful in ordinary MoonBit code as well as in "
+"documentation sources."
+msgstr ""
+
+#: ../../language/docs.md:18
+msgid "Doc Comments"
+msgstr ""
+
+#: ../../language/docs.md:20
+msgid ""
+"Doc comments use `///` on each line immediately before a top-level item "
+"such as `fn`, `let`, `enum`, `struct`, or `type`. Doc comments are "
+"written in Markdown."
+msgstr ""
+
+#: ../../language/docs.md:24
+msgid ""
+"/// Return a new array with reversed elements.\n"
+"fn[T] reverse(xs : Array[T]) -> Array[T] {\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/docs.md:31
+msgid ""
+"Markdown code blocks inside doc comments marked with `mbt check` are "
+"treated as document tests. `moon check` and `moon test` will "
+"automatically check and run these tests, so that examples in doc comments"
+" are always up-to-date. Wrap the snippet in `test { .. }` when you want a"
+" test block:"
+msgstr ""
+
+#: ../../language/docs.md:36
+msgid ""
+"/// Increment an integer by one,\n"
+"///\n"
+"/// Example:\n"
+"/// ```mbt check\n"
+"/// test {\n"
+"///   inspect(incr(41), content=\"42\")\n"
+"/// }\n"
+"/// ```\n"
+"pub fn incr(x : Int) -> Int {\n"
+"  x + 1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/docs.md:42
+msgid ""
+"If you want to prevent a code snippet from being treated as a document "
+"test, mark it with a language id other than `mbt check` on the markdown "
+"code block:"
+msgstr ""
+
+#: ../../language/docs.md:45
+msgid ""
+"/// `c_incr(x)` is the same as the following C code:\n"
+"/// ```c\n"
+"/// x++\n"
+"/// ```\n"
+"pub fn c_incr(x : Ref[Int]) -> Int {\n"
+"  let old = x.val\n"
+"  x.val += 1\n"
+"  old\n"
+"}\n"
+msgstr ""
+
+#: ../../language/docs.md:51
+msgid ""
+"Currently, document tests are always [blackbox tests](/language/tests.md"
+"#blackbox-tests-and-whitebox-tests). So private definitions cannot have "
+"document test."
+msgstr ""
+
+#: ../../language/docs.md:54
+msgid "Literate `.mbt.md` Files"
+msgstr ""
+
+#: ../../language/docs.md:56
+msgid ""
+"MoonBit also supports literate Markdown files ending in `.mbt.md`. These "
+"files can live inside a package as checked documentation, or they can be "
+"used as standalone single-file inputs to `moon check` and `moon test`."
+msgstr ""
+
+#: ../../language/docs.md:60
+msgid "For a standalone file, run:"
+msgstr ""
+
+#: ../../language/docs.md:62
+msgid ""
+"moon check README.mbt.md\n"
+"moon test README.mbt.md\n"
+msgstr ""
+
+#: ../../language/docs.md:67
+msgid ""
+"Inside a project, keep using the package-level `moon check` and `moon "
+"test` commands instead."
+msgstr ""
+
+#: ../../language/docs.md:70
+msgid "The code fence language controls how each block is handled:"
+msgstr ""
+
+#: ../../language/docs.md:72
+msgid "`mbt`: MoonBit code that is compiled, but does not create a test entry."
+msgstr ""
+
+#: ../../language/docs.md:73
+msgid ""
+"`mbt check`: MoonBit document-test code. Use `test { .. }` or `async "
+"test` inside the block when you want assertions."
+msgstr ""
+
+#: ../../language/docs.md:75
+msgid "`mbt nocheck`: Show MoonBit code without compiling or testing it."
+msgstr ""
+
+#: ../../language/docs.md:76
+msgid ""
+"`moonbit`: Ordinary displayed code block for documentation; it is not "
+"compiled or tested."
+msgstr ""
+
+#: ../../language/docs.md:79
+msgid "For example:"
+msgstr ""
+
+#: ../../language/docs.md:81
+msgid ""
+"```mbt nocheck\n"
+"///|\n"
+"fn helper() -> Int {\n"
+"  42\n"
+"}\n"
+"```\n"
+"\n"
+"```mbt check\n"
+"///|\n"
+"test \"forty two\" {\n"
+"  inspect(40 + 2, content=\"42\")\n"
+"}\n"
+"```\n"
+"\n"
+"```mbt nocheck\n"
+"///|\n"
+"fn native_only() -> Unit {\n"
+"  ...\n"
+"}\n"
+"```\n"
+msgstr ""
+
+#: ../../language/docs.md:87
+msgid ""
+"Standalone `.mbt.md` files can also declare front matter to specify "
+"imports or the target backend:"
+msgstr ""
+
+#: ../../language/docs.md:90
+msgid ""
+"---\n"
+"moonbit:\n"
+"  import:\n"
+"    - path: moonbitlang/core/ref\n"
+"      alias: ref\n"
+"  backend:\n"
+"    native\n"
+"---\n"
+"\n"
+"```mbt check\n"
+"fn answer() -> Int {\n"
+"  let cell : @ref.Ref[Int] = { val: 41 }\n"
+"  cell.val + 1\n"
+"}\n"
+"\n"
+"///|\n"
+"test \"answer\" {\n"
+"  inspect(answer(), content=\"42\")\n"
+"}\n"
+"```\n"
+msgstr ""
+
+#: ../../language/docs.md:94
+msgid ""
+"Use `moonbit.import` when you want to name the packages the file can "
+"import directly. Use `moonbit.deps` when you only want to declare module "
+"dependencies and let Moon synthesize the imports automatically."
+msgstr ""
+
