@@ -47,7 +47,7 @@ msgstr "MoonBit では、すべてのエラー値を汎用エラー型である 
 msgid ""
 "However, an `Error` cannot be constructed directly. A concrete error type "
 "must be defined, in the following forms:"
-msgstr "ただし、`Error` は直接構築できません。次の形式で具体的なエラー型を定義する必要があります:"
+msgstr "ただし、`Error` は直接構築できません。次の形式で具体的なエラー型を定義する必要があります："
 
 #: ../../language/error-handling.md:16
 msgid ""
@@ -85,7 +85,7 @@ msgstr "古い `suberror A B` 構文は非推奨です。代わりに `suberror 
 msgid ""
 "The error types can be promoted to the `Error` type automatically, and "
 "pattern matched back:"
-msgstr "これらのエラー型は自動的に `Error` 型へ昇格でき、パターンマッチで取り出せます:"
+msgstr "これらのエラー型は自動的に `Error` 型へ昇格でき、パターンマッチで取り出せます："
 
 #: ../../language/error-handling.md:30
 msgid ""
@@ -112,7 +112,7 @@ msgid ""
 "example,"
 msgstr ""
 "`Error` 型には複数のエラー型を含められるため、`Error` 型に対するパターンマッチでは、すべてのエラー型に対応するためにワイルドカード "
-"`_` を使う必要があります。例えば:"
+"`_` を使う必要があります。例えば："
 
 #: ../../language/error-handling.md:39
 msgid ""
@@ -188,7 +188,7 @@ msgid ""
 "`DivError`:"
 msgstr ""
 "関数の型宣言では、`raise` とエラー型を組み合わせて、その関数が実行中にエラーを送出する可能性があることを示せます。例えば次の `div` 関数は"
-" `DivError` 型のエラーを返す可能性があります:"
+" `DivError` 型のエラーを返す可能性があります："
 
 #: ../../language/error-handling.md:75
 msgid ""
@@ -218,7 +218,7 @@ msgid ""
 " equivalent:"
 msgstr ""
 "具体的なエラー型が重要でない場合は `Error` を使えます。便宜上、`raise` の後のエラー型は省略でき、その場合は `Error` "
-"型を使うことを意味します。例えば次の関数シグネチャは等価です:"
+"型を使うことを意味します。例えば次の関数シグネチャは等価です："
 
 #: ../../language/error-handling.md:87
 msgid ""
@@ -244,7 +244,7 @@ msgstr ""
 msgid ""
 "For functions that are generic in the error type, you can use the `Error` "
 "bound to do that. For example,"
-msgstr "エラー型に対してジェネリックな関数では、`Error` 制約を使えます。例えば:"
+msgstr "エラー型に対してジェネリックな関数では、`Error` 制約を使えます。例えば："
 
 #: ../../language/error-handling.md:97
 msgid ""
@@ -268,7 +268,7 @@ msgstr ""
 msgid ""
 "For functions that do not raise an error, you can add `noraise` in the "
 "signature. For example:"
-msgstr "エラーを送出しない関数には、シグネチャに `noraise` を追加できます。例えば:"
+msgstr "エラーを送出しない関数には、シグネチャに `noraise` を追加できます。例えば："
 
 #: ../../language/error-handling.md:106
 msgid ""
@@ -293,7 +293,7 @@ msgstr "これは、高階関数が別の関数を引数として受け取ると
 
 #: ../../language/error-handling.md:118
 msgid "A notable example is `map` of `Array`:"
-msgstr "代表的な例は `Array` の `map` です:"
+msgstr "代表的な例は `Array` の `map` です："
 
 #: ../../language/error-handling.md:120
 msgid ""
@@ -387,7 +387,7 @@ msgstr "エラー処理"
 msgid ""
 "Applying the function normally will rethrow the error directly in case of an"
 " error. For example:"
-msgstr "関数を通常どおり呼び出すと、エラーが発生した場合はそのまま再送出されます。例えば:"
+msgstr "関数を通常どおり呼び出すと、エラーが発生した場合はそのまま再送出されます。例えば："
 
 #: ../../language/error-handling.md:146
 msgid ""
@@ -409,7 +409,7 @@ msgstr "Try ... Catch"
 
 #: ../../language/error-handling.md:156
 msgid "You can use `try` and `catch` to catch and handle errors, for example:"
-msgstr "`try` と `catch` を使ってエラーを捕捉し、処理できます。例えば:"
+msgstr "`try` と `catch` を使ってエラーを捕捉し、処理できます。例えば："
 
 #: ../../language/error-handling.md:158
 msgid ""
@@ -452,7 +452,7 @@ msgstr ""
 msgid ""
 "The `noraise` block can be omitted if no action is needed when no error is "
 "caught. For example:"
-msgstr "エラーが発生しなかったときに何もしないなら、`noraise` ブロックは省略できます。例えば:"
+msgstr "エラーが発生しなかったときに何もしないなら、`noraise` ブロックは省略できます。例えば："
 
 #: ../../language/error-handling.md:177
 msgid ""
@@ -468,7 +468,7 @@ msgstr ""
 msgid ""
 "When the body of `try` is a simple expression, the curly braces, and even "
 "the `try` keyword can be omitted. For example:"
-msgstr "`try` の本体が単純な式である場合は、中括弧、さらには `try` キーワード自体も省略できます。例えば:"
+msgstr "`try` の本体が単純な式である場合は、中括弧、さらには `try` キーワード自体も省略できます。例えば："
 
 #: ../../language/error-handling.md:187
 msgid ""
@@ -490,7 +490,7 @@ msgid ""
 msgstr ""
 "エラーを送出する可能性のある式の前に `try?` を付けると、潜在的なエラーを捕捉して "
 "[`Result`](/language/fundamentals.md#option-and-result) 型の first-class "
-"な値へ変換することもできます:"
+"な値へ変換することもできます："
 
 #: ../../language/error-handling.md:200
 msgid ""
@@ -520,7 +520,7 @@ msgstr "エラー時にパニックする"
 
 #: ../../language/error-handling.md:208
 msgid "You can also panic directly when an unexpected error occurs:"
-msgstr "予期しないエラーが起きたときに直接パニックさせることもできます:"
+msgstr "予期しないエラーが起きたときに直接パニックさせることもできます："
 
 #: ../../language/error-handling.md:210
 msgid ""
@@ -554,7 +554,7 @@ msgid ""
 msgstr ""
 "`try` ブロック内では、複数種類のエラーが送出されることがあります。その場合、コンパイラは共通エラー型として `Error` "
 "型を使います。したがってハンドラ側では、すべてのエラーを捕捉するためにワイルドカード `_` を使い、`e => raise e` "
-"で他のエラーを再送出する必要があります。例えば:"
+"で他のエラーを再送出する必要があります。例えば："
 
 #: ../../language/error-handling.md:223
 msgid ""
