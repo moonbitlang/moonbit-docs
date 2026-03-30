@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
@@ -21,7 +20,7 @@ msgstr ""
 
 #: ../../language/async-experimental.md:1
 msgid "Async programming support"
-msgstr ""
+msgstr "非同期プログラミングのサポート"
 
 #: ../../language/async-experimental.md:3
 msgid ""
@@ -34,10 +33,18 @@ msgid ""
 "not support WebAssembly backend yet. The API of `moonbitlang/async` is "
 "not considered stable, and may change in the future."
 msgstr ""
+"MoonBit は、[Kotlin](https://kotlinlang.org/docs/coroutines-overview.html) に"
+"似たコルーチンベースの非同期プログラミング方式を採用しています。MoonBit の"
+"非同期プログラミングは 2 つの要素から成ります。1 つは `async` 関数に対するコ"
+"ンパイラサポート、もう 1 つは公式の非同期ランタイム `moonbitlang/async` で"
+"す。現在、`moonbitlang/async` は native バックエンドを最もよくサポートし、"
+"JavaScript バックエンドは限定的にサポートしていますが、WebAssembly バック"
+"エンドはまだサポートしていません。`moonbitlang/async` の API は安定版とは見"
+"なされておらず、将来変更される可能性があります。"
 
 #: ../../language/async-experimental.md:10
 msgid "Getting started"
-msgstr ""
+msgstr "はじめに"
 
 #: ../../language/async-experimental.md:11
 msgid ""
@@ -50,6 +57,13 @@ msgid ""
 "in your packages. If you want a workflow-first example, see the [Native "
 "CLI Quickstart](/tutorial/cli-quickstart.md)."
 msgstr ""
+"`moonbitlang/async` を使って非同期プログラミングを行うには、まずプロジェク"
+"トで `moon add moonbitlang/async` を実行して、`moonbitlang/async` を依存関係"
+"に追加してください。`moon.mod.json` で `\"preferred-target\": \"native\"` を"
+"設定しておくのもよいでしょう。次に、`moon.pkg` で `moonbitlang/async` と "
+"`moonbitlang/async` ライブラリ内の他のパッケージを import すれば、非同期プロ"
+"グラミング API を使えるようになります。ワークフロー重視の例が見たい場合は、"
+"[Native CLI Quickstart](/tutorial/cli-quickstart.md) を参照してください。"
 
 #: ../../language/async-experimental.md:19
 msgid ""
@@ -62,10 +76,15 @@ msgid ""
 "of the basic concept of `moonbitlang/async` and some of the most "
 "important API."
 msgstr ""
+"`moonbitlang/async` に含まれるパッケージ一覧と詳細なドキュメントは "
+"[mooncakes.io](https://mooncakes.io/docs/moonbitlang/async) で確認でき、"
+"`moonbitlang/async` の GitHub リポジトリには便利な [examples](https://github."
+"com/moonbitlang/async/tree/main/examples) もあります。この記事では、"
+"`moonbitlang/async` の基本的な概念と、特に重要な API をいくつか紹介します。"
 
 #: ../../language/async-experimental.md:24
 msgid "Async function"
-msgstr ""
+msgstr "Async 関数"
 
 #: ../../language/async-experimental.md:25
 msgid ""
@@ -73,6 +92,9 @@ msgid ""
 "[`raise`](/language/error-handling.md#throwing-errors) errors  and need "
 "to declare `noraise` explicitly if otherwise."
 msgstr ""
+"Async 関数は `async` キーワードで宣言します。これらは暗黙に "
+"[`raise`](/language/error-handling.md#throwing-errors) し、そうでない場合は "
+"`noraise` を明示的に宣言する必要があります。"
 
 #: ../../language/async-experimental.md:29
 msgid ""
@@ -85,6 +107,14 @@ msgid ""
 "  body.text()\n"
 "}\n"
 msgstr ""
+"async fn my_async_function() -> String {\n"
+"  let (response, body) = @http.get(\"https://www.moonbitlang.com\")\n"
+"  guard response.code is (200..<300) else {\n"
+"    fail(\"server responded with \\{response.code} \\{response.reason}\")"
+"\n"
+"  }\n"
+"  body.text()\n"
+"}\n"
 
 #: ../../language/async-experimental.md:35
 msgid ""
@@ -95,6 +125,10 @@ msgid ""
 "should see the `@http.get` function rendered in italic style with an "
 "underline."
 msgstr ""
+"MoonBit は静的型付け言語なので、コンパイラが async であることを追跡します。"
+"そのため、async 関数は通常の関数と同じように呼び出せます。MoonBit IDE では、"
+"async 関数の呼び出しが別のスタイルで強調表示されます。上のコードスニペットを"
+"MoonBit IDE で開くと、`@http.get` 関数が下線付きの斜体で表示されるはずです。"
 
 #: ../../language/async-experimental.md:47
 msgid ""
@@ -102,6 +136,9 @@ msgid ""
 "`async` function will result in the caller being blocked and waiting for "
 "the callee to return, similar to `await` in many other languages."
 msgstr ""
+"Async 関数は async 関数の内部からしか呼び出せません。`async` 関数を呼び出す"
+"と、呼び出し元はブロックされ、呼び出し先が返るまで待機します。これは多くの他"
+"の言語における `await` に似ています。"
 
 #: ../../language/async-experimental.md:51
 msgid ""
@@ -112,10 +149,15 @@ msgid ""
 "`moonbitlang/async` in your package to use `async fn main` and `async "
 "test`."
 msgstr ""
+"MoonBit は非同期プログラミングを第一級にサポートしています。`async fn main` "
+"で非同期のプログラムエントリを宣言でき、`async test` で非同期コードのテスト"
+"を書けます。非同期テストは、デフォルトで自動的に並列実行されます。`async fn "
+"main` と `async test` を使うには、パッケージ内で `moonbitlang/async` を import"
+" する必要がある点に注意してください。"
 
 #: ../../language/async-experimental.md:57
 msgid "Structured concurrency and task group"
-msgstr ""
+msgstr "構造化並行性とタスクグループ"
 
 #: ../../language/async-experimental.md:58
 msgid ""
@@ -128,6 +170,11 @@ msgid ""
 " the control flow of programs become much more complex due to concurrent "
 "tasks."
 msgstr ""
+"非同期プログラムが async 関数を直接呼び出すだけ（つまり `await` だけを使う）"
+"なら、その制御フローは線形で、通常の同期プログラミングと変わりません。非同期"
+"プログラムと同期プログラムの根本的な違いは、複数のタスクを生成して並列に実行"
+"できることです。この能力は、同時実行タスクによってプログラムの制御フローが大"
+"幅に複雑になるため、タスクを堅牢に管理するという新しい課題も生みます。"
 
 #: ../../language/async-experimental.md:66
 msgid ""
@@ -137,6 +184,11 @@ msgid ""
 " inside a *task group*, while task groups can only be created via the "
 "`@async.with_task_group` function:"
 msgstr ""
+"`moonbitlang/async` ライブラリは、タスク管理の問題を解決し、非同期プログラム"
+"の堅牢性を高めるために *構造化並行性* のパラダイムを採用しています。"
+"`moonbitlang/async` では、新しいタスクを生成できるのは *task group* の内部の"
+"みであり、task group は `@async.with_task_group` 関数を通じてのみ作成できま"
+"す:"
 
 #: ../../language/async-experimental.md:71
 msgid ""
@@ -144,6 +196,9 @@ msgid ""
 "  f : async (@async.TaskGroup[Result]) -> Result,\n"
 ") -> Result\n"
 msgstr ""
+"async fn[Result] with_task_group(\n"
+"  f : async (@async.TaskGroup[Result]) -> Result,\n"
+") -> Result\n"
 
 #: ../../language/async-experimental.md:77
 msgid ""
@@ -152,6 +207,10 @@ msgid ""
 "itself as argument. `f` can then use the group to spawn more new tasks, "
 "using various methods such as `spawn_bg`:"
 msgstr ""
+"`with_task_group` 関数は新しい task group を作成し、その task group の中で新し"
+"いタスクを生成し、グループ自身を引数として `f` を新しいタスクの中で実行しま"
+"す。`f` はその後、`spawn_bg` などのさまざまな方法を使って、さらに新しいタス"
+"クを生成できます:"
 
 #: ../../language/async-experimental.md:82
 msgid ""
@@ -162,18 +221,26 @@ msgid ""
 "  ...\n"
 ") -> Unit\n"
 msgstr ""
+"/// Spawn a new task in the group and let it run in the background\n"
+"fn[Result] @async.TaskGroup::spawn_bg(\n"
+"  group : TaskGroup[Result],\n"
+"  f : async () -> Unit,\n"
+"  ...\n"
+") -> Unit\n"
 
 #: ../../language/async-experimental.md:91
 msgid ""
 "The magic of structured concurrency lies in the following rule for "
 "`with_task_group`:"
 msgstr ""
+"構造化並行性の肝は、`with_task_group` に対する次の規則にあります:"
 
 #: ../../language/async-experimental.md:93
 msgid ""
 "`with_task_group` will only return after all tasks inside the group has "
 "terminated"
 msgstr ""
+"`with_task_group` は、グループ内のすべてのタスクが終了した後でのみ戻ります"
 
 #: ../../language/async-experimental.md:95
 msgid ""
@@ -188,12 +255,22 @@ msgid ""
 "because the program forget to cancel it) can never exist in "
 "`moonbitlang/async`."
 msgstr ""
+"`with_task_group` は、どのような条件でも上記の性質を保証します。通常は、"
+"`with_task_group` はタスクが普通に完了するのを待つだけです。致命的なエラーな"
+"どの理由で `with_task_group` をすぐに終了する必要がある場合（デフォルトでは、"
+"子タスクのいずれかが失敗すると `with_task_group` 自体もすぐに失敗し、エラーが"
+"黙って無視されないようにします）、すべての子タスクを適切にキャンセルし、そ"
+"のクリーンアップ処理が終わるまで待ちます。要するに、`with_task_group` の規則"
+"により、*孤児タスク*（プログラムがキャンセルし忘れたせいで動き続ける不要なタ"
+"スク）が `moonbitlang/async` で存在し得なくなります。"
 
 #: ../../language/async-experimental.md:105
 msgid ""
 "Here's a simple example of using `with_task_group` to create multiple "
 "tasks and let them run in parallel:"
 msgstr ""
+"`with_task_group` を使って複数のタスクを作成し、並列に実行させる簡単な例は次"
+"のとおりです:"
 
 #: ../../language/async-experimental.md:107
 msgid ""
@@ -219,6 +296,27 @@ msgid ""
 "  ])\n"
 "}\n"
 msgstr ""
+"async test \"with_task_group\" {\n"
+"  let log = []\n"
+"  @async.with_task_group(group => {\n"
+"    group.spawn_bg(() => for _ in 0..<3 {\n"
+"      log.push(\"task #1 tick\")\n"
+"      @async.sleep(200) // sleep for 200ms\n"
+"    })\n"
+"    group.spawn_bg(() => {\n"
+"      @async.sleep(100)\n"
+"      for _ in 0..<3 {\n"
+"        log.push(\"task #2 tick\")\n"
+"        @async.sleep(200)\n"
+"      }\n"
+"    })\n"
+"  })\n"
+"  json_inspect(log, content=[\n"
+"    \"task #1 tick\", \"task #2 tick\", \"task #1 tick\", \"task #2 "
+"tick\", \"task #1 tick\",\n"
+"    \"task #2 tick\",\n"
+"  ])\n"
+"}\n"
 
 #: ../../language/async-experimental.md:113
 msgid ""
@@ -226,6 +324,8 @@ msgid ""
 "simulate many async control flow operation. For example, here's a "
 "function that run an async function with a timeout:"
 msgstr ""
+"`with_task_group` は非常に強力な構文です。多くの非同期制御フローを模倣できま"
+"す。例えば、非同期関数をタイムアウト付きで実行する関数は次のように書けます:"
 
 #: ../../language/async-experimental.md:117
 msgid ""
@@ -239,6 +339,15 @@ msgid ""
 "  })\n"
 "}\n"
 msgstr ""
+"async fn with_timeout(timeout : Int, f : async () -> Unit) -> Unit {\n"
+"  @async.with_task_group(group => {\n"
+"    group.spawn_bg(no_wait=true, () => {\n"
+"      @async.sleep(timeout)\n"
+"      raise Failure::Failure(\"timeout!\")\n"
+"    })\n"
+"    f()\n"
+"  })\n"
+"}\n"
 
 #: ../../language/async-experimental.md:123
 msgid ""
@@ -246,6 +355,8 @@ msgid ""
 "ensures that this simple function will work properly in every corner "
 "case:"
 msgstr ""
+"コード自体はとても単純ですが、`with_task_group` の意味論により、この単純な関"
+"数があらゆる境界ケースで正しく動作することが保証されます:"
 
 #: ../../language/async-experimental.md:125
 msgid ""
@@ -255,12 +366,18 @@ msgid ""
 "task immediately. So `with_timeout(.., f)` will return immediately after "
 "`f` returns, without unnecessary delay."
 msgstr ""
+"`f` がタイムアウト前に正常終了した場合、sleep タスクは `no_wait=true` で生成"
+"されているので、`with_task_group` は sleep タスクを待ちません。その規則を守る"
+"ために、`with_task_group` は sleep タスクをただちにキャンセルします。した"
+"がって `with_timeout(.., f)` は、`f` が返った直後に不要な遅延なしで戻ります。"
 
 #: ../../language/async-experimental.md:129
 msgid ""
 "if `f` fails, the error will propagate to the whole `with_task_group`. "
 "The sleep task will again get cancelled automatically in this case."
 msgstr ""
+"`f` が失敗した場合、そのエラーは `with_task_group` 全体に伝播します。この場合"
+"も sleep タスクは自動的にキャンセルされます。"
 
 #: ../../language/async-experimental.md:131
 msgid ""
@@ -268,10 +385,13 @@ msgid ""
 "raise a fatal timeout error, aborting the whole group. `f` will also get "
 "cancelled automatically in this case."
 msgstr ""
+"タイムアウト時点で `f` がまだ実行中なら、sleep タスクが致命的なタイムアウト"
+"エラーを送出し、グループ全体が中断されます。この場合も `f` は自動的にキャン"
+"セルされます。"
 
 #: ../../language/async-experimental.md:135
 msgid "Cancellation makes asynchronous program modular"
-msgstr ""
+msgstr "キャンセルによって非同期プログラムはモジュール化される"
 
 #: ../../language/async-experimental.md:136
 msgid ""
@@ -282,6 +402,11 @@ msgid ""
 "these basic asynchronous operations into bigger program, no matter how "
 "complex your program is, it is automatically cancellable."
 msgstr ""
+"前の節では「キャンセル」という言葉が何度も出てきました。実際、キャンセルは"
+"非同期プログラミングで非常に重要な要素です。`moonbitlang/async` では、"
+"`with_task_group` を含むすべての非同期操作がデフォルトでキャンセル可能です。"
+"そのため、これらの基本的な非同期操作を組み合わせてより大きなプログラムを作っ"
+"ても、どれほど複雑であっても自動的にキャンセル可能になります。"
 
 #: ../../language/async-experimental.md:142
 msgid ""
@@ -291,6 +416,10 @@ msgid ""
 "cancellation signal will automically propagate through the program, "
 "triggering cleanup operations in `defer` and error handlers."
 msgstr ""
+"非同期コードの一部がキャンセルされると、そのキャンセル信号は、以前ブロック"
+"していた地点で送出されるエラーとして表現されます。そのため、キャンセルを特"
+"別に処理する必要はありません。キャンセル信号は自動的にプログラム全体に伝播"
+"し、`defer` やエラーハンドラ内のクリーンアップ処理を発火させます。"
 
 #: ../../language/async-experimental.md:148
 msgid ""
@@ -301,6 +430,11 @@ msgid ""
 "For example, the following program try to make a HTTP request with a "
 "timeout, and allow at most three retry attempts:"
 msgstr ""
+"任意の async コードをキャンセルできることにより、MoonBit の async プログラム"
+"は非常にモジュール化しやすくなります。`moonbitlang/async` パッケージには、タ"
+"イムアウト制限や自動リトライなどを行う便利な combinator が多数あり、それらは"
+"すべてキャンセル機構に依存して正しく動作します。例えば、次のプログラムは "
+"HTTP リクエストをタイムアウト付きで試み、リトライ回数は最大 3 回に制限します:"
 
 #: ../../language/async-experimental.md:155
 msgid ""
@@ -315,10 +449,20 @@ msgid ""
 "  }))\n"
 "}\n"
 msgstr ""
+"async fn make_request() -> String {\n"
+"  @async.retry(Immediate, max_retry=3, () => @async.with_timeout(1000, ()"
+" => {\n"
+"    let (response, body) = @http.get(\"https://www.moonbitlang.com\")\n"
+"    guard response.code is (200..<300) else {\n"
+"      fail(\"the HTTP request is not successful\")\n"
+"    }\n"
+"    body.text()\n"
+"  }))\n"
+"}\n"
 
 #: ../../language/async-experimental.md:161
 msgid "Interacting with the world"
-msgstr ""
+msgstr "外部世界とのやり取り"
 
 #: ../../language/async-experimental.md:162
 msgid ""
@@ -334,6 +478,14 @@ msgid ""
 "repo](https://github.com/moonbitlang/async/tree/main/examples). here's a "
 "quick taste of some of the most common features:"
 msgstr ""
+"`moonbitlang/async` は、非同期プログラミングのプリミティブに加えて、非同期 "
+"IO 操作用のイベントループも提供します。さらに、`http`/`https`、ファイル IO、"
+"ソケット IO、プロセス生成など、豊富な IO 操作を [十分な性能](https://www."
+"moonbitlang.com/blog/moonbit-async#performance-comparison) 付きで備えていま"
+"す。サポートされる操作の完全な一覧とそのドキュメントは "
+"[mooncakes.io](https://mooncakes.io/docs/moonbitlang/async) に、簡単な例は "
+"[GitHub リポジトリ](https://github.com/moonbitlang/async/tree/main/examples)"
+" にあります。以下では、よく使う機能をいくつか手早く見てみましょう:"
 
 #: ../../language/async-experimental.md:171
 msgid ""
@@ -346,26 +498,38 @@ msgid ""
 "  out_file.write_reader(body)\n"
 "}\n"
 msgstr ""
+"async fn download_file(url : String, file_name : String) -> Unit {\n"
+"  // perform the transfer lazily to save memory\n"
+"  let (_response, body) = @http.get_stream(url)\n"
+"  defer body.close()\n"
+"  let out_file = @fs.create(file_name, permission=0o644)\n"
+"  defer out_file.close()\n"
+"  out_file.write_reader(body)\n"
+"}\n"
 
 #: ../../language/async-experimental.md:177
 msgid "JavaScript support"
-msgstr ""
+msgstr "JavaScript サポート"
 
 #: ../../language/async-experimental.md:178
 msgid ""
 "Although `moonbitlang/async` supports native backend best, it also has "
 "basic support for JavaScript backend:"
 msgstr ""
+"`moonbitlang/async` は native バックエンドを最もよくサポートしますが、"
+"JavaScript バックエンドも基本的にサポートしています:"
 
 #: ../../language/async-experimental.md:181
 msgid "all IO independent API, such as task group and timeout, are available"
-msgstr ""
+msgstr "task group や timeout など、IO に依存しない API はすべて利用できます"
 
 #: ../../language/async-experimental.md:182
 msgid ""
 "IO related API are not available, because not all JavaScript environment "
 "(for example browsers) support them"
 msgstr ""
+"IO 関連 API は利用できません。なぜなら、すべての JavaScript 実行環境（たとえ"
+"ばブラウザ）がそれらをサポートしているわけではないからです"
 
 #: ../../language/async-experimental.md:183
 msgid ""
@@ -375,6 +539,10 @@ msgid ""
 "allows interaction with native asynchronous operations of the JavaScript "
 "host."
 msgstr ""
+"`moonbitlang/async/js_async` は、外部の JavaScript Promise を待機したり、"
+"MoonBit の `async` 関数を JavaScript Promise として公開したりするなど、"
+"JavaScript Promise との統合をサポートします。これにより、JavaScript ホストの"
+"ネイティブな非同期操作とやり取りできます。"
 
 #: ../../language/async-experimental.md:187
 msgid ""
@@ -382,4 +550,5 @@ msgid ""
 "`moonbitlang/async/js_async`](https://mooncakes.io/docs/moonbitlang/async/js_async)"
 " fore more details."
 msgstr ""
-
+"詳細は [moonbitlang/async/js_async の mooncakes.io ページ](https://mooncakes."
+"io/docs/moonbitlang/async/js_async) を参照してください。"

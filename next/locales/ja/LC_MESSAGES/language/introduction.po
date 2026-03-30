@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
@@ -21,38 +20,38 @@ msgstr ""
 
 #: ../../language/introduction.md:1
 msgid "Introduction"
-msgstr ""
+msgstr "はじめに"
 
 #: ../../language/introduction.md:3
 msgid "A MoonBit program consists of top-level definitions including:"
-msgstr ""
+msgstr "MoonBit プログラムは、次のようなトップレベル定義から構成されます:"
 
 #: ../../language/introduction.md:5
 msgid "type definitions"
-msgstr ""
+msgstr "型定義"
 
 #: ../../language/introduction.md:6
 msgid "function definitions"
-msgstr ""
+msgstr "関数定義"
 
 #: ../../language/introduction.md:7
 msgid "constant definitions and variable bindings"
-msgstr ""
+msgstr "定数定義と変数束縛"
 
 #: ../../language/introduction.md:8
 msgid "`init` functions, `main` function and/or `test` blocks."
-msgstr ""
+msgstr "`init` 関数、`main` 関数、`test` ブロック"
 
 #: ../../language/introduction.md:10
 msgid "Expressions and Statements"
-msgstr ""
+msgstr "式と文"
 
 #: ../../language/introduction.md:12
 msgid ""
 "MoonBit distinguishes between statements and expressions. In a function "
-"body, only the last clause should be an expression, which serves as a "
-"return value. For example:"
-msgstr ""
+"body, only the last clause should be an expression, which serves as a return"
+" value. For example:"
+msgstr "MoonBit では文と式を区別します。関数本体では最後の句だけが式であり、それが戻り値になります。例えば:"
 
 #: ../../language/introduction.md:14
 msgid ""
@@ -67,83 +66,95 @@ msgid ""
 "  x + 2\n"
 "}"
 msgstr ""
+"fn foo() -> Int {\n"
+"  let x = 1\n"
+"  x + 1\n"
+"}\n"
+"\n"
+"fn bar() -> Int {\n"
+"  let x = 1\n"
+"  //! x + 1\n"
+"  x + 2\n"
+"}"
 
 #: ../../language/introduction.md:28
 msgid "Expressions include:"
-msgstr ""
+msgstr "式には次のものが含まれます:"
 
 #: ../../language/introduction.md:30
 msgid ""
-"Value literals (e.g. Boolean values, numbers, characters, strings, "
-"arrays, tuples, structs)"
-msgstr ""
+"Value literals (e.g. Boolean values, numbers, characters, strings, arrays, "
+"tuples, structs)"
+msgstr "値リテラル（例: 真偽値、数値、文字、文字列、配列、タプル、構造体）"
 
 #: ../../language/introduction.md:31
 msgid "Arithmetical, logical, or comparison operations"
-msgstr ""
+msgstr "算術演算、論理演算、比較演算"
 
 #: ../../language/introduction.md:32
 msgid ""
-"Accesses to array elements (e.g. `a[0]`), struct fields (e.g `r.x`), "
-"tuple components (e.g. `t.0`), etc."
-msgstr ""
+"Accesses to array elements (e.g. `a[0]`), struct fields (e.g `r.x`), tuple "
+"components (e.g. `t.0`), etc."
+msgstr "配列要素（例: `a[0]`）、構造体フィールド（例: `r.x`）、タプル要素（例: `t.0`）などへのアクセス"
 
 #: ../../language/introduction.md:33
 msgid "Variables and (capitalized) enum constructors"
-msgstr ""
+msgstr "変数と（先頭が大文字の）enum コンストラクタ"
 
 #: ../../language/introduction.md:34
 msgid "Anonymous local function definitions"
-msgstr ""
+msgstr "無名ローカル関数定義"
 
 #: ../../language/introduction.md:35
 msgid "`match`, `if`, `loop` expressions, etc."
-msgstr ""
+msgstr "`match`、`if`、`loop` 式など"
 
 #: ../../language/introduction.md:37
 msgid "Statements include:"
-msgstr ""
+msgstr "文には次のものが含まれます:"
 
 #: ../../language/introduction.md:39
 msgid "Named local function definitions"
-msgstr ""
+msgstr "名前付きローカル関数定義"
 
 #: ../../language/introduction.md:40
 msgid "Local variable bindings"
-msgstr ""
+msgstr "ローカル変数束縛"
 
 #: ../../language/introduction.md:41
 msgid "Assignments"
-msgstr ""
+msgstr "代入"
 
 #: ../../language/introduction.md:42
 msgid "`return` statements"
-msgstr ""
+msgstr "`return` 文"
 
 #: ../../language/introduction.md:43
 msgid "Any expression whose return type is `Unit`, (e.g. `ignore`)"
-msgstr ""
+msgstr "戻り値の型が `Unit` の式（例: `ignore`）"
 
 #: ../../language/introduction.md:45
 msgid ""
 "A code block can contain multiple statements and one expression, and the "
 "value of the expression is the value of the code block."
-msgstr ""
+msgstr "コードブロックには複数の文と 1 つの式を含められ、その式の値がコードブロックの値になります。"
 
 #: ../../language/introduction.md:47
 msgid "Variable Binding"
-msgstr ""
+msgstr "変数束縛"
 
 #: ../../language/introduction.md:49
 msgid ""
-"A variable can be declared as mutable or immutable using `let mut` or "
-"`let`, respectively. A mutable variable can be reassigned to a new value,"
-" while an immutable one cannot."
+"A variable can be declared as mutable or immutable using `let mut` or `let`,"
+" respectively. A mutable variable can be reassigned to a new value, while an"
+" immutable one cannot."
 msgstr ""
+"変数は `let mut` または `let` "
+"を使って、それぞれ可変または不変として宣言できます。可変変数には新しい値を再代入できますが、不変変数にはできません。"
 
 #: ../../language/introduction.md:51
 msgid "A constant can only be declared at top level and cannot be changed."
-msgstr ""
+msgstr "定数はトップレベルでのみ宣言でき、変更できません。"
 
 #: ../../language/introduction.md:53
 msgid ""
@@ -158,46 +169,60 @@ msgid ""
 "  println(i + zero + ZERO)\n"
 "}"
 msgstr ""
+"let zero = 0\n"
+"\n"
+"const ZERO = 0\n"
+"\n"
+"fn main {\n"
+"  //! const ZERO = 0 \n"
+"  let mut i = 10\n"
+"  i = 20\n"
+"  println(i + zero + ZERO)\n"
+"}"
 
 #: ../../language/introduction.md:68
 msgid "A top level variable binding"
-msgstr ""
+msgstr "トップレベルの変数束縛は、"
 
 #: ../../language/introduction.md:69
 msgid ""
-"requires **explicit** type annotation (unless defined using literals such"
-" as string, byte or numbers)"
-msgstr ""
+"requires **explicit** type annotation (unless defined using literals such as"
+" string, byte or numbers)"
+msgstr "**明示的な**型注釈が必要です（文字列、バイト、数値などのリテラルで定義する場合を除く）"
 
 #: ../../language/introduction.md:70
 msgid "can't be mutable (use `Ref` instead)"
-msgstr ""
+msgstr "可変にはできません（代わりに `Ref` を使ってください）"
 
 #: ../../language/introduction.md:74
 msgid "Naming conventions"
-msgstr ""
+msgstr "命名規則"
 
 #: ../../language/introduction.md:76
 msgid ""
 "Variables, functions should start with lowercase letters `a-z` and can "
-"contain letters, numbers, underscore, and other non-ascii unicode chars. "
-"It is recommended to name them with snake_case."
+"contain letters, numbers, underscore, and other non-ascii unicode chars. It "
+"is recommended to name them with snake_case."
 msgstr ""
+"変数名と関数名は小文字の `a-z` で始める必要があり、文字、数字、アンダースコア、その他の非 ASCII Unicode "
+"文字を含められます。snake_case を使うことを推奨します。"
 
 #: ../../language/introduction.md:79
 msgid ""
-"Constants, types should start with uppercase letters `A-Z` and can "
-"contain letters, numbers, underscore, and other non-ascii unicode chars. "
-"It is recommended to name them with PascalCase or SCREAMING_SNAKE_CASE."
+"Constants, types should start with uppercase letters `A-Z` and can contain "
+"letters, numbers, underscore, and other non-ascii unicode chars. It is "
+"recommended to name them with PascalCase or SCREAMING_SNAKE_CASE."
 msgstr ""
+"定数名と型名は大文字の `A-Z` で始める必要があり、文字、数字、アンダースコア、その他の非 ASCII Unicode "
+"文字を含められます。PascalCase または SCREAMING_SNAKE_CASE を使うことを推奨します。"
 
 #: ../../language/introduction.md:82
 msgid "Keywords"
-msgstr ""
+msgstr "キーワード"
 
 #: ../../language/introduction.md:84
 msgid "The following are the keywords and should not be used:"
-msgstr ""
+msgstr "以下はキーワードであり、識別子として使用できません:"
 
 #: ../../language/introduction.md:86
 msgid ""
@@ -210,27 +235,40 @@ msgid ""
 "\"raise\", \"try\", \"catch\",\n"
 "  \"pub\", \"priv\", \"readonly\", \"true\", \"false\", \"_\", \"test\", "
 "\"loop\", \"for\", \"in\", \"impl\",\n"
-"  \"with\", \"guard\", \"async\", \"is\", \"suberror\", \"and\", "
-"\"letrec\", \"enumview\", \"noraise\",\n"
+"  \"with\", \"guard\", \"async\", \"is\", \"suberror\", \"and\", \"letrec\","
+" \"enumview\", \"noraise\",\n"
 "  \"defer\",\n"
 "]\n"
 msgstr ""
+"[\n"
+"  \"as\", \"else\", \"extern\", \"fn\", \"fnalias\", \"if\", \"let\", "
+"\"const\", \"match\", \"using\",\n"
+"  \"mut\", \"type\", \"typealias\", \"struct\", \"enum\", \"trait\", "
+"\"traitalias\", \"derive\",\n"
+"  \"while\", \"break\", \"continue\", \"import\", \"return\", \"throw\", "
+"\"raise\", \"try\", \"catch\",\n"
+"  \"pub\", \"priv\", \"readonly\", \"true\", \"false\", \"_\", \"test\", "
+"\"loop\", \"for\", \"in\", \"impl\",\n"
+"  \"with\", \"guard\", \"async\", \"is\", \"suberror\", \"and\", \"letrec\","
+" \"enumview\", \"noraise\",\n"
+"  \"defer\",\n"
+"]\n"
 
 #: ../../language/introduction.md:97
 msgid "Reserved Keywords"
-msgstr ""
+msgstr "予約語"
 
 #: ../../language/introduction.md:99
 msgid ""
 "The following are the reserved keywords. Using them would introduce a "
 "warning. They might be turned into keywords in the future."
-msgstr ""
+msgstr "以下は予約語です。使用すると警告が出ます。将来的にキーワードになる可能性があります。"
 
 #: ../../language/introduction.md:102
 msgid ""
 "[\n"
-"  \"module\", \"move\", \"ref\", \"static\", \"super\", \"unsafe\", "
-"\"use\", \"where\", \"await\",\n"
+"  \"module\", \"move\", \"ref\", \"static\", \"super\", \"unsafe\", \"use\","
+" \"where\", \"await\",\n"
 "  \"dyn\", \"abstract\", \"do\", \"final\", \"macro\", \"override\", "
 "\"typeof\", \"virtual\", \"yield\",\n"
 "  \"local\", \"method\", \"alias\", \"assert\", \"package\", \"recur\", "
@@ -239,43 +277,62 @@ msgid ""
 "\"namespace\", \"static\", \"upcast\",\n"
 "  \"use\", \"void\", \"lazy\", \"include\", \"mixin\", \"protected\", "
 "\"sealed\", \"constructor\",\n"
-"  \"atomic\", \"volatile\", \"anyframe\", \"anytype\", \"asm\", "
-"\"await\", \"comptime\", \"errdefer\",\n"
+"  \"atomic\", \"volatile\", \"anyframe\", \"anytype\", \"asm\", \"await\", "
+"\"comptime\", \"errdefer\",\n"
 "  \"export\", \"opaque\", \"orelse\", \"resume\", \"threadlocal\", "
 "\"unreachable\", \"dynclass\",\n"
 "  \"dynobj\", \"dynrec\", \"var\", \"finally\", \"noasync\",\n"
 "]\n"
 msgstr ""
+"[\n"
+"  \"module\", \"move\", \"ref\", \"static\", \"super\", \"unsafe\", \"use\","
+" \"where\", \"await\",\n"
+"  \"dyn\", \"abstract\", \"do\", \"final\", \"macro\", \"override\", "
+"\"typeof\", \"virtual\", \"yield\",\n"
+"  \"local\", \"method\", \"alias\", \"assert\", \"package\", \"recur\", "
+"\"using\", \"enumview\",\n"
+"  \"isnot\", \"define\", \"downcast\", \"inherit\", \"member\", "
+"\"namespace\", \"static\", \"upcast\",\n"
+"  \"use\", \"void\", \"lazy\", \"include\", \"mixin\", \"protected\", "
+"\"sealed\", \"constructor\",\n"
+"  \"atomic\", \"volatile\", \"anyframe\", \"anytype\", \"asm\", \"await\", "
+"\"comptime\", \"errdefer\",\n"
+"  \"export\", \"opaque\", \"orelse\", \"resume\", \"threadlocal\", "
+"\"unreachable\", \"dynclass\",\n"
+"  \"dynobj\", \"dynrec\", \"var\", \"finally\", \"noasync\",\n"
+"]\n"
 
 #: ../../language/introduction.md:115
 msgid "Program entrance"
-msgstr ""
+msgstr "プログラムのエントリ"
 
 #: ../../language/introduction.md:117
 msgid "`init` and `main`"
-msgstr ""
+msgstr "`init` と `main`"
 
 #: ../../language/introduction.md:118
 msgid ""
-"There is a specialized function called `init` function. The `init` "
-"function is special:"
-msgstr ""
+"There is a specialized function called `init` function. The `init` function "
+"is special:"
+msgstr "`init` 関数という特別な関数があります。`init` 関数には次の特徴があります:"
 
 #: ../../language/introduction.md:120
 msgid "It has no parameter list nor return type."
-msgstr ""
+msgstr "引数リストも戻り値型も持ちません。"
 
 #: ../../language/introduction.md:121
 msgid "There can be multiple `init` functions in the same package."
-msgstr ""
+msgstr "同じパッケージ内に複数の `init` 関数を定義できます。"
 
 #: ../../language/introduction.md:122
 msgid ""
 "An `init` function can't be explicitly called or referred to by other "
 "functions.  Instead, all `init` functions will be implicitly called when "
-"initializing a package. Therefore, `init` functions should only consist "
-"of statements."
+"initializing a package. Therefore, `init` functions should only consist of "
+"statements."
 msgstr ""
+"`init` 関数は、他の関数から明示的に呼び出したり参照したりできません。代わりに、パッケージ初期化時にすべての `init` "
+"関数が暗黙的に呼び出されます。したがって、`init` 関数は文のみで構成する必要があります。"
 
 #: ../../language/introduction.md:125
 msgid ""
@@ -284,17 +341,21 @@ msgid ""
 "  println(x)\n"
 "}"
 msgstr ""
+"fn init {\n"
+"  let x = 1\n"
+"  println(x)\n"
+"}"
 
 #: ../../language/introduction.md:133
 msgid ""
 "There is another specialized function called `main` function. The `main` "
-"function is the main entrance of the program, and it will be executed "
-"after the initialization stage."
-msgstr ""
+"function is the main entrance of the program, and it will be executed after "
+"the initialization stage."
+msgstr "`main` 関数という別の特別な関数もあります。`main` 関数はプログラムの主エントリであり、初期化段階の後に実行されます。"
 
 #: ../../language/introduction.md:135
 msgid "Same as the `init` function, it has no parameter list nor return type."
-msgstr ""
+msgstr "`init` 関数と同様に、引数リストも戻り値型も持ちません。"
 
 #: ../../language/introduction.md:137
 msgid ""
@@ -303,27 +364,36 @@ msgid ""
 "  println(x)\n"
 "}"
 msgstr ""
+"fn main {\n"
+"  let x = 2\n"
+"  println(x)\n"
+"}"
 
 #: ../../language/introduction.md:145
 msgid "The previous two code snippets will print the following at runtime:"
-msgstr ""
+msgstr "前の 2 つのコード例は、実行時に次を出力します:"
 
 #: ../../language/introduction.md:147
 msgid ""
 "1\n"
 "2\n"
 msgstr ""
+"1\n"
+"2\n"
 
 #: ../../language/introduction.md:152
 msgid ""
 "Only packages that are `main` packages can define such `main` function. "
-"Check out [build system tutorial](/toolchain/moon/tutorial) for detail. "
-"In current projects, this is configured in `moon.pkg`:"
+"Check out [build system tutorial](/toolchain/moon/tutorial) for detail. In "
+"current projects, this is configured in `moon.pkg`:"
 msgstr ""
+"このような `main` 関数を定義できるのは `main` パッケージだけです。詳しくは "
+"[ビルドシステムチュートリアル](/toolchain/moon/tutorial) を参照してください。現在のプロジェクトでは、これは "
+"`moon.pkg` で次のように設定します:"
 
 #: ../../language/introduction.md:154
 msgid "moon.pkg"
-msgstr ""
+msgstr "moon.pkg"
 
 #: ../../language/introduction.md:154
 msgid ""
@@ -331,16 +401,19 @@ msgid ""
 "  \"is-main\": true,\n"
 ")\n"
 msgstr ""
+"options(\n"
+"  \"is-main\": true,\n"
+")\n"
 
 #: ../../language/introduction.md:159
 msgid "`test`"
-msgstr ""
+msgstr "`test`"
 
 #: ../../language/introduction.md:161
 msgid ""
 "There's also a top-level structure called `test` block. A `test` block "
 "defines inline tests, such as:"
-msgstr ""
+msgstr "`test` ブロックというトップレベル構造もあります。`test` ブロックでは次のようにインラインテストを定義できます:"
 
 #: ../../language/introduction.md:163
 msgid ""
@@ -350,11 +423,18 @@ msgid ""
 "  inspect([1, 2, 3], content=\"[1, 2, 3]\")\n"
 "}\n"
 msgstr ""
+"test \"test_name\" {\n"
+"  assert_eq(1 + 1, 2)\n"
+"  assert_eq(2 + 2, 4)\n"
+"  inspect([1, 2, 3], content=\"[1, 2, 3]\")\n"
+"}\n"
 
 #: ../../language/introduction.md:169
 msgid ""
 "The following contents will use `test` block and `main` function to "
-"demonstrate the execution result, and we assume that all the `test` "
-"blocks pass unless stated otherwise."
+"demonstrate the execution result, and we assume that all the `test` blocks "
+"pass unless stated otherwise."
 msgstr ""
+"以降では `test` ブロックと `main` 関数を使って実行結果を示します。特に断りがない限り、すべての `test` "
+"ブロックは成功すると仮定します。"
 

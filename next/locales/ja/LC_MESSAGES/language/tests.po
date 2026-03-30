@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
@@ -21,7 +20,7 @@ msgstr ""
 
 #: ../../language/tests.md:1
 msgid "Writing Tests"
-msgstr ""
+msgstr "テストの書き方"
 
 #: ../../language/tests.md:3
 msgid ""
@@ -29,20 +28,24 @@ msgid ""
 "program. They verify the behavior of a program and also serves as a "
 "specification to avoid regressions over time."
 msgstr ""
+"テストは、プログラムの品質と保守性を高めるうえで重要です。プログラムの振る舞"
+"いを検証し、時間が経っても回帰を防ぐための仕様としても機能します。"
 
 #: ../../language/tests.md:5
 msgid "MoonBit comes with test support to make the writing easier and simpler."
-msgstr ""
+msgstr "MoonBit にはテスト機能があり、テストを書く作業をより簡単にできます。"
 
 #: ../../language/tests.md:7
 msgid "Test Blocks"
-msgstr ""
+msgstr "テストブロック"
 
 #: ../../language/tests.md:9
 msgid ""
 "MoonBit provides the test code block for writing inline test cases. For "
 "example:"
 msgstr ""
+"MoonBit には、インラインのテストケースを書くための test コードブロックがあり"
+"ます。例えば:"
 
 #: ../../language/tests.md:11
 msgid ""
@@ -52,6 +55,11 @@ msgid ""
 "  inspect([1, 2, 3], content=\"[1, 2, 3]\")\n"
 "}\n"
 msgstr ""
+"test \"test_name\" {\n"
+"  assert_eq(1 + 1, 2)\n"
+"  assert_eq(2 + 2, 4)\n"
+"  inspect([1, 2, 3], content=\"[1, 2, 3]\")\n"
+"}\n"
 
 #: ../../language/tests.md:17
 msgid ""
@@ -64,6 +72,13 @@ msgid ""
 "terminates the test. The string `\"test_name\"` is used to identify the "
 "test case and is optional."
 msgstr ""
+"test コードブロックは、本質的には `Unit` を返す関数ですが、[`Error`](/language"
+"/error-handling.md#error-types)、つまり戻り値型の位置では `Unit!Error` と表示"
+"されるエラーを送出する可能性があります。これは `moon test` の実行中に呼び出"
+"され、ビルドシステムを通じてテストレポートを出力します。`assert_eq` 関数は標"
+"準ライブラリ由来で、アサーションが失敗するとエラーメッセージを表示してテスト"
+"を終了します。文字列 `\"test_name\"` はテストケースを識別するために使われま"
+"すが、省略可能です。"
 
 #: ../../language/tests.md:19
 msgid ""
@@ -71,6 +86,8 @@ msgid ""
 "behavior of the test is to trigger a panic, and the test will only pass "
 "if the panic is triggered. For example:"
 msgstr ""
+"テスト名が `\"panic\"` で始まる場合、そのテストの期待動作は panic を発生させ"
+"ることであり、panic が発生した場合にのみテストが成功します。例えば:"
 
 #: ../../language/tests.md:21
 msgid ""
@@ -79,10 +96,14 @@ msgid ""
 "\n"
 "}\n"
 msgstr ""
+"test \"panic_test\" {\n"
+"  let _ : Int = Option::None.unwrap()\n"
+"\n"
+"}\n"
 
 #: ../../language/tests.md:27
 msgid "Snapshot Tests"
-msgstr ""
+msgstr "スナップショットテスト"
 
 #: ../../language/tests.md:29
 msgid ""
@@ -90,10 +111,13 @@ msgid ""
 "MoonBit provides three kinds of snapshot tests. All of which can be "
 "inserted or updated automatically using `moon test --update`."
 msgstr ""
+"期待値を細かく指定しながらテストを書くのは面倒なことがあります。そのため "
+"MoonBit には 3 種類のスナップショットテストがあります。いずれも "
+"`moon test --update` で自動的に挿入または更新できます。"
 
 #: ../../language/tests.md:32
 msgid "Snapshotting `Show`"
-msgstr ""
+msgstr "`Show` のスナップショット"
 
 #: ../../language/tests.md:34
 msgid ""
@@ -103,6 +127,10 @@ msgid ""
 "content of the data structures.  The labelled argument `content` can be "
 "omitted as `moon test --update` will insert it for you:"
 msgstr ""
+"`Show` トレイトを実装しているものなら、`inspect(x, content=\"x\")` を使って"
+"検査できます。前述のとおり、`Show` は導出可能な組み込みトレイトであり、デー"
+"タ構造の内容を表示する `to_string` を提供します。ラベル付き引数 `content` "
+"は、`moon test --update` が自動で挿入するため省略できます:"
 
 #: ../../language/tests.md:38
 msgid ""
@@ -114,16 +142,25 @@ msgid ""
 "  inspect({ x: 10 }, content=\"{x: 10}\")\n"
 "}\n"
 msgstr ""
+"struct X {\n"
+"  x : Int\n"
+"} derive(Show)\n"
+"\n"
+"test \"show snapshot test\" {\n"
+"  inspect({ x: 10 }, content=\"{x: 10}\")\n"
+"}\n"
 
 #: ../../language/tests.md:44
 msgid "Snapshotting `JSON`"
-msgstr ""
+msgstr "`JSON` のスナップショット"
 
 #: ../../language/tests.md:46
 msgid ""
 "The problem with the derived `Show` trait is that it does not perform "
 "pretty printing, resulting in extremely long output."
 msgstr ""
+"導出された `Show` トレイトの問題は、整形出力をしないため、出力が非常に長くな"
+"ることです。"
 
 #: ../../language/tests.md:48
 msgid ""
@@ -131,6 +168,8 @@ msgid ""
 " the resulting content is a JSON structure, which can be more readable "
 "after being formatted."
 msgstr ""
+"解決策は `@json.inspect(x, content=x)` を使うことです。これにより、出力は "
+"JSON 構造になり、整形後に読みやすくなります。"
 
 #: ../../language/tests.md:50
 msgid ""
@@ -160,28 +199,55 @@ msgid ""
 "  ])\n"
 "}\n"
 msgstr ""
+"enum Rec {\n"
+"  End\n"
+"  Really_long_name_that_is_difficult_to_read(Rec)\n"
+"} derive(Show, ToJson)\n"
+"\n"
+"test \"json snapshot test\" {\n"
+"  let r = Really_long_name_that_is_difficult_to_read(\n"
+"    Really_long_name_that_is_difficult_to_read(\n"
+"      Really_long_name_that_is_difficult_to_read(End),\n"
+"    ),\n"
+"  )\n"
+"  inspect(\n"
+"    r,\n"
+"    content=\"Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(End)))\",\n"
+"  )\n"
+"  json_inspect(r, content=[\n"
+"    \"Really_long_name_that_is_difficult_to_read\",\n"
+"    [\n"
+"      \"Really_long_name_that_is_difficult_to_read\",\n"
+"      [\"Really_long_name_that_is_difficult_to_read\", \"End\"],\n"
+"    ],\n"
+"  ])\n"
+"}\n"
 
 #: ../../language/tests.md:56
 msgid ""
 "One can also implement a custom `ToJson` to keep only the essential "
 "information."
-msgstr ""
+msgstr "必要な情報だけを残すために、独自の `ToJson` を実装することもできます。"
 
 #: ../../language/tests.md:58
 msgid "Snapshotting Anything"
-msgstr ""
+msgstr "あらゆるもののスナップショット"
 
 #: ../../language/tests.md:60
 msgid ""
 "Still, sometimes we want to not only record one data structure but the "
 "output of a whole process."
 msgstr ""
+"それでも、1 つのデータ構造だけでなく、処理全体の出力を記録したいことがありま"
+"す。"
 
 #: ../../language/tests.md:62
 msgid ""
 "A full snapshot test can be used to record anything using "
 "`@test.T::write` and `@test.T::writeln`:"
 msgstr ""
+"完全なスナップショットテストでは、`@test.T::write` と `@test.T::writeln` を"
+"使って何でも記録できます:"
 
 #: ../../language/tests.md:64
 msgid ""
@@ -191,32 +257,43 @@ msgid ""
 "  t.snapshot(filename=\"record_anything.txt\")\n"
 "}\n"
 msgstr ""
+"test \"record anything\" (t : @test.Test) {\n"
+"  t.write(\"Hello, world!\")\n"
+"  t.writeln(\" And hello, MoonBit!\")\n"
+"  t.snapshot(filename=\"record_anything.txt\")\n"
+"}\n"
 
 #: ../../language/tests.md:70
 msgid ""
 "This will create a file under `__snapshot__` of that package with the "
 "given filename:"
 msgstr ""
+"これにより、そのパッケージの `__snapshot__` 以下に、指定したファイル名のファ"
+"イルが作成されます:"
 
 #: ../../language/tests.md:72
 msgid "Hello, world! And hello, MoonBit!\n"
-msgstr ""
+msgstr "Hello, world! And hello, MoonBit!\n"
 
 #: ../../language/tests.md:75
 msgid ""
 "This can also be used for applications to test the generated output, "
 "whether it were creating an image, a video or some custom data."
 msgstr ""
+"これは、画像や動画、あるいは独自データの生成など、アプリケーションの生成出力"
+"をテストするためにも使えます。"
 
 #: ../../language/tests.md:77
 msgid ""
 "Please note that `@test.T::snapshot` should be used at the end of a test "
 "block, as it always raises exception."
 msgstr ""
+"`@test.T::snapshot` は常に例外を送出するため、テストブロックの最後で使う必要"
+"がある点に注意してください。"
 
 #: ../../language/tests.md:79
 msgid "BlackBox Tests and WhiteBox Tests"
-msgstr ""
+msgstr "ブラックボックステストとホワイトボックステスト"
 
 #: ../../language/tests.md:81
 msgid ""
@@ -225,6 +302,9 @@ msgid ""
 "public. That's why MoonBit provides BlackBox tests, allowing developers "
 "to have a grasp of how others are feeling."
 msgstr ""
+"ライブラリを開発するときは、利用者が正しく使えるかを確認することが重要です。"
+"例えば、型や関数を public にし忘れることがあります。そのため MoonBit には "
+"BlackBox テストがあり、開発者が利用者の立場を把握しやすくしています。"
 
 #: ../../language/tests.md:83
 msgid ""
@@ -232,6 +312,9 @@ msgid ""
 "WhiteBox tests as we can see everything. Such tests can be defined inline"
 " or defined in a file whose name ends with `_wbtest.mbt`."
 msgstr ""
+"パッケージ内のすべてのメンバーにアクセスできるテストは、すべてが見えるため "
+"WhiteBox テストと呼ばれます。この種のテストは、インラインで定義することも、"
+"名前が `_wbtest.mbt` で終わるファイルに定義することもできます。"
 
 #: ../../language/tests.md:85
 msgid ""
@@ -239,6 +322,9 @@ msgid ""
 "a BlackBox tests. Such tests need to be defined in a file whose name ends"
 " with `_test.mbt`."
 msgstr ""
+"パッケージの public メンバーのみにアクセスできるテストは、BlackBox テストと"
+"呼ばれます。この種のテストは、名前が `_test.mbt` で終わるファイルに定義する"
+"必要があります。"
 
 #: ../../language/tests.md:87
 msgid ""
@@ -246,6 +332,9 @@ msgid ""
 "the `import` and `wbtest-import` sections of the package configuration "
 "(`moon.pkg`, or legacy `moon.pkg.json`)."
 msgstr ""
+"WhiteBox テストファイル（`_wbtest.mbt`）は、パッケージ設定（`moon.pkg`、また"
+"は旧形式の `moon.pkg.json`）の `import` および `wbtest-import` セクションで定"
+"義されたパッケージを import します。"
 
 #: ../../language/tests.md:89
 msgid ""
@@ -253,4 +342,6 @@ msgid ""
 " packages defined in the `import` and `test-import` sections of the "
 "package configuration (`moon.pkg`, or legacy `moon.pkg.json`)."
 msgstr ""
-
+"BlackBox テストファイル（`_test.mbt`）は、現在のパッケージと、パッケージ設定"
+"（`moon.pkg`、または旧形式の `moon.pkg.json`）の `import` および `test-import`"
+" セクションで定義されたパッケージを import します。"

@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
@@ -21,36 +20,39 @@ msgstr ""
 
 #: ../../language/error-handling.md:1
 msgid "Error handling"
-msgstr ""
+msgstr "エラーハンドリング"
 
 #: ../../language/error-handling.md:3
 msgid ""
 "Error handling has always been at core of our language design. In the "
 "following we'll be explaining how error handling is done in MoonBit. We "
-"assume you have some prior knowledge of MoonBit, if not, please checkout "
-"[A tour of MoonBit](../tutorial/tour.md)."
+"assume you have some prior knowledge of MoonBit, if not, please checkout [A "
+"tour of MoonBit](../tutorial/tour.md)."
 msgstr ""
+"エラーハンドリングは、私たちの言語設計の中核です。以下では、MoonBit でのエラーハンドリングの方法を説明します。MoonBit "
+"の基本的な知識があることを前提としています。まだの場合は [A tour of MoonBit](../tutorial/tour.md) "
+"を参照してください。"
 
 #: ../../language/error-handling.md:8
 msgid "Error Types"
-msgstr ""
+msgstr "エラー型"
 
 #: ../../language/error-handling.md:10
 msgid ""
-"In MoonBit, all the error values can be represented by the `Error` type, "
-"a generalized error type."
-msgstr ""
+"In MoonBit, all the error values can be represented by the `Error` type, a "
+"generalized error type."
+msgstr "MoonBit では、すべてのエラー値を汎用エラー型である `Error` 型で表現できます。"
 
 #: ../../language/error-handling.md:13
 msgid ""
-"However, an `Error` cannot be constructed directly. A concrete error type"
-" must be defined, in the following forms:"
-msgstr ""
+"However, an `Error` cannot be constructed directly. A concrete error type "
+"must be defined, in the following forms:"
+msgstr "ただし、`Error` は直接構築できません。次の形式で具体的なエラー型を定義する必要があります:"
 
 #: ../../language/error-handling.md:16
 msgid ""
-"suberror E1 { E1(Int) } // error type E1 has one constructor E1 with an "
-"Int payload\n"
+"suberror E1 { E1(Int) } // error type E1 has one constructor E1 with an Int "
+"payload\n"
 "\n"
 "suberror E2 // error type E2 has one constructor E2 with no payload\n"
 "\n"
@@ -61,18 +63,29 @@ msgid ""
 "  C(mut x~ : String, Char, y~ : Bool)\n"
 "}\n"
 msgstr ""
+"suberror E1 { E1(Int) } // error type E1 has one constructor E1 with an Int "
+"payload\n"
+"\n"
+"suberror E2 // error type E2 has one constructor E2 with no payload\n"
+"\n"
+"suberror E3 { // error type E3 has three constructors like a normal enum "
+"type\n"
+"  A\n"
+"  B(Int, x~ : String)\n"
+"  C(mut x~ : String, Char, y~ : Bool)\n"
+"}\n"
 
 #: ../../language/error-handling.md:24
 msgid ""
 "The older `suberror A B` syntax is deprecated. Use `suberror A { A(B) }` "
 "instead."
-msgstr ""
+msgstr "古い `suberror A B` 構文は非推奨です。代わりに `suberror A { A(B) }` を使ってください。"
 
 #: ../../language/error-handling.md:27
 msgid ""
 "The error types can be promoted to the `Error` type automatically, and "
 "pattern matched back:"
-msgstr ""
+msgstr "これらのエラー型は自動的に `Error` 型へ昇格でき、パターンマッチで取り出せます:"
 
 #: ../../language/error-handling.md:30
 msgid ""
@@ -84,13 +97,22 @@ msgid ""
 "  assert_eq(m, 42)\n"
 "}\n"
 msgstr ""
+"suberror CustomError { CustomError(UInt) }\n"
+"\n"
+"test {\n"
+"  let e : Error = CustomError(42)\n"
+"  guard e is CustomError(m)\n"
+"  assert_eq(m, 42)\n"
+"}\n"
 
 #: ../../language/error-handling.md:36
 msgid ""
-"Since the type `Error` can include multiple error types, pattern matching"
-" on the `Error` type must use the wildcard `_` to match all error types. "
-"For example,"
+"Since the type `Error` can include multiple error types, pattern matching on"
+" the `Error` type must use the wildcard `_` to match all error types. For "
+"example,"
 msgstr ""
+"`Error` 型には複数のエラー型を含められるため、`Error` 型に対するパターンマッチでは、すべてのエラー型に対応するためにワイルドカード "
+"`_` を使う必要があります。例えば:"
 
 #: ../../language/error-handling.md:39
 msgid ""
@@ -103,27 +125,38 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+"fn f(e : Error) -> Unit {\n"
+"  match e {\n"
+"    E2 => println(\"E2\")\n"
+"    A => println(\"A\")\n"
+"    B(i, x~) => println(\"B(\\{i}, \\{x})\")\n"
+"    _ => println(\"unknown error\")\n"
+"  }\n"
+"}\n"
 
 #: ../../language/error-handling.md:45
 msgid ""
-"The `Error` is meant to be used where no concrete error type is needed, "
-"or a catch-all for all kinds of sub-errors is needed."
-msgstr ""
+"The `Error` is meant to be used where no concrete error type is needed, or a"
+" catch-all for all kinds of sub-errors is needed."
+msgstr "`Error` は、具体的なエラー型が不要な場面や、あらゆる種類のサブエラーを一括で扱いたい場面で使うことを想定しています。"
 
 #: ../../language/error-handling.md:48
 msgid "Failure"
-msgstr ""
+msgstr "Failure"
 
 #: ../../language/error-handling.md:50
 msgid "A builtin error type is `Failure`."
-msgstr ""
+msgstr "組み込みエラー型として `Failure` があります。"
 
 #: ../../language/error-handling.md:52
 msgid ""
-"There's a handly `fail` function, which is merely a constructor with a "
-"pre-defined output template for showing both the error and the source "
-"location. In practice, `fail` is always preferred over `Failure`."
+"There's a handly `fail` function, which is merely a constructor with a pre-"
+"defined output template for showing both the error and the source location. "
+"In practice, `fail` is always preferred over `Failure`."
 msgstr ""
+"便利な `fail` "
+"関数もあります。これはエラーとソース位置の両方を表示するための定義済み出力テンプレートを持つ、実質的にはコンストラクタです。実際には `Failure`"
+" より `fail` を常に優先して使います。"
 
 #: ../../language/error-handling.md:58
 msgid ""
@@ -132,16 +165,20 @@ msgid ""
 "  raise Failure(\"FAILED: \\{loc} \\{msg}\")\n"
 "}"
 msgstr ""
+"#callsite(autofill(loc))\n"
+"pub fn[T] fail(msg : String, loc~ : SourceLoc) -> T raise Failure {\n"
+"  raise Failure(\"FAILED: \\{loc} \\{msg}\")\n"
+"}"
 
 #: ../../language/error-handling.md:66
 msgid "Throwing Errors"
-msgstr ""
+msgstr "エラーの送出"
 
 #: ../../language/error-handling.md:68
 msgid ""
-"The keyword `raise` is used to interrupt the function execution and "
-"return an error."
-msgstr ""
+"The keyword `raise` is used to interrupt the function execution and return "
+"an error."
+msgstr "`raise` キーワードは、関数の実行を中断してエラーを返すために使います。"
 
 #: ../../language/error-handling.md:71
 msgid ""
@@ -150,6 +187,8 @@ msgid ""
 "example, the following function `div` might return an error of type "
 "`DivError`:"
 msgstr ""
+"関数の型宣言では、`raise` とエラー型を組み合わせて、その関数が実行中にエラーを送出する可能性があることを示せます。例えば次の `div` 関数は"
+" `DivError` 型のエラーを返す可能性があります:"
 
 #: ../../language/error-handling.md:75
 msgid ""
@@ -162,14 +201,24 @@ msgid ""
 "  x / y\n"
 "}\n"
 msgstr ""
+"suberror DivError { DivError(String) }\n"
+"\n"
+"fn div(x : Int, y : Int) -> Int raise DivError {\n"
+"  if y == 0 {\n"
+"    raise DivError(\"division by zero\")\n"
+"  }\n"
+"  x / y\n"
+"}\n"
 
 #: ../../language/error-handling.md:82
 msgid ""
-"The `Error` can be used when the concrete error type is not important. "
-"For convenience, you can omit the error type after the `raise` to "
-"indicate that the `Error` type is used. For example, the following "
-"function signatures are equivalent:"
+"The `Error` can be used when the concrete error type is not important. For "
+"convenience, you can omit the error type after the `raise` to indicate that "
+"the `Error` type is used. For example, the following function signatures are"
+" equivalent:"
 msgstr ""
+"具体的なエラー型が重要でない場合は `Error` を使えます。便宜上、`raise` の後のエラー型は省略でき、その場合は `Error` "
+"型を使うことを意味します。例えば次の関数シグネチャは等価です:"
 
 #: ../../language/error-handling.md:87
 msgid ""
@@ -182,12 +231,20 @@ msgid ""
 "  ...\n"
 "}\n"
 msgstr ""
+"fn f() -> Unit raise {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn g() -> Unit raise Error {\n"
+"  let h : () -> Unit raise = fn() raise { fail(\"fail\") }\n"
+"  ...\n"
+"}\n"
 
 #: ../../language/error-handling.md:94
 msgid ""
-"For functions that are generic in the error type, you can use the `Error`"
-" bound to do that. For example,"
-msgstr ""
+"For functions that are generic in the error type, you can use the `Error` "
+"bound to do that. For example,"
+msgstr "エラー型に対してジェネリックな関数では、`Error` 制約を使えます。例えば:"
 
 #: ../../language/error-handling.md:97
 msgid ""
@@ -199,12 +256,19 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+"// Result::unwrap_or_error\n"
+"fn[T, E : Error] unwrap_or_error(result : Result[T, E]) -> T raise E {\n"
+"  match result {\n"
+"    Ok(x) => x\n"
+"    Err(e) => raise e\n"
+"  }\n"
+"}\n"
 
 #: ../../language/error-handling.md:103
 msgid ""
 "For functions that do not raise an error, you can add `noraise` in the "
 "signature. For example:"
-msgstr ""
+msgstr "エラーを送出しない関数には、シグネチャに `noraise` を追加できます。例えば:"
 
 #: ../../language/error-handling.md:106
 msgid ""
@@ -212,21 +276,24 @@ msgid ""
 "  a + b\n"
 "}\n"
 msgstr ""
+"fn add(a : Int, b : Int) -> Int noraise {\n"
+"  a + b\n"
+"}\n"
 
 #: ../../language/error-handling.md:112
 msgid "Error Polymorphism"
-msgstr ""
+msgstr "エラー多相性"
 
 #: ../../language/error-handling.md:114
 msgid ""
 "It happens when a higher order function accepts another function as "
-"parameter. The function as parameter may or may not throw error, which in"
-" turn affects the behavior of this function."
-msgstr ""
+"parameter. The function as parameter may or may not throw error, which in "
+"turn affects the behavior of this function."
+msgstr "これは、高階関数が別の関数を引数として受け取るときに起こります。引数として渡される関数がエラーを送出する場合もしない場合もあり、それによってこの関数自身の振る舞いが変わります。"
 
 #: ../../language/error-handling.md:118
 msgid "A notable example is `map` of `Array`:"
-msgstr ""
+msgstr "代表的な例は `Array` の `map` です:"
 
 #: ../../language/error-handling.md:120
 msgid ""
@@ -238,18 +305,25 @@ msgid ""
 "  res\n"
 "}\n"
 msgstr ""
+"fn[T] map(array : Array[T], f : (T) -> T raise) -> Array[T] raise {\n"
+"  let mut res = []\n"
+"  for x in array {\n"
+"    res.push(f(x))\n"
+"  }\n"
+"  res\n"
+"}\n"
 
 #: ../../language/error-handling.md:126
 msgid ""
 "However, writing so would make the `map` function constantly having the "
 "possibility of throwing errors, which is not the case."
-msgstr ""
+msgstr "ただしこのように書くと、`map` 関数が常にエラーを送出する可能性を持つことになり、実態に合いません。"
 
 #: ../../language/error-handling.md:129
 msgid ""
-"Thus, the error polymorphism is introduced. You may use `raise?` to "
-"signify that an error may or may not be throw."
-msgstr ""
+"Thus, the error polymorphism is introduced. You may use `raise?` to signify "
+"that an error may or may not be throw."
+msgstr "そこでエラー多相性が導入されています。`raise?` を使うと、エラーを送出する場合もしない場合もあることを表せます。"
 
 #: ../../language/error-handling.md:132
 msgid ""
@@ -271,27 +345,49 @@ msgid ""
 "  map_with_polymorphism(array, f)\n"
 "}\n"
 "\n"
-"fn[T] map_with_error(array : Array[T], f : (T) -> T raise) -> Array[T] "
-"raise {\n"
+"fn[T] map_with_error(array : Array[T], f : (T) -> T raise) -> Array[T] raise"
+" {\n"
 "  map_with_polymorphism(array, f)\n"
 "}\n"
 msgstr ""
+"fn[T] map_with_polymorphism(\n"
+"  array : Array[T],\n"
+"  f : (T) -> T raise?\n"
+") -> Array[T] raise? {\n"
+"  let mut res = []\n"
+"  for x in array {\n"
+"    res.push(f(x))\n"
+"  }\n"
+"  res\n"
+"}\n"
+"\n"
+"fn[T] map_without_error(\n"
+"  array : Array[T],\n"
+"  f : (T) -> T noraise,\n"
+") -> Array[T] noraise {\n"
+"  map_with_polymorphism(array, f)\n"
+"}\n"
+"\n"
+"fn[T] map_with_error(array : Array[T], f : (T) -> T raise) -> Array[T] raise"
+" {\n"
+"  map_with_polymorphism(array, f)\n"
+"}\n"
 
 #: ../../language/error-handling.md:138
 msgid ""
 "The signature of the `map_with_polymorphism` will be determined by the "
 "actual parameter."
-msgstr ""
+msgstr "`map_with_polymorphism` のシグネチャは、実際に渡される引数によって決定されます。"
 
 #: ../../language/error-handling.md:141
 msgid "Handling Errors"
-msgstr ""
+msgstr "エラー処理"
 
 #: ../../language/error-handling.md:143
 msgid ""
-"Applying the function normally will rethrow the error directly in case of"
-" an error. For example:"
-msgstr ""
+"Applying the function normally will rethrow the error directly in case of an"
+" error. For example:"
+msgstr "関数を通常どおり呼び出すと、エラーが発生した場合はそのまま再送出されます。例えば:"
 
 #: ../../language/error-handling.md:146
 msgid ""
@@ -299,18 +395,21 @@ msgid ""
 "  div(x, y) // Rethrow the error if `div` raised an error\n"
 "}\n"
 msgstr ""
+"fn div_reraise(x : Int, y : Int) -> Int raise DivError {\n"
+"  div(x, y) // Rethrow the error if `div` raised an error\n"
+"}\n"
 
 #: ../../language/error-handling.md:152
 msgid "However, you may want to handle the errors."
-msgstr ""
+msgstr "ただし、エラーをその場で処理したい場合もあります。"
 
 #: ../../language/error-handling.md:154
 msgid "Try ... Catch"
-msgstr ""
+msgstr "Try ... Catch"
 
 #: ../../language/error-handling.md:156
 msgid "You can use `try` and `catch` to catch and handle errors, for example:"
-msgstr ""
+msgstr "`try` と `catch` を使ってエラーを捕捉し、処理できます。例えば:"
 
 #: ../../language/error-handling.md:158
 msgid ""
@@ -322,28 +421,38 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+"fn main {\n"
+"  try div(42, 0) catch {\n"
+"    DivError(s) => println(s)\n"
+"  } noraise {\n"
+"    v => println(v)\n"
+"  }\n"
+"}\n"
 
 #: ../../language/error-handling.md:166
 msgid "Output"
-msgstr ""
+msgstr "出力"
 
 #: ../../language/error-handling.md:166
 msgid "division by zero\n"
-msgstr ""
+msgstr "division by zero\n"
 
 #: ../../language/error-handling.md:170
 msgid ""
 "Here, `try` is used to call a function that might throw an error, and "
-"`catch` is used to match and handle the caught error. If no error is "
-"caught, the catch block will not be executed and the `noraise` block will"
-" be executed instead."
+"`catch` is used to match and handle the caught error. If no error is caught,"
+" the catch block will not be executed and the `noraise` block will be "
+"executed instead."
 msgstr ""
+"ここでは、`try` でエラーを送出する可能性がある関数を呼び出し、`catch` "
+"で捕捉したエラーをパターンマッチして処理しています。エラーが発生しなかった場合、`catch` ブロックは実行されず、代わりに `noraise` "
+"ブロックが実行されます。"
 
 #: ../../language/error-handling.md:174
 msgid ""
-"The `noraise` block can be omitted if no action is needed when no error "
-"is caught. For example:"
-msgstr ""
+"The `noraise` block can be omitted if no action is needed when no error is "
+"caught. For example:"
+msgstr "エラーが発生しなかったときに何もしないなら、`noraise` ブロックは省略できます。例えば:"
 
 #: ../../language/error-handling.md:177
 msgid ""
@@ -351,29 +460,37 @@ msgid ""
 "  _ => println(\"Error\")\n"
 "}\n"
 msgstr ""
+"try { println(div(42, 0)) } catch {\n"
+"  _ => println(\"Error\")\n"
+"}\n"
 
 #: ../../language/error-handling.md:184
 msgid ""
-"When the body of `try` is a simple expression, the curly braces, and even"
-" the `try` keyword can be omitted. For example:"
-msgstr ""
+"When the body of `try` is a simple expression, the curly braces, and even "
+"the `try` keyword can be omitted. For example:"
+msgstr "`try` の本体が単純な式である場合は、中括弧、さらには `try` キーワード自体も省略できます。例えば:"
 
 #: ../../language/error-handling.md:187
 msgid ""
 "let a = div(42, 0) catch { _ => 0 }\n"
 "println(a)\n"
 msgstr ""
+"let a = div(42, 0) catch { _ => 0 }\n"
+"println(a)\n"
 
 #: ../../language/error-handling.md:194
 msgid "Transforming to Result"
-msgstr ""
+msgstr "Result への変換"
 
 #: ../../language/error-handling.md:196
 msgid ""
 "You can also catch the potential error and transform into a first-class "
-"value of the [`Result`](/language/fundamentals.md#option-and-result) "
-"type, by using `try?` before an expression that may throw error:"
+"value of the [`Result`](/language/fundamentals.md#option-and-result) type, "
+"by using `try?` before an expression that may throw error:"
 msgstr ""
+"エラーを送出する可能性のある式の前に `try?` を付けると、潜在的なエラーを捕捉して "
+"[`Result`](/language/fundamentals.md#option-and-result) 型の first-class "
+"な値へ変換することもできます:"
 
 #: ../../language/error-handling.md:200
 msgid ""
@@ -387,14 +504,23 @@ msgid ""
 "  )\n"
 "}\n"
 msgstr ""
+"test {\n"
+"  let res = try? (div(6, 0) * div(6, 3))\n"
+"  inspect(\n"
+"    res,\n"
+"    content=(\n"
+"      #|Err(\"division by zero\")\n"
+"    ),\n"
+"  )\n"
+"}\n"
 
 #: ../../language/error-handling.md:206
 msgid "Panic on Errors"
-msgstr ""
+msgstr "エラー時にパニックする"
 
 #: ../../language/error-handling.md:208
 msgid "You can also panic directly when an unexpected error occurs:"
-msgstr ""
+msgstr "予期しないエラーが起きたときに直接パニックさせることもできます:"
 
 #: ../../language/error-handling.md:210
 msgid ""
@@ -406,19 +532,29 @@ msgid ""
 "  a - b * div\n"
 "}\n"
 msgstr ""
+"fn remainder(a : Int, b : Int) -> Int raise DivError {\n"
+"  if b == 0 {\n"
+"    raise DivError(\"division by zero\")\n"
+"  }\n"
+"  let div = try! div(a, b)\n"
+"  a - b * div\n"
+"}\n"
 
 #: ../../language/error-handling.md:216
 msgid "Error Inference"
-msgstr ""
+msgstr "エラー推論"
 
 #: ../../language/error-handling.md:218
 msgid ""
-"Within a `try` block, several different kinds of errors can be raised. "
-"When that happens, the compiler will use the type `Error` as the common "
-"error type. Accordingly, the handler must use the wildcard `_` to make "
-"sure all errors are caught, and `e => raise e` to reraise the other "
-"errors. For example,"
+"Within a `try` block, several different kinds of errors can be raised. When "
+"that happens, the compiler will use the type `Error` as the common error "
+"type. Accordingly, the handler must use the wildcard `_` to make sure all "
+"errors are caught, and `e => raise e` to reraise the other errors. For "
+"example,"
 msgstr ""
+"`try` ブロック内では、複数種類のエラーが送出されることがあります。その場合、コンパイラは共通エラー型として `Error` "
+"型を使います。したがってハンドラ側では、すべてのエラーを捕捉するためにワイルドカード `_` を使い、`e => raise e` "
+"で他のエラーを再送出する必要があります。例えば:"
 
 #: ../../language/error-handling.md:223
 msgid ""
@@ -439,4 +575,20 @@ msgid ""
 "  e => raise e\n"
 "}\n"
 msgstr ""
+"fn f1() -> Unit raise E1 {\n"
+"  ...\n"
+"}\n"
+"\n"
+"fn f2() -> Unit raise E2 {\n"
+"  ...\n"
+"}\n"
+"\n"
+"try {\n"
+"  f1()\n"
+"  f2()\n"
+"} catch {\n"
+"  E1(_) => ...\n"
+"  E2 => ...\n"
+"  e => raise e\n"
+"}\n"
 
