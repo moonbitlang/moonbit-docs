@@ -1,0 +1,602 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-27 17:45+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../tutorial/fullstack-one-project.md:1
+msgid "Fullstack in One MoonBit Project"
+msgstr "1つの MoonBit プロジェクトで作るフルスタック"
+
+#: ../../tutorial/fullstack-one-project.md:3
+msgid "This tutorial builds a small fullstack app in one MoonBit module."
+msgstr "このチュートリアルでは、1つの MoonBit モジュールで小さなフルスタックアプリを構築します。"
+
+#: ../../tutorial/fullstack-one-project.md:5
+msgid "You will implement one shared validation rule set and use it in both places:"
+msgstr "共有のバリデーションルール一式を実装し、次の両方で使います。"
+
+#: ../../tutorial/fullstack-one-project.md:7
+msgid "`frontend/`: show local warnings and call backend"
+msgstr "`frontend/`：ローカル警告を表示し、バックエンドを呼び出す"
+
+#: ../../tutorial/fullstack-one-project.md:8
+msgid "`backend/`: validate again and return JSON response"
+msgstr "`backend/`：再度バリデーションして JSON 応答を返す"
+
+#: ../../tutorial/fullstack-one-project.md:10
+msgid "The key is `supported-targets`:"
+msgstr "ポイントは `supported-targets` です。"
+
+#: ../../tutorial/fullstack-one-project.md:12
+msgid "`frontend/` is `js`"
+msgstr "`frontend/` は `js`"
+
+#: ../../tutorial/fullstack-one-project.md:13
+msgid "`backend/` is `native`"
+msgstr "`backend/` は `native`"
+
+#: ../../tutorial/fullstack-one-project.md:14
+msgid "`shared/` is target-agnostic"
+msgstr "`shared/` はターゲット非依存"
+
+#: ../../tutorial/fullstack-one-project.md:16
+msgid "Prerequisites"
+msgstr "前提条件"
+
+#: ../../tutorial/fullstack-one-project.md:18
+msgid "MoonBit toolchain installed"
+msgstr "MoonBit ツールチェーンがインストール済み"
+
+#: ../../tutorial/fullstack-one-project.md:19
+msgid "`hurl` installed for API testing"
+msgstr "API テスト用に `hurl` がインストール済み"
+
+#: ../../tutorial/fullstack-one-project.md:21
+msgid "Step 1: Create the module"
+msgstr "ステップ 1: モジュールを作成する"
+
+#: ../../tutorial/fullstack-one-project.md:23
+msgid "moon new fullstack_one_project\n"
+"cd fullstack_one_project\n"
+"moon add moonbitlang/async\n"
+"moon add moonbit-community/rabbita\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:30
+msgid "Project layout:"
+msgstr "プロジェクト構成:"
+
+#: ../../tutorial/fullstack-one-project.md:32
+msgid "fullstack_one_project\n"
+"├── Makefile\n"
+"├── moon.mod.json\n"
+"├── backend\n"
+"│   ├── api.hurl\n"
+"│   ├── index.html\n"
+"│   ├── main.mbt\n"
+"│   └── moon.pkg\n"
+"├── frontend\n"
+"│   ├── main.mbt\n"
+"│   └── moon.pkg\n"
+"└── shared\n"
+"    ├── moon.pkg\n"
+"    ├── shared_test.mbt\n"
+"    └── task.mbt\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:50
+msgid "Module config:"
+msgstr "モジュール設定:"
+
+#: ../../tutorial/fullstack-one-project.md:52
+msgid "{\n"
+"  \"name\": \"moonbit-community/fullstack-one-project-doc\",\n"
+"  \"version\": \"0.1.0\",\n"
+"  \"deps\": {\n"
+"    \"moonbitlang/async\": \"0.16.6\",\n"
+"    \"moonbit-community/rabbita\": \"0.11.5\"\n"
+"  },\n"
+"  \"preferred-target\": \"native\",\n"
+"  \"supported-targets\": \"+wasm+wasm-gc+js+native\"\n"
+"}\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:56
+msgid "Step 2: Implement shared domain validation"
+msgstr "ステップ 2: 共有ドメインバリデーションを実装する"
+
+#: ../../tutorial/fullstack-one-project.md:58
+msgid "Define request/response types with `derive(ToJson, FromJson)` and one `suberror`-based validator in `shared/`. Both frontend and backend import this package."
+msgstr "`shared/` に `derive(ToJson, FromJson)` 付きのリクエスト/レスポンス型と、`suberror` ベースのバリデータを定義します。フロントエンドとバックエンドの両方がこのパッケージをインポートします。"
+
+#: ../../tutorial/fullstack-one-project.md:61
+msgid "import {\n"
+"  \"moonbitlang/core/json\" @json,\n"
+"}\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:65
+msgid "pub(all) struct SubmitTitleRequest {\n"
+"  title : String\n"
+"} derive(Eq, ToJson, FromJson)\n"
+"\n"
+"///|\n"
+"pub(all) suberror TitleValidationError {\n"
+"  EmptyTitle\n"
+"  TooLong(Int)\n"
+"  ForbiddenHash\n"
+"} derive(Eq, ToJson, FromJson)\n"
+"\n"
+"///|\n"
+"pub(all) enum SubmitTitleResponse {\n"
+"  Accepted(String)\n"
+"  ValidationError(TitleValidationError)\n"
+"  InvalidJson\n"
+"} derive(Eq, ToJson, FromJson)\n"
+"\n"
+"///|\n"
+"pub fn validate_request(\n"
+"  request : SubmitTitleRequest,\n"
+") -> Unit raise TitleValidationError {\n"
+"  let title = request.title.trim().to_string()\n"
+"  if title.length() == 0 {\n"
+"    raise EmptyTitle\n"
+"  } else if title.length() > 24 {\n"
+"    raise TooLong(title.length())\n"
+"  } else if title.rev_find(\"#\") is Some(_) {\n"
+"    raise ForbiddenHash\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn warning_text(err : TitleValidationError) -> String {\n"
+"  match err {\n"
+"    EmptyTitle => \"title cannot be empty\"\n"
+"    TooLong(length) => \"title is too long (\\{length}), max is 24\"\n"
+"    ForbiddenHash => \"title cannot contain '#'\"\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"pub impl Show for SubmitTitleResponse with output(self, logger) {\n"
+"  let text = match self {\n"
+"    Accepted(title) => \"accepted: \\{title}\"\n"
+"    ValidationError(err) => \"validation_error: \\{warning_text(err)}\"\n"
+"    InvalidJson => \"invalid_json: invalid request json\"\n"
+"  }\n"
+"  logger.write_string(text)\n"
+"}\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:71
+msgid "Step 3: Implement the frontend (`js`)"
+msgstr "ステップ 3: フロントエンド（`js`）を実装する"
+
+#: ../../tutorial/fullstack-one-project.md:73
+msgid "Frontend behavior:"
+msgstr "フロントエンドの挙動:"
+
+#: ../../tutorial/fullstack-one-project.md:75
+msgid "validate title locally with shared rules"
+msgstr "共有ルールでタイトルをローカル検証する"
+
+#: ../../tutorial/fullstack-one-project.md:76
+msgid "if valid, `POST` to backend `/submit`"
+msgstr "有効ならバックエンド `/submit` に `POST` する"
+
+#: ../../tutorial/fullstack-one-project.md:77
+msgid "display backend response text"
+msgstr "バックエンドの応答テキストを表示する"
+
+#: ../../tutorial/fullstack-one-project.md:79
+msgid "import {\n"
+"  \"moonbit-community/fullstack-one-project-doc/shared\" @shared,\n"
+"  \"moonbitlang/core/json\" @json,\n"
+"  \"moonbit-community/rabbita\" @rabbita,\n"
+"  \"moonbit-community/rabbita/html\" @html,\n"
+"  \"moonbit-community/rabbita/http\" @rhttp,\n"
+"}\n"
+"\n"
+"supported_targets = \"js\"\n"
+"\n"
+"options(\n"
+"  \"is-main\": true,\n"
+")\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:83
+msgid "fn main {\n"
+"  let app = @rabbita.cell(\n"
+"    model={ title: \"\", warning: None, server_message: None },\n"
+"    update=(dispatch, msg, model) => {\n"
+"      match msg {\n"
+"        Edit(title) => {\n"
+"          let warning = local_warning(title)\n"
+"          (@rabbita.none, { title, warning, server_message: None })\n"
+"        }\n"
+"        Submit =>\n"
+"          match model.warning {\n"
+"            Some(message) =>\n"
+"              (\n"
+"                @rabbita.none,\n"
+"                { ..model, server_message: Some(\"not sent: \\{message}\") },\n"
+"              )\n"
+"            None => {\n"
+"              let request = @shared.SubmitTitleRequest::{ title: model.title }\n"
+"              let request_json = request.to_json().stringify()\n"
+"              let expect : @rhttp.Expecting[@rabbita.Cmd, Unit] = @rhttp.Expecting::Text(result => {\n"
+"                  dispatch(ServerReplied(result))\n"
+"                },\n"
+"              )\n"
+"              let cmd = @rhttp.post(\n"
+"                \"http://127.0.0.1:8080/submit\",\n"
+"                @rhttp.Body::Text(request_json),\n"
+"                expect~,\n"
+"              )\n"
+"              (\n"
+"                cmd,\n"
+"                { ..model, server_message: Some(\"sending json request...\") },\n"
+"              )\n"
+"            }\n"
+"          }\n"
+"        ServerReplied(result) => {\n"
+"          let server_message = match result {\n"
+"            Ok(raw_json) =>\n"
+"              try {\n"
+"                let response : @shared.SubmitTitleResponse = @json.from_json(\n"
+"                  @json.parse(raw_json),\n"
+"                )\n"
+"                Some(\"\\{response}\")\n"
+"              } catch {\n"
+"                _ => Some(\"invalid backend response json\")\n"
+"              }\n"
+"            Err(err) => Some(\"request failed: \\{err}\")\n"
+"          }\n"
+"          (@rabbita.none, { ..model, server_message, })\n"
+"        }\n"
+"      }\n"
+"    },\n"
+"    view=(dispatch, model) => {\n"
+"      let warning_line = match model.warning {\n"
+"        Some(message) => p(\"warning: \\{message}\")\n"
+"        None => p(\"local validation passed\")\n"
+"      }\n"
+"      let server_line = match model.server_message {\n"
+"        Some(response) => p(\"backend response: \\{response}\")\n"
+"        None => p(\"backend response: (none yet)\")\n"
+"      }\n"
+"      let value = model.title\n"
+"      div([\n"
+"        h2(\"Shared Validation Demo\"),\n"
+"        input(\n"
+"          input_type=Text,\n"
+"          value~,\n"
+"          on_input=text => dispatch(Edit(text)),\n"
+"          nothing,\n"
+"        ),\n"
+"        button(on_click=dispatch(Submit), \"Submit as JSON\"),\n"
+"        warning_line,\n"
+"        server_line,\n"
+"      ])\n"
+"    },\n"
+"  )\n"
+"  @rabbita.new(app).mount(\"app\")\n"
+"}\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:89
+msgid "Step 4: Implement the backend (`native`)"
+msgstr "ステップ 4: バックエンド（`native`）を実装する"
+
+#: ../../tutorial/fullstack-one-project.md:91
+msgid "Backend behavior:"
+msgstr "バックエンドの挙動:"
+
+#: ../../tutorial/fullstack-one-project.md:93
+msgid "serve `GET /` from static `backend/index.html`"
+msgstr "静的ファイル `backend/index.html` を `GET /` で配信する"
+
+#: ../../tutorial/fullstack-one-project.md:94
+msgid "serve `GET /frontend.js` from frontend build output"
+msgstr "フロントエンドのビルド成果物を `GET /frontend.js` で配信する"
+
+#: ../../tutorial/fullstack-one-project.md:95
+msgid "handle `POST /submit` with shared validation and JSON response"
+msgstr "共有バリデーションで `POST /submit` を処理し、JSON レスポンスを返す"
+
+#: ../../tutorial/fullstack-one-project.md:97
+msgid "import {\n"
+"  \"moonbit-community/fullstack-one-project-doc/shared\" @shared,\n"
+"  \"moonbitlang/core/json\" @json,\n"
+"  \"moonbitlang/async\",\n"
+"  \"moonbitlang/async/fs\" @fs,\n"
+"  \"moonbitlang/async/http\" @http,\n"
+"  \"moonbitlang/async/socket\" @socket,\n"
+"  \"moonbitlang/async/stdio\",\n"
+"}\n"
+"\n"
+"supported_targets = \"native\"\n"
+"\n"
+"options(\n"
+"  \"is-main\": true,\n"
+")\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:101
+msgid "<!doctype html>\n"
+"<html>\n"
+"  <head>\n"
+"    <meta charset=\"utf-8\" />\n"
+"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n"
+"    <title>Shared Validation Demo</title>\n"
+"  </head>\n"
+"  <body>\n"
+"    <h1>Shared Validation Demo</h1>\n"
+"    <p>Backend serves this page and the built frontend bundle.</p>\n"
+"    <div id=\"app\"></div>\n"
+"    <script src=\"/frontend.js\"></script>\n"
+"  </body>\n"
+"</html>\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:105
+msgid "async fn main {\n"
+"  @stdio.stdout.write(\"starting backend on http://127.0.0.1:8080\\n\")\n"
+"  let server = @http.Server::new(@socket.Addr::parse(\"127.0.0.1:8080\")) catch {\n"
+"    err => {\n"
+"      @stdio.stdout.write(\"failed to start backend: \\{err}\\n\")\n"
+"      return\n"
+"    }\n"
+"  }\n"
+"\n"
+"  server.run_forever((request, body, conn) => {\n"
+"    match (request.meth, request.path) {\n"
+"      (Get, \"/\") =>\n"
+"        send_file(\n"
+"          conn, index_html_path, html_headers, \"missing backend/index.html\",\n"
+"        )\n"
+"      (Get, \"/frontend.js\") =>\n"
+"        send_file(\n"
+"          conn, frontend_js_path, js_headers, \"missing frontend bundle; run `moon build frontend --target js`\",\n"
+"        )\n"
+"      (Post, \"/submit\") => {\n"
+"        let raw_body = body.read_all().text() catch { _ => \"\" }\n"
+"        let response : @shared.SubmitTitleResponse = try {\n"
+"          let request : @shared.SubmitTitleRequest = @json.from_json(\n"
+"            @json.parse(raw_body),\n"
+"          )\n"
+"          try {\n"
+"            @shared.validate_request(request)\n"
+"            @shared.SubmitTitleResponse::Accepted(\n"
+"              request.title.trim().to_string(),\n"
+"            )\n"
+"          } catch {\n"
+"            err => @shared.SubmitTitleResponse::ValidationError(err)\n"
+"          }\n"
+"        } catch {\n"
+"          _ => @shared.SubmitTitleResponse::InvalidJson\n"
+"        }\n"
+"        let code = match response {\n"
+"          @shared.SubmitTitleResponse::Accepted(_) => 200\n"
+"          _ => 400\n"
+"        }\n"
+"        let reason = if code == 200 { \"OK\" } else { \"BadRequest\" }\n"
+"        conn\n"
+"        ..send_response(code, reason, extra_headers=json_headers)\n"
+"        ..write(response.to_json().stringify())\n"
+"        .end_response()\n"
+"      }\n"
+"      _ =>\n"
+"        conn\n"
+"        ..send_response(404, \"NotFound\", extra_headers=text_headers)\n"
+"        ..write(\"Not Found\")\n"
+"        .end_response()\n"
+"    }\n"
+"  })\n"
+"}\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:111
+msgid "Step 5: Use Makefile shortcuts"
+msgstr "ステップ 5: Makefile のショートカットを使う"
+
+#: ../../tutorial/fullstack-one-project.md:113
+msgid ".PHONY: help build-frontend run-backend check test api-test verify verify-all clean\n"
+"\n"
+"help:\n"
+"	@echo \"Targets:\"\n"
+"	@echo \"  make build-frontend  Build frontend JS bundle\"\n"
+"	@echo \"  make run-backend     Run backend server on 127.0.0.1:8080\"\n"
+"	@echo \"  make check           Run moon check for all targets\"\n"
+"	@echo \"  make test            Run moon test for all targets\"\n"
+"	@echo \"  make api-test        Run Hurl API tests against local backend\"\n"
+"	@echo \"  make verify          Run check + test\"\n"
+"	@echo \"  make verify-all      Run verify + api-test\"\n"
+"	@echo \"  make clean           Remove build artifacts\"\n"
+"\n"
+"build-frontend:\n"
+"	moon build frontend --target js\n"
+"\n"
+"run-backend:\n"
+"	moon run backend --target native\n"
+"\n"
+"check:\n"
+"	moon check --deny-warn --target all\n"
+"\n"
+"test:\n"
+"	moon test --deny-warn --target all\n"
+"\n"
+"api-test: build-frontend\n"
+"	@command -v hurl >/dev/null 2>&1 || { echo \"hurl is required for api-test\"; exit 1; }\n"
+"	@set -eu; \\\n"
+"		moon run backend --target native >/tmp/fullstack-one-project-backend.log 2>&1 & \\\n"
+"		pid=$$!; \\\n"
+"		trap 'kill $$pid >/dev/null 2>&1 || true' EXIT INT TERM; \\\n"
+"		sleep 1; \\\n"
+"		hurl --test backend/api.hurl\n"
+"\n"
+"verify: check test\n"
+"\n"
+"verify-all: verify api-test\n"
+"\n"
+"clean:\n"
+"	rm -rf _build\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:117
+msgid "Common workflow:"
+msgstr "一般的なワークフロー:"
+
+#: ../../tutorial/fullstack-one-project.md:119
+msgid "make build-frontend\n"
+"make run-backend\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:124
+msgid "Then open `http://127.0.0.1:8080/` in a browser."
+msgstr "その後、ブラウザで `http://127.0.0.1:8080/` を開きます。"
+
+#: ../../tutorial/fullstack-one-project.md:126
+msgid "Step 6: Test API with Hurl"
+msgstr "ステップ 6: Hurl で API をテストする"
+
+#: ../../tutorial/fullstack-one-project.md:128
+msgid "Hurl test suite:"
+msgstr "Hurl テストスイート:"
+
+#: ../../tutorial/fullstack-one-project.md:130
+msgid "GET http://127.0.0.1:8080/\n"
+"HTTP 200\n"
+"[Asserts]\n"
+"body contains \"<div id=\\\"app\\\"></div>\"\n"
+"\n"
+"GET http://127.0.0.1:8080/frontend.js\n"
+"HTTP 200\n"
+"[Asserts]\n"
+"body contains \"function\"\n"
+"\n"
+"POST http://127.0.0.1:8080/submit\n"
+"Content-Type: application/json\n"
+"{\n"
+"  \"title\": \"Write docs\"\n"
+"}\n"
+"HTTP 200\n"
+"[Asserts]\n"
+"jsonpath \"$[0]\" == \"Accepted\"\n"
+"jsonpath \"$[1]\" == \"Write docs\"\n"
+"\n"
+"POST http://127.0.0.1:8080/submit\n"
+"Content-Type: application/json\n"
+"{\n"
+"  \"title\": \"bad #title\"\n"
+"}\n"
+"HTTP 400\n"
+"[Asserts]\n"
+"jsonpath \"$[0]\" == \"ValidationError\"\n"
+"jsonpath \"$[1]\" == \"ForbiddenHash\"\n"
+"\n"
+"POST http://127.0.0.1:8080/submit\n"
+"Content-Type: application/json\n"
+"{\n"
+"  \"title\": \"01234567890123456789012345\"\n"
+"}\n"
+"HTTP 400\n"
+"[Asserts]\n"
+"jsonpath \"$[0]\" == \"ValidationError\"\n"
+"jsonpath \"$[1][0]\" == \"TooLong\"\n"
+"jsonpath \"$[1][1]\" == 26\n"
+"\n"
+"POST http://127.0.0.1:8080/submit\n"
+"Content-Type: application/json\n"
+"```\n"
+"{\"title\":\n"
+"```\n"
+"HTTP 400\n"
+"[Asserts]\n"
+"jsonpath \"$\" == \"InvalidJson\"\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:134
+msgid "Run it:"
+msgstr "実行方法:"
+
+#: ../../tutorial/fullstack-one-project.md:136
+msgid "make api-test\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:140
+msgid "This verifies:"
+msgstr "このテストで検証する内容:"
+
+#: ../../tutorial/fullstack-one-project.md:142
+msgid "static `GET /` and `GET /frontend.js`"
+msgstr "静的 `GET /` と `GET /frontend.js`"
+
+#: ../../tutorial/fullstack-one-project.md:143
+msgid "accepted submit (`200`)"
+msgstr "受理される送信（`200`）"
+
+#: ../../tutorial/fullstack-one-project.md:144
+msgid "rejected submit (`400`) for invalid titles"
+msgstr "不正なタイトルの送信が拒否される（`400`）"
+
+#: ../../tutorial/fullstack-one-project.md:145
+msgid "rejected submit (`400`) for malformed JSON input"
+msgstr "不正な JSON 入力が拒否される（`400`）"
+
+#: ../../tutorial/fullstack-one-project.md:147
+msgid "Step 7: Verify everything"
+msgstr "ステップ 7: 全体を検証する"
+
+#: ../../tutorial/fullstack-one-project.md:149
+msgid "make verify-all\n"
+""
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:153
+msgid "This runs:"
+msgstr "実行される内容:"
+
+#: ../../tutorial/fullstack-one-project.md:155
+msgid "`moon check --deny-warn --target all`"
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:156
+msgid "`moon test --deny-warn --target all`"
+msgstr ""
+
+#: ../../tutorial/fullstack-one-project.md:157
+msgid "Hurl API tests"
+msgstr "Hurl API テスト"
+
+#: ../../tutorial/fullstack-one-project.md:159
+msgid "You now have one executable project where frontend and backend share the same validation contract and error model."
+msgstr "これで、フロントエンドとバックエンドが同じバリデーション契約とエラーモデルを共有する、実行可能なプロジェクトが完成します。"
