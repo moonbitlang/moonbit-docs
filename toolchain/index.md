@@ -15,6 +15,7 @@
   * [MoonBit's Build System Tutorial](moon/tutorial.md)
   * [Running `.mbtx` Scripts](moon/script-mode.md)
   * [Use and publish packages](moon/package-manage-tour.md)
+  * [Workspace Support](moon/workspace.md)
   * [Command-Line Help for `moon`](moon/commands.md)
   * [Module Configuration](moon/module.md)
   * [Package Configuration](moon/package.md)
