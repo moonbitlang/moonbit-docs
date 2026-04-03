@@ -260,25 +260,6 @@ let description = match status {
 
 For more details on `match` expressions, please refer to [Pattern Matching]().
 
-### `loop` Expressions
-
-MoonBit's loops can return values as well.
-
-Functional loops using the `loop` keyword are particularly powerful.
-The loop body is similar to that of a `match` expression, where each arm tries to
-match the loop variables and act on them accordingly.
-You may use the `continue` keyword to start the next iteration of the loop with the given
-loop values, or use the `break` keyword to exit the loop with some given output value.
-At the trailing expression of each arm, the `break`ing is implicit and thus not required.
-
-```moonbit
-// Calculates the sum of all elements in an `xs : IntList`.
-let sum = loop (xs, 0) {
-  (Nil, acc) => acc
-  (Cons(x, rest), acc) => continue (rest, x + acc)
-}
-```
-
 ### `for` and `while` Expressions
 
 MoonBit's `for` and `while` loops are also expressions that return values.
