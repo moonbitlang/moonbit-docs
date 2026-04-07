@@ -5432,11 +5432,312 @@ msgstr ""
 "  println(b)\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1822
+#: ../../language/fundamentals.md:1826
+msgid "Regex Literal Expression"
+msgstr "正規表現リテラル式"
+
+#: ../../language/fundamentals.md:1828
+msgid "`re\"...\"` is a regex literal expression. Its type is `Regex`."
+msgstr "`re\"...\"` は正規表現リテラル式です。型は `Regex` です。"
+
+#: ../../language/fundamentals.md:1830
+msgid ""
+"Regex literals are ordinary expressions, so they can be stored in local "
+"bindings, passed as arguments, used as default argument values, and "
+"defined as constants:"
+msgstr ""
+"正規表現リテラルは通常の式なので、ローカル束縛に保存したり、引数として渡したり、デフォルト引数として使ったり、定数として定義したりできます："
+
+#: ../../language/fundamentals.md:1834
+msgid ""
+"let r : Regex = re\"a(b+)\"\n"
+"const IDENT_START : Regex = re\"[A-Za-z_]\"\n"
+"const IDENT : Regex = IDENT_START + re\"[A-Za-z0-9_]*\"\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1840
+msgid ""
+"Regex values can also be combined with `+` for sequence and `|` for "
+"alternation. In places that require a regex constant expression, such as "
+"[`=~`](#regex-match-expression), named `const` values defined from regex "
+"literals can be referenced directly."
+msgstr ""
+"`Regex` 値は `+` で連接、`|` で選択を表すように組み合わせることもできます。[`=~`](#regex-match-expression) "
+"のように正規表現の定数式が必要な場所では、正規表現リテラルから定義した名前付き `const` を直接参照できます。"
+
+#: ../../language/fundamentals.md:1845
+msgid ""
+"Unlike ordinary string literals, regex literals do not require double-"
+"escaping backslashes. For example, write `re\"/\\*\"` instead of "
+"`re\"/\\\\*\"`."
+msgstr ""
+"通常の文字列リテラルとは異なり、正規表現リテラルではバックスラッシュを二重にエスケープする必要はありません。例えば "
+"`re\"/\\\\*\"` ではなく `re\"/\\*\"` と書きます。"
+
+#: ../../language/fundamentals.md:1848
+msgid ""
+"test {\n"
+"  let regex : Regex = re\"a(b+)\"\n"
+"  assert_true(regex.execute(\"abbb\"[:]) is Some(_))\n"
+"  assert_true(regex.execute(\"ac\"[:]) is None)\n"
+"\n"
+"  assert_true(REGEX_AB.execute(\"ab\"[:]) is Some(_))\n"
+"  assert_true(REGEX_AB.execute(\"ac\"[:]) is None)\n"
+"  assert_true(regex_default_arg())\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1855
+msgid "Invalid regex literals are rejected at compile time."
+msgstr "不正な正規表現リテラルはコンパイル時に拒否されます。"
+
+#: ../../language/fundamentals.md:1857
+msgid "Regex literals use MoonBit's regex syntax. The supported forms include:"
+msgstr "正規表現リテラルでは MoonBit の正規表現構文を使います。サポートされる形式は次のとおりです："
+
+#: ../../language/fundamentals.md:1859
+msgid "Literal characters: ordinary characters match themselves"
+msgstr "リテラル文字：通常の文字はそのまま自分自身にマッチします"
+
+#: ../../language/fundamentals.md:1860
+msgid "Wildcard: `.` matches any single character, including newline"
+msgstr "ワイルドカード：`.` は改行を含む任意の 1 文字にマッチします"
+
+#: ../../language/fundamentals.md:1861
+msgid "Character classes: `[abc]`, `[^abc]`, `[a-z]`"
+msgstr "文字クラス：`[abc]`、`[^abc]`、`[a-z]`"
+
+#: ../../language/fundamentals.md:1862
+msgid ""
+"POSIX classes inside character classes: `[[:digit:]]`, `[[:alpha:]]`, "
+"`[[:space:]]`, `[[:word:]]`, `[[:xdigit:]]`, etc."
+msgstr ""
+"文字クラス内の POSIX クラス：`[[:digit:]]`、`[[:alpha:]]`、`[[:space:]]`、`[[:word:]]`、"
+"`[[:xdigit:]]` など"
+
+#: ../../language/fundamentals.md:1864
+msgid "Quantifiers: `*`, `+`, `?`, `{n}`, `{n,}`, `{n,m}`"
+msgstr "量指定子：`*`、`+`、`?`、`{n}`、`{n,}`、`{n,m}`"
+
+#: ../../language/fundamentals.md:1865
+msgid "Non-greedy quantifiers: `*?`, `+?`, `??`, `{n}?`, `{n,}?`, `{n,m}?`"
+msgstr "非貪欲量指定子：`*?`、`+?`、`??`、`{n}?`、`{n,}?`、`{n,m}?`"
+
+#: ../../language/fundamentals.md:1866
+msgid "Grouping and alternation: `( ... )`, `(?: ... )`, `(?<name> ... )`, `a|b`"
+msgstr "グループ化と選択：`( ... )`、`(?: ... )`、`(?<name> ... )`、`a|b`"
+
+#: ../../language/fundamentals.md:1867
+msgid "Assertions: `^`, `$`, `\\b`, `\\B`"
+msgstr "アサーション：`^`、`$`、`\\b`、`\\B`"
+
+#: ../../language/fundamentals.md:1868
+msgid "Scoped modifier: `(?i: ... )` for case-insensitive matching"
+msgstr "スコープ付き修飾子：`(?i: ... )` による大文字小文字を区別しないマッチ"
+
+#: ../../language/fundamentals.md:1870
+msgid ""
+"Escape handling is regex-oriented rather than string-oriented. Common "
+"escapes include `\\n`, `\\r`, `\\t`, `\\f`, `\\v`, escaped metacharacters"
+" such as `\\.` and `\\(`, and Unicode escapes `\\uXXXX` / `\\u{X...}`."
+msgstr ""
+"エスケープは文字列ではなく正規表現の規則で解釈されます。一般的なものには `\\n`、`\\r`、`\\t`、`\\f`、`\\v`、"
+"`\\.` や `\\(` のようなメタ文字のエスケープ、そして Unicode エスケープ `\\uXXXX` / `\\u{X...}` があります。"
+
+#: ../../language/fundamentals.md:1874
+msgid "There are several important semantics and restrictions:"
+msgstr "重要な意味論と制限がいくつかあります："
+
+#: ../../language/fundamentals.md:1876
+msgid ""
+"`^` and `$` are non-multiline anchors: they match only the beginning and "
+"end of the whole input"
+msgstr "`^` と `$` はマルチラインではないアンカーで、入力全体の先頭と末尾にだけマッチします"
+
+#: ../../language/fundamentals.md:1878
+msgid ""
+"`\\b` and `\\B` are currently usable when a regex literal is handled as a"
+" first-class `Regex` value They are not currently available in `regex "
+"match expression` constant contexts such as [`=~`](#regex-match-"
+"expression), but this restriction is expected to be relaxed in the future"
+msgstr ""
+"`\\b` と `\\B` は、正規表現リテラルを一級の `Regex` 値として扱う場合には現在利用できます。ですが、"
+"[`=~`](#regex-match-expression) のような `regex match expression` の定数コンテキストでは現時点では使えません。この制限は将来緩和される予定です。"
+
+#: ../../language/fundamentals.md:1883
+msgid "POSIX character classes are ASCII-based"
+msgstr "POSIX 文字クラスは ASCII ベースです"
+
+#: ../../language/fundamentals.md:1884
+msgid ""
+"`\\d`, `\\D`, `\\s`, `\\S`, `\\w`, and `\\W` are not supported Use "
+"`[[:digit:]]`, `[^[:digit:]]`, `[[:space:]]`, `[^[:space:]]`, "
+"`[[:word:]]`, and `[^[:word:]]` instead"
+msgstr ""
+"`\\d`、`\\D`、`\\s`、`\\S`、`\\w`、`\\W` はサポートされません。代わりに `[[:digit:]]`、"
+"`[^[:digit:]]`、`[[:space:]]`、`[^[:space:]]`、`[[:word:]]`、`[^[:word:]]` を使ってください。"
+
+#: ../../language/fundamentals.md:1887
+msgid ""
+"`\\xHH` byte escapes are not supported in `re\"...\"`; use Unicode "
+"escapes or ordinary characters instead"
+msgstr ""
+"`re\"...\"` では `\\xHH` のバイトエスケープは使えません。代わりに Unicode エスケープか通常の文字を使ってください。"
+
+#: ../../language/fundamentals.md:1889
+msgid ""
+"Lookahead, lookbehind, backreferences, and character-class set operations"
+" are not supported"
+msgstr "先読み、後読み、後方参照、文字クラスの集合演算はサポートされません"
+
+#: ../../language/fundamentals.md:1891
+msgid ""
+"In character classes, `-` is used for ranges To match a literal dash, "
+"escape it as `\\-`; putting `-` at the start or end of a character class "
+"is not supported"
+msgstr ""
+"文字クラスでは `-` は範囲を表します。リテラルのハイフンにマッチさせたい場合は `\\-` とエスケープしてください。`-` を文字クラスの先頭または末尾に置く書き方はサポートされません。"
+
+#: ../../language/fundamentals.md:1895
+msgid ""
+"Named capture groups such as `(?<id>[0-9]+)` belong to the `Regex` value "
+"itself. They are useful with APIs such as `Regex::execute` and "
+"`MatchResult::named_group`, but they do not introduce MoonBit binders by "
+"themselves."
+msgstr ""
+"`(?<id>[0-9]+)` のような名前付きキャプチャグループは `Regex` 値自身の一部です。`Regex::execute` や "
+"`MatchResult::named_group` などの API では便利ですが、それ自体が MoonBit の束縛を導入するわけではありません。"
+
+#: ../../language/fundamentals.md:1900
+msgid ""
+"When a regex literal is used as a first-class `Regex` value, operations "
+"such as `Regex::execute` use first-match semantics: they return the first"
+" match found from the search position. They do not provide a longest-"
+"match mode."
+msgstr ""
+"正規表現リテラルを一級の `Regex` 値として使うとき、`Regex::execute` などの操作は first-match semantics を使います。つまり検索位置から見つかった最初のマッチを返し、longest-match モードは提供しません。"
+
+#: ../../language/fundamentals.md:1904
+msgid "Regex Match Expression"
+msgstr "正規表現マッチ式"
+
+#: ../../language/fundamentals.md:1906
+msgid ""
+"Regex match expressions use the `=~` operator to search a `StringView` "
+"with a  regex constant expression. This is a newer regex-matching form "
+"intended to  replace experimental `lexmatch`. The expression returns "
+"`Bool`."
+msgstr ""
+"正規表現マッチ式では `=~` 演算子を使って、regex 定数式で `StringView` を検索します。これは実験的な `lexmatch` を置き換えることを意図した新しい正規表現マッチ機能です。式の結果は `Bool` です。"
+
+#: ../../language/fundamentals.md:1910
+msgid ""
+"input =~ re\"abc\"\n"
+"input =~ ((PREFIX + SUFFIX) as whole, before=head, after=tail)\n"
+"input =~ (re\"b\", before~, after~)\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1916
+msgid ""
+"The right-hand side must be a regex constant expression: a regex literal "
+"such as `re\"abc\"`, a named `const`, or an expression built from "
+"constants with `+` (concatenation), `|` (alternation), and parentheses. "
+"Arbitrary runtime values are not allowed."
+msgstr ""
+"右辺は正規表現の定数式でなければなりません。`re\"abc\"` のような正規表現リテラル、名前付き `const`、あるいは定数を `+` "
+"（連接）、`|`（選択）、括弧で組み立てた式が使えます。任意の実行時値は使えません。"
+
+#: ../../language/fundamentals.md:1921
+msgid ""
+"Use `as` to bind the matched substring. Use `before` and `after` to bind "
+"the unmatched prefix and suffix as `StringView`; `before~` and `after~` "
+"are shorthand forms that bind variables named `before` and `after`."
+msgstr ""
+"マッチした部分文字列を束縛するには `as` を使います。未マッチの前置部分と後置部分を `StringView` として束縛するには `before` "
+"と `after` を使います。`before~` と `after~` は、それぞれ `before` と `after` という名前の変数を束縛する短縮形です。"
+
+#: ../../language/fundamentals.md:1925
+msgid ""
+"This is separate from regex named capture groups. For example, in "
+"`re\"(?<id>[0-9]+)\"`, the name `id` is part of the regex engine's "
+"capture metadata, not a MoonBit binder. If you need a binder in `=~`, use"
+" `as`, such as `(re\"(?<id>[0-9]+)\" as digits)`."
+msgstr ""
+"これは正規表現の名前付きキャプチャグループとは別物です。例えば `re\"(?<id>[0-9]+)\"` では、`id` という名前は正規表現エンジンのキャプチャメタデータの一部であり、MoonBit の束縛ではありません。`=~` で束縛が必要な場合は、`(re\"(?<id>[0-9]+)\" as digits)` のように `as` を使ってください。"
+
+#: ../../language/fundamentals.md:1930
+msgid ""
+"Like `is`, binders introduced by `=~` can be used in the same boolean-"
+"flow contexts, such as the right-hand side of `&&` and the true branch of"
+" `if`. Regex matching is search-based by default, so `\"zabc!\" =~ "
+"re\"abc\"` is `true`. Use anchors such as `^` and `$` when you need to "
+"constrain the match to the beginning or end of the input."
+msgstr ""
+"`is` と同様に、`=~` によって導入された束縛は `&&` の右辺や `if` の true 分岐など、同じブールフローの文脈で使えます。正規表現マッチはデフォルトで検索ベースなので、`\"zabc!\" =~ re\"abc\"` は `true` です。入力の先頭または末尾にマッチを制限したい場合は、`^` や `$` のようなアンカーを使ってください。"
+
+#: ../../language/fundamentals.md:1936
+msgid ""
+"`=~` also uses first-match semantics. It will not support longest-match "
+"behavior."
+msgstr "`=~` も first-match semantics を使います。設計上、longest-match の挙動はサポートしません。"
+
+#: ../../language/fundamentals.md:1939
+msgid ""
+"test {\n"
+"  let input = \" let_name = 42 \"\n"
+"  if input =~ (\n"
+"      ((REGEX_IDENT_START + REGEX_IDENT_CONT) as ident),\n"
+"      before=head,\n"
+"      after=tail,\n"
+"    ) {\n"
+"    assert_true(head is \" \")\n"
+"    assert_true(ident is \"let_name\")\n"
+"    assert_true(tail is \" = 42 \")\n"
+"  } else {\n"
+"    fail(\"expected identifier\")\n"
+"  }\n"
+"\n"
+"  if \"abc\" =~ (re\"b\", before~, after~) {\n"
+"    assert_true(before is \"a\")\n"
+"    assert_true(after is \"c\")\n"
+"  } else {\n"
+"    fail(\"expected middle match\")\n"
+"  }\n"
+"\n"
+"  let source : StringView = \"abc\"[:]\n"
+"  if source =~ (re\".\" as ch, after=rest) {\n"
+"    assert_eq(ch, 'a')\n"
+"    assert_true(rest is \"bc\")\n"
+"  } else {\n"
+"    fail(\"expected leading char\")\n"
+"  }\n"
+"\n"
+"  assert_true(\"zabc!\" =~ re\"abc\")\n"
+"  assert_true(!(\"zabc!\" =~ re\"^abc\"))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1946
+msgid ""
+"In the example above, `head`, `ident`, `tail`, `before`, `after`, and "
+"`rest` have type `StringView`. The binder `ch` has type `Char`, because "
+"`re\".\"` matches exactly one character."
+msgstr ""
+"上の例では、`head`、`ident`、`tail`、`before`、`after`、`rest` の型はすべて `StringView` です。束縛 `ch` の型が `Char` になるのは、`re\".\"` がちょうど 1 文字にマッチするからです。"
+
+#: ../../language/fundamentals.md:1950
 msgid "Lexmatch"
 msgstr "`lexmatch`"
 
-#: ../../language/fundamentals.md:1824
+#: ../../language/fundamentals.md:1953
+msgid ""
+"`lexmatch` and `lexmatch?` are deprecated. Prefer [regex match expression"
+"](#regex-match-expression) in new code. This section is kept as reference"
+" for existing code."
+msgstr ""
+"`lexmatch` と `lexmatch?` は非推奨です。新しいコードでは [regex match expression](#regex-match-expression) を使ってください。この節は既存コードの参考のためだけに残しています。"
+
+#: ../../language/fundamentals.md:1958
 msgid ""
 "`lexmatch` matches a `String` against a regex pattern and lets you bind the "
 "pieces of a match. The search-mode pattern is `(before, regex pieces, "
@@ -5453,13 +5754,13 @@ msgstr ""
 "自体は文字列リテラルの列として書くので、複数行に分けたり、途中にコメントを挟んだりできます。`(\"b*\" as b)` "
 "のように、マッチしたサブパターンに `as` で束縛することもできます。"
 
-#: ../../language/fundamentals.md:1832
+#: ../../language/fundamentals.md:1966
 msgid ""
 "`lexmatch?` is a boolean check similar to `is`, and it can introduce binders"
 " for use in the same contexts as `is` expressions."
 msgstr "`lexmatch?` は `is` に似た真偽チェックで、`is` 式と同じ文脈で使える束縛を導入できます。"
 
-#: ../../language/fundamentals.md:1835
+#: ../../language/fundamentals.md:1969
 msgid ""
 "`lexmatch` also supports a lexer-style mode: `lexmatch <expr> with longest`,"
 " which picks the longest match among alternatives (for example, `if|[a-z]*` "
@@ -5470,16 +5771,19 @@ msgstr ""
 "は、候補の中から最長一致を選びます（たとえば `if|[a-z]*` は longest モードでは `iff` を `iff` "
 "として一致させますが、search モードではまず `if` が一致します）。"
 
-#: ../../language/fundamentals.md:1839
+#: ../../language/fundamentals.md:1973
 msgid ""
-"Regex literals do not support `\\\\b`, `\\\\s`, or `\\\\w`. Use POSIX "
-"character classes like `[:digit:]` inside ranges (for example, "
-"`[[:digit:]]`)."
+"Regex literals support `\\\\b` and `\\\\B` as part of the regex syntax, "
+"but these word-boundary assertions are not currently available in `regex "
+"match expression` constant contexts. They do work when the regex is used "
+"as a first-class `Regex` value, and this restriction is expected to be "
+"relaxed in the future. Regex literals also do not support `\\\\d`, "
+"`\\\\D`, `\\\\s`, `\\\\S`, `\\\\w`, or `\\\\W`. Use POSIX character "
+"classes like `[[:digit:]]` inside character classes instead."
 msgstr ""
-"正規表現リテラルは `\\b`、`\\s`、`\\w` をサポートしていません。範囲内では `[:digit:]` のような POSIX "
-"文字クラスを使ってください（例：`[[:digit:]]`）。"
+"正規表現リテラルでは `\\\\b` と `\\\\B` を正規表現構文の一部として使えますが、これらの単語境界アサーションは現在のところ `regex match expression` の定数コンテキストでは使えません。正規表現を一級の `Regex` 値として使う場合には動作し、この制限は将来緩和される予定です。また、正規表現リテラルは `\\\\d`、`\\\\D`、`\\\\s`、`\\\\S`、`\\\\w`、`\\\\W` もサポートしません。代わりに文字クラス内で `[[:digit:]]` のような POSIX 文字クラスを使ってください。"
 
-#: ../../language/fundamentals.md:1842
+#: ../../language/fundamentals.md:1981
 msgid ""
 "test {\n"
 "  let text = \"xxabbbcyy\"\n"
@@ -5525,7 +5829,7 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1849
+#: ../../language/fundamentals.md:1988
 msgid "Spread Operator"
 msgstr "スプレッド演算子"
 

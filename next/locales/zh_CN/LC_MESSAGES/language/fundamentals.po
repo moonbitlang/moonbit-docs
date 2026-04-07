@@ -4465,10 +4465,311 @@ msgid ""
 msgstr ""
 
 #: ../../language/fundamentals.md:1826
+msgid "Regex Literal Expression"
+msgstr "正则字面量表达式"
+
+#: ../../language/fundamentals.md:1828
+msgid "`re\"...\"` is a regex literal expression. Its type is `Regex`."
+msgstr "`re\"...\"` 是一个正则字面量表达式，其类型为 `Regex`。"
+
+#: ../../language/fundamentals.md:1830
+msgid ""
+"Regex literals are ordinary expressions, so they can be stored in local "
+"bindings, passed as arguments, used as default argument values, and "
+"defined as constants:"
+msgstr ""
+"正则字面量是普通表达式，因此可以存入局部绑定、作为参数传递、用作默认参数值，也可以定义为常量："
+
+#: ../../language/fundamentals.md:1834
+msgid ""
+"let r : Regex = re\"a(b+)\"\n"
+"const IDENT_START : Regex = re\"[A-Za-z_]\"\n"
+"const IDENT : Regex = IDENT_START + re\"[A-Za-z0-9_]*\"\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1840
+msgid ""
+"Regex values can also be combined with `+` for sequence and `|` for "
+"alternation. In places that require a regex constant expression, such as "
+"[`=~`](#regex-match-expression), named `const` values defined from regex "
+"literals can be referenced directly."
+msgstr ""
+"`Regex` 值也可以通过 `+` 组合成序列，通过 `|` 组合成备选。在需要正则常量表达式的地方，例如 "
+"[`=~`](#regex-match-expression)，可以直接引用由正则字面量定义的具名 `const`。"
+
+#: ../../language/fundamentals.md:1845
+msgid ""
+"Unlike ordinary string literals, regex literals do not require double-"
+"escaping backslashes. For example, write `re\"/\\*\"` instead of "
+"`re\"/\\\\*\"`."
+msgstr ""
+"与普通字符串字面量不同，正则字面量中的反斜杠不需要二次转义。例如，应写 `re\"/\\*\"`，而不是 "
+"`re\"/\\\\*\"`。"
+
+#: ../../language/fundamentals.md:1848
+msgid ""
+"test {\n"
+"  let regex : Regex = re\"a(b+)\"\n"
+"  assert_true(regex.execute(\"abbb\"[:]) is Some(_))\n"
+"  assert_true(regex.execute(\"ac\"[:]) is None)\n"
+"\n"
+"  assert_true(REGEX_AB.execute(\"ab\"[:]) is Some(_))\n"
+"  assert_true(REGEX_AB.execute(\"ac\"[:]) is None)\n"
+"  assert_true(regex_default_arg())\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1855
+msgid "Invalid regex literals are rejected at compile time."
+msgstr "非法的正则字面量会在编译期被拒绝。"
+
+#: ../../language/fundamentals.md:1857
+msgid "Regex literals use MoonBit's regex syntax. The supported forms include:"
+msgstr "正则字面量使用 MoonBit 的正则语法，支持的形式包括："
+
+#: ../../language/fundamentals.md:1859
+msgid "Literal characters: ordinary characters match themselves"
+msgstr "字面字符：普通字符匹配其自身"
+
+#: ../../language/fundamentals.md:1860
+msgid "Wildcard: `.` matches any single character, including newline"
+msgstr "通配符：`.` 匹配任意单个字符，包括换行符"
+
+#: ../../language/fundamentals.md:1861
+msgid "Character classes: `[abc]`, `[^abc]`, `[a-z]`"
+msgstr "字符类：`[abc]`、`[^abc]`、`[a-z]`"
+
+#: ../../language/fundamentals.md:1862
+msgid ""
+"POSIX classes inside character classes: `[[:digit:]]`, `[[:alpha:]]`, "
+"`[[:space:]]`, `[[:word:]]`, `[[:xdigit:]]`, etc."
+msgstr ""
+"字符类中的 POSIX 类：`[[:digit:]]`、`[[:alpha:]]`、`[[:space:]]`、`[[:word:]]`、"
+"`[[:xdigit:]]` 等"
+
+#: ../../language/fundamentals.md:1864
+msgid "Quantifiers: `*`, `+`, `?`, `{n}`, `{n,}`, `{n,m}`"
+msgstr "量词：`*`、`+`、`?`、`{n}`、`{n,}`、`{n,m}`"
+
+#: ../../language/fundamentals.md:1865
+msgid "Non-greedy quantifiers: `*?`, `+?`, `??`, `{n}?`, `{n,}?`, `{n,m}?`"
+msgstr "非贪婪量词：`*?`、`+?`、`??`、`{n}?`、`{n,}?`、`{n,m}?`"
+
+#: ../../language/fundamentals.md:1866
+msgid "Grouping and alternation: `( ... )`, `(?: ... )`, `(?<name> ... )`, `a|b`"
+msgstr "分组与分支：`( ... )`、`(?: ... )`、`(?<name> ... )`、`a|b`"
+
+#: ../../language/fundamentals.md:1867
+msgid "Assertions: `^`, `$`, `\\b`, `\\B`"
+msgstr "断言：`^`、`$`、`\\b`、`\\B`"
+
+#: ../../language/fundamentals.md:1868
+msgid "Scoped modifier: `(?i: ... )` for case-insensitive matching"
+msgstr "作用域修饰符：`(?i: ... )` 用于大小写不敏感匹配"
+
+#: ../../language/fundamentals.md:1870
+msgid ""
+"Escape handling is regex-oriented rather than string-oriented. Common "
+"escapes include `\\n`, `\\r`, `\\t`, `\\f`, `\\v`, escaped metacharacters"
+" such as `\\.` and `\\(`, and Unicode escapes `\\uXXXX` / `\\u{X...}`."
+msgstr ""
+"转义规则按正则语义处理，而不是按字符串语义处理。常见转义包括 `\\n`、`\\r`、`\\t`、`\\f`、`\\v`，以及 "
+"`\\.`、`\\(` 这类元字符转义，还有 Unicode 转义 `\\uXXXX` / `\\u{X...}`。"
+
+#: ../../language/fundamentals.md:1874
+msgid "There are several important semantics and restrictions:"
+msgstr "还有一些重要语义和限制："
+
+#: ../../language/fundamentals.md:1876
+msgid ""
+"`^` and `$` are non-multiline anchors: they match only the beginning and "
+"end of the whole input"
+msgstr "`^` 和 `$` 是非多行锚点：只匹配整个输入的开头和结尾"
+
+#: ../../language/fundamentals.md:1878
+msgid ""
+"`\\b` and `\\B` are currently usable when a regex literal is handled as a"
+" first-class `Regex` value They are not currently available in `regex "
+"match expression` constant contexts such as [`=~`](#regex-match-"
+"expression), but this restriction is expected to be relaxed in the future"
+msgstr ""
+"`\\b` 和 `\\B` 当前在正则字面量作为一等 `Regex` 值使用时可用；但在 [`=~`](#regex-match-expression) "
+"这样的 `regex match expression` 常量上下文中暂不可用，未来这一限制预计会放宽。"
+
+#: ../../language/fundamentals.md:1883
+msgid "POSIX character classes are ASCII-based"
+msgstr "POSIX 字符类基于 ASCII"
+
+#: ../../language/fundamentals.md:1884
+msgid ""
+"`\\d`, `\\D`, `\\s`, `\\S`, `\\w`, and `\\W` are not supported Use "
+"`[[:digit:]]`, `[^[:digit:]]`, `[[:space:]]`, `[^[:space:]]`, "
+"`[[:word:]]`, and `[^[:word:]]` instead"
+msgstr ""
+"不支持 `\\d`、`\\D`、`\\s`、`\\S`、`\\w` 和 `\\W`。请改用 `[[:digit:]]`、"
+"`[^[:digit:]]`、`[[:space:]]`、`[^[:space:]]`、`[[:word:]]` 和 `[^[:word:]]`。"
+
+#: ../../language/fundamentals.md:1887
+msgid ""
+"`\\xHH` byte escapes are not supported in `re\"...\"`; use Unicode "
+"escapes or ordinary characters instead"
+msgstr ""
+"`re\"...\"` 不支持 `\\xHH` 字节转义；请改用 Unicode 转义或直接写普通字符。"
+
+#: ../../language/fundamentals.md:1889
+msgid ""
+"Lookahead, lookbehind, backreferences, and character-class set operations"
+" are not supported"
+msgstr "不支持前瞻、后顾、反向引用和字符类集合运算"
+
+#: ../../language/fundamentals.md:1891
+msgid ""
+"In character classes, `-` is used for ranges To match a literal dash, "
+"escape it as `\\-`; putting `-` at the start or end of a character class "
+"is not supported"
+msgstr ""
+"在字符类中，`-` 用于表示范围。若要匹配字面量连字符，请写 `\\-`；不支持把 `-` 放在字符类开头或结尾来表示字面量。"
+
+#: ../../language/fundamentals.md:1895
+msgid ""
+"Named capture groups such as `(?<id>[0-9]+)` belong to the `Regex` value "
+"itself. They are useful with APIs such as `Regex::execute` and "
+"`MatchResult::named_group`, but they do not introduce MoonBit binders by "
+"themselves."
+msgstr ""
+"具名捕获组（例如 `(?<id>[0-9]+)`）属于 `Regex` 值本身。它们可与 `Regex::execute` 和 "
+"`MatchResult::named_group` 等 API 配合使用，但不会自行引入 MoonBit 绑定变量。"
+
+#: ../../language/fundamentals.md:1900
+msgid ""
+"When a regex literal is used as a first-class `Regex` value, operations "
+"such as `Regex::execute` use first-match semantics: they return the first"
+" match found from the search position. They do not provide a longest-"
+"match mode."
+msgstr ""
+"当正则字面量作为一等 `Regex` 值使用时，`Regex::execute` 等操作采用 first-match 语义：它们返回从搜索位置开始找到的第一个匹配，不提供 longest-match 模式。"
+
+#: ../../language/fundamentals.md:1904
+msgid "Regex Match Expression"
+msgstr "正则匹配表达式"
+
+#: ../../language/fundamentals.md:1906
+msgid ""
+"Regex match expressions use the `=~` operator to search a `StringView` "
+"with a  regex constant expression. This is a newer regex-matching form "
+"intended to  replace experimental `lexmatch`. The expression returns "
+"`Bool`."
+msgstr ""
+"正则匹配表达式使用 `=~` 运算符，以正则常量表达式在 `StringView` 中进行搜索。这是一种较新的正则匹配形式，旨在取代实验性的 "
+"`lexmatch`。该表达式返回 `Bool`。"
+
+#: ../../language/fundamentals.md:1910
+msgid ""
+"input =~ re\"abc\"\n"
+"input =~ ((PREFIX + SUFFIX) as whole, before=head, after=tail)\n"
+"input =~ (re\"b\", before~, after~)\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1916
+msgid ""
+"The right-hand side must be a regex constant expression: a regex literal "
+"such as `re\"abc\"`, a named `const`, or an expression built from "
+"constants with `+` (concatenation), `|` (alternation), and parentheses. "
+"Arbitrary runtime values are not allowed."
+msgstr ""
+"右侧必须是正则常量表达式：可以是 `re\"abc\"` 这样的正则字面量、具名 `const`，或者由常量通过 `+`（拼接）、`|`（分支）和括号构造出来的表达式。不允许任意运行时值。"
+
+#: ../../language/fundamentals.md:1921
+msgid ""
+"Use `as` to bind the matched substring. Use `before` and `after` to bind "
+"the unmatched prefix and suffix as `StringView`; `before~` and `after~` "
+"are shorthand forms that bind variables named `before` and `after`."
+msgstr ""
+"使用 `as` 绑定匹配到的子串。使用 `before` 和 `after` 将未匹配的前缀和后缀绑定为 `StringView`；`before~` "
+"和 `after~` 是简写，分别绑定名为 `before` 和 `after` 的变量。"
+
+#: ../../language/fundamentals.md:1925
+msgid ""
+"This is separate from regex named capture groups. For example, in "
+"`re\"(?<id>[0-9]+)\"`, the name `id` is part of the regex engine's "
+"capture metadata, not a MoonBit binder. If you need a binder in `=~`, use"
+" `as`, such as `(re\"(?<id>[0-9]+)\" as digits)`."
+msgstr ""
+"这和正则的具名捕获组是两回事。例如在 `re\"(?<id>[0-9]+)\"` 中，名称 `id` 属于正则引擎的捕获元数据，不是 MoonBit 绑定变量。如果你需要在 `=~` 中引入绑定，请使用 `as`，例如 `(re\"(?<id>[0-9]+)\" as digits)`。"
+
+#: ../../language/fundamentals.md:1930
+msgid ""
+"Like `is`, binders introduced by `=~` can be used in the same boolean-"
+"flow contexts, such as the right-hand side of `&&` and the true branch of"
+" `if`. Regex matching is search-based by default, so `\"zabc!\" =~ "
+"re\"abc\"` is `true`. Use anchors such as `^` and `$` when you need to "
+"constrain the match to the beginning or end of the input."
+msgstr ""
+"和 `is` 一样，`=~` 引入的绑定可以用于相同的布尔流上下文，例如 `&&` 的右侧和 `if` 的 true 分支。正则匹配默认按搜索语义工作，因此 `\"zabc!\" =~ re\"abc\"` 的结果是 `true`。如果需要限制匹配必须发生在输入的开头或结尾，请使用 `^` 和 `$` 等锚点。"
+
+#: ../../language/fundamentals.md:1936
+msgid ""
+"`=~` also uses first-match semantics. It will not support longest-match "
+"behavior."
+msgstr "`=~` 同样采用 first-match 语义。它在设计上不会支持 longest-match 行为。"
+
+#: ../../language/fundamentals.md:1939
+msgid ""
+"test {\n"
+"  let input = \" let_name = 42 \"\n"
+"  if input =~ (\n"
+"      ((REGEX_IDENT_START + REGEX_IDENT_CONT) as ident),\n"
+"      before=head,\n"
+"      after=tail,\n"
+"    ) {\n"
+"    assert_true(head is \" \")\n"
+"    assert_true(ident is \"let_name\")\n"
+"    assert_true(tail is \" = 42 \")\n"
+"  } else {\n"
+"    fail(\"expected identifier\")\n"
+"  }\n"
+"\n"
+"  if \"abc\" =~ (re\"b\", before~, after~) {\n"
+"    assert_true(before is \"a\")\n"
+"    assert_true(after is \"c\")\n"
+"  } else {\n"
+"    fail(\"expected middle match\")\n"
+"  }\n"
+"\n"
+"  let source : StringView = \"abc\"[:]\n"
+"  if source =~ (re\".\" as ch, after=rest) {\n"
+"    assert_eq(ch, 'a')\n"
+"    assert_true(rest is \"bc\")\n"
+"  } else {\n"
+"    fail(\"expected leading char\")\n"
+"  }\n"
+"\n"
+"  assert_true(\"zabc!\" =~ re\"abc\")\n"
+"  assert_true(!(\"zabc!\" =~ re\"^abc\"))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1946
+msgid ""
+"In the example above, `head`, `ident`, `tail`, `before`, `after`, and "
+"`rest` have type `StringView`. The binder `ch` has type `Char`, because "
+"`re\".\"` matches exactly one character."
+msgstr ""
+"上面的例子中，`head`、`ident`、`tail`、`before`、`after` 和 `rest` 的类型都是 `StringView`。绑定变量 `ch` 的类型是 `Char`，因为 `re\".\"` 恰好匹配一个字符。"
+
+#: ../../language/fundamentals.md:1950
 msgid "Lexmatch"
 msgstr "Lexmatch"
 
-#: ../../language/fundamentals.md:1828
+#: ../../language/fundamentals.md:1953
+msgid ""
+"`lexmatch` and `lexmatch?` are deprecated. Prefer [regex match expression"
+"](#regex-match-expression) in new code. This section is kept as reference"
+" for existing code."
+msgstr ""
+"`lexmatch` 和 `lexmatch?` 已弃用。新代码请优先使用 [regex match expression](#regex-match-expression)。本节仅作为现有代码的参考保留。"
+
+#: ../../language/fundamentals.md:1958
 msgid ""
 "`lexmatch` matches a `String` against a regex pattern and lets you bind "
 "the pieces of a match. The search-mode pattern is `(before, regex pieces,"
@@ -4484,13 +4785,13 @@ msgstr ""
 "是可选的绑定，用于捕获未匹配的前缀和后缀，并用逗号分隔；中间的正则片段只用空白分隔。正则本身由一串字符串字面量组成，因此可以拆成多行或在各部分之间插入注释。你也可以用"
 " `as` 绑定子模式，例如 `(\"b*\" as b)`。"
 
-#: ../../language/fundamentals.md:1836
+#: ../../language/fundamentals.md:1966
 msgid ""
 "`lexmatch?` is a boolean check similar to `is`, and it can introduce "
 "binders for use in the same contexts as `is` expressions."
 msgstr "`lexmatch?` 是类似 `is` 的布尔检查，并且可以在与 `is` 表达式相同的上下文中引入绑定。"
 
-#: ../../language/fundamentals.md:1839
+#: ../../language/fundamentals.md:1969
 msgid ""
 "`lexmatch` also supports a lexer-style mode: `lexmatch <expr> with "
 "longest`, which picks the longest match among alternatives (for example, "
@@ -4500,16 +4801,19 @@ msgstr ""
 "`lexmatch` 还支持类似词法器的模式：`lexmatch <expr> with longest`，它会在备选项中选择最长匹配（例如在 "
 "longest 模式下 `if|[a-z]*` 会把 `iff` 匹配为 `iff`，而搜索模式会先匹配到 `if`）。"
 
-#: ../../language/fundamentals.md:1843
+#: ../../language/fundamentals.md:1973
 msgid ""
-"Regex literals do not support `\\\\b`, `\\\\s`, or `\\\\w`. Use POSIX "
-"character classes like `[:digit:]` inside ranges (for example, "
-"`[[:digit:]]`)."
+"Regex literals support `\\\\b` and `\\\\B` as part of the regex syntax, "
+"but these word-boundary assertions are not currently available in `regex "
+"match expression` constant contexts. They do work when the regex is used "
+"as a first-class `Regex` value, and this restriction is expected to be "
+"relaxed in the future. Regex literals also do not support `\\\\d`, "
+"`\\\\D`, `\\\\s`, `\\\\S`, `\\\\w`, or `\\\\W`. Use POSIX character "
+"classes like `[[:digit:]]` inside character classes instead."
 msgstr ""
-"正则字面量不支持 `\\\\b`、`\\\\s` 或 `\\\\w`。请在范围中使用 POSIX 字符类，例如 `[:digit:]`（如 "
-"`[[:digit:]]`）。"
+"正则字面量支持把 `\\\\b` 和 `\\\\B` 作为正则语法的一部分使用，但这些单词边界断言目前在 `regex match expression` 的常量上下文中还不可用。当正则作为一等 `Regex` 值使用时，它们是可用的，未来这一限制预计会放宽。另外，正则字面量也不支持 `\\\\d`、`\\\\D`、`\\\\s`、`\\\\S`、`\\\\w` 和 `\\\\W`。请改用字符类中的 POSIX 字符类，例如 `[[:digit:]]`。"
 
-#: ../../language/fundamentals.md:1846
+#: ../../language/fundamentals.md:1981
 msgid ""
 "test {\n"
 "  let text = \"xxabbbcyy\"\n"
@@ -4534,7 +4838,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1853
+#: ../../language/fundamentals.md:1988
 msgid "Spread Operator"
 msgstr "展开运算符"
 
