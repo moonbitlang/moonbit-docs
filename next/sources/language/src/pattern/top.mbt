@@ -287,22 +287,22 @@ fn guard_check(x : Int?) -> Unit {
 }
 // end guard condition 2
 
+// start regex literal 1
 const REGEX_IDENT_START = re"[A-Za-z_]"
 const REGEX_IDENT_CONT = re"[A-Za-z0-9_]*"
 const REGEX_AB : Regex = re"a" + re"b"
 
 fn regex_default_arg(re? : Regex = re"abc") -> Bool {
-  re.execute("zabc"[:]) is Some(_)
+  re.execute("zabc") is Some(_)
 }
 
-// start regex literal 1
 test {
   let regex : Regex = re"a(b+)"
-  assert_true(regex.execute("abbb"[:]) is Some(_))
-  assert_true(regex.execute("ac"[:]) is None)
+  assert_true(regex.execute("abbb") is Some(_))
+  assert_true(regex.execute("ac") is None)
 
-  assert_true(REGEX_AB.execute("ab"[:]) is Some(_))
-  assert_true(REGEX_AB.execute("ac"[:]) is None)
+  assert_true(REGEX_AB.execute("ab") is Some(_))
+  assert_true(REGEX_AB.execute("ac") is None)
   assert_true(regex_default_arg())
 }
 // end regex literal 1
@@ -329,7 +329,7 @@ test {
     fail("expected middle match")
   }
 
-  let source : StringView = "abc"[:]
+  let source : StringView = "abc"
   if source =~ (re"." as ch, after=rest) {
     assert_eq(ch, 'a')
     assert_true(rest is "bc")
