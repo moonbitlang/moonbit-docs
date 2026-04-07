@@ -1869,7 +1869,9 @@ Regex literals use MoonBit's regex syntax. The supported forms include:
 
 Escape handling is regex-oriented rather than string-oriented. Common escapes
 include `\n`, `\r`, `\t`, `\f`, `\v`, escaped metacharacters such as `\.` and
-`\(`, and Unicode escapes `\uXXXX` / `\u{X...}`.
+`\(`, and Unicode escapes `\uXXXX` / `\u{X...}`. To match a literal `{`, use
+`[{]` rather than `\{`. This leaves room for future interpolation support in
+regex literals, where `\{` would conflict with the interpolation syntax.
 
 There are several important semantics and restrictions:
 
