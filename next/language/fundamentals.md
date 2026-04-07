@@ -1823,7 +1823,137 @@ example:
 :end-before: end is 6
 ```
 
+### Regex Literal Expression
+
+`re"..."` is a regex literal expression. Its type is `Regex`.
+
+Regex literals are ordinary expressions, so they can be stored in local
+bindings, passed as arguments, used as default argument values, and defined as
+constants:
+
+```moonbit
+let r : Regex = re"a(b+)"
+const IDENT_START : Regex = re"[A-Za-z_]"
+const IDENT : Regex = IDENT_START + re"[A-Za-z0-9_]*"
+```
+
+Regex values can also be combined with `+` for sequence and `|` for
+alternation. In places that require a regex constant expression, such as
+[`=~`](#regex-match-expression), named `const` values defined from regex
+literals can be referenced directly.
+
+Unlike ordinary string literals, regex literals do not require double-escaping
+backslashes. For example, write `re"/\*"` instead of `re"/\\*"`.
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start regex literal 1
+:end-before: end regex literal 1
+```
+
+Invalid regex literals are rejected at compile time.
+
+Regex literals use MoonBit's regex syntax. The supported forms include:
+
+- Literal characters: ordinary characters match themselves
+- Wildcard: `.` matches any single character, including newline
+- Character classes: `[abc]`, `[^abc]`, `[a-z]`
+- POSIX classes inside character classes: `[[:digit:]]`, `[[:alpha:]]`,
+  `[[:space:]]`, `[[:word:]]`, `[[:xdigit:]]`, etc.
+- Quantifiers: `*`, `+`, `?`, `{n}`, `{n,}`, `{n,m}`
+- Non-greedy quantifiers: `*?`, `+?`, `??`, `{n}?`, `{n,}?`, `{n,m}?`
+- Grouping and alternation: `( ... )`, `(?: ... )`, `(?<name> ... )`, `a|b`
+- Assertions: `^`, `$`, `\b`, `\B`
+- Scoped modifier: `(?i: ... )` for case-insensitive matching
+
+Escape handling is regex-oriented rather than string-oriented. Common escapes
+include `\n`, `\r`, `\t`, `\f`, `\v`, escaped metacharacters such as `\.` and
+`\(`, and Unicode escapes `\uXXXX` / `\u{X...}`.
+
+There are several important semantics and restrictions:
+
+- `^` and `$` are non-multiline anchors: they match only the beginning and end
+  of the whole input
+- `\b` and `\B` are currently usable when a regex literal is handled as a
+  first-class `Regex` value
+  They are not currently available in `regex match expression` constant
+  contexts such as [`=~`](#regex-match-expression), but this restriction is
+  expected to be relaxed in the future
+- POSIX character classes are ASCII-based
+- `\d`, `\D`, `\s`, `\S`, `\w`, and `\W` are not supported
+  Use `[[:digit:]]`, `[^[:digit:]]`, `[[:space:]]`, `[^[:space:]]`,
+  `[[:word:]]`, and `[^[:word:]]` instead
+- `\xHH` byte escapes are not supported in `re"..."`; use Unicode escapes or
+  ordinary characters instead
+- Lookahead, lookbehind, backreferences, and character-class set operations are
+  not supported
+- In character classes, `-` is used for ranges
+  To match a literal dash, escape it as `\-`; putting `-` at the start or end
+  of a character class is not supported
+
+Named capture groups such as `(?<id>[0-9]+)` belong to the `Regex` value
+itself. They are useful with APIs such as `Regex::execute` and
+`MatchResult::named_group`, but they do not introduce MoonBit binders by
+themselves.
+
+When a regex literal is used as a first-class `Regex` value, operations such
+as `Regex::execute` use first-match semantics: they return the first match
+found from the search position. They do not provide a longest-match mode.
+
+### Regex Match Expression
+
+Regex match expressions use the `=~` operator to search a `StringView` with a 
+regex constant expression. This is a newer regex-matching form intended to 
+replace experimental `lexmatch`. The expression returns `Bool`.
+
+```moonbit
+input =~ re"abc"
+input =~ ((PREFIX + SUFFIX) as whole, before=head, after=tail)
+input =~ (re"b", before~, after~)
+```
+
+The right-hand side must be a regex constant expression: a regex literal such
+as `re"abc"`, a named `const`, or an expression built from constants with `+`
+(concatenation), `|` (alternation), and parentheses. Arbitrary runtime values
+are not allowed.
+
+Use `as` to bind the matched substring. Use `before` and `after` to bind the
+unmatched prefix and suffix as `StringView`; `before~` and `after~` are
+shorthand forms that bind variables named `before` and `after`.
+
+This is separate from regex named capture groups. For example, in
+`re"(?<id>[0-9]+)"`, the name `id` is part of the regex engine's capture
+metadata, not a MoonBit binder. If you need a binder in `=~`, use `as`, such
+as `(re"(?<id>[0-9]+)" as digits)`.
+
+Like `is`, binders introduced by `=~` can be used in the same boolean-flow
+contexts, such as the right-hand side of `&&` and the true branch of `if`.
+Regex matching is search-based by default, so `"zabc!" =~ re"abc"` is `true`.
+Use anchors such as `^` and `$` when you need to constrain the match to the
+beginning or end of the input.
+
+`=~` also uses first-match semantics. It will not support longest-match
+behavior.
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start regex match 1
+:end-before: end regex match 1
+```
+
+In the example above, `head`, `ident`, `tail`, `before`, `after`, and `rest`
+have type `StringView`. The binder `ch` has type `Char`, because `re"."`
+matches exactly one character.
+
 ### Lexmatch
+
+```{warning}
+`lexmatch` and `lexmatch?` are deprecated. Prefer
+[regex match expression](#regex-match-expression) in new code.
+This section is kept as reference for existing code.
+```
 
 `lexmatch` matches a `String` against a regex pattern and lets you bind the
 pieces of a match. The search-mode pattern is `(before, regex pieces, after)`,
@@ -1840,8 +1970,13 @@ for use in the same contexts as `is` expressions.
 which picks the longest match among alternatives (for example, `if|[a-z]*`
 matches `iff` as `iff` in longest mode, while search mode matches `if` first).
 
-Regex literals do not support `\\b`, `\\s`, or `\\w`. Use POSIX character
-classes like `[:digit:]` inside ranges (for example, `[[:digit:]]`).
+Regex literals support `\b` and `\B` as part of the regex syntax, but these
+word-boundary assertions are not currently available in `regex match
+expression` constant contexts. They do work when the regex is used as a
+first-class `Regex` value, and this restriction is expected to be relaxed in
+the future. Regex literals also do not support `\d`, `\D`, `\s`, `\S`, `\w`,
+or `\W`. Use POSIX character classes like `[[:digit:]]` inside character
+classes instead.
 
 ```{literalinclude} /sources/language/src/pattern/top.mbt
 :language: moonbit

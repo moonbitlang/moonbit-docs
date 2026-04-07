@@ -287,6 +287,61 @@ fn guard_check(x : Int?) -> Unit {
 }
 // end guard condition 2
 
+const REGEX_IDENT_START = re"[A-Za-z_]"
+const REGEX_IDENT_CONT = re"[A-Za-z0-9_]*"
+const REGEX_AB : Regex = re"a" + re"b"
+
+fn regex_default_arg(re? : Regex = re"abc") -> Bool {
+  re.execute("zabc"[:]) is Some(_)
+}
+
+// start regex literal 1
+test {
+  let regex : Regex = re"a(b+)"
+  assert_true(regex.execute("abbb"[:]) is Some(_))
+  assert_true(regex.execute("ac"[:]) is None)
+
+  assert_true(REGEX_AB.execute("ab"[:]) is Some(_))
+  assert_true(REGEX_AB.execute("ac"[:]) is None)
+  assert_true(regex_default_arg())
+}
+// end regex literal 1
+
+// start regex match 1
+test {
+  let input = " let_name = 42 "
+  if input =~ (
+      ((REGEX_IDENT_START + REGEX_IDENT_CONT) as ident),
+      before=head,
+      after=tail,
+    ) {
+    assert_true(head is " ")
+    assert_true(ident is "let_name")
+    assert_true(tail is " = 42 ")
+  } else {
+    fail("expected identifier")
+  }
+
+  if "abc" =~ (re"b", before~, after~) {
+    assert_true(before is "a")
+    assert_true(after is "c")
+  } else {
+    fail("expected middle match")
+  }
+
+  let source : StringView = "abc"[:]
+  if source =~ (re"." as ch, after=rest) {
+    assert_eq(ch, 'a')
+    assert_true(rest is "bc")
+  } else {
+    fail("expected leading char")
+  }
+
+  assert_true("zabc!" =~ re"abc")
+  assert_true(!("zabc!" =~ re"^abc"))
+}
+// end regex match 1
+
 // start lexmatch 1
 test {
   let text = "xxabbbcyy"
