@@ -1542,11 +1542,10 @@ create value for the `struct` using the name of the struct,
 it can be declared as follows:
 
 ```moonbit
-struct StructWithConstr {
-  x : Int
-  y : Int
+struct IntBox {
+  value : Int
 
-  fn new(x~ : Int, y? : Int) -> StructWithConstr
+  fn new(value : Int) -> IntBox
 } derive(Show)
 ```
 
@@ -1555,16 +1554,96 @@ The constructor should then be implemented by a `new` method (the name cannot be
 with exactly the same type:
 
 ```moonbit
-fn StructWithConstr::new(x~ : Int, y? : Int = x) -> StructWithConstr {
-  { x, y }
+fn IntBox::new(value : Int) -> IntBox {
+  { value, }
 }
 ```
 
 If a `struct` declares a constructor, it can be constructed by name directly:
 
 ```moonbit
+  let box = IntBox(10)
+  inspect(box, content="{value: 10}")
+```
+
+The constructor call follows the declared `new` signature, so unlabeled parameters can be written in the familiar `TypeName(value)` form.
+
+Constructors may also use labeled and optional arguments, just like normal functions:
+
+```moonbit
+struct StructWithConstr {
+  x : Int
+  y : Int
+
+  fn new(x~ : Int, y? : Int) -> StructWithConstr
+} derive(Show)
+```
+
+```moonbit
+fn StructWithConstr::new(x~ : Int, y? : Int = x) -> StructWithConstr {
+  { x, y }
+}
+```
+
+```moonbit
   let s = StructWithConstr(x=1)
   inspect(s, content="{x: 1, y: 1}")
+```
+
+Because struct constructors are implemented by normal functions, they may raise errors:
+
+```moonbit
+suberror BuildError {
+  NegativeInput
+} derive(Show)
+
+struct Positive {
+  value : Int
+
+  fn new(x : Int) -> Positive raise BuildError
+} derive(Show)
+```
+
+```moonbit
+fn Positive::new(x : Int) -> Positive raise BuildError {
+  guard x >= 0 else { raise NegativeInput }
+  { value: x }
+}
+```
+
+```moonbit
+  inspect(
+    try? Positive(10),
+    content="Ok({value: 10})",
+  )
+  inspect(
+    try? Positive(-1),
+    content="Err(NegativeInput)",
+  )
+```
+
+Asynchronous constructors are declared with `async fn new` and can be used inside async code:
+
+```moonbit
+struct AsyncBox {
+  value : Int
+
+  async fn new(x : Int) -> AsyncBox
+} derive(Show)
+```
+
+```moonbit
+async fn AsyncBox::new(x : Int) -> AsyncBox {
+  @async.sleep(0)
+  { value: x }
+}
+```
+
+```moonbit
+async test "struct constructor async" {
+  let box = AsyncBox(10)
+  inspect(box, content="{value: 10}")
+}
 ```
 
 Creating value via `struct` constructor has exactly the same semantic as
@@ -1578,10 +1657,6 @@ they may [raise error](error-handling.md) or [perform asynchronous operations](a
 `struct` constructors also support [optional arguments]().
 Notice that the default value of optional arguments should be defined at the implementation of struct constructors,
 the declaration inside the `struct` should only contain a `label? : T` signature.
-
-For `struct` with type parameters, constructors may specialize the type arguments or
-require [trait bounds]() on the type parameters.
-The syntax is the same as a normal toplevel function declaration.
 
 ### Enum
 
@@ -2319,7 +2394,7 @@ fn[S, T] List::reduce(self : List[S], op : (T, S) -> T, init : T) -> T {
 
 ### Pipelines
 
-MoonBit provides a convenient pipe syntax `x |> f(y)`, which can be used to chain regular function calls:
+MoonBit provides convenient pipe syntaxes `x |> f(y)` and `f <| x`, which can be used to chain regular function calls or make nested builder-style code easier to read:
 
 ```moonbit
 5 |> ignore // <=> ignore(5)
@@ -2337,6 +2412,28 @@ For example, `x |> f(y)` is equivalent to `f(x, y)`.
 You can use the `_` operator to insert `x` into any argument of the function `f`, such as `x |> f(y, _)`, which is equivalent to `f(y, x)`. Labeled arguments are also supported.
 
 The pipe operator can also connect to an arrow function. When piping into an arrow function, the function body must be wrapped in curly braces, for example `value |> x => { x + 1 }`.
+
+The reverse pipe operator applies the right-hand side as the final argument of the left-hand side call. For example, `f <| x` is equivalent to `f(x)`, and `f(a, b) <| c` is equivalent to `f(a, b, c)`. This is especially useful for DSL-like code, since nested calls such as `div([text("hello")])` can instead be written as `div <| [text <| "hello"]`.
+
+```moonbit
+let page =
+  div <| [
+    text <| "hello",
+    section("toolbar") <| fn () {
+      [
+        text <| "save",
+        text <| "cancel",
+      ]
+    },
+  ]
+inspect(
+  page,
+  content=
+    "div(text(hello), toolbar: div(text(save), text(cancel)))",
+)
+```
+
+Because reverse pipe attaches the final argument, it also works well with functions whose last argument is a lambda, enabling a trailing-lambda style such as `section("toolbar") <| fn () { ... }`.
 
 ### Cascade Operator
 
