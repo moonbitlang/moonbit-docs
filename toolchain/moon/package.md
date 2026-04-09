@@ -73,6 +73,36 @@ object ::= "{" (field ",")* field? "}"
 
 The package name is not configurable; it is determined by the directory name of the package.
 
+## Formatter
+
+The `formatter` field configures `moon fmt` for this package. Currently it
+supports `ignore`, a list of file names that the formatter should skip.
+
+This is useful for generated files or files that you intentionally keep in a
+different format. Files produced by `pre-build` are already skipped
+automatically, so `formatter.ignore` is mainly for additional files you want to
+exclude.
+
+### moon.pkg
+
+```moonbit
+options(
+  formatter: {
+    ignore: [ "generated.mbt", "snapshot.mbt" ],
+  },
+)
+```
+
+### moon.pkg.json
+
+```json
+{
+  "formatter": {
+    "ignore": ["generated.mbt", "snapshot.mbt"]
+  }
+}
+```
+
 ## is-main
 
 The `is-main` field is used to specify whether a package needs to be linked into an executable file.
@@ -194,6 +224,30 @@ import {
       "alias": "pkg2"
     }
   }
+}
+```
+
+## Maximum Concurrent Tests
+
+The `max-concurrent-tests` field limits how many tests from this package may
+run at the same time when `moon test` executes the package.
+
+This is useful when tests in the same package share ports, temporary files, or
+other external resources that should not all run in parallel.
+
+### moon.pkg
+
+```moonbit
+options(
+  "max-concurrent-tests": 2,
+)
+```
+
+### moon.pkg.json
+
+```json
+{
+  "max-concurrent-tests": 2
 }
 ```
 
@@ -321,11 +375,42 @@ A common setup is:
 - set `"preferred-target": "native"` in `moon.mod.json`
 - use `targets` only when some files inside the package differ by backend
 
+## Native Stub Files
+
+The `native-stub` field lists C stub source files that should be compiled with
+this package for native builds.
+
+This is commonly used together with [`extern "C"` declarations in the FFI
+documentation](../../language/ffi.md), where the stub file provides wrapper
+functions or adapter code that is easier to write in C than directly in
+MoonBit.
+
+Paths are relative to the package directory.
+
+### moon.pkg
+
+```moonbit
+options(
+  "native-stub": [ "stub.c", "helpers.c" ],
+)
+```
+
+### moon.pkg.json
+
+```json
+{
+  "native-stub": ["stub.c", "helpers.c"]
+}
+```
+
 ## Link Options
 
 By default, moon only links packages where `is-main` is set to `true`. If you need to link other packages, you can specify this with the `link` option.
 
 The `link` option is used to specify link options, and its value can be either a boolean or an object.
+
+Currently, `link` does not work for the native backend. The behavior described
+in this section applies to the `wasm`, `wasm-gc`, and `js` backends.
 
 - When the `link` value is `true`, it indicates that the package should be linked. The output will vary depending on the backend specified during the build.
 
@@ -430,6 +515,58 @@ The `link` option is used to specify link options, and its value can be either a
           "module": "env",
           "name": "memory"
         }
+      }
+    }
+  }
+  ```
+- The `memory-limits` option is used to specify the minimum and maximum size of
+  the linear memory used by the Wasm module.
+- The `shared-memory` option is used to enable shared linear memory.
+
+  For example, the following configuration sets memory limits and enables
+  shared memory for both the `wasm` and `wasm-gc` backends.
+
+  ### moon.pkg
+
+  ```moonbit
+  options(
+    link: {
+      "wasm": {
+        "memory-limits": {
+          "min": 1,
+          "max": 65536,
+        },
+        "shared-memory": true,
+      },
+      "wasm-gc": {
+        "memory-limits": {
+          "min": 1,
+          "max": 65535,
+        },
+        "shared-memory": true,
+      },
+    },
+  )
+  ```
+
+  ### moon.pkg.json
+
+  ```json
+  {
+    "link": {
+      "wasm": {
+        "memory-limits": {
+          "min": 1,
+          "max": 65536
+        },
+        "shared-memory": true
+      },
+      "wasm-gc": {
+        "memory-limits": {
+          "min": 1,
+          "max": 65535
+        },
+        "shared-memory": true
       }
     }
   }
