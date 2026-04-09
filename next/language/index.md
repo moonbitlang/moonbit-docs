@@ -33,5 +33,6 @@ docs
 attributes
 ffi
 async-experimental
+verification
 error_codes/index
 ```

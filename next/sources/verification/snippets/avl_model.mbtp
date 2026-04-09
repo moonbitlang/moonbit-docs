@@ -1,0 +1,24 @@
+// Assume `Tree`, `height`, and `Fset` are defined elsewhere.
+
+// start model 1
+fn[T : Compare] Tree::model(self : Tree[T]) -> Fset[T] {
+  match self {
+    Empty => Fset::empty()
+    Node(l, x, r, _) => l.model().union(r.model()).add(x)
+  }
+}
+
+predicate[T : Compare] avl_inv(t : Tree[T]) {
+  match t {
+    Empty => true
+    Node(l, x, r, h) =>
+      avl_inv(l) &&
+      avl_inv(r) &&
+      (∀ y : T, l.model().mem(y) → y < x) &&
+      (∀ y : T, r.model().mem(y) → x < y) &&
+      h == 1 + max2(height(l), height(r)) &&
+      -1 <= height(l) - height(r) &&
+      height(l) - height(r) <= 1
+  }
+}
+// end model 1

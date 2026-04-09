@@ -1,0 +1,17 @@
+// Assume `Tree`, `height`, and `avl_inv` are defined elsewhere.
+
+// start lemma 1
+lemma[T : Compare] height_nonneg_lemma(t : Tree[T]) where {
+  proof_decrease: t,
+  proof_require: avl_inv(t),
+  proof_ensure: 0 <= height(t),
+} {
+  match t {
+    Empty => ()
+    Node(l, _x, r, _h) => {
+      height_nonneg_lemma(l)
+      height_nonneg_lemma(r)
+    }
+  }
+}
+// end lemma 1

@@ -1,0 +1,47 @@
+// start predicate 1
+predicate[T] in_bounds(xs : FixedArray[T], i : Int) {
+  (0 <= i) && (i < xs.length())
+}
+
+predicate[T : Compare] sorted(xs : FixedArray[T]) {
+  ∀ i : Int, ∀ j : Int,
+    in_bounds(xs, i) && in_bounds(xs, j) && (i <= j) →
+      xs[i] <= xs[j]
+}
+
+predicate[T : Compare] binary_search_ok(xs : FixedArray[T], key : T, result : Option[Int]) {
+  match result {
+    None => ∀ i : Int, in_bounds(xs, i) → xs[i] != key
+    Some(result) => in_bounds(xs, result) && xs[result] == key
+  }
+}
+// end predicate 1
+
+// start generic predicate 1
+predicate[T : Eq] fixedarray_pair(x : T, y : T, xs : FixedArray[T]) {
+  (xs.length() == 2) && (xs[0] == x) && (xs[1] == y)
+}
+// end generic predicate 1
+
+// start proof pure use 1
+predicate[T] cached_height_ok(t : Tree[T], result : Int) {
+  result == height(t)
+}
+// end proof pure use 1
+
+// start model 1
+fn model(bridge : Bridge) -> @fset.Fset[Int] {
+  @fset.fset_empty().add(bridge.used_nonces)
+}
+
+predicate bridge_inv(bridge : Bridge) {
+  0 <= bridge.reserve
+}
+
+predicate deposit_post(bridge : Bridge, amount : Int, result : Bridge) {
+  bridge_inv(result) &&
+  result.reserve == bridge.reserve + amount &&
+  result.used_nonces == bridge.used_nonces &&
+  model(result).eq(model(bridge))
+}
+// end model 1
