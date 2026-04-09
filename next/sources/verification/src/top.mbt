@@ -1,6 +1,6 @@
-pub enum Tree[T] {
+pub enum Tree {
   Empty
-  Node(Tree[T], T, Tree[T], Int)
+  Node(Tree, Int, Tree, Int)
 }
 
 pub struct Bridge {
@@ -10,7 +10,7 @@ pub struct Bridge {
 
 // start proof pure 1
 #proof_pure
-fn[T] height(t : Tree[T]) -> Int {
+fn height(t : Tree) -> Int {
   match t {
     Empty => 0
     Node(_, _, _, h) => h
@@ -18,20 +18,20 @@ fn[T] height(t : Tree[T]) -> Int {
 }
 // end proof pure 1
 
-pub fn[T] cached_height(t : Tree[T]) -> Int where {
+pub fn cached_height(t : Tree) -> Int where {
   proof_ensure: result => cached_height_ok(t, result),
 } {
   height(t)
 }
 
-pub fn[T] leaf(x : T) -> Tree[T] {
+pub fn leaf(x : Int) -> Tree {
   Node(Empty, x, Empty, 1)
 }
 
 // start contract 1
-pub fn[T : Compare] binary_search(
-  xs : FixedArray[T],
-  key : T,
+pub fn binary_search(
+  xs : FixedArray[Int],
+  key : Int,
 ) -> Int? where {
   proof_require: sorted(xs),
   proof_ensure: result => binary_search_ok(xs, key, result),
@@ -77,9 +77,9 @@ pub fn[T : Compare] binary_search(
 // end contract 1
 
 // start loop invariant 1
-pub fn[T : Compare] search_window(
-  xs : FixedArray[T],
-  key : T,
+pub fn search_window(
+  xs : FixedArray[Int],
+  key : Int,
 ) -> Int? where {
   proof_require: sorted(xs),
   proof_ensure: result => binary_search_ok(xs, key, result),
@@ -142,11 +142,3 @@ pub fn assumed_nonnegative(x : Int) -> Int where {
   x
 }
 // end proof axiomatized 1
-
-// start generic contract 1
-pub fn[T : Eq] make_pair(x : T, y : T) -> FixedArray[T] where {
-  proof_ensure: result => fixedarray_pair(x, y, result),
-} {
-  [x, y]
-}
-// end generic contract 1

@@ -1,15 +1,15 @@
 // start predicate 1
-predicate[T] in_bounds(xs : FixedArray[T], i : Int) {
+predicate in_bounds(xs : FixedArray[Int], i : Int) {
   (0 <= i) && (i < xs.length())
 }
 
-predicate[T : Compare] sorted(xs : FixedArray[T]) {
+predicate sorted(xs : FixedArray[Int]) {
   ∀ i : Int, ∀ j : Int,
     in_bounds(xs, i) && in_bounds(xs, j) && (i <= j) →
       xs[i] <= xs[j]
 }
 
-predicate[T : Compare] binary_search_ok(xs : FixedArray[T], key : T, result : Option[Int]) {
+predicate binary_search_ok(xs : FixedArray[Int], key : Int, result : Option[Int]) {
   match result {
     None => ∀ i : Int, in_bounds(xs, i) → xs[i] != key
     Some(result) => in_bounds(xs, result) && xs[result] == key
@@ -17,14 +17,8 @@ predicate[T : Compare] binary_search_ok(xs : FixedArray[T], key : T, result : Op
 }
 // end predicate 1
 
-// start generic predicate 1
-predicate[T : Eq] fixedarray_pair(x : T, y : T, xs : FixedArray[T]) {
-  (xs.length() == 2) && (xs[0] == x) && (xs[1] == y)
-}
-// end generic predicate 1
-
 // start proof pure use 1
-predicate[T] cached_height_ok(t : Tree[T], result : Int) {
+predicate cached_height_ok(t : Tree, result : Int) {
   result == height(t)
 }
 // end proof pure use 1

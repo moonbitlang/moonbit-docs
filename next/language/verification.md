@@ -22,7 +22,6 @@ fits together. It shows:
 - preconditions and postconditions
 - loop invariants and `proof_yield`
 - local `proof_assert` steps
-- generic verification with `T : Compare`
 - `proof_reasoning` as a proof-oriented explanation of the loop
 
 First, enable proofs for the package:
@@ -307,50 +306,6 @@ Lemma bodies vary with the amount of proof guidance the solver needs:
 - some lemmas use a sequence of `proof_assert` steps to expose intermediate facts
 - recursive lemmas can also call other lemmas, including themselves on smaller inputs
 
-### Generics
-
-Verification works with generic definitions as well. Predicates, lemmas, and
-contracted functions can all be parameterized by type variables, and proof code
-can also carry trait bounds. The [binary search overview](#overview-example-binary-search) already uses `T :
-Compare`, so the proof talks about an ordered element type rather than one
-specific runtime type.
-
-```{literalinclude} /sources/verification/src/top.mbtp
-:language: moonbit
-:start-after: start generic predicate 1
-:end-before: end generic predicate 1
-```
-
-```{literalinclude} /sources/verification/src/top.mbt
-:language: moonbit
-:start-after: start generic contract 1
-:end-before: end generic contract 1
-```
-
-In practice:
-
-- use unconstrained type parameters when the specification does not need any
-  operations on the type
-- add trait bounds when the proof needs equality or ordering
-- prefer small generic predicates over large generic contracts
-
-At the moment, the proof system supports generic reasoning through the `Eq` and
-`Compare` traits.
-
-- `Eq` assumes that `equal` is an equivalence relation: every value is equal
-  to itself, equality is symmetric, and equality is transitive
-- `Compare` assumes that the comparison induces a total order: every two values
-  are comparable, the ordering is antisymmetric, and the ordering is
-  transitive
-
-Generic proofs should therefore be written with these assumptions in mind.
-Arbitrary trait-bounded reasoning beyond `Eq` and `Compare` is not yet the
-supported model.
-
-Generic verification is particularly useful for container constructors,
-structural properties, and APIs whose correctness should not depend on one
-specific element type.
-
 ### Loop Invariants
 
 Loops are verified with proof-specific clauses in the loop's `where { ... }`
@@ -388,7 +343,8 @@ An AVL tree is a representative example of this style:
 Here:
 
 - `model()` maps a concrete tree to its abstract finite-set view
-- `all_lt` and `all_gt` describe ordering constraints over that abstract model
+- the quantified conditions inline the ordering constraints over that abstract
+  model
 - `avl_inv` ties together recursive well-formedness, search-tree ordering, and
   cached-height correctness
 
@@ -465,7 +421,6 @@ The main trusted assumptions today are:
 
 - verification reasons about mathematical integers rather than machine integers
 - any item marked `proof_axiomatized` is assumed rather than proved
-- trait-bounded reasoning assumes the intended laws of supported traits
 
 For integers, this means proof obligations are checked in an unbounded integer
 model. As a result:
@@ -474,14 +429,6 @@ model. As a result:
 - a program can be correct in the proof model and still need explicit range
   discipline in execution
 - machine-integer verification is planned, but is not the current default
-
-When a proof depends on trait-bounded generic code, the system relies on the
-intended laws of those traits being respected by implementations.
-
-Concretely:
-
-- `Eq` is trusted to behave as an equivalence relation
-- `Compare` is trusted to behave as a total order
 
 ### Current Status
 

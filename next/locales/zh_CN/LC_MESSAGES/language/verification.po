@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-09 17:17+0800\n"
+"POT-Creation-Date: 2026-04-09 18:03+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -29,8 +29,8 @@ msgid ""
 "properties about that code, and discharge the generated proof obligations"
 " with the SMT solvers."
 msgstr ""
-"MoonBit 通过 `moon prove` 提供实验性的形式化验证支持。你可以编写可执行的 "
-"MoonBit 代码，为这些代码陈述逻辑性质，并借助 SMT 求解器证明生成的证明任务。"
+"MoonBit 通过 `moon prove` 提供实验性的形式化验证支持。你可以编写可执行的 MoonBit "
+"代码，为这些代码陈述逻辑性质，并借助 SMT 求解器证明生成的证明任务。"
 
 #: ../../language/verification.md:7
 msgid "At a high level, the workflow looks like this:"
@@ -87,18 +87,14 @@ msgid "local `proof_assert` steps"
 msgstr "局部的 `proof_assert` 步骤"
 
 #: ../../language/verification.md:25
-msgid "generic verification with `T : Compare`"
-msgstr "带 `T : Compare` 的泛型验证"
-
-#: ../../language/verification.md:26
 msgid "`proof_reasoning` as a proof-oriented explanation of the loop"
 msgstr "用 `proof_reasoning` 对循环进行面向证明的说明"
 
-#: ../../language/verification.md:28
+#: ../../language/verification.md:27
 msgid "First, enable proofs for the package:"
 msgstr "首先，为该包启用证明："
 
-#: ../../language/verification.md:30
+#: ../../language/verification.md:29
 msgid ""
 "options(\n"
 "  \"proof-enabled\": true,\n"
@@ -108,41 +104,41 @@ msgstr ""
 "  \"proof-enabled\": true,\n"
 ")\n"
 
-#: ../../language/verification.md:34
+#: ../../language/verification.md:33
 msgid "Then define the logic-side specification in `.mbtp`:"
 msgstr "然后在 `.mbtp` 中定义逻辑侧规范："
 
-#: ../../language/verification.md:36 ../../language/verification.md:278
+#: ../../language/verification.md:35 ../../language/verification.md:277
 msgid ""
-"predicate[T] in_bounds(xs : FixedArray[T], i : Int) {\n"
+"predicate in_bounds(xs : FixedArray[Int], i : Int) {\n"
 "  (0 <= i) && (i < xs.length())\n"
 "}\n"
 "\n"
-"predicate[T : Compare] sorted(xs : FixedArray[T]) {\n"
+"predicate sorted(xs : FixedArray[Int]) {\n"
 "  ∀ i : Int, ∀ j : Int,\n"
 "    in_bounds(xs, i) && in_bounds(xs, j) && (i <= j) →\n"
 "      xs[i] <= xs[j]\n"
 "}\n"
 "\n"
-"predicate[T : Compare] binary_search_ok(xs : FixedArray[T], key : T, "
-"result : Option[Int]) {\n"
+"predicate binary_search_ok(xs : FixedArray[Int], key : Int, result : "
+"Option[Int]) {\n"
 "  match result {\n"
 "    None => ∀ i : Int, in_bounds(xs, i) → xs[i] != key\n"
 "    Some(result) => in_bounds(xs, result) && xs[result] == key\n"
 "  }\n"
 "}\n"
 msgstr ""
-"predicate[T] in_bounds(xs : FixedArray[T], i : Int) {\n"
+"predicate in_bounds(xs : FixedArray[Int], i : Int) {\n"
 "  (0 <= i) && (i < xs.length())\n"
 "}\n"
 "\n"
-"predicate[T : Compare] sorted(xs : FixedArray[T]) {\n"
+"predicate sorted(xs : FixedArray[Int]) {\n"
 "  ∀ i : Int, ∀ j : Int,\n"
 "    in_bounds(xs, i) && in_bounds(xs, j) && (i <= j) →\n"
 "      xs[i] <= xs[j]\n"
 "}\n"
 "\n"
-"predicate[T : Compare] binary_search_ok(xs : FixedArray[T], key : T, "
+"predicate binary_search_ok(xs : FixedArray[Int], key : Int, "
 "result : Option[Int]) {\n"
 "  match result {\n"
 "    None => ∀ i : Int, in_bounds(xs, i) → xs[i] != key\n"
@@ -150,15 +146,15 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/verification.md:42
+#: ../../language/verification.md:41
 msgid "Finally, implement the executable function in `.mbt`:"
 msgstr "最后，在 `.mbt` 中实现可执行函数："
 
-#: ../../language/verification.md:44
+#: ../../language/verification.md:43
 msgid ""
-"pub fn[T : Compare] binary_search(\n"
-"  xs : FixedArray[T],\n"
-"  key : T,\n"
+"pub fn binary_search(\n"
+"  xs : FixedArray[Int],\n"
+"  key : Int,\n"
 ") -> Int? where {\n"
 "  proof_require: sorted(xs),\n"
 "  proof_ensure: result => binary_search_ok(xs, key, result),\n"
@@ -206,9 +202,9 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
-"pub fn[T : Compare] binary_search(\n"
-"  xs : FixedArray[T],\n"
-"  key : T,\n"
+"pub fn binary_search(\n"
+"  xs : FixedArray[Int],\n"
+"  key : Int,\n"
 ") -> Int? where {\n"
 "  proof_require: sorted(xs),\n"
 "  proof_ensure: result => binary_search_ok(xs, key, result),\n"
@@ -256,338 +252,333 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/verification.md:50
+#: ../../language/verification.md:49
 msgid "This example already shows the main structure of verified MoonBit code:"
 msgstr "这个示例已经展示了经过验证的 MoonBit 代码的主要结构："
 
-#: ../../language/verification.md:52
+#: ../../language/verification.md:51
 msgid "`sorted` and `binary_search_ok` are logic-side predicates"
 msgstr "`sorted` 与 `binary_search_ok` 是逻辑侧谓词"
 
-#: ../../language/verification.md:53
+#: ../../language/verification.md:52
 msgid "`binary_search` is executable program-side code"
 msgstr "`binary_search` 是可执行的程序侧代码"
 
-#: ../../language/verification.md:54
+#: ../../language/verification.md:53
 msgid "the `where { ... }` block attaches logic-side contracts to the function"
 msgstr "`where { ... }` 块将逻辑侧契约附加到函数上"
 
-#: ../../language/verification.md:55
+#: ../../language/verification.md:54
 msgid "`proof_assert` records local facts that help the prover"
 msgstr "`proof_assert` 记录有助于证明器求解的局部条件"
 
-#: ../../language/verification.md:56
+#: ../../language/verification.md:55
 msgid "the loop invariants describe the shrinking search window"
 msgstr "循环不变量描述逐步收缩的搜索窗口"
 
-#: ../../language/verification.md:57
+#: ../../language/verification.md:56
 msgid "`proof_reasoning` records the proof idea in structured prose"
 msgstr "`proof_reasoning` 用结构化文字记录证明思路"
 
-#: ../../language/verification.md:59
+#: ../../language/verification.md:58
 msgid ""
 "The rest of this page explains these pieces in more detail and introduces"
 " additional features such as `#proof_pure`, `proof_decrease`, "
 "`proof_axiomatized`, model-based verification, and the trusted surface."
 msgstr ""
-"本页后续部分会更详细地解释这些组成部分，并介绍 `#proof_pure`、"
-"`proof_decrease`、`proof_axiomatized`、基于模型的验证，以及可信边界等附加特性。"
+"本页后续部分会更详细地解释这些组成部分，并介绍 "
+"`#proof_pure`、`proof_decrease`、`proof_axiomatized`、基于模型的验证，以及可信边界等附加特性。"
 
-#: ../../language/verification.md:63
+#: ../../language/verification.md:62
 msgid "Setup"
 msgstr "环境准备"
 
-#: ../../language/verification.md:65
+#: ../../language/verification.md:64
 msgid "Environment Setup"
 msgstr "环境配置"
 
-#: ../../language/verification.md:67
+#: ../../language/verification.md:66
 msgid ""
 "`moon prove` relies on the external Why3 verification toolchain. MoonBit "
 "lowers proof-enabled packages to Why3, and Why3 then dispatches proof "
 "obligations to one or more external solvers."
 msgstr ""
-"`moon prove` 依赖外部的 Why3 验证工具链。MoonBit 会将启用了证明的包转换为 "
-"Why3，随后由 Why3 将证明任务分派给一个或多个外部求解器。"
+"`moon prove` 依赖外部的 Why3 验证工具链。MoonBit 会将启用了证明的包转换为 Why3，随后由 Why3 "
+"将证明任务分派给一个或多个外部求解器。"
 
-#: ../../language/verification.md:71
+#: ../../language/verification.md:70
 msgid "Why3"
 msgstr "Why3"
 
-#: ../../language/verification.md:73
+#: ../../language/verification.md:72
 msgid "Why3 is required to run formal verification in MoonBit."
 msgstr "在 MoonBit 中运行形式化验证必须安装 Why3。"
 
-#: ../../language/verification.md:75
+#: ../../language/verification.md:74
 msgid "It is recommended to install Why3 through `opam`."
 msgstr "推荐通过 `opam` 安装 Why3。"
 
-#: ../../language/verification.md:76
+#: ../../language/verification.md:75
 msgid "The recommended pinned version is `1.7.2`."
 msgstr "推荐固定使用的版本为 `1.7.2`。"
 
-#: ../../language/verification.md:78
+#: ../../language/verification.md:77
 msgid ""
 "Using `opam` makes it easier to keep Why3 aligned with the version "
 "expected by the current MoonBit proof pipeline."
 msgstr "使用 `opam` 更容易让 Why3 与当前 MoonBit 证明流水线所期望的版本保持一致。"
 
-#: ../../language/verification.md:81
+#: ../../language/verification.md:80
 msgid "External Solvers"
 msgstr "外部求解器"
 
-#: ../../language/verification.md:83
+#: ../../language/verification.md:82
 msgid "At least one external solver must also be installed."
 msgstr "还必须至少安装一个外部求解器。"
 
-#: ../../language/verification.md:85
+#: ../../language/verification.md:84
 msgid "MoonBit currently supports:"
 msgstr "MoonBit 当前支持："
 
-#: ../../language/verification.md:87
+#: ../../language/verification.md:86
 msgid "`z3`"
 msgstr "`z3`"
 
-#: ../../language/verification.md:88
+#: ../../language/verification.md:87
 msgid "`cvc5`"
 msgstr "`cvc5`"
 
-#: ../../language/verification.md:89
+#: ../../language/verification.md:88
 msgid "`alt-ergo`"
 msgstr "`alt-ergo`"
 
-#: ../../language/verification.md:91
+#: ../../language/verification.md:90
 msgid ""
 "Installing more than one solver can improve prover coverage, but a "
 "working setup only requires one of them to be available."
 msgstr "安装多个求解器有助于提高证明覆盖率，但一个可用的环境只需要其中任意一个即可。"
 
-#: ../../language/verification.md:94
+#: ../../language/verification.md:93
 msgid "Enabling Proofs in a Package"
 msgstr "在包中启用证明"
 
-#: ../../language/verification.md:96
+#: ../../language/verification.md:95
 msgid ""
 "Proof support is enabled per package in `moon.pkg`, as shown in the "
 "overview example above."
 msgstr "证明支持是按包在 `moon.pkg` 中启用的，如上面的概览示例所示。"
 
-#: ../../language/verification.md:99
+#: ../../language/verification.md:98
 msgid ""
 "Once enabled, the package can contain both ordinary MoonBit source files "
 "and proof-oriented `.mbtp` files. Proof enablement is package-local: if "
 "multiple packages in a module carry proofs, each of those packages must "
 "enable it."
 msgstr ""
-"启用后，该包既可以包含普通的 MoonBit 源文件，也可以包含面向证明的 `.mbtp` 文件。"
-"如果一个模块中的多个包都包含证明，那么每个这样的包都必须分别启用它。"
+"启用后，该包既可以包含普通的 MoonBit 源文件，也可以包含面向证明的 `.mbtp` "
+"文件。如果一个模块中的多个包都包含证明，那么每个这样的包都必须分别启用它。"
 
-#: ../../language/verification.md:103
+#: ../../language/verification.md:102
 msgid "Structure of Verified Code"
 msgstr "包含验证的代码的结构"
 
-#: ../../language/verification.md:105
+#: ../../language/verification.md:104
 msgid "Source Layout"
 msgstr "源码布局"
 
-#: ../../language/verification.md:107
+#: ../../language/verification.md:106
 msgid "Verification-oriented packages usually split into two layers:"
 msgstr "面向验证的包通常会分成两层："
 
-#: ../../language/verification.md:109
+#: ../../language/verification.md:108
 msgid "`.mbt`: executable code, contracts, loop invariants, and local proof steps"
 msgstr "`.mbt`：可执行代码、契约、循环不变量和局部证明步骤"
 
-#: ../../language/verification.md:110
+#: ../../language/verification.md:109
 msgid "`.mbtp`: predicates, abstract models, invariants, and lemmas"
 msgstr "`.mbtp`：谓词、抽象模型、不变量和引理"
 
-#: ../../language/verification.md:112
+#: ../../language/verification.md:111
 msgid ""
 "That split keeps runtime code readable while making proof structure "
 "explicit. In the [binary search overview](#overview-example-binary-"
 "search), the predicates live in `.mbtp` and the executable search "
 "function lives in `.mbt`."
 msgstr ""
-"这种拆分方式在保持运行时代码可读性的同时，也让证明结构更加明确。"
-"在 [二分查找概览示例](#overview-example-binary-search) 中，"
-"谓词位于 `.mbtp` 中，而可执行的搜索函数位于 `.mbt` 中。"
+"这种拆分方式在保持运行时代码可读性的同时，也让证明结构更加明确。在 [二分查找概览示例](#overview-example-binary-"
+"search) 中，谓词位于 `.mbtp` 中，而可执行的搜索函数位于 `.mbt` 中。"
 
-#: ../../language/verification.md:116
+#: ../../language/verification.md:115
 msgid "Program Side and Logic Side"
 msgstr "程序侧与逻辑侧"
 
-#: ../../language/verification.md:118
+#: ../../language/verification.md:117
 msgid ""
 "MoonBit verification has a clear distinction between the program side and"
 " the logic side."
 msgstr "MoonBit 的验证系统明确区分程序侧与逻辑侧。"
 
-#: ../../language/verification.md:121
+#: ../../language/verification.md:120
 msgid "The program side is executable MoonBit code."
 msgstr "程序侧是可执行的 MoonBit 代码。"
 
-#: ../../language/verification.md:122
+#: ../../language/verification.md:121
 msgid ""
 "The logic side is used for specifications and proofs, and may not "
 "correspond to runtime code at all."
 msgstr "逻辑侧用于编写规范与证明，它可能根本不对应任何运行时代码。"
 
-#: ../../language/verification.md:125
+#: ../../language/verification.md:124
 msgid ""
 "Definitions in `.mbt` files are on the program side. Definitions in "
 "`.mbtp` files are on the logic side."
 msgstr "`.mbt` 文件中的定义属于程序侧，`.mbtp` 文件中的定义属于逻辑侧。"
 
-#: ../../language/verification.md:128
+#: ../../language/verification.md:127
 msgid ""
 "This distinction is important because program-side definitions and logic-"
 "side definitions are separated:"
 msgstr "这种区分很重要，因为程序侧定义与逻辑侧定义是分离的："
 
-#: ../../language/verification.md:131
+#: ../../language/verification.md:130
 msgid ""
 "program-side definitions are executable and can be called by ordinary "
 "MoonBit code"
 msgstr "程序侧定义是可执行的，可以被普通 MoonBit 代码调用"
 
-#: ../../language/verification.md:133
+#: ../../language/verification.md:132
 msgid "logic-side definitions are used by specifications and proofs"
 msgstr "逻辑侧定义用于规范与证明"
 
-#: ../../language/verification.md:134
+#: ../../language/verification.md:133
 msgid "logic-side definitions in `.mbtp` are not ordinary runtime functions"
 msgstr "`.mbtp` 中的逻辑侧定义不是普通的运行时函数"
 
-#: ../../language/verification.md:135
+#: ../../language/verification.md:134
 msgid ""
 "program-side code does not call logic-side definitions as part of "
 "execution"
 msgstr "程序侧代码在执行过程中不会调用逻辑侧定义"
 
-#: ../../language/verification.md:136
+#: ../../language/verification.md:135
 msgid ""
 "logic-side specifications do not in general call arbitrary program-side "
 "definitions"
 msgstr "逻辑侧规范通常也不会任意调用程序侧定义"
 
-#: ../../language/verification.md:139
+#: ../../language/verification.md:138
 msgid "This separation is the reason verified packages often have both:"
 msgstr "正因为有这种分离，带证明的包通常会同时包含："
 
-#: ../../language/verification.md:141
+#: ../../language/verification.md:140
 msgid "program-side helper functions used by execution"
 msgstr "供执行时使用的程序侧辅助函数"
 
-#: ../../language/verification.md:142
+#: ../../language/verification.md:141
 msgid "logic-side predicates or model functions used by contracts"
 msgstr "供契约使用的逻辑侧谓词或模型函数"
 
-#: ../../language/verification.md:144
+#: ../../language/verification.md:143
 msgid ""
 "When one definition needs to be visible from both sides, `#proof_pure` is"
 " the mechanism for doing that."
 msgstr "当某个定义需要同时在两侧可见时，就可以使用 `#proof_pure`。"
 
-#: ../../language/verification.md:147
+#: ../../language/verification.md:146
 msgid ""
 "Within a `.mbt` file, contracts and proof annotations are the places "
 "where logic-side reasoning appears inside program code. In particular:"
 msgstr "在 `.mbt` 文件中，契约和证明注解是逻辑侧推理嵌入程序代码的位置。具体来说："
 
-#: ../../language/verification.md:150
+#: ../../language/verification.md:149
 msgid ""
 "`proof_require` and `proof_ensure` are logic-side specifications attached"
 " to program functions"
 msgstr "`proof_require` 和 `proof_ensure` 是附加在程序函数上的逻辑侧规范"
 
-#: ../../language/verification.md:152
+#: ../../language/verification.md:151
 msgid "`proof_assert` states a logical fact that must be proved at that point"
 msgstr "`proof_assert` 声明一个必须在该位置被证明的逻辑事实"
 
-#: ../../language/verification.md:153
+#: ../../language/verification.md:152
 msgid ""
 "loop annotations such as `proof_invariant`, `proof_yield`, and "
 "`proof_reasoning` are logic-side statements about executable loops"
 msgstr ""
-"诸如 `proof_invariant`、`proof_yield` 和 `proof_reasoning` 之类的循环注解，"
-"都是关于可执行循环的逻辑侧陈述"
+"诸如 `proof_invariant`、`proof_yield` 和 `proof_reasoning` "
+"之类的循环注解，都是关于可执行循环的逻辑侧陈述"
 
-#: ../../language/verification.md:156
+#: ../../language/verification.md:155
 msgid "Writing Specifications and Proofs"
 msgstr "编写规范与证明"
 
-#: ../../language/verification.md:158
+#: ../../language/verification.md:157
 msgid "Contracts in `.mbt`"
 msgstr "`.mbt` 中的契约"
 
-#: ../../language/verification.md:160
+#: ../../language/verification.md:159
 msgid ""
 "MoonBit uses `where { ... }` clauses for function contracts. In the "
 "binary search overview, the function contract appears directly on the "
 "program-side definition:"
-msgstr ""
-"MoonBit 使用 `where { ... }` 子句来编写函数契约。"
-"在二分查找概览示例中，函数契约直接写在程序侧定义上："
+msgstr "MoonBit 使用 `where { ... }` 子句来编写函数契约。在二分查找概览示例中，函数契约直接写在程序侧定义上："
 
-#: ../../language/verification.md:164
+#: ../../language/verification.md:163
 msgid "`proof_require` states a precondition."
 msgstr "`proof_require` 声明前置条件。"
 
-#: ../../language/verification.md:165
+#: ../../language/verification.md:164
 msgid "`proof_ensure` states a postcondition."
 msgstr "`proof_ensure` 声明后置条件。"
 
-#: ../../language/verification.md:166
+#: ../../language/verification.md:165
 msgid "`result` refers to the function result."
 msgstr "`result` 指代函数结果。"
 
-#: ../../language/verification.md:168
+#: ../../language/verification.md:167
 msgid ""
 "Inside executable code, `proof_assert` can be used to record intermediate"
 " facts that help the prover connect the implementation to the "
 "specification."
-msgstr ""
-"在可执行代码内部，可以用 `proof_assert` 记录中间事实，帮助证明器把实现与规范关联起来。"
+msgstr "在可执行代码内部，可以用 `proof_assert` 记录中间事实，帮助证明器把实现与规范关联起来。"
 
-#: ../../language/verification.md:171
+#: ../../language/verification.md:170
 msgid ""
 "This is often the point where program-side implementation facts are "
 "connected to logic-side predicates and postconditions."
 msgstr "这通常就是把程序侧实现事实连接到逻辑侧谓词和后置条件的地方。"
 
-#: ../../language/verification.md:174
+#: ../../language/verification.md:173
 msgid "Proof-Specific Annotations"
 msgstr "证明专用注解"
 
-#: ../../language/verification.md:176
+#: ../../language/verification.md:175
 msgid ""
 "Besides `proof_require`, `proof_ensure`, and `proof_assert`, MoonBit also"
 " has proof-specific annotations that control how definitions are treated "
 "by the proof pipeline."
 msgstr ""
-"除了 `proof_require`、`proof_ensure` 和 `proof_assert` 之外，"
-"MoonBit 还提供了一些证明专用注解，用于控制证明流水线如何处理这些定义。"
+"除了 `proof_require`、`proof_ensure` 和 `proof_assert` 之外，MoonBit "
+"还提供了一些证明专用注解，用于控制证明流水线如何处理这些定义。"
 
-#: ../../language/verification.md:180
+#: ../../language/verification.md:179
 msgid "`#proof_pure`"
 msgstr "`#proof_pure`"
 
-#: ../../language/verification.md:182
+#: ../../language/verification.md:181
 msgid ""
 "`#proof_pure` marks a function as pure from the verifier's point of view."
 " This is useful for helper functions that compute logical quantities used"
 " in predicates and postconditions, while still being visible on the "
 "program side."
 msgstr ""
-"`#proof_pure` 从验证器的角度将一个函数标记为纯函数。"
-"这适用于那些计算逻辑量的辅助函数：它们会出现在谓词和后置条件中，"
-"同时又需要在程序侧可见。"
+"`#proof_pure` "
+"从验证器的角度将一个函数标记为纯函数。这适用于那些计算逻辑量的辅助函数：它们会出现在谓词和后置条件中，同时又需要在程序侧可见。"
 
-#: ../../language/verification.md:186
+#: ../../language/verification.md:185
 msgid ""
 "#proof_pure\n"
-"fn[T] height(t : Tree[T]) -> Int {\n"
+"fn height(t : Tree) -> Int {\n"
 "  match t {\n"
 "    Empty => 0\n"
 "    Node(_, _, _, h) => h\n"
@@ -595,92 +586,87 @@ msgid ""
 "}\n"
 msgstr ""
 "#proof_pure\n"
-"fn[T] height(t : Tree[T]) -> Int {\n"
+"fn height(t : Tree) -> Int {\n"
 "  match t {\n"
 "    Empty => 0\n"
 "    Node(_, _, _, h) => h\n"
 "  }\n"
 "}\n"
 
-#: ../../language/verification.md:192
+#: ../../language/verification.md:191
 msgid "The same helper can then be used in a specification:"
 msgstr "同一个辅助函数随后就可以在规范中使用："
 
-#: ../../language/verification.md:194
+#: ../../language/verification.md:193
 msgid ""
-"predicate[T] cached_height_ok(t : Tree[T], result : Int) {\n"
+"predicate cached_height_ok(t : Tree, result : Int) {\n"
 "  result == height(t)\n"
 "}\n"
 msgstr ""
-"predicate[T] cached_height_ok(t : Tree[T], result : Int) {\n"
+"predicate cached_height_ok(t : Tree, result : Int) {\n"
 "  result == height(t)\n"
 "}\n"
 
-#: ../../language/verification.md:200
+#: ../../language/verification.md:199
 msgid ""
 "The rationale for `#proof_pure` is that some computations naturally "
 "belong on both sides. A helper such as `height` on a tree can be useful "
 "in executable code, but specifications may also want to talk about the "
 "same quantity."
 msgstr ""
-"`#proof_pure` 的动机在于，有些计算天然同时属于两侧。"
-"例如树的 `height` 这样的辅助函数，在可执行代码中很有用，"
-"而规范也可能需要引用同一个量。"
+"`#proof_pure` 的动机在于，有些计算天然同时属于两侧。例如树的 `height` "
+"这样的辅助函数，在可执行代码中很有用，而规范也可能需要引用同一个量。"
 
-#: ../../language/verification.md:204
+#: ../../language/verification.md:203
 msgid "Without `#proof_pure`, this typically means:"
 msgstr "如果没有 `#proof_pure`，通常就意味着："
 
-#: ../../language/verification.md:206
+#: ../../language/verification.md:205
 msgid "writing one program-side definition for execution"
 msgstr "写一个供执行使用的程序侧定义"
 
-#: ../../language/verification.md:207
+#: ../../language/verification.md:206
 msgid "writing a second logic-side definition for specifications"
 msgstr "再写一个供规范使用的逻辑侧定义"
 
-#: ../../language/verification.md:208
+#: ../../language/verification.md:207
 msgid "proving that the two definitions are equivalent before using them"
 msgstr "在使用之前还要证明这两个定义是等价的"
 
-#: ../../language/verification.md:210
+#: ../../language/verification.md:209
 msgid ""
 "`#proof_pure` avoids that duplication by allowing one side-effect-free "
 "MoonBit definition to be shared across program code and proof-oriented "
 "logic."
-msgstr ""
-"`#proof_pure` 允许一个无副作用的 MoonBit 定义被程序代码和面向证明的逻辑共同使用，"
-"从而避免这种重复。"
+msgstr "`#proof_pure` 允许一个无副作用的 MoonBit 定义被程序代码和面向证明的逻辑共同使用，从而避免这种重复。"
 
-#: ../../language/verification.md:213
+#: ../../language/verification.md:212
 msgid ""
 "In larger verified packages, `#proof_pure` is commonly used for helpers "
 "such as structural measures like height, ranking functions, summaries, "
 "and other proof-facing computations that should behave like mathematical "
 "functions."
-msgstr ""
-"在更大的验证包中，`#proof_pure` 常用于诸如高度这类结构度量、排序函数、汇总函数，"
-"以及其他应当像数学函数一样工作的面向证明的计算。"
+msgstr "在更大的验证包中，`#proof_pure` 常用于诸如高度这类结构度量、排序函数、汇总函数，以及其他应当像数学函数一样工作的面向证明的计算。"
 
-#: ../../language/verification.md:217
+#: ../../language/verification.md:216
 msgid ""
 "At the moment, `#proof_pure` helpers are best treated as pure "
 "specification helpers rather than fully contracted verified functions. In"
 " particular, support for attaching ordinary verification contracts "
 "directly to `#proof_pure` definitions is still limited."
 msgstr ""
-"目前，`#proof_pure` 辅助函数更适合视为纯规范辅助函数，而不是带完整契约的已验证函数。"
-"尤其是，直接给 `#proof_pure` 定义附加普通验证契约的支持仍然有限。"
+"目前，`#proof_pure` 辅助函数更适合视为纯规范辅助函数，而不是带完整契约的已验证函数。尤其是，直接给 `#proof_pure` "
+"定义附加普通验证契约的支持仍然有限。"
 
-#: ../../language/verification.md:222
+#: ../../language/verification.md:221
 msgid "`proof_decrease`"
 msgstr "`proof_decrease`"
 
-#: ../../language/verification.md:224
+#: ../../language/verification.md:223
 msgid "`proof_decrease` supplies a termination measure for recursive definitions."
 msgstr "`proof_decrease` 为递归定义提供终止度量。"
 
-#: ../../language/verification.md:226
+#: ../../language/verification.md:225
 msgid ""
 "pub fn countdown(n : Int) -> Int where {\n"
 "  proof_decrease: n,\n"
@@ -706,47 +692,47 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/verification.md:232
+#: ../../language/verification.md:231
 msgid ""
 "This annotation is especially important when structural recursion or a "
 "numeric measure is not obvious to the prover from the function body "
 "alone."
 msgstr "当证明器无法仅从函数体中直接看出结构递归或数值度量时，这个注解尤其重要。"
 
-#: ../../language/verification.md:235
+#: ../../language/verification.md:234
 msgid "`proof_axiomatized`"
 msgstr "`proof_axiomatized`"
 
-#: ../../language/verification.md:237
+#: ../../language/verification.md:236
 msgid ""
 "`proof_axiomatized` marks a contracted function or lemma as assumed "
 "rather than proved."
 msgstr "`proof_axiomatized` 将一个带契约的函数或引理标记为“被假定成立”，而不是“被证明成立”。"
 
-#: ../../language/verification.md:240
+#: ../../language/verification.md:239
 msgid ""
 "This is useful when a definition should be available to later proofs, but"
 " its implementation or proof is intentionally left outside the current "
 "verification boundary."
 msgstr "当某个定义需要供后续证明使用，但其实现或证明被有意留在当前验证边界之外时，这会很有用。"
 
-#: ../../language/verification.md:244
+#: ../../language/verification.md:243
 msgid "In practice, `proof_axiomatized` should be used sparingly:"
 msgstr "在实践中，应当谨慎使用 `proof_axiomatized`："
 
-#: ../../language/verification.md:246
+#: ../../language/verification.md:245
 msgid "on a function, it means the verifier assumes the stated contract"
 msgstr "用于函数时，表示验证器会直接假定所声明的契约成立"
 
-#: ../../language/verification.md:247
+#: ../../language/verification.md:246
 msgid "on a lemma, it means the verifier assumes the stated conclusion"
 msgstr "用于引理时，表示验证器会直接假定所声明的结论成立"
 
-#: ../../language/verification.md:249
+#: ../../language/verification.md:248
 msgid "For example:"
 msgstr "例如："
 
-#: ../../language/verification.md:251
+#: ../../language/verification.md:250
 msgid ""
 "pub fn assumed_nonnegative(x : Int) -> Int where {\n"
 "  proof_axiomatized: true,\n"
@@ -764,7 +750,7 @@ msgstr ""
 "  x\n"
 "}\n"
 
-#: ../../language/verification.md:257
+#: ../../language/verification.md:256
 msgid ""
 "This kind of declaration can be useful as a temporary bridge while a "
 "proof is still being developed, or when the trusted boundary is "
@@ -772,81 +758,77 @@ msgid ""
 "use the contract as an assumption, rather than proving it from the "
 "function body."
 msgstr ""
-"当证明仍在开发过程中时，这类声明可以作为临时桥梁；"
-"或者当可信边界是有意且明确设定时，也可以使用它。"
-"关键在于，`moon prove` 会把该契约当作假设来使用，而不是从函数体出发对其进行证明。"
+"当证明仍在开发过程中时，这类声明可以作为临时桥梁；或者当可信边界是有意且明确设定时，也可以使用它。关键在于，`moon prove` "
+"会把该契约当作假设来使用，而不是从函数体出发对其进行证明。"
 
-#: ../../language/verification.md:262
+#: ../../language/verification.md:261
 msgid ""
 "Because these assumptions are not discharged by `moon prove`, they become"
 " part of the trusted surface of the verified package."
 msgstr "由于这些假设不会被 `moon prove` 消解，它们就会成为已验证包可信边界的一部分。"
 
-#: ../../language/verification.md:265
+#: ../../language/verification.md:264
 msgid "Predicates and Lemmas in `.mbtp`"
 msgstr "`.mbtp` 中的谓词与引理"
 
-#: ../../language/verification.md:267
+#: ../../language/verification.md:266
 msgid ""
 "Logical properties live in `.mbtp` files. In the [binary search overview"
 "](#overview-example-binary-search), the logic side defines:"
 msgstr ""
-"逻辑性质定义在 `.mbtp` 文件中。在 [二分查找概览示例](#overview-example-binary-search) 中，"
-"逻辑侧定义了："
+"逻辑性质定义在 `.mbtp` 文件中。在 [二分查找概览示例](#overview-example-binary-search) "
+"中，逻辑侧定义了："
 
-#: ../../language/verification.md:270
+#: ../../language/verification.md:269
 msgid "`in_bounds` as a basic indexing predicate"
 msgstr "把 `in_bounds` 作为基本索引谓词"
 
-#: ../../language/verification.md:271
+#: ../../language/verification.md:270
 msgid "`sorted` as the precondition on the input array"
 msgstr "把 `sorted` 作为输入数组的前置条件"
 
-#: ../../language/verification.md:272
+#: ../../language/verification.md:271
 msgid ""
 "`binary_search_ok` as the postcondition relating the result to the array "
 "and the key"
 msgstr "把 `binary_search_ok` 作为把结果与数组及键值关联起来的后置条件"
 
-#: ../../language/verification.md:275
+#: ../../language/verification.md:274
 msgid ""
 "For example, predicates in `.mbtp` can define the logical vocabulary used"
 " by contracts:"
 msgstr "例如，`.mbtp` 中的谓词可以定义契约所使用的逻辑词汇："
 
-#: ../../language/verification.md:284
+#: ../../language/verification.md:283
 msgid "For larger verified packages, `.mbtp` also holds:"
 msgstr "对于更大的验证包，`.mbtp` 还会包含："
 
-#: ../../language/verification.md:286
+#: ../../language/verification.md:285
 msgid "abstract model functions such as `model(x)`"
 msgstr "如 `model(x)` 这样的抽象模型函数"
 
-#: ../../language/verification.md:287
+#: ../../language/verification.md:286
 msgid "representation invariants such as `bridge_inv(x)` or `sparse_array_inv(x)`"
 msgstr "如 `bridge_inv(x)` 或 `sparse_array_inv(x)` 这样的表示不变量"
 
-#: ../../language/verification.md:288
+#: ../../language/verification.md:287
 msgid "named postconditions such as `deposit_post(...)`"
 msgstr "如 `deposit_post(...)` 这样的具名后置条件"
 
-#: ../../language/verification.md:289
+#: ../../language/verification.md:288
 msgid "reusable lemmas"
 msgstr "可复用的引理"
 
-#: ../../language/verification.md:291
+#: ../../language/verification.md:290
 msgid ""
 "Lemmas are proof-only declarations that capture reusable facts. Small "
 "lemmas may have an empty body when the prover can discharge them "
 "directly, while larger lemmas can use recursive proof structure:"
-msgstr ""
-"引理是仅用于证明的声明，用来表达可复用的事实。"
-"当证明器可以直接消解时，较小的引理可以拥有空函数体；"
-"而更大的引理则可以使用递归的证明结构："
+msgstr "引理是仅用于证明的声明，用来表达可复用的事实。当证明器可以直接消解时，较小的引理可以拥有空函数体；而更大的引理则可以使用递归的证明结构："
 
-#: ../../language/verification.md:295
+#: ../../language/verification.md:294
 msgid ""
-"lemma[T : Compare] height_nonneg_lemma(t : Tree[T]) where {\n"
+"lemma height_nonneg_lemma(t : Tree) where {\n"
 "  proof_decrease: t,\n"
 "  proof_require: avl_inv(t),\n"
 "  proof_ensure: 0 <= height(t),\n"
@@ -860,7 +842,7 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
-"lemma[T : Compare] height_nonneg_lemma(t : Tree[T]) where {\n"
+"lemma height_nonneg_lemma(t : Tree) where {\n"
 "  proof_decrease: t,\n"
 "  proof_require: avl_inv(t),\n"
 "  proof_ensure: 0 <= height(t),\n"
@@ -874,534 +856,528 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/verification.md:301
+#: ../../language/verification.md:300
 msgid ""
 "In this example, `avl_inv` is a representation invariant for an AVL tree,"
 " and the lemma proves `height(t)` is nonnegative by structural recursion "
 "on `t`."
-msgstr ""
-"在这个例子中，`avl_inv` 是 AVL 树的表示不变量，"
-"而这个引理通过对 `t` 进行结构递归来证明 `height(t)` 非负。"
+msgstr "在这个例子中，`avl_inv` 是 AVL 树的表示不变量，而这个引理通过对 `t` 进行结构递归来证明 `height(t)` 非负。"
 
-#: ../../language/verification.md:304
+#: ../../language/verification.md:303
 msgid "Lemma bodies vary with the amount of proof guidance the solver needs:"
 msgstr "引理体会随着求解器所需的证明引导程度而有所不同："
 
-#: ../../language/verification.md:306
+#: ../../language/verification.md:305
 msgid ""
 "some lemmas have an empty body because the verifier can discharge them "
 "directly"
 msgstr "有些引理的函数体为空，因为验证器可以直接完成证明"
 
-#: ../../language/verification.md:307
+#: ../../language/verification.md:306
 msgid ""
 "some lemmas use a sequence of `proof_assert` steps to expose intermediate"
 " facts"
 msgstr "有些引理会使用一连串 `proof_assert` 步骤来显式给出中间事实"
 
-#: ../../language/verification.md:308
+#: ../../language/verification.md:307
 msgid ""
 "recursive lemmas can also call other lemmas, including themselves on "
 "smaller inputs"
 msgstr "递归引理还可以调用其他引理，包括在更小输入上递归调用自身"
 
-#: ../../language/verification.md:310
-msgid "Generics"
-msgstr "泛型"
-
-#: ../../language/verification.md:312
-msgid ""
-"Verification works with generic definitions as well. Predicates, lemmas, "
-"and contracted functions can all be parameterized by type variables, and "
-"proof code can also carry trait bounds. The [binary search overview"
-"](#overview-example-binary-search) already uses `T : Compare`, so the "
-"proof talks about an ordered element type rather than one specific "
-"runtime type."
-msgstr ""
-"验证同样适用于泛型定义。谓词、引理和带契约的函数都可以由类型变量参数化，"
-"证明代码也可以带有 trait 约束。"
-"[二分查找概览示例](#overview-example-binary-search) 已经使用了 `T : Compare`，"
-"因此这里讨论的是一个有序元素类型，而不是某个特定的运行时类型。"
-
-#: ../../language/verification.md:318
-msgid ""
-"predicate[T : Eq] fixedarray_pair(x : T, y : T, xs : FixedArray[T]) {\n"
-"  (xs.length() == 2) && (xs[0] == x) && (xs[1] == y)\n"
-"}\n"
-msgstr ""
-"predicate[T : Eq] fixedarray_pair(x : T, y : T, xs : FixedArray[T]) {\n"
-"  (xs.length() == 2) && (xs[0] == x) && (xs[1] == y)\n"
-"}\n"
-
-#: ../../language/verification.md:324
-msgid ""
-"pub fn[T : Eq] make_pair(x : T, y : T) -> FixedArray[T] where {\n"
-"  proof_ensure: result => fixedarray_pair(x, y, result),\n"
-"} {\n"
-"  [x, y]\n"
-"}\n"
-msgstr ""
-"pub fn[T : Eq] make_pair(x : T, y : T) -> FixedArray[T] where {\n"
-"  proof_ensure: result => fixedarray_pair(x, y, result),\n"
-"} {\n"
-"  [x, y]\n"
-"}\n"
-
-#: ../../language/verification.md:330
-msgid "In practice:"
-msgstr "在实践中："
-
-#: ../../language/verification.md:332
-msgid ""
-"use unconstrained type parameters when the specification does not need "
-"any operations on the type"
-msgstr "当规范不需要对该类型做任何操作时，使用无约束的类型参数"
-
-#: ../../language/verification.md:334
-msgid "add trait bounds when the proof needs equality or ordering"
-msgstr "当证明需要相等性或顺序关系时，加入 trait 约束"
-
-#: ../../language/verification.md:335
-msgid "prefer small generic predicates over large generic contracts"
-msgstr "优先使用小型泛型谓词，而不是庞大的泛型契约"
-
-#: ../../language/verification.md:337
-msgid ""
-"At the moment, the proof system supports generic reasoning through the "
-"`Eq` and `Compare` traits."
-msgstr "目前，证明系统通过 `Eq` 和 `Compare` trait 支持泛型推理。"
-
-#: ../../language/verification.md:340
-msgid ""
-"`Eq` assumes that `equal` is an equivalence relation: every value is "
-"equal to itself, equality is symmetric, and equality is transitive"
-msgstr ""
-"`Eq` 假定 `equal` 是一个等价关系：每个值都与自身相等，相等性满足对称性和传递性"
-
-#: ../../language/verification.md:342
-msgid ""
-"`Compare` assumes that the comparison induces a total order: every two "
-"values are comparable, the ordering is antisymmetric, and the ordering is"
-" transitive"
-msgstr ""
-"`Compare` 假定比较关系诱导出一个全序：任意两个值都可比较，并且该顺序满足反对称性和传递性"
-
-#: ../../language/verification.md:346
-msgid ""
-"Generic proofs should therefore be written with these assumptions in "
-"mind. Arbitrary trait-bounded reasoning beyond `Eq` and `Compare` is not "
-"yet the supported model."
-msgstr ""
-"因此，编写泛型证明时应当以这些假设为前提。"
-"除了 `Eq` 和 `Compare` 之外，任意 trait 约束下的推理目前还不是受支持的模型。"
-
-#: ../../language/verification.md:350
-msgid ""
-"Generic verification is particularly useful for container constructors, "
-"structural properties, and APIs whose correctness should not depend on "
-"one specific element type."
-msgstr "泛型验证尤其适用于容器构造器、结构性质，以及那些正确性不应依赖某个特定元素类型的 API。"
-
-#: ../../language/verification.md:354
+#: ../../language/verification.md:309
 msgid "Loop Invariants"
 msgstr "循环不变量"
 
-#: ../../language/verification.md:356
+#: ../../language/verification.md:311
 msgid ""
 "Loops are verified with proof-specific clauses in the loop's `where { ..."
 " }` block. In the [binary search overview](#overview-example-binary-"
 "search), the loop invariants state that:"
 msgstr ""
-"循环通过循环的 `where { ... }` 块中的证明专用子句来验证。"
-"在 [二分查找概览示例](#overview-example-binary-search) 中，"
-"循环不变量说明了："
+"循环通过循环的 `where { ... }` 块中的证明专用子句来验证。在 [二分查找概览示例](#overview-example-"
+"binary-search) 中，循环不变量说明了："
 
-#: ../../language/verification.md:359
+#: ../../language/verification.md:314
 msgid "the current search window is always a valid slice `[i, j)`"
 msgstr "当前搜索窗口始终是一个合法的区间 `[i, j)`"
 
-#: ../../language/verification.md:360
+#: ../../language/verification.md:315
 msgid "every index before `i` contains a value `< key`"
 msgstr "`i` 之前的每个索引都包含 `< key` 的值"
 
-#: ../../language/verification.md:361
+#: ../../language/verification.md:316
 msgid "every index from `j` onward contains a value `> key`"
 msgstr "从 `j` 开始的每个索引都包含 `> key` 的值"
 
-#: ../../language/verification.md:363
+#: ../../language/verification.md:318
 msgid "The most common loop proof annotations are:"
 msgstr "最常见的循环证明注解有："
 
-#: ../../language/verification.md:365
+#: ../../language/verification.md:320
 msgid "`proof_invariant`: facts that must hold at every iteration boundary"
 msgstr "`proof_invariant`：在每次迭代边界都必须成立的事实"
 
-#: ../../language/verification.md:366
+#: ../../language/verification.md:321
 msgid "`proof_yield`: facts that must hold for values yielded by `break`"
 msgstr "`proof_yield`：对由 `break` 产出的值必须成立的事实"
 
-#: ../../language/verification.md:367
+#: ../../language/verification.md:322
 msgid "`proof_reasoning`: a proof-oriented explanation of why the loop is correct"
 msgstr "`proof_reasoning`：解释循环为何正确的面向证明的说明"
 
-#: ../../language/verification.md:369
+#: ../../language/verification.md:324
 msgid ""
 "In practice, good loop invariants describe the current search window, "
 "prefix, or processed region rather than the entire algorithm all at once."
 msgstr "在实践中，好的循环不变量通常描述当前搜索窗口、前缀或已处理区域，而不是一次性描述整个算法。"
 
-#: ../../language/verification.md:372
+#: ../../language/verification.md:327
 msgid "Model-Based Verification"
 msgstr "基于模型的验证"
 
-#: ../../language/verification.md:374
+#: ../../language/verification.md:329
 msgid ""
 "For data structures and stateful systems, the most useful pattern is "
 "often:"
 msgstr "对于数据结构和有状态系统，最有用的模式通常是："
 
-#: ../../language/verification.md:376
+#: ../../language/verification.md:331
 msgid "define an abstract model,"
 msgstr "定义一个抽象模型，"
 
-#: ../../language/verification.md:377
+#: ../../language/verification.md:332
 msgid "define a representation invariant,"
 msgstr "定义一个表示不变量，"
 
-#: ../../language/verification.md:378
+#: ../../language/verification.md:333
 msgid "specify each operation against the abstract model."
 msgstr "针对该抽象模型来为每个操作编写规范。"
 
-#: ../../language/verification.md:380
+#: ../../language/verification.md:335
 msgid "An AVL tree is a representative example of this style:"
 msgstr "AVL 树就是这种风格的一个代表性例子："
 
-#: ../../language/verification.md:382
+#: ../../language/verification.md:337
 msgid ""
-"fn[T : Compare] Tree::model(self : Tree[T]) -> Fset[T] {\n"
+"fn Tree::model(self : Tree) -> Fset[Int] {\n"
 "  match self {\n"
 "    Empty => Fset::empty()\n"
 "    Node(l, x, r, _) => l.model().union(r.model()).add(x)\n"
 "  }\n"
 "}\n"
 "\n"
-"predicate[T : Compare] avl_inv(t : Tree[T]) {\n"
+"predicate avl_inv(t : Tree) {\n"
 "  match t {\n"
 "    Empty => true\n"
 "    Node(l, x, r, h) =>\n"
 "      avl_inv(l) &&\n"
 "      avl_inv(r) &&\n"
-"      (∀ y : T, l.model().mem(y) → y < x) &&\n"
-"      (∀ y : T, r.model().mem(y) → x < y) &&\n"
+"      (∀ y : Int, l.model().mem(y) → y < x) &&\n"
+"      (∀ y : Int, r.model().mem(y) → x < y) &&\n"
 "      h == 1 + max2(height(l), height(r)) &&\n"
 "      -1 <= height(l) - height(r) &&\n"
 "      height(l) - height(r) <= 1\n"
 "  }\n"
 "}\n"
 msgstr ""
-"fn[T : Compare] Tree::model(self : Tree[T]) -> Fset[T] {\n"
+"fn Tree::model(self : Tree) -> Fset[Int] {\n"
 "  match self {\n"
 "    Empty => Fset::empty()\n"
 "    Node(l, x, r, _) => l.model().union(r.model()).add(x)\n"
 "  }\n"
 "}\n"
 "\n"
-"predicate[T : Compare] avl_inv(t : Tree[T]) {\n"
+"predicate avl_inv(t : Tree) {\n"
 "  match t {\n"
 "    Empty => true\n"
 "    Node(l, x, r, h) =>\n"
 "      avl_inv(l) &&\n"
 "      avl_inv(r) &&\n"
-"      (∀ y : T, l.model().mem(y) → y < x) &&\n"
-"      (∀ y : T, r.model().mem(y) → x < y) &&\n"
+"      (∀ y : Int, l.model().mem(y) → y < x) &&\n"
+"      (∀ y : Int, r.model().mem(y) → x < y) &&\n"
 "      h == 1 + max2(height(l), height(r)) &&\n"
 "      -1 <= height(l) - height(r) &&\n"
 "      height(l) - height(r) <= 1\n"
 "  }\n"
 "}\n"
 
-#: ../../language/verification.md:388
+#: ../../language/verification.md:343
 msgid "Here:"
 msgstr "这里："
 
-#: ../../language/verification.md:390
+#: ../../language/verification.md:345
 msgid "`model()` maps a concrete tree to its abstract finite-set view"
 msgstr "`model()` 把具体的树映射为它的抽象有限集合视图"
 
-#: ../../language/verification.md:391
+#: ../../language/verification.md:346
 msgid ""
 "`all_lt` and `all_gt` describe ordering constraints over that abstract "
 "model"
 msgstr "内联的量词条件描述了该抽象模型上的顺序约束"
 
-#: ../../language/verification.md:392
+#: ../../language/verification.md:347
 msgid ""
 "`avl_inv` ties together recursive well-formedness, search-tree ordering, "
 "and cached-height correctness"
 msgstr "`avl_inv` 将递归的良构性、搜索树顺序以及缓存高度的正确性绑定在一起"
 
-#: ../../language/verification.md:395
+#: ../../language/verification.md:350
 msgid ""
 "This style scales much better than writing large inline boolean formulas "
 "in each contract. Each operation can be specified in terms of the "
 "abstract model and the invariant, and the implementation can then prove "
 "local facts until the named postcondition follows."
-msgstr ""
-"与在每个契约中直接写庞大的内联布尔公式相比，这种风格的可扩展性要好得多。"
-"每个操作都可以基于抽象模型和不变量来编写规范，"
-"而实现部分则通过证明局部事实，最终推出相应的具名后置条件。"
+msgstr "与在每个契约中直接写庞大的内联布尔公式相比，这种风格的可扩展性要好得多。每个操作都可以基于抽象模型和不变量来编写规范，而实现部分则通过证明局部事实，最终推出相应的具名后置条件。"
 
-#: ../../language/verification.md:400
+#: ../../language/verification.md:355
 msgid "Recommended Style"
 msgstr "推荐风格"
 
-#: ../../language/verification.md:402
+#: ../../language/verification.md:357
 msgid "Keep executable logic in `.mbt` and proof logic in `.mbtp`."
 msgstr "把可执行逻辑放在 `.mbt` 中，把证明逻辑放在 `.mbtp` 中。"
 
-#: ../../language/verification.md:403
+#: ../../language/verification.md:358
 msgid ""
 "Treat the program side and the logic side as distinct layers with a "
 "narrow bridge between them."
 msgstr "将程序侧和逻辑侧视为两个不同的层次，它们之间只通过一个狭窄的桥梁连接。"
 
-#: ../../language/verification.md:405
+#: ../../language/verification.md:360
 msgid "Prefer named predicates over large inline formulas."
 msgstr "优先使用具名谓词，而不是大型内联公式。"
 
-#: ../../language/verification.md:406
+#: ../../language/verification.md:361
 msgid ""
 "Use small, stable invariants and postconditions such as `*_inv` and "
 "`*_post`."
 msgstr "使用小而稳定的不变量和后置条件，例如 `*_inv` 与 `*_post`。"
 
-#: ../../language/verification.md:407
+#: ../../language/verification.md:362
 msgid ""
 "Add `proof_assert` after important construction steps, branches, and loop"
 " updates when the prover needs help."
 msgstr "当证明器需要帮助时，在重要的构造步骤、分支和循环更新之后加入 `proof_assert`。"
 
-#: ../../language/verification.md:409
+#: ../../language/verification.md:364
 msgid ""
 "Start with simple algorithmic proofs, then move to model-based "
 "verification for data structures and protocols."
 msgstr "从简单的算法证明开始，然后再过渡到针对数据结构和协议的基于模型的验证。"
 
-#: ../../language/verification.md:411
+#: ../../language/verification.md:366
 msgid ""
 "Be deliberate about recursive helpers: `#proof_pure` and `proof_decrease`"
 " often determine whether a proof remains maintainable."
 msgstr "谨慎设计递归辅助函数：`#proof_pure` 和 `proof_decrease` 往往决定了一个证明是否仍然易于维护。"
 
-#: ../../language/verification.md:414
+#: ../../language/verification.md:369
 msgid "Running Verification"
 msgstr "运行验证"
 
-#: ../../language/verification.md:416
+#: ../../language/verification.md:371
 msgid "What `moon prove` Checks"
 msgstr "`moon prove` 会检查什么"
 
-#: ../../language/verification.md:418
+#: ../../language/verification.md:373
 msgid "Running `moon prove` asks the verifier to prove obligations such as:"
 msgstr "运行 `moon prove` 会要求验证器证明如下几类义务："
 
-#: ../../language/verification.md:420
+#: ../../language/verification.md:375
 msgid "function preconditions imply the function body is safe to execute"
 msgstr "函数前置条件足以保证函数体可以安全执行"
 
-#: ../../language/verification.md:421
+#: ../../language/verification.md:376
 msgid "postconditions hold on every return path"
 msgstr "后置条件在每一条返回路径上都成立"
 
-#: ../../language/verification.md:422
+#: ../../language/verification.md:377
 msgid "`proof_assert` statements are valid"
 msgstr "`proof_assert` 语句是有效的"
 
-#: ../../language/verification.md:423
+#: ../../language/verification.md:378
 msgid "loop invariants hold initially and are preserved"
 msgstr "循环不变量初始成立，并且在循环过程中得以保持"
 
-#: ../../language/verification.md:424
+#: ../../language/verification.md:379
 msgid "loop termination measures decrease when the loop form supports them"
 msgstr "当循环形式支持时，循环的终止度量会递减"
 
-#: ../../language/verification.md:425
+#: ../../language/verification.md:380
 msgid "bounds checks and similar safety properties required by the proof"
 msgstr "证明所需的边界检查和类似的安全性质"
 
-#: ../../language/verification.md:427
+#: ../../language/verification.md:382
 msgid "Running the Verifier"
 msgstr "运行验证器"
 
-#: ../../language/verification.md:429
+#: ../../language/verification.md:384
 msgid "From a module root, run:"
 msgstr "在模块根目录下运行："
 
-#: ../../language/verification.md:431
+#: ../../language/verification.md:386
 msgid "moon prove\n"
 msgstr "moon prove\n"
 
-#: ../../language/verification.md:435
+#: ../../language/verification.md:390
 msgid "This tries to prove the proof-enabled packages in the current module."
 msgstr "这会尝试证明当前模块中所有启用了证明的包。"
 
-#: ../../language/verification.md:437
+#: ../../language/verification.md:392
 msgid "To prove a single package, pass its path:"
 msgstr "如果只想证明一个包，可以传入它的路径："
 
-#: ../../language/verification.md:439
+#: ../../language/verification.md:394
 msgid "moon prove path/to/package\n"
 msgstr "moon prove path/to/package\n"
 
-#: ../../language/verification.md:443
+#: ../../language/verification.md:398
 msgid ""
 "In this targeted mode, MoonBit tries to prove only the selected package. "
 "Its dependencies are assumed rather than reproved as part of the same "
 "command."
 msgstr "在这种定向模式下，MoonBit 只会尝试证明被选中的包；它的依赖会被当作假设，而不会作为同一条命令的一部分重新证明。"
 
-#: ../../language/verification.md:446
+#: ../../language/verification.md:401
 msgid ""
 "MoonBit lowers the proof-enabled package to Why3 and invokes the "
 "configured provers on the generated verification conditions."
 msgstr "MoonBit 会把启用了证明的包转换为 Why3，并调用已配置的证明器处理生成的验证条件。"
 
-#: ../../language/verification.md:449
+#: ../../language/verification.md:404
 msgid ""
 "`moon check` and `moon prove` serve different purposes here. `moon check`"
 " validates the package as MoonBit code, while `moon prove` tries to "
 "discharge its proof obligations."
-msgstr "`moon check` 和 `moon prove` 在这里承担不同的职责。`moon check` 负责把包作为 MoonBit 代码进行校验，而 `moon prove` 则尝试消解它的证明义务。"
+msgstr ""
+"`moon check` 和 `moon prove` 在这里承担不同的职责。`moon check` 负责把包作为 MoonBit "
+"代码进行校验，而 `moon prove` 则尝试消解它的证明义务。"
 
-#: ../../language/verification.md:453
+#: ../../language/verification.md:408
 msgid "Trust Model and Limitations"
 msgstr "可信模型与限制"
 
-#: ../../language/verification.md:455
+#: ../../language/verification.md:410
 msgid "Trusted Assumptions"
 msgstr "受信假设"
 
-#: ../../language/verification.md:457
+#: ../../language/verification.md:412
 msgid ""
 "Like any verification system, MoonBit's proof story has a trusted "
 "surface: some facts are assumed by the frontend and backend rather than "
 "proved inside user code."
 msgstr "和任何验证系统一样，MoonBit 的证明体系也有一个可信边界：某些事实由前端和后端直接假定，而不是在用户代码内部加以证明。"
 
-#: ../../language/verification.md:461
+#: ../../language/verification.md:416
 msgid ""
 "This trusted surface also includes any user-written item marked "
 "`proof_axiomatized`."
 msgstr "任何用户编写且标记为 `proof_axiomatized` 的项目，也属于这个可信边界。"
 
-#: ../../language/verification.md:464
+#: ../../language/verification.md:419
 msgid "The main trusted assumptions today are:"
 msgstr "当前主要的可信假设包括："
 
-#: ../../language/verification.md:466
+#: ../../language/verification.md:421
 msgid ""
 "verification reasons about mathematical integers rather than machine "
 "integers"
 msgstr "验证所推理的是数学整数，而不是机器整数"
 
-#: ../../language/verification.md:467
+#: ../../language/verification.md:422
 msgid "any item marked `proof_axiomatized` is assumed rather than proved"
 msgstr "任何标记为 `proof_axiomatized` 的项目都会被当作假设，而不是被证明"
 
-#: ../../language/verification.md:468
-msgid "trait-bounded reasoning assumes the intended laws of supported traits"
-msgstr "带 trait 约束的推理会假定受支持 trait 的预期定律成立"
-
-#: ../../language/verification.md:470
+#: ../../language/verification.md:424
 msgid ""
 "For integers, this means proof obligations are checked in an unbounded "
 "integer model. As a result:"
 msgstr "对整数来说，这意味着证明义务是在一个无界整数模型下进行检查的。因此："
 
-#: ../../language/verification.md:473
+#: ../../language/verification.md:427
 msgid "arithmetic proofs do not currently model runtime overflow"
 msgstr "算术证明目前不会建模运行时溢出"
 
-#: ../../language/verification.md:474
+#: ../../language/verification.md:428
 msgid ""
 "a program can be correct in the proof model and still need explicit range"
 " discipline in execution"
 msgstr "一个程序在证明模型中可能是正确的，但在实际执行时仍然需要显式的范围约束"
 
-#: ../../language/verification.md:476
+#: ../../language/verification.md:430
 msgid "machine-integer verification is planned, but is not the current default"
 msgstr "机器整数验证已经在计划中，但目前还不是默认模型"
 
-#: ../../language/verification.md:478
-msgid ""
-"When a proof depends on trait-bounded generic code, the system relies on "
-"the intended laws of those traits being respected by implementations."
-msgstr "当证明依赖于带 trait 约束的泛型代码时，系统会依赖这些 trait 的预期定律被具体实现遵守。"
-
-#: ../../language/verification.md:481
-msgid "Concretely:"
-msgstr "具体来说："
-
-#: ../../language/verification.md:483
-msgid "`Eq` is trusted to behave as an equivalence relation"
-msgstr "`Eq` 被信任为满足等价关系"
-
-#: ../../language/verification.md:484
-msgid "`Compare` is trusted to behave as a total order"
-msgstr "`Compare` 被信任为满足全序关系"
-
-#: ../../language/verification.md:486
+#: ../../language/verification.md:432
 msgid "Current Status"
 msgstr "当前状态"
 
-#: ../../language/verification.md:488
+#: ../../language/verification.md:434
 msgid ""
 "Formal verification in MoonBit is still experimental. The surface syntax,"
 " prover integration, and proof ergonomics are actively evolving, so it is"
 " best to treat this as an advanced feature for packages that benefit from"
 " strong, machine-checked guarantees."
 msgstr ""
-"MoonBit 中的形式化验证仍处于实验阶段。"
-"表面语法、证明器集成和证明易用性都还在快速演进，"
-"因此最好把它视为一种高级特性，主要面向那些确实能从强而可机检的保证中受益的包。"
+"MoonBit "
+"中的形式化验证仍处于实验阶段。表面语法、证明器集成和证明易用性都还在快速演进，因此最好把它视为一种高级特性，主要面向那些确实能从强而可机检的保证中受益的包。"
 
-#: ../../language/verification.md:493
+#: ../../language/verification.md:439
 msgid "Preferred Verification Style"
 msgstr "推荐的验证风格"
 
-#: ../../language/verification.md:495
+#: ../../language/verification.md:441
 msgid ""
 "MoonBit's current verifier works best with a functional proof style and "
 "model-based specifications."
 msgstr "MoonBit 当前的验证器最适合函数式的证明风格，以及基于模型的规范。"
 
-#: ../../language/verification.md:498
+#: ../../language/verification.md:444
 msgid ""
 "Imperative features such as local mutation and in-place `FixedArray` "
 "updates are supported, but their verified use is more limited:"
 msgstr "诸如局部可变状态和原地 `FixedArray` 更新这样的命令式特性虽然受支持，但它们在验证中的使用限制更多："
 
-#: ../../language/verification.md:501
+#: ../../language/verification.md:447
 msgid "mutable state is expected to remain local"
 msgstr "可变状态应当保持为局部使用"
 
-#: ../../language/verification.md:502
+#: ../../language/verification.md:448
 msgid "escaping uses of `FixedArray` are currently not supported"
 msgstr "`FixedArray` 的逃逸式使用目前还不受支持"
 
-#: ../../language/verification.md:503
+#: ../../language/verification.md:449
 msgid ""
 "when both formulations are available, functional-style programs are "
 "preferred"
 msgstr "当两种写法都可行时，优先选择函数式风格的程序"
 
-#: ../../language/verification.md:505
+#: ../../language/verification.md:451
 msgid "Further Reading"
 msgstr "进一步阅读"
 
-#: ../../language/verification.md:507
+#: ../../language/verification.md:453
 msgid ""
 "For additional verified programs and reusable proof-oriented libraries, "
 "see the [`moonbit-community/verified`](https://github.com/moonbit-"
 "community/verified) repository."
-msgstr "如果想查看更多已验证程序和可复用的面向证明的库，请参考 [`moonbit-community/verified`](https://github.com/moonbit-community/verified) 仓库。"
+msgstr ""
+"如果想查看更多已验证程序和可复用的面向证明的库，请参考 [`moonbit-"
+"community/verified`](https://github.com/moonbit-community/verified) 仓库。"
+
+#~ msgid "generic verification with `T : Compare`"
+#~ msgstr "带 `T : Compare` 的泛型验证"
+
+#~ msgid "Generics"
+#~ msgstr "泛型"
+
+#~ msgid ""
+#~ "Verification works with generic definitions"
+#~ " as well. Predicates, lemmas, and "
+#~ "contracted functions can all be "
+#~ "parameterized by type variables, and "
+#~ "proof code can also carry trait "
+#~ "bounds. The [binary search overview"
+#~ "](#overview-example-binary-search) already "
+#~ "uses `T : Compare`, so the proof"
+#~ " talks about an ordered element type"
+#~ " rather than one specific runtime "
+#~ "type."
+#~ msgstr ""
+#~ "验证同样适用于泛型定义。谓词、引理和带契约的函数都可以由类型变量参数化，证明代码也可以带有 trait "
+#~ "约束。[二分查找概览示例](#overview-example-binary-search) "
+#~ "已经使用了 `T : Compare`，因此这里讨论的是一个有序元素类型，而不是某个特定的运行时类型。"
+
+#~ msgid ""
+#~ "predicate[T : Eq] fixedarray_pair(x : T, y : T, xs : FixedArray[T]) {\n"
+#~ "  (xs.length() == 2) && (xs[0] == x) && (xs[1] == y)\n"
+#~ "}\n"
+#~ msgstr ""
+#~ "predicate[T : Eq] fixedarray_pair(x : T, y : T, xs : FixedArray[T]) {\n"
+#~ "  (xs.length() == 2) && (xs[0] == x) && (xs[1] == y)\n"
+#~ "}\n"
+
+#~ msgid ""
+#~ "pub fn[T : Eq] make_pair(x : T, y : T) -> FixedArray[T] where {\n"
+#~ "  proof_ensure: result => fixedarray_pair(x, y, result),\n"
+#~ "} {\n"
+#~ "  [x, y]\n"
+#~ "}\n"
+#~ msgstr ""
+#~ "pub fn[T : Eq] make_pair(x : T, y : T) -> FixedArray[T] where {\n"
+#~ "  proof_ensure: result => fixedarray_pair(x, y, result),\n"
+#~ "} {\n"
+#~ "  [x, y]\n"
+#~ "}\n"
+
+#~ msgid "In practice:"
+#~ msgstr "在实践中："
+
+#~ msgid ""
+#~ "use unconstrained type parameters when "
+#~ "the specification does not need any "
+#~ "operations on the type"
+#~ msgstr "当规范不需要对该类型做任何操作时，使用无约束的类型参数"
+
+#~ msgid "add trait bounds when the proof needs equality or ordering"
+#~ msgstr "当证明需要相等性或顺序关系时，加入 trait 约束"
+
+#~ msgid "prefer small generic predicates over large generic contracts"
+#~ msgstr "优先使用小型泛型谓词，而不是庞大的泛型契约"
+
+#~ msgid ""
+#~ "At the moment, the proof system "
+#~ "supports generic reasoning through the "
+#~ "`Eq` and `Compare` traits."
+#~ msgstr "目前，证明系统通过 `Eq` 和 `Compare` trait 支持泛型推理。"
+
+#~ msgid ""
+#~ "`Eq` assumes that `equal` is an "
+#~ "equivalence relation: every value is "
+#~ "equal to itself, equality is symmetric,"
+#~ " and equality is transitive"
+#~ msgstr "`Eq` 假定 `equal` 是一个等价关系：每个值都与自身相等，相等性满足对称性和传递性"
+
+#~ msgid ""
+#~ "`Compare` assumes that the comparison "
+#~ "induces a total order: every two "
+#~ "values are comparable, the ordering is"
+#~ " antisymmetric, and the ordering is "
+#~ "transitive"
+#~ msgstr "`Compare` 假定比较关系诱导出一个全序：任意两个值都可比较，并且该顺序满足反对称性和传递性"
+
+#~ msgid ""
+#~ "Generic proofs should therefore be "
+#~ "written with these assumptions in mind."
+#~ " Arbitrary trait-bounded reasoning beyond"
+#~ " `Eq` and `Compare` is not yet "
+#~ "the supported model."
+#~ msgstr "因此，编写泛型证明时应当以这些假设为前提。除了 `Eq` 和 `Compare` 之外，任意 trait 约束下的推理目前还不是受支持的模型。"
+
+#~ msgid ""
+#~ "Generic verification is particularly useful"
+#~ " for container constructors, structural "
+#~ "properties, and APIs whose correctness "
+#~ "should not depend on one specific "
+#~ "element type."
+#~ msgstr "泛型验证尤其适用于容器构造器、结构性质，以及那些正确性不应依赖某个特定元素类型的 API。"
+
+#~ msgid "trait-bounded reasoning assumes the intended laws of supported traits"
+#~ msgstr "带 trait 约束的推理会假定受支持 trait 的预期定律成立"
+
+#~ msgid ""
+#~ "When a proof depends on trait-"
+#~ "bounded generic code, the system relies"
+#~ " on the intended laws of those "
+#~ "traits being respected by implementations."
+#~ msgstr "当证明依赖于带 trait 约束的泛型代码时，系统会依赖这些 trait 的预期定律被具体实现遵守。"
+
+#~ msgid "Concretely:"
+#~ msgstr "具体来说："
+
+#~ msgid "`Eq` is trusted to behave as an equivalence relation"
+#~ msgstr "`Eq` 被信任为满足等价关系"
+
+#~ msgid "`Compare` is trusted to behave as a total order"
+#~ msgstr "`Compare` 被信任为满足全序关系"
