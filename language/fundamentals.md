@@ -486,6 +486,7 @@ Both `start` and `end` indices can be omitted.
 `MutArrayView[T]` via `data.mut_view(...)`.
 
 ```moonbit
+
 test {
   let xs = [0, 1, 2, 3, 4, 5]
   let s1 : ArrayView[Int] = xs[2:]
@@ -948,6 +949,7 @@ The `else` clause can only be omitted if the return value has type `Unit`.
 The `match` expression is similar to conditional expression, but it uses [pattern matching]() to decide which consequent to evaluate and extracting variables at the same time.
 
 ```moonbit
+
 fn decide_sport(weather : String, humidity : Int) -> String {
   match weather {
     "sunny" => "tennis"
@@ -971,6 +973,7 @@ the subsequent statements and returns. If the condition is not satisfied (i.e., 
 the code in the `else` block is executed and its evaluation result is returned (the subsequent statements are skipped).
 
 ```moonbit
+
 fn guarded_get(array : Array[Int], index : Int) -> Int? {
   guard index >= 0 && index < array.length() else { None }
   Some(array[index])
@@ -990,6 +993,7 @@ and it uses the `guard` statement to ensure this invariant while extracting the 
 Compared to using a `match` statement, the subsequent processing of `text` can have one less level of indentation.
 
 ```moonbit
+
 enum Resource {
   Folder(Array[String])
   PlainText(String)
@@ -1202,6 +1206,7 @@ For more information of the `Iter` type, see [Iterator]() below.
 `for .. in` loop also supports iterating through a sequence of integers, such as:
 
 ```moonbit
+
 test {
   let mut i = 0
   for j in 0..<10 {
@@ -1209,7 +1214,7 @@ test {
   }
   assert_eq(i, 45)
   let mut k = 0
-  for l in 0..=10 {
+  for l in 0..<=10 {
     k += l
   }
   assert_eq(k, 55)
@@ -1304,11 +1309,14 @@ A functional loop consumes an argument and returns a value. It is defined using 
 The `loop` syntax will be removed soon. Do not introduce it in new code; prefer `for`, `for .. in`, or `while`. This section is kept as reference for existing code and migration.
 
 ```moonbit
+
 test {
   fn sum(xs : @list.List[Int]) -> Int {
-    loop (xs, 0) {
-      (Empty, acc) => break acc // <=> Nil, acc => acc
-      (More(x, tail=rest), acc) => continue (rest, x + acc)
+    for xs = xs, acc = 0 {
+      match xs {
+        Empty => break acc // <=> Nil, acc => acc
+        More(x, tail=rest) => continue rest, x + acc
+      }
     }
   }
 
@@ -1322,6 +1330,7 @@ When a loop is labelled, it can be referenced from a `break` or `continue` from
 within a nested loop. For example:
 
 ```moonbit
+
 test "break label" {
   let mut count = 0
   let xs = [1, 2, 3]
@@ -1341,13 +1350,14 @@ test "break label" {
 test "continue label" {
   let mut count = 0
   let init = 10
-  let res = outer~: loop init {
-    0 => 42
-    i =>
-      for ;; {
-        count = count + 1
-        continue outer~ i - 1
-      }
+  let res = outer~: for i = init {
+    if i == 0 {
+      break outer~ 42
+    }
+    for ;; {
+      count = count + 1
+      continue outer~ i - 1
+    }
   }
   assert_eq(res, 42)
   assert_eq(count, 10)
@@ -1472,6 +1482,7 @@ There are two ways to create new data types: `struct` and `enum`.
 In MoonBit, structs are similar to tuples, but their fields are indexed by field names. A struct can be constructed using a struct literal, which is composed of a set of labeled values and delimited with curly brackets. The type of a struct literal can be automatically inferred if its fields exactly match the type definition. A field can be accessed using the dot syntax `s.f`. If a field is marked as mutable using the keyword `mut`, it can be assigned a new value.
 
 ```moonbit
+
 struct User {
   id : Int
   name : String
@@ -1542,11 +1553,12 @@ create value for the `struct` using the name of the struct,
 it can be declared as follows:
 
 ```moonbit
+
 struct IntBox {
   value : Int
 
   fn new(value : Int) -> IntBox
-} derive(Show)
+} derive(Debug)
 ```
 
 Here, the return value of the constructor must be the struct itself.
@@ -1554,6 +1566,7 @@ The constructor should then be implemented by a `new` method (the name cannot be
 with exactly the same type:
 
 ```moonbit
+
 fn IntBox::new(value : Int) -> IntBox {
   { value, }
 }
@@ -1563,7 +1576,7 @@ If a `struct` declares a constructor, it can be constructed by name directly:
 
 ```moonbit
   let box = IntBox(10)
-  inspect(box, content="{value: 10}")
+  debug_inspect(box, content="{ value: 10 }")
 ```
 
 The constructor call follows the declared `new` signature, so unlabeled parameters can be written in the familiar `TypeName(value)` form.
@@ -1571,15 +1584,17 @@ The constructor call follows the declared `new` signature, so unlabeled paramete
 Constructors may also use labeled and optional arguments, just like normal functions:
 
 ```moonbit
+
 struct StructWithConstr {
   x : Int
   y : Int
 
   fn new(x~ : Int, y? : Int) -> StructWithConstr
-} derive(Show)
+} derive(Debug)
 ```
 
 ```moonbit
+
 fn StructWithConstr::new(x~ : Int, y? : Int = x) -> StructWithConstr {
   { x, y }
 }
@@ -1587,24 +1602,26 @@ fn StructWithConstr::new(x~ : Int, y? : Int = x) -> StructWithConstr {
 
 ```moonbit
   let s = StructWithConstr(x=1)
-  inspect(s, content="{x: 1, y: 1}")
+  debug_inspect(s, content="{ x: 1, y: 1 }")
 ```
 
 Because struct constructors are implemented by normal functions, they may raise errors:
 
 ```moonbit
+
 suberror BuildError {
   NegativeInput
-} derive(Show)
+} derive(Debug)
 
 struct Positive {
   value : Int
 
   fn new(x : Int) -> Positive raise BuildError
-} derive(Show)
+} derive(Debug)
 ```
 
 ```moonbit
+
 fn Positive::new(x : Int) -> Positive raise BuildError {
   guard x >= 0 else { raise NegativeInput }
   { value: x }
@@ -1612,14 +1629,8 @@ fn Positive::new(x : Int) -> Positive raise BuildError {
 ```
 
 ```moonbit
-  inspect(
-    try? Positive(10),
-    content="Ok({value: 10})",
-  )
-  inspect(
-    try? Positive(-1),
-    content="Err(NegativeInput)",
-  )
+  debug_inspect(try? Positive(10), content="Ok({ value: 10 })")
+  debug_inspect(try? Positive(-1), content="Err(NegativeInput)")
 ```
 
 Asynchronous constructors are declared with `async fn new` and can be used inside async code:
@@ -1629,7 +1640,7 @@ struct AsyncBox {
   value : Int
 
   async fn new(x : Int) -> AsyncBox
-} derive(Show)
+} derive(Debug)
 ```
 
 ```moonbit
@@ -1642,7 +1653,7 @@ async fn AsyncBox::new(x : Int) -> AsyncBox {
 ```moonbit
 async test "struct constructor async" {
   let box = AsyncBox(10)
-  inspect(box, content="{value: 10}")
+  debug_inspect(box, content="{ value: 10 }")
 }
 ```
 
@@ -1665,6 +1676,7 @@ Enum types are similar to algebraic data types in functional languages. Users fa
 An enum can have a set of cases (constructors). Constructor names must start with capitalized letter. You can use these names to construct corresponding cases of an enum, or checking which branch an enum value belongs to in pattern matching:
 
 ```moonbit
+
 /// An enum type that represents the ordering relation between two values,
 /// with three cases "Smaller", "Greater" and "Equal"
 enum Relation {
@@ -1722,6 +1734,7 @@ greater!
 Enum cases can also carry payload data. Here's an example of defining an integer list type using enum:
 
 ```moonbit
+
 enum Lst {
   Nil
   // constructor `Cons` carries additional payload: the first element of the list,
@@ -1784,6 +1797,7 @@ nil
 Enum constructors can have labelled argument:
 
 ```moonbit
+
 enum E {
   // `x` and `y` are labelled argument
   C(x~ : Int, y~ : Int)
@@ -1819,12 +1833,13 @@ fn main {
 It is also possible to access labelled arguments of constructors like accessing struct fields in pattern matching:
 
 ```moonbit
+
 enum Object {
   Point(x~ : Double, y~ : Double)
   Circle(x~ : Double, y~ : Double, radius~ : Double)
 }
 
-suberror NotImplementedError derive(Show)
+suberror NotImplementedError derive(Debug)
 
 fn Object::distance_with(
   self : Object,
@@ -1854,7 +1869,7 @@ fn main {
     println(p1.distance_with(p2))
     println(p1.distance_with(c1))
   } catch {
-    e => println(e)
+    _ => println("NotImplementedError")
   }
 }
 ```
@@ -1870,6 +1885,7 @@ It is also possible to define mutable fields for constructor. This is especially
 
 ```moonbit
 // A set implemented using mutable binary search tree.
+
 struct Set[X] {
   mut root : Tree[X]
 }
@@ -1879,6 +1895,7 @@ fn[X : Compare] Set::insert(self : Set[X], x : X) -> Unit {
 }
 
 // A mutable binary search tree with parent pointer
+
 enum Tree[X] {
   Nil
   // only labelled arguments can be mutable
@@ -1892,6 +1909,7 @@ enum Tree[X] {
 
 // In-place insert a new element to a binary search tree.
 // Return the new tree root
+
 fn[X : Compare] Tree::insert(
   self : Tree[X],
   x : X,
@@ -1971,8 +1989,11 @@ MoonBit supports type alias via the syntax `type NewType = OldType`:
 The old syntax `typealias OldType as NewType` may be removed in the future.
 
 ```moonbit
+
 pub type Index = Int
+
 pub type MyIndex = Int
+
 pub type MyMap = Map[Int, String]
 ```
 
@@ -1990,15 +2011,16 @@ methods using derive, but no additional methods can be defined manually. For
 example:
 
 ```moonbit
-fn[T : Show] toplevel(x : T) -> Unit {
+
+fn[T : Debug] toplevel(x : T) -> Unit {
   enum LocalEnum {
     A(T)
     B(Int)
-  } derive(Show)
+  } derive(Debug)
   struct LocalStruct {
     a : (String, T)
-  } derive(Show)
-  struct LocalStructTuple(T) derive(Show)
+  } derive(Debug)
+  struct LocalStructTuple(T) derive(Debug)
   ...
 }
 ```
@@ -2024,6 +2046,7 @@ We can pattern match expressions against
 and so on. We can define identifiers to bind the matched values so that they can be used later.
 
 ```moonbit
+
 const ONE = 1
 
 fn match_int(x : Int) -> Unit {
@@ -2038,6 +2061,7 @@ fn match_int(x : Int) -> Unit {
 We can use `_` as wildcards for the values we don't care about, and use `..` to ignore remaining fields of struct or enum, or array (see [array pattern]()).
 
 ```moonbit
+
 struct Point3D {
   x : Int
   y : Int
@@ -2100,6 +2124,7 @@ Array patterns have the following forms:
   elements, it can appear at most once in an array pattern.
 
 ```moonbit
+
 test {
   let ary = [1, 2, 3, 4]
   if ary is [a, b, .. rest] && a == 1 && b == 2 && rest.length() == 2 {
@@ -2117,11 +2142,14 @@ respects the code unit boundaries. For example, we can check if a string is a
 palindrome:
 
 ```moonbit
+
 test {
   fn palindrome(s : String) -> Bool {
-    loop s.view() {
-      [] | [_] => true
-      [a, .. rest, b] => if a == b { continue rest } else { false }
+    for view = s.view() {
+      match view {
+        [] | [_] => break true
+        [a, .. rest, b] => if a == b { continue rest } else { break false }
+      }
     }
   }
 
@@ -2137,6 +2165,7 @@ cleaner. Note that in this case the `..` followed by string or bytes constant
 matches exact number of elements so its usage is not limited to once.
 
 ```moonbit
+
 const NO : Bytes = "no"
 
 test {
@@ -2165,11 +2194,13 @@ n), since little-endian order is defined on bytes. Without `..`, the pattern
 must consume the entire view.
 
 ```moonbit
+
 test {
   let packet : Bytes = b"\xD2\x10\x7F"
   let header : BytesView = packet[0:2]
   let (flag, kind, version, length) = match header {
-    [u1be(flag), u3be(kind), u4be(version), u8be(length)] => (flag, kind, version, length)
+    [u1be(flag), u3be(kind), u4be(version), u8be(length)] =>
+      (flag, kind, version, length)
     _ => fail("bad header")
   }
   assert_eq(flag, 1)
@@ -2183,11 +2214,12 @@ Use literal bit patterns to validate headers, and `..` to capture the remaining
 data for the next parse step.
 
 ```moonbit
+
 test {
   let data : Bytes = b"\xF1\xAA\xBB"
   let view : BytesView = data[0:]
   let tag = match view {
-    [u4be(0b1111), u4be(tag), ..rest] => {
+    [u4be(0b1111), u4be(tag), .. rest] => {
       assert_eq(rest, b"\xAA\xBB"[0:])
       tag
     }
@@ -2200,6 +2232,7 @@ test {
 Examples over common byte containers (note the `MutArrayView` slice):
 
 ```moonbit
+
 test {
   let b : Bytes = b"\x80"
   guard b is [u1be(1), ..] else { fail("Bytes") }
@@ -2225,6 +2258,7 @@ Signed patterns use two's-complement semantics. For example, `u1be` yields `0`
 or `1`, while `i1be` yields `0` or `-1`:
 
 ```moonbit
+
 test {
   let bytes = b"\x80"
   let u : UInt = match bytes[:] {
@@ -2262,6 +2296,7 @@ Range patterns have the form `a..<b` or `a..=b`, where `..<` means the upper bou
 Here are some examples:
 
 ```moonbit
+
 const Zero = 0
 
 fn sign(x : Int) -> Int {
@@ -2324,6 +2359,7 @@ If the guard condition is false, the case is skipped and the next case is tried.
 For example:
 
 ```moonbit
+
 fn guard_cond(x : Int?) -> Int {
   fn f(x : Int) -> Array[Int] {
     [x, x + 42]
@@ -2348,6 +2384,7 @@ patterns are covered by the match expression. So you will see a warning of
 partial match for the following case:
 
 ```moonbit
+
 fn guard_check(x : Int?) -> Unit {
   match x {
     Some(a) if a >= 0 => ()
@@ -2416,20 +2453,13 @@ The pipe operator can also connect to an arrow function. When piping into an arr
 The reverse pipe operator applies the right-hand side as the final argument of the left-hand side call. For example, `f <| x` is equivalent to `f(x)`, and `f(a, b) <| c` is equivalent to `f(a, b, c)`. This is especially useful for DSL-like code, since nested calls such as `div([text("hello")])` can instead be written as `div <| [text <| "hello"]`.
 
 ```moonbit
-let page =
-  div <| [
+let page = div <| [
     text <| "hello",
-    section("toolbar") <| fn () {
-      [
-        text <| "save",
-        text <| "cancel",
-      ]
-    },
+    section("toolbar") <| fn() { [text <| "save", text <| "cancel"] },
   ]
 inspect(
   page,
-  content=
-    "div(text(hello), toolbar: div(text(save), text(cancel)))",
+  content="div(text(hello), toolbar: div(text(save), text(cancel)))",
 )
 ```
 
@@ -2570,8 +2600,11 @@ Unlike ordinary string literals, regex literals do not require double-escaping
 backslashes. For example, write `re"/\*"` instead of `re"/\\*"`.
 
 ```moonbit
+
 const REGEX_IDENT_START = re"[A-Za-z_]"
+
 const REGEX_IDENT_CONT = re"[A-Za-z0-9_]*"
+
 const REGEX_AB : Regex = re"a" + re"b"
 
 fn regex_default_arg(re? : Regex = re"abc") -> Bool {
@@ -2676,13 +2709,14 @@ beginning or end of the input.
 behavior.
 
 ```moonbit
+
 test {
   let input = " let_name = 42 "
-  if input =~ (
-      ((REGEX_IDENT_START + REGEX_IDENT_CONT) as ident),
+  if (input =~ (
+      (REGEX_IDENT_START + REGEX_IDENT_CONT) as ident,
       before=head,
-      after=tail,
-    ) {
+      after=tail
+    )) {
     assert_true(head is " ")
     assert_true(ident is "let_name")
     assert_true(tail is " = 42 ")
@@ -2690,7 +2724,7 @@ test {
     fail("expected identifier")
   }
 
-  if "abc" =~ (re"b", before~, after~) {
+  if ("abc" =~ (re"b", before~, after~)) {
     assert_true(before is "a")
     assert_true(after is "c")
   } else {
@@ -2698,7 +2732,7 @@ test {
   }
 
   let source : StringView = "abc"
-  if source =~ (re"." as ch, after=rest) {
+  if (source =~ (re"." as ch, after=rest)) {
     assert_eq(ch, 'a')
     assert_true(rest is "bc")
   } else {
@@ -2744,6 +2778,7 @@ or `\W`. Use POSIX character classes like `[[:digit:]]` inside character
 classes instead.
 
 ```moonbit
+
 test {
   let text = "xxabbbcyy"
   lexmatch text {
@@ -2777,6 +2812,7 @@ expand such a sequence, it needs to be prefixed with `..`, and it must have
 For example, we can use the spread operator to construct an array:
 
 ```moonbit
+
 test {
   let a1 : Array[Int] = [1, 2, 3]
   let a2 : FixedArray[Int] = [4, 5, 6]
@@ -2789,6 +2825,7 @@ test {
 Similarly, we can use the spread operator to construct a string:
 
 ```moonbit
+
 test {
   let s1 : String = "Hello"
   let s2 : StringView = "World".view()
@@ -2802,6 +2839,7 @@ The last example shows how the spread operator can be used to construct a bytes
 sequence.
 
 ```moonbit
+
 test {
   let b1 : Bytes = "hello"
   let b2 : BytesView = b1[1:4]

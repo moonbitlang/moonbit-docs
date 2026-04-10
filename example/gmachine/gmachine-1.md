@@ -103,6 +103,7 @@ coreF excludes anonymous functions because anonymous functions introduce extra f
 Super combinators will eventually be parsed into `ScDef[String]`, but writing a parser is a tedious task. I will provide it along with the final code.
 
 ```moonbit
+
 enum RawExpr[T] {
   Var(T)
   Num(Int)
@@ -110,18 +111,19 @@ enum RawExpr[T] {
   App(RawExpr[T], RawExpr[T])
   Let(Bool, List[(T, RawExpr[T])], RawExpr[T]) // isRec, Defs, Body
   Case(RawExpr[T], List[(Int, List[T], RawExpr[T])])
-} derive(Show)
+} derive(Debug)
 
 struct ScDef[T] {
   name : String
   args : List[T]
   body : RawExpr[T]
-} derive(Show)
+} derive(Debug)
 ```
 
 Additionally, some predefined coreF programs are required.
 
 ```moonbit
+
 let prelude_defs : List[ScDef[String]] = {
   let args : (FixedArray[String]) -> List[String] = x => @list.from_array(x)
   let id = ScDef::new("I", args(["x"]), Var("x")) // id x = x
@@ -316,9 +318,11 @@ In this simple version of the G-Machine, the state includes:
 - Heap: This is where the expression graph and the sequences of instructions corresponding to super combinators are stored.
   ```moonbit
   // Use the struct tuple to encapsulate an address type.
-  struct Addr(Int) derive(Eq, Show)
+
+  struct Addr(Int) derive(Eq, Debug)
 
   // Describe graph nodes with an enumeration type.
+
   enum Node {
     NNum(Int)
     // The application node
@@ -328,7 +332,7 @@ In this simple version of the G-Machine, the state includes:
     NGlobal(String, Int, List[Instruction])
     // The Indirection node. The key component of implementing lazy evaluation
     NInd(Addr)
-  } derive(Eq, Show)
+  } derive(Eq, Debug)
 
   struct GHeap {
     // The heap uses an array, 
@@ -338,6 +342,7 @@ In this simple version of the G-Machine, the state includes:
   }
 
   // Allocate heap space for nodes.
+
   fn GHeap::alloc(self : GHeap, node : Node) -> Addr {
     let heap = self
     fn next(n : Int) -> Int {
@@ -352,7 +357,7 @@ In this simple version of the G-Machine, the state includes:
     }
 
     let mut i = heap.object_count
-    while !(free(i)) {
+    while !free(i) {
       i = next(i)
     }
     heap.memory[i] = Some(node)
@@ -368,6 +373,7 @@ In this simple version of the G-Machine, the state includes:
 The entire state is represented using the type `GState`.
 
 ```moonbit
+
 struct GState {
   mut stack : List[Addr]
   heap : GHeap
@@ -401,6 +407,7 @@ fn GState::pop1(self : GState) -> Addr {
 }
 
 // e1 e2 ..... -> (e1, e2) ......
+
 fn GState::pop2(self : GState) -> (Addr, Addr) {
   match self.stack {
     More(addr1, tail=More(addr2, tail=reststack)) => {
@@ -425,6 +432,7 @@ All of these tasks have corresponding instruction implementations.
 The highly simplified G-Machine currently consists of 7 instructions.
 
 ```moonbit
+
 enum Instruction {
   Unwind
   PushGlobal(String)
@@ -433,12 +441,13 @@ enum Instruction {
   MkApp
   Update(Int)
   Pop(Int)
-} derive(Eq, Show)
+} derive(Eq, Debug)
 ```
 
 The `PushInt` instruction is the simplest. It allocates an `NNum` node on the heap and pushes its address onto the stack.
 
 ```moonbit
+
 fn GState::push_int(self : GState, num : Int) -> Unit {
   let addr = self.heap.alloc(NNum(num))
   self.put_stack(addr)
@@ -448,6 +457,7 @@ fn GState::push_int(self : GState, num : Int) -> Unit {
 The `PushGlobal` instruction retrieves the address of the specified super combinator from the global table and then pushes the address onto the stack.
 
 ```moonbit
+
 fn GState::push_global(self : GState, name : String) -> Unit {
   guard self.globals.get(name) is Some(addr) else {
     abort("push_global(): can't find supercombinator \{name}")
@@ -459,13 +469,14 @@ fn GState::push_global(self : GState, name : String) -> Unit {
 The `PushArg` instruction is a bit more complex. It has specific requirements regarding the layout of addresses on the stack: the first address should point to the super combinator node, followed by n addresses pointing to N `NApp` nodes. `PushArg` retrieves the Nth parameter, starting from the `offset + 1`.
 
 ```moonbit
+
 fn GState::push_arg(self : GState, offset : Int) -> Unit {
   let appaddr = self.stack.unsafe_nth(offset + 1)
   let arg = match self.heap[appaddr] {
     NApp(_, arg) => arg
     otherwise =>
       abort(
-        "pusharg: stack offset \{offset} address \{appaddr} node \{otherwise}",
+        "pusharg: stack offset \{offset} address \{@debug.to_string(appaddr)} node \{@debug.to_string(otherwise)}",
       )
   }
   self.put_stack(arg)
@@ -475,6 +486,7 @@ fn GState::push_arg(self : GState, offset : Int) -> Unit {
 The `MkApp` instruction takes two addresses from the top of the stack, constructs an `NApp` node, and pushes its address onto the stack.
 
 ```moonbit
+
 fn GState::mk_apply(self : GState) -> Unit {
   let (a1, a2) = self.pop2()
   let appaddr = self.heap.alloc(NApp(a1, a2))
@@ -485,6 +497,7 @@ fn GState::mk_apply(self : GState) -> Unit {
 The `Update` instruction assumes that the first address on the stack points to the current redex's evaluation result. It skips the addresses of the immediately following super combinator nodes and replaces the Nth `NApp` node with an indirect node pointing to the evaluation result. If the current redex is a CAF, it directly replaces its corresponding `NGlobal` node on the heap. From this, we can see why in lazy functional languages, there is not much distinction between functions without parameters and ordinary variables.
 
 ```moonbit
+
 fn GState::update(self : GState, n : Int) -> Unit {
   let addr = self.pop1()
   let dst = self.stack.unsafe_nth(n)
@@ -500,6 +513,7 @@ The `Unwind` instruction in the G-Machine is akin to an evaluation loop. It has 
 - For `NInd` nodes: Push the address contained within this indirect node onto the stack and Unwind again.
 
 ```moonbit
+
 fn GState::unwind(self : GState) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {
@@ -606,17 +620,20 @@ fn RawExpr::compileC(
 Once the super combinators are compiled, they need to be placed on the heap (along with adding their addresses to the global table). This can be done recursively.
 
 ```moonbit
+
 fn build_initial_heap(
-  scdefs : List[(String, Int, List[Instruction])]
+  scdefs : List[(String, Int, List[Instruction])],
 ) -> (GHeap, @hashmap.HashMap[String, Addr]) {
   let heap = { object_count: 0, memory: Array::make(10000, None) }
   let globals = @hashmap.new(capacity=50)
-  loop scdefs {
-    Empty => ()
-    More((name, arity, instrs), tail=rest) => {
-      let addr = heap.alloc(NGlobal(name, arity, instrs))
-      globals[name] = addr
-      continue rest
+  for scdefs = scdefs {
+    match scdefs {
+      Empty => break
+      More((name, arity, instrs), tail=rest) => {
+        let addr = heap.alloc(NGlobal(name, arity, instrs))
+        globals[name] = addr
+        continue rest
+      }
     }
   }
   return (heap, globals)
@@ -626,6 +643,7 @@ fn build_initial_heap(
 Define a function "step" that updates the state of the G-Machine by one step, returning false if the final state has been reached.
 
 ```moonbit
+
 fn GState::step(self : GState) -> Bool {
   match self.code {
     Empty => return false
@@ -650,6 +668,7 @@ fn GState::step(self : GState) -> Bool {
 Additionally, define a function "reify" that continuously executes the "step" function until the final state is reached.
 
 ```moonbit
+
 fn GState::reify(self : GState) -> Node {
   if self.step() {
     self.reify()
@@ -660,7 +679,7 @@ fn GState::reify(self : GState) -> Node {
         let res = self.heap[addr]
         return res
       }
-      _ => abort("wrong stack \{stack}")
+      _ => abort("wrong stack \{@debug.to_string(stack)}")
     }
   }
 }
@@ -674,7 +693,7 @@ fn run(codes : List[String]) -> Node {
     let tokens = tokenize(code)
     let code = try tokens.parse_sc() catch {
       ParseError(s) => abort(s)
-    } else {
+    } noraise {
       expr => expr
     }
     let code = code.compileSC()

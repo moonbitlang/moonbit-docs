@@ -109,9 +109,11 @@ Here's a simple example of using `with_task_group` to create multiple tasks and 
 async test "with_task_group" {
   let log = []
   @async.with_task_group(group => {
-    group.spawn_bg(() => for _ in 0..<3 {
-      log.push("task #1 tick")
-      @async.sleep(200) // sleep for 200ms
+    group.spawn_bg(() => {
+      for _ in 0..<3 {
+        log.push("task #1 tick")
+        @async.sleep(200) // sleep for 200ms
+      }
     })
     group.spawn_bg(() => {
       @async.sleep(100)
@@ -179,13 +181,15 @@ and allow at most three retry attempts:
 
 ```moonbit
 async fn make_request() -> String {
-  @async.retry(Immediate, max_retry=3, () => @async.with_timeout(1000, () => {
-    let (response, body) = @http.get("https://www.moonbitlang.com")
-    guard response.code is (200..<300) else {
-      fail("the HTTP request is not successful")
-    }
-    body.text()
-  }))
+  @async.retry(Immediate, max_retry=3, () => {
+    @async.with_timeout(1000, () => {
+      let (response, body) = @http.get("https://www.moonbitlang.com")
+      guard response.code is (200..<300) else {
+        fail("the HTTP request is not successful")
+      }
+      body.text()
+    })
+  })
 }
 ```
 

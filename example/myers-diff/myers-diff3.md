@@ -78,13 +78,13 @@ struct Box {
   right : Int
   top : Int
   bottom : Int
-} derive(Show)
+}
 
 ///|
 struct Snake {
   start : (Int, Int)
   end : (Int, Int)
-} derive(Show)
+}
 
 ///|
 fn Box::width(self : Self) -> Int {

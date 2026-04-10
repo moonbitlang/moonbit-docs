@@ -209,7 +209,7 @@ Let's first define the `Line` struct, which represents a line in the text.
 struct Line {
   number : Int // Line number
   text : String // Does not include newline
-} derive(Show, ToJson)
+} derive(ToJson)
 
 ///|
 fn Line::new(number : Int, text : String) -> Line {

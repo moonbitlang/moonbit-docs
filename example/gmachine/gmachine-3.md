@@ -342,6 +342,7 @@ The corresponding graph node for a list is `NConstr(Int, List[Addr])`, which con
 We need to add two instructions, `Split` and `Pack`, to deconstruct and construct lists.
 
 ```moonbit
+
 fn GState::pack(self : GState, t : Int, n : Int) -> Unit {
   let addrs = self.stack.take(n)
   self.stack = self.stack.drop(n)
@@ -363,7 +364,11 @@ fn GState::split(self : GState) -> Unit {
 Additionally, a `CaseJump` instruction is needed to implement the `case` expression.
 
 ```moonbit
-fn GState::casejump(self : GState, table : List[(Int, List[Instruction])]) -> Unit {
+
+fn GState::casejump(
+  self : GState,
+  table : List[(Int, List[Instruction])],
+) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {
     NConstr(t, _) =>
@@ -374,7 +379,10 @@ fn GState::casejump(self : GState, table : List[(Int, List[Instruction])]) -> Un
           self.put_stack(addr)
         }
       }
-    otherwise => abort("casejump(): addr = \{addr} node = \{otherwise}")
+    otherwise =>
+      abort(
+        "casejump(): addr = \{@debug.to_string(addr)} node = \{@debug.to_string(otherwise)}",
+      )
   }
 }
 ```
@@ -384,7 +392,9 @@ After adding the above instructions, we need to modify the `compileC` and `compi
 ```moonbit
 App(App(Constructor(tag=1, arity=2), x), xs) =>
   // Cons(x, xs)
-  xs.compileC(env) + x.compileC(argOffset(1, env)) + @list.from_array([Pack(1, 2)])
+  xs.compileC(env) +
+  x.compileC(argOffset(1, env)) +
+  @list.from_array([Pack(1, 2)])
 // Empty
 Constructor(tag=0, arity=0) => @list.from_array([Pack(0, 0)])
 ```
@@ -397,12 +407,15 @@ Constructor(tag=0, arity=0) =>
   @list.from_array([Pack(0, 0)])
 App(App(Constructor(tag=1, arity=2), x), xs) =>
   // Cons(x, xs)
-  xs.compileC(env) + x.compileC(argOffset(1, env)) + @list.from_array([Pack(1, 2)])
+  xs.compileC(env) +
+  x.compileC(argOffset(1, env)) +
+  @list.from_array([Pack(1, 2)])
 ```
 
 At this point, a new problem arises. Previously, printing the evaluation result only needed to handle simple `NNum` nodes, but `NConstr` nodes have substructures. When the list itself is evaluated to WHNF, its substructures are mostly unevaluated `NApp` nodes. We need to add a `Print` instruction, which will recursively evaluate and write the result into the `output` component of `GState`.
 
 ```moonbit
+
 fn GState::gprint(self : GState) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {

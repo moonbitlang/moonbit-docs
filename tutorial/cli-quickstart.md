@@ -57,7 +57,7 @@ The root package defines the CLI contract. It owns the command shape and turns a
 pub struct Config {
   url : String
   output : String?
-} derive(Show, Eq)
+} derive(Eq)
 
 ///|
 pub fn command() -> @argparse.Command {

@@ -11,10 +11,15 @@ For example, deriving `Show` for a struct `struct A { x: T1; y: T2 }` requires b
 The derived format is similar to how the type can be constructed in code.
 
 ```moonbit
+
 struct MyStruct {
   x : Int
   y : Int
-} derive(Show)
+}
+
+impl Show for MyStruct with output(self, logger) {
+  logger.write_string("{x: \{self.x}, y: \{self.y}}")
+}
 
 test "derive show struct" {
   let p = MyStruct::{ x: 1, y: 2 }
@@ -23,11 +28,20 @@ test "derive show struct" {
 ```
 
 ```moonbit
+
 enum MyEnum {
   Case1(Int)
   Case2(label~ : String)
   Case3
-} derive(Show)
+}
+
+impl Show for MyEnum with output(self, logger) {
+  match self {
+    Case1(value) => logger.write_string("Case1(\{value})")
+    Case2(label~) => logger.write_string("Case2(label=\"\{label}\")")
+    Case3 => logger.write_string("Case3")
+  }
+}
 
 test "derive show enum" {
   assert_eq(Show::to_string(MyEnum::Case1(42)), "Case1(42)")
@@ -118,28 +132,30 @@ test "derive eq_compare enum" {
 For structs, the default value is the struct with all fields set as their default value.
 
 ```moonbit
+
 struct DeriveDefault {
   x : Int
   y : String?
-} derive(Default, Eq, Show)
+} derive(Default, Eq)
 
 test "derive default struct" {
   let p = DeriveDefault::default()
-  assert_eq(p, DeriveDefault::{ x: 0, y: None })
+  assert_true(p == DeriveDefault::{ x: 0, y: None })
 }
 ```
 
 For enums, the default value is the only case that has no parameters.
 
 ```moonbit
+
 enum DeriveDefaultEnum {
   Case1(Int)
   Case2(label~ : String)
   Case3
-} derive(Default, Eq, Show)
+} derive(Default, Eq)
 
 test "derive default enum" {
-  assert_eq(DeriveDefaultEnum::default(), DeriveDefaultEnum::Case3)
+  assert_true(DeriveDefaultEnum::default() == DeriveDefaultEnum::Case3)
 }
 ```
 
@@ -165,10 +181,11 @@ This will allow the type to be used in places that expects a `Hash` implementati
 for example `HashMap`s and `HashSet`s.
 
 ```moonbit
+
 struct DeriveHash {
   x : Int
   y : String?
-} derive(Hash, Eq, Show)
+} derive(Hash, Eq)
 
 test "derive hash struct" {
   let hs = @hashset.new()
@@ -191,25 +208,26 @@ used for serializing the type to and from JSON.
 The implementation is mainly for debugging and storing the types in a human-readable format.
 
 ```moonbit
+
 struct JsonTest1 {
   x : Int
   y : Int
-} derive(FromJson, ToJson, Eq, Show)
+} derive(FromJson, ToJson, Eq)
 
 enum JsonTest2 {
   A(x~ : Int)
   B(x~ : Int, y~ : Int)
-} derive(FromJson(style="legacy"), ToJson(style="legacy"), Eq, Show)
+} derive(FromJson(style="legacy"), ToJson(style="legacy"), Eq)
 
 test "json basic" {
   let input = JsonTest1::{ x: 123, y: 456 }
   let expected : Json = { "x": 123, "y": 456 }
   assert_eq(input.to_json(), expected)
-  assert_eq(@json.from_json(expected), input)
+  assert_true(@json.from_json(expected) == input)
   let input = JsonTest2::A(x=123)
   let expected : Json = { "$tag": "A", "x": 123 }
   assert_eq(input.to_json(), expected)
-  assert_eq(@json.from_json(expected), input)
+  assert_true(@json.from_json(expected) == input)
 }
 ```
 
@@ -228,6 +246,7 @@ For such usage and future usage of them, please manually implement the traits.
 The arguments include: `repr`, `case_repr`, `default`, `rename_all`, etc.
 
 ```moonbit
+
 struct JsonTest3 {
   x : Int
   y : Int
@@ -235,23 +254,22 @@ struct JsonTest3 {
   FromJson(fields(x(rename="renamedX"))),
   ToJson(fields(x(rename="renamedX"))),
   Eq,
-  Show,
 )
 
 enum JsonTest4 {
   A(x~ : Int)
   B(x~ : Int, y~ : Int)
-} derive(FromJson, ToJson, Eq, Show)
+} derive(FromJson, ToJson, Eq)
 
 test "json args" {
   let input = JsonTest3::{ x: 123, y: 456 }
   let expected : Json = { "renamedX": 123, "y": 456 }
   assert_eq(input.to_json(), expected)
-  assert_eq(@json.from_json(expected), input)
+  assert_true(@json.from_json(expected) == input)
   let input = JsonTest4::A(x=123)
   let expected : Json = ["A", { "x": 123 }]
   assert_eq(input.to_json(), expected)
-  assert_eq(@json.from_json(expected), input)
+  assert_true(@json.from_json(expected) == input)
 }
 ```
 
@@ -295,6 +313,7 @@ As a result, it interpreted as `T | undefined` iff it is a direct field
 of a struct, and `[T] | null` otherwise:
 
 ```moonbit
+
 struct A {
   x : Int?
   y : Int??
