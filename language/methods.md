@@ -126,7 +126,6 @@ test {
 MoonBit supports overloading infix operators of builtin operators via several builtin traits. For example:
 
 ```moonbit
-
 struct T {
   x : Int
 }
@@ -145,7 +144,6 @@ test {
 Other operators are overloaded via methods with annotations, for example `_[_]` and `_[_]=_`:
 
 ```moonbit
-
 struct Coord {
   mut x : Int
   mut y : Int
@@ -215,7 +213,6 @@ When overloading `_[_]`/`_[_] = _`/`_[_:_]`, the method must have a correcnt sig
 By implementing `_[_:_]` method, you can create a view for a user-defined type. Here is an example:
 
 ```moonbit
-
 struct DataView(String)
 
 struct Data {}
@@ -239,7 +236,6 @@ test {
 MoonBit provides a trait system for overloading/ad-hoc polymorphism. Traits declare a list of operations, which must be supplied when a type wants to implement the trait. Traits can be declared as follows:
 
 ```moonbit
-
 pub(open) trait I {
   method_(Int) -> Int
   method_with_label(Int, label~ : Int) -> Int
@@ -254,7 +250,6 @@ In the body of a trait definition, a special type `Self` is used to refer to the
 A trait can depend on other traits, for example:
 
 ```moonbit
-
 pub(open) trait Position {
   pos(Self) -> (Int, Int)
 }
@@ -272,7 +267,6 @@ To implement a trait, a type must explicitly provide all the methods required by
 using the syntax `impl Trait for Type with method_name(...) { ... }`. For example:
 
 ```moonbit
-
 pub(open) trait MyShow {
   to_string(Self) -> String
 }
@@ -285,10 +279,9 @@ pub impl MyShow for MyType with to_string(self) {
 
 struct MyContainer[_] {}
 
-// trait implementation with type parameters.
-// `[X : Show]` means the type parameter `X` must implement `Show`,
-// this will be covered later.
-
+/// trait implementation with type parameters.
+/// `[X : Show]` means the type parameter `X` must implement `Show`,
+/// this will be covered later.
 pub impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) {
   ...
 }
@@ -299,7 +292,6 @@ Type annotation can be omitted for trait `impl`: MoonBit will automatically infe
 The author of the trait can also define **default implementations** for some methods in the trait, for example:
 
 ```moonbit
-
 pub(open) trait J {
   f(Self) -> Unit
   f_twice(Self) -> Unit = _
@@ -320,7 +312,6 @@ Implementers of trait `J` don't have to provide an implementation for `f_twice`:
 They can always override the default implementation with an explicit `impl J for Type with f_twice`, if desired, though.
 
 ```moonbit
-
 impl J for Int with f(self) {
   println(self)
 }
@@ -340,7 +331,6 @@ To implement the sub trait, one will have to implement the super traits,
 and the methods defined in the sub trait. For example:
 
 ```moonbit
-
 impl Position for Point with pos(self) {
   (self.x, self.y)
 }
@@ -380,7 +370,6 @@ Currently, an empty trait without any method is implemented automatically.
 When declaring a generic function, the type parameters can be annotated with the traits they should implement, allowing the definition of constrained generic functions. For example:
 
 ```moonbit
-
 fn[X : Eq] contains(xs : Array[X], elem : X) -> Bool {
   for x in xs {
     if x == elem {
@@ -395,7 +384,6 @@ fn[X : Eq] contains(xs : Array[X], elem : X) -> Bool {
 Without the `Eq` requirement, the expression `x == elem` in `contains` will result in a type error. Now, the function `contains` can be called with any type that implements `Eq`, for example:
 
 ```moonbit
-
 struct Point {
   x : Int
   y : Int
@@ -417,7 +405,6 @@ test {
 Methods of a trait can be called directly via `Trait::method`. MoonBit will infer the type of `Self` and check if `Self` indeed implements `Trait`, for example:
 
 ```moonbit
-
 test {
   assert_eq(Show::to_string(42), "42")
   assert_eq(Compare::compare(1.0, 2.5), -1)
@@ -438,7 +425,6 @@ the method called via dot syntax must always come from current package or the pa
 Here's an example of calling trait `impl` with dot syntax:
 
 ```moonbit
-
 struct MyCustomType {}
 
 pub impl Show for MyCustomType with output(self, logger) {
@@ -462,7 +448,6 @@ Trait object erases the concrete type of a value,
 so objects created from different concrete types can be put in the same data structure and handled uniformly:
 
 ```moonbit
-
 pub(open) trait Animal {
   speak(Self) -> String
 }
@@ -510,7 +495,6 @@ Not all traits can be used to create objects.
 Users can define new methods for trait objects, just like defining new methods for structs and enums:
 
 ```moonbit
-
 pub(open) trait Logger {
   write_string(Self, String) -> Unit
 }
@@ -523,8 +507,7 @@ fn[Obj : CanLog] &Logger::write_object(self : &Logger, obj : Obj) -> Unit {
   obj.log(self)
 }
 
-// use the new method to simplify code
-
+/// use the new method to simplify code
 pub impl[A : CanLog, B : CanLog] CanLog for (A, B) with log(self, logger) {
   let (a, b) = self
   logger
@@ -571,7 +554,6 @@ trait Default {
 MoonBit can automatically derive implementations for some builtin traits:
 
 ```moonbit
-
 struct T {
   a : Int
   b : Int

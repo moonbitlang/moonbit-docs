@@ -9,7 +9,6 @@ MoonBit comes with test support to make the writing easier and simpler.
 MoonBit provides the test code block for writing inline test cases. For example:
 
 ```moonbit
-
 test "test_name" {
   assert_eq(1 + 1, 2)
   assert_eq(2 + 2, 4)
@@ -22,7 +21,6 @@ A test code block is essentially a function that returns a `Unit` but may throws
 If a test name starts with `"panic"`, it indicates that the expected behavior of the test is to trigger a panic, and the test will only pass if the panic is triggered. For example:
 
 ```moonbit
-
 test "panic_test" {
   let _ : Int = Option::None.unwrap()
 }
@@ -40,7 +38,6 @@ As we mentioned before, `Show` is a builtin trait that can be derived, providing
 The labelled argument `content` can be omitted as `moon test --update` will insert it for you:
 
 ```moonbit
-
 struct X {
   x : Int
 } derive(Debug)
@@ -57,7 +54,6 @@ The problem with the derived `Show` trait is that it does not perform pretty pri
 The solution is to use `@json.inspect(x, content=x)`. The benefit is that the resulting content is a JSON structure, which can be more readable after being formatted.
 
 ```moonbit
-
 enum Rec {
   End
   Really_long_name_that_is_difficult_to_read(Rec)
@@ -92,7 +88,6 @@ Still, sometimes we want to not only record one data structure but the output of
 A full snapshot test can be used to record anything using `@test.T::write` and `@test.T::writeln`:
 
 ```moonbit
-
 test "record anything" (t : @test.Test) {
   t.write("Hello, world!")
   t.writeln(" And hello, MoonBit!")

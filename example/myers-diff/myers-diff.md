@@ -205,7 +205,6 @@ You can see that in each round of searching, `k` is strictly within the range `[
 Let's first define the `Line` struct, which represents a line in the text.
 
 ```moonbit
-///
 struct Line {
   number : Int // Line number
   text : String // Does not include newline
@@ -220,7 +219,6 @@ fn Line::new(number : Int, text : String) -> Line {
 Then, define a helper function that splits a string into `Array[Line]` based on newline characters. Note that line numbers start from 1.
 
 ```moonbit
-///
 fn lines(str : String) -> Array[Line] {
   let lines = Array::new(capacity=50)
   let mut line_number = 0

@@ -342,7 +342,6 @@ The corresponding graph node for a list is `NConstr(Int, List[Addr])`, which con
 We need to add two instructions, `Split` and `Pack`, to deconstruct and construct lists.
 
 ```moonbit
-
 fn GState::pack(self : GState, t : Int, n : Int) -> Unit {
   let addrs = self.stack.take(n)
   self.stack = self.stack.drop(n)
@@ -364,7 +363,6 @@ fn GState::split(self : GState) -> Unit {
 Additionally, a `CaseJump` instruction is needed to implement the `case` expression.
 
 ```moonbit
-
 fn GState::casejump(
   self : GState,
   table : List[(Int, List[Instruction])],
@@ -415,7 +413,6 @@ App(App(Constructor(tag=1, arity=2), x), xs) =>
 At this point, a new problem arises. Previously, printing the evaluation result only needed to handle simple `NNum` nodes, but `NConstr` nodes have substructures. When the list itself is evaluated to WHNF, its substructures are mostly unevaluated `NApp` nodes. We need to add a `Print` instruction, which will recursively evaluate and write the result into the `output` component of `GState`.
 
 ```moonbit
-
 fn GState::gprint(self : GState) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {

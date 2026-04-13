@@ -158,7 +158,6 @@ options(
 There's also a top-level structure called `test` block. A `test` block defines inline tests, such as:
 
 ```moonbit
-
 test "test_name" {
   assert_eq(1 + 1, 2)
   assert_eq(2 + 2, 4)

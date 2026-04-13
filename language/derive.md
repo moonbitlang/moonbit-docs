@@ -5,54 +5,6 @@ MoonBit supports deriving a number of builtin traits automatically from the type
 To derive a trait `T`, it is required that all fields used in the type implements `T`.
 For example, deriving `Show` for a struct `struct A { x: T1; y: T2 }` requires both `T1: Show` and `T2: Show`
 
-## Show
-
-`derive(Show)` will generate a pretty-printing method for the type.
-The derived format is similar to how the type can be constructed in code.
-
-```moonbit
-
-struct MyStruct {
-  x : Int
-  y : Int
-}
-
-impl Show for MyStruct with output(self, logger) {
-  logger.write_string("{x: \{self.x}, y: \{self.y}}")
-}
-
-test "derive show struct" {
-  let p = MyStruct::{ x: 1, y: 2 }
-  assert_eq(Show::to_string(p), "{x: 1, y: 2}")
-}
-```
-
-```moonbit
-
-enum MyEnum {
-  Case1(Int)
-  Case2(label~ : String)
-  Case3
-}
-
-impl Show for MyEnum with output(self, logger) {
-  match self {
-    Case1(value) => logger.write_string("Case1(\{value})")
-    Case2(label~) => logger.write_string("Case2(label=\"\{label}\")")
-    Case3 => logger.write_string("Case3")
-  }
-}
-
-test "derive show enum" {
-  assert_eq(Show::to_string(MyEnum::Case1(42)), "Case1(42)")
-  assert_eq(
-    Show::to_string(MyEnum::Case2(label="hello")),
-    "Case2(label=\"hello\")",
-  )
-  assert_eq(Show::to_string(MyEnum::Case3), "Case3")
-}
-```
-
 ## Eq and Compare
 
 `derive(Eq)` and `derive(Compare)` will generate the corresponding method for testing equality and comparison.
@@ -132,7 +84,6 @@ test "derive eq_compare enum" {
 For structs, the default value is the struct with all fields set as their default value.
 
 ```moonbit
-
 struct DeriveDefault {
   x : Int
   y : String?
@@ -147,7 +98,6 @@ test "derive default struct" {
 For enums, the default value is the only case that has no parameters.
 
 ```moonbit
-
 enum DeriveDefaultEnum {
   Case1(Int)
   Case2(label~ : String)
@@ -181,7 +131,6 @@ This will allow the type to be used in places that expects a `Hash` implementati
 for example `HashMap`s and `HashSet`s.
 
 ```moonbit
-
 struct DeriveHash {
   x : Int
   y : String?
@@ -208,7 +157,6 @@ used for serializing the type to and from JSON.
 The implementation is mainly for debugging and storing the types in a human-readable format.
 
 ```moonbit
-
 struct JsonTest1 {
   x : Int
   y : Int
@@ -246,7 +194,6 @@ For such usage and future usage of them, please manually implement the traits.
 The arguments include: `repr`, `case_repr`, `default`, `rename_all`, etc.
 
 ```moonbit
-
 struct JsonTest3 {
   x : Int
   y : Int
@@ -313,7 +260,6 @@ As a result, it interpreted as `T | undefined` iff it is a direct field
 of a struct, and `[T] | null` otherwise:
 
 ```moonbit
-
 struct A {
   x : Int?
   y : Int??

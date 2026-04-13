@@ -259,7 +259,7 @@ The prefixes have the following meanings:
 
 Currently this attribute only works with some specific warnings.
 
-To learn more about warning names, see [warning list](../toolchain/moon/package.md#warning-list).
+To learn more about warning names, see [warning list](../toolchain/moon/package.md#warnings-list).
 
 ## External Attribute
 
