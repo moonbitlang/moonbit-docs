@@ -23,7 +23,7 @@ The key is `supported-targets`:
 ```bash
 moon new fullstack_one_project
 cd fullstack_one_project
-moon add moonbitlang/async
+moon add moonbitlang/async@0.17.0
 moon add moonbit-community/rabbita
 ```
 
@@ -54,7 +54,7 @@ Module config:
   "name": "moonbit-community/fullstack-one-project-doc",
   "version": "0.1.0",
   "deps": {
-    "moonbitlang/async": "0.16.6",
+    "moonbitlang/async": "0.17.0",
     "moonbit-community/rabbita": "0.11.5"
   },
   "preferred-target": "native",

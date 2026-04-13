@@ -16,7 +16,7 @@ Start with a normal MoonBit module:
 ```bash
 moon new download_cli
 cd download_cli
-moon add moonbitlang/async
+moon add moonbitlang/async@0.17.0
 ```
 
 `argparse` is already part of the standard library, so this quickstart only adds `moonbitlang/async`.
@@ -28,7 +28,7 @@ Set the preferred target to native in `moon.mod.json` so `moon run` and `moon bu
   "name": "username/download_cli",
   "version": "0.1.0",
   "deps": {
-    "moonbitlang/async": "0.16.6"
+    "moonbitlang/async": "0.17.0"
   },
   "preferred-target": "native"
 }
@@ -72,16 +72,20 @@ pub fn command() -> @argparse.Command {
       ),
     ],
     positionals=[
-      @argparse.PositionArg::new("url", about="HTTP or HTTPS URL to download"),
+      @argparse.PositionArg::new(
+        "url",
+        about="HTTP or HTTPS URL to download",
+        num_args=@argparse.ValueRange::single(),
+      ),
     ],
   )
 }
 
 ///|
-pub fn parse_config(argv : Array[String]) -> Config raise {
+pub fn parse_config(argv : ArrayView[String]) -> Config raise {
   let matches = @argparse.parse(command(), argv~)
   let values : Map[String, Array[String]] = matches.values
-  guard values is { "url": [url, ..], "output"? : output_paths, .. } else {
+  guard values is { "url": [url], "output"? : output_paths, .. } else {
     fail("missing url")
   }
   let output = match output_paths {
@@ -146,7 +150,8 @@ options(
 
 ```moonbit
 async fn main {
-  let config = @app.parse_config(@env.args())
+  let argv = @env.args()
+  let config = @app.parse_config(argv[1:])
   @app.run(config)
 }
 ```
