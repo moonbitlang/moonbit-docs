@@ -65,7 +65,6 @@
   * [Supported Targets](module.md#supported-targets)
   * [Source directory](module.md#source-directory)
   * [Warning List](module.md#warning-list)
-  * [Alert List](module.md#alert-list)
   * [Scripts](module.md#scripts)
 * [Package Configuration](package.md)
   * [New format (`moon.pkg`)](package.md#new-format-moon-pkg)
