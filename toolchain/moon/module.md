@@ -230,60 +230,87 @@ If it is necessary to activate certain warnings that were originally prohibited,
 }
 ```
 
-You can use `moonc build-package -warn-help` to see the list of preset compiler warning numbers.
+You can use `moonc check -warn-help` to see the list of preset compiler warning numbers.
+In the output below, `mnemonic` is the symbolic warning name used in warning lists,
+while `id` is the numeric form of the same warning.
 
 ```default
-$ moonc -v
-v0.1.20250606+a3f4966ca
-
-$ moonc build-package -warn-help
+$ moonc check -warn-help
 Available warnings: 
-  1 Unused function.
-  2 Unused variable.
-  3 Unused type declaration.
-  4 Unused abstract type.
-  5 Unused type variable.
-  6 Unused constructor.
-  7 Unused field or constructor argument.
-  8 Redundant modifier.
-  9 Unused function declaration.
- 10 Struct never constructed.
- 11 Partial pattern matching.
- 12 Unreachable code.
- 13 Unresolved type variable.
- 14 Lowercase type name.
- 15 Unused mutability.
- 16 Parser inconsistency.
- 18 Useless loop expression.
- 19 Top-level declaration is not left aligned.
- 20 Invalid pragma
- 21 Some arguments of constructor are omitted in pattern.
- 22 Ambiguous block.
- 23 Useless try expression.
- 24 Useless error type.
- 26 Useless catch all.
- 27 Deprecated syntax.
- 28 Todo
- 29 Unused package.
- 30 Empty package alias.
- 31 Optional argument never supplied.
- 32 Default value of optional argument never used.
- 33 Unused import value
- 35 Reserved keyword.
- 36 Loop label shadows another label.
- 37 Unused loop label.
- 38 Useless guard.
- 39 Duplicated method.
- 40 Call a qualified method using regular call syntax.
- 41 Closed map pattern.
- 42 Invalid attribute.
- 43 Unused attribute.
- 44 Invalid inline-wasm.
- 46 Useless `..` in pattern
- 47 Invalid mbti file
- 48 Trait method with default implementation not marked with `= _`
- 49 Unused pub definition because it does not exist in mbti file.
-  A all warnings
+mnemonic                   description                                                     id state
+unused_value               Unused variable or function.                                     1 warn
+unused_value               Unused variable.                                                 2 warn
+unused_type_declaration    Unused type declaration.                                         3 warn
+missing_priv               Unused abstract type.                                            4 warn
+unused_type_variable       Unused type variable.                                            5 warn
+unused_constructor         Unused constructor.                                              6 warn
+unused_field               Unused field or constructor argument.                            7 warn
+redundant_modifier         Redundant modifier.                                              8 warn
+struct_never_constructed   Struct never constructed.                                        9 warn
+unused_pattern             Unused pattern.                                                 10 warn
+partial_match              Partial pattern matching.                                       11 error
+unreachable_code           Unreachable code.                                               12 warn
+unresolved_type_variable   Unresolved type variable.                                       13 warn
+alert or alert_<category>  All alerts or alerts with specific category.                    14 warn
+unused_mut                 Unused mutability.                                              15 error
+parser_inconsistency       Parser inconsistency check.                                     16 warn
+ambiguous_loop_argument    Ambiguous usage of loop argument.                               17 warn
+useless_loop               Useless loop expression.                                        18 warn
+deprecated                 Deprecated API usage.                                           20 warn
+missing_pattern_arguments  Some arguments of constructor are omitted in pattern.           21 warn
+ambiguous_block            Ambiguous block.                                                22 warn
+unused_try                 Useless try expression.                                         23 warn
+unused_error_type          Useless error type.                                             24 warn
+test_unqualified_package   Using implicitly imported API in test.                          25 off
+unused_catch_all           Useless catch all.                                              26 warn
+deprecated_syntax          Deprecated syntax.                                              27 warn
+todo                       Todo                                                            28 warn
+unused_package             Unused package.                                                 29 warn
+missing_package_alias      Empty package alias.                                            30 warn
+unused_optional_argument   Optional argument never supplied.                               31 off
+unused_default_value       Default value of optional argument never used.                  32 off
+text_segment_excceed       Text segment exceed the line or column limits.                  33 warn
+implicit_use_builtin       Implicit use of definitions from `moonbitlang/core/builtin`.    34 warn
+reserved_keyword           Reserved keyword.                                               35 warn
+loop_label_shadowing       Loop label shadows another label.                               36 warn
+unused_loop_label          Unused loop label.                                              37 warn
+missing_invariant          For-loop is missing an invariant.                               38 off
+missing_reasoning          For-loop is missing a proof_reasoning.                          39 off
+multiline_string_escape    Deprecated escape sequence in multiline string.                 40 error
+missing_rest_mark          Missing `..` in map pattern.                                    41 warn
+invalid_attribute          Invalid attribute.                                              42 warn
+unused_attribute           Unused attribute.                                               43 warn
+invalid_inline_wasm        Invalid inline-wasm.                                            44 error
+unused_rest_mark           Useless `..` in pattern                                         46 warn
+invalid_mbti               Invalid mbti file                                               47 warn
+missing_definition         Unused pub definition because it does not exist in mbti file.   49 warn
+method_shadowing           Local method shadows upstream method                            50 warn
+ambiguous_precedence       Ambiguous operator precedence                                   51 warn
+unused_loop_variable       Loop variable not updated in loop                               52 warn
+unused_trait_bound         Unused trait bound                                              53 warn
+ambiguous_range_direction  Ambiguous looping direction for range e1..=e2                   54 off
+unannotated_ffi            Unannotated FFI param type                                      55 error
+missing_pattern_field      Missing field in struct pattern                                 56 warn
+missing_pattern_payload    Constructor pattern expect payload                              57 warn
+unaligned_byte_access      Unaligned byte access in bits pattern                           59 warn
+unused_struct_update       Unused struct update                                            60 warn
+duplicate_test             Duplicate test name                                             61 warn
+invalid_cascade            Calling method with non-unit return type via `..`               62 warn
+syntax_lint                Syntax lint warning                                             63 warn
+unannotated_toplevel_array Unannotated toplevel array                                      64 warn
+prefer_readonly_array      Suggest ReadOnlyArray for read-only array literal               65 off
+prefer_fixed_array         Suggest FixedArray for mutated array literal                    66 off
+unused_async               Useless `async` annotation                                      67 warn
+declaration_unimplemented  Declaration is unimplemented                                    68 warn
+declaration_implemented    Declaration is already implemented                              69 off
+deprecated_for_in_method   using `iterator()` method for `for .. in` loop.                 70 off
+core_package_not_imported  Packages in `moonbitlang/core` need to be explicitly imported.  71 warn
+unqualified_local_using    unqualified local using                                         72 off
+unnecessary_annotation     unnecessary type annotation                                     73 off
+missing_doc                Missing documentation for public definition                     74 off
+A                          all warnings
+state: warn = enabled, error = promoted to error, off = disabled
+note: default alert exceptions: alert_unsafe=off
 ```
 
 ## Scripts
