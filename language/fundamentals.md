@@ -271,7 +271,8 @@ test "buffer 1" {
 }
 ```
 
-When the expected type is `Bytes`, the `b` prefix can be omitted. Array literals can also be overloaded to construct a `Bytes` sequence by specifying each byte in the sequence.
+Array literals can also be overloaded to construct a `Bytes` sequence by
+specifying each byte in the sequence.
 
 ```moonbit
 test {
@@ -559,8 +560,8 @@ The overloaded literals can be composed. If array literal can be overloaded to `
 | Overloaded literal                                          | Default type   | Can be overloaded to                                                              |
 |-------------------------------------------------------------|----------------|-----------------------------------------------------------------------------------|
 | `10`, `0xFF`, `0o377`, `10_000`                             | `Int`          | `UInt`, `Int64`, `UInt64`, `Int16`, `UInt16`, `Byte`, `Double`, `Float`, `BigInt` |
-| `"str"`                                                     | `String`       | `Bytes`                                                                           |
-| `'c'`                                                       | `Char`         | `Int` , `Byte`                                                                    |
+| `"str"`                                                     | `String`       | —                                                                                 |
+| `'c'`                                                       | `Char`         | `Int`                                                                             |
 | `3.14`                                                      | `Double`       | `Float`                                                                           |
 | `[a, b, c]` (where the types of literals a, b, and c are E) | `Array[E]`     | `FixedArray[E]`, `String`  (if E is of type Char), `Bytes` (if E is of type Byte) |
 
@@ -2112,7 +2113,7 @@ cleaner. Note that in this case the `..` followed by string or bytes constant
 matches exact number of elements so its usage is not limited to once.
 
 ```moonbit
-const NO : Bytes = "no"
+const NO : Bytes = b"no"
 
 test {
   fn match_string(s : String) -> Bool {
@@ -2774,7 +2775,7 @@ sequence.
 
 ```moonbit
 test {
-  let b1 : Bytes = "hello"
+  let b1 : Bytes = b"hello"
   let b2 : BytesView = b1[1:4]
   let b : Bytes = [..b1, ..b2, 10]
   inspect(
