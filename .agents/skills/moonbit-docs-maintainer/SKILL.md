@@ -27,6 +27,8 @@ repo-maintenance router, not a MoonBit language tutorial.
 - Translation catalogs under `next/locales/` or gettext template updates: read
   `references/translation.md`.
 - Interactive tour changes under `moonbit-tour/`: read `references/tour.md`.
+- Typo, spelling, or prose lint changes involving `typos` or `autocorrect`:
+  read `references/typo.md`.
 
 If a task spans multiple areas, read the most specific reference first, then any
 secondary reference needed for validation.
@@ -85,6 +87,7 @@ Choose the smallest useful check:
 - Error-code examples: `python3 next/check_error_docs.py all`
 - One error code: `python3 next/check_error_docs.py 0001`
 - Tour build: `cd moonbit-tour && pnpm build`
+- Prose lint: `autocorrect . --lint --no-diff-bg-color`
 
 If dependencies are missing or a full check is too expensive, run the closest
 targeted command and report the remaining risk.

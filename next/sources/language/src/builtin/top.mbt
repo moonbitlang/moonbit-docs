@@ -147,8 +147,8 @@ test {
 
 // start bytes 1
 test {
-  let b : Byte = '\xFF'
-  let bs : Bytes = [b, '\x01']
+  let b : Byte = b'\xFF'
+  let bs : Bytes = [b, b'\x01']
   inspect(
     bs,
     content=(
