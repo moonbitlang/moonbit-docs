@@ -54,6 +54,7 @@ unavailable.
 - `just i18n ja`: runs the i18n flow for another locale.
 - `just docs-html`: builds the default Sphinx docs.
 - `just docs-html-zh`: builds the Chinese Sphinx docs.
+- `just docs-html-ja`: builds the Japanese Sphinx docs.
 - `just check-docs`: checks non-error-code MoonBit examples under
   `next/sources/`.
 - `just check-errors`: checks all error-code docs examples under
@@ -83,6 +84,7 @@ Choose the smallest useful check:
 
 - Sphinx docs: `just docs-html`
 - Chinese Sphinx build: `just docs-html-zh`
+- Japanese Sphinx build: `just docs-html-ja`
 - MoonBit docs examples: `python3 scripts/check-document.py`
 - Error-code examples: `python3 next/check_error_docs.py all`
 - One error code: `python3 next/check_error_docs.py 0001`

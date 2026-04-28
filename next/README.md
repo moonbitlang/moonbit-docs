@@ -39,35 +39,34 @@ Execute task `Build Document` in VSCode, or:
 
 ```bash
 just docs-html
-python3 -m http.server -d _build/html
+python3 -m http.server -d next/_build/html
 ```
 
 For Chinese version:
 
 ```bash
 just docs-html-zh
-python3 -m http.server -d _build/html
+python3 -m http.server -d next/_build/html
 ```
 
 For Japanese version:
 
 ```bash
-cd next && LANGUAGE="ja" uv run --with-requirements requirements.txt make html
-python3 -m http.server -d _build/html
+just docs-html-ja
+python3 -m http.server -d next/_build/html
 ```
 
 For PDF:
 
 ```bash
 just docs-pdf
-open ./_build/latex/moonbitdocument.pdf
+open next/_build/latex/moonbitdocument.pdf
 ```
 
 For Markdown:
 
 ```bash
-pip install sphinx-markdown-builder
-make markdown
+just docs-markdown
 ```
 
 ### Update translation template
@@ -87,6 +86,7 @@ just i18n ja
 This runs the same underlying Sphinx flow:
 
 ```bash
+cd next
 make gettext
 sphinx-intl update -p _build/gettext -l zh_CN
 ```

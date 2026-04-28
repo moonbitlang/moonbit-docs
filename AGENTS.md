@@ -18,7 +18,8 @@ an interactive language tour.
 - Prefer `uv` for Python tooling. Do not create ad-hoc virtualenvs unless a
   task explicitly requires one or `uv` is unavailable.
 - Dev server: `just docs-watch` (Chinese: `just docs-watch-zh`)
-- Build: `just docs-html` (Chinese: `just docs-html-zh`)
+- Build: `just docs-html` (Chinese: `just docs-html-zh`, Japanese:
+  `just docs-html-ja`)
 
 ## Translation workflow (next)
 - Before editing translation catalogs, sync templates first with `just i18n`

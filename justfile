@@ -9,6 +9,10 @@ docs-html:
 docs-html-zh:
     cd next && LANGUAGE=zh_CN uv run --with-requirements requirements.txt make html
 
+# Build the Japanese Sphinx docs with uv-managed Python dependencies.
+docs-html-ja:
+    cd next && LANGUAGE=ja uv run --with-requirements requirements.txt make html
+
 # Build the Sphinx PDF with uv-managed Python dependencies.
 docs-pdf:
     cd next && uv run --with-requirements requirements.txt make latexpdf

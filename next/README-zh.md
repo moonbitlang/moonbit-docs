@@ -34,35 +34,34 @@ just docs-watch
 
 ```bash
 just docs-html
-python3 -m http.server -d _build/html
+python3 -m http.server -d next/_build/html
 ```
 
 对于中文版本：
 
 ```bash
 just docs-html-zh
-python3 -m http.server -d _build/html
+python3 -m http.server -d next/_build/html
 ```
 
 对于日文版本：
 
 ```bash
-cd next && LANGUAGE="ja" uv run --with-requirements requirements.txt make html
-python3 -m http.server -d _build/html
+just docs-html-ja
+python3 -m http.server -d next/_build/html
 ```
 
 对于 PDF：
 
 ```bash
 just docs-pdf
-open ./_build/latex/moonbitdocument.pdf
+open next/_build/latex/moonbitdocument.pdf
 ```
 
 对于 Markdown：
 
 ```bash
-pip install sphinx-markdown-builder
-make markdown
+just docs-markdown
 ```
 
 ### 更新翻译模板
@@ -82,6 +81,7 @@ just i18n ja
 这个命令内部执行同样的 Sphinx 流程：
 
 ```bash
+cd next
 make gettext
 sphinx-intl update -p _build/gettext -l zh_CN
 ```

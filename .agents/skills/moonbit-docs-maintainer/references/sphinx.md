@@ -27,6 +27,7 @@ documentation site.
 - Chinese development server: `just docs-watch-zh`
 - HTML build: `just docs-html`
 - Chinese HTML build: `just docs-html-zh`
+- Japanese HTML build: `just docs-html-ja`
 - PDF build: `just docs-pdf`
 - Markdown build: `just docs-markdown`
 - Manual development server: `cd next && sphinx-autobuild . ./_build/html`
