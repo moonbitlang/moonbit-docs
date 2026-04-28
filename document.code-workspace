@@ -10,7 +10,7 @@
         },
         {
             "path": "moonbit-tour",
-            "name": "tour",
+            "name": "tour"
         }
     ],
     "tasks": {
@@ -18,107 +18,163 @@
         "tasks": [
             {
                 "label": "Watch Document 监视文档",
-                "command": "make",
+                "command": "just",
                 "type": "shell",
                 "args": [
-                    "html"
+                    "${input:watchTarget}"
                 ],
                 "options": {
-                    "env": {
-                        "SPHINXBUILD": "sphinx-autobuild",
-                        "LANGUAGE": "${input:language}"
-                    },
-                    "cwd": "${workspaceFolder:document}"
+                    "cwd": "${workspaceFolder:document}/.."
                 },
                 "group": "build"
             },
             {
                 "label": "Build Document 构建文档",
-                "command": "make",
+                "command": "just",
                 "type": "shell",
                 "args": [
                     "${input:target}"
                 ],
                 "options": {
-                    "env": {
-                        "LANGUAGE": "${input:language}"
-                    },
-                    "cwd": "${workspaceFolder:document}"
+                    "cwd": "${workspaceFolder:document}/.."
                 },
                 "group": "build"
             },
             {
                 "label": "Translate Document 翻译文档",
-                "command": "make gettext && sphinx-intl update -p _build/gettext -l zh_CN",
+                "command": "just",
                 "type": "shell",
+                "args": [
+                    "i18n",
+                    "${input:locale}"
+                ],
                 "options": {
-                    "cwd": "${workspaceFolder:document}"
+                    "cwd": "${workspaceFolder:document}/.."
                 },
                 "group": "build"
             },
             {
-                "label": "Install Dependencies 安装依赖",
-                "command": "pnpm",
+                "label": "Build Tour 构建导览",
+                "command": "just",
                 "type": "shell",
                 "args": [
-                    "install"
+                    "tour-build"
                 ],
                 "options": {
-                    "cwd": "${workspaceFolder:document}"
+                    "cwd": "${workspaceFolder:document}/.."
+                },
+                "group": "build"
+            },
+            {
+                "label": "Check Document Examples 检查文档示例",
+                "command": "just",
+                "type": "shell",
+                "args": [
+                    "check-docs"
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder:document}/.."
+                },
+                "group": "build",
+                "problemMatcher": []
+            },
+            {
+                "label": "Check Error Docs 检查错误文档",
+                "command": "just",
+                "type": "shell",
+                "args": [
+                    "check-errors"
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder:document}/.."
+                },
+                "group": "build",
+                "problemMatcher": []
+            },
+            {
+                "label": "Install Tour Dependencies 安装导览依赖",
+                "command": "just",
+                "type": "shell",
+                "args": [
+                    "tour-install"
+                ],
+                "options": {
+                    "cwd": "${workspaceFolder:document}/.."
                 },
                 "group": "build",
                 "problemMatcher": []
             },
             {
                 "label": "Develop Tour 开发导览",
-                "command": "pnpm",
+                "command": "just",
                 "type": "shell",
                 "args": [
-                    "dev"
+                    "tour-dev"
                 ],
                 "options": {
-                    "cwd": "${workspaceFolder:tour}"
+                    "cwd": "${workspaceFolder:document}/.."
                 },
                 "group": "build",
                 "dependsOn": [
-                    "Install Dependencies 安装依赖"
-                ]
+                    "Install Tour Dependencies 安装导览依赖"
+                ],
+                "dependsOrder": "sequence"
             }
         ],
         "inputs": [
             {
-                "id": "language",
+                "id": "locale",
                 "type": "pickString",
                 "description": "Language 语言",
-                "default": "en",
+                "default": "zh_CN",
                 "options": [
-                    {
-                        "value": "en",
-                        "label": "English 英语",
-                    },
                     {
                         "value": "zh_CN",
                         "label": "Chinese 中文"
+                    },
+                    {
+                        "value": "ja",
+                        "label": "Japanese 日文"
                     }
-                ],
+                ]
             },
             {
                 "id": "target",
                 "type": "pickString",
-                "default": "html",
+                "default": "docs-html",
                 "description": "Target 目标",
                 "options": [
                     {
-                        "value": "html",
+                        "value": "docs-html",
                         "label": "HTML"
                     },
                     {
-                        "value": "latexpdf",
+                        "value": "docs-html-zh",
+                        "label": "HTML Chinese 中文"
+                    },
+                    {
+                        "value": "docs-pdf",
                         "label": "PDF"
                     },
                     {
-                        "value": "markdown",
+                        "value": "docs-markdown",
                         "label": "Markdown"
+                    }
+                ]
+            },
+            {
+                "id": "watchTarget",
+                "type": "pickString",
+                "default": "docs-watch",
+                "description": "Watch target 监视目标",
+                "options": [
+                    {
+                        "value": "docs-watch",
+                        "label": "English 英语"
+                    },
+                    {
+                        "value": "docs-watch-zh",
+                        "label": "Chinese 中文"
                     }
                 ]
             }

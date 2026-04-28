@@ -13,12 +13,10 @@ Below are the instructions for manual setup.
 
 ### Install
 
-- For Python Environment, execute command `> Python: Create Environment` for `next` using `requirement.txt` in VSCode, or:
+- Install `just` and `uv`, then run commands from the repository root:
 
   ```bash
-  python3 -m venv .env
-  source .env/bin/activate
-  pip install -r requirements.txt
+  just --list
   ```
 
 - For building PDF using Latex, `latexmk` needs to be installed:
@@ -31,8 +29,8 @@ Below are the instructions for manual setup.
 Execute task `Watch Document` in VSCode, or:
 
 ```bash
-sphinx-autobuild . ./_build/html
-# or sphinx-autobuild -D language='zh_CN' . ./_build/html
+just docs-watch
+# or just docs-watch-zh
 ```
 
 ### Build
@@ -40,28 +38,28 @@ sphinx-autobuild . ./_build/html
 Execute task `Build Document` in VSCode, or:
 
 ```bash
-make html
+just docs-html
 python3 -m http.server -d _build/html
 ```
 
 For Chinese version:
 
 ```bash
-LANGUAGE="zh_CN" make html
+just docs-html-zh
 python3 -m http.server -d _build/html
 ```
 
 For Japanese version:
 
 ```bash
-LANGUAGE="ja" make html
+cd next && LANGUAGE="ja" uv run --with-requirements requirements.txt make html
 python3 -m http.server -d _build/html
 ```
 
 For PDF:
 
 ```bash
-make latexpdf
+just docs-pdf
 open ./_build/latex/moonbitdocument.pdf
 ```
 
@@ -74,31 +72,23 @@ make markdown
 
 ### Update translation template
 
-Execute task `Translate Document` in VSCode, or:
+From the repository root, run:
 
 ```bash
-make gettext
-sphinx-intl update -p _build/gettext -l zh_CN
-```
-
-You can also use the helper script (uses the same `make gettext` +
-`sphinx-intl update` flow):
-
-```bash
-python3 scripts/i18n.py all
+just i18n
 ```
 
 For Japanese locale catalog updates:
 
 ```bash
-python3 scripts/i18n.py all --locale ja
+just i18n ja
 ```
 
-Other subcommands:
+This runs the same underlying Sphinx flow:
 
 ```bash
-python3 scripts/i18n.py gettext
-python3 scripts/i18n.py sync
+make gettext
+sphinx-intl update -p _build/gettext -l zh_CN
 ```
 
 You should be able to see the file changed thanks to the Git version system.

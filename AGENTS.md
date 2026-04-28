@@ -10,25 +10,41 @@ an interactive language tour.
 - `moonbit-tour/`: Interactive tour web app (pnpm-based).
 - `legacy/`: Legacy docs/examples.
 - `scripts/`: Repo-level checks for MoonBit examples under `next/sources/`.
+- `justfile`: Maintainer command entrypoints. Prefer these over hand-written
+  multi-step shell flows when available.
 - `document.code-workspace`: VSCode tasks and dev shortcuts.
 
 ## Sphinx docs (next)
-- Install deps: `python3 -m venv .env && source .env/bin/activate && pip install -r next/requirements.txt`
-- Dev server: `cd next && ./autobuild.sh` or `sphinx-autobuild . ./_build/html`
-- Build: `cd next && make html` (Chinese: `LANGUAGE=zh_CN make html`)
+- Prefer `uv` for Python tooling. Do not create ad-hoc virtualenvs unless a
+  task explicitly requires one or `uv` is unavailable.
+- Dev server: `just docs-watch` (Chinese: `just docs-watch-zh`)
+- Build: `just docs-html` (Chinese: `just docs-html-zh`)
 
 ## Translation workflow (next)
-- Update templates: `cd next && make gettext` then
-  `sphinx-intl update -p _build/gettext -l zh_CN`
+- Before editing translation catalogs, sync templates first with `just i18n`
+  (or `just i18n <locale>`). This wraps `make gettext` and `sphinx-intl update`
+  so generated i18n entries stay aligned with source docs.
 - Translate missing strings in `next/locales/zh_CN/LC_MESSAGES/*.po`.
-- AI helper: `python3 next/scripts/translate_po_ai.py` (requires `OPENAI_API_KEY`).
+- If the source string does not need translation, such as code-only content,
+  leave `msgstr` empty.
+- Commit catalog changes produced by the i18n sync together with the related
+  source or translation change.
+- AI translation helpers require `OPENAI_API_KEY`; verify the helper path exists
+  in the current checkout before using one.
 - If `#, fuzzy` is present and the translation is verified, remove the flag.
+- Do not use `msgfmt` as the default validation command; prefer `just i18n`
+  followed by a Sphinx build.
 
 ## Checks
-- `python3 scripts/check-document.py`: runs MoonBit example checks under
-  `next/sources/`.
-- `python3 next/check_error_docs.py all`: validates error-code examples.
+- `just check-docs`: runs MoonBit example checks under `next/sources/`.
+- `just check-errors`: validates all error-code examples.
+- `just check-error 0001`: validates one error-code example.
+- When touching examples under `next/sources/`, avoid broad `moon fmt` runs that
+  rewrite unrelated files.
 
 ## moonbit-tour
-- Install/build: `cd moonbit-tour && pnpm install && pnpm build && pnpm preview`
-- Dev server: `cd moonbit-tour && pnpm dev`
+- Install/build: `just tour-install && just tour-build && just tour-preview`
+- Dev server: `just tour-dev`
+
+## Commit style
+- Use conventional commits.

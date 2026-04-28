@@ -8,12 +8,10 @@
 
 ### 安装
 
-- 对于 Python 环境，可以在 VSCode 中执行 `> Python: Create Environment` 命令，为 `next` 项目使用 `requirement.txt` 创建环境，或者：
+- 安装 `just` 和 `uv`，然后在仓库根目录运行命令：
 
   ```bash
-  python3 -m venv .env
-  source .env/bin/activate
-  pip install -r requirements.txt
+  just --list
   ```
 
 - 使用 Latex 构建 PDF 时，需要安装 `latexmk`：
@@ -26,8 +24,8 @@
 在 VSCode 中执行 `Watch Document` 任务，或者：
 
 ```bash
-sphinx-autobuild . ./_build/html
-# 或者 sphinx-autobuild -D language='zh_CN' . ./_build/html
+just docs-watch
+# 或者 just docs-watch-zh
 ```
 
 ### 构建
@@ -35,28 +33,28 @@ sphinx-autobuild . ./_build/html
 在 VSCode 中执行 `Build Document` 任务，或者：
 
 ```bash
-make html
+just docs-html
 python3 -m http.server -d _build/html
 ```
 
 对于中文版本：
 
 ```bash
-LANGUAGE="zh_CN" make html
+just docs-html-zh
 python3 -m http.server -d _build/html
 ```
 
 对于日文版本：
 
 ```bash
-LANGUAGE="ja" make html
+cd next && LANGUAGE="ja" uv run --with-requirements requirements.txt make html
 python3 -m http.server -d _build/html
 ```
 
 对于 PDF：
 
 ```bash
-make latexpdf
+just docs-pdf
 open ./_build/latex/moonbitdocument.pdf
 ```
 
@@ -69,30 +67,23 @@ make markdown
 
 ### 更新翻译模板
 
-在 VSCode 中执行 `Translate Document` 任务，或者：
+在仓库根目录运行：
 
 ```bash
-make gettext
-sphinx-intl update -p _build/gettext -l zh_CN
-```
-
-也可以使用辅助脚本（内部走同样的 `make gettext` + `sphinx-intl update` 流程）：
-
-```bash
-python3 scripts/i18n.py all
+just i18n
 ```
 
 更新日文翻译模板：
 
 ```bash
-python3 scripts/i18n.py all --locale ja
+just i18n ja
 ```
 
-其他子命令：
+这个命令内部执行同样的 Sphinx 流程：
 
 ```bash
-python3 scripts/i18n.py gettext
-python3 scripts/i18n.py sync
+make gettext
+sphinx-intl update -p _build/gettext -l zh_CN
 ```
 
 你应该能够通过 Git 版本系统看到文件的变化。
