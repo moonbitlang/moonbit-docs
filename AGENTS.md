@@ -29,8 +29,6 @@ an interactive language tour.
   leave `msgstr` empty.
 - Commit catalog changes produced by the i18n sync together with the related
   source or translation change.
-- AI translation helpers require `OPENAI_API_KEY`; verify the helper path exists
-  in the current checkout before using one.
 - If `#, fuzzy` is present and the translation is verified, remove the flag.
 - Do not use `msgfmt` as the default validation command; prefer `just i18n`
   followed by a Sphinx build.

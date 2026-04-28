@@ -48,7 +48,4 @@ The `just i18n` recipe is the preferred one-line command and uses `uv` with
 
 ## Notes
 
-- Only use AI translation helper scripts after verifying the path exists in the
-  current checkout. Such helpers require `OPENAI_API_KEY`; do not assume it is
-  available.
 - Do not translate generated files under `next/_build/`.
