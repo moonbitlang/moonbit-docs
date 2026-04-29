@@ -45,3 +45,38 @@ fn main {
 }
 
 // end visibility
+
+// start must_implement_one any
+#must_implement_one
+pub(open) trait RequireAnyMethod {
+  f(Self) -> Unit = _
+  g(Self) -> Unit = _
+}
+
+impl RequireAnyMethod with f(_) {}
+
+impl RequireAnyMethod with g(_) {}
+
+type AnyImpl
+
+impl RequireAnyMethod for AnyImpl with f(_) {}
+// end must_implement_one any
+
+// start must_implement_one selected
+#must_implement_one(f, g)
+pub(open) trait RequireSelectedMethod {
+  f(Self) -> Unit = _
+  g(Self) -> Unit = _
+  h(Self) -> Unit = _
+}
+
+impl RequireSelectedMethod with f(_) {}
+
+impl RequireSelectedMethod with g(_) {}
+
+impl RequireSelectedMethod with h(_) {}
+
+type SelectedImpl
+
+impl RequireSelectedMethod for SelectedImpl with g(_) {}
+// end must_implement_one selected

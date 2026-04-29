@@ -155,5 +155,5 @@ Such a line shares the coverage of closest covered the line before it.
 
 ## Skipping coverage
 
-Adding the pragma `/// @coverage.skip` skips all coverage operations within the function.
+Adding the attribute `#coverage.skip` skips all coverage operations within the function.
 Additionally, all deprecated functions will not be covered.

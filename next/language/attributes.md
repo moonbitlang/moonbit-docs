@@ -228,7 +228,7 @@ The argument is a string that specifies the warning list. It can contain multipl
 warning names, each prefixed with a sign:
 
 ```{code-block} moonbit
-#warning("-unused_value@deprecated")
+#warnings("-unused_value@deprecated")
 fn f() -> Unit {
   let x = 42 
 }
@@ -243,6 +243,33 @@ The prefixes have the following meanings:
 Currently this attribute only works with some specific warnings.
 
 To learn more about warning names, see [warning list](../toolchain/moon/package.md#warnings-list).
+
+## Must Implement One Attribute
+
+The `#must_implement_one` attribute is used on traits to require that each
+implementation explicitly defines at least one method, instead of relying only on
+default method implementations.
+
+Without arguments, at least one method of the trait must be explicitly
+implemented:
+
+```{literalinclude} /sources/language/src/attributes/top.mbt
+:language: moonbit
+:start-after: start must_implement_one any
+:end-before: end must_implement_one any
+```
+
+With method names, at least one of the listed methods must be explicitly
+implemented:
+
+```{literalinclude} /sources/language/src/attributes/top.mbt
+:language: moonbit
+:start-after: start must_implement_one selected
+:end-before: end must_implement_one selected
+```
+
+Multiple `#must_implement_one` attributes can be used on the same trait to
+require explicit implementations from multiple method groups.
 
 ## External Attribute
 
