@@ -257,7 +257,7 @@ fn guarded_get(array : Array[Int], index : Int) -> Int? {
 }
 
 test {
-  inspect(guarded_get([1, 2, 3], -1), content="None")
+  debug_inspect(guarded_get([1, 2, 3], -1), content="None")
 }
 // end guard 1
 

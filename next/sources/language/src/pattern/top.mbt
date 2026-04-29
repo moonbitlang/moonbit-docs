@@ -350,16 +350,15 @@ test {
 /// start lexmatch 1
 test {
   let text = "xxabbbcyy"
-  lexmatch text {
-    (before, "a" ("b*" as b) "c", after) => {
-      inspect(before, content="xx")
-      inspect(b, content="bbb")
-      inspect(after, content="yy")
-    }
-    _ => fail("")
+  if text =~ (re"a" + (re"b*" as b) + re"c", before~, after~) {
+    inspect(before, content="xx")
+    inspect(b, content="bbb")
+    inspect(after, content="yy")
+  } else {
+    fail("")
   }
 
-  if text lexmatch? ("a" ("b*" as b) "c") && b.length() > 0 {
+  if text =~ (re"a" + (re"b*" as b) + re"c") && b.length() > 0 {
     inspect(b, content="bbb")
   }
 

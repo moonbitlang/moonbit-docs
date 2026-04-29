@@ -59,8 +59,8 @@ test "string 1" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start string 1
   let a = "兔rabbit"
-  println(a.code_unit_at(0).to_char())
-  println(a.code_unit_at(1).to_char())
+  debug_inspect(a.code_unit_at(0).to_char(), content="Some('兔')")
+  debug_inspect(a.code_unit_at(1).to_char(), content="Some('r')")
   let b =
     #| Hello
     #| MoonBit\n
