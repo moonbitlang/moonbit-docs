@@ -23,6 +23,25 @@ For enums, the order between cases ascends in the order of definition.
 :end-before: end derive eq_compare enum
 ```
 
+## Debug
+
+`derive(Debug)` will generate a structural debugging implementation for the type.
+It is useful with `debug_inspect` in tests and `@debug.to_string` when formatting diagnostic messages.
+
+```{literalinclude} /sources/language/src/derive/debug.mbt
+:language: moonbit
+:start-after: start derive debug struct
+:end-before: end derive debug struct
+```
+
+Enums can derive `Debug` as well:
+
+```{literalinclude} /sources/language/src/derive/debug.mbt
+:language: moonbit
+:start-after: start derive debug enum
+:end-before: end derive debug enum
+```
+
 ## Default
 
 `derive(Default)` will generate a method that returns the default value of the type.
