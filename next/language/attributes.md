@@ -248,7 +248,7 @@ To learn more about warning names, see [warning list](../toolchain/moon/package.
 
 The `#external` attribute is used to mark an abstract type as external type.
 
-- For Wasm(GC) backends, it would be interpreted as `anyref`.
+- For Wasm and Wasm GC backends, it would be interpreted as `externref`.
 - For JavaScript backend, it would be interpreted as `any`.
 - For native backends, it would be interpreted as `void*`.
 
