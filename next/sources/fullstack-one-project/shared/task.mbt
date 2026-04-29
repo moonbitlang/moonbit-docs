@@ -22,7 +22,7 @@ pub(all) enum SubmitTitleResponse {
 pub fn validate_request(
   request : SubmitTitleRequest,
 ) -> Unit raise TitleValidationError {
-  let title = request.title.trim().to_string()
+  let title = request.title.trim().to_owned()
   if title.length() == 0 {
     raise EmptyTitle
   } else if title.length() > 24 {

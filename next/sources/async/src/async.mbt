@@ -31,14 +31,12 @@ async fn use_value() -> Int {
 // start struct constructor async 1
 struct AsyncBox {
   value : Int
-
-  async fn new(x : Int) -> AsyncBox
 } derive(Debug)
 // end struct constructor async 1
 
 ///|
 // start struct constructor async 2
-async fn AsyncBox::new(x : Int) -> AsyncBox {
+async fn AsyncBox::AsyncBox(x : Int) -> AsyncBox {
   @async.sleep(0)
   { value: x }
 }

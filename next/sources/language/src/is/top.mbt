@@ -17,9 +17,9 @@ fn f(x : Int?) -> Bool {
 // start is 3
 fn g(x : Array[Int?]) -> Unit {
   if x is [v, .. rest] && v is Some(i) && i is (0..=10) {
-    println(v)
+    debug(v)
     println(i)
-    println(rest)
+    debug(rest)
   }
 }
 // end is 3
@@ -49,6 +49,6 @@ fn j(x : Int) -> Int? {
 fn init {
   guard j(42) is (Some(a) as b)
   println(a)
-  println(b)
+  debug(b)
 }
 // end is 6

@@ -49,13 +49,11 @@ test "struct 4" (t : @test.Test) {
 // start struct constructor 1
 struct IntBox {
   value : Int
-
-  fn new(value : Int) -> IntBox
 } derive(Debug)
 // end struct constructor 1
 
 // start struct constructor 2
-fn IntBox::new(value : Int) -> IntBox {
+fn IntBox::IntBox(value : Int) -> IntBox {
   { value, }
 }
 // end struct constructor 2
@@ -71,13 +69,11 @@ test "struct constructor positional" {
 struct StructWithConstr {
   x : Int
   y : Int
-
-  fn new(x~ : Int, y? : Int) -> StructWithConstr
 } derive(Debug)
 // end struct constructor 4
 
 // start struct constructor 5
-fn StructWithConstr::new(x~ : Int, y? : Int = x) -> StructWithConstr {
+fn StructWithConstr::StructWithConstr(x~ : Int, y? : Int = x) -> StructWithConstr {
   { x, y }
 }
 // end struct constructor 5
@@ -96,13 +92,11 @@ suberror BuildError {
 
 struct Positive {
   value : Int
-
-  fn new(x : Int) -> Positive raise BuildError
 } derive(Debug)
 // end struct constructor 7
 
 // start struct constructor 8
-fn Positive::new(x : Int) -> Positive raise BuildError {
+fn Positive::Positive(x : Int) -> Positive raise BuildError {
   guard x >= 0 else { raise NegativeInput }
   { value: x }
 }

@@ -80,7 +80,7 @@ async fn main {
           try {
             @shared.validate_request(request)
             @shared.SubmitTitleResponse::Accepted(
-              request.title.trim().to_string(),
+              request.title.trim().to_owned(),
             )
           } catch {
             err => @shared.SubmitTitleResponse::ValidationError(err)
