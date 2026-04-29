@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-13 10:40+0800\n"
+"POT-Creation-Date: 2026-04-29 17:41+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -568,7 +568,7 @@ msgstr "它的参数是一个声明了警告列表的字符串。字符串包含
 
 #: ../../language/attributes.md:230
 msgid ""
-"#warning(\"-unused_value@deprecated\")\n"
+"#warnings(\"-unused_value@deprecated\")\n"
 "fn f() -> Unit {\n"
 "  let x = 42 \n"
 "}"
@@ -601,38 +601,104 @@ msgid ""
 msgstr "要了解更多关于警告名的信息，见 [警告列表](../toolchain/moon/package.md#warnings-list)"
 
 #: ../../language/attributes.md:247
+msgid "Must Implement One Attribute"
+msgstr "Must Implement One 属性"
+
+#: ../../language/attributes.md:249
+msgid ""
+"The `#must_implement_one` attribute is used on traits to require that "
+"each implementation explicitly defines at least one method, instead of "
+"relying only on default method implementations."
+msgstr "`#must_implement_one` 属性用于 trait，要求每个实现都显式定义至少一个方法，而不是只依赖默认方法实现。"
+
+#: ../../language/attributes.md:253
+msgid ""
+"Without arguments, at least one method of the trait must be explicitly "
+"implemented:"
+msgstr "不带参数时，必须显式实现该 trait 的至少一个方法："
+
+#: ../../language/attributes.md:256
+msgid ""
+"#must_implement_one\n"
+"pub(open) trait RequireAnyMethod {\n"
+"  f(Self) -> Unit = _\n"
+"  g(Self) -> Unit = _\n"
+"}\n"
+"\n"
+"impl RequireAnyMethod with f(_) {}\n"
+"\n"
+"impl RequireAnyMethod with g(_) {}\n"
+"\n"
+"type AnyImpl\n"
+"\n"
+"impl RequireAnyMethod for AnyImpl with f(_) {}\n"
+msgstr ""
+
+#: ../../language/attributes.md:262
+msgid ""
+"With method names, at least one of the listed methods must be explicitly "
+"implemented:"
+msgstr "带方法名时，必须显式实现列出的方法中的至少一个："
+
+#: ../../language/attributes.md:265
+msgid ""
+"#must_implement_one(f, g)\n"
+"pub(open) trait RequireSelectedMethod {\n"
+"  f(Self) -> Unit = _\n"
+"  g(Self) -> Unit = _\n"
+"  h(Self) -> Unit = _\n"
+"}\n"
+"\n"
+"impl RequireSelectedMethod with f(_) {}\n"
+"\n"
+"impl RequireSelectedMethod with g(_) {}\n"
+"\n"
+"impl RequireSelectedMethod with h(_) {}\n"
+"\n"
+"type SelectedImpl\n"
+"\n"
+"impl RequireSelectedMethod for SelectedImpl with g(_) {}\n"
+msgstr ""
+
+#: ../../language/attributes.md:271
+msgid ""
+"Multiple `#must_implement_one` attributes can be used on the same trait "
+"to require explicit implementations from multiple method groups."
+msgstr "同一个 trait 上可以使用多个 `#must_implement_one` 属性，以要求显式实现多个方法组中的方法。"
+
+#: ../../language/attributes.md:274
 msgid "External Attribute"
 msgstr "`external` 属性"
 
-#: ../../language/attributes.md:249
+#: ../../language/attributes.md:276
 msgid ""
 "The `#external` attribute is used to mark an abstract type as external "
 "type."
 msgstr "`#external`属性用于标记一个抽象类型为外部类型。"
 
-#: ../../language/attributes.md:251
+#: ../../language/attributes.md:278
 msgid "For Wasm and Wasm GC backends, it would be interpreted as `externref`."
 msgstr "对于 Wasm 和 Wasm GC 后端，它将被解释为 `externref`。"
 
-#: ../../language/attributes.md:252
+#: ../../language/attributes.md:279
 msgid "For JavaScript backend, it would be interpreted as `any`."
 msgstr "对于 JavaScript 后端，它将被解释为`any`。"
 
-#: ../../language/attributes.md:253
+#: ../../language/attributes.md:280
 msgid "For native backends, it would be interpreted as `void*`."
 msgstr "对于原生后端，它将被解释为`void*`。"
 
-#: ../../language/attributes.md:255
+#: ../../language/attributes.md:282
 msgid ""
 "#external\n"
 "type Ptr"
 msgstr ""
 
-#: ../../language/attributes.md:261
+#: ../../language/attributes.md:288
 msgid "Borrow and Owned Attribute"
 msgstr "`borrow` 和 `owned` 属性"
 
-#: ../../language/attributes.md:263
+#: ../../language/attributes.md:290
 msgid ""
 "The `#borrow` and `#owned` attribute is used to indicate that a FFI takes"
 " ownership of its arguments. For more detail, see [FFI](./ffi.md#the-"
@@ -641,11 +707,11 @@ msgstr ""
 "`#borrow` 和 `#owned` 属性用于表示一个外部接口是否获得参数的所有权。对于更多细节，见 [FFI](./ffi.md#the-"
 "borrow-and-owned-attribute)。"
 
-#: ../../language/attributes.md:265
+#: ../../language/attributes.md:292
 msgid "`as_free_fn` Attribute"
 msgstr "`as_free_fn` 属性"
 
-#: ../../language/attributes.md:267
+#: ../../language/attributes.md:294
 msgid ""
 "The `#as_free_fn` attribute is used to mark a method that it is declared "
 "as a free function as well. It can also change the visibility of the free"
@@ -655,7 +721,7 @@ msgstr ""
 "`#as_free_fn` "
 "属性用于标记一个方法，同时它也被声明为一个自由函数。它还可以改变自由函数的可见性、自由函数的名字，并且提供单独的弃用警告。"
 
-#: ../../language/attributes.md:270
+#: ../../language/attributes.md:297
 msgid ""
 "#as_free_fn(dec, visibility=\"pub\", deprecated=\"use `Int::decrement` "
 "instead\")\n"
@@ -670,17 +736,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/attributes.md:276
+#: ../../language/attributes.md:303
 msgid "Callsite Attribute"
 msgstr "`callsite` 属性"
 
-#: ../../language/attributes.md:278
+#: ../../language/attributes.md:305
 msgid ""
 "The `#callsite` attribute is used to mark properties that happen at "
 "callsite."
 msgstr "`#callsite` 属性用于标记发生在调用位置的属性。"
 
-#: ../../language/attributes.md:280
+#: ../../language/attributes.md:307
 msgid ""
 "It could be `autofill`, which is to autofill the arguments [SourceLoc and"
 " ArgLoc](/language/fundamentals.md#autofill-arguments) at callsite."
@@ -688,27 +754,27 @@ msgstr ""
 "它可以是 `autofill`，用于在调用位置自动填充参数 [SourceLoc 和 "
 "ArgLoc](/language/fundamentals.md#autofill-arguments)。"
 
-#: ../../language/attributes.md:283
+#: ../../language/attributes.md:310
 msgid "Skip Attribute"
 msgstr "`skip` 属性"
 
-#: ../../language/attributes.md:285
+#: ../../language/attributes.md:312
 msgid ""
 "The `#skip` attribute is used to skip a single test block. The type "
 "checking will still be performed."
 msgstr "`#skip` 属性用于跳过一个测试块。类型检查仍然会被执行。"
 
-#: ../../language/attributes.md:287
+#: ../../language/attributes.md:314
 msgid "Configuration attribute"
 msgstr "`cfg` 属性"
 
-#: ../../language/attributes.md:289
+#: ../../language/attributes.md:316
 msgid ""
 "The `#cfg` attribute is used to perform conditional compilation. Examples"
 " are:"
 msgstr "`#cfg` 属性用于执行条件编译。例子有："
 
-#: ../../language/attributes.md:293
+#: ../../language/attributes.md:320
 msgid ""
 "#cfg(true)\n"
 "#cfg(false)\n"
@@ -718,24 +784,31 @@ msgid ""
 "#cfg(any(target=\"wasm\", target=\"native\"))\n"
 msgstr ""
 
-#: ../../language/attributes.md:302
+#: ../../language/attributes.md:329
 msgid "Module attribute"
 msgstr "模块属性"
 
-#: ../../language/attributes.md:304
+#: ../../language/attributes.md:331
 msgid ""
 "The `module` attribute is used to declare the module dependency for "
 "JavaScript backend."
 msgstr "`module` 属性用于为 JavaScript 后端声明模块依赖。"
 
-#: ../../language/attributes.md:306
+#: ../../language/attributes.md:333
 msgid ""
 "In `cjs` format, it is interpreted as `require`, and in `esm` format, it "
 "is interpreted as `import`."
 msgstr "在 `cjs` 格式中，它被解释为 `require`，而在 `esm` 格式中，它被解释为 `import`。"
 
-#: ../../language/attributes.md:309
+#: ../../language/attributes.md:336
 msgid ""
 "#module(\"node:fs\")\n"
 "pub fn write_file_sync(file : String, data : String) = \"writeFileSync\"\n"
 msgstr ""
+
+#~ msgid ""
+#~ "#warning(\"-unused_value@deprecated\")\n"
+#~ "fn f() -> Unit {\n"
+#~ "  let x = 42 \n"
+#~ "}"
+#~ msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-13 10:40+0800\n"
+"POT-Creation-Date: 2026-04-29 17:41+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -614,12 +614,12 @@ msgstr "引数は警告リストを指定する文字列です。複数の警告
 
 #: ../../language/attributes.md:230
 msgid ""
-"#warning(\"-unused_value@deprecated\")\n"
+"#warnings(\"-unused_value@deprecated\")\n"
 "fn f() -> Unit {\n"
 "  let x = 42 \n"
 "}"
 msgstr ""
-"#warning(\"-unused_value@deprecated\")\n"
+"#warnings(\"-unused_value@deprecated\")\n"
 "fn f() -> Unit {\n"
 "  let x = 42 \n"
 "}"
@@ -645,37 +645,102 @@ msgid "Currently this attribute only works with some specific warnings."
 msgstr "現在、このアトリビュートは一部の特定の警告にのみ対応しています。"
 
 #: ../../language/attributes.md:245
-#, fuzzy
 msgid ""
 "To learn more about warning names, see [warning "
 "list](../toolchain/moon/package.md#warnings-list)."
 msgstr ""
-"警告名について詳しくは [warning list](../toolchain/moon/package.md#warning-list) "
+"警告名について詳しくは [warning list](../toolchain/moon/package.md#warnings-list) "
 "を参照してください。"
 
 #: ../../language/attributes.md:247
+msgid "Must Implement One Attribute"
+msgstr "Must Implement One アトリビュート"
+
+#: ../../language/attributes.md:249
+msgid ""
+"The `#must_implement_one` attribute is used on traits to require that "
+"each implementation explicitly defines at least one method, instead of "
+"relying only on default method implementations."
+msgstr "`#must_implement_one` アトリビュートは trait に付けて、各実装がデフォルトメソッド実装だけに依存せず、少なくとも 1 つのメソッドを明示的に定義することを要求します。"
+
+#: ../../language/attributes.md:253
+msgid ""
+"Without arguments, at least one method of the trait must be explicitly "
+"implemented:"
+msgstr "引数を指定しない場合、その trait の少なくとも 1 つのメソッドを明示的に実装する必要があります："
+
+#: ../../language/attributes.md:256
+msgid ""
+"#must_implement_one\n"
+"pub(open) trait RequireAnyMethod {\n"
+"  f(Self) -> Unit = _\n"
+"  g(Self) -> Unit = _\n"
+"}\n"
+"\n"
+"impl RequireAnyMethod with f(_) {}\n"
+"\n"
+"impl RequireAnyMethod with g(_) {}\n"
+"\n"
+"type AnyImpl\n"
+"\n"
+"impl RequireAnyMethod for AnyImpl with f(_) {}\n"
+msgstr ""
+
+#: ../../language/attributes.md:262
+msgid ""
+"With method names, at least one of the listed methods must be explicitly "
+"implemented:"
+msgstr "メソッド名を指定した場合、列挙されたメソッドのうち少なくとも 1 つを明示的に実装する必要があります："
+
+#: ../../language/attributes.md:265
+msgid ""
+"#must_implement_one(f, g)\n"
+"pub(open) trait RequireSelectedMethod {\n"
+"  f(Self) -> Unit = _\n"
+"  g(Self) -> Unit = _\n"
+"  h(Self) -> Unit = _\n"
+"}\n"
+"\n"
+"impl RequireSelectedMethod with f(_) {}\n"
+"\n"
+"impl RequireSelectedMethod with g(_) {}\n"
+"\n"
+"impl RequireSelectedMethod with h(_) {}\n"
+"\n"
+"type SelectedImpl\n"
+"\n"
+"impl RequireSelectedMethod for SelectedImpl with g(_) {}\n"
+msgstr ""
+
+#: ../../language/attributes.md:271
+msgid ""
+"Multiple `#must_implement_one` attributes can be used on the same trait "
+"to require explicit implementations from multiple method groups."
+msgstr "同じ trait に複数の `#must_implement_one` アトリビュートを付けることで、複数のメソッドグループから明示的な実装を要求できます。"
+
+#: ../../language/attributes.md:274
 msgid "External Attribute"
 msgstr "外部アトリビュート"
 
-#: ../../language/attributes.md:249
+#: ../../language/attributes.md:276
 msgid ""
 "The `#external` attribute is used to mark an abstract type as external "
 "type."
 msgstr "`#external` アトリビュートは、抽象型を外部型としてマークするために使います。"
 
-#: ../../language/attributes.md:251
+#: ../../language/attributes.md:278
 msgid "For Wasm and Wasm GC backends, it would be interpreted as `externref`."
 msgstr "Wasm および Wasm GC バックエンドでは、これは `externref` と解釈されます。"
 
-#: ../../language/attributes.md:252
+#: ../../language/attributes.md:279
 msgid "For JavaScript backend, it would be interpreted as `any`."
 msgstr "JavaScript バックエンドでは、これは `any` と解釈されます。"
 
-#: ../../language/attributes.md:253
+#: ../../language/attributes.md:280
 msgid "For native backends, it would be interpreted as `void*`."
 msgstr "ネイティブバックエンドでは、これは `void*` と解釈されます。"
 
-#: ../../language/attributes.md:255
+#: ../../language/attributes.md:282
 msgid ""
 "#external\n"
 "type Ptr"
@@ -683,11 +748,11 @@ msgstr ""
 "#external\n"
 "type Ptr"
 
-#: ../../language/attributes.md:261
+#: ../../language/attributes.md:288
 msgid "Borrow and Owned Attribute"
 msgstr "Borrow/Owned アトリビュート"
 
-#: ../../language/attributes.md:263
+#: ../../language/attributes.md:290
 msgid ""
 "The `#borrow` and `#owned` attribute is used to indicate that a FFI takes"
 " ownership of its arguments. For more detail, see [FFI](./ffi.md#the-"
@@ -696,11 +761,11 @@ msgstr ""
 "`#borrow` と `#owned` アトリビュートは、FFI が引数の所有権を受け取ることを示すために使います。詳しくは "
 "[FFI](./ffi.md#the-borrow-and-owned-attribute) を参照してください。"
 
-#: ../../language/attributes.md:265
+#: ../../language/attributes.md:292
 msgid "`as_free_fn` Attribute"
 msgstr "`as_free_fn` アトリビュート"
 
-#: ../../language/attributes.md:267
+#: ../../language/attributes.md:294
 msgid ""
 "The `#as_free_fn` attribute is used to mark a method that it is declared "
 "as a free function as well. It can also change the visibility of the free"
@@ -710,7 +775,7 @@ msgstr ""
 "`#as_free_fn` アトリビュートは、メソッドを free 関数としても宣言することを示すために使います。free "
 "関数の可視性や名前を変更したり、別個の非推奨警告を与えたりすることもできます。"
 
-#: ../../language/attributes.md:270
+#: ../../language/attributes.md:297
 msgid ""
 "#as_free_fn(dec, visibility=\"pub\", deprecated=\"use `Int::decrement` "
 "instead\")\n"
@@ -736,17 +801,17 @@ msgstr ""
 "  let _ = (10).decrement()\n"
 "}\n"
 
-#: ../../language/attributes.md:276
+#: ../../language/attributes.md:303
 msgid "Callsite Attribute"
 msgstr "Callsite アトリビュート"
 
-#: ../../language/attributes.md:278
+#: ../../language/attributes.md:305
 msgid ""
 "The `#callsite` attribute is used to mark properties that happen at "
 "callsite."
 msgstr "`#callsite` アトリビュートは、呼び出し元で起こる属性を示すために使います。"
 
-#: ../../language/attributes.md:280
+#: ../../language/attributes.md:307
 msgid ""
 "It could be `autofill`, which is to autofill the arguments [SourceLoc and"
 " ArgLoc](/language/fundamentals.md#autofill-arguments) at callsite."
@@ -754,27 +819,27 @@ msgstr ""
 "`autofill` を指定でき、呼び出し元で引数 [SourceLoc と ArgLoc](/language/fundamentals.md"
 "#autofill-arguments) を自動補完します。"
 
-#: ../../language/attributes.md:283
+#: ../../language/attributes.md:310
 msgid "Skip Attribute"
 msgstr "Skip アトリビュート"
 
-#: ../../language/attributes.md:285
+#: ../../language/attributes.md:312
 msgid ""
 "The `#skip` attribute is used to skip a single test block. The type "
 "checking will still be performed."
 msgstr "`#skip` アトリビュートは 1 つの test ブロックをスキップするために使います。型チェックは引き続き行われます。"
 
-#: ../../language/attributes.md:287
+#: ../../language/attributes.md:314
 msgid "Configuration attribute"
 msgstr "設定アトリビュート"
 
-#: ../../language/attributes.md:289
+#: ../../language/attributes.md:316
 msgid ""
 "The `#cfg` attribute is used to perform conditional compilation. Examples"
 " are:"
 msgstr "`#cfg` アトリビュートは条件付きコンパイルを行うために使います。例は次のとおりです："
 
-#: ../../language/attributes.md:293
+#: ../../language/attributes.md:320
 msgid ""
 "#cfg(true)\n"
 "#cfg(false)\n"
@@ -790,23 +855,23 @@ msgstr ""
 "#cfg(all(target=\"wasm\", true))\n"
 "#cfg(any(target=\"wasm\", target=\"native\"))\n"
 
-#: ../../language/attributes.md:302
+#: ../../language/attributes.md:329
 msgid "Module attribute"
 msgstr "モジュールアトリビュート"
 
-#: ../../language/attributes.md:304
+#: ../../language/attributes.md:331
 msgid ""
 "The `module` attribute is used to declare the module dependency for "
 "JavaScript backend."
 msgstr "`module` アトリビュートは、JavaScript バックエンド向けのモジュール依存を宣言するために使います。"
 
-#: ../../language/attributes.md:306
+#: ../../language/attributes.md:333
 msgid ""
 "In `cjs` format, it is interpreted as `require`, and in `esm` format, it "
 "is interpreted as `import`."
 msgstr "`cjs` 形式では `require` として解釈され、`esm` 形式では `import` として解釈されます。"
 
-#: ../../language/attributes.md:309
+#: ../../language/attributes.md:336
 msgid ""
 "#module(\"node:fs\")\n"
 "pub fn write_file_sync(file : String, data : String) = \"writeFileSync\"\n"
