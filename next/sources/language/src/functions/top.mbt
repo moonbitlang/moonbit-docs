@@ -17,6 +17,27 @@ fn add3(x : Int, y : Int, z : Int) -> Int {
 }
 // end top-level functions
 
+// start declared functions
+declare fn declared_add(x : Int, y : Int) -> Int
+
+fn declared_add(x : Int, y : Int) -> Int {
+  x + y
+}
+
+struct DeclaredCounter(Int)
+
+declare fn DeclaredCounter::value(self : Self) -> Int
+
+fn DeclaredCounter::value(self : Self) -> Int {
+  self.0
+}
+
+test "declared functions" {
+  @test.assert_eq(declared_add(1, 2), 3)
+  @test.assert_eq(DeclaredCounter(4).value(), 4)
+}
+// end declared functions
+
 // start function application 1
 test {
   let add3 = fn(x, y, z) { x + y + z }

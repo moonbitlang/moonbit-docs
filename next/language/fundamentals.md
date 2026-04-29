@@ -545,6 +545,18 @@ Functions can be defined as top-level or local. We can use the `fn` keyword to d
 
 Note that the arguments and return value of top-level functions require **explicit** type annotations.
 
+Top-level functions and methods can also be introduced with `declare`.
+A declared function has a signature but no body, and a later implementation must match that signature.
+This is useful when you want to make an API shape available before placing its implementation.
+
+```{literalinclude} /sources/language/src/functions/top.mbt
+:language: moonbit
+:start-after: start declared functions
+:end-before: end declared functions
+```
+
+If a declared function has an implementation, the declaration and the implementation must agree on the function name, visibility, type parameters, parameters, return type, and effects.
+
 ### Local Functions
 
 Local functions can be named or anonymous. Type annotations can be omitted for local function definitions: they can be automatically inferred in most cases. For example:
