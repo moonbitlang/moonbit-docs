@@ -1206,9 +1206,8 @@ It's useful to create a new struct based on an existing one, but with some field
 #### Custom constructor for struct
 
 MoonBit also supports defining a custom constructor for every `struct` type.
-The constructor for a `struct` is a special function that can be used to
-create value for the `struct` using the name of the struct,
-it can be declared as follows:
+A constructor is a special method that can be called with the name of the
+struct to create a value. First define the struct as usual:
 
 ```{literalinclude} /sources/language/src/data/top.mbt
 :language: moonbit
@@ -1216,9 +1215,8 @@ it can be declared as follows:
 :end-before: end struct constructor 1
 ```
 
-Here, the return value of the constructor must be the struct itself.
-The constructor should then be implemented by a `new` method (the name cannot be changed here)
-with exactly the same type:
+The constructor should then be implemented as a method whose name is the same as
+the struct type. Its return value must be the struct itself:
 
 ```{literalinclude} /sources/language/src/data/top.mbt
 :language: moonbit
@@ -1234,7 +1232,8 @@ If a `struct` declares a constructor, it can be constructed by name directly:
 :end-before: end struct constructor 3
 ```
 
-The constructor call follows the declared `new` signature, so unlabeled parameters can be written in the familiar `TypeName(value)` form.
+The constructor call follows the constructor method signature, so unlabeled
+parameters can be written in the familiar `TypeName(value)` form.
 
 Constructors may also use labeled and optional arguments, just like normal functions:
 
@@ -1276,7 +1275,8 @@ Because struct constructors are implemented by normal functions, they may raise 
 :end-before: end struct constructor 9
 ```
 
-Asynchronous constructors are declared with `async fn new` and can be used inside async code:
+Asynchronous constructors are declared with `async fn TypeName::TypeName` and
+can be used inside async code:
 
 ```{literalinclude} /sources/async/src/async.mbt
 :language: moonbit
@@ -1305,8 +1305,8 @@ the package name can be omitted if the expected type of the expression is known.
 Since `struct` constructors are implemented by normal functions,
 they may [raise error](/language/error-handling.md) or [perform asynchronous operations](/language/async-experimental.md).
 `struct` constructors also support [optional arguments](#optional-arguments).
-Notice that the default value of optional arguments should be defined at the implementation of struct constructors,
-the declaration inside the `struct` should only contain a `label? : T` signature.
+Default values for optional arguments are written on the constructor
+implementation, just like normal function signatures.
 
 ### Enum
 
@@ -2018,9 +2018,25 @@ also bind a matched sub-pattern using `as`, such as `("b*" as b)`.
 `lexmatch?` is a boolean check similar to `is`, and it can introduce binders
 for use in the same contexts as `is` expressions.
 
+In old code, search-mode `lexmatch` looked like this:
+
+```moonbit
+lexmatch text {
+  (before, "a" ("b*" as b) "c", after) => ...
+  _ => ...
+}
+
+if text lexmatch? ("a" ("b*" as b) "c") && b.length() > 0 {
+  ...
+}
+```
+
+In new code, write those search-mode checks with `=~` instead.
+
 `lexmatch` also supports a lexer-style mode: `lexmatch <expr> with longest`,
 which picks the longest match among alternatives (for example, `if|[a-z]*`
-matches `iff` as `iff` in longest mode, while search mode matches `if` first).
+matches `iff` as `iff` in longest mode, while first-match search mode matches
+`if` first). Regex match expressions do not provide this longest-match mode.
 
 Regex literals support `\b` and `\B` as part of the regex syntax, but these
 word-boundary assertions are not currently available in `regex match
