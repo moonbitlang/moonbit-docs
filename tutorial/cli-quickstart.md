@@ -101,6 +101,7 @@ The package descriptor imports `argparse` from `moonbitlang/core` and the async 
 ```moonbit
 import {
   "moonbitlang/core/argparse",
+  "moonbitlang/core/test",
   "moonbitlang/async/fs",
   "moonbitlang/async/http",
   "moonbitlang/async/stdio",
@@ -185,7 +186,7 @@ The parser and config shaping logic stay easy to test because they do not perfor
 test "parse config for stdout" {
   let config = parse_config(["https://example.com/feed.xml"])
   assert_eq(config.url, "https://example.com/feed.xml")
-  assert_eq(config.output, None)
+  @test.assert_eq(config.output, None)
 }
 
 ///|

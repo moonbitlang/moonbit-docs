@@ -109,8 +109,8 @@ let bigint : BigInt = 42
 
 ```moonbit
 let a = "兔rabbit"
-println(a.code_unit_at(0).to_char())
-println(a.code_unit_at(1).to_char())
+debug_inspect(a.code_unit_at(0).to_char(), content="Some('兔')")
+debug_inspect(a.code_unit_at(1).to_char(), content="Some('r')")
 let b =
   #| Hello
   #| MoonBit\n
@@ -119,8 +119,6 @@ println(b)
 ```
 
 ```default
-Some('兔')
-Some('r')
  Hello
  MoonBit\n
 
@@ -978,7 +976,7 @@ fn guarded_get(array : Array[Int], index : Int) -> Int? {
 }
 
 test {
-  inspect(guarded_get([1, 2, 3], -1), content="None")
+  debug_inspect(guarded_get([1, 2, 3], -1), content="None")
 }
 ```
 
@@ -1517,24 +1515,20 @@ fn main {
 #### Custom constructor for struct
 
 MoonBit also supports defining a custom constructor for every `struct` type.
-The constructor for a `struct` is a special function that can be used to
-create value for the `struct` using the name of the struct,
-it can be declared as follows:
+A constructor is a special method that can be called with the name of the
+struct to create a value. First define the struct as usual:
 
 ```moonbit
 struct IntBox {
   value : Int
-
-  fn new(value : Int) -> IntBox
 } derive(Debug)
 ```
 
-Here, the return value of the constructor must be the struct itself.
-The constructor should then be implemented by a `new` method (the name cannot be changed here)
-with exactly the same type:
+The constructor should then be implemented as a method whose name is the same as
+the struct type. Its return value must be the struct itself:
 
 ```moonbit
-fn IntBox::new(value : Int) -> IntBox {
+fn IntBox::IntBox(value : Int) -> IntBox {
   { value, }
 }
 ```
@@ -1546,7 +1540,8 @@ If a `struct` declares a constructor, it can be constructed by name directly:
   debug_inspect(box, content="{ value: 10 }")
 ```
 
-The constructor call follows the declared `new` signature, so unlabeled parameters can be written in the familiar `TypeName(value)` form.
+The constructor call follows the constructor method signature, so unlabeled
+parameters can be written in the familiar `TypeName(value)` form.
 
 Constructors may also use labeled and optional arguments, just like normal functions:
 
@@ -1554,13 +1549,11 @@ Constructors may also use labeled and optional arguments, just like normal funct
 struct StructWithConstr {
   x : Int
   y : Int
-
-  fn new(x~ : Int, y? : Int) -> StructWithConstr
 } derive(Debug)
 ```
 
 ```moonbit
-fn StructWithConstr::new(x~ : Int, y? : Int = x) -> StructWithConstr {
+fn StructWithConstr::StructWithConstr(x~ : Int, y? : Int = x) -> StructWithConstr {
   { x, y }
 }
 ```
@@ -1579,13 +1572,11 @@ suberror BuildError {
 
 struct Positive {
   value : Int
-
-  fn new(x : Int) -> Positive raise BuildError
 } derive(Debug)
 ```
 
 ```moonbit
-fn Positive::new(x : Int) -> Positive raise BuildError {
+fn Positive::Positive(x : Int) -> Positive raise BuildError {
   guard x >= 0 else { raise NegativeInput }
   { value: x }
 }
@@ -1596,18 +1587,17 @@ fn Positive::new(x : Int) -> Positive raise BuildError {
   debug_inspect(try? Positive(-1), content="Err(NegativeInput)")
 ```
 
-Asynchronous constructors are declared with `async fn new` and can be used inside async code:
+Asynchronous constructors are declared with `async fn TypeName::TypeName` and
+can be used inside async code:
 
 ```moonbit
 struct AsyncBox {
   value : Int
-
-  async fn new(x : Int) -> AsyncBox
 } derive(Debug)
 ```
 
 ```moonbit
-async fn AsyncBox::new(x : Int) -> AsyncBox {
+async fn AsyncBox::AsyncBox(x : Int) -> AsyncBox {
   @async.sleep(0)
   { value: x }
 }
@@ -1629,8 +1619,8 @@ the package name can be omitted if the expected type of the expression is known.
 Since `struct` constructors are implemented by normal functions,
 they may [raise error](error-handling.md) or [perform asynchronous operations](async-experimental.md).
 `struct` constructors also support [optional arguments]().
-Notice that the default value of optional arguments should be defined at the implementation of struct constructors,
-the declaration inside the `struct` should only contain a `label? : T` signature.
+Default values for optional arguments are written on the constructor
+implementation, just like normal function signatures.
 
 ### Enum
 
@@ -2477,9 +2467,9 @@ contexts:
    ```moonbit
    fn g(x : Array[Int?]) -> Unit {
      if x is [v, .. rest] && v is Some(i) && i is (0..=10) {
-       println(v)
+       debug(v)
        println(i)
-       println(rest)
+       debug(rest)
      }
    }
    ```
@@ -2513,7 +2503,7 @@ fn j(x : Int) -> Int? {
 fn init {
   guard j(42) is (Some(a) as b)
   println(a)
-  println(b)
+  debug(b)
 }
 ```
 
@@ -2704,9 +2694,25 @@ also bind a matched sub-pattern using `as`, such as `("b*" as b)`.
 `lexmatch?` is a boolean check similar to `is`, and it can introduce binders
 for use in the same contexts as `is` expressions.
 
+In old code, search-mode `lexmatch` looked like this:
+
+```moonbit
+lexmatch text {
+  (before, "a" ("b*" as b) "c", after) => ...
+  _ => ...
+}
+
+if text lexmatch? ("a" ("b*" as b) "c") && b.length() > 0 {
+  ...
+}
+```
+
+In new code, write those search-mode checks with `=~` instead.
+
 `lexmatch` also supports a lexer-style mode: `lexmatch <expr> with longest`,
 which picks the longest match among alternatives (for example, `if|[a-z]*`
-matches `iff` as `iff` in longest mode, while search mode matches `if` first).
+matches `iff` as `iff` in longest mode, while first-match search mode matches
+`if` first). Regex match expressions do not provide this longest-match mode.
 
 Regex literals support `\b` and `\B` as part of the regex syntax, but these
 word-boundary assertions are not currently available in `regex match expression` constant contexts. They do work when the regex is used as a
@@ -2718,16 +2724,15 @@ classes instead.
 ```moonbit
 test {
   let text = "xxabbbcyy"
-  lexmatch text {
-    (before, "a" ("b*" as b) "c", after) => {
-      inspect(before, content="xx")
-      inspect(b, content="bbb")
-      inspect(after, content="yy")
-    }
-    _ => fail("")
+  if text =~ (re"a" + (re"b*" as b) + re"c", before~, after~) {
+    inspect(before, content="xx")
+    inspect(b, content="bbb")
+    inspect(after, content="yy")
+  } else {
+    fail("")
   }
 
-  if text lexmatch? ("a" ("b*" as b) "c") && b.length() > 0 {
+  if text =~ (re"a" + (re"b*" as b) + re"c") && b.length() > 0 {
     inspect(b, content="bbb")
   }
 

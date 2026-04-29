@@ -96,7 +96,7 @@ pub(all) enum SubmitTitleResponse {
 pub fn validate_request(
   request : SubmitTitleRequest,
 ) -> Unit raise TitleValidationError {
-  let title = request.title.trim().to_string()
+  let title = request.title.trim().to_owned()
   if title.length() == 0 {
     raise EmptyTitle
   } else if title.length() > 24 {
@@ -302,7 +302,7 @@ async fn main {
           try {
             @shared.validate_request(request)
             @shared.SubmitTitleResponse::Accepted(
-              request.title.trim().to_string(),
+              request.title.trim().to_owned(),
             )
           } catch {
             err => @shared.SubmitTitleResponse::ValidationError(err)

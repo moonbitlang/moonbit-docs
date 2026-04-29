@@ -635,7 +635,7 @@ in this section applies to the `wasm`, `wasm-gc`, and `js` backends.
 
 #### Wasm GC Backend Link Options
 
-- The `use-js-string-builtin` option is used to specify whether the [JS String Builtin Proposal](https://github.com/WebAssembly/js-string-builtins/blob/main/proposals/js-string-builtins/Overview.md) should be enabled when compiling to the Wasm GC backend.
+- The `use-js-builtin-string` option is used to specify whether the [JS String Builtin Proposal](https://github.com/WebAssembly/js-string-builtins/blob/main/proposals/js-string-builtins/Overview.md) should be enabled when compiling to the Wasm GC backend.
   It will make the `String` in MoonBit equivalent to the `String` in JavaScript host runtime.
 
   For example, the following configuration enables the JS String Builtin.
