@@ -50,7 +50,7 @@ For the up-to-date manual, please check out [moon's repository](https://github.c
 * `test` — Test the current package
 * `clean` — Remove the _build directory
 * `fmt` — Format source code
-* `doc` — Generate documentation
+* `doc` — Generate documentation or searching documentation for a symbol
 * `info` — Generate public interface (`.mbti`) files for all packages in the module
 * `bench` — Run benchmarks in the current package
 * `add` — Add a dependency
@@ -296,9 +296,13 @@ Format source code
 
 ## `moon doc`
 
-Generate documentation
+Generate documentation or searching documentation for a symbol
 
-**Usage:** `moon doc [OPTIONS]`
+**Usage:** `moon doc [OPTIONS] [SYMBOL]`
+
+**Arguments:**
+
+* `<SYMBOL>` — [Deprecated] The symbol to query documentation for. Use `moon ide doc <SYMBOL>` instead.
 
 **Options:**
 
