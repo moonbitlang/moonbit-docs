@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
@@ -21,7 +20,7 @@ msgstr ""
 
 #: ../../tutorial/tour.md:1
 msgid "A Tour of MoonBit for Beginners"
-msgstr ""
+msgstr "初心者向け MoonBit ツアー"
 
 #: ../../tutorial/tour.md:3
 msgid ""
@@ -30,20 +29,23 @@ msgid ""
 "guide for those who haven't programmed in a way that MoonBit enables them"
 " to, that is, in a more modern, functional way."
 msgstr ""
+"このガイドは初学者向けであり、5 分で終わる駆け足のツアーではありません。"
+"MoonBit が可能にする、よりモダンで関数型的な書き方にまだ親しみのない人に向けて、"
+"簡潔で分かりやすい解説を目指しています。"
 
 #: ../../tutorial/tour.md:8
 msgid ""
 "See [the General Introduction](../language/index.md) if you want to "
 "straight delve into the language."
-msgstr ""
+msgstr "すぐに言語仕様そのものを学びたい場合は、[言語の概要](../language/index.md) を参照してください。"
 
 #: ../../tutorial/tour.md:11
 msgid "Installation"
-msgstr ""
+msgstr "インストール"
 
 #: ../../tutorial/tour.md:13
 msgid "**The extension**"
-msgstr ""
+msgstr "**拡張機能**"
 
 #: ../../tutorial/tour.md:15
 msgid ""
@@ -52,10 +54,13 @@ msgid ""
 "Marketplace](https://marketplace.visualstudio.com/items?itemName=moonbit"
 ".moonbit-lang) to download MoonBit language support."
 msgstr ""
+"現在、MoonBit の開発サポートは VS Code 拡張機能を通じて提供されています。[VS Code "
+"Marketplace](https://marketplace.visualstudio.com/items?itemName=moonbit.moonbit-lang)"
+" にアクセスして、MoonBit の言語サポートをダウンロードしてください。"
 
 #: ../../tutorial/tour.md:20
 msgid "**The toolchain**"
-msgstr ""
+msgstr "**ツールチェーン**"
 
 #: ../../tutorial/tour.md:22
 msgid ""
@@ -64,16 +69,19 @@ msgid ""
 "menu and you may skip this part: ![runtime-installation](/imgs/runtime-"
 "installation.png)"
 msgstr ""
+"（推奨）上の拡張機能をインストール済みであれば、アクションメニューで "
+"`Install moonbit toolchain` を実行するだけでランタイムを直接インストールできるため、"
+"この節は飛ばせます。![ランタイムのインストール](/imgs/runtime-installation.png)"
 
 #: ../../tutorial/tour.md:22
 msgid "runtime-installation"
-msgstr ""
+msgstr "ランタイムのインストール"
 
 #: ../../tutorial/tour.md:27
 msgid ""
 "We also provide an installation script: Linux & macOS users can install "
 "via"
-msgstr ""
+msgstr "インストールスクリプトも用意しています。Linux と macOS では次の方法でインストールできます："
 
 #: ../../tutorial/tour.md:29
 msgid "curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash\n"
@@ -81,7 +89,7 @@ msgstr ""
 
 #: ../../tutorial/tour.md:33
 msgid "For Windows users, PowerShell is used:"
-msgstr ""
+msgstr "Windows ユーザーは PowerShell を使います："
 
 #: ../../tutorial/tour.md:35
 msgid ""
@@ -93,25 +101,31 @@ msgstr ""
 msgid ""
 "This automatically installs MoonBit in `$HOME/.moon` and adds it to your "
 "`PATH`."
-msgstr ""
+msgstr "これにより、MoonBit は `$HOME/.moon` に自動的にインストールされ、`PATH` に追加されます。"
 
 #: ../../tutorial/tour.md:41
 msgid ""
 "If you encounter `moon` not found after installation, try restarting your"
 " terminal or VS Code to let the environment variable take effect."
 msgstr ""
+"インストール後に `moon` が見つからない場合は、環境変数を反映させるためにターミナル"
+"または VS Code を再起動してみてください。"
 
 #: ../../tutorial/tour.md:44
 msgid ""
 "Do notice that MoonBit is not production-ready at the moment, it's under "
 "active development. To update MoonBit, just run the commands above again."
 msgstr ""
+"現時点の MoonBit はまだ本番利用向けではなく、活発に開発が進められています。"
+"MoonBit を更新するには、上記のコマンドをもう一度実行してください。"
 
 #: ../../tutorial/tour.md:47
 msgid ""
 "Running `moon help` gives us a bunch of subcommands. But right now the "
 "only commands we need are `build`, `run`, and `new`."
 msgstr ""
+"`moon help` を実行すると多くのサブコマンドが表示されます。ただし、ここで必要になるのは "
+"`build`、`run`、`new` だけです。"
 
 #: ../../tutorial/tour.md:50
 msgid ""
@@ -119,6 +133,9 @@ msgid ""
 "where path is the place you would like to place the project. For example,"
 " if you execute `moon new examine`, you will get:"
 msgstr ""
+"プロジェクト（より正確にはモジュール）を作成するには、`moon new <path>` を実行します。"
+"ここで `path` はプロジェクトを配置したい場所です。例えば `moon new examine` を実行すると、"
+"次のようになります："
 
 #: ../../tutorial/tour.md:54
 msgid ""
@@ -142,42 +159,48 @@ msgid ""
 "which contains a `cmd/main` lib containing a `fn main` that serves as the"
 " entrance of the program. Try running `cd examine && moon run cmd/main`."
 msgstr ""
+"この中には `cmd/main` ライブラリがあり、そこにはプログラムの入口となる `fn main` が"
+"含まれています。`cd examine && moon run cmd/main` を実行してみてください。"
 
 #: ../../tutorial/tour.md:73
 msgid ""
 "In this tutorial, we assume the project name is `examine`,  and the "
 "current working directory is also `examine`."
 msgstr ""
+"このチュートリアルでは、プロジェクト名を `examine`、現在の作業ディレクトリも "
+"`examine` と仮定します。"
 
 #: ../../tutorial/tour.md:76
 msgid "Example: Finding students who passed the test"
-msgstr ""
+msgstr "例: テストに合格した学生を探す"
 
 #: ../../tutorial/tour.md:78
 msgid ""
 "In this example, we will try to find out, given the scores of some "
 "students, how many of them have passed the test?"
-msgstr ""
+msgstr "この例では、複数の学生の点数が与えられたとき、何人がテストに合格したかを求めてみます。"
 
 #: ../../tutorial/tour.md:81
 msgid ""
 "To do so, we will start with defining our data types, identify our "
 "functions, and write our tests. Then we will implement our functions."
 msgstr ""
+"そのために、まずデータ型を定義し、必要な関数を洗い出して、テストを書きます。"
+"その後で関数を実装します。"
 
 #: ../../tutorial/tour.md:84
 msgid "Unless specified, the following will be defined under the file `top.mbt`."
-msgstr ""
+msgstr "特に断りがない限り、以下の定義は `top.mbt` ファイルに記述します。"
 
 #: ../../tutorial/tour.md:86
 msgid "Data types"
-msgstr ""
+msgstr "データ型"
 
 #: ../../tutorial/tour.md:88
 msgid ""
 "The [basic data types](/language/fundamentals.md#built-in-data-"
 "structures) in MoonBit include the following:"
-msgstr ""
+msgstr "MoonBit の [基本データ型](/language/fundamentals.md#built-in-data-structures) には次のものがあります："
 
 #: ../../tutorial/tour.md:90
 msgid "`Unit`"
@@ -205,7 +228,7 @@ msgstr ""
 
 #: ../../tutorial/tour.md:96
 msgid "Tuples, and still others"
-msgstr ""
+msgstr "タプルなど"
 
 #: ../../tutorial/tour.md:98
 msgid ""
@@ -216,12 +239,16 @@ msgid ""
 "data types, such as a struct containing a student ID and the height of "
 "the student."
 msgstr ""
+"学生 ID と点数を持つ構造体をプリミティブ型で表すには、学生 ID（型は `String`）と"
+"点数（型は `Double`）からなる 2 要素タプル `(String, Double)` を使えます。"
+"しかし、この表現は直感的ではありません。例えば、学生 ID と身長を持つ構造体のような"
+"他の型と区別できないからです。"
 
 #: ../../tutorial/tour.md:104
 msgid ""
 "So we choose to declare our own data type using "
 "[struct](/language/fundamentals.md#struct):"
-msgstr ""
+msgstr "そこで、[struct](/language/fundamentals.md#struct) を使って独自のデータ型を宣言します："
 
 #: ../../tutorial/tour.md:106
 msgid ""
@@ -235,7 +262,7 @@ msgstr ""
 msgid ""
 "One can either pass or fail an exam, so the judgement result can be "
 "defined using [enum](/language/fundamentals.md#enum):"
-msgstr ""
+msgstr "試験は合格か不合格かのどちらかなので、判定結果は [enum](/language/fundamentals.md#enum) を使って次のように定義できます："
 
 #: ../../tutorial/tour.md:117
 msgid ""
@@ -247,17 +274,17 @@ msgstr ""
 
 #: ../../tutorial/tour.md:125
 msgid "Functions"
-msgstr ""
+msgstr "関数"
 
 #: ../../tutorial/tour.md:127
 msgid ""
 "A [Function](/language/fundamentals.md#functions) is a piece of code that"
 " takes some inputs and produces a result."
-msgstr ""
+msgstr "[関数](/language/fundamentals.md#functions) とは、入力を受け取り、結果を返すコード片です。"
 
 #: ../../tutorial/tour.md:129
 msgid "In our example, we need to judge whether a student has passed an exam:"
-msgstr ""
+msgstr "この例では、学生が試験に合格したかどうかを判定する必要があります："
 
 #: ../../tutorial/tour.md:131
 msgid ""
@@ -273,14 +300,16 @@ msgid ""
 "different for each course or different in each country, and returns an "
 "`ExamResult`."
 msgstr ""
+"この関数は、先ほど定義した `Student` 型の値 `student` と、科目や国ごとに基準が"
+"異なり得るため `Double` 型で表した基準値 `criteria` を受け取り、`ExamResult` を返します。"
 
 #: ../../tutorial/tour.md:140
 msgid "The `...` syntax allows us to leave functions unimplemented for now."
-msgstr ""
+msgstr "`...` 構文を使うと、関数をいったん未実装のままにできます。"
 
 #: ../../tutorial/tour.md:142
 msgid "We also need to find out how many students have passed an exam:"
-msgstr ""
+msgstr "また、試験に合格した学生が何人いるかを求める必要があります："
 
 #: ../../tutorial/tour.md:144
 msgid ""
@@ -300,10 +329,13 @@ msgid ""
 "and another function that will judge whether a student has passed an "
 "exam."
 msgstr ""
+"MoonBit では関数は第一級の値として扱われます。つまり、関数を変数に束縛したり、引数として渡したり、"
+"戻り値として受け取ったりできます。この関数は、学生の構造体の配列と、各学生が合格したか"
+"どうかを判定する別の関数を受け取ります。"
 
 #: ../../tutorial/tour.md:157
 msgid "Writing tests"
-msgstr ""
+msgstr "テストを書く"
 
 #: ../../tutorial/tour.md:159
 msgid ""
@@ -311,6 +343,9 @@ msgid ""
 "functions. This is also helpful to make sure that there'll be no "
 "regressions when we refactor the program."
 msgstr ""
+"関数の期待される振る舞いを定義するために、インラインテストを記述できます。"
+"これは、プログラムをリファクタリングしたときに回帰が起きないことを"
+"確かめるのにも役立ちます。"
 
 #: ../../tutorial/tour.md:161
 msgid ""
@@ -328,19 +363,19 @@ msgstr ""
 msgid ""
 "We will get an error message, reminding us that `Show` and `Eq` are not "
 "implemented for `ExamResult`."
-msgstr ""
+msgstr "`ExamResult` に `Show` と `Eq` が実装されていないことを示すエラーメッセージが出ます。"
 
 #: ../../tutorial/tour.md:172
 msgid ""
 "`Show` and `Eq` are **traits**. A trait in MoonBit defines some common "
 "operations that a type should be able to perform."
-msgstr ""
+msgstr "`Show` と `Eq` は **trait** です。MoonBit の trait は、ある型が提供すべき共通操作を定義します。"
 
 #: ../../tutorial/tour.md:174
 msgid ""
 "For example, `Eq` defines that there should be a way to compare two "
 "values of the same type with a function called `op_equal`:"
-msgstr ""
+msgstr "例えば `Eq` では、同じ型の 2 つの値を `op_equal` という関数で比較できることを定義します："
 
 #: ../../tutorial/tour.md:176
 msgid ""
@@ -353,7 +388,7 @@ msgstr ""
 msgid ""
 "and `Show` defines that there should be a way to either convert a value "
 "of a type into `String` or write it using a `Logger`:"
-msgstr ""
+msgstr "一方 `Show` では、値を `String` に変換するか、`Logger` を使って出力できることを定義します："
 
 #: ../../tutorial/tour.md:185
 msgid ""
@@ -368,6 +403,8 @@ msgid ""
 "And the `assert_eq` uses them to constraint the passed parameters so that"
 " it can compare the two values and print them when they are not equal:"
 msgstr ""
+"そして `assert_eq` はこれらの trait を使って、渡された 2 つの値を比較し、"
+"等しくない場合に表示できるよう、型パラメータに制約を付けています："
 
 #: ../../tutorial/tour.md:195
 msgid ""
@@ -380,11 +417,11 @@ msgstr ""
 msgid ""
 "We need to implement `Eq` and `Show` for our `ExamResult`. There are two "
 "ways to do so."
-msgstr ""
+msgstr "`ExamResult` に対して `Eq` と `Show` を実装する必要があります。方法は 2 つあります。"
 
 #: ../../tutorial/tour.md:204
 msgid "By defining an explicit implementation:"
-msgstr ""
+msgstr "明示的な実装を定義する方法です："
 
 #: ../../tutorial/tour.md:206
 msgid ""
@@ -400,7 +437,7 @@ msgstr ""
 msgid ""
 "Here we use [pattern matching](/language/fundamentals.md#pattern-"
 "matching) to check the cases of the `ExamResult`."
-msgstr ""
+msgstr "ここでは [パターンマッチング](/language/fundamentals.md#pattern-matching) を使って `ExamResult` の各ケースを判定しています。"
 
 #: ../../tutorial/tour.md:218
 msgid ""
@@ -408,6 +445,9 @@ msgid ""
 "`Show` are [builtin traits](/language/methods.md#builtin-traits) and the "
 "output for `ExamResult` is quite straightforward:"
 msgstr ""
+"もう 1 つの方法は [derive](/language/derive.md) を使うことです。`Eq` と `Show` は"
+"[組み込み trait](/language/methods.md#builtin-traits) であり、`ExamResult` の出力は"
+"かなり単純です："
 
 #: ../../tutorial/tour.md:220
 msgid ""
@@ -421,7 +461,7 @@ msgstr ""
 msgid ""
 "Now that we've implemented the traits, we can continue with our test "
 "implementations:"
-msgstr ""
+msgstr "trait を実装できたので、テストの実装を続けます："
 
 #: ../../tutorial/tour.md:230
 msgid ""
@@ -443,19 +483,19 @@ msgid ""
 "Here we use [lambda expressions](/language/fundamentals.md#local-"
 "functions) to reuse the previously defined `is_qualified` to create "
 "different criteria."
-msgstr ""
+msgstr "ここでは [ラムダ式](/language/fundamentals.md#local-functions) により、先ほど定義した `is_qualified` を再利用して異なる基準を作成しています。"
 
 #: ../../tutorial/tour.md:248
 msgid "We can run `moon test` to see whether the tests succeed or not."
-msgstr ""
+msgstr "`moon test` を実行して、テストが成功するかどうかを確認できます。"
 
 #: ../../tutorial/tour.md:250
 msgid "Implementing the functions"
-msgstr ""
+msgstr "関数を実装する"
 
 #: ../../tutorial/tour.md:252
 msgid "For the `is_qualified` function, it is as easy as a simple comparison:"
-msgstr ""
+msgstr "`is_qualified` 関数は、単純な比較で実装できます："
 
 #: ../../tutorial/tour.md:254
 msgid ""
@@ -473,19 +513,19 @@ msgid ""
 "In MoonBit, the result of the last expression is the return value of the "
 "function, and the result of each branch is the value of the `if` "
 "expression."
-msgstr ""
+msgstr "MoonBit では、最後の式の結果が関数の戻り値になり、`if` 式では各分岐の結果がその式の値になります。"
 
 #: ../../tutorial/tour.md:267
 msgid ""
 "For the `count_qualified_students` function, we need to iterate through "
 "the array to check if each student has passed or not."
-msgstr ""
+msgstr "`count_qualified_students` 関数では、各学生が合格したかどうかを調べるために配列を走査する必要があります。"
 
 #: ../../tutorial/tour.md:269
 msgid ""
 "A naive version is by using a mutable value and a [`for` "
 "loop](/language/fundamentals.md#for-loop):"
-msgstr ""
+msgstr "素朴な方法としては、可変変数と [`for` ループ](/language/fundamentals.md#for-loop) を使います："
 
 #: ../../tutorial/tour.md:271
 msgid ""
@@ -509,6 +549,9 @@ msgid ""
 "intuitive, so we can replace the `for` loop with a [`for .. in` "
 "loop](/language/fundamentals.md#for--in-loop):"
 msgstr ""
+"しかし、これは境界チェックが発生するため効率的でもなく、直感的でもありません。"
+"そこで `for` ループを [`for .. in` ループ](/language/fundamentals.md#for--in-loop) "
+"に置き換えられます："
 
 #: ../../tutorial/tour.md:289
 msgid ""
@@ -528,7 +571,7 @@ msgstr ""
 msgid ""
 "Still another way is use the functions defined for "
 "[iterator](/language/fundamentals.md#iterator):"
-msgstr ""
+msgstr "さらに別の方法として、[イテレータ](/language/fundamentals.md#iterator) 向けに定義された関数を使うこともできます："
 
 #: ../../tutorial/tour.md:305
 msgid ""
@@ -543,58 +586,58 @@ msgstr ""
 
 #: ../../tutorial/tour.md:315
 msgid "Now the tests defined before should pass."
-msgstr ""
+msgstr "これで、先ほど定義したテストは通るはずです。"
 
 #: ../../tutorial/tour.md:317
 msgid "Making the library available"
-msgstr ""
+msgstr "ライブラリを公開する"
 
 #: ../../tutorial/tour.md:319
 msgid "Congratulation on your first MoonBit library!"
-msgstr ""
+msgstr "最初の MoonBit ライブラリの完成、おめでとうございます。"
 
 #: ../../tutorial/tour.md:321
 msgid ""
 "You can now share it with other developers so that they don't need to "
 "repeat what you have done."
-msgstr ""
+msgstr "これを他の開発者と共有すれば、同じことを繰り返し実装する必要がなくなります。"
 
 #: ../../tutorial/tour.md:323
 msgid "But before that, you have some other things to do."
-msgstr ""
+msgstr "ただし、その前にもう少しやることがあります。"
 
 #: ../../tutorial/tour.md:325
 msgid "Adjusting the visibility"
-msgstr ""
+msgstr "可視性を調整する"
 
 #: ../../tutorial/tour.md:327
 msgid ""
 "To see how other people may use our program, MoonBit provides a mechanism"
 " called [\"black box test\"](/language/tests.md#blackbox-tests-and-"
 "whitebox-tests)."
-msgstr ""
+msgstr "自分たちのプログラムが他の人からどう使われるかを確認するために、MoonBit には [ブラックボックステスト](/language/tests.md#blackbox-tests-and-whitebox-tests) という仕組みがあります。"
 
 #: ../../tutorial/tour.md:329
 msgid ""
 "Let's move the `test` block we defined above into a new file "
 "`top_test.mbt`."
-msgstr ""
+msgstr "先ほど定義した `test` ブロックを、新しいファイル `top_test.mbt` に移してみましょう。"
 
 #: ../../tutorial/tour.md:331
 msgid "Oops! Now there are errors complaining that:"
-msgstr ""
+msgstr "すると、次のようなエラーが出ます："
 
 #: ../../tutorial/tour.md:332
 msgid "`is_qualified` and `count_qualified_students` are unbound"
-msgstr ""
+msgstr "`is_qualified` と `count_qualified_students` が未束縛になっている"
 
 #: ../../tutorial/tour.md:333
 msgid "`Fail` and `Pass` are undefined"
-msgstr ""
+msgstr "`Fail` と `Pass` が未定義になっている"
 
 #: ../../tutorial/tour.md:334
 msgid "`Student` is not a struct type and the field `id` is not found, etc."
-msgstr ""
+msgstr "`Student` が struct 型ではなく、フィールド `id` が見つからない、など"
 
 #: ../../tutorial/tour.md:336
 msgid ""
@@ -606,25 +649,30 @@ msgid ""
 "that everything you'd like others to have is indeed decorated with the "
 "intended visibility."
 msgstr ""
+"これらはすべて可視性の問題に由来します。デフォルトでは、定義した関数は現在のパッケージ"
+"（現在のフォルダで区切られる範囲）の外部からは見えません。また、型はデフォルトで抽象型"
+"として扱われるため、`Student` 型と `ExamResult` 型が存在することしか分かりません。"
+"ブラックボックステストを使えば、他の人に公開したいものに、意図した可視性が正しく"
+"付いているかを確認できます。"
 
 #: ../../tutorial/tour.md:340
 msgid ""
 "In order for others to use the functions, we need to add `pub` before the"
 " `fn` to make the function public."
-msgstr ""
+msgstr "他の人が関数を使えるようにするには、`fn` の前に `pub` を付けて関数を公開する必要があります。"
 
 #: ../../tutorial/tour.md:342
 msgid ""
 "In order for others to construct the types and read the content, we need "
 "to add `pub(all)` before the `struct` and `enum` to make the types "
 "public."
-msgstr ""
+msgstr "他の人が型を構築して内容を読めるようにするには、`struct` と `enum` の前に `pub(all)` を付けて型を公開する必要があります。"
 
 #: ../../tutorial/tour.md:344
 msgid ""
 "We also need to slightly modify the test of `count qualified students` to"
 " add type annotation:"
-msgstr ""
+msgstr "また、`count qualified students` のテストに型注釈を追加するため、少し修正する必要があります："
 
 #: ../../tutorial/tour.md:346
 msgid ""
@@ -646,41 +694,41 @@ msgid ""
 "Note that we access the type and the functions with `@examine`, the name "
 "of your package. This is how others use your package, but you can omit "
 "them in the black box tests."
-msgstr ""
+msgstr "ここでは、パッケージ名である `@examine` を付けて型と関数にアクセスしています。これは他の人があなたのパッケージを使うときの書き方ですが、ブラックボックステスト内では省略できます。"
 
 #: ../../tutorial/tour.md:363
 msgid "And now, the compilation should work and the tests should pass again."
-msgstr ""
+msgstr "これで再びコンパイルが通り、テストも成功するはずです。"
 
 #: ../../tutorial/tour.md:365
 msgid "Publishing the library"
-msgstr ""
+msgstr "ライブラリを公開する"
 
 #: ../../tutorial/tour.md:367
 msgid ""
 "Now that you're ready, you can publish this project to "
 "[mooncakes.io](https://mooncakes.io), the module registry of MoonBit. You"
 " can find other interesting projects there too."
-msgstr ""
+msgstr "準備ができたら、このプロジェクトを MoonBit のモジュールレジストリである [mooncakes.io](https://mooncakes.io) に公開できます。そこでは他にも興味深いプロジェクトを見つけられます。"
 
 #: ../../tutorial/tour.md:371
 msgid ""
 "Execute `moon login` and follow the instruction to create your account "
 "with an existing GitHub account."
-msgstr ""
+msgstr "`moon login` を実行し、案内に従って既存の GitHub アカウントでアカウントを作成します。"
 
 #: ../../tutorial/tour.md:373
 msgid ""
 "Modify the project name in `moon.mod.json` to `<your github account "
 "name>/<project name>`. Run `moon check` to see if there's any other "
 "affected places in `moon.pkg`."
-msgstr ""
+msgstr "`moon.mod.json` のプロジェクト名を `<your github account name>/<project name>` に変更します。`moon.pkg` に他に影響する箇所がないか、`moon check` を実行して確認します。"
 
 #: ../../tutorial/tour.md:376
 msgid ""
 "Execute `moon publish` and your done. Your project will be available for "
 "others to use."
-msgstr ""
+msgstr "`moon publish` を実行すれば完了です。これで他の人がこのプロジェクトを利用できるようになります。"
 
 #: ../../tutorial/tour.md:379
 msgid ""
@@ -691,10 +739,15 @@ msgid ""
 "2.0](https://spdx.org/licenses/MulanPSL-2.0.html), by changing the field "
 "`license` in `moon.mod.json` and the content of `LICENSE`."
 msgstr ""
+"デフォルトでは、このプロジェクトは [Apache "
+"2.0](https://www.apache.org/licenses/LICENSE-2.0.html) の下で公開されます。"
+"これは誰でも利用できる寛容なライセンスです。`moon.mod.json` の `license` フィールドと "
+"`LICENSE` の内容を変更すれば、[MulanPSL "
+"2.0](https://spdx.org/licenses/MulanPSL-2.0.html) のような他のライセンスも使えます。"
 
 #: ../../tutorial/tour.md:383
 msgid "Closing"
-msgstr ""
+msgstr "まとめ"
 
 #: ../../tutorial/tour.md:385
 msgid ""
@@ -704,4 +757,7 @@ msgid ""
 "tours](https://tour.moonbitlang.com) for more information in grammar and "
 "basic types, and other documents to get a better hold of MoonBit."
 msgstr ""
-
+"ここまでで、MoonBit のごく基本的でありながら、決して単純ではない機能を学びました。"
+"しかし、MoonBit は機能豊富なマルチパラダイム言語です。文法や基本型についてさらに"
+"知りたい場合は [言語ツアー](https://tour.moonbitlang.com) を参照し、"
+"そのほかのドキュメントも読んで MoonBit への理解を深めてください。"
