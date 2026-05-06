@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-06 14:57+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -25,8 +25,8 @@ msgstr ""
 
 #: ../../language/error_codes/E4013.md:3
 msgid ""
-"This function has a type which expects a different number of arguments than "
-"provided."
+"This function has a type which expects a different number of arguments "
+"than provided."
 msgstr "此函数的类型需要的参数数量与提供的参数数量不同。"
 
 #: ../../language/error_codes/E4013.md:5
@@ -40,44 +40,64 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4013.md:13
+#: ../../language/error_codes/E4013.md:11
 msgid ""
-"The example above declares a function `f` returns a function which expects "
-"no arguments, but returns a function that expects one argument. This will "
-"give the following error on line 2:"
+"The example above declares a function `f` returns a function which "
+"expects no arguments, but returns a function that expects one argument. "
+"This will give the following error on line 2:"
 msgstr "上面的示例声明了一个函数 `f`，该函数返回一个不带参数的函数，但实际返回的却是一个带一个参数的函数。这将导致第 2 行出现以下错误："
 
-#: ../../language/error_codes/E4013.md:17
+#: ../../language/error_codes/E4013.md:15
 msgid ""
-"This function has type () -> Int, which expects 0 argument(s), but is given "
-"1 argument(s).\n"
+"This function has type () -> Int, which expects 0 argument(s), but is "
+"given 1 argument(s).\n"
 msgstr ""
 
-#: ../../language/error_codes/E4013.md:21
+#: ../../language/error_codes/E4013.md:19
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4013.md:23
+#: ../../language/error_codes/E4013.md:21
 msgid ""
-"Adjust the code so that the number of arguments in the function type matches"
-" the number of arguments in the function definition:"
+"Adjust the code so that the number of arguments in the function type "
+"matches the number of arguments in the function definition:"
 msgstr "修改代码，使函数类型中的参数数量与函数定义中的参数数量相匹配。"
 
-#: ../../language/error_codes/E4013.md:26
+#: ../../language/error_codes/E4013.md:24
 msgid ""
-"fn f() -> ((Int) -> Int) {\n"
-"  fn (x: Int) { x }\n"
-"}"
+"///|\n"
+"pub fn f() -> (Int) -> Int {\n"
+"  fn(x : Int) { x }\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4013.md:30
+#: ../../language/error_codes/E4013.md:28
 msgid "... or:"
 msgstr "或："
 
-#: ../../language/error_codes/E4013.md:32
+#: ../../language/error_codes/E4013.md:30
 msgid ""
-"fn f(x: Int) -> (() -> Int) {\n"
+"///|\n"
+"pub fn g(x : Int) -> () -> Int {\n"
 "  fn() { x }\n"
-"}"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "fn f(x: Int) -> (() -> Int) {\n"
+#~ "  fn() { x }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f() -> ((Int) -> Int) {\n"
+#~ "  fn (x: Int) { x }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn g(x: Int) -> (() -> Int) {\n"
+#~ "  fn() { x }\n"
+#~ "}\n"
+#~ msgstr ""
 

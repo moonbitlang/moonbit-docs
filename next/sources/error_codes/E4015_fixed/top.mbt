@@ -1,1 +1,0 @@
-let hey = "hey".to_upper()

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-06 14:57+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -38,34 +38,47 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4002.md:13
+#: ../../language/error_codes/E4002.md:11
 msgid ""
 "This example declares a field with the `pub(open)` visibility modifier, "
 "which is not allowed and will give the following error on line 2:"
 msgstr "这个例子在一个字段中声明了 `pub(open)` 可见性修饰符，这是不允许的，会在第 2 行报错："
 
-#: ../../language/error_codes/E4002.md:16
+#: ../../language/error_codes/E4002.md:14
 msgid "The public open modifier is not supported here\n"
 msgstr "这里不支持公开且开放修饰符\n"
 
-#: ../../language/error_codes/E4002.md:20
+#: ../../language/error_codes/E4002.md:18
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4002.md:22
+#: ../../language/error_codes/E4002.md:20
 msgid "Change the visibility of the field to match the visibility of the struct:"
 msgstr "将字段的可见性修改至与结构体的可见性匹配："
 
-#: ../../language/error_codes/E4002.md:24
+#: ../../language/error_codes/E4002.md:22
 msgid ""
+"///|\n"
 "pub struct S {\n"
-"  field: Int\n"
-"}"
+"  field : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn make() -> S {\n"
+"  S::{ field: 0 }\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4002.md:28
+#: ../../language/error_codes/E4002.md:26
 msgid ""
-"We could have written `pub field: Int` instead of `field: Int` as well, but "
-"it is not necessary, as all fields in a public struct are public by default."
+"We could have written `pub field: Int` instead of `field: Int` as well, "
+"but it is not necessary, as all fields in a public struct are public by "
+"default."
 msgstr "我们可以将 `field: Int` 改为 `pub field: Int`，但这并不是必要的，因为公开结构体中的所有字段默认都是公开的。"
+
+#~ msgid ""
+#~ "pub struct S {\n"
+#~ "  field: Int\n"
+#~ "}"
+#~ msgstr ""
 
