@@ -1,7 +1,7 @@
 ///|
 enum Message {
   Add(String)
-} derive(Show)
+}
 
 ///|
 fn[T] perform(message : (T) -> Message, produce : () -> T) -> Message {
@@ -10,5 +10,7 @@ fn[T] perform(message : (T) -> Message, produce : () -> T) -> Message {
 
 ///|
 fn main {
-  println(perform(x => Add(x), fn() { "Hello, world!" }))
+  match perform(x => Add(x), fn() { "Hello, world!" }) {
+    Add(message) => println(message)
+  }
 }

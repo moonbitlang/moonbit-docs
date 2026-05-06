@@ -18,7 +18,7 @@ test {
 // make public
 
 ///|
-struct Code2(Int) derive(Show)
+struct Code2(Int) derive(Debug)
 
 ///|
 pub fn Code2::new(value : Int) -> Code2 {
@@ -28,5 +28,5 @@ pub fn Code2::new(value : Int) -> Code2 {
 
 ///|
 test {
-  inspect(Code2::new(1), content="Code2(1)")
+  inspect(Code2::new(1).0, content="1")
 }

@@ -30,7 +30,7 @@ pub fn[T : Compare] shortlex(a : Array[T], b : Array[T]) -> Int {
           1..<_ => return 1
           0 => ()
         }
-      } else {
+      } nobreak {
         return 0
       }
   }
