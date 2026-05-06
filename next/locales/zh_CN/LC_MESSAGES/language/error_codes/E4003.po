@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-06 14:57+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -25,8 +25,8 @@ msgstr ""
 
 #: ../../language/error_codes/E4003.md:3
 msgid ""
-"This is a reserved type name. Cannot declare it as a type variable, type, or"
-" trait."
+"This is a reserved type name. Cannot declare it as a type variable, type,"
+" or trait."
 msgstr "这是一个保留的类型名称。不能将其声明为类型变量、类型或特性。"
 
 #: ../../language/error_codes/E4003.md:5
@@ -39,8 +39,8 @@ msgstr ""
 
 #: ../../language/error_codes/E4003.md:11
 msgid ""
-"`Error` is the reserved name for the built-in error type, so it cannot be "
-"used for a custom type. This will give the following error on line 1:"
+"`Error` is the reserved name for the built-in error type, so it cannot be"
+" used for a custom type. This will give the following error on line 1:"
 msgstr "`Error` 是内置错误类型的保留名称，因此不能用于自定义类型。这会在第 1 行出现如下错误："
 
 #: ../../language/error_codes/E4003.md:14
@@ -56,6 +56,16 @@ msgid "Consider using another name for your type, such as `MyError` or `Error_`.
 msgstr "考虑将你的类型命名为其他名称，例如 `MyError` 或 `Error_`。"
 
 #: ../../language/error_codes/E4003.md:22
-msgid "struct MyError {}"
+msgid ""
+"///|\n"
+"priv struct MyError {}\n"
+"\n"
+"///|\n"
+"pub fn make() -> Unit {\n"
+"  ignore(MyError::{  })\n"
+"}\n"
 msgstr ""
+
+#~ msgid "struct MyError {}"
+#~ msgstr ""
 

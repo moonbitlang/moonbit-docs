@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 14:57+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,12 +24,63 @@ msgid "E3022"
 msgstr ""
 
 #: ../../language/error_codes/E3022.md:3
-msgid "Compiler diagnostic name: `invalid_alert_list`."
-msgstr ""
+msgid "Ill-formed list of alerts."
+msgstr "alert 列表格式不正确。"
 
 #: ../../language/error_codes/E3022.md:5
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"This error happens when the `alert-list` field in `moon.pkg` cannot be "
+"parsed. The field uses the same compact list syntax as `warn-list`, with "
+"`+` to enable an alert, `-` to disable an alert, and `@` to enable it as "
+"an error."
+msgstr ""
+"当 `moon.pkg` 中的 `alert-list` 字段无法解析时，会发生此错误。该字段使用与 `warn-list` "
+"相同的紧凑列表语法：用 `+` 启用 alert，用 `-` 禁用 alert，用 `@` 将其作为错误启用。"
+
+#: ../../language/error_codes/E3022.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E3022.md:11
+msgid ""
+"options(\n"
+"  \"alert-list\": \"1\",\n"
+")\n"
 msgstr ""
 
+#: ../../language/error_codes/E3022.md:15
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E3022.md:17
+msgid "Use a valid alert-list entry:"
+msgstr "使用有效的 alert-list 条目："
+
+#: ../../language/error_codes/E3022.md:19
+msgid ""
+"options(\n"
+"  \"alert-list\": \"-unsafe\",\n"
+")\n"
+msgstr ""
+
+#~ msgid "Compiler diagnostic name: `invalid_alert_list`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"alert-list\": \"1\"\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"alert-list\": \"-unsafe\",\n"
+#~ "  \"warn-list\": \"-a\"\n"
+#~ "}\n"
+#~ msgstr ""
