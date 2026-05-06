@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 12:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +21,65 @@ msgstr ""
 
 #: ../../language/error_codes/E4175.md:1
 msgid "E4175"
-msgstr ""
+msgstr "E4175"
 
 #: ../../language/error_codes/E4175.md:3
 msgid "Compiler diagnostic name: `as_not_trait_object`."
-msgstr ""
+msgstr "编译器诊断名称：`as_not_trait_object`。"
 
 #: ../../language/error_codes/E4175.md:5
+msgid "The right-hand side of `as` is not a trait object type."
+msgstr "`as` 右侧不是 trait 对象类型。"
+
+#: ../../language/error_codes/E4175.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"MoonBit uses `as &Trait` to convert a value to a trait object. The target"
+" type must therefore be a trait object type such as `&Show`, not an "
+"ordinary concrete type, type parameter, or package type."
+msgstr ""
+"MoonBit 使用 `as &Trait` 将值转换为 trait 对象。因此目标类型必须是 `&Show` 这"
+"样的 trait 对象类型，而不是普通的具体类型、类型参数或包类型。"
+
+#: ../../language/error_codes/E4175.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4175.md:13
+msgid ""
+"fn invalid_cast() -> Unit {\n"
+"  let _ = 1 as Int\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4175.md:17
+msgid ""
+"`Int` is a concrete type, not a trait object type, so it cannot be used "
+"on the right-hand side of `as`."
+msgstr "`Int` 是具体类型，不是 trait 对象类型，因此不能用在 `as` 的右侧。"
+
+#: ../../language/error_codes/E4175.md:20
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4175.md:22
+msgid ""
+"Use `as &Trait` when you want a trait object. If you only need a type "
+"annotation, write the expected type as an annotation instead of using "
+"`as`."
+msgstr ""
+"如果需要 trait 对象，请使用 `as &Trait`。如果只需要类型标注，请将期望类型写成"
+"标注，而不是使用 `as`。"
+
+#: ../../language/error_codes/E4175.md:25
+msgid ""
+"fn show_value() -> Unit {\n"
+"  let value = 1 as &Show\n"
+"  println(value)\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

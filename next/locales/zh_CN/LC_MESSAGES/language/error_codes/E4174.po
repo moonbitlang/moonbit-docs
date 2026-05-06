@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 12:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +21,68 @@ msgstr ""
 
 #: ../../language/error_codes/E4174.md:1
 msgid "E4174"
-msgstr ""
+msgstr "E4174"
 
 #: ../../language/error_codes/E4174.md:3
 msgid "Compiler diagnostic name: `control_in_defer`."
-msgstr ""
+msgstr "编译器诊断名称：`control_in_defer`。"
 
 #: ../../language/error_codes/E4174.md:5
+msgid "Invalid control flow inside `defer`."
+msgstr "`defer` 内部存在无效的控制流。"
+
+#: ../../language/error_codes/E4174.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"The right-hand side of `defer` is cleanup code that runs when the "
+"surrounding scope exits. It cannot change how that surrounding scope "
+"exits. MoonBit rejects `return`, `break`, `continue`, `raise`, calls to "
+"functions that may raise, and async calls inside `defer`."
+msgstr ""
+"`defer` 右侧是清理代码，会在外围作用域退出时运行。它不能改变外围作用域的退出"
+"方式。MoonBit 会拒绝 `defer` 内部的 `return`、`break`、`continue`、`raise`、对"
+"可能抛出错误的函数的调用，以及 async 调用。"
+
+#: ../../language/error_codes/E4174.md:12
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4174.md:14
+msgid ""
+"fn answer() -> Int {\n"
+"  defer { return 42 }\n"
+"  0\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4174.md:18
+msgid ""
+"The `return` would try to exit the surrounding function from cleanup "
+"code, so it is rejected."
+msgstr "`return` 会试图从清理代码中退出外围函数，因此会被拒绝。"
+
+#: ../../language/error_codes/E4174.md:21
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4174.md:23
+msgid ""
+"Keep `defer` for cleanup with `Unit`-returning, non-raising, synchronous "
+"code. Perform control flow after the deferred cleanup has been "
+"registered."
+msgstr ""
+"只在返回 `Unit`、不会抛出错误的同步清理代码中使用 `defer`。控制流应在注册延迟"
+"清理之后执行。"
+
+#: ../../language/error_codes/E4174.md:26
+msgid ""
+"fn answer() -> Int {\n"
+"  defer println(\"leaving answer\")\n"
+"  42\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 12:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +21,53 @@ msgstr ""
 
 #: ../../language/error_codes/E4209.md:1
 msgid "E4209"
-msgstr ""
+msgstr "E4209"
 
 #: ../../language/error_codes/E4209.md:3
 msgid "Compiler diagnostic name: `duplicate_regex_match_binding`."
-msgstr ""
+msgstr "编译器诊断名称：`duplicate_regex_match_binding`。"
 
 #: ../../language/error_codes/E4209.md:5
+msgid "Duplicate regex match binding."
+msgstr "重复的正则匹配绑定。"
+
+#: ../../language/error_codes/E4209.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"Each special binding in a regex match expression can be specified at most"
+" once. Using `before` or `after` multiple times would give the same part "
+"of the match more than one name."
+msgstr ""
+"正则匹配表达式中的每个特殊绑定最多只能指定一次。多次使用 `before` 或 `after` "
+"会给匹配的同一部分赋予多个名称。"
+
+#: ../../language/error_codes/E4209.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4209.md:13
+msgid ""
+"fn match_text(s : String) -> Unit {\n"
+"  ignore(s =~ (re\"a\", before=head, before=prefix))\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4209.md:17
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4209.md:19
+msgid "Use each binding label only once."
+msgstr "每个绑定标签只能使用一次。"
+
+#: ../../language/error_codes/E4209.md:21
+msgid ""
+"fn match_text(s : String) -> Unit {\n"
+"  ignore(s =~ (re\"a\", before=head, after=tail))\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
