@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 12:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +21,59 @@ msgstr ""
 
 #: ../../language/error_codes/E4194.md:1
 msgid "E4194"
-msgstr ""
+msgstr "E4194"
 
 #: ../../language/error_codes/E4194.md:3
 msgid "Compiler diagnostic name: `unsupported_declaration`."
-msgstr ""
+msgstr "编译器诊断名称：`unsupported_declaration`。"
 
 #: ../../language/error_codes/E4194.md:5
+msgid "Unsupported declaration target."
+msgstr "不支持的声明目标。"
+
+#: ../../language/error_codes/E4194.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"The declaration-only attribute is supported only on declaration items "
+"that the compiler can later match with an implementation. It cannot be "
+"applied to ordinary value bindings or other unsupported top-level items."
+msgstr ""
+"declaration-only 属性只支持用于编译器之后能与某个实现匹配的声明条目。它不能应"
+"用于普通值绑定或其他不支持的顶层条目。"
+
+#: ../../language/error_codes/E4194.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4194.md:13
+msgid ""
+"#declaration_only\n"
+"let answer = 42\n"
 msgstr ""
 
+#: ../../language/error_codes/E4194.md:17
+msgid ""
+"`answer` is a `let` binding, not a function, type, or implementation "
+"relation that can be tracked as a declaration."
+msgstr ""
+"`answer` 是 `let` 绑定，不是可以作为声明进行跟踪的函数、类型或实现关系。"
+
+#: ../../language/error_codes/E4194.md:20
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4194.md:22
+msgid ""
+"Use an ordinary definition for values. If you need a declaration, declare"
+" a function signature, abstract type, or implementation relation."
+msgstr ""
+"对值使用普通定义。如果需要声明，请声明函数签名、抽象类型或实现关系。"
+
+#: ../../language/error_codes/E4194.md:25
+msgid "let answer = 42\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

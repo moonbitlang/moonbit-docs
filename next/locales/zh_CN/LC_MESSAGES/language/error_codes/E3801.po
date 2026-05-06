@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 12:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +21,65 @@ msgstr ""
 
 #: ../../language/error_codes/E3801.md:1
 msgid "E3801"
-msgstr ""
+msgstr "E3801"
 
 #: ../../language/error_codes/E3801.md:3
 msgid "Compiler diagnostic name: `inclusive_range_pattern_missing_equal`."
-msgstr ""
+msgstr "编译器诊断名称：`inclusive_range_pattern_missing_equal`。"
 
 #: ../../language/error_codes/E3801.md:5
+msgid "Range pattern is missing `=`."
+msgstr "范围模式缺少 `=`。"
+
+#: ../../language/error_codes/E3801.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"Range patterns must spell out whether the upper bound is inclusive or "
+"exclusive. Use `a..=b` for an inclusive range and `a..<b` for an "
+"exclusive range."
+msgstr ""
+"范围模式必须明确上界是包含还是排除。包含上界的范围请使用 `a..=b`，排除上界的"
+"范围请使用 `a..<b`。"
+
+#: ../../language/error_codes/E3801.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E3801.md:12
+msgid ""
+"fn classify(x : Int) -> Unit {\n"
+"  match x {\n"
+"    1..2 => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E3801.md:16
+msgid ""
+"`1..2` is not accepted as a pattern because it does not say whether `2` "
+"is included."
+msgstr "`1..2` 不能作为模式使用，因为它没有说明是否包含 `2`。"
+
+#: ../../language/error_codes/E3801.md:19
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E3801.md:21
+msgid "Choose an inclusive or exclusive range pattern explicitly."
+msgstr "显式选择包含上界或排除上界的范围模式。"
+
+#: ../../language/error_codes/E3801.md:23
+msgid ""
+"fn classify(x : Int) -> Unit {\n"
+"  match x {\n"
+"    1..=2 => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

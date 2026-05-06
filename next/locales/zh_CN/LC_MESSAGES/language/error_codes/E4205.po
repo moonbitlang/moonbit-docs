@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 12:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +21,56 @@ msgstr ""
 
 #: ../../language/error_codes/E4205.md:1
 msgid "E4205"
-msgstr ""
+msgstr "E4205"
 
 #: ../../language/error_codes/E4205.md:3
 msgid "Compiler diagnostic name: `regex_map_key_not_supported`."
-msgstr ""
+msgstr "编译器诊断名称：`regex_map_key_not_supported`。"
 
 #: ../../language/error_codes/E4205.md:5
+msgid "Regex literal is not supported as a map key."
+msgstr "正则表达式字面量不能作为 map 键。"
+
+#: ../../language/error_codes/E4205.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"Map literals require ordinary key values. A `re\"...\"` literal creates a"
+" `Regex`, and regex values are not valid map keys."
+msgstr ""
+"map 字面量需要普通的键值。`re\"...\"` 字面量会创建 `Regex`，而正则表达式值不"
+"是有效的 map 键。"
+
+#: ../../language/error_codes/E4205.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4205.md:12
+msgid ""
+"fn build_map() -> Unit {\n"
+"  let _ = { re\"a+\": 1, \"b\": 2 }\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4205.md:16
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4205.md:18
+msgid ""
+"Use a string key if you want to store the pattern text, or store regex "
+"values as map values instead of keys."
+msgstr ""
+"如果要存储模式文本，请使用字符串键；或者将正则表达式值作为 map 值存储，而不是"
+"作为键。"
+
+#: ../../language/error_codes/E4205.md:21
+msgid ""
+"fn build_map() -> Unit {\n"
+"  let _ = { \"a+\": 1, \"b\": 2 }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

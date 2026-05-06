@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 12:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +21,66 @@ msgstr ""
 
 #: ../../language/error_codes/E3021.md:1
 msgid "E3021"
-msgstr ""
+msgstr "E3021"
 
 #: ../../language/error_codes/E3021.md:3
 msgid "Compiler diagnostic name: `invalid_warn_list`."
-msgstr ""
+msgstr "编译器诊断名称：`invalid_warn_list`。"
 
 #: ../../language/error_codes/E3021.md:5
+msgid "Invalid warning list."
+msgstr "无效的警告列表。"
+
+#: ../../language/error_codes/E3021.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"MoonBit warning lists are strings that enable or disable warnings by name"
+" or number. They are accepted in places such as `moon.pkg.json` `warn-"
+"list` and the `#warnings` attribute. This error happens when the warning "
+"list cannot be parsed, for example because it contains an unknown warning"
+" name or malformed syntax."
+msgstr ""
+"MoonBit 的警告列表是用于按名称或编号启用、禁用警告的字符串。它们可用于 "
+"`moon.pkg.json` 的 `warn-list` 字段和 `#warnings` 属性等位置。当警告列表无法解"
+"析时会出现此错误，例如其中包含未知的警告名称或格式错误的语法。"
+
+#: ../../language/error_codes/E3021.md:13
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E3021.md:15
+msgid ""
+"#warnings(\"-does_not_exist\")\n"
+"fn f() -> Unit {\n"
+"  ()\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E3021.md:19
+msgid "`does_not_exist` is not a known warning name."
+msgstr "`does_not_exist` 不是已知的警告名称。"
+
+#: ../../language/error_codes/E3021.md:21
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E3021.md:23
+msgid ""
+"Use a valid warning name or warning number. Warning names are the "
+"identifiers shown in compiler diagnostics, such as `unused_value`."
+msgstr ""
+"使用有效的警告名称或警告编号。警告名称是编译器诊断中显示的标识符，例如 "
+"`unused_value`。"
+
+#: ../../language/error_codes/E3021.md:26
+msgid ""
+"#warnings(\"-unused_value\")\n"
+"fn f() -> Unit {\n"
+"  ()\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

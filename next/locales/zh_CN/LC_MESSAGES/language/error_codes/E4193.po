@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 12:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +21,69 @@ msgstr ""
 
 #: ../../language/error_codes/E4193.md:1
 msgid "E4193"
-msgstr ""
+msgstr "E4193"
 
 #: ../../language/error_codes/E4193.md:3
 msgid "Compiler diagnostic name: `declare_body_not_empty`."
-msgstr ""
+msgstr "编译器诊断名称：`declare_body_not_empty`。"
 
 #: ../../language/error_codes/E4193.md:5
+msgid "Declaration body is not empty."
+msgstr "声明体不为空。"
+
+#: ../../language/error_codes/E4193.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"A declaration describes an item without providing its implementation "
+"body. For function declarations, the declaration must not contain a `{ "
+"... }` block. For type declarations, the declared type must be abstract "
+"rather than a concrete struct, enum, or tuple struct definition."
+msgstr ""
+"声明用于描述条目，但不提供其实现体。对于函数声明，声明中不能包含 `{ ... }` 块。"
+"对于类型声明，被声明的类型必须是抽象的，而不是具体的 struct、enum 或元组 "
+"struct 定义。"
+
+#: ../../language/error_codes/E4193.md:12
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4193.md:14
+msgid ""
+"#declaration_only\n"
+"fn declared_answer() -> Int {\n"
+"  42\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4193.md:18
+msgid ""
+"The `#declaration_only` attribute marks `declared_answer` as a "
+"declaration, but the function still provides an implementation body."
+msgstr ""
+"`#declaration_only` 属性将 `declared_answer` 标记为声明，但该函数仍然提供了实"
+"现体。"
+
+#: ../../language/error_codes/E4193.md:21
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4193.md:23
+msgid ""
+"Remove the declaration marker when the item is already implemented, or "
+"keep the declaration body empty and provide a matching implementation "
+"elsewhere."
+msgstr ""
+"如果该条目已经实现，请移除声明标记；或者保持声明体为空，并在其他位置提供匹配"
+"的实现。"
+
+#: ../../language/error_codes/E4193.md:26
+msgid ""
+"fn declared_answer() -> Int {\n"
+"  42\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 12:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +21,71 @@ msgstr ""
 
 #: ../../language/error_codes/E4173.md:1
 msgid "E4173"
-msgstr ""
+msgstr "E4173"
 
 #: ../../language/error_codes/E4173.md:3
 msgid "Compiler diagnostic name: `invalid_value_type_attr`."
-msgstr ""
+msgstr "编译器诊断名称：`invalid_value_type_attr`。"
 
 #: ../../language/error_codes/E4173.md:5
+msgid "Invalid `#valtype` declaration."
+msgstr "无效的 `#valtype` 声明。"
+
+#: ../../language/error_codes/E4173.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"`#valtype` asks the compiler to represent a type as a value type. Not "
+"every type shape can be represented this way. The compiler rejects "
+"declarations that would require boxed or runtime-object storage, such as "
+"a type parameter field, an object field, a mutable field, too many "
+"fields, or a nested value type field."
+msgstr ""
+"`#valtype` 要求编译器将某个类型表示为值类型。并不是所有类型形状都能这样表示。"
+"如果声明需要装箱或运行时对象存储，编译器会拒绝它，例如包含类型参数字段、对象"
+"字段、可变字段、过多字段或嵌套值类型字段。"
+
+#: ../../language/error_codes/E4173.md:12
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4173.md:14
+msgid ""
+"#valtype\n"
+"struct Box[T] {\n"
+"  value : T\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4173.md:18
+msgid ""
+"The field `value` has type `T`, a type parameter. A value type must have "
+"a concrete supported layout, so this generic field is rejected."
+msgstr ""
+"字段 `value` 的类型是类型参数 `T`。值类型必须具有具体且受支持的布局，因此这个"
+"泛型字段会被拒绝。"
+
+#: ../../language/error_codes/E4173.md:21
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4173.md:23
+msgid ""
+"Use concrete scalar fields for the value type, or remove `#valtype` if "
+"the type needs a generic or boxed layout."
+msgstr ""
+"为值类型使用具体的标量字段；如果该类型需要泛型布局或装箱布局，则移除 "
+"`#valtype`。"
+
+#: ../../language/error_codes/E4173.md:26
+msgid ""
+"#valtype\n"
+"struct Point {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

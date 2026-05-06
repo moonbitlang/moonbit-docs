@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 12:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +21,57 @@ msgstr ""
 
 #: ../../language/error_codes/E4208.md:1
 msgid "E4208"
-msgstr ""
+msgstr "E4208"
 
 #: ../../language/error_codes/E4208.md:3
 msgid "Compiler diagnostic name: `unknown_regex_match_binding`."
-msgstr ""
+msgstr "编译器诊断名称：`unknown_regex_match_binding`。"
 
 #: ../../language/error_codes/E4208.md:5
+msgid "Unknown regex match binding."
+msgstr "未知的正则匹配绑定。"
+
+#: ../../language/error_codes/E4208.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"Regex match expressions support only the special bindings `before` and "
+"`after` beside the matched regex itself. `before` binds the unmatched "
+"prefix and `after` binds the unmatched suffix."
+msgstr ""
+"正则匹配表达式除匹配的正则本身外，只支持特殊绑定 `before` 和 `after`。"
+"`before` 绑定未匹配的前缀，`after` 绑定未匹配的后缀。"
+
+#: ../../language/error_codes/E4208.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4208.md:13
+msgid ""
+"fn match_text(s : String) -> Unit {\n"
+"  ignore(s =~ (re\"a\", middle=mid))\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4208.md:17
+msgid "`middle` is not a supported regex match binding label."
+msgstr "`middle` 不是受支持的正则匹配绑定标签。"
+
+#: ../../language/error_codes/E4208.md:19
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4208.md:21
+msgid "Use `before` or `after`, or bind the regex itself with `as`."
+msgstr "使用 `before` 或 `after`，或者用 `as` 绑定正则本身。"
+
+#: ../../language/error_codes/E4208.md:23
+msgid ""
+"fn match_text(s : String) -> Unit {\n"
+"  ignore(s =~ (re\"a\", before=head))\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

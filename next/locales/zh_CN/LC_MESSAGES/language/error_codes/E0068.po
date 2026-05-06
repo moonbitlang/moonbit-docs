@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 13:08+0800\n"
+"POT-Creation-Date: 2026-05-06 12:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -33,30 +33,42 @@ msgstr "声明未实现。"
 
 #: ../../language/error_codes/E0068.md:7
 msgid ""
-"This warning is emitted when a declaration is left unimplemented. Provide"
-" an implementation or remove the declaration."
-msgstr "当声明未实现时发出此警告。请补充实现或删除该声明。"
+"This warning is emitted when a `declare` item is left without a matching "
+"implementation in the same package. It can apply to declared functions, "
+"methods, abstract types, and implementation relations."
+msgstr ""
+"当同一个包中的 `declare` 条目没有对应实现时，会发出此警告。它适用于已声明的函"
+"数、方法、抽象类型和实现关系。"
 
-#: ../../language/error_codes/E0068.md:10
+#: ../../language/error_codes/E0068.md:11
+msgid ""
+"Leaving a declaration unimplemented is useful while designing an API, but"
+" it can also mean that callers can see a contract that the package never "
+"actually provides. Enable this warning when you want declaration stubs to"
+" be temporary."
+msgstr ""
+"在设计 API 时暂时保留未实现的声明很有用，但这也可能意味着调用者能看到一个包并"
+"未真正提供的契约。如果你希望声明桩只是临时存在，可以启用此警告。"
+
+#: ../../language/error_codes/E0068.md:15
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0068.md:12
-#, fuzzy
+#: ../../language/error_codes/E0068.md:17
 msgid "declare fn f() -> Unit\n"
 msgstr ""
-"declare fn f() -> Unit\n"
-"\n"
 
-#: ../../language/error_codes/E0068.md:16
+#: ../../language/error_codes/E0068.md:21
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0068.md:18
-msgid "Provide an implementation:"
-msgstr "补充实现："
+#: ../../language/error_codes/E0068.md:23
+msgid ""
+"Provide an implementation, or remove the declaration if the API is no "
+"longer needed:"
+msgstr "提供一个实现；如果不再需要该 API，则删除这个声明："
 
-#: ../../language/error_codes/E0068.md:20
+#: ../../language/error_codes/E0068.md:26
 msgid ""
 "fn f() -> Unit {\n"
 "  println(\"Hello\")\n"
@@ -66,3 +78,12 @@ msgstr ""
 "  println(\"Hello\")\n"
 "}\n"
 
+#~ msgid ""
+#~ "This warning is emitted when a "
+#~ "declaration is left unimplemented. Provide "
+#~ "an implementation or remove the "
+#~ "declaration."
+#~ msgstr "当声明未实现时发出此警告。请补充实现或删除该声明。"
+
+#~ msgid "Provide an implementation:"
+#~ msgstr "补充实现："
