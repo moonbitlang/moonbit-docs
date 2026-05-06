@@ -77,6 +77,37 @@ test "derive eq_compare enum" {
 }
 ```
 
+## Debug
+
+`derive(Debug)` will generate a structural debugging implementation for the type.
+It is useful with `debug_inspect` in tests and `@debug.to_string` when formatting diagnostic messages.
+
+```moonbit
+struct DebugPoint {
+  x : Int
+  y : Int
+} derive(Debug)
+
+test "derive debug struct" {
+  let point = DebugPoint::{ x: 1, y: 2 }
+  debug_inspect(point, content="{ x: 1, y: 2 }")
+}
+```
+
+Enums can derive `Debug` as well:
+
+```moonbit
+enum DebugShape {
+  Circle(radius~ : Int)
+  Rect(width~ : Int, height~ : Int)
+} derive(Debug)
+
+test "derive debug enum" {
+  let shape = DebugShape::Rect(width=3, height=4)
+  debug_inspect(shape, content="Rect(width=3, height=4)")
+}
+```
+
 ## Default
 
 `derive(Default)` will generate a method that returns the default value of the type.

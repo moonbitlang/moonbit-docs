@@ -84,10 +84,10 @@ The following are the keywords and should not be used:
 [
   "as", "else", "extern", "fn", "fnalias", "if", "let", "const", "match", "using",
   "mut", "type", "typealias", "struct", "enum", "trait", "traitalias", "derive",
-  "while", "break", "continue", "import", "return", "throw", "raise", "try", "catch",
-  "pub", "priv", "readonly", "true", "false", "_", "test", "loop", "for", "in", "impl",
-  "with", "guard", "async", "is", "suberror", "and", "letrec", "enumview", "noraise",
-  "defer",
+  "declare", "while", "break", "continue", "import", "return", "throw", "raise",
+  "try", "catch", "pub", "priv", "readonly", "true", "false", "_", "test", "loop",
+  "for", "in", "impl", "with", "guard", "async", "is", "suberror", "and", "letrec",
+  "enumview", "noraise", "defer",
 ]
 ```
 
