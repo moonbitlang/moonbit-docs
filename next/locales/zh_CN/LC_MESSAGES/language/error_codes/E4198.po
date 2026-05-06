@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 19:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +20,67 @@ msgstr ""
 
 #: ../../language/error_codes/E4198.md:1
 msgid "E4198"
-msgstr ""
+msgstr "E4198"
 
 #: ../../language/error_codes/E4198.md:3
 msgid "Compiler diagnostic name: `struct_constr_not_implemented`."
-msgstr ""
+msgstr "编译器诊断名称：`struct_constr_not_implemented`。"
 
 #: ../../language/error_codes/E4198.md:5
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"When a `struct` declares a constructor signature, that constructor must "
+"be implemented as the corresponding `Type::new` method. The declaration "
+"only gives the constructor signature; it does not create the "
+"implementation body."
+msgstr ""
+"当 `struct` 声明构造器签名时，必须将该构造器实现为对应的 `Type::new` 方法。"
+"声明只给出构造器签名，并不会创建实现体。"
+
+#: ../../language/error_codes/E4198.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4198.md:11
+msgid ""
+"///|\n"
+"priv struct Point {\n"
+"  x : Int\n"
+"\n"
+"  fn new(Int) -> Point\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4198.md:15
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4198.md:17
+msgid "Define the matching `Type::new` method."
+msgstr "定义匹配的 `Type::new` 方法。"
+
+#: ../../language/error_codes/E4198.md:19
+msgid ""
+"///|\n"
+"priv struct Point {\n"
+"  x : Int\n"
+"\n"
+"  fn new(Int) -> Point\n"
+"}\n"
+"\n"
+"///|\n"
+"fn Point::new(x : Int) -> Point {\n"
+"  { x, }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let point = Point(4)\n"
+"  inspect(point.x, content=\"4\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
