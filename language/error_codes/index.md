@@ -3,7 +3,7 @@
 #### WARNING
 The error codes index is currently WIP.
 
-Many of the entries contains only verify brief description of the error code.
+Many entries currently contain only a brief description of the error code.
 You are more than welcomed to expand any of the entries by submitting a PR to
 [moonbitlang/moonbit-docs](https://github.com/moonbitlang/moonbit-docs).
 
