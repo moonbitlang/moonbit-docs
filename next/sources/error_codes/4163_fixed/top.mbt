@@ -5,11 +5,8 @@ pub fn[A, B] map(
   f : (A) -> B,
   target? : Array[B] = [],
 ) -> Array[B] {
-  loop arr {
-    [hd, .. tl] => {
-      target.push(f(hd))
-      continue tl
-    }
-    [] => target
+  for item in arr {
+    target.push(f(item))
   }
+  target
 }

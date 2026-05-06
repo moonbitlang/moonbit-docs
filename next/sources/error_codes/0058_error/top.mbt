@@ -1,3 +1,4 @@
+///|
 test {
   let text = "xxabcyy"
   lexmatch text {

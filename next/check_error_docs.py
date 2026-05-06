@@ -10,6 +10,11 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 ERROR_CODES_DIR = BASE_DIR / 'language/error_codes'
 ERROR_CODES_SOURCE_DIR = BASE_DIR / 'sources/error_codes'
+RUN_ONLY_ERROR_CODES = {
+    # The compiler no longer exposes warning 58 / unused_non_capturing, but
+    # the documentation snippets should still stay runnable.
+    '0058',
+}
 
 
 def is_moon_project(path: Path) -> bool:
@@ -65,6 +70,9 @@ def check_error_code(error_code):
 
     if not error_path.exists() and not fixed_path.exists():
         return True
+
+    if error_code in RUN_ONLY_ERROR_CODES:
+        return run_moon_test(str(error_path)) and run_moon_test(str(fixed_path))
 
     # Test error case should produce warning/error
     error_ok = run_moon_test(str(error_path), error_code)
