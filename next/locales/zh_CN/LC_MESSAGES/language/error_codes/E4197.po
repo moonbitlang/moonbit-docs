@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 19:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +20,90 @@ msgstr ""
 
 #: ../../language/error_codes/E4197.md:1
 msgid "E4197"
-msgstr ""
+msgstr "E4197"
 
 #: ../../language/error_codes/E4197.md:3
 msgid "Compiler diagnostic name: `cannot_match_struct_constr`."
-msgstr ""
+msgstr "编译器诊断名称：`cannot_match_struct_constr`。"
 
 #: ../../language/error_codes/E4197.md:5
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"A constructor declared by a `struct` is a constructor function, not a "
+"pattern constructor. It can be called to create a value, but it cannot be"
+" used in a `match` pattern."
+msgstr ""
+"由 `struct` 声明的构造器是构造函数，而不是模式构造器。它可以被调用来创建值，"
+"但不能在 `match` 模式中使用。"
+
+#: ../../language/error_codes/E4197.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4197.md:11
+msgid ""
+"///|\n"
+"priv struct Point {\n"
+"  x : Int\n"
+"\n"
+"  fn new(Int) -> Point\n"
+"}\n"
+"\n"
+"///|\n"
+"fn Point::new(x : Int) -> Point {\n"
+"  { x, }\n"
+"}\n"
+"\n"
+"///|\n"
+"fn read(point : Point) -> Int {\n"
+"  match point {\n"
+"    Point(x) => x\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let _ = read(Point(1))\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4197.md:15
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4197.md:17
+msgid ""
+"Read the struct fields directly, or use another pattern that does not "
+"call the constructor function."
+msgstr ""
+"直接读取结构体字段，或使用另一种不会调用构造函数的模式。"
+
+#: ../../language/error_codes/E4197.md:20
+msgid ""
+"///|\n"
+"priv struct Point {\n"
+"  x : Int\n"
+"\n"
+"  fn new(Int) -> Point\n"
+"}\n"
+"\n"
+"///|\n"
+"fn Point::new(x : Int) -> Point {\n"
+"  { x, }\n"
+"}\n"
+"\n"
+"///|\n"
+"fn read(point : Point) -> Int {\n"
+"  point.x\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(read(Point(3)), content=\"3\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
