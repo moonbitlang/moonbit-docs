@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-06 17:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +20,83 @@ msgstr ""
 
 #: ../../language/error_codes/E4203.md:1
 msgid "E4203"
-msgstr ""
+msgstr "E4203"
 
 #: ../../language/error_codes/E4203.md:3
 msgid "Compiler diagnostic name: `constr_as_function`."
-msgstr ""
+msgstr "编译器诊断名称：`constr_as_function`。"
 
 #: ../../language/error_codes/E4203.md:5
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"MoonBit does not allow constructors to be passed directly as higher-order"
+" functions. A constructor may still be called normally, but when a "
+"function value is required, wrap the constructor call in a lambda so the "
+"argument flow is explicit."
+msgstr ""
+"MoonBit 不允许将构造器直接作为高阶函数传递。构造器仍然可以正常调用，但在需要"
+"函数值时，应使用 lambda 包装构造器调用，使参数传递过程保持明确。"
+
+#: ../../language/error_codes/E4203.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4203.md:12
+msgid ""
+"///|\n"
+"priv enum Message {\n"
+"  Text(String)\n"
+"}\n"
+"\n"
+"///|\n"
+"fn build(make : (String) -> Message) -> Message {\n"
+"  make(\"ready\")\n"
+"}\n"
+"\n"
+"///|\n"
+"fn read(message : Message) -> String {\n"
+"  match message {\n"
+"    Text(value) => value\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(read(Text(\"used\")), content=\"used\")\n"
+"  let _ = build(Text)\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4203.md:16
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4203.md:18
+msgid "Use a lambda that calls the constructor."
+msgstr "使用调用构造器的 lambda。"
+
+#: ../../language/error_codes/E4203.md:20
+msgid ""
+"///|\n"
+"priv enum Message {\n"
+"  Text(String)\n"
+"}\n"
+"\n"
+"///|\n"
+"fn build(make : (String) -> Message) -> Message {\n"
+"  make(\"ready\")\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let message = build(value => Text(value))\n"
+"  match message {\n"
+"    Text(value) => inspect(value, content=\"ready\")\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
