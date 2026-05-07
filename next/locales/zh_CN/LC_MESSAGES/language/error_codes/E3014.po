@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-07 11:52+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -25,8 +24,8 @@ msgstr ""
 
 #: ../../language/error_codes/E3014.md:3
 msgid ""
-"Inline wasm syntax error. MoonBit will check if the inline wasm syntax is "
-"correct, including:"
+"Inline wasm syntax error. MoonBit will check if the inline wasm syntax is"
+" correct, including:"
 msgstr "内联 Wasm 语法错误。MoonBit 会检查内联 Wasm 是否正确，包括："
 
 #: ../../language/error_codes/E3014.md:5
@@ -43,10 +42,13 @@ msgstr "错误示例"
 
 #: ../../language/error_codes/E3014.md:10
 msgid ""
-"extern \"wasm\" fn i32_load(addr : Int) -> Int = // Error: Inline wasm "
-"syntax error: unmatched parenthesis at 1:1-1:57\n"
+"///|\n"
+"extern \"wasm\" fn i32_load(\n"
+"  addr : Int, // Error: Inline wasm syntax error: unmatched parenthesis "
+"at 1:1-1:57\n"
+") -> Int =\n"
 "  #|(func (param i32) (result i32)\n"
-"  #| (i32.load (local.get 0))"
+"  #| (i32.load (local.get 0))\n"
 msgstr ""
 
 #: ../../language/error_codes/E3014.md:14
@@ -59,8 +61,28 @@ msgstr "根据错误信息的建议修正内联 Wasm。"
 
 #: ../../language/error_codes/E3014.md:18
 msgid ""
+"///|\n"
 "extern \"wasm\" fn i32_load(addr : Int) -> Int =\n"
 "  #|(func (param i32) (result i32)\n"
-"  #| (i32.load (local.get 0)))"
+"  #| (i32.load (local.get 0)))\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(i32_load(0))\n"
+"}\n"
 msgstr ""
 
+#~ msgid ""
+#~ "extern \"wasm\" fn i32_load(addr : Int)"
+#~ " -> Int = // Error: Inline wasm"
+#~ " syntax error: unmatched parenthesis at "
+#~ "1:1-1:57\n"
+#~ "  #|(func (param i32) (result i32)\n"
+#~ "  #| (i32.load (local.get 0))"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "extern \"wasm\" fn i32_load(addr : Int) -> Int =\n"
+#~ "  #|(func (param i32) (result i32)\n"
+#~ "  #| (i32.load (local.get 0)))"
+#~ msgstr ""

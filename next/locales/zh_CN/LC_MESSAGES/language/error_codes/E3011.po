@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-07 11:52+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -25,8 +24,8 @@ msgstr ""
 
 #: ../../language/error_codes/E3011.md:3
 msgid ""
-"The assignment contains an invalid left-hand-side (LHS) expression, such as "
-"a constant or a constructor."
+"The assignment contains an invalid left-hand-side (LHS) expression, such "
+"as a constant or a constructor."
 msgstr "赋值包含一个无效的左侧表达式，例如常量或构造函数。"
 
 #: ../../language/error_codes/E3011.md:6
@@ -37,9 +36,14 @@ msgstr "错误示例"
 msgid ""
 "const N = 4\n"
 "\n"
-"fn main {\n"
+"fn assign_const() -> Int {\n"
 "  N = 5 // Error: Invalid left value for assignment.\n"
-"}"
+"  N\n"
+"}\n"
+"\n"
+"test {\n"
+"  inspect(assign_const(), content=\"5\")\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E3011.md:12
@@ -54,9 +58,30 @@ msgstr "将左侧表达式改为一个合法的可变的内存位置，例如一
 
 #: ../../language/error_codes/E3011.md:17
 msgid ""
-"fn main {\n"
+"///|\n"
+"fn assign_mutable() -> Int {\n"
 "  let mut n = 4\n"
 "  n = 5\n"
-"}"
+"  n\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(assign_mutable(), content=\"5\")\n"
+"}\n"
 msgstr ""
 
+#~ msgid ""
+#~ "const N = 4\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  N = 5 // Error: Invalid left value for assignment.\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let mut n = 4\n"
+#~ "  n = 5\n"
+#~ "}"
+#~ msgstr ""
