@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-07 11:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,27 +23,31 @@ msgid "E3005"
 msgstr ""
 
 #: ../../language/error_codes/E3005.md:3
-msgid "There is no such visibility for the entity (function/type/trait/...)."
-msgstr "对象没有这样的可见性（函数/类型/特征/...）。"
+msgid ""
+"There is no such visibility for the entity (function, type, trait, and so"
+" on)."
+msgstr "该实体（函数、类型、trait 等）不支持这种可见性。"
 
 #: ../../language/error_codes/E3005.md:5
 msgid ""
-"Usually, this means that you put an `priv` visibility modifier on a entity "
-"is by-default private."
-msgstr "通常，这意味着你在一个默认为私有的对象上放置了 `priv` 可见性修饰符。"
+"Usually, this means that you put a `priv` visibility modifier on an "
+"entity that is private by default."
+msgstr "通常，这表示你在默认私有的实体上使用了 `priv` 可见性修饰符。"
 
 #: ../../language/error_codes/E3005.md:8
 msgid ""
-"See the [Access Control](/language/packages.md#access-control) section of "
+"See the [Access Control](/language/packages.md#access-control) section "
 "for a detailed explanation on the visibility in MoonBit."
-msgstr "查看 [访问控制](/language/packages.md#access-control) 中的详细说明。"
+msgstr "参见 [访问控制](/language/packages.md#access-control) 一节，了解 MoonBit 可见性的详细说明。"
 
 #: ../../language/error_codes/E3005.md:11
 msgid "Erroneous example"
 msgstr "错误示例"
 
 #: ../../language/error_codes/E3005.md:13
-msgid "priv let value = 3 // Error: No 'priv' visibility for value."
+msgid ""
+"///|\n"
+"priv let value = 3 // Error: No 'priv' visibility for value.\n"
 msgstr ""
 
 #: ../../language/error_codes/E3005.md:17
@@ -56,6 +59,15 @@ msgid "Remove the visibility modifier from the definition of the entity:"
 msgstr "移除对象定义中的可见性修饰符："
 
 #: ../../language/error_codes/E3005.md:21
-msgid "let value = 3 // This is already `priv` by default."
-msgstr "let value = 3 // 这默认为 `priv`。"
+msgid ""
+"///|\n"
+"let value = 3 // This is already `priv` by default.\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(value, content=\"3\")\n"
+"}\n"
+msgstr ""
 
+#~ msgid "priv let value = 3 // Error: No 'priv' visibility for value."
+#~ msgstr ""
