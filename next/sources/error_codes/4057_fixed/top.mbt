@@ -1,0 +1,15 @@
+///|
+priv enum E {
+  A
+  B(Int)
+}
+
+///|
+test {
+  let value = E::B(1)
+  ignore(E::A)
+  match value {
+    A => inspect("A")
+    B(n) => inspect(n, content="1")
+  }
+}

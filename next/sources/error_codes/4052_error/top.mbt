@@ -1,0 +1,5 @@
+///|
+pub type A
+
+///|
+pub trait A {} // Error: The trait A duplicates with type A previously defined at ...
