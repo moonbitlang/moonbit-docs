@@ -27,13 +27,16 @@ pnpm preview
 
 1. 打开 <http://localhost:8080> 查看 tour 网站。
 
-1. 在章节文件夹下创建一个新的文件夹，遵循命名惯例 `lesson<n>_<lesson-name>` (从 1 开始计数)。
+1. 在章节文件夹下创建一个新的文件夹。现有命名惯例是 `lesson<n>_<lesson-name>`，但教程顺序不再依赖编号。
 
 1. 在创建的文件夹下编写教程内容（`index.md`），并编写教程代码（`index.mbt`）。
 
+1. 将新教程添加到 `tour/toc.json`。`path` 指向教程文件夹，`slug` 控制生成的 URL。调整教程顺序时，只需要移动这个文件里的条目。
+
 ### 添加新的章节
 
-1. 在 `tour` 文件夹下创建一个新的文件夹，遵循命名惯例 `chapter<n>_<chapter-name>`。
+1. 在 `tour` 文件夹下创建一个新的文件夹。现有命名惯例是 `chapter<n>_<chapter-name>`，但章节顺序不再依赖编号。
+1. 将新章节添加到 `tour/toc.json`。`path` 指向章节文件夹，`slug` 控制生成的 URL。
 1. 按照上述步骤添加新的教程。
 
 ## 致谢

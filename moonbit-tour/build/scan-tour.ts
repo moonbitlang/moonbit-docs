@@ -1,4 +1,3 @@
-import { Dirent } from "fs";
 import fs from "fs/promises";
 import path from "path";
 import * as remark from "./remark";
@@ -12,7 +11,9 @@ export type Chapter = {
 
 type Lesson = {
   chapter: string;
+  chapterSlug: string;
   lesson: string;
+  slug: string;
   title: string;
   index: number;
   total: number;
@@ -26,37 +27,41 @@ type Tour = {
   zh: Chapter[];
 };
 
-async function dirs(path: string, filter?: (d: Dirent) => boolean) {
-  return (await fs.readdir(path, { withFileTypes: true }))
-    .filter((i) => i.isDirectory())
-    .filter(filter ?? (() => true))
-    .sort((a, b) => {
-      const na = +a.name.slice(a.name.search(/\d+/), a.name.search("_"));
-      const nb = +b.name.slice(b.name.search(/\d+/), b.name.search("_"));
-      return na - nb;
-    });
-}
+type TourIndex = {
+  chapters: {
+    path: string;
+    slug: string;
+    lessons: { path: string; slug: string }[];
+  }[];
+};
 
 async function scanTour(): Promise<Tour> {
   async function getChapters(
-    folders: Dirent[],
+    index: TourIndex,
     locale: Locale,
   ): Promise<Chapter[]> {
     const chapters: Chapter[] = [];
-    for (const f of folders) {
-      const chapter = f.name.split("_").slice(1).join(" ");
-      const ds = await dirs(path.join(f.parentPath, f.name));
+    const root = locale === "en" ? "tour" : "tour/zh";
+    for (const chapterEntry of index.chapters) {
+      const chapter = chapterEntry.slug.replaceAll("-", " ");
       const lessons: Lesson[] = await Promise.all(
-        ds.map(async (d, i, arr) => {
-          const lesson = d.name.split("_").slice(1).join(" ");
-          const mdPath = path.join(d.parentPath, d.name, "index.md");
-          const mbtPath = path.join(d.parentPath, d.name, "index.mbt");
+        chapterEntry.lessons.map(async (lessonEntry, i, arr) => {
+          const lesson = lessonEntry.slug.replaceAll("-", " ");
+          const lessonPath = path.join(
+            root,
+            chapterEntry.path,
+            lessonEntry.path,
+          );
+          const mdPath = path.join(lessonPath, "index.md");
+          const mbtPath = path.join(lessonPath, "index.mbt");
           const md = await fs.readFile(mdPath, "utf8");
           const mbt = await fs.readFile(mbtPath, "utf8");
           const title = remark.getFirstH1Title(md) ?? lesson;
           return {
             chapter,
+            chapterSlug: chapterEntry.slug,
             lesson,
+            slug: lessonEntry.slug,
             title,
             index: i,
             total: arr.length,
@@ -66,15 +71,19 @@ async function scanTour(): Promise<Tour> {
           };
         }),
       );
-      chapters.push({ chapter, lessons });
+      chapters.push({
+        chapter,
+        lessons,
+      });
     }
     return chapters;
   }
-  const enChapterFolders = await dirs("tour", (d) => d.name !== "zh");
-  const zhChapterFolders = await dirs("tour/zh");
+  const index = JSON.parse(
+    await fs.readFile("tour/toc.json", "utf8"),
+  ) as TourIndex;
   const [enChapters, zhChapters] = await Promise.all([
-    getChapters(enChapterFolders, "en"),
-    getChapters(zhChapterFolders, "zh"),
+    getChapters(index, "en"),
+    getChapters(index, "zh"),
   ]);
   return {
     en: enChapters,
@@ -84,7 +93,7 @@ async function scanTour(): Promise<Tour> {
 
 function slug(lesson: Lesson): string {
   const prefix = lesson.locale === "zh" ? "zh/" : "";
-  const postfix = `${lesson.chapter.replaceAll(" ", "-")}/${lesson.lesson.replaceAll(" ", "-")}`;
+  const postfix = `${lesson.chapterSlug}/${lesson.slug}`;
   return prefix + postfix;
 }
 
