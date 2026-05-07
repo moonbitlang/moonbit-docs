@@ -1,0 +1,4 @@
+///|
+test {
+  println("Hello, world!")
+}

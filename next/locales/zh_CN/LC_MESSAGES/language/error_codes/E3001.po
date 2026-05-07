@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-07 11:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,7 +23,7 @@ msgid "E3001"
 msgstr ""
 
 #: ../../language/error_codes/E3001.md:3
-msgid "This source files contains invalid or incomplete tokens."
+msgid "This source file contains invalid or incomplete tokens."
 msgstr "源文件包含无效或不完整的记号。"
 
 #: ../../language/error_codes/E3001.md:5
@@ -33,9 +32,9 @@ msgstr "错误示例"
 
 #: ../../language/error_codes/E3001.md:7
 msgid ""
-"fn main {\n"
+"test {\n"
 "  println('3)\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E3001.md:11
@@ -48,7 +47,7 @@ msgstr ""
 
 #: ../../language/error_codes/E3001.md:17
 msgid ""
-"... which indicates that the compiler don't know how to interpret the "
+"... which indicates that the compiler does not know how to interpret the "
 "dangling character `'` (ASCII 0x27) on that line as a part of a MoonBit "
 "token."
 msgstr "这表明编译器不知道如何将该行上的悬空字符 `'`（ASCII 0x27）解释为 MoonBit 记号的一部分。"
@@ -69,8 +68,20 @@ msgstr "在上面的例子中，应该添加缺失的闭合撇号："
 
 #: ../../language/error_codes/E3001.md:28
 msgid ""
-"fn main {\n"
-"  println('3')\n"
-"}"
+"///|\n"
+"test {\n"
+"  ignore('3')\n"
+"}\n"
 msgstr ""
 
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println('3)\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println('3')\n"
+#~ "}"
+#~ msgstr ""
