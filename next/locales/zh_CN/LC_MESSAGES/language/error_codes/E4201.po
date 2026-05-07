@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-07 10:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +20,74 @@ msgstr ""
 
 #: ../../language/error_codes/E4201.md:1
 msgid "E4201"
-msgstr ""
+msgstr "E4201"
 
 #: ../../language/error_codes/E4201.md:3
 msgid "Compiler diagnostic name: `struct_constr_inconsistent_impl`."
-msgstr ""
+msgstr "编译器诊断名称：`struct_constr_inconsistent_impl`。"
 
 #: ../../language/error_codes/E4201.md:5
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"The implementation of a struct constructor must have the same parameter "
+"and return types as the constructor declaration in the `struct`. A method"
+" with a different signature is not an implementation of that constructor."
+msgstr ""
+"结构体构造器的实现必须与 `struct` 中的构造器声明具有相同的参数类型和返回类型。"
+"签名不同的方法不是该构造器的实现。"
+
+#: ../../language/error_codes/E4201.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4201.md:11
+msgid ""
+"///|\n"
+"priv struct Point {\n"
+"  x : Int\n"
+"\n"
+"  fn new(Int) -> Point\n"
+"}\n"
+"\n"
+"///|\n"
+"fn Point::new(text : String) -> Point {\n"
+"  { x: text.length() }\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4201.md:15
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4201.md:17
+msgid ""
+"Change either the constructor declaration or the `Type::new` "
+"implementation so their signatures match."
+msgstr ""
+"修改构造器声明或 `Type::new` 实现，使两者的签名保持一致。"
+
+#: ../../language/error_codes/E4201.md:20
+msgid ""
+"///|\n"
+"priv struct Point {\n"
+"  x : Int\n"
+"\n"
+"  fn new(Int) -> Point\n"
+"}\n"
+"\n"
+"///|\n"
+"fn Point::new(x : Int) -> Point {\n"
+"  { x, }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let point = Point(2)\n"
+"  inspect(point.x, content=\"2\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

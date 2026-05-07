@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-07 10:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +20,92 @@ msgstr ""
 
 #: ../../language/error_codes/E4206.md:1
 msgid "E4206"
-msgstr ""
+msgstr "E4206"
 
 #: ../../language/error_codes/E4206.md:3
 msgid "Compiler diagnostic name: `must_implement_one`."
-msgstr ""
+msgstr "编译器诊断名称：`must_implement_one`。"
 
 #: ../../language/error_codes/E4206.md:5
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"The `#must_implement_one` trait attribute requires each implementation to"
+" provide at least one method from the specified set. If the "
+"implementation relies only on defaults for all required methods, the "
+"compiler reports this error."
+msgstr ""
+"`#must_implement_one` trait 属性要求每个实现至少提供指定方法集合中的一个方法。"
+"如果实现对所有必需方法都只依赖默认实现，编译器会报告此错误。"
+
+#: ../../language/error_codes/E4206.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4206.md:11
+msgid ""
+"///|\n"
+"type Token\n"
+"\n"
+"///|\n"
+"#must_implement_one(render)\n"
+"pub(open) trait Render {\n"
+"  render(Self) -> String = _\n"
+"  debug(Self) -> String = _\n"
+"}\n"
+"\n"
+"///|\n"
+"impl Render with render(_) {\n"
+"  \"rendered\"\n"
+"}\n"
+"\n"
+"///|\n"
+"impl Render with debug(_) {\n"
+"  \"debug\"\n"
+"}\n"
+"\n"
+"///|\n"
+"pub impl Render for Token with debug(_) {\n"
+"  \"token\"\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4206.md:15
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4206.md:17
+msgid "Implement at least one of the methods named by `#must_implement_one`."
+msgstr "至少实现一个由 `#must_implement_one` 指定的方法。"
+
+#: ../../language/error_codes/E4206.md:19
+msgid ""
+"///|\n"
+"type Token\n"
+"\n"
+"///|\n"
+"#must_implement_one(render)\n"
+"pub(open) trait Render {\n"
+"  render(Self) -> String = _\n"
+"  debug(Self) -> String = _\n"
+"}\n"
+"\n"
+"///|\n"
+"impl Render with render(_) {\n"
+"  \"rendered\"\n"
+"}\n"
+"\n"
+"///|\n"
+"impl Render with debug(_) {\n"
+"  \"debug\"\n"
+"}\n"
+"\n"
+"///|\n"
+"pub impl Render for Token with render(_) {\n"
+"  \"token\"\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
