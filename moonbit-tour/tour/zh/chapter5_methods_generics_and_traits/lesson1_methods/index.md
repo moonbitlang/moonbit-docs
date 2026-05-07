@@ -8,5 +8,3 @@
 - 方法也可以用 `x.method_name(..)` 的形式调用，假设 `x` 的类型是 `T`，这种写法等价于 `T::method_name(x, ..)`
 
 之前的章节中已经出现了很多方法，例如 `Array::make(..)` 和 `array.length()`。
-
-方法也支持部分应用（partial application），`x.f(_)` 和 `_.f(..)` 都是合法的匿名函数。
