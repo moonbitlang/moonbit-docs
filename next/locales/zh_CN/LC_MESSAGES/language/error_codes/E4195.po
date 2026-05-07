@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-06 19:07+0800\n"
+"POT-Creation-Date: 2026-05-07 10:10+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -36,14 +36,25 @@ msgid ""
 msgstr ""
 "`where` 子句只接受当前上下文中有意义的字段。对于函数契约，请使用 "
 "`proof_require`、`proof_ensure`、`proof_decrease`、`proof_axiomatized` 和 "
-"`proof_reasoning` 等字段。对于循环契约，请使用 `proof_invariant`、"
-"`proof_yield` 和 `proof_reasoning` 等字段。"
+"`proof_reasoning` 等字段。对于循环契约，请使用 `proof_invariant`、`proof_yield` 和 "
+"`proof_reasoning` 等字段。"
 
 #: ../../language/error_codes/E4195.md:11
+msgid ""
+"For the proof concepts behind these fields, see [Formal "
+"Verification](/language/verification.md), especially [Contracts in "
+"`.mbt`](/language/verification.md#contracts-in-mbt) and [Loop "
+"Invariants](/language/verification.md#loop-invariants)."
+msgstr ""
+"关于这些字段背后的证明概念，请参阅[形式化验证](/language/verification.md)，"
+"尤其是 [`.mbt` 中的契约](/language/verification.md#contracts-in-mbt) 和"
+"[循环不变式](/language/verification.md#loop-invariants)。"
+
+#: ../../language/error_codes/E4195.md:16
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4195.md:13
+#: ../../language/error_codes/E4195.md:18
 msgid ""
 "///|\n"
 "fn keep(x : Int) -> Int where { proof_note: x >= 0 } {\n"
@@ -56,15 +67,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4195.md:17
+#: ../../language/error_codes/E4195.md:22
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4195.md:19
+#: ../../language/error_codes/E4195.md:24
 msgid "Replace the unknown field with a supported `where` clause field."
 msgstr "将未知字段替换为支持的 `where` 子句字段。"
 
-#: ../../language/error_codes/E4195.md:21
+#: ../../language/error_codes/E4195.md:26
 msgid ""
 "///|\n"
 "fn keep(\n"
