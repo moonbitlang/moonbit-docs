@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-07 10:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -21,15 +20,69 @@ msgstr ""
 
 #: ../../language/error_codes/E4200.md:1
 msgid "E4200"
-msgstr ""
+msgstr "E4200"
 
 #: ../../language/error_codes/E4200.md:3
 msgid "Compiler diagnostic name: `struct_constr_incorrect_return_type`."
-msgstr ""
+msgstr "编译器诊断名称：`struct_constr_incorrect_return_type`。"
 
 #: ../../language/error_codes/E4200.md:5
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"A struct constructor must return the struct type itself. If the "
+"constructor signature returns another type, the declaration cannot be "
+"used as that struct's constructor."
+msgstr ""
+"结构体构造器必须返回结构体自身的类型。如果构造器签名返回其他类型，这个声明"
+"就不能作为该结构体的构造器使用。"
+
+#: ../../language/error_codes/E4200.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4200.md:11
+msgid ""
+"///|\n"
+"priv struct Point {\n"
+"  x : Int\n"
+"\n"
+"  fn new(Int) -> String\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4200.md:15
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4200.md:17
+msgid ""
+"Make the constructor return the struct type and implement the matching "
+"`Type::new` method."
+msgstr ""
+"让构造器返回结构体类型，并实现匹配的 `Type::new` 方法。"
+
+#: ../../language/error_codes/E4200.md:20
+msgid ""
+"///|\n"
+"priv struct Point {\n"
+"  x : Int\n"
+"\n"
+"  fn new(Int) -> Point\n"
+"}\n"
+"\n"
+"///|\n"
+"fn Point::new(x : Int) -> Point {\n"
+"  { x, }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let point = Point(1)\n"
+"  inspect(point.x, content=\"1\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
