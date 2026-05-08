@@ -86,10 +86,10 @@ You can use the `pub` modifier before toplevel `let`/`fn` to make them public.
 
 ### Aliases
 
-By default, [function alias](/language/fundamentals.md#function-alias) and
+By default, [function alias](/language/fundamentals/functions.md#function-alias) and
 [method alias](/language/methods.md#alias-methods-as-functions) follow the
 visibility of the original definition, while 
-[type alias](/language/fundamentals.md#type-alias), [using](#using) are _invisible_ to other
+[type alias](/language/fundamentals/custom-data-types.md#type-alias), [using](#using) are _invisible_ to other
 packages.
 
 You can add the `pub` modifier before the definition or fill in the `visibility`
@@ -279,7 +279,7 @@ The first line of the interface file need to be `package "full-package-name"`. T
 The `pub` keyword for [access control](#access-control) and the function parameter names should be omitted.
 
 ```{hint}
-If you are uncertain about how to define the interface, you can create a normal package, define the functions you need using [TODO syntax](/language/fundamentals.md#todo-syntax), and use `moon info` to help you generate the interface.
+If you are uncertain about how to define the interface, you can create a normal package, define the functions you need using [TODO syntax](/language/fundamentals/special-syntax.md#todo-syntax), and use `moon info` to help you generate the interface.
 ```
 
 ### Implementing a virtual package
