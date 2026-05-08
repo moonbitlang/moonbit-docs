@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-08 11:54+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -29,8 +29,9 @@ msgstr "整数字面量超出范围。"
 
 #: ../../language/error_codes/E4095.md:5
 msgid ""
-"Integer literals can be used to initialize `Byte`, `Int16`, `Int`, `Int64` "
-"and their unsigned variants. The range of these types are as follows:"
+"Integer literals can be used to initialize `Byte`, `Int16`, `Int`, "
+"`Int64` and their unsigned variants. The range of these types are as "
+"follows:"
 msgstr "整数字面量可以用来初始化 `Byte`、`Int16`、`Int`、`Int64` 及其无符号变体。这些类型的范围如下："
 
 #: ../../language/error_codes/E4095.md
@@ -123,9 +124,11 @@ msgstr "错误示例"
 
 #: ../../language/error_codes/E4095.md:20
 msgid ""
-"fn main {\n"
+"///|\n"
+"test {\n"
 "  let byte : Byte = 256\n"
-"}"
+"  ignore(byte)\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4095.md:24
@@ -140,8 +143,22 @@ msgstr "您应该使用对应类型范围内的值，或者调整类型以适应
 
 #: ../../language/error_codes/E4095.md:28
 msgid ""
-"fn main {\n"
+"///|\n"
+"test {\n"
 "  let int : Int = 256\n"
-"}"
+"  inspect(int, content=\"256\")\n"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let byte : Byte = 256\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let int : Int = 256\n"
+#~ "}"
+#~ msgstr ""
 
