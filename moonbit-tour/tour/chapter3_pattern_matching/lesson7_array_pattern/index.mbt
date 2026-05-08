@@ -6,10 +6,10 @@ fn main {
   println("a: \{a}, b: \{b}")
   println("c: \{c}, d: \{d}")
   println("e: \{e}, f: \{f}")
-  println("sum of array: \{sum(array)}")
+  println("sum of array: \{sum(array[:])}")
 }
 
-fn sum(array : @array.View[Int]) -> Int {
+fn sum(array : ArrayView[Int]) -> Int {
   match array {
     [] => 0
     [x, .. xs] => x + sum(xs)

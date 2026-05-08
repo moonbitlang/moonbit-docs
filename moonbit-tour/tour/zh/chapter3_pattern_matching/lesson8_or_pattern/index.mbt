@@ -4,7 +4,7 @@ enum Color {
   Green
   RGB(Int, Int, Int)
   RGBA(Int, Int, Int, Int)
-} derive(Show)
+} derive(Debug)
 
 fn get_green(color : Color) -> Int {
   match color {

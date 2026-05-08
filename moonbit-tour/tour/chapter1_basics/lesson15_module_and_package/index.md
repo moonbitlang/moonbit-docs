@@ -26,7 +26,7 @@ Here is some essential information you need to know:
 
 After you introduce a module as a dependency (for example, `moonbitlang/x`) and import the package you want to use (such as `moonbitlang/x/fs`), you can access its functions using the `@path/to/pkg.func` syntax. For instance, use `@moonbitlang/x/fs.create_dir` (or `@fs.create_dir` if you assigned an alias) to call the `create_dir` function.
 
-**Note**: The `moonbitlang/core` module is special—it's added as a dependency and its packages are imported by default.
+**Note**: In a normal package, ordinary core packages such as `moonbitlang/core/math` should still be listed in the `import` block of `moon.pkg`; only `moonbitlang/core/prelude` participates in unqualified name resolution by default.
 
 ## Local Module Dependencies
 

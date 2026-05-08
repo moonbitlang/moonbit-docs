@@ -10,9 +10,8 @@ We can also add a `Point::` prefix to create an instance explicitly to disambigu
 
 Analogous to tuples, we can access the fields of a struct using the syntax `point.x`.
 
-The `derive(Show)` after the struct definition means that we can print the struct using the `println` function.
+The `derive(Debug)` after the struct definition means that we can convert the struct to a debug representation, for example with `to_repr`.
 
 The fields of a struct are immutable by default; they can't be changed after they are created. There is a syntax called *functional update* that allows you to create a new struct with some fields updated.
 
 We will learn how to make the fields mutable in the next lesson.
-

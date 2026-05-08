@@ -9,6 +9,6 @@ fn first_char(s : String) -> Result[Char, String] {
 fn main {
   let c1  = first_char("hello")
   let c2  = first_char("")
-  println("\{c1.is_ok()}, \{c1}, \{c1.unwrap()}")
-  println("\{c2.is_err()}, \{c2}")
+  println("\{c1 is Ok(_)}, \{to_repr(c1)}, \{c1.unwrap()}")
+  println("\{c2 is Err(_)}, \{to_repr(c2)}")
 }
