@@ -85,7 +85,7 @@ Unless specified, the following will be defined under the file `top.mbt`.
 
 ### Data types
 
-The [basic data types](/language/fundamentals/builtins.md#built-in-data-structures) in MoonBit include the following:
+The [basic data types](/language/fundamentals/builtins-and-literals.md#built-ins-and-literals) in MoonBit include the following:
 
 - `Unit`
 - `Bool`
@@ -266,7 +266,7 @@ In MoonBit, the result of the last expression is the return value of the functio
 
 For the `count_qualified_students` function, we need to iterate through the array to check if each student has passed or not.
 
-A naive version is by using a mutable value and a [`for` loop](/language/fundamentals/control-structures.md#for-loop):
+A naive version is by using a mutable value and a [`for` loop](/language/fundamentals/control-flow-and-iteration.md#for-loop):
 
 ```{code-block} moonbit
 :class: top-level
@@ -284,7 +284,7 @@ fn count_qualified_students(
 }
 ```
 
-However, this is neither efficient (due to the border check) nor intuitive, so we can replace the `for` loop with a [`for .. in` loop](/language/fundamentals/control-structures.md#for--in-loop):
+However, this is neither efficient (due to the border check) nor intuitive, so we can replace the `for` loop with a [`for .. in` loop](/language/fundamentals/control-flow-and-iteration.md#for--in-loop):
 
 ```{code-block} moonbit
 :class: top-level
@@ -300,7 +300,7 @@ fn count_qualified_students(
 }
 ```
 
-Still another way is use the functions defined for [iterator](/language/fundamentals/iterator.md#iterator):
+Still another way is use the functions defined for [iterator](/language/fundamentals/control-flow-and-iteration.md#iterator):
 
 ```{code-block} moonbit
 :class: top-level

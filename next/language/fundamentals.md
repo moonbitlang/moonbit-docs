@@ -1,59 +1,56 @@
 # Fundamentals
 
-This section introduces the core MoonBit language concepts. It is split into focused pages so the language manual is easier to scan, link, and maintain.
+This section covers the core MoonBit language concepts that later manual pages build on. The pages are grouped by concept area so readers can scan the manual without turning every small syntax topic into a separate stop in the reading order.
 
 ```{toctree}
 :maxdepth: 2
 
-fundamentals/builtins
-fundamentals/overloaded-literals
+fundamentals/builtins-and-literals
 fundamentals/functions
-fundamentals/control-structures
-fundamentals/iterator
+fundamentals/control-flow-and-iteration
 fundamentals/custom-data-types
 fundamentals/pattern-matching
-fundamentals/generics
 fundamentals/special-syntax
 ```
 
 ## Topic Index
 
 <span id="built-in-data-structures"></span>
-- [Built-in Data Structures](fundamentals/builtins.md)
+- [Built-in Data Structures](fundamentals/builtins-and-literals.md)
 <span id="unit"></span>
-- [Unit](fundamentals/builtins.md#unit)
+- [Unit](fundamentals/builtins-and-literals.md#unit)
 <span id="boolean"></span>
-- [Boolean](fundamentals/builtins.md#boolean)
+- [Boolean](fundamentals/builtins-and-literals.md#boolean)
 <span id="number"></span>
-- [Number](fundamentals/builtins.md#number)
+- [Number](fundamentals/builtins-and-literals.md#number)
 <span id="string"></span>
-- [String](fundamentals/builtins.md#string)
+- [String](fundamentals/builtins-and-literals.md#string)
 <span id="char"></span>
-- [Char](fundamentals/builtins.md#char)
+- [Char](fundamentals/builtins-and-literals.md#char)
 <span id="byte-s"></span>
-- [Byte(s)](fundamentals/builtins.md#bytes)
+- [Byte(s)](fundamentals/builtins-and-literals.md#bytes)
 <span id="bytes"></span>
-- [Bytes](fundamentals/builtins.md#bytes)
+- [Bytes](fundamentals/builtins-and-literals.md#bytes)
 <span id="choosing-a-byte-container"></span>
-- [Choosing a Byte Container](fundamentals/builtins.md#choosing-a-byte-container)
+- [Choosing a Byte Container](fundamentals/builtins-and-literals.md#choosing-a-byte-container)
 <span id="tuple"></span>
-- [Tuple](fundamentals/builtins.md#tuple)
+- [Tuple](fundamentals/builtins-and-literals.md#tuple)
 <span id="ref"></span>
-- [Ref](fundamentals/builtins.md#ref)
+- [Ref](fundamentals/builtins-and-literals.md#ref)
 <span id="option-and-result"></span>
-- [Option and Result](fundamentals/builtins.md#option-and-result)
+- [Option and Result](fundamentals/builtins-and-literals.md#option-and-result)
 <span id="array"></span>
-- [Array](fundamentals/builtins.md#array)
+- [Array](fundamentals/builtins-and-literals.md#array)
 <span id="arrayview"></span>
-- [ArrayView](fundamentals/builtins.md#arrayview)
+- [ArrayView](fundamentals/builtins-and-literals.md#arrayview)
 <span id="map"></span>
-- [Map](fundamentals/builtins.md#map)
+- [Map](fundamentals/builtins-and-literals.md#map)
 <span id="json"></span>
-- [Json](fundamentals/builtins.md#json)
+- [Json](fundamentals/builtins-and-literals.md#json)
 <span id="overloaded-literals"></span>
-- [Overloaded Literals](fundamentals/overloaded-literals.md)
+- [Overloaded Literals](fundamentals/builtins-and-literals.md#overloaded-literals)
 <span id="escape-sequences-in-overloaded-literals"></span>
-- [Escape Sequences in Overloaded Literals](fundamentals/overloaded-literals.md#escape-sequences-in-overloaded-literals)
+- [Escape Sequences in Overloaded Literals](fundamentals/builtins-and-literals.md#escape-sequences-in-overloaded-literals)
 <span id="functions"></span>
 - [Functions](fundamentals/functions.md)
 <span id="top-level-functions"></span>
@@ -75,29 +72,29 @@ fundamentals/special-syntax
 <span id="function-alias"></span>
 - [Function alias](fundamentals/functions.md#function-alias)
 <span id="control-structures"></span>
-- [Control Structures](fundamentals/control-structures.md)
+- [Control Structures](fundamentals/control-flow-and-iteration.md)
 <span id="conditional-expressions"></span>
-- [Conditional Expressions](fundamentals/control-structures.md#conditional-expressions)
+- [Conditional Expressions](fundamentals/control-flow-and-iteration.md#conditional-expressions)
 <span id="match-expression"></span>
-- [Match Expression](fundamentals/control-structures.md#match-expression)
+- [Match Expression](fundamentals/control-flow-and-iteration.md#match-expression)
 <span id="guard-statement"></span>
-- [Guard Statement](fundamentals/control-structures.md#guard-statement)
+- [Guard Statement](fundamentals/control-flow-and-iteration.md#guard-statement)
 <span id="guard-statement-and-is-expression"></span>
-- [Guard statement and is expression](fundamentals/control-structures.md#guard-statement-and-is-expression)
+- [Guard statement and is expression](fundamentals/control-flow-and-iteration.md#guard-statement-and-is-expression)
 <span id="while-loop"></span>
-- [While loop](fundamentals/control-structures.md#while-loop)
+- [While loop](fundamentals/control-flow-and-iteration.md#while-loop)
 <span id="for-loop"></span>
-- [For Loop](fundamentals/control-structures.md#for-loop)
+- [For Loop](fundamentals/control-flow-and-iteration.md#for-loop)
 <span id="for--in-loop"></span>
-- [for .. in loop](fundamentals/control-structures.md#for--in-loop)
+- [for .. in loop](fundamentals/control-flow-and-iteration.md#for--in-loop)
 <span id="range-expression-in-for--in-loop"></span>
-- [Range expression in for .. in loop](fundamentals/control-structures.md#range-expression-in-for--in-loop)
+- [Range expression in for .. in loop](fundamentals/control-flow-and-iteration.md#range-expression-in-for--in-loop)
 <span id="labelled-continuebreak"></span>
-- [Labelled Continue/Break](fundamentals/control-structures.md#labelled-continuebreak)
+- [Labelled Continue/Break](fundamentals/control-flow-and-iteration.md#labelled-continuebreak)
 <span id="defer-expression"></span>
-- [defer expression](fundamentals/control-structures.md#defer-expression)
+- [defer expression](fundamentals/control-flow-and-iteration.md#defer-expression)
 <span id="iterator"></span>
-- [Iterator](fundamentals/iterator.md)
+- [Iterator](fundamentals/control-flow-and-iteration.md#iterator)
 <span id="custom-data-types"></span>
 - [Custom Data Types](fundamentals/custom-data-types.md)
 <span id="struct"></span>
@@ -137,7 +134,7 @@ fundamentals/special-syntax
 <span id="guard-condition"></span>
 - [Guard condition](fundamentals/pattern-matching.md#guard-condition)
 <span id="generics"></span>
-- [Generics](fundamentals/generics.md)
+- [Generics](fundamentals/custom-data-types.md#generics)
 <span id="special-syntax"></span>
 - [Special Syntax](fundamentals/special-syntax.md)
 <span id="pipelines"></span>
