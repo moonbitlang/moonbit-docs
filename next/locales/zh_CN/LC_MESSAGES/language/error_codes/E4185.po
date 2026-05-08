@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 17:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,8 +27,86 @@ msgid "Compiler diagnostic name: `invalid_lex_pattern`."
 msgstr ""
 
 #: ../../language/error_codes/E4185.md:5
+msgid "Invalid `lexmatch` pattern shape."
+msgstr "无效的 `lexmatch` 模式形状。"
+
+#: ../../language/error_codes/E4185.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"`lexmatch` patterns allow one regex pattern, optionally with a start rest"
+" binder and an end rest binder. Other top-level pattern shapes are "
+"invalid."
+msgstr "`lexmatch` 模式允许一个正则模式，并可选带有一个起始剩余绑定和一个结束剩余绑定。其他顶层模式形状都是无效的。"
+
+#: ../../language/error_codes/E4185.md:11
+msgid ""
+"`lexmatch` is deprecated for new code. Prefer regex match expressions "
+"such as `value =~ (re\"...\", before~, after~)` unless you specifically "
+"need legacy lexer-style behavior."
+msgstr ""
+"新代码中已不推荐使用 `lexmatch`。除非你确实需要旧式词法分析器风格的行为，否则请优先使用 `value =~ (re\"...\", "
+"before~, after~)` 这类正则匹配表达式。"
+
+#: ../../language/error_codes/E4185.md:16
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4185.md:18
+msgid "The following pattern has too many top-level pieces:"
+msgstr "下面的模式包含了过多的顶层部分："
+
+#: ../../language/error_codes/E4185.md:20
+msgid ""
+"///|\n"
+"fn classify(input : String) -> String {\n"
+"  lexmatch input with longest {\n"
+"    (\"a\", before, \"b\", after) => before.to_owned() + after.to_owned()"
+"\n"
+"    _ => \"none\"\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(classify)\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4185.md:24
+msgid "MoonBit will report an error."
+msgstr "MoonBit 会报告一个错误。"
+
+#: ../../language/error_codes/E4185.md:26
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4185.md:28
+msgid ""
+"Use one regex pattern plus optional start and end rest binders. In new "
+"code, a regex match expression is usually clearer:"
+msgstr "使用一个正则模式，并按需添加起始和结束剩余绑定。在新代码中，正则匹配表达式通常更清晰："
+
+#: ../../language/error_codes/E4185.md:31
+msgid ""
+"///|\n"
+"fn classify(input : String) -> String {\n"
+"  if input =~ (re\"a\" + re\"b\", before~, after~) {\n"
+"    before.to_owned() + after.to_owned()\n"
+"  } else {\n"
+"    \"none\"\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(classify(\"xabz\"), content=\"xz\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid "Compiler diagnostic name: `invalid_lex_pattern`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

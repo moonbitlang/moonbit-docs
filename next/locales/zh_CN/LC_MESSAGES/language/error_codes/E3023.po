@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 17:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,8 +27,71 @@ msgid "Compiler diagnostic name: `invalid_grouped_impls`."
 msgstr ""
 
 #: ../../language/error_codes/E3023.md:5
+msgid "Invalid grouped `impl` declaration."
+msgstr "无效的分组 `impl` 声明。"
+
+#: ../../language/error_codes/E3023.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"MoonBit does not use Rust-style grouped `impl` blocks. Each trait "
+"implementation or method implementation is written as a single `impl ... "
+"with method(...) { ... }` declaration."
+msgstr ""
+"MoonBit 不使用 Rust 风格的分组 `impl` 块。每个 trait 实现或方法实现都写作单独的 `impl ... with "
+"method(...) { ... }` 声明。"
+
+#: ../../language/error_codes/E3023.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E3023.md:13
+msgid ""
+"The following example tries to put a method body inside an `impl ... { "
+"... }` block:"
+msgstr "下面的示例尝试将方法体放在 `impl ... { ... }` 块内部："
+
+#: ../../language/error_codes/E3023.md:16
+msgid ""
+"///|\n"
+"pub trait Named {\n"
+"  name(Self) -> String\n"
+"}\n"
+"\n"
+"///|\n"
+"pub impl Named for Int {\n"
+"  name(_self) { \"user\" }\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E3023.md:20
+msgid "MoonBit will report an error."
+msgstr "MoonBit 会报告一个错误。"
+
+#: ../../language/error_codes/E3023.md:22
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E3023.md:24
+msgid ""
+"Move the method name and body into the `with` clause of the `impl` "
+"declaration:"
+msgstr "将方法名和方法体移动到 `impl` 声明的 `with` 子句中："
+
+#: ../../language/error_codes/E3023.md:26
+msgid ""
+"///|\n"
+"pub trait Named {\n"
+"  name(Self) -> String\n"
+"}\n"
+"\n"
+"///|\n"
+"pub impl Named for Int with name(_self) { \"user\" }\n"
+msgstr ""
+
+#~ msgid "Compiler diagnostic name: `invalid_grouped_impls`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

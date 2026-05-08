@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 17:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,8 +27,75 @@ msgid "Compiler diagnostic name: `using_missing_keyword`."
 msgstr ""
 
 #: ../../language/error_codes/E4187.md:5
+msgid "Missing keyword in a `using` alias."
+msgstr "`using` 别名中缺少关键字。"
+
+#: ../../language/error_codes/E4187.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"When a `using` declaration imports a type or trait, the imported name "
+"must be prefixed with the corresponding keyword. This keeps type and "
+"trait aliases distinct from value aliases."
+msgstr "当 `using` 声明导入类型或 trait 时，被导入的名称必须带有对应的关键字前缀。这样可以将类型和 trait 别名与值别名区分开。"
+
+#: ../../language/error_codes/E4187.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4187.md:13
+msgid ""
+"The following example imports the builtin `Array` type without the `type`"
+" keyword:"
+msgstr "下面的示例导入内置的 `Array` 类型，但没有使用 `type` 关键字："
+
+#: ../../language/error_codes/E4187.md:16
+msgid ""
+"///|\n"
+"using @builtin {Array}\n"
+"\n"
+"///|\n"
+"fn length(values : Array[Int]) -> Int {\n"
+"  values.length()\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(length)\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4187.md:20
+msgid "MoonBit will report an error."
+msgstr "MoonBit 会报告一个错误。"
+
+#: ../../language/error_codes/E4187.md:22
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4187.md:24
+msgid "Add `type` when importing a type, or `trait` when importing a trait:"
+msgstr "导入类型时添加 `type`，导入 trait 时添加 `trait`："
+
+#: ../../language/error_codes/E4187.md:26
+msgid ""
+"///|\n"
+"using @builtin {type Array}\n"
+"\n"
+"///|\n"
+"fn length(values : Array[Int]) -> Int {\n"
+"  values.length()\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(length([1, 2]), content=\"2\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid "Compiler diagnostic name: `using_missing_keyword`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

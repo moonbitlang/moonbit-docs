@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 17:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,8 +27,72 @@ msgid "Compiler diagnostic name: `invalid_predicate`."
 msgstr ""
 
 #: ../../language/error_codes/E4207.md:5
+msgid "Invalid predicate expression."
+msgstr "无效的谓词表达式。"
+
+#: ../../language/error_codes/E4207.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"Quantifiers and other proof-only predicate forms are part of MoonBit's "
+"verification language. They are valid in proof positions such as "
+"`proof_assert`, contracts, and `.mbtp` predicate definitions, but they "
+"cannot be used as ordinary runtime expressions."
+msgstr ""
+"量词和其他仅用于证明的谓词形式属于 MoonBit 的验证语言。它们可以出现在 `proof_assert`、契约和 `.mbtp` "
+"谓词定义等证明位置，但不能作为普通运行时表达式使用。"
+
+#: ../../language/error_codes/E4207.md:12
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4207.md:14
+msgid ""
+"The following example tries to bind a quantified predicate as an ordinary"
+" value:"
+msgstr "下面的示例尝试将一个带量词的谓词绑定为普通值："
+
+#: ../../language/error_codes/E4207.md:16
+msgid ""
+"///|\n"
+"fn invalid_predicate() -> Unit {\n"
+"  let _ = ∀ i : Int, 0 <= i\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(invalid_predicate)\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4207.md:20
+msgid "MoonBit will report an error."
+msgstr "MoonBit 会报告一个错误。"
+
+#: ../../language/error_codes/E4207.md:22
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4207.md:24
+msgid "Move the predicate into a proof position such as `proof_assert`:"
+msgstr "将谓词移动到 `proof_assert` 等证明位置："
+
+#: ../../language/error_codes/E4207.md:26
+msgid ""
+"///|\n"
+"fn checked_predicate() -> Unit {\n"
+"  proof_assert ∀ i : Int, i == i\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  checked_predicate()\n"
+"}\n"
+msgstr ""
+
+#~ msgid "Compiler diagnostic name: `invalid_predicate`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

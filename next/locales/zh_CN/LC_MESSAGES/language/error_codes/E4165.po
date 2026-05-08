@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 17:30+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,8 +27,126 @@ msgid "Compiler diagnostic name: `missing_op_as_view`."
 msgstr ""
 
 #: ../../language/error_codes/E4165.md:5
+msgid "Missing `op_as_view` method for array pattern matching."
+msgstr "数组模式匹配缺少 `op_as_view` 方法。"
+
+#: ../../language/error_codes/E4165.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"Open array patterns such as `[head, ..tail]` need a value that can "
+"provide a view for the `..` part of the pattern. `op_as_view` is the "
+"compiler's internal name for the `_[_:_]` view operator; in source code "
+"this operation is provided by annotating a compatible method with "
+"`#alias(\"_[_:_]\")`."
+msgstr ""
+"像 `[head, ..tail]` 这样的开放数组模式需要目标值能够为模式中的 `..` 部分提供视图。"
+"`op_as_view` 是编译器为 `_[_:_]` 视图操作符使用的内部名称；在源码中，这个操作通过"
+"给兼容的方法标注 `#alias(\"_[_:_]\")` 来提供。"
+
+#: ../../language/error_codes/E4165.md:12
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4165.md:14
+msgid ""
+"The following example tries to use an open array pattern on an `Int`, "
+"which does not provide `op_as_view`:"
+msgstr "下面的示例尝试对 `Int` 使用开放数组模式，但 `Int` 并不提供 `op_as_view`："
+
+#: ../../language/error_codes/E4165.md:17
+msgid ""
+"///|\n"
+"\n"
+"///|\n"
+"fn first_and_rest(value : Int) -> Int {\n"
+"  match value {\n"
+"    [head, .. _tail] => head\n"
+"    _ => 0\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(first_and_rest)\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4165.md:21
+msgid "MoonBit will report an error."
+msgstr "MoonBit 会报告一个错误。"
+
+#: ../../language/error_codes/E4165.md:23
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4165.md:25
+msgid ""
+"Use an array-like value that provides the view operation. When defining "
+"that operation, annotate the method with `#alias(\"_[_:_]\")`, for "
+"example:"
+msgstr ""
+"请使用提供视图操作的类数组值。定义这个操作时，给方法标注 "
+"`#alias(\"_[_:_]\")`，例如："
+
+#: ../../language/error_codes/E4165.md:28
+msgid ""
+"#alias(\"_[_:_]\")\n"
+"fn Type::view(self : Type, start? : Int = 0, end? : Int) -> View {\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4165.md:35
+msgid ""
+"The fixed example uses `Array[Int]`, which already provides this "
+"operation:"
+msgstr "修复后的示例使用 `Array[Int]`，它已经提供了这个操作："
+
+#: ../../language/error_codes/E4165.md:37
+msgid ""
+"///|\n"
+"\n"
+"///|\n"
+"fn first_or_zero(values : Array[Int]) -> Int {\n"
+"  match values {\n"
+"    [head, .. _tail] => head\n"
+"    [] => 0\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(first_or_zero([1, 2, 3]), content=\"1\")\n"
+"  inspect(first_or_zero([]), content=\"0\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid "Compiler diagnostic name: `missing_op_as_view`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Open array patterns such as `[head, "
+#~ "..tail]` need a value that can be"
+#~ " viewed as an array-like sequence."
+#~ " Built-in array-like types support"
+#~ " this directly. Custom types need a"
+#~ " compatible `op_as_view` method; otherwise "
+#~ "MoonBit cannot know how to split "
+#~ "the value around the `..` pattern."
+#~ msgstr ""
+#~ "开放数组模式（例如 `[head, "
+#~ "..tail]`）需要目标值可以被视为类似数组的序列。内置的类数组类型直接支持这种用法。自定义类型需要提供兼容的 "
+#~ "`op_as_view` 方法；否则 MoonBit 无法知道该如何围绕 `..` "
+#~ "模式拆分这个值。"
+
+#~ msgid ""
+#~ "Use an array-like value, or define"
+#~ " the required view operation for your"
+#~ " custom type. For example, matching "
+#~ "an `Array[Int]` works directly:"
+#~ msgstr "使用类数组的值，或者为自定义类型定义所需的视图操作。例如，匹配 `Array[Int]` 可以直接工作："

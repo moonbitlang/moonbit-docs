@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 18:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,8 +27,101 @@ msgid "Compiler diagnostic name: `unsupported_match_strategy`."
 msgstr ""
 
 #: ../../language/error_codes/E4180.md:5
+msgid "Unsupported `lexmatch` match strategy."
+msgstr "不支持的 `lexmatch` 匹配策略。"
+
+#: ../../language/error_codes/E4180.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"`lexmatch` only supports the default first-match strategy and the "
+"explicit `longest` strategy. Other strategy names are rejected."
+msgstr "`lexmatch` 只支持默认的首次匹配策略，以及显式的 `longest` 策略。其他策略名会被拒绝。"
+
+#: ../../language/error_codes/E4180.md:11
+msgid ""
+"`lexmatch` is deprecated for new code. Prefer regex match expressions "
+"such as `value =~ re\"...\"` unless you specifically need legacy lexer-"
+"style behavior."
+msgstr ""
+"新代码中已不推荐使用 `lexmatch`。除非你确实需要旧式词法分析器风格的行为，否则请优先使用 `value =~ re\"...\"` "
+"这类正则匹配表达式。"
+
+#: ../../language/error_codes/E4180.md:15
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4180.md:17
+msgid "The following example asks for an unsupported `shortest` strategy:"
+msgstr "下面的示例请求了不支持的 `shortest` 策略："
+
+#: ../../language/error_codes/E4180.md:19
+msgid ""
+"///|\n"
+"fn classify(input : String) -> String {\n"
+"  lexmatch input with shortest {\n"
+"    \"if\" => \"keyword\"\n"
+"    _ => \"identifier\"\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(classify)\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4180.md:23
+msgid "MoonBit will report an error."
+msgstr "MoonBit 会报告一个错误。"
+
+#: ../../language/error_codes/E4180.md:25
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4180.md:27
+msgid ""
+"Use one of the supported strategies, or rewrite the code with a regex "
+"match expression when first-match behavior is enough:"
+msgstr "使用受支持的策略之一；如果首次匹配行为已经足够，也可以用正则匹配表达式重写代码："
+
+#: ../../language/error_codes/E4180.md:30
+msgid ""
+"///|\n"
+"fn classify(input : String) -> String {\n"
+"  if input =~ re\"^if$\" {\n"
+"    \"keyword\"\n"
+"  } else {\n"
+"    \"identifier\"\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(classify(\"if\"), content=\"keyword\")\n"
+"  inspect(classify(\"gift\"), content=\"identifier\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid "Compiler diagnostic name: `unsupported_match_strategy`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "fn classify(input : String) -> String {\n"
+#~ "  if input =~ re\"if\" {\n"
+#~ "    \"keyword\"\n"
+#~ "  } else {\n"
+#~ "    \"identifier\"\n"
+#~ "  }\n"
+#~ "}\n"
+#~ "\n"
+#~ "///|\n"
+#~ "test {\n"
+#~ "  inspect(classify(\"if\"), content=\"keyword\")\n"
+#~ "}\n"
+#~ msgstr ""
