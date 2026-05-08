@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 12:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,8 +28,68 @@ msgid "Compiler diagnostic name: `guard_not_supported_in_longest_match_strategy`
 msgstr ""
 
 #: ../../language/error_codes/E4186.md:5
+msgid "Guards are not supported in longest-match `lexmatch` cases."
+msgstr "最长匹配策略的 `lexmatch` 分支不支持守卫条件。"
+
+#: ../../language/error_codes/E4186.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"The longest-match strategy decides which regex case wins before running "
+"the case body. Case guards would make that decision depend on arbitrary "
+"expressions, so they are rejected for `lexmatch ... with longest`."
+msgstr ""
+"最长匹配策略会在运行分支主体之前决定哪个正则分支胜出。分支守卫会让这个决定依赖任意表达式，因此在 `lexmatch ... with "
+"longest` 中会被拒绝。"
+
+#: ../../language/error_codes/E4186.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4186.md:13
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    \"abc\" if text.length() > 0 => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4186.md:17
+msgid "The first case has an `if` guard."
+msgstr "第一个分支带有 `if` 守卫。"
+
+#: ../../language/error_codes/E4186.md:19
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E4186.md:21
+msgid ""
+"Move the condition into the case body so the longest-match decision "
+"depends only on the regex patterns."
+msgstr "将条件移入分支主体，让最长匹配的决定只依赖正则模式。"
+
+#: ../../language/error_codes/E4186.md:24
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    \"abc\" => if text.length() > 0 { () }\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Move the condition into the case "
+#~ "body, or use a first-match "
+#~ "`lexmatch` if guard semantics are "
+#~ "required and the deprecation warning is"
+#~ " acceptable for your code."
+#~ msgstr "将条件移入分支主体；如果确实需要守卫语义，并且代码可以接受弃用警告，也可以使用首个匹配策略的 `lexmatch`。"

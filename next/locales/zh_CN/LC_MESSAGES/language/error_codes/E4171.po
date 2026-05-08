@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 12:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,8 +28,59 @@ msgid "Compiler diagnostic name: `last_regex_case_must_be_catchall`."
 msgstr ""
 
 #: ../../language/error_codes/E4171.md:5
+msgid "The last case in a `lexmatch` expression must be a catch-all pattern."
+msgstr "`lexmatch` 表达式的最后一个分支必须是兜底模式。"
+
+#: ../../language/error_codes/E4171.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"MoonBit checks `lexmatch` expressions for exhaustiveness. When all "
+"previous regex patterns fail, the expression still needs a final branch "
+"that can handle the remaining input."
+msgstr ""
+"MoonBit 会检查 `lexmatch` 表达式的穷尽性。当之前所有正则模式都匹配失败时，"
+"表达式仍然需要一个可以处理剩余输入的最终分支。"
+
+#: ../../language/error_codes/E4171.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4171.md:13
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    \"abc\" => ()\n"
+"  }\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4171.md:17
+msgid "The only branch matches `\"abc\"`, so other input has no branch to run."
+msgstr "唯一的分支匹配 `\"abc\"`，因此其他输入没有可执行的分支。"
+
+#: ../../language/error_codes/E4171.md:19
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E4171.md:21
+msgid ""
+"Add a final `_` case, or otherwise make the last case catch all remaining"
+" input."
+msgstr "添加最终的 `_` 分支，或者用其他方式让最后一个分支匹配所有剩余输入。"
+
+#: ../../language/error_codes/E4171.md:23
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    \"abc\" => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
