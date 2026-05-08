@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-08 12:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -25,7 +25,7 @@ msgstr ""
 
 #: ../../language/error_codes/E4085.md:3
 msgid "This has no parameter with the given label."
-msgstr "给定标签没有参数。"
+msgstr "该函数没有使用给定标签的参数。"
 
 #: ../../language/error_codes/E4085.md:5
 msgid "This error happens when:"
@@ -37,11 +37,11 @@ msgstr "您在标签名称上打了个错字；"
 
 #: ../../language/error_codes/E4085.md:8
 msgid "You mistakenly treat a positional argument as a labelled argument."
-msgstr "您错误地将位置参数视为标记参数。"
+msgstr "你错误地将位置参数当作带标签参数。"
 
 #: ../../language/error_codes/E4085.md:9
-msgid "You provided extra labelled arguments to the function."
-msgstr "您为函数提供了额外的标记参数。"
+msgid "You provide extra labelled arguments to the function."
+msgstr "你向函数提供了额外的带标签参数。"
 
 #: ../../language/error_codes/E4085.md:11
 msgid "Erroneous Example"
@@ -49,34 +49,79 @@ msgstr "错误示例："
 
 #: ../../language/error_codes/E4085.md:13
 msgid ""
+"///|\n"
 "pub fn f(name : String) -> Unit {\n"
 "  println(\"Hello, \\{name}\")\n"
 "}\n"
 "\n"
-"fn main {\n"
-"  f(\"John\", age=20) // Error: This function has no parameter with label "
-"age~.\n"
+"///|\n"
+"test {\n"
+"  f(\"John\", age=20)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4085.md:23
+#: ../../language/error_codes/E4085.md:17
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4085.md:25
+#: ../../language/error_codes/E4085.md:19
 msgid ""
-"Check the signature of the function and provide the correct label name or "
-"remove the extra labelled argument."
-msgstr "检查函数的签名并提供正确的标签名称或删除多余的标签参数。"
+"Check the signature of the function and provide the correct label name or"
+" remove the extra labelled argument."
+msgstr "检查函数签名，并提供正确的标签名称或删除多余的带标签参数。"
 
-#: ../../language/error_codes/E4085.md:28
+#: ../../language/error_codes/E4085.md:22
 msgid ""
+"///|\n"
 "pub fn f(name : String) -> Unit {\n"
 "  println(\"Hello, \\{name}\")\n"
 "}\n"
 "\n"
-"fn main {\n"
+"///|\n"
+"test {\n"
 "  f(\"John\")\n"
-"}"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "pub fn f(name : String) -> Unit {\n"
+#~ "  println(\"Hello, \\{name}\")\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  f(\"John\", age=20) // Error: This "
+#~ "function has no parameter with label "
+#~ "age~.\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn f(name : String) -> Unit {\n"
+#~ "  println(\"Hello, \\{name}\")\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  f(\"John\")\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn f(name : String) -> Unit {\n"
+#~ "  println(\"Hello, \\{name}\")\n"
+#~ "}\n"
+#~ "\n"
+#~ "test {\n"
+#~ "  f(\"John\", age=20)\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn f(name : String) -> Unit {\n"
+#~ "  println(\"Hello, \\{name}\")\n"
+#~ "}\n"
+#~ "\n"
+#~ "test {\n"
+#~ "  f(\"John\")\n"
+#~ "}\n"
+#~ msgstr ""
 
