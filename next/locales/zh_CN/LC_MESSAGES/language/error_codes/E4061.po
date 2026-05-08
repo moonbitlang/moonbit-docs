@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-08 12:18+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,7 +24,9 @@ msgid "E4061"
 msgstr ""
 
 #: ../../language/error_codes/E4061.md:3
-msgid "Cannot implement a trait for a type when both are defined in other packages."
+msgid ""
+"Cannot implement a trait for a type when both are defined in other "
+"packages."
 msgstr "无法为类型和特征（trait）都定义在其他包中的情况实现该特征（trait）"
 
 #: ../../language/error_codes/E4061.md:5
@@ -61,9 +63,9 @@ msgstr "否"
 
 #: ../../language/error_codes/E4061.md:14
 msgid ""
-"See the [Access control of methods and trait implementations](../packages.md"
-"#trait-implementations) section of the MoonBit documentation for more "
-"information."
+"See the [Access control of methods and trait "
+"implementations](../packages.md#trait-implementations) section of the "
+"MoonBit documentation for more information."
 msgstr ""
 
 #: ../../language/error_codes/E4061.md:17
@@ -77,23 +79,26 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4061.md:22
-msgid "`a/a.mbt`:"
+msgid "`a/top.mbt`:"
 msgstr ""
 
 #: ../../language/error_codes/E4061.md:24
 msgid ""
-"pub(all) type A Int\n"
+"///|\n"
+"pub(all) struct A(Int)\n"
+"\n"
+"///|\n"
 "pub(open) trait B {\n"
 "  to_int(Self) -> Int\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4061.md:28
-msgid "`a/moon.pkg.json`:"
+msgid "`a/moon.pkg`:"
 msgstr ""
 
 #: ../../language/error_codes/E4061.md:30
-msgid "{}\n"
+msgid "\n"
 msgstr ""
 
 #: ../../language/error_codes/E4061.md:34
@@ -101,54 +106,108 @@ msgid "Now, if you want to implement trait `@a.B` for type `@a.A`:"
 msgstr ""
 
 #: ../../language/error_codes/E4061.md:36
-msgid "`b/moon.pkg.json`:"
+msgid "`b/moon.pkg`:"
 msgstr ""
 
 #: ../../language/error_codes/E4061.md:38
 msgid ""
-"{\n"
-"  \"import\": [\n"
-"    \"username/hello/a\"\n"
-"  ]\n"
+"import {\n"
+"  \"moonbit-community/E4061-error/a\",\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4061.md:46 ../../language/error_codes/E4061.md:61
-msgid "`b/b.mbt`:"
+#: ../../language/error_codes/E4061.md:42
+#: ../../language/error_codes/E4061.md:57
+msgid "`b/top.mbt`:"
+msgstr ""
+
+#: ../../language/error_codes/E4061.md:44
+msgid ""
+"///|\n"
+"impl @a.B for @a.A with to_int(self : @a.A) -> Int {\n"
+"  self.0\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4061.md:48
-msgid ""
-"impl @a.B for @a.A with to_int(self : @a.A) -> Int {\n"
-"  //                    ^~~~~~\n"
-"  // Error: Cannot define method to_int of trait @a.B from package a for "
-"type @a.A from package a\n"
-"  self._\n"
-"}"
-msgstr ""
-
-#: ../../language/error_codes/E4061.md:52
 msgid "MoonBit will report an error."
 msgstr "MoonBit 会报错。"
 
-#: ../../language/error_codes/E4061.md:54
+#: ../../language/error_codes/E4061.md:50
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4061.md:56
+#: ../../language/error_codes/E4061.md:52
 msgid ""
-"You can move either the trait or type into the current package where the "
-"implementation is in. If that is not possible, you can create a new type "
-"over the type you wish to implement the trait for, and then implement the "
-"trait for the new type:"
-msgstr "您可以将特征或类型移动到实现所在的当前包中。如果这不可能，您可以在希望实现特征的类型上创建一个新类型，然后为新类型实现特征："
+"You can move either the trait or the type into the package that contains "
+"the implementation. If that is not possible, create a wrapper type around"
+" the type you wish to implement the trait for, and then implement the "
+"trait for the wrapper type:"
+msgstr "你可以将特征或类型移动到包含该实现的包中。如果无法这样做，请为目标类型创建一个包装类型，然后为这个包装类型实现该特征："
 
-#: ../../language/error_codes/E4061.md:63
+#: ../../language/error_codes/E4061.md:59
 msgid ""
-"type WrapA @a.A\n"
+"///|\n"
+"priv struct WrapA(@a.A)\n"
 "\n"
+"///|\n"
 "impl @a.B for WrapA with to_int(self : WrapA) -> Int {\n"
-"  ...\n"
-"}"
+"  let _ = self.0\n"
+"  0\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let value = WrapA(@a.A(1))\n"
+"  inspect(value.to_int(), content=\"0\")\n"
+"}\n"
 msgstr ""
 
+#~ msgid "`a/a.mbt`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub(all) type A Int\n"
+#~ "pub(open) trait B {\n"
+#~ "  to_int(Self) -> Int\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid "`a/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid "{}\n"
+#~ msgstr ""
+
+#~ msgid "`b/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"import\": [\n"
+#~ "    \"username/hello/a\"\n"
+#~ "  ]\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "`b/b.mbt`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "impl @a.B for @a.A with to_int(self : @a.A) -> Int {\n"
+#~ "  //                    ^~~~~~\n"
+#~ "  // Error: Cannot define method "
+#~ "to_int of trait @a.B from package "
+#~ "a for type @a.A from package a"
+#~ "\n"
+#~ "  self._\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "type WrapA @a.A\n"
+#~ "\n"
+#~ "impl @a.B for WrapA with to_int(self : WrapA) -> Int {\n"
+#~ "  ...\n"
+#~ "}"
+#~ msgstr ""
