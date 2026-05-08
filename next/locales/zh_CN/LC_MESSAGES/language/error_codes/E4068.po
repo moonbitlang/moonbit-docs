@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-08 12:18+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -29,14 +29,14 @@ msgstr "Main 函数已经定义。"
 
 #: ../../language/error_codes/E4068.md:5
 msgid ""
-"In MoonBit, a `main` package contains a single `main` function that serves "
-"as the entry point of the program. Therefore, you cannot define more than "
-"one `main` function in the main package. If you want to have multiple "
-"programs to be built as separate binaries, you can use multiple `main` "
-"packages within the same module."
+"In MoonBit, a `main` package contains a single `main` function that "
+"serves as the entry point of the program. Therefore, you cannot define "
+"more than one `main` function in the main package. If you want to have "
+"multiple programs to be built as separate binaries, you can use multiple "
+"`main` packages within the same module."
 msgstr ""
-"在 MoonBit 中，一个 `main` 包包含一个 `main` 函数，作为程序的入口点。因此，您不能在 `main` 包中定义多个 `main` "
-"函数。如果您希望将多个程序构建为单独的二进制文件，则可以在同一个模块中使用多个 `main` 包。"
+"在 MoonBit 中，一个 `main` 包包含一个 `main` 函数，作为程序的入口点。因此，您不能在 `main` 包中定义多个 "
+"`main` 函数。如果您希望将多个程序构建为单独的二进制文件，则可以在同一个模块中使用多个 `main` 包。"
 
 #: ../../language/error_codes/E4068.md:11
 msgid "Erroneous example"
@@ -47,79 +47,117 @@ msgid "Suppose in package `main`:"
 msgstr "假设在包 `main` 中："
 
 #: ../../language/error_codes/E4068.md:15
-msgid "`main/moon.pkg.json`:"
+msgid "`main/moon.pkg`:"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:17 ../../language/error_codes/E4068.md:41
+#: ../../language/error_codes/E4068.md:17
+#: ../../language/error_codes/E4068.md:39
 msgid ""
-"{\n"
-"  \"is-main\": true\n"
-"}\n"
+"options(\n"
+"  \"is-main\": true,\n"
+")\n"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:23
+#: ../../language/error_codes/E4068.md:21
 msgid "`main/main.mbt`:"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:25
+#: ../../language/error_codes/E4068.md:23
 msgid ""
+"///|\n"
 "fn main {\n"
 "  println(\"Hello, World!\")\n"
 "}\n"
 "\n"
-"fn main { // Error: Main function is already defined at ...\n"
+"///|\n"
+"fn main {\n"
 "  println(\"Hello, World! Again!\")\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:29
+#: ../../language/error_codes/E4068.md:27
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4068.md:31
+#: ../../language/error_codes/E4068.md:29
 msgid "You can either remove the extra `main` function:"
 msgstr "你可以删除额外的 `main` 函数："
 
-#: ../../language/error_codes/E4068.md:33
+#: ../../language/error_codes/E4068.md:31
+#: ../../language/error_codes/E4068.md:51
 msgid ""
+"///|\n"
 "fn main {\n"
 "  println(\"Hello, World!\")\n"
 "}\n"
-"// Remove the extra main function\n"
-"//- fn main {\n"
-"//-   println(\"Hello, World! Again!\")\n"
-"//- }"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:37
+#: ../../language/error_codes/E4068.md:35
 msgid ""
 "Or you can move the extra `main` function to a different package, say "
 "`main2`:"
 msgstr "或者你可以将额外的 `main` 函数移到另一个包中，比如 `main2`:"
 
-#: ../../language/error_codes/E4068.md:39
-msgid "`main2/moon.pkg.json`:"
+#: ../../language/error_codes/E4068.md:37
+msgid "`main2/moon.pkg`:"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:47
+#: ../../language/error_codes/E4068.md:43
 msgid "`main2/main.mbt`:"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:49
+#: ../../language/error_codes/E4068.md:45
 msgid ""
+"///|\n"
 "fn main {\n"
 "  println(\"Hello, World! Again!\")\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:53
-msgid "while keeping the `main/main.mbt` contains only one main function:"
+#: ../../language/error_codes/E4068.md:49
+msgid "while keeping `main/main.mbt` with only one main function:"
 msgstr "同时保留 `main/main.mbt` 只包含一个 `main` 函数："
 
-#: ../../language/error_codes/E4068.md:55
-msgid ""
-"fn main {\n"
-"  println(\"Hello, World!\")\n"
-"}"
-msgstr ""
+#~ msgid "`main/moon.pkg.json`:"
+#~ msgstr ""
 
+#~ msgid ""
+#~ "{\n"
+#~ "  \"is-main\": true\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(\"Hello, World!\")\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main { // Error: Main function is already defined at ...\n"
+#~ "  println(\"Hello, World! Again!\")\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(\"Hello, World!\")\n"
+#~ "}\n"
+#~ "// Remove the extra main function\n"
+#~ "//- fn main {\n"
+#~ "//-   println(\"Hello, World! Again!\")\n"
+#~ "//- }"
+#~ msgstr ""
+
+#~ msgid "`main2/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(\"Hello, World! Again!\")\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(\"Hello, World!\")\n"
+#~ "}"
+#~ msgstr ""

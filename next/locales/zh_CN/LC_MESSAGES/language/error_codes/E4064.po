@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-08 12:18+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -32,28 +32,64 @@ msgid "Erroneous example"
 msgstr "错误示例"
 
 #: ../../language/error_codes/E4064.md:7
-msgid "Using escape sequence with invalid unicode code point result in this error:"
-msgstr "如果转义序列中包含不合法的 unicode code point，编译器就会产生本错误："
-
-#: ../../language/error_codes/E4064.md:9
 msgid ""
+"Using an escape sequence with an invalid Unicode code point results in "
+"this error:"
+msgstr "使用包含非法 Unicode 码位的转义序列会导致此错误："
+
+#: ../../language/error_codes/E4064.md:10
+msgid ""
+"///|\n"
 "test {\n"
 "  println('\\uD800')\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4064.md:13
-msgid "Another case is using unsupported escape sequence in char literal for `Byte`:"
-msgstr "此外，用字符字面量创建 `Byte` 类型的值时，如果使用了 `Byte` 不支持的转义序列，编译器也会产生本错误："
+#: ../../language/error_codes/E4064.md:14
+msgid "Another case is using an unsupported escape sequence in a `Byte` literal:"
+msgstr "另一种情况是在 `Byte` 字面量中使用不支持的转义序列："
 
-#: ../../language/error_codes/E4064.md:15
+#: ../../language/error_codes/E4064.md:16
 msgid ""
+"///|\n"
 "test {\n"
 "  let _ : Byte = '\\uD000'\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4064.md:19
+#: ../../language/error_codes/E4064.md:20
 msgid "Only `\\x` and `\\o` escape sequences are supported in `Byte` literal."
 msgstr "在 `Byte` 字面量中，只能使用 `\\x` 和 `\\o` 形式的转义序列。"
 
+#: ../../language/error_codes/E4064.md:22
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4064.md:24
+msgid ""
+"Use a valid Unicode code point for `Char` and `String` literals. For "
+"`Byte` literals, use byte escape sequences such as `\\x` or `\\o`:"
+msgstr ""
+
+#: ../../language/error_codes/E4064.md:27
+msgid ""
+"///|\n"
+"test {\n"
+"  let char : Char = '\\u{1F600}'\n"
+"  let byte : Byte = b'\\x41'\n"
+"  ignore(char)\n"
+"  inspect(byte.to_int(), content=\"65\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "test {\n"
+#~ "  println('\\uD800')\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "test {\n"
+#~ "  let _ : Byte = '\\uD000'\n"
+#~ "}"
+#~ msgstr ""

@@ -1,3 +1,0 @@
-test {
-  println('\uD800')
-}
