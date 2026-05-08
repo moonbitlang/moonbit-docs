@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-08 11:54+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -42,30 +42,35 @@ msgid "Suppose you have a package `a` in module `username/hello`:"
 msgstr "假设您在模块 `username/hello` 中有一个包 `a`："
 
 #: ../../language/error_codes/E4094.md:12
-msgid "`a/moon.pkg.json`:"
+msgid "`a/moon.pkg`:"
 msgstr ""
 
 #: ../../language/error_codes/E4094.md:14
-msgid "{}\n"
+msgid "\n"
 msgstr ""
 
 #: ../../language/error_codes/E4094.md:18
+#: ../../language/error_codes/E4094.md:43
 msgid "`a/a.mbt`:"
 msgstr ""
 
 #: ../../language/error_codes/E4094.md:20
+#: ../../language/error_codes/E4094.md:45
 msgid ""
+"///|\n"
 "pub struct T {\n"
 "  mut value : Int\n"
 "}\n"
 "\n"
+"///|\n"
 "pub fn T::new() -> T {\n"
 "  T::{ value: 0 }\n"
 "}\n"
 "\n"
+"///|\n"
 "pub fn T::set(self : T, value : Int) -> Unit {\n"
 "  self.value = value\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4094.md:24
@@ -73,65 +78,112 @@ msgid "And you have another package `b` in the same module:"
 msgstr "您在相同模块中还有另一个包 `b`："
 
 #: ../../language/error_codes/E4094.md:26
-msgid "`b/moon.pkg.json`:"
+msgid "`b/moon.pkg`:"
 msgstr ""
 
 #: ../../language/error_codes/E4094.md:28
 msgid ""
-"{\n"
-"  \"is-main\": true,\n"
-"  \"import\": [\n"
-"    \"username/hello/a\"\n"
-"  ]\n"
+"import {\n"
+"  \"moonbit-community/E4094/a\",\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4094.md:37 ../../language/error_codes/E4094.md:58
+#: ../../language/error_codes/E4094.md:32
+#: ../../language/error_codes/E4094.md:49
 msgid "`b/b.mbt`:"
 msgstr ""
 
-#: ../../language/error_codes/E4094.md:39
+#: ../../language/error_codes/E4094.md:34
 msgid ""
-"fn main {\n"
+"///|\n"
+"test {\n"
 "  let a = @a.T::new()\n"
 "  a.value = 3 // Error: Cannot modify a read-only field: value\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4094.md:43
+#: ../../language/error_codes/E4094.md:38
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4094.md:45
+#: ../../language/error_codes/E4094.md:40
 msgid ""
-"If you have control over the package where the type is defined, you can "
-"simply make the struct has `pub(all)` visibility."
-msgstr "如果您有控制定义类型的包，您可以简单地使结构体具有 `pub(all)` 可见性。"
+"If you have control over the package where the type is defined, expose "
+"mutation through a method in that package."
+msgstr "如果您可以控制定义该类型的包，请通过该包中的方法暴露修改操作。"
 
-#: ../../language/error_codes/E4094.md:48
-msgid "`a/a.mbt"
-msgstr ""
-
-#: ../../language/error_codes/E4094.md:50
+#: ../../language/error_codes/E4094.md:51
 msgid ""
-"pub(all) struct T {\n"
-"  mut value : Int\n"
-"}"
-msgstr ""
-
-#: ../../language/error_codes/E4094.md:54
-msgid ""
-"However, this might not be the best solution if you want to hide the "
-"implementation details of the struct or protect the invariant of the struct."
-" We recommend using getter/setter pattern to guard the access to the struct "
-"fields."
-msgstr "然而，这可能不是隐藏结构体实现细节或保护结构体不变量的最佳解决方案。我们建议使用 `getter/setter` 模式来保护对结构体字段的访问。"
-
-#: ../../language/error_codes/E4094.md:60
-msgid ""
-"fn main {\n"
+"///|\n"
+"test {\n"
 "  let a = @a.T::new()\n"
 "  a.set(3)\n"
-"}"
+"}\n"
 msgstr ""
 
+#~ msgid "`a/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid "{}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub struct T {\n"
+#~ "  mut value : Int\n"
+#~ "}\n"
+#~ "\n"
+#~ "pub fn T::new() -> T {\n"
+#~ "  T::{ value: 0 }\n"
+#~ "}\n"
+#~ "\n"
+#~ "pub fn T::set(self : T, value : Int) -> Unit {\n"
+#~ "  self.value = value\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid "`b/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"is-main\": true,\n"
+#~ "  \"import\": [\n"
+#~ "    \"username/hello/a\"\n"
+#~ "  ]\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let a = @a.T::new()\n"
+#~ "  a.value = 3 // Error: Cannot modify a read-only field: value\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid "`a/a.mbt"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub(all) struct T {\n"
+#~ "  mut value : Int\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "However, this might not be the "
+#~ "best solution if you want to hide"
+#~ " the implementation details of the "
+#~ "struct or protect the invariant of "
+#~ "the struct. We recommend using "
+#~ "getter/setter pattern to guard the "
+#~ "access to the struct fields."
+#~ msgstr ""
+#~ "然而，这可能不是隐藏结构体实现细节或保护结构体不变量的最佳解决方案。我们建议使用 `getter/setter` "
+#~ "模式来保护对结构体字段的访问。"
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let a = @a.T::new()\n"
+#~ "  a.set(3)\n"
+#~ "}"
+#~ msgstr ""

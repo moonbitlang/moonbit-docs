@@ -1,0 +1,26 @@
+///|
+priv enum Point {
+  D2(Double, Double)
+  D3(Double, Double, Double)
+}
+
+///|
+test {
+  let a = Point::D2(1.0, 2.0)
+  let b = Point::D3(1.0, 2.0, 3.0)
+  match a {
+    D2(x, y) => {
+      inspect(x, content="1")
+      inspect(y, content="2")
+    }
+    D3(_, _, _) => fail("unexpected 3D point")
+  }
+  match b {
+    D2(_, _) => fail("unexpected 2D point")
+    D3(x, y, z) => {
+      inspect(x, content="1")
+      inspect(y, content="2")
+      inspect(z, content="3")
+    }
+  }
+}
