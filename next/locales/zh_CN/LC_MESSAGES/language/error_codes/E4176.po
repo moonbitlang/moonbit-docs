@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 12:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,8 +28,56 @@ msgid "Compiler diagnostic name: `invalid_lexmatch_target`."
 msgstr ""
 
 #: ../../language/error_codes/E4176.md:5
+msgid "Invalid `lexmatch` target."
+msgstr "无效的 `lexmatch` 目标。"
+
+#: ../../language/error_codes/E4176.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"`lexmatch` works on textual views. The target expression must have a type"
+" that can be matched by regex patterns, such as `String` or `StringView`,"
+" instead of a numeric, boolean, or other unrelated type."
+msgstr ""
+"`lexmatch` 作用于文本视图。目标表达式的类型必须可以被正则模式匹配，例如 "
+"`String` 或 `StringView`，而不能是数值、布尔值或其他无关类型。"
+
+#: ../../language/error_codes/E4176.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4176.md:13
+msgid ""
+"///|\n"
+"pub fn match_number(n : Int) -> Unit {\n"
+"  lexmatch n with longest {\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4176.md:17
+msgid "The target is an `Int`, which cannot be consumed by `lexmatch`."
+msgstr "目标是 `Int`，不能被 `lexmatch` 消费。"
+
+#: ../../language/error_codes/E4176.md:19
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E4176.md:21
+msgid "Match a string-like value, or convert the input before using `lexmatch`."
+msgstr "匹配类似字符串的值，或者在使用 `lexmatch` 前先转换输入。"
+
+#: ../../language/error_codes/E4176.md:23
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

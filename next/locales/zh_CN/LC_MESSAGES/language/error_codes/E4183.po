@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 12:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,8 +28,63 @@ msgid "Compiler diagnostic name: `regex_interpolation_is_not_supported`."
 msgstr ""
 
 #: ../../language/error_codes/E4183.md:5
+msgid "Regex interpolation is not supported in `lexmatch` patterns."
+msgstr "`lexmatch` 模式不支持正则插值。"
+
+#: ../../language/error_codes/E4183.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"`lexmatch` patterns are compiled as part of the match. They must be known"
+" as literal regex patterns instead of being built with string or regex "
+"interpolation."
+msgstr ""
+"`lexmatch` 模式会作为匹配的一部分被编译。它们必须是已知的正则字面量模式，"
+"而不能通过字符串或正则插值构造。"
+
+#: ../../language/error_codes/E4183.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4183.md:13
+msgid ""
+"///|\n"
+"pub fn match_text(text : String, part : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    (\"\\{part}\", _) => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4183.md:17
+msgid "The regex pattern tries to interpolate `part`."
+msgstr "该正则模式尝试插入 `part`。"
+
+#: ../../language/error_codes/E4183.md:19
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E4183.md:21
+msgid ""
+"Use a literal pattern in the `lexmatch` case. For dynamic regex matching,"
+" build a regex value and use a regex match expression instead of "
+"`lexmatch`."
+msgstr ""
+"在 `lexmatch` 分支中使用字面量模式。对于动态正则匹配，请构造正则值，并使用"
+"正则匹配表达式，而不是 `lexmatch`。"
+
+#: ../../language/error_codes/E4183.md:24
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    (\"abc\", _) => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

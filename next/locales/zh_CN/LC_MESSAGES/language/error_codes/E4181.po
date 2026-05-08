@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 12:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -31,7 +31,62 @@ msgstr ""
 
 #: ../../language/error_codes/E4181.md:5
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"Named capture groups are not supported in regex literals used by "
+"`lexmatch`."
+msgstr "`lexmatch` 使用的正则字面量不支持命名捕获组。"
+
+#: ../../language/error_codes/E4181.md:7
+msgid ""
+"`lexmatch` can bind parts of a regex pattern through positional binders "
+"in the lex pattern. Named capture groups inside the regex itself are "
+"rejected because they are not part of the supported lex pattern binding "
+"model."
+msgstr ""
+"`lexmatch` 可以通过词法模式中的位置绑定器绑定正则模式的部分内容。正则本身"
+"内部的命名捕获组不属于受支持的词法模式绑定模型，因此会被拒绝。"
+
+#: ../../language/error_codes/E4181.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4181.md:13
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    (\"(?<word>abc)\", _) => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4181.md:17
+msgid "The regex contains the named capture group `(?<word>...)`."
+msgstr "该正则包含命名捕获组 `(?<word>...)`。"
+
+#: ../../language/error_codes/E4181.md:19
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E4181.md:21
+msgid ""
+"Use a normal regex group and bind the matched rest through the "
+"surrounding lex pattern when needed."
+msgstr "使用普通正则分组；需要时，通过外层词法模式绑定匹配到的剩余部分。"
+
+#: ../../language/error_codes/E4181.md:24
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    (\"abc\", _) => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
