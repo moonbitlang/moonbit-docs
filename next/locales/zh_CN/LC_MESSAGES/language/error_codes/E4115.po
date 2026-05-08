@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-08 12:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -29,9 +28,9 @@ msgstr "不能自动填充此类型的参数。"
 
 #: ../../language/error_codes/E4115.md:5
 msgid ""
-"MoonBit supports and auto-filling `SourceLoc` and `ArgsLoc` parameters in "
-"functions. Leaving the default value of parameter of other types will result"
-" in this error."
+"MoonBit supports and auto-filling `SourceLoc` and `ArgsLoc` parameters in"
+" functions. Leaving the default value of parameter of other types will "
+"result in this error."
 msgstr "MoonBit 支持自动填充 `SourceLoc` 和 `ArgsLoc` 参数的函数。将其他类型参数的默认值留空将导致出现此错误。"
 
 #: ../../language/error_codes/E4115.md:9
@@ -40,9 +39,11 @@ msgstr "错误示例"
 
 #: ../../language/error_codes/E4115.md:11
 msgid ""
-"fn f(parameter~ : Int = _) -> Unit {\n"
+"///|\n"
+"#callsite(autofill(parameter))\n"
+"fn f(parameter~ : Int) -> Unit {\n"
 "  // ^~~~~~~~~ Error: Cannot auto-fill parameter of type Int\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4115.md:15
@@ -55,7 +56,25 @@ msgstr "为参数使用默认值："
 
 #: ../../language/error_codes/E4115.md:19
 msgid ""
-"fn f(parameter~ : Int = 0) -> Unit {\n"
-"}"
+"///|\n"
+"pub fn f(parameter? : Int = 0) -> Int {\n"
+"  parameter\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(f(), content=\"0\")\n"
+"  inspect(f(parameter=1), content=\"1\")\n"
+"}\n"
 msgstr ""
 
+#~ msgid ""
+#~ "fn f(parameter~ : Int = _) -> Unit {\n"
+#~ "  // ^~~~~~~~~ Error: Cannot auto-fill parameter of type Int\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f(parameter~ : Int = 0) -> Unit {\n"
+#~ "}"
+#~ msgstr ""

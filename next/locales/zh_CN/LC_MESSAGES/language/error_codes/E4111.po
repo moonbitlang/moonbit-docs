@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-08 12:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -29,8 +28,8 @@ msgstr "break 语句的使用无效。"
 
 #: ../../language/error_codes/E4111.md:5
 msgid ""
-"This error happens when you use a `break` statement in the initialization, "
-"condition, or update statement of a loop."
+"This error happens when you use a `break` statement in the "
+"initialization, condition, or update statement of a loop."
 msgstr "当您在循环的初始化、条件或更新语句中使用 `break` 语句时，就会发生此错误。"
 
 #: ../../language/error_codes/E4111.md:8
@@ -39,14 +38,20 @@ msgstr "错误示例"
 
 #: ../../language/error_codes/E4111.md:10
 msgid ""
-"pub fn f(x: Int, y: Int) -> Unit {\n"
+"///|\n"
+"pub fn f(x : Int, y : Int) -> Unit {\n"
 "  for i = 0; i < x; i = i + 1 {\n"
-"    for j = { break }; j < y; j = j + 1 {\n"
-"//            ^^^^^ Error: The usage of break statement is invalid.\n"
-"        println(i + j)\n"
+"    for j = ({\n"
+"            break\n"
+"          })\n"
+"        j < y\n"
+"        j = j + 1 {\n"
+"      //            ^^^^^ Error: The usage of break statement is invalid."
+"\n"
+"      println(i + j)\n"
 "    }\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4111.md:14
@@ -55,7 +60,32 @@ msgstr "建议"
 
 #: ../../language/error_codes/E4111.md:16
 msgid ""
-"Do not write `break` statement in the initialization, condition, or update "
-"statement of a loop."
-msgstr "不要在循环的初始化、条件或更新语句中编写 `break` 语句。"
+"Do not write a `break` statement in the initialization, condition, or "
+"update statement of a loop. Put it in the loop body instead."
+msgstr "不要在循环的初始化、条件或更新语句中编写 `break` 语句。请将它放在循环体中。"
 
+#: ../../language/error_codes/E4111.md:19
+msgid ""
+"///|\n"
+"pub fn f(x : Int, y : Int) -> Unit {\n"
+"  for i = 0; i < x; i = i + 1 {\n"
+"    for j = 0; j < y; j = j + 1 {\n"
+"      if i + j > 10 {\n"
+"        break\n"
+"      }\n"
+"      println(i + j)\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "pub fn f(x: Int, y: Int) -> Unit {\n"
+#~ "  for i = 0; i < x; i = i + 1 {\n"
+#~ "    for j = { break }; j < y; j = j + 1 {\n"
+#~ "//            ^^^^^ Error: The usage of break statement is invalid.\n"
+#~ "        println(i + j)\n"
+#~ "    }\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""

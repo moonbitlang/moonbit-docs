@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-08 12:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -25,14 +24,14 @@ msgstr ""
 
 #: ../../language/error_codes/E4110.md:3
 msgid ""
-"The loop is not expected to yield a value, please remove the argument of the"
-" `break` or add an `else` branch."
-msgstr "该循环不应该返回值，请从 `break` 语句中删除参数，或添加 `else` 分支。"
+"The loop is not expected to yield a value, please remove the argument of "
+"the `break` or add a `nobreak` branch."
+msgstr "该循环不应该返回值，请移除 `break` 的参数，或添加 `nobreak` 分支。"
 
 #: ../../language/error_codes/E4110.md:6
 msgid ""
-"This error occurs when using a `break` statement with an argument in a loop "
-"that is not expected to yield a value. This applies to:"
+"This error occurs when using a `break` statement with an argument in a "
+"loop that is not expected to yield a value. This applies to:"
 msgstr "当在不应该返回值的循环中使用带有参数的 `break` 语句时，就会发生此错误。此错误适用于以下循环："
 
 #: ../../language/error_codes/E4110.md:9
@@ -55,15 +54,15 @@ msgstr "这些循环结构没有从循环体返回值的机制。如果您需要
 
 #: ../../language/error_codes/E4110.md:16
 msgid ""
-"Remove the argument from the `break` statement if you don't need to return a"
-" value, or"
+"Remove the argument from the `break` statement if you don't need to "
+"return a value, or"
 msgstr "如果您不需要从循环中返回值，请从 `break` 语句中删除参数，或"
 
 #: ../../language/error_codes/E4110.md:18
 msgid ""
-"Add an `else` branch to handle the case when the loop completes normally and"
-" provide a return value"
-msgstr "添加一个 `else` 分支，用于处理循环正常完成时返回值的情况"
+"Add a `nobreak` branch to handle the case when the loop completes "
+"normally and provide a return value"
+msgstr "添加一个 `nobreak` 分支，用于处理循环正常完成并提供返回值的情况"
 
 #: ../../language/error_codes/E4110.md:21
 msgid "Erroneous example"
@@ -71,14 +70,16 @@ msgstr "错误示例"
 
 #: ../../language/error_codes/E4110.md:23
 msgid ""
-"pub fn f(x: Int) -> Unit {\n"
-"  for i in 0..=x {\n"
+"///|\n"
+"pub fn f(x : Int) -> Unit {\n"
+"  for i in 0..<=x {\n"
 "    break i\n"
-"//  ^^^^^^^^ Error: The for loop is not expected to yield a value, please\n"
-"//                  remove the argument of the `break` or add an `else` "
-"branch.\n"
+"    //  ^^^^^^^^ Error: The for loop is not expected to yield a value, "
+"please\n"
+"    //                  remove the argument of the `break` or add an "
+"`else` branch.\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4110.md:27
@@ -95,27 +96,63 @@ msgstr "从 `break` 语句中删除参数。例如："
 
 #: ../../language/error_codes/E4110.md:33
 msgid ""
-"pub fn f(x: Int) -> Unit {\n"
-"  for i in 0..=x {\n"
-"    break\n"
+"///|\n"
+"pub fn stop_at_zero(x : Int) -> Unit {\n"
+"  for i in 0..<=x {\n"
+"    if i == 0 {\n"
+"      break\n"
+"    }\n"
+"    println(i)\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4110.md:37
 msgid ""
-"Add an `else` branch to handle the case when the loop completes normally and"
-" provide a return value. For example,"
-msgstr "添加一个 `else` 分支，用于处理循环正常完成时返回值的情况。例如："
+"Add a `nobreak` branch to handle the case when the loop completes "
+"normally and provide a return value. For example,"
+msgstr "添加一个 `nobreak` 分支，用于处理循环正常完成并提供返回值的情况。例如："
 
 #: ../../language/error_codes/E4110.md:40
 msgid ""
-"pub fn f(x: Int) -> Int {\n"
-"  for i in 0..=x {\n"
+"///|\n"
+"pub fn first_index_or_default(x : Int) -> Int {\n"
+"  for i in 0..<=x {\n"
 "    break i\n"
-"  } else {\n"
+"  } nobreak {\n"
 "    42\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
 
+#~ msgid ""
+#~ "pub fn f(x: Int) -> Unit {\n"
+#~ "  for i in 0..=x {\n"
+#~ "    break i\n"
+#~ "//  ^^^^^^^^ Error: The for loop "
+#~ "is not expected to yield a value,"
+#~ " please\n"
+#~ "//                  remove the argument of "
+#~ "the `break` or add an `else` "
+#~ "branch.\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn f(x: Int) -> Unit {\n"
+#~ "  for i in 0..=x {\n"
+#~ "    break\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn f(x: Int) -> Int {\n"
+#~ "  for i in 0..=x {\n"
+#~ "    break i\n"
+#~ "  } else {\n"
+#~ "    42\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
