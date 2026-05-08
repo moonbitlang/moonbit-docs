@@ -1,0 +1,2 @@
+///|
+type T derive(Hash) // Error: Cannot derive trait Hash for type T: target type is abstract

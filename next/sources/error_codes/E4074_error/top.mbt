@@ -1,1 +1,0 @@
-let a = 1 + 1 // Error: Cannot infer the type of variable a, please add more type annotation.
