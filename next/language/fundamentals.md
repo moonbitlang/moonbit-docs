@@ -1437,6 +1437,57 @@ It is also possible to define mutable fields for constructor. This is especially
 :end-before: end enum 12
 ```
 
+#### Extensible enum
+
+An `extenum` defines an open enum type. Unlike a regular `enum`, an
+`extenum` can receive more constructors later, including from another package.
+This is useful when a package wants to define the shared event, message, or
+extension-point type, while other packages contribute their own cases.
+
+```{literalinclude} /sources/language/src/extenum/base/top.mbt
+:language: moonbit
+:start-after: start extenum declare
+:end-before: end extenum declare
+```
+
+Use `extenum Type += { ... }` to add constructors to an extensible enum in the
+same package:
+
+```{literalinclude} /sources/language/src/extenum/base/top.mbt
+:language: moonbit
+:start-after: start extenum local extension
+:end-before: end extenum local extension
+```
+
+To extend an extensible enum from another package, qualify the target type with
+the package that defines the type:
+
+```{literalinclude} /sources/language/src/extenum/plugin/top.mbt
+:language: moonbit
+:start-after: start extenum foreign extension
+:end-before: end extenum foreign extension
+```
+
+Extensible enum constructors are qualified by the package that defines the
+constructor. For constructors from the current package, use the constructor name
+directly when the expected type is known. For constructors from another
+package, use `@pkg.Constructor` in expressions and patterns.
+
+When a package imports both the base package and an extension package, values
+from both packages have the same extensible enum type:
+
+```{literalinclude} /sources/language/src/extenum/app/top.mbt
+:language: moonbit
+:start-after: start extenum interaction
+:end-before: end extenum interaction
+```
+
+Pattern matching must include a wildcard branch, because more constructors
+can be added outside the current declaration.
+
+Only `extenum` declarations can be extended. Regular `enum` declarations are
+closed.
+
 ### Tuple Struct
 
 MoonBit supports a special kind of struct called tuple struct:
