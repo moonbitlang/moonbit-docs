@@ -1908,6 +1908,68 @@ fn[X : Compare] Tree::insert(
 }
 ```
 
+#### Extensible enum
+
+An `extenum` defines an open enum type. Unlike a regular `enum`, an
+`extenum` can receive more constructors later, including from another package.
+This is useful when a package wants to define the shared event, message, or
+extension-point type, while other packages contribute their own cases.
+
+```moonbit
+pub(all) extenum LogEvent[T] {
+  Info(T)
+}
+```
+
+Use `extenum Type += { ... }` to add constructors to an extensible enum in the
+same package:
+
+```moonbit
+pub(all) extenum LogEvent[T] += {
+  Warning(T)
+  Critical(T, T)
+}
+```
+
+To extend an extensible enum from another package, qualify the target type with
+the package that defines the type:
+
+```moonbit
+pub(all) extenum @base.LogEvent[T] += {
+  Debug(T)
+}
+```
+
+Extensible enum constructors are qualified by the package that defines the
+constructor. For constructors from the current package, use the constructor name
+directly when the expected type is known. For constructors from another
+package, use `@pkg.Constructor` in expressions and patterns.
+
+When a package imports both the base package and an extension package, values
+from both packages have the same extensible enum type:
+
+```moonbit
+pub fn describe(event : @base.LogEvent[String]) -> String {
+  match event {
+    @base.Info(message) => "info: \{message}"
+    @base.Warning(message) => "warning: \{message}"
+    @base.Critical(code, message) => "critical \{code}: \{message}"
+    @plugin.Debug(message) => "debug: \{message}"
+    _ => "unknown"
+  }
+}
+
+pub fn debug_event(message : String) -> @base.LogEvent[String] {
+  @plugin.Debug(message)
+}
+```
+
+Pattern matching must include a wildcard branch, because more constructors
+can be added outside the current declaration.
+
+Only `extenum` declarations can be extended. Regular `enum` declarations are
+closed.
+
 ### Tuple Struct
 
 MoonBit supports a special kind of struct called tuple struct:

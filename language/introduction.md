@@ -83,11 +83,12 @@ The following are the keywords and should not be used:
 ```json
 [
   "as", "else", "extern", "fn", "fnalias", "if", "let", "const", "match", "using",
-  "mut", "type", "typealias", "struct", "enum", "trait", "traitalias", "derive",
-  "declare", "while", "break", "continue", "import", "return", "throw", "raise",
-  "try", "catch", "pub", "priv", "readonly", "true", "false", "_", "test", "loop",
-  "for", "in", "impl", "with", "guard", "async", "is", "suberror", "and", "letrec",
-  "enumview", "noraise", "defer",
+  "mut", "type", "typealias", "struct", "enum", "extenum", "trait",
+  "traitalias", "derive", "while", "break", "continue", "import", "return",
+  "throw", "raise", "try", "catch", "pub", "priv", "proof_assert", "proof_let",
+  "readonly", "true", "false", "_", "test", "loop", "for", "in", "impl", "with",
+  "guard", "async", "is", "suberror", "and", "letrec", "enumview", "noraise",
+  "defer", "lexmatch", "where", "declare", "nobreak",
 ]
 ```
 
@@ -98,14 +99,14 @@ They might be turned into keywords in the future.
 
 ```json
 [
-  "module", "move", "ref", "static", "super", "unsafe", "use", "where", "await",
+  "module", "move", "ref", "static", "super", "unsafe", "use", "await",
   "dyn", "abstract", "do", "final", "macro", "override", "typeof", "virtual", "yield",
   "local", "method", "alias", "assert", "package", "recur", "using", "enumview",
   "isnot", "define", "downcast", "inherit", "member", "namespace", "static", "upcast",
   "use", "void", "lazy", "include", "mixin", "protected", "sealed", "constructor",
   "atomic", "volatile", "anyframe", "anytype", "asm", "await", "comptime", "errdefer",
   "export", "opaque", "orelse", "resume", "threadlocal", "unreachable", "dynclass",
-  "dynobj", "dynrec", "var", "finally", "noasync",
+  "dynobj", "dynrec", "var", "finally", "noasync", "assume",
 ]
 ```
 
