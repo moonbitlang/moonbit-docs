@@ -1,4 +1,4 @@
 ///|
 test {
-  let _ : Byte = '\uD000'
+  let _ : Byte = b'\uD000'
 }
