@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 17:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,8 +27,72 @@ msgid "Compiler diagnostic name: `mbt_check_non_test_toplevel`."
 msgstr ""
 
 #: ../../language/error_codes/E4191.md:5
+msgid "Non-test toplevel in an `mbt check` documentation block."
+msgstr "`mbt check` 文档块中存在非测试顶层声明。"
+
+#: ../../language/error_codes/E4191.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"Code fences marked as `mbt check` in doc comments are treated as "
+"document-test blocks. These blocks should contain test toplevels, such as"
+" `test { ... }`. Ordinary toplevel declarations are skipped and reported "
+"with this diagnostic."
+msgstr ""
+"文档注释中标记为 `mbt check` 的代码围栏会被视为文档测试块。这些代码块应该包含测试顶层声明，例如 `test { ... "
+"}`。普通顶层声明会被跳过，并报告此诊断。"
+
+#: ../../language/error_codes/E4191.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4191.md:13
+msgid "The following `mbt check` block declares a normal helper function:"
+msgstr "下面的 `mbt check` 块声明了一个普通辅助函数："
+
+#: ../../language/error_codes/E4191.md:15
+msgid ""
+"/// Returns the answer.\n"
+"///\n"
+"/// ```mbt check\n"
+"/// fn helper() -> Int {\n"
+"///   42\n"
+"/// }\n"
+"/// ```\n"
+"pub fn answer() -> Int {\n"
+"  42\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E4191.md:19
+msgid "MoonBit will report an error."
+msgstr "MoonBit 会报告一个错误。"
+
+#: ../../language/error_codes/E4191.md:21
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4191.md:23
+msgid "Move the checked code into a `test { ... }` block:"
+msgstr "将需要检查的代码移动到 `test { ... }` 块中："
+
+#: ../../language/error_codes/E4191.md:25
+msgid ""
+"/// Returns the answer.\n"
+"///\n"
+"/// ```mbt check\n"
+"/// test {\n"
+"///   inspect(answer(), content=\"42\")\n"
+"/// }\n"
+"/// ```\n"
+"pub fn answer() -> Int {\n"
+"  42\n"
+"}\n"
+msgstr ""
+
+#~ msgid "Compiler diagnostic name: `mbt_check_non_test_toplevel`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

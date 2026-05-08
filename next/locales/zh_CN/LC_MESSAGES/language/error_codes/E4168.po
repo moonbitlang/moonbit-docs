@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-08 17:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,8 +27,64 @@ msgid "Compiler diagnostic name: `error_poly_unsupported`."
 msgstr ""
 
 #: ../../language/error_codes/E4168.md:5
+msgid "Error polymorphism is not supported in this position."
+msgstr "此位置不支持错误多态。"
+
+#: ../../language/error_codes/E4168.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"The `raise?` annotation means that a function is error-polymorphic: it "
+"can propagate the error behavior of a callback or another polymorphic "
+"operation. MoonBit only supports this form in specific function "
+"positions. It is not a general-purpose type annotation that can be used "
+"anywhere a function type is written."
+msgstr ""
+"`raise?` 标注表示函数具有错误多态：它可以传播回调或其他多态操作的错误行为。MoonBit "
+"只在特定的函数位置支持这种形式。它不是一个可以在任意函数类型处使用的通用类型标注。"
+
+#: ../../language/error_codes/E4168.md:13
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4168.md:15
+msgid "The following toplevel value uses `raise?` in a function type annotation:"
+msgstr "下面的顶层值在函数类型标注中使用了 `raise?`："
+
+#: ../../language/error_codes/E4168.md:17
+msgid ""
+"///|\n"
+"\n"
+"///|\n"
+"let _callback : () -> Unit raise? = fn() { () }\n"
 msgstr ""
 
+#: ../../language/error_codes/E4168.md:21
+msgid "MoonBit will report an error."
+msgstr "MoonBit 会报告一个错误。"
+
+#: ../../language/error_codes/E4168.md:23
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4168.md:25
+msgid ""
+"Use a non-raising function type when the callback cannot raise, or use an"
+" ordinary concrete `raise` annotation in a supported function declaration"
+" when the function may raise:"
+msgstr "当回调不会抛出错误时，使用不抛错的函数类型；如果函数可能抛错，则在受支持的函数声明中使用普通的具体 `raise` 标注："
+
+#: ../../language/error_codes/E4168.md:29
+msgid ""
+"///|\n"
+"\n"
+"///|\n"
+"let _callback : () -> Unit = fn() { () }\n"
+msgstr ""
+
+#~ msgid "Compiler diagnostic name: `error_poly_unsupported`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
