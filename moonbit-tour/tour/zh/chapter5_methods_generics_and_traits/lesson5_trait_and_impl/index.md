@@ -16,14 +16,14 @@
 在`main`函数中，通过`Equal::is_equal()`可以调用该特征总结的方法，根据传入的`a`、`b`类型，不同类型
 会调用各自的实现版本。也就是说：
 
-- 当`a`和`b`是`Int`类型时，执行的是`impl Int for Equal with is_equal`内的代码。
-- 当`a`和`b`是`Pos`类型时，执行的是`impl Pos for Equal with is_equal`内的代码。
+- 当`a`和`b`是`Int`类型时，执行的是`impl Equal for Int with is_equal`内的代码。
+- 当`a`和`b`是`Pos`类型时，执行的是`impl Equal for Pos with is_equal`内的代码。
 
 调用哪个实现版本是静态地决定的，没有运行时动态分派的开销。
 
 ## 限制
 
-在为类型实现特征时，MoonBit 遵循**孤儿规则**（orphan rule）：`impl Type for Trait ...`实现必须和`Type`或`Trait`在同一个包，
+在为类型实现特征时，MoonBit 遵循**孤儿规则**（orphan rule）：`impl Trait for Type ...`实现必须和`Type`或`Trait`在同一个包，
 而不允许孤立地存在于某个包中。
 这一限制保证了特征实现的唯一性，避免了不同包中对同一类型和特征的重复实现引发冲突，或者因为其他包的变化而改变已有代码的行为。
 

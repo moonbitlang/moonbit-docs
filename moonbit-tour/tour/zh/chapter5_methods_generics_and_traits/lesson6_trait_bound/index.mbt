@@ -28,7 +28,7 @@ fn main {
   let ints = [2, 1, 3, 4, 5]
   swap(ints)
   let j = find_index(ints, 4)
-  println("the result is \{j}")
+  println("the result is \{to_repr(j)}")
   let i = find_index([true, false, true, false], false)
-  println("the result is \{i}")
+  println("the result is \{to_repr(i)}")
 }

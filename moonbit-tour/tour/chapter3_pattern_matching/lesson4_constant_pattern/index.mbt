@@ -34,6 +34,6 @@ fn contents(file : String) -> String? {
 fn main {
   println("fib(5): \{fibonacci(5)}")
   println("negate(false): \{negate(false)}")
-  println("read('2'): \{read('2')}, read('5'): \{read('5')}")
-  println(contents("README"))
+  println("read('2'): \{to_repr(read('2'))}, read('5'): \{to_repr(read('5'))}")
+  println(to_repr(contents("README")))
 }

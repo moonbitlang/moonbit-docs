@@ -1,7 +1,7 @@
 struct Point {
   x : Int
   y : Int
-} derive(Show)
+}
 
 fn main {
   let tuple = (1, false, 3.14)

@@ -8,7 +8,7 @@
 
 本教程不详细介绍如何使用 `moon` 或 mooncakes.io。更多信息请参考上述链接。不必担心——只有在开发 MoonBit 项目时才需要这些工具，你可以先继续本教程，稍后再探索它们。
 
-## 通过 `@path/to/pkg.Func` 语法访问 API
+## 通过 `@path/to/pkg.func` 语法访问 API
 
 以下是你需要了解的一些基本信息：
 
@@ -25,7 +25,7 @@
 
 在你将某个模块（如 `moonbitlang/x` ）作为依赖引入，并导入你想使用的包（如 `moonbitlang/x/fs` ）后，可以通过 `@path/to/pkg.func` 语法访问其函数。例如，使用 `@moonbitlang/x/fs.create_dir` （或如果你为其指定了别名，则可用 `@fs.create_dir` ）来调用 `create_dir` 函数。
 
-**注意**： `moonbitlang/core` 模块比较特殊——它会被默认添加为依赖，并自动导入其包。
+**注意**：在普通包中，`moonbitlang/core/math` 这类普通 core 包仍应写入 `moon.pkg` 的 `import` 块；只有 `moonbitlang/core/prelude` 会默认参与非限定名称解析。
 
 ## 本地模块依赖
 

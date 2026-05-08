@@ -7,4 +7,4 @@
 - `Empty` : 一个空列表
 - `More` : 一个元素和列表的其余部分。
 
-可以用 `@list.empty()` 和 `@list.construct(..)` 来构造列表。还可以用 `xs.prepend(x)` 来往列表头部追加元素。
+可以用 `@list.empty()` 和 `@list.cons(..)` 来构造 `@list.List`。还可以用 `xs.prepend(x)` 来往列表头部追加元素。

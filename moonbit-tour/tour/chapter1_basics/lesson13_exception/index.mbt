@@ -23,12 +23,12 @@ fn main {
     _ => panic()
   }
   try {
-    let result = safe_add(@int.max_value, @int.max_value)
+    let result = safe_add(@int.MAX_VALUE, @int.MAX_VALUE)
 
   } catch {
-    Failure(error_message) => println(error_message)
+    Failure::Failure(error_message) => println(error_message)
     _ => panic()
   }
-  let result = try? safe_add(@int.max_value, @int.max_value)
+  let result = try? safe_add(@int.MAX_VALUE, @int.MAX_VALUE)
 
 }
