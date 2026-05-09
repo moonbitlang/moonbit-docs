@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-09 17:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -25,11 +24,50 @@ msgstr ""
 
 #: ../../language/error_codes/E3700.md:3
 msgid "Compiler diagnostic name: `extra_ast_lint_warning`."
-msgstr ""
+msgstr "编译器诊断名称：`extra_ast_lint_warning`。"
 
 #: ../../language/error_codes/E3700.md:5
+msgid "The parser found a syntax pattern that has a dedicated lint suggestion."
+msgstr "解析器发现了有专门 lint 建议的语法模式。"
+
+#: ../../language/error_codes/E3700.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"This diagnostic is used for AST-level lints that are reported as compiler"
+" errors. One common case is multiplying a string literal by a number."
+msgstr ""
+"此诊断用于报告 AST 层面的 lint，并以编译器错误的形式呈现。一个常见情况是将字"
+"符串字面量乘以数字。"
+
+#: ../../language/error_codes/E3700.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E3700.md:12
+msgid ""
+"///|\n"
+"pub fn repeated() -> String {\n"
+"  \"ha\" * 3\n"
+"}\n"
 msgstr ""
 
+#: ../../language/error_codes/E3700.md:16
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E3700.md:18
+msgid "Use the suggested API directly."
+msgstr "请直接使用建议的 API。"
+
+#: ../../language/error_codes/E3700.md:20
+msgid ""
+"///|\n"
+"pub fn repeated() -> String {\n"
+"  \"ha\".repeat(3)\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""

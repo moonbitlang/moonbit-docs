@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-16 15:45+0800\n"
+"POT-Creation-Date: 2026-05-09 17:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -25,14 +24,13 @@ msgstr ""
 
 #: ../../language/error_codes/E0034.md:3
 msgid "Warning name: `implicit_use_builtin`"
-msgstr ""
+msgstr "警告名称：`implicit_use_builtin`"
 
 #: ../../language/error_codes/E0034.md:5
 msgid "Implicit use of definitions from `moonbitlang/core/builtin`."
 msgstr "隐式使用了 `moonbitlang/core/builtin` 中的定义。"
 
 #: ../../language/error_codes/E0034.md:7
-#, fuzzy
 msgid ""
 "This warning is emitted when code implicitly relies on definitions from "
 "`moonbitlang/core/builtin`. Consider importing the desired APIs "
@@ -41,3 +39,57 @@ msgstr ""
 "当代码隐式依赖 `moonbitlang/core/builtin` 中的定义时，会发出此警告。建议显式导入\n"
 "需要的 API，使依赖关系更清晰。"
 
+#: ../../language/error_codes/E0034.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0034.md:13
+msgid ""
+"Here `Null` is inferred as the `Json::Null` constructor from "
+"`moonbitlang/core/builtin` without an explicit type or qualification:"
+msgstr ""
+"这里的 `Null` 在没有显式类型或限定名的情况下，被推断为来自 "
+"`moonbitlang/core/builtin` 的 `Json::Null` 构造器："
+
+#: ../../language/error_codes/E0034.md:16
+msgid ""
+"///|\n"
+"pub fn check(value : Json) -> Int {\n"
+"  fn classify(input) {\n"
+"    match input {\n"
+"      Null => 0\n"
+"      _ => 1\n"
+"    }\n"
+"  }\n"
+"\n"
+"  classify(value)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0034.md:20
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E0034.md:22
+msgid ""
+"Make the builtin dependency explicit and qualify the constructor, or "
+"otherwise add enough type information that the code no longer relies on "
+"implicit builtin constructor inference."
+msgstr ""
+"请显式声明 builtin 依赖并限定构造器名称，或者加入足够的类型信息，使代码不再依"
+"赖隐式的 builtin 构造器推断。"
+
+#: ../../language/error_codes/E0034.md:26
+msgid ""
+"///|\n"
+"pub fn check(value : Json) -> Int {\n"
+"  fn classify(input : Json) {\n"
+"    match input {\n"
+"      Json::Null => 0\n"
+"      _ => 1\n"
+"    }\n"
+"  }\n"
+"\n"
+"  classify(value)\n"
+"}\n"
+msgstr ""

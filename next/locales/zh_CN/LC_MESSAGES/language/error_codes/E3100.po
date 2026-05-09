@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-05-09 17:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -25,11 +24,57 @@ msgstr ""
 
 #: ../../language/error_codes/E3100.md:3
 msgid "Compiler diagnostic name: `invalid_mbti`."
-msgstr ""
+msgstr "编译器诊断名称：`invalid_mbti`。"
 
 #: ../../language/error_codes/E3100.md:5
+msgid "The package interface file is invalid."
+msgstr "包接口文件无效。"
+
+#: ../../language/error_codes/E3100.md:7
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"An `.mbti` file describes the public interface of a package. MoonBit "
+"reports this error when the file cannot be parsed as a valid interface "
+"file."
+msgstr ""
+"`.mbti` 文件描述包的公开接口。当该文件无法按有效接口文件解析时，MoonBit 会报"
+"告此错误。"
+
+#: ../../language/error_codes/E3100.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E3100.md:12
+#: ../../language/error_codes/E3100.md:22
+msgid "pkg.mbti"
 msgstr ""
 
+#: ../../language/error_codes/E3100.md:12
+msgid ""
+"package \"moonbit-community/E3100\"\n"
+"\n"
+"let value = 1\n"
+msgstr ""
+
+#: ../../language/error_codes/E3100.md:17
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E3100.md:19
+msgid ""
+"Regenerate the interface with `moon info`, or edit it so it contains "
+"valid interface declarations."
+msgstr ""
+"请使用 `moon info` 重新生成接口，或者手动编辑它，使其包含有效的接口声明。"
+
+#: ../../language/error_codes/E3100.md:22
+msgid ""
+"package \"moonbit-community/E3100-fixed\"\n"
+"\n"
+"fn value() -> Int\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
