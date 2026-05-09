@@ -28,16 +28,16 @@ msgstr "警告名称：`alert` 或 `alert_<category>`"
 
 #: ../../language/error_codes/E0014.md:5
 msgid ""
-"Alert warnings are emitted when code uses an API that the provider marked"
-" with an alert attribute, such as [`#internal`](../attributes.md"
-"#internal-attribute). The alert category is chosen by the API provider, "
-"so the warning name can be `alert` for all alerts or `alert_<category>` "
-"for one category."
+"Alert warnings are emitted when code uses an API that carries an alert, "
+"for example through `#alert`, [`#internal`](../attributes.md#internal-"
+"attribute), or a visibility-change annotation. The alert category is "
+"chosen by the API provider, so the warning name can be `alert` for all "
+"alerts or `alert_<category>` for one category."
 msgstr ""
-"当代码使用了 API 提供者通过 alert 属性（例如 "
-"[`#internal`](../attributes.md#internal-attribute)）标记的 API 时，会发出 "
-"alert 警告。Alert 的类别由 API 提供者选择，因此警告名称可以是用于所有 alert "
-"的 `alert`，也可以是用于某一类别的 `alert_<category>`。"
+"当代码使用了带有 alert 的 API 时会发出 alert 警告，例如通过 `#alert`、"
+"[`#internal`](../attributes.md#internal-attribute) 或可见性变更标注产生的 "
+"alert。Alert 的类别由 API 提供者选择，因此警告名称可以是用于所有 alert 的 "
+"`alert`，也可以是用于某一类别的 `alert_<category>`。"
 
 #: ../../language/error_codes/E0014.md:10
 msgid "Erroneous example"
@@ -84,12 +84,18 @@ msgstr "修改建议"
 
 #: ../../language/error_codes/E0014.md:27
 msgid ""
-"Use a stable public API instead, or configure the specific alert category"
-" only when the dependency intentionally exposes that API for your use "
-"case."
+"Read the alert category and message, then follow the guidance for that "
+"specific API. Different alert categories can mean different things: an "
+"API may be experimental, deprecated, visibility-changing, unsafe, not "
+"total, or carry a provider-defined meaning."
 msgstr ""
-"请改用稳定的公开 API；只有当依赖项有意为你的使用场景暴露该 API 时，才配置对应"
-"的 alert 类别。"
+"请阅读 alert 的类别和消息，然后按照该 API 的具体指引处理。不同 alert 类别的含"
+"义可能不同：API 可能是实验性的、已弃用的、即将改变可见性的、不安全的、非全函"
+"数的，或者带有提供者自定义的含义。"
+
+#: ../../language/error_codes/E0014.md:32
+msgid "In this example, the provider asks callers to use the stable API instead:"
+msgstr "在这个示例中，provider 要求调用方改用稳定 API："
 
 #: ../../language/error_codes/E0014.md:30
 msgid ""
