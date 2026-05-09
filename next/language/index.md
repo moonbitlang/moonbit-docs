@@ -17,7 +17,7 @@ MoonBit can already be used in production, with backwards-incompatible changes e
 
 ## Manual map
 
-The language section is a manual, not a single tutorial path. Start with the orientation pages if you are new to MoonBit, then jump to the topic you need.
+The language section is a manual, not a single tutorial path. Start with the orientation pages if you are new to MoonBit, then jump to the topic you need. The navigation order follows the same groups.
 
 **Orientation**
 
@@ -54,18 +54,44 @@ The language section is a manual, not a single tutorial path. Start with the ori
 
 ```{toctree}
 :hidden:
+:caption: Orientation
+
 introduction
 fundamentals
+```
+
+```{toctree}
+:hidden:
+:caption: Core language
+
 methods
 derive
 error-handling
 packages
+```
+
+```{toctree}
+:hidden:
+:caption: Development model
+
 tests
 benchmarks
 docs
 attributes
+```
+
+```{toctree}
+:hidden:
+:caption: Interop and advanced topics
+
 ffi
 async-experimental
 verification
+```
+
+```{toctree}
+:hidden:
+:caption: Reference
+
 error_codes/index
 ```
