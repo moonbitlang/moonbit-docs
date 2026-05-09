@@ -1050,6 +1050,50 @@ There are four kinds of range expressions available in `for .. in` loop:
 - `a>..b`: iterate from `a` to `b` in decreasing order, excluding `a`
 - `a>=..b`: iterate from `a` to `b` in decreasing  order, including `a`
 
+### List comprehension
+
+MoonBit supports list comprehension syntax for constructing a collection by
+iterating over another collection or range:
+
+```moonbit
+let squares = [ for x in 1..<=5 => x * x ]
+let evens = [ for x in 1..<=10 if x % 2 == 0 => x ]
+let labelled = [ for i, x in ["a", "b", "c"] => "\{i}: \{x}" ]
+let map = { 1: 2, 2: 4, 3: 8 }
+let present = [ for x in [1, 2, 3] if map.get(x) is Some(y) => y ]
+```
+
+The syntax is `[ for ... => ... ]`. The part before `=>` follows the same
+iteration rules as `for .. in`: one binder uses `Iter`, two binders use `Iter2`,
+and range expressions such as `0..<10` are supported. An optional `if` guard can
+filter elements before evaluating the result expression. Names introduced by an
+`is` expression in the guard, such as `y` above, can be used in the result
+expression.
+
+The result defaults to `Array[T]` when there is no expected type. When the
+expected type is known, a list comprehension can also construct
+`FixedArray[T]`, `ReadOnlyArray[T]`, `Iter[T]`, `String`, `Bytes`, or `Json`:
+
+```moonbit
+let text : String = [ for x in 0..<3 => (x + 'a').unsafe_to_char() ]
+let bytes : Bytes = [ for x in 0..<3 => x.to_byte() ]
+let fixed : FixedArray[_] = [ for x in 1..<=3 => x ]
+```
+
+List comprehensions also support the normal `for` loop header form:
+
+```moonbit
+let fib = [
+  for i = 0, a = 0, b = 1
+      i < 6
+      i = i + 1, a = b, b = a + b
+  => a
+]
+```
+
+Control flow operations such as `return`, `break`, and `continue` are not
+allowed inside list comprehensions.
+
 ### Labelled Continue/Break
 
 When a loop is labelled, it can be referenced from a `break` or `continue` from
