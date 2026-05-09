@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-16 15:45+0800\n"
+"POT-Creation-Date: 2026-05-09 17:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,21 +23,107 @@ msgid "E0014"
 msgstr ""
 
 #: ../../language/error_codes/E0014.md:3
-#, fuzzy
-msgid ""
-"Alerts are special warnings that indicate the usage of API marked with "
-"the [`#internal` attribute](../attributes.md#internal-attribute)."
-msgstr ""
-"Alerts 是一种特殊的警告，用于提示你正在使用被 [`#internal` attribute](../attributes.md"
-"#internal-attribute) 标记的 API。"
+msgid "Warning name: `alert` or `alert_<category>`"
+msgstr "警告名称：`alert` 或 `alert_<category>`"
 
-#: ../../language/error_codes/E0014.md:7
-#, fuzzy
+#: ../../language/error_codes/E0014.md:5
 msgid ""
-"Currently, MoonBit won't emit this error code. See [alert "
-"warning](../../toolchain/moon/package.md#alert-warning) for how alerts "
-"are reported and configured."
+"Alert warnings are emitted when code uses an API that the provider marked"
+" with an alert attribute, such as [`#internal`](../attributes.md"
+"#internal-attribute). The alert category is chosen by the API provider, "
+"so the warning name can be `alert` for all alerts or `alert_<category>` "
+"for one category."
 msgstr ""
-"目前，MoonBit 不会发出此错误码。关于 alerts 的报告与配置方式，请参见 [alert "
-"warning](../../toolchain/moon/package.md#alert-warning)。"
+"当代码使用了 API 提供者通过 alert 属性（例如 "
+"[`#internal`](../attributes.md#internal-attribute)）标记的 API 时，会发出 "
+"alert 警告。Alert 的类别由 API 提供者选择，因此警告名称可以是用于所有 alert "
+"的 `alert`，也可以是用于某一类别的 `alert_<category>`。"
 
+#: ../../language/error_codes/E0014.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0014.md:12
+msgid ""
+"The provider module marks `experimental` as internal, and the importing "
+"module calls it:"
+msgstr ""
+"provider 模块将 `experimental` 标记为 internal，导入它的模块随后调用了"
+"它："
+
+#: ../../language/error_codes/E0014.md:15
+#: ../../language/error_codes/E0014.md:30
+msgid "provider/top.mbt"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:15
+msgid ""
+"///|\n"
+"#internal(experimental, \"use stable instead\")\n"
+"pub fn experimental() -> Int {\n"
+"  1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:20
+#: ../../language/error_codes/E0014.md:35
+msgid "top.mbt"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:20
+msgid ""
+"///|\n"
+"test {\n"
+"  inspect(@provider.experimental(), content=\"1\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:25
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E0014.md:27
+msgid ""
+"Use a stable public API instead, or configure the specific alert category"
+" only when the dependency intentionally exposes that API for your use "
+"case."
+msgstr ""
+"请改用稳定的公开 API；只有当依赖项有意为你的使用场景暴露该 API 时，才配置对应"
+"的 alert 类别。"
+
+#: ../../language/error_codes/E0014.md:30
+msgid ""
+"///|\n"
+"pub fn stable() -> Int {\n"
+"  1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:35
+msgid ""
+"///|\n"
+"test {\n"
+"  inspect(@provider.stable(), content=\"1\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Alerts are special warnings that "
+#~ "indicate the usage of API marked "
+#~ "with the [`#internal` attribute](../attributes.md"
+#~ "#internal-attribute)."
+#~ msgstr ""
+#~ "Alerts 是一种特殊的警告，用于提示你正在使用被 [`#internal` "
+#~ "attribute](../attributes.md#internal-attribute) 标记的 "
+#~ "API。"
+
+#~ msgid ""
+#~ "Currently, MoonBit won't emit this error"
+#~ " code. See [alert "
+#~ "warning](../../toolchain/moon/package.md#alert-warning) "
+#~ "for how alerts are reported and "
+#~ "configured."
+#~ msgstr ""
+#~ "目前，MoonBit 不会发出此错误码。关于 alerts 的报告与配置方式，请参见 "
+#~ "[alert warning](../../toolchain/moon/package.md#alert-"
+#~ "warning)。"

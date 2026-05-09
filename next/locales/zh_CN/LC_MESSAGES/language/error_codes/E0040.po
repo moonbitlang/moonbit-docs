@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-09 17:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,6 +23,54 @@ msgid "E0040"
 msgstr ""
 
 #: ../../language/error_codes/E0040.md:3
-msgid "No longer emitted."
-msgstr "MoonBit 已不再使用此错误码。"
+msgid "Warning name: `multiline_string_escape`"
+msgstr "警告名称：`multiline_string_escape`"
 
+#: ../../language/error_codes/E0040.md:5
+msgid "Escape sequences in `$|` multiline string lines are deprecated."
+msgstr "`$|` 多行字符串行中的转义序列已弃用。"
+
+#: ../../language/error_codes/E0040.md:7
+msgid ""
+"MoonBit treats `$|` lines as multiline string content. Escape sequences "
+"such as `\\n`, `\\t`, and `\\\\` in those lines are deprecated because "
+"they will be treated literally in the future."
+msgstr ""
+"MoonBit 会将 `$|` 行视为多行字符串内容。这些行中的 `\\n`、`\\t`、`\\\\` 等转"
+"义序列已弃用，因为它们将来会按字面量处理。"
+
+#: ../../language/error_codes/E0040.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0040.md:13
+msgid ""
+"///|\n"
+"pub fn text() -> String {\n"
+"  let result = $|line\\nnext\n"
+"  result\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0040.md:17
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E0040.md:19
+msgid ""
+"Use interpolation when you need an escaped character, or write the "
+"literal text directly when that is what the string should contain."
+msgstr ""
+"如果需要转义字符，请使用插值；如果需要的是字面文本，请直接写出该文本。"
+
+#: ../../language/error_codes/E0040.md:22
+msgid ""
+"///|\n"
+"pub fn text() -> String {\n"
+"  let result = $|line\\{'\\n'}next\n"
+"  result\n"
+"}\n"
+msgstr ""
+
+#~ msgid "No longer emitted."
+#~ msgstr "MoonBit 已不再使用此错误码。"

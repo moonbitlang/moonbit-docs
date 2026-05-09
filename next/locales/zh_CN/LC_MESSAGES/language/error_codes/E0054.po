@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-09 17:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,6 +23,57 @@ msgid "E0054"
 msgstr ""
 
 #: ../../language/error_codes/E0054.md:3
-msgid "No longer emitted."
-msgstr "MoonBit 已不再使用此错误码。"
+msgid "Warning name: `ambiguous_range_direction`"
+msgstr "警告名称：`ambiguous_range_direction`"
 
+#: ../../language/error_codes/E0054.md:5
+msgid "The direction of an inclusive range is ambiguous."
+msgstr "闭区间范围的方向不明确。"
+
+#: ../../language/error_codes/E0054.md:7
+msgid ""
+"This warning is emitted when an inclusive range such as `10..=0` is used "
+"in a loop. The endpoints suggest a descending loop, but the range syntax "
+"does not make the direction explicit."
+msgstr ""
+"当循环中使用 `10..=0` 这类闭区间范围时，会发出此警告。端点暗示这是一个递减循"
+"环，但范围语法没有显式写出方向。"
+
+#: ../../language/error_codes/E0054.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0054.md:13
+msgid ""
+"///|\n"
+"pub fn values() -> Array[Int] {\n"
+"  let result = []\n"
+"  for i in 10..=0 {\n"
+"    result.push(i)\n"
+"  }\n"
+"  result\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0054.md:17
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E0054.md:19
+msgid "Use explicit descending range syntax when the loop should count down."
+msgstr "如果循环应该递减计数，请使用显式的递减范围语法。"
+
+#: ../../language/error_codes/E0054.md:21
+msgid ""
+"///|\n"
+"pub fn values() -> Array[Int] {\n"
+"  let result = []\n"
+"  for i in 10>..0 {\n"
+"    result.push(i)\n"
+"  }\n"
+"  result\n"
+"}\n"
+msgstr ""
+
+#~ msgid "No longer emitted."
+#~ msgstr "MoonBit 已不再使用此错误码。"
