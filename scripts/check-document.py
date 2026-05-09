@@ -11,8 +11,9 @@ def main():
         if not dir_path.is_dir() or dir_path.name.startswith('.') or dir_path.name == "target":
             continue
 
-        # Skip error codes; they should be handled with another script
-        if dir_path.name == "error_codes":
+        # Skip error codes; they should be handled with another script.
+        # Script mode has command transcripts checked by scrut.
+        if dir_path.name in {"error_codes", "script-mode"}:
             continue
 
         # These examples require the native backend.

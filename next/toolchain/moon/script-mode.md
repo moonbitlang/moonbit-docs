@@ -57,6 +57,13 @@ Moon supports running a `.mbtx` script from stdin:
 $ cat script.mbtx | moon run -
 ```
 
+For short scripts, pass the `.mbtx` source directly with `-c`:
+
+```
+$ moon run -c "<script>"
+$ moon run -c 'fn main { println("hello") }'
+```
+
 You can also use a heredoc, a feature provided by the shell:
 
 ```
