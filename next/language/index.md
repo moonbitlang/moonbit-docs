@@ -24,24 +24,23 @@ The language section is a manual, not a single tutorial path. Start with the ori
 - [Introduction](introduction.md): expressions, bindings, names, keywords, and entry points.
 - [Fundamentals](fundamentals.md): built-ins, functions, control flow, data types, pattern matching, and common syntax.
 
-**Core language**
+**Core language mechanisms**
 
 - [Method and Trait](methods.md): methods, operators, traits, trait objects, and built-in traits.
 - [Deriving traits](derive.md): generated implementations for common traits.
-- [Error handling](error-handling.md): error types, throwing, catching, and inference.
-- [Managing Projects with Packages](packages.md): packages, modules, access control, and virtual packages.
-
-**Development model**
-
-- [Writing Tests](tests.md): test blocks, snapshot tests, and blackbox or whitebox tests.
-- [Writing Benchmarks](benchmarks.md): benchmark blocks and output statistics.
-- [Comments and Documentation](docs.md): comments, doc comments, and literate `.mbt.md` files.
 - [Attribute](attributes.md): attributes that affect declarations, visibility, warnings, externals, and configuration.
+- [Error handling](error-handling.md): error types, throwing, catching, and inference.
+
+**Packages and development**
+
+- [Managing Projects with Packages](packages.md): packages, modules, access control, and virtual packages.
+- [Testing and Benchmarking](tests.md): test blocks, snapshot tests, blackbox or whitebox tests, and benchmark blocks.
+- [Comments and Documentation](docs.md): comments, doc comments, and literate `.mbt.md` files.
 
 **Interop and advanced topics**
 
 - [Foreign Function Interface (FFI)](ffi.md): external types, foreign functions, exports, and lifetime management.
-- [Async programming support](async-experimental.md): experimental async functions, task groups, cancellation, and JavaScript support.
+- [Async programming support](async.md): async functions, task groups, cancellation, and JavaScript support.
 - [Formal Verification](verification.md): proof setup, specifications, running the verifier, and the trust model.
 
 **Reference**
@@ -62,22 +61,21 @@ fundamentals
 
 ```{toctree}
 :hidden:
-:caption: Core language
+:caption: Core language mechanisms
 
 methods
 derive
+attributes
 error-handling
-packages
 ```
 
 ```{toctree}
 :hidden:
-:caption: Development model
+:caption: Packages and development
 
+packages
 tests
-benchmarks
 docs
-attributes
 ```
 
 ```{toctree}
@@ -85,7 +83,7 @@ attributes
 :caption: Interop and advanced topics
 
 ffi
-async-experimental
+async
 verification
 ```
 

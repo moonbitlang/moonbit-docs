@@ -160,7 +160,7 @@ For example, when creating a foreign `struct` using constructors,
 the package name can be omitted if the expected type of the expression is known.
 
 Since `struct` constructors are implemented by normal functions,
-they may [raise error](/language/error-handling.md) or [perform asynchronous operations](/language/async-experimental.md).
+they may [raise error](/language/error-handling.md) or [perform asynchronous operations](/language/async.md).
 `struct` constructors also support [optional arguments](functions.md#optional-arguments).
 Default values for optional arguments are written on the constructor
 implementation, just like normal function signatures.
