@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-09 14:58+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4211.md:1
+msgid "E4211"
+msgstr ""
+
+#: ../../language/error_codes/E4211.md:3
+msgid "Compiler diagnostic name: `control_in_list_comprehension`."
+msgstr ""
+
+#: ../../language/error_codes/E4211.md:5
+msgid "Control flow is not allowed inside a list comprehension."
+msgstr "列表推导式内部不允许使用控制流。"
+
+#: ../../language/error_codes/E4211.md:7
+msgid ""
+"A list comprehension builds a new collection from the elements produced "
+"by its clauses. Control operations such as `break`, `continue`, `return`,"
+" `raise`, and `async` control do not have a surrounding loop or function "
+"boundary inside the comprehension body that can consume them."
+msgstr ""
+"列表推导式会根据其子句产生的元素构造一个新的集合。"
+"`break`、`continue`、`return`、`raise` 以及 `async` 控制等控制操作，"
+"在推导式主体内部没有可接收它们的外层循环或函数边界。"
+
+#: ../../language/error_codes/E4211.md:12
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4211.md:14
+msgid ""
+"fn values() -> Array[Int] {\n"
+"  [for _ in 0..<3 => break]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4211.md:20
+msgid ""
+"The `break` appears inside the list comprehension body, so MoonBit "
+"reports an error."
+msgstr "`break` 出现在列表推导式主体内部，因此 MoonBit 会报告错误。"
+
+#: ../../language/error_codes/E4211.md:23
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4211.md:25
+msgid ""
+"Move the control flow outside the comprehension, or rewrite the code as "
+"an explicit loop."
+msgstr "将控制流移到推导式外部，或将代码改写为显式循环。"
+
+#: ../../language/error_codes/E4211.md:28
+msgid ""
+"fn values() -> Array[Int] {\n"
+"  [for value in 0..<3 => value]\n"
+"}\n"
+msgstr ""
