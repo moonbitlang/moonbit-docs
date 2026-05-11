@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-11 17:02+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -34,7 +34,9 @@ msgid ""
 msgstr "MoonBit 中的相互递归的定义不应该有相同的标识符。这包括："
 
 #: ../../language/error_codes/E4051.md:8
-msgid "All toplevel definitions, including variables, functions, types, traits, etc."
+msgid ""
+"All toplevel definitions, including variables, functions, types, traits, "
+"etc."
 msgstr "所有的顶层定义，包括变量、函数、类型、特征等。"
 
 #: ../../language/error_codes/E4051.md:9
@@ -47,8 +49,9 @@ msgstr "局部类型。"
 
 #: ../../language/error_codes/E4051.md:12
 msgid ""
-"Note, locally defined variables are not mutually recursive, so they can have"
-" the same identifier, and the later definition shadows the previous one."
+"Note, locally defined variables are not mutually recursive, so they can "
+"have the same identifier, and the later definition shadows the previous "
+"one."
 msgstr "注意，局部定义的变量不是相互递归的，所以它们可以有相同的标识符，后一个定义会遮蔽前一个。"
 
 #: ../../language/error_codes/E4051.md:15
@@ -62,37 +65,37 @@ msgstr "顶层变量定义："
 #: ../../language/error_codes/E4051.md:19
 msgid ""
 "pub let a = 0\n"
-"pub let a = 1 // Error: The toplevel identifier a is declared twice: it was "
-"previously defined at ...\n"
+"pub let a = 1 // Error: The toplevel identifier a is declared twice: it "
+"was previously defined at ...\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:24
+#: ../../language/error_codes/E4051.md:23
 msgid "Toplevel function definition:"
 msgstr "顶层函数定义："
 
-#: ../../language/error_codes/E4051.md:26
+#: ../../language/error_codes/E4051.md:25
 msgid ""
 "pub fn f() -> Unit {}\n"
-"pub fn f() -> Unit {} // Error: The toplevel identifier f is declared twice:"
-" it was previously defined at ...\n"
+"pub fn f() -> Unit {} // Error: The toplevel identifier f is declared "
+"twice: it was previously defined at ...\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:31
+#: ../../language/error_codes/E4051.md:30
 msgid "Toplevel type definition:"
 msgstr "顶层类型定义"
 
-#: ../../language/error_codes/E4051.md:33
+#: ../../language/error_codes/E4051.md:32
 msgid ""
 "pub enum A {}\n"
-"pub struct A {} // Error: The type A is declared twice: it was previously "
-"defined at ...\n"
+"pub struct A {} // Error: The type A is declared twice: it was previously"
+" defined at ...\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:38
+#: ../../language/error_codes/E4051.md:37
 msgid "Local type definition:"
 msgstr "局部类型定义"
 
-#: ../../language/error_codes/E4051.md:40
+#: ../../language/error_codes/E4051.md:39
 msgid ""
 "pub fn g() -> Unit {\n"
 "  struct A {}\n"
@@ -101,31 +104,43 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:47
+#: ../../language/error_codes/E4051.md:46
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4051.md:49
+#: ../../language/error_codes/E4051.md:48
 msgid "Rename the identifier to a different name."
 msgstr "将标识符改为其他的名称。"
 
-#: ../../language/error_codes/E4051.md:51
+#: ../../language/error_codes/E4051.md:50
 msgid ""
 "pub let a = 0\n"
-"pub let b = 1"
+"pub let b = 1\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:55
+#: ../../language/error_codes/E4051.md:54
 msgid ""
-"If you want to shadow the previous definition, you can use a block and put "
-"the definition in the block."
+"If you want to shadow the previous definition, you can use a block and "
+"put the definition in the block."
 msgstr "如果你希望遮蔽前一个定义，可以使用一个块并将定义放在块中。"
 
-#: ../../language/error_codes/E4051.md:58
+#: ../../language/error_codes/E4051.md:57
 msgid ""
-"pub let a = {\n"
+"pub let c : Int = {\n"
 "  let a = 0\n"
-"  1\n"
-"}"
+"  a + 1\n"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "pub let a = 0\n"
+#~ "pub let b = 1"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub let a = {\n"
+#~ "  let a = 0\n"
+#~ "  1\n"
+#~ "}"
+#~ msgstr ""
 

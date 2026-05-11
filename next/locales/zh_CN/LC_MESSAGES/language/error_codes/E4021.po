@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-11 17:02+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -32,14 +32,14 @@ msgid "Erroneous Example"
 msgstr "错误示例："
 
 #: ../../language/error_codes/E4021.md:7
-msgid "let a = @bool.to_integer(true)\n"
+msgid "pub let a : Int = @bool.to_integer(true)\n"
 msgstr ""
 
 #: ../../language/error_codes/E4021.md:11
 msgid ""
 "The example above tries to call the function `to_integer` in a package "
-"`@bool`, but this function is not present in the package `@bool`, giving the"
-" following error on line 1:"
+"`@bool`, but this function is not present in the package `@bool`, giving "
+"the following error on line 1:"
 msgstr "在上述例子中，尝试使用包 `@bool` 中的函数 `to_integer`，但这个方法不在包 `@bool` 中，会在第 1 行报错："
 
 #: ../../language/error_codes/E4021.md:15
@@ -56,11 +56,16 @@ msgstr "请确保标识符是正确的。"
 
 #: ../../language/error_codes/E4021.md:23
 msgid ""
-"In the above example, the function name should be `to_int` instead of "
+"In the above example, the method name should be `to_int` instead of "
 "`to_integer`:"
-msgstr "在上述例子中，函数名称应该为 `to_int` 而不是 `to_integer`："
+msgstr "在上述例子中，方法名应该为 `to_int` 而不是 `to_integer`："
 
-#: ../../language/error_codes/E4021.md:25
-msgid "let a = @bool.to_int(true)"
+#: ../../language/error_codes/E4021.md:26
+msgid "pub let a : Int = true.to_int()\n"
 msgstr ""
 
+#~ msgid "let a = @bool.to_integer(true)\n"
+#~ msgstr ""
+
+#~ msgid "let a = @bool.to_int(true)"
+#~ msgstr ""

@@ -1,1 +1,0 @@
-let a : String = Show::to_string(42)
