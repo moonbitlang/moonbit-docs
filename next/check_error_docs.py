@@ -17,6 +17,20 @@ RUN_ONLY_ERROR_CODES = {
 }
 
 
+def example_status(error_code):
+    """Return whether examples for this error code are fully monitored."""
+    error_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_error"
+    fixed_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_fixed"
+    has_error = is_moon_project(error_path)
+    has_fixed = is_moon_project(fixed_path)
+
+    if has_error and has_fixed:
+        return 'full'
+    if has_error or has_fixed:
+        return 'partial'
+    return 'missing'
+
+
 def is_moon_project(path: Path) -> bool:
     """Return True if the path looks like a Moon project root."""
     return (path / 'moon.mod.json').exists()
@@ -68,7 +82,7 @@ def check_error_code(error_code):
     error_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_error"
     fixed_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_fixed"
 
-    if not error_path.exists() and not fixed_path.exists():
+    if example_status(error_code) == 'missing':
         return True
 
     if error_code in RUN_ONLY_ERROR_CODES:
@@ -99,12 +113,41 @@ def get_all_error_codes():
     return sorted(error_codes)
 
 
+def print_coverage_summary(error_codes):
+    """Print example coverage for all known error codes."""
+    missing = []
+    partial = []
+
+    for error_code in error_codes:
+        status = example_status(error_code)
+        if status == 'missing':
+            missing.append(error_code)
+        elif status == 'partial':
+            partial.append(error_code)
+
+    total = len(error_codes)
+    full = total - len(missing) - len(partial)
+    print(
+        f"Coverage: {full} full, {len(partial)} partial, "
+        f"{len(missing)} missing, {total} total")
+
+    if partial:
+        print(f"PARTIAL: {', '.join(partial)}")
+
+    if missing:
+        print(f"MISSING: {', '.join(missing)}")
+
+
 def main():
     """Main function"""
     parser = argparse.ArgumentParser(
         description='Check error code documentation')
     parser.add_argument(
         'target', help='Error code to check or "all" for all codes')
+    parser.add_argument(
+        '--require-examples',
+        action='store_true',
+        help='fail if any error code is missing monitored examples')
     args = parser.parse_args()
 
     if args.target == 'all':
@@ -125,11 +168,27 @@ def main():
             print(f"FAILED: {', '.join(failed)}")
 
         print(f"Results: {passed} passed, {len(failed)} failed, {total} total")
+        print_coverage_summary(error_codes)
+
+        if args.require_examples:
+            incomplete = [
+                error_code for error_code in error_codes
+                if example_status(error_code) != 'full'
+            ]
+            if incomplete:
+                print(f"INCOMPLETE: {', '.join(incomplete)}")
+
+            return 1 if failed or incomplete else 0
+
         return 1 if failed else 0
 
     else:
         if not re.match(r'^\d+$', args.target):
             print('Error: Invalid error code format, should be like 0001')
+            return 1
+
+        if args.require_examples and example_status(args.target) != 'full':
+            print(f"INCOMPLETE: {args.target}")
             return 1
 
         success = check_error_code(args.target)
