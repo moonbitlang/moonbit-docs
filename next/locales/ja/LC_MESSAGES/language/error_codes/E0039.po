@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"POT-Creation-Date: 2026-05-11 10:52+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,14 +28,22 @@ msgid "Warning name: `missing_reasoning`"
 msgstr ""
 
 #: ../../language/error_codes/E0039.md:5
+msgid ""
+"This warning is emitted for a proof-checked `for` loop that has no "
+"`proof_reasoning` clause. Proof reasoning records the argument that "
+"explains why the loop invariants are maintained and why the loop result "
+"satisfies the surrounding contract."
+msgstr ""
+
+#: ../../language/error_codes/E0039.md:10
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E0039.md:7
-msgid "The loop does not have `reasoning` clause."
+#: ../../language/error_codes/E0039.md:12
+msgid "The loop does not have a `proof_reasoning` clause."
 msgstr ""
 
-#: ../../language/error_codes/E0039.md:9
+#: ../../language/error_codes/E0039.md:14
 msgid ""
 "///|\n"
 "fn fib(n : Int) -> UInt64 {\n"
@@ -47,24 +55,24 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0039.md:13
+#: ../../language/error_codes/E0039.md:18
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E0039.md:15
-msgid "Add some reasoning."
+#: ../../language/error_codes/E0039.md:20
+msgid "Add some proof reasoning."
 msgstr ""
 
-#: ../../language/error_codes/E0039.md:17
+#: ../../language/error_codes/E0039.md:22
 msgid ""
 "///|\n"
 "fn fib(n : Int) -> UInt64 {\n"
 "  for i = 0, a = 0UL, b = 1UL; i < n; i = i + 1, a = b, b = a + b {\n"
 "\n"
-"  } else {\n"
+"  } nobreak {\n"
 "    b\n"
 "  } where {\n"
-"    reasoning: (\n"
+"    proof_reasoning: (\n"
 "      #|The variables `a` and `b` represent consecutive Fibonacci "
 "numbers, \n"
 "      #|so `a` is always less than or equal to `b`.\n"
@@ -73,4 +81,28 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+
+#~ msgid "The loop does not have `reasoning` clause."
+#~ msgstr ""
+
+#~ msgid "Add some reasoning."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "fn fib(n : Int) -> UInt64 {\n"
+#~ "  for i = 0, a = 0UL, b = 1UL; i < n; i = i + 1, a = b, b = a + b {\n"
+#~ "\n"
+#~ "  } else {\n"
+#~ "    b\n"
+#~ "  } where {\n"
+#~ "    reasoning: (\n"
+#~ "      #|The variables `a` and `b` "
+#~ "represent consecutive Fibonacci numbers, \n"
+#~ "      #|so `a` is always less than or equal to `b`.\n"
+#~ "      #|\n"
+#~ "    ),\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
 

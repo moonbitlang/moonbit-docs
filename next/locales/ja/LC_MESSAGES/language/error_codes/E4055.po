@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-05-11 11:20+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -24,34 +24,67 @@ msgid "E4055"
 msgstr ""
 
 #: ../../language/error_codes/E4055.md:3
-msgid "Field is already declared."
+msgid "Compiler diagnostic name: `field_duplicate`."
 msgstr ""
 
 #: ../../language/error_codes/E4055.md:5
+msgid ""
+"Field is already declared. Within one struct declaration, each field name"
+" must be unique because field access, construction, and update syntax all"
+" identify a field by name."
+msgstr ""
+
+#: ../../language/error_codes/E4055.md:9
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4055.md:7
+#: ../../language/error_codes/E4055.md:11
 msgid ""
+"///|\n"
 "struct A {\n"
 "  a : Int\n"
 "  a : Double\n"
-"}"
-msgstr ""
-
-#: ../../language/error_codes/E4055.md:11
-msgid "Suggestion"
-msgstr ""
-
-#: ../../language/error_codes/E4055.md:13
-msgid "Rename the field to a different name."
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4055.md:15
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4055.md:17
+msgid "Rename the field to a different name."
+msgstr ""
+
+#: ../../language/error_codes/E4055.md:19
 msgid ""
-"struct A {\n"
+"///|\n"
+"priv struct A {\n"
 "  a : Int\n"
 "  b : Double\n"
-"}"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let value : A = { a: 1, b: 2.0 }\n"
+"  inspect(value.a, content=\"1\")\n"
+"  inspect(value.b, content=\"2\")\n"
+"}\n"
 msgstr ""
+
+#~ msgid "Field is already declared."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "struct A {\n"
+#~ "  a : Int\n"
+#~ "  a : Double\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "struct A {\n"
+#~ "  a : Int\n"
+#~ "  b : Double\n"
+#~ "}"
+#~ msgstr ""
 
