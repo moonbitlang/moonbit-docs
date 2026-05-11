@@ -1,1 +1,0 @@
-const A : Array[Int] = [1, 2, 3] // Error: Not a valid constant type, only immutable primitive types are allowed.

@@ -1,1 +1,0 @@
-const A : Int = 1 + 1 // Error: This 'const' declaration is not constant.

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-11 15:18+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -37,8 +37,8 @@ msgstr "一个循环变量用于可迭代内容。"
 
 #: ../../language/error_codes/E4133.md:8
 msgid ""
-"Two loop variables are used for the index and the content of the iterable "
-"respectively."
+"Two loop variables are used for the index and the content of the iterable"
+" respectively."
 msgstr "两个循环变量分别用于索引和可迭代内容。"
 
 #: ../../language/error_codes/E4133.md:11
@@ -47,12 +47,12 @@ msgstr "错误示例"
 
 #: ../../language/error_codes/E4133.md:13
 msgid ""
-"fn main {\n"
+"pub fn bad_loop() -> Unit {\n"
 "  for a, b, c in [1, 2, 3] { // Error: This `for .. in` loop has 3 loop "
 "variables, but at most 2 is expected.\n"
-"    ...\n"
+"    println(\"\\{a}, \\{b}, \\{c}\")\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4133.md:17
@@ -61,17 +61,17 @@ msgstr "建议"
 
 #: ../../language/error_codes/E4133.md:19
 msgid ""
-"If you want to iterate over the index and the content of the iterable, you "
-"can use two loop variables:"
+"If you want to iterate over the index and the content of the iterable, "
+"you can use two loop variables:"
 msgstr "如果您想同时迭代索引和可迭代内容，您可以使用两个循环变量："
 
 #: ../../language/error_codes/E4133.md:22
 msgid ""
-"fn main {\n"
+"pub fn iterate_with_index() -> Unit {\n"
 "  for i, v in [1, 2, 3] {\n"
-"    ...\n"
+"    println(\"\\{i}: \\{v}\")\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4133.md:26
@@ -82,11 +82,39 @@ msgstr "如果您想迭代元组的可迭代内容，那么您需要在循环体
 
 #: ../../language/error_codes/E4133.md:29
 msgid ""
-"fn main {\n"
+"pub fn iterate_tuples() -> Unit {\n"
 "  for v in [(1, 2, 3), (4, 5, 6)] {\n"
 "    let (a, b, c) = v\n"
-"    ...\n"
+"    println(\"\\{a}, \\{b}, \\{c}\")\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  for a, b, c in [1, 2, "
+#~ "3] { // Error: This `for .. "
+#~ "in` loop has 3 loop variables, but"
+#~ " at most 2 is expected.\n"
+#~ "    ...\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  for i, v in [1, 2, 3] {\n"
+#~ "    ...\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  for v in [(1, 2, 3), (4, 5, 6)] {\n"
+#~ "    let (a, b, c) = v\n"
+#~ "    ...\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
 
