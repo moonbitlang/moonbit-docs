@@ -221,7 +221,6 @@ This page lists all error codes produced by the MoonBit compiler.
 * [E4132](E4132.md)
 * [E4133](E4133.md)
 * [E4135](E4135.md)
-* [E4136](E4136.md)
 * [E4137](E4137.md)
 * [E4138](E4138.md)
 * [E4139](E4139.md)
