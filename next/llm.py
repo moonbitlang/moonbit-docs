@@ -1,47 +1,13 @@
 import os
-from glob import glob
+import pickle
 
 BUILD_DIR = "_build/markdown"
+ENV_PATH = "_build/doctrees/environment.pickle"
 
 
-def source_path(markdown_path):
-    if markdown_path.endswith(".md"):
-        return markdown_path
-    return f"{markdown_path}.md"
-
-
-def parse_toctree_entry(line):
-    line = line.strip()
-    if not line or line.startswith(":") or line == "```":
-        return None
-    if "<" in line and line.endswith(">"):
-        return line.rsplit("<", 1)[1][:-1].strip()
-    return line
-
-
-def toctree_paths(index_path, directory):
-    paths = []
-    collect_paths = False
-    with open(index_path, "r") as index_file:
-        for line in index_file:
-            line = line.strip()
-            if "toctree" in line:
-                collect_paths = True
-                continue
-            if not collect_paths:
-                continue
-            if line == "```":
-                collect_paths = False
-                continue
-            entry = parse_toctree_entry(line)
-            if entry is None:
-                continue
-            path = os.path.normpath(os.path.join(directory, source_path(entry)))
-            if any(char in path for char in "*?["):
-                paths.extend(sorted(glob(path)))
-            else:
-                paths.append(path)
-    return paths
+def load_sphinx_env():
+    with open(ENV_PATH, "rb") as file:
+        return pickle.load(file)
 
 
 def collect(directory, header_level, output_file):
@@ -50,20 +16,22 @@ def collect(directory, header_level, output_file):
             return '#' * level + line
         return line
 
-    def process_file(filepath, level, output, seen):
-        if filepath in seen:
+    def process_doc(docname, level, output, seen):
+        if docname in seen:
             return
-        seen.add(filepath)
+        seen.add(docname)
+        filepath = f"{docname}.md"
         output.write(f"\n<!-- path: {filepath} -->\n")
         with open(os.path.join(BUILD_DIR, filepath), "r") as file:
             for line in file:
                 output.write(adjust_header(line, level))
-        for path in toctree_paths(filepath, os.path.dirname(filepath)):
-            process_file(path, level + 1, output, seen)
+        for child in env.toctree_includes.get(docname, []):
+            process_doc(child, level + 1, output, seen)
 
-    index_path = os.path.join(directory, "index.md")
+    env = load_sphinx_env()
+    root_doc = f"{directory}/index"
     with open(output_file, "a") as output:
-        process_file(index_path, header_level, output, set())
+        process_doc(root_doc, header_level, output, set())
 
 
 def llms_txt():
