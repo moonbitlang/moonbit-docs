@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-16 15:45+0800\n"
+"POT-Creation-Date: 2026-05-11 11:20+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,38 +28,43 @@ msgid "Warning name: `unused_package`"
 msgstr ""
 
 #: ../../language/error_codes/E0029.md:5
-msgid "Unused package."
-msgstr "未使用的包。"
+msgid ""
+"This warning is emitted when a package is listed as an import but no code"
+" in the current package refers to it. Remove the import if it was left "
+"over from a refactor, or use the package through its alias if the "
+"dependency is still needed."
+msgstr ""
+"当某个包被列为导入项，但当前包中没有任何代码引用它时，会发出此警告。如果该导入是重构后遗留的，请移除它；如果仍然需要该依赖，请通过其别名使用该包。"
 
-#: ../../language/error_codes/E0029.md:7
+#: ../../language/error_codes/E0029.md:10
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0029.md:9
+#: ../../language/error_codes/E0029.md:12
 msgid "moon.mod.json"
 msgstr ""
 
-#: ../../language/error_codes/E0029.md:9
+#: ../../language/error_codes/E0029.md:12
 msgid ""
 "{\n"
 "  \"name\": \"moonbit-community/E0029\"\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0029.md:13
+#: ../../language/error_codes/E0029.md:16
 msgid "lib/moon.pkg.json"
 msgstr ""
 
-#: ../../language/error_codes/E0029.md:13
+#: ../../language/error_codes/E0029.md:16
 msgid "{}"
 msgstr ""
 
-#: ../../language/error_codes/E0029.md:17
-#: ../../language/error_codes/E0029.md:30
+#: ../../language/error_codes/E0029.md:20
+#: ../../language/error_codes/E0029.md:33
 msgid "moon.pkg.json"
 msgstr ""
 
-#: ../../language/error_codes/E0029.md:17
+#: ../../language/error_codes/E0029.md:20
 msgid ""
 "{\n"
 "  \"is_main\": true,\n"
@@ -68,11 +73,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0029.md:21
+#: ../../language/error_codes/E0029.md:24
 msgid "top.mbt"
 msgstr ""
 
-#: ../../language/error_codes/E0029.md:21
+#: ../../language/error_codes/E0029.md:24
 msgid ""
 "///|\n"
 "fn main {\n"
@@ -80,18 +85,20 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0029.md:26
+#: ../../language/error_codes/E0029.md:29
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0029.md:28
+#: ../../language/error_codes/E0029.md:31
 msgid "Remove the unused package:"
 msgstr "移除未使用的包："
 
-#: ../../language/error_codes/E0029.md:30
+#: ../../language/error_codes/E0029.md:33
 msgid ""
 "{\n"
 "  \"is-main\": true\n"
 "}\n"
 msgstr ""
 
+#~ msgid "Unused package."
+#~ msgstr "未使用的包。"

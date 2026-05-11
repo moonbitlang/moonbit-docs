@@ -1,0 +1,1 @@
+type Wrap[T] = T

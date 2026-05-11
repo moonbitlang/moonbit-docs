@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-11 11:20+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,24 +24,38 @@ msgid "E4128"
 msgstr ""
 
 #: ../../language/error_codes/E4128.md:3
+msgid "Compiler diagnostic name: `invalid_type_alias_target`."
+msgstr ""
+
+#: ../../language/error_codes/E4128.md:5
 msgid "Target of type alias must not be a type parameter."
 msgstr "类型别名的目标不能是类型参数。"
 
-#: ../../language/error_codes/E4128.md:5
+#: ../../language/error_codes/E4128.md:7
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4128.md:7
-msgid ""
-"typealias Wrap[T] = T // Error: Target of type alias must not be a type "
-"parameter."
+#: ../../language/error_codes/E4128.md:9
+msgid "type Wrap[T] = T\n"
 msgstr ""
 
-#: ../../language/error_codes/E4128.md:11
+#: ../../language/error_codes/E4128.md:13
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4128.md:13
+#: ../../language/error_codes/E4128.md:15
 msgid "Use the type directly without using a typealias:"
 msgstr "直接使用类型而不使用类型别名："
 
+#: ../../language/error_codes/E4128.md:17
+msgid ""
+"pub fn[T] id(value : T) -> T {\n"
+"  value\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "typealias Wrap[T] = T // Error: "
+#~ "Target of type alias must not be"
+#~ " a type parameter."
+#~ msgstr ""

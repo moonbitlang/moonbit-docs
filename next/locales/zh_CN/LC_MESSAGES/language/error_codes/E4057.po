@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 17:31+0800\n"
+"POT-Creation-Date: 2026-05-11 11:20+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,14 +24,22 @@ msgid "E4057"
 msgstr ""
 
 #: ../../language/error_codes/E4057.md:3
-msgid "The constructor is duplicate."
-msgstr "构造器重复定义。"
+msgid "Compiler diagnostic name: `constructor_duplicate`."
+msgstr ""
 
 #: ../../language/error_codes/E4057.md:5
+msgid ""
+"The constructor is duplicate. Constructors in the same enum must have "
+"unique names so construction and pattern matching can identify one "
+"variant unambiguously."
+msgstr ""
+"构造器重复定义。同一个枚举中的构造器名称必须唯一，这样构造和模式匹配才能明确识别对应的变体。"
+
+#: ../../language/error_codes/E4057.md:9
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4057.md:7
+#: ../../language/error_codes/E4057.md:11
 msgid ""
 "///|\n"
 "enum E {\n"
@@ -40,15 +48,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4057.md:11
+#: ../../language/error_codes/E4057.md:15
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4057.md:13
+#: ../../language/error_codes/E4057.md:17
 msgid "Rename the constructor to a different name."
 msgstr "请将构造器重命名为其他名称。"
 
-#: ../../language/error_codes/E4057.md:15
+#: ../../language/error_codes/E4057.md:19
 msgid ""
 "///|\n"
 "priv enum E {\n"
@@ -80,4 +88,3 @@ msgstr ""
 #~ "  B(Int)\n"
 #~ "}"
 #~ msgstr ""
-
