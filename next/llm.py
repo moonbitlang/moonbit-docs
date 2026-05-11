@@ -1,7 +1,48 @@
 import os
-import sys
+from glob import glob
 
-BUILD_DIR="_build/markdown"
+BUILD_DIR = "_build/markdown"
+
+
+def source_path(markdown_path):
+    if markdown_path.endswith(".md"):
+        return markdown_path
+    return f"{markdown_path}.md"
+
+
+def parse_toctree_entry(line):
+    line = line.strip()
+    if not line or line.startswith(":") or line == "```":
+        return None
+    if "<" in line and line.endswith(">"):
+        return line.rsplit("<", 1)[1][:-1].strip()
+    return line
+
+
+def toctree_paths(index_path, directory):
+    paths = []
+    collect_paths = False
+    with open(index_path, "r") as index_file:
+        for line in index_file:
+            line = line.strip()
+            if "toctree" in line:
+                collect_paths = True
+                continue
+            if not collect_paths:
+                continue
+            if line == "```":
+                collect_paths = False
+                continue
+            entry = parse_toctree_entry(line)
+            if entry is None:
+                continue
+            path = os.path.normpath(os.path.join(directory, source_path(entry)))
+            if any(char in path for char in "*?["):
+                paths.extend(sorted(glob(path)))
+            else:
+                paths.append(path)
+    return paths
+
 
 def collect(directory, header_level, output_file):
     def adjust_header(line, level):
@@ -9,32 +50,21 @@ def collect(directory, header_level, output_file):
             return '#' * level + line
         return line
 
-    def process_file(filepath, level, output):
+    def process_file(filepath, level, output, seen):
+        if filepath in seen:
+            return
+        seen.add(filepath)
         output.write(f"\n<!-- path: {filepath} -->\n")
         with open(os.path.join(BUILD_DIR, filepath), "r") as file:
             for line in file:
                 output.write(adjust_header(line, level))
+        for path in toctree_paths(filepath, os.path.dirname(filepath)):
+            process_file(path, level + 1, output, seen)
 
     index_path = os.path.join(directory, "index.md")
-    with open(index_path, "r") as index_file:
-        toctree_paths = []
-        collect_paths = False
-        for line in index_file:
-            line = line.strip()
-            if "toctree" in line:
-                collect_paths = True
-                continue
-            if collect_paths:
-                if line.startswith(":"):
-                    continue
-                if line == "```":
-                    break
-                toctree_paths.append(os.path.join(directory, f"{line}.md"))
-
     with open(output_file, "a") as output:
-        process_file(index_path, header_level, output)
-        for path in toctree_paths:
-            process_file(path, header_level + 1, output)
+        process_file(index_path, header_level, output, set())
+
 
 def llms_txt():
   with open(f"{BUILD_DIR}/llm.md", "w") as f:
@@ -47,7 +77,8 @@ def llms_txt():
   collect("language", 1, f"{BUILD_DIR}/llm.md")
 
 def main():
-  os.system("make markdown")
+  if os.system("make markdown") != 0:
+    raise SystemExit("make markdown failed")
   llms_txt()
   for directory in ["tutorial", "language", "toolchain", "example"]:
     output_file = f"download/{directory}/summary.md"
