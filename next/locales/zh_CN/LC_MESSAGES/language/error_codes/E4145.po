@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-11 15:18+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -30,8 +30,8 @@ msgstr "无法实现封闭特征。"
 #: ../../language/error_codes/E4145.md:5
 msgid ""
 "Sealed trait means the trait is not allowed to be implemented in other "
-"packages. Use `pub(open)` to make the trait open to be implemented by other "
-"packages."
+"packages. Use `pub(open)` to make the trait open to be implemented by "
+"other packages."
 msgstr "封闭的特征不允许在其他包中实现。使用 `pub(open)` 使该特性对其他包开放，以便实现。"
 
 #: ../../language/error_codes/E4145.md:8
@@ -43,11 +43,11 @@ msgid "Suppose there is a package `a` in module `username/hello`:"
 msgstr "例如，在模块 `username/hello` 中存在一个包 `a`："
 
 #: ../../language/error_codes/E4145.md:12
-msgid "`a/moon.pkg.json`:"
+msgid "`a/moon.pkg`:"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:14
-msgid "{}"
+msgid "\n"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:18
@@ -57,8 +57,8 @@ msgstr ""
 #: ../../language/error_codes/E4145.md:20
 msgid ""
 "pub trait Sealed {\n"
-"  to_int() -> Int\n"
-"}"
+"  to_int(Self) -> Int\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:24
@@ -66,16 +66,14 @@ msgid "While in package `b`:"
 msgstr "而在包 `b` 中："
 
 #: ../../language/error_codes/E4145.md:26
-msgid "`b/moon.pkg.json`:"
+msgid "`b/moon.pkg`:"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:28
 msgid ""
-"{\n"
-"  \"import\": [\n"
-"    \"username/hello/a\"\n"
-"  ]\n"
-"}"
+"import {\n"
+"  \"username/hello/a\" @a,\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:32
@@ -84,12 +82,18 @@ msgstr ""
 
 #: ../../language/error_codes/E4145.md:34
 msgid ""
-"type A Int\n"
+"pub struct A {\n"
+"  value : Int\n"
+"}\n"
 "\n"
 "impl @a.Sealed for A with to_int(self : A) -> Int { // Error: Cannot "
 "implement trait '@a.Sealed' because it is readonly.\n"
-"  self._\n"
-"}"
+"  self.value\n"
+"}\n"
+"\n"
+"pub fn make(value : Int) -> A {\n"
+"  { value, }\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:38
@@ -98,14 +102,54 @@ msgstr "建议"
 
 #: ../../language/error_codes/E4145.md:40
 msgid ""
-"You can change the visibility of the trait to `pub(open)`, so that it can be"
-" implemented by other packages."
+"You can change the visibility of the trait to `pub(open)`, so that it can"
+" be implemented by other packages."
 msgstr "您可以将该特性的可见性更改为 `pub(open)`，以便其他包可以实现它。"
 
 #: ../../language/error_codes/E4145.md:43
 msgid ""
 "pub(open) trait Sealed {\n"
-"  to_int() -> Int\n"
-"}"
+"  to_int(Self) -> Int\n"
+"}\n"
 msgstr ""
+
+#~ msgid "`a/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid "{}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub trait Sealed {\n"
+#~ "  to_int() -> Int\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid "`b/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"import\": [\n"
+#~ "    \"username/hello/a\"\n"
+#~ "  ]\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "type A Int\n"
+#~ "\n"
+#~ "impl @a.Sealed for A with to_int(self"
+#~ " : A) -> Int { // Error: "
+#~ "Cannot implement trait '@a.Sealed' because "
+#~ "it is readonly.\n"
+#~ "  self._\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub(open) trait Sealed {\n"
+#~ "  to_int() -> Int\n"
+#~ "}"
+#~ msgstr ""
 

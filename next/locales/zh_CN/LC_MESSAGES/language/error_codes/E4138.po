@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-11 15:18+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -25,8 +25,8 @@ msgstr ""
 
 #: ../../language/error_codes/E4138.md:3
 msgid ""
-"Range operators only support builtin integer types, they cannot be used on "
-"this type."
+"Range operators only support builtin integer types, they cannot be used "
+"on this type."
 msgstr "范围运算符仅支持内置整数类型，不能在此类型上使用。"
 
 #: ../../language/error_codes/E4138.md:6
@@ -40,9 +40,10 @@ msgstr "例如，您不能使用 `Float` 或 `Double` 与范围运算符一起�
 #: ../../language/error_codes/E4138.md:10
 msgid ""
 "fn main {\n"
-"  for f in 0.0..<1.0 {\n"
+"  for _ in 0.0..<1.0 {\n"
+"    ()\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4138.md:14
@@ -51,17 +52,17 @@ msgstr "建议"
 
 #: ../../language/error_codes/E4138.md:16
 msgid ""
-"Use integer types for the range operators, and generate floats from these "
-"integers instead:"
+"Use integer types for the range operators, and generate floats from these"
+" integers instead:"
 msgstr "使用整数类型的范围运算符，并且这些整数生成浮点数："
 
 #: ../../language/error_codes/E4138.md:19
 msgid ""
 "fn main {\n"
 "  for i in 0..<10 {\n"
-"    println(i.to_float())\n"
+"    println(Float::from_int(i))\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4138.md:23
@@ -70,11 +71,35 @@ msgstr "您还可以使用 `until` 构造数字范围："
 
 #: ../../language/error_codes/E4138.md:25
 msgid ""
-"fn main {\n"
-"  let range : Iter[Double] = (0.0).until(10.0)\n"
+"pub fn print_range() -> Unit {\n"
+"  let range : Iter[Int] = (0).until(10)\n"
 "  for i in range {\n"
-"    println(i)\n"
+"    println(Float::from_int(i))\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  for f in 0.0..<1.0 {\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  for i in 0..<10 {\n"
+#~ "    println(i.to_float())\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let range : Iter[Double] = (0.0).until(10.0)\n"
+#~ "  for i in range {\n"
+#~ "    println(i)\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
 

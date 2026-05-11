@@ -1,5 +1,0 @@
-{
-  "import": [
-    "username/hello/a"
-  ]
-}

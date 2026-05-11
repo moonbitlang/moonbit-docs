@@ -1,1 +1,0 @@
-const A : Int = 2 // This is a constant value.
