@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-11 17:02+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -33,41 +33,75 @@ msgstr "错误示例："
 
 #: ../../language/error_codes/E4034.md:7
 msgid ""
-"fn main {\n"
-"  struct S { x : Int; y : Int }\n"
-"  struct T { x : Int; y : Int }\n"
-"  let c = { x: 2, y: 1 }\n"
+"pub struct S {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"pub struct T {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"pub fn make() -> Unit {\n"
+"  let _ = { x: 2, y: 1 }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4034.md:15
+#: ../../language/error_codes/E4034.md:11
 msgid ""
 "The example above tries to assign a struct with fields `x` and `y` to a "
 "variable `c`, but this field combination matches both `S` and `T` types, "
 "giving the following error on line 4:"
 msgstr ""
-"在上述例子中，试图将一个带有字段 `x` 和 `y` 的结构体赋值给一个变量 `c`，但这个字段组合同时匹配了 `S` 和 `T` 两种类型，会在第 4"
-" 行报错："
+"在上述例子中，试图将一个带有字段 `x` 和 `y` 的结构体赋值给一个变量 `c`，但这个字段组合同时匹配了 `S` 和 `T` "
+"两种类型，会在第 4 行报错："
 
-#: ../../language/error_codes/E4034.md:18
-msgid "Multiple possible struct types detected: T, S, please add more annotation.\n"
+#: ../../language/error_codes/E4034.md:14
+msgid ""
+"Multiple possible struct types detected: T, S, please add more "
+"annotation.\n"
 msgstr ""
 
-#: ../../language/error_codes/E4034.md:22
+#: ../../language/error_codes/E4034.md:18
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4034.md:24
+#: ../../language/error_codes/E4034.md:20
 msgid "Disambiguate the struct type by adding a type annotation:"
 msgstr "通过添加类型注释来去歧义："
 
-#: ../../language/error_codes/E4034.md:26
+#: ../../language/error_codes/E4034.md:22
 msgid ""
-"fn main {\n"
-"  struct S { x : Int; y : Int }\n"
-"  struct T { x : Int; y : Int }\n"
-"  let c : S = { x: 2, y: 1 }\n"
-"  let c2 = S::{ x : 2, y : 1 }\n"
-"}"
+"pub struct S {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"pub struct T {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"pub let c : S = { x: 2, y: 1 }\n"
+"pub let c2 : S = S::{ x: 2, y: 1 }\n"
+"pub let t : T = { x: 0, y: 0 }\n"
 msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  struct S { x : Int; y : Int }\n"
+#~ "  struct T { x : Int; y : Int }\n"
+#~ "  let c = { x: 2, y: 1 }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  struct S { x : Int; y : Int }\n"
+#~ "  struct T { x : Int; y : Int }\n"
+#~ "  let c : S = { x: 2, y: 1 }\n"
+#~ "  let c2 = S::{ x : 2, y : 1 }\n"
+#~ "}"
+#~ msgstr ""
 

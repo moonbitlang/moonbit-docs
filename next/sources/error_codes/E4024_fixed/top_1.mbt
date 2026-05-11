@@ -1,1 +1,0 @@
-let a = Bool::to_string(true)

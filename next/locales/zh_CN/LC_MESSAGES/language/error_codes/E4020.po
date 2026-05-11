@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-11 17:02+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -32,14 +32,14 @@ msgid "Erroneous Example"
 msgstr "错误示例："
 
 #: ../../language/error_codes/E4020.md:7
-msgid "let a = @boolean.to_int(true)\n"
+msgid "pub let a : Int = @boolean.Bool::to_int(true)\n"
 msgstr ""
 
 #: ../../language/error_codes/E4020.md:11
 msgid ""
-"The example above tries to call the method `to_int` in a package `boolean`, "
-"but this package is not present in the list of loaded packages, giving the "
-"following error on line 1:"
+"The example above tries to call the method `to_int` in a package "
+"`boolean`, but this package is not present in the list of loaded "
+"packages, giving the following error on line 1:"
 msgstr "上述例子中，试图在包 `boolean` 中调用方法 `to_int`，但这个包不在加载的包列表中，会在第 1 行报错："
 
 #: ../../language/error_codes/E4020.md:15
@@ -56,17 +56,20 @@ msgstr "确保包名是合法的。"
 
 #: ../../language/error_codes/E4020.md:23
 msgid ""
-"If it is not a package in module `moonbitlang/core`, make sure that it is "
-"mentioned as one of the imported packages in `moon.pkg.json` as well."
+"If it is not a package in module `moonbitlang/core`, make sure that it is"
+" mentioned as one of the imported packages in `moon.pkg.json` as well."
 msgstr "如果它不是 `moonbitlang/core` 的包，请确保它也在 `moon.pkg.json` 中作为导入包之一被声明。"
 
 #: ../../language/error_codes/E4020.md:26
-msgid ""
-"In the above example, the package name should be `@bool` instead of "
-"`@boolean`:"
-msgstr "在上面的示例中，包名应该是 `@bool` 而不是 `@boolean`："
+msgid "In the above example, call the method on `Bool` directly:"
+msgstr "在上面的示例中，直接在 `Bool` 上调用该方法："
 
 #: ../../language/error_codes/E4020.md:28
-msgid "let a = @bool.to_int(true)"
+msgid "pub let a : Int = true.to_int()\n"
 msgstr ""
 
+#~ msgid "let a = @boolean.to_int(true)\n"
+#~ msgstr ""
+
+#~ msgid "let a = @bool.to_int(true)"
+#~ msgstr ""
