@@ -12,6 +12,10 @@ pub fn describe(event : @base.LogEvent[String]) -> String {
 pub fn debug_event(message : String) -> @base.LogEvent[String] {
   @plugin.Debug(message)
 }
+
+pub fn qualified_debug_event(message : String) -> @base.LogEvent[String] {
+  @base.LogEvent::@plugin.Debug(message)
+}
 // end extenum interaction
 
 test "extenum interaction" {
@@ -22,4 +26,8 @@ test "extenum interaction" {
     content="critical E_CONN: database unavailable",
   )
   inspect(describe(debug_event("verbose trace")), content="debug: verbose trace")
+  inspect(
+    describe(qualified_debug_event("fully qualified")),
+    content="debug: fully qualified",
+  )
 }
