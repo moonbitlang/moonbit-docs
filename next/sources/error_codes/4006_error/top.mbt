@@ -1,11 +1,8 @@
-pub fn use_helper() -> Unit {
-  fn helper() {
-    1 + 1
+pub fn use_helper() -> Int {
+  letrec helper = fn(n : Int) -> Int {
+    n
+  } and helper = fn(n : Int) -> Int {
+    n + 1
   }
-
-  fn helper() {
-    2 + 2
-  }
-
-  ignore(helper())
+  helper(0)
 }
