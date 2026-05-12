@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-12 14:18+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,10 +23,48 @@ msgid "E4032"
 msgstr ""
 
 #: ../../language/error_codes/E4032.md:3
+msgid "Compiler diagnostic name: `type_not_found`."
+msgstr "编译器诊断名称：`type_not_found`。"
+
+#: ../../language/error_codes/E4032.md:5
 msgid "The type is undefined."
 msgstr "这个类型未定义。"
 
-#: ../../language/error_codes/E4032.md:5
-msgid "Currently, MoonBit won't emit this error."
-msgstr "目前，MoonBit 不会报告这个错误。"
+#: ../../language/error_codes/E4032.md:7
+msgid ""
+"This error happens when a type annotation, constructor path, trait bound,"
+" or other type position refers to a type that is not in scope."
+msgstr "当类型标注、构造器路径、trait 约束或其他类型位置引用了当前作用域中不可见的类型时，会出现此错误。"
 
+#: ../../language/error_codes/E4032.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4032.md:12
+msgid ""
+"pub fn make(x : Missing) -> Unit {\n"
+"  //          ^~~~~~~\n"
+"  // Error: The type Missing is undefined.\n"
+"  ignore(x)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4032.md:16
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4032.md:18
+msgid ""
+"Use a type that is defined and visible from the current package, or "
+"import the package that defines the type."
+msgstr "使用当前包中已定义且可见的类型，或导入定义该类型的包。"
+
+#: ../../language/error_codes/E4032.md:21
+msgid ""
+"pub fn make(x : Int) -> Unit {\n"
+"  ignore(x)\n"
+"}\n"
+msgstr ""
+
+#~ msgid "Currently, MoonBit won't emit this error."
+#~ msgstr "目前，MoonBit 不会报告这个错误。"
