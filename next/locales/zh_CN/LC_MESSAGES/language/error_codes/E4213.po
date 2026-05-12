@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-09 14:58+0800\n"
+"POT-Creation-Date: 2026-05-12 10:35+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -32,13 +32,12 @@ msgstr "构造方法只能为 `struct` 类型定义。"
 
 #: ../../language/error_codes/E4213.md:7
 msgid ""
-"MoonBit's `Type::new` constructor mechanism belongs to structs. Enums, "
+"MoonBit's `Type::Type` constructor mechanism belongs to structs. Enums, "
 "newtypes, and other type forms already have their own construction "
 "syntax, so a constructor method for those types is rejected."
 msgstr ""
-"MoonBit 的 `Type::new` 构造机制属于结构体。"
-"枚举、newtype 以及其他类型形式已经有各自的构造语法，"
-"因此为这些类型定义构造方法会被拒绝。"
+"MoonBit 的 `Type::Type` 构造机制属于结构体。枚举、newtype "
+"以及其他类型形式已经有各自的构造语法，因此为这些类型定义构造方法会被拒绝。"
 
 #: ../../language/error_codes/E4213.md:11
 msgid "Erroneous example"
@@ -46,37 +45,54 @@ msgstr "错误示例"
 
 #: ../../language/error_codes/E4213.md:13
 msgid ""
-"enum Status {\n"
+"pub enum Status {\n"
 "  Ready\n"
 "}\n"
 "\n"
-"fn Status::new() -> Status {\n"
+"pub fn Status::Status() -> Status {\n"
 "  Ready\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4213.md:23
+#: ../../language/error_codes/E4213.md:17
 msgid ""
-"`Status` is an `enum`, not a `struct`, so `Status::new` cannot be used as"
-" a struct constructor."
-msgstr "`Status` 是 `enum`，不是 `struct`，因此 `Status::new` 不能用作结构体构造方法。"
+"`Status` is an `enum`, not a `struct`, so `Status::Status` cannot be used"
+" as a struct constructor."
+msgstr "`Status` 是 `enum`，不是 `struct`，因此 `Status::Status` 不能用作结构体构造方法。"
 
-#: ../../language/error_codes/E4213.md:26
+#: ../../language/error_codes/E4213.md:20
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4213.md:28
+#: ../../language/error_codes/E4213.md:22
 msgid ""
 "Use the enum constructor directly, or change the type to a `struct` if "
 "you need a custom constructor method."
-msgstr ""
-"直接使用枚举构造器；如果确实需要自定义构造方法，则将该类型改为 `struct`。"
+msgstr "直接使用枚举构造器；如果确实需要自定义构造方法，则将该类型改为 `struct`。"
 
-#: ../../language/error_codes/E4213.md:31
+#: ../../language/error_codes/E4213.md:25
 msgid ""
-"struct Status {}\n"
+"pub struct Status {}\n"
 "\n"
-"fn Status::new() -> Status {\n"
+"pub fn Status::Status() -> Status {\n"
 "  Status::{  }\n"
 "}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "enum Status {\n"
+#~ "  Ready\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn Status::new() -> Status {\n"
+#~ "  Ready\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "struct Status {}\n"
+#~ "\n"
+#~ "fn Status::new() -> Status {\n"
+#~ "  Status::{  }\n"
+#~ "}\n"
+#~ msgstr ""

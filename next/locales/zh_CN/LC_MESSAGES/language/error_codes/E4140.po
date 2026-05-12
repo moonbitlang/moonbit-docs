@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-12 10:35+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -29,9 +29,9 @@ msgstr "extern \"C\" 声明中的无效 C 函数名称。"
 
 #: ../../language/error_codes/E4140.md:5
 msgid ""
-"When binding a C function with the `extern \"C\"` declaration, the function "
-"name must be a valid C identifier. This means that the name must satisfy the"
-" following regex:"
+"When binding a C function with the `extern \"C\"` declaration, the "
+"function name must be a valid C identifier. This means that the name must"
+" satisfy the following regex:"
 msgstr "当使用 `extern \"C\"` 声明绑定 C 函数时，函数名称必须是有效的 C 标识符。这意味着名称必须满足以下正则表达式："
 
 #: ../../language/error_codes/E4140.md:9
@@ -43,9 +43,7 @@ msgid "Erroneous example"
 msgstr "错误示例"
 
 #: ../../language/error_codes/E4140.md:15
-msgid ""
-"extern \"C\" fn f1() = \"1\" // Error: Invalid C function name in extern "
-"\"C\" declaration"
+msgid "pub extern \"C\" fn f1() = \"1\"\n"
 msgstr ""
 
 #: ../../language/error_codes/E4140.md:19
@@ -57,6 +55,15 @@ msgid "Change the function name to a valid C identifier:"
 msgstr "将函数名更改为有效的 C 标识符："
 
 #: ../../language/error_codes/E4140.md:23
-msgid "extern \"C\" fn f1() = \"f1\""
+msgid "pub extern \"C\" fn f1() = \"f1\"\n"
 msgstr ""
+
+#~ msgid ""
+#~ "extern \"C\" fn f1() = \"1\" //"
+#~ " Error: Invalid C function name in"
+#~ " extern \"C\" declaration"
+#~ msgstr ""
+
+#~ msgid "extern \"C\" fn f1() = \"f1\""
+#~ msgstr ""
 
