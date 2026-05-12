@@ -1471,7 +1471,9 @@ the package that defines the type:
 Extensible enum constructors are qualified by the package that defines the
 constructor. For constructors from the current package, use the constructor name
 directly when the expected type is known. For constructors from another
-package, use `@pkg.Constructor` in expressions and patterns.
+package, use `@pkg.Constructor` in expressions and patterns. When you want to
+make both the extensible enum type and the constructor origin explicit, write
+the constructor as `@type_pkg.Type::@constructor_pkg.Constructor`.
 
 When a package imports both the base package and an extension package, values
 from both packages have the same extensible enum type:
