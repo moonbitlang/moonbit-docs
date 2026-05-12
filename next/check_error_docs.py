@@ -15,10 +15,19 @@ RUN_ONLY_ERROR_CODES = {
     # the documentation snippets should still stay runnable.
     '0058',
 }
+SKIPPED_ERROR_CODES = {
+    # Reproducing E0033 requires an extremely long source segment to exceed the
+    # compiler's internal line/column limits, so we do not monitor it with a
+    # small checked example project.
+    '0033',
+}
 
 
 def example_status(error_code):
     """Return whether examples for this error code are fully monitored."""
+    if error_code in SKIPPED_ERROR_CODES:
+        return 'skipped'
+
     error_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_error"
     fixed_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_fixed"
     has_error = is_moon_project(error_path)
@@ -79,6 +88,9 @@ def run_moon_test(file_path, error_code=None):
 
 def check_error_code(error_code):
     """Check specific error code documentation"""
+    if error_code in SKIPPED_ERROR_CODES:
+        return True
+
     error_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_error"
     fixed_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_fixed"
 
@@ -117,6 +129,7 @@ def print_coverage_summary(error_codes):
     """Print example coverage for all known error codes."""
     missing = []
     partial = []
+    skipped = []
 
     for error_code in error_codes:
         status = example_status(error_code)
@@ -124,18 +137,23 @@ def print_coverage_summary(error_codes):
             missing.append(error_code)
         elif status == 'partial':
             partial.append(error_code)
+        elif status == 'skipped':
+            skipped.append(error_code)
 
     total = len(error_codes)
-    full = total - len(missing) - len(partial)
+    full = total - len(missing) - len(partial) - len(skipped)
     print(
         f"Coverage: {full} full, {len(partial)} partial, "
-        f"{len(missing)} missing, {total} total")
+        f"{len(missing)} missing, {len(skipped)} skipped, {total} total")
 
     if partial:
         print(f"PARTIAL: {', '.join(partial)}")
 
     if missing:
         print(f"MISSING: {', '.join(missing)}")
+
+    if skipped:
+        print(f"SKIPPED: {', '.join(skipped)}")
 
 
 def main():
@@ -174,6 +192,7 @@ def main():
             incomplete = [
                 error_code for error_code in error_codes
                 if example_status(error_code) != 'full'
+                and error_code not in SKIPPED_ERROR_CODES
             ]
             if incomplete:
                 print(f"INCOMPLETE: {', '.join(incomplete)}")
@@ -187,7 +206,11 @@ def main():
             print('Error: Invalid error code format, should be like 0001')
             return 1
 
-        if args.require_examples and example_status(args.target) != 'full':
+        if (
+            args.require_examples
+            and args.target not in SKIPPED_ERROR_CODES
+            and example_status(args.target) != 'full'
+        ):
             print(f"INCOMPLETE: {args.target}")
             return 1
 
