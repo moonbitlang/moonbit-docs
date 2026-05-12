@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-08 12:45+0800\n"
+"POT-Creation-Date: 2026-05-12 18:01+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -23,19 +23,23 @@ msgid "E4120"
 msgstr ""
 
 #: ../../language/error_codes/E4120.md:3
+msgid "Compiler diagnostic name: `unhandled_error`."
+msgstr "编译器诊断名称：`unhandled_error`。"
+
+#: ../../language/error_codes/E4120.md:5
 msgid "The application might raise errors, but they are not handled."
 msgstr "该函数应用可能会引发错误，但这些错误没有被处理。"
 
-#: ../../language/error_codes/E4120.md:5
+#: ../../language/error_codes/E4120.md:7
 msgid ""
 "Current MoonBit reports the ordinary unhandled re-raise pattern as "
 "[E4122](./E4122.md). This page is retained for older compiler output that"
 " used E4120 with the deprecated postfix error-handling syntax."
 msgstr ""
-"当前 MoonBit 会将普通的未处理重新抛出模式报告为 [E4122](./E4122.md)。"
-"本页面保留给较旧编译器输出使用；旧版编译器会针对已弃用的后缀错误处理语法报告 E4120。"
+"当前 MoonBit 会将普通的未处理重新抛出模式报告为 "
+"[E4122](./E4122.md)。本页面保留给较旧编译器输出使用；旧版编译器会针对已弃用的后缀错误处理语法报告 E4120。"
 
-#: ../../language/error_codes/E4120.md:9
+#: ../../language/error_codes/E4120.md:11
 msgid ""
 "In MoonBit, we require programmers to explicitly annotate which functions"
 " may raise errors. A function that re-raises an error must use a `raise` "
@@ -43,29 +47,29 @@ msgid ""
 "handle the error with `try ... catch` or materialize it to a `Result[T, "
 "E]` value with `try?`."
 msgstr ""
-"在 MoonBit 中，程序员需要显式标注哪些函数可能引发错误。重新抛出错误的函数必须在签名中使用 "
-"`raise` 标注。若要让当前函数不抛出错误，请使用 `try ... catch` 处理错误，"
-"或使用 `try?` 将其物化为 `Result[T, E]` 值。"
+"在 MoonBit 中，程序员需要显式标注哪些函数可能引发错误。重新抛出错误的函数必须在签名中使用 `raise` "
+"标注。若要让当前函数不抛出错误，请使用 `try ... catch` 处理错误，或使用 `try?` 将其物化为 `Result[T, E]` "
+"值。"
 
-#: ../../language/error_codes/E4120.md:14
+#: ../../language/error_codes/E4120.md:16
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4120.md:16
+#: ../../language/error_codes/E4120.md:18
 msgid ""
 "See [E4122](./E4122.md) for checked erroneous examples with the current "
 "syntax."
 msgstr "当前语法下已检查的错误示例请参阅 [E4122](./E4122.md)。"
 
-#: ../../language/error_codes/E4120.md:18
+#: ../../language/error_codes/E4120.md:20
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4120.md:20
+#: ../../language/error_codes/E4120.md:22
 msgid "You can either annotate the caller so it re-raises the error:"
 msgstr "您可以为调用者添加标注，使其重新抛出错误："
 
-#: ../../language/error_codes/E4120.md:22
+#: ../../language/error_codes/E4120.md:24
 msgid ""
 "///|\n"
 "pub suberror ExampleError {\n"
@@ -86,11 +90,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4120.md:26
+#: ../../language/error_codes/E4120.md:28
 msgid "Or materialize the error to a `Result[T, E]` type with `try?`:"
 msgstr "或者使用 `try?` 将错误物化为 `Result[T, E]` 类型："
 
-#: ../../language/error_codes/E4120.md:28
+#: ../../language/error_codes/E4120.md:30
 msgid ""
 "///|\n"
 "pub fn materialize_error() -> Result[Unit, ExampleError] {\n"
