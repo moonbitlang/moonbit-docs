@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-09 14:58+0800\n"
+"POT-Creation-Date: 2026-05-12 15:03+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -36,32 +36,37 @@ msgid ""
 " by the build system. Unknown or misplaced configuration keys are "
 "rejected so that spelling mistakes do not silently change how a module is"
 " built."
-msgstr ""
-"`moon.mod.json` 只接受构建系统能够理解的模块级配置字段。"
-"未知或位置错误的配置键会被拒绝，以免拼写错误悄悄改变模块的构建方式。"
+msgstr "`moon.mod.json` 只接受构建系统能够理解的模块级配置字段。未知或位置错误的配置键会被拒绝，以免拼写错误悄悄改变模块的构建方式。"
 
 #: ../../language/error_codes/E4212.md:11
+msgid ""
+"This error is produced while the build system reads module configuration,"
+" before ordinary `moon check` diagnostic rendering is available, so it is"
+" not monitored by a source-level error-code example."
+msgstr "此错误在构建系统读取模块配置时产生，早于普通 `moon check` 诊断渲染可用的阶段，因此不会通过源码级错误码示例监控。"
+
+#: ../../language/error_codes/E4212.md:15
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4212.md:13
+#: ../../language/error_codes/E4212.md:17
 msgid "{\"name\": \"moonbit-community/example\", \"invalid-config\": true}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4212.md:17
+#: ../../language/error_codes/E4212.md:21
 msgid "The `invalid-config` field is not a valid module configuration key."
 msgstr "`invalid-config` 字段不是有效的模块配置键。"
 
-#: ../../language/error_codes/E4212.md:19
+#: ../../language/error_codes/E4212.md:23
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4212.md:21
+#: ../../language/error_codes/E4212.md:25
 msgid ""
 "Remove the invalid field, or move package-level configuration to "
 "`moon.pkg`."
 msgstr "移除无效字段，或将包级配置移动到 `moon.pkg`。"
 
-#: ../../language/error_codes/E4212.md:23
+#: ../../language/error_codes/E4212.md:27
 msgid "{\"name\": \"moonbit-community/example\"}\n"
 msgstr ""

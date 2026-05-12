@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-05-12 15:03+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,23 +24,28 @@ msgid "E3017"
 msgstr ""
 
 #: ../../language/error_codes/E3017.md:3
-msgid "JSON parse error. This will only appear in `moon.pkg.json` files only."
-msgstr "JSON 解析错误。这只会出现在 `moon.pkg.json` 文件中。"
+msgid "Compiler diagnostic name: `json_parse_error`."
+msgstr ""
 
 #: ../../language/error_codes/E3017.md:5
 msgid ""
-"It is very like that the editor you are using will have support for JSON "
-"installed (for example, Visual Studio Code has a built-in JSON parser). This"
-" error is likely to be caused by a missing comma or a missing closing brace."
-msgstr ""
-"您使用的编辑器可能已经安装对 JSON 的支持（例如，Visual Studio Code 有内置的 JSON "
-"解析器）。此错误可能是由于缺少逗号或缺少结束大括号引起的。"
+"JSON parse error. This diagnostic is used for legacy JSON package "
+"configuration files such as `moon.pkg.json`."
+msgstr "JSON 解析错误。此诊断用于旧版 JSON 包配置文件，例如 `moon.pkg.json`。"
 
-#: ../../language/error_codes/E3017.md:9
+#: ../../language/error_codes/E3017.md:8
+msgid ""
+"The current package configuration format is `moon.pkg`, which is not "
+"JSON. If you still maintain a legacy `moon.pkg.json`, this error is "
+"likely to be caused by a missing comma, a missing closing brace, or "
+"another JSON syntax issue."
+msgstr "当前的包配置格式是 `moon.pkg`，它不是 JSON。如果你仍在维护旧版 `moon.pkg.json`，此错误很可能是由缺少逗号、缺少右花括号或其他 JSON 语法问题引起的。"
+
+#: ../../language/error_codes/E3017.md:12
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E3017.md:11
+#: ../../language/error_codes/E3017.md:14
 msgid ""
 "{\n"
 "  \"is-main\": true\n"
@@ -48,11 +53,24 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3017.md:18
+#: ../../language/error_codes/E3017.md:21
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E3017.md:20
+#: ../../language/error_codes/E3017.md:23
+msgid ""
+"Prefer migrating the package configuration to `moon.pkg`. If you must "
+"keep the legacy JSON file for now, fix the JSON syntax."
+msgstr "优先将包配置迁移到 `moon.pkg`。如果暂时必须保留旧版 JSON 文件，请修复 JSON 语法。"
+
+#: ../../language/error_codes/E3017.md:26
+msgid ""
+"This page has no checked source example because legacy JSON configuration"
+" is parsed before ordinary `moon check` diagnostic rendering is "
+"available."
+msgstr "此页面没有受检查的源码示例，因为旧版 JSON 配置会在普通 `moon check` 诊断渲染可用之前被解析。"
+
+#: ../../language/error_codes/E3017.md:29
 msgid ""
 "{\n"
 "  \"is-main\": true,\n"
@@ -60,3 +78,17 @@ msgid ""
 "}\n"
 msgstr ""
 
+#~ msgid "JSON parse error. This will only appear in `moon.pkg.json` files only."
+#~ msgstr "JSON 解析错误。这只会出现在 `moon.pkg.json` 文件中。"
+
+#~ msgid ""
+#~ "It is very like that the editor"
+#~ " you are using will have support "
+#~ "for JSON installed (for example, Visual"
+#~ " Studio Code has a built-in "
+#~ "JSON parser). This error is likely "
+#~ "to be caused by a missing comma"
+#~ " or a missing closing brace."
+#~ msgstr ""
+#~ "您使用的编辑器可能已经安装对 JSON 的支持（例如，Visual Studio Code"
+#~ " 有内置的 JSON 解析器）。此错误可能是由于缺少逗号或缺少结束大括号引起的。"
