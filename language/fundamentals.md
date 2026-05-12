@@ -1943,7 +1943,9 @@ pub(all) extenum @base.LogEvent[T] += {
 Extensible enum constructors are qualified by the package that defines the
 constructor. For constructors from the current package, use the constructor name
 directly when the expected type is known. For constructors from another
-package, use `@pkg.Constructor` in expressions and patterns.
+package, use `@pkg.Constructor` in expressions and patterns. When you want to
+make both the extensible enum type and the constructor origin explicit, write
+the constructor as `@type_pkg.Type::@constructor_pkg.Constructor`.
 
 When a package imports both the base package and an extension package, values
 from both packages have the same extensible enum type:
@@ -1961,6 +1963,10 @@ pub fn describe(event : @base.LogEvent[String]) -> String {
 
 pub fn debug_event(message : String) -> @base.LogEvent[String] {
   @plugin.Debug(message)
+}
+
+pub fn qualified_debug_event(message : String) -> @base.LogEvent[String] {
+  @base.LogEvent::@plugin.Debug(message)
 }
 ```
 
