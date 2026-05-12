@@ -20,6 +20,22 @@ SKIPPED_ERROR_CODES = {
     # compiler's internal line/column limits, so we do not monitor it with a
     # small checked example project.
     '0033',
+    # These compatibility diagnostics are no longer emitted directly, or are
+    # routed through newer, more specific diagnostics.
+    '0045',
+    '0047',
+    '4054',
+    '4066',
+    '4092',
+    # These internal diagnostics are not meant to appear as independent
+    # user-facing errors.
+    '1000',
+    '1001',
+    # Legacy or build-system configuration parsing happens before ordinary
+    # source-level diagnostic rendering is available to the checker.
+    '3017',
+    '4192',
+    '4212',
     # Current MoonBit reports missing infix operator methods through more
     # specific diagnostics, so E4016 does not have a stable source repro.
     '4016',
@@ -27,6 +43,7 @@ SKIPPED_ERROR_CODES = {
     # build artifacts rather than ordinary MoonBit source projects.
     '4047',
     '4048',
+    '4049',
 }
 
 
