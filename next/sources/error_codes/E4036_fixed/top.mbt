@@ -1,1 +1,0 @@
-let r : @lib.R = @lib.R::new(1)
