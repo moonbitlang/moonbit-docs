@@ -1064,9 +1064,9 @@ iterating over another collection or range:
 
 The syntax is `[ for ... => ... ]`. The part before `=>` follows the same
 iteration rules as `for .. in`: one binder uses `Iter`, two binders use `Iter2`,
-and range expressions such as `0..<10` are supported. An optional `if` guard can
-filter elements before evaluating the result expression. Names introduced by an
-`is` expression in the guard, such as `y` above, can be used in the result
+and range expressions such as `0..<10` are supported. An optional `if` guard
+filters elements before evaluating the result expression. Names introduced by
+an `is` expression in the guard, such as `y` above, can be used in the result
 expression.
 
 The result defaults to `Array[T]` when there is no expected type. When the
@@ -1080,7 +1080,9 @@ expected type is known, a list comprehension can also construct
 :end-before: end list comprehension 2
 ```
 
-List comprehensions also support the normal `for` loop header form:
+List comprehensions also support the normal `for` loop header form. When the
+expected type is `Iter[T]`, the loop does not need to terminate, so it can be
+used to define infinite sequences:
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
