@@ -1055,12 +1055,11 @@ There are four kinds of range expressions available in `for .. in` loop:
 MoonBit supports list comprehension syntax for constructing a collection by
 iterating over another collection or range:
 
-```moonbit
-let squares = [ for x in 1..<=5 => x * x ]
-let evens = [ for x in 1..<=10 if x % 2 == 0 => x ]
-let labelled = [ for i, x in ["a", "b", "c"] => "\{i}: \{x}" ]
-let map = { 1: 2, 2: 4, 3: 8 }
-let present = [ for x in [1, 2, 3] if map.get(x) is Some(y) => y ]
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start list comprehension 1
+:end-before: end list comprehension 1
 ```
 
 The syntax is `[ for ... => ... ]`. The part before `=>` follows the same
@@ -1074,21 +1073,20 @@ The result defaults to `Array[T]` when there is no expected type. When the
 expected type is known, a list comprehension can also construct
 `FixedArray[T]`, `ReadOnlyArray[T]`, `Iter[T]`, `String`, `Bytes`, or `Json`:
 
-```moonbit
-let text : String = [ for x in 0..<3 => (x + 'a').unsafe_to_char() ]
-let bytes : Bytes = [ for x in 0..<3 => x.to_byte() ]
-let fixed : FixedArray[_] = [ for x in 1..<=3 => x ]
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start list comprehension 2
+:end-before: end list comprehension 2
 ```
 
 List comprehensions also support the normal `for` loop header form:
 
-```moonbit
-let fib = [
-  for i = 0, a = 0, b = 1
-      i < 6
-      i = i + 1, a = b, b = a + b
-  => a
-]
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start list comprehension 3
+:end-before: end list comprehension 3
 ```
 
 Control flow operations such as `return`, `break`, and `continue` are not
