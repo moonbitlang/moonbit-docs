@@ -216,6 +216,43 @@ test {
 }
 // end for loop 10
 
+test "list comprehension 1" {
+  // start list comprehension 1
+  let squares = [ for x in 1..<=5 => x * x ]
+  let evens = [ for x in 1..<=10 if x % 2 == 0 => x ]
+  let labelled = [ for i, x in ["a", "b", "c"] => "\{i}: \{x}" ]
+  let map = { 1: 2, 2: 4, 3: 8 }
+  let present = [ for x in [1, 2, 3] if map.get(x) is Some(y) => y ]
+  // end list comprehension 1
+  assert_eq(squares[4], 25)
+  assert_eq(evens[0], 2)
+  assert_eq(labelled[1], "1: b")
+  assert_eq(present[2], 8)
+}
+
+test "list comprehension 2" {
+  // start list comprehension 2
+  let text : String = [ for x in 0..<3 => (x + 'a').unsafe_to_char() ]
+  let bytes : Bytes = [ for x in 0..<3 => x.to_byte() ]
+  let fixed : FixedArray[_] = [ for x in 1..<=3 => x ]
+  // end list comprehension 2
+  assert_eq(text, "abc")
+  assert_eq(bytes, b"\x00\x01\x02")
+  assert_eq(fixed.length(), 3)
+}
+
+test "list comprehension 3" {
+  // start list comprehension 3
+  let fib = [
+    for i = 0, a = 0, b = 1
+        i < 6
+        i = i + 1, a = b, b = a + b
+    => a
+  ]
+  // end list comprehension 3
+  assert_eq(fib[5], 5)
+}
+
 // start loop label
 test "break label" {
   let mut count = 0
