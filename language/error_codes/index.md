@@ -27,7 +27,6 @@ This page lists all error codes produced by the MoonBit compiler.
 * [E0016](E0016.md)
 * [E0017](E0017.md)
 * [E0018](E0018.md)
-* [E0019](E0019.md)
 * [E0020](E0020.md)
 * [E0021](E0021.md)
 * [E0022](E0022.md)
