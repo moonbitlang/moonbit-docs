@@ -227,7 +227,7 @@ Basic binary operations can be handled uniformly through a lookup table. First, 
 
 ```moonbit
 let builtinOpS : @hashmap.HashMap[String, Instruction] = {
-  let table = @hashmap.new(capacity=50)
+  let table = @hashmap.HashMap([], capacity=50)
   table["add"] = Add
   table["mul"] = Mul
   table["sub"] = Sub

@@ -84,7 +84,7 @@ indicate that the function might raise an error during an execution. For
 example, the following function `div` might return an error of type `DivError`:
 
 ```moonbit
-suberror DivError { DivError(String) }
+suberror DivError { DivError(String) } derive(Debug)
 
 fn div(x : Int, y : Int) -> Int raise DivError {
   if y == 0 {
@@ -244,12 +244,10 @@ the [`Result`](fundamentals.md#option-and-result) type, by using
 ```moonbit
 test {
   let res = try? (div(6, 0) * div(6, 3))
-  inspect(
-    res,
-    content=(
-      #|Err("division by zero")
-    ),
-  )
+  match res {
+    Err(DivError(message)) => @test.assert_eq(message, "division by zero")
+    Ok(_) => fail("expected division to fail")
+  }
 }
 ```
 

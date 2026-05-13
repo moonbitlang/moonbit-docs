@@ -168,12 +168,12 @@ struct DeriveHash {
 } derive(Hash, Eq)
 
 test "derive hash struct" {
-  let hs = @hashset.new()
+  let hs = @hashset.HashSet([])
   hs.add(DeriveHash::{ x: 123, y: None })
   hs.add(DeriveHash::{ x: 123, y: None })
-  assert_eq(hs.length(), 1)
+  @test.assert_eq(hs.length(), 1)
   hs.add(DeriveHash::{ x: 123, y: Some("456") })
-  assert_eq(hs.length(), 2)
+  @test.assert_eq(hs.length(), 2)
 }
 ```
 
@@ -201,11 +201,11 @@ enum JsonTest2 {
 test "json basic" {
   let input = JsonTest1::{ x: 123, y: 456 }
   let expected : Json = { "x": 123, "y": 456 }
-  assert_eq(input.to_json(), expected)
+  @test.assert_eq(input.to_json(), expected)
   assert_true(@json.from_json(expected) == input)
   let input = JsonTest2::A(x=123)
   let expected : Json = { "$tag": "A", "x": 123 }
-  assert_eq(input.to_json(), expected)
+  @test.assert_eq(input.to_json(), expected)
   assert_true(@json.from_json(expected) == input)
 }
 ```
@@ -242,11 +242,11 @@ enum JsonTest4 {
 test "json args" {
   let input = JsonTest3::{ x: 123, y: 456 }
   let expected : Json = { "renamedX": 123, "y": 456 }
-  assert_eq(input.to_json(), expected)
+  @test.assert_eq(input.to_json(), expected)
   assert_true(@json.from_json(expected) == input)
   let input = JsonTest4::A(x=123)
   let expected : Json = ["A", { "x": 123 }]
-  assert_eq(input.to_json(), expected)
+  @test.assert_eq(input.to_json(), expected)
   assert_true(@json.from_json(expected) == input)
 }
 ```

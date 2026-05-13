@@ -488,10 +488,10 @@ Both `start` and `end` indices can be omitted.
 test {
   let xs = [0, 1, 2, 3, 4, 5]
   let s1 : ArrayView[Int] = xs[2:]
-  inspect(s1, content="[2, 3, 4, 5]")
-  inspect(xs[:4], content="[0, 1, 2, 3]")
-  inspect(xs[2:5], content="[2, 3, 4]")
-  inspect(xs[:], content="[0, 1, 2, 3, 4, 5]")
+  @test.assert_eq(s1.to_owned(), [2, 3, 4, 5])
+  @test.assert_eq(xs[:4].to_owned(), [0, 1, 2, 3])
+  @test.assert_eq(xs[2:5].to_owned(), [2, 3, 4])
+  @test.assert_eq(xs[:].to_owned(), [0, 1, 2, 3, 4, 5])
   let mv : MutArrayView[Int] = xs.mut_view(start=1, end=3)
   mv[0] = 99
   inspect(xs[1], content="99")
@@ -675,7 +675,7 @@ fn local_2(x : Int) -> (Int, Int) {
 }
 
 test {
-  assert_eq(local_2(3), (4, 4))
+  @test.assert_eq(local_2(3), (4, 4))
 }
 ```
 
@@ -797,11 +797,11 @@ fn incr(counter? : Ref[Int] = { val: 0 }) -> Ref[Int] {
 }
 
 test {
-  inspect(incr(), content="{val: 1}")
-  inspect(incr(), content="{val: 1}")
+  @test.assert_eq(incr().val, 1)
+  @test.assert_eq(incr().val, 1)
   let counter : Ref[Int] = { val: 0 }
-  inspect(incr(counter~), content="{val: 1}")
-  inspect(incr(counter~), content="{val: 2}")
+  @test.assert_eq(incr(counter~).val, 1)
+  @test.assert_eq(incr(counter~).val, 2)
 }
 ```
 
@@ -871,7 +871,7 @@ fn create_rectangle(a : Int, b? : Int = a) -> (Int, Int) {
 }
 
 test {
-  inspect(create_rectangle(10), content="(10, 10)")
+  debug_inspect(create_rectangle(10), content="(10, 10)")
 }
 ```
 
@@ -2854,7 +2854,7 @@ test {
   let a2 : FixedArray[Int] = [4, 5, 6]
   let a3 : @list.List[Int] = @list.from_array([7, 8, 9])
   let a : Array[Int] = [..a1, ..a2, ..a3, 10]
-  inspect(a, content="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
+  debug_inspect(a, content="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
 }
 ```
 

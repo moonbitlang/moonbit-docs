@@ -12,7 +12,7 @@ MoonBit provides the test code block for writing inline test cases. For example:
 test "test_name" {
   assert_eq(1 + 1, 2)
   assert_eq(2 + 2, 4)
-  inspect([1, 2, 3], content="[1, 2, 3]")
+  debug_inspect([1, 2, 3], content="[1, 2, 3]")
 }
 ```
 
