@@ -11,7 +11,7 @@ suberror E3 { // error type E3 has three constructors like a normal enum type
 // end error 1
 
 // start error 2
-suberror DivError { DivError(String) }
+suberror DivError { DivError(String) } derive(Debug)
 
 fn div(x : Int, y : Int) -> Int raise DivError {
   if y == 0 {
@@ -80,12 +80,10 @@ fn div_reraise(x : Int, y : Int) -> Int raise DivError {
 // start error 8
 test {
   let res = try? (div(6, 0) * div(6, 3))
-  inspect(
-    res,
-    content=(
-      #|Err("division by zero")
-    ),
-  )
+  match res {
+    Err(DivError(message)) => @test.assert_eq(message, "division by zero")
+    Ok(_) => fail("expected division to fail")
+  }
 }
 // end error 8
 

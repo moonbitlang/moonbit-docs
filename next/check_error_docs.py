@@ -16,8 +16,7 @@ RUN_ONLY_ERROR_CODES = {
     '0058',
 }
 SKIPPED_ERROR_CODES = {
-    # Parser consistency warnings are produced by compiler parser-internal
-    # checks rather than normal `moon check` project diagnostics.
+    # Current MoonBit does not emit this warning.
     '0016',
     # Reproducing E0033 requires an extremely long source segment to exceed the
     # compiler's internal line/column limits, so we do not monitor it with a

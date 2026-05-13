@@ -1,5 +1,5 @@
 let programs : @hashmap.HashMap[String, String] = {
-  let programs = @hashmap.new(capacity=40)
+  let programs = @hashmap.HashMap([], capacity=40)
   programs["square"] = (
     #| (defn square[x] (mul x x))
   )

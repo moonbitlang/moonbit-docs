@@ -96,7 +96,7 @@ fn local_2(x : Int) -> (Int, Int) {
 }
 
 test {
-  assert_eq(local_2(3), (4, 4))
+  @test.assert_eq(local_2(3), (4, 4))
 }
 // end local functions 2
 
@@ -139,11 +139,11 @@ fn incr(counter? : Ref[Int] = { val: 0 }) -> Ref[Int] {
 }
 
 test {
-  inspect(incr(), content="{val: 1}")
-  inspect(incr(), content="{val: 1}")
+  @test.assert_eq(incr().val, 1)
+  @test.assert_eq(incr().val, 1)
   let counter : Ref[Int] = { val: 0 }
-  inspect(incr(counter~), content="{val: 1}")
-  inspect(incr(counter~), content="{val: 2}")
+  @test.assert_eq(incr(counter~).val, 1)
+  @test.assert_eq(incr(counter~).val, 2)
 }
 // end optional arguments 2
 
@@ -167,7 +167,7 @@ fn create_rectangle(a : Int, b? : Int = a) -> (Int, Int) {
 }
 
 test {
-  inspect(create_rectangle(10), content="(10, 10)")
+  debug_inspect(create_rectangle(10), content="(10, 10)")
 }
 // end optional arguments 4
 
