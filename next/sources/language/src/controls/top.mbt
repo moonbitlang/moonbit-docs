@@ -219,13 +219,14 @@ test {
 test "list comprehension 1" {
   // start list comprehension 1
   let squares = [ for x in 1..<=5 => x * x ]
-  let evens = [ for x in 1..<=10 if x % 2 == 0 => x ]
+  let even_numbers = [ for x in 0..<100 if x % 2 == 0 => x ]
   let labelled = [ for i, x in ["a", "b", "c"] => "\{i}: \{x}" ]
   let map = { 1: 2, 2: 4, 3: 8 }
   let present = [ for x in [1, 2, 3] if map.get(x) is Some(y) => y ]
   // end list comprehension 1
   assert_eq(squares[4], 25)
-  assert_eq(evens[0], 2)
+  assert_eq(even_numbers[0], 0)
+  assert_eq(even_numbers[49], 98)
   assert_eq(labelled[1], "1: b")
   assert_eq(present[2], 8)
 }
@@ -243,14 +244,12 @@ test "list comprehension 2" {
 
 test "list comprehension 3" {
   // start list comprehension 3
-  let fib = [
-    for i = 0, a = 0, b = 1
-        i < 6
-        i = i + 1, a = b, b = a + b
-    => a
+  let fib_numbers : Iter[Int] = [
+    for p1 = 1, p2 = 0;; p1 = p1 + p2, p2 = p1 => p1
   ]
+  let first_six = fib_numbers.take(6).collect()
   // end list comprehension 3
-  assert_eq(fib[5], 5)
+  assert_eq(first_six[5], 8)
 }
 
 // start loop label
