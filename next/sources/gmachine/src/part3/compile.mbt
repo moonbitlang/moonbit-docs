@@ -380,7 +380,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
 
 ///| start builtin definition
 let builtinOpS : @hashmap.HashMap[String, Instruction] = {
-  let table = @hashmap.new(capacity=50)
+  let table = @hashmap.HashMap([], capacity=50)
   table["add"] = Add
   table["mul"] = Mul
   table["sub"] = Sub

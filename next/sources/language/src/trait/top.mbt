@@ -184,7 +184,7 @@ test {
   let duck2 = Duck::make("duck2")
   let fox1 = Fox::make("fox1")
   let animals : Array[&Animal] = [duck1, duck2, fox1]
-  inspect(
+  debug_inspect(
     animals.map(fn(animal) { animal.speak() }),
     content=(
       #|["duck1: quack!", "duck2: quack!", "What does the fox say?"]
