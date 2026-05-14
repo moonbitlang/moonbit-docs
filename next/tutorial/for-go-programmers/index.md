@@ -277,7 +277,7 @@ let sum = for i = 1, acc = 0; i <= 6; i = i + 1 {
   if i % 2 == 0 {
     continue i + 1, acc + i
   }
-} else {
+} nobreak {
   acc
 }
 ```
@@ -287,7 +287,7 @@ There are a few distinct features of the `for` loop in MoonBit, however:
 - The update clause is not in-place, but rather are used to assign new values to the loop variables.
 - `continue` can (optionally) be used to start the next iteration with new input values.
   In that case, the update clause is skipped.
-- The `else` clause is used to return the final value of the loop when it normally exits. If the loop
+- The `nobreak` clause is used to return the final value of the loop when it normally exits. If the loop
   is exited early with the `break` keyword, the value from the `break` clause is returned instead.
 
 The `while` loop is equivalent to the `for` loop with a condition clause only, and it can also return
@@ -299,7 +299,7 @@ let result = while condition {
   if should_break {
     break "early exit value"
   }
-} else {
+} nobreak {
   "normal completion value"
 }
 ```
