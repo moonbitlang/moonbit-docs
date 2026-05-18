@@ -4,9 +4,6 @@ struct Foo {
 }
 
 ///|
-pub fn f() -> Unit {
-  struct Bar {
-    foot : Int
-  }
-
+struct Bar {
+  foot : Int
 }

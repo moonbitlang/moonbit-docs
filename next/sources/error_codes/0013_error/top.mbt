@@ -31,6 +31,5 @@ fn main {
   let b = None
 //        ^^ Warning: The type of this expression is Option[_/0], which contains
 //           unresolved type variables. The type variable is default to Unit.
-  println(b.is_empty())
+  println(b is None)
 }
-

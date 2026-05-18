@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"POT-Creation-Date: 2026-05-18 10:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -36,5 +36,56 @@ msgid ""
 "This warning is emitted when code implicitly relies on definitions from "
 "`moonbitlang/core/builtin`. Consider importing the desired APIs "
 "explicitly to make dependencies clearer."
+msgstr ""
+
+#: ../../language/error_codes/E0034.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0034.md:13
+msgid ""
+"Here `Null` is inferred as the `Json::Null` constructor from "
+"`moonbitlang/core/builtin` without an explicit type or qualification:"
+msgstr ""
+
+#: ../../language/error_codes/E0034.md:16
+msgid ""
+"///|\n"
+"pub fn check(value : Json) -> Int {\n"
+"  fn classify(input) {\n"
+"    match input {\n"
+"      Null => 0\n"
+"      _ => 1\n"
+"    }\n"
+"  }\n"
+"\n"
+"  classify(value)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0034.md:20
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0034.md:22
+msgid ""
+"Make the builtin dependency explicit and qualify the constructor, or "
+"otherwise add enough type information that the code no longer relies on "
+"implicit builtin constructor inference."
+msgstr ""
+
+#: ../../language/error_codes/E0034.md:26
+msgid ""
+"///|\n"
+"pub fn check(value : Json) -> Int {\n"
+"  fn classify(input : Json) {\n"
+"    match input {\n"
+"      Json::Null => 0\n"
+"      _ => 1\n"
+"    }\n"
+"  }\n"
+"\n"
+"  classify(value)\n"
+"}\n"
 msgstr ""
 

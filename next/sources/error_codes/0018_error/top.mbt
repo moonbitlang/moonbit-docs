@@ -1,6 +1,6 @@
 ///|
 test (ctx : @test.Test) {
-  let println = ctx.writeln(_)
+  let println = value => ctx.writeln(value)
   // start example
   let count = 2
   loop count {
