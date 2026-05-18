@@ -18,12 +18,6 @@ RUN_ONLY_ERROR_CODES = {
 SKIPPED_ERROR_CODES = {
     # Current MoonBit does not emit this warning.
     '0016',
-    # These compatibility warnings are tied to legacy `loop` or `catch!`
-    # syntax. Current MoonBit also reports those constructs as deprecated
-    # syntax, so they do not have clean standalone source repros.
-    '0017',
-    '0018',
-    '0026',
     # Reproducing E0033 requires an extremely long source segment to exceed the
     # compiler's internal line/column limits, so we do not monitor it with a
     # small checked example project.
