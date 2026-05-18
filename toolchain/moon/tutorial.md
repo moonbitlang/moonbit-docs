@@ -97,7 +97,7 @@ The `username/my_project` package contains `my_project.mbt` and `my_project_test
 pub fn fib(n : Int) -> Int64 {
   for i = 0, a = 0L, b = 1L; i < n; i = i + 1, a = b, b = a + b {
 
-  } else {
+  } nobreak {
     b
   }
 }
