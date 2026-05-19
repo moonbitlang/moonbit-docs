@@ -73,6 +73,16 @@ def is_moon_project(path: Path) -> bool:
     return (path / 'moon.mod.json').exists()
 
 
+def diagnostic_codes(output):
+    """Return all numbered compiler diagnostics in moon output."""
+    return re.findall(r'(?:Warning|Error): \[(\d{4})\]', output)
+
+
+def has_error_code(output, error_code):
+    """Return True if moon output contains this error diagnostic."""
+    return bool(re.search(rf'Error: \[{error_code}\]', output))
+
+
 def run_moon_test(file_path, error_code=None):
     """Execute moon check command and return results"""
     try:
@@ -88,25 +98,24 @@ def run_moon_test(file_path, error_code=None):
         )
 
         output = result.stdout + result.stderr
-        has_warnings = bool(re.search(r'Warning: \[\d{4}\]', output))
-        has_errors = bool(re.search(r'Error: \[\d{4}\]', output))
+        codes = diagnostic_codes(output)
 
         if error_code:
             error_code_padded = error_code.zfill(4)
+            has_only_expected = codes and all(
+                code == error_code_padded for code in codes)
             if int(error_code) < 3000:
                 # Expect warning or error
-                warning_pattern = rf'Warning: \[{error_code_padded}\]'
-                error_pattern = rf'Error: \[{error_code_padded}\]'
-                has_expected = bool(re.search(warning_pattern, output)) or \
-                    (result.returncode != 0 and bool(
-                        re.search(error_pattern, output)))
+                has_expected = has_only_expected
             else:
-                # Expect error - command should fail
+                # Expect error - command should fail. Error recovery can report
+                # cascading diagnostics, so only warning-code examples are
+                # strict about emitting no other diagnostic codes.
                 has_expected = result.returncode != 0 and \
-                    bool(re.search(rf'Error: \[{error_code_padded}\]', output))
+                    has_error_code(output, error_code_padded)
         else:
             # Expect no warnings or errors
-            has_expected = not has_warnings and not has_errors and result.returncode == 0
+            has_expected = not codes and result.returncode == 0
 
         return has_expected
 

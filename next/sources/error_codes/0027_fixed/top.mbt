@@ -1,16 +1,9 @@
 ///|
-enum Message {
-  Add(String)
-}
-
-///|
-fn[T] perform(message : (T) -> Message, produce : () -> T) -> Message {
-  message(produce())
+fn[T] identity(value : T) -> T {
+  value
 }
 
 ///|
 fn main {
-  match perform(x => Add(x), fn() { "Hello, world!" }) {
-    Add(message) => println(message)
-  }
+  println(identity("Hello, world!"))
 }

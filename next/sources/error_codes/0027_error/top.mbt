@@ -1,17 +1,10 @@
-enum Message {
-  Add(String)
-} derive(Show)
-
-fn perform[T](message : (T) -> Message, produce : () -> T) -> Message {
+fn identity[T](value : T) -> T {
   //
-  // Warning: The syntax fn f[..] for declaring polymorphic function is 
+  // Warning: The syntax fn f[..] for declaring polymorphic function is
   // deprecated. Use fn[..] f instead.
-  message(produce())
+  value
 }
 
 fn main {
-  println(perform(Add, fn() { "Hello, world!" }))
-  //              ^^^
-  // Warning: Using constructor as function directly is
-  // deprecated. Use the partial application syntax instead
+  println(identity("Hello, world!"))
 }

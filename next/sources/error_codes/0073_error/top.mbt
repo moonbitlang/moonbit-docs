@@ -1,5 +1,5 @@
 ///|
-struct Point {
+priv struct Point {
   x : Int
 }
 

@@ -1,5 +1,5 @@
 ///|
-struct Bag {}
+priv struct Bag {}
 
 ///|
 fn Bag::iterator(_self : Bag) -> Iter[Int] {
