@@ -1,28 +1,49 @@
 # Module Configuration
 
-moon uses the `moon.mod.json` file to identify and describe a module.
+moon uses a module file to identify and describe a module. The legacy format is `moon.mod.json`,
+and the new format is `moon.mod`. For full JSON schema, please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json).
+
+Full syntax of moon.mod is as follows:
+
+```default
+moon_mod ::= statement*
+statement ::= import | assign | apply
+
+import ::= "import" "{" (import_item ",")* import_item? "}" import_kind?
+import_item ::= STRING
+
+assign ::= LIDENT "=" expr
+
+apply ::= LIDENT "(" (argument ",")* argument? ")"
+argument ::= LIDENT ":" expr | STRING ":" expr  
+
+expr ::= array | object | apply | STRING | INT | "true" | "false"
+array ::= "[" (expr ",")* expr? "]"
+object ::= "{" (field ",")* field? "}"
+```
 
 ## Name
 
 The `name` field is used to specify the name of the module, and it is required.
 
+### moon.mod
+
+```moonbit
+name = "user/example"
+```
+
+### moon.mod.json
+
 ```json
 {
-  "name": "example"
+  "name": "user/example"
   // ...
 }
 ```
 
 The module name can contain letters, numbers, `_`, `-`, and `/`.
 
-For modules published to [mooncakes.io](https://mooncakes.io), the module name must begin with the username. For example:
-
-```json
-{
-  "name": "moonbitlang/core"
-  // ...
-}
-```
+For modules published to [mooncakes.io](https://mooncakes.io), the module name must begin with the username.
 
 ## Version
 
@@ -30,11 +51,17 @@ The `version` field is used to specify the version of the module.
 
 This field is optional. For modules published to [mooncakes.io](https://mooncakes.io), the version number must follow the [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) specification.
 
+### moon.mod
+
+```moonbit
+version = "0.1.0"
+```
+
+### moon.mod.json
+
 ```json
 {
-  "name": "example",
   "version": "0.1.0"
-  // ...
 }
 ```
 
@@ -43,6 +70,17 @@ This field is optional. For modules published to [mooncakes.io](https://mooncake
 The `deps` field is used to specify the dependencies of the module.
 
 It is automatically managed by commands like `moon add` and `moon remove`.
+
+### moon.mod
+
+```moonbit
+name = "username/hello"
+import {
+  "moonbitlang/x@0.4.6"
+}
+```
+
+### moon.mod.json
 
 ```json
 {
@@ -53,7 +91,35 @@ It is automatically managed by commands like `moon add` and `moon remove`.
 }
 ```
 
-You may also specify a local dependency, such as:
+You may also use a local dependency for module.
+
+### moon.mod
+
+For new `moon.mod` format, the local dependency configuration is deprecated.
+The recommended way to use a local dependency is to configure it in `moon.work`.
+
+For example, if you use `moon.work` to manage `user/module1` and `user/module2`:
+
+```moonbit
+// in moon.work
+members = [
+  "source/to/module1",
+  "source/to/module2",
+]
+```
+
+And `user/module1` uses `user/module2` as a dependency:
+
+```moonbit
+// in source/to/module1/moon.mod
+import {
+  "user/module2@0.1.0"
+}
+```
+
+The `@version` part is ignored, `user/module2` is resolved from the local source instead of mooncakes.io.
+
+### moon.mod.json
 
 ```json
 {
@@ -72,13 +138,55 @@ You may also specify a local dependency, such as:
 
 The `readme` field is used to specify the path to the module's README file.
 
+### moon.mod
+
+```moonbit
+options(
+  readme: "README.md",
+)
+```
+
+### moon.mod.json
+
+```json
+{
+  "readme": "README.md"
+}
+```
+
 ### Repository
 
 The `repository` field is used to specify the URL of the module's repository.
 
+### moon.mod
+
+```moonbit
+options(
+  repository: "link/to/your/repo",
+)
+```
+
+### moon.mod.json
+
+```json
+{
+  "repository": "link/to/your/repo"
+}
+```
+
 ### License
 
 The `license` field is used to specify the license of the module. The license type must comply with the [SPDX License List](https://spdx.org/licenses/).
+
+### moon.mod
+
+```moonbit
+options(
+  license: "MIT",
+)
+```
+
+### moon.mod.json
 
 ```json
 {
@@ -90,6 +198,16 @@ The `license` field is used to specify the license of the module. The license ty
 
 The `keywords` field is used to specify the keywords for the module.
 
+### moon.mod
+
+```moonbit
+options(
+  keywords: ["example", "test"]
+)
+```
+
+### moon.mod.json
+
 ```json
 {
   "keywords": ["example", "test"]
@@ -99,6 +217,16 @@ The `keywords` field is used to specify the keywords for the module.
 ### Description
 
 The `description` field is used to specify the description of the module.
+
+### moon.mod
+
+```moonbit
+options(
+  description: "This is a description of the module.",
+)
+```
+
+### moon.mod.json
 
 ```json
 {
@@ -114,6 +242,17 @@ It follows the gitignore syntax, and include follows the exclude.
 For example, the following configuration will include the `build/assets`
 but exclude anything else in the `build` directory.
 
+### moon.mod
+
+```moonbit
+options(
+  exclude: ["build"],
+  "include": ["build/assets"],
+)
+```
+
+### moon.mod.json
+
 ```json
 {
   "exclude": ["build"],
@@ -128,6 +267,16 @@ You may use [`moon package --list`](commands.md#moon-package) to verify if the p
 The `preferred-target` field allows the `moon` and the language server to know which target
 should be used as the default target, avoiding the necessity to write `--target`
 when developing a project targeting other backends than Wasm GC.
+
+### moon.mod
+
+```moonbit
+options(
+  "preferred-target": "js",
+)
+```
+
+### moon.mod.json
 
 ```json
 {
@@ -149,6 +298,16 @@ the module's compatibility surface in metadata.
 
 For example:
 
+### moon.mod
+
+```moonbit
+options(
+  "supported-targets": "+js+wasm-gc"
+)
+```
+
+### moon.mod.json
+
 ```json
 {
   "supported-targets": "+js+wasm-gc"
@@ -156,6 +315,16 @@ For example:
 ```
 
 Legacy array syntax is still accepted for compatibility:
+
+### moon.mod
+
+```moonbit
+options(
+  "supported-targets": ["js", "wasm-gc"]
+)
+```
+
+### moon.mod.json
 
 ```json
 {
@@ -182,23 +351,57 @@ It must be a subdirectory of the directory where the `moon.mod.json` file is loc
 
 When creating a module using the `moon new` command, a `src` directory will be automatically generated, and the default value of the `source` field will be `src`.
 
+### moon.mod
+
+```moonbit
+options(
+  source: "src"
+)
+```
+
+### moon.mod.json
+
 ```json
 {
   "source": "src"
 }
 ```
 
-When the `source` field does not exist, or its value is `null` or an empty string `""`, it is equivalent to setting `"source": "."`. This means that the source directory is the same as the directory where the `moon.mod.json` file is located.
+When the `source` field does not exist, or its value is an empty string `""`, it is equivalent to setting `"source": "."`. This means that the source directory is the same as the directory where the `moon.mod.json` file is located.
+
+### moon.mod
+
+```moonbit
+options(
+  "source": ""
+)
+```
+
+```moonbit
+options(
+  "source": "."
+)
+```
+
+### moon.mod.json
+
+```json
+{
+  "source": ""
+}
+```
+
+```json
+{
+  "source": "."
+}
+```
+
+`null` is equivalent to the cases above:
 
 ```json
 {
   "source": null
-}
-{
-  "source": ""
-}
-{
-  "source": "."
 }
 ```
 
@@ -208,6 +411,14 @@ This is used to disable specific preset compiler warning numbers.
 
 For example, in the following configuration, `-2` disables the warning number 2 (Unused variable).
 
+### moon.mod
+
+```moonbit
+warnings = "-2"
+```
+
+### moon.mod.json
+
 ```json
 {
   "warn-list": "-2"
@@ -216,6 +427,14 @@ For example, in the following configuration, `-2` disables the warning number 2 
 
 If multiple warnings need to be disabled, they can be directly connected and combined.
 
+### moon.mod
+
+```moonbit
+warnings = "-2-4"
+```
+
+### moon.mod.json
+
 ```json
 {
   "warn-list": "-2-4"
@@ -223,6 +442,14 @@ If multiple warnings need to be disabled, they can be directly connected and com
 ```
 
 If it is necessary to activate certain warnings that were originally prohibited, use the plus sign.
+
+### moon.mod
+
+```moonbit
+warnings = "+31"
+```
+
+### moon.mod.json
 
 ```json
 {
@@ -323,6 +550,18 @@ The `postadd` script runs automatically after the module has been added.
 When executed, the script's current working directory (cwd) is set to the
 directory where the `moon.mod.json` file resides.
 
+### moon.mod
+
+```moonbit
+options(
+  scripts: {
+    "postadd": "python3 build.py",
+  },
+)
+```
+
+### moon.mod.json
+
 ```json
 {
   "scripts": {
@@ -343,6 +582,16 @@ Please use with caution and only with trusted dependencies.
 
 The pre-build config script is added in order to aid native target programming.
 To use such script, add your script in your `moon.mod.json`:
+
+### moon.mod
+
+```moonbit
+options(
+  "--moonbit-unstable-prebuild": "<path/to/build-script>",
+)
+```
+
+### moon.mod.json
 
 ```json
 {
