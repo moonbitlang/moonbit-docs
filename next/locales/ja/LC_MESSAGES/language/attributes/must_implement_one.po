@@ -1,0 +1,86 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-21 14:57+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/must_implement_one.md:1
+msgid "Must Implement One Attribute"
+msgstr "Must Implement One アトリビュート"
+
+#: ../../language/attributes/must_implement_one.md:3
+msgid ""
+"The `#must_implement_one` attribute is used on traits to require that "
+"each implementation explicitly defines at least one method, instead of "
+"relying only on default method implementations."
+msgstr "`#must_implement_one` アトリビュートは trait に付けて、各実装がデフォルトメソッド実装だけに依存せず、少なくとも 1 つのメソッドを明示的に定義することを要求します。"
+
+#: ../../language/attributes/must_implement_one.md:7
+msgid ""
+"Without arguments, at least one method of the trait must be explicitly "
+"implemented:"
+msgstr "引数を指定しない場合、その trait の少なくとも 1 つのメソッドを明示的に実装する必要があります："
+
+#: ../../language/attributes/must_implement_one.md:10
+msgid ""
+"#must_implement_one\n"
+"pub(open) trait RequireAnyMethod {\n"
+"  f(Self) -> Unit = _\n"
+"  g(Self) -> Unit = _\n"
+"}\n"
+"\n"
+"impl RequireAnyMethod with f(_) {}\n"
+"\n"
+"impl RequireAnyMethod with g(_) {}\n"
+"\n"
+"type AnyImpl\n"
+"\n"
+"impl RequireAnyMethod for AnyImpl with f(_) {}\n"
+msgstr ""
+
+#: ../../language/attributes/must_implement_one.md:16
+msgid ""
+"With method names, at least one of the listed methods must be explicitly "
+"implemented:"
+msgstr "メソッド名を指定した場合、列挙されたメソッドのうち少なくとも 1 つを明示的に実装する必要があります："
+
+#: ../../language/attributes/must_implement_one.md:19
+msgid ""
+"#must_implement_one(f, g)\n"
+"pub(open) trait RequireSelectedMethod {\n"
+"  f(Self) -> Unit = _\n"
+"  g(Self) -> Unit = _\n"
+"  h(Self) -> Unit = _\n"
+"}\n"
+"\n"
+"impl RequireSelectedMethod with f(_) {}\n"
+"\n"
+"impl RequireSelectedMethod with g(_) {}\n"
+"\n"
+"impl RequireSelectedMethod with h(_) {}\n"
+"\n"
+"type SelectedImpl\n"
+"\n"
+"impl RequireSelectedMethod for SelectedImpl with g(_) {}\n"
+msgstr ""
+
+#: ../../language/attributes/must_implement_one.md:25
+msgid ""
+"Multiple `#must_implement_one` attributes can be used on the same trait "
+"to require explicit implementations from multiple method groups."
+msgstr "同じ trait に複数の `#must_implement_one` アトリビュートを付けることで、複数のメソッドグループから明示的な実装を要求できます。"

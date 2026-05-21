@@ -73,6 +73,7 @@ You can use `using` syntax to import symbols defined in another package.
 
 By having `pub` modifier, it is considered as reexportation.
 
+(access-control)=
 ## Access Control
 
 MoonBit features a comprehensive access control system that governs which parts of your code are accessible from other packages. 

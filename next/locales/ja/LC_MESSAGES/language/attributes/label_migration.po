@@ -1,0 +1,106 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-21 14:57+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/label_migration.md:1
+msgid "`label_migration` Attribute"
+msgstr "`label_migration` アトリビュート"
+
+#: ../../language/attributes/label_migration.md:3
+msgid ""
+"The `#label_migration` attribute is used to help you safely evolve your "
+"API by warning users during the transition period."
+msgstr "`#label_migration` アトリビュートは、移行期間中にユーザーへ警告することで、API を安全に進化させるのに役立ちます。"
+
+#: ../../language/attributes/label_migration.md:6
+msgid "It has three following forms:"
+msgstr "形式は次の 3 種類です："
+
+#: ../../language/attributes/label_migration.md:8
+msgid "`#label_migration(id, fill=true, msg=\"message\")`"
+msgstr "`#label_migration(id, fill=true, msg=\"message\")`"
+
+#: ../../language/attributes/label_migration.md:10
+msgid ""
+"The `fill` argument is used when you want to refactor an optional "
+"parameter. You can use `fill=true` when you want to eventually make an "
+"optional parameter required. You can use `fill=false` when you want to "
+"eventually remove an optional parameter."
+msgstr "`fill` 引数は、オプション引数をリファクタリングしたいときに使います。将来的にオプション引数を必須にしたい場合は `fill=true` を使えます。将来的にオプション引数を削除したい場合は `fill=false` を使えます。"
+
+#: ../../language/attributes/label_migration.md:15
+#: ../../language/attributes/label_migration.md:30
+#: ../../language/attributes/label_migration.md:45
+msgid ""
+"The `msg` argument is an string that provides additional information "
+"about the migration."
+msgstr "`msg` 引数は、移行に関する追加情報を提供する文字列です。"
+
+#: ../../language/attributes/label_migration.md:17
+msgid ""
+"#label_migration(x, fill=true)\n"
+"#label_migration(y, fill=false)\n"
+"fn label_migration_fill(x? : Int = 0, y? : Int = 1) -> Int {\n"
+"  x + y\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/label_migration.md:23
+msgid "`#label_migration(id, allow_positional=true, msg=\"message\")`"
+msgstr "`#label_migration(id, allow_positional=true, msg=\"message\")`"
+
+#: ../../language/attributes/label_migration.md:25
+msgid ""
+"The `allow_positional` argument is used when you want a labelled "
+"parameter to be used without its label being provided. When the parameter"
+" is used positionally (without a label), the compiler reports a warning. "
+"This is useful when you want to change a positional parameter to a "
+"labelled parameter without breaking the downstream code."
+msgstr "`allow_positional` 引数は、ラベル付き引数をラベルなしで使えるようにしたいときに使います。引数が位置引数として（ラベルなしで）使われると、コンパイラは警告を出します。これは、下流コードを壊さずに位置引数をラベル付き引数へ変更したいときに有用です。"
+
+#: ../../language/attributes/label_migration.md:32
+msgid ""
+"#label_migration(x, allow_positional=true)\n"
+"fn label_migration_allow_positional(x~ : Int) -> Int {\n"
+"  x\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/label_migration.md:38
+msgid "`#label_migration(id, alias=new_id, msg=\"message\")`"
+msgstr "`#label_migration(id, alias=new_id, msg=\"message\")`"
+
+#: ../../language/attributes/label_migration.md:40
+msgid ""
+"The alias argument allows you to provide an alternative name to a "
+"labelled parameter. This is useful when renaming a parameter to maintain "
+"backward compatibility. If a warning message is provided, the compiler "
+"warns when using the alias; otherwise, the alias can be used without "
+"warnings."
+msgstr "`alias` 引数は、ラベル付き引数に別名を付けるために使えます。これは、後方互換性を保ちながら引数名を変更したい場合に有用です。警告メッセージを指定すると、別名を使ったときにコンパイラが警告を出します。指定しない場合、別名は警告なしで使えます。"
+
+#: ../../language/attributes/label_migration.md:47
+msgid ""
+"#label_migration(x, alias=xx)\n"
+"#label_migration(x, alias=y, msg=\"warning\")\n"
+"fn label_migration_alias(x~ : Int) -> Int {\n"
+"  x\n"
+"}\n"
+msgstr ""
