@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 17:41+0800\n"
+"POT-Creation-Date: 2026-05-21 14:57+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -23,12 +23,12 @@ msgid "Attribute"
 msgstr "アトリビュート"
 
 #: ../../language/attributes.md:3
+#, fuzzy
 msgid ""
 "Attributes are annotations placed before structures in source code. They "
 "take the form `#attribute(...)`. An attribute occupies the entire line, "
-"and newlines are not allowed within it.  Attributes do not normally "
-"affect the meaning of programs. Unused attributes will be reported as "
-"warnings."
+"and newlines are not allowed within it. Attributes do not normally affect"
+" the meaning of programs. Unused attributes will be reported as warnings."
 msgstr ""
 "アトリビュートは、ソースコード中で構造の前に置かれる注釈です。形式は `#attribute(...)` です。アトリビュートは 1 "
 "行全体を占め、その中に改行を入れることはできません。通常、アトリビュートはプログラムの意味に影響しません。使われていないアトリビュートは警告として報告されます。"
@@ -38,48 +38,34 @@ msgid "The syntax of attributes is defined as follows:"
 msgstr "アトリビュートの構文は次のとおりです："
 
 #: ../../language/attributes.md:9
+#, fuzzy
 msgid ""
 "attribute ::= '#' attribute-name\n"
-"            | '#' attribute-name '(' attribute-arguments ')' \n"
+"            | '#' attribute-name '(' attribute-arguments ')'\n"
 "\n"
 "attribute-name ::= LIDENT | LIDENT '.' LIDENT\n"
 "\n"
 "attribute-arguments ::= attribute-argument (',' attribute-argument )*\n"
 "\n"
-"attribute-argument ::= expr | LIDENT '=' expr \n"
+"attribute-argument ::= expr | LIDENT '=' expr\n"
 "\n"
 "expr ::= LIDENT | UIDENT | STRING | 'true' | 'false'\n"
 "       | LIDENT '.' LIDENT\n"
 "       | LIDENT '(' attribute-arguments ')'\n"
 "       | LIDENT '.' LIDENT '(' attribute-arguments ')'\n"
 msgstr ""
-"attribute ::= '#' attribute-name\n"
-"            | '#' attribute-name '(' attribute-arguments ')' \n"
-"\n"
-"attribute-name ::= LIDENT | LIDENT '.' LIDENT\n"
-"\n"
-"attribute-arguments ::= attribute-argument (',' attribute-argument )*\n"
-"\n"
-"attribute-argument ::= expr | LIDENT '=' expr \n"
-"\n"
-"expr ::= LIDENT | UIDENT | STRING | 'true' | 'false'\n"
-"       | LIDENT '.' LIDENT\n"
-"       | LIDENT '(' attribute-arguments ')'\n"
-"       | LIDENT '.' LIDENT '(' attribute-arguments ')'\n"
 
-#: ../../language/attributes.md:26
+#: ../../language/attributes.md:25
 msgid ""
 "Attributes have two categories: the built-in attributes and user-defined "
 "attributes. For example:"
 msgstr "アトリビュートには 2 種類あります。組み込みアトリビュートとユーザー定義アトリビュートです。例えば："
 
-#: ../../language/attributes.md:28
+#: ../../language/attributes.md:27
 msgid ""
 "#deprecated(\"message\")\n"
 "#custom.attribute(key=\"value\", flag=true)\n"
 msgstr ""
-"#deprecated(\"message\")\n"
-"#custom.attribute(key=\"value\", flag=true)\n"
 
 #: ../../language/attributes.md:32
 msgid ""
@@ -117,21 +103,22 @@ msgid ""
 "unnecessary complexity)."
 msgstr "私たちはコンパイル時コード生成を使うことを好みます。これにより静的型付けと性能の利点を保てます（ただし、不要な複雑さを避けるため慎重に使うべきです）。"
 
-#: ../../language/attributes.md:42
+#: ../../language/attributes/deprecated.md:2
 msgid "Deprecated Attribute"
 msgstr "非推奨アトリビュート"
 
-#: ../../language/attributes.md:44
+#: ../../language/attributes/deprecated.md:4
+#, fuzzy
 msgid ""
 "The `#deprecated` attribute is used to mark an API as deprecated. MoonBit"
-" emits  a warning when the deprecated API is used, and if the API is "
-"listed in completion,  it will be shown with a strikethrough style. For "
+" emits a warning when the deprecated API is used, and if the API is "
+"listed in completion, it will be shown with a strikethrough style. For "
 "example:"
 msgstr ""
 "`#deprecated` アトリビュートは API を非推奨としてマークするために使います。非推奨 API が使われると MoonBit "
 "は警告を出し、補完候補に表示される場合は取り消し線付きで示されます。例えば："
 
-#: ../../language/attributes.md:48
+#: ../../language/attributes/deprecated.md:8
 msgid ""
 "#deprecated\n"
 "pub fn foo() -> Unit {\n"
@@ -144,76 +131,113 @@ msgid ""
 "  Ctor2\n"
 "}\n"
 msgstr ""
-"#deprecated\n"
-"pub fn foo() -> Unit {\n"
-"  ...\n"
-"}\n"
-"\n"
-"#deprecated(\"Use Bar2 instead\")\n"
-"pub(all) enum Bar {\n"
-"  Ctor1\n"
-"  Ctor2\n"
-"}\n"
 
-#: ../../language/attributes.md:54
+#: ../../language/attributes/deprecated.md:14
 msgid "The `#deprecated` attribute can be used in the following contexts:"
 msgstr "`#deprecated` アトリビュートは次の文脈で使えます："
 
-#: ../../language/attributes.md:56
+#: ../../language/attributes/deprecated.md:16
 msgid "Top-level value declarations (including `fn`, `let`, and `const`)"
 msgstr "トップレベルの値宣言（`fn`、`let`、`const` を含む）"
 
-#: ../../language/attributes.md:57
+#: ../../language/attributes/deprecated.md:17
 msgid "Top-level type declarations (including `type`, `struct`, and `enum`)"
 msgstr "トップレベルの型宣言（`type`、`struct`、`enum` を含む）"
 
-#: ../../language/attributes.md:58
+#: ../../language/attributes/deprecated.md:18
 msgid "Trait method declarations"
 msgstr "trait メソッド宣言"
 
-#: ../../language/attributes.md:59
+#: ../../language/attributes/deprecated.md:19
 msgid "Trait default implementations"
 msgstr "trait のデフォルト実装"
 
-#: ../../language/attributes.md:61
-msgid "It has three forms:"
-msgstr "形式は 3 種類あります："
+#: ../../language/attributes/deprecated.md:21
+msgid "Common forms include:"
+msgstr "一般的な形式は次のとおりです："
 
-#: ../../language/attributes.md:63
+#: ../../language/attributes/deprecated.md:23
 msgid "`#deprecated`"
 msgstr "`#deprecated`"
 
-#: ../../language/attributes.md:65
+#: ../../language/attributes/deprecated.md:25
 msgid "Marks the item as deprecated with a default warning message."
 msgstr "項目を非推奨にし、デフォルトの警告メッセージを使います。"
 
-#: ../../language/attributes.md:67
+#: ../../language/attributes/deprecated.md:27
 msgid "`#deprecated(\"Use new_function instead\")`"
 msgstr "`#deprecated(\"Use new_function instead\")`"
 
-#: ../../language/attributes.md:69
+#: ../../language/attributes/deprecated.md:29
 msgid ""
 "Marks the item as deprecated with a custom warning message. Every time "
 "the deprecated API is used, the provided message will be displayed as a "
 "warning."
 msgstr "項目を非推奨にし、カスタム警告メッセージを使います。非推奨 API が使われるたびに、指定したメッセージが警告として表示されます。"
 
-#: ../../language/attributes.md:71
+#: ../../language/attributes/deprecated.md:31
 msgid "`#deprecated(\"Use new_function instead\", skip_current_package=true)`"
 msgstr "`#deprecated(\"Use new_function instead\", skip_current_package=true)`"
 
-#: ../../language/attributes.md:73
+#: ../../language/attributes/deprecated.md:33
 msgid ""
 "Marks the item as deprecated with a custom warning message, but skips "
 "emitting warnings when the deprecated API is used within the same "
 "package."
 msgstr "項目を非推奨にし、カスタム警告メッセージを使いますが、同じパッケージ内で非推奨 API が使われた場合は警告を出しません。"
 
-#: ../../language/attributes.md:75
+#: ../../language/attributes/deprecated.md:35
+#, fuzzy
+msgid "`#deprecated(skip_current_package=true)`"
+msgstr "`#deprecated(\"Use new_function instead\", skip_current_package=true)`"
+
+#: ../../language/attributes/deprecated.md:37
+#, fuzzy
+msgid ""
+"Marks the item as deprecated with a default warning message, but skips "
+"emitting warnings within the same package. When both a message and "
+"`skip_current_package` are present, either argument order is accepted."
+msgstr "項目を非推奨にし、カスタム警告メッセージを使いますが、同じパッケージ内で非推奨 API が使われた場合は警告を出しません。"
+
+#: ../../language/attributes/alert.md:2
+#, fuzzy
+msgid "Alert Attribute"
+msgstr "エイリアスアトリビュート"
+
+#: ../../language/attributes/alert.md:4
+msgid ""
+"The `#alert` attribute attaches a category and message to an API. When "
+"code uses the API, MoonBit emits an alert warning."
+msgstr "`#alert` アトリビュートは API にカテゴリとメッセージを付与します。その API が使われると、MoonBit は alert 警告を出します。"
+
+#: ../../language/attributes/alert.md:7
+#, fuzzy
+msgid ""
+"#alert(unsafe, \"This function is unsafe.\")\n"
+"fn[A] alert_unsafe_get(arr : Array[A], index : Int) -> A {\n"
+"  arr[index]\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/alert.md:13
+msgid ""
+"The first argument is the alert category, and the second argument is the "
+"message shown to users. The warning can be configured through warning "
+"names such as `alert` and `alert_unsafe`."
+msgstr "第 1 引数は alert のカテゴリで、第 2 引数はユーザーに表示されるメッセージです。この警告は `alert` や `alert_unsafe` などの警告名で設定できます。"
+
+#: ../../language/attributes/alert.md:17
+#, fuzzy
+msgid ""
+"For more detail, see [alert warning](/toolchain/moon/package.md#alert-"
+"warning)."
+msgstr "詳しくは [alert warning](/toolchain/moon/package.md#alert-warning) を参照してください。"
+
+#: ../../language/attributes/alias.md:2
 msgid "Alias Attribute"
 msgstr "エイリアスアトリビュート"
 
-#: ../../language/attributes.md:77
+#: ../../language/attributes/alias.md:4
 msgid ""
 "The `alias` attribute is used to overload operators related to indexing, "
 "or to create an alias name for a top-level function or variable. It has "
@@ -222,37 +246,37 @@ msgstr ""
 "`alias` アトリビュートは、添字に関係する演算子をオーバーロードしたり、トップレベル関数や変数に別名を付けたりするために使います。形式は 2"
 " 種類あります："
 
-#: ../../language/attributes.md:80
+#: ../../language/attributes/alias.md:6
 msgid ""
 "`#alias(\"op\")`: where `op` is one of the following strings representing"
 " the indexing operators:"
 msgstr "`#alias(\"op\")`。ここで `op` は次の添字演算子を表す文字列のいずれかです："
 
-#: ../../language/attributes.md:82
+#: ../../language/attributes/alias.md:8
 msgid "`_[_]`: for the indexing operator"
 msgstr "`_[_]`: 添字演算子"
 
-#: ../../language/attributes.md:83
+#: ../../language/attributes/alias.md:9
 msgid "`_[_]=_`: for the indexing assignment operator"
 msgstr "`_[_]=_`: 添字代入演算子"
 
-#: ../../language/attributes.md:84
+#: ../../language/attributes/alias.md:10
 msgid "`_[_:_]`: for the as view operator"
 msgstr "`_[_:_]`: as view 演算子"
 
-#: ../../language/attributes.md:86
+#: ../../language/attributes/alias.md:12
 msgid "`#alias(id)`: where `id` is a identifier representing the alias name."
 msgstr "`#alias(id)`。ここで `id` は別名を表す識別子です。"
 
-#: ../../language/attributes.md:88
+#: ../../language/attributes/alias.md:14
 msgid "Both forms allowed additional arguments:"
 msgstr "どちらの形式でも追加引数を指定できます："
 
-#: ../../language/attributes.md:90
+#: ../../language/attributes/alias.md:16
 msgid "`visibility=\"modifier\"`"
 msgstr "`visibility=\"modifier\"`"
 
-#: ../../language/attributes.md:92
+#: ../../language/attributes/alias.md:18
 msgid ""
 "A labeled argument, changes the visibility of the alias. The `modifier` "
 "can be `pub` or `priv`. If not specified, the alias will have the same "
@@ -261,178 +285,156 @@ msgstr ""
 "ラベル付き引数で、別名の可視性を変更します。`modifier` は `pub` または `priv` "
 "です。指定しない場合、別名の可視性は元の関数または変数と同じになります。"
 
-#: ../../language/attributes.md:94
+#: ../../language/attributes/alias.md:20
 msgid "`deprecated` or `deprecated=\"message\"`"
 msgstr "`deprecated` または `deprecated=\"message\"`"
 
-#: ../../language/attributes.md:96
+#: ../../language/attributes/alias.md:22
 msgid ""
 "Marks the alias as deprecated. If a message is provided, it will be "
 "displayed as a warning when the alias is used."
 msgstr "別名を非推奨としてマークします。メッセージを指定した場合、別名が使われると警告として表示されます。"
 
-#: ../../language/attributes.md:98
+#: ../../language/attributes/alias.md:24
+#, fuzzy
 msgid ""
 "To graceful migration from old API to new API, you can rename the old API"
 " directly, and create an alias with the old name, mark it as deprecated. "
-"For  example:"
+"For example:"
 msgstr "古い API から新しい API へ滑らかに移行するには、古い API を直接リネームし、古い名前の別名を作成して非推奨にできます。例えば："
 
-#: ../../language/attributes.md:101
+#: ../../language/attributes/alias.md:27
+#, fuzzy
 msgid ""
-"#alias(\"old_name\", deprecated)\n"
+"#alias(old_name, deprecated)\n"
 "fn new_name() -> Unit {\n"
-"  ...\n"
-"}"
+"  ()\n"
+"}\n"
 msgstr ""
-"#alias(\"old_name\", deprecated)\n"
-"fn new_name() -> Unit {\n"
-"  ...\n"
-"}"
 
-#: ../../language/attributes.md:109
+#: ../../language/attributes/label_migration.md:2
 msgid "`label_migration` Attribute"
 msgstr "`label_migration` アトリビュート"
 
-#: ../../language/attributes.md:111
+#: ../../language/attributes/label_migration.md:4
+#, fuzzy
 msgid ""
 "The `#label_migration` attribute is used to help you safely evolve your "
-"API  by warning users during the transition period."
+"API by warning users during the transition period."
 msgstr "`#label_migration` アトリビュートは、移行期間中にユーザーへ警告することで、API を安全に進化させるのに役立ちます。"
 
-#: ../../language/attributes.md:114
+#: ../../language/attributes/label_migration.md:7
 msgid "It has three following forms:"
 msgstr "形式は次の 3 種類です："
 
-#: ../../language/attributes.md:116
+#: ../../language/attributes/label_migration.md:9
 msgid "`#label_migration(id, fill=true, msg=\"message\")`"
 msgstr "`#label_migration(id, fill=true, msg=\"message\")`"
 
-#: ../../language/attributes.md:118
+#: ../../language/attributes/label_migration.md:11
+#, fuzzy
 msgid ""
 "The `fill` argument is used when you want to refactor an optional "
 "parameter. You can use `fill=true` when you want to eventually make an "
-"optional  parameter required. You can use `fill=false` when you want to "
-"eventually  remove an optional parameter."
+"optional parameter required. You can use `fill=false` when you want to "
+"eventually remove an optional parameter."
 msgstr ""
 "`fill` 引数は、オプション引数をリファクタリングしたいときに使います。将来的にオプション引数を必須にしたい場合は `fill=true` "
 "を使えます。将来的にオプション引数を削除したい場合は `fill=false` を使えます。"
 
-#: ../../language/attributes.md:123 ../../language/attributes.md:143
-#: ../../language/attributes.md:162
+#: ../../language/attributes/label_migration.md:16
+#: ../../language/attributes/label_migration.md:31
+#: ../../language/attributes/label_migration.md:46
 msgid ""
 "The `msg` argument is an string that provides additional information "
 "about the migration."
 msgstr "`msg` 引数は、移行に関する追加情報を提供する文字列です。"
 
-#: ../../language/attributes.md:125
+#: ../../language/attributes/label_migration.md:18
+#, fuzzy
 msgid ""
 "#label_migration(x, fill=true)\n"
 "#label_migration(y, fill=false)\n"
-"fn f(x?: Int = 0, y?: Int = 1) -> Unit { ... }\n"
-"fn main {\n"
-"  f(x=1, y=1) // warn on y being filled\n"
-"  f()         // warn on x not being filled\n"
-"}"
+"fn label_migration_fill(x? : Int = 0, y? : Int = 1) -> Int {\n"
+"  x + y\n"
+"}\n"
 msgstr ""
-"#label_migration(x, fill=true)\n"
-"#label_migration(y, fill=false)\n"
-"fn f(x?: Int = 0, y?: Int = 1) -> Unit { ... }\n"
-"fn main {\n"
-"  f(x=1, y=1) // warn on y being filled\n"
-"  f()         // warn on x not being filled\n"
-"}"
 
-#: ../../language/attributes.md:136
+#: ../../language/attributes/label_migration.md:24
 msgid "`#label_migration(id, allow_positional=true, msg=\"message\")`"
 msgstr "`#label_migration(id, allow_positional=true, msg=\"message\")`"
 
-#: ../../language/attributes.md:138
+#: ../../language/attributes/label_migration.md:26
+#, fuzzy
 msgid ""
 "The `allow_positional` argument is used when you want a labelled "
-"parameter to be  used without its label being provided. When the "
-"parameter is used positionally  (without a label), the compiler reports a"
-" warning. This is useful when you want to change a positional parameter "
-"to a labelled parameter without breaking the downstream code."
+"parameter to be used without its label being provided. When the parameter"
+" is used positionally (without a label), the compiler reports a warning. "
+"This is useful when you want to change a positional parameter to a "
+"labelled parameter without breaking the downstream code."
 msgstr ""
 "`allow_positional` "
 "引数は、ラベル付き引数をラベルなしで使えるようにしたいときに使います。引数が位置引数として（ラベルなしで）使われると、コンパイラは警告を出します。これは、下流コードを壊さずに位置引数をラベル付き引数へ変更したいときに有用です。"
 
-#: ../../language/attributes.md:145
+#: ../../language/attributes/label_migration.md:33
 msgid ""
 "#label_migration(x, allow_positional=true)\n"
-"fn f(x~: Int) -> Unit { ... }\n"
-"\n"
-"fn main {\n"
-"  f(42) // warn on positional argument 42 used without label\n"
-"}"
+"fn label_migration_allow_positional(x~ : Int) -> Int {\n"
+"  x\n"
+"}\n"
 msgstr ""
-"#label_migration(x, allow_positional=true)\n"
-"fn f(x~: Int) -> Unit { ... }\n"
-"\n"
-"fn main {\n"
-"  f(42) // warn on positional argument 42 used without label\n"
-"}"
 
-#: ../../language/attributes.md:155
+#: ../../language/attributes/label_migration.md:39
 msgid "`#label_migration(id, alias=new_id, msg=\"message\")`"
 msgstr "`#label_migration(id, alias=new_id, msg=\"message\")`"
 
-#: ../../language/attributes.md:157
+#: ../../language/attributes/label_migration.md:41
+#, fuzzy
 msgid ""
 "The alias argument allows you to provide an alternative name to a "
 "labelled parameter. This is useful when renaming a parameter to maintain "
-"backward  compatibility. If a warning message is provided, the compiler "
-"warns when  using the alias; otherwise, the alias can be used without "
+"backward compatibility. If a warning message is provided, the compiler "
+"warns when using the alias; otherwise, the alias can be used without "
 "warnings."
 msgstr ""
 "`alias` "
 "引数は、ラベル付き引数に別名を付けるために使えます。これは、後方互換性を保ちながら引数名を変更したい場合に有用です。警告メッセージを指定すると、別名を使ったときにコンパイラが警告を出します。指定しない場合、別名は警告なしで使えます。"
 
-#: ../../language/attributes.md:164
+#: ../../language/attributes/label_migration.md:48
+#, fuzzy
 msgid ""
 "#label_migration(x, alias=xx)\n"
 "#label_migration(x, alias=y, msg=\"warning\")\n"
-"fn f(x~: Int) -> Unit { ... }\n"
-"\n"
-"fn main {\n"
-"  f(xx=42) // no warning\n"
-"  f(y=42)  // warning\n"
-"}"
+"fn label_migration_alias(x~ : Int) -> Int {\n"
+"  x\n"
+"}\n"
 msgstr ""
-"#label_migration(x, alias=xx)\n"
-"#label_migration(x, alias=y, msg=\"warning\")\n"
-"fn f(x~: Int) -> Unit { ... }\n"
-"\n"
-"fn main {\n"
-"  f(xx=42) // no warning\n"
-"  f(y=42)  // warning\n"
-"}"
 
-#: ../../language/attributes.md:176
+#: ../../language/attributes/visibility.md:2
 msgid "Visibility Attribute"
 msgstr "可視性アトリビュート"
 
-#: ../../language/attributes.md:179
+#: ../../language/attributes/visibility.md:5
+#, fuzzy
 msgid ""
 "This topic does not covered the access control. To learn more about "
-"`pub`, `pub(all)` and `priv`, see [Access Control](./packages.md#access-"
-"control)."
-msgstr ""
-"このトピックではアクセス制御は扱いません。`pub`、`pub(all)`、`priv` について詳しくは [Access "
-"Control](./packages.md#access-control) を参照してください。"
+"`pub`, `pub(all)` and `priv`, see [Access Control](/language/packages.md"
+"#access-control)."
+msgstr "このトピックではアクセス制御は扱いません。`pub`、`pub(all)`、`priv` について詳しくは [Access Control](/language/packages.md#access-control) を参照してください。"
 
-#: ../../language/attributes.md:182
+#: ../../language/attributes/visibility.md:8
+#, fuzzy
 msgid ""
 "The `#visibility` attribute is similar to the `#deprecated` attribute, "
 "but it is used to hint that a type will change its visibility in the "
-"future.  For outside usages, if the usage will be invalidated by the "
+"future. For outside usages, if the usage will be invalidated by the "
 "visibility change in future, a warning will be emitted."
 msgstr ""
 "`#visibility` アトリビュートは `#deprecated` "
 "に似ていますが、型の可視性が将来変わることを示すために使います。外部からの利用については、将来の可視性変更で無効になる場合、警告が出ます。"
 
-#: ../../language/attributes.md:185
+#: ../../language/attributes/visibility.md:11
+#, fuzzy
 msgid ""
 "// in @util package\n"
 "#visibility(change_to=\"readonly\", \"Point will be readonly in the "
@@ -459,7 +461,7 @@ msgid ""
 "\n"
 "// in another package\n"
 "fn main {\n"
-"  let p = Point::{ x: 1, y: 2 } // warning \n"
+"  let p = Point::{ x: 1, y: 2 } // warning\n"
 "  let { x, y } = p // ok\n"
 "  println(p.x) // ok\n"
 "  match Resource::Text(\"\") { // warning\n"
@@ -469,48 +471,15 @@ msgid ""
 "}\n"
 "\n"
 msgstr ""
-"// in @util package\n"
-"#visibility(change_to=\"readonly\", \"Point will be readonly in the "
-"future.\")\n"
-"pub(all) struct Point {\n"
-"  x : Int\n"
-"  y : Int\n"
-"}\n"
-"\n"
-"#visibility(change_to=\"abstract\", \"Use new_text and new_binary "
-"instead.\")\n"
-"pub(all) enum Resource {\n"
-"  Text(String)\n"
-"  Binary(Bytes)\n"
-"}\n"
-"\n"
-"pub fn new_text(str : String) -> Resource {\n"
-"  ...\n"
-"}\n"
-"\n"
-"pub fn new_binary(bytes : Bytes) -> Resource {\n"
-"  ...\n"
-"}\n"
-"\n"
-"// in another package\n"
-"fn main {\n"
-"  let p = Point::{ x: 1, y: 2 } // warning \n"
-"  let { x, y } = p // ok\n"
-"  println(p.x) // ok\n"
-"  match Resource::Text(\"\") { // warning\n"
-"    Text(s) => ... // waning\n"
-"    Binary(b) => ... // warning\n"
-"  }\n"
-"}\n"
-"\n"
 
-#: ../../language/attributes.md:191
+#: ../../language/attributes/visibility.md:17
+#, fuzzy
 msgid ""
-"The `#visibility` attribute takes two arguments: `change_to` and "
-"`message`."
+"The `#visibility` attribute takes a required `change_to` argument and an "
+"optional `message` argument."
 msgstr "`#visibility` アトリビュートは `change_to` と `message` の 2 つの引数を取ります。"
 
-#: ../../language/attributes.md:193
+#: ../../language/attributes/visibility.md:20
 msgid ""
 "The `change_to` argument is a string that indicates the new visibility of"
 " the type. It can be either `\"abstract\"` or `\"readonly\"`."
@@ -518,158 +487,181 @@ msgstr ""
 "`change_to` 引数は、型の新しい可視性を表す文字列です。値は `\"abstract\"` または `\"readonly\"` "
 "のどちらかです。"
 
-#: ../../language/attributes.md:185
+#: ../../language/attributes.md:11
 msgid "`change_to`"
 msgstr "`change_to`"
 
-#: ../../language/attributes.md:185
+#: ../../language/attributes.md:11
 msgid "Invalidated Usages"
 msgstr "無効になる使い方"
 
-#: ../../language/attributes.md:185
+#: ../../language/attributes.md:11
 msgid "`\"readonly\"`"
 msgstr "`\"readonly\"`"
 
-#: ../../language/attributes.md:185
+#: ../../language/attributes.md:11
 msgid "Creating an instance of the type or mutating the fields of the instance."
 msgstr "型のインスタンスを生成すること、またはそのフィールドを変更すること。"
 
-#: ../../language/attributes.md:185
+#: ../../language/attributes.md:11
 msgid "`\"abstract\"`"
 msgstr "`\"abstract\"`"
 
-#: ../../language/attributes.md:185
+#: ../../language/attributes.md:11
 msgid ""
 "Creating an instance of the type, mutating the fields of the instance, "
 "pattern matching, or accessing fields by label."
 msgstr "型のインスタンスを生成すること、インスタンスのフィールドを変更すること、パターンマッチ、またはラベルによるフィールドアクセス。"
 
-#: ../../language/attributes.md:200
+#: ../../language/attributes/visibility.md:27
+#, fuzzy
 msgid ""
-"The `message` argument is a string that provides additional information "
-"about the visibility change."
+"The optional `message` argument is a string that provides additional "
+"information about the visibility change."
 msgstr "`message` 引数は、可視性の変更に関する追加情報を提供する文字列です。"
 
-#: ../../language/attributes.md:202
+#: ../../language/attributes/internal.md:2
 msgid "Internal Attribute"
 msgstr "内部アトリビュート"
 
-#: ../../language/attributes.md:204
+#: ../../language/attributes/internal.md:4
+#, fuzzy
 msgid ""
 "The `#internal` attribute is used to mark a function, type, or trait as "
-"internal.  Any usage of the internal function or type in other modules "
+"internal. Any usage of the internal function or type in other modules "
 "will emit an alert warning."
 msgstr ""
 "`#internal` アトリビュートは、関数・型・trait "
 "を内部用としてマークするために使います。他のモジュールから内部関数や内部型を使うと、警告が出ます。"
 
-#: ../../language/attributes.md:207
+#: ../../language/attributes/internal.md:7
+#, fuzzy
 msgid ""
 "#internal(unsafe, \"This is an unsafe function\")\n"
-"fn unsafe_get[A](arr : Array[A]) -> A {\n"
-"  ...\n"
-"}"
+"fn[A] internal_unsafe_get(arr : Array[A], index : Int) -> A {\n"
+"  arr[index]\n"
+"}\n"
 msgstr ""
-"#internal(unsafe, \"This is an unsafe function\")\n"
-"fn unsafe_get[A](arr : Array[A]) -> A {\n"
-"  ...\n"
-"}"
 
-#: ../../language/attributes.md:215
+#: ../../language/attributes/internal.md:13
+#, fuzzy
 msgid ""
-"The internal attribute takes two arguments: `category` and `message`.  "
-"`category` is a identifier that indicates the category of the alert, and "
-"`message` is a string that provides additional message for the alert."
+"The internal attribute takes a required `category` argument and an "
+"optional `message` argument. `category` is a identifier that indicates "
+"the category of the alert, and `message` is a string that provides "
+"additional message for the alert."
 msgstr ""
 "内部アトリビュートは `category` と `message` の 2 つの引数を取ります。`category` "
 "は警告のカテゴリを表す識別子で、`message` は警告に関する追加メッセージを与える文字列です。"
 
-#: ../../language/attributes.md:218
+#: ../../language/attributes/internal.md:18
+#, fuzzy
 msgid ""
 "The alert warnings can be turn off by setting the `warn-list` in "
 "`moon.pkg`. For more detail, see [alert "
-"warning](../toolchain/moon/package.md#alert-warning)."
-msgstr ""
-"警告は `moon.pkg` の `warn-list` を設定することで無効化できます。詳しくは [alert "
-"warning](../toolchain/moon/package.md#alert-warning) を参照してください。"
+"warning](/toolchain/moon/package.md#alert-warning)."
+msgstr "alert 警告は `moon.pkg` の `warn-list` を設定することで無効化できます。詳しくは [alert warning](/toolchain/moon/package.md#alert-warning) を参照してください。"
 
-#: ../../language/attributes.md:221
+#: ../../language/attributes/doc_hidden.md:2
+#, fuzzy
+msgid "Doc Hidden Attribute"
+msgstr "モジュールアトリビュート"
+
+#: ../../language/attributes/doc_hidden.md:4
+msgid "The `#doc(hidden)` attribute hides an API from generated documentation."
+msgstr "`#doc(hidden)` アトリビュートは生成されるドキュメントから API を隠します。"
+
+#: ../../language/attributes/doc_hidden.md:6
+msgid ""
+"#doc(hidden)\n"
+"pub fn hidden_helper() -> Unit {\n"
+"  ()\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/doc_hidden.md:12
+msgid ""
+"Use it for public declarations that must remain available to code but "
+"should not be shown as part of the documented API surface."
+msgstr "コードからは利用可能なままにする必要がある一方で、ドキュメント化された API としては表示したくない公開宣言に使います。"
+
+#: ../../language/attributes/warnings.md:2
 msgid "Warnings Attribute"
 msgstr "警告アトリビュート"
 
-#: ../../language/attributes.md:223
+#: ../../language/attributes/warnings.md:4
+#, fuzzy
 msgid ""
 "The `#warnings` attribute is used to configure warning settings for a "
-"specific  top-level declaration. It can enable, disable or treat an "
-"enabled warning as error  for specific warnings in that declaration."
+"specific top-level declaration. It can enable, disable or treat an "
+"enabled warning as error for specific warnings in that declaration."
 msgstr ""
 "`#warnings` "
 "アトリビュートは、特定のトップレベル宣言に対する警告設定を構成するために使います。その宣言内の特定の警告について、有効化・無効化・有効な警告をエラー扱いにすることができます。"
 
-#: ../../language/attributes.md:227
+#: ../../language/attributes/warnings.md:8
+#, fuzzy
 msgid ""
 "The argument is a string that specifies the warning list. It can contain "
-"multiple  warning names, each prefixed with a sign:"
+"multiple warning names, each prefixed with a sign:"
 msgstr "引数は警告リストを指定する文字列です。複数の警告名を含められ、それぞれの前に記号を付けます："
 
-#: ../../language/attributes.md:230
+#: ../../language/attributes/warnings.md:11
+#, fuzzy
 msgid ""
-"#warnings(\"-unused_value@deprecated\")\n"
-"fn f() -> Unit {\n"
-"  let x = 42 \n"
-"}"
+"#warnings(\"-unused_value\")\n"
+"fn warnings_example() -> Unit {\n"
+"  let x = 42\n"
+"}\n"
 msgstr ""
-"#warnings(\"-unused_value@deprecated\")\n"
-"fn f() -> Unit {\n"
-"  let x = 42 \n"
-"}"
 
-#: ../../language/attributes.md:237
+#: ../../language/attributes/warnings.md:17
 msgid "The prefixes have the following meanings:"
 msgstr "プレフィックスの意味は次のとおりです："
 
-#: ../../language/attributes.md:239
+#: ../../language/attributes/warnings.md:19
 msgid "`+warning_name`: enable the warning"
 msgstr "`+warning_name`: 警告を有効化"
 
-#: ../../language/attributes.md:240
+#: ../../language/attributes/warnings.md:20
 msgid "`-warning_name`: disable the warning"
 msgstr "`-warning_name`: 警告を無効化"
 
-#: ../../language/attributes.md:241
+#: ../../language/attributes/warnings.md:21
 msgid "`@warning_name`: treat a enabled warning as an error"
 msgstr "`@warning_name`: 有効な警告をエラーとして扱う"
 
-#: ../../language/attributes.md:243
+#: ../../language/attributes/warnings.md:23
 msgid "Currently this attribute only works with some specific warnings."
 msgstr "現在、このアトリビュートは一部の特定の警告にのみ対応しています。"
 
-#: ../../language/attributes.md:245
+#: ../../language/attributes/warnings.md:25
+#, fuzzy
 msgid ""
 "To learn more about warning names, see [warning "
-"list](../toolchain/moon/package.md#warnings-list)."
-msgstr ""
-"警告名について詳しくは [warning list](../toolchain/moon/package.md#warnings-list) "
-"を参照してください。"
+"list](/toolchain/moon/package.md#warnings-list)."
+msgstr "警告名について詳しくは [warning list](/toolchain/moon/package.md#warnings-list) を参照してください。"
 
-#: ../../language/attributes.md:247
+#: ../../language/attributes/must_implement_one.md:2
 msgid "Must Implement One Attribute"
 msgstr "Must Implement One アトリビュート"
 
-#: ../../language/attributes.md:249
+#: ../../language/attributes/must_implement_one.md:4
 msgid ""
 "The `#must_implement_one` attribute is used on traits to require that "
 "each implementation explicitly defines at least one method, instead of "
 "relying only on default method implementations."
-msgstr "`#must_implement_one` アトリビュートは trait に付けて、各実装がデフォルトメソッド実装だけに依存せず、少なくとも 1 つのメソッドを明示的に定義することを要求します。"
+msgstr ""
+"`#must_implement_one` アトリビュートは trait に付けて、各実装がデフォルトメソッド実装だけに依存せず、少なくとも 1 "
+"つのメソッドを明示的に定義することを要求します。"
 
-#: ../../language/attributes.md:253
+#: ../../language/attributes/must_implement_one.md:8
 msgid ""
 "Without arguments, at least one method of the trait must be explicitly "
 "implemented:"
 msgstr "引数を指定しない場合、その trait の少なくとも 1 つのメソッドを明示的に実装する必要があります："
 
-#: ../../language/attributes.md:256
+#: ../../language/attributes/must_implement_one.md:11
 msgid ""
 "#must_implement_one\n"
 "pub(open) trait RequireAnyMethod {\n"
@@ -686,13 +678,13 @@ msgid ""
 "impl RequireAnyMethod for AnyImpl with f(_) {}\n"
 msgstr ""
 
-#: ../../language/attributes.md:262
+#: ../../language/attributes/must_implement_one.md:17
 msgid ""
 "With method names, at least one of the listed methods must be explicitly "
 "implemented:"
 msgstr "メソッド名を指定した場合、列挙されたメソッドのうち少なくとも 1 つを明示的に実装する必要があります："
 
-#: ../../language/attributes.md:265
+#: ../../language/attributes/must_implement_one.md:20
 msgid ""
 "#must_implement_one(f, g)\n"
 "pub(open) trait RequireSelectedMethod {\n"
@@ -712,60 +704,97 @@ msgid ""
 "impl RequireSelectedMethod for SelectedImpl with g(_) {}\n"
 msgstr ""
 
-#: ../../language/attributes.md:271
+#: ../../language/attributes/must_implement_one.md:26
 msgid ""
 "Multiple `#must_implement_one` attributes can be used on the same trait "
 "to require explicit implementations from multiple method groups."
-msgstr "同じ trait に複数の `#must_implement_one` アトリビュートを付けることで、複数のメソッドグループから明示的な実装を要求できます。"
+msgstr ""
+"同じ trait に複数の `#must_implement_one` "
+"アトリビュートを付けることで、複数のメソッドグループから明示的な実装を要求できます。"
 
-#: ../../language/attributes.md:274
+#: ../../language/attributes/inline.md:2
+#, fuzzy
+msgid "Inline Attribute"
+msgstr "エイリアスアトリビュート"
+
+#: ../../language/attributes/inline.md:4
+msgid ""
+"The `#inline` attribute is an optimization hint for a function. It asks "
+"the compiler to inline the function when possible:"
+msgstr "`#inline` アトリビュートは関数に対する最適化ヒントです。可能であればその関数をインライン化するようコンパイラに依頼します："
+
+#: ../../language/attributes/inline.md:7
+msgid ""
+"#inline\n"
+"fn add_one(x : Int) -> Int {\n"
+"  x + 1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/inline.md:13
+msgid "Use `#inline(never)` to ask the compiler not to inline a function:"
+msgstr "`#inline(never)` を使うと、関数をインライン化しないようコンパイラに依頼できます："
+
+#: ../../language/attributes/inline.md:15
+msgid ""
+"#inline(never)\n"
+"fn keep_stack_frame(x : Int) -> Int {\n"
+"  x + 1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/inline.md:21
+msgid ""
+"These attributes are hints. They do not change the source-level behavior "
+"of the function."
+msgstr "これらのアトリビュートはヒントです。関数のソースレベルの振る舞いは変わりません。"
+
+#: ../../language/attributes/external.md:2
 msgid "External Attribute"
 msgstr "外部アトリビュート"
 
-#: ../../language/attributes.md:276
+#: ../../language/attributes/external.md:4
 msgid ""
 "The `#external` attribute is used to mark an abstract type as external "
 "type."
 msgstr "`#external` アトリビュートは、抽象型を外部型としてマークするために使います。"
 
-#: ../../language/attributes.md:278
+#: ../../language/attributes/external.md:6
 msgid "For Wasm and Wasm GC backends, it would be interpreted as `externref`."
 msgstr "Wasm および Wasm GC バックエンドでは、これは `externref` と解釈されます。"
 
-#: ../../language/attributes.md:279
+#: ../../language/attributes/external.md:7
 msgid "For JavaScript backend, it would be interpreted as `any`."
 msgstr "JavaScript バックエンドでは、これは `any` と解釈されます。"
 
-#: ../../language/attributes.md:280
+#: ../../language/attributes/external.md:8
 msgid "For native backends, it would be interpreted as `void*`."
 msgstr "ネイティブバックエンドでは、これは `void*` と解釈されます。"
 
-#: ../../language/attributes.md:282
+#: ../../language/attributes/external.md:10
+#, fuzzy
 msgid ""
 "#external\n"
-"type Ptr"
+"type AttrPtr\n"
 msgstr ""
-"#external\n"
-"type Ptr"
 
-#: ../../language/attributes.md:288
+#: ../../language/attributes/borrow_and_owned.md:2
 msgid "Borrow and Owned Attribute"
 msgstr "Borrow/Owned アトリビュート"
 
-#: ../../language/attributes.md:290
+#: ../../language/attributes/borrow_and_owned.md:4
+#, fuzzy
 msgid ""
 "The `#borrow` and `#owned` attribute is used to indicate that a FFI takes"
-" ownership of its arguments. For more detail, see [FFI](./ffi.md#the-"
-"borrow-and-owned-attribute)."
-msgstr ""
-"`#borrow` と `#owned` アトリビュートは、FFI が引数の所有権を受け取ることを示すために使います。詳しくは "
-"[FFI](./ffi.md#the-borrow-and-owned-attribute) を参照してください。"
+" ownership of its arguments. For more detail, see [FFI](/language/ffi.md"
+"#the-borrow-and-owned-attribute)."
+msgstr "`#borrow` と `#owned` アトリビュートは、FFI が引数の所有権を受け取ることを示すために使います。詳しくは [FFI](/language/ffi.md#the-borrow-and-owned-attribute) を参照してください。"
 
-#: ../../language/attributes.md:292
+#: ../../language/attributes/as_free_fn.md:2
 msgid "`as_free_fn` Attribute"
 msgstr "`as_free_fn` アトリビュート"
 
-#: ../../language/attributes.md:294
+#: ../../language/attributes/as_free_fn.md:4
 msgid ""
 "The `#as_free_fn` attribute is used to mark a method that it is declared "
 "as a free function as well. It can also change the visibility of the free"
@@ -775,7 +804,7 @@ msgstr ""
 "`#as_free_fn` アトリビュートは、メソッドを free 関数としても宣言することを示すために使います。free "
 "関数の可視性や名前を変更したり、別個の非推奨警告を与えたりすることもできます。"
 
-#: ../../language/attributes.md:297
+#: ../../language/attributes/as_free_fn.md:7
 msgid ""
 "#as_free_fn(dec, visibility=\"pub\", deprecated=\"use `Int::decrement` "
 "instead\")\n"
@@ -789,29 +818,18 @@ msgid ""
 "  let _ = (10).decrement()\n"
 "}\n"
 msgstr ""
-"#as_free_fn(dec, visibility=\"pub\", deprecated=\"use `Int::decrement` "
-"instead\")\n"
-"#as_free_fn(visibility=\"pub\")\n"
-"fn Int::decrement(i : Self) -> Self {\n"
-"  i - 1\n"
-"}\n"
-"\n"
-"test {\n"
-"  let _ = decrement(10)\n"
-"  let _ = (10).decrement()\n"
-"}\n"
 
-#: ../../language/attributes.md:303
+#: ../../language/attributes/callsite.md:2
 msgid "Callsite Attribute"
 msgstr "Callsite アトリビュート"
 
-#: ../../language/attributes.md:305
+#: ../../language/attributes/callsite.md:4
 msgid ""
 "The `#callsite` attribute is used to mark properties that happen at "
 "callsite."
 msgstr "`#callsite` アトリビュートは、呼び出し元で起こる属性を示すために使います。"
 
-#: ../../language/attributes.md:307
+#: ../../language/attributes/callsite.md:6
 msgid ""
 "It could be `autofill`, which is to autofill the arguments [SourceLoc and"
 " ArgLoc](/language/fundamentals.md#autofill-arguments) at callsite."
@@ -819,62 +837,148 @@ msgstr ""
 "`autofill` を指定でき、呼び出し元で引数 [SourceLoc と ArgLoc](/language/fundamentals.md"
 "#autofill-arguments) を自動補完します。"
 
-#: ../../language/attributes.md:310
+#: ../../language/attributes/skip.md:2
 msgid "Skip Attribute"
 msgstr "Skip アトリビュート"
 
-#: ../../language/attributes.md:312
+#: ../../language/attributes/skip.md:4
+#, fuzzy
 msgid ""
-"The `#skip` attribute is used to skip a single test block. The type "
-"checking will still be performed."
+"The `#skip` attribute is used to skip a single test block. It can be "
+"written as `#skip` or with a reason, such as `#skip(\"blocked by external"
+" service\")`. The type checking will still be performed."
 msgstr "`#skip` アトリビュートは 1 つの test ブロックをスキップするために使います。型チェックは引き続き行われます。"
 
-#: ../../language/attributes.md:314
+#: ../../language/attributes/coverage_skip.md:2
+#, fuzzy
+msgid "Coverage Skip Attribute"
+msgstr "Skip アトリビュート"
+
+#: ../../language/attributes/coverage_skip.md:4
+msgid ""
+"The `#coverage.skip` attribute skips coverage operations within a "
+"function."
+msgstr "`#coverage.skip` アトリビュートは関数内のカバレッジ操作をスキップします。"
+
+#: ../../language/attributes/coverage_skip.md:6
+msgid ""
+"#coverage.skip\n"
+"fn platform_specific_helper() -> Unit {\n"
+"  ()\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/coverage_skip.md:12
+msgid ""
+"Use it for functions that should not affect coverage reports, such as "
+"platform-specific fallback code or code paths that are intentionally "
+"excluded from coverage measurement. For more detail, see [Skipping "
+"coverage](/toolchain/moon/coverage.md#skipping-coverage)."
+msgstr "プラットフォーム固有のフォールバックコードや、意図的にカバレッジ測定から除外するコードパスなど、カバレッジレポートに影響させたくない関数に使います。詳しくは [Skipping coverage](/toolchain/moon/coverage.md#skipping-coverage) を参照してください。"
+
+#: ../../language/attributes/cfg.md:2
 msgid "Configuration attribute"
 msgstr "設定アトリビュート"
 
-#: ../../language/attributes.md:316
+#: ../../language/attributes/cfg.md:4
 msgid ""
 "The `#cfg` attribute is used to perform conditional compilation. Examples"
 " are:"
 msgstr "`#cfg` アトリビュートは条件付きコンパイルを行うために使います。例は次のとおりです："
 
-#: ../../language/attributes.md:320
+#: ../../language/attributes/cfg.md:8
 msgid ""
 "#cfg(true)\n"
+"fn cfg_true() -> Unit {\n"
+"  ()\n"
+"}\n"
+"\n"
 "#cfg(false)\n"
+"fn cfg_false() -> Unit {\n"
+"  ()\n"
+"}\n"
+"\n"
 "#cfg(target=\"wasm\")\n"
+"fn cfg_wasm() -> Unit {\n"
+"  ()\n"
+"}\n"
+"\n"
 "#cfg(not(target=\"wasm\"))\n"
+"fn cfg_not_wasm() -> Unit {\n"
+"  ()\n"
+"}\n"
+"\n"
 "#cfg(all(target=\"wasm\", true))\n"
+"fn cfg_all() -> Unit {\n"
+"  ()\n"
+"}\n"
+"\n"
 "#cfg(any(target=\"wasm\", target=\"native\"))\n"
+"fn cfg_any() -> Unit {\n"
+"  ()\n"
+"}\n"
 msgstr ""
-"#cfg(true)\n"
-"#cfg(false)\n"
-"#cfg(target=\"wasm\")\n"
-"#cfg(not(target=\"wasm\"))\n"
-"#cfg(all(target=\"wasm\", true))\n"
-"#cfg(any(target=\"wasm\", target=\"native\"))\n"
 
-#: ../../language/attributes.md:329
+#: ../../language/attributes/module.md:2
 msgid "Module attribute"
 msgstr "モジュールアトリビュート"
 
-#: ../../language/attributes.md:331
+#: ../../language/attributes/module.md:4
 msgid ""
 "The `module` attribute is used to declare the module dependency for "
 "JavaScript backend."
 msgstr "`module` アトリビュートは、JavaScript バックエンド向けのモジュール依存を宣言するために使います。"
 
-#: ../../language/attributes.md:333
+#: ../../language/attributes/module.md:6
 msgid ""
 "In `cjs` format, it is interpreted as `require`, and in `esm` format, it "
 "is interpreted as `import`."
 msgstr "`cjs` 形式では `require` として解釈され、`esm` 形式では `import` として解釈されます。"
 
-#: ../../language/attributes.md:336
+#: ../../language/attributes/module.md:10
 msgid ""
-"#module(\"node:fs\")\n"
-"pub fn write_file_sync(file : String, data : String) = \"writeFileSync\"\n"
+"#module(\"math-utils\")\n"
+"pub extern \"js\" fn add_from_module(x : Int, y : Int) -> Int = \"add\"\n"
 msgstr ""
-"#module(\"node:fs\")\n"
-"pub fn write_file_sync(file : String, data : String) = \"writeFileSync\"\n"
+
+#~ msgid "It has three forms:"
+#~ msgstr "形式は 3 種類あります："
+
+#~ msgid ""
+#~ "#label_migration(x, allow_positional=true)\n"
+#~ "fn f(x~: Int) -> Unit { ... }\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  f(42) // warn on positional argument 42 used without label\n"
+#~ "}"
+#~ msgstr ""
+#~ "#label_migration(x, allow_positional=true)\n"
+#~ "fn f(x~: Int) -> Unit { ... }\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  f(42) // warn on positional argument 42 used without label\n"
+#~ "}"
+
+#~ msgid ""
+#~ "#cfg(true)\n"
+#~ "#cfg(false)\n"
+#~ "#cfg(target=\"wasm\")\n"
+#~ "#cfg(not(target=\"wasm\"))\n"
+#~ "#cfg(all(target=\"wasm\", true))\n"
+#~ "#cfg(any(target=\"wasm\", target=\"native\"))\n"
+#~ msgstr ""
+#~ "#cfg(true)\n"
+#~ "#cfg(false)\n"
+#~ "#cfg(target=\"wasm\")\n"
+#~ "#cfg(not(target=\"wasm\"))\n"
+#~ "#cfg(all(target=\"wasm\", true))\n"
+#~ "#cfg(any(target=\"wasm\", target=\"native\"))\n"
+
+#~ msgid ""
+#~ "#module(\"node:fs\")\n"
+#~ "pub fn write_file_sync(file : String, "
+#~ "data : String) = \"writeFileSync\"\n"
+#~ msgstr ""
+#~ "#module(\"node:fs\")\n"
+#~ "pub fn write_file_sync(file : String, "
+#~ "data : String) = \"writeFileSync\"\n"

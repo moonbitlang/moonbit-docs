@@ -1,0 +1,86 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-21 14:57+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/must_implement_one.md:1
+msgid "Must Implement One Attribute"
+msgstr "Must Implement One 属性"
+
+#: ../../language/attributes/must_implement_one.md:3
+msgid ""
+"The `#must_implement_one` attribute is used on traits to require that "
+"each implementation explicitly defines at least one method, instead of "
+"relying only on default method implementations."
+msgstr "`#must_implement_one` 属性用于 trait，要求每个实现都显式定义至少一个方法，而不是只依赖默认方法实现。"
+
+#: ../../language/attributes/must_implement_one.md:7
+msgid ""
+"Without arguments, at least one method of the trait must be explicitly "
+"implemented:"
+msgstr "不带参数时，必须显式实现该 trait 的至少一个方法："
+
+#: ../../language/attributes/must_implement_one.md:10
+msgid ""
+"#must_implement_one\n"
+"pub(open) trait RequireAnyMethod {\n"
+"  f(Self) -> Unit = _\n"
+"  g(Self) -> Unit = _\n"
+"}\n"
+"\n"
+"impl RequireAnyMethod with f(_) {}\n"
+"\n"
+"impl RequireAnyMethod with g(_) {}\n"
+"\n"
+"type AnyImpl\n"
+"\n"
+"impl RequireAnyMethod for AnyImpl with f(_) {}\n"
+msgstr ""
+
+#: ../../language/attributes/must_implement_one.md:16
+msgid ""
+"With method names, at least one of the listed methods must be explicitly "
+"implemented:"
+msgstr "带方法名时，必须显式实现列出的方法中的至少一个："
+
+#: ../../language/attributes/must_implement_one.md:19
+msgid ""
+"#must_implement_one(f, g)\n"
+"pub(open) trait RequireSelectedMethod {\n"
+"  f(Self) -> Unit = _\n"
+"  g(Self) -> Unit = _\n"
+"  h(Self) -> Unit = _\n"
+"}\n"
+"\n"
+"impl RequireSelectedMethod with f(_) {}\n"
+"\n"
+"impl RequireSelectedMethod with g(_) {}\n"
+"\n"
+"impl RequireSelectedMethod with h(_) {}\n"
+"\n"
+"type SelectedImpl\n"
+"\n"
+"impl RequireSelectedMethod for SelectedImpl with g(_) {}\n"
+msgstr ""
+
+#: ../../language/attributes/must_implement_one.md:25
+msgid ""
+"Multiple `#must_implement_one` attributes can be used on the same trait "
+"to require explicit implementations from multiple method groups."
+msgstr "同一个 trait 上可以使用多个 `#must_implement_one` 属性，以要求显式实现多个方法组中的方法。"

@@ -734,6 +734,7 @@ MoonBit provides a syntax `label?=value` for this, with `label?` being an abbrev
 :end-before: end optional arguments 7
 ```
 
+(autofill-arguments)=
 ### Autofill arguments
 
 MoonBit supports filling specific types of arguments automatically at different call site, such as the source location of a function call.

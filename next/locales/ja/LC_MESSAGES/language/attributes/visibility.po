@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-21 14:57+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/visibility.md:1
+msgid "Visibility Attribute"
+msgstr "可視性アトリビュート"
+
+#: ../../language/attributes/visibility.md:4
+msgid ""
+"This topic does not covered the access control. To learn more about "
+"`pub`, `pub(all)` and `priv`, see [Access Control](/language/packages.md"
+"#access-control)."
+msgstr "このトピックではアクセス制御は扱いません。`pub`、`pub(all)`、`priv` について詳しくは [Access Control](/language/packages.md#access-control) を参照してください。"
+
+#: ../../language/attributes/visibility.md:7
+msgid ""
+"The `#visibility` attribute is similar to the `#deprecated` attribute, "
+"but it is used to hint that a type will change its visibility in the "
+"future. For outside usages, if the usage will be invalidated by the "
+"visibility change in future, a warning will be emitted."
+msgstr "`#visibility` アトリビュートは `#deprecated` に似ていますが、型の可視性が将来変わることを示すために使います。外部からの利用については、将来の可視性変更で無効になる場合、警告が出ます。"
+
+#: ../../language/attributes/visibility.md:10
+msgid ""
+"// in @util package\n"
+"#visibility(change_to=\"readonly\", \"Point will be readonly in the "
+"future.\")\n"
+"pub(all) struct Point {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"#visibility(change_to=\"abstract\", \"Use new_text and new_binary "
+"instead.\")\n"
+"pub(all) enum Resource {\n"
+"  Text(String)\n"
+"  Binary(Bytes)\n"
+"}\n"
+"\n"
+"pub fn new_text(str : String) -> Resource {\n"
+"  ...\n"
+"}\n"
+"\n"
+"pub fn new_binary(bytes : Bytes) -> Resource {\n"
+"  ...\n"
+"}\n"
+"\n"
+"// in another package\n"
+"fn main {\n"
+"  let p = Point::{ x: 1, y: 2 } // warning\n"
+"  let { x, y } = p // ok\n"
+"  println(p.x) // ok\n"
+"  match Resource::Text(\"\") { // warning\n"
+"    Text(s) => ... // waning\n"
+"    Binary(b) => ... // warning\n"
+"  }\n"
+"}\n"
+"\n"
+msgstr ""
+
+#: ../../language/attributes/visibility.md:16
+msgid ""
+"The `#visibility` attribute takes a required `change_to` argument and an "
+"optional `message` argument."
+msgstr "`#visibility` アトリビュートは `change_to` と `message` の 2 つの引数を取ります。"
+
+#: ../../language/attributes/visibility.md:19
+msgid ""
+"The `change_to` argument is a string that indicates the new visibility of"
+" the type. It can be either `\"abstract\"` or `\"readonly\"`."
+msgstr "`change_to` 引数は、型の新しい可視性を表す文字列です。値は `\"abstract\"` または `\"readonly\"` のどちらかです。"
+
+#: ../../language/attributes/visibility.md:10
+msgid "`change_to`"
+msgstr "`change_to`"
+
+#: ../../language/attributes/visibility.md:10
+msgid "Invalidated Usages"
+msgstr "無効になる使い方"
+
+#: ../../language/attributes/visibility.md:10
+msgid "`\"readonly\"`"
+msgstr "`\"readonly\"`"
+
+#: ../../language/attributes/visibility.md:10
+msgid "Creating an instance of the type or mutating the fields of the instance."
+msgstr "型のインスタンスを生成すること、またはそのフィールドを変更すること。"
+
+#: ../../language/attributes/visibility.md:10
+msgid "`\"abstract\"`"
+msgstr "`\"abstract\"`"
+
+#: ../../language/attributes/visibility.md:10
+msgid ""
+"Creating an instance of the type, mutating the fields of the instance, "
+"pattern matching, or accessing fields by label."
+msgstr "型のインスタンスを生成すること、インスタンスのフィールドを変更すること、パターンマッチ、またはラベルによるフィールドアクセス。"
+
+#: ../../language/attributes/visibility.md:26
+msgid ""
+"The optional `message` argument is a string that provides additional "
+"information about the visibility change."
+msgstr "`message` 引数は、可視性の変更に関する追加情報を提供する文字列です。"

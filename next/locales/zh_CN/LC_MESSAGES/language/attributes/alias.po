@@ -1,0 +1,93 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-21 14:57+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/alias.md:1
+msgid "Alias Attribute"
+msgstr "`alias` 属性"
+
+#: ../../language/attributes/alias.md:3
+msgid ""
+"The `alias` attribute is used to overload operators related to indexing, "
+"or to create an alias name for a top-level function or variable. It has "
+"two forms:"
+msgstr "`alias` 属性用于重载一个和索引操作相关的运算符，或者为一个顶层函数与变量创建别名。它有两种形式："
+
+#: ../../language/attributes/alias.md:5
+msgid ""
+"`#alias(\"op\")`: where `op` is one of the following strings representing"
+" the indexing operators:"
+msgstr "`#alias(\"op\")`: `op` 是下面其中一个字符串，表示对应的索引操作："
+
+#: ../../language/attributes/alias.md:7
+msgid "`_[_]`: for the indexing operator"
+msgstr "`_[_]`：数组索引操作符"
+
+#: ../../language/attributes/alias.md:8
+msgid "`_[_]=_`: for the indexing assignment operator"
+msgstr "`_[_]=_`：数组索引赋值操作符"
+
+#: ../../language/attributes/alias.md:9
+msgid "`_[_:_]`: for the as view operator"
+msgstr "`_[_:_]`：op_as_view 操作符"
+
+#: ../../language/attributes/alias.md:11
+msgid "`#alias(id)`: where `id` is a identifier representing the alias name."
+msgstr "`#alias(id)`: 其中 `id` 是一个代表别名的标识符"
+
+#: ../../language/attributes/alias.md:13
+msgid "Both forms allowed additional arguments:"
+msgstr "所有形式都支持额外的参数："
+
+#: ../../language/attributes/alias.md:15
+msgid "`visibility=\"modifier\"`"
+msgstr ""
+
+#: ../../language/attributes/alias.md:17
+msgid ""
+"A labeled argument, changes the visibility of the alias. The `modifier` "
+"can be `pub` or `priv`. If not specified, the alias will have the same "
+"visibility as the original function or variable."
+msgstr "一个带标签的参数，用于改变别名的可见性。`modifier` 可以是 `pub` 或者 `priv`，如果没有声明，别名会和原始的函数或者变量有一样的可见性。"
+
+#: ../../language/attributes/alias.md:19
+msgid "`deprecated` or `deprecated=\"message\"`"
+msgstr "`deprecated` 或者 `deprecated=\"message\"`"
+
+#: ../../language/attributes/alias.md:21
+msgid ""
+"Marks the alias as deprecated. If a message is provided, it will be "
+"displayed as a warning when the alias is used."
+msgstr "将别名标记为弃用的。如果提供了 `message` 信息，当别名被使用时，信息会被一起显示在警告中。"
+
+#: ../../language/attributes/alias.md:23
+msgid ""
+"To graceful migration from old API to new API, you can rename the old API"
+" directly, and create an alias with the old name, mark it as deprecated. "
+"For example:"
+msgstr "如果要优雅地将一个旧的 API 迁移到新的 API，可以直接将旧的 API 重命名成新的名字；然后，使用旧名字创建一个别名，同时将它标记成弃用的。"
+
+#: ../../language/attributes/alias.md:26
+msgid ""
+"#alias(old_name, deprecated)\n"
+"fn new_name() -> Unit {\n"
+"  ()\n"
+"}\n"
+msgstr ""

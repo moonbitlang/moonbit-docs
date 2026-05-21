@@ -1,0 +1,111 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-21 14:57+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/deprecated.md:1
+msgid "Deprecated Attribute"
+msgstr "非推奨アトリビュート"
+
+#: ../../language/attributes/deprecated.md:3
+msgid ""
+"The `#deprecated` attribute is used to mark an API as deprecated. MoonBit"
+" emits a warning when the deprecated API is used, and if the API is "
+"listed in completion, it will be shown with a strikethrough style. For "
+"example:"
+msgstr "`#deprecated` アトリビュートは API を非推奨としてマークするために使います。非推奨 API が使われると MoonBit は警告を出し、補完候補に表示される場合は取り消し線付きで示されます。例えば："
+
+#: ../../language/attributes/deprecated.md:7
+msgid ""
+"#deprecated\n"
+"pub fn foo() -> Unit {\n"
+"  ...\n"
+"}\n"
+"\n"
+"#deprecated(\"Use Bar2 instead\")\n"
+"pub(all) enum Bar {\n"
+"  Ctor1\n"
+"  Ctor2\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/deprecated.md:13
+msgid "The `#deprecated` attribute can be used in the following contexts:"
+msgstr "`#deprecated` アトリビュートは次の文脈で使えます："
+
+#: ../../language/attributes/deprecated.md:15
+msgid "Top-level value declarations (including `fn`, `let`, and `const`)"
+msgstr "トップレベルの値宣言（`fn`、`let`、`const` を含む）"
+
+#: ../../language/attributes/deprecated.md:16
+msgid "Top-level type declarations (including `type`, `struct`, and `enum`)"
+msgstr "トップレベルの型宣言（`type`、`struct`、`enum` を含む）"
+
+#: ../../language/attributes/deprecated.md:17
+msgid "Trait method declarations"
+msgstr "trait メソッド宣言"
+
+#: ../../language/attributes/deprecated.md:18
+msgid "Trait default implementations"
+msgstr "trait のデフォルト実装"
+
+#: ../../language/attributes/deprecated.md:20
+msgid "Common forms include:"
+msgstr "一般的な形式は次のとおりです："
+
+#: ../../language/attributes/deprecated.md:22
+msgid "`#deprecated`"
+msgstr "`#deprecated`"
+
+#: ../../language/attributes/deprecated.md:24
+msgid "Marks the item as deprecated with a default warning message."
+msgstr "項目を非推奨にし、デフォルトの警告メッセージを使います。"
+
+#: ../../language/attributes/deprecated.md:26
+msgid "`#deprecated(\"Use new_function instead\")`"
+msgstr "`#deprecated(\"Use new_function instead\")`"
+
+#: ../../language/attributes/deprecated.md:28
+msgid ""
+"Marks the item as deprecated with a custom warning message. Every time "
+"the deprecated API is used, the provided message will be displayed as a "
+"warning."
+msgstr "項目を非推奨にし、カスタム警告メッセージを使います。非推奨 API が使われるたびに、指定したメッセージが警告として表示されます。"
+
+#: ../../language/attributes/deprecated.md:30
+msgid "`#deprecated(\"Use new_function instead\", skip_current_package=true)`"
+msgstr "`#deprecated(\"Use new_function instead\", skip_current_package=true)`"
+
+#: ../../language/attributes/deprecated.md:32
+msgid ""
+"Marks the item as deprecated with a custom warning message, but skips "
+"emitting warnings when the deprecated API is used within the same "
+"package."
+msgstr "項目を非推奨にし、カスタム警告メッセージを使いますが、同じパッケージ内で非推奨 API が使われた場合は警告を出しません。"
+
+#: ../../language/attributes/deprecated.md:34
+msgid "`#deprecated(skip_current_package=true)`"
+msgstr "`#deprecated(\"Use new_function instead\", skip_current_package=true)`"
+
+#: ../../language/attributes/deprecated.md:36
+msgid ""
+"Marks the item as deprecated with a default warning message, but skips "
+"emitting warnings within the same package. When both a message and "
+"`skip_current_package` are present, either argument order is accepted."
+msgstr "項目を非推奨にし、カスタム警告メッセージを使いますが、同じパッケージ内で非推奨 API が使われた場合は警告を出しません。"
