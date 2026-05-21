@@ -568,6 +568,31 @@ state: warn = enabled, error = promoted to error, off = disabled
 note: default alert exceptions: alert_unsafe=off
 ```
 
+## Rule
+
+The module-level `rule` entry declares a reusable pre-build command that is
+visible to every `moon.pkg` in the module. A module-level rule does not run by
+itself; to use it before building a package, add a package-level `dev_build`
+entry in `moon.pkg`. See the "Rule and dev_build" section in
+[Package Configuration](/toolchain/moon/package.md#rule-and-dev_build) for the package-level
+configuration.
+
+Use `rule(name: "...", command: "...")`, where `name` identifies the rule and
+`command` is a shell command string. The command can refer to `$input` and
+`$output`, which are supplied by the package-level `dev_build` entry that uses
+the rule. A module can declare multiple module-level `rule` entries.
+
+`````````{tab-set}
+``````{tab-item} moon.mod
+```moonbit
+rule(name: "tool", command: "tool $input -o $output")
+```
+``````
+``````{tab-item} moon.mod.json
+This feature is not supported in `moon.mod.json`.
+``````
+`````````
+
 ## Scripts
 
 The `scripts` field is used to define custom scripts associated with the module.
