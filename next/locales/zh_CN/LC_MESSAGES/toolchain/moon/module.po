@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-18 15:20+0800\n"
+"POT-Creation-Date: 2026-05-21 11:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -29,9 +29,9 @@ msgid ""
 "JSON schema, please check [moon's "
 "repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json)."
 msgstr ""
-"moon 使用模块文件来标识和描述一个模块。旧格式为 `moon.mod.json`，新格式为 `moon.mod`。完整的 JSON 模式请查看 [moon "
-"的仓库](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json)"
-"。"
+"moon 使用模块文件来标识和描述一个模块。旧格式为 `moon.mod.json`，新格式为 `moon.mod`。完整的 JSON 模式请查看"
+" [moon "
+"的仓库](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json)。"
 
 #: ../../toolchain/moon/module.md:7
 msgid "Full syntax of moon.mod is as follows:"
@@ -546,8 +546,8 @@ msgid ""
 "the source directory is the same as the directory where the "
 "`moon.mod.json` file is located."
 msgstr ""
-"如果 `source` 字段不存在，或其值为空字符串 `\"\"`，则等同于设置 `\"source\": "
-"\".\"`。这意味着源目录与 `moon.mod.json` 文件所在目录相同。"
+"如果 `source` 字段不存在，或其值为空字符串 `\"\"`，则等同于设置 `\"source\": \".\"`。这意味着源目录与 "
+"`moon.mod.json` 文件所在目录相同。"
 
 #: ../../toolchain/moon/module.md:400
 msgid ""
@@ -809,27 +809,65 @@ msgid ""
 msgstr ""
 
 #: ../../toolchain/moon/module.md:571
+msgid "Rule"
+msgstr "Rule"
+
+#: ../../toolchain/moon/module.md:573
+msgid ""
+"The module-level `rule` entry declares a reusable pre-build command that "
+"is visible to every `moon.pkg` in the module. A module-level rule does "
+"not run by itself; to use it before building a package, add a package-"
+"level `dev_build` entry in `moon.pkg`. See the \"Rule and dev_build\" "
+"section in [Package Configuration](/toolchain/moon/package.md#rule-and-"
+"dev_build) for the package-level configuration."
+msgstr ""
+"模块级 `rule` 条目声明一个可复用的预构建命令，模块内的每个 `moon.pkg` 都可以使用它。模块级 rule "
+"不会自行运行；如果要在构建包之前使用它，需要在 `moon.pkg` 中添加包级 `dev_build` 条目。关于包级配置，"
+"请参阅 [Package Configuration](package.md#rule-and-dev_build) 中的 "
+"\"Rule and dev_build\" 一节。"
+
+#: ../../toolchain/moon/module.md:580
+msgid ""
+"Use `rule(name: \"...\", command: \"...\")`, where `name` identifies the "
+"rule and `command` is a shell command string. The command can refer to "
+"`$input` and `$output`, which are supplied by the package-level "
+"`dev_build` entry that uses the rule. A module can declare multiple "
+"module-level `rule` entries."
+msgstr ""
+"使用 `rule(name: \"...\", command: \"...\")`，其中 `name` 标识规则，"
+"`command` 是一个 shell 命令字符串。该命令可以引用 `$input` 和 `$output`，它们由使用该 rule "
+"的包级 `dev_build` 条目提供。一个模块可以声明多个模块级 `rule` 条目。"
+
+#: ../../toolchain/moon/module.md:587
+msgid "rule(name: \"tool\", command: \"tool $input -o $output\")\n"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:592
+msgid "This feature is not supported in `moon.mod.json`."
+msgstr "`moon.mod.json` 不支持此功能。"
+
+#: ../../toolchain/moon/module.md:596
 msgid "Scripts"
 msgstr "脚本"
 
-#: ../../toolchain/moon/module.md:573
+#: ../../toolchain/moon/module.md:598
 msgid ""
 "The `scripts` field is used to define custom scripts associated with the "
 "module."
 msgstr "`scripts` 字段用于定义与模块关联的自定义脚本。"
 
-#: ../../toolchain/moon/module.md:575
+#: ../../toolchain/moon/module.md:600
 msgid "postadd script"
 msgstr "postadd 脚本"
 
-#: ../../toolchain/moon/module.md:577
+#: ../../toolchain/moon/module.md:602
 msgid ""
 "The `postadd` script runs automatically after the module has been added. "
 "When executed, the script's current working directory (cwd) is set to the"
 " directory where the `moon.mod.json` file resides."
 msgstr "`postadd` 脚本在模块添加后自动运行。执行时，脚本的当前工作目录（cwd）设置为 `moon.mod.json` 文件所在的目录。"
 
-#: ../../toolchain/moon/module.md:583
+#: ../../toolchain/moon/module.md:608
 msgid ""
 "options(\n"
 "  scripts: {\n"
@@ -838,7 +876,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:592
+#: ../../toolchain/moon/module.md:617
 msgid ""
 "{\n"
 "  \"scripts\": {\n"
@@ -847,43 +885,43 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:603
+#: ../../toolchain/moon/module.md:628
 msgid "\\[Experimental\\] Pre-build config script"
 msgstr "\\[实验性\\] 预构建配置脚本"
 
-#: ../../toolchain/moon/module.md:606
+#: ../../toolchain/moon/module.md:631
 msgid ""
 "This feature is extremely experimental, and its API may change at any "
 "time. This documentation reflects the implementation as of 2025-06-03."
 msgstr "这个功能是极其实验性的，其 API 可能随时发生变化。本文件反映了截至 2025-06-03 的实现。"
 
-#: ../../toolchain/moon/module.md:611
+#: ../../toolchain/moon/module.md:636
 msgid ""
 "Using this feature may execute arbitrary code in your computer. Please "
 "use with caution and only with trusted dependencies."
 msgstr "使用此功能可能会在您的计算机上执行任意代码。请谨慎使用，仅与受信任的依赖项一起使用。"
 
-#: ../../toolchain/moon/module.md:615
+#: ../../toolchain/moon/module.md:640
 msgid ""
 "The pre-build config script is added in order to aid native target "
 "programming. To use such script, add your script in your `moon.mod.json`:"
 msgstr "pre-build 配置脚本的添加是为了帮助本地目标编程。要使用此脚本，请在您的 `moon.mod.json` 中添加您的脚本："
 
-#: ../../toolchain/moon/module.md:621
+#: ../../toolchain/moon/module.md:646
 msgid ""
 "options(\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\",\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:628
+#: ../../toolchain/moon/module.md:653
 msgid ""
 "{\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:636
+#: ../../toolchain/moon/module.md:661
 msgid ""
 "The path is a relative path from the root of the project. The script may "
 "either be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) "
@@ -893,17 +931,17 @@ msgstr ""
 "路径是相对于项目根目录的相对路径。脚本可以是 JavaScript 脚本（扩展名为 `.js`、`.cjs`、`.mjs`）使用 `node` "
 "执行，或者是 Python 脚本（扩展名为 `.py`）使用 `python3` 或 `python` 执行。"
 
-#: ../../toolchain/moon/module.md:641
+#: ../../toolchain/moon/module.md:666
 msgid "Input"
 msgstr "输入"
 
-#: ../../toolchain/moon/module.md:643
+#: ../../toolchain/moon/module.md:668
 msgid ""
 "The script will be provided with a JSON with the structure of "
 "`BuildScriptEnvironment` from standard input stream (stdin):"
 msgstr "脚本将从标准输入流（stdin）接收一个具有 `BuildScriptEnvironment` 结构的 JSON："
 
-#: ../../toolchain/moon/module.md:646
+#: ../../toolchain/moon/module.md:671
 msgid ""
 "/** Represents the environment a build script receives */\n"
 "interface BuildScriptEnvironment {\n"
@@ -942,17 +980,17 @@ msgstr ""
 "  kind: string // TargetBackend\n"
 "}\n"
 
-#: ../../toolchain/moon/module.md:666
+#: ../../toolchain/moon/module.md:691
 msgid "Output"
 msgstr "输出"
 
-#: ../../toolchain/moon/module.md:668
+#: ../../toolchain/moon/module.md:693
 msgid ""
 "The script is expected to print a JSON string in its standard output "
 "stream (stdout) with the structure of `BuildScriptOutput`:"
 msgstr "脚本预计将在其标准输出流（stdout）中打印一个具有 `BuildScriptOutput` 结构的 JSON 字符串："
 
-#: ../../toolchain/moon/module.md:671
+#: ../../toolchain/moon/module.md:696
 msgid ""
 "interface BuildScriptOutput {\n"
 "  /** Build variables */\n"
@@ -1009,33 +1047,33 @@ msgstr ""
 "  link_search_paths?: string[]\n"
 "}\n"
 
-#: ../../toolchain/moon/module.md:700
+#: ../../toolchain/moon/module.md:725
 msgid "Build variables"
 msgstr "构建变量"
 
-#: ../../toolchain/moon/module.md:702
+#: ../../toolchain/moon/module.md:727
 msgid ""
 "You may use the variables emitted in the `vars` fields in the native "
 "linking arguments in `moon.pkg` as `${build.<var_name>}`."
 msgstr "您可以在 `moon.pkg` 的本地链接参数中使用 `vars` 字段中发出的变量，格式为 `${build.<var_name>}`。"
 
-#: ../../toolchain/moon/module.md:705
+#: ../../toolchain/moon/module.md:730
 msgid "For example, if your build script outputs:"
 msgstr "例如，如果您的构建脚本输出："
 
-#: ../../toolchain/moon/module.md:707
+#: ../../toolchain/moon/module.md:732
 msgid "{ \"vars\": { \"CC\": \"gcc\" } }\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:711
+#: ../../toolchain/moon/module.md:736
 msgid "and your `moon.pkg` is structured like:"
 msgstr "并且您的 `moon.pkg` 结构如下："
 
-#: ../../toolchain/moon/module.md:713
+#: ../../toolchain/moon/module.md:738
 msgid "moon.pkg"
 msgstr "moon.pkg"
 
-#: ../../toolchain/moon/module.md:713
+#: ../../toolchain/moon/module.md:738
 msgid ""
 "options(\n"
 "  link: {\n"
@@ -1046,11 +1084,11 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:718
+#: ../../toolchain/moon/module.md:743
 msgid "It will be transformed into"
 msgstr "它会被转换为"
 
-#: ../../toolchain/moon/module.md:720
+#: ../../toolchain/moon/module.md:745
 msgid ""
 "{\n"
 "  \"link\": {\n"

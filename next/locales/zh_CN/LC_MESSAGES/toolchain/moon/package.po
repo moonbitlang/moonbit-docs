@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 16:47+0800\n"
+"POT-Creation-Date: 2026-05-21 11:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -955,7 +955,10 @@ msgid ""
 "enabled when compiling to the Wasm GC backend. It will make the `String` "
 "in MoonBit equivalent to the `String` in JavaScript host runtime."
 msgstr ""
-"`use-js-builtin-string` 选项用于指定在编译到 Wasm GC 后端时是否应启用 [内建 JS String 提案](https://github.com/WebAssembly/js-string-builtins/blob/main/proposals/js-string-builtins/Overview.md)。它将使 MoonBit 中的 `String` 等效于 JavaScript 宿主运行时中的 `String`。"
+"`use-js-builtin-string` 选项用于指定在编译到 Wasm GC 后端时是否应启用 [内建 JS String "
+"提案](https://github.com/WebAssembly/js-string-builtins/blob/main/proposals"
+"/js-string-builtins/Overview.md)。它将使 MoonBit 中的 `String` 等效于 JavaScript "
+"宿主运行时中的 `String`。"
 
 #: ../../toolchain/moon/package.md:648
 msgid "For example, the following configuration enables the JS String Builtin."
@@ -1322,194 +1325,201 @@ msgid ""
 msgstr ""
 
 #: ../../toolchain/moon/package.md:909
-msgid "Pre-build"
-msgstr "预构建"
+msgid "Rule and dev_build"
+msgstr "Rule 和 dev_build"
 
 #: ../../toolchain/moon/package.md:911
 msgid ""
-"The `\"pre-build\"` field is used to specify pre-build commands, which "
-"will be executed before build commands such as `moon check|build|test`."
-msgstr "`pre-build` 字段用于指定预构建命令，这些命令将在构建命令（如 `moon check|build|test`）之前执行。"
-
-#: ../../toolchain/moon/package.md:913
-msgid ""
-"`\"pre-build\"` is an array, where each element is an object containing "
-"`input`, `output`, and `command` fields. The `input` and `output` fields "
-"can be strings or arrays of strings, while the `command` field is a "
-"string. In the `command`, you can use any shell commands, as well as the "
-"`$input` and `$output` variables, which represent the input and output "
-"files, respectively. If these fields are arrays, they will be joined with"
-" spaces by default."
+"`rule` declares a reusable command, and `dev_build` applies a rule to "
+"concrete input and output files. These pre-build steps run before "
+"development commands such as `moon check`, `moon build`, and `moon test`."
 msgstr ""
-"`\"pre-build\"` 是一个数组，其中每个元素是一个包含 `input`、`output` 和 `command` "
-"字段的对象。`input` 和 `output` 字段可以是字符串或字符串数组，而 `command` 字段是一个字符串。在 `command` "
-"中，可以使用任何 shell 命令，以及分别表示输入和输出文件的 `$input` 和 `$output` "
-"变量。如果这些字段是数组，它们将默认使用空格连接。"
+"`rule` 声明一个可复用的命令，`dev_build` 将一条 rule 应用于具体的输入和输出文件。"
+"这些预构建步骤会在 `moon check`、`moon build` 和 `moon test` 等开发命令之前运行。"
 
 #: ../../toolchain/moon/package.md:915
 msgid ""
-"Currently, there is a built-in special command `:embed`, which converts "
-"files into MoonBit source code. The `--text` parameter is used to embed "
-"text files, and `--binary` is used for binary files. `--text` is the "
-"default and can be omitted. The `--name` parameter is used to specify the"
-" generated variable name, with `resource` being the default. The command "
-"is executed in the directory where the `moon.pkg.json` file is located."
+"This mechanism is intended for package authors during package "
+"development. When the package is used as a dependency by downstream "
+"users, these pre-build steps are not triggered for security reasons, so "
+"dependencies do not execute arbitrary commands during builds. Commit the "
+"generated output files to the repository so downstream users can build "
+"against them directly."
 msgstr ""
-"目前，内置了一个特殊命令 `:embed`，它将文件转换为 MoonBit 源代码。`--text` 参数用于嵌入文本文件，`--binary` "
-"用于二进制文件。`--text` 是默认值，可以省略。`--name` 参数用于指定生成的变量名，默认为 `resource`。该命令在 "
-"`moon.pkg.json` 文件所在的目录中执行。"
+"此机制面向包作者在包开发期间使用。当该包作为依赖被下游用户使用时，出于安全原因，这些预构建步骤不会被触发，"
+"因此依赖不会在构建期间执行任意命令。请将生成的输出文件提交到仓库，使下游用户可以直接基于这些文件构建。"
 
-#: ../../toolchain/moon/package.md:919
+#: ../../toolchain/moon/package.md:921
 msgid ""
-"options(\n"
-"  \"pre-build\": [\n"
-"    {\n"
-"      \"input\": \"a.txt\",\n"
-"      \"output\": \"a.mbt\",\n"
-"      \"command\": \":embed -i $input -o $output\",\n"
-"    },\n"
-"  ],\n"
-")\n"
+"`rule(name: \"...\", command: \"...\")` declares a reusable command "
+"template. The `name` field identifies the rule, and `command` is a shell "
+"command string. The command can refer to `$input` and `$output`, which "
+"are supplied by the `dev_build` entry that uses the rule. A package can "
+"declare multiple `rule` entries."
 msgstr ""
+"`rule(name: \"...\", command: \"...\")` 声明一个可复用的命令模板。`name` 字段标识该 rule，"
+"`command` 是一个 shell 命令字符串。命令可以引用 `$input` 和 `$output`，它们由使用该 rule 的 "
+"`dev_build` 条目提供。一个包可以声明多个 `rule` 条目。"
+
+#: ../../toolchain/moon/package.md:927
+msgid ""
+"`dev_build(rule: \"...\", input: \"...\", output: \"...\")` declares a "
+"pre-build step. It selects a rule and supplies the input and output paths"
+" used when expanding that rule's command. A package can declare multiple "
+"`dev_build` entries."
+msgstr ""
+"`dev_build(rule: \"...\", input: \"...\", output: \"...\")` 声明一个预构建步骤。"
+"它选择一条 rule，并提供展开该 rule 命令时使用的输入和输出路径。一个包可以声明多个 `dev_build` 条目。"
 
 #: ../../toolchain/moon/package.md:932
+msgid ""
+"Rules can be declared either as package-level rules in the same "
+"`moon.pkg` or as module-level rules in "
+"[`moon.mod`](/toolchain/moon/module.md). A package-level rule is visible "
+"only to `dev_build` entries in that same `moon.pkg`; a module-level rule "
+"is visible to `dev_build` entries in every package in the module. When "
+"resolving a rule name, `moon` first looks for a package-level rule in the"
+" same `moon.pkg`, then for a module-level rule in `moon.mod`."
+msgstr ""
+"可以在同一个 `moon.pkg` 中声明包级 rule，也可以在 [`moon.mod`](/toolchain/moon/module.md) "
+"中声明模块级 rule。包级 rule 只对同一个 `moon.pkg` 中的 `dev_build` 条目可见；模块级 rule "
+"对模块内每个包中的 `dev_build` 条目可见。解析 rule 名称时，`moon` 会先在同一个 `moon.pkg` 中查找包级 rule，"
+"再在 `moon.mod` 中查找模块级 rule。"
+
+#: ../../toolchain/moon/package.md:941
+msgid ""
+"rule(name: \"copy\", command: \"cat $input > $output\")\n"
+"dev_build(rule: \"copy\", input: \"a.txt\", output: \"a.mbt\")\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:947
+msgid ""
+"The `rule` and `dev_build` entries are not supported in `moon.pkg.json`. "
+"Use the deprecated `pre-build` configuration instead:"
+msgstr ""
+"`moon.pkg.json` 不支持 `rule` 和 `dev_build` 条目。请改用已废弃的 `pre-build` 配置："
+
+#: ../../toolchain/moon/package.md:949
 msgid ""
 "{\n"
 "  \"pre-build\": [\n"
 "    {\n"
 "      \"input\": \"a.txt\",\n"
 "      \"output\": \"a.mbt\",\n"
-"      \"command\": \":embed -i $input -o $output\"\n"
+"      \"command\": \"cat $input > $output\"\n"
 "    }\n"
 "  ]\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:946
-msgid "If the content of `a.txt` in the current package directory is:"
-msgstr "如果当前包目录中 `a.txt` 的内容为："
-
-#: ../../toolchain/moon/package.md:947
+#: ../../toolchain/moon/package.md:963
 msgid ""
-"hello,\n"
-"world\n"
+"In this example, running a development command such as `moon check` "
+"copies the contents of `a.txt` to `a.mbt` before the package is checked."
 msgstr ""
+"在此示例中，运行 `moon check` 等开发命令时，会在检查包之前将 `a.txt` 的内容复制到 `a.mbt`。"
 
-#: ../../toolchain/moon/package.md:952
-msgid ""
-"After running `moon build`, the following `a.mbt` file will be generated "
-"in the directory where the `moon.pkg.json` is located:"
-msgstr "那么在 `moon.pkg.json` 所在目录中运行 `moon build` 后，将生成以下 `a.mbt` 文件："
-
-#: ../../toolchain/moon/package.md:954
-msgid ""
-"let resource : String =\n"
-"  #|hello,\n"
-"  #|world\n"
-"  #|\n"
-msgstr ""
-
-#: ../../toolchain/moon/package.md:961
+#: ../../toolchain/moon/package.md:966
 msgid "Warnings List"
 msgstr "警告列表"
 
-#: ../../toolchain/moon/package.md:963
+#: ../../toolchain/moon/package.md:968
 msgid ""
 "Used to disable warnings, enable warnings, or treat a warning as a fatal "
 "error. The warning list is a string composed of multiple warning name, "
 "each prefixed with a sign:"
 msgstr "用于关闭警告，启用警告，或者把一个启用的警告视为错误。警告列表是由多个警告名组成的字符串，每个警告名前有一个符号前缀："
 
-#: ../../toolchain/moon/package.md:966
+#: ../../toolchain/moon/package.md:971
 msgid "`-` to disable the warning"
 msgstr "`-`用于关闭警告"
 
-#: ../../toolchain/moon/package.md:967
+#: ../../toolchain/moon/package.md:972
 msgid "`+` to enable the warning"
 msgstr "`+`用于启用警告"
 
-#: ../../toolchain/moon/package.md:968
+#: ../../toolchain/moon/package.md:973
 msgid "`@` to treat the enabled warning as a fatal error"
 msgstr "`@`用于把一个已经启用的警告视为错误"
 
-#: ../../toolchain/moon/package.md:970
+#: ../../toolchain/moon/package.md:975
 msgid ""
 "For example, in the following configuration, `-unused_value` disables the"
 " unused functions and variables warning."
 msgstr "例如，在以下配置中，`-unused_value` 禁用函数或者变量未使用警告。"
 
-#: ../../toolchain/moon/package.md:974
+#: ../../toolchain/moon/package.md:979
 msgid "warnings = \"-unused_value\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:979
+#: ../../toolchain/moon/package.md:984
 msgid ""
 "{\n"
 "  \"warn-list\": \"-unused_value\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:987
+#: ../../toolchain/moon/package.md:992
 msgid ""
 "If multiple warnings need to be disabled, they can be directly connected "
 "and combined."
 msgstr "如果需要禁用多种警告，可以直接连接起来进行组合。"
 
-#: ../../toolchain/moon/package.md:991
+#: ../../toolchain/moon/package.md:996
 msgid "warnings = \"-unused_value-unreachable_code\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:996
+#: ../../toolchain/moon/package.md:1001
 msgid ""
 "{\n"
 "  \"warn-list\": \"-unused_value-unreachable_code\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1004
+#: ../../toolchain/moon/package.md:1009
 msgid ""
 "If it is necessary to activate certain warnings that were originally "
 "prohibited, use the plus sign."
 msgstr "如果需要激活某种原来未启用的警告，则使用加号。"
 
-#: ../../toolchain/moon/package.md:1008
+#: ../../toolchain/moon/package.md:1013
 msgid "warnings = \"+unused_optional_argument\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1013
+#: ../../toolchain/moon/package.md:1018
 msgid ""
 "{\n"
 "  \"warn-list\": \"+unused_optional_argument\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1021
+#: ../../toolchain/moon/package.md:1026
 msgid "To treat a warning as a fatal error, use the `@`."
 msgstr "要把一个警告视为错误，使用`@`。"
 
-#: ../../toolchain/moon/package.md:1025
+#: ../../toolchain/moon/package.md:1030
 msgid "warnings = \"@deprecated\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1030
+#: ../../toolchain/moon/package.md:1035
 msgid ""
 "{\n"
 "  \"warn-list\": \"@deprecated\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1038
+#: ../../toolchain/moon/package.md:1043
 msgid ""
 "You can also use warning numbers in `warn-list`. In the output below, "
 "`mnemonic` is the symbolic warning name used in warning lists, while `id`"
 " is the numeric form of the same warning."
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1042
+#: ../../toolchain/moon/package.md:1047
 msgid "The current list from `moonc check -warn-help` is:"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1044
+#: ../../toolchain/moon/package.md:1049
 #, fuzzy
 msgid ""
 "Available warnings:\n"
@@ -1731,16 +1741,16 @@ msgstr ""
 " 70 deprecated_for_in_method       `for .. in` 循环中使用了 `iterator()` 方法\n"
 "  A                                所有警告\n"
 
-#: ../../toolchain/moon/package.md:1123
+#: ../../toolchain/moon/package.md:1128
 #, fuzzy
 msgid "Use `moonc check -warn-help` to see the list of preset compiler warnings."
 msgstr "你可以使用 `moonc build-package -warn-help` 来查看预设编译器警告编号列表。"
 
-#: ../../toolchain/moon/package.md:1126
+#: ../../toolchain/moon/package.md:1131
 msgid "Alert Warning"
 msgstr "`alert`警告"
 
-#: ../../toolchain/moon/package.md:1128
+#: ../../toolchain/moon/package.md:1133
 msgid ""
 "Alerts are special warnings that indicate the usage of API marked with  "
 "[`#internal` attribute](../../language/attributes.md#internal-attribute)."
@@ -1748,7 +1758,7 @@ msgstr ""
 "`alert`是一种特殊的警告，表示使用了某些被 [`#internal`属性](../../language/attributes.md"
 "#internal-attribute) 标记了的 API。 "
 
-#: ../../toolchain/moon/package.md:1131
+#: ../../toolchain/moon/package.md:1136
 msgid ""
 "All alerts has a category associated with it, which is customized by the "
 "author of the API. You can enable or disable specific alert categories "
@@ -1758,51 +1768,51 @@ msgstr ""
 "所有`alert`都附有一个类别，这是由 API "
 "的作者定义的。你可以通过`alert_<类别>`这样的警告名来启用或者关闭特定的`alert`类别，或者用`alert`一次性控制所有`alert`警告。"
 
-#: ../../toolchain/moon/package.md:1135
+#: ../../toolchain/moon/package.md:1140
 msgid ""
 "For example, in the following configuration, all warnings for alerts are "
 "treated  as fatal errors, except for the `unsafe` category, which is "
 "disabled."
 msgstr "例如，在下面的配置中，所有`alert`警告都被视为错误，除了`unsafe`类别——只有它被关闭。"
 
-#: ../../toolchain/moon/package.md:1140
+#: ../../toolchain/moon/package.md:1145
 msgid "warnings = \"@alert-alert_unsafe\" \n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1145
+#: ../../toolchain/moon/package.md:1150
 msgid ""
 "{\n"
 "  \"warn-list\": \"@alert-alert_unsafe\" \n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1153
+#: ../../toolchain/moon/package.md:1158
 msgid "Virtual Package"
 msgstr "虚拟包"
 
-#: ../../toolchain/moon/package.md:1155
+#: ../../toolchain/moon/package.md:1160
 msgid ""
 "A virtual package serves as an interface of a package that can be "
 "replaced by actual implementations."
 msgstr "一个虚拟包可以作为一个包的接口被实际的实现替换。"
 
-#: ../../toolchain/moon/package.md:1157
+#: ../../toolchain/moon/package.md:1162
 msgid "Declarations"
 msgstr "声明"
 
-#: ../../toolchain/moon/package.md:1159
+#: ../../toolchain/moon/package.md:1164
 msgid ""
 "The `virtual` field is used to declare the current package as a virtual "
 "package."
 msgstr "`virtual` 字段用于将当前包声明为虚拟包。"
 
-#: ../../toolchain/moon/package.md:1161
+#: ../../toolchain/moon/package.md:1166
 msgid ""
 "For example, the following declares a virtual package with default "
 "implementation:"
 msgstr "例如，以下配置声明了一个具有默认实现的虚拟包："
 
-#: ../../toolchain/moon/package.md:1165
+#: ../../toolchain/moon/package.md:1170
 msgid ""
 "options(\n"
 "  virtual: {\n"
@@ -1811,7 +1821,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1174
+#: ../../toolchain/moon/package.md:1179
 msgid ""
 "{\n"
 "  \"virtual\": {\n"
@@ -1820,58 +1830,58 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1184
+#: ../../toolchain/moon/package.md:1189
 msgid "Implementations"
 msgstr "实现"
 
-#: ../../toolchain/moon/package.md:1186
+#: ../../toolchain/moon/package.md:1191
 msgid ""
 "The `implement` field is used to declare the virtual package to be "
 "implemented by the current package."
 msgstr "`implement` 字段用于指定当前包实现的虚拟包。"
 
-#: ../../toolchain/moon/package.md:1188
+#: ../../toolchain/moon/package.md:1193
 msgid "For example, the following implements a virtual package:"
 msgstr "例如，以下配置实现了一个虚拟包："
 
-#: ../../toolchain/moon/package.md:1192
+#: ../../toolchain/moon/package.md:1197
 msgid ""
 "options(\n"
 "  implement: \"moonbitlang/core/abort\",\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1199
+#: ../../toolchain/moon/package.md:1204
 msgid ""
 "{\n"
 "  \"implement\": \"moonbitlang/core/abort\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1207
+#: ../../toolchain/moon/package.md:1212
 msgid "Overriding implementations"
 msgstr "覆盖实现"
 
-#: ../../toolchain/moon/package.md:1209
+#: ../../toolchain/moon/package.md:1214
 msgid ""
 "The `overrides` field is used to provide the implementations that "
 "fulfills an imported virtual package."
 msgstr "`overrides` 字段用于提供满足导入虚拟包的实现。"
 
-#: ../../toolchain/moon/package.md:1211
+#: ../../toolchain/moon/package.md:1216
 msgid ""
 "For example, the following overrides the default implementation of the "
 "builtin abort package with another package:"
 msgstr "例如，以下配置将内置的 abort 包的默认实现替换为另一个包："
 
-#: ../../toolchain/moon/package.md:1215
+#: ../../toolchain/moon/package.md:1220
 msgid ""
 "options(\n"
 "  overrides: [ \"moonbitlang/dummy_abort/abort_show_msg\" ],\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1222
+#: ../../toolchain/moon/package.md:1227
 msgid ""
 "{\n"
 "  \"overrides\": [\"moonbitlang/dummy_abort/abort_show_msg\"]\n"
@@ -1968,3 +1978,100 @@ msgstr ""
 #~ "in warning list. Here is the full"
 #~ " list of warning names:"
 #~ msgstr "你也可以在警告列表中使用警告编号。这里是完整的警告名和编号："
+
+#~ msgid "Pre-build"
+#~ msgstr "预构建"
+
+#~ msgid ""
+#~ "The `\"pre-build\"` field is used "
+#~ "to specify pre-build commands, which "
+#~ "will be executed before build commands"
+#~ " such as `moon check|build|test`."
+#~ msgstr "`pre-build` 字段用于指定预构建命令，这些命令将在构建命令（如 `moon check|build|test`）之前执行。"
+
+#~ msgid ""
+#~ "`\"pre-build\"` is an array, where "
+#~ "each element is an object containing "
+#~ "`input`, `output`, and `command` fields. "
+#~ "The `input` and `output` fields can "
+#~ "be strings or arrays of strings, "
+#~ "while the `command` field is a "
+#~ "string. In the `command`, you can "
+#~ "use any shell commands, as well as"
+#~ " the `$input` and `$output` variables, "
+#~ "which represent the input and output "
+#~ "files, respectively. If these fields are"
+#~ " arrays, they will be joined with "
+#~ "spaces by default."
+#~ msgstr ""
+#~ "`\"pre-build\"` 是一个数组，其中每个元素是一个包含 `input`、`output`"
+#~ " 和 `command` 字段的对象。`input` 和 `output` "
+#~ "字段可以是字符串或字符串数组，而 `command` 字段是一个字符串。在 `command` "
+#~ "中，可以使用任何 shell 命令，以及分别表示输入和输出文件的 `$input` 和"
+#~ " `$output` 变量。如果这些字段是数组，它们将默认使用空格连接。"
+
+#~ msgid ""
+#~ "Currently, there is a built-in "
+#~ "special command `:embed`, which converts "
+#~ "files into MoonBit source code. The "
+#~ "`--text` parameter is used to embed "
+#~ "text files, and `--binary` is used "
+#~ "for binary files. `--text` is the "
+#~ "default and can be omitted. The "
+#~ "`--name` parameter is used to specify"
+#~ " the generated variable name, with "
+#~ "`resource` being the default. The "
+#~ "command is executed in the directory "
+#~ "where the `moon.pkg.json` file is "
+#~ "located."
+#~ msgstr ""
+#~ "目前，内置了一个特殊命令 `:embed`，它将文件转换为 MoonBit 源代码。`--text`"
+#~ " 参数用于嵌入文本文件，`--binary` 用于二进制文件。`--text` "
+#~ "是默认值，可以省略。`--name` 参数用于指定生成的变量名，默认为 `resource`。该命令在 "
+#~ "`moon.pkg.json` 文件所在的目录中执行。"
+
+#~ msgid ""
+#~ "options(\n"
+#~ "  \"pre-build\": [\n"
+#~ "    {\n"
+#~ "      \"input\": \"a.txt\",\n"
+#~ "      \"output\": \"a.mbt\",\n"
+#~ "      \"command\": \":embed -i $input -o $output\",\n"
+#~ "    },\n"
+#~ "  ],\n"
+#~ ")\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"pre-build\": [\n"
+#~ "    {\n"
+#~ "      \"input\": \"a.txt\",\n"
+#~ "      \"output\": \"a.mbt\",\n"
+#~ "      \"command\": \":embed -i $input -o $output\"\n"
+#~ "    }\n"
+#~ "  ]\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "If the content of `a.txt` in the current package directory is:"
+#~ msgstr "如果当前包目录中 `a.txt` 的内容为："
+
+#~ msgid ""
+#~ "hello,\n"
+#~ "world\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "After running `moon build`, the "
+#~ "following `a.mbt` file will be generated"
+#~ " in the directory where the "
+#~ "`moon.pkg.json` is located:"
+#~ msgstr "那么在 `moon.pkg.json` 所在目录中运行 `moon build` 后，将生成以下 `a.mbt` 文件："
+
+#~ msgid ""
+#~ "let resource : String =\n"
+#~ "  #|hello,\n"
+#~ "  #|world\n"
+#~ "  #|\n"
+#~ msgstr ""
