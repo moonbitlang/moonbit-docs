@@ -91,6 +91,8 @@ pub using @pkgA {incr, trait Trait, type Type}
 
 By having `pub` modifier, it is considered as reexportation.
 
+<a id="access-control"></a>
+
 ## Access Control
 
 MoonBit features a comprehensive access control system that governs which parts of your code are accessible from other packages.

@@ -906,6 +906,8 @@ fn fixed_width_image(height? : Int) -> Image {
 }
 ```
 
+<a id="autofill-arguments"></a>
+
 ### Autofill arguments
 
 MoonBit supports filling specific types of arguments automatically at different call site, such as the source location of a function call.
