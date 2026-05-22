@@ -6,9 +6,9 @@ on:
       - main
   pull_request:
     paths:
-      - legacy/examples
-  schedule:
-    - cron: "0 10 * * 2"
+      - .github/workflows/legacy-check.yml
+      - legacy/examples/**
+      - scripts/check-legacy-examples.py
 
 jobs:
   build:
