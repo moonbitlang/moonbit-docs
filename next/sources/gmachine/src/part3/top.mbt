@@ -16,7 +16,7 @@ fn run(codes : List[String]) -> String {
   let (heap, globals) = build_initial_heap(codes)
   // start init definition
   let initialState : GState = {
-    output: @buffer.new(size_hint=60),
+    output: StringBuilder::new(size_hint=60),
     heap,
     stack: @list.empty(),
     code: @list.from_array([PushGlobal("main"), Eval, Print]),

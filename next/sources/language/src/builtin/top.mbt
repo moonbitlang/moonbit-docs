@@ -160,7 +160,7 @@ test {
 
 // start buffer 1
 test "buffer 1" {
-  let buf : @buffer.Buffer = @buffer.new()
+  let buf : @buffer.Buffer = Buffer()
   buf.write_bytes(b"Hello")
   buf.write_byte(b'!')
   assert_eq(buf.contents(), b"Hello!")

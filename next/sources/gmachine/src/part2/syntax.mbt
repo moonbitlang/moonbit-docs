@@ -141,14 +141,14 @@ fn tokenize(source : String) -> Tokens {
       tokens.push(Close(ch))
       continue
     } else if isAlpha(ch) {
-      let identifier = @buffer.new(size_hint=42)
+      let identifier = StringBuilder::new(size_hint=42)
       identifier.write_char(ch)
       next()
       while current < source.length() && isIdChar(peek()) {
         identifier.write_char(peek())
         next()
       }
-      let identifier = identifier.contents().to_unchecked_string()
+      let identifier = identifier.to_string()
       match identifier {
         "let" => tokens.push(Let)
         "letrec" => tokens.push(Letrec)
