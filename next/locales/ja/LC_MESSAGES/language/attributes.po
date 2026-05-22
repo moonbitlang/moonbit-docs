@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-21 14:57+0800\n"
+"POT-Creation-Date: 2026-05-22 14:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -98,7 +98,7 @@ msgstr ""
 
 #: ../../language/attributes.md:39
 msgid ""
-"We perfer to use compile-time code generation, keeping the benefits of "
+"We prefer to use compile-time code generation, keeping the benefits of "
 "static typing and performance (should also be used judiciously to avoid "
 "unnecessary complexity)."
 msgstr "私たちはコンパイル時コード生成を使うことを好みます。これにより静的型付けと性能の利点を保てます（ただし、不要な複雑さを避けるため慎重に使うべきです）。"
@@ -208,7 +208,9 @@ msgstr "エイリアスアトリビュート"
 msgid ""
 "The `#alert` attribute attaches a category and message to an API. When "
 "code uses the API, MoonBit emits an alert warning."
-msgstr "`#alert` アトリビュートは API にカテゴリとメッセージを付与します。その API が使われると、MoonBit は alert 警告を出します。"
+msgstr ""
+"`#alert` アトリビュートは API にカテゴリとメッセージを付与します。その API が使われると、MoonBit は alert "
+"警告を出します。"
 
 #: ../../language/attributes/alert.md:7
 #, fuzzy
@@ -224,7 +226,9 @@ msgid ""
 "The first argument is the alert category, and the second argument is the "
 "message shown to users. The warning can be configured through warning "
 "names such as `alert` and `alert_unsafe`."
-msgstr "第 1 引数は alert のカテゴリで、第 2 引数はユーザーに表示されるメッセージです。この警告は `alert` や `alert_unsafe` などの警告名で設定できます。"
+msgstr ""
+"第 1 引数は alert のカテゴリで、第 2 引数はユーザーに表示されるメッセージです。この警告は `alert` や "
+"`alert_unsafe` などの警告名で設定できます。"
 
 #: ../../language/attributes/alert.md:17
 #, fuzzy
@@ -415,12 +419,13 @@ msgid "Visibility Attribute"
 msgstr "可視性アトリビュート"
 
 #: ../../language/attributes/visibility.md:5
-#, fuzzy
 msgid ""
-"This topic does not covered the access control. To learn more about "
-"`pub`, `pub(all)` and `priv`, see [Access Control](/language/packages.md"
-"#access-control)."
-msgstr "このトピックではアクセス制御は扱いません。`pub`、`pub(all)`、`priv` について詳しくは [Access Control](/language/packages.md#access-control) を参照してください。"
+"This topic does not cover access control. To learn more about `pub`, "
+"`pub(all)` and `priv`, see [Access Control](/language/packages.md#access-"
+"control)."
+msgstr ""
+"このトピックではアクセス制御は扱いません。`pub`、`pub(all)`、`priv` について詳しくは [Access "
+"Control](/language/packages.md#access-control) を参照してください。"
 
 #: ../../language/attributes/visibility.md:8
 #, fuzzy
@@ -560,7 +565,9 @@ msgid ""
 "The alert warnings can be turn off by setting the `warn-list` in "
 "`moon.pkg`. For more detail, see [alert "
 "warning](/toolchain/moon/package.md#alert-warning)."
-msgstr "alert 警告は `moon.pkg` の `warn-list` を設定することで無効化できます。詳しくは [alert warning](/toolchain/moon/package.md#alert-warning) を参照してください。"
+msgstr ""
+"alert 警告は `moon.pkg` の `warn-list` を設定することで無効化できます。詳しくは [alert "
+"warning](/toolchain/moon/package.md#alert-warning) を参照してください。"
 
 #: ../../language/attributes/doc_hidden.md:2
 #, fuzzy
@@ -640,7 +647,9 @@ msgstr "現在、このアトリビュートは一部の特定の警告にのみ
 msgid ""
 "To learn more about warning names, see [warning "
 "list](/toolchain/moon/package.md#warnings-list)."
-msgstr "警告名について詳しくは [warning list](/toolchain/moon/package.md#warnings-list) を参照してください。"
+msgstr ""
+"警告名について詳しくは [warning list](/toolchain/moon/package.md#warnings-list) "
+"を参照してください。"
 
 #: ../../language/attributes/must_implement_one.md:2
 msgid "Must Implement One Attribute"
@@ -783,12 +792,53 @@ msgid "Borrow and Owned Attribute"
 msgstr "Borrow/Owned アトリビュート"
 
 #: ../../language/attributes/borrow_and_owned.md:4
-#, fuzzy
 msgid ""
-"The `#borrow` and `#owned` attribute is used to indicate that a FFI takes"
-" ownership of its arguments. For more detail, see [FFI](/language/ffi.md"
-"#the-borrow-and-owned-attribute)."
-msgstr "`#borrow` と `#owned` アトリビュートは、FFI が引数の所有権を受け取ることを示すために使います。詳しくは [FFI](/language/ffi.md#the-borrow-and-owned-attribute) を参照してください。"
+"The `#borrow` and `#owned` attributes are used on FFI declarations to "
+"describe how reference-counted MoonBit arguments are passed to foreign "
+"code. This matters for boxed MoonBit values such as `Bytes`, `String`, "
+"`FixedArray[T]`, and abstract types, whose lifetimes are managed by "
+"reference counting on the C and Wasm backends."
+msgstr ""
+"`#borrow` と `#owned` アトリビュートは FFI 宣言で使い、参照カウントされる MoonBit "
+"引数を外部コードへどのように渡すかを記述します。これは `Bytes`、`String`、`FixedArray[T]`、"
+"抽象型などのボックス化された MoonBit 値で重要です。これらの値のライフタイムは C および Wasm "
+"バックエンドで参照カウントにより管理されます。"
+
+#: ../../language/attributes/borrow_and_owned.md:10
+msgid ""
+"Use `#borrow(param)` when the foreign function only reads `param` during "
+"the call and does not store or return it. A borrowed parameter remains "
+"owned by MoonBit, so the foreign function does not need to call "
+"`moonbit_decref` or `$moonbit.decref` for it."
+msgstr ""
+"外部関数が呼び出し中に `param` を読むだけで、それを保存したり返したりしない場合は "
+"`#borrow(param)` を使います。borrow された引数の所有権は MoonBit "
+"に残るため、外部関数はその引数に対して `moonbit_decref` や `$moonbit.decref` "
+"を呼ぶ必要がありません。"
+
+#: ../../language/attributes/borrow_and_owned.md:15
+msgid ""
+"Use `#owned(param)` when the foreign function takes ownership of `param`,"
+" for example by storing it and releasing it later. An owned parameter "
+"must eventually be released by the foreign side when it is no longer "
+"needed."
+msgstr ""
+"外部関数が `param` の所有権を受け取る場合、たとえば保存して後で解放する場合は "
+"`#owned(param)` を使います。owned 引数は不要になった時点で、最終的に外部側が解放する必要があります。"
+
+#: ../../language/attributes/borrow_and_owned.md:19
+msgid ""
+"#borrow(filename)\n"
+"extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open\""
+msgstr ""
+
+#: ../../language/attributes/borrow_and_owned.md:25
+msgid ""
+"For the full calling-convention rules, see [FFI lifetime "
+"management](/language/ffi.md#the-borrow-and-owned-attribute)."
+msgstr ""
+"完全な呼び出し規約のルールについては [FFI ライフタイム管理](/language/ffi.md#the-borrow-and-owned-attribute) "
+"を参照してください。"
 
 #: ../../language/attributes/as_free_fn.md:2
 msgid "`as_free_fn` Attribute"
@@ -874,7 +924,10 @@ msgid ""
 "platform-specific fallback code or code paths that are intentionally "
 "excluded from coverage measurement. For more detail, see [Skipping "
 "coverage](/toolchain/moon/coverage.md#skipping-coverage)."
-msgstr "プラットフォーム固有のフォールバックコードや、意図的にカバレッジ測定から除外するコードパスなど、カバレッジレポートに影響させたくない関数に使います。詳しくは [Skipping coverage](/toolchain/moon/coverage.md#skipping-coverage) を参照してください。"
+msgstr ""
+"プラットフォーム固有のフォールバックコードや、意図的にカバレッジ測定から除外するコードパスなど、カバレッジレポートに影響させたくない関数に使います。詳しくは"
+" [Skipping coverage](/toolchain/moon/coverage.md#skipping-coverage) "
+"を参照してください。"
 
 #: ../../language/attributes/cfg.md:2
 msgid "Configuration attribute"
@@ -982,3 +1035,14 @@ msgstr ""
 #~ "#module(\"node:fs\")\n"
 #~ "pub fn write_file_sync(file : String, "
 #~ "data : String) = \"writeFileSync\"\n"
+
+#~ msgid ""
+#~ "The `#borrow` and `#owned` attribute is"
+#~ " used to indicate that a FFI "
+#~ "takes ownership of its arguments. For"
+#~ " more detail, see [FFI](/language/ffi.md#the-"
+#~ "borrow-and-owned-attribute)."
+#~ msgstr ""
+#~ "`#borrow` と `#owned` アトリビュートは、FFI "
+#~ "が引数の所有権を受け取ることを示すために使います。詳しくは [FFI](/language/ffi.md#the-"
+#~ "borrow-and-owned-attribute) を参照してください。"

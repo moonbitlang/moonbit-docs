@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-21 14:57+0800\n"
+"POT-Creation-Date: 2026-05-22 14:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -94,7 +94,7 @@ msgstr ""
 
 #: ../../language/attributes.md:39
 msgid ""
-"We perfer to use compile-time code generation, keeping the benefits of "
+"We prefer to use compile-time code generation, keeping the benefits of "
 "static typing and performance (should also be used judiciously to avoid "
 "unnecessary complexity)."
 msgstr "我们更倾向于使用编译时的代码生成，维持静态类型分析和性能上的优势（代码生成也需要节约地使用，避免不必要的复杂性）。"
@@ -407,12 +407,13 @@ msgid "Visibility Attribute"
 msgstr "`visibility` 属性"
 
 #: ../../language/attributes/visibility.md:5
-#, fuzzy
 msgid ""
-"This topic does not covered the access control. To learn more about "
-"`pub`, `pub(all)` and `priv`, see [Access Control](/language/packages.md"
-"#access-control)."
-msgstr "这里的文档不涉及访问控制。关于如何使用 `pub`、`pub(all)` 和 `priv`，见[访问控制](/language/packages.md#access-control)。"
+"This topic does not cover access control. To learn more about `pub`, "
+"`pub(all)` and `priv`, see [Access Control](/language/packages.md#access-"
+"control)."
+msgstr ""
+"这里的文档不涉及访问控制。关于如何使用 `pub`、`pub(all)` 和 "
+"`priv`，见[访问控制](/language/packages.md#access-control)。"
 
 #: ../../language/attributes/visibility.md:8
 #, fuzzy
@@ -546,7 +547,9 @@ msgid ""
 "The alert warnings can be turn off by setting the `warn-list` in "
 "`moon.pkg`. For more detail, see [alert "
 "warning](/toolchain/moon/package.md#alert-warning)."
-msgstr "`alert` 警告可以通过设置 `moon.pkg` 中的 `warn-list` 关闭。更多细节见 [alert 警告](/toolchain/moon/package.md#alert-warning)。"
+msgstr ""
+"`alert` 警告可以通过设置 `moon.pkg` 中的 `warn-list` 关闭。更多细节见 [alert "
+"警告](/toolchain/moon/package.md#alert-warning)。"
 
 #: ../../language/attributes/doc_hidden.md:2
 #, fuzzy
@@ -762,12 +765,49 @@ msgid "Borrow and Owned Attribute"
 msgstr "`borrow` 和 `owned` 属性"
 
 #: ../../language/attributes/borrow_and_owned.md:4
-#, fuzzy
 msgid ""
-"The `#borrow` and `#owned` attribute is used to indicate that a FFI takes"
-" ownership of its arguments. For more detail, see [FFI](/language/ffi.md"
-"#the-borrow-and-owned-attribute)."
-msgstr "`#borrow` 和 `#owned` 属性用于表示 FFI 会获得其参数的所有权。更多细节见 [FFI](/language/ffi.md#the-borrow-and-owned-attribute)。"
+"The `#borrow` and `#owned` attributes are used on FFI declarations to "
+"describe how reference-counted MoonBit arguments are passed to foreign "
+"code. This matters for boxed MoonBit values such as `Bytes`, `String`, "
+"`FixedArray[T]`, and abstract types, whose lifetimes are managed by "
+"reference counting on the C and Wasm backends."
+msgstr ""
+"`#borrow` 和 `#owned` 属性用于 FFI 声明，用来描述带引用计数的 MoonBit 参数如何传递给外部代码。"
+"这对于 `Bytes`、`String`、`FixedArray[T]` 以及抽象类型等装箱的 MoonBit 值很重要；"
+"这些值在 C 和 Wasm 后端上的生命周期由引用计数管理。"
+
+#: ../../language/attributes/borrow_and_owned.md:10
+msgid ""
+"Use `#borrow(param)` when the foreign function only reads `param` during "
+"the call and does not store or return it. A borrowed parameter remains "
+"owned by MoonBit, so the foreign function does not need to call "
+"`moonbit_decref` or `$moonbit.decref` for it."
+msgstr ""
+"当外部函数只在调用期间读取 `param`，且不会存储或返回它时，使用 `#borrow(param)`。"
+"借用参数仍由 MoonBit 拥有，因此外部函数不需要为它调用 `moonbit_decref` 或 `$moonbit.decref`。"
+
+#: ../../language/attributes/borrow_and_owned.md:15
+msgid ""
+"Use `#owned(param)` when the foreign function takes ownership of `param`,"
+" for example by storing it and releasing it later. An owned parameter "
+"must eventually be released by the foreign side when it is no longer "
+"needed."
+msgstr ""
+"当外部函数接管 `param` 的所有权时，例如将它存储起来并在之后释放，使用 `#owned(param)`。"
+"owned 参数最终必须由外部侧在不再需要时释放。"
+
+#: ../../language/attributes/borrow_and_owned.md:19
+msgid ""
+"#borrow(filename)\n"
+"extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open\""
+msgstr ""
+
+#: ../../language/attributes/borrow_and_owned.md:25
+msgid ""
+"For the full calling-convention rules, see [FFI lifetime "
+"management](/language/ffi.md#the-borrow-and-owned-attribute)."
+msgstr ""
+"完整的调用约定规则见 [FFI 生命周期管理](/language/ffi.md#the-borrow-and-owned-attribute)。"
 
 #: ../../language/attributes/as_free_fn.md:2
 msgid "`as_free_fn` Attribute"
@@ -853,7 +893,9 @@ msgid ""
 "platform-specific fallback code or code paths that are intentionally "
 "excluded from coverage measurement. For more detail, see [Skipping "
 "coverage](/toolchain/moon/coverage.md#skipping-coverage)."
-msgstr "它适用于不应影响覆盖率报告的函数，例如特定平台的回退代码，或有意排除在覆盖率统计之外的代码路径。更多细节见[跳过覆盖率](/toolchain/moon/coverage.md#skipping-coverage)。"
+msgstr ""
+"它适用于不应影响覆盖率报告的函数，例如特定平台的回退代码，或有意排除在覆盖率统计之外的代码路径。更多细节见[跳过覆盖率](/toolchain/moon/coverage.md"
+"#skipping-coverage)。"
 
 #: ../../language/attributes/cfg.md:2
 msgid "Configuration attribute"
@@ -998,3 +1040,14 @@ msgstr ""
 #~ "pub fn write_file_sync(file : String, "
 #~ "data : String) = \"writeFileSync\"\n"
 #~ msgstr ""
+
+#~ msgid ""
+#~ "The `#borrow` and `#owned` attribute is"
+#~ " used to indicate that a FFI "
+#~ "takes ownership of its arguments. For"
+#~ " more detail, see [FFI](/language/ffi.md#the-"
+#~ "borrow-and-owned-attribute)."
+#~ msgstr ""
+#~ "`#borrow` 和 `#owned` 属性用于表示 FFI "
+#~ "会获得其参数的所有权。更多细节见 [FFI](/language/ffi.md#the-borrow-"
+#~ "and-owned-attribute)。"
