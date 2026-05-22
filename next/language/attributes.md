@@ -36,7 +36,7 @@ The second attribute is a user-defined attribute; it has a namespace prefix `cus
 ```{note}
 MoonBit is designed not to support runtime reflection. It's easy to abuse, making it impossible for toolchains (e.g., the compiler) to catch errors at compile time, which makes code harder to maintain. It also negatively impacts performance optimization.
 
-We perfer to use compile-time code generation, keeping the benefits of static typing and performance (should also be used judiciously to avoid unnecessary complexity).
+We prefer to use compile-time code generation, keeping the benefits of static typing and performance (should also be used judiciously to avoid unnecessary complexity).
 ```
 
 ```{include} /language/attributes/deprecated.md
