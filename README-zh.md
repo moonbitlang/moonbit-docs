@@ -8,6 +8,6 @@
 
 ## 布局
 
-- `legacy/examples`: 一些 MoonBit 的小示例。
+- `legacy/examples`: MoonBit 的旧版演示和集成示例。
 - `next`: 基于 Sphinx 的当前文档，托管在 readthedocs 上。查看 [README](./next/README.md)。
 - `moonbit-tour`: 一个互动教程。查看 [README](./moonbit-tour/README.md)。

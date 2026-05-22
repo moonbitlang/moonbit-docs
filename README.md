@@ -8,6 +8,6 @@ Open `document.code-workspace` for a better development experience. Choose comma
 
 ## Layout
 
-- `legacy/examples`: some small examples for MoonBit.
+- `legacy/examples`: legacy demos and integration examples for MoonBit.
 - `next`: current documentation hosted on readthedocs based on Sphinx. Check [README](./next/README.md).
 - `moonbit-tour`: an interactive tour. Check [README](./moonbit-tour/README.md)
