@@ -83,7 +83,7 @@ const importObject = {
     },
 };
 
-WebAssembly.instantiateStreaming(fetch("target/wasm/release/build/main/main.wasm"), importObject).then(
+WebAssembly.instantiateStreaming(fetch("target/wasm-gc/release/build/main/main.wasm"), importObject).then(
     (obj) => {
         // @ts-ignore
         obj.instance.exports._start();

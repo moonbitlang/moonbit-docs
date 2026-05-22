@@ -36,9 +36,11 @@ Create `moon.mod.json` and `top.mbt`, plus a package configuration file. Current
 
 ```moonbit title=top.mbt
 pub fn fib(n : Int) -> Int64 {
-  loop (0L, 1L, n) {
-    (a, _, 0) => a
-    (a, b, n) => continue (b, a + b, n - 1)
+  for a = 0L, b = 1L, remaining = n {
+    if remaining == 0 {
+      break a
+    }
+    continue b, a + b, remaining - 1
   }
 }
 ```
