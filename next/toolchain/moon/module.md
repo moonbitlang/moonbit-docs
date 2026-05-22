@@ -149,9 +149,7 @@ The `readme` field is used to specify the path to the module's README file.
 `````````{tab-set}
 ``````{tab-item} moon.mod
 ```moonbit
-options(
-  readme: "README.md",
-)
+readme = "README.md"
 ```
 ``````
 ``````{tab-item} moon.mod.json
@@ -171,9 +169,7 @@ The `repository` field is used to specify the URL of the module's repository.
 `````````{tab-set}
 ``````{tab-item} moon.mod
 ```moonbit
-options(
-  repository: "link/to/your/repo",
-)
+repository = "link/to/your/repo"
 ```
 ``````
 ``````{tab-item} moon.mod.json
@@ -194,9 +190,7 @@ The `license` field is used to specify the license of the module. The license ty
 `````````{tab-set}
 ``````{tab-item} moon.mod
 ```moonbit
-options(
-  license: "MIT",
-)
+license = "MIT"
 ```
 ``````
 ``````{tab-item} moon.mod.json
@@ -215,9 +209,7 @@ The `keywords` field is used to specify the keywords for the module.
 `````````{tab-set}
 ``````{tab-item} moon.mod
 ```moonbit
-options(
-  keywords: ["example", "test"]
-)
+keywords = ["example", "test"]
 ```
 ``````
 ``````{tab-item} moon.mod.json
@@ -237,9 +229,7 @@ The `description` field is used to specify the description of the module.
 `````````{tab-set}
 ``````{tab-item} moon.mod
 ```moonbit
-options(
-  description: "This is a description of the module.",
-)
+description = "This is a description of the module."
 ```
 ``````
 ``````{tab-item} moon.mod.json
@@ -291,9 +281,7 @@ when developing a project targeting other backends than Wasm GC.
 `````````{tab-set}
 ``````{tab-item} moon.mod
 ```moonbit
-options(
-  "preferred-target": "js",
-)
+preferred_target = "js"
 ```
 ``````
 ``````{tab-item} moon.mod.json
@@ -324,9 +312,7 @@ For example:
 `````````{tab-set}
 ``````{tab-item} moon.mod
 ```moonbit
-options(
-  "supported-targets": "+js+wasm-gc"
-)
+supported_targets = "+js+wasm-gc"
 ```
 ``````
 ``````{tab-item} moon.mod.json
@@ -343,9 +329,7 @@ Legacy array syntax is still accepted for compatibility:
 `````````{tab-set}
 ``````{tab-item} moon.mod
 ```moonbit
-options(
-  "supported-targets": ["js", "wasm-gc"]
-)
+supported_targets = ["js", "wasm-gc"]
 ```
 ``````
 ``````{tab-item} moon.mod.json
