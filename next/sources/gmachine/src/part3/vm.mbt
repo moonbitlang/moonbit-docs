@@ -57,7 +57,7 @@ fn GHeap::op_set(self : GHeap, key : Addr, val : Node) -> Unit {
 }
 
 struct GState {
-  output : @buffer.Buffer
+  output : StringBuilder
   mut stack : List[Addr]
   heap : GHeap
   globals : @hashmap.HashMap[String, Addr]
@@ -415,6 +415,6 @@ fn GState::reify(self : GState) -> String {
   if self.step() {
     self.reify()
   } else {
-    self.output.contents().to_unchecked_string()
+    self.output.to_string()
   }
 }
