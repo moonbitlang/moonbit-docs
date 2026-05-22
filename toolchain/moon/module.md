@@ -141,9 +141,7 @@ The `readme` field is used to specify the path to the module's README file.
 ### moon.mod
 
 ```moonbit
-options(
-  readme: "README.md",
-)
+readme = "README.md"
 ```
 
 ### moon.mod.json
@@ -161,9 +159,7 @@ The `repository` field is used to specify the URL of the module's repository.
 ### moon.mod
 
 ```moonbit
-options(
-  repository: "link/to/your/repo",
-)
+repository = "link/to/your/repo"
 ```
 
 ### moon.mod.json
@@ -181,9 +177,7 @@ The `license` field is used to specify the license of the module. The license ty
 ### moon.mod
 
 ```moonbit
-options(
-  license: "MIT",
-)
+license = "MIT"
 ```
 
 ### moon.mod.json
@@ -201,9 +195,7 @@ The `keywords` field is used to specify the keywords for the module.
 ### moon.mod
 
 ```moonbit
-options(
-  keywords: ["example", "test"]
-)
+keywords = ["example", "test"]
 ```
 
 ### moon.mod.json
@@ -221,9 +213,7 @@ The `description` field is used to specify the description of the module.
 ### moon.mod
 
 ```moonbit
-options(
-  description: "This is a description of the module.",
-)
+description = "This is a description of the module."
 ```
 
 ### moon.mod.json
@@ -271,9 +261,7 @@ when developing a project targeting other backends than Wasm GC.
 ### moon.mod
 
 ```moonbit
-options(
-  "preferred-target": "js",
-)
+preferred_target = "js"
 ```
 
 ### moon.mod.json
@@ -301,9 +289,7 @@ For example:
 ### moon.mod
 
 ```moonbit
-options(
-  "supported-targets": "+js+wasm-gc"
-)
+supported_targets = "+js+wasm-gc"
 ```
 
 ### moon.mod.json
@@ -319,9 +305,7 @@ Legacy array syntax is still accepted for compatibility:
 ### moon.mod
 
 ```moonbit
-options(
-  "supported-targets": ["js", "wasm-gc"]
-)
+supported_targets = ["js", "wasm-gc"]
 ```
 
 ### moon.mod.json
@@ -539,6 +523,30 @@ A                          all warnings
 state: warn = enabled, error = promoted to error, off = disabled
 note: default alert exceptions: alert_unsafe=off
 ```
+
+## Rule
+
+The module-level `rule` entry declares a reusable pre-build command that is
+visible to every `moon.pkg` in the module. A module-level rule does not run by
+itself; to use it before building a package, add a package-level `dev_build`
+entry in `moon.pkg`. See the "Rule and dev_build" section in
+[Package Configuration](package.md#rule-and-dev-build) for the package-level
+configuration.
+
+Use `rule(name: "...", command: "...")`, where `name` identifies the rule and
+`command` is a shell command string. The command can refer to `$input` and
+`$output`, which are supplied by the package-level `dev_build` entry that uses
+the rule. A module can declare multiple module-level `rule` entries.
+
+### moon.mod
+
+```moonbit
+rule(name: "tool", command: "tool $input -o $output")
+```
+
+### moon.mod.json
+
+This feature is not supported in `moon.mod.json`.
 
 ## Scripts
 
