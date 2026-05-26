@@ -1,6 +1,6 @@
 ///|
 fn make_buffer() -> @buffer.Buffer {
-  @buffer.new()
+  Buffer()
 }
 
 ///|
