@@ -1,3 +1,3 @@
 trait Stringer {
-  stringify[T : Show](Self, T) -> String
+  fn[T : Show] stringify(Self, T) -> String
 }
