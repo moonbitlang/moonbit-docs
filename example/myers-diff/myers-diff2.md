@@ -166,12 +166,12 @@ fn pprint_edit(edit : Edit) -> String {
 
 ///|
 fn pprint_diff(diff : Array[Edit]) -> String {
-  let buf = @buffer.new(size_hint=100)
+  let buf = StringBuilder::new(size_hint=100)
   for i = diff.length(); i > 0; i = i - 1 {
     buf.write_string(pprint_edit(diff[i - 1]))
     buf.write_char('\n')
   } nobreak {
-    buf.contents().to_unchecked_string()
+    buf.to_string()
   }
 }
 ```

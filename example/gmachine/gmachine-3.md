@@ -436,7 +436,7 @@ Finally, change the initial code of the G-Machine to:
 
 ```moonbit
 let initialState : GState = {
-  output: @buffer.new(size_hint=60),
+  output: StringBuilder::new(size_hint=60),
   heap,
   stack: @list.empty(),
   code: @list.from_array([PushGlobal("main"), Eval, Print]),
