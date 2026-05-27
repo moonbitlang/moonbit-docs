@@ -36,7 +36,7 @@ The second attribute is a user-defined attribute; it has a namespace prefix `cus
 #### NOTE
 MoonBit is designed not to support runtime reflection. It's easy to abuse, making it impossible for toolchains (e.g., the compiler) to catch errors at compile time, which makes code harder to maintain. It also negatively impacts performance optimization.
 
-We perfer to use compile-time code generation, keeping the benefits of static typing and performance (should also be used judiciously to avoid unnecessary complexity).
+We prefer to use compile-time code generation, keeping the benefits of static typing and performance (should also be used judiciously to avoid unnecessary complexity).
 
 ## Deprecated Attribute
 
@@ -181,7 +181,7 @@ It has three following forms:
 ## Visibility Attribute
 
 #### NOTE
-This topic does not covered the access control. To learn more about `pub`, `pub(all)` and `priv`, see [Access Control](packages.md#id1).
+This topic does not cover access control. To learn more about `pub`, `pub(all)` and `priv`, see [Access Control](packages.md#id1).
 
 The `#visibility` attribute is similar to the `#deprecated` attribute, but it is used to hint that a type will change its visibility in the future.
 For outside usages, if the usage will be invalidated by the visibility change in future, a warning will be emitted.
@@ -381,7 +381,28 @@ type AttrPtr
 
 ## Borrow and Owned Attribute
 
-The `#borrow` and `#owned` attribute is used to indicate that a FFI takes ownership of its arguments. For more detail, see [FFI](ffi.md#the-borrow-and-owned-attribute).
+The `#borrow` and `#owned` attributes are used on FFI declarations to describe
+how reference-counted MoonBit arguments are passed to foreign code. This matters
+for boxed MoonBit values such as `Bytes`, `String`, `FixedArray[T]`, and
+abstract types, whose lifetimes are managed by reference counting on the C and
+Wasm backends.
+
+Use `#borrow(param)` when the foreign function only reads `param` during the
+call and does not store or return it. A borrowed parameter remains owned by
+MoonBit, so the foreign function does not need to call `moonbit_decref` or
+`$moonbit.decref` for it.
+
+Use `#owned(param)` when the foreign function takes ownership of `param`, for
+example by storing it and releasing it later. An owned parameter must eventually
+be released by the foreign side when it is no longer needed.
+
+```moonbit
+#borrow(filename)
+extern "C" fn open(filename : Bytes, flags : Int) -> Int = "open"
+```
+
+For the full calling-convention rules, see
+[FFI lifetime management](ffi.md#the-borrow-and-owned-attribute).
 
 ## `as_free_fn` Attribute
 

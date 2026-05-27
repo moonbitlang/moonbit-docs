@@ -1,7 +1,7 @@
 # Visibility Attribute
 
 #### NOTE
-This topic does not covered the access control. To learn more about `pub`, `pub(all)` and `priv`, see [Access Control](../packages.md#id1).
+This topic does not cover access control. To learn more about `pub`, `pub(all)` and `priv`, see [Access Control](../packages.md#id1).
 
 The `#visibility` attribute is similar to the `#deprecated` attribute, but it is used to hint that a type will change its visibility in the future.
 For outside usages, if the usage will be invalidated by the visibility change in future, a warning will be emitted.
