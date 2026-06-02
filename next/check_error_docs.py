@@ -38,9 +38,6 @@ SKIPPED_ERROR_CODES = {
     '3017',
     '4192',
     '4212',
-    # Current MoonBit reports missing infix operator methods through more
-    # specific diagnostics, so E4016 does not have a stable source repro.
-    '4016',
     # These package-loading diagnostics depend on missing or malformed internal
     # build artifacts rather than ordinary MoonBit source projects.
     '4047',
