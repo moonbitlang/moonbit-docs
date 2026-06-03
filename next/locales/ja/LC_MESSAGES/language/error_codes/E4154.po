@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -42,8 +42,8 @@ msgstr ""
 
 #: ../../language/error_codes/E4154.md:15
 msgid ""
-"However, only constant `enum` (all constructors have not payload) can "
-"have custom tag. Otherwise this error will be reported."
+"However, only constant `enum` values (where all constructors have no "
+"payload) can have custom tags. Otherwise this error will be reported."
 msgstr ""
 
 #: ../../language/error_codes/E4154.md:18
@@ -58,4 +58,32 @@ msgid ""
 "  C(Int)\n"
 "}"
 msgstr ""
+
+#: ../../language/error_codes/E4154.md:23
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4154.md:25
+msgid "Remove the payload, or remove the custom tag values:"
+msgstr ""
+
+#: ../../language/error_codes/E4154.md:27
+msgid ""
+"pub enum Good {\n"
+"  A = 1\n"
+"  B = 2\n"
+"  C = 3\n"
+"}\n"
+"\n"
+"pub fn all() -> (Good, Good, Good) {\n"
+"  (A, B, C)\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "However, only constant `enum` (all "
+#~ "constructors have not payload) can have"
+#~ " custom tag. Otherwise this error "
+#~ "will be reported."
+#~ msgstr ""
 

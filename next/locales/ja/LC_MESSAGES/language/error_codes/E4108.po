@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -24,107 +24,188 @@ msgid "E4108"
 msgstr ""
 
 #: ../../language/error_codes/E4108.md:3
-msgid "The loop is expected to yield a value, please add an `else` branch."
+msgid ""
+"The loop is expected to yield a value; in current syntax, add a `nobreak`"
+" branch."
 msgstr ""
 
-#: ../../language/error_codes/E4108.md:5
+#: ../../language/error_codes/E4108.md:6
 msgid ""
 "This error occurs when the compiler infers that a for-loop is expected to"
 " yield a non-Unit value based on its context (such as the function's "
-"return type), but the loop lacks an `else` branch to provide that value."
+"return type), but the loop lacks a branch to provide that value. In "
+"current MoonBit syntax, that branch is written as `nobreak`."
 msgstr ""
 
-#: ../../language/error_codes/E4108.md:9
+#: ../../language/error_codes/E4108.md:11
 msgid ""
 "In MoonBit, when a for-loop is used in a context where a value is "
 "expected (for example, when the function returns a non-Unit type), the "
-"loop must have an `else` branch that specifies what value to return when "
-"the loop completes normally. This is because:"
+"loop must have an `nobreak` branch that specifies what value to return "
+"when the loop completes normally. This is because:"
 msgstr ""
 
-#: ../../language/error_codes/E4108.md:14
+#: ../../language/error_codes/E4108.md:16
 msgid "The loop body itself cannot yield a value (unlike `loop` expressions)"
 msgstr ""
 
-#: ../../language/error_codes/E4108.md:15
+#: ../../language/error_codes/E4108.md:17
 msgid ""
-"Without an `else` branch, there's no way to determine what value should "
-"be returned when the loop finishes without breaking"
-msgstr ""
-
-#: ../../language/error_codes/E4108.md:18
-msgid "This commonly occurs in two situations:"
+"Without a `nobreak` branch, there's no way to determine what value should"
+" be returned when the loop finishes without breaking"
 msgstr ""
 
 #: ../../language/error_codes/E4108.md:20
+msgid "This commonly occurs in two situations:"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:22
 msgid ""
 "When the for-loop is the last expression in a function that returns a "
 "non-Unit type"
 msgstr ""
 
-#: ../../language/error_codes/E4108.md:22
+#: ../../language/error_codes/E4108.md:24
 msgid ""
 "When the for-loop's result is assigned to a variable or used in an "
 "expression that expects a non-Unit value"
 msgstr ""
 
-#: ../../language/error_codes/E4108.md:25
+#: ../../language/error_codes/E4108.md:27
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4108.md:27
+#: ../../language/error_codes/E4108.md:29
 msgid ""
-"pub fn f(x: Int) -> Int {\n"
+"///|\n"
+"pub fn f(x : Int) -> Int {\n"
 "  for i = 0, acc = 0; i < x; i = i + 1, acc = acc + i {\n"
-"//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Error: The for "
-"loop is\n"
-"//                                                      not expected to "
-"yield a\n"
-"//                                                      value, please add"
-" an\n"
-"//                                                      `else` branch.\n"
+"    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Error: The "
+"for loop is\n"
+"    //                                                      not expected "
+"to yield a\n"
+"    //                                                      value, please"
+" add an\n"
+"    //                                                      `else` "
+"branch.\n"
 "  }\n"
 "}\n"
 "\n"
-"pub fn g(x: Int) -> Int {\n"
-"  for i in 0..=x {\n"
+"///|\n"
+"pub fn g(x : Int) -> Int {\n"
+"  for i in 0..<=x {\n"
+"\n"
 "  }\n"
-"}"
-msgstr ""
-
-#: ../../language/error_codes/E4108.md:31
-msgid "Suggestion"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4108.md:33
-msgid "To fix this error, you can:"
+msgid "Suggestion"
 msgstr ""
 
 #: ../../language/error_codes/E4108.md:35
-msgid "add an `else` branch to the for-loop:"
+msgid "To fix this error, you can:"
 msgstr ""
 
 #: ../../language/error_codes/E4108.md:37
-msgid ""
-"pub fn f(x: Int) -> Int {\n"
-"  for i = 0, acc = 0; i < x; i = i + 1, acc = acc + i {\n"
-"  } else {\n"
-"    acc\n"
-"  }\n"
-"}"
+msgid "add a `nobreak` branch to the for-loop:"
 msgstr ""
 
-#: ../../language/error_codes/E4108.md:41
+#: ../../language/error_codes/E4108.md:39
+msgid ""
+"///|\n"
+"pub fn f(x : Int) -> Int {\n"
+"  for i = 0, acc = 0; i < x; i = i + 1, acc = acc + i {\n"
+"\n"
+"  } nobreak {\n"
+"    acc\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4108.md:43
 msgid ""
 "change the function's return type to `Unit` if you don't need to return a"
 " value from the loop:"
 msgstr ""
 
-#: ../../language/error_codes/E4108.md:44
+#: ../../language/error_codes/E4108.md:46
 msgid ""
-"pub fn g(x: Int) -> Unit {\n"
-"  for i in 0..=x {\n"
+"///|\n"
+"pub fn g(x : Int) -> Unit {\n"
+"  for i in 0..<=x {\n"
+"    ignore(i)\n"
 "  }\n"
-"}"
+"}\n"
 msgstr ""
+
+#~ msgid "The loop is expected to yield a value, please add an `else` branch."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This error occurs when the compiler "
+#~ "infers that a for-loop is expected"
+#~ " to yield a non-Unit value "
+#~ "based on its context (such as the"
+#~ " function's return type), but the "
+#~ "loop lacks an `else` branch to "
+#~ "provide that value."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "In MoonBit, when a for-loop is "
+#~ "used in a context where a value"
+#~ " is expected (for example, when the"
+#~ " function returns a non-Unit type),"
+#~ " the loop must have an `else` "
+#~ "branch that specifies what value to "
+#~ "return when the loop completes normally."
+#~ " This is because:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Without an `else` branch, there's no "
+#~ "way to determine what value should "
+#~ "be returned when the loop finishes "
+#~ "without breaking"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn f(x: Int) -> Int {\n"
+#~ "  for i = 0, acc = 0; i < x; i = i + 1, acc = acc + i {\n"
+#~ "//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Error:"
+#~ " The for loop is\n"
+#~ "//                                                      not "
+#~ "expected to yield a\n"
+#~ "//                                                      value,"
+#~ " please add an\n"
+#~ "//                                                      `else`"
+#~ " branch.\n"
+#~ "  }\n"
+#~ "}\n"
+#~ "\n"
+#~ "pub fn g(x: Int) -> Int {\n"
+#~ "  for i in 0..=x {\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid "add an `else` branch to the for-loop:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn f(x: Int) -> Int {\n"
+#~ "  for i = 0, acc = 0; i < x; i = i + 1, acc = acc + i {\n"
+#~ "  } else {\n"
+#~ "    acc\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn g(x: Int) -> Unit {\n"
+#~ "  for i in 0..=x {\n"
+#~ "  }\n"
+#~ "}"
+#~ msgstr ""
 

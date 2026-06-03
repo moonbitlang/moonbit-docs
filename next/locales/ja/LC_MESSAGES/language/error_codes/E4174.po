@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,57 @@ msgid "Compiler diagnostic name: `control_in_defer`."
 msgstr ""
 
 #: ../../language/error_codes/E4174.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Invalid control flow inside `defer`."
 msgstr ""
+
+#: ../../language/error_codes/E4174.md:7
+msgid ""
+"The right-hand side of `defer` is cleanup code that runs when the "
+"surrounding scope exits. It cannot change how that surrounding scope "
+"exits. MoonBit rejects `return`, `break`, `continue`, `raise`, calls to "
+"functions that may raise, and async calls inside `defer`."
+msgstr ""
+
+#: ../../language/error_codes/E4174.md:12
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4174.md:14
+msgid ""
+"fn answer() -> Int {\n"
+"  defer { return 42 }\n"
+"  0\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4174.md:18
+msgid ""
+"The `return` would try to exit the surrounding function from cleanup "
+"code, so it is rejected."
+msgstr ""
+
+#: ../../language/error_codes/E4174.md:21
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4174.md:23
+msgid ""
+"Keep `defer` for cleanup with `Unit`-returning, non-raising, synchronous "
+"code. Perform control flow after the deferred cleanup has been "
+"registered."
+msgstr ""
+
+#: ../../language/error_codes/E4174.md:26
+msgid ""
+"fn answer() -> Int {\n"
+"  defer println(\"leaving answer\")\n"
+"  42\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

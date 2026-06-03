@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,81 @@ msgid "Compiler diagnostic name: `unsupported_match_strategy`."
 msgstr ""
 
 #: ../../language/error_codes/E4180.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Unsupported `lexmatch` match strategy."
 msgstr ""
+
+#: ../../language/error_codes/E4180.md:7
+msgid ""
+"`lexmatch` only supports the default first-match strategy and the "
+"explicit `longest` strategy. Other strategy names are rejected."
+msgstr ""
+
+#: ../../language/error_codes/E4180.md:11
+msgid ""
+"`lexmatch` is deprecated for new code. Prefer regex match expressions "
+"such as `value =~ re\"...\"` unless you specifically need legacy lexer-"
+"style behavior."
+msgstr ""
+
+#: ../../language/error_codes/E4180.md:15
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4180.md:17
+msgid "The following example asks for an unsupported `shortest` strategy:"
+msgstr ""
+
+#: ../../language/error_codes/E4180.md:19
+msgid ""
+"///|\n"
+"fn classify(input : String) -> String {\n"
+"  lexmatch input with shortest {\n"
+"    \"if\" => \"keyword\"\n"
+"    _ => \"identifier\"\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(classify)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4180.md:23
+msgid "MoonBit will report an error."
+msgstr ""
+
+#: ../../language/error_codes/E4180.md:25
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4180.md:27
+msgid ""
+"Use one of the supported strategies, or rewrite the code with a regex "
+"match expression when first-match behavior is enough:"
+msgstr ""
+
+#: ../../language/error_codes/E4180.md:30
+msgid ""
+"///|\n"
+"fn classify(input : String) -> String {\n"
+"  if input =~ re\"^if$\" {\n"
+"    \"keyword\"\n"
+"  } else {\n"
+"    \"identifier\"\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(classify(\"if\"), content=\"keyword\")\n"
+"  inspect(classify(\"gift\"), content=\"identifier\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

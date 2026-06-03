@@ -1,0 +1,79 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4213.md:1
+msgid "E4213"
+msgstr ""
+
+#: ../../language/error_codes/E4213.md:3
+msgid "Compiler diagnostic name: `constr_for_non_struct`."
+msgstr ""
+
+#: ../../language/error_codes/E4213.md:5
+msgid "Constructor methods can only be defined for `struct` types."
+msgstr ""
+
+#: ../../language/error_codes/E4213.md:7
+msgid ""
+"MoonBit's `Type::Type` constructor mechanism belongs to structs. Enums, "
+"newtypes, and other type forms already have their own construction "
+"syntax, so a constructor method for those types is rejected."
+msgstr ""
+
+#: ../../language/error_codes/E4213.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4213.md:13
+msgid ""
+"pub enum Status {\n"
+"  Ready\n"
+"}\n"
+"\n"
+"pub fn Status::Status() -> Status {\n"
+"  Ready\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4213.md:17
+msgid ""
+"`Status` is an `enum`, not a `struct`, so `Status::Status` cannot be used"
+" as a struct constructor."
+msgstr ""
+
+#: ../../language/error_codes/E4213.md:20
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4213.md:22
+msgid ""
+"Use the enum constructor directly, or change the type to a `struct` if "
+"you need a custom constructor method."
+msgstr ""
+
+#: ../../language/error_codes/E4213.md:25
+msgid ""
+"pub struct Status {}\n"
+"\n"
+"pub fn Status::Status() -> Status {\n"
+"  Status::{  }\n"
+"}\n"
+msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -29,37 +29,64 @@ msgstr ""
 
 #: ../../language/error_codes/E3006.md:5
 msgid ""
-"Usually, this means that you put an `priv` or `pub` visibility modifier "
-"on a enum constructor."
+"Usually, this means that you put a `priv` or `pub` visibility modifier on"
+" an enum constructor."
 msgstr ""
 
-#: ../../language/error_codes/E3006.md:7
+#: ../../language/error_codes/E3006.md:8
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E3006.md:9
+#: ../../language/error_codes/E3006.md:10
 msgid ""
 "enum A {\n"
 "  priv A1 // Error: No individual visibility for enum constructor.\n"
 "  pub A2 // Error: No individual visibility for enum constructor.\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3006.md:13
+#: ../../language/error_codes/E3006.md:14
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E3006.md:15
+#: ../../language/error_codes/E3006.md:16
 msgid ""
 "Remove the visibility modifier from the definition of the enum "
 "constructor:"
 msgstr ""
 
-#: ../../language/error_codes/E3006.md:17
+#: ../../language/error_codes/E3006.md:18
 msgid ""
-"enum A {\n"
+"///|\n"
+"pub(all) enum A {\n"
 "  A1\n"
 "  A2\n"
-"}"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let _ = A1\n"
+"  let _ = A2\n"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "Usually, this means that you put "
+#~ "an `priv` or `pub` visibility modifier"
+#~ " on a enum constructor."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "enum A {\n"
+#~ "  priv A1 // Error: No individual visibility for enum constructor.\n"
+#~ "  pub A2 // Error: No individual visibility for enum constructor.\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "enum A {\n"
+#~ "  A1\n"
+#~ "  A2\n"
+#~ "}"
+#~ msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,45 @@ msgid "Compiler diagnostic name: `duplicate_regex_match_binding`."
 msgstr ""
 
 #: ../../language/error_codes/E4209.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Duplicate regex match binding."
 msgstr ""
+
+#: ../../language/error_codes/E4209.md:7
+msgid ""
+"Each special binding in a regex match expression can be specified at most"
+" once. Using `before` or `after` multiple times would give the same part "
+"of the match more than one name."
+msgstr ""
+
+#: ../../language/error_codes/E4209.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4209.md:13
+msgid ""
+"fn match_text(s : String) -> Unit {\n"
+"  ignore(s =~ (re\"a\", before=head, before=prefix))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4209.md:17
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4209.md:19
+msgid "Use each binding label only once."
+msgstr ""
+
+#: ../../language/error_codes/E4209.md:21
+msgid ""
+"fn match_text(s : String) -> Unit {\n"
+"  ignore(s =~ (re\"a\", before=head, after=tail))\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

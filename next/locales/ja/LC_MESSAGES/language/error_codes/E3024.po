@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -24,12 +24,62 @@ msgid "E3024"
 msgstr ""
 
 #: ../../language/error_codes/E3024.md:3
-msgid "Compiler diagnostic name: `struct_constr_invalid_name`."
+msgid "Constructor function of `struct` must have name `new`."
 msgstr ""
 
 #: ../../language/error_codes/E3024.md:5
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"This error happens when a constructor function declared inside a `struct`"
+" is not named `new`. MoonBit treats `new` as the constructor entry point "
+"for the struct."
 msgstr ""
+
+#: ../../language/error_codes/E3024.md:9
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E3024.md:11
+msgid ""
+"pub struct S {\n"
+"  x : Int\n"
+"  fn constr(x : Int) -> S\n"
+"}\n"
+"\n"
+"fn S::constr(x : Int) -> S {\n"
+"  { x, }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3024.md:15
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E3024.md:17
+msgid "Rename the constructor function to `new`:"
+msgstr ""
+
+#: ../../language/error_codes/E3024.md:19
+msgid ""
+"pub struct S {\n"
+"  x : Int\n"
+"  fn new(x : Int) -> S\n"
+"}\n"
+"\n"
+"fn S::new(x : Int) -> S {\n"
+"  { x, }\n"
+"}\n"
+"\n"
+"pub fn make(x : Int) -> S {\n"
+"  S::new(x)\n"
+"}\n"
+msgstr ""
+
+#~ msgid "Compiler diagnostic name: `struct_constr_invalid_name`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

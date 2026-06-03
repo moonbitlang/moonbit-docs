@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,49 @@ msgid "Compiler diagnostic name: `unsupported_declaration`."
 msgstr ""
 
 #: ../../language/error_codes/E4194.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Unsupported declaration target."
 msgstr ""
+
+#: ../../language/error_codes/E4194.md:7
+msgid ""
+"The declaration-only attribute is supported only on declaration items "
+"that the compiler can later match with an implementation. It cannot be "
+"applied to ordinary value bindings or other unsupported top-level items."
+msgstr ""
+
+#: ../../language/error_codes/E4194.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4194.md:13
+msgid ""
+"#declaration_only\n"
+"let answer = 42\n"
+msgstr ""
+
+#: ../../language/error_codes/E4194.md:17
+msgid ""
+"`answer` is a `let` binding, not a function, type, or implementation "
+"relation that can be tracked as a declaration."
+msgstr ""
+
+#: ../../language/error_codes/E4194.md:20
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4194.md:22
+msgid ""
+"Use an ordinary definition for values. If you need a declaration, declare"
+" a function signature, abstract type, or implementation relation."
+msgstr ""
+
+#: ../../language/error_codes/E4194.md:25
+msgid "let answer = 42\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -40,7 +40,7 @@ msgid "You mistakenly treat a positional argument as a labelled argument."
 msgstr ""
 
 #: ../../language/error_codes/E4085.md:9
-msgid "You provided extra labelled arguments to the function."
+msgid "You provide extra labelled arguments to the function."
 msgstr ""
 
 #: ../../language/error_codes/E4085.md:11
@@ -49,34 +49,62 @@ msgstr ""
 
 #: ../../language/error_codes/E4085.md:13
 msgid ""
+"///|\n"
 "pub fn f(name : String) -> Unit {\n"
 "  println(\"Hello, \\{name}\")\n"
 "}\n"
 "\n"
-"fn main {\n"
-"  f(\"John\", age=20) // Error: This function has no parameter with label"
-" age~.\n"
+"///|\n"
+"test {\n"
+"  f(\"John\", age=20)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4085.md:23
+#: ../../language/error_codes/E4085.md:17
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4085.md:25
+#: ../../language/error_codes/E4085.md:19
 msgid ""
 "Check the signature of the function and provide the correct label name or"
 " remove the extra labelled argument."
 msgstr ""
 
-#: ../../language/error_codes/E4085.md:28
+#: ../../language/error_codes/E4085.md:22
 msgid ""
+"///|\n"
 "pub fn f(name : String) -> Unit {\n"
 "  println(\"Hello, \\{name}\")\n"
 "}\n"
 "\n"
-"fn main {\n"
+"///|\n"
+"test {\n"
 "  f(\"John\")\n"
-"}"
+"}\n"
 msgstr ""
+
+#~ msgid "You provided extra labelled arguments to the function."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn f(name : String) -> Unit {\n"
+#~ "  println(\"Hello, \\{name}\")\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  f(\"John\", age=20) // Error: This "
+#~ "function has no parameter with label "
+#~ "age~.\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn f(name : String) -> Unit {\n"
+#~ "  println(\"Hello, \\{name}\")\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  f(\"John\")\n"
+#~ "}"
+#~ msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -25,37 +25,70 @@ msgstr ""
 
 #: ../../language/error_codes/E3008.md:3
 msgid ""
-"There are multiple `..` patterns in array pattern. Remove until there is "
-"only one `..` pattern in array pattern."
+"There are multiple `..` patterns in an array pattern. Use at most one "
+"`..` in each array pattern."
 msgstr ""
 
-#: ../../language/error_codes/E3008.md:5
+#: ../../language/error_codes/E3008.md:6
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E3008.md:7
+#: ../../language/error_codes/E3008.md:8
 msgid ""
-"fn main {\n"
-"  let array = [1, 2, 3, 4, 5]\n"
+"fn outer_sum(array : Array[Int]) -> Int {\n"
 "  let [fst, .., .., snd] = array\n"
-"  //            ^^\n"
-"  // Error: At most one `..` is allowed in array pattern.\n"
-"}"
+"  fst + snd\n"
+"}\n"
+"\n"
+"test {\n"
+"  inspect(outer_sum([1, 2, 3, 4, 5]), content=\"6\")\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3008.md:11
+#: ../../language/error_codes/E3008.md:12
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E3008.md:13
+#: ../../language/error_codes/E3008.md:14
 msgid "Remove the extra `..` pattern."
 msgstr ""
 
-#: ../../language/error_codes/E3008.md:15
+#: ../../language/error_codes/E3008.md:16
 msgid ""
-"fn main {\n"
-"  // ...\n"
-"  let [fst, .., snd] = array\n"
-"}"
+"///|\n"
+"fn outer_sum(array : Array[Int]) -> Int {\n"
+"  match array {\n"
+"    [fst, .., snd] => fst + snd\n"
+"    _ => 0\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(outer_sum([1, 2, 3, 4, 5]), content=\"6\")\n"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "There are multiple `..` patterns in "
+#~ "array pattern. Remove until there is "
+#~ "only one `..` pattern in array "
+#~ "pattern."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let array = [1, 2, 3, 4, 5]\n"
+#~ "  let [fst, .., .., snd] = array\n"
+#~ "  //            ^^\n"
+#~ "  // Error: At most one `..` is allowed in array pattern.\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  // ...\n"
+#~ "  let [fst, .., snd] = array\n"
+#~ "}"
+#~ msgstr ""
 

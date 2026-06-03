@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,71 @@ msgid "Compiler diagnostic name: `mbt_check_fatal_error`."
 msgstr ""
 
 #: ../../language/error_codes/E4190.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Fatal syntax error in an `mbt check` documentation block."
 msgstr ""
+
+#: ../../language/error_codes/E4190.md:7
+msgid ""
+"Code fences marked as `mbt check` in doc comments are parsed as document "
+"tests. If a block contains fatal syntax errors, MoonBit skips that block "
+"and reports this diagnostic on the code fence."
+msgstr ""
+
+#: ../../language/error_codes/E4190.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4190.md:13
+msgid ""
+"The following doc comment has an incomplete `let` binding inside an `mbt "
+"check` block:"
+msgstr ""
+
+#: ../../language/error_codes/E4190.md:16
+msgid ""
+"/// Returns the answer.\n"
+"///\n"
+"/// ```mbt check\n"
+"/// test {\n"
+"///   let value =\n"
+"/// }\n"
+"/// ```\n"
+"pub fn answer() -> Int {\n"
+"  42\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4190.md:20
+msgid "MoonBit will report an error."
+msgstr ""
+
+#: ../../language/error_codes/E4190.md:22
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4190.md:24
+msgid ""
+"Fix the syntax inside the documentation block. When the block is meant to"
+" be checked as a doctest, wrap executable statements in `test { ... }`:"
+msgstr ""
+
+#: ../../language/error_codes/E4190.md:27
+msgid ""
+"/// Returns the answer.\n"
+"///\n"
+"/// ```mbt check\n"
+"/// test {\n"
+"///   inspect(answer(), content=\"42\")\n"
+"/// }\n"
+"/// ```\n"
+"pub fn answer() -> Int {\n"
+"  42\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

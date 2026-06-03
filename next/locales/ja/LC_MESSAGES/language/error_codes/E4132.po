@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -25,8 +25,8 @@ msgstr ""
 
 #: ../../language/error_codes/E4132.md:3
 msgid ""
-"Invalid test parameter. Only one parameter with type `@test.T` or "
-"`@bench.T` is allowed."
+"Invalid test parameter. Only one parameter with type `@test.Test` is "
+"allowed."
 msgstr ""
 
 #: ../../language/error_codes/E4132.md:5
@@ -36,8 +36,8 @@ msgstr ""
 #: ../../language/error_codes/E4132.md:7
 msgid ""
 "test (name : String) {\n"
-"  ...\n"
-"}"
+"  ignore(name)\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4132.md:11
@@ -47,18 +47,15 @@ msgstr ""
 #: ../../language/error_codes/E4132.md:13
 msgid ""
 "It is not yet possible to pass custom parameters to tests, and you have "
-"to use the predefined `@test.T` type or `@bench.T` type."
+"to use the predefined `@test.Test` type."
 msgstr ""
 
 #: ../../language/error_codes/E4132.md:16
 msgid ""
-"test (it : @test.T) {\n"
-"  ...\n"
+"test (it : @test.Test) {\n"
+"  ignore(it)\n"
+"  @test.assert_eq(1 + 1, 2)\n"
 "}\n"
-"\n"
-"test (bm : @bench.T) {\n"
-"  ...\n"
-"}"
 msgstr ""
 
 #: ../../language/error_codes/E4132.md:20
@@ -68,7 +65,42 @@ msgstr ""
 #: ../../language/error_codes/E4132.md:22
 msgid ""
 "test {\n"
-"  ...\n"
-"}"
+"  @test.assert_eq(3 + 3, 6)\n"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "Invalid test parameter. Only one "
+#~ "parameter with type `@test.T` or "
+#~ "`@bench.T` is allowed."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "test (name : String) {\n"
+#~ "  ...\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "It is not yet possible to pass "
+#~ "custom parameters to tests, and you "
+#~ "have to use the predefined `@test.T` "
+#~ "type or `@bench.T` type."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "test (it : @test.T) {\n"
+#~ "  ...\n"
+#~ "}\n"
+#~ "\n"
+#~ "test (bm : @bench.T) {\n"
+#~ "  ...\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "test {\n"
+#~ "  ...\n"
+#~ "}"
+#~ msgstr ""
 

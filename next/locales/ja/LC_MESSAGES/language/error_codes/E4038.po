@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -33,58 +33,70 @@ msgstr ""
 
 #: ../../language/error_codes/E4038.md:7
 msgid ""
-"fn main {\n"
-"  let a = 3 as &Eq\n"
+"pub fn eq_object() -> &Eq {\n"
+"  3 as &Eq\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4038.md:13
+#: ../../language/error_codes/E4038.md:11
 msgid ""
 "The example above tries to create an object of the `Eq` trait. This is "
 "not allowed, as the trait is not object safe."
 msgstr ""
 
-#: ../../language/error_codes/E4038.md:16
+#: ../../language/error_codes/E4038.md:14
 msgid "The `Eq` trait is defined as follows:"
 msgstr ""
 
-#: ../../language/error_codes/E4038.md:18
+#: ../../language/error_codes/E4038.md:16
 msgid ""
 "pub(open) trait Eq {\n"
 "  op_equal(Self, Self) -> Bool\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4038.md:24
+#: ../../language/error_codes/E4038.md:22
 msgid "... which is why the following error is given on line 2:"
 msgstr ""
 
-#: ../../language/error_codes/E4038.md:26
+#: ../../language/error_codes/E4038.md:24
 msgid ""
 "Trait object for Eq is not allowed: `Self` occur multiple times in the "
 "type of method op_equal\n"
 msgstr ""
 
-#: ../../language/error_codes/E4038.md:30
+#: ../../language/error_codes/E4038.md:28
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4038.md:32
+#: ../../language/error_codes/E4038.md:30
 msgid "Use an object-safe trait to create a trait object."
 msgstr ""
 
-#: ../../language/error_codes/E4038.md:34
+#: ../../language/error_codes/E4038.md:32
 msgid ""
 "For a trait to be object-safe, its dispatchable functions must use and "
 "only use the `Self` type as the first parameter. For example, `Show` is "
 "such a trait:"
 msgstr ""
 
-#: ../../language/error_codes/E4038.md:37
+#: ../../language/error_codes/E4038.md:35
 msgid ""
-"pub(open) trait Show {\n"
-"  output(Self, &Logger) -> Unit\n"
-"  to_string(Self) -> String\n"
-"}"
+"pub fn show_object() -> &Show {\n"
+"  3 as &Show\n"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  let a = 3 as &Eq\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub(open) trait Show {\n"
+#~ "  output(Self, &Logger) -> Unit\n"
+#~ "  to_string(Self) -> String\n"
+#~ "}"
+#~ msgstr ""
 

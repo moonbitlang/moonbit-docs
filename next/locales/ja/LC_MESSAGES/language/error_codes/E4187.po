@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,73 @@ msgid "Compiler diagnostic name: `using_missing_keyword`."
 msgstr ""
 
 #: ../../language/error_codes/E4187.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Missing keyword in a `using` alias."
 msgstr ""
+
+#: ../../language/error_codes/E4187.md:7
+msgid ""
+"When a `using` declaration imports a type or trait, the imported name "
+"must be prefixed with the corresponding keyword. This keeps type and "
+"trait aliases distinct from value aliases."
+msgstr ""
+
+#: ../../language/error_codes/E4187.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4187.md:13
+msgid ""
+"The following example imports the builtin `Array` type without the `type`"
+" keyword:"
+msgstr ""
+
+#: ../../language/error_codes/E4187.md:16
+msgid ""
+"///|\n"
+"using @builtin {Array}\n"
+"\n"
+"///|\n"
+"fn length(values : Array[Int]) -> Int {\n"
+"  values.length()\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(length)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4187.md:20
+msgid "MoonBit will report an error."
+msgstr ""
+
+#: ../../language/error_codes/E4187.md:22
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4187.md:24
+msgid "Add `type` when importing a type, or `trait` when importing a trait:"
+msgstr ""
+
+#: ../../language/error_codes/E4187.md:26
+msgid ""
+"///|\n"
+"using @builtin {type Array}\n"
+"\n"
+"///|\n"
+"fn length(values : Array[Int]) -> Int {\n"
+"  values.length()\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(length([1, 2]), content=\"2\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

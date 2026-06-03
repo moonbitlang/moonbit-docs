@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -24,6 +24,56 @@ msgid "E0054"
 msgstr ""
 
 #: ../../language/error_codes/E0054.md:3
-msgid "No longer emitted."
+msgid "Warning name: `ambiguous_range_direction`"
 msgstr ""
+
+#: ../../language/error_codes/E0054.md:5
+msgid "The direction of an inclusive range is ambiguous."
+msgstr ""
+
+#: ../../language/error_codes/E0054.md:7
+msgid ""
+"This warning is emitted when an inclusive range such as `10..=0` is used "
+"in a loop. The endpoints suggest a descending loop, but the range syntax "
+"does not make the direction explicit."
+msgstr ""
+
+#: ../../language/error_codes/E0054.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0054.md:13
+msgid ""
+"///|\n"
+"pub fn values() -> Array[Int] {\n"
+"  let result = []\n"
+"  for i in 10..=0 {\n"
+"    result.push(i)\n"
+"  }\n"
+"  result\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0054.md:17
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0054.md:19
+msgid "Use explicit descending range syntax when the loop should count down."
+msgstr ""
+
+#: ../../language/error_codes/E0054.md:21
+msgid ""
+"///|\n"
+"pub fn values() -> Array[Int] {\n"
+"  let result = []\n"
+"  for i in 10>=..0 {\n"
+"    result.push(i)\n"
+"  }\n"
+"  result\n"
+"}\n"
+msgstr ""
+
+#~ msgid "No longer emitted."
+#~ msgstr ""
 

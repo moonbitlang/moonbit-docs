@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -24,53 +24,95 @@ msgid "E4042"
 msgstr ""
 
 #: ../../language/error_codes/E4042.md:3
-msgid "Invalid stub type."
+msgid "Compiler diagnostic name: `invalid_stub_type`."
 msgstr ""
 
 #: ../../language/error_codes/E4042.md:5
+msgid "Invalid stub type."
+msgstr ""
+
+#: ../../language/error_codes/E4042.md:7
 msgid ""
-"When defineing a FFI, the stub type must be a valid type, namely they can"
-" be represented natively at corresponding backends."
+"When defining an FFI function, each parameter and return type must be a "
+"valid stub type that can be represented natively by the selected backend."
 msgstr ""
 
-#: ../../language/error_codes/E4042.md:8
+#: ../../language/error_codes/E4042.md:10
 msgid ""
-"For example, you cannot use `FixedArray[T]` and `String` in FFI "
-"definition on WASM linear backend."
+"For example, `FixedArray[T]` is not a valid stub type for the Wasm GC "
+"backend."
 msgstr ""
 
-#: ../../language/error_codes/E4042.md:11
-msgid "Erroneous Example"
+#: ../../language/error_codes/E4042.md:12
+msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4042.md:13
-msgid "On WASM linear backend:"
-msgstr ""
-
-#: ../../language/error_codes/E4042.md:15
+#: ../../language/error_codes/E4042.md:14
 msgid ""
-"fn ffi(array : FixedArray[Int]) -> Unit = \"mod\" \"ffi\"\n"
-"//             ^~~~~~~~~~~~~~~ Error: Invalid stub type.\n"
+"pub fn ffi(array : FixedArray[Int]) -> Unit = \"mod\" \"ffi\"\n"
+"//                 ^~~~~~~~~~~~~~~\n"
+"// Error: Invalid stub type.\n"
 msgstr ""
 
-#: ../../language/error_codes/E4042.md:20
+#: ../../language/error_codes/E4042.md:18
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4042.md:22
+#: ../../language/error_codes/E4042.md:20
 msgid ""
 "The way to pass non-native types through the FFI interface depends on "
 "both the backend of the MoonBit compiler and the runtime you are using. "
-"For example, if you wish to pass an array of int to the JS host with the "
-"WASM linear backend, you can pass the int one by one to the host function"
-" and store the array on the JS side."
+"Use a native stub type directly, or pass a handle/index and manage the "
+"compound value on the host side."
 msgstr ""
 
-#: ../../language/error_codes/E4042.md:28
-msgid ""
-"extern type JsArray\n"
-"fn make_js_array() -> JsArray = \"mod\" \"make_js_array\"\n"
-"fn push_js_array(array : JsArray, value : Int) -> Unit = \"mod\" "
-"\"push_js_array\""
+#: ../../language/error_codes/E4042.md:25
+msgid "pub fn ffi(value : Int) -> Unit = \"mod\" \"ffi\"\n"
 msgstr ""
+
+#~ msgid ""
+#~ "When defineing a FFI, the stub "
+#~ "type must be a valid type, namely"
+#~ " they can be represented natively at"
+#~ " corresponding backends."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For example, you cannot use "
+#~ "`FixedArray[T]` and `String` in FFI "
+#~ "definition on WASM linear backend."
+#~ msgstr ""
+
+#~ msgid "Erroneous Example"
+#~ msgstr ""
+
+#~ msgid "On WASM linear backend:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn ffi(array : FixedArray[Int]) -> Unit = \"mod\" \"ffi\"\n"
+#~ "//             ^~~~~~~~~~~~~~~ Error: Invalid stub type.\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The way to pass non-native types"
+#~ " through the FFI interface depends on"
+#~ " both the backend of the MoonBit "
+#~ "compiler and the runtime you are "
+#~ "using. For example, if you wish to"
+#~ " pass an array of int to the"
+#~ " JS host with the WASM linear "
+#~ "backend, you can pass the int one"
+#~ " by one to the host function "
+#~ "and store the array on the JS "
+#~ "side."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "extern type JsArray\n"
+#~ "fn make_js_array() -> JsArray = \"mod\" \"make_js_array\"\n"
+#~ "fn push_js_array(array : JsArray, value "
+#~ ": Int) -> Unit = \"mod\" "
+#~ "\"push_js_array\""
+#~ msgstr ""
 

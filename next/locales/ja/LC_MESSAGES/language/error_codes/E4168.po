@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,60 @@ msgid "Compiler diagnostic name: `error_poly_unsupported`."
 msgstr ""
 
 #: ../../language/error_codes/E4168.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Error polymorphism is not supported in this position."
 msgstr ""
+
+#: ../../language/error_codes/E4168.md:7
+msgid ""
+"The `raise?` annotation means that a function is error-polymorphic: it "
+"can propagate the error behavior of a callback or another polymorphic "
+"operation. MoonBit only supports this form in specific function "
+"positions. It is not a general-purpose type annotation that can be used "
+"anywhere a function type is written."
+msgstr ""
+
+#: ../../language/error_codes/E4168.md:13
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4168.md:15
+msgid "The following toplevel value uses `raise?` in a function type annotation:"
+msgstr ""
+
+#: ../../language/error_codes/E4168.md:17
+msgid ""
+"///|\n"
+"\n"
+"///|\n"
+"let _callback : () -> Unit raise? = fn() { () }\n"
+msgstr ""
+
+#: ../../language/error_codes/E4168.md:21
+msgid "MoonBit will report an error."
+msgstr ""
+
+#: ../../language/error_codes/E4168.md:23
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4168.md:25
+msgid ""
+"Use a non-raising function type when the callback cannot raise, or use an"
+" ordinary concrete `raise` annotation in a supported function declaration"
+" when the function may raise:"
+msgstr ""
+
+#: ../../language/error_codes/E4168.md:29
+msgid ""
+"///|\n"
+"\n"
+"///|\n"
+"let _callback : () -> Unit = fn() { () }\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

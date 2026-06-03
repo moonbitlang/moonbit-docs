@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -43,11 +43,11 @@ msgid "Suppose there is a package `a` in module `username/hello`:"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:12
-msgid "`a/moon.pkg.json`:"
+msgid "`a/moon.pkg`:"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:14
-msgid "{}"
+msgid "\n"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:18
@@ -57,8 +57,8 @@ msgstr ""
 #: ../../language/error_codes/E4145.md:20
 msgid ""
 "pub trait Sealed {\n"
-"  to_int() -> Int\n"
-"}"
+"  to_int(Self) -> Int\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:24
@@ -66,16 +66,14 @@ msgid "While in package `b`:"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:26
-msgid "`b/moon.pkg.json`:"
+msgid "`b/moon.pkg`:"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:28
 msgid ""
-"{\n"
-"  \"import\": [\n"
-"    \"username/hello/a\"\n"
-"  ]\n"
-"}"
+"import {\n"
+"  \"username/hello/a\" @a,\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:32
@@ -84,12 +82,18 @@ msgstr ""
 
 #: ../../language/error_codes/E4145.md:34
 msgid ""
-"type A Int\n"
+"pub struct A {\n"
+"  value : Int\n"
+"}\n"
 "\n"
 "impl @a.Sealed for A with to_int(self : A) -> Int { // Error: Cannot "
 "implement trait '@a.Sealed' because it is readonly.\n"
-"  self._\n"
-"}"
+"  self.value\n"
+"}\n"
+"\n"
+"pub fn make(value : Int) -> A {\n"
+"  { value, }\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4145.md:38
@@ -105,7 +109,47 @@ msgstr ""
 #: ../../language/error_codes/E4145.md:43
 msgid ""
 "pub(open) trait Sealed {\n"
-"  to_int() -> Int\n"
-"}"
+"  to_int(Self) -> Int\n"
+"}\n"
 msgstr ""
+
+#~ msgid "`a/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid "{}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub trait Sealed {\n"
+#~ "  to_int() -> Int\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid "`b/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"import\": [\n"
+#~ "    \"username/hello/a\"\n"
+#~ "  ]\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "type A Int\n"
+#~ "\n"
+#~ "impl @a.Sealed for A with to_int(self"
+#~ " : A) -> Int { // Error: "
+#~ "Cannot implement trait '@a.Sealed' because "
+#~ "it is readonly.\n"
+#~ "  self._\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub(open) trait Sealed {\n"
+#~ "  to_int() -> Int\n"
+#~ "}"
+#~ msgstr ""
 

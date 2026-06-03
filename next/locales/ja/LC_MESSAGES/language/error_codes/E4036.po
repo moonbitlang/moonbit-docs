@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -44,38 +44,61 @@ msgid ""
 "  priv __private : Int\n"
 "}\n"
 "\n"
-"pub fn R::new(x: Int) -> R {\n"
-"  {x, __private: 42}\n"
+"pub fn R::new(x : Int) -> R {\n"
+"  { x, __private: 42 }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4036.md:20
+#: ../../language/error_codes/E4036.md:13
 msgid "In `main/main.mbt`, we try to create a value of type `R`:"
 msgstr ""
 
-#: ../../language/error_codes/E4036.md:22
-msgid "let r : @lib.R = { x: 1, __private: 42 }\n"
+#: ../../language/error_codes/E4036.md:15
+msgid ""
+"pub fn make() -> @lib.R {\n"
+"  { x: 1, __private: 42 }\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4036.md:26
+#: ../../language/error_codes/E4036.md:19
 msgid "This gives the following error on line 1:"
 msgstr ""
 
-#: ../../language/error_codes/E4036.md:28
+#: ../../language/error_codes/E4036.md:21
 msgid ""
 "Cannot create values of struct type @lib.R because it contains private "
 "field(s).\n"
 msgstr ""
 
-#: ../../language/error_codes/E4036.md:32
+#: ../../language/error_codes/E4036.md:25
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4036.md:34
+#: ../../language/error_codes/E4036.md:27
 msgid "Construct the value using the public constructor:"
 msgstr ""
 
-#: ../../language/error_codes/E4036.md:36
-msgid "let r : @lib.R = @lib.R::new(1)"
+#: ../../language/error_codes/E4036.md:29
+msgid ""
+"pub fn make() -> @lib.R {\n"
+"  @lib.R::new(1)\n"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "pub(all) struct R {\n"
+#~ "  x : Int\n"
+#~ "  priv __private : Int\n"
+#~ "}\n"
+#~ "\n"
+#~ "pub fn R::new(x: Int) -> R {\n"
+#~ "  {x, __private: 42}\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "let r : @lib.R = { x: 1, __private: 42 }\n"
+#~ msgstr ""
+
+#~ msgid "let r : @lib.R = @lib.R::new(1)"
+#~ msgstr ""
 

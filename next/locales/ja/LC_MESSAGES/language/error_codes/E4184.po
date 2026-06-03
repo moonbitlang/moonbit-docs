@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -31,7 +31,62 @@ msgstr ""
 
 #: ../../language/error_codes/E4184.md:5
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"A leading rest binder is not supported with the longest-match `lexmatch` "
+"strategy."
 msgstr ""
+
+#: ../../language/error_codes/E4184.md:8
+msgid ""
+"In `lexmatch ... with longest`, the engine chooses the longest matching "
+"case. Allowing a rest binder before the regex would make that choice "
+"ambiguous, so the start rest binder is rejected."
+msgstr ""
+
+#: ../../language/error_codes/E4184.md:12
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4184.md:14
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    (_, \"abc\", _) => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4184.md:18
+msgid ""
+"The first `_` attempts to bind or skip input before the `\"abc\"` regex "
+"pattern."
+msgstr ""
+
+#: ../../language/error_codes/E4184.md:20
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4184.md:22
+msgid ""
+"Match the regex at the start of the remaining input, and bind only the "
+"suffix when needed."
+msgstr ""
+
+#: ../../language/error_codes/E4184.md:25
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    (\"abc\", _) => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

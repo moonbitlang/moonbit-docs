@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -24,10 +24,49 @@ msgid "E4032"
 msgstr ""
 
 #: ../../language/error_codes/E4032.md:3
-msgid "The type is undefined."
+msgid "Compiler diagnostic name: `type_not_found`."
 msgstr ""
 
 #: ../../language/error_codes/E4032.md:5
-msgid "Currently, MoonBit won't emit this error."
+msgid "The type is undefined."
 msgstr ""
+
+#: ../../language/error_codes/E4032.md:7
+msgid ""
+"This error happens when a type annotation, constructor path, trait bound,"
+" or other type position refers to a type that is not in scope."
+msgstr ""
+
+#: ../../language/error_codes/E4032.md:10
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4032.md:12
+msgid ""
+"pub fn make(x : Missing) -> Unit {\n"
+"  //          ^~~~~~~\n"
+"  // Error: The type Missing is undefined.\n"
+"  ignore(x)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4032.md:16
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4032.md:18
+msgid ""
+"Use a type that is defined and visible from the current package, or "
+"import the package that defines the type."
+msgstr ""
+
+#: ../../language/error_codes/E4032.md:21
+msgid ""
+"pub fn make(x : Int) -> Unit {\n"
+"  ignore(x)\n"
+"}\n"
+msgstr ""
+
+#~ msgid "Currently, MoonBit won't emit this error."
+#~ msgstr ""
 

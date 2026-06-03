@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -40,44 +40,58 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4013.md:13
+#: ../../language/error_codes/E4013.md:11
 msgid ""
 "The example above declares a function `f` returns a function which "
 "expects no arguments, but returns a function that expects one argument. "
 "This will give the following error on line 2:"
 msgstr ""
 
-#: ../../language/error_codes/E4013.md:17
+#: ../../language/error_codes/E4013.md:15
 msgid ""
 "This function has type () -> Int, which expects 0 argument(s), but is "
 "given 1 argument(s).\n"
 msgstr ""
 
-#: ../../language/error_codes/E4013.md:21
+#: ../../language/error_codes/E4013.md:19
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4013.md:23
+#: ../../language/error_codes/E4013.md:21
 msgid ""
 "Adjust the code so that the number of arguments in the function type "
 "matches the number of arguments in the function definition:"
 msgstr ""
 
-#: ../../language/error_codes/E4013.md:26
+#: ../../language/error_codes/E4013.md:24
 msgid ""
-"fn f() -> ((Int) -> Int) {\n"
-"  fn (x: Int) { x }\n"
-"}"
+"///|\n"
+"pub fn f() -> (Int) -> Int {\n"
+"  fn(x : Int) { x }\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4013.md:30
+#: ../../language/error_codes/E4013.md:28
 msgid "... or:"
 msgstr ""
 
-#: ../../language/error_codes/E4013.md:32
+#: ../../language/error_codes/E4013.md:30
 msgid ""
-"fn f(x: Int) -> (() -> Int) {\n"
+"///|\n"
+"pub fn g(x : Int) -> () -> Int {\n"
 "  fn() { x }\n"
-"}"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "fn f() -> ((Int) -> Int) {\n"
+#~ "  fn (x: Int) { x }\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f(x: Int) -> (() -> Int) {\n"
+#~ "  fn() { x }\n"
+#~ "}"
+#~ msgstr ""
 

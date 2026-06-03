@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,82 @@ msgid "Compiler diagnostic name: `invalid_lex_pattern`."
 msgstr ""
 
 #: ../../language/error_codes/E4185.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Invalid `lexmatch` pattern shape."
 msgstr ""
+
+#: ../../language/error_codes/E4185.md:7
+msgid ""
+"`lexmatch` patterns allow one regex pattern, optionally with a start rest"
+" binder and an end rest binder. Other top-level pattern shapes are "
+"invalid."
+msgstr ""
+
+#: ../../language/error_codes/E4185.md:11
+msgid ""
+"`lexmatch` is deprecated for new code. Prefer regex match expressions "
+"such as `value =~ (re\"...\", before~, after~)` unless you specifically "
+"need legacy lexer-style behavior."
+msgstr ""
+
+#: ../../language/error_codes/E4185.md:16
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4185.md:18
+msgid "The following pattern has too many top-level pieces:"
+msgstr ""
+
+#: ../../language/error_codes/E4185.md:20
+msgid ""
+"///|\n"
+"fn classify(input : String) -> String {\n"
+"  lexmatch input with longest {\n"
+"    (\"a\", before, \"b\", after) => before.to_owned() + after.to_owned()"
+"\n"
+"    _ => \"none\"\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(classify)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4185.md:24
+msgid "MoonBit will report an error."
+msgstr ""
+
+#: ../../language/error_codes/E4185.md:26
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4185.md:28
+msgid ""
+"Use one regex pattern plus optional start and end rest binders. In new "
+"code, a regex match expression is usually clearer:"
+msgstr ""
+
+#: ../../language/error_codes/E4185.md:31
+msgid ""
+"///|\n"
+"fn classify(input : String) -> String {\n"
+"  if input =~ (re\"a\" + re\"b\", before~, after~) {\n"
+"    before.to_owned() + after.to_owned()\n"
+"  } else {\n"
+"    \"none\"\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(classify(\"xabz\"), content=\"xz\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

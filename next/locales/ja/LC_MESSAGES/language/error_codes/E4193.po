@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,56 @@ msgid "Compiler diagnostic name: `declare_body_not_empty`."
 msgstr ""
 
 #: ../../language/error_codes/E4193.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Declaration body is not empty."
 msgstr ""
+
+#: ../../language/error_codes/E4193.md:7
+msgid ""
+"A declaration describes an item without providing its implementation "
+"body. For function declarations, the declaration must not contain a `{ "
+"... }` block. For type declarations, the declared type must be abstract "
+"rather than a concrete struct, enum, or tuple struct definition."
+msgstr ""
+
+#: ../../language/error_codes/E4193.md:12
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4193.md:14
+msgid ""
+"#declaration_only\n"
+"fn declared_answer() -> Int {\n"
+"  42\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4193.md:18
+msgid ""
+"The `#declaration_only` attribute marks `declared_answer` as a "
+"declaration, but the function still provides an implementation body."
+msgstr ""
+
+#: ../../language/error_codes/E4193.md:21
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4193.md:23
+msgid ""
+"Remove the declaration marker when the item is already implemented, or "
+"keep the declaration body empty and provide a matching implementation "
+"elsewhere."
+msgstr ""
+
+#: ../../language/error_codes/E4193.md:26
+msgid ""
+"fn declared_answer() -> Int {\n"
+"  42\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

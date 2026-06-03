@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,58 @@ msgid "Compiler diagnostic name: `invalid_value_type_attr`."
 msgstr ""
 
 #: ../../language/error_codes/E4173.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Invalid `#valtype` declaration."
 msgstr ""
+
+#: ../../language/error_codes/E4173.md:7
+msgid ""
+"`#valtype` asks the compiler to represent a type as a value type. Not "
+"every type shape can be represented this way. The compiler rejects "
+"declarations that would require boxed or runtime-object storage, such as "
+"a type parameter field, an object field, a mutable field, too many "
+"fields, or a nested value type field."
+msgstr ""
+
+#: ../../language/error_codes/E4173.md:12
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4173.md:14
+msgid ""
+"#valtype\n"
+"struct Box[T] {\n"
+"  value : T\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4173.md:18
+msgid ""
+"The field `value` has type `T`, a type parameter. A value type must have "
+"a concrete supported layout, so this generic field is rejected."
+msgstr ""
+
+#: ../../language/error_codes/E4173.md:21
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4173.md:23
+msgid ""
+"Use concrete scalar fields for the value type, or remove `#valtype` if "
+"the type needs a generic or boxed layout."
+msgstr ""
+
+#: ../../language/error_codes/E4173.md:26
+msgid ""
+"#valtype\n"
+"struct Point {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

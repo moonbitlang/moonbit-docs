@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -24,12 +24,33 @@ msgid "E4092"
 msgstr ""
 
 #: ../../language/error_codes/E4092.md:3
-msgid "Missing annotation for this empty struct."
+msgid "Compiler diagnostic name: `record_type_missing`."
 msgstr ""
 
 #: ../../language/error_codes/E4092.md:5
-msgid ""
-"Currently, the MoonBit compiler does not emit this error, as it is "
-"impossible to create an empty struct without using `T::{ .. }` syntax."
+msgid "Missing annotation for this empty struct."
 msgstr ""
+
+#: ../../language/error_codes/E4092.md:7
+msgid ""
+"MoonBit needs a concrete struct type before it can type-check an empty "
+"struct literal such as `T::{}`. In current compiler output, this "
+"diagnostic can appear as a follow-up error when the type name itself "
+"cannot be resolved."
+msgstr ""
+
+#: ../../language/error_codes/E4092.md:11
+msgid ""
+"This page has no checked source example because the available small "
+"reproduction also reports the missing type as the primary error. Prefer "
+"adding an explicit type annotation or using a struct type that is in "
+"scope."
+msgstr ""
+
+#~ msgid ""
+#~ "Currently, the MoonBit compiler does not"
+#~ " emit this error, as it is "
+#~ "impossible to create an empty struct "
+#~ "without using `T::{ .. }` syntax."
+#~ msgstr ""
 

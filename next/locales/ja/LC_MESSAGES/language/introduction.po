@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 19:40+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -229,33 +229,36 @@ msgid ""
 "[\n"
 "  \"as\", \"else\", \"extern\", \"fn\", \"fnalias\", \"if\", \"let\", "
 "\"const\", \"match\", \"using\",\n"
-"  \"mut\", \"type\", \"typealias\", \"struct\", \"enum\", \"trait\", "
-"\"traitalias\", \"derive\",\n"
-"  \"declare\", \"while\", \"break\", \"continue\", \"import\", "
-"\"return\", \"throw\", \"raise\",\n"
-"  \"try\", \"catch\", \"pub\", \"priv\", \"readonly\", \"true\", "
-"\"false\", \"_\", \"test\", \"loop\",\n"
-"  \"for\", \"in\", \"impl\", \"with\", \"guard\", \"async\", \"is\", "
-"\"suberror\", \"and\", \"letrec\",\n"
-"  \"enumview\", \"noraise\", \"defer\",\n"
+"  \"mut\", \"type\", \"typealias\", \"struct\", \"enum\", \"extenum\", "
+"\"trait\",\n"
+"  \"traitalias\", \"derive\", \"while\", \"break\", \"continue\", "
+"\"import\", \"return\",\n"
+"  \"throw\", \"raise\", \"try\", \"catch\", \"pub\", \"priv\", "
+"\"proof_assert\", \"proof_let\",\n"
+"  \"readonly\", \"true\", \"false\", \"_\", \"test\", \"loop\", \"for\", "
+"\"in\", \"impl\", \"with\",\n"
+"  \"guard\", \"async\", \"is\", \"suberror\", \"and\", \"letrec\", "
+"\"enumview\", \"noraise\",\n"
+"  \"defer\", \"lexmatch\", \"where\", \"declare\", \"nobreak\",\n"
 "]\n"
 msgstr ""
 
-#: ../../language/introduction.md:97
+#: ../../language/introduction.md:98
 msgid "Reserved Keywords"
 msgstr "予約語"
 
-#: ../../language/introduction.md:99
+#: ../../language/introduction.md:100
 msgid ""
 "The following are the reserved keywords. Using them would introduce a "
 "warning. They might be turned into keywords in the future."
 msgstr "以下は予約語です。使用すると警告が出ます。将来的にキーワードになる可能性があります。"
 
-#: ../../language/introduction.md:102
+#: ../../language/introduction.md:103
+#, fuzzy
 msgid ""
 "[\n"
 "  \"module\", \"move\", \"ref\", \"static\", \"super\", \"unsafe\", "
-"\"use\", \"where\", \"await\",\n"
+"\"use\", \"await\",\n"
 "  \"dyn\", \"abstract\", \"do\", \"final\", \"macro\", \"override\", "
 "\"typeof\", \"virtual\", \"yield\",\n"
 "  \"local\", \"method\", \"alias\", \"assert\", \"package\", \"recur\", "
@@ -268,7 +271,7 @@ msgid ""
 "\"await\", \"comptime\", \"errdefer\",\n"
 "  \"export\", \"opaque\", \"orelse\", \"resume\", \"threadlocal\", "
 "\"unreachable\", \"dynclass\",\n"
-"  \"dynobj\", \"dynrec\", \"var\", \"finally\", \"noasync\",\n"
+"  \"dynobj\", \"dynrec\", \"var\", \"finally\", \"noasync\", \"assume\",\n"
 "]\n"
 msgstr ""
 "[\n"
@@ -289,29 +292,29 @@ msgstr ""
 "  \"dynobj\", \"dynrec\", \"var\", \"finally\", \"noasync\",\n"
 "]\n"
 
-#: ../../language/introduction.md:115
+#: ../../language/introduction.md:116
 msgid "Program entrance"
 msgstr "プログラムのエントリ"
 
-#: ../../language/introduction.md:117
+#: ../../language/introduction.md:118
 msgid "`init` and `main`"
 msgstr "`init` と `main`"
 
-#: ../../language/introduction.md:118
+#: ../../language/introduction.md:119
 msgid ""
 "There is a specialized function called `init` function. The `init` "
 "function is special:"
 msgstr "`init` 関数という特別な関数があります。`init` 関数には次の特徴があります："
 
-#: ../../language/introduction.md:120
+#: ../../language/introduction.md:121
 msgid "It has no parameter list nor return type."
 msgstr "引数リストも戻り値型も持ちません。"
 
-#: ../../language/introduction.md:121
+#: ../../language/introduction.md:122
 msgid "There can be multiple `init` functions in the same package."
 msgstr "同じパッケージ内に複数の `init` 関数を定義できます。"
 
-#: ../../language/introduction.md:122
+#: ../../language/introduction.md:123
 msgid ""
 "An `init` function can't be explicitly called or referred to by other "
 "functions.  Instead, all `init` functions will be implicitly called when "
@@ -321,7 +324,7 @@ msgstr ""
 "`init` 関数は、他の関数から明示的に呼び出したり参照したりできません。代わりに、パッケージ初期化時にすべての `init` "
 "関数が暗黙的に呼び出されます。したがって、`init` 関数は文のみで構成する必要があります。"
 
-#: ../../language/introduction.md:125
+#: ../../language/introduction.md:126
 msgid ""
 "fn init {\n"
 "  let x = 1\n"
@@ -333,18 +336,18 @@ msgstr ""
 "  println(x)\n"
 "}"
 
-#: ../../language/introduction.md:133
+#: ../../language/introduction.md:134
 msgid ""
 "There is another specialized function called `main` function. The `main` "
 "function is the main entrance of the program, and it will be executed "
 "after the initialization stage."
 msgstr "`main` 関数という別の特別な関数もあります。`main` 関数はプログラムの主エントリであり、初期化段階の後に実行されます。"
 
-#: ../../language/introduction.md:135
+#: ../../language/introduction.md:136
 msgid "Same as the `init` function, it has no parameter list nor return type."
 msgstr "`init` 関数と同様に、引数リストも戻り値型も持ちません。"
 
-#: ../../language/introduction.md:137
+#: ../../language/introduction.md:138
 msgid ""
 "fn main {\n"
 "  let x = 2\n"
@@ -356,11 +359,11 @@ msgstr ""
 "  println(x)\n"
 "}"
 
-#: ../../language/introduction.md:145
+#: ../../language/introduction.md:146
 msgid "The previous two code snippets will print the following at runtime:"
 msgstr "前の 2 つのコード例は、実行時に次を出力します："
 
-#: ../../language/introduction.md:147
+#: ../../language/introduction.md:148
 msgid ""
 "1\n"
 "2\n"
@@ -368,7 +371,7 @@ msgstr ""
 "1\n"
 "2\n"
 
-#: ../../language/introduction.md:152
+#: ../../language/introduction.md:153
 msgid ""
 "Only packages that are `main` packages can define such `main` function. "
 "Check out [build system tutorial](/toolchain/moon/tutorial) for detail. "
@@ -378,11 +381,11 @@ msgstr ""
 "[ビルドシステムチュートリアル](/toolchain/moon/tutorial) を参照してください。現在のプロジェクトでは、これは "
 "`moon.pkg` で次のように設定します："
 
-#: ../../language/introduction.md:154
+#: ../../language/introduction.md:155
 msgid "moon.pkg"
 msgstr "moon.pkg"
 
-#: ../../language/introduction.md:154
+#: ../../language/introduction.md:155
 msgid ""
 "options(\n"
 "  \"is-main\": true,\n"
@@ -392,23 +395,23 @@ msgstr ""
 "  \"is-main\": true,\n"
 ")\n"
 
-#: ../../language/introduction.md:159
+#: ../../language/introduction.md:160
 msgid "`test`"
 msgstr "`test`"
 
-#: ../../language/introduction.md:161
+#: ../../language/introduction.md:162
 msgid ""
 "There's also a top-level structure called `test` block. A `test` block "
 "defines inline tests, such as:"
 msgstr "`test` ブロックというトップレベル構造もあります。`test` ブロックでは次のようにインラインテストを定義できます："
 
-#: ../../language/introduction.md:163
+#: ../../language/introduction.md:164
 #, fuzzy
 msgid ""
 "test \"test_name\" {\n"
 "  assert_eq(1 + 1, 2)\n"
 "  assert_eq(2 + 2, 4)\n"
-"  inspect([1, 2, 3], content=\"[1, 2, 3]\")\n"
+"  debug_inspect([1, 2, 3], content=\"[1, 2, 3]\")\n"
 "}\n"
 msgstr ""
 "test \"test_name\" {\n"
@@ -417,7 +420,7 @@ msgstr ""
 "  inspect([1, 2, 3], content=\"[1, 2, 3]\")\n"
 "}\n"
 
-#: ../../language/introduction.md:169
+#: ../../language/introduction.md:170
 msgid ""
 "The following contents will use `test` block and `main` function to "
 "demonstrate the execution result, and we assume that all the `test` "
@@ -425,3 +428,24 @@ msgid ""
 msgstr ""
 "以降では `test` ブロックと `main` 関数を使って実行結果を示します。特に断りがない限り、すべての `test` "
 "ブロックは成功すると仮定します。"
+
+#~ msgid ""
+#~ "[\n"
+#~ "  \"as\", \"else\", \"extern\", \"fn\", "
+#~ "\"fnalias\", \"if\", \"let\", \"const\", "
+#~ "\"match\", \"using\",\n"
+#~ "  \"mut\", \"type\", \"typealias\", "
+#~ "\"struct\", \"enum\", \"trait\", \"traitalias\", "
+#~ "\"derive\",\n"
+#~ "  \"declare\", \"while\", \"break\", "
+#~ "\"continue\", \"import\", \"return\", \"throw\", "
+#~ "\"raise\",\n"
+#~ "  \"try\", \"catch\", \"pub\", \"priv\", "
+#~ "\"readonly\", \"true\", \"false\", \"_\", "
+#~ "\"test\", \"loop\",\n"
+#~ "  \"for\", \"in\", \"impl\", \"with\", "
+#~ "\"guard\", \"async\", \"is\", \"suberror\", "
+#~ "\"and\", \"letrec\",\n"
+#~ "  \"enumview\", \"noraise\", \"defer\",\n"
+#~ "]\n"
+#~ msgstr ""

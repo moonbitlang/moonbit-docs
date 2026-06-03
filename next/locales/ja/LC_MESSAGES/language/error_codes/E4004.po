@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -37,22 +37,35 @@ msgstr ""
 #: ../../language/error_codes/E4004.md:8
 msgid ""
 "trait Stringer {\n"
-"  stringify[T: Show](Self, T) -> String\n"
+"  fn[T : Show] stringify(Self, T) -> String\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4004.md:14
+#: ../../language/error_codes/E4004.md:12
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4004.md:16
+#: ../../language/error_codes/E4004.md:14
 msgid "Consider using dynamic dispatch instead of generics:"
 msgstr ""
 
-#: ../../language/error_codes/E4004.md:18
+#: ../../language/error_codes/E4004.md:16
 msgid ""
-"trait Stringer {\n"
+"///|\n"
+"pub(open) trait Stringer {\n"
 "  stringify(Self, &Show) -> String\n"
-"}"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "trait Stringer {\n"
+#~ "  stringify[T: Show](Self, T) -> String\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "trait Stringer {\n"
+#~ "  stringify(Self, &Show) -> String\n"
+#~ "}"
+#~ msgstr ""
 

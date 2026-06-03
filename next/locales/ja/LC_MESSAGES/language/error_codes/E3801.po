@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,57 @@ msgid "Compiler diagnostic name: `inclusive_range_pattern_missing_equal`."
 msgstr ""
 
 #: ../../language/error_codes/E3801.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Range pattern is missing `=`."
 msgstr ""
+
+#: ../../language/error_codes/E3801.md:7
+msgid ""
+"Range patterns must spell out whether the upper bound is inclusive or "
+"exclusive. Use `a..=b` for an inclusive range and `a..<b` for an "
+"exclusive range."
+msgstr ""
+
+#: ../../language/error_codes/E3801.md:10
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E3801.md:12
+msgid ""
+"fn classify(x : Int) -> Unit {\n"
+"  match x {\n"
+"    1..2 => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3801.md:16
+msgid ""
+"`1..2` is not accepted as a pattern because it does not say whether `2` "
+"is included."
+msgstr ""
+
+#: ../../language/error_codes/E3801.md:19
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E3801.md:21
+msgid "Choose an inclusive or exclusive range pattern explicitly."
+msgstr ""
+
+#: ../../language/error_codes/E3801.md:23
+msgid ""
+"fn classify(x : Int) -> Unit {\n"
+"  match x {\n"
+"    1..=2 => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

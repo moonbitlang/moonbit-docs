@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -33,32 +33,52 @@ msgstr ""
 
 #: ../../language/error_codes/E4031.md:7
 msgid ""
-"enum U { V }\n"
-"let v : U = W\n"
+"pub enum U {\n"
+"  V\n"
+"}\n"
+"\n"
+"pub fn make() -> U {\n"
+"  W\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4031.md:12
+#: ../../language/error_codes/E4031.md:11
 msgid ""
 "The example above tries to assign a variant `W` to a variable `v` of type"
 " `U`, but this variant doesn't exist, giving the following error on line "
 "2:"
 msgstr ""
 
-#: ../../language/error_codes/E4031.md:15
+#: ../../language/error_codes/E4031.md:14
 msgid "The variant type U does not have the constructor W.\n"
 msgstr ""
 
-#: ../../language/error_codes/E4031.md:19
+#: ../../language/error_codes/E4031.md:18
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4031.md:21
+#: ../../language/error_codes/E4031.md:20
 msgid "Make sure to use the correct constructor instead:"
 msgstr ""
 
-#: ../../language/error_codes/E4031.md:23
+#: ../../language/error_codes/E4031.md:22
 msgid ""
-"enum U { V }\n"
-"let v : U = V"
+"pub enum U {\n"
+"  V\n"
+"}\n"
+"\n"
+"pub fn make() -> U {\n"
+"  V\n"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "enum U { V }\n"
+#~ "let v : U = W\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "enum U { V }\n"
+#~ "let v : U = V"
+#~ msgstr ""
 

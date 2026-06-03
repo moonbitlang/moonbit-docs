@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,67 @@ msgid "Compiler diagnostic name: `invalid_grouped_impls`."
 msgstr ""
 
 #: ../../language/error_codes/E3023.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Invalid grouped `impl` declaration."
 msgstr ""
+
+#: ../../language/error_codes/E3023.md:7
+msgid ""
+"MoonBit does not use Rust-style grouped `impl` blocks. Each trait "
+"implementation or method implementation is written as a single `impl ... "
+"with method(...) { ... }` declaration."
+msgstr ""
+
+#: ../../language/error_codes/E3023.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E3023.md:13
+msgid ""
+"The following example tries to put a method body inside an `impl ... { "
+"... }` block:"
+msgstr ""
+
+#: ../../language/error_codes/E3023.md:16
+msgid ""
+"///|\n"
+"pub trait Named {\n"
+"  name(Self) -> String\n"
+"}\n"
+"\n"
+"///|\n"
+"pub impl Named for Int {\n"
+"  name(_self) { \"user\" }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3023.md:20
+msgid "MoonBit will report an error."
+msgstr ""
+
+#: ../../language/error_codes/E3023.md:22
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E3023.md:24
+msgid ""
+"Move the method name and body into the `with` clause of the `impl` "
+"declaration:"
+msgstr ""
+
+#: ../../language/error_codes/E3023.md:26
+msgid ""
+"///|\n"
+"pub trait Named {\n"
+"  name(Self) -> String\n"
+"}\n"
+"\n"
+"///|\n"
+"pub impl Named for Int with name(_self) { \"user\" }\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

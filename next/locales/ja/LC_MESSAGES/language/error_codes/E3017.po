@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -24,22 +24,28 @@ msgid "E3017"
 msgstr ""
 
 #: ../../language/error_codes/E3017.md:3
-msgid "JSON parse error. This will only appear in `moon.pkg.json` files only."
+msgid "Compiler diagnostic name: `json_parse_error`."
 msgstr ""
 
 #: ../../language/error_codes/E3017.md:5
 msgid ""
-"It is very like that the editor you are using will have support for JSON "
-"installed (for example, Visual Studio Code has a built-in JSON parser). "
-"This error is likely to be caused by a missing comma or a missing closing"
-" brace."
+"JSON parse error. This diagnostic is used for legacy JSON package "
+"configuration files such as `moon.pkg.json`."
 msgstr ""
 
-#: ../../language/error_codes/E3017.md:9
+#: ../../language/error_codes/E3017.md:8
+msgid ""
+"The current package configuration format is `moon.pkg`, which is not "
+"JSON. If you still maintain a legacy `moon.pkg.json`, this error is "
+"likely to be caused by a missing comma, a missing closing brace, or "
+"another JSON syntax issue."
+msgstr ""
+
+#: ../../language/error_codes/E3017.md:12
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E3017.md:11
+#: ../../language/error_codes/E3017.md:14
 msgid ""
 "{\n"
 "  \"is-main\": true\n"
@@ -47,15 +53,41 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3017.md:18
+#: ../../language/error_codes/E3017.md:21
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E3017.md:20
+#: ../../language/error_codes/E3017.md:23
+msgid ""
+"Prefer migrating the package configuration to `moon.pkg`. If you must "
+"keep the legacy JSON file for now, fix the JSON syntax."
+msgstr ""
+
+#: ../../language/error_codes/E3017.md:26
+msgid ""
+"This page has no checked source example because legacy JSON configuration"
+" is parsed before ordinary `moon check` diagnostic rendering is "
+"available."
+msgstr ""
+
+#: ../../language/error_codes/E3017.md:29
 msgid ""
 "{\n"
 "  \"is-main\": true,\n"
 "  \"import\": []\n"
 "}\n"
 msgstr ""
+
+#~ msgid "JSON parse error. This will only appear in `moon.pkg.json` files only."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "It is very like that the editor"
+#~ " you are using will have support "
+#~ "for JSON installed (for example, Visual"
+#~ " Studio Code has a built-in "
+#~ "JSON parser). This error is likely "
+#~ "to be caused by a missing comma"
+#~ " or a missing closing brace."
+#~ msgstr ""
 

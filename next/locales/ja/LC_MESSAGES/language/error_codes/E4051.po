@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -69,33 +69,33 @@ msgid ""
 "was previously defined at ...\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:24
+#: ../../language/error_codes/E4051.md:23
 msgid "Toplevel function definition:"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:26
+#: ../../language/error_codes/E4051.md:25
 msgid ""
 "pub fn f() -> Unit {}\n"
 "pub fn f() -> Unit {} // Error: The toplevel identifier f is declared "
 "twice: it was previously defined at ...\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:31
+#: ../../language/error_codes/E4051.md:30
 msgid "Toplevel type definition:"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:33
+#: ../../language/error_codes/E4051.md:32
 msgid ""
 "pub enum A {}\n"
 "pub struct A {} // Error: The type A is declared twice: it was previously"
 " defined at ...\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:38
+#: ../../language/error_codes/E4051.md:37
 msgid "Local type definition:"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:40
+#: ../../language/error_codes/E4051.md:39
 msgid ""
 "pub fn g() -> Unit {\n"
 "  struct A {}\n"
@@ -104,31 +104,43 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:47
+#: ../../language/error_codes/E4051.md:46
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:49
+#: ../../language/error_codes/E4051.md:48
 msgid "Rename the identifier to a different name."
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:51
+#: ../../language/error_codes/E4051.md:50
 msgid ""
 "pub let a = 0\n"
-"pub let b = 1"
+"pub let b = 1\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:55
+#: ../../language/error_codes/E4051.md:54
 msgid ""
 "If you want to shadow the previous definition, you can use a block and "
 "put the definition in the block."
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:58
+#: ../../language/error_codes/E4051.md:57
 msgid ""
-"pub let a = {\n"
+"pub let c : Int = {\n"
 "  let a = 0\n"
-"  1\n"
-"}"
+"  a + 1\n"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "pub let a = 0\n"
+#~ "pub let b = 1"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub let a = {\n"
+#~ "  let a = 0\n"
+#~ "  1\n"
+#~ "}"
+#~ msgstr ""
 
