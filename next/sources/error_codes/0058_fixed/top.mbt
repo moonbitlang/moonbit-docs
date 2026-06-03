@@ -1,11 +1,10 @@
 ///|
 test {
   let text = "xxabcyy"
-  lexmatch text {
-    (before, "a" "b" "c", after) => {
-      inspect(before, content="xx")
-      inspect(after, content="yy")
-    }
-    _ => fail("")
+  if text =~ (re"abc", before~, after~) {
+    inspect(before, content="xx")
+    inspect(after, content="yy")
+  } else {
+    fail("")
   }
 }
