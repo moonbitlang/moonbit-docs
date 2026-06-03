@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,55 @@ msgid "Compiler diagnostic name: `invalid_lexmatch_target`."
 msgstr ""
 
 #: ../../language/error_codes/E4176.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Invalid `lexmatch` target."
 msgstr ""
+
+#: ../../language/error_codes/E4176.md:7
+msgid ""
+"`lexmatch` works on textual views. The target expression must have a type"
+" that can be matched by regex patterns, such as `String` or `StringView`,"
+" instead of a numeric, boolean, or other unrelated type."
+msgstr ""
+
+#: ../../language/error_codes/E4176.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4176.md:13
+msgid ""
+"///|\n"
+"pub fn match_number(n : Int) -> Unit {\n"
+"  lexmatch n with longest {\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4176.md:17
+msgid "The target is an `Int`, which cannot be consumed by `lexmatch`."
+msgstr ""
+
+#: ../../language/error_codes/E4176.md:19
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4176.md:21
+msgid "Match a string-like value, or convert the input before using `lexmatch`."
+msgstr ""
+
+#: ../../language/error_codes/E4176.md:23
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

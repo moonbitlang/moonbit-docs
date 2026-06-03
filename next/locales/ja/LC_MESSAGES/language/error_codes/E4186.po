@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,59 @@ msgid "Compiler diagnostic name: `guard_not_supported_in_longest_match_strategy`
 msgstr ""
 
 #: ../../language/error_codes/E4186.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Guards are not supported in longest-match `lexmatch` cases."
 msgstr ""
+
+#: ../../language/error_codes/E4186.md:7
+msgid ""
+"The longest-match strategy decides which regex case wins before running "
+"the case body. Case guards would make that decision depend on arbitrary "
+"expressions, so they are rejected for `lexmatch ... with longest`."
+msgstr ""
+
+#: ../../language/error_codes/E4186.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4186.md:13
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    \"abc\" if text.length() > 0 => ()\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4186.md:17
+msgid "The first case has an `if` guard."
+msgstr ""
+
+#: ../../language/error_codes/E4186.md:19
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4186.md:21
+msgid ""
+"Move the condition into the case body so the longest-match decision "
+"depends only on the regex patterns."
+msgstr ""
+
+#: ../../language/error_codes/E4186.md:24
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    \"abc\" => if text.length() > 0 { () }\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

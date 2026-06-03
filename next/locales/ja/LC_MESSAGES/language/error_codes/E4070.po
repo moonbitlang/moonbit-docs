@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -29,45 +29,70 @@ msgstr ""
 
 #: ../../language/error_codes/E4070.md:5
 msgid ""
-"Note all intrinsic is not intended for usage outside of "
-"`moonbitlang/core` and is subject to change without notice, and we highly"
-" recommend **against** using them."
+"Intrinsics are not intended for usage outside of `moonbitlang/core`. They"
+" are subject to change without notice, and we highly recommend "
+"**against** using them."
 msgstr ""
 
-#: ../../language/error_codes/E4070.md:9
+#: ../../language/error_codes/E4070.md:8
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4070.md:11
+#: ../../language/error_codes/E4070.md:10
 msgid ""
+"///|\n"
 "pub fn my_abort(message : String) -> Unit = \"%abort\"\n"
 "// Error: Unknown intrinsic: %abort\n"
-"\n"
-"fn main {\n"
-"  my_abort(\"Abort!\")\n"
-"}"
 msgstr ""
 
-#: ../../language/error_codes/E4070.md:15
+#: ../../language/error_codes/E4070.md:14
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4070.md:17
-msgid ""
-"You may probably want to use the `abort` function from the "
-"`moonbitlang/core`:"
+#: ../../language/error_codes/E4070.md:16
+msgid "You probably want to use the `abort` function from `moonbitlang/core`:"
 msgstr ""
 
-#: ../../language/error_codes/E4070.md:19
+#: ../../language/error_codes/E4070.md:18
 msgid ""
-"fn main {\n"
-"  abort(\"Abort!\")\n"
-"}"
+"///|\n"
+"pub fn my_abort(message : String) -> Unit {\n"
+"  abort(message)\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4070.md:23
+#: ../../language/error_codes/E4070.md:22
 msgid ""
 "If you really need to use the intrinsic, you can check the source code of"
 " `moonbitlang/core` for further usage of the corresponding intrinsic."
 msgstr ""
+
+#~ msgid ""
+#~ "Note all intrinsic is not intended "
+#~ "for usage outside of `moonbitlang/core` "
+#~ "and is subject to change without "
+#~ "notice, and we highly recommend "
+#~ "**against** using them."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub fn my_abort(message : String) -> Unit = \"%abort\"\n"
+#~ "// Error: Unknown intrinsic: %abort\n"
+#~ "\n"
+#~ "fn main {\n"
+#~ "  my_abort(\"Abort!\")\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "You may probably want to use the"
+#~ " `abort` function from the "
+#~ "`moonbitlang/core`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  abort(\"Abort!\")\n"
+#~ "}"
+#~ msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -24,15 +24,99 @@ msgid "E0014"
 msgstr ""
 
 #: ../../language/error_codes/E0014.md:3
-msgid ""
-"Alerts are special warnings that indicate the usage of API marked with "
-"the [`#internal` attribute](../attributes.md#internal-attribute)."
+msgid "Warning name: `alert` or `alert_<category>`"
 msgstr ""
 
-#: ../../language/error_codes/E0014.md:7
+#: ../../language/error_codes/E0014.md:5
 msgid ""
-"Currently, MoonBit won't emit this error code. See [alert "
-"warning](../../toolchain/moon/package.md#alert-warning) for how alerts "
-"are reported and configured."
+"Alert warnings are emitted when code uses an API that carries an alert, "
+"for example through `#alert`, [`#internal`](../attributes.md#internal-"
+"attribute), or a visibility-change annotation. The alert category is "
+"chosen by the API provider, so the warning name can be `alert` for all "
+"alerts or `alert_<category>` for one category."
 msgstr ""
+
+#: ../../language/error_codes/E0014.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:13
+msgid ""
+"The provider module marks `experimental` as internal, and the importing "
+"module calls it:"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:16
+#: ../../language/error_codes/E0014.md:35
+msgid "provider/top.mbt"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:16
+msgid ""
+"///|\n"
+"#internal(experimental, \"use stable instead\")\n"
+"pub fn experimental() -> Int {\n"
+"  1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:21
+#: ../../language/error_codes/E0014.md:40
+msgid "top.mbt"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:21
+msgid ""
+"///|\n"
+"test {\n"
+"  inspect(@provider.experimental(), content=\"1\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:26
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:28
+msgid ""
+"Read the alert category and message, then follow the guidance for that "
+"specific API. Different alert categories can mean different things: an "
+"API may be experimental, deprecated, visibility-changing, unsafe, not "
+"total, or carry a provider-defined meaning."
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:33
+msgid "In this example, the provider asks callers to use the stable API instead:"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:35
+msgid ""
+"///|\n"
+"pub fn stable() -> Int {\n"
+"  1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0014.md:40
+msgid ""
+"///|\n"
+"test {\n"
+"  inspect(@provider.stable(), content=\"1\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Alerts are special warnings that "
+#~ "indicate the usage of API marked "
+#~ "with the [`#internal` attribute](../attributes.md"
+#~ "#internal-attribute)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Currently, MoonBit won't emit this error"
+#~ " code. See [alert "
+#~ "warning](../../toolchain/moon/package.md#alert-warning) "
+#~ "for how alerts are reported and "
+#~ "configured."
+#~ msgstr ""
 

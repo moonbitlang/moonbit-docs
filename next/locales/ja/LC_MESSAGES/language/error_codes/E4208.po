@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,49 @@ msgid "Compiler diagnostic name: `unknown_regex_match_binding`."
 msgstr ""
 
 #: ../../language/error_codes/E4208.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Unknown regex match binding."
 msgstr ""
+
+#: ../../language/error_codes/E4208.md:7
+msgid ""
+"Regex match expressions support only the special bindings `before` and "
+"`after` beside the matched regex itself. `before` binds the unmatched "
+"prefix and `after` binds the unmatched suffix."
+msgstr ""
+
+#: ../../language/error_codes/E4208.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4208.md:13
+msgid ""
+"fn match_text(s : String) -> Unit {\n"
+"  ignore(s =~ (re\"a\", middle=mid))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4208.md:17
+msgid "`middle` is not a supported regex match binding label."
+msgstr ""
+
+#: ../../language/error_codes/E4208.md:19
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4208.md:21
+msgid "Use `before` or `after`, or bind the regex itself with `as`."
+msgstr ""
+
+#: ../../language/error_codes/E4208.md:23
+msgid ""
+"fn match_text(s : String) -> Unit {\n"
+"  ignore(s =~ (re\"a\", before=head))\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,46 @@ msgid "Compiler diagnostic name: `extra_ast_lint_warning`."
 msgstr ""
 
 #: ../../language/error_codes/E3700.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "The parser found a syntax pattern that has a dedicated lint suggestion."
 msgstr ""
+
+#: ../../language/error_codes/E3700.md:7
+msgid ""
+"This diagnostic is used for AST-level lints that are reported as compiler"
+" errors. One common case is multiplying a string literal by a number."
+msgstr ""
+
+#: ../../language/error_codes/E3700.md:10
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E3700.md:12
+msgid ""
+"///|\n"
+"pub fn repeated() -> String {\n"
+"  \"ha\" * 3\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3700.md:16
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E3700.md:18
+msgid "Use the suggested API directly."
+msgstr ""
+
+#: ../../language/error_codes/E3700.md:20
+msgid ""
+"///|\n"
+"pub fn repeated() -> String {\n"
+"  \"ha\".repeat(3)\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

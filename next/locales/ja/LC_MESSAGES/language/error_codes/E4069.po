@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -54,11 +54,11 @@ msgstr ""
 
 #: ../../language/error_codes/E4069.md:19
 #: ../../language/error_codes/E4069.md:42
-msgid "`lib/moon.pkg.json`:"
+msgid "`lib/moon.pkg`:"
 msgstr ""
 
 #: ../../language/error_codes/E4069.md:21
-msgid "{} // \"is-main\" is by default false\n"
+msgid "\n"
 msgstr ""
 
 #: ../../language/error_codes/E4069.md:25
@@ -67,9 +67,10 @@ msgstr ""
 
 #: ../../language/error_codes/E4069.md:27
 msgid ""
-"fn main { // Error: Unexpected main function in the non-main package.\n"
+"///|\n"
+"fn main {\n"
 "  println(\"Hello, world!\")\n"
-"}"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4069.md:31
@@ -82,10 +83,10 @@ msgstr ""
 
 #: ../../language/error_codes/E4069.md:35
 msgid ""
-"// Remove the main function\n"
-"//- fn main {\n"
-"//-   println(\"Hello, world!\")\n"
-"//- }"
+"///|\n"
+"pub fn message() -> String {\n"
+"  \"Hello, world!\"\n"
+"}\n"
 msgstr ""
 
 #: ../../language/error_codes/E4069.md:39
@@ -95,11 +96,10 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4069.md:44
-#: ../../language/error_codes/E4069.md:54
 msgid ""
-"{\n"
-"  \"is-main\": true\n"
-"}\n"
+"options(\n"
+"  \"is-main\": true,\n"
+")\n"
 msgstr ""
 
 #: ../../language/error_codes/E4069.md:50
@@ -107,17 +107,63 @@ msgid "You can also move the `main` function to a different package, say `main`:
 msgstr ""
 
 #: ../../language/error_codes/E4069.md:52
-msgid "`main/moon.pkg.json`:"
+msgid "`main/moon.pkg`:"
 msgstr ""
 
-#: ../../language/error_codes/E4069.md:60
+#: ../../language/error_codes/E4069.md:54
+msgid ""
+"import {\n"
+"  \"moonbit-community/E4069-fixed\" @lib,\n"
+"}\n"
+"\n"
+"options(\n"
+"  \"is-main\": true,\n"
+")\n"
+msgstr ""
+
+#: ../../language/error_codes/E4069.md:58
 msgid "`main/main.mbt`:"
 msgstr ""
 
-#: ../../language/error_codes/E4069.md:62
+#: ../../language/error_codes/E4069.md:60
 msgid ""
+"///|\n"
 "fn main {\n"
-"  println(\"Hello, world!\")\n"
-"}"
+"  println(@lib.message())\n"
+"}\n"
 msgstr ""
+
+#~ msgid "`lib/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid "{} // \"is-main\" is by default false\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main { // Error: Unexpected main function in the non-main package.\n"
+#~ "  println(\"Hello, world!\")\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "// Remove the main function\n"
+#~ "//- fn main {\n"
+#~ "//-   println(\"Hello, world!\")\n"
+#~ "//- }"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"is-main\": true\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid "`main/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(\"Hello, world!\")\n"
+#~ "}"
+#~ msgstr ""
 

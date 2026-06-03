@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,68 @@ msgid "Compiler diagnostic name: `async_with_error_poly`."
 msgstr ""
 
 #: ../../language/error_codes/E4188.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "`async` functions cannot use error polymorphism."
 msgstr ""
+
+#: ../../language/error_codes/E4188.md:7
+msgid ""
+"MoonBit currently does not support combining `async` with `raise?`. An "
+"`async` function is raising by default, so use an ordinary `async fn` "
+"when the function may raise, or remove `async` if the function is not "
+"asynchronous."
+msgstr ""
+
+#: ../../language/error_codes/E4188.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4188.md:13
+msgid "The following function combines `async` with `raise?`:"
+msgstr ""
+
+#: ../../language/error_codes/E4188.md:15
+msgid ""
+"///|\n"
+"async fn load() -> Unit raise? {\n"
+"  ()\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(load)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4188.md:19
+msgid "MoonBit will report an error."
+msgstr ""
+
+#: ../../language/error_codes/E4188.md:21
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4188.md:23
+msgid ""
+"Remove `raise?` from the async function, or remove `async` if the "
+"function does not need asynchronous behavior:"
+msgstr ""
+
+#: ../../language/error_codes/E4188.md:26
+msgid ""
+"///|\n"
+"fn load() -> Unit {\n"
+"  ()\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(load)\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

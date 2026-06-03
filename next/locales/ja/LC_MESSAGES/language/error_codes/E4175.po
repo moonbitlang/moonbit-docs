@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,55 @@ msgid "Compiler diagnostic name: `as_not_trait_object`."
 msgstr ""
 
 #: ../../language/error_codes/E4175.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "The right-hand side of `as` is not a trait object type."
 msgstr ""
+
+#: ../../language/error_codes/E4175.md:7
+msgid ""
+"MoonBit uses `as &Trait` to convert a value to a trait object. The target"
+" type must therefore be a trait object type such as `&Show`, not an "
+"ordinary concrete type, type parameter, or package type."
+msgstr ""
+
+#: ../../language/error_codes/E4175.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4175.md:13
+msgid ""
+"fn invalid_cast() -> Unit {\n"
+"  let _ = 1 as Int\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4175.md:17
+msgid ""
+"`Int` is a concrete type, not a trait object type, so it cannot be used "
+"on the right-hand side of `as`."
+msgstr ""
+
+#: ../../language/error_codes/E4175.md:20
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4175.md:22
+msgid ""
+"Use `as &Trait` when you want a trait object. If you only need a type "
+"annotation, write the expected type as an annotation instead of using "
+"`as`."
+msgstr ""
+
+#: ../../language/error_codes/E4175.md:25
+msgid ""
+"fn show_value() -> Unit {\n"
+"  let value = 1 as &Show\n"
+"  println(value)\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

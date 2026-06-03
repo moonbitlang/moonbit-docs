@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 13:08+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -33,30 +33,51 @@ msgstr ""
 
 #: ../../language/error_codes/E0068.md:7
 msgid ""
-"This warning is emitted when a declaration is left unimplemented. Provide"
-" an implementation or remove the declaration."
+"This warning is emitted when a `declare` item is left without a matching "
+"implementation in the same package. It can apply to declared functions, "
+"methods, abstract types, and implementation relations."
 msgstr ""
 
-#: ../../language/error_codes/E0068.md:10
+#: ../../language/error_codes/E0068.md:11
+msgid ""
+"Leaving a declaration unimplemented is useful while designing an API, but"
+" it can also mean that callers can see a contract that the package never "
+"actually provides. Enable this warning when you want declaration stubs to"
+" be temporary."
+msgstr ""
+
+#: ../../language/error_codes/E0068.md:15
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E0068.md:12
+#: ../../language/error_codes/E0068.md:17
 msgid "declare fn f() -> Unit\n"
 msgstr ""
 
-#: ../../language/error_codes/E0068.md:16
+#: ../../language/error_codes/E0068.md:21
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E0068.md:18
-msgid "Provide an implementation:"
+#: ../../language/error_codes/E0068.md:23
+msgid ""
+"Provide an implementation, or remove the declaration if the API is no "
+"longer needed:"
 msgstr ""
 
-#: ../../language/error_codes/E0068.md:20
+#: ../../language/error_codes/E0068.md:26
 msgid ""
 "fn f() -> Unit {\n"
 "  println(\"Hello\")\n"
 "}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "This warning is emitted when a "
+#~ "declaration is left unimplemented. Provide "
+#~ "an implementation or remove the "
+#~ "declaration."
+#~ msgstr ""
+
+#~ msgid "Provide an implementation:"
+#~ msgstr ""
 

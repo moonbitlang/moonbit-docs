@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -58,36 +58,48 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4001.md:20
+#: ../../language/error_codes/E4001.md:18
 msgid ""
 "This example declares a field with public visibility within a struct with"
 " private visibility, which is not allowed and will give the following "
 "error on line 2:"
 msgstr ""
 
-#: ../../language/error_codes/E4001.md:24
+#: ../../language/error_codes/E4001.md:22
 msgid "A public field cannot be declared within a private struct.\n"
 msgstr ""
 
-#: ../../language/error_codes/E4001.md:28
+#: ../../language/error_codes/E4001.md:26
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4001.md:30
+#: ../../language/error_codes/E4001.md:28
 msgid "Change the visibility of the field to match the visibility of the struct:"
 msgstr ""
 
-#: ../../language/error_codes/E4001.md:32
+#: ../../language/error_codes/E4001.md:30
 msgid ""
+"///|\n"
 "priv struct S {\n"
-"  field: Int\n"
-"}"
+"  field : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn get_field() -> Int {\n"
+"  S::{ field: 0 }.field\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4001.md:36
+#: ../../language/error_codes/E4001.md:34
 msgid ""
 "We could have written `priv field: Int` instead of `field: Int` as well, "
 "but it is not necessary, as all fields in a private struct are private by"
 " default."
 msgstr ""
+
+#~ msgid ""
+#~ "priv struct S {\n"
+#~ "  field: Int\n"
+#~ "}"
+#~ msgstr ""
 

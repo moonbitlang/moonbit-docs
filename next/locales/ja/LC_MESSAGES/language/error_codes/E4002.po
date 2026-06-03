@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -38,35 +38,47 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4002.md:13
+#: ../../language/error_codes/E4002.md:11
 msgid ""
 "This example declares a field with the `pub(open)` visibility modifier, "
 "which is not allowed and will give the following error on line 2:"
 msgstr ""
 
-#: ../../language/error_codes/E4002.md:16
+#: ../../language/error_codes/E4002.md:14
 msgid "The public open modifier is not supported here\n"
 msgstr ""
 
-#: ../../language/error_codes/E4002.md:20
+#: ../../language/error_codes/E4002.md:18
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4002.md:22
+#: ../../language/error_codes/E4002.md:20
 msgid "Change the visibility of the field to match the visibility of the struct:"
 msgstr ""
 
-#: ../../language/error_codes/E4002.md:24
+#: ../../language/error_codes/E4002.md:22
 msgid ""
+"///|\n"
 "pub struct S {\n"
-"  field: Int\n"
-"}"
+"  field : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn make() -> S {\n"
+"  S::{ field: 0 }\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4002.md:28
+#: ../../language/error_codes/E4002.md:26
 msgid ""
 "We could have written `pub field: Int` instead of `field: Int` as well, "
 "but it is not necessary, as all fields in a public struct are public by "
 "default."
 msgstr ""
+
+#~ msgid ""
+#~ "pub struct S {\n"
+#~ "  field: Int\n"
+#~ "}"
+#~ msgstr ""
 

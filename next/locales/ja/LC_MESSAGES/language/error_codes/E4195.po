@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -29,7 +29,68 @@ msgstr ""
 
 #: ../../language/error_codes/E4195.md:5
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"A `where` clause accepts only the fields that are meaningful for that "
+"context. For a function contract, use fields such as `proof_require`, "
+"`proof_ensure`, `proof_decrease`, `proof_axiomatized`, and "
+"`proof_reasoning`. For a loop contract, use fields such as "
+"`proof_invariant`, `proof_yield`, and `proof_reasoning`."
 msgstr ""
+
+#: ../../language/error_codes/E4195.md:11
+msgid ""
+"For the proof concepts behind these fields, see [Formal "
+"Verification](/language/verification.md), especially [Contracts in "
+"`.mbt`](/language/verification.md#contracts-in-mbt) and [Loop "
+"Invariants](/language/verification.md#loop-invariants)."
+msgstr ""
+
+#: ../../language/error_codes/E4195.md:16
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4195.md:18
+msgid ""
+"///|\n"
+"fn keep(x : Int) -> Int where { proof_note: x >= 0 } {\n"
+"  x\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(keep)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4195.md:22
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4195.md:24
+msgid "Replace the unknown field with a supported `where` clause field."
+msgstr ""
+
+#: ../../language/error_codes/E4195.md:26
+msgid ""
+"///|\n"
+"fn keep(\n"
+"  x : Int,\n"
+") -> Int where {\n"
+"  proof_require: x >= 0,\n"
+"  proof_ensure: result => result == x,\n"
+"  proof_reasoning: \"The function returns its argument unchanged.\",\n"
+"} {\n"
+"  x\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(keep(1), content=\"1\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

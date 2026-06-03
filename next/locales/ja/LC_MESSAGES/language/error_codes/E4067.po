@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -32,8 +32,8 @@ msgid ""
 "In MoonBit, packages are divided into two types: main packages and non-"
 "main packages. Non-main packages are often used as libraries to provide "
 "functionality to other packages. Main packages, on the other hand, are "
-"the entry points of the program. Therefore, main package should contains "
-"a `main` function serving as the entry point of the program."
+"the entry points of the program. Therefore, a main package should contain"
+" a `main` function serving as the entry point of the program."
 msgstr ""
 
 #: ../../language/error_codes/E4067.md:11
@@ -45,58 +45,109 @@ msgid "Suppose in package `main`:"
 msgstr ""
 
 #: ../../language/error_codes/E4067.md:15
-#: ../../language/error_codes/E4067.md:42
-msgid "`main/moon.pkg.json`:"
+#: ../../language/error_codes/E4067.md:40
+msgid "`main/moon.pkg`:"
 msgstr ""
 
 #: ../../language/error_codes/E4067.md:17
 msgid ""
-"{ // Error: Missing main function in the main package.\n"
-"  \"is-main\": true\n"
-"}\n"
+"options(\n"
+"  \"is-main\": true,\n"
+")\n"
 msgstr ""
 
-#: ../../language/error_codes/E4067.md:23
-#: ../../language/error_codes/E4067.md:33
+#: ../../language/error_codes/E4067.md:21
+#: ../../language/error_codes/E4067.md:31
 msgid "`main/main.mbt`:"
 msgstr ""
 
-#: ../../language/error_codes/E4067.md:25
+#: ../../language/error_codes/E4067.md:23
 msgid ""
-"type A Int\n"
-"\n"
-"pub fn A::to_int(self : A) -> Int {\n"
-"  self._\n"
-"}"
+"///|\n"
+"pub fn helper() -> Unit {\n"
+"  ()\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4067.md:29
+#: ../../language/error_codes/E4067.md:27
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4067.md:31
+#: ../../language/error_codes/E4067.md:29
 msgid "You can add a `main` function to the main package:"
 msgstr ""
 
-#: ../../language/error_codes/E4067.md:35
+#: ../../language/error_codes/E4067.md:33
 msgid ""
-"// ...\n"
+"///|\n"
+"priv struct A(Int)\n"
+"\n"
+"///|\n"
+"fn A::to_int(self : A) -> Int {\n"
+"  self.0\n"
+"}\n"
+"\n"
+"///|\n"
 "fn main {\n"
-"  let a : A = 42\n"
+"  let a = A(42)\n"
 "  println(a.to_int())\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4067.md:39
+#: ../../language/error_codes/E4067.md:37
 msgid ""
 "Alternatively, you can set the package to be a non-main package by "
 "setting `\"is-main\"` to `false` in the package configuration file."
 msgstr ""
 
-#: ../../language/error_codes/E4067.md:44
+#: ../../language/error_codes/E4067.md:42
 msgid ""
-"{\n"
-"  \"is-main\": false\n"
-"}\n"
+"options(\n"
+"  \"is-main\": false,\n"
+")\n"
 msgstr ""
+
+#~ msgid ""
+#~ "In MoonBit, packages are divided into"
+#~ " two types: main packages and non-"
+#~ "main packages. Non-main packages are "
+#~ "often used as libraries to provide "
+#~ "functionality to other packages. Main "
+#~ "packages, on the other hand, are "
+#~ "the entry points of the program. "
+#~ "Therefore, main package should contains "
+#~ "a `main` function serving as the "
+#~ "entry point of the program."
+#~ msgstr ""
+
+#~ msgid "`main/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{ // Error: Missing main function in the main package.\n"
+#~ "  \"is-main\": true\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "type A Int\n"
+#~ "\n"
+#~ "pub fn A::to_int(self : A) -> Int {\n"
+#~ "  self._\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "// ...\n"
+#~ "fn main {\n"
+#~ "  let a : A = 42\n"
+#~ "  println(a.to_int())\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"is-main\": false\n"
+#~ "}\n"
+#~ msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -33,42 +33,64 @@ msgstr ""
 
 #: ../../language/error_codes/E4046.md:7
 msgid ""
-"priv trait I { m(Self) }\n"
-"pub impl I for Int with m(self) {}\n"
+"priv trait I {\n"
+"  m(Self) -> Unit\n"
+"}\n"
+"\n"
+"pub impl I for Int with m(self) {\n"
+"  ignore(self)\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4046.md:12
+#: ../../language/error_codes/E4046.md:11
 msgid ""
 "The above example tries to implement a private trait `I` for the type "
 "`Int`, but the implementation itself is public, which is not allowed. "
 "This gives the following error on line 2:"
 msgstr ""
 
-#: ../../language/error_codes/E4046.md:16
+#: ../../language/error_codes/E4046.md:15
 msgid "A public definition cannot depend on private trait\n"
 msgstr ""
 
-#: ../../language/error_codes/E4046.md:20
+#: ../../language/error_codes/E4046.md:19
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4046.md:22
+#: ../../language/error_codes/E4046.md:21
 msgid "Adjust the visibility of the trait or the implementation to match:"
 msgstr ""
 
-#: ../../language/error_codes/E4046.md:24
+#: ../../language/error_codes/E4046.md:23
 msgid ""
-"trait I { m(Self) -> Unit }\n"
-"pub impl I for Int with m(self) {}"
+"pub(open) trait I {\n"
+"  m(Self) -> Unit\n"
+"}\n"
+"\n"
+"pub impl I for Int with m(self) {\n"
+"  ignore(self)\n"
+"}\n"
+"\n"
+"pub fn call_i(x : Int) -> Unit {\n"
+"  I::m(x)\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4046.md:28
-msgid "... or:"
-msgstr ""
+#~ msgid ""
+#~ "priv trait I { m(Self) }\n"
+#~ "pub impl I for Int with m(self) {}\n"
+#~ msgstr ""
 
-#: ../../language/error_codes/E4046.md:30
-msgid ""
-"priv trait I { m(Self) -> Unit }\n"
-"impl I for Int with m(self) {}"
-msgstr ""
+#~ msgid ""
+#~ "trait I { m(Self) -> Unit }\n"
+#~ "pub impl I for Int with m(self) {}"
+#~ msgstr ""
+
+#~ msgid "... or:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "priv trait I { m(Self) -> Unit }\n"
+#~ "impl I for Int with m(self) {}"
+#~ msgstr ""
 

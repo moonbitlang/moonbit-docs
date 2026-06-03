@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,52 @@ msgid "Compiler diagnostic name: `regex_alias_in_alternation`."
 msgstr ""
 
 #: ../../language/error_codes/E4210.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Regex alias is not allowed inside an alternation branch."
 msgstr ""
+
+#: ../../language/error_codes/E4210.md:7
+msgid ""
+"In a regex match expression, `as` binds the matched text. When the "
+"pattern uses alternation with `|`, bind the whole alternation instead of "
+"binding only one branch. Otherwise the binder would exist only for some "
+"alternatives."
+msgstr ""
+
+#: ../../language/error_codes/E4210.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4210.md:13
+msgid ""
+"fn match_text(s : String) -> Unit {\n"
+"  ignore(s =~ ((re\"a\" as left) | re\"b\"))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4210.md:17
+msgid "`left` is bound only when the first branch matches."
+msgstr ""
+
+#: ../../language/error_codes/E4210.md:19
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4210.md:21
+msgid ""
+"Move the alias outside the alternation so it is defined no matter which "
+"branch matches."
+msgstr ""
+
+#: ../../language/error_codes/E4210.md:24
+msgid ""
+"fn match_text(s : String) -> Unit {\n"
+"  ignore(s =~ ((re\"a\" | re\"b\") as either))\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

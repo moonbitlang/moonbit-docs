@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,68 @@ msgid "Compiler diagnostic name: `invalid_predicate`."
 msgstr ""
 
 #: ../../language/error_codes/E4207.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Invalid predicate expression."
 msgstr ""
+
+#: ../../language/error_codes/E4207.md:7
+msgid ""
+"Quantifiers and other proof-only predicate forms are part of MoonBit's "
+"verification language. They are valid in proof positions such as "
+"`proof_assert`, contracts, and `.mbtp` predicate definitions, but they "
+"cannot be used as ordinary runtime expressions."
+msgstr ""
+
+#: ../../language/error_codes/E4207.md:12
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4207.md:14
+msgid ""
+"The following example tries to bind a quantified predicate as an ordinary"
+" value:"
+msgstr ""
+
+#: ../../language/error_codes/E4207.md:16
+msgid ""
+"///|\n"
+"fn invalid_predicate() -> Unit {\n"
+"  let _ = ∀ i : Int, 0 <= i\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(invalid_predicate)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4207.md:20
+msgid "MoonBit will report an error."
+msgstr ""
+
+#: ../../language/error_codes/E4207.md:22
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4207.md:24
+msgid "Move the predicate into a proof position such as `proof_assert`:"
+msgstr ""
+
+#: ../../language/error_codes/E4207.md:26
+msgid ""
+"///|\n"
+"fn checked_predicate() -> Unit {\n"
+"  proof_assert ∀ i : Int, i == i\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  checked_predicate()\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

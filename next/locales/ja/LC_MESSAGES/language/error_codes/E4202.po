@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -29,7 +29,87 @@ msgstr ""
 
 #: ../../language/error_codes/E4202.md:5
 msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+"Struct update syntax copies every field from the original value before "
+"applying the explicit field changes. If the struct has private fields "
+"from another package, code outside that package cannot perform the copy "
+"directly."
 msgstr ""
+
+#: ../../language/error_codes/E4202.md:9
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4202.md:11
+msgid "The imported package defines a struct with a private field:"
+msgstr ""
+
+#: ../../language/error_codes/E4202.md:13
+msgid ""
+"///|\n"
+"pub(all) struct User {\n"
+"  name : String\n"
+"  priv id : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"pub let default_user : User = { name: \"old\", id: 1 }\n"
+msgstr ""
+
+#: ../../language/error_codes/E4202.md:17
+msgid "The caller cannot use update syntax on that struct:"
+msgstr ""
+
+#: ../../language/error_codes/E4202.md:19
+msgid ""
+"///|\n"
+"fn rename(user : @lib.User) -> @lib.User {\n"
+"  { ..user, name: \"new\" }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(rename(@lib.default_user))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4202.md:23
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4202.md:25
+msgid ""
+"Move the update into the package that owns the private fields, or expose "
+"a helper that performs the update."
+msgstr ""
+
+#: ../../language/error_codes/E4202.md:28
+msgid ""
+"///|\n"
+"pub(all) struct User {\n"
+"  name : String\n"
+"  priv id : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"pub let default_user : User = { name: \"old\", id: 1 }\n"
+"\n"
+"///|\n"
+"pub fn rename(user : User) -> User {\n"
+"  { name: \"new\", id: user.id }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4202.md:32
+msgid ""
+"///|\n"
+"test {\n"
+"  inspect(@lib.rename(@lib.default_user).name, content=\"new\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

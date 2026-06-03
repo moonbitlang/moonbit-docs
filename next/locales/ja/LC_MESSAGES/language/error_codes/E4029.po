@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -33,42 +33,77 @@ msgstr ""
 
 #: ../../language/error_codes/E4029.md:7
 msgid ""
-"fn main {\n"
-"  fn f {\n"
-"    (a, b) => a + b\n"
+"pub(all) struct T {\n"
+"  value : Int\n"
+"}\n"
+"\n"
+"pub fn check(value : Int?) -> Int {\n"
+"  match value {\n"
+"    T::None => 0\n"
+"    Some(value) => value\n"
 "  }\n"
-"  let a = f(None)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4029.md:16
+#: ../../language/error_codes/E4029.md:11
 msgid ""
-"The example above tries to call a function `f` with a value `None`, which"
-" is a variant of the `Option[_]` type, but `f` only accepts a tuple, "
-"giving the following error on line 5:"
+"The example above tries to use `T::None` as a constructor pattern, but "
+"`T` is a struct type, not an enum or enumview type, giving the following "
+"error on line 5:"
 msgstr ""
 
-#: ../../language/error_codes/E4029.md:20
-msgid ""
-"This expression has type (Int, Int), which is a tuple type and not a "
-"variant.\n"
+#: ../../language/error_codes/E4029.md:15
+msgid "The type T is a struct type and not an enum or enumview.\n"
 msgstr ""
 
-#: ../../language/error_codes/E4029.md:24
+#: ../../language/error_codes/E4029.md:19
 msgid "Suggestions"
 msgstr ""
 
-#: ../../language/error_codes/E4029.md:26
+#: ../../language/error_codes/E4029.md:21
 msgid "Make sure to use a value of the correct type instead:"
 msgstr ""
 
-#: ../../language/error_codes/E4029.md:28
+#: ../../language/error_codes/E4029.md:23
 msgid ""
-"fn main {\n"
-"  fn f {\n"
-"    (a, b) => a + b\n"
+"pub fn check(value : Int?) -> Int {\n"
+"  match value {\n"
+"    None => 0\n"
+"    Some(value) => value\n"
 "  }\n"
-"  let a = f((3, 4))\n"
-"}"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  fn f {\n"
+#~ "    (a, b) => a + b\n"
+#~ "  }\n"
+#~ "  let a = f(None)\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The example above tries to call a"
+#~ " function `f` with a value `None`,"
+#~ " which is a variant of the "
+#~ "`Option[_]` type, but `f` only accepts"
+#~ " a tuple, giving the following error"
+#~ " on line 5:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This expression has type (Int, Int), "
+#~ "which is a tuple type and not "
+#~ "a variant.\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  fn f {\n"
+#~ "    (a, b) => a + b\n"
+#~ "  }\n"
+#~ "  let a = f((3, 4))\n"
+#~ "}"
+#~ msgstr ""
 

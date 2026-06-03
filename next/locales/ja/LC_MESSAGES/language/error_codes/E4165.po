@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,97 @@ msgid "Compiler diagnostic name: `missing_op_as_view`."
 msgstr ""
 
 #: ../../language/error_codes/E4165.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Missing `op_as_view` method for array pattern matching."
 msgstr ""
+
+#: ../../language/error_codes/E4165.md:7
+msgid ""
+"Open array patterns such as `[head, ..tail]` need a value that can "
+"provide a view for the `..` part of the pattern. `op_as_view` is the "
+"compiler's internal name for the `_[_:_]` view operator; in source code "
+"this operation is provided by annotating a compatible method with "
+"`#alias(\"_[_:_]\")`."
+msgstr ""
+
+#: ../../language/error_codes/E4165.md:12
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4165.md:14
+msgid ""
+"The following example tries to use an open array pattern on an `Int`, "
+"which does not provide `op_as_view`:"
+msgstr ""
+
+#: ../../language/error_codes/E4165.md:17
+msgid ""
+"///|\n"
+"\n"
+"///|\n"
+"fn first_and_rest(value : Int) -> Int {\n"
+"  match value {\n"
+"    [head, .. _tail] => head\n"
+"    _ => 0\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(first_and_rest)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4165.md:21
+msgid "MoonBit will report an error."
+msgstr ""
+
+#: ../../language/error_codes/E4165.md:23
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4165.md:25
+msgid ""
+"Use an array-like value that provides the view operation. When defining "
+"that operation, annotate the method with `#alias(\"_[_:_]\")`, for "
+"example:"
+msgstr ""
+
+#: ../../language/error_codes/E4165.md:28
+msgid ""
+"#alias(\"_[_:_]\")\n"
+"fn Type::view(self : Type, start? : Int = 0, end? : Int) -> View {\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4165.md:35
+msgid ""
+"The fixed example uses `Array[Int]`, which already provides this "
+"operation:"
+msgstr ""
+
+#: ../../language/error_codes/E4165.md:37
+msgid ""
+"///|\n"
+"\n"
+"///|\n"
+"fn first_or_zero(values : Array[Int]) -> Int {\n"
+"  match values {\n"
+"    [head, .. _tail] => head\n"
+"    [] => 0\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(first_or_zero([1, 2, 3]), content=\"1\")\n"
+"  inspect(first_or_zero([]), content=\"0\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

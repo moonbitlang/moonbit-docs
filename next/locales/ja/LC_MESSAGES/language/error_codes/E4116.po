@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -29,34 +29,65 @@ msgstr ""
 
 #: ../../language/error_codes/E4116.md:5
 msgid ""
-"If you want to represent unfinished code, we recommend using `...` "
-"instead. Using `...` allows the program to be compiled and run, while `_`"
-" will cause a compilation error."
+"If you want to represent unfinished code temporarily, use `...` instead. "
+"Using `...` allows the program to be checked while the implementation is "
+"incomplete, whereas `_` causes a compilation error. Before committing "
+"finished code, replace the placeholder with a real expression."
 msgstr ""
 
-#: ../../language/error_codes/E4116.md:9
+#: ../../language/error_codes/E4116.md:10
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4116.md:11
+#: ../../language/error_codes/E4116.md:12
 msgid ""
-"fn main {\n"
+"///|\n"
+"fn value() -> Int {\n"
 "  _ // Error: Found hole _\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4116.md:15
+#: ../../language/error_codes/E4116.md:16
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4116.md:17
-msgid "Use `...` instead:"
+#: ../../language/error_codes/E4116.md:18
+msgid "Replace the hole with an expression of the expected type:"
 msgstr ""
 
-#: ../../language/error_codes/E4116.md:19
+#: ../../language/error_codes/E4116.md:20
 msgid ""
-"fn main {\n"
-"  ... // Warning: unfinished code\n"
-"}"
+"///|\n"
+"fn value() -> Int {\n"
+"  0\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(value(), content=\"0\")\n"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "If you want to represent unfinished "
+#~ "code, we recommend using `...` instead."
+#~ " Using `...` allows the program to"
+#~ " be compiled and run, while `_` "
+#~ "will cause a compilation error."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  _ // Error: Found hole _\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid "Use `...` instead:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  ... // Warning: unfinished code\n"
+#~ "}"
+#~ msgstr ""
 

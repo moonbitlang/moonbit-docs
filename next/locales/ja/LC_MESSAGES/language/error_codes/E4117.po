@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -33,11 +33,11 @@ msgid ""
 "argument to another function."
 msgstr ""
 
-#: ../../language/error_codes/E4117.md:7
+#: ../../language/error_codes/E4117.md:8
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4117.md:9
+#: ../../language/error_codes/E4117.md:10
 msgid ""
 "///|\n"
 "pub fn accumulate(acc~ : Int, value : Int) -> Int {\n"
@@ -51,25 +51,64 @@ msgid ""
 "  //                       ^~~~~~~~~~~~\n"
 "  // Error: Function with labelled arguments can only be applied "
 "directly.\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4117.md:13
+#: ../../language/error_codes/E4117.md:14
 msgid ""
 "Use [Partial "
 "Applications](https://docs.moonbitlang.com/en/latest/language/fundamentals.html"
-"#partial-applications) to create non-labelled-arguments-function."
-msgstr ""
-
-#: ../../language/error_codes/E4117.md:15
-msgid "Suggestion"
+"#partial-applications) to create a function value without labelled "
+"arguments."
 msgstr ""
 
 #: ../../language/error_codes/E4117.md:17
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4117.md:19
 msgid ""
+"///|\n"
+"pub fn accumulate(acc~ : Int, value : Int) -> Int {\n"
+"  acc + value\n"
+"}\n"
+"\n"
+"///|\n"
 "test {\n"
 "  let xs = [1, 2, 3, 4, 5]\n"
-"  let sum = xs.fold(init=0, accumulate(acc=_,_))\n"
-"}"
+"  let sum = xs.fold(init=0, fn(acc, value) { accumulate(acc~, value) })\n"
+"  inspect(sum, content=\"15\")\n"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "pub fn accumulate(acc~ : Int, value : Int) -> Int {\n"
+#~ "  acc + value\n"
+#~ "}\n"
+#~ "\n"
+#~ "///|\n"
+#~ "test {\n"
+#~ "  let xs = [1, 2, 3, 4, 5]\n"
+#~ "  let sum = xs.fold(init=0, accumulate)\n"
+#~ "  //                       ^~~~~~~~~~~~\n"
+#~ "  // Error: Function with labelled "
+#~ "arguments can only be applied directly."
+#~ "\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Use [Partial "
+#~ "Applications](https://docs.moonbitlang.com/en/latest/language/fundamentals.html"
+#~ "#partial-applications) to create non-"
+#~ "labelled-arguments-function."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "test {\n"
+#~ "  let xs = [1, 2, 3, 4, 5]\n"
+#~ "  let sum = xs.fold(init=0, accumulate(acc=_,_))\n"
+#~ "}"
+#~ msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -33,36 +33,54 @@ msgstr ""
 
 #: ../../language/error_codes/E4033.md:7
 msgid ""
-"fn main {\n"
-"  struct S { x : Int; y : Int }\n"
-"  let c = { x: 2, w: 1 }\n"
+"pub struct S {\n"
+"  x : Int\n"
+"  y : Int\n"
 "}\n"
+"\n"
+"pub let c = { x: 2, w: 1 }\n"
 msgstr ""
 
-#: ../../language/error_codes/E4033.md:14
+#: ../../language/error_codes/E4033.md:11
 msgid ""
 "The example above tries to assign a struct with fields `x` and `w` to a "
 "variable `c`, but this field doesn't exist in any known struct type, "
 "giving the following error on line 3:"
 msgstr ""
 
-#: ../../language/error_codes/E4033.md:17
+#: ../../language/error_codes/E4033.md:14
 msgid "There is no struct definition with the fields: x, w.\n"
 msgstr ""
 
-#: ../../language/error_codes/E4033.md:21
+#: ../../language/error_codes/E4033.md:18
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4033.md:23
+#: ../../language/error_codes/E4033.md:20
 msgid "Make sure to use the correct field identifiers instead:"
 msgstr ""
 
-#: ../../language/error_codes/E4033.md:25
+#: ../../language/error_codes/E4033.md:22
 msgid ""
-"fn main {\n"
-"  struct S { x : Int; y : Int }\n"
-"  let c = { x: 2, y: 1 }\n"
-"}"
+"pub struct S {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"pub let c : S = { x: 2, y: 1 }\n"
 msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  struct S { x : Int; y : Int }\n"
+#~ "  let c = { x: 2, w: 1 }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  struct S { x : Int; y : Int }\n"
+#~ "  let c = { x: 2, y: 1 }\n"
+#~ "}"
+#~ msgstr ""
 

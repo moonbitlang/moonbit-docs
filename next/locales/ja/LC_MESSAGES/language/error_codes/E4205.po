@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,46 @@ msgid "Compiler diagnostic name: `regex_map_key_not_supported`."
 msgstr ""
 
 #: ../../language/error_codes/E4205.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Regex literal is not supported as a map key."
 msgstr ""
+
+#: ../../language/error_codes/E4205.md:7
+msgid ""
+"Map literals require ordinary key values. A `re\"...\"` literal creates a"
+" `Regex`, and regex values are not valid map keys."
+msgstr ""
+
+#: ../../language/error_codes/E4205.md:10
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4205.md:12
+msgid ""
+"fn build_map() -> Unit {\n"
+"  let _ = { re\"a+\": 1, \"b\": 2 }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4205.md:16
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4205.md:18
+msgid ""
+"Use a string key if you want to store the pattern text, or store regex "
+"values as map values instead of keys."
+msgstr ""
+
+#: ../../language/error_codes/E4205.md:21
+msgid ""
+"fn build_map() -> Unit {\n"
+"  let _ = { \"a+\": 1, \"b\": 2 }\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

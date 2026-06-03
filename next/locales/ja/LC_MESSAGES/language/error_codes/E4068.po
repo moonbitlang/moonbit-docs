@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -45,80 +45,121 @@ msgid "Suppose in package `main`:"
 msgstr ""
 
 #: ../../language/error_codes/E4068.md:15
-msgid "`main/moon.pkg.json`:"
+msgid "`main/moon.pkg`:"
 msgstr ""
 
 #: ../../language/error_codes/E4068.md:17
-#: ../../language/error_codes/E4068.md:41
+#: ../../language/error_codes/E4068.md:39
 msgid ""
-"{\n"
-"  \"is-main\": true\n"
-"}\n"
+"options(\n"
+"  \"is-main\": true,\n"
+")\n"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:23
+#: ../../language/error_codes/E4068.md:21
 msgid "`main/main.mbt`:"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:25
+#: ../../language/error_codes/E4068.md:23
 msgid ""
+"///|\n"
 "fn main {\n"
 "  println(\"Hello, World!\")\n"
 "}\n"
 "\n"
-"fn main { // Error: Main function is already defined at ...\n"
+"///|\n"
+"fn main {\n"
 "  println(\"Hello, World! Again!\")\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:29
+#: ../../language/error_codes/E4068.md:27
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:31
+#: ../../language/error_codes/E4068.md:29
 msgid "You can either remove the extra `main` function:"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:33
+#: ../../language/error_codes/E4068.md:31
+#: ../../language/error_codes/E4068.md:51
 msgid ""
+"///|\n"
 "fn main {\n"
 "  println(\"Hello, World!\")\n"
 "}\n"
-"// Remove the extra main function\n"
-"//- fn main {\n"
-"//-   println(\"Hello, World! Again!\")\n"
-"//- }"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:37
+#: ../../language/error_codes/E4068.md:35
 msgid ""
 "Or you can move the extra `main` function to a different package, say "
 "`main2`:"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:39
-msgid "`main2/moon.pkg.json`:"
+#: ../../language/error_codes/E4068.md:37
+msgid "`main2/moon.pkg`:"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:47
+#: ../../language/error_codes/E4068.md:43
 msgid "`main2/main.mbt`:"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:49
+#: ../../language/error_codes/E4068.md:45
 msgid ""
+"///|\n"
 "fn main {\n"
 "  println(\"Hello, World! Again!\")\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:53
-msgid "while keeping the `main/main.mbt` contains only one main function:"
+#: ../../language/error_codes/E4068.md:49
+msgid "while keeping `main/main.mbt` with only one main function:"
 msgstr ""
 
-#: ../../language/error_codes/E4068.md:55
-msgid ""
-"fn main {\n"
-"  println(\"Hello, World!\")\n"
-"}"
-msgstr ""
+#~ msgid "`main/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"is-main\": true\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(\"Hello, World!\")\n"
+#~ "}\n"
+#~ "\n"
+#~ "fn main { // Error: Main function is already defined at ...\n"
+#~ "  println(\"Hello, World! Again!\")\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(\"Hello, World!\")\n"
+#~ "}\n"
+#~ "// Remove the extra main function\n"
+#~ "//- fn main {\n"
+#~ "//-   println(\"Hello, World! Again!\")\n"
+#~ "//- }"
+#~ msgstr ""
+
+#~ msgid "`main2/moon.pkg.json`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(\"Hello, World! Again!\")\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid "while keeping the `main/main.mbt` contains only one main function:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn main {\n"
+#~ "  println(\"Hello, World!\")\n"
+#~ "}"
+#~ msgstr ""
 

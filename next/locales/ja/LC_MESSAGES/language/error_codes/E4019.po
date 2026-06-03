@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -33,33 +33,46 @@ msgstr ""
 
 #: ../../language/error_codes/E4019.md:7
 msgid ""
-"fn f(g~ : Int, g~ : String) -> Int {\n"
-"  g\n"
+"pub fn f(g~ : Int, g~ : String) -> Unit {\n"
+"  ignore(g)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4019.md:13
+#: ../../language/error_codes/E4019.md:11
 msgid ""
 "The above example declares the label `g` twice in the function `f`, which"
 " is not allowed and gives the following error on line 1:"
 msgstr ""
 
-#: ../../language/error_codes/E4019.md:16
+#: ../../language/error_codes/E4019.md:14
 msgid "The label g~ is declared twice in this function, first in <FILE>.mbt:1:6\n"
 msgstr ""
 
-#: ../../language/error_codes/E4019.md:20
+#: ../../language/error_codes/E4019.md:18
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4019.md:22
+#: ../../language/error_codes/E4019.md:20
 msgid "Rename one of the labels to avoid the conflict:"
 msgstr ""
 
-#: ../../language/error_codes/E4019.md:24
+#: ../../language/error_codes/E4019.md:22
 msgid ""
-"fn f(g~ : Int, h~ : String) -> Int {\n"
+"pub fn f(g~ : Int, h~ : String) -> Int {\n"
+"  ignore(h)\n"
 "  g\n"
-"}"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "fn f(g~ : Int, g~ : String) -> Int {\n"
+#~ "  g\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f(g~ : Int, h~ : String) -> Int {\n"
+#~ "  g\n"
+#~ "}"
+#~ msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -24,19 +24,21 @@ msgid "E3005"
 msgstr ""
 
 #: ../../language/error_codes/E3005.md:3
-msgid "There is no such visibility for the entity (function/type/trait/...)."
+msgid ""
+"There is no such visibility for the entity (function, type, trait, and so"
+" on)."
 msgstr ""
 
 #: ../../language/error_codes/E3005.md:5
 msgid ""
-"Usually, this means that you put an `priv` visibility modifier on a "
-"entity is by-default private."
+"Usually, this means that you put a `priv` visibility modifier on an "
+"entity that is private by default."
 msgstr ""
 
 #: ../../language/error_codes/E3005.md:8
 msgid ""
-"See the [Access Control](/language/packages.md#access-control) section of"
-" for a detailed explanation on the visibility in MoonBit."
+"See the [Access Control](/language/packages.md#access-control) section "
+"for a detailed explanation on the visibility in MoonBit."
 msgstr ""
 
 #: ../../language/error_codes/E3005.md:11
@@ -44,7 +46,9 @@ msgid "Erroneous example"
 msgstr ""
 
 #: ../../language/error_codes/E3005.md:13
-msgid "priv let value = 3 // Error: No 'priv' visibility for value."
+msgid ""
+"///|\n"
+"priv let value = 3 // Error: No 'priv' visibility for value.\n"
 msgstr ""
 
 #: ../../language/error_codes/E3005.md:17
@@ -56,6 +60,35 @@ msgid "Remove the visibility modifier from the definition of the entity:"
 msgstr ""
 
 #: ../../language/error_codes/E3005.md:21
-msgid "let value = 3 // This is already `priv` by default."
+msgid ""
+"///|\n"
+"let value = 3 // This is already `priv` by default.\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(value, content=\"3\")\n"
+"}\n"
 msgstr ""
+
+#~ msgid "There is no such visibility for the entity (function/type/trait/...)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Usually, this means that you put "
+#~ "an `priv` visibility modifier on a "
+#~ "entity is by-default private."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "See the [Access Control](/language/packages.md"
+#~ "#access-control) section of for a "
+#~ "detailed explanation on the visibility "
+#~ "in MoonBit."
+#~ msgstr ""
+
+#~ msgid "priv let value = 3 // Error: No 'priv' visibility for value."
+#~ msgstr ""
+
+#~ msgid "let value = 3 // This is already `priv` by default."
+#~ msgstr ""
 

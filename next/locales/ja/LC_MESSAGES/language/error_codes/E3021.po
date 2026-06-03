@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,55 @@ msgid "Compiler diagnostic name: `invalid_warn_list`."
 msgstr ""
 
 #: ../../language/error_codes/E3021.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Invalid warning list."
 msgstr ""
+
+#: ../../language/error_codes/E3021.md:7
+msgid ""
+"MoonBit warning lists are strings that enable or disable warnings by name"
+" or number. They are accepted in places such as `moon.pkg.json` `warn-"
+"list` and the `#warnings` attribute. This error happens when the warning "
+"list cannot be parsed, for example because it contains an unknown warning"
+" name or malformed syntax."
+msgstr ""
+
+#: ../../language/error_codes/E3021.md:13
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E3021.md:15
+msgid ""
+"#warnings(\"-does_not_exist\")\n"
+"fn f() -> Unit {\n"
+"  ()\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E3021.md:19
+msgid "`does_not_exist` is not a known warning name."
+msgstr ""
+
+#: ../../language/error_codes/E3021.md:21
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E3021.md:23
+msgid ""
+"Use a valid warning name or warning number. Warning names are the "
+"identifiers shown in compiler diagnostics, such as `unused_value`."
+msgstr ""
+
+#: ../../language/error_codes/E3021.md:26
+msgid ""
+"#warnings(\"-unused_value\")\n"
+"fn f() -> Unit {\n"
+"  ()\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

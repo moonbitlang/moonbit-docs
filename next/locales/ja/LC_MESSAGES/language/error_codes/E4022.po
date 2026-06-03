@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,70 @@ msgid "Compiler diagnostic name: `unbound_constant`."
 msgstr ""
 
 #: ../../language/error_codes/E4022.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Unbound regex constant."
 msgstr ""
+
+#: ../../language/error_codes/E4022.md:7
+msgid ""
+"Regex match expressions and legacy `lexmatch` patterns can refer to regex"
+" constants. The constant must be declared and visible at the use site. If"
+" the name cannot be resolved as a constant, MoonBit reports this error."
+msgstr ""
+
+#: ../../language/error_codes/E4022.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4022.md:13
+msgid "The following example refers to `WORD` without declaring it:"
+msgstr ""
+
+#: ../../language/error_codes/E4022.md:15
+msgid ""
+"///|\n"
+"fn has_word(input : String) -> Bool {\n"
+"  input =~ WORD\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  ignore(has_word)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4022.md:19
+msgid "MoonBit will report an error."
+msgstr ""
+
+#: ../../language/error_codes/E4022.md:21
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4022.md:23
+msgid ""
+"Declare the regex constant before using it, or use a regex literal "
+"directly:"
+msgstr ""
+
+#: ../../language/error_codes/E4022.md:25
+msgid ""
+"///|\n"
+"const WORD = re\"[A-Za-z]+\"\n"
+"\n"
+"///|\n"
+"fn has_word(input : String) -> Bool {\n"
+"  input =~ WORD\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(has_word(\"MoonBit\"), content=\"true\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

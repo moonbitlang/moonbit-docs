@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 13:08+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -33,15 +33,23 @@ msgstr ""
 
 #: ../../language/error_codes/E0069.md:7
 msgid ""
-"This warning is emitted when a declaration is implemented more than once."
-" Remove the redundant implementation."
+"This warning is emitted when a `declare` item already has a matching "
+"implementation in the same package. At that point the declaration is "
+"redundant: the implementation itself is enough for the compiler to know "
+"the API."
 msgstr ""
 
-#: ../../language/error_codes/E0069.md:10
+#: ../../language/error_codes/E0069.md:11
+msgid ""
+"This warning is useful when declarations were added during a refactor and"
+" should be removed after the implementation has landed."
+msgstr ""
+
+#: ../../language/error_codes/E0069.md:14
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E0069.md:12
+#: ../../language/error_codes/E0069.md:16
 msgid ""
 "declare fn f() -> Unit\n"
 "\n"
@@ -50,18 +58,27 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0069.md:16
+#: ../../language/error_codes/E0069.md:20
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E0069.md:18
-msgid "Remove the redundant declaration:"
+#: ../../language/error_codes/E0069.md:22
+msgid "Remove the redundant declaration and keep the implementation:"
 msgstr ""
 
-#: ../../language/error_codes/E0069.md:20
+#: ../../language/error_codes/E0069.md:24
 msgid ""
 "fn f() -> Unit {\n"
 "  println(\"only\")\n"
 "}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "This warning is emitted when a "
+#~ "declaration is implemented more than "
+#~ "once. Remove the redundant implementation."
+#~ msgstr ""
+
+#~ msgid "Remove the redundant declaration:"
+#~ msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -25,83 +25,162 @@ msgstr ""
 
 #: ../../language/error_codes/E4059.md:3
 msgid ""
-"Cannot define method for builtin types or types that come from other "
-"packages."
+"Cannot define public methods for builtin types or types that come from "
+"other packages."
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:5
+#: ../../language/error_codes/E4059.md:6
 msgid ""
-"MoonBit only allows defining methods or implementing traits for types "
-"that are defined in the current package."
+"MoonBit only allows defining public methods for types that are defined in"
+" the current package."
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:8
+#: ../../language/error_codes/E4059.md:9
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:10
+#: ../../language/error_codes/E4059.md:11
 msgid "In package `a`:"
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:12
-msgid "pub type A Int"
+#: ../../language/error_codes/E4059.md:13
+msgid ""
+"///|\n"
+"pub(all) struct A(Int)\n"
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:16
+#: ../../language/error_codes/E4059.md:17
 msgid "In package `b`:"
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:18
+#: ../../language/error_codes/E4059.md:19
 msgid ""
-"fn f(self : @a.A) -> Int { // Error: Cannot define method f for type @a.A"
-" from package a\n"
+"///|\n"
+"pub fn @a.A::f(self : @a.A) -> Int {\n"
+"  ignore(self)\n"
 "  0\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:22
+#: ../../language/error_codes/E4059.md:23
 msgid ""
-"Defining methods for builtin types, or types in standard library, is "
-"another frequent case of this error:"
+"Defining public methods for builtin types, or types in the standard "
+"library, is another frequent case of this error:"
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:25
+#: ../../language/error_codes/E4059.md:26
 msgid ""
-"fn f(self : Int) -> Int { // Error: Cannot define method f for builtin "
-"type Int\n"
-"  0\n"
-"}"
+"///|\n"
+"pub fn Int::g(self : Int) -> Int {\n"
+"  self\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:29
+#: ../../language/error_codes/E4059.md:30
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:31
+#: ../../language/error_codes/E4059.md:32
 msgid "You can either move the type definition to the current package:"
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:33
+#: ../../language/error_codes/E4059.md:34
 msgid ""
-"pub type A Int\n"
+"///|\n"
+"priv struct A(Int)\n"
 "\n"
-"fn f(self : A) -> Int {\n"
-"  0\n"
-"}"
+"///|\n"
+"fn A::f(self : A) -> Int {\n"
+"  self.0\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let value = A(1)\n"
+"  inspect(value.f(), content=\"1\")\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:37
-msgid "Or use new type to wrap the builtin type or type from other package:"
+#: ../../language/error_codes/E4059.md:38
+msgid ""
+"Or use a wrapper type around the builtin type or type from another "
+"package:"
 msgstr ""
 
-#: ../../language/error_codes/E4059.md:39
+#: ../../language/error_codes/E4059.md:40
 msgid ""
-"pub type WrapA @a.A\n"
+"///|\n"
+"priv struct WrapA(@a.A)\n"
 "\n"
-"fn f(self : WrapA) -> Int {\n"
-"  ignore(self._) // Use `._` to access the wrapped value if @a.A is "
-"public\n"
+"///|\n"
+"fn WrapA::f(self : WrapA) -> Int {\n"
+"  let _ = self.0\n"
 "  0\n"
-"}"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  let value = WrapA(@a.A(1))\n"
+"  inspect(value.f(), content=\"0\")\n"
+"}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "Cannot define method for builtin types"
+#~ " or types that come from other "
+#~ "packages."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "MoonBit only allows defining methods or"
+#~ " implementing traits for types that "
+#~ "are defined in the current package."
+#~ msgstr ""
+
+#~ msgid "pub type A Int"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f(self : @a.A) -> Int { "
+#~ "// Error: Cannot define method f "
+#~ "for type @a.A from package a\n"
+#~ "  0\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Defining methods for builtin types, or"
+#~ " types in standard library, is "
+#~ "another frequent case of this error:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "fn f(self : Int) -> Int { //"
+#~ " Error: Cannot define method f for"
+#~ " builtin type Int\n"
+#~ "  0\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub type A Int\n"
+#~ "\n"
+#~ "fn f(self : A) -> Int {\n"
+#~ "  0\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid "Or use new type to wrap the builtin type or type from other package:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "pub type WrapA @a.A\n"
+#~ "\n"
+#~ "fn f(self : WrapA) -> Int {\n"
+#~ "  ignore(self._) // Use `._` to "
+#~ "access the wrapped value if @a.A "
+#~ "is public\n"
+#~ "  0\n"
+#~ "}"
+#~ msgstr ""
 

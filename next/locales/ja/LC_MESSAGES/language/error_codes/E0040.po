@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -24,6 +24,52 @@ msgid "E0040"
 msgstr ""
 
 #: ../../language/error_codes/E0040.md:3
-msgid "No longer emitted."
+msgid "Warning name: `multiline_string_escape`"
 msgstr ""
+
+#: ../../language/error_codes/E0040.md:5
+msgid "Escape sequences in `$|` multiline string lines are deprecated."
+msgstr ""
+
+#: ../../language/error_codes/E0040.md:7
+msgid ""
+"MoonBit treats `$|` lines as multiline string content. Escape sequences "
+"such as `\\n`, `\\t`, and `\\\\` in those lines are deprecated because "
+"they will be treated literally in the future."
+msgstr ""
+
+#: ../../language/error_codes/E0040.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0040.md:13
+msgid ""
+"///|\n"
+"pub fn text() -> String {\n"
+"  let result = $|line\\nnext\n"
+"  result\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0040.md:17
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0040.md:19
+msgid ""
+"Use interpolation when you need an escaped character, or write the "
+"literal text directly when that is what the string should contain."
+msgstr ""
+
+#: ../../language/error_codes/E0040.md:22
+msgid ""
+"///|\n"
+"pub fn text() -> String {\n"
+"  let result = $|line\\{'\\n'}next\n"
+"  result\n"
+"}\n"
+msgstr ""
+
+#~ msgid "No longer emitted."
+#~ msgstr ""
 

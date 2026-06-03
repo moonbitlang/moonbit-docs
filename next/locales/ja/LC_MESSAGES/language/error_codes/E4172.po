@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 11:17+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,8 +28,51 @@ msgid "Compiler diagnostic name: `invalid_regex_pattern`."
 msgstr ""
 
 #: ../../language/error_codes/E4172.md:5
-msgid ""
-"Detailed documentation and examples for this diagnostic have not been "
-"added yet."
+msgid "Invalid regex pattern."
 msgstr ""
+
+#: ../../language/error_codes/E4172.md:7
+msgid ""
+"This error happens when a `re\"...\"` literal or a regex pattern used by "
+"`lexmatch` does not follow MoonBit's regex syntax. Regex literals are "
+"checked at compile time, so syntax errors, unsupported assertions, "
+"invalid ranges, and duplicate capture names are reported before the "
+"program runs."
+msgstr ""
+
+#: ../../language/error_codes/E4172.md:12
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4172.md:14
+msgid ""
+"fn invalid_regex() -> Regex {\n"
+"  re\"[a-z\"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4172.md:18
+msgid "The character class starts with `[`, but never closes with `]`."
+msgstr ""
+
+#: ../../language/error_codes/E4172.md:20
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4172.md:22
+msgid "Fix the regex syntax, or rewrite the pattern using a supported regex form."
+msgstr ""
+
+#: ../../language/error_codes/E4172.md:24
+msgid ""
+"fn valid_regex() -> Regex {\n"
+"  re\"[a-z]\"\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Detailed documentation and examples for "
+#~ "this diagnostic have not been added "
+#~ "yet."
+#~ msgstr ""
 

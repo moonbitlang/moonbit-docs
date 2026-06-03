@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-06-02 17:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -33,31 +33,75 @@ msgstr ""
 
 #: ../../language/error_codes/E4064.md:7
 msgid ""
-"Using escape sequence with invalid unicode code point result in this "
-"error:"
+"Using an escape sequence with an invalid Unicode code point results in "
+"this error:"
 msgstr ""
 
-#: ../../language/error_codes/E4064.md:9
+#: ../../language/error_codes/E4064.md:10
 msgid ""
+"///|\n"
 "test {\n"
 "  println('\\uD800')\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4064.md:13
-msgid ""
-"Another case is using unsupported escape sequence in char literal for "
-"`Byte`:"
+#: ../../language/error_codes/E4064.md:14
+msgid "Another case is using an unsupported escape sequence in a `Byte` literal:"
 msgstr ""
 
-#: ../../language/error_codes/E4064.md:15
+#: ../../language/error_codes/E4064.md:16
 msgid ""
+"///|\n"
 "test {\n"
-"  let _ : Byte = '\\uD000'\n"
-"}"
+"  let _ : Byte = b'\\uD000'\n"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4064.md:19
+#: ../../language/error_codes/E4064.md:20
 msgid "Only `\\x` and `\\o` escape sequences are supported in `Byte` literal."
 msgstr ""
+
+#: ../../language/error_codes/E4064.md:22
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4064.md:24
+msgid ""
+"Use a valid Unicode code point for `Char` and `String` literals. For "
+"`Byte` literals, use byte escape sequences such as `\\x` or `\\o`:"
+msgstr ""
+
+#: ../../language/error_codes/E4064.md:27
+msgid ""
+"///|\n"
+"test {\n"
+"  let char : Char = '\\u{1F600}'\n"
+"  let byte : Byte = b'\\x41'\n"
+"  ignore(char)\n"
+"  inspect(byte.to_int(), content=\"65\")\n"
+"}\n"
+msgstr ""
+
+#~ msgid ""
+#~ "Using escape sequence with invalid "
+#~ "unicode code point result in this "
+#~ "error:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "test {\n"
+#~ "  println('\\uD800')\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Another case is using unsupported escape"
+#~ " sequence in char literal for `Byte`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "test {\n"
+#~ "  let _ : Byte = '\\uD000'\n"
+#~ "}"
+#~ msgstr ""
 
