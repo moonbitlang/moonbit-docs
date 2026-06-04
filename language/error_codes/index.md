@@ -124,7 +124,6 @@ This page lists all error codes produced by the MoonBit compiler.
 * [E4013](E4013.md)
 * [E4014](E4014.md)
 * [E4015](E4015.md)
-* [E4016](E4016.md)
 * [E4017](E4017.md)
 * [E4018](E4018.md)
 * [E4019](E4019.md)
