@@ -82,6 +82,8 @@ This page lists all error codes produced by the MoonBit compiler.
 * [E0073](E0073.md)
 * [E0074](E0074.md)
 * [E0075](E0075.md)
+* [E0076](E0076.md)
+* [E0077](E0077.md)
 * [E1000](E1000.md)
 * [E1001](E1001.md)
 * [E3001](E3001.md)
