@@ -1,6 +1,9 @@
 ///|
 priv struct Point {
   x : Int
+}
 
-  fn new(Int) -> String
+///|
+fn Point::Point(_: Int) -> String {
+  ""
 }

@@ -193,9 +193,8 @@ When the body of `try` is a simple expression, the curly braces, and even the
 
 ### Transforming to Result
 
-You can also catch the potential error and transform into a first-class value of
-the [`Result`](/language/fundamentals.md#option-and-result) type, by using
-`try?` before an expression that may throw error:
+You can also catch the potential error and transform it into a first-class value
+of the [`Result`](/language/fundamentals.md#option-and-result) type:
 
 ```{literalinclude} /sources/language/src/error/top.mbt
 :language: moonbit

@@ -104,8 +104,16 @@ fn Positive::Positive(x : Int) -> Positive raise BuildError {
 
 test "struct constructor raise" {
   // start struct constructor 9
-  debug_inspect(try? Positive(10), content="Ok({ value: 10 })")
-  debug_inspect(try? Positive(-1), content="Err(NegativeInput)")
+  try Positive(10) catch {
+    error => debug_inspect(error, content="NegativeInput")
+  } noraise {
+    value => debug_inspect(value, content="{ value: 10 }")
+  }
+  try Positive(-1) catch {
+    error => debug_inspect(error, content="NegativeInput")
+  } noraise {
+    value => debug_inspect(value, content="{ value: -1 }")
+  }
   // end struct constructor 9
 }
 

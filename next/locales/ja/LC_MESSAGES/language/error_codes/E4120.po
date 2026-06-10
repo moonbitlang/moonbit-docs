@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 17:59+0800\n"
+"POT-Creation-Date: 2026-06-10 10:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -43,29 +43,30 @@ msgid ""
 "In MoonBit, we require programmers to explicitly annotate which functions"
 " may raise errors. A function that re-raises an error must use a `raise` "
 "annotation in its signature. To keep the current function from raising, "
-"handle the error with `try ... catch` or materialize it to a `Result[T, "
-"E]` value with `try?`."
-msgstr ""
-
-#: ../../language/error_codes/E4120.md:16
-msgid "Erroneous example"
+"handle the error with `try ... catch`. If the `Result[T, E]` value must "
+"escape the local expression, build it explicitly with `Ok` and `Err` in "
+"the `try ... catch` branches."
 msgstr ""
 
 #: ../../language/error_codes/E4120.md:18
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4120.md:20
 msgid ""
 "See [E4122](./E4122.md) for checked erroneous examples with the current "
 "syntax."
 msgstr ""
 
-#: ../../language/error_codes/E4120.md:20
+#: ../../language/error_codes/E4120.md:22
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4120.md:22
+#: ../../language/error_codes/E4120.md:24
 msgid "You can either annotate the caller so it re-raises the error:"
 msgstr ""
 
-#: ../../language/error_codes/E4120.md:24
+#: ../../language/error_codes/E4120.md:26
 msgid ""
 "///|\n"
 "pub suberror ExampleError {\n"
@@ -86,15 +87,20 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4120.md:28
-msgid "Or materialize the error to a `Result[T, E]` type with `try?`:"
+#: ../../language/error_codes/E4120.md:30
+msgid "Or materialize the error to a `Result[T, E]` type with `try ... catch`:"
 msgstr ""
 
-#: ../../language/error_codes/E4120.md:30
+#: ../../language/error_codes/E4120.md:32
 msgid ""
 "///|\n"
 "pub fn materialize_error() -> Result[Unit, ExampleError] {\n"
-"  try? may_raise_error(42)\n"
+"  try {\n"
+"    may_raise_error(42)\n"
+"    Ok(())\n"
+"  } catch {\n"
+"    error => Err(error)\n"
+"  }\n"
 "}\n"
 msgstr ""
 
