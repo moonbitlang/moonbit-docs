@@ -623,13 +623,18 @@ fn use_divide_propagate() -> Unit raise ValueError {
   println(q) // Use the quotient
 }
 
-// Option 2: Use `try?` to convert the error to a `Result[T, E]` type.
+// Option 2: Use `try { .. } catch { .. }` to convert the error to a
+// `Result[T, E]` type.
 fn use_divide_try() -> Unit raise ValueError {
   // The type annotation is optional
   let mq : Result[
     Int,
     ValueError,
-  ] = try? divide(10, 2)
+  ] = try {
+    Ok(divide(10, 2))
+  } catch {
+    e => Err(e)
+  }
   match mq { // Refer to the section on pattern matching for more details
     Err(e) => raise e
     Ok(q) => println(q) // Use the quotient

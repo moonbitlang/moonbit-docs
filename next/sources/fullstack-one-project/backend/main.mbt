@@ -54,7 +54,7 @@ async fn send_file(
 /// start backend-main
 async fn main {
   @stdio.stdout.write("starting backend on http://127.0.0.1:8080\n")
-  let server = @http.Server::new(@socket.Addr::parse("127.0.0.1:8080")) catch {
+  let server = @http.Server(@socket.Addr::parse("127.0.0.1:8080")) catch {
     err => {
       @stdio.stdout.write("failed to start backend: \{err}\n")
       return

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-12 18:01+0800\n"
+"POT-Creation-Date: 2026-06-10 10:59+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -44,32 +44,33 @@ msgid ""
 "In MoonBit, we require programmers to explicitly annotate which functions"
 " may raise errors. A function that re-raises an error must use a `raise` "
 "annotation in its signature. To keep the current function from raising, "
-"handle the error with `try ... catch` or materialize it to a `Result[T, "
-"E]` value with `try?`."
+"handle the error with `try ... catch`. If the `Result[T, E]` value must "
+"escape the local expression, build it explicitly with `Ok` and `Err` in "
+"the `try ... catch` branches."
 msgstr ""
 "在 MoonBit 中，程序员需要显式标注哪些函数可能引发错误。重新抛出错误的函数必须在签名中使用 `raise` "
-"标注。若要让当前函数不抛出错误，请使用 `try ... catch` 处理错误，或使用 `try?` 将其物化为 `Result[T, E]` "
-"值。"
+"标注。若要让当前函数不抛出错误，请使用 `try ... catch` 处理错误。如果 `Result[T, E]` "
+"值必须逃逸出局部表达式，请在 `try ... catch` 分支中用 `Ok` 和 `Err` 显式构造它。"
 
-#: ../../language/error_codes/E4120.md:16
+#: ../../language/error_codes/E4120.md:18
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4120.md:18
+#: ../../language/error_codes/E4120.md:20
 msgid ""
 "See [E4122](./E4122.md) for checked erroneous examples with the current "
 "syntax."
 msgstr "当前语法下已检查的错误示例请参阅 [E4122](./E4122.md)。"
 
-#: ../../language/error_codes/E4120.md:20
+#: ../../language/error_codes/E4120.md:22
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4120.md:22
+#: ../../language/error_codes/E4120.md:24
 msgid "You can either annotate the caller so it re-raises the error:"
 msgstr "您可以为调用者添加标注，使其重新抛出错误："
 
-#: ../../language/error_codes/E4120.md:24
+#: ../../language/error_codes/E4120.md:26
 msgid ""
 "///|\n"
 "pub suberror ExampleError {\n"
@@ -90,15 +91,20 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4120.md:28
-msgid "Or materialize the error to a `Result[T, E]` type with `try?`:"
-msgstr "或者使用 `try?` 将错误物化为 `Result[T, E]` 类型："
-
 #: ../../language/error_codes/E4120.md:30
+msgid "Or materialize the error to a `Result[T, E]` type with `try ... catch`:"
+msgstr "或者使用 `try ... catch` 将错误物化为 `Result[T, E]` 类型："
+
+#: ../../language/error_codes/E4120.md:32
 msgid ""
 "///|\n"
 "pub fn materialize_error() -> Result[Unit, ExampleError] {\n"
-"  try? may_raise_error(42)\n"
+"  try {\n"
+"    may_raise_error(42)\n"
+"    Ok(())\n"
+"  } catch {\n"
+"    error => Err(error)\n"
+"  }\n"
 "}\n"
 msgstr ""
 

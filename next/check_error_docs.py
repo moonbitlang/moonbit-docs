@@ -45,6 +45,16 @@ SKIPPED_ERROR_CODES = {
     '4049',
     # Current MoonBit reports this source pattern through newer diagnostics.
     '4120',
+    # Generic trait method syntax is now accepted in the old checked form or
+    # rejected by parser/type-annotation diagnostics before E4004 is emitted.
+    '4004',
+    # These legacy in-struct constructor-signature diagnostics are now
+    # preempted by the deprecation diagnostic for that declaration form.
+    '4198',
+    '4201',
+    # Current MoonBit no longer emits this diagnostic for the documented list
+    # comprehension control-flow pattern.
+    '4211',
 }
 
 

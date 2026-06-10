@@ -79,7 +79,9 @@ fn div_reraise(x : Int, y : Int) -> Int raise DivError {
 
 // start error 8
 test {
-  let res = try? (div(6, 0) * div(6, 3))
+  let res : Result[Int, DivError] = Ok(div(6, 0) * div(6, 3)) catch {
+    error => Err(error)
+  }
   match res {
     Err(DivError(message)) => @test.assert_eq(message, "division by zero")
     Ok(_) => fail("expected division to fail")
@@ -101,7 +103,7 @@ test "error 9" (t : @test.Test) {
 
 fn error() -> Unit {
   // start error 10
-  try { println(div(42, 0)) } catch {
+  println(div(42, 0)) catch {
     _ => println("Error")
   }
   // end error 10

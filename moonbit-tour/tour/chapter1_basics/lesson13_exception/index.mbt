@@ -29,6 +29,10 @@ fn main {
     Failure::Failure(error_message) => println(error_message)
     _ => panic()
   }
-  let result = try? safe_add(@int.MAX_VALUE, @int.MAX_VALUE)
+  let result = try {
+    Ok(safe_add(@int.MAX_VALUE, @int.MAX_VALUE))
+  } catch {
+    error => Err(error)
+  }
 
 }

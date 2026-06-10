@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-27 16:32+0800\n"
+"POT-Creation-Date: 2026-06-10 11:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -296,9 +296,7 @@ msgstr ""
 msgid ""
 "The signature of the `map_with_polymorphism` will be determined by the "
 "actual parameter."
-msgstr ""
-"`map_with_polymorphism` 的签名将由实际参数推导而来。因此，在 `res` 后面的 `try?` "
-"将会有一个警告，因为不会抛出错误。"
+msgstr "`map_with_polymorphism` 的签名将由实际参数推导而来。"
 
 #: ../../language/error-handling.md:141
 msgid "Handling Errors"
@@ -369,7 +367,7 @@ msgstr "如果不需要在没有捕获到错误时执行任何操作，则可以
 
 #: ../../language/error-handling.md:177
 msgid ""
-"try { println(div(42, 0)) } catch {\n"
+"println(div(42, 0)) catch {\n"
 "  _ => println(\"Error\")\n"
 "}\n"
 msgstr ""
@@ -391,19 +389,20 @@ msgid "Transforming to Result"
 msgstr "转换为 Result"
 
 #: ../../language/error-handling.md:196
-#, fuzzy
 msgid ""
-"You can also catch the potential error and transform into a first-class "
-"value of the [`Result`](/language/fundamentals.md#option-and-result) "
-"type, by using `try?` before an expression that may throw error:"
+"You can also catch the potential error and transform it into a first-"
+"class value of the [`Result`](/language/fundamentals.md#option-and-"
+"result) type:"
 msgstr ""
 "您还可以捕获潜在的错误，并将其转换为一等公民的 [`Result`](/language/fundamentals.md#option-and-"
-"result) type，方法是在可能引发错误的表达式前使用 `try?`："
+"result) 类型："
 
-#: ../../language/error-handling.md:200
+#: ../../language/error-handling.md:199
 msgid ""
 "test {\n"
-"  let res = try? (div(6, 0) * div(6, 3))\n"
+"  let res : Result[Int, DivError] = Ok(div(6, 0) * div(6, 3)) catch {\n"
+"    error => Err(error)\n"
+"  }\n"
 "  match res {\n"
 "    Err(DivError(message)) => @test.assert_eq(message, \"division by "
 "zero\")\n"
@@ -412,15 +411,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:206
+#: ../../language/error-handling.md:205
 msgid "Panic on Errors"
 msgstr "出错时崩溃"
 
-#: ../../language/error-handling.md:208
+#: ../../language/error-handling.md:207
 msgid "You can also panic directly when an unexpected error occurs:"
 msgstr "如果发生意外错误，您也可以直接引发崩溃："
 
-#: ../../language/error-handling.md:210
+#: ../../language/error-handling.md:209
 msgid ""
 "fn remainder(a : Int, b : Int) -> Int raise DivError {\n"
 "  if b == 0 {\n"
@@ -431,11 +430,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error-handling.md:216
+#: ../../language/error-handling.md:215
 msgid "Error Inference"
 msgstr "错误推导"
 
-#: ../../language/error-handling.md:218
+#: ../../language/error-handling.md:217
 msgid ""
 "Within a `try` block, several different kinds of errors can be raised. "
 "When that happens, the compiler will use the type `Error` as the common "
@@ -446,7 +445,7 @@ msgstr ""
 "在 `try` 块中，可能引发多种不同类型的错误。当发生这种情况时，编译器将使用 `Error` "
 "类型作为通用错误类型。因此，处理程序必须使用通配符 `_` 来确保捕获所有错误，并且通过 `e => raise e` 来抛出其他错误。例如："
 
-#: ../../language/error-handling.md:223
+#: ../../language/error-handling.md:222
 msgid ""
 "fn f1() -> Unit raise E1 {\n"
 "  ...\n"
@@ -478,13 +477,23 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ""
+#~ "try { println(div(42, 0)) } catch {\n"
+#~ "  _ => println(\"Error\")\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
 #~ "test {\n"
-#~ "  let res = try? (div(6, 0) * div(6, 3))\n"
-#~ "  inspect(\n"
-#~ "    res,\n"
-#~ "    content=(\n"
-#~ "      #|Err(\"division by zero\")\n"
-#~ "    ),\n"
-#~ "  )\n"
+#~ "  let res : Result[Int, DivError] = try {\n"
+#~ "    Ok(div(6, 0) * div(6, 3))\n"
+#~ "  } catch {\n"
+#~ "    error => Err(error)\n"
+#~ "  }\n"
+#~ "  match res {\n"
+#~ "    Err(DivError(message)) => "
+#~ "@test.assert_eq(message, \"division by zero\")\n"
+#~ ""
+#~ "    Ok(_) => fail(\"expected division to fail\")\n"
+#~ "  }\n"
 #~ "}\n"
 #~ msgstr ""
