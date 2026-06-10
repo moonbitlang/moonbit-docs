@@ -4,9 +4,8 @@ Sudoku is a logic-based puzzle game that originated in 1979. It was well-suited
 for print media like newspapers, and even in the digital age, many Sudoku game
 programs are available for computers and smartphones. Despite the variety of
 entertainment options today, Sudoku enthusiasts continue to form active
-communities (online forum such as:
-[enjoysudoku](http://forum.enjoysudoku.com/)). This article will demonstrate how
-to write a suitable program to solve Sudoku using MoonBit.
+online communities. This article will demonstrate how to write a suitable
+program to solve Sudoku using MoonBit.
 ![sudoku example](/imgs/sudoku.jpg)
 
 ## Squares, Units, and Peers
