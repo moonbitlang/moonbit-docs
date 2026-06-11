@@ -43,7 +43,11 @@ SKIPPED_ERROR_CODES = {
     '4047',
     '4048',
     '4049',
-    # Current MoonBit reports this source pattern through newer diagnostics.
+}
+SKIPPED_ERROR_CASE_CODES = {
+    # Current MoonBit reports these legacy failing examples through newer
+    # diagnostics, but the fixed examples are still included in the docs and
+    # should stay warning-free.
     '4120',
     # Generic trait method syntax is now accepted in the old checked form or
     # rejected by parser/type-annotation diagnostics before E4004 is emitted.
@@ -130,6 +134,18 @@ def run_moon_test(file_path, error_code=None):
         return False
 
 
+def has_required_examples(error_code):
+    """Return True if required example projects are present."""
+    if error_code in SKIPPED_ERROR_CODES:
+        return True
+
+    if error_code in SKIPPED_ERROR_CASE_CODES:
+        fixed_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_fixed"
+        return is_moon_project(fixed_path)
+
+    return example_status(error_code) == 'full'
+
+
 def check_error_code(error_code):
     """Check specific error code documentation"""
     if error_code in SKIPPED_ERROR_CODES:
@@ -143,6 +159,9 @@ def check_error_code(error_code):
 
     if error_code in RUN_ONLY_ERROR_CODES:
         return run_moon_test(str(error_path)) and run_moon_test(str(fixed_path))
+
+    if error_code in SKIPPED_ERROR_CASE_CODES:
+        return run_moon_test(str(fixed_path))
 
     # Test error case should produce warning/error
     error_ok = run_moon_test(str(error_path), error_code)
@@ -235,8 +254,7 @@ def main():
         if args.require_examples:
             incomplete = [
                 error_code for error_code in error_codes
-                if example_status(error_code) != 'full'
-                and error_code not in SKIPPED_ERROR_CODES
+                if not has_required_examples(error_code)
             ]
             if incomplete:
                 print(f"INCOMPLETE: {', '.join(incomplete)}")
@@ -252,8 +270,7 @@ def main():
 
         if (
             args.require_examples
-            and args.target not in SKIPPED_ERROR_CODES
-            and example_status(args.target) != 'full'
+            and not has_required_examples(args.target)
         ):
             print(f"INCOMPLETE: {args.target}")
             return 1
