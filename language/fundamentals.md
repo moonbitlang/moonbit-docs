@@ -1656,8 +1656,16 @@ fn Positive::Positive(x : Int) -> Positive raise BuildError {
 ```
 
 ```moonbit
-  debug_inspect(try? Positive(10), content="Ok({ value: 10 })")
-  debug_inspect(try? Positive(-1), content="Err(NegativeInput)")
+  try Positive(10) catch {
+    error => debug_inspect(error, content="NegativeInput")
+  } noraise {
+    value => debug_inspect(value, content="{ value: 10 }")
+  }
+  try Positive(-1) catch {
+    error => debug_inspect(error, content="NegativeInput")
+  } noraise {
+    value => debug_inspect(value, content="{ value: -1 }")
+  }
 ```
 
 Asynchronous constructors are declared with `async fn TypeName::TypeName` and

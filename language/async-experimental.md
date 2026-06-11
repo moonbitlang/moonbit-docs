@@ -10,7 +10,7 @@ The API of `moonbitlang/async` is not considered stable, and may change in the f
 ## Getting started
 
 To use `moonbitlang/async` for asynchronous programming,
-you should first run `moon add moonbitlang/async@0.17.0` in your project
+you should first run `moon add moonbitlang/async@0.19.2` in your project
 to add `moonbitlang/async` as a dependency of your project.
 You may also want to set `"preferred-target": "native"` in `moon.mod.json`.
 Now, import `moonbitlang/async` and other packages in the `moonbitlang/async` library in `moon.pkg`,

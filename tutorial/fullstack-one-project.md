@@ -23,7 +23,7 @@ The key is `supported-targets`:
 ```bash
 moon new fullstack_one_project
 cd fullstack_one_project
-moon add moonbitlang/async@0.17.0
+moon add moonbitlang/async@0.19.2
 moon add moonbit-community/rabbita
 ```
 
@@ -54,7 +54,7 @@ Module config:
   "name": "moonbit-community/fullstack-one-project-doc",
   "version": "0.1.0",
   "deps": {
-    "moonbitlang/async": "0.17.0",
+    "moonbitlang/async": "0.19.2",
     "moonbit-community/rabbita": "0.11.5"
   },
   "preferred-target": "native",
@@ -276,7 +276,7 @@ options(
 ```moonbit
 async fn main {
   @stdio.stdout.write("starting backend on http://127.0.0.1:8080\n")
-  let server = @http.Server::new(@socket.Addr::parse("127.0.0.1:8080")) catch {
+  let server = @http.Server(@socket.Addr::parse("127.0.0.1:8080")) catch {
     err => {
       @stdio.stdout.write("failed to start backend: \{err}\n")
       return
