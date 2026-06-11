@@ -468,5 +468,4 @@ not be overly concerned with an unsolvable Sudoku puzzle.
 
 Let's play with MoonBit with ease!
 
-This tutorial references Norvig's blog:
-[http://norvig.com/sudoku.html](http://norvig.com/sudoku.html)
+This tutorial references Peter Norvig's Sudoku-solving write-up.
