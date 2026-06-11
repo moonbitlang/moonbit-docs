@@ -19,7 +19,9 @@ jobs:
       - name: install
         run: pip install -r requirements.txt
       - name: build
-        run: LANGUAGE="zh_CN" make html
+        run: |
+          LANGUAGE="zh_CN" python3 llm.py
+          LANGUAGE="zh_CN" make html
       - uses: aliyun/setup-aliyun-cli-action@v1
       - name: upload
         run: |
