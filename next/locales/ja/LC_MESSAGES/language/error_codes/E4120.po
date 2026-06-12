@@ -1,0 +1,68 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-12 10:17+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4120.md:1
+msgid "E4120"
+msgstr "E4120"
+
+#: ../../language/error_codes/E4120.md:3
+msgid "Compiler diagnostic name: `unhandled_error`."
+msgstr "コンパイラ診断名：`unhandled_error`。"
+
+#: ../../language/error_codes/E4120.md:5
+msgid ""
+"An infix operator application may raise an error, but the error is not "
+"handled."
+msgstr ""
+"中置演算子の適用がエラーを送出する可能性がありますが、そのエラーが処理されて"
+"いません。"
+
+#: ../../language/error_codes/E4120.md:7
+msgid ""
+"Most error-producing function calls are checked directly at the call "
+"site. This diagnostic is used for operator applications after the "
+"operator has been resolved to a function whose effect may raise. The "
+"operation must either handle the error locally or appear in a context "
+"that can propagate it."
+msgstr ""
+"エラーを発生させるほとんどの関数呼び出しは、呼び出し箇所で直接チェックされま"
+"す。この診断は、演算子がエラーを送出しうる関数へ解決された後の演算子適用に使"
+"われます。その操作は、ローカルでエラーを処理するか、そのエラーを伝播できる文"
+"脈に現れる必要があります。"
+
+#: ../../language/error_codes/E4120.md:12
+msgid ""
+"This diagnostic is currently tied to an operator-resolution path and is "
+"not monitored by a source-level error-code example."
+msgstr ""
+"この診断は現在、演算子解決の経路に結び付いており、ソースレベルのエラーコード"
+"例では監視されていません。"
+
+#: ../../language/error_codes/E4120.md:15
+msgid "Suggestion"
+msgstr "提案"
+
+#: ../../language/error_codes/E4120.md:17
+msgid ""
+"Handle the error with `try`/`catch`, or use the operator only inside a "
+"function whose signature permits the raised error."
+msgstr ""
+"`try`/`catch` でエラーを処理するか、送出されるエラーを許可するシグネチャを持"
+"つ関数の中でのみ、その演算子を使用してください。"
