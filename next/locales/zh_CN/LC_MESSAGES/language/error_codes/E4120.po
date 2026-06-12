@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-12 10:17+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4120.md:1
+msgid "E4120"
+msgstr "E4120"
+
+#: ../../language/error_codes/E4120.md:3
+msgid "Compiler diagnostic name: `unhandled_error`."
+msgstr "编译器诊断名称：`unhandled_error`。"
+
+#: ../../language/error_codes/E4120.md:5
+msgid ""
+"An infix operator application may raise an error, but the error is not "
+"handled."
+msgstr ""
+"中缀运算符应用可能会抛出错误，但该错误没有被处理。"
+
+#: ../../language/error_codes/E4120.md:7
+msgid ""
+"Most error-producing function calls are checked directly at the call "
+"site. This diagnostic is used for operator applications after the "
+"operator has been resolved to a function whose effect may raise. The "
+"operation must either handle the error locally or appear in a context "
+"that can propagate it."
+msgstr ""
+"大多数会产生错误的函数调用会在调用点直接检查。该诊断用于运算符应用：当运算"
+"符被解析为一个可能抛出错误的函数后，如果该操作既没有在本地处理错误，也没有"
+"出现在可以传播该错误的上下文中，就会触发该诊断。"
+
+#: ../../language/error_codes/E4120.md:12
+msgid ""
+"This diagnostic is currently tied to an operator-resolution path and is "
+"not monitored by a source-level error-code example."
+msgstr ""
+"该诊断目前绑定在运算符解析路径上，尚未由源码级错误代码示例监测。"
+
+#: ../../language/error_codes/E4120.md:15
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4120.md:17
+msgid ""
+"Handle the error with `try`/`catch`, or use the operator only inside a "
+"function whose signature permits the raised error."
+msgstr ""
+"使用 `try`/`catch` 处理错误，或只在函数签名允许传播该错误的函数内部使用该运"
+"算符。"

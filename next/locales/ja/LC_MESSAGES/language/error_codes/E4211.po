@@ -1,0 +1,85 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-12 10:17+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4211.md:1
+msgid "E4211"
+msgstr "E4211"
+
+#: ../../language/error_codes/E4211.md:3
+msgid "Compiler diagnostic name: `control_in_list_comprehension`."
+msgstr "コンパイラ診断名：`control_in_list_comprehension`。"
+
+#: ../../language/error_codes/E4211.md:5
+msgid ""
+"`return`, `break`, `continue`, and error-producing calls are not allowed "
+"inside a list comprehension whose result type is `Iter`."
+msgstr ""
+"結果の型が `Iter` であるリスト内包表記の内部では、`return`、`break`、"
+"`continue`、およびエラーを発生させる呼び出しは使用できません。"
+
+#: ../../language/error_codes/E4211.md:8
+msgid ""
+"An `Iter` comprehension is lazy: its body runs later, when the iterator "
+"is consumed. Control-flow operations that jump out of the surrounding "
+"function or loop, or calls that need immediate error propagation, cannot "
+"be preserved safely across that lazy boundary."
+msgstr ""
+"`Iter` の内包表記は遅延評価されます。本体は後で、イテレータが消費されるとき"
+"に実行されます。外側の関数やループから脱出する制御フロー操作や、即時のエラー"
+"伝播を必要とする呼び出しは、この遅延境界を越えて安全に保持できません。"
+
+#: ../../language/error_codes/E4211.md:13
+msgid "Erroneous example"
+msgstr "エラー例"
+
+#: ../../language/error_codes/E4211.md:15
+msgid ""
+"fn values() -> Iter[Int] {\n"
+"  let xs : Iter[Int] = [ for _ in 0..<3 => { return Iter::empty() } ]\n"
+"  xs\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4211.md:19
+msgid "Suggestion"
+msgstr "提案"
+
+#: ../../language/error_codes/E4211.md:21
+msgid ""
+"Keep the comprehension body as a normal value-producing expression. If "
+"you need early exit, use an eager collection target or write an explicit "
+"loop around the iterator consumption."
+msgstr ""
+"内包表記の本体は、通常の値を生成する式のままにしてください。早期終了が必要な"
+"場合は、即時評価されるコレクションを対象にするか、イテレータを消費する箇所で"
+"明示的なループを書いてください。"
+
+#: ../../language/error_codes/E4211.md:25
+msgid ""
+"fn values() -> Iter[Int] {\n"
+"  [ for i in 0..<3 => i ]\n"
+"}\n"
+"\n"
+"test {\n"
+"  let mut sum = 0\n"
+"  values().each(x => sum = sum + x)\n"
+"  inspect(sum, content=\"3\")\n"
+"}\n"
+msgstr ""
