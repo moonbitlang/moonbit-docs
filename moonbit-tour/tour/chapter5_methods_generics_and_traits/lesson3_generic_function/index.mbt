@@ -27,16 +27,16 @@ fn main {
   // swap ints
   let array1 = [1, 2]
   swap_int(array1)
-  println(array1)
+  println(to_repr(array1))
 
   // swap bools
   let array2 = [true, false]
   swap_bool(array2)
-  println(array2)
+  println(to_repr(array2))
 
   // generic swap
   swap(array1)
   swap(array2)
-  println(array1)
-  println(array2)
+  println(to_repr(array1))
+  println(to_repr(array2))
 }

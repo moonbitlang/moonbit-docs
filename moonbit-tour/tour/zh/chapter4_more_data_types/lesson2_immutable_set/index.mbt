@@ -7,5 +7,5 @@ fn main {
   let c = a.add(6)
   let d = b.add(6)
   let except_one = d.remove_min()
-  println(d)
+  println(to_repr(d))
 }

@@ -2,11 +2,11 @@ fn main {
   // create Tuple 
   let tuple = (3.14, false, [1,2,3])  
   let tuple2 : (Float, Bool, Int) = (2.1, true, 20)
-  println(tuple)
+  println(to_repr(tuple))
 
   // Accessing tuple elements
   println(tuple.0)
-  println(tuple.2)
+  println(to_repr(tuple.2))
 
   // Tuple can also be destructured. 
   let (a, b, c) = f()
