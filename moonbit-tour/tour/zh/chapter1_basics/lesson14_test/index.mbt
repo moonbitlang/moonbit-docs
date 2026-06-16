@@ -6,7 +6,7 @@ test {
 
 test {
   inspect(fib(5))
-  inspect([1,2,3,4].map(fib))
+  inspect(to_repr([1,2,3,4].map(fib)), content="[1, 1, 2, 3]")
 }
 
 // Add test name to make it more descriptive.
@@ -22,4 +22,3 @@ fn fib(n : Int) -> Int {
     fib(n - 1) + fib(n - 2)
   }
 }
-

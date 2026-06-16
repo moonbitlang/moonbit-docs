@@ -11,8 +11,8 @@ fn @sorted_set.SortedSet::add_range(self : Self[Int], l : Int, r : Int) -> Unit 
 
 ///|
 fn main {
-  let set = @sorted_set.new()
+  let set = @sorted_set.SortedSet([])
   set.add_range(1, 10)
   set.add_range(15, 20)
-  println(set)
+  println(to_repr(set))
 }
