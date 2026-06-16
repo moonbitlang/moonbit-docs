@@ -41,14 +41,14 @@ const plugin = (): esbuild.Plugin => {
 
         await fs.cp("./public", "./dist", { recursive: true });
 
-        const names = ["lsp-server.js", "moonc-worker.js", "onig.wasm"];
+        const names = ["moonc-worker.js", "onig.wasm"];
         await Promise.all(
-          names.map((name) => {
+          names.map((name) =>
             fs.copyFile(
               `./node_modules/@moonbit/moonpad-monaco/dist/${name}`,
               `./dist/${name}`,
-            );
-          }),
+            ),
+          ),
         );
 
         const template = await fs.readFile("index.html", "utf8");

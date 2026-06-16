@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@moonbit/moonpad-monaco':
-        specifier: ^0.1.202602255
-        version: 0.1.202602255(monaco-editor-core@0.52.2)
+        specifier: ^0.1.202606151
+        version: 0.1.202606151(monaco-editor-core@0.52.2)
       monaco-editor-core:
         specifier: ^0.52.2
         version: 0.52.2
@@ -416,14 +416,11 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@moonbit/analyzer@0.1.202604291':
-    resolution: {integrity: sha512-YwhutHOkGzAUtNvsqG5/X4o+X9muBYlv3MIhJiodVnzH2HvmglKYB26ctGKW2eK/418qI9NPp3bzPH88xQxOUw==}
+  '@moonbit/moonc-worker@0.1.202606094':
+    resolution: {integrity: sha512-win38k3+rtjiwUaYM46Qmk+qU3ln9nPn47n+Sa+ec7rFMN/Ls1l9tmQ8pJmXcUIK2r9utZJoKkeC2B4aOr7kNg==}
 
-  '@moonbit/moonc-worker@0.1.202604291':
-    resolution: {integrity: sha512-M0ZPApdcJ4SCre0Mq6yp/feVJ6+MyaSsk5xUaSpUh/wstzNafaByBKP65jQ4HS00QI/0Z4Mzlx26JfSaepZ6YA==}
-
-  '@moonbit/moonpad-monaco@0.1.202602255':
-    resolution: {integrity: sha512-RxSLivsbRy5DQCRaGMKydLZrXDl2Nk83sYHFs1ZPsZG9cyW6sTNpa4+5Sqzn8636scZDuUtwM6eWdh76fWm6BA==}
+  '@moonbit/moonpad-monaco@0.1.202606151':
+    resolution: {integrity: sha512-iTAERrBuYd1xNLiac42RKthH8s895E1nY2oRR/1GIarTGwMdRjjPckVtWL+8rjS5wz5fldleB1M0Z+PNbX30bw==}
     peerDependencies:
       monaco-editor-core: ^0.52.0
 
@@ -2632,20 +2629,6 @@ packages:
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
 
-  vscode-jsonrpc@8.2.0:
-    resolution: {integrity: sha512-C+r0eKJUIfiDIfwJhria30+TYWPtuHJXHtI7J0YlOmKAo7ogxP20T0zxB7HZQIFhIyvoBPwWskjxrvAtfjyZfA==}
-    engines: {node: '>=14.0.0'}
-
-  vscode-jsonrpc@8.2.1:
-    resolution: {integrity: sha512-kdjOSJ2lLIn7r1rtrMbbNCHjyMPfRnowdKjBQ+mGq6NAW5QY2bEZC/khaC5OR8svbbjvLEaIXkOq45e2X9BIbQ==}
-    engines: {node: '>=14.0.0'}
-
-  vscode-languageserver-protocol@3.17.5:
-    resolution: {integrity: sha512-mb1bvRJN8SVznADSGWM9u/b07H7Ecg0I3OgXDuLdn307rl/J3A9YD6/eYOssqhecL27hK1IPZAsaqh00i/Jljg==}
-
-  vscode-languageserver-types@3.17.5:
-    resolution: {integrity: sha512-Ld1VelNuX9pdF39h2Hgaeb5hEZM2Z3jUrrMgWQAu82jMtZp7p3vJT3BzToKtZI7NgQssZje5o0zryOrhQvzQAg==}
-
   vscode-oniguruma@2.0.1:
     resolution: {integrity: sha512-poJU8iHIWnC3vgphJnrLZyI3YdqRlR27xzqDmpPXYzA93R4Gk8z7T6oqDzDoHjoikA2aS82crdXFkjELCdJsjQ==}
 
@@ -2878,19 +2861,14 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@moonbit/analyzer@0.1.202604291': {}
+  '@moonbit/moonc-worker@0.1.202606094': {}
 
-  '@moonbit/moonc-worker@0.1.202604291': {}
-
-  '@moonbit/moonpad-monaco@0.1.202602255(monaco-editor-core@0.52.2)':
+  '@moonbit/moonpad-monaco@0.1.202606151(monaco-editor-core@0.52.2)':
     dependencies:
-      '@moonbit/analyzer': 0.1.202604291
-      '@moonbit/moonc-worker': 0.1.202604291
+      '@moonbit/moonc-worker': 0.1.202606094
       '@zenfs/core': 1.11.4
       comlink: 4.4.2
       monaco-editor-core: 0.52.2
-      vscode-jsonrpc: 8.2.1
-      vscode-languageserver-protocol: 3.17.5
       vscode-oniguruma: 2.0.1
       vscode-textmate: 9.3.2
       vscode-uri: 3.1.0
@@ -5573,17 +5551,6 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
-
-  vscode-jsonrpc@8.2.0: {}
-
-  vscode-jsonrpc@8.2.1: {}
-
-  vscode-languageserver-protocol@3.17.5:
-    dependencies:
-      vscode-jsonrpc: 8.2.0
-      vscode-languageserver-types: 3.17.5
-
-  vscode-languageserver-types@3.17.5: {}
 
   vscode-oniguruma@2.0.1: {}
 

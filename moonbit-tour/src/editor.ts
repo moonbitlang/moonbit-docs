@@ -4,11 +4,7 @@ import * as util from "./util";
 
 const moon = moonbitMode.init({
   onigWasmUrl: new URL("./onig.wasm", import.meta.url).toString(),
-  lspWorker: new Worker("/lsp-server.js"),
   mooncWorkerFactory: () => new Worker("/moonc-worker.js"),
-  codeLensFilter(l) {
-    return l.command?.command === "moonbit-lsp/debug-main";
-  },
 });
 
 // @ts-ignore
@@ -30,27 +26,19 @@ const trace = moonbitMode.traceCommandFactory();
 
 async function run(debug: boolean) {
   if (debug) {
-    const result = await moon.compile({
-      libInputs: [["main.mbt", model.getValue()]],
+    const result = await moon.runSingleFile({
+      code: model.getValue(),
+      filename: "main.mbt",
       debugMain: true,
     });
     switch (result.kind) {
       case "success": {
-        const js = result.js;
-        const stream = await moon.run(js);
-        let buffer = "";
-        await stream.pipeTo(
-          new WritableStream({
-            write(chunk) {
-              buffer += `${chunk}\n`;
-            },
-          }),
-        );
-        output.textContent = buffer;
+        output.textContent = result.output;
         return;
       }
       case "error": {
-        console.error(result.diagnostics);
+        console.error(result.diagnostics ?? result.message);
+        output.textContent = result.message;
       }
     }
     return;
