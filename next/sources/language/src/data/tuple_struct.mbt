@@ -4,8 +4,7 @@ struct UserId(Int)
 struct UserInfo(UserId, String)
 // end simple definition
 
-test "tuple struct 2" {
-  let t = @test.Test("tuple struct 2")
+test "tuple struct 2" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // create and destructure tuple struct
   let id : UserId = UserId(1)
@@ -18,8 +17,7 @@ test "tuple struct 2" {
   t.snapshot(filename="tuple_struct_2")
 }
 
-test "tuple struct 3" {
-  let t = @test.Test("tuple struct 3")
+test "tuple struct 3" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // access tuple struct by index
   let id : UserId = UserId(1)

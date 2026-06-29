@@ -55,8 +55,7 @@ let number : Unit = {
 
 }
 
-test "string 1" {
-  let t = @test.Test("string 1")
+test "string 1" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start string 1
   let a = "兔rabbit"
@@ -78,8 +77,7 @@ let string : Unit = {
   // end string 3
 }
 
-test "string 4" {
-  let t = @test.Test("string 4")
+test "string 4" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start string 4
   let lang = "MoonBit"
@@ -128,8 +126,7 @@ test {
 }
 // end char 2
 
-test "byte 1" {
-  let t = @test.Test("byte 1")
+test "byte 1" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start byte 1
   let b1 : Byte = b'a'
@@ -170,8 +167,7 @@ test "buffer 1" {
 }
 // end buffer 1
 
-test "tuple 1" {
-  let t = @test.Test("tuple 1")
+test "tuple 1" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start tuple 1
   fn pack(
