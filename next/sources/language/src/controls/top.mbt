@@ -23,8 +23,7 @@ fn c() -> Unit {
   // end conditional expressions 3
 }
 
-test "while loop 1" {
-  let t = @test.Test("while loop 1")
+test "while loop 1" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start while loop 1
   let mut i = 5
@@ -36,8 +35,7 @@ test "while loop 1" {
   t.snapshot(filename="while_loop_1")
 }
 
-test "while loop 2" {
-  let t = @test.Test("while loop 2")
+test "while loop 2" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start while loop 2
   let mut i = 5
@@ -55,8 +53,7 @@ test "while loop 2" {
   t.snapshot(filename="while_loop_2")
 }
 
-test "while loop 3" {
-  let t = @test.Test("while loop 3")
+test "while loop 3" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start while loop 3
   let mut i = 2
@@ -70,8 +67,7 @@ test "while loop 3" {
   t.snapshot(filename="while_loop_3")
 }
 
-test "while loop 4" {
-  let t = @test.Test("while loop 4")
+test "while loop 4" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start while loop 4
   let mut i = 10
@@ -88,8 +84,7 @@ test "while loop 4" {
   t.snapshot(filename="while_loop_4")
 }
 
-test "while loop 5" {
-  let t = @test.Test("while loop 5")
+test "while loop 5" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start while loop 5
   let mut i = 10
@@ -103,8 +98,7 @@ test "while loop 5" {
   t.snapshot(filename="while_loop_5")
 }
 
-test "for loop 1" {
-  let t = @test.Test("for loop 1")
+test "for loop 1" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start for loop 1
   for i = 0; i < 5; i = i + 1 {
@@ -133,8 +127,7 @@ fn infinite_loop() -> Unit {
   // end for loop 3
 }
 
-test "for loop 4" {
-  let t = @test.Test("for loop 4")
+test "for loop 4" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start for loop 4
   let sum = for i = 1, acc = 0; i <= 6; i = i + 1 {
@@ -170,8 +163,7 @@ fn e() -> Unit {
   // end for loop 7
 }
 
-test "for loop 7" {
-  let t = @test.Test("for loop 7")
+test "for loop 7" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start for loop 7
   for index, elem in [4, 5, 6] {
@@ -182,8 +174,7 @@ test "for loop 7" {
   t.snapshot(filename="for_loop_7")
 }
 
-test "for loop 8" {
-  let t = @test.Test("for loop 8")
+test "for loop 8" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start for loop 8
   let map = { "x": 1, "y": 2, "z": 3, "w": 4 }
@@ -200,8 +191,7 @@ test "for loop 8" {
   t.snapshot(filename="for_loop_8")
 }
 
-test "for loop 9" {
-  let t = @test.Test("for loop 9")
+test "for loop 9" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start for loop 9
   for x in 0..<5 {

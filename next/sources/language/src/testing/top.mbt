@@ -49,8 +49,7 @@ test "json snapshot test" {
 // end snapshot test 2
 
 /// start snapshot test 3
-test "record anything" {
-  let t = @test.Test("record anything")
+test "record anything" (t : @test.Test) {
   t.write("Hello, world!")
   t.writeln(" And hello, MoonBit!")
   t.snapshot(filename="record_anything.txt")

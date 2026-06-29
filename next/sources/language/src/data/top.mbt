@@ -6,8 +6,7 @@ struct User {
 }
 // end struct 1
 
-test "struct 1" {
-  let t = @test.Test("struct 1")
+test "struct 1" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start struct 2
   let u = User::{ id: 0, name: "John Doe", email: "john@doe.com" }
@@ -32,8 +31,7 @@ let struct_3 : Unit = {
 
 }
 
-test "struct 4" {
-  let t = @test.Test("struct 4")
+test "struct 4" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start struct 4
   let user = { id: 0, name: "John Doe", email: "john@doe.com" }
@@ -129,8 +127,7 @@ enum Relation {
 }
 // end enum 1
 
-test "enum 3" {
-  let t = @test.Test("enum 3")
+test "enum 3" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start enum 2
   /// compare the ordering relation between two integers
@@ -179,8 +176,7 @@ enum Lst {
 }
 // end enum 4
 
-test "enum 6" {
-  let t = @test.Test("enum 6")
+test "enum 6" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start enum 5
   // In addition to binding payload to variables,
@@ -230,8 +226,7 @@ enum E {
 }
 // end enum 7
 
-test "enum 9" {
-  let t = @test.Test("enum 9")
+test "enum 9" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start enum 8
   // pattern matching constructor with labelled arguments
@@ -280,8 +275,7 @@ fn Object::distance_with(
 }
 // end enum 10
 
-test "enum 11" {
-  let t = @test.Test("enum 11")
+test "enum 11" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start enum 11
   let p1 : Object = Point(x=0, y=0)
