@@ -752,6 +752,9 @@ For example, `Array::fold(_, _, init=5)` is equivalent to `fn(x, y) { Array::fol
 
 The `_` operator can also be used in enum creation, dot style function calls and in the pipelines.
 
+#### WARNING
+The syntax `f(a, _, b)` for partial application is deprecated. Use `x => f(a, x, b)` instead.
+
 ### Labelled arguments
 
 **Top-level** functions can declare labelled argument with the syntax `label~ : Type`. `label` will also serve as parameter name inside function body:
