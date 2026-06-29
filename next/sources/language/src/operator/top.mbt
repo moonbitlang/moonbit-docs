@@ -37,7 +37,8 @@ fn Coord::set(coord : Self, key : String, val : Int) -> Unit {
 }
 // end operator 2
 
-test "operator 3" (t : @test.Test) {
+test "operator 3" {
+  let t = @test.Test("operator 3")
   let println = fn(show) { t.writeln(show) }
   // start operator 3
   let c = { x: 1, y: 2 }
