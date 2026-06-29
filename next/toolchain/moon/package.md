@@ -144,9 +144,7 @@ User can write `@c` to access definitions from `pkgC`.
 ``````
 
 ``````{tab-item} moon.pkg.json
-```{literalinclude} /sources/language/src/packages/pkgB/moon.pkg.json
-:language: json
-```
+This package uses the new `moon.pkg` format. Prefer the `moon.pkg` tab above.
 ``````
 
 `````````
