@@ -35,6 +35,8 @@ jobs:
           python scripts/check-document.py
 
       - name: check error-code examples
+        env:
+          CHECK_ERROR_DOCS_ALLOW_TOOLCHAIN_DRIFT: "1"
         run: |
           python next/check_error_docs.py all
 
