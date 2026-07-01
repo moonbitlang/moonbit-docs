@@ -29,9 +29,9 @@ msgstr "编译器诊断名称：`control_in_list_comprehension`。"
 #: ../../language/error_codes/E4211.md:5
 msgid ""
 "`return`, `break`, `continue`, and error-producing calls are not allowed "
-"inside an iterator comprehension (`[| ... |]`)."
+"inside a list comprehension whose result type is `Iter`."
 msgstr ""
-"在迭代器推导式（`[| ... |]`）内部，不允许使用 `return`、`break`、"
+"在结果类型为 `Iter` 的列表推导式内部，不允许使用 `return`、`break`、"
 "`continue`，也不允许调用会产生错误的函数。"
 
 #: ../../language/error_codes/E4211.md:8
@@ -52,7 +52,7 @@ msgstr "错误示例"
 #: ../../language/error_codes/E4211.md:15
 msgid ""
 "fn values() -> Iter[Int] {\n"
-"  let xs : Iter[Int] = [| for _ in 0..<3 => { return Iter::empty() } |]\n"
+"  let xs : Iter[Int] = [ for _ in 0..<3 => { return Iter::empty() } ]\n"
 "  xs\n"
 "}\n"
 msgstr ""
