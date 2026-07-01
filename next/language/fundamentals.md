@@ -1067,7 +1067,8 @@ iterating over another collection or range:
 :end-before: end list comprehension 1
 ```
 
-The syntax is `[ for ... => ... ]`. The part before `=>` follows the same
+The syntax for eager collections is `[ for ... => ... ]`. The part before `=>`
+follows the same
 iteration rules as `for .. in`: one binder uses `Iter`, two binders use `Iter2`,
 and range expressions such as `0..<10` are supported. An optional `if` guard
 filters elements before evaluating the result expression. Names introduced by
@@ -1076,7 +1077,7 @@ expression.
 
 The result defaults to `Array[T]` when there is no expected type. When the
 expected type is known, a list comprehension can also construct
-`FixedArray[T]`, `ReadOnlyArray[T]`, `Iter[T]`, `String`, `Bytes`, or `Json`:
+`FixedArray[T]`, `ReadOnlyArray[T]`, `String`, `Bytes`, or `Json`:
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
@@ -1085,9 +1086,9 @@ expected type is known, a list comprehension can also construct
 :end-before: end list comprehension 2
 ```
 
-List comprehensions also support the normal `for` loop header form. When the
-expected type is `Iter[T]`, the loop does not need to terminate, so it can be
-used to define infinite sequences:
+Iterator comprehensions use `[| for ... => ... |]`. They also support the normal
+`for` loop header form. Because an `Iter[T]` value is lazy, the loop does not
+need to terminate, so it can be used to define infinite sequences:
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit

@@ -1,5 +1,5 @@
 fn values() -> Iter[Int] {
-  [ for i in 0..<3 => i ]
+  [| for i in 0..<3 => i |]
 }
 
 test {
