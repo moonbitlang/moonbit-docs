@@ -11,6 +11,11 @@ BASE_DIR = Path(__file__).resolve().parent
 ERROR_CODES_DIR = BASE_DIR / 'language/error_codes'
 ERROR_CODES_SOURCE_DIR = BASE_DIR / 'sources/error_codes'
 RUN_ONLY_ERROR_CODES = set()
+TOOLCHAIN_SPECIFIC_ERROR_CODES = {
+    # E4213 is still emitted by the documented stable compiler, but newer
+    # latest toolchains accept the constructor form used by the example.
+    '4213': 'v0.10.1',
+}
 SKIPPED_ERROR_CODES = {
     # Current MoonBit does not emit this warning.
     '0016',
@@ -40,6 +45,7 @@ SKIPPED_ERROR_CODES = {
     '4048',
     '4049',
 }
+MOONC_VERSION = None
 
 
 def example_status(error_code):
@@ -72,6 +78,32 @@ def diagnostic_codes(output):
 def has_error_code(output, error_code):
     """Return True if moon output contains this error diagnostic."""
     return bool(re.search(rf'Error: \[{error_code}\]', output))
+
+
+def moonc_version():
+    """Return the active moonc version string, or an empty string on failure."""
+    global MOONC_VERSION
+    if MOONC_VERSION is None:
+        try:
+            result = subprocess.run(
+                ['moonc', '-v'],
+                capture_output=True,
+                text=True,
+            )
+            MOONC_VERSION = (result.stdout + result.stderr).strip()
+        except Exception:
+            MOONC_VERSION = ''
+    return MOONC_VERSION
+
+
+def allow_toolchain_drift(error_code):
+    """Return True if CI may tolerate a docs-stable diagnostic drift."""
+    expected = TOOLCHAIN_SPECIFIC_ERROR_CODES.get(error_code)
+    return (
+        expected is not None
+        and os.getenv('CHECK_ERROR_DOCS_ALLOW_TOOLCHAIN_DRIFT') == '1'
+        and not moonc_version().startswith(expected)
+    )
 
 
 def run_moon_test(file_path, error_code=None):
@@ -130,6 +162,8 @@ def check_error_code(error_code):
 
     # Test error case should produce warning/error
     error_ok = run_moon_test(str(error_path), error_code)
+    if not error_ok and allow_toolchain_drift(error_code):
+        error_ok = True
 
     # Test fixed case should have no warnings/errors
     fixed_ok = run_moon_test(str(fixed_path))
