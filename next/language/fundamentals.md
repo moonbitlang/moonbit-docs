@@ -1076,7 +1076,7 @@ expression.
 
 The result defaults to `Array[T]` when there is no expected type. When the
 expected type is known, a list comprehension can also construct
-`FixedArray[T]`, `ReadOnlyArray[T]`, `Iter[T]`, `String`, `Bytes`, or `Json`:
+`FixedArray[T]`, `ReadOnlyArray[T]`, `String`, `Bytes`, or `Json`:
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
@@ -1085,9 +1085,9 @@ expected type is known, a list comprehension can also construct
 :end-before: end list comprehension 2
 ```
 
-List comprehensions also support the normal `for` loop header form. When the
-expected type is `Iter[T]`, the loop does not need to terminate, so it can be
-used to define infinite sequences:
+For lazy or infinite sequences, create an `Iter[T]` directly. The following
+iterator keeps Fibonacci state in captured variables and is limited before
+collection:
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit

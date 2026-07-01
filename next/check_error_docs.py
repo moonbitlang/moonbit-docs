@@ -38,6 +38,9 @@ SKIPPED_ERROR_CODES = {
     '3017',
     '4192',
     '4212',
+    # The current compiler resource still documents this diagnostic, but the
+    # former enum-constructor example is now accepted by latest MoonBit.
+    '4213',
     # These package-loading diagnostics depend on missing or malformed internal
     # build artifacts rather than ordinary MoonBit source projects.
     '4047',
