@@ -11,9 +11,6 @@ BASE_DIR = Path(__file__).resolve().parent
 ERROR_CODES_DIR = BASE_DIR / 'language/error_codes'
 ERROR_CODES_SOURCE_DIR = BASE_DIR / 'sources/error_codes'
 RUN_ONLY_ERROR_CODES = {
-    # The compiler no longer exposes warning 58 / unused_non_capturing, but
-    # the documentation snippets should still stay runnable.
-    '0058',
     # The try? syntax-lint sample is accepted by current MoonBit, but the
     # documentation snippets should still stay runnable.
     '0063',
