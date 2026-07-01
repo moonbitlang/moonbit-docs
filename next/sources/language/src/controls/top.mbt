@@ -244,9 +244,9 @@ test "list comprehension 2" {
 
 test "list comprehension 3" {
   // start list comprehension 3
-  let fib_numbers : Iter[Int] = [|
+  let fib_numbers : Iter[Int] = [
     for p1 = 1, p2 = 0;; p1 = p1 + p2, p2 = p1 => p1
-  |]
+  ]
   let first_six = fib_numbers.take(6).collect()
   // end list comprehension 3
   assert_eq(first_six[5], 8)
