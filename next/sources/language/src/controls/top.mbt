@@ -242,11 +242,16 @@ test "list comprehension 2" {
   assert_eq(fixed.length(), 3)
 }
 
-test "list comprehension 3" {
+test "lazy iterator" {
   // start list comprehension 3
-  let fib_numbers : Iter[Int] = [
-    for p1 = 1, p2 = 0;; p1 = p1 + p2, p2 = p1 => p1
-  ]
+  let mut p1 = 1
+  let mut p2 = 0
+  let fib_numbers : Iter[Int] = Iter::new(fn() {
+    let next = p1
+    p1 = p1 + p2
+    p2 = next
+    Some(next)
+  })
   let first_six = fib_numbers.take(6).collect()
   // end list comprehension 3
   assert_eq(first_six[5], 8)
