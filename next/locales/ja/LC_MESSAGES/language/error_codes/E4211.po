@@ -29,9 +29,9 @@ msgstr "コンパイラ診断名：`control_in_list_comprehension`。"
 #: ../../language/error_codes/E4211.md:5
 msgid ""
 "`return`, `break`, `continue`, and error-producing calls are not allowed "
-"inside a list comprehension whose result type is `Iter`."
+"inside an iterator comprehension (`[| ... |]`)."
 msgstr ""
-"結果の型が `Iter` であるリスト内包表記の内部では、`return`、`break`、"
+"イテレータ内包表記（`[| ... |]`）の内部では、`return`、`break`、"
 "`continue`、およびエラーを発生させる呼び出しは使用できません。"
 
 #: ../../language/error_codes/E4211.md:8
@@ -52,7 +52,7 @@ msgstr "エラー例"
 #: ../../language/error_codes/E4211.md:15
 msgid ""
 "fn values() -> Iter[Int] {\n"
-"  let xs : Iter[Int] = [ for _ in 0..<3 => { return Iter::empty() } ]\n"
+"  let xs : Iter[Int] = [| for _ in 0..<3 => { return Iter::empty() } |]\n"
 "  xs\n"
 "}\n"
 msgstr ""
