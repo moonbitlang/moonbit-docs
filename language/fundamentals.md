@@ -1347,7 +1347,7 @@ expression.
 
 The result defaults to `Array[T]` when there is no expected type. When the
 expected type is known, a list comprehension can also construct
-`FixedArray[T]`, `ReadOnlyArray[T]`, `Iter[T]`, `String`, `Bytes`, or `Json`:
+`FixedArray[T]`, `ReadOnlyArray[T]`, `String`, `Bytes`, or `Json`:
 
 ```moonbit
 let text : String = [ for x in 0..<3 => (x + 'a').unsafe_to_char() ]
@@ -1355,14 +1355,19 @@ let bytes : Bytes = [ for x in 0..<3 => x.to_byte() ]
 let fixed : FixedArray[_] = [ for x in 1..<=3 => x ]
 ```
 
-List comprehensions also support the normal `for` loop header form. When the
-expected type is `Iter[T]`, the loop does not need to terminate, so it can be
-used to define infinite sequences:
+For lazy or infinite sequences, create an `Iter[T]` directly. The following
+iterator keeps Fibonacci state in captured variables and is limited before
+collection:
 
 ```moonbit
-let fib_numbers : Iter[Int] = [
-  for p1 = 1, p2 = 0;; p1 = p1 + p2, p2 = p1 => p1
-]
+let mut p1 = 1
+let mut p2 = 0
+let fib_numbers : Iter[Int] = Iter::new(fn() {
+  let next = p1
+  p1 = p1 + p2
+  p2 = next
+  Some(next)
+})
 let first_six = fib_numbers.take(6).collect()
 ```
 

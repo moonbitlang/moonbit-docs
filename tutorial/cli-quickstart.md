@@ -61,18 +61,18 @@ pub struct Config {
 
 ///|
 pub fn command() -> @argparse.Command {
-  @argparse.Command::new(
+  @argparse.Command(
     "moon-fetch",
     about="Download a URL to stdout or a file",
     options=[
-      @argparse.OptionArg::new(
+      @argparse.OptionArg(
         "output",
         short='o',
         about="Write the response body to this file",
       ),
     ],
     positionals=[
-      @argparse.PositionArg::new(
+      @argparse.PositionArg(
         "url",
         about="HTTP or HTTPS URL to download",
         num_args=@argparse.ValueRange::single(),
