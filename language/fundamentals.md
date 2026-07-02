@@ -2526,7 +2526,7 @@ MoonBit provides convenient pipe syntaxes `x |> f(y)` and `f <| x`, which can be
 1
 |> add(5) // <=> add(1, 5)
 |> x => { x + 1 }
-|> ignore // <=> ignore(add(1, 5))
+|> ignore // <=> ignore(add(1, 5) + 1)
 ```
 
 The MoonBit code follows the *data-first* style, meaning the function places its "subject" as the first argument.
