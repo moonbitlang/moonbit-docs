@@ -49,6 +49,9 @@ smartquotes_excludes = {
   'builders': ['man', 'text', 'markdown', 'latex'],
 }
 
+# Avoid guess-highlighting output blocks and other snippets without a language.
+highlight_language = 'none'
+
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
