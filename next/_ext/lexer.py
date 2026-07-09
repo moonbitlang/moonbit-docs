@@ -19,7 +19,7 @@ class MoonBitLexer(RegexLexer):
         'root': [
             (r"#.*$", token.Comment.Preproc),
             (r"//.*$", token.Comment.Single),
-            (r"b?\'.*\'", token.Literal),
+            (r"b?'(?:\\(?:[0\\tnrb\"']|x[0-9a-fA-F]{2}|u\{[0-9a-fA-F]+\}|u[0-9a-fA-F]{4})|[^\\'\n])+'", token.Literal),
             (r"#\|.*$", token.String),
             (r"(b)(\")", bygroups(token.String.Affix, token.String), "string.inline"),
             ("\"", token.String, "string.inline"),
@@ -45,7 +45,7 @@ class MoonBitLexer(RegexLexer):
             (words(('true', 'false'), suffix=r"\b"), token.Keyword.Constant),
             (words(('Eq', 'Compare', 'Hash', 'Show', 'Default', 'ToJson', 'FromJson'), suffix=r"\b"), token.Name.Builtin),
             (words(('Array', 'FixedArray', 'Int', 'Int64', 'UInt', 'UInt64', 'Option', 'Result', 'Byte', 'Bool', 'Unit', 'String', 'Float', 'Double'), suffix=r"\b"), token.Name.Builtin),
-            (words(('+', '-', '*', '/', '%', '|>', '>>', '<<', '&&', '||', '&', '|', '<', '>', '==')), token.Operator),
+            (r"\|>|>>|<<|&&|\|\||==|!=|<=|>=|[+\-*/%&|<>]", token.Operator),
             (words(('not', 'lsl', 'lsr', 'asr', 'op_add', 'op_sub', 'op_div', 'op_mul', 'op_mod', '...')), token.Operator.Word),
             # @namespace.
             (r"@[A-Za-z][A-Za-z0-9_/]*\.", token.Name.Namespace),
