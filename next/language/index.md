@@ -34,5 +34,6 @@ attributes
 ffi
 async-experimental
 verification
+lexical-conventions
 error_codes/index
 ```
