@@ -218,6 +218,8 @@ class SemanticIndexer:
                     )
                 path_to_source[realpath(alias_path)] = source
 
+        logical_sources = _logical_source_map(sources.values())
+
         if stdlib_state:
             root, _ = stdlib_state
             self._verify_precheck(root, precheck_sources[root.root_id])
@@ -239,7 +241,13 @@ class SemanticIndexer:
                 if cfg.skip_lsp:
                     self._record_skipped_context(context, input_sources, "--skip-lsp")
                 else:
-                    self._analyze_context(root, context, input_sources, path_to_source)
+                    self._analyze_context(
+                        root,
+                        context,
+                        input_sources,
+                        path_to_source,
+                        logical_sources,
+                    )
 
         public_sources = [self._public_source(source) for source in sources.values()]
         resolution = self._resolution_lock(all_states, stdlib)
@@ -332,7 +340,14 @@ class SemanticIndexer:
             return False
         return True if expected else ok
 
-    def _analyze_context(self, root: Root, context: dict[str, Any], input_sources: list[dict[str, Any]], path_to_source: dict[Path, dict[str, Any]]) -> None:
+    def _analyze_context(
+        self,
+        root: Root,
+        context: dict[str, Any],
+        input_sources: list[dict[str, Any]],
+        path_to_source: dict[Path, dict[str, Any]],
+        logical_sources: dict[str, dict[str, Any]],
+    ) -> None:
         analyzable = [
             source
             for source in sorted(input_sources, key=lambda value: value["source_id"])
@@ -359,7 +374,13 @@ class SemanticIndexer:
             )
             try:
                 for source in chunk:
-                    self._analyze_source(session, context, source, path_to_source)
+                    self._analyze_source(
+                        session,
+                        context,
+                        source,
+                        path_to_source,
+                        logical_sources,
+                    )
                 return session.position_encoding
             finally:
                 session.close()
@@ -394,7 +415,14 @@ class SemanticIndexer:
             }
             self.occurrence_shards[key] = {"context_id": key[0], "source_id": key[1], "occurrences": []}
 
-    def _analyze_source(self, session: LspSession, context: dict[str, Any], source: dict[str, Any], path_to_source: dict[Path, dict[str, Any]]) -> None:
+    def _analyze_source(
+        self,
+        session: LspSession,
+        context: dict[str, Any],
+        source: dict[str, Any],
+        path_to_source: dict[Path, dict[str, Any]],
+        logical_sources: dict[str, dict[str, Any]],
+    ) -> None:
         path = Path(source["_realpath"])
         raw = source["_blob"]
         coords = SourceCoordinates(raw)
@@ -408,7 +436,16 @@ class SemanticIndexer:
                 try:
                     hover = session.hover(uri, candidate["position"])
                     definition = session.definition(uri, candidate["position"])
-                    occurrence = self._occurrence(source, context, candidate, hover, definition, path_to_source, session.position_encoding)
+                    occurrence = self._occurrence(
+                        source,
+                        context,
+                        candidate,
+                        hover,
+                        definition,
+                        path_to_source,
+                        logical_sources,
+                        session.position_encoding,
+                    )
                     if occurrence:
                         occurrences.append(occurrence)
                     if not hover and not definition:
@@ -465,7 +502,17 @@ class SemanticIndexer:
             })
         return candidates
 
-    def _occurrence(self, source: dict[str, Any], context: dict[str, Any], candidate: dict[str, Any], hover: Any, definition: Any, path_to_source: dict[Path, dict[str, Any]], encoding: str) -> dict[str, Any] | None:
+    def _occurrence(
+        self,
+        source: dict[str, Any],
+        context: dict[str, Any],
+        candidate: dict[str, Any],
+        hover: Any,
+        definition: Any,
+        path_to_source: dict[Path, dict[str, Any]],
+        logical_sources: dict[str, dict[str, Any]],
+        encoding: str,
+    ) -> dict[str, Any] | None:
         coords = SourceCoordinates(source["_blob"])
         normalized_hover = None
         hover_range = None
@@ -482,6 +529,8 @@ class SemanticIndexer:
         for location in definition_locations(definition):
             target_path = _file_uri(location.pop("uri"))
             target = path_to_source.get(realpath(target_path))
+            if target is None:
+                target = logical_sources.get(_logical_definition_path(target_path))
             if target is None:
                 if self.config.strict:
                     raise ValueError(f"definition target is outside captured corpus: {target_path}")
@@ -783,6 +832,29 @@ def _file_uri(uri: str) -> Path:
     if parsed.scheme != "file" or parsed.netloc not in ("", "localhost"):
         raise ValueError(f"unsupported definition URI: {uri}")
     return Path(unquote(parsed.path))
+
+
+def _logical_definition_path(path: Path) -> str:
+    return unicodedata.normalize("NFC", path.as_posix().replace("\\", "/").lstrip("/"))
+
+
+def _logical_source_map(values: Any) -> dict[str, dict[str, Any]]:
+    candidates: dict[str, list[dict[str, Any]]] = {}
+    for source in values:
+        module = str(source.get("module") or "").strip("/")
+        path = str(source.get("path") or "").replace("\\", "/").lstrip("/")
+        if not module or not path:
+            continue
+        keys = {f"{module}/{path}"}
+        if path.startswith("src/"):
+            keys.add(f"{module}/{path.removeprefix('src/')}")
+        for key in keys:
+            candidates.setdefault(unicodedata.normalize("NFC", key), []).append(source)
+    return {
+        key: sources[0]
+        for key, sources in candidates.items()
+        if len({source["source_id"] for source in sources}) == 1
+    }
 
 
 def _symbol_id(source_id: str, selection: list[int], kind: str) -> str:

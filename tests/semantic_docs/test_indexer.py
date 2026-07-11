@@ -269,6 +269,34 @@ class SemanticIndexerTest(unittest.TestCase):
         validate_snapshot(output)
         self.assertGreaterEqual(state["maximum"], 2)
 
+    def test_virtual_module_definition_uri_resolves_to_canonical_source(self):
+        class VirtualDefinitionLsp(FakeLsp):
+            def definition(inner_self, uri, position):
+                return {
+                    "uri": "file:///acme/lib/lib.mbt",
+                    "range": {
+                        "start": {"line": 0, "character": 3},
+                        "end": {"line": 0, "character": 7},
+                    },
+                }
+
+        output = self.repo / "snapshot-virtual-definition"
+        manifest = SemanticIndexer(BuildConfig(
+            repo_root=self.repo,
+            source_root=Path("next/sources"),
+            output=output,
+            stdlib_root=self.stdlib,
+            runner=FakeRunner(),
+            lsp_factory=lambda root: (
+                VirtualDefinitionLsp()
+                if root.module_name == "example/app"
+                else FakeLsp()
+            ),
+        )).build()
+
+        validate_snapshot(output)
+        self.assertGreater(manifest["counts"]["symbols"], 0)
+
     def test_validator_rejects_self_consistent_manifest_with_missing_required_ledger(self):
         output = self.repo / "snapshot"
         SemanticIndexer(BuildConfig(
