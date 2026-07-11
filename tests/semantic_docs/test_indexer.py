@@ -12,7 +12,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from scripts.moonbit_semantic.canonical import canonical_json_bytes, digest_bytes, digest_json
 from scripts.moonbit_semantic.indexer import BuildConfig, SemanticIndexer
-from scripts.moonbit_semantic.inventory import discover_roots, metadata_allowed_module_roots, scan_sources
+from scripts.moonbit_semantic.inventory import Root, discover_roots, metadata_allowed_module_roots, package_metadata, scan_sources
 from scripts.moonbit_semantic.literate import extract_literate_fences, moonbit_projection
 from scripts.moonbit_semantic.lsp import JsonRpcProcess, LspError
 from scripts.moonbit_semantic.ranges import RangeError, SourceCoordinates
@@ -205,6 +205,21 @@ class SemanticIndexerTest(unittest.TestCase):
         deps = metadata_allowed_module_roots(metadata, self.stdlib)
         self.assertEqual({path.name for path in deps}, {"lib"})
         self.assertEqual({path.name for path in scan_sources(next(iter(deps)))}, {"lib.mbt", "types.mbti"})
+
+    def test_workspace_member_uses_shared_package_metadata(self):
+        workspace = self.sources / "workspace"
+        member = workspace / "member"
+        member.mkdir(parents=True)
+        (workspace / "moon.work").write_text("members = [\"member\"]\n", encoding="utf-8")
+        self._write_json(member / "moon.mod.json", {"name": "example/member"})
+        metadata = {"packages": [{"root-path": str(member), "files": {}}]}
+        self._write_json(workspace / "_build/packages.json", metadata)
+
+        root = Root(member, "root:workspace/member", "required", "example/member", "", "wasm-gc")
+        actual, path = package_metadata(root)
+
+        self.assertEqual(actual, metadata)
+        self.assertEqual(path, (workspace / "_build/packages.json").resolve())
 
     def test_source_change_during_check_fails_closed(self):
         app_source = self.sources / "app/main.mbt"

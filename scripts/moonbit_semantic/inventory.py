@@ -47,6 +47,13 @@ def discover_roots(source_root: Path, backend: str) -> list[Root]:
 
 def package_metadata(root: Root) -> tuple[dict[str, Any] | None, Path | None]:
     candidates = [root.path / "_build" / "packages.json"]
+    # `moon check -C <workspace-member>` writes the IDE package graph into
+    # the nearest `moon.work` owner's shared `_build`, not necessarily below
+    # the member module itself.  Resolve that location explicitly instead of
+    # walking arbitrary ancestor build directories.
+    workspace = _nearest_workspace(root.path)
+    if workspace is not None:
+        candidates.append(workspace / "_build" / "packages.json")
     if root.root_id.startswith("standalone:"):
         candidates.extend(sorted((root.path / "_build").glob("*.packages.json")))
     for candidate in candidates:
@@ -57,6 +64,13 @@ def package_metadata(root: Root) -> tuple[dict[str, Any] | None, Path | None]:
             except (OSError, UnicodeDecodeError, json.JSONDecodeError):
                 return None, candidate
     return None, None
+
+
+def _nearest_workspace(path: Path) -> Path | None:
+    for candidate in (path.resolve(), *path.resolve().parents):
+        if (candidate / "moon.work").is_file():
+            return candidate
+    return None
 
 
 def metadata_sources(metadata: dict[str, Any]) -> set[Path]:
