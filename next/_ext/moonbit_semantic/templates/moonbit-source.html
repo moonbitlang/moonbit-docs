@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="{{ language or 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <title>{{ title|e }} — MoonBit source</title>
+  <link rel="stylesheet" href="{{ pygments_css|e }}">
+  <link rel="stylesheet" href="{{ semantic_css|e }}">
+  <script defer src="{{ semantic_js|e }}"></script>
+</head>
+<body>
+<main class="mbt-source-page">
+  {% if source %}
+  <header class="mbt-source-header">
+    <span class="mbt-source-path">{{ source.path|e }}</span>
+    {% if source.module %}<span>{{ source.module|e }}{% if source.version %}@{{ source.version|e }}{% endif %}</span>{% endif %}
+  </header>
+  {% endif %}
+  {{ body }}
+</main>
+</body>
+</html>

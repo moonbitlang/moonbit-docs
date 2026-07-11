@@ -1,0 +1,248 @@
+from __future__ import annotations
+
+import hashlib
+from io import StringIO
+import json
+from pathlib import Path
+import sys
+
+import pytest
+
+
+ROOT = Path(__file__).resolve().parents[2]
+EXT = ROOT / "next" / "_ext"
+sys.path.insert(0, str(EXT))
+
+from moonbit_semantic.render import SemanticCodeRenderer
+from moonbit_semantic.snapshot import Occurrence, SnapshotError, load_snapshot
+
+
+def _write_snapshot(root: Path, *, extra_literate: str = "") -> Path:
+    snapshot = root / "snapshot"
+    blobs = snapshot / "blobs" / "sha256"
+    occurrences = snapshot / "occurrences" / "ctx"
+    hovers = snapshot / "hovers"
+    blobs.mkdir(parents=True)
+    occurrences.mkdir(parents=True)
+    hovers.mkdir(parents=True)
+
+    pure = "pub fn answer() -> Int { 42 }\n"
+    literate = "# Literate Guide\n\nProse survives from the frozen Markdown.\n\n```mbt\npub fn lit() -> Int { 7 }\n```\n\n![Frozen logo](logo.svg)\n" + extra_literate
+    logo = b'<svg xmlns="http://www.w3.org/2000/svg"><title>logo</title></svg>'
+    pure_digest = hashlib.sha256(pure.encode()).hexdigest()
+    lit_digest = hashlib.sha256(literate.encode()).hexdigest()
+    logo_digest = hashlib.sha256(logo).hexdigest()
+    (blobs / pure_digest).write_text(pure)
+    (blobs / lit_digest).write_text(literate)
+    (blobs / logo_digest).write_bytes(logo)
+
+    sources = [
+        {
+            "source_id": "local:src/main.mbt",
+            "path": "src/main.mbt",
+            "blob_digest": f"sha256:{pure_digest}",
+            "kind": ".mbt",
+            "origin": "local",
+            "package": "demo",
+            "route_key": "local/demo/src/main.mbt",
+        },
+        {
+            "source_id": "dependency:demo@1.0:guide.mbt.md",
+            "path": "guide.mbt.md",
+            "blob_digest": f"sha256:{lit_digest}",
+            "kind": ".mbt.md",
+            "origin": "dependency",
+            "module": "demo",
+            "version": "1.0",
+            "package": "demo/guide",
+            "route_key": "pkg/demo/1.0/guide.mbt.md",
+        },
+    ]
+    answer_start = pure.encode().index(b"answer")
+    lit_start = literate.encode().index(b"lit()")
+    fence_start = literate.encode().index(b"pub fn lit")
+    fence_end = literate.encode().index(b"```", fence_start)
+    sources[1]["literate_fences"] = [
+        {
+            "raw_byte_range": [fence_start, fence_end],
+            "raw_line_range": [6, 7],
+            "content_digest": "sha256:test",
+            "fence_kind": "mbt",
+            "semantic_status": "analyzed",
+            "range_map": [
+                {
+                    "raw_utf8": [fence_start, fence_end],
+                    "display_utf8": [0, fence_end - fence_start],
+                    "transform_kind": "identity",
+                }
+            ],
+        }
+    ]
+    symbols = [
+        {
+            "symbol_id": "sym:demo.answer",
+            "source_id": "local:src/main.mbt",
+            "selection_range_utf8": [answer_start, answer_start + len(b"answer")],
+            "name": "answer",
+            "qualified_name": "demo.answer",
+            "kind": "function",
+            "package": "demo",
+            "hover_id": "hover:answer",
+        },
+        {
+            "symbol_id": "sym:demo.lit",
+            "source_id": "dependency:demo@1.0:guide.mbt.md",
+            "selection_range_utf8": [lit_start, lit_start + len(b"lit")],
+            "name": "lit",
+            "kind": "function",
+            "package": "demo/guide",
+            "hover_id": "hover:lit",
+        },
+    ]
+    (snapshot / "sources.jsonl").write_text("".join(json.dumps(item) + "\n" for item in sources))
+    (snapshot / "symbols.jsonl").write_text("".join(json.dumps(item) + "\n" for item in symbols))
+    (snapshot / "assets.jsonl").write_text(
+        json.dumps(
+            {
+                "asset_id": "asset:logo",
+                "owner_source_id": "dependency:demo@1.0:guide.mbt.md",
+                "path": "logo.svg",
+                "blob_digest": f"sha256:{logo_digest}",
+                "mime": "image/svg+xml",
+            }
+        )
+        + "\n"
+    )
+    (occurrences / "main.json").write_text(json.dumps({"occurrences": []}))
+    (hovers / "all.json").write_text(json.dumps({"hover:answer": "fn answer() -> Int", "hover:lit": "fn lit() -> Int"}))
+    files = []
+    for path in sorted(snapshot.rglob("*")):
+        if path.is_file() and path.name != "manifest.json":
+            data = path.read_bytes()
+            files.append(
+                {
+                    "path": path.relative_to(snapshot).as_posix(),
+                    "digest": "sha256:" + hashlib.sha256(data).hexdigest(),
+                    "size": len(data),
+                }
+            )
+    (snapshot / "manifest.json").write_text(
+        json.dumps({"schema": "moonbit-semantic-snapshot/v1", "corpus_digest": "sha256:test", "files": files})
+    )
+    return snapshot
+
+
+def _project(tmp_path: Path, snapshot: Path | None, *, required: bool, builder: str = "html", parallel: int = 1):
+    from sphinx.application import Sphinx
+
+    src = tmp_path / "docs"
+    out = tmp_path / "out"
+    doctrees = tmp_path / "doctrees"
+    src.mkdir(parents=True)
+    configured = repr(str(snapshot)) if snapshot else "None"
+    (src / "conf.py").write_text(
+        "\n".join(
+            [
+                "import sys",
+                f"sys.path.insert(0, {str(EXT)!r})",
+                "extensions = ['myst_parser', 'lexer', 'moonbit_semantic']",
+                "source_suffix = {'.md': 'markdown'}",
+                "master_doc = 'index'",
+                "project = 'semantic-test'",
+                "html_theme = 'basic'",
+                f"moonbit_semantic_snapshot = {configured}",
+                f"moonbit_semantic_required = {required!r}",
+                "moonbit_semantic_source_prefix = '_moonbit-src'",
+            ]
+        )
+    )
+    (src / "index.md").write_text("# Test docs\n\nOrdinary docs remain available.\n")
+    (src / "second.md").write_text("# Second page\n\nParallel read fixture.\n")
+    status, warning = StringIO(), StringIO()
+    app = Sphinx(src, src, out, doctrees, builder, status=status, warning=warning, freshenv=True, parallel=parallel)
+    return app, out, status, warning
+
+
+def test_snapshot_loader_and_renderer_use_utf8_byte_ranges(tmp_path: Path) -> None:
+    snapshot = load_snapshot(_write_snapshot(tmp_path))
+    text = "😀answer\n"
+    start = len("😀".encode())
+    occurrence = Occurrence("source", (start, start + 6), hover_id="hover:answer")
+    html = SemanticCodeRenderer().render(text, [occurrence], lambda _item: "target.html", source_page=True)
+    assert "😀" in html
+    assert 'data-mbt-hover="hover:answer"' in html
+    assert 'href="target.html"' in html
+    assert 'id="L1"' in html
+
+
+def test_snapshot_rejects_blob_digest_mismatch(tmp_path: Path) -> None:
+    path = _write_snapshot(tmp_path)
+    source = json.loads((path / "sources.jsonl").read_text().splitlines()[0])
+    blob = path / "blobs" / "sha256" / source["blob_digest"].removeprefix("sha256:")
+    blob.write_text("changed")
+    with pytest.raises(SnapshotError, match="digest mismatch"):
+        load_snapshot(path)
+
+
+def test_sphinx_generates_code_and_literate_source_pages(tmp_path: Path) -> None:
+    snapshot = _write_snapshot(tmp_path)
+    app, out, _status, warning = _project(tmp_path, snapshot, required=True)
+    app.build(force_all=True)
+    assert app.statuscode == 0, warning.getvalue()
+
+    pure = out / "_moonbit-src" / "local" / "demo" / "src" / "main.mbt.html"
+    literate = out / "_moonbit-src" / "pkg" / "demo" / "1.0" / "guide.mbt.md.html"
+    assert pure.is_file()
+    assert literate.is_file()
+    pure_html = pure.read_text()
+    lit_html = literate.read_text()
+    assert 'data-mbt-semantic-source="true"' in pure_html
+    assert 'data-mbt-hover="hover:answer"' in pure_html
+    assert "mbt-semantic-token mbt-definition mbt-has-hover nf" in pure_html
+    assert 'id="L1"' in pure_html
+    assert "mb-def-" in pure_html
+    assert "Literate Guide" in lit_html
+    assert "Prose survives from the frozen Markdown." in lit_html
+    assert 'data-mbt-hover="hover:lit"' in lit_html
+    assert "moonbit-semantic/assets/" in lit_html
+    assert "snapshot://" not in pure_html + lit_html
+    assert str(tmp_path) not in pure_html + lit_html
+    assert (out / "_static" / "moonbit-semantic" / "hovers.json").is_file()
+    assert list((out / "_static" / "moonbit-semantic" / "assets").rglob("logo.svg"))
+
+
+def test_strict_literate_page_rejects_unfrozen_include(tmp_path: Path) -> None:
+    from sphinx.errors import ExtensionError
+
+    snapshot = _write_snapshot(tmp_path, extra_literate="\n```{include} missing.md\n```\n")
+    app, _out, _status, _warning = _project(tmp_path, snapshot, required=True)
+    with pytest.raises(ExtensionError, match="not frozen"):
+        app.build(force_all=True)
+
+
+def test_missing_snapshot_gracefully_falls_back(tmp_path: Path) -> None:
+    app, out, _status, warning = _project(tmp_path, None, required=False)
+    app.build(force_all=True)
+    assert app.statuscode == 0
+    assert (out / "index.html").is_file()
+    assert "semantic source pages are disabled" in warning.getvalue()
+
+
+def test_required_snapshot_fails_only_supported_builder(tmp_path: Path) -> None:
+    from sphinx.errors import ExtensionError
+
+    with pytest.raises(ExtensionError, match="not configured"):
+        _project(tmp_path / "html", None, required=True)
+
+    app, out, _status, warning = _project(tmp_path / "text", None, required=True, builder="text")
+    app.build(force_all=True)
+    assert app.statuscode == 0, warning.getvalue()
+    assert (out / "index.txt").is_file()
+
+
+def test_parallel_read_merges_domain_without_worker_domain_instances(tmp_path: Path) -> None:
+    snapshot = _write_snapshot(tmp_path)
+    app, out, _status, warning = _project(tmp_path, snapshot, required=True, parallel=2)
+    app.build(force_all=True)
+    assert app.statuscode == 0, warning.getvalue()
+    assert (out / "_moonbit-src" / "index.html").is_file()
