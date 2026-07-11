@@ -35,7 +35,9 @@ def setup(app: Any) -> dict[str, Any]:
     app.add_config_value("moonbit_semantic_source_prefix", "_moonbit-source", "html", types=(str,))
     app.add_domain(MoonBitSemanticDomain)
     app.connect("config-inited", _config_inited)
-    app.connect("builder-inited", on_builder_inited)
+    # MyST creates ``env.myst_config`` during its normal setup.  Render Hover
+    # Markdown afterwards so the isolated GFM profile can safely derive from it.
+    app.connect("builder-inited", on_builder_inited, priority=600)
     app.connect("env-get-outdated", get_outdated)
     app.connect("env-before-read-docs", prepare_literate_doctrees)
     app.connect("env-purge-doc", on_env_purge_doc)

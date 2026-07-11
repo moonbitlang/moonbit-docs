@@ -179,6 +179,18 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
         prefix = "globalThis.__moonbitSemanticHoverPayloads="
         self.assertTrue(payload_source.startswith(prefix), hover_script)
         payloads = json.loads(payload_source.removeprefix(prefix).removesuffix(";\n"))
+        rich_hovers = 0
+        for hover_id, payload in payloads.items():
+            self.assertEqual(payload.get("kind"), "html", hover_id)
+            fragment = payload.get("value")
+            self.assertIsInstance(fragment, str, hover_id)
+            lowered = fragment.lower()
+            self.assertNotIn("<script", lowered, hover_id)
+            self.assertNotIn('href="javascript:', lowered, hover_id)
+            self.assertNotIn("file://", lowered, hover_id)
+            self.assertNotIn(str(REPO_ROOT), fragment, hover_id)
+            rich_hovers += "highlight-moonbit" in fragment
+        self.assertGreater(rich_hovers, 0)
 
         pages = list(self.html.rglob("*.html"))
         self.assertTrue(pages, self.html)

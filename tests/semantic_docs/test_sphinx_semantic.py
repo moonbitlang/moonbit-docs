@@ -4,6 +4,7 @@ import hashlib
 from io import StringIO
 import json
 from pathlib import Path
+import re
 import sys
 from types import SimpleNamespace
 
@@ -145,8 +146,40 @@ def _write_snapshot(
     (hovers / "all.json").write_text(
         json.dumps(
             {
-                "hover:answer": "fn answer() -> Int",
-                "hover:lit": "fn lit() -> Int\u2028line separator\u2029paragraph separator",
+                "hover:answer": {
+                    "kind": "markdown",
+                    "value": """```moonbit
+pub fn answer() -> Int { 42 }
+```
+
+---
+
+Returns **the answer** with `Int` type.
+
+- [Safe documentation](https://example.com/docs)
+- Nested MoonBit:
+
+  ```mbt check
+  fn nested() -> Unit {}
+  ```
+
+```c
+int answer(void) { return 42; }
+```
+
+<script>globalThis.hoverInjected = true</script>
+<img src=x onerror=\"globalThis.hoverInjected = true\">
+![remote image](https://example.com/tracker.png)
+[unsafe](javascript:globalThis.hoverInjected=true)
+
+```{include} hover-secret.txt
+```
+""",
+                },
+                "hover:lit": {
+                    "kind": "plaintext",
+                    "value": "fn lit() -> Int\u2028line separator\u2029**not Markdown** <b>not HTML</b>",
+                },
             }
         )
     )
@@ -191,11 +224,34 @@ def _project(tmp_path: Path, snapshot: Path | None, *, required: bool, builder: 
             ]
         )
     )
-    (src / "index.md").write_text("# Test docs\n\nOrdinary docs remain available.\n")
+    (src / "index.md").write_text(
+        "# Test docs\n\nOrdinary docs remain available.\n\n"
+        "```moonbit\npub fn answer() -> Int { 42 }\n```\n"
+    )
     (src / "second.md").write_text("# Second page\n\nParallel read fixture.\n")
+    (src / "hover-secret.txt").write_text("LOCAL_HOVER_SECRET\n")
     status, warning = StringIO(), StringIO()
     app = Sphinx(src, src, out, doctrees, builder, status=status, warning=warning, freshenv=True, parallel=parallel)
     return app, out, status, warning
+
+
+def _hover_payloads(out: Path) -> dict[str, dict[str, str]]:
+    scripts = list((out / "_static" / "moonbit-semantic").glob("hovers.*.js"))
+    assert len(scripts) == 1
+    prefix = "globalThis.__moonbitSemanticHoverPayloads="
+    source = scripts[0].read_text()
+    assert source.startswith(prefix)
+    return json.loads(source.removeprefix(prefix).removesuffix(";\n"))
+
+
+def _highlighted_pre(html: str, language: str) -> str:
+    match = re.search(
+        rf'<div class="highlight-{re.escape(language)} notranslate"><div class="highlight"><pre>(.*?)</pre>',
+        html,
+        re.DOTALL,
+    )
+    assert match is not None
+    return match.group(1)
 
 
 def test_snapshot_loader_and_renderer_use_utf8_byte_ranges(tmp_path: Path) -> None:
@@ -275,10 +331,53 @@ def test_sphinx_generates_code_and_literate_source_pages(tmp_path: Path) -> None
     assert pure_html.index(hover_script.name) < pure_html.index("moonbit-semantic.js")
     docs_html = (out / "index.html").read_text()
     assert docs_html.index(hover_script.name) < docs_html.index("moonbit-semantic.js")
-    assert "activeTarget !== target" in runtime_script.read_text()
-    assert "belowSpace >= naturalHeight" in runtime_script.read_text()
-    assert "pointer-events: none" in runtime_styles.read_text()
+    runtime = runtime_script.read_text()
+    styles = runtime_styles.read_text()
+    assert "activeTarget !== target" in runtime
+    assert "belowSpace >= naturalHeight" in runtime
+    assert 'raw.kind === "html"' in runtime
+    assert 'tooltip.role = "dialog"' in runtime
+    assert "pointer-events: auto" in styles
+    assert "pointer-events: none" not in styles
     assert list((out / "_static" / "moonbit-semantic" / "assets").rglob("logo.svg"))
+
+
+def test_hover_markdown_uses_sphinx_highlighting_and_is_sanitized(tmp_path: Path) -> None:
+    snapshot = _write_snapshot(tmp_path)
+    app, out, _status, warning = _project(tmp_path, snapshot, required=True)
+    app.build(force_all=True)
+    assert app.statuscode == 0, warning.getvalue()
+
+    payloads = _hover_payloads(out)
+    answer = payloads["hover:answer"]
+    assert answer["kind"] == "html"
+    fragment = answer["value"]
+    assert '<div class="mbt-hover-markdown bd-content' in fragment
+    assert "<strong>the answer</strong>" in fragment
+    assert "<code" in fragment and "Int" in fragment
+    assert "<ul" in fragment
+    assert "<hr" in fragment
+    assert 'href="https://example.com/docs"' in fragment
+    assert 'class="highlight-moonbit notranslate"' in fragment
+    assert 'class="highlight-c notranslate"' in fragment
+    assert "highlight-text" in fragment
+    assert 'class="kd">fn</span>' in fragment
+    assert "data-mbt-hover" not in fragment
+    assert "mbt-semantic-token" not in fragment
+    assert "mbt-definition" not in fragment
+    assert "<script" not in fragment
+    assert "<img" not in fragment
+    assert 'href="javascript:' not in fragment
+    assert "LOCAL_HOVER_SECRET" not in fragment
+
+    docs_html = (out / "index.html").read_text()
+    assert _highlighted_pre(fragment, "moonbit") == _highlighted_pre(docs_html, "moonbit")
+
+    plaintext = payloads["hover:lit"]["value"]
+    assert "mbt-hover-plaintext" in plaintext
+    assert "**not Markdown**" in plaintext
+    assert "&lt;b&gt;not HTML&lt;/b&gt;" in plaintext
+    assert "<strong>not Markdown</strong>" not in plaintext
 
 
 def test_local_definition_links_to_deferred_external_source_page(tmp_path: Path) -> None:

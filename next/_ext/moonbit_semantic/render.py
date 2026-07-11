@@ -52,7 +52,8 @@ def _wrap(text: str, occurrence: Occurrence, href: str | None, lexical_class: st
             (
                 f'data-mbt-hover="{escape(occurrence.hover_id, quote=True)}"',
                 'tabindex="0"',
-                'aria-haspopup="true"',
+                'aria-haspopup="dialog"',
+                'aria-expanded="false"',
             )
         )
     if occurrence.symbol_id:

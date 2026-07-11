@@ -14,6 +14,7 @@ from sphinx.errors import ExtensionError
 from sphinx.util import logging
 from sphinx.util.osutil import relative_uri
 
+from .hover import render_hover_payloads
 from .literate import render_literate
 from .render import SemanticCodeRenderer
 from .routing import source_pagename, symbol_anchor, target_fingerprint
@@ -34,12 +35,12 @@ def _snapshot_path(app: Any) -> Path | None:
     return path.resolve()
 
 
-def _hover_payload(snapshot: SemanticSnapshot) -> str:
-    return json.dumps(snapshot.hovers, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+def _hover_payload(hovers: dict[str, Any]) -> str:
+    return json.dumps(hovers, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
-def _hover_script_name(snapshot: SemanticSnapshot) -> str:
-    payload = _hover_payload(snapshot).encode("utf-8")
+def _hover_script_name(hovers: dict[str, Any]) -> str:
+    payload = _hover_payload(hovers).encode("utf-8")
     digest = hashlib.sha256(payload).hexdigest()
     return f"hovers.{digest}.js"
 
@@ -47,6 +48,7 @@ def _hover_script_name(snapshot: SemanticSnapshot) -> str:
 def on_builder_inited(app: Any) -> None:
     app._moonbit_semantic_snapshot = None
     app._moonbit_semantic_load_error = None
+    app._moonbit_semantic_hovers = None
     app._moonbit_semantic_hover_script = None
     if app.builder.name not in SUPPORTED_BUILDERS:
         return
@@ -67,7 +69,8 @@ def on_builder_inited(app: Any) -> None:
         LOGGER.warning("MoonBit semantic snapshot disabled: %s", exc)
         return
     app._moonbit_semantic_snapshot = snapshot
-    app._moonbit_semantic_hover_script = _hover_script_name(snapshot)
+    app._moonbit_semantic_hovers = render_hover_payloads(app, snapshot.hovers)
+    app._moonbit_semantic_hover_script = _hover_script_name(app._moonbit_semantic_hovers)
     domain = app.env.get_domain("mbtsem")
     domain.register_snapshot(snapshot, app.config.moonbit_semantic_source_prefix)
     app.add_css_file("moonbit-semantic/moonbit-semantic.css")
@@ -223,8 +226,11 @@ def get_outdated(app: Any, env: Any, added: set[str], changed: set[str], removed
     if snapshot is None:
         return []
     old = getattr(env, "moonbit_semantic_corpus_digest", None)
+    old_hover_script = getattr(env, "moonbit_semantic_hover_script", None)
+    hover_script = getattr(app, "_moonbit_semantic_hover_script", None)
     env.moonbit_semantic_corpus_digest = snapshot.corpus_digest
-    if old != snapshot.corpus_digest:
+    env.moonbit_semantic_hover_script = hover_script
+    if old != snapshot.corpus_digest or old_hover_script != hover_script:
         # The payload filename is content-addressed and semantic overlays may
         # also have changed, so every document must be rewritten to reference
         # the new asset and occurrence set.
@@ -288,7 +294,7 @@ def _write_assets(app: Any, exception: Exception | None) -> None:
     package = Path(__file__).parent
     for name in ("moonbit-semantic.css", "moonbit-semantic.js"):
         shutil.copyfile(package / "static" / name, destination / name)
-    payload = _hover_payload(snapshot)
+    payload = _hover_payload(app._moonbit_semantic_hovers)
     script_payload = payload.replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
     _atomic_write_text(destination / "hovers.json", payload)
     _atomic_write_text(
