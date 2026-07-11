@@ -7,6 +7,7 @@ from typing import Any
 
 from .domain import MoonBitSemanticDomain
 from .literate import prepare_literate_doctrees
+from .nodes import setup_block_semantics
 from .source_pages import (
     collect_pages,
     get_outdated,
@@ -42,6 +43,7 @@ def setup(app: Any) -> dict[str, Any]:
     app.connect("env-check-consistency", on_env_check_consistency)
     app.connect("html-collect-pages", collect_pages)
     app.connect("build-finished", on_build_finished)
+    setup_block_semantics(app)
     return {
         "version": "0.1.0",
         "env_version": 1,
