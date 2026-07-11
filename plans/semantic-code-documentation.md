@@ -560,6 +560,7 @@ Hover 内容按 source page 或 module 分片并去重，token 只保存 `hover_
 
 - 普通 `href` 在无 JavaScript 时仍工作；
 - JavaScript 只负责 hover/focus/touch、多个 target 选择和同 href 高亮；
+- 当前纯文本 Hover 是不参与 hit testing 的被动 tooltip；定位必须做上下碰撞翻转并限制到 viewport，异步 payload 返回前还要校验触发 token 仍处于 active 状态，避免 tooltip 覆盖 token 后形成 `pointerout -> hide -> pointerover -> show` 闪烁循环；
 - hover payload 只支持受限 Markdown，HTML 必须 escape/sanitize；
 - UI 需支持键盘、触摸、`aria` 和 reduced motion。
 

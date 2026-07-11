@@ -259,6 +259,8 @@ def test_sphinx_generates_code_and_literate_source_pages(tmp_path: Path) -> None
     assert "snapshot://" not in pure_html + lit_html
     assert str(tmp_path) not in pure_html + lit_html
     hover_json = out / "_static" / "moonbit-semantic" / "hovers.json"
+    runtime_script = out / "_static" / "moonbit-semantic" / "moonbit-semantic.js"
+    runtime_styles = out / "_static" / "moonbit-semantic" / "moonbit-semantic.css"
     hover_scripts = list((out / "_static" / "moonbit-semantic").glob("hovers.*.js"))
     assert len(hover_scripts) == 1
     hover_script = hover_scripts[0]
@@ -273,6 +275,9 @@ def test_sphinx_generates_code_and_literate_source_pages(tmp_path: Path) -> None
     assert pure_html.index(hover_script.name) < pure_html.index("moonbit-semantic.js")
     docs_html = (out / "index.html").read_text()
     assert docs_html.index(hover_script.name) < docs_html.index("moonbit-semantic.js")
+    assert "activeTarget !== target" in runtime_script.read_text()
+    assert "belowSpace >= naturalHeight" in runtime_script.read_text()
+    assert "pointer-events: none" in runtime_styles.read_text()
     assert list((out / "_static" / "moonbit-semantic" / "assets").rglob("logo.svg"))
 
 

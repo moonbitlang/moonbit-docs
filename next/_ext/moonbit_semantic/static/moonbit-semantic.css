@@ -12,5 +12,5 @@ body { margin: 0; }
 .mbt-semantic-token[href]:hover, .mbt-semantic-token[href]:focus { text-decoration: underline; }
 .mbt-semantic-token[data-mbt-hover]:focus { outline: 2px solid currentColor; outline-offset: 2px; }
 .mbt-definition-anchor { position: relative; top: -4rem; }
-.mbt-semantic-tooltip { position: fixed; z-index: 10000; max-width: min(42rem, calc(100vw - 2rem)); max-height: 50vh; overflow: auto; padding: .7rem .9rem; border: 1px solid #777; border-radius: .35rem; background: Canvas; color: CanvasText; box-shadow: 0 .25rem 1rem #0004; white-space: pre-wrap; font: .9rem/1.4 ui-monospace, monospace; }
+.mbt-semantic-tooltip { position: fixed; z-index: 10000; box-sizing: border-box; max-width: min(42rem, calc(100vw - 2rem)); max-height: 50vh; overflow: auto; overflow-wrap: anywhere; padding: .7rem .9rem; border: 1px solid #777; border-radius: .35rem; background: Canvas; color: CanvasText; box-shadow: 0 .25rem 1rem #0004; white-space: pre-wrap; pointer-events: none; font: .9rem/1.4 ui-monospace, monospace; }
 @media (prefers-reduced-motion: no-preference) { .mbt-semantic-tooltip { transition: opacity 80ms ease-out; } }
