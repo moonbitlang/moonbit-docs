@@ -22,6 +22,7 @@ class _SemanticOutputParser(HTMLParser):
         super().__init__()
         self.hover_ids: list[str] = []
         self.definition_hrefs: list[str] = []
+        self.source_download_hrefs: list[str] = []
         self.ids: set[str] = set()
         self.scripts: list[str] = []
         self.has_view_source = False
@@ -38,6 +39,8 @@ class _SemanticOutputParser(HTMLParser):
             self.hover_ids.append(values["data-mbt-hover"] or "")
         if tag == "a" and "mbt-semantic-token" in classes and values.get("href"):
             self.definition_hrefs.append(values["href"] or "")
+        if tag == "a" and "_sources/" in (values.get("href") or ""):
+            self.source_download_hrefs.append(values["href"] or "")
         if tag == "script" and values.get("src"):
             self.scripts.append(values["src"] or "")
         self.has_view_source |= "mbt-view-source" in classes
@@ -81,7 +84,9 @@ class SemanticDocumentationConfigurationTests(unittest.TestCase):
         self.assertIn("'moonbit_semantic'", source)
         self.assertNotIn("'_moonbit-src'", source)
         self.assertIn("html_copy_source = False", source)
+        self.assertIn("html_show_sourcelink = False", source)
         self.assertIn('"use_source_button": False', source)
+        self.assertIn('"use_download_button": False', source)
 
     @unittest.skipUnless(shutil.which("just"), "just is not installed")
     def test_semantic_recipes_preserve_the_build_order(self) -> None:
@@ -177,6 +182,7 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
     def test_generated_html_contains_only_document_semantic_overlays(self) -> None:
         self.assertFalse((self.html / "_moonbit-src").exists())
         self.assertFalse((self.html / "_moonbit-source").exists())
+        self.assertFalse((self.html / "_sources").exists())
         pages = list(self.html.rglob("*.html"))
         self.assertTrue(pages, self.html)
 
@@ -189,6 +195,7 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
             self.assertNotIn(str(REPO_ROOT), rendered, page)
             parser = _SemanticOutputParser()
             parser.feed(rendered)
+            self.assertFalse(parser.source_download_hrefs, page)
             self.assertFalse(parser.has_semantic_source, page)
             self.assertFalse(parser.has_line_anchor, page)
             has_semantic_document |= parser.has_semantic_document
