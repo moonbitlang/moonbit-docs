@@ -36,6 +36,16 @@ def parser() -> argparse.ArgumentParser:
         default=max(1, min(8, os.cpu_count() or 1)),
         help="maximum asynchronous LSP sessions for a large context",
     )
+    build.add_argument(
+        "--semantic-origins",
+        nargs="+",
+        choices=("local", "standalone", "dependency", "stdlib"),
+        default=("local", "standalone"),
+        help=(
+            "source origins whose occurrences receive semantic analysis; "
+            "all origins remain in the frozen source corpus"
+        ),
+    )
     build.add_argument("--skip-check", action="store_true", help="testing only: do not establish the moon check barrier")
     build.add_argument("--skip-lsp", action="store_true", help="testing only: capture corpus without semantic requests")
     build.add_argument("--allow-partial", action="store_true", help="record tool failures instead of failing closed")
@@ -55,6 +65,7 @@ def main(argv: list[str] | None = None) -> int:
                 stdlib_root=args.stdlib_root, backend=args.backend, moon=args.moon,
                 mooninfo=args.mooninfo, moon_lsp=args.moon_lsp,
                 jobs=args.jobs, sessions=args.sessions,
+                semantic_origins=tuple(args.semantic_origins),
                 skip_check=args.skip_check, skip_lsp=args.skip_lsp, strict=not args.allow_partial,
             )
             manifest = SemanticIndexer(config).build()

@@ -115,12 +115,27 @@ class SemanticIndexerTest(unittest.TestCase):
     def test_complete_fake_tool_build_is_deterministic_and_valid(self):
         manifests = []
         outputs = []
+        session_roots = []
+        checked_roots = []
+
+        class RecordingRunner(FakeRunner):
+            def run(inner_self, args, **kwargs):
+                values = tuple(str(arg) for arg in args)
+                if "check" in values and "-C" in values:
+                    checked_roots.append(values[values.index("-C") + 1])
+                return super().run(args, **kwargs)
+
         for name in ("snapshot-a", "nested/snapshot-b"):
             output = self.repo / name
+
+            def factory(root):
+                session_roots.append(root.root_id)
+                return FakeLsp()
+
             config = BuildConfig(
                 repo_root=self.repo, source_root=Path("next/sources"), output=output,
-                stdlib_root=self.stdlib, runner=FakeRunner(),
-                lsp_factory=lambda root: FakeLsp(),
+                stdlib_root=self.stdlib, runner=RecordingRunner(),
+                lsp_factory=factory,
             )
             manifests.append(SemanticIndexer(config).build())
             outputs.append(output)
@@ -136,9 +151,54 @@ class SemanticIndexerTest(unittest.TestCase):
                 for item in sources
             )
         )
+        self.assertFalse(
+            any("/.mooncakes/" in root for root in checked_roots)
+        )
+        self.assertNotIn(str(self.stdlib), checked_roots)
         self.assertTrue(any(item["kind"] == "mbti" and item["analysis_status"] == "display-only" for item in sources))
         dependency_sources = [item for item in sources if item["origin"] == "dependency"]
         self.assertEqual({item["path"] for item in dependency_sources}, {"lib.mbt", "types.mbti"})
+        self.assertTrue(
+            all(
+                item["analysis_status"]
+                == ("display-only" if item["kind"] in {"mbti", "mbtp"} else "deferred-by-origin-policy")
+                for item in dependency_sources
+            )
+        )
+        self.assertTrue(
+            all(
+                item["analysis_status"] == "deferred-by-origin-policy"
+                for item in sources
+                if item["origin"] == "stdlib"
+            )
+        )
+        self.assertFalse(
+            any(
+                root_id.startswith(("dependency:", "stdlib:"))
+                for root_id in session_roots
+            )
+        )
+        contexts = self._jsonl(outputs[0] / "contexts.jsonl")
+        by_source = {item["source_id"]: item for item in sources}
+        for context in contexts:
+            self.assertEqual(context["analysis_origins"], ["local", "standalone"])
+            self.assertTrue(
+                all(
+                    by_source[source_id]["origin"] in {"local", "standalone"}
+                    for source_id in context["analysis_source_ids"]
+                )
+            )
+        for shard_root in ("requests", "occurrences"):
+            for shard in (outputs[0] / shard_root).glob("*/*.json"):
+                source_id = json.loads(shard.read_text())["source_id"]
+                self.assertIn(by_source[source_id]["origin"], {"local", "standalone"})
+        self.assertEqual(
+            manifests[0]["analysis"],
+            {
+                "origins": ["local", "standalone"],
+                "external_targets": "frozen-source",
+            },
+        )
         self.assertGreater(manifests[0]["counts"]["symbols"], 0)
         self.assertGreater(manifests[0]["counts"]["hovers"], 0)
         assets = self._jsonl(outputs[0] / "assets.jsonl")
@@ -151,6 +211,36 @@ class SemanticIndexerTest(unittest.TestCase):
         public_inputs = (outputs[0] / "analysis-inputs.jsonl").read_text()
         self.assertNotIn(str(self.repo), public_inputs)
         self.assertNotIn(str(self.repo.resolve()), public_inputs)
+
+    def test_full_origin_policy_restores_external_analysis_contexts(self):
+        session_roots = []
+        output = self.repo / "snapshot-full-origins"
+
+        def factory(root):
+            session_roots.append(root.root_id)
+            return FakeLsp()
+
+        SemanticIndexer(BuildConfig(
+            repo_root=self.repo,
+            source_root=Path("next/sources"),
+            output=output,
+            stdlib_root=self.stdlib,
+            runner=FakeRunner(),
+            lsp_factory=factory,
+            semantic_origins=("local", "standalone", "dependency", "stdlib"),
+        )).build()
+
+        validate_snapshot(output)
+        self.assertTrue(any(item.startswith("dependency:") for item in session_roots))
+        self.assertTrue(any(item.startswith("stdlib:") for item in session_roots))
+        contexts = self._jsonl(output / "contexts.jsonl")
+        self.assertTrue(
+            all(
+                context["analysis_source_ids"]
+                for context in contexts
+                if context["root_id"].startswith(("dependency:", "stdlib:"))
+            )
+        )
 
     def test_dependency_check_failure_degrades_own_context_but_keeps_pages(self):
         dependency = self.sources / "app/.mooncakes/acme/lib"
@@ -166,6 +256,7 @@ class SemanticIndexerTest(unittest.TestCase):
         SemanticIndexer(BuildConfig(
             repo_root=self.repo, source_root=Path("next/sources"), output=output,
             stdlib_root=self.stdlib, runner=DependencyFailureRunner(), lsp_factory=lambda root: FakeLsp(),
+            semantic_origins=("local", "standalone", "dependency", "stdlib"),
         )).build()
         validate_snapshot(output)
         sources = self._jsonl(output / "sources.jsonl")
@@ -228,6 +319,22 @@ class SemanticIndexerTest(unittest.TestCase):
             if item["origin"] == "dependency" and item["path"] == "lib.mbt"
         ]
         self.assertEqual(len(dependency_sources), 1)
+        dependency_id = dependency_sources[0]["source_id"]
+        definitions = [
+            definition
+            for shard in (output / "occurrences").glob("*/*.json")
+            for occurrence in json.loads(shard.read_text())["occurrences"]
+            for definition in occurrence.get("definitions", [])
+            if definition["target_source_id"] == dependency_id
+        ]
+        self.assertTrue(definitions)
+        self.assertTrue(all(item.get("symbol_id") for item in definitions))
+        ledger_source_ids = {
+            json.loads(shard.read_text())["source_id"]
+            for root in ("requests", "occurrences")
+            for shard in (output / root).glob("*/*.json")
+        }
+        self.assertNotIn(dependency_id, ledger_source_ids)
 
     def test_lsp_jobs_run_multiple_requests_with_deterministic_output(self):
         app = self.sources / "app"
@@ -302,6 +409,19 @@ class SemanticIndexerTest(unittest.TestCase):
 
         validate_snapshot(output)
         self.assertGreater(manifest["counts"]["symbols"], 0)
+        dependency_id = next(
+            item["source_id"]
+            for item in self._jsonl(output / "sources.jsonl")
+            if item["origin"] == "dependency" and item["path"] == "lib.mbt"
+        )
+        self.assertTrue(
+            any(
+                definition["target_source_id"] == dependency_id
+                for shard in (output / "occurrences").glob("*/*.json")
+                for occurrence in json.loads(shard.read_text())["occurrences"]
+                for definition in occurrence.get("definitions", [])
+            )
+        )
 
     def test_large_context_combines_multiple_sessions_with_async_requests(self):
         counts = {"app": 0}

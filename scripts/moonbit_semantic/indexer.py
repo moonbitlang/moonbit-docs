@@ -26,7 +26,7 @@ from .ranges import RangeError, SourceCoordinates
 from .runner import CommandError, Runner, SubprocessRunner
 from .snapshot import SnapshotWriter
 
-ANALYZER_VERSION = "moonbit-semantic-indexer/1"
+ANALYZER_VERSION = "moonbit-semantic-indexer/2"
 LOC = re.compile(r"^(\d+):(\d+)-(\d+):(\d+)$")
 IDENTIFIER_TOKENS = {
     "LIDENT", "UIDENT", "DOT_LIDENT", "DOT_UIDENT", "PACKAGE_NAME",
@@ -50,6 +50,7 @@ class BuildConfig:
     )
     sessions: int = field(default_factory=lambda: max(1, min(8, os.cpu_count() or 1)))
     positions_per_session: int = 256
+    semantic_origins: tuple[str, ...] = ("local", "standalone")
     skip_check: bool = False
     skip_lsp: bool = False
     strict: bool = True
@@ -69,6 +70,13 @@ class BuildConfig:
             raise ValueError("sessions must be at least 1")
         if self.positions_per_session < 1:
             raise ValueError("positions_per_session must be at least 1")
+        allowed_origins = {"local", "standalone", "dependency", "stdlib"}
+        self.semantic_origins = tuple(dict.fromkeys(self.semantic_origins))
+        unknown_origins = set(self.semantic_origins) - allowed_origins
+        if unknown_origins:
+            raise ValueError(
+                f"unsupported semantic origins: {sorted(unknown_origins)}"
+            )
 
 
 class SemanticIndexer:
@@ -146,8 +154,19 @@ class SemanticIndexer:
             # pages when an unrelated auxiliary package does not check.
             candidate = Root(path, f"dependency:{identity}", "display-only", info["name"], version, info["preferred_target"] or cfg.backend)
             precheck_sources[candidate.root_id] = {source: source.read_bytes() for source in scan_sources(candidate.path)}
-            check_ok = self._check_barrier(candidate)
-            dep = Root(path, candidate.root_id, "required" if check_ok else "display-only", info["name"], version, candidate.backend)
+            if "dependency" in cfg.semantic_origins:
+                check_ok = self._check_barrier(candidate)
+            else:
+                check_ok = False
+                self._record_policy_skip(candidate, "dependency")
+            dep_status = (
+                "required"
+                if check_ok
+                else "display-only"
+                if "dependency" in cfg.semantic_origins
+                else "deferred-by-origin-policy"
+            )
+            dep = Root(path, candidate.root_id, dep_status, info["name"], version, candidate.backend)
             metadata, metadata_path = package_metadata(dep)
             resolved_dependencies = metadata_allowed_module_roots(metadata, stdlib) if metadata else set()
             for dependency in resolved_dependencies:
@@ -163,11 +182,23 @@ class SemanticIndexer:
         if stdlib:
             info = module_info(stdlib)
             version = info["version"] or _source_tree_digest(stdlib).removeprefix("sha256:")[:16]
-            stdroot = Root(stdlib, f"stdlib:{info['name']}@{version}", "required", info["name"], version, info["preferred_target"] or cfg.backend)
+            stdroot = Root(
+                stdlib,
+                f"stdlib:{info['name']}@{version}",
+                "required"
+                if "stdlib" in cfg.semantic_origins
+                else "deferred-by-origin-policy",
+                info["name"],
+                version,
+                info["preferred_target"] or cfg.backend,
+            )
             # The shipped stdlib already contains a pinned bundle. Check when requested, then
             # verify its source and executable digests as analysis inputs either way.
             precheck_sources[stdroot.root_id] = {source: source.read_bytes() for source in scan_sources(stdroot.path)}
-            self._check_barrier(stdroot)
+            if "stdlib" in cfg.semantic_origins:
+                self._check_barrier(stdroot)
+            else:
+                self._record_policy_skip(stdroot, "stdlib")
             metadata, metadata_path = package_metadata(stdroot)
             if metadata_path and metadata_path.is_file():
                 self._input(metadata_path, "package-metadata", stdroot.root_id)
@@ -201,7 +232,7 @@ class SemanticIndexer:
                 # Analysis completeness belongs to a context.  A dependency's
                 # own module-wide check may degrade while its packages remain
                 # fully analyzable in a healthy consumer context.
-                source = make_source(path, origin="dependency", base=root.path, module=root.module_name, version=root.version, status="required")
+                source = make_source(path, origin="dependency", base=root.path, module=root.module_name, version=root.version, status=root.status)
                 self._add_source(source, sources, path_to_source)
             self._manifest_inputs(root)
 
@@ -230,7 +261,7 @@ class SemanticIndexer:
             root, _ = stdlib_state
             self._verify_precheck(root, precheck_sources[root.root_id])
             for path in scan_sources(root.path):
-                source = make_source(path, origin="stdlib", base=root.path, module=root.module_name, version=root.version, status="required")
+                source = make_source(path, origin="stdlib", base=root.path, module=root.module_name, version=root.version, status=root.status)
                 self._add_source(source, sources, path_to_source)
             self._manifest_inputs(root)
 
@@ -243,16 +274,19 @@ class SemanticIndexer:
             input_sources = self._context_sources(root, metadata, path_to_source)
             if not input_sources:
                 continue
-            context = self._context(root, input_sources)
+            analysis_sources = self._analysis_sources(root, input_sources)
+            context = self._context(root, input_sources, analysis_sources)
             contexts.append(context)
-            if root.status == "required":
+            if root.status == "required" and analysis_sources:
                 if cfg.skip_lsp:
-                    self._record_skipped_context(context, input_sources, "--skip-lsp")
+                    self._record_skipped_context(
+                        context, analysis_sources, "--skip-lsp"
+                    )
                 else:
                     self._analyze_context(
                         root,
                         context,
-                        input_sources,
+                        analysis_sources,
                         path_to_source,
                         logical_sources,
                     )
@@ -312,6 +346,10 @@ class SemanticIndexer:
                     "requests": sum(len(value["requests"]) for value in self.request_shards.values()),
                 },
                 "partial": not cfg.strict,
+                "analysis": {
+                    "origins": list(cfg.semantic_origins),
+                    "external_targets": "frozen-source",
+                },
             })
             return manifest
         except BaseException:
@@ -347,6 +385,15 @@ class SemanticIndexer:
                 raise CommandError(result)
             return False
         return True if expected else ok
+
+    def _record_policy_skip(self, root: Root, origin: str) -> None:
+        self.diagnostics.append({
+            "root_id": root.root_id,
+            "source_id": "",
+            "kind": "check",
+            "status": "skipped-semantic-origin",
+            "message": f"{origin} is outside semantic_origins",
+        })
 
     def _analyze_context(
         self,
@@ -681,14 +728,50 @@ class SemanticIndexer:
         paths = metadata_sources(metadata) if metadata else set(scan_sources(root.path))
         return sorted({path_to_source[path]["source_id"]: path_to_source[path] for path in paths if path in path_to_source}.values(), key=lambda value: value["source_id"])
 
-    def _context(self, root: Root, sources: list[dict[str, Any]]) -> dict[str, Any]:
+    def _analysis_sources(
+        self, root: Root, sources: list[dict[str, Any]]
+    ) -> list[dict[str, Any]]:
+        if root.root_id.startswith("dependency:"):
+            context_origin = "dependency"
+        elif root.root_id.startswith("stdlib:"):
+            context_origin = "stdlib"
+        elif root.root_id.startswith("standalone:"):
+            context_origin = "standalone"
+        else:
+            context_origin = "local"
+        if context_origin not in self.config.semantic_origins:
+            return []
+        return [
+            source
+            for source in sources
+            if source["origin"] in self.config.semantic_origins
+            and source["kind"] in {"mbt", "mbt.md"}
+            and source["analysis_status"]
+            not in {"display-only", "deferred-by-origin-policy"}
+        ]
+
+    def _context(
+        self,
+        root: Root,
+        sources: list[dict[str, Any]],
+        analysis_sources: list[dict[str, Any]],
+    ) -> dict[str, Any]:
         inputs = [{"source_id": source["source_id"], "blob_digest": source["blob_digest"]} for source in sources]
-        fingerprint = {"root_id": root.root_id, "module": root.module_name, "backend": root.backend, "toolchain": digest_json(self.toolchain), "inputs": inputs}
+        analysis_source_ids = sorted(
+            source["source_id"] for source in analysis_sources
+        )
+        analysis = {
+            "origins": list(self.config.semantic_origins),
+            "source_ids": analysis_source_ids,
+        }
+        fingerprint = {"root_id": root.root_id, "module": root.module_name, "backend": root.backend, "toolchain": digest_json(self.toolchain), "inputs": inputs, "analysis": analysis}
         context_id = "ctx:" + digest_json(fingerprint).removeprefix("sha256:")[:32]
         return {
             "context_id": context_id, "root_id": root.root_id, "package": root.module_name,
             "file_role": "module", "backend": root.backend, "input_source_ids": [item["source_id"] for item in inputs],
             "input_blobs": inputs, "context_input_digest": digest_json(fingerprint), "analysis_status": root.status,
+            "analysis_origins": list(self.config.semantic_origins),
+            "analysis_source_ids": analysis_source_ids,
             "toolchain_digest": digest_json(self.toolchain), "position_encoding": "utf-16", "initialize": {},
         }
 

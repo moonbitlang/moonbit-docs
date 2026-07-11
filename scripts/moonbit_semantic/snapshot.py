@@ -63,6 +63,8 @@ class SnapshotWriter:
             "partial": bool(metadata.get("partial", False)),
             "files": files,
         }
+        if metadata.get("analysis") is not None:
+            manifest["analysis"] = metadata["analysis"]
         write_json(self.temp / "manifest.json", manifest)
         validate_snapshot(self.temp)
         previous = self.output.with_name(self.output.name + ".previous")
@@ -175,6 +177,18 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
         unknown = set(context["input_source_ids"]) - source_ids
         if unknown:
             raise SnapshotError(f"context references unknown sources: {sorted(unknown)}")
+        analysis_source_ids = context.get(
+            "analysis_source_ids", context["input_source_ids"]
+        )
+        if not isinstance(analysis_source_ids, list):
+            raise SnapshotError(
+                f"context analysis source ids must be a list: {context['context_id']}"
+            )
+        analysis_unknown = set(analysis_source_ids) - set(context["input_source_ids"])
+        if analysis_unknown:
+            raise SnapshotError(
+                f"context analysis sources are outside its inputs: {sorted(analysis_unknown)}"
+            )
         if {item.get("source_id") for item in context.get("input_blobs", [])} != set(context["input_source_ids"]):
             raise SnapshotError(f"context input blob ledger mismatch: {context['context_id']}")
         ledger = {item.get("source_id"): item.get("blob_digest") for item in context.get("input_blobs", [])}
@@ -186,6 +200,11 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
             "backend": context["backend"], "toolchain": digest_json(manifest["toolchain"]),
             "inputs": context["input_blobs"],
         }
+        if "analysis_source_ids" in context:
+            fingerprint["analysis"] = {
+                "origins": context.get("analysis_origins", []),
+                "source_ids": analysis_source_ids,
+            }
         if digest_json(fingerprint) != context["context_input_digest"]:
             raise SnapshotError(f"context digest mismatch: {context['context_id']}")
     hover_ids: set[str] = set()
@@ -219,6 +238,12 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
         occurrence_ledgers.add(identity)
         if payload["source_id"] not in context_by_id[payload["context_id"]]["input_source_ids"]:
             raise SnapshotError(f"occurrence source is outside context: {path.relative_to(root)}")
+        analysis_sources = context_by_id[payload["context_id"]].get(
+            "analysis_source_ids",
+            context_by_id[payload["context_id"]]["input_source_ids"],
+        )
+        if payload["source_id"] not in analysis_sources:
+            raise SnapshotError(f"occurrence source is outside analysis scope: {path.relative_to(root)}")
         for occurrence in payload.get("occurrences", []):
             occurrence_count += 1
             if occurrence.get("context_id") != payload["context_id"] or occurrence.get("source_id") != payload["source_id"]:
@@ -252,6 +277,12 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
         request_ledgers.add(identity)
         if payload["source_id"] not in context_by_id[payload["context_id"]]["input_source_ids"]:
             raise SnapshotError(f"request source is outside context: {path.relative_to(root)}")
+        analysis_sources = context_by_id[payload["context_id"]].get(
+            "analysis_source_ids",
+            context_by_id[payload["context_id"]]["input_source_ids"],
+        )
+        if payload["source_id"] not in analysis_sources:
+            raise SnapshotError(f"request source is outside analysis scope: {path.relative_to(root)}")
         allowed = {"complete", "valid-no-result", "skipped-with-reason"}
         if manifest["partial"]:
             allowed.add("error")
@@ -265,7 +296,9 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
     required_ledgers = {
         (context["context_id"], source_id)
         for context in contexts if context.get("analysis_status") == "required"
-        for source_id in context["input_source_ids"]
+        for source_id in context.get(
+            "analysis_source_ids", context["input_source_ids"]
+        )
         if source_by_id[source_id]["kind"] in {"mbt", "mbt.md"}
         and source_by_id[source_id]["analysis_status"] != "display-only"
     }
