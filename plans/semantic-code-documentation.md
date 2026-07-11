@@ -601,3 +601,77 @@ Snapshot 中暂时可以继续保存 external target 的冻结 source blob，用
 ```
 
 未来若把整套文档迁入 Mooncakes ecosystem，也可以直接复用 snapshot 中的 occurrence、Hover 和 canonical external target identity；本站不拥有源码页面，因此不存在 URL 迁移或双源 canonical 冲突。
+
+## 18. 2026-07-11 实现与验收基线
+
+本里程碑已经按上面的数据流落地。实现拆分为以下提交：
+
+1. `c174fbe6 docs: adopt Mooncakes definition routing`
+2. `a6bc62b8 feat(semantic): resolve Mooncakes definition targets`
+3. `d672118a feat(docs): link rendered semantic definitions`
+4. `f08fac35 refactor(docs): remove semantic source pages`
+5. `eaa51fcb perf(docs): enable parallel semantic HTML builds`
+
+### 18.1 全量语义索引
+
+在 clean checkout 上执行 `just semantic-index` 的实测结果：
+
+| 指标 | 数值 |
+| --- | ---: |
+| wall time | 约 223.2 秒 |
+| source files | 2,075 |
+| analysis contexts | 572 |
+| symbols | 4,569 |
+| hovers | 1,567 |
+| occurrences | 17,324 |
+| definition requests | 17,665 |
+| Mooncakes unique positions | 261 |
+| Mooncakes exact targets | 187 |
+| Mooncakes unsupported/skipped | 74 |
+| frozen literate assets | 0 |
+
+这 223 秒不是 Mooncakes 网络解析造成的：261 个去重位置以 16 workers 解析约 8.3 秒。主要耗时是 279 个含 occurrence 的本地 analysis context 仍按 context 串行启动和驱动 LSP；大型 context 内已经使用 8 个 session。下一阶段若要显著加速，目标应是 context-level scheduler，而不是扩大单 context 的 session 数，也不是重新分析 stdlib/dependency occurrence。
+
+当前 74 个 unsupported 结果按 fail-closed 合同保留 Hover 但不生成 `href`。它们不是错误，也不会降级成按名字猜测的 Mooncakes 链接。
+
+### 18.2 HTML 构建与静态闭包
+
+`make clean html SPHINXOPTS="-j auto"` 的实测 wall time 约 15.7 秒，构建 347 个 Sphinx source documents；现有 16 条文档 warning 与本功能无关。生成物统计为：
+
+| 指标 | 数值 |
+| --- | ---: |
+| HTML pages | 351 |
+| semantic code blocks | 669 |
+| Hover-bearing tokens | 12,334 |
+| definition anchors | 2,831 |
+| semantic links | 9,074 |
+| local definition links | 8,722 |
+| Mooncakes links | 352 |
+| unique Mooncakes URLs | 89 |
+| HTML size | 约 33 MiB |
+
+静态 E2E 已验证：
+
+- 所有本地 definition fragment 都能在目标 HTML 中闭合；
+- 所有外部 definition href 都精确来自 snapshot external target table；
+- 不存在 `_moonbit-src`、`_moonbit-source` 或 Sphinx `_sources` 输出；
+- 不存在 `file://` 或绝对本地路径泄漏；
+- `.mbt.md` 继续由普通 MyST include 处理 prose，内部 MoonBit fence 接收相同语义渲染；
+- Hover Markdown、嵌套 MoonBit fence 高亮和 sanitization 的既有测试继续通过。
+
+自动化 in-app browser 的 URL policy 不允许打开本地 `file://` 构建产物，因此没有把一次真实外部点击作为 CI/验收条件；链接行为由生成 HTML 的精确 href、snapshot 合同和静态 fragment crawl 验证。Mooncakes SPA 的 fragment 滚动 race 仍按第 13 节记录为上游问题，不影响本站是否输出正确 URL。
+
+### 18.3 验收命令
+
+```bash
+uv run --with-requirements next/requirements.txt --with pytest \
+  pytest -q tests/semantic_docs
+just semantic-index
+just semantic-check
+cd next
+MOONBIT_SEMANTIC_E2E=1 uv run --with-requirements requirements.txt \
+  --with pytest pytest -q ../tests/semantic_docs/test_integration_config.py
+make clean html SPHINXOPTS="-j auto"
+```
+
+live Mooncakes smoke test 只用于人工确认公开服务当前路由，不进入 CI；CI 中 resolver 继续使用确定性 fixture，避免把外部服务可用性变成文档构建条件。
