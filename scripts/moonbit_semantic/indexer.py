@@ -7,7 +7,9 @@ import os
 import re
 import shutil
 import tempfile
+import threading
 import unicodedata
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
@@ -43,6 +45,7 @@ class BuildConfig:
     moon: str = "moon"
     mooninfo: str = "mooninfo"
     moon_lsp: str = "moon-lsp"
+    jobs: int = field(default_factory=lambda: max(1, min(4, os.cpu_count() or 1)))
     skip_check: bool = False
     skip_lsp: bool = False
     strict: bool = True
@@ -56,6 +59,8 @@ class BuildConfig:
         self.output = (self.repo_root / self.output).resolve() if not self.output.is_absolute() else self.output.resolve()
         if self.stdlib_root is not None:
             self.stdlib_root = self.stdlib_root.resolve()
+        if self.jobs < 1:
+            raise ValueError("jobs must be at least 1")
 
 
 class SemanticIndexer:
@@ -71,6 +76,7 @@ class SemanticIndexer:
         self.toolchain: dict[str, Any] = {}
         self.portable_roots: dict[Path, str] = {config.repo_root: "$REPO"}
         self.capture_roots: set[Path] = set()
+        self._semantic_lock = threading.Lock()
 
     def build(self) -> dict[str, Any]:
         cfg = self.config
@@ -327,16 +333,55 @@ class SemanticIndexer:
         return True if expected else ok
 
     def _analyze_context(self, root: Root, context: dict[str, Any], input_sources: list[dict[str, Any]], path_to_source: dict[Path, dict[str, Any]]) -> None:
-        session = self.config.lsp_factory(root) if self.config.lsp_factory else LspSession(JsonRpcProcess([self.config.moon_lsp, "--stdio"], root.path, self.config.timeout), root.path)
-        try:
-            context["position_encoding"] = session.position_encoding
-            context["initialize"] = {"root_uri": _portable_root_uri(root), "position_encoding": session.position_encoding}
-            for source in sorted(input_sources, key=lambda value: value["source_id"]):
-                if source["kind"] not in {"mbt", "mbt.md"} or source["analysis_status"] == "display-only":
-                    continue
-                self._analyze_source(session, context, source, path_to_source)
-        finally:
-            session.close()
+        analyzable = [
+            source
+            for source in sorted(input_sources, key=lambda value: value["source_id"])
+            if source["kind"] in {"mbt", "mbt.md"}
+            and source["analysis_status"] != "display-only"
+        ]
+        if not analyzable:
+            return
+        worker_count = min(self.config.jobs, len(analyzable))
+        chunks = [analyzable[index::worker_count] for index in range(worker_count)]
+
+        def analyze_chunk(chunk: list[dict[str, Any]]) -> str:
+            session = (
+                self.config.lsp_factory(root)
+                if self.config.lsp_factory
+                else LspSession(
+                    JsonRpcProcess(
+                        [self.config.moon_lsp, "--stdio"],
+                        root.path,
+                        self.config.timeout,
+                    ),
+                    root.path,
+                )
+            )
+            try:
+                for source in chunk:
+                    self._analyze_source(session, context, source, path_to_source)
+                return session.position_encoding
+            finally:
+                session.close()
+
+        if worker_count == 1:
+            encodings = [analyze_chunk(chunks[0])]
+        else:
+            with ThreadPoolExecutor(
+                max_workers=worker_count,
+                thread_name_prefix="moonbit-semantic-lsp",
+            ) as executor:
+                encodings = list(executor.map(analyze_chunk, chunks))
+        if len(set(encodings)) != 1:
+            raise RuntimeError(
+                f"LSP sessions negotiated inconsistent position encodings: {encodings}"
+            )
+        context["position_encoding"] = encodings[0]
+        context["initialize"] = {
+            "root_uri": _portable_root_uri(root),
+            "position_encoding": encodings[0],
+            "sessions": worker_count,
+        }
 
     def _record_skipped_context(self, context: dict[str, Any], input_sources: list[dict[str, Any]], reason: str) -> None:
         for source in input_sources:
@@ -431,7 +476,8 @@ class SemanticIndexer:
         hover_id = None
         if normalized_hover and normalized_hover["value"]:
             hover_id = digest_json(normalized_hover)
-            self.hovers[hover_id] = normalized_hover
+            with self._semantic_lock:
+                self.hovers[hover_id] = normalized_hover
         definitions = []
         for location in definition_locations(definition):
             target_path = _file_uri(location.pop("uri"))
@@ -456,19 +502,20 @@ class SemanticIndexer:
             definition_kind = _definition_kind(target["_blob"], selection)
             symbol_id = _symbol_id(target["source_id"], selection, definition_kind)
             at_definition = source["source_id"] == target["source_id"] and candidate["range_utf8"] == selection
-            symbol = self.symbols.get(symbol_id)
-            if symbol is None:
-                symbol = {
-                    "symbol_id": symbol_id,
-                    "definition_source_id": target["source_id"],
-                    "selection_range_utf8": selection,
-                    "target_range_utf8": target_range,
-                    "kind": definition_kind,
-                    "hover_id": hover_id if at_definition else None,
-                }
-                self.symbols[symbol_id] = symbol
-            elif at_definition and hover_id and not symbol.get("hover_id"):
-                symbol["hover_id"] = hover_id
+            with self._semantic_lock:
+                symbol = self.symbols.get(symbol_id)
+                if symbol is None:
+                    symbol = {
+                        "symbol_id": symbol_id,
+                        "definition_source_id": target["source_id"],
+                        "selection_range_utf8": selection,
+                        "target_range_utf8": target_range,
+                        "kind": definition_kind,
+                        "hover_id": hover_id if at_definition else None,
+                    }
+                    self.symbols[symbol_id] = symbol
+                elif at_definition and hover_id and not symbol.get("hover_id"):
+                    symbol["hover_id"] = hover_id
             definition_item["symbol_id"] = symbol_id
         if not hover_id and not definitions:
             return None

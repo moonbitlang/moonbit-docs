@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 import sys
 import tempfile
+import threading
+import time
 import unittest
 from pathlib import Path
 
@@ -226,6 +228,46 @@ class SemanticIndexerTest(unittest.TestCase):
             if item["origin"] == "dependency" and item["path"] == "lib.mbt"
         ]
         self.assertEqual(len(dependency_sources), 1)
+
+    def test_lsp_jobs_run_multiple_sessions_with_deterministic_output(self):
+        app = self.sources / "app"
+        other = app / "other.mbt"
+        other.write_text("fn name() -> Unit {}\n", encoding="utf-8")
+        metadata_path = app / "_build/packages.json"
+        metadata = json.loads(metadata_path.read_text())
+        metadata["packages"][0]["files"][str(other)] = {}
+        self._write_json(metadata_path, metadata)
+        lock = threading.Lock()
+        state = {"active": 0, "maximum": 0}
+
+        class ConcurrentLsp(FakeLsp):
+            def __init__(inner_self):
+                super().__init__()
+                with lock:
+                    state["active"] += 1
+                    state["maximum"] = max(state["maximum"], state["active"])
+
+            def hover(inner_self, uri, position):
+                time.sleep(0.02)
+                return super().hover(uri, position)
+
+            def close(inner_self):
+                with lock:
+                    state["active"] -= 1
+
+        output = self.repo / "snapshot-concurrent"
+        SemanticIndexer(BuildConfig(
+            repo_root=self.repo,
+            source_root=Path("next/sources"),
+            output=output,
+            stdlib_root=self.stdlib,
+            runner=FakeRunner(),
+            lsp_factory=lambda root: ConcurrentLsp(),
+            jobs=2,
+        )).build()
+
+        validate_snapshot(output)
+        self.assertGreaterEqual(state["maximum"], 2)
 
     def test_validator_rejects_self_consistent_manifest_with_missing_required_ledger(self):
         output = self.repo / "snapshot"

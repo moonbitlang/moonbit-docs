@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -23,6 +24,12 @@ def parser() -> argparse.ArgumentParser:
     build.add_argument("--moon", default="moon")
     build.add_argument("--mooninfo", default="mooninfo")
     build.add_argument("--moon-lsp", default="moon-lsp")
+    build.add_argument(
+        "--jobs",
+        type=int,
+        default=max(1, min(4, os.cpu_count() or 1)),
+        help="maximum LSP sessions per analysis context (default: up to 4)",
+    )
     build.add_argument("--skip-check", action="store_true", help="testing only: do not establish the moon check barrier")
     build.add_argument("--skip-lsp", action="store_true", help="testing only: capture corpus without semantic requests")
     build.add_argument("--allow-partial", action="store_true", help="record tool failures instead of failing closed")
@@ -41,6 +48,7 @@ def main(argv: list[str] | None = None) -> int:
                 repo_root=args.repo_root, source_root=args.source_root, output=args.output,
                 stdlib_root=args.stdlib_root, backend=args.backend, moon=args.moon,
                 mooninfo=args.mooninfo, moon_lsp=args.moon_lsp,
+                jobs=args.jobs,
                 skip_check=args.skip_check, skip_lsp=args.skip_lsp, strict=not args.allow_partial,
             )
             manifest = SemanticIndexer(config).build()
