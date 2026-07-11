@@ -6,8 +6,10 @@ import json
 import os
 import re
 import shutil
+import sys
 import tempfile
 import threading
+import time
 import unicodedata
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
@@ -51,6 +53,7 @@ class BuildConfig:
     sessions: int = field(default_factory=lambda: max(1, min(8, os.cpu_count() or 1)))
     positions_per_session: int = 256
     semantic_origins: tuple[str, ...] = ("local", "standalone")
+    progress: bool = False
     skip_check: bool = False
     skip_lsp: bool = False
     strict: bool = True
@@ -93,12 +96,15 @@ class SemanticIndexer:
         self.portable_roots: dict[Path, str] = {config.repo_root: "$REPO"}
         self.capture_roots: set[Path] = set()
         self._semantic_lock = threading.Lock()
+        self._progress_lock = threading.Lock()
+        self._started_at = time.monotonic()
 
     def build(self) -> dict[str, Any]:
         cfg = self.config
         roots = discover_roots(cfg.source_root, cfg.backend)
         if not roots:
             raise RuntimeError(f"no MoonBit roots found below {cfg.source_root}")
+        self._progress(f"discovered {len(roots)} local/standalone roots")
         self.capture_roots.update(realpath(root.path) for root in roots)
         precheck_sources = {
             root.root_id: {path: path.read_bytes() for path in scan_sources(root.path)}
@@ -113,7 +119,9 @@ class SemanticIndexer:
         root_states: dict[str, tuple[Root, dict[str, Any] | None]] = {}
         dependency_roots: set[Path] = set()
 
-        for root in roots:
+        for root_index, root in enumerate(roots, 1):
+            if root_index == 1 or root_index % 25 == 0 or root_index == len(roots):
+                self._progress(f"checking local roots {root_index}/{len(roots)}")
             check_ok = self._check_barrier(root)
             metadata, metadata_path = package_metadata(root)
             resolved_dependencies = metadata_allowed_module_roots(metadata, stdlib) if metadata else set()
@@ -125,6 +133,9 @@ class SemanticIndexer:
                 raise RuntimeError(f"moon check produced no package metadata for {root.path}")
             root_states[root.root_id] = (root, metadata)
             dependency_roots.update(resolved_dependencies)
+        self._progress(
+            f"local check barrier complete; discovered {len(dependency_roots)} resolved dependency roots"
+        )
 
         # Resolved registry/path dependencies are entire modules, never just files hit by LSP.
         dependency_states: list[tuple[Root, dict[str, Any] | None]] = []
@@ -177,6 +188,9 @@ class SemanticIndexer:
             for transitive in sorted(resolved_dependencies):
                 if transitive not in pending:
                     pending.append(transitive)
+        self._progress(
+            f"froze {len(dependency_states)} dependency modules without external occurrence analysis"
+        )
 
         stdlib_state: tuple[Root, dict[str, Any] | None] | None = None
         if stdlib:
@@ -203,6 +217,7 @@ class SemanticIndexer:
             if metadata_path and metadata_path.is_file():
                 self._input(metadata_path, "package-metadata", stdroot.root_id)
             stdlib_state = (stdroot, metadata)
+            self._progress("froze pinned stdlib source corpus")
 
         sources: dict[str, dict[str, Any]] = {}
         path_to_source: dict[Path, dict[str, Any]] = {}
@@ -269,6 +284,9 @@ class SemanticIndexer:
 
         self._collect_assets(sources, path_to_source)
         contexts: list[dict[str, Any]] = []
+        active_contexts: list[
+            tuple[Root, dict[str, Any], list[dict[str, Any]]]
+        ] = []
         all_states = list(root_states.values()) + dependency_states + ([stdlib_state] if stdlib_state else [])
         for root, metadata in all_states:
             input_sources = self._context_sources(root, metadata, path_to_source)
@@ -278,22 +296,40 @@ class SemanticIndexer:
             context = self._context(root, input_sources, analysis_sources)
             contexts.append(context)
             if root.status == "required" and analysis_sources:
-                if cfg.skip_lsp:
-                    self._record_skipped_context(
-                        context, analysis_sources, "--skip-lsp"
-                    )
-                else:
-                    self._analyze_context(
-                        root,
-                        context,
-                        analysis_sources,
-                        path_to_source,
-                        logical_sources,
-                    )
+                active_contexts.append((root, context, analysis_sources))
+
+        self._progress(
+            f"captured {len(sources)} source pages in {len(contexts)} contexts; "
+            f"{len(active_contexts)} contexts are active"
+        )
+        for context_index, (root, context, analysis_sources) in enumerate(
+            active_contexts, 1
+        ):
+            self._progress(
+                f"context {context_index}/{len(active_contexts)} {root.root_id}: "
+                f"{len(analysis_sources)} source files"
+            )
+            if cfg.skip_lsp:
+                self._record_skipped_context(
+                    context, analysis_sources, "--skip-lsp"
+                )
+                continue
+            candidate_count, worker_count = self._analyze_context(
+                root,
+                context,
+                analysis_sources,
+                path_to_source,
+                logical_sources,
+            )
+            self._progress(
+                f"context {context_index}/{len(active_contexts)} complete: "
+                f"{candidate_count} candidates across {worker_count} sessions"
+            )
 
         public_sources = [self._public_source(source) for source in sources.values()]
         resolution = self._resolution_lock(all_states, stdlib)
         writer = SnapshotWriter(cfg.output)
+        self._progress("writing and validating atomic snapshot")
         try:
             for source in sources.values():
                 if Path(source["_realpath"]).read_bytes() != source["_blob"]:
@@ -351,6 +387,9 @@ class SemanticIndexer:
                     "external_targets": "frozen-source",
                 },
             })
+            self._progress(
+                f"published snapshot with {manifest['counts']['occurrences']} occurrences"
+            )
             return manifest
         except BaseException:
             writer.abort()
@@ -402,7 +441,7 @@ class SemanticIndexer:
         input_sources: list[dict[str, Any]],
         path_to_source: dict[Path, dict[str, Any]],
         logical_sources: dict[str, dict[str, Any]],
-    ) -> None:
+    ) -> tuple[int, int]:
         analyzable = [
             source
             for source in sorted(input_sources, key=lambda value: value["source_id"])
@@ -410,7 +449,7 @@ class SemanticIndexer:
             and source["analysis_status"] != "display-only"
         ]
         if not analyzable:
-            return
+            return 0, 0
         primary = (
             self.config.lsp_factory(root)
             if self.config.lsp_factory
@@ -454,6 +493,10 @@ class SemanticIndexer:
                 (candidate_count + self.config.positions_per_session - 1)
                 // self.config.positions_per_session,
             ),
+        )
+        self._progress(
+            f"{root.root_id}: collected {candidate_count} candidates; "
+            f"using {worker_count} LSP sessions"
         )
         chunks: list[list[dict[str, Any]]] = [[] for _ in range(worker_count)]
         chunk_sizes = [0] * worker_count
@@ -518,6 +561,14 @@ class SemanticIndexer:
             "root_uri": _portable_root_uri(root),
             "position_encoding": encodings[0],
         }
+        return candidate_count, worker_count
+
+    def _progress(self, message: str) -> None:
+        if not self.config.progress:
+            return
+        elapsed = time.monotonic() - self._started_at
+        with self._progress_lock:
+            print(f"[semantic {elapsed:8.1f}s] {message}", file=sys.stderr, flush=True)
 
     def _record_skipped_context(self, context: dict[str, Any], input_sources: list[dict[str, Any]], reason: str) -> None:
         for source in input_sources:

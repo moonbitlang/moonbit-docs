@@ -49,6 +49,7 @@ def parser() -> argparse.ArgumentParser:
     build.add_argument("--skip-check", action="store_true", help="testing only: do not establish the moon check barrier")
     build.add_argument("--skip-lsp", action="store_true", help="testing only: capture corpus without semantic requests")
     build.add_argument("--allow-partial", action="store_true", help="record tool failures instead of failing closed")
+    build.add_argument("--quiet", action="store_true", help="suppress phase and context progress")
     validate = commands.add_parser("validate", help="validate all snapshot files, hashes, and references")
     validate.add_argument("--snapshot", type=Path, default=Path("semantic-snapshot"))
     return result
@@ -66,6 +67,7 @@ def main(argv: list[str] | None = None) -> int:
                 mooninfo=args.mooninfo, moon_lsp=args.moon_lsp,
                 jobs=args.jobs, sessions=args.sessions,
                 semantic_origins=tuple(args.semantic_origins),
+                progress=not args.quiet,
                 skip_check=args.skip_check, skip_lsp=args.skip_lsp, strict=not args.allow_partial,
             )
             manifest = SemanticIndexer(config).build()
