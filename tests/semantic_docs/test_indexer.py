@@ -196,9 +196,10 @@ class SemanticIndexerTest(unittest.TestCase):
             manifests[0]["analysis"],
             {
                 "origins": ["local", "standalone"],
-                "external_targets": "frozen-source",
+                "external_targets": "mooncakes",
             },
         )
+        self.assertEqual(manifests[0]["counts"]["external_targets"], 0)
         self.assertGreater(manifests[0]["counts"]["symbols"], 0)
         self.assertGreater(manifests[0]["counts"]["hovers"], 0)
         assets = self._jsonl(outputs[0] / "assets.jsonl")

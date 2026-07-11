@@ -5,12 +5,12 @@ default:
 docs-html:
     cd next && uv run --with-requirements requirements.txt make html
 
-# Build and validate the self-contained MoonBit semantic source snapshot.
+# Build and validate the self-contained MoonBit semantic snapshot.
 # The snapshot argument is relative to the repository root.
 semantic-index snapshot="semantic-snapshot":
     uv run python scripts/build_semantic_snapshot.py build --repo-root . --output "{{ snapshot }}"
 
-# Validate an existing semantic source snapshot without rebuilding it.
+# Validate an existing semantic snapshot without rebuilding it.
 semantic-check snapshot="semantic-snapshot":
     uv run python scripts/build_semantic_snapshot.py validate --snapshot "{{ snapshot }}"
 

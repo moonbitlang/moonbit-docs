@@ -19,11 +19,13 @@ from urllib.parse import unquote, urlparse
 
 from .canonical import digest_bytes, digest_json, is_within, normalize_relative, realpath
 from .inventory import (
-    Root, discover_roots, make_source, metadata_allowed_module_roots,
-    metadata_sources, module_info, package_metadata, recognized, scan_sources,
+    PackageOwnership, Root, discover_roots, make_source,
+    metadata_allowed_module_roots, metadata_package_ownership, metadata_sources,
+    module_info, package_metadata, recognized, scan_sources,
 )
 from .literate import moonbit_projection
 from .lsp import JsonRpcProcess, LspError, LspSession, definition_locations, normalize_hover_contents
+from .mooncakes import DefinitionEvidence, Fetcher, MooncakesClient, MooncakesResolution
 from .ranges import RangeError, SourceCoordinates
 from .runner import CommandError, Runner, SubprocessRunner
 from .snapshot import SnapshotWriter
@@ -58,6 +60,10 @@ class BuildConfig:
     skip_lsp: bool = False
     strict: bool = True
     timeout: float = 120.0
+    mooncakes_cache: Path | None = None
+    mooncakes_offline: bool = False
+    mooncakes_refresh: bool = False
+    mooncakes_fetcher: Fetcher | None = None
     runner: Runner = field(default_factory=SubprocessRunner)
     lsp_factory: Callable[[Root], LspSession] | None = None
 
@@ -67,12 +73,22 @@ class BuildConfig:
         self.output = (self.repo_root / self.output).resolve() if not self.output.is_absolute() else self.output.resolve()
         if self.stdlib_root is not None:
             self.stdlib_root = self.stdlib_root.resolve()
+        if self.mooncakes_cache is not None:
+            self.mooncakes_cache = (
+                self.repo_root / self.mooncakes_cache
+                if not self.mooncakes_cache.is_absolute()
+                else self.mooncakes_cache
+            ).resolve()
         if self.jobs < 1:
             raise ValueError("jobs must be at least 1")
         if self.sessions < 1:
             raise ValueError("sessions must be at least 1")
         if self.positions_per_session < 1:
             raise ValueError("positions_per_session must be at least 1")
+        if self.mooncakes_offline and self.mooncakes_refresh:
+            raise ValueError(
+                "mooncakes_offline and mooncakes_refresh are mutually exclusive"
+            )
         allowed_origins = {"local", "standalone", "dependency", "stdlib"}
         self.semantic_origins = tuple(dict.fromkeys(self.semantic_origins))
         unknown_origins = set(self.semantic_origins) - allowed_origins
@@ -90,6 +106,7 @@ class SemanticIndexer:
         self.assets: list[dict[str, Any]] = []
         self.hovers: dict[str, dict[str, str]] = {}
         self.symbols: dict[str, dict[str, Any]] = {}
+        self.external_targets: dict[str, dict[str, Any]] = {}
         self.occurrence_shards: dict[tuple[str, str], dict[str, Any]] = {}
         self.request_shards: dict[tuple[str, str], dict[str, Any]] = {}
         self.toolchain: dict[str, Any] = {}
@@ -98,6 +115,16 @@ class SemanticIndexer:
         self._semantic_lock = threading.Lock()
         self._progress_lock = threading.Lock()
         self._started_at = time.monotonic()
+        self._mooncakes = (
+            MooncakesClient(
+                config.mooncakes_cache,
+                offline=config.mooncakes_offline,
+                refresh=config.mooncakes_refresh,
+                fetcher=config.mooncakes_fetcher,
+            )
+            if config.mooncakes_cache is not None
+            else None
+        )
 
     def build(self) -> dict[str, Any]:
         cfg = self.config
@@ -159,10 +186,10 @@ class SemanticIndexer:
                 continue
             resolved_modules[identity] = source_tree
             resolved_module_roots[identity] = realpath(path)
-            # A resolved module's page corpus includes auxiliary examples and nested
-            # modules which need not be healthy under the consumer's toolchain.  Try
-            # its own context, but degrade that context instead of losing all source
-            # pages when an unrelated auxiliary package does not check.
+            # A resolved module's captured evidence corpus includes auxiliary
+            # examples and nested modules which need not be healthy under the
+            # consumer's toolchain. Try its own context, but degrade that context
+            # instead of losing definition evidence when one example does not check.
             candidate = Root(path, f"dependency:{identity}", "display-only", info["name"], version, info["preferred_target"] or cfg.backend)
             precheck_sources[candidate.root_id] = {source: source.read_bytes() for source in scan_sources(candidate.path)}
             if "dependency" in cfg.semantic_origins:
@@ -285,7 +312,12 @@ class SemanticIndexer:
         self._collect_assets(sources, path_to_source)
         contexts: list[dict[str, Any]] = []
         active_contexts: list[
-            tuple[Root, dict[str, Any], list[dict[str, Any]]]
+            tuple[
+                Root,
+                dict[str, Any],
+                list[dict[str, Any]],
+                PackageOwnership,
+            ]
         ] = []
         all_states = list(root_states.values()) + dependency_states + ([stdlib_state] if stdlib_state else [])
         for root, metadata in all_states:
@@ -296,13 +328,25 @@ class SemanticIndexer:
             context = self._context(root, input_sources, analysis_sources)
             contexts.append(context)
             if root.status == "required" and analysis_sources:
-                active_contexts.append((root, context, analysis_sources))
+                ownership = (
+                    metadata_package_ownership(metadata)
+                    if metadata is not None
+                    else PackageOwnership()
+                )
+                active_contexts.append(
+                    (root, context, analysis_sources, ownership)
+                )
 
         self._progress(
-            f"captured {len(sources)} source pages in {len(contexts)} contexts; "
+            f"captured {len(sources)} sources in {len(contexts)} contexts; "
             f"{len(active_contexts)} contexts are active"
         )
-        for context_index, (root, context, analysis_sources) in enumerate(
+        for context_index, (
+            root,
+            context,
+            analysis_sources,
+            ownership,
+        ) in enumerate(
             active_contexts, 1
         ):
             self._progress(
@@ -320,11 +364,14 @@ class SemanticIndexer:
                 analysis_sources,
                 path_to_source,
                 logical_sources,
+                ownership,
             )
             self._progress(
                 f"context {context_index}/{len(active_contexts)} complete: "
                 f"{candidate_count} candidates across {worker_count} sessions"
             )
+
+        self._resolve_pending_external_targets()
 
         public_sources = [self._public_source(source) for source in sources.values()]
         resolution = self._resolution_lock(all_states, stdlib)
@@ -363,6 +410,11 @@ class SemanticIndexer:
             writer.write_table("assets.jsonl", self.assets, ("asset_id",))
             writer.write_table("contexts.jsonl", contexts, ("context_id",))
             writer.write_table("symbols.jsonl", self.symbols.values(), ("symbol_id",))
+            writer.write_table(
+                "external-targets.jsonl",
+                self.external_targets.values(),
+                ("external_target_id",),
+            )
             writer.write_table("diagnostics.jsonl", self.diagnostics, ("root_id", "source_id", "kind"))
             for (context_id, source_id), payload in self.occurrence_shards.items():
                 writer.write_shard(f"occurrences/{_slug(context_id)}/{_slug(source_id)}.json", payload)
@@ -380,11 +432,12 @@ class SemanticIndexer:
                     "assets": len(self.assets), "hovers": len(self.hovers),
                     "occurrences": sum(len(value["occurrences"]) for value in self.occurrence_shards.values()),
                     "requests": sum(len(value["requests"]) for value in self.request_shards.values()),
+                    "external_targets": len(self.external_targets),
                 },
                 "partial": not cfg.strict,
                 "analysis": {
                     "origins": list(cfg.semantic_origins),
-                    "external_targets": "frozen-source",
+                    "external_targets": "mooncakes",
                 },
             })
             self._progress(
@@ -441,6 +494,7 @@ class SemanticIndexer:
         input_sources: list[dict[str, Any]],
         path_to_source: dict[Path, dict[str, Any]],
         logical_sources: dict[str, dict[str, Any]],
+        ownership: PackageOwnership,
     ) -> tuple[int, int]:
         analyzable = [
             source
@@ -538,6 +592,7 @@ class SemanticIndexer:
                         source,
                         path_to_source,
                         logical_sources,
+                        ownership,
                         candidates_by_source[source["source_id"]],
                     )
                 return session.position_encoding
@@ -570,6 +625,98 @@ class SemanticIndexer:
         with self._progress_lock:
             print(f"[semantic {elapsed:8.1f}s] {message}", file=sys.stderr, flush=True)
 
+    def _resolve_pending_external_targets(self) -> None:
+        """Resolve unique external locations after every LSP context closes."""
+
+        if self._mooncakes is None:
+            return
+        pending: dict[
+            str, tuple[DefinitionEvidence, list[dict[str, Any]]]
+        ] = {}
+        for shard in self.occurrence_shards.values():
+            for occurrence in shard["occurrences"]:
+                for definition in occurrence.get("definitions", []):
+                    raw = definition.get("_external_evidence")
+                    if not isinstance(raw, dict):
+                        continue
+                    evidence = DefinitionEvidence(
+                        module=str(raw.get("module") or ""),
+                        requested_version=str(
+                            raw.get("requested_version") or ""
+                        ),
+                        package=str(raw.get("package") or ""),
+                        file=str(raw.get("file") or ""),
+                        line=raw.get("line"),
+                        column=raw.get("column"),
+                    )
+                    key = digest_json(raw)
+                    if key not in pending:
+                        pending[key] = (evidence, [])
+                    pending[key][1].append(definition)
+        if not pending:
+            return
+
+        ordered = [pending[key] for key in sorted(pending)]
+        workers = min(16, self.config.jobs, len(ordered))
+        self._progress(
+            f"resolving {len(ordered)} unique Mooncakes definition locations "
+            f"with {workers} workers"
+        )
+        with ThreadPoolExecutor(
+            max_workers=workers,
+            thread_name_prefix="moonbit-semantic-mooncakes",
+        ) as executor:
+            resolutions = list(
+                executor.map(
+                    self._mooncakes.resolve,
+                    (evidence for evidence, _definitions in ordered),
+                )
+            )
+
+        for (evidence, definitions), resolution in zip(ordered, resolutions):
+            self.diagnostics.append({
+                "root_id": "",
+                "source_id": "",
+                "kind": "mooncakes-definition",
+                "status": resolution.status,
+                "reason": resolution.reason,
+                "module": evidence.module,
+                "package": evidence.package,
+            })
+            if resolution.exact:
+                record = self._external_target_record(resolution)
+                target_id = (
+                    "mooncakes:"
+                    + digest_json(record).removeprefix("sha256:")
+                )
+                record["external_target_id"] = target_id
+                self.external_targets[target_id] = record
+                for definition in definitions:
+                    definition.pop("_external_evidence", None)
+                    definition["external_target_id"] = target_id
+                    definition["external_status"] = "exact"
+            else:
+                for definition in definitions:
+                    definition.pop("_external_evidence", None)
+                    definition["external_status"] = resolution.status
+
+    @staticmethod
+    def _external_target_record(
+        resolution: MooncakesResolution,
+    ) -> dict[str, Any]:
+        return {
+            "provider": resolution.provider,
+            "module": resolution.module,
+            "requested_version": resolution.requested_version,
+            "resolved_version": resolution.resolved_version,
+            "package": resolution.package,
+            "anchor": resolution.fragment,
+            "symbol_kind": resolution.symbol_kind,
+            "url": resolution.url,
+            "match": "location",
+            "status": "exact",
+        }
+
     def _record_skipped_context(self, context: dict[str, Any], input_sources: list[dict[str, Any]], reason: str) -> None:
         for source in input_sources:
             if source["kind"] not in {"mbt", "mbt.md"} or source["analysis_status"] == "display-only":
@@ -588,6 +735,7 @@ class SemanticIndexer:
         source: dict[str, Any],
         path_to_source: dict[Path, dict[str, Any]],
         logical_sources: dict[str, dict[str, Any]],
+        ownership: PackageOwnership,
         candidates: list[dict[str, Any]] | None = None,
     ) -> None:
         path = Path(source["_realpath"])
@@ -639,6 +787,7 @@ class SemanticIndexer:
                         definition,
                         path_to_source,
                         logical_sources,
+                        ownership,
                         session.position_encoding,
                     )
                     if occurrence:
@@ -706,6 +855,7 @@ class SemanticIndexer:
         definition: Any,
         path_to_source: dict[Path, dict[str, Any]],
         logical_sources: dict[str, dict[str, Any]],
+        ownership: PackageOwnership,
         encoding: str,
     ) -> dict[str, Any] | None:
         coords = SourceCoordinates(source["_blob"])
@@ -742,7 +892,6 @@ class SemanticIndexer:
             }
             if origin:
                 definition_item["origin_selection_range_utf8"] = coords.range_to_bytes(origin, encoding)
-            definitions.append(definition_item)
             definition_kind = _definition_kind(target["_blob"], selection)
             symbol_id = _symbol_id(target["source_id"], selection, definition_kind)
             at_definition = source["source_id"] == target["source_id"] and candidate["range_utf8"] == selection
@@ -761,6 +910,28 @@ class SemanticIndexer:
                 elif at_definition and hover_id and not symbol.get("hover_id"):
                     symbol["hover_id"] = hover_id
             definition_item["symbol_id"] = symbol_id
+            if target["origin"] in {"dependency", "stdlib"}:
+                owned = ownership.resolve_location(target_path)
+                if owned is None:
+                    owned = ownership.resolve_location(target["_realpath"])
+                if owned is None:
+                    definition_item["external_status"] = "package-not-indexed"
+                elif self._mooncakes is None:
+                    definition_item["external_status"] = "provider-disabled"
+                else:
+                    package, relative_file = owned
+                    position = target_coords.byte_to_position(
+                        selection[0], "utf-32"
+                    )
+                    definition_item["_external_evidence"] = {
+                        "module": target["module"],
+                        "requested_version": target["version"],
+                        "package": package,
+                        "file": relative_file,
+                        "line": position["line"] + 1,
+                        "column": position["character"] + 1,
+                    }
+            definitions.append(definition_item)
         if not hover_id and not definitions:
             return None
         effective = hover_range or candidate["range_utf8"]
@@ -775,7 +946,7 @@ class SemanticIndexer:
         # packages.json is the exact checked graph.  Scanning dependency module
         # roots here pulls nested examples into the wrong LSP context and can attach
         # plausible-but-wrong semantics.  Files outside this graph remain in the
-        # page corpus and receive a separate context (or an explicit display status).
+        # snapshot corpus and receive a separate context (or an explicit status).
         paths = metadata_sources(metadata) if metadata else set(scan_sources(root.path))
         return sorted({path_to_source[path]["source_id"]: path_to_source[path] for path in paths if path in path_to_source}.values(), key=lambda value: value["source_id"])
 

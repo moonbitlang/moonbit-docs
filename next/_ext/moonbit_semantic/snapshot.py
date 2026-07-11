@@ -11,6 +11,7 @@ import hashlib
 import json
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable, Mapping
+from urllib.parse import quote, urlsplit
 
 
 SCHEMA_VERSION = 1
@@ -21,6 +22,7 @@ ACCEPTED_SCHEMAS = {
     "moonbit-semantic/1",
     "moonbit-semantic-snapshot/v1",
 }
+EXTERNAL_TARGET_TABLE = "external-targets.jsonl"
 
 
 class SnapshotError(ValueError):
@@ -85,6 +87,23 @@ class DefinitionTarget:
     selection_range: tuple[int, int]
     symbol_id: str | None = None
     target_range: tuple[int, int] | None = None
+    external_target_id: str | None = None
+    external_status: str | None = None
+
+
+@dataclass(frozen=True)
+class ExternalTarget:
+    external_target_id: str
+    provider: str
+    module: str
+    resolved_version: str
+    package: str
+    anchor: str
+    url: str
+    status: str = "exact"
+    requested_version: str = ""
+    match: str = ""
+    metadata: Mapping[str, Any] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -151,6 +170,7 @@ class SemanticSnapshot:
     occurrences: dict[str, tuple[Occurrence, ...]]
     hovers: dict[str, Any]
     corpus_digest: str
+    external_targets: dict[str, ExternalTarget] = field(default_factory=dict)
     _blob_cache: dict[str, bytes] = field(default_factory=dict, repr=False)
 
     def blob_bytes(self, source: Source) -> bytes:
@@ -198,6 +218,11 @@ class SemanticSnapshot:
                 for target in occurrence.definitions:
                     if target.source_id not in self.sources:
                         raise SnapshotError(f"definition targets unknown source {target.source_id!r}")
+                    _validate_definition_external_target(
+                        target,
+                        self.sources[target.source_id],
+                        self.external_targets,
+                    )
             # A path is presentation metadata, but must still be portable.
             _safe_relative(source.path, label="source path")
         for symbol in self.symbols.values():
@@ -211,6 +236,10 @@ class SemanticSnapshot:
                 raise SnapshotError(f"asset {asset.asset_id!r} has unknown owner")
             _safe_relative(asset.path, label="asset path")
             self.asset_bytes(asset)
+        for target_id, target in self.external_targets.items():
+            if target_id != target.external_target_id:
+                raise SnapshotError("external target map key does not match its record ID")
+            _validate_external_target_value(target)
 
 
 def _source(record: Mapping[str, Any]) -> Source:
@@ -262,6 +291,97 @@ def _asset(record: Mapping[str, Any]) -> Asset:
     return Asset(required[0], required[1], required[2], required[3], str(record.get("mime") or "application/octet-stream"))
 
 
+def _segments(value: Any, *, field: str) -> list[str]:
+    if not isinstance(value, str) or not value or value.startswith("/") or value.endswith("/"):
+        raise SnapshotError(f"external target {field} must be a non-empty slash-separated string")
+    parts = value.split("/")
+    if any(not part or part in {".", ".."} for part in parts):
+        raise SnapshotError(f"external target has invalid {field}: {value!r}")
+    return parts
+
+
+def _encoded_segment(value: str) -> str:
+    # ``@`` is Mooncakes' version separator in the final module segment.
+    return quote(value, safe="-._~+@")
+
+
+def _external_target_url(target: ExternalTarget) -> str:
+    if target.provider != "mooncakes" or target.status != "exact":
+        raise SnapshotError("external target records must be exact Mooncakes routes")
+    module_parts = _segments(target.module, field="module")
+    package_parts = _segments(target.package, field="package")
+    if not target.resolved_version:
+        raise SnapshotError("external target resolved_version must be non-empty")
+    if not target.anchor:
+        raise SnapshotError("external target anchor must be non-empty")
+    if package_parts[: len(module_parts)] != module_parts:
+        raise SnapshotError("external target package must belong to its module")
+    if target.module == "moonbitlang/core":
+        route_parts = package_parts
+    else:
+        route_parts = [
+            *module_parts[:-1],
+            module_parts[-1] + "@" + target.resolved_version,
+            *package_parts[len(module_parts) :],
+        ]
+    path = "/docs/" + "/".join(_encoded_segment(part) for part in route_parts)
+    fragment = quote(target.anchor, safe=":-._~")
+    return f"https://mooncakes.io{path}#{fragment}"
+
+
+def _validate_external_target_value(target: ExternalTarget) -> None:
+    if not target.external_target_id:
+        raise SnapshotError("external target requires a non-empty external_target_id")
+    try:
+        parsed = urlsplit(target.url)
+    except ValueError as exc:
+        raise SnapshotError(f"external target {target.external_target_id!r} has an invalid URL") from exc
+    if (
+        parsed.scheme != "https"
+        or parsed.netloc != "mooncakes.io"
+        or parsed.query
+        or not parsed.fragment
+    ):
+        raise SnapshotError(f"external target {target.external_target_id!r} has an unsafe Mooncakes URL")
+    if target.url != _external_target_url(target):
+        raise SnapshotError(
+            f"external target {target.external_target_id!r} URL does not match its route fields"
+        )
+
+
+def _external_target(record: Mapping[str, Any]) -> ExternalTarget:
+    required = {
+        "external_target_id",
+        "provider",
+        "module",
+        "resolved_version",
+        "package",
+        "anchor",
+        "url",
+        "status",
+    }
+    missing = required - record.keys()
+    if missing:
+        raise SnapshotError(f"external target missing fields: {sorted(missing)}")
+    if any(not isinstance(record[field], str) or not record[field] for field in required):
+        raise SnapshotError("external target fields must be non-empty strings")
+    target = ExternalTarget(
+        external_target_id=record["external_target_id"],
+        provider=record["provider"],
+        module=record["module"],
+        requested_version=str(record.get("requested_version") or ""),
+        resolved_version=record["resolved_version"],
+        package=record["package"],
+        anchor=record["anchor"],
+        url=record["url"],
+        match=str(record.get("match") or ""),
+        status=record["status"],
+        metadata=dict(record),
+    )
+    _validate_external_target_value(target)
+    return target
+
+
 def _target(record: Mapping[str, Any]) -> DefinitionTarget:
     source_id = record.get("target_source_id") or record.get("source_id")
     selected = record.get("target_selection_range_utf8") or record.get("selection_range_utf8") or record.get("target_range_utf8")
@@ -269,12 +389,47 @@ def _target(record: Mapping[str, Any]) -> DefinitionTarget:
         raise SnapshotError("definition target requires target_source_id")
     selection = _range(selected, label="definition selection range")
     whole = record.get("target_range_utf8")
+    external_target_id = record.get("external_target_id")
+    external_status = record.get("external_status")
+    if external_target_id is not None and not isinstance(external_target_id, str):
+        raise SnapshotError("definition external_target_id must be a string")
+    if external_status is not None and not isinstance(external_status, str):
+        raise SnapshotError("definition external_status must be a string")
     return DefinitionTarget(
         source_id=source_id,
         selection_range=selection,
         symbol_id=record.get("symbol_id") or record.get("target_symbol_id"),
         target_range=_range(whole, label="definition target range") if whole is not None else selection,
+        external_target_id=external_target_id,
+        external_status=external_status,
     )
+
+
+def _validate_definition_external_target(
+    definition: DefinitionTarget,
+    target_source: Source,
+    external_targets: Mapping[str, ExternalTarget],
+) -> None:
+    if definition.external_status is not None and (
+        not isinstance(definition.external_status, str)
+        or not definition.external_status
+    ):
+        raise SnapshotError("definition external_status must be a non-empty string")
+    if definition.external_target_id is None:
+        if definition.external_status == "exact":
+            raise SnapshotError("exact external definition is missing external_target_id")
+        return
+    if not definition.external_target_id:
+        raise SnapshotError("definition external_target_id must be non-empty")
+    if definition.external_status != "exact":
+        raise SnapshotError("definition external_target_id requires external_status='exact'")
+    if target_source.origin in {"local", "standalone"}:
+        raise SnapshotError("local/standalone definition target cannot be external")
+    target = external_targets.get(definition.external_target_id)
+    if target is None or target.status != "exact":
+        raise SnapshotError(
+            f"definition references missing external target: {definition.external_target_id}"
+        )
 
 
 def _occurrence(record: Mapping[str, Any], default_source_id: str | None = None) -> Occurrence:
@@ -308,7 +463,7 @@ def _records_from_json(path: Path) -> Iterable[Mapping[str, Any]]:
     raise SnapshotError(f"unsupported record shard shape: {path}")
 
 
-def _verify_manifest_shards(root: Path, manifest: Mapping[str, Any]) -> None:
+def _verify_manifest_shards(root: Path, manifest: Mapping[str, Any]) -> set[str]:
     shards = manifest.get("shards") or manifest.get("files") or {}
     if isinstance(shards, list):
         shards = {item["path"]: item.get("sha256") or item.get("digest") for item in shards}
@@ -322,6 +477,7 @@ def _verify_manifest_shards(root: Path, manifest: Mapping[str, Any]) -> None:
             raise SnapshotError(f"manifest shard is missing: {name}")
         if _sha256(path.read_bytes()) != _digest_name(expected):
             raise SnapshotError(f"manifest shard digest mismatch: {name}")
+    return set(shards)
 
 
 def load_snapshot(path: str | Path) -> SemanticSnapshot:
@@ -339,7 +495,7 @@ def load_snapshot(path: str | Path) -> SemanticSnapshot:
     schema = manifest.get("schema_version", manifest.get("schema"))
     if schema not in ACCEPTED_SCHEMAS:
         raise SnapshotError(f"unsupported semantic snapshot schema: {schema!r}")
-    _verify_manifest_shards(root, manifest)
+    verified_shards = _verify_manifest_shards(root, manifest)
 
     sources: dict[str, Source] = {}
     for record in _jsonl(root / "sources.jsonl", required=True):
@@ -361,6 +517,18 @@ def load_snapshot(path: str | Path) -> SemanticSnapshot:
         if asset.asset_id in assets:
             raise SnapshotError(f"duplicate asset_id: {asset.asset_id}")
         assets[asset.asset_id] = asset
+
+    external_path = root / EXTERNAL_TARGET_TABLE
+    if external_path.exists() and EXTERNAL_TARGET_TABLE not in verified_shards:
+        raise SnapshotError("external target table is not covered by the manifest")
+    external_targets: dict[str, ExternalTarget] = {}
+    for record in _jsonl(external_path):
+        target = _external_target(record)
+        if target.external_target_id in external_targets:
+            raise SnapshotError(
+                f"duplicate external_target_id: {target.external_target_id}"
+            )
+        external_targets[target.external_target_id] = target
 
     occurrences_by_context: dict[str, dict[str, list[Occurrence]]] = {}
     occurrence_root = root / "occurrences"
@@ -384,7 +552,16 @@ def load_snapshot(path: str | Path) -> SemanticSnapshot:
             selected = contexts[sorted(contexts)[0]]
         unique: dict[tuple[Any, ...], Occurrence] = {}
         for item in selected or []:
-            targets = tuple((target.source_id, target.selection_range, target.symbol_id) for target in item.definitions)
+            targets = tuple(
+                (
+                    target.source_id,
+                    target.selection_range,
+                    target.symbol_id,
+                    target.external_target_id,
+                    target.external_status,
+                )
+                for target in item.definitions
+            )
             unique[(item.byte_range, item.hover_id, item.symbol_id, item.role, targets)] = item
         occurrences[source_id] = list(unique.values())
 
@@ -432,6 +609,7 @@ def load_snapshot(path: str | Path) -> SemanticSnapshot:
         occurrences={key: tuple(sorted(values, key=lambda item: (item.byte_range, item.symbol_id or ""))) for key, values in occurrences.items()},
         hovers=hovers,
         corpus_digest=corpus,
+        external_targets=external_targets,
     )
     snapshot.validate()
     try:

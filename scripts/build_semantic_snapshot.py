@@ -49,6 +49,22 @@ def parser() -> argparse.ArgumentParser:
     build.add_argument("--skip-check", action="store_true", help="testing only: do not establish the moon check barrier")
     build.add_argument("--skip-lsp", action="store_true", help="testing only: capture corpus without semantic requests")
     build.add_argument("--allow-partial", action="store_true", help="record tool failures instead of failing closed")
+    build.add_argument(
+        "--mooncakes-cache",
+        type=Path,
+        default=Path(".semantic-cache/mooncakes"),
+        help="build-time JSON cache for verified Mooncakes definition routes",
+    )
+    build.add_argument(
+        "--mooncakes-offline",
+        action="store_true",
+        help="resolve external definitions from the Mooncakes cache only",
+    )
+    build.add_argument(
+        "--refresh-mooncakes",
+        action="store_true",
+        help="refresh cached Mooncakes provider responses during this build",
+    )
     build.add_argument("--quiet", action="store_true", help="suppress phase and context progress")
     validate = commands.add_parser("validate", help="validate all snapshot files, hashes, and references")
     validate.add_argument("--snapshot", type=Path, default=Path("semantic-snapshot"))
@@ -69,6 +85,9 @@ def main(argv: list[str] | None = None) -> int:
                 semantic_origins=tuple(args.semantic_origins),
                 progress=not args.quiet,
                 skip_check=args.skip_check, skip_lsp=args.skip_lsp, strict=not args.allow_partial,
+                mooncakes_cache=args.mooncakes_cache,
+                mooncakes_offline=args.mooncakes_offline,
+                mooncakes_refresh=args.refresh_mooncakes,
             )
             manifest = SemanticIndexer(config).build()
         print(json.dumps({"schema": manifest["schema"], "corpus_digest": manifest["corpus_digest"], "counts": manifest["counts"]}, sort_keys=True))

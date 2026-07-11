@@ -8,6 +8,7 @@ import shutil
 import tempfile
 from pathlib import Path
 from typing import Any, Iterable
+from urllib.parse import quote, urlsplit
 
 from .canonical import canonical_json_bytes, digest_bytes, digest_json, normalize_relative, write_json, write_jsonl
 
@@ -16,6 +17,7 @@ JSONL_TABLES = (
     "analysis-inputs.jsonl", "sources.jsonl", "assets.jsonl", "contexts.jsonl",
     "symbols.jsonl", "diagnostics.jsonl",
 )
+EXTERNAL_TARGET_TABLE = "external-targets.jsonl"
 
 
 class SnapshotError(RuntimeError):
@@ -134,12 +136,27 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
     assets = _jsonl(root / "assets.jsonl")
     contexts = _jsonl(root / "contexts.jsonl")
     symbols = _jsonl(root / "symbols.jsonl")
+    external_targets = (
+        _jsonl(root / EXTERNAL_TARGET_TABLE)
+        if EXTERNAL_TARGET_TABLE in listed
+        else []
+    )
     source_ids = _unique(sources, "source_id")
     context_ids = _unique(contexts, "context_id")
     symbol_ids = _unique(symbols, "symbol_id")
+    external_target_ids = (
+        _unique(external_targets, "external_target_id")
+        if external_targets
+        else set()
+    )
     source_by_id = {source["source_id"]: source for source in sources}
     context_by_id = {context["context_id"]: context for context in contexts}
     symbol_by_id = {symbol["symbol_id"]: symbol for symbol in symbols}
+    external_target_by_id = {
+        target["external_target_id"]: target for target in external_targets
+    }
+    for target in external_targets:
+        _validate_external_target(target)
     source_blobs: dict[str, bytes] = {}
     boundaries: dict[str, set[int]] = {}
     for source in sources:
@@ -265,6 +282,11 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
                     _validate_range(definition.get(field), target_id, source_blobs, boundaries, field)
                 if definition.get("origin_selection_range_utf8") is not None:
                     _validate_range(definition["origin_selection_range_utf8"], payload["source_id"], source_blobs, boundaries, "origin selection")
+                _validate_definition_external_target(
+                    definition,
+                    source_by_id[target_id],
+                    external_target_by_id,
+                )
     request_ledgers: set[tuple[str, str]] = set()
     request_count = 0
     for path in sorted((root / "requests").glob("*/*.json")) if (root / "requests").exists() else []:
@@ -312,6 +334,8 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
         "assets": len(assets), "hovers": len(hover_ids), "occurrences": occurrence_count,
         "requests": request_count,
     }
+    if external_targets or "external_targets" in expected:
+        actual_counts["external_targets"] = len(external_target_ids)
     if any(expected.get(key) != value for key, value in actual_counts.items()):
         raise SnapshotError("manifest counts do not match tables")
     return manifest
@@ -356,6 +380,114 @@ def _validate_blob(root: Path, digest: Any, owner: str) -> None:
     path = root / "blobs" / "sha256" / digest.removeprefix("sha256:")
     if not path.is_file() or digest_bytes(path.read_bytes()) != digest:
         raise SnapshotError(f"missing/corrupt blob for {owner}: {digest}")
+
+
+def _segments(value: Any, *, field: str) -> list[str]:
+    if not isinstance(value, str) or not value or value.startswith("/") or value.endswith("/"):
+        raise SnapshotError(f"external target {field} must be a non-empty slash-separated string")
+    parts = value.split("/")
+    if any(not part or part in {".", ".."} for part in parts):
+        raise SnapshotError(f"external target has invalid {field}: {value!r}")
+    return parts
+
+
+def _encoded_segment(value: str) -> str:
+    # ``@`` is Mooncakes' version separator in the final module segment.
+    return quote(value, safe="-._~+@")
+
+
+def _external_target_url(record: dict[str, Any]) -> str:
+    provider = record.get("provider")
+    status = record.get("status")
+    if provider != "mooncakes" or status != "exact":
+        raise SnapshotError("external target records must be exact Mooncakes routes")
+    module_parts = _segments(record.get("module"), field="module")
+    package_parts = _segments(record.get("package"), field="package")
+    resolved_version = record.get("resolved_version")
+    anchor = record.get("anchor")
+    if not isinstance(resolved_version, str) or not resolved_version:
+        raise SnapshotError("external target resolved_version must be non-empty")
+    if not isinstance(anchor, str) or not anchor:
+        raise SnapshotError("external target anchor must be non-empty")
+    if package_parts[: len(module_parts)] != module_parts:
+        raise SnapshotError("external target package must belong to its module")
+
+    if record["module"] == "moonbitlang/core":
+        route_parts = package_parts
+    else:
+        versioned_module = [
+            *module_parts[:-1],
+            module_parts[-1] + "@" + resolved_version,
+        ]
+        route_parts = [*versioned_module, *package_parts[len(module_parts) :]]
+    path = "/docs/" + "/".join(_encoded_segment(part) for part in route_parts)
+    fragment = quote(anchor, safe=":-._~")
+    return f"https://mooncakes.io{path}#{fragment}"
+
+
+def _validate_external_target(record: dict[str, Any]) -> None:
+    _require(
+        record,
+        {
+            "external_target_id",
+            "provider",
+            "module",
+            "resolved_version",
+            "package",
+            "anchor",
+            "url",
+            "status",
+        },
+        "external target",
+    )
+    target_id = record["external_target_id"]
+    if not isinstance(target_id, str) or not target_id:
+        raise SnapshotError("external target requires a non-empty external_target_id")
+    url = record["url"]
+    if not isinstance(url, str):
+        raise SnapshotError(f"external target {target_id!r} has a non-string URL")
+    try:
+        parsed = urlsplit(url)
+    except ValueError as exc:
+        raise SnapshotError(f"external target {target_id!r} has an invalid URL") from exc
+    if (
+        parsed.scheme != "https"
+        or parsed.netloc != "mooncakes.io"
+        or parsed.query
+        or not parsed.fragment
+    ):
+        raise SnapshotError(f"external target {target_id!r} has an unsafe Mooncakes URL")
+    expected = _external_target_url(record)
+    if url != expected:
+        raise SnapshotError(
+            f"external target {target_id!r} URL does not match its route fields"
+        )
+
+
+def _validate_definition_external_target(
+    definition: dict[str, Any],
+    target_source: dict[str, Any],
+    external_targets: dict[str, dict[str, Any]],
+) -> None:
+    external_target_id = definition.get("external_target_id")
+    external_status = definition.get("external_status")
+    if external_status is not None and (
+        not isinstance(external_status, str) or not external_status
+    ):
+        raise SnapshotError("definition external_status must be a non-empty string")
+    if external_target_id is None:
+        if external_status == "exact":
+            raise SnapshotError("exact external definition is missing external_target_id")
+        return
+    if not isinstance(external_target_id, str) or not external_target_id:
+        raise SnapshotError("definition external_target_id must be a non-empty string")
+    if external_status != "exact":
+        raise SnapshotError("definition external_target_id requires external_status='exact'")
+    if target_source.get("origin") in {"local", "standalone"}:
+        raise SnapshotError("local/standalone definition target cannot be external")
+    target = external_targets.get(external_target_id)
+    if target is None or target.get("status") != "exact":
+        raise SnapshotError(f"definition references missing external target: {external_target_id}")
 
 
 def _validate_range(value: Any, source_id: str, blobs: dict[str, bytes], boundaries: dict[str, set[int]], owner: str) -> None:

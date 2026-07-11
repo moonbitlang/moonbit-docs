@@ -6,7 +6,7 @@ import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Mapping
 
 from .canonical import digest_bytes, is_within, normalize_relative, realpath
 from .literate import extract_literate_fences
@@ -24,6 +24,194 @@ class Root:
     version: str
     backend: str
     entry_file: Path | None = None
+
+
+@dataclass(frozen=True)
+class PackageOwnership:
+    """One ``packages.json`` context's physical-to-logical package index.
+
+    The tuples deliberately contain only ``Path`` and ``str`` values so the
+    index can be copied to analysis workers and exercised without a live Moon
+    process.  Callers must build one instance per package-metadata context;
+    ownership is never inferred from another context or from a global cache.
+
+    ``resolve`` fails closed for both missing and ambiguous ownership.  An
+    exact production-file declaration wins over directory ancestry.  When no
+    exact declaration exists, the deepest matching package root wins.
+    """
+
+    file_owners: tuple[tuple[Path, str], ...] = ()
+    root_owners: tuple[tuple[Path, str], ...] = ()
+
+    def resolve(self, target: str | Path) -> str | None:
+        location = self.resolve_location(target)
+        return location[0] if location is not None else None
+
+    def resolve_location(self, target: str | Path) -> tuple[str, str] | None:
+        """Return the logical package and its package-relative POSIX file."""
+
+        path = realpath(Path(target))
+        exact = {
+            package for candidate, package in self.file_owners if candidate == path
+        }
+        if exact:
+            if len(exact) != 1:
+                return None
+            return self._location(path, next(iter(exact)))
+
+        matches: list[tuple[int, Path, str]] = []
+        for root, package in self.root_owners:
+            try:
+                path.relative_to(root)
+            except ValueError:
+                continue
+            matches.append((len(root.parts), root, package))
+        if not matches:
+            return None
+        longest = max(depth for depth, _root, _package in matches)
+        packages = {
+            package for depth, _root, package in matches if depth == longest
+        }
+        if len(packages) != 1:
+            return None
+        return self._location(path, next(iter(packages)))
+
+    def _location(self, path: Path, package: str) -> tuple[str, str] | None:
+        containing: set[Path] = set()
+        for root, owner in self.root_owners:
+            if owner != package:
+                continue
+            try:
+                path.relative_to(root)
+            except ValueError:
+                continue
+            containing.add(root)
+        if not containing:
+            return None
+        longest = max(len(root.parts) for root in containing)
+        roots = {root for root in containing if len(root.parts) == longest}
+        if len(roots) != 1:
+            return None
+        root = next(iter(roots))
+        return package, path.relative_to(root).as_posix()
+
+
+def _package_path(root: Any, relative: Any) -> str | None:
+    if not isinstance(root, str) or not root.strip("/"):
+        return None
+    root = root.strip("/")
+    if not isinstance(relative, str) or relative.strip("/") in {"", "."}:
+        return root
+    return root + "/" + relative.strip("/")
+
+
+def _metadata_path(value: Any, base: Path | None = None) -> Path | None:
+    if not isinstance(value, (str, Path)) or not str(value):
+        return None
+    path = Path(value)
+    if not path.is_absolute() and base is not None:
+        path = base / path
+    return realpath(path)
+
+
+def _metadata_file_paths(value: Any) -> Iterable[Any]:
+    if isinstance(value, Mapping):
+        return value.keys()
+    if isinstance(value, (list, tuple)):
+        return value
+    return ()
+
+
+def metadata_package_ownership(metadata: dict[str, Any]) -> PackageOwnership:
+    """Build a context-local ownership index from Moon's ``packages.json``.
+
+    Package records are authoritative: ``root`` plus ``rel`` supplies the
+    logical package, ``root-path`` its physical root, and ``files`` its exact
+    production-file set.  Dependency records supplement the root index using
+    their logical ``path`` and physical ``fspath``.  No module-version parsing,
+    checkout scanning, or cross-context fallback is performed here.
+    """
+
+    source_dir = _metadata_path(metadata.get("source_dir"))
+    package_roots: list[tuple[Path, str]] = []
+    file_owners: set[tuple[Path, str]] = set()
+    root_owners: set[tuple[Path, str]] = set()
+    package_records = metadata.get("packages")
+    if not isinstance(package_records, list):
+        package_records = []
+
+    for record in package_records:
+        if not isinstance(record, Mapping):
+            continue
+        package = _package_path(record.get("root"), record.get("rel"))
+        root = _metadata_path(
+            record.get("root-path", record.get("root_path")), source_dir
+        )
+        if package is None or root is None:
+            continue
+        package_roots.append((root, package))
+        root_owners.add((root, package))
+        for value in _metadata_file_paths(record.get("files")):
+            path = _metadata_path(value, root)
+            if path is not None:
+                file_owners.add((path, package))
+
+    roots_by_package: dict[str, set[Path]] = {}
+    packages_by_root: dict[Path, set[str]] = {}
+    for root, package in package_roots:
+        roots_by_package.setdefault(package, set()).add(root)
+        packages_by_root.setdefault(root, set()).add(package)
+
+    dependency_records: list[Any] = []
+    for record in package_records:
+        if not isinstance(record, Mapping):
+            continue
+        for key in (
+            "deps",
+            "wbtest-deps",
+            "wbtest_deps",
+            "test-deps",
+            "test_deps",
+        ):
+            value = record.get(key)
+            if isinstance(value, list):
+                dependency_records.extend(value)
+    top_level_dependencies = metadata.get("deps")
+    if isinstance(top_level_dependencies, list):
+        dependency_records.extend(top_level_dependencies)
+
+    for dependency in dependency_records:
+        if not isinstance(dependency, Mapping):
+            continue
+        raw_package = dependency.get("path")
+        package = (
+            raw_package.strip("/")
+            if isinstance(raw_package, str) and raw_package.strip("/")
+            else None
+        )
+        root = _metadata_path(dependency.get("fspath"), source_dir)
+
+        # Older or synthetic metadata may omit one half of the pair.  Use an
+        # unambiguous authoritative package record as the fallback; never guess
+        # from another ``packages.json`` context.
+        if root is None and package is not None:
+            candidates = roots_by_package.get(package, set())
+            if len(candidates) == 1:
+                root = next(iter(candidates))
+        if package is None and root is not None:
+            candidates = packages_by_root.get(root, set())
+            if len(candidates) == 1:
+                package = next(iter(candidates))
+        if package is not None and root is not None:
+            root_owners.add((root, package))
+
+    def order(item: tuple[Path, str]) -> tuple[str, str]:
+        return item[0].as_posix(), item[1]
+
+    return PackageOwnership(
+        file_owners=tuple(sorted(file_owners, key=order)),
+        root_owners=tuple(sorted(root_owners, key=order)),
+    )
 
 
 def discover_roots(source_root: Path, backend: str) -> list[Root]:
