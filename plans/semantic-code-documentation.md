@@ -1117,6 +1117,423 @@ RTD/production 的唯一顺序固定为：
 - [Haddock hyperlink renderer](https://github.com/haskell/haddock/blob/395f33bfc14b5a28a14705a559f7f86d0599ab8c/haddock-api/src/Haddock/Backends/Hyperlinker/Renderer.hs#L131-L294)
 - [Koka semantic `RangeMap`](https://github.com/koka-lang/koka/blob/429f578512ba7229ec86a2389d4d2481100d17bc/src/Syntax/RangeMap.hs#L68-L190)
 - [Koka literate range overlay](https://github.com/koka-lang/koka/blob/429f578512ba7229ec86a2389d4d2481100d17bc/src/Syntax/Colorize.hs#L121-L176)
+- [Koka popup 与 token 样式](https://github.com/koka-lang/koka/blob/dev/doc/koka.css#L156-L283)
 - [Lean Verso](https://reservoir.lean-lang.org/%40leanprover/verso)
+- [Verso highlighted code 数据模型](https://github.com/leanprover/verso/blob/main/src/verso/Verso/Code/Highlighted.lean)
+- [Verso semantic CSS variables](https://github.com/leanprover/verso/blob/main/static-web/verso-vars.css)
+- [Verso Literate source page 样式](https://github.com/leanprover/verso/blob/main/src/verso-literate-html/literate.css)
 - [LSP 3.17 Hover](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_hover)
 - [LSP 3.17 Definition](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_definition)
+
+## 20. MoonBit 专用高亮、Hover 与源码页视觉计划
+
+本节固定语义文档的视觉与高亮方向。目标不是把源码页做成一个浏览器 IDE，也不是为每种 identifier 随意分配一种颜色，而是在 Hackage 式源码保真基础上加入 MoonBit 自己的语言特征：`@package` namespace、type/trait/constructor、函数 effect，以及编译器已经确认的 binding identity。
+
+总体组合固定为：
+
+- 使用 Hackage/Haddock 的源码保真、行锚点、定义锚点和跨 package 路由模型；
+- 使用 Lean/Verso 的稳定 binding identity、结构化 Hover、主题变量和交互状态模型；
+- 使用 Koka 的语言特定 signature/effect 展示，但不复制双份源码 DOM、固定亮色 popup 或 `overflow: visible`；
+- 继续保留当前 content-addressed Hover preload，不能退回页面级 JSON Fetch。
+
+视觉签名只使用在真实 MoonBit 概念上：`@package` 和 package/module identity 使用兔子洋红，type/trait/constructor 使用月面蓝；官方 MoonBit 扩展定义的 `async` 使用斜体，可能抛错的 function call/declaration 使用下划线。其余界面保持安静、平整和高密度，避免通用渐变、IDE chrome 和大面积品牌色。
+
+### 20.1 必须先承认的当前问题
+
+2026-07-11 的严格构建基线给出了以下实证：
+
+| 问题 | 当前证据 | 直接后果 |
+|---|---|---|
+| 独立源码页没有实际命中 Pygments 配色 | `_standalone_page()` 输出的 `<html>` 没有 `data-theme`；生成的 152 条 `pygments.css` 规则全部限定在 `html[data-theme="light|dark"]` | 源码页虽然带 `.kd/.nf/.nc/...` class，最终仍接近单色 |
+| Hover 不是结构化内容 | 1,567 个 payload 中 1,565 个含 MoonBit fence，328 个还含 `---` 后的文档；中位长度 50、最大 2,582 字符；runtime 只赋值 `textContent` | 用户直接看到 fence、分隔线、列表和 inline code 的 Markdown 原文 |
+| Snapshot 没有真实 symbol taxonomy | 4,569 个 symbol kind 只有 3,881 个 `LIDENT` 与 688 个 `UIDENT` | 不能诚实地区分 function、method、trait、field、constructor、parameter 和 local |
+| Candidate 的词法类别被丢弃 | `mooninfo -dump-tokens` 已给出 `DOT_LIDENT`、`PACKAGE_NAME`、`LABEL` 等，但 occurrence 写盘时没有保留 `token_kind` | package alias、field/label 与普通变量失去可用的确定性信息 |
+| Hover range 被当作可交互 token range | 当前 `effective_range = Hover.range or candidate_range`；生成的 local HTML 中语义 wrapper 大量落在 `.w/.p/.k` 等 whitespace、punctuation、keyword fragment 上 | 同一 identifier 可能把空白、`~` 或关键字一起变成 Hover/Definition 区域，无法可靠做 token 状态样式 |
+| Definition location 也常是 broad range | 4,569 个逻辑 definition 被拆成 10,726 个 HTML element；其中约 1,497 个 whitespace、934 个 punctuation、661 个 keyword/declaration fragment 也带 definition class | 不能直接给 `.mbt-definition` 设置文字色或字重；必须先分离导航 anchor 与可着色 selection |
+| 当前 lexer 与 MoonBit 已有语法漂移 | `#|` multiline string 被识别为 preprocessor，绝大多数十进制 float 被拆开，`suberror/where/defer/using/nobreak/extenum` 等落为 variable，`.mbtp` 的 `∀/→/^` 产生 `.err` | 只修源码页 theme selector 仍会把错误类别“漂亮地显示出来” |
+| DOM/HTML 体积已经偏大 | 当前源码输出约 106 MB；单字符 whitespace/string token 造成约 121 万 `.w`、63 万 `.p`、43 万 `.s2` span，renderer 不合并相邻同类 fragment | 新样式施加在数百万节点上；必须在视觉增强前 coalesce token chunk 并设置体积预算 |
+| CSS 同时承担文档页和独立源码页 | 同一文件含无 scope 的 `html`、`body` 规则，又注入完整 Sphinx 文档 | 继续扩展后容易意外改变现有文档主题，而源码页仍缺专用 shell |
+| 当前被动 Hover 不能承载长文档 | 快速止闪修复使用 `pointer-events: none`，但 tooltip 同时有 `max-height` 和 `overflow: auto` | 纯短 signature 可用；含长说明的 328 个 Hover 无法滚动、选取或使用内部链接 |
+| 键盘焦点数量失控 | 源码页有 19,503 个 Hover occurrence，全部有 `tabindex="0"`；其中 3,739 个是没有链接的 `<span>` | Tab 顺序被成千上万个 token 淹没；`aria-haspopup="true"` 也不符合普通 tooltip 语义 |
+| `.mbt.md` 页面存在重复正文 | 抽样页面的完整 heading/prose fragment 出现两次；`render_partial(document)` 会把现有 document 再 append 到新的 partial document | 在建立视觉截图基线前必须先修正文唯一性，否则任何样式比较都不可信 |
+| 当前 template 与真实路径不一致 | `templates/moonbit-source.html` 存在，但实际页面由 `_standalone_page()` 字符串生成 | 后续必须先确定唯一模板入口，不能修改一个从未消费的模板后误以为页面已更新 |
+
+这些问题说明“词法高亮、语义交互、语义着色”必须保持为三个不同层次：
+
+1. **词法高亮**覆盖全部 `.mbt/.mbti/.mbtp/.mbt.md` 代码；冻结 source/provenance 优先读取 snapshot lexical shard，普通 fence 使用 Pygments fallback，不要求 occurrence semantics 完整；
+2. **语义交互**只为 verified occurrence 添加 Hover、Definition 和 binding identity，不改变基础词法颜色；
+3. **语义着色**只使用 Moon 工具链明确提供并经过归一化的 symbol kind/modifier；缺数据时退回词法颜色，不能按大小写或“有没有 Hover”猜测。
+
+普通 Markdown 中没有文学编程/源码 provenance 的 MoonBit fence 仍只拥有第一层。这些 fence 可以获得相同的高质量 MoonBit 词法主题，但不会出现伪 Hover 或伪 Definition。
+
+### 20.2 MoonBit provider 能力与语义分类策略
+
+当前 `moon-lsp v0.10.2+1bb3e16cf` 的初始化能力已经实测：
+
+- `semanticTokensProvider` 只有 `function_call`、`function_decl`；modifier 只有 `async`、`error`；
+- `documentSymbolProvider` 可返回 declaration hierarchy；实测 trait 为 kind 11、field 为 8、enum member 为 22、function 为 12、trait method/impl block 为 6、struct/opaque type 常见为 19；
+- `documentSymbol.selectionRange` 在多个构造上覆盖整条声明甚至整个 body，不是精确 identifier range，不能直接拿来生成 `<a>`；
+- Hover 与 Definition 仍是最终解析后的类型、方法、operator 和 package target 的权威来源。
+
+这意味着第一版真正可用的 MoonBit semantic decoration 是 function call/declaration 与 `async/error` effect；更细的声明类别需要把 `documentSymbol` hierarchy 与精确 Definition target range 连接。归一化时使用以下权威顺序：
+
+| 信息 | 首选来源 | 次选/连接方式 | 无法确认时 |
+|---|---|---|---|
+| keyword/string/number/comment/operator/punctuation | Snapshot 中版本化的 `mooninfo -dump-tokens` lexical shard | 与官方 MoonBit grammar 对齐的 Pygments fallback | `Text`，不伪造类别 |
+| package/module alias、dot identifier、label | 持久化的 `mooninfo token_kind` | 词法上下文 | 普通 identifier |
+| function call/declaration、`async/error` | LSP semantic tokens + snapshot 中保存的 legend | exact UTF range | 保留词法 `.nf`，不加 effect modifier |
+| top-level declaration kind | `documentSymbol` hierarchy | 选择包含精确 Definition selection range 的最窄、name-compatible symbol | `unknown-declaration`，不猜 |
+| reference kind | Definition edge 指向的已分类 symbol | 多 target 只有在类别一致时传播 | 保留词法类别 |
+| local/parameter/pattern binding | 稳定 definition identity + 后续 MoonBit parser/provider | 不能按文本或 href 合并 shadowing | 普通 variable |
+| builtin | provider 明确无源码且 hover/signature 可验证 | 版本化 builtin inventory | 普通 type/name |
+| deprecated/diagnostic | 后续 provider 明确返回的 modifier/diagnostic | 无 | 不展示 |
+
+内部 taxonomy 不直接使用 Pygments 或 LSP 的原始名字，而固定为稳定的 MoonBit class：
+
+- namespace：`package`、`module-alias`；
+- type：`builtin-type`、`struct`、`enum`、`type-alias`、`error-type`、`trait`、`type-parameter`；
+- value：`constructor`、`top-level-value`、`constant`、`function`、`method`、`trait-method`、`operator`；
+- binding：`field`、`parameter`、`local`、`pattern-binding`、`label`；
+- lexical：`keyword-control`、`keyword-declaration`、`visibility`、`attribute`、`string`、`string-escape`、`interpolation`、`number`、`comment`、`doc-comment`、`punctuation`；
+- modifier：`definition`、`async`、`raises-error`、`mutable`、`readonly`、`public`、`deprecated`、`builtin`、`unresolved`。
+
+当前 schema 需要把“在哪里触发交互”与“provider 返回了什么范围”分开，建议的增量字段为：
+
+```json
+{
+  "candidate_range_utf8": [120, 126],
+  "display_range_utf8": [120, 126],
+  "hover_range_utf8": [118, 127],
+  "lexical_kind": "DOT_LIDENT",
+  "semantic_kind": "method",
+  "semantic_modifiers": ["async", "raises-error"],
+  "symbol_id": "sym:...",
+  "hover_id": "sha256:..."
+}
+```
+
+`display_range_utf8` 默认使用精确 candidate identifier；只有 provider range 与同一词法 token 严格相容时才允许扩大。`hover_range_utf8` 保留用于审计，绝不能因为它覆盖更大表达式就把 whitespace、keyword 或 punctuation 变成独立 Tab stop。Schema、renderer 与 cache digest 都必须包含 taxonomy/legend/version。
+
+源码词法层建议增加独立、可合并的 shard：
+
+```json
+{
+  "source_id": "local:...",
+  "provider": "mooninfo -dump-tokens",
+  "provider_version": "v0.10.2+...",
+  "tokens": [
+    {"range_utf8": [0, 3], "kind": "PUB"},
+    {"range_utf8": [4, 6], "kind": "FN"},
+    {"range_utf8": [7, 10], "kind": "LIDENT"}
+  ]
+}
+```
+
+该 lexical capture 不受 `analysis_origin` 限制：local、dependency、stdlib 和 display-only source 都应尝试生成。一次本地 spike 对 689 个 local `.mbt` 用 16 workers 完成 110 种 token kind 的捕获约需 1.67 秒，说明它与逐 occurrence LSP 分析不是同一性能量级。仍需在全 2,075 source 上测量 `.mbti/.mbtp/.mbt.md` 能力、失败率、shard 大小和 toolchain/version mismatch；失败文件使用 Pygments fallback 并记录 reason，不能从页面 corpus 消失。
+
+普通 `Location` 的 target range 可以继续决定导航落点，但只有在 lexical shard 内成功 narrow 到一个 name-compatible identifier 时才产生有宽度的 definition selection。无法 narrow 时生成 zero-width/line anchor，不把整段 declaration/body 包成 `.mbt-definition`。
+
+数据流固定为：
+
+```mermaid
+flowchart LR
+  A["mooninfo lexical capture"] --> L["Snapshot lexical ranges"]
+  AF["Pygments + official grammar fixtures"] --> LF["No-provenance fallback"]
+  B["mooninfo token_kind"] --> O["Occurrence display identity"]
+  C["LSP semanticTokens"] --> E["function/effect decorations"]
+  D["documentSymbol + Definition targets"] --> K["Normalized symbol kind"]
+  H["LSP Hover MarkupContent"] --> P["Safe structured Hover blocks"]
+  L --> S["Versioned semantic snapshot"]
+  O --> S
+  E --> S
+  K --> S
+  P --> S
+  S --> R["Shared range renderer"]
+  R --> DOC["Sphinx document code blocks"]
+  R --> SRC["Frozen source pages"]
+  R --> POP["Highlighted Hover signature"]
+  LF --> DOC
+```
+
+### 20.3 词法主题与视觉 token
+
+不新增外部 Web Font。正文继续继承 Sphinx/PyData 字体；代码、路径和 signature 使用：
+
+```css
+ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, Consolas, monospace
+```
+
+MoonBit 的 `->`、`=>`、`::`、`|>` 对教学有语法意义，默认关闭代码 ligature，避免多个源码字符被显示成一个字形。代码保持 2-space tab、可缩放字号和不换行的源码布局。
+
+候选视觉变量如下；实现前以真实 MoonBit fixture 做 light/dark 对比度和色盲检查，正文 token 对代码背景至少达到 WCAG 4.5:1：
+
+| Token | Light | Dark | 主要用途 |
+|---|---:|---:|---|
+| `--mbt-rabbit` | `#B92482` | `#F18BCB` | `@package`、focus、header 品牌轨道 |
+| `--mbt-lunar` | `#116A8B` | `#7DD3FC` | type、trait、constructor |
+| `--mbt-nebula` | `#7C3AED` | `#D6B4FF` | keyword、declaration |
+| `--mbt-leaf` | `#2F6B3F` | `#9DD9A6` | string |
+| `--mbt-amber` | `#8A4B12` | `#F4C279` | number、constant |
+| `--mbt-ink` | `#26212A` | `#EEEAF0` | 普通 identifier、punctuation |
+| `--mbt-muted` | `#6E6672` | `#A59DA8` | comment、line number |
+| `--mbt-code-surface` | `#F7F5F8` | `#1B171E` | code background |
+| `--mbt-elevated` | `#FFFFFF` | `#211C24` | Hover background |
+| `--mbt-brand-wash` | `#F8E3F0` | `#3A1730` | hover、focus、`:target` state |
+
+稳定 lexical taxonomy 把 Moon 的约 110 种 raw token kind 合并到少量视觉类别；Pygments fallback 使用同一类别与变量。第一版映射保持克制：
+
+- `.k/.kd` → Nebula；
+- `.nn` → Rabbit，仅在 lexer 已确认 package/namespace 时使用；
+- `.nc/.nb/.nt` → Lunar；
+- `.nf/.fm` → Rabbit 的可读派生色；
+- `.s*` → Leaf；
+- `.m*` → Amber；
+- `.c*` → Muted；
+- `.nv/.na/.p` → Ink，不把所有变量或 named argument 染成醒目的独立颜色。
+
+官方 MoonBit semantic modifiers 不再发明新的文字颜色：
+
+- `async` call/declaration 使用斜体；
+- `raises-error` call/declaration 使用带 offset、可见于 light/dark 的直线下划线；
+- 两者同时存在时组合；
+- effect 样式不等同 diagnostic，不能使用 error background 或波浪红线。
+
+Token 状态也不能覆盖基础语法色：
+
+| 状态 | 表现 |
+|---|---|
+| 普通词法 token | 只有基础语法色 |
+| Hover-only | `cursor: help`；hover 时轻微 brand wash |
+| Definition link | 保留语法色；hover/focus 时细下划线 |
+| Hover + Definition | background 与下划线组合，不另换文字颜色 |
+| Definition occurrence | 默认不加粗，避免整页噪音 |
+| 当前 URL target | brand wash + 2px 底部/侧边标记 |
+| Keyboard focus | 2px Rabbit outline，不能只靠颜色 |
+| Forced colors | `CanvasText`、`LinkText`、`Highlight`、系统 outline |
+
+Renderer 会在 lexical/semantic 边界并集上拆分 span。所有 token 样式禁止 padding、margin、改变字宽的 border 和伪内容；只允许 color、font-style、font-weight、text-decoration、background 与不参与布局的 outline/box-shadow。`<pre>.textContent` 必须继续逐字节对应展示源码。
+
+Renderer 还必须在不跨行号、semantic boundary、anchor 或链接边界的前提下合并相邻相同 class 的 lexical fragment。Whitespace 使用纯文本或按行合并，不再每个字符一个 `<span class="w">`；普通 string content 也按连续 range 合并。HTML 大小和 DOM node 数应在 Phase 1 先下降，再增加新的 semantic class。
+
+CSS 资产需要拆分职责：
+
+```text
+moonbit-code.css       # 只 scope 到 .highlight-moonbit；词法色与 semantic token state
+moonbit-semantic.css   # Hover/Definition interaction；不得含无 scope 的 html/body shell
+moonbit-source.css     # 仅独立 source/literate/index/target-set 页面
+```
+
+文档页通过 `html[data-theme]` 映射变量；独立页面用极小的 head bootstrap 读取显式 `light/dark` preference，缺失、`auto` 或 `file://` localStorage 不可共享时回退 `prefers-color-scheme`。独立源码页不能加载完整 PyData/Sphinx Book Theme。
+
+### 20.4 结构化 Hover 计划
+
+Hover 应从 raw Markdown 字符串规范化为安全、可主题化的 block model，而不是把任意 HTML 放进 payload：
+
+```json
+{
+  "signature": {
+    "language": "moonbit",
+    "tokens": [["keyword-declaration", "fn"], ["function", "map"], ["text", "(...)"]]
+  },
+  "documentation": [
+    {"kind": "paragraph", "inline": []},
+    {"kind": "list", "items": []},
+    {"kind": "code", "language": "moonbit", "tokens": []}
+  ]
+}
+```
+
+构建期使用当前 MyST/markdown-it 栈解析受限 Markdown，并把依赖、stdlib doc comment 视为不可信输入：
+
+- raw HTML 禁用；
+- URL scheme 使用 allowlist；
+- paragraph、emphasis、strong、inline code、list、受限 link、MoonBit fence 是第一阶段允许集合；
+- plaintext Hover 只生成 escaped text/pre；
+- MoonBit signature 与文档内 MoonBit fence 使用同一 lexer/token variable；
+- payload 存结构化 token/text，不存未经 sanitizer 的 `innerHTML`。
+
+视觉结构保持两层，不增加此前已经删除的 `View Source` 控件：
+
+```text
+┌─ Rabbit accent ──────────────────────────┐
+│ fn[T : Eq] assert_eq(a : T, b : T)       │  MoonBit code font + token colors
+├──────────────────────────────────────────┤
+│ Asserts that two values are equal.       │  prose font
+│ • a — first value                        │
+│ • b — second value                       │
+└──────────────────────────────────────────┘
+```
+
+- 最大宽度约 44rem、最大高度约 70dvh；signature 横向滚动，documentation 纵向滚动；
+- 使用 1px border、8px radius、克制 shadow 和 2–3px Rabbit 侧轨；不使用定位箭头；
+- 宽度低于约 40rem 或上下都无法容纳时改为左右 8px inset 的底部 panel；
+- 200% zoom、safe-area、CJK 文档和长 package path 都不能截断触发 token。
+
+一旦展示 328 个带长说明的 Hover，当前 `pointer-events: none` 被动 tooltip 就不再满足产品要求。最终状态机固定为：
+
+```text
+open = targetHovered
+    OR targetFocused
+    OR popoverHovered
+    OR popoverFocusWithin
+    OR pinned
+```
+
+关闭使用 100–150ms intent delay，允许鼠标跨越 token 与 popover 的间隙；触摸/click 可以 pin，`Escape` 关闭。若内容允许滚动、链接或选择，应使用 popover 语义而不是伪装成纯 `role="tooltip"`。普通链接 token 继续由浏览器 Tab；无链接 Hover span 不再全部持久化 `tabindex="0"`，而应采用 roving/按需焦点策略。显示时动态关联 `aria-describedby` 或 popover control，`aria-haspopup="true"` 只在语义确实匹配时使用。
+
+### 20.5 纯源码页与 literate page
+
+纯 `.mbt/.mbti/.mbtp` 页面继续保持 code-only，不按 declaration 拆卡片：
+
+```text
+┌──────────────────────────────────────────────────────────────┐
+│ MoonBit source  module@version                  path/file.mbt │
+├─────┬────────────────────────────────────────────────────────┤
+│  1  │ pub fn ...                                             │
+│  2  │ ...                                                    │
+└─────┴────────────────────────────────────────────────────────┘
+```
+
+- header 高 44–48px，path 是主信息，module/version/origin 是弱 metadata；不显示大 logo、View Source 或 IDE 工具栏；
+- header 可 sticky，但 `#L42` 与 definition anchor 必须设置对应 `scroll-margin-top`；
+- line-number gutter 使用独立 surface，行号不进入 `<pre>.textContent`；行号链接可选，但 `:target` 行必须清晰；
+- 代码铺满页面，不放圆角 card，不自动换行，长行水平滚动；
+- 低于 48rem 时 header 两行、path 可断行、gutter 缩至约 3.5–4em；
+- print 隐藏 Hover，源码保持黑白可读。
+
+`.mbt.md` 使用同一 header/token theme，但页面 variant 明确为 `mbt-source-page--literate`：
+
+- prose 限制约 72ch，代码 block 可突破 prose 宽度并水平滚动；
+- front matter 是 metadata，不渲染成普通 field list；
+- prose、heading、list、image 只出现一次；
+- 不采用 Lean Literate 隐藏 import、移动 docstring 或重排 command 的行为，冻结源内容仍须忠实。
+
+页面 shell 应有显式 `--code`、`--literate`、`--index`、`--targets` variant。先统一真实生成入口，再删除或接入当前未使用的 `moonbit-source.html` template。源码 index 的 2,000+ 平铺列表不属于第一轮配色阻断项；后续按 origin → module/version → package 分组并增加纯前端 filter，但不能拖慢源码页首轮发布。
+
+### 20.6 分 commit 实施顺序
+
+视觉工作不得触发不必要的 LSP 重跑。CSS/template-only 阶段只重建 HTML；只有新增 semantic token/document symbol 字段时才失效 semantic snapshot。
+
+1. `fix(docs): render literate source once`
+   - 修复 `render_partial(document)` 的双渲染；
+   - front matter 不进入正文；
+   - 增加 `.mbt.md` prose、heading、code occurrence 唯一性测试。
+
+2. `test(docs): lock MoonBit lexer conformance`
+   - 建立 MoonBit language showcase fixture；
+   - 覆盖 `pub(all/open/readonly)`、attribute、`#|/$|` string、interpolation、decimal/hex float、`@package`、dot call、trait/impl、constructor、label、operator、`suberror/extenum`；
+   - 为 `.mbti`、`.mbtp` 建独立 lexer/profile，覆盖 `predicate/lemma/∀/∃/→`；
+   - 与 pinned 官方 TextMate grammar、`mooninfo -dump-tokens` 做版本化差异测试，不直接 vendoring 未确认许可的 extension grammar。
+
+3. `feat(docs): persist MoonBit lexical token shards`
+   - 对完整 local/dependency/stdlib corpus 并行运行轻量 lexical capture；
+   - 建立约 110 个 raw kind 到稳定 lexical taxonomy 的显式表；
+   - `.mbt.md` 复用 raw fence map，`.mbti/.mbtp` 按 provider capability 记录；
+   - renderer 优先消费 shard，无 shard 时使用 Pygments fallback；
+   - 合并相邻同类 fragment，建立 HTML/DOM 体积 baseline。
+
+4. `refactor(docs): define MoonBit code theme tokens`
+   - 拆分 code/semantic/source CSS；
+   - 加入 light/dark/forced-colors/print variables；
+   - 只 scope `.highlight-moonbit`，不改变其他语言 code block；
+   - 普通 lexical fence 与 semantic block 先获得一致基础视觉。
+
+5. `feat(docs): style frozen MoonBit source pages`
+   - 增加 `lang`、theme bootstrap、page variant 与紧凑 header；
+   - 完成 gutter、horizontal scroll、`:target`、responsive；
+   - 保持轻量 standalone shell，不加载完整 Sphinx theme。
+
+6. `feat(docs): persist MoonBit semantic decorations`
+   - 每个 active source 增加一次 `semanticTokens/full` 和一次 `documentSymbol` 请求；
+   - snapshot 保存 legend、exact ranges、candidate `token_kind`、normalized kind/modifier；
+   - Definition target 向 reference 传播 kind 时要求唯一且一致；
+   - schema/cache/ledger/test fixture 同步升级。
+
+7. `feat(docs): render semantic token classes`
+   - renderer 输出 `data-mbt-kind`、`data-mbt-modifiers` 和稳定 class；
+   - 语义 effect 只做字体/下划线修饰，基础颜色仍由 lexer 提供；
+   - 修复 broad Hover range 导致 whitespace/punctuation 可交互的问题；
+   - 文档 block、源码页与 Hover signature 共享 renderer。
+
+8. `feat(docs): render structured MoonBit hovers`
+   - 构建期规范化/sanitize MarkupContent；
+   - signature 与 doc fence 生成 token arrays；
+   - runtime 用 DOM/text node 构造 card，禁止任意 `innerHTML`；
+   - 继续输出 file-safe content-addressed preload。
+
+9. `fix(docs): make rich hovers accessible`
+   - 实现 target/popover/pin 状态机与 intent delay；
+   - 修复 Tab stop、ARIA、touch、coarse pointer、viewport bottom panel；
+   - keyboard focus 与 Go to definition 的普通链接行为保持独立。
+
+10. `test(docs): add MoonBit semantic visual regressions`
+   - Chromium、Firefox、WebKit；
+   - light/dark/forced-colors/print；
+   - 375、768、1440px 与 200% zoom；
+   - `file://` 与 HTTP；
+   - English、zh_CN、ja 和长 CJK/prose/signature fixture；
+   - screenshot、DOM contract、contrast、link/anchor 与性能 gate。
+
+### 20.7 测试矩阵与性能门槛
+
+语言 fixture 至少覆盖：
+
+- package alias、qualified reference、dot method、static method、trait method、operator overload；
+- struct/enum/type alias/error/trait/type parameter、constructor、field；
+- top-level function/value、parameter、local、pattern binding、shadowing；
+- `async`、raise/noraise、async + error 同时存在；
+- named/optional/autofill label 的 `x= / x? / x~` 精确 display range；
+- doc comment、attribute、deprecated、string interpolation、多行 string；
+- `.mbti` signature 与 `.mbtp` proof symbol；
+- 故意无效/error-code source 的 lexical-only fallback。
+
+DOM/功能 gate：
+
+- `<pre>.textContent` 与 frozen/display projection 完全一致；
+- 任何 token 不因 range 交叉产生 nested `<a>`；
+- whitespace、punctuation、keyword 不因 broad Hover range 获得伪 Tab stop；
+- 相同 binding 联动不跨越 shadowing；
+- semantic kind 不确定时只保留 lexical class；
+- ordinary `Location` broad range 无法 narrow 时只有 anchor，没有整段 definition coloring；
+- 相邻同类 lexical token 被安全合并，代码文本、line anchor 和 semantic link 边界不变；
+- JavaScript 禁用时 Definition href 和 target-set 仍工作；
+- 普通 fence 只显示 lexical theme；provenance block 才显示交互状态；
+- `.mbt.md` prose/code/front matter 不重复；
+- Hover 不显示原始 fence、`---` 或 Markdown marker；
+- untrusted dependency documentation 不能注入 HTML/script/危险 URL；
+- source page、doc block、Hover signature 对同一 token 使用一致颜色变量。
+
+视觉/a11y gate：
+
+- 所有普通大小 token 对背景达到 4.5:1；comment 也不能靠过低对比度表达“次要”；
+- 信息不只靠颜色；async/error/definition/focus 都有非颜色状态；
+- keyboard、touch、screen reader、forced-colors 和 reduced-motion 有 fixture；
+- Hover 在四个 viewport 边缘、长 signature、长文档、滚动中不闪烁、不遮住 focus target；
+- 不加载外部字体，不要求网络，不破坏 `file://`。
+
+性能 gate：
+
+- CSS/template 变化不运行 `moon check` 或 LSP；
+- lexical capture 只运行 `mooninfo`，不启动 LSP session；完整 corpus 时间和失败率进入报告；
+- semantic token/document symbol 是每个 active file 常数次请求，不回到逐 identifier 扩张；
+- 新 snapshot shard 的字节数、压缩后大小、HTML DOM node 数和 Hover payload 大小进入报告；HTML/DOM 应先因 coalescing 明显下降；
+- standalone page 不加载完整 PyData theme；
+- clean Sphinx HTML 仍保持当前 1–2 分钟预算，视觉层不能显著增加 2,000+ 页面写出时间。
+
+### 20.8 两阶段完成定义
+
+**视觉基础完成**要求：
+
+- 所有 MoonBit code block 和 source page 在 light/dark 下获得一致、可读的 MoonBit 词法主题；
+- standalone 源码页确实命中自己的 scoped token CSS，不再依赖失配的 `data-theme` Pygments selector；
+- pure/literate 页面结构、gutter、target 和响应式可用；
+- structured Hover 正确显示 signature 与说明，不再显示 raw Markdown；
+- `.mbt.md` 不重复；
+- 现有 Hover/Definition/复制/anchor 正确性不回归。
+
+**完整语义高亮完成**在上述基础上再要求：
+
+- `function_call/function_decl + async/error` 与官方 MoonBit provider 行为一致；
+- declaration/reference kind 具有可审计来源，未知类别 fail closed；
+- method、trait method、field、constructor、package alias 与 shadowed local fixture 全部通过；
+- dependency/stdlib 将来进入 active analysis 后只增加 overlay，不改变 class taxonomy、CSS token、URL 或页面 shell。
