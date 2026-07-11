@@ -91,7 +91,7 @@ class SemanticDocumentationConfigurationTests(unittest.TestCase):
         self.assertIn("'READTHEDOCS'", source)
 
     @unittest.skipUnless(shutil.which("just"), "just is not installed")
-    def test_semantic_recipes_preserve_the_build_order(self) -> None:
+    def test_existing_docs_recipes_include_the_semantic_phase(self) -> None:
         def dry_run(recipe: str) -> str:
             result = subprocess.run(
                 ["just", "--dry-run", recipe],
@@ -102,35 +102,47 @@ class SemanticDocumentationConfigurationTests(unittest.TestCase):
             )
             return result.stdout + result.stderr
 
-        production = dry_run("docs-html-semantic")
-        self.assertLess(
-            production.index("just semantic-index"),
-            production.index("just docs-html-semantic-from-snapshot"),
-        )
+        justfile = (REPO_ROOT / "justfile").read_text()
+        self.assertNotIn("docs-html-semantic", justfile)
+        for recipe in ("docs-html", "docs-html-zh", "docs-html-ja"):
+            production = dry_run(recipe)
+            index = production.index("build_semantic_snapshot.py build")
+            validate = production.index("validate --snapshot")
+            sphinx = production.index("MOONBIT_SEMANTIC_REQUIRED=1")
+            self.assertLess(index, validate, recipe)
+            self.assertLess(validate, sphinx, recipe)
+            self.assertIn("--require-semantics", production)
+            self.assertIn("--require-external-definitions", production)
+            self.assertIn("make html", production)
 
-        required = dry_run("semantic-check-required")
-        self.assertIn("validate --snapshot", required)
-        self.assertIn("--require-semantics", required)
-        self.assertIn("--require-external-definitions", required)
-
-        render = dry_run("docs-html-semantic-from-snapshot")
-        validate = render.index("just semantic-check-required")
-        sphinx = render.index("MOONBIT_SEMANTIC_REQUIRED=1")
-        closure = render.index("just semantic-html-check")
-        self.assertLess(validate, sphinx)
-        self.assertLess(sphinx, closure)
+        self.assertIn("LANGUAGE=zh_CN", dry_run("docs-html-zh"))
+        self.assertIn("LANGUAGE=ja", dry_run("docs-html-ja"))
 
     def test_deployment_entrypoints_require_semantic_content(self) -> None:
         rtd = (REPO_ROOT / ".readthedocs.yaml").read_text()
         self.assertIn("build_semantic_snapshot.py build", rtd)
         self.assertIn("--require-semantics", rtd)
         self.assertIn("--require-external-definitions", rtd)
-        self.assertIn("MOONBIT_SEMANTIC_E2E=1", rtd)
+        self.assertNotIn("post_build", rtd)
 
         release = (
             REPO_ROOT / ".github" / "workflows" / "release.yml"
         ).read_text()
-        self.assertIn("docs-html-semantic-zh", release)
+        self.assertIn("build_semantic_snapshot.py build", release)
+        self.assertIn("--repo-root .. --output semantic-snapshot", release)
+        self.assertNotIn("--output ../semantic-snapshot", release)
+        self.assertIn("--require-semantics", release)
+        self.assertIn("--require-external-definitions", release)
+        self.assertIn('LANGUAGE="zh_CN" MOONBIT_SEMANTIC_REQUIRED=1 make html', release)
+        self.assertNotIn("docs-html-semantic", release)
+
+        self.assertFalse(
+            (REPO_ROOT / ".github" / "workflows" / "semantic-docs.yml").exists()
+        )
+        existing_ci = (
+            REPO_ROOT / ".github" / "workflows" / "next-check.yml"
+        ).read_text()
+        self.assertIn("just docs-html", existing_ci)
 
     @unittest.skipUnless(
         importlib.util.find_spec("sphinx"), "Sphinx is not installed"

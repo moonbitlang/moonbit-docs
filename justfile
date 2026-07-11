@@ -1,60 +1,22 @@
 default:
     just --list
 
-# Build the default Sphinx docs with uv-managed Python dependencies.
-docs-html:
-    cd next && uv run --with-requirements requirements.txt make html
-
-# Build and validate the self-contained MoonBit semantic snapshot.
-# The snapshot argument is relative to the repository root.
+# Build and validate the semantic input consumed by the existing docs recipes.
 semantic-index snapshot="semantic-snapshot":
     uv run python scripts/build_semantic_snapshot.py build --repo-root . --output "{{ snapshot }}"
-
-# Validate an existing semantic snapshot without rebuilding it.
-semantic-check snapshot="semantic-snapshot":
-    uv run python scripts/build_semantic_snapshot.py validate --snapshot "{{ snapshot }}"
-
-# Validate that a deployment snapshot is complete and contains real semantics.
-semantic-check-required snapshot="semantic-snapshot":
     uv run python scripts/build_semantic_snapshot.py validate --snapshot "{{ snapshot }}" --require-semantics --require-external-definitions
 
-# Build one locale from an existing snapshot and verify the rendered semantics.
-docs-html-semantic-from-snapshot snapshot="semantic-snapshot" language="" builddir="next/_build":
-    just semantic-check-required "{{ snapshot }}"
-    cd next && LANGUAGE="{{ language }}" MOONBIT_SEMANTIC_SNAPSHOT="{{ justfile_directory() }}/{{ snapshot }}" MOONBIT_SEMANTIC_REQUIRED=1 uv run --with-requirements requirements.txt make clean html BUILDDIR="{{ justfile_directory() }}/{{ builddir }}" SPHINXOPTS="-j auto"
-    just semantic-html-check "{{ snapshot }}" "{{ builddir }}/html"
-
-# Production HTML entrypoint: index once, then build one strict locale.
-docs-html-semantic snapshot="semantic-snapshot" language="" builddir="next/_build":
-    just semantic-index "{{ snapshot }}"
-    just docs-html-semantic-from-snapshot "{{ snapshot }}" "{{ language }}" "{{ builddir }}"
-
-# Build strict Chinese HTML at the normal deployment output path.
-docs-html-semantic-zh snapshot="semantic-snapshot" builddir="next/_build":
-    just docs-html-semantic "{{ snapshot }}" "zh_CN" "{{ builddir }}"
-
-# Build strict Japanese HTML at the normal deployment output path.
-docs-html-semantic-ja snapshot="semantic-snapshot" builddir="next/_build":
-    just docs-html-semantic "{{ snapshot }}" "ja" "{{ builddir }}"
-
-# Build all deployed locales from one shared snapshot for CI/local inspection.
-docs-html-semantic-all snapshot="semantic-snapshot":
-    just semantic-index "{{ snapshot }}"
-    just docs-html-semantic-from-snapshot "{{ snapshot }}" "" "next/_build"
-    just docs-html-semantic-from-snapshot "{{ snapshot }}" "zh_CN" "next/_build/zh_CN"
-    just docs-html-semantic-from-snapshot "{{ snapshot }}" "ja" "next/_build/ja"
-
-# Check that generated HTML contains closed Hover and Definition data.
-semantic-html-check snapshot="semantic-snapshot" html="next/_build/html":
-    MOONBIT_SEMANTIC_E2E=1 MOONBIT_SEMANTIC_SNAPSHOT="{{ snapshot }}" MOONBIT_SEMANTIC_HTML="{{ html }}" uv run --with-requirements next/requirements.txt python -m unittest discover -s tests/semantic_docs -p 'test_integration*.py' -v
+# Build the default Sphinx docs with uv-managed Python dependencies.
+docs-html: semantic-index
+    cd next && MOONBIT_SEMANTIC_REQUIRED=1 uv run --with-requirements requirements.txt make html
 
 # Build the Chinese Sphinx docs with uv-managed Python dependencies.
-docs-html-zh:
-    cd next && LANGUAGE=zh_CN uv run --with-requirements requirements.txt make html
+docs-html-zh: semantic-index
+    cd next && LANGUAGE=zh_CN MOONBIT_SEMANTIC_REQUIRED=1 uv run --with-requirements requirements.txt make html
 
 # Build the Japanese Sphinx docs with uv-managed Python dependencies.
-docs-html-ja:
-    cd next && LANGUAGE=ja uv run --with-requirements requirements.txt make html
+docs-html-ja: semantic-index
+    cd next && LANGUAGE=ja MOONBIT_SEMANTIC_REQUIRED=1 uv run --with-requirements requirements.txt make html
 
 # Build the Sphinx PDF with uv-managed Python dependencies.
 docs-pdf:

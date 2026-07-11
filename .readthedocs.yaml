@@ -8,11 +8,9 @@ build:
       - curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash -s "0.1.20260629"
       - PATH="$HOME/.moon/bin:$PATH" moon update
     pre_build:
-      - cd next && python3 llm.py
+      - cd next && python3 llm.py && cd ..
       - PATH="$HOME/.moon/bin:$PATH" python3 scripts/build_semantic_snapshot.py build --repo-root . --output semantic-snapshot
       - python3 scripts/build_semantic_snapshot.py validate --snapshot semantic-snapshot --require-semantics --require-external-definitions
-    post_build:
-      - MOONBIT_SEMANTIC_E2E=1 MOONBIT_SEMANTIC_SNAPSHOT=semantic-snapshot MOONBIT_SEMANTIC_HTML="$READTHEDOCS_OUTPUT/html" python3 -m unittest discover -s tests/semantic_docs -p 'test_integration*.py' -v
 
 sphinx:
   configuration: next/conf.py

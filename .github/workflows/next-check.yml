@@ -6,7 +6,15 @@ on:
       - main
   pull_request:
     paths:
+      - .github/actions/setup/**
+      - .github/workflows/next-check.yml
+      - .github/workflows/release.yml
+      - .readthedocs.yaml
+      - justfile
       - next/**
+      - scripts/build_semantic_snapshot.py
+      - scripts/moonbit_semantic/**
+      - tests/semantic_docs/**
   schedule:
     - cron: "0 10 * * 2"
 
@@ -29,6 +37,14 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.x"
+
+      - name: Install semantic documentation tools
+        if: matrix.os == 'ubuntu-latest'
+        run: python -m pip install uv
+
+      - name: Install just
+        if: matrix.os == 'ubuntu-latest'
+        uses: extractions/setup-just@v3
 
       - name: moon check and test
         run: |
@@ -53,3 +69,11 @@ jobs:
       - name: Script mode command transcript
         shell: bash
         run: scrut test --shell bash next/sources/script-mode/script-mode.cram
+
+      - name: Check semantic documentation
+        if: matrix.os == 'ubuntu-latest'
+        shell: bash
+        run: |
+          uv run --with-requirements next/requirements.txt --with pytest pytest -q tests/semantic_docs
+          just docs-html
+          MOONBIT_SEMANTIC_E2E=1 MOONBIT_SEMANTIC_TARGET_E2E=1 MOONBIT_SEMANTIC_SNAPSHOT=semantic-snapshot MOONBIT_SEMANTIC_HTML=next/_build/html uv run --with-requirements next/requirements.txt python -m unittest discover -s tests/semantic_docs -p 'test_integration*.py' -v

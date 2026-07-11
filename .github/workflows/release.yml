@@ -17,18 +17,17 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
       - name: install
-        run: pip install -r requirements.txt uv
-      - name: Install just
-        uses: extractions/setup-just@v3
+        run: pip install -r requirements.txt
       - name: Install MoonBit
         uses: ./.github/actions/setup
         with:
           version: "0.1.20260629"
-      - name: Build auxiliary downloads
-        run: LANGUAGE="zh_CN" python3 llm.py
-      - name: Build strict semantic Chinese HTML
-        working-directory: ${{ github.workspace }}
-        run: just docs-html-semantic-zh
+      - name: build
+        run: |
+          LANGUAGE="zh_CN" python3 llm.py
+          python3 ../scripts/build_semantic_snapshot.py build --repo-root .. --output semantic-snapshot
+          python3 ../scripts/build_semantic_snapshot.py validate --snapshot ../semantic-snapshot --require-semantics --require-external-definitions
+          LANGUAGE="zh_CN" MOONBIT_SEMANTIC_REQUIRED=1 make html
       - uses: aliyun/setup-aliyun-cli-action@v1
       - name: upload
         run: |
