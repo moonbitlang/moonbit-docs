@@ -1,9 +1,14 @@
 (() => {
   "use strict";
-  let payloadPromise;
+  const preloaded = globalThis.__moonbitSemanticHoverPayloads;
+  let payloadPromise = preloaded && typeof preloaded === "object"
+    ? Promise.resolve(preloaded)
+    : undefined;
   let tooltip;
   const hoverUrl = new URL("hovers.json", document.currentScript?.src || document.baseURI);
-  const payloads = () => payloadPromise ||= fetch(hoverUrl, {credentials: "same-origin"}).then(r => r.ok ? r.json() : {});
+  const payloads = () => payloadPromise ||= fetch(hoverUrl, {credentials: "same-origin"})
+    .then(r => r.ok ? r.json() : {})
+    .catch(() => ({}));
   const hide = () => { if (tooltip) tooltip.hidden = true; };
   const show = async target => {
     const id = target.dataset.mbtHover;

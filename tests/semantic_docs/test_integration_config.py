@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import ast
+from html.parser import HTMLParser
 import importlib.util
+import json
 import os
 from pathlib import Path
 import shutil
@@ -9,9 +11,33 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from urllib.parse import unquote, urlsplit
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+class _SemanticOutputParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.hover_ids: list[str] = []
+        self.definition_hrefs: list[str] = []
+        self.ids: set[str] = set()
+        self.scripts: list[str] = []
+        self.has_view_source = False
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = dict(attrs)
+        classes = set((values.get("class") or "").split())
+        if values.get("id"):
+            self.ids.add(values["id"] or "")
+        if values.get("data-mbt-hover"):
+            self.hover_ids.append(values["data-mbt-hover"] or "")
+        if tag == "a" and "mbt-semantic-token" in classes and values.get("href"):
+            self.definition_hrefs.append(values["href"] or "")
+        if tag == "script" and values.get("src"):
+            self.scripts.append(values["src"] or "")
+        self.has_view_source |= "mbt-view-source" in classes
 
 
 class SemanticDocumentationConfigurationTests(unittest.TestCase):
@@ -143,6 +169,63 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
         self.assertTrue(has_line_anchor, "no source line anchor was rendered")
         self.assertTrue(has_hover, "no hover-enabled token was rendered")
         self.assertTrue(has_definition, "no definition anchor was rendered")
+
+    def test_hover_payloads_and_definition_links_are_closed(self) -> None:
+        static = self.html / "_static" / "moonbit-semantic"
+        hover_scripts = list(static.glob("hovers.*.js"))
+        self.assertEqual(len(hover_scripts), 1, hover_scripts)
+        hover_script = hover_scripts[0]
+        payload_source = hover_script.read_text(encoding="utf-8")
+        prefix = "globalThis.__moonbitSemanticHoverPayloads="
+        self.assertTrue(payload_source.startswith(prefix), hover_script)
+        payloads = json.loads(payload_source.removeprefix(prefix).removesuffix(";\n"))
+
+        pages = list(self.html.rglob("*.html"))
+        self.assertTrue(pages, self.html)
+        parsed_pages: dict[Path, _SemanticOutputParser] = {}
+
+        def parse(page: Path) -> _SemanticOutputParser:
+            resolved = page.resolve()
+            if resolved not in parsed_pages:
+                parser = _SemanticOutputParser()
+                parser.feed(resolved.read_text(encoding="utf-8", errors="replace"))
+                parsed_pages[resolved] = parser
+            return parsed_pages[resolved]
+
+        hover_occurrences = 0
+        definition_links = 0
+        for page in pages:
+            parser = parse(page)
+            self.assertFalse(parser.has_view_source, page)
+            for hover_id in parser.hover_ids:
+                hover_occurrences += 1
+                self.assertIn(hover_id, payloads, f"{page}: {hover_id}")
+            if parser.hover_ids:
+                preload = next(
+                    (index for index, src in enumerate(parser.scripts) if hover_script.name in src),
+                    None,
+                )
+                runtime = next(
+                    (index for index, src in enumerate(parser.scripts) if src.endswith("moonbit-semantic.js")),
+                    None,
+                )
+                self.assertIsNotNone(preload, page)
+                self.assertIsNotNone(runtime, page)
+                self.assertLess(preload, runtime, page)
+
+            for href in parser.definition_hrefs:
+                definition_links += 1
+                target = urlsplit(href)
+                self.assertFalse(target.scheme, f"{page}: {href}")
+                target_page = page if not target.path else page.parent / unquote(target.path)
+                target_page = target_page.resolve()
+                self.assertTrue(target_page.is_relative_to(self.html), f"{page}: {href}")
+                self.assertTrue(target_page.is_file(), f"{page}: {href}")
+                if target.fragment:
+                    self.assertIn(unquote(target.fragment), parse(target_page).ids, f"{page}: {href}")
+
+        self.assertGreater(hover_occurrences, 0)
+        self.assertGreater(definition_links, 0)
 
 
 if __name__ == "__main__":

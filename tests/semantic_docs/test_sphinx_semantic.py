@@ -5,6 +5,7 @@ from io import StringIO
 import json
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 
 import pytest
 
@@ -15,6 +16,7 @@ sys.path.insert(0, str(EXT))
 
 from moonbit_semantic.render import SemanticCodeRenderer
 from moonbit_semantic.snapshot import Occurrence, SnapshotError, load_snapshot
+from moonbit_semantic.source_pages import get_outdated
 
 
 def _write_snapshot(
@@ -140,7 +142,14 @@ def _write_snapshot(
     (occurrences / "main.json").write_text(
         json.dumps({"occurrences": occurrence_records})
     )
-    (hovers / "all.json").write_text(json.dumps({"hover:answer": "fn answer() -> Int", "hover:lit": "fn lit() -> Int"}))
+    (hovers / "all.json").write_text(
+        json.dumps(
+            {
+                "hover:answer": "fn answer() -> Int",
+                "hover:lit": "fn lit() -> Int\u2028line separator\u2029paragraph separator",
+            }
+        )
+    )
     files = []
     for path in sorted(snapshot.rglob("*")):
         if path.is_file() and path.name != "manifest.json":
@@ -210,6 +219,22 @@ def test_snapshot_rejects_blob_digest_mismatch(tmp_path: Path) -> None:
         load_snapshot(path)
 
 
+def test_snapshot_change_outdates_every_document_page() -> None:
+    app = SimpleNamespace(
+        _moonbit_semantic_snapshot=SimpleNamespace(corpus_digest="sha256:new"),
+        config=SimpleNamespace(root_doc="index"),
+    )
+    env = SimpleNamespace(
+        moonbit_semantic_corpus_digest="sha256:old",
+        found_docs={"second", "index"},
+    )
+
+    outdated = get_outdated(app, env, set(), set(), set())
+
+    assert outdated == ["index", "second"]
+    assert env.moonbit_semantic_corpus_digest == "sha256:new"
+
+
 def test_sphinx_generates_code_and_literate_source_pages(tmp_path: Path) -> None:
     snapshot = _write_snapshot(tmp_path)
     app, out, _status, warning = _project(tmp_path, snapshot, required=True)
@@ -233,7 +258,21 @@ def test_sphinx_generates_code_and_literate_source_pages(tmp_path: Path) -> None
     assert "moonbit-semantic/assets/" in lit_html
     assert "snapshot://" not in pure_html + lit_html
     assert str(tmp_path) not in pure_html + lit_html
-    assert (out / "_static" / "moonbit-semantic" / "hovers.json").is_file()
+    hover_json = out / "_static" / "moonbit-semantic" / "hovers.json"
+    hover_scripts = list((out / "_static" / "moonbit-semantic").glob("hovers.*.js"))
+    assert len(hover_scripts) == 1
+    hover_script = hover_scripts[0]
+    assert hover_json.is_file()
+    assert hover_script.is_file()
+    hover_script_text = hover_script.read_text()
+    assert "__moonbitSemanticHoverPayloads=" in hover_script_text
+    assert "\\u2028" in hover_script_text
+    assert "\\u2029" in hover_script_text
+    assert "\u2028" not in hover_script_text
+    assert "\u2029" not in hover_script_text
+    assert pure_html.index(hover_script.name) < pure_html.index("moonbit-semantic.js")
+    docs_html = (out / "index.html").read_text()
+    assert docs_html.index(hover_script.name) < docs_html.index("moonbit-semantic.js")
     assert list((out / "_static" / "moonbit-semantic" / "assets").rglob("logo.svg"))
 
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 from html import escape
 import json
 import os
@@ -33,9 +34,20 @@ def _snapshot_path(app: Any) -> Path | None:
     return path.resolve()
 
 
+def _hover_payload(snapshot: SemanticSnapshot) -> str:
+    return json.dumps(snapshot.hovers, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+def _hover_script_name(snapshot: SemanticSnapshot) -> str:
+    payload = _hover_payload(snapshot).encode("utf-8")
+    digest = hashlib.sha256(payload).hexdigest()
+    return f"hovers.{digest}.js"
+
+
 def on_builder_inited(app: Any) -> None:
     app._moonbit_semantic_snapshot = None
     app._moonbit_semantic_load_error = None
+    app._moonbit_semantic_hover_script = None
     if app.builder.name not in SUPPORTED_BUILDERS:
         return
     path = _snapshot_path(app)
@@ -55,9 +67,17 @@ def on_builder_inited(app: Any) -> None:
         LOGGER.warning("MoonBit semantic snapshot disabled: %s", exc)
         return
     app._moonbit_semantic_snapshot = snapshot
+    app._moonbit_semantic_hover_script = _hover_script_name(snapshot)
     domain = app.env.get_domain("mbtsem")
     domain.register_snapshot(snapshot, app.config.moonbit_semantic_source_prefix)
     app.add_css_file("moonbit-semantic/moonbit-semantic.css")
+    # A classic script works for local ``file://`` previews in browsers that
+    # reject Fetch API requests for sibling JSON files. Keep it before the
+    # runtime so deferred scripts expose the payload before hover listeners run.
+    app.add_js_file(
+        f"moonbit-semantic/{app._moonbit_semantic_hover_script}",
+        defer="defer",
+    )
     app.add_js_file("moonbit-semantic/moonbit-semantic.js", defer="defer")
 
 
@@ -91,6 +111,8 @@ def _standalone_page(app: Any, pagename: str, title: str, body: str, source: Any
     current = app.builder.get_target_uri(pagename)
     css = relative_uri(current, "_static/moonbit-semantic/moonbit-semantic.css")
     pygments = relative_uri(current, "_static/pygments.css")
+    hover_script = app._moonbit_semantic_hover_script
+    hovers = relative_uri(current, f"_static/moonbit-semantic/{hover_script}")
     js = relative_uri(current, "_static/moonbit-semantic/moonbit-semantic.js")
     header = ""
     if source is not None:
@@ -111,6 +133,7 @@ def _standalone_page(app: Any, pagename: str, title: str, body: str, source: Any
         f"<title>{escape(title)} — MoonBit source</title>"
         f'<link rel="stylesheet" href="{escape(pygments, quote=True)}">'
         f'<link rel="stylesheet" href="{escape(css, quote=True)}">'
+        f'<script defer src="{escape(hovers, quote=True)}"></script>'
         f'<script defer src="{escape(js, quote=True)}"></script>'
         f'</head><body><main class="mbt-source-page">{header}{body}</main></body></html>'
     )
@@ -202,7 +225,11 @@ def get_outdated(app: Any, env: Any, added: set[str], changed: set[str], removed
     old = getattr(env, "moonbit_semantic_corpus_digest", None)
     env.moonbit_semantic_corpus_digest = snapshot.corpus_digest
     if old != snapshot.corpus_digest:
-        return [app.config.root_doc]
+        # The payload filename is content-addressed and semantic overlays may
+        # also have changed, so every document must be rewritten to reference
+        # the new asset and occurrence set.
+        found_docs = sorted(getattr(env, "found_docs", ()))
+        return found_docs or [app.config.root_doc]
     # Additional pages are not docnames, so force one write sentinel if their
     # output was externally removed between incremental builds.
     prefix = app.config.moonbit_semantic_source_prefix.strip("/")
@@ -211,7 +238,15 @@ def get_outdated(app: Any, env: Any, added: set[str], changed: set[str], removed
     pages.extend(f"{prefix}/_targets/{digest}" for digest in _target_sets(snapshot))
     expected = [Path(app.builder.get_outfilename(page)) for page in pages]
     static = Path(app.outdir) / "_static" / "moonbit-semantic"
-    expected.extend(static / name for name in ("moonbit-semantic.css", "moonbit-semantic.js", "hovers.json"))
+    expected.extend(
+        static / name
+        for name in (
+            "moonbit-semantic.css",
+            app._moonbit_semantic_hover_script,
+            "moonbit-semantic.js",
+            "hovers.json",
+        )
+    )
     for asset in snapshot.assets.values():
         expected.append(static / "assets" / asset.blob_digest.removeprefix("sha256:") / asset.path.rsplit("/", 1)[-1])
     return [app.config.root_doc] if any(not path.is_file() for path in expected) else []
@@ -235,6 +270,15 @@ def on_env_check_consistency(app: Any, env: Any) -> None:
         raise ExtensionError("MoonBit semantic snapshot has colliding source page routes")
 
 
+def _atomic_write_text(path: Path, content: str) -> None:
+    temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    try:
+        temporary.write_text(content, encoding="utf-8")
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
 def _write_assets(app: Any, exception: Exception | None) -> None:
     snapshot = getattr(app, "_moonbit_semantic_snapshot", None)
     if exception is not None or snapshot is None or app.builder.name not in SUPPORTED_BUILDERS:
@@ -244,8 +288,13 @@ def _write_assets(app: Any, exception: Exception | None) -> None:
     package = Path(__file__).parent
     for name in ("moonbit-semantic.css", "moonbit-semantic.js"):
         shutil.copyfile(package / "static" / name, destination / name)
-    payload = json.dumps(snapshot.hovers, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-    (destination / "hovers.json").write_text(payload, encoding="utf-8")
+    payload = _hover_payload(snapshot)
+    script_payload = payload.replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
+    _atomic_write_text(destination / "hovers.json", payload)
+    _atomic_write_text(
+        destination / app._moonbit_semantic_hover_script,
+        "globalThis.__moonbitSemanticHoverPayloads=" + script_payload + ";\n",
+    )
     for asset in snapshot.assets.values():
         target = destination / "assets" / asset.blob_digest.removeprefix("sha256:") / asset.path.rsplit("/", 1)[-1]
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -296,6 +345,11 @@ def _cleanup_stale_outputs(app: Any, exception: Exception | None) -> None:
         for output in asset_root.rglob("*"):
             if output.is_file() and output.resolve() not in expected_assets:
                 output.unlink()
+
+    static_root = Path(app.outdir) / "_static" / "moonbit-semantic"
+    for output in static_root.glob("hovers*.js"):
+        if output.name != app._moonbit_semantic_hover_script:
+            output.unlink()
 
 
 def on_build_finished(app: Any, exception: Exception | None) -> None:
