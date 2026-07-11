@@ -1,10 +1,12 @@
 # MoonBit 语义化代码文档实施计划
 
-状态：Proposed
+状态：In progress（当前里程碑采用 local-first semantic scope）
 
 范围：`next/` Sphinx 文档站点、`next/sources/` 中的 MoonBit 示例，以及它们解析后的 MoonBit 依赖闭包
 
-目标功能：代码 Hover、Go to definition、Hackage 风格的语义化源码页
+当前目标功能：local/standalone 代码 Hover、从 local/standalone occurrence 出发的 Go to definition、覆盖完整 local/dependency/stdlib corpus 的 Hackage 风格冻结源码页
+
+长期目标功能：把 occurrence analysis 扩展到 dependency 和 stdlib 源码页，使完整 corpus 都具有 Hover 与 Go to definition
 
 ## 1. 结论与不可变约束
 
@@ -25,6 +27,24 @@
 
 这里的“非侵入”只约束文档内容与被引用源码，不约束扩展实现和构建流水线。
 
+### 1.1 当前里程碑：完整页面 corpus，local-first 语义
+
+为先得到可用且 clean build 足够快的产品，本计划把“源码是否进入 snapshot/page corpus”和“源码是否作为 LSP occurrence analysis 的起点”明确分离：
+
+| Origin | 冻结 blob 与 canonical source page | 作为 LSP occurrence analysis 起点 | 页面语义 overlay |
+|---|---|---|---|
+| local/workspace required source | 是 | 是 | Hover + Definition |
+| standalone required `.mbt.md` | 是 | 是 | MoonBit code blocks 中的 Hover + Definition |
+| resolved dependency（含 `.mooncakes`、path dependency） | 是，完整 resolution-locked corpus | 否 | 不扫描自身 occurrence；允许为 local 入站 target 合成定义落点 |
+| pinned stdlib/core | 是，完整 toolchain-locked corpus | 否 | 不扫描自身 occurrence；允许为 local 入站 target 合成定义落点 |
+| expected-failure / 无可靠 context | 是 | 否 | 暂无；只显示冻结代码 |
+
+这里的“不分析 dependency/stdlib”表示不为这些 origin 启动独立 LSP analysis session、不枚举其中 token，也不为其中 occurrence 发起 Hover/Definition 请求。Local/standalone 文件中的 occurrence 仍由其 required consumer context 分析；当 LSP 返回的 Definition target 位于 dependency 或 stdlib 时，索引器保留该 verified location，并把链接解析到对应的冻结本站源码页。目标页至少提供文件行锚点，也可以低成本地为这个已验证入站 target 合成 definition occurrence/精确锚点；这种合成不包含目标文件自身 Hover 或引用图，不会触发对目标文件的递归语义扫描。
+
+这一收缩不改变 snapshot schema、source identity、Definition edge、Sphinx domain、source-page route 或 renderer 数据流。未来恢复全量语义时，只扩大 `analysis_origin` allowlist，把 dependency/stdlib 的 required contexts 放回 occurrence analysis 输入；页面 corpus、冻结 blob 和现有 local-to-dependency/stdlib 链接无需重做。
+
+除明确标注“当前里程碑”的范围外，本文对 dependency/stdlib 完整语义的描述均是长期目标和后续验收门槛，不是当前发布的阻塞条件。
+
 ## 2. 目标体验
 
 ### 2.1 文档页面中的代码块
@@ -44,26 +64,27 @@
 
 `.mbt.md` 使用单独的 literate source page：Markdown prose、标题、列表、链接和其他文档结构按 MyST/Sphinx 规则渲染，MoonBit fence 渲染为带语义信息的代码块。它不是 raw Markdown dump，也不是删除 prose 的代码投影；front matter 作为页面元数据处理，fence delimiter 不作为可见正文。
 
-| Source kind | Canonical page | Semantic behavior |
+| Source kind / origin | Canonical page | 当前里程碑的 semantic behavior |
 |---|---|---|
-| `.mbt` | Hackage 风格 code-only page | 完整 Hover/Definition |
-| `.mbti` | code-only page | provider 支持时完整语义，否则显式 display-only |
-| `.mbtp` | code-only page | proof provider 支持时完整语义，否则显式 display-only |
-| `.mbt.md` | 保留 Markdown prose 的 literate page | 在可分析 MoonBit code blocks 中提供语义 |
-| generated pure source | code-only page | 按真实 source kind/provider 处理 |
+| local/workspace required `.mbt` | Hackage 风格 code-only page | 完整 Hover/Definition |
+| local/standalone required `.mbt.md` | 保留 Markdown prose 的 literate page | 在可分析 MoonBit code blocks 中提供 Hover/Definition |
+| dependency/stdlib recognized source | 对应类型的冻结 code-only/literate page | 不扫描自身 occurrence；可作为 local Definition 的入站目标并合成 definition anchor |
+| `.mbti` | code-only page | 仅当属于允许的 local provider/context 时分析，否则 display-only |
+| `.mbtp` | code-only page | 仅当属于允许的 local proof provider/context 时分析，否则 display-only |
+| generated pure source | code-only page | local 且 provider/context 可靠时分析，否则 display-only |
 | virtual inline unit | code-only synthetic page | 仅在 Phase 4 context 可确定时生成 |
 
 每个源码页必须具有：
 
 - canonical、可预测、包含依赖版本身份的 URL；
 - 每个展示代码行对应的原始文件行锚点；
-- 全局定义和局部 binding 的唯一锚点；
-- 引用到定义的真实 `href`；
-- 与文档代码块一致的 Hover；
+- 当前被分析 source 中全局定义和局部 binding 的唯一锚点；display-only target 至少具有稳定行锚点，并可具有由入站 Definition location 建立的精确 target anchor；
+- 当前被分析 occurrence 到定义的真实 `href`；
+- 对拥有 semantic overlay 的页面，与文档代码块一致的 Hover；
 - 同一符号引用的可选联动高亮；
 - 没有语义数据时仍完整可读的词法高亮代码。
 
-源码页不是 `literalinclude` 的兜底。它是 definition navigation 的主要目的地，也是当前仓库完全缺失的新输出类型。
+源码页不是 `literalinclude` 的兜底。它是 definition navigation 的主要目的地，也是当前仓库完全缺失的新输出类型。当前里程碑中 dependency/stdlib 页面虽然没有自身 occurrence 的 Hover/Definition overlay，仍是一等、冻结且可离线重建的导航目标。
 
 ## 3. 当前系统与缺口
 
@@ -110,13 +131,17 @@ flowchart LR
   B --> C["固化输入 digest 与 moon check barrier"]
   C --> E["package metadata adapter 与 resolution lock"]
   D[".mooncakes resolved dependencies 与 pinned stdlib"] --> E
-  E --> Q["安全扩张 resolved source / definition closure"]
+  E --> Q["完整 local / dependency / stdlib page corpus"]
   B --> Q
-  Q --> F["token candidate collector"]
+  Q --> R["冻结全部 source blob 与 route identity"]
+  Q --> S["analysis-origin filter"]
+  S -->|"当前：local / standalone required"| F["token candidate collector"]
+  S -.->|"后续：放回 dependency / stdlib"| F
   F --> G["长期运行的 moon-lsp sessions"]
-  G --> H["规范化 symbol / hover / definition"]
-  H --> I["自包含 semantic source snapshot"]
-  Q --> I
+  G --> H["规范化 local occurrence / hover / definition"]
+  H --> T["解析 target source；允许 dependency / stdlib"]
+  T --> I["自包含 semantic source snapshot"]
+  R --> I
 
   J["现有 Markdown"] --> K["MyST / Sphinx read phase"]
   L["include 与 literalinclude"] --> K
@@ -130,10 +155,12 @@ flowchart LR
 这条数据流有三个需要显式区分的清单：
 
 - pre-check source inventory：来自受控 root、Moon 配置、error-code inventory 和受控文件发现，保证故意失败的源码也能固化 blob 并生成源码页；
-- semantic source inventory：来自成功检查后的 resolved package graph，决定哪些文件/context 可以获得完整语义，并补入 dependency、stdlib 和生成源码；
+- semantic source inventory：来自成功检查后的 resolved package graph，建立可分析 source/context 的全集，并补入 dependency、stdlib 和生成源码；当前里程碑再由 `analysis_origin` 策略从中只选择 local/standalone required contexts；
 - documentation occurrence inventory：来自最终 Sphinx doctree，决定哪些源码区间被显示在某个文档页面中。
 
 前两者合并为 snapshot source corpus；它与 documentation occurrence inventory 只在渲染时通过 `source_id + context_id + source range + blob digest` 连接。源码页永远不能由文档 occurrence inventory 反推，否则未被 `literalinclude` 的文件和定义会再次丢失。
+
+当前里程碑的关键单向边界是：dependency/stdlib 可以出现在 Definition target closure 中，但不会因此反向进入 token candidate collector。换言之，target resolution 只补充导航边和 target anchor，不递归触发目标文件的 Hover/Definition 请求。
 
 ## 5. 阶段 A：建立 semantic source snapshot
 
@@ -205,9 +232,12 @@ Definition closure 扩张必须在写入 blob 前执行 realpath/source-kind/lic
 这里还必须区分：
 
 - page corpus：上述全部 recognized source，必须 100% 有页面；
-- semantic corpus：拥有成功、可复现 analysis context 的 source，必须完成 candidate request ledger 并获得可用语义。
+- semantic-capable corpus：拥有成功、可复现 analysis context 的 source/context 全集；
+- active analysis corpus：本次构建策略允许作为 occurrence analysis 起点的 source/context，必须完成 candidate request ledger 并获得可用语义。
 
-对于 resolved dependency module 自带但不在 consumer graph 中的 package/example，索引器先从其自身 workspace/module manifest 解析独立 context，并锁定额外的 dev/test dependency。确实无法形成健康 context 的文件仍在 page corpus 中，但标记为 `display-only-with-reason`；不能把“有词法页面”计入 semantic complete。Coverage report 分别给出 `page_corpus_count`、`semantic_complete_count`、`expected_failure_count` 和 `display_only_count`。
+当前里程碑的 active analysis corpus 只包含 local/workspace/standalone 的 required contexts。Dependency 和 stdlib 即使拥有健康 context，也以 `analysis_status = deferred-by-origin-policy` 进入 page corpus，不建立 candidate ledger；它们不应被误报为分析失败。对于 resolved dependency module 自带但不在 consumer graph 中的 package/example，当前只需固化源码、身份和页面，不解析其额外 dev/test context。长期全量模式恢复时，再从其自身 workspace/module manifest 解析独立 context，并锁定额外的 dev/test dependency。
+
+确实无法形成健康 context 的 local 文件仍在 page corpus 中，但标记为 `display-only-with-reason`；不能把“有词法页面”计入 semantic complete。Coverage report 分别给出 `page_corpus_count`、`active_analysis_source_count`、`semantic_complete_count`、`deferred_by_origin_count`、`expected_failure_count` 和 `display_only_count`。
 
 ### 5.4 采集 Hover 和 Definition
 
@@ -218,10 +248,14 @@ Definition closure 扩张必须在写入 blob 前执行 realpath/source-kind/lic
 - `moon ide gen-symbols`：全局声明、名称和 anchor 的补充信息；
 - package metadata adapter：source identity、package、依赖版本和 backend 路由。
 
-每个 root 启动一个长期运行的 `moon-lsp --stdio` session。对文件发送 `didOpen`，然后对候选 token 请求：
+每个 active required context 使用长期运行的 `moon-lsp --stdio` session。对 active analysis source 发送 `didOpen`，然后对候选 token 请求：
 
 - `textDocument/hover`；
 - `textDocument/definition`。
+
+当前 `analysis_origin` allowlist 为 local/workspace/standalone，dependency 和 stdlib 文件不进入候选枚举、不发送 `didOpen`、不产生自己的 Hover/Definition request ledger。Local occurrence 的 Definition 响应仍可以指向 dependency/stdlib：索引器将返回 URI 规范化为已经冻结的 `source_id`，校验 target range 落在对应 blob 内，并保存导航 edge。该 edge 的渲染目标优先使用由 verified `targetSelectionRange` 建立的稳定 target anchor；若 provider 只返回普通 `Location`，至少使用可信行锚点。索引器不得因为发现这个 target 而分析目标文件中的其他 occurrence。
+
+恢复长期全量模式时，此处的 provider、请求、range normalization 和 ledger 规则全部不变；只将 dependency/stdlib contexts 加入 `analysis_origin` allowlist，并为它们建立 candidate ledger。
 
 普通 `.mbt` 使用 MoonBit language ID；`.mbt.md` 以原始 Markdown 内容和 Markdown language ID 打开，使 LSP range 直接落在原文件坐标。`mooninfo` 不能直接把 `.mbt.md` prose 当可靠 MoonBit token：候选枚举器需要把非代码区域替换为空白并保留换行/偏移，或先按 projection range 过滤 raw token。候选 token 只决定“向哪里提问”，最终 occurrence range 以 LSP response 或经过验证的原 token span 为准。
 
@@ -245,12 +279,12 @@ Snapshot 的规范渲染坐标使用原始 blob 上的 UTF-8 byte range，同时
 
 1. 普通 package 文件优先 normal package context；
 2. test/wbtest 专用文件使用自身 file-role context；
-3. `.mooncakes` dependency 优先其 resolved module/package 自身的可复现 context，consumer root context 作为 variant；
-4. stdlib 优先 pinned toolchain 的独立 core semantic context；
+3. `.mooncakes` dependency 在长期全量模式中优先其 resolved module/package 自身的可复现 context，consumer root context 作为 variant；当前里程碑没有 occurrence overlay；
+4. stdlib 在长期全量模式中优先 pinned toolchain 的独立 core semantic context；当前里程碑没有 occurrence overlay；
 5. 第一版使用项目配置的 preferred backend；
 6. 同一源码在多个 context 得到不同结果时全部保存在 snapshot，并在覆盖报告中列出；未实现 context selector 前，页面只展示 canonical context，不做无规则合并。
 
-Definition anchor 由 target source identity 和 definition identity 决定，不因引用方 context 改变。Source page 对所有已验证 context 的 definition anchors 取并集，确保任一合法引用都有落点；Hover/reference overlay 则使用 canonical context，避免把相互冲突的类型信息合并。未来的多 backend UI 可以切换 overlay，但不能改变同一个定义的 canonical source URL。
+Definition anchor 由 target source identity 和 definition identity 决定，不因引用方 context 改变。Source page 对所有已验证入站 target 和已分析 context 的 definition anchors 取并集，确保任一合法引用都有落点；target-only anchor 只是导航落点，不赋予 display-only 页面 Hover/reference overlay。拥有语义数据的页面使用 canonical context 展示 overlay，避免把相互冲突的类型信息合并。未来的多 backend UI 可以切换 overlay，但不能改变同一个定义的 canonical source URL。
 
 ### 5.6 Symbol identity
 
@@ -289,12 +323,12 @@ semantic-snapshot/
 
 各部分职责：
 
-- `manifest.json`：schema、analyzer revision、toolchain、corpus digest、root 和全部 shard digest；
+- `manifest.json`：schema、analyzer revision、toolchain、corpus digest、root、显式 `analysis_origin` policy 和全部 shard digest；
 - `resolution-lock.json`：local/path/registry dependency 和 stdlib 的 version/revision/tree digest/package set；
 - `analysis-inputs.jsonl`：`moon.work`、`moon.mod*`、`moon.pkg*`、原始及规范化 package metadata、provider config 等精确输入的 logical identity/blob digest；
 - `sources.jsonl`：canonical source identity、origin、module/version/package/path、aliases、blob digest、analysis status、literate structure 和 source-page route key；local、resolved `.mooncakes` dependency 与 pinned stdlib 都在此表中；
 - `assets.jsonl`：literate page 递归引用的 Markdown include、图片和允许的静态资源 identity/MIME/blob digest；
-- `contexts.jsonl`：root、package、file role、backend、package graph digest、toolchain digest、LSP initialize params、negotiated position encoding，以及精确 `input_source_ids + blob digests`/`context_input_digest`；
+- `contexts.jsonl`：root、package、file role、backend、package graph digest、toolchain digest、是否 active/deferred、LSP initialize params、negotiated position encoding，以及精确 `input_source_ids + blob digests`/`context_input_digest`；deferred context 不伪造 LSP 初始化信息；
 - `symbols.jsonl`：navigation symbol ID、logical symbol key、definition source/selection range、kind、visibility、qualified name、hover ID；
 - `occurrences`：按 context 隔离的 definition/reference range、hover ID 和完整 target location/link；
 - `requests`：每个 candidate 的 hover/definition 完成状态、重试和错误 ledger；
@@ -327,7 +361,7 @@ semantic-snapshot/
 
 所有 byte range 都是原始 blob 上的半开区间 `[start, end)`。普通 `Location` 把 target range 和 target selection range 规范化为同一 verified identifier range；`LocationLink` 的四个 range 全部保留。Hover 同时保存请求位置、candidate range、可选的 `Hover.range` 和最终采用的 effective range，避免 qualifier、method 或 field 被绑定到错误 span。
 
-Required context 只有在所有 candidate 都进入 `complete`、`valid-no-result` 或 `skipped-with-reason` 状态时才能发布。任何未分类请求、JSON-RPC error、timeout、LSP crash 或未完成文件都会使该 context 失败；不得用 occurrence 数量看起来“差不多”来判断完成。
+Active required context 只有在所有 candidate 都进入 `complete`、`valid-no-result` 或 `skipped-with-reason` 状态时才能发布。任何未分类请求、JSON-RPC error、timeout、LSP crash 或未完成文件都会使该 context 失败；不得用 occurrence 数量看起来“差不多”来判断完成。`deferred-by-origin-policy` source 不建立空 ledger 冒充 complete，而是由 manifest policy 和 coverage report 单独审计。
 
 Sphinx 只能从 snapshot blob 生成源码页，不能在渲染阶段重新读取 `.mooncakes`、`$MOON_HOME` 或依赖 checkout。Snapshot 对渲染和分析输入审计是 self-contained；重新执行语义分析仍需要 manifest 指定的 pinned toolchain/provider。这一边界保证分析字节与展示字节一致，也使不安装 MoonBit 的文档环境能够生成完整页面。
 
@@ -479,6 +513,8 @@ Renderer 在 lexical 和 semantic range 的边界并集上切分文本，直接�
 2. 使用共享 semantic renderer，生成 token hover、definition anchor、reference link 和 line anchor；
 3. 同时生成 source root、module、package、file index，并把 symbols 注册到 MoonBit domain。
 
+当前里程碑中，第 2 点只对 active local/standalone source 渲染完整 occurrence overlay。Dependency/stdlib 页面使用同一 lexical renderer 和 canonical route，但不渲染自身扫描得到的 Hover、引用链接或文件内部 occurrence；它们仍渲染行锚点，并允许为 local Definition edge 实际命中的 target 合成 definition occurrence/anchor。未来放开 origin policy 后，同一页面模板直接叠加其完整 occurrence overlay，不改变 URL。
+
 推荐 namespace：
 
 ```text
@@ -501,7 +537,7 @@ _moonbit-source/_targets/<definition-set-digest>
 - 行锚点：`#L42`，永远表示原始文件的一基第 42 行；
 - 定义锚点：`#mb-def-<stable-symbol-id>`，附着在精确的 definition token 上。
 
-Reference 的默认 `href` 指向定义锚点；如果只有可信 location 而没有完整 symbol identity，则至少指向对应行锚点。单个 Definition target 直接链接源码页；多个 target 则生成一个确定性、静态的 target-set page，普通 `href` 指向该页面，页面列出全部候选源码锚点。JavaScript 可以把同一选择器增强为就地 popover，但不能代替静态页面。这样既不静默丢弃 target，也保证禁用 JavaScript 后仍可完成导航。
+Reference 的默认 `href` 指向定义锚点；如果只有可信 location 而没有完整 symbol identity，则至少指向对应行锚点。这一规则同样适用于 display-only dependency/stdlib 目标：目标页无需自己的 semantic overlay，也必须能承接 local occurrence 的入站链接。单个 Definition target 直接链接源码页；多个 target 则生成一个确定性、静态的 target-set page，普通 `href` 指向该页面，页面列出全部候选源码锚点。JavaScript 可以把同一选择器增强为就地 popover，但不能代替静态页面。这样既不静默丢弃 target，也保证禁用 JavaScript 后仍可完成导航。
 
 全局、局部、同名 shadowing 和跨 package symbol 使用同一 contract。Go to definition 不优先选择文档页面 occurrence，从而避免同一源码被多个页面重复 include 时的歧义。
 
@@ -591,9 +627,9 @@ Hover 内容按 source page 或 module 分片并去重，token 只保存 `hover_
 
 ## 8. `.mooncakes`、dependency、stdlib 与发布策略
 
-### 8.1 `.mooncakes` 是第一等分析输入
+### 8.1 `.mooncakes` 是第一等 page-corpus 输入
 
-`.mooncakes` 不能被忽略。它是当前工程实际解析出的 registry dependency source tree，也是 cross-package Hover/Definition 的主要来源。
+`.mooncakes` 不能被忽略。它是当前工程实际解析出的 registry dependency source tree，也是 cross-package Definition 的主要目标之一。当前里程碑把它作为第一等冻结源码与路由输入，但暂不把其中源码作为 occurrence analysis 起点。
 
 正确边界是：
 
@@ -601,8 +637,10 @@ Hover 内容按 source page 或 module 分片并去重，token 只保存 `hover_
 分析阶段
   packages.json / resolution lock
     → 定位每个 root 的 .mooncakes 中的精确 module/version/package
-    → 枚举并分析全部 provider-recognized source
-    → 固化 blob、语义 index、版本和 tree digest
+    → 枚举全部 provider-recognized source
+    → 固化 blob、route、版本和 tree digest
+    → 解析 local Definition 返回的 dependency target
+    → 不枚举 dependency token，不请求其 Hover/Definition
 
 Sphinx 阶段
   只消费上述 snapshot
@@ -614,18 +652,20 @@ Sphinx 阶段
 - 从 package metadata 而不是目录名猜测 module/package identity；
 - 记录 `.mooncakes` alias、canonical realpath、module、resolved version/revision 和 source tree digest；
 - 对 resolution lock 中每个 dependency module 的全部 provider-recognized source 建 page inventory，不只收集恰好被某次 Definition 命中的文件；
-- 使用 consumer context 或 dependency 自身可复现的 module context 分析这些文件，并持久化 `context_id`；
+- 当前以 `deferred-by-origin-policy` 记录这些文件，不为其建立 occurrence request ledger；
 - 把所有 dependency source blob 复制进 content-addressed snapshot；
 - 为每个 dependency 文件生成本站版本化 source/literate page；
-- 让跨 package Definition 只指向这些本站页面和锚点。
+- 让从 local/standalone occurrence 出发的跨 package Definition 只指向这些本站页面和锚点。
+
+长期全量模式再使用 consumer context 或 dependency 自身可复现的 module context 分析这些文件并持久化 occurrence。这个变化只扩大 analysis origin，不改变依赖发现、blob、source identity、route 或已存在的入站 Definition edge。
 
 不同 root 的 `.mooncakes` 可能包含同一 module/version。Tree digest 相同则共享 blob/page identity；相同 version 但 digest 不同必须视为 resolution conflict 并在 production 中失败。
 
 Path dependency 使用同一规则：从 package metadata/resolution lock 确认 module root，扫描该 root 的全部 provider-recognized source，并用 commit ID 或 module tree digest 固化身份。它不能因为不位于 `.mooncakes` 就只收当前 consumer 恰好编译到的几个文件。
 
-### 8.2 完整 stdlib source corpus
+### 8.2 完整 stdlib source corpus，当前 display-only
 
-Stdlib 也不是 Definition 命中时才临时补一个文件。索引器为 pinned MoonBit toolchain 建立独立 stdlib/core semantic root，纳入该发行版中全部 provider-recognized source，并为每个文件生成版本化本站页面。
+Stdlib 也不是 Definition 命中时才临时补一个文件。索引器从 pinned MoonBit toolchain 纳入该发行版中全部 provider-recognized source，并为每个文件生成版本化本站页面。当前里程碑不启动独立 stdlib/core LSP occurrence analysis；stdlib 页面是可承接 local Definition 的 display-only 冻结页面。
 
 Snapshot 记录：
 
@@ -635,10 +675,11 @@ Snapshot 记录：
 - `moon-lsp`、`moonc` 和相关 provider executable digest；
 - backend 与 build profile；
 - package、相对路径、source kind 和 blob digest；
-- canonical analysis context；
-- definitions、references 和 hover payload。
+- 当前分析策略 `deferred-by-origin-policy`；
+- local occurrence 返回的入站 Definition target 与 target-only anchor；
+- 长期全量模式所需的 canonical analysis context fingerprint。
 
-Stdlib 索引在不可变 toolchain snapshot 中重新 bundle/check core，或验证现有 semantic artifacts 明确由相同 core source tree 产生；不能把新 source tree 与旧 `.mi`/bundle 混用。来自文档示例、`.mooncakes` dependency 或 stdlib 内部的引用都通过同一 symbol graph 链接。Toolchain 升级会整体失效 stdlib pages、hover 和所有指向它们的 definition edge。
+当前里程碑只要求验证 consumer LSP 使用的 stdlib semantic artifacts 与 pinned toolchain/source identity 一致，并校验每个入站 target 落在冻结 blob 内；不遍历 stdlib token，也不生成 stdlib 内部引用图。长期全量模式在不可变 toolchain snapshot 中重新 bundle/check core，或验证现有 semantic artifacts 明确由相同 core source tree 产生，不能把新 source tree 与旧 `.mi`/bundle 混用。Toolchain 升级会整体失效 stdlib pages 和所有指向它们的 Definition edge；启用全量后也会失效 stdlib Hover/occurrence overlay。
 
 ### 8.3 License 是前置 gate，不是外链降级
 
@@ -655,14 +696,14 @@ Snapshot 至少记录 module、version/revision、repository、license、normali
 分析策略显式分为：
 
 ```text
-required          健康工程和 *_fixed，完整语义是发布要求
+required          active local/standalone 健康工程和 *_fixed，完整语义是发布要求
 expected-failure  故意触发诊断的 *_error
-display-only      nocheck、无法形成可靠 semantic context 的片段
+display-only      deferred dependency/stdlib、nocheck、无法形成可靠 semantic context 的片段
 ```
 
 第一版策略：
 
-- `required` root 分析失败时，production semantic build 失败，且不得复用旧 occurrence；
+- active `required` root 分析失败时，production semantic build 失败，且不得复用旧 occurrence；deferred origin 不启动分析，也不产生这一失败状态；
 - `expected-failure` 仍保存精确 blob、diagnostic 状态并按文件类型生成纯源码页或 literate page；初版不发布未经验证的 recovery semantics；
 - `_fixed` 工程按 `required` 完整分析；
 - `display-only` 仍生成词法页面或普通代码块，但 occurrence 为空；
@@ -677,8 +718,8 @@ Diagnostics 至少保存 code、severity、message、raw/normalized half-open ra
 
 | Builder | 语义扩展行为 |
 |---|---|
-| `html` | 完整启用文档语义代码块、source pages、hover、definition 和 index |
-| `dirhtml` | 完整启用，所有 URI 经 builder API 计算 |
+| `html` | 启用 active 文档语义代码块、全部 source pages、active hover/definition 和 index |
+| `dirhtml` | 与 `html` 相同的 active/deferred 范围，所有 URI 经 builder API 计算 |
 | `singlehtml` | 初版不支持独立 source topology；退化并给出一次 warning |
 | `epub` | 不生成 source pages/JS，保留普通代码块 |
 | `latex` / PDF | 保留原 literal block，不输出 HTML-only link |
@@ -706,7 +747,8 @@ I18n 规则：
 
 ```text
 semantic-index
-  → resolve/check/analyze
+  → resolve/check/freeze complete page corpus
+  → analyze active local/standalone origins
   → validate/atomically publish semantic-snapshot
 
 docs-html
@@ -738,6 +780,24 @@ RTD/production 的唯一顺序固定为：
 
 现有 [`justfile`](../justfile) 的普通 `docs-html` 保持可用并允许无 snapshot 退化；实施时新增 `just semantic-index`、`just docs-html-semantic` 和 `just semantic-check`，其中 `docs-html-semantic` 是 release/RTD 的 production 入口，但不改写现有文档内容。
 
+### 11.1 当前 clean-build 性能预算
+
+当前规模测量约为 1,828 个冻结源码页面；收缩到 local/workspace/standalone required origins 后，active analysis 约 411 个文件、17,647 个 identifier candidate，约为原全量 337,210 个 candidate 的 5.2%。Dependency/stdlib 的源码枚举、hash、blob 固化与页面生成仍完整执行，但不再产生逐 occurrence LSP RPC。
+
+当前里程碑的 clean-build 预算如下；它是需要由 CI 报告验证的工程预算，不是以跳过正确性检查换取的软目标：
+
+| 阶段 | 当前预计 |
+|---|---:|
+| local root check、resolved graph 与完整 corpus 固化 | 1–2.5 分钟 |
+| local/standalone candidate collection | 约 2–3 秒 |
+| active Hover + Definition capture | 2–3.5 分钟 |
+| snapshot 校验与原子发布 | 5–20 秒 |
+| Sphinx HTML（含全部冻结源码页） | 1–2 分钟 |
+| semantic snapshot only | 约 3–6 分钟 |
+| 完整 clean semantic HTML | 约 4–8 分钟，保守上限 10 分钟 |
+
+性能报告必须分别记录 corpus discovery/hash、check barrier、candidate collection、LSP capture、snapshot write/validate 和 Sphinx render，不能只提供总时长。超过 10 分钟时先按 context/source/candidate/request 吞吐定位回归，不通过继续排除 source origin 来掩盖问题。
+
 ## 12. 缓存与失效
 
 第一版使用 root-wide semantic fingerprint，正确性稳定后再优化到 package/file shard。Fingerprint 至少包含：
@@ -750,6 +810,7 @@ RTD/production 的唯一顺序固定为：
 - normalized package graph；
 - dependency resolved version/revision/tree digest；
 - stdlib/toolchain digest；
+- `analysis_origin` policy（当前 local/workspace/standalone；长期再加入 dependency/stdlib）；
 - expected-failure/display-only policy。
 
 可独立缓存：
@@ -762,8 +823,9 @@ RTD/production 的唯一顺序固定为：
 
 关键失效语义：
 
-- dependency API 或版本变化会失效消费者 occurrence 和 dependency page；
-- toolchain 变化会失效全部 semantics 和 stdlib page；
+- dependency API 或版本变化会失效消费者 occurrence 和 dependency page；当前不会触发 dependency 自身 occurrence 重算，因为它不存在；
+- toolchain 变化会失效全部 active semantics 和 stdlib page；
+- 扩大 `analysis_origin` 会新增 dependency/stdlib semantic overlay，但不改变内容相同的冻结 blob/page route；
 - `.mbt.md` prose 在代码前增加一行会改变原始 line anchor，因此该文件 snapshot 必须失效；
 - 只有普通文档 prose 变化且 source 不变时，不重跑 MoonBit 分析；
 - 只有 CSS/template 变化时，只重渲染 HTML，不重跑 LSP。
@@ -794,7 +856,7 @@ RTD/production 的唯一顺序固定为：
 - dependency/stdlib license 与 attribution policy 已固定，不允许 external-only 替代；
 - `.mbt/.mbt.md/.mbti/.mbtp` 的 provider/display policy 已固定。
 
-### Phase 1：自包含 snapshot 与完整源码页
+### Phase 1（当前目标）：自包含 snapshot、完整冻结源码页与 local-first 语义
 
 这是首个产品增量，并优先解决当前完全没有覆盖的源码页。
 
@@ -805,18 +867,24 @@ RTD/production 的唯一顺序固定为：
 - Sphinx extension skeleton、MoonBit domain 和 `html-collect-pages`；
 - module/package/file index；
 - `.mbt/.mbti/.mbtp` 和 generated pure-source kinds 的 code-only source pages，以及 `.mbt.md` 的完整 literate source pages；
-- 行锚点、definition anchor、Hover 和跨 package Definition 链接。
+- 对 local/workspace/standalone required source 建立 Hover、Definition 和完整 request ledger；
+- dependency/stdlib 页面保持 display-only，但具有行锚点和 local Definition 实际命中的 target-only anchor；
+- 从 local/standalone occurrence 到 local、dependency 或 stdlib 冻结源码页的跨 package Definition 链接；
+- manifest 中显式、可审计的 `analysis_origin` policy 和 `deferred-by-origin-policy` coverage。
 
 退出条件：
 
 - 删除工作树、`.mooncakes` 和 `$MOON_HOME` 后，只从 snapshot 仍能生成全部 source pages；
 - generated source pages 与 `snapshot.sources` 一一对应；
-- 每个健康 root 返回的 `file://` Definition 都解析为本站 snapshot source page；无文件位置的语言 builtin 必须显式记录 `no_source_definition`；
-- 每个 snapshot definition 恰好生成一个 definition anchor，每个 Definition edge 命中存在的 page/anchor 或静态 target-set page；
-- 每个引用的 hover ID 都能从声明的 shard 加载，每个 required request ledger 都是 complete；
+- 每个 active local/standalone required context 返回的 `file://` Definition 都解析为本站 snapshot source page，包括 dependency/stdlib target；无文件位置的语言 builtin 必须显式记录 `no_source_definition`；
+- 每个 active snapshot Definition 恰好生成一个 definition 或 target-only anchor，每个 Definition edge 命中存在的 page/anchor 或静态 target-set page；
+- 每个 active occurrence 引用的 hover ID 都能从声明的 shard 加载，每个 active required request ledger 都是 complete；
+- dependency/stdlib 没有 occurrence/request shard，coverage 将其报告为 deferred 而不是 complete 或 error；
+- 构建日志与测试证明没有为 dependency/stdlib origin 启动独立 LSP analysis session；
+- dependency/stdlib 页面没有自身扫描得到的 `data-mbt-hover` 或引用图；允许 local 入站 Definition 为命中的 target 合成 definition occurrence/anchor；
 - 每个 Definition target 的原始行都实际出现在对应纯源码页或 literate code block 中；
 - 禁用 JavaScript 后 Definition 仍可用；
-- `.mbt.md` 页面保留并正确渲染 prose，front matter 作为元数据处理，MoonBit code block 带原始行锚点和语义信息。
+- `.mbt.md` 页面保留并正确渲染 prose，front matter 作为元数据处理；active local/standalone MoonBit code block 带原始行锚点和语义信息，deferred origin 只带原始行锚点。
 
 ### Phase 2：文档 `literalinclude` 语义增强
 
@@ -882,23 +950,44 @@ RTD/production 的唯一顺序固定为：
 退出条件：
 
 - clean CI 可以稳定复现 snapshot 和 HTML；
+- 当前 local-first 完整 clean semantic HTML 满足 4–8 分钟目标，并以 10 分钟为回归 gate；
 - snapshot 不完整、悬空 definition、缺 blob、路径泄漏或 page count 不一致会失败；
 - source HTML、hover payload 和内部 target URL 通过安全检查；
 - 性能预算和 artifact retention policy 已固定。
+
+### Phase 6（长期目标）：恢复 dependency/stdlib occurrence analysis
+
+交付物：
+
+- 将 resolved dependency、path dependency 和 pinned stdlib required contexts 加入 `analysis_origin` allowlist；
+- 为这些 context 建立与 local 完全相同的 candidate ledger、Hover、Definition 和 semantic overlay；
+- dependency 自身独立 context、额外 dev/test dependency 与 stdlib/core semantic root 的可复现构建；
+- 面向全量规模的批量 compiler/provider API 或等价缓存与调度优化。
+
+退出条件：
+
+- 不修改 snapshot schema、source identity、canonical route、Sphinx renderer contract 或现有 local Definition edge，即可为原 display-only 页面叠加语义；
+- dependency/stdlib active required ledger 全部 complete，页面中的 Hover/Definition 与 local 页面遵守同一正确性标准；
+- 全量语义模式拥有单独测量并固定的性能预算，不能降低 Phase 1 local-first 发布的默认速度；
+- stdlib LSP/provider crash、版本不匹配和未完成 request 都 fail closed，不回退到旧 overlay。
 
 ## 14. 测试矩阵
 
 ### 14.1 Snapshot 与 source pages
 
-- local、workspace、path dependency、完整 `.mooncakes` registry dependency、完整 pinned stdlib、generated source；
+- local、workspace、path dependency、完整 `.mooncakes` registry dependency、完整 pinned stdlib、generated source 的 page corpus；
+- 当前 origin policy 只为 local/workspace/standalone required source 产生 candidate/request/occurrence，dependency/stdlib source 计入 deferred 且 request 数为零；
+- local occurrence 分别 Definition 到 local、`.mooncakes` dependency、path dependency 和 stdlib，所有链接都命中冻结本站页面的精确 target-only anchor 或行锚点；
+- dependency/stdlib 页面不存在自身扫描得到的 Hover payload 与引用图，仍保留完整代码、行锚点，并可包含 local 入站 target 合成的 definition occurrence；
+- 把 dependency/stdlib 加入测试用 `analysis_origin` 后，同一 fixture 无 schema/route 变化即可获得 overlay；
 - `.mbt`、`.mbt.md`、`.mbti`、`.mbtp` 的页面与 provider policy；
 - public function/type/trait/method、field/constructor、operator、local binding 和 shadowing；
 - 同文件、跨文件、跨 package、跨 module 和多个 Definition target；
-- 同一 dependency 文件从两个 root/file-role/backend 分析，context occurrence 不互相覆盖；
+- 长期全量模式：同一 dependency 文件从两个 root/file-role/backend 分析，context occurrence 不互相覆盖；
 - Unicode identifier、emoji、CRLF、tab；
 - `.mbt.md` prose/heading/link/include/image、多 fence、list/blockquote fence、原始行列、`mbt nocheck`、兼容的 `moonbit check/skip`；
 - literate include/image/resource closure 离线可重建；缺失、越界、循环 include 和危险 directive 被 strict policy 拒绝；
-- dependency version 和 toolchain upgrade；
+- dependency version 和 toolchain upgrade 会同时失效冻结 target page 与 active consumer edge；
 - 相同 dependency version 但 tree digest 不同；symlink/URI alias 仍解析为同一 source page；
 - LSP timeout/crash、未完成 request ledger、check 后源码变化；
 - expected-failure 与 fixed pair；
@@ -942,13 +1031,15 @@ RTD/production 的唯一顺序固定为：
 
 - discovered roots、packages 和 sources；
 - 每个 `.mooncakes` module/version/tree digest 的 package/source/page 数，以及 pinned stdlib 的总 package/source/page 数；
-- `page_corpus_count`、`semantic_complete_count`、`expected_failure_count`、`display_only_count`；
+- 生效的 `analysis_origin` policy；
+- `page_corpus_count`、`active_analysis_source_count`、`semantic_complete_count`、`deferred_by_origin_count`、`expected_failure_count`、`display_only_count`；
 - source pages 计划数和实际生成数；
-- analyzed occurrences、hover、definitions；
+- 按 source origin/context 分组的 analyzed occurrences、hover、definitions，以及 local-to-dependency/stdlib edge 数；
 - candidate request ledger 的 complete/no-result/skipped/error 数；
 - unresolved/multiple/no-source definitions；
 - 文档 code block 总数、成功映射数和降级原因；
-- cache hit rate、索引耗时、Sphinx render 耗时；
+- cache hit rate，以及 corpus discovery/hash、check、candidate collection、LSP capture、snapshot validation、Sphinx render 的分阶段耗时；
+- active candidate 总数、每 session/context 吞吐、最长 context/source 和 clean 总用时是否超过 10 分钟 gate；
 - snapshot 和 HTML payload 大小；
 - license gate、绝对路径泄漏和 stale shard 检查。
 
@@ -959,7 +1050,8 @@ RTD/production 的唯一顺序固定为：
 | 风险 | 缓解 |
 |---|---|
 | LSP/IDE metadata 快速变化 | provider adapter、自有 schema、版本 fixture、tool executable digest |
-| 逐 token LSP 请求过慢 | 长期 session、候选过滤、受控并发、root/package cache；推动未来批量 compiler API |
+| 逐 token LSP 请求过慢 | 当前只分析 local/workspace/standalone origins，并保持完整 target corpus；长期 session、候选过滤、受控并发、root/package cache；恢复全量前推动批量 compiler API |
+| stdlib/dependency provider 崩溃拖垮首个可用版本 | 当前不从这些 origin 发起 occurrence 请求；local 入站 target 仍严格校验；Phase 6 单独以 fail-closed fixture 恢复 |
 | 依赖源码在 Sphinx 环境消失 | snapshot 携带 content-addressed source blobs |
 | 第三方源码再发布限制 | Phase 0 license gate、attribution；不满足时阻止 full-source 发布，不用外链伪装覆盖 |
 | `_error` 工程无法完整类型检查 | 页面始终生成；初版 display-only；recovery 单独验证 |
@@ -983,24 +1075,40 @@ RTD/production 的唯一顺序固定为：
 4. Hover 允许的 Markdown 子集和最大 payload；
 5. 普通 inline fence 的 context 推断规则和 documentation inventory prepass 的范围；virtual definition 已固定指向 synthetic source page；
 6. source symbol 是否注入 Sphinx HTML search，或只进入独立 MoonBit domain search；
-7. clean production build 的页面数、artifact 大小和索引时间预算。
+7. 当前 local-first clean production build 使用 4–8 分钟目标/10 分钟 gate；Phase 6 全量模式另行测量并固定页面数、artifact 大小和索引时间预算。
 
 ## 18. 完成定义
 
-当且仅当下列条件同时满足，才能认为这一功能完整交付：
+### 18.1 当前 local-first 里程碑
+
+当且仅当下列条件同时满足，才能认为当前里程碑完整交付：
 
 - 现有 Markdown 和被引用 MoonBit 源码没有为了语义文档而发生内容变更；
 - snapshot 对分析时的源码、依赖、toolchain 和 backend 是自包含且可复现的；
 - resolution lock 中全部 `.mooncakes`/path dependency module roots 的 recognized source 与 pinned toolchain 完整 stdlib/core source 都在 snapshot 中并拥有本站页面；
 - 所有 `snapshot.sources` 都有与文件类型匹配的 canonical source/literate page；
-- 所有健康 root 的 file-based Definition target 都有有效的本站 source page/anchor；无源码的 builtin 有显式 `no_source_definition`；
-- 文档代码块与源码页对同一 occurrence 显示一致 Hover 和 Definition；
-- `.mbt/.mbti/.mbtp` 等 pure-source page 只显示代码；`.mbt.md` literate page 保留 Markdown prose，并在语义代码块中使用原始 Markdown 行号；
+- manifest 将 active local/workspace/standalone origin 与 deferred dependency/stdlib origin 明确分开，coverage 数量守恒；
+- 所有 active required context 的 candidate request ledger 完整，file-based Definition target 都有有效的本站 source page/anchor；无源码的 builtin 有显式 `no_source_definition`；
+- local occurrence 指向 dependency/stdlib 时仍链接到冻结本站源码页的精确 target-only anchor 或行锚点；
+- dependency/stdlib 页面完整展示代码，但没有自身 occurrence Hover/Definition overlay，也没有伪造的 complete ledger；
+- 对 active occurrence，文档代码块与源码页显示一致 Hover 和 Definition；
+- `.mbt/.mbti/.mbtp` 等 pure-source page 只显示代码；`.mbt.md` literate page 保留 Markdown prose，并使用原始 Markdown 行号；active origin 的 code block 叠加语义，deferred origin 的 code block 保持词法显示；
 - JavaScript 禁用后 Go to definition 仍工作；
 - 无语义或故意无效代码不会获得伪语义；
 - EN/zh_CN/ja HTML 正常，其他 builder 保持现有行为；
 - copybutton、选择文本和 `<pre>.textContent` 与增强前一致；
-- 生产构建能够检测 snapshot 不完整、悬空链接、缺 blob、绝对路径泄漏、license gate 违反和 stale pages。
+- 生产构建能够检测 snapshot 不完整、悬空链接、缺 blob、绝对路径泄漏、license gate 违反和 stale pages；
+- 当前规模的 clean semantic HTML 在正常 CI 资源上满足 4–8 分钟目标，并以 10 分钟为性能回归 gate。
+
+### 18.2 长期全量语义目标
+
+长期完整交付在当前里程碑全部条件之上，再要求：
+
+- dependency 与 stdlib required contexts 进入 active analysis corpus；
+- 它们的 candidate request ledger 与 local 使用相同完整性规则；
+- dependency/stdlib 源码页获得自己的 Hover、Definition 和 canonical occurrence overlay；
+- 放开 analysis origin 不改变既有 snapshot schema、source/page identity、URL、anchor contract 或 local-to-external Definition edge；
+- 全量模式通过独立的 provider 稳定性、可复现性与性能预算 gate。
 
 ## 19. 参考实现
 
