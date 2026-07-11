@@ -112,6 +112,36 @@ def _sanitize_document(document: nodes.document) -> None:
         # closure.  Never turn LSP documentation into local/remote requests.
         node.replace_self(nodes.Text(str(node.get("alt") or "")))
 
+    # A Hover fragment is mounted inside an existing page, so it must not
+    # create document-level section ids or permalink anchors.  MyST can also
+    # emit visible system messages when a fragment begins at H2/H3.  Preserve
+    # heading text as a styled rubric and discard those document diagnostics.
+    for node in list(document.findall(nodes.system_message)):
+        node.replace_self([])
+    for section in reversed(list(document.findall(nodes.section))):
+        title = next(
+            (child for child in section.children if isinstance(child, nodes.title)),
+            None,
+        )
+        replacement = [child for child in section.children if child is not title]
+        if title is not None:
+            depth = 1
+            parent = section.parent
+            while parent is not None:
+                if isinstance(parent, nodes.section):
+                    depth += 1
+                parent = parent.parent
+            rubric = nodes.rubric(
+                title.rawsource,
+                "",
+                classes=["mbt-hover-heading", f"mbt-hover-heading-{min(depth, 6)}"],
+            )
+            rubric.extend(title.children)
+            title.children = []
+            replacement.insert(0, rubric)
+        section.children = []
+        section.replace_self(replacement)
+
     # In the GFM profile, ```{include} is an ordinary fenced block.  Render it
     # as text to avoid an unknown-lexer warning and make the non-execution
     # explicit in the generated output.

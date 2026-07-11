@@ -14,6 +14,7 @@
   let closeTimer;
   let positionFrame;
   let generation = 0;
+  let suppressedFocusTarget;
 
   const viewportMargin = 8;
   const tooltipGap = 6;
@@ -153,18 +154,22 @@
     clearCloseTimer();
     generation += 1;
     const previousTarget = activeTarget;
-    if (
-      restoreFocus &&
-      previousTarget?.isConnected &&
-      tooltip?.contains(document.activeElement)
-    ) {
-      previousTarget.focus();
-    }
+    const restoreTargetFocus = Boolean(
+      restoreFocus && previousTarget?.isConnected &&
+      tooltip?.contains(document.activeElement),
+    );
     setTargetExpanded(previousTarget, false);
     activeTarget = undefined;
     targetHovered = false;
     tooltipHovered = false;
     if (tooltip) tooltip.hidden = true;
+    if (restoreTargetFocus) {
+      suppressedFocusTarget = previousTarget;
+      previousTarget.focus();
+      queueMicrotask(() => {
+        if (suppressedFocusTarget === previousTarget) suppressedFocusTarget = undefined;
+      });
+    }
   };
 
   function scheduleHide() {
@@ -196,6 +201,9 @@
     if (!id) return;
 
     clearOpenTimer();
+    if (!targetHovered && document.activeElement !== target && !target.contains(document.activeElement)) {
+      return;
+    }
     clearCloseTimer();
     if (activeTarget !== target) {
       setTargetExpanded(activeTarget, false);
@@ -204,6 +212,7 @@
     const requestGeneration = ++generation;
     const all = await payloads();
     if (requestGeneration !== generation || activeTarget !== target) return;
+    if (!targetHovered && !targetOrTooltipHasFocus()) return;
     const raw = all[id];
     if (raw == null) {
       hideNow();
@@ -244,7 +253,10 @@
   document.addEventListener("pointerout", event => {
     const target = event.target.closest?.("[data-mbt-hover]");
     if (!target || (event.relatedTarget && target.contains(event.relatedTarget))) return;
-    if (target === activeTarget) targetHovered = false;
+    if (target === activeTarget) {
+      targetHovered = false;
+      clearOpenTimer();
+    }
     if (tooltip && event.relatedTarget && tooltip.contains(event.relatedTarget)) {
       tooltipHovered = true;
       clearCloseTimer();
@@ -255,6 +267,10 @@
 
   document.addEventListener("focusin", event => {
     const target = event.target.closest?.("[data-mbt-hover]");
+    if (target && target === suppressedFocusTarget) {
+      suppressedFocusTarget = undefined;
+      return;
+    }
     if (target) scheduleShow(target, 0);
   });
 
@@ -288,7 +304,10 @@
     }
   });
 
-  document.addEventListener("scroll", requestPosition, true);
+  document.addEventListener("scroll", event => {
+    if (tooltip && event.target && tooltip.contains(event.target)) return;
+    requestPosition();
+  }, true);
   globalThis.addEventListener("resize", requestPosition);
   globalThis.visualViewport?.addEventListener("resize", requestPosition);
   globalThis.visualViewport?.addEventListener("scroll", requestPosition);

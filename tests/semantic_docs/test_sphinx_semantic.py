@@ -154,6 +154,8 @@ pub fn answer() -> Int { 42 }
 
 ---
 
+## Details
+
 Returns **the answer** with `Int` type.
 
 - [Safe documentation](https://example.com/docs)
@@ -357,6 +359,10 @@ def test_hover_markdown_uses_sphinx_highlighting_and_is_sanitized(tmp_path: Path
     assert "<code" in fragment and "Int" in fragment
     assert "<ul" in fragment
     assert "<hr" in fragment
+    assert "mbt-hover-heading" in fragment and "Details" in fragment
+    assert "<section" not in fragment
+    assert "headerlink" not in fragment
+    assert "system-message" not in fragment
     assert 'href="https://example.com/docs"' in fragment
     assert 'class="highlight-moonbit notranslate"' in fragment
     assert 'class="highlight-c notranslate"' in fragment
