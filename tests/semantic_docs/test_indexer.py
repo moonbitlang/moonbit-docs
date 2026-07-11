@@ -229,31 +229,37 @@ class SemanticIndexerTest(unittest.TestCase):
         ]
         self.assertEqual(len(dependency_sources), 1)
 
-    def test_lsp_jobs_run_multiple_sessions_with_deterministic_output(self):
+    def test_lsp_jobs_run_multiple_requests_with_deterministic_output(self):
         app = self.sources / "app"
-        other = app / "other.mbt"
-        other.write_text("fn name() -> Unit {}\n", encoding="utf-8")
-        metadata_path = app / "_build/packages.json"
-        metadata = json.loads(metadata_path.read_text())
-        metadata["packages"][0]["files"][str(other)] = {}
-        self._write_json(metadata_path, metadata)
+        (app / "main.mbt").write_text("fn name() { name() }\n", encoding="utf-8")
         lock = threading.Lock()
         state = {"active": 0, "maximum": 0}
 
+        class TwoCandidateRunner(FakeRunner):
+            def run(inner_self, args, **kwargs):
+                args = tuple(str(arg) for arg in args)
+                if "-dump-tokens" in args:
+                    path = Path(args[args.index("-dump-tokens") + 1])
+                    if "name() { name" not in path.read_text(encoding="utf-8"):
+                        return super().run(args, **kwargs)
+                    value = [
+                        {"token": ["LIDENT", "name"], "loc": "1:4-1:8"},
+                        {"token": ["LIDENT", "name"], "loc": "1:13-1:17"},
+                    ]
+                    return CommandResult(args, 0, json.dumps(value).encode(), b"")
+                return super().run(args, **kwargs)
+
         class ConcurrentLsp(FakeLsp):
-            def __init__(inner_self):
-                super().__init__()
+            def hover(inner_self, uri, position):
                 with lock:
                     state["active"] += 1
                     state["maximum"] = max(state["maximum"], state["active"])
-
-            def hover(inner_self, uri, position):
-                time.sleep(0.02)
-                return super().hover(uri, position)
-
-            def close(inner_self):
-                with lock:
-                    state["active"] -= 1
+                try:
+                    time.sleep(0.02)
+                    return super().hover(uri, position)
+                finally:
+                    with lock:
+                        state["active"] -= 1
 
         output = self.repo / "snapshot-concurrent"
         SemanticIndexer(BuildConfig(
@@ -261,7 +267,7 @@ class SemanticIndexerTest(unittest.TestCase):
             source_root=Path("next/sources"),
             output=output,
             stdlib_root=self.stdlib,
-            runner=FakeRunner(),
+            runner=TwoCandidateRunner(),
             lsp_factory=lambda root: ConcurrentLsp(),
             jobs=2,
         )).build()
@@ -438,6 +444,51 @@ class RangeAndLiterateTest(unittest.TestCase):
             transport = JsonRpcProcess([sys.executable, str(server)], Path.cwd(), timeout=0.2)
             try:
                 self.assertEqual(transport.request("test", {}), {"ok": True})
+            finally:
+                transport.close()
+
+    def test_json_rpc_multiplexes_out_of_order_responses(self):
+        import sys
+        import textwrap
+
+        with tempfile.TemporaryDirectory() as directory:
+            server = Path(directory) / "server.py"
+            server.write_text(textwrap.dedent("""
+                import json, sys
+
+                def read():
+                    first = sys.stdin.buffer.readline()
+                    if not first:
+                        return None
+                    length = int(first.split(b":", 1)[1])
+                    while sys.stdin.buffer.readline() not in (b"\\r\\n", b"\\n"):
+                        pass
+                    return json.loads(sys.stdin.buffer.read(length))
+
+                def send(value):
+                    body = json.dumps(value).encode()
+                    sys.stdout.buffer.write(
+                        b"Content-Length: " + str(len(body)).encode() + b"\\r\\n\\r\\n" + body
+                    )
+                    sys.stdout.buffer.flush()
+
+                first, second = read(), read()
+                send({"jsonrpc": "2.0", "id": second["id"], "result": "second"})
+                send({"jsonrpc": "2.0", "id": first["id"], "result": "first"})
+                shutdown = read()
+                send({"jsonrpc": "2.0", "id": shutdown["id"], "result": None})
+                read()
+            """), encoding="utf-8")
+            transport = JsonRpcProcess(
+                [sys.executable, str(server)],
+                Path.cwd(),
+                timeout=1,
+            )
+            try:
+                _first_id, first = transport.request_async("first", {})
+                _second_id, second = transport.request_async("second", {})
+                self.assertEqual(second.result(timeout=1), "second")
+                self.assertEqual(first.result(timeout=1), "first")
             finally:
                 transport.close()
 

@@ -8,6 +8,7 @@ import select
 import subprocess
 import threading
 import time
+from concurrent.futures import Future, TimeoutError as FutureTimeoutError
 from pathlib import Path
 from typing import Any, BinaryIO, Protocol
 
@@ -34,27 +35,57 @@ class JsonRpcProcess:
         self.writer: BinaryIO = self.process.stdin
         self._read_buffer = bytearray()
         self.next_id = 1
-        self.lock = threading.Lock()
+        self._state_lock = threading.Lock()
+        self._send_lock = threading.Lock()
+        self._pending: dict[int, Future[Any]] = {}
+        self._reader_error: BaseException | None = None
         self.timeout = timeout
+        self._reader_thread = threading.Thread(
+            target=self._read_loop,
+            name="moonbit-semantic-jsonrpc-reader",
+            daemon=True,
+        )
+        self._reader_thread.start()
 
     def request(self, method: str, params: dict[str, Any]) -> Any:
-        with self.lock:
+        request_id, future = self.request_async(method, params)
+        try:
+            return future.result(timeout=self.timeout)
+        except FutureTimeoutError as exc:
+            with self._state_lock:
+                self._pending.pop(request_id, None)
+            raise LspError(f"{method}: response timed out after {self.timeout}s") from exc
+
+    def request_async(
+        self,
+        method: str,
+        params: dict[str, Any],
+    ) -> tuple[int, Future[Any]]:
+        future: Future[Any] = Future()
+        with self._state_lock:
+            if self._reader_error is not None:
+                raise LspError(f"language server reader failed: {self._reader_error}")
             request_id = self.next_id
             self.next_id += 1
-            self._send({"jsonrpc": "2.0", "id": request_id, "method": method, "params": params})
-            while True:
-                message = self._receive()
-                if message.get("id") != request_id:
-                    if "id" in message and "method" in message:
-                        self._send({"jsonrpc": "2.0", "id": message["id"], "result": None})
-                    continue
-                if "error" in message:
-                    raise LspError(f"{method}: {message['error']}")
-                return message.get("result")
+            self._pending[request_id] = future
+        try:
+            self._send(
+                {
+                    "jsonrpc": "2.0",
+                    "id": request_id,
+                    "method": method,
+                    "params": params,
+                }
+            )
+        except BaseException as exc:
+            with self._state_lock:
+                self._pending.pop(request_id, None)
+            future.set_exception(exc)
+            raise
+        return request_id, future
 
     def notify(self, method: str, params: dict[str, Any]) -> None:
-        with self.lock:
-            self._send({"jsonrpc": "2.0", "method": method, "params": params})
+        self._send({"jsonrpc": "2.0", "method": method, "params": params})
 
     def close(self) -> None:
         try:
@@ -69,14 +100,43 @@ class JsonRpcProcess:
         finally:
             self.writer.close()
             self.reader.close()
+            self._reader_thread.join(timeout=1)
 
     def _send(self, value: dict[str, Any]) -> None:
         body = json.dumps(value, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
-        self.writer.write(f"Content-Length: {len(body)}\r\n\r\n".encode("ascii") + body)
-        self.writer.flush()
+        with self._send_lock:
+            self.writer.write(f"Content-Length: {len(body)}\r\n\r\n".encode("ascii") + body)
+            self.writer.flush()
+
+    def _read_loop(self) -> None:
+        try:
+            while True:
+                message = self._receive()
+                request_id = message.get("id")
+                if request_id is not None and "method" not in message:
+                    with self._state_lock:
+                        future = self._pending.pop(request_id, None)
+                    if future is None:
+                        continue
+                    if "error" in message:
+                        future.set_exception(LspError(str(message["error"])))
+                    else:
+                        future.set_result(message.get("result"))
+                elif request_id is not None and "method" in message:
+                    self._send(
+                        {"jsonrpc": "2.0", "id": request_id, "result": None}
+                    )
+        except BaseException as exc:
+            with self._state_lock:
+                self._reader_error = exc
+                pending = list(self._pending.values())
+                self._pending.clear()
+            for future in pending:
+                if not future.done():
+                    future.set_exception(LspError(f"language server reader failed: {exc}"))
 
     def _receive(self) -> dict[str, Any]:
-        deadline = time.monotonic() + self.timeout
+        deadline = None
         while b"\r\n\r\n" not in self._read_buffer and b"\n\n" not in self._read_buffer:
             self._read_more(deadline)
         crlf_end = self._read_buffer.find(b"\r\n\r\n")
@@ -106,17 +166,20 @@ class JsonRpcProcess:
             raise LspError("JSON-RPC response is not an object")
         return message
 
-    def _fill_size(self, length: int, deadline: float) -> None:
+    def _fill_size(self, length: int, deadline: float | None) -> None:
         while len(self._read_buffer) < length:
             self._read_more(deadline)
 
-    def _read_more(self, deadline: float) -> None:
-        remaining = deadline - time.monotonic()
-        if remaining <= 0:
-            raise LspError(f"language server response timed out after {self.timeout}s")
-        ready, _, _ = select.select([self.reader.fileno()], [], [], remaining)
-        if not ready:
-            raise LspError(f"language server response timed out after {self.timeout}s")
+    def _read_more(self, deadline: float | None) -> None:
+        while True:
+            remaining = 1.0 if deadline is None else deadline - time.monotonic()
+            if remaining <= 0:
+                raise LspError(f"language server response timed out after {self.timeout}s")
+            ready, _, _ = select.select([self.reader.fileno()], [], [], remaining)
+            if ready:
+                break
+            if deadline is not None or self.process.poll() is not None:
+                raise LspError(f"language server response timed out after {self.timeout}s")
         chunk = os.read(self.reader.fileno(), 65536)
         if not chunk:
             code = self.process.poll()
@@ -154,6 +217,54 @@ class LspSession:
 
     def definition(self, uri: str, position: dict[str, int]) -> Any:
         return self.transport.request("textDocument/definition", {"textDocument": {"uri": uri}, "position": position})
+
+    def hover_definitions(
+        self,
+        uri: str,
+        positions: list[dict[str, int]],
+        *,
+        window: int,
+    ) -> list[tuple[Any, Any]]:
+        request_async = getattr(self.transport, "request_async", None)
+        if request_async is None:
+            return [
+                (self.hover(uri, position), self.definition(uri, position))
+                for position in positions
+            ]
+        timeout = float(getattr(self.transport, "timeout", 120.0))
+        results: list[tuple[Any, Any]] = []
+        for offset in range(0, len(positions), max(1, window)):
+            batch = positions[offset : offset + max(1, window)]
+            pending = []
+            for position in batch:
+                hover = request_async(
+                    "textDocument/hover",
+                    {"textDocument": {"uri": uri}, "position": position},
+                )
+                definition = request_async(
+                    "textDocument/definition",
+                    {"textDocument": {"uri": uri}, "position": position},
+                )
+                pending.append((hover, definition))
+            for (_hover_id, hover), (_definition_id, definition) in pending:
+                try:
+                    hover_value: Any = hover.result(timeout=timeout)
+                except FutureTimeoutError as exc:
+                    hover_value = LspError(
+                        f"hover request timed out after {timeout}s"
+                    )
+                except BaseException as exc:
+                    hover_value = exc
+                try:
+                    definition_value: Any = definition.result(timeout=timeout)
+                except FutureTimeoutError as exc:
+                    definition_value = LspError(
+                        f"definition request timed out after {timeout}s"
+                    )
+                except BaseException as exc:
+                    definition_value = exc
+                results.append((hover_value, definition_value))
+        return results
 
     def close_document(self, uri: str) -> None:
         self.transport.notify("textDocument/didClose", {"textDocument": {"uri": uri}})

@@ -45,7 +45,9 @@ class BuildConfig:
     moon: str = "moon"
     mooninfo: str = "mooninfo"
     moon_lsp: str = "moon-lsp"
-    jobs: int = field(default_factory=lambda: max(1, min(4, os.cpu_count() or 1)))
+    jobs: int = field(
+        default_factory=lambda: max(8, min(64, (os.cpu_count() or 1) * 8))
+    )
     skip_check: bool = False
     skip_lsp: bool = False
     strict: bool = True
@@ -356,52 +358,33 @@ class SemanticIndexer:
         ]
         if not analyzable:
             return
-        worker_count = min(self.config.jobs, len(analyzable))
-        chunks = [analyzable[index::worker_count] for index in range(worker_count)]
-
-        def analyze_chunk(chunk: list[dict[str, Any]]) -> str:
-            session = (
-                self.config.lsp_factory(root)
-                if self.config.lsp_factory
-                else LspSession(
-                    JsonRpcProcess(
-                        [self.config.moon_lsp, "--stdio"],
-                        root.path,
-                        self.config.timeout,
-                    ),
+        session = (
+            self.config.lsp_factory(root)
+            if self.config.lsp_factory
+            else LspSession(
+                JsonRpcProcess(
+                    [self.config.moon_lsp, "--stdio"],
                     root.path,
+                    self.config.timeout,
+                ),
+                root.path,
+            )
+        )
+        try:
+            for source in analyzable:
+                self._analyze_source(
+                    session,
+                    context,
+                    source,
+                    path_to_source,
+                    logical_sources,
                 )
-            )
-            try:
-                for source in chunk:
-                    self._analyze_source(
-                        session,
-                        context,
-                        source,
-                        path_to_source,
-                        logical_sources,
-                    )
-                return session.position_encoding
-            finally:
-                session.close()
-
-        if worker_count == 1:
-            encodings = [analyze_chunk(chunks[0])]
-        else:
-            with ThreadPoolExecutor(
-                max_workers=worker_count,
-                thread_name_prefix="moonbit-semantic-lsp",
-            ) as executor:
-                encodings = list(executor.map(analyze_chunk, chunks))
-        if len(set(encodings)) != 1:
-            raise RuntimeError(
-                f"LSP sessions negotiated inconsistent position encodings: {encodings}"
-            )
-        context["position_encoding"] = encodings[0]
+        finally:
+            session.close()
+        context["position_encoding"] = session.position_encoding
         context["initialize"] = {
             "root_uri": _portable_root_uri(root),
-            "position_encoding": encodings[0],
-            "sessions": worker_count,
+            "position_encoding": session.position_encoding,
         }
 
     def _record_skipped_context(self, context: dict[str, Any], input_sources: list[dict[str, Any]], reason: str) -> None:
@@ -431,11 +414,26 @@ class SemanticIndexer:
         occurrences = []
         try:
             candidates = self._candidates(path, source, coords, session.position_encoding)
-            for candidate in candidates:
+            positions = [candidate["position"] for candidate in candidates]
+            batch_method = getattr(session, "hover_definitions", None)
+            if batch_method is not None:
+                responses = batch_method(uri, positions, window=self.config.jobs)
+            else:
+                def query(position: dict[str, int]) -> tuple[Any, Any]:
+                    return session.hover(uri, position), session.definition(uri, position)
+
+                with ThreadPoolExecutor(
+                    max_workers=min(self.config.jobs, max(1, len(positions))),
+                    thread_name_prefix="moonbit-semantic-request",
+                ) as executor:
+                    responses = list(executor.map(query, positions))
+            for candidate, (hover, definition) in zip(candidates, responses):
                 request = {"position": candidate["position"], "candidate_range_utf8": candidate["range_utf8"], "status": "complete"}
                 try:
-                    hover = session.hover(uri, candidate["position"])
-                    definition = session.definition(uri, candidate["position"])
+                    if isinstance(hover, BaseException):
+                        raise hover
+                    if isinstance(definition, BaseException):
+                        raise definition
                     occurrence = self._occurrence(
                         source,
                         context,

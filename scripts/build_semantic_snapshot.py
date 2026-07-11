@@ -27,8 +27,8 @@ def parser() -> argparse.ArgumentParser:
     build.add_argument(
         "--jobs",
         type=int,
-        default=max(1, min(4, os.cpu_count() or 1)),
-        help="maximum LSP sessions per analysis context (default: up to 4)",
+        default=max(8, min(64, (os.cpu_count() or 1) * 8)),
+        help="maximum in-flight semantic positions per LSP session",
     )
     build.add_argument("--skip-check", action="store_true", help="testing only: do not establish the moon check barrier")
     build.add_argument("--skip-lsp", action="store_true", help="testing only: capture corpus without semantic requests")
