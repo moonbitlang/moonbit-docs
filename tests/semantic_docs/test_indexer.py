@@ -1,0 +1,306 @@
+from __future__ import annotations
+
+import json
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from scripts.moonbit_semantic.canonical import canonical_json_bytes, digest_bytes, digest_json
+from scripts.moonbit_semantic.indexer import BuildConfig, SemanticIndexer
+from scripts.moonbit_semantic.inventory import discover_roots, metadata_allowed_module_roots, scan_sources
+from scripts.moonbit_semantic.literate import extract_literate_fences, moonbit_projection
+from scripts.moonbit_semantic.lsp import JsonRpcProcess, LspError
+from scripts.moonbit_semantic.ranges import RangeError, SourceCoordinates
+from scripts.moonbit_semantic.runner import CommandResult
+from scripts.moonbit_semantic.snapshot import SnapshotError, validate_snapshot
+
+
+class FakeRunner:
+    def run(self, args, *, cwd=None, input=None, timeout=None):
+        args = tuple(str(arg) for arg in args)
+        if "-dump-tokens" in args:
+            path = Path(args[args.index("-dump-tokens") + 1])
+            # One identifier is enough to exercise hover + definition. Locations
+            # deliberately use mooninfo's one-based scalar coordinate contract.
+            value = [{"token": ["LIDENT", "name"], "loc": "1:4-1:8"}]
+            return CommandResult(args, 0, json.dumps(value).encode(), b"")
+        if args[-2:] == ("version", "--all"):
+            return CommandResult(args, 0, b"moon fake\n", b"")
+        if args[-1:] == ("--version",):
+            return CommandResult(args, 0, b"lsp fake\n", b"")
+        if args[-1:] == ("--help",):
+            return CommandResult(args, 0, b"mooninfo fake\n", b"")
+        return CommandResult(args, 0, b"", b"")
+
+
+class FakeLsp:
+    position_encoding = "utf-16"
+
+    def __init__(self):
+        self.uri = ""
+
+    def open(self, path, text):
+        self.uri = Path(path).resolve().as_uri()
+        return self.uri
+
+    def hover(self, uri, position):
+        return {
+            "contents": {"kind": "markdown", "value": "```moonbit\nfn name() -> Unit\n```"},
+            "range": {"start": {"line": 0, "character": 3}, "end": {"line": 0, "character": 7}},
+        }
+
+    def definition(self, uri, position):
+        return {"uri": self.uri, "range": {"start": {"line": 0, "character": 3}, "end": {"line": 0, "character": 7}}}
+
+    def close_document(self, uri):
+        pass
+
+    def close(self):
+        pass
+
+
+class SemanticIndexerTest(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.repo = Path(self.temp.name)
+        self.sources = self.repo / "next/sources"
+        app = self.sources / "app"
+        dependency = app / ".mooncakes/acme/lib"
+        stdlib = self.repo / "toolchain/core"
+        for path in (app, dependency, stdlib):
+            path.mkdir(parents=True)
+        self._write_json(app / "moon.mod.json", {"name": "example/app", "version": "1.0.0"})
+        (app / "main.mbt").write_text("fn name() -> Unit {}\n", encoding="utf-8")
+        (app / "guide.mbt.md").write_text("# Guide\n\n```mbt nocheck\ninvalid ???\n```\n\n> ```moonbit check\n> fn prose() {}\n> ```\n", encoding="utf-8")
+        (app / "icon.png").write_bytes(b"png")
+        global_image = self.repo / "next/imgs/global.png"
+        global_image.parent.mkdir(parents=True)
+        global_image.write_bytes(b"global-png")
+        (app / "guide.mbt.md").write_text(
+            (app / "guide.mbt.md").read_text()
+            + "\n![icon](./icon.png)\n![global](/imgs/global.png)\n",
+            encoding="utf-8",
+        )
+        self._write_json(dependency / "moon.mod.json", {"name": "acme/lib", "version": "2.1.0", "license": "Apache-2.0"})
+        (dependency / "lib.mbt").write_text("fn name() -> Unit {}\n", encoding="utf-8")
+        (dependency / "types.mbti").write_text("pub fn name() -> Unit\n", encoding="utf-8")
+        (stdlib / "moon.mod").write_text('name = "moonbitlang/core"\nversion = "0.10.2"\nlicense = "Apache-2.0"\n', encoding="utf-8")
+        (stdlib / "builtin.mbt").write_text("fn name() -> Unit {}\n", encoding="utf-8")
+        package = {
+            "source_dir": str(app), "name": "example/app", "backend": "wasm-gc",
+            "packages": [{
+                "root-path": str(app), "files": {str(app / "main.mbt"): {}},
+                "mbt-md-files": {str(app / "guide.mbt.md"): {}},
+                "artifact": str(app / "_build/app.mi"),
+                "check-command": ["-pkg-sources", f"example/app:{app}"],
+                "deps": [
+                    {"path": "acme/lib", "fspath": str(dependency)},
+                    {"path": "moonbitlang/core", "fspath": str(stdlib)},
+                ],
+            }],
+        }
+        self._write_json(app / "_build/packages.json", package)
+        self.stdlib = stdlib
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def test_complete_fake_tool_build_is_deterministic_and_valid(self):
+        manifests = []
+        outputs = []
+        for name in ("snapshot-a", "nested/snapshot-b"):
+            output = self.repo / name
+            config = BuildConfig(
+                repo_root=self.repo, source_root=Path("next/sources"), output=output,
+                stdlib_root=self.stdlib, runner=FakeRunner(),
+                lsp_factory=lambda root: FakeLsp(),
+            )
+            manifests.append(SemanticIndexer(config).build())
+            outputs.append(output)
+            validate_snapshot(output)
+        self.assertEqual(manifests[0]["corpus_digest"], manifests[1]["corpus_digest"])
+        self.assertEqual(manifests[0]["counts"], manifests[1]["counts"])
+        sources = self._jsonl(outputs[0] / "sources.jsonl")
+        origins = {item["origin"] for item in sources}
+        self.assertEqual(origins, {"local", "dependency", "stdlib"})
+        self.assertFalse(
+            any(
+                item["origin"] == "local" and ".mooncakes" in Path(item["path"]).parts
+                for item in sources
+            )
+        )
+        self.assertTrue(any(item["kind"] == "mbti" and item["analysis_status"] == "display-only" for item in sources))
+        dependency_sources = [item for item in sources if item["origin"] == "dependency"]
+        self.assertEqual({item["path"] for item in dependency_sources}, {"lib.mbt", "types.mbti"})
+        self.assertGreater(manifests[0]["counts"]["symbols"], 0)
+        self.assertGreater(manifests[0]["counts"]["hovers"], 0)
+        assets = self._jsonl(outputs[0] / "assets.jsonl")
+        self.assertEqual({item["path"] for item in assets}, {"icon.png", "imgs/global.png"})
+        self.assertNotIn(str(self.repo), (outputs[0] / "assets.jsonl").read_text())
+        inputs = self._jsonl(outputs[0] / "analysis-inputs.jsonl")
+        for item in inputs:
+            blob = outputs[0] / "blobs/sha256" / item["blob_digest"].removeprefix("sha256:")
+            self.assertTrue(blob.is_file())
+        public_inputs = (outputs[0] / "analysis-inputs.jsonl").read_text()
+        self.assertNotIn(str(self.repo), public_inputs)
+        self.assertNotIn(str(self.repo.resolve()), public_inputs)
+
+    def test_dependency_check_failure_degrades_own_context_but_keeps_pages(self):
+        dependency = self.sources / "app/.mooncakes/acme/lib"
+
+        class DependencyFailureRunner(FakeRunner):
+            def run(inner_self, args, **kwargs):
+                args = tuple(str(arg) for arg in args)
+                if "check" in args and any(value.endswith("/.mooncakes/acme/lib") for value in args):
+                    return CommandResult(args, 1, b"", b"auxiliary example is stale")
+                return super().run(args, **kwargs)
+
+        output = self.repo / "snapshot"
+        SemanticIndexer(BuildConfig(
+            repo_root=self.repo, source_root=Path("next/sources"), output=output,
+            stdlib_root=self.stdlib, runner=DependencyFailureRunner(), lsp_factory=lambda root: FakeLsp(),
+        )).build()
+        validate_snapshot(output)
+        sources = self._jsonl(output / "sources.jsonl")
+        self.assertTrue(any(item["origin"] == "dependency" and item["path"] == "lib.mbt" for item in sources))
+        contexts = self._jsonl(output / "contexts.jsonl")
+        dependency_context = next(item for item in contexts if item["root_id"].startswith("dependency:"))
+        self.assertEqual(dependency_context["analysis_status"], "display-only")
+
+    def test_validator_rejects_self_consistent_manifest_with_missing_required_ledger(self):
+        output = self.repo / "snapshot"
+        SemanticIndexer(BuildConfig(
+            repo_root=self.repo, source_root=Path("next/sources"), output=output,
+            stdlib_root=self.stdlib, runner=FakeRunner(), lsp_factory=lambda root: FakeLsp(),
+        )).build()
+        request = next((output / "requests").glob("*/*.json"))
+        count = len(json.loads(request.read_text())["requests"])
+        request.unlink()
+        manifest = json.loads((output / "manifest.json").read_text())
+        manifest["counts"]["requests"] -= count
+        self._refresh_manifest(output, manifest)
+        with self.assertRaisesRegex(SnapshotError, "missing required ledgers"):
+            validate_snapshot(output)
+
+    def test_validator_rejects_tampered_blob(self):
+        output = self.repo / "snapshot"
+        SemanticIndexer(BuildConfig(
+            repo_root=self.repo, source_root=Path("next/sources"), output=output,
+            stdlib_root=self.stdlib, runner=FakeRunner(), lsp_factory=lambda root: FakeLsp(),
+        )).build()
+        blob = next((output / "blobs/sha256").iterdir())
+        blob.write_bytes(b"tampered")
+        with self.assertRaises(SnapshotError):
+            validate_snapshot(output)
+
+    def test_inventory_recognizes_full_dependency_module(self):
+        roots = discover_roots(self.sources, "wasm-gc")
+        app = next(root for root in roots if root.module_name == "example/app")
+        metadata = json.loads((app.path / "_build/packages.json").read_text())
+        deps = metadata_allowed_module_roots(metadata, self.stdlib)
+        self.assertEqual({path.name for path in deps}, {"lib"})
+        self.assertEqual({path.name for path in scan_sources(next(iter(deps)))}, {"lib.mbt", "types.mbti"})
+
+    def test_source_change_during_check_fails_closed(self):
+        app_source = self.sources / "app/main.mbt"
+
+        class MutatingRunner(FakeRunner):
+            mutated = False
+
+            def run(inner_self, args, **kwargs):
+                if "check" in args and not inner_self.mutated:
+                    app_source.write_text("fn changed() -> Unit {}\n", encoding="utf-8")
+                    inner_self.mutated = True
+                return super().run(args, **kwargs)
+
+        with self.assertRaisesRegex(RuntimeError, "changed across moon check"):
+            SemanticIndexer(BuildConfig(
+                repo_root=self.repo, source_root=Path("next/sources"), output=self.repo / "snapshot",
+                stdlib_root=self.stdlib, runner=MutatingRunner(), lsp_factory=lambda root: FakeLsp(),
+            )).build()
+
+    @staticmethod
+    def _write_json(path, value):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(canonical_json_bytes(value))
+
+    @staticmethod
+    def _jsonl(path):
+        return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+
+    @staticmethod
+    def _refresh_manifest(output, manifest):
+        files = []
+        for path in sorted(output.rglob("*")):
+            if path.is_file() and path.name != "manifest.json":
+                raw = path.read_bytes()
+                files.append({"path": path.relative_to(output).as_posix(), "digest": digest_bytes(raw), "size": len(raw)})
+        manifest["files"] = files
+        manifest["corpus_digest"] = digest_json(files)
+        (output / "manifest.json").write_bytes(canonical_json_bytes(manifest))
+
+
+class RangeAndLiterateTest(unittest.TestCase):
+    def test_utf16_utf8_round_trip_and_empty_file(self):
+        coordinates = SourceCoordinates("a😀中\n".encode())
+        for offset in (0, 1, 5, 8, 9):
+            position = coordinates.byte_to_position(offset, "utf-16")
+            self.assertEqual(coordinates.position_to_byte(position, "utf-16"), offset)
+        empty = SourceCoordinates(b"")
+        self.assertEqual(empty.position_to_byte({"line": 0, "character": 0}), 0)
+        self.assertEqual(empty.byte_to_position(0), {"line": 0, "character": 0})
+        with self.assertRaises(RangeError):
+            coordinates.byte_to_position(2)
+
+    def test_literate_full_info_blockquote_and_projection(self):
+        raw = b"prose\n\n```mbt nocheck\nbad\n```\n\n> ```moonbit check\n> fn ok() {}\n> ```\n"
+        fences = extract_literate_fences(raw)
+        self.assertEqual([item["fence_kind"] for item in fences], ["mbt-nocheck", "moonbit-check"])
+        self.assertEqual([item["semantic_status"] for item in fences], ["display-only", "analyzed"])
+        projected = moonbit_projection(raw, fences)
+        self.assertNotIn(b"prose", projected)
+        self.assertNotIn(b"bad", projected)
+        self.assertIn(b"fn ok", projected)
+        self.assertEqual(len(projected), len(raw))
+
+    def test_json_rpc_timeout_is_bounded(self):
+        import sys
+        transport = JsonRpcProcess([sys.executable, "-c", "import time; time.sleep(2)"], Path.cwd(), timeout=0.02)
+        try:
+            with self.assertRaises(LspError):
+                transport.request("initialize", {})
+        finally:
+            transport.close()
+
+    def test_json_rpc_reads_body_already_buffered_with_headers(self):
+        import sys
+        import textwrap
+
+        with tempfile.TemporaryDirectory() as directory:
+            server = Path(directory) / "server.py"
+            server.write_text(textwrap.dedent("""
+                import json, sys, time
+                first = sys.stdin.buffer.readline()
+                length = int(first.split(b":", 1)[1])
+                while sys.stdin.buffer.readline() not in (b"\\r\\n", b"\\n"):
+                    pass
+                sys.stdin.buffer.read(length)
+                body = json.dumps({"jsonrpc": "2.0", "id": 1, "result": {"ok": True}}).encode()
+                sys.stdout.buffer.write(b"Content-Length: " + str(len(body)).encode() + b"\\r\\n\\r\\n" + body)
+                sys.stdout.buffer.flush()
+                time.sleep(1)
+            """), encoding="utf-8")
+            transport = JsonRpcProcess([sys.executable, str(server)], Path.cwd(), timeout=0.2)
+            try:
+                self.assertEqual(transport.request("test", {}), {"ok": True})
+            finally:
+                transport.close()
+
+
+if __name__ == "__main__":
+    unittest.main()
