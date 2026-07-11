@@ -257,9 +257,9 @@ LSP worker 不直接阻塞等待网络：
 
 模式：
 
-- online（默认 semantic recipe）：cache hit 直接使用，miss 才请求网络；
-- offline：只读 cache，miss 产生 `unavailable-offline`，不产生链接；
-- refresh：显式更新 manifest/latest，版本化 assets 仍按 immutable key 复用。
+- online（默认 semantic recipe）：带精确版本的 dependency manifest 和 assets 在 cache hit 时直接使用；core manifest URL 不带版本，因此每个 client 生命周期重新验证一次，再按返回版本读取 immutable assets；
+- offline：所有 URL 只读 cache，miss 产生 `offline-miss`，不产生链接；
+- refresh：显式绕过全部 provider cache；这是排障/强制刷新开关，不是默认 recipe。
 
 并发要求：同一进程中同一个 URL 只有一个 in-flight fetch，其他 worker 等待结果；失败结果在本次构建内也缓存，避免请求风暴。
 
@@ -316,6 +316,7 @@ Definition target 保持原有 local location 字段以便审计：
 - URL scheme/host 必须精确为 `https://mooncakes.io`；
 - URL path 必须处于 `/docs/`；
 - external record 的 module/version/package/anchor 重新组装后必须等于保存的 URL；
+- external record 的 module/requested version 必须与 definition target source 身份一致；
 - local/standalone target 不得带 external target；
 - snapshot manifest 统计 exact external targets 和各 skip reason；
 - Sphinx loader 兼容没有 external table 的旧 snapshot，此时只有 Hover 和文档内 local link 可用。
@@ -606,11 +607,18 @@ Snapshot 中暂时可以继续保存 external target 的冻结 source blob，用
 
 本里程碑已经按上面的数据流落地。实现拆分为以下提交：
 
-1. `c174fbe6 docs: adopt Mooncakes definition routing`
-2. `a6bc62b8 feat(semantic): resolve Mooncakes definition targets`
-3. `d672118a feat(docs): link rendered semantic definitions`
-4. `f08fac35 refactor(docs): remove semantic source pages`
-5. `eaa51fcb perf(docs): enable parallel semantic HTML builds`
+1. `4bde38aa docs: adopt Mooncakes definition routing`
+2. `0feabf42 feat(semantic): resolve Mooncakes definition targets`
+3. `7b3ad0b9 feat(docs): link rendered semantic definitions`
+4. `bac79eb2 refactor(docs): remove semantic source pages`
+5. `79d2736a perf(docs): enable parallel semantic HTML builds`
+
+验收与独立审查后的加固提交：
+
+- `51e53b00 docs: record semantic navigation baseline`
+- `26d82417 fix(docs): remove broken source download links`
+- `651c0ba6 fix(semantic): revalidate core Mooncakes manifests`
+- `2512f771 fix(semantic): bind external targets to source identity`
 
 ### 18.1 全量语义索引
 
