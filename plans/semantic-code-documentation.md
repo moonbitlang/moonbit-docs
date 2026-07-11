@@ -1,6 +1,6 @@
 # MoonBit 文档语义导航实施计划
 
-状态：可直接实施
+状态：已实现，并通过全量 snapshot、clean HTML 和静态端到端验收
 
 最后更新：2026-07-11
 
@@ -67,6 +67,31 @@ Definition file URI
 
 stdlib 同理。`$MOON_HOME/lib/core/cmp/cmp.mbt` 的物理位置只用于确认它属于 `moonbitlang/core/cmp`；最终 HTML 绝不暴露该路径。
 
+### 2.4 mixed target 与唯一 canonical context
+
+一个 MoonBit module 可以同时包含互不兼容的 package target。例如
+`fullstack-one-project` 的 `frontend/` 只支持 JS，`backend/` 只支持 native，
+`shared/` 同时可用。不能只按 module 的 `preferred-target` 启动一个 LSP：在
+native context 中查询 frontend 虽然不报错，但所有 Hover/Definition 都会稳定
+返回空结果。
+
+当前实现从 `packages.json` 的 package/file `supported-targets` 为每个 local
+source 选择且只选择一个 semantic backend：优先使用 module preferred target，
+否则按稳定 backend 顺序选择该 source 支持的 target。每个 backend 形成不相交的
+`analysis_source_ids`；非 preferred target 使用临时 shadow module，仅改 shadow
+manifest 的 preferred target，不改原文档或被 include 的源码。
+
+shadow 保留最近的 `moon.work`、workspace siblings、仓库内相对 path dependency
+和 `.mooncakes` 解析结果。alternate `moon check` 生成的 `packages.json` 会在临时
+目录清理前规范化、冻结为 analysis input，并把 digest 写入 context fingerprint。
+因此 package ownership、import alias 和最终 Mooncakes URL 都有可审计的输入证据。
+
+workspace 容器、成员 module 和 nested path dependency 可能读到同一份 package
+graph。输入 graph 可以重叠，但 occurrence ledger 不可重叠：每个 local source
+在 backend 分组前先归属到包含它的最深 discovered root。只有实际运行或明确
+skip 的 active context 才能成为 source 的 canonical context；expected-failure
+source 不会获得一个没有 ledger 的伪 canonical context。
+
 ## 3. 用户可见行为
 
 ### 3.1 Hover
@@ -94,6 +119,9 @@ Hover 中递归出现的 `mbt`/`moonbit` fence 继续复用文档站的高亮器
 | local/standalone | symbol definition 实际渲染在至少一个文档语义 block 中 | 相对文档 URL + `#mb-def-*` |
 | dependency/stdlib | Mooncakes resolver 返回唯一 `exact` target | 绝对 `https://mooncakes.io/docs/...#...` |
 | 多个 LSP target | 去重后全部指向同一个最终 URL | 该唯一 URL |
+| external exact + unresolved | 有显式 `@alias` 对应 package，或可证明是 bare core prelude facade | 证据所指的唯一 exact URL |
+| external exact + unresolved | 没有上述 package/facade 证据 | 无 `href` |
+| external 与 local 混合 | 即使其中有一个 exact external target | 无 `href` |
 | 多个不同目标 | 当前无法无歧义选择 | 无 `href` |
 | Mooncakes 不支持 | 没有稳定锚点 | 无 `href` |
 | local definition 未被文档展示 | 本站没有真实目的地 | 无 `href` |
@@ -175,22 +203,24 @@ Mooncakes 是 SPA。不存在的 `/docs/...` 路径或 fragment 仍可能返回 
 flowchart LR
   A[Moon docs + literalinclude + .mbt.md fences] --> B[provenance inventory]
   C[moon check packages.json] --> D[package ownership map]
-  E[local/standalone source] --> F[mooninfo tokens]
-  F --> G[parallel LSP Hover + Definition]
-  G --> H[local definition identity]
-  G --> I[external file location]
-  D --> I
-  I --> J[deduplicated Mooncakes resolution queue]
-  K[manifest/module_index/package_data cache] --> J
-  H --> L[semantic snapshot]
-  J --> L
-  G --> L
-  L --> M[Sphinx parallel doctree read]
-  M --> N[merge actual document definition anchors]
-  N --> O[HTML post-transform]
-  O --> P[document anchor href]
-  O --> Q[Mooncakes absolute href]
-  O --> R[Hover-only span]
+  C --> E[target-aware source assignment]
+  E --> F[preferred or shadow LSP contexts]
+  F --> G[mooninfo tokens]
+  G --> H[parallel LSP Hover + Definition]
+  H --> I[local definition identity]
+  H --> J[external file location]
+  D --> J
+  J --> K[deduplicated Mooncakes resolution queue]
+  L[manifest/module_index/package_data cache] --> K
+  I --> M[semantic snapshot]
+  K --> M
+  H --> M
+  M --> N[Sphinx parallel doctree read]
+  N --> O[merge actual document definition anchors]
+  O --> P[HTML post-transform]
+  P --> Q[document anchor href]
+  P --> R[Mooncakes absolute href]
+  P --> S[Hover-only span]
 ```
 
 关键分界：
@@ -215,6 +245,8 @@ flowchart LR
 
 - 对 target file 使用最长物理前缀匹配；
 - 同一物理 root 映射到不同逻辑 package 时标记 `ambiguous-package`；
+- production/test dependency 集中同一 import alias 指向不同 package 时整张 alias map fail closed；
+- 同一 source 出现在多个 local root graph 时只由最深 root 分析，其他 root 只保留它作为 context input；
 - package 必须等于 module 或以 `module/` 开头；
 - dependency module/version 来自已解析 module root，而不是从路径字符串猜；
 - 只有在 metadata 缺失时，才允许用 module root 下的相对目录进行保守推断，并必须再由 Mooncakes catalog 精确确认。
@@ -318,6 +350,10 @@ Definition target 保持原有 local location 字段以便审计：
 - external record 的 module/version/package/anchor 重新组装后必须等于保存的 URL；
 - external record 的 module/requested version 必须与 definition target source 身份一致；
 - local/standalone target 不得带 external target；
+- `preferred_external_target_id` 只能用于全部 definition 都指向 dependency/stdlib 的 occurrence，不能覆盖 local/external 混合结果；
+- source 的 canonical context 必须存在对应 occurrence ledger，即使 ledger 为空；
+- ledger envelope 与内部 occurrence 的 source/context identity 必须一致且非空；
+- alternate-target package metadata digest 必须属于冻结 analysis inputs；
 - snapshot manifest 统计 exact external targets 和各 skip reason；
 - Sphinx loader 兼容没有 external table 的旧 snapshot，此时只有 Hover 和文档内 local link 可用。
 
@@ -414,7 +450,8 @@ Snapshot 中暂时可以继续保存 external target 的冻结 source blob，用
 - HTML 不包含 `file://`、repo absolute path、`.mooncakes` absolute path 或 `$MOON_HOME`；
 - Sphinx build 不联网，所以可复现性由 snapshot digest 决定；
 - unsupported/ambiguous 永远不猜测；
-- 多目标只在最终 URL 完全相同时合并。
+- 多目标只在最终 URL 完全相同，或有显式 alias/prelude facade 证据时合并；
+- 临时 shadow、repo、`.mooncakes` 和 toolchain 绝对路径在 diagnostics、request error、metadata 与 HTML 中统一规范化。
 
 ## 12. 性能模型
 
@@ -422,7 +459,7 @@ Snapshot 中暂时可以继续保存 external target 的冻结 source blob，用
 
 新成本：
 
-- LSP：与当前 local/standalone-only 流程相同；
+- LSP：仍只分析 local/standalone，但 mixed-target module 会按不相交 source set 增加必要的 backend context；
 - ownership map：线性扫描 `packages.json` package/dependency entries；
 - Mooncakes：按唯一 module/package 缓存和并行请求，不按 occurrence 请求；
 - Sphinx：只对实际文档代码 block 做已有 range projection；
@@ -509,6 +546,20 @@ Snapshot 中暂时可以继续保存 external target 的冻结 source blob，用
 
 如果 Commit 2–4 已各自包含充分测试，Commit 5 不强制制造空的测试提交。
 
+### Commit 6 — `fix(semantic): analyze mixed-target documentation sources`
+
+- 从 package/file `supported-targets` 建立不相交 backend contexts；
+- 为 alternate target 建立保留 workspace/path dependency 的临时 shadow；
+- 最深 root 唯一认领 canonical occurrence ledger；
+- 用 alias/prelude facade 证据选择 Core/JSON 的 public route；
+- 加固旧 snapshot 兼容、ledger identity、external/local 混合和临时路径合同；
+- 以 `fullstack-one-project` 的 frontend/backend literalinclude 作为真实 E2E fixture。
+
+### Commit 7 — `docs: record target-aware semantic baseline`
+
+- 把 mixed-target 数据流、fail-closed 路由条件与完整实测指标写回本文；
+- 不包含运行时代码。
+
 ## 15. 测试矩阵
 
 ### 15.1 Resolver unit tests
@@ -536,6 +587,11 @@ Snapshot 中暂时可以继续保存 external target 的冻结 source blob，用
 - 非 Mooncakes host 被拒绝；
 - URL 与结构化字段不一致被拒绝；
 - local target 夹带 external route 被拒绝；
+- preferred external occurrence 夹带伪 external-status local target 仍被拒绝；
+- canonical context 缺 ledger 被拒绝；
+- ledger envelope identity 向内继承，但与内部 record 冲突或为空时被拒绝；
+- 旧 v1 snapshot 无 canonical context 且有多个 ledger 时保持稳定排序 fallback；
+- alternate target package metadata 被冻结并参与 context fingerprint；
 - 旧 snapshot 无 external table 仍可加载；
 - manifest counts 与 skip statistics 一致。
 
@@ -572,6 +628,7 @@ Snapshot 中暂时可以继续保存 external target 的冻结 source blob，用
 - 至少有一个文档内 local Definition link；
 - 至少有一个 core Mooncakes link；
 - 若 fixture 含已发布 dependency，至少有一个带精确版本的 dependency link。
+- `fullstack-one-project` 的 JS frontend 与 native backend 中，`from_json`、`parse`、`Json::stringify` 都同时有 Hover 与精确 Core JSON URL。
 
 ## 16. 完成标准
 
@@ -619,6 +676,7 @@ Snapshot 中暂时可以继续保存 external target 的冻结 source blob，用
 - `26d82417 fix(docs): remove broken source download links`
 - `651c0ba6 fix(semantic): revalidate core Mooncakes manifests`
 - `2512f771 fix(semantic): bind external targets to source identity`
+- `96521030 fix(semantic): analyze mixed-target documentation sources`
 
 ### 18.1 全量语义索引
 
@@ -626,36 +684,41 @@ Snapshot 中暂时可以继续保存 external target 的冻结 source blob，用
 
 | 指标 | 数值 |
 | --- | ---: |
-| wall time | 约 223.2 秒 |
+| wall time | 244.1 秒 |
 | source files | 2,075 |
-| analysis contexts | 572 |
-| symbols | 4,569 |
-| hovers | 1,567 |
-| occurrences | 17,324 |
-| definition requests | 17,665 |
-| Mooncakes unique positions | 261 |
+| all / active analysis contexts | 574 / 280 |
+| symbols | 4,638 |
+| hovers | 1,608 |
+| occurrences | 17,464 |
+| Hover + Definition requests | 17,627 |
+| Mooncakes unique positions | 285 |
 | Mooncakes exact targets | 187 |
-| Mooncakes unsupported/skipped | 74 |
+| Mooncakes unsupported / unavailable | 74 / 24 |
 | frozen literate assets | 0 |
 
-这 223 秒不是 Mooncakes 网络解析造成的：261 个去重位置以 16 workers 解析约 8.3 秒。主要耗时是 279 个含 occurrence 的本地 analysis context 仍按 context 串行启动和驱动 LSP；大型 context 内已经使用 8 个 session。下一阶段若要显著加速，目标应是 context-level scheduler，而不是扩大单 context 的 session 数，也不是重新分析 stdlib/dependency occurrence。
+本轮前置 542 roots 的 clean `moon check` barrier 在 20.1 秒完成，source/context inventory 在 49.1 秒完成；280 个 active local/standalone contexts 在 234.0 秒完成。285 个去重 Mooncakes 位置以 16 workers 解析约 5.5 秒，原子写入与 validator 约 4.5 秒。主要耗时仍是 context 串行启动和 LSP 请求；`gmachine` 的 6,456 candidates 单独约 36 秒，`language` 的 4,111 candidates 约 25.5 秒。下一阶段若要显著加速，目标应是 context-level scheduler，而不是重新分析 stdlib/dependency occurrence。
 
-当前 74 个 unsupported 结果按 fail-closed 合同保留 Hover 但不生成 `href`。它们不是错误，也不会降级成按名字猜测的 Mooncakes 链接。
+本轮仅新增两个实际需要的 alternate backend context：
+`fullstack-one-project@js`（178 candidates，约 5.6 秒）和
+`error_codes/4156_fixed@native`（2 candidates，约 0.1 秒）。这说明 target-aware
+分析的成本由真正不兼容的 local source 决定，而不是 backend 数乘以全仓 source 数。
+
+当前 74 个 unsupported 和 24 个 unavailable 结果按 fail-closed 合同保留 Hover 但不生成 `href`。它们不是索引失败，也不会降级成按名字猜测的 Mooncakes 链接。
 
 ### 18.2 HTML 构建与静态闭包
 
-`make clean html SPHINXOPTS="-j auto"` 的实测 wall time 约 15.7 秒，构建 347 个 Sphinx source documents；现有 16 条文档 warning 与本功能无关。生成物统计为：
+`make clean html SPHINXOPTS="-j auto"` 本轮约 10 秒，构建 347 个 Sphinx source documents；现有 16 条文档 warning 与本功能无关。生成物统计为：
 
 | 指标 | 数值 |
 | --- | ---: |
 | HTML pages | 351 |
-| semantic code blocks | 669 |
-| Hover-bearing tokens | 12,334 |
-| definition anchors | 2,831 |
-| semantic links | 9,074 |
-| local definition links | 8,722 |
-| Mooncakes links | 352 |
-| unique Mooncakes URLs | 89 |
+| semantic code blocks | 671 |
+| Hover-bearing tokens | 12,475 |
+| definition anchors | 2,858 |
+| semantic links | 9,886 |
+| local definition links | 8,766 |
+| Mooncakes links | 1,120 |
+| unique Mooncakes URLs | 435 |
 | HTML size | 约 33 MiB |
 
 静态 E2E 已验证：
@@ -666,6 +729,12 @@ Snapshot 中暂时可以继续保存 external target 的冻结 source blob，用
 - 不存在 `file://` 或绝对本地路径泄漏；
 - `.mbt.md` 继续由普通 MyST include 处理 prose，内部 MoonBit fence 接收相同语义渲染；
 - Hover Markdown、嵌套 MoonBit fence 高亮和 sanitization 的既有测试继续通过。
+- `fullstack-one-project` 的 Step 3 是 `literalinclude` 的真实 JS-only `.mbt`，不是普通无 provenance fence；它与 Step 4 native block 的 Core JSON Hover/Definition 已同时闭合。
+
+语义扩展测试结果为 `88 passed, 4 skipped, 12 subtests passed`；整站
+`SemanticDocumentationEndToEndTests` 为 `4 passed`。独立复审另用全仓
+skip-LSP topology、workspace mixed-target fixture、旧 v1 snapshot 与伪造
+external/local occurrence 做了反例验证，没有剩余 blocking finding。
 
 自动化 in-app browser 的 URL policy 不允许打开本地 `file://` 构建产物，因此没有把一次真实外部点击作为 CI/验收条件；链接行为由生成 HTML 的精确 href、snapshot 合同和静态 fragment crawl 验证。Mooncakes SPA 的 fragment 滚动 race 仍按第 13 节记录为上游问题，不影响本站是否输出正确 URL。
 
@@ -677,9 +746,16 @@ uv run --with-requirements next/requirements.txt --with pytest \
 just semantic-index
 just semantic-check
 cd next
-MOONBIT_SEMANTIC_E2E=1 uv run --with-requirements requirements.txt \
-  --with pytest pytest -q ../tests/semantic_docs/test_integration_config.py
-make clean html SPHINXOPTS="-j auto"
+MOONBIT_SEMANTIC_SNAPSHOT="$(pwd)/../semantic-snapshot" \
+  MOONBIT_SEMANTIC_REQUIRED=1 \
+  uv run --with-requirements requirements.txt \
+  make clean html SPHINXOPTS="-j auto"
+cd ..
+MOONBIT_SEMANTIC_E2E=1 \
+  MOONBIT_SEMANTIC_SNAPSHOT=semantic-snapshot \
+  MOONBIT_SEMANTIC_HTML=next/_build/html \
+  uv run --with-requirements next/requirements.txt --with pytest \
+  pytest -q tests/semantic_docs/test_integration_config.py::SemanticDocumentationEndToEndTests
 ```
 
 live Mooncakes smoke test 只用于人工确认公开服务当前路由，不进入 CI；CI 中 resolver 继续使用确定性 fixture，避免把外部服务可用性变成文档构建条件。
