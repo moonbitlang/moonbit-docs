@@ -782,19 +782,18 @@ RTD/production 的唯一顺序固定为：
 
 ### 11.1 当前 clean-build 性能预算
 
-当前规模测量约为 1,828 个冻结源码页面；收缩到 local/workspace/standalone required origins 后，active analysis 约 411 个文件、17,647 个 identifier candidate，约为原全量 337,210 个 candidate 的 5.2%。Dependency/stdlib 的源码枚举、hash、blob 固化与页面生成仍完整执行，但不再产生逐 occurrence LSP RPC。
+2026-07-11 的首个 strict local-first baseline 实际冻结 2,075 个源码页面，在 279 个 active context 中完成 17,665 个 identifier request；相对原全量约 337,210 个 candidate，逐 occurrence LSP 工作量只剩约 5.2%。Dependency/stdlib 的源码枚举、hash、blob 固化与页面生成仍完整执行，但不再产生自身的逐 occurrence LSP RPC。
 
 当前里程碑的 clean-build 预算如下；它是需要由 CI 报告验证的工程预算，不是以跳过正确性检查换取的软目标：
 
-| 阶段 | 当前预计 |
-|---|---:|
-| local root check、resolved graph 与完整 corpus 固化 | 1–2.5 分钟 |
-| local/standalone candidate collection | 约 2–3 秒 |
-| active Hover + Definition capture | 2–3.5 分钟 |
-| snapshot 校验与原子发布 | 5–20 秒 |
-| Sphinx HTML（含全部冻结源码页） | 1–2 分钟 |
-| semantic snapshot only | 约 3–6 分钟 |
-| 完整 clean semantic HTML | 约 4–8 分钟，保守上限 10 分钟 |
+| 阶段 | 当前预计 | 2026-07-11 strict baseline |
+|---|---:|---:|
+| local root check、resolved graph 与完整 corpus 固化 | 1–2.5 分钟 | 27.5 秒 |
+| active candidate + Hover + Definition capture | 2–3.5 分钟 | 约 176.1 秒 |
+| snapshot 校验与原子发布 | 5–20 秒 | 约 5.0 秒 |
+| Sphinx HTML（含全部冻结源码页） | 1–2 分钟 | 85.28 秒 |
+| semantic snapshot only | 约 3–6 分钟 | 208.6 秒 |
+| 完整 clean semantic HTML | 约 4–8 分钟，保守上限 10 分钟 | 293.9 秒（约 4 分 54 秒） |
 
 性能报告必须分别记录 corpus discovery/hash、check barrier、candidate collection、LSP capture、snapshot write/validate 和 Sphinx render，不能只提供总时长。超过 10 分钟时先按 context/source/candidate/request 吞吐定位回归，不通过继续排除 source origin 来掩盖问题。
 
