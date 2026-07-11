@@ -40,7 +40,30 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path("_ext").resolve()))
 
-extensions = ['myst_parser', 'lexer', 'grammar', 'check', 'indent', 'sphinx_copybutton', 'sphinx_design']
+extensions = [
+    'myst_parser',
+    'lexer',
+    'grammar',
+    'check',
+    'indent',
+    'sphinx_copybutton',
+    'sphinx_design',
+    'moonbit_semantic',
+]
+
+# Semantic documentation is an optional overlay for normal local builds.  The
+# production recipe enables strict validation explicitly after generating the
+# snapshot; non-HTML builders remain unaffected inside the extension.
+moonbit_semantic_snapshot = os.getenv(
+    'MOONBIT_SEMANTIC_SNAPSHOT',
+    str(Path(__file__).resolve().parent.parent / 'semantic-snapshot'),
+)
+moonbit_semantic_required = os.getenv(
+    'MOONBIT_SEMANTIC_REQUIRED', ''
+).lower() in {'1', 'true', 'yes', 'on'}
+moonbit_semantic_source_prefix = os.getenv(
+    'MOONBIT_SEMANTIC_SOURCE_PREFIX', '_moonbit-src'
+)
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README*.md", 'sources', 'download']

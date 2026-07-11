@@ -5,6 +5,21 @@ default:
 docs-html:
     cd next && uv run --with-requirements requirements.txt make html
 
+# Build and validate the self-contained MoonBit semantic source snapshot.
+# The snapshot argument is relative to the repository root.
+semantic-index snapshot="semantic-snapshot":
+    uv run python scripts/build_semantic_snapshot.py build --repo-root . --output "{{ snapshot }}"
+
+# Validate an existing semantic source snapshot without rebuilding it.
+semantic-check snapshot="semantic-snapshot":
+    uv run python scripts/build_semantic_snapshot.py validate --snapshot "{{ snapshot }}"
+
+# Production HTML entrypoint: index first, validate, then require semantics.
+docs-html-semantic snapshot="semantic-snapshot":
+    uv run python scripts/build_semantic_snapshot.py build --repo-root . --output "{{ snapshot }}"
+    uv run python scripts/build_semantic_snapshot.py validate --snapshot "{{ snapshot }}"
+    cd next && MOONBIT_SEMANTIC_SNAPSHOT="{{ justfile_directory() }}/{{ snapshot }}" MOONBIT_SEMANTIC_REQUIRED=1 uv run --with-requirements requirements.txt make clean html
+
 # Build the Chinese Sphinx docs with uv-managed Python dependencies.
 docs-html-zh:
     cd next && LANGUAGE=zh_CN uv run --with-requirements requirements.txt make html
