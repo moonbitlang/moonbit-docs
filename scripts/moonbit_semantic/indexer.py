@@ -36,7 +36,6 @@ IDENTIFIER_TOKENS = {
     "LIDENT", "UIDENT", "DOT_LIDENT", "DOT_UIDENT", "PACKAGE_NAME",
     "LABEL", "QUESTION_LABEL", "POST_LABEL",
 }
-ASSET = re.compile(rb"(?:!\[[^\]]*\]\(([^)\s]+)|\{(?:include|literalinclude)\}\s+([^\s}]+))")
 
 
 @dataclass
@@ -111,7 +110,6 @@ class SemanticIndexer:
         self.request_shards: dict[tuple[str, str], dict[str, Any]] = {}
         self.toolchain: dict[str, Any] = {}
         self.portable_roots: dict[Path, str] = {config.repo_root: "$REPO"}
-        self.capture_roots: set[Path] = set()
         self._semantic_lock = threading.Lock()
         self._progress_lock = threading.Lock()
         self._started_at = time.monotonic()
@@ -132,7 +130,6 @@ class SemanticIndexer:
         if not roots:
             raise RuntimeError(f"no MoonBit roots found below {cfg.source_root}")
         self._progress(f"discovered {len(roots)} local/standalone roots")
-        self.capture_roots.update(realpath(root.path) for root in roots)
         precheck_sources = {
             root.root_id: {path: path.read_bytes() for path in scan_sources(root.path)}
             for root in roots
@@ -141,7 +138,6 @@ class SemanticIndexer:
         cfg.stdlib_root = stdlib
         if stdlib:
             self.portable_roots[realpath(stdlib)] = "$STDLIB"
-            self.capture_roots.add(realpath(stdlib))
         self.toolchain = self._toolchain()
         root_states: dict[str, tuple[Root, dict[str, Any] | None]] = {}
         dependency_roots: set[Path] = set()
@@ -309,7 +305,6 @@ class SemanticIndexer:
 
         logical_sources = _logical_source_map(sources.values())
 
-        self._collect_assets(sources, path_to_source)
         contexts: list[dict[str, Any]] = []
         active_contexts: list[
             tuple[
@@ -1010,91 +1005,6 @@ class SemanticIndexer:
         sources[source["source_id"]] = source
         path_map[path] = source
 
-    def _collect_assets(self, sources: dict[str, dict[str, Any]], path_map: dict[Path, dict[str, Any]]) -> None:
-        for source in list(sources.values()):
-            if source["kind"] != "mbt.md":
-                continue
-            owner = Path(source["_realpath"])
-            owner_roots = sorted(
-                (root for root in self.capture_roots if is_within(owner, root)),
-                key=lambda root: len(root.parts),
-                reverse=True,
-            )
-            if not owner_roots:
-                continue
-            capture_root = owner_roots[0]
-            # MyST root-relative links in next/sources/*.mbt.md are relative to
-            # the Sphinx source root (next/), not to the Moon module.
-            document_root = (
-                self.config.source_root.parent
-                if is_within(owner, self.config.source_root)
-                else capture_root
-            )
-            self._assets_from(
-                owner,
-                source["source_id"],
-                set(),
-                path_map,
-                capture_root=capture_root,
-                document_root=document_root,
-            )
-
-    def _assets_from(
-        self,
-        owner: Path,
-        owner_id: str,
-        visited: set[Path],
-        path_map: dict[Path, dict[str, Any]],
-        *,
-        capture_root: Path,
-        document_root: Path,
-        depth: int = 0,
-    ) -> None:
-        if depth > 16:
-            raise RuntimeError(f"literate asset recursion exceeds limit at {owner}")
-        raw = owner.read_bytes()
-        for match in ASSET.finditer(raw):
-            value = next((group for group in match.groups() if group), b"").decode("utf-8", "replace").strip("<>\"'")
-            if not value or "://" in value or value.startswith("#"):
-                continue
-            reference = value.split("#", 1)[0]
-            target = realpath(
-                document_root / reference.lstrip("/")
-                if reference.startswith("/")
-                else owner.parent / reference
-            )
-            if target in visited or not target.is_file():
-                continue
-            allowed_roots = (capture_root, document_root)
-            logical_root = next(
-                (root for root in allowed_roots if is_within(target, root)),
-                None,
-            )
-            if logical_root is None:
-                if self.config.strict:
-                    raise RuntimeError(f"literate asset escapes allowed roots: {target}")
-                continue
-            visited.add(target)
-            blob = target.read_bytes()
-            logical_path = unicodedata.normalize(
-                "NFC", normalize_relative(target.relative_to(logical_root))
-            )
-            asset_id = "asset:" + digest_json({"owner": owner_id, "path": logical_path, "blob": digest_bytes(blob)}).removeprefix("sha256:")[:24]
-            self.assets.append({
-                "asset_id": asset_id, "owner_source_id": owner_id, "path": logical_path,
-                "blob_digest": digest_bytes(blob), "mime": _mime(target), "_realpath": str(target), "_blob": blob,
-            })
-            if target.suffix.lower() in {".md", ".markdown"}:
-                self._assets_from(
-                    target,
-                    owner_id,
-                    visited,
-                    path_map,
-                    capture_root=capture_root,
-                    document_root=document_root,
-                    depth=depth + 1,
-                )
-
     def _input(self, path: Path, kind: str, root_id: str) -> None:
         raw = path.read_bytes()
         try:
@@ -1168,7 +1078,6 @@ class SemanticIndexer:
         info = module_info(root)
         version = info["version"] or _source_tree_digest(root).removeprefix("sha256:")[:16]
         self.portable_roots[root] = f"$MODULE/{info['name']}@{version}"
-        self.capture_roots.add(root)
 
     def _portable_diagnostic(self, value: str, root: Root) -> str:
         replacements = [(str(self.config.repo_root), "$REPO"), (str(root.path), "$ROOT")]
@@ -1274,10 +1183,6 @@ def _definition_kind(raw: bytes, selection: list[int]) -> str:
 
 def _slug(value: str) -> str:
     return digest_bytes(value.encode()).removeprefix("sha256:")[:32]
-
-
-def _mime(path: Path) -> str:
-    return {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".svg": "image/svg+xml", ".md": "text/markdown"}.get(path.suffix.lower(), "application/octet-stream")
 
 
 def _source_tree_digest(root: Path) -> str:

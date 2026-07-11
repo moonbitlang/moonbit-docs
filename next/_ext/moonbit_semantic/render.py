@@ -1,16 +1,13 @@
-"""Semantic range overlay renderer shared by docs and source pages."""
+"""Semantic range overlay renderer for MoonBit document code blocks."""
 
 from __future__ import annotations
 
-from dataclasses import replace
 from html import escape
-import re
 from typing import Callable, Iterable
 
 from pygments.formatters.html import HtmlFormatter
 from sphinx.highlighting import lexer_classes
 
-from .routing import symbol_anchor
 from .snapshot import Occurrence
 
 
@@ -90,33 +87,24 @@ class SemanticCodeRenderer:
         occurrences: Iterable[Occurrence],
         resolve_target: TargetResolver,
         *,
-        base_offset: int = 0,
-        start_line: int = 1,
-        line_anchors: bool = True,
-        source_page: bool = False,
         language: str = "moonbit",
         resolve_definition_anchor: DefinitionAnchorResolver | None = None,
     ) -> str:
         encoded_size = len(text.encode("utf-8"))
-        local: list[Occurrence] = []
-        for item in occurrences:
-            start, end = item.byte_range
-            if end <= base_offset or start >= base_offset + encoded_size or start == end:
-                continue
-            clipped = (max(start, base_offset) - base_offset, min(end, base_offset + encoded_size) - base_offset)
-            local.append(replace(item, byte_range=clipped))
-
         boundaries = _byte_to_char_boundaries(text)
         char_boundaries = _char_to_byte_boundaries(text)
         valid: list[Occurrence] = []
-        for item in local:
-            if item.byte_range[0] in boundaries and item.byte_range[1] in boundaries:
+        for item in occurrences:
+            start, end = item.byte_range
+            if (
+                0 <= start < end <= encoded_size
+                and start in boundaries
+                and end in boundaries
+            ):
                 valid.append(item)
         events = {0, encoded_size}
         for item in valid:
             events.update(item.byte_range)
-        for match in re.finditer("\n", text):
-            events.add(len(text[: match.start() + 1].encode("utf-8")))
         lexical: list[tuple[int, int, str]] = []
         lexer = lexer_classes.get(language) or lexer_classes.get("mbt")
         if lexer is not None:
@@ -136,17 +124,12 @@ class SemanticCodeRenderer:
         points = sorted(events)
 
         chunks: list[str] = []
-        line = start_line
-        at_line_start = True
         ordered_occurrences = sorted(valid, key=lambda item: (item.byte_range[0], item.byte_range[1]))
         occurrence_index = 0
         active_occurrences: list[Occurrence] = []
         lexical_index = 0
         emitted_anchors: set[str] = set()
         for left, right in zip(points, points[1:]):
-            if at_line_start and line_anchors:
-                chunks.append(f'<span id="L{line}" class="mbt-line-anchor" data-source-line="{line}"></span>')
-                at_line_start = False
             piece = text[boundaries[left] : boundaries[right]]
             active_occurrences = [item for item in active_occurrences if item.byte_range[1] > left]
             while occurrence_index < len(ordered_occurrences) and ordered_occurrences[occurrence_index].byte_range[0] <= left:
@@ -173,7 +156,7 @@ class SemanticCodeRenderer:
                     candidate = (
                         resolve_definition_anchor(occurrence)
                         if resolve_definition_anchor is not None
-                        else symbol_anchor(occurrence.symbol_id)
+                        else None
                     )
                     if candidate and candidate not in emitted_anchors:
                         anchor = candidate
@@ -191,16 +174,7 @@ class SemanticCodeRenderer:
                 chunks.append(f'<span class="{lexical_class}">{escape(piece)}</span>')
             else:
                 chunks.append(escape(piece))
-            newline_count = piece.count("\n")
-            if newline_count:
-                line += newline_count
-                at_line_start = piece.endswith("\n")
-        if not points or (text == ""):
-            if line_anchors:
-                chunks.append(f'<span id="L{line}" class="mbt-line-anchor" data-source-line="{line}"></span>')
-        classes = "mbt-semantic-source" if source_page else "mbt-semantic-code"
-        marker = ' data-mbt-semantic-source="true"' if source_page else ""
         return (
-            f'<div class="{classes}"{marker}><div class="highlight-moonbit notranslate">'
+            '<div class="mbt-semantic-code"><div class="highlight-moonbit notranslate">'
             f'<div class="highlight"><pre>{"".join(chunks)}</pre></div></div></div>'
         )

@@ -108,8 +108,8 @@ def _sanitize_document(document: nodes.document) -> None:
             _drop_unsafe_reference(node)
 
     for node in list(document.findall(nodes.image)):
-        # Hover fragments have no stable source-page base or frozen asset
-        # closure.  Never turn LSP documentation into local/remote requests.
+        # Hover fragments have no stable document-relative asset base. Never
+        # turn LSP documentation into local or remote image requests.
         node.replace_self(nodes.Text(str(node.get("alt") or "")))
 
     # A Hover fragment is mounted inside an existing page, so it must not

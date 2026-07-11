@@ -158,20 +158,31 @@ class LiteralIncludeProvenanceTests(unittest.TestCase):
         self.assertFalse(provenance_is_current(provenance, raw.decode(), snapshot))
 
     def test_parallel_environment_state_merges_and_purges_by_docname(self) -> None:
-        env = SimpleNamespace(moonbit_semantic_block_sources={"old": {"source:a"}})
+        key = ("local:sample.mbt", "sym:answer", 4, 10)
+        env = SimpleNamespace(
+            moonbit_semantic_document_definitions={
+                "old": {key: [(0, "old-anchor")]}
+            }
+        )
         other = SimpleNamespace(
-            moonbit_semantic_block_sources={
-                "new": {"source:b"},
-                "ignored": {"source:c"},
+            moonbit_semantic_document_definitions={
+                "new": {key: [(1, "new-anchor")]},
+                "ignored": {key: [(2, "ignored-anchor")]},
             }
         )
         merge_semantic_blocks(None, env, ["new"], other)
         self.assertEqual(
-            env.moonbit_semantic_block_sources,
-            {"old": {"source:a"}, "new": {"source:b"}},
+            env.moonbit_semantic_document_definitions,
+            {
+                "old": {key: [(0, "old-anchor")]},
+                "new": {key: [(1, "new-anchor")]},
+            },
         )
         purge_semantic_blocks(None, env, "old")
-        self.assertEqual(env.moonbit_semantic_block_sources, {"new": {"source:b"}})
+        self.assertEqual(
+            env.moonbit_semantic_document_definitions,
+            {"new": {key: [(1, "new-anchor")]}},
+        )
 
 
 if __name__ == "__main__":

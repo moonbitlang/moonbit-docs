@@ -17,15 +17,25 @@ sys.path.insert(0, str(EXT))
 
 from moonbit_semantic.render import SemanticCodeRenderer
 from moonbit_semantic.snapshot import Occurrence, SnapshotError, load_snapshot
-from moonbit_semantic.source_pages import get_outdated
+from moonbit_semantic.lifecycle import get_outdated
 
 
-def _write_snapshot(
-    root: Path,
-    *,
-    extra_literate: str = "",
-    deferred_external_target: bool = False,
-) -> Path:
+MAIN_SOURCE = (
+    "pub fn answer() -> Int { 42 }\n"
+    "fn use() -> Int { answer() }\n"
+)
+LITERATE_SOURCE = """# Included literate guide
+
+Literate Markdown prose survives the normal MyST include.
+
+```moonbit
+pub fn lit() -> Int { 7 }
+fn use_lit() -> Int { lit() }
+```
+"""
+
+
+def _write_snapshot(root: Path) -> Path:
     snapshot = root / "snapshot"
     blobs = snapshot / "blobs" / "sha256"
     occurrences = snapshot / "occurrences" / "ctx"
@@ -34,62 +44,43 @@ def _write_snapshot(
     occurrences.mkdir(parents=True)
     hovers.mkdir(parents=True)
 
-    pure = "pub fn answer() -> Int { 42 }\n"
-    literate = "# Literate Guide\n\nProse survives from the frozen Markdown.\n\n```mbt\npub fn lit() -> Int { 7 }\n```\n\n![Frozen logo](logo.svg)\n" + extra_literate
-    logo = b'<svg xmlns="http://www.w3.org/2000/svg"><title>logo</title></svg>'
+    pure = MAIN_SOURCE
+    literate = LITERATE_SOURCE
     pure_digest = hashlib.sha256(pure.encode()).hexdigest()
-    lit_digest = hashlib.sha256(literate.encode()).hexdigest()
-    logo_digest = hashlib.sha256(logo).hexdigest()
+    literate_digest = hashlib.sha256(literate.encode()).hexdigest()
     (blobs / pure_digest).write_text(pure)
-    (blobs / lit_digest).write_text(literate)
-    (blobs / logo_digest).write_bytes(logo)
+    (blobs / literate_digest).write_text(literate)
 
     sources = [
         {
-            "source_id": "local:src/main.mbt",
-            "path": "src/main.mbt",
+            "source_id": "local:main.mbt",
+            "path": "main.mbt",
             "blob_digest": f"sha256:{pure_digest}",
             "kind": ".mbt",
             "origin": "local",
             "package": "demo",
+            "analysis_status": "required",
             "route_key": "local/demo/src/main.mbt",
         },
         {
-            "source_id": "dependency:demo@1.0:guide.mbt.md",
-            "path": "guide.mbt.md",
-            "blob_digest": f"sha256:{lit_digest}",
+            "source_id": "local:literate.mbt.md",
+            "path": "literate.mbt.md",
+            "blob_digest": f"sha256:{literate_digest}",
             "kind": ".mbt.md",
-            "origin": "dependency",
-            "module": "demo",
-            "version": "1.0",
-            "package": "demo/guide",
-            "route_key": "pkg/demo/1.0/guide.mbt.md",
+            "origin": "local",
+            "package": "demo/literate",
+            "analysis_status": "required",
+            "route_key": "local/demo/literate.mbt.md",
         },
     ]
     answer_start = pure.encode().index(b"answer")
+    use_start = pure.encode().rindex(b"answer")
     lit_start = literate.encode().index(b"lit()")
-    fence_start = literate.encode().index(b"pub fn lit")
-    fence_end = literate.encode().index(b"```", fence_start)
-    sources[1]["literate_fences"] = [
-        {
-            "raw_byte_range": [fence_start, fence_end],
-            "raw_line_range": [6, 7],
-            "content_digest": "sha256:test",
-            "fence_kind": "mbt",
-            "semantic_status": "analyzed",
-            "range_map": [
-                {
-                    "raw_utf8": [fence_start, fence_end],
-                    "display_utf8": [0, fence_end - fence_start],
-                    "transform_kind": "identity",
-                }
-            ],
-        }
-    ]
+    lit_use_start = literate.encode().rindex(b"lit()")
     symbols = [
         {
             "symbol_id": "sym:demo.answer",
-            "source_id": "local:src/main.mbt",
+            "source_id": "local:main.mbt",
             "selection_range_utf8": [answer_start, answer_start + len(b"answer")],
             "name": "answer",
             "qualified_name": "demo.answer",
@@ -99,47 +90,61 @@ def _write_snapshot(
         },
         {
             "symbol_id": "sym:demo.lit",
-            "source_id": "dependency:demo@1.0:guide.mbt.md",
+            "source_id": "local:literate.mbt.md",
             "selection_range_utf8": [lit_start, lit_start + len(b"lit")],
             "name": "lit",
+            "qualified_name": "demo.lit",
             "kind": "function",
-            "package": "demo/guide",
-            "hover_id": "hover:lit",
+            "package": "demo/literate",
+            "hover_id": "hover:answer",
         },
     ]
-    if deferred_external_target:
-        sources[1]["analysis_status"] = "deferred-by-origin-policy"
-        symbols[1].pop("hover_id")
     (snapshot / "sources.jsonl").write_text("".join(json.dumps(item) + "\n" for item in sources))
     (snapshot / "symbols.jsonl").write_text("".join(json.dumps(item) + "\n" for item in symbols))
-    (snapshot / "assets.jsonl").write_text(
-        json.dumps(
-            {
-                "asset_id": "asset:logo",
-                "owner_source_id": "dependency:demo@1.0:guide.mbt.md",
-                "path": "logo.svg",
-                "blob_digest": f"sha256:{logo_digest}",
-                "mime": "image/svg+xml",
-            }
-        )
-        + "\n"
-    )
-    occurrence_records = []
-    if deferred_external_target:
-        occurrence_records.append({
-            "source_id": "local:src/main.mbt",
-            "context_id": "ctx:local",
-            "effective_range_utf8": [answer_start, answer_start + len(b"answer")],
-            "candidate_range_utf8": [answer_start, answer_start + len(b"answer")],
+    occurrence_records = [
+        {
+            "source_id": "local:main.mbt",
+            "effective_range_utf8": [use_start, use_start + len(b"answer")],
+            "candidate_range_utf8": [use_start, use_start + len(b"answer")],
             "symbol_id": "sym:demo.answer",
             "hover_id": "hover:answer",
-            "definitions": [{
-                "target_source_id": "dependency:demo@1.0:guide.mbt.md",
-                "target_selection_range_utf8": [lit_start, lit_start + len(b"lit")],
-                "target_range_utf8": [lit_start, lit_start + len(b"lit")],
-                "symbol_id": "sym:demo.lit",
-            }],
-        })
+            "definitions": [
+                {
+                    "target_source_id": "local:main.mbt",
+                    "target_selection_range_utf8": [
+                        answer_start,
+                        answer_start + len(b"answer"),
+                    ],
+                    "target_range_utf8": [
+                        answer_start,
+                        answer_start + len(b"answer"),
+                    ],
+                    "symbol_id": "sym:demo.answer",
+                }
+            ],
+        },
+        {
+            "source_id": "local:literate.mbt.md",
+            "effective_range_utf8": [lit_use_start, lit_use_start + len(b"lit")],
+            "candidate_range_utf8": [lit_use_start, lit_use_start + len(b"lit")],
+            "symbol_id": "sym:demo.lit",
+            "hover_id": "hover:answer",
+            "definitions": [
+                {
+                    "target_source_id": "local:literate.mbt.md",
+                    "target_selection_range_utf8": [
+                        lit_start,
+                        lit_start + len(b"lit"),
+                    ],
+                    "target_range_utf8": [
+                        lit_start,
+                        lit_start + len(b"lit"),
+                    ],
+                    "symbol_id": "sym:demo.lit",
+                }
+            ],
+        },
+    ]
     (occurrences / "main.json").write_text(
         json.dumps({"occurrences": occurrence_records})
     )
@@ -178,9 +183,9 @@ int answer(void) { return 42; }
 ```
 """,
                 },
-                "hover:lit": {
+                "hover:plain": {
                     "kind": "plaintext",
-                    "value": "fn lit() -> Int\u2028line separator\u2029**not Markdown** <b>not HTML</b>",
+                    "value": "fn plain() -> Int\u2028line separator\u2029**not Markdown** <b>not HTML</b>",
                 },
             }
         )
@@ -222,16 +227,24 @@ def _project(tmp_path: Path, snapshot: Path | None, *, required: bool, builder: 
                 "html_theme = 'basic'",
                 f"moonbit_semantic_snapshot = {configured}",
                 f"moonbit_semantic_required = {required!r}",
-                "moonbit_semantic_source_prefix = '_moonbit-src'",
             ]
         )
     )
+    (src / "main.mbt").write_text(MAIN_SOURCE)
+    (src / "literate.mbt.md").write_text(LITERATE_SOURCE)
     (src / "index.md").write_text(
         "# Test docs\n\nOrdinary docs remain available.\n\n"
-        "```moonbit\npub fn answer() -> Int { 42 }\n```\n"
+        "```moonbit\npub fn answer() -> Int { 42 }\n```\n\n"
+        "```{literalinclude} main.mbt\n:language: moonbit\n```\n\n"
+        "```{include} literate.mbt.md\n```\n\n"
+        "```{toctree}\n:hidden:\n\nsecond\n```\n"
     )
     (src / "second.md").write_text("# Second page\n\nParallel read fixture.\n")
     (src / "hover-secret.txt").write_text("LOCAL_HOVER_SECRET\n")
+    (src / "conf.py").write_text(
+        (src / "conf.py").read_text()
+        + "\nexclude_patterns = ['literate.mbt.md']\n"
+    )
     status, warning = StringIO(), StringIO()
     app = Sphinx(src, src, out, doctrees, builder, status=status, warning=warning, freshenv=True, parallel=parallel)
     return app, out, status, warning
@@ -261,11 +274,14 @@ def test_snapshot_loader_and_renderer_use_utf8_byte_ranges(tmp_path: Path) -> No
     text = "😀answer\n"
     start = len("😀".encode())
     occurrence = Occurrence("source", (start, start + 6), hover_id="hover:answer")
-    html = SemanticCodeRenderer().render(text, [occurrence], lambda _item: "target.html", source_page=True)
+    html = SemanticCodeRenderer().render(
+        text, [occurrence], lambda _item: "target.html"
+    )
     assert "😀" in html
     assert 'data-mbt-hover="hover:answer"' in html
     assert 'href="target.html"' in html
-    assert 'id="L1"' in html
+    assert "mbt-line-anchor" not in html
+    assert "data-mbt-semantic-source" not in html
 
 
 def test_snapshot_rejects_blob_digest_mismatch(tmp_path: Path) -> None:
@@ -280,6 +296,7 @@ def test_snapshot_rejects_blob_digest_mismatch(tmp_path: Path) -> None:
 def test_snapshot_change_outdates_every_document_page() -> None:
     app = SimpleNamespace(
         _moonbit_semantic_snapshot=SimpleNamespace(corpus_digest="sha256:new"),
+        _moonbit_semantic_hover_script="hovers.new.js",
         config=SimpleNamespace(root_doc="index"),
     )
     env = SimpleNamespace(
@@ -293,29 +310,29 @@ def test_snapshot_change_outdates_every_document_page() -> None:
     assert env.moonbit_semantic_corpus_digest == "sha256:new"
 
 
-def test_sphinx_generates_code_and_literate_source_pages(tmp_path: Path) -> None:
+def test_sphinx_renders_document_overlay_and_removes_legacy_source_outputs(
+    tmp_path: Path,
+) -> None:
     snapshot = _write_snapshot(tmp_path)
     app, out, _status, warning = _project(tmp_path, snapshot, required=True)
+    for legacy_name in ("_moonbit-src", "_moonbit-source"):
+        legacy = out / legacy_name
+        legacy.mkdir(parents=True)
+        (legacy / "stale.html").write_text("stale")
     app.build(force_all=True)
     assert app.statuscode == 0, warning.getvalue()
 
-    pure = out / "_moonbit-src" / "local" / "demo" / "src" / "main.mbt.html"
-    literate = out / "_moonbit-src" / "pkg" / "demo" / "1.0" / "guide.mbt.md.html"
-    assert pure.is_file()
-    assert literate.is_file()
-    pure_html = pure.read_text()
-    lit_html = literate.read_text()
-    assert 'data-mbt-semantic-source="true"' in pure_html
-    assert 'data-mbt-hover="hover:answer"' in pure_html
-    assert "mbt-semantic-token mbt-definition mbt-has-hover nf" in pure_html
-    assert 'id="L1"' in pure_html
-    assert "mb-def-" in pure_html
-    assert "Literate Guide" in lit_html
-    assert "Prose survives from the frozen Markdown." in lit_html
-    assert 'data-mbt-hover="hover:lit"' in lit_html
-    assert "moonbit-semantic/assets/" in lit_html
-    assert "snapshot://" not in pure_html + lit_html
-    assert str(tmp_path) not in pure_html + lit_html
+    assert not (out / "_moonbit-src").exists()
+    assert not (out / "_moonbit-source").exists()
+    docs_html = (out / "index.html").read_text()
+    assert 'class="mbt-semantic-document-block"' in docs_html
+    assert 'data-mbt-hover="hover:answer"' in docs_html
+    assert 'id="mb-def-doc-' in docs_html
+    assert 'href="#mb-def-doc-' in docs_html
+    assert "data-mbt-semantic-source" not in docs_html
+    assert "mbt-line-anchor" not in docs_html
+    assert "snapshot://" not in docs_html
+    assert str(tmp_path) not in docs_html
     hover_json = out / "_static" / "moonbit-semantic" / "hovers.json"
     runtime_script = out / "_static" / "moonbit-semantic" / "moonbit-semantic.js"
     runtime_styles = out / "_static" / "moonbit-semantic" / "moonbit-semantic.css"
@@ -330,8 +347,6 @@ def test_sphinx_generates_code_and_literate_source_pages(tmp_path: Path) -> None
     assert "\\u2029" in hover_script_text
     assert "\u2028" not in hover_script_text
     assert "\u2029" not in hover_script_text
-    assert pure_html.index(hover_script.name) < pure_html.index("moonbit-semantic.js")
-    docs_html = (out / "index.html").read_text()
     assert docs_html.index(hover_script.name) < docs_html.index("moonbit-semantic.js")
     runtime = runtime_script.read_text()
     styles = runtime_styles.read_text()
@@ -341,7 +356,31 @@ def test_sphinx_generates_code_and_literate_source_pages(tmp_path: Path) -> None
     assert 'tooltip.role = "dialog"' in runtime
     assert "pointer-events: auto" in styles
     assert "pointer-events: none" not in styles
-    assert list((out / "_static" / "moonbit-semantic" / "assets").rglob("logo.svg"))
+    assert not (out / "_static" / "moonbit-semantic" / "assets").exists()
+
+
+def test_normal_myst_literate_include_preserves_prose_and_semantics(
+    tmp_path: Path,
+) -> None:
+    snapshot = _write_snapshot(tmp_path)
+    app, out, _status, warning = _project(tmp_path, snapshot, required=True)
+    app.build(force_all=True)
+    assert app.statuscode == 0, warning.getvalue()
+
+    html = (out / "index.html").read_text(encoding="utf-8")
+    assert "Included literate guide" in html
+    assert "Literate Markdown prose survives the normal MyST include." in html
+    assert 'data-mbt-symbol="sym:demo.lit"' in html
+    assert 'data-mbt-hover="hover:answer"' in html
+    match = re.search(
+        r'id="(mb-def-doc-[^"]+)" class="mbt-definition-anchor"></span>'
+        r'<a [^>]*data-mbt-symbol="sym:demo\.lit"',
+        html,
+    )
+    assert match is not None
+    assert f'href="#{match.group(1)}"' in html
+    assert not (out / "literate.mbt.html").exists()
+    assert not (out / "_moonbit-src").exists()
 
 
 def test_hover_markdown_uses_sphinx_highlighting_and_is_sanitized(tmp_path: Path) -> None:
@@ -379,37 +418,11 @@ def test_hover_markdown_uses_sphinx_highlighting_and_is_sanitized(tmp_path: Path
     docs_html = (out / "index.html").read_text()
     assert _highlighted_pre(fragment, "moonbit") == _highlighted_pre(docs_html, "moonbit")
 
-    plaintext = payloads["hover:lit"]["value"]
+    plaintext = payloads["hover:plain"]["value"]
     assert "mbt-hover-plaintext" in plaintext
     assert "**not Markdown**" in plaintext
     assert "&lt;b&gt;not HTML&lt;/b&gt;" in plaintext
     assert "<strong>not Markdown</strong>" not in plaintext
-
-
-def test_local_definition_links_to_deferred_external_source_page(tmp_path: Path) -> None:
-    snapshot = _write_snapshot(tmp_path, deferred_external_target=True)
-    app, out, _status, warning = _project(tmp_path, snapshot, required=True)
-    app.build(force_all=True)
-    assert app.statuscode == 0, warning.getvalue()
-
-    local_page = out / "_moonbit-src" / "local" / "demo" / "src" / "main.mbt.html"
-    external_page = out / "_moonbit-src" / "pkg" / "demo" / "1.0" / "guide.mbt.md.html"
-    local_html = local_page.read_text()
-    external_html = external_page.read_text()
-
-    assert "guide.mbt.md.html#mb-def-" in local_html
-    assert 'data-mbt-hover="hover:answer"' in local_html
-    assert 'id="mb-def-' in external_html
-    assert "data-mbt-hover" not in external_html
-
-
-def test_strict_literate_page_rejects_unfrozen_include(tmp_path: Path) -> None:
-    from sphinx.errors import ExtensionError
-
-    snapshot = _write_snapshot(tmp_path, extra_literate="\n```{include} missing.md\n```\n")
-    app, _out, _status, _warning = _project(tmp_path, snapshot, required=True)
-    with pytest.raises(ExtensionError, match="not frozen"):
-        app.build(force_all=True)
 
 
 def test_missing_snapshot_gracefully_falls_back(tmp_path: Path) -> None:
@@ -417,7 +430,7 @@ def test_missing_snapshot_gracefully_falls_back(tmp_path: Path) -> None:
     app.build(force_all=True)
     assert app.statuscode == 0
     assert (out / "index.html").is_file()
-    assert "semantic source pages are disabled" in warning.getvalue()
+    assert "semantic overlays are disabled" in warning.getvalue()
 
 
 def test_required_snapshot_fails_only_supported_builder(tmp_path: Path) -> None:
@@ -432,9 +445,14 @@ def test_required_snapshot_fails_only_supported_builder(tmp_path: Path) -> None:
     assert (out / "index.txt").is_file()
 
 
-def test_parallel_read_merges_domain_without_worker_domain_instances(tmp_path: Path) -> None:
+def test_parallel_read_keeps_document_overlay_and_destinations(tmp_path: Path) -> None:
     snapshot = _write_snapshot(tmp_path)
     app, out, _status, warning = _project(tmp_path, snapshot, required=True, parallel=2)
     app.build(force_all=True)
     assert app.statuscode == 0, warning.getvalue()
-    assert (out / "_moonbit-src" / "index.html").is_file()
+    assert (out / "index.html").is_file()
+    assert (out / "second.html").is_file()
+    assert not (out / "_moonbit-src").exists()
+    html = (out / "index.html").read_text(encoding="utf-8")
+    assert 'class="mbt-semantic-document-block"' in html
+    assert 'href="#mb-def-doc-' in html

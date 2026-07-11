@@ -99,7 +99,6 @@ def annotate_semantic_blocks(app: Any, doctree: nodes.document) -> None:
         return
     env = getattr(doctree.settings, "env", app.env)
     docname = getattr(env, "docname", None) or env.temp_data.get("docname")
-    used_sources: set[str] = set()
     document_definitions: dict[
         tuple[str, str, int, int], list[tuple[int, str]]
     ] = {}
@@ -165,30 +164,15 @@ def annotate_semantic_blocks(app: Any, doctree: nodes.document) -> None:
                     (block_ordinal, anchor)
                 )
         node[DEFINITION_ANCHORS_ATTRIBUTE] = block_anchors
-        used_sources.add(source_id)
-        if docname:
-            env.get_domain("mbtsem").note_backlink(docname, source_id)
     if docname:
-        store = getattr(env, "moonbit_semantic_block_sources", {})
-        store[docname] = used_sources
-        env.moonbit_semantic_block_sources = store
         replace_document_definitions(env, docname, document_definitions)
 
 
 def purge_semantic_blocks(app: Any, env: Any, docname: str) -> None:
-    store = getattr(env, "moonbit_semantic_block_sources", None)
-    if isinstance(store, dict):
-        store.pop(docname, None)
     purge_document_definitions(env, docname)
 
 
 def merge_semantic_blocks(app: Any, env: Any, docnames: list[str], other: Any) -> None:
-    destination = getattr(env, "moonbit_semantic_block_sources", {})
-    source = getattr(other, "moonbit_semantic_block_sources", {})
-    for docname in docnames:
-        if docname in source:
-            destination[docname] = set(source[docname])
-    env.moonbit_semantic_block_sources = destination
     merge_document_definitions(env, docnames, other)
 
 
@@ -235,8 +219,6 @@ class SemanticBlockPostTransform(SphinxPostTransform):
                 lambda occurrence: resolve_occurrence_target(
                     self.app, docname, snapshot, occurrence
                 ),
-                line_anchors=False,
-                source_page=False,
                 resolve_definition_anchor=lambda occurrence: node.get(
                     DEFINITION_ANCHORS_ATTRIBUTE, {}
                 ).get(

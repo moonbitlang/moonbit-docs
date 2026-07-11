@@ -202,9 +202,10 @@ class SemanticIndexerTest(unittest.TestCase):
         self.assertEqual(manifests[0]["counts"]["external_targets"], 0)
         self.assertGreater(manifests[0]["counts"]["symbols"], 0)
         self.assertGreater(manifests[0]["counts"]["hovers"], 0)
-        assets = self._jsonl(outputs[0] / "assets.jsonl")
-        self.assertEqual({item["path"] for item in assets}, {"icon.png", "imgs/global.png"})
-        self.assertNotIn(str(self.repo), (outputs[0] / "assets.jsonl").read_text())
+        # Literate prose and its images are rendered by the normal Sphinx/MyST
+        # document pipeline. The semantic snapshot no longer freezes a second
+        # copy solely for removed standalone source pages.
+        self.assertEqual(self._jsonl(outputs[0] / "assets.jsonl"), [])
         inputs = self._jsonl(outputs[0] / "analysis-inputs.jsonl")
         for item in inputs:
             blob = outputs[0] / "blobs/sha256" / item["blob_digest"].removeprefix("sha256:")

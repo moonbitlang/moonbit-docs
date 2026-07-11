@@ -253,7 +253,6 @@ def _project(tmp_path: Path, *, parallel: int = 2):
                 "html_theme = 'basic'",
                 f"moonbit_semantic_snapshot = {str(snapshot)!r}",
                 "moonbit_semantic_required = True",
-                "moonbit_semantic_source_prefix = '_moonbit-src'",
             )
         ),
         encoding="utf-8",
@@ -303,6 +302,8 @@ def test_document_and_external_definition_routes_are_fail_closed(
     app, out, warning = _project(tmp_path, parallel=2)
     app.build(force_all=True)
     assert app.statuscode == 0, warning.getvalue()
+    assert not (out / "_moonbit-src").exists()
+    assert not (out / "_moonbit-source").exists()
 
     a_html = (out / "a.html").read_text(encoding="utf-8")
     b_html = (out / "b.html").read_text(encoding="utf-8")

@@ -25,6 +25,9 @@ class _SemanticOutputParser(HTMLParser):
         self.ids: set[str] = set()
         self.scripts: list[str] = []
         self.has_view_source = False
+        self.has_semantic_document = False
+        self.has_semantic_source = False
+        self.has_line_anchor = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = dict(attrs)
@@ -38,6 +41,9 @@ class _SemanticOutputParser(HTMLParser):
         if tag == "script" and values.get("src"):
             self.scripts.append(values["src"] or "")
         self.has_view_source |= "mbt-view-source" in classes
+        self.has_semantic_document |= "mbt-semantic-document-block" in classes
+        self.has_semantic_source |= "mbt-semantic-source" in classes
+        self.has_line_anchor |= "mbt-line-anchor" in classes
 
 
 class SemanticDocumentationConfigurationTests(unittest.TestCase):
@@ -55,11 +61,13 @@ class SemanticDocumentationConfigurationTests(unittest.TestCase):
 
         self.assertIn("moonbit_semantic_snapshot", assignments)
         self.assertIn("moonbit_semantic_required", assignments)
-        self.assertIn("moonbit_semantic_source_prefix", assignments)
+        self.assertNotIn("moonbit_semantic_source_prefix", assignments)
 
         source = (REPO_ROOT / "next" / "conf.py").read_text()
         self.assertIn("'moonbit_semantic'", source)
-        self.assertIn("'_moonbit-src'", source)
+        self.assertNotIn("'_moonbit-src'", source)
+        self.assertIn("html_copy_source = False", source)
+        self.assertIn('"use_source_button": False', source)
 
     @unittest.skipUnless(shutil.which("just"), "just is not installed")
     def test_semantic_recipes_preserve_the_build_order(self) -> None:
@@ -100,7 +108,6 @@ class SemanticDocumentationConfigurationTests(unittest.TestCase):
                             "source_suffix = {'.md': 'markdown'}",
                             f"moonbit_semantic_snapshot = {str(missing_snapshot)!r}",
                             f"moonbit_semantic_required = {required!r}",
-                            "moonbit_semantic_source_prefix = '_moonbit-src'",
                         ]
                     )
                     + "\n"
@@ -140,35 +147,43 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
         html = os.getenv("MOONBIT_SEMANTIC_HTML", "next/_build/html")
         cls.snapshot = (REPO_ROOT / snapshot).resolve()
         cls.html = (REPO_ROOT / html).resolve()
+        target_table = cls.snapshot / "external-targets.jsonl"
+        cls.external_definition_urls = {
+            record["url"]
+            for line in target_table.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+            and (record := json.loads(line)).get("status") == "exact"
+        } if target_table.is_file() else set()
 
     def test_snapshot_and_html_outputs_exist(self) -> None:
         self.assertTrue(self.snapshot.is_dir(), self.snapshot)
         self.assertTrue((self.snapshot / "manifest.json").is_file())
         self.assertTrue((self.html / "index.html").is_file())
 
-    def test_generated_html_does_not_leak_local_file_urls(self) -> None:
-        source_root = self.html / "_moonbit-src"
-        self.assertTrue(source_root.is_dir(), source_root)
-        source_pages = list(source_root.rglob("*.html"))
-        self.assertTrue(source_pages, source_root)
+    def test_generated_html_contains_only_document_semantic_overlays(self) -> None:
+        self.assertFalse((self.html / "_moonbit-src").exists())
+        self.assertFalse((self.html / "_moonbit-source").exists())
+        pages = list(self.html.rglob("*.html"))
+        self.assertTrue(pages, self.html)
 
-        has_semantic_source = False
-        has_line_anchor = False
+        has_semantic_document = False
         has_hover = False
         has_definition = False
-        for page in source_pages:
+        for page in pages:
             rendered = page.read_text(errors="replace")
             self.assertNotIn("file://", rendered, page)
             self.assertNotIn(str(REPO_ROOT), rendered, page)
-            has_semantic_source |= "data-mbt-semantic-source" in rendered
-            has_line_anchor |= 'id="L' in rendered
+            parser = _SemanticOutputParser()
+            parser.feed(rendered)
+            self.assertFalse(parser.has_semantic_source, page)
+            self.assertFalse(parser.has_line_anchor, page)
+            has_semantic_document |= parser.has_semantic_document
             has_hover |= "data-mbt-hover" in rendered
-            has_definition |= 'id="mb-def-' in rendered
+            has_definition |= 'id="mb-def-doc-' in rendered
 
-        self.assertTrue(has_semantic_source, "no semantic source page was rendered")
-        self.assertTrue(has_line_anchor, "no source line anchor was rendered")
+        self.assertTrue(has_semantic_document, "no semantic document block was rendered")
         self.assertTrue(has_hover, "no hover-enabled token was rendered")
-        self.assertTrue(has_definition, "no definition anchor was rendered")
+        self.assertTrue(has_definition, "no document definition anchor was rendered")
 
     def test_hover_payloads_and_definition_links_are_closed(self) -> None:
         static = self.html / "_static" / "moonbit-semantic"
@@ -228,7 +243,15 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
             for href in parser.definition_hrefs:
                 definition_links += 1
                 target = urlsplit(href)
-                self.assertFalse(target.scheme, f"{page}: {href}")
+                if target.scheme or target.netloc:
+                    self.assertEqual(target.scheme, "https", f"{page}: {href}")
+                    self.assertEqual(target.netloc, "mooncakes.io", f"{page}: {href}")
+                    self.assertTrue(target.path.startswith("/docs/"), f"{page}: {href}")
+                    self.assertFalse(target.query, f"{page}: {href}")
+                    self.assertTrue(target.fragment, f"{page}: {href}")
+                    self.assertNotIn("%3a", target.fragment.lower(), f"{page}: {href}")
+                    self.assertIn(href, self.external_definition_urls, f"{page}: {href}")
+                    continue
                 target_page = page if not target.path else page.parent / unquote(target.path)
                 target_page = target_page.resolve()
                 self.assertTrue(target_page.is_relative_to(self.html), f"{page}: {href}")

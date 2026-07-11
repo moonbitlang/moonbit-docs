@@ -130,7 +130,6 @@ class SemanticBlockSphinxTests(unittest.TestCase):
                     "html_theme = 'basic'",
                     f"moonbit_semantic_snapshot = {str(snapshot)!r}",
                     "moonbit_semantic_required = True",
-                    "moonbit_semantic_source_prefix = '_moonbit-src'",
                 ]
             ),
             encoding="utf-8",
@@ -182,6 +181,9 @@ class SemanticBlockSphinxTests(unittest.TestCase):
         self.assertNotIn("View source", html)
         self.assertNotIn("mbt-view-source", html)
         self.assertIn('<div class="highlight-moonbit notranslate">', html)
+        self.assertFalse((out / "_moonbit-src").exists())
+        self.assertNotIn("data-mbt-semantic-source", html)
+        self.assertNotIn("mbt-line-anchor", html)
         parser = _PreText()
         parser.feed(html)
         self.assertEqual(

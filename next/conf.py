@@ -61,9 +61,6 @@ moonbit_semantic_snapshot = os.getenv(
 moonbit_semantic_required = os.getenv(
     'MOONBIT_SEMANTIC_REQUIRED', ''
 ).lower() in {'1', 'true', 'yes', 'on'}
-moonbit_semantic_source_prefix = os.getenv(
-    'MOONBIT_SEMANTIC_SOURCE_PREFIX', '_moonbit-src'
-)
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README*.md", 'sources', 'download']
@@ -76,11 +73,12 @@ smartquotes_excludes = {
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_book_theme'
+html_copy_source = False
 html_static_path = ['_static']
 html_theme_options = {
     "repository_url": "https://github.com/moonbitlang/moonbit-docs/",
     "path_to_docs": "next",
-    "use_source_button": True,
+    "use_source_button": False,
     "use_edit_page_button": True,
     "use_issues_button": True,
     "logo": {
