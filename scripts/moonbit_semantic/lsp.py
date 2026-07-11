@@ -224,46 +224,105 @@ class LspSession:
         positions: list[dict[str, int]],
         *,
         window: int,
-    ) -> list[tuple[Any, Any]]:
+    ) -> list[tuple[Any, Any, str]]:
         request_async = getattr(self.transport, "request_async", None)
         if request_async is None:
             return [
-                (self.hover(uri, position), self.definition(uri, position))
+                (
+                    self.hover(uri, position),
+                    self.definition(uri, position),
+                    "requested",
+                )
                 for position in positions
             ]
+        definitions = self._request_many(
+            request_async,
+            "textDocument/definition",
+            uri,
+            positions,
+            window,
+        )
+        groups: dict[str, list[int]] = {}
+        for index, definition in enumerate(definitions):
+            if isinstance(definition, BaseException):
+                continue
+            locations = definition_locations(definition)
+            if locations:
+                targets = sorted(
+                    (
+                        str(location["uri"]),
+                        json.dumps(
+                            location["target_selection_range"],
+                            ensure_ascii=False,
+                            sort_keys=True,
+                            separators=(",", ":"),
+                        ),
+                    )
+                    for location in locations
+                )
+                key = json.dumps(targets, ensure_ascii=False, separators=(",", ":"))
+            else:
+                # A no-definition token can still have position-specific hover
+                # information, so it must not share another token's response.
+                key = f"no-definition:{index}"
+            groups.setdefault(key, []).append(index)
+
+        representatives = [indices[0] for indices in groups.values()]
+        requested_hovers = self._request_many(
+            request_async,
+            "textDocument/hover",
+            uri,
+            [positions[index] for index in representatives],
+            window,
+        )
+        hovers: list[Any] = [None] * len(positions)
+        statuses = ["not-requested-definition-error"] * len(positions)
+        for indices, hover in zip(groups.values(), requested_hovers):
+            for offset, index in enumerate(indices):
+                if offset == 0:
+                    hovers[index] = hover
+                    statuses[index] = "requested"
+                    continue
+                # Hover.range belongs to the representative occurrence.  Reuse
+                # only its semantic contents; the consumer keeps this token's
+                # verified candidate range.
+                if isinstance(hover, dict):
+                    hovers[index] = {
+                        key: value for key, value in hover.items() if key != "range"
+                    }
+                else:
+                    hovers[index] = hover
+                statuses[index] = "reused-definition"
+        return list(zip(hovers, definitions, statuses))
+
+    def _request_many(
+        self,
+        request_async: Any,
+        method: str,
+        uri: str,
+        positions: list[dict[str, int]],
+        window: int,
+    ) -> list[Any]:
         timeout = float(getattr(self.transport, "timeout", 120.0))
-        results: list[tuple[Any, Any]] = []
+        results: list[Any] = []
         for offset in range(0, len(positions), max(1, window)):
             batch = positions[offset : offset + max(1, window)]
             pending = []
             for position in batch:
-                hover = request_async(
-                    "textDocument/hover",
+                pending.append(request_async(
+                    method,
                     {"textDocument": {"uri": uri}, "position": position},
-                )
-                definition = request_async(
-                    "textDocument/definition",
-                    {"textDocument": {"uri": uri}, "position": position},
-                )
-                pending.append((hover, definition))
-            for (_hover_id, hover), (_definition_id, definition) in pending:
+                ))
+            for _request_id, future in pending:
                 try:
-                    hover_value: Any = hover.result(timeout=timeout)
+                    value: Any = future.result(timeout=timeout)
                 except FutureTimeoutError as exc:
-                    hover_value = LspError(
-                        f"hover request timed out after {timeout}s"
+                    value = LspError(
+                        f"{method} request timed out after {timeout}s"
                     )
                 except BaseException as exc:
-                    hover_value = exc
-                try:
-                    definition_value: Any = definition.result(timeout=timeout)
-                except FutureTimeoutError as exc:
-                    definition_value = LspError(
-                        f"definition request timed out after {timeout}s"
-                    )
-                except BaseException as exc:
-                    definition_value = exc
-                results.append((hover_value, definition_value))
+                    value = exc
+                results.append(value)
         return results
 
     def close_document(self, uri: str) -> None:

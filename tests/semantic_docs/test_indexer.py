@@ -16,7 +16,7 @@ from scripts.moonbit_semantic.canonical import canonical_json_bytes, digest_byte
 from scripts.moonbit_semantic.indexer import BuildConfig, SemanticIndexer
 from scripts.moonbit_semantic.inventory import Root, discover_roots, metadata_allowed_module_roots, package_metadata, scan_sources
 from scripts.moonbit_semantic.literate import extract_literate_fences, moonbit_projection
-from scripts.moonbit_semantic.lsp import JsonRpcProcess, LspError
+from scripts.moonbit_semantic.lsp import JsonRpcProcess, LspError, LspSession
 from scripts.moonbit_semantic.ranges import RangeError, SourceCoordinates
 from scripts.moonbit_semantic.runner import CommandResult
 from scripts.moonbit_semantic.snapshot import SnapshotError, validate_snapshot
@@ -303,6 +303,39 @@ class SemanticIndexerTest(unittest.TestCase):
         validate_snapshot(output)
         self.assertGreater(manifest["counts"]["symbols"], 0)
 
+    def test_large_context_combines_multiple_sessions_with_async_requests(self):
+        counts = {"app": 0}
+        lock = threading.Lock()
+        app = self.sources / "app"
+        other = app / "other.mbt"
+        other.write_text("fn name() -> Unit {}\n", encoding="utf-8")
+        metadata_path = app / "_build/packages.json"
+        metadata = json.loads(metadata_path.read_text())
+        metadata["packages"][0]["files"][str(other)] = {}
+        self._write_json(metadata_path, metadata)
+
+        def factory(root):
+            if root.module_name == "example/app":
+                with lock:
+                    counts["app"] += 1
+            return FakeLsp()
+
+        output = self.repo / "snapshot-hybrid"
+        SemanticIndexer(BuildConfig(
+            repo_root=self.repo,
+            source_root=Path("next/sources"),
+            output=output,
+            stdlib_root=self.stdlib,
+            runner=FakeRunner(),
+            lsp_factory=factory,
+            jobs=2,
+            sessions=2,
+            positions_per_session=1,
+        )).build()
+
+        validate_snapshot(output)
+        self.assertEqual(counts["app"], 2)
+
     def test_validator_rejects_self_consistent_manifest_with_missing_required_ledger(self):
         output = self.repo / "snapshot"
         SemanticIndexer(BuildConfig(
@@ -491,6 +524,60 @@ class RangeAndLiterateTest(unittest.TestCase):
                 self.assertEqual(first.result(timeout=1), "first")
             finally:
                 transport.close()
+
+    def test_semantic_batch_reuses_hover_by_verified_definition(self):
+        from concurrent.futures import Future
+
+        class ImmediateTransport:
+            timeout = 1.0
+
+            def __init__(inner_self):
+                inner_self.counts = {"textDocument/definition": 0, "textDocument/hover": 0}
+
+            def request(inner_self, method, params):
+                if method == "initialize":
+                    return {"capabilities": {"positionEncoding": "utf-16"}}
+                return None
+
+            def request_async(inner_self, method, params):
+                inner_self.counts[method] += 1
+                future = Future()
+                if method == "textDocument/definition":
+                    value = {
+                        "uri": "file:///module/src/top.mbt",
+                        "range": {
+                            "start": {"line": 0, "character": 3},
+                            "end": {"line": 0, "character": 7},
+                        },
+                    }
+                else:
+                    value = {
+                        "contents": {"kind": "markdown", "value": "fn name()"},
+                        "range": {
+                            "start": params["position"],
+                            "end": params["position"],
+                        },
+                    }
+                future.set_result(value)
+                return inner_self.counts[method], future
+
+            def notify(inner_self, method, params):
+                return None
+
+            def close(inner_self):
+                return None
+
+        transport = ImmediateTransport()
+        session = LspSession(transport, Path.cwd())
+        positions = [{"line": 0, "character": index} for index in range(10)]
+
+        results = session.hover_definitions("file:///module/src/use.mbt", positions, window=4)
+
+        self.assertEqual(transport.counts["textDocument/definition"], 10)
+        self.assertEqual(transport.counts["textDocument/hover"], 1)
+        self.assertEqual([result[2] for result in results].count("requested"), 1)
+        self.assertEqual([result[2] for result in results].count("reused-definition"), 9)
+        self.assertNotIn("range", results[1][0])
 
 
 if __name__ == "__main__":

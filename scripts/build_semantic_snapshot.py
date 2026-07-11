@@ -30,6 +30,12 @@ def parser() -> argparse.ArgumentParser:
         default=max(8, min(64, (os.cpu_count() or 1) * 8)),
         help="maximum in-flight semantic positions per LSP session",
     )
+    build.add_argument(
+        "--sessions",
+        type=int,
+        default=max(1, min(8, os.cpu_count() or 1)),
+        help="maximum asynchronous LSP sessions for a large context",
+    )
     build.add_argument("--skip-check", action="store_true", help="testing only: do not establish the moon check barrier")
     build.add_argument("--skip-lsp", action="store_true", help="testing only: capture corpus without semantic requests")
     build.add_argument("--allow-partial", action="store_true", help="record tool failures instead of failing closed")
@@ -48,7 +54,7 @@ def main(argv: list[str] | None = None) -> int:
                 repo_root=args.repo_root, source_root=args.source_root, output=args.output,
                 stdlib_root=args.stdlib_root, backend=args.backend, moon=args.moon,
                 mooninfo=args.mooninfo, moon_lsp=args.moon_lsp,
-                jobs=args.jobs,
+                jobs=args.jobs, sessions=args.sessions,
                 skip_check=args.skip_check, skip_lsp=args.skip_lsp, strict=not args.allow_partial,
             )
             manifest = SemanticIndexer(config).build()

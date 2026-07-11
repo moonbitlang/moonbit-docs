@@ -48,6 +48,8 @@ class BuildConfig:
     jobs: int = field(
         default_factory=lambda: max(8, min(64, (os.cpu_count() or 1) * 8))
     )
+    sessions: int = field(default_factory=lambda: max(1, min(8, os.cpu_count() or 1)))
+    positions_per_session: int = 256
     skip_check: bool = False
     skip_lsp: bool = False
     strict: bool = True
@@ -63,6 +65,10 @@ class BuildConfig:
             self.stdlib_root = self.stdlib_root.resolve()
         if self.jobs < 1:
             raise ValueError("jobs must be at least 1")
+        if self.sessions < 1:
+            raise ValueError("sessions must be at least 1")
+        if self.positions_per_session < 1:
+            raise ValueError("positions_per_session must be at least 1")
 
 
 class SemanticIndexer:
@@ -220,8 +226,6 @@ class SemanticIndexer:
                     )
                 path_to_source[realpath(alias_path)] = source
 
-        logical_sources = _logical_source_map(sources.values())
-
         if stdlib_state:
             root, _ = stdlib_state
             self._verify_precheck(root, precheck_sources[root.root_id])
@@ -229,6 +233,8 @@ class SemanticIndexer:
                 source = make_source(path, origin="stdlib", base=root.path, module=root.module_name, version=root.version, status="required")
                 self._add_source(source, sources, path_to_source)
             self._manifest_inputs(root)
+
+        logical_sources = _logical_source_map(sources.values())
 
         self._collect_assets(sources, path_to_source)
         contexts: list[dict[str, Any]] = []
@@ -358,7 +364,7 @@ class SemanticIndexer:
         ]
         if not analyzable:
             return
-        session = (
+        primary = (
             self.config.lsp_factory(root)
             if self.config.lsp_factory
             else LspSession(
@@ -371,20 +377,99 @@ class SemanticIndexer:
             )
         )
         try:
-            for source in analyzable:
-                self._analyze_source(
-                    session,
-                    context,
-                    source,
-                    path_to_source,
-                    logical_sources,
+            def discover(source: dict[str, Any]) -> tuple[str, list[dict[str, Any]]]:
+                path = Path(source["_realpath"])
+                coordinates = SourceCoordinates(source["_blob"])
+                return (
+                    source["source_id"],
+                    self._candidates(
+                        path,
+                        source,
+                        coordinates,
+                        primary.position_encoding,
+                    ),
                 )
-        finally:
-            session.close()
-        context["position_encoding"] = session.position_encoding
+
+            with ThreadPoolExecutor(
+                max_workers=min(self.config.sessions, len(analyzable)),
+                thread_name_prefix="moonbit-semantic-candidates",
+            ) as executor:
+                candidates_by_source = dict(executor.map(discover, analyzable))
+        except BaseException:
+            primary.close()
+            raise
+        candidate_count = sum(len(values) for values in candidates_by_source.values())
+        worker_count = min(
+            self.config.sessions,
+            len(analyzable),
+            max(
+                1,
+                (candidate_count + self.config.positions_per_session - 1)
+                // self.config.positions_per_session,
+            ),
+        )
+        chunks: list[list[dict[str, Any]]] = [[] for _ in range(worker_count)]
+        chunk_sizes = [0] * worker_count
+        for source in sorted(
+            analyzable,
+            key=lambda value: (
+                -len(candidates_by_source[value["source_id"]]),
+                -len(value["_blob"]),
+                value["source_id"],
+            ),
+        ):
+            index = min(range(worker_count), key=lambda value: (chunk_sizes[value], value))
+            chunks[index].append(source)
+            chunk_sizes[index] += max(
+                1, len(candidates_by_source[source["source_id"]])
+            )
+        for chunk in chunks:
+            chunk.sort(key=lambda value: value["source_id"])
+
+        def analyze_chunk(item: tuple[int, list[dict[str, Any]]]) -> str:
+            index, chunk = item
+            session = primary if index == 0 else (
+                self.config.lsp_factory(root)
+                if self.config.lsp_factory
+                else LspSession(
+                    JsonRpcProcess(
+                        [self.config.moon_lsp, "--stdio"],
+                        root.path,
+                        self.config.timeout,
+                    ),
+                    root.path,
+                )
+            )
+            try:
+                for source in chunk:
+                    self._analyze_source(
+                        session,
+                        context,
+                        source,
+                        path_to_source,
+                        logical_sources,
+                        candidates_by_source[source["source_id"]],
+                    )
+                return session.position_encoding
+            finally:
+                session.close()
+
+        if worker_count == 1:
+            encodings = [analyze_chunk((0, chunks[0]))]
+        else:
+            with ThreadPoolExecutor(
+                max_workers=worker_count,
+                thread_name_prefix="moonbit-semantic-session",
+            ) as executor:
+                encodings = list(executor.map(analyze_chunk, enumerate(chunks)))
+        if len(set(encodings)) != 1:
+            raise RuntimeError(
+                f"LSP sessions negotiated inconsistent position encodings: {encodings}"
+            )
+        context["position_encoding"] = encodings[0]
         context["initialize"] = {
             "root_uri": _portable_root_uri(root),
-            "position_encoding": session.position_encoding,
+            "position_encoding": encodings[0],
         }
 
     def _record_skipped_context(self, context: dict[str, Any], input_sources: list[dict[str, Any]], reason: str) -> None:
@@ -405,6 +490,7 @@ class SemanticIndexer:
         source: dict[str, Any],
         path_to_source: dict[Path, dict[str, Any]],
         logical_sources: dict[str, dict[str, Any]],
+        candidates: list[dict[str, Any]] | None = None,
     ) -> None:
         path = Path(source["_realpath"])
         raw = source["_blob"]
@@ -413,22 +499,35 @@ class SemanticIndexer:
         requests = []
         occurrences = []
         try:
-            candidates = self._candidates(path, source, coords, session.position_encoding)
+            if candidates is None:
+                candidates = self._candidates(
+                    path, source, coords, session.position_encoding
+                )
             positions = [candidate["position"] for candidate in candidates]
             batch_method = getattr(session, "hover_definitions", None)
             if batch_method is not None:
                 responses = batch_method(uri, positions, window=self.config.jobs)
             else:
-                def query(position: dict[str, int]) -> tuple[Any, Any]:
-                    return session.hover(uri, position), session.definition(uri, position)
+                def query(position: dict[str, int]) -> tuple[Any, Any, str]:
+                    return (
+                        session.hover(uri, position),
+                        session.definition(uri, position),
+                        "requested",
+                    )
 
                 with ThreadPoolExecutor(
                     max_workers=min(self.config.jobs, max(1, len(positions))),
                     thread_name_prefix="moonbit-semantic-request",
                 ) as executor:
                     responses = list(executor.map(query, positions))
-            for candidate, (hover, definition) in zip(candidates, responses):
-                request = {"position": candidate["position"], "candidate_range_utf8": candidate["range_utf8"], "status": "complete"}
+            for candidate, (hover, definition, hover_status) in zip(candidates, responses):
+                request = {
+                    "position": candidate["position"],
+                    "candidate_range_utf8": candidate["range_utf8"],
+                    "status": "complete",
+                    "hover_status": hover_status,
+                    "definition_status": "requested",
+                }
                 try:
                     if isinstance(hover, BaseException):
                         raise hover
