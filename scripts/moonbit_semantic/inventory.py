@@ -41,7 +41,19 @@ def discover_roots(source_root: Path, backend: str) -> list[Root]:
         if not any(is_within(literate, root.path) for root in roots.values()):
             path = literate.parent.resolve()
             relative = normalize_relative(literate.resolve().relative_to(source_root.resolve()))
-            roots[path] = Root(path, "standalone:" + relative, "required", "standalone", "", backend, literate.resolve())
+            # moon-lsp creates loose-file `.mbt.md` contexts for the native
+            # backend and exposes no initialize option to override it.  Match
+            # the check barrier to that real provider context so its generated
+            # packages metadata remains stable across analysis.
+            roots[path] = Root(
+                path,
+                "standalone:" + relative,
+                "required",
+                "standalone",
+                "",
+                "native",
+                literate.resolve(),
+            )
     return sorted(roots.values(), key=lambda root: root.root_id)
 
 

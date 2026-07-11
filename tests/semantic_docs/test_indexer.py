@@ -490,6 +490,19 @@ class SemanticIndexerTest(unittest.TestCase):
         self.assertEqual({path.name for path in deps}, {"lib"})
         self.assertEqual({path.name for path in scan_sources(next(iter(deps)))}, {"lib.mbt", "types.mbti"})
 
+    def test_standalone_literate_root_matches_lsp_native_backend(self):
+        loose = self.sources / "loose/README.mbt.md"
+        loose.parent.mkdir(parents=True)
+        loose.write_text("# Loose\n\n```mbt\nfn main {}\n```\n", encoding="utf-8")
+
+        root = next(
+            item
+            for item in discover_roots(self.sources, "wasm-gc")
+            if item.root_id.startswith("standalone:")
+        )
+
+        self.assertEqual(root.backend, "native")
+
     def test_workspace_member_uses_shared_package_metadata(self):
         workspace = self.sources / "workspace"
         member = workspace / "member"
