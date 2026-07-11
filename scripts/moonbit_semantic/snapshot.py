@@ -161,6 +161,20 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
     boundaries: dict[str, set[int]] = {}
     for source in sources:
         _require(source, {"source_id", "origin", "path", "kind", "blob_digest", "analysis_status", "route_key"}, "source")
+        canonical_context = source.get("context_id")
+        if canonical_context is not None:
+            if not isinstance(canonical_context, str) or not canonical_context:
+                raise SnapshotError(
+                    f"source has invalid canonical context: {source['source_id']}"
+                )
+            context = context_by_id.get(canonical_context)
+            if context is None or source["source_id"] not in context.get(
+                "analysis_source_ids", context.get("input_source_ids", [])
+            ):
+                raise SnapshotError(
+                    f"source canonical context is missing or does not analyze it: "
+                    f"{source['source_id']}"
+                )
         digest = source["blob_digest"]
         if not isinstance(digest, str) or not digest.startswith("sha256:"):
             raise SnapshotError(f"invalid blob digest for {source.get('source_id')}")
@@ -182,6 +196,9 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
     for item in analysis_inputs:
         _require(item, {"root_id", "kind", "path", "blob_digest"}, "analysis input")
         _validate_blob(root, item["blob_digest"], f"analysis input {item['path']}")
+    analysis_input_digests = {
+        item["blob_digest"] for item in analysis_inputs
+    }
     asset_ids = _unique(assets, "asset_id") if assets else set()
     del asset_ids
     for asset in assets:
@@ -222,6 +239,19 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
                 "origins": context.get("analysis_origins", []),
                 "source_ids": analysis_source_ids,
             }
+        if "package_metadata_digest" in context:
+            package_metadata_digest = context["package_metadata_digest"]
+            if (
+                package_metadata_digest is not None
+                and package_metadata_digest not in analysis_input_digests
+            ):
+                raise SnapshotError(
+                    "context package metadata is not a frozen analysis input: "
+                    f"{context['context_id']}"
+                )
+            fingerprint["package_metadata_digest"] = (
+                package_metadata_digest
+            )
         if digest_json(fingerprint) != context["context_input_digest"]:
             raise SnapshotError(f"context digest mismatch: {context['context_id']}")
     hover_ids: set[str] = set()
@@ -287,6 +317,42 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
                     source_by_id[target_id],
                     external_target_by_id,
                 )
+            preferred_external = occurrence.get(
+                "preferred_external_target_id"
+            )
+            if preferred_external is not None:
+                definitions = occurrence.get("definitions", [])
+                if not definitions or any(
+                    definition.get("external_status") is None
+                    or source_by_id[definition["target_source_id"]].get(
+                        "origin"
+                    )
+                    in {"local", "standalone"}
+                    for definition in definitions
+                ):
+                    raise SnapshotError(
+                        "occurrence preferred external target is mixed with "
+                        "a local definition"
+                    )
+                if not isinstance(preferred_external, str) or not any(
+                    definition.get("external_status") == "exact"
+                    and definition.get("external_target_id")
+                    == preferred_external
+                    for definition in definitions
+                ):
+                    raise SnapshotError(
+                        "occurrence preferred external target is not an exact definition"
+                    )
+    for source in sources:
+        canonical_context = source.get("context_id")
+        if canonical_context is not None and (
+            canonical_context,
+            source["source_id"],
+        ) not in occurrence_ledgers:
+            raise SnapshotError(
+                f"source canonical context has no occurrence ledger: "
+                f"{source['source_id']}"
+            )
     request_ledgers: set[tuple[str, str]] = set()
     request_count = 0
     for path in sorted((root / "requests").glob("*/*.json")) if (root / "requests").exists() else []:

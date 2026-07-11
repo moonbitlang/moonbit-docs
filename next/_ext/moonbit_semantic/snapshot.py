@@ -115,6 +115,7 @@ class Occurrence:
     hover_id: str | None = None
     role: str = "reference"
     definitions: tuple[DefinitionTarget, ...] = ()
+    preferred_external_target_id: str | None = None
 
 
 @dataclass(frozen=True)
@@ -223,6 +224,27 @@ class SemanticSnapshot:
                         self.sources[target.source_id],
                         self.external_targets,
                     )
+                if occurrence.preferred_external_target_id is not None:
+                    if not occurrence.definitions or any(
+                        target.external_status is None
+                        or self.sources[target.source_id].origin
+                        in {"local", "standalone"}
+                        for target in occurrence.definitions
+                    ):
+                        raise SnapshotError(
+                            "occurrence preferred external target is mixed with "
+                            "a local definition"
+                        )
+                    if not any(
+                        target.external_status == "exact"
+                        and target.external_target_id
+                        == occurrence.preferred_external_target_id
+                        for target in occurrence.definitions
+                    ):
+                        raise SnapshotError(
+                            "occurrence preferred external target is not an "
+                            "exact definition"
+                        )
             # A path is presentation metadata, but must still be portable.
             _safe_relative(source.path, label="source path")
         for symbol in self.symbols.values():
@@ -443,20 +465,67 @@ def _validate_definition_external_target(
         )
 
 
-def _occurrence(record: Mapping[str, Any], default_source_id: str | None = None) -> Occurrence:
-    source_id = record.get("source_id") or default_source_id
+def _occurrence(
+    record: Mapping[str, Any],
+    default_source_id: str | None = None,
+    default_context_id: str | None = None,
+) -> Occurrence:
+    explicit_source_id = record.get("source_id")
+    explicit_context_id = record.get("context_id")
+    if (
+        default_source_id is not None
+        and explicit_source_id is not None
+        and explicit_source_id != default_source_id
+    ):
+        raise SnapshotError(
+            "occurrence source_id conflicts with its ledger envelope"
+        )
+    if (
+        default_context_id is not None
+        and explicit_context_id is not None
+        and explicit_context_id != default_context_id
+    ):
+        raise SnapshotError(
+            "occurrence context_id conflicts with its ledger envelope"
+        )
+    source_id = (
+        default_source_id
+        if explicit_source_id is None
+        else explicit_source_id
+    )
+    context_id = (
+        default_context_id
+        if explicit_context_id is None
+        else explicit_context_id
+    )
     effective = record.get("effective_range_utf8") or record.get("hover_range_utf8") or record.get("candidate_range_utf8") or record.get("byte_range")
-    if not isinstance(source_id, str):
+    if not isinstance(source_id, str) or not source_id:
         raise SnapshotError("occurrence requires source_id")
+    if context_id is not None and (
+        not isinstance(context_id, str) or not context_id
+    ):
+        raise SnapshotError(
+            "occurrence context_id must be a non-empty string"
+        )
+    preferred_external_target_id = record.get(
+        "preferred_external_target_id"
+    )
+    if preferred_external_target_id is not None and not isinstance(
+        preferred_external_target_id, str
+    ):
+        raise SnapshotError(
+            "occurrence preferred_external_target_id must be a string"
+        )
     definitions = record.get("definitions") or record.get("targets") or []
     return Occurrence(
         source_id=source_id,
         byte_range=_range(effective, label="occurrence range"),
-        context_id=record.get("context_id"),
+        context_id=context_id,
         symbol_id=record.get("symbol_id"),
         hover_id=record.get("hover_id"),
         role=str(record.get("role") or record.get("kind") or "reference"),
         definitions=tuple(_target(item) for item in definitions),
+        preferred_external_target_id=preferred_external_target_id,
     )
 
 
@@ -545,8 +614,51 @@ def load_snapshot(path: str | Path) -> SemanticSnapshot:
     occurrence_root = root / "occurrences"
     if occurrence_root.is_dir():
         for shard in sorted(occurrence_root.rglob("*.json")):
-            for record in _records_from_json(shard):
-                occurrence = _occurrence(record)
+            payload = _json(shard)
+            if isinstance(payload, dict) and isinstance(
+                payload.get("occurrences"), list
+            ):
+                source_id = payload.get("source_id")
+                context_id = payload.get("context_id")
+                if (source_id is None) != (context_id is None):
+                    raise SnapshotError(
+                        f"occurrence ledger has partial source/context identity: {shard}"
+                    )
+                records = payload["occurrences"]
+                if (
+                    isinstance(source_id, str)
+                    and source_id
+                    and isinstance(context_id, str)
+                    and context_id
+                ):
+                    if source_id not in sources:
+                        raise SnapshotError(
+                            f"occurrence ledger has unknown source: {shard}"
+                        )
+                    occurrences_by_context.setdefault(source_id, {}).setdefault(
+                        context_id, []
+                    )
+                    envelope_context_id = context_id
+                else:
+                    if source_id is not None or context_id is not None:
+                        raise SnapshotError(
+                            f"occurrence ledger identity must be strings: {shard}"
+                        )
+                    source_id = None
+                    envelope_context_id = None
+            else:
+                records = _records_from_json(shard)
+                source_id = None
+                envelope_context_id = None
+            for record in records:
+                occurrence = _occurrence(
+                    record, source_id, envelope_context_id
+                )
+                if occurrence.source_id not in sources:
+                    raise SnapshotError(
+                        "occurrence targets unknown source: "
+                        f"{occurrence.source_id}"
+                    )
                 context = occurrence.context_id or ""
                 occurrences_by_context.setdefault(occurrence.source_id, {}).setdefault(context, []).append(occurrence)
     for record in _jsonl(root / "occurrences.jsonl"):
@@ -558,9 +670,19 @@ def load_snapshot(path: str | Path) -> SemanticSnapshot:
     for source_id in sources:
         contexts = occurrences_by_context.get(source_id, {})
         preferred = sources[source_id].context_id
-        selected = contexts.get(preferred) if preferred else None
-        if selected is None and contexts:
+        if preferred:
+            if preferred not in contexts:
+                raise SnapshotError(
+                    f"source canonical context has no occurrence ledger: {source_id}"
+                )
+            selected = contexts[preferred]
+        elif contexts:
+            # Schema v1 snapshots predating canonical contexts may contain
+            # several ledgers for one source.  Preserve their deterministic
+            # historical fallback while new snapshots select explicitly.
             selected = contexts[sorted(contexts)[0]]
+        else:
+            selected = []
         unique: dict[tuple[Any, ...], Occurrence] = {}
         for item in selected or []:
             targets = tuple(
@@ -573,7 +695,16 @@ def load_snapshot(path: str | Path) -> SemanticSnapshot:
                 )
                 for target in item.definitions
             )
-            unique[(item.byte_range, item.hover_id, item.symbol_id, item.role, targets)] = item
+            unique[
+                (
+                    item.byte_range,
+                    item.hover_id,
+                    item.symbol_id,
+                    item.role,
+                    targets,
+                    item.preferred_external_target_id,
+                )
+            ] = item
         occurrences[source_id] = list(unique.values())
 
     # Ensure every definition is rendered even when the provider emitted no

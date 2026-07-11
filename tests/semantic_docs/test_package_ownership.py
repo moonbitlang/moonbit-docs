@@ -12,6 +12,7 @@ if str(REPO_ROOT) not in sys.path:
 from scripts.moonbit_semantic.inventory import (
     PackageOwnership,
     metadata_package_ownership,
+    metadata_source_backends,
 )
 
 
@@ -40,6 +41,7 @@ def test_package_records_and_all_dependency_kinds_are_context_local(tmp_path: Pa
                 "deps": [
                     {
                         "path": "moonbitlang/core/cmp",
+                        "alias": "cmp",
                         "fspath": ".mooncakes/moonbitlang/core/cmp",
                     }
                 ],
@@ -64,6 +66,9 @@ def test_package_records_and_all_dependency_kinds_are_context_local(tmp_path: Pa
     assert ownership.resolve(local) == "example/app/cli"
     assert ownership.resolve(local_test) == "example/app/cli"
     assert ownership.resolve(core) == "moonbitlang/core/cmp"
+    assert ownership.aliases_for(local) == {
+        "cmp": "moonbitlang/core/cmp"
+    }
     assert ownership.resolve(async_file) == "moonbitlang/async/http"
     assert ownership.resolve_location(async_file) == (
         "moonbitlang/async/http",
@@ -222,3 +227,77 @@ def test_dependency_path_and_fspath_can_fall_back_to_package_records(tmp_path: P
 
     assert ownership.resolve(by_path) == "dependency/by-path"
     assert ownership.resolve(by_root) == "dependency/by-root"
+
+
+def test_local_sources_choose_one_supported_semantic_backend(tmp_path: Path) -> None:
+    module = tmp_path / "mixed"
+    backend = _touch(module / "backend/main.mbt")
+    frontend = _touch(module / "frontend/main.mbt")
+    shared = _touch(module / "shared/task.mbt")
+    dependency = _touch(tmp_path / "dependency/value.mbt")
+    metadata = {
+        "source_dir": str(module),
+        "packages": [
+            {
+                "root-path": str(backend.parent),
+                "supported-targets": ["Native"],
+                "files": {str(backend): {"backend": ["Native", "Js"]}},
+            },
+            {
+                "root-path": str(frontend.parent),
+                "supported-targets": ["Js"],
+                "files": {str(frontend): {"backend": ["Native", "Js"]}},
+            },
+            {
+                "root-path": str(shared.parent),
+                "supported-targets": ["Wasm", "WasmGC", "Js", "Native"],
+                "files": {str(shared): {}},
+                "deps": [
+                    {
+                        "path": "vendor/dependency",
+                        "fspath": str(dependency.parent),
+                    }
+                ],
+            },
+        ],
+    }
+
+    assignments = metadata_source_backends(metadata, module, "native")
+
+    assert assignments == {
+        backend.resolve(): "native",
+        frontend.resolve(): "js",
+        shared.resolve(): "native",
+    }
+    assert dependency.resolve() not in assignments
+
+
+def test_conflicting_dependency_aliases_fail_closed(tmp_path: Path) -> None:
+    package_root = tmp_path / "app/src"
+    local = _touch(package_root / "main.mbt")
+    metadata = {
+        "packages": [
+            {
+                "root": "example/app",
+                "rel": "src",
+                "root-path": str(package_root),
+                "files": {str(local): {}},
+                "deps": [
+                    {
+                        "alias": "json",
+                        "path": "moonbitlang/core/json",
+                    }
+                ],
+                "test-deps": [
+                    {
+                        "alias": "json",
+                        "path": "vendor/alternate-json",
+                    }
+                ],
+            }
+        ]
+    }
+
+    ownership = metadata_package_ownership(metadata)
+
+    assert ownership.aliases_for(local) == {}

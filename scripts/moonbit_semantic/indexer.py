@@ -21,7 +21,8 @@ from .canonical import digest_bytes, digest_json, is_within, normalize_relative,
 from .inventory import (
     PackageOwnership, Root, discover_roots, make_source,
     metadata_allowed_module_roots, metadata_package_ownership, metadata_sources,
-    module_info, package_metadata, recognized, scan_sources,
+    metadata_source_backends, module_info, nearest_workspace, package_metadata, recognized,
+    scan_sources,
 )
 from .literate import moonbit_projection
 from .lsp import JsonRpcProcess, LspError, LspSession, definition_locations, normalize_hover_contents
@@ -304,6 +305,9 @@ class SemanticIndexer:
             self._manifest_inputs(root)
 
         logical_sources = _logical_source_map(sources.values())
+        canonical_local_sources = self._canonical_local_source_ids(
+            root_states, path_to_source
+        )
 
         contexts: list[dict[str, Any]] = []
         active_contexts: list[
@@ -312,59 +316,128 @@ class SemanticIndexer:
                 dict[str, Any],
                 list[dict[str, Any]],
                 PackageOwnership,
+                dict[Path, dict[str, Any]],
             ]
         ] = []
         all_states = list(root_states.values()) + dependency_states + ([stdlib_state] if stdlib_state else [])
-        for root, metadata in all_states:
-            input_sources = self._context_sources(root, metadata, path_to_source)
-            if not input_sources:
-                continue
-            analysis_sources = self._analysis_sources(root, input_sources)
-            context = self._context(root, input_sources, analysis_sources)
-            contexts.append(context)
-            if root.status == "required" and analysis_sources:
-                ownership = (
-                    metadata_package_ownership(metadata)
-                    if metadata is not None
-                    else PackageOwnership()
-                )
-                active_contexts.append(
-                    (root, context, analysis_sources, ownership)
-                )
-
-        self._progress(
-            f"captured {len(sources)} sources in {len(contexts)} contexts; "
-            f"{len(active_contexts)} contexts are active"
+        analysis_workspace = tempfile.TemporaryDirectory(
+            prefix="moonbit-semantic-targets-"
         )
-        for context_index, (
-            root,
-            context,
-            analysis_sources,
-            ownership,
-        ) in enumerate(
-            active_contexts, 1
-        ):
+        try:
+            workspace = Path(analysis_workspace.name)
+            for root, metadata in all_states:
+                for (
+                    variant_root,
+                    variant_metadata,
+                    variant_path_map,
+                    allowed_source_ids,
+                    physical_paths,
+                    package_metadata_digest,
+                ) in self._context_variants(
+                    root,
+                    metadata,
+                    path_to_source,
+                    workspace,
+                    (
+                        canonical_local_sources.get(root.root_id, set())
+                        if root.root_id in root_states
+                        else None
+                    ),
+                ):
+                    input_sources = self._context_sources(
+                        variant_root,
+                        variant_metadata,
+                        variant_path_map,
+                    )
+                    if not input_sources:
+                        continue
+                    analysis_sources = self._analysis_sources(
+                        variant_root, input_sources
+                    )
+                    if allowed_source_ids is not None:
+                        analysis_sources = [
+                            source
+                            for source in analysis_sources
+                            if source["source_id"] in allowed_source_ids
+                        ]
+                    analysis_sources = [
+                        {
+                            **source,
+                            "_realpath": physical_paths.get(
+                                source["source_id"], source["_realpath"]
+                            ),
+                        }
+                        for source in analysis_sources
+                    ]
+                    context = self._context(
+                        variant_root,
+                        input_sources,
+                        analysis_sources,
+                        package_metadata_digest,
+                    )
+                    contexts.append(context)
+                    if variant_root.status == "required" and analysis_sources:
+                        for source in analysis_sources:
+                            canonical = sources[source["source_id"]]
+                            previous = canonical.get("context_id")
+                            if (
+                                previous is not None
+                                and previous != context["context_id"]
+                            ):
+                                raise RuntimeError(
+                                    "source assigned to multiple semantic contexts: "
+                                    f"{source['source_id']}"
+                                )
+                            canonical["context_id"] = context["context_id"]
+                        ownership = (
+                            metadata_package_ownership(variant_metadata)
+                            if variant_metadata is not None
+                            else PackageOwnership()
+                        )
+                        active_contexts.append(
+                            (
+                                variant_root,
+                                context,
+                                analysis_sources,
+                                ownership,
+                                variant_path_map,
+                            )
+                        )
+
             self._progress(
-                f"context {context_index}/{len(active_contexts)} {root.root_id}: "
-                f"{len(analysis_sources)} source files"
+                f"captured {len(sources)} sources in {len(contexts)} contexts; "
+                f"{len(active_contexts)} contexts are active"
             )
-            if cfg.skip_lsp:
-                self._record_skipped_context(
-                    context, analysis_sources, "--skip-lsp"
-                )
-                continue
-            candidate_count, worker_count = self._analyze_context(
+            for context_index, (
                 root,
                 context,
                 analysis_sources,
-                path_to_source,
-                logical_sources,
                 ownership,
-            )
-            self._progress(
-                f"context {context_index}/{len(active_contexts)} complete: "
-                f"{candidate_count} candidates across {worker_count} sessions"
-            )
+                context_path_map,
+            ) in enumerate(active_contexts, 1):
+                self._progress(
+                    f"context {context_index}/{len(active_contexts)} "
+                    f"{root.root_id}: {len(analysis_sources)} source files"
+                )
+                if cfg.skip_lsp:
+                    self._record_skipped_context(
+                        context, analysis_sources, "--skip-lsp"
+                    )
+                    continue
+                candidate_count, worker_count = self._analyze_context(
+                    root,
+                    context,
+                    analysis_sources,
+                    context_path_map,
+                    logical_sources,
+                    ownership,
+                )
+                self._progress(
+                    f"context {context_index}/{len(active_contexts)} complete: "
+                    f"{candidate_count} candidates across {worker_count} sessions"
+                )
+        finally:
+            analysis_workspace.cleanup()
 
         self._resolve_pending_external_targets()
 
@@ -389,13 +462,17 @@ class SemanticIndexer:
                     raise RuntimeError(f"asset changed during capture: {asset['path']}")
             public_inputs = []
             for item in self.analysis_inputs:
-                real = Path(item.pop("_realpath"))
-                current = real.read_bytes()
-                if item["kind"] == "package-metadata":
-                    current = self._normalize_metadata(current)
-                if digest_bytes(current) != item["blob_digest"]:
-                    raise RuntimeError(f"analysis input changed after capture: {real}")
                 raw = item.pop("_blob")
+                real_value = item.pop("_realpath", None)
+                if real_value is not None:
+                    real = Path(real_value)
+                    current = real.read_bytes()
+                    if item["kind"] == "package-metadata":
+                        current = self._normalize_metadata(current)
+                    if digest_bytes(current) != item["blob_digest"]:
+                        raise RuntimeError(
+                            f"analysis input changed after capture: {real}"
+                        )
                 if writer.write_blob(raw) != item["blob_digest"]:
                     raise RuntimeError(f"analysis input changed during capture: {item['path']}")
                 public_inputs.append(item)
@@ -624,6 +701,7 @@ class SemanticIndexer:
         """Resolve unique external locations after every LSP context closes."""
 
         if self._mooncakes is None:
+            self._finalize_external_navigation()
             return
         pending: dict[
             str, tuple[DefinitionEvidence, list[dict[str, Any]]]
@@ -649,6 +727,7 @@ class SemanticIndexer:
                         pending[key] = (evidence, [])
                     pending[key][1].append(definition)
         if not pending:
+            self._finalize_external_navigation()
             return
 
         ordered = [pending[key] for key in sorted(pending)]
@@ -694,6 +773,78 @@ class SemanticIndexer:
                 for definition in definitions:
                     definition.pop("_external_evidence", None)
                     definition["external_status"] = resolution.status
+        self._finalize_external_navigation()
+
+    def _finalize_external_navigation(self) -> None:
+        """Collapse proven public aliases without guessing unresolved symbols."""
+
+        for shard in self.occurrence_shards.values():
+            for occurrence in shard["occurrences"]:
+                definitions = occurrence.get("definitions", [])
+                chosen: str | None = None
+                if definitions and all(
+                    definition.get("external_status") is not None
+                    for definition in definitions
+                ):
+                    exact = []
+                    for definition in definitions:
+                        target_id = definition.get("external_target_id")
+                        target = self.external_targets.get(target_id)
+                        if (
+                            definition.get("external_status") == "exact"
+                            and target is not None
+                            and target.get("status") == "exact"
+                        ):
+                            exact.append((target_id, target))
+
+                    def one_route(
+                        values: list[tuple[str, dict[str, Any]]],
+                    ) -> str | None:
+                        urls = {target["url"] for _target_id, target in values}
+                        if len(urls) != 1:
+                            return None
+                        return min(
+                            target_id
+                            for target_id, target in values
+                            if target["url"] in urls
+                        )
+
+                    all_candidates_are_exact = len(exact) == len(definitions)
+                    chosen = (
+                        one_route(exact)
+                        if all_candidates_are_exact
+                        else None
+                    )
+                    if chosen is None and exact:
+                        aliases = occurrence.get("_navigation_aliases")
+                        qualifier = occurrence.get("_navigation_qualifier")
+                        package = (
+                            aliases.get(qualifier)
+                            if isinstance(aliases, dict)
+                            and isinstance(qualifier, str)
+                            else None
+                        )
+                        if package:
+                            chosen = one_route(
+                                [
+                                    item
+                                    for item in exact
+                                    if item[1].get("package") == package
+                                ]
+                            )
+                        elif qualifier is None:
+                            chosen = one_route(
+                                [
+                                    item
+                                    for item in exact
+                                    if item[1].get("package")
+                                    == "moonbitlang/core/prelude"
+                                ]
+                            )
+                if chosen is not None:
+                    occurrence["preferred_external_target_id"] = chosen
+                occurrence.pop("_navigation_aliases", None)
+                occurrence.pop("_navigation_qualifier", None)
 
     @staticmethod
     def _external_target_record(
@@ -791,7 +942,7 @@ class SemanticIndexer:
                         request["status"] = "valid-no-result"
                 except (LspError, RangeError, ValueError, KeyError) as exc:
                     request["status"] = "error"
-                    request["error"] = str(exc)
+                    request["error"] = self._portable_text(str(exc))
                     if self.config.strict:
                         raise
                 requests.append(request)
@@ -930,12 +1081,19 @@ class SemanticIndexer:
         if not hover_id and not definitions:
             return None
         effective = hover_range or candidate["range_utf8"]
-        return {
+        occurrence = {
             "source_id": source["source_id"], "context_id": context["context_id"],
             "request_position": candidate["position"], "candidate_range_utf8": candidate["range_utf8"],
             "hover_range_utf8": hover_range, "effective_range_utf8": effective,
             "hover_id": hover_id, "definitions": sorted(definitions, key=lambda value: (value["target_source_id"], value["target_selection_range_utf8"])),
         }
+        aliases = ownership.aliases_for(Path(source["_realpath"]))
+        qualifier = _navigation_qualifier(source["_blob"], effective)
+        if aliases:
+            occurrence["_navigation_aliases"] = aliases
+        if qualifier:
+            occurrence["_navigation_qualifier"] = qualifier
+        return occurrence
 
     def _context_sources(self, root: Root, metadata: dict[str, Any] | None, path_to_source: dict[Path, dict[str, Any]]) -> list[dict[str, Any]]:
         # packages.json is the exact checked graph.  Scanning dependency module
@@ -945,9 +1103,46 @@ class SemanticIndexer:
         paths = metadata_sources(metadata) if metadata else set(scan_sources(root.path))
         return sorted({path_to_source[path]["source_id"]: path_to_source[path] for path in paths if path in path_to_source}.values(), key=lambda value: value["source_id"])
 
+    @staticmethod
+    def _canonical_local_source_ids(
+        root_states: dict[str, tuple[Root, dict[str, Any] | None]],
+        path_to_source: dict[Path, dict[str, Any]],
+    ) -> dict[str, set[str]]:
+        """Assign each local source to its most specific discovered root.
+
+        A workspace container and its member modules can all read the same
+        workspace ``packages.json``.  Nested path-dependency fixtures have the
+        same shape.  Context input graphs may overlap, but semantic occurrence
+        ledgers must have one canonical owner, so the deepest containing root
+        owns each local source before backend variants are constructed.
+        """
+
+        roots = [root for root, _metadata in root_states.values()]
+        owned = {root.root_id: set() for root in roots}
+        for path, source in path_to_source.items():
+            if source["origin"] not in {"local", "standalone"}:
+                continue
+            containing = [root for root in roots if is_within(path, root.path)]
+            if not containing:
+                raise RuntimeError(
+                    f"local source has no discovered semantic root: {path}"
+                )
+            depth = max(len(root.path.parts) for root in containing)
+            candidates = [
+                root for root in containing if len(root.path.parts) == depth
+            ]
+            if len(candidates) != 1:
+                raise RuntimeError(
+                    f"local source has ambiguous semantic roots: {path}"
+                )
+            owned[candidates[0].root_id].add(source["source_id"])
+        return owned
+
     def _analysis_sources(
         self, root: Root, sources: list[dict[str, Any]]
     ) -> list[dict[str, Any]]:
+        if root.status != "required":
+            return []
         if root.root_id.startswith("dependency:"):
             context_origin = "dependency"
         elif root.root_id.startswith("stdlib:"):
@@ -967,11 +1162,224 @@ class SemanticIndexer:
             not in {"display-only", "deferred-by-origin-policy"}
         ]
 
+    def _context_variants(
+        self,
+        root: Root,
+        metadata: dict[str, Any] | None,
+        path_to_source: dict[Path, dict[str, Any]],
+        workspace: Path,
+        owned_source_ids: set[str] | None,
+    ) -> list[
+        tuple[
+            Root,
+            dict[str, Any] | None,
+            dict[Path, dict[str, Any]],
+            set[str] | None,
+            dict[str, str],
+            str | None,
+        ]
+    ]:
+        metadata_digest = self._package_metadata_digest(metadata)
+        base = (
+            root,
+            metadata,
+            path_to_source,
+            owned_source_ids,
+            {},
+            metadata_digest,
+        )
+        if (
+            metadata is None
+            or root.status != "required"
+            or not root.root_id.startswith("root:")
+        ):
+            return [base]
+
+        assignments = metadata_source_backends(
+            metadata, root.path, root.backend
+        )
+        groups: dict[str, set[str]] = {}
+        for path, backend in assignments.items():
+            source = path_to_source.get(realpath(path))
+            if source is None or source["origin"] not in {"local", "standalone"}:
+                continue
+            groups.setdefault(backend, set()).add(source["source_id"])
+        if owned_source_ids is not None:
+            groups = {
+                backend: source_ids & owned_source_ids
+                for backend, source_ids in groups.items()
+                if source_ids & owned_source_ids
+            }
+        if not groups:
+            return [base]
+
+        order = {name: index for index, name in enumerate(
+            ("wasm-gc", "wasm", "js", "native", "llvm")
+        )}
+        variants = []
+        for backend in sorted(
+            groups,
+            key=lambda value: (
+                value != root.backend,
+                order.get(value, len(order)),
+                value,
+            ),
+        ):
+            allowed = groups[backend]
+            if backend == root.backend:
+                variants.append(
+                    (
+                        root,
+                        metadata,
+                        path_to_source,
+                        allowed,
+                        {},
+                        metadata_digest,
+                    )
+                )
+                continue
+            variants.append(
+                self._shadow_context_variant(
+                    root,
+                    metadata,
+                    backend,
+                    path_to_source,
+                    workspace,
+                    allowed,
+                )
+            )
+        return variants
+
+    def _shadow_context_variant(
+        self,
+        root: Root,
+        metadata: dict[str, Any],
+        backend: str,
+        path_to_source: dict[Path, dict[str, Any]],
+        workspace: Path,
+        allowed_source_ids: set[str],
+    ) -> tuple[
+        Root,
+        dict[str, Any],
+        dict[Path, dict[str, Any]],
+        set[str],
+        dict[str, str],
+        str,
+    ]:
+        suffix = digest_json(
+            {"root_id": root.root_id, "backend": backend}
+        ).removeprefix("sha256:")[:16]
+        ignored = {".git", ".hg", ".svn", "_build", "target", "node_modules", ".mooncakes"}
+
+        def ignore(_directory: str, names: list[str]) -> set[str]:
+            return set(names) & ignored
+
+        original_owner = nearest_workspace(root.path) or root.path
+        if not is_within(original_owner, self.config.repo_root):
+            raise RuntimeError(
+                f"alternate-target root is outside repository: {root.path}"
+            )
+        shadow_repo = workspace / f"{suffix}-{backend}" / "repo"
+        shadow_owner = _copy_repo_overlay(
+            self.config.repo_root,
+            original_owner,
+            shadow_repo,
+            ignored,
+            ignore,
+        )
+        _link_mooncakes_trees(original_owner, shadow_owner, ignored)
+        shadow_path = shadow_owner / root.path.relative_to(original_owner)
+        _set_preferred_target(shadow_path, backend)
+        shadow_owner = realpath(shadow_owner)
+        shadow_path = realpath(shadow_path)
+        owner_relative = normalize_relative(
+            original_owner.relative_to(self.config.repo_root)
+        )
+        self.portable_roots[shadow_owner] = (
+            "$REPO" + (f"/{owner_relative}" if owner_relative else "")
+        )
+        shadow = Root(
+            shadow_path,
+            f"{root.root_id}@{backend}",
+            root.status,
+            root.module_name,
+            root.version,
+            backend,
+            (
+                shadow_path / root.entry_file.relative_to(root.path)
+                if root.entry_file is not None
+                else None
+            ),
+        )
+        self._progress(
+            f"checking alternate target {backend} for {root.root_id}"
+        )
+        self._check_barrier(shadow)
+
+        generated_metadata, _generated_path = package_metadata(shadow)
+        shadow_metadata = (
+            generated_metadata
+            if generated_metadata is not None
+            else _replace_path_prefix(
+                metadata,
+                original_owner,
+                shadow_owner,
+            )
+        )
+        metadata_digest = self._package_metadata_digest(shadow_metadata)
+        if metadata_digest is None:
+            raise RuntimeError(
+                f"alternate target produced no package metadata: {shadow.root_id}"
+            )
+        self._captured_input(
+            json.dumps(
+                shadow_metadata,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+            + b"\n",
+            "package-metadata-variant",
+            shadow.root_id,
+            f"alternate-target/{_slug(shadow.root_id)}.packages.json",
+        )
+        aliases = dict(path_to_source)
+        physical_paths: dict[str, str] = {}
+        for original, source in path_to_source.items():
+            if not is_within(original, original_owner):
+                continue
+            relative = original.relative_to(original_owner)
+            candidate = shadow_owner / relative
+            if not candidate.is_file():
+                continue
+            candidate = realpath(candidate)
+            if candidate.read_bytes() != source["_blob"]:
+                raise RuntimeError(
+                    f"alternate target shadow differs from source: {original}"
+                )
+            aliases[candidate] = source
+            if source["source_id"] in allowed_source_ids:
+                physical_paths[source["source_id"]] = str(candidate)
+        missing = allowed_source_ids - physical_paths.keys()
+        if missing:
+            raise RuntimeError(
+                f"alternate target shadow is missing sources: {sorted(missing)}"
+            )
+        return (
+            shadow,
+            shadow_metadata,
+            aliases,
+            allowed_source_ids,
+            physical_paths,
+            metadata_digest,
+        )
+
     def _context(
         self,
         root: Root,
         sources: list[dict[str, Any]],
         analysis_sources: list[dict[str, Any]],
+        package_metadata_digest: str | None,
     ) -> dict[str, Any]:
         inputs = [{"source_id": source["source_id"], "blob_digest": source["blob_digest"]} for source in sources]
         analysis_source_ids = sorted(
@@ -981,7 +1389,15 @@ class SemanticIndexer:
             "origins": list(self.config.semantic_origins),
             "source_ids": analysis_source_ids,
         }
-        fingerprint = {"root_id": root.root_id, "module": root.module_name, "backend": root.backend, "toolchain": digest_json(self.toolchain), "inputs": inputs, "analysis": analysis}
+        fingerprint = {
+            "root_id": root.root_id,
+            "module": root.module_name,
+            "backend": root.backend,
+            "toolchain": digest_json(self.toolchain),
+            "inputs": inputs,
+            "analysis": analysis,
+            "package_metadata_digest": package_metadata_digest,
+        }
         context_id = "ctx:" + digest_json(fingerprint).removeprefix("sha256:")[:32]
         return {
             "context_id": context_id, "root_id": root.root_id, "package": root.module_name,
@@ -989,6 +1405,7 @@ class SemanticIndexer:
             "input_blobs": inputs, "context_input_digest": digest_json(fingerprint), "analysis_status": root.status,
             "analysis_origins": list(self.config.semantic_origins),
             "analysis_source_ids": analysis_source_ids,
+            "package_metadata_digest": package_metadata_digest,
             "toolchain_digest": digest_json(self.toolchain), "position_encoding": "utf-16", "initialize": {},
         }
 
@@ -1017,6 +1434,47 @@ class SemanticIndexer:
             "blob_digest": digest_bytes(captured), "normalized": captured != raw,
             "_realpath": str(path.resolve()), "_blob": captured,
         })
+
+    def _captured_input(
+        self,
+        raw: bytes,
+        kind: str,
+        root_id: str,
+        portable_path: str,
+    ) -> None:
+        """Freeze an ephemeral analysis input before its workspace is removed."""
+
+        captured = (
+            self._normalize_metadata(raw)
+            if kind.startswith("package-metadata")
+            else raw
+        )
+        self.analysis_inputs.append(
+            {
+                "root_id": root_id,
+                "kind": kind,
+                "path": portable_path,
+                "blob_digest": digest_bytes(captured),
+                "normalized": captured != raw,
+                "_blob": captured,
+            }
+        )
+
+    def _package_metadata_digest(
+        self, metadata: dict[str, Any] | None
+    ) -> str | None:
+        if metadata is None:
+            return None
+        raw = (
+            json.dumps(
+                metadata,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+            + b"\n"
+        )
+        return digest_bytes(self._normalize_metadata(raw))
 
     @staticmethod
     def _verify_precheck(root: Root, captured: dict[Path, bytes]) -> None:
@@ -1080,10 +1538,17 @@ class SemanticIndexer:
         self.portable_roots[root] = f"$MODULE/{info['name']}@{version}"
 
     def _portable_diagnostic(self, value: str, root: Root) -> str:
-        replacements = [(str(self.config.repo_root), "$REPO"), (str(root.path), "$ROOT")]
-        if self.config.stdlib_root:
-            replacements.append((str(self.config.stdlib_root), "$STDLIB"))
-        for original, replacement in sorted(replacements, key=lambda item: len(item[0]), reverse=True):
+        return self._portable_text(value, root)
+
+    def _portable_text(self, value: str, root: Root | None = None) -> str:
+        replacements = {
+            str(path): label for path, label in self.portable_roots.items()
+        }
+        if root is not None:
+            replacements[str(root.path)] = "$ROOT"
+        for original, replacement in sorted(
+            replacements.items(), key=lambda item: len(item[0]), reverse=True
+        ):
             value = value.replace(original, replacement)
         return value
 
@@ -1132,6 +1597,147 @@ class SemanticIndexer:
     @staticmethod
     def _public_source(source: dict[str, Any]) -> dict[str, Any]:
         return {key: value for key, value in source.items() if not key.startswith("_")}
+
+
+def _copy_repo_overlay(
+    repo_root: Path,
+    owner: Path,
+    destination: Path,
+    ignored: set[str],
+    ignore: Callable[[str, list[str]], set[str]],
+) -> Path:
+    """Copy one module/workspace while symlinking its repository siblings.
+
+    Recreating the ancestor layout keeps workspace membership and repository-
+    relative path dependencies valid without copying the whole documentation
+    tree for every alternate backend.
+    """
+
+    repo_root = realpath(repo_root)
+    owner = realpath(owner)
+    relative = owner.relative_to(repo_root)
+    original_cursor = repo_root
+    shadow_cursor = destination
+    shadow_cursor.mkdir(parents=True, exist_ok=True)
+
+    for part in relative.parts:
+        for sibling in original_cursor.iterdir():
+            if sibling.name == part or sibling.name in ignored:
+                continue
+            link = shadow_cursor / sibling.name
+            if link.exists() or link.is_symlink():
+                continue
+            os.symlink(
+                sibling,
+                link,
+                target_is_directory=sibling.is_dir(),
+            )
+        original_cursor /= part
+        shadow_cursor /= part
+        shadow_cursor.mkdir(exist_ok=True)
+
+    shutil.copytree(
+        owner,
+        shadow_cursor,
+        symlinks=True,
+        ignore=ignore,
+        dirs_exist_ok=True,
+    )
+    return shadow_cursor
+
+
+def _link_mooncakes_trees(
+    original_owner: Path,
+    shadow_owner: Path,
+    ignored: set[str],
+) -> None:
+    """Restore ignored dependency stores as read-only symlinked inputs."""
+
+    for current, directories, _files in os.walk(original_owner):
+        current_path = Path(current)
+        relative = current_path.relative_to(original_owner)
+        for name in list(directories):
+            if name == ".mooncakes":
+                source = current_path / name
+                target = shadow_owner / relative / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                if not target.exists() and not target.is_symlink():
+                    os.symlink(source, target, target_is_directory=True)
+        directories[:] = [
+            name for name in directories if name not in ignored
+        ]
+
+
+def _set_preferred_target(root: Path, backend: str) -> None:
+    json_manifest = root / "moon.mod.json"
+    if json_manifest.is_file():
+        try:
+            value = json.loads(json_manifest.read_text(encoding="utf-8"))
+        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+            raise RuntimeError(
+                f"cannot rewrite alternate-target manifest: {json_manifest}"
+            ) from exc
+        if not isinstance(value, dict):
+            raise RuntimeError(
+                f"alternate-target manifest is not an object: {json_manifest}"
+            )
+        value["preferred-target"] = backend
+        json_manifest.write_text(
+            json.dumps(value, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        return
+
+    manifest = root / "moon.mod"
+    if manifest.is_file():
+        text = manifest.read_text(encoding="utf-8")
+        replacement = f'preferred_target = "{backend}"'
+        if re.search(r"^\s*preferred_target\s*=", text, re.MULTILINE):
+            text = re.sub(
+                r'^\s*preferred_target\s*=\s*"[^"]*"',
+                replacement,
+                text,
+                count=1,
+                flags=re.MULTILINE,
+            )
+        else:
+            text = text.rstrip() + "\n" + replacement + "\n"
+        manifest.write_text(text, encoding="utf-8")
+        return
+
+    raise RuntimeError(
+        f"alternate-target analysis requires a module manifest below {root}"
+    )
+
+
+def _replace_path_prefix(value: Any, original: Path, replacement: Path) -> Any:
+    source = str(realpath(original))
+    target = str(realpath(replacement))
+    if isinstance(value, dict):
+        return {
+            _replace_path_prefix(key, original, replacement): _replace_path_prefix(
+                item, original, replacement
+            )
+            for key, item in value.items()
+        }
+    if isinstance(value, list):
+        return [_replace_path_prefix(item, original, replacement) for item in value]
+    if isinstance(value, str):
+        return value.replace(source, target)
+    return value
+
+
+def _navigation_qualifier(raw: bytes, byte_range: list[int]) -> str | None:
+    """Return the explicit ``@alias`` immediately qualifying an occurrence."""
+
+    end = byte_range[1]
+    line_start = raw.rfind(b"\n", 0, end) + 1
+    try:
+        prefix = raw[line_start:end].decode("utf-8")
+    except UnicodeDecodeError:
+        return None
+    match = re.search(r"@([A-Za-z_][A-Za-z0-9_]*)\.[A-Za-z0-9_]*$", prefix)
+    return match.group(1) if match else None
 
 
 def _portable_root_uri(root: Root) -> str:

@@ -207,6 +207,26 @@ int answer(void) { return 42; }
     return snapshot
 
 
+def _refresh_snapshot_manifest(snapshot: Path) -> None:
+    """Refresh fixture shard digests after a test rewrites its snapshot."""
+
+    manifest_path = snapshot / "manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    files = []
+    for path in sorted(snapshot.rglob("*")):
+        if path.is_file() and path != manifest_path:
+            data = path.read_bytes()
+            files.append(
+                {
+                    "path": path.relative_to(snapshot).as_posix(),
+                    "digest": "sha256:" + hashlib.sha256(data).hexdigest(),
+                    "size": len(data),
+                }
+            )
+    manifest["files"] = files
+    manifest_path.write_text(json.dumps(manifest))
+
+
 def _project(tmp_path: Path, snapshot: Path | None, *, required: bool, builder: str = "html", parallel: int = 1):
     from sphinx.application import Sphinx
 
@@ -291,6 +311,129 @@ def test_snapshot_rejects_blob_digest_mismatch(tmp_path: Path) -> None:
     blob.write_text("changed")
     with pytest.raises(SnapshotError, match="digest mismatch"):
         load_snapshot(path)
+
+
+def test_snapshot_rejects_missing_canonical_occurrence_ledger(
+    tmp_path: Path,
+) -> None:
+    path = _write_snapshot(tmp_path)
+    sources_path = path / "sources.jsonl"
+    sources = [json.loads(line) for line in sources_path.read_text().splitlines()]
+    sources[0]["context_id"] = "ctx:missing"
+    sources_path.write_text(
+        "".join(json.dumps(source) + "\n" for source in sources)
+    )
+    _refresh_snapshot_manifest(path)
+
+    with pytest.raises(
+        SnapshotError,
+        match="canonical context has no occurrence ledger",
+    ):
+        load_snapshot(path)
+
+
+def test_occurrence_ledger_envelope_supplies_source_and_context(
+    tmp_path: Path,
+) -> None:
+    path = _write_snapshot(tmp_path)
+    sources_path = path / "sources.jsonl"
+    sources = [json.loads(line) for line in sources_path.read_text().splitlines()]
+    sources[0]["context_id"] = "ctx:main"
+    sources_path.write_text(
+        "".join(json.dumps(source) + "\n" for source in sources)
+    )
+
+    ledger_path = path / "occurrences" / "ctx" / "main.json"
+    records = json.loads(ledger_path.read_text())["occurrences"]
+    occurrence = next(
+        record for record in records if record["source_id"] == "local:main.mbt"
+    )
+    occurrence.pop("source_id")
+    occurrence.pop("context_id", None)
+    ledger_path.write_text(
+        json.dumps(
+            {
+                "source_id": "local:main.mbt",
+                "context_id": "ctx:main",
+                "occurrences": [occurrence],
+            }
+        )
+    )
+    _refresh_snapshot_manifest(path)
+
+    snapshot = load_snapshot(path)
+    inherited = [
+        item
+        for item in snapshot.occurrences["local:main.mbt"]
+        if item.context_id == "ctx:main"
+    ]
+
+    assert len(inherited) == 1
+    assert inherited[0].source_id == "local:main.mbt"
+    assert inherited[0].hover_id == "hover:answer"
+
+
+def test_occurrence_ledger_rejects_inner_identity_conflict(
+    tmp_path: Path,
+) -> None:
+    path = _write_snapshot(tmp_path)
+    ledger_path = path / "occurrences" / "ctx" / "main.json"
+    records = json.loads(ledger_path.read_text())["occurrences"]
+    conflicting = next(
+        record
+        for record in records
+        if record["source_id"] == "local:literate.mbt.md"
+    )
+    ledger_path.write_text(
+        json.dumps(
+            {
+                "source_id": "local:main.mbt",
+                "context_id": "ctx:main",
+                "occurrences": [conflicting],
+            }
+        )
+    )
+    _refresh_snapshot_manifest(path)
+
+    with pytest.raises(
+        SnapshotError,
+        match="source_id conflicts with its ledger envelope",
+    ):
+        load_snapshot(path)
+
+
+def test_legacy_snapshot_uses_sorted_context_fallback(tmp_path: Path) -> None:
+    path = _write_snapshot(tmp_path)
+    occurrence_root = path / "occurrences" / "ctx"
+    records = json.loads((occurrence_root / "main.json").read_text())[
+        "occurrences"
+    ]
+    template = next(
+        record for record in records if record["source_id"] == "local:main.mbt"
+    )
+    template.pop("source_id")
+    template.pop("context_id", None)
+    (occurrence_root / "main.json").unlink()
+    for context_id in ("ctx:z", "ctx:a"):
+        (occurrence_root / f"{context_id}.json").write_text(
+            json.dumps(
+                {
+                    "source_id": "local:main.mbt",
+                    "context_id": context_id,
+                    "occurrences": [template],
+                }
+            )
+        )
+    _refresh_snapshot_manifest(path)
+
+    snapshot = load_snapshot(path)
+    selected_contexts = {
+        item.context_id
+        for item in snapshot.occurrences["local:main.mbt"]
+        if item.context_id is not None
+    }
+
+    assert selected_contexts == {"ctx:a"}
 
 
 def test_snapshot_change_outdates_every_document_page() -> None:

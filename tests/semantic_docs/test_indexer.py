@@ -214,6 +214,459 @@ class SemanticIndexerTest(unittest.TestCase):
         self.assertNotIn(str(self.repo), public_inputs)
         self.assertNotIn(str(self.repo.resolve()), public_inputs)
 
+    def test_mixed_target_packages_get_disjoint_analysis_contexts(self):
+        module = self.sources / "mixed-target"
+        backend = module / "backend/main.mbt"
+        frontend = module / "frontend/main.mbt"
+        backend.parent.mkdir(parents=True)
+        frontend.parent.mkdir(parents=True)
+        self._write_json(
+            module / "moon.mod.json",
+            {
+                "name": "example/mixed-target",
+                "version": "1.0.0",
+                "preferred-target": "native",
+                "supported-targets": "+native+js",
+            },
+        )
+        backend.write_text("fn name() -> Unit {}\n", encoding="utf-8")
+        frontend.write_text("fn name() -> Unit {}\n", encoding="utf-8")
+        (backend.parent / "moon.pkg").write_text(
+            'supported_targets = "native"\n', encoding="utf-8"
+        )
+        (frontend.parent / "moon.pkg").write_text(
+            'supported_targets = "js"\n', encoding="utf-8"
+        )
+        self._write_json(
+            module / "_build/packages.json",
+            {
+                "source_dir": str(module),
+                "name": "example/mixed-target",
+                "backend": "native",
+                "packages": [
+                    {
+                        "root": "example/mixed-target",
+                        "rel": "backend",
+                        "root-path": str(backend.parent),
+                        "supported-targets": ["Native"],
+                        "files": {str(backend): {}},
+                    },
+                    {
+                        "root": "example/mixed-target",
+                        "rel": "frontend",
+                        "root-path": str(frontend.parent),
+                        "supported-targets": ["Js"],
+                        "files": {str(frontend): {}},
+                    },
+                ],
+            },
+        )
+        opened: list[tuple[str, str]] = []
+        checked_targets: list[str] = []
+
+        class RecordingRunner(FakeRunner):
+            def run(inner_self, args, **kwargs):
+                values = tuple(str(value) for value in args)
+                if "check" in values and "--target" in values:
+                    checked_targets.append(values[values.index("--target") + 1])
+                return super().run(args, **kwargs)
+
+        class TargetAwareLsp(FakeLsp):
+            def __init__(inner_self, backend_name):
+                super().__init__()
+                inner_self.backend_name = backend_name
+                inner_self.package = ""
+
+            def open(inner_self, path, text):
+                inner_self.package = Path(path).parent.name
+                opened.append((inner_self.backend_name, inner_self.package))
+                return super().open(path, text)
+
+            def _supported(inner_self):
+                expected = {"backend": "native", "frontend": "js"}
+                return inner_self.backend_name == expected[inner_self.package]
+
+            def hover(inner_self, uri, position):
+                return super().hover(uri, position) if inner_self._supported() else None
+
+            def definition(inner_self, uri, position):
+                return (
+                    super().definition(uri, position)
+                    if inner_self._supported()
+                    else None
+                )
+
+        output = self.repo / "snapshot-mixed-target"
+        SemanticIndexer(
+            BuildConfig(
+                repo_root=self.repo,
+                source_root=module,
+                output=output,
+                stdlib_root=self.stdlib,
+                runner=RecordingRunner(),
+                lsp_factory=lambda root: TargetAwareLsp(root.backend),
+                sessions=1,
+            )
+        ).build()
+        validate_snapshot(output)
+
+        contexts = self._jsonl(output / "contexts.jsonl")
+        sources = self._jsonl(output / "sources.jsonl")
+        by_path = {item["path"]: item for item in sources}
+        backend_source = by_path["next/sources/mixed-target/backend/main.mbt"]
+        frontend_source = by_path["next/sources/mixed-target/frontend/main.mbt"]
+
+        def owners(source_id):
+            return [
+                context
+                for context in contexts
+                if source_id in context["analysis_source_ids"]
+            ]
+
+        backend_owners = owners(backend_source["source_id"])
+        frontend_owners = owners(frontend_source["source_id"])
+        self.assertEqual(len(backend_owners), 1)
+        self.assertEqual(len(frontend_owners), 1)
+        self.assertEqual(backend_owners[0]["backend"], "native")
+        self.assertEqual(frontend_owners[0]["backend"], "js")
+        self.assertEqual(
+            backend_source["context_id"], backend_owners[0]["context_id"]
+        )
+        self.assertEqual(
+            frontend_source["context_id"], frontend_owners[0]["context_id"]
+        )
+        self.assertNotEqual(
+            backend_owners[0]["context_id"], frontend_owners[0]["context_id"]
+        )
+        self.assertIn(("native", "backend"), opened)
+        self.assertIn(("js", "frontend"), opened)
+        self.assertNotIn(("native", "frontend"), opened)
+        self.assertNotIn(("js", "backend"), opened)
+        self.assertGreaterEqual(set(checked_targets), {"native", "js"})
+
+        ledgers = [
+            json.loads(path.read_text())
+            for path in (output / "occurrences").glob("*/*.json")
+        ]
+        frontend_ledgers = [
+            ledger
+            for ledger in ledgers
+            if ledger["source_id"] == frontend_source["source_id"]
+        ]
+        self.assertEqual(len(frontend_ledgers), 1)
+        self.assertEqual(
+            frontend_ledgers[0]["context_id"],
+            frontend_source["context_id"],
+        )
+        self.assertTrue(frontend_ledgers[0]["occurrences"])
+        self.assertTrue(
+            any(
+                occurrence.get("hover_id")
+                for occurrence in frontend_ledgers[0]["occurrences"]
+            )
+        )
+        analysis_inputs = self._jsonl(output / "analysis-inputs.jsonl")
+        variant_inputs = [
+            item
+            for item in analysis_inputs
+            if item["kind"] == "package-metadata-variant"
+        ]
+        self.assertEqual(len(variant_inputs), 1)
+        self.assertEqual(
+            frontend_owners[0]["package_metadata_digest"],
+            variant_inputs[0]["blob_digest"],
+        )
+        public_snapshot = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in output.rglob("*.json*")
+        )
+        self.assertNotIn("moonbit-semantic-targets-", public_snapshot)
+
+        class LeakyAlternateLsp(TargetAwareLsp):
+            def definition(inner_self, uri, position):
+                if inner_self.backend_name != "js":
+                    return super().definition(uri, position)
+                return {
+                    "uri": "file://blocked" + uri.removeprefix("file://"),
+                    "range": {
+                        "start": {"line": 0, "character": 3},
+                        "end": {"line": 0, "character": 7},
+                    },
+                }
+
+        partial_output = self.repo / "snapshot-mixed-target-partial"
+        SemanticIndexer(
+            BuildConfig(
+                repo_root=self.repo,
+                source_root=module,
+                output=partial_output,
+                stdlib_root=self.stdlib,
+                runner=RecordingRunner(),
+                lsp_factory=lambda root: LeakyAlternateLsp(root.backend),
+                sessions=1,
+                strict=False,
+            )
+        ).build()
+        validate_snapshot(partial_output)
+        request_payload = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in (partial_output / "requests").glob("*/*.json")
+        )
+        self.assertIn('"status":"error"', request_payload)
+        self.assertNotIn("moonbit-semantic-targets-", request_payload)
+        self.assertNotIn(str(self.repo), request_payload)
+
+    def test_workspace_container_and_member_have_disjoint_canonical_contexts(self):
+        workspace = self.sources / "workspace-contexts"
+        member = workspace / "member"
+        container_source = workspace / "main.mbt"
+        member_source = member / "main.mbt"
+        member.mkdir(parents=True)
+        (workspace / "moon.work").write_text(
+            'members = ["member"]\n', encoding="utf-8"
+        )
+        self._write_json(
+            workspace / "moon.mod.json",
+            {"name": "example/workspace", "preferred-target": "wasm-gc"},
+        )
+        self._write_json(
+            member / "moon.mod.json",
+            {"name": "example/member", "preferred-target": "wasm-gc"},
+        )
+        container_source.write_text("fn name() -> Unit {}\n", encoding="utf-8")
+        member_source.write_text("fn name() -> Unit {}\n", encoding="utf-8")
+        self._write_json(
+            workspace / "_build/packages.json",
+            {
+                "source_dir": str(workspace),
+                "backend": "wasm-gc",
+                "packages": [
+                    {
+                        "root": "example/workspace",
+                        "root-path": str(workspace),
+                        "files": {str(container_source): {}},
+                    },
+                    {
+                        "root": "example/member",
+                        "root-path": str(member),
+                        "files": {str(member_source): {}},
+                    },
+                ],
+            },
+        )
+
+        output = self.repo / "snapshot-workspace-contexts"
+        SemanticIndexer(
+            BuildConfig(
+                repo_root=self.repo,
+                source_root=workspace,
+                output=output,
+                stdlib_root=self.stdlib,
+                runner=FakeRunner(),
+                lsp_factory=lambda root: FakeLsp(),
+                sessions=1,
+            )
+        ).build()
+        validate_snapshot(output)
+
+        sources = {
+            item["path"]: item for item in self._jsonl(output / "sources.jsonl")
+        }
+        contexts = self._jsonl(output / "contexts.jsonl")
+        local_sources = [
+            sources["next/sources/workspace-contexts/main.mbt"],
+            sources["next/sources/workspace-contexts/member/main.mbt"],
+        ]
+        for source in local_sources:
+            owners = [
+                context
+                for context in contexts
+                if source["source_id"] in context["analysis_source_ids"]
+            ]
+            self.assertEqual(
+                len(owners),
+                1,
+                f"{source['source_id']} must have one canonical analysis owner",
+            )
+            self.assertEqual(source.get("context_id"), owners[0]["context_id"])
+
+        occurrence_ledgers = [
+            json.loads(path.read_text())
+            for path in (output / "occurrences").glob("*/*.json")
+        ]
+        for source in local_sources:
+            canonical_ledgers = [
+                ledger
+                for ledger in occurrence_ledgers
+                if ledger["source_id"] == source["source_id"]
+                and ledger["context_id"] == source["context_id"]
+            ]
+            self.assertEqual(len(canonical_ledgers), 1)
+
+    def test_expected_failure_source_has_no_unbacked_canonical_context(self):
+        root = self.sources / "error_codes/1234_error"
+        source_path = root / "main.mbt"
+        root.mkdir(parents=True)
+        self._write_json(root / "moon.mod.json", {"name": "example/error"})
+        source_path.write_text("fn name() -> Unit {}\n", encoding="utf-8")
+        lsp_roots = []
+
+        class ExpectedFailureRunner(FakeRunner):
+            def run(inner_self, args, **kwargs):
+                values = tuple(str(value) for value in args)
+                if "check" in values and any(
+                    value.endswith("/1234_error") for value in values
+                ):
+                    return CommandResult(
+                        values, 1, b"", b"intentional documentation error"
+                    )
+                return super().run(args, **kwargs)
+
+        output = self.repo / "snapshot-expected-failure"
+        SemanticIndexer(
+            BuildConfig(
+                repo_root=self.repo,
+                source_root=self.sources / "error_codes",
+                output=output,
+                stdlib_root=self.stdlib,
+                runner=ExpectedFailureRunner(),
+                lsp_factory=lambda context_root: (
+                    lsp_roots.append(context_root.root_id) or FakeLsp()
+                ),
+            )
+        ).build()
+        validate_snapshot(output)
+
+        source = next(
+            item
+            for item in self._jsonl(output / "sources.jsonl")
+            if item["path"].endswith("/error_codes/1234_error/main.mbt")
+        )
+        self.assertEqual(source["analysis_status"], "expected-failure")
+        self.assertEqual(lsp_roots, [])
+        occurrence_ledgers = [
+            ledger
+            for path in (output / "occurrences").glob("*/*.json")
+            if (ledger := json.loads(path.read_text()))["source_id"]
+            == source["source_id"]
+        ]
+        request_ledgers = [
+            ledger
+            for path in (output / "requests").glob("*/*.json")
+            if (ledger := json.loads(path.read_text()))["source_id"]
+            == source["source_id"]
+        ]
+
+        canonical_context = source.get("context_id")
+        if canonical_context is None:
+            self.assertEqual(occurrence_ledgers, [])
+            self.assertEqual(request_ledgers, [])
+        else:
+            self.assertEqual(
+                [ledger["context_id"] for ledger in occurrence_ledgers],
+                [canonical_context],
+            )
+            self.assertEqual(occurrence_ledgers[0]["occurrences"], [])
+            self.assertEqual(
+                [ledger["context_id"] for ledger in request_ledgers],
+                [canonical_context],
+            )
+            self.assertEqual(
+                {request["status"] for request in request_ledgers[0]["requests"]},
+                {"skipped-with-reason"},
+            )
+
+    def test_external_navigation_collapses_only_proven_public_aliases(self):
+        indexer = SemanticIndexer(
+            BuildConfig(
+                repo_root=self.repo,
+                source_root=self.sources,
+                output=self.repo / "unused-snapshot",
+                mooncakes_cache=None,
+                runner=FakeRunner(),
+            )
+        )
+        indexer.external_targets = {
+            "json": {
+                "status": "exact",
+                "package": "moonbitlang/core/json",
+                "url": "https://mooncakes.io/docs/moonbitlang/core/json#Json",
+            },
+            "prelude": {
+                "status": "exact",
+                "package": "moonbitlang/core/prelude",
+                "url": "https://mooncakes.io/docs/moonbitlang/core/prelude#Json",
+            },
+            "builtin": {
+                "status": "exact",
+                "package": "moonbitlang/core/builtin",
+                "url": "https://mooncakes.io/docs/moonbitlang/core/builtin#Json",
+            },
+            "test": {
+                "status": "exact",
+                "package": "moonbitlang/core/test",
+                "url": "https://mooncakes.io/docs/moonbitlang/core/test#inspect",
+            },
+            "debug": {
+                "status": "exact",
+                "package": "moonbitlang/core/debug",
+                "url": "https://mooncakes.io/docs/moonbitlang/core/debug#inspect",
+            },
+        }
+
+        def exact(target_id):
+            return {
+                "external_status": "exact",
+                "external_target_id": target_id,
+            }
+
+        occurrences = [
+            {
+                "definitions": [
+                    exact("json"),
+                    {"external_status": "package-not-indexed"},
+                ]
+            },
+            {
+                "definitions": [exact("json"), exact("prelude")],
+                "_navigation_aliases": {
+                    "json": "moonbitlang/core/json"
+                },
+                "_navigation_qualifier": "json",
+            },
+            {
+                "definitions": [exact("builtin"), exact("prelude")],
+            },
+            {
+                "definitions": [exact("test"), exact("debug")],
+            },
+            {
+                "definitions": [exact("json"), {"symbol_id": "local"}],
+            },
+        ]
+        indexer.occurrence_shards = {
+            ("ctx", "source"): {"occurrences": occurrences}
+        }
+
+        indexer._finalize_external_navigation()
+
+        self.assertNotIn("preferred_external_target_id", occurrences[0])
+        self.assertEqual(
+            occurrences[1]["preferred_external_target_id"], "json"
+        )
+        self.assertEqual(
+            occurrences[2]["preferred_external_target_id"], "prelude"
+        )
+        self.assertNotIn("preferred_external_target_id", occurrences[3])
+        self.assertNotIn("preferred_external_target_id", occurrences[4])
+        self.assertTrue(
+            all(
+                "_navigation_aliases" not in occurrence
+                and "_navigation_qualifier" not in occurrence
+                for occurrence in occurrences
+            )
+        )
+
     def test_full_origin_policy_restores_external_analysis_contexts(self):
         session_roots = []
         output = self.repo / "snapshot-full-origins"

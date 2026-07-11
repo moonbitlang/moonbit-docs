@@ -141,14 +141,40 @@ def resolve_occurrence_target(
     snapshot: SemanticSnapshot,
     occurrence: Occurrence,
 ) -> str | None:
-    """Resolve a Definition result only when every target is unambiguous.
+    """Resolve a Definition result only when its public route is unambiguous.
 
-    LSP may return multiple locations.  A normal anchor can represent them only
-    when every location resolves and all routes collapse to the same href.
+    The index may persist a canonical public target after proving an import
+    alias or prelude re-export.  Older snapshots still require every LSP
+    location to resolve to the same href.
     """
 
     if not occurrence.definitions:
         return None
+    if occurrence.preferred_external_target_id is not None:
+        if any(
+            target.external_status is None
+            or snapshot.sources.get(target.source_id) is None
+            or snapshot.sources[target.source_id].origin
+            in {"local", "standalone"}
+            for target in occurrence.definitions
+        ):
+            return None
+        preferred = [
+            target
+            for target in occurrence.definitions
+            if target.external_status == "exact"
+            and target.external_target_id
+            == occurrence.preferred_external_target_id
+        ]
+        if not preferred:
+            return None
+        resolved_preferred = {
+            resolve_definition_target(app, fromdocname, snapshot, target)
+            for target in preferred
+        }
+        if None in resolved_preferred or len(resolved_preferred) != 1:
+            return None
+        return next(iter(resolved_preferred))
     resolved = [
         resolve_definition_target(app, fromdocname, snapshot, target)
         for target in occurrence.definitions

@@ -22,6 +22,7 @@ class _SemanticOutputParser(HTMLParser):
         super().__init__()
         self.hover_ids: list[str] = []
         self.definition_hrefs: list[str] = []
+        self.semantic_links: list[tuple[str, str | None]] = []
         self.source_download_hrefs: list[str] = []
         self.ids: set[str] = set()
         self.scripts: list[str] = []
@@ -39,6 +40,9 @@ class _SemanticOutputParser(HTMLParser):
             self.hover_ids.append(values["data-mbt-hover"] or "")
         if tag == "a" and "mbt-semantic-token" in classes and values.get("href"):
             self.definition_hrefs.append(values["href"] or "")
+            self.semantic_links.append(
+                (values["href"] or "", values.get("data-mbt-hover"))
+            )
         if tag == "a" and "_sources/" in (values.get("href") or ""):
             self.source_download_hrefs.append(values["href"] or "")
         if tag == "script" and values.get("src"):
@@ -282,6 +286,39 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
 
         self.assertGreater(hover_occurrences, 0)
         self.assertGreater(definition_links, 0)
+
+    def test_fullstack_mixed_targets_render_core_json_semantics(self) -> None:
+        page = self.html / "tutorial" / "fullstack-one-project.html"
+        rendered = page.read_text(encoding="utf-8")
+        frontend_start = rendered.index(
+            '<section id="step-3-implement-the-frontend-js">'
+        )
+        backend_start = rendered.index(
+            '<section id="step-4-implement-the-backend-native">'
+        )
+        backend_end = rendered.index('<section id="step-5-', backend_start)
+        frontend = _SemanticOutputParser()
+        frontend.feed(rendered[frontend_start:backend_start])
+        backend = _SemanticOutputParser()
+        backend.feed(rendered[backend_start:backend_end])
+
+        expected = {
+            "https://mooncakes.io/docs/moonbitlang/core/json#from_json",
+            "https://mooncakes.io/docs/moonbitlang/core/json#parse",
+            "https://mooncakes.io/docs/moonbitlang/core/json#Json::stringify",
+        }
+        for section in (frontend, backend):
+            links = {
+                href
+                for href, hover_id in section.semantic_links
+                if hover_id
+            }
+            self.assertTrue(expected <= links, page)
+
+        self.assertIn(
+            "https://mooncakes.io/docs/moonbitlang/core/prelude#ToJson",
+            rendered,
+        )
 
 
 if __name__ == "__main__":

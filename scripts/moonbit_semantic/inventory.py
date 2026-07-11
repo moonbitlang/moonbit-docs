@@ -42,6 +42,7 @@ class PackageOwnership:
 
     file_owners: tuple[tuple[Path, str], ...] = ()
     root_owners: tuple[tuple[Path, str], ...] = ()
+    alias_owners: tuple[tuple[Path, tuple[tuple[str, str], ...]], ...] = ()
 
     def resolve(self, target: str | Path) -> str | None:
         location = self.resolve_location(target)
@@ -95,6 +96,36 @@ class PackageOwnership:
         root = next(iter(roots))
         return package, path.relative_to(root).as_posix()
 
+    def aliases_for(self, target: str | Path) -> dict[str, str]:
+        """Return the deepest owning package's explicit import aliases."""
+
+        path = realpath(Path(target))
+        matches: list[tuple[int, tuple[tuple[str, str], ...]]] = []
+        for root, aliases in self.alias_owners:
+            try:
+                path.relative_to(root)
+            except ValueError:
+                continue
+            matches.append((len(root.parts), aliases))
+        if not matches:
+            return {}
+        deepest = max(depth for depth, _aliases in matches)
+        candidates = {
+            aliases for depth, aliases in matches if depth == deepest
+        }
+        if len(candidates) != 1:
+            return {}
+        result: dict[str, str] = {}
+        for alias, package in next(iter(candidates)):
+            previous = result.get(alias)
+            if previous is not None and previous != package:
+                # Test and production dependency sets can expose the same
+                # spelling for different packages.  That spelling is not
+                # authoritative enough to choose an external navigation URL.
+                return {}
+            result[alias] = package
+        return result
+
 
 def _package_path(root: Any, relative: Any) -> str | None:
     if not isinstance(root, str) or not root.strip("/"):
@@ -136,6 +167,7 @@ def metadata_package_ownership(metadata: dict[str, Any]) -> PackageOwnership:
     package_roots: list[tuple[Path, str]] = []
     file_owners: set[tuple[Path, str]] = set()
     root_owners: set[tuple[Path, str]] = set()
+    alias_owners: dict[Path, set[tuple[str, str]]] = {}
     package_records = metadata.get("packages")
     if not isinstance(package_records, list):
         package_records = []
@@ -151,6 +183,29 @@ def metadata_package_ownership(metadata: dict[str, Any]) -> PackageOwnership:
             continue
         package_roots.append((root, package))
         root_owners.add((root, package))
+        aliases = alias_owners.setdefault(root, set())
+        for key in (
+            "deps",
+            "wbtest-deps",
+            "wbtest_deps",
+            "test-deps",
+            "test_deps",
+        ):
+            value = record.get(key)
+            if not isinstance(value, list):
+                continue
+            for dependency in value:
+                if not isinstance(dependency, Mapping):
+                    continue
+                alias = dependency.get("alias")
+                dependency_path = dependency.get("path")
+                if (
+                    isinstance(alias, str)
+                    and alias
+                    and isinstance(dependency_path, str)
+                    and dependency_path.strip("/")
+                ):
+                    aliases.add((alias, dependency_path.strip("/")))
         for value in _metadata_file_paths(record.get("files")):
             path = _metadata_path(value, root)
             if path is not None:
@@ -211,6 +266,15 @@ def metadata_package_ownership(metadata: dict[str, Any]) -> PackageOwnership:
     return PackageOwnership(
         file_owners=tuple(sorted(file_owners, key=order)),
         root_owners=tuple(sorted(root_owners, key=order)),
+        alias_owners=tuple(
+            sorted(
+                [
+                    (root, tuple(sorted(aliases)))
+                    for root, aliases in alias_owners.items()
+                ],
+                key=lambda item: item[0].as_posix(),
+            )
+        ),
     )
 
 
@@ -251,7 +315,7 @@ def package_metadata(root: Root) -> tuple[dict[str, Any] | None, Path | None]:
     # the nearest `moon.work` owner's shared `_build`, not necessarily below
     # the member module itself.  Resolve that location explicitly instead of
     # walking arbitrary ancestor build directories.
-    workspace = _nearest_workspace(root.path)
+    workspace = nearest_workspace(root.path)
     if workspace is not None:
         candidates.append(workspace / "_build" / "packages.json")
     if root.root_id.startswith("standalone:"):
@@ -266,7 +330,9 @@ def package_metadata(root: Root) -> tuple[dict[str, Any] | None, Path | None]:
     return None, None
 
 
-def _nearest_workspace(path: Path) -> Path | None:
+def nearest_workspace(path: Path) -> Path | None:
+    """Return the closest ``moon.work`` owner for a module path, if any."""
+
     for candidate in (path.resolve(), *path.resolve().parents):
         if (candidate / "moon.work").is_file():
             return candidate
@@ -283,6 +349,105 @@ def metadata_sources(metadata: dict[str, Any]) -> set[Path]:
                 candidate = Path(path)
                 if candidate.is_file() and recognized(candidate):
                     result.add(realpath(candidate))
+    return result
+
+
+_BACKEND_ALIASES = {
+    "wasm": "wasm",
+    "wasmgc": "wasm-gc",
+    "wasm-gc": "wasm-gc",
+    "js": "js",
+    "native": "native",
+    "llvm": "llvm",
+}
+_BACKEND_ORDER = ("wasm-gc", "wasm", "js", "native", "llvm")
+
+
+def _metadata_backends(value: Any) -> set[str]:
+    if isinstance(value, str):
+        values = re.findall(r"wasm-gc|wasmgc|wasm|js|native|llvm", value.lower())
+    elif isinstance(value, (list, tuple, set)):
+        values = [str(item).lower() for item in value]
+    else:
+        values = []
+    return {
+        normalized
+        for item in values
+        if (normalized := _BACKEND_ALIASES.get(item.replace("_", "-")))
+    }
+
+
+def metadata_source_backends(
+    metadata: dict[str, Any],
+    local_root: Path,
+    preferred_backend: str,
+) -> dict[Path, str]:
+    """Assign each local source to one canonical semantic backend.
+
+    Moon's package graph includes packages excluded from the module's preferred
+    backend, with a null check command and their real ``supported-targets``.
+    Those sources must not be queried in the preferred LSP context: the server
+    returns no semantic result for every position.  Pick exactly one supported
+    backend per source so mixed native/JS modules can use disjoint contexts
+    without duplicating or nondeterministically merging occurrences.
+    """
+
+    local_root = realpath(local_root)
+    preferred = _BACKEND_ALIASES.get(
+        preferred_backend.lower().replace("_", "-"), preferred_backend
+    )
+    candidates: dict[Path, set[str]] = {}
+    records = metadata.get("packages")
+    if not isinstance(records, list):
+        records = []
+
+    for record in records:
+        if not isinstance(record, Mapping):
+            continue
+        package_root = _metadata_path(
+            record.get("root-path", record.get("root_path")),
+            _metadata_path(metadata.get("source_dir")),
+        )
+        if package_root is None or not is_within(package_root, local_root):
+            continue
+        package_backends = _metadata_backends(
+            record.get("supported-targets", record.get("supported_targets"))
+        )
+        if not package_backends:
+            package_backends = {preferred}
+
+        for key in ("files", "wbtest-files", "test-files", "mbt-md-files"):
+            raw_files = record.get(key, {})
+            if isinstance(raw_files, Mapping):
+                file_items = raw_files.items()
+            elif isinstance(raw_files, (list, tuple)):
+                file_items = ((value, None) for value in raw_files)
+            else:
+                continue
+            for raw_path, file_metadata in file_items:
+                path = _metadata_path(raw_path, package_root)
+                if path is None or not is_within(path, local_root):
+                    continue
+                file_backends = (
+                    _metadata_backends(file_metadata.get("backend"))
+                    if isinstance(file_metadata, Mapping)
+                    else set()
+                )
+                supported = package_backends & file_backends if file_backends else package_backends
+                if supported:
+                    candidates.setdefault(path, set()).update(supported)
+
+    def choose(values: set[str]) -> str:
+        if preferred in values:
+            return preferred
+        return next(
+            backend for backend in _BACKEND_ORDER if backend in values
+        )
+
+    result = {path: choose(values) for path, values in candidates.items()}
+    for path in metadata_sources(metadata):
+        if is_within(path, local_root):
+            result.setdefault(path, preferred)
     return result
 
 

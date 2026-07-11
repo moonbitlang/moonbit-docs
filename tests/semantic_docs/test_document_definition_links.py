@@ -117,6 +117,7 @@ def _write_snapshot(root: Path, sources: dict[str, bytes]) -> Path:
             b"hidden",
             b"maximum",
             b"maximum_alias",
+            b"maximum_partial",
             b"mixed",
             b"ambiguous",
         )
@@ -130,6 +131,15 @@ def _write_snapshot(root: Path, sources: dict[str, bytes]) -> Path:
         ],
         "maximum": [external_target],
         "maximum_alias": [dict(external_target), dict(external_target)],
+        "maximum_partial": [
+            dict(external_target),
+            {
+                "target_source_id": source_ids["cmp.mbt"],
+                "target_selection_range_utf8": maximum_range,
+                "target_range_utf8": maximum_range,
+                "external_status": "package-not-indexed",
+            },
+        ],
         "mixed": [
             dict(external_target),
             local_target(source_ids["hidden.mbt"], "sym:hidden", hidden_range),
@@ -139,15 +149,19 @@ def _write_snapshot(root: Path, sources: dict[str, bytes]) -> Path:
             local_target(source_ids["defs.mbt"], "sym:other", other_range),
         ],
     }
-    occurrences = [
-        {
+    occurrences = []
+    for name, byte_range in use_ranges.items():
+        occurrence = {
             "source_id": source_ids["use.mbt"],
             "effective_range_utf8": byte_range,
             "candidate_range_utf8": byte_range,
             "definitions": definitions[name],
         }
-        for name, byte_range in use_ranges.items()
-    ]
+        if name == "maximum_partial":
+            occurrence["preferred_external_target_id"] = (
+                "mooncakes:core-maximum"
+            )
+        occurrences.append(occurrence)
 
     (snapshot / "sources.jsonl").write_text(
         "".join(json.dumps(record) + "\n" for record in source_records),
@@ -231,6 +245,7 @@ def _project(tmp_path: Path, *, parallel: int = 2):
             b"  hidden()\n"
             b"  maximum()\n"
             b"  maximum_alias()\n"
+            b"  maximum_partial()\n"
             b"  mixed()\n"
             b"  ambiguous()\n"
             b"}\n"
@@ -320,6 +335,7 @@ def test_document_and_external_definition_routes_are_fail_closed(
     assert _tag_for(b_html, "hidden") == ("span", None)
     assert _tag_for(b_html, "maximum") == ("a", EXTERNAL_URL)
     assert _tag_for(b_html, "maximum_alias") == ("a", EXTERNAL_URL)
+    assert _tag_for(b_html, "maximum_partial") == ("a", EXTERNAL_URL)
     assert _tag_for(b_html, "mixed") == ("span", None)
     assert _tag_for(b_html, "ambiguous") == ("span", None)
 

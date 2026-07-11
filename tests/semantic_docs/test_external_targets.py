@@ -396,6 +396,24 @@ def _write_runtime_snapshot(
     return snapshot
 
 
+def _refresh_runtime_manifest(snapshot: Path) -> None:
+    manifest_path = snapshot / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    files = []
+    for path in sorted(snapshot.rglob("*")):
+        if path.is_file() and path != manifest_path:
+            raw = path.read_bytes()
+            files.append(
+                {
+                    "path": path.relative_to(snapshot).as_posix(),
+                    "digest": "sha256:" + hashlib.sha256(raw).hexdigest(),
+                    "size": len(raw),
+                }
+            )
+    manifest["files"] = files
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+
 def test_runtime_loader_is_backward_compatible_without_external_table(
     tmp_path: Path,
 ) -> None:
@@ -440,4 +458,36 @@ def test_runtime_loader_rejects_dangling_external_target_reference(
     )
 
     with pytest.raises(RuntimeSnapshotError, match="missing external target"):
+        load_snapshot(path)
+
+
+def test_runtime_loader_rejects_preferred_external_mixed_with_local(
+    tmp_path: Path,
+) -> None:
+    path = _write_runtime_snapshot(
+        tmp_path,
+        include_external_table=True,
+        include_external_reference=True,
+    )
+    occurrence_path = path / "occurrences" / "all.json"
+    payload = json.loads(occurrence_path.read_text(encoding="utf-8"))
+    occurrence = payload["occurrences"][0]
+    target_id = _external_record(core=True)["external_target_id"]
+    occurrence["preferred_external_target_id"] = target_id
+    occurrence["definitions"].append(
+        {
+            "target_source_id": "local:main.mbt",
+            "target_selection_range_utf8": occurrence[
+                "effective_range_utf8"
+            ],
+            "external_status": "provider-disabled",
+        }
+    )
+    occurrence_path.write_text(json.dumps(payload), encoding="utf-8")
+    _refresh_runtime_manifest(path)
+
+    with pytest.raises(
+        RuntimeSnapshotError,
+        match="mixed with a local definition",
+    ):
         load_snapshot(path)
