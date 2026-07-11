@@ -368,6 +368,22 @@ class MooncakesResolverTest(unittest.TestCase):
         )
         self.assertNotIn("toolchain-version", "\n".join(fetcher.calls))
 
+        # A new online build must revalidate the mutable, unversioned core
+        # manifest while retaining the immutable versioned asset cache.
+        cached_fetcher = FakeFetcher(fetcher.responses)
+        cached = self.client(cached_fetcher).resolve(
+            DefinitionEvidence(
+                module,
+                "0.10.2+toolchain-version",
+                package,
+                "cmp.mbt",
+                103,
+                21,
+            )
+        )
+        self.assertTrue(cached.exact, cached)
+        self.assertEqual(cached_fetcher.calls, [manifest_url])
+
     def test_manifest_and_module_index_are_required_evidence(self) -> None:
         wrong_manifest = {
             "name": PACKAGE,
@@ -445,6 +461,14 @@ class MooncakesResolverTest(unittest.TestCase):
                 ).hexdigest(),
             )
         self.assertFalse(list(self.cache.glob("*.tmp")))
+
+        # Version-qualified dependency data is immutable and remains a normal
+        # online cache hit across client lifecycles.
+        cached_fetcher = FakeFetcher({})
+        cached = self.client(cached_fetcher)
+        cached_result = cached.resolve(evidence(50, 8))
+        self.assertTrue(cached_result.exact, cached_result)
+        self.assertEqual(cached_fetcher.calls, [])
 
         offline_fetcher = FakeFetcher({})
         offline = self.client(offline_fetcher, offline=True)

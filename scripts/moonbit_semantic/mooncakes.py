@@ -150,7 +150,15 @@ class MooncakesClient:
             )
 
         try:
-            manifest = self._json_for(manifest_url)
+            # Core's public docs URL and manifest endpoint are intentionally
+            # unversioned.  Revalidate that mutable manifest once per client
+            # lifecycle so a long-lived disk cache cannot keep proving routes
+            # against an obsolete core release.  The resolved, versioned
+            # module/package assets below remain immutable cache entries.
+            manifest = self._json_for(
+                manifest_url,
+                revalidate=evidence.module == "moonbitlang/core",
+            )
             manifest_problem = _validate_manifest(manifest, evidence)
             resolved_version = str(manifest.get("version") or "")
             if manifest_problem is not None:
@@ -245,7 +253,12 @@ class MooncakesClient:
         digest = hashlib.sha256(url.encode("utf-8")).hexdigest()
         return self.cache_dir / f"{digest}.json"
 
-    def _json_for(self, url: str) -> Mapping[str, Any]:
+    def _json_for(
+        self,
+        url: str,
+        *,
+        revalidate: bool = False,
+    ) -> Mapping[str, Any]:
         with self._flight_lock:
             future = self._inflight.get(url)
             if future is None:
@@ -258,7 +271,7 @@ class MooncakesClient:
             return future.result()
 
         try:
-            value = self._load_json(url)
+            value = self._load_json(url, revalidate=revalidate)
         except BaseException as exc:
             future.set_exception(exc)
             raise
@@ -266,9 +279,15 @@ class MooncakesClient:
             future.set_result(value)
             return value
 
-    def _load_json(self, url: str) -> Mapping[str, Any]:
+    def _load_json(
+        self,
+        url: str,
+        *,
+        revalidate: bool = False,
+    ) -> Mapping[str, Any]:
         path = self.cache_path(url)
-        if path.is_file() and (self.offline or not self.refresh):
+        use_cached = self.offline or not (self.refresh or revalidate)
+        if path.is_file() and use_cached:
             try:
                 return _read_cache(path, url)
             except (OSError, UnicodeError, json.JSONDecodeError, _ProviderDataError):
