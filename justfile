@@ -18,7 +18,7 @@ semantic-check snapshot="semantic-snapshot":
 docs-html-semantic snapshot="semantic-snapshot":
     uv run python scripts/build_semantic_snapshot.py build --repo-root . --output "{{ snapshot }}"
     uv run python scripts/build_semantic_snapshot.py validate --snapshot "{{ snapshot }}"
-    cd next && MOONBIT_SEMANTIC_SNAPSHOT="{{ justfile_directory() }}/{{ snapshot }}" MOONBIT_SEMANTIC_REQUIRED=1 uv run --with-requirements requirements.txt make clean html
+    cd next && MOONBIT_SEMANTIC_SNAPSHOT="{{ justfile_directory() }}/{{ snapshot }}" MOONBIT_SEMANTIC_REQUIRED=1 uv run --with-requirements requirements.txt make clean html SPHINXOPTS="-j auto"
 
 # Build the Chinese Sphinx docs with uv-managed Python dependencies.
 docs-html-zh:

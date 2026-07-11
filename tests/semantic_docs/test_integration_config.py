@@ -47,6 +47,20 @@ class _SemanticOutputParser(HTMLParser):
 
 
 class SemanticDocumentationConfigurationTests(unittest.TestCase):
+    def test_indent_workaround_declares_parallel_safety(self) -> None:
+        path = REPO_ROOT / "next" / "_ext" / "indent.py"
+        spec = importlib.util.spec_from_file_location("moonbit_docs_indent_test", path)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader if spec else None)
+        module = importlib.util.module_from_spec(spec)
+        assert spec is not None and spec.loader is not None
+        spec.loader.exec_module(module)
+
+        metadata = module.setup(None)
+
+        self.assertTrue(metadata["parallel_read_safe"])
+        self.assertTrue(metadata["parallel_write_safe"])
+
     def test_sphinx_configuration_registers_the_public_contract(self) -> None:
         tree = ast.parse((REPO_ROOT / "next" / "conf.py").read_text())
         assignments = {

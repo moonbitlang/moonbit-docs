@@ -11,4 +11,11 @@ class ModifiedIndent:
 
 i18n.indent = ModifiedIndent
 
-def setup(_app): pass
+def setup(_app):
+    # The extension installs one deterministic process-global i18n helper and
+    # keeps no builder/environment state. Worker processes can safely reuse it.
+    return {
+        "version": "0.1.0",
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
+    }
