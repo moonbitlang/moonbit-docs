@@ -430,6 +430,17 @@ def _validate_definition_external_target(
         raise SnapshotError(
             f"definition references missing external target: {definition.external_target_id}"
         )
+    if target_source.module and target.module != target_source.module:
+        raise SnapshotError(
+            "external definition module does not match its target source"
+        )
+    if (
+        target_source.version
+        and target.requested_version != target_source.version
+    ):
+        raise SnapshotError(
+            "external definition requested version does not match its target source"
+        )
 
 
 def _occurrence(record: Mapping[str, Any], default_source_id: str | None = None) -> Occurrence:

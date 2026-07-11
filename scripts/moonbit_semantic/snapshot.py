@@ -488,6 +488,16 @@ def _validate_definition_external_target(
     target = external_targets.get(external_target_id)
     if target is None or target.get("status") != "exact":
         raise SnapshotError(f"definition references missing external target: {external_target_id}")
+    source_module = target_source.get("module")
+    if source_module and target.get("module") != source_module:
+        raise SnapshotError(
+            "external definition module does not match its target source"
+        )
+    source_version = target_source.get("version")
+    if source_version and target.get("requested_version") != source_version:
+        raise SnapshotError(
+            "external definition requested version does not match its target source"
+        )
 
 
 def _validate_range(value: Any, source_id: str, blobs: dict[str, bytes], boundaries: dict[str, set[int]], owner: str) -> None:

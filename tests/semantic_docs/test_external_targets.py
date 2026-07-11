@@ -102,6 +102,8 @@ def test_definition_reference_requires_exact_existing_external_target() -> None:
     dependency_source = {
         "source_id": "dependency:moonbitlang/async@0.19.2:http/server.mbt",
         "origin": "dependency",
+        "module": "moonbitlang/async",
+        "version": "0.19.2",
     }
     runtime_source = Source(
         source_id=dependency_source["source_id"],
@@ -109,6 +111,8 @@ def test_definition_reference_requires_exact_existing_external_target() -> None:
         blob_digest="sha256:unused",
         kind="mbt",
         origin="dependency",
+        module="moonbitlang/async",
+        version="0.19.2",
     )
     definition_record = {
         "external_target_id": record["external_target_id"],
@@ -183,6 +187,35 @@ def test_definition_reference_requires_exact_existing_external_target() -> None:
             ),
             {target.external_target_id: target},
         )
+
+    for field, wrong in (
+        ("module", "moonbitlang/other"),
+        ("version", "9.9.9"),
+    ):
+        with pytest.raises(WriterSnapshotError, match="does not match"):
+            validate_writer_definition(
+                definition_record,
+                {**dependency_source, field: wrong},
+                {record["external_target_id"]: record},
+            )
+        with pytest.raises(RuntimeSnapshotError, match="does not match"):
+            validate_runtime_definition(
+                definition,
+                Source(
+                    source_id=runtime_source.source_id,
+                    path=runtime_source.path,
+                    blob_digest=runtime_source.blob_digest,
+                    kind=runtime_source.kind,
+                    origin=runtime_source.origin,
+                    module=(
+                        wrong if field == "module" else runtime_source.module
+                    ),
+                    version=(
+                        wrong if field == "version" else runtime_source.version
+                    ),
+                ),
+                {target.external_target_id: target},
+            )
 
 
 def _publish_writer_snapshot(
