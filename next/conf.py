@@ -51,16 +51,18 @@ extensions = [
     'moonbit_semantic',
 ]
 
-# Semantic documentation is an optional overlay for normal local builds.  The
-# production recipe enables strict validation explicitly after generating the
-# snapshot; non-HTML builders remain unaffected inside the extension.
+# Semantic documentation is an optional overlay for normal local builds.
+# Production recipes and Read the Docs require the generated snapshot;
+# non-HTML builders remain unaffected inside the extension.
 moonbit_semantic_snapshot = os.getenv(
     'MOONBIT_SEMANTIC_SNAPSHOT',
     str(Path(__file__).resolve().parent.parent / 'semantic-snapshot'),
 )
 moonbit_semantic_required = os.getenv(
     'MOONBIT_SEMANTIC_REQUIRED', ''
-).lower() in {'1', 'true', 'yes', 'on'}
+).lower() in {'1', 'true', 'yes', 'on'} or os.getenv(
+    'READTHEDOCS', ''
+).lower() == 'true'
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', ".env", '.venv', "README*.md", 'sources', 'download']
@@ -73,14 +75,11 @@ smartquotes_excludes = {
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_book_theme'
-html_copy_source = False
-html_show_sourcelink = False
 html_static_path = ['_static']
 html_theme_options = {
     "repository_url": "https://github.com/moonbitlang/moonbit-docs/",
     "path_to_docs": "next",
-    "use_source_button": False,
-    "use_download_button": False,
+    "use_source_button": True,
     "use_edit_page_button": True,
     "use_issues_button": True,
     "logo": {

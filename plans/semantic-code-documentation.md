@@ -725,7 +725,8 @@ Snapshot 中暂时可以继续保存 external target 的冻结 source blob，用
 
 - 所有本地 definition fragment 都能在目标 HTML 中闭合；
 - 所有外部 definition href 都精确来自 snapshot external target table；
-- 不存在 `_moonbit-src`、`_moonbit-source` 或 Sphinx `_sources` 输出；
+- 不存在 `_moonbit-src` 或 `_moonbit-source`；Sphinx 原有的 `_sources`、
+  Source 按钮与 Download 菜单保持 `main` 行为不变；
 - 不存在 `file://` 或绝对本地路径泄漏；
 - `.mbt.md` 继续由普通 MyST include 处理 prose，内部 MoonBit fence 接收相同语义渲染；
 - Hover Markdown、嵌套 MoonBit fence 高亮和 sanitization 的既有测试继续通过。
