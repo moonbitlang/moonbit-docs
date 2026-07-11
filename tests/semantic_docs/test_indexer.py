@@ -172,6 +172,61 @@ class SemanticIndexerTest(unittest.TestCase):
         dependency_context = next(item for item in contexts if item["root_id"].startswith("dependency:"))
         self.assertEqual(dependency_context["analysis_status"], "display-only")
 
+    def test_duplicate_dependency_tree_maps_consumer_specific_definition_uri(self):
+        canonical = self.sources / "app/.mooncakes/acme/lib"
+        consumer = self.sources / "consumer"
+        alias = consumer / ".mooncakes/acme/lib"
+        alias.mkdir(parents=True)
+        self._write_json(consumer / "moon.mod.json", {"name": "example/consumer"})
+        (consumer / "main.mbt").write_text("fn name() -> Unit {}\n", encoding="utf-8")
+        for source in canonical.iterdir():
+            if source.is_file():
+                (alias / source.name).write_bytes(source.read_bytes())
+        metadata = {
+            "packages": [{
+                "root-path": str(consumer),
+                "files": {str(consumer / "main.mbt"): {}},
+                "deps": [{"path": "acme/lib", "fspath": str(alias)}],
+            }],
+        }
+        self._write_json(consumer / "_build/packages.json", metadata)
+
+        class ConsumerLsp(FakeLsp):
+            def __init__(inner_self, target):
+                super().__init__()
+                inner_self.target = target
+
+            def definition(inner_self, uri, position):
+                return {
+                    "uri": inner_self.target.resolve().as_uri(),
+                    "range": {
+                        "start": {"line": 0, "character": 3},
+                        "end": {"line": 0, "character": 7},
+                    },
+                }
+
+        output = self.repo / "snapshot-alias"
+        manifest = SemanticIndexer(BuildConfig(
+            repo_root=self.repo,
+            source_root=Path("next/sources"),
+            output=output,
+            stdlib_root=self.stdlib,
+            runner=FakeRunner(),
+            lsp_factory=lambda root: (
+                ConsumerLsp(alias / "lib.mbt")
+                if root.module_name == "example/consumer"
+                else FakeLsp()
+            ),
+        )).build()
+
+        validate_snapshot(output)
+        self.assertGreater(manifest["counts"]["symbols"], 0)
+        dependency_sources = [
+            item for item in self._jsonl(output / "sources.jsonl")
+            if item["origin"] == "dependency" and item["path"] == "lib.mbt"
+        ]
+        self.assertEqual(len(dependency_sources), 1)
+
     def test_validator_rejects_self_consistent_manifest_with_missing_required_ledger(self):
         output = self.repo / "snapshot"
         SemanticIndexer(BuildConfig(

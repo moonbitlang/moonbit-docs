@@ -108,6 +108,8 @@ class SemanticIndexer:
         dependency_states: list[tuple[Root, dict[str, Any] | None]] = []
         pending = list(sorted(dependency_roots))
         resolved_modules: dict[str, str] = {}
+        resolved_module_roots: dict[str, Path] = {}
+        dependency_alias_roots: list[tuple[Path, Path]] = []
         while pending:
             path = pending.pop(0)
             info = module_info(path)
@@ -118,8 +120,12 @@ class SemanticIndexer:
             if previous is not None:
                 if previous != source_tree:
                     raise RuntimeError(f"resolution conflict: {identity} has multiple source trees")
+                canonical_root = resolved_module_roots[identity]
+                if realpath(path) != canonical_root:
+                    dependency_alias_roots.append((realpath(path), canonical_root))
                 continue
             resolved_modules[identity] = source_tree
+            resolved_module_roots[identity] = realpath(path)
             # A resolved module's page corpus includes auxiliary examples and nested
             # modules which need not be healthy under the consumer's toolchain.  Try
             # its own context, but degrade that context instead of losing all source
@@ -184,6 +190,27 @@ class SemanticIndexer:
                 source = make_source(path, origin="dependency", base=root.path, module=root.module_name, version=root.version, status="required")
                 self._add_source(source, sources, path_to_source)
             self._manifest_inputs(root)
+
+        # Different consumer roots commonly materialize the same immutable
+        # registry module under different `.mooncakes` paths.  Its public page
+        # corpus is deduplicated by module identity/tree digest, but LSP
+        # Definition responses retain the consumer-specific physical URI.
+        # Map every byte-identical alias path back to the canonical source so
+        # those targets remain inside the frozen corpus.
+        for alias_root, canonical_root in dependency_alias_roots:
+            for alias_path in scan_sources(alias_root):
+                relative = alias_path.relative_to(alias_root)
+                canonical_path = realpath(canonical_root / relative)
+                source = path_to_source.get(canonical_path)
+                if source is None:
+                    raise RuntimeError(
+                        f"dependency alias has no canonical source: {alias_path}"
+                    )
+                if alias_path.read_bytes() != source["_blob"]:
+                    raise RuntimeError(
+                        f"dependency alias differs from canonical source: {alias_path}"
+                    )
+                path_to_source[realpath(alias_path)] = source
 
         if stdlib_state:
             root, _ = stdlib_state
