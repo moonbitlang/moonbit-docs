@@ -17,7 +17,12 @@ from moonbit_semantic.render import SemanticCodeRenderer
 from moonbit_semantic.snapshot import Occurrence, SnapshotError, load_snapshot
 
 
-def _write_snapshot(root: Path, *, extra_literate: str = "") -> Path:
+def _write_snapshot(
+    root: Path,
+    *,
+    extra_literate: str = "",
+    deferred_external_target: bool = False,
+) -> Path:
     snapshot = root / "snapshot"
     blobs = snapshot / "blobs" / "sha256"
     occurrences = snapshot / "occurrences" / "ctx"
@@ -99,6 +104,9 @@ def _write_snapshot(root: Path, *, extra_literate: str = "") -> Path:
             "hover_id": "hover:lit",
         },
     ]
+    if deferred_external_target:
+        sources[1]["analysis_status"] = "deferred-by-origin-policy"
+        symbols[1].pop("hover_id")
     (snapshot / "sources.jsonl").write_text("".join(json.dumps(item) + "\n" for item in sources))
     (snapshot / "symbols.jsonl").write_text("".join(json.dumps(item) + "\n" for item in symbols))
     (snapshot / "assets.jsonl").write_text(
@@ -113,7 +121,25 @@ def _write_snapshot(root: Path, *, extra_literate: str = "") -> Path:
         )
         + "\n"
     )
-    (occurrences / "main.json").write_text(json.dumps({"occurrences": []}))
+    occurrence_records = []
+    if deferred_external_target:
+        occurrence_records.append({
+            "source_id": "local:src/main.mbt",
+            "context_id": "ctx:local",
+            "effective_range_utf8": [answer_start, answer_start + len(b"answer")],
+            "candidate_range_utf8": [answer_start, answer_start + len(b"answer")],
+            "symbol_id": "sym:demo.answer",
+            "hover_id": "hover:answer",
+            "definitions": [{
+                "target_source_id": "dependency:demo@1.0:guide.mbt.md",
+                "target_selection_range_utf8": [lit_start, lit_start + len(b"lit")],
+                "target_range_utf8": [lit_start, lit_start + len(b"lit")],
+                "symbol_id": "sym:demo.lit",
+            }],
+        })
+    (occurrences / "main.json").write_text(
+        json.dumps({"occurrences": occurrence_records})
+    )
     (hovers / "all.json").write_text(json.dumps({"hover:answer": "fn answer() -> Int", "hover:lit": "fn lit() -> Int"}))
     files = []
     for path in sorted(snapshot.rglob("*")):
@@ -209,6 +235,23 @@ def test_sphinx_generates_code_and_literate_source_pages(tmp_path: Path) -> None
     assert str(tmp_path) not in pure_html + lit_html
     assert (out / "_static" / "moonbit-semantic" / "hovers.json").is_file()
     assert list((out / "_static" / "moonbit-semantic" / "assets").rglob("logo.svg"))
+
+
+def test_local_definition_links_to_deferred_external_source_page(tmp_path: Path) -> None:
+    snapshot = _write_snapshot(tmp_path, deferred_external_target=True)
+    app, out, _status, warning = _project(tmp_path, snapshot, required=True)
+    app.build(force_all=True)
+    assert app.statuscode == 0, warning.getvalue()
+
+    local_page = out / "_moonbit-src" / "local" / "demo" / "src" / "main.mbt.html"
+    external_page = out / "_moonbit-src" / "pkg" / "demo" / "1.0" / "guide.mbt.md.html"
+    local_html = local_page.read_text()
+    external_html = external_page.read_text()
+
+    assert "guide.mbt.md.html#mb-def-" in local_html
+    assert 'data-mbt-hover="hover:answer"' in local_html
+    assert 'id="mb-def-' in external_html
+    assert "data-mbt-hover" not in external_html
 
 
 def test_strict_literate_page_rejects_unfrozen_include(tmp_path: Path) -> None:
