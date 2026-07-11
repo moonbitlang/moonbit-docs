@@ -10,19 +10,30 @@ from docutils import nodes
 from sphinx.transforms.post_transforms import SphinxPostTransform
 
 from .directives import PROVENANCE_ATTRIBUTE, register_literalinclude
+from .links import (
+    definition_anchor as make_definition_anchor,
+    definition_key,
+    displayed_definition_key,
+    merge_document_definitions,
+    purge_document_definitions,
+    replace_document_definitions,
+    resolve_occurrence_target,
+)
 from .provenance import (
     infer_identity_provenance,
     map_occurrences,
+    map_source_range,
     provenance_is_current,
     sha256_text,
 )
 from .render import SemanticCodeRenderer
-from .source_pages import _target_href
 
 
 OCCURRENCES_ATTRIBUTE = "moonbit_semantic_occurrences"
 DISPLAY_DIGEST_ATTRIBUTE = "moonbit_semantic_display_digest"
 SOURCE_ID_ATTRIBUTE = "moonbit_semantic_source_id"
+BLOCK_ORDINAL_ATTRIBUTE = "moonbit_semantic_block_ordinal"
+DEFINITION_ANCHORS_ATTRIBUTE = "moonbit_semantic_definition_anchors"
 MOONBIT_LANGUAGES = {"mbt", "moonbit", "mbt check", "moonbit check"}
 SKIP_MARKERS = {"nocheck", "skip", "moonbit skip", "mbt nocheck"}
 
@@ -54,6 +65,13 @@ def _is_moonbit(node: nodes.literal_block) -> bool:
     return language in MOONBIT_LANGUAGES and not (classes & SKIP_MARKERS)
 
 
+def _post_transformable(node: nodes.literal_block) -> bool:
+    """Match the presentation contract enforced by the post-transform."""
+
+    highlight_args = node.get("highlight_args") or {}
+    return not node.get("linenos") and not highlight_args.get("hl_lines")
+
+
 def _roots(app: Any) -> tuple[Path, ...]:
     return (Path(app.srcdir), Path(app.confdir), Path(app.confdir).parent)
 
@@ -82,8 +100,15 @@ def annotate_semantic_blocks(app: Any, doctree: nodes.document) -> None:
     env = getattr(doctree.settings, "env", app.env)
     docname = getattr(env, "docname", None) or env.temp_data.get("docname")
     used_sources: set[str] = set()
-    for node in doctree.findall(nodes.literal_block):
-        if isinstance(node, SemanticLiteralBlock) or not _is_moonbit(node):
+    document_definitions: dict[
+        tuple[str, str, int, int], list[tuple[int, str]]
+    ] = {}
+    for block_ordinal, node in enumerate(doctree.findall(nodes.literal_block)):
+        if (
+            isinstance(node, SemanticLiteralBlock)
+            or not _is_moonbit(node)
+            or not _post_transformable(node)
+        ):
             continue
         provenance = _provenance_for_node(app, node, snapshot)
         if provenance is None or not provenance_is_current(provenance, node.astext(), snapshot):
@@ -109,6 +134,37 @@ def annotate_semantic_blocks(app: Any, doctree: nodes.document) -> None:
         node[OCCURRENCES_ATTRIBUTE] = mapped
         node[DISPLAY_DIGEST_ATTRIBUTE] = sha256_text(node.astext())
         node[SOURCE_ID_ATTRIBUTE] = source_id
+        node[BLOCK_ORDINAL_ATTRIBUTE] = block_ordinal
+        block_anchors: dict[tuple[str, int, int], str] = {}
+        if docname:
+            for occurrence in occurrences:
+                if occurrence.role != "definition" or not occurrence.symbol_id:
+                    continue
+                displayed_range = map_source_range(
+                    provenance, occurrence.byte_range
+                )
+                if displayed_range is None:
+                    continue
+                anchor = make_definition_anchor(
+                    docname,
+                    block_ordinal,
+                    source_id,
+                    occurrence.symbol_id,
+                    occurrence.byte_range,
+                )
+                display_key = displayed_definition_key(
+                    occurrence.symbol_id, displayed_range
+                )
+                block_anchors.setdefault(display_key, anchor)
+                source_key = definition_key(
+                    source_id,
+                    occurrence.symbol_id,
+                    occurrence.byte_range,
+                )
+                document_definitions.setdefault(source_key, []).append(
+                    (block_ordinal, anchor)
+                )
+        node[DEFINITION_ANCHORS_ATTRIBUTE] = block_anchors
         used_sources.add(source_id)
         if docname:
             env.get_domain("mbtsem").note_backlink(docname, source_id)
@@ -116,12 +172,14 @@ def annotate_semantic_blocks(app: Any, doctree: nodes.document) -> None:
         store = getattr(env, "moonbit_semantic_block_sources", {})
         store[docname] = used_sources
         env.moonbit_semantic_block_sources = store
+        replace_document_definitions(env, docname, document_definitions)
 
 
 def purge_semantic_blocks(app: Any, env: Any, docname: str) -> None:
     store = getattr(env, "moonbit_semantic_block_sources", None)
     if isinstance(store, dict):
         store.pop(docname, None)
+    purge_document_definitions(env, docname)
 
 
 def merge_semantic_blocks(app: Any, env: Any, docnames: list[str], other: Any) -> None:
@@ -131,6 +189,7 @@ def merge_semantic_blocks(app: Any, env: Any, docnames: list[str], other: Any) -
         if docname in source:
             destination[docname] = set(source[docname])
     env.moonbit_semantic_block_sources = destination
+    merge_document_definitions(env, docnames, other)
 
 
 class SemanticBlockPostTransform(SphinxPostTransform):
@@ -152,8 +211,7 @@ class SemanticBlockPostTransform(SphinxPostTransform):
             # carry meaning that the semantic renderer does not reproduce.
             # This preserves line numbers and emphasized lines byte-for-byte
             # instead of silently weakening existing documentation markup.
-            highlight_args = node.get("highlight_args") or {}
-            if node.get("linenos") or highlight_args.get("hl_lines"):
+            if not _post_transformable(node):
                 continue
             provenance = node.get(PROVENANCE_ATTRIBUTE)
             occurrences = node.get(OCCURRENCES_ATTRIBUTE)
@@ -174,9 +232,18 @@ class SemanticBlockPostTransform(SphinxPostTransform):
             rendered = renderer.render(
                 text,
                 mapped,
-                lambda occurrence: _target_href(self.app, docname, occurrence),
+                lambda occurrence: resolve_occurrence_target(
+                    self.app, docname, snapshot, occurrence
+                ),
                 line_anchors=False,
                 source_page=False,
+                resolve_definition_anchor=lambda occurrence: node.get(
+                    DEFINITION_ANCHORS_ATTRIBUTE, {}
+                ).get(
+                    displayed_definition_key(
+                        occurrence.symbol_id, occurrence.byte_range
+                    )
+                ),
             )
             ids = " ".join(str(value) for value in node.get("ids", ()))
             identity = f' id="{escape(ids.split()[0], quote=True)}"' if ids else ""

@@ -15,6 +15,7 @@ from .snapshot import Occurrence
 
 
 TargetResolver = Callable[[Occurrence], str | None]
+DefinitionAnchorResolver = Callable[[Occurrence], str | None]
 
 
 def _byte_to_char_boundaries(text: str) -> dict[int, int]:
@@ -44,7 +45,13 @@ def _semantic_class(occurrence: Occurrence) -> str:
     return " ".join(classes)
 
 
-def _wrap(text: str, occurrence: Occurrence, href: str | None, lexical_class: str = "") -> str:
+def _wrap(
+    text: str,
+    occurrence: Occurrence,
+    href: str | None,
+    lexical_class: str = "",
+    definition_anchor: str | None = None,
+) -> str:
     classes = " ".join(item for item in (_semantic_class(occurrence), lexical_class) if item)
     attrs = [f'class="{classes}"']
     if occurrence.hover_id:
@@ -64,8 +71,8 @@ def _wrap(text: str, occurrence: Occurrence, href: str | None, lexical_class: st
         rendered = f"<a {' '.join(attrs)}>{rendered}</a>"
     else:
         rendered = f"<span {' '.join(attrs)}>{rendered}</span>"
-    if occurrence.role == "definition" and occurrence.symbol_id:
-        rendered = f'<span id="{symbol_anchor(occurrence.symbol_id)}" class="mbt-definition-anchor"></span>{rendered}'
+    if definition_anchor:
+        rendered = f'<span id="{escape(definition_anchor, quote=True)}" class="mbt-definition-anchor"></span>{rendered}'
     return rendered
 
 
@@ -88,6 +95,7 @@ class SemanticCodeRenderer:
         line_anchors: bool = True,
         source_page: bool = False,
         language: str = "moonbit",
+        resolve_definition_anchor: DefinitionAnchorResolver | None = None,
     ) -> str:
         encoded_size = len(text.encode("utf-8"))
         local: list[Occurrence] = []
@@ -134,6 +142,7 @@ class SemanticCodeRenderer:
         occurrence_index = 0
         active_occurrences: list[Occurrence] = []
         lexical_index = 0
+        emitted_anchors: set[str] = set()
         for left, right in zip(points, points[1:]):
             if at_line_start and line_anchors:
                 chunks.append(f'<span id="L{line}" class="mbt-line-anchor" data-source-line="{line}"></span>')
@@ -159,7 +168,25 @@ class SemanticCodeRenderer:
                 if lexical_start <= left and right <= lexical_end:
                     lexical_class = lexical_css
             if occurrence:
-                chunks.append(_wrap(piece, occurrence, resolve_target(occurrence), lexical_class))
+                anchor = None
+                if occurrence.role == "definition" and occurrence.symbol_id:
+                    candidate = (
+                        resolve_definition_anchor(occurrence)
+                        if resolve_definition_anchor is not None
+                        else symbol_anchor(occurrence.symbol_id)
+                    )
+                    if candidate and candidate not in emitted_anchors:
+                        anchor = candidate
+                        emitted_anchors.add(candidate)
+                chunks.append(
+                    _wrap(
+                        piece,
+                        occurrence,
+                        resolve_target(occurrence),
+                        lexical_class,
+                        anchor,
+                    )
+                )
             elif lexical_class:
                 chunks.append(f'<span class="{lexical_class}">{escape(piece)}</span>')
             else:
