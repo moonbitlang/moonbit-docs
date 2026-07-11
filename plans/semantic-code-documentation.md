@@ -53,10 +53,9 @@
 
 - 鼠标悬停、键盘聚焦或触摸点击时显示签名、类型和文档；
 - 标识符使用普通 `href` 指向定义，禁用 JavaScript 后仍可跳转；
-- provenance 已知的代码块必须提供指向 canonical source page 的 “View source” 链接；具体入口样式和位置可以由主题集成决定；
 - 复制、选择、换行、caption、Pygments 样式和现有 copybutton 行为不变。
 
-无法确定 package context、source provenance 或 source hash 不匹配时，该代码块自动退化为现有普通高亮。
+只有文学编程 source 或 `literalinclude` 等具有可验证 source provenance 的代码块才叠加语义。普通 Markdown 中直接书写、没有文学编程 source identity 的 MoonBit fence 按设计保持现有词法高亮，不属于语义覆盖缺口。Source hash 不匹配时，原本具有 provenance 的代码块也必须 fail closed，退化为普通高亮。
 
 ### 2.2 Hackage 风格源码页
 
@@ -170,8 +169,7 @@ flowchart LR
 
 1. `moon.work` workspace；
 2. `moon.mod.json` 或 `moon.mod` module；
-3. 可以由工具链单独检查的 standalone `.mbt.md`；
-4. Phase 4 中由轻量 documentation inventory prepass 发现、且拥有明确 package context 的文档内联代码虚拟单元。
+3. 可以由工具链单独检查的 standalone `.mbt.md`。
 
 Root 发现不依赖 Sphinx `env.found_docs`，因为 `next/sources/` 被 Sphinx 排除。
 
@@ -411,6 +409,8 @@ next/_ext/moonbit_semantic/
     └── moonbit-semantic.js
 ```
 
+构建输出另包含 `_static/moonbit-semantic/hovers.<payload-digest>.js` 和兼容回退 `hovers.json`；前者由 snapshot 生成，不是扩展包中的手写静态文件。
+
 扩展可以侵入 Sphinx pipeline，但不能要求修改任何现有 `.md` 或 `.mbt` 文件。
 
 ### 6.1 Sphinx domain
@@ -437,7 +437,7 @@ next/_ext/moonbit_semantic/
 | `env-get-outdated` | 细粒度标记受影响文档；若 corpus/source-page/renderer digest 改变，或 expected output manifest 中任一 page/target-set/hover/CSS/JS 文件缺失，即使源码未变、文件从未被文档引用，也至少返回 `root_doc` 作为 write sentinel |
 | `env-before-read-docs` | 为每个 `.mbt.md` 以稳定 virtual docname、snapshot source URI 和独立 settings 调用 MyST；运行允许的 read transforms，将可 pickle doctree 存入 environment |
 | 自定义 `literalinclude` | 保留 target、全部 slice options 和 displayed-to-source 分段映射 |
-| `source-read` / `include-read` | 记录整篇 `.mbt.md` include 和普通 fence 的来源上下文 |
+| `source-read` / `include-read` | 记录整篇 `.mbt.md` include 的来源上下文；不为普通 Markdown fence 合成 source identity |
 | `doctree-read` | 在 include 与 i18n 后为现有 `literal_block` 附加轻量 semantic annotation；不替换 node |
 | `env-purge-doc` / `env-merge-info` | 维护 usage/backlink，支持增量构建和 `-j` |
 | `env-updated` | 校验 snapshot graph、计划 route、definition closure，完成 backlink 汇总 |
@@ -445,8 +445,8 @@ next/_ext/moonbit_semantic/
 | `SphinxPostTransform` | 仅在目标 HTML builder 中把已注解 block 换成 semantic node |
 | `write-started` | clone literate doctree，运行 reference resolution、semantic post-transforms 和独立 HTML writer，准备不可变 body/context |
 | `html-collect-pages` | 只 yield 已准备好的纯源码 body、literate body、target-set page 和 module/package/source index；开始时验证计划页数量，不再修改 environment |
-| `html-page-context` | 提供 breadcrumb、locale UI 文本和 hover shard URL；不正则改写 HTML body |
-| `build-finished` copy handler | 仅在无 build exception 时从扩展 package/snapshot asset manifest 复制 CSS、JS、content-addressed hover JSON 和 literate static assets 到 `_static/moonbit-semantic/` |
+| `html-page-context` | 提供 breadcrumb、locale UI 文本和 hover asset URL；不正则改写 HTML body |
+| `build-finished` copy handler | 仅在无 build exception 时从扩展 package/snapshot asset manifest 复制 CSS、runtime JS、经典脚本形式的 hover payload、兼容回退 JSON 和 literate static assets 到 `_static/moonbit-semantic/` |
 | `build-finished` validation handler | 在 copy 后验证实际文件、hover shard、anchor manifest 和 page count；成功后只清理扩展 namespace 中的 stale page/asset |
 
 现有 `check.py` 已在 `doctree-read` 遍历 literal block。Semantic handler 必须晚于它运行，且此阶段只增加可 pickle attribute；真正 node replacement 推迟到 post-transform。
@@ -472,12 +472,11 @@ next/_ext/moonbit_semantic/
 ### 6.4 普通 fence 与 `{include}`
 
 - 完整 `.mbt.md` 被 `{include}` 后，内部 code block 保留原 `.mbt.md` source 和行号，扩展据此映射到 snapshot；
-- 普通 MoonBit fence 若没有可靠 package context，第一阶段保持词法高亮；
-- 对拥有明确 root/context 且可独立分析的 fence，后续可由一个 Sphinx inventory prepass 生成 virtual source unit，再交给同一索引器分析；
-- virtual unit 不写回 Markdown，但会像其他 snapshot source 一样生成 code-only synthetic source page。其本地定义以该 synthetic page 的定义锚点为 canonical target，外部引用仍链接真实 source page；
+- 普通 Markdown 中直接书写、没有文学编程 source provenance 的 MoonBit fence 始终保持词法高亮；不推断 package context，也不生成 virtual source unit；
+- `{literalinclude}`、整篇 `.mbt.md` include 以及 canonical `.mbt.md` literate page 使用 verified source/range map 获得语义；
 - 以 `language: markdown` 原样展示 `.mbt.md` 文件时，不把 fence 文本误当成当前代码块中的 MoonBit token。
 
-这使“所有可以可靠语义分析的代码”逐步扩展，同时不对残缺、包含 `...` 或缺少 package context 的片段伪造语义。
+这一边界使语义始终来自仓库中真实、可复现的文学编程/源码单元，不对教学片段、残缺代码或包含 `...` 的普通 fence 伪造语义。
 
 ### 6.5 文档代码块渲染
 
@@ -557,6 +556,8 @@ Reference 的默认 `href` 指向定义锚点；如果只有可信 location 而�
 
 Hover 内容按 source page 或 module 分片并去重，token 只保存 `hover_id`，避免像早期 Hackage/Koka 页面一样在每个 occurrence 内重复整段签名。
 
+本地静态预览不能依赖 `fetch(file://.../hovers.json)`。构建必须同时输出在 runtime 之前加载的经典脚本 `hovers.<payload-digest>.js`，直接注册同一份确定性 payload；内容寻址文件名同时避免 HTTP/浏览器缓存旧 Hover。`hovers.json` 仅作为 HTTP 部署或旧页面的兼容回退。runtime 的 fetch 回退必须捕获失败，不能产生未处理 rejection。这样直接打开生成的 HTML 与通过 HTTP 服务访问时使用相同的 Hover 数据。
+
 - 普通 `href` 在无 JavaScript 时仍工作；
 - JavaScript 只负责 hover/focus/touch、多个 target 选择和同 href 高亮；
 - hover payload 只支持受限 Markdown，HTML 必须 escape/sanitize；
@@ -571,9 +572,9 @@ Hover 内容按 source page 或 module 分片并去重，token 只保存 `hover_
   ├─ front matter                    → 页面元数据
   ├─ Markdown prose/heading/list     → 正常渲染并保留
   ├─ link/image/directive/include    → 按 Sphinx/MyST 规则解析
-  ├─ mbt / mbt check / moonbit check → 代码块 + 已有语义 overlay
+  ├─ mbt / mbt check / moonbit check → active origin 中为代码块叠加语义
   ├─ mbt nocheck / moonbit skip      → 代码块，仅词法高亮
-  ├─ 普通 moonbit fence              → 代码块；有可靠 occurrence 才附加语义
+  ├─ 普通 moonbit fence              → `.mbt.md` 文学编程代码块；active origin 中叠加语义
   └─ 其他语言 fence                  → 正常文档代码块
 ```
 
@@ -892,7 +893,7 @@ RTD/production 的唯一顺序固定为：
 - 同名 `literalinclude` override；
 - 精确 provenance segment map；
 - semantic literal node 和共享 renderer；
-- 文档 block 到 source page 的 Definition link 与 View source；
+- 文档 block 中 token 到 canonical source page/anchor 的 Definition link；不增加独立 `View source` 控件；
 - copybutton、caption、选区和 textContent 兼容测试。
 
 退出条件：
@@ -923,15 +924,13 @@ RTD/production 的唯一顺序固定为：
 
 交付物：
 
-- 轻量 documentation inventory prepass，以及拥有明确 context 的普通 fence semantic indexing；
 - expected-failure recovery semantics 的独立实验和正确性 gate；
 - 多 backend snapshot/merge 策略；
 - symbol search、docs backlinks 和同 href 联动高亮。
 
 退出条件：
 
-- 流水线固定为 `documentation inventory prepass -> semantic-index virtual units -> 正式 Sphinx build`，不存在 Sphinx 与 semantic-index 的循环依赖；
-- 每个没有语义增强的 MoonBit block 都有机器可读 reason；
+- 普通 Markdown fence 维持 lexical-only；具有 provenance 的 block 若没有语义增强，则有机器可读 reason；
 - recovery semantics 不会在 source 改变后残留；
 - 多 backend 冲突有确定的展示和 target 规则；
 - local binding shadowing 和多个 Definition target 的端到端测试通过。
@@ -993,7 +992,7 @@ RTD/production 的唯一顺序固定为：
 - dependency/stdlib license gate 拒绝与 attribution；
 - clean output 中 stale `_moonbit-source` page 清理；
 - 修改一个从未被文档引用的 source，incremental build 仍更新其 additional page；
-- 手工删除未引用 source page、target-set page、hover shard 或 semantic CSS/JS 后，incremental build 自动恢复。
+- 手工删除未引用 source page、target-set page、hover preload/JSON 或 semantic CSS/runtime JS 后，incremental build 自动恢复。
 
 ### 14.2 文档 projection
 
@@ -1006,7 +1005,7 @@ RTD/production 的唯一顺序固定为：
 - literate page 保留 prose，include 展开后每个代码块仍指向自己的 source identity；
 - 同一 child source include 两次时没有重复 DOM ID，两个 occurrence 使用 scoped anchor，而 canonical Definition URL 不变；
 - raw Markdown literalinclude；
-- 普通 fence 有/无 semantic context；
+- 普通 Markdown fence 保持 lexical-only，`.mbt.md`/`literalinclude` provenance block 才允许语义 overlay；
 - translated literal block；
 - stale/missing snapshot；
 - copybutton 和 `<pre>.textContent` 精确一致。
@@ -1072,7 +1071,7 @@ RTD/production 的唯一顺序固定为：
 2. dependency/stdlib license 与 attribution policy；该模式不允许用 `external-only` 替代本站源码页；
 3. source URL 是否包含 docs release/corpus digest，还是仅由 module version/toolchain identity 隔离；
 4. Hover 允许的 Markdown 子集和最大 payload；
-5. 普通 inline fence 的 context 推断规则和 documentation inventory prepass 的范围；virtual definition 已固定指向 synthetic source page；
+5. 普通 inline fence 不推断 context、不生成 virtual source；语义范围严格限于文学编程/源码 provenance；
 6. source symbol 是否注入 Sphinx HTML search，或只进入独立 MoonBit domain search；
 7. 当前 local-first clean production build 使用 4–8 分钟目标/10 分钟 gate；Phase 6 全量模式另行测量并固定页面数、artifact 大小和索引时间预算。
 
@@ -1091,6 +1090,7 @@ RTD/production 的唯一顺序固定为：
 - local occurrence 指向 dependency/stdlib 时仍链接到冻结本站源码页的精确 target-only anchor 或行锚点；
 - dependency/stdlib 页面完整展示代码，但没有自身 occurrence Hover/Definition overlay，也没有伪造的 complete ledger；
 - 对 active occurrence，文档代码块与源码页显示一致 Hover 和 Definition；
+- 普通 Markdown 中没有文学编程/源码 provenance 的 code fence 按设计保持词法高亮，不生成 synthetic source 或伪语义；
 - `.mbt/.mbti/.mbtp` 等 pure-source page 只显示代码；`.mbt.md` literate page 保留 Markdown prose，并使用原始 Markdown 行号；active origin 的 code block 叠加语义，deferred origin 的 code block 保持词法显示；
 - JavaScript 禁用后 Go to definition 仍工作；
 - 无语义或故意无效代码不会获得伪语义；
