@@ -489,19 +489,3 @@ def map_occurrences(
         if displayed_range is not None:
             mapped.append(replace(occurrence, byte_range=displayed_range))
     return tuple(mapped)
-
-
-def first_source_line(
-    provenance: Mapping[str, Any], snapshot: SemanticSnapshot
-) -> int | None:
-    source = snapshot.sources.get(provenance.get("source_id"))
-    if source is None:
-        return None
-    starts = [
-        segment["source"][0]
-        for segment in provenance.get("segments", ())
-        if isinstance(segment.get("source"), (list, tuple))
-    ]
-    if not starts:
-        return None
-    return snapshot.blob_bytes(source).count(b"\n", 0, min(starts)) + 1

@@ -165,7 +165,7 @@ class SemanticBlockSphinxTests(unittest.TestCase):
         )
         return app, out, status, warning
 
-    def test_html_overlay_has_hover_definition_view_source_and_exact_copy_text(self) -> None:
+    def test_html_overlay_has_hover_definition_and_exact_copy_text(self) -> None:
         source = (
             b"// begin\n"
             b"    pub fn answer() -> Int { 42 }\n"
@@ -179,7 +179,8 @@ class SemanticBlockSphinxTests(unittest.TestCase):
         self.assertIn('class="mbt-semantic-document-block"', html)
         self.assertIn('data-mbt-hover="hover:answer"', html)
         self.assertIn("#mb-def-", html)
-        self.assertIn('class="mbt-view-source"', html)
+        self.assertNotIn("View source", html)
+        self.assertNotIn("mbt-view-source", html)
         self.assertIn('<div class="highlight-moonbit notranslate">', html)
         parser = _PreText()
         parser.feed(html)

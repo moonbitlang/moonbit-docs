@@ -11,14 +11,12 @@ from sphinx.transforms.post_transforms import SphinxPostTransform
 
 from .directives import PROVENANCE_ATTRIBUTE, register_literalinclude
 from .provenance import (
-    first_source_line,
     infer_identity_provenance,
     map_occurrences,
     provenance_is_current,
     sha256_text,
 )
 from .render import SemanticCodeRenderer
-from .routing import source_pagename
 from .source_pages import _target_href
 
 
@@ -135,17 +133,6 @@ def merge_semantic_blocks(app: Any, env: Any, docnames: list[str], other: Any) -
     env.moonbit_semantic_block_sources = destination
 
 
-def _view_source_href(app: Any, docname: str, provenance: Mapping[str, Any]) -> str | None:
-    snapshot = app._moonbit_semantic_snapshot
-    source = snapshot.sources.get(provenance.get("source_id"))
-    if source is None:
-        return None
-    page = source_pagename(app.config.moonbit_semantic_source_prefix, source)
-    uri = app.builder.get_relative_uri(docname, page)
-    line = first_source_line(provenance, snapshot)
-    return uri + (f"#L{line}" if line is not None else "")
-
-
 class SemanticBlockPostTransform(SphinxPostTransform):
     """Replace verified annotations only for HTML-family builders."""
 
@@ -191,17 +178,9 @@ class SemanticBlockPostTransform(SphinxPostTransform):
                 line_anchors=False,
                 source_page=False,
             )
-            view_source = _view_source_href(self.app, docname, provenance)
-            controls = ""
-            if view_source:
-                controls = (
-                    '<div class="mbt-semantic-code-tools">'
-                    f'<a class="mbt-view-source" href="{escape(view_source, quote=True)}">'
-                    "View source</a></div>"
-                )
             ids = " ".join(str(value) for value in node.get("ids", ()))
             identity = f' id="{escape(ids.split()[0], quote=True)}"' if ids else ""
-            html = f'<div class="mbt-semantic-document-block"{identity}>{controls}{rendered}</div>'
+            html = f'<div class="mbt-semantic-document-block"{identity}>{rendered}</div>'
             replacement = SemanticLiteralBlock(node.rawsource, text, **dict(node.attributes))
             replacement.source = node.source
             replacement.line = node.line
