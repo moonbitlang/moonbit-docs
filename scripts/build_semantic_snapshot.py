@@ -68,6 +68,19 @@ def parser() -> argparse.ArgumentParser:
     build.add_argument("--quiet", action="store_true", help="suppress phase and context progress")
     validate = commands.add_parser("validate", help="validate all snapshot files, hashes, and references")
     validate.add_argument("--snapshot", type=Path, default=Path("semantic-snapshot"))
+    validate.add_argument(
+        "--require-semantics",
+        action="store_true",
+        help=(
+            "also reject partial snapshots or snapshots without occurrences, "
+            "referenced hovers, and definitions"
+        ),
+    )
+    validate.add_argument(
+        "--require-external-definitions",
+        action="store_true",
+        help="also require an occurrence with an exact external definition target",
+    )
     return result
 
 
@@ -75,7 +88,11 @@ def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     try:
         if args.command == "validate":
-            manifest = validate_snapshot(args.snapshot)
+            manifest = validate_snapshot(
+                args.snapshot,
+                require_semantics=args.require_semantics,
+                require_external_definitions=args.require_external_definitions,
+            )
         else:
             config = BuildConfig(
                 repo_root=args.repo_root, source_root=args.source_root, output=args.output,

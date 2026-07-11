@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 import tempfile
 import threading
@@ -139,7 +140,11 @@ class SemanticIndexerTest(unittest.TestCase):
             )
             manifests.append(SemanticIndexer(config).build())
             outputs.append(output)
-            validate_snapshot(output)
+            validate_snapshot(output, require_semantics=True)
+        with self.assertRaisesRegex(SnapshotError, "no exact external definitions"):
+            validate_snapshot(
+                outputs[0], require_external_definitions=True
+            )
         self.assertEqual(manifests[0]["corpus_digest"], manifests[1]["corpus_digest"])
         self.assertEqual(manifests[0]["counts"], manifests[1]["counts"])
         sources = self._jsonl(outputs[0] / "sources.jsonl")
@@ -213,6 +218,42 @@ class SemanticIndexerTest(unittest.TestCase):
         public_inputs = (outputs[0] / "analysis-inputs.jsonl").read_text()
         self.assertNotIn(str(self.repo), public_inputs)
         self.assertNotIn(str(self.repo.resolve()), public_inputs)
+
+    def test_deployment_validation_rejects_empty_semantics(self):
+        output = self.repo / "snapshot-without-semantics"
+        SemanticIndexer(
+            BuildConfig(
+                repo_root=self.repo,
+                source_root=Path("next/sources"),
+                output=output,
+                stdlib_root=self.stdlib,
+                runner=FakeRunner(),
+                lsp_factory=lambda _root: FakeLsp(),
+                semantic_origins=(),
+            )
+        ).build()
+
+        validate_snapshot(output)
+        with self.assertRaisesRegex(
+            SnapshotError, "no occurrences"
+        ):
+            validate_snapshot(output, require_semantics=True)
+        cli = subprocess.run(
+            [
+                sys.executable,
+                str(REPO_ROOT / "scripts" / "build_semantic_snapshot.py"),
+                "validate",
+                "--snapshot",
+                str(output),
+                "--require-semantics",
+            ],
+            cwd=REPO_ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertNotEqual(cli.returncode, 0)
+        self.assertIn("no occurrences", cli.stderr)
 
     def test_mixed_target_packages_get_disjoint_analysis_contexts(self):
         module = self.sources / "mixed-target"
@@ -408,6 +449,8 @@ class SemanticIndexerTest(unittest.TestCase):
             )
         ).build()
         validate_snapshot(partial_output)
+        with self.assertRaisesRegex(SnapshotError, "must not be partial"):
+            validate_snapshot(partial_output, require_semantics=True)
         request_payload = "\n".join(
             path.read_text(encoding="utf-8")
             for path in (partial_output / "requests").glob("*/*.json")

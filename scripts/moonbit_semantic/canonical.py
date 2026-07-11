@@ -53,4 +53,3 @@ def write_jsonl(path: Path, values: Iterable[dict[str, Any]], key) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     ordered = sorted(values, key=key)
     path.write_bytes(b"".join(canonical_json_bytes(item) for item in ordered))
-

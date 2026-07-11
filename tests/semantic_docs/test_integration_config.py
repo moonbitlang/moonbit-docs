@@ -23,7 +23,6 @@ class _SemanticOutputParser(HTMLParser):
         self.hover_ids: list[str] = []
         self.definition_hrefs: list[str] = []
         self.semantic_links: list[tuple[str, str | None]] = []
-        self.source_download_hrefs: list[str] = []
         self.ids: set[str] = set()
         self.scripts: list[str] = []
         self.has_view_source = False
@@ -43,8 +42,6 @@ class _SemanticOutputParser(HTMLParser):
             self.semantic_links.append(
                 (values["href"] or "", values.get("data-mbt-hover"))
             )
-        if tag == "a" and "_sources/" in (values.get("href") or ""):
-            self.source_download_hrefs.append(values["href"] or "")
         if tag == "script" and values.get("src"):
             self.scripts.append(values["src"] or "")
         self.has_view_source |= "mbt-view-source" in classes
@@ -87,27 +84,53 @@ class SemanticDocumentationConfigurationTests(unittest.TestCase):
         source = (REPO_ROOT / "next" / "conf.py").read_text()
         self.assertIn("'moonbit_semantic'", source)
         self.assertNotIn("'_moonbit-src'", source)
-        self.assertIn("html_copy_source = False", source)
-        self.assertIn("html_show_sourcelink = False", source)
-        self.assertIn('"use_source_button": False', source)
-        self.assertIn('"use_download_button": False', source)
+        self.assertNotIn("html_copy_source", source)
+        self.assertNotIn("html_show_sourcelink", source)
+        self.assertIn('"use_source_button": True', source)
+        self.assertNotIn('"use_download_button"', source)
+        self.assertIn("'READTHEDOCS'", source)
 
     @unittest.skipUnless(shutil.which("just"), "just is not installed")
     def test_semantic_recipes_preserve_the_build_order(self) -> None:
-        result = subprocess.run(
-            ["just", "--dry-run", "docs-html-semantic"],
-            cwd=REPO_ROOT,
-            check=True,
-            capture_output=True,
-            text=True,
+        def dry_run(recipe: str) -> str:
+            result = subprocess.run(
+                ["just", "--dry-run", recipe],
+                cwd=REPO_ROOT,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            return result.stdout + result.stderr
+
+        production = dry_run("docs-html-semantic")
+        self.assertLess(
+            production.index("just semantic-index"),
+            production.index("just docs-html-semantic-from-snapshot"),
         )
 
-        commands = result.stdout + result.stderr
-        index = commands.index("build --repo-root . --output")
-        validate = commands.index("validate --snapshot")
-        sphinx = commands.index("MOONBIT_SEMANTIC_REQUIRED=1")
-        self.assertLess(index, validate)
+        required = dry_run("semantic-check-required")
+        self.assertIn("validate --snapshot", required)
+        self.assertIn("--require-semantics", required)
+        self.assertIn("--require-external-definitions", required)
+
+        render = dry_run("docs-html-semantic-from-snapshot")
+        validate = render.index("just semantic-check-required")
+        sphinx = render.index("MOONBIT_SEMANTIC_REQUIRED=1")
+        closure = render.index("just semantic-html-check")
         self.assertLess(validate, sphinx)
+        self.assertLess(sphinx, closure)
+
+    def test_deployment_entrypoints_require_semantic_content(self) -> None:
+        rtd = (REPO_ROOT / ".readthedocs.yaml").read_text()
+        self.assertIn("build_semantic_snapshot.py build", rtd)
+        self.assertIn("--require-semantics", rtd)
+        self.assertIn("--require-external-definitions", rtd)
+        self.assertIn("MOONBIT_SEMANTIC_E2E=1", rtd)
+
+        release = (
+            REPO_ROOT / ".github" / "workflows" / "release.yml"
+        ).read_text()
+        self.assertIn("docs-html-semantic-zh", release)
 
     @unittest.skipUnless(
         importlib.util.find_spec("sphinx"), "Sphinx is not installed"
@@ -186,7 +209,7 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
     def test_generated_html_contains_only_document_semantic_overlays(self) -> None:
         self.assertFalse((self.html / "_moonbit-src").exists())
         self.assertFalse((self.html / "_moonbit-source").exists())
-        self.assertFalse((self.html / "_sources").exists())
+        self.assertTrue((self.html / "_sources").is_dir())
         pages = list(self.html.rglob("*.html"))
         self.assertTrue(pages, self.html)
 
@@ -199,7 +222,6 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
             self.assertNotIn(str(REPO_ROOT), rendered, page)
             parser = _SemanticOutputParser()
             parser.feed(rendered)
-            self.assertFalse(parser.source_download_hrefs, page)
             self.assertFalse(parser.has_semantic_source, page)
             self.assertFalse(parser.has_line_anchor, page)
             has_semantic_document |= parser.has_semantic_document
@@ -246,6 +268,7 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
 
         hover_occurrences = 0
         definition_links = 0
+        external_definition_links = 0
         for page in pages:
             parser = parse(page)
             self.assertFalse(parser.has_view_source, page)
@@ -269,6 +292,7 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
                 definition_links += 1
                 target = urlsplit(href)
                 if target.scheme or target.netloc:
+                    external_definition_links += 1
                     self.assertEqual(target.scheme, "https", f"{page}: {href}")
                     self.assertEqual(target.netloc, "mooncakes.io", f"{page}: {href}")
                     self.assertTrue(target.path.startswith("/docs/"), f"{page}: {href}")
@@ -286,7 +310,12 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
 
         self.assertGreater(hover_occurrences, 0)
         self.assertGreater(definition_links, 0)
+        self.assertGreater(external_definition_links, 0)
 
+    @unittest.skipUnless(
+        os.getenv("MOONBIT_SEMANTIC_TARGET_E2E") == "1",
+        "set MOONBIT_SEMANTIC_TARGET_E2E=1 for the English target fixture",
+    )
     def test_fullstack_mixed_targets_render_core_json_semantics(self) -> None:
         page = self.html / "tutorial" / "fullstack-one-project.html"
         rendered = page.read_text(encoding="utf-8")

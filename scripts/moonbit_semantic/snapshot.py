@@ -89,7 +89,12 @@ class SnapshotWriter:
         shutil.rmtree(self.temp, ignore_errors=True)
 
 
-def validate_snapshot(root: Path) -> dict[str, Any]:
+def validate_snapshot(
+    root: Path,
+    *,
+    require_semantics: bool = False,
+    require_external_definitions: bool = False,
+) -> dict[str, Any]:
     root = root.resolve()
     manifest_path = root / "manifest.json"
     if not manifest_path.is_file():
@@ -275,6 +280,9 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
             raise SnapshotError(f"symbol hover missing: {symbol['symbol_id']}")
     occurrence_ledgers: set[tuple[str, str]] = set()
     occurrence_count = 0
+    referenced_hover_count = 0
+    definition_count = 0
+    external_definition_count = 0
     for path in sorted((root / "occurrences").glob("*/*.json")) if (root / "occurrences").exists() else []:
         payload = _json(path)
         if payload.get("context_id") not in context_ids or payload.get("source_id") not in source_ids:
@@ -301,7 +309,10 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
                 _validate_range(occurrence["hover_range_utf8"], payload["source_id"], source_blobs, boundaries, "hover range")
             if occurrence.get("hover_id") is not None and occurrence["hover_id"] not in hover_ids:
                 raise SnapshotError(f"occurrence hover missing in {path.relative_to(root)}")
+            if occurrence.get("hover_id") is not None:
+                referenced_hover_count += 1
             for definition in occurrence.get("definitions", []):
+                definition_count += 1
                 target_id = definition.get("target_source_id")
                 if target_id not in source_ids:
                     raise SnapshotError(f"definition target missing in {path.relative_to(root)}")
@@ -317,6 +328,8 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
                     source_by_id[target_id],
                     external_target_by_id,
                 )
+                if definition.get("external_target_id") is not None:
+                    external_definition_count += 1
             preferred_external = occurrence.get(
                 "preferred_external_target_id"
             )
@@ -404,6 +417,26 @@ def validate_snapshot(root: Path) -> dict[str, Any]:
         actual_counts["external_targets"] = len(external_target_ids)
     if any(expected.get(key) != value for key, value in actual_counts.items()):
         raise SnapshotError("manifest counts do not match tables")
+    if require_semantics:
+        if manifest["partial"]:
+            raise SnapshotError("semantic deployment snapshot must not be partial")
+        empty = [
+            key
+            for key in ("occurrences", "hovers", "symbols")
+            if actual_counts[key] < 1
+        ]
+        if referenced_hover_count < 1:
+            empty.append("referenced hovers")
+        if definition_count < 1:
+            empty.append("definitions")
+        if empty:
+            raise SnapshotError(
+                "semantic deployment snapshot has no " + ", ".join(empty)
+            )
+    if require_external_definitions and external_definition_count < 1:
+        raise SnapshotError(
+            "semantic deployment snapshot has no exact external definitions"
+        )
     return manifest
 
 

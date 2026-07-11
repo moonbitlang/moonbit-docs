@@ -36,4 +36,3 @@ class CommandError(RuntimeError):
         detail = (result.stdout + result.stderr).decode("utf-8", "replace").strip()
         super().__init__(f"command failed ({result.returncode}): {command}\n{detail}")
         self.result = result
-
