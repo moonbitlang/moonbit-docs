@@ -124,6 +124,8 @@ class SemanticDocumentationConfigurationTests(unittest.TestCase):
         self.assertIn("--require-semantics", rtd)
         self.assertIn("--require-external-definitions", rtd)
         self.assertNotIn("post_build", rtd)
+        self.assertIn('install/unix.sh | bash -s "latest"', rtd)
+        self.assertNotIn("0.1.20260629", rtd)
 
         release = (
             REPO_ROOT / ".github" / "workflows" / "release.yml"
@@ -135,6 +137,8 @@ class SemanticDocumentationConfigurationTests(unittest.TestCase):
         self.assertIn("--require-external-definitions", release)
         self.assertIn('LANGUAGE="zh_CN" MOONBIT_SEMANTIC_REQUIRED=1 make html', release)
         self.assertNotIn("docs-html-semantic", release)
+        self.assertIn('version: "latest"', release)
+        self.assertNotIn("0.1.20260629", release)
 
         self.assertFalse(
             (REPO_ROOT / ".github" / "workflows" / "semantic-docs.yml").exists()

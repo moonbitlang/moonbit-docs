@@ -5,7 +5,7 @@ build:
     python: "3.13"
   jobs:
     post_install:
-      - curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash -s "0.1.20260629"
+      - curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash -s "latest"
       - PATH="$HOME/.moon/bin:$PATH" moon update
     pre_build:
       - cd next && python3 llm.py && cd ..
