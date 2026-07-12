@@ -297,7 +297,11 @@ class SemanticDocumentationEndToEndTests(unittest.TestCase):
                     None,
                 )
                 runtime = next(
-                    (index for index, src in enumerate(parser.scripts) if src.endswith("moonbit-semantic.js")),
+                    (
+                        index
+                        for index, src in enumerate(parser.scripts)
+                        if urlsplit(src).path.endswith("moonbit-semantic.js")
+                    ),
                     None,
                 )
                 self.assertIsNotNone(preload, page)
