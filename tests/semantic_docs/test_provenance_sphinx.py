@@ -96,8 +96,25 @@ class SemanticBlockSphinxTests(unittest.TestCase):
         (snapshot / "occurrences.jsonl").write_text(
             "".join(json.dumps(record) + "\n" for record in occurrences), encoding="utf-8"
         )
+        files = []
+        for path in sorted(snapshot.rglob("*")):
+            if path.is_file():
+                raw = path.read_bytes()
+                files.append(
+                    {
+                        "path": path.relative_to(snapshot).as_posix(),
+                        "digest": "sha256:" + hashlib.sha256(raw).hexdigest(),
+                        "size": len(raw),
+                    }
+                )
         (snapshot / "manifest.json").write_text(
-            json.dumps({"schema": "moonbit-semantic-snapshot/v1", "corpus_digest": "test"}),
+            json.dumps(
+                {
+                    "schema": "moonbit-semantic-snapshot/v1",
+                    "corpus_digest": "test",
+                    "files": files,
+                }
+            ),
             encoding="utf-8",
         )
         return snapshot

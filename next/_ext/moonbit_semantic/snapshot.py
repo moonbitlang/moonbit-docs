@@ -549,6 +549,7 @@ def _verify_manifest_shards(root: Path, manifest: Mapping[str, Any]) -> set[str]
         shards = {item["path"]: item.get("sha256") or item.get("digest") for item in shards}
     if not isinstance(shards, Mapping):
         raise SnapshotError("manifest shards must be a mapping or list")
+    verified = set(shards)
     for name, expected in shards.items():
         if not isinstance(name, str) or not isinstance(expected, str):
             raise SnapshotError("manifest shard entries require string path and digest")
@@ -557,7 +558,18 @@ def _verify_manifest_shards(root: Path, manifest: Mapping[str, Any]) -> set[str]
             raise SnapshotError(f"manifest shard is missing: {name}")
         if _sha256(path.read_bytes()) != _digest_name(expected):
             raise SnapshotError(f"manifest shard digest mismatch: {name}")
-    return set(shards)
+    manifest_path = root / "manifest.json"
+    actual = {
+        path.relative_to(root).as_posix()
+        for path in root.rglob("*")
+        if path.is_file() and path != manifest_path
+    }
+    unlisted = actual - verified
+    if unlisted:
+        raise SnapshotError(
+            f"snapshot contains unlisted files: {sorted(unlisted)}"
+        )
+    return verified
 
 
 def load_snapshot(path: str | Path) -> SemanticSnapshot:

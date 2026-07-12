@@ -313,6 +313,23 @@ def test_snapshot_rejects_blob_digest_mismatch(tmp_path: Path) -> None:
         load_snapshot(path)
 
 
+def test_snapshot_rejects_unlisted_hover_shard(tmp_path: Path) -> None:
+    path = _write_snapshot(tmp_path)
+    (path / "hovers" / "unlisted.json").write_text(
+        json.dumps(
+            {
+                "unlisted": {
+                    "kind": "plaintext",
+                    "value": "not covered by the manifest",
+                }
+            }
+        )
+    )
+
+    with pytest.raises(SnapshotError, match="unlisted files"):
+        load_snapshot(path)
+
+
 def test_snapshot_rejects_missing_canonical_occurrence_ledger(
     tmp_path: Path,
 ) -> None:
