@@ -94,10 +94,15 @@ def get_outdated(
     removed: set[str],
 ) -> list[str]:
     snapshot = getattr(app, "_moonbit_semantic_snapshot", None)
-    if snapshot is None:
-        return []
     old = getattr(env, "moonbit_semantic_corpus_digest", None)
     old_hover_script = getattr(env, "moonbit_semantic_hover_script", None)
+    if snapshot is None:
+        if old is None and old_hover_script is None:
+            return []
+        env.moonbit_semantic_corpus_digest = None
+        env.moonbit_semantic_hover_script = None
+        found_docs = sorted(getattr(env, "found_docs", ()))
+        return found_docs or [app.config.root_doc]
     hover_script = app._moonbit_semantic_hover_script
     env.moonbit_semantic_corpus_digest = snapshot.corpus_digest
     env.moonbit_semantic_hover_script = hover_script

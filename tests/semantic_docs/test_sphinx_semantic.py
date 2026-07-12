@@ -453,6 +453,39 @@ def test_snapshot_change_outdates_every_document_page() -> None:
     assert env.moonbit_semantic_corpus_digest == "sha256:new"
 
 
+def test_missing_optional_snapshot_rebuilds_stale_semantic_pages(
+    tmp_path: Path,
+) -> None:
+    from sphinx.application import Sphinx
+
+    snapshot = _write_snapshot(tmp_path)
+    app, out, _status, warning = _project(
+        tmp_path, snapshot, required=False
+    )
+    app.build(force_all=True)
+    assert app.statuscode == 0, warning.getvalue()
+    html_path = out / "index.html"
+    assert "mbt-semantic-document-block" in html_path.read_text()
+
+    (snapshot / "manifest.json").unlink()
+    status, warning = StringIO(), StringIO()
+    rebuilt = Sphinx(
+        tmp_path / "docs",
+        tmp_path / "docs",
+        out,
+        tmp_path / "doctrees",
+        "html",
+        status=status,
+        warning=warning,
+        freshenv=False,
+    )
+    rebuilt.build(force_all=False)
+
+    assert rebuilt.statuscode == 0, warning.getvalue()
+    assert "mbt-semantic-document-block" not in html_path.read_text()
+    assert not (out / "_static" / "moonbit-semantic").exists()
+
+
 def test_sphinx_renders_document_overlay_and_removes_legacy_source_outputs(
     tmp_path: Path,
 ) -> None:
