@@ -4,10 +4,8 @@ from __future__ import annotations
 
 import json
 import os
-import select
 import subprocess
 import threading
-import time
 from concurrent.futures import Future, TimeoutError as FutureTimeoutError
 from pathlib import Path
 from typing import Any, BinaryIO, Protocol
@@ -136,9 +134,8 @@ class JsonRpcProcess:
                     future.set_exception(LspError(f"language server reader failed: {exc}"))
 
     def _receive(self) -> dict[str, Any]:
-        deadline = None
         while b"\r\n\r\n" not in self._read_buffer and b"\n\n" not in self._read_buffer:
-            self._read_more(deadline)
+            self._read_more()
         crlf_end = self._read_buffer.find(b"\r\n\r\n")
         lf_end = self._read_buffer.find(b"\n\n")
         if crlf_end >= 0 and (lf_end < 0 or crlf_end <= lf_end):
@@ -155,7 +152,7 @@ class JsonRpcProcess:
             length = int(headers["content-length"])
         except (KeyError, ValueError) as exc:
             raise LspError("invalid JSON-RPC Content-Length") from exc
-        self._fill_size(length, deadline)
+        self._fill_size(length)
         body = bytes(self._read_buffer[:length])
         del self._read_buffer[:length]
         try:
@@ -166,20 +163,14 @@ class JsonRpcProcess:
             raise LspError("JSON-RPC response is not an object")
         return message
 
-    def _fill_size(self, length: int, deadline: float | None) -> None:
+    def _fill_size(self, length: int) -> None:
         while len(self._read_buffer) < length:
-            self._read_more(deadline)
+            self._read_more()
 
-    def _read_more(self, deadline: float | None) -> None:
-        while True:
-            remaining = 1.0 if deadline is None else deadline - time.monotonic()
-            if remaining <= 0:
-                raise LspError(f"language server response timed out after {self.timeout}s")
-            ready, _, _ = select.select([self.reader.fileno()], [], [], remaining)
-            if ready:
-                break
-            if deadline is not None or self.process.poll() is not None:
-                raise LspError(f"language server response timed out after {self.timeout}s")
+    def _read_more(self) -> None:
+        # A dedicated reader thread can block on the pipe while request futures
+        # enforce their own deadlines.  Unlike ``select``, ``os.read`` supports
+        # subprocess pipe descriptors on Windows as well as POSIX systems.
         chunk = os.read(self.reader.fileno(), 65536)
         if not chunk:
             code = self.process.poll()
