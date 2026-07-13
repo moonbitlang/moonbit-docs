@@ -8,7 +8,7 @@ Higher-order functions such as `map` and `filter` often serve as many people's f
 
 To enhance code efficiency, some propose leveraging compiler optimizations based on recurring patterns within higher-order functions. For instance, by rewriting `map(f, map(g, list))` as：
 
-```
+```moonbit
 map(fn (x) { f(g(x)) }, list)
 ```
 
