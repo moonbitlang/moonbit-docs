@@ -123,7 +123,7 @@ Additionally, some predefined coreF programs are required.
 
 ```moonbit
 let prelude_defs : List[ScDef[String]] = {
-  let args : (FixedArray[String]) -> List[String] = x => @list.from_array(x)
+  let args : (FixedArray[String]) -> List[String] = x => @list.List(x)
   let id = ScDef::new("I", args(["x"]), Var("x")) // id x = x
   let k = ScDef::new("K", args(["x", "y"]), Var("x")) // K x y = x
   let k1 = ScDef::new("K1", args(["x", "y"]), Var("y")) // K1 x y = y
@@ -142,7 +142,7 @@ let prelude_defs : List[ScDef[String]] = {
     args(["f"]),
     App(App(Var("compose"), Var("f")), Var("f")),
   ) // twice f = compose f f
-  @list.from_array([id, k, k1, s, compose, twice])
+  @list.List([id, k, k1, s, compose, twice])
 }
 ```
 
@@ -508,7 +508,7 @@ fn GState::unwind(self : GState) -> Unit {
     NApp(a1, _) => {
       self.put_stack(addr)
       self.put_stack(a1)
-      self.put_code(@list.from_array([Unwind]))
+      self.put_code(@list.List([Unwind]))
     }
     NGlobal(_, n, c) =>
       if self.stack.length() < n {
@@ -519,7 +519,7 @@ fn GState::unwind(self : GState) -> Unit {
       }
     NInd(a) => {
       self.put_stack(a)
-      self.put_code(@list.from_array([Unwind]))
+      self.put_code(@list.List([Unwind]))
     }
   }
 }
@@ -572,9 +572,9 @@ fn RawExpr::compileR(
   arity : Int
 ) -> List[Instruction] {
   if arity == 0 {
-    self.compileC(env) + @list.from_array([Update(arity), Unwind])
+    self.compileC(env) + @list.List([Update(arity), Unwind])
   } else {
-    self.compileC(env) + @list.from_array([Update(arity), Pop(arity), Unwind])
+    self.compileC(env) + @list.List([Update(arity), Pop(arity), Unwind])
   }
 }
 ```
@@ -589,14 +589,14 @@ fn RawExpr::compileC(
   match self {
     Var(s) =>
       match env.lookup(s) {
-        None => @list.from_array([PushGlobal(s)])
-        Some(n) => @list.from_array([PushArg(n)])
+        None => @list.List([PushGlobal(s)])
+        Some(n) => @list.List([PushArg(n)])
       }
-    Num(n) => @list.from_array([PushInt(n)])
+    Num(n) => @list.List([PushInt(n)])
     App(e1, e2) =>
       e2.compileC(env) +
       e1.compileC(argOffset(1, env)) +
-      @list.from_array([MkApp])
+      @list.List([MkApp])
     _ => abort("not support yet")
   }
 }
@@ -689,7 +689,7 @@ fn run(codes : List[String]) -> Node {
   let initialState : GState = {
     heap,
     stack: @list.empty(),
-    code: @list.from_array([PushGlobal("main"), Unwind]),
+    code: @list.List([PushGlobal("main"), Unwind]),
     globals,
     stats: 0,
   }

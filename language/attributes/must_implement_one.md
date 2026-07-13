@@ -14,13 +14,13 @@ pub(open) trait RequireAnyMethod {
   g(Self) -> Unit = _
 }
 
-impl RequireAnyMethod with f(_) {}
+impl RequireAnyMethod with f(_) { () }
 
-impl RequireAnyMethod with g(_) {}
+impl RequireAnyMethod with g(_) { () }
 
 type AnyImpl
 
-impl RequireAnyMethod for AnyImpl with f(_) {}
+impl RequireAnyMethod for AnyImpl with f(_) { () }
 ```
 
 With method names, at least one of the listed methods must be explicitly
@@ -34,15 +34,15 @@ pub(open) trait RequireSelectedMethod {
   h(Self) -> Unit = _
 }
 
-impl RequireSelectedMethod with f(_) {}
+impl RequireSelectedMethod with f(_) { () }
 
-impl RequireSelectedMethod with g(_) {}
+impl RequireSelectedMethod with g(_) { () }
 
-impl RequireSelectedMethod with h(_) {}
+impl RequireSelectedMethod with h(_) { () }
 
 type SelectedImpl
 
-impl RequireSelectedMethod for SelectedImpl with g(_) {}
+impl RequireSelectedMethod for SelectedImpl with g(_) { () }
 ```
 
 Multiple `#must_implement_one` attributes can be used on the same trait to

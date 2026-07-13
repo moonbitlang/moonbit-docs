@@ -112,7 +112,7 @@ fn compileLet(
       }
     }
   }
-  codes + comp(expr, env) + @list.from_array([Slide(defs.length())])
+  codes + comp(expr, env) + @list.List([Slide(defs.length())])
 }
 ```
 
@@ -159,7 +159,7 @@ fn compileLetrec(
     offset : Int,
   ) -> List[Instruction] {
     match defs {
-      Empty => comp(expr, env) + @list.from_array([Slide(n)])
+      Empty => comp(expr, env) + @list.List([Slide(n)])
       More((_, expr), tail=rest) =>
         expr.compileC(env) +
         compileDefs(rest, offset - 1).prepend(Update(offset))
@@ -224,8 +224,8 @@ The implementation of the `Eval` instruction is not complicated:
 fn GState::eval(self : GState) -> Unit {
   let addr = self.pop1()
   self.put_dump(self.code, self.stack)
-  self.stack = @list.from_array([addr])
-  self.code = @list.from_array([Unwind])
+  self.stack = @list.List([addr])
+  self.code = @list.List([Unwind])
 }
 ```
 
@@ -249,7 +249,7 @@ fn GState::unwind(self : GState) -> Unit {
     NApp(a1, _) => {
       self.put_stack(addr)
       self.put_stack(a1)
-      self.put_code(@list.from_array([Unwind]))
+      self.put_code(@list.List([Unwind]))
     }
     NGlobal(_, n, c) =>
       if self.stack.length() < n {
@@ -264,7 +264,7 @@ fn GState::unwind(self : GState) -> Unit {
       }
     NInd(a) => {
       self.put_stack(a)
-      self.put_code(@list.from_array([Unwind]))
+      self.put_code(@list.List([Unwind]))
     }
   }
 }
@@ -346,12 +346,12 @@ fn GState::condition(
 No major adjustments are needed in the compilation part, just add some predefined programs:
 
 ```moonbit
-let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_array([
+let compiled_primitives : List[(String, Int, List[Instruction])] = @list.List([
     // Arith
     (
       "add",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -365,7 +365,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "sub",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -379,7 +379,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "mul",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -393,7 +393,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "div",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -408,7 +408,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "eq",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -422,7 +422,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "neq",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -436,7 +436,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "ge",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -450,7 +450,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "gt",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -464,7 +464,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "le",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -478,7 +478,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "lt",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -493,15 +493,15 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "negate",
       1,
-      @list.from_array([Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),
+      @list.List([Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),
     ),
     (
       "if",
       3,
-      @list.from_array([
+      @list.List([
         Push(0),
         Eval,
-        Cond(@list.from_array([Push(1)]), @list.from_array([Push(2)])),
+        Cond(@list.List([Push(1)]), @list.List([Push(2)])),
         Update(3),
         Pop(3),
         Unwind,
@@ -517,7 +517,7 @@ and modify the initial instruction sequence
 let initialState : GState = {
   heap,
   stack: @list.empty(),
-  code: @list.from_array([PushGlobal("main"), Eval]),
+  code: @list.List([PushGlobal("main"), Eval]),
   globals,
   stats: 0,
   dump: @list.empty(),

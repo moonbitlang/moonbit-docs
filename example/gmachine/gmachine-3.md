@@ -7,12 +7,12 @@ This article is the third in a series on implementing Haskell's lazy evaluation 
 Let's review how we implemented primitives in the [last tutorial](gmachine-2.md).
 
 ```moonbit
-let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_array([
+let compiled_primitives : List[(String, Int, List[Instruction])] = @list.List([
     // Arith
     (
       "add",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -26,7 +26,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "sub",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -40,7 +40,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "mul",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -54,7 +54,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "div",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -69,7 +69,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "eq",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -83,7 +83,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "neq",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -97,7 +97,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "ge",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -111,7 +111,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "gt",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -125,7 +125,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "le",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -139,7 +139,7 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "lt",
       2,
-      @list.from_array([
+      @list.List([
         Push(1),
         Eval,
         Push(1),
@@ -154,15 +154,15 @@ let compiled_primitives : List[(String, Int, List[Instruction])] = @list.from_ar
     (
       "negate",
       1,
-      @list.from_array([Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),
+      @list.List([Push(0), Eval, Neg, Update(1), Pop(1), Unwind]),
     ),
     (
       "if",
       3,
-      @list.from_array([
+      @list.List([
         Push(0),
         Eval,
-        Cond(@list.from_array([Push(1)]), @list.from_array([Push(2)])),
+        Cond(@list.List([Push(1)]), @list.List([Push(2)])),
         Update(3),
         Pop(3),
         Unwind,
@@ -191,13 +191,13 @@ We use the `compileE` function to implement compilation in a strict context, ens
 For the default branch, we simply add an `Eval` instruction after the result of `compileC`.
 
 ```moonbit
-_ => self.compileC(env) + @list.from_array([Eval])
+_ => self.compileC(env) + @list.List([Eval])
 ```
 
 Constants are pushed directly.
 
 ```moonbit
-Num(n) => @list.from_array([PushInt(n)])
+Num(n) => @list.List([PushInt(n)])
 ```
 
 For `let/letrec` expressions, the specially designed `compileLet` and `compileLetrec` become useful. Compiling a `let/letrec` expression in a strict context only requires using `compileE` to compile its main expression.
@@ -218,9 +218,9 @@ App(App(App(Var("if"), b), e1), e2) => {
   let condition = b.compileE(env)
   let branch1 = e1.compileE(env)
   let branch2 = e2.compileE(env)
-  condition + @list.from_array([Cond(branch1, branch2)])
+  condition + @list.List([Cond(branch1, branch2)])
 }
-App(Var("negate"), e) => e.compileE(env) + @list.from_array([Neg])
+App(Var("negate"), e) => e.compileE(env) + @list.List([Neg])
 ```
 
 Basic binary operations can be handled uniformly through a lookup table. First, construct a hash table called `builtinOpS` to query the corresponding instructions by the name of the primitive.
@@ -247,11 +247,11 @@ The rest of the handling is not much different.
 ```moonbit
 App(App(Var(op), e0), e1) =>
   match builtinOpS.get(op) {
-    None => self.compileC(env) + @list.from_array([Eval])
+    None => self.compileC(env) + @list.List([Eval])
     Some(instr) => {
       let code1 = e1.compileE(env)
       let code0 = e0.compileE(argOffset(1, env))
-      code1 + code0 + @list.from_array([instr])
+      code1 + code0 + @list.List([instr])
     }
   }
 ```
@@ -392,22 +392,22 @@ App(App(Constructor(tag=1, arity=2), x), xs) =>
   // Cons(x, xs)
   xs.compileC(env) +
   x.compileC(argOffset(1, env)) +
-  @list.from_array([Pack(1, 2)])
+  @list.List([Pack(1, 2)])
 // Empty
-Constructor(tag=0, arity=0) => @list.from_array([Pack(0, 0)])
+Constructor(tag=0, arity=0) => @list.List([Pack(0, 0)])
 ```
 
 ```moonbit
 Case(e, alts) =>
-  e.compileE(env) + @list.from_array([CaseJump(compileAlts(alts, env))])
+  e.compileE(env) + @list.List([CaseJump(compileAlts(alts, env))])
 Constructor(tag=0, arity=0) =>
   // Empty
-  @list.from_array([Pack(0, 0)])
+  @list.List([Pack(0, 0)])
 App(App(Constructor(tag=1, arity=2), x), xs) =>
   // Cons(x, xs)
   xs.compileC(env) +
   x.compileC(argOffset(1, env)) +
-  @list.from_array([Pack(1, 2)])
+  @list.List([Pack(1, 2)])
 ```
 
 At this point, a new problem arises. Previously, printing the evaluation result only needed to handle simple `NNum` nodes, but `NConstr` nodes have substructures. When the list itself is evaluated to WHNF, its substructures are mostly unevaluated `NApp` nodes. We need to add a `Print` instruction, which will recursively evaluate and write the result into the `output` component of `GState`.
@@ -422,7 +422,7 @@ fn GState::gprint(self : GState) -> Unit {
     }
     NConstr(0, Empty) => self.output.write_string("Nil")
     NConstr(1, More(addr1, tail=More(addr2, tail=Empty))) => {
-      self.code = @list.from_array([Instruction::Eval, Print, Eval, Print]) +
+      self.code = @list.List([Instruction::Eval, Print, Eval, Print]) +
         self.code
       self.put_stack(addr2)
       self.put_stack(addr1)
@@ -439,7 +439,7 @@ let initialState : GState = {
   output: StringBuilder::new(size_hint=60),
   heap,
   stack: @list.empty(),
-  code: @list.from_array([PushGlobal("main"), Eval, Print]),
+  code: @list.List([PushGlobal("main"), Eval, Print]),
   globals,
   stats: 0,
   dump: @list.empty(),
