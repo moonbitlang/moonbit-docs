@@ -274,7 +274,7 @@ fn Tokens::parse_alts(
             self.next()
             let x = self.parse_var()
             let xs = self.parse_var()
-            (1, @list.from_array([x, xs]))
+            (1, @list.List([x, xs]))
           }
           other =>
             raise ParseError(

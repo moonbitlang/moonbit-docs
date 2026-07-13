@@ -82,7 +82,7 @@ let peers : Grid[Squares] = {
 
 ///|
 fn Grid::parse(s : String) -> Grid[@sorted_set.SortedSet[Char]] {
-  let digits = @sorted_set.from_array(cols.to_array())
+  let digits = @sorted_set.SortedSet(cols.to_array())
   let values = Grid::new(digits)
   let chars = s
     .iter()

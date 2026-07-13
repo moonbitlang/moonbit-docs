@@ -183,7 +183,7 @@ fn GState::unwind(self : GState) -> Unit {
     NApp(a1, _) => {
       self.put_stack(addr)
       self.put_stack(a1)
-      self.put_code(@list.from_array([Unwind]))
+      self.put_code(@list.List([Unwind]))
     }
     NGlobal(_, n, c) =>
       if self.stack.length() < n {
@@ -198,7 +198,7 @@ fn GState::unwind(self : GState) -> Unit {
       }
     NInd(a) => {
       self.put_stack(a)
-      self.put_code(@list.from_array([Unwind]))
+      self.put_code(@list.List([Unwind]))
     }
   }
 }
@@ -220,8 +220,8 @@ fn GState::alloc_nodes(self : GState, n : Int) -> Unit {
 fn GState::eval(self : GState) -> Unit {
   let addr = self.pop1()
   self.put_dump(self.code, self.stack)
-  self.stack = @list.from_array([addr])
-  self.code = @list.from_array([Unwind])
+  self.stack = @list.List([addr])
+  self.code = @list.List([Unwind])
 }
 // end eval definition
 

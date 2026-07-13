@@ -18,7 +18,7 @@ fn run(codes : List[String]) -> Node {
   let initialState : GState = {
     heap,
     stack: @list.empty(),
-    code: @list.from_array([PushGlobal("main"), Eval]),
+    code: @list.List([PushGlobal("main"), Eval]),
     globals,
     stats: 0,
     dump: @list.empty(),
@@ -30,7 +30,7 @@ fn run(codes : List[String]) -> Node {
 ///|
 test "basic eval" {
   let main = "(defn main[] (let ([add1 (add 1)]) (add1 1)))"
-  debug_inspect(run(@list.from_array([main])), content="NNum(2)")
+  debug_inspect(run(@list.List([main])), content="NNum(2)")
   let main = "(defn main[] (let ([x 4] [y 5]) (sub x y)))"
-  debug_inspect(run(@list.from_array([main])), content="NNum(-1)")
+  debug_inspect(run(@list.List([main])), content="NNum(-1)")
 }
