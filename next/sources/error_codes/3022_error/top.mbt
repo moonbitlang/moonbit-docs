@@ -1,1 +1,1 @@
-pub fn f() -> Unit {}
+pub fn f() -> Unit { () }

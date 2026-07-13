@@ -5,5 +5,5 @@ pub(open) trait I {
 
 pub(all) struct P[X](X)
 
-impl[X : Show] I for P[X] with f(_self) {}
-impl[X] I for P[X] with g(_self) {}
+impl[X : Show] I for P[X] with f(_self) { () }
+impl[X] I for P[X] with g(_self) { () }

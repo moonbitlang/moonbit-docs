@@ -111,13 +111,13 @@ pub(open) trait RequireAnyMethod {
   g(Self) -> Unit = _
 }
 
-impl RequireAnyMethod with f(_) {}
+impl RequireAnyMethod with f(_) { () }
 
-impl RequireAnyMethod with g(_) {}
+impl RequireAnyMethod with g(_) { () }
 
 type AnyImpl
 
-impl RequireAnyMethod for AnyImpl with f(_) {}
+impl RequireAnyMethod for AnyImpl with f(_) { () }
 // end must_implement_one any
 
 // start must_implement_one selected
@@ -128,15 +128,15 @@ pub(open) trait RequireSelectedMethod {
   h(Self) -> Unit = _
 }
 
-impl RequireSelectedMethod with f(_) {}
+impl RequireSelectedMethod with f(_) { () }
 
-impl RequireSelectedMethod with g(_) {}
+impl RequireSelectedMethod with g(_) { () }
 
-impl RequireSelectedMethod with h(_) {}
+impl RequireSelectedMethod with h(_) { () }
 
 type SelectedImpl
 
-impl RequireSelectedMethod for SelectedImpl with g(_) {}
+impl RequireSelectedMethod for SelectedImpl with g(_) { () }
 // end must_implement_one selected
 
 // start inline default
