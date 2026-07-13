@@ -23,7 +23,7 @@ fn main {
   let config1 = { "name": "Alice", "theme": "dark", "language": "en" }
   let config2 = { "name": "Bob", "language": "zh" }
   let config3 = { "theme": "light", "timeout": "30" }
-  let config4 = {}
+  let config4 = Map([])
   println(process_config(config1))
   println(process_config(config2))
   println(process_config(config3))

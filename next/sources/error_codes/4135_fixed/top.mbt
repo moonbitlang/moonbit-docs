@@ -5,8 +5,8 @@ pub(open) trait I {
 
 pub(all) struct P[X](X)
 
-impl[X] I for P[X] with f(_self) {}
-impl[X] I for P[X] with g(_self) {}
+impl[X] I for P[X] with f(_self) { () }
+impl[X] I for P[X] with g(_self) { () }
 
 pub fn use_i(p : P[Int]) -> Unit {
   p.f()
