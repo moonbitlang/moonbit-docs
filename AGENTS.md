@@ -41,6 +41,19 @@ an interactive language tour.
 - When touching examples under `next/sources/`, avoid broad `moon fmt` runs that
   rewrite unrelated files.
 
+## Stable toolchain updates
+- Use `~/repos/moon-stable/bin/moon` as the entry point when validating the
+  stable toolchain, and inspect the complete version output with
+  `~/repos/moon-stable/bin/moon version --all`.
+- Do not update docs against a nightly toolchain. The `moon version --all`
+  output must not contain `-nightly`.
+- Compare the `moonc` release reported by `moon version --all` with `release`
+  in `next/conf.py`. When the stable toolchain advances, tag the last published
+  commit on `origin/main` with the previous release before bumping `conf.py`.
+  Never place this release tag on an unmerged PR commit.
+- Apply stable toolchain updates in this order: tag the previous release, bump
+  `next/conf.py`, fix new warnings in checked examples, then update the docs.
+
 ## moonbit-tour
 - Install/build: `just tour-install && just tour-build && just tour-preview`
 - Dev server: `just tour-dev`
