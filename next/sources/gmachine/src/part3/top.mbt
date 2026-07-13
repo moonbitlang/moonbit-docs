@@ -19,7 +19,7 @@ fn run(codes : List[String]) -> String {
     output: StringBuilder::new(size_hint=60),
     heap,
     stack: @list.empty(),
-    code: @list.from_array([PushGlobal("main"), Eval, Print]),
+    code: @list.List([PushGlobal("main"), Eval, Print]),
     globals,
     stats: 0,
     dump: @list.empty(),
@@ -35,10 +35,10 @@ test "basic eval" {
     let (_, v) = kv
     basic.push(v)
   }
-  let basic = @list.from_array(basic)
+  let basic = @list.List(basic)
   let main = "(defn main[] (take 20 fibs))"
   inspect(
-    run(@list.from_array([main]).concat(basic)),
+    run(@list.List([main]).concat(basic)),
     content="0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 Nil",
   )
 }
