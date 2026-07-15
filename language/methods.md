@@ -177,7 +177,7 @@ fn main {
 }
 ```
 
-```default
+```none
 {x: 1, y: 2}
 2
 {x: 23, y: 2}

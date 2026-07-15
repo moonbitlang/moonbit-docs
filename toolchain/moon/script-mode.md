@@ -22,7 +22,7 @@ async fn main {
 
 Then run this script directly:
 
-```default
+```none
 $ moon run script.mbtx
 ```
 
@@ -52,20 +52,20 @@ in the local registry index.
 
 Moon supports running a `.mbtx` script from stdin:
 
-```default
+```none
 $ cat script.mbtx | moon run -
 ```
 
 For short scripts, pass the `.mbtx` source directly with `-c`:
 
-```default
+```none
 $ moon run -c "<script>"
 $ moon run -c 'fn main { println("hello") }'
 ```
 
 You can also use a heredoc, a feature provided by the shell:
 
-```default
+```none
 $ moon run - <<EOF
 fn main {
   println("hello")

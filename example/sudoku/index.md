@@ -15,7 +15,7 @@ top to bottom as A-I, and the columns from left to right as 1-9. This gives each
 square in the grid a coordinate, for example, the square containing the number 0
 in the grid below has the coordinate C3.
 
-```default
+```none
   1 2 3 4 5 6 7 8 9
 A . . . . . . . . .
 B . . . . . . . . .
@@ -32,7 +32,7 @@ This 9x9 grid has a total of 9 units, and each unit contains squares that must
 have unique digits from 1 to 9. However, in the initial state of the game, most
 squares do not contain any digits.
 
-```default
+```none
  4  1  7 | 3  6  9 | 8  2  5
  6  3  2 | 1  5  8 | 9  4  7
  9  5  8 | 7  2  4 | 3  1  6
@@ -50,7 +50,7 @@ Beyond the units, another important concept is peers. A square's peers include
 other squares in the same row, column, and unit. For example, the peers of C2
 include these squares:
 
-```default
+```none
     A2   |         |
     B2   |         |
     C2   |         |
@@ -188,7 +188,7 @@ We use a string to represent the initial Sudoku grid. Various formats are
 acceptable; both `.` and `0` represent empty squares, and other characters like
 spaces and newlines are ignored.
 
-```default
+```none
 #|400000805
 #|030000000
 #|000700000

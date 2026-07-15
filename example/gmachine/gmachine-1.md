@@ -8,7 +8,7 @@ Higher-order functions such as `map` and `filter` often serve as many people's f
 
 To enhance code efficiency, some propose leveraging compiler optimizations based on recurring patterns within higher-order functions. For instance, by rewriting `map(f, map(g, list))` as：
 
-```default
+```moonbit
 map(fn (x) { f(g(x)) }, list)
 ```
 
@@ -227,7 +227,7 @@ Before delving into how graph reduction works, let's establish some key terms an
 
 So, the graph reduction can be described with the following pseudocode:
 
-```default
+```none
 While there exist reducible expressions in the graph {
     Select the outermost reducible expression.
     Reduce the expression.

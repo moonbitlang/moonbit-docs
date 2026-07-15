@@ -72,7 +72,7 @@ The next issue is that we need something to clean up. Consider the following exp
 
 After constructing the graph corresponding to the expression `expr`, the stack still contains addresses pointing to e1 and e2 (corresponding to variables x1 and x2), as shown below (the stack grows from bottom to top):
 
-```default
+```none
 <Address pointing to expr>
        |
 <Address pointing to x2>

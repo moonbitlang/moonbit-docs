@@ -10,7 +10,7 @@ and how many times if they were.
 To enable coverage instrumentation in tests,
 you need to pass the `--enable-coverage` argument to `moon test`.
 
-```default
+```none
 $ moon test --enable-coverage
 ...
 Total tests: 3077, passed: 3077, failed: 0.
@@ -21,7 +21,7 @@ if they weren't previously compiled with coverage enabled.
 The execution process will look the same,
 but new coverage result files will be generated under the `target` directory.
 
-```default
+```none
 $ ls _build/wasm-gc/debug/test/ -w1
 array
 ...
@@ -56,7 +56,7 @@ controlled by the `-f` flag:
 `moon coverage report -f summary` exports the coverage data into stdout,
 printing the covered points and total coverage point count for each file.
 
-```default
+```none
 $ moon coverage report -f summary
 array/array.mbt: 21/22
 array/array_nonjs.mbt: 3/3
@@ -84,7 +84,7 @@ a file `bisect.coverage` which can be read by [OCaml Bisect](https://github.com/
 This format is line-based, and can be read by both Coveralls and CodeCov.
 You can find its specification [here](https://docs.coveralls.io/api-introduction#json-format-web-data).
 
-```default
+```none
 $ moon coverage report -f coveralls
 $ cat coveralls.json
 {
@@ -103,7 +103,7 @@ $ cat coveralls.json
 You can directly send this coverage report to Coveralls or CodeCov using the `--send-to` argument.
 The following is an example of using it in GitHub Actions:
 
-```default
+```none
 moon coverage report \
     -f coveralls \
     -o codecov_report.json \

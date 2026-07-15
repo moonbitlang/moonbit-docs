@@ -267,7 +267,7 @@ enum E {
 
 With `derive(ToJson(style="legacy"))`, the enum is formatted into:
 
-```default
+```none
 E::One              => { "$tag": "One" }
 E::Uniform(2)       => { "$tag": "Uniform", "0": 2 }
 E::Axes(x=-1, y=1)  => { "$tag": "Axes", "x": -1, "y": 1 }
@@ -275,7 +275,7 @@ E::Axes(x=-1, y=1)  => { "$tag": "Axes", "x": -1, "y": 1 }
 
 With `derive(ToJson(style="flat"))`, the enum is formatted into:
 
-```default
+```none
 E::One              => "One"
 E::Uniform(2)       => [ "Uniform", 2 ]
 E::Axes(x=-1, y=1)  => [ "Axes", -1, 1 ]

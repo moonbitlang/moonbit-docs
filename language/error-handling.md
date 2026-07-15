@@ -210,7 +210,7 @@ fn main {
 }
 ```
 
-```default
+```none
 division by zero
 ```
 

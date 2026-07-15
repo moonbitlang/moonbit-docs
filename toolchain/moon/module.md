@@ -5,7 +5,7 @@ and the new format is `moon.mod`. For full JSON schema, please check [moon's rep
 
 Full syntax of moon.mod is as follows:
 
-```default
+```none
 moon_mod ::= statement*
 statement ::= import | assign | apply
 
@@ -445,7 +445,7 @@ You can use `moonc check -warn-help` to see the list of preset compiler warning 
 In the output below, `mnemonic` is the symbolic warning name used in warning lists,
 while `id` is the numeric form of the same warning.
 
-```default
+```none
 $ moonc check -warn-help
 Available warnings: 
 mnemonic                   description                                                     id state

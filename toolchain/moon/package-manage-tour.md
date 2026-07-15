@@ -16,7 +16,7 @@ guide. If you have previously registered an account, you can use `moon login` to
 
 When you see the following message, it means you have successfully logged in:
 
-```default
+```none
 API token saved to ~/.moon/credentials.json
 ```
 
@@ -31,7 +31,7 @@ Created username/myapp at .
 
 It will generate template files in the path:
 
-```default
+```none
 ├── AGENTS.md                    # Collaboration guide for agents
 ├── LICENSE                      # Open-source license 
 ├── README.mbt.md                # README file with type checking support for moonbit 
@@ -55,7 +55,7 @@ the `.mbt` files in the same directory.
 Modules and packages are identified by a special path (not the file path in the file system).
 For example:
 
-```default
+```none
 username/myapp/cmd/main
 ─────────────────┬─────
 ────────┬─────   │
@@ -69,7 +69,7 @@ The template contains test files, documentation, and collaboration metadata by d
 You can safely remove any template files you do not need.
 The following is also a valid MoonBit project:
 
-```default
+```none
 ├── moon.mod.json
 ├── moon.pkg
 └── source.mbt

@@ -97,7 +97,7 @@ test "record anything" (t : @test.Test) {
 
 This will create a file under `__snapshot__` of that package with the given filename:
 
-```default
+```none
 Hello, world! And hello, MoonBit!
 ```
 

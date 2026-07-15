@@ -30,7 +30,7 @@ When we talk about the "difference" between two text files, what we are actually
 
 Assume the content of text a is
 
-```default
+```none
 A
 B
 C
@@ -42,7 +42,7 @@ A
 
 Assume the content of text b is
 
-```default
+```none
 C
 B
 A
@@ -110,7 +110,7 @@ In fact, it is one of the shortest edit sequences that can transform text a into
 
 When we insert a new function definition at the end of a file, the calculated edit sequence should ideally locate the changes at the end. In similar cases, when there are both deletions and insertions, it is best not to calculate an edit sequence that interleaves these two operations. Here's another example.
 
-```default
+```none
 Good:   - one         Bad:    - one
         - two                 + four
         - three               - two
@@ -125,7 +125,7 @@ Myers' diff algorithm can fulfill all those requirements. It is a greedy algorit
 
 The basic idea in Myers' paper is to construct a grid graph of edit sequences and then search for the shortest path on this graph. Using the previous example `a = ABCABBA` and `b = CBABAC`, we create an `(x, y)` coordinate grid.
 
-```default
+```none
     0     1     2     3     4     5     6     7
 
 0   o-----o-----o-----o-----o-----o-----o-----o
@@ -179,7 +179,7 @@ The implementation of the Myers algorithm adopts a clever approach by defining a
 
 Let's define another coordinate `d` to represent the depth of the search. Using `d` as the horizontal axis and `k` as the vertical axis, we can draw a tree diagram of the search process.
 
-```default
+```none
     |      0     1     2     3     4     5
 ----+--------------------------------------
     |

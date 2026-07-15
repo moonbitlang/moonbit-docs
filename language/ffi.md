@@ -364,7 +364,7 @@ void *moonbit_make_external_object(
 `moonbit_make_external_object` will create a new MoonBit object of size `payload_size + sizeof(finalize)`,
 the layout of the object is as follows:
 
-```default
+```none
 | MoonBit object header | ... payload | finalize function |
                         ^
                         |

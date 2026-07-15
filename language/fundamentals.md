@@ -118,7 +118,7 @@ let b =
 println(b)
 ```
 
-```default
+```none
  Hello
  MoonBit\n
 
@@ -160,7 +160,7 @@ println(raw)
 println(interp)
 ```
 
-```default
+```none
  Hello
  ---
  \{lang}
@@ -233,7 +233,7 @@ fn main {
 }
 ```
 
-```default
+```none
 97
 255
 ```
@@ -340,7 +340,7 @@ fn main {
 }
 ```
 
-```default
+```none
 false 100 text 3.14
 ```
 
@@ -1060,7 +1060,7 @@ fn main {
 }
 ```
 
-```default
+```none
 5
 4
 3
@@ -1086,7 +1086,7 @@ fn main {
 }
 ```
 
-```default
+```none
 3
 2
 ```
@@ -1105,7 +1105,7 @@ fn main {
 }
 ```
 
-```default
+```none
 2
 1
 0
@@ -1128,7 +1128,7 @@ fn main {
 }
 ```
 
-```default
+```none
 5
 ```
 
@@ -1144,7 +1144,7 @@ fn main {
 }
 ```
 
-```default
+```none
 7
 ```
 
@@ -1161,7 +1161,7 @@ fn main {
 }
 ```
 
-```default
+```none
 0
 1
 2
@@ -1210,7 +1210,7 @@ fn main {
 }
 ```
 
-```default
+```none
 even: 2
 even: 4
 even: 6
@@ -1268,7 +1268,7 @@ fn main {
 }
 ```
 
-```default
+```none
 The 1-th element of the array is 4
 The 2-th element of the array is 5
 The 3-th element of the array is 6
@@ -1291,7 +1291,7 @@ fn main {
 }
 ```
 
-```default
+```none
 x, 1
 z, 3
 ```
@@ -1310,7 +1310,7 @@ fn main {
 }
 ```
 
-```default
+```none
 0
 1
 2
@@ -1549,7 +1549,7 @@ fn main {
 }
 ```
 
-```default
+```none
 0
 John Doe
 john@doe.name
@@ -1588,7 +1588,7 @@ fn main {
 }
 ```
 
-```default
+```none
 { id: 0, name: John Doe, email: john@doe.com }
 { id: 0, name: John Doe, email: john@doe.name }
 ```
@@ -1766,7 +1766,7 @@ fn main {
 }
 ```
 
-```default
+```none
 smaller!
 equal!
 greater!
@@ -1825,7 +1825,7 @@ fn main {
 }
 ```
 
-```default
+```none
 false
 1,
 2,
@@ -1864,7 +1864,7 @@ fn main {
 }
 ```
 
-```default
+```none
 0!
 0
 ```
@@ -1912,7 +1912,7 @@ fn main {
 }
 ```
 
-```default
+```none
 5
 NotImplementedError
 ```
@@ -2061,7 +2061,7 @@ fn main {
 }
 ```
 
-```default
+```none
 1
 John Doe
 ```
@@ -2079,7 +2079,7 @@ fn main {
 }
 ```
 
-```default
+```none
 1
 John Doe
 ```

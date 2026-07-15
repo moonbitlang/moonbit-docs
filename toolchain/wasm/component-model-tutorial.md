@@ -20,7 +20,7 @@ instructions from the
 Verify your MoonBit installation (below are the versions at the time of
 writing):
 
-```default
+```none
 $ moon version --all
 moon 0.1.20250826 (8ab6c9e 2025-08-26) ~/.moon/bin/moon
 moonc v0.6.25+d6913262c (2025-08-27) ~/.moon/bin/moonc
@@ -32,17 +32,17 @@ moon-pilot 0.0.1-95f12db ~/.moon/bin/moon-pilot
 
 1. Install the `wit-bindgen` CLI tool, which generates MoonBit bindings from WIT
    files:
-   ```default
+   ```none
    $ cargo install wit-bindgen-cli
    ```
 2. Install `wasm-tools` for working with WebAssembly components:
-   ```default
+   ```none
    $ cargo install wasm-tools
    ```
 
 Verify the installations (below are the versions at the time of writing):
 
-```default
+```none
 $ wit-bindgen --version
 wit-bindgen-cli 0.45.0
 $ wasm-tools --version
@@ -94,7 +94,7 @@ $ wit-bindgen moonbit wit/world.wit --out-dir . \
 
 This command generates the following directory structure:
 
-```default
+```none
 .
 ├── ffi
 │   ├── moon.pkg
@@ -245,7 +245,7 @@ $ cargo run --release -- 5 3 adder.component.wasm
 
 Expected output:
 
-```default
+```none
 5 + 3 = 8
 ```
 

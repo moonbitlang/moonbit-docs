@@ -51,7 +51,7 @@ To create a project (or module, more formally), run `moon new <path>`, where pat
 is the place you would like to place the project. For example, if you execute
 `moon new examine`, you will get:
 
-```default
+```none
 examine
 ├── Agents.md
 ├── cmd

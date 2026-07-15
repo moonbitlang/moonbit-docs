@@ -51,7 +51,7 @@ The `moon.pkg` format allows comments `//...`.
 
 Full syntax of `moon.pkg` is as follows:
 
-```default
+```none
 moon_pkg ::= statement*
 statement ::= import | assign | apply
 
@@ -1023,7 +1023,7 @@ form of the same warning.
 
 The current list from `moonc check -warn-help` is:
 
-```default
+```none
 Available warnings:
 mnemonic                   description                                                     id state
 unused_value               Unused variable or function.                                     1 warn

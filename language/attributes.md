@@ -24,7 +24,7 @@ expr ::= LIDENT | UIDENT | STRING | 'true' | 'false'
 
 Attributes have two categories: the built-in attributes and user-defined attributes. For example:
 
-```default
+```moonbit
 #deprecated("message")
 #custom.attribute(key="value", flag=true)
 ```
