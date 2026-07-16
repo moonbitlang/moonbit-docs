@@ -1865,9 +1865,9 @@ bind structurally:
 :end-before: end or pattern defaults
 ```
 
-For multiple defaults, write `with (x = value, y = value)`. Parentheses also
-make it clear which alternative receives a default. A default cannot refer to a binder
-from the complete pattern, and control flow such as `return`, `break`,
+For multiple defaults, write `(Pattern with x = value, y = value)`. Parentheses
+make it clear which alternative receives a default. A default cannot refer to a
+binder from the complete pattern, and control flow such as `return`, `break`,
 `continue`, or `raise` is not allowed inside the default expression.
 
 ### Guard condition

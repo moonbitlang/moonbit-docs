@@ -37,10 +37,10 @@ impl ToJson for Node with to_json(node) {
   match node {
     Nil => "Nil"
     Node(data~, tag~, left~, right~) => {
-      let data_json = data.to_json()
-      let tag_json = tag.to_json()
-      let left_json = left.to_json()
-      let right_json = right.to_json()
+      let data_json = ToJson::to_json(data)
+      let tag_json = ToJson::to_json(tag)
+      let left_json = ToJson::to_json(left)
+      let right_json = ToJson::to_json(right)
       {
         "data": data_json,
         "tag": tag_json,
