@@ -4,6 +4,10 @@ moon uses a package file to identify and describe a package. The legacy format
 is `moon.pkg.json`, and the new format is `moon.pkg`. For full JSON schema,
 please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/pkg.schema.json).
 
+Support for `moon.pkg.json` is deprecated in v0.10.4 and scheduled for removal
+in the following release. New projects should use `moon.pkg`; existing JSON
+configuration can be migrated with `moon fmt` as described below.
+
 ## New format (`moon.pkg`)
 
 The new format is a concise DSL. You can generate or reformat it from an
@@ -26,9 +30,10 @@ In `moon.pkg`, dependencies are declared in an `import { ... }` block. Use
 :language: moonbit
 ```
 
-All other fields from `moon.pkg.json` move into a single `options(...)` block.
-The key names and value shapes are unchanged; the legacy keys that contain `-` must be
-quoted.
+Most fields from `moon.pkg.json` can be represented in an `options(...)` block.
+Stable declarations such as `formatter` and `pkgtype` have dedicated top-level
+forms. Legacy keys that contain `-` must be quoted when they are used inside
+`options`.
 
 ```{literalinclude} /sources/language/src/packages/virtual/moon.pkg
 :language: moonbit
@@ -75,11 +80,7 @@ exclude.
 ``````{tab-item} moon.pkg
 
 ```moonbit
-options(
-  formatter: {
-    ignore: [ "generated.mbt", "snapshot.mbt" ],
-  },
-)
+formatter(ignore: ["generated.mbt", "snapshot.mbt"])
 ```
 
 ``````
@@ -96,9 +97,45 @@ options(
 
 `````````
 
-## is-main
+## Package type
 
-The `is-main` field is used to specify whether a package needs to be linked into an executable file.
+Use one `pkgtype` declaration to specify what a package builds. For example, an
+executable package uses:
+
+```moonbit
+pkgtype(kind: "executable")
+```
+
+The available kinds are `library`, `executable`, and `foreign_library`.
+`library` is the default. `executable` replaces the legacy
+`options("is-main": true)`, while `foreign_library` replaces the legacy
+`options(link: true)`. These kinds are alternatives and must not be declared
+together.
+
+In a foreign-library package, `#export_name` assigns a stable symbol name to a
+public, non-generic function in generated Wasm, JavaScript, or C output:
+
+```moonbit
+#export_name("attr_add")
+pub fn add_by_attr(n : Int) -> Int {
+  n + 42
+}
+```
+
+Export names must be valid C symbol identifiers and unique within the package.
+The attribute cannot be used on generic functions or functions with optional
+arguments, and it exports only functions declared in the foreign-library
+package itself, not symbols from dependencies. Static and dynamic library
+output from the new native backend is still being stabilized, so
+`#export_name` is currently most useful with the Wasm and JavaScript backends.
+
+(is-main)=
+## is-main (deprecated)
+
+The `is-main` field is deprecated. It is still accepted for compatibility with
+existing package files, but new and migrated `moon.pkg` files should use
+`pkgtype(kind: "executable")` instead. The following legacy declarations are
+equivalent to that `pkgtype` declaration:
 
 The output of the linking process depends on the backend. When this field is set to `true`:
 
@@ -144,7 +181,7 @@ User can write `@c` to access definitions from `pkgC`.
 ``````
 
 ``````{tab-item} moon.pkg.json
-```{literalinclude} /sources/language/src/packages/pkgB/moon.pkg.json
+```{literalinclude} /sources/language/src/packages/pkgB/moon.pkg.json.example
 :language: json
 ```
 ``````
@@ -342,7 +379,7 @@ This is package metadata, not a conditional compilation rule:
 
 - use `supported-targets` to declare the package's supported backend set
 - use `targets` to include or exclude individual files for different backends
-- use `preferred-target` in `moon.mod.json` to choose the default backend for commands such as `moon check`, `moon run`, and `moon build`
+- use `preferred_target` in `moon.mod` to choose the default backend for commands such as `moon check`, `moon run`, and `moon build`
 
 When both the module and the package declare `supported-targets`, the effective backend set is
 their intersection.
@@ -367,7 +404,7 @@ Notes:
 A common setup is:
 
 - mark a native-only package with `"supported-targets": "native"`
-- set `"preferred-target": "native"` in `moon.mod.json`
+- set `preferred_target = "native"` in `moon.mod`
 - use `targets` only when some files inside the package differ by backend
 
 ## Native Stub Files
@@ -401,7 +438,10 @@ options(
 
 ## Link Options
 
-By default, moon only links packages where `is-main` is set to `true`. If you need to link other packages, you can specify this with the `link` option.
+Packages declared as `executable` or `foreign_library` produce linked output.
+The boolean `link: true` form is legacy; use
+`pkgtype(kind: "foreign_library")` when a package builds a library for foreign
+code. An object-valued `link` option configures backend-specific linking.
 
 The `link` option is used to specify link options, and its value can be either a boolean or an object.
 
@@ -929,6 +969,9 @@ step. It selects a rule and supplies the input and output paths used when
 expanding that rule's command. A package can declare multiple `dev_build`
 entries.
 
+Pre-build commands run with the module root as their working directory. Input,
+output, and other pre-build paths are resolved relative to that module root.
+
 Rules can be declared either as package-level rules in the same `moon.pkg` or as
 module-level rules in [`moon.mod`](/toolchain/moon/module.md). A package-level
 rule is visible only to `dev_build` entries in that same `moon.pkg`; a
@@ -970,7 +1013,7 @@ The warning list is a string composed of multiple warning name, each prefixed wi
 
 - `-` to disable the warning
 - `+` to enable the warning
-- `@` to treat the enabled warning as a fatal error
+- `@` to treat the enabled warning as a fatal error (deprecated)
 
 For example, in the following configuration, `-unused_value` disables the unused functions and variables warning.
 
@@ -1023,7 +1066,9 @@ warnings = "+unused_optional_argument"
 ``````
 `````````
 
-To treat a warning as a fatal error, use the `@`.
+The `@` switch is deprecated. Use `moon check --deny-warn` (and the equivalent
+flag on other CI commands) when warnings should fail the build. Existing `@`
+configuration is shown here only for migration.
 
 `````````{tab-set}
 ``````{tab-item} moon.pkg
@@ -1119,6 +1164,15 @@ core_package_not_imported  Packages in `moonbitlang/core` need to be explicitly 
 unqualified_local_using    unqualified local using                                         72 off
 unnecessary_annotation     unnecessary type annotation                                     73 off
 missing_doc                Missing documentation for public definition                     74 off
+unnecessary_view_op        Unnecessary `[:]` view operator                                 75 off
+lexmatch_first_match       Deprecated `lexmatch` with first-match semantics.               76 warn
+lexmatch_longest_match     Deprecated `lexmatch` with longest-match semantics.             77 warn
+result_error_return        Using `Result[T, E]` where `E` is an error type.                78 off
+implicit_impl_as_method    `impl` implicitly promoted as method                            79 off
+regex_match_missing_before Missing `before` binding in `regex match`.                      80 warn
+regex_match_missing_after  Missing `after` binding in `regex match`.                       81 warn
+ambiguous_braces           Ambiguous `{}` braces.                                          82 warn
+type_param_method          Calling method of type parameter in a deprecated way.           83 warn
 A                          all warnings
 state: warn = enabled, error = promoted to error, off = disabled
 note: default alert exceptions: alert_unsafe=off

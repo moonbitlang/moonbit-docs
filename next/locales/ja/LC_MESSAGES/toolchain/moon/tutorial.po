@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-18 10:16+0800\n"
+"POT-Creation-Date: 2026-07-16 16:10+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -178,60 +178,58 @@ msgstr ""
 msgid "`cmd/main/moon.pkg`:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:81 ../../toolchain/moon/tutorial.md:186
+#: ../../toolchain/moon/tutorial.md:81 ../../toolchain/moon/tutorial.md:185
 msgid ""
 "import {\n"
 "  \"username/my_project\" @lib,\n"
 "}\n"
 "\n"
-"options(\n"
-"  \"is-main\": true,\n"
-")\n"
+"pkgtype(kind: \"executable\")\n"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:91
+#: ../../toolchain/moon/tutorial.md:89
 msgid ""
-"Here, `\"is-main\": true` declares that the package contains an entry for"
-" the `moon run` command."
-msgstr ""
+"Here, `pkgtype(kind: \"executable\")` declares that the package contains "
+"an entry for the `moon run` command."
+msgstr "ここでは、`pkgtype(kind: \"executable\")` により、このパッケージに `moon run` コマンドのエントリが含まれることを宣言します。"
 
-#: ../../toolchain/moon/tutorial.md:93
+#: ../../toolchain/moon/tutorial.md:92
 msgid "`moon.pkg`:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:95
+#: ../../toolchain/moon/tutorial.md:94
 msgid ""
 "This file may be empty. Its purpose is simply to inform the build system "
 "that this folder is a package."
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:97
+#: ../../toolchain/moon/tutorial.md:96
 msgid ""
 "`README.mbt.md` is the README file. In this file, `mbt check` code blocks"
 " are checked and run by `moon check` and `moon test`."
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:99
+#: ../../toolchain/moon/tutorial.md:98
 msgid "Working with Packages"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:101
+#: ../../toolchain/moon/tutorial.md:100
 msgid ""
 "Our `username/my_project` module contains two packages: "
 "`username/my_project` and `username/my_project/cmd/main`."
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:103
+#: ../../toolchain/moon/tutorial.md:102
 msgid ""
 "The `username/my_project` package contains `my_project.mbt` and "
 "`my_project_test.mbt` files:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:106
+#: ../../toolchain/moon/tutorial.md:105
 msgid "my_project.mbt"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:106
+#: ../../toolchain/moon/tutorial.md:105
 msgid ""
 "///|\n"
 "pub fn fib(n : Int) -> Int64 {\n"
@@ -243,11 +241,11 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:118
+#: ../../toolchain/moon/tutorial.md:117
 msgid "my_project_test.mbt"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:118
+#: ../../toolchain/moon/tutorial.md:117
 msgid ""
 "///|\n"
 "test \"fib\" {\n"
@@ -260,15 +258,15 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:132
+#: ../../toolchain/moon/tutorial.md:131
 msgid "The generated file name will depend on the package name."
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:135
+#: ../../toolchain/moon/tutorial.md:134
 msgid "The `username/my_project/cmd/main` package contains a `main.mbt` file:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:137
+#: ../../toolchain/moon/tutorial.md:136
 msgid ""
 "///|\n"
 "fn main {\n"
@@ -276,61 +274,61 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:144
+#: ../../toolchain/moon/tutorial.md:143
 msgid ""
 "To execute the program, specify the file system's path to the "
 "`username/my_project/cmd/main` package in the `moon run` command:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:146
+#: ../../toolchain/moon/tutorial.md:145
 msgid ""
 "$ moon run cmd/main\n"
 "89\n"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:151
+#: ../../toolchain/moon/tutorial.md:150
 msgid "You can test using the `moon test` command:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:153
+#: ../../toolchain/moon/tutorial.md:152
 msgid ""
 "$ moon test\n"
 "Total tests: 1, passed: 1, failed: 0.\n"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:158
+#: ../../toolchain/moon/tutorial.md:157
 msgid "Choosing a Target"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:160
+#: ../../toolchain/moon/tutorial.md:159
 msgid ""
 "Moon has three different target-related knobs, and they serve different "
 "jobs:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:162
+#: ../../toolchain/moon/tutorial.md:161
 msgid ""
 "`--target` on the command line chooses which backend the current command "
 "uses"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:163
+#: ../../toolchain/moon/tutorial.md:162
 msgid ""
 "`preferred-target` in `moon.mod.json` chooses the default backend for "
 "`moon` and the language server"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:164
+#: ../../toolchain/moon/tutorial.md:163
 msgid ""
 "`supported-targets` declares which backends a module or package is "
 "intended to support"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:166
+#: ../../toolchain/moon/tutorial.md:165
 msgid "For example, a native-first CLI project may set:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:168
+#: ../../toolchain/moon/tutorial.md:167
 msgid ""
 "{\n"
 "  \"preferred-target\": \"native\",\n"
@@ -338,24 +336,24 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:175
+#: ../../toolchain/moon/tutorial.md:174
 msgid ""
 "`supported-targets` uses target-set syntax such as `js`, `+js+wasm-gc`, "
 "or `+all-js`."
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:177
+#: ../../toolchain/moon/tutorial.md:176
 msgid ""
 "If only some files are backend-specific, keep the module or package "
 "metadata broad and use [`targets`](package.md#conditional-compilation) in"
 " `moon.pkg` or legacy `moon.pkg.json` to select files per backend."
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:181
+#: ../../toolchain/moon/tutorial.md:180
 msgid "Package Importing"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:183
+#: ../../toolchain/moon/tutorial.md:182
 msgid ""
 "In the MoonBit build system, dependencies are declared at the package "
 "level. To import the `username/my_project` package in "
@@ -363,34 +361,34 @@ msgid ""
 "`cmd/main/moon.pkg`:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:196
+#: ../../toolchain/moon/tutorial.md:193
 msgid ""
 "Here, `\"username/my_project\"` specifies importing the root package and "
 "having an alias of `lib`, so you can use `@lib.fib(10)` in "
 "`cmd/main/main.mbt`."
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:198
+#: ../../toolchain/moon/tutorial.md:195
 msgid "Creating and Using a New Package"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:200
+#: ../../toolchain/moon/tutorial.md:197
 msgid "First, create a new directory named `fib` in the module root:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:202
+#: ../../toolchain/moon/tutorial.md:199
 msgid "mkdir fib\n"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:206
+#: ../../toolchain/moon/tutorial.md:203
 msgid "Now, you can create new files under `fib`:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:208
+#: ../../toolchain/moon/tutorial.md:205
 msgid "slow.mbt"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:208
+#: ../../toolchain/moon/tutorial.md:205
 msgid ""
 "pub fn fib_slow(n : Int) -> Int {\n"
 "  match n {\n"
@@ -401,11 +399,11 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:219
+#: ../../toolchain/moon/tutorial.md:216
 msgid "fast.mbt"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:219
+#: ../../toolchain/moon/tutorial.md:216
 msgid ""
 "pub fn fib_fast(num : Int) -> Int {\n"
 "  fn aux(n, acc1, acc2) {\n"
@@ -420,21 +418,21 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:234
+#: ../../toolchain/moon/tutorial.md:231
 msgid "moon.pkg"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:234
+#: ../../toolchain/moon/tutorial.md:231
 msgid "// This package does not need extra options yet."
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:239
+#: ../../toolchain/moon/tutorial.md:236
 msgid ""
 "After creating these files, your directory structure should look like "
 "this:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:241
+#: ../../toolchain/moon/tutorial.md:238
 msgid ""
 ".\n"
 "├── Agents.md\n"
@@ -455,31 +453,29 @@ msgid ""
 "└── README.md -> README.mbt.md\n"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:261
+#: ../../toolchain/moon/tutorial.md:258
 msgid ""
 "In the `cmd/main/moon.pkg` file, import the `username/my_project/fib` "
 "package and customize its alias to `my_awesome_fibonacci`:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:263
+#: ../../toolchain/moon/tutorial.md:260
 msgid ""
 "import {\n"
 "  \"username/my_project/fib\" @my_awesome_fibonacci,\n"
 "}\n"
 "\n"
-"options(\n"
-"  \"is-main\": true,\n"
-")\n"
+"pkgtype(kind: \"executable\")\n"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:273
+#: ../../toolchain/moon/tutorial.md:268
 msgid ""
 "This imports the `fib` package. After doing this, you can use the `fib` "
 "package in `cmd/main/main.mbt`. Replace the file content of "
 "`cmd/main/main.mbt` to:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:275
+#: ../../toolchain/moon/tutorial.md:270
 msgid ""
 "fn main {\n"
 "  let a = @my_awesome_fibonacci.fib_slow(10)\n"
@@ -488,27 +484,27 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:283
+#: ../../toolchain/moon/tutorial.md:278
 msgid "To execute your program, specify the path to the `main` package:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:285
+#: ../../toolchain/moon/tutorial.md:280
 msgid ""
 "$ moon run cmd/main\n"
 "fib(10) = 55, fib(11) = 89\n"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:290
+#: ../../toolchain/moon/tutorial.md:285
 msgid "Adding Tests"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:292
+#: ../../toolchain/moon/tutorial.md:287
 msgid ""
 "Let's add some tests to verify our fib implementation. Add the following "
 "content in `fib/fib_test.mbt`:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:294
+#: ../../toolchain/moon/tutorial.md:289
 msgid ""
 "test {\n"
 "  inspect(@fib.fib_slow(0))\n"
@@ -517,27 +513,27 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:302
+#: ../../toolchain/moon/tutorial.md:297
 msgid ""
 "This code tests the first three terms of the Fibonacci sequence. `test { "
 "... }` defines an inline test block. The code inside an inline test block"
 " is executed in test mode."
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:304
+#: ../../toolchain/moon/tutorial.md:299
 msgid ""
 "Inline test blocks are discarded in non-test compilation modes (`moon "
 "build` and `moon run`), so they won't cause the generated code size to "
 "bloat."
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:306
+#: ../../toolchain/moon/tutorial.md:301
 msgid ""
 "Here we are using the snapshot test. Execute `moon test --update`, and "
 "the file should be changed to:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:308
+#: ../../toolchain/moon/tutorial.md:303
 msgid ""
 "test {\n"
 "  inspect(@fib.fib_slow(0), content=\"0\")\n"
@@ -546,22 +542,48 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:316
+#: ../../toolchain/moon/tutorial.md:311
 msgid ""
 "Notice that the test code uses `@fib` to refer to the `fib` package. The "
 "build system automatically creates a new package for blackbox tests by "
 "using the files that end with `_test.mbt`."
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:318
+#: ../../toolchain/moon/tutorial.md:313
 msgid ""
 "Finally, reuse the `moon test` command, which scans the entire project, "
 "identifies, and runs all the tests. If everything is normal, you will "
 "see:"
 msgstr ""
 
-#: ../../toolchain/moon/tutorial.md:321
+#: ../../toolchain/moon/tutorial.md:316
 msgid ""
 "$ moon test\n"
 "Total tests: 2, passed: 2, failed: 0.\n"
 msgstr ""
+
+#~ msgid ""
+#~ "import {\n"
+#~ "  \"username/my_project\" @lib,\n"
+#~ "}\n"
+#~ "\n"
+#~ "options(\n"
+#~ "  \"is-main\": true,\n"
+#~ ")\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Here, `\"is-main\": true` declares that"
+#~ " the package contains an entry for"
+#~ " the `moon run` command."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "import {\n"
+#~ "  \"username/my_project/fib\" @my_awesome_fibonacci,\n"
+#~ "}\n"
+#~ "\n"
+#~ "options(\n"
+#~ "  \"is-main\": true,\n"
+#~ ")\n"
+#~ msgstr ""

@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
@@ -346,8 +345,7 @@ msgid ""
 "}\n"
 msgstr ""
 "let prelude_defs : List[ScDef[String]] = {\n"
-"  let args : (FixedArray[String]) -> List[String] = x => "
-"@list.from_array(x)\n"
+"  let args : (FixedArray[String]) -> List[String] = x => @list.List(x)\n"
 "  let id = ScDef::new(\"I\", args([\"x\"]), Var(\"x\")) // 恒等：id x = x\n"
 "  let k = ScDef::new(\"K\", args([\"x\", \"y\"]), Var(\"x\")) // K 组合子：K "
 "x y = x\n"
@@ -368,7 +366,7 @@ msgstr ""
 "    args([\"f\"]),\n"
 "    App(App(Var(\"compose\"), Var(\"f\")), Var(\"f\")),\n"
 "  ) // 两次应用：twice f = compose f f\n"
-"  @list.from_array([id, k, k1, s, compose, twice])\n"
+"  @list.List([id, k, k1, s, compose, twice])\n"
 "}\n"
 
 #: ../../example/gmachine/gmachine-1.md:106

@@ -117,6 +117,21 @@ test "struct constructor raise" {
   // end struct constructor 9
 }
 
+// start custom constructor enum
+enum Endpoint {
+  Host(String, Int)
+} derive(Debug)
+
+fn Endpoint::Endpoint(host : String, port? : Int = 80) -> Endpoint {
+  Host(host, port)
+}
+
+test {
+  let endpoint = Endpoint("example.com", port=443)
+  debug_inspect(endpoint, content="Host(\"example.com\", 443)")
+}
+// end custom constructor enum
+
 // start enum 1
 /// An enum type that represents the ordering relation between two values,
 /// with three cases "Smaller", "Greater" and "Equal"

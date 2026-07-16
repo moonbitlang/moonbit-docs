@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-21 14:57+0800\n"
+"POT-Creation-Date: 2026-07-16 15:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -57,14 +56,23 @@ msgid "`-warning_name`: disable the warning"
 msgstr "`-warning_name`: 关闭这个警告"
 
 #: ../../language/attributes/warnings.md:20
-msgid "`@warning_name`: treat a enabled warning as an error"
-msgstr "`@warning_name`: 如果这个警告已经启用，转换为错误"
+msgid "`@warning_name`: treat an enabled warning as an error (deprecated)"
+msgstr "`@warning_name`：将已启用的警告视为错误（已弃用）"
 
 #: ../../language/attributes/warnings.md:22
+msgid ""
+"The `@` switch is deprecated in v0.10.4. Use `+` or `-` to configure "
+"individual warnings, and use `moon check --deny-warn` or the equivalent "
+"command flag when warnings should fail a CI build."
+msgstr ""
+"`@` 开关已在 v0.10.4 中弃用。请使用 `+` 或 `-` 配置单项警告；需要让警告导致 "
+"CI 构建失败时，请使用 `moon check --deny-warn` 或相应命令的同类选项。"
+
+#: ../../language/attributes/warnings.md:26
 msgid "Currently this attribute only works with some specific warnings."
 msgstr "目前这个属性只对部分特定的警告工作。"
 
-#: ../../language/attributes/warnings.md:24
+#: ../../language/attributes/warnings.md:28
 msgid ""
 "To learn more about warning names, see [warning "
 "list](/toolchain/moon/package.md#warnings-list)."

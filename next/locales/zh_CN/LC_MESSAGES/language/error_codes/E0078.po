@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-16 15:07+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0078.md:1
+msgid "E0078"
+msgstr ""
+
+#: ../../language/error_codes/E0078.md:3
+msgid "Warning name: `result_error_return`"
+msgstr "警告名称：`result_error_return`"
+
+#: ../../language/error_codes/E0078.md:5
+msgid "A function returns `Result[T, E]` even though `E` is an error type."
+msgstr "函数返回了 `Result[T, E]`，但 `E` 本身是错误类型。"
+
+#: ../../language/error_codes/E0078.md:7
+msgid ""
+"For a failable API, prefer MoonBit's error effect, written `T raise E`. "
+"Keep a `Result` return type only when success and failure are "
+"intentionally represented as ordinary data. This migration warning is "
+"disabled by default."
+msgstr ""
+"对于可能失败的 API，优先使用 MoonBit 的错误效应，即 `T raise E`。只有在成功与失败确实要作为普通数据表示时，才保留 `Result` 返回类型。此迁移警告默认关闭。"
+
+#: ../../language/error_codes/E0078.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0078.md:13
+msgid ""
+"///|\n"
+"pub(all) suberror ParseError {\n"
+"  ParseError\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn parse_number() -> Result[Int, ParseError] {\n"
+"  Err(ParseError)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0078.md:17
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E0078.md:19
+msgid "Return the success type and declare the error with `raise`."
+msgstr "返回成功值的类型，并用 `raise` 声明错误。"
+
+#: ../../language/error_codes/E0078.md:21
+msgid ""
+"///|\n"
+"pub(all) suberror ParseError {\n"
+"  ParseError\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn parse_number() -> Int raise ParseError {\n"
+"  raise ParseError\n"
+"}\n"
+msgstr ""

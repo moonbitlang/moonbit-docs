@@ -1,5 +1,9 @@
-pub struct Status {}
+///|
+pub(open) trait Renderable {
+  fn render(Self) -> String
+}
 
-pub fn Status::Status() -> Status {
-  Status::{  }
+///|
+pub fn[X : Renderable] as_renderable(value : X) -> &Renderable {
+  value as &Renderable
 }

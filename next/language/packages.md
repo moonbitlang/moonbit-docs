@@ -6,7 +6,8 @@ More often, it involves using other people's work: most noticeably is the [core]
 ## Packages and modules
 
 In MoonBit, the most important unit for code organization is a package, which consists of a number of source code files and a single package configuration file (`moon.pkg`, or the legacy `moon.pkg.json` format).
-A package can either be a `main` package, consisting a `main` function, or a package that serves as a library, identified by the [`is-main`](/toolchain/moon/package.md#is-main) field.
+A package is a library by default. A package containing a `main` function is
+declared executable with [`pkgtype(kind: "executable")`](/toolchain/moon/package.md#package-type).
 
 A project, corresponding to a module, consists of multiple packages and a single `moon.mod.json` configuration file.
 

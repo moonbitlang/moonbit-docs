@@ -216,6 +216,11 @@ and the methods defined in the sub trait. For example:
 :end-before: end super trait 2
 ```
 
+In a generic function constrained by a subtrait, call methods inherited from a
+supertrait with qualified syntax such as `Position::pos(obj)`. Calling those
+methods on the type parameter with dot syntax is deprecated because the method
+comes from the supertrait rather than the written constraint.
+
 For traits where all methods have default implementation,
 it is still necessary to explicitly implement them,
 in order to support features such as [abstract trait](/language/packages.md#traits).
@@ -229,6 +234,38 @@ the `impl Trait for Type` can also serve as documentation, or a TODO mark before
 ```{warning}
 Currently, an empty trait without any method is implemented automatically.
 ```
+
+#### Attaching trait methods with `extend`
+
+An `impl Trait for Type` declaration records that `Type` implements `Trait`.
+Use an `extend` declaration to explicitly attach selected trait methods to the
+type so that they can be called with dot syntax:
+
+```{literalinclude} /sources/language/src/trait/top.mbt
+:language: moonbit
+:start-after: start trait 8
+:end-before: end trait 8
+```
+
+The general form is `extend Type with Trait::{method1, method2}`. Add `pub` to
+make the attached methods public; without `pub`, they are available only in the
+current package. A private type may still have a private `extend` declaration.
+
+When an attached trait method uses a default implementation, `Self` in that
+implementation is specialized to `Type`. Trait-object types can also be
+extended, for example `extend &Derived with Super::{method}`.
+
+Automatically attaching every method from an `impl` is deprecated. Besides
+being implicit, that behavior is not refactoring-safe: a new default method in
+an upstream trait can make an existing dot call ambiguous. Library authors
+should add an explicit `extend` for methods that are intended to be callable
+with dot syntax, or keep using `Trait::method(value, ...)` when no method-style
+API is intended.
+
+For compatibility, v0.10.4 still performs the old implicit attachment. The
+`implicit_impl_as_method` warning is disabled by default in this release and
+can be enabled while migrating existing code. New code should use `extend`
+rather than rely on the compatibility behavior.
 
 ### Using traits
 
@@ -258,24 +295,18 @@ Methods of a trait can be called directly via `Trait::method`. MoonBit will infe
 :end-before: end trait 7
 ```
 
-Trait implementations can also be invoked via dot syntax, with the following restrictions:
+For a future-proof concrete-type API, explicitly attach trait methods that
+should support dot syntax with
+[`extend`](#attaching-trait-methods-with-extend). A regular method takes
+precedence over an attached trait method. Existing implicit dot calls remain
+accepted during the v0.10.4 compatibility period but are deprecated.
 
-1. if a regular method is present, the regular method is always favored when using dot syntax
-2. only trait implementations that are located in the package of the self type can be invoked via dot syntax
-   - if there are multiple trait methods (from different traits) with the same name available, an ambiguity error is reported
-
-The above rules ensures that MoonBit's dot syntax enjoys good property while being flexible.
-For example, adding a new dependency never break existing code with dot syntax due to ambiguity.
-These rules also make name resolution of MoonBit extremely simple:
-the method called via dot syntax must always come from current package or the package of the type!
-
-Here's an example of calling trait `impl` with dot syntax:
-
-```{literalinclude} /sources/language/src/trait/top.mbt
-:language: moonbit
-:start-after: start trait 8
-:end-before: end trait 8
-```
+For type parameters, a method from the single written constraint may be called
+with dot syntax. Use qualified syntax for methods inherited from a supertrait,
+and for every trait method when the type parameter has multiple constraints.
+This makes the selected trait unambiguous. The same principle applies to trait
+objects: call supertrait methods with qualified syntax, or explicitly extend
+the trait-object type.
 
 ## Trait objects
 

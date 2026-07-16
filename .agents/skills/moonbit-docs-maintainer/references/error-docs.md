@@ -24,7 +24,7 @@ currently have prose only.
    intentionally touched when formatting is necessary.
 7. When migrating or adding examples, prefer adding both `<code>_error/` and
    `<code>_fixed/` as independent MoonBit projects with their own
-   `moon.mod.json`.
+   `moon.mod`.
 
 ## Validation
 

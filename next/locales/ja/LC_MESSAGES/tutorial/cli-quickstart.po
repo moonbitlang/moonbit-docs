@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-01 17:47+0800\n"
+"POT-Creation-Date: 2026-07-16 15:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -60,7 +60,7 @@ msgstr "通常の MoonBit モジュールから始めます。"
 msgid ""
 "moon new download_cli\n"
 "cd download_cli\n"
-"moon add moonbitlang/async@0.19.2\n"
+"moon add moonbitlang/async@0.20.2\n"
 msgstr ""
 
 #: ../../tutorial/cli-quickstart.md:22
@@ -70,31 +70,29 @@ msgid ""
 msgstr "`argparse` はすでに標準ライブラリに含まれているため、このクイックスタートでは `moonbitlang/async` のみ追加します。"
 
 #: ../../tutorial/cli-quickstart.md:24
+#, fuzzy
 msgid ""
-"Set the preferred target to native in `moon.mod.json` so `moon run` and "
-"`moon build` default to the backend that `moonbitlang/async` supports "
-"best:"
+"Set the preferred target to native in `moon.mod` so `moon run` and `moon "
+"build` default to the backend that `moonbitlang/async` supports best:"
 msgstr ""
 "`moon.mod.json` で preferred target を native に設定すると、`moon run` と `moon "
 "build` は `moonbitlang/async` のサポートが最も良いバックエンドを既定で使います。"
 
-#: ../../tutorial/cli-quickstart.md:26
+#: ../../tutorial/cli-quickstart.md:27
 msgid ""
-"{\n"
-"  \"name\": \"username/download_cli\",\n"
-"  \"version\": \"0.1.0\",\n"
-"  \"deps\": {\n"
-"    \"moonbitlang/async\": \"0.19.2\"\n"
-"  },\n"
-"  \"preferred-target\": \"native\"\n"
+"name = \"username/download_cli\"\n"
+"version = \"0.1.0\"\n"
+"import {\n"
+"  \"moonbitlang/async@0.20.2\",\n"
 "}\n"
+"preferred_target = \"native\"\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:37
+#: ../../tutorial/cli-quickstart.md:36
 msgid "The final layout will look like this:"
 msgstr "最終的な構成は次のようになります。"
 
-#: ../../tutorial/cli-quickstart.md:39
+#: ../../tutorial/cli-quickstart.md:38
 msgid ""
 "download_cli\n"
 "├── cmd\n"
@@ -104,21 +102,21 @@ msgid ""
 "├── cli_test.mbt\n"
 "├── config.mbt\n"
 "├── download.mbt\n"
-"├── moon.mod.json\n"
+"├── moon.mod\n"
 "└── moon.pkg\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:52
+#: ../../tutorial/cli-quickstart.md:51
 msgid "Keep parsing in the library package"
 msgstr "パース処理はライブラリパッケージに置く"
 
-#: ../../tutorial/cli-quickstart.md:54
+#: ../../tutorial/cli-quickstart.md:53
 msgid ""
 "The root package defines the CLI contract. It owns the command shape and "
 "turns argv into a typed config value:"
 msgstr "ルートパッケージで CLI の契約を定義します。コマンドの形を定義し、argv を型付きの設定値に変換します。"
 
-#: ../../tutorial/cli-quickstart.md:56
+#: ../../tutorial/cli-quickstart.md:55
 msgid ""
 "pub struct Config {\n"
 "  url : String\n"
@@ -163,13 +161,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:62
+#: ../../tutorial/cli-quickstart.md:61
 msgid ""
 "The package descriptor imports `argparse` from `moonbitlang/core` and the"
 " async libraries used by the implementation:"
 msgstr "パッケージ記述子では、`moonbitlang/core` の `argparse` と実装で使う async ライブラリをインポートします。"
 
-#: ../../tutorial/cli-quickstart.md:64
+#: ../../tutorial/cli-quickstart.md:63
 msgid ""
 "import {\n"
 "  \"moonbitlang/core/argparse\",\n"
@@ -180,17 +178,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:68
+#: ../../tutorial/cli-quickstart.md:67
 msgid "Put async IO behind one function"
 msgstr "async I/O は 1 つの関数に集約する"
 
-#: ../../tutorial/cli-quickstart.md:70
+#: ../../tutorial/cli-quickstart.md:69
 msgid ""
 "`run` performs the actual download. If `-o` is passed, it streams the "
 "body into a file. Otherwise it writes directly to stdout:"
 msgstr "`run` が実際のダウンロード処理を行います。`-o` が渡された場合は本文をファイルへストリームし、それ以外は標準出力へ直接書き出します。"
 
-#: ../../tutorial/cli-quickstart.md:72
+#: ../../tutorial/cli-quickstart.md:71
 msgid ""
 "pub async fn run(config : Config) -> Unit {\n"
 "  let (response, body) = @http.get_stream(config.url)\n"
@@ -212,17 +210,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:78
+#: ../../tutorial/cli-quickstart.md:77
 msgid "Keep `main` thin"
 msgstr "`main` は薄く保つ"
 
-#: ../../tutorial/cli-quickstart.md:80
+#: ../../tutorial/cli-quickstart.md:79
 msgid ""
 "`cmd/main` should usually do only wiring: read argv, build config, and "
 "call the library entrypoint."
 msgstr "`cmd/main` は基本的に配線だけを担当します。argv を読み、設定を組み立て、ライブラリのエントリポイントを呼び出します。"
 
-#: ../../tutorial/cli-quickstart.md:82
+#: ../../tutorial/cli-quickstart.md:81
 msgid ""
 "import {\n"
 "  \"moonbit-community/cli-quickstart-doc\" @app,\n"
@@ -230,12 +228,10 @@ msgid ""
 "  \"moonbitlang/async\",\n"
 "}\n"
 "\n"
-"options(\n"
-"  \"is-main\": true,\n"
-")\n"
+"pkgtype(kind: \"executable\")\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:86
+#: ../../tutorial/cli-quickstart.md:85
 msgid ""
 "async fn main {\n"
 "  let argv = @env.args()\n"
@@ -244,45 +240,45 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:92
+#: ../../tutorial/cli-quickstart.md:91
 msgid "Run the command"
 msgstr "コマンドを実行する"
 
-#: ../../tutorial/cli-quickstart.md:94
+#: ../../tutorial/cli-quickstart.md:93
 msgid "Write the response body to stdout:"
 msgstr "レスポンス本文を標準出力に書き出す場合："
 
-#: ../../tutorial/cli-quickstart.md:96
+#: ../../tutorial/cli-quickstart.md:95
 msgid "moon run cmd/main https://example.com/feed.xml\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:100
+#: ../../tutorial/cli-quickstart.md:99
 msgid "Write it to a file:"
 msgstr "ファイルに書き出す場合："
 
-#: ../../tutorial/cli-quickstart.md:102
+#: ../../tutorial/cli-quickstart.md:101
 msgid "moon run cmd/main https://example.com/feed.xml -o feed.xml\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:106
+#: ../../tutorial/cli-quickstart.md:105
 msgid "Build a native binary:"
 msgstr "ネイティブバイナリをビルドする場合："
 
-#: ../../tutorial/cli-quickstart.md:108
+#: ../../tutorial/cli-quickstart.md:107
 msgid "moon build --target native\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:112
+#: ../../tutorial/cli-quickstart.md:111
 msgid "Test the pure part"
 msgstr "純粋な部分をテストする"
 
-#: ../../tutorial/cli-quickstart.md:114
+#: ../../tutorial/cli-quickstart.md:113
 msgid ""
 "The parser and config shaping logic stay easy to test because they do not"
 " perform IO:"
 msgstr "パーサーと設定組み立てロジックは I/O を行わないため、テストしやすいまま保てます。"
 
-#: ../../tutorial/cli-quickstart.md:116
+#: ../../tutorial/cli-quickstart.md:115
 msgid ""
 "///|\n"
 "test \"parse config for stdout\" {\n"
@@ -302,26 +298,68 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:120
+#: ../../tutorial/cli-quickstart.md:119
 msgid "Run the tests with:"
 msgstr "テストは次で実行します。"
 
-#: ../../tutorial/cli-quickstart.md:122
+#: ../../tutorial/cli-quickstart.md:121
 msgid "moon test\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:126
+#: ../../tutorial/cli-quickstart.md:125
 msgid "When the CLI grows, keep following the same split:"
 msgstr "CLI が大きくなっても、同じ分離方針を維持してください。"
 
-#: ../../tutorial/cli-quickstart.md:128
+#: ../../tutorial/cli-quickstart.md:127
 msgid "parse and validate inputs in the library package"
 msgstr "入力のパースと検証はライブラリパッケージで行う"
 
-#: ../../tutorial/cli-quickstart.md:129
+#: ../../tutorial/cli-quickstart.md:128
 msgid "keep side effects in a small number of async functions"
 msgstr "副作用は少数の async 関数に閉じ込める"
 
-#: ../../tutorial/cli-quickstart.md:130
+#: ../../tutorial/cli-quickstart.md:129
 msgid "keep `cmd/main` focused on wiring"
 msgstr "`cmd/main` は配線に専念させる"
+
+#~ msgid ""
+#~ "moon new download_cli\n"
+#~ "cd download_cli\n"
+#~ "moon add moonbitlang/async@0.19.2\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"name\": \"username/download_cli\",\n"
+#~ "  \"version\": \"0.1.0\",\n"
+#~ "  \"deps\": {\n"
+#~ "    \"moonbitlang/async\": \"0.19.2\"\n"
+#~ "  },\n"
+#~ "  \"preferred-target\": \"native\"\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "download_cli\n"
+#~ "├── cmd\n"
+#~ "│   └── main\n"
+#~ "│       ├── main.mbt\n"
+#~ "│       └── moon.pkg\n"
+#~ "├── cli_test.mbt\n"
+#~ "├── config.mbt\n"
+#~ "├── download.mbt\n"
+#~ "├── moon.mod.json\n"
+#~ "└── moon.pkg\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "import {\n"
+#~ "  \"moonbit-community/cli-quickstart-doc\" @app,\n"
+#~ "  \"moonbitlang/core/env\",\n"
+#~ "  \"moonbitlang/async\",\n"
+#~ "}\n"
+#~ "\n"
+#~ "options(\n"
+#~ "  \"is-main\": true,\n"
+#~ ")\n"
+#~ msgstr ""

@@ -104,9 +104,7 @@ import {
   "moonbit-community/starter/rabbit"
 }
 
-options(
-  "is-main": true
-)
+pkgtype(kind: "executable")
 ```
 
 ``````{note}

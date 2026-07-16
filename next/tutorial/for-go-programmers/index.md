@@ -439,7 +439,7 @@ Notable **primitive types** in MoonBit include
 
 Notable **immutable collection types** in MoonBit include
 [tuples](../../language/fundamentals.md#tuple),
-immutable collections such as `@immut/hashset.T[A]`,
+immutable collections such as `@immut/hashset.HashSet[A]`,
 and custom types with no `mut` fields.
 
 On the other hand, notable **mutable collection types** include

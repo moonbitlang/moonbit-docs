@@ -15,7 +15,7 @@ import {
 
 ///|
 async fn main {
-  let xs = @ls.from_array(["1", "2", "3"])
+  let xs = @ls.List(["1", "2", "3"])
   debug(xs)
 }
 ```
@@ -33,8 +33,8 @@ configuration. There is one difference: import paths can optionally include a ve
 ```mbt
 ///|
 import {
-  "moonbitlang/async@0.19.2/fs",
-  "moonbitlang/async@0.19.2",
+  "moonbitlang/async@0.20.2/fs",
+  "moonbitlang/async@0.20.2",
 }
 
 ///|

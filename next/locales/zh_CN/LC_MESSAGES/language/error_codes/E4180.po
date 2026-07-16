@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-08 18:09+0800\n"
+"POT-Creation-Date: 2026-07-16 14:41+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -39,11 +39,11 @@ msgstr "`lexmatch` 只支持默认的首次匹配策略，以及显式的 `longe
 #: ../../language/error_codes/E4180.md:11
 msgid ""
 "`lexmatch` is deprecated for new code. Prefer regex match expressions "
-"such as `value =~ re\"...\"` unless you specifically need legacy lexer-"
-"style behavior."
+"such as `value =~ re\"...\"` for boolean checks, or `lexscan` for case-"
+"based scanning."
 msgstr ""
-"新代码中已不推荐使用 `lexmatch`。除非你确实需要旧式词法分析器风格的行为，否则请优先使用 `value =~ re\"...\"` "
-"这类正则匹配表达式。"
+"新代码中已弃用 `lexmatch`。布尔检查请优先使用 `value =~ re\"...\"` 这类正则"
+"匹配表达式，基于 case 的扫描请使用 `lexscan`。"
 
 #: ../../language/error_codes/E4180.md:15
 msgid "Erroneous example"
@@ -79,9 +79,9 @@ msgstr "建议"
 
 #: ../../language/error_codes/E4180.md:27
 msgid ""
-"Use one of the supported strategies, or rewrite the code with a regex "
-"match expression when first-match behavior is enough:"
-msgstr "使用受支持的策略之一；如果首次匹配行为已经足够，也可以用正则匹配表达式重写代码："
+"Rewrite the code with a regex match expression when first-match behavior "
+"is enough, or use `lexscan ... with longest` for longest-match scanning:"
+msgstr "如果首次匹配行为已经足够，请用正则匹配表达式重写代码；需要最长匹配扫描时，请使用 `lexscan ... with longest`："
 
 #: ../../language/error_codes/E4180.md:30
 msgid ""

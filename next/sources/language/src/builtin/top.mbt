@@ -145,6 +145,14 @@ test {
 }
 // end byte 2
 
+// start bytes interpolation
+test {
+  let value = 42
+  let bytes : Bytes = b"value=\{value}"
+  assert_eq(bytes, b"value=42")
+}
+// end bytes interpolation
+
 // start bytes 1
 test {
   let b : Byte = b'\xFF'
