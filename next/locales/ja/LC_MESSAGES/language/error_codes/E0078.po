@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-16 15:07+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0078.md:1
+msgid "E0078"
+msgstr ""
+
+#: ../../language/error_codes/E0078.md:3
+msgid "Warning name: `result_error_return`"
+msgstr ""
+
+#: ../../language/error_codes/E0078.md:5
+msgid "A function returns `Result[T, E]` even though `E` is an error type."
+msgstr ""
+
+#: ../../language/error_codes/E0078.md:7
+msgid ""
+"For a failable API, prefer MoonBit's error effect, written `T raise E`. "
+"Keep a `Result` return type only when success and failure are "
+"intentionally represented as ordinary data. This migration warning is "
+"disabled by default."
+msgstr ""
+
+#: ../../language/error_codes/E0078.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0078.md:13
+msgid ""
+"///|\n"
+"pub(all) suberror ParseError {\n"
+"  ParseError\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn parse_number() -> Result[Int, ParseError] {\n"
+"  Err(ParseError)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0078.md:17
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0078.md:19
+msgid "Return the success type and declare the error with `raise`."
+msgstr ""
+
+#: ../../language/error_codes/E0078.md:21
+msgid ""
+"///|\n"
+"pub(all) suberror ParseError {\n"
+"  ParseError\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn parse_number() -> Int raise ParseError {\n"
+"  raise ParseError\n"
+"}\n"
+msgstr ""

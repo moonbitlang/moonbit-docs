@@ -257,6 +257,16 @@ test "lazy iterator" {
   assert_eq(first_six[5], 8)
 }
 
+test "iter literal" {
+  // start iter literal
+  let prefix = [| 1, 2, 3 |]
+  let values = [| ..prefix, 4, 5 |]
+  let squares = [| for x in 1..<=3 => x * x |]
+  // end iter literal
+  assert_eq(values.collect(), [1, 2, 3, 4, 5])
+  assert_eq(squares.collect(), [1, 4, 9])
+}
+
 // start loop label
 test "break label" {
   let mut count = 0

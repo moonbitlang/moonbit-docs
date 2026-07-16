@@ -260,6 +260,27 @@ fn[T] match_point(p : Point[T]) -> Unit {
 }
 // end simple pattern 2
 
+// start or pattern defaults
+fn option_value(value : Int?) -> Int {
+  match value {
+    Some(x) | (None with x = 0) => x
+  }
+}
+
+fn pair_value(value : (Int, Int)?) -> Int {
+  match value {
+    Some((x, y)) | (None with (x = 0, y = 0)) => x + y
+  }
+}
+
+test {
+  assert_eq(option_value(None), 0)
+  assert_eq(option_value(Some(42)), 42)
+  assert_eq(pair_value(None), 0)
+  assert_eq(pair_value(Some((20, 22))), 42)
+}
+// end or pattern defaults
+
 /// start guard condition 1
 fn guard_cond(x : Int?) -> Int {
   fn f(x : Int) -> Array[Int] {
@@ -347,7 +368,7 @@ test {
 }
 // end regex match 1
 
-/// start lexmatch 1
+/// start lexscan 1
 test {
   let text = "xxabbbcyy"
   if text =~ (re"a" + (re"b*" as b) + re"c", before~, after~) {
@@ -363,9 +384,9 @@ test {
   }
 
   let keyword = "iff"
-  lexmatch keyword with longest {
-    ("if|[a-z]*" as ident) => inspect(ident, content="iff")
+  lexscan keyword with longest {
+    (re"^(if|[a-z]*)$" as ident) => inspect(ident, content="iff")
     _ => fail("")
   }
 }
-// end lexmatch 1
+// end lexscan 1

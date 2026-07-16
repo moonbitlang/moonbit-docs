@@ -240,6 +240,17 @@ A `Bytes` is an immutable sequence of bytes. Similar to byte, bytes literals hav
 :end-before: end byte 2
 ```
 
+Bytes literals support interpolation with `b"...\{expression}"`. The
+interpolated string is encoded as UTF-8 to produce `Bytes`:
+
+```{literalinclude} /sources/language/src/builtin/top.mbt
+:language: moonbit
+:start-after: start bytes interpolation
+:end-before: end bytes interpolation
+```
+
+Template-write syntax also accepts interpolated Bytes literals.
+
 The byte literal and bytes literal also support escape sequences, but different from those in string literals. The following table lists the supported escape sequences for byte and bytes literals:
 
 | escape sequences     | description                                          |
@@ -488,6 +499,10 @@ API: <https://mooncakes.io/docs/moonbitlang/core/json>
 ## Overloaded Literals
 
 Overloaded literals allow you to use the same syntax to represent different types of values. 
+
+An empty `{}` literal is ambiguous: it may mean an empty map, an empty JSON
+object, an empty record, or a block. Write the intended form explicitly:
+`Map([])`, `Json::empty_object()`, `Record::{}`, or `{ () }`, respectively.
 For example, you can use `1` to represent `UInt` or `Double` depending on the expected type. If the expected type is not known, the literal will be interpreted as `Int` by default.
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
@@ -1202,6 +1217,24 @@ like `each`, `fold`, or `collect`, their internal state advances and cannot be
 reset. If you need to traverse the sequence again, request a new `Iter` from
 the source.
 
+Use `[| ... |]` to construct an `Iter` explicitly. Elements, spread syntax,
+and comprehensions are supported inside the delimiters:
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start iter literal
+:end-before: end iter literal
+```
+
+In `[| x, y |]`, `x` and `y` are evaluated when the iterator literal is
+constructed. For `..xs`, evaluating `xs` happens immediately, while consuming
+the resulting iterator remains lazy. A comprehension `[| for ... |]` is fully
+lazy and runs as the outer iterator is consumed.
+
+Using an overloaded array literal such as `[x, ..xs]` to construct an `Iter`
+from its expected type is deprecated because the type would silently change
+evaluation order. Use `[| x, ..xs |]` instead.
+
 ## Custom Data Types
 
 There are two ways to create new data types: `struct` and `enum`.
@@ -1264,11 +1297,11 @@ It's useful to create a new struct based on an existing one, but with some field
 :caption: Output
 ```
 
-#### Custom constructor for struct
+#### Custom constructors
 
-MoonBit also supports defining a custom constructor for every `struct` type.
-A constructor is a special method that can be called with the name of the
-struct to create a value. First define the struct as usual:
+MoonBit supports defining a custom constructor for any type. A constructor is a
+special method whose name is the same as its result type. The following
+examples start with a struct:
 
 ```{literalinclude} /sources/language/src/data/top.mbt
 :language: moonbit
@@ -1336,6 +1369,15 @@ Because struct constructors are implemented by normal functions, they may raise 
 :end-before: end struct constructor 9
 ```
 
+Other types can use the same `fn Type::Type(...) -> Type` form. A custom
+constructor cannot have the same name as an existing constructor of that type:
+
+```{literalinclude} /sources/language/src/data/top.mbt
+:language: moonbit
+:start-after: start custom constructor enum
+:end-before: end custom constructor enum
+```
+
 Asynchronous constructors are declared with `async fn TypeName::TypeName` and
 can be used inside async code:
 
@@ -1357,15 +1399,15 @@ can be used inside async code:
 :end-before: end struct constructor async 3
 ```
 
-Creating value via `struct` constructor has exactly the same semantic as
+Creating a value via a custom constructor has exactly the same call semantics as
 [enum constructors](#enum),
-except that `struct` constructors cannot be used for pattern matching.
+except that custom constructors cannot be used for pattern matching.
 For example, when creating a foreign `struct` using constructors,
 the package name can be omitted if the expected type of the expression is known.
 
-Since `struct` constructors are implemented by normal functions,
+Since custom constructors are implemented by normal functions,
 they may [raise error](/language/error-handling.md) or [perform asynchronous operations](/language/async-experimental.md).
-`struct` constructors also support [optional arguments](#optional-arguments).
+Custom constructors also support [optional arguments](#optional-arguments).
 Default values for optional arguments are written on the constructor
 implementation, just like normal function signatures.
 
@@ -1811,6 +1853,23 @@ When the matched value has type `Json`, literal patterns can be used directly, t
 :end-before: end pattern 6
 ```
 
+### Default bindings in or-patterns
+
+Every alternative of an or-pattern normally has to bind the same variables.
+Use `with` on an alternative to provide defaults for variables that it does not
+bind structurally:
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:start-after: start or pattern defaults
+:end-before: end or pattern defaults
+```
+
+For multiple defaults, write `with (x = value, y = value)`. Parentheses also
+make it clear which alternative receives a default. A default cannot refer to a binder
+from the complete pattern, and control flow such as `return`, `break`,
+`continue`, or `raise` is not allowed inside the default expression.
+
 ### Guard condition
 
 Each case in a pattern matching expression can have a guard condition. A guard
@@ -2113,12 +2172,34 @@ In the example above, `head`, `ident`, `tail`, `before`, `after`, and `rest`
 have type `StringView`. The binder `ch` has type `Char`, because `re"."`
 matches exactly one character.
 
-### Lexmatch
+### Lexscan
+
+Use `lexscan` when matching one input against several regex cases. It accepts
+`String` and `StringView` inputs and returns the body of the selected case. The
+default strategy selects the first matching case. Add `with longest` to select
+the case that consumes the longest prefix instead. In v0.10.4, `lexscan` does
+not support `Bytes`, `BytesView`, or streaming scanner inputs.
+
+In longest-match mode, each regex case must be anchored at the start with `^`.
+Anchor it at the end with `$` when the whole input must match, or use `after=`
+to bind the unmatched suffix. `before=` is not supported in longest-match mode,
+and `lexscan` cases do not support guards. Put any additional condition inside
+the selected case body.
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start lexscan 1
+:end-before: end lexscan 1
+```
+
+### Lexmatch (deprecated)
 
 ```{warning}
-`lexmatch` and `lexmatch?` are deprecated. Prefer
-[regex match expression](#regex-match-expression) in new code.
-This section is kept as reference for existing code.
+`lexmatch` and `lexmatch?` are deprecated. Use
+[regex match expressions](#regex-match-expression) for boolean and
+first-match checks, or [`lexscan`](#lexscan) for case-based and longest-match
+scanning. This section is kept as reference for existing code.
 ```
 
 `lexmatch` matches a `String` against a regex pattern and lets you bind the
@@ -2150,7 +2231,8 @@ In new code, write those search-mode checks with `=~` instead.
 `lexmatch` also supports a lexer-style mode: `lexmatch <expr> with longest`,
 which picks the longest match among alternatives (for example, `if|[a-z]*`
 matches `iff` as `iff` in longest mode, while first-match search mode matches
-`if` first). Regex match expressions do not provide this longest-match mode.
+`if` first). Migrate this form to `lexscan <expr> with longest`, convert its
+patterns to regex literals, and anchor them at `^`.
 
 Regex literals support `\b` and `\B` as part of the regex syntax, but these
 word-boundary assertions are not currently available in `regex match
@@ -2159,13 +2241,6 @@ first-class `Regex` value, and this restriction is expected to be relaxed in
 the future. Regex literals also do not support `\d`, `\D`, `\s`, `\S`, `\w`,
 or `\W`. Use POSIX character classes like `[[:digit:]]` inside character
 classes instead.
-
-```{literalinclude} /sources/language/src/pattern/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start lexmatch 1
-:end-before: end lexmatch 1
-```
 
 ### Spread Operator
 
@@ -2181,6 +2256,16 @@ For example, we can use the spread operator to construct an array:
 :dedent:
 :start-after: start spread 1
 :end-before: end spread 1
+```
+
+A conditional spread `..if condition { sequence }` contributes the sequence
+only when the condition is true:
+
+```{literalinclude} /sources/language/src/operator/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start conditional spread
+:end-before: end conditional spread
 ```
 
 Similarly, we can use the spread operator to construct a string:

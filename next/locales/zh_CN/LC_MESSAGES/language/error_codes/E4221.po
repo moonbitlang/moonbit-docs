@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-16 15:07+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4221.md:1
+msgid "E4221"
+msgstr ""
+
+#: ../../language/error_codes/E4221.md:3
+msgid "Compiler diagnostic name: `control_in_with_pattern_default`."
+msgstr "编译器诊断名称：`control_in_with_pattern_default`。"
+
+#: ../../language/error_codes/E4221.md:5
+msgid ""
+"A default expression in an or-pattern's `with` clause attempts to "
+"transfer control with `return`, `break`, `continue`, or `raise`. The "
+"default must produce a value locally and cannot leave its surrounding "
+"pattern."
+msgstr ""
+"or-pattern 的 `with` 子句中的默认表达式试图通过 `return`、`break`、`continue` 或 `raise` 转移控制流。默认表达式必须在局部产生值，不能离开所在的模式。"
+
+#: ../../language/error_codes/E4221.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4221.md:11
+msgid ""
+"///|\n"
+"pub fn value_or_zero(value : Int?) -> Int {\n"
+"  match value {\n"
+"    Some(x) | (None with x = { return 0 }) => x\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4221.md:15
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E4221.md:17
+msgid ""
+"Use a plain value as the default and perform any control flow after the "
+"pattern has matched."
+msgstr ""
+"默认值应使用普通表达式；需要的控制流应在模式匹配完成后执行。"
+
+#: ../../language/error_codes/E4221.md:20
+msgid ""
+"///|\n"
+"pub fn value_or_zero(value : Int?) -> Int {\n"
+"  match value {\n"
+"    Some(x) | (None with x = 0) => x\n"
+"  }\n"
+"}\n"
+msgstr ""

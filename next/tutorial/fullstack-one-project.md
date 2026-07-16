@@ -23,7 +23,7 @@ The key is `supported-targets`:
 ```bash
 moon new fullstack_one_project
 cd fullstack_one_project
-moon add moonbitlang/async@0.19.2
+moon add moonbitlang/async@0.20.2
 moon add moonbit-community/rabbita
 ```
 
@@ -32,7 +32,7 @@ Project layout:
 ```text
 fullstack_one_project
 ├── Makefile
-├── moon.mod.json
+├── moon.mod
 ├── backend
 │   ├── api.hurl
 │   ├── index.html
@@ -49,8 +49,8 @@ fullstack_one_project
 
 Module config:
 
-```{literalinclude} /sources/fullstack-one-project/moon.mod.json
-:language: json
+```{literalinclude} /sources/fullstack-one-project/moon.mod
+:language: moonbit
 ```
 
 ## Step 2: Implement shared domain validation

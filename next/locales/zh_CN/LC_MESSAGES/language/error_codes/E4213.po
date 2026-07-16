@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-12 10:35+0800\n"
+"POT-Creation-Date: 2026-07-16 15:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -23,58 +23,114 @@ msgid "E4213"
 msgstr ""
 
 #: ../../language/error_codes/E4213.md:3
-msgid "Compiler diagnostic name: `constr_for_non_struct`."
+msgid "Compiler diagnostic name: `invalid_constr_self_type`."
 msgstr ""
 
 #: ../../language/error_codes/E4213.md:5
-msgid "Constructor methods can only be defined for `struct` types."
-msgstr "构造方法只能为 `struct` 类型定义。"
+msgid ""
+"Custom constructors cannot be defined for trait object types such as "
+"`&Trait`."
+msgstr "不能为 `&Trait` 这样的 trait 对象类型定义自定义构造器。"
 
 #: ../../language/error_codes/E4213.md:7
 msgid ""
-"MoonBit's `Type::Type` constructor mechanism belongs to structs. Enums, "
-"newtypes, and other type forms already have their own construction "
-"syntax, so a constructor method for those types is rejected."
+"MoonBit supports custom constructors for user-defined concrete types, "
+"including structs, enums, and newtypes. A trait object is an erased "
+"runtime view rather than a concrete type that can own a constructor, so "
+"`fn &Trait::Trait(...)` is rejected."
 msgstr ""
-"MoonBit 的 `Type::Type` 构造机制属于结构体。枚举、newtype "
-"以及其他类型形式已经有各自的构造语法，因此为这些类型定义构造方法会被拒绝。"
+"MoonBit 支持为用户定义的具体类型（包括结构体、枚举和 newtype）定义自定义构造器。"
+"trait 对象是经过类型擦除的运行时视图，并不是能拥有构造器的具体类型，因此 "
+"`fn &Trait::Trait(...)` 会被拒绝。"
 
-#: ../../language/error_codes/E4213.md:11
+#: ../../language/error_codes/E4213.md:12
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4213.md:13
+#: ../../language/error_codes/E4213.md:14
 msgid ""
-"pub enum Status {\n"
-"  Ready\n"
+"///|\n"
+"pub(open) trait Renderable {\n"
+"  fn render(Self) -> String\n"
 "}\n"
 "\n"
-"pub fn Status::Status() -> Status {\n"
-"  Ready\n"
+"///|\n"
+"pub fn[X : Renderable] &Renderable::Renderable(value : X) -> &Renderable "
+"{\n"
+"  value as &Renderable\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4213.md:17
+#: ../../language/error_codes/E4213.md:18
 msgid ""
-"`Status` is an `enum`, not a `struct`, so `Status::Status` cannot be used"
-" as a struct constructor."
-msgstr "`Status` 是 `enum`，不是 `struct`，因此 `Status::Status` 不能用作结构体构造方法。"
+"The erroneous example tries to make `&Renderable::Renderable` a "
+"constructor for the trait object type."
+msgstr "错误示例试图将 `&Renderable::Renderable` 用作 trait 对象类型的构造器。"
 
-#: ../../language/error_codes/E4213.md:20
+#: ../../language/error_codes/E4213.md:21
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4213.md:22
+#: ../../language/error_codes/E4213.md:23
 msgid ""
-"Use the enum constructor directly, or change the type to a `struct` if "
-"you need a custom constructor method."
-msgstr "直接使用枚举构造器；如果确实需要自定义构造方法，则将该类型改为 `struct`。"
+"Use a normal function to convert a value to the trait object, or define a"
+" custom constructor on a concrete wrapper type."
+msgstr "使用普通函数将值转换为 trait 对象，或在具体的包装类型上定义自定义构造器。"
 
-#: ../../language/error_codes/E4213.md:25
+#: ../../language/error_codes/E4213.md:26
 msgid ""
-"pub struct Status {}\n"
+"///|\n"
+"pub(open) trait Renderable {\n"
+"  fn render(Self) -> String\n"
+"}\n"
 "\n"
-"pub fn Status::Status() -> Status {\n"
-"  Status::{  }\n"
+"///|\n"
+"pub fn[X : Renderable] as_renderable(value : X) -> &Renderable {\n"
+"  value as &Renderable\n"
 "}\n"
 msgstr ""
+
+#~ msgid "Compiler diagnostic name: `constr_for_non_struct`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "MoonBit's `Type::Type` constructor mechanism "
+#~ "belongs to structs. Enums, newtypes, and"
+#~ " other type forms already have their"
+#~ " own construction syntax, so a "
+#~ "constructor method for those types is"
+#~ " rejected."
+#~ msgstr ""
+#~ "MoonBit 的 `Type::Type` 构造机制属于结构体。枚举、newtype "
+#~ "以及其他类型形式已经有各自的构造语法，因此为这些类型定义构造方法会被拒绝。"
+
+#~ msgid ""
+#~ "pub enum Status {\n"
+#~ "  Ready\n"
+#~ "}\n"
+#~ "\n"
+#~ "pub fn Status::Status() -> Status {\n"
+#~ "  Ready\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "`Status` is an `enum`, not a "
+#~ "`struct`, so `Status::Status` cannot be "
+#~ "used as a struct constructor."
+#~ msgstr "`Status` 是 `enum`，不是 `struct`，因此 `Status::Status` 不能用作结构体构造方法。"
+
+#~ msgid ""
+#~ "Use the enum constructor directly, or"
+#~ " change the type to a `struct` "
+#~ "if you need a custom constructor "
+#~ "method."
+#~ msgstr "直接使用枚举构造器；如果确实需要自定义构造方法，则将该类型改为 `struct`。"
+
+#~ msgid ""
+#~ "pub struct Status {}\n"
+#~ "\n"
+#~ "pub fn Status::Status() -> Status {\n"
+#~ "  Status::{  }\n"
+#~ "}\n"
+#~ msgstr ""

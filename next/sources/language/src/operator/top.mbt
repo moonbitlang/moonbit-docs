@@ -189,11 +189,22 @@ test {
 test {
   let a1 : Array[Int] = [1, 2, 3]
   let a2 : FixedArray[Int] = [4, 5, 6]
-  let a3 : @list.List[Int] = @list.from_array([7, 8, 9])
+  let a3 : @list.List[Int] = @list.List([7, 8, 9])
   let a : Array[Int] = [..a1, ..a2, ..a3, 10]
   debug_inspect(a, content="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
 }
 // end spread 1
+
+/// start conditional spread
+test {
+  let include_middle = true
+  let values = [1, ..if include_middle { [2, 3] }, 4]
+  assert_eq(values, [1, 2, 3, 4])
+
+  let without_middle = [1, ..if false { [2, 3] }, 4]
+  assert_eq(without_middle, [1, 4])
+}
+// end conditional spread
 
 /// start spread 2
 test {

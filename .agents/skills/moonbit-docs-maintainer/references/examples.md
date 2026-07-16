@@ -5,8 +5,10 @@ Use this reference for runnable examples under `next/sources/`, excluding
 
 ## Relevant paths
 
-- `next/sources/<example>/moon.mod.json`: example module root.
-- `next/sources/<example>/**/moon.pkg.json`: package configuration.
+- `next/sources/<example>/moon.mod`: example module root. Older examples may
+  still use the deprecated `moon.mod.json` format.
+- `next/sources/<example>/**/moon.pkg`: package configuration. Older examples
+  may still use the deprecated `moon.pkg.json` format.
 - `next/sources/<example>/**/*.mbt`: MoonBit source files.
 - `next/sources/single-file/README.mbt.md`: single-file example checked in
   single-file mode.

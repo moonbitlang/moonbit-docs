@@ -17,7 +17,11 @@ The prefixes have the following meanings:
 
 - `+warning_name`: enable the warning
 - `-warning_name`: disable the warning
-- `@warning_name`: treat a enabled warning as an error
+- `@warning_name`: treat an enabled warning as an error (deprecated)
+
+The `@` switch is deprecated in v0.10.4. Use `+` or `-` to configure individual
+warnings, and use `moon check --deny-warn` or the equivalent command flag when
+warnings should fail a CI build.
 
 Currently this attribute only works with some specific warnings.
 

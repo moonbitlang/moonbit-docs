@@ -1,12 +1,12 @@
 ///|
-fn is_keyword(input : String) -> Bool {
+fn classify(input : String) -> String {
   lexmatch input with longest {
-    "if" => true
-    _ => false
+    ("if|[a-z]*" as token) => token.to_owned()
+    _ => "other"
   }
 }
 
 ///|
 test {
-  ignore(is_keyword)
+  inspect(classify("iff"), content="iff")
 }

@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-16 14:41+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0080.md:1
+msgid "E0080"
+msgstr ""
+
+#: ../../language/error_codes/E0080.md:3
+msgid "Warning name: `regex_match_missing_before`"
+msgstr ""
+
+#: ../../language/error_codes/E0080.md:5
+msgid ""
+"A non-streaming `lexscan` pattern can skip an input prefix, but the "
+"pattern does not bind or explicitly ignore that prefix."
+msgstr ""
+
+#: ../../language/error_codes/E0080.md:8
+msgid ""
+"For `String` and `StringView` inputs, an unanchored regex searches "
+"forward from the start of the input. Add `^` when the match must start at"
+" the beginning, or add `before=` to bind or ignore the skipped prefix."
+msgstr ""
+
+#: ../../language/error_codes/E0080.md:12
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E0080.md:14
+msgid ""
+"///|\n"
+"pub fn ends_with_digits(input : String) -> Bool {\n"
+"  lexscan input {\n"
+"    re\"[0-9]+$\" => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0080.md:18
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E0080.md:20
+msgid ""
+"Anchor the regex at the start, or make the skipped prefix explicit with "
+"`before=prefix` or `before=_`."
+msgstr ""
+
+#: ../../language/error_codes/E0080.md:23
+msgid ""
+"///|\n"
+"pub fn ends_with_digits(input : String) -> Bool {\n"
+"  lexscan input {\n"
+"    (re\"[0-9]+$\", before=_) => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""

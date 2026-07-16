@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-08 17:17+0800\n"
+"POT-Creation-Date: 2026-07-16 14:15+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -41,22 +41,22 @@ msgstr ""
 
 #: ../../language/error_codes/E4182.md:12
 msgid ""
-"`lexmatch` is deprecated for new code. Prefer regex match expressions "
-"such as `value =~ SOME_REGEX` unless you specifically need legacy lexer-"
-"style behavior."
+"Longest-match `lexmatch` is deprecated for new code. Use `lexscan ... "
+"with longest`, or prefer regex match expressions such as `value =~ "
+"SOME_REGEX` when you do not need lexer-style behavior."
 msgstr ""
-"新代码中已不推荐使用 `lexmatch`。除非你确实需要旧式词法分析器风格的行为，否则请优先使用 `value =~ SOME_REGEX` "
-"这类正则匹配表达式。"
+"新代码不应使用最长匹配 `lexmatch`。请使用 `lexscan ... with longest`；"
+"如果不需要词法分析器风格的行为，则优先使用 `value =~ SOME_REGEX` 这类正则匹配表达式。"
 
-#: ../../language/error_codes/E4182.md:16
+#: ../../language/error_codes/E4182.md:17
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4182.md:18
+#: ../../language/error_codes/E4182.md:19
 msgid "The following example uses a regex constant in a longest-match `lexmatch`:"
 msgstr "下面的示例在最长匹配的 `lexmatch` 中使用了正则常量："
 
-#: ../../language/error_codes/E4182.md:20
+#: ../../language/error_codes/E4182.md:21
 msgid ""
 "///|\n"
 "const WORD = re\"[A-Za-z]+\"\n"
@@ -70,27 +70,37 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4182.md:24
+#: ../../language/error_codes/E4182.md:25
 msgid "MoonBit will report an error."
 msgstr "MoonBit 会报告一个错误。"
 
-#: ../../language/error_codes/E4182.md:26
+#: ../../language/error_codes/E4182.md:27
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4182.md:28
+#: ../../language/error_codes/E4182.md:29
 msgid ""
-"Use a literal regex pattern in that `lexmatch` case, or rewrite the code "
-"with a regex match expression:"
-msgstr "在该 `lexmatch` 分支中使用正则字面量模式，或者用正则匹配表达式重写代码："
+"Use a literal regex pattern with `lexscan`, or rewrite the code with a "
+"regex match expression:"
+msgstr "在 `lexscan` 中使用正则字面量模式，或者用正则匹配表达式重写代码："
 
-#: ../../language/error_codes/E4182.md:31
+#: ../../language/error_codes/E4182.md:32
 msgid ""
 "///|\n"
 "pub fn match_word(input : String) -> Unit {\n"
-"  lexmatch input with longest {\n"
-"    (\"[A-Za-z]+\", _) => ()\n"
+"  lexscan input with longest {\n"
+"    (re\"^[A-Za-z]+\", after=_) => ()\n"
 "    _ => ()\n"
 "  }\n"
 "}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "pub fn match_word(input : String) -> Unit {\n"
+#~ "  lexmatch input with longest {\n"
+#~ "    (\"[A-Za-z]+\", _) => ()\n"
+#~ "    _ => ()\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""

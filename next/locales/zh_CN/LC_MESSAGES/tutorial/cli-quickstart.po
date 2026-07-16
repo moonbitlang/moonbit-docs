@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-01 14:37+0800\n"
+"POT-Creation-Date: 2026-07-16 15:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -60,11 +60,8 @@ msgstr "先从一个普通的 MoonBit 模块开始："
 msgid ""
 "moon new download_cli\n"
 "cd download_cli\n"
-"moon add moonbitlang/async@0.19.2\n"
+"moon add moonbitlang/async@0.20.2\n"
 msgstr ""
-"moon new download_cli\n"
-"cd download_cli\n"
-"moon add moonbitlang/async@0.19.2\n"
 
 #: ../../tutorial/cli-quickstart.md:22
 msgid ""
@@ -74,38 +71,27 @@ msgstr "`argparse` 已经属于标准库，因此这个快速开始只需要添�
 
 #: ../../tutorial/cli-quickstart.md:24
 msgid ""
-"Set the preferred target to native in `moon.mod.json` so `moon run` and "
-"`moon build` default to the backend that `moonbitlang/async` supports "
-"best:"
+"Set the preferred target to native in `moon.mod` so `moon run` and `moon "
+"build` default to the backend that `moonbitlang/async` supports best:"
 msgstr ""
-"在 `moon.mod.json` 中把首选目标设置为 native，这样 `moon run` 和 `moon build` 默认就会使用 "
+"在 `moon.mod` 中把首选目标设置为 native，这样 `moon run` 和 `moon build` 默认就会使用 "
 "`moonbitlang/async` 支持最好的后端："
 
-#: ../../tutorial/cli-quickstart.md:26
+#: ../../tutorial/cli-quickstart.md:27
 msgid ""
-"{\n"
-"  \"name\": \"username/download_cli\",\n"
-"  \"version\": \"0.1.0\",\n"
-"  \"deps\": {\n"
-"    \"moonbitlang/async\": \"0.19.2\"\n"
-"  },\n"
-"  \"preferred-target\": \"native\"\n"
+"name = \"username/download_cli\"\n"
+"version = \"0.1.0\"\n"
+"import {\n"
+"  \"moonbitlang/async@0.20.2\",\n"
 "}\n"
+"preferred_target = \"native\"\n"
 msgstr ""
-"{\n"
-"  \"name\": \"username/download_cli\",\n"
-"  \"version\": \"0.1.0\",\n"
-"  \"deps\": {\n"
-"    \"moonbitlang/async\": \"0.19.2\"\n"
-"  },\n"
-"  \"preferred-target\": \"native\"\n"
-"}\n"
 
-#: ../../tutorial/cli-quickstart.md:37
+#: ../../tutorial/cli-quickstart.md:36
 msgid "The final layout will look like this:"
 msgstr "最终目录结构如下："
 
-#: ../../tutorial/cli-quickstart.md:39
+#: ../../tutorial/cli-quickstart.md:38
 msgid ""
 "download_cli\n"
 "├── cmd\n"
@@ -115,31 +101,21 @@ msgid ""
 "├── cli_test.mbt\n"
 "├── config.mbt\n"
 "├── download.mbt\n"
-"├── moon.mod.json\n"
+"├── moon.mod\n"
 "└── moon.pkg\n"
 msgstr ""
-"download_cli\n"
-"├── cmd\n"
-"│   └── main\n"
-"│       ├── main.mbt\n"
-"│       └── moon.pkg\n"
-"├── cli_test.mbt\n"
-"├── config.mbt\n"
-"├── download.mbt\n"
-"├── moon.mod.json\n"
-"└── moon.pkg\n"
 
-#: ../../tutorial/cli-quickstart.md:52
+#: ../../tutorial/cli-quickstart.md:51
 msgid "Keep parsing in the library package"
 msgstr "在库包中保留解析逻辑"
 
-#: ../../tutorial/cli-quickstart.md:54
+#: ../../tutorial/cli-quickstart.md:53
 msgid ""
 "The root package defines the CLI contract. It owns the command shape and "
 "turns argv into a typed config value:"
 msgstr "根包定义 CLI 契约。它负责命令的形状，并把 argv 转成带类型的配置值："
 
-#: ../../tutorial/cli-quickstart.md:56
+#: ../../tutorial/cli-quickstart.md:55
 msgid ""
 "pub struct Config {\n"
 "  url : String\n"
@@ -184,13 +160,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:62
+#: ../../tutorial/cli-quickstart.md:61
 msgid ""
 "The package descriptor imports `argparse` from `moonbitlang/core` and the"
 " async libraries used by the implementation:"
 msgstr "包描述文件从 `moonbitlang/core` 导入 `argparse`，并导入实现中使用的异步库："
 
-#: ../../tutorial/cli-quickstart.md:64
+#: ../../tutorial/cli-quickstart.md:63
 msgid ""
 "import {\n"
 "  \"moonbitlang/core/argparse\",\n"
@@ -201,17 +177,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:68
+#: ../../tutorial/cli-quickstart.md:67
 msgid "Put async IO behind one function"
 msgstr "把异步 IO 收拢到一个函数中"
 
-#: ../../tutorial/cli-quickstart.md:70
+#: ../../tutorial/cli-quickstart.md:69
 msgid ""
 "`run` performs the actual download. If `-o` is passed, it streams the "
 "body into a file. Otherwise it writes directly to stdout:"
 msgstr "`run` 负责实际下载。传入 `-o` 时，它会把响应体写入文件；否则直接写到标准输出："
 
-#: ../../tutorial/cli-quickstart.md:72
+#: ../../tutorial/cli-quickstart.md:71
 msgid ""
 "pub async fn run(config : Config) -> Unit {\n"
 "  let (response, body) = @http.get_stream(config.url)\n"
@@ -251,17 +227,17 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../tutorial/cli-quickstart.md:78
+#: ../../tutorial/cli-quickstart.md:77
 msgid "Keep `main` thin"
 msgstr "保持 `main` 精简"
 
-#: ../../tutorial/cli-quickstart.md:80
+#: ../../tutorial/cli-quickstart.md:79
 msgid ""
 "`cmd/main` should usually do only wiring: read argv, build config, and "
 "call the library entrypoint."
 msgstr "`cmd/main` 通常只负责接线：读取 argv、构造配置并调用库入口点。"
 
-#: ../../tutorial/cli-quickstart.md:82
+#: ../../tutorial/cli-quickstart.md:81
 msgid ""
 "import {\n"
 "  \"moonbit-community/cli-quickstart-doc\" @app,\n"
@@ -269,21 +245,10 @@ msgid ""
 "  \"moonbitlang/async\",\n"
 "}\n"
 "\n"
-"options(\n"
-"  \"is-main\": true,\n"
-")\n"
+"pkgtype(kind: \"executable\")\n"
 msgstr ""
-"import {\n"
-"  \"moonbit-community/cli-quickstart-doc\" @app,\n"
-"  \"moonbitlang/core/env\",\n"
-"  \"moonbitlang/async\",\n"
-"}\n"
-"\n"
-"options(\n"
-"  \"is-main\": true,\n"
-")\n"
 
-#: ../../tutorial/cli-quickstart.md:86
+#: ../../tutorial/cli-quickstart.md:85
 msgid ""
 "async fn main {\n"
 "  let argv = @env.args()\n"
@@ -297,45 +262,45 @@ msgstr ""
 "  @app.run(config)\n"
 "}\n"
 
-#: ../../tutorial/cli-quickstart.md:92
+#: ../../tutorial/cli-quickstart.md:91
 msgid "Run the command"
 msgstr "运行命令"
 
-#: ../../tutorial/cli-quickstart.md:94
+#: ../../tutorial/cli-quickstart.md:93
 msgid "Write the response body to stdout:"
 msgstr "将响应体写到标准输出："
 
-#: ../../tutorial/cli-quickstart.md:96
+#: ../../tutorial/cli-quickstart.md:95
 msgid "moon run cmd/main https://example.com/feed.xml\n"
 msgstr "moon run cmd/main https://example.com/feed.xml\n"
 
-#: ../../tutorial/cli-quickstart.md:100
+#: ../../tutorial/cli-quickstart.md:99
 msgid "Write it to a file:"
 msgstr "将其写入文件："
 
-#: ../../tutorial/cli-quickstart.md:102
+#: ../../tutorial/cli-quickstart.md:101
 msgid "moon run cmd/main https://example.com/feed.xml -o feed.xml\n"
 msgstr "moon run cmd/main https://example.com/feed.xml -o feed.xml\n"
 
-#: ../../tutorial/cli-quickstart.md:106
+#: ../../tutorial/cli-quickstart.md:105
 msgid "Build a native binary:"
 msgstr "构建原生二进制："
 
-#: ../../tutorial/cli-quickstart.md:108
+#: ../../tutorial/cli-quickstart.md:107
 msgid "moon build --target native\n"
 msgstr "moon build --target native\n"
 
-#: ../../tutorial/cli-quickstart.md:112
+#: ../../tutorial/cli-quickstart.md:111
 msgid "Test the pure part"
 msgstr "测试纯逻辑部分"
 
-#: ../../tutorial/cli-quickstart.md:114
+#: ../../tutorial/cli-quickstart.md:113
 msgid ""
 "The parser and config shaping logic stay easy to test because they do not"
 " perform IO:"
 msgstr "解析器和配置整理逻辑不执行 IO，因此仍然很容易测试："
 
-#: ../../tutorial/cli-quickstart.md:116
+#: ../../tutorial/cli-quickstart.md:115
 msgid ""
 "///|\n"
 "test \"parse config for stdout\" {\n"
@@ -355,26 +320,26 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../tutorial/cli-quickstart.md:120
+#: ../../tutorial/cli-quickstart.md:119
 msgid "Run the tests with:"
 msgstr "用下面的命令运行测试："
 
-#: ../../tutorial/cli-quickstart.md:122
+#: ../../tutorial/cli-quickstart.md:121
 msgid "moon test\n"
 msgstr "moon test\n"
 
-#: ../../tutorial/cli-quickstart.md:126
+#: ../../tutorial/cli-quickstart.md:125
 msgid "When the CLI grows, keep following the same split:"
 msgstr "当 CLI 继续增长时，仍然沿用同样的拆分方式："
 
-#: ../../tutorial/cli-quickstart.md:128
+#: ../../tutorial/cli-quickstart.md:127
 msgid "parse and validate inputs in the library package"
 msgstr "在库包中解析并校验输入"
 
-#: ../../tutorial/cli-quickstart.md:129
+#: ../../tutorial/cli-quickstart.md:128
 msgid "keep side effects in a small number of async functions"
 msgstr "把副作用集中在少量 async 函数中"
 
-#: ../../tutorial/cli-quickstart.md:130
+#: ../../tutorial/cli-quickstart.md:129
 msgid "keep `cmd/main` focused on wiring"
 msgstr "让 `cmd/main` 专注于接线"

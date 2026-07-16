@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 17:59+0800\n"
+"POT-Creation-Date: 2026-07-16 16:10+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -53,7 +53,7 @@ msgid "Suppose in package `lib`:"
 msgstr ""
 
 #: ../../language/error_codes/E4069.md:19
-#: ../../language/error_codes/E4069.md:42
+#: ../../language/error_codes/E4069.md:41
 msgid "`lib/moon.pkg`:"
 msgstr ""
 
@@ -90,45 +90,61 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4069.md:39
-msgid ""
-"Alternatively, you can set the package to be a main package by setting "
-"`\"is-main\"` to `true` in the package configuration file."
+msgid "Alternatively, you can declare the package executable."
+msgstr "または、このパッケージを実行可能パッケージとして宣言できます。"
+
+#: ../../language/error_codes/E4069.md:43
+msgid "pkgtype(kind: \"executable\")\n"
 msgstr ""
 
-#: ../../language/error_codes/E4069.md:44
-msgid ""
-"options(\n"
-"  \"is-main\": true,\n"
-")\n"
-msgstr ""
-
-#: ../../language/error_codes/E4069.md:50
+#: ../../language/error_codes/E4069.md:47
 msgid "You can also move the `main` function to a different package, say `main`:"
 msgstr ""
 
-#: ../../language/error_codes/E4069.md:52
+#: ../../language/error_codes/E4069.md:49
 msgid "`main/moon.pkg`:"
 msgstr ""
 
-#: ../../language/error_codes/E4069.md:54
+#: ../../language/error_codes/E4069.md:51
 msgid ""
 "import {\n"
 "  \"moonbit-community/E4069-fixed\" @lib,\n"
 "}\n"
 "\n"
-"options(\n"
-"  \"is-main\": true,\n"
-")\n"
+"pkgtype(kind: \"executable\")\n"
 msgstr ""
 
-#: ../../language/error_codes/E4069.md:58
+#: ../../language/error_codes/E4069.md:55
 msgid "`main/main.mbt`:"
 msgstr ""
 
-#: ../../language/error_codes/E4069.md:60
+#: ../../language/error_codes/E4069.md:57
 msgid ""
 "///|\n"
 "fn main {\n"
 "  println(@lib.message())\n"
 "}\n"
 msgstr ""
+
+#~ msgid ""
+#~ "Alternatively, you can set the package"
+#~ " to be a main package by "
+#~ "setting `\"is-main\"` to `true` in "
+#~ "the package configuration file."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "options(\n"
+#~ "  \"is-main\": true,\n"
+#~ ")\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "import {\n"
+#~ "  \"moonbit-community/E4069-fixed\" @lib,\n"
+#~ "}\n"
+#~ "\n"
+#~ "options(\n"
+#~ "  \"is-main\": true,\n"
+#~ ")\n"
+#~ msgstr ""

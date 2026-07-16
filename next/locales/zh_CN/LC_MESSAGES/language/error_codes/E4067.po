@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-08 12:18+0800\n"
+"POT-Creation-Date: 2026-07-16 16:10+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -34,7 +34,9 @@ msgid ""
 "functionality to other packages. Main packages, on the other hand, are "
 "the entry points of the program. Therefore, a main package should contain"
 " a `main` function serving as the entry point of the program."
-msgstr "在 MoonBit 中，包分为 main 包和非 main 包两类。非 main 包通常作为库，为其他包提供功能；main 包则是程序的入口。因此，main 包应该包含一个作为程序入口的 `main` 函数。"
+msgstr ""
+"在 MoonBit 中，包分为 main 包和非 main 包两类。非 main 包通常作为库，为其他包提供功能；main "
+"包则是程序的入口。因此，main 包应该包含一个作为程序入口的 `main` 函数。"
 
 #: ../../language/error_codes/E4067.md:11
 msgid "Erroneous example"
@@ -45,15 +47,11 @@ msgid "Suppose in package `main`:"
 msgstr "假设在包 `main` 中："
 
 #: ../../language/error_codes/E4067.md:15
-#: ../../language/error_codes/E4067.md:40
 msgid "`main/moon.pkg`:"
 msgstr ""
 
 #: ../../language/error_codes/E4067.md:17
-msgid ""
-"options(\n"
-"  \"is-main\": true,\n"
-")\n"
+msgid "pkgtype(kind: \"executable\")\n"
 msgstr ""
 
 #: ../../language/error_codes/E4067.md:21
@@ -96,13 +94,27 @@ msgstr ""
 
 #: ../../language/error_codes/E4067.md:37
 msgid ""
-"Alternatively, you can set the package to be a non-main package by "
-"setting `\"is-main\"` to `false` in the package configuration file."
-msgstr "或者，您可以通过在包配置文件中将 `\"is-main\"` 设置为 `false` 来将包设置为非主包。"
-
-#: ../../language/error_codes/E4067.md:42
-msgid ""
-"options(\n"
-"  \"is-main\": false,\n"
-")\n"
+"Alternatively, if the package is meant to be a library, remove the "
+"`pkgtype(kind: \"executable\")` declaration. Library is the default "
+"package type."
 msgstr ""
+"或者，如果这个包本来应该是库，请移除 `pkgtype(kind: \"executable\")` 声明。库是默认的包类型。"
+
+#~ msgid ""
+#~ "options(\n"
+#~ "  \"is-main\": true,\n"
+#~ ")\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Alternatively, you can set the package"
+#~ " to be a non-main package by"
+#~ " setting `\"is-main\"` to `false` in"
+#~ " the package configuration file."
+#~ msgstr "或者，您可以通过在包配置文件中将 `\"is-main\"` 设置为 `false` 来将包设置为非主包。"
+
+#~ msgid ""
+#~ "options(\n"
+#~ "  \"is-main\": false,\n"
+#~ ")\n"
+#~ msgstr ""

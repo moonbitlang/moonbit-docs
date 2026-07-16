@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-21 14:57+0800\n"
+"POT-Creation-Date: 2026-07-16 15:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,7 +28,9 @@ msgid ""
 "The `#warnings` attribute is used to configure warning settings for a "
 "specific top-level declaration. It can enable, disable or treat an "
 "enabled warning as error for specific warnings in that declaration."
-msgstr "`#warnings` アトリビュートは、特定のトップレベル宣言に対する警告設定を構成するために使います。その宣言内の特定の警告について、有効化・無効化・有効な警告をエラー扱いにすることができます。"
+msgstr ""
+"`#warnings` "
+"アトリビュートは、特定のトップレベル宣言に対する警告設定を構成するために使います。その宣言内の特定の警告について、有効化・無効化・有効な警告をエラー扱いにすることができます。"
 
 #: ../../language/attributes/warnings.md:7
 msgid ""
@@ -57,15 +59,25 @@ msgid "`-warning_name`: disable the warning"
 msgstr "`-warning_name`: 警告を無効化"
 
 #: ../../language/attributes/warnings.md:20
-msgid "`@warning_name`: treat a enabled warning as an error"
+#, fuzzy
+msgid "`@warning_name`: treat an enabled warning as an error (deprecated)"
 msgstr "`@warning_name`: 有効な警告をエラーとして扱う"
 
 #: ../../language/attributes/warnings.md:22
+msgid ""
+"The `@` switch is deprecated in v0.10.4. Use `+` or `-` to configure "
+"individual warnings, and use `moon check --deny-warn` or the equivalent "
+"command flag when warnings should fail a CI build."
+msgstr ""
+
+#: ../../language/attributes/warnings.md:26
 msgid "Currently this attribute only works with some specific warnings."
 msgstr "現在、このアトリビュートは一部の特定の警告にのみ対応しています。"
 
-#: ../../language/attributes/warnings.md:24
+#: ../../language/attributes/warnings.md:28
 msgid ""
 "To learn more about warning names, see [warning "
 "list](/toolchain/moon/package.md#warnings-list)."
-msgstr "警告名について詳しくは [warning list](/toolchain/moon/package.md#warnings-list) を参照してください。"
+msgstr ""
+"警告名について詳しくは [warning list](/toolchain/moon/package.md#warnings-list) "
+"を参照してください。"

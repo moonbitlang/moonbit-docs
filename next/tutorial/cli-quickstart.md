@@ -16,22 +16,21 @@ Start with a normal MoonBit module:
 ```bash
 moon new download_cli
 cd download_cli
-moon add moonbitlang/async@0.19.2
+moon add moonbitlang/async@0.20.2
 ```
 
 `argparse` is already part of the standard library, so this quickstart only adds `moonbitlang/async`.
 
-Set the preferred target to native in `moon.mod.json` so `moon run` and `moon build` default to the backend that `moonbitlang/async` supports best:
+Set the preferred target to native in `moon.mod` so `moon run` and `moon build`
+default to the backend that `moonbitlang/async` supports best:
 
-```json
-{
-  "name": "username/download_cli",
-  "version": "0.1.0",
-  "deps": {
-    "moonbitlang/async": "0.19.2"
-  },
-  "preferred-target": "native"
+```moonbit
+name = "username/download_cli"
+version = "0.1.0"
+import {
+  "moonbitlang/async@0.20.2",
 }
+preferred_target = "native"
 ```
 
 The final layout will look like this:
@@ -45,7 +44,7 @@ download_cli
 ├── cli_test.mbt
 ├── config.mbt
 ├── download.mbt
-├── moon.mod.json
+├── moon.mod
 └── moon.pkg
 ```
 

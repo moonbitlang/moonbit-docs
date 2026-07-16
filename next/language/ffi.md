@@ -14,6 +14,13 @@ MoonBit currently have five backends:
 - C
 - LLVM (experimental)
 
+For the `native` target, debug and release builds may use different compiler
+backends. In v0.10.4, debug builds use the new native backend by default on
+macOS Apple Silicon, while release builds use the C backend with optimization.
+The new native backend is also available on x86-64 Linux. Set
+`MOONBIT_NEW_NATIVE=0` to force the C backend, or `MOONBIT_NEW_NATIVE=1` to opt
+in where the new backend is available but not the default.
+
 `````````{tab-set}
 
 ``````{tab-item} Wasm
@@ -369,7 +376,28 @@ This feature is particular useful for binding flags of C libraries.
 
 ## Export Functions
 
-For public functions that are neither methods nor polymorphic, they can be exported by configuring the `exports` field in [link configuration](/toolchain/moon/package.md#link-options).
+For a foreign-library package, `#export_name` gives a public function its symbol
+name in generated Wasm, JavaScript, or C output:
+
+```moonbit
+// moon.pkg
+pkgtype(kind: "foreign_library")
+```
+
+```moonbit
+#export_name("add")
+pub fn add_one(value : Int) -> Int {
+  value + 1
+}
+```
+
+The name must be a unique valid C symbol identifier. The attribute is not
+available on generic functions, functions with optional arguments, methods, or
+declarations without a body. It exports only functions defined in the current
+foreign-library package; dependency symbols are not re-exported.
+
+Public functions can also be exported with the backend-specific `exports` field
+in [link configuration](/toolchain/moon/package.md#link-options):
 
 ```moonbit
 options(
