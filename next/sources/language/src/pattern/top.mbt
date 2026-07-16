@@ -269,7 +269,7 @@ fn option_value(value : Int?) -> Int {
 
 fn pair_value(value : (Int, Int)?) -> Int {
   match value {
-    Some((x, y)) | (None with (x = 0, y = 0)) => x + y
+    Some((x, y)) | (None with x = 0, y = 0) => x + y
   }
 }
 

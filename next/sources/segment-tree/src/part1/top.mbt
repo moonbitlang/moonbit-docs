@@ -11,8 +11,8 @@ impl ToJson for Node with to_json(self) {
   match self {
     Nil => "Nil"
     Node(value, left, right) => {
-      let left_json = left.to_json()
-      let right_json = right.to_json()
+      let left_json = ToJson::to_json(left)
+      let right_json = ToJson::to_json(right)
       [Json::number(value.to_double()), left_json, right_json]
     }
   }
