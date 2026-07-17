@@ -20,6 +20,6 @@ impl Number for A with to_float(self : A) -> Float {
 ///|
 test {
   let value : A = A(42)
-  inspect(value.to_int(), content="42")
-  ignore(value.to_float())
+  inspect(Number::to_int(value), content="42")
+  ignore(Number::to_float(value))
 }

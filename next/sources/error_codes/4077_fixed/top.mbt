@@ -14,5 +14,5 @@ impl T for A with f(self : A) -> Int {
 ///|
 test {
   let value : A = A(1)
-  inspect(value.f(), content="1")
+  inspect(T::f(value), content="1")
 }

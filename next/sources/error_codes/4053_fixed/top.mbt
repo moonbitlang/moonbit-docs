@@ -11,5 +11,5 @@ impl T for Handler with f(self) {
 }
 
 fn init {
-  Handler::{ run: x => ignore(x) }.f()
+  T::f(Handler::{ run: x => ignore(x) })
 }

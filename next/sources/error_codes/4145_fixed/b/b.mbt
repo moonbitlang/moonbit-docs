@@ -11,5 +11,5 @@ pub fn make(value : Int) -> A {
 }
 
 pub fn value_of(a : A) -> Int {
-  A::to_int(a)
+  @a.Sealed::to_int(a)
 }
