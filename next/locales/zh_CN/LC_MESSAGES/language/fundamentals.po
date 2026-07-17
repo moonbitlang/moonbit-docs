@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 17:38+0800\n"
+"POT-Creation-Date: 2026-07-17 14:46+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -711,7 +711,7 @@ msgstr "`Bytes`"
 msgid "owned, immutable"
 msgstr "拥有所有权，不可变"
 
-#: ../../language/fundamentals.md:284
+#: ../../language/fundamentals.md:284 ../../language/fundamentals.md:2164
 msgid "no"
 msgstr "否"
 
@@ -739,7 +739,7 @@ msgstr "`Array[Byte]`"
 msgid "owned, mutable"
 msgstr "拥有所有权，可变"
 
-#: ../../language/fundamentals.md:284
+#: ../../language/fundamentals.md:284 ../../language/fundamentals.md:2164
 msgid "yes"
 msgstr "是"
 
@@ -5183,58 +5183,266 @@ msgstr "Lexscan"
 
 #: ../../language/fundamentals.md:2177
 msgid ""
-"Use `lexscan` when matching one input against several regex cases. It "
-"accepts `String` and `StringView` inputs and returns the body of the "
-"selected case. The default strategy selects the first matching case. Add "
-"`with longest` to select the case that consumes the longest prefix "
-"instead. In v0.10.4, `lexscan` does not support `Bytes`, `BytesView`, or "
-"streaming scanner inputs."
-msgstr ""
-"当需要将一个输入与多个正则 case 匹配时，请使用 `lexscan`。它接受 `String` 和 `StringView` "
-"输入，并返回被选中 case 的函数体结果。默认策略选择第一个匹配的 case；添加 `with longest` 后，则选择消耗最长前缀的 "
-"case。在 v0.10.4 中，`lexscan` 不支持 `Bytes`、`BytesView` 或流式扫描器输入。"
+"`lexscan` matches one input against several regex cases and evaluates the"
+" body of the selected case. Its syntax is:"
+msgstr "`lexscan` 将一个输入与多个正则 case 匹配，并求值被选中 case 的函数体。语法如下："
 
-#: ../../language/fundamentals.md:2183
+#: ../../language/fundamentals.md:2180
 msgid ""
-"In longest-match mode, each regex case must be anchored at the start with"
-" `^`. Anchor it at the end with `$` when the whole input must match, or "
-"use `after=` to bind the unmatched suffix. `before=` is not supported in "
-"longest-match mode, and `lexscan` cases do not support guards. Put any "
-"additional condition inside the selected case body."
+"lexscan input [with first|longest] {\n"
+"  regex_case => expression\n"
+"  ...\n"
+"  _ => fallback_expression\n"
+"}\n"
 msgstr ""
-"在最长匹配模式下，每个正则 case 都必须用 `^` 锚定输入开头。需要匹配整个输入时，再用 `$` 锚定结尾；否则可以用 `after=` "
-"绑定未匹配的后缀。最长匹配模式不支持 `before=`，`lexscan` case 也不支持守卫条件。请把额外条件放进被选中的 case "
-"函数体中。"
 
-#: ../../language/fundamentals.md:2189
+#: ../../language/fundamentals.md:2188
 msgid ""
-"test {\n"
-"  let text = \"xxabbbcyy\"\n"
-"  if text =~ (re\"a\" + (re\"b*\" as b) + re\"c\", before~, after~) {\n"
-"    inspect(before, content=\"xx\")\n"
-"    inspect(b, content=\"bbb\")\n"
-"    inspect(after, content=\"yy\")\n"
-"  } else {\n"
-"    fail(\"\")\n"
+"The input may be a `String`, a `StringView`, a synchronous "
+"`@lexbuf.Lexbuf`, or an asynchronous `@lexbuf.AsyncLexbuf`. The latter "
+"two are streaming inputs and require the following direct package import:"
+msgstr ""
+"输入可以是 `String`、`StringView`、同步的 `@lexbuf.Lexbuf`，或异步的 "
+"`@lexbuf.AsyncLexbuf`。后两者是流式输入，并要求直接导入以下包："
+
+#: ../../language/fundamentals.md:2192
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/lexbuf\",\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:2198
+msgid ""
+"`Bytes`, `BytesView`, and user-defined lexbuf-like types are not "
+"supported."
+msgstr "不支持 `Bytes`、`BytesView`，以及用户自定义的类 lexbuf 类型。"
+
+#: ../../language/fundamentals.md:2200
+msgid "The strategy controls how overlapping cases are resolved:"
+msgstr "匹配策略决定如何处理相互重叠的 case："
+
+#: ../../language/fundamentals.md:2202
+msgid ""
+"`first` is the default. It selects the first case, in source order, that "
+"can match. On a `String` or `StringView`, the regex may search forward "
+"from the beginning of the input. On a streaming input, every regex must "
+"start with `^`, because scanning always starts at the lexbuf's current "
+"cursor."
+msgstr ""
+"`first` 是默认策略。它按源码顺序选择第一个能够匹配的 case。对于 `String` 或 "
+"`StringView`，正则表达式可以从输入开头向后搜索。对于流式输入，每个正则表达式都必须以 `^` 开头，因为扫描总是从 lexbuf "
+"的当前游标开始。"
+
+#: ../../language/fundamentals.md:2206
+msgid ""
+"`longest` selects the case that consumes the longest input prefix. Every "
+"regex must start with `^`. If several cases consume the same number of "
+"characters, their source order breaks the tie. Non-greedy quantifiers "
+"such as `*?` and `+?` are not supported with this strategy."
+msgstr ""
+"`longest` 选择消耗最长输入前缀的 case。每个正则表达式都必须以 `^` 开头。如果多个 case "
+"消耗的字符数相同，则按源码顺序决定优先级。该策略不支持 `*?`、`+?` 等非贪婪量词。"
+
+#: ../../language/fundamentals.md:2211
+msgid ""
+"The last case must be a catch-all. Write `_` when the unmatched input is "
+"not needed. For a non-streaming input, a binder such as `rest` receives "
+"the entire input when no regex case matches. A streaming catch-all cannot"
+" bind the remaining input and does not advance the lexbuf cursor."
+msgstr ""
+"最后一个 case 必须是兜底 case。不需要未匹配的输入时请写 `_`。对于非流式输入，如果没有正则 case 匹配，`rest` "
+"这样的绑定变量会接收整个输入。流式兜底 case 不能绑定剩余输入，也不会推进 lexbuf 游标。"
+
+#: ../../language/fundamentals.md:2216
+msgid "Captures and remaining input"
+msgstr "捕获与剩余输入"
+
+#: ../../language/fundamentals.md:2218
+msgid ""
+"Use `as` to bind the substring matched by a regex or one of its "
+"subexpressions. Captures have type `StringView`, except that a regex "
+"known to match exactly one character, such as `re\".\"`, produces a "
+"`Char` capture."
+msgstr ""
+"使用 `as` 绑定正则表达式或其子表达式匹配到的子串。捕获值的类型为 "
+"`StringView`；但如果编译器知道某个正则表达式恰好匹配一个字符，例如 `re\".\"`，则捕获值的类型为 `Char`。"
+
+#: ../../language/fundamentals.md:2222
+msgid ""
+"With a non-streaming input, `before=` and `after=` bind the unmatched "
+"prefix and suffix as `StringView`. The shorthand forms `before~` and "
+"`after~` bind variables with those names, while `before=_` and `after=_` "
+"explicitly discard the corresponding part. These bindings depend on the "
+"strategy and input type:"
+msgstr ""
+"对于非流式输入，`before=` 和 `after=` 会将未匹配的前缀和后缀绑定为 `StringView`。简写形式 `before~` 和"
+" `after~` 会绑定同名变量，而 `before=_` 和 `after=_` "
+"会显式丢弃对应部分。是否支持这些绑定取决于匹配策略和输入类型："
+
+#: ../../language/fundamentals.md:2164
+msgid "Input"
+msgstr "输入"
+
+#: ../../language/fundamentals.md:2164
+msgid "Strategy"
+msgstr "策略"
+
+#: ../../language/fundamentals.md:2164
+msgid "`before=`"
+msgstr "`before=`"
+
+#: ../../language/fundamentals.md:2164
+msgid "`after=`"
+msgstr "`after=`"
+
+#: ../../language/fundamentals.md:2164
+msgid "`String` or `StringView`"
+msgstr "`String` 或 `StringView`"
+
+#: ../../language/fundamentals.md:2164
+msgid "`first`"
+msgstr "`first`"
+
+#: ../../language/fundamentals.md:2164
+msgid "`longest`"
+msgstr "`longest`"
+
+#: ../../language/fundamentals.md:2164
+msgid "`Lexbuf` or `AsyncLexbuf`"
+msgstr "`Lexbuf` 或 `AsyncLexbuf`"
+
+#: ../../language/fundamentals.md:2164
+msgid "`first` or `longest`"
+msgstr "`first` 或 `longest`"
+
+#: ../../language/fundamentals.md:2233
+msgid ""
+"For non-streaming `first` matching, an unanchored pattern searches "
+"through the input. Bind or explicitly discard `before` and `after`, or "
+"use `^` and `$` to make the intended boundaries clear. For `longest`, use"
+" `after=` when the case only consumes a prefix; add `$` instead when it "
+"must consume the whole input."
+msgstr ""
+"对于非流式的 `first` 匹配，未锚定的模式会在输入中搜索。请绑定或显式丢弃 `before` 和 `after`，或者使用 `^` 和 "
+"`$` 明确所需的边界。对于 `longest`，如果 case 只消耗一个前缀，请使用 `after=`；如果必须消耗整个输入，则改为添加 "
+"`$`。"
+
+#: ../../language/fundamentals.md:2238
+msgid ""
+"test \"scan strings\" {\n"
+"  let text = \"xx123yy\"\n"
+"  lexscan text {\n"
+"    (re\"[0-9]+\" as digits, before~, after~) => {\n"
+"      inspect(before, content=\"xx\")\n"
+"      inspect(digits, content=\"123\")\n"
+"      inspect(after, content=\"yy\")\n"
+"    }\n"
+"    _ => fail(\"\")\n"
 "  }\n"
 "\n"
-"  if text =~ (re\"a\" + (re\"b*\" as b) + re\"c\") && b.length() > 0 {\n"
-"    inspect(b, content=\"bbb\")\n"
-"  }\n"
-"\n"
-"  let keyword = \"iff\"\n"
-"  lexscan keyword with longest {\n"
-"    (re\"^(if|[a-z]*)$\" as ident) => inspect(ident, content=\"iff\")\n"
+"  lexscan \"letters123\" with longest {\n"
+"    (re\"^[a-z]+\" as word, after=rest) => {\n"
+"      inspect(word, content=\"letters\")\n"
+"      inspect(rest, content=\"123\")\n"
+"    }\n"
 "    _ => fail(\"\")\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2196
+#: ../../language/fundamentals.md:2245
+msgid "Streaming scanners"
+msgstr "流式扫描器"
+
+#: ../../language/fundamentals.md:2247
+msgid ""
+"`Lexbuf` and `AsyncLexbuf` retain a cursor between `lexscan` calls. A "
+"successful regex case consumes the matched prefix and commits the cursor "
+"to the end of that match. This makes a recursive or repeated scanner "
+"behave like a lexer. Patterns may span any number of chunks supplied by "
+"`from_fn`; a chunk boundary does not end a token. Return `None` from the "
+"source to signal end of input, and use the catch-all case to handle EOF "
+"or an otherwise unmatched character."
+msgstr ""
+"`Lexbuf` 和 `AsyncLexbuf` 会在多次 `lexscan` 调用之间保留游标。正则 case "
+"匹配成功后，会消耗匹配到的前缀，并将游标提交到匹配结尾。因此，递归或重复调用扫描器时，其行为类似词法分析器。模式可以跨越 `from_fn` "
+"提供的任意数量的数据块；数据块边界不会结束 token。数据源返回 `None` 表示输入结束，并使用兜底 case 处理 EOF "
+"或其他无法匹配的字符。"
+
+#: ../../language/fundamentals.md:2254
+msgid "The following scanner skips whitespace and returns one token per call:"
+msgstr "以下扫描器会跳过空白，并在每次调用时返回一个 token："
+
+#: ../../language/fundamentals.md:2256
+msgid ""
+"priv enum Token {\n"
+"  Word(StringView)\n"
+"  Integer(StringView)\n"
+"  Punctuation(Char)\n"
+"  Eof\n"
+"}\n"
+"\n"
+"///|\n"
+"fn next_token(input : @lexbuf.Lexbuf) -> Token {\n"
+"  lexscan input with longest {\n"
+"    re\"^[[:space:]]+\" => next_token(input)\n"
+"    re\"^[[:alpha:]]+\" as word => Word(word)\n"
+"    re\"^[[:digit:]]+\" as digits => Integer(digits)\n"
+"    re\"^.\" as mark => Punctuation(mark)\n"
+"    _ => Eof\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test \"scan a synchronous stream\" {\n"
+"  let input = @lexbuf.Lexbuf::from_string(\"hello 123!\")\n"
+"  guard next_token(input) is Word(word) else { fail(\"expected word\") }\n"
+"  assert_true(word == \"hello\")\n"
+"  guard next_token(input) is Integer(digits) else { fail(\"expected "
+"integer\") }\n"
+"  assert_true(digits == \"123\")\n"
+"  guard next_token(input) is Punctuation(mark) else {\n"
+"    fail(\"expected punctuation\")\n"
+"  }\n"
+"  assert_true(mark == '!')\n"
+"  assert_true(next_token(input) is Eof)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:2263
+msgid ""
+"`AsyncLexbuf` has the same matching and cursor semantics. Its source is "
+"an `async () -> String?` function, so a function that scans it must also "
+"be `async`. MoonBit has no `await` keyword; call the async scanner "
+"normally from async code."
+msgstr ""
+"`AsyncLexbuf` 具有相同的匹配和游标语义。它的数据源是 `async () -> String?` 函数，因此扫描它的函数也必须是 "
+"`async`。MoonBit 没有 `await` 关键字；在异步代码中正常调用异步扫描器即可。"
+
+#: ../../language/fundamentals.md:2268
+msgid ""
+"/// Returns the next alphabetic token from an asynchronous lexbuf.\n"
+"pub async fn next_word(input : @lexbuf.AsyncLexbuf) -> StringView? {\n"
+"  lexscan input {\n"
+"    re\"^[[:alpha:]]+\" as word => Some(word)\n"
+"    _ => None\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:2275
+msgid ""
+"`lexscan` case bodies cannot have guards. The scanner selects a case "
+"before it evaluates the body, so put any additional condition inside that"
+" body."
+msgstr "`lexscan` 的 case 函数体不能带守卫条件。扫描器会在求值函数体之前选定 case，因此请将额外条件放在该函数体内部。"
+
+#: ../../language/fundamentals.md:2278
 msgid "Lexmatch (deprecated)"
 msgstr "Lexmatch（已弃用）"
 
-#: ../../language/fundamentals.md:2199
+#: ../../language/fundamentals.md:2281
 msgid ""
 "`lexmatch` and `lexmatch?` are deprecated. Use [regex match expressions"
 "](#regex-match-expression) for boolean and first-match checks, or "
@@ -5244,7 +5452,7 @@ msgstr ""
 "`lexmatch` 和 `lexmatch?` 已弃用。布尔检查和首次匹配检查请使用[正则匹配表达式](#regex-match-"
 "expression)，基于 case 或最长匹配的扫描请使用 [`lexscan`](#lexscan)。本节仅作为现有代码的参考保留。"
 
-#: ../../language/fundamentals.md:2205
+#: ../../language/fundamentals.md:2287
 msgid ""
 "`lexmatch` matches a `String` against a regex pattern and lets you bind "
 "the pieces of a match. The search-mode pattern is `(before, regex pieces,"
@@ -5260,17 +5468,17 @@ msgstr ""
 "是可选的绑定，用于捕获未匹配的前缀和后缀，并用逗号分隔；中间的正则片段只用空白分隔。正则本身由一串字符串字面量组成，因此可以拆成多行或在各部分之间插入注释。你也可以用"
 " `as` 绑定子模式，例如 `(\"b*\" as b)`。"
 
-#: ../../language/fundamentals.md:2213
+#: ../../language/fundamentals.md:2295
 msgid ""
 "`lexmatch?` is a boolean check similar to `is`, and it can introduce "
 "binders for use in the same contexts as `is` expressions."
 msgstr "`lexmatch?` 是类似 `is` 的布尔检查，并且可以在与 `is` 表达式相同的上下文中引入绑定。"
 
-#: ../../language/fundamentals.md:2216
+#: ../../language/fundamentals.md:2298
 msgid "In old code, search-mode `lexmatch` looked like this:"
 msgstr "在旧代码中，搜索模式的 `lexmatch` 写法如下："
 
-#: ../../language/fundamentals.md:2218
+#: ../../language/fundamentals.md:2300
 msgid ""
 "lexmatch text {\n"
 "  (before, \"a\" (\"b*\" as b) \"c\", after) => ...\n"
@@ -5282,11 +5490,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2229
+#: ../../language/fundamentals.md:2311
 msgid "In new code, write those search-mode checks with `=~` instead."
 msgstr "在新代码中，请改用 `=~` 编写这些搜索模式检查。"
 
-#: ../../language/fundamentals.md:2231
+#: ../../language/fundamentals.md:2313
 msgid ""
 "`lexmatch` also supports a lexer-style mode: `lexmatch <expr> with "
 "longest`, which picks the longest match among alternatives (for example, "
@@ -5299,7 +5507,7 @@ msgstr ""
 "longest 模式下 `if|[a-z]*` 会把 `iff` 匹配为 `iff`，而首个匹配的搜索模式会先匹配到 "
 "`if`）。请把这种形式迁移为 `lexscan <expr> with longest`，将其中的模式转换为正则字面量，并用 `^` 锚定开头。"
 
-#: ../../language/fundamentals.md:2237
+#: ../../language/fundamentals.md:2319
 msgid ""
 "Regex literals support `\\b` and `\\B` as part of the regex syntax, but "
 "these word-boundary assertions are not currently available in `regex "
@@ -5315,11 +5523,11 @@ msgstr ""
 "`\\\\d`、`\\\\D`、`\\\\s`、`\\\\S`、`\\\\w` 和 `\\\\W`。请改用字符类中的 POSIX 字符类，例如 "
 "`[[:digit:]]`。"
 
-#: ../../language/fundamentals.md:2245
+#: ../../language/fundamentals.md:2327
 msgid "Spread Operator"
 msgstr "展开运算符"
 
-#: ../../language/fundamentals.md:2247
+#: ../../language/fundamentals.md:2329
 msgid ""
 "MoonBit provides a spread operator to expand a sequence of elements when "
 "constructing `Array`, `String`, and `Bytes` using the array literal "
@@ -5330,11 +5538,11 @@ msgstr ""
 "MoonBit 提供了一个展开运算符，用于在使用数组字面量语法构造 `Array`、`String`和 `Bytes` "
 "时展开元素序列。要展开这样的序列，需要在其前面加上 `..` 前缀，并且该序列必须具有 `iter()` 方法，并且该方法能够产生相应类型的元素。"
 
-#: ../../language/fundamentals.md:2252
+#: ../../language/fundamentals.md:2334
 msgid "For example, we can use the spread operator to construct an array:"
 msgstr "例如，我们可以使用展开运算符构造一个数组："
 
-#: ../../language/fundamentals.md:2254
+#: ../../language/fundamentals.md:2336
 msgid ""
 "test {\n"
 "  let a1 : Array[Int] = [1, 2, 3]\n"
@@ -5345,13 +5553,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2261
+#: ../../language/fundamentals.md:2343
 msgid ""
 "A conditional spread `..if condition { sequence }` contributes the "
 "sequence only when the condition is true:"
 msgstr "条件展开 `..if condition { sequence }` 只在条件为真时加入该序列："
 
-#: ../../language/fundamentals.md:2264
+#: ../../language/fundamentals.md:2346
 msgid ""
 "test {\n"
 "  let include_middle = true\n"
@@ -5363,11 +5571,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2271
+#: ../../language/fundamentals.md:2353
 msgid "Similarly, we can use the spread operator to construct a string:"
 msgstr "同样，我们可以使用展开运算符构造一个字符串："
 
-#: ../../language/fundamentals.md:2273
+#: ../../language/fundamentals.md:2355
 msgid ""
 "test {\n"
 "  let s1 : String = \"Hello\"\n"
@@ -5378,13 +5586,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2280
+#: ../../language/fundamentals.md:2362
 msgid ""
 "The last example shows how the spread operator can be used to construct a"
 " bytes sequence."
 msgstr "最后一个例子展示了如何使用展开运算符构造一个字节序列。"
 
-#: ../../language/fundamentals.md:2283
+#: ../../language/fundamentals.md:2365
 msgid ""
 "test {\n"
 "  let b1 : Bytes = b\"hello\"\n"
@@ -5399,18 +5607,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2291
+#: ../../language/fundamentals.md:2373
 msgid "TODO syntax"
 msgstr "TODO 语法"
 
-#: ../../language/fundamentals.md:2293
+#: ../../language/fundamentals.md:2375
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo`语法 (`...`) 是一种特殊构造，用于标记尚未实现或用于未来功能的占位符代码段。例如："
 
-#: ../../language/fundamentals.md:2295
+#: ../../language/fundamentals.md:2377
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"
@@ -5425,7 +5633,6 @@ msgstr ""
 #~ "|> x => { x + 1 }\n"
 #~ "|> ignore // <=> ignore(add(1, 5))\n"
 #~ msgstr ""
-
 #~ msgid ""
 #~ "test {\n"
 #~ "  let text = \"xxabbbcyy\"\n"
@@ -5494,5 +5701,131 @@ msgstr ""
 #~ "  assert_eq(option_value(Some(42)), 42)\n"
 #~ "  assert_eq(pair_value(None), 0)\n"
 #~ "  assert_eq(pair_value(Some((20, 22))), 42)\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Use `lexscan` when matching one input"
+#~ " against several regex cases. It "
+#~ "accepts `String` and `StringView` inputs "
+#~ "and returns the body of the "
+#~ "selected case. The default strategy "
+#~ "selects the first matching case. Add "
+#~ "`with longest` to select the case "
+#~ "that consumes the longest prefix "
+#~ "instead. In v0.10.4, `lexscan` does not"
+#~ " support `Bytes`, `BytesView`, or streaming"
+#~ " scanner inputs."
+#~ msgstr ""
+#~ "当需要将一个输入与多个正则 case 匹配时，请使用 `lexscan`。它接受 "
+#~ "`String` 和 `StringView` 输入，并返回被选中 case "
+#~ "的函数体结果。默认策略选择第一个匹配的 case；添加 `with longest` "
+#~ "后，则选择消耗最长前缀的 case。在 v0.10.4 中，`lexscan` 不支持"
+#~ " `Bytes`、`BytesView` 或流式扫描器输入。"
+
+#~ msgid ""
+#~ "In longest-match mode, each regex "
+#~ "case must be anchored at the start"
+#~ " with `^`. Anchor it at the end"
+#~ " with `$` when the whole input "
+#~ "must match, or use `after=` to "
+#~ "bind the unmatched suffix. `before=` is"
+#~ " not supported in longest-match mode,"
+#~ " and `lexscan` cases do not support"
+#~ " guards. Put any additional condition "
+#~ "inside the selected case body."
+#~ msgstr ""
+#~ "在最长匹配模式下，每个正则 case 都必须用 `^` "
+#~ "锚定输入开头。需要匹配整个输入时，再用 `$` 锚定结尾；否则可以用 `after=` "
+#~ "绑定未匹配的后缀。最长匹配模式不支持 `before=`，`lexscan` case "
+#~ "也不支持守卫条件。请把额外条件放进被选中的 case 函数体中。"
+
+#~ msgid ""
+#~ "test {\n"
+#~ "  let text = \"xxabbbcyy\"\n"
+#~ "  if text =~ (re\"a\" + (re\"b*\" as b) + re\"c\", before~, after~) {\n"
+#~ "    inspect(before, content=\"xx\")\n"
+#~ "    inspect(b, content=\"bbb\")\n"
+#~ "    inspect(after, content=\"yy\")\n"
+#~ "  } else {\n"
+#~ "    fail(\"\")\n"
+#~ "  }\n"
+#~ "\n"
+#~ "  if text =~ (re\"a\" + (re\"b*\""
+#~ " as b) + re\"c\") && b.length() "
+#~ "> 0 {\n"
+#~ "    inspect(b, content=\"bbb\")\n"
+#~ "  }\n"
+#~ "\n"
+#~ "  let keyword = \"iff\"\n"
+#~ "  lexscan keyword with longest {\n"
+#~ "    (re\"^(if|[a-z]*)$\" as ident) => inspect(ident, content=\"iff\")\n"
+#~ "    _ => fail(\"\")\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "test {\n"
+#~ "  let text = \"xx123yy\"\n"
+#~ "  lexscan text {\n"
+#~ "    (re\"[0-9]+\" as digits, before~, after~) => {\n"
+#~ "      inspect(before, content=\"xx\")\n"
+#~ "      inspect(digits, content=\"123\")\n"
+#~ "      inspect(after, content=\"yy\")\n"
+#~ "    }\n"
+#~ "    _ => fail(\"\")\n"
+#~ "  }\n"
+#~ "\n"
+#~ "  lexscan \"letters123\" with longest {\n"
+#~ "    (re\"^[a-z]+\" as word, after=rest) => {\n"
+#~ "      inspect(word, content=\"letters\")\n"
+#~ "      inspect(rest, content=\"123\")\n"
+#~ "    }\n"
+#~ "    _ => fail(\"\")\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "enum Token {\n"
+#~ "  Word(StringView)\n"
+#~ "  Integer(StringView)\n"
+#~ "  Punctuation(Char)\n"
+#~ "  Eof\n"
+#~ "} derive(Debug)\n"
+#~ "\n"
+#~ "fn next_token(input : @lexbuf.Lexbuf) -> Token {\n"
+#~ "  lexscan input with longest {\n"
+#~ "    re\"^[[:space:]]+\" => next_token(input)\n"
+#~ "    (re\"^[[:alpha:]]+\" as word) => Word(word)\n"
+#~ "    (re\"^[[:digit:]]+\" as digits) => Integer(digits)\n"
+#~ "    (re\"^.\" as mark) => Punctuation(mark)\n"
+#~ "    _ => Eof\n"
+#~ "  }\n"
+#~ "}\n"
+#~ "\n"
+#~ "test {\n"
+#~ "  let input = @lexbuf.Lexbuf::from_string(\"hello 123!\")\n"
+#~ "  inspect(next_token(input), content=\"Word(\\\"hello\\\")\")\n"
+#~ "  inspect(next_token(input), content=\"Integer(\\\"123\\\")\")\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "async fn next_word(input : @lexbuf.AsyncLexbuf) -> StringView? {\n"
+#~ "  lexscan input {\n"
+#~ "    (re\"^[[:alpha:]]+\") as word => Some(word)\n"
+#~ "    _ => None\n"
+#~ "  }\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "async fn next_word(input : @lexbuf.AsyncLexbuf) -> StringView? {\n"
+#~ "  lexscan input {\n"
+#~ "    re\"^[[:alpha:]]+\" as word => Some(word)\n"
+#~ "    _ => None\n"
+#~ "  }\n"
 #~ "}\n"
 #~ msgstr ""

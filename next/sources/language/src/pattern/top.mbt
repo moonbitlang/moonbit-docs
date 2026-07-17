@@ -367,26 +367,3 @@ test {
   assert_true(!("zabc!" =~ re"^abc"))
 }
 // end regex match 1
-
-/// start lexscan 1
-test {
-  let text = "xxabbbcyy"
-  if text =~ (re"a" + (re"b*" as b) + re"c", before~, after~) {
-    inspect(before, content="xx")
-    inspect(b, content="bbb")
-    inspect(after, content="yy")
-  } else {
-    fail("")
-  }
-
-  if text =~ (re"a" + (re"b*" as b) + re"c") && b.length() > 0 {
-    inspect(b, content="bbb")
-  }
-
-  let keyword = "iff"
-  lexscan keyword with longest {
-    (re"^(if|[a-z]*)$" as ident) => inspect(ident, content="iff")
-    _ => fail("")
-  }
-}
-// end lexscan 1
