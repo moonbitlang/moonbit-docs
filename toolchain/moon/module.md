@@ -3,6 +3,10 @@
 moon uses a module file to identify and describe a module. The legacy format is `moon.mod.json`,
 and the new format is `moon.mod`. For full JSON schema, please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json).
 
+Support for `moon.mod.json` is deprecated in v0.10.4 and scheduled for removal
+in the following release. Prefer `moon.mod` for new projects and migrate
+existing JSON files with `moon fmt`.
+
 Full syntax of moon.mod is as follows:
 
 ```none
@@ -258,6 +262,9 @@ The `preferred-target` field allows the `moon` and the language server to know w
 should be used as the default target, avoiding the necessity to write `--target`
 when developing a project targeting other backends than Wasm GC.
 
+Set this field on each module. Workspace-level `preferred-target` is deprecated;
+`moon run` uses the selected module's own preferred target.
+
 ### moon.mod
 
 ```moonbit
@@ -331,16 +338,15 @@ in `moon.pkg` / `moon.pkg.json` instead.
 
 The `source` field is used to specify the source directory of the module.
 
-It must be a subdirectory of the directory where the `moon.mod.json` file is located and must be a relative path.
+It must be a relative path to a subdirectory of the directory containing the
+module file.
 
 When creating a module using the `moon new` command, a `src` directory will be automatically generated, and the default value of the `source` field will be `src`.
 
 ### moon.mod
 
 ```moonbit
-options(
-  source: "src"
-)
+source = "src"
 ```
 
 ### moon.mod.json
@@ -351,20 +357,18 @@ options(
 }
 ```
 
-When the `source` field does not exist, or its value is an empty string `""`, it is equivalent to setting `"source": "."`. This means that the source directory is the same as the directory where the `moon.mod.json` file is located.
+When the `source` field does not exist, or its value is an empty string `""`, it
+is equivalent to setting `source = "."`. This means that the source directory is
+the same as the directory containing the module file.
 
 ### moon.mod
 
 ```moonbit
-options(
-  "source": ""
-)
+source = ""
 ```
 
 ```moonbit
-options(
-  "source": "."
-)
+source = "."
 ```
 
 ### moon.mod.json

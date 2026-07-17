@@ -75,12 +75,11 @@ Here's a brief explanation of the directory structure:
       "username/my_project" @lib,
     }
 
-    options(
-      "is-main": true,
-    )
+    pkgtype(kind: "executable")
     ```
 
-    Here, `"is-main": true` declares that the package contains an entry for the `moon run` command.
+    Here, `pkgtype(kind: "executable")` declares that the package contains an
+    entry for the `moon run` command.
   - `moon.pkg`:
 
     This file may be empty. Its purpose is simply to inform the build system that this folder is a package.
@@ -174,9 +173,7 @@ import {
   "username/my_project" @lib,
 }
 
-options(
-  "is-main": true,
-)
+pkgtype(kind: "executable")
 ```
 
 Here, `"username/my_project"` specifies importing the root package and having an alias of `lib`, so you can use `@lib.fib(10)` in `cmd/main/main.mbt`.
@@ -248,9 +245,7 @@ import {
   "username/my_project/fib" @my_awesome_fibonacci,
 }
 
-options(
-  "is-main": true,
-)
+pkgtype(kind: "executable")
 ```
 
 This imports the `fib` package. After doing this, you can use the `fib` package in `cmd/main/main.mbt`. Replace the file content of `cmd/main/main.mbt` to:

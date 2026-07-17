@@ -23,7 +23,7 @@ The key is `supported-targets`:
 ```bash
 moon new fullstack_one_project
 cd fullstack_one_project
-moon add moonbitlang/async@0.19.2
+moon add moonbitlang/async@0.20.2
 moon add moonbit-community/rabbita
 ```
 
@@ -32,7 +32,7 @@ Project layout:
 ```text
 fullstack_one_project
 ├── Makefile
-├── moon.mod.json
+├── moon.mod
 ├── backend
 │   ├── api.hurl
 │   ├── index.html
@@ -49,17 +49,17 @@ fullstack_one_project
 
 Module config:
 
-```json
-{
-  "name": "moonbit-community/fullstack-one-project-doc",
-  "version": "0.1.0",
-  "deps": {
-    "moonbitlang/async": "0.19.2",
-    "moonbit-community/rabbita": "0.11.5"
-  },
-  "preferred-target": "native",
-  "supported-targets": "+wasm+wasm-gc+js+native"
+```moonbit
+name = "moonbit-community/fullstack-one-project-doc"
+version = "0.1.0"
+
+import {
+  "moonbitlang/async@0.20.2",
+  "moonbit-community/rabbita@0.11.5",
 }
+
+preferred_target = "native"
+supported_targets = "+wasm+wasm-gc+js+native"
 ```
 
 ## Step 2: Implement shared domain validation
@@ -145,9 +145,7 @@ import {
 
 supported_targets = "js"
 
-options(
-  "is-main": true,
-)
+pkgtype(kind: "executable")
 ```
 
 ```moonbit
@@ -251,9 +249,7 @@ import {
 
 supported_targets = "native"
 
-options(
-  "is-main": true,
-)
+pkgtype(kind: "executable")
 ```
 
 ```html

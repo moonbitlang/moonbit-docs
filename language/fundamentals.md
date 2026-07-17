@@ -248,6 +248,19 @@ test {
 }
 ```
 
+Bytes literals support interpolation with `b"...\{expression}"`. The
+interpolated string is encoded as UTF-8 to produce `Bytes`:
+
+```moonbit
+test {
+  let value = 42
+  let bytes : Bytes = b"value=\{value}"
+  assert_eq(bytes, b"value=42")
+}
+```
+
+Template-write syntax also accepts interpolated Bytes literals.
+
 The byte literal and bytes literal also support escape sequences, but different from those in string literals. The following table lists the supported escape sequences for byte and bytes literals:
 
 | escape sequences       | description                                          |
@@ -539,6 +552,10 @@ API: [https://mooncakes.io/docs/moonbitlang/core/json](https://mooncakes.io/docs
 ## Overloaded Literals
 
 Overloaded literals allow you to use the same syntax to represent different types of values.
+
+An empty `{}` literal is ambiguous: it may mean an empty map, an empty JSON
+object, an empty record, or a block. Write the intended form explicitly:
+`Map([])`, `Json::empty_object()`, `Record::{}`, or `{ () }`, respectively.
 For example, you can use `1` to represent `UInt` or `Double` depending on the expected type. If the expected type is not known, the literal will be interpreted as `Int` by default.
 
 ```moonbit
@@ -1522,6 +1539,24 @@ like `each`, `fold`, or `collect`, their internal state advances and cannot be
 reset. If you need to traverse the sequence again, request a new `Iter` from
 the source.
 
+Use `[| ... |]` to construct an `Iter` explicitly. Elements, spread syntax,
+and comprehensions are supported inside the delimiters:
+
+```moonbit
+  let prefix = [| 1, 2, 3 |]
+  let values = [| ..prefix, 4, 5 |]
+  let squares = [| for x in 1..<=3 => x * x |]
+```
+
+In `[| x, y |]`, `x` and `y` are evaluated when the iterator literal is
+constructed. For `..xs`, evaluating `xs` happens immediately, while consuming
+the resulting iterator remains lazy. A comprehension `[| for ... |]` is fully
+lazy and runs as the outer iterator is consumed.
+
+Using an overloaded array literal such as `[x, ..xs]` to construct an `Iter`
+from its expected type is deprecated because the type would silently change
+evaluation order. Use `[| x, ..xs |]` instead.
+
 ## Custom Data Types
 
 There are two ways to create new data types: `struct` and `enum`.
@@ -1593,11 +1628,11 @@ fn main {
 { id: 0, name: John Doe, email: john@doe.name }
 ```
 
-#### Custom constructor for struct
+#### Custom constructors
 
-MoonBit also supports defining a custom constructor for every `struct` type.
-A constructor is a special method that can be called with the name of the
-struct to create a value. First define the struct as usual:
+MoonBit supports defining a custom constructor for any type. A constructor is a
+special method whose name is the same as its result type. The following
+examples start with a struct:
 
 ```moonbit
 struct IntBox {
@@ -1676,6 +1711,24 @@ fn Positive::Positive(x : Int) -> Positive raise BuildError {
   }
 ```
 
+Other types can use the same `fn Type::Type(...) -> Type` form. A custom
+constructor cannot have the same name as an existing constructor of that type:
+
+```moonbit
+enum Endpoint {
+  Host(String, Int)
+} derive(Debug)
+
+fn Endpoint::Endpoint(host : String, port? : Int = 80) -> Endpoint {
+  Host(host, port)
+}
+
+test {
+  let endpoint = Endpoint("example.com", port=443)
+  debug_inspect(endpoint, content="Host(\"example.com\", 443)")
+}
+```
+
 Asynchronous constructors are declared with `async fn TypeName::TypeName` and
 can be used inside async code:
 
@@ -1699,15 +1752,15 @@ async test "struct constructor async" {
 }
 ```
 
-Creating value via `struct` constructor has exactly the same semantic as
+Creating a value via a custom constructor has exactly the same call semantics as
 [enum constructors](),
-except that `struct` constructors cannot be used for pattern matching.
+except that custom constructors cannot be used for pattern matching.
 For example, when creating a foreign `struct` using constructors,
 the package name can be omitted if the expected type of the expression is known.
 
-Since `struct` constructors are implemented by normal functions,
+Since custom constructors are implemented by normal functions,
 they may [raise error](error-handling.md) or [perform asynchronous operations](async-experimental.md).
-`struct` constructors also support [optional arguments]().
+Custom constructors also support [optional arguments]().
 Default values for optional arguments are written on the constructor
 implementation, just like normal function signatures.
 
@@ -2440,6 +2493,38 @@ match json {
 }
 ```
 
+### Default bindings in or-patterns
+
+Every alternative of an or-pattern normally has to bind the same variables.
+Use `with` on an alternative to provide defaults for variables that it does not
+bind structurally:
+
+```moonbit
+fn option_value(value : Int?) -> Int {
+  match value {
+    Some(x) | (None with x = 0) => x
+  }
+}
+
+fn pair_value(value : (Int, Int)?) -> Int {
+  match value {
+    Some((x, y)) | (None with x = 0, y = 0) => x + y
+  }
+}
+
+test {
+  assert_eq(option_value(None), 0)
+  assert_eq(option_value(Some(42)), 42)
+  assert_eq(pair_value(None), 0)
+  assert_eq(pair_value(Some((20, 22))), 42)
+}
+```
+
+For multiple defaults, write `(Pattern with x = value, y = value)`. Parentheses
+make it clear which alternative receives a default. A default cannot refer to a
+binder from the complete pattern, and control flow such as `return`, `break`,
+`continue`, or `raise` is not allowed inside the default expression.
+
 ### Guard condition
 
 Each case in a pattern matching expression can have a guard condition. A guard
@@ -2833,12 +2918,50 @@ In the example above, `head`, `ident`, `tail`, `before`, `after`, and `rest`
 have type `StringView`. The binder `ch` has type `Char`, because `re"."`
 matches exactly one character.
 
-### Lexmatch
+### Lexscan
+
+Use `lexscan` when matching one input against several regex cases. It accepts
+`String` and `StringView` inputs and returns the body of the selected case. The
+default strategy selects the first matching case. Add `with longest` to select
+the case that consumes the longest prefix instead. In v0.10.4, `lexscan` does
+not support `Bytes`, `BytesView`, or streaming scanner inputs.
+
+In longest-match mode, each regex case must be anchored at the start with `^`.
+Anchor it at the end with `$` when the whole input must match, or use `after=`
+to bind the unmatched suffix. `before=` is not supported in longest-match mode,
+and `lexscan` cases do not support guards. Put any additional condition inside
+the selected case body.
+
+```moonbit
+test {
+  let text = "xxabbbcyy"
+  if text =~ (re"a" + (re"b*" as b) + re"c", before~, after~) {
+    inspect(before, content="xx")
+    inspect(b, content="bbb")
+    inspect(after, content="yy")
+  } else {
+    fail("")
+  }
+
+  if text =~ (re"a" + (re"b*" as b) + re"c") && b.length() > 0 {
+    inspect(b, content="bbb")
+  }
+
+  let keyword = "iff"
+  lexscan keyword with longest {
+    (re"^(if|[a-z]*)$" as ident) => inspect(ident, content="iff")
+    _ => fail("")
+  }
+}
+```
+
+### Lexmatch (deprecated)
 
 #### WARNING
-`lexmatch` and `lexmatch?` are deprecated. Prefer
-[regex match expression]() in new code.
-This section is kept as reference for existing code.
+`lexmatch` and `lexmatch?` are deprecated. Use
+[regex match expressions]() for boolean and
+first-match checks, or [`lexscan`]() for case-based and longest-match
+scanning. This section is kept as reference for existing code.
 
 `lexmatch` matches a `String` against a regex pattern and lets you bind the
 pieces of a match. The search-mode pattern is `(before, regex pieces, after)`,
@@ -2869,7 +2992,8 @@ In new code, write those search-mode checks with `=~` instead.
 `lexmatch` also supports a lexer-style mode: `lexmatch <expr> with longest`,
 which picks the longest match among alternatives (for example, `if|[a-z]*`
 matches `iff` as `iff` in longest mode, while first-match search mode matches
-`if` first). Regex match expressions do not provide this longest-match mode.
+`if` first). Migrate this form to `lexscan <expr> with longest`, convert its
+patterns to regex literals, and anchor them at `^`.
 
 Regex literals support `\b` and `\B` as part of the regex syntax, but these
 word-boundary assertions are not currently available in `regex match expression` constant contexts. They do work when the regex is used as a
@@ -2877,29 +3001,6 @@ first-class `Regex` value, and this restriction is expected to be relaxed in
 the future. Regex literals also do not support `\d`, `\D`, `\s`, `\S`, `\w`,
 or `\W`. Use POSIX character classes like `[[:digit:]]` inside character
 classes instead.
-
-```moonbit
-test {
-  let text = "xxabbbcyy"
-  if text =~ (re"a" + (re"b*" as b) + re"c", before~, after~) {
-    inspect(before, content="xx")
-    inspect(b, content="bbb")
-    inspect(after, content="yy")
-  } else {
-    fail("")
-  }
-
-  if text =~ (re"a" + (re"b*" as b) + re"c") && b.length() > 0 {
-    inspect(b, content="bbb")
-  }
-
-  let keyword = "iff"
-  lexmatch keyword with longest {
-    ("if|[a-z]*" as ident) => inspect(ident, content="iff")
-    _ => fail("")
-  }
-}
-```
 
 ### Spread Operator
 
@@ -2914,9 +3015,23 @@ For example, we can use the spread operator to construct an array:
 test {
   let a1 : Array[Int] = [1, 2, 3]
   let a2 : FixedArray[Int] = [4, 5, 6]
-  let a3 : @list.List[Int] = @list.from_array([7, 8, 9])
+  let a3 : @list.List[Int] = @list.List([7, 8, 9])
   let a : Array[Int] = [..a1, ..a2, ..a3, 10]
   debug_inspect(a, content="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
+}
+```
+
+A conditional spread `..if condition { sequence }` contributes the sequence
+only when the condition is true:
+
+```moonbit
+test {
+  let include_middle = true
+  let values = [1, ..if include_middle { [2, 3] }, 4]
+  assert_eq(values, [1, 2, 3, 4])
+
+  let without_middle = [1, ..if false { [2, 3] }, 4]
+  assert_eq(without_middle, [1, 4])
 }
 ```
 

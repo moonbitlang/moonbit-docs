@@ -305,7 +305,12 @@ Generate public interface (`.mbti`) files for all packages in the module
 
 Run benchmarks in the current package
 
-**Usage:** `moon bench [OPTIONS]`
+**Usage:** `moon bench [OPTIONS] [PATH]...`
+
+**Arguments:**
+
+* `[PATH]...` — Run benchmarks for a filesystem path. `PATH` may point to a
+  package directory or a file inside a package.
 
 **Options:**
 

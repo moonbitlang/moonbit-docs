@@ -141,7 +141,7 @@ struct Index {
 }
 ```
 
-Then we write a helper function to find the corresponding `depth` based on a specific `name` from `@list.T[Index]`:
+Then we write a helper function to find the corresponding `depth` based on a specific `name` from `@list.List[Index]`:
 
 ```moonbit
 // Find the depth corresponding to the first varname in the environment
@@ -240,4 +240,4 @@ Full code is available [here](/sources/lambda-expression/src/top.mbt)
 
 ## Improvement
 
-When mapping variable names to indices, we used the `@list.T[Index]` type and updated the entire list every time we added a new Lambda. However, this is actually quite a clumsy method. I believe you can quickly realize that to store a `@list.T[String]` should simply suffice. If you're interested, you can try it yourself.
+When mapping variable names to indices, we used the `@list.List[Index]` type and updated the entire list every time we added a new Lambda. However, this is actually quite a clumsy method. I believe you can quickly realize that to store a `@list.List[String]` should simply suffice. If you're interested, you can try it yourself.

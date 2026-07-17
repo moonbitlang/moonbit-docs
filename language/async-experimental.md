@@ -2,7 +2,8 @@
 
 MoonBit adopts a coroutine based approach to async programming which is similar to [Kotlin](https://kotlinlang.org/docs/coroutines-overview.html).
 Asynchronous programming in MoonBit consists of two parts: compiler support for `async` functions, and the official async runtime `moonbitlang/async`.
-Currently, `moonbitlang/async` supports native backend best, has limit support for JavaScript backend, and does not support WebAssembly backend yet.
+Currently, `moonbitlang/async` supports the native backend best, has limited
+support for the JavaScript backend, and provides experimental Wasm1 support.
 The API of `moonbitlang/async` is not considered stable, and may change in the future.
 
 <!-- We highly appreciate any feedback or experiment with current design. -->
@@ -10,9 +11,9 @@ The API of `moonbitlang/async` is not considered stable, and may change in the f
 ## Getting started
 
 To use `moonbitlang/async` for asynchronous programming,
-you should first run `moon add moonbitlang/async@0.19.2` in your project
+you should first run `moon add moonbitlang/async@0.20.2` in your project
 to add `moonbitlang/async` as a dependency of your project.
-You may also want to set `"preferred-target": "native"` in `moon.mod.json`.
+You may also want to set `preferred_target = "native"` in `moon.mod`.
 Now, import `moonbitlang/async` and other packages in the `moonbitlang/async` library in `moon.pkg`,
 and the asynchronous programming API should be available in your packages.
 If you want a workflow-first example, see the [Native CLI Quickstart](../tutorial/cli-quickstart.md).
@@ -226,4 +227,12 @@ it also has basic support for JavaScript backend:
   including waiting for an external JavaScript promise and exporting a MoonBit `async` function as a JavaScript promise.
   This allows interaction with native asynchronous operations of the JavaScript host.
 
-See [the mooncakes.io page for `moonbitlang/async/js_async`](https://mooncakes.io/docs/moonbitlang/async/js_async) fore more details.
+See [the mooncakes.io page for `moonbitlang/async/js_async`](https://mooncakes.io/docs/moonbitlang/async/js_async) for more details.
+
+## Experimental Wasm1 support
+
+Version 0.20.2 adds experimental Wasm1 support with the same API signatures and
+behavior as the native backend. Programs built with this support currently need
+the latest `moonrun` and are not yet compatible with other WebAssembly
+runtimes. The Wasm1 backend does not yet support `@websocket`, `@fs.Watcher`, or
+`@fs.realpath`.

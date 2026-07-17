@@ -218,8 +218,8 @@ initially set the content of all squares to
 `['1', '2', '3', '4', '5', '6', '7', '8', '9']` (a List).
 
 ```moonbit
-fn Grid::parse(s : String) -> Grid[@immut/sorted_set.T[Char]] {
-  let digits = @immut/sorted_set.from_array(cols.to_array())
+fn Grid::parse(s : String) -> Grid[@immut/sorted_set.SortedSet[Char]] {
+  let digits = @immut/sorted_set.SortedSet(cols.to_array())
   let values = Grid::new(digits)
   ...
 }
@@ -231,7 +231,7 @@ where `key` is a string like `A6` and `val` is a character. It is easy to write
 such code.
 
 ```moonbit
-fn assign(values : Grid[@immut/sorted_set.T[Char]], key : String, val : Char) -> Unit {
+fn assign(values : Grid[@immut/sorted_set.SortedSet[Char]], key : String, val : Char) -> Unit {
   values[key] = @immut/sorted_set.singleton(val)
 }
 ```

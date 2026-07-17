@@ -88,7 +88,7 @@ The following are the keywords and should not be used:
   "throw", "raise", "try", "catch", "pub", "priv", "proof_assert", "proof_let",
   "readonly", "true", "false", "_", "test", "loop", "for", "in", "impl", "with",
   "guard", "async", "is", "suberror", "and", "letrec", "enumview", "noraise",
-  "defer", "lexmatch", "where", "declare", "nobreak",
+  "defer", "lexmatch", "lexscan", "where", "declare", "nobreak",
 ]
 ```
 
@@ -106,7 +106,7 @@ They might be turned into keywords in the future.
   "use", "void", "lazy", "include", "mixin", "protected", "sealed", "constructor",
   "atomic", "volatile", "anyframe", "anytype", "asm", "await", "comptime", "errdefer",
   "export", "opaque", "orelse", "resume", "threadlocal", "unreachable", "dynclass",
-  "dynobj", "dynrec", "var", "finally", "noasync", "assume",
+  "dynobj", "dynrec", "var", "finally", "noasync", "assume", "extend",
 ]
 ```
 
@@ -149,9 +149,7 @@ The previous two code snippets will print the following at runtime:
 Only packages that are `main` packages can define such `main` function. Check out [build system tutorial](../toolchain/moon/tutorial.md) for detail. In current projects, this is configured in `moon.pkg`:
 
 ```text
-options(
-  "is-main": true,
-)
+pkgtype(kind: "executable")
 ```
 
 ### `test`
