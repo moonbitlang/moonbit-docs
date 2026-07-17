@@ -10,5 +10,5 @@ impl @a.B for WrapA with to_int(self : WrapA) -> Int {
 ///|
 test {
   let value = WrapA(@a.A(1))
-  inspect(value.to_int(), content="0")
+  inspect(@a.B::to_int(value), content="0")
 }
