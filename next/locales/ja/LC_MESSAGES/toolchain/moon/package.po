@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 16:10+0800\n"
+"POT-Creation-Date: 2026-07-17 12:47+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -242,8 +242,9 @@ msgid ""
 "should use `pkgtype(kind: \"executable\")` instead. The following legacy "
 "declarations are equivalent to that `pkgtype` declaration:"
 msgstr ""
-"`is-main` フィールドは非推奨です。既存のパッケージファイルとの互換性のため引き続き使用できますが、新規または移行後の `moon.pkg` "
-"では `pkgtype(kind: \"executable\")` を使用してください。次の旧形式の宣言は、この `pkgtype` 宣言と同等です。"
+"`is-main` フィールドは非推奨です。既存のパッケージファイルとの互換性のため引き続き使用できますが、新規または移行後の "
+"`moon.pkg` では `pkgtype(kind: \"executable\")` を使用してください。次の旧形式の宣言は、この "
+"`pkgtype` 宣言と同等です。"
 
 #: ../../toolchain/moon/package.md:140
 msgid ""
@@ -703,9 +704,10 @@ msgid ""
 "\"foreign_library\")` when a package builds a library for foreign code. "
 "An object-valued `link` option configures backend-specific linking."
 msgstr ""
-"`executable` または `foreign_library` として宣言されたパッケージは、リンク済みの出力を生成します。ブール値形式の `link: true` "
-"は旧形式です。外部コード向けのライブラリをビルドする場合は `pkgtype(kind: \"foreign_library\")` "
-"を使用してください。オブジェクト形式の `link` オプションはバックエンド固有のリンク設定に使用します。"
+"`executable` または `foreign_library` として宣言されたパッケージは、リンク済みの出力を生成します。ブール値形式の "
+"`link: true` は旧形式です。外部コード向けのライブラリをビルドする場合は `pkgtype(kind: "
+"\"foreign_library\")` を使用してください。オブジェクト形式の `link` "
+"オプションはバックエンド固有のリンク設定に使用します。"
 
 #: ../../toolchain/moon/package.md:446
 msgid ""
@@ -1753,57 +1755,62 @@ msgstr ""
 
 #: ../../toolchain/moon/package.md:1190
 msgid ""
-"All alerts has a category associated with it, which is customized by the "
-"author of the API. You can enable or disable specific alert categories "
-"using the `alert_<category>` warning name, or use `alert` to control all "
-"alert warnings at once."
+"All alerts have a category associated with them, which is customized by "
+"the author of the API. You can enable or disable specific alert "
+"categories using the `alert_<category>` warning name, or use `alert` to "
+"control all alert warnings at once."
 msgstr ""
+"すべての alert には API 作者が定めたカテゴリがあります。`alert_<category>` という警告名で特定カテゴリを有効または無効にでき、"
+"`alert` を使えばすべての alert 警告をまとめて制御できます。"
 
 #: ../../toolchain/moon/package.md:1194
 msgid ""
-"For example, in the following configuration, all warnings for alerts are "
-"treated  as fatal errors, except for the `unsafe` category, which is "
-"disabled."
+"For example, the following configuration enables all alert warnings "
+"except the `unsafe` category. In CI, add `--deny-warn` to `moon check`, "
+"`moon test`, or the equivalent command to treat enabled warnings as fatal"
+" errors."
+msgstr ""
+"例えば、次の設定は `unsafe` カテゴリ以外のすべての alert 警告を有効にします。CI で有効な警告を致命的エラーとして扱うには、"
+"`moon check`、`moon test`、または同等のコマンドに `--deny-warn` を追加してください。"
+
+#: ../../toolchain/moon/package.md:1200
+msgid "warnings = \"+alert-alert_unsafe\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1199
-msgid "warnings = \"@alert-alert_unsafe\" \n"
-msgstr ""
-
-#: ../../toolchain/moon/package.md:1204
+#: ../../toolchain/moon/package.md:1205
 msgid ""
 "{\n"
-"  \"warn-list\": \"@alert-alert_unsafe\" \n"
+"  \"warn-list\": \"+alert-alert_unsafe\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1212
+#: ../../toolchain/moon/package.md:1213
 msgid "Virtual Package"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1214
+#: ../../toolchain/moon/package.md:1215
 msgid ""
 "A virtual package serves as an interface of a package that can be "
 "replaced by actual implementations."
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1216
+#: ../../toolchain/moon/package.md:1217
 msgid "Declarations"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1218
+#: ../../toolchain/moon/package.md:1219
 msgid ""
 "The `virtual` field is used to declare the current package as a virtual "
 "package."
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1220
+#: ../../toolchain/moon/package.md:1221
 msgid ""
 "For example, the following declares a virtual package with default "
 "implementation:"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1224
+#: ../../toolchain/moon/package.md:1225
 msgid ""
 "options(\n"
 "  virtual: {\n"
@@ -1812,7 +1819,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1233
+#: ../../toolchain/moon/package.md:1234
 msgid ""
 "{\n"
 "  \"virtual\": {\n"
@@ -1821,58 +1828,58 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1243
+#: ../../toolchain/moon/package.md:1244
 msgid "Implementations"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1245
+#: ../../toolchain/moon/package.md:1246
 msgid ""
 "The `implement` field is used to declare the virtual package to be "
 "implemented by the current package."
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1247
+#: ../../toolchain/moon/package.md:1248
 msgid "For example, the following implements a virtual package:"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1251
+#: ../../toolchain/moon/package.md:1252
 msgid ""
 "options(\n"
 "  implement: \"moonbitlang/core/abort\",\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1258
+#: ../../toolchain/moon/package.md:1259
 msgid ""
 "{\n"
 "  \"implement\": \"moonbitlang/core/abort\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1266
+#: ../../toolchain/moon/package.md:1267
 msgid "Overriding implementations"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1268
+#: ../../toolchain/moon/package.md:1269
 msgid ""
 "The `overrides` field is used to provide the implementations that "
 "fulfills an imported virtual package."
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1270
+#: ../../toolchain/moon/package.md:1271
 msgid ""
 "For example, the following overrides the default implementation of the "
 "builtin abort package with another package:"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1274
+#: ../../toolchain/moon/package.md:1275
 msgid ""
 "options(\n"
 "  overrides: [ \"moonbitlang/dummy_abort/abort_show_msg\" ],\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1281
+#: ../../toolchain/moon/package.md:1282
 msgid ""
 "{\n"
 "  \"overrides\": [\"moonbitlang/dummy_abort/abort_show_msg\"]\n"
@@ -2179,4 +2186,31 @@ msgstr ""
 #~ " If you need to link other "
 #~ "packages, you can specify this with "
 #~ "the `link` option."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "All alerts has a category associated "
+#~ "with it, which is customized by "
+#~ "the author of the API. You can "
+#~ "enable or disable specific alert "
+#~ "categories using the `alert_<category>` "
+#~ "warning name, or use `alert` to "
+#~ "control all alert warnings at once."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For example, in the following "
+#~ "configuration, all warnings for alerts "
+#~ "are treated  as fatal errors, except "
+#~ "for the `unsafe` category, which is "
+#~ "disabled."
+#~ msgstr ""
+
+#~ msgid "warnings = \"@alert-alert_unsafe\" \n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"warn-list\": \"@alert-alert_unsafe\" \n"
+#~ "}\n"
 #~ msgstr ""

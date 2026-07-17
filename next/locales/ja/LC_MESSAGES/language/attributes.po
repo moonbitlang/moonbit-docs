@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 15:37+0800\n"
+"POT-Creation-Date: 2026-07-17 12:47+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -152,46 +152,50 @@ msgstr "trait メソッド宣言"
 msgid "Trait default implementations"
 msgstr "trait のデフォルト実装"
 
-#: ../../language/attributes/deprecated.md:21
+#: ../../language/attributes/deprecated.md:20
+msgid "`extend` declarations"
+msgstr "`extend` 宣言"
+
+#: ../../language/attributes/deprecated.md:22
 msgid "Common forms include:"
 msgstr "一般的な形式は次のとおりです："
 
-#: ../../language/attributes/deprecated.md:23
+#: ../../language/attributes/deprecated.md:24
 msgid "`#deprecated`"
 msgstr "`#deprecated`"
 
-#: ../../language/attributes/deprecated.md:25
+#: ../../language/attributes/deprecated.md:26
 msgid "Marks the item as deprecated with a default warning message."
 msgstr "項目を非推奨にし、デフォルトの警告メッセージを使います。"
 
-#: ../../language/attributes/deprecated.md:27
+#: ../../language/attributes/deprecated.md:28
 msgid "`#deprecated(\"Use new_function instead\")`"
 msgstr "`#deprecated(\"Use new_function instead\")`"
 
-#: ../../language/attributes/deprecated.md:29
+#: ../../language/attributes/deprecated.md:30
 msgid ""
 "Marks the item as deprecated with a custom warning message. Every time "
 "the deprecated API is used, the provided message will be displayed as a "
 "warning."
 msgstr "項目を非推奨にし、カスタム警告メッセージを使います。非推奨 API が使われるたびに、指定したメッセージが警告として表示されます。"
 
-#: ../../language/attributes/deprecated.md:31
+#: ../../language/attributes/deprecated.md:32
 msgid "`#deprecated(\"Use new_function instead\", skip_current_package=true)`"
 msgstr "`#deprecated(\"Use new_function instead\", skip_current_package=true)`"
 
-#: ../../language/attributes/deprecated.md:33
+#: ../../language/attributes/deprecated.md:34
 msgid ""
 "Marks the item as deprecated with a custom warning message, but skips "
 "emitting warnings when the deprecated API is used within the same "
 "package."
 msgstr "項目を非推奨にし、カスタム警告メッセージを使いますが、同じパッケージ内で非推奨 API が使われた場合は警告を出しません。"
 
-#: ../../language/attributes/deprecated.md:35
+#: ../../language/attributes/deprecated.md:36
 #, fuzzy
 msgid "`#deprecated(skip_current_package=true)`"
 msgstr "`#deprecated(\"Use new_function instead\", skip_current_package=true)`"
 
-#: ../../language/attributes/deprecated.md:37
+#: ../../language/attributes/deprecated.md:38
 #, fuzzy
 msgid ""
 "Marks the item as deprecated with a default warning message, but skips "
@@ -635,9 +639,8 @@ msgid "`-warning_name`: disable the warning"
 msgstr "`-warning_name`: 警告を無効化"
 
 #: ../../language/attributes/warnings.md:21
-#, fuzzy
 msgid "`@warning_name`: treat an enabled warning as an error (deprecated)"
-msgstr "`@warning_name`: 有効な警告をエラーとして扱う"
+msgstr "`@warning_name`: 有効な警告をエラーとして扱う（非推奨）"
 
 #: ../../language/attributes/warnings.md:23
 msgid ""
@@ -645,6 +648,8 @@ msgid ""
 "individual warnings, and use `moon check --deny-warn` or the equivalent "
 "command flag when warnings should fail a CI build."
 msgstr ""
+"`@` スイッチは v0.10.4 で非推奨になりました。個別の警告は `+` または `-` で設定し、警告によって CI "
+"ビルドを失敗させる場合は `moon check --deny-warn` または各コマンドの同等オプションを使用してください。"
 
 #: ../../language/attributes/warnings.md:27
 msgid "Currently this attribute only works with some specific warnings."
