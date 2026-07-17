@@ -267,6 +267,11 @@ For compatibility, v0.10.4 still performs the old implicit attachment. The
 can be enabled while migrating existing code. New code should use `extend`
 rather than rely on the compatibility behavior.
 
+If an implicitly attached method should remain callable temporarily but is not
+part of the intended method-style API, add a corresponding `extend` declaration
+marked with `#deprecated`. This preserves a migration path for downstream code
+while directing users to qualified calls such as `Trait::method(value)`.
+
 ### Using traits
 
 When declaring a generic function, the type parameters can be annotated with the traits they should implement, allowing the definition of constrained generic functions. For example:

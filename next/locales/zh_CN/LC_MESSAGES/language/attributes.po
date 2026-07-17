@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 15:37+0800\n"
+"POT-Creation-Date: 2026-07-17 12:47+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -148,46 +148,50 @@ msgstr "特征声明"
 msgid "Trait default implementations"
 msgstr "特征的默认实现"
 
-#: ../../language/attributes/deprecated.md:21
+#: ../../language/attributes/deprecated.md:20
+msgid "`extend` declarations"
+msgstr "`extend` 声明"
+
+#: ../../language/attributes/deprecated.md:22
 msgid "Common forms include:"
 msgstr "常见形式包括："
 
-#: ../../language/attributes/deprecated.md:23
+#: ../../language/attributes/deprecated.md:24
 msgid "`#deprecated`"
 msgstr "`#deprecated`"
 
-#: ../../language/attributes/deprecated.md:25
+#: ../../language/attributes/deprecated.md:26
 msgid "Marks the item as deprecated with a default warning message."
 msgstr "将这个项目标记成弃用的，并使用默认的警告信息。"
 
-#: ../../language/attributes/deprecated.md:27
+#: ../../language/attributes/deprecated.md:28
 msgid "`#deprecated(\"Use new_function instead\")`"
 msgstr "`#deprecated(\"使用 new_function 代替\")`"
 
-#: ../../language/attributes/deprecated.md:29
+#: ../../language/attributes/deprecated.md:30
 msgid ""
 "Marks the item as deprecated with a custom warning message. Every time "
 "the deprecated API is used, the provided message will be displayed as a "
 "warning."
 msgstr "将 API 标记为弃用，并自定义一个警告信息。每当这个弃用的 API 被使用时，自定义信息将会显示在警告中。"
 
-#: ../../language/attributes/deprecated.md:31
+#: ../../language/attributes/deprecated.md:32
 msgid "`#deprecated(\"Use new_function instead\", skip_current_package=true)`"
 msgstr "`#deprecated(\"使用 new_function 代替\", skip_current_package=true)`"
 
-#: ../../language/attributes/deprecated.md:33
+#: ../../language/attributes/deprecated.md:34
 msgid ""
 "Marks the item as deprecated with a custom warning message, but skips "
 "emitting warnings when the deprecated API is used within the same "
 "package."
 msgstr "将 API 标记为弃用的同时自定义警告信息，但是当 API 在同一个包内使用时不触发警告。"
 
-#: ../../language/attributes/deprecated.md:35
+#: ../../language/attributes/deprecated.md:36
 #, fuzzy
 msgid "`#deprecated(skip_current_package=true)`"
 msgstr "`#deprecated(\"使用 new_function 代替\", skip_current_package=true)`"
 
-#: ../../language/attributes/deprecated.md:37
+#: ../../language/attributes/deprecated.md:38
 #, fuzzy
 msgid ""
 "Marks the item as deprecated with a default warning message, but skips "
@@ -614,9 +618,8 @@ msgid "`-warning_name`: disable the warning"
 msgstr "`-warning_name`: 关闭这个警告"
 
 #: ../../language/attributes/warnings.md:21
-#, fuzzy
 msgid "`@warning_name`: treat an enabled warning as an error (deprecated)"
-msgstr "`@warning_name`: 如果这个警告已经启用，转换为错误"
+msgstr "`@warning_name`：将已启用的警告视为错误（已弃用）"
 
 #: ../../language/attributes/warnings.md:23
 msgid ""
@@ -624,6 +627,8 @@ msgid ""
 "individual warnings, and use `moon check --deny-warn` or the equivalent "
 "command flag when warnings should fail a CI build."
 msgstr ""
+"`@` 开关已在 v0.10.4 中弃用。请使用 `+` 或 `-` 配置单项警告；需要让警告导致 CI "
+"构建失败时，请使用 `moon check --deny-warn` 或相应命令的同类选项。"
 
 #: ../../language/attributes/warnings.md:27
 msgid "Currently this attribute only works with some specific warnings."
