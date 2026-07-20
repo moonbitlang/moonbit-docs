@@ -63,6 +63,7 @@ The `#deprecated` attribute can be used in the following contexts:
 - Top-level type declarations (including `type`, `struct`, and `enum`)
 - Trait method declarations
 - Trait default implementations
+- `extend` declarations
 
 Common forms include:
 

@@ -10,9 +10,9 @@ Assume this layout:
 ```text
 repo/
   mod_a/
-    moon.mod.json
+    moon.mod
   mod_b/
-    moon.mod.json
+    moon.mod
 ```
 
 At `repo/`, initialize the workspace and register members:
@@ -67,4 +67,4 @@ example `mod_a@0.1.0` while workspace member `mod_a` is already `0.2.0`), run:
 moon work sync
 ```
 
-This updates member `moon.mod.json` files to aligned workspace member versions.
+This updates member `moon.mod` files to aligned workspace member versions.

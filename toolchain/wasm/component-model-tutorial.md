@@ -92,7 +92,9 @@ $ wit-bindgen moonbit wit/world.wit --out-dir . \
     --derive-error
 ```
 
-This command generates the following directory structure:
+With versions that still emit the legacy `moon.mod.json` format, run `moon fmt`
+once in the generated project to migrate it to `moon.mod`. After that migration,
+the generated directory structure is:
 
 ```none
 .
@@ -115,7 +117,7 @@ This command generates the following directory structure:
 │   │       ├── moon.pkg
 │   │       └── stub.mbt
 │   └── world_adder_export.mbt
-├── moon.mod.json
+├── moon.mod
 ├── wit
 │   └── world.wit
 └── world
@@ -128,7 +130,7 @@ This command generates the following directory structure:
 
 The generated files include:
 
-- `moon.mod.json`: MoonBit module configuration
+- `moon.mod`: MoonBit module configuration
 - `gen/`: Generated export bindings
   - `interface/`: Generated export interface bindings
   - `world/`: Generated export world bindings

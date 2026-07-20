@@ -16,7 +16,17 @@ test "test_name" {
 }
 ```
 
-A test code block is essentially a function that returns a `Unit` but may throws an [`Error`](error-handling.md#error-types), or `Unit!Error` as one would see in its signature at the position of return type. It is called during the execution of `moon test` and outputs a test report through the build system. The `assert_eq` function is from the standard library; if the assertion fails, it prints an error message and terminates the test. The string `"test_name"` is used to identify the test case and is optional.
+A test code block is essentially a function with type
+`() -> Unit raise Error`: it returns `Unit` and may raise an
+[`Error`](error-handling.md#error-types). It is called during the
+execution of `moon test` and outputs a test report through the build system.
+The `assert_eq` function is from the standard library; if the assertion fails,
+it prints an error message and terminates the test. The string `"test_name"`
+is used to identify the test case and is optional.
+
+Tests started by `moon test` use the module root as their current working
+directory. Resolve relative paths used by tests from the module root, rather
+than from the package directory or the directory containing the test file.
 
 If a test name starts with `"panic"`, it indicates that the expected behavior of the test is to trigger a panic, and the test will only pass if the panic is triggered. For example:
 

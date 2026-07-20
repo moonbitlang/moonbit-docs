@@ -1165,24 +1165,25 @@ Use `moonc check -warn-help` to see the list of preset compiler warnings.
 Alerts are special warnings that indicate the usage of API marked with
 [`#internal` attribute](../../language/attributes.md#internal-attribute).
 
-All alerts has a category associated with it, which is customized by the author of the API.
+All alerts have a category associated with them, which is customized by the author of the API.
 You can enable or disable specific alert categories using the `alert_<category>` warning name,
 or use `alert` to control all alert warnings at once.
 
-For example, in the following configuration, all warnings for alerts are treated
-as fatal errors, except for the `unsafe` category, which is disabled.
+For example, the following configuration enables all alert warnings except the
+`unsafe` category. In CI, add `--deny-warn` to `moon check`, `moon test`, or the
+equivalent command to treat enabled warnings as fatal errors.
 
 ### moon.pkg
 
 ```moonbit
-warnings = "@alert-alert_unsafe" 
+warnings = "+alert-alert_unsafe"
 ```
 
 ### moon.pkg.json
 
 ```json
 {
-  "warn-list": "@alert-alert_unsafe" 
+  "warn-list": "+alert-alert_unsafe"
 }
 ```
 

@@ -71,7 +71,8 @@ version = "0.1.0"
 
 ## Dependency Management
 
-The `deps` field is used to specify the dependencies of the module.
+Module dependencies are declared with `import` in `moon.mod`. The legacy
+`moon.mod.json` format represents the same information in its `deps` field.
 
 It is automatically managed by commands like `moon add` and `moon remove`.
 
@@ -560,7 +561,7 @@ The `scripts` field is used to define custom scripts associated with the module.
 
 The `postadd` script runs automatically after the module has been added.
 When executed, the script's current working directory (cwd) is set to the
-directory where the `moon.mod.json` file resides.
+directory containing the module configuration file.
 
 ### moon.mod
 
@@ -593,7 +594,7 @@ Using this feature may execute arbitrary code in your computer.
 Please use with caution and only with trusted dependencies.
 
 The pre-build config script is added in order to aid native target programming.
-To use such script, add your script in your `moon.mod.json`:
+To use such a script, add it to your module configuration:
 
 ### moon.mod
 

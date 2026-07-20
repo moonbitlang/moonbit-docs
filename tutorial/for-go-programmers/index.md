@@ -1000,14 +1000,15 @@ that they will be treated as a whole by the toolchain.
 For definitions within source files of another directory, however,
 you would need to import them before they can be used.
 
-In MoonBit, on the other hand, the default project structure provided by
-`moon new` is more organized, as shown below:
+In MoonBit, a project can use a binary-and-library structure such as the one
+below. Starting from `moon new`, move the packages under `src` when you want
+this layout and set the module's source directory accordingly:
 
 ```txt
 my-project
 ├── LICENSE
 ├── README.md
-├── moon.mod.json
+├── moon.mod
 └── src
     ├── lib
     │   ├── hello.mbt
@@ -1019,13 +1020,11 @@ my-project
 ```
 
 This demonstrates a typical "binary-and-library" project structure in MoonBit,
-located in the `src` directory. This is declared in `moon.mod.json` like so
+located in the `src` directory. This is declared in `moon.mod` like so
 (with irrelevant parts omitted):
 
-```json
-{
-  "source": "src"
-}
+```moonbit
+source = "src"
 ```
 
 This is the module configuration file that also registers the project's
@@ -1074,10 +1073,10 @@ import (
 )
 ```
 
-MoonBit uses a different approach with `moon.mod.json` for module configuration and
+MoonBit uses a different approach with `moon.mod` for module configuration and
 `moon.pkg` for package configuration.
 
-First, declare dependencies in the `"deps"` section of your `moon.mod.json`.
+First, declare module dependencies with an `import` declaration in `moon.mod`.
 This is usually done with the `moon add <package>` command.
 
 For example, to use `moonbitlang/x`, you would run:
@@ -1086,13 +1085,12 @@ For example, to use `moonbitlang/x`, you would run:
 $ moon add moonbitlang/x
 ```
 
-... which would result in a `moon.mod.json` file like so (with irrelevant parts omitted):
+... which adds an entry like the following to `moon.mod` (the resolved version
+may differ):
 
-```json
-{
-  "deps": {
-    "moonbitlang/x": "*"
-  }
+```moonbit
+import {
+  "moonbitlang/x@0.4.6",
 }
 ```
 

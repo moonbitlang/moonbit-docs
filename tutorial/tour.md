@@ -59,7 +59,7 @@ examine
 │       ├── main.mbt
 │       └── moon.pkg
 ├── LICENSE
-├── moon.mod.json
+├── moon.mod
 ├── moon.pkg
 ├── examine_test.mbt
 ├── examine.mbt
@@ -351,7 +351,7 @@ too.
 
 1. Execute `moon login` and follow the instruction to create your account with
    an existing GitHub account.
-2. Modify the project name in `moon.mod.json` to
+2. Modify the project name in `moon.mod` to
    `<your github account name>/<project name>`. Run `moon check` to see if
    there's any other affected places in `moon.pkg`.
 3. Execute `moon publish` and your done. Your project will be available for
@@ -359,7 +359,7 @@ too.
 
 By default, the project will be shared under [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html),
 which is a permissive license allowing everyone to use. You can also use other licenses, such as the [MulanPSL 2.0](https://spdx.org/licenses/MulanPSL-2.0.html),
-by changing the field `license` in `moon.mod.json` and the content of `LICENSE`.
+by changing the field `license` in `moon.mod` and the content of `LICENSE`.
 
 ### Closing
 

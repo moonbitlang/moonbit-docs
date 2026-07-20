@@ -42,7 +42,7 @@ my_project
 │       ├── main.mbt
 │       └── moon.pkg
 ├── LICENSE
-├── moon.mod.json
+├── moon.mod
 ├── moon.pkg
 ├── my_project_test.mbt
 ├── my_project.mbt
@@ -55,17 +55,16 @@ On Windows system, you need administrator privilege or the developer mode enable
 
 Here's a brief explanation of the directory structure:
 
-- `moon.mod.json` is used to identify a directory as a MoonBit module. It contains the module's metadata, such as the module name, version, etc.
-  ```json
-  {
-    "name": "username/my_project",
-    "version": "0.1.0",
-    "readme": "README.md",
-    "repository": "",
-    "license": "Apache-2.0",
-    "keywords": [],
-    "description": ""
-  }
+- `moon.mod` is used to identify a directory as a MoonBit module. It contains
+  the module's metadata, such as the module name and version.
+  ```moonbit
+  name = "username/my_project"
+  version = "0.1.0"
+  readme = "README.mbt.md"
+  repository = ""
+  license = "Apache-2.0"
+  keywords = []
+  description = ""
   ```
 - `.` and `cmd/main` directories: These are the packages within the module. Each package can contain multiple `.mbt` files, which are the source code files for the MoonBit language. However, regardless of how many `.mbt` files a package has, they all share a common `moon.pkg` file. Older projects may still use the legacy `moon.pkg.json` format. `*_test.mbt` are separate test files in the package, these files are for blackbox tests, so private members of the same package cannot be accessed directly.
 - `moon.pkg` is the package descriptor. It defines the properties of the package, such as whether it is the main package and the packages it imports.
@@ -145,19 +144,17 @@ Total tests: 1, passed: 1, failed: 0.
 Moon has three different target-related knobs, and they serve different jobs:
 
 - `--target` on the command line chooses which backend the current command uses
-- `preferred-target` in `moon.mod.json` chooses the default backend for `moon` and the language server
-- `supported-targets` declares which backends a module or package is intended to support
+- `preferred_target` in `moon.mod` chooses the default backend for `moon` and the language server
+- `supported_targets` declares which backends a module or package is intended to support
 
 For example, a native-first CLI project may set:
 
-```json
-{
-  "preferred-target": "native",
-  "supported-targets": "native"
-}
+```moonbit
+preferred_target = "native"
+supported_targets = "native"
 ```
 
-`supported-targets` uses target-set syntax such as `js`, `+js+wasm-gc`, or `+all-js`.
+`supported_targets` uses target-set syntax such as `js`, `+js+wasm-gc`, or `+all-js`.
 
 If only some files are backend-specific, keep the module or package metadata broad and use
 [`targets`](package.md#conditional-compilation) in `moon.pkg` or legacy `moon.pkg.json` to select files
@@ -230,7 +227,7 @@ After creating these files, your directory structure should look like this:
 │   ├── moon.pkg
 │   └── slow.mbt
 ├── LICENSE
-├── moon.mod.json
+├── moon.mod
 ├── moon.pkg
 ├── my_project_test.mbt
 ├── my_project.mbt

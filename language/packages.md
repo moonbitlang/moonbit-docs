@@ -9,12 +9,16 @@ In MoonBit, the most important unit for code organization is a package, which co
 A package is a library by default. A package containing a `main` function is
 declared executable with [`pkgtype(kind: "executable")`](../toolchain/moon/package.md#package-type).
 
-A project, corresponding to a module, consists of multiple packages and a single `moon.mod.json` configuration file.
+A project, corresponding to a module, consists of multiple packages and a
+single `moon.mod` configuration file. Older projects may still use the legacy
+`moon.mod.json` format.
 
 A module is identified by the [`name`](../toolchain/moon/module.md#name) field, which usually consists of two parts, separated by `/`: `user-name/project-name`.
 A package is identified by the relative path to the source root defined by the [`source`](../toolchain/moon/module.md#source-directory) field. The full identifier would be `user-name/project-name/path-to-pkg`.
 
-When using things from another package, the dependency between modules should first be declared inside the `moon.mod.json` by the [`deps`](../toolchain/moon/module.md#dependency-management) field.
+When using things from another package, the dependency between modules should
+first be declared in `moon.mod` with an
+[`import`](../toolchain/moon/module.md#dependency-management) declaration.
 The dependency between packages should then be declared in the package file (`moon.pkg`, or legacy `moon.pkg.json`) by the [`import`](../toolchain/moon/package.md#import) field.
 Most core packages follow the same rule: if you use `@json`, `@test`, or other
 ordinary core aliases, add the corresponding `moonbitlang/core/...` package to
