@@ -23,10 +23,7 @@ You can build mixed-backend projects in one module, such as a native backend and
 
 - [Tour](https://tour.moonbitlang.com): Interactive language playground
 
-- [MoonBit Skills](https://mooncakes.io/skills): Browse the skills marketplace
-  and install a skill directly from its page URL with
-  `npx skills@latest add <skill-page-url>`. The maintained source collection is
-  also available in the [MoonBit skills repository](https://github.com/moonbitlang/skills).
+- [MoonBit Skills](https://github.com/moonbitlang/skills): Install skills from this repository before using MoonBit code agents.
 
 - [mooncakes.io](https://mooncakes.io): Package registry along with API documents, including:
   - [Experimental library API](https://mooncakes.io/docs/moonbitlang/x/)
