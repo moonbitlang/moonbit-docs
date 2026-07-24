@@ -7,203 +7,381 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-10 15:52+0800\n"
+"POT-Creation-Date: 2026-07-24 10:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: zh_CN <LL@li.org>\n"
 "Language: zh_CN\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: zh_CN <LL@li.org>\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
 #: ../../language/lexical-conventions.md:1
 msgid "Lexical Conventions"
 msgstr "词法约定"
 
-#: ../../language/lexical-conventions.md:4
-msgid "This page is a work in progress and is currently incomplete."
-msgstr "本页面仍在编写中，内容尚不完整。"
+#: ../../language/lexical-conventions.md:3
+msgid ""
+"This page specifies MoonBit lexical forms. Runtime representation, APIs, "
+"and literal overloading are covered in [Fundamentals](fundamentals.md"
+"#built-in-data-structures)."
+msgstr ""
+"本页面规定 MoonBit 的词法形式。运行时表示、API 和字面量重载见[基础](fundamentals.md#built-in-data-"
+"structures)。"
 
 #: ../../language/lexical-conventions.md:7
 msgid ""
-"This page specifies MoonBit lexical forms. Runtime representation, APIs, "
-"and literal overloading are covered in [Fundamentals]"
-"(fundamentals.md#built-in-data-structures)."
+"MoonBit source text must be well-formed UTF-8. Malformed input reports a "
+"lexical error. At each position, the lexer consumes the longest valid "
+"token. Whitespace is discarded, while newlines participate in automatic "
+"semicolon insertion."
 msgstr ""
-"本页面规定 MoonBit 的词法形式。运行时表示、API 和字面量重载见[基础]"
-"(fundamentals.md#built-in-data-structures)。"
+"MoonBit 源文本必须是格式正确的 UTF-8。格式错误的输入会报告词法错误。在每个位置，词法分析器都会取最长的有效词法单元。空白会被丢弃，"
+"而换行参与自动分号插入。"
 
-#: ../../language/lexical-conventions.md:11
+#: ../../language/lexical-conventions.md:12
 msgid ""
-"In the productions, `{ symbol }` means zero or more repetitions, "
-"`{ symbol }+` means one or more repetitions, and `x ... y` denotes an "
-"inclusive range."
+"In the productions, `{ symbol }` means zero or more repetitions, `{ "
+"symbol }+` means one or more repetitions, `[ symbol ]` means zero or one "
+"occurrence, and `x...y` denotes an inclusive range. Parentheses group a "
+"form. An `except` clause removes the listed forms from the complete form "
+"on its left."
 msgstr ""
-"在产生式中，`{ symbol }` 表示重复零次或多次，`{ symbol }+` 表示重复一次或"
-"多次，`x ... y` 表示包含两端的范围。"
+"在产生式中，`{ symbol }` 表示重复零次或多次，`{ symbol }+` 表示重复一次或多次，`[ symbol ]` 表示出现零次"
+"或一次，`x...y` 表示包含两端的范围。圆括号用于组合形式。`except` 子句从其左侧的完整形式中排除所列形式。"
 
-#: ../../language/lexical-conventions.md:15
+#: ../../language/lexical-conventions.md:17
 msgid "Common Lexical Classes"
 msgstr "通用词法类"
 
-#: ../../language/lexical-conventions.md:30
+#: ../../language/lexical-conventions.md:32
 msgid "String Literals"
 msgstr "字符串字面量"
 
-#: ../../language/lexical-conventions.md:48
+#: ../../language/lexical-conventions.md:52
 msgid "The simple escape sequences have the following meanings:"
 msgstr "简单转义序列的含义如下："
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Sequence"
 msgstr "序列"
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Character"
 msgstr "字符"
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\\\`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Backslash (U+005C)"
 msgstr "反斜杠（U+005C）"
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\\"`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Double quote (U+0022)"
 msgstr "双引号（U+0022）"
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\'`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Single quote (U+0027)"
 msgstr "单引号（U+0027）"
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\/`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Forward slash (U+002F)"
 msgstr "正斜杠（U+002F）"
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\n`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Line feed (U+000A)"
 msgstr "换行符（U+000A）"
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\r`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Carriage return (U+000D)"
 msgstr "回车符（U+000D）"
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\t`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Horizontal tab (U+0009)"
 msgstr "水平制表符（U+0009）"
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\b`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Backspace (U+0008)"
 msgstr "退格符（U+0008）"
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\f`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Form feed (U+000C)"
 msgstr "换页符（U+000C）"
 
-#: ../../language/lexical-conventions.md:62
+#: ../../language/lexical-conventions.md:66
 msgid ""
-"A Unicode escape must denote a Unicode scalar value. A CR or LF before "
-"the closing quote reports an unterminated string literal."
-msgstr ""
-"Unicode 转义必须表示 Unicode 标量值。若在右引号之前遇到 CR 或 LF，则报告未"
-"终止的字符串字面量。"
+"A Unicode escape must denote a Unicode scalar value. A newline before the"
+" closing quote reports an unterminated string literal."
+msgstr "Unicode 转义必须表示 Unicode 标量值。若在右引号之前遇到换行，则报告未终止的字符串字面量。"
 
-#: ../../language/lexical-conventions.md:65
+#: ../../language/lexical-conventions.md:69
 msgid "Interpolation"
 msgstr "插值"
 
-#: ../../language/lexical-conventions.md:71
+#: ../../language/lexical-conventions.md:75
 msgid ""
 "The expression must be nonempty and end at the matching `}`. Braces "
-"inside nested literals do not affect matching; nested interpolations are "
-"recognized recursively. CR, LF, `//` comments, attributes, and multiline "
-"string literals are not permitted."
+"inside nested literals do not affect matching. Nested interpolations are "
+"recognized recursively. Newlines, `//` comments, attributes, and "
+"multiline string literals are not permitted."
 msgstr ""
-"表达式不能为空，并在匹配的 `}` 处结束。嵌套字面量中的大括号不影响配对；嵌"
-"套插值会被递归识别。不允许 CR、LF、`//` 注释、属性和多行字符串字面量。"
+"表达式不能为空，且必须在与之匹配的 `}` 处结束。嵌套字面量中的大括号不影响匹配。嵌套插值会被递归识别。不允许出现换行、`//` "
+"注释、属性和多行字符串字面量。"
 
-#: ../../language/lexical-conventions.md:76
+#: ../../language/lexical-conventions.md:80
 msgid "Multiline String Literals"
 msgstr "多行字符串字面量"
 
-#: ../../language/lexical-conventions.md:95
+#: ../../language/lexical-conventions.md:97
 msgid ""
 "The prefixes are omitted from the result, and lines are joined with "
 "U+000A. A final empty prefixed line adds a trailing line feed. A `#|` "
-"line is literal; in a `$|` line, only `\\{` begins interpolation. "
+"line is literal. In a `$|` line, only `\\{` begins interpolation. "
 "Multiline strings are not permitted inside interpolation expressions."
 msgstr ""
-"前缀不计入结果，行之间以 U+000A 连接。最后一个带前缀的空行会添加末尾换行"
-"符。`#|` 行为原样文本；在 `$|` 行中，只有 `\\{` 开始插值。插值表达式内不允"
-"许多行字符串。"
+"结果中省略各行前缀，并使用 U+000A 连接各行。最后一个带前缀的空行会添加末尾换行符。`#|` 行是原样文本。在 `$|` 行中，只有 "
+"`\\{` 会开始插值。插值表达式内不允许多行字符串。"
 
-#: ../../language/lexical-conventions.md:100
+#: ../../language/lexical-conventions.md:102
 msgid "Bytes Literals"
 msgstr "字节序列字面量"
 
-#: ../../language/lexical-conventions.md:114
+#: ../../language/lexical-conventions.md:116
 msgid ""
-"A CR or LF before the closing quote reports an unterminated literal. Non-"
-"ASCII source characters contribute their UTF-8 encoding; `\\xHH` and "
+"A newline before the closing quote reports an unterminated literal. Non-"
+"ASCII source characters contribute their UTF-8 encoding. `\\xHH` and "
 "`\\oDDD` each contribute one byte with a value from 0 to 255. "
 "Interpolation follows the string-literal rules. There is no multiline "
 "bytes-literal form."
 msgstr ""
-"若在右引号之前遇到 CR 或 LF，则报告未终止的字面量。非 ASCII 源字符写入其 "
-"UTF-8 编码；`\\xHH` 和 `\\oDDD` 各写入一个取值为 0 到 255 的字节。插值遵循"
-"字符串字面量规则。字节序列字面量没有多行形式。"
+"若在右引号之前遇到换行，则报告未终止的字面量。非 ASCII 源字符写入其 UTF-8 编码。`\\xHH` 和 `\\oDDD` "
+"各写入一个取值为 0 到 255 的字节。插值遵循字符串字面量规则。字节序列字面量没有多行形式。"
 
-#: ../../language/lexical-conventions.md:119
+#: ../../language/lexical-conventions.md:121
+msgid "Regex Literals"
+msgstr "正则字面量"
+
+#: ../../language/lexical-conventions.md:131
+msgid ""
+"Backslashes are preserved for the regex parser, while `\\{` starts an "
+"interpolation. Interpolated regex literals are accepted only in lex-"
+"pattern contexts. A newline before the closing quote reports an "
+"unterminated literal. See [Regex Literal Expression](fundamentals.md"
+"#regex-literal-expression)."
+msgstr ""
+"反斜杠会原样保留给正则解析器，而 `\\{` 会开始插值。带插值的正则字面量仅在 lex-pattern 上下文中接受。若在右引号之前遇到换行，"
+"则报告未终止的字面量。参见[正则字面量表达式](fundamentals.md#regex-literal-expression)。"
+
+#: ../../language/lexical-conventions.md:136
 msgid "Character Literals"
 msgstr "字符字面量"
 
-#: ../../language/lexical-conventions.md:131
+#: ../../language/lexical-conventions.md:149
 msgid ""
 "A character literal contains exactly one Unicode scalar value or escape "
 "sequence."
 msgstr "字符字面量恰好包含一个 Unicode 标量值或转义序列。"
 
-#: ../../language/lexical-conventions.md:134
+#: ../../language/lexical-conventions.md:152
 msgid "Byte Literals"
 msgstr "字节字面量"
 
-#: ../../language/lexical-conventions.md:146
-msgid ""
-"An unescaped byte is ASCII. Unicode escapes are invalid in byte literals."
+#: ../../language/lexical-conventions.md:165
+msgid "An unescaped byte is ASCII. Unicode escapes are invalid in byte literals."
 msgstr "未转义的字节必须是 ASCII。字节字面量中不允许 Unicode 转义。"
+
+#: ../../language/lexical-conventions.md:167
+msgid "Comments"
+msgstr "注释"
+
+#: ../../language/lexical-conventions.md:175
+msgid ""
+"`doc-comment` takes precedence over `line-comment` when both match. "
+"MoonBit has no block-comment form."
+msgstr "当两者都能匹配时，`doc-comment` 优先于 `line-comment`。MoonBit 不支持块注释。"
+
+#: ../../language/lexical-conventions.md:178
+msgid "Identifiers"
+msgstr "标识符"
+
+#: ../../language/lexical-conventions.md:210
+msgid ""
+"These exact ranges are used, without Unicode normalization. A `uident` "
+"begins with an ASCII uppercase letter. All other identifier spellings "
+"begin with an ASCII lowercase letter, `_`, or a character in `non-ascii`."
+" The exact spelling `_` is a dedicated token. Keywords also use their own"
+" tokens. A leading ASCII decimal digit starts a numeric literal."
+msgstr ""
+"以上字符范围按原样使用，不进行 Unicode 规范化。`uident` 以 ASCII 大写字母开头。其他标识符拼写以 ASCII "
+"小写字母、`_` 或 `non-ascii` 中的字符开头。单独的 `_` 是专用词法单元。关键字也使用各自的专用词法单元。以 ASCII "
+"十进制数字开头时会开始一个数字字面量。"
+
+#: ../../language/lexical-conventions.md:216
+msgid "Keywords"
+msgstr "关键字"
+
+#: ../../language/lexical-conventions.md:231
+msgid "Keywords take precedence over identifiers."
+msgstr "关键字优先于标识符。"
+
+#: ../../language/lexical-conventions.md:233
+msgid ""
+"The following spellings are reserved. A spelling that is not already a "
+"keyword is otherwise tokenized as an identifier or label and reports a "
+"reserved-keyword warning."
+msgstr "以下拼写为保留字。尚未成为关键字的保留字会被词法分析为标识符或标签，并报告保留关键字警告。"
+
+#: ../../language/lexical-conventions.md:252
+msgid "Labels"
+msgstr "标签"
+
+#: ../../language/lexical-conventions.md:259
+msgid ""
+"The `~` must immediately follow the name. ASCII-uppercase identifiers and"
+" keywords cannot form labels."
+msgstr "`~` 必须紧跟名称。以 ASCII 大写字母开头的标识符和关键字不能构成标签。"
+
+#: ../../language/lexical-conventions.md:262
+msgid "Package Names"
+msgstr "包名"
+
+#: ../../language/lexical-conventions.md:270
+msgid ""
+"Package names are ASCII-only. A hyphen cannot begin a package part. The "
+"leading `@`, slashes, and parts must be adjacent."
+msgstr "包名仅限 ASCII。连字符不能位于包名部分的开头。前导 `@`、斜杠和各个部分必须彼此相邻。"
+
+#: ../../language/lexical-conventions.md:273
+msgid "Attributes"
+msgstr "属性"
+
+#: ../../language/lexical-conventions.md:281
+msgid ""
+"After the optional dot-qualified name, everything through the next "
+"newline is the raw payload. Attributes are not permitted inside an "
+"`interpolation`. See [Attribute](attributes.md) for the payload grammar."
+msgstr ""
+"可选的点号限定名之后，到下一个换行为止的所有内容都是原始载荷。`interpolation` 中不允许使用属性。载荷文法见[属性]"
+"(attributes.md)。"
+
+#: ../../language/lexical-conventions.md:285
+msgid "Numeric Literals"
+msgstr "数字字面量"
+
+#: ../../language/lexical-conventions.md:315
+msgid ""
+"After the first digit of a numeral, underscores may repeat or trail. "
+"Uppercase suffixes select `UInt` (`U`), `Int64` (`L`), `UInt64` (`UL`), "
+"`BigInt` (`N`), or `Float` (`F`). An unsuffixed floating-point literal is"
+" a `Double`."
+msgstr ""
+"数的第一个数字之后，下划线可以重复出现，也可以出现在末尾。大写后缀分别指定 `UInt`（`U`）、`Int64`（`L`）、`UInt64`"
+"（`UL`）、`BigInt`（`N`）或 `Float`（`F`）。不带后缀的浮点字面量为 `Double`。"
+
+#: ../../language/lexical-conventions.md:319
+msgid ""
+"Floating-point literals always contain a decimal point. A hexadecimal "
+"`Float` requires a `p` or `P` exponent before `F`, so `0x1.F` is a "
+"`Double`. Signs are separate tokens. Before `..`, an integer ends first, "
+"so `1..=2` begins with `1` and `..=`."
+msgstr ""
+"浮点字面量始终包含小数点。十六进制 `Float` 必须在 `F` 前包含由 `p` 或 `P` 引导的指数部分，因此 `0x1.F` 是 "
+"`Double`。正负号是独立的词法单元。紧接 `..` 时，整数词法单元先结束，因此 `1..=2` 以 `1` 和 `..=` 开始。"
+
+#: ../../language/lexical-conventions.md:324
+msgid "`1.` and `1.F` are also valid double and float literal."
+msgstr "`1.` 和 `1.F` 也分别是合法的 `Double` 和 `Float` 字面量。"
+
+#: ../../language/lexical-conventions.md:326
+msgid "Dot-Prefixed Tokens"
+msgstr "点号前缀词法单元"
+
+#: ../../language/lexical-conventions.md:334
+msgid ""
+"These forms contain no whitespace. Tuple accessors do not permit "
+"underscores, and dot-identifiers use the identifier case rules without "
+"consulting the keyword table, so `.if` is valid. A single `.` reports a "
+"lexical error."
+msgstr ""
+"这些形式中不能包含空白。元组访问器中不能有下划线。点号标识符遵循标识符的大小写规则，但不查询关键字表，因此 `.if` 合法。单独的 `.` "
+"会报告词法错误。"
+
+#: ../../language/lexical-conventions.md:338
+msgid "Operators and Delimiters"
+msgstr "运算符与分隔符"
+
+#: ../../language/lexical-conventions.md:355
+msgid ""
+"The longest listed token wins. MoonBit has no generic operator-name "
+"syntax."
+msgstr "列出的词法单元中，最长者优先。"
+
+#: ../../language/lexical-conventions.md:357
+msgid "Automatic Semicolon Insertion"
+msgstr "自动分号插入"
+
+#: ../../language/lexical-conventions.md:359
+msgid ""
+"After a newline, the lexer may insert `;` when the preceding token can "
+"end a statement and the following token can begin one. End of file is "
+"also an eligible follower. It does not insert one before `}` or between "
+"adjacent multiline string lines."
+msgstr ""
+"换行后，如果前一个词法单元可以结束语句，且后一个词法单元可以开始语句，词法分析器可能会插入 `;`。文件末尾也可作为有效的后继。词法分析器不会"
+"在 `}` 前插入分号，也不会在多行字符串的相邻行之间插入分号。"
+
+#: ../../language/lexical-conventions.md:364
+msgid "`.mbti` Extensions"
+msgstr "`.mbti` 扩展"
+
+#: ../../language/lexical-conventions.md:366
+msgid "The `.mbti` lexical grammar adds this keyword to `.mbt`:"
+msgstr "`.mbti` 的词法文法在 `.mbt` 的基础上增加以下关键字："
+
+#: ../../language/lexical-conventions.md:372
+msgid ""
+"In `.mbti`, `package` takes precedence over identifiers and cannot form a"
+" label. In `.mbt`, it follows the reserved-word behavior above and can "
+"form `package~`."
+msgstr ""
+"在 `.mbti` 中，`package` 的匹配优先级高于标识符，且不能构成标签。在 `.mbt` 中，它遵循上文所述的保留字规则，并可构成 "
+"`package~`。"
+
+#~ msgid "This page is a work in progress and is currently incomplete."
+#~ msgstr "本页面仍在编写中，内容尚不完整。"
