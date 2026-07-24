@@ -372,16 +372,3 @@ mbti-keyword ::= `keyword` | "package"
 In `.mbti`, `package` takes precedence over identifiers and cannot form a
 label. In `.mbt`, it follows the reserved-word behavior above and can
 form `package~`.
-
-## `.mbtp` Extensions
-
-The `.mbtp` lexical grammar adds only these forms to `.mbt`:
-
-```{moonbit-grammar} moonbit-lexical
-mbtp-keyword ::= `keyword` | "predicate" | "lemma"
-
-mbtp-logical-symbol ::= "∀" | "∃" | "→"
-```
-
-`predicate` and `lemma` take precedence over identifiers and cannot form
-labels. `∀`, `∃`, and `→` are dedicated logical tokens.
