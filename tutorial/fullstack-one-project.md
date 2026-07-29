@@ -7,7 +7,7 @@ You will implement one shared validation rule set and use it in both places:
 - `frontend/`: show local warnings and call backend
 - `backend/`: validate again and return JSON response
 
-The key is `supported-targets`:
+The key is `supported_targets`:
 
 - `frontend/` is `js`
 - `backend/` is `native`

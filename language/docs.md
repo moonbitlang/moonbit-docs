@@ -130,7 +130,7 @@ moonbit:
 
 ```mbt check
 fn answer() -> Int {
-  let cell : @ref.Ref[Int] = { val: 41 }
+  let cell = @ref.Ref::{ val: 41 }
   cell.val + 1
 }
 

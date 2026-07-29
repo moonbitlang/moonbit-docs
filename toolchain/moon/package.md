@@ -14,7 +14,7 @@ The new format is a concise DSL. You can generate or reformat it from an
 existing `moon.pkg.json` with:
 
 ```bash
-moon fmt -C <module_dir>
+moon -C <module_dir> fmt
 ```
 
 Example:
@@ -349,15 +349,13 @@ options(
 
 ## Supported Targets
 
-The `supported-targets` option declares which backends a package is intended to support.
+The `supported_targets` field declares which backends a package is intended to support.
 It uses a target-set expression, not an array:
 
 ### moon.pkg
 
 ```moonbit
-options(
-  "supported-targets": "js",
-)
+supported_targets = "js"
 ```
 
 ### moon.pkg.json
@@ -376,6 +374,14 @@ Examples:
 
 Legacy array syntax is still accepted for compatibility:
 
+### moon.pkg
+
+```moonbit
+supported_targets = ["js", "native"]
+```
+
+### moon.pkg.json
+
 ```json
 {
   "supported-targets": ["js", "native"]
@@ -384,11 +390,11 @@ Legacy array syntax is still accepted for compatibility:
 
 This is package metadata, not a conditional compilation rule:
 
-- use `supported-targets` to declare the package's supported backend set
+- use `supported_targets` to declare the package's supported backend set
 - use `targets` to include or exclude individual files for different backends
 - use `preferred_target` in `moon.mod` to choose the default backend for commands such as `moon check`, `moon run`, and `moon build`
 
-When both the module and the package declare `supported-targets`, the effective backend set is
+When both the module and the package declare `supported_targets`, the effective backend set is
 their intersection.
 
 Command behavior follows the selected backend:
@@ -403,14 +409,14 @@ does not support the selected backend, the command fails with a normal user-faci
 
 Notes:
 
-- omitting `supported-targets` means all backends are supported
+- omitting `supported_targets` means all backends are supported
 - `--target all` expands to `wasm`, `wasm-gc`, `js`, and `native`, but not `llvm`
-- `llvm` is still a valid `supported-targets` value
+- `llvm` is still a valid `supported_targets` value
 - legacy array syntax is deprecated, but still accepted for compatibility
 
 A common setup is:
 
-- mark a native-only package with `"supported-targets": "native"`
+- mark a native-only package with `supported_targets = "native"`
 - set `preferred_target = "native"` in `moon.mod`
 - use `targets` only when some files inside the package differ by backend
 
@@ -991,12 +997,12 @@ contents of `a.txt` to `a.mbt` before the package is checked.
 
 ## Warnings List
 
-Used to disable warnings, enable warnings, or treat a warning as a fatal error.
-The warning list is a string composed of multiple warning name, each prefixed with a sign:
+Warning lists disable or enable warnings. To make enabled warnings fail a
+command, use `--deny-warn`. A warning list is a string composed of one or more
+warning names, each prefixed with a sign:
 
 - `-` to disable the warning
 - `+` to enable the warning
-- `@` to treat the enabled warning as a fatal error (deprecated)
 
 For example, in the following configuration, `-unused_value` disables the unused functions and variables warning.
 
@@ -1046,25 +1052,12 @@ warnings = "+unused_optional_argument"
 }
 ```
 
-The `@` switch is deprecated. Use `moon check --deny-warn` (and the equivalent
-flag on other CI commands) when warnings should fail the build. Existing `@`
-configuration is shown here only for migration.
+Older configurations may use an `@` prefix to promote a warning to an error.
+The prefix remains accepted only for compatibility and should not be used in
+new configuration. Use `moon check --deny-warn` (and the equivalent flag on
+other CI commands) when warnings should fail the build.
 
-### moon.pkg
-
-```moonbit
-warnings = "@deprecated"
-```
-
-### moon.pkg.json
-
-```json
-{
-  "warn-list": "@deprecated"
-}
-```
-
-You can also use warning numbers in `warn-list`. In the output below, `mnemonic`
+You can also use warning numbers in `warnings`. In the output below, `mnemonic`
 is the symbolic warning name used in warning lists, while `id` is the numeric
 form of the same warning.
 
@@ -1117,7 +1110,6 @@ invalid_attribute          Invalid attribute.                                   
 unused_attribute           Unused attribute.                                               43 warn
 invalid_inline_wasm        Invalid inline-wasm.                                            44 error
 unused_rest_mark           Useless `..` in pattern                                         46 warn
-invalid_mbti               Invalid mbti file                                               47 warn
 missing_definition         Unused pub definition because it does not exist in mbti file.   49 warn
 method_shadowing           Local method shadows upstream method                            50 warn
 ambiguous_precedence       Ambiguous operator precedence                                   51 warn
@@ -1152,7 +1144,10 @@ regex_match_missing_before Missing `before` binding in `regex match`.           
 regex_match_missing_after  Missing `after` binding in `regex match`.                       81 warn
 ambiguous_braces           Ambiguous `{}` braces.                                          82 warn
 type_param_method          Calling method of type parameter in a deprecated way.           83 warn
-A                          all warnings
+unqualified_record         Struct literal in a `let` binding without a type prefix.        84 off
+unlabelled_break_in_labelled_loop Unlabelled `break` directly inside a labelled loop.             85 warn
+unlabelled_continue_in_labelled_loop Unlabelled `continue` directly inside a labelled loop.          86 warn
+all                        all warnings
 state: warn = enabled, error = promoted to error, off = disabled
 note: default alert exceptions: alert_unsafe=off
 ```

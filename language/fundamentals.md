@@ -819,7 +819,7 @@ fn incr(counter? : Ref[Int] = { val: 0 }) -> Ref[Int] {
 test {
   @test.assert_eq(incr().val, 1)
   @test.assert_eq(incr().val, 1)
-  let counter : Ref[Int] = { val: 0 }
+  let counter = Ref::{ val: 0 }
   @test.assert_eq(incr(counter~).val, 1)
   @test.assert_eq(incr(counter~).val, 2)
 }
@@ -1061,6 +1061,16 @@ in the `guard` statement is not true or cannot be matched.
 guard condition  // <=> guard condition else { panic() }
 guard expr is Some(x)
 // <=> guard expr is Some(x) else { _ => panic() }
+```
+
+Use `guard!` to make this terminating behavior explicit. Unlike `guard`,
+`guard!` cannot have an `else` clause.
+
+```moonbit
+fn require_some(value : Int?) -> Int {
+  guard! value is Some(result)
+  result
+}
 ```
 
 ### While loop
@@ -1396,6 +1406,11 @@ allowed inside list comprehensions.
 When a loop is labelled, it can be referenced from a `break` or `continue` from
 within a nested loop. For example:
 
+Once a loop has a label, use that label for `break` or `continue` statements
+that directly target the loop as well. An unlabelled `break` or `continue`
+directly inside a labelled loop is deprecated because it leaves the target
+implicit.
+
 ```moonbit
 test "break label" {
   let mut count = 0
@@ -1429,6 +1444,26 @@ test "continue label" {
   assert_eq(count, 10)
 }
 ```
+
+### Labelled Blocks
+
+A block can also have a label. `break label~ value` exits the block immediately
+and makes `value` the result of the block. This is useful for returning early
+from nested control flow without returning from the enclosing function.
+
+```moonbit
+fn absolute(n : Int) -> Int {
+  result~: {
+    if n < 0 {
+      break result~ -n
+    }
+    n
+  }
+}
+```
+
+An unlabelled `break` cannot exit or pass through a labelled block, and
+`continue` can only target a labelled loop, not a labelled block.
 
 ### `defer` expression
 
@@ -1563,7 +1598,12 @@ There are two ways to create new data types: `struct` and `enum`.
 
 ### Struct
 
-In MoonBit, structs are similar to tuples, but their fields are indexed by field names. A struct can be constructed using a struct literal, which is composed of a set of labeled values and delimited with curly brackets. The type of a struct literal can be automatically inferred if its fields exactly match the type definition. A field can be accessed using the dot syntax `s.f`. If a field is marked as mutable using the keyword `mut`, it can be assigned a new value.
+In MoonBit, structs are similar to tuples, but their fields are indexed by field
+names. A struct can be constructed using a type-qualified struct literal such
+as `T::{ field: value }`. The type prefix makes the constructed type explicit,
+even when the fields would be sufficient to infer it. A field can be accessed
+using the dot syntax `s.f`. If a field is marked as mutable using the keyword
+`mut`, it can be assigned a new value.
 
 ```moonbit
 struct User {
@@ -1600,10 +1640,12 @@ let email = "john@doe.com"
 let u = User::{ id: 0, name, email }
 ```
 
-If there's no other struct that has the same fields, it's redundant to add the struct's name when constructing it:
+An unqualified struct literal can still be inferred when its context identifies
+the type. In a direct `let` binding, prefer keeping the type prefix even when no
+other struct has the same fields:
 
 ```moonbit
-let u2 = { id: 0, name, email }
+let u2 = User::{ id: 0, name, email }
 ```
 
 #### Struct Update Syntax
@@ -1612,8 +1654,8 @@ It's useful to create a new struct based on an existing one, but with some field
 
 ```moonbit
 fn main {
-  let user = { id: 0, name: "John Doe", email: "john@doe.com" }
-  let updated_user = { ..user, email: "john@doe.name" }
+  let user = User::{ id: 0, name: "John Doe", email: "john@doe.com" }
+  let updated_user = User::{ ..user, email: "john@doe.name" }
   println(
     (
       $|{ id: \{user.id}, name: \{user.name}, email: \{user.email} }
@@ -2425,6 +2467,20 @@ Result types depend on width:
 | 33..64 bits (`u`)    | `UInt64`       |
 | 33..64 bits (`i`)    | `Int64`        |
 
+Use `v128le(pattern)` at a byte-aligned offset to extract a 128-bit
+little-endian SIMD value. Its payload has type `V128`.
+
+```moonbit
+test {
+  let bytes = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F"
+  let vector : V128 = match bytes {
+    [v128le(value)] => value
+    _ => fail("expected 16 bytes")
+  }
+  let _ = vector
+}
+```
+
 ### Range Pattern
 
 For builtin integer types and `Char`, MoonBit allows matching whether the value falls in a specific range.
@@ -2521,9 +2577,10 @@ test {
 ```
 
 For multiple defaults, write `(Pattern with x = value, y = value)`. Parentheses
-make it clear which alternative receives a default. A default cannot refer to a
-binder from the complete pattern, and control flow such as `return`, `break`,
-`continue`, or `raise` is not allowed inside the default expression.
+make it clear which alternative receives a default. A default can be a general
+expression evaluated in the surrounding scope. It cannot refer to a binder from
+the complete pattern, and control flow such as `return`, `break`, `continue`, or
+`raise` is not allowed inside the default expression.
 
 ### Guard condition
 
@@ -2923,8 +2980,8 @@ matches exactly one character.
 Use `lexscan` when matching one input against several regex cases. It accepts
 `String` and `StringView` inputs and returns the body of the selected case. The
 default strategy selects the first matching case. Add `with longest` to select
-the case that consumes the longest prefix instead. In v0.10.4, `lexscan` does
-not support `Bytes`, `BytesView`, or streaming scanner inputs.
+the case that consumes the longest prefix instead. Currently, `lexscan` does not
+support `Bytes`, `BytesView`, or streaming scanner inputs.
 
 In longest-match mode, each regex case must be anchored at the start with `^`.
 Anchor it at the end with `$` when the whole input must match, or use `after=`

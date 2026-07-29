@@ -135,8 +135,8 @@ impl Add for T with add(self : T, other : T) -> T {
 }
 
 test {
-  let a = { x: 0 }
-  let b = { x: 2 }
+  let a = T::{ x: 0 }
+  let b = T::{ x: 2 }
   assert_eq((a + b).x, 2)
 }
 ```
@@ -168,7 +168,7 @@ fn Coord::set(coord : Self, key : String, val : Int) -> Unit {
 
 ```moonbit
 fn main {
-  let c = { x: 1, y: 2 }
+  let c = Coord::{ x: 1, y: 2 }
   println("{x: \{c.x}, y: \{c.y}}")
   println(c["y"])
   c["x"] = 23
