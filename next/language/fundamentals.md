@@ -859,6 +859,16 @@ in the `guard` statement is not true or cannot be matched.
 :end-before: end guard 3
 ```
 
+Use `guard!` to make this terminating behavior explicit. Unlike `guard`,
+`guard!` cannot have an `else` clause.
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start guard 4
+:end-before: end guard 4
+```
+
 ### While loop
 
 In MoonBit, `while` loop can be used to execute a block of code repeatedly as long as a condition is true. The condition is evaluated before executing the block of code. The `while` loop is defined using the `while` keyword, followed by a condition and the loop body. The loop body is a sequence of statements. The loop body is executed as long as the condition is true.
@@ -1124,6 +1134,22 @@ within a nested loop. For example:
 :start-after: start loop label
 :end-before: end loop label
 ```
+
+### Labelled Blocks
+
+A block can also have a label. `break label~ value` exits the block immediately
+and makes `value` the result of the block. This is useful for returning early
+from nested control flow without returning from the enclosing function.
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start labelled block
+:end-before: end labelled block
+```
+
+An unlabelled `break` cannot exit or pass through a labelled block, and
+`continue` can only target a labelled loop, not a labelled block.
 
 ### `defer` expression
 
@@ -1805,6 +1831,15 @@ Result types depend on width:
 | 33..64 bits (`u`)           | `UInt64`       |
 | 33..64 bits (`i`)           | `Int64`        |
 
+Use `v128le(pattern)` at a byte-aligned offset to extract a 128-bit
+little-endian SIMD value. Its payload has type `V128`.
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:start-after: start bit pattern v128
+:end-before: end bit pattern v128
+```
+
 ### Range Pattern
 For builtin integer types and `Char`, MoonBit allows matching whether the value falls in a specific range.
 
@@ -1866,9 +1901,10 @@ bind structurally:
 ```
 
 For multiple defaults, write `(Pattern with x = value, y = value)`. Parentheses
-make it clear which alternative receives a default. A default cannot refer to a
-binder from the complete pattern, and control flow such as `return`, `break`,
-`continue`, or `raise` is not allowed inside the default expression.
+make it clear which alternative receives a default. A default can be a general
+expression evaluated in the surrounding scope. It cannot refer to a binder from
+the complete pattern, and control flow such as `return`, `break`, `continue`, or
+`raise` is not allowed inside the default expression.
 
 ### Guard condition
 
@@ -2177,8 +2213,8 @@ matches exactly one character.
 Use `lexscan` when matching one input against several regex cases. It accepts
 `String` and `StringView` inputs and returns the body of the selected case. The
 default strategy selects the first matching case. Add `with longest` to select
-the case that consumes the longest prefix instead. In v0.10.4, `lexscan` does
-not support `Bytes`, `BytesView`, or streaming scanner inputs.
+the case that consumes the longest prefix instead. Currently, `lexscan` does not
+support `Bytes`, `BytesView`, or streaming scanner inputs.
 
 In longest-match mode, each regex case must be anchored at the start with `^`.
 Anchor it at the end with `$` when the whole input must match, or use `after=`

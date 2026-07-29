@@ -1,0 +1,81 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-29 14:36+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0084.md:1
+msgid "E0084"
+msgstr ""
+
+#: ../../language/error_codes/E0084.md:3
+msgid "Warning name: `unqualified_record`"
+msgstr "警告名：`unqualified_record`"
+
+#: ../../language/error_codes/E0084.md:5
+msgid "A struct literal bound directly by a `let` has no explicit type prefix."
+msgstr "`let` で直接束縛された構造体リテラルに、明示的な型プレフィックスがありません。"
+
+#: ../../language/error_codes/E0084.md:7
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E0084.md:9
+msgid ""
+"The type annotation identifies the struct type, but the literal itself "
+"remains unqualified:"
+msgstr "型注釈によって構造体の型は特定されていますが、リテラル自体は修飾されていません："
+
+#: ../../language/error_codes/E0084.md:12
+msgid ""
+"///|\n"
+"pub struct Point {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn origin() -> Point {\n"
+"  let point : Point = { x: 0, y: 0 }\n"
+"  point\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0084.md:16
+msgid "Suggestion"
+msgstr "修正方法"
+
+#: ../../language/error_codes/E0084.md:18
+msgid ""
+"Prefix the literal with the struct type and let the binding type be "
+"inferred."
+msgstr "リテラルに構造体型のプレフィックスを付け、束縛の型は推論させます。"
+
+#: ../../language/error_codes/E0084.md:20
+msgid ""
+"///|\n"
+"pub struct Point {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn origin() -> Point {\n"
+"  let point = Point::{ x: 0, y: 0 }\n"
+"  point\n"
+"}\n"
+msgstr ""

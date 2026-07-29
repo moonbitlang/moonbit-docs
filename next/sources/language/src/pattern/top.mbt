@@ -157,6 +157,17 @@ test {
 }
 // end bit pattern types
 
+/// start bit pattern v128
+test {
+  let bytes = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F"
+  let vector : V128 = match bytes {
+    [v128le(value)] => value
+    _ => fail("expected 16 bytes")
+  }
+  let _ = vector
+}
+// end bit pattern v128
+
 enum Arith {
   Lit(Int)
   Add(Arith, Arith)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 13:08+0800\n"
+"POT-Creation-Date: 2026-07-20 11:55+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -40,30 +40,29 @@ msgstr "错误示例"
 
 #: ../../language/error_codes/E0031.md:11
 msgid ""
-"Note, this warning is turned off by default. To enable this warning, you "
-"have to modify the `\"warn-list\"` of `moon.pkg.json`:"
-msgstr "注意，默认情况下，此警告是关闭的。要启用此警告，你必须修改 `moon.pkg.json` 的 `\"warn-list\"`："
+"This warning is turned off by default. Enable it with the `warnings` "
+"field in `moon.pkg`:"
+msgstr "此警告默认关闭。请通过 `moon.pkg` 中的 `warnings` 字段启用它："
 
 #: ../../language/error_codes/E0031.md:14
-msgid "moon.pkg.json"
+msgid "moon.pkg"
 msgstr ""
 
 #: ../../language/error_codes/E0031.md:14
 msgid ""
-"{\n"
-"  \"is_main\": true,\n"
-"  \"warn-list\": \"+unused_optional_argument\"\n"
-"}"
+"warnings = \"+unused_optional_argument\"\n"
+"\n"
+"pkgtype(kind: \"executable\")\n"
 msgstr ""
 
-#: ../../language/error_codes/E0031.md:18
+#: ../../language/error_codes/E0031.md:19
 msgid "main.mbt"
 msgstr ""
 
-#: ../../language/error_codes/E0031.md:18
+#: ../../language/error_codes/E0031.md:19
 msgid ""
 "///|\n"
-"fn f(opt~ : Int = 4) -> Int {\n"
+"fn f(opt? : Int = 4) -> Int {\n"
 "  ignore(opt)\n"
 "  0\n"
 "}\n"
@@ -75,17 +74,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0031.md:23
+#: ../../language/error_codes/E0031.md:24
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0031.md:25
+#: ../../language/error_codes/E0031.md:26
 msgid ""
 "You can remove the optional argument, and use a local variable definition"
 " instead:"
 msgstr "你可以移除可选参数，并使用局部变量定义代替："
 
-#: ../../language/error_codes/E0031.md:28
+#: ../../language/error_codes/E0031.md:29
 msgid ""
 "///|\n"
 "fn f() -> Int {\n"
@@ -100,3 +99,27 @@ msgid ""
 "  println(f())\n"
 "}\n"
 msgstr ""
+
+#~ msgid "moon.pkg.json"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"is_main\": true,\n"
+#~ "  \"warn-list\": \"+unused_optional_argument\"\n"
+#~ "}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "///|\n"
+#~ "fn f(opt~ : Int = 4) -> Int {\n"
+#~ "  ignore(opt)\n"
+#~ "  0\n"
+#~ "}\n"
+#~ "\n"
+#~ "///|\n"
+#~ "fn main {\n"
+#~ "  println(f())\n"
+#~ "  println(f())\n"
+#~ "}\n"
+#~ msgstr ""

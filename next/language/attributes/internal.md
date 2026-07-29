@@ -14,5 +14,5 @@ The internal attribute takes a required `category` argument and an optional
 the alert, and `message` is a string that provides additional message for the
 alert.
 
-The alert warnings can be turn off by setting the `warn-list` in `moon.pkg`.
+Alert warnings can be turned off with the `warnings` field in `moon.pkg`.
 For more detail, see [alert warning](/toolchain/moon/package.md#alert-warning).

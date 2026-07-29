@@ -35,22 +35,29 @@
 * 使用尚未发布的模块
 * 跨多个模块测试更改
 
-要添加本地依赖，请编辑 `moon.mod.json` 文件中的 `deps` 字段：
+要一起使用多个本地模块，请将它们添加为同一个 `moon.work` 工作区的成员。
+例如，工作区中包含 `hello` 模块和本地的 `foo/bar` 模块时：
 
-```json
-{
-  "name": "username/hello",
-  "deps": {
-    "foo/bar": {
-      "path": "../../path/to/foo-module"
-    }
-  }
+```moonbit
+members = [
+  "./hello",
+  "../../path/to/foo-module",
+]
+```
+
+成员路径相对于 `moon.work`。然后在 `hello/moon.mod` 中声明对 `foo/bar`
+模块的依赖：
+
+```moonbit
+name = "username/hello"
+import {
+  "foo/bar@0.1.0"
 }
 ```
 
-`path` 应该是指向包含本地模块 `moon.mod.json` 文件的目录的相对路径。
+工作区成员会从本地源码解析，因此不会从 mooncakes.io 下载这里声明的版本。
 
-一旦声明了本地依赖，你就可以在 `moon.pkg` 中从本地模块导入包，就像使用其他任何模块一样：
+之后就可以在 `moon.pkg` 中从本地模块导入包，就像使用其他任何模块一样：
 
 ```moonbit
 import {

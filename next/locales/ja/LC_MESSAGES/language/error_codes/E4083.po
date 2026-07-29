@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-29 14:51+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4083.md:1
+msgid "E4083"
+msgstr ""
+
+#: ../../language/error_codes/E4083.md:3
+msgid ""
+"The default value in a `with` pattern cannot refer to a binder introduced"
+" by the complete pattern. The default expression is evaluated in the "
+"surrounding scope, where that binder is not available."
+msgstr ""
+"`with` パターンのデフォルト値は、パターン全体で導入されるバインダーを参照できません。"
+"デフォルト式は外側のスコープで評価され、そこではそのバインダーを使用できません。"
+
+#: ../../language/error_codes/E4083.md:7
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E4083.md:9
+msgid ""
+"///|\n"
+"pub fn value_or(value : Int?, result : Int) -> Int {\n"
+"  match value {\n"
+"    Some(result) | (None with result = result) => result\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4083.md:13
+msgid "Suggestion"
+msgstr "修正方法"
+
+#: ../../language/error_codes/E4083.md:15
+msgid "Use a value that is available in the surrounding scope."
+msgstr "外側のスコープで使用できる値を使います。"
+
+#: ../../language/error_codes/E4083.md:17
+msgid ""
+"///|\n"
+"pub fn value_or(value : Int?, fallback : Int) -> Int {\n"
+"  match value {\n"
+"    Some(result) | (None with result = fallback) => result\n"
+"  }\n"
+"}\n"
+msgstr ""
