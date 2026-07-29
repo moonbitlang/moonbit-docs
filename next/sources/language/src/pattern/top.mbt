@@ -5,7 +5,7 @@ struct User {
 }
 
 let user : Unit = {
-  let u = { id: "1", name: "John", email: "john@example.com" }
+  let u = User::{ id: "1", name: "John", email: "john@example.com" }
   // start pattern 1
   let id = match u {
     { id, name: _, email: _ } => id

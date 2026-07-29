@@ -8,8 +8,8 @@ impl Add for T with add(self : T, other : T) -> T {
 }
 
 test {
-  let a = { x: 0 }
-  let b = { x: 2 }
+  let a = T::{ x: 0 }
+  let b = T::{ x: 2 }
   assert_eq((a + b).x, 2)
 }
 // end operator 1
@@ -40,7 +40,7 @@ fn Coord::set(coord : Self, key : String, val : Int) -> Unit {
 test "operator 3" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start operator 3
-  let c = { x: 1, y: 2 }
+  let c = Coord::{ x: 1, y: 2 }
   println("{x: \{c.x}, y: \{c.y}}")
   println(c["y"])
   c["x"] = 23
@@ -143,8 +143,8 @@ impl Shr for T with shr(self : T, other : Int) -> T {
 }
 
 test {
-  let a = { x: 0b1010 }
-  let b = { x: 0b1100 }
+  let a = T::{ x: 0b1010 }
+  let b = T::{ x: 0b1100 }
   assert_eq((a & b).x, 0b1000)
   assert_eq((a | b).x, 0b1110)
   assert_eq((a ^ b).x, 0b0110)

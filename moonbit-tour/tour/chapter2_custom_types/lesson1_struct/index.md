@@ -4,9 +4,10 @@ Struct is a new type composed of other types.
 
 In the example we define a struct `Point` with two fields, `x` and `y`, both of which are integers.
 
-We can create an instance of `Point` by writing `{ x: 3, y: 4 }`. The struct name can be omitted since the compiler can infer it from the labels `x` and `y`.
-
-We can also add a `Point::` prefix to create an instance explicitly to disambiguate its type.
+We can create an instance of `Point` by writing `Point::{ x: 3, y: 4 }`.
+Keeping the `Point::` prefix makes the constructed type explicit. The compiler
+can infer an unqualified literal such as `{ x: 3, y: 4 }` in some contexts, but
+the type-qualified form is preferred for a direct `let` binding.
 
 Analogous to tuples, we can access the fields of a struct using the syntax `point.x`.
 

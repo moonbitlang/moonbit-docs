@@ -1129,6 +1129,11 @@ allowed inside list comprehensions.
 When a loop is labelled, it can be referenced from a `break` or `continue` from
 within a nested loop. For example:
 
+Once a loop has a label, use that label for `break` or `continue` statements
+that directly target the loop as well. An unlabelled `break` or `continue`
+directly inside a labelled loop is deprecated because it leaves the target
+implicit.
+
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
 :start-after: start loop label
@@ -1267,7 +1272,12 @@ There are two ways to create new data types: `struct` and `enum`.
 
 ### Struct
 
-In MoonBit, structs are similar to tuples, but their fields are indexed by field names. A struct can be constructed using a struct literal, which is composed of a set of labeled values and delimited with curly brackets. The type of a struct literal can be automatically inferred if its fields exactly match the type definition. A field can be accessed using the dot syntax `s.f`. If a field is marked as mutable using the keyword `mut`, it can be assigned a new value.
+In MoonBit, structs are similar to tuples, but their fields are indexed by field
+names. A struct can be constructed using a type-qualified struct literal such
+as `T::{ field: value }`. The type prefix makes the constructed type explicit,
+even when the fields would be sufficient to infer it. A field can be accessed
+using the dot syntax `s.f`. If a field is marked as mutable using the keyword
+`mut`, it can be assigned a new value.
 
 ```{literalinclude} /sources/language/src/data/top.mbt
 :language: moonbit
@@ -1298,7 +1308,9 @@ If you already have some variable like `name` and `email`, it's redundant to rep
 :end-before: end struct 3
 ```
 
-If there's no other struct that has the same fields, it's redundant to add the struct's name when constructing it:
+An unqualified struct literal can still be inferred when its context identifies
+the type. In a direct `let` binding, prefer keeping the type prefix even when no
+other struct has the same fields:
 
 ```{literalinclude} /sources/language/src/data/top.mbt
 :language: moonbit

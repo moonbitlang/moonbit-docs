@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-29 14:36+0800\n"
+"POT-Creation-Date: 2026-07-29 15:26+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -27,14 +27,18 @@ msgid "Warning name: `unlabelled_break_in_labelled_loop`"
 msgstr "警告名：`unlabelled_break_in_labelled_loop`"
 
 #: ../../language/error_codes/E0085.md:5
-msgid "An unlabelled `break` appears directly inside a labelled loop."
-msgstr "ラベル付きループの直下に、ラベルのない `break` があります。"
+msgid ""
+"Using an unlabelled `break` directly inside a labelled loop is "
+"deprecated. Once a loop has a label, name it in a `break` that targets "
+"the loop, even when the `break` is not nested inside another loop."
+msgstr ""
+"ラベル付きループの直下でラベルなしの `break` を使うことは非推奨です。ループにラベルを付けたら、`break` が別のループ内にネストされていない場合でも、対象のループのラベルを指定してください。"
 
-#: ../../language/error_codes/E0085.md:7
+#: ../../language/error_codes/E0085.md:9
 msgid "Erroneous example"
 msgstr "誤った例"
 
-#: ../../language/error_codes/E0085.md:9
+#: ../../language/error_codes/E0085.md:11
 msgid ""
 "///|\n"
 "pub fn stop_immediately() -> Unit {\n"
@@ -45,15 +49,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0085.md:13
+#: ../../language/error_codes/E0085.md:15
 msgid "Suggestion"
 msgstr "修正方法"
 
-#: ../../language/error_codes/E0085.md:15
+#: ../../language/error_codes/E0085.md:17
 msgid "Name the loop explicitly in the `break`."
 msgstr "`break` でループのラベルを明示します。"
 
-#: ../../language/error_codes/E0085.md:17
+#: ../../language/error_codes/E0085.md:19
 msgid ""
 "///|\n"
 "pub fn stop_immediately() -> Unit {\n"
@@ -63,3 +67,6 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+
+#~ msgid "An unlabelled `break` appears directly inside a labelled loop."
+#~ msgstr "ラベル付きループの直下に、ラベルのない `break` があります。"
