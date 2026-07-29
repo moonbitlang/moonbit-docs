@@ -1,5 +1,5 @@
 ///|
-fn f(opt~ : Int = 4) -> Int {
+fn f(opt? : Int = 4) -> Int {
   ignore(opt)
   0
 }

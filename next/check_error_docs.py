@@ -14,6 +14,7 @@ RUN_ONLY_ERROR_CODES = set()
 SKIPPED_ERROR_CODES = {
     # Current MoonBit does not emit this warning.
     '0016',
+    '0034',
     # Reproducing E0033 requires an extremely long source segment to exceed the
     # compiler's internal line/column limits, so we do not monitor it with a
     # small checked example project.

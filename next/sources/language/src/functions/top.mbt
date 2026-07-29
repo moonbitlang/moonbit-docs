@@ -141,7 +141,7 @@ fn incr(counter? : Ref[Int] = { val: 0 }) -> Ref[Int] {
 test {
   @test.assert_eq(incr().val, 1)
   @test.assert_eq(incr().val, 1)
-  let counter : Ref[Int] = { val: 0 }
+  let counter = Ref::{ val: 0 }
   @test.assert_eq(incr(counter~).val, 1)
   @test.assert_eq(incr(counter~).val, 2)
 }

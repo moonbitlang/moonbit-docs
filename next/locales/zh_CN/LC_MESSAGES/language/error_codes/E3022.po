@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-06 14:57+0800\n"
+"POT-Creation-Date: 2026-07-21 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -29,34 +29,37 @@ msgstr "alert 列表格式不正确。"
 
 #: ../../language/error_codes/E3022.md:5
 msgid ""
-"This error happens when the `alert-list` field in `moon.pkg` cannot be "
-"parsed. The field uses the same compact list syntax as `warn-list`, with "
-"`+` to enable an alert, `-` to disable an alert, and `@` to enable it as "
-"an error."
+"This error happens when the `alert-list` option in `moon.pkg` cannot be "
+"parsed. The option uses the same compact list syntax as `warnings`, with "
+"`+` to enable an alert and `-` to disable an alert. Older configurations "
+"may use an `@` prefix to promote an alert to an error. The prefix remains"
+" accepted only for compatibility and should not be used in new "
+"configuration."
 msgstr ""
-"当 `moon.pkg` 中的 `alert-list` 字段无法解析时，会发生此错误。该字段使用与 `warn-list` "
-"相同的紧凑列表语法：用 `+` 启用 alert，用 `-` 禁用 alert，用 `@` 将其作为错误启用。"
+"当 `moon.pkg` 中的 `alert-list` 选项无法解析时，会发生此错误。该选项使用与 `warnings` "
+"相同的紧凑列表语法：用 `+` 启用 alert，用 `-` 禁用 alert。旧配置可能使用 `@` 前缀将 alert "
+"提升为错误。该前缀仅为兼容性而保留，新配置不应再使用。"
 
-#: ../../language/error_codes/E3022.md:9
+#: ../../language/error_codes/E3022.md:11
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E3022.md:11
+#: ../../language/error_codes/E3022.md:13
 msgid ""
 "options(\n"
 "  \"alert-list\": \"1\",\n"
 ")\n"
 msgstr ""
 
-#: ../../language/error_codes/E3022.md:15
+#: ../../language/error_codes/E3022.md:17
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E3022.md:17
+#: ../../language/error_codes/E3022.md:19
 msgid "Use a valid alert-list entry:"
 msgstr "使用有效的 alert-list 条目："
 
-#: ../../language/error_codes/E3022.md:19
+#: ../../language/error_codes/E3022.md:21
 msgid ""
 "options(\n"
 "  \"alert-list\": \"-unsafe\",\n"

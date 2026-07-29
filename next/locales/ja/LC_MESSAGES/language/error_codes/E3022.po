@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 17:59+0800\n"
+"POT-Creation-Date: 2026-07-21 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -29,34 +29,62 @@ msgstr ""
 
 #: ../../language/error_codes/E3022.md:5
 msgid ""
-"This error happens when the `alert-list` field in `moon.pkg` cannot be "
-"parsed. The field uses the same compact list syntax as `warn-list`, with "
-"`+` to enable an alert, `-` to disable an alert, and `@` to enable it as "
-"an error."
+"This error happens when the `alert-list` option in `moon.pkg` cannot be "
+"parsed. The option uses the same compact list syntax as `warnings`, with "
+"`+` to enable an alert and `-` to disable an alert. Older configurations "
+"may use an `@` prefix to promote an alert to an error. The prefix remains"
+" accepted only for compatibility and should not be used in new "
+"configuration."
 msgstr ""
+"`moon.pkg` の `alert-list` オプションを解析できないときに、このエラーが発生します。"
+"このオプションは `warnings` と同じ簡潔なリスト構文を使い、`+` でアラートを有効にし、"
+"`-` で無効にします。古い設定では、アラートをエラーに昇格させるために `@` "
+"接頭辞を使っていることがあります。この接頭辞は互換性のためにのみ引き続き受け入れられますが、"
+"新しい設定では使用しないでください。"
 
-#: ../../language/error_codes/E3022.md:9
+#: ../../language/error_codes/E3022.md:11
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E3022.md:11
+#: ../../language/error_codes/E3022.md:13
 msgid ""
 "options(\n"
 "  \"alert-list\": \"1\",\n"
 ")\n"
 msgstr ""
 
-#: ../../language/error_codes/E3022.md:15
+#: ../../language/error_codes/E3022.md:17
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E3022.md:17
+#: ../../language/error_codes/E3022.md:19
 msgid "Use a valid alert-list entry:"
 msgstr ""
 
-#: ../../language/error_codes/E3022.md:19
+#: ../../language/error_codes/E3022.md:21
 msgid ""
 "options(\n"
 "  \"alert-list\": \"-unsafe\",\n"
 ")\n"
 msgstr ""
+
+#~ msgid ""
+#~ "This error happens when the `alert-"
+#~ "list` field in `moon.pkg` cannot be "
+#~ "parsed. The field uses the same "
+#~ "compact list syntax as `warn-list`, "
+#~ "with `+` to enable an alert, `-`"
+#~ " to disable an alert, and `@` "
+#~ "to enable it as an error."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This error happens when the `alert-"
+#~ "list` option in `moon.pkg` cannot be "
+#~ "parsed. The option uses the same "
+#~ "compact list syntax as `warnings`, with"
+#~ " `+` to enable an alert, `-` to"
+#~ " disable an alert, and the deprecated"
+#~ " `@` prefix to enable it as an"
+#~ " error."
+#~ msgstr ""

@@ -1,0 +1,88 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-29 15:26+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0084.md:1
+msgid "E0084"
+msgstr ""
+
+#: ../../language/error_codes/E0084.md:3
+msgid "Warning name: `unqualified_record`"
+msgstr "警告名称：`unqualified_record`"
+
+#: ../../language/error_codes/E0084.md:5
+msgid ""
+"A struct literal bound directly by a `let` has no explicit `T::` type "
+"prefix. Even when a binding annotation identifies the type, keeping the "
+"prefix on the literal makes the constructed type explicit."
+msgstr ""
+"由 `let` 直接绑定的结构体字面量没有显式的 `T::` 类型前缀。即使绑定上的类型标注已经确定了类型，在字面量上保留前缀也能明确所构造的类型。"
+
+#: ../../language/error_codes/E0084.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0084.md:11
+msgid ""
+"The type annotation identifies the struct type, but the literal itself "
+"remains unqualified:"
+msgstr "类型标注指明了结构体类型，但字面量本身仍未带限定："
+
+#: ../../language/error_codes/E0084.md:14
+msgid ""
+"///|\n"
+"pub struct Point {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn origin() -> Point {\n"
+"  let point : Point = { x: 0, y: 0 }\n"
+"  point\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0084.md:18
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E0084.md:20
+msgid ""
+"Prefix the literal with the struct type and let the binding type be "
+"inferred."
+msgstr "请为字面量加上结构体类型前缀，并让绑定的类型通过推断得出。"
+
+#: ../../language/error_codes/E0084.md:22
+msgid ""
+"///|\n"
+"pub struct Point {\n"
+"  x : Int\n"
+"  y : Int\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn origin() -> Point {\n"
+"  let point = Point::{ x: 0, y: 0 }\n"
+"  point\n"
+"}\n"
+msgstr ""
+
+#~ msgid "A struct literal bound directly by a `let` has no explicit type prefix."
+#~ msgstr "由 `let` 直接绑定的结构体字面量没有显式类型前缀。"

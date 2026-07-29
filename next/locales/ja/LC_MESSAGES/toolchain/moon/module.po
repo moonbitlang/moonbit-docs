@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 12:47+0800\n"
+"POT-Creation-Date: 2026-07-29 14:36+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -143,7 +143,8 @@ msgid ""
 "`moon.mod.json` format represents the same information in its `deps` "
 "field."
 msgstr ""
-"モジュール依存関係は `moon.mod` の `import` で宣言します。従来の `moon.mod.json` 形式では、同じ情報を `deps` フィールドで表します。"
+"モジュール依存関係は `moon.mod` の `import` で宣言します。従来の `moon.mod.json` 形式では、同じ情報を "
+"`deps` フィールドで表します。"
 
 #: ../../toolchain/moon/module.md:82
 msgid "It is automatically managed by commands like `moon add` and `moon remove`."
@@ -382,20 +383,23 @@ msgstr "優先ターゲット"
 
 #: ../../toolchain/moon/module.md:281
 msgid ""
-"The `preferred-target` field allows the `moon` and the language server to"
-" know which target should be used as the default target, avoiding the "
+"The `preferred_target` field allows `moon` and the language server to "
+"know which target should be used as the default target, avoiding the "
 "necessity to write `--target` when developing a project targeting other "
 "backends than Wasm GC."
 msgstr ""
-"`preferred-target` フィールドは、`moon` "
+"`preferred_target` フィールドは、`moon` "
 "と言語サーバーにデフォルトターゲットとして使うべきターゲットを知らせます。これにより、Wasm GC "
 "以外のバックエンドを対象とするプロジェクトを開発するときに `--target` を書く必要を避けられます。"
 
 #: ../../toolchain/moon/module.md:285
 msgid ""
-"Set this field on each module. Workspace-level `preferred-target` is "
-"deprecated; `moon run` uses the selected module's own preferred target."
+"Set `preferred_target` on each module. Workspace-level `preferred-target`"
+" is deprecated; `moon run` uses the selected module's own preferred "
+"target."
 msgstr ""
+"各モジュールに `preferred_target` を設定してください。ワークスペースレベルの `preferred-target` "
+"は非推奨です。`moon run` は選択したモジュール自身の優先ターゲットを使います。"
 
 #: ../../toolchain/moon/module.md:291
 msgid "preferred_target = \"js\"\n"
@@ -414,17 +418,18 @@ msgstr "サポート対象ターゲット"
 
 #: ../../toolchain/moon/module.md:308
 msgid ""
-"The `supported-targets` field declares which backends this module is "
-"intended to support. Unlike `preferred-target`, it does not choose a "
+"The `supported_targets` field declares which backends this module is "
+"intended to support. Unlike `preferred_target`, it does not choose a "
 "default target for commands. Use it to record the module's compatibility "
 "surface in metadata."
 msgstr ""
-"`supported-targets` フィールドは、このモジュールがサポートする想定のバックエンドを宣言します。`preferred-"
-"target` とは異なり、コマンドのデフォルトターゲットは選択しません。モジュールの互換バックエンド範囲をメタデータに記録するために使います。"
+"`supported_targets` "
+"フィールドは、このモジュールがサポートする想定のバックエンドを宣言します。`preferred_target` "
+"とは異なり、コマンドのデフォルトターゲットは選択しません。モジュールの互換バックエンド範囲をメタデータに記録するために使います。"
 
 #: ../../toolchain/moon/module.md:312
-msgid "`supported-targets` uses a compact target-set syntax:"
-msgstr "`supported-targets` はコンパクトなターゲット集合構文を使います："
+msgid "`supported_targets` uses a compact target-set syntax:"
+msgstr "`supported_targets` はコンパクトなターゲット集合構文を使います："
 
 #: ../../toolchain/moon/module.md:314
 msgid "`js` for a single backend"
@@ -464,29 +469,29 @@ msgstr ""
 #: ../../toolchain/moon/module.md:344
 msgid ""
 "{\n"
-"  \"supported-targets\": [\"js\", \"native\"]\n"
+"  \"supported-targets\": [\"js\", \"wasm-gc\"]\n"
 "}\n"
 msgstr ""
 
 #: ../../toolchain/moon/module.md:352
-msgid "`preferred-target` and `supported-targets` are often used together:"
-msgstr "`preferred-target` と `supported-targets` はよく一緒に使われます："
+msgid "`preferred_target` and `supported_targets` are often used together:"
+msgstr "`preferred_target` と `supported_targets` はよく一緒に使われます："
 
 #: ../../toolchain/moon/module.md:354
-msgid "`preferred-target` says which backend `moon` should use by default"
-msgstr "`preferred-target` は、`moon` がデフォルトで使うべきバックエンドを示します"
+msgid "`preferred_target` says which backend `moon` should use by default"
+msgstr "`preferred_target` は、`moon` がデフォルトで使うべきバックエンドを示します"
 
 #: ../../toolchain/moon/module.md:355
-msgid "`supported-targets` says which backends the module claims to support"
-msgstr "`supported-targets` は、モジュールがサポートすると宣言するバックエンドを示します"
+msgid "`supported_targets` says which backends the module claims to support"
+msgstr "`supported_targets` は、モジュールがサポートすると宣言するバックエンドを示します"
 
 #: ../../toolchain/moon/module.md:357
 msgid ""
-"When a package also defines `supported-targets`, the effective backend "
+"When a package also defines `supported_targets`, the effective backend "
 "set is the intersection of the module-level and package-level "
 "declarations."
 msgstr ""
-"パッケージも `supported-targets` "
+"パッケージも `supported_targets` "
 "を定義している場合、実際に有効なバックエンド集合はモジュールレベルとパッケージレベルの宣言の共通部分になります。"
 
 #: ../../toolchain/moon/module.md:360
@@ -739,8 +744,6 @@ msgid ""
 "                                            44 error\n"
 "unused_rest_mark           Useless `..` in pattern"
 "                                         46 warn\n"
-"invalid_mbti               Invalid mbti file"
-"                                               47 warn\n"
 "missing_definition         Unused pub definition because it does not "
 "exist in mbti file.   49 warn\n"
 "method_shadowing           Local method shadows upstream method"
@@ -791,16 +794,40 @@ msgid ""
 "                                     73 off\n"
 "missing_doc                Missing documentation for public definition"
 "                     74 off\n"
-"A                          all warnings\n"
+"unnecessary_view_op        Unnecessary `[:]` view operator"
+"                                 75 off\n"
+"lexmatch_first_match       Deprecated `lexmatch` with first-match "
+"semantics.               76 warn\n"
+"lexmatch_longest_match     Deprecated `lexmatch` with longest-match "
+"semantics.             77 warn\n"
+"result_error_return        Using `Result[T, E]` where `E` is an error "
+"type.                78 off\n"
+"implicit_impl_as_method    `impl` implicitly promoted as method"
+"                            79 off\n"
+"regex_match_missing_before Missing `before` binding in `regex match`."
+"                      80 warn\n"
+"regex_match_missing_after  Missing `after` binding in `regex match`."
+"                       81 warn\n"
+"ambiguous_braces           Ambiguous `{}` braces."
+"                                          82 warn\n"
+"type_param_method          Calling method of type parameter in a "
+"deprecated way.           83 warn\n"
+"unqualified_record         Struct literal in a `let` binding without a "
+"type prefix.        84 off\n"
+"unlabelled_break_in_labelled_loop Unlabelled `break` directly inside a "
+"labelled loop.             85 warn\n"
+"unlabelled_continue_in_labelled_loop Unlabelled `continue` directly "
+"inside a labelled loop.          86 warn\n"
+"all                        all warnings\n"
 "state: warn = enabled, error = promoted to error, off = disabled\n"
 "note: default alert exceptions: alert_unsafe=off\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:560
+#: ../../toolchain/moon/module.md:571
 msgid "Rule"
 msgstr "rule"
 
-#: ../../toolchain/moon/module.md:562
+#: ../../toolchain/moon/module.md:573
 msgid ""
 "The module-level `rule` entry declares a reusable pre-build command that "
 "is visible to every `moon.pkg` in the module. A module-level rule does "
@@ -815,7 +842,7 @@ msgstr ""
 "エントリを追加します。パッケージレベルの設定については、[パッケージ設定](/toolchain/moon/package.md#rule-"
 "and-dev_build) の「`rule` と `dev_build`」セクションを参照してください。"
 
-#: ../../toolchain/moon/module.md:569
+#: ../../toolchain/moon/module.md:580
 msgid ""
 "Use `rule(name: \"...\", command: \"...\")`, where `name` identifies the "
 "rule and `command` is a shell command string. The command can refer to "
@@ -828,29 +855,29 @@ msgstr ""
 " `rule` を使用するパッケージレベルの `dev_build` エントリから提供されます。モジュールは複数のモジュールレベル `rule` "
 "エントリを宣言できます。"
 
-#: ../../toolchain/moon/module.md:576
+#: ../../toolchain/moon/module.md:587
 msgid "rule(name: \"tool\", command: \"tool $input -o $output\")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:581
+#: ../../toolchain/moon/module.md:592
 msgid "This feature is not supported in `moon.mod.json`."
 msgstr "この機能は `moon.mod.json` ではサポートされていません。"
 
-#: ../../toolchain/moon/module.md:585
+#: ../../toolchain/moon/module.md:596
 msgid "Scripts"
 msgstr "スクリプト"
 
-#: ../../toolchain/moon/module.md:587
+#: ../../toolchain/moon/module.md:598
 msgid ""
 "The `scripts` field is used to define custom scripts associated with the "
 "module."
 msgstr "`scripts` フィールドは、モジュールに関連付けるカスタムスクリプトを定義するために使います。"
 
-#: ../../toolchain/moon/module.md:589
+#: ../../toolchain/moon/module.md:600
 msgid "postadd script"
 msgstr "postadd スクリプト"
 
-#: ../../toolchain/moon/module.md:591
+#: ../../toolchain/moon/module.md:602
 msgid ""
 "The `postadd` script runs automatically after the module has been added. "
 "When executed, the script's current working directory (cwd) is set to the"
@@ -859,7 +886,7 @@ msgstr ""
 "`postadd` スクリプトは、モジュールが追加された後に自動的に実行されます。実行時、スクリプトの現在の作業ディレクトリ（cwd）は "
 "モジュール設定ファイルがあるディレクトリに設定されます。"
 
-#: ../../toolchain/moon/module.md:597
+#: ../../toolchain/moon/module.md:608
 msgid ""
 "options(\n"
 "  scripts: {\n"
@@ -868,7 +895,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:606
+#: ../../toolchain/moon/module.md:617
 msgid ""
 "{\n"
 "  \"scripts\": {\n"
@@ -877,45 +904,45 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:617
+#: ../../toolchain/moon/module.md:628
 msgid "\\[Experimental\\] Pre-build config script"
 msgstr "\\[実験的\\] 事前ビルド設定スクリプト"
 
-#: ../../toolchain/moon/module.md:620
+#: ../../toolchain/moon/module.md:631
 msgid ""
 "This feature is extremely experimental, and its API may change at any "
 "time. This documentation reflects the implementation as of 2025-06-03."
 msgstr "この機能は非常に実験的であり、API はいつでも変更される可能性があります。このドキュメントは 2025-06-03 時点の実装を反映しています。"
 
-#: ../../toolchain/moon/module.md:625
+#: ../../toolchain/moon/module.md:636
 msgid ""
 "Using this feature may execute arbitrary code in your computer. Please "
 "use with caution and only with trusted dependencies."
 msgstr "この機能を使うと、コンピュータ上で任意のコードが実行される可能性があります。注意して使用し、信頼できる依存関係に対してのみ使ってください。"
 
-#: ../../toolchain/moon/module.md:629
+#: ../../toolchain/moon/module.md:640
 msgid ""
 "The pre-build config script is added in order to aid native target "
 "programming. To use such a script, add it to your module configuration:"
 msgstr ""
-"事前ビルド設定スクリプトは、native ターゲット向けプログラミングを支援するために追加されました。使用するには、"
-"モジュール設定にスクリプトを追加します："
+"事前ビルド設定スクリプトは、native "
+"ターゲット向けプログラミングを支援するために追加されました。使用するには、モジュール設定にスクリプトを追加します："
 
-#: ../../toolchain/moon/module.md:635
+#: ../../toolchain/moon/module.md:646
 msgid ""
 "options(\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\",\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:642
+#: ../../toolchain/moon/module.md:653
 msgid ""
 "{\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:650
+#: ../../toolchain/moon/module.md:661
 msgid ""
 "The path is a relative path from the root of the project. The script may "
 "either be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) "
@@ -926,17 +953,17 @@ msgstr ""
 "`.js`、`.cjs`、`.mjs`）か、`python3` または `python` で実行される Python スクリプト（拡張子 "
 "`.py`）を指定できます。"
 
-#: ../../toolchain/moon/module.md:655
+#: ../../toolchain/moon/module.md:666
 msgid "Input"
 msgstr "入力"
 
-#: ../../toolchain/moon/module.md:657
+#: ../../toolchain/moon/module.md:668
 msgid ""
 "The script will be provided with a JSON with the structure of "
 "`BuildScriptEnvironment` from standard input stream (stdin):"
 msgstr "スクリプトには、標準入力ストリーム（stdin）から `BuildScriptEnvironment` 構造の JSON が渡されます："
 
-#: ../../toolchain/moon/module.md:660
+#: ../../toolchain/moon/module.md:671
 msgid ""
 "/** Represents the environment a build script receives */\n"
 "interface BuildScriptEnvironment {\n"
@@ -958,17 +985,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:680
+#: ../../toolchain/moon/module.md:691
 msgid "Output"
 msgstr "出力"
 
-#: ../../toolchain/moon/module.md:682
+#: ../../toolchain/moon/module.md:693
 msgid ""
 "The script is expected to print a JSON string in its standard output "
 "stream (stdout) with the structure of `BuildScriptOutput`:"
 msgstr "スクリプトは、標準出力ストリーム（stdout）に `BuildScriptOutput` 構造の JSON 文字列を出力することが期待されます："
 
-#: ../../toolchain/moon/module.md:685
+#: ../../toolchain/moon/module.md:696
 msgid ""
 "interface BuildScriptOutput {\n"
 "  /** Build variables */\n"
@@ -999,11 +1026,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:714
+#: ../../toolchain/moon/module.md:725
 msgid "Build variables"
 msgstr "ビルド変数"
 
-#: ../../toolchain/moon/module.md:716
+#: ../../toolchain/moon/module.md:727
 msgid ""
 "You may use the variables emitted in the `vars` fields in the native "
 "linking arguments in `moon.pkg` as `${build.<var_name>}`."
@@ -1011,23 +1038,23 @@ msgstr ""
 "`vars` フィールドに出力された変数は、`moon.pkg` の native リンク引数内で `${build.<var_name>}` "
 "として使用できます。"
 
-#: ../../toolchain/moon/module.md:719
+#: ../../toolchain/moon/module.md:730
 msgid "For example, if your build script outputs:"
 msgstr "例えば、ビルドスクリプトが次を出力する場合："
 
-#: ../../toolchain/moon/module.md:721
+#: ../../toolchain/moon/module.md:732
 msgid "{ \"vars\": { \"CC\": \"gcc\" } }\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:725
+#: ../../toolchain/moon/module.md:736
 msgid "and your `moon.pkg` is structured like:"
 msgstr "そして `moon.pkg` が次のような構成の場合："
 
-#: ../../toolchain/moon/module.md:727
+#: ../../toolchain/moon/module.md:738
 msgid "moon.pkg"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:727
+#: ../../toolchain/moon/module.md:738
 msgid ""
 "options(\n"
 "  link: {\n"
@@ -1038,11 +1065,11 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:732
+#: ../../toolchain/moon/module.md:743
 msgid "It will be transformed into"
 msgstr "次のように変換されます"
 
-#: ../../toolchain/moon/module.md:734
+#: ../../toolchain/moon/module.md:745
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -1087,3 +1114,210 @@ msgstr ""
 
 #~ msgid "The `deps` field is used to specify the dependencies of the module."
 #~ msgstr "`deps` フィールドはモジュールの依存関係を指定するために使います。"
+
+#~ msgid ""
+#~ "Set this field on each module. "
+#~ "Workspace-level `preferred-target` is "
+#~ "deprecated; `moon run` uses the selected"
+#~ " module's own preferred target."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "{\n"
+#~ "  \"supported-targets\": [\"js\", \"native\"]\n"
+#~ "}\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "$ moonc check -warn-help\n"
+#~ "Available warnings: \n"
+#~ "mnemonic                   description"
+#~ "                                                     id state"
+#~ "\n"
+#~ "unused_value               Unused variable or "
+#~ "function.                                     1 warn\n"
+#~ ""
+#~ "unused_value               Unused variable."
+#~ "                                                 2 warn\n"
+#~ ""
+#~ "unused_type_declaration    Unused type declaration."
+#~ "                                         3 warn\n"
+#~ "missing_priv               Unused abstract type."
+#~ "                                            4 warn\n"
+#~ "unused_type_variable       Unused type variable."
+#~ "                                            5 warn\n"
+#~ "unused_constructor         Unused constructor."
+#~ "                                              6 warn\n"
+#~ "unused_field               Unused field or "
+#~ "constructor argument.                            7 "
+#~ "warn\n"
+#~ "redundant_modifier         Redundant modifier."
+#~ "                                              8 warn\n"
+#~ "struct_never_constructed   Struct never constructed."
+#~ "                                        9 warn\n"
+#~ "unused_pattern             Unused pattern."
+#~ "                                                 10 warn\n"
+#~ ""
+#~ "partial_match              Partial pattern matching."
+#~ "                                       11 error\n"
+#~ "unreachable_code           Unreachable code."
+#~ "                                               12 warn\n"
+#~ ""
+#~ "unresolved_type_variable   Unresolved type variable."
+#~ "                                       13 warn\n"
+#~ "alert or alert_<category>  All alerts or"
+#~ " alerts with specific category."
+#~ "                    14 warn\n"
+#~ "unused_mut                 Unused mutability."
+#~ "                                              15 error\n"
+#~ ""
+#~ "parser_inconsistency       Parser inconsistency "
+#~ "check.                                     16 warn\n"
+#~ "ambiguous_loop_argument    Ambiguous usage of "
+#~ "loop argument.                               17 warn"
+#~ "\n"
+#~ "useless_loop               Useless loop expression."
+#~ "                                        18 warn\n"
+#~ "deprecated                 Deprecated API usage."
+#~ "                                           20 warn\n"
+#~ "missing_pattern_arguments  Some arguments of "
+#~ "constructor are omitted in pattern."
+#~ "           21 warn\n"
+#~ "ambiguous_block            Ambiguous block."
+#~ "                                                22 warn\n"
+#~ ""
+#~ "unused_try                 Useless try expression."
+#~ "                                         23 warn\n"
+#~ "unused_error_type          Useless error type."
+#~ "                                             24 warn\n"
+#~ "test_unqualified_package   Using implicitly imported"
+#~ " API in test.                          25 "
+#~ "off\n"
+#~ "unused_catch_all           Useless catch all."
+#~ "                                              26 warn\n"
+#~ "deprecated_syntax          Deprecated syntax."
+#~ "                                              27 warn\n"
+#~ "todo                       Todo"
+#~ "                                                            28 "
+#~ "warn\n"
+#~ "unused_package             Unused package."
+#~ "                                                 29 warn\n"
+#~ ""
+#~ "missing_package_alias      Empty package alias."
+#~ "                                            30 warn\n"
+#~ "unused_optional_argument   Optional argument never"
+#~ " supplied.                               31 off\n"
+#~ "unused_default_value       Default value of "
+#~ "optional argument never used.                  "
+#~ "32 off\n"
+#~ "text_segment_excceed       Text segment exceed "
+#~ "the line or column limits."
+#~ "                  33 warn\n"
+#~ "implicit_use_builtin       Implicit use of "
+#~ "definitions from `moonbitlang/core/builtin`.    34"
+#~ " warn\n"
+#~ "reserved_keyword           Reserved keyword."
+#~ "                                               35 warn\n"
+#~ ""
+#~ "loop_label_shadowing       Loop label shadows "
+#~ "another label.                               36 warn"
+#~ "\n"
+#~ "unused_loop_label          Unused loop label."
+#~ "                                              37 warn\n"
+#~ "missing_invariant          For-loop is missing"
+#~ " an invariant.                               38 "
+#~ "off\n"
+#~ "missing_reasoning          For-loop is missing"
+#~ " a proof_reasoning.                          39 "
+#~ "off\n"
+#~ "multiline_string_escape    Deprecated escape "
+#~ "sequence in multiline string.                 "
+#~ "40 error\n"
+#~ "missing_rest_mark          Missing `..` in map"
+#~ " pattern.                                    41 warn"
+#~ "\n"
+#~ "invalid_attribute          Invalid attribute."
+#~ "                                              42 warn\n"
+#~ "unused_attribute           Unused attribute."
+#~ "                                               43 warn\n"
+#~ ""
+#~ "invalid_inline_wasm        Invalid inline-wasm."
+#~ "                                            44 error\n"
+#~ "unused_rest_mark           Useless `..` in "
+#~ "pattern                                         46 warn"
+#~ "\n"
+#~ "invalid_mbti               Invalid mbti file"
+#~ "                                               47 warn\n"
+#~ ""
+#~ "missing_definition         Unused pub definition "
+#~ "because it does not exist in mbti"
+#~ " file.   49 warn\n"
+#~ "method_shadowing           Local method shadows "
+#~ "upstream method                            50 warn"
+#~ "\n"
+#~ "ambiguous_precedence       Ambiguous operator "
+#~ "precedence                                   51 warn\n"
+#~ ""
+#~ "unused_loop_variable       Loop variable not "
+#~ "updated in loop                               52 "
+#~ "warn\n"
+#~ "unused_trait_bound         Unused trait bound"
+#~ "                                              53 warn\n"
+#~ "ambiguous_range_direction  Ambiguous looping "
+#~ "direction for range e1..=e2                   "
+#~ "54 off\n"
+#~ "unannotated_ffi            Unannotated FFI param "
+#~ "type                                      55 error\n"
+#~ "missing_pattern_field      Missing field in "
+#~ "struct pattern                                 56 "
+#~ "warn\n"
+#~ "missing_pattern_payload    Constructor pattern "
+#~ "expect payload                              57 warn"
+#~ "\n"
+#~ "unaligned_byte_access      Unaligned byte access "
+#~ "in bits pattern                           59 "
+#~ "warn\n"
+#~ "unused_struct_update       Unused struct update"
+#~ "                                            60 warn\n"
+#~ "duplicate_test             Duplicate test name"
+#~ "                                             61 warn\n"
+#~ "invalid_cascade            Calling method with "
+#~ "non-unit return type via `..`"
+#~ "               62 warn\n"
+#~ "syntax_lint                Syntax lint warning"
+#~ "                                             63 warn\n"
+#~ "unannotated_toplevel_array Unannotated toplevel "
+#~ "array                                      64 warn\n"
+#~ "prefer_readonly_array      Suggest ReadOnlyArray for"
+#~ " read-only array literal               65"
+#~ " off\n"
+#~ "prefer_fixed_array         Suggest FixedArray for"
+#~ " mutated array literal                    66 "
+#~ "off\n"
+#~ "unused_async               Useless `async` "
+#~ "annotation                                      67 warn"
+#~ "\n"
+#~ "declaration_unimplemented  Declaration is "
+#~ "unimplemented                                    68 warn"
+#~ "\n"
+#~ "declaration_implemented    Declaration is already"
+#~ " implemented                              69 off\n"
+#~ ""
+#~ "deprecated_for_in_method   using `iterator()` method"
+#~ " for `for .. in` loop.                 "
+#~ "70 off\n"
+#~ "core_package_not_imported  Packages in "
+#~ "`moonbitlang/core` need to be explicitly "
+#~ "imported.  71 warn\n"
+#~ "unqualified_local_using    unqualified local using"
+#~ "                                         72 off\n"
+#~ "unnecessary_annotation     unnecessary type "
+#~ "annotation                                     73 off\n"
+#~ ""
+#~ "missing_doc                Missing documentation for"
+#~ " public definition                     74 off"
+#~ "\n"
+#~ "A                          all warnings\n"
+#~ "state: warn = enabled, error = promoted to error, off = disabled\n"
+#~ "note: default alert exceptions: alert_unsafe=off\n"
+#~ msgstr ""
