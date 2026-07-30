@@ -124,8 +124,14 @@ pub fn add_by_attr(n : Int) -> Int {
 
 Export names must be valid C symbol identifiers and unique within the package.
 The attribute cannot be used on generic functions or functions with optional
-arguments, and it exports only functions declared in the foreign-library
-package itself, not symbols from dependencies.
+arguments. Prefer `#export_name` over backend-specific `exports` link
+configuration for new exports.
+
+Export declarations are scoped to the package that produces the artifact. An
+attribute or `exports` configuration in a dependency applies when that
+dependency is built as its own artifact, but it does not add symbols to a
+downstream package's artifact. Define and export a wrapper in the exporting
+package to expose dependency functionality.
 
 ```{note}
 The native backend does not currently support exporting a `foreign_library`
@@ -457,6 +463,11 @@ The `link` option is used to specify link options, and its value can be either a
 
 Currently, `link` does not work for the native backend. The behavior described
 in this section applies to the `wasm`, `wasm-gc`, and `js` backends.
+
+For new function exports, prefer
+[`#export_name`](/language/attributes.md#export-name-attribute). Use the
+backend-specific `exports` field when the export set or names must differ by
+backend, or when the source cannot be annotated.
 
 - When the `link` value is `true`, it indicates that the package should be linked. The output will vary depending on the backend specified during the build.
   

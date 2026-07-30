@@ -393,16 +393,19 @@ pub fn add_one(value : Int) -> Int {
 
 The name must be a unique valid C symbol identifier. The attribute is not
 available on generic functions, functions with optional arguments, methods, or
-declarations without a body. It exports only functions defined in the current
-foreign-library package; dependency symbols are not re-exported.
+declarations without a body.
+
+Prefer `#export_name` for new exports. It keeps the exported name next to the
+function and applies to every backend that supports foreign-library output.
 
 ```{note}
 The native backend does not currently support exporting a `foreign_library`
 package as a library artifact.
 ```
 
-Public functions can also be exported with the backend-specific `exports` field
-in [link configuration](/toolchain/moon/package.md#link-options):
+Use the backend-specific `exports` field in
+[link configuration](/toolchain/moon/package.md#link-options) when the export
+set or names must differ by backend, or when the source cannot be annotated:
 
 ```moonbit
 options(
@@ -416,29 +419,29 @@ options(
 
 The previous example exports functions `add` and `fib`, where `fib` will be exported as `test`.
 
+Both `#export_name` and `exports` are scoped to the package that produces the
+artifact. Declarations and configuration in a dependency apply when that
+dependency is built as its own artifact, but they do not add symbols to a
+downstream package's artifact. To expose dependency functionality, define and
+export a wrapper in the exporting package.
+
 `````````{tab-set}
 ``````{tab-item} Wasm & Wasm GC
 :sync: wasm1
 :sync: wasm-gc
 
-```{note}
-It is only effective for the package that configures it, i.e. it doesn't affect the downstream packages.
-```
+The `exports` field supports renaming as shown above.
 ``````
 ``````{tab-item} JavaScript
 :sync: js
 
 ```{note}
-It is only effective for the package that configures it, i.e. it doesn't affect the downstream packages.
-
 There's another `format` option to export as CommonJS module (`cjs`), ES Module (`esm`), or `iife`.
 ```
 ``````
 ``````{tab-item} C
 :sync: c
 ```{note}
-It is only effective for the package that configures it, i.e. it doesn't affect the downstream packages.
-
 Renaming the exported function is not supported for now
 ```
 ``````
