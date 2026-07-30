@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 12:07+0800\n"
+"POT-Creation-Date: 2026-07-30 12:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -31,18 +31,22 @@ msgstr ""
 msgid ""
 "The `#export_name` attribute is invalid. MoonBit currently requires "
 "exported names to be unique valid C symbol identifiers for every backend."
-" This is a known compiler issue: the attribute applies this cross-backend"
-" restriction even though WebAssembly export names themselves are UTF-8 "
-"strings and are not limited to C identifiers. The attribute may be used "
-"only on public, non-generic function definitions without optional "
-"arguments in a foreign-library package."
+" The attribute may be used only on public, non-generic function "
+"definitions without optional arguments in a foreign-library package."
 msgstr ""
 
-#: ../../language/error_codes/E4219.md:12
+#: ../../language/error_codes/E4219.md:11
+msgid ""
+"Known compiler issue: `#export_name` currently applies its C-symbol-"
+"identifier restriction to every backend. WebAssembly export names are "
+"UTF-8 strings and are not limited to C identifiers."
+msgstr ""
+
+#: ../../language/error_codes/E4219.md:16
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4219.md:14
+#: ../../language/error_codes/E4219.md:18
 msgid ""
 "///|\n"
 "#export_name(\"bad-name\")\n"
@@ -51,17 +55,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4219.md:18
+#: ../../language/error_codes/E4219.md:22
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4219.md:20
+#: ../../language/error_codes/E4219.md:24
 msgid ""
 "Use a valid symbol name and declare the package as a foreign library with"
 " `pkgtype(kind: \"foreign_library\")`."
 msgstr ""
 
-#: ../../language/error_codes/E4219.md:23
+#: ../../language/error_codes/E4219.md:27
 msgid ""
 "///|\n"
 "#export_name(\"add_one\")\n"
@@ -101,6 +105,21 @@ msgstr ""
 #~ "to be unique valid C symbol "
 #~ "identifiers for every backend. This is"
 #~ " a known compiler limitation: the "
+#~ "attribute applies this cross-backend "
+#~ "restriction even though WebAssembly export "
+#~ "names themselves are UTF-8 strings and"
+#~ " are not limited to C identifiers."
+#~ " The attribute may be used only "
+#~ "on public, non-generic function "
+#~ "definitions without optional arguments in "
+#~ "a foreign-library package."
+#~ msgstr ""
+#~ msgid ""
+#~ "The `#export_name` attribute is invalid. "
+#~ "MoonBit currently requires exported names "
+#~ "to be unique valid C symbol "
+#~ "identifiers for every backend. This is"
+#~ " a known compiler issue: the "
 #~ "attribute applies this cross-backend "
 #~ "restriction even though WebAssembly export "
 #~ "names themselves are UTF-8 strings and"

@@ -13,11 +13,15 @@ pub fn add_one(value : Int) -> Int {
 
 MoonBit currently requires the exported name to be unique within the package
 and to be a valid C symbol identifier, regardless of the selected backend.
-This is a known compiler issue: `#export_name` applies this cross-backend
-restriction even though WebAssembly export names themselves are UTF-8 strings
-and are not limited to C identifiers. The attribute cannot be used on generic
-functions, functions with optional arguments, methods, or declarations without
-a body.
+
+```{warning}
+Known compiler issue: `#export_name` currently applies its C-symbol-identifier
+restriction to every backend. WebAssembly export names are UTF-8 strings and
+are not limited to C identifiers.
+```
+
+The attribute cannot be used on generic functions, functions with optional
+arguments, methods, or declarations without a body.
 
 Prefer `#export_name` over backend-specific `exports` link configuration for
 new exports. It keeps the exported name next to the function and applies to

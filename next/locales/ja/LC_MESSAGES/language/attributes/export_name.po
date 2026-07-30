@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 12:07+0800\n"
+"POT-Creation-Date: 2026-07-30 12:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -43,14 +43,23 @@ msgstr ""
 msgid ""
 "MoonBit currently requires the exported name to be unique within the "
 "package and to be a valid C symbol identifier, regardless of the selected"
-" backend. This is a known compiler issue: `#export_name` applies this "
-"cross-backend restriction even though WebAssembly export names themselves"
-" are UTF-8 strings and are not limited to C identifiers. The attribute "
-"cannot be used on generic functions, functions with optional arguments, "
-"methods, or declarations without a body."
+" backend."
 msgstr ""
 
-#: ../../language/attributes/export_name.md:22
+#: ../../language/attributes/export_name.md:18
+msgid ""
+"Known compiler issue: `#export_name` currently applies its C-symbol-"
+"identifier restriction to every backend. WebAssembly export names are "
+"UTF-8 strings and are not limited to C identifiers."
+msgstr ""
+
+#: ../../language/attributes/export_name.md:23
+msgid ""
+"The attribute cannot be used on generic functions, functions with "
+"optional arguments, methods, or declarations without a body."
+msgstr ""
+
+#: ../../language/attributes/export_name.md:26
 msgid ""
 "Prefer `#export_name` over backend-specific `exports` link configuration "
 "for new exports. It keeps the exported name next to the function and "
@@ -59,7 +68,7 @@ msgid ""
 "the source cannot be annotated."
 msgstr ""
 
-#: ../../language/attributes/export_name.md:28
+#: ../../language/attributes/export_name.md:32
 msgid ""
 "Export declarations are scoped to the package that produces the artifact."
 " An attribute in a dependency applies when that dependency is built as "
@@ -68,14 +77,14 @@ msgid ""
 " in the exporting package."
 msgstr ""
 
-#: ../../language/attributes/export_name.md:35
+#: ../../language/attributes/export_name.md:39
 msgid ""
 "The native backend does not currently support exporting a "
 "`foreign_library` package as a library artifact. Use Wasm or JavaScript "
 "if you need an exported library."
 msgstr ""
 
-#: ../../language/attributes/export_name.md:40
+#: ../../language/attributes/export_name.md:44
 msgid ""
 "See [Export Functions](/language/ffi.md#export-functions) for backend-"
 "specific alternatives."
@@ -136,7 +145,6 @@ msgstr ""
 #~ "functions with optional arguments, methods,"
 #~ " or declarations without a body."
 #~ msgstr ""
-
 #~ msgid ""
 #~ "MoonBit currently requires the exported "
 #~ "name to be unique within the "
@@ -151,4 +159,20 @@ msgstr ""
 #~ " cannot be used on generic functions,"
 #~ " functions with optional arguments, "
 #~ "methods, or declarations without a body."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "MoonBit currently requires the exported "
+#~ "name to be unique within the "
+#~ "package and to be a valid C "
+#~ "symbol identifier, regardless of the "
+#~ "selected backend. This is a known "
+#~ "compiler issue: `#export_name` applies this"
+#~ " cross-backend restriction even though "
+#~ "WebAssembly export names themselves are "
+#~ "UTF-8 strings and are not limited "
+#~ "to C identifiers. The attribute cannot"
+#~ " be used on generic functions, "
+#~ "functions with optional arguments, methods,"
+#~ " or declarations without a body."
 #~ msgstr ""
