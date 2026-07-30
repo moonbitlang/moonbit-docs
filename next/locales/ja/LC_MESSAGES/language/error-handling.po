@@ -191,7 +191,6 @@ msgstr ""
 "関数は `DivError` 型のエラーを返す可能性があります："
 
 #: ../../language/error-handling.md:75
-#, fuzzy
 msgid ""
 "suberror DivError { DivError(String) } derive(Debug)\n"
 "\n"
@@ -202,14 +201,6 @@ msgid ""
 "  x / y\n"
 "}\n"
 msgstr ""
-"suberror DivError { DivError(String) }\n"
-"\n"
-"fn div(x : Int, y : Int) -> Int raise DivError {\n"
-"  if y == 0 {\n"
-"    raise DivError(\"division by zero\")\n"
-"  }\n"
-"  x / y\n"
-"}\n"
 
 #: ../../language/error-handling.md:82
 msgid ""
@@ -456,15 +447,11 @@ msgid ""
 msgstr "エラーが発生しなかったときに何もしないなら、`noraise` ブロックは省略できます。例えば："
 
 #: ../../language/error-handling.md:177
-#, fuzzy
 msgid ""
 "println(div(42, 0)) catch {\n"
 "  _ => println(\"Error\")\n"
 "}\n"
 msgstr ""
-"try { println(div(42, 0)) } catch {\n"
-"  _ => println(\"Error\")\n"
-"}\n"
 
 #: ../../language/error-handling.md:184
 msgid ""
