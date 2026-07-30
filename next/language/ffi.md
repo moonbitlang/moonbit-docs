@@ -396,6 +396,11 @@ available on generic functions, functions with optional arguments, methods, or
 declarations without a body. It exports only functions defined in the current
 foreign-library package; dependency symbols are not re-exported.
 
+```{note}
+The native backend does not currently support exporting a `foreign_library`
+package as a library artifact.
+```
+
 Public functions can also be exported with the backend-specific `exports` field
 in [link configuration](/toolchain/moon/package.md#link-options):
 

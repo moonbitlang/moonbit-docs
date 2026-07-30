@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-30 11:07+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/export_name.md:1
+msgid "Export Name Attribute"
+msgstr ""
+
+#: ../../language/attributes/export_name.md:3
+msgid ""
+"The `#export_name` attribute assigns a stable exported symbol name to a "
+"public function in a package declared with `pkgtype(kind: "
+"\"foreign_library\")`. The name is used in generated Wasm, JavaScript, or"
+" C output:"
+msgstr ""
+
+#: ../../language/attributes/export_name.md:7
+msgid ""
+"#export_name(\"add\")\n"
+"pub fn add_one(value : Int) -> Int {\n"
+"  value + 1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/export_name.md:14
+msgid ""
+"The exported name must be a unique valid C symbol identifier. The "
+"attribute cannot be used on generic functions, functions with optional "
+"arguments, methods, or declarations without a body. It exports only "
+"functions defined in the current package; dependency symbols are not re-"
+"exported."
+msgstr ""
+
+#: ../../language/attributes/export_name.md:20
+msgid ""
+"The native backend does not currently support exporting a "
+"`foreign_library` package as a library artifact. Use Wasm or JavaScript "
+"if you need an exported library."
+msgstr ""
+
+#: ../../language/attributes/export_name.md:25
+msgid ""
+"See [Export Functions](/language/ffi.md#export-functions) for package "
+"configuration and backend-specific alternatives."
+msgstr ""
+
+#~ msgid ""
+#~ "The `#export_name` attribute assigns a "
+#~ "stable exported symbol name to a "
+#~ "public function in a package declared"
+#~ " with `pkgtype(kind: \"foreign_library\")`:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The native backend does not currently"
+#~ " support exporting a package as a "
+#~ "library. Use `#export_name` with Wasm or"
+#~ " JavaScript foreign-library output for "
+#~ "now."
+#~ msgstr ""

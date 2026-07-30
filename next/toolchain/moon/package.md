@@ -125,9 +125,12 @@ pub fn add_by_attr(n : Int) -> Int {
 Export names must be valid C symbol identifiers and unique within the package.
 The attribute cannot be used on generic functions or functions with optional
 arguments, and it exports only functions declared in the foreign-library
-package itself, not symbols from dependencies. Static and dynamic library
-output from the new native backend is still being stabilized, so
-`#export_name` is currently most useful with the Wasm and JavaScript backends.
+package itself, not symbols from dependencies.
+
+```{note}
+The native backend does not currently support exporting a `foreign_library`
+package as a library artifact.
+```
 
 (is-main)=
 ## is-main (deprecated)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-20 11:55+0800\n"
+"POT-Creation-Date: 2026-07-30 11:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -972,6 +972,53 @@ msgid ""
 "#module(\"math-utils\")\n"
 "pub extern \"js\" fn add_from_module(x : Int, y : Int) -> Int = \"add\"\n"
 msgstr ""
+
+#: ../../language/attributes/export_name.md:2
+msgid "Export Name Attribute"
+msgstr "导出名称属性"
+
+#: ../../language/attributes/export_name.md:4
+msgid ""
+"The `#export_name` attribute assigns a stable exported symbol name to a "
+"public function in a package declared with `pkgtype(kind: "
+"\"foreign_library\")`. The name is used in generated Wasm, JavaScript, or"
+" C output:"
+msgstr ""
+"`#export_name` 属性为使用 `pkgtype(kind: \"foreign_library\")` "
+"声明的包中的公开函数指定稳定的导出符号名称。该名称用于生成的 Wasm、JavaScript 或 C 输出："
+
+#: ../../language/attributes/export_name.md:8
+msgid ""
+"#export_name(\"add\")\n"
+"pub fn add_one(value : Int) -> Int {\n"
+"  value + 1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/export_name.md:15
+msgid ""
+"The exported name must be a unique valid C symbol identifier. The "
+"attribute cannot be used on generic functions, functions with optional "
+"arguments, methods, or declarations without a body. It exports only "
+"functions defined in the current package; dependency symbols are not re-"
+"exported."
+msgstr ""
+"导出名称必须是唯一且有效的 C "
+"符号标识符。该属性不能用于泛型函数、带可选参数的函数、方法或没有函数体的声明。它只导出当前包中定义的函数；不会重新导出依赖中的符号。"
+
+#: ../../language/attributes/export_name.md:21
+msgid ""
+"The native backend does not currently support exporting a "
+"`foreign_library` package as a library artifact. Use Wasm or JavaScript "
+"if you need an exported library."
+msgstr ""
+"native 后端目前不支持将 `foreign_library` 包导出为库产物。如需导出的库，请使用 Wasm 或 JavaScript。"
+
+#: ../../language/attributes/export_name.md:26
+msgid ""
+"See [Export Functions](/language/ffi.md#export-functions) for package "
+"configuration and backend-specific alternatives."
+msgstr "有关包配置及特定于后端的替代方案，请参阅[导出函数](/language/ffi.md#export-functions)。"
 
 #~ msgid ""
 #~ "#must_implement_one\n"
