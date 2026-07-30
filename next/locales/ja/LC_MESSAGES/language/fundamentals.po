@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-29 15:29+0800\n"
+"POT-Creation-Date: 2026-07-30 12:01+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -3159,8 +3159,8 @@ msgid ""
 "or `continue` directly inside a labelled loop is deprecated because it "
 "leaves the target implicit."
 msgstr ""
-"ループにラベルを付けたら、そのループを直接対象にする `break` や `continue` にもラベルを指定します。ラベル付きループの直下にあるラベルなしの "
-"`break` や `continue` は、対象が暗黙になるため非推奨です。"
+"ループにラベルを付けたら、そのループを直接対象にする `break` や `continue` "
+"にもラベルを指定します。ラベル付きループの直下にあるラベルなしの `break` や `continue` は、対象が暗黙になるため非推奨です。"
 
 #: ../../language/fundamentals.md:1137
 #, fuzzy
@@ -3555,8 +3555,9 @@ msgid ""
 "is marked as mutable using the keyword `mut`, it can be assigned a new "
 "value."
 msgstr ""
-"MoonBit の struct は tuple に似ていますが、フィールドは名前で管理されます。struct は `T::{ field: value }` "
-"のような型修飾付き struct リテラルで構築できます。フィールドだけで型を推論できる場合でも、型プレフィックスによって構築する型が明確になります。フィールドにはドット構文 "
+"MoonBit の struct は tuple に似ていますが、フィールドは名前で管理されます。struct は `T::{ field: "
+"value }` のような型修飾付き struct "
+"リテラルで構築できます。フィールドだけで型を推論できる場合でも、型プレフィックスによって構築する型が明確になります。フィールドにはドット構文 "
 "`s.f` でアクセスできます。フィールドに `mut` キーワードが付いていれば、新しい値を代入できます。"
 
 #: ../../language/fundamentals.md:1282
@@ -5261,17 +5262,24 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1855
+#: ../../language/fundamentals.md:1856
+msgid ""
+"Known compiler issue: this example is currently skipped for the native "
+"Windows target because the C backend's `v128.load` fallback recurses. "
+"This is not an incompatibility between Windows and SSE2."
+msgstr ""
+
+#: ../../language/fundamentals.md:1861
 msgid "Range Pattern"
 msgstr "範囲パターン"
 
-#: ../../language/fundamentals.md:1856
+#: ../../language/fundamentals.md:1862
 msgid ""
 "For builtin integer types and `Char`, MoonBit allows matching whether the"
 " value falls in a specific range."
 msgstr "組み込みの整数型と `Char` では、値が特定の範囲に入るかどうかを MoonBit でマッチできます。"
 
-#: ../../language/fundamentals.md:1858
+#: ../../language/fundamentals.md:1864
 msgid ""
 "Range patterns have the form `a..<b` or `a..=b`, where `..<` means the "
 "upper bound is exclusive, and `..=` means inclusive upper bound. `a` and "
@@ -5280,23 +5288,23 @@ msgstr ""
 "範囲パターンは `a..<b` または `a..=b` の形をとります。`..<` は上限を含まないことを、`..=` "
 "は上限を含むことを意味します。`a` と `b` には次のいずれかを指定できます："
 
-#: ../../language/fundamentals.md:1861
+#: ../../language/fundamentals.md:1867
 msgid "literal"
 msgstr "リテラル"
 
-#: ../../language/fundamentals.md:1862
+#: ../../language/fundamentals.md:1868
 msgid "named constant declared with `const`"
 msgstr "`const` で宣言された名前付き定数"
 
-#: ../../language/fundamentals.md:1863
+#: ../../language/fundamentals.md:1869
 msgid "`_`, meaning the pattern has no restriction on this side"
 msgstr "`_` は、この側に制約がないことを意味します"
 
-#: ../../language/fundamentals.md:1865
+#: ../../language/fundamentals.md:1871
 msgid "Here are some examples:"
 msgstr "いくつか例を示します："
 
-#: ../../language/fundamentals.md:1867
+#: ../../language/fundamentals.md:1873
 #, fuzzy
 msgid ""
 "const Zero = 0\n"
@@ -5337,11 +5345,11 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1874
+#: ../../language/fundamentals.md:1880
 msgid "Map Pattern"
 msgstr "Map パターン"
 
-#: ../../language/fundamentals.md:1876
+#: ../../language/fundamentals.md:1882
 msgid ""
 "MoonBit allows convenient matching on map-like data structures. Inside a "
 "map pattern, the `key : value` syntax will match if `key` exists in the "
@@ -5353,7 +5361,7 @@ msgstr ""
 "`key` が map に存在する場合に一致し、`key` の値をパターン `value` でマッチします。`key? : value` 構文は "
 "`key` の有無にかかわらず一致し、`value` は `map[key]`（Optional）と照合されます。"
 
-#: ../../language/fundamentals.md:1880
+#: ../../language/fundamentals.md:1886
 msgid ""
 "match map {\n"
 "  // matches if any only if \"b\" exists in `map`\n"
@@ -5375,7 +5383,7 @@ msgstr ""
 "  // compiler reports missing case: { \"b\"? : None, \"a\"? : None }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1887
+#: ../../language/fundamentals.md:1893
 #, fuzzy
 msgid ""
 "To match a data type `T` using map pattern, `T` must have a method "
@@ -5385,33 +5393,33 @@ msgstr ""
 "map パターンでデータ型 `T` をマッチさせるには、`T` がある型 `K` と `V` に対して `op_get(Self, K) -> "
 "Option[V]` メソッドを持っている必要があります（[method and trait](./methods.md) を参照）。"
 
-#: ../../language/fundamentals.md:1888
+#: ../../language/fundamentals.md:1894
 msgid "Currently, the key part of map pattern must be a literal or constant"
 msgstr "現在、map パターンの key 部分はリテラルまたは定数でなければなりません"
 
-#: ../../language/fundamentals.md:1889
+#: ../../language/fundamentals.md:1895
 msgid ""
 "Map patterns are always open: the unmatched keys are silently ignored, "
 "and `..` needs to be added to identify this nature"
 msgstr "map パターンは常に open です。マッチしなかった key は黙って無視され、この性質を明示するには `..` を追加する必要があります"
 
-#: ../../language/fundamentals.md:1890
+#: ../../language/fundamentals.md:1896
 msgid ""
 "Map pattern will be compiled to efficient code: every key will be fetched"
 " at most once"
 msgstr "map パターンは効率的なコードにコンパイルされます。各 key は高々 1 回しか取得されません"
 
-#: ../../language/fundamentals.md:1892
+#: ../../language/fundamentals.md:1898
 msgid "Json Pattern"
 msgstr "Json パターン"
 
-#: ../../language/fundamentals.md:1894
+#: ../../language/fundamentals.md:1900
 msgid ""
 "When the matched value has type `Json`, literal patterns can be used "
 "directly, together with constructors:"
 msgstr "マッチ対象の値の型が `Json` の場合は、リテラルパターンをコンストラクタと組み合わせて直接使えます："
 
-#: ../../language/fundamentals.md:1896
+#: ../../language/fundamentals.md:1902
 msgid ""
 "match json {\n"
 "  { \"version\": \"1.0.0\", \"import\": [..] as imports, .. } => ...\n"
@@ -5425,18 +5433,18 @@ msgstr ""
 "  ...\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1903
+#: ../../language/fundamentals.md:1909
 msgid "Default bindings in or-patterns"
 msgstr ""
 
-#: ../../language/fundamentals.md:1905
+#: ../../language/fundamentals.md:1911
 msgid ""
 "Every alternative of an or-pattern normally has to bind the same "
 "variables. Use `with` on an alternative to provide defaults for variables"
 " that it does not bind structurally:"
 msgstr ""
 
-#: ../../language/fundamentals.md:1909
+#: ../../language/fundamentals.md:1915
 msgid ""
 "fn option_value(value : Int?) -> Int {\n"
 "  match value {\n"
@@ -5458,7 +5466,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1915
+#: ../../language/fundamentals.md:1921
 msgid ""
 "For multiple defaults, write `(Pattern with x = value, y = value)`. "
 "Parentheses make it clear which alternative receives a default. A default"
@@ -5471,11 +5479,11 @@ msgstr ""
 "と書きます。括弧によって、どの選択肢にデフォルト値が属するかが明確になります。デフォルト値には、外側のスコープで評価される一般の式を使用できます。ただし、パターン全体のバインダーを参照できず、デフォルト式の中では"
 " `return`、`break`、`continue`、`raise` などの制御フローを使用できません。"
 
-#: ../../language/fundamentals.md:1921
+#: ../../language/fundamentals.md:1927
 msgid "Guard condition"
 msgstr "ガード条件"
 
-#: ../../language/fundamentals.md:1923
+#: ../../language/fundamentals.md:1929
 msgid ""
 "Each case in a pattern matching expression can have a guard condition. A "
 "guard condition is a boolean expression that must be true for the case to"
@@ -5485,7 +5493,7 @@ msgstr ""
 "パターンマッチ式の各 case にはガード条件を付けられます。ガード条件は、case "
 "がマッチするために真でなければならない真偽式です。ガード条件が偽なら、その case はスキップされ、次の case が試されます。例えば："
 
-#: ../../language/fundamentals.md:1927
+#: ../../language/fundamentals.md:1933
 #, fuzzy
 msgid ""
 "fn guard_cond(x : Int?) -> Int {\n"
@@ -5524,7 +5532,7 @@ msgstr ""
 "  assert_eq(guard_cond(Some(1)), 1)\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1934
+#: ../../language/fundamentals.md:1940
 msgid ""
 "Note that the guard conditions will not be considered when checking if "
 "all patterns are covered by the match expression. So you will see a "
@@ -5533,7 +5541,7 @@ msgstr ""
 "ガード条件は、match 式ですべてのパターンが網羅されているかをチェックするときには考慮されません。そのため、次の case では "
 "partial match の警告が表示されます："
 
-#: ../../language/fundamentals.md:1938
+#: ../../language/fundamentals.md:1944
 #, fuzzy
 msgid ""
 "fn guard_check(x : Int?) -> Unit {\n"
@@ -5552,7 +5560,7 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1946
+#: ../../language/fundamentals.md:1952
 msgid ""
 "It is not encouraged to call a function that mutates a part of the value "
 "being matched inside a guard condition. When such case happens, the part "
@@ -5560,11 +5568,11 @@ msgid ""
 " with caution."
 msgstr "ガード条件の中で、マッチ対象の値の一部を変更する関数を呼ぶことは推奨されません。そのような場合、変更された部分は後続のパターンで再評価されません。注意して使ってください。"
 
-#: ../../language/fundamentals.md:1951
+#: ../../language/fundamentals.md:1957
 msgid "Generics"
 msgstr "ジェネリクス"
 
-#: ../../language/fundamentals.md:1953
+#: ../../language/fundamentals.md:1959
 msgid ""
 "Generics are supported in top-level function and data type definitions. "
 "Type parameters can be introduced within square brackets. We can rewrite "
@@ -5576,7 +5584,7 @@ msgstr ""
 "に型パラメータ `T` を追加して、リストのジェネリック版を作り直すことができます。そうすると、`map` や `reduce` "
 "のようなリスト向けのジェネリック関数を定義できます。"
 
-#: ../../language/fundamentals.md:1955
+#: ../../language/fundamentals.md:1961
 msgid ""
 "///|\n"
 "enum List[T] {\n"
@@ -5622,15 +5630,15 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1959
+#: ../../language/fundamentals.md:1965
 msgid "Special Syntax"
 msgstr "特殊構文"
 
-#: ../../language/fundamentals.md:1961
+#: ../../language/fundamentals.md:1967
 msgid "Pipelines"
 msgstr "パイプライン"
 
-#: ../../language/fundamentals.md:1963
+#: ../../language/fundamentals.md:1969
 msgid ""
 "MoonBit provides convenient pipe syntaxes `x |> f(y)` and `f <| x`, which"
 " can be used to chain regular function calls or make nested builder-style"
@@ -5639,7 +5647,7 @@ msgstr ""
 "MoonBit には便利なパイプ構文 `x |> f(y)` と `f <| x` "
 "があり、通常の関数呼び出しを連結したり、ネストしたビルダー風コードを読みやすくしたりできます："
 
-#: ../../language/fundamentals.md:1965
+#: ../../language/fundamentals.md:1971
 msgid ""
 "5 |> ignore // <=> ignore(5)\n"
 "[] |> Array::push(5) // <=> Array::push([], 5)\n"
@@ -5649,7 +5657,7 @@ msgid ""
 "|> ignore // <=> ignore(add(1, 5) + 1)\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1972
+#: ../../language/fundamentals.md:1978
 msgid ""
 "The MoonBit code follows the *data-first* style, meaning the function "
 "places its \"subject\" as the first argument. Thus, the pipe operator "
@@ -5661,7 +5669,7 @@ msgstr ""
 "引数に置きます。そのため、パイプ演算子は既定で左辺の値を右辺の関数呼び出しの第 1 引数に差し込みます。たとえば、`x |> f(y)` は "
 "`f(x, y)` と等価です。"
 
-#: ../../language/fundamentals.md:1976
+#: ../../language/fundamentals.md:1982
 msgid ""
 "You can use the `_` operator to insert `x` into any argument of the "
 "function `f`, such as `x |> f(y, _)`, which is equivalent to `f(y, x)`. "
@@ -5670,7 +5678,7 @@ msgstr ""
 "`_` 演算子を使うと、`x |> f(y, _)` のように `f` の任意の引数位置に `x` を差し込めます。これは `f(y, x)` "
 "と等価です。ラベル付き引数も使えます。"
 
-#: ../../language/fundamentals.md:1978
+#: ../../language/fundamentals.md:1984
 msgid ""
 "The pipe operator can also connect to an arrow function. When piping into"
 " an arrow function, the function body must be wrapped in curly braces, "
@@ -5679,7 +5687,7 @@ msgstr ""
 "パイプ演算子はアロー関数にもつなげられます。アロー関数にパイプするときは、関数本体を中括弧で囲む必要があります。たとえば `value |> x "
 "=> { x + 1 }` です。"
 
-#: ../../language/fundamentals.md:1980
+#: ../../language/fundamentals.md:1986
 msgid ""
 "The reverse pipe operator applies the right-hand side as the final "
 "argument of the left-hand side call. For example, `f <| x` is equivalent "
@@ -5692,7 +5700,7 @@ msgstr ""
 " c` は `f(a, b, c)` と等価です。これは DSL 風のコードで特に有用で、`div([text(\"hello\")])` "
 "のようなネストした呼び出しを `div <| [text <| \"hello\"]` と書けます。"
 
-#: ../../language/fundamentals.md:1982
+#: ../../language/fundamentals.md:1988
 #, fuzzy
 msgid ""
 "let page = div <| [\n"
@@ -5721,7 +5729,7 @@ msgstr ""
 "    \"div(text(hello), toolbar: div(text(save), text(cancel)))\",\n"
 ")\n"
 
-#: ../../language/fundamentals.md:1989
+#: ../../language/fundamentals.md:1995
 msgid ""
 "Because reverse pipe attaches the final argument, it also works well with"
 " functions whose last argument is a lambda, enabling a trailing-lambda "
@@ -5730,25 +5738,25 @@ msgstr ""
 "逆パイプは最後の引数を付け足すので、最後の引数がラムダである関数とも相性がよく、`section(\"toolbar\") <| fn () { "
 "... }` のような trailing-lambda スタイルを書けます。"
 
-#: ../../language/fundamentals.md:1992
+#: ../../language/fundamentals.md:1998
 msgid "Cascade Operator"
 msgstr "カスケード演算子"
 
-#: ../../language/fundamentals.md:1994
+#: ../../language/fundamentals.md:2000
 msgid ""
 "The cascade operator `..` is used to perform a series of mutable "
 "operations on the same value consecutively. The syntax is as follows:"
 msgstr "カスケード演算子 `..` は、同じ値に対する可変操作を連続して行うために使います。構文は次のとおりです："
 
-#: ../../language/fundamentals.md:1997
+#: ../../language/fundamentals.md:2003
 msgid "let arr = []..append([1])\n"
 msgstr "let arr = []..append([1])\n"
 
-#: ../../language/fundamentals.md:2004
+#: ../../language/fundamentals.md:2010
 msgid "Here, `x..f()` is equivalent to `{ x.f(); x }`."
 msgstr "ここでは、`x..f()` は `{ x.f(); x }` と同じ意味です。"
 
-#: ../../language/fundamentals.md:2007
+#: ../../language/fundamentals.md:2013
 msgid ""
 "Consider the following scenario: for a `StringBuilder` type that has "
 "methods like `write_string`, `write_char`, `write_object`, etc., we often"
@@ -5758,7 +5766,7 @@ msgstr ""
 "次のような場面を考えてみましょう。`write_string`、`write_char`、`write_object` などのメソッドを持つ "
 "`StringBuilder` 型では、同じ `StringBuilder` 値に対して一連の操作を行う必要がよくあります："
 
-#: ../../language/fundamentals.md:2011
+#: ../../language/fundamentals.md:2017
 msgid ""
 "let builder = StringBuilder::new()\n"
 "builder.write_char('a')\n"
@@ -5774,7 +5782,7 @@ msgstr ""
 "builder.write_string(\"abcdef\")\n"
 "let result = builder.to_string()\n"
 
-#: ../../language/fundamentals.md:2018
+#: ../../language/fundamentals.md:2024
 msgid ""
 "To avoid repetitive typing of `builder`, its methods are often designed "
 "to return `self` itself, allowing operations to be chained using the `.` "
@@ -5787,7 +5795,7 @@ msgstr ""
 "演算子で操作を連結できます。immutable な操作と mutable な操作を区別するために、MoonBit では `Unit` "
 "を返すすべてのメソッドに対して、戻り値型を変更せずに連続した操作を行うためにカスケード演算子を使えます。"
 
-#: ../../language/fundamentals.md:2024
+#: ../../language/fundamentals.md:2030
 msgid ""
 "let result = StringBuilder::new()\n"
 "  ..write_char('a')\n"
@@ -5803,18 +5811,18 @@ msgstr ""
 "  ..write_string(\"abcdef\")\n"
 "  .to_string()\n"
 
-#: ../../language/fundamentals.md:2031
+#: ../../language/fundamentals.md:2037
 msgid "is Expression"
 msgstr "`is` 式"
 
-#: ../../language/fundamentals.md:2033
+#: ../../language/fundamentals.md:2039
 msgid ""
 "The `is` expression tests whether a value conforms to a specific pattern."
 " It returns a `Bool` value and can be used anywhere a boolean value is "
 "expected, for example:"
 msgstr "`is` 式は、値が特定のパターンに一致するかどうかを調べます。`Bool` 値を返し、真偽値が期待される場所ならどこでも使えます。例えば："
 
-#: ../../language/fundamentals.md:2037
+#: ../../language/fundamentals.md:2043
 msgid ""
 "fn[T] is_none(x : T?) -> Bool {\n"
 "  x is None\n"
@@ -5832,19 +5840,19 @@ msgstr ""
 "  s is ['a'..='z', ..]\n"
 "}\n"
 
-#: ../../language/fundamentals.md:2044
+#: ../../language/fundamentals.md:2050
 msgid ""
 "Pattern binders introduced by `is` expressions can be used in the "
 "following contexts:"
 msgstr "`is` 式で導入されたパターン束縛は、次の文脈で使えます："
 
-#: ../../language/fundamentals.md:2047
+#: ../../language/fundamentals.md:2053
 msgid ""
 "In boolean AND expressions (`&&`): binders introduced in the left-hand "
 "expression can be used in the right-hand expression"
 msgstr "真偽値の AND 式（`&&`）: 左辺の式で導入された束縛は、右辺の式で使えます"
 
-#: ../../language/fundamentals.md:2051
+#: ../../language/fundamentals.md:2057
 msgid ""
 "fn f(x : Int?) -> Bool {\n"
 "  x is Some(v) && v >= 0\n"
@@ -5854,7 +5862,7 @@ msgstr ""
 "  x is Some(v) && v >= 0\n"
 "}\n"
 
-#: ../../language/fundamentals.md:2058
+#: ../../language/fundamentals.md:2064
 msgid ""
 "In the first branch of `if` expression: if the condition is a sequence of"
 " boolean expressions `e1 && e2 && ...`, the binders introduced by the "
@@ -5864,7 +5872,7 @@ msgstr ""
 "`if` 式の最初の分岐：条件が `e1 && e2 && ...` という真偽式の列である場合、`is` 式で導入された束縛は、条件が "
 "`true` に評価される分岐で使えます。"
 
-#: ../../language/fundamentals.md:2062
+#: ../../language/fundamentals.md:2068
 #, fuzzy
 msgid ""
 "fn g(x : Array[Int?]) -> Unit {\n"
@@ -5883,11 +5891,11 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:2069
+#: ../../language/fundamentals.md:2075
 msgid "In the following statements of a `guard` condition:"
 msgstr "`guard` 条件の後続の文では："
 
-#: ../../language/fundamentals.md:2071
+#: ../../language/fundamentals.md:2077
 msgid ""
 "fn h(x : Int?) -> Unit {\n"
 "  guard x is Some(v)\n"
@@ -5899,11 +5907,11 @@ msgstr ""
 "  println(v)\n"
 "}\n"
 
-#: ../../language/fundamentals.md:2078
+#: ../../language/fundamentals.md:2084
 msgid "In the body of a `while` loop:"
 msgstr "`while` ループ本体では："
 
-#: ../../language/fundamentals.md:2080
+#: ../../language/fundamentals.md:2086
 msgid ""
 "fn i(x : Int?) -> Unit {\n"
 "  let mut m = x\n"
@@ -5921,7 +5929,7 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:2087
+#: ../../language/fundamentals.md:2093
 msgid ""
 "Note that `is` expression can only take a simple pattern. If you need to "
 "use `as` to bind the pattern to a variable, you have to add parentheses. "
@@ -5930,7 +5938,7 @@ msgstr ""
 "`is` 式には単純なパターンしか指定できないことに注意してください。パターンを変数に束縛するために `as` "
 "を使いたい場合は、括弧を追加する必要があります。例えば："
 
-#: ../../language/fundamentals.md:2090
+#: ../../language/fundamentals.md:2096
 #, fuzzy
 msgid ""
 "fn j(x : Int) -> Int? {\n"
@@ -5953,29 +5961,29 @@ msgstr ""
 "  println(b)\n"
 "}\n"
 
-#: ../../language/fundamentals.md:2097
+#: ../../language/fundamentals.md:2103
 msgid "Regex Literal Expression"
 msgstr "正規表現リテラル式"
 
-#: ../../language/fundamentals.md:2099
+#: ../../language/fundamentals.md:2105
 msgid "`re\"...\"` is a regex literal expression. Its type is `Regex`."
 msgstr "`re\"...\"` は正規表現リテラル式です。型は `Regex` です。"
 
-#: ../../language/fundamentals.md:2101
+#: ../../language/fundamentals.md:2107
 msgid ""
 "Regex literals are ordinary expressions, so they can be stored in local "
 "bindings, passed as arguments, used as default argument values, and "
 "defined as constants:"
 msgstr "正規表現リテラルは通常の式なので、ローカル束縛に保存したり、引数として渡したり、デフォルト引数として使ったり、定数として定義したりできます："
 
-#: ../../language/fundamentals.md:2105
+#: ../../language/fundamentals.md:2111
 msgid ""
 "let r : Regex = re\"a(b+)\"\n"
 "const IDENT_START : Regex = re\"[A-Za-z_]\"\n"
 "const IDENT : Regex = IDENT_START + re\"[A-Za-z0-9_]*\"\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2111
+#: ../../language/fundamentals.md:2117
 msgid ""
 "Regex values can also be combined with `+` for sequence and `|` for "
 "alternation. In places that require a regex constant expression, such as "
@@ -5985,7 +5993,7 @@ msgstr ""
 "`Regex` 値は `+` で連接、`|` で選択を表すように組み合わせることもできます。[`=~`](#regex-match-"
 "expression) のように正規表現の定数式が必要な場所では、正規表現リテラルから定義した名前付き `const` を直接参照できます。"
 
-#: ../../language/fundamentals.md:2116
+#: ../../language/fundamentals.md:2122
 msgid ""
 "Unlike ordinary string literals, regex literals do not require double-"
 "escaping backslashes. For example, write `re\"/\\*\"` instead of "
@@ -5994,7 +6002,7 @@ msgstr ""
 "通常の文字列リテラルとは異なり、正規表現リテラルではバックスラッシュを二重にエスケープする必要はありません。例えば `re\"/\\\\*\"` "
 "ではなく `re\"/\\*\"` と書きます。"
 
-#: ../../language/fundamentals.md:2119
+#: ../../language/fundamentals.md:2125
 msgid ""
 "const REGEX_IDENT_START = re\"[A-Za-z_]\"\n"
 "\n"
@@ -6017,27 +6025,27 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2126
+#: ../../language/fundamentals.md:2132
 msgid "Invalid regex literals are rejected at compile time."
 msgstr "不正な正規表現リテラルはコンパイル時に拒否されます。"
 
-#: ../../language/fundamentals.md:2128
+#: ../../language/fundamentals.md:2134
 msgid "Regex literals use MoonBit's regex syntax. The supported forms include:"
 msgstr "正規表現リテラルでは MoonBit の正規表現構文を使います。サポートされる形式は次のとおりです："
 
-#: ../../language/fundamentals.md:2130
+#: ../../language/fundamentals.md:2136
 msgid "Literal characters: ordinary characters match themselves"
 msgstr "リテラル文字：通常の文字はそのまま自分自身にマッチします"
 
-#: ../../language/fundamentals.md:2131
+#: ../../language/fundamentals.md:2137
 msgid "Wildcard: `.` matches any single character, including newline"
 msgstr "ワイルドカード：`.` は改行を含む任意の 1 文字にマッチします"
 
-#: ../../language/fundamentals.md:2132
+#: ../../language/fundamentals.md:2138
 msgid "Character classes: `[abc]`, `[^abc]`, `[a-z]`"
 msgstr "文字クラス：`[abc]`、`[^abc]`、`[a-z]`"
 
-#: ../../language/fundamentals.md:2133
+#: ../../language/fundamentals.md:2139
 msgid ""
 "POSIX classes inside character classes: `[[:digit:]]`, `[[:alpha:]]`, "
 "`[[:space:]]`, `[[:word:]]`, `[[:xdigit:]]`, etc."
@@ -6046,27 +6054,27 @@ msgstr ""
 "クラス：`[[:digit:]]`、`[[:alpha:]]`、`[[:space:]]`、`[[:word:]]`、`[[:xdigit:]]`"
 " など"
 
-#: ../../language/fundamentals.md:2135
+#: ../../language/fundamentals.md:2141
 msgid "Quantifiers: `*`, `+`, `?`, `{n}`, `{n,}`, `{n,m}`"
 msgstr "量指定子：`*`、`+`、`?`、`{n}`、`{n,}`、`{n,m}`"
 
-#: ../../language/fundamentals.md:2136
+#: ../../language/fundamentals.md:2142
 msgid "Non-greedy quantifiers: `*?`, `+?`, `??`, `{n}?`, `{n,}?`, `{n,m}?`"
 msgstr "非貪欲量指定子：`*?`、`+?`、`??`、`{n}?`、`{n,}?`、`{n,m}?`"
 
-#: ../../language/fundamentals.md:2137
+#: ../../language/fundamentals.md:2143
 msgid "Grouping and alternation: `( ... )`, `(?: ... )`, `(?<name> ... )`, `a|b`"
 msgstr "グループ化と選択：`( ... )`、`(?: ... )`、`(?<name> ... )`、`a|b`"
 
-#: ../../language/fundamentals.md:2138
+#: ../../language/fundamentals.md:2144
 msgid "Assertions: `^`, `$`, `\\b`, `\\B`"
 msgstr "アサーション：`^`、`$`、`\\b`、`\\B`"
 
-#: ../../language/fundamentals.md:2139
+#: ../../language/fundamentals.md:2145
 msgid "Scoped modifier: `(?i: ... )` for case-insensitive matching"
 msgstr "スコープ付き修飾子：`(?i: ... )` による大文字小文字を区別しないマッチ"
 
-#: ../../language/fundamentals.md:2141
+#: ../../language/fundamentals.md:2147
 msgid ""
 "Escape handling is regex-oriented rather than string-oriented. Common "
 "escapes include `\\n`, `\\r`, `\\t`, `\\f`, `\\v`, escaped metacharacters"
@@ -6080,17 +6088,17 @@ msgstr ""
 "があります。リテラルの `{` にマッチさせたい場合は、`\\{` ではなく `[{]` を使ってください。これは、将来 regex "
 "literal で補間をサポートするときの構文の余地を残すためです。`\\{` は補間構文と衝突するためです。"
 
-#: ../../language/fundamentals.md:2147
+#: ../../language/fundamentals.md:2153
 msgid "There are several important semantics and restrictions:"
 msgstr "重要な意味論と制限がいくつかあります："
 
-#: ../../language/fundamentals.md:2149
+#: ../../language/fundamentals.md:2155
 msgid ""
 "`^` and `$` are non-multiline anchors: they match only the beginning and "
 "end of the whole input"
 msgstr "`^` と `$` はマルチラインではないアンカーで、入力全体の先頭と末尾にだけマッチします"
 
-#: ../../language/fundamentals.md:2151
+#: ../../language/fundamentals.md:2157
 msgid ""
 "`\\b` and `\\B` are currently usable when a regex literal is handled as a"
 " first-class `Regex` value They are not currently available in `regex "
@@ -6101,11 +6109,11 @@ msgstr ""
 "、[`=~`](#regex-match-expression) のような `regex match expression` "
 "の定数コンテキストでは現時点では使えません。この制限は将来緩和される予定です。"
 
-#: ../../language/fundamentals.md:2156
+#: ../../language/fundamentals.md:2162
 msgid "POSIX character classes are ASCII-based"
 msgstr "POSIX 文字クラスは ASCII ベースです"
 
-#: ../../language/fundamentals.md:2157
+#: ../../language/fundamentals.md:2163
 msgid ""
 "`\\d`, `\\D`, `\\s`, `\\S`, `\\w`, and `\\W` are not supported Use "
 "`[[:digit:]]`, `[^[:digit:]]`, `[[:space:]]`, `[^[:space:]]`, "
@@ -6115,19 +6123,19 @@ msgstr ""
 "`[[:digit:]]`、`[^[:digit:]]`、`[[:space:]]`、`[^[:space:]]`、`[[:word:]]`、`[^[:word:]]`"
 " を使ってください。"
 
-#: ../../language/fundamentals.md:2160
+#: ../../language/fundamentals.md:2166
 msgid ""
 "`\\xHH` byte escapes are not supported in `re\"...\"`; use Unicode "
 "escapes or ordinary characters instead"
 msgstr "`re\"...\"` では `\\xHH` のバイトエスケープは使えません。代わりに Unicode エスケープか通常の文字を使ってください。"
 
-#: ../../language/fundamentals.md:2162
+#: ../../language/fundamentals.md:2168
 msgid ""
 "Lookahead, lookbehind, backreferences, and character-class set operations"
 " are not supported"
 msgstr "先読み、後読み、後方参照、文字クラスの集合演算はサポートされません"
 
-#: ../../language/fundamentals.md:2164
+#: ../../language/fundamentals.md:2170
 msgid ""
 "In character classes, `-` is used for ranges To match a literal dash, "
 "escape it as `\\-`; putting `-` at the start or end of a character class "
@@ -6136,7 +6144,7 @@ msgstr ""
 "文字クラスでは `-` は範囲を表します。リテラルのハイフンにマッチさせたい場合は `\\-` とエスケープしてください。`-` "
 "を文字クラスの先頭または末尾に置く書き方はサポートされません。"
 
-#: ../../language/fundamentals.md:2168
+#: ../../language/fundamentals.md:2174
 msgid ""
 "Named capture groups such as `(?<id>[0-9]+)` belong to the `Regex` value "
 "itself. They are useful with APIs such as `Regex::execute` and "
@@ -6147,7 +6155,7 @@ msgstr ""
 "`MatchResult::named_group` などの API では便利ですが、それ自体が MoonBit "
 "の束縛を導入するわけではありません。"
 
-#: ../../language/fundamentals.md:2173
+#: ../../language/fundamentals.md:2179
 msgid ""
 "When a regex literal is used as a first-class `Regex` value, operations "
 "such as `Regex::execute` use first-match semantics: they return the first"
@@ -6157,11 +6165,11 @@ msgstr ""
 "正規表現リテラルを一級の `Regex` 値として使うとき、`Regex::execute` などの操作は first-match "
 "semantics を使います。つまり検索位置から見つかった最初のマッチを返し、longest-match モードは提供しません。"
 
-#: ../../language/fundamentals.md:2177
+#: ../../language/fundamentals.md:2183
 msgid "Regex Match Expression"
 msgstr "正規表現マッチ式"
 
-#: ../../language/fundamentals.md:2179
+#: ../../language/fundamentals.md:2185
 msgid ""
 "Regex match expressions use the `=~` operator to search a `StringView` "
 "with a  regex constant expression. This is a newer regex-matching form "
@@ -6171,14 +6179,14 @@ msgstr ""
 "正規表現マッチ式では `=~` 演算子を使って、regex 定数式で `StringView` を検索します。これは実験的な `lexmatch`"
 " を置き換えることを意図した新しい正規表現マッチ機能です。式の結果は `Bool` です。"
 
-#: ../../language/fundamentals.md:2183
+#: ../../language/fundamentals.md:2189
 msgid ""
 "input =~ re\"abc\"\n"
 "input =~ ((PREFIX + SUFFIX) as whole, before=head, after=tail)\n"
 "input =~ (re\"b\", before~, after~)\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2189
+#: ../../language/fundamentals.md:2195
 msgid ""
 "The right-hand side must be a regex constant expression: a regex literal "
 "such as `re\"abc\"`, a named `const`, or an expression built from "
@@ -6188,7 +6196,7 @@ msgstr ""
 "右辺は正規表現の定数式でなければなりません。`re\"abc\"` のような正規表現リテラル、名前付き `const`、あるいは定数を `+` "
 "（連接）、`|`（選択）、括弧で組み立てた式が使えます。任意の実行時値は使えません。"
 
-#: ../../language/fundamentals.md:2194
+#: ../../language/fundamentals.md:2200
 msgid ""
 "Use `as` to bind the matched substring. Use `before` and `after` to bind "
 "the unmatched prefix and suffix as `StringView`; `before~` and `after~` "
@@ -6198,7 +6206,7 @@ msgstr ""
 "`before` と `after` を使います。`before~` と `after~` は、それぞれ `before` と `after` "
 "という名前の変数を束縛する短縮形です。"
 
-#: ../../language/fundamentals.md:2198
+#: ../../language/fundamentals.md:2204
 msgid ""
 "This is separate from regex named capture groups. For example, in "
 "`re\"(?<id>[0-9]+)\"`, the name `id` is part of the regex engine's "
@@ -6209,7 +6217,7 @@ msgstr ""
 "という名前は正規表現エンジンのキャプチャメタデータの一部であり、MoonBit の束縛ではありません。`=~` "
 "で束縛が必要な場合は、`(re\"(?<id>[0-9]+)\" as digits)` のように `as` を使ってください。"
 
-#: ../../language/fundamentals.md:2203
+#: ../../language/fundamentals.md:2209
 msgid ""
 "Like `is`, binders introduced by `=~` can be used in the same boolean-"
 "flow contexts, such as the right-hand side of `&&` and the true branch of"
@@ -6221,13 +6229,13 @@ msgstr ""
 "分岐など、同じブールフローの文脈で使えます。正規表現マッチはデフォルトで検索ベースなので、`\"zabc!\" =~ re\"abc\"` は "
 "`true` です。入力の先頭または末尾にマッチを制限したい場合は、`^` や `$` のようなアンカーを使ってください。"
 
-#: ../../language/fundamentals.md:2209
+#: ../../language/fundamentals.md:2215
 msgid ""
 "`=~` also uses first-match semantics. It will not support longest-match "
 "behavior."
 msgstr "`=~` も first-match semantics を使います。設計上、longest-match の挙動はサポートしません。"
 
-#: ../../language/fundamentals.md:2212
+#: ../../language/fundamentals.md:2218
 msgid ""
 "test {\n"
 "  let input = \" let_name = 42 \"\n"
@@ -6263,7 +6271,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2219
+#: ../../language/fundamentals.md:2225
 msgid ""
 "In the example above, `head`, `ident`, `tail`, `before`, `after`, and "
 "`rest` have type `StringView`. The binder `ch` has type `Char`, because "
@@ -6272,11 +6280,11 @@ msgstr ""
 "上の例では、`head`、`ident`、`tail`、`before`、`after`、`rest` の型はすべて `StringView` "
 "です。束縛 `ch` の型が `Char` になるのは、`re\".\"` がちょうど 1 文字にマッチするからです。"
 
-#: ../../language/fundamentals.md:2223
+#: ../../language/fundamentals.md:2229
 msgid "Lexscan"
 msgstr ""
 
-#: ../../language/fundamentals.md:2225
+#: ../../language/fundamentals.md:2231
 msgid ""
 "Use `lexscan` when matching one input against several regex cases. It "
 "accepts `String` and `StringView` inputs and returns the body of the "
@@ -6290,7 +6298,7 @@ msgstr ""
 "longest` を付けると最長の接頭辞を消費する case を選択します。現在、`lexscan` は "
 "`Bytes`、`BytesView`、ストリーミングスキャナー入力をサポートしていません。"
 
-#: ../../language/fundamentals.md:2231
+#: ../../language/fundamentals.md:2237
 msgid ""
 "In longest-match mode, each regex case must be anchored at the start with"
 " `^`. Anchor it at the end with `$` when the whole input must match, or "
@@ -6299,7 +6307,7 @@ msgid ""
 "additional condition inside the selected case body."
 msgstr ""
 
-#: ../../language/fundamentals.md:2237
+#: ../../language/fundamentals.md:2243
 msgid ""
 "test {\n"
 "  let text = \"xxabbbcyy\"\n"
@@ -6323,11 +6331,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2244
+#: ../../language/fundamentals.md:2250
 msgid "Lexmatch (deprecated)"
 msgstr ""
 
-#: ../../language/fundamentals.md:2247
+#: ../../language/fundamentals.md:2253
 #, fuzzy
 msgid ""
 "`lexmatch` and `lexmatch?` are deprecated. Use [regex match expressions"
@@ -6338,7 +6346,7 @@ msgstr ""
 "`lexmatch` と `lexmatch?` は非推奨です。新しいコードでは [regex match expression](#regex-"
 "match-expression) を使ってください。この節は既存コードの参考のためだけに残しています。"
 
-#: ../../language/fundamentals.md:2253
+#: ../../language/fundamentals.md:2259
 msgid ""
 "`lexmatch` matches a `String` against a regex pattern and lets you bind "
 "the pieces of a match. The search-mode pattern is `(before, regex pieces,"
@@ -6355,17 +6363,17 @@ msgstr ""
 "自体は文字列リテラルの列として書くので、複数行に分けたり、途中にコメントを挟んだりできます。`(\"b*\" as b)` "
 "のように、マッチしたサブパターンに `as` で束縛することもできます。"
 
-#: ../../language/fundamentals.md:2261
+#: ../../language/fundamentals.md:2267
 msgid ""
 "`lexmatch?` is a boolean check similar to `is`, and it can introduce "
 "binders for use in the same contexts as `is` expressions."
 msgstr "`lexmatch?` は `is` に似た真偽チェックで、`is` 式と同じ文脈で使える束縛を導入できます。"
 
-#: ../../language/fundamentals.md:2264
+#: ../../language/fundamentals.md:2270
 msgid "In old code, search-mode `lexmatch` looked like this:"
 msgstr "古いコードでは、search モードの `lexmatch` は次のように書かれていました："
 
-#: ../../language/fundamentals.md:2266
+#: ../../language/fundamentals.md:2272
 msgid ""
 "lexmatch text {\n"
 "  (before, \"a\" (\"b*\" as b) \"c\", after) => ...\n"
@@ -6377,11 +6385,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2277
+#: ../../language/fundamentals.md:2283
 msgid "In new code, write those search-mode checks with `=~` instead."
 msgstr "新しいコードでは、このような search モードのチェックは `=~` で書いてください。"
 
-#: ../../language/fundamentals.md:2279
+#: ../../language/fundamentals.md:2285
 #, fuzzy
 msgid ""
 "`lexmatch` also supports a lexer-style mode: `lexmatch <expr> with "
@@ -6396,7 +6404,7 @@ msgstr ""
 "として一致させますが、first-match の search モードではまず `if` が一致します）。正規表現マッチ式はこの longest-"
 "match モードを提供しません。"
 
-#: ../../language/fundamentals.md:2285
+#: ../../language/fundamentals.md:2291
 msgid ""
 "Regex literals support `\\b` and `\\B` as part of the regex syntax, but "
 "these word-boundary assertions are not currently available in `regex "
@@ -6412,11 +6420,11 @@ msgstr ""
 "`\\\\d`、`\\\\D`、`\\\\s`、`\\\\S`、`\\\\w`、`\\\\W` もサポートしません。代わりに文字クラス内で "
 "`[[:digit:]]` のような POSIX 文字クラスを使ってください。"
 
-#: ../../language/fundamentals.md:2293
+#: ../../language/fundamentals.md:2299
 msgid "Spread Operator"
 msgstr "スプレッド演算子"
 
-#: ../../language/fundamentals.md:2295
+#: ../../language/fundamentals.md:2301
 msgid ""
 "MoonBit provides a spread operator to expand a sequence of elements when "
 "constructing `Array`, `String`, and `Bytes` using the array literal "
@@ -6428,11 +6436,11 @@ msgstr ""
 "を構築するときに要素列を展開するためのスプレッド演算子があります。このような列を展開するには先頭に `..` "
 "を付ける必要があり、対応する要素型を返す `iter()` メソッドを持っていなければなりません。"
 
-#: ../../language/fundamentals.md:2300
+#: ../../language/fundamentals.md:2306
 msgid "For example, we can use the spread operator to construct an array:"
 msgstr "たとえば、スプレッド演算子を使って配列を構築できます："
 
-#: ../../language/fundamentals.md:2302
+#: ../../language/fundamentals.md:2308
 #, fuzzy
 msgid ""
 "test {\n"
@@ -6451,13 +6459,13 @@ msgstr ""
 "  debug_inspect(a, content=\"[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\")\n"
 "}\n"
 
-#: ../../language/fundamentals.md:2309
+#: ../../language/fundamentals.md:2315
 msgid ""
 "A conditional spread `..if condition { sequence }` contributes the "
 "sequence only when the condition is true:"
 msgstr ""
 
-#: ../../language/fundamentals.md:2312
+#: ../../language/fundamentals.md:2318
 msgid ""
 "test {\n"
 "  let include_middle = true\n"
@@ -6469,11 +6477,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2319
+#: ../../language/fundamentals.md:2325
 msgid "Similarly, we can use the spread operator to construct a string:"
 msgstr "同様に、スプレッド演算子を使って文字列を構築できます："
 
-#: ../../language/fundamentals.md:2321
+#: ../../language/fundamentals.md:2327
 #, fuzzy
 msgid ""
 "test {\n"
@@ -6492,13 +6500,13 @@ msgstr ""
 "  inspect(s, content=\"Hello World!Hello World!\")\n"
 "}\n"
 
-#: ../../language/fundamentals.md:2328
+#: ../../language/fundamentals.md:2334
 msgid ""
 "The last example shows how the spread operator can be used to construct a"
 " bytes sequence."
 msgstr "最後の例は、スプレッド演算子で bytes 列を構築できることを示しています。"
 
-#: ../../language/fundamentals.md:2331
+#: ../../language/fundamentals.md:2337
 msgid ""
 "test {\n"
 "  let b1 : Bytes = b\"hello\"\n"
@@ -6524,18 +6532,18 @@ msgstr ""
 "  )\n"
 "}\n"
 
-#: ../../language/fundamentals.md:2339
+#: ../../language/fundamentals.md:2345
 msgid "TODO syntax"
 msgstr "TODO 構文"
 
-#: ../../language/fundamentals.md:2341
+#: ../../language/fundamentals.md:2347
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo` 構文（`...`）は、まだ実装されていないコードや将来の機能のプレースホルダを示すための特別な構文です。例えば："
 
-#: ../../language/fundamentals.md:2343
+#: ../../language/fundamentals.md:2349
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"

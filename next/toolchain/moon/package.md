@@ -122,10 +122,13 @@ pub fn add_by_attr(n : Int) -> Int {
 }
 ```
 
-Export names must be valid C symbol identifiers and unique within the package.
-The attribute cannot be used on generic functions or functions with optional
-arguments. Prefer `#export_name` over backend-specific `exports` link
-configuration for new exports.
+MoonBit currently requires export names to be valid C symbol identifiers and
+unique within the package, regardless of the selected backend. This is a known
+compiler issue: `#export_name` applies this cross-backend
+restriction even though WebAssembly export names themselves are UTF-8 strings
+and are not limited to C identifiers. The attribute cannot be used on generic
+functions or functions with optional arguments. Prefer `#export_name` over
+backend-specific `exports` link configuration for new exports.
 
 Export declarations are scoped to the package that produces the artifact. An
 attribute or `exports` configuration in a dependency applies when that
