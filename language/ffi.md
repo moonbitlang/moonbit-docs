@@ -330,13 +330,27 @@ pub fn add_one(value : Int) -> Int {
 }
 ```
 
-The name must be a unique valid C symbol identifier. The attribute is not
-available on generic functions, functions with optional arguments, methods, or
-declarations without a body. It exports only functions defined in the current
-foreign-library package; dependency symbols are not re-exported.
+MoonBit currently requires the name to be unique within the package and to be a
+valid C symbol identifier, regardless of the selected backend.
 
-Public functions can also be exported with the backend-specific `exports` field
-in [link configuration](../toolchain/moon/package.md#link-options):
+#### WARNING
+Known compiler issue: `#export_name` currently applies its C-symbol-identifier
+restriction to every backend. WebAssembly export names are UTF-8 strings and
+are not limited to C identifiers.
+
+The attribute is not available on generic functions, functions with optional
+arguments, methods, or declarations without a body.
+
+Prefer `#export_name` for new exports. It keeps the exported name next to the
+function and applies to every backend that supports foreign-library output.
+
+#### NOTE
+The native backend does not currently support exporting a `foreign_library`
+package as a library artifact.
+
+Use the backend-specific `exports` field in
+[link configuration](../toolchain/moon/package.md#link-options) when the export
+set or names must differ by backend, or when the source cannot be annotated:
 
 ```moonbit
 options(
@@ -350,23 +364,24 @@ options(
 
 The previous example exports functions `add` and `fib`, where `fib` will be exported as `test`.
 
+Both `#export_name` and `exports` are scoped to the package that produces the
+artifact. Declarations and configuration in a dependency apply when that
+dependency is built as its own artifact, but they do not add symbols to a
+downstream package's artifact. To expose dependency functionality, define and
+export a wrapper in the exporting package.
+
 ### Wasm & Wasm GC
 
-#### NOTE
-It is only effective for the package that configures it, i.e. it doesn't affect the downstream packages.
+The `exports` field supports renaming as shown above.
 
 ### JavaScript
 
 #### NOTE
-It is only effective for the package that configures it, i.e. it doesn't affect the downstream packages.
-
 There's another `format` option to export as CommonJS module (`cjs`), ES Module (`esm`), or `iife`.
 
 ### C
 
 #### NOTE
-It is only effective for the package that configures it, i.e. it doesn't affect the downstream packages.
-
 Renaming the exported function is not supported for now
 
 ## Lifetime management

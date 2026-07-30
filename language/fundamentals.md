@@ -2481,6 +2481,11 @@ test {
 }
 ```
 
+#### NOTE
+Known compiler issue: this example is currently skipped for the native Windows
+target because the C backend's `v128.load` fallback recurses. This is not an
+incompatibility between Windows and SSE2.
+
 ### Range Pattern
 
 For builtin integer types and `Char`, MoonBit allows matching whether the value falls in a specific range.
