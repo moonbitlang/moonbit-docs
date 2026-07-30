@@ -110,3 +110,7 @@ We prefer to use compile-time code generation, keeping the benefits of static ty
 ```{include} /language/attributes/module.md
 :heading-offset: 1
 ```
+
+```{include} /language/attributes/export_name.md
+:heading-offset: 1
+```

@@ -1,0 +1,127 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-30 12:21+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/export_name.md:1
+msgid "Export Name Attribute"
+msgstr "导出名称属性"
+
+#: ../../language/attributes/export_name.md:3
+msgid ""
+"The `#export_name` attribute assigns a stable exported symbol name to a "
+"public function in a package declared with `pkgtype(kind: "
+"\"foreign_library\")`. The name is used in generated Wasm, JavaScript, or"
+" C output:"
+msgstr ""
+"`#export_name` 属性为使用 `pkgtype(kind: \"foreign_library\")` "
+"声明的包中的公开函数指定稳定的导出符号名称。该名称用于生成的 Wasm、JavaScript 或 C 输出："
+
+#: ../../language/attributes/export_name.md:7
+msgid ""
+"#export_name(\"add\")\n"
+"pub fn add_one(value : Int) -> Int {\n"
+"  value + 1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/export_name.md:14
+msgid ""
+"MoonBit currently requires the exported name to be unique within the "
+"package and to be a valid C symbol identifier, regardless of the selected"
+" backend."
+msgstr "MoonBit 目前要求导出名在包内唯一，并且无论选择哪个后端，都必须是有效的 C 符号标识符。"
+
+#: ../../language/attributes/export_name.md:18
+msgid ""
+"Known compiler issue: `#export_name` currently applies its C-symbol-"
+"identifier restriction to every backend. WebAssembly export names are "
+"UTF-8 strings and are not limited to C identifiers."
+msgstr ""
+"已知编译器问题：`#export_name` 目前会对所有后端施加 C 符号标识符限制。WebAssembly 导出名是 UTF-8 "
+"字符串，并不限于 C 标识符。"
+
+#: ../../language/attributes/export_name.md:23
+msgid ""
+"The attribute cannot be used on generic functions, functions with "
+"optional arguments, methods, or declarations without a body."
+msgstr "该属性不能用于泛型函数、带可选参数的函数、方法或没有函数体的声明。"
+
+#: ../../language/attributes/export_name.md:26
+msgid ""
+"Prefer `#export_name` over backend-specific `exports` link configuration "
+"for new exports. It keeps the exported name next to the function and "
+"applies to every backend that supports foreign-library output. Use "
+"`exports` when the export set or names must differ by backend, or when "
+"the source cannot be annotated."
+msgstr ""
+"对于新的导出，优先使用 `#export_name`，而不是各后端的 `exports` "
+"链接配置。它将导出名称放在函数旁，并适用于所有支持外部库输出的后端。当导出集合或名称需要因后端而异，或者无法修改源代码添加属性时，使用 "
+"`exports`。"
+
+#: ../../language/attributes/export_name.md:32
+msgid ""
+"Export declarations are scoped to the package that produces the artifact."
+" An attribute in a dependency applies when that dependency is built as "
+"its own artifact, but it does not add a symbol to a downstream package's "
+"artifact. To expose dependency functionality, define and export a wrapper"
+" in the exporting package."
+msgstr "导出声明的作用域是生成产物的包。依赖中的属性在该依赖自身构建为产物时生效，但不会向下游包的产物添加符号。若要暴露依赖的功能，请在执行导出的包中定义并导出一个包装函数。"
+
+#: ../../language/attributes/export_name.md:39
+msgid ""
+"The native backend does not currently support exporting a "
+"`foreign_library` package as a library artifact. Use Wasm or JavaScript "
+"if you need an exported library."
+msgstr "native 后端目前不支持将 `foreign_library` 包导出为库产物。如需导出的库，请使用 Wasm 或 JavaScript。"
+
+#: ../../language/attributes/export_name.md:44
+msgid ""
+"See [Export Functions](/language/ffi.md#export-functions) for backend-"
+"specific alternatives."
+msgstr "有关各后端的替代方式，请参阅[导出函数](/language/ffi.md#export-functions)。"
+
+#~ msgid ""
+#~ "The exported name must be a unique"
+#~ " valid C symbol identifier. The "
+#~ "attribute cannot be used on generic "
+#~ "functions, functions with optional arguments,"
+#~ " methods, or declarations without a "
+#~ "body."
+#~ msgstr "导出名称必须是唯一且有效的 C 符号标识符。该属性不能用于泛型函数、带可选参数的函数、方法或没有函数体的声明。"
+
+#~ msgid ""
+#~ "MoonBit currently requires the exported "
+#~ "name to be unique within the "
+#~ "package and to be a valid C "
+#~ "symbol identifier, regardless of the "
+#~ "selected backend. This is a known "
+#~ "compiler issue: `#export_name` applies this"
+#~ " cross-backend restriction even though "
+#~ "WebAssembly export names themselves are "
+#~ "UTF-8 strings and are not limited "
+#~ "to C identifiers. The attribute cannot"
+#~ " be used on generic functions, "
+#~ "functions with optional arguments, methods,"
+#~ " or declarations without a body."
+#~ msgstr ""
+#~ "MoonBit 目前要求导出名在包内唯一，并且无论选择哪个后端，都必须是有效的 C "
+#~ "符号标识符。这是一个已知的编译器问题：尽管 WebAssembly 导出名本身是 UTF-8 "
+#~ "字符串，并不限于 C 标识符，`#export_name` "
+#~ "仍会施加这一跨后端限制。该属性不能用于泛型函数、带可选参数的函数、方法或没有函数体的声明。"

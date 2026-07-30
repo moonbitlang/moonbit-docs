@@ -157,8 +157,8 @@ test {
 }
 // end bit pattern types
 
-// FIXME: Re-enable this test on Windows native once the v128.load fallback no
-// longer recurses in the C backend.
+// FIXME(compiler): Re-enable this test on Windows native after the known
+// C-backend v128.load fallback recursion is fixed.
 #cfg(not(all(target="native", platform="windows")))
 /// start bit pattern v128
 test {
