@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
@@ -280,13 +279,10 @@ msgid "extern \"C\" fn put_char(ch : UInt) -> Unit = \"function_name\"\n"
 msgstr ""
 
 #: ../../language/ffi.md:170
-#, fuzzy
 msgid ""
 "If a package needs to dynamically link with foreign C library, add `cc-"
 "link-flags` to `moon.pkg`. It would be passed to C compiler directly."
 msgstr ""
-"如果一个包需要动态链接外部 C 库，可以在它的 `moon.pkg.json` 里添加 `cc-link-flags`。它会被直接传递给 C "
-"编译器。"
 
 #: ../../language/ffi.md:172
 msgid ""
@@ -300,14 +296,12 @@ msgid ""
 msgstr ""
 
 #: ../../language/ffi.md:184
-#, fuzzy
 msgid ""
 "To define wrapper functions, you can add a C stub file to a package, and "
 "add the following to the `moon.pkg` of the package:"
-msgstr "要定义 C 胶水函数来连接 C 与 MoonBit，可以在一个包中引入一些 C 胶水文件，并向 `moon.pkg.json` 文件加入下面的内容："
+msgstr ""
 
 #: ../../language/ffi.md:186
-#, fuzzy
 msgid ""
 "options(\n"
 "  \"native-stub\": [ \n"
@@ -315,13 +309,6 @@ msgid ""
 "  ],\n"
 ")\n"
 msgstr ""
-"{\n"
-"  // ...\n"
-"  \"native-stub\": [ \n"
-"    // <包含胶水函数的 C 文件列表>\n"
-"  ],\n"
-"  // ...\n"
-"}\n"
 
 #: ../../language/ffi.md:194
 msgid ""
@@ -947,37 +934,3 @@ msgid ""
 msgstr ""
 "`#owned` 语义与之相反，表示参数会被 FFI 函数存储，并且需要在稍后手动调用 `decref`。一个使用场景是注册回调函数，其中闭包会被"
 " **持有所有权**。"
-
-#~ msgid ""
-#~ "It is only effective for the "
-#~ "package that configures it, i.e. it "
-#~ "doesn't affect the downstream packages."
-#~ msgstr "这仅对配置它的包有效，即它不会影响下游包。"
-
-#~ msgid ""
-#~ "The name must be a unique valid"
-#~ " C symbol identifier. The attribute "
-#~ "is not available on generic functions,"
-#~ " functions with optional arguments, "
-#~ "methods, or declarations without a body."
-#~ msgstr "名称必须是唯一且有效的 C 符号标识符。此属性不能用于泛型函数、带可选参数的函数、方法或没有函数体的声明。"
-
-#~ msgid ""
-#~ "MoonBit currently requires the name to"
-#~ " be unique within the package and "
-#~ "to be a valid C symbol identifier,"
-#~ " regardless of the selected backend. "
-#~ "This is a known compiler issue: "
-#~ "`#export_name` applies this cross-backend "
-#~ "restriction even though WebAssembly export "
-#~ "names themselves are UTF-8 strings and"
-#~ " are not limited to C identifiers."
-#~ " The attribute is not available on"
-#~ " generic functions, functions with optional"
-#~ " arguments, methods, or declarations "
-#~ "without a body."
-#~ msgstr ""
-#~ "MoonBit 目前要求导出名在包内唯一，并且无论选择哪个后端，都必须是有效的 C "
-#~ "符号标识符。这是一个已知的编译器问题：尽管 WebAssembly 导出名本身是 UTF-8 "
-#~ "字符串，并不限于 C 标识符，`#export_name` "
-#~ "仍会施加这一跨后端限制。该属性不能用于泛型函数、带可选参数的函数、方法或没有函数体的声明。"

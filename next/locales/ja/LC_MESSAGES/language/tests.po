@@ -44,7 +44,6 @@ msgid ""
 msgstr "MoonBit には、インラインのテストケースを書くための test コードブロックがあります。例えば："
 
 #: ../../language/tests.md:11
-#, fuzzy
 msgid ""
 "test \"test_name\" {\n"
 "  assert_eq(1 + 1, 2)\n"
@@ -52,11 +51,6 @@ msgid ""
 "  debug_inspect([1, 2, 3], content=\"[1, 2, 3]\")\n"
 "}\n"
 msgstr ""
-"test \"test_name\" {\n"
-"  assert_eq(1 + 1, 2)\n"
-"  assert_eq(2 + 2, 4)\n"
-"  inspect([1, 2, 3], content=\"[1, 2, 3]\")\n"
-"}\n"
 
 #: ../../language/tests.md:17
 msgid ""
@@ -94,16 +88,11 @@ msgstr ""
 "が発生した場合にのみテストが成功します。例えば："
 
 #: ../../language/tests.md:31
-#, fuzzy
 msgid ""
 "test \"panic_test\" {\n"
 "  let _ : Int = Option::None.unwrap()\n"
 "}\n"
 msgstr ""
-"test \"panic_test\" {\n"
-"  let _ : Int = Option::None.unwrap()\n"
-"\n"
-"}\n"
 
 #: ../../language/tests.md:37
 msgid "Snapshot Tests"
@@ -135,7 +124,6 @@ msgstr ""
 "を提供します。ラベル付き引数 `content` は、`moon test --update` が自動で挿入するため省略できます："
 
 #: ../../language/tests.md:48
-#, fuzzy
 msgid ""
 "struct X {\n"
 "  x : Int\n"
@@ -145,13 +133,6 @@ msgid ""
 "  debug_inspect({ x: 10 }, content=\"{ x: 10 }\")\n"
 "}\n"
 msgstr ""
-"struct X {\n"
-"  x : Int\n"
-"} derive(Show)\n"
-"\n"
-"test \"show snapshot test\" {\n"
-"  inspect({ x: 10 }, content=\"{x: 10}\")\n"
-"}\n"
 
 #: ../../language/tests.md:54
 msgid "Snapshotting `JSON`"
@@ -173,7 +154,6 @@ msgstr ""
 "構造になり、整形後に読みやすくなります。"
 
 #: ../../language/tests.md:60
-#, fuzzy
 msgid ""
 "enum Rec {\n"
 "  End\n"
@@ -201,31 +181,6 @@ msgid ""
 "  ])\n"
 "}\n"
 msgstr ""
-"enum Rec {\n"
-"  End\n"
-"  Really_long_name_that_is_difficult_to_read(Rec)\n"
-"} derive(Show, ToJson)\n"
-"\n"
-"test \"json snapshot test\" {\n"
-"  let r = Really_long_name_that_is_difficult_to_read(\n"
-"    Really_long_name_that_is_difficult_to_read(\n"
-"      Really_long_name_that_is_difficult_to_read(End),\n"
-"    ),\n"
-"  )\n"
-"  inspect(\n"
-"    r,\n"
-"    "
-"content=\"Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(Really_long_name_that_is_difficult_to_read(End)))\","
-"\n"
-"  )\n"
-"  json_inspect(r, content=[\n"
-"    \"Really_long_name_that_is_difficult_to_read\",\n"
-"    [\n"
-"      \"Really_long_name_that_is_difficult_to_read\",\n"
-"      [\"Really_long_name_that_is_difficult_to_read\", \"End\"],\n"
-"    ],\n"
-"  ])\n"
-"}\n"
 
 #: ../../language/tests.md:66
 msgid ""
@@ -250,7 +205,6 @@ msgid ""
 msgstr "完全なスナップショットテストでは、`@test.T::write` と `@test.T::writeln` を使って何でも記録できます："
 
 #: ../../language/tests.md:74
-#, fuzzy
 msgid ""
 "test \"record anything\" (t : @test.Test) {\n"
 "  t.write(\"Hello, world!\")\n"
@@ -258,11 +212,6 @@ msgid ""
 "  t.snapshot(filename=\"record_anything.txt\")\n"
 "}\n"
 msgstr ""
-"test \"record anything\" (t : @test.Test) {\n"
-"  t.write(\"Hello, world!\")\n"
-"  t.writeln(\" And hello, MoonBit!\")\n"
-"  t.snapshot(filename=\"record_anything.txt\")\n"
-"}\n"
 
 #: ../../language/tests.md:80
 msgid ""
