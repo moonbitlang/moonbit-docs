@@ -87,6 +87,10 @@ We prefer to use compile-time code generation, keeping the benefits of static ty
 :heading-offset: 1
 ```
 
+```{include} /language/attributes/unsafe_cycle_free.md
+:heading-offset: 1
+```
+
 ```{include} /language/attributes/as_free_fn.md
 :heading-offset: 1
 ```

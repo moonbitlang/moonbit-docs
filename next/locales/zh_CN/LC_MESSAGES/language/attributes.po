@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 12:21+0800\n"
+"POT-Creation-Date: 2026-08-03 17:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -780,6 +780,36 @@ msgid ""
 "For the full calling-convention rules, see [FFI lifetime "
 "management](/language/ffi.md#the-borrow-and-owned-attribute)."
 msgstr "完整的调用约定规则见 [FFI 生命周期管理](/language/ffi.md#the-borrow-and-owned-attribute)。"
+
+#: ../../language/attributes/unsafe_cycle_free.md:2
+msgid "Unsafe Cycle-Free Attribute"
+msgstr "不安全的无环属性"
+
+#: ../../language/attributes/unsafe_cycle_free.md:4
+msgid ""
+"The `#unsafe_cycle_free` attribute is an advanced optimization assertion "
+"for a struct, enum, or newtype declaration. It tells the compiler that no"
+" value of the annotated type will ever participate in a reference cycle. "
+"The compiler trusts this assertion during cycle-capability analysis and "
+"does not verify it."
+msgstr ""
+"`#unsafe_cycle_free` 属性是用于 struct、enum 或 newtype 声明的高级优化断言。它告诉编译器，该类型的值永远不会参与引用环。编译器会在分析类型是否可能成环时信任此断言，而不会验证它。"
+
+#: ../../language/attributes/unsafe_cycle_free.md:9
+msgid ""
+"#unsafe_cycle_free\n"
+"pub(all) struct CycleFreeNode {\n"
+"  mut next : CycleFreeNode?\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/unsafe_cycle_free.md:16
+msgid ""
+"Use this attribute only when the cycle-free invariant is guaranteed by "
+"the program. An incorrect assertion can cause reference cycles involving "
+"the type to be treated as impossible and therefore not reclaimed."
+msgstr ""
+"仅当程序能够保证无环不变量时才应使用此属性。错误的断言会使涉及该类型的引用环被视为不可能存在，从而无法回收。"
 
 #: ../../language/attributes/as_free_fn.md:2
 msgid "`as_free_fn` Attribute"

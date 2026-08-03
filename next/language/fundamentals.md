@@ -849,8 +849,11 @@ Compared to using a `match` statement, the subsequent processing of `text` can h
 :end-before: end guard 2
 ```
 
-When the `else` part is omitted, the program terminates if the condition specified
-in the `guard` statement is not true or cannot be matched.
+An ordinary `guard` that may fail must have an `else` clause. If the compiler
+cannot prove that a `guard` without `else` always succeeds, it reports
+[E0087](/language/error_codes/E0087.md), because failure would implicitly
+terminate the program. Use `guard!` when termination is intended. Unlike
+`guard`, `guard!` cannot have an `else` clause.
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
@@ -859,8 +862,8 @@ in the `guard` statement is not true or cannot be matched.
 :end-before: end guard 3
 ```
 
-Use `guard!` to make this terminating behavior explicit. Unlike `guard`,
-`guard!` cannot have an `else` clause.
+When a condition or pattern is exhaustive, use plain `guard` without an `else`.
+The compiler reports a warning for a redundant `!` or `else` clause.
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
@@ -2072,7 +2075,8 @@ contexts:
    :end-before: end is 3
    ```
 
-3. In the following statements of a `guard` condition:
+3. In the following statements after a successful `guard` or `guard!`
+   condition:
 
    ```{literalinclude} /sources/language/src/is/top.mbt
    :language: moonbit

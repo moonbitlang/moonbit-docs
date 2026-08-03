@@ -26,7 +26,7 @@ let squares : Squares = cross(rows, cols, _ => true)
 
 ///|
 fn unit_of(square : String) -> Squares {
-  guard square is [row, col, ..]
+  guard! square is [row, col, ..]
   let rows = match row {
     'A'..='C' => "ABC"
     'D'..='F' => "DEF"

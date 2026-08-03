@@ -1,0 +1,63 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-03 17:22+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0088.md:1
+msgid "E0088"
+msgstr ""
+
+#: ../../language/error_codes/E0088.md:3
+msgid "Warning name: `guard_redundant_bang`"
+msgstr "警告名称：`guard_redundant_bang`"
+
+#: ../../language/error_codes/E0088.md:5
+msgid ""
+"The condition or pattern of a `guard!` is exhaustive, so it cannot fail "
+"and the explicitly terminating form is unnecessary."
+msgstr "`guard!` 的条件或模式是穷尽的，因此不可能失败，无需使用显式终止形式。"
+
+#: ../../language/error_codes/E0088.md:8
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0088.md:10
+msgid ""
+"///|\n"
+"pub fn identity(value : Int) -> Int {\n"
+"  guard! value is result\n"
+"  result\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0088.md:14
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E0088.md:16
+msgid "Replace `guard!` with `guard`."
+msgstr "将 `guard!` 替换为 `guard`。"
+
+#: ../../language/error_codes/E0088.md:18
+msgid ""
+"///|\n"
+"pub fn identity(value : Int) -> Int {\n"
+"  guard value is result\n"
+"  result\n"
+"}\n"
+msgstr ""
