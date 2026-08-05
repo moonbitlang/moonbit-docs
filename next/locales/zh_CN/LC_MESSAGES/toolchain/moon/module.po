@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 15:37+0800\n"
+"POT-Creation-Date: 2026-07-29 14:36+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -39,8 +39,8 @@ msgid ""
 "removal in the following release. Prefer `moon.mod` for new projects and "
 "migrate existing JSON files with `moon fmt`."
 msgstr ""
-"`moon.mod.json` 支持已在 v0.10.4 中弃用，并计划在下一个版本移除。新项目请优先使用 "
-"`moon.mod`，现有 JSON 文件可使用 `moon fmt` 迁移。"
+"`moon.mod.json` 支持已在 v0.10.4 中弃用，并计划在下一个版本移除。新项目请优先使用 `moon.mod`，现有 JSON "
+"文件可使用 `moon fmt` 迁移。"
 
 #: ../../toolchain/moon/module.md:11
 msgid "Full syntax of moon.mod is as follows:"
@@ -139,14 +139,19 @@ msgid "Dependency Management"
 msgstr "依赖管理"
 
 #: ../../toolchain/moon/module.md:79
-msgid "The `deps` field is used to specify the dependencies of the module."
-msgstr "`deps` 字段用于指定模块的依赖项。"
+msgid ""
+"Module dependencies are declared with `import` in `moon.mod`. The legacy "
+"`moon.mod.json` format represents the same information in its `deps` "
+"field."
+msgstr ""
+"模块依赖通过 `moon.mod` 中的 `import` 声明。遗留的 `moon.mod.json` 格式则使用 `deps` "
+"字段表示相同信息。"
 
-#: ../../toolchain/moon/module.md:81
+#: ../../toolchain/moon/module.md:82
 msgid "It is automatically managed by commands like `moon add` and `moon remove`."
 msgstr "它由 `moon add` 和 `moon remove` 等命令自动管理。"
 
-#: ../../toolchain/moon/module.md:85
+#: ../../toolchain/moon/module.md:86
 msgid ""
 "name = \"username/hello\"\n"
 "import {\n"
@@ -154,7 +159,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:93
+#: ../../toolchain/moon/module.md:94
 msgid ""
 "{\n"
 "  \"name\": \"username/hello\",\n"
@@ -164,24 +169,24 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:104
+#: ../../toolchain/moon/module.md:105
 msgid "You may also use a local dependency for module."
 msgstr "你也可以为模块使用本地依赖。"
 
-#: ../../toolchain/moon/module.md:108
+#: ../../toolchain/moon/module.md:109
 msgid ""
 "For new `moon.mod` format, the local dependency configuration is "
 "deprecated.  The recommended way to use a local dependency is to "
 "configure it in `moon.work`."
 msgstr "对于新的 `moon.mod` 格式，本地依赖配置已被弃用。推荐的本地依赖使用方式是在 `moon.work` 中配置。"
 
-#: ../../toolchain/moon/module.md:111
+#: ../../toolchain/moon/module.md:112
 msgid ""
 "For example, if you use `moon.work` to manage `user/module1` and "
 "`user/module2`:"
 msgstr "例如，如果你使用 `moon.work` 管理 `user/module1` 和 `user/module2`："
 
-#: ../../toolchain/moon/module.md:113
+#: ../../toolchain/moon/module.md:114
 msgid ""
 "// in moon.work\n"
 "members = [\n"
@@ -190,11 +195,11 @@ msgid ""
 "]\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:121
+#: ../../toolchain/moon/module.md:122
 msgid "And `user/module1` uses `user/module2` as a dependency:"
 msgstr "并且 `user/module1` 使用 `user/module2` 作为依赖："
 
-#: ../../toolchain/moon/module.md:123
+#: ../../toolchain/moon/module.md:124
 msgid ""
 "// in source/to/module1/moon.mod\n"
 "import {\n"
@@ -202,13 +207,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:130
+#: ../../toolchain/moon/module.md:131
 msgid ""
 "The `@version` part is ignored, `user/module2` is resolved from the local"
 " source instead of mooncakes.io."
 msgstr "`@version` 部分会被忽略，`user/module2` 会从本地源码解析，而不是从 mooncakes.io 解析。"
 
-#: ../../toolchain/moon/module.md:134
+#: ../../toolchain/moon/module.md:135
 msgid ""
 "{\n"
 "  \"name\": \"username/hello\",\n"
@@ -220,123 +225,123 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:147
+#: ../../toolchain/moon/module.md:148
 msgid "Meta Information"
 msgstr "元信息"
 
-#: ../../toolchain/moon/module.md:149
+#: ../../toolchain/moon/module.md:150
 msgid "README"
 msgstr "README"
 
-#: ../../toolchain/moon/module.md:151
+#: ../../toolchain/moon/module.md:152
 msgid ""
 "The `readme` field is used to specify the path to the module's README "
 "file."
 msgstr "`readme` 字段用于指定模块的 README 文件的路径。"
 
-#: ../../toolchain/moon/module.md:155
+#: ../../toolchain/moon/module.md:156
 msgid "readme = \"README.md\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:160
+#: ../../toolchain/moon/module.md:161
 msgid ""
 "{\n"
 "  \"readme\": \"README.md\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:169
+#: ../../toolchain/moon/module.md:170
 msgid "Repository"
 msgstr "仓库"
 
-#: ../../toolchain/moon/module.md:171
+#: ../../toolchain/moon/module.md:172
 msgid ""
 "The `repository` field is used to specify the URL of the module's "
 "repository."
 msgstr "`repository` 字段用于指定模块的仓库的 URL。"
 
-#: ../../toolchain/moon/module.md:175
+#: ../../toolchain/moon/module.md:176
 msgid "repository = \"link/to/your/repo\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:180
+#: ../../toolchain/moon/module.md:181
 msgid ""
 "{\n"
 "  \"repository\": \"link/to/your/repo\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:189
+#: ../../toolchain/moon/module.md:190
 msgid "License"
 msgstr "许可证"
 
-#: ../../toolchain/moon/module.md:191
+#: ../../toolchain/moon/module.md:192
 msgid ""
 "The `license` field is used to specify the license of the module. The "
 "license type must comply with the [SPDX License "
 "List](https://spdx.org/licenses/)."
 msgstr "`license` 字段用于指定模块的许可证。许可证类型必须符合 [SPDX 许可证列表](https://spdx.org/licenses/)。"
 
-#: ../../toolchain/moon/module.md:196
+#: ../../toolchain/moon/module.md:197
 msgid "license = \"MIT\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:201
+#: ../../toolchain/moon/module.md:202
 msgid ""
 "{\n"
 "  \"license\": \"MIT\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:209
+#: ../../toolchain/moon/module.md:210
 msgid "Keywords"
 msgstr "关键字"
 
-#: ../../toolchain/moon/module.md:211
+#: ../../toolchain/moon/module.md:212
 msgid "The `keywords` field is used to specify the keywords for the module."
 msgstr "`keywords` 字段用于指定模块的关键字。"
 
-#: ../../toolchain/moon/module.md:215
+#: ../../toolchain/moon/module.md:216
 msgid "keywords = [\"example\", \"test\"]\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:220
+#: ../../toolchain/moon/module.md:221
 msgid ""
 "{\n"
 "  \"keywords\": [\"example\", \"test\"]\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:228
+#: ../../toolchain/moon/module.md:229
 msgid "Description"
 msgstr "描述"
 
-#: ../../toolchain/moon/module.md:230
+#: ../../toolchain/moon/module.md:231
 msgid "The `description` field is used to specify the description of the module."
 msgstr "`description` 字段用于指定模块的描述。"
 
-#: ../../toolchain/moon/module.md:235
+#: ../../toolchain/moon/module.md:236
 msgid "description = \"This is a description of the module.\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:240
+#: ../../toolchain/moon/module.md:241
 msgid ""
 "{\n"
 "  \"description\": \"This is a description of the module.\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:248
+#: ../../toolchain/moon/module.md:249
 msgid "Include and Exclude"
 msgstr "包含和排除"
 
-#: ../../toolchain/moon/module.md:250
+#: ../../toolchain/moon/module.md:251
 msgid ""
 "The `include` and `exclude` fields are used to include or exclude "
 "specific directories or files during publishing process."
 msgstr " `include` 和 `exclude` 字段用于在发布过程中包含或排除特定的目录或文件。"
 
-#: ../../toolchain/moon/module.md:252
+#: ../../toolchain/moon/module.md:253
 msgid ""
 "It follows the gitignore syntax, and include follows the exclude.  For "
 "example, the following configuration will include the `build/assets`  but"
@@ -345,7 +350,7 @@ msgstr ""
 "它遵循 gitignore 语法，并且包含的内容会覆盖排除的内容。例如，以下配置将包含 `build/assets` 但排除 `build` "
 "目录中的其他内容。"
 
-#: ../../toolchain/moon/module.md:259
+#: ../../toolchain/moon/module.md:260
 msgid ""
 "options(\n"
 "  exclude: [\"build\"],\n"
@@ -353,7 +358,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:267
+#: ../../toolchain/moon/module.md:268
 msgid ""
 "{\n"
 "  \"exclude\": [\"build\"],\n"
@@ -361,38 +366,40 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:276
+#: ../../toolchain/moon/module.md:277
 msgid ""
 "You may use [`moon package --list`](commands.md#moon-package) to verify "
 "if the packaged result is expected."
 msgstr "你可以使用 [`moon package --list`](commands.md#moon-package) 来验证打包结果是否符合预期。"
 
-#: ../../toolchain/moon/module.md:278
+#: ../../toolchain/moon/module.md:279
 msgid "Preferred Target"
 msgstr "首选目标"
 
-#: ../../toolchain/moon/module.md:280
+#: ../../toolchain/moon/module.md:281
 msgid ""
-"The `preferred-target` field allows the `moon` and the language server to"
-" know which target should be used as the default target, avoiding the "
+"The `preferred_target` field allows `moon` and the language server to "
+"know which target should be used as the default target, avoiding the "
 "necessity to write `--target` when developing a project targeting other "
 "backends than Wasm GC."
 msgstr ""
-" `preferred-target` 字段允许 `moon` 和语言服务器知道应该使用哪个目标作为默认目标，从而避免在开发针对 Wasm GC "
+"`preferred_target` 字段允许 `moon` 和语言服务器知道应该使用哪个目标作为默认目标，从而避免在开发针对 Wasm GC "
 "以外的其他后端的项目时需要传递 `--target`。"
 
-#: ../../toolchain/moon/module.md:284
+#: ../../toolchain/moon/module.md:285
 msgid ""
-"Set this field on each module. Workspace-level `preferred-target` is "
-"deprecated; `moon run` uses the selected module's own preferred target."
+"Set `preferred_target` on each module. Workspace-level `preferred-target`"
+" is deprecated; `moon run` uses the selected module's own preferred "
+"target."
 msgstr ""
-"请在各模块中设置此字段。工作区级别的 `preferred-target` 已弃用；`moon run` 使用所选模块自身的首选目标。"
+"请在各模块中设置 `preferred_target`。工作区级别的 `preferred-target` 已弃用；`moon run` "
+"使用所选模块自身的首选目标。"
 
-#: ../../toolchain/moon/module.md:290
+#: ../../toolchain/moon/module.md:291
 msgid "preferred_target = \"js\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:295
+#: ../../toolchain/moon/module.md:296
 msgid ""
 "{\n"
 "  \"preferred-target\": \"js\"\n"
@@ -402,45 +409,45 @@ msgstr ""
 "  \"preferred-target\": \"js\"\n"
 "}\n"
 
-#: ../../toolchain/moon/module.md:305
+#: ../../toolchain/moon/module.md:306
 msgid "Supported Targets"
 msgstr "支持的目标"
 
-#: ../../toolchain/moon/module.md:307
+#: ../../toolchain/moon/module.md:308
 msgid ""
-"The `supported-targets` field declares which backends this module is "
-"intended to support. Unlike `preferred-target`, it does not choose a "
+"The `supported_targets` field declares which backends this module is "
+"intended to support. Unlike `preferred_target`, it does not choose a "
 "default target for commands. Use it to record the module's compatibility "
 "surface in metadata."
 msgstr ""
-"`supported-targets` 字段用于声明该模块打算支持哪些后端。与 `preferred-target` "
+"`supported_targets` 字段用于声明该模块打算支持哪些后端。与 `preferred_target` "
 "不同，它不会为命令选择默认目标。它的作用是把模块的兼容后端范围记录在元数据中。"
 
-#: ../../toolchain/moon/module.md:311
-msgid "`supported-targets` uses a compact target-set syntax:"
-msgstr "`supported-targets` 使用紧凑的目标集合语法："
+#: ../../toolchain/moon/module.md:312
+msgid "`supported_targets` uses a compact target-set syntax:"
+msgstr "`supported_targets` 使用紧凑的目标集合语法："
 
-#: ../../toolchain/moon/module.md:313
+#: ../../toolchain/moon/module.md:314
 msgid "`js` for a single backend"
 msgstr "`js` 表示单个后端"
 
-#: ../../toolchain/moon/module.md:314
+#: ../../toolchain/moon/module.md:315
 msgid "`+js+wasm-gc` for an explicit set of backends"
 msgstr "`+js+wasm-gc` 表示显式指定一组后端"
 
-#: ../../toolchain/moon/module.md:315
+#: ../../toolchain/moon/module.md:316
 msgid "`+all-js` for all backends except `js`"
 msgstr "`+all-js` 表示除 `js` 之外的所有后端"
 
-#: ../../toolchain/moon/module.md:317
+#: ../../toolchain/moon/module.md:318
 msgid "For example:"
 msgstr "例如："
 
-#: ../../toolchain/moon/module.md:321
+#: ../../toolchain/moon/module.md:322
 msgid "supported_targets = \"+js+wasm-gc\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:326
+#: ../../toolchain/moon/module.md:327
 msgid ""
 "{\n"
 "  \"supported-targets\": \"+js+wasm-gc\"\n"
@@ -450,44 +457,41 @@ msgstr ""
 "  \"supported-targets\": \"+js+wasm-gc\"\n"
 "}\n"
 
-#: ../../toolchain/moon/module.md:334
+#: ../../toolchain/moon/module.md:335
 msgid "Legacy array syntax is still accepted for compatibility:"
 msgstr "为了兼容，旧的数组语法仍然可以使用："
 
-#: ../../toolchain/moon/module.md:338
+#: ../../toolchain/moon/module.md:339
 msgid "supported_targets = [\"js\", \"wasm-gc\"]\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:343
+#: ../../toolchain/moon/module.md:344
 msgid ""
 "{\n"
-"  \"supported-targets\": [\"js\", \"native\"]\n"
+"  \"supported-targets\": [\"js\", \"wasm-gc\"]\n"
 "}\n"
 msgstr ""
-"{\n"
-"  \"supported-targets\": [\"js\", \"native\"]\n"
-"}\n"
 
-#: ../../toolchain/moon/module.md:351
-msgid "`preferred-target` and `supported-targets` are often used together:"
-msgstr "`preferred-target` 和 `supported-targets` 经常一起使用："
-
-#: ../../toolchain/moon/module.md:353
-msgid "`preferred-target` says which backend `moon` should use by default"
-msgstr "`preferred-target` 表示 `moon` 默认应使用哪个后端"
+#: ../../toolchain/moon/module.md:352
+msgid "`preferred_target` and `supported_targets` are often used together:"
+msgstr "`preferred_target` 和 `supported_targets` 经常一起使用："
 
 #: ../../toolchain/moon/module.md:354
-msgid "`supported-targets` says which backends the module claims to support"
-msgstr "`supported-targets` 表示模块声明自己支持哪些后端"
+msgid "`preferred_target` says which backend `moon` should use by default"
+msgstr "`preferred_target` 表示 `moon` 默认应使用哪个后端"
 
-#: ../../toolchain/moon/module.md:356
+#: ../../toolchain/moon/module.md:355
+msgid "`supported_targets` says which backends the module claims to support"
+msgstr "`supported_targets` 表示模块声明自己支持哪些后端"
+
+#: ../../toolchain/moon/module.md:357
 msgid ""
-"When a package also defines `supported-targets`, the effective backend "
+"When a package also defines `supported_targets`, the effective backend "
 "set is the intersection of the module-level and package-level "
 "declarations."
-msgstr "当某个包也定义了 `supported-targets` 时，实际生效的后端集合就是模块级声明与包级声明的交集。"
+msgstr "当某个包也定义了 `supported_targets` 时，实际生效的后端集合就是模块级声明与包级声明的交集。"
 
-#: ../../toolchain/moon/module.md:359
+#: ../../toolchain/moon/module.md:360
 msgid ""
 "For per-file conditional compilation inside a package, use "
 "[`targets`](package.md#conditional-compilation) in `moon.pkg` / "
@@ -496,39 +500,39 @@ msgstr ""
 "如果你想在包内部按文件做条件编译，应改用 `moon.pkg` / `moon.pkg.json` 中的 "
 "[`targets`](package.md#conditional-compilation)。"
 
-#: ../../toolchain/moon/module.md:362
+#: ../../toolchain/moon/module.md:363
 msgid "Source directory"
 msgstr "源目录"
 
-#: ../../toolchain/moon/module.md:364
+#: ../../toolchain/moon/module.md:365
 msgid "The `source` field is used to specify the source directory of the module."
 msgstr "`source` 字段用于指定模块的源目录。"
 
-#: ../../toolchain/moon/module.md:366
+#: ../../toolchain/moon/module.md:367
 msgid ""
 "It must be a relative path to a subdirectory of the directory containing "
 "the module file."
 msgstr "它必须是相对于模块文件所在目录的子目录路径。"
 
-#: ../../toolchain/moon/module.md:369
+#: ../../toolchain/moon/module.md:370
 msgid ""
 "When creating a module using the `moon new` command, a `src` directory "
 "will be automatically generated, and the default value of the `source` "
 "field will be `src`."
 msgstr "当使用 `moon new` 命令创建一个模块时，将自动生成一个 `src` 目录，并且 `source` 字段的默认值将为 `src`。"
 
-#: ../../toolchain/moon/module.md:373
+#: ../../toolchain/moon/module.md:374
 msgid "source = \"src\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:378
+#: ../../toolchain/moon/module.md:379
 msgid ""
 "{\n"
 "  \"source\": \"src\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:386
+#: ../../toolchain/moon/module.md:387
 msgid ""
 "When the `source` field does not exist, or its value is an empty string "
 "`\"\"`, it is equivalent to setting `source = \".\"`. This means that the"
@@ -538,99 +542,99 @@ msgstr ""
 "如果 `source` 字段不存在，或其值为空字符串 `\"\"`，则等同于设置 `source = "
 "\".\"`。这意味着源目录与模块文件所在目录相同。"
 
-#: ../../toolchain/moon/module.md:392
+#: ../../toolchain/moon/module.md:393
 msgid "source = \"\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:395
+#: ../../toolchain/moon/module.md:396
 msgid "source = \".\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:400
+#: ../../toolchain/moon/module.md:401
 msgid ""
 "{\n"
 "  \"source\": \"\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:405
+#: ../../toolchain/moon/module.md:406
 msgid ""
 "{\n"
 "  \"source\": \".\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:411
+#: ../../toolchain/moon/module.md:412
 msgid "`null` is equivalent to the cases above:"
 msgstr "`null` 等同于上述情况："
 
-#: ../../toolchain/moon/module.md:413
+#: ../../toolchain/moon/module.md:414
 msgid ""
 "{\n"
 "  \"source\": null\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:420
+#: ../../toolchain/moon/module.md:421
 msgid "Warning List"
 msgstr "警告列表"
 
-#: ../../toolchain/moon/module.md:422
+#: ../../toolchain/moon/module.md:423
 msgid "This is used to disable specific preset compiler warning numbers."
 msgstr "这用于禁用特定的预设编译器警告编号。"
 
-#: ../../toolchain/moon/module.md:424
+#: ../../toolchain/moon/module.md:425
 msgid ""
 "For example, in the following configuration, `-2` disables the warning "
 "number 2 (Unused variable)."
 msgstr "例如，在以下配置中，`-2` 禁用警告编号 2（未使用的变量）。"
 
-#: ../../toolchain/moon/module.md:428
+#: ../../toolchain/moon/module.md:429
 msgid "warnings = \"-2\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:433
+#: ../../toolchain/moon/module.md:434
 msgid ""
 "{\n"
 "  \"warn-list\": \"-2\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:441
+#: ../../toolchain/moon/module.md:442
 msgid ""
 "If multiple warnings need to be disabled, they can be directly connected "
 "and combined."
 msgstr "如果需要禁用多种警告，可以直接连接起来进行组合。"
 
-#: ../../toolchain/moon/module.md:446
+#: ../../toolchain/moon/module.md:447
 msgid "warnings = \"-2-4\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:451
+#: ../../toolchain/moon/module.md:452
 msgid ""
 "{\n"
 "  \"warn-list\": \"-2-4\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:459
+#: ../../toolchain/moon/module.md:460
 msgid ""
 "If it is necessary to activate certain warnings that were originally "
 "prohibited, use the plus sign."
 msgstr "如果需要激活某种原来未启用的警告，则使用加号。"
 
-#: ../../toolchain/moon/module.md:463
+#: ../../toolchain/moon/module.md:464
 msgid "warnings = \"+31\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:468
+#: ../../toolchain/moon/module.md:469
 msgid ""
 "{\n"
 "  \"warn-list\": \"+31\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:476
+#: ../../toolchain/moon/module.md:477
 msgid ""
 "You can use `moonc check -warn-help` to see the list of preset compiler "
 "warning numbers. In the output below, `mnemonic` is the symbolic warning "
@@ -640,7 +644,7 @@ msgstr ""
 "你可以使用 `moonc check -warn-help` 查看预设编译器警告编号列表。在下面的输出中，`mnemonic` "
 "是警告列表中使用的符号名称，`id` 是同一警告的数字形式。"
 
-#: ../../toolchain/moon/module.md:480
+#: ../../toolchain/moon/module.md:481
 msgid ""
 "$ moonc check -warn-help\n"
 "Available warnings: \n"
@@ -734,8 +738,6 @@ msgid ""
 "                                            44 error\n"
 "unused_rest_mark           Useless `..` in pattern"
 "                                         46 warn\n"
-"invalid_mbti               Invalid mbti file"
-"                                               47 warn\n"
 "missing_definition         Unused pub definition because it does not "
 "exist in mbti file.   49 warn\n"
 "method_shadowing           Local method shadows upstream method"
@@ -786,16 +788,40 @@ msgid ""
 "                                     73 off\n"
 "missing_doc                Missing documentation for public definition"
 "                     74 off\n"
-"A                          all warnings\n"
+"unnecessary_view_op        Unnecessary `[:]` view operator"
+"                                 75 off\n"
+"lexmatch_first_match       Deprecated `lexmatch` with first-match "
+"semantics.               76 warn\n"
+"lexmatch_longest_match     Deprecated `lexmatch` with longest-match "
+"semantics.             77 warn\n"
+"result_error_return        Using `Result[T, E]` where `E` is an error "
+"type.                78 off\n"
+"implicit_impl_as_method    `impl` implicitly promoted as method"
+"                            79 off\n"
+"regex_match_missing_before Missing `before` binding in `regex match`."
+"                      80 warn\n"
+"regex_match_missing_after  Missing `after` binding in `regex match`."
+"                       81 warn\n"
+"ambiguous_braces           Ambiguous `{}` braces."
+"                                          82 warn\n"
+"type_param_method          Calling method of type parameter in a "
+"deprecated way.           83 warn\n"
+"unqualified_record         Struct literal in a `let` binding without a "
+"type prefix.        84 off\n"
+"unlabelled_break_in_labelled_loop Unlabelled `break` directly inside a "
+"labelled loop.             85 warn\n"
+"unlabelled_continue_in_labelled_loop Unlabelled `continue` directly "
+"inside a labelled loop.          86 warn\n"
+"all                        all warnings\n"
 "state: warn = enabled, error = promoted to error, off = disabled\n"
 "note: default alert exceptions: alert_unsafe=off\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:559
+#: ../../toolchain/moon/module.md:571
 msgid "Rule"
 msgstr "Rule"
 
-#: ../../toolchain/moon/module.md:561
+#: ../../toolchain/moon/module.md:573
 msgid ""
 "The module-level `rule` entry declares a reusable pre-build command that "
 "is visible to every `moon.pkg` in the module. A module-level rule does "
@@ -809,7 +835,7 @@ msgstr ""
 "[Package Configuration](package.md#rule-and-dev_build) 中的 \"Rule and "
 "dev_build\" 一节。"
 
-#: ../../toolchain/moon/module.md:568
+#: ../../toolchain/moon/module.md:580
 msgid ""
 "Use `rule(name: \"...\", command: \"...\")`, where `name` identifies the "
 "rule and `command` is a shell command string. The command can refer to "
@@ -821,36 +847,36 @@ msgstr ""
 "shell 命令字符串。该命令可以引用 `$input` 和 `$output`，它们由使用该 rule 的包级 `dev_build` "
 "条目提供。一个模块可以声明多个模块级 `rule` 条目。"
 
-#: ../../toolchain/moon/module.md:575
+#: ../../toolchain/moon/module.md:587
 msgid "rule(name: \"tool\", command: \"tool $input -o $output\")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:580
+#: ../../toolchain/moon/module.md:592
 msgid "This feature is not supported in `moon.mod.json`."
 msgstr "`moon.mod.json` 不支持此功能。"
 
-#: ../../toolchain/moon/module.md:584
+#: ../../toolchain/moon/module.md:596
 msgid "Scripts"
 msgstr "脚本"
 
-#: ../../toolchain/moon/module.md:586
+#: ../../toolchain/moon/module.md:598
 msgid ""
 "The `scripts` field is used to define custom scripts associated with the "
 "module."
 msgstr "`scripts` 字段用于定义与模块关联的自定义脚本。"
 
-#: ../../toolchain/moon/module.md:588
+#: ../../toolchain/moon/module.md:600
 msgid "postadd script"
 msgstr "postadd 脚本"
 
-#: ../../toolchain/moon/module.md:590
+#: ../../toolchain/moon/module.md:602
 msgid ""
 "The `postadd` script runs automatically after the module has been added. "
 "When executed, the script's current working directory (cwd) is set to the"
-" directory where the `moon.mod.json` file resides."
-msgstr "`postadd` 脚本在模块添加后自动运行。执行时，脚本的当前工作目录（cwd）设置为 `moon.mod.json` 文件所在的目录。"
+" directory containing the module configuration file."
+msgstr "`postadd` 脚本在模块添加后自动运行。执行时，脚本的当前工作目录（cwd）设置为模块配置文件所在的目录。"
 
-#: ../../toolchain/moon/module.md:596
+#: ../../toolchain/moon/module.md:608
 msgid ""
 "options(\n"
 "  scripts: {\n"
@@ -859,7 +885,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:605
+#: ../../toolchain/moon/module.md:617
 msgid ""
 "{\n"
 "  \"scripts\": {\n"
@@ -868,43 +894,43 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:616
+#: ../../toolchain/moon/module.md:628
 msgid "\\[Experimental\\] Pre-build config script"
 msgstr "\\[实验性\\] 预构建配置脚本"
 
-#: ../../toolchain/moon/module.md:619
+#: ../../toolchain/moon/module.md:631
 msgid ""
 "This feature is extremely experimental, and its API may change at any "
 "time. This documentation reflects the implementation as of 2025-06-03."
 msgstr "这个功能是极其实验性的，其 API 可能随时发生变化。本文件反映了截至 2025-06-03 的实现。"
 
-#: ../../toolchain/moon/module.md:624
+#: ../../toolchain/moon/module.md:636
 msgid ""
 "Using this feature may execute arbitrary code in your computer. Please "
 "use with caution and only with trusted dependencies."
 msgstr "使用此功能可能会在您的计算机上执行任意代码。请谨慎使用，仅与受信任的依赖项一起使用。"
 
-#: ../../toolchain/moon/module.md:628
+#: ../../toolchain/moon/module.md:640
 msgid ""
 "The pre-build config script is added in order to aid native target "
-"programming. To use such script, add your script in your `moon.mod.json`:"
-msgstr "pre-build 配置脚本的添加是为了帮助本地目标编程。要使用此脚本，请在您的 `moon.mod.json` 中添加您的脚本："
+"programming. To use such a script, add it to your module configuration:"
+msgstr "预构建配置脚本用于辅助 native 目标编程。要使用此类脚本，请将其添加到模块配置中："
 
-#: ../../toolchain/moon/module.md:634
+#: ../../toolchain/moon/module.md:646
 msgid ""
 "options(\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\",\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:641
+#: ../../toolchain/moon/module.md:653
 msgid ""
 "{\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:649
+#: ../../toolchain/moon/module.md:661
 msgid ""
 "The path is a relative path from the root of the project. The script may "
 "either be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) "
@@ -914,17 +940,17 @@ msgstr ""
 "路径是相对于项目根目录的相对路径。脚本可以是 JavaScript 脚本（扩展名为 `.js`、`.cjs`、`.mjs`）使用 `node` "
 "执行，或者是 Python 脚本（扩展名为 `.py`）使用 `python3` 或 `python` 执行。"
 
-#: ../../toolchain/moon/module.md:654
+#: ../../toolchain/moon/module.md:666
 msgid "Input"
 msgstr "输入"
 
-#: ../../toolchain/moon/module.md:656
+#: ../../toolchain/moon/module.md:668
 msgid ""
 "The script will be provided with a JSON with the structure of "
 "`BuildScriptEnvironment` from standard input stream (stdin):"
 msgstr "脚本将从标准输入流（stdin）接收一个具有 `BuildScriptEnvironment` 结构的 JSON："
 
-#: ../../toolchain/moon/module.md:659
+#: ../../toolchain/moon/module.md:671
 msgid ""
 "/** Represents the environment a build script receives */\n"
 "interface BuildScriptEnvironment {\n"
@@ -963,17 +989,17 @@ msgstr ""
 "  kind: string // TargetBackend\n"
 "}\n"
 
-#: ../../toolchain/moon/module.md:679
+#: ../../toolchain/moon/module.md:691
 msgid "Output"
 msgstr "输出"
 
-#: ../../toolchain/moon/module.md:681
+#: ../../toolchain/moon/module.md:693
 msgid ""
 "The script is expected to print a JSON string in its standard output "
 "stream (stdout) with the structure of `BuildScriptOutput`:"
 msgstr "脚本预计将在其标准输出流（stdout）中打印一个具有 `BuildScriptOutput` 结构的 JSON 字符串："
 
-#: ../../toolchain/moon/module.md:684
+#: ../../toolchain/moon/module.md:696
 msgid ""
 "interface BuildScriptOutput {\n"
 "  /** Build variables */\n"
@@ -1030,33 +1056,33 @@ msgstr ""
 "  link_search_paths?: string[]\n"
 "}\n"
 
-#: ../../toolchain/moon/module.md:713
+#: ../../toolchain/moon/module.md:725
 msgid "Build variables"
 msgstr "构建变量"
 
-#: ../../toolchain/moon/module.md:715
+#: ../../toolchain/moon/module.md:727
 msgid ""
 "You may use the variables emitted in the `vars` fields in the native "
 "linking arguments in `moon.pkg` as `${build.<var_name>}`."
 msgstr "您可以在 `moon.pkg` 的本地链接参数中使用 `vars` 字段中发出的变量，格式为 `${build.<var_name>}`。"
 
-#: ../../toolchain/moon/module.md:718
+#: ../../toolchain/moon/module.md:730
 msgid "For example, if your build script outputs:"
 msgstr "例如，如果您的构建脚本输出："
 
-#: ../../toolchain/moon/module.md:720
+#: ../../toolchain/moon/module.md:732
 msgid "{ \"vars\": { \"CC\": \"gcc\" } }\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:724
+#: ../../toolchain/moon/module.md:736
 msgid "and your `moon.pkg` is structured like:"
 msgstr "并且您的 `moon.pkg` 结构如下："
 
-#: ../../toolchain/moon/module.md:726
+#: ../../toolchain/moon/module.md:738
 msgid "moon.pkg"
 msgstr "moon.pkg"
 
-#: ../../toolchain/moon/module.md:726
+#: ../../toolchain/moon/module.md:738
 msgid ""
 "options(\n"
 "  link: {\n"
@@ -1067,11 +1093,11 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:731
+#: ../../toolchain/moon/module.md:743
 msgid "It will be transformed into"
 msgstr "它会被转换为"
 
-#: ../../toolchain/moon/module.md:733
+#: ../../toolchain/moon/module.md:745
 msgid ""
 "{\n"
 "  \"link\": {\n"
@@ -1081,28 +1107,3 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
-
-#~ msgid ""
-#~ "It must be a subdirectory of the"
-#~ " directory where the `moon.mod.json` file"
-#~ " is located and must be a "
-#~ "relative path."
-#~ msgstr "它必须是 `moon.mod.json` 文件所在目录的子目录，并且必须是相对路径。"
-
-#~ msgid ""
-#~ "options(\n"
-#~ "  source: \"src\"\n"
-#~ ")\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "options(\n"
-#~ "  \"source\": \"\"\n"
-#~ ")\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "options(\n"
-#~ "  \"source\": \".\"\n"
-#~ ")\n"
-#~ msgstr ""

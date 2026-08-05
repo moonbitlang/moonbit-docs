@@ -26,7 +26,7 @@ let struct_3 : Unit = {
   let u = User::{ id: 0, name, email }
   // end struct 3
   // start struct 5
-  let u2 = { id: 0, name, email }
+  let u2 = User::{ id: 0, name, email }
   // end struct 5
 
 }
@@ -34,8 +34,8 @@ let struct_3 : Unit = {
 test "struct 4" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start struct 4
-  let user = { id: 0, name: "John Doe", email: "john@doe.com" }
-  let updated_user = { ..user, email: "john@doe.name" }
+  let user = User::{ id: 0, name: "John Doe", email: "john@doe.com" }
+  let updated_user = User::{ ..user, email: "john@doe.name" }
   println(
     (
       $|{ id: \{user.id}, name: \{user.name}, email: \{user.email} }

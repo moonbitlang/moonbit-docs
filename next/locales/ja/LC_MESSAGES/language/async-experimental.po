@@ -23,7 +23,6 @@ msgid "Async programming support"
 msgstr "非同期プログラミングのサポート"
 
 #: ../../language/async-experimental.md:3
-#, fuzzy
 msgid ""
 "MoonBit adopts a coroutine based approach to async programming which is "
 "similar to [Kotlin](https://kotlinlang.org/docs/coroutines-"
@@ -46,7 +45,6 @@ msgid "Getting started"
 msgstr "はじめに"
 
 #: ../../language/async-experimental.md:12
-#, fuzzy
 msgid ""
 "To use `moonbitlang/async` for asynchronous programming, you should first"
 " run `moon add moonbitlang/async@0.20.2` in your project to add "
@@ -57,13 +55,6 @@ msgid ""
 "in your packages. If you want a workflow-first example, see the [Native "
 "CLI Quickstart](/tutorial/cli-quickstart.md)."
 msgstr ""
-"`moonbitlang/async` を使って非同期プログラミングを行うには、まずプロジェクトで `moon add "
-"moonbitlang/async@0.19.2` を実行して、`moonbitlang/async` "
-"を依存関係に追加してください。`moon.mod.json` で `\"preferred-target\": \"native\"` "
-"を設定しておくのもよいでしょう。次に、`moon.pkg` で `moonbitlang/async` と `moonbitlang/async`"
-" ライブラリ内の他のパッケージを import すれば、非同期プログラミング API "
-"を使えるようになります。ワークフロー重視の例が見たい場合は、[Native CLI Quickstart](/tutorial/cli-"
-"quickstart.md) を参照してください。"
 
 #: ../../language/async-experimental.md:20
 msgid ""
@@ -258,7 +249,6 @@ msgid ""
 msgstr "`with_task_group` を使って複数のタスクを作成し、並列に実行させる簡単な例は次のとおりです："
 
 #: ../../language/async-experimental.md:108
-#, fuzzy
 msgid ""
 "async test \"with_task_group\" {\n"
 "  let log = []\n"
@@ -284,27 +274,6 @@ msgid ""
 "  ])\n"
 "}\n"
 msgstr ""
-"async test \"with_task_group\" {\n"
-"  let log = []\n"
-"  @async.with_task_group(group => {\n"
-"    group.spawn_bg(() => for _ in 0..<3 {\n"
-"      log.push(\"task #1 tick\")\n"
-"      @async.sleep(200) // sleep for 200ms\n"
-"    })\n"
-"    group.spawn_bg(() => {\n"
-"      @async.sleep(100)\n"
-"      for _ in 0..<3 {\n"
-"        log.push(\"task #2 tick\")\n"
-"        @async.sleep(200)\n"
-"      }\n"
-"    })\n"
-"  })\n"
-"  json_inspect(log, content=[\n"
-"    \"task #1 tick\", \"task #2 tick\", \"task #1 tick\", \"task #2 "
-"tick\", \"task #1 tick\",\n"
-"    \"task #2 tick\",\n"
-"  ])\n"
-"}\n"
 
 #: ../../language/async-experimental.md:114
 msgid ""
@@ -420,7 +389,6 @@ msgstr ""
 "リクエストをタイムアウト付きで試み、リトライ回数は最大 3 回に制限します："
 
 #: ../../language/async-experimental.md:156
-#, fuzzy
 msgid ""
 "async fn make_request() -> String {\n"
 "  @async.retry(Immediate, max_retry=3, () => {\n"
@@ -434,16 +402,6 @@ msgid ""
 "  })\n"
 "}\n"
 msgstr ""
-"async fn make_request() -> String {\n"
-"  @async.retry(Immediate, max_retry=3, () => @async.with_timeout(1000, ()"
-" => {\n"
-"    let (response, body) = @http.get(\"https://www.moonbitlang.com\")\n"
-"    guard response.code is (200..<300) else {\n"
-"      fail(\"the HTTP request is not successful\")\n"
-"    }\n"
-"    body.text()\n"
-"  }))\n"
-"}\n"
 
 #: ../../language/async-experimental.md:162
 msgid "Interacting with the world"
@@ -528,14 +486,11 @@ msgstr ""
 "との統合をサポートします。これにより、JavaScript ホストのネイティブな非同期操作とやり取りできます。"
 
 #: ../../language/async-experimental.md:188
-#, fuzzy
 msgid ""
 "See [the mooncakes.io page for "
 "`moonbitlang/async/js_async`](https://mooncakes.io/docs/moonbitlang/async/js_async)"
 " for more details."
 msgstr ""
-"詳細は [moonbitlang/async/js_async の mooncakes.io "
-"ページ](https://mooncakes.io/docs/moonbitlang/async/js_async) を参照してください。"
 
 #: ../../language/async-experimental.md:190
 msgid "Experimental Wasm1 support"

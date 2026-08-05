@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 15:37+0800\n"
+"POT-Creation-Date: 2026-07-30 12:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -24,15 +23,12 @@ msgid "Attribute"
 msgstr "属性"
 
 #: ../../language/attributes.md:3
-#, fuzzy
 msgid ""
 "Attributes are annotations placed before structures in source code. They "
 "take the form `#attribute(...)`. An attribute occupies the entire line, "
 "and newlines are not allowed within it. Attributes do not normally affect"
 " the meaning of programs. Unused attributes will be reported as warnings."
 msgstr ""
-"属性是放置在源码中的结构之前的信息。它们都采用 `#attribute(...)` "
-"的形式。一个属性占用整行的空间，其中不允许换行。属性一般不会影响程序的含义。无用的属性将会触发警告。"
 
 #: ../../language/attributes.md:7
 msgid "The syntax of attributes is defined as follows:"
@@ -104,15 +100,12 @@ msgid "Deprecated Attribute"
 msgstr "`deprecated` 属性"
 
 #: ../../language/attributes/deprecated.md:4
-#, fuzzy
 msgid ""
 "The `#deprecated` attribute is used to mark an API as deprecated. MoonBit"
 " emits a warning when the deprecated API is used, and if the API is "
 "listed in completion, it will be shown with a strikethrough style. For "
 "example:"
 msgstr ""
-"`#deprecated`属性用于标记一个 API 为弃用状态。当弃用的 API 在其他包中被使用时，MoonBit 将会触发警告，而且如果 "
-"API 出现补全列表中，它会被加上删除线的样式。例如："
 
 #: ../../language/attributes/deprecated.md:8
 msgid ""
@@ -148,57 +141,58 @@ msgstr "特征声明"
 msgid "Trait default implementations"
 msgstr "特征的默认实现"
 
-#: ../../language/attributes/deprecated.md:21
+#: ../../language/attributes/deprecated.md:20
+msgid "`extend` declarations"
+msgstr "`extend` 声明"
+
+#: ../../language/attributes/deprecated.md:22
 msgid "Common forms include:"
 msgstr "常见形式包括："
 
-#: ../../language/attributes/deprecated.md:23
+#: ../../language/attributes/deprecated.md:24
 msgid "`#deprecated`"
 msgstr "`#deprecated`"
 
-#: ../../language/attributes/deprecated.md:25
+#: ../../language/attributes/deprecated.md:26
 msgid "Marks the item as deprecated with a default warning message."
 msgstr "将这个项目标记成弃用的，并使用默认的警告信息。"
 
-#: ../../language/attributes/deprecated.md:27
+#: ../../language/attributes/deprecated.md:28
 msgid "`#deprecated(\"Use new_function instead\")`"
 msgstr "`#deprecated(\"使用 new_function 代替\")`"
 
-#: ../../language/attributes/deprecated.md:29
+#: ../../language/attributes/deprecated.md:30
 msgid ""
 "Marks the item as deprecated with a custom warning message. Every time "
 "the deprecated API is used, the provided message will be displayed as a "
 "warning."
 msgstr "将 API 标记为弃用，并自定义一个警告信息。每当这个弃用的 API 被使用时，自定义信息将会显示在警告中。"
 
-#: ../../language/attributes/deprecated.md:31
+#: ../../language/attributes/deprecated.md:32
 msgid "`#deprecated(\"Use new_function instead\", skip_current_package=true)`"
 msgstr "`#deprecated(\"使用 new_function 代替\", skip_current_package=true)`"
 
-#: ../../language/attributes/deprecated.md:33
+#: ../../language/attributes/deprecated.md:34
 msgid ""
 "Marks the item as deprecated with a custom warning message, but skips "
 "emitting warnings when the deprecated API is used within the same "
 "package."
 msgstr "将 API 标记为弃用的同时自定义警告信息，但是当 API 在同一个包内使用时不触发警告。"
 
-#: ../../language/attributes/deprecated.md:35
-#, fuzzy
+#: ../../language/attributes/deprecated.md:36
 msgid "`#deprecated(skip_current_package=true)`"
-msgstr "`#deprecated(\"使用 new_function 代替\", skip_current_package=true)`"
+msgstr ""
 
-#: ../../language/attributes/deprecated.md:37
-#, fuzzy
+#: ../../language/attributes/deprecated.md:38
 msgid ""
 "Marks the item as deprecated with a default warning message, but skips "
 "emitting warnings within the same package. When both a message and "
 "`skip_current_package` are present, either argument order is accepted."
-msgstr "将 API 标记为弃用的同时自定义警告信息，但是当 API 在同一个包内使用时不触发警告。"
+msgstr ""
 
 #: ../../language/attributes/alert.md:2
-#, fuzzy
 msgid "Alert Attribute"
-msgstr "`alias` 属性"
+msgstr ""
 
 #: ../../language/attributes/alert.md:4
 msgid ""
@@ -207,7 +201,6 @@ msgid ""
 msgstr "`#alert` 属性会为 API 附加一个类别和一条消息。当代码使用该 API 时，MoonBit 会发出 alert 警告。"
 
 #: ../../language/attributes/alert.md:7
-#, fuzzy
 msgid ""
 "#alert(unsafe, \"This function is unsafe.\")\n"
 "fn[A] alert_unsafe_get(arr : Array[A], index : Int) -> A {\n"
@@ -223,11 +216,10 @@ msgid ""
 msgstr "第一个参数是 alert 类别，第二个参数是展示给用户的消息。该警告可以通过 `alert`、`alert_unsafe` 等警告名称配置。"
 
 #: ../../language/attributes/alert.md:17
-#, fuzzy
 msgid ""
 "For more detail, see [alert warning](/toolchain/moon/package.md#alert-"
 "warning)."
-msgstr "更多细节见 [alert 警告](/toolchain/moon/package.md#alert-warning)。"
+msgstr ""
 
 #: ../../language/attributes/alias.md:2
 msgid "Alias Attribute"
@@ -290,12 +282,11 @@ msgid ""
 msgstr "将别名标记为弃用的。如果提供了 `message` 信息，当别名被使用时，信息会被一起显示在警告中。"
 
 #: ../../language/attributes/alias.md:24
-#, fuzzy
 msgid ""
 "To graceful migration from old API to new API, you can rename the old API"
 " directly, and create an alias with the old name, mark it as deprecated. "
 "For example:"
-msgstr "如果要优雅地将一个旧的 API 迁移到新的 API，可以直接将旧的 API 重命名成新的名字；然后，使用旧名字创建一个别名，同时将它标记成弃用的。"
+msgstr ""
 
 #: ../../language/attributes/alias.md:27
 msgid ""
@@ -310,11 +301,10 @@ msgid "`label_migration` Attribute"
 msgstr "`label_migration` 属性"
 
 #: ../../language/attributes/label_migration.md:4
-#, fuzzy
 msgid ""
 "The `#label_migration` attribute is used to help you safely evolve your "
 "API by warning users during the transition period."
-msgstr "`#label_migration` 属性用于帮助你安全地演进 API，在迁移期间给下游的用户警告。"
+msgstr ""
 
 #: ../../language/attributes/label_migration.md:7
 msgid "It has three following forms:"
@@ -325,15 +315,12 @@ msgid "`#label_migration(id, fill=true, msg=\"message\")`"
 msgstr ""
 
 #: ../../language/attributes/label_migration.md:11
-#, fuzzy
 msgid ""
 "The `fill` argument is used when you want to refactor an optional "
 "parameter. You can use `fill=true` when you want to eventually make an "
 "optional parameter required. You can use `fill=false` when you want to "
 "eventually remove an optional parameter."
 msgstr ""
-"当你想重构一个可选参数时，可以设置`fill`。当 `fill=true` 时，这代表最终这个参数将变成必选的；当 `fill=false` "
-"时，这代表最终这个参数会被移除。"
 
 #: ../../language/attributes/label_migration.md:16
 #: ../../language/attributes/label_migration.md:31
@@ -357,7 +344,6 @@ msgid "`#label_migration(id, allow_positional=true, msg=\"message\")`"
 msgstr ""
 
 #: ../../language/attributes/label_migration.md:26
-#, fuzzy
 msgid ""
 "The `allow_positional` argument is used when you want a labelled "
 "parameter to be used without its label being provided. When the parameter"
@@ -365,8 +351,6 @@ msgid ""
 "This is useful when you want to change a positional parameter to a "
 "labelled parameter without breaking the downstream code."
 msgstr ""
-"当你希望带标签的参数可以在不提供标签的情况下使用时，可以设置 "
-"`allow_positional`。当参数按位置使用（没有标签）时，编译器会报告警告。这在你想要将位置参数更改为带标签参数，并且不破坏下游代码时非常有用。"
 
 #: ../../language/attributes/label_migration.md:33
 msgid ""
@@ -381,7 +365,6 @@ msgid "`#label_migration(id, alias=new_id, msg=\"message\")`"
 msgstr ""
 
 #: ../../language/attributes/label_migration.md:41
-#, fuzzy
 msgid ""
 "The alias argument allows you to provide an alternative name to a "
 "labelled parameter. This is useful when renaming a parameter to maintain "
@@ -389,11 +372,8 @@ msgid ""
 "warns when using the alias; otherwise, the alias can be used without "
 "warnings."
 msgstr ""
-"`alias` "
-"属性允许为带标签的参数提供替代名称。这在重命名参数以保持向后兼容性时很有用。如果提供了警告消息，编译器在使用别名时会发出警告；否则，可以在不发出警告的情况下使用别名。"
 
 #: ../../language/attributes/label_migration.md:48
-#, fuzzy
 msgid ""
 "#label_migration(x, alias=xx)\n"
 "#label_migration(x, alias=y, msg=\"warning\")\n"
@@ -416,16 +396,14 @@ msgstr ""
 "`priv`，见[访问控制](/language/packages.md#access-control)。"
 
 #: ../../language/attributes/visibility.md:8
-#, fuzzy
 msgid ""
 "The `#visibility` attribute is similar to the `#deprecated` attribute, "
 "but it is used to hint that a type will change its visibility in the "
 "future. For outside usages, if the usage will be invalidated by the "
 "visibility change in future, a warning will be emitted."
-msgstr "`#visibility`属性和`#deprecated`属性类似。但它用于提示用户一个类型未来将改变它的可见性。对于外部的包，如果使用这个类型的方式在未来改变可见性以后不再合法，它将会触发警告。"
+msgstr ""
 
 #: ../../language/attributes/visibility.md:11
-#, fuzzy
 msgid ""
 "// in @util package\n"
 "#visibility(change_to=\"readonly\", \"Point will be readonly in the "
@@ -464,11 +442,10 @@ msgid ""
 msgstr ""
 
 #: ../../language/attributes/visibility.md:17
-#, fuzzy
 msgid ""
 "The `#visibility` attribute takes a required `change_to` argument and an "
 "optional `message` argument."
-msgstr "`#visibility`属性接受两个参数：`change_to` 和 `message`。"
+msgstr ""
 
 #: ../../language/attributes/visibility.md:20
 msgid ""
@@ -503,26 +480,23 @@ msgid ""
 msgstr "创建该类型的实例、变更实例的字段的值、对它的实例进行模式匹配或者访问实例的字段。"
 
 #: ../../language/attributes/visibility.md:27
-#, fuzzy
 msgid ""
 "The optional `message` argument is a string that provides additional "
 "information about the visibility change."
-msgstr "`message`参数用于提供额外的信息，告诉使用者关于可见性的变更。"
+msgstr ""
 
 #: ../../language/attributes/internal.md:2
 msgid "Internal Attribute"
 msgstr "`internal` 属性"
 
 #: ../../language/attributes/internal.md:4
-#, fuzzy
 msgid ""
 "The `#internal` attribute is used to mark a function, type, or trait as "
 "internal. Any usage of the internal function or type in other modules "
 "will emit an alert warning."
-msgstr "`#internal`属性用于标记一个函数、类型或者特征为内部的。所有在模块外的使用将会触发警告。"
+msgstr ""
 
 #: ../../language/attributes/internal.md:7
-#, fuzzy
 msgid ""
 "#internal(unsafe, \"This is an unsafe function\")\n"
 "fn[A] internal_unsafe_get(arr : Array[A], index : Int) -> A {\n"
@@ -531,30 +505,25 @@ msgid ""
 msgstr ""
 
 #: ../../language/attributes/internal.md:13
-#, fuzzy
 msgid ""
 "The internal attribute takes a required `category` argument and an "
 "optional `message` argument. `category` is a identifier that indicates "
 "the category of the alert, and `message` is a string that provides "
 "additional message for the alert."
 msgstr ""
-"“internal”属性接受两个参数：`category` 和 `message`。`category` "
-"是一个标识符，表示警示对应的类别。`message` 是一个字符串，表示警示中额外的提示信息。"
 
 #: ../../language/attributes/internal.md:18
-#, fuzzy
 msgid ""
-"The alert warnings can be turn off by setting the `warn-list` in "
-"`moon.pkg`. For more detail, see [alert "
-"warning](/toolchain/moon/package.md#alert-warning)."
+"Alert warnings can be turned off with the `warnings` field in `moon.pkg`."
+" For more detail, see [alert warning](/toolchain/moon/package.md#alert-"
+"warning)."
 msgstr ""
-"`alert` 警告可以通过设置 `moon.pkg` 中的 `warn-list` 关闭。更多细节见 [alert "
+"`alert` 警告可以通过设置 `moon.pkg` 中的 `warnings` 字段关闭。更多细节见 [alert "
 "警告](/toolchain/moon/package.md#alert-warning)。"
 
 #: ../../language/attributes/doc_hidden.md:2
-#, fuzzy
 msgid "Doc Hidden Attribute"
-msgstr "模块属性"
+msgstr ""
 
 #: ../../language/attributes/doc_hidden.md:4
 msgid "The `#doc(hidden)` attribute hides an API from generated documentation."
@@ -579,19 +548,17 @@ msgid "Warnings Attribute"
 msgstr "`warnings` 属性"
 
 #: ../../language/attributes/warnings.md:4
-#, fuzzy
 msgid ""
 "The `#warnings` attribute is used to configure warning settings for a "
 "specific top-level declaration. It can enable, disable or treat an "
 "enabled warning as error for specific warnings in that declaration."
-msgstr "`#warnings`属性用于配置单个顶层的声明的警告。在声明内，它能够启用、关闭警告，或者将一个已经启用的警告配置为错误。"
+msgstr ""
 
 #: ../../language/attributes/warnings.md:8
-#, fuzzy
 msgid ""
 "The argument is a string that specifies the warning list. It can contain "
 "multiple warning names, each prefixed with a sign:"
-msgstr "它的参数是一个声明了警告列表的字符串。字符串包含多个警告名，每个名字以符号开头："
+msgstr ""
 
 #: ../../language/attributes/warnings.md:11
 msgid ""
@@ -614,9 +581,8 @@ msgid "`-warning_name`: disable the warning"
 msgstr "`-warning_name`: 关闭这个警告"
 
 #: ../../language/attributes/warnings.md:21
-#, fuzzy
 msgid "`@warning_name`: treat an enabled warning as an error (deprecated)"
-msgstr "`@warning_name`: 如果这个警告已经启用，转换为错误"
+msgstr "`@warning_name`：将已启用的警告视为错误（已弃用）"
 
 #: ../../language/attributes/warnings.md:23
 msgid ""
@@ -624,17 +590,18 @@ msgid ""
 "individual warnings, and use `moon check --deny-warn` or the equivalent "
 "command flag when warnings should fail a CI build."
 msgstr ""
+"`@` 开关已在 v0.10.4 中弃用。请使用 `+` 或 `-` 配置单项警告；需要让警告导致 CI 构建失败时，请使用 `moon "
+"check --deny-warn` 或相应命令的同类选项。"
 
 #: ../../language/attributes/warnings.md:27
 msgid "Currently this attribute only works with some specific warnings."
 msgstr "目前这个属性只对部分特定的警告工作。"
 
 #: ../../language/attributes/warnings.md:29
-#, fuzzy
 msgid ""
 "To learn more about warning names, see [warning "
 "list](/toolchain/moon/package.md#warnings-list)."
-msgstr "要了解更多关于警告名的信息，见[警告列表](/toolchain/moon/package.md#warnings-list)。"
+msgstr ""
 
 #: ../../language/attributes/must_implement_one.md:2
 msgid "Must Implement One Attribute"
@@ -703,9 +670,8 @@ msgid ""
 msgstr "同一个 trait 上可以使用多个 `#must_implement_one` 属性，以要求显式实现多个方法组中的方法。"
 
 #: ../../language/attributes/inline.md:2
-#, fuzzy
 msgid "Inline Attribute"
-msgstr "`alias` 属性"
+msgstr ""
 
 #: ../../language/attributes/inline.md:4
 msgid ""
@@ -762,7 +728,6 @@ msgid "For native backends, it would be interpreted as `void*`."
 msgstr "对于原生后端，它将被解释为`void*`。"
 
 #: ../../language/attributes/external.md:10
-#, fuzzy
 msgid ""
 "#external\n"
 "type AttrPtr\n"
@@ -868,17 +833,15 @@ msgid "Skip Attribute"
 msgstr "`skip` 属性"
 
 #: ../../language/attributes/skip.md:4
-#, fuzzy
 msgid ""
 "The `#skip` attribute is used to skip a single test block. It can be "
 "written as `#skip` or with a reason, such as `#skip(\"blocked by external"
 " service\")`. The type checking will still be performed."
-msgstr "`#skip` 属性用于跳过一个测试块。类型检查仍然会被执行。"
+msgstr ""
 
 #: ../../language/attributes/coverage_skip.md:2
-#, fuzzy
 msgid "Coverage Skip Attribute"
-msgstr "`skip` 属性"
+msgstr ""
 
 #: ../../language/attributes/coverage_skip.md:4
 msgid ""
@@ -969,37 +932,80 @@ msgid ""
 "pub extern \"js\" fn add_from_module(x : Int, y : Int) -> Int = \"add\"\n"
 msgstr ""
 
-#~ msgid ""
-#~ "#must_implement_one\n"
-#~ "pub(open) trait RequireAnyMethod {\n"
-#~ "  f(Self) -> Unit = _\n"
-#~ "  g(Self) -> Unit = _\n"
-#~ "}\n"
-#~ "\n"
-#~ "impl RequireAnyMethod with f(_) {}\n"
-#~ "\n"
-#~ "impl RequireAnyMethod with g(_) {}\n"
-#~ "\n"
-#~ "type AnyImpl\n"
-#~ "\n"
-#~ "impl RequireAnyMethod for AnyImpl with f(_) {}\n"
-#~ msgstr ""
+#: ../../language/attributes/export_name.md:2
+msgid "Export Name Attribute"
+msgstr "导出名称属性"
 
-#~ msgid ""
-#~ "#must_implement_one(f, g)\n"
-#~ "pub(open) trait RequireSelectedMethod {\n"
-#~ "  f(Self) -> Unit = _\n"
-#~ "  g(Self) -> Unit = _\n"
-#~ "  h(Self) -> Unit = _\n"
-#~ "}\n"
-#~ "\n"
-#~ "impl RequireSelectedMethod with f(_) {}\n"
-#~ "\n"
-#~ "impl RequireSelectedMethod with g(_) {}\n"
-#~ "\n"
-#~ "impl RequireSelectedMethod with h(_) {}\n"
-#~ "\n"
-#~ "type SelectedImpl\n"
-#~ "\n"
-#~ "impl RequireSelectedMethod for SelectedImpl with g(_) {}\n"
-#~ msgstr ""
+#: ../../language/attributes/export_name.md:4
+msgid ""
+"The `#export_name` attribute assigns a stable exported symbol name to a "
+"public function in a package declared with `pkgtype(kind: "
+"\"foreign_library\")`. The name is used in generated Wasm, JavaScript, or"
+" C output:"
+msgstr ""
+"`#export_name` 属性为使用 `pkgtype(kind: \"foreign_library\")` "
+"声明的包中的公开函数指定稳定的导出符号名称。该名称用于生成的 Wasm、JavaScript 或 C 输出："
+
+#: ../../language/attributes/export_name.md:8
+msgid ""
+"#export_name(\"add\")\n"
+"pub fn add_one(value : Int) -> Int {\n"
+"  value + 1\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/export_name.md:15
+msgid ""
+"MoonBit currently requires the exported name to be unique within the "
+"package and to be a valid C symbol identifier, regardless of the selected"
+" backend."
+msgstr "MoonBit 目前要求导出名在包内唯一，并且无论选择哪个后端，都必须是有效的 C 符号标识符。"
+
+#: ../../language/attributes/export_name.md:19
+msgid ""
+"Known compiler issue: `#export_name` currently applies its C-symbol-"
+"identifier restriction to every backend. WebAssembly export names are "
+"UTF-8 strings and are not limited to C identifiers."
+msgstr ""
+"已知编译器问题：`#export_name` 目前会对所有后端施加 C 符号标识符限制。WebAssembly 导出名是 UTF-8 "
+"字符串，并不限于 C 标识符。"
+
+#: ../../language/attributes/export_name.md:24
+msgid ""
+"The attribute cannot be used on generic functions, functions with "
+"optional arguments, methods, or declarations without a body."
+msgstr "该属性不能用于泛型函数、带可选参数的函数、方法或没有函数体的声明。"
+
+#: ../../language/attributes/export_name.md:27
+msgid ""
+"Prefer `#export_name` over backend-specific `exports` link configuration "
+"for new exports. It keeps the exported name next to the function and "
+"applies to every backend that supports foreign-library output. Use "
+"`exports` when the export set or names must differ by backend, or when "
+"the source cannot be annotated."
+msgstr ""
+"对于新的导出，优先使用 `#export_name`，而不是各后端的 `exports` "
+"链接配置。它将导出名称放在函数旁，并适用于所有支持外部库输出的后端。当导出集合或名称需要因后端而异，或者无法修改源代码添加属性时，使用 "
+"`exports`。"
+
+#: ../../language/attributes/export_name.md:33
+msgid ""
+"Export declarations are scoped to the package that produces the artifact."
+" An attribute in a dependency applies when that dependency is built as "
+"its own artifact, but it does not add a symbol to a downstream package's "
+"artifact. To expose dependency functionality, define and export a wrapper"
+" in the exporting package."
+msgstr "导出声明的作用域是生成产物的包。依赖中的属性在该依赖自身构建为产物时生效，但不会向下游包的产物添加符号。若要暴露依赖的功能，请在执行导出的包中定义并导出一个包装函数。"
+
+#: ../../language/attributes/export_name.md:40
+msgid ""
+"The native backend does not currently support exporting a "
+"`foreign_library` package as a library artifact. Use Wasm or JavaScript "
+"if you need an exported library."
+msgstr "native 后端目前不支持将 `foreign_library` 包导出为库产物。如需导出的库，请使用 Wasm 或 JavaScript。"
+
+#: ../../language/attributes/export_name.md:45
+msgid ""
+"See [Export Functions](/language/ffi.md#export-functions) for backend-"
+"specific alternatives."
+msgstr "有关各后端的替代方式，请参阅[导出函数](/language/ffi.md#export-functions)。"

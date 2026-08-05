@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 13:08+0800\n"
+"POT-Creation-Date: 2026-07-20 11:55+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -41,30 +40,31 @@ msgstr ""
 
 #: ../../language/error_codes/E0032.md:9
 msgid ""
-"Note, this warning is turned off by default. To enable this warning, you "
-"need to modify the `\"warn-list\"` of `moon.pkg.json`:"
+"This warning is turned off by default. Enable it with the `warnings` "
+"field in `moon.pkg`:"
+msgstr ""
+"この警告はデフォルトでは無効です。`moon.pkg` の `warnings` "
+"フィールドで有効にできます："
+
+#: ../../language/error_codes/E0032.md:12
+msgid "moon.pkg"
 msgstr ""
 
-#: ../../language/error_codes/E0032.md:11
-msgid "moon.pkg.json"
-msgstr ""
-
-#: ../../language/error_codes/E0032.md:11
+#: ../../language/error_codes/E0032.md:12
 msgid ""
-"{\n"
-"  \"is_main\": true,\n"
-"  \"warn-list\": \"+unused_default_value\"\n"
-"}"
+"warnings = \"+unused_default_value\"\n"
+"\n"
+"pkgtype(kind: \"executable\")\n"
 msgstr ""
 
-#: ../../language/error_codes/E0032.md:15
+#: ../../language/error_codes/E0032.md:17
 msgid "main.mbt"
 msgstr ""
 
-#: ../../language/error_codes/E0032.md:15
+#: ../../language/error_codes/E0032.md:17
 msgid ""
 "///|\n"
-"fn f(opt~ : Int = 4) -> Int {\n"
+"fn f(opt? : Int = 4) -> Int {\n"
 "  ignore(opt)\n"
 "  0\n"
 "}\n"
@@ -76,15 +76,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0032.md:20
+#: ../../language/error_codes/E0032.md:22
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E0032.md:22
+#: ../../language/error_codes/E0032.md:24
 msgid "Turn the optional argument into a labelled argument:"
 msgstr ""
 
-#: ../../language/error_codes/E0032.md:24
+#: ../../language/error_codes/E0032.md:26
 msgid ""
 "///|\n"
 "fn f(opt~ : Int) -> Int {\n"
@@ -98,4 +98,3 @@ msgid ""
 "  println(f(opt=3))\n"
 "}\n"
 msgstr ""
-

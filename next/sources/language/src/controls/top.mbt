@@ -301,6 +301,17 @@ test "continue label" {
 }
 // end loop label
 
+// start labelled block
+fn absolute(n : Int) -> Int {
+  result~: {
+    if n < 0 {
+      break result~ -n
+    }
+    n
+  }
+}
+// end labelled block
+
 // start guard 1
 fn guarded_get(array : Array[Int], index : Int) -> Int? {
   guard index >= 0 && index < array.length() else { None }
@@ -342,6 +353,13 @@ fn g() -> Unit {
   // <=> guard expr is Some(x) else { _ => panic() }
   // end guard 3
 }
+
+// start guard 4
+fn require_some(value : Int?) -> Int {
+  guard! value is Some(result)
+  result
+}
+// end guard 4
 
 // start match 1
 fn decide_sport(weather : String, humidity : Int) -> String {

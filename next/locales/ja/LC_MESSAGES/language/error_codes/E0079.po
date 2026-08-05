@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 15:07+0800\n"
+"POT-Creation-Date: 2026-07-17 12:47+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -62,15 +61,19 @@ msgstr ""
 
 #: ../../language/error_codes/E0079.md:15
 msgid "Suggestion"
-msgstr ""
+msgstr "修正案"
 
 #: ../../language/error_codes/E0079.md:17
 msgid ""
 "Use `extend Type with Trait::{method}` for methods that should support "
-"dot syntax. Otherwise, call the implementation as `Trait::method(value)`."
+"dot syntax. If the compatibility method should remain available only for "
+"migration, mark that `extend` declaration with `#deprecated`. Otherwise, "
+"call the implementation as `Trait::method(value)`."
 msgstr ""
+"ドット構文をサポートすべきメソッドには `extend Type with Trait::{method}` を使用します。互換メソッドを移行期間だけ残す場合は、"
+"その `extend` 宣言を `#deprecated` でマークしてください。それ以外の場合は `Trait::method(value)` として実装を呼び出します。"
 
-#: ../../language/error_codes/E0079.md:20
+#: ../../language/error_codes/E0079.md:22
 msgid ""
 "///|\n"
 "pub(open) trait Render {\n"

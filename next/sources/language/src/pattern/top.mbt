@@ -5,7 +5,7 @@ struct User {
 }
 
 let user : Unit = {
-  let u = { id: "1", name: "John", email: "john@example.com" }
+  let u = User::{ id: "1", name: "John", email: "john@example.com" }
   // start pattern 1
   let id = match u {
     { id, name: _, email: _ } => id
@@ -156,6 +156,20 @@ test {
   assert_eq(le, 0x0201U)
 }
 // end bit pattern types
+
+// FIXME(compiler): Re-enable this test on Windows native after the known
+// C-backend v128.load fallback recursion is fixed.
+#cfg(not(all(target="native", platform="windows")))
+/// start bit pattern v128
+test {
+  let bytes = b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F"
+  let vector : V128 = match bytes {
+    [v128le(value)] => value
+    _ => fail("expected 16 bytes")
+  }
+  let _ = vector
+}
+// end bit pattern v128
 
 enum Arith {
   Lit(Int)

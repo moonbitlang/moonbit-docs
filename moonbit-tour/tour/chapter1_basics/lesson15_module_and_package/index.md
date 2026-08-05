@@ -36,22 +36,32 @@ In addition to modules from mooncakes.io, you can also use local modules as depe
 - Working with modules that are not yet published
 - Testing changes across multiple modules
 
-To add a local dependency, edit the `deps` field in your `moon.mod.json` file:
+To use local modules together, add them as members of the same `moon.work`
+workspace. For example, if the workspace contains the `hello` module and the
+local `foo/bar` module:
 
-```json
-{
-  "name": "username/hello",
-  "deps": {
-    "foo/bar": {
-      "path": "../../path/to/foo-module"
-    }
-  }
+```moonbit
+members = [
+  "./hello",
+  "../../path/to/foo-module",
+]
+```
+
+Member paths are relative to `moon.work`. Declare `foo/bar` as a dependency of
+the `hello` module in `hello/moon.mod`:
+
+```moonbit
+name = "username/hello"
+import {
+  "foo/bar@0.1.0"
 }
 ```
 
-The `path` should be a relative path to the directory containing the local module's `moon.mod.json` file.
+Workspace members are resolved from their local source, so the declared
+version is not downloaded from mooncakes.io.
 
-Once declared, you can import packages from the local module in your `moon.pkg`, just like any other module:
+You can then import packages from the local module in `moon.pkg`, just like any
+other module:
 
 ```moonbit
 import {

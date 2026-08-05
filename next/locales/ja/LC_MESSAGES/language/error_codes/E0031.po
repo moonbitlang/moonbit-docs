@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-28 13:08+0800\n"
+"POT-Creation-Date: 2026-07-20 11:55+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -40,30 +39,31 @@ msgstr ""
 
 #: ../../language/error_codes/E0031.md:11
 msgid ""
-"Note, this warning is turned off by default. To enable this warning, you "
-"have to modify the `\"warn-list\"` of `moon.pkg.json`:"
+"This warning is turned off by default. Enable it with the `warnings` "
+"field in `moon.pkg`:"
 msgstr ""
+"この警告はデフォルトでは無効です。`moon.pkg` の `warnings` "
+"フィールドで有効にできます："
 
 #: ../../language/error_codes/E0031.md:14
-msgid "moon.pkg.json"
+msgid "moon.pkg"
 msgstr ""
 
 #: ../../language/error_codes/E0031.md:14
 msgid ""
-"{\n"
-"  \"is_main\": true,\n"
-"  \"warn-list\": \"+unused_optional_argument\"\n"
-"}"
+"warnings = \"+unused_optional_argument\"\n"
+"\n"
+"pkgtype(kind: \"executable\")\n"
 msgstr ""
 
-#: ../../language/error_codes/E0031.md:18
+#: ../../language/error_codes/E0031.md:19
 msgid "main.mbt"
 msgstr ""
 
-#: ../../language/error_codes/E0031.md:18
+#: ../../language/error_codes/E0031.md:19
 msgid ""
 "///|\n"
-"fn f(opt~ : Int = 4) -> Int {\n"
+"fn f(opt? : Int = 4) -> Int {\n"
 "  ignore(opt)\n"
 "  0\n"
 "}\n"
@@ -75,17 +75,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0031.md:23
+#: ../../language/error_codes/E0031.md:24
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E0031.md:25
+#: ../../language/error_codes/E0031.md:26
 msgid ""
 "You can remove the optional argument, and use a local variable definition"
 " instead:"
 msgstr ""
 
-#: ../../language/error_codes/E0031.md:28
+#: ../../language/error_codes/E0031.md:29
 msgid ""
 "///|\n"
 "fn f() -> Int {\n"
@@ -100,4 +100,3 @@ msgid ""
 "  println(f())\n"
 "}\n"
 msgstr ""
-

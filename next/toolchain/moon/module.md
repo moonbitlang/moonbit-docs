@@ -76,7 +76,8 @@ version = "0.1.0"
 
 ## Dependency Management
 
-The `deps` field is used to specify the dependencies of the module.
+Module dependencies are declared with `import` in `moon.mod`. The legacy
+`moon.mod.json` format represents the same information in its `deps` field.
 
 It is automatically managed by commands like `moon add` and `moon remove`.
 
@@ -277,11 +278,11 @@ You may use [`moon package --list`](commands.md#moon-package) to verify if the p
 
 ## Preferred Target
 
-The `preferred-target` field allows the `moon` and the language server to know which target
+The `preferred_target` field allows `moon` and the language server to know which target
 should be used as the default target, avoiding the necessity to write `--target`
 when developing a project targeting other backends than Wasm GC.
 
-Set this field on each module. Workspace-level `preferred-target` is deprecated;
+Set `preferred_target` on each module. Workspace-level `preferred-target` is deprecated;
 `moon run` uses the selected module's own preferred target.
 
 
@@ -304,11 +305,11 @@ preferred_target = "js"
 
 ## Supported Targets
 
-The `supported-targets` field declares which backends this module is intended to support.
-Unlike `preferred-target`, it does not choose a default target for commands. Use it to record
+The `supported_targets` field declares which backends this module is intended to support.
+Unlike `preferred_target`, it does not choose a default target for commands. Use it to record
 the module's compatibility surface in metadata.
 
-`supported-targets` uses a compact target-set syntax:
+`supported_targets` uses a compact target-set syntax:
 
 - `js` for a single backend
 - `+js+wasm-gc` for an explicit set of backends
@@ -342,18 +343,18 @@ supported_targets = ["js", "wasm-gc"]
 ``````{tab-item} moon.mod.json
 ```json
 {
-  "supported-targets": ["js", "native"]
+  "supported-targets": ["js", "wasm-gc"]
 }
 ```
 ``````
 `````````
 
-`preferred-target` and `supported-targets` are often used together:
+`preferred_target` and `supported_targets` are often used together:
 
-- `preferred-target` says which backend `moon` should use by default
-- `supported-targets` says which backends the module claims to support
+- `preferred_target` says which backend `moon` should use by default
+- `supported_targets` says which backends the module claims to support
 
-When a package also defines `supported-targets`, the effective backend set is the intersection
+When a package also defines `supported_targets`, the effective backend set is the intersection
 of the module-level and package-level declarations.
 
 For per-file conditional compilation inside a package, use [`targets`](package.md#conditional-compilation)
@@ -525,7 +526,6 @@ invalid_attribute          Invalid attribute.                                   
 unused_attribute           Unused attribute.                                               43 warn
 invalid_inline_wasm        Invalid inline-wasm.                                            44 error
 unused_rest_mark           Useless `..` in pattern                                         46 warn
-invalid_mbti               Invalid mbti file                                               47 warn
 missing_definition         Unused pub definition because it does not exist in mbti file.   49 warn
 method_shadowing           Local method shadows upstream method                            50 warn
 ambiguous_precedence       Ambiguous operator precedence                                   51 warn
@@ -551,7 +551,19 @@ core_package_not_imported  Packages in `moonbitlang/core` need to be explicitly 
 unqualified_local_using    unqualified local using                                         72 off
 unnecessary_annotation     unnecessary type annotation                                     73 off
 missing_doc                Missing documentation for public definition                     74 off
-A                          all warnings
+unnecessary_view_op        Unnecessary `[:]` view operator                                 75 off
+lexmatch_first_match       Deprecated `lexmatch` with first-match semantics.               76 warn
+lexmatch_longest_match     Deprecated `lexmatch` with longest-match semantics.             77 warn
+result_error_return        Using `Result[T, E]` where `E` is an error type.                78 off
+implicit_impl_as_method    `impl` implicitly promoted as method                            79 off
+regex_match_missing_before Missing `before` binding in `regex match`.                      80 warn
+regex_match_missing_after  Missing `after` binding in `regex match`.                       81 warn
+ambiguous_braces           Ambiguous `{}` braces.                                          82 warn
+type_param_method          Calling method of type parameter in a deprecated way.           83 warn
+unqualified_record         Struct literal in a `let` binding without a type prefix.        84 off
+unlabelled_break_in_labelled_loop Unlabelled `break` directly inside a labelled loop.             85 warn
+unlabelled_continue_in_labelled_loop Unlabelled `continue` directly inside a labelled loop.          86 warn
+all                        all warnings
 state: warn = enabled, error = promoted to error, off = disabled
 note: default alert exceptions: alert_unsafe=off
 ```
@@ -589,7 +601,7 @@ The `scripts` field is used to define custom scripts associated with the module.
 
 The `postadd` script runs automatically after the module has been added.
 When executed, the script's current working directory (cwd) is set to the
-directory where the `moon.mod.json` file resides.
+directory containing the module configuration file.
 
 `````````{tab-set}
 ``````{tab-item} moon.mod
@@ -626,7 +638,7 @@ Please use with caution and only with trusted dependencies.
 ```
 
 The pre-build config script is added in order to aid native target programming.
-To use such script, add your script in your `moon.mod.json`:
+To use such a script, add it to your module configuration:
 
 
 `````````{tab-set}

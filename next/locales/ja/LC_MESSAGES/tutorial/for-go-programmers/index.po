@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 16:24+0800\n"
+"POT-Creation-Date: 2026-07-17 12:47+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -1524,16 +1523,19 @@ msgstr ""
 
 #: ../../tutorial/for-go-programmers/index.md:1008
 msgid ""
-"In MoonBit, on the other hand, the default project structure provided by "
-"`moon new` is more organized, as shown below:"
+"In MoonBit, a project can use a binary-and-library structure such as the "
+"one below. Starting from `moon new`, move the packages under `src` when "
+"you want this layout and set the module's source directory accordingly:"
 msgstr ""
+"MoonBit のプロジェクトでは、次のようなバイナリとライブラリの構成を使用できます。`moon new` で作成したプロジェクトでこの構成を使う場合は、"
+"パッケージを `src` の下へ移動し、モジュールのソースディレクトリも合わせて設定します："
 
-#: ../../tutorial/for-go-programmers/index.md:1011
+#: ../../tutorial/for-go-programmers/index.md:1012
 msgid ""
 "my-project\n"
 "├── LICENSE\n"
 "├── README.md\n"
-"├── moon.mod.json\n"
+"├── moon.mod\n"
 "└── src\n"
 "    ├── lib\n"
 "    │   ├── hello.mbt\n"
@@ -1544,27 +1546,26 @@ msgid ""
 "        └── moon.pkg\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1026
+#: ../../tutorial/for-go-programmers/index.md:1027
 msgid ""
 "This demonstrates a typical \"binary-and-library\" project structure in "
-"MoonBit, located in the `src` directory. This is declared in "
-"`moon.mod.json` like so (with irrelevant parts omitted):"
+"MoonBit, located in the `src` directory. This is declared in `moon.mod` "
+"like so (with irrelevant parts omitted):"
+msgstr ""
+"これは `src` ディレクトリに置く、MoonBit の典型的な「バイナリとライブラリ」プロジェクト構成です。`moon.mod` では次のように宣言します"
+"（関係のない部分は省略しています）："
+
+#: ../../tutorial/for-go-programmers/index.md:1031
+msgid "source = \"src\"\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1030
-msgid ""
-"{\n"
-"  \"source\": \"src\"\n"
-"}\n"
-msgstr ""
-
-#: ../../tutorial/for-go-programmers/index.md:1036
+#: ../../tutorial/for-go-programmers/index.md:1035
 msgid ""
 "This is the module configuration file that also registers the project's "
 "basic information such as its name, version, and dependencies."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1039
+#: ../../tutorial/for-go-programmers/index.md:1038
 msgid ""
 "Each directory under the source directory (`src` in this example) is a "
 "package with its own `moon.pkg` file containing package-specific "
@@ -1573,11 +1574,11 @@ msgid ""
 "`src/main/moon.pkg` can be written as:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1044
+#: ../../tutorial/for-go-programmers/index.md:1043
 msgid "src/main/moon.pkg"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1044
+#: ../../tutorial/for-go-programmers/index.md:1043
 msgid ""
 "import {\n"
 "  \"username/hello/lib\",\n"
@@ -1586,7 +1587,7 @@ msgid ""
 "pkgtype(kind: \"executable\")\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1049
+#: ../../tutorial/for-go-programmers/index.md:1048
 msgid ""
 "Similarly to Go, MoonBit treats all `.mbt` files under a same package "
 "directory as a whole. When creating a new directory for more source "
@@ -1594,37 +1595,37 @@ msgid ""
 "directory."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1053
+#: ../../tutorial/for-go-programmers/index.md:1052
 msgid "Running the Project"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1055
+#: ../../tutorial/for-go-programmers/index.md:1054
 msgid "To run the aforementioned Go project, you would typically use:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1057
+#: ../../tutorial/for-go-programmers/index.md:1056
 msgid "$ go run main.go\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1061
+#: ../../tutorial/for-go-programmers/index.md:1060
 msgid "Running the previous MoonBit project with `moon run` is very similar:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1063
+#: ../../tutorial/for-go-programmers/index.md:1062
 msgid "$ moon run src/main/main.mbt\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1067
+#: ../../tutorial/for-go-programmers/index.md:1066
 msgid "Adding Imports"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1069
+#: ../../tutorial/for-go-programmers/index.md:1068
 msgid ""
 "In Go, you can add imports with the `import` clause followed by their "
 "module path:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1071
+#: ../../tutorial/for-go-programmers/index.md:1070
 msgid ""
 "package main\n"
 "\n"
@@ -1633,238 +1634,235 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1079
+#: ../../tutorial/for-go-programmers/index.md:1078
 msgid ""
-"MoonBit uses a different approach with `moon.mod.json` for module "
+"MoonBit uses a different approach with `moon.mod` for module "
 "configuration and `moon.pkg` for package configuration."
-msgstr ""
+msgstr "MoonBit では、モジュール設定に `moon.mod`、パッケージ設定に `moon.pkg` を使用します。"
 
-#: ../../tutorial/for-go-programmers/index.md:1082
+#: ../../tutorial/for-go-programmers/index.md:1081
 msgid ""
-"First, declare dependencies in the `\"deps\"` section of your "
-"`moon.mod.json`. This is usually done with the `moon add <package>` "
-"command."
-msgstr ""
+"First, declare module dependencies with an `import` declaration in "
+"`moon.mod`. This is usually done with the `moon add <package>` command."
+msgstr "まず、`moon.mod` の `import` 宣言でモジュール依存関係を指定します。通常は `moon add <package>` コマンドで行います。"
 
-#: ../../tutorial/for-go-programmers/index.md:1085
+#: ../../tutorial/for-go-programmers/index.md:1084
 msgid "For example, to use `moonbitlang/x`, you would run:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1087
+#: ../../tutorial/for-go-programmers/index.md:1086
 msgid "$ moon add moonbitlang/x\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1091
+#: ../../tutorial/for-go-programmers/index.md:1090
 msgid ""
-"... which would result in a `moon.mod.json` file like so (with irrelevant"
-" parts omitted):"
-msgstr ""
+"... which adds an entry like the following to `moon.mod` (the resolved "
+"version may differ):"
+msgstr "……これにより、`moon.mod` に次のようなエントリが追加されます（解決されるバージョンは異なる場合があります）："
 
 #: ../../tutorial/for-go-programmers/index.md:1093
 msgid ""
-"{\n"
-"  \"deps\": {\n"
-"    \"moonbitlang/x\": \"*\"\n"
-"  }\n"
+"import {\n"
+"  \"moonbitlang/x@0.4.6\",\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1101
+#: ../../tutorial/for-go-programmers/index.md:1099
 msgid "Then, in your package's `moon.pkg`, specify which packages to import:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1103
-#: ../../tutorial/for-go-programmers/index.md:1141
+#: ../../tutorial/for-go-programmers/index.md:1101
+#: ../../tutorial/for-go-programmers/index.md:1139
 msgid "moon.pkg"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1103
+#: ../../tutorial/for-go-programmers/index.md:1101
 msgid ""
 "import {\n"
 "  \"moonbitlang/x/sys\",\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1108
+#: ../../tutorial/for-go-programmers/index.md:1106
 msgid "Now you should be ready to use the `sys` package in this MoonBit package."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1110
+#: ../../tutorial/for-go-programmers/index.md:1108
 msgid "Using Imported Packages"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1112
+#: ../../tutorial/for-go-programmers/index.md:1110
 msgid ""
 "In Go, the above import allows you to access the `sys` package's APIs "
 "using the `<package-name>.` prefix (the actual API is hypothetical):"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1115
+#: ../../tutorial/for-go-programmers/index.md:1113
 msgid ""
 "func main() {\n"
 "    sys.SetEnvVar(\"MOONBIT\", \"Hello\")\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1121
+#: ../../tutorial/for-go-programmers/index.md:1119
 msgid "In MoonBit, you access imported APIs using the `@<package-name>.` prefix:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1123
+#: ../../tutorial/for-go-programmers/index.md:1121
 msgid ""
 "fn main {\n"
 "  @sys.set_env_var(\"MOONBIT\", \"Hello\")\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1129
+#: ../../tutorial/for-go-programmers/index.md:1127
 msgid "Package Aliases"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1131
+#: ../../tutorial/for-go-programmers/index.md:1129
 msgid ""
 "In Go, you can create aliases for imported packages using the `import` "
 "statement:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1133
+#: ../../tutorial/for-go-programmers/index.md:1131
 msgid ""
 "import (\n"
 "    system \"github.com/user/repo/sys\"\n"
 ")\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1139
+#: ../../tutorial/for-go-programmers/index.md:1137
 msgid "In MoonBit, you can create aliases for imported packages in `moon.pkg`:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1141
+#: ../../tutorial/for-go-programmers/index.md:1139
 msgid ""
 "import {\n"
 "  \"moonbitlang/x/sys\" @system,\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1146
+#: ../../tutorial/for-go-programmers/index.md:1144
 msgid "Then you may use the alias like so:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1148
+#: ../../tutorial/for-go-programmers/index.md:1146
 msgid ""
 "fn main {\n"
 "  @system.set_env_var(\"MOONBIT\", \"Hello\")\n"
 "}\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1154
+#: ../../tutorial/for-go-programmers/index.md:1152
 msgid "Access Control"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1156
+#: ../../tutorial/for-go-programmers/index.md:1154
 msgid ""
 "In Go, visibility is determined by the case of the first letter of an "
 "identifier (uppercase for public, lowercase for private)."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1159
+#: ../../tutorial/for-go-programmers/index.md:1157
 msgid ""
 "MoonBit has more granular access control than Go, providing the following"
 " visibility levels:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1161
+#: ../../tutorial/for-go-programmers/index.md:1159
 msgid "`priv`: Completely private (like Go's lowercase identifiers)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1162
+#: ../../tutorial/for-go-programmers/index.md:1160
 msgid ""
 "Default (abstract): Only the type name is visible, implementation is "
 "hidden"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1163
+#: ../../tutorial/for-go-programmers/index.md:1161
 msgid "`pub`: Read-only access from outside the package"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1164
+#: ../../tutorial/for-go-programmers/index.md:1162
 msgid "`pub(all)`: Full public access (like Go's uppercase identifiers)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1166
+#: ../../tutorial/for-go-programmers/index.md:1164
 msgid ""
 "This gives you fine-grained control over what parts of your API are "
 "exposed and how they can be used."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1168
+#: ../../tutorial/for-go-programmers/index.md:1166
 msgid "Runtime Support"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1170
+#: ../../tutorial/for-go-programmers/index.md:1168
 msgid ""
 "The same MoonBit code can target multiple runtimes with different code "
 "generation backends, allowing you to choose the best fit for your "
 "particular application:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1173
+#: ../../tutorial/for-go-programmers/index.md:1171
 msgid "WebAssembly (for web and edge computing)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1174
+#: ../../tutorial/for-go-programmers/index.md:1172
 msgid "JavaScript (for Node.js integration)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1175
+#: ../../tutorial/for-go-programmers/index.md:1173
 msgid "C (for native performance)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1176
+#: ../../tutorial/for-go-programmers/index.md:1174
 msgid "LLVM (experimental)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1178
+#: ../../tutorial/for-go-programmers/index.md:1176
 msgid "Memory Management"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1180
+#: ../../tutorial/for-go-programmers/index.md:1178
 msgid ""
 "Go uses a garbage collector, while MoonBit uses different strategies "
 "depending on the code generation backend being used:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1183
+#: ../../tutorial/for-go-programmers/index.md:1181
 msgid "**Wasm/C backends**: Reference counting without cycle detection"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1184
+#: ../../tutorial/for-go-programmers/index.md:1182
 msgid "**Wasm GC/JavaScript backends**: Leverages the runtime's garbage collector"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1186
+#: ../../tutorial/for-go-programmers/index.md:1184
 msgid "Getting Started"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1188
+#: ../../tutorial/for-go-programmers/index.md:1186
 msgid "Check out our [installation guide](../tour.md#installation)."
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1190
+#: ../../tutorial/for-go-programmers/index.md:1188
 msgid "Create your first MoonBit project:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1191
+#: ../../tutorial/for-go-programmers/index.md:1189
 msgid ""
 "$ moon new hello-world\n"
 "$ cd hello-world\n"
 "$ moon run\n"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1197
+#: ../../tutorial/for-go-programmers/index.md:1195
 msgid "When to Choose MoonBit"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1199
+#: ../../tutorial/for-go-programmers/index.md:1197
 msgid ""
 "MoonBit offers a fresh take on systems programming with functional "
 "programming benefits and WebAssembly-first design. While different from "
@@ -1873,60 +1871,42 @@ msgid ""
 "option for your project if you embrace:"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1203
+#: ../../tutorial/for-go-programmers/index.md:1201
 msgid "**WebAssembly targets** with minimal size and maximum performance"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1204
+#: ../../tutorial/for-go-programmers/index.md:1202
 msgid ""
 "**Functional programming** features like pattern matching and algebraic "
 "data types"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1205
+#: ../../tutorial/for-go-programmers/index.md:1203
 msgid ""
 "**Mathematical/algorithmic code** that benefits from immutability by "
 "default"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1206
+#: ../../tutorial/for-go-programmers/index.md:1204
 msgid "**Strong type safety** with comprehensive error handling"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1208
+#: ../../tutorial/for-go-programmers/index.md:1206
 msgid "Next Steps"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1210
+#: ../../tutorial/for-go-programmers/index.md:1208
 msgid "Explore the [Language Fundamentals](../../language/fundamentals.md)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1211
+#: ../../tutorial/for-go-programmers/index.md:1209
 msgid "Learn about [Error Handling](../../language/error-handling.md)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1212
+#: ../../tutorial/for-go-programmers/index.md:1210
 msgid "Understand [Methods and Traits](../../language/methods.md)"
 msgstr ""
 
-#: ../../tutorial/for-go-programmers/index.md:1213
+#: ../../tutorial/for-go-programmers/index.md:1211
 msgid "Check out [FFI capabilities](../../language/ffi.md) for interop"
 msgstr ""
-
-#~ msgid ""
-#~ "import {\n"
-#~ "  \"username/hello/lib\",\n"
-#~ "}\n"
-#~ "\n"
-#~ "options(\n"
-#~ "  \"is-main\": true,\n"
-#~ ")\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Notable **immutable collection types** in "
-#~ "MoonBit include "
-#~ "[tuples](../../language/fundamentals.md#tuple), immutable "
-#~ "collections such as `@immut/hashset.T[A]`, and"
-#~ " custom types with no `mut` fields."
-#~ msgstr ""

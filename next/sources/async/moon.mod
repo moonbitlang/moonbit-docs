@@ -1,4 +1,5 @@
 name = "moonbit-community/async-doc"
+
 version = "0.1.0"
 
 import {
@@ -6,9 +7,15 @@ import {
 }
 
 readme = "README.md"
+
 repository = ""
+
 license = "Apache-2.0"
-keywords = []
+
+keywords = [ ]
+
 description = ""
+
 source = "src"
+
 preferred_target = "native"

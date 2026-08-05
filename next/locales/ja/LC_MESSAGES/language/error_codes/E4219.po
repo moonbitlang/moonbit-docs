@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the MoonBit package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 15:07+0800\n"
+"POT-Creation-Date: 2026-07-30 12:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -29,17 +28,24 @@ msgstr ""
 
 #: ../../language/error_codes/E4219.md:5
 msgid ""
-"The `#export_name` attribute is invalid. Exported names must be unique "
-"valid C symbol identifiers, and the attribute may be used only on public,"
-" non-generic function definitions without optional arguments in a "
-"foreign-library package."
-msgstr ""
-
-#: ../../language/error_codes/E4219.md:9
-msgid "Erroneous example"
+"The `#export_name` attribute is invalid. MoonBit currently requires "
+"exported names to be unique valid C symbol identifiers for every backend."
+" The attribute may be used only on public, non-generic function "
+"definitions without optional arguments in a foreign-library package."
 msgstr ""
 
 #: ../../language/error_codes/E4219.md:11
+msgid ""
+"Known compiler issue: `#export_name` currently applies its C-symbol-"
+"identifier restriction to every backend. WebAssembly export names are "
+"UTF-8 strings and are not limited to C identifiers."
+msgstr ""
+
+#: ../../language/error_codes/E4219.md:16
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4219.md:18
 msgid ""
 "///|\n"
 "#export_name(\"bad-name\")\n"
@@ -48,17 +54,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4219.md:15
+#: ../../language/error_codes/E4219.md:22
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4219.md:17
+#: ../../language/error_codes/E4219.md:24
 msgid ""
 "Use a valid symbol name and declare the package as a foreign library with"
 " `pkgtype(kind: \"foreign_library\")`."
 msgstr ""
 
-#: ../../language/error_codes/E4219.md:20
+#: ../../language/error_codes/E4219.md:27
 msgid ""
 "///|\n"
 "#export_name(\"add_one\")\n"

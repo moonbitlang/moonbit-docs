@@ -41,7 +41,7 @@ It will generate template files in the path:
 │   └── main                     
 │       ├── main.mbt             # MoonBit source file 
 │       └── moon.pkg             # Package configuration for username/myapp/cmd/main package
-├── moon.mod.json                # Module configuration for username/myapp module
+├── moon.mod                     # Module configuration for username/myapp module
 ├── moon.pkg                     # Package configuration for username/myapp package
 ├── myapp.mbt                    # MoonBit source file
 ├── myapp_test.mbt               # Black-box test
@@ -71,7 +71,7 @@ You can safely remove any template files you do not need.
 The following is also a valid MoonBit project:
 
 ```
-├── moon.mod.json
+├── moon.mod
 ├── moon.pkg
 └── source.mbt
 ```
@@ -79,8 +79,8 @@ The following is also a valid MoonBit project:
 ## Add dependencies
 
 You can browse all available modules on [mooncakes.io](https://mooncakes.io).
-Use `moon add` to add the dependencies you need, or manually edit the `deps`
-field in `moon.mod.json`.
+Use `moon add` to add the dependencies you need, or manually edit the `import`
+declaration in `moon.mod`.
 
 For example, to add the latest version of the [moonbit-community/starter](https://mooncakes.io/docs/moonbit-community/starter) module:
 
@@ -156,7 +156,7 @@ moon implements the [minimal version selection](https://research.swtch.com/vgo-m
 
 ### Readme & metadata
 
-Metadata in `moon.mod.json` and `README.md` will be shown in mooncakes.io.
+Metadata in `moon.mod` and `README.md` will be shown in mooncakes.io.
 
 Metadata consist of the following sections:
 
