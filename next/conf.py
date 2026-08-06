@@ -49,6 +49,13 @@ smartquotes_excludes = {
   'builders': ['man', 'text', 'markdown', 'latex'],
 }
 
+# Keep generated Markdown links usable when pages are consumed out of tree.
+markdown_http_base = {
+    'zh_CN': 'https://docs.moonbitlang.cn',
+    'ja': 'https://docs.moonbitlang.com/ja/latest',
+}.get(globals().get('language'), 'https://docs.moonbitlang.com/en/latest')
+markdown_uri_doc_suffix = '.html'
+
 # Avoid guess-highlighting output blocks and other snippets without a language.
 highlight_language = 'none'
 
