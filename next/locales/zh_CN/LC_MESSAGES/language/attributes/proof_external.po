@@ -1,0 +1,57 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-06 11:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/proof_external.md:1
+msgid "Proof External Attribute"
+msgstr "Proof External 属性"
+
+#: ../../language/attributes/proof_external.md:3
+msgid ""
+"The `#proof_external(module, symbol)` attribute tells verification lowering "
+"to represent an abstract MoonBit type with a type from a Why3 module."
+msgstr ""
+"`#proof_external(module, symbol)` 属性指示验证降级过程使用 Why3 模块中的类型"
+"表示一个抽象 MoonBit 类型。"
+
+#: ../../language/attributes/proof_external.md:6
+msgid ""
+"///|\n"
+"#proof_external(\"set.Fset\", \"fset\")\n"
+"pub type ProofSet[T]\n"
+msgstr ""
+
+#: ../../language/attributes/proof_external.md:12
+msgid ""
+"In this example, occurrences of `ProofSet[T]` in proof-oriented logic are "
+"lowered to the Why3 type `set.Fset.fset T`. The attribute does not implement "
+"the MoonBit type, provide runtime values, or connect the type to an FFI ABI."
+msgstr ""
+"在本例中，面向证明的逻辑中的 `ProofSet[T]` 会降级为 Why3 类型 `set.Fset.fset "
+"T`。该属性不会实现这个 MoonBit 类型、提供运行时值，也不会将该类型连接到 FFI "
+"ABI。"
+
+#: ../../language/attributes/proof_external.md:16
+msgid ""
+"The module and symbol mapping is part of the trusted verification boundary. "
+"For the corresponding operation imports and proof example, see [Formal "
+"Verification](/language/verification.md#proof-specific-annotations)."
+msgstr ""
+"模块和符号映射是可信验证边界的一部分。有关对应的操作导入和证明示例，请参阅[形"
+"式化验证](/language/verification.md#proof-specific-annotations)。"

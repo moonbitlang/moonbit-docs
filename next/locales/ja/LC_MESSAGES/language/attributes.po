@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 17:22+0800\n"
+"POT-Creation-Date: 2026-08-06 11:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -813,7 +813,8 @@ msgid ""
 "The compiler trusts this assertion during cycle-capability analysis and "
 "does not verify it."
 msgstr ""
-"`#unsafe_cycle_free` アトリビュートは、struct、enum、newtype の宣言に対する高度な最適化アサーションです。注釈を付けた型の値が参照サイクルに決して加わらないことをコンパイラに伝えます。コンパイラはサイクル可能性の解析でこのアサーションを信頼し、検証しません。"
+"`#unsafe_cycle_free` アトリビュートは、struct、enum、newtype "
+"の宣言に対する高度な最適化アサーションです。注釈を付けた型の値が参照サイクルに決して加わらないことをコンパイラに伝えます。コンパイラはサイクル可能性の解析でこのアサーションを信頼し、検証しません。"
 
 #: ../../language/attributes/unsafe_cycle_free.md:9
 msgid ""
@@ -828,8 +829,7 @@ msgid ""
 "Use this attribute only when the cycle-free invariant is guaranteed by "
 "the program. An incorrect assertion can cause reference cycles involving "
 "the type to be treated as impossible and therefore not reclaimed."
-msgstr ""
-"プログラムがサイクルフリー不変条件を保証できる場合にのみ、このアトリビュートを使ってください。誤ったアサーションにより、この型を含む参照サイクルが存在しないものとして扱われ、回収されなくなる可能性があります。"
+msgstr "プログラムがサイクルフリー不変条件を保証できる場合にのみ、このアトリビュートを使ってください。誤ったアサーションにより、この型を含む参照サイクルが存在しないものとして扱われ、回収されなくなる可能性があります。"
 
 #: ../../language/attributes/as_free_fn.md:2
 msgid "`as_free_fn` Attribute"
@@ -1053,3 +1053,120 @@ msgid ""
 "See [Export Functions](/language/ffi.md#export-functions) for backend-"
 "specific alternatives."
 msgstr ""
+
+#: ../../language/attributes/proof_pure.md:2
+msgid "Proof Pure Attribute"
+msgstr "Proof Pure アトリビュート"
+
+#: ../../language/attributes/proof_pure.md:4
+msgid ""
+"The `#proof_pure` attribute makes a side-effect-free function available "
+"to both executable code and proof-oriented logic."
+msgstr "`#proof_pure` アトリビュートは、副作用のない関数を実行可能コードと証明向けロジックの両方で利用できるようにします。"
+
+#: ../../language/attributes/proof_pure.md:7
+msgid ""
+"#proof_pure\n"
+"fn height(t : Tree) -> Int {\n"
+"  match t {\n"
+"    Empty => 0\n"
+"    Node(_, _, _, h) => h\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/proof_pure.md:13
+msgid ""
+"It currently supports regular top-level functions and ordinary methods. "
+"Verification contracts, direct recursion, and mutual recursion are not "
+"yet supported on `#proof_pure` definitions."
+msgstr "現在、通常のトップレベル関数と通常のメソッドをサポートしています。`#proof_pure` 定義では、検証契約、直接再帰、相互再帰はまだサポートされていません。"
+
+#: ../../language/attributes/proof_pure.md:17
+msgid ""
+"For its role in specifications and a complete example, see [Formal "
+"Verification](/language/verification.md#proof-specific-annotations)."
+msgstr "仕様における役割と完全な例については、[形式検証](/language/verification.md#proof-specific-annotations)を参照してください。"
+
+#: ../../language/attributes/proof_external.md:2
+msgid "Proof External Attribute"
+msgstr "Proof External アトリビュート"
+
+#: ../../language/attributes/proof_external.md:4
+msgid ""
+"The `#proof_external(module, symbol)` attribute tells verification "
+"lowering to represent an abstract MoonBit type with a type from a Why3 "
+"module."
+msgstr "`#proof_external(module, symbol)` アトリビュートは、検証時の変換で抽象 MoonBit 型を Why3 モジュール内の型として表現するよう指定します。"
+
+#: ../../language/attributes/proof_external.md:7
+msgid ""
+"///|\n"
+"#proof_external(\"set.Fset\", \"fset\")\n"
+"pub type ProofSet[T]\n"
+msgstr ""
+
+#: ../../language/attributes/proof_external.md:13
+msgid ""
+"In this example, occurrences of `ProofSet[T]` in proof-oriented logic are"
+" lowered to the Why3 type `set.Fset.fset T`. The attribute does not "
+"implement the MoonBit type, provide runtime values, or connect the type "
+"to an FFI ABI."
+msgstr "この例では、証明向けロジック内の `ProofSet[T]` は Why3 型 `set.Fset.fset T` に変換されます。このアトリビュートは MoonBit 型を実装せず、実行時の値も提供せず、その型を FFI ABI に接続することもありません。"
+
+#: ../../language/attributes/proof_external.md:17
+msgid ""
+"The module and symbol mapping is part of the trusted verification "
+"boundary. For the corresponding operation imports and proof example, see "
+"[Formal Verification](/language/verification.md#proof-specific-"
+"annotations)."
+msgstr "モジュールとシンボルの対応付けは、信頼される検証境界の一部です。対応する演算のインポートと証明例については、[形式検証](/language/verification.md#proof-specific-annotations)を参照してください。"
+
+#: ../../language/attributes/proof_import.md:2
+msgid "Proof Import Attribute"
+msgstr "Proof Import アトリビュート"
+
+#: ../../language/attributes/proof_import.md:4
+msgid ""
+"The `#proof_import(module)` attribute maps a proof-only logic declaration"
+" in a `.mbtp` file to a symbol from a Why3 module. The declaration's "
+"string body names the Why3 symbol; it is not an executable MoonBit "
+"expression."
+msgstr "`#proof_import(module)` アトリビュートは、`.mbtp` ファイル内の証明専用ロジック宣言を Why3 モジュールのシンボルに対応付けます。宣言の文字列本体は Why3 シンボルを指定するもので、実行可能な MoonBit 式ではありません。"
+
+#: ../../language/attributes/proof_import.md:8
+msgid ""
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_mem(x : Int, set : ProofSet[Int]) -> Bool = \"mem\"\n"
+"\n"
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_empty() -> ProofSet[Int] = \"empty\"\n"
+"\n"
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_add(x : Int, set : ProofSet[Int]) -> ProofSet[Int] = \"add\""
+"\n"
+"\n"
+"lemma proof_set_add_contains(x : Int) where {\n"
+"  proof_ensure: proof_set_mem(\n"
+"    x,\n"
+"    proof_set_add(x, proof_set_empty()),\n"
+"  ),\n"
+"} {}\n"
+msgstr ""
+
+#: ../../language/attributes/proof_import.md:14
+msgid ""
+"Here, `set.Fset` is the Why3 module path, while `\"mem\"`, `\"empty\"`, "
+"and `\"add\"` name symbols in that module. These declarations affect "
+"verification lowering only and do not provide runtime implementations or "
+"FFI bindings. The final lemma creates a proof obligation; the imported "
+"declarations themselves do not."
+msgstr "ここで、`set.Fset` は Why3 のモジュールパスであり、`\"mem\"`、`\"empty\"`、`\"add\"` はそのモジュール内のシンボルを指定します。これらの宣言は検証時の変換だけに影響し、実行時の実装や FFI バインディングは提供しません。最後の補題は証明義務を生成しますが、インポート宣言自体は生成しません。"
+
+#: ../../language/attributes/proof_import.md:19
+msgid ""
+"The declared signatures and symbol mappings are part of the trusted "
+"verification boundary. For a complete example and usage guidance, see "
+"[Formal Verification](/language/verification.md#proof-specific-"
+"annotations)."
+msgstr "宣言したシグネチャとシンボルの対応付けは、信頼される検証境界の一部です。完全な例と利用方法については、[形式検証](/language/verification.md#proof-specific-annotations)を参照してください。"

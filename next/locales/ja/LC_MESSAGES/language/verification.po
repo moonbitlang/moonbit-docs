@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-10 17:25+0800\n"
+"POT-Creation-Date: 2026-08-06 11:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -103,7 +103,7 @@ msgstr ""
 msgid "Then define the logic-side specification in `.mbtp`:"
 msgstr ""
 
-#: ../../language/verification.md:35 ../../language/verification.md:277
+#: ../../language/verification.md:35 ../../language/verification.md:320
 msgid ""
 "predicate in_bounds(xs : FixedArray[Int], i : Int) {\n"
 "  (0 <= i) && (i < xs.length())\n"
@@ -212,88 +212,89 @@ msgstr ""
 #: ../../language/verification.md:58
 msgid ""
 "The rest of this page explains these pieces in more detail and introduces"
-" additional features such as `#proof_pure`, `proof_decrease`, "
-"`proof_axiomatized`, model-based verification, and the trusted surface."
+" additional features such as `#proof_pure`, `#proof_external`, "
+"`#proof_import`, `proof_decrease`, `proof_axiomatized`, model-based "
+"verification, and the trusted surface."
 msgstr ""
 
-#: ../../language/verification.md:62
+#: ../../language/verification.md:63
 msgid "Setup"
 msgstr ""
 
-#: ../../language/verification.md:64
+#: ../../language/verification.md:65
 msgid "Environment Setup"
 msgstr ""
 
-#: ../../language/verification.md:66
+#: ../../language/verification.md:67
 msgid ""
 "`moon prove` relies on the external Why3 verification toolchain. MoonBit "
 "lowers proof-enabled packages to Why3, and Why3 then dispatches proof "
 "obligations to one or more external solvers."
 msgstr ""
 
-#: ../../language/verification.md:70
+#: ../../language/verification.md:71
 msgid "Why3"
 msgstr ""
 
-#: ../../language/verification.md:72
+#: ../../language/verification.md:73
 msgid "Why3 is required to run formal verification in MoonBit."
 msgstr ""
 
-#: ../../language/verification.md:74
+#: ../../language/verification.md:75
 msgid "It is recommended to install Why3 through `opam`."
 msgstr ""
 
-#: ../../language/verification.md:75
+#: ../../language/verification.md:76
 msgid "The recommended pinned version is `1.7.2`."
 msgstr ""
 
-#: ../../language/verification.md:77
+#: ../../language/verification.md:78
 msgid ""
 "Using `opam` makes it easier to keep Why3 aligned with the version "
 "expected by the current MoonBit proof pipeline."
 msgstr ""
 
-#: ../../language/verification.md:80
+#: ../../language/verification.md:81
 msgid "External Solvers"
 msgstr ""
 
-#: ../../language/verification.md:82
+#: ../../language/verification.md:83
 msgid "At least one external solver must also be installed."
 msgstr ""
 
-#: ../../language/verification.md:84
+#: ../../language/verification.md:85
 msgid "MoonBit currently supports:"
 msgstr ""
 
-#: ../../language/verification.md:86
+#: ../../language/verification.md:87
 msgid "`z3`"
 msgstr ""
 
-#: ../../language/verification.md:87
+#: ../../language/verification.md:88
 msgid "`cvc5`"
 msgstr ""
 
-#: ../../language/verification.md:88
+#: ../../language/verification.md:89
 msgid "`alt-ergo`"
 msgstr ""
 
-#: ../../language/verification.md:90
+#: ../../language/verification.md:91
 msgid ""
 "Installing more than one solver can improve prover coverage, but a "
 "working setup only requires one of them to be available."
 msgstr ""
 
-#: ../../language/verification.md:93
+#: ../../language/verification.md:94
 msgid "Enabling Proofs in a Package"
 msgstr ""
 
-#: ../../language/verification.md:95
+#: ../../language/verification.md:96
 msgid ""
 "Proof support is enabled per package in `moon.pkg`, as shown in the "
 "overview example above."
 msgstr ""
 
-#: ../../language/verification.md:98
+#: ../../language/verification.md:99
 msgid ""
 "Once enabled, the package can contain both ordinary MoonBit source files "
 "and proof-oriented `.mbtp` files. Proof enablement is package-local: if "
@@ -301,27 +302,27 @@ msgid ""
 "enable it."
 msgstr ""
 
-#: ../../language/verification.md:102
+#: ../../language/verification.md:103
 msgid "Structure of Verified Code"
 msgstr ""
 
-#: ../../language/verification.md:104
+#: ../../language/verification.md:105
 msgid "Source Layout"
 msgstr ""
 
-#: ../../language/verification.md:106
+#: ../../language/verification.md:107
 msgid "Verification-oriented packages usually split into two layers:"
 msgstr ""
 
-#: ../../language/verification.md:108
+#: ../../language/verification.md:109
 msgid "`.mbt`: executable code, contracts, loop invariants, and local proof steps"
 msgstr ""
 
-#: ../../language/verification.md:109
+#: ../../language/verification.md:110
 msgid "`.mbtp`: predicates, abstract models, invariants, and lemmas"
 msgstr ""
 
-#: ../../language/verification.md:111
+#: ../../language/verification.md:112
 msgid ""
 "That split keeps runtime code readable while making proof structure "
 "explicit. In the [binary search overview](#overview-example-binary-"
@@ -329,160 +330,160 @@ msgid ""
 "function lives in `.mbt`."
 msgstr ""
 
-#: ../../language/verification.md:115
+#: ../../language/verification.md:116
 msgid "Program Side and Logic Side"
 msgstr ""
 
-#: ../../language/verification.md:117
+#: ../../language/verification.md:118
 msgid ""
 "MoonBit verification has a clear distinction between the program side and"
 " the logic side."
 msgstr ""
 
-#: ../../language/verification.md:120
+#: ../../language/verification.md:121
 msgid "The program side is executable MoonBit code."
 msgstr ""
 
-#: ../../language/verification.md:121
+#: ../../language/verification.md:122
 msgid ""
 "The logic side is used for specifications and proofs, and may not "
 "correspond to runtime code at all."
 msgstr ""
 
-#: ../../language/verification.md:124
+#: ../../language/verification.md:125
 msgid ""
 "Definitions in `.mbt` files are on the program side. Definitions in "
 "`.mbtp` files are on the logic side."
 msgstr ""
 
-#: ../../language/verification.md:127
+#: ../../language/verification.md:128
 msgid ""
 "This distinction is important because program-side definitions and logic-"
 "side definitions are separated:"
 msgstr ""
 
-#: ../../language/verification.md:130
+#: ../../language/verification.md:131
 msgid ""
 "program-side definitions are executable and can be called by ordinary "
 "MoonBit code"
 msgstr ""
 
-#: ../../language/verification.md:132
+#: ../../language/verification.md:133
 msgid "logic-side definitions are used by specifications and proofs"
 msgstr ""
 
-#: ../../language/verification.md:133
+#: ../../language/verification.md:134
 msgid "logic-side definitions in `.mbtp` are not ordinary runtime functions"
 msgstr ""
 
-#: ../../language/verification.md:134
+#: ../../language/verification.md:135
 msgid ""
 "program-side code does not call logic-side definitions as part of "
 "execution"
 msgstr ""
 
-#: ../../language/verification.md:135
+#: ../../language/verification.md:136
 msgid ""
 "logic-side specifications do not in general call arbitrary program-side "
 "definitions"
 msgstr ""
 
-#: ../../language/verification.md:138
+#: ../../language/verification.md:139
 msgid "This separation is the reason verified packages often have both:"
 msgstr ""
 
-#: ../../language/verification.md:140
+#: ../../language/verification.md:141
 msgid "program-side helper functions used by execution"
 msgstr ""
 
-#: ../../language/verification.md:141
+#: ../../language/verification.md:142
 msgid "logic-side predicates or model functions used by contracts"
 msgstr ""
 
-#: ../../language/verification.md:143
+#: ../../language/verification.md:144
 msgid ""
 "When one definition needs to be visible from both sides, `#proof_pure` is"
 " the mechanism for doing that."
 msgstr ""
 
-#: ../../language/verification.md:146
+#: ../../language/verification.md:147
 msgid ""
 "Within a `.mbt` file, contracts and proof annotations are the places "
 "where logic-side reasoning appears inside program code. In particular:"
 msgstr ""
 
-#: ../../language/verification.md:149
+#: ../../language/verification.md:150
 msgid ""
 "`proof_require` and `proof_ensure` are logic-side specifications attached"
 " to program functions"
 msgstr ""
 
-#: ../../language/verification.md:151
+#: ../../language/verification.md:152
 msgid "`proof_assert` states a logical fact that must be proved at that point"
 msgstr ""
 
-#: ../../language/verification.md:152
+#: ../../language/verification.md:153
 msgid ""
 "loop annotations such as `proof_invariant`, `proof_yield`, and "
 "`proof_reasoning` are logic-side statements about executable loops"
 msgstr ""
 
-#: ../../language/verification.md:155
+#: ../../language/verification.md:156
 msgid "Writing Specifications and Proofs"
 msgstr ""
 
-#: ../../language/verification.md:157
+#: ../../language/verification.md:158
 msgid "Contracts in `.mbt`"
 msgstr ""
 
-#: ../../language/verification.md:159
+#: ../../language/verification.md:160
 msgid ""
 "MoonBit uses `where { ... }` clauses for function contracts. In the "
 "binary search overview, the function contract appears directly on the "
 "program-side definition:"
 msgstr ""
 
-#: ../../language/verification.md:163
+#: ../../language/verification.md:164
 msgid "`proof_require` states a precondition."
 msgstr ""
 
-#: ../../language/verification.md:164
+#: ../../language/verification.md:165
 msgid "`proof_ensure` states a postcondition."
 msgstr ""
 
-#: ../../language/verification.md:165
+#: ../../language/verification.md:166
 msgid "`result` refers to the function result."
 msgstr ""
 
-#: ../../language/verification.md:167
+#: ../../language/verification.md:168
 msgid ""
 "Inside executable code, `proof_assert` can be used to record intermediate"
 " facts that help the prover connect the implementation to the "
 "specification."
 msgstr ""
 
-#: ../../language/verification.md:170
+#: ../../language/verification.md:171
 msgid ""
 "This is often the point where program-side implementation facts are "
 "connected to logic-side predicates and postconditions."
 msgstr ""
 
-#: ../../language/verification.md:173
+#: ../../language/verification.md:174
 msgid "Proof-Specific Annotations"
 msgstr ""
 
-#: ../../language/verification.md:175
+#: ../../language/verification.md:176
 msgid ""
 "Besides `proof_require`, `proof_ensure`, and `proof_assert`, MoonBit also"
 " has proof-specific annotations that control how definitions are treated "
 "by the proof pipeline."
 msgstr ""
 
-#: ../../language/verification.md:179
+#: ../../language/verification.md:180
 msgid "`#proof_pure`"
 msgstr ""
 
-#: ../../language/verification.md:181
+#: ../../language/verification.md:182
 msgid ""
 "`#proof_pure` marks a function as pure from the verifier's point of view."
 " This is useful for helper functions that compute logical quantities used"
@@ -490,7 +491,7 @@ msgid ""
 "program side."
 msgstr ""
 
-#: ../../language/verification.md:185
+#: ../../language/verification.md:186
 msgid ""
 "#proof_pure\n"
 "fn height(t : Tree) -> Int {\n"
@@ -501,18 +502,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/verification.md:191
+#: ../../language/verification.md:192
 msgid "The same helper can then be used in a specification:"
 msgstr ""
 
-#: ../../language/verification.md:193
+#: ../../language/verification.md:194
 msgid ""
 "predicate cached_height_ok(t : Tree, result : Int) {\n"
 "  result == height(t)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/verification.md:199
+#: ../../language/verification.md:200
 msgid ""
 "The rationale for `#proof_pure` is that some computations naturally "
 "belong on both sides. A helper such as `height` on a tree can be useful "
@@ -520,30 +521,30 @@ msgid ""
 "same quantity."
 msgstr ""
 
-#: ../../language/verification.md:203
+#: ../../language/verification.md:204
 msgid "Without `#proof_pure`, this typically means:"
 msgstr ""
 
-#: ../../language/verification.md:205
+#: ../../language/verification.md:206
 msgid "writing one program-side definition for execution"
 msgstr ""
 
-#: ../../language/verification.md:206
+#: ../../language/verification.md:207
 msgid "writing a second logic-side definition for specifications"
 msgstr ""
 
-#: ../../language/verification.md:207
+#: ../../language/verification.md:208
 msgid "proving that the two definitions are equivalent before using them"
 msgstr ""
 
-#: ../../language/verification.md:209
+#: ../../language/verification.md:210
 msgid ""
 "`#proof_pure` avoids that duplication by allowing one side-effect-free "
 "MoonBit definition to be shared across program code and proof-oriented "
 "logic."
 msgstr ""
 
-#: ../../language/verification.md:212
+#: ../../language/verification.md:213
 msgid ""
 "In larger verified packages, `#proof_pure` is commonly used for helpers "
 "such as structural measures like height, ranking functions, summaries, "
@@ -551,23 +552,106 @@ msgid ""
 "functions."
 msgstr ""
 
-#: ../../language/verification.md:216
+#: ../../language/verification.md:217
 msgid ""
 "At the moment, `#proof_pure` helpers are best treated as pure "
 "specification helpers rather than fully contracted verified functions. In"
-" particular, support for attaching ordinary verification contracts "
-"directly to `#proof_pure` definitions is still limited."
-msgstr ""
-
-#: ../../language/verification.md:221
-msgid "`proof_decrease`"
+" particular, support is currently limited to regular top-level functions "
+"and ordinary methods. Verification contracts, direct recursion, and "
+"mutual recursion are not yet supported on `#proof_pure` definitions."
 msgstr ""
 
 #: ../../language/verification.md:223
-msgid "`proof_decrease` supplies a termination measure for recursive definitions."
+msgid "External Theories: `#proof_external` and `#proof_import`"
 msgstr ""
 
 #: ../../language/verification.md:225
+msgid ""
+"Proof-oriented libraries sometimes expose a MoonBit type whose logical "
+"model is provided by an existing Why3 theory. Two attributes form this "
+"bridge:"
+msgstr ""
+
+#: ../../language/verification.md:228
+msgid ""
+"`#proof_external(module, symbol)` tells proof lowering to represent an "
+"abstract MoonBit type with a type from a Why3 module."
+msgstr ""
+
+#: ../../language/verification.md:230
+msgid ""
+"`#proof_import(module)` declares a proof-only stub for an operation from "
+"a Why3 module."
+msgstr ""
+
+#: ../../language/verification.md:233
+msgid ""
+"For example, an opaque carrier can be represented by Why3's "
+"`set.Fset.fset` type during verification:"
+msgstr ""
+
+#: ../../language/verification.md:236
+msgid ""
+"///|\n"
+"#proof_external(\"set.Fset\", \"fset\")\n"
+"pub type ProofSet[T]\n"
+msgstr ""
+
+#: ../../language/verification.md:242
+msgid ""
+"The proof side can then declare stubs for Why3 operations and prove a "
+"property using the imported finite-set theory. Stub parameter order must "
+"match the Why3 symbol:"
+msgstr ""
+
+#: ../../language/verification.md:246
+msgid ""
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_mem(x : Int, set : ProofSet[Int]) -> Bool = \"mem\"\n"
+"\n"
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_empty() -> ProofSet[Int] = \"empty\"\n"
+"\n"
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_add(x : Int, set : ProofSet[Int]) -> ProofSet[Int] = \"add\""
+"\n"
+"\n"
+"lemma proof_set_add_contains(x : Int) where {\n"
+"  proof_ensure: proof_set_mem(\n"
+"    x,\n"
+"    proof_set_add(x, proof_set_empty()),\n"
+"  ),\n"
+"} {}\n"
+msgstr ""
+
+#: ../../language/verification.md:252
+msgid ""
+"Here, `set.Fset` is a Why3 module path, and the string body `\"mem\"` "
+"names a symbol in that module. A string body is special proof-stub syntax"
+" accepted in a `.mbtp` file; it is not an executable MoonBit expression "
+"and is unrelated to MoonBit FFI. The final lemma is an actual proof "
+"obligation discharged from the imported Why3 theory; none of these "
+"declarations can be called by runtime MoonBit code."
+msgstr ""
+
+#: ../../language/verification.md:259
+msgid ""
+"Both attributes affect verification lowering only. `#proof_external` does"
+" not implement the MoonBit type or connect it to a runtime ABI, and "
+"`#proof_import` does not provide an executable function body. The "
+"declared signatures and their mapping to Why3 symbols are a trusted "
+"integration boundary."
+msgstr ""
+
+#: ../../language/verification.md:264
+msgid "`proof_decrease`"
+msgstr ""
+
+#: ../../language/verification.md:266
+msgid "`proof_decrease` supplies a termination measure for recursive definitions."
+msgstr ""
+
+#: ../../language/verification.md:268
 msgid ""
 "pub fn countdown(n : Int) -> Int where {\n"
 "  proof_decrease: n,\n"
@@ -582,47 +666,47 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/verification.md:231
+#: ../../language/verification.md:274
 msgid ""
 "This annotation is especially important when structural recursion or a "
 "numeric measure is not obvious to the prover from the function body "
 "alone."
 msgstr ""
 
-#: ../../language/verification.md:234
+#: ../../language/verification.md:277
 msgid "`proof_axiomatized`"
 msgstr ""
 
-#: ../../language/verification.md:236
+#: ../../language/verification.md:279
 msgid ""
 "`proof_axiomatized` marks a contracted function or lemma as assumed "
 "rather than proved."
 msgstr ""
 
-#: ../../language/verification.md:239
+#: ../../language/verification.md:282
 msgid ""
 "This is useful when a definition should be available to later proofs, but"
 " its implementation or proof is intentionally left outside the current "
 "verification boundary."
 msgstr ""
 
-#: ../../language/verification.md:243
+#: ../../language/verification.md:286
 msgid "In practice, `proof_axiomatized` should be used sparingly:"
 msgstr ""
 
-#: ../../language/verification.md:245
+#: ../../language/verification.md:288
 msgid "on a function, it means the verifier assumes the stated contract"
 msgstr ""
 
-#: ../../language/verification.md:246
+#: ../../language/verification.md:289
 msgid "on a lemma, it means the verifier assumes the stated conclusion"
 msgstr ""
 
-#: ../../language/verification.md:248
+#: ../../language/verification.md:291
 msgid "For example:"
 msgstr ""
 
-#: ../../language/verification.md:250
+#: ../../language/verification.md:293
 msgid ""
 "pub fn assumed_nonnegative(x : Int) -> Int where {\n"
 "  proof_axiomatized: true,\n"
@@ -633,7 +717,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/verification.md:256
+#: ../../language/verification.md:299
 msgid ""
 "This kind of declaration can be useful as a temporary bridge while a "
 "proof is still being developed, or when the trusted boundary is "
@@ -642,70 +726,70 @@ msgid ""
 "function body."
 msgstr ""
 
-#: ../../language/verification.md:261
+#: ../../language/verification.md:304
 msgid ""
 "Because these assumptions are not discharged by `moon prove`, they become"
 " part of the trusted surface of the verified package."
 msgstr ""
 
-#: ../../language/verification.md:264
+#: ../../language/verification.md:307
 msgid "Predicates and Lemmas in `.mbtp`"
 msgstr ""
 
-#: ../../language/verification.md:266
+#: ../../language/verification.md:309
 msgid ""
 "Logical properties live in `.mbtp` files. In the [binary search overview"
 "](#overview-example-binary-search), the logic side defines:"
 msgstr ""
 
-#: ../../language/verification.md:269
+#: ../../language/verification.md:312
 msgid "`in_bounds` as a basic indexing predicate"
 msgstr ""
 
-#: ../../language/verification.md:270
+#: ../../language/verification.md:313
 msgid "`sorted` as the precondition on the input array"
 msgstr ""
 
-#: ../../language/verification.md:271
+#: ../../language/verification.md:314
 msgid ""
 "`binary_search_ok` as the postcondition relating the result to the array "
 "and the key"
 msgstr ""
 
-#: ../../language/verification.md:274
+#: ../../language/verification.md:317
 msgid ""
 "For example, predicates in `.mbtp` can define the logical vocabulary used"
 " by contracts:"
 msgstr ""
 
-#: ../../language/verification.md:283
+#: ../../language/verification.md:326
 msgid "For larger verified packages, `.mbtp` also holds:"
 msgstr ""
 
-#: ../../language/verification.md:285
+#: ../../language/verification.md:328
 msgid "abstract model functions such as `model(x)`"
 msgstr ""
 
-#: ../../language/verification.md:286
+#: ../../language/verification.md:329
 msgid "representation invariants such as `bridge_inv(x)` or `sparse_array_inv(x)`"
 msgstr ""
 
-#: ../../language/verification.md:287
+#: ../../language/verification.md:330
 msgid "named postconditions such as `deposit_post(...)`"
 msgstr ""
 
-#: ../../language/verification.md:288
+#: ../../language/verification.md:331
 msgid "reusable lemmas"
 msgstr ""
 
-#: ../../language/verification.md:290
+#: ../../language/verification.md:333
 msgid ""
 "Lemmas are proof-only declarations that capture reusable facts. Small "
 "lemmas may have an empty body when the prover can discharge them "
 "directly, while larger lemmas can use recursive proof structure:"
 msgstr ""
 
-#: ../../language/verification.md:294
+#: ../../language/verification.md:337
 msgid ""
 "lemma height_nonneg_lemma(t : Tree) where {\n"
 "  proof_decrease: t,\n"
@@ -722,107 +806,107 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/verification.md:300
+#: ../../language/verification.md:343
 msgid ""
 "In this example, `avl_inv` is a representation invariant for an AVL tree,"
 " and the lemma proves `height(t)` is nonnegative by structural recursion "
 "on `t`."
 msgstr ""
 
-#: ../../language/verification.md:303
+#: ../../language/verification.md:346
 msgid "Lemma bodies vary with the amount of proof guidance the solver needs:"
 msgstr ""
 
-#: ../../language/verification.md:305
+#: ../../language/verification.md:348
 msgid ""
 "some lemmas have an empty body because the verifier can discharge them "
 "directly"
 msgstr ""
 
-#: ../../language/verification.md:306
+#: ../../language/verification.md:349
 msgid ""
 "some lemmas use a sequence of `proof_assert` steps to expose intermediate"
 " facts"
 msgstr ""
 
-#: ../../language/verification.md:307
+#: ../../language/verification.md:350
 msgid ""
 "recursive lemmas can also call other lemmas, including themselves on "
 "smaller inputs"
 msgstr ""
 
-#: ../../language/verification.md:309
+#: ../../language/verification.md:352
 msgid "Loop Invariants"
 msgstr ""
 
-#: ../../language/verification.md:311
+#: ../../language/verification.md:354
 msgid ""
 "Loops are verified with proof-specific clauses in the loop's `where { ..."
 " }` block. In the [binary search overview](#overview-example-binary-"
 "search), the loop invariants state that:"
 msgstr ""
 
-#: ../../language/verification.md:314
+#: ../../language/verification.md:357
 msgid "the current search window is always a valid slice `[i, j)`"
 msgstr ""
 
-#: ../../language/verification.md:315
+#: ../../language/verification.md:358
 msgid "every index before `i` contains a value `< key`"
 msgstr ""
 
-#: ../../language/verification.md:316
+#: ../../language/verification.md:359
 msgid "every index from `j` onward contains a value `> key`"
 msgstr ""
 
-#: ../../language/verification.md:318
+#: ../../language/verification.md:361
 msgid "The most common loop proof annotations are:"
 msgstr ""
 
-#: ../../language/verification.md:320
+#: ../../language/verification.md:363
 msgid "`proof_invariant`: facts that must hold at every iteration boundary"
 msgstr ""
 
-#: ../../language/verification.md:321
+#: ../../language/verification.md:364
 msgid "`proof_yield`: facts that must hold for values yielded by `break`"
 msgstr ""
 
-#: ../../language/verification.md:322
+#: ../../language/verification.md:365
 msgid "`proof_reasoning`: a proof-oriented explanation of why the loop is correct"
 msgstr ""
 
-#: ../../language/verification.md:324
+#: ../../language/verification.md:367
 msgid ""
 "In practice, good loop invariants describe the current search window, "
 "prefix, or processed region rather than the entire algorithm all at once."
 msgstr ""
 
-#: ../../language/verification.md:327
+#: ../../language/verification.md:370
 msgid "Model-Based Verification"
 msgstr ""
 
-#: ../../language/verification.md:329
+#: ../../language/verification.md:372
 msgid ""
 "For data structures and stateful systems, the most useful pattern is "
 "often:"
 msgstr ""
 
-#: ../../language/verification.md:331
+#: ../../language/verification.md:374
 msgid "define an abstract model,"
 msgstr ""
 
-#: ../../language/verification.md:332
+#: ../../language/verification.md:375
 msgid "define a representation invariant,"
 msgstr ""
 
-#: ../../language/verification.md:333
+#: ../../language/verification.md:376
 msgid "specify each operation against the abstract model."
 msgstr ""
 
-#: ../../language/verification.md:335
+#: ../../language/verification.md:378
 msgid "An AVL tree is a representative example of this style:"
 msgstr ""
 
-#: ../../language/verification.md:337
+#: ../../language/verification.md:380
 msgid ""
 "fn Tree::model(self : Tree) -> Fset[Int] {\n"
 "  match self {\n"
@@ -846,27 +930,27 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/verification.md:343
+#: ../../language/verification.md:386
 msgid "Here:"
 msgstr ""
 
-#: ../../language/verification.md:345
+#: ../../language/verification.md:388
 msgid "`model()` maps a concrete tree to its abstract finite-set view"
 msgstr ""
 
-#: ../../language/verification.md:346
+#: ../../language/verification.md:389
 msgid ""
 "the quantified conditions inline the ordering constraints over that "
 "abstract model"
 msgstr ""
 
-#: ../../language/verification.md:348
+#: ../../language/verification.md:391
 msgid ""
 "`avl_inv` ties together recursive well-formedness, search-tree ordering, "
 "and cached-height correctness"
 msgstr ""
 
-#: ../../language/verification.md:351
+#: ../../language/verification.md:394
 msgid ""
 "This style scales much better than writing large inline boolean formulas "
 "in each contract. Each operation can be specified in terms of the "
@@ -874,188 +958,194 @@ msgid ""
 "local facts until the named postcondition follows."
 msgstr ""
 
-#: ../../language/verification.md:356
+#: ../../language/verification.md:399
 msgid "Recommended Style"
 msgstr ""
 
-#: ../../language/verification.md:358
+#: ../../language/verification.md:401
 msgid "Keep executable logic in `.mbt` and proof logic in `.mbtp`."
 msgstr ""
 
-#: ../../language/verification.md:359
+#: ../../language/verification.md:402
 msgid ""
 "Treat the program side and the logic side as distinct layers with a "
 "narrow bridge between them."
 msgstr ""
 
-#: ../../language/verification.md:361
+#: ../../language/verification.md:404
 msgid "Prefer named predicates over large inline formulas."
 msgstr ""
 
-#: ../../language/verification.md:362
+#: ../../language/verification.md:405
 msgid ""
 "Use small, stable invariants and postconditions such as `*_inv` and "
 "`*_post`."
 msgstr ""
 
-#: ../../language/verification.md:363
+#: ../../language/verification.md:406
 msgid ""
 "Add `proof_assert` after important construction steps, branches, and loop"
 " updates when the prover needs help."
 msgstr ""
 
-#: ../../language/verification.md:365
+#: ../../language/verification.md:408
 msgid ""
 "Start with simple algorithmic proofs, then move to model-based "
 "verification for data structures and protocols."
 msgstr ""
 
-#: ../../language/verification.md:367
+#: ../../language/verification.md:410
 msgid ""
 "Be deliberate about recursive helpers: `#proof_pure` and `proof_decrease`"
 " often determine whether a proof remains maintainable."
 msgstr ""
 
-#: ../../language/verification.md:370
+#: ../../language/verification.md:413
 msgid "Running Verification"
 msgstr ""
 
-#: ../../language/verification.md:372
+#: ../../language/verification.md:415
 msgid "What `moon prove` Checks"
 msgstr ""
 
-#: ../../language/verification.md:374
+#: ../../language/verification.md:417
 msgid "Running `moon prove` asks the verifier to prove obligations such as:"
 msgstr ""
 
-#: ../../language/verification.md:376
+#: ../../language/verification.md:419
 msgid "function preconditions imply the function body is safe to execute"
 msgstr ""
 
-#: ../../language/verification.md:377
+#: ../../language/verification.md:420
 msgid "postconditions hold on every return path"
 msgstr ""
 
-#: ../../language/verification.md:378
+#: ../../language/verification.md:421
 msgid "`proof_assert` statements are valid"
 msgstr ""
 
-#: ../../language/verification.md:379
+#: ../../language/verification.md:422
 msgid "loop invariants hold initially and are preserved"
 msgstr ""
 
-#: ../../language/verification.md:380
+#: ../../language/verification.md:423
 msgid "loop termination measures decrease when the loop form supports them"
 msgstr ""
 
-#: ../../language/verification.md:381
+#: ../../language/verification.md:424
 msgid "bounds checks and similar safety properties required by the proof"
 msgstr ""
 
-#: ../../language/verification.md:383
+#: ../../language/verification.md:426
 msgid "Running the Verifier"
 msgstr ""
 
-#: ../../language/verification.md:385
+#: ../../language/verification.md:428
 msgid "From a module root, run:"
 msgstr ""
 
-#: ../../language/verification.md:387
+#: ../../language/verification.md:430
 msgid "moon prove\n"
 msgstr ""
 
-#: ../../language/verification.md:391
+#: ../../language/verification.md:434
 msgid "This tries to prove the proof-enabled packages in the current module."
 msgstr ""
 
-#: ../../language/verification.md:393
+#: ../../language/verification.md:436
 msgid "To prove a single package, pass its path:"
 msgstr ""
 
-#: ../../language/verification.md:395
+#: ../../language/verification.md:438
 msgid "moon prove path/to/package\n"
 msgstr ""
 
-#: ../../language/verification.md:399
+#: ../../language/verification.md:442
 msgid ""
 "In this targeted mode, MoonBit tries to prove only the selected package. "
 "Its dependencies are assumed rather than reproved as part of the same "
 "command."
 msgstr ""
 
-#: ../../language/verification.md:402
+#: ../../language/verification.md:445
 msgid ""
 "MoonBit lowers the proof-enabled package to Why3 and invokes the "
 "configured provers on the generated verification conditions."
 msgstr ""
 
-#: ../../language/verification.md:405
+#: ../../language/verification.md:448
 msgid ""
 "`moon check` and `moon prove` serve different purposes here. `moon check`"
 " validates the package as MoonBit code, while `moon prove` tries to "
 "discharge its proof obligations."
 msgstr ""
 
-#: ../../language/verification.md:409
+#: ../../language/verification.md:452
 msgid "Trust Model and Limitations"
 msgstr ""
 
-#: ../../language/verification.md:411
+#: ../../language/verification.md:454
 msgid "Trusted Assumptions"
 msgstr ""
 
-#: ../../language/verification.md:413
+#: ../../language/verification.md:456
 msgid ""
 "Like any verification system, MoonBit's proof story has a trusted "
 "surface: some facts are assumed by the frontend and backend rather than "
 "proved inside user code."
 msgstr ""
 
-#: ../../language/verification.md:417
+#: ../../language/verification.md:460
 msgid ""
 "This trusted surface also includes any user-written item marked "
 "`proof_axiomatized`."
 msgstr ""
 
-#: ../../language/verification.md:420
+#: ../../language/verification.md:463
 msgid "The main trusted assumptions today are:"
 msgstr ""
 
-#: ../../language/verification.md:422
+#: ../../language/verification.md:465
 msgid ""
 "verification reasons about mathematical integers rather than machine "
 "integers"
 msgstr ""
 
-#: ../../language/verification.md:423
+#: ../../language/verification.md:466
 msgid "any item marked `proof_axiomatized` is assumed rather than proved"
 msgstr ""
 
-#: ../../language/verification.md:425
+#: ../../language/verification.md:467
+msgid ""
+"declarations using `#proof_external` or `#proof_import` correctly "
+"describe the intended Why3 types and operations"
+msgstr ""
+
+#: ../../language/verification.md:470
 msgid ""
 "For integers, this means proof obligations are checked in an unbounded "
 "integer model. As a result:"
 msgstr ""
 
-#: ../../language/verification.md:428
+#: ../../language/verification.md:473
 msgid "arithmetic proofs do not currently model runtime overflow"
 msgstr ""
 
-#: ../../language/verification.md:429
+#: ../../language/verification.md:474
 msgid ""
 "a program can be correct in the proof model and still need explicit range"
 " discipline in execution"
 msgstr ""
 
-#: ../../language/verification.md:431
+#: ../../language/verification.md:476
 msgid "machine-integer verification is planned, but is not the current default"
 msgstr ""
 
-#: ../../language/verification.md:433
+#: ../../language/verification.md:478
 msgid "Current Status"
 msgstr ""
 
-#: ../../language/verification.md:435
+#: ../../language/verification.md:480
 msgid ""
 "Formal verification in MoonBit is still experimental. The surface syntax,"
 " prover integration, and proof ergonomics are actively evolving, so it is"
@@ -1063,41 +1153,41 @@ msgid ""
 " strong, machine-checked guarantees."
 msgstr ""
 
-#: ../../language/verification.md:440
+#: ../../language/verification.md:485
 msgid "Preferred Verification Style"
 msgstr ""
 
-#: ../../language/verification.md:442
+#: ../../language/verification.md:487
 msgid ""
 "MoonBit's current verifier works best with a functional proof style and "
 "model-based specifications."
 msgstr ""
 
-#: ../../language/verification.md:445
+#: ../../language/verification.md:490
 msgid ""
 "Imperative features such as local mutation and in-place `FixedArray` "
 "updates are supported, but their verified use is more limited:"
 msgstr ""
 
-#: ../../language/verification.md:448
+#: ../../language/verification.md:493
 msgid "mutable state is expected to remain local"
 msgstr ""
 
-#: ../../language/verification.md:449
+#: ../../language/verification.md:494
 msgid "escaping uses of `FixedArray` are currently not supported"
 msgstr ""
 
-#: ../../language/verification.md:450
+#: ../../language/verification.md:495
 msgid ""
 "when both formulations are available, functional-style programs are "
 "preferred"
 msgstr ""
 
-#: ../../language/verification.md:452
+#: ../../language/verification.md:497
 msgid "Further Reading"
 msgstr ""
 
-#: ../../language/verification.md:454
+#: ../../language/verification.md:499
 msgid ""
 "For additional verified programs and reusable proof-oriented libraries, "
 "see the [`moonbit-community/verified`](https://github.com/moonbit-"

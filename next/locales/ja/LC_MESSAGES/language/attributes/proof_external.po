@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-06 11:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/proof_external.md:1
+msgid "Proof External Attribute"
+msgstr "Proof External アトリビュート"
+
+#: ../../language/attributes/proof_external.md:3
+msgid ""
+"The `#proof_external(module, symbol)` attribute tells verification lowering "
+"to represent an abstract MoonBit type with a type from a Why3 module."
+msgstr ""
+"`#proof_external(module, symbol)` アトリビュートは、検証時の変換で抽象 "
+"MoonBit 型を Why3 モジュール内の型として表現するよう指定します。"
+
+#: ../../language/attributes/proof_external.md:6
+msgid ""
+"///|\n"
+"#proof_external(\"set.Fset\", \"fset\")\n"
+"pub type ProofSet[T]\n"
+msgstr ""
+
+#: ../../language/attributes/proof_external.md:12
+msgid ""
+"In this example, occurrences of `ProofSet[T]` in proof-oriented logic are "
+"lowered to the Why3 type `set.Fset.fset T`. The attribute does not implement "
+"the MoonBit type, provide runtime values, or connect the type to an FFI ABI."
+msgstr ""
+"この例では、証明向けロジック内の `ProofSet[T]` は Why3 型 `set.Fset.fset T` "
+"に変換されます。このアトリビュートは MoonBit 型を実装せず、実行時の値も提供せ"
+"ず、その型を FFI ABI に接続することもありません。"
+
+#: ../../language/attributes/proof_external.md:16
+msgid ""
+"The module and symbol mapping is part of the trusted verification boundary. "
+"For the corresponding operation imports and proof example, see [Formal "
+"Verification](/language/verification.md#proof-specific-annotations)."
+msgstr ""
+"モジュールとシンボルの対応付けは、信頼される検証境界の一部です。対応する演算"
+"のインポートと証明例については、[形式検証](/language/verification.md#proof-"
+"specific-annotations)を参照してください。"

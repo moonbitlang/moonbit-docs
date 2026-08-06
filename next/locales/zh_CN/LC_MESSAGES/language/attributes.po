@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 17:22+0800\n"
+"POT-Creation-Date: 2026-08-06 11:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -793,7 +793,8 @@ msgid ""
 "The compiler trusts this assertion during cycle-capability analysis and "
 "does not verify it."
 msgstr ""
-"`#unsafe_cycle_free` 属性是用于 struct、enum 或 newtype 声明的高级优化断言。它告诉编译器，该类型的值永远不会参与引用环。编译器会在分析类型是否可能成环时信任此断言，而不会验证它。"
+"`#unsafe_cycle_free` 属性是用于 struct、enum 或 newtype "
+"声明的高级优化断言。它告诉编译器，该类型的值永远不会参与引用环。编译器会在分析类型是否可能成环时信任此断言，而不会验证它。"
 
 #: ../../language/attributes/unsafe_cycle_free.md:9
 msgid ""
@@ -808,8 +809,7 @@ msgid ""
 "Use this attribute only when the cycle-free invariant is guaranteed by "
 "the program. An incorrect assertion can cause reference cycles involving "
 "the type to be treated as impossible and therefore not reclaimed."
-msgstr ""
-"仅当程序能够保证无环不变量时才应使用此属性。错误的断言会使涉及该类型的引用环被视为不可能存在，从而无法回收。"
+msgstr "仅当程序能够保证无环不变量时才应使用此属性。错误的断言会使涉及该类型的引用环被视为不可能存在，从而无法回收。"
 
 #: ../../language/attributes/as_free_fn.md:2
 msgid "`as_free_fn` Attribute"
@@ -1039,3 +1039,120 @@ msgid ""
 "See [Export Functions](/language/ffi.md#export-functions) for backend-"
 "specific alternatives."
 msgstr "有关各后端的替代方式，请参阅[导出函数](/language/ffi.md#export-functions)。"
+
+#: ../../language/attributes/proof_pure.md:2
+msgid "Proof Pure Attribute"
+msgstr "Proof Pure 属性"
+
+#: ../../language/attributes/proof_pure.md:4
+msgid ""
+"The `#proof_pure` attribute makes a side-effect-free function available "
+"to both executable code and proof-oriented logic."
+msgstr "`#proof_pure` 属性使无副作用的函数可同时用于可执行代码和面向证明的逻辑。"
+
+#: ../../language/attributes/proof_pure.md:7
+msgid ""
+"#proof_pure\n"
+"fn height(t : Tree) -> Int {\n"
+"  match t {\n"
+"    Empty => 0\n"
+"    Node(_, _, _, h) => h\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/proof_pure.md:13
+msgid ""
+"It currently supports regular top-level functions and ordinary methods. "
+"Verification contracts, direct recursion, and mutual recursion are not "
+"yet supported on `#proof_pure` definitions."
+msgstr "目前，它支持普通的顶层函数和常规方法。`#proof_pure` 定义暂不支持验证契约、直接递归和相互递归。"
+
+#: ../../language/attributes/proof_pure.md:17
+msgid ""
+"For its role in specifications and a complete example, see [Formal "
+"Verification](/language/verification.md#proof-specific-annotations)."
+msgstr "有关它在规约中的作用和完整示例，请参阅[形式化验证](/language/verification.md#proof-specific-annotations)。"
+
+#: ../../language/attributes/proof_external.md:2
+msgid "Proof External Attribute"
+msgstr "Proof External 属性"
+
+#: ../../language/attributes/proof_external.md:4
+msgid ""
+"The `#proof_external(module, symbol)` attribute tells verification "
+"lowering to represent an abstract MoonBit type with a type from a Why3 "
+"module."
+msgstr "`#proof_external(module, symbol)` 属性指示验证降级过程使用 Why3 模块中的类型表示一个抽象 MoonBit 类型。"
+
+#: ../../language/attributes/proof_external.md:7
+msgid ""
+"///|\n"
+"#proof_external(\"set.Fset\", \"fset\")\n"
+"pub type ProofSet[T]\n"
+msgstr ""
+
+#: ../../language/attributes/proof_external.md:13
+msgid ""
+"In this example, occurrences of `ProofSet[T]` in proof-oriented logic are"
+" lowered to the Why3 type `set.Fset.fset T`. The attribute does not "
+"implement the MoonBit type, provide runtime values, or connect the type "
+"to an FFI ABI."
+msgstr "在本例中，面向证明的逻辑中的 `ProofSet[T]` 会降级为 Why3 类型 `set.Fset.fset T`。该属性不会实现这个 MoonBit 类型、提供运行时值，也不会将该类型连接到 FFI ABI。"
+
+#: ../../language/attributes/proof_external.md:17
+msgid ""
+"The module and symbol mapping is part of the trusted verification "
+"boundary. For the corresponding operation imports and proof example, see "
+"[Formal Verification](/language/verification.md#proof-specific-"
+"annotations)."
+msgstr "模块和符号映射是可信验证边界的一部分。有关对应的操作导入和证明示例，请参阅[形式化验证](/language/verification.md#proof-specific-annotations)。"
+
+#: ../../language/attributes/proof_import.md:2
+msgid "Proof Import Attribute"
+msgstr "Proof Import 属性"
+
+#: ../../language/attributes/proof_import.md:4
+msgid ""
+"The `#proof_import(module)` attribute maps a proof-only logic declaration"
+" in a `.mbtp` file to a symbol from a Why3 module. The declaration's "
+"string body names the Why3 symbol; it is not an executable MoonBit "
+"expression."
+msgstr "`#proof_import(module)` 属性将 `.mbtp` 文件中仅用于证明的逻辑声明映射到 Why3 模块中的符号。声明的字符串函数体指定 Why3 符号；它不是可执行的 MoonBit 表达式。"
+
+#: ../../language/attributes/proof_import.md:8
+msgid ""
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_mem(x : Int, set : ProofSet[Int]) -> Bool = \"mem\"\n"
+"\n"
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_empty() -> ProofSet[Int] = \"empty\"\n"
+"\n"
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_add(x : Int, set : ProofSet[Int]) -> ProofSet[Int] = \"add\""
+"\n"
+"\n"
+"lemma proof_set_add_contains(x : Int) where {\n"
+"  proof_ensure: proof_set_mem(\n"
+"    x,\n"
+"    proof_set_add(x, proof_set_empty()),\n"
+"  ),\n"
+"} {}\n"
+msgstr ""
+
+#: ../../language/attributes/proof_import.md:14
+msgid ""
+"Here, `set.Fset` is the Why3 module path, while `\"mem\"`, `\"empty\"`, "
+"and `\"add\"` name symbols in that module. These declarations affect "
+"verification lowering only and do not provide runtime implementations or "
+"FFI bindings. The final lemma creates a proof obligation; the imported "
+"declarations themselves do not."
+msgstr "这里，`set.Fset` 是 Why3 模块路径，而 `\"mem\"`、`\"empty\"` 和 `\"add\"` 指定该模块中的符号。这些声明只影响验证降级过程，并不提供运行时实现或 FFI 绑定。最后的引理会产生证明义务；导入声明本身不会。"
+
+#: ../../language/attributes/proof_import.md:19
+msgid ""
+"The declared signatures and symbol mappings are part of the trusted "
+"verification boundary. For a complete example and usage guidance, see "
+"[Formal Verification](/language/verification.md#proof-specific-"
+"annotations)."
+msgstr "声明的签名和符号映射是可信验证边界的一部分。有关完整示例和使用说明，请参阅[形式化验证](/language/verification.md#proof-specific-annotations)。"

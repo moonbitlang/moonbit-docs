@@ -1,0 +1,73 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-06 11:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/proof_import.md:1
+msgid "Proof Import Attribute"
+msgstr "Proof Import 属性"
+
+#: ../../language/attributes/proof_import.md:3
+msgid ""
+"The `#proof_import(module)` attribute maps a proof-only logic declaration in "
+"a `.mbtp` file to a symbol from a Why3 module. The declaration's string body "
+"names the Why3 symbol; it is not an executable MoonBit expression."
+msgstr ""
+"`#proof_import(module)` 属性将 `.mbtp` 文件中仅用于证明的逻辑声明映射到 Why3 "
+"模块中的符号。声明的字符串函数体指定 Why3 符号；它不是可执行的 MoonBit 表达"
+"式。"
+
+#: ../../language/attributes/proof_import.md:7
+msgid ""
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_mem(x : Int, set : ProofSet[Int]) -> Bool = \"mem\"\n"
+"\n"
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_empty() -> ProofSet[Int] = \"empty\"\n"
+"\n"
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_add(x : Int, set : ProofSet[Int]) -> ProofSet[Int] = \"add\"\n"
+"\n"
+"lemma proof_set_add_contains(x : Int) where {\n"
+"  proof_ensure: proof_set_mem(\n"
+"    x,\n"
+"    proof_set_add(x, proof_set_empty()),\n"
+"  ),\n"
+"} {}\n"
+msgstr ""
+
+#: ../../language/attributes/proof_import.md:13
+msgid ""
+"Here, `set.Fset` is the Why3 module path, while `\"mem\"`, `\"empty\"`, and "
+"`\"add\"` name symbols in that module. These declarations affect "
+"verification lowering only and do not provide runtime implementations or FFI "
+"bindings. The final lemma creates a proof obligation; the imported "
+"declarations themselves do not."
+msgstr ""
+"这里，`set.Fset` 是 Why3 模块路径，而 `\"mem\"`、`\"empty\"` 和 `\"add\"` 指"
+"定该模块中的符号。这些声明只影响验证降级过程，并不提供运行时实现或 FFI 绑定。"
+"最后的引理会产生证明义务；导入声明本身不会。"
+
+#: ../../language/attributes/proof_import.md:18
+msgid ""
+"The declared signatures and symbol mappings are part of the trusted "
+"verification boundary. For a complete example and usage guidance, see "
+"[Formal Verification](/language/verification.md#proof-specific-annotations)."
+msgstr ""
+"声明的签名和符号映射是可信验证边界的一部分。有关完整示例和使用说明，请参阅[形"
+"式化验证](/language/verification.md#proof-specific-annotations)。"
