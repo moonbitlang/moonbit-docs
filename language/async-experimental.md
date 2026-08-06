@@ -16,7 +16,7 @@ to add `moonbitlang/async` as a dependency of your project.
 You may also want to set `preferred_target = "native"` in `moon.mod`.
 Now, import `moonbitlang/async` and other packages in the `moonbitlang/async` library in `moon.pkg`,
 and the asynchronous programming API should be available in your packages.
-If you want a workflow-first example, see the [Native CLI Quickstart](../tutorial/cli-quickstart.md).
+If you want a workflow-first example, see the [Native CLI Quickstart](https://docs.moonbitlang.com/en/latest/tutorial/cli-quickstart.html).
 
 The list of packages in `moonbitlang/async` and their detailed documentation
 can be found on [mooncakes.io](https://mooncakes.io/docs/moonbitlang/async),
@@ -26,7 +26,7 @@ This article will introduce some of the basic concept of `moonbitlang/async` and
 ## Async function
 
 Async functions are declared with the `async` keyword.
-They implicitly [`raise`](error-handling.md#throwing-errors) errors
+They implicitly [`raise`](https://docs.moonbitlang.com/en/latest/language/error-handling.html#throwing-errors) errors
 and need to declare `noraise` explicitly if otherwise.
 
 ```moonbit

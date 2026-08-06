@@ -255,7 +255,7 @@ options(
 }
 ```
 
-You may use [`moon package --list`](commands.md#moon-package) to verify if the packaged result is expected.
+You may use [`moon package --list`](https://docs.moonbitlang.com/en/latest/toolchain/moon/commands.html#moon-package) to verify if the packaged result is expected.
 
 ## Preferred Target
 
@@ -332,7 +332,7 @@ supported_targets = ["js", "wasm-gc"]
 When a package also defines `supported_targets`, the effective backend set is the intersection
 of the module-level and package-level declarations.
 
-For per-file conditional compilation inside a package, use [`targets`](package.md#conditional-compilation)
+For per-file conditional compilation inside a package, use [`targets`](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#conditional-compilation)
 in `moon.pkg` / `moon.pkg.json` instead.
 
 ## Source directory
@@ -546,7 +546,7 @@ The module-level `rule` entry declares a reusable pre-build command that is
 visible to every `moon.pkg` in the module. A module-level rule does not run by
 itself; to use it before building a package, add a package-level `dev_build`
 entry in `moon.pkg`. See the "Rule and dev_build" section in
-[Package Configuration](package.md#rule-and-dev-build) for the package-level
+[Package Configuration](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#rule-and-dev-build) for the package-level
 configuration.
 
 Use `rule(name: "...", command: "...")`, where `name` identifies the rule and

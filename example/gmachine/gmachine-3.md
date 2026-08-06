@@ -4,7 +4,7 @@ This article is the third in a series on implementing Haskell's lazy evaluation 
 
 ## Tracking Context
 
-Let's review how we implemented primitives in the [last tutorial](gmachine-2.md).
+Let's review how we implemented primitives in the [last tutorial](https://docs.moonbitlang.com/en/latest/example/gmachine/gmachine-2.html).
 
 ```moonbit
 let compiled_primitives : List[(String, Int, List[Instruction])] = @list.List([

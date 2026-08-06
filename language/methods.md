@@ -84,7 +84,7 @@ test {
 ### Local method
 
 To ensure single source of truth in method resolution and avoid ambiguity,
-[methods can only be defined in the same package as its type](packages.md#trait-implementations).
+[methods can only be defined in the same package as its type](https://docs.moonbitlang.com/en/latest/language/packages.html#trait-implementations).
 However, there is one exception to this rule: MoonBit allows defining *private* methods for foreign types locally.
 These local methods can override methods from the type's own package (MoonBit will emit a warning in this case),
 and provide extension/complementary to upstream API:
@@ -359,7 +359,7 @@ comes from the supertrait rather than the written constraint.
 
 For traits where all methods have default implementation,
 it is still necessary to explicitly implement them,
-in order to support features such as [abstract trait](packages.md#traits).
+in order to support features such as [abstract trait](https://docs.moonbitlang.com/en/latest/language/packages.html#traits).
 For this purpose, MoonBit provides the syntax `impl Trait for Type` (i.e. without the method part).
 `impl Trait for Type` ensures that `Type` implements `Trait`,
 MoonBit will automatically check if every method in `Trait` has corresponding implementation (custom or default).
@@ -607,4 +607,4 @@ test {
 }
 ```
 
-See [Deriving](derive.md) for more information about deriving traits.
+See [Deriving](https://docs.moonbitlang.com/en/latest/language/derive.html) for more information about deriving traits.

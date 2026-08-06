@@ -5,7 +5,7 @@ tour. This article tries to be a succinct yet easy to understand guide for those
 who haven't programmed in a way that MoonBit enables them to, that is, in a more
 modern, functional way.
 
-See [the General Introduction](../language/index.md) if you want to straight
+See [the General Introduction](https://docs.moonbitlang.com/en/latest/language/index.html) if you want to straight
 delve into the language.
 
 ## Installation
@@ -85,7 +85,7 @@ Unless specified, the following will be defined under the file `examine.mbt`.
 
 ### Data types
 
-The [basic data types](../language/fundamentals.md#built-in-data-structures) in MoonBit include the following:
+The [basic data types](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#built-in-data-structures) in MoonBit include the following:
 
 - `Unit`
 - `Bool`
@@ -101,7 +101,7 @@ score (of type `Double`) as `(String, Double)`. However this is not very
 intuitive as we can't distinguish with other possible data types, such as a struct
 containing a student ID and the height of the student.
 
-So we choose to declare our own data type using [struct](../language/fundamentals.md#struct):
+So we choose to declare our own data type using [struct](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#struct):
 
 ```moonbit
 struct Student {
@@ -111,7 +111,7 @@ struct Student {
 ```
 
 One can either pass or fail an exam, so the judgement result can be defined
-using [enum](../language/fundamentals.md#enum):
+using [enum](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#enum):
 
 ```moonbit
 enum ExamResult {
@@ -122,7 +122,7 @@ enum ExamResult {
 
 ### Functions
 
-A [Function](../language/fundamentals.md#functions) is a piece of code that takes some inputs and produces a result.
+A [Function](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#functions) is a piece of code that takes some inputs and produces a result.
 
 In our example, we need to judge whether a student has passed an exam:
 
@@ -203,8 +203,8 @@ We need to implement `Eq` and `Show` for our `ExamResult`. There are two ways to
    }
    ```
 
-   Here we use [pattern matching](../language/fundamentals.md#pattern-matching) to check the cases of the `ExamResult`.
-2. An alternative way is by [deriving](../language/derive.md) since `Eq` and `Show` are [builtin traits](../language/methods.md#builtin-traits) and the output for `ExamResult` is quite straightforward:
+   Here we use [pattern matching](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#pattern-matching) to check the cases of the `ExamResult`.
+2. An alternative way is by [deriving](https://docs.moonbitlang.com/en/latest/language/derive.html) since `Eq` and `Show` are [builtin traits](https://docs.moonbitlang.com/en/latest/language/methods.html#builtin-traits) and the output for `ExamResult` is quite straightforward:
    ```moonbit
    enum ExamResult {
      Pass
@@ -228,7 +228,7 @@ test "count qualified students" {
 }
 ```
 
-Here we use [lambda expressions](../language/fundamentals.md#local-functions) to reuse the previously defined `is_qualified` to create different criteria.
+Here we use [lambda expressions](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#local-functions) to reuse the previously defined `is_qualified` to create different criteria.
 
 We can run `moon test` to see whether the tests succeed or not.
 
@@ -250,7 +250,7 @@ In MoonBit, the result of the last expression is the return value of the functio
 
 For the `count_qualified_students` function, we need to iterate through the array to check if each student has passed or not.
 
-A naive version is by using a mutable value and a [`for` loop](../language/fundamentals.md#for-loop):
+A naive version is by using a mutable value and a [`for` loop](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#for-loop):
 
 ```moonbit
 fn count_qualified_students(
@@ -267,7 +267,7 @@ fn count_qualified_students(
 }
 ```
 
-However, this is neither efficient (due to the border check) nor intuitive, so we can replace the `for` loop with a [`for .. in` loop](../language/fundamentals.md#for-in-loop):
+However, this is neither efficient (due to the border check) nor intuitive, so we can replace the `for` loop with a [`for .. in` loop](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#for-in-loop):
 
 ```moonbit
 fn count_qualified_students(
@@ -282,7 +282,7 @@ fn count_qualified_students(
 }
 ```
 
-Still another way is use the functions defined for [iterator](../language/fundamentals.md#iterator):
+Still another way is use the functions defined for [iterator](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#iterator):
 
 ```moonbit
 fn count_qualified_students(
@@ -305,7 +305,7 @@ But before that, you have some other things to do.
 
 ### Adjusting the visibility
 
-To see how other people may use our program, MoonBit provides a mechanism called ["black box test"](../language/tests.md#blackbox-tests-and-whitebox-tests).
+To see how other people may use our program, MoonBit provides a mechanism called ["black box test"](https://docs.moonbitlang.com/en/latest/language/tests.html#blackbox-tests-and-whitebox-tests).
 
 Let's move the `test` block we defined above into a new file `top_test.mbt`.
 

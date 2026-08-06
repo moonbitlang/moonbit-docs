@@ -16,4 +16,4 @@ the alert, and `message` is a string that provides additional message for the
 alert.
 
 Alert warnings can be turned off with the `warnings` field in `moon.pkg`.
-For more detail, see [alert warning](../../toolchain/moon/package.md#alert-warning).
+For more detail, see [alert warning](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#alert-warning).

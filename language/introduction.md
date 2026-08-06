@@ -146,7 +146,7 @@ The previous two code snippets will print the following at runtime:
 2
 ```
 
-Only packages that are `main` packages can define such `main` function. Check out [build system tutorial](../toolchain/moon/tutorial.md) for detail. In current projects, this is configured in `moon.pkg`:
+Only packages that are `main` packages can define such `main` function. Check out [build system tutorial](https://docs.moonbitlang.com/en/latest/toolchain/moon/tutorial.html) for detail. In current projects, this is configured in `moon.pkg`:
 
 ```text
 pkgtype(kind: "executable")

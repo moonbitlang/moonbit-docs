@@ -18,7 +18,7 @@ test "test_name" {
 
 A test code block is essentially a function with type
 `() -> Unit raise Error`: it returns `Unit` and may raise an
-[`Error`](error-handling.md#error-types). It is called during the
+[`Error`](https://docs.moonbitlang.com/en/latest/language/error-handling.html#error-types). It is called during the
 execution of `moon test` and outputs a test report through the build system.
 The `assert_eq` function is from the standard library; if the assertion fails,
 it prints an error message and terminates the test. The string `"test_name"`

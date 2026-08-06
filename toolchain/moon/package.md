@@ -441,7 +441,7 @@ The `native-stub` field lists C stub source files that should be compiled with
 this package for native builds.
 
 This is commonly used together with [`extern "C"` declarations in the FFI
-documentation](../../language/ffi.md), where the stub file provides wrapper
+documentation](https://docs.moonbitlang.com/en/latest/language/ffi.html), where the stub file provides wrapper
 functions or adapter code that is easier to write in C than directly in
 MoonBit.
 
@@ -476,7 +476,7 @@ Currently, `link` does not work for the native backend. The behavior described
 in this section applies to the `wasm`, `wasm-gc`, and `js` backends.
 
 For new function exports, prefer
-[`#export_name`](../../language/attributes.md#export-name-attribute). Use the
+[`#export_name`](https://docs.moonbitlang.com/en/latest/language/attributes.html#export-name-attribute). Use the
 backend-specific `exports` field when the export set or names must differ by
 backend, or when the source cannot be annotated.
 
@@ -982,7 +982,7 @@ Pre-build commands run with the module root as their working directory. Input,
 output, and other pre-build paths are resolved relative to that module root.
 
 Rules can be declared either as package-level rules in the same `moon.pkg` or as
-module-level rules in [`moon.mod`](module.md). A package-level
+module-level rules in [`moon.mod`](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html). A package-level
 rule is visible only to `dev_build` entries in that same `moon.pkg`; a
 module-level rule is visible to `dev_build` entries in every package in the
 module. When resolving a rule name, `moon` first looks for a package-level rule
@@ -1178,7 +1178,7 @@ Use `moonc check -warn-help` to see the list of preset compiler warnings.
 ### Alert Warning
 
 Alerts are special warnings that indicate the usage of API marked with
-[`#internal` attribute](../../language/attributes.md#internal-attribute).
+[`#internal` attribute](https://docs.moonbitlang.com/en/latest/language/attributes.html#internal-attribute).
 
 All alerts have a category associated with them, which is customized by the author of the API.
 You can enable or disable specific alert categories using the `alert_<category>` warning name,

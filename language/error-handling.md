@@ -3,7 +3,7 @@
 Error handling has always been at core of our language design. In the following
 we'll be explaining how error handling is done in MoonBit. We assume you have
 some prior knowledge of MoonBit, if not, please checkout
-[A tour of MoonBit](../tutorial/tour.md).
+[A tour of MoonBit](https://docs.moonbitlang.com/en/latest/tutorial/tour.html).
 
 ## Error Types
 
@@ -238,7 +238,7 @@ println(a)
 ### Transforming to Result
 
 You can also catch the potential error and transform it into a first-class value
-of the [`Result`](fundamentals.md#option-and-result) type:
+of the [`Result`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#option-and-result) type:
 
 ```moonbit
 test {

@@ -1,6 +1,6 @@
 # Myers diff 3
 
-This article is the third in the [diff series](index.md). In the [previous part](myers-diff2.md), we explored the full Myers algorithm and its limitations. In this post, we'll learn how to implement a variant of the Myers algorithm that operates with linear space complexity.
+This article is the third in the [diff series](https://docs.moonbitlang.com/en/latest/example/myers-diff/index.html). In the [previous part](https://docs.moonbitlang.com/en/latest/example/myers-diff/myers-diff2.html), we explored the full Myers algorithm and its limitations. In this post, we'll learn how to implement a variant of the Myers algorithm that operates with linear space complexity.
 
 ## Divide and Conquer
 

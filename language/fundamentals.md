@@ -132,7 +132,7 @@ In double quotes string, a backslash followed by certain special characters form
 | `\\`                   | Backslash                                            |
 | `\u5154` , `\u{1F600}` | Unicode escape sequence                              |
 
-MoonBit supports string interpolation. It enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text. Variables used for string interpolation must implement the [`Show` trait](methods.md#builtin-traits).
+MoonBit supports string interpolation. It enables you to substitute variables within interpolated strings. This feature simplifies the process of constructing dynamic strings by directly embedding variable values into the text. Variables used for string interpolation must implement the [`Show` trait](https://docs.moonbitlang.com/en/latest/language/methods.html#builtin-traits).
 
 ```moonbit
 let x = 42
@@ -173,7 +173,7 @@ println(interp)
 
 Avoid mixing `$|` and `#|` within the same multi-line string; pick one style for the whole block.
 
-The [VSCode extension](../toolchain/vscode/index.md#actions) includes an action that can turn pasted documents into a plain multi-line string and switch between plain text and MoonBit multi-line strings.
+The [VSCode extension](https://docs.moonbitlang.com/en/latest/toolchain/vscode/index.html#actions) includes an action that can turn pasted documents into a plain multi-line string and switch between plain text and MoonBit multi-line strings.
 
 When the expected type is `String` , the array literal syntax is overloaded to
 construct the `String` by specifying each character in the string.
@@ -670,8 +670,8 @@ For simple anonymous function, MoonBit provides a very concise syntax called arr
 
 Although local function supports type inference for types of parameters and return value,
 *effect inference* is only supported for the arrow function syntax.
-If a `fn` may [raise error](error-handling.md)
-or [perform asynchronous operations](async-experimental.md),
+If a `fn` may [raise error](https://docs.moonbitlang.com/en/latest/language/error-handling.html)
+or [perform asynchronous operations](https://docs.moonbitlang.com/en/latest/language/async-experimental.html),
 it must be explicitly annotated with `raise` or `async`.
 
 Functions, whether named or anonymous, are *lexical closures*: any identifiers without a local binding must refer to bindings from a surrounding lexical scope. For example:
@@ -1056,7 +1056,7 @@ fn getProcessedText(
 
 An ordinary `guard` that may fail must have an `else` clause. If the compiler
 cannot prove that a `guard` without `else` always succeeds, it reports
-[E0087](error_codes/E0087.md), because failure would implicitly
+[E0087](https://docs.moonbitlang.com/en/latest/language/error_codes/E0087.html), because failure would implicitly
 terminate the program. Use `guard!` when termination is intended. Unlike
 `guard`, `guard!` cannot have an `else` clause.
 
@@ -1488,7 +1488,7 @@ For example, the following program:
 
 will first print `do things with the resource`, and then `perform resource cleanup`.
 `defer` expression will always get executed no matter how its body exits.
-It can handle [error](error-handling.md),
+It can handle [error](https://docs.moonbitlang.com/en/latest/language/error-handling.html),
 as well as control flow constructs including `return`, `break` and `continue`.
 
 Consecutive `defer` will be executed in reverse order, for example, the following:
@@ -1804,7 +1804,7 @@ For example, when creating a foreign `struct` using constructors,
 the package name can be omitted if the expected type of the expression is known.
 
 Since custom constructors are implemented by normal functions,
-they may [raise error](error-handling.md) or [perform asynchronous operations](async-experimental.md).
+they may [raise error](https://docs.moonbitlang.com/en/latest/language/error-handling.html) or [perform asynchronous operations](https://docs.moonbitlang.com/en/latest/language/async-experimental.html).
 Custom constructors also support [optional arguments]().
 Default values for optional arguments are written on the constructor
 implementation, just like normal function signatures.
@@ -2540,7 +2540,7 @@ match map {
 }
 ```
 
-- To match a data type `T` using map pattern, `T` must have a method `get(Self, K) -> Option[V]` for some type `K` and `V` (see [method and trait](methods.md)).
+- To match a data type `T` using map pattern, `T` must have a method `get(Self, K) -> Option[V]` for some type `K` and `V` (see [method and trait](https://docs.moonbitlang.com/en/latest/language/methods.html)).
 - Currently, the key part of map pattern must be a literal or constant
 - Map patterns are always open: the unmatched keys are silently ignored, and `..` needs to be added to identify this nature
 - Map pattern will be compiled to efficient code: every key will be fetched at most once

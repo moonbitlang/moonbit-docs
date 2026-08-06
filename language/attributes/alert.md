@@ -14,4 +14,4 @@ The first argument is the alert category, and the second argument is the message
 shown to users. The warning can be configured through warning names such as
 `alert` and `alert_unsafe`.
 
-For more detail, see [alert warning](../../toolchain/moon/package.md#alert-warning).
+For more detail, see [alert warning](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#alert-warning).

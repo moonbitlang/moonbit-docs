@@ -39,5 +39,5 @@ The native backend does not currently support exporting a `foreign_library`
 package as a library artifact. Use Wasm or JavaScript if you need an exported
 library.
 
-See [Export Functions](../ffi.md#export-functions) for backend-specific
+See [Export Functions](https://docs.moonbitlang.com/en/latest/language/ffi.html#export-functions) for backend-specific
 alternatives.

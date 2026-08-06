@@ -5,12 +5,12 @@ WebAssembly.
 
 ## Component Model
 
-Check out [this tutorial](component-model-tutorial.md) on how to work with
+Check out [this tutorial](https://docs.moonbitlang.com/en/latest/toolchain/wasm/component-model-tutorial.html) on how to work with
 [component model](https://component-model.bytecodealliance.org/) in MoonBit.
 
 ## Custom Export and Import
 
-Check out [FFI](../../language/ffi.md) section on how to import or export functions.
+Check out [FFI](https://docs.moonbitlang.com/en/latest/language/ffi.html) section on how to import or export functions.
 
 ## Q&A
 

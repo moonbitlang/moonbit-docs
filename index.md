@@ -6,10 +6,10 @@ You can build mixed-backend projects in one module, such as a native backend and
 
 ## Get started
 
-- [**Tutorials**](tutorial/index.md): Follow tutorials to start your journey
-- [**Language**](language/index.md): Introduction to detailed language specifications
+- [**Tutorials**](https://docs.moonbitlang.com/en/latest/tutorial/index.html): Follow tutorials to start your journey
+- [**Language**](https://docs.moonbitlang.com/en/latest/language/index.html): Introduction to detailed language specifications
 - [**Standard library**](https://mooncakes.io/docs/moonbitlang/core/): documentation of the standard library `moonbitlang/core`
-- [**Toolchains**](toolchain/index.md): Introduction to all the toolchains making developing MoonBit a unique experience.
+- [**Toolchains**](https://docs.moonbitlang.com/en/latest/toolchain/index.html): Introduction to all the toolchains making developing MoonBit a unique experience.
 
 ## Useful Sources
 

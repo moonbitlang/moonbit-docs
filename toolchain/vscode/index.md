@@ -19,7 +19,7 @@ The plugin provides several commands, available through
   by the extension.
 - Toggle multiline string: It can help switching the chosen text between a plain
   text and the MoonBit's
-  [multiline string syntax](../../language/fundamentals.md#string)
+  [multiline string syntax](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#string)
 
 ## Actions
 
@@ -27,7 +27,7 @@ The plugin also provides several actions, available through
 [quick fix](https://code.visualstudio.com/docs/editing/refactoring#_code-actions-quick-fixes-and-refactorings)
 
 - Add missing arms: It allows you to fill up the branches of a `match`
-  expression when encountering [Error 0011](../../language/error_codes/E0011.md)
+  expression when encountering [Error 0011](https://docs.moonbitlang.com/en/latest/language/error_codes/E0011.html)
 
 ## Code Lens
 
@@ -39,7 +39,7 @@ The provided functionalities are:
 - Format: format the code block
 - Test / Bench: test or bench the test block
 - Debug (JavaScript backend only): test the test block with debugger
-- Update: update the [snapshot tests](../../language/tests.md#snapshot-tests) in the
+- Update: update the [snapshot tests](https://docs.moonbitlang.com/en/latest/language/tests.html#snapshot-tests) in the
   code block
 - Trace: turn on/off the tracing of the test block where each assignment will
   have the value rendered next to it

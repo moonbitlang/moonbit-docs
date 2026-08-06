@@ -12,4 +12,4 @@ fn platform_specific_helper() -> Unit {
 Use it for functions that should not affect coverage reports, such as
 platform-specific fallback code or code paths that are intentionally excluded
 from coverage measurement. For more detail, see
-[Skipping coverage](../../toolchain/moon/coverage.md#skipping-coverage).
+[Skipping coverage](https://docs.moonbitlang.com/en/latest/toolchain/moon/coverage.html#skipping-coverage).

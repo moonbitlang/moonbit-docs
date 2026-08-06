@@ -157,7 +157,7 @@ supported_targets = "native"
 `supported_targets` uses target-set syntax such as `js`, `+js+wasm-gc`, or `+all-js`.
 
 If only some files are backend-specific, keep the module or package metadata broad and use
-[`targets`](package.md#conditional-compilation) in `moon.pkg` or legacy `moon.pkg.json` to select files
+[`targets`](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#conditional-compilation) in `moon.pkg` or legacy `moon.pkg.json` to select files
 per backend.
 
 ## Package Importing

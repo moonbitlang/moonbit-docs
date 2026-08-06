@@ -18,4 +18,4 @@ Verification contracts, direct recursion, and mutual recursion are not yet
 supported on `#proof_pure` definitions.
 
 For its role in specifications and a complete example, see
-[Formal Verification](../verification.md#proof-specific-annotations).
+[Formal Verification](https://docs.moonbitlang.com/en/latest/language/verification.html#proof-specific-annotations).

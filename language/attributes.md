@@ -96,7 +96,7 @@ The first argument is the alert category, and the second argument is the message
 shown to users. The warning can be configured through warning names such as
 `alert` and `alert_unsafe`.
 
-For more detail, see [alert warning](../toolchain/moon/package.md#alert-warning).
+For more detail, see [alert warning](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#alert-warning).
 
 ## Alias Attribute
 
@@ -182,7 +182,7 @@ It has three following forms:
 ## Visibility Attribute
 
 #### NOTE
-This topic does not cover access control. To learn more about `pub`, `pub(all)` and `priv`, see [Access Control](packages.md#id1).
+This topic does not cover access control. To learn more about `pub`, `pub(all)` and `priv`, see [Access Control](https://docs.moonbitlang.com/en/latest/language/packages.html#id1).
 
 The `#visibility` attribute is similar to the `#deprecated` attribute, but it is used to hint that a type will change its visibility in the future.
 For outside usages, if the usage will be invalidated by the visibility change in future, a warning will be emitted.
@@ -251,7 +251,7 @@ the alert, and `message` is a string that provides additional message for the
 alert.
 
 Alert warnings can be turned off with the `warnings` field in `moon.pkg`.
-For more detail, see [alert warning](../toolchain/moon/package.md#alert-warning).
+For more detail, see [alert warning](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#alert-warning).
 
 ## Doc Hidden Attribute
 
@@ -295,7 +295,7 @@ warnings should fail a CI build.
 
 Currently this attribute only works with some specific warnings.
 
-To learn more about warning names, see [warning list](../toolchain/moon/package.md#warnings-list).
+To learn more about warning names, see [warning list](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#warnings-list).
 
 ## Must Implement One Attribute
 
@@ -407,7 +407,7 @@ extern "C" fn open(filename : Bytes, flags : Int) -> Int = "open"
 ```
 
 For the full calling-convention rules, see
-[FFI lifetime management](ffi.md#the-borrow-and-owned-attribute).
+[FFI lifetime management](https://docs.moonbitlang.com/en/latest/language/ffi.html#the-borrow-and-owned-attribute).
 
 ## Unsafe Cycle-Free Attribute
 
@@ -445,7 +445,7 @@ test {
 
 The `#callsite` attribute is used to mark properties that happen at callsite.
 
-It could be `autofill`, which is to autofill the arguments [SourceLoc and ArgLoc](fundamentals.md#id1)
+It could be `autofill`, which is to autofill the arguments [SourceLoc and ArgLoc](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#id1)
 at callsite.
 
 ## Skip Attribute
@@ -468,7 +468,7 @@ fn platform_specific_helper() -> Unit {
 Use it for functions that should not affect coverage reports, such as
 platform-specific fallback code or code paths that are intentionally excluded
 from coverage measurement. For more detail, see
-[Skipping coverage](../toolchain/moon/coverage.md#skipping-coverage).
+[Skipping coverage](https://docs.moonbitlang.com/en/latest/toolchain/moon/coverage.html#skipping-coverage).
 
 ## Configuration attribute
 
@@ -560,7 +560,7 @@ The native backend does not currently support exporting a `foreign_library`
 package as a library artifact. Use Wasm or JavaScript if you need an exported
 library.
 
-See [Export Functions](ffi.md#export-functions) for backend-specific
+See [Export Functions](https://docs.moonbitlang.com/en/latest/language/ffi.html#export-functions) for backend-specific
 alternatives.
 
 ## Proof Pure Attribute
@@ -583,7 +583,7 @@ Verification contracts, direct recursion, and mutual recursion are not yet
 supported on `#proof_pure` definitions.
 
 For its role in specifications and a complete example, see
-[Formal Verification](verification.md#proof-specific-annotations).
+[Formal Verification](https://docs.moonbitlang.com/en/latest/language/verification.html#proof-specific-annotations).
 
 ## Proof External Attribute
 
@@ -602,7 +602,7 @@ MoonBit type, provide runtime values, or connect the type to an FFI ABI.
 
 The module and symbol mapping is part of the trusted verification boundary. For
 the corresponding operation imports and proof example, see
-[Formal Verification](verification.md#proof-specific-annotations).
+[Formal Verification](https://docs.moonbitlang.com/en/latest/language/verification.html#proof-specific-annotations).
 
 ## Proof Import Attribute
 
@@ -635,4 +635,4 @@ lemma creates a proof obligation; the imported declarations themselves do not.
 
 The declared signatures and symbol mappings are part of the trusted
 verification boundary. For a complete example and usage guidance, see
-[Formal Verification](verification.md#proof-specific-annotations).
+[Formal Verification](https://docs.moonbitlang.com/en/latest/language/verification.html#proof-specific-annotations).

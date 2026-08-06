@@ -26,4 +26,4 @@ warnings should fail a CI build.
 
 Currently this attribute only works with some specific warnings.
 
-To learn more about warning names, see [warning list](../../toolchain/moon/package.md#warnings-list).
+To learn more about warning names, see [warning list](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#warnings-list).

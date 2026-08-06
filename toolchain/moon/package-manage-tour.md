@@ -88,7 +88,7 @@ $ moon add moonbit-community/starter
 ```
 
 #### NOTE
-Moon also supports local dependencies. See [Dependency Management](module.md#dependency-management) for more details.
+Moon also supports local dependencies. See [Dependency Management](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#dependency-management) for more details.
 
 ## Import packages from module
 

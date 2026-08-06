@@ -5,7 +5,7 @@ This page is a work in progress and is currently incomplete.
 
 This page specifies MoonBit lexical forms. Runtime representation, APIs, and
 literal overloading are covered in
-[Fundamentals](fundamentals.md#built-in-data-structures).
+[Fundamentals](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#built-in-data-structures).
 
 In the productions, `{ symbol }` means zero or more repetitions,
 `{ symbol }+` means one or more repetitions, and `x ... y` denotes an inclusive

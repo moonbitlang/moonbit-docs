@@ -15,4 +15,4 @@ MoonBit type, provide runtime values, or connect the type to an FFI ABI.
 
 The module and symbol mapping is part of the trusted verification boundary. For
 the corresponding operation imports and proof example, see
-[Formal Verification](../verification.md#proof-specific-annotations).
+[Formal Verification](https://docs.moonbitlang.com/en/latest/language/verification.html#proof-specific-annotations).

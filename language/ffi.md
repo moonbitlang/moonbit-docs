@@ -48,11 +48,11 @@ For Wasm backends, all functions interacting with outside world relies on the ho
 
 ### JavaScript
 
-JavaScript backend will generate a JavaScript file, which can be a CommonJS module, an ES module or an IIFE based on the [configuration](../toolchain/moon/package.md#js-backend-link-options).
+JavaScript backend will generate a JavaScript file, which can be a CommonJS module, an ES module or an IIFE based on the [configuration](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#js-backend-link-options).
 
 ### C
 
-C backend will generate a C file. The MoonBit toolchain will also compile the project and generate an executable based on the [configuration](../toolchain/moon/package.md#native-backend-link-options).
+C backend will generate a C file. The MoonBit toolchain will also compile the project and generate an executable based on the [configuration](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#native-backend-link-options).
 
 ### LLVM
 
@@ -243,7 +243,7 @@ Sometimes, we want to pass a MoonBit function to the foreign interface as callba
 
 > A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives a function access to its outer scope. In JavaScript, closures are created every time a function is created, at function creation time.
 
-In some cases, we would like to pass the callback function which doesn't capture any local free variables. For this purpose, MoonBit provides a special type `FuncRef[T]`, which represents closed function of type `T`. Values of type `FuncRef[T]` must be closed function of type `T`, otherwise [a type error](error_codes/E4151.md) would occur.
+In some cases, we would like to pass the callback function which doesn't capture any local free variables. For this purpose, MoonBit provides a special type `FuncRef[T]`, which represents closed function of type `T`. Values of type `FuncRef[T]` must be closed function of type `T`, otherwise [a type error](https://docs.moonbitlang.com/en/latest/language/error_codes/E4151.html) would occur.
 
 In other cases, a MoonBit function parameter would be represented as a function and an object containing the surrounding state.
 
@@ -349,7 +349,7 @@ The native backend does not currently support exporting a `foreign_library`
 package as a library artifact.
 
 Use the backend-specific `exports` field in
-[link configuration](../toolchain/moon/package.md#link-options) when the export
+[link configuration](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#link-options) when the export
 set or names must differ by backend, or when the source cannot be annotated:
 
 ```moonbit

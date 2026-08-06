@@ -7,19 +7,19 @@ More often, it involves using other people's work: most noticeably is the [core]
 
 In MoonBit, the most important unit for code organization is a package, which consists of a number of source code files and a single package configuration file (`moon.pkg`, or the legacy `moon.pkg.json` format).
 A package is a library by default. A package containing a `main` function is
-declared executable with [`pkgtype(kind: "executable")`](../toolchain/moon/package.md#package-type).
+declared executable with [`pkgtype(kind: "executable")`](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#package-type).
 
 A project, corresponding to a module, consists of multiple packages and a
 single `moon.mod` configuration file. Older projects may still use the legacy
 `moon.mod.json` format.
 
-A module is identified by the [`name`](../toolchain/moon/module.md#name) field, which usually consists of two parts, separated by `/`: `user-name/project-name`.
-A package is identified by the relative path to the source root defined by the [`source`](../toolchain/moon/module.md#source-directory) field. The full identifier would be `user-name/project-name/path-to-pkg`.
+A module is identified by the [`name`](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#name) field, which usually consists of two parts, separated by `/`: `user-name/project-name`.
+A package is identified by the relative path to the source root defined by the [`source`](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#source-directory) field. The full identifier would be `user-name/project-name/path-to-pkg`.
 
 When using things from another package, the dependency between modules should
 first be declared in `moon.mod` with an
-[`import`](../toolchain/moon/module.md#dependency-management) declaration.
-The dependency between packages should then be declared in the package file (`moon.pkg`, or legacy `moon.pkg.json`) by the [`import`](../toolchain/moon/package.md#import) field.
+[`import`](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#dependency-management) declaration.
+The dependency between packages should then be declared in the package file (`moon.pkg`, or legacy `moon.pkg.json`) by the [`import`](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#import) field.
 Most core packages follow the same rule: if you use `@json`, `@test`, or other
 ordinary core aliases, add the corresponding `moonbitlang/core/...` package to
 `import` to avoid `core_package_not_imported` warnings.
@@ -28,7 +28,7 @@ ordinary core aliases, add the corresponding `moonbitlang/core/...` package to
 
 The **default alias** of a package is the last part of the identifier split by `/`.
 One can use `@pkg_alias` to access the imported entities, where `pkg_alias` is either the full identifier or the default alias.
-A custom alias may also be defined with the [`import`](../toolchain/moon/package.md#import) field.
+A custom alias may also be defined with the [`import`](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#import) field.
 
 In `moon.pkg`, a custom alias is written as:
 
@@ -111,10 +111,10 @@ You can use the `pub` modifier before toplevel `let`/`fn` to make them public.
 
 ### Aliases
 
-By default, [function alias](fundamentals.md#function-alias) and
-[method alias](methods.md#alias-methods-as-functions) follow the
+By default, [function alias](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#function-alias) and
+[method alias](https://docs.moonbitlang.com/en/latest/language/methods.html#alias-methods-as-functions) follow the
 visibility of the original definition, while
-[type alias](fundamentals.md#type-alias), [using]() are *invisible* to other
+[type alias](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#type-alias), [using]() are *invisible* to other
 packages.
 
 You can add the `pub` modifier before the definition or fill in the `visibility`
@@ -218,7 +218,7 @@ and prevent third-party packages from modifying behavior of existing programs by
 MoonBit employs the following restrictions on who can define methods/implement traits for types:
 
 - *only the package that defines a type can define methods for it*. So one cannot define new methods or override old methods for builtin and foreign types.
-  - there is an exception to this rule: [local methods](methods.md#local-method). Local methods are always private though, so they do not break coherence properties of MoonBit's type system
+  - there is an exception to this rule: [local methods](https://docs.moonbitlang.com/en/latest/language/methods.html#local-method). Local methods are always private though, so they do not break coherence properties of MoonBit's type system
 - *only the package of the type or the package of the trait can define an implementation*.
   For example, only `@pkg1` and `@pkg2` are allowed to write `impl @pkg1.Trait for @pkg2.Type`.
 
@@ -280,7 +280,7 @@ Virtual packages can be useful when swapping different implementations while kee
 
 You need to declare it to be a virtual package and define its interface in a MoonBit interface file.
 
-Within `moon.pkg`, you will need to add field [`virtual`](../toolchain/moon/package.md#declarations) :
+Within `moon.pkg`, you will need to add field [`virtual`](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#declarations) :
 
 ```text
 options(
@@ -303,7 +303,7 @@ The `pub` keyword for [access control]() and the function parameter names should
 
 ### Implementing a virtual package
 
-A virtual package can have a default implementation. By defining [`virtual.has-default`](../toolchain/moon/package.md#declarations) as `true`, you can implement the code as usual within the same package.
+A virtual package can have a default implementation. By defining [`virtual.has-default`](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#declarations) as `true`, you can implement the code as usual within the same package.
 
 ```moonbit
 ///|
@@ -312,7 +312,7 @@ pub fn log(s : String) -> Unit {
 }
 ```
 
-A virtual package can also be implemented by a third party. By defining [`implements`](../toolchain/moon/package.md#implementations) as the target package's full name, the compiler can warn you about the missing implementations or the mismatched implementations.
+A virtual package can also be implemented by a third party. By defining [`implements`](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#implementations) as the target package's full name, the compiler can warn you about the missing implementations or the mismatched implementations.
 
 ```text
 options(
@@ -329,13 +329,13 @@ pub fn log(string : String) -> Unit {
 
 ### Using a virtual package
 
-To use a virtual package, it's the same as other packages: define [`import`](../toolchain/moon/package.md#import) field in the package where you want to use it.
+To use a virtual package, it's the same as other packages: define [`import`](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#import) field in the package where you want to use it.
 
 ### Overriding a virtual package
 
 If a virtual package has a default implementation and that is your choice, there's no extra configurations.
 
-Otherwise, you may define the [`overrides`](../toolchain/moon/package.md#overriding-implementations) field by providing an array of implementations that you would like to use.
+Otherwise, you may define the [`overrides`](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#overriding-implementations) field by providing an array of implementations that you would like to use.
 
 ```text
 import {

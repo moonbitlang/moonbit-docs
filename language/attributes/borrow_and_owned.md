@@ -21,4 +21,4 @@ extern "C" fn open(filename : Bytes, flags : Int) -> Int = "open"
 ```
 
 For the full calling-convention rules, see
-[FFI lifetime management](../ffi.md#the-borrow-and-owned-attribute).
+[FFI lifetime management](https://docs.moonbitlang.com/en/latest/language/ffi.html#the-borrow-and-owned-attribute).

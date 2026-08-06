@@ -425,23 +425,23 @@ depends on its type: a value of an \*\*immutable type\*\* is passed by value, wh
 of a \*\*mutable type\*\* is passed by reference. -->
 
 Notable **primitive types** in MoonBit include
-[`Unit`](../../language/fundamentals.md#unit)
-, [`Boolean`](../../language/fundamentals.md#boolean)
-, integers ([`Int`](../../language/fundamentals.md#number), [`Int64`](../../language/fundamentals.md#number), [`UInt`](../../language/fundamentals.md#number), etc.)
-, floating-point numbers ([`Double`](../../language/fundamentals.md#number), [`Float`](../../language/fundamentals.md#number), etc.)
-, [`String`](../../language/fundamentals.md#string)
-, [`Char`](../../language/fundamentals.md#char)
-, [`Byte`](../../language/fundamentals.md#byte-s).
+[`Unit`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#unit)
+, [`Boolean`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#boolean)
+, integers ([`Int`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#number), [`Int64`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#number), [`UInt`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#number), etc.)
+, floating-point numbers ([`Double`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#number), [`Float`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#number), etc.)
+, [`String`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#string)
+, [`Char`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#char)
+, [`Byte`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#byte-s).
 
 Notable **immutable collection types** in MoonBit include
-[tuples](../../language/fundamentals.md#tuple),
+[tuples](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#tuple),
 immutable collections such as `@immut/hashset.HashSet[A]`,
 and custom types with no `mut` fields.
 
 On the other hand, notable **mutable collection types** include
-mutable collections such as [`Array[T]`](../../language/fundamentals.md#array)
-, [`FixedArray[T]`](../../language/fundamentals.md#array)
-, and [`Map[K, V]`](../../language/fundamentals.md#map),
+mutable collections such as [`Array[T]`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#array)
+, [`FixedArray[T]`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#array)
+, and [`Map[K, V]`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#map),
 as well as custom types with at least one `mut` field.
 
 For example, we can rewrite some of the above Go examples in MoonBit:
@@ -473,10 +473,10 @@ fn modify_map(m : Map[String, Int]) -> Unit {
 }
 ```
 
-#### The [`Ref[T]`](../../language/fundamentals.md#ref) Helper Type
+#### The [`Ref[T]`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#ref) Helper Type
 
 When you need explicit mutable references to value types,
-MoonBit provides the [`Ref[T]`](../../language/fundamentals.md#ref) type
+MoonBit provides the [`Ref[T]`](https://docs.moonbitlang.com/en/latest/language/fundamentals.html#ref) type
 which is roughly defined as follows:
 
 ```moonbit
@@ -1183,7 +1183,7 @@ code generation backend being used:
 
 ## Getting Started
 
-1. Check out our [installation guide](../tour.md#installation).
+1. Check out our [installation guide](https://docs.moonbitlang.com/en/latest/tutorial/tour.html#installation).
 2. Create your first MoonBit project:
    ```console
    $ moon new hello-world
@@ -1204,7 +1204,7 @@ Thus, MoonBit will be an interesting option for your project if you embrace:
 
 ## Next Steps
 
-- Explore the [Language Fundamentals](../../language/fundamentals.md)
-- Learn about [Error Handling](../../language/error-handling.md)
-- Understand [Methods and Traits](../../language/methods.md)
-- Check out [FFI capabilities](../../language/ffi.md) for interop
+- Explore the [Language Fundamentals](https://docs.moonbitlang.com/en/latest/language/fundamentals.html)
+- Learn about [Error Handling](https://docs.moonbitlang.com/en/latest/language/error-handling.html)
+- Understand [Methods and Traits](https://docs.moonbitlang.com/en/latest/language/methods.html)
+- Check out [FFI capabilities](https://docs.moonbitlang.com/en/latest/language/ffi.html) for interop

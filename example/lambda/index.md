@@ -236,7 +236,7 @@ fn subst(t1 : TermDBI, t2 : TermDBI) -> TermDBI {
 
 ```
 
-Full code is available [here](/sources/lambda-expression/src/top.mbt)
+Full code is available [here](https://docs.moonbitlang.com/en/latest/example/lambda/sources/lambda-expression/src/top.mbt)
 
 ## Improvement
 

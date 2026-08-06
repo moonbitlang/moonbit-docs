@@ -62,7 +62,7 @@ pub fn c_incr(x : Ref[Int]) -> Int {
 }
 ```
 
-Currently, document tests are always [blackbox tests](tests.md#blackbox-tests-and-whitebox-tests).
+Currently, document tests are always [blackbox tests](https://docs.moonbitlang.com/en/latest/language/tests.html#blackbox-tests-and-whitebox-tests).
 So private definitions cannot have document test.
 
 ## Literate `.mbt.md` Files
