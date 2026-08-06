@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-03 17:22+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0087.md:1
+msgid "E0087"
+msgstr ""
+
+#: ../../language/error_codes/E0087.md:3
+msgid "Warning name: `guard_inexhaustive`"
+msgstr "警告名称：`guard_inexhaustive`"
+
+#: ../../language/error_codes/E0087.md:5
+msgid ""
+"A `guard` without an `else` clause may fail. When its condition is false "
+"or its pattern does not match, it would implicitly terminate the program."
+msgstr ""
+"不带 `else` 子句的 `guard` 可能失败。当条件为假或模式无法匹配时，程序将隐式终止。"
+
+#: ../../language/error_codes/E0087.md:8
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0087.md:10
+msgid ""
+"///|\n"
+"pub fn unwrap(value : Int?) -> Int {\n"
+"  guard value is Some(result)\n"
+"  result\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0087.md:14
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E0087.md:16
+msgid ""
+"Add an `else` clause to handle failure, or use `guard!` when termination "
+"is intentional."
+msgstr "添加 `else` 子句处理失败；如果本来就需要终止程序，请使用 `guard!`。"
+
+#: ../../language/error_codes/E0087.md:19
+msgid ""
+"///|\n"
+"pub fn unwrap_or_zero(value : Int?) -> Int {\n"
+"  guard value is Some(result) else { 0 }\n"
+"  result\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn require_some(value : Int?) -> Int {\n"
+"  guard! value is Some(result)\n"
+"  result\n"
+"}\n"
+msgstr ""

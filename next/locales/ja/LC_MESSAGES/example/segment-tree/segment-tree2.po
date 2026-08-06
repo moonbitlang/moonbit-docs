@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-08-03 17:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,18 +28,17 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:5
 msgid ""
-"In the previous article, we discussed the basic implementation of a "
-"segment tree. That tree only allowed range queries (single-point "
-"modifications and queries were also possible), but it couldn't handle "
-"range modifications, such as adding a value to all elements in a given "
-"range."
+"In the previous article, we discussed the basic implementation of a segment "
+"tree. That tree only allowed range queries (single-point modifications and "
+"queries were also possible), but it couldn't handle range modifications, "
+"such as adding a value to all elements in a given range."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:7
 msgid ""
-"In this session, we will deepen the abstraction by introducing the "
-"concept of **LazyTag** to handle range modifications, creating a more "
-"functional segment tree."
+"In this session, we will deepen the abstraction by introducing the concept "
+"of **LazyTag** to handle range modifications, creating a more functional "
+"segment tree."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:9
@@ -48,8 +47,8 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:11
 msgid ""
-"First, let's imagine what happens if we add a number to all elements in a"
-" range on the segment tree. How would we do this using a straightforward "
+"First, let's imagine what happens if we add a number to all elements in a "
+"range on the segment tree. How would we do this using a straightforward "
 "approach?"
 msgstr ""
 
@@ -64,9 +63,9 @@ msgstr ""
 #: ../../example/segment-tree/segment-tree2.md:15
 msgid ""
 "Take the segment tree from the last lesson as an example. In the figure "
-"below, we add 1 to the range [4, 7]. You'll notice that we need to "
-"rebuild and maintain all parts of the tree that cover this range, which "
-"is too costly."
+"below, we add 1 to the range [4, 7]. You'll notice that we need to rebuild "
+"and maintain all parts of the tree that cover this range, which is too "
+"costly."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:17
@@ -83,18 +82,17 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:21
 msgid ""
-"Consider that instead of modifying every affected part, we mark the "
-"smallest covering range with a \"+1\" tag. Based on the length of the "
-"range, we calculate its value and merge it upward. Following the "
-"complexity of querying from the last lesson, this operation would be "
-"O(log N)."
+"Consider that instead of modifying every affected part, we mark the smallest "
+"covering range with a \"+1\" tag. Based on the length of the range, we "
+"calculate its value and merge it upward. Following the complexity of "
+"querying from the last lesson, this operation would be O(log N)."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:23
 msgid ""
 "However, there's a problem. While querying ranges like [1, 7] or [4, 7] "
-"works fine, what if we query [4, 6]? The minimal covering ranges are [4, "
-"5] and [6, 6], not [4, 7], so our tag doesn't propagate to lower nodes."
+"works fine, what if we query [4, 6]? The minimal covering ranges are [4, 5] "
+"and [6, 6], not [4, 7], so our tag doesn't propagate to lower nodes."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:25
@@ -111,10 +109,10 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:29
 msgid ""
-"We define that when querying a node with a tag, the tag is distributed to"
-" its child nodes. These child nodes inherit the tag and compute their "
-"values based on their length. The following diagram shows the propagation"
-" of the tag downward when querying [4, 6]."
+"We define that when querying a node with a tag, the tag is distributed to "
+"its child nodes. These child nodes inherit the tag and compute their values "
+"based on their length. The following diagram shows the propagation of the "
+"tag downward when querying [4, 6]."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:31
@@ -125,8 +123,8 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:34
 msgid ""
-"Some may wonder about overlapping tags. However, additive tags like these"
-" merge seamlessly without affecting the total sum of a node."
+"Some may wonder about overlapping tags. However, additive tags like these "
+"merge seamlessly without affecting the total sum of a node."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:37
@@ -144,10 +142,9 @@ msgstr ""
 #: ../../example/segment-tree/segment-tree2.md:43
 msgid ""
 "In the previous code, we defined the segment tree using `enum`. However, "
-"none of the elements were clearly named, which was manageable when the "
-"data size was small. Now, we need to add **Tag** and **Length** "
-"attributes, so it makes sense to use labeled arguments in the `enum` "
-"definition:"
+"none of the elements were clearly named, which was manageable when the data "
+"size was small. Now, we need to add **Tag** and **Length** attributes, so it "
+"makes sense to use labeled arguments in the `enum` definition:"
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:45
@@ -173,10 +170,10 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:51
 msgid ""
-"This allows for clearer initialization and pattern matching, making the "
-"code easier to follow. We've also abstracted the `Data` type, adding a "
-"`len` attribute to represent the length of the current range, which is "
-"useful for calculating the node's value."
+"This allows for clearer initialization and pattern matching, making the code "
+"easier to follow. We've also abstracted the `Data` type, adding a `len` "
+"attribute to represent the length of the current range, which is useful for "
+"calculating the node's value."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:53
@@ -185,9 +182,9 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:55
 msgid ""
-"Similar to the last lesson, before building the tree, we need to define "
-"the addition operations between `Node` types. However, since we’ve "
-"abstracted `Data`, we must account for its addition too:"
+"Similar to the last lesson, before building the tree, we need to define the "
+"addition operations between `Node` types. However, since we’ve abstracted "
+"`Data`, we must account for its addition too:"
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:57
@@ -215,9 +212,8 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:63
 msgid ""
-"Here, we’ve ignored merging LazyTags for now and set the resulting tag to"
-" `Nil` because once a node is reached, its parent’s LazyTag no longer "
-"applies."
+"Here, we’ve ignored merging LazyTags for now and set the resulting tag to "
+"`Nil` because once a node is reached, its parent’s LazyTag no longer applies."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:65
@@ -244,10 +240,10 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:75
 msgid ""
-"We define a node receiving a LazyTag as `apply`. The key logic lies in "
-"here: the node receiving the LazyTag may not own a LazyTag, and if it did"
-" own one, how do we merge them? And how do we compute the new value of "
-"the node based on the LazyTag?"
+"We define a node receiving a LazyTag as `apply`. The key logic lies in here: "
+"the node receiving the LazyTag may not own a LazyTag, and if it did own one, "
+"how do we merge them? And how do we compute the new value of the node based "
+"on the LazyTag?"
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:77
@@ -286,8 +282,8 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:86
 msgid ""
-"Here is the core part of this section: compute the correct node's value "
-"with the segment's length and the value of LazyTag."
+"Here is the core part of this section: compute the correct node's value with "
+"the segment's length and the value of LazyTag."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:88
@@ -311,7 +307,7 @@ msgid ""
 "  } else if modify_l <= l && modify_r >= r {\n"
 "    self.apply(tag)\n"
 "  } else {\n"
-"    guard self is Node(left~, right~, ..)\n"
+"    guard! self is Node(left~, right~, ..)\n"
 "    let mid = (l + r) >> 1\n"
 "    left.modify(l, mid, modify_l, modify_r, tag) +\n"
 "    right.modify(mid + 1, r, modify_l, modify_r, tag)\n"
@@ -321,34 +317,32 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:96
 msgid ""
-"The logic is similar to the query function from the previous lesson, but "
-"now each relevant node applies the necessary LazyTag for the "
-"modification."
+"The logic is similar to the query function from the previous lesson, but now "
+"each relevant node applies the necessary LazyTag for the modification."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:98
 msgid ""
-"When we arrive here, we find that, even with the range modification, it's"
-" still a persistent, or **Immutable** segment tree. The `modify` function"
-" will return the recently created segment tree, without changing the "
-"original one, and the semantics of recurring and merging represent this "
-"vividly."
+"When we arrive here, we find that, even with the range modification, it's "
+"still a persistent, or **Immutable** segment tree. The `modify` function "
+"will return the recently created segment tree, without changing the original "
+"one, and the semantics of recurring and merging represent this vividly."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:100
 msgid ""
-"This means that using these kind of implementations (ADT(enum), "
-"recursion) for meeting immutable requirements is natural and elegant. "
-"With the garbage collection mechanism of MoonBit, we don't need to use "
-"pointers **explicitly** for some relationships in recurring ADT(enum), "
-"and we don't need to take care of the memory."
+"This means that using these kind of implementations (ADT(enum), recursion) "
+"for meeting immutable requirements is natural and elegant. With the garbage "
+"collection mechanism of MoonBit, we don't need to use pointers "
+"**explicitly** for some relationships in recurring ADT(enum), and we don't "
+"need to take care of the memory."
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:102
 msgid ""
-"Readers unfamiliar with the functional programming languages may not "
-"notice this, but we actually always profit from it. For example, writing "
-"a `ConsList` in Rust using ADT(enum), we usually need:"
+"Readers unfamiliar with the functional programming languages may not notice "
+"this, but we actually always profit from it. For example, writing a "
+"`ConsList` in Rust using ADT(enum), we usually need:"
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:104
@@ -407,7 +401,7 @@ msgid ""
 "  } else if query_l <= l && query_r >= r {\n"
 "    self\n"
 "  } else {\n"
-"    guard self is Node(tag~, left~, right~, ..)\n"
+"    guard! self is Node(tag~, left~, right~, ..)\n"
 "    let mid = (l + r) >> 1\n"
 "    left.apply(tag).query(l, mid, query_l, query_r) +\n"
 "    right.apply(tag).query(mid + 1, r, query_l, query_r)\n"
@@ -421,18 +415,17 @@ msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:134
 msgid ""
-"With this, we have a segment tree that supports range modifications and "
-"is much more functional!"
+"With this, we have a segment tree that supports range modifications and is "
+"much more functional!"
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:136
 msgid ""
-"In the next lesson, we’ll add multiplication support to the segment tree "
-"and explore some use cases for immutable segment trees. Stay tuned!"
+"In the next lesson, we’ll add multiplication support to the segment tree and "
+"explore some use cases for immutable segment trees. Stay tuned!"
 msgstr ""
 
 #: ../../example/segment-tree/segment-tree2.md:138
 msgid ""
-"Full code is available [here](path:/sources/segment-"
-"tree/src/part2/top.mbt)."
+"Full code is available [here](path:/sources/segment-tree/src/part2/top.mbt)."
 msgstr ""

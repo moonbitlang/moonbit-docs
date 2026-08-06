@@ -26,7 +26,7 @@ fn g(x : Array[Int?]) -> Unit {
 
 // start is 4
 fn h(x : Int?) -> Unit {
-  guard x is Some(v)
+  guard! x is Some(v)
   println(v)
 }
 // end is 4
@@ -47,7 +47,7 @@ fn j(x : Int) -> Int? {
 }
 
 fn init {
-  guard j(42) is (Some(a) as b)
+  guard! j(42) is (Some(a) as b)
   println(a)
   debug(b)
 }

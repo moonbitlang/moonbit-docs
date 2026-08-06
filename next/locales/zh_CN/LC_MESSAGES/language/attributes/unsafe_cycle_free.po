@@ -1,0 +1,49 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-03 17:22+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/unsafe_cycle_free.md:1
+msgid "Unsafe Cycle-Free Attribute"
+msgstr "不安全的无环属性"
+
+#: ../../language/attributes/unsafe_cycle_free.md:3
+msgid ""
+"The `#unsafe_cycle_free` attribute is an advanced optimization assertion "
+"for a struct, enum, or newtype declaration. It tells the compiler that no"
+" value of the annotated type will ever participate in a reference cycle. "
+"The compiler trusts this assertion during cycle-capability analysis and "
+"does not verify it."
+msgstr ""
+"`#unsafe_cycle_free` 属性是用于 struct、enum 或 newtype 声明的高级优化断言。它告诉编译器，该类型的值永远不会参与引用环。编译器会在分析类型是否可能成环时信任此断言，而不会验证它。"
+
+#: ../../language/attributes/unsafe_cycle_free.md:8
+msgid ""
+"#unsafe_cycle_free\n"
+"pub(all) struct CycleFreeNode {\n"
+"  mut next : CycleFreeNode?\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/unsafe_cycle_free.md:15
+msgid ""
+"Use this attribute only when the cycle-free invariant is guaranteed by "
+"the program. An incorrect assertion can cause reference cycles involving "
+"the type to be treated as impossible and therefore not reclaimed."
+msgstr ""
+"仅当程序能够保证无环不变量时才应使用此属性。错误的断言会使涉及该类型的引用环被视为不可能存在，从而无法回收。"

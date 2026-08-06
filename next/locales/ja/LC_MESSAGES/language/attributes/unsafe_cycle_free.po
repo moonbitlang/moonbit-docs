@@ -1,0 +1,49 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-03 17:22+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/unsafe_cycle_free.md:1
+msgid "Unsafe Cycle-Free Attribute"
+msgstr "Unsafe Cycle-Free アトリビュート"
+
+#: ../../language/attributes/unsafe_cycle_free.md:3
+msgid ""
+"The `#unsafe_cycle_free` attribute is an advanced optimization assertion "
+"for a struct, enum, or newtype declaration. It tells the compiler that no"
+" value of the annotated type will ever participate in a reference cycle. "
+"The compiler trusts this assertion during cycle-capability analysis and "
+"does not verify it."
+msgstr ""
+"`#unsafe_cycle_free` アトリビュートは、struct、enum、newtype の宣言に対する高度な最適化アサーションです。注釈を付けた型の値が参照サイクルに決して加わらないことをコンパイラに伝えます。コンパイラはサイクル可能性の解析でこのアサーションを信頼し、検証しません。"
+
+#: ../../language/attributes/unsafe_cycle_free.md:8
+msgid ""
+"#unsafe_cycle_free\n"
+"pub(all) struct CycleFreeNode {\n"
+"  mut next : CycleFreeNode?\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/unsafe_cycle_free.md:15
+msgid ""
+"Use this attribute only when the cycle-free invariant is guaranteed by "
+"the program. An incorrect assertion can cause reference cycles involving "
+"the type to be treated as impossible and therefore not reclaimed."
+msgstr ""
+"プログラムがサイクルフリー不変条件を保証できる場合にのみ、このアトリビュートを使ってください。誤ったアサーションにより、この型を含む参照サイクルが存在しないものとして扱われ、回収されなくなる可能性があります。"

@@ -158,6 +158,13 @@ fn keep_stack_frame(x : Int) -> Int {
 type AttrPtr
 // end external
 
+// start unsafe cycle free
+#unsafe_cycle_free
+pub(all) struct CycleFreeNode {
+  mut next : CycleFreeNode?
+}
+// end unsafe cycle free
+
 // start coverage skip
 #coverage.skip
 fn platform_specific_helper() -> Unit {

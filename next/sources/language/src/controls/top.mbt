@@ -348,8 +348,8 @@ fn g() -> Unit {
   let condition = true
   let expr = Some(5)
   // start guard 3
-  guard condition  // <=> guard condition else { panic() }
-  guard expr is Some(x)
+  guard! condition  // <=> guard condition else { panic() }
+  guard! expr is Some(x)
   // <=> guard expr is Some(x) else { _ => panic() }
   // end guard 3
 }
