@@ -36,7 +36,7 @@ suberror CustomError { CustomError(UInt) }
 
 test {
   let e : Error = CustomError(42)
-  guard e is CustomError(m)
+  guard! e is CustomError(m)
   assert_eq(m, 42)
 }
 ```

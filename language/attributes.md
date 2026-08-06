@@ -409,6 +409,20 @@ extern "C" fn open(filename : Bytes, flags : Int) -> Int = "open"
 For the full calling-convention rules, see
 [FFI lifetime management](ffi.md#the-borrow-and-owned-attribute).
 
+## Unsafe Cycle-Free Attribute
+
+The `#unsafe_cycle_free` attribute is an advanced optimization assertion for a
+struct, enum, or newtype declaration. It tells the compiler that no value of
+the annotated type will ever participate in a reference cycle. The compiler
+trusts this assertion during cycle-capability analysis and does not verify it.
+
+```moonbit
+#unsafe_cycle_free
+pub(all) struct CycleFreeNode {
+  mut next : CycleFreeNode?
+}
+```
+
 ## `as_free_fn` Attribute
 
 The `#as_free_fn` attribute is used to mark a method that it is declared as a free function as well.

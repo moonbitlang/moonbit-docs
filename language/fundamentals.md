@@ -1054,17 +1054,20 @@ fn getProcessedText(
 }
 ```
 
-When the `else` part is omitted, the program terminates if the condition specified
-in the `guard` statement is not true or cannot be matched.
+An ordinary `guard` that may fail must have an `else` clause. If the compiler
+cannot prove that a `guard` without `else` always succeeds, it reports
+[E0087](error_codes/E0087.md), because failure would implicitly
+terminate the program. Use `guard!` when termination is intended. Unlike
+`guard`, `guard!` cannot have an `else` clause.
 
 ```moonbit
-guard condition  // <=> guard condition else { panic() }
-guard expr is Some(x)
+guard! condition  // <=> guard condition else { panic() }
+guard! expr is Some(x)
 // <=> guard expr is Some(x) else { _ => panic() }
 ```
 
-Use `guard!` to make this terminating behavior explicit. Unlike `guard`,
-`guard!` cannot have an `else` clause.
+When a condition or pattern is exhaustive, use plain `guard` without an `else`.
+The compiler reports a warning for a redundant `!` or `else` clause.
 
 ```moonbit
 fn require_some(value : Int?) -> Int {
@@ -2777,10 +2780,11 @@ contexts:
      }
    }
    ```
-3. In the following statements of a `guard` condition:
+3. In the following statements after a successful `guard` or `guard!`
+   condition:
    ```moonbit
    fn h(x : Int?) -> Unit {
-     guard x is Some(v)
+     guard! x is Some(v)
      println(v)
    }
    ```
@@ -2805,7 +2809,7 @@ fn j(x : Int) -> Int? {
 }
 
 fn init {
-  guard j(42) is (Some(a) as b)
+  guard! j(42) is (Some(a) as b)
   println(a)
   debug(b)
 }

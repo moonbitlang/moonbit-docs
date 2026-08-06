@@ -41,7 +41,7 @@ The adjustment is done in the implementation of the `Unwind` instruction. If the
 fn GState::rearrange(self : GState, n : Int) -> Unit {
   let appnodes = self.stack.take(n)
   let args = appnodes.map(fn(addr) {
-    guard self.heap[addr] is NApp(_, arg)
+    guard! self.heap[addr] is NApp(_, arg)
     arg
   })
   self.stack = args + appnodes.drop(n - 1)

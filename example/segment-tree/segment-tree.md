@@ -119,7 +119,7 @@ fn Node::query(
   } else if query_l <= l && query_r >= r {
     self
   } else {
-    guard self is Node(_, left, right)
+    guard! self is Node(_, left, right)
     let mid = (l + r) >> 1
     left.query(l, mid, query_l, query_r) +
     right.query(mid + 1, r, query_l, query_r)
