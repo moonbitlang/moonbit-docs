@@ -1,0 +1,75 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-06 11:39+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/proof_import.md:1
+msgid "Proof Import Attribute"
+msgstr "Proof Import アトリビュート"
+
+#: ../../language/attributes/proof_import.md:3
+msgid ""
+"The `#proof_import(module)` attribute maps a proof-only logic declaration in "
+"a `.mbtp` file to a symbol from a Why3 module. The declaration's string body "
+"names the Why3 symbol; it is not an executable MoonBit expression."
+msgstr ""
+"`#proof_import(module)` アトリビュートは、`.mbtp` ファイル内の証明専用ロジッ"
+"ク宣言を Why3 モジュールのシンボルに対応付けます。宣言の文字列本体は Why3 シ"
+"ンボルを指定するもので、実行可能な MoonBit 式ではありません。"
+
+#: ../../language/attributes/proof_import.md:7
+msgid ""
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_mem(x : Int, set : ProofSet[Int]) -> Bool = \"mem\"\n"
+"\n"
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_empty() -> ProofSet[Int] = \"empty\"\n"
+"\n"
+"#proof_import(\"set.Fset\")\n"
+"fn proof_set_add(x : Int, set : ProofSet[Int]) -> ProofSet[Int] = \"add\"\n"
+"\n"
+"lemma proof_set_add_contains(x : Int) where {\n"
+"  proof_ensure: proof_set_mem(\n"
+"    x,\n"
+"    proof_set_add(x, proof_set_empty()),\n"
+"  ),\n"
+"} {}\n"
+msgstr ""
+
+#: ../../language/attributes/proof_import.md:13
+msgid ""
+"Here, `set.Fset` is the Why3 module path, while `\"mem\"`, `\"empty\"`, and "
+"`\"add\"` name symbols in that module. These declarations affect "
+"verification lowering only and do not provide runtime implementations or FFI "
+"bindings. The final lemma creates a proof obligation; the imported "
+"declarations themselves do not."
+msgstr ""
+"ここで、`set.Fset` は Why3 のモジュールパスであり、`\"mem\"`、`\"empty\"`、"
+"`\"add\"` はそのモジュール内のシンボルを指定します。これらの宣言は検証時の変"
+"換だけに影響し、実行時の実装や FFI バインディングは提供しません。最後の補題は"
+"証明義務を生成しますが、インポート宣言自体は生成しません。"
+
+#: ../../language/attributes/proof_import.md:18
+msgid ""
+"The declared signatures and symbol mappings are part of the trusted "
+"verification boundary. For a complete example and usage guidance, see "
+"[Formal Verification](/language/verification.md#proof-specific-annotations)."
+msgstr ""
+"宣言したシグネチャとシンボルの対応付けは、信頼される検証境界の一部です。完全"
+"な例と利用方法については、[形式検証](/language/verification.md#proof-"
+"specific-annotations)を参照してください。"

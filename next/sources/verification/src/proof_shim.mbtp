@@ -1,0 +1,17 @@
+// start proof import 1
+#proof_import("set.Fset")
+fn proof_set_mem(x : Int, set : ProofSet[Int]) -> Bool = "mem"
+
+#proof_import("set.Fset")
+fn proof_set_empty() -> ProofSet[Int] = "empty"
+
+#proof_import("set.Fset")
+fn proof_set_add(x : Int, set : ProofSet[Int]) -> ProofSet[Int] = "add"
+
+lemma proof_set_add_contains(x : Int) where {
+  proof_ensure: proof_set_mem(
+    x,
+    proof_set_add(x, proof_set_empty()),
+  ),
+} {}
+// end proof import 1
