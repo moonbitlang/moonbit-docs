@@ -113,8 +113,9 @@ This example already shows the main structure of verified MoonBit code:
 - `proof_reasoning` records the proof idea in structured prose
 
 The rest of this page explains these pieces in more detail and introduces
-additional features such as `#proof_pure`, `proof_decrease`,
-`proof_axiomatized`, model-based verification, and the trusted surface.
+additional features such as `#proof_pure`, `#proof_external`, `#proof_import`,
+`proof_decrease`, `proof_axiomatized`, model-based verification, and the
+trusted surface.
 
 ## Setup
 
@@ -276,8 +277,62 @@ proof-facing computations that should behave like mathematical functions.
 
 At the moment, `#proof_pure` helpers are best treated as pure specification
 helpers rather than fully contracted verified functions. In particular, support
-for attaching ordinary verification contracts directly to `#proof_pure`
-definitions is still limited.
+is currently limited to regular top-level functions and ordinary methods.
+Verification contracts, direct recursion, and mutual recursion are not yet
+supported on `#proof_pure` definitions.
+
+### External Theories: `#proof_external` and `#proof_import`
+
+Proof-oriented libraries sometimes expose a MoonBit type whose logical model is
+provided by an existing Why3 theory. Two attributes form this bridge:
+
+- `#proof_external(module, symbol)` tells proof lowering to represent an
+  abstract MoonBit type with a type from a Why3 module.
+- `#proof_import(module)` declares a proof-only stub for an operation from a
+  Why3 module.
+
+For example, an opaque carrier can be represented by Why3's `set.Fset.fset` type
+during verification:
+
+```moonbit
+///|
+#proof_external("set.Fset", "fset")
+pub type ProofSet[T]
+```
+
+The proof side can then declare stubs for Why3 operations and prove a property
+using the imported finite-set theory. Stub parameter order must match the Why3
+symbol:
+
+```moonbit
+#proof_import("set.Fset")
+fn proof_set_mem(x : Int, set : ProofSet[Int]) -> Bool = "mem"
+
+#proof_import("set.Fset")
+fn proof_set_empty() -> ProofSet[Int] = "empty"
+
+#proof_import("set.Fset")
+fn proof_set_add(x : Int, set : ProofSet[Int]) -> ProofSet[Int] = "add"
+
+lemma proof_set_add_contains(x : Int) where {
+  proof_ensure: proof_set_mem(
+    x,
+    proof_set_add(x, proof_set_empty()),
+  ),
+} {}
+```
+
+Here, `set.Fset` is a Why3 module path, and the string body `"mem"` names a
+symbol in that module. A string body is special proof-stub syntax accepted in a
+`.mbtp` file; it is not an executable MoonBit expression and is unrelated to
+MoonBit FFI. The final lemma is an actual proof obligation discharged from the
+imported Why3 theory; none of these declarations can be called by runtime
+MoonBit code.
+
+Both attributes affect verification lowering only. `#proof_external` does not
+implement the MoonBit type or connect it to a runtime ABI, and `#proof_import`
+does not provide an executable function body. The declared signatures and their
+mapping to Why3 symbols are a trusted integration boundary.
 
 ### `proof_decrease`
 
@@ -534,6 +589,8 @@ The main trusted assumptions today are:
 
 - verification reasons about mathematical integers rather than machine integers
 - any item marked `proof_axiomatized` is assumed rather than proved
+- declarations using `#proof_external` or `#proof_import` correctly describe
+  the intended Why3 types and operations
 
 For integers, this means proof obligations are checked in an unbounded integer
 model. As a result:

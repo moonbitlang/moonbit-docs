@@ -562,3 +562,77 @@ library.
 
 See [Export Functions](ffi.md#export-functions) for backend-specific
 alternatives.
+
+## Proof Pure Attribute
+
+The `#proof_pure` attribute makes a side-effect-free function available to both
+executable code and proof-oriented logic.
+
+```moonbit
+#proof_pure
+fn height(t : Tree) -> Int {
+  match t {
+    Empty => 0
+    Node(_, _, _, h) => h
+  }
+}
+```
+
+It currently supports regular top-level functions and ordinary methods.
+Verification contracts, direct recursion, and mutual recursion are not yet
+supported on `#proof_pure` definitions.
+
+For its role in specifications and a complete example, see
+[Formal Verification](verification.md#proof-specific-annotations).
+
+## Proof External Attribute
+
+The `#proof_external(module, symbol)` attribute tells verification lowering to
+represent an abstract MoonBit type with a type from a Why3 module.
+
+```moonbit
+///|
+#proof_external("set.Fset", "fset")
+pub type ProofSet[T]
+```
+
+In this example, occurrences of `ProofSet[T]` in proof-oriented logic are
+lowered to the Why3 type `set.Fset.fset T`. The attribute does not implement the
+MoonBit type, provide runtime values, or connect the type to an FFI ABI.
+
+The module and symbol mapping is part of the trusted verification boundary. For
+the corresponding operation imports and proof example, see
+[Formal Verification](verification.md#proof-specific-annotations).
+
+## Proof Import Attribute
+
+The `#proof_import(module)` attribute maps a proof-only logic declaration in a
+`.mbtp` file to a symbol from a Why3 module. The declaration's string body names
+the Why3 symbol; it is not an executable MoonBit expression.
+
+```moonbit
+#proof_import("set.Fset")
+fn proof_set_mem(x : Int, set : ProofSet[Int]) -> Bool = "mem"
+
+#proof_import("set.Fset")
+fn proof_set_empty() -> ProofSet[Int] = "empty"
+
+#proof_import("set.Fset")
+fn proof_set_add(x : Int, set : ProofSet[Int]) -> ProofSet[Int] = "add"
+
+lemma proof_set_add_contains(x : Int) where {
+  proof_ensure: proof_set_mem(
+    x,
+    proof_set_add(x, proof_set_empty()),
+  ),
+} {}
+```
+
+Here, `set.Fset` is the Why3 module path, while `"mem"`, `"empty"`, and `"add"`
+name symbols in that module. These declarations affect verification lowering
+only and do not provide runtime implementations or FFI bindings. The final
+lemma creates a proof obligation; the imported declarations themselves do not.
+
+The declared signatures and symbol mappings are part of the trusted
+verification boundary. For a complete example and usage guidance, see
+[Formal Verification](verification.md#proof-specific-annotations).
