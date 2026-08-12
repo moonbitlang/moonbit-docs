@@ -5236,7 +5236,7 @@ msgstr ""
 
 #: ../../language/fundamentals.md:2215
 msgid "Lexmatch"
-msgstr ""
+msgstr "Lexmatch"
 
 #: ../../language/fundamentals.md:2217
 msgid ""
@@ -5245,6 +5245,8 @@ msgid ""
 " strategy selects the first matching case. Add `with longest` to select "
 "the case that matches the longest prefix instead."
 msgstr ""
+"使用 `lexmatch` 将内存中的 `String` 或 `StringView` 与多个正则分支进行匹配，并返回选中分支的主体。默认策略选择第一个匹配的分支；添加 "
+"`with longest` 后，则改为选择能匹配最长前缀的分支。"
 
 #: ../../language/fundamentals.md:2222
 msgid ""
@@ -5255,6 +5257,8 @@ msgid ""
 "remaining suffix is needed. Lexical match cases do not support guards, so"
 " put additional conditions inside the selected case body."
 msgstr ""
+"分支使用 `re\"...\"` 等正则常量表达式，最后一个分支必须是兜底分支。使用 `as` 绑定匹配文本。在首次匹配模式下，`before=` 和 "
+"`after=` 可以绑定未匹配的输入；在最长匹配模式下，应使用 `^` 将每个正则锚定在开头，并在需要剩余后缀时使用 `after=`。词法匹配分支不支持守卫，因此请将额外条件写在选中分支的主体中。"
 
 #: ../../language/fundamentals.md:2229
 msgid ""
@@ -5271,7 +5275,7 @@ msgstr ""
 msgid ""
 "For a single boolean check, [`=~`](#regex-match-expression) is usually "
 "more concise."
-msgstr ""
+msgstr "对于单个布尔检查，[`=~`](#regex-match-expression) 通常更简洁。"
 
 #: ../../language/fundamentals.md:2239
 msgid "Lexscan"
@@ -5285,6 +5289,8 @@ msgid ""
 "input. Each `lexscan` advances the buffer past the selected match, "
 "including matches that span chunk boundaries."
 msgstr ""
+"使用 `lexscan` 从流式输入中消费词法单元。同步类型 `@lexbuf.Lexbuf` 可以读取完整字符串，也可以通过回调依次获取 `String` "
+"分块；回调在输入结束时返回 `None`。每次 `lexscan` 都会将缓冲区推进到所选匹配之后，包括跨越分块边界的匹配。"
 
 #: ../../language/fundamentals.md:2247
 msgid ""
@@ -5293,6 +5299,8 @@ msgid ""
 " can match and the longest token should win. Matched text can be bound "
 "with `as`."
 msgstr ""
+"流式正则分支必须使用 `^` 锚定在当前位置，并且必须以兜底分支结尾。当多个分支都可能匹配且应由最长的词法单元胜出时，添加 `with longest`。可以使用 "
+"`as` 绑定匹配文本。"
 
 #: ../../language/fundamentals.md:2251
 msgid ""
@@ -5318,15 +5326,15 @@ msgstr ""
 msgid ""
 "For asynchronous sources, use `@lexbuf.AsyncLexbuf::from_fn` with an "
 "async callback and call `lexscan` from an async function."
-msgstr ""
+msgstr "对于异步数据源，请使用带异步回调的 `@lexbuf.AsyncLexbuf::from_fn`，并从异步函数中调用 `lexscan`。"
 
 #: ../../language/fundamentals.md:2261
 msgid "Legacy lexical pattern syntax"
-msgstr ""
+msgstr "旧版词法模式语法"
 
 #: ../../language/fundamentals.md:2263
 msgid "Older code may use string-piece patterns or `lexmatch?`, for example:"
-msgstr ""
+msgstr "旧代码可能会使用字符串片段模式或 `lexmatch?`，例如："
 
 #: ../../language/fundamentals.md:2265
 msgid ""
@@ -5344,7 +5352,7 @@ msgstr ""
 msgid ""
 "For current code, use `lexmatch` with `re\"...\"` cases when several "
 "branches are needed, or `=~` for a boolean search."
-msgstr ""
+msgstr "对于当前代码，需要多个分支时使用带 `re\"...\"` 分支的 `lexmatch`；只需进行布尔搜索时则使用 `=~`。"
 
 #: ../../language/fundamentals.md:2279
 msgid "Spread Operator"

@@ -330,14 +330,14 @@ msgstr ""
 
 #: ../../toolchain/moon/module.md:248
 msgid "Publishing Files with `.moonignore`"
-msgstr ""
+msgstr "使用 `.moonignore` 控制发布文件"
 
 #: ../../toolchain/moon/module.md:250
 msgid ""
 "Use `.moonignore` files to exclude files and directories from archives "
 "created by `moon package` and `moon publish`. Each file uses gitignore-"
 "style patterns:"
-msgstr ""
+msgstr "使用 `.moonignore` 文件从 `moon package` 和 `moon publish` 创建的归档中排除文件和目录。每个文件使用 gitignore 风格的模式："
 
 #: ../../toolchain/moon/module.md:253
 msgid ""
@@ -365,6 +365,7 @@ msgid ""
 "directory are not combined. This filtering is based on the patterns, "
 "regardless of whether a file is tracked by Git."
 msgstr ""
+"发布时默认遵循 `.gitignore` 规则。如果某个目录包含 `.moonignore`，创建归档时将使用其规则代替同一目录中的 `.gitignore`；同一目录中的这两个文件不会合并。无论文件是否由 Git 跟踪，筛选都只依据这些模式。"
 
 #: ../../toolchain/moon/module.md:276
 msgid ""
@@ -372,7 +373,7 @@ msgid ""
 "configuration are not consulted. Only the ignore files that belong to the"
 " project affect the archive, so publishing the same contents does not "
 "depend on a user's Git configuration."
-msgstr ""
+msgstr "不会读取 Git 仓库本地的 `.git/info/exclude` 和全局忽略配置。只有项目自身包含的忽略文件会影响归档，因此发布相同内容的结果不会依赖用户的 Git 配置。"
 
 #: ../../toolchain/moon/module.md:281
 msgid ""
@@ -382,6 +383,8 @@ msgid ""
 "not automatically re-include its contents, so the second `.well-known` "
 "rule is also needed."
 msgstr ""
+"默认情况下，各层级中名称以 `.` 开头的文件和目录都会被排除。上面锚定到根目录的示例会将两个忽略文件和 `.well-known/` "
+"保留在归档中。重新包含一个目录并不会自动重新包含其内容，因此还需要第二条 `.well-known` 规则。"
 
 #: ../../toolchain/moon/module.md:286
 msgid ""
@@ -392,6 +395,8 @@ msgid ""
 "directory, while `examples/_build/data.bin` is not excluded merely "
 "because a nested directory is named `_build`."
 msgstr ""
+"包根目录下的 `_build/` 始终会被排除，无法通过忽略规则或已弃用的 `include` 字段重新包含。此固定排除不适用于同名的嵌套目录。例如，`!/_build/` 和 "
+"`!/_build/**` 无法恢复包根目录下的 `_build/`，而 `examples/_build/data.bin` 不会仅仅因为所在的嵌套目录名为 `_build` 就被排除。"
 
 #: ../../toolchain/moon/module.md:293
 msgid ""
@@ -403,22 +408,24 @@ msgid ""
 "directory containing the ignore file, while a trailing `/` matches "
 "directories."
 msgstr ""
+"规则作用于包含忽略文件的目录及其所有后代。父目录继承来的规则仍然有效，而嵌套目录中后出现的匹配规则优先。这也包括用 `!` "
+"恢复先前排除的路径、且该路径的父目录仍然可见的规则。开头的 `/` 将模式锚定到包含忽略文件的目录，末尾的 `/` 则匹配目录。"
 
 #: ../../toolchain/moon/module.md:300
 msgid ""
 "Use [`moon package --list`](commands.md#moon-package) to inspect the "
 "files that will be packaged."
-msgstr ""
+msgstr "使用 [`moon package --list`](commands.md#moon-package) 检查将要打包的文件。"
 
 #: ../../toolchain/moon/module.md:303
 msgid "Deprecated `include` and `exclude` fields"
-msgstr ""
+msgstr "已弃用的 `include` 和 `exclude` 字段"
 
 #: ../../toolchain/moon/module.md:306
 msgid ""
 "The `include` and `exclude` fields in `moon.mod` and `moon.mod.json` are "
 "deprecated. Use `.moonignore` for new and migrated modules."
-msgstr ""
+msgstr "`moon.mod` 和 `moon.mod.json` 中的 `include` 与 `exclude` 字段已弃用。新模块和迁移后的模块请使用 `.moonignore`。"
 
 #: ../../toolchain/moon/module.md:310
 msgid ""
@@ -428,12 +435,14 @@ msgid ""
 "patterns within `include` for exceptions to the allowlist. The fixed "
 "exclusion of the package-root `_build/` directory still applies."
 msgstr ""
+"现有清单仍可使用其中任一字段。当存在 `include` 时，它是完整的允许列表：不会应用 `exclude`、`.gitignore`、`.moonignore` "
+"以及默认的点前缀路径排除规则。可在 `include` 中使用 `!` 模式为允许列表添加例外。对包根目录 `_build/` 的固定排除仍然有效。"
 
 #: ../../toolchain/moon/module.md:316
 msgid ""
 "Avoid combining these legacy fields with ignore files; migrate the "
 "complete publishing policy to `.moonignore` instead."
-msgstr ""
+msgstr "请勿将这些旧字段与忽略文件混用；应将完整的发布策略迁移到 `.moonignore`。"
 
 #: ../../toolchain/moon/module.md:319
 msgid "Preferred Target"
