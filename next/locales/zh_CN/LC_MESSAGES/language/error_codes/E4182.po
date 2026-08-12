@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 14:15+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -27,36 +27,26 @@ msgid "Compiler diagnostic name: `regex_constant_ref_in_lex_is_not_supported`."
 msgstr ""
 
 #: ../../language/error_codes/E4182.md:5
-msgid "Regex constants are not supported in this `lexmatch` context."
-msgstr "此 `lexmatch` 上下文不支持正则常量。"
-
-#: ../../language/error_codes/E4182.md:7
 msgid ""
-"Legacy `lexmatch` can use regex constants only in limited contexts: a "
-"`StringView` target with the default first-match strategy. Other "
-"`lexmatch` forms, such as `with longest`, require literal regex patterns."
-msgstr ""
-"旧的 `lexmatch` 只能在有限上下文中使用正则常量：目标为 `StringView`，并且使用默认的首次匹配策略。其他 "
-"`lexmatch` 形式（例如 `with longest`）需要使用正则字面量模式。"
+"This diagnostic described a restriction of an earlier lexical pattern "
+"form and is not emitted by the current compiler."
+msgstr "此诊断描述的是早期词法模式形式的一项限制，当前编译器不会发出该诊断。"
 
-#: ../../language/error_codes/E4182.md:12
+#: ../../language/error_codes/E4182.md:8
 msgid ""
-"Longest-match `lexmatch` is deprecated for new code. Use `lexscan ... "
-"with longest`, or prefer regex match expressions such as `value =~ "
-"SOME_REGEX` when you do not need lexer-style behavior."
-msgstr ""
-"新代码不应使用最长匹配 `lexmatch`。请使用 `lexscan ... with longest`；"
-"如果不需要词法分析器风格的行为，则优先使用 `value =~ SOME_REGEX` 这类正则匹配表达式。"
+"Current `lexmatch` and `lexscan` cases accept regex constant expressions,"
+" including named `const` values."
+msgstr "当前的 `lexmatch` 和 `lexscan` 分支接受正则常量表达式，包括具名 `const` 值。"
 
-#: ../../language/error_codes/E4182.md:17
+#: ../../language/error_codes/E4182.md:11
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4182.md:19
-msgid "The following example uses a regex constant in a longest-match `lexmatch`:"
-msgstr "下面的示例在最长匹配的 `lexmatch` 中使用了正则常量："
+#: ../../language/error_codes/E4182.md:13
+msgid "The following historical example uses the old pattern shape:"
+msgstr "以下历史示例使用了旧模式形式："
 
-#: ../../language/error_codes/E4182.md:21
+#: ../../language/error_codes/E4182.md:15
 msgid ""
 "///|\n"
 "const WORD = re\"[A-Za-z]+\"\n"
@@ -70,26 +60,27 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4182.md:25
-msgid "MoonBit will report an error."
-msgstr "MoonBit 会报告一个错误。"
+#: ../../language/error_codes/E4182.md:19
+msgid "Current code should use the regex constant as the case pattern instead."
+msgstr "当前代码应改为将正则常量用作分支模式。"
 
-#: ../../language/error_codes/E4182.md:27
+#: ../../language/error_codes/E4182.md:21
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4182.md:29
-msgid ""
-"Use a literal regex pattern with `lexscan`, or rewrite the code with a "
-"regex match expression:"
-msgstr "在 `lexscan` 中使用正则字面量模式，或者用正则匹配表达式重写代码："
+#: ../../language/error_codes/E4182.md:23
+msgid "Use the regex constant directly as the case pattern:"
+msgstr "直接将正则常量用作分支模式："
 
-#: ../../language/error_codes/E4182.md:32
+#: ../../language/error_codes/E4182.md:25
 msgid ""
 "///|\n"
+"const WORD = re\"^[A-Za-z]+$\"\n"
+"\n"
+"///|\n"
 "pub fn match_word(input : String) -> Unit {\n"
-"  lexscan input with longest {\n"
-"    (re\"^[A-Za-z]+\", after=_) => ()\n"
+"  lexmatch input with longest {\n"
+"    WORD => ()\n"
 "    _ => ()\n"
 "  }\n"
 "}\n"

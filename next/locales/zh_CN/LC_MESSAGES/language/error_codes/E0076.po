@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 14:41+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -27,23 +27,23 @@ msgid "Warning name: `lexmatch_first_match`"
 msgstr ""
 
 #: ../../language/error_codes/E0076.md:5
-msgid "Using `lexmatch` with first-match semantics is deprecated."
-msgstr "使用 first-match 语义的 `lexmatch` 已弃用。"
-
-#: ../../language/error_codes/E0076.md:7
 msgid ""
-"This warning is emitted for `lexmatch` expressions that use the default "
-"first-match strategy, including `lexmatch ... with first`. Prefer regex "
-"match expressions for ordinary regex checks in new code."
-msgstr ""
-"当 `lexmatch` 表达式使用默认的 first-match 策略时会触发此警告，包括 `lexmatch ... with "
-"first`。在新代码中，普通正则检查应优先使用正则匹配表达式。"
+"This warning described an earlier experimental form of first-match "
+"`lexmatch` and is not emitted by the current compiler."
+msgstr "此警告描述的是早期实验性的首次匹配 `lexmatch` 形式，当前编译器不会发出该警告。"
 
-#: ../../language/error_codes/E0076.md:11
+#: ../../language/error_codes/E0076.md:8
+msgid ""
+"Current `lexmatch` expressions use `re\"...\"` case patterns and may use "
+"the default first-match strategy. For a single boolean check, a regex "
+"match expression is usually more concise."
+msgstr "当前的 `lexmatch` 表达式使用 `re\"...\"` 分支模式，并且可以采用默认的首次匹配策略。对于单个布尔检查，正则匹配表达式通常更简洁。"
+
+#: ../../language/error_codes/E0076.md:12
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0076.md:13
+#: ../../language/error_codes/E0076.md:14
 msgid ""
 "///|\n"
 "fn classify(input : String) -> String {\n"
@@ -59,22 +59,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0076.md:17
+#: ../../language/error_codes/E0076.md:18
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0076.md:19
+#: ../../language/error_codes/E0076.md:20
 msgid ""
-"Rewrite first-match `lexmatch` code with a regex match expression when "
-"only a boolean result is needed, or with `lexscan` when the cases return "
-"different values. If you need lexer-style longest-match behavior, use "
-"`lexscan ... with longest`."
-msgstr ""
-"只需要布尔结果时，请把 first-match `lexmatch` 改写为正则匹配表达式；不同 case "
-"需要返回不同值时，请改用 `lexscan`。需要词法分析器风格的最长匹配行为时，请使用"
-" `lexscan ... with longest`。"
+"Rewrite the old string-piece pattern syntax with `re\"...\"` cases, or "
+"use a regex match expression when only a boolean result is needed."
+msgstr "请将旧的字符串片段模式语法改写为 `re\"...\"` 分支；如果只需要布尔结果，则使用正则匹配表达式。"
 
-#: ../../language/error_codes/E0076.md:24
+#: ../../language/error_codes/E0076.md:23
 msgid ""
 "///|\n"
 "fn classify(input : String) -> String {\n"

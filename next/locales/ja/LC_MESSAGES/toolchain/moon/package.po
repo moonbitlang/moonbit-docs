@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 12:21+0800\n"
+"POT-Creation-Date: 2026-08-12 15:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -32,11 +32,12 @@ msgstr ""
 
 #: ../../toolchain/moon/package.md:7
 msgid ""
-"Support for `moon.pkg.json` is deprecated in v0.10.4 and scheduled for "
-"removal in the following release. New projects should use `moon.pkg`; "
-"existing JSON configuration can be migrated with `moon fmt` as described "
-"below."
+"Support for `moon.pkg.json` is deprecated. New projects should use "
+"`moon.pkg`; existing JSON configuration can be migrated with `moon fmt` "
+"as described below."
 msgstr ""
+"`moon.pkg.json` のサポートは非推奨です。新しいプロジェクトでは `moon.pkg` を使ってください。既存の JSON "
+"設定は、以下の説明に従って `moon fmt` で移行できます。"
 
 #: ../../toolchain/moon/package.md:11
 msgid "New format (`moon.pkg`)"
@@ -1670,10 +1671,10 @@ msgid ""
 "`moonbitlang/core/builtin`.    34 warn\n"
 "reserved_keyword           Reserved keyword."
 "                                               35 warn\n"
-"loop_label_shadowing       Loop label shadows another label."
-"                               36 warn\n"
-"unused_loop_label          Unused loop label."
-"                                              37 warn\n"
+"block_label_shadowing      Block label shadows another label."
+"                              36 warn\n"
+"unused_block_label         Unused block label."
+"                                             37 warn\n"
 "missing_invariant          For-loop is missing an invariant."
 "                               38 off\n"
 "missing_reasoning          For-loop is missing a proof_reasoning."
@@ -1742,10 +1743,6 @@ msgid ""
 "                     74 off\n"
 "unnecessary_view_op        Unnecessary `[:]` view operator"
 "                                 75 off\n"
-"lexmatch_first_match       Deprecated `lexmatch` with first-match "
-"semantics.               76 warn\n"
-"lexmatch_longest_match     Deprecated `lexmatch` with longest-match "
-"semantics.             77 warn\n"
 "result_error_return        Using `Result[T, E]` where `E` is an error "
 "type.                78 off\n"
 "implicit_impl_as_method    `impl` implicitly promoted as method"
@@ -1764,26 +1761,32 @@ msgid ""
 "labelled loop.             85 warn\n"
 "unlabelled_continue_in_labelled_loop Unlabelled `continue` directly "
 "inside a labelled loop.          86 warn\n"
+"guard_inexhaustive         `guard` condition is not exhaustive and may "
+"panic.              87 warn\n"
+"guard_redundant_bang       Redundant `!` on an exhaustive `guard`."
+"                         88 warn\n"
+"guard_redundant_else       Redundant `else` on an exhaustive `guard`."
+"                      89 warn\n"
 "all                        all warnings\n"
 "state: warn = enabled, error = promoted to error, off = disabled\n"
 "note: default alert exceptions: alert_unsafe=off\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1199
+#: ../../toolchain/moon/package.md:1201
 msgid "Use `moonc check -warn-help` to see the list of preset compiler warnings."
 msgstr "`moonc check -warn-help` を使うと、プリセットされたコンパイラ警告の一覧を確認できます。"
 
-#: ../../toolchain/moon/package.md:1202
+#: ../../toolchain/moon/package.md:1204
 msgid "Alert Warning"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1204
+#: ../../toolchain/moon/package.md:1206
 msgid ""
 "Alerts are special warnings that indicate the usage of API marked with  "
 "[`#internal` attribute](../../language/attributes.md#internal-attribute)."
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1207
+#: ../../toolchain/moon/package.md:1209
 msgid ""
 "All alerts have a category associated with them, which is customized by "
 "the author of the API. You can enable or disable specific alert "
@@ -1793,7 +1796,7 @@ msgstr ""
 "すべての alert には API 作者が定めたカテゴリがあります。`alert_<category>` "
 "という警告名で特定カテゴリを有効または無効にでき、`alert` を使えばすべての alert 警告をまとめて制御できます。"
 
-#: ../../toolchain/moon/package.md:1211
+#: ../../toolchain/moon/package.md:1213
 msgid ""
 "For example, the following configuration enables all alert warnings "
 "except the `unsafe` category. In CI, add `--deny-warn` to `moon check`, "
@@ -1804,44 +1807,44 @@ msgstr ""
 "で有効な警告を致命的エラーとして扱うには、`moon check`、`moon test`、または同等のコマンドに `--deny-warn` "
 "を追加してください。"
 
-#: ../../toolchain/moon/package.md:1217
+#: ../../toolchain/moon/package.md:1219
 msgid "warnings = \"+alert-alert_unsafe\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1222
+#: ../../toolchain/moon/package.md:1224
 msgid ""
 "{\n"
 "  \"warn-list\": \"+alert-alert_unsafe\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1230
+#: ../../toolchain/moon/package.md:1232
 msgid "Virtual Package"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1232
+#: ../../toolchain/moon/package.md:1234
 msgid ""
 "A virtual package serves as an interface of a package that can be "
 "replaced by actual implementations."
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1234
+#: ../../toolchain/moon/package.md:1236
 msgid "Declarations"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1236
+#: ../../toolchain/moon/package.md:1238
 msgid ""
 "The `virtual` field is used to declare the current package as a virtual "
 "package."
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1238
+#: ../../toolchain/moon/package.md:1240
 msgid ""
 "For example, the following declares a virtual package with default "
 "implementation:"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1242
+#: ../../toolchain/moon/package.md:1244
 msgid ""
 "options(\n"
 "  virtual: {\n"
@@ -1850,7 +1853,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1251
+#: ../../toolchain/moon/package.md:1253
 msgid ""
 "{\n"
 "  \"virtual\": {\n"
@@ -1859,58 +1862,58 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1261
+#: ../../toolchain/moon/package.md:1263
 msgid "Implementations"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1263
+#: ../../toolchain/moon/package.md:1265
 msgid ""
 "The `implement` field is used to declare the virtual package to be "
 "implemented by the current package."
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1265
+#: ../../toolchain/moon/package.md:1267
 msgid "For example, the following implements a virtual package:"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1269
+#: ../../toolchain/moon/package.md:1271
 msgid ""
 "options(\n"
 "  implement: \"moonbitlang/core/abort\",\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1276
+#: ../../toolchain/moon/package.md:1278
 msgid ""
 "{\n"
 "  \"implement\": \"moonbitlang/core/abort\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1284
+#: ../../toolchain/moon/package.md:1286
 msgid "Overriding implementations"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1286
+#: ../../toolchain/moon/package.md:1288
 msgid ""
 "The `overrides` field is used to provide the implementations that "
 "fulfills an imported virtual package."
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1288
+#: ../../toolchain/moon/package.md:1290
 msgid ""
 "For example, the following overrides the default implementation of the "
 "builtin abort package with another package:"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1292
+#: ../../toolchain/moon/package.md:1294
 msgid ""
 "options(\n"
 "  overrides: [ \"moonbitlang/dummy_abort/abort_show_msg\" ],\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1299
+#: ../../toolchain/moon/package.md:1301
 msgid ""
 "{\n"
 "  \"overrides\": [\"moonbitlang/dummy_abort/abort_show_msg\"]\n"

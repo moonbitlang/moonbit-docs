@@ -2,6 +2,7 @@
 struct A(Array[Int])
 
 ///|
-fn A::op_get(self : A, idx : Int) -> Int {
+#alias("_[_]")
+fn A::get(self : A, idx : Int) -> Int {
   return self.0[idx]
 }

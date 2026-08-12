@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-13 10:07+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -42,88 +42,71 @@ msgstr ""
 msgid "Locally named functions. (Reported as [E4006](E4006))"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:10
-msgid "Local types."
-msgstr ""
-
-#: ../../language/error_codes/E4051.md:12
+#: ../../language/error_codes/E4051.md:11
 msgid ""
 "Note, locally defined variables are not mutually recursive, so they can "
 "have the same identifier, and the later definition shadows the previous "
 "one."
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:15
+#: ../../language/error_codes/E4051.md:14
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:17
+#: ../../language/error_codes/E4051.md:16
 msgid "Toplevel variable definition:"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:19
+#: ../../language/error_codes/E4051.md:18
 msgid ""
 "pub let a = 0\n"
 "pub let a = 1 // Error: The toplevel identifier a is declared twice: it "
 "was previously defined at ...\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:23
+#: ../../language/error_codes/E4051.md:22
 msgid "Toplevel function definition:"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:25
+#: ../../language/error_codes/E4051.md:24
 msgid ""
 "pub fn f() -> Unit { () }\n"
 "pub fn f() -> Unit { () } // Error: The toplevel identifier f is declared"
 " twice: it was previously defined at ...\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:30
+#: ../../language/error_codes/E4051.md:29
 msgid "Toplevel type definition:"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:32
+#: ../../language/error_codes/E4051.md:31
 msgid ""
 "pub enum A {}\n"
 "pub struct A {} // Error: The type A is declared twice: it was previously"
 " defined at ...\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:37
-msgid "Local type definition:"
-msgstr ""
-
-#: ../../language/error_codes/E4051.md:39
-msgid ""
-"pub fn g() -> Unit {\n"
-"  struct A {}\n"
-"  struct A {} // Error: The local type A is declared twice: it was "
-"previously defined at ...\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E4051.md:46
+#: ../../language/error_codes/E4051.md:36
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:48
+#: ../../language/error_codes/E4051.md:38
 msgid "Rename the identifier to a different name."
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:50
+#: ../../language/error_codes/E4051.md:40
 msgid ""
 "pub let a = 0\n"
 "pub let b = 1\n"
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:54
+#: ../../language/error_codes/E4051.md:44
 msgid ""
 "If you want to shadow the previous definition, you can use a block and "
 "put the definition in the block."
 msgstr ""
 
-#: ../../language/error_codes/E4051.md:57
+#: ../../language/error_codes/E4051.md:47
 msgid ""
 "pub let c : Int = {\n"
 "  let a = 0\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 14:41+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -36,22 +36,15 @@ msgid ""
 "explicit `longest` strategy. Other strategy names are rejected."
 msgstr ""
 
-#: ../../language/error_codes/E4180.md:11
-msgid ""
-"`lexmatch` is deprecated for new code. Prefer regex match expressions "
-"such as `value =~ re\"...\"` for boolean checks, or `lexscan` for case-"
-"based scanning."
-msgstr ""
-
-#: ../../language/error_codes/E4180.md:15
+#: ../../language/error_codes/E4180.md:10
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4180.md:17
+#: ../../language/error_codes/E4180.md:12
 msgid "The following example asks for an unsupported `shortest` strategy:"
 msgstr ""
 
-#: ../../language/error_codes/E4180.md:19
+#: ../../language/error_codes/E4180.md:14
 msgid ""
 "///|\n"
 "fn classify(input : String) -> String {\n"
@@ -67,21 +60,22 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4180.md:23
+#: ../../language/error_codes/E4180.md:18
 msgid "MoonBit will report an error."
 msgstr ""
 
-#: ../../language/error_codes/E4180.md:25
+#: ../../language/error_codes/E4180.md:20
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4180.md:27
+#: ../../language/error_codes/E4180.md:22
 msgid ""
-"Rewrite the code with a regex match expression when first-match behavior "
-"is enough, or use `lexscan ... with longest` for longest-match scanning:"
-msgstr ""
+"Rewrite the code with a regex match expression when a single boolean "
+"check is enough, or use `lexmatch ... with longest` for longest-match "
+"case selection:"
+msgstr "1 回の真偽値チェックで十分な場合は正規表現マッチ式に書き換え、最長一致でケースを選択する場合は `lexmatch ... with longest` を使ってください："
 
-#: ../../language/error_codes/E4180.md:30
+#: ../../language/error_codes/E4180.md:25
 msgid ""
 "///|\n"
 "fn classify(input : String) -> String {\n"

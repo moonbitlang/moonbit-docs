@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 14:41+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -27,15 +27,16 @@ msgid "Warning name: `lexmatch_longest_match`"
 msgstr ""
 
 #: ../../language/error_codes/E0077.md:5
-msgid "Using `lexmatch` with longest-match semantics is deprecated."
-msgstr ""
-
-#: ../../language/error_codes/E0077.md:7
 msgid ""
-"This warning is emitted for `lexmatch ... with longest`. Regex match "
-"expressions do not provide longest-match semantics; use `lexscan ... with"
-" longest` for lexer-style longest matching."
-msgstr ""
+"This warning described an earlier experimental form of longest-match "
+"`lexmatch` and is not emitted by the current compiler."
+msgstr "この警告は、longest-match `lexmatch` の以前の実験的な形式を説明するものであり、現在のコンパイラでは発生しません。"
+
+#: ../../language/error_codes/E0077.md:8
+msgid ""
+"Current `lexmatch ... with longest` is supported for in-memory `String` "
+"and `StringView` inputs when its cases use regex constant expressions."
+msgstr "現在の `lexmatch ... with longest` は、ケースが正規表現の定数式を使う場合、メモリ上の `String` と `StringView` の入力に対して利用できます。"
 
 #: ../../language/error_codes/E0077.md:11
 msgid "Erroneous example"
@@ -65,16 +66,14 @@ msgstr ""
 msgid ""
 "Convert each legacy string pattern to a regex literal. Anchor it at `^`, "
 "and at `$` as well when the case must consume the whole input. Replace a "
-"trailing rest binder with `after=`. Longest-match `lexscan` does not "
-"support leading rest binders or case guards, so those cases require "
-"manual refactoring."
-msgstr ""
+"trailing rest binder with `after=`."
+msgstr "各レガシー文字列パターンを正規表現リテラルに変換し、`^` で先頭に固定してください。ケースが入力全体を消費する必要がある場合は、`$` でも末尾に固定します。末尾の残余部分の束縛は `after=` に置き換えてください。"
 
-#: ../../language/error_codes/E0077.md:24
+#: ../../language/error_codes/E0077.md:23
 msgid ""
 "///|\n"
 "fn classify(input : String) -> String {\n"
-"  lexscan input with longest {\n"
+"  lexmatch input with longest {\n"
 "    re\"^(if|[a-z]*)$\" as token => token.to_owned()\n"
 "    _ => \"other\"\n"
 "  }\n"

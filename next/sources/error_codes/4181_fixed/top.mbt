@@ -1,7 +1,7 @@
 ///|
 pub fn match_text(text : String) -> Unit {
-  lexscan text with longest {
-    (re"^abc", after=_) => ()
+  lexmatch text with longest {
+    (re"^(abc)$" as word) => ignore(word)
     _ => ()
   }
 }

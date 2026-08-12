@@ -1,11 +1,12 @@
 ///|
-fn f(xss : Array[Array[Int]]) -> Unit {
-  l~: for xs in xss {
-    // Warning: The label name `l` shadows a label name that is already in scope.
-    l~: for x in xs {
+fn has_positive(xs : Array[Int]) -> Bool {
+  found~: {
+    // Warning: The label name `found` shadows a label name that is already in scope.
+    found~: for x in xs {
       if x > 0 {
-        break l~
+        break found~
       }
     }
+    false
   }
 }

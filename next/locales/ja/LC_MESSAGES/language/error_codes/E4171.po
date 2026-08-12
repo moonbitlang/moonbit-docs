@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 14:15+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -27,50 +27,51 @@ msgid "Compiler diagnostic name: `last_regex_case_must_be_catchall`."
 msgstr ""
 
 #: ../../language/error_codes/E4171.md:5
-msgid "The last case in a `lexmatch` expression must be a catch-all pattern."
-msgstr ""
-
-#: ../../language/error_codes/E4171.md:7
 msgid ""
-"MoonBit checks `lexmatch` expressions for exhaustiveness. When all "
-"previous regex patterns fail, the expression still needs a final branch "
-"that can handle the remaining input."
-msgstr ""
+"The catch-all case in a `lexmatch` or `lexscan` expression must be the "
+"last case."
+msgstr "`lexmatch` または `lexscan` 式のキャッチオールケースは、最後のケースでなければなりません。"
 
-#: ../../language/error_codes/E4171.md:11
+#: ../../language/error_codes/E4171.md:8
+msgid ""
+"Once a catch-all branch is reached, later regex cases can never be "
+"selected."
+msgstr "キャッチオール分岐に到達すると、それ以降の正規表現ケースは選択されません。"
+
+#: ../../language/error_codes/E4171.md:10
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4171.md:13
+#: ../../language/error_codes/E4171.md:12
 msgid ""
 "///|\n"
 "pub fn match_text(text : String) -> Unit {\n"
 "  lexmatch text with longest {\n"
-"    \"abc\" => ()\n"
+"    _ => ()\n"
+"    re\"^abc$\" => ()\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4171.md:17
-msgid "The only branch matches `\"abc\"`, so other input has no branch to run."
-msgstr ""
+#: ../../language/error_codes/E4171.md:16
+msgid "The `_` branch appears before another regex case."
+msgstr "`_` 分岐が別の正規表現ケースより前にあります。"
 
-#: ../../language/error_codes/E4171.md:19
+#: ../../language/error_codes/E4171.md:18
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4171.md:21
+#: ../../language/error_codes/E4171.md:20
 msgid ""
-"Add a final `_` case, or otherwise make the last case catch all remaining"
-" input. For new code, use `lexscan ... with longest` with anchored regex "
-"patterns."
-msgstr ""
+"Move the catch-all branch to the end. If the expression has no catch-all "
+"case at all, see [E4224](E4224.md)."
+msgstr "キャッチオール分岐を最後に移動してください。式にキャッチオールケース自体がない場合は、[E4224](E4224.md) を参照してください。"
 
-#: ../../language/error_codes/E4171.md:24
+#: ../../language/error_codes/E4171.md:23
 msgid ""
 "///|\n"
 "pub fn match_text(text : String) -> Unit {\n"
-"  lexscan text with longest {\n"
+"  lexmatch text with longest {\n"
 "    re\"^abc$\" => ()\n"
 "    _ => ()\n"
 "  }\n"

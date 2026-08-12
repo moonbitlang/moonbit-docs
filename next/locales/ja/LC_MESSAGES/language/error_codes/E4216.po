@@ -1,0 +1,75 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-12 15:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4216.md:1
+msgid "E4216"
+msgstr ""
+
+#: ../../language/error_codes/E4216.md:3
+msgid "Compiler diagnostic name: `lexscan_catchall_binder_not_supported`."
+msgstr "コンパイラ診断名：`lexscan_catchall_binder_not_supported`。"
+
+#: ../../language/error_codes/E4216.md:5
+msgid "A streaming `lexscan` catch-all case uses a binder pattern."
+msgstr "ストリーミング `lexscan` のキャッチオールケースで束縛パターンが使われています。"
+
+#: ../../language/error_codes/E4216.md:7
+msgid ""
+"Streaming cases consume input only when a regex matches. The final catch-"
+"all also handles end of input, so it does not bind a matched substring. "
+"Use `_` for that case and bind text with `as` on the regex cases that "
+"need it."
+msgstr ""
+"ストリーミングのケースは、正規表現がマッチした場合だけ入力を消費します。最後のキャッチオールは入力の終端も処理するため、マッチした部分文字列を束縛しません。このケースには"
+" `_` を使い、テキストが必要な正規表現ケースでは `as` で束縛してください。"
+
+#: ../../language/error_codes/E4216.md:11
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E4216.md:13
+msgid ""
+"///|\n"
+"pub fn next_token(lexbuf : @lexbuf.Lexbuf) -> String {\n"
+"  lexscan lexbuf {\n"
+"    (re\"^[a-z]+\" as word) => word.to_owned()\n"
+"    rest => rest.to_owned()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4216.md:17
+msgid "Suggestion"
+msgstr "提案"
+
+#: ../../language/error_codes/E4216.md:19
+msgid "Replace the catch-all binder with `_`."
+msgstr "キャッチオールの束縛を `_` に置き換えてください。"
+
+#: ../../language/error_codes/E4216.md:21
+msgid ""
+"///|\n"
+"pub fn next_token(lexbuf : @lexbuf.Lexbuf) -> String {\n"
+"  lexscan lexbuf {\n"
+"    (re\"^[a-z]+\" as word) => word.to_owned()\n"
+"    _ => \"end\"\n"
+"  }\n"
+"}\n"
+msgstr ""

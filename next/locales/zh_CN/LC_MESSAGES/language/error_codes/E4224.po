@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-12 15:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4224.md:1
+msgid "E4224"
+msgstr ""
+
+#: ../../language/error_codes/E4224.md:3
+msgid "Compiler diagnostic name: `lexscan_catchall_missing`."
+msgstr "编译器诊断名称：`lexscan_catchall_missing`。"
+
+#: ../../language/error_codes/E4224.md:5
+msgid ""
+"The regex cases in a `lexmatch` or `lexscan` expression are not "
+"exhaustive, and the expression has no catch-all case."
+msgstr "`lexmatch` 或 `lexscan` 表达式中的正则分支并不穷尽，并且该表达式没有兜底分支。"
+
+#: ../../language/error_codes/E4224.md:8
+msgid ""
+"The compiler checks whether the regex cases cover every possible input, "
+"including empty input and, for streaming scans, end of input. An "
+"exhaustive expression may omit the catch-all. Otherwise, add a final "
+"catch-all branch to define the result when no regex case matches."
+msgstr "编译器会检查正则分支是否覆盖所有可能的输入，包括空输入，以及流式扫描的输入结束。如果表达式是穷尽的，可以省略兜底分支。否则，请添加最后的兜底分支，定义没有正则分支匹配时的结果。"
+
+#: ../../language/error_codes/E4224.md:13
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4224.md:15
+msgid ""
+"///|\n"
+"pub fn classify(text : String) -> String {\n"
+"  lexmatch text with longest {\n"
+"    re\"^[a-z]+$\" => \"word\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4224.md:19
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4224.md:21
+msgid ""
+"Make the regex cases exhaustive, or add a final catch-all case. A "
+"`lexmatch` catch-all may bind the unmatched input; a streaming `lexscan` "
+"catch-all must be written as `_`. If a catch-all exists but is not last, "
+"see [E4171](E4171.md)."
+msgstr "使正则分支穷尽，或添加最后的兜底分支。`lexmatch` 的兜底分支可以绑定未匹配的输入；流式 `lexscan` 的兜底分支必须写成 `_`。如果存在兜底分支但它不在最后，请参见 [E4171](E4171.md)。"
+
+#: ../../language/error_codes/E4224.md:25
+msgid ""
+"///|\n"
+"pub fn classify(text : String) -> String {\n"
+"  lexmatch text with longest {\n"
+"    re\"^.*$\" => \"text\"\n"
+"  }\n"
+"}\n"
+msgstr ""

@@ -1,4 +1,4 @@
 #valtype
-struct Box[T] {
-  value : T
+struct Counter {
+  mut value : Int
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-18 16:20+0800\n"
+"POT-Creation-Date: 2026-08-12 15:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -40,10 +40,18 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E0027.md:12
+msgid ""
+"The compiler also reports this warning when `lexscan` is used with a "
+"`String` or `StringView` target. That compatibility form is temporarily "
+"accepted, but new code should use `lexmatch` for in-memory lexical "
+"matching."
+msgstr "`lexscan` を `String` または `StringView` の対象に使用した場合にも、コンパイラはこの警告を報告します。この互換形式は一時的に受け入れられますが、新しいコードではメモリ上の入力に対する字句マッチに `lexmatch` を使用してください。"
+
+#: ../../language/error_codes/E0027.md:16
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E0027.md:14
+#: ../../language/error_codes/E0027.md:18
 msgid ""
 "fn identity[T](value : T) -> T {\n"
 "  //\n"
@@ -57,17 +65,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0027.md:18
+#: ../../language/error_codes/E0027.md:22
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E0027.md:20
+#: ../../language/error_codes/E0027.md:24
 msgid ""
 "Migrate the code according to the warning message. In this case, move the"
 " type parameter list before the function name."
 msgstr ""
 
-#: ../../language/error_codes/E0027.md:23
+#: ../../language/error_codes/E0027.md:27
 msgid ""
 "///|\n"
 "fn[T] identity(value : T) -> T {\n"

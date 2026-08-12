@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 14:15+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -27,10 +27,13 @@ msgid "Compiler diagnostic name: `guard_not_supported_in_longest_match_strategy`
 msgstr ""
 
 #: ../../language/error_codes/E4186.md:5
-msgid "Guards are not supported in longest-match `lexmatch` cases."
-msgstr "最长匹配策略的 `lexmatch` 分支不支持守卫条件。"
+msgid ""
+"This diagnostic code was used for guards in longest-match lexical cases "
+"and is not emitted by the current compiler. The current diagnostic is "
+"[E4217](E4217.md)."
+msgstr "此诊断码曾用于最长匹配词法分支中的守卫，当前编译器已不再发出该诊断。当前对应的诊断是 [E4217](E4217.md)。"
 
-#: ../../language/error_codes/E4186.md:7
+#: ../../language/error_codes/E4186.md:9
 msgid ""
 "The longest-match strategy decides which regex case wins before running "
 "the case body. Case guards would make that decision depend on arbitrary "
@@ -39,11 +42,11 @@ msgstr ""
 "最长匹配策略会在运行分支主体之前决定哪个正则分支胜出。分支守卫会让这个决定依赖任意表达式，因此在 `lexmatch ... with "
 "longest` 中会被拒绝。"
 
-#: ../../language/error_codes/E4186.md:11
+#: ../../language/error_codes/E4186.md:13
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4186.md:13
+#: ../../language/error_codes/E4186.md:15
 msgid ""
 "///|\n"
 "pub fn match_text(text : String) -> Unit {\n"
@@ -54,25 +57,25 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4186.md:17
+#: ../../language/error_codes/E4186.md:19
 msgid "The first case has an `if` guard."
 msgstr "第一个分支带有 `if` 守卫。"
 
-#: ../../language/error_codes/E4186.md:19
+#: ../../language/error_codes/E4186.md:21
 msgid "Suggestion"
 msgstr "修改建议"
 
-#: ../../language/error_codes/E4186.md:21
+#: ../../language/error_codes/E4186.md:23
 msgid ""
-"Use `lexscan` and move the condition into the case body so the longest-"
-"match decision depends only on the regex patterns."
-msgstr "使用 `lexscan` 并将条件移入分支主体，让最长匹配的决定只依赖正则模式。"
+"Move the condition into the case body so selection depends only on the "
+"regex patterns."
+msgstr "将条件移入分支主体，使分支选择只依赖正则模式。"
 
-#: ../../language/error_codes/E4186.md:24
+#: ../../language/error_codes/E4186.md:26
 msgid ""
 "///|\n"
 "pub fn match_text(text : String) -> Unit {\n"
-"  lexscan text with longest {\n"
+"  lexmatch text with longest {\n"
 "    re\"^abc$\" => if text.length() > 0 { () }\n"
 "    _ => ()\n"
 "  }\n"

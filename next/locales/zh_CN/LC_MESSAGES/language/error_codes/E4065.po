@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 10:54+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -40,8 +40,8 @@ msgid "Operator"
 msgstr "运算符"
 
 #: ../../language/error_codes/E4065.md
-msgid "Method Name"
-msgstr "方法名称"
+msgid "`#alias` value"
+msgstr "`#alias` 的值"
 
 #: ../../language/error_codes/E4065.md
 msgid "Number of Arguments"
@@ -52,7 +52,7 @@ msgid "`_[_]`"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md
-msgid "`op_get`"
+msgid "`\"_[_]\"`"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md
@@ -64,7 +64,7 @@ msgid "`_[_] = _`"
 msgstr "`_[_] = _`"
 
 #: ../../language/error_codes/E4065.md
-msgid "`op_set`"
+msgid "`\"_[_]=_\"`"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md
@@ -76,7 +76,7 @@ msgid "`_[_:_]`"
 msgstr "`_[_:_]`"
 
 #: ../../language/error_codes/E4065.md
-msgid "`op_as_view`"
+msgid "`\"_[_:_]\"`"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md:15
@@ -89,10 +89,11 @@ msgid ""
 "struct A(Array[Int])\n"
 "\n"
 "///|\n"
-"fn A::op_get(self : A, idx : Int, offset? : Int) -> Int {\n"
+"#alias(\"_[_]\")\n"
+"fn A::get(self : A, idx : Int, offset? : Int) -> Int {\n"
 "  //  ^~~~~~\n"
-"  // Error: overloaded operator \"op_get\" should accept 2 arguments, but it"
-" accepts 3 arguments\n"
+"  // Error: overloaded indexing should accept 2 arguments, but it accepts"
+" 3 arguments\n"
 "  let idx = match offset {\n"
 "    None => idx\n"
 "    Some(offset) => idx + offset\n"
@@ -106,8 +107,8 @@ msgid "Suggestion"
 msgstr "建议"
 
 #: ../../language/error_codes/E4065.md:23
-msgid "Modify the method to match the expected number of arguments of the operator."
-msgstr "修改该方法以匹配操作符的预期参数数。"
+msgid "Give the aliased method the number of arguments expected by the operator."
+msgstr "请让带别名的方法接受该运算符所需数量的参数。"
 
 #: ../../language/error_codes/E4065.md:25
 msgid ""
@@ -115,7 +116,8 @@ msgid ""
 "struct A(Array[Int])\n"
 "\n"
 "///|\n"
-"fn A::op_get(self : A, idx : Int) -> Int {\n"
+"#alias(\"_[_]\")\n"
+"fn A::get(self : A, idx : Int) -> Int {\n"
 "  return self.0[idx]\n"
 "}\n"
 msgstr ""

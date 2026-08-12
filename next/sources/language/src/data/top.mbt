@@ -360,17 +360,3 @@ pub type Index = Int
 pub type MyIndex = Int
 pub type MyMap = Map[Int, String]
 // end typealias 1
-
-// start local-type 1
-fn[T : Debug] toplevel(x : T) -> Unit {
-  enum LocalEnum {
-    A(T)
-    B(Int)
-  } derive(Debug)
-  struct LocalStruct {
-    a : (String, T)
-  } derive(Debug)
-  struct LocalStructTuple(T) derive(Debug)
-  ...
-}
-// end local-type 1

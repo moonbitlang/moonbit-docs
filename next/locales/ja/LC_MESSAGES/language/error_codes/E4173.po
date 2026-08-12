@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 17:59+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -32,42 +32,38 @@ msgstr ""
 
 #: ../../language/error_codes/E4173.md:7
 msgid ""
-"`#valtype` asks the compiler to represent a type as a value type. Not "
-"every type shape can be represented this way. The compiler rejects "
-"declarations that would require boxed or runtime-object storage, such as "
-"a type parameter field, an object field, a mutable field, too many "
-"fields, or a nested value type field."
-msgstr ""
+"`#valtype` asks the compiler to represent a type as a value type. Value-"
+"type fields must be immutable, so a declaration with a mutable field is "
+"rejected."
+msgstr "`#valtype` は、型を値型として表現するようコンパイラに要求します。値型のフィールドは不変でなければならないため、可変フィールドを含む宣言は拒否されます。"
 
-#: ../../language/error_codes/E4173.md:12
+#: ../../language/error_codes/E4173.md:10
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4173.md:14
+#: ../../language/error_codes/E4173.md:12
 msgid ""
 "#valtype\n"
-"struct Box[T] {\n"
-"  value : T\n"
+"struct Counter {\n"
+"  mut value : Int\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4173.md:18
-msgid ""
-"The field `value` has type `T`, a type parameter. A value type must have "
-"a concrete supported layout, so this generic field is rejected."
-msgstr ""
+#: ../../language/error_codes/E4173.md:16
+msgid "The field `value` is mutable."
+msgstr "フィールド `value` は可変です。"
 
-#: ../../language/error_codes/E4173.md:21
+#: ../../language/error_codes/E4173.md:18
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4173.md:23
+#: ../../language/error_codes/E4173.md:20
 msgid ""
-"Use concrete scalar fields for the value type, or remove `#valtype` if "
-"the type needs a generic or boxed layout."
-msgstr ""
+"Make the field immutable, or remove `#valtype` if the type needs in-place"
+" mutation."
+msgstr "フィールドを不変にしてください。その型でインプレース変更が必要な場合は、`#valtype` を削除します。"
 
-#: ../../language/error_codes/E4173.md:26
+#: ../../language/error_codes/E4173.md:23
 msgid ""
 "#valtype\n"
 "struct Point {\n"

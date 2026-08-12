@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 15:37+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -27,48 +27,48 @@ msgid "Compiler diagnostic name: `regex_match_binding_not_supported`."
 msgstr ""
 
 #: ../../language/error_codes/E4220.md:5
-msgid ""
-"A `lexscan ... with longest` case uses a `before=` binding, which is not "
-"available in longest-match mode."
-msgstr ""
+msgid "A lexical case uses a binding that is not available in its matching mode."
+msgstr "字句ケースで、そのマッチモードでは利用できない束縛が使われています。"
 
-#: ../../language/error_codes/E4220.md:8
+#: ../../language/error_codes/E4220.md:7
 msgid ""
-"For `String` and `StringView` inputs, first-match mode supports both "
-"`before=` and `after=`. Longest-match mode starts at the beginning of the"
-" input, so it supports `after=` but not `before=`."
-msgstr ""
+"For `String` and `StringView` inputs, first-match `lexmatch` supports "
+"both `before=` and `after=`. Longest-match mode starts at the beginning "
+"of the input, so it supports `after=` but not `before=`. Streaming "
+"`lexscan` consumes its input buffer and does not expose unmatched "
+"prefixes or suffixes through these bindings."
+msgstr "`String` と `StringView` の入力では、first-match `lexmatch` は `before=` と `after=` の両方をサポートします。longest-match モードは入力の先頭から始まるため、`after=` はサポートしますが `before=` はサポートしません。ストリーミング `lexscan` は入力バッファを消費するため、これらの束縛を通して未マッチの接頭部分や接尾部分を公開しません。"
 
-#: ../../language/error_codes/E4220.md:12
+#: ../../language/error_codes/E4220.md:13
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4220.md:14
+#: ../../language/error_codes/E4220.md:15
 msgid ""
 "///|\n"
 "pub fn first_word(input : String) -> StringView {\n"
-"  lexscan input with longest {\n"
+"  lexmatch input with longest {\n"
 "    (re\"^[a-z]+\" as word, before=_) => word\n"
 "    _ => \"\"\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4220.md:18
+#: ../../language/error_codes/E4220.md:19
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4220.md:20
+#: ../../language/error_codes/E4220.md:21
 msgid ""
 "Remove `before=`, anchor the regex at `^`, and use `after=` when the "
 "unmatched suffix is needed."
 msgstr ""
 
-#: ../../language/error_codes/E4220.md:23
+#: ../../language/error_codes/E4220.md:24
 msgid ""
 "///|\n"
 "pub fn first_word(input : String) -> StringView {\n"
-"  lexscan input with longest {\n"
+"  lexmatch input with longest {\n"
 "    (re\"^[a-z]+\" as word, after=_) => word\n"
 "    _ => \"\"\n"
 "  }\n"

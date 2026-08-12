@@ -45,7 +45,8 @@ fn GHeap::alloc(self : GHeap, node : Node) -> Addr {
 }
 // end heap definition
 
-fn GHeap::op_get(self : GHeap, key : Addr) -> Node {
+#alias("_[_]")
+fn GHeap::get(self : GHeap, key : Addr) -> Node {
   let Addr(i) = key
   match self.memory[i] {
     Some(node) => node
@@ -53,7 +54,8 @@ fn GHeap::op_get(self : GHeap, key : Addr) -> Node {
   }
 }
 
-fn GHeap::op_set(self : GHeap, key : Addr, val : Node) -> Unit {
+#alias("_[_]=_")
+fn GHeap::set(self : GHeap, key : Addr, val : Node) -> Unit {
   self.memory[key.0] = Some(val)
 }
 

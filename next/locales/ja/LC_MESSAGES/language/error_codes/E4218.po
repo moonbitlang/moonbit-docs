@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 15:37+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -27,45 +27,46 @@ msgid "Compiler diagnostic name: `lexscan_pattern_not_anchored`."
 msgstr ""
 
 #: ../../language/error_codes/E4218.md:5
-msgid "A `lexscan` regex pattern is not anchored where anchoring is required."
-msgstr ""
+msgid "A lexical regex pattern is not anchored where anchoring is required."
+msgstr "字句用の正規表現パターンが、必要な位置に固定されていません。"
 
 #: ../../language/error_codes/E4218.md:7
 msgid ""
-"Patterns used with the `longest` strategy must start at the beginning of "
-"the input. Anchor each such regex with `^`."
-msgstr ""
+"Patterns used by streaming `lexscan`, or by either expression with the "
+"`longest` strategy, must start at the current input position. Anchor each"
+" such regex with `^`."
+msgstr "ストリーミング `lexscan` で使うパターンと、いずれかの式で `longest` 戦略を使うパターンは、現在の入力位置から始まらなければなりません。そのような正規表現はすべて `^` で先頭に固定してください。"
 
-#: ../../language/error_codes/E4218.md:10
+#: ../../language/error_codes/E4218.md:11
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4218.md:12
+#: ../../language/error_codes/E4218.md:13
 msgid ""
 "///|\n"
 "pub fn classify(input : String) -> String {\n"
-"  lexscan input with longest {\n"
+"  lexmatch input with longest {\n"
 "    re\"[a-z]+\" => \"word\"\n"
 "    _ => \"other\"\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4218.md:16
+#: ../../language/error_codes/E4218.md:17
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4218.md:18
+#: ../../language/error_codes/E4218.md:19
 msgid ""
 "Add `^` to the start of the regex. Add `$` as well only when the case "
 "must consume the whole input."
 msgstr ""
 
-#: ../../language/error_codes/E4218.md:21
+#: ../../language/error_codes/E4218.md:22
 msgid ""
 "///|\n"
 "pub fn classify(input : String) -> String {\n"
-"  lexscan input with longest {\n"
+"  lexmatch input with longest {\n"
 "    (re\"^[a-z]+\", after=_) => \"word\"\n"
 "    _ => \"other\"\n"
 "  }\n"

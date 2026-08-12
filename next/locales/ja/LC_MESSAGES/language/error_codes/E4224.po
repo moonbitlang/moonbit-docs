@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-12 15:09+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4224.md:1
+msgid "E4224"
+msgstr ""
+
+#: ../../language/error_codes/E4224.md:3
+msgid "Compiler diagnostic name: `lexscan_catchall_missing`."
+msgstr "コンパイラ診断名：`lexscan_catchall_missing`。"
+
+#: ../../language/error_codes/E4224.md:5
+msgid ""
+"The regex cases in a `lexmatch` or `lexscan` expression are not "
+"exhaustive, and the expression has no catch-all case."
+msgstr "`lexmatch` または `lexscan` 式の正規表現ケースは網羅的ではなく、その式にはキャッチオールケースがありません。"
+
+#: ../../language/error_codes/E4224.md:8
+msgid ""
+"The compiler checks whether the regex cases cover every possible input, "
+"including empty input and, for streaming scans, end of input. An "
+"exhaustive expression may omit the catch-all. Otherwise, add a final "
+"catch-all branch to define the result when no regex case matches."
+msgstr "コンパイラは、正規表現ケースが空の入力、およびストリーミングスキャンにおける入力の終端を含む、可能な入力をすべて網羅しているかを確認します。網羅的な式ではキャッチオールを省略できます。そうでない場合は、どの正規表現ケースにもマッチしないときの結果を定義するため、最後にキャッチオール分岐を追加してください。"
+
+#: ../../language/error_codes/E4224.md:13
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E4224.md:15
+msgid ""
+"///|\n"
+"pub fn classify(text : String) -> String {\n"
+"  lexmatch text with longest {\n"
+"    re\"^[a-z]+$\" => \"word\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4224.md:19
+msgid "Suggestion"
+msgstr "提案"
+
+#: ../../language/error_codes/E4224.md:21
+msgid ""
+"Make the regex cases exhaustive, or add a final catch-all case. A "
+"`lexmatch` catch-all may bind the unmatched input; a streaming `lexscan` "
+"catch-all must be written as `_`. If a catch-all exists but is not last, "
+"see [E4171](E4171.md)."
+msgstr "正規表現ケースを網羅的にするか、最後にキャッチオールケースを追加してください。`lexmatch` のキャッチオールはマッチしなかった入力を束縛できますが、ストリーミング `lexscan` のキャッチオールは `_` と記述する必要があります。キャッチオールが存在しても最後にない場合は、[E4171](E4171.md) を参照してください。"
+
+#: ../../language/error_codes/E4224.md:25
+msgid ""
+"///|\n"
+"pub fn classify(text : String) -> String {\n"
+"  lexmatch text with longest {\n"
+"    re\"^.*$\" => \"text\"\n"
+"  }\n"
+"}\n"
+msgstr ""

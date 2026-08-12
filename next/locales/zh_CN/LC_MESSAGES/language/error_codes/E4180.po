@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 14:41+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -36,24 +36,15 @@ msgid ""
 "explicit `longest` strategy. Other strategy names are rejected."
 msgstr "`lexmatch` 只支持默认的首次匹配策略，以及显式的 `longest` 策略。其他策略名会被拒绝。"
 
-#: ../../language/error_codes/E4180.md:11
-msgid ""
-"`lexmatch` is deprecated for new code. Prefer regex match expressions "
-"such as `value =~ re\"...\"` for boolean checks, or `lexscan` for case-"
-"based scanning."
-msgstr ""
-"新代码中已弃用 `lexmatch`。布尔检查请优先使用 `value =~ re\"...\"` 这类正则"
-"匹配表达式，基于 case 的扫描请使用 `lexscan`。"
-
-#: ../../language/error_codes/E4180.md:15
+#: ../../language/error_codes/E4180.md:10
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4180.md:17
+#: ../../language/error_codes/E4180.md:12
 msgid "The following example asks for an unsupported `shortest` strategy:"
 msgstr "下面的示例请求了不支持的 `shortest` 策略："
 
-#: ../../language/error_codes/E4180.md:19
+#: ../../language/error_codes/E4180.md:14
 msgid ""
 "///|\n"
 "fn classify(input : String) -> String {\n"
@@ -69,21 +60,22 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4180.md:23
+#: ../../language/error_codes/E4180.md:18
 msgid "MoonBit will report an error."
 msgstr "MoonBit 会报告一个错误。"
 
-#: ../../language/error_codes/E4180.md:25
+#: ../../language/error_codes/E4180.md:20
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4180.md:27
+#: ../../language/error_codes/E4180.md:22
 msgid ""
-"Rewrite the code with a regex match expression when first-match behavior "
-"is enough, or use `lexscan ... with longest` for longest-match scanning:"
-msgstr "如果首次匹配行为已经足够，请用正则匹配表达式重写代码；需要最长匹配扫描时，请使用 `lexscan ... with longest`："
+"Rewrite the code with a regex match expression when a single boolean "
+"check is enough, or use `lexmatch ... with longest` for longest-match "
+"case selection:"
+msgstr "如果单个布尔检查就足够，请使用正则匹配表达式重写代码；如果需要按最长匹配选择分支，则使用 `lexmatch ... with longest`："
 
-#: ../../language/error_codes/E4180.md:30
+#: ../../language/error_codes/E4180.md:25
 msgid ""
 "///|\n"
 "fn classify(input : String) -> String {\n"

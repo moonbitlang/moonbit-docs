@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-01 17:46+0800\n"
+"POT-Creation-Date: 2026-08-12 13:05+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -33,14 +33,46 @@ msgstr "语法 lint 警告。"
 #: ../../language/error_codes/E0063.md:7
 msgid ""
 "This warning category is used for valid code patterns that the compiler "
-"accepts but discourages through syntax lint diagnostics."
-msgstr "此警告类别用于编译器接受但通过语法 lint 诊断不推荐的合法代码模式。"
+"accepts but discourages. For example, wrapping a supplied optional "
+"argument in `Some` is unnecessary:"
+msgstr "编译器会接受此类合法代码模式，但并不推荐。例如，为已提供的可选参数显式包装 `Some` 是不必要的："
 
-#: ../../language/error_codes/E0063.md:10
+#: ../../language/error_codes/E0063.md:11
 msgid ""
-"No checked example is currently included for this warning. Add an "
-"`0063_error` fixture only when there is a compact stable-toolchain "
-"snippet that reproduces `Warning: [0063]`."
+"///|\n"
+"pub fn consume(value? : Int) -> Unit {\n"
+"  ignore(value)\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn demo() -> Unit {\n"
+"  consume(value?=Some(42))\n"
+"}\n"
 msgstr ""
-"此警告目前没有包含已检查的示例。只有在存在能够复现 `Warning: [0063]` "
-"的简短稳定工具链代码片段时，才添加 `0063_error` fixture。"
+
+#: ../../language/error_codes/E0063.md:15
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0063.md:17
+msgid "Pass the value directly when supplying the optional argument:"
+msgstr "为可选参数提供值时，直接传入该值："
+
+#: ../../language/error_codes/E0063.md:19
+msgid ""
+"///|\n"
+"pub fn consume(value? : Int) -> Unit {\n"
+"  ignore(value)\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn demo() -> Unit {\n"
+"  consume(value=42)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0063.md:23
+msgid ""
+"Other syntax lint diagnostics may report different anti-patterns and "
+"provide a suggestion specific to the code being checked."
+msgstr "其他语法 lint 诊断可能会报告不同的反模式，并针对正在检查的代码给出相应建议。"
