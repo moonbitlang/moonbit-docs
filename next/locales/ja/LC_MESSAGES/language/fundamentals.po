@@ -5683,7 +5683,7 @@ msgstr "正規表現マッチ式"
 msgid ""
 "Regex match expressions use the `=~` operator to search a `StringView` "
 "with a regex constant expression. The expression returns `Bool`."
-msgstr ""
+msgstr "正規表現マッチ式は `=~` 演算子を使い、正規表現の定数式で `StringView` を検索します。この式は `Bool` を返します。"
 
 #: ../../language/fundamentals.md:2175
 msgid ""
@@ -5788,7 +5788,7 @@ msgstr ""
 
 #: ../../language/fundamentals.md:2215
 msgid "Lexmatch"
-msgstr ""
+msgstr "Lexmatch"
 
 #: ../../language/fundamentals.md:2217
 msgid ""
@@ -5796,7 +5796,7 @@ msgid ""
 "several regex cases and return the body of the selected case. The default"
 " strategy selects the first matching case. Add `with longest` to select "
 "the case that matches the longest prefix instead."
-msgstr ""
+msgstr "`lexmatch` を使うと、メモリ上の `String` または `StringView` を複数の正規表現ケースと照合し、選択されたケースの本体を返せます。デフォルトの戦略では、最初にマッチしたケースを選択します。代わりに最長の接頭部分へマッチするケースを選ぶには、`with longest` を追加します。"
 
 #: ../../language/fundamentals.md:2222
 msgid ""
@@ -5806,7 +5806,7 @@ msgid ""
 "mode, anchor each regex at the start with `^`, and use `after=` when the "
 "remaining suffix is needed. Lexical match cases do not support guards, so"
 " put additional conditions inside the selected case body."
-msgstr ""
+msgstr "ケースには `re\"...\"` などの正規表現の定数式を使い、最後のケースはキャッチオールでなければなりません。マッチしたテキストを束縛するには `as` を使います。first-match モードでは `before=` と `after=` で未マッチ部分を束縛できます。longest-match モードでは各正規表現を `^` で先頭に固定し、残りの接尾部分が必要な場合は `after=` を使います。字句マッチのケースはガードをサポートしないため、追加の条件は選択されたケースの本体に記述してください。"
 
 #: ../../language/fundamentals.md:2229
 msgid ""
@@ -5823,11 +5823,11 @@ msgstr ""
 msgid ""
 "For a single boolean check, [`=~`](#regex-match-expression) is usually "
 "more concise."
-msgstr ""
+msgstr "1 回の真偽値チェックだけなら、通常は [`=~`](#regex-match-expression) の方が簡潔です。"
 
 #: ../../language/fundamentals.md:2239
 msgid "Lexscan"
-msgstr ""
+msgstr "Lexscan"
 
 #: ../../language/fundamentals.md:2241
 msgid ""
@@ -5836,7 +5836,7 @@ msgid ""
 "`String` chunks from a callback; the callback returns `None` at end of "
 "input. Each `lexscan` advances the buffer past the selected match, "
 "including matches that span chunk boundaries."
-msgstr ""
+msgstr "`lexscan` を使うと、ストリーミング入力からトークンを消費できます。同期型の `@lexbuf.Lexbuf` は、文字列全体を読み取ることも、コールバックから連続する `String` チャンクを取得することもできます。コールバックは入力の終端で `None` を返します。各 `lexscan` は、チャンク境界をまたぐマッチも含め、選択されたマッチの直後までバッファを進めます。"
 
 #: ../../language/fundamentals.md:2247
 msgid ""
@@ -5844,7 +5844,7 @@ msgid ""
 "and must end with a catch-all case. Add `with longest` when several cases"
 " can match and the longest token should win. Matched text can be bound "
 "with `as`."
-msgstr ""
+msgstr "ストリーミングの正規表現ケースは `^` で現在位置に固定し、最後をキャッチオールケースにしなければなりません。複数のケースがマッチし得るときに最長のトークンを選ぶには、`with longest` を追加します。マッチしたテキストは `as` で束縛できます。"
 
 #: ../../language/fundamentals.md:2251
 msgid ""
@@ -5870,15 +5870,15 @@ msgstr ""
 msgid ""
 "For asynchronous sources, use `@lexbuf.AsyncLexbuf::from_fn` with an "
 "async callback and call `lexscan` from an async function."
-msgstr ""
+msgstr "非同期ソースでは、非同期コールバックを指定した `@lexbuf.AsyncLexbuf::from_fn` を使い、非同期関数から `lexscan` を呼び出してください。"
 
 #: ../../language/fundamentals.md:2261
 msgid "Legacy lexical pattern syntax"
-msgstr ""
+msgstr "レガシー字句パターン構文"
 
 #: ../../language/fundamentals.md:2263
 msgid "Older code may use string-piece patterns or `lexmatch?`, for example:"
-msgstr ""
+msgstr "古いコードでは、次のような文字列断片パターンや `lexmatch?` が使われている場合があります："
 
 #: ../../language/fundamentals.md:2265
 msgid ""
@@ -5896,7 +5896,7 @@ msgstr ""
 msgid ""
 "For current code, use `lexmatch` with `re\"...\"` cases when several "
 "branches are needed, or `=~` for a boolean search."
-msgstr ""
+msgstr "現在のコードでは、複数の分岐が必要な場合は `re\"...\"` のケースを持つ `lexmatch` を使い、真偽値の検索には `=~` を使ってください。"
 
 #: ../../language/fundamentals.md:2279
 msgid "Spread Operator"
