@@ -2725,6 +2725,16 @@ msgid ""
 msgstr "未带标签的 `break` 不能退出或越过带标签的代码块；`continue` 只能指向带标签的循环，不能指向带标签的代码块。"
 
 #: ../../language/fundamentals.md:1162
+msgid ""
+"Block and loop labels share the same namespace. Reusing an enclosing "
+"label on a nested block or loop shadows the outer label and produces "
+"[E0036](error_codes/E0036.md). Use distinct names so that each labelled "
+"`break` or `continue` has an unambiguous target."
+msgstr ""
+"代码块标签和循环标签共享同一个命名空间。在嵌套的代码块或循环上重复使用外层标签会遮蔽该外层标签，并产生 "
+"[E0036](error_codes/E0036.md)。请使用不同的名称，确保每个带标签的 `break` 或 `continue` 都有明确的目标。"
+
+#: ../../language/fundamentals.md:1162
 msgid "`defer` expression"
 msgstr "`defer` 表达式"
 
@@ -5367,12 +5377,18 @@ msgid ""
 msgstr ""
 
 #: ../../language/fundamentals.md:2288
-msgid "The lexbuf types require the following direct package import:"
-msgstr "词法缓冲区类型需要直接导入以下包："
+msgid ""
+"The lexbuf types require a direct `moonbitlang/core/lexbuf` import. This "
+"runnable example also imports the official `moonbitlang/async` runtime so"
+" its asynchronous scanner can be tested with `async test`:"
+msgstr ""
+"词法缓冲区类型需要直接导入 `moonbitlang/core/lexbuf`。这个可运行示例还导入了官方 "
+"`moonbitlang/async` 运行时，从而可以用 `async test` 测试异步扫描器："
 
 #: ../../language/fundamentals.md:2290
 msgid ""
 "import {\n"
+"  \"moonbitlang/async\",\n"
 "  \"moonbitlang/core/lexbuf\",\n"
 "}\n"
 msgstr ""

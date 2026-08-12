@@ -68,21 +68,10 @@ pub async fn next_word(input : @lexbuf.AsyncLexbuf) -> StringView? {
 // end lexscan async scanner
 
 ///|
-async fn[T] suspend(f : ((T) -> Unit) -> Unit) -> T noraise = "%async.suspend"
-
-///|
-fn run_async(f : async () -> Unit noraise) -> Unit = "%async.run"
-
-///|
-async fn pause() -> Unit noraise {
-  suspend(continue_ => continue_(()))
-}
-
-///|
-test "scan an asynchronous stream" {
+async test "scan an asynchronous stream" {
   let mut sent = false
   let input = @lexbuf.AsyncLexbuf::from_fn(async fn() {
-    pause()
+    @async.pause()
     if sent {
       None
     } else {
@@ -90,12 +79,6 @@ test "scan an asynchronous stream" {
       Some("hello")
     }
   })
-  run_async(async fn() noraise {
-    try {
-      guard next_word(input) is Some(word) else { abort("expected word") }
-      guard word == "hello" else { abort("unexpected word") }
-    } catch {
-      _ => abort("unexpected scanner error")
-    }
-  })
+  guard next_word(input) is Some(word) else { fail("expected word") }
+  assert_true(word == "hello")
 }

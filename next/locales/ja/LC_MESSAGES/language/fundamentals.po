@@ -3156,6 +3156,17 @@ msgstr ""
 "が対象にできるのはラベル付きループだけで、ラベル付きブロックは対象にできません。"
 
 #: ../../language/fundamentals.md:1162
+msgid ""
+"Block and loop labels share the same namespace. Reusing an enclosing "
+"label on a nested block or loop shadows the outer label and produces "
+"[E0036](error_codes/E0036.md). Use distinct names so that each labelled "
+"`break` or `continue` has an unambiguous target."
+msgstr ""
+"ブロックとループのラベルは同じ名前空間を共有します。ネストしたブロックまたはループで外側のラベルを再利用すると、そのラベルを隠して "
+"[E0036](error_codes/E0036.md) が発生します。ラベル付きの `break` や `continue` "
+"の対象が明確になるよう、互いに異なる名前を使用してください。"
+
+#: ../../language/fundamentals.md:1162
 msgid "`defer` expression"
 msgstr "`defer` 式"
 
@@ -5920,12 +5931,18 @@ msgid ""
 msgstr ""
 
 #: ../../language/fundamentals.md:2288
-msgid "The lexbuf types require the following direct package import:"
-msgstr "字句バッファ型を使うには、次のパッケージを直接インポートする必要があります："
+msgid ""
+"The lexbuf types require a direct `moonbitlang/core/lexbuf` import. This "
+"runnable example also imports the official `moonbitlang/async` runtime so"
+" its asynchronous scanner can be tested with `async test`:"
+msgstr ""
+"字句バッファ型を使うには `moonbitlang/core/lexbuf` を直接インポートする必要があります。この実行可能な例では、非同期スキャナーを "
+"`async test` でテストできるよう、公式の `moonbitlang/async` ランタイムもインポートしています："
 
 #: ../../language/fundamentals.md:2290
 msgid ""
 "import {\n"
+"  \"moonbitlang/async\",\n"
 "  \"moonbitlang/core/lexbuf\",\n"
 "}\n"
 msgstr ""

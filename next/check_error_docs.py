@@ -25,8 +25,6 @@ SKIPPED_ERROR_CODES = {
     '0047',
     '0076',
     '0077',
-    # This warning is implemented in the source compiler but is not emitted by
-    # the stable toolchain used to validate this documentation update yet.
     '0090',
     '4054',
     '4066',

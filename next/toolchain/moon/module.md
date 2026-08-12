@@ -520,7 +520,7 @@ while `id` is the numeric form of the same warning.
 
 ```
 $ moonc check -warn-help
-Available warnings: 
+Available warnings:
 mnemonic                   description                                                     id state
 unused_value               Unused variable or function.                                     1 warn
 unused_value               Unused variable.                                                 2 warn

@@ -1,10 +1,12 @@
 ///|
-fn f(xss : Array[Array[Int]]) -> Unit {
-  outer~: for xs in xss {
-    inner~: for x in xs {
+fn has_positive(xs : Array[Int]) -> Bool {
+  found~: {
+    search~: for x in xs {
       if x > 0 {
-        break inner~
+        break found~ true
       }
+      continue search~
     }
+    false
   }
 }

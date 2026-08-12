@@ -1159,6 +1159,11 @@ from nested control flow without returning from the enclosing function.
 An unlabelled `break` cannot exit or pass through a labelled block, and
 `continue` can only target a labelled loop, not a labelled block.
 
+Block and loop labels share the same namespace. Reusing an enclosing label on
+a nested block or loop shadows the outer label and produces
+[E0036](error_codes/E0036.md). Use distinct names so that each labelled
+`break` or `continue` has an unambiguous target.
+
 ### `defer` expression
 
 `defer` expression can be used to perform reliable resource cleanup.
@@ -2285,12 +2290,12 @@ lexscan input [with first|longest] {
 }
 ```
 
-The lexbuf types require the following direct package import:
+The lexbuf types require a direct `moonbitlang/core/lexbuf` import. This
+runnable example also imports the official `moonbitlang/async` runtime so its
+asynchronous scanner can be tested with `async test`:
 
-```moonbit
-import {
-  "moonbitlang/core/lexbuf",
-}
+```{literalinclude} /sources/language/src/lexscan/moon.pkg
+:language: moonbit
 ```
 
 Every streaming regex must start with `^`, because scanning always begins at
