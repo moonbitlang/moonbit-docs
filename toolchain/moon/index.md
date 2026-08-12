@@ -60,7 +60,7 @@
   * [Version](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#version)
   * [Dependency Management](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#dependency-management)
   * [Meta Information](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#meta-information)
-  * [Include and Exclude](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#include-and-exclude)
+  * [Publishing Files with `.moonignore`](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#publishing-files-with-moonignore)
   * [Preferred Target](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#preferred-target)
   * [Supported Targets](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#supported-targets)
   * [Source directory](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#source-directory)

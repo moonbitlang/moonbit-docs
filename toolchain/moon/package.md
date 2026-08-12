@@ -4,9 +4,9 @@ moon uses a package file to identify and describe a package. The legacy format
 is `moon.pkg.json`, and the new format is `moon.pkg`. For full JSON schema,
 please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/pkg.schema.json).
 
-Support for `moon.pkg.json` is deprecated in v0.10.4 and scheduled for removal
-in the following release. New projects should use `moon.pkg`; existing JSON
-configuration can be migrated with `moon fmt` as described below.
+Support for `moon.pkg.json` is deprecated. New projects should use `moon.pkg`;
+existing JSON configuration can be migrated with `moon fmt` as described
+below.
 
 ## New format (`moon.pkg`)
 
@@ -1120,8 +1120,8 @@ unused_default_value       Default value of optional argument never used.       
 text_segment_excceed       Text segment exceed the line or column limits.                  33 warn
 implicit_use_builtin       Implicit use of definitions from `moonbitlang/core/builtin`.    34 warn
 reserved_keyword           Reserved keyword.                                               35 warn
-loop_label_shadowing       Loop label shadows another label.                               36 warn
-unused_loop_label          Unused loop label.                                              37 warn
+block_label_shadowing      Block label shadows another label.                              36 warn
+unused_block_label         Unused block label.                                             37 warn
 missing_invariant          For-loop is missing an invariant.                               38 off
 missing_reasoning          For-loop is missing a proof_reasoning.                          39 off
 multiline_string_escape    Deprecated escape sequence in multiline string.                 40 error
@@ -1156,8 +1156,6 @@ unqualified_local_using    unqualified local using                              
 unnecessary_annotation     unnecessary type annotation                                     73 off
 missing_doc                Missing documentation for public definition                     74 off
 unnecessary_view_op        Unnecessary `[:]` view operator                                 75 off
-lexmatch_first_match       Deprecated `lexmatch` with first-match semantics.               76 warn
-lexmatch_longest_match     Deprecated `lexmatch` with longest-match semantics.             77 warn
 result_error_return        Using `Result[T, E]` where `E` is an error type.                78 off
 implicit_impl_as_method    `impl` implicitly promoted as method                            79 off
 regex_match_missing_before Missing `before` binding in `regex match`.                      80 warn
@@ -1167,6 +1165,9 @@ type_param_method          Calling method of type parameter in a deprecated way.
 unqualified_record         Struct literal in a `let` binding without a type prefix.        84 off
 unlabelled_break_in_labelled_loop Unlabelled `break` directly inside a labelled loop.             85 warn
 unlabelled_continue_in_labelled_loop Unlabelled `continue` directly inside a labelled loop.          86 warn
+guard_inexhaustive         `guard` condition is not exhaustive and may panic.              87 warn
+guard_redundant_bang       Redundant `!` on an exhaustive `guard`.                         88 warn
+guard_redundant_else       Redundant `else` on an exhaustive `guard`.                      89 warn
 all                        all warnings
 state: warn = enabled, error = promoted to error, off = disabled
 note: default alert exceptions: alert_unsafe=off

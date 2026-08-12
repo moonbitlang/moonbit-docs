@@ -3,9 +3,8 @@
 moon uses a module file to identify and describe a module. The legacy format is `moon.mod.json`,
 and the new format is `moon.mod`. For full JSON schema, please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json).
 
-Support for `moon.mod.json` is deprecated in v0.10.4 and scheduled for removal
-in the following release. Prefer `moon.mod` for new projects and migrate
-existing JSON files with `moon fmt`.
+Support for `moon.mod.json` is deprecated. Prefer `moon.mod` for new projects
+and migrate existing JSON files with `moon fmt`.
 
 Full syntax of moon.mod is as follows:
 
@@ -229,33 +228,75 @@ description = "This is a description of the module."
 }
 ```
 
-## Include and Exclude
+## Publishing Files with `.moonignore`
 
-The `include` and `exclude` fields are used to include or exclude specific directories or files during publishing process.
+Use `.moonignore` files to exclude files and directories from archives created
+by `moon package` and `moon publish`. Each file uses gitignore-style patterns:
 
-It follows the gitignore syntax, and include follows the exclude.
-For example, the following configuration will include the `build/assets`
-but exclude anything else in the `build` directory.
+```text
+# Generated output
+build/
+*.log
 
-### moon.mod
+# Keep this fixture even though other log files are excluded
+!fixtures/expected.log
 
-```moonbit
-options(
-  exclude: ["build"],
-  "include": ["build/assets"],
-)
+# Keep selected root dotfiles that are excluded by default
+!/.gitignore
+!/.moonignore
+
+# Keep a hidden directory and everything below it
+!/.well-known/
+!/.well-known/**
 ```
 
-### moon.mod.json
+Publishing honors `.gitignore` rules by default. If a directory contains a
+`.moonignore`, its rules are used instead of that directory's `.gitignore` when
+creating the archive; the two files in the same directory are not combined.
+This filtering is based on the patterns, regardless of whether a file is
+tracked by Git.
 
-```json
-{
-  "exclude": ["build"],
-  "include": ["build/assets"]
-}
-```
+Git's repository-local `.git/info/exclude` and global ignore configuration are
+not consulted. Only the ignore files that belong to the project affect the
+archive, so publishing the same contents does not depend on a user's Git
+configuration.
 
-You may use [`moon package --list`](https://docs.moonbitlang.com/en/latest/toolchain/moon/commands.html#moon-package) to verify if the packaged result is expected.
+By default, files and directories whose names begin with `.` are excluded at
+every depth. The root-anchored examples above keep the two ignore files and
+`.well-known/` in the archive. Re-including a directory does not automatically
+re-include its contents, so the second `.well-known` rule is also needed.
+
+The package-root `_build/` directory is always excluded and cannot be
+re-included by an ignore rule or the deprecated `include` field. This fixed
+exclusion does not apply to nested directories with the same name. For example,
+`!/_build/` and `!/_build/**` cannot restore the package-root directory, while
+`examples/_build/data.bin` is not excluded merely because a nested directory is
+named `_build`.
+
+Rules apply to the directory containing the ignore file and all of its
+descendants. Rules inherited from parent directories remain in effect, while
+later matching rules in nested directories take precedence. This includes `!`
+rules that restore a previously excluded path whose parent directory is still
+visible. A leading `/` anchors a pattern to the directory containing the ignore
+file, while a trailing `/` matches directories.
+
+Use [`moon package --list`](https://docs.moonbitlang.com/en/latest/toolchain/moon/commands.html#moon-package) to inspect the files that
+will be packaged.
+
+### Deprecated `include` and `exclude` fields
+
+#### WARNING
+The `include` and `exclude` fields in `moon.mod` and `moon.mod.json` are
+deprecated. Use `.moonignore` for new and migrated modules.
+
+Existing manifests may still use either field. When `include` is present, it is
+an exhaustive allowlist: `exclude`, `.gitignore`, `.moonignore`, and the default
+dot-prefixed-path exclusion are not applied. Use `!` patterns within `include`
+for exceptions to the allowlist. The fixed exclusion of the package-root
+`_build/` directory still applies.
+
+Avoid combining these legacy fields with ignore files; migrate the complete
+publishing policy to `.moonignore` instead.
 
 ## Preferred Target
 
@@ -452,7 +493,7 @@ while `id` is the numeric form of the same warning.
 
 ```none
 $ moonc check -warn-help
-Available warnings: 
+Available warnings:
 mnemonic                   description                                                     id state
 unused_value               Unused variable or function.                                     1 warn
 unused_value               Unused variable.                                                 2 warn
@@ -488,8 +529,8 @@ unused_default_value       Default value of optional argument never used.       
 text_segment_excceed       Text segment exceed the line or column limits.                  33 warn
 implicit_use_builtin       Implicit use of definitions from `moonbitlang/core/builtin`.    34 warn
 reserved_keyword           Reserved keyword.                                               35 warn
-loop_label_shadowing       Loop label shadows another label.                               36 warn
-unused_loop_label          Unused loop label.                                              37 warn
+block_label_shadowing      Block label shadows another label.                              36 warn
+unused_block_label         Unused block label.                                             37 warn
 missing_invariant          For-loop is missing an invariant.                               38 off
 missing_reasoning          For-loop is missing a proof_reasoning.                          39 off
 multiline_string_escape    Deprecated escape sequence in multiline string.                 40 error
@@ -524,8 +565,6 @@ unqualified_local_using    unqualified local using                              
 unnecessary_annotation     unnecessary type annotation                                     73 off
 missing_doc                Missing documentation for public definition                     74 off
 unnecessary_view_op        Unnecessary `[:]` view operator                                 75 off
-lexmatch_first_match       Deprecated `lexmatch` with first-match semantics.               76 warn
-lexmatch_longest_match     Deprecated `lexmatch` with longest-match semantics.             77 warn
 result_error_return        Using `Result[T, E]` where `E` is an error type.                78 off
 implicit_impl_as_method    `impl` implicitly promoted as method                            79 off
 regex_match_missing_before Missing `before` binding in `regex match`.                      80 warn
@@ -535,6 +574,9 @@ type_param_method          Calling method of type parameter in a deprecated way.
 unqualified_record         Struct literal in a `let` binding without a type prefix.        84 off
 unlabelled_break_in_labelled_loop Unlabelled `break` directly inside a labelled loop.             85 warn
 unlabelled_continue_in_labelled_loop Unlabelled `continue` directly inside a labelled loop.          86 warn
+guard_inexhaustive         `guard` condition is not exhaustive and may panic.              87 warn
+guard_redundant_bang       Redundant `!` on an exhaustive `guard`.                         88 warn
+guard_redundant_else       Redundant `else` on an exhaustive `guard`.                      89 warn
 all                        all warnings
 state: warn = enabled, error = promoted to error, off = disabled
 note: default alert exceptions: alert_unsafe=off

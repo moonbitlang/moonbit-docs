@@ -1468,6 +1468,11 @@ fn absolute(n : Int) -> Int {
 An unlabelled `break` cannot exit or pass through a labelled block, and
 `continue` can only target a labelled loop, not a labelled block.
 
+Block and loop labels share the same namespace. Reusing an enclosing label on
+a nested block or loop shadows the outer label and produces
+[E0036](https://docs.moonbitlang.com/en/latest/language/error_codes/E0036.html). Use distinct names so that each labelled
+`break` or `continue` has an unambiguous target.
+
 ### `defer` expression
 
 `defer` expression can be used to perform reliable resource cleanup.
@@ -2199,31 +2204,6 @@ Unlike all other kinds of type declaration above, type alias does not define a n
 it is merely a type macro that behaves exactly the same as its definition.
 So for example one cannot define new methods or implement traits for a type alias.
 
-### Local types
-
-MoonBit supports declaring structs/enums at the top of a toplevel
-function, which are only visible within the current toplevel function. These
-local types can use the generic parameters of the toplevel function but cannot
-introduce additional generic parameters themselves. Local types can derive
-methods using derive, but no additional methods can be defined manually. For
-example:
-
-```moonbit
-fn[T : Debug] toplevel(x : T) -> Unit {
-  enum LocalEnum {
-    A(T)
-    B(Int)
-  } derive(Debug)
-  struct LocalStruct {
-    a : (String, T)
-  } derive(Debug)
-  struct LocalStructTuple(T) derive(Debug)
-  ...
-}
-```
-
-Currently, local types do not support being declared as error types.
-
 ## Pattern Matching
 
 Pattern matching allows us to match on specific pattern and bind data from data structures.
@@ -2913,8 +2893,9 @@ found from the search position. They do not provide a longest-match mode.
 ### Regex Match Expression
 
 Regex match expressions use the `=~` operator to search a `StringView` with a
-regex constant expression. This is a newer regex-matching form intended to
-replace experimental `lexmatch`. The expression returns `Bool`.
+regex constant expression. The expression returns `Bool`; use it when a single
+boolean check is enough, and use [`lexmatch`]() when several regex
+cases return different results.
 
 ```moonbit
 input =~ re"abc"
@@ -2984,63 +2965,188 @@ In the example above, `head`, `ident`, `tail`, `before`, `after`, and `rest`
 have type `StringView`. The binder `ch` has type `Char`, because `re"."`
 matches exactly one character.
 
-### Lexscan
+### Lexmatch
 
-Use `lexscan` when matching one input against several regex cases. It accepts
-`String` and `StringView` inputs and returns the body of the selected case. The
-default strategy selects the first matching case. Add `with longest` to select
-the case that consumes the longest prefix instead. Currently, `lexscan` does not
-support `Bytes`, `BytesView`, or streaming scanner inputs.
-
-In longest-match mode, each regex case must be anchored at the start with `^`.
-Anchor it at the end with `$` when the whole input must match, or use `after=`
-to bind the unmatched suffix. `before=` is not supported in longest-match mode,
-and `lexscan` cases do not support guards. Put any additional condition inside
-the selected case body.
+Use `lexmatch` to match an in-memory `String` or `StringView` against several
+regex cases and evaluate the body of the selected case. Its syntax is:
 
 ```moonbit
-test {
-  let text = "xxabbbcyy"
-  if text =~ (re"a" + (re"b*" as b) + re"c", before~, after~) {
-    inspect(before, content="xx")
-    inspect(b, content="bbb")
-    inspect(after, content="yy")
-  } else {
-    fail("")
+lexmatch input [with first|longest] {
+  regex_case => expression
+  ...
+  [catch_all => fallback_expression]
+}
+```
+
+Each regex case contains a regex constant expression, optionally with `as`,
+`before=`, and `after=` bindings. `Bytes`, `BytesView`, and other input types
+are not supported.
+
+The strategy controls how overlapping cases are resolved:
+
+- `first` is the default. It selects the first case, in source order, that can
+  match. An unanchored regex may search forward from the beginning of the
+  input.
+- `longest` selects the case that consumes the longest input prefix. Every
+  regex must start with `^`. If several cases consume the same number of
+  characters, their source order breaks the tie. Non-greedy quantifiers such
+  as `*?` and `+?` are not supported with this strategy.
+
+Use `as` to bind the substring matched by a regex or one of its subexpressions.
+Captures have type `StringView`, except that a regex known to match exactly one
+character, such as `re"."`, produces a `Char` capture.
+
+`before=` and `after=` bind the unmatched prefix and suffix as `StringView`.
+The shorthand forms `before~` and `after~` bind variables with those names,
+while `before=_` and `after=_` explicitly discard the corresponding part.
+First-match mode supports both bindings. Longest-match mode starts at the
+beginning of the input, so it supports `after=` but not `before=`.
+
+For first-match cases, bind or explicitly discard `before` and `after`, or use
+`^` and `$` to make the intended boundaries clear. For longest-match cases,
+use `after=` when a case consumes only a prefix; add `$` instead when it must
+consume the whole input.
+
+```moonbit
+test "scan strings" {
+  let text = "xx123yy"
+  lexmatch text {
+    (re"[0-9]+" as digits, before~, after~) => {
+      inspect(before, content="xx")
+      inspect(digits, content="123")
+      inspect(after, content="yy")
+    }
+    _ => fail("")
   }
 
-  if text =~ (re"a" + (re"b*" as b) + re"c") && b.length() > 0 {
-    inspect(b, content="bbb")
-  }
-
-  let keyword = "iff"
-  lexscan keyword with longest {
-    (re"^(if|[a-z]*)$" as ident) => inspect(ident, content="iff")
+  lexmatch "letters123" with longest {
+    (re"^[a-z]+" as word, after=rest) => {
+      inspect(word, content="letters")
+      inspect(rest, content="123")
+    }
     _ => fail("")
   }
 }
 ```
 
-### Lexmatch (deprecated)
+A catch-all case is required only when the regex cases do not cover every
+possible input. If the compiler can prove that the regex cases are exhaustive,
+the catch-all may be omitted. Otherwise it reports [E4224](https://docs.moonbitlang.com/en/latest/language/error_codes/E4224.html).
+A present catch-all must be last; a binder such as `rest` receives the entire
+input when no regex case matches, while `_` discards it. The compiler reports
+[E0090](https://docs.moonbitlang.com/en/latest/language/error_codes/E0090.html) when a regex case or catch-all can never be
+selected.
 
-#### WARNING
-`lexmatch` and `lexmatch?` are deprecated. Use
-[regex match expressions]() for boolean and
-first-match checks, or [`lexscan`]() for case-based and longest-match
-scanning. This section is kept as reference for existing code.
+### Lexscan
 
-`lexmatch` matches a `String` against a regex pattern and lets you bind the
-pieces of a match. The search-mode pattern is `(before, regex pieces, after)`,
-where `before` and `after` are optional bindings for the unmatched prefix and
-suffix, separated by commas. The regex pieces in the middle are separated by
-whitespace only. The regex itself is written as a sequence of string literals,
-so you can split it across lines or insert comments between parts. You can
-also bind a matched sub-pattern using `as`, such as `("b*" as b)`.
+Use `lexscan` with a synchronous `@lexbuf.Lexbuf` or asynchronous
+`@lexbuf.AsyncLexbuf` to consume tokens from streaming input. It uses the same
+case syntax and `first` or `longest` strategies as `lexmatch`:
 
-`lexmatch?` is a boolean check similar to `is`, and it can introduce binders
-for use in the same contexts as `is` expressions.
+```moonbit
+lexscan input [with first|longest] {
+  regex_case => expression
+  ...
+  [catch_all => fallback_expression]
+}
+```
 
-In old code, search-mode `lexmatch` looked like this:
+The lexbuf types require a direct `moonbitlang/core/lexbuf` import. This
+runnable example also imports the official `moonbitlang/async` runtime so its
+asynchronous scanner can be tested with `async test`:
+
+```moonbit
+import {
+  "moonbitlang/async",
+  "moonbitlang/core/lexbuf",
+}
+```
+
+Every streaming regex must start with `^`, because scanning always begins at
+the lexbuf's current cursor. Streaming cases do not support `before=` or
+`after=`. They may still use `as` to bind matched text, with the same
+`StringView` and `Char` capture types as `lexmatch`.
+
+`lexscan` temporarily accepts `String` and `StringView` targets for
+compatibility, but this use is deprecated and emits [E0027](https://docs.moonbitlang.com/en/latest/language/error_codes/E0027.html).
+Use `lexmatch` for those in-memory inputs. `Bytes`, `BytesView`, and
+user-defined lexbuf-like types are not supported.
+
+#### Streaming scanners
+
+`Lexbuf` and `AsyncLexbuf` retain a cursor between `lexscan` calls. A successful
+regex case consumes the matched prefix and commits the cursor to the end of
+that match. This makes a recursive or repeated scanner behave like a lexer.
+Patterns may span any number of chunks supplied by `from_fn`; a chunk boundary
+does not end a token.
+
+As with `lexmatch`, a catch-all is required only when the regex cases are not
+exhaustive. A streaming catch-all must be written as `_`: it handles EOF or an
+otherwise unmatched character, does not bind the remaining input, and does not
+advance the lexbuf cursor.
+
+The following scanner skips whitespace and returns one token per call:
+
+```moonbit
+priv enum Token {
+  Word(StringView)
+  Integer(StringView)
+  Punctuation(Char)
+  Eof
+}
+
+///|
+fn next_token(input : @lexbuf.Lexbuf) -> Token {
+  lexscan input with longest {
+    re"^[[:space:]]+" => next_token(input)
+    re"^[[:alpha:]]+" as word => Word(word)
+    re"^[[:digit:]]+" as digits => Integer(digits)
+    re"^." as mark => Punctuation(mark)
+    _ => Eof
+  }
+}
+
+///|
+test "scan a synchronous stream" {
+  let input = @lexbuf.Lexbuf::from_string("hello 123!")
+  guard next_token(input) is Word(word) else { fail("expected word") }
+  assert_true(word == "hello")
+  guard next_token(input) is Integer(digits) else { fail("expected integer") }
+  assert_true(digits == "123")
+  guard next_token(input) is Punctuation(mark) else {
+    fail("expected punctuation")
+  }
+  assert_true(mark == '!')
+  assert_true(next_token(input) is Eof)
+}
+```
+
+`AsyncLexbuf` has the same matching and cursor semantics. Its source is an
+`async () -> String?` function, so a function that scans it must also be
+`async`. MoonBit has no `await` keyword; call the async scanner normally from
+async code.
+
+```moonbit
+/// Returns the next alphabetic token from an asynchronous lexbuf.
+pub async fn next_word(input : @lexbuf.AsyncLexbuf) -> StringView? {
+  lexscan input {
+    re"^[[:alpha:]]+" as word => Some(word)
+    _ => None
+  }
+}
+```
+
+`lexmatch` and `lexscan` case bodies cannot have guards. The expression selects
+a case before it evaluates the body, so put any additional condition inside
+that body.
+
+### Legacy lexical pattern syntax
+
+Earlier experimental versions used string-piece `lexmatch` patterns and a
+`lexmatch?` boolean form. Those forms have been removed. The `lexmatch` keyword
+now denotes the in-memory regex-case expression described above.
+
+For example, older code may look like this:
 
 ```moonbit
 lexmatch text {
@@ -3053,20 +3159,8 @@ if text lexmatch? ("a" ("b*" as b) "c") && b.length() > 0 {
 }
 ```
 
-In new code, write those search-mode checks with `=~` instead.
-
-`lexmatch` also supports a lexer-style mode: `lexmatch <expr> with longest`,
-which picks the longest match among alternatives (for example, `if|[a-z]*`
-matches `iff` as `iff` in longest mode, while first-match search mode matches
-`if` first). Migrate this form to `lexscan <expr> with longest`, convert its
-patterns to regex literals, and anchor them at `^`.
-
-Regex literals support `\b` and `\B` as part of the regex syntax, but these
-word-boundary assertions are not currently available in `regex match expression` constant contexts. They do work when the regex is used as a
-first-class `Regex` value, and this restriction is expected to be relaxed in
-the future. Regex literals also do not support `\d`, `\D`, `\s`, `\S`, `\w`,
-or `\W`. Use POSIX character classes like `[[:digit:]]` inside character
-classes instead.
+Convert case-based code to `lexmatch` with regex constant expressions. For a
+single boolean search, use [`=~`]() instead.
 
 ### Spread Operator
 
