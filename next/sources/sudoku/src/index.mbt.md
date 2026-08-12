@@ -116,8 +116,8 @@ test {
 ```
 
 Then we wrap the array and provide operations for creating, accessing, assigning
-values to specific coordinates, and copying `Grid[T]`. By overloading the op_get
-and op_set methods, we can write convenient code like `table["A2"]` and
+values to specific coordinates, and copying `Grid[T]`. By attaching indexing
+aliases to the access methods, we can write convenient code like `table["A2"]` and
 `table["C3"] = ...`.
 
 ```moonbit check

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-29 14:36+0800\n"
+"POT-Creation-Date: 2026-08-12 12:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -35,16 +35,15 @@ msgstr ""
 
 #: ../../toolchain/moon/module.md:6
 msgid ""
-"Support for `moon.mod.json` is deprecated in v0.10.4 and scheduled for "
-"removal in the following release. Prefer `moon.mod` for new projects and "
-"migrate existing JSON files with `moon fmt`."
+"Support for `moon.mod.json` is deprecated. Prefer `moon.mod` for new "
+"projects and migrate existing JSON files with `moon fmt`."
 msgstr ""
 
-#: ../../toolchain/moon/module.md:11
+#: ../../toolchain/moon/module.md:10
 msgid "Full syntax of moon.mod is as follows:"
 msgstr "`moon.mod` の完全な構文は次のとおりです："
 
-#: ../../toolchain/moon/module.md:13
+#: ../../toolchain/moon/module.md:12
 msgid ""
 "moon_mod ::= statement*\n"
 "statement ::= import | assign | apply\n"
@@ -63,11 +62,11 @@ msgid ""
 "object ::= \"{\" (field \",\")* field? \"}\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:31
+#: ../../toolchain/moon/module.md:30
 msgid "Name"
 msgstr "名前"
 
-#: ../../toolchain/moon/module.md:33
+#: ../../toolchain/moon/module.md:32
 msgid ""
 "The `name` field is used to specify the name of the module, and it is "
 "required."
@@ -77,7 +76,7 @@ msgstr "`name` フィールドはモジュール名を指定するために使�
 msgid "moon.mod"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:37
+#: ../../toolchain/moon/module.md:36
 msgid "name = \"user/example\"\n"
 msgstr ""
 
@@ -85,7 +84,7 @@ msgstr ""
 msgid "moon.mod.json"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:43
+#: ../../toolchain/moon/module.md:42
 msgid ""
 "{\n"
 "  \"name\": \"user/example\"\n"
@@ -93,25 +92,25 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:52
+#: ../../toolchain/moon/module.md:51
 msgid "The module name can contain letters, numbers, `_`, `-`, and `/`."
 msgstr "モジュール名には、英字、数字、`_`、`-`、`/` を含めることができます。"
 
-#: ../../toolchain/moon/module.md:54
+#: ../../toolchain/moon/module.md:53
 msgid ""
 "For modules published to [mooncakes.io](https://mooncakes.io), the module"
 " name must begin with the username."
 msgstr "[mooncakes.io](https://mooncakes.io) に公開するモジュールでは、モジュール名をユーザー名で始める必要があります。"
 
-#: ../../toolchain/moon/module.md:56
+#: ../../toolchain/moon/module.md:55
 msgid "Version"
 msgstr "バージョン"
 
-#: ../../toolchain/moon/module.md:58
+#: ../../toolchain/moon/module.md:57
 msgid "The `version` field is used to specify the version of the module."
 msgstr "`version` フィールドはモジュールのバージョンを指定するために使います。"
 
-#: ../../toolchain/moon/module.md:60
+#: ../../toolchain/moon/module.md:59
 msgid ""
 "This field is optional. For modules published to "
 "[mooncakes.io](https://mooncakes.io), the version number must follow the "
@@ -122,22 +121,22 @@ msgstr ""
 "[Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html) "
 "仕様に従う必要があります。"
 
-#: ../../toolchain/moon/module.md:64
+#: ../../toolchain/moon/module.md:63
 msgid "version = \"0.1.0\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:69
+#: ../../toolchain/moon/module.md:68
 msgid ""
 "{\n"
 "  \"version\": \"0.1.0\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:77
+#: ../../toolchain/moon/module.md:76
 msgid "Dependency Management"
 msgstr "依存関係管理"
 
-#: ../../toolchain/moon/module.md:79
+#: ../../toolchain/moon/module.md:78
 msgid ""
 "Module dependencies are declared with `import` in `moon.mod`. The legacy "
 "`moon.mod.json` format represents the same information in its `deps` "
@@ -146,11 +145,11 @@ msgstr ""
 "モジュール依存関係は `moon.mod` の `import` で宣言します。従来の `moon.mod.json` 形式では、同じ情報を "
 "`deps` フィールドで表します。"
 
-#: ../../toolchain/moon/module.md:82
+#: ../../toolchain/moon/module.md:81
 msgid "It is automatically managed by commands like `moon add` and `moon remove`."
 msgstr "`moon add` や `moon remove` などのコマンドによって自動的に管理されます。"
 
-#: ../../toolchain/moon/module.md:86
+#: ../../toolchain/moon/module.md:85
 msgid ""
 "name = \"username/hello\"\n"
 "import {\n"
@@ -158,7 +157,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:94
+#: ../../toolchain/moon/module.md:93
 msgid ""
 "{\n"
 "  \"name\": \"username/hello\",\n"
@@ -168,11 +167,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:105
+#: ../../toolchain/moon/module.md:104
 msgid "You may also use a local dependency for module."
 msgstr "モジュールにはローカル依存関係も使用できます。"
 
-#: ../../toolchain/moon/module.md:109
+#: ../../toolchain/moon/module.md:108
 msgid ""
 "For new `moon.mod` format, the local dependency configuration is "
 "deprecated.  The recommended way to use a local dependency is to "
@@ -181,13 +180,13 @@ msgstr ""
 "新しい `moon.mod` 形式では、ローカル依存関係の設定は非推奨です。ローカル依存関係を使う推奨方法は、`moon.work` "
 "で設定することです。"
 
-#: ../../toolchain/moon/module.md:112
+#: ../../toolchain/moon/module.md:111
 msgid ""
 "For example, if you use `moon.work` to manage `user/module1` and "
 "`user/module2`:"
 msgstr "例えば、`moon.work` を使って `user/module1` と `user/module2` を管理する場合："
 
-#: ../../toolchain/moon/module.md:114
+#: ../../toolchain/moon/module.md:113
 msgid ""
 "// in moon.work\n"
 "members = [\n"
@@ -196,11 +195,11 @@ msgid ""
 "]\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:122
+#: ../../toolchain/moon/module.md:121
 msgid "And `user/module1` uses `user/module2` as a dependency:"
 msgstr "そして `user/module1` が `user/module2` を依存関係として使う場合："
 
-#: ../../toolchain/moon/module.md:124
+#: ../../toolchain/moon/module.md:123
 msgid ""
 "// in source/to/module1/moon.mod\n"
 "import {\n"
@@ -208,13 +207,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:131
+#: ../../toolchain/moon/module.md:130
 msgid ""
 "The `@version` part is ignored, `user/module2` is resolved from the local"
 " source instead of mooncakes.io."
 msgstr "`@version` の部分は無視され、`user/module2` は mooncakes.io ではなくローカルソースから解決されます。"
 
-#: ../../toolchain/moon/module.md:135
+#: ../../toolchain/moon/module.md:134
 msgid ""
 "{\n"
 "  \"name\": \"username/hello\",\n"
@@ -226,57 +225,57 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:148
+#: ../../toolchain/moon/module.md:147
 msgid "Meta Information"
 msgstr "メタ情報"
 
-#: ../../toolchain/moon/module.md:150
+#: ../../toolchain/moon/module.md:149
 msgid "README"
 msgstr "README"
 
-#: ../../toolchain/moon/module.md:152
+#: ../../toolchain/moon/module.md:151
 msgid ""
 "The `readme` field is used to specify the path to the module's README "
 "file."
 msgstr "`readme` フィールドは、モジュールの README ファイルへのパスを指定するために使います。"
 
-#: ../../toolchain/moon/module.md:156
+#: ../../toolchain/moon/module.md:155
 msgid "readme = \"README.md\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:161
+#: ../../toolchain/moon/module.md:160
 msgid ""
 "{\n"
 "  \"readme\": \"README.md\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:170
+#: ../../toolchain/moon/module.md:169
 msgid "Repository"
 msgstr "リポジトリ"
 
-#: ../../toolchain/moon/module.md:172
+#: ../../toolchain/moon/module.md:171
 msgid ""
 "The `repository` field is used to specify the URL of the module's "
 "repository."
 msgstr "`repository` フィールドは、モジュールのリポジトリ URL を指定するために使います。"
 
-#: ../../toolchain/moon/module.md:176
+#: ../../toolchain/moon/module.md:175
 msgid "repository = \"link/to/your/repo\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:181
+#: ../../toolchain/moon/module.md:180
 msgid ""
 "{\n"
 "  \"repository\": \"link/to/your/repo\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:190
+#: ../../toolchain/moon/module.md:189
 msgid "License"
 msgstr "ライセンス"
 
-#: ../../toolchain/moon/module.md:192
+#: ../../toolchain/moon/module.md:191
 msgid ""
 "The `license` field is used to specify the license of the module. The "
 "license type must comply with the [SPDX License "
@@ -285,103 +284,167 @@ msgstr ""
 "`license` フィールドはモジュールのライセンスを指定するために使います。ライセンス種別は [SPDX License "
 "List](https://spdx.org/licenses/) に準拠している必要があります。"
 
-#: ../../toolchain/moon/module.md:197
+#: ../../toolchain/moon/module.md:196
 msgid "license = \"MIT\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:202
+#: ../../toolchain/moon/module.md:201
 msgid ""
 "{\n"
 "  \"license\": \"MIT\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:210
+#: ../../toolchain/moon/module.md:209
 msgid "Keywords"
 msgstr "キーワード"
 
-#: ../../toolchain/moon/module.md:212
+#: ../../toolchain/moon/module.md:211
 msgid "The `keywords` field is used to specify the keywords for the module."
 msgstr "`keywords` フィールドはモジュールのキーワードを指定するために使います。"
 
-#: ../../toolchain/moon/module.md:216
+#: ../../toolchain/moon/module.md:215
 msgid "keywords = [\"example\", \"test\"]\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:221
+#: ../../toolchain/moon/module.md:220
 msgid ""
 "{\n"
 "  \"keywords\": [\"example\", \"test\"]\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:229
+#: ../../toolchain/moon/module.md:228
 msgid "Description"
 msgstr "説明"
 
-#: ../../toolchain/moon/module.md:231
+#: ../../toolchain/moon/module.md:230
 msgid "The `description` field is used to specify the description of the module."
 msgstr "`description` フィールドはモジュールの説明を指定するために使います。"
 
-#: ../../toolchain/moon/module.md:236
+#: ../../toolchain/moon/module.md:235
 msgid "description = \"This is a description of the module.\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:241
+#: ../../toolchain/moon/module.md:240
 msgid ""
 "{\n"
 "  \"description\": \"This is a description of the module.\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:249
-msgid "Include and Exclude"
-msgstr "include と exclude"
+#: ../../toolchain/moon/module.md:248
+msgid "Publishing Files with `.moonignore`"
+msgstr ""
 
-#: ../../toolchain/moon/module.md:251
+#: ../../toolchain/moon/module.md:250
 msgid ""
-"The `include` and `exclude` fields are used to include or exclude "
-"specific directories or files during publishing process."
-msgstr "`include` と `exclude` フィールドは、公開処理中に特定のディレクトリやファイルを含める、または除外するために使います。"
+"Use `.moonignore` files to exclude files and directories from archives "
+"created by `moon package` and `moon publish`. Each file uses gitignore-"
+"style patterns:"
+msgstr ""
 
 #: ../../toolchain/moon/module.md:253
 msgid ""
-"It follows the gitignore syntax, and include follows the exclude.  For "
-"example, the following configuration will include the `build/assets`  but"
-" exclude anything else in the `build` directory."
+"# Generated output\n"
+"build/\n"
+"*.log\n"
+"\n"
+"# Keep this fixture even though other log files are excluded\n"
+"!fixtures/expected.log\n"
+"\n"
+"# Keep selected root dotfiles that are excluded by default\n"
+"!/.gitignore\n"
+"!/.moonignore\n"
+"\n"
+"# Keep a hidden directory and everything below it\n"
+"!/.well-known/\n"
+"!/.well-known/**\n"
 msgstr ""
-"gitignore 構文に従い、include は exclude の後に適用されます。例えば、次の設定では `build/assets` "
-"を含めますが、`build` ディレクトリ内のその他の内容は除外します。"
 
-#: ../../toolchain/moon/module.md:260
+#: ../../toolchain/moon/module.md:270
 msgid ""
-"options(\n"
-"  exclude: [\"build\"],\n"
-"  \"include\": [\"build/assets\"],\n"
-")\n"
+"Publishing honors `.gitignore` rules by default. If a directory contains "
+"a `.moonignore`, its rules are used instead of that directory's "
+"`.gitignore` when creating the archive; the two files in the same "
+"directory are not combined. This filtering is based on the patterns, "
+"regardless of whether a file is tracked by Git."
 msgstr ""
 
-#: ../../toolchain/moon/module.md:268
+#: ../../toolchain/moon/module.md:276
 msgid ""
-"{\n"
-"  \"exclude\": [\"build\"],\n"
-"  \"include\": [\"build/assets\"]\n"
-"}\n"
+"Git's repository-local `.git/info/exclude` and global ignore "
+"configuration are not consulted. Only the ignore files that belong to the"
+" project affect the archive, so publishing the same contents does not "
+"depend on a user's Git configuration."
 msgstr ""
 
-#: ../../toolchain/moon/module.md:277
+#: ../../toolchain/moon/module.md:281
 msgid ""
-"You may use [`moon package --list`](commands.md#moon-package) to verify "
-"if the packaged result is expected."
+"By default, files and directories whose names begin with `.` are excluded"
+" at every depth. The root-anchored examples above keep the two ignore "
+"files and `.well-known/` in the archive. Re-including a directory does "
+"not automatically re-include its contents, so the second `.well-known` "
+"rule is also needed."
 msgstr ""
-"パッケージ結果が期待どおりかどうかは、[`moon package --list`](commands.md#moon-package) "
-"を使って確認できます。"
 
-#: ../../toolchain/moon/module.md:279
+#: ../../toolchain/moon/module.md:286
+msgid ""
+"The package-root `_build/` directory is always excluded and cannot be re-"
+"included by an ignore rule or the deprecated `include` field. This fixed "
+"exclusion does not apply to nested directories with the same name. For "
+"example, `!/_build/` and `!/_build/**` cannot restore the package-root "
+"directory, while `examples/_build/data.bin` is not excluded merely "
+"because a nested directory is named `_build`."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:293
+msgid ""
+"Rules apply to the directory containing the ignore file and all of its "
+"descendants. Rules inherited from parent directories remain in effect, "
+"while later matching rules in nested directories take precedence. This "
+"includes `!` rules that restore a previously excluded path whose parent "
+"directory is still visible. A leading `/` anchors a pattern to the "
+"directory containing the ignore file, while a trailing `/` matches "
+"directories."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:300
+msgid ""
+"Use [`moon package --list`](commands.md#moon-package) to inspect the "
+"files that will be packaged."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:303
+msgid "Deprecated `include` and `exclude` fields"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:306
+msgid ""
+"The `include` and `exclude` fields in `moon.mod` and `moon.mod.json` are "
+"deprecated. Use `.moonignore` for new and migrated modules."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:310
+msgid ""
+"Existing manifests may still use either field. When `include` is present,"
+" it is an exhaustive allowlist: `exclude`, `.gitignore`, `.moonignore`, "
+"and the default dot-prefixed-path exclusion are not applied. Use `!` "
+"patterns within `include` for exceptions to the allowlist. The fixed "
+"exclusion of the package-root `_build/` directory still applies."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:316
+msgid ""
+"Avoid combining these legacy fields with ignore files; migrate the "
+"complete publishing policy to `.moonignore` instead."
+msgstr ""
+
+#: ../../toolchain/moon/module.md:319
 msgid "Preferred Target"
 msgstr "優先ターゲット"
 
-#: ../../toolchain/moon/module.md:281
+#: ../../toolchain/moon/module.md:321
 msgid ""
 "The `preferred_target` field allows `moon` and the language server to "
 "know which target should be used as the default target, avoiding the "
@@ -392,7 +455,7 @@ msgstr ""
 "と言語サーバーにデフォルトターゲットとして使うべきターゲットを知らせます。これにより、Wasm GC "
 "以外のバックエンドを対象とするプロジェクトを開発するときに `--target` を書く必要を避けられます。"
 
-#: ../../toolchain/moon/module.md:285
+#: ../../toolchain/moon/module.md:325
 msgid ""
 "Set `preferred_target` on each module. Workspace-level `preferred-target`"
 " is deprecated; `moon run` uses the selected module's own preferred "
@@ -401,22 +464,22 @@ msgstr ""
 "各モジュールに `preferred_target` を設定してください。ワークスペースレベルの `preferred-target` "
 "は非推奨です。`moon run` は選択したモジュール自身の優先ターゲットを使います。"
 
-#: ../../toolchain/moon/module.md:291
+#: ../../toolchain/moon/module.md:331
 msgid "preferred_target = \"js\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:296
+#: ../../toolchain/moon/module.md:336
 msgid ""
 "{\n"
 "  \"preferred-target\": \"js\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:306
+#: ../../toolchain/moon/module.md:346
 msgid "Supported Targets"
 msgstr "サポート対象ターゲット"
 
-#: ../../toolchain/moon/module.md:308
+#: ../../toolchain/moon/module.md:348
 msgid ""
 "The `supported_targets` field declares which backends this module is "
 "intended to support. Unlike `preferred_target`, it does not choose a "
@@ -427,65 +490,65 @@ msgstr ""
 "フィールドは、このモジュールがサポートする想定のバックエンドを宣言します。`preferred_target` "
 "とは異なり、コマンドのデフォルトターゲットは選択しません。モジュールの互換バックエンド範囲をメタデータに記録するために使います。"
 
-#: ../../toolchain/moon/module.md:312
+#: ../../toolchain/moon/module.md:352
 msgid "`supported_targets` uses a compact target-set syntax:"
 msgstr "`supported_targets` はコンパクトなターゲット集合構文を使います："
 
-#: ../../toolchain/moon/module.md:314
+#: ../../toolchain/moon/module.md:354
 msgid "`js` for a single backend"
 msgstr "`js` は単一のバックエンドを表します"
 
-#: ../../toolchain/moon/module.md:315
+#: ../../toolchain/moon/module.md:355
 msgid "`+js+wasm-gc` for an explicit set of backends"
 msgstr "`+js+wasm-gc` はバックエンドの明示的な集合を表します"
 
-#: ../../toolchain/moon/module.md:316
+#: ../../toolchain/moon/module.md:356
 msgid "`+all-js` for all backends except `js`"
 msgstr "`+all-js` は `js` 以外のすべてのバックエンドを表します"
 
-#: ../../toolchain/moon/module.md:318
+#: ../../toolchain/moon/module.md:358
 msgid "For example:"
 msgstr "例えば："
 
-#: ../../toolchain/moon/module.md:322
+#: ../../toolchain/moon/module.md:362
 msgid "supported_targets = \"+js+wasm-gc\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:327
+#: ../../toolchain/moon/module.md:367
 msgid ""
 "{\n"
 "  \"supported-targets\": \"+js+wasm-gc\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:335
+#: ../../toolchain/moon/module.md:375
 msgid "Legacy array syntax is still accepted for compatibility:"
 msgstr "互換性のために、従来の配列構文も引き続き受け付けられます："
 
-#: ../../toolchain/moon/module.md:339
+#: ../../toolchain/moon/module.md:379
 msgid "supported_targets = [\"js\", \"wasm-gc\"]\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:344
+#: ../../toolchain/moon/module.md:384
 msgid ""
 "{\n"
 "  \"supported-targets\": [\"js\", \"wasm-gc\"]\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:352
+#: ../../toolchain/moon/module.md:392
 msgid "`preferred_target` and `supported_targets` are often used together:"
 msgstr "`preferred_target` と `supported_targets` はよく一緒に使われます："
 
-#: ../../toolchain/moon/module.md:354
+#: ../../toolchain/moon/module.md:394
 msgid "`preferred_target` says which backend `moon` should use by default"
 msgstr "`preferred_target` は、`moon` がデフォルトで使うべきバックエンドを示します"
 
-#: ../../toolchain/moon/module.md:355
+#: ../../toolchain/moon/module.md:395
 msgid "`supported_targets` says which backends the module claims to support"
 msgstr "`supported_targets` は、モジュールがサポートすると宣言するバックエンドを示します"
 
-#: ../../toolchain/moon/module.md:357
+#: ../../toolchain/moon/module.md:397
 msgid ""
 "When a package also defines `supported_targets`, the effective backend "
 "set is the intersection of the module-level and package-level "
@@ -494,7 +557,7 @@ msgstr ""
 "パッケージも `supported_targets` "
 "を定義している場合、実際に有効なバックエンド集合はモジュールレベルとパッケージレベルの宣言の共通部分になります。"
 
-#: ../../toolchain/moon/module.md:360
+#: ../../toolchain/moon/module.md:400
 msgid ""
 "For per-file conditional compilation inside a package, use "
 "[`targets`](package.md#conditional-compilation) in `moon.pkg` / "
@@ -503,21 +566,21 @@ msgstr ""
 "パッケージ内でファイルごとの条件付きコンパイルを行う場合は、代わりに `moon.pkg` / `moon.pkg.json` の "
 "[`targets`](package.md#conditional-compilation) を使ってください。"
 
-#: ../../toolchain/moon/module.md:363
+#: ../../toolchain/moon/module.md:403
 msgid "Source directory"
 msgstr "ソースディレクトリ"
 
-#: ../../toolchain/moon/module.md:365
+#: ../../toolchain/moon/module.md:405
 msgid "The `source` field is used to specify the source directory of the module."
 msgstr "`source` フィールドはモジュールのソースディレクトリを指定するために使います。"
 
-#: ../../toolchain/moon/module.md:367
+#: ../../toolchain/moon/module.md:407
 msgid ""
 "It must be a relative path to a subdirectory of the directory containing "
 "the module file."
 msgstr ""
 
-#: ../../toolchain/moon/module.md:370
+#: ../../toolchain/moon/module.md:410
 msgid ""
 "When creating a module using the `moon new` command, a `src` directory "
 "will be automatically generated, and the default value of the `source` "
@@ -526,18 +589,18 @@ msgstr ""
 "`moon new` コマンドでモジュールを作成すると、`src` ディレクトリが自動的に生成され、`source` フィールドのデフォルト値は "
 "`src` になります。"
 
-#: ../../toolchain/moon/module.md:374
+#: ../../toolchain/moon/module.md:414
 msgid "source = \"src\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:379
+#: ../../toolchain/moon/module.md:419
 msgid ""
 "{\n"
 "  \"source\": \"src\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:387
+#: ../../toolchain/moon/module.md:427
 msgid ""
 "When the `source` field does not exist, or its value is an empty string "
 "`\"\"`, it is equivalent to setting `source = \".\"`. This means that the"
@@ -547,99 +610,99 @@ msgstr ""
 "`source` フィールドが存在しない場合、または値が空文字列 `\"\"` の場合、`source = \".\"` "
 "を設定した場合と同等です。これは、ソースディレクトリがモジュールファイルのあるディレクトリと同じであることを意味します。"
 
-#: ../../toolchain/moon/module.md:393
+#: ../../toolchain/moon/module.md:433
 msgid "source = \"\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:396
+#: ../../toolchain/moon/module.md:436
 msgid "source = \".\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:401
+#: ../../toolchain/moon/module.md:441
 msgid ""
 "{\n"
 "  \"source\": \"\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:406
+#: ../../toolchain/moon/module.md:446
 msgid ""
 "{\n"
 "  \"source\": \".\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:412
+#: ../../toolchain/moon/module.md:452
 msgid "`null` is equivalent to the cases above:"
 msgstr "`null` は上記の場合と同等です："
 
-#: ../../toolchain/moon/module.md:414
+#: ../../toolchain/moon/module.md:454
 msgid ""
 "{\n"
 "  \"source\": null\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:421
+#: ../../toolchain/moon/module.md:461
 msgid "Warning List"
 msgstr "警告リスト"
 
-#: ../../toolchain/moon/module.md:423
+#: ../../toolchain/moon/module.md:463
 msgid "This is used to disable specific preset compiler warning numbers."
 msgstr "これは、特定のプリセットコンパイラ警告番号を無効化するために使います。"
 
-#: ../../toolchain/moon/module.md:425
+#: ../../toolchain/moon/module.md:465
 msgid ""
 "For example, in the following configuration, `-2` disables the warning "
 "number 2 (Unused variable)."
 msgstr "例えば、次の設定では `-2` によって警告番号 2（未使用の変数）を無効化します。"
 
-#: ../../toolchain/moon/module.md:429
+#: ../../toolchain/moon/module.md:469
 msgid "warnings = \"-2\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:434
+#: ../../toolchain/moon/module.md:474
 msgid ""
 "{\n"
 "  \"warn-list\": \"-2\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:442
+#: ../../toolchain/moon/module.md:482
 msgid ""
 "If multiple warnings need to be disabled, they can be directly connected "
 "and combined."
 msgstr "複数の警告を無効化する必要がある場合は、それらをそのまま連結して組み合わせることができます。"
 
-#: ../../toolchain/moon/module.md:447
+#: ../../toolchain/moon/module.md:487
 msgid "warnings = \"-2-4\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:452
+#: ../../toolchain/moon/module.md:492
 msgid ""
 "{\n"
 "  \"warn-list\": \"-2-4\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:460
+#: ../../toolchain/moon/module.md:500
 msgid ""
 "If it is necessary to activate certain warnings that were originally "
 "prohibited, use the plus sign."
 msgstr "もともと禁止されていた特定の警告を有効化する必要がある場合は、プラス記号を使います。"
 
-#: ../../toolchain/moon/module.md:464
+#: ../../toolchain/moon/module.md:504
 msgid "warnings = \"+31\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:469
+#: ../../toolchain/moon/module.md:509
 msgid ""
 "{\n"
 "  \"warn-list\": \"+31\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:477
+#: ../../toolchain/moon/module.md:517
 msgid ""
 "You can use `moonc check -warn-help` to see the list of preset compiler "
 "warning numbers. In the output below, `mnemonic` is the symbolic warning "
@@ -649,7 +712,7 @@ msgstr ""
 "`moonc check -warn-help` を使うと、プリセットコンパイラ警告番号の一覧を確認できます。以下の出力では、`mnemonic`"
 " は警告リストで使われる記号名で、`id` は同じ警告の数値形式です。"
 
-#: ../../toolchain/moon/module.md:481
+#: ../../toolchain/moon/module.md:521
 msgid ""
 "$ moonc check -warn-help\n"
 "Available warnings: \n"
@@ -723,10 +786,10 @@ msgid ""
 "`moonbitlang/core/builtin`.    34 warn\n"
 "reserved_keyword           Reserved keyword."
 "                                               35 warn\n"
-"loop_label_shadowing       Loop label shadows another label."
-"                               36 warn\n"
-"unused_loop_label          Unused loop label."
-"                                              37 warn\n"
+"block_label_shadowing      Block label shadows another label."
+"                              36 warn\n"
+"unused_block_label         Unused block label."
+"                                             37 warn\n"
 "missing_invariant          For-loop is missing an invariant."
 "                               38 off\n"
 "missing_reasoning          For-loop is missing a proof_reasoning."
@@ -795,10 +858,6 @@ msgid ""
 "                     74 off\n"
 "unnecessary_view_op        Unnecessary `[:]` view operator"
 "                                 75 off\n"
-"lexmatch_first_match       Deprecated `lexmatch` with first-match "
-"semantics.               76 warn\n"
-"lexmatch_longest_match     Deprecated `lexmatch` with longest-match "
-"semantics.             77 warn\n"
 "result_error_return        Using `Result[T, E]` where `E` is an error "
 "type.                78 off\n"
 "implicit_impl_as_method    `impl` implicitly promoted as method"
@@ -817,16 +876,22 @@ msgid ""
 "labelled loop.             85 warn\n"
 "unlabelled_continue_in_labelled_loop Unlabelled `continue` directly "
 "inside a labelled loop.          86 warn\n"
+"guard_inexhaustive         `guard` condition is not exhaustive and may "
+"panic.              87 warn\n"
+"guard_redundant_bang       Redundant `!` on an exhaustive `guard`."
+"                         88 warn\n"
+"guard_redundant_else       Redundant `else` on an exhaustive `guard`."
+"                      89 warn\n"
 "all                        all warnings\n"
 "state: warn = enabled, error = promoted to error, off = disabled\n"
 "note: default alert exceptions: alert_unsafe=off\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:571
+#: ../../toolchain/moon/module.md:612
 msgid "Rule"
 msgstr "rule"
 
-#: ../../toolchain/moon/module.md:573
+#: ../../toolchain/moon/module.md:614
 msgid ""
 "The module-level `rule` entry declares a reusable pre-build command that "
 "is visible to every `moon.pkg` in the module. A module-level rule does "
@@ -841,7 +906,7 @@ msgstr ""
 "エントリを追加します。パッケージレベルの設定については、[パッケージ設定](/toolchain/moon/package.md#rule-"
 "and-dev_build) の「`rule` と `dev_build`」セクションを参照してください。"
 
-#: ../../toolchain/moon/module.md:580
+#: ../../toolchain/moon/module.md:621
 msgid ""
 "Use `rule(name: \"...\", command: \"...\")`, where `name` identifies the "
 "rule and `command` is a shell command string. The command can refer to "
@@ -854,29 +919,29 @@ msgstr ""
 " `rule` を使用するパッケージレベルの `dev_build` エントリから提供されます。モジュールは複数のモジュールレベル `rule` "
 "エントリを宣言できます。"
 
-#: ../../toolchain/moon/module.md:587
+#: ../../toolchain/moon/module.md:628
 msgid "rule(name: \"tool\", command: \"tool $input -o $output\")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:592
+#: ../../toolchain/moon/module.md:633
 msgid "This feature is not supported in `moon.mod.json`."
 msgstr "この機能は `moon.mod.json` ではサポートされていません。"
 
-#: ../../toolchain/moon/module.md:596
+#: ../../toolchain/moon/module.md:637
 msgid "Scripts"
 msgstr "スクリプト"
 
-#: ../../toolchain/moon/module.md:598
+#: ../../toolchain/moon/module.md:639
 msgid ""
 "The `scripts` field is used to define custom scripts associated with the "
 "module."
 msgstr "`scripts` フィールドは、モジュールに関連付けるカスタムスクリプトを定義するために使います。"
 
-#: ../../toolchain/moon/module.md:600
+#: ../../toolchain/moon/module.md:641
 msgid "postadd script"
 msgstr "postadd スクリプト"
 
-#: ../../toolchain/moon/module.md:602
+#: ../../toolchain/moon/module.md:643
 msgid ""
 "The `postadd` script runs automatically after the module has been added. "
 "When executed, the script's current working directory (cwd) is set to the"
@@ -885,7 +950,7 @@ msgstr ""
 "`postadd` スクリプトは、モジュールが追加された後に自動的に実行されます。実行時、スクリプトの現在の作業ディレクトリ（cwd）は "
 "モジュール設定ファイルがあるディレクトリに設定されます。"
 
-#: ../../toolchain/moon/module.md:608
+#: ../../toolchain/moon/module.md:649
 msgid ""
 "options(\n"
 "  scripts: {\n"
@@ -894,7 +959,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:617
+#: ../../toolchain/moon/module.md:658
 msgid ""
 "{\n"
 "  \"scripts\": {\n"
@@ -903,23 +968,23 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:628
+#: ../../toolchain/moon/module.md:669
 msgid "\\[Experimental\\] Pre-build config script"
 msgstr "\\[実験的\\] 事前ビルド設定スクリプト"
 
-#: ../../toolchain/moon/module.md:631
+#: ../../toolchain/moon/module.md:672
 msgid ""
 "This feature is extremely experimental, and its API may change at any "
 "time. This documentation reflects the implementation as of 2025-06-03."
 msgstr "この機能は非常に実験的であり、API はいつでも変更される可能性があります。このドキュメントは 2025-06-03 時点の実装を反映しています。"
 
-#: ../../toolchain/moon/module.md:636
+#: ../../toolchain/moon/module.md:677
 msgid ""
 "Using this feature may execute arbitrary code in your computer. Please "
 "use with caution and only with trusted dependencies."
 msgstr "この機能を使うと、コンピュータ上で任意のコードが実行される可能性があります。注意して使用し、信頼できる依存関係に対してのみ使ってください。"
 
-#: ../../toolchain/moon/module.md:640
+#: ../../toolchain/moon/module.md:681
 msgid ""
 "The pre-build config script is added in order to aid native target "
 "programming. To use such a script, add it to your module configuration:"
@@ -927,21 +992,21 @@ msgstr ""
 "事前ビルド設定スクリプトは、native "
 "ターゲット向けプログラミングを支援するために追加されました。使用するには、モジュール設定にスクリプトを追加します："
 
-#: ../../toolchain/moon/module.md:646
+#: ../../toolchain/moon/module.md:687
 msgid ""
 "options(\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\",\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:653
+#: ../../toolchain/moon/module.md:694
 msgid ""
 "{\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:661
+#: ../../toolchain/moon/module.md:702
 msgid ""
 "The path is a relative path from the root of the project. The script may "
 "either be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) "
@@ -952,17 +1017,17 @@ msgstr ""
 "`.js`、`.cjs`、`.mjs`）か、`python3` または `python` で実行される Python スクリプト（拡張子 "
 "`.py`）を指定できます。"
 
-#: ../../toolchain/moon/module.md:666
+#: ../../toolchain/moon/module.md:707
 msgid "Input"
 msgstr "入力"
 
-#: ../../toolchain/moon/module.md:668
+#: ../../toolchain/moon/module.md:709
 msgid ""
 "The script will be provided with a JSON with the structure of "
 "`BuildScriptEnvironment` from standard input stream (stdin):"
 msgstr "スクリプトには、標準入力ストリーム（stdin）から `BuildScriptEnvironment` 構造の JSON が渡されます："
 
-#: ../../toolchain/moon/module.md:671
+#: ../../toolchain/moon/module.md:712
 msgid ""
 "/** Represents the environment a build script receives */\n"
 "interface BuildScriptEnvironment {\n"
@@ -984,17 +1049,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:691
+#: ../../toolchain/moon/module.md:732
 msgid "Output"
 msgstr "出力"
 
-#: ../../toolchain/moon/module.md:693
+#: ../../toolchain/moon/module.md:734
 msgid ""
 "The script is expected to print a JSON string in its standard output "
 "stream (stdout) with the structure of `BuildScriptOutput`:"
 msgstr "スクリプトは、標準出力ストリーム（stdout）に `BuildScriptOutput` 構造の JSON 文字列を出力することが期待されます："
 
-#: ../../toolchain/moon/module.md:696
+#: ../../toolchain/moon/module.md:737
 msgid ""
 "interface BuildScriptOutput {\n"
 "  /** Build variables */\n"
@@ -1025,11 +1090,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:725
+#: ../../toolchain/moon/module.md:766
 msgid "Build variables"
 msgstr "ビルド変数"
 
-#: ../../toolchain/moon/module.md:727
+#: ../../toolchain/moon/module.md:768
 msgid ""
 "You may use the variables emitted in the `vars` fields in the native "
 "linking arguments in `moon.pkg` as `${build.<var_name>}`."
@@ -1037,23 +1102,23 @@ msgstr ""
 "`vars` フィールドに出力された変数は、`moon.pkg` の native リンク引数内で `${build.<var_name>}` "
 "として使用できます。"
 
-#: ../../toolchain/moon/module.md:730
+#: ../../toolchain/moon/module.md:771
 msgid "For example, if your build script outputs:"
 msgstr "例えば、ビルドスクリプトが次を出力する場合："
 
-#: ../../toolchain/moon/module.md:732
+#: ../../toolchain/moon/module.md:773
 msgid "{ \"vars\": { \"CC\": \"gcc\" } }\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:736
+#: ../../toolchain/moon/module.md:777
 msgid "and your `moon.pkg` is structured like:"
 msgstr "そして `moon.pkg` が次のような構成の場合："
 
-#: ../../toolchain/moon/module.md:738
+#: ../../toolchain/moon/module.md:779
 msgid "moon.pkg"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:738
+#: ../../toolchain/moon/module.md:779
 msgid ""
 "options(\n"
 "  link: {\n"
@@ -1064,11 +1129,11 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:743
+#: ../../toolchain/moon/module.md:784
 msgid "It will be transformed into"
 msgstr "次のように変換されます"
 
-#: ../../toolchain/moon/module.md:745
+#: ../../toolchain/moon/module.md:786
 msgid ""
 "{\n"
 "  \"link\": {\n"

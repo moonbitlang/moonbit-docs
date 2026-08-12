@@ -1,0 +1,73 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4224.md:1
+msgid "E4224"
+msgstr ""
+
+#: ../../language/error_codes/E4224.md:3
+msgid "Compiler diagnostic name: `lexscan_catchall_missing`."
+msgstr ""
+
+#: ../../language/error_codes/E4224.md:5
+msgid "A `lexmatch` or `lexscan` expression has no final catch-all case."
+msgstr ""
+
+#: ../../language/error_codes/E4224.md:7
+msgid ""
+"Regex cases do not necessarily cover every possible input, including an "
+"empty input. Add a final `_` branch to define the result when no regex "
+"case matches."
+msgstr ""
+
+#: ../../language/error_codes/E4224.md:10
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4224.md:12
+msgid ""
+"///|\n"
+"pub fn classify(text : String) -> String {\n"
+"  lexmatch text with longest {\n"
+"    re\"^[a-z]+$\" => \"word\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4224.md:16
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4224.md:18
+msgid ""
+"Add a final `_` case. If a catch-all exists but is not last, see "
+"[E4171](E4171.md)."
+msgstr ""
+
+#: ../../language/error_codes/E4224.md:21
+msgid ""
+"///|\n"
+"pub fn classify(text : String) -> String {\n"
+"  lexmatch text with longest {\n"
+"    re\"^[a-z]+$\" => \"word\"\n"
+"    _ => \"other\"\n"
+"  }\n"
+"}\n"
+msgstr ""

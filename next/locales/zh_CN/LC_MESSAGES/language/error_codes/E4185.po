@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 14:41+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -27,34 +27,27 @@ msgid "Compiler diagnostic name: `invalid_lex_pattern`."
 msgstr ""
 
 #: ../../language/error_codes/E4185.md:5
-msgid "Invalid `lexmatch` pattern shape."
-msgstr "无效的 `lexmatch` 模式形状。"
-
-#: ../../language/error_codes/E4185.md:7
 msgid ""
-"`lexmatch` patterns allow one regex pattern, optionally with a start rest"
-" binder and an end rest binder. Other top-level pattern shapes are "
-"invalid."
-msgstr "`lexmatch` 模式允许一个正则模式，并可选带有一个起始剩余绑定和一个结束剩余绑定。其他顶层模式形状都是无效的。"
+"This diagnostic described the earlier string-piece `lexmatch` pattern "
+"shape and is not emitted by the current compiler."
+msgstr ""
+
+#: ../../language/error_codes/E4185.md:8
+msgid ""
+"Current lexical cases contain one regex constant expression, optionally "
+"with `as`, `before=`, and `after=` bindings supported by the selected "
+"matching mode."
+msgstr ""
 
 #: ../../language/error_codes/E4185.md:11
-msgid ""
-"`lexmatch` is deprecated for new code. Prefer regex match expressions "
-"such as `value =~ (re\"...\", before~, after~)` for boolean checks, or "
-"`lexscan` for case-based and longest-match scanning."
-msgstr ""
-"新代码中已弃用 `lexmatch`。布尔检查请优先使用 `value =~ (re\"...\", before~, "
-"after~)` 这类正则匹配表达式，基于 case 和最长匹配的扫描请使用 `lexscan`。"
-
-#: ../../language/error_codes/E4185.md:16
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4185.md:18
+#: ../../language/error_codes/E4185.md:13
 msgid "The following pattern has too many top-level pieces:"
 msgstr "下面的模式包含了过多的顶层部分："
 
-#: ../../language/error_codes/E4185.md:20
+#: ../../language/error_codes/E4185.md:15
 msgid ""
 "///|\n"
 "fn classify(input : String) -> String {\n"
@@ -71,21 +64,21 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4185.md:24
-msgid "MoonBit will report an error."
-msgstr "MoonBit 会报告一个错误。"
+#: ../../language/error_codes/E4185.md:19
+msgid "Current code should use the regex-case syntax instead."
+msgstr ""
 
-#: ../../language/error_codes/E4185.md:26
+#: ../../language/error_codes/E4185.md:21
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4185.md:28
+#: ../../language/error_codes/E4185.md:23
 msgid ""
-"Use one regex pattern plus optional start and end rest binders. In new "
-"code, a regex match expression is usually clearer:"
-msgstr "使用一个正则模式，并按需添加起始和结束剩余绑定。在新代码中，正则匹配表达式通常更清晰："
+"Use a current `lexmatch` case pattern, or a regex match expression when "
+"only a boolean result is needed:"
+msgstr ""
 
-#: ../../language/error_codes/E4185.md:31
+#: ../../language/error_codes/E4185.md:26
 msgid ""
 "///|\n"
 "fn classify(input : String) -> String {\n"

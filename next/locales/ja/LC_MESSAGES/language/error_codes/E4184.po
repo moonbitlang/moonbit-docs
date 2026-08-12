@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 14:15+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -30,15 +30,15 @@ msgstr ""
 
 #: ../../language/error_codes/E4184.md:5
 msgid ""
-"A leading rest binder is not supported with the longest-match `lexmatch` "
-"strategy."
+"This diagnostic described a leading rest binder in the earlier lexical "
+"pattern syntax and is not emitted by the current compiler. The "
+"corresponding current binding error is [E4220](E4220.md)."
 msgstr ""
 
-#: ../../language/error_codes/E4184.md:8
+#: ../../language/error_codes/E4184.md:9
 msgid ""
-"In `lexmatch ... with longest`, the engine chooses the longest matching "
-"case. Allowing a rest binder before the regex would make that choice "
-"ambiguous, so the start rest binder is rejected."
+"In `lexmatch ... with longest`, each regex starts at the beginning of the"
+" input, so `before=` is not available."
 msgstr ""
 
 #: ../../language/error_codes/E4184.md:12
@@ -68,15 +68,15 @@ msgstr ""
 
 #: ../../language/error_codes/E4184.md:22
 msgid ""
-"With `lexscan`, anchor the regex at the start of the input and bind only "
-"the suffix with `after=` when needed."
+"Use a `^`-anchored regex and bind only the suffix with `after=` when "
+"needed."
 msgstr ""
 
-#: ../../language/error_codes/E4184.md:25
+#: ../../language/error_codes/E4184.md:24
 msgid ""
 "///|\n"
 "pub fn match_text(text : String) -> Unit {\n"
-"  lexscan text with longest {\n"
+"  lexmatch text with longest {\n"
 "    (re\"^abc\", after=_) => ()\n"
 "    _ => ()\n"
 "  }\n"

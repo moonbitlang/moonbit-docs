@@ -1685,23 +1685,6 @@ you can leave a type alias `type T = @pkgB.T` in `@pkgA`, and **incrementally** 
 The type alias can be removed after all uses of `@pkgA.T` is migrated to `@pkgB.T`.
 ```
 
-### Local types
-
-MoonBit supports declaring structs/enums at the top of a toplevel
-function, which are only visible within the current toplevel function. These
-local types can use the generic parameters of the toplevel function but cannot
-introduce additional generic parameters themselves. Local types can derive
-methods using derive, but no additional methods can be defined manually. For 
-example:
-
-```{literalinclude} /sources/language/src/data/top.mbt
-:language: moonbit
-:start-after: start local-type 1
-:end-before: end local-type 1
-```
-
-Currently, local types do not support being declared as error types.
-
 ## Pattern Matching
 
 Pattern matching allows us to match on specific pattern and bind data from data structures.
@@ -2186,9 +2169,8 @@ found from the search position. They do not provide a longest-match mode.
 
 ### Regex Match Expression
 
-Regex match expressions use the `=~` operator to search a `StringView` with a 
-regex constant expression. This is a newer regex-matching form intended to 
-replace experimental `lexmatch`. The expression returns `Bool`.
+Regex match expressions use the `=~` operator to search a `StringView` with a
+regex constant expression. The expression returns `Bool`.
 
 ```moonbit
 input =~ re"abc"
@@ -2230,19 +2212,41 @@ In the example above, `head`, `ident`, `tail`, `before`, `after`, and `rest`
 have type `StringView`. The binder `ch` has type `Char`, because `re"."`
 matches exactly one character.
 
+### Lexmatch
+
+Use `lexmatch` to match an in-memory `String` or `StringView` against several
+regex cases and return the body of the selected case. The default strategy
+selects the first matching case. Add `with longest` to select the case that
+matches the longest prefix instead.
+
+Cases use regex constant expressions such as `re"..."`, and the final case
+must be a catch-all. Use `as` to bind matched text. In first-match mode,
+`before=` and `after=` can bind unmatched input; in longest-match mode, anchor
+each regex at the start with `^`, and use `after=` when the remaining suffix is
+needed. Lexical match cases do not support guards, so put additional conditions
+inside the selected case body.
+
+```{literalinclude} /sources/language/src/pattern/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start lexmatch 1
+:end-before: end lexmatch 1
+```
+
+For a single boolean check, [`=~`](#regex-match-expression) is usually more
+concise.
+
 ### Lexscan
 
-Use `lexscan` when matching one input against several regex cases. It accepts
-`String` and `StringView` inputs and returns the body of the selected case. The
-default strategy selects the first matching case. Add `with longest` to select
-the case that consumes the longest prefix instead. Currently, `lexscan` does not
-support `Bytes`, `BytesView`, or streaming scanner inputs.
+Use `lexscan` to consume tokens from a streaming input. The synchronous
+`@lexbuf.Lexbuf` type can read a complete string or obtain successive `String`
+chunks from a callback; the callback returns `None` at end of input. Each
+`lexscan` advances the buffer past the selected match, including matches that
+span chunk boundaries.
 
-In longest-match mode, each regex case must be anchored at the start with `^`.
-Anchor it at the end with `$` when the whole input must match, or use `after=`
-to bind the unmatched suffix. `before=` is not supported in longest-match mode,
-and `lexscan` cases do not support guards. Put any additional condition inside
-the selected case body.
+Streaming regex cases must be anchored at the current position with `^` and
+must end with a catch-all case. Add `with longest` when several cases can match
+and the longest token should win. Matched text can be bound with `as`.
 
 ```{literalinclude} /sources/language/src/pattern/top.mbt
 :language: moonbit
@@ -2251,27 +2255,12 @@ the selected case body.
 :end-before: end lexscan 1
 ```
 
-### Lexmatch (deprecated)
+For asynchronous sources, use `@lexbuf.AsyncLexbuf::from_fn` with an async
+callback and call `lexscan` from an async function.
 
-```{warning}
-`lexmatch` and `lexmatch?` are deprecated. Use
-[regex match expressions](#regex-match-expression) for boolean and
-first-match checks, or [`lexscan`](#lexscan) for case-based and longest-match
-scanning. This section is kept as reference for existing code.
-```
+### Legacy lexical pattern syntax
 
-`lexmatch` matches a `String` against a regex pattern and lets you bind the
-pieces of a match. The search-mode pattern is `(before, regex pieces, after)`,
-where `before` and `after` are optional bindings for the unmatched prefix and
-suffix, separated by commas. The regex pieces in the middle are separated by
-whitespace only. The regex itself is written as a sequence of string literals,
-so you can split it across lines or insert comments between parts. You can
-also bind a matched sub-pattern using `as`, such as `("b*" as b)`.
-
-`lexmatch?` is a boolean check similar to `is`, and it can introduce binders
-for use in the same contexts as `is` expressions.
-
-In old code, search-mode `lexmatch` looked like this:
+Older code may use string-piece patterns or `lexmatch?`, for example:
 
 ```moonbit
 lexmatch text {
@@ -2284,21 +2273,8 @@ if text lexmatch? ("a" ("b*" as b) "c") && b.length() > 0 {
 }
 ```
 
-In new code, write those search-mode checks with `=~` instead.
-
-`lexmatch` also supports a lexer-style mode: `lexmatch <expr> with longest`,
-which picks the longest match among alternatives (for example, `if|[a-z]*`
-matches `iff` as `iff` in longest mode, while first-match search mode matches
-`if` first). Migrate this form to `lexscan <expr> with longest`, convert its
-patterns to regex literals, and anchor them at `^`.
-
-Regex literals support `\b` and `\B` as part of the regex syntax, but these
-word-boundary assertions are not currently available in `regex match
-expression` constant contexts. They do work when the regex is used as a
-first-class `Regex` value, and this restriction is expected to be relaxed in
-the future. Regex literals also do not support `\d`, `\D`, `\s`, `\S`, `\w`,
-or `\W`. Use POSIX character classes like `[[:digit:]]` inside character
-classes instead.
+For current code, use `lexmatch` with `re"..."` cases when several branches are
+needed, or `=~` for a boolean search.
 
 ### Spread Operator
 

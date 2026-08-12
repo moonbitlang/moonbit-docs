@@ -1,6 +1,6 @@
 ///|
 fn classify(input : String) -> String {
-  lexscan input with longest {
+  lexmatch input with longest {
     re"^(if|[a-z]*)$" as token => token.to_owned()
     _ => "other"
   }

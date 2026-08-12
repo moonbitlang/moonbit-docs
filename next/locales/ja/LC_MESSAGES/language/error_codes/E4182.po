@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 14:15+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -27,32 +27,26 @@ msgid "Compiler diagnostic name: `regex_constant_ref_in_lex_is_not_supported`."
 msgstr ""
 
 #: ../../language/error_codes/E4182.md:5
-msgid "Regex constants are not supported in this `lexmatch` context."
-msgstr ""
-
-#: ../../language/error_codes/E4182.md:7
 msgid ""
-"Legacy `lexmatch` can use regex constants only in limited contexts: a "
-"`StringView` target with the default first-match strategy. Other "
-"`lexmatch` forms, such as `with longest`, require literal regex patterns."
+"This diagnostic described a restriction of an earlier lexical pattern "
+"form and is not emitted by the current compiler."
 msgstr ""
 
-#: ../../language/error_codes/E4182.md:12
+#: ../../language/error_codes/E4182.md:8
 msgid ""
-"Longest-match `lexmatch` is deprecated for new code. Use `lexscan ... "
-"with longest`, or prefer regex match expressions such as `value =~ "
-"SOME_REGEX` when you do not need lexer-style behavior."
+"Current `lexmatch` and `lexscan` cases accept regex constant expressions,"
+" including named `const` values."
 msgstr ""
 
-#: ../../language/error_codes/E4182.md:17
+#: ../../language/error_codes/E4182.md:11
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4182.md:19
-msgid "The following example uses a regex constant in a longest-match `lexmatch`:"
+#: ../../language/error_codes/E4182.md:13
+msgid "The following historical example uses the old pattern shape:"
 msgstr ""
 
-#: ../../language/error_codes/E4182.md:21
+#: ../../language/error_codes/E4182.md:15
 msgid ""
 "///|\n"
 "const WORD = re\"[A-Za-z]+\"\n"
@@ -66,26 +60,27 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4182.md:25
-msgid "MoonBit will report an error."
+#: ../../language/error_codes/E4182.md:19
+msgid "Current code should use the regex constant as the case pattern instead."
 msgstr ""
 
-#: ../../language/error_codes/E4182.md:27
+#: ../../language/error_codes/E4182.md:21
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4182.md:29
-msgid ""
-"Use a literal regex pattern with `lexscan`, or rewrite the code with a "
-"regex match expression:"
+#: ../../language/error_codes/E4182.md:23
+msgid "Use the regex constant directly as the case pattern:"
 msgstr ""
 
-#: ../../language/error_codes/E4182.md:32
+#: ../../language/error_codes/E4182.md:25
 msgid ""
 "///|\n"
+"const WORD = re\"^[A-Za-z]+$\"\n"
+"\n"
+"///|\n"
 "pub fn match_word(input : String) -> Unit {\n"
-"  lexscan input with longest {\n"
-"    (re\"^[A-Za-z]+\", after=_) => ()\n"
+"  lexmatch input with longest {\n"
+"    WORD => ()\n"
 "    _ => ()\n"
 "  }\n"
 "}\n"

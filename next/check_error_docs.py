@@ -23,9 +23,20 @@ SKIPPED_ERROR_CODES = {
     # routed through newer, more specific diagnostics.
     '0045',
     '0047',
+    '0076',
+    '0077',
     '4054',
     '4066',
     '4092',
+    # These diagnostics belonged to older lexical-pattern forms. Current
+    # lexmatch/lexscan syntax either accepts the construct or reports a newer,
+    # more specific diagnostic.
+    '4176',
+    '4182',
+    '4183',
+    '4184',
+    '4185',
+    '4186',
     # These internal diagnostics are not meant to appear as independent
     # user-facing errors.
     '1000',

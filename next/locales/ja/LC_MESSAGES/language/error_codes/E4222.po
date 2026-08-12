@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4222.md:1
+msgid "E4222"
+msgstr ""
+
+#: ../../language/error_codes/E4222.md:3
+msgid "Compiler diagnostic name: `invalid_lexscan_target`."
+msgstr ""
+
+#: ../../language/error_codes/E4222.md:5
+msgid "Invalid lexical matching target."
+msgstr ""
+
+#: ../../language/error_codes/E4222.md:7
+msgid ""
+"`lexmatch` accepts an in-memory `String` or `StringView`. Streaming "
+"`lexscan` accepts `@lexbuf.Lexbuf` or `@lexbuf.AsyncLexbuf`. Other "
+"values, such as numbers, cannot be matched by these expressions."
+msgstr ""
+
+#: ../../language/error_codes/E4222.md:11
+msgid "Erroneous example"
+msgstr ""
+
+#: ../../language/error_codes/E4222.md:13
+msgid ""
+"///|\n"
+"pub fn match_number(number : Int) -> Unit {\n"
+"  lexmatch number with longest {\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4222.md:17
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4222.md:19
+msgid ""
+"Use `lexmatch` with a string-like value, or create a lexing buffer for "
+"`lexscan`."
+msgstr ""
+
+#: ../../language/error_codes/E4222.md:22
+msgid ""
+"///|\n"
+"pub fn match_text(text : String) -> Unit {\n"
+"  lexmatch text with longest {\n"
+"    _ => ()\n"
+"  }\n"
+"}\n"
+msgstr ""

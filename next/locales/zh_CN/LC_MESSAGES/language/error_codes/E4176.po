@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 14:15+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -27,10 +27,13 @@ msgid "Compiler diagnostic name: `invalid_lexmatch_target`."
 msgstr ""
 
 #: ../../language/error_codes/E4176.md:5
-msgid "Invalid `lexmatch` target."
-msgstr "无效的 `lexmatch` 目标。"
+msgid ""
+"This diagnostic code was used for an invalid `lexmatch` target and is not"
+" emitted by the current compiler. The current diagnostic is "
+"[E4222](E4222.md)."
+msgstr ""
 
-#: ../../language/error_codes/E4176.md:7
+#: ../../language/error_codes/E4176.md:8
 msgid ""
 "`lexmatch` works on textual views. The target expression must have a type"
 " that can be matched by regex patterns, such as `String` or `StringView`,"
@@ -39,11 +42,11 @@ msgstr ""
 "`lexmatch` 作用于文本视图。目标表达式的类型必须可以被正则模式匹配，例如 `String` 或 "
 "`StringView`，而不能是数值、布尔值或其他无关类型。"
 
-#: ../../language/error_codes/E4176.md:11
+#: ../../language/error_codes/E4176.md:12
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4176.md:13
+#: ../../language/error_codes/E4176.md:14
 msgid ""
 "///|\n"
 "pub fn match_number(n : Int) -> Unit {\n"
@@ -53,28 +56,23 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4176.md:17
+#: ../../language/error_codes/E4176.md:18
 msgid "The target is an `Int`, which cannot be consumed by `lexmatch`."
 msgstr "目标是 `Int`，不能被 `lexmatch` 消费。"
 
-#: ../../language/error_codes/E4176.md:19
+#: ../../language/error_codes/E4176.md:20
 msgid "Suggestion"
 msgstr "修改建议"
 
-#: ../../language/error_codes/E4176.md:21
-msgid ""
-"Match a string-like value, or convert the input before matching. For new "
-"code, use `lexscan` instead of the deprecated longest-match `lexmatch` "
-"form."
+#: ../../language/error_codes/E4176.md:22
+msgid "Match a `String` or `StringView`, or convert the input before matching."
 msgstr ""
-"匹配字符串类值，或先转换输入再进行匹配。新代码请使用 `lexscan`，"
-"而不是已弃用的最长匹配 `lexmatch` 形式。"
 
 #: ../../language/error_codes/E4176.md:24
 msgid ""
 "///|\n"
 "pub fn match_text(text : String) -> Unit {\n"
-"  lexscan text with longest {\n"
+"  lexmatch text with longest {\n"
 "    _ => ()\n"
 "  }\n"
 "}\n"

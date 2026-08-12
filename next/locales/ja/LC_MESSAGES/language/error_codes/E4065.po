@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 11:46+0800\n"
+"POT-Creation-Date: 2026-08-11 18:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -38,7 +38,7 @@ msgid "Operator"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md
-msgid "Method Name"
+msgid "`#alias` value"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md
@@ -50,7 +50,7 @@ msgid "`_[_]`"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md
-msgid "`op_get`"
+msgid "`\"_[_]\"`"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md
@@ -62,7 +62,7 @@ msgid "`_[_] = _`"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md
-msgid "`op_set`"
+msgid "`\"_[_]=_\"`"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md
@@ -74,7 +74,7 @@ msgid "`_[_:_]`"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md
-msgid "`op_as_view`"
+msgid "`\"_[_:_]\"`"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md:15
@@ -87,10 +87,11 @@ msgid ""
 "struct A(Array[Int])\n"
 "\n"
 "///|\n"
-"fn A::op_get(self : A, idx : Int, offset? : Int) -> Int {\n"
+"#alias(\"_[_]\")\n"
+"fn A::get(self : A, idx : Int, offset? : Int) -> Int {\n"
 "  //  ^~~~~~\n"
-"  // Error: overloaded operator \"op_get\" should accept 2 arguments, but"
-" it accepts 3 arguments\n"
+"  // Error: overloaded indexing should accept 2 arguments, but it accepts"
+" 3 arguments\n"
 "  let idx = match offset {\n"
 "    None => idx\n"
 "    Some(offset) => idx + offset\n"
@@ -104,9 +105,7 @@ msgid "Suggestion"
 msgstr ""
 
 #: ../../language/error_codes/E4065.md:23
-msgid ""
-"Modify the method to match the expected number of arguments of the "
-"operator."
+msgid "Give the aliased method the number of arguments expected by the operator."
 msgstr ""
 
 #: ../../language/error_codes/E4065.md:25
@@ -115,7 +114,8 @@ msgid ""
 "struct A(Array[Int])\n"
 "\n"
 "///|\n"
-"fn A::op_get(self : A, idx : Int) -> Int {\n"
+"#alias(\"_[_]\")\n"
+"fn A::get(self : A, idx : Int) -> Int {\n"
 "  return self.0[idx]\n"
 "}\n"
 msgstr ""

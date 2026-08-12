@@ -382,25 +382,31 @@ test {
 }
 // end regex match 1
 
-/// start lexscan 1
+/// start lexmatch 1
 test {
-  let text = "xxabbbcyy"
-  if text =~ (re"a" + (re"b*" as b) + re"c", before~, after~) {
-    inspect(before, content="xx")
-    inspect(b, content="bbb")
-    inspect(after, content="yy")
-  } else {
-    fail("")
-  }
-
-  if text =~ (re"a" + (re"b*" as b) + re"c") && b.length() > 0 {
-    inspect(b, content="bbb")
-  }
-
   let keyword = "iff"
-  lexscan keyword with longest {
+  lexmatch keyword with longest {
     (re"^(if|[a-z]*)$" as ident) => inspect(ident, content="iff")
     _ => fail("")
   }
+}
+// end lexmatch 1
+
+/// start lexscan 1
+fn next_token(lexbuf : @lexbuf.Lexbuf) -> String {
+  lexscan lexbuf with longest {
+    (re"^[A-Za-z]+" as word) => "word:\{word}"
+    (re"^[0-9]+" as digits) => "number:\{digits}"
+    re"^[ \t\r\n]+" => next_token(lexbuf)
+    _ => "end"
+  }
+}
+
+test {
+  let chunks = ["hello ", "42"].iter()
+  let lexbuf = @lexbuf.Lexbuf::from_fn(() => chunks.next())
+  inspect(next_token(lexbuf), content="word:hello")
+  inspect(next_token(lexbuf), content="number:42")
+  inspect(next_token(lexbuf), content="end")
 }
 // end lexscan 1
