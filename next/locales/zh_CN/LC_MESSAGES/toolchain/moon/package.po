@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-11 18:34+0800\n"
+"POT-Creation-Date: 2026-08-12 15:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -38,7 +38,9 @@ msgid ""
 "Support for `moon.pkg.json` is deprecated. New projects should use "
 "`moon.pkg`; existing JSON configuration can be migrated with `moon fmt` "
 "as described below."
-msgstr "对 `moon.pkg.json` 的支持已弃用。新项目应使用 `moon.pkg`；现有 JSON 配置可以按照下文说明通过 `moon fmt` 迁移。"
+msgstr ""
+"对 `moon.pkg.json` 的支持已弃用。新项目应使用 `moon.pkg`；现有 JSON 配置可以按照下文说明通过 `moon "
+"fmt` 迁移。"
 
 #: ../../toolchain/moon/package.md:11
 msgid "New format (`moon.pkg`)"
@@ -1788,20 +1790,23 @@ msgid ""
 "                         88 warn\n"
 "guard_redundant_else       Redundant `else` on an exhaustive `guard`."
 "                      89 warn\n"
+"unused_lexcase             `lexmatch`/`lexscan` branch that can never be "
+"selected because other branches takes precedence or its pattern matches "
+"nothing. 90 warn\n"
 "all                        all warnings\n"
 "state: warn = enabled, error = promoted to error, off = disabled\n"
 "note: default alert exceptions: alert_unsafe=off\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1200
+#: ../../toolchain/moon/package.md:1201
 msgid "Use `moonc check -warn-help` to see the list of preset compiler warnings."
 msgstr "使用 `moonc check -warn-help` 查看预设编译器警告列表。"
 
-#: ../../toolchain/moon/package.md:1203
+#: ../../toolchain/moon/package.md:1204
 msgid "Alert Warning"
 msgstr "`alert`警告"
 
-#: ../../toolchain/moon/package.md:1205
+#: ../../toolchain/moon/package.md:1206
 msgid ""
 "Alerts are special warnings that indicate the usage of API marked with  "
 "[`#internal` attribute](../../language/attributes.md#internal-attribute)."
@@ -1809,7 +1814,7 @@ msgstr ""
 "`alert`是一种特殊的警告，表示使用了某些被 [`#internal`属性](../../language/attributes.md"
 "#internal-attribute) 标记了的 API。 "
 
-#: ../../toolchain/moon/package.md:1208
+#: ../../toolchain/moon/package.md:1209
 msgid ""
 "All alerts have a category associated with them, which is customized by "
 "the author of the API. You can enable or disable specific alert "
@@ -1819,7 +1824,7 @@ msgstr ""
 "所有`alert`都附有一个类别，这是由 API "
 "的作者定义的。你可以通过`alert_<类别>`这样的警告名来启用或者关闭特定的`alert`类别，或者用`alert`一次性控制所有`alert`警告。"
 
-#: ../../toolchain/moon/package.md:1212
+#: ../../toolchain/moon/package.md:1213
 msgid ""
 "For example, the following configuration enables all alert warnings "
 "except the `unsafe` category. In CI, add `--deny-warn` to `moon check`, "
@@ -1829,44 +1834,44 @@ msgstr ""
 "例如，以下配置启用除 `unsafe` 类别以外的所有 alert 警告。在 CI 中，请为 `moon check`、`moon test` "
 "或相应命令添加 `--deny-warn`，将已启用的警告视为致命错误。"
 
-#: ../../toolchain/moon/package.md:1218
+#: ../../toolchain/moon/package.md:1219
 msgid "warnings = \"+alert-alert_unsafe\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1223
+#: ../../toolchain/moon/package.md:1224
 msgid ""
 "{\n"
 "  \"warn-list\": \"+alert-alert_unsafe\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1231
+#: ../../toolchain/moon/package.md:1232
 msgid "Virtual Package"
 msgstr "虚拟包"
 
-#: ../../toolchain/moon/package.md:1233
+#: ../../toolchain/moon/package.md:1234
 msgid ""
 "A virtual package serves as an interface of a package that can be "
 "replaced by actual implementations."
 msgstr "一个虚拟包可以作为一个包的接口被实际的实现替换。"
 
-#: ../../toolchain/moon/package.md:1235
+#: ../../toolchain/moon/package.md:1236
 msgid "Declarations"
 msgstr "声明"
 
-#: ../../toolchain/moon/package.md:1237
+#: ../../toolchain/moon/package.md:1238
 msgid ""
 "The `virtual` field is used to declare the current package as a virtual "
 "package."
 msgstr "`virtual` 字段用于将当前包声明为虚拟包。"
 
-#: ../../toolchain/moon/package.md:1239
+#: ../../toolchain/moon/package.md:1240
 msgid ""
 "For example, the following declares a virtual package with default "
 "implementation:"
 msgstr "例如，以下配置声明了一个具有默认实现的虚拟包："
 
-#: ../../toolchain/moon/package.md:1243
+#: ../../toolchain/moon/package.md:1244
 msgid ""
 "options(\n"
 "  virtual: {\n"
@@ -1875,7 +1880,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1252
+#: ../../toolchain/moon/package.md:1253
 msgid ""
 "{\n"
 "  \"virtual\": {\n"
@@ -1884,58 +1889,58 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1262
+#: ../../toolchain/moon/package.md:1263
 msgid "Implementations"
 msgstr "实现"
 
-#: ../../toolchain/moon/package.md:1264
+#: ../../toolchain/moon/package.md:1265
 msgid ""
 "The `implement` field is used to declare the virtual package to be "
 "implemented by the current package."
 msgstr "`implement` 字段用于指定当前包实现的虚拟包。"
 
-#: ../../toolchain/moon/package.md:1266
+#: ../../toolchain/moon/package.md:1267
 msgid "For example, the following implements a virtual package:"
 msgstr "例如，以下配置实现了一个虚拟包："
 
-#: ../../toolchain/moon/package.md:1270
+#: ../../toolchain/moon/package.md:1271
 msgid ""
 "options(\n"
 "  implement: \"moonbitlang/core/abort\",\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1277
+#: ../../toolchain/moon/package.md:1278
 msgid ""
 "{\n"
 "  \"implement\": \"moonbitlang/core/abort\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1285
+#: ../../toolchain/moon/package.md:1286
 msgid "Overriding implementations"
 msgstr "覆盖实现"
 
-#: ../../toolchain/moon/package.md:1287
+#: ../../toolchain/moon/package.md:1288
 msgid ""
 "The `overrides` field is used to provide the implementations that "
 "fulfills an imported virtual package."
 msgstr "`overrides` 字段用于提供满足导入虚拟包的实现。"
 
-#: ../../toolchain/moon/package.md:1289
+#: ../../toolchain/moon/package.md:1290
 msgid ""
 "For example, the following overrides the default implementation of the "
 "builtin abort package with another package:"
 msgstr "例如，以下配置将内置的 abort 包的默认实现替换为另一个包："
 
-#: ../../toolchain/moon/package.md:1293
+#: ../../toolchain/moon/package.md:1294
 msgid ""
 "options(\n"
 "  overrides: [ \"moonbitlang/dummy_abort/abort_show_msg\" ],\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1300
+#: ../../toolchain/moon/package.md:1301
 msgid ""
 "{\n"
 "  \"overrides\": [\"moonbitlang/dummy_abort/abort_show_msg\"]\n"

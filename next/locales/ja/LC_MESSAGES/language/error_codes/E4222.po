@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-11 18:34+0800\n"
+"POT-Creation-Date: 2026-08-12 15:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -32,16 +32,19 @@ msgstr "字句マッチの対象が不正です。"
 
 #: ../../language/error_codes/E4222.md:7
 msgid ""
-"`lexmatch` accepts an in-memory `String` or `StringView`. Streaming "
-"`lexscan` accepts `@lexbuf.Lexbuf` or `@lexbuf.AsyncLexbuf`. Other "
-"values, such as numbers, cannot be matched by these expressions."
-msgstr "`lexmatch` はメモリ上の `String` または `StringView` を受け付けます。ストリーミング `lexscan` は `@lexbuf.Lexbuf` または `@lexbuf.AsyncLexbuf` を受け付けます。数値など、ほかの値をこれらの式でマッチさせることはできません。"
+"`lexmatch` accepts an in-memory `String` or `StringView`. `lexscan` is "
+"intended for `@lexbuf.Lexbuf` or `@lexbuf.AsyncLexbuf`. It temporarily "
+"also accepts `String` and `StringView` for compatibility, but emits a "
+"deprecation warning; use `lexmatch` for those inputs. Other values, such "
+"as numbers or user-defined lexbuf-like types, cannot be matched by these "
+"expressions."
+msgstr "`lexmatch` はメモリ上の `String` または `StringView` を受け付けます。`lexscan` は `@lexbuf.Lexbuf` または `@lexbuf.AsyncLexbuf` 向けです。互換性のため一時的に `String` と `StringView` も受け付けますが、非推奨警告が発生します。これらの入力には `lexmatch` を使用してください。数値やユーザー定義の字句バッファ類似型など、その他の値はこれらの式では照合できません。"
 
-#: ../../language/error_codes/E4222.md:11
+#: ../../language/error_codes/E4222.md:13
 msgid "Erroneous example"
 msgstr "誤った例"
 
-#: ../../language/error_codes/E4222.md:13
+#: ../../language/error_codes/E4222.md:15
 msgid ""
 "///|\n"
 "pub fn match_number(number : Int) -> Unit {\n"
@@ -51,17 +54,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4222.md:17
+#: ../../language/error_codes/E4222.md:19
 msgid "Suggestion"
 msgstr "提案"
 
-#: ../../language/error_codes/E4222.md:19
+#: ../../language/error_codes/E4222.md:21
 msgid ""
 "Use `lexmatch` with a string-like value, or create a lexing buffer for "
 "`lexscan`."
 msgstr "文字列相当の値には `lexmatch` を使うか、`lexscan` 用の字句バッファを作成してください。"
 
-#: ../../language/error_codes/E4222.md:22
+#: ../../language/error_codes/E4222.md:24
 msgid ""
 "///|\n"
 "pub fn match_text(text : String) -> Unit {\n"

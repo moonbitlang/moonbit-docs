@@ -2170,7 +2170,9 @@ found from the search position. They do not provide a longest-match mode.
 ### Regex Match Expression
 
 Regex match expressions use the `=~` operator to search a `StringView` with a
-regex constant expression. The expression returns `Bool`.
+regex constant expression. The expression returns `Bool`; use it when a single
+boolean check is enough, and use [`lexmatch`](#lexmatch) when several regex
+cases return different results.
 
 ```moonbit
 input =~ re"abc"
@@ -2215,52 +2217,137 @@ matches exactly one character.
 ### Lexmatch
 
 Use `lexmatch` to match an in-memory `String` or `StringView` against several
-regex cases and return the body of the selected case. The default strategy
-selects the first matching case. Add `with longest` to select the case that
-matches the longest prefix instead.
+regex cases and evaluate the body of the selected case. Its syntax is:
 
-Cases use regex constant expressions such as `re"..."`, and the final case
-must be a catch-all. Use `as` to bind matched text. In first-match mode,
-`before=` and `after=` can bind unmatched input; in longest-match mode, anchor
-each regex at the start with `^`, and use `after=` when the remaining suffix is
-needed. Lexical match cases do not support guards, so put additional conditions
-inside the selected case body.
-
-```{literalinclude} /sources/language/src/pattern/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start lexmatch 1
-:end-before: end lexmatch 1
+```moonbit
+lexmatch input [with first|longest] {
+  regex_case => expression
+  ...
+  [catch_all => fallback_expression]
+}
 ```
 
-For a single boolean check, [`=~`](#regex-match-expression) is usually more
-concise.
+Each regex case contains a regex constant expression, optionally with `as`,
+`before=`, and `after=` bindings. `Bytes`, `BytesView`, and other input types
+are not supported.
+
+The strategy controls how overlapping cases are resolved:
+
+- `first` is the default. It selects the first case, in source order, that can
+  match. An unanchored regex may search forward from the beginning of the
+  input.
+- `longest` selects the case that consumes the longest input prefix. Every
+  regex must start with `^`. If several cases consume the same number of
+  characters, their source order breaks the tie. Non-greedy quantifiers such
+  as `*?` and `+?` are not supported with this strategy.
+
+Use `as` to bind the substring matched by a regex or one of its subexpressions.
+Captures have type `StringView`, except that a regex known to match exactly one
+character, such as `re"."`, produces a `Char` capture.
+
+`before=` and `after=` bind the unmatched prefix and suffix as `StringView`.
+The shorthand forms `before~` and `after~` bind variables with those names,
+while `before=_` and `after=_` explicitly discard the corresponding part.
+First-match mode supports both bindings. Longest-match mode starts at the
+beginning of the input, so it supports `after=` but not `before=`.
+
+For first-match cases, bind or explicitly discard `before` and `after`, or use
+`^` and `$` to make the intended boundaries clear. For longest-match cases,
+use `after=` when a case consumes only a prefix; add `$` instead when it must
+consume the whole input.
+
+```{literalinclude} /sources/language/src/lexscan/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start lexmatch strings
+:end-before: end lexmatch strings
+```
+
+A catch-all case is required only when the regex cases do not cover every
+possible input. If the compiler can prove that the regex cases are exhaustive,
+the catch-all may be omitted. Otherwise it reports [E4224](error_codes/E4224.md).
+A present catch-all must be last; a binder such as `rest` receives the entire
+input when no regex case matches, while `_` discards it. The compiler reports
+[E0090](error_codes/E0090.md) when a regex case or catch-all can never be
+selected.
 
 ### Lexscan
 
-Use `lexscan` to consume tokens from a streaming input. The synchronous
-`@lexbuf.Lexbuf` type can read a complete string or obtain successive `String`
-chunks from a callback; the callback returns `None` at end of input. Each
-`lexscan` advances the buffer past the selected match, including matches that
-span chunk boundaries.
+Use `lexscan` with a synchronous `@lexbuf.Lexbuf` or asynchronous
+`@lexbuf.AsyncLexbuf` to consume tokens from streaming input. It uses the same
+case syntax and `first` or `longest` strategies as `lexmatch`:
 
-Streaming regex cases must be anchored at the current position with `^` and
-must end with a catch-all case. Add `with longest` when several cases can match
-and the longest token should win. Matched text can be bound with `as`.
-
-```{literalinclude} /sources/language/src/pattern/top.mbt
-:language: moonbit
-:dedent:
-:start-after: start lexscan 1
-:end-before: end lexscan 1
+```moonbit
+lexscan input [with first|longest] {
+  regex_case => expression
+  ...
+  [catch_all => fallback_expression]
+}
 ```
 
-For asynchronous sources, use `@lexbuf.AsyncLexbuf::from_fn` with an async
-callback and call `lexscan` from an async function.
+The lexbuf types require the following direct package import:
+
+```moonbit
+import {
+  "moonbitlang/core/lexbuf",
+}
+```
+
+Every streaming regex must start with `^`, because scanning always begins at
+the lexbuf's current cursor. Streaming cases do not support `before=` or
+`after=`. They may still use `as` to bind matched text, with the same
+`StringView` and `Char` capture types as `lexmatch`.
+
+`lexscan` temporarily accepts `String` and `StringView` targets for
+compatibility, but this use is deprecated and emits [E0027](error_codes/E0027.md).
+Use `lexmatch` for those in-memory inputs. `Bytes`, `BytesView`, and
+user-defined lexbuf-like types are not supported.
+
+#### Streaming scanners
+
+`Lexbuf` and `AsyncLexbuf` retain a cursor between `lexscan` calls. A successful
+regex case consumes the matched prefix and commits the cursor to the end of
+that match. This makes a recursive or repeated scanner behave like a lexer.
+Patterns may span any number of chunks supplied by `from_fn`; a chunk boundary
+does not end a token.
+
+As with `lexmatch`, a catch-all is required only when the regex cases are not
+exhaustive. A streaming catch-all must be written as `_`: it handles EOF or an
+otherwise unmatched character, does not bind the remaining input, and does not
+advance the lexbuf cursor.
+
+The following scanner skips whitespace and returns one token per call:
+
+```{literalinclude} /sources/language/src/lexscan/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start lexscan sync scanner
+:end-before: end lexscan sync scanner
+```
+
+`AsyncLexbuf` has the same matching and cursor semantics. Its source is an
+`async () -> String?` function, so a function that scans it must also be
+`async`. MoonBit has no `await` keyword; call the async scanner normally from
+async code.
+
+```{literalinclude} /sources/language/src/lexscan/top.mbt
+:language: moonbit
+:dedent:
+:start-after: start lexscan async scanner
+:end-before: end lexscan async scanner
+```
+
+`lexmatch` and `lexscan` case bodies cannot have guards. The expression selects
+a case before it evaluates the body, so put any additional condition inside
+that body.
 
 ### Legacy lexical pattern syntax
 
-Older code may use string-piece patterns or `lexmatch?`, for example:
+Earlier experimental versions used string-piece `lexmatch` patterns and a
+`lexmatch?` boolean form. Those forms have been removed. The `lexmatch` keyword
+now denotes the in-memory regex-case expression described above.
+
+For example, older code may look like this:
 
 ```moonbit
 lexmatch text {
@@ -2273,8 +2360,8 @@ if text lexmatch? ("a" ("b*" as b) "c") && b.length() > 0 {
 }
 ```
 
-For current code, use `lexmatch` with `re"..."` cases when several branches are
-needed, or `=~` for a boolean search.
+Convert case-based code to `lexmatch` with regex constant expressions. For a
+single boolean search, use [`=~`](#regex-match-expression) instead.
 
 ### Spread Operator
 

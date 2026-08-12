@@ -1191,6 +1191,7 @@ unlabelled_continue_in_labelled_loop Unlabelled `continue` directly inside a lab
 guard_inexhaustive         `guard` condition is not exhaustive and may panic.              87 warn
 guard_redundant_bang       Redundant `!` on an exhaustive `guard`.                         88 warn
 guard_redundant_else       Redundant `else` on an exhaustive `guard`.                      89 warn
+unused_lexcase             `lexmatch`/`lexscan` branch that can never be selected because other branches takes precedence or its pattern matches nothing. 90 warn
 all                        all warnings
 state: warn = enabled, error = promoted to error, off = disabled
 note: default alert exceptions: alert_unsafe=off

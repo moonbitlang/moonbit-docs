@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-11 18:34+0800\n"
+"POT-Creation-Date: 2026-08-12 15:49+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -5682,17 +5682,19 @@ msgstr "正規表現マッチ式"
 #: ../../language/fundamentals.md:2172
 msgid ""
 "Regex match expressions use the `=~` operator to search a `StringView` "
-"with a regex constant expression. The expression returns `Bool`."
-msgstr "正規表現マッチ式は `=~` 演算子を使い、正規表現の定数式で `StringView` を検索します。この式は `Bool` を返します。"
+"with a regex constant expression. The expression returns `Bool`; use it "
+"when a single boolean check is enough, and use [`lexmatch`](#lexmatch) "
+"when several regex cases return different results."
+msgstr "正規表現マッチ式は `=~` 演算子を使い、正規表現定数式で `StringView` を検索します。この式は `Bool` を返します。単一の真偽値チェックだけで十分な場合に使用し、複数の正規表現ケースが異なる結果を返す場合は [`lexmatch`](#lexmatch) を使用してください。"
 
-#: ../../language/fundamentals.md:2175
+#: ../../language/fundamentals.md:2177
 msgid ""
 "input =~ re\"abc\"\n"
 "input =~ ((PREFIX + SUFFIX) as whole, before=head, after=tail)\n"
 "input =~ (re\"b\", before~, after~)\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2181
+#: ../../language/fundamentals.md:2183
 msgid ""
 "The right-hand side must be a regex constant expression: a regex literal "
 "such as `re\"abc\"`, a named `const`, or an expression built from "
@@ -5702,7 +5704,7 @@ msgstr ""
 "右辺は正規表現の定数式でなければなりません。`re\"abc\"` のような正規表現リテラル、名前付き `const`、あるいは定数を `+` "
 "（連接）、`|`（選択）、括弧で組み立てた式が使えます。任意の実行時値は使えません。"
 
-#: ../../language/fundamentals.md:2186
+#: ../../language/fundamentals.md:2188
 msgid ""
 "Use `as` to bind the matched substring. Use `before` and `after` to bind "
 "the unmatched prefix and suffix as `StringView`; `before~` and `after~` "
@@ -5712,7 +5714,7 @@ msgstr ""
 "`before` と `after` を使います。`before~` と `after~` は、それぞれ `before` と `after` "
 "という名前の変数を束縛する短縮形です。"
 
-#: ../../language/fundamentals.md:2190
+#: ../../language/fundamentals.md:2192
 msgid ""
 "This is separate from regex named capture groups. For example, in "
 "`re\"(?<id>[0-9]+)\"`, the name `id` is part of the regex engine's "
@@ -5723,7 +5725,7 @@ msgstr ""
 "という名前は正規表現エンジンのキャプチャメタデータの一部であり、MoonBit の束縛ではありません。`=~` "
 "で束縛が必要な場合は、`(re\"(?<id>[0-9]+)\" as digits)` のように `as` を使ってください。"
 
-#: ../../language/fundamentals.md:2195
+#: ../../language/fundamentals.md:2197
 msgid ""
 "Like `is`, binders introduced by `=~` can be used in the same boolean-"
 "flow contexts, such as the right-hand side of `&&` and the true branch of"
@@ -5735,13 +5737,13 @@ msgstr ""
 "分岐など、同じブールフローの文脈で使えます。正規表現マッチはデフォルトで検索ベースなので、`\"zabc!\" =~ re\"abc\"` は "
 "`true` です。入力の先頭または末尾にマッチを制限したい場合は、`^` や `$` のようなアンカーを使ってください。"
 
-#: ../../language/fundamentals.md:2201
+#: ../../language/fundamentals.md:2203
 msgid ""
 "`=~` also uses first-match semantics. It will not support longest-match "
 "behavior."
 msgstr "`=~` も first-match semantics を使います。設計上、longest-match の挙動はサポートしません。"
 
-#: ../../language/fundamentals.md:2204
+#: ../../language/fundamentals.md:2206
 msgid ""
 "test {\n"
 "  let input = \" let_name = 42 \"\n"
@@ -5777,7 +5779,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2211
+#: ../../language/fundamentals.md:2213
 msgid ""
 "In the example above, `head`, `ident`, `tail`, `before`, `after`, and "
 "`rest` have type `StringView`. The binder `ch` has type `Char`, because "
@@ -5786,101 +5788,271 @@ msgstr ""
 "上の例では、`head`、`ident`、`tail`、`before`、`after`、`rest` の型はすべて `StringView` "
 "です。束縛 `ch` の型が `Char` になるのは、`re\".\"` がちょうど 1 文字にマッチするからです。"
 
-#: ../../language/fundamentals.md:2215
+#: ../../language/fundamentals.md:2217
 msgid "Lexmatch"
 msgstr "Lexmatch"
 
-#: ../../language/fundamentals.md:2217
+#: ../../language/fundamentals.md:2219
 msgid ""
 "Use `lexmatch` to match an in-memory `String` or `StringView` against "
-"several regex cases and return the body of the selected case. The default"
-" strategy selects the first matching case. Add `with longest` to select "
-"the case that matches the longest prefix instead."
-msgstr "`lexmatch` を使うと、メモリ上の `String` または `StringView` を複数の正規表現ケースと照合し、選択されたケースの本体を返せます。デフォルトの戦略では、最初にマッチしたケースを選択します。代わりに最長の接頭部分へマッチするケースを選ぶには、`with longest` を追加します。"
+"several regex cases and evaluate the body of the selected case. Its "
+"syntax is:"
+msgstr "`lexmatch` は、メモリ上の `String` または `StringView` を複数の正規表現ケースと照合し、選択されたケースの本体を評価します。構文は次のとおりです："
 
 #: ../../language/fundamentals.md:2222
 msgid ""
-"Cases use regex constant expressions such as `re\"...\"`, and the final "
-"case must be a catch-all. Use `as` to bind matched text. In first-match "
-"mode, `before=` and `after=` can bind unmatched input; in longest-match "
-"mode, anchor each regex at the start with `^`, and use `after=` when the "
-"remaining suffix is needed. Lexical match cases do not support guards, so"
-" put additional conditions inside the selected case body."
-msgstr "ケースには `re\"...\"` などの正規表現の定数式を使い、最後のケースはキャッチオールでなければなりません。マッチしたテキストを束縛するには `as` を使います。first-match モードでは `before=` と `after=` で未マッチ部分を束縛できます。longest-match モードでは各正規表現を `^` で先頭に固定し、残りの接尾部分が必要な場合は `after=` を使います。字句マッチのケースはガードをサポートしないため、追加の条件は選択されたケースの本体に記述してください。"
+"lexmatch input [with first|longest] {\n"
+"  regex_case => expression\n"
+"  ...\n"
+"  [catch_all => fallback_expression]\n"
+"}\n"
+msgstr ""
 
-#: ../../language/fundamentals.md:2229
+#: ../../language/fundamentals.md:2230
 msgid ""
-"test {\n"
-"  let keyword = \"iff\"\n"
-"  lexmatch keyword with longest {\n"
-"    (re\"^(if|[a-z]*)$\" as ident) => inspect(ident, content=\"iff\")\n"
+"Each regex case contains a regex constant expression, optionally with "
+"`as`, `before=`, and `after=` bindings. `Bytes`, `BytesView`, and other "
+"input types are not supported."
+msgstr "各正規表現ケースには正規表現定数式があり、必要に応じて `as`、`before=`、`after=` による束縛を指定できます。`Bytes`、`BytesView`、その他の入力型はサポートされません。"
+
+#: ../../language/fundamentals.md:2234
+msgid "The strategy controls how overlapping cases are resolved:"
+msgstr "マッチ戦略は、重複する case の解決方法を制御します。"
+
+#: ../../language/fundamentals.md:2236
+msgid ""
+"`first` is the default. It selects the first case, in source order, that "
+"can match. An unanchored regex may search forward from the beginning of "
+"the input."
+msgstr "`first` がデフォルトです。ソース上の順序で、マッチ可能な最初のケースを選択します。アンカーのない正規表現は、入力の先頭から前方へ検索できます。"
+
+#: ../../language/fundamentals.md:2239
+msgid ""
+"`longest` selects the case that consumes the longest input prefix. Every "
+"regex must start with `^`. If several cases consume the same number of "
+"characters, their source order breaks the tie. Non-greedy quantifiers "
+"such as `*?` and `+?` are not supported with this strategy."
+msgstr ""
+"`longest` は最長の入力接頭辞を消費する case を選択します。すべての正規表現を `^` で始める必要があります。複数の case "
+"が同じ文字数を消費する場合は、ソースコード順で優先順位が決まります。この戦略では `*?` や `+?` "
+"などの非貪欲量指定子はサポートされません。"
+
+#: ../../language/fundamentals.md:2244
+msgid ""
+"Use `as` to bind the substring matched by a regex or one of its "
+"subexpressions. Captures have type `StringView`, except that a regex "
+"known to match exactly one character, such as `re\".\"`, produces a "
+"`Char` capture."
+msgstr ""
+"`as` を使うと、正規表現またはその部分式にマッチした部分文字列を束縛できます。キャプチャの型は `StringView` "
+"です。ただし、`re\".\"` のようにちょうど 1 文字にマッチすると判定できる正規表現では、キャプチャの型は `Char` になります。"
+
+#: ../../language/fundamentals.md:2248
+msgid ""
+"`before=` and `after=` bind the unmatched prefix and suffix as "
+"`StringView`. The shorthand forms `before~` and `after~` bind variables "
+"with those names, while `before=_` and `after=_` explicitly discard the "
+"corresponding part. First-match mode supports both bindings. Longest-"
+"match mode starts at the beginning of the input, so it supports `after=` "
+"but not `before=`."
+msgstr "`before=` と `after=` は、マッチしなかった接頭部と接尾部を `StringView` として束縛します。短縮形 `before~` と `after~` は同名の変数を束縛し、`before=_` と `after=_` は対応する部分を明示的に破棄します。先頭一致モードでは両方の束縛を使用できます。最長一致モードは入力の先頭から始まるため、`after=` は使用できますが `before=` は使用できません。"
+
+#: ../../language/fundamentals.md:2254
+msgid ""
+"For first-match cases, bind or explicitly discard `before` and `after`, "
+"or use `^` and `$` to make the intended boundaries clear. For longest-"
+"match cases, use `after=` when a case consumes only a prefix; add `$` "
+"instead when it must consume the whole input."
+msgstr "先頭一致のケースでは、`before` と `after` を束縛または明示的に破棄するか、`^` と `$` を使って意図する境界を明確にしてください。最長一致のケースでは、入力の接頭部だけを消費する場合は `after=` を使用し、入力全体を消費する必要がある場合は代わりに `$` を追加してください。"
+
+#: ../../language/fundamentals.md:2259
+msgid ""
+"test \"scan strings\" {\n"
+"  let text = \"xx123yy\"\n"
+"  lexmatch text {\n"
+"    (re\"[0-9]+\" as digits, before~, after~) => {\n"
+"      inspect(before, content=\"xx\")\n"
+"      inspect(digits, content=\"123\")\n"
+"      inspect(after, content=\"yy\")\n"
+"    }\n"
+"    _ => fail(\"\")\n"
+"  }\n"
+"\n"
+"  lexmatch \"letters123\" with longest {\n"
+"    (re\"^[a-z]+\" as word, after=rest) => {\n"
+"      inspect(word, content=\"letters\")\n"
+"      inspect(rest, content=\"123\")\n"
+"    }\n"
 "    _ => fail(\"\")\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2236
+#: ../../language/fundamentals.md:2266
 msgid ""
-"For a single boolean check, [`=~`](#regex-match-expression) is usually "
-"more concise."
-msgstr "1 回の真偽値チェックだけなら、通常は [`=~`](#regex-match-expression) の方が簡潔です。"
+"A catch-all case is required only when the regex cases do not cover every"
+" possible input. If the compiler can prove that the regex cases are "
+"exhaustive, the catch-all may be omitted. Otherwise it reports "
+"[E4224](error_codes/E4224.md). A present catch-all must be last; a binder"
+" such as `rest` receives the entire input when no regex case matches, "
+"while `_` discards it. The compiler reports [E0090](error_codes/E0090.md)"
+" when a regex case or catch-all can never be selected."
+msgstr "正規表現ケースが可能な入力をすべて網羅していない場合に限り、キャッチオールケースが必要です。コンパイラが正規表現ケースを網羅的だと証明できる場合は、キャッチオールを省略できます。そうでなければ [E4224](error_codes/E4224.md) が報告されます。キャッチオールを記述する場合は最後に置く必要があります。どの正規表現ケースにもマッチしない場合、`rest` のような束縛は入力全体を受け取り、`_` はそれを破棄します。正規表現ケースまたはキャッチオールが決して選択されない場合、コンパイラは [E0090](error_codes/E0090.md) を報告します。"
 
-#: ../../language/fundamentals.md:2239
+#: ../../language/fundamentals.md:2274
 msgid "Lexscan"
 msgstr "Lexscan"
 
-#: ../../language/fundamentals.md:2241
+#: ../../language/fundamentals.md:2276
 msgid ""
-"Use `lexscan` to consume tokens from a streaming input. The synchronous "
-"`@lexbuf.Lexbuf` type can read a complete string or obtain successive "
-"`String` chunks from a callback; the callback returns `None` at end of "
-"input. Each `lexscan` advances the buffer past the selected match, "
-"including matches that span chunk boundaries."
-msgstr "`lexscan` を使うと、ストリーミング入力からトークンを消費できます。同期型の `@lexbuf.Lexbuf` は、文字列全体を読み取ることも、コールバックから連続する `String` チャンクを取得することもできます。コールバックは入力の終端で `None` を返します。各 `lexscan` は、チャンク境界をまたぐマッチも含め、選択されたマッチの直後までバッファを進めます。"
+"Use `lexscan` with a synchronous `@lexbuf.Lexbuf` or asynchronous "
+"`@lexbuf.AsyncLexbuf` to consume tokens from streaming input. It uses the"
+" same case syntax and `first` or `longest` strategies as `lexmatch`:"
+msgstr "同期版の `@lexbuf.Lexbuf` または非同期版の `@lexbuf.AsyncLexbuf` とともに `lexscan` を使用し、ストリーミング入力からトークンを消費します。ケース構文と `first` / `longest` 戦略は `lexmatch` と同じです："
 
-#: ../../language/fundamentals.md:2247
+#: ../../language/fundamentals.md:2280
 msgid ""
-"Streaming regex cases must be anchored at the current position with `^` "
-"and must end with a catch-all case. Add `with longest` when several cases"
-" can match and the longest token should win. Matched text can be bound "
-"with `as`."
-msgstr "ストリーミングの正規表現ケースは `^` で現在位置に固定し、最後をキャッチオールケースにしなければなりません。複数のケースがマッチし得るときに最長のトークンを選ぶには、`with longest` を追加します。マッチしたテキストは `as` で束縛できます。"
-
-#: ../../language/fundamentals.md:2251
-msgid ""
-"fn next_token(lexbuf : @lexbuf.Lexbuf) -> String {\n"
-"  lexscan lexbuf with longest {\n"
-"    (re\"^[A-Za-z]+\" as word) => \"word:\\{word}\"\n"
-"    (re\"^[0-9]+\" as digits) => \"number:\\{digits}\"\n"
-"    re\"^[ \\t\\r\\n]+\" => next_token(lexbuf)\n"
-"    _ => \"end\"\n"
-"  }\n"
-"}\n"
-"\n"
-"test {\n"
-"  let chunks = [\"hello \", \"42\"].iter()\n"
-"  let lexbuf = @lexbuf.Lexbuf::from_fn(() => chunks.next())\n"
-"  inspect(next_token(lexbuf), content=\"word:hello\")\n"
-"  inspect(next_token(lexbuf), content=\"number:42\")\n"
-"  inspect(next_token(lexbuf), content=\"end\")\n"
+"lexscan input [with first|longest] {\n"
+"  regex_case => expression\n"
+"  ...\n"
+"  [catch_all => fallback_expression]\n"
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2258
-msgid ""
-"For asynchronous sources, use `@lexbuf.AsyncLexbuf::from_fn` with an "
-"async callback and call `lexscan` from an async function."
-msgstr "非同期ソースでは、非同期コールバックを指定した `@lexbuf.AsyncLexbuf::from_fn` を使い、非同期関数から `lexscan` を呼び出してください。"
+#: ../../language/fundamentals.md:2288
+msgid "The lexbuf types require the following direct package import:"
+msgstr "字句バッファ型を使うには、次のパッケージを直接インポートする必要があります："
 
-#: ../../language/fundamentals.md:2261
+#: ../../language/fundamentals.md:2290
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/lexbuf\",\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:2296
+msgid ""
+"Every streaming regex must start with `^`, because scanning always begins"
+" at the lexbuf's current cursor. Streaming cases do not support `before=`"
+" or `after=`. They may still use `as` to bind matched text, with the same"
+" `StringView` and `Char` capture types as `lexmatch`."
+msgstr "スキャンは常に字句バッファの現在のカーソル位置から始まるため、ストリーミング正規表現はすべて `^` で始める必要があります。ストリーミングケースでは `before=` と `after=` は使用できません。`as` によるマッチ文字列の束縛は使用でき、キャプチャ型は `lexmatch` と同じく `StringView` または `Char` です。"
+
+#: ../../language/fundamentals.md:2301
+msgid ""
+"`lexscan` temporarily accepts `String` and `StringView` targets for "
+"compatibility, but this use is deprecated and emits "
+"[E0027](error_codes/E0027.md). Use `lexmatch` for those in-memory inputs."
+" `Bytes`, `BytesView`, and user-defined lexbuf-like types are not "
+"supported."
+msgstr "互換性のため、`lexscan` は現在も一時的に `String` と `StringView` を対象として受け付けますが、この用法は非推奨であり [E0027](error_codes/E0027.md) が発生します。これらのメモリ上の入力には `lexmatch` を使用してください。`Bytes`、`BytesView`、ユーザー定義の字句バッファ類似型はサポートされません。"
+
+#: ../../language/fundamentals.md:2306
+msgid "Streaming scanners"
+msgstr "ストリーミングスキャナー"
+
+#: ../../language/fundamentals.md:2308
+msgid ""
+"`Lexbuf` and `AsyncLexbuf` retain a cursor between `lexscan` calls. A "
+"successful regex case consumes the matched prefix and commits the cursor "
+"to the end of that match. This makes a recursive or repeated scanner "
+"behave like a lexer. Patterns may span any number of chunks supplied by "
+"`from_fn`; a chunk boundary does not end a token."
+msgstr "`Lexbuf` と `AsyncLexbuf` は、複数回の `lexscan` 呼び出しにわたってカーソルを保持します。正規表現ケースが成功すると、マッチした接頭部を消費し、カーソルをマッチの末尾まで進めて確定します。これにより、再帰的または反復的なスキャナは字句解析器のように動作します。パターンは `from_fn` が供給する任意の数のチャンクをまたぐことができ、チャンク境界でトークンが終了することはありません。"
+
+#: ../../language/fundamentals.md:2314
+msgid ""
+"As with `lexmatch`, a catch-all is required only when the regex cases are"
+" not exhaustive. A streaming catch-all must be written as `_`: it handles"
+" EOF or an otherwise unmatched character, does not bind the remaining "
+"input, and does not advance the lexbuf cursor."
+msgstr "`lexmatch` と同様に、正規表現ケースが網羅的でない場合に限りキャッチオールが必要です。ストリーミングのキャッチオールは `_` と記述する必要があります。これは EOF またはその他のマッチしない文字を処理しますが、残りの入力を束縛せず、字句バッファのカーソルも進めません。"
+
+#: ../../language/fundamentals.md:2319
+msgid "The following scanner skips whitespace and returns one token per call:"
+msgstr "次のスキャナーは空白を読み飛ばし、呼び出しごとに 1 つの token を返します。"
+
+#: ../../language/fundamentals.md:2321
+msgid ""
+"priv enum Token {\n"
+"  Word(StringView)\n"
+"  Integer(StringView)\n"
+"  Punctuation(Char)\n"
+"  Eof\n"
+"}\n"
+"\n"
+"///|\n"
+"fn next_token(input : @lexbuf.Lexbuf) -> Token {\n"
+"  lexscan input with longest {\n"
+"    re\"^[[:space:]]+\" => next_token(input)\n"
+"    re\"^[[:alpha:]]+\" as word => Word(word)\n"
+"    re\"^[[:digit:]]+\" as digits => Integer(digits)\n"
+"    re\"^.\" as mark => Punctuation(mark)\n"
+"    _ => Eof\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test \"scan a synchronous stream\" {\n"
+"  let input = @lexbuf.Lexbuf::from_string(\"hello 123!\")\n"
+"  guard next_token(input) is Word(word) else { fail(\"expected word\") }\n"
+"  assert_true(word == \"hello\")\n"
+"  guard next_token(input) is Integer(digits) else { fail(\"expected "
+"integer\") }\n"
+"  assert_true(digits == \"123\")\n"
+"  guard next_token(input) is Punctuation(mark) else {\n"
+"    fail(\"expected punctuation\")\n"
+"  }\n"
+"  assert_true(mark == '!')\n"
+"  assert_true(next_token(input) is Eof)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:2328
+msgid ""
+"`AsyncLexbuf` has the same matching and cursor semantics. Its source is "
+"an `async () -> String?` function, so a function that scans it must also "
+"be `async`. MoonBit has no `await` keyword; call the async scanner "
+"normally from async code."
+msgstr ""
+"`AsyncLexbuf` のマッチとカーソルの意味は同じです。入力元は `async () -> String?` "
+"関数なので、それを走査する関数も `async` でなければなりません。MoonBit には `await` "
+"キーワードはありません。非同期コードから非同期スキャナーを通常どおり呼び出してください。"
+
+#: ../../language/fundamentals.md:2333
+msgid ""
+"/// Returns the next alphabetic token from an asynchronous lexbuf.\n"
+"pub async fn next_word(input : @lexbuf.AsyncLexbuf) -> StringView? {\n"
+"  lexscan input {\n"
+"    re\"^[[:alpha:]]+\" as word => Some(word)\n"
+"    _ => None\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:2340
+msgid ""
+"`lexmatch` and `lexscan` case bodies cannot have guards. The expression "
+"selects a case before it evaluates the body, so put any additional "
+"condition inside that body."
+msgstr "`lexmatch` と `lexscan` のケース本体にはガードを付けられません。式は本体を評価する前にケースを選択するため、追加の条件は本体の中に置いてください。"
+
+#: ../../language/fundamentals.md:2344
 msgid "Legacy lexical pattern syntax"
 msgstr "レガシー字句パターン構文"
 
-#: ../../language/fundamentals.md:2263
-msgid "Older code may use string-piece patterns or `lexmatch?`, for example:"
-msgstr "古いコードでは、次のような文字列断片パターンや `lexmatch?` が使われている場合があります："
+#: ../../language/fundamentals.md:2346
+msgid ""
+"Earlier experimental versions used string-piece `lexmatch` patterns and a"
+" `lexmatch?` boolean form. Those forms have been removed. The `lexmatch` "
+"keyword now denotes the in-memory regex-case expression described above."
+msgstr "以前の実験的なバージョンでは、文字列断片からなる `lexmatch` パターンと、真偽値形式の `lexmatch?` が使われていました。これらの形式は削除されました。現在の `lexmatch` キーワードは、上で説明したメモリ上の正規表現ケース式を表します。"
 
-#: ../../language/fundamentals.md:2265
+#: ../../language/fundamentals.md:2350
+msgid "For example, older code may look like this:"
+msgstr "たとえば、以前のコードは次のようになっていることがあります："
+
+#: ../../language/fundamentals.md:2352
 msgid ""
 "lexmatch text {\n"
 "  (before, \"a\" (\"b*\" as b) \"c\", after) => ...\n"
@@ -5892,17 +6064,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2276
+#: ../../language/fundamentals.md:2363
 msgid ""
-"For current code, use `lexmatch` with `re\"...\"` cases when several "
-"branches are needed, or `=~` for a boolean search."
-msgstr "現在のコードでは、複数の分岐が必要な場合は `re\"...\"` のケースを持つ `lexmatch` を使い、真偽値の検索には `=~` を使ってください。"
+"Convert case-based code to `lexmatch` with regex constant expressions. "
+"For a single boolean search, use [`=~`](#regex-match-expression) instead."
+msgstr "ケースを使ったコードは、正規表現定数式を用いる `lexmatch` に変換してください。単一の真偽値検索には、代わりに [`=~`](#regex-match-expression) を使用します。"
 
-#: ../../language/fundamentals.md:2279
+#: ../../language/fundamentals.md:2366
 msgid "Spread Operator"
 msgstr "スプレッド演算子"
 
-#: ../../language/fundamentals.md:2281
+#: ../../language/fundamentals.md:2368
 msgid ""
 "MoonBit provides a spread operator to expand a sequence of elements when "
 "constructing `Array`, `String`, and `Bytes` using the array literal "
@@ -5914,11 +6086,11 @@ msgstr ""
 "を構築するときに要素列を展開するためのスプレッド演算子があります。このような列を展開するには先頭に `..` "
 "を付ける必要があり、対応する要素型を返す `iter()` メソッドを持っていなければなりません。"
 
-#: ../../language/fundamentals.md:2286
+#: ../../language/fundamentals.md:2373
 msgid "For example, we can use the spread operator to construct an array:"
 msgstr "たとえば、スプレッド演算子を使って配列を構築できます："
 
-#: ../../language/fundamentals.md:2288
+#: ../../language/fundamentals.md:2375
 msgid ""
 "test {\n"
 "  let a1 : Array[Int] = [1, 2, 3]\n"
@@ -5929,13 +6101,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2295
+#: ../../language/fundamentals.md:2382
 msgid ""
 "A conditional spread `..if condition { sequence }` contributes the "
 "sequence only when the condition is true:"
 msgstr ""
 
-#: ../../language/fundamentals.md:2298
+#: ../../language/fundamentals.md:2385
 msgid ""
 "test {\n"
 "  let include_middle = true\n"
@@ -5947,11 +6119,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2305
+#: ../../language/fundamentals.md:2392
 msgid "Similarly, we can use the spread operator to construct a string:"
 msgstr "同様に、スプレッド演算子を使って文字列を構築できます："
 
-#: ../../language/fundamentals.md:2307
+#: ../../language/fundamentals.md:2394
 msgid ""
 "test {\n"
 "  let s1 : String = \"Hello\"\n"
@@ -5962,13 +6134,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2314
+#: ../../language/fundamentals.md:2401
 msgid ""
 "The last example shows how the spread operator can be used to construct a"
 " bytes sequence."
 msgstr "最後の例は、スプレッド演算子で bytes 列を構築できることを示しています。"
 
-#: ../../language/fundamentals.md:2317
+#: ../../language/fundamentals.md:2404
 msgid ""
 "test {\n"
 "  let b1 : Bytes = b\"hello\"\n"
@@ -5994,18 +6166,18 @@ msgstr ""
 "  )\n"
 "}\n"
 
-#: ../../language/fundamentals.md:2325
+#: ../../language/fundamentals.md:2412
 msgid "TODO syntax"
 msgstr "TODO 構文"
 
-#: ../../language/fundamentals.md:2327
+#: ../../language/fundamentals.md:2414
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo` 構文（`...`）は、まだ実装されていないコードや将来の機能のプレースホルダを示すための特別な構文です。例えば："
 
-#: ../../language/fundamentals.md:2329
+#: ../../language/fundamentals.md:2416
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"
