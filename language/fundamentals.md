@@ -3039,9 +3039,11 @@ selected.
 
 ### Lexscan
 
-Use `lexscan` with a synchronous `@lexbuf.Lexbuf` or asynchronous
-`@lexbuf.AsyncLexbuf` to consume tokens from streaming input. It uses the same
-case syntax and `first` or `longest` strategies as `lexmatch`:
+Use `lexscan` to consume successive tokens while it updates the cursor stored
+in its target. The target can be an in-memory `@lexbuf.StringScanner`, a
+synchronous streaming `@lexbuf.Lexbuf`, or an asynchronous streaming
+`@lexbuf.AsyncLexbuf`. `lexscan` uses the same case syntax and `first` or
+`longest` strategies as `lexmatch`:
 
 ```moonbit
 lexscan input [with first|longest] {
@@ -3051,7 +3053,7 @@ lexscan input [with first|longest] {
 }
 ```
 
-The lexbuf types require a direct `moonbitlang/core/lexbuf` import. This
+These scanner types require a direct `moonbitlang/core/lexbuf` import. This
 runnable example also imports the official `moonbitlang/async` runtime so its
 asynchronous scanner can be tested with `async test`:
 
@@ -3062,30 +3064,39 @@ import {
 }
 ```
 
-Every streaming regex must start with `^`, because scanning always begins at
-the lexbuf's current cursor. Streaming cases do not support `before=` or
-`after=`. They may still use `as` to bind matched text, with the same
-`StringView` and `Char` capture types as `lexmatch`.
+Every `lexscan` regex must start with `^`, because scanning always begins at the
+target's current cursor. `lexscan` cases do not support `before=` or `after=`.
+They may still use `as` to bind matched text, with the same `StringView` and
+`Char` capture types as `lexmatch`.
 
-`lexscan` temporarily accepts `String` and `StringView` targets for
-compatibility, but this use is deprecated and emits [E0027](https://docs.moonbitlang.com/en/latest/language/error_codes/E0027.html).
-Use `lexmatch` for those in-memory inputs. `Bytes`, `BytesView`, and
-user-defined lexbuf-like types are not supported.
+A `String` or `StringView` value is not a valid `lexscan` target. Use `lexmatch`
+to match one in-memory value, or put a `StringView` in a `StringScanner` when
+successive scans should share a cursor. `Bytes`, `BytesView`, and user-defined
+lexbuf-like types are not supported.
 
-#### Streaming scanners
+#### String scanners
 
-`Lexbuf` and `AsyncLexbuf` retain a cursor between `lexscan` calls. A successful
-regex case consumes the matched prefix and commits the cursor to the end of
-that match. This makes a recursive or repeated scanner behave like a lexer.
-Patterns may span any number of chunks supplied by `from_fn`; a chunk boundary
-does not end a token.
+`@lexbuf.StringScanner` scans an in-memory `StringView`. Subject to the
+`lexscan` restrictions above, case selection and captures behave like applying
+`lexmatch` to the unconsumed part of `scanner.data`, starting at
+`scanner.cursor`. After a regex case is selected, `lexscan` updates
+`scanner.cursor` to the end of the match. The same scanner can therefore be
+passed to successive calls without slicing the input or updating an offset
+manually.
 
-As with `lexmatch`, a catch-all is required only when the regex cases are not
-exhaustive. A streaming catch-all must be written as `_`: it handles EOF or an
-otherwise unmatched character, does not bind the remaining input, and does not
-advance the lexbuf cursor.
+Construct a string scanner with its cursor at `0`:
 
-The following scanner skips whitespace and returns one token per call:
+```moonbit
+let scanner = @lexbuf.StringScanner::{ data: text[:], cursor: 0 }
+```
+
+Both the cursor and the `StringView` indexes are measured in UTF-16 code units.
+The cursor is relative to `data` and must be in `0..=data.length()`, so `data`
+may itself be a slice of a larger string. A catch-all branch must be `_`; it
+does not advance the cursor.
+
+The following scanner skips whitespace and returns one token per call. The
+test also shows that `lexscan` maintains the cursor:
 
 ```moonbit
 priv enum Token {
@@ -3096,9 +3107,9 @@ priv enum Token {
 }
 
 ///|
-fn next_token(input : @lexbuf.Lexbuf) -> Token {
+fn next_string_token(input : @lexbuf.StringScanner) -> Token {
   lexscan input with longest {
-    re"^[[:space:]]+" => next_token(input)
+    re"^[[:space:]]+" => next_string_token(input)
     re"^[[:alpha:]]+" as word => Word(word)
     re"^[[:digit:]]+" as digits => Integer(digits)
     re"^." as mark => Punctuation(mark)
@@ -3107,17 +3118,75 @@ fn next_token(input : @lexbuf.Lexbuf) -> Token {
 }
 
 ///|
-test "scan a synchronous stream" {
-  let input = @lexbuf.Lexbuf::from_string("hello 123!")
-  guard next_token(input) is Word(word) else { fail("expected word") }
+test "scan an in-memory string with a maintained cursor" {
+  let input = @lexbuf.StringScanner::{ data: "hello 123!"[:], cursor: 0 }
+  guard next_string_token(input) is Word(word) else { fail("expected word") }
   assert_true(word == "hello")
-  guard next_token(input) is Integer(digits) else { fail("expected integer") }
+  assert_eq(input.cursor, 5)
+  guard next_string_token(input) is Integer(digits) else {
+    fail("expected integer")
+  }
   assert_true(digits == "123")
-  guard next_token(input) is Punctuation(mark) else {
+  assert_eq(input.cursor, 9)
+  guard next_string_token(input) is Punctuation(mark) else {
     fail("expected punctuation")
   }
   assert_true(mark == '!')
-  assert_true(next_token(input) is Eof)
+  assert_eq(input.cursor, input.data.length())
+  assert_true(next_string_token(input) is Eof)
+  assert_eq(input.cursor, input.data.length())
+}
+```
+
+#### Streaming scanners
+
+`Lexbuf` and `AsyncLexbuf` retain a cursor between `lexscan` calls. A successful
+regex case consumes the matched prefix and commits the cursor to the end of
+that match. This makes a recursive or repeated scanner behave like a lexer.
+Patterns may span any number of chunks supplied by `from_fn`; a chunk boundary
+does not end a token.
+
+As with `lexmatch`, a catch-all is required only when the regex cases are not
+exhaustive. A `lexscan` catch-all must be written as `_`: it handles EOF or an
+otherwise unmatched character, does not bind the remaining input, and does not
+advance the target cursor.
+
+The following scanner skips whitespace and returns one token per call:
+
+```moonbit
+priv enum StreamToken {
+  StreamWord(StringView)
+  StreamInteger(StringView)
+  StreamPunctuation(Char)
+  StreamEof
+}
+
+///|
+fn next_token(input : @lexbuf.Lexbuf) -> StreamToken {
+  lexscan input with longest {
+    re"^[[:space:]]+" => next_token(input)
+    re"^[[:alpha:]]+" as word => StreamWord(word)
+    re"^[[:digit:]]+" as digits => StreamInteger(digits)
+    re"^." as mark => StreamPunctuation(mark)
+    _ => StreamEof
+  }
+}
+
+///|
+test "scan a synchronous stream" {
+  let chunks = ["hello ", "123!"][:].iter()
+  let input = @lexbuf.Lexbuf::from_fn(() => chunks.next())
+  guard next_token(input) is StreamWord(word) else { fail("expected word") }
+  assert_true(word == "hello")
+  guard next_token(input) is StreamInteger(digits) else {
+    fail("expected integer")
+  }
+  assert_true(digits == "123")
+  guard next_token(input) is StreamPunctuation(mark) else {
+    fail("expected punctuation")
+  }
+  assert_true(mark == '!')
+  assert_true(next_token(input) is StreamEof)
 }
 ```
 
