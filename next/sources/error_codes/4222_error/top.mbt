@@ -1,6 +1,6 @@
 ///|
-pub fn match_number(number : Int) -> Unit {
-  lexmatch number with longest {
+pub fn scan_text(text : String) -> Unit {
+  lexscan text with longest {
     _ => ()
   }
 }

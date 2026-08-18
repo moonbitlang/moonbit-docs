@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-11 18:34+0800\n"
+"POT-Creation-Date: 2026-08-18 15:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -34,10 +34,13 @@ msgstr "字句ケースで、そのマッチモードでは利用できない束
 msgid ""
 "For `String` and `StringView` inputs, first-match `lexmatch` supports "
 "both `before=` and `after=`. Longest-match mode starts at the beginning "
-"of the input, so it supports `after=` but not `before=`. Streaming "
-"`lexscan` consumes its input buffer and does not expose unmatched "
-"prefixes or suffixes through these bindings."
-msgstr "`String` と `StringView` の入力では、first-match `lexmatch` は `before=` と `after=` の両方をサポートします。longest-match モードは入力の先頭から始まるため、`after=` はサポートしますが `before=` はサポートしません。ストリーミング `lexscan` は入力バッファを消費するため、これらの束縛を通して未マッチの接頭部分や接尾部分を公開しません。"
+"of the input, so it supports `after=` but not `before=`. `lexscan` does "
+"not support either binding: streaming targets consume their input "
+"buffers, while an in-memory `@lexbuf.StringScanner` stores the next scan "
+"position in its `cursor` field."
+msgstr ""
+"`String` と `StringView` の入力では、先頭一致の `lexmatch` は `before=` と `after=` の両方をサポートします。最長一致モードは入力の先頭から始まるため、`after=` はサポートしますが `before=` はサポートしません。"
+"`lexscan` はどちらの束縛もサポートしません。ストリーミング対象は入力バッファを消費し、メモリ内の `@lexbuf.StringScanner` は次のスキャン位置を `cursor` フィールドに保存します。"
 
 #: ../../language/error_codes/E4220.md:13
 msgid "Erroneous example"
@@ -60,11 +63,12 @@ msgstr ""
 
 #: ../../language/error_codes/E4220.md:21
 msgid ""
-"Remove `before=`, anchor the regex at `^`, and use `after=` when the "
-"unmatched suffix is needed."
-msgstr ""
+"For `lexscan`, remove `before=` or `after=` and anchor the regex at `^`. "
+"For `lexmatch`, remove `before=`, anchor the regex at `^`, and use "
+"`after=` when the unmatched suffix is needed."
+msgstr "`lexscan` では `before=` または `after=` を削除し、正規表現を `^` でアンカーしてください。`lexmatch` では `before=` を削除して正規表現を `^` でアンカーし、マッチしなかった接尾部が必要な場合は `after=` を使用してください。"
 
-#: ../../language/error_codes/E4220.md:24
+#: ../../language/error_codes/E4220.md:25
 msgid ""
 "///|\n"
 "pub fn first_word(input : String) -> StringView {\n"

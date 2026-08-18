@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-12 15:09+0800\n"
+"POT-Creation-Date: 2026-08-18 13:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -27,24 +27,25 @@ msgid "Compiler diagnostic name: `lexscan_catchall_binder_not_supported`."
 msgstr "编译器诊断名称：`lexscan_catchall_binder_not_supported`。"
 
 #: ../../language/error_codes/E4216.md:5
-msgid "A streaming `lexscan` catch-all case uses a binder pattern."
-msgstr "流式 `lexscan` 的兜底分支使用了绑定模式。"
+msgid "A `lexscan` catch-all case uses a binder pattern."
+msgstr "`lexscan` 的兜底分支使用了绑定模式。"
 
 #: ../../language/error_codes/E4216.md:7
 msgid ""
-"Streaming cases consume input only when a regex matches. The final catch-"
-"all also handles end of input, so it does not bind a matched substring. "
-"Use `_` for that case and bind text with `as` on the regex cases that "
-"need it."
+"`lexscan` consumes input only when a regex matches. The final catch-all "
+"also handles end of input, so it does not bind a matched substring. Use "
+"`_` for that case and bind text with `as` on the regex cases that need "
+"it. This also applies when the target is an in-memory "
+"`@lexbuf.StringScanner`."
 msgstr ""
-"流式分支只在正则匹配时消费输入。最后的兜底分支还负责处理输入结束，因此不会绑定匹配到的子串。该分支应使用 `_`，需要匹配文本的正则分支则通过 "
-"`as` 绑定。"
+"`lexscan` 只在正则匹配时消费输入。最后的兜底分支还负责处理输入结束，因此不会绑定匹配到的子串。该分支应使用 `_`，需要匹配文本的正则分支则通过 "
+"`as` 绑定。当目标是内存中的 `@lexbuf.StringScanner` 时，这一规则同样适用。"
 
-#: ../../language/error_codes/E4216.md:11
+#: ../../language/error_codes/E4216.md:12
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4216.md:13
+#: ../../language/error_codes/E4216.md:14
 msgid ""
 "///|\n"
 "pub fn next_token(lexbuf : @lexbuf.Lexbuf) -> String {\n"
@@ -55,15 +56,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4216.md:17
+#: ../../language/error_codes/E4216.md:18
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4216.md:19
+#: ../../language/error_codes/E4216.md:20
 msgid "Replace the catch-all binder with `_`."
 msgstr "将兜底分支的绑定变量替换为 `_`。"
 
-#: ../../language/error_codes/E4216.md:21
+#: ../../language/error_codes/E4216.md:22
 msgid ""
 "///|\n"
 "pub fn next_token(lexbuf : @lexbuf.Lexbuf) -> String {\n"

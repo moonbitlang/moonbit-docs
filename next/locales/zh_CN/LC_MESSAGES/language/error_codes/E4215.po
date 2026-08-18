@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-13 13:41+0800\n"
+"POT-Creation-Date: 2026-08-18 15:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -27,10 +27,13 @@ msgid "Compiler diagnostic name: `expect_template_string`."
 msgstr ""
 
 #: ../../language/error_codes/E4215.md:5
-msgid "Template writing expects a string template."
-msgstr "模板写入需要字符串模板。"
+msgid ""
+"This diagnostic described a non-template right-hand side of the `<+` "
+"operator and is not emitted by the current compiler. The parser now "
+"rejects this syntax with [E3002](E3002.md)."
+msgstr "此诊断用于描述 `<+` 操作符右侧不是模板的情况，当前编译器已不再产生该诊断。解析器现在会以 [E3002](E3002.md) 拒绝此语法。"
 
-#: ../../language/error_codes/E4215.md:7
+#: ../../language/error_codes/E4215.md:9
 msgid ""
 "The `<+` template-writing operator writes a string template to the value "
 "on its left. The right-hand side must be a string literal, an "
@@ -38,11 +41,11 @@ msgid ""
 "cannot be expanded as template content."
 msgstr "`<+` 模板写入操作符会把字符串模板写入左侧的值。右侧必须是字符串字面量、插值字符串或多行字符串模板。其他表达式不能作为模板内容展开。"
 
-#: ../../language/error_codes/E4215.md:12
+#: ../../language/error_codes/E4215.md:14
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4215.md:14
+#: ../../language/error_codes/E4215.md:16
 msgid ""
 "pub fn render(value : String) -> String {\n"
 "  let builder = StringBuilder::new()\n"
@@ -51,19 +54,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4215.md:18
+#: ../../language/error_codes/E4215.md:20
 msgid "The right-hand side is a variable reference, not a template string."
 msgstr "右侧是变量引用，而不是模板字符串。"
 
-#: ../../language/error_codes/E4215.md:20
+#: ../../language/error_codes/E4215.md:22
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4215.md:22
+#: ../../language/error_codes/E4215.md:24
 msgid "Use a string template on the right-hand side."
 msgstr "在右侧使用字符串模板。"
 
-#: ../../language/error_codes/E4215.md:24
+#: ../../language/error_codes/E4215.md:26
 msgid ""
 "pub fn render(value : String) -> String {\n"
 "  let builder = StringBuilder::new()\n"
