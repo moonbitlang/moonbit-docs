@@ -38,6 +38,11 @@ SKIPPED_ERROR_CODES = {
     '4184',
     '4185',
     '4186',
+    # These diagnostics are no longer independently reachable from source.
+    # Their pages document that invalid template-writing operands and
+    # lexmatch/lexscan guards are now rejected earlier by the parser with E3002.
+    '4215',
+    '4217',
     # These internal diagnostics are not meant to appear as independent
     # user-facing errors.
     '1000',

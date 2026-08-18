@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-11 18:34+0800\n"
+"POT-Creation-Date: 2026-08-18 15:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -32,10 +32,13 @@ msgstr "字句用の正規表現パターンが、必要な位置に固定され
 
 #: ../../language/error_codes/E4218.md:7
 msgid ""
-"Patterns used by streaming `lexscan`, or by either expression with the "
-"`longest` strategy, must start at the current input position. Anchor each"
-" such regex with `^`."
-msgstr "ストリーミング `lexscan` で使うパターンと、いずれかの式で `longest` 戦略を使うパターンは、現在の入力位置から始まらなければなりません。そのような正規表現はすべて `^` で先頭に固定してください。"
+"Patterns used by `lexscan`, including scans of an in-memory "
+"`@lexbuf.StringScanner`, or by `lexmatch` with the `longest` strategy, "
+"must start at the current input position. Anchor each such regex with "
+"`^`."
+msgstr ""
+"`lexscan` で使うパターン（メモリ内の `@lexbuf.StringScanner` をスキャンする場合を含む）と、`longest` 戦略を使う `lexmatch` のパターンは、現在の入力位置から始まる必要があります。"
+"そのような正規表現はそれぞれ `^` でアンカーしてください。"
 
 #: ../../language/error_codes/E4218.md:11
 msgid "Erroneous example"

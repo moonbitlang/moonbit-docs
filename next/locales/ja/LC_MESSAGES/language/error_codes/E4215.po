@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 17:59+0800\n"
+"POT-Creation-Date: 2026-08-18 15:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -27,10 +27,13 @@ msgid "Compiler diagnostic name: `expect_template_string`."
 msgstr ""
 
 #: ../../language/error_codes/E4215.md:5
-msgid "Template writing expects a string template."
-msgstr ""
+msgid ""
+"This diagnostic described a non-template right-hand side of the `<+` "
+"operator and is not emitted by the current compiler. The parser now "
+"rejects this syntax with [E3002](E3002.md)."
+msgstr "この診断は `<+` 演算子の右辺がテンプレートでない場合を説明するもので、現在のコンパイラでは出力されません。現在はパーサーがこの構文を [E3002](E3002.md) として拒否します。"
 
-#: ../../language/error_codes/E4215.md:7
+#: ../../language/error_codes/E4215.md:9
 msgid ""
 "The `<+` template-writing operator writes a string template to the value "
 "on its left. The right-hand side must be a string literal, an "
@@ -38,11 +41,11 @@ msgid ""
 "cannot be expanded as template content."
 msgstr ""
 
-#: ../../language/error_codes/E4215.md:12
+#: ../../language/error_codes/E4215.md:14
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4215.md:14
+#: ../../language/error_codes/E4215.md:16
 msgid ""
 "pub fn render(value : String) -> String {\n"
 "  let builder = StringBuilder::new()\n"
@@ -50,19 +53,20 @@ msgid ""
 "  builder.to_string()\n"
 "}\n"
 msgstr ""
-#: ../../language/error_codes/E4215.md:18
+
+#: ../../language/error_codes/E4215.md:20
 msgid "The right-hand side is a variable reference, not a template string."
 msgstr ""
 
-#: ../../language/error_codes/E4215.md:20
+#: ../../language/error_codes/E4215.md:22
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4215.md:22
+#: ../../language/error_codes/E4215.md:24
 msgid "Use a string template on the right-hand side."
 msgstr ""
 
-#: ../../language/error_codes/E4215.md:24
+#: ../../language/error_codes/E4215.md:26
 msgid ""
 "pub fn render(value : String) -> String {\n"
 "  let builder = StringBuilder::new()\n"
