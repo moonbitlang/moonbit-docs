@@ -5839,12 +5839,16 @@ msgstr "マッチ戦略は、重複する case の解決方法を制御します
 
 #: ../../language/fundamentals.md:2241
 msgid ""
-"`first` is the default. It selects the first case, in source order, that "
-"can match. An unanchored regex may search forward from the beginning of "
-"the input."
+"`first` is the default. As with `match`, cases have priority from top to "
+"bottom, and the first case whose regex can match is selected. This is "
+"case priority, not a leftmost-first comparison among matches from "
+"different cases: an earlier unanchored case that matches later in the "
+"input takes precedence over a later case that matches earlier."
 msgstr ""
-"`first` "
-"がデフォルトです。ソース上の順序で、マッチ可能な最初のケースを選択します。アンカーのない正規表現は、入力の先頭から前方へ検索できます。"
+"`first` がデフォルトです。`match` と同様に、case には上から下への優先順位があり、正規表現がマッチ可能な最初の "
+"case が選択されます。これは case の優先順位であり、異なる case のマッチを leftmost-first "
+"で比較するものではありません。先に書かれたアンカーなしの case が入力中のより後ろでマッチする場合でも、より前でマッチする後続 "
+"case より優先されます。"
 
 #: ../../language/fundamentals.md:2244
 msgid ""
@@ -5980,6 +5984,19 @@ msgid ""
 msgstr ""
 "スキャンは常に対象の現在のカーソル位置から始まるため、すべての `lexscan` 正規表現は `^` で始める必要があります。`lexscan` のケースでは `before=` と `after=` は使用できません。"
 "`as` によるマッチ文字列の束縛は使用でき、キャプチャ型は `lexmatch` と同じく `StringView` または `Char` です。"
+
+#: ../../language/fundamentals.md:2310
+msgid ""
+"In `first` mode, `lexscan` tests the cases from top to bottom, like "
+"`match`, and selects the first regex that matches at the current cursor. "
+"Here `first` refers to case priority: it does not compare leftmost match "
+"positions or match lengths across cases. Because every `lexscan` regex is"
+" anchored with `^`, all cases are tested from the same current cursor "
+"position."
+msgstr ""
+"`first` モードでは、`lexscan` は `match` と同様に case を上から順に試し、現在のカーソル位置でマッチする最初の正規表現を選択します。"
+"ここでの `first` は case の優先順位を指し、case 間で最も左のマッチ位置やマッチ長を比較するものではありません。すべての "
+"`lexscan` 正規表現は `^` でアンカーされるため、すべての case は同じ現在のカーソル位置から試されます。"
 
 #: ../../language/fundamentals.md:2308
 msgid ""

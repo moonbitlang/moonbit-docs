@@ -5284,10 +5284,15 @@ msgstr "匹配策略决定如何处理相互重叠的 case："
 
 #: ../../language/fundamentals.md:2241
 msgid ""
-"`first` is the default. It selects the first case, in source order, that "
-"can match. An unanchored regex may search forward from the beginning of "
-"the input."
-msgstr "`first` 是默认策略。它按照源码顺序选择第一个能够匹配的分支。未锚定的正则可以从输入开头向后搜索。"
+"`first` is the default. As with `match`, cases have priority from top to "
+"bottom, and the first case whose regex can match is selected. This is "
+"case priority, not a leftmost-first comparison among matches from "
+"different cases: an earlier unanchored case that matches later in the "
+"input takes precedence over a later case that matches earlier."
+msgstr ""
+"`first` 是默认策略。与 `match` 一样，各 case 按照从上到下的顺序具有优先级，并选择第一个正则能够匹配的 "
+"case。这是 case 优先级，而不是在不同 case 的匹配结果之间进行 leftmost-first 比较：即使靠前的未锚定 case "
+"在输入中较晚的位置才匹配，它仍然优先于在较早位置匹配的靠后 case。"
 
 #: ../../language/fundamentals.md:2244
 msgid ""
@@ -5422,6 +5427,19 @@ msgid ""
 msgstr ""
 "每个 `lexscan` 正则都必须以 `^` 开头，因为扫描总是从目标的当前游标处开始。`lexscan` 分支不支持 `before=` 或 "
 "`after=`。它们仍可使用 `as` 绑定匹配文本，其 `StringView` 和 `Char` 捕获类型与 `lexmatch` 相同。"
+
+#: ../../language/fundamentals.md:2310
+msgid ""
+"In `first` mode, `lexscan` tests the cases from top to bottom, like "
+"`match`, and selects the first regex that matches at the current cursor. "
+"Here `first` refers to case priority: it does not compare leftmost match "
+"positions or match lengths across cases. Because every `lexscan` regex is"
+" anchored with `^`, all cases are tested from the same current cursor "
+"position."
+msgstr ""
+"在 `first` 模式下，`lexscan` 与 `match` 一样从上到下尝试各 case，并选择第一个在当前游标处匹配的正则。"
+"这里的 `first` 指 case 优先级；它不会在 case 之间比较最靠左的匹配位置或匹配长度。由于每个 `lexscan` "
+"正则都用 `^` 锚定，因此所有 case 都从同一个当前游标位置开始尝试。"
 
 #: ../../language/fundamentals.md:2308
 msgid ""
