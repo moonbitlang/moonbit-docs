@@ -262,10 +262,9 @@ should add an explicit `extend` for methods that are intended to be callable
 with dot syntax, or keep using `Trait::method(value, ...)` when no method-style
 API is intended.
 
-For compatibility, v0.10.4 still performs the old implicit attachment. The
-`implicit_impl_as_method` warning is disabled by default in this release and
-can be enabled while migrating existing code. New code should use `extend`
-rather than rely on the compatibility behavior.
+For compatibility, the compiler still accepts the old implicit attachment but
+reports a deprecation diagnostic. New code should use `extend` rather than rely
+on the compatibility behavior.
 
 If an implicitly attached method should remain callable temporarily but is not
 part of the intended method-style API, add a corresponding `extend` declaration
@@ -304,7 +303,7 @@ For a future-proof concrete-type API, explicitly attach trait methods that
 should support dot syntax with
 [`extend`](#attaching-trait-methods-with-extend). A regular method takes
 precedence over an attached trait method. Existing implicit dot calls remain
-accepted during the v0.10.4 compatibility period but are deprecated.
+accepted for compatibility but are deprecated.
 
 For type parameters, a method from the single written constraint may be called
 with dot syntax. Use qualified syntax for methods inherited from a supertrait,

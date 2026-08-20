@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-18 15:32+0800\n"
+"POT-Creation-Date: 2026-08-20 17:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -128,7 +128,7 @@ msgstr "32 位有符号整数"
 msgid "`42`"
 msgstr ""
 
-#: ../../language/fundamentals.md:24 ../../language/fundamentals.md:1823
+#: ../../language/fundamentals.md:24 ../../language/fundamentals.md:1838
 msgid "`Int64`"
 msgstr ""
 
@@ -164,7 +164,7 @@ msgstr "32 位无符号整数"
 msgid "`14U`"
 msgstr ""
 
-#: ../../language/fundamentals.md:24 ../../language/fundamentals.md:1823
+#: ../../language/fundamentals.md:24 ../../language/fundamentals.md:1838
 msgid "`UInt64`"
 msgstr ""
 
@@ -360,10 +360,10 @@ msgstr ""
 #: ../../language/fundamentals.md:941 ../../language/fundamentals.md:958
 #: ../../language/fundamentals.md:996 ../../language/fundamentals.md:1043
 #: ../../language/fundamentals.md:1057 ../../language/fundamentals.md:1075
-#: ../../language/fundamentals.md:1304 ../../language/fundamentals.md:1342
-#: ../../language/fundamentals.md:1487 ../../language/fundamentals.md:1514
-#: ../../language/fundamentals.md:1543 ../../language/fundamentals.md:1563
-#: ../../language/fundamentals.md:1650 ../../language/fundamentals.md:1664
+#: ../../language/fundamentals.md:1319 ../../language/fundamentals.md:1357
+#: ../../language/fundamentals.md:1502 ../../language/fundamentals.md:1529
+#: ../../language/fundamentals.md:1558 ../../language/fundamentals.md:1578
+#: ../../language/fundamentals.md:1665 ../../language/fundamentals.md:1679
 msgid "Output"
 msgstr "输出"
 
@@ -501,7 +501,7 @@ msgstr ""
 msgid "API: <https://mooncakes.io/docs/moonbitlang/core/string>"
 msgstr ""
 
-#: ../../language/fundamentals.md:193 ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:193 ../../language/fundamentals.md:1744
 msgid "Char"
 msgstr "字符"
 
@@ -687,7 +687,7 @@ msgid ""
 "they serve different jobs:"
 msgstr "MoonBit 有几种面向字节的容器类型。它们彼此相关，但用途并不相同："
 
-#: ../../language/fundamentals.md:284 ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:284 ../../language/fundamentals.md:1744
 msgid "Type"
 msgstr "类型"
 
@@ -2736,8 +2736,8 @@ msgstr ""
 "都有明确的目标。"
 
 #: ../../language/fundamentals.md:1167
-msgid "`defer` expression"
-msgstr "`defer` 表达式"
+msgid "`defer` and `errdefer` expressions"
+msgstr "`defer` 和 `errdefer` 表达式"
 
 #: ../../language/fundamentals.md:1169
 msgid ""
@@ -2808,10 +2808,49 @@ msgstr ""
 "右边的表达式里也不能抛出错误或调用 `async` 函数。"
 
 #: ../../language/fundamentals.md:1204
+msgid ""
+"`errdefer` has the same general form, but runs its cleanup expression "
+"only when the body exits by raising an error. It is useful for rolling "
+"back partially completed work while preserving the original error:"
+msgstr ""
+"`errdefer` 的一般形式与 `defer` 相同，但仅在主体因抛出错误而退出时执行清理表达式。它适合在保留原始错误的"
+"同时回滚部分完成的操作："
+
+#: ../../language/fundamentals.md:1208
+msgid ""
+"fn operation_that_may_fail() -> Unit raise {\n"
+"  fail(\"operation failed\")\n"
+"}\n"
+"\n"
+"test \"errdefer\" {\n"
+"  let mut cleaned_up = false\n"
+"  try {\n"
+"    errdefer {\n"
+"      cleaned_up = true\n"
+"    }\n"
+"    operation_that_may_fail()\n"
+"  } catch {\n"
+"    _ => ()\n"
+"  }\n"
+"  assert_true(cleaned_up)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1214
+msgid ""
+"If the body cannot raise an error, the `errdefer` can never run and "
+"produces [E0091](error_codes/E0091.md). A catch-all handler that only "
+"performs cleanup and re-raises the same error should generally be "
+"replaced with `errdefer`; see [E0092](error_codes/E0092.md)."
+msgstr ""
+"如果主体不可能抛出错误，`errdefer` 就永远不会执行，并产生 [E0091](error_codes/E0091.md)。如果兜底处理器"
+"只进行清理并重新抛出同一个错误，通常应改用 `errdefer`；参见 [E0092](error_codes/E0092.md)。"
+
+#: ../../language/fundamentals.md:1219
 msgid "Iterator"
 msgstr "迭代器"
 
-#: ../../language/fundamentals.md:1206
+#: ../../language/fundamentals.md:1221
 msgid ""
 "An iterator is an object that traverse through a sequence while providing"
 " access to its elements. Traditional OO languages like Java's "
@@ -2826,7 +2865,7 @@ msgstr ""
 "和`hasNext()` 来遍历迭代过程，而函数式语言（JavaScript 的 `forEach`，Lisp 的 "
 "`mapcar`）提供了一个高阶函数，该函数接受一个操作和一个序列，然后使用该操作应用于序列。前者称为外部迭代器（对用户可见），后者称为内部迭代器（对用户不可见）。"
 
-#: ../../language/fundamentals.md:1214
+#: ../../language/fundamentals.md:1229
 msgid ""
 "The built-in type `Iter[T]` is MoonBit's external iterator "
 "implementation. It exposes `next()` to pull the next value: it returns "
@@ -2837,7 +2876,7 @@ msgstr ""
 "内置类型 `Iter[T]` 是 MoonBit 的外部迭代器实现。它提供 `next()` 来拉取下一个值：返回 `Some(value)` "
 "并推进迭代器，或在迭代结束时返回 `None`。几乎所有内置的顺序数据结构都已经实现了 `Iter`："
 
-#: ../../language/fundamentals.md:1219
+#: ../../language/fundamentals.md:1234
 msgid ""
 "///|\n"
 "fn filter_even(l : Array[Int]) -> Array[Int] {\n"
@@ -2853,45 +2892,45 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1225
+#: ../../language/fundamentals.md:1240
 msgid "Commonly used methods include:"
 msgstr "常用的方法包括："
 
-#: ../../language/fundamentals.md:1227
+#: ../../language/fundamentals.md:1242
 msgid ""
 "`each`: Iterates over each element in the iterator, applying some "
 "function to each element."
 msgstr "`each`: 遍历迭代器中的每个元素，对每个元素应用某个函数。"
 
-#: ../../language/fundamentals.md:1228
+#: ../../language/fundamentals.md:1243
 msgid ""
 "`fold`: Folds the elements of the iterator using the given function, "
 "starting with the given initial value."
 msgstr "`fold`: 使用给定的函数，从给定的初始值开始，对迭代器的元素进行“折叠”。"
 
-#: ../../language/fundamentals.md:1229
+#: ../../language/fundamentals.md:1244
 msgid "`collect`: Collects the elements of the iterator into an array."
 msgstr "`collect`: 将迭代器的元素收集到一个数组中。"
 
-#: ../../language/fundamentals.md:1231
+#: ../../language/fundamentals.md:1246
 msgid ""
 "`filter`: _lazy_ Filters the elements of the iterator based on a "
 "predicate function."
 msgstr "`filter`: （惰性）根据谓词函数过滤迭代器的元素。"
 
-#: ../../language/fundamentals.md:1232
+#: ../../language/fundamentals.md:1247
 msgid ""
 "`map`: _lazy_ Transforms the elements of the iterator using a mapping "
 "function."
 msgstr "`map`: （惰性）使用映射函数转换迭代器的元素。"
 
-#: ../../language/fundamentals.md:1233
+#: ../../language/fundamentals.md:1248
 msgid ""
 "`concat`: _lazy_ Combines two iterators into one by appending the "
 "elements of the second iterator to the first."
 msgstr "`concat`: （惰性）通过将第二个迭代器的元素附加到第一个迭代器，将两个迭代器合并为一个。"
 
-#: ../../language/fundamentals.md:1235
+#: ../../language/fundamentals.md:1250
 msgid ""
 "Methods like `filter` and `map` are very common on a sequence object e.g."
 " Array. But what makes `Iter` special is that any method that constructs "
@@ -2905,7 +2944,7 @@ msgstr ""
 "`Iter` 的方法都是**惰性**的（即在调用时不会开始迭代，因为它被包装在一个函数内），因此不会为中间值分配内存。这就是使 `Iter` "
 "优于遍历序列的原因：没有额外的成本。MoonBit 鼓励用户将 `Iter` 传递给函数，而不是传递序列对象本身。"
 
-#: ../../language/fundamentals.md:1243
+#: ../../language/fundamentals.md:1258
 msgid ""
 "Pre-defined sequence structures like `Array` and its iterators should be "
 "enough to use. But to take advantages of these methods when used with a "
@@ -2916,7 +2955,7 @@ msgstr ""
 "预定义的序列结构如 `Array` 及其迭代器应该足够使用。但是，为了在自定义序列（元素类型为 `S`）中使用这些方法，我们需要实现 "
 "`Iter`，即返回 `Iter[S]` 的函数。以 `Bytes` 为例："
 
-#: ../../language/fundamentals.md:1248
+#: ../../language/fundamentals.md:1263
 msgid ""
 "///|\n"
 "fn iter(data : Bytes) -> Iter[Byte] {\n"
@@ -2933,7 +2972,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1254
+#: ../../language/fundamentals.md:1269
 msgid ""
 "Iterators are single-pass: once you call `next()` or consume them with "
 "methods like `each`, `fold`, or `collect`, their internal state advances "
@@ -2943,20 +2982,20 @@ msgstr ""
 "迭代器是单次遍历的：一旦调用 `next()` 或使用 `each`、`fold`、`collect` "
 "等方法消耗它们，其内部状态就会推进，无法重置。如果需要再次遍历序列，请从源头重新获取一个 `Iter`。"
 
-#: ../../language/fundamentals.md:1259
+#: ../../language/fundamentals.md:1274
 msgid ""
 "Use `[| ... |]` to construct an `Iter` explicitly. Elements, spread "
 "syntax, and comprehensions are supported inside the delimiters:"
 msgstr "使用 `[| ... |]` 显式构造 `Iter`。分隔符内支持元素、展开语法和推导式："
 
-#: ../../language/fundamentals.md:1262
+#: ../../language/fundamentals.md:1277
 msgid ""
 "  let prefix = [| 1, 2, 3 |]\n"
 "  let values = [| ..prefix, 4, 5 |]\n"
 "  let squares = [| for x in 1..<=3 => x * x |]\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1268
+#: ../../language/fundamentals.md:1283
 msgid ""
 "In `[| x, y |]`, `x` and `y` are evaluated when the iterator literal is "
 "constructed. For `..xs`, evaluating `xs` happens immediately, while "
@@ -2966,7 +3005,7 @@ msgstr ""
 "在 `[| x, y |]` 中，`x` 和 `y` 会在构造迭代器字面量时求值。对于 `..xs`，`xs` "
 "本身会立即求值，但消费所得迭代器仍是惰性的。推导式 `[| for ... |]` 完全惰性，只在外层迭代器被消费时运行。"
 
-#: ../../language/fundamentals.md:1273
+#: ../../language/fundamentals.md:1288
 msgid ""
 "Using an overloaded array literal such as `[x, ..xs]` to construct an "
 "`Iter` from its expected type is deprecated because the type would "
@@ -2975,19 +3014,19 @@ msgstr ""
 "不再建议根据期望类型，用 `[x, ..xs]` 这类重载数组字面量构造 `Iter`，因为类型会隐式改变求值顺序。请改用 `[| x, ..xs"
 " |]`。"
 
-#: ../../language/fundamentals.md:1277
+#: ../../language/fundamentals.md:1292
 msgid "Custom Data Types"
 msgstr "自定义数据类型"
 
-#: ../../language/fundamentals.md:1279
+#: ../../language/fundamentals.md:1294
 msgid "There are two ways to create new data types: `struct` and `enum`."
 msgstr "创建新数据类型有两种方法：`struct` 和 `enum`。"
 
-#: ../../language/fundamentals.md:1281
+#: ../../language/fundamentals.md:1296
 msgid "Struct"
 msgstr "结构体"
 
-#: ../../language/fundamentals.md:1283
+#: ../../language/fundamentals.md:1298
 msgid ""
 "In MoonBit, structs are similar to tuples, but their fields are indexed "
 "by field names. A struct can be constructed using a type-qualified struct"
@@ -3001,7 +3040,7 @@ msgstr ""
 "这样的带类型限定结构体字面量构造。即使仅凭字段就足以推断类型，类型前缀仍能明确所构造的类型。字段可通过点语法 `s.f` 访问。若字段使用关键字 "
 "`mut` 标记为可变，则可以为其赋新值。"
 
-#: ../../language/fundamentals.md:1290
+#: ../../language/fundamentals.md:1305
 msgid ""
 "struct User {\n"
 "  id : Int\n"
@@ -3010,7 +3049,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1296
+#: ../../language/fundamentals.md:1311
 msgid ""
 "fn main {\n"
 "  let u = User::{ id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
@@ -3022,53 +3061,53 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1304
+#: ../../language/fundamentals.md:1319
 msgid ""
 "0\n"
 "John Doe\n"
 "john@doe.name\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1308
+#: ../../language/fundamentals.md:1323
 msgid "Constructing Struct with Shorthand"
 msgstr "使用简写构造结构体"
 
-#: ../../language/fundamentals.md:1310
+#: ../../language/fundamentals.md:1325
 msgid ""
 "If you already have some variable like `name` and `email`, it's redundant"
 " to repeat those names when constructing a struct. You can use shorthand "
 "instead, it behaves exactly the same:"
 msgstr "如果已经有一些变量，如 `name` 和 `email`，在构造结构体时重复这些名称是多余的。可以使用简写，它的行为完全相同："
 
-#: ../../language/fundamentals.md:1312
+#: ../../language/fundamentals.md:1327
 msgid ""
 "let name = \"john\"\n"
 "let email = \"john@doe.com\"\n"
 "let u = User::{ id: 0, name, email }\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1319
+#: ../../language/fundamentals.md:1334
 msgid ""
 "An unqualified struct literal can still be inferred when its context "
 "identifies the type. In a direct `let` binding, prefer keeping the type "
 "prefix even when no other struct has the same fields:"
 msgstr "上下文能够确定类型时，未限定的结构体字面量仍可被推断。直接使用 `let` 绑定时，即使没有其他结构体拥有相同字段，也建议保留类型前缀："
 
-#: ../../language/fundamentals.md:1323
+#: ../../language/fundamentals.md:1338
 msgid "let u2 = User::{ id: 0, name, email }\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1330
+#: ../../language/fundamentals.md:1345
 msgid "Struct Update Syntax"
 msgstr "结构体更新语法"
 
-#: ../../language/fundamentals.md:1332
+#: ../../language/fundamentals.md:1347
 msgid ""
 "It's useful to create a new struct based on an existing one, but with "
 "some fields updated."
 msgstr "可以用这个语法来根据现有结构体创建一个新的结构体，但只更新部分字段。"
 
-#: ../../language/fundamentals.md:1334
+#: ../../language/fundamentals.md:1349
 msgid ""
 "fn main {\n"
 "  let user = User::{ id: 0, name: \"John Doe\", email: \"john@doe.com\" }"
@@ -3084,69 +3123,69 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1342
+#: ../../language/fundamentals.md:1357
 msgid ""
 "{ id: 0, name: John Doe, email: john@doe.com }\n"
 "{ id: 0, name: John Doe, email: john@doe.name }\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1346
+#: ../../language/fundamentals.md:1361
 msgid "Custom constructors"
 msgstr "自定义构造器"
 
-#: ../../language/fundamentals.md:1348
+#: ../../language/fundamentals.md:1363
 msgid ""
 "MoonBit supports defining a custom constructor for any type. A "
 "constructor is a special method whose name is the same as its result "
 "type. The following examples start with a struct:"
 msgstr "MoonBit 支持为任意类型定义自定义构造器。构造器是一种特殊方法，其名称与返回类型相同。下面先从结构体示例开始："
 
-#: ../../language/fundamentals.md:1352
+#: ../../language/fundamentals.md:1367
 msgid ""
 "struct IntBox {\n"
 "  value : Int\n"
 "} derive(Debug)\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1358
+#: ../../language/fundamentals.md:1373
 msgid ""
 "The constructor should then be implemented as a method whose name is the "
 "same as the struct type. Its return value must be the struct itself:"
 msgstr "随后应将构造器实现为一个与结构体类型同名的方法。其返回值必须是该结构体本身："
 
-#: ../../language/fundamentals.md:1361
+#: ../../language/fundamentals.md:1376
 msgid ""
 "fn IntBox::IntBox(value : Int) -> IntBox {\n"
 "  { value, }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1367
+#: ../../language/fundamentals.md:1382
 msgid ""
 "If a `struct` declares a constructor, it can be constructed by name "
 "directly:"
 msgstr "当一个结构体定义了构造器，它就可以直接通过类型名字被构造："
 
-#: ../../language/fundamentals.md:1369
+#: ../../language/fundamentals.md:1384
 msgid ""
 "  let box = IntBox(10)\n"
 "  debug_inspect(box, content=\"{ value: 10 }\")\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1375
+#: ../../language/fundamentals.md:1390
 msgid ""
 "The constructor call follows the constructor method signature, so "
 "unlabeled parameters can be written in the familiar `TypeName(value)` "
 "form."
 msgstr "构造器调用遵循构造器方法的签名，因此无标签参数可以写成熟悉的 `TypeName(value)` 形式。"
 
-#: ../../language/fundamentals.md:1378
+#: ../../language/fundamentals.md:1393
 msgid ""
 "Constructors may also use labeled and optional arguments, just like "
 "normal functions:"
 msgstr "构造器也可以像普通函数一样使用带标签参数和可选参数："
 
-#: ../../language/fundamentals.md:1380
+#: ../../language/fundamentals.md:1395
 msgid ""
 "struct StructWithConstr {\n"
 "  x : Int\n"
@@ -3154,7 +3193,7 @@ msgid ""
 "} derive(Debug)\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1386
+#: ../../language/fundamentals.md:1401
 msgid ""
 "fn StructWithConstr::StructWithConstr(x~ : Int, y? : Int = x) -> "
 "StructWithConstr {\n"
@@ -3162,19 +3201,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1392
+#: ../../language/fundamentals.md:1407
 msgid ""
 "  let s = StructWithConstr(x=1)\n"
 "  debug_inspect(s, content=\"{ x: 1, y: 1 }\")\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1398
+#: ../../language/fundamentals.md:1413
 msgid ""
 "Because struct constructors are implemented by normal functions, they may"
 " raise errors:"
 msgstr "由于结构体构造器由普通函数实现，因此它们也可以抛出错误："
 
-#: ../../language/fundamentals.md:1400
+#: ../../language/fundamentals.md:1415
 msgid ""
 "suberror BuildError {\n"
 "  NegativeInput\n"
@@ -3185,7 +3224,7 @@ msgid ""
 "} derive(Debug)\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1406
+#: ../../language/fundamentals.md:1421
 msgid ""
 "fn Positive::Positive(x : Int) -> Positive raise BuildError {\n"
 "  guard x >= 0 else { raise NegativeInput }\n"
@@ -3193,7 +3232,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1412
+#: ../../language/fundamentals.md:1427
 msgid ""
 "  try Positive(10) catch {\n"
 "    error => debug_inspect(error, content=\"NegativeInput\")\n"
@@ -3207,14 +3246,14 @@ msgid ""
 "  }\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1418
+#: ../../language/fundamentals.md:1433
 msgid ""
 "Other types can use the same `fn Type::Type(...) -> Type` form. A custom "
 "constructor cannot have the same name as an existing constructor of that "
 "type:"
 msgstr "其他类型也可以使用同样的 `fn Type::Type(...) -> Type` 形式。自定义构造器不能与该类型已有的构造器同名："
 
-#: ../../language/fundamentals.md:1421
+#: ../../language/fundamentals.md:1436
 msgid ""
 "enum Endpoint {\n"
 "  Host(String, Int)\n"
@@ -3230,20 +3269,20 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1427
+#: ../../language/fundamentals.md:1442
 msgid ""
 "Asynchronous constructors are declared with `async fn TypeName::TypeName`"
 " and can be used inside async code:"
 msgstr "异步构造器使用 `async fn TypeName::TypeName` 声明，并且可以在异步代码中使用："
 
-#: ../../language/fundamentals.md:1430
+#: ../../language/fundamentals.md:1445
 msgid ""
 "struct AsyncBox {\n"
 "  value : Int\n"
 "} derive(Debug)\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1436
+#: ../../language/fundamentals.md:1451
 msgid ""
 "async fn AsyncBox::AsyncBox(x : Int) -> AsyncBox {\n"
 "  @async.sleep(0)\n"
@@ -3251,7 +3290,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1442
+#: ../../language/fundamentals.md:1457
 msgid ""
 "async test \"struct constructor async\" {\n"
 "  let box = AsyncBox(10)\n"
@@ -3259,7 +3298,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1448
+#: ../../language/fundamentals.md:1463
 msgid ""
 "Creating a value via a custom constructor has exactly the same call "
 "semantics as [enum constructors](#enum), except that custom constructors "
@@ -3270,7 +3309,7 @@ msgstr ""
 "通过自定义构造器创建值与[枚举构造器](#enum)具有相同的调用语义，但自定义构造器不能用于模式匹配。例如，通过构造器创建外部包中的 "
 "`struct` 时，如果表达式的期望类型已知，就可以省略包名。"
 
-#: ../../language/fundamentals.md:1454
+#: ../../language/fundamentals.md:1469
 msgid ""
 "Since custom constructors are implemented by normal functions, they may "
 "[raise error](/language/error-handling.md) or [perform asynchronous "
@@ -3283,17 +3322,17 @@ msgstr ""
 "/async-experimental.md)，也支持[可选参数](#optional-"
 "arguments)。可选参数的默认值写在构造器实现上，与普通函数签名相同。"
 
-#: ../../language/fundamentals.md:1460
+#: ../../language/fundamentals.md:1475
 msgid "Enum"
 msgstr "枚举"
 
-#: ../../language/fundamentals.md:1462
+#: ../../language/fundamentals.md:1477
 msgid ""
 "Enum types are similar to algebraic data types in functional languages. "
 "Users familiar with C/C++ may prefer calling it tagged union."
 msgstr "枚举类型类似于函数式语言中的代数数据类型。熟悉 C/C++ 的用户可能更喜欢称其为标记联合。"
 
-#: ../../language/fundamentals.md:1464
+#: ../../language/fundamentals.md:1479
 msgid ""
 "An enum can have a set of cases (constructors). Constructor names must "
 "start with capitalized letter. You can use these names to construct "
@@ -3301,7 +3340,7 @@ msgid ""
 "belongs to in pattern matching:"
 msgstr "枚举可以有一组情况（构造函数）。构造函数的名称必须以大写字母开头。可以使用这些名称来构造枚举的相应情况，或在模式匹配中检查枚举值属于哪个分支："
 
-#: ../../language/fundamentals.md:1466
+#: ../../language/fundamentals.md:1481
 msgid ""
 "/// An enum type that represents the ordering relation between two "
 "values,\n"
@@ -3320,7 +3359,7 @@ msgstr ""
 "  Equal\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1472
+#: ../../language/fundamentals.md:1487
 msgid ""
 "/// compare the ordering relation between two integers\n"
 "fn compare_int(x : Int, y : Int) -> Relation {\n"
@@ -3380,7 +3419,7 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1479
+#: ../../language/fundamentals.md:1494
 msgid ""
 "fn main {\n"
 "  print_relation(compare_int(0, 1))\n"
@@ -3389,20 +3428,20 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1487
+#: ../../language/fundamentals.md:1502
 msgid ""
 "smaller!\n"
 "equal!\n"
 "greater!\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1491
+#: ../../language/fundamentals.md:1506
 msgid ""
 "Enum cases can also carry payload data. Here's an example of defining an "
 "integer list type using enum:"
 msgstr "枚举情况也可以携带额外数据。以下是使用枚举定义整数列表类型的示例："
 
-#: ../../language/fundamentals.md:1493
+#: ../../language/fundamentals.md:1508
 msgid ""
 "enum Lst {\n"
 "  Nil\n"
@@ -3419,7 +3458,7 @@ msgstr ""
 "  Cons(Int, Lst)\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1499
+#: ../../language/fundamentals.md:1514
 msgid ""
 "// In addition to binding payload to variables,\n"
 "// you can also continue matching payload data inside constructors.\n"
@@ -3483,7 +3522,7 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1506
+#: ../../language/fundamentals.md:1521
 msgid ""
 "fn main {\n"
 "  // when creating values using `Cons`, the payload of by `Cons` must be "
@@ -3500,7 +3539,7 @@ msgstr ""
 "  print_list(l)\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1514
+#: ../../language/fundamentals.md:1529
 msgid ""
 "false\n"
 "1,\n"
@@ -3508,15 +3547,15 @@ msgid ""
 "nil\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1518
+#: ../../language/fundamentals.md:1533
 msgid "Constructor with labelled arguments"
 msgstr "构造器与带标签参数"
 
-#: ../../language/fundamentals.md:1520
+#: ../../language/fundamentals.md:1535
 msgid "Enum constructors can have labelled argument:"
 msgstr "枚举构造器可以有带标签的参数："
 
-#: ../../language/fundamentals.md:1522
+#: ../../language/fundamentals.md:1537
 msgid ""
 "enum E {\n"
 "  // `x` and `y` are labelled argument\n"
@@ -3528,7 +3567,7 @@ msgstr ""
 "  C(x~ : Int, y~ : Int)\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1528
+#: ../../language/fundamentals.md:1543
 msgid ""
 "// pattern matching constructor with labelled arguments\n"
 "fn f(e : E) -> Unit {\n"
@@ -3552,7 +3591,7 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1535
+#: ../../language/fundamentals.md:1550
 msgid ""
 "fn main {\n"
 "  f(C(x=0, y=0))\n"
@@ -3561,19 +3600,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1543
+#: ../../language/fundamentals.md:1558
 msgid ""
 "0!\n"
 "0\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1547
+#: ../../language/fundamentals.md:1562
 msgid ""
 "It is also possible to access labelled arguments of constructors like "
 "accessing struct fields in pattern matching:"
 msgstr "也可以像在模式匹配中访问结构体字段一样访问构造函数的有标签参数："
 
-#: ../../language/fundamentals.md:1549
+#: ../../language/fundamentals.md:1564
 msgid ""
 "enum Object {\n"
 "  Point(x~ : Double, y~ : Double)\n"
@@ -3629,7 +3668,7 @@ msgstr ""
 "}\n"
 "\n"
 
-#: ../../language/fundamentals.md:1555
+#: ../../language/fundamentals.md:1570
 msgid ""
 "fn main {\n"
 "  let p1 : Object = Point(x=0, y=0)\n"
@@ -3644,23 +3683,23 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1563
+#: ../../language/fundamentals.md:1578
 msgid ""
 "5\n"
 "NotImplementedError\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1567
+#: ../../language/fundamentals.md:1582
 msgid "Constructor with mutable fields"
 msgstr "构造器与可变字段"
 
-#: ../../language/fundamentals.md:1569
+#: ../../language/fundamentals.md:1584
 msgid ""
 "It is also possible to define mutable fields for constructor. This is "
 "especially useful for defining imperative data structures:"
 msgstr "也可以为构造器定义可变字段。这对于定义命令式数据结构特别有用："
 
-#: ../../language/fundamentals.md:1571
+#: ../../language/fundamentals.md:1586
 msgid ""
 "// A set implemented using mutable binary search tree.\n"
 "struct Set[X] {\n"
@@ -3757,11 +3796,11 @@ msgstr ""
 "  }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1577
+#: ../../language/fundamentals.md:1592
 msgid "Extensible enum"
 msgstr "可扩展枚举"
 
-#: ../../language/fundamentals.md:1579
+#: ../../language/fundamentals.md:1594
 msgid ""
 "An `extenum` defines an open enum type. Unlike a regular `enum`, an "
 "`extenum` can receive more constructors later, including from another "
@@ -3772,20 +3811,20 @@ msgstr ""
 "`extenum` 定义的是开放的枚举类型。与普通的 `enum` 不同，`extenum` "
 "之后可以继续接收更多构造器，包括来自其他包的构造器。当某个包想定义共享的事件、消息或扩展点类型，而其他包贡献各自的分支时，这会很有用。"
 
-#: ../../language/fundamentals.md:1584
+#: ../../language/fundamentals.md:1599
 msgid ""
 "pub(all) extenum LogEvent[T] {\n"
 "  Info(T)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1590
+#: ../../language/fundamentals.md:1605
 msgid ""
 "Use `extenum Type += { ... }` to add constructors to an extensible enum "
 "in the same package:"
 msgstr "使用 `extenum Type += { ... }` 为同一个包中的可扩展枚举添加构造器："
 
-#: ../../language/fundamentals.md:1593
+#: ../../language/fundamentals.md:1608
 msgid ""
 "pub(all) extenum LogEvent[T] += {\n"
 "  Warning(T)\n"
@@ -3793,20 +3832,20 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1599
+#: ../../language/fundamentals.md:1614
 msgid ""
 "To extend an extensible enum from another package, qualify the target "
 "type with the package that defines the type:"
 msgstr "要扩展另一个包中的可扩展枚举，需要用定义该类型的包来限定目标类型："
 
-#: ../../language/fundamentals.md:1602
+#: ../../language/fundamentals.md:1617
 msgid ""
 "pub(all) extenum @base.LogEvent[T] += {\n"
 "  Debug(T)\n"
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1608
+#: ../../language/fundamentals.md:1623
 msgid ""
 "Extensible enum constructors are qualified by the package that defines "
 "the constructor. For constructors from the current package, use the "
@@ -3820,13 +3859,13 @@ msgstr ""
 " `@pkg.Constructor`。当你想同时显式写出可扩展枚举类型和构造器来源时，可以将构造器写成 "
 "`@type_pkg.Type::@constructor_pkg.Constructor`。"
 
-#: ../../language/fundamentals.md:1615
+#: ../../language/fundamentals.md:1630
 msgid ""
 "When a package imports both the base package and an extension package, "
 "values from both packages have the same extensible enum type:"
 msgstr "当一个包同时导入基础包和扩展包时，来自这两个包的值具有同一个可扩展枚举类型："
 
-#: ../../language/fundamentals.md:1618
+#: ../../language/fundamentals.md:1633
 msgid ""
 "pub fn describe(event : @base.LogEvent[String]) -> String {\n"
 "  match event {\n"
@@ -3848,34 +3887,34 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1624
+#: ../../language/fundamentals.md:1639
 msgid ""
 "Pattern matching must include a wildcard branch, because more "
 "constructors can be added outside the current declaration."
 msgstr "模式匹配必须包含通配符分支，因为当前声明之外还可以继续添加更多构造器。"
 
-#: ../../language/fundamentals.md:1627
+#: ../../language/fundamentals.md:1642
 msgid ""
 "Only `extenum` declarations can be extended. Regular `enum` declarations "
 "are closed."
 msgstr "只有 `extenum` 声明可以被扩展。普通的 `enum` 声明是封闭的。"
 
-#: ../../language/fundamentals.md:1630
+#: ../../language/fundamentals.md:1645
 msgid "Tuple Struct"
 msgstr "元组结构体"
 
-#: ../../language/fundamentals.md:1632
+#: ../../language/fundamentals.md:1647
 msgid "MoonBit supports a special kind of struct called tuple struct:"
 msgstr "MoonBit 支持一种特殊的结构体称为元组结构体："
 
-#: ../../language/fundamentals.md:1634
+#: ../../language/fundamentals.md:1649
 msgid ""
 "struct UserId(Int)\n"
 "\n"
 "struct UserInfo(UserId, String)\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1640
+#: ../../language/fundamentals.md:1655
 msgid ""
 "Tuple structs are similar to enum with only one constructor (with the "
 "same name as the tuple struct itself). So, you can use the constructor to"
@@ -3883,7 +3922,7 @@ msgid ""
 "representation:"
 msgstr "元组结构体类似于只有一个构造函数的枚举（与元组结构体本身的名称相同）。因此，可以使用构造函数创建或使用模式匹配提取底层表示："
 
-#: ../../language/fundamentals.md:1642
+#: ../../language/fundamentals.md:1657
 msgid ""
 "fn main {\n"
 "  let id : UserId = UserId(1)\n"
@@ -3895,19 +3934,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1650 ../../language/fundamentals.md:1664
+#: ../../language/fundamentals.md:1665 ../../language/fundamentals.md:1679
 msgid ""
 "1\n"
 "John Doe\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1654
+#: ../../language/fundamentals.md:1669
 msgid ""
 "Besides pattern matching, you can also use index to access the elements "
 "similar to tuple:"
 msgstr "除了模式匹配之外，还可以使用索引访问元素，类似于元组："
 
-#: ../../language/fundamentals.md:1656
+#: ../../language/fundamentals.md:1671
 msgid ""
 "fn main {\n"
 "  let id : UserId = UserId(1)\n"
@@ -3919,28 +3958,28 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1668
+#: ../../language/fundamentals.md:1683
 msgid "Type alias"
 msgstr "类型别名"
 
-#: ../../language/fundamentals.md:1669
+#: ../../language/fundamentals.md:1684
 msgid "MoonBit supports type alias via the syntax `type NewType = OldType`:"
 msgstr "MoonBit 支持使用语法 `type NewType = OldType` 定义类型别名："
 
-#: ../../language/fundamentals.md:1672
+#: ../../language/fundamentals.md:1687
 msgid ""
 "The old syntax `typealias OldType as NewType` may be removed in the "
 "future."
 msgstr "旧语法 `typealias OldType as NewType` 可能会在将来被移除。"
 
-#: ../../language/fundamentals.md:1675
+#: ../../language/fundamentals.md:1690
 msgid ""
 "pub type Index = Int\n"
 "pub type MyIndex = Int\n"
 "pub type MyMap = Map[Int, String]\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1681
+#: ../../language/fundamentals.md:1696
 msgid ""
 "Unlike all other kinds of type declaration above, type alias does not "
 "define a new type, it is merely a type macro that behaves exactly the "
@@ -3948,11 +3987,11 @@ msgid ""
 "implement traits for a type alias."
 msgstr "与上面所有其他类型声明不同，类型别名不定义新类型，它只是一个行为与其定义完全相同的类型宏。因此，例如，不能为类型别名定义新方法或实现特征。"
 
-#: ../../language/fundamentals.md:1686
+#: ../../language/fundamentals.md:1701
 msgid "Type alias can be used to perform incremental code refactor."
 msgstr "类型别名可用于执行增量代码重构。"
 
-#: ../../language/fundamentals.md:1688
+#: ../../language/fundamentals.md:1703
 msgid ""
 "For example, if you want to move a type `T` from `@pkgA` to `@pkgB`, you "
 "can leave a type alias `type T = @pkgB.T` in `@pkgA`, and "
@@ -3962,59 +4001,59 @@ msgstr ""
 "例如，如果要将类型 `T` 从 `@pkgA` 移动到 `@pkgB`，可以在 `@pkgA` 中留下一个类型别名 `type T = "
 "@pkgB.T`，"
 
-#: ../../language/fundamentals.md:1693
+#: ../../language/fundamentals.md:1708
 msgid "Pattern Matching"
 msgstr "模式匹配"
 
-#: ../../language/fundamentals.md:1695
+#: ../../language/fundamentals.md:1710
 msgid ""
 "Pattern matching allows us to match on specific pattern and bind data "
 "from data structures."
 msgstr "模式匹配允许我们匹配特定模式并从数据结构中绑定数据。"
 
-#: ../../language/fundamentals.md:1697
+#: ../../language/fundamentals.md:1712
 msgid "Simple Patterns"
 msgstr "简单模式"
 
-#: ../../language/fundamentals.md:1699
+#: ../../language/fundamentals.md:1714
 msgid "We can pattern match expressions against"
 msgstr "我们可以将表达式与以下内容进行模式匹配："
 
-#: ../../language/fundamentals.md:1701
+#: ../../language/fundamentals.md:1716
 msgid "literals, such as boolean values, numbers, chars, strings, etc"
 msgstr "字面量，例如布尔值、数字、字符、字符串等"
 
-#: ../../language/fundamentals.md:1702
+#: ../../language/fundamentals.md:1717
 msgid "constants"
 msgstr "常量"
 
-#: ../../language/fundamentals.md:1703
+#: ../../language/fundamentals.md:1718
 msgid "structs"
 msgstr "结构体"
 
-#: ../../language/fundamentals.md:1704
+#: ../../language/fundamentals.md:1719
 msgid "enums"
 msgstr "枚举"
 
-#: ../../language/fundamentals.md:1705
+#: ../../language/fundamentals.md:1720
 msgid "arrays"
 msgstr "数组"
 
-#: ../../language/fundamentals.md:1706
+#: ../../language/fundamentals.md:1721
 msgid "maps"
 msgstr "键值对"
 
-#: ../../language/fundamentals.md:1707
+#: ../../language/fundamentals.md:1722
 msgid "JSONs"
 msgstr "JSON"
 
-#: ../../language/fundamentals.md:1709
+#: ../../language/fundamentals.md:1724
 msgid ""
 "and so on. We can define identifiers to bind the matched values so that "
 "they can be used later."
 msgstr "等等。我们可以定义标识符来绑定匹配的值，以便稍后使用。"
 
-#: ../../language/fundamentals.md:1711
+#: ../../language/fundamentals.md:1726
 msgid ""
 "const ONE = 1\n"
 "\n"
@@ -4027,7 +4066,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1718
+#: ../../language/fundamentals.md:1733
 msgid ""
 "We can use `_` as wildcards for the values we don't care about, and use "
 "`..` to ignore remaining fields of struct or enum, or array (see [array "
@@ -4036,7 +4075,7 @@ msgstr ""
 "我们可以使用 `_` 作为我们不关心的值的通配符，并使用 `..` 忽略结构体或枚举的剩余字段，或数组（参见 [数组模式](#array-"
 "pattern））。"
 
-#: ../../language/fundamentals.md:1720
+#: ../../language/fundamentals.md:1735
 msgid ""
 "struct Point3D {\n"
 "  x : Int\n"
@@ -4065,7 +4104,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1727
+#: ../../language/fundamentals.md:1742
 msgid ""
 "We can use `as` to give a name to some pattern, and we can use `|` to "
 "match several cases at once. A variable name can only be bound once in a "
@@ -4075,7 +4114,7 @@ msgstr ""
 "我们可以使用 `as` 为某些模式命名，可以使用 `|` 一次匹配多个情况。在单个模式中，变量名只能绑定一次，并且在 `|` "
 "模式的两侧应绑定相同的变量集。"
 
-#: ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:1744
 msgid ""
 "match expr {\n"
 "  //! Add(e1, e2) | Lit(e1) => ...\n"
@@ -4085,71 +4124,71 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1736
+#: ../../language/fundamentals.md:1751
 msgid "Array Pattern"
 msgstr "数组模式"
 
-#: ../../language/fundamentals.md:1738
+#: ../../language/fundamentals.md:1753
 msgid ""
 "Array patterns can be used to match on the following types to obtain "
 "their corresponding elements or views:"
 msgstr "数组模式可以用来匹配以下类型以获取其对应的元素或视图（View）："
 
-#: ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:1744
 msgid "Element"
 msgstr "元素"
 
-#: ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:1744
 msgid "View"
 msgstr "视图"
 
-#: ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:1744
 msgid "Array[T], ArrayView[T], FixedArray[T]"
 msgstr ""
 
-#: ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:1744
 msgid "T"
 msgstr ""
 
-#: ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:1744
 msgid "ArrayView[T]"
 msgstr ""
 
-#: ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:1744
 msgid "Bytes, BytesView"
 msgstr ""
 
-#: ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:1744
 msgid "Byte"
 msgstr "字节"
 
-#: ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:1744
 msgid "BytesView"
 msgstr ""
 
-#: ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:1744
 msgid "String, StringView"
 msgstr ""
 
-#: ../../language/fundamentals.md:1729
+#: ../../language/fundamentals.md:1744
 msgid "StringView"
 msgstr ""
 
-#: ../../language/fundamentals.md:1748
+#: ../../language/fundamentals.md:1763
 msgid "Array patterns have the following forms:"
 msgstr "数组模式可以有以下形式："
 
-#: ../../language/fundamentals.md:1750
+#: ../../language/fundamentals.md:1765
 msgid "`[]` : matching for empty array"
 msgstr "`[]`：匹配空数组"
 
-#: ../../language/fundamentals.md:1751
+#: ../../language/fundamentals.md:1766
 msgid ""
 "`[pa, pb, pc]` : matching for array of length three, and bind `pa`, `pb`,"
 " `pc` to the three elements"
 msgstr "`[pa, pb, pc]`：匹配长度为 3 的数组，并将其中的元素分别绑定到 `pa`, `pb`, `pc`"
 
-#: ../../language/fundamentals.md:1753
+#: ../../language/fundamentals.md:1768
 msgid ""
 "`[pa, ..rest, pb]` : matching for array with at least two elements, and "
 "bind `pa` to the first element, `pb` to the last element, and `rest` to "
@@ -4162,7 +4201,7 @@ msgstr ""
 "`rest`。如果不需要其余元素，可以省略绑定 `rest`。在 `..` 部分前后允许任意数量的元素。由于 `..` "
 "可以匹配不确定数量的元素，因此在数组模式中最多只能出现一次。"
 
-#: ../../language/fundamentals.md:1760
+#: ../../language/fundamentals.md:1775
 msgid ""
 "test {\n"
 "  let ary = [1, 2, 3, 4]\n"
@@ -4176,7 +4215,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1766
+#: ../../language/fundamentals.md:1781
 msgid ""
 "Array patterns provide a unicode-safe way to manipulate strings, meaning "
 "that it respects the code unit boundaries. For example, we can check if a"
@@ -4185,7 +4224,7 @@ msgstr ""
 "数组模式提供了一种 Unicode 安全的方式来操作字符串，这意味着它在访问元素的时候不会跨越代码单元边界。例如，我们可以检查一个包含 "
 "Unicode 的字符串是否是回文："
 
-#: ../../language/fundamentals.md:1770
+#: ../../language/fundamentals.md:1785
 msgid ""
 "test {\n"
 "  fn palindrome(s : String) -> Bool {\n"
@@ -4204,7 +4243,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1776
+#: ../../language/fundamentals.md:1791
 msgid ""
 "When there are consecutive char or byte constants in an array pattern, "
 "the pattern spread `..` operator can be used to combine them to make the "
@@ -4215,7 +4254,7 @@ msgstr ""
 "当数组模式中有连续的字符或字节常量时，可以使用模式展开 `..` 运算符将它们组合起来，使代码看起来更整洁。在这种情况下，`..` "
 "后跟字符串或字节常量匹配确切数量的元素，因此它可以在数组模式中多次使用。"
 
-#: ../../language/fundamentals.md:1781
+#: ../../language/fundamentals.md:1796
 msgid ""
 "const NO : Bytes = b\"no\"\n"
 "\n"
@@ -4234,11 +4273,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1787
+#: ../../language/fundamentals.md:1802
 msgid "Bitstring Pattern"
 msgstr "位串模式"
 
-#: ../../language/fundamentals.md:1789
+#: ../../language/fundamentals.md:1804
 msgid ""
 "Bitstring patterns can match packed bit fields from byte containers. They"
 " are supported on `BytesView`, `Bytes`, `Array[Byte]`, "
@@ -4253,7 +4292,7 @@ msgstr ""
 " 和 `ArrayView[Byte]`。使用带 `be`/`le` 后缀的显式位宽以明确端序。`be` 支持 1..64 位；`le` "
 "仅支持按字节对齐的宽度（8 * n），因为小端只对字节序有明确意义。没有 `..` 时，模式必须消费整个视图。"
 
-#: ../../language/fundamentals.md:1797
+#: ../../language/fundamentals.md:1812
 msgid ""
 "test {\n"
 "  let packet : Bytes = b\"\\xD2\\x10\\x7F\"\n"
@@ -4270,13 +4309,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1803
+#: ../../language/fundamentals.md:1818
 msgid ""
 "Use literal bit patterns to validate headers, and `..` to capture the "
 "remaining data for the next parse step."
 msgstr "使用字面量位模式验证头部，并用 `..` 捕获剩余数据以供下一步解析。"
 
-#: ../../language/fundamentals.md:1806
+#: ../../language/fundamentals.md:1821
 msgid ""
 "test {\n"
 "  let data : Bytes = b\"\\xF1\\xAA\\xBB\"\n"
@@ -4292,11 +4331,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1812
+#: ../../language/fundamentals.md:1827
 msgid "Examples over common byte containers (note the `MutArrayView` slice):"
 msgstr "常见字节容器示例（注意 `MutArrayView` 需要切片）："
 
-#: ../../language/fundamentals.md:1814
+#: ../../language/fundamentals.md:1829
 msgid ""
 "test {\n"
 "  let b : Bytes = b\"\\x80\"\n"
@@ -4319,13 +4358,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1820
+#: ../../language/fundamentals.md:1835
 msgid ""
 "Signed patterns use two's-complement semantics. For example, `u1be` "
 "yields `0` or `1`, while `i1be` yields `0` or `-1`:"
 msgstr "有符号模式使用二进制补码语义。例如，`u1be` 产生 `0` 或 `1`，而 `i1be` 产生 `0` 或 `-1`："
 
-#: ../../language/fundamentals.md:1823
+#: ../../language/fundamentals.md:1838
 msgid ""
 "test {\n"
 "  let bytes = b\"\\x80\"\n"
@@ -4342,41 +4381,41 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1829
+#: ../../language/fundamentals.md:1844
 msgid "Result types depend on width:"
 msgstr "结果类型取决于位宽："
 
-#: ../../language/fundamentals.md:1823
+#: ../../language/fundamentals.md:1838
 msgid "Width"
 msgstr "位宽"
 
-#: ../../language/fundamentals.md:1823
+#: ../../language/fundamentals.md:1838
 msgid "Result type"
 msgstr "结果类型"
 
-#: ../../language/fundamentals.md:1823
+#: ../../language/fundamentals.md:1838
 msgid "1..32 bits (`u`/`i`)"
 msgstr "1..32 位（`u`/`i`）"
 
-#: ../../language/fundamentals.md:1823
+#: ../../language/fundamentals.md:1838
 msgid "`UInt` / `Int`"
 msgstr "`UInt` / `Int`"
 
-#: ../../language/fundamentals.md:1823
+#: ../../language/fundamentals.md:1838
 msgid "33..64 bits (`u`)"
 msgstr "33..64 位（`u`）"
 
-#: ../../language/fundamentals.md:1823
+#: ../../language/fundamentals.md:1838
 msgid "33..64 bits (`i`)"
 msgstr "33..64 位（`i`）"
 
-#: ../../language/fundamentals.md:1837
+#: ../../language/fundamentals.md:1852
 msgid ""
 "Use `v128le(pattern)` at a byte-aligned offset to extract a 128-bit "
 "little-endian SIMD value. Its payload has type `V128`."
 msgstr "在字节对齐的偏移处使用 `v128le(pattern)` 提取 128 位小端 SIMD 值。其载荷类型为 `V128`。"
 
-#: ../../language/fundamentals.md:1840
+#: ../../language/fundamentals.md:1855
 msgid ""
 "test {\n"
 "  let bytes = "
@@ -4390,7 +4429,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1847
+#: ../../language/fundamentals.md:1862
 msgid ""
 "Known compiler issue: this example is currently skipped for the native "
 "Windows target because the C backend's `v128.load` fallback recurses. "
@@ -4399,17 +4438,17 @@ msgstr ""
 "已知编译器问题：目前会在 native Windows 目标上跳过此示例，因为 C 后端的 `v128.load` 回退实现会发生递归。这并非 "
 "Windows 与 SSE2 不兼容。"
 
-#: ../../language/fundamentals.md:1852
+#: ../../language/fundamentals.md:1867
 msgid "Range Pattern"
 msgstr "范围模式"
 
-#: ../../language/fundamentals.md:1853
+#: ../../language/fundamentals.md:1868
 msgid ""
 "For builtin integer types and `Char`, MoonBit allows matching whether the"
 " value falls in a specific range."
 msgstr "对于内置整数类型和 `Char`，MoonBit 允许匹配值是否落在特定范围内。"
 
-#: ../../language/fundamentals.md:1855
+#: ../../language/fundamentals.md:1870
 msgid ""
 "Range patterns have the form `a..<b` or `a..=b`, where `..<` means the "
 "upper bound is exclusive, and `..=` means inclusive upper bound. `a` and "
@@ -4418,23 +4457,23 @@ msgstr ""
 "范围模式的形式为 `a..<b` 或 `a..=b`，其中 `..<` 表示上限是排他的，`..=` 表示包含上限。`a` 和 `b` "
 "可以是以下之一："
 
-#: ../../language/fundamentals.md:1858
+#: ../../language/fundamentals.md:1873
 msgid "literal"
 msgstr "字面量"
 
-#: ../../language/fundamentals.md:1859
+#: ../../language/fundamentals.md:1874
 msgid "named constant declared with `const`"
 msgstr "使用 `const` 声明的常量"
 
-#: ../../language/fundamentals.md:1860
+#: ../../language/fundamentals.md:1875
 msgid "`_`, meaning the pattern has no restriction on this side"
 msgstr "`_`，表示此模式在此侧没有限制"
 
-#: ../../language/fundamentals.md:1862
+#: ../../language/fundamentals.md:1877
 msgid "Here are some examples:"
 msgstr "以下是一些示例："
 
-#: ../../language/fundamentals.md:1864
+#: ../../language/fundamentals.md:1879
 msgid ""
 "const Zero = 0\n"
 "\n"
@@ -4456,11 +4495,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1871
+#: ../../language/fundamentals.md:1886
 msgid "Map Pattern"
 msgstr "Map 模式"
 
-#: ../../language/fundamentals.md:1873
+#: ../../language/fundamentals.md:1888
 msgid ""
 "MoonBit allows convenient matching on map-like data structures. Inside a "
 "map pattern, the `key : value` syntax will match if `key` exists in the "
@@ -4472,7 +4511,7 @@ msgstr ""
 "`key` 时匹配，并将 `key` 的值与模式 `value` 匹配。`key? : value` 语法将无论 `key` "
 "是否存在都匹配，`value` 将与 `map[key]`（一个可选项）匹配。"
 
-#: ../../language/fundamentals.md:1877
+#: ../../language/fundamentals.md:1892
 msgid ""
 "match map {\n"
 "  // matches if any only if \"b\" exists in `map`\n"
@@ -4493,7 +4532,7 @@ msgstr ""
 "  // 编译器报告缺失的情况：{ \"b\"? : None, \"a\"? : None }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1884
+#: ../../language/fundamentals.md:1899
 msgid ""
 "To match a data type `T` using map pattern, `T` must have a method "
 "`get(Self, K) -> Option[V]` for some type `K` and `V` (see [method and "
@@ -4502,33 +4541,33 @@ msgstr ""
 "要使用 map 模式匹配数据类型 `T`，`T` 必须具有某种类型 `K` 和 `V` 的方法 `get(Self, K) -> "
 "Option[V]`（请参见 [方法和特征](./methods.md)）。"
 
-#: ../../language/fundamentals.md:1885
+#: ../../language/fundamentals.md:1900
 msgid "Currently, the key part of map pattern must be a literal or constant"
 msgstr "目前，map 模式的键部分必须是字面量或常量"
 
-#: ../../language/fundamentals.md:1886
+#: ../../language/fundamentals.md:1901
 msgid ""
 "Map patterns are always open: the unmatched keys are silently ignored, "
 "and `..` needs to be added to identify this nature"
 msgstr "Map 模式始终是开放的：未匹配的键会被静默忽略，并且需要添加 `..` 以显示这一点"
 
-#: ../../language/fundamentals.md:1887
+#: ../../language/fundamentals.md:1902
 msgid ""
 "Map pattern will be compiled to efficient code: every key will be fetched"
 " at most once"
 msgstr "Map 模式将编译为高效的代码：每个键最多只会被获取一次"
 
-#: ../../language/fundamentals.md:1889
+#: ../../language/fundamentals.md:1904
 msgid "Json Pattern"
 msgstr "Json 模式"
 
-#: ../../language/fundamentals.md:1891
+#: ../../language/fundamentals.md:1906
 msgid ""
 "When the matched value has type `Json`, literal patterns can be used "
 "directly, together with constructors:"
 msgstr "当匹配的值具有类型 `Json` 时，可以直接使用字面量模式，以及构造函数："
 
-#: ../../language/fundamentals.md:1893
+#: ../../language/fundamentals.md:1908
 msgid ""
 "match json {\n"
 "  { \"version\": \"1.0.0\", \"import\": [..] as imports, .. } => ...\n"
@@ -4537,18 +4576,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1900
+#: ../../language/fundamentals.md:1915
 msgid "Default bindings in or-patterns"
 msgstr "or-pattern 中的默认绑定"
 
-#: ../../language/fundamentals.md:1902
+#: ../../language/fundamentals.md:1917
 msgid ""
 "Every alternative of an or-pattern normally has to bind the same "
 "variables. Use `with` on an alternative to provide defaults for variables"
 " that it does not bind structurally:"
 msgstr "or-pattern 的每个分支通常必须绑定完全相同的变量。可以在某个分支上使用 `with`，为该分支没有在结构上绑定的变量提供默认值："
 
-#: ../../language/fundamentals.md:1906
+#: ../../language/fundamentals.md:1921
 msgid ""
 "fn option_value(value : Int?) -> Int {\n"
 "  match value {\n"
@@ -4570,7 +4609,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1912
+#: ../../language/fundamentals.md:1927
 msgid ""
 "For multiple defaults, write `(Pattern with x = value, y = value)`. "
 "Parentheses make it clear which alternative receives a default. A default"
@@ -4583,11 +4622,11 @@ msgstr ""
 "value)`。括号能明确默认值属于哪个分支。默认值可以是在外围作用域中求值的通用表达式。默认表达式不能引用完整模式中的绑定变量，也不允许包含 "
 "`return`、`break`、`continue` 或 `raise` 等控制流。"
 
-#: ../../language/fundamentals.md:1918
+#: ../../language/fundamentals.md:1933
 msgid "Guard condition"
 msgstr "守卫条件"
 
-#: ../../language/fundamentals.md:1920
+#: ../../language/fundamentals.md:1935
 msgid ""
 "Each case in a pattern matching expression can have a guard condition. A "
 "guard condition is a boolean expression that must be true for the case to"
@@ -4595,7 +4634,7 @@ msgid ""
 " next case is tried. For example:"
 msgstr "模式匹配表达式中的每个分支都可以有一个守卫条件。守卫条件是一个布尔表达式，只有当该条件为真时，对应的分支才会被匹配。如果守卫条件为假，则跳过该分支并尝试下一个分支。例如："
 
-#: ../../language/fundamentals.md:1924
+#: ../../language/fundamentals.md:1939
 msgid ""
 "fn guard_cond(x : Int?) -> Int {\n"
 "  fn f(x : Int) -> Array[Int] {\n"
@@ -4616,14 +4655,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1931
+#: ../../language/fundamentals.md:1946
 msgid ""
 "Note that the guard conditions will not be considered when checking if "
 "all patterns are covered by the match expression. So you will see a "
 "warning of partial match for the following case:"
 msgstr "注意，在检查所有模式是否都被匹配表达式覆盖时，不会考虑守卫条件。因此，您会看到以下情况的警告："
 
-#: ../../language/fundamentals.md:1935
+#: ../../language/fundamentals.md:1950
 msgid ""
 "fn guard_check(x : Int?) -> Unit {\n"
 "  match x {\n"
@@ -4634,7 +4673,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1943
+#: ../../language/fundamentals.md:1958
 msgid ""
 "It is not encouraged to call a function that mutates a part of the value "
 "being matched inside a guard condition. When such case happens, the part "
@@ -4642,11 +4681,11 @@ msgid ""
 " with caution."
 msgstr "不鼓励在守卫条件中调用可能通过副作用改变被匹配的值的函数。在这种情况下，被改变的部分不会在后续模式中重新求值。请谨慎使用。"
 
-#: ../../language/fundamentals.md:1948
+#: ../../language/fundamentals.md:1963
 msgid "Generics"
 msgstr "泛型"
 
-#: ../../language/fundamentals.md:1950
+#: ../../language/fundamentals.md:1965
 msgid ""
 "Generics are supported in top-level function and data type definitions. "
 "Type parameters can be introduced within square brackets. We can rewrite "
@@ -4657,7 +4696,7 @@ msgstr ""
 "泛型在顶层函数和数据类型定义中受支持。可以在方括号内引入类型参数。我们可以重写上述数据类型 `List`，添加类型参数 `T` "
 "以获得列表的通用版本。然后，我们可以定义列表上的通用函数，如 `map` 和 `reduce`。"
 
-#: ../../language/fundamentals.md:1952
+#: ../../language/fundamentals.md:1967
 msgid ""
 "///|\n"
 "enum List[T] {\n"
@@ -4682,22 +4721,22 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1956
+#: ../../language/fundamentals.md:1971
 msgid "Special Syntax"
 msgstr "特殊语法"
 
-#: ../../language/fundamentals.md:1958
+#: ../../language/fundamentals.md:1973
 msgid "Pipelines"
 msgstr "管道"
 
-#: ../../language/fundamentals.md:1960
+#: ../../language/fundamentals.md:1975
 msgid ""
 "MoonBit provides convenient pipe syntaxes `x |> f(y)` and `f <| x`, which"
 " can be used to chain regular function calls or make nested builder-style"
 " code easier to read:"
 msgstr "MoonBit 提供了方便的管道语法 `x |> f(y)` 和 `f <| x`，可以用来串联常规函数调用，或让嵌套的构建器风格代码更易读："
 
-#: ../../language/fundamentals.md:1962
+#: ../../language/fundamentals.md:1977
 msgid ""
 "5 |> ignore // <=> ignore(5)\n"
 "[] |> Array::push(5) // <=> Array::push([], 5)\n"
@@ -4707,7 +4746,7 @@ msgid ""
 "|> ignore // <=> ignore(add(1, 5) + 1)\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1969
+#: ../../language/fundamentals.md:1984
 msgid ""
 "The MoonBit code follows the *data-first* style, meaning the function "
 "places its \"subject\" as the first argument. Thus, the pipe operator "
@@ -4719,7 +4758,7 @@ msgstr ""
 "代码遵循*数据优先*风格，也就是说，函数将它的“主题”放置在第一个参数的位置。所以，管道默认将左侧的值填入右侧的函数调用的第一个参数的位置。例如 "
 "`x |> f(y)`等价于`f(x,y)`。"
 
-#: ../../language/fundamentals.md:1973
+#: ../../language/fundamentals.md:1988
 msgid ""
 "You can use the `_` operator to insert `x` into any argument of the "
 "function `f`, such as `x |> f(y, _)`, which is equivalent to `f(y, x)`. "
@@ -4728,14 +4767,14 @@ msgstr ""
 "你也可以使用`_`操作符改变`x`在函数`f`的调用中的插入位置，例如`x |> f(y, _)`, "
 "这等价于`f(y,x)`。带标签的参数也是支持的。"
 
-#: ../../language/fundamentals.md:1975
+#: ../../language/fundamentals.md:1990
 msgid ""
 "The pipe operator can also connect to an arrow function. When piping into"
 " an arrow function, the function body must be wrapped in curly braces, "
 "for example `value |> x => { x + 1 }`."
 msgstr "管道操作符也可以连接到箭头函数。通过管道传入箭头函数时，函数体必须用花括号包裹，例如 `value |> x => { x + 1 }`。"
 
-#: ../../language/fundamentals.md:1977
+#: ../../language/fundamentals.md:1992
 msgid ""
 "The reverse pipe operator applies the right-hand side as the final "
 "argument of the left-hand side call. For example, `f <| x` is equivalent "
@@ -4748,7 +4787,7 @@ msgstr ""
 "`f(a, b, c)`。这对于 DSL 风格的代码尤其有用，因为像 `div([text(\"hello\")])` 这样的嵌套调用可以改写为 "
 "`div <| [text <| \"hello\"]`。"
 
-#: ../../language/fundamentals.md:1979
+#: ../../language/fundamentals.md:1994
 msgid ""
 "let page = div <| [\n"
 "    text <| \"hello\",\n"
@@ -4761,7 +4800,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1986
+#: ../../language/fundamentals.md:2001
 msgid ""
 "Because reverse pipe attaches the final argument, it also works well with"
 " functions whose last argument is a lambda, enabling a trailing-lambda "
@@ -4770,25 +4809,25 @@ msgstr ""
 "因为反向管道会附加最后一个参数，所以它也很适合最后一个参数是 lambda 的函数，从而可以写出类似 `section(\"toolbar\") "
 "<| fn () { ... }` 这样的尾随 lambda 风格。"
 
-#: ../../language/fundamentals.md:1989
+#: ../../language/fundamentals.md:2004
 msgid "Cascade Operator"
 msgstr "级联运算符"
 
-#: ../../language/fundamentals.md:1991
+#: ../../language/fundamentals.md:2006
 msgid ""
 "The cascade operator `..` is used to perform a series of mutable "
 "operations on the same value consecutively. The syntax is as follows:"
 msgstr "级联运算符`..`用于连续对同一值执行一系列可变操作。语法如下："
 
-#: ../../language/fundamentals.md:1994
+#: ../../language/fundamentals.md:2009
 msgid "let arr = []..append([1])\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2001
+#: ../../language/fundamentals.md:2016
 msgid "Here, `x..f()` is equivalent to `{ x.f(); x }`."
 msgstr "这里 `x..f()` 等价于 `{ x.f(); x }`。"
 
-#: ../../language/fundamentals.md:2004
+#: ../../language/fundamentals.md:2019
 msgid ""
 "Consider the following scenario: for a `StringBuilder` type that has "
 "methods like `write_string`, `write_char`, `write_object`, etc., we often"
@@ -4796,7 +4835,7 @@ msgid ""
 "value:"
 msgstr "考虑以下情况：对于具有诸如`write_string`，`write_char`，`write_object`等方法的`StringBuilder`类型，我们经常需要对同一`StringBuilder`值执行一系列操作："
 
-#: ../../language/fundamentals.md:2008
+#: ../../language/fundamentals.md:2023
 msgid ""
 "let builder = StringBuilder::new()\n"
 "builder.write_char('a')\n"
@@ -4806,7 +4845,7 @@ msgid ""
 "let result = builder.to_string()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2015
+#: ../../language/fundamentals.md:2030
 msgid ""
 "To avoid repetitive typing of `builder`, its methods are often designed "
 "to return `self` itself, allowing operations to be chained using the `.` "
@@ -4818,7 +4857,7 @@ msgstr ""
 "为了避免重复输入`builder`，其方法通常设计为返回`self`本身，允许使用`.`运算符链接操作。为了区分不可变和可变操作，在 "
 "MoonBit 中，对于所有返回`Unit`的方法，可以使用级联运算符进行连续操作，而无需修改方法的返回类型。"
 
-#: ../../language/fundamentals.md:2021
+#: ../../language/fundamentals.md:2036
 msgid ""
 "let result = StringBuilder::new()\n"
 "  ..write_char('a')\n"
@@ -4828,18 +4867,18 @@ msgid ""
 "  .to_string()\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2028
+#: ../../language/fundamentals.md:2043
 msgid "is Expression"
 msgstr "is 表达式"
 
-#: ../../language/fundamentals.md:2030
+#: ../../language/fundamentals.md:2045
 msgid ""
 "The `is` expression tests whether a value conforms to a specific pattern."
 " It returns a `Bool` value and can be used anywhere a boolean value is "
 "expected, for example:"
 msgstr "`is` 表达式测试值是否符合特定模式。它返回一个 `Bool` 值，并可以在期望布尔值的任何地方使用，例如："
 
-#: ../../language/fundamentals.md:2034
+#: ../../language/fundamentals.md:2049
 msgid ""
 "fn[T] is_none(x : T?) -> Bool {\n"
 "  x is None\n"
@@ -4850,26 +4889,26 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2041
+#: ../../language/fundamentals.md:2056
 msgid ""
 "Pattern binders introduced by `is` expressions can be used in the "
 "following contexts:"
 msgstr "通过 `is` 表达式绑定的标识符可以在以下的上下文中使用："
 
-#: ../../language/fundamentals.md:2044
+#: ../../language/fundamentals.md:2059
 msgid ""
 "In boolean AND expressions (`&&`): binders introduced in the left-hand "
 "expression can be used in the right-hand expression"
 msgstr "在与表达式（`&&`）中：左侧表达式中绑定的标识符可以在右侧表达式中使用"
 
-#: ../../language/fundamentals.md:2048
+#: ../../language/fundamentals.md:2063
 msgid ""
 "fn f(x : Int?) -> Bool {\n"
 "  x is Some(v) && v >= 0\n"
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2055
+#: ../../language/fundamentals.md:2070
 msgid ""
 "In the first branch of `if` expression: if the condition is a sequence of"
 " boolean expressions `e1 && e2 && ...`, the binders introduced by the "
@@ -4879,7 +4918,7 @@ msgstr ""
 "在 `if` 的第一个分支中：如果条件是一系列布尔表达式 `e1 && e2 && ...`，则可以在条件为真的分支中使用 `is` "
 "表达式中绑定的标识符。"
 
-#: ../../language/fundamentals.md:2059
+#: ../../language/fundamentals.md:2074
 msgid ""
 "fn g(x : Array[Int?]) -> Unit {\n"
 "  if x is [v, .. rest] && v is Some(i) && i is (0..=10) {\n"
@@ -4890,13 +4929,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2066
+#: ../../language/fundamentals.md:2081
 msgid ""
 "In the following statements after a successful `guard` or `guard!` "
 "condition:"
 msgstr "在成功的 `guard` 或 `guard!` 条件之后的语句中："
 
-#: ../../language/fundamentals.md:2069
+#: ../../language/fundamentals.md:2084
 msgid ""
 "fn h(x : Int?) -> Unit {\n"
 "  guard! x is Some(v)\n"
@@ -4904,11 +4943,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2076
+#: ../../language/fundamentals.md:2091
 msgid "In the body of a `while` loop:"
 msgstr "在 `while` 循环中的使用："
 
-#: ../../language/fundamentals.md:2078
+#: ../../language/fundamentals.md:2093
 msgid ""
 "fn i(x : Int?) -> Unit {\n"
 "  let mut m = x\n"
@@ -4919,14 +4958,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2085
+#: ../../language/fundamentals.md:2100
 msgid ""
 "Note that `is` expression can only take a simple pattern. If you need to "
 "use `as` to bind the pattern to a variable, you have to add parentheses. "
 "For example:"
 msgstr "`is` 表达式只能接受一个简单模式，如果你需要通过 `as` 把模式绑定到某个变量上，需要加括号。比如："
 
-#: ../../language/fundamentals.md:2088
+#: ../../language/fundamentals.md:2103
 msgid ""
 "fn j(x : Int) -> Int? {\n"
 "  Some(x)\n"
@@ -4939,29 +4978,29 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2095
+#: ../../language/fundamentals.md:2110
 msgid "Regex Literal Expression"
 msgstr "正则字面量表达式"
 
-#: ../../language/fundamentals.md:2097
+#: ../../language/fundamentals.md:2112
 msgid "`re\"...\"` is a regex literal expression. Its type is `Regex`."
 msgstr "`re\"...\"` 是一个正则字面量表达式，其类型为 `Regex`。"
 
-#: ../../language/fundamentals.md:2099
+#: ../../language/fundamentals.md:2114
 msgid ""
 "Regex literals are ordinary expressions, so they can be stored in local "
 "bindings, passed as arguments, used as default argument values, and "
 "defined as constants:"
 msgstr "正则字面量是普通表达式，因此可以存入局部绑定、作为参数传递、用作默认参数值，也可以定义为常量："
 
-#: ../../language/fundamentals.md:2103
+#: ../../language/fundamentals.md:2118
 msgid ""
 "let r : Regex = re\"a(b+)\"\n"
 "const IDENT_START : Regex = re\"[A-Za-z_]\"\n"
 "const IDENT : Regex = IDENT_START + re\"[A-Za-z0-9_]*\"\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2109
+#: ../../language/fundamentals.md:2124
 msgid ""
 "Regex values can also be combined with `+` for sequence and `|` for "
 "alternation. In places that require a regex constant expression, such as "
@@ -4971,14 +5010,14 @@ msgstr ""
 "`Regex` 值也可以通过 `+` 组合成序列，通过 `|` 组合成备选。在需要正则常量表达式的地方，例如 [`=~`](#regex-"
 "match-expression)，可以直接引用由正则字面量定义的具名 `const`。"
 
-#: ../../language/fundamentals.md:2114
+#: ../../language/fundamentals.md:2129
 msgid ""
 "Unlike ordinary string literals, regex literals do not require double-"
 "escaping backslashes. For example, write `re\"/\\*\"` instead of "
 "`re\"/\\\\*\"`."
 msgstr "与普通字符串字面量不同，正则字面量中的反斜杠不需要二次转义。例如，应写 `re\"/\\*\"`，而不是 `re\"/\\\\*\"`。"
 
-#: ../../language/fundamentals.md:2117
+#: ../../language/fundamentals.md:2132
 msgid ""
 "const REGEX_IDENT_START = re\"[A-Za-z_]\"\n"
 "\n"
@@ -5001,27 +5040,27 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2124
+#: ../../language/fundamentals.md:2139
 msgid "Invalid regex literals are rejected at compile time."
 msgstr "非法的正则字面量会在编译期被拒绝。"
 
-#: ../../language/fundamentals.md:2126
+#: ../../language/fundamentals.md:2141
 msgid "Regex literals use MoonBit's regex syntax. The supported forms include:"
 msgstr "正则字面量使用 MoonBit 的正则语法，支持的形式包括："
 
-#: ../../language/fundamentals.md:2128
+#: ../../language/fundamentals.md:2143
 msgid "Literal characters: ordinary characters match themselves"
 msgstr "字面字符：普通字符匹配其自身"
 
-#: ../../language/fundamentals.md:2129
+#: ../../language/fundamentals.md:2144
 msgid "Wildcard: `.` matches any single character, including newline"
 msgstr "通配符：`.` 匹配任意单个字符，包括换行符"
 
-#: ../../language/fundamentals.md:2130
+#: ../../language/fundamentals.md:2145
 msgid "Character classes: `[abc]`, `[^abc]`, `[a-z]`"
 msgstr "字符类：`[abc]`、`[^abc]`、`[a-z]`"
 
-#: ../../language/fundamentals.md:2131
+#: ../../language/fundamentals.md:2146
 msgid ""
 "POSIX classes inside character classes: `[[:digit:]]`, `[[:alpha:]]`, "
 "`[[:space:]]`, `[[:word:]]`, `[[:xdigit:]]`, etc."
@@ -5029,27 +5068,27 @@ msgstr ""
 "字符类中的 POSIX "
 "类：`[[:digit:]]`、`[[:alpha:]]`、`[[:space:]]`、`[[:word:]]`、`[[:xdigit:]]` 等"
 
-#: ../../language/fundamentals.md:2133
+#: ../../language/fundamentals.md:2148
 msgid "Quantifiers: `*`, `+`, `?`, `{n}`, `{n,}`, `{n,m}`"
 msgstr "量词：`*`、`+`、`?`、`{n}`、`{n,}`、`{n,m}`"
 
-#: ../../language/fundamentals.md:2134
+#: ../../language/fundamentals.md:2149
 msgid "Non-greedy quantifiers: `*?`, `+?`, `??`, `{n}?`, `{n,}?`, `{n,m}?`"
 msgstr "非贪婪量词：`*?`、`+?`、`??`、`{n}?`、`{n,}?`、`{n,m}?`"
 
-#: ../../language/fundamentals.md:2135
+#: ../../language/fundamentals.md:2150
 msgid "Grouping and alternation: `( ... )`, `(?: ... )`, `(?<name> ... )`, `a|b`"
 msgstr "分组与分支：`( ... )`、`(?: ... )`、`(?<name> ... )`、`a|b`"
 
-#: ../../language/fundamentals.md:2136
+#: ../../language/fundamentals.md:2151
 msgid "Assertions: `^`, `$`, `\\b`, `\\B`"
 msgstr "断言：`^`、`$`、`\\b`、`\\B`"
 
-#: ../../language/fundamentals.md:2137
+#: ../../language/fundamentals.md:2152
 msgid "Scoped modifier: `(?i: ... )` for case-insensitive matching"
 msgstr "作用域修饰符：`(?i: ... )` 用于大小写不敏感匹配"
 
-#: ../../language/fundamentals.md:2139
+#: ../../language/fundamentals.md:2154
 msgid ""
 "Escape handling is regex-oriented rather than string-oriented. Common "
 "escapes include `\\n`, `\\r`, `\\t`, `\\f`, `\\v`, escaped metacharacters"
@@ -5062,17 +5101,17 @@ msgstr ""
 "`\\.`、`\\(` 这类元字符转义，还有 Unicode 转义 `\\uXXXX` / `\\u{X...}`。如果要匹配字面量 "
 "`{`，请使用 `[{]`，不要写成 `\\{`。这是为了给未来在正则字面量中支持插值预留语法空间，因为 `\\{` 会和插值语法冲突。"
 
-#: ../../language/fundamentals.md:2145
+#: ../../language/fundamentals.md:2160
 msgid "There are several important semantics and restrictions:"
 msgstr "还有一些重要语义和限制："
 
-#: ../../language/fundamentals.md:2147
+#: ../../language/fundamentals.md:2162
 msgid ""
 "`^` and `$` are non-multiline anchors: they match only the beginning and "
 "end of the whole input"
 msgstr "`^` 和 `$` 是非多行锚点：只匹配整个输入的开头和结尾"
 
-#: ../../language/fundamentals.md:2149
+#: ../../language/fundamentals.md:2164
 msgid ""
 "`\\b` and `\\B` are currently usable when a regex literal is handled as a"
 " first-class `Regex` value They are not currently available in `regex "
@@ -5082,11 +5121,11 @@ msgstr ""
 "`\\b` 和 `\\B` 当前在正则字面量作为一等 `Regex` 值使用时可用；但在 [`=~`](#regex-match-"
 "expression) 这样的 `regex match expression` 常量上下文中暂不可用，未来这一限制预计会放宽。"
 
-#: ../../language/fundamentals.md:2154
+#: ../../language/fundamentals.md:2169
 msgid "POSIX character classes are ASCII-based"
 msgstr "POSIX 字符类基于 ASCII"
 
-#: ../../language/fundamentals.md:2155
+#: ../../language/fundamentals.md:2170
 msgid ""
 "`\\d`, `\\D`, `\\s`, `\\S`, `\\w`, and `\\W` are not supported Use "
 "`[[:digit:]]`, `[^[:digit:]]`, `[[:space:]]`, `[^[:space:]]`, "
@@ -5096,26 +5135,26 @@ msgstr ""
 "`[[:digit:]]`、`[^[:digit:]]`、`[[:space:]]`、`[^[:space:]]`、`[[:word:]]` 和 "
 "`[^[:word:]]`。"
 
-#: ../../language/fundamentals.md:2158
+#: ../../language/fundamentals.md:2173
 msgid ""
 "`\\xHH` byte escapes are not supported in `re\"...\"`; use Unicode "
 "escapes or ordinary characters instead"
 msgstr "`re\"...\"` 不支持 `\\xHH` 字节转义；请改用 Unicode 转义或直接写普通字符。"
 
-#: ../../language/fundamentals.md:2160
+#: ../../language/fundamentals.md:2175
 msgid ""
 "Lookahead, lookbehind, backreferences, and character-class set operations"
 " are not supported"
 msgstr "不支持前瞻、后顾、反向引用和字符类集合运算"
 
-#: ../../language/fundamentals.md:2162
+#: ../../language/fundamentals.md:2177
 msgid ""
 "In character classes, `-` is used for ranges To match a literal dash, "
 "escape it as `\\-`; putting `-` at the start or end of a character class "
 "is not supported"
 msgstr "在字符类中，`-` 用于表示范围。若要匹配字面量连字符，请写 `\\-`；不支持把 `-` 放在字符类开头或结尾来表示字面量。"
 
-#: ../../language/fundamentals.md:2166
+#: ../../language/fundamentals.md:2181
 msgid ""
 "Named capture groups such as `(?<id>[0-9]+)` belong to the `Regex` value "
 "itself. They are useful with APIs such as `Regex::execute` and "
@@ -5125,7 +5164,7 @@ msgstr ""
 "具名捕获组（例如 `(?<id>[0-9]+)`）属于 `Regex` 值本身。它们可与 `Regex::execute` 和 "
 "`MatchResult::named_group` 等 API 配合使用，但不会自行引入 MoonBit 绑定变量。"
 
-#: ../../language/fundamentals.md:2171
+#: ../../language/fundamentals.md:2186
 msgid ""
 "When a regex literal is used as a first-class `Regex` value, operations "
 "such as `Regex::execute` use first-match semantics: they return the first"
@@ -5135,11 +5174,11 @@ msgstr ""
 "当正则字面量作为一等 `Regex` 值使用时，`Regex::execute` 等操作采用 first-match "
 "语义：它们返回从搜索位置开始找到的第一个匹配，不提供 longest-match 模式。"
 
-#: ../../language/fundamentals.md:2175
+#: ../../language/fundamentals.md:2190
 msgid "Regex Match Expression"
 msgstr "正则匹配表达式"
 
-#: ../../language/fundamentals.md:2177
+#: ../../language/fundamentals.md:2192
 msgid ""
 "Regex match expressions use the `=~` operator to search a `StringView` "
 "with a regex constant expression. The expression returns `Bool`; use it "
@@ -5149,14 +5188,14 @@ msgstr ""
 "正则匹配表达式使用 `=~` 运算符以正则常量表达式搜索 `StringView`。该表达式返回 "
 "`Bool`；只需单个布尔检查时使用它，多个正则分支返回不同结果时则使用 [`lexmatch`](#lexmatch)。"
 
-#: ../../language/fundamentals.md:2182
+#: ../../language/fundamentals.md:2197
 msgid ""
 "input =~ re\"abc\"\n"
 "input =~ ((PREFIX + SUFFIX) as whole, before=head, after=tail)\n"
 "input =~ (re\"b\", before~, after~)\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2188
+#: ../../language/fundamentals.md:2203
 msgid ""
 "The right-hand side must be a regex constant expression: a regex literal "
 "such as `re\"abc\"`, a named `const`, or an expression built from "
@@ -5166,7 +5205,7 @@ msgstr ""
 "右侧必须是正则常量表达式：可以是 `re\"abc\"` 这样的正则字面量、具名 `const`，或者由常量通过 "
 "`+`（拼接）、`|`（分支）和括号构造出来的表达式。不允许任意运行时值。"
 
-#: ../../language/fundamentals.md:2193
+#: ../../language/fundamentals.md:2208
 msgid ""
 "Use `as` to bind the matched substring. Use `before` and `after` to bind "
 "the unmatched prefix and suffix as `StringView`; `before~` and `after~` "
@@ -5175,7 +5214,7 @@ msgstr ""
 "使用 `as` 绑定匹配到的子串。使用 `before` 和 `after` 将未匹配的前缀和后缀绑定为 "
 "`StringView`；`before~` 和 `after~` 是简写，分别绑定名为 `before` 和 `after` 的变量。"
 
-#: ../../language/fundamentals.md:2197
+#: ../../language/fundamentals.md:2212
 msgid ""
 "This is separate from regex named capture groups. For example, in "
 "`re\"(?<id>[0-9]+)\"`, the name `id` is part of the regex engine's "
@@ -5186,7 +5225,7 @@ msgstr ""
 "MoonBit 绑定变量。如果你需要在 `=~` 中引入绑定，请使用 `as`，例如 `(re\"(?<id>[0-9]+)\" as "
 "digits)`。"
 
-#: ../../language/fundamentals.md:2202
+#: ../../language/fundamentals.md:2217
 msgid ""
 "Like `is`, binders introduced by `=~` can be used in the same boolean-"
 "flow contexts, such as the right-hand side of `&&` and the true branch of"
@@ -5198,13 +5237,13 @@ msgstr ""
 "分支。正则匹配默认按搜索语义工作，因此 `\"zabc!\" =~ re\"abc\"` 的结果是 "
 "`true`。如果需要限制匹配必须发生在输入的开头或结尾，请使用 `^` 和 `$` 等锚点。"
 
-#: ../../language/fundamentals.md:2208
+#: ../../language/fundamentals.md:2223
 msgid ""
 "`=~` also uses first-match semantics. It will not support longest-match "
 "behavior."
 msgstr "`=~` 同样采用 first-match 语义。它在设计上不会支持 longest-match 行为。"
 
-#: ../../language/fundamentals.md:2211
+#: ../../language/fundamentals.md:2226
 msgid ""
 "test {\n"
 "  let input = \" let_name = 42 \"\n"
@@ -5240,7 +5279,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2218
+#: ../../language/fundamentals.md:2233
 msgid ""
 "In the example above, `head`, `ident`, `tail`, `before`, `after`, and "
 "`rest` have type `StringView`. The binder `ch` has type `Char`, because "
@@ -5249,18 +5288,18 @@ msgstr ""
 "上面的例子中，`head`、`ident`、`tail`、`before`、`after` 和 `rest` 的类型都是 "
 "`StringView`。绑定变量 `ch` 的类型是 `Char`，因为 `re\".\"` 恰好匹配一个字符。"
 
-#: ../../language/fundamentals.md:2222
+#: ../../language/fundamentals.md:2237
 msgid "Lexmatch"
 msgstr "Lexmatch"
 
-#: ../../language/fundamentals.md:2224
+#: ../../language/fundamentals.md:2239
 msgid ""
 "Use `lexmatch` to match an in-memory `String` or `StringView` against "
 "several regex cases and evaluate the body of the selected case. Its "
 "syntax is:"
 msgstr "使用 `lexmatch` 将内存中的 `String` 或 `StringView` 与多个正则分支进行匹配，并求值所选分支的主体。其语法为："
 
-#: ../../language/fundamentals.md:2227
+#: ../../language/fundamentals.md:2242
 msgid ""
 "lexmatch input [with first|longest] {\n"
 "  regex_case => expression\n"
@@ -5269,7 +5308,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2235
+#: ../../language/fundamentals.md:2250
 msgid ""
 "Each regex case contains a regex constant expression, optionally with "
 "`as`, `before=`, and `after=` bindings. `Bytes`, `BytesView`, and other "
@@ -5278,11 +5317,11 @@ msgstr ""
 "每个正则分支包含一个正则常量表达式，还可带有 `as`、`before=` 和 `after=` 绑定。不支持 "
 "`Bytes`、`BytesView` 及其他输入类型。"
 
-#: ../../language/fundamentals.md:2239
+#: ../../language/fundamentals.md:2254
 msgid "The strategy controls how overlapping cases are resolved:"
 msgstr "匹配策略决定如何处理相互重叠的 case："
 
-#: ../../language/fundamentals.md:2241
+#: ../../language/fundamentals.md:2256
 msgid ""
 "`first` is the default. As with `match`, cases have priority from top to "
 "bottom, and the first case whose regex can match is selected. This is "
@@ -5294,7 +5333,7 @@ msgstr ""
 "case。这是 case 优先级，而不是在不同 case 的匹配结果之间进行 leftmost-first 比较：即使靠前的未锚定 case "
 "在输入中较晚的位置才匹配，它仍然优先于在较早位置匹配的靠后 case。"
 
-#: ../../language/fundamentals.md:2244
+#: ../../language/fundamentals.md:2259
 msgid ""
 "`longest` selects the case that consumes the longest input prefix. Every "
 "regex must start with `^`. If several cases consume the same number of "
@@ -5304,7 +5343,7 @@ msgstr ""
 "`longest` 选择消耗最长输入前缀的 case。每个正则表达式都必须以 `^` 开头。如果多个 case "
 "消耗的字符数相同，则按源码顺序决定优先级。该策略不支持 `*?`、`+?` 等非贪婪量词。"
 
-#: ../../language/fundamentals.md:2249
+#: ../../language/fundamentals.md:2264
 msgid ""
 "Use `as` to bind the substring matched by a regex or one of its "
 "subexpressions. Captures have type `StringView`, except that a regex "
@@ -5314,7 +5353,7 @@ msgstr ""
 "使用 `as` 绑定正则表达式或其子表达式匹配到的子串。捕获值的类型为 "
 "`StringView`；但如果编译器知道某个正则表达式恰好匹配一个字符，例如 `re\".\"`，则捕获值的类型为 `Char`。"
 
-#: ../../language/fundamentals.md:2253
+#: ../../language/fundamentals.md:2268
 msgid ""
 "`before=` and `after=` bind the unmatched prefix and suffix as "
 "`StringView`. The shorthand forms `before~` and `after~` bind variables "
@@ -5327,7 +5366,7 @@ msgstr ""
 " 会绑定同名变量，而 `before=_` 和 `after=_` "
 "会显式丢弃相应部分。首次匹配模式支持这两种绑定。最长匹配模式从输入开头开始，因此支持 `after=`，但不支持 `before=`。"
 
-#: ../../language/fundamentals.md:2259
+#: ../../language/fundamentals.md:2274
 msgid ""
 "For first-match cases, bind or explicitly discard `before` and `after`, "
 "or use `^` and `$` to make the intended boundaries clear. For longest-"
@@ -5337,7 +5376,7 @@ msgstr ""
 "对于首次匹配分支，应绑定或显式丢弃 `before` 和 `after`，也可以使用 `^` 和 `$` "
 "明确预期的边界。对于最长匹配分支，当分支只消费输入前缀时请使用 `after=`；如果必须消费整个输入，则改为添加 `$`。"
 
-#: ../../language/fundamentals.md:2264
+#: ../../language/fundamentals.md:2279
 msgid ""
 "test \"scan strings\" {\n"
 "  let text = \"xx123yy\"\n"
@@ -5360,7 +5399,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2271
+#: ../../language/fundamentals.md:2286
 msgid ""
 "A catch-all case is required only when the regex cases do not cover every"
 " possible input. If the compiler can prove that the regex cases are "
@@ -5375,11 +5414,11 @@ msgstr ""
 "之类的绑定会接收整个输入，而 `_` 会丢弃它。当正则分支或兜底分支永远无法选中时，编译器会报告 "
 "[E0090](error_codes/E0090.md)。"
 
-#: ../../language/fundamentals.md:2279
+#: ../../language/fundamentals.md:2294
 msgid "Lexscan"
 msgstr "Lexscan"
 
-#: ../../language/fundamentals.md:2281
+#: ../../language/fundamentals.md:2296
 msgid ""
 "Use `lexscan` to consume successive tokens while it updates the cursor "
 "stored in its target. The target can be an in-memory "
@@ -5392,7 +5431,7 @@ msgstr ""
 "`@lexbuf.AsyncLexbuf`。`lexscan` 与 `lexmatch` 使用相同的分支语法，以及 `first` 或 "
 "`longest` 策略："
 
-#: ../../language/fundamentals.md:2287
+#: ../../language/fundamentals.md:2302
 msgid ""
 "lexscan input [with first|longest] {\n"
 "  regex_case => expression\n"
@@ -5401,7 +5440,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2295
+#: ../../language/fundamentals.md:2310
 msgid ""
 "These scanner types require a direct `moonbitlang/core/lexbuf` import. "
 "This runnable example also imports the official `moonbitlang/async` "
@@ -5410,7 +5449,7 @@ msgstr ""
 "这些扫描器类型需要直接导入 `moonbitlang/core/lexbuf`。这个可运行示例还导入了官方 `moonbitlang/async`"
 " 运行时，从而可以用 `async test` 测试异步扫描器："
 
-#: ../../language/fundamentals.md:2299
+#: ../../language/fundamentals.md:2314
 msgid ""
 "import {\n"
 "  \"moonbitlang/async\",\n"
@@ -5418,7 +5457,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2303
+#: ../../language/fundamentals.md:2318
 msgid ""
 "Every `lexscan` regex must start with `^`, because scanning always begins"
 " at the target's current cursor. `lexscan` cases do not support `before=`"
@@ -5428,7 +5467,7 @@ msgstr ""
 "每个 `lexscan` 正则都必须以 `^` 开头，因为扫描总是从目标的当前游标处开始。`lexscan` 分支不支持 `before=` 或 "
 "`after=`。它们仍可使用 `as` 绑定匹配文本，其 `StringView` 和 `Char` 捕获类型与 `lexmatch` 相同。"
 
-#: ../../language/fundamentals.md:2310
+#: ../../language/fundamentals.md:2325
 msgid ""
 "In `first` mode, `lexscan` tests the cases from top to bottom, like "
 "`match`, and selects the first regex that matches at the current cursor. "
@@ -5441,7 +5480,7 @@ msgstr ""
 "这里的 `first` 指 case 优先级；它不会在 case 之间比较最靠左的匹配位置或匹配长度。由于每个 `lexscan` "
 "正则都用 `^` 锚定，因此所有 case 都从同一个当前游标位置开始尝试。"
 
-#: ../../language/fundamentals.md:2308
+#: ../../language/fundamentals.md:2331
 msgid ""
 "A `String` or `StringView` value is not a valid `lexscan` target. Use "
 "`lexmatch` to match one in-memory value, or put a `StringView` in a "
@@ -5452,11 +5491,11 @@ msgstr ""
 "`lexmatch`；如需让连续多次扫描共享游标，请将 `StringView` 放入 `StringScanner`。不支持 "
 "`Bytes`、`BytesView` 及用户自定义的类词法缓冲区类型。"
 
-#: ../../language/fundamentals.md:2313
+#: ../../language/fundamentals.md:2328
 msgid "String scanners"
 msgstr "字符串扫描器"
 
-#: ../../language/fundamentals.md:2315
+#: ../../language/fundamentals.md:2330
 msgid ""
 "`@lexbuf.StringScanner` scans an in-memory `StringView`. Subject to the "
 "`lexscan` restrictions above, case selection and captures behave like "
@@ -5471,15 +5510,15 @@ msgstr ""
 "`lexmatch`。选中正则分支后，`lexscan` 会将 `scanner.cursor` "
 "更新为匹配末尾的位置。因此，同一扫描器可以连续传给多次调用，而无需切分输入或手动更新偏移量。"
 
-#: ../../language/fundamentals.md:2323
+#: ../../language/fundamentals.md:2338
 msgid "Construct a string scanner with its cursor at `0`:"
 msgstr "构造字符串扫描器时，将其游标设为 `0`："
 
-#: ../../language/fundamentals.md:2325
+#: ../../language/fundamentals.md:2340
 msgid "let scanner = @lexbuf.StringScanner::{ data: text[:], cursor: 0 }\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2329
+#: ../../language/fundamentals.md:2344
 msgid ""
 "Both the cursor and the `StringView` indexes are measured in UTF-16 code "
 "units. The cursor is relative to `data` and must be in "
@@ -5489,13 +5528,13 @@ msgstr ""
 "游标和 `StringView` 索引都以 UTF-16 代码单元为单位。游标相对于 `data`，且必须位于 "
 "`0..=data.length()` 范围内，因此 `data` 本身可以是更大字符串的切片。兜底分支必须写成 `_`；它不会推进游标。"
 
-#: ../../language/fundamentals.md:2334
+#: ../../language/fundamentals.md:2349
 msgid ""
 "The following scanner skips whitespace and returns one token per call. "
 "The test also shows that `lexscan` maintains the cursor:"
 msgstr "以下扫描器会跳过空白，并在每次调用时返回一个词元。测试还展示了 `lexscan` 如何维护游标："
 
-#: ../../language/fundamentals.md:2337
+#: ../../language/fundamentals.md:2352
 msgid ""
 "priv enum Token {\n"
 "  Word(StringView)\n"
@@ -5538,11 +5577,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2344
+#: ../../language/fundamentals.md:2359
 msgid "Streaming scanners"
 msgstr "流式扫描器"
 
-#: ../../language/fundamentals.md:2346
+#: ../../language/fundamentals.md:2361
 msgid ""
 "`Lexbuf` and `AsyncLexbuf` retain a cursor between `lexscan` calls. A "
 "successful regex case consumes the matched prefix and commits the cursor "
@@ -5554,7 +5593,7 @@ msgstr ""
 "调用之间保留游标。正则分支匹配成功后，会消费匹配到的前缀，并将游标提交到该匹配的末尾。这使得递归或重复调用的扫描器能像词法分析器一样工作。模式可以跨越"
 " `from_fn` 提供的任意多个数据块；数据块边界不会结束词元。"
 
-#: ../../language/fundamentals.md:2352
+#: ../../language/fundamentals.md:2367
 msgid ""
 "As with `lexmatch`, a catch-all is required only when the regex cases are"
 " not exhaustive. A `lexscan` catch-all must be written as `_`: it handles"
@@ -5564,11 +5603,11 @@ msgstr ""
 "与 `lexmatch` 一样，仅当正则分支不穷尽时才需要兜底分支。`lexscan` 兜底分支必须写成 `_`：它处理 EOF "
 "或其他无法匹配的字符，不绑定剩余输入，也不推进目标游标。"
 
-#: ../../language/fundamentals.md:2357
+#: ../../language/fundamentals.md:2372
 msgid "The following scanner skips whitespace and returns one token per call:"
 msgstr "以下扫描器会跳过空白，并在每次调用时返回一个 token："
 
-#: ../../language/fundamentals.md:2359
+#: ../../language/fundamentals.md:2374
 msgid ""
 "priv enum StreamToken {\n"
 "  StreamWord(StringView)\n"
@@ -5607,7 +5646,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2366
+#: ../../language/fundamentals.md:2381
 msgid ""
 "`AsyncLexbuf` has the same matching and cursor semantics. Its source is "
 "an `async () -> String?` function, so a function that scans it must also "
@@ -5617,7 +5656,7 @@ msgstr ""
 "`AsyncLexbuf` 具有相同的匹配和游标语义。它的数据源是 `async () -> String?` 函数，因此扫描它的函数也必须是 "
 "`async`。MoonBit 没有 `await` 关键字；在异步代码中正常调用异步扫描器即可。"
 
-#: ../../language/fundamentals.md:2371
+#: ../../language/fundamentals.md:2386
 msgid ""
 "/// Returns the next alphabetic token from an asynchronous lexbuf.\n"
 "pub async fn next_word(input : @lexbuf.AsyncLexbuf) -> StringView? {\n"
@@ -5628,18 +5667,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2378
+#: ../../language/fundamentals.md:2393
 msgid ""
 "`lexmatch` and `lexscan` case bodies cannot have guards. The expression "
 "selects a case before it evaluates the body, so put any additional "
 "condition inside that body."
 msgstr "`lexmatch` 和 `lexscan` 的分支主体不能带 guard。表达式会先选择分支，再求值其主体，因此请将其他条件放到主体内部。"
 
-#: ../../language/fundamentals.md:2382
+#: ../../language/fundamentals.md:2397
 msgid "Legacy lexical pattern syntax"
 msgstr "旧版词法模式语法"
 
-#: ../../language/fundamentals.md:2384
+#: ../../language/fundamentals.md:2399
 msgid ""
 "Earlier experimental versions used string-piece `lexmatch` patterns and a"
 " `lexmatch?` boolean form. Those forms have been removed. The `lexmatch` "
@@ -5648,11 +5687,11 @@ msgstr ""
 "较早的实验版本使用由字符串片段组成的 `lexmatch` 模式，以及布尔形式 "
 "`lexmatch?`。这些形式已经移除。现在，`lexmatch` 关键字表示上文所述的内存中正则分支表达式。"
 
-#: ../../language/fundamentals.md:2388
+#: ../../language/fundamentals.md:2403
 msgid "For example, older code may look like this:"
 msgstr "例如，旧代码可能如下："
 
-#: ../../language/fundamentals.md:2390
+#: ../../language/fundamentals.md:2405
 msgid ""
 "lexmatch text {\n"
 "  (before, \"a\" (\"b*\" as b) \"c\", after) => ...\n"
@@ -5664,7 +5703,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2401
+#: ../../language/fundamentals.md:2416
 msgid ""
 "Convert case-based code to `lexmatch` with regex constant expressions. "
 "For a single boolean search, use [`=~`](#regex-match-expression) instead."
@@ -5672,11 +5711,11 @@ msgstr ""
 "将基于分支的代码转换为使用正则常量表达式的 `lexmatch`。单个布尔搜索则使用 [`=~`](#regex-match-"
 "expression)。"
 
-#: ../../language/fundamentals.md:2404
+#: ../../language/fundamentals.md:2419
 msgid "Spread Operator"
 msgstr "展开运算符"
 
-#: ../../language/fundamentals.md:2406
+#: ../../language/fundamentals.md:2421
 msgid ""
 "MoonBit provides a spread operator to expand a sequence of elements when "
 "constructing `Array`, `String`, and `Bytes` using the array literal "
@@ -5687,11 +5726,11 @@ msgstr ""
 "MoonBit 提供了一个展开运算符，用于在使用数组字面量语法构造 `Array`、`String`和 `Bytes` "
 "时展开元素序列。要展开这样的序列，需要在其前面加上 `..` 前缀，并且该序列必须具有 `iter()` 方法，并且该方法能够产生相应类型的元素。"
 
-#: ../../language/fundamentals.md:2411
+#: ../../language/fundamentals.md:2426
 msgid "For example, we can use the spread operator to construct an array:"
 msgstr "例如，我们可以使用展开运算符构造一个数组："
 
-#: ../../language/fundamentals.md:2413
+#: ../../language/fundamentals.md:2428
 msgid ""
 "test {\n"
 "  let a1 : Array[Int] = [1, 2, 3]\n"
@@ -5702,13 +5741,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2420
+#: ../../language/fundamentals.md:2435
 msgid ""
 "A conditional spread `..if condition { sequence }` contributes the "
 "sequence only when the condition is true:"
 msgstr "条件展开 `..if condition { sequence }` 只在条件为真时加入该序列："
 
-#: ../../language/fundamentals.md:2423
+#: ../../language/fundamentals.md:2438
 msgid ""
 "test {\n"
 "  let include_middle = true\n"
@@ -5720,11 +5759,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2430
+#: ../../language/fundamentals.md:2445
 msgid "Similarly, we can use the spread operator to construct a string:"
 msgstr "同样，我们可以使用展开运算符构造一个字符串："
 
-#: ../../language/fundamentals.md:2432
+#: ../../language/fundamentals.md:2447
 msgid ""
 "test {\n"
 "  let s1 : String = \"Hello\"\n"
@@ -5735,13 +5774,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2439
+#: ../../language/fundamentals.md:2454
 msgid ""
 "The last example shows how the spread operator can be used to construct a"
 " bytes sequence."
 msgstr "最后一个例子展示了如何使用展开运算符构造一个字节序列。"
 
-#: ../../language/fundamentals.md:2442
+#: ../../language/fundamentals.md:2457
 msgid ""
 "test {\n"
 "  let b1 : Bytes = b\"hello\"\n"
@@ -5756,18 +5795,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2450
+#: ../../language/fundamentals.md:2465
 msgid "TODO syntax"
 msgstr "TODO 语法"
 
-#: ../../language/fundamentals.md:2452
+#: ../../language/fundamentals.md:2467
 msgid ""
 "The `todo` syntax (`...`) is a special construct used to mark sections of"
 " code that are not yet implemented or are placeholders for future "
 "functionality. For example:"
 msgstr "`todo`语法 (`...`) 是一种特殊构造，用于标记尚未实现或用于未来功能的占位符代码段。例如："
 
-#: ../../language/fundamentals.md:2454
+#: ../../language/fundamentals.md:2469
 msgid ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"

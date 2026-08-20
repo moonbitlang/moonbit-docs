@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-12 12:21+0800\n"
+"POT-Creation-Date: 2026-08-20 17:02+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -337,7 +337,9 @@ msgid ""
 "Use `.moonignore` files to exclude files and directories from archives "
 "created by `moon package` and `moon publish`. Each file uses gitignore-"
 "style patterns:"
-msgstr "使用 `.moonignore` 文件从 `moon package` 和 `moon publish` 创建的归档中排除文件和目录。每个文件使用 gitignore 风格的模式："
+msgstr ""
+"使用 `.moonignore` 文件从 `moon package` 和 `moon publish` 创建的归档中排除文件和目录。每个文件使用"
+" gitignore 风格的模式："
 
 #: ../../toolchain/moon/module.md:253
 msgid ""
@@ -365,7 +367,8 @@ msgid ""
 "directory are not combined. This filtering is based on the patterns, "
 "regardless of whether a file is tracked by Git."
 msgstr ""
-"发布时默认遵循 `.gitignore` 规则。如果某个目录包含 `.moonignore`，创建归档时将使用其规则代替同一目录中的 `.gitignore`；同一目录中的这两个文件不会合并。无论文件是否由 Git 跟踪，筛选都只依据这些模式。"
+"发布时默认遵循 `.gitignore` 规则。如果某个目录包含 `.moonignore`，创建归档时将使用其规则代替同一目录中的 "
+"`.gitignore`；同一目录中的这两个文件不会合并。无论文件是否由 Git 跟踪，筛选都只依据这些模式。"
 
 #: ../../toolchain/moon/module.md:276
 msgid ""
@@ -373,7 +376,9 @@ msgid ""
 "configuration are not consulted. Only the ignore files that belong to the"
 " project affect the archive, so publishing the same contents does not "
 "depend on a user's Git configuration."
-msgstr "不会读取 Git 仓库本地的 `.git/info/exclude` 和全局忽略配置。只有项目自身包含的忽略文件会影响归档，因此发布相同内容的结果不会依赖用户的 Git 配置。"
+msgstr ""
+"不会读取 Git 仓库本地的 `.git/info/exclude` "
+"和全局忽略配置。只有项目自身包含的忽略文件会影响归档，因此发布相同内容的结果不会依赖用户的 Git 配置。"
 
 #: ../../toolchain/moon/module.md:281
 msgid ""
@@ -395,8 +400,9 @@ msgid ""
 "directory, while `examples/_build/data.bin` is not excluded merely "
 "because a nested directory is named `_build`."
 msgstr ""
-"包根目录下的 `_build/` 始终会被排除，无法通过忽略规则或已弃用的 `include` 字段重新包含。此固定排除不适用于同名的嵌套目录。例如，`!/_build/` 和 "
-"`!/_build/**` 无法恢复包根目录下的 `_build/`，而 `examples/_build/data.bin` 不会仅仅因为所在的嵌套目录名为 `_build` 就被排除。"
+"包根目录下的 `_build/` 始终会被排除，无法通过忽略规则或已弃用的 `include` "
+"字段重新包含。此固定排除不适用于同名的嵌套目录。例如，`!/_build/` 和 `!/_build/**` 无法恢复包根目录下的 "
+"`_build/`，而 `examples/_build/data.bin` 不会仅仅因为所在的嵌套目录名为 `_build` 就被排除。"
 
 #: ../../toolchain/moon/module.md:293
 msgid ""
@@ -425,7 +431,9 @@ msgstr "已弃用的 `include` 和 `exclude` 字段"
 msgid ""
 "The `include` and `exclude` fields in `moon.mod` and `moon.mod.json` are "
 "deprecated. Use `.moonignore` for new and migrated modules."
-msgstr "`moon.mod` 和 `moon.mod.json` 中的 `include` 与 `exclude` 字段已弃用。新模块和迁移后的模块请使用 `.moonignore`。"
+msgstr ""
+"`moon.mod` 和 `moon.mod.json` 中的 `include` 与 `exclude` 字段已弃用。新模块和迁移后的模块请使用"
+" `.moonignore`。"
 
 #: ../../toolchain/moon/module.md:310
 msgid ""
@@ -435,8 +443,9 @@ msgid ""
 "patterns within `include` for exceptions to the allowlist. The fixed "
 "exclusion of the package-root `_build/` directory still applies."
 msgstr ""
-"现有清单仍可使用其中任一字段。当存在 `include` 时，它是完整的允许列表：不会应用 `exclude`、`.gitignore`、`.moonignore` "
-"以及默认的点前缀路径排除规则。可在 `include` 中使用 `!` 模式为允许列表添加例外。对包根目录 `_build/` 的固定排除仍然有效。"
+"现有清单仍可使用其中任一字段。当存在 `include` 时，它是完整的允许列表：不会应用 "
+"`exclude`、`.gitignore`、`.moonignore` 以及默认的点前缀路径排除规则。可在 `include` 中使用 `!` "
+"模式为允许列表添加例外。对包根目录 `_build/` 的固定排除仍然有效。"
 
 #: ../../toolchain/moon/module.md:316
 msgid ""
@@ -886,16 +895,23 @@ msgid ""
 "                         88 warn\n"
 "guard_redundant_else       Redundant `else` on an exhaustive `guard`."
 "                      89 warn\n"
+"unused_lexcase             `lexmatch`/`lexscan` branch that can never be "
+"selected because other branches takes precedence or its pattern matches "
+"nothing.  90 warn\n"
+"unused_errdefer            unused `errdefer` statement"
+"                                     91 warn\n"
+"fragile_catch_all          fragile `catch` handler that can be converted "
+"to `defer` or `errdefer`  92 warn\n"
 "all                        all warnings\n"
 "state: warn = enabled, error = promoted to error, off = disabled\n"
 "note: default alert exceptions: alert_unsafe=off\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:612
+#: ../../toolchain/moon/module.md:615
 msgid "Rule"
 msgstr "Rule"
 
-#: ../../toolchain/moon/module.md:614
+#: ../../toolchain/moon/module.md:617
 msgid ""
 "The module-level `rule` entry declares a reusable pre-build command that "
 "is visible to every `moon.pkg` in the module. A module-level rule does "
@@ -909,7 +925,7 @@ msgstr ""
 "[Package Configuration](package.md#rule-and-dev_build) 中的 \"Rule and "
 "dev_build\" 一节。"
 
-#: ../../toolchain/moon/module.md:621
+#: ../../toolchain/moon/module.md:624
 msgid ""
 "Use `rule(name: \"...\", command: \"...\")`, where `name` identifies the "
 "rule and `command` is a shell command string. The command can refer to "
@@ -921,36 +937,36 @@ msgstr ""
 "shell 命令字符串。该命令可以引用 `$input` 和 `$output`，它们由使用该 rule 的包级 `dev_build` "
 "条目提供。一个模块可以声明多个模块级 `rule` 条目。"
 
-#: ../../toolchain/moon/module.md:628
+#: ../../toolchain/moon/module.md:631
 msgid "rule(name: \"tool\", command: \"tool $input -o $output\")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:633
+#: ../../toolchain/moon/module.md:636
 msgid "This feature is not supported in `moon.mod.json`."
 msgstr "`moon.mod.json` 不支持此功能。"
 
-#: ../../toolchain/moon/module.md:637
+#: ../../toolchain/moon/module.md:640
 msgid "Scripts"
 msgstr "脚本"
 
-#: ../../toolchain/moon/module.md:639
+#: ../../toolchain/moon/module.md:642
 msgid ""
 "The `scripts` field is used to define custom scripts associated with the "
 "module."
 msgstr "`scripts` 字段用于定义与模块关联的自定义脚本。"
 
-#: ../../toolchain/moon/module.md:641
+#: ../../toolchain/moon/module.md:644
 msgid "postadd script"
 msgstr "postadd 脚本"
 
-#: ../../toolchain/moon/module.md:643
+#: ../../toolchain/moon/module.md:646
 msgid ""
 "The `postadd` script runs automatically after the module has been added. "
 "When executed, the script's current working directory (cwd) is set to the"
 " directory containing the module configuration file."
 msgstr "`postadd` 脚本在模块添加后自动运行。执行时，脚本的当前工作目录（cwd）设置为模块配置文件所在的目录。"
 
-#: ../../toolchain/moon/module.md:649
+#: ../../toolchain/moon/module.md:652
 msgid ""
 "options(\n"
 "  scripts: {\n"
@@ -959,7 +975,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:658
+#: ../../toolchain/moon/module.md:661
 msgid ""
 "{\n"
 "  \"scripts\": {\n"
@@ -968,43 +984,43 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:669
+#: ../../toolchain/moon/module.md:672
 msgid "\\[Experimental\\] Pre-build config script"
 msgstr "\\[实验性\\] 预构建配置脚本"
 
-#: ../../toolchain/moon/module.md:672
+#: ../../toolchain/moon/module.md:675
 msgid ""
 "This feature is extremely experimental, and its API may change at any "
 "time. This documentation reflects the implementation as of 2025-06-03."
 msgstr "这个功能是极其实验性的，其 API 可能随时发生变化。本文件反映了截至 2025-06-03 的实现。"
 
-#: ../../toolchain/moon/module.md:677
+#: ../../toolchain/moon/module.md:680
 msgid ""
 "Using this feature may execute arbitrary code in your computer. Please "
 "use with caution and only with trusted dependencies."
 msgstr "使用此功能可能会在您的计算机上执行任意代码。请谨慎使用，仅与受信任的依赖项一起使用。"
 
-#: ../../toolchain/moon/module.md:681
+#: ../../toolchain/moon/module.md:684
 msgid ""
 "The pre-build config script is added in order to aid native target "
 "programming. To use such a script, add it to your module configuration:"
 msgstr "预构建配置脚本用于辅助 native 目标编程。要使用此类脚本，请将其添加到模块配置中："
 
-#: ../../toolchain/moon/module.md:687
+#: ../../toolchain/moon/module.md:690
 msgid ""
 "options(\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\",\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:694
+#: ../../toolchain/moon/module.md:697
 msgid ""
 "{\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:702
+#: ../../toolchain/moon/module.md:705
 msgid ""
 "The path is a relative path from the root of the project. The script may "
 "either be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) "
@@ -1014,17 +1030,17 @@ msgstr ""
 "路径是相对于项目根目录的相对路径。脚本可以是 JavaScript 脚本（扩展名为 `.js`、`.cjs`、`.mjs`）使用 `node` "
 "执行，或者是 Python 脚本（扩展名为 `.py`）使用 `python3` 或 `python` 执行。"
 
-#: ../../toolchain/moon/module.md:707
+#: ../../toolchain/moon/module.md:710
 msgid "Input"
 msgstr "输入"
 
-#: ../../toolchain/moon/module.md:709
+#: ../../toolchain/moon/module.md:712
 msgid ""
 "The script will be provided with a JSON with the structure of "
 "`BuildScriptEnvironment` from standard input stream (stdin):"
 msgstr "脚本将从标准输入流（stdin）接收一个具有 `BuildScriptEnvironment` 结构的 JSON："
 
-#: ../../toolchain/moon/module.md:712
+#: ../../toolchain/moon/module.md:715
 msgid ""
 "/** Represents the environment a build script receives */\n"
 "interface BuildScriptEnvironment {\n"
@@ -1063,17 +1079,17 @@ msgstr ""
 "  kind: string // TargetBackend\n"
 "}\n"
 
-#: ../../toolchain/moon/module.md:732
+#: ../../toolchain/moon/module.md:735
 msgid "Output"
 msgstr "输出"
 
-#: ../../toolchain/moon/module.md:734
+#: ../../toolchain/moon/module.md:737
 msgid ""
 "The script is expected to print a JSON string in its standard output "
 "stream (stdout) with the structure of `BuildScriptOutput`:"
 msgstr "脚本预计将在其标准输出流（stdout）中打印一个具有 `BuildScriptOutput` 结构的 JSON 字符串："
 
-#: ../../toolchain/moon/module.md:737
+#: ../../toolchain/moon/module.md:740
 msgid ""
 "interface BuildScriptOutput {\n"
 "  /** Build variables */\n"
@@ -1130,33 +1146,33 @@ msgstr ""
 "  link_search_paths?: string[]\n"
 "}\n"
 
-#: ../../toolchain/moon/module.md:766
+#: ../../toolchain/moon/module.md:769
 msgid "Build variables"
 msgstr "构建变量"
 
-#: ../../toolchain/moon/module.md:768
+#: ../../toolchain/moon/module.md:771
 msgid ""
 "You may use the variables emitted in the `vars` fields in the native "
 "linking arguments in `moon.pkg` as `${build.<var_name>}`."
 msgstr "您可以在 `moon.pkg` 的本地链接参数中使用 `vars` 字段中发出的变量，格式为 `${build.<var_name>}`。"
 
-#: ../../toolchain/moon/module.md:771
+#: ../../toolchain/moon/module.md:774
 msgid "For example, if your build script outputs:"
 msgstr "例如，如果您的构建脚本输出："
 
-#: ../../toolchain/moon/module.md:773
+#: ../../toolchain/moon/module.md:776
 msgid "{ \"vars\": { \"CC\": \"gcc\" } }\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:777
+#: ../../toolchain/moon/module.md:780
 msgid "and your `moon.pkg` is structured like:"
 msgstr "并且您的 `moon.pkg` 结构如下："
 
-#: ../../toolchain/moon/module.md:779
+#: ../../toolchain/moon/module.md:782
 msgid "moon.pkg"
 msgstr "moon.pkg"
 
-#: ../../toolchain/moon/module.md:779
+#: ../../toolchain/moon/module.md:782
 msgid ""
 "options(\n"
 "  link: {\n"
@@ -1167,11 +1183,11 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:784
+#: ../../toolchain/moon/module.md:787
 msgid "It will be transformed into"
 msgstr "它会被转换为"
 
-#: ../../toolchain/moon/module.md:786
+#: ../../toolchain/moon/module.md:789
 msgid ""
 "{\n"
 "  \"link\": {\n"

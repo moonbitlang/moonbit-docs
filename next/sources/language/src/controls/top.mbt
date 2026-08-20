@@ -387,3 +387,22 @@ test {
   println("do things")
   // end defer 2
 }
+
+// start errdefer
+fn operation_that_may_fail() -> Unit raise {
+  fail("operation failed")
+}
+
+test "errdefer" {
+  let mut cleaned_up = false
+  try {
+    errdefer {
+      cleaned_up = true
+    }
+    operation_that_may_fail()
+  } catch {
+    _ => ()
+  }
+  assert_true(cleaned_up)
+}
+// end errdefer
