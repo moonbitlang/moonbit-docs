@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-20 17:02+0800\n"
+"POT-Creation-Date: 2026-08-21 11:05+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -824,14 +824,17 @@ msgstr ""
 
 #: ../../language/methods.md:265
 msgid ""
-"For compatibility, the compiler still accepts the old implicit attachment"
-" but reports a deprecation diagnostic. New code should use `extend` "
-"rather than rely on the compatibility behavior."
+"For compatibility, the compiler still accepts the old implicit "
+"attachment. It can report an `implicit_impl_as_method` deprecation "
+"diagnostic when warning 79 is enabled; this warning is disabled in the "
+"default warning configuration. New code should use `extend` rather than "
+"rely on the compatibility behavior."
 msgstr ""
-"互換性のため、コンパイラは旧来の暗黙的な付加を引き続き受け入れますが、非推奨診断を報告します。新しいコードでは、"
-"この互換動作に依存せず `extend` を使用してください。"
+"互換性のため、コンパイラは旧来の暗黙的な付加を引き続き受け入れます。警告 79 "
+"を有効にすると、`implicit_impl_as_method` の非推奨診断を報告できます。この警告はデフォルトの警告設定では無効です。新しいコードでは、この互換動作に依存せず "
+"`extend` を使用してください。"
 
-#: ../../language/methods.md:269
+#: ../../language/methods.md:270
 msgid ""
 "If an implicitly attached method should remain callable temporarily but "
 "is not part of the intended method-style API, add a corresponding "
@@ -844,18 +847,18 @@ msgstr ""
 "でマークします。これにより、下流コードの移行経路を保ちながら、`Trait::method(value)` "
 "のような修飾呼び出しへ利用者を誘導できます。"
 
-#: ../../language/methods.md:274
+#: ../../language/methods.md:275
 msgid "Using traits"
 msgstr "trait の使用"
 
-#: ../../language/methods.md:276
+#: ../../language/methods.md:277
 msgid ""
 "When declaring a generic function, the type parameters can be annotated "
 "with the traits they should implement, allowing the definition of "
 "constrained generic functions. For example:"
 msgstr "ジェネリック関数を宣言するとき、型パラメータに実装すべき trait を注釈でき、制約付きジェネリック関数を定義できます。例えば："
 
-#: ../../language/methods.md:278
+#: ../../language/methods.md:279
 msgid ""
 "fn[X : Eq] contains(xs : Array[X], elem : X) -> Bool {\n"
 "  for x in xs {\n"
@@ -868,7 +871,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:284
+#: ../../language/methods.md:285
 msgid ""
 "Without the `Eq` requirement, the expression `x == elem` in `contains` "
 "will result in a type error. Now, the function `contains` can be called "
@@ -877,7 +880,7 @@ msgstr ""
 "`Eq` 制約がないと、`contains` 内の式 `x == elem` は型エラーになります。これで、関数 `contains` は "
 "`Eq` を実装する任意の型に対して呼び出せます。例えば："
 
-#: ../../language/methods.md:286
+#: ../../language/methods.md:287
 msgid ""
 "struct Point {\n"
 "  x : Int\n"
@@ -895,11 +898,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:292
+#: ../../language/methods.md:293
 msgid "Invoke trait methods directly"
 msgstr "trait メソッドを直接呼び出す"
 
-#: ../../language/methods.md:294
+#: ../../language/methods.md:295
 msgid ""
 "Methods of a trait can be called directly via `Trait::method`. MoonBit "
 "will infer the type of `Self` and check if `Self` indeed implements "
@@ -908,7 +911,7 @@ msgstr ""
 "trait のメソッドは `Trait::method` で直接呼び出せます。MoonBit は `Self` の型を推論し、`Self` "
 "が本当に `Trait` を実装しているかを確認します。例えば："
 
-#: ../../language/methods.md:296
+#: ../../language/methods.md:297
 msgid ""
 "test {\n"
 "  assert_eq(Show::to_string(42), \"42\")\n"
@@ -916,7 +919,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:302
+#: ../../language/methods.md:303
 msgid ""
 "For a future-proof concrete-type API, explicitly attach trait methods "
 "that should support dot syntax with [`extend`](#attaching-trait-methods-"
@@ -924,11 +927,11 @@ msgid ""
 "method. Existing implicit dot calls remain accepted for compatibility but"
 " are deprecated."
 msgstr ""
-"将来の変更に強い具象型 API にするには、ドット構文をサポートする trait メソッドを "
-"[`extend`](#attaching-trait-methods-with-extend) で明示的に付加してください。通常のメソッドは、付加された "
-"trait メソッドより優先されます。既存の暗黙的なドット呼び出しは互換性のため引き続き受け入れられますが、非推奨です。"
+"将来の変更に強い具象型 API にするには、ドット構文をサポートする trait メソッドを [`extend`](#attaching-"
+"trait-methods-with-extend) で明示的に付加してください。通常のメソッドは、付加された trait "
+"メソッドより優先されます。既存の暗黙的なドット呼び出しは互換性のため引き続き受け入れられますが、非推奨です。"
 
-#: ../../language/methods.md:308
+#: ../../language/methods.md:309
 msgid ""
 "For type parameters, a method from the single written constraint may be "
 "called with dot syntax. Use qualified syntax for methods inherited from a"
@@ -938,11 +941,11 @@ msgid ""
 "qualified syntax, or explicitly extend the trait-object type."
 msgstr ""
 
-#: ../../language/methods.md:315
+#: ../../language/methods.md:316
 msgid "Trait objects"
 msgstr "trait オブジェクト"
 
-#: ../../language/methods.md:317
+#: ../../language/methods.md:318
 msgid ""
 "MoonBit supports runtime polymorphism via trait objects. If `t` is of "
 "type `T`, which implements trait `I`, one can pack the methods of `T` "
@@ -957,7 +960,7 @@ msgstr ""
 "trait オブジェクト型だと分かっている場合は、`as &I` を省略できます。trait "
 "オブジェクトは値の具体的な型を消去するため、異なる具体型から作られたオブジェクトを同じデータ構造に入れて、統一的に扱えます："
 
-#: ../../language/methods.md:325
+#: ../../language/methods.md:326
 msgid ""
 "pub(open) trait Animal {\n"
 "  speak(Self) -> String\n"
@@ -998,7 +1001,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:331
+#: ../../language/methods.md:332
 msgid ""
 "Not all traits can be used to create objects. \"object-safe\" traits' "
 "methods must satisfy the following conditions:"
@@ -1006,23 +1009,23 @@ msgstr ""
 "すべての trait がオブジェクト生成に使えるわけではありません。\"object-safe\" な trait "
 "のメソッドは、次の条件を満たす必要があります："
 
-#: ../../language/methods.md:334
+#: ../../language/methods.md:335
 msgid "`Self` must be the first parameter of a method"
 msgstr "`Self` はメソッドの最初の引数でなければなりません"
 
-#: ../../language/methods.md:335
+#: ../../language/methods.md:336
 msgid ""
 "There must be only one occurrence of `Self` in the type of the method "
 "(i.e. the first parameter)"
 msgstr "メソッドの型の中に `Self` は 1 回だけ現れなければなりません（つまり最初の引数のみ）"
 
-#: ../../language/methods.md:337
+#: ../../language/methods.md:338
 msgid ""
 "Users can define new methods for trait objects, just like defining new "
 "methods for structs and enums:"
 msgstr "ユーザーは trait オブジェクトに対しても新しいメソッドを定義できます。struct や enum に新しいメソッドを定義するのと同じです："
 
-#: ../../language/methods.md:339
+#: ../../language/methods.md:340
 msgid ""
 "pub(open) trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
@@ -1050,15 +1053,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:345
+#: ../../language/methods.md:346
 msgid "Builtin traits"
 msgstr "組み込み trait"
 
-#: ../../language/methods.md:347
+#: ../../language/methods.md:348
 msgid "MoonBit provides the following useful builtin traits:"
 msgstr "MoonBit は次のような便利な組み込み trait を提供します："
 
-#: ../../language/methods.md:351
+#: ../../language/methods.md:352
 msgid ""
 "trait Eq {\n"
 "  op_equal(Self, Self) -> Bool\n"
@@ -1106,15 +1109,15 @@ msgstr ""
 "  default() -> Self\n"
 "}\n"
 
-#: ../../language/methods.md:376
+#: ../../language/methods.md:377
 msgid "Deriving builtin traits"
 msgstr "組み込み trait の導出"
 
-#: ../../language/methods.md:378
+#: ../../language/methods.md:379
 msgid "MoonBit can automatically derive implementations for some builtin traits:"
 msgstr "MoonBit は一部の組み込み trait について、実装を自動導出できます："
 
-#: ../../language/methods.md:380
+#: ../../language/methods.md:381
 msgid ""
 "struct T {\n"
 "  a : Int\n"
@@ -1131,6 +1134,6 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:386
+#: ../../language/methods.md:387
 msgid "See [Deriving](./derive.md) for more information about deriving traits."
 msgstr "trait の導出について詳しくは [Deriving](./derive.md) を参照してください。"

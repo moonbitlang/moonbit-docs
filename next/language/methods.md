@@ -262,9 +262,10 @@ should add an explicit `extend` for methods that are intended to be callable
 with dot syntax, or keep using `Trait::method(value, ...)` when no method-style
 API is intended.
 
-For compatibility, the compiler still accepts the old implicit attachment but
-reports a deprecation diagnostic. New code should use `extend` rather than rely
-on the compatibility behavior.
+For compatibility, the compiler still accepts the old implicit attachment. It
+can report an `implicit_impl_as_method` deprecation diagnostic when warning 79
+is enabled; this warning is disabled in the default warning configuration. New
+code should use `extend` rather than rely on the compatibility behavior.
 
 If an implicitly attached method should remain callable temporarily but is not
 part of the intended method-style API, add a corresponding `extend` declaration

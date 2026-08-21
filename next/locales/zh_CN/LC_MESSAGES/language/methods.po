@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-20 17:02+0800\n"
+"POT-Creation-Date: 2026-08-21 11:05+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -771,13 +771,17 @@ msgstr ""
 
 #: ../../language/methods.md:265
 msgid ""
-"For compatibility, the compiler still accepts the old implicit attachment"
-" but reports a deprecation diagnostic. New code should use `extend` "
-"rather than rely on the compatibility behavior."
+"For compatibility, the compiler still accepts the old implicit "
+"attachment. It can report an `implicit_impl_as_method` deprecation "
+"diagnostic when warning 79 is enabled; this warning is disabled in the "
+"default warning configuration. New code should use `extend` rather than "
+"rely on the compatibility behavior."
 msgstr ""
-"为保持兼容，编译器仍接受旧的隐式附加，但会报告弃用诊断。新代码应使用 `extend`，而不应依赖这一兼容行为。"
+"为保持兼容，编译器仍接受旧的隐式附加。启用警告 79 时，编译器可以报告 "
+"`implicit_impl_as_method` 弃用诊断；默认警告配置中此警告处于关闭状态。新代码应使用 "
+"`extend`，而不应依赖这一兼容行为。"
 
-#: ../../language/methods.md:269
+#: ../../language/methods.md:270
 msgid ""
 "If an implicitly attached method should remain callable temporarily but "
 "is not part of the intended method-style API, add a corresponding "
@@ -788,18 +792,18 @@ msgstr ""
 "如果某个隐式附加的方法需要暂时保持可调用、但不属于预期的方法式 API，请添加对应的 `extend` 声明并用 `#deprecated` "
 "标记。这样既能为下游代码保留迁移路径，也能引导用户改用 `Trait::method(value)` 等限定调用。"
 
-#: ../../language/methods.md:274
+#: ../../language/methods.md:275
 msgid "Using traits"
 msgstr "使用特征"
 
-#: ../../language/methods.md:276
+#: ../../language/methods.md:277
 msgid ""
 "When declaring a generic function, the type parameters can be annotated "
 "with the traits they should implement, allowing the definition of "
 "constrained generic functions. For example:"
 msgstr "在声明泛型函数时，可以使用特征注释类型参数，来定义受约束的泛型函数。例如："
 
-#: ../../language/methods.md:278
+#: ../../language/methods.md:279
 msgid ""
 "fn[X : Eq] contains(xs : Array[X], elem : X) -> Bool {\n"
 "  for x in xs {\n"
@@ -812,7 +816,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:284
+#: ../../language/methods.md:285
 msgid ""
 "Without the `Eq` requirement, the expression `x == elem` in `contains` "
 "will result in a type error. Now, the function `contains` can be called "
@@ -821,7 +825,7 @@ msgstr ""
 "如果没有 `Eq` 要求，`contains` 中的表达式 `x == elem` 将产生类型错误。现在，函数 `contains` "
 "可以使用任何实现 `Eq` 的类型调用，例如："
 
-#: ../../language/methods.md:286
+#: ../../language/methods.md:287
 msgid ""
 "struct Point {\n"
 "  x : Int\n"
@@ -839,11 +843,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:292
+#: ../../language/methods.md:293
 msgid "Invoke trait methods directly"
 msgstr "直接调用特征方法"
 
-#: ../../language/methods.md:294
+#: ../../language/methods.md:295
 msgid ""
 "Methods of a trait can be called directly via `Trait::method`. MoonBit "
 "will infer the type of `Self` and check if `Self` indeed implements "
@@ -852,7 +856,7 @@ msgstr ""
 "可以通过 `Trait::method` 直接调用特征的方法。MoonBit 将推断 `Self` 的类型，并检查 `Self` 是否确实实现了 "
 "`Trait`，例如："
 
-#: ../../language/methods.md:296
+#: ../../language/methods.md:297
 msgid ""
 "test {\n"
 "  assert_eq(Show::to_string(42), \"42\")\n"
@@ -860,7 +864,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:302
+#: ../../language/methods.md:303
 msgid ""
 "For a future-proof concrete-type API, explicitly attach trait methods "
 "that should support dot syntax with [`extend`](#attaching-trait-methods-"
@@ -871,7 +875,7 @@ msgstr ""
 "为了让具体类型的 API 经得起未来演进，请使用 [`extend`](#attaching-trait-methods-with-extend)"
 " 显式附加需要支持点语法的 trait 方法。普通方法的优先级高于附加的 trait 方法。为保持兼容，现有的隐式点调用仍会被接受，但已经弃用。"
 
-#: ../../language/methods.md:308
+#: ../../language/methods.md:309
 msgid ""
 "For type parameters, a method from the single written constraint may be "
 "called with dot syntax. Use qualified syntax for methods inherited from a"
@@ -884,11 +888,11 @@ msgstr ""
 "方法都应使用限定语法，从而明确所选 trait。trait object 也遵循同样原则：使用限定语法调用父 trait 方法，或显式扩展该 "
 "trait object 类型。"
 
-#: ../../language/methods.md:315
+#: ../../language/methods.md:316
 msgid "Trait objects"
 msgstr "特征对象"
 
-#: ../../language/methods.md:317
+#: ../../language/methods.md:318
 msgid ""
 "MoonBit supports runtime polymorphism via trait objects. If `t` is of "
 "type `T`, which implements trait `I`, one can pack the methods of `T` "
@@ -902,7 +906,7 @@ msgstr ""
 "的 `T` 的方法与 `t` 一起打包到运行时对象中。如果从上下文可以知道某个表达式的类型是特征对象类型，则 `as &I` "
 "可以省略。特征对象擦除了值的具体类型，因此可以将从不同具体类型创建的对象放入相同的数据结构并统一处理："
 
-#: ../../language/methods.md:325
+#: ../../language/methods.md:326
 msgid ""
 "pub(open) trait Animal {\n"
 "  speak(Self) -> String\n"
@@ -943,29 +947,29 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:331
+#: ../../language/methods.md:332
 msgid ""
 "Not all traits can be used to create objects. \"object-safe\" traits' "
 "methods must satisfy the following conditions:"
 msgstr "并非所有特征都可以用于创建对象。“对象安全”特征的方法必须满足以下条件："
 
-#: ../../language/methods.md:334
+#: ../../language/methods.md:335
 msgid "`Self` must be the first parameter of a method"
 msgstr "`Self` 必须是方法的第一个参数"
 
-#: ../../language/methods.md:335
+#: ../../language/methods.md:336
 msgid ""
 "There must be only one occurrence of `Self` in the type of the method "
 "(i.e. the first parameter)"
 msgstr "方法的类型中只能出现一个 `Self`（即第一个参数）"
 
-#: ../../language/methods.md:337
+#: ../../language/methods.md:338
 msgid ""
 "Users can define new methods for trait objects, just like defining new "
 "methods for structs and enums:"
 msgstr "用户可以为特征对象定义新方法，就像为结构体和枚举定义新方法一样："
 
-#: ../../language/methods.md:339
+#: ../../language/methods.md:340
 msgid ""
 "pub(open) trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
@@ -1017,15 +1021,15 @@ msgstr ""
 "  .write_string(\")\")\n"
 "}\n"
 
-#: ../../language/methods.md:345
+#: ../../language/methods.md:346
 msgid "Builtin traits"
 msgstr "内建特征"
 
-#: ../../language/methods.md:347
+#: ../../language/methods.md:348
 msgid "MoonBit provides the following useful builtin traits:"
 msgstr "MoonBit 提供了以下有用的内建特征："
 
-#: ../../language/methods.md:351
+#: ../../language/methods.md:352
 msgid ""
 "trait Eq {\n"
 "  op_equal(Self, Self) -> Bool\n"
@@ -1073,15 +1077,15 @@ msgstr ""
 "  default() -> Self\n"
 "}\n"
 
-#: ../../language/methods.md:376
+#: ../../language/methods.md:377
 msgid "Deriving builtin traits"
 msgstr "派生内建特征"
 
-#: ../../language/methods.md:378
+#: ../../language/methods.md:379
 msgid "MoonBit can automatically derive implementations for some builtin traits:"
 msgstr "MoonBit 可以自动为一些内建特征派生实现："
 
-#: ../../language/methods.md:380
+#: ../../language/methods.md:381
 msgid ""
 "struct T {\n"
 "  a : Int\n"
@@ -1098,6 +1102,6 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:386
+#: ../../language/methods.md:387
 msgid "See [Deriving](./derive.md) for more information about deriving traits."
 msgstr "参见 [派生](./derive.md) 了解有关派生特征的更多信息。"
