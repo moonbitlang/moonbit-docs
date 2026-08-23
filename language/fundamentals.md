@@ -2984,9 +2984,11 @@ are not supported.
 
 The strategy controls how overlapping cases are resolved:
 
-- `first` is the default. It selects the first case, in source order, that can
-  match. An unanchored regex may search forward from the beginning of the
-  input.
+- `first` is the default. As with `match`, cases have priority from top to
+  bottom, and the first case whose regex can match is selected. This is case
+  priority, not a leftmost-first comparison among matches from different
+  cases: an earlier unanchored case that matches later in the input takes
+  precedence over a later case that matches earlier.
 - `longest` selects the case that consumes the longest input prefix. Every
   regex must start with `^`. If several cases consume the same number of
   characters, their source order breaks the tie. Non-greedy quantifiers such
@@ -3068,6 +3070,12 @@ Every `lexscan` regex must start with `^`, because scanning always begins at the
 target's current cursor. `lexscan` cases do not support `before=` or `after=`.
 They may still use `as` to bind matched text, with the same `StringView` and
 `Char` capture types as `lexmatch`.
+
+In `first` mode, `lexscan` tests the cases from top to bottom, like `match`, and
+selects the first regex that matches at the current cursor. Here `first` refers
+to case priority: it does not compare leftmost match positions or match lengths
+across cases. Because every `lexscan` regex is anchored with `^`, all cases are
+tested from the same current cursor position.
 
 A `String` or `StringView` value is not a valid `lexscan` target. Use `lexmatch`
 to match one in-memory value, or put a `StringView` in a `StringScanner` when
