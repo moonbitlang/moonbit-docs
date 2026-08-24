@@ -1,0 +1,100 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-20 17:02+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0092.md:1
+msgid "E0092"
+msgstr ""
+
+#: ../../language/error_codes/E0092.md:3
+msgid "Warning name: `fragile_catch_all`"
+msgstr "警告名称：`fragile_catch_all`"
+
+#: ../../language/error_codes/E0092.md:5
+msgid ""
+"A catch-all handler performs cleanup and then re-raises the same error. This "
+"pattern is fragile because catch-all handlers will not capture asynchronous "
+"cancellation in the future, while cleanup must also run when an operation is "
+"cancelled."
+msgstr ""
+"兜底处理器执行清理后重新抛出同一个错误。这种写法并不稳健，因为将来兜底处理器"
+"不会捕获异步取消，而操作被取消时仍需执行清理。"
+
+#: ../../language/error_codes/E0092.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0092.md:12
+msgid ""
+"///|\n"
+"fn operation_that_may_fail() -> Unit raise {\n"
+"  fail(\"operation failed\")\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn run() -> Unit raise {\n"
+"  try operation_that_may_fail() catch {\n"
+"    error => {\n"
+"      println(\"cleanup\")\n"
+"      raise error\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0092.md:16
+msgid ""
+"The handler does not recover from or transform the error; it only performs "
+"cleanup before propagating it."
+msgstr "该处理器不会从错误中恢复或转换错误；它只在继续传播错误之前执行清理。"
+
+#: ../../language/error_codes/E0092.md:19
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E0092.md:21
+msgid ""
+"Replace the catch-all handler with `errdefer`. The cleanup then runs "
+"whenever the following body exits with an error, and the original error is "
+"propagated automatically."
+msgstr ""
+"将兜底处理器替换为 `errdefer`。这样，后续主体因错误退出时就会执行清理，并自动"
+"传播原始错误。"
+
+#: ../../language/error_codes/E0092.md:25
+msgid ""
+"///|\n"
+"fn operation_that_may_fail() -> Unit raise {\n"
+"  fail(\"operation failed\")\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn run() -> Unit raise {\n"
+"  errdefer println(\"cleanup\")\n"
+"  operation_that_may_fail()\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0092.md:29
+msgid ""
+"If the handler must inspect the error, keep that logic in `catch`, but move "
+"independent cleanup into `errdefer`."
+msgstr ""
+"如果处理器必须检查错误，请将该逻辑保留在 `catch` 中，但把独立的清理移到 "
+"`errdefer` 中。"

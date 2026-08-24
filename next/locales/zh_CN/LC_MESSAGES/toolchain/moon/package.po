@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-12 15:49+0800\n"
+"POT-Creation-Date: 2026-08-20 17:02+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1790,20 +1790,27 @@ msgid ""
 "                         88 warn\n"
 "guard_redundant_else       Redundant `else` on an exhaustive `guard`."
 "                      89 warn\n"
+"unused_lexcase             `lexmatch`/`lexscan` branch that can never be "
+"selected because other branches takes precedence or its pattern matches "
+"nothing.  90 warn\n"
+"unused_errdefer            unused `errdefer` statement"
+"                                     91 warn\n"
+"fragile_catch_all          fragile `catch` handler that can be converted "
+"to `defer` or `errdefer`  92 warn\n"
 "all                        all warnings\n"
 "state: warn = enabled, error = promoted to error, off = disabled\n"
 "note: default alert exceptions: alert_unsafe=off\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1201
+#: ../../toolchain/moon/package.md:1203
 msgid "Use `moonc check -warn-help` to see the list of preset compiler warnings."
 msgstr "使用 `moonc check -warn-help` 查看预设编译器警告列表。"
 
-#: ../../toolchain/moon/package.md:1204
+#: ../../toolchain/moon/package.md:1206
 msgid "Alert Warning"
 msgstr "`alert`警告"
 
-#: ../../toolchain/moon/package.md:1206
+#: ../../toolchain/moon/package.md:1208
 msgid ""
 "Alerts are special warnings that indicate the usage of API marked with  "
 "[`#internal` attribute](../../language/attributes.md#internal-attribute)."
@@ -1811,7 +1818,7 @@ msgstr ""
 "`alert`是一种特殊的警告，表示使用了某些被 [`#internal`属性](../../language/attributes.md"
 "#internal-attribute) 标记了的 API。 "
 
-#: ../../toolchain/moon/package.md:1209
+#: ../../toolchain/moon/package.md:1211
 msgid ""
 "All alerts have a category associated with them, which is customized by "
 "the author of the API. You can enable or disable specific alert "
@@ -1821,7 +1828,7 @@ msgstr ""
 "所有`alert`都附有一个类别，这是由 API "
 "的作者定义的。你可以通过`alert_<类别>`这样的警告名来启用或者关闭特定的`alert`类别，或者用`alert`一次性控制所有`alert`警告。"
 
-#: ../../toolchain/moon/package.md:1213
+#: ../../toolchain/moon/package.md:1215
 msgid ""
 "For example, the following configuration enables all alert warnings "
 "except the `unsafe` category. In CI, add `--deny-warn` to `moon check`, "
@@ -1831,44 +1838,44 @@ msgstr ""
 "例如，以下配置启用除 `unsafe` 类别以外的所有 alert 警告。在 CI 中，请为 `moon check`、`moon test` "
 "或相应命令添加 `--deny-warn`，将已启用的警告视为致命错误。"
 
-#: ../../toolchain/moon/package.md:1219
+#: ../../toolchain/moon/package.md:1221
 msgid "warnings = \"+alert-alert_unsafe\"\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1224
+#: ../../toolchain/moon/package.md:1226
 msgid ""
 "{\n"
 "  \"warn-list\": \"+alert-alert_unsafe\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1232
+#: ../../toolchain/moon/package.md:1234
 msgid "Virtual Package"
 msgstr "虚拟包"
 
-#: ../../toolchain/moon/package.md:1234
+#: ../../toolchain/moon/package.md:1236
 msgid ""
 "A virtual package serves as an interface of a package that can be "
 "replaced by actual implementations."
 msgstr "一个虚拟包可以作为一个包的接口被实际的实现替换。"
 
-#: ../../toolchain/moon/package.md:1236
+#: ../../toolchain/moon/package.md:1238
 msgid "Declarations"
 msgstr "声明"
 
-#: ../../toolchain/moon/package.md:1238
+#: ../../toolchain/moon/package.md:1240
 msgid ""
 "The `virtual` field is used to declare the current package as a virtual "
 "package."
 msgstr "`virtual` 字段用于将当前包声明为虚拟包。"
 
-#: ../../toolchain/moon/package.md:1240
+#: ../../toolchain/moon/package.md:1242
 msgid ""
 "For example, the following declares a virtual package with default "
 "implementation:"
 msgstr "例如，以下配置声明了一个具有默认实现的虚拟包："
 
-#: ../../toolchain/moon/package.md:1244
+#: ../../toolchain/moon/package.md:1246
 msgid ""
 "options(\n"
 "  virtual: {\n"
@@ -1877,7 +1884,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1253
+#: ../../toolchain/moon/package.md:1255
 msgid ""
 "{\n"
 "  \"virtual\": {\n"
@@ -1886,58 +1893,58 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1263
+#: ../../toolchain/moon/package.md:1265
 msgid "Implementations"
 msgstr "实现"
 
-#: ../../toolchain/moon/package.md:1265
+#: ../../toolchain/moon/package.md:1267
 msgid ""
 "The `implement` field is used to declare the virtual package to be "
 "implemented by the current package."
 msgstr "`implement` 字段用于指定当前包实现的虚拟包。"
 
-#: ../../toolchain/moon/package.md:1267
+#: ../../toolchain/moon/package.md:1269
 msgid "For example, the following implements a virtual package:"
 msgstr "例如，以下配置实现了一个虚拟包："
 
-#: ../../toolchain/moon/package.md:1271
+#: ../../toolchain/moon/package.md:1273
 msgid ""
 "options(\n"
 "  implement: \"moonbitlang/core/abort\",\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1278
+#: ../../toolchain/moon/package.md:1280
 msgid ""
 "{\n"
 "  \"implement\": \"moonbitlang/core/abort\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1286
+#: ../../toolchain/moon/package.md:1288
 msgid "Overriding implementations"
 msgstr "覆盖实现"
 
-#: ../../toolchain/moon/package.md:1288
+#: ../../toolchain/moon/package.md:1290
 msgid ""
 "The `overrides` field is used to provide the implementations that "
 "fulfills an imported virtual package."
 msgstr "`overrides` 字段用于提供满足导入虚拟包的实现。"
 
-#: ../../toolchain/moon/package.md:1290
+#: ../../toolchain/moon/package.md:1292
 msgid ""
 "For example, the following overrides the default implementation of the "
 "builtin abort package with another package:"
 msgstr "例如，以下配置将内置的 abort 包的默认实现替换为另一个包："
 
-#: ../../toolchain/moon/package.md:1294
+#: ../../toolchain/moon/package.md:1296
 msgid ""
 "options(\n"
 "  overrides: [ \"moonbitlang/dummy_abort/abort_show_msg\" ],\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/package.md:1301
+#: ../../toolchain/moon/package.md:1303
 msgid ""
 "{\n"
 "  \"overrides\": [\"moonbitlang/dummy_abort/abort_show_msg\"]\n"

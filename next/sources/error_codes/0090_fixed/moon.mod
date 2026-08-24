@@ -1,1 +1,1 @@
-source = "error_0090_fixed"
+name = "moonbit-community/E0090_fixed"

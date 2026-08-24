@@ -1164,7 +1164,7 @@ a nested block or loop shadows the outer label and produces
 [E0036](error_codes/E0036.md). Use distinct names so that each labelled
 `break` or `continue` has an unambiguous target.
 
-### `defer` expression
+### `defer` and `errdefer` expressions
 
 `defer` expression can be used to perform reliable resource cleanup.
 The syntax for `defer` is as follows:
@@ -1198,10 +1198,11 @@ Consecutive `defer` will be executed in reverse order, for example, the followin
 
 will output first `do things`, then `second defer`, and finally `first defer`.
 
-`return`, `break` and `continue` are disallowed in the right-hand side of `defer`.
-However, it is fine to run code that may raise an error or perform `async` operations inside `defer`.
-If `defer` raises an error, the new error will replace the old error that triggered the `defer`, if any.
-For example, the following code will raise `defer err`:
+`return`, `break` and `continue` are disallowed in the right-hand side of
+`defer`. The cleanup expression may otherwise raise an error and, in async
+code, perform async operations. If it raises, its error replaces any error
+that caused the body to exit. The following test confirms that the cleanup
+error replaces the body error:
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
@@ -1209,35 +1210,45 @@ For example, the following code will raise `defer err`:
 :end-before: end defer 3
 ```
 
-### `errdefer` expression
-
-`errdefer` expression is similar to `defer`, except that it is only triggered on error.
-The syntax for `errdefer` is as follows:
+`errdefer` has the same general form, but runs its cleanup expression only when
+the body raises an error or, for async code, is cancelled:
 
 ```moonbit
 errdefer <expr>
 <body>
 ```
 
-When `body` raises an error or gets cancelled (for `async` code), `expr` will be executed.
-However, if `body` returns normally, or jumps away via `return`/`break`/`continue`,
-`expr` will not get executed.
-Similar to `defer`, `expr` may raise an error or perform async operations,
-and in case `expr` raises an error, that error will replace the old one that triggered `errdefer`.
+On normal completion or a `return`, `break`, or `continue`, the cleanup is not
+run. Like `defer`, its cleanup expression may raise an error and, in async
+code, perform async operations. If it raises, its error becomes the result,
+replacing the error that triggered `errdefer`, if any.
 
-`errdefer` is especially useful for functions that return some kind of resource:
+It is useful for rolling back partially completed work without handling the
+original error:
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
-:start-after: start errdefer 1
-:end-before: end errdefer 1
+:start-after: start errdefer
+:end-before: end errdefer
 ```
 
-In this example, if `connect_tcp_socket` succeeds,
-`sock` will be returned to the caller and must not be closed.
-However, if `connect_tcp_socket` fails or gets cancelled, `sock` will not be returned,
-and must be closed to avoid a resource leak.
-Hence `errdefer` should be used here instead of `defer`.
+`errdefer` is especially useful for functions that return a resource:
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start errdefer resource
+:end-before: end errdefer resource
+```
+
+If `connect_tcp_socket` succeeds, `sock` is returned to the caller and must not
+be closed. If the connection fails or is cancelled, `sock` is not returned and
+must be closed to avoid a resource leak. Hence `errdefer` is used instead of
+`defer`.
+
+If the body cannot raise an error, the `errdefer` can never run and produces
+[E0091](error_codes/E0091.md). A catch-all handler that only performs cleanup
+and re-raises the same error should generally be replaced with `errdefer`; see
+[E0092](error_codes/E0092.md).
 
 ## Iterator
 

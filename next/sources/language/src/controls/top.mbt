@@ -388,18 +388,38 @@ test {
   // end defer 2
 }
 
-test {
-  try {
-    // start defer 3
+test "defer cleanup error replaces body error" {
+  // start defer 3
+  let message = try {
     defer {
-      raise Failure("defer err")
+      raise Failure("cleanup error")
     }
-    raise Failure("body err")
-    // end defer 3
+    raise Failure("body error")
   } catch {
-    err => println(err)
+    Failure(message) => message
   }
+  assert_eq(message, "cleanup error")
+  // end defer 3
 }
+
+// start errdefer
+fn operation_that_may_fail() -> Unit raise {
+  fail("operation failed")
+}
+
+test "errdefer" {
+  let mut cleaned_up = false
+  try {
+    errdefer {
+      cleaned_up = true
+    }
+    operation_that_may_fail()
+  } catch {
+    _ => ()
+  }
+  assert_true(cleaned_up)
+}
+// end errdefer
 
 priv struct Tcp(Int)
 
@@ -408,21 +428,20 @@ fn Tcp::close(_sock : Tcp) -> Unit {}
 priv struct Addr(String)
 
 #warnings("-unused_async")
-fn _errdefer_demo() -> Unit {
+fn _errdefer_resource_demo() -> Unit {
   fn make_tcp_socket() -> Tcp {
     Tcp(-1)
   }
-  async fn connect_tcp_socket(sock : Tcp, addr : Addr) -> Unit {
-    ignore(sock)
-    ignore(addr)
+  async fn connect_tcp_socket(_sock : Tcp, addr : Addr) -> Unit {
+    guard addr.0 != "" else { fail("invalid address") }
   }
 
-  // start errdefer 1
+  // start errdefer resource
   async fn connect(addr : Addr) -> Tcp {
     let sock = make_tcp_socket()
     errdefer sock.close()
     connect_tcp_socket(sock, addr)
     sock
   }
-  // end errdefer 1
+  // end errdefer resource
 }
