@@ -1198,18 +1198,52 @@ Consecutive `defer` will be executed in reverse order, for example, the followin
 
 will output first `do things`, then `second defer`, and finally `first defer`.
 
-`return`, `break` and `continue` are disallowed in the right hand side of `defer`.
-Currently, raising error or calling `async` function is also disallowed in the right hand side of `defer`.
+`return`, `break` and `continue` are disallowed in the right-hand side of
+`defer`. The cleanup expression may otherwise raise an error and, in async
+code, perform async operations. If it raises, its error replaces any error
+that caused the body to exit. The following test confirms that the cleanup
+error replaces the body error:
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start defer 3
+:end-before: end defer 3
+```
 
 `errdefer` has the same general form, but runs its cleanup expression only when
-the body exits by raising an error. It is useful for rolling back partially
-completed work while preserving the original error:
+the body raises an error or, for async code, is cancelled:
+
+```moonbit
+errdefer <expr>
+<body>
+```
+
+On normal completion or a `return`, `break`, or `continue`, the cleanup is not
+run. Like `defer`, its cleanup expression may raise an error and, in async
+code, perform async operations. If it raises, its error becomes the result,
+replacing the error that triggered `errdefer`, if any.
+
+It is useful for rolling back partially completed work without handling the
+original error:
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
 :language: moonbit
 :start-after: start errdefer
 :end-before: end errdefer
 ```
+
+`errdefer` is especially useful for functions that return a resource:
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start errdefer resource
+:end-before: end errdefer resource
+```
+
+If `connect_tcp_socket` succeeds, `sock` is returned to the caller and must not
+be closed. If the connection fails or is cancelled, `sock` is not returned and
+must be closed to avoid a resource leak. Hence `errdefer` is used instead of
+`defer`.
 
 If the body cannot raise an error, the `errdefer` can never run and produces
 [E0091](error_codes/E0091.md). A catch-all handler that only performs cleanup

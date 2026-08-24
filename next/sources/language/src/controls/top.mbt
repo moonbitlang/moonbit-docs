@@ -388,6 +388,20 @@ test {
   // end defer 2
 }
 
+test "defer cleanup error replaces body error" {
+  // start defer 3
+  let message = try {
+    defer {
+      raise Failure("cleanup error")
+    }
+    raise Failure("body error")
+  } catch {
+    Failure(message) => message
+  }
+  assert_eq(message, "cleanup error")
+  // end defer 3
+}
+
 // start errdefer
 fn operation_that_may_fail() -> Unit raise {
   fail("operation failed")
@@ -406,3 +420,28 @@ test "errdefer" {
   assert_true(cleaned_up)
 }
 // end errdefer
+
+priv struct Tcp(Int)
+
+fn Tcp::close(_sock : Tcp) -> Unit {}
+
+priv struct Addr(String)
+
+#warnings("-unused_async")
+fn _errdefer_resource_demo() -> Unit {
+  fn make_tcp_socket() -> Tcp {
+    Tcp(-1)
+  }
+  async fn connect_tcp_socket(_sock : Tcp, addr : Addr) -> Unit {
+    guard addr.0 != "" else { fail("invalid address") }
+  }
+
+  // start errdefer resource
+  async fn connect(addr : Addr) -> Tcp {
+    let sock = make_tcp_socket()
+    errdefer sock.close()
+    connect_tcp_socket(sock, addr)
+    sock
+  }
+  // end errdefer resource
+}
