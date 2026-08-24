@@ -387,3 +387,42 @@ test {
   println("do things")
   // end defer 2
 }
+
+test {
+  try {
+    // start defer 3
+    defer {
+      raise Failure("defer err")
+    }
+    raise Failure("body err")
+    // end defer 3
+  } catch {
+    err => println(err)
+  }
+}
+
+priv struct Tcp(Int)
+
+fn Tcp::close(_sock : Tcp) -> Unit {}
+
+priv struct Addr(String)
+
+#warnings("-unused_async")
+fn _errdefer_demo() -> Unit {
+  fn make_tcp_socket() -> Tcp {
+    Tcp(-1)
+  }
+  async fn connect_tcp_socket(sock : Tcp, addr : Addr) -> Unit {
+    ignore(sock)
+    ignore(addr)
+  }
+
+  // start errdefer 1
+  async fn connect(addr : Addr) -> Tcp {
+    let sock = make_tcp_socket()
+    errdefer sock.close()
+    connect_tcp_socket(sock, addr)
+    sock
+  }
+  // end errdefer 1
+}

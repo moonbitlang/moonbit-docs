@@ -1198,8 +1198,46 @@ Consecutive `defer` will be executed in reverse order, for example, the followin
 
 will output first `do things`, then `second defer`, and finally `first defer`.
 
-`return`, `break` and `continue` are disallowed in the right hand side of `defer`.
-Currently, raising error or calling `async` function is also disallowed in the right hand side of `defer`.
+`return`, `break` and `continue` are disallowed in the right-hand side of `defer`.
+However, it is fine to run code that may raise an error or perform `async` operations inside `defer`.
+If `defer` raises an error, the new error will replace the old error that triggered the `defer`, if any.
+For example, the following code will raise `defer err`:
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start defer 3
+:end-before: end defer 3
+```
+
+### `errdefer` expression
+
+`errdefer` expression is similar to `defer`, except that it is only triggered on error.
+The syntax for `errdefer` is as follows:
+
+```moonbit
+errdefer <expr>
+<body>
+```
+
+When `body` raises an error or gets cancelled (for `async` code), `expr` will be executed.
+However, if `body` returns normally, or jumps away via `return`/`break`/`continue`,
+`expr` will not get executed.
+Similar to `defer`, `expr` may raise an error or perform async operations,
+and in case `expr` raises an error, that error will replace the old one that triggered `errdefer`.
+
+`errdefer` is especially useful for functions that return some kind of resource:
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start errdefer 1
+:end-before: end errdefer 1
+```
+
+In this example, if `connect_tcp_socket` succeeds,
+`sock` will be returned to the caller and must not be closed.
+However, if `connect_tcp_socket` fails or gets cancelled, `sock` will not be returned,
+and must be closed to avoid a resource leak.
+Hence `errdefer` should be used here instead of `defer`.
 
 ## Iterator
 
