@@ -1,0 +1,84 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-20 17:02+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0091.md:1
+msgid "E0091"
+msgstr ""
+
+#: ../../language/error_codes/E0091.md:3
+msgid "Warning name: `unused_errdefer`"
+msgstr "警告名：`unused_errdefer`"
+
+#: ../../language/error_codes/E0091.md:5
+msgid ""
+"An `errdefer` statement cannot run because the rest of its body cannot raise "
+"an error. Unlike `defer`, `errdefer` performs its cleanup only when control "
+"leaves the body by raising an error."
+msgstr ""
+"body の残りの部分がエラーを送出しないため、`errdefer` 文は実行されません。"
+"`defer` とは異なり、`errdefer` はエラーの送出によって制御が body を離れる場合"
+"にのみクリーンアップを実行します。"
+
+#: ../../language/error_codes/E0091.md:9
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E0091.md:11
+msgid ""
+"///|\n"
+"pub fn run() -> Unit {\n"
+"  errdefer println(\"cleanup\")\n"
+"  println(\"operation completed\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0091.md:15
+msgid ""
+"The statements after `errdefer` complete normally, so its cleanup is unused."
+msgstr ""
+"`errdefer` の後の文は正常に完了するため、このクリーンアップは使われません。"
+
+#: ../../language/error_codes/E0091.md:17
+msgid "Suggestion"
+msgstr "修正案"
+
+#: ../../language/error_codes/E0091.md:19
+msgid ""
+"Remove the statement if no cleanup is needed. Use `defer` for cleanup that "
+"must always run, or keep `errdefer` before an operation that can raise an "
+"error when the cleanup is needed only on failure."
+msgstr ""
+"クリーンアップが不要なら、この文を削除します。常に実行する必要があるクリーン"
+"アップには `defer` を使います。失敗時だけクリーンアップする場合は、エラーを送"
+"出する可能性がある処理の前に `errdefer` を置きます。"
+
+#: ../../language/error_codes/E0091.md:23
+msgid ""
+"///|\n"
+"fn operation_that_may_fail() -> Unit raise {\n"
+"  fail(\"operation failed\")\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn run() -> Unit raise {\n"
+"  errdefer println(\"cleanup\")\n"
+"  operation_that_may_fail()\n"
+"}\n"
+msgstr ""

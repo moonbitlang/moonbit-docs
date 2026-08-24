@@ -113,7 +113,7 @@ struct T {
 } derive(Eq, Compare, Debug, Default)
 
 test {
-  let t1 = T::default()
+  let t1 : T = Default::default()
   let t2 = T::{ a: 1, b: 1 }
   debug_inspect(t1, content="{ a: 0, b: 0 }")
   debug_inspect(t2, content="{ a: 1, b: 1 }")

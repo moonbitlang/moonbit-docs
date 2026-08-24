@@ -1164,7 +1164,7 @@ a nested block or loop shadows the outer label and produces
 [E0036](error_codes/E0036.md). Use distinct names so that each labelled
 `break` or `continue` has an unambiguous target.
 
-### `defer` expression
+### `defer` and `errdefer` expressions
 
 `defer` expression can be used to perform reliable resource cleanup.
 The syntax for `defer` is as follows:
@@ -1200,6 +1200,21 @@ will output first `do things`, then `second defer`, and finally `first defer`.
 
 `return`, `break` and `continue` are disallowed in the right hand side of `defer`.
 Currently, raising error or calling `async` function is also disallowed in the right hand side of `defer`.
+
+`errdefer` has the same general form, but runs its cleanup expression only when
+the body exits by raising an error. It is useful for rolling back partially
+completed work while preserving the original error:
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start errdefer
+:end-before: end errdefer
+```
+
+If the body cannot raise an error, the `errdefer` can never run and produces
+[E0091](error_codes/E0091.md). A catch-all handler that only performs cleanup
+and re-raises the same error should generally be replaced with `errdefer`; see
+[E0092](error_codes/E0092.md).
 
 ## Iterator
 
