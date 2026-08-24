@@ -1473,7 +1473,7 @@ a nested block or loop shadows the outer label and produces
 [E0036](https://docs.moonbitlang.com/en/latest/language/error_codes/E0036.html). Use distinct names so that each labelled
 `break` or `continue` has an unambiguous target.
 
-### `defer` expression
+### `defer` and `errdefer` expressions
 
 `defer` expression can be used to perform reliable resource cleanup.
 The syntax for `defer` is as follows:
@@ -1508,6 +1508,34 @@ will output first `do things`, then `second defer`, and finally `first defer`.
 
 `return`, `break` and `continue` are disallowed in the right hand side of `defer`.
 Currently, raising error or calling `async` function is also disallowed in the right hand side of `defer`.
+
+`errdefer` has the same general form, but runs its cleanup expression only when
+the body exits by raising an error. It is useful for rolling back partially
+completed work while preserving the original error:
+
+```moonbit
+fn operation_that_may_fail() -> Unit raise {
+  fail("operation failed")
+}
+
+test "errdefer" {
+  let mut cleaned_up = false
+  try {
+    errdefer {
+      cleaned_up = true
+    }
+    operation_that_may_fail()
+  } catch {
+    _ => ()
+  }
+  assert_true(cleaned_up)
+}
+```
+
+If the body cannot raise an error, the `errdefer` can never run and produces
+[E0091](https://docs.moonbitlang.com/en/latest/language/error_codes/E0091.html). A catch-all handler that only performs cleanup
+and re-raises the same error should generally be replaced with `errdefer`; see
+[E0092](https://docs.moonbitlang.com/en/latest/language/error_codes/E0092.html).
 
 ## Iterator
 

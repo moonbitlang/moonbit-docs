@@ -5,5 +5,5 @@ This branch contains the automatically generated markdown files from the Sphinx 
 **Do not edit files in this branch directly** - they will be overwritten on the next build.
 
 Source: https://github.com/moonbitlang/moonbit-docs
-Built from commit: fbc5bc381118f1aebe606c98c7d18f3ff64749af
+Built from commit: e0ba714241c3b07da2814e4f2442c84e5b730a0f
 Built at: $(date -u +"%Y-%m-%d %H:%M:%S UTC")

@@ -110,7 +110,11 @@ test "derive debug enum" {
 
 ## Default
 
-`derive(Default)` will generate a method that returns the default value of the type.
+`derive(Default)` generates a `Default` implementation for the type. Call
+`Default::default()` with the expected type specified so MoonBit can select the
+implementation. Deriving the trait does not by itself attach `default` as a
+type method; use an explicit [`extend`](https://docs.moonbitlang.com/en/latest/language/methods.html#attaching-trait-methods-with-extend)
+declaration if a method-style API is desired.
 
 For structs, the default value is the struct with all fields set as their default value.
 
@@ -121,7 +125,7 @@ struct DeriveDefault {
 } derive(Default, Eq)
 
 test "derive default struct" {
-  let p = DeriveDefault::default()
+  let p : DeriveDefault = Default::default()
   assert_true(p == DeriveDefault::{ x: 0, y: None })
 }
 ```
@@ -136,7 +140,8 @@ enum DeriveDefaultEnum {
 } derive(Default, Eq)
 
 test "derive default enum" {
-  assert_true(DeriveDefaultEnum::default() == DeriveDefaultEnum::Case3)
+  let value : DeriveDefaultEnum = Default::default()
+  assert_true(value == DeriveDefaultEnum::Case3)
 }
 ```
 
@@ -183,8 +188,9 @@ test "derive hash struct" {
 
 ## FromJson and ToJson
 
-`derive(FromJson)` and `derive(ToJson)` automatically derives round-trippable method implementations
-used for serializing the type to and from JSON.
+`derive(FromJson)` and `derive(ToJson)` automatically generate round-trippable
+trait implementations used for serializing the type to and from JSON. Trait
+functions can be called with qualified syntax such as `ToJson::to_json(value)`.
 The implementation is mainly for debugging and storing the types in a human-readable format.
 
 ```moonbit
@@ -201,11 +207,11 @@ enum JsonTest2 {
 test "json basic" {
   let input = JsonTest1::{ x: 123, y: 456 }
   let expected : Json = { "x": 123, "y": 456 }
-  @test.assert_eq(input.to_json(), expected)
+  @test.assert_eq(ToJson::to_json(input), expected)
   assert_true(@json.from_json(expected) == input)
   let input = JsonTest2::A(x=123)
   let expected : Json = { "$tag": "A", "x": 123 }
-  @test.assert_eq(input.to_json(), expected)
+  @test.assert_eq(ToJson::to_json(input), expected)
   assert_true(@json.from_json(expected) == input)
 }
 ```
@@ -242,11 +248,11 @@ enum JsonTest4 {
 test "json args" {
   let input = JsonTest3::{ x: 123, y: 456 }
   let expected : Json = { "renamedX": 123, "y": 456 }
-  @test.assert_eq(input.to_json(), expected)
+  @test.assert_eq(ToJson::to_json(input), expected)
   assert_true(@json.from_json(expected) == input)
   let input = JsonTest4::A(x=123)
   let expected : Json = ["A", { "x": 123 }]
-  @test.assert_eq(input.to_json(), expected)
+  @test.assert_eq(ToJson::to_json(input), expected)
   assert_true(@json.from_json(expected) == input)
 }
 ```
