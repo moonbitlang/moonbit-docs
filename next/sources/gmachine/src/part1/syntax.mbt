@@ -142,7 +142,7 @@ fn tokenize(source : String) -> Tokens {
       tokens.push(Close(ch))
       continue
     } else if isAlpha(ch) {
-      let identifier = StringBuilder::new(size_hint=42)
+      let identifier = StringBuilder(size_hint=42)
       identifier.write_char(ch)
       next()
       while current < source.length() && isIdChar(peek()) {

@@ -103,7 +103,7 @@ fn cascade() -> Unit {
   let arr = []..append([1])
   // end operator 5
   // start operator 6
-  let builder = StringBuilder::new()
+  let builder = StringBuilder()
   builder.write_char('a')
   builder.write_char('a')
   builder.write_object(1001)
@@ -112,7 +112,7 @@ fn cascade() -> Unit {
   // end operator 6
 
   // start operator 7
-  let result = StringBuilder::new()
+  let result = StringBuilder()
     ..write_char('a')
     ..write_char('a')
     ..write_object(1001)

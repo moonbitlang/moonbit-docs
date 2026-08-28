@@ -1,6 +1,6 @@
 test {
   ignore(
-    StringBuilder::new()
+    StringBuilder()
       ..write_string("a")
       ..to_string(),
   )

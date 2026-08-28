@@ -47,7 +47,7 @@ fn pprint_edit(edit : Edit) -> String {
 
 ///|
 fn pprint_diff(diff : Array[Edit]) -> String {
-  let buf = StringBuilder::new(size_hint=100)
+  let buf = StringBuilder(size_hint=100)
   for i = diff.length(); i > 0; i = i - 1 {
     buf.write_string(pprint_edit(diff[i - 1]))
     buf.write_char('\n')
