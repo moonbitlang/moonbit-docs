@@ -1,5 +1,5 @@
 test {
-  let s = StringBuilder::new()
+  let s = StringBuilder()
     ..write_string("a")
     .to_string()
   inspect(s, content="a")

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 12:21+0800\n"
+"POT-Creation-Date: 2026-08-28 14:44+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -355,7 +355,15 @@ msgstr "下の表は、いくつかの MoonBit 型の内部表現を示してい
 msgid "The `FixedArray[T]` for numbers may migrate to `TypedArray` in the future."
 msgstr "数値用の `FixedArray[T]` は、将来的に `TypedArray` に移行する可能性があります。"
 
-#: ../../language/ffi.md:284
+#: ../../language/ffi.md:261
+msgid ""
+"Using `Array[T]` in a JavaScript FFI signature is deprecated. Use "
+"`FixedArray[T]` instead."
+msgstr ""
+"JavaScript FFI のシグネチャで `Array[T]` を使用することは非推奨です。代わりに "
+"`FixedArray[T]` を使用してください。"
+
+#: ../../language/ffi.md:287
 msgid ""
 "A foreign function returning `Unit` corresponds to a C function returning"
 " `void`. If the return type of `T` in `FuncRef[T]` is `Unit`, then it "
@@ -364,17 +372,17 @@ msgstr ""
 "`Unit` を返す外部関数は、`void` を返す C 関数に対応します。`FuncRef[T]` の `T` の戻り値型が `Unit` "
 "の場合、それは `void` を返す関数を指します。"
 
-#: ../../language/ffi.md:289
+#: ../../language/ffi.md:292
 msgid ""
 "Types not mentioned above do not have a stable ABI, so your code should "
 "not depend on their representations."
 msgstr "上で触れていない型には安定した ABI がないため、その内部表現に依存したコードを書くべきではありません。"
 
-#: ../../language/ffi.md:291
+#: ../../language/ffi.md:294
 msgid "Callbacks"
 msgstr "コールバック"
 
-#: ../../language/ffi.md:293
+#: ../../language/ffi.md:296
 msgid ""
 "Sometimes, we want to pass a MoonBit function to the foreign interface as"
 " callback. In MoonBit, it is possible to have closures. Per [MDN "
@@ -385,7 +393,7 @@ msgstr ""
 "glossary](https://developer.mozilla.org/en-"
 "US/docs/Web/JavaScript/Guide/Closures) によると："
 
-#: ../../language/ffi.md:295
+#: ../../language/ffi.md:298
 msgid ""
 "A closure is the combination of a function bundled together (enclosed) "
 "with references to its surrounding state (the lexical environment). In "
@@ -396,7 +404,7 @@ msgstr ""
 "クロージャとは、関数と、その周囲の状態（レキシカル環境）への参照をひとまとめにしたものです。言い換えると、クロージャによって関数は外側のスコープにアクセスできます。JavaScript"
 " では、関数が作られるたびにクロージャが作成されます。"
 
-#: ../../language/ffi.md:297
+#: ../../language/ffi.md:300
 msgid ""
 "In some cases, we would like to pass the callback function which doesn't "
 "capture any local free variables. For this purpose, MoonBit provides a "
@@ -408,13 +416,13 @@ msgstr ""
 "の閉じた関数を表す特別な型 `FuncRef[T]` を用意しています。`FuncRef[T]` 型の値は、型 `T` "
 "の閉じた関数でなければならず、そうでない場合は [型エラー](/language/error_codes/E4151.md) が発生します。"
 
-#: ../../language/ffi.md:299
+#: ../../language/ffi.md:302
 msgid ""
 "In other cases, a MoonBit function parameter would be represented as a "
 "function and an object containing the surrounding state."
 msgstr "それ以外の場合、MoonBit の関数引数は、関数と周囲の状態を保持するオブジェクトとして表現されます。"
 
-#: ../../language/ffi.md:307
+#: ../../language/ffi.md:310
 msgid ""
 "For Wasm backends, the callbacks will be passed as `externref`, which "
 "represents a function of the host. However, it is essential to convert "
@@ -423,7 +431,7 @@ msgstr ""
 "Wasm バックエンドでは、コールバックはホストの関数を表す `externref` "
 "として渡されます。ただし、関数と捕捉したデータをまとめてホスト側の関数に変換することが重要です。"
 
-#: ../../language/ffi.md:309
+#: ../../language/ffi.md:312
 msgid ""
 "To do so, the Wasm module will import a function under the module "
 "`moonbit:ffi` and function name `make_closure`. This function takes a "
@@ -435,7 +443,7 @@ msgstr ""
 "そのために、Wasm モジュールは `moonbit:ffi` モジュール、関数名 `make_closure` "
 "の関数をインポートします。この関数は関数とオブジェクトを受け取り、関数の最初の引数がそのオブジェクトであるものを、ホストの関数として返す必要があります。つまり、部分適用はホスト側の責任です。実装例は次のとおりです："
 
-#: ../../language/ffi.md:311
+#: ../../language/ffi.md:314
 msgid ""
 "{ \n"
 "  \"moonbit:ffi\": {\n"
@@ -449,27 +457,27 @@ msgstr ""
 "  } \n"
 "}\n"
 
-#: ../../language/ffi.md:323
+#: ../../language/ffi.md:326
 msgid "JavaScript supports closure, so there's nothing special to be done here."
 msgstr "JavaScript はクロージャをサポートしているので、ここで特別なことは必要ありません。"
 
-#: ../../language/ffi.md:330
+#: ../../language/ffi.md:333
 msgid ""
 "Some C library functions allow supplying extra data in addition to the "
 "callback function. Assume we have the following C library function:"
 msgstr "C ライブラリの関数の中には、コールバック関数に加えて追加データを渡せるものがあります。次の C ライブラリ関数があるとします："
 
-#: ../../language/ffi.md:333
+#: ../../language/ffi.md:336
 msgid "void register_callback(void (*callback)(void*), void *data);\n"
 msgstr "void register_callback(void (*callback)(void*), void *data);\n"
 
-#: ../../language/ffi.md:337
+#: ../../language/ffi.md:340
 msgid ""
 "we can bind this C function and pass closure to it using the following "
 "trick:"
 msgstr "この C 関数をバインドし、次の工夫でクロージャを渡すことができます："
 
-#: ../../language/ffi.md:339
+#: ../../language/ffi.md:342
 msgid ""
 "extern \"C\" fn register_callback_ffi(\n"
 "  call_closure : FuncRef[(() -> Unit) -> Unit],\n"
@@ -495,7 +503,7 @@ msgstr ""
 "  )\n"
 "}\n"
 
-#: ../../language/ffi.md:355
+#: ../../language/ffi.md:358
 msgid ""
 "Values of type `FuncRef[_]` can be called directly from MoonBit too. This"
 " is useful for dynamic loading functions via symbol name or implementing "
@@ -504,11 +512,11 @@ msgstr ""
 "`FuncRef[_]` 型の値は、MoonBit "
 "から直接呼び出すこともできます。これは、シンボル名で関数を動的に読み込む場合や、ネイティブバックエンドで JIT を実装する場合に便利です。"
 
-#: ../../language/ffi.md:357
+#: ../../language/ffi.md:360
 msgid "Customize integer value of constant enum"
 msgstr "定数 enum の整数値をカスタマイズする"
 
-#: ../../language/ffi.md:358
+#: ../../language/ffi.md:361
 msgid ""
 "In all backends of MoonBit, constant enum (`enum` where all constructors "
 "have no payload) are translated to integer. It is possible to customize "
@@ -519,7 +527,7 @@ msgstr ""
 "`enum`）は整数に変換されます。コンストラクタ宣言の後に `= <integer literal>` "
 "を追加すると、各コンストラクタの実際の整数表現をカスタマイズできます："
 
-#: ../../language/ffi.md:362
+#: ../../language/ffi.md:365
 msgid ""
 "enum SpecialNumbers {\n"
 "  Zero = 0\n"
@@ -539,7 +547,7 @@ msgstr ""
 "  FourtyTwo = 42\n"
 "}\n"
 
-#: ../../language/ffi.md:373
+#: ../../language/ffi.md:376
 msgid ""
 "If a constructor's integer value is unspecified, it defaults to one plus "
 "the value of the previous constructor (or zero for the first "
@@ -549,23 +557,23 @@ msgstr ""
 "コンストラクタの整数値を指定しない場合は、直前のコンストラクタの値に 1 を加えた値が既定になります（最初のコンストラクタは 0 "
 "です）。この機能は、C ライブラリのフラグをバインドするときに特に便利です。"
 
-#: ../../language/ffi.md:377
+#: ../../language/ffi.md:380
 msgid "Export Functions"
 msgstr "関数のエクスポート"
 
-#: ../../language/ffi.md:379
+#: ../../language/ffi.md:382
 msgid ""
 "For a foreign-library package, `#export_name` gives a public function its"
 " symbol name in generated Wasm, JavaScript, or C output:"
 msgstr ""
 
-#: ../../language/ffi.md:382
+#: ../../language/ffi.md:385
 msgid ""
 "// moon.pkg\n"
 "pkgtype(kind: \"foreign_library\")\n"
 msgstr ""
 
-#: ../../language/ffi.md:387
+#: ../../language/ffi.md:390
 msgid ""
 "#export_name(\"add\")\n"
 "pub fn add_one(value : Int) -> Int {\n"
@@ -573,39 +581,39 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/ffi.md:394
+#: ../../language/ffi.md:397
 msgid ""
 "MoonBit currently requires the name to be unique within the package and "
 "to be a valid C symbol identifier, regardless of the selected backend."
 msgstr ""
 
-#: ../../language/ffi.md:398
+#: ../../language/ffi.md:401
 msgid ""
 "Known compiler issue: `#export_name` currently applies its C-symbol-"
 "identifier restriction to every backend. WebAssembly export names are "
 "UTF-8 strings and are not limited to C identifiers."
 msgstr ""
 
-#: ../../language/ffi.md:403
+#: ../../language/ffi.md:406
 msgid ""
 "The attribute is not available on generic functions, functions with "
 "optional arguments, methods, or declarations without a body."
 msgstr ""
 
-#: ../../language/ffi.md:406
+#: ../../language/ffi.md:409
 msgid ""
 "Prefer `#export_name` for new exports. It keeps the exported name next to"
 " the function and applies to every backend that supports foreign-library "
 "output."
 msgstr ""
 
-#: ../../language/ffi.md:410
+#: ../../language/ffi.md:413
 msgid ""
 "The native backend does not currently support exporting a "
 "`foreign_library` package as a library artifact."
 msgstr ""
 
-#: ../../language/ffi.md:414
+#: ../../language/ffi.md:417
 msgid ""
 "Use the backend-specific `exports` field in [link "
 "configuration](/toolchain/moon/package.md#link-options) when the export "
@@ -613,7 +621,7 @@ msgid ""
 "annotated:"
 msgstr ""
 
-#: ../../language/ffi.md:418
+#: ../../language/ffi.md:421
 msgid ""
 "options(\n"
 "  \"link\": {\n"
@@ -631,13 +639,13 @@ msgstr ""
 "  }\n"
 ")\n"
 
-#: ../../language/ffi.md:428
+#: ../../language/ffi.md:431
 msgid ""
 "The previous example exports functions `add` and `fib`, where `fib` will "
 "be exported as `test`."
 msgstr "前の例では `add` と `fib` をエクスポートしますが、`fib` は `test` としてエクスポートされます。"
 
-#: ../../language/ffi.md:430
+#: ../../language/ffi.md:433
 msgid ""
 "Both `#export_name` and `exports` are scoped to the package that produces"
 " the artifact. Declarations and configuration in a dependency apply when "
@@ -646,11 +654,11 @@ msgid ""
 "define and export a wrapper in the exporting package."
 msgstr ""
 
-#: ../../language/ffi.md:441
+#: ../../language/ffi.md:444
 msgid "The `exports` field supports renaming as shown above."
 msgstr ""
 
-#: ../../language/ffi.md:447
+#: ../../language/ffi.md:450
 msgid ""
 "There's another `format` option to export as CommonJS module (`cjs`), ES "
 "Module (`esm`), or `iife`."
@@ -658,15 +666,15 @@ msgstr ""
 "CommonJS モジュール（`cjs`）、ES Module（`esm`）、`iife` としてエクスポートするための別の `format` "
 "オプションもあります。"
 
-#: ../../language/ffi.md:453
+#: ../../language/ffi.md:456
 msgid "Renaming the exported function is not supported for now"
 msgstr "エクスポートした関数の名前変更は、現時点ではサポートしていません"
 
-#: ../../language/ffi.md:458
+#: ../../language/ffi.md:461
 msgid "Lifetime management"
 msgstr "ライフタイム管理"
 
-#: ../../language/ffi.md:460
+#: ../../language/ffi.md:463
 msgid ""
 "MoonBit is a programming language with garbage collection. Thus when "
 "handling external object or passing MoonBit object to host, it is "
@@ -679,11 +687,11 @@ msgstr ""
 "バックエンドでは参照カウントを使います。Wasm GC バックエンドと JavaScript バックエンドでは、ランタイムの GC "
 "を再利用します。"
 
-#: ../../language/ffi.md:462
+#: ../../language/ffi.md:465
 msgid "Lifetime management of external object"
 msgstr "外部オブジェクトのライフタイム管理"
 
-#: ../../language/ffi.md:464
+#: ../../language/ffi.md:467
 msgid ""
 "When handling external object/resource in MoonBit, it is important to "
 "destroy object or release resource in time to prevent memory/resource "
@@ -692,11 +700,11 @@ msgstr ""
 "MoonBit "
 "で外部オブジェクトやリソースを扱うときは、メモリやリソースのリークを防ぐために、適切なタイミングでオブジェクトを破棄したりリソースを解放したりすることが重要です。"
 
-#: ../../language/ffi.md:467
+#: ../../language/ffi.md:470
 msgid "For C backend only"
 msgstr "C バックエンドのみ"
 
-#: ../../language/ffi.md:470
+#: ../../language/ffi.md:473
 msgid ""
 "`moonbit.h` provides an API `moonbit_make_external_object` for handling "
 "lifetime of external object/resource using MoonBit's own automatic memory"
@@ -705,7 +713,7 @@ msgstr ""
 "`moonbit.h` には、MoonBit 独自の自動メモリ管理システムを使って外部オブジェクトやリソースのライフタイムを扱うための API "
 "`moonbit_make_external_object` があります："
 
-#: ../../language/ffi.md:472
+#: ../../language/ffi.md:475
 msgid ""
 "void *moonbit_make_external_object(\n"
 "  void (*finalize)(void *self),\n"
@@ -717,7 +725,7 @@ msgstr ""
 "  uint32_t payload_size\n"
 ");\n"
 
-#: ../../language/ffi.md:479
+#: ../../language/ffi.md:482
 msgid ""
 "`moonbit_make_external_object` will create a new MoonBit object of size "
 "`payload_size + sizeof(finalize)`, the layout of the object is as "
@@ -726,7 +734,7 @@ msgstr ""
 "`moonbit_make_external_object` は、サイズが `payload_size + sizeof(finalize)` "
 "の新しい MoonBit オブジェクトを作成します。オブジェクトのレイアウトは次のとおりです："
 
-#: ../../language/ffi.md:482
+#: ../../language/ffi.md:485
 msgid ""
 "| MoonBit object header | ... payload | finalize function |\n"
 "                        ^\n"
@@ -742,7 +750,7 @@ msgstr ""
 "                           pointer returned by "
 "`moonbit_make_external_object`\n"
 
-#: ../../language/ffi.md:490
+#: ../../language/ffi.md:493
 msgid ""
 "so you can treat the object as a pointer to its payload directly. When "
 "MoonBit's automatic memory management system finds that an object created"
@@ -755,13 +763,13 @@ msgstr ""
 "で作成されたオブジェクトがもう生きていないと判断すると、オブジェクト自身を引数として `finalize` 関数を呼び出します。これにより "
 "`finalize` は、オブジェクトのペイロードが保持していた外部リソースやメモリを解放できます。"
 
-#: ../../language/ffi.md:493
+#: ../../language/ffi.md:496
 msgid ""
 "`finalize` **must not** drop the object itself, as this is handled by "
 "MoonBit runtime."
 msgstr "`finalize` はオブジェクト自身を解放してはいけません。これは MoonBit ランタイムが処理します。"
 
-#: ../../language/ffi.md:496
+#: ../../language/ffi.md:499
 msgid ""
 "On the MoonBit side, objects returned by `moonbit_make_external_object` "
 "should be bind to an *abstract* type, declared using `type T`, so that "
@@ -770,11 +778,11 @@ msgstr ""
 "MoonBit 側では、`moonbit_make_external_object` が返すオブジェクトは、`type T` で宣言した "
 "*abstract* 型に束縛しておくべきです。そうすることで、MoonBit のメモリ管理システムがそのオブジェクトを無視しなくなります。"
 
-#: ../../language/ffi.md:501
+#: ../../language/ffi.md:504
 msgid "Lifetime management of MoonBit object"
 msgstr "MoonBit オブジェクトのライフタイム管理"
 
-#: ../../language/ffi.md:503
+#: ../../language/ffi.md:506
 msgid ""
 "When passing MoonBit objects to the host through functions, it is "
 "essential to take care of the lifetime management of MoonBit itself. As "
@@ -788,15 +796,15 @@ msgstr ""
 "バックエンドは、コンパイラ最適化された参照カウントでオブジェクトのライフタイムを管理します。メモリエラーやリークを避けるため、FFI 関数は "
 "MoonBit オブジェクトの参照カウントを適切に維持しなければなりません。"
 
-#: ../../language/ffi.md:506
+#: ../../language/ffi.md:509
 msgid "For C backend and for Wasm backend only."
 msgstr "C バックエンドと Wasm バックエンドのみ"
 
-#: ../../language/ffi.md:509
+#: ../../language/ffi.md:512
 msgid "The calling convention of reference counting"
 msgstr "参照カウントの呼び出し規約"
 
-#: ../../language/ffi.md:511
+#: ../../language/ffi.md:514
 msgid ""
 "By default, MoonBit uses an owned calling convention for reference "
 "counting. That is, callee (the function being invoked) is responsible for"
@@ -811,57 +819,57 @@ msgstr ""
 "関数を使って引数を解放する責任を持ちます。引数を複数回使う場合は、被呼び出し側が `moonbit_incref` / "
 "`$moonbit.incref` 関数を使って参照カウントを増やす必要があります。状況ごとに必要な操作は次のとおりです："
 
-#: ../../language/ffi.md:505 ../../language/ffi.md:558
+#: ../../language/ffi.md:508 ../../language/ffi.md:561
 msgid "event"
 msgstr "イベント"
 
-#: ../../language/ffi.md:505 ../../language/ffi.md:558
+#: ../../language/ffi.md:508 ../../language/ffi.md:561
 msgid "operation"
 msgstr "操作"
 
-#: ../../language/ffi.md:505
+#: ../../language/ffi.md:508
 msgid "read field/element"
 msgstr "フィールド / 要素を読む"
 
-#: ../../language/ffi.md:505 ../../language/ffi.md:558
+#: ../../language/ffi.md:508 ../../language/ffi.md:561
 msgid "nothing"
 msgstr "なし"
 
-#: ../../language/ffi.md:505 ../../language/ffi.md:558
+#: ../../language/ffi.md:508 ../../language/ffi.md:561
 msgid "store into data structure"
 msgstr "データ構造に格納する"
 
-#: ../../language/ffi.md:505 ../../language/ffi.md:558
+#: ../../language/ffi.md:508 ../../language/ffi.md:561
 msgid "`incref`"
 msgstr "`incref`"
 
-#: ../../language/ffi.md:505 ../../language/ffi.md:558
+#: ../../language/ffi.md:508 ../../language/ffi.md:561
 msgid "passed to MoonBit function"
 msgstr "MoonBit 関数に渡す"
 
-#: ../../language/ffi.md:505
+#: ../../language/ffi.md:508
 msgid "passed to other foreign function"
 msgstr "他の外部関数に渡す"
 
-#: ../../language/ffi.md:505 ../../language/ffi.md:558
+#: ../../language/ffi.md:508 ../../language/ffi.md:561
 msgid "returned"
 msgstr "返す"
 
-#: ../../language/ffi.md:505 ../../language/ffi.md:558
+#: ../../language/ffi.md:508 ../../language/ffi.md:561
 msgid "end of scope (not returned)"
 msgstr "スコープ末尾（返さない）"
 
-#: ../../language/ffi.md:505
+#: ../../language/ffi.md:508
 msgid "`decref`"
 msgstr "`decref`"
 
-#: ../../language/ffi.md:522
+#: ../../language/ffi.md:525
 msgid ""
 "For example, here's a lifetime-correct binding to the standard `open` "
 "function for opening a file:"
 msgstr "例えば、ファイルを開く標準の `open` 関数に対する、ライフタイムが正しいバインディングは次のようになります："
 
-#: ../../language/ffi.md:524
+#: ../../language/ffi.md:527
 msgid ""
 "extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open_ffi\""
 "\n"
@@ -869,7 +877,7 @@ msgstr ""
 "extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open_ffi\""
 "\n"
 
-#: ../../language/ffi.md:528
+#: ../../language/ffi.md:531
 msgid ""
 "int open_ffi(moonbit_bytes_t filename, int flags) {\n"
 "  int fd = open(filename, flags);\n"
@@ -883,37 +891,37 @@ msgstr ""
 "  return fd;\n"
 "}\n"
 
-#: ../../language/ffi.md:536
+#: ../../language/ffi.md:539
 msgid "The managed types"
 msgstr "管理対象の型"
 
-#: ../../language/ffi.md:538
+#: ../../language/ffi.md:541
 msgid ""
 "The following types are always unboxed, so there is no need to manage "
 "their lifetime:"
 msgstr "次の型は常に unboxed であり、ライフタイムを管理する必要はありません："
 
-#: ../../language/ffi.md:540
+#: ../../language/ffi.md:543
 msgid "builtin number types, such as `Int` and `Double`"
 msgstr "`Int` や `Double` などの組み込み数値型"
 
-#: ../../language/ffi.md:541
+#: ../../language/ffi.md:544
 msgid "constant `enum` (`enum` where all constructors have no payload)"
 msgstr "定数 `enum`（すべてのコンストラクタがペイロードを持たない `enum`）"
 
-#: ../../language/ffi.md:543
+#: ../../language/ffi.md:546
 msgid "The following types are always boxed and reference counted:"
 msgstr "次の型は常に boxed で、参照カウントされます："
 
-#: ../../language/ffi.md:545
+#: ../../language/ffi.md:548
 msgid "`FixedArray[T]`, `Bytes` and `String`"
 msgstr "`FixedArray[T]`、`Bytes`、`String`"
 
-#: ../../language/ffi.md:546
+#: ../../language/ffi.md:549
 msgid "abstract types (`type T`)"
 msgstr "abstract 型（`type T`）"
 
-#: ../../language/ffi.md:548
+#: ../../language/ffi.md:551
 msgid ""
 "External types (`#external type T`) are also boxed, but they represent "
 "external pointers, so MoonBit will not perform any reference counting "
@@ -922,15 +930,15 @@ msgstr ""
 "外部型（`#external type T`）も boxed ですが、これは外部ポインタを表すため、MoonBit "
 "はそれらに対して参照カウント操作を行いません。"
 
-#: ../../language/ffi.md:551
+#: ../../language/ffi.md:554
 msgid "The layout of `struct`/`enum` with payload is currently unstable."
 msgstr "ペイロード付きの `struct` / `enum` のレイアウトは、現時点では安定していません。"
 
-#: ../../language/ffi.md:553
+#: ../../language/ffi.md:556
 msgid "The borrow and owned attribute"
 msgstr "`borrow` と `owned` 属性"
 
-#: ../../language/ffi.md:555
+#: ../../language/ffi.md:558
 msgid ""
 "When passing a parameter through the FFI, its ownership may or may not be"
 " kept. The `#borrow` and `#owned` attributes can be used to specify these"
@@ -939,17 +947,17 @@ msgstr ""
 "FFI を通して引数を渡すとき、その所有権が維持される場合とされない場合があります。`#borrow` と `#owned` 属性を使うと、この "
 "2 つの条件を指定できます。"
 
-#: ../../language/ffi.md:559
+#: ../../language/ffi.md:562
 msgid ""
 "We are in the process of migrating the default semantics to `#borrow` "
 "instead of `#owned`"
 msgstr "既定の意味論は `#owned` から `#borrow` へ移行中です"
 
-#: ../../language/ffi.md:562
+#: ../../language/ffi.md:565
 msgid "The syntax of `#borrow` and `#owned` are as follows:"
 msgstr "`#borrow` と `#owned` の構文は次のとおりです："
 
-#: ../../language/ffi.md:564
+#: ../../language/ffi.md:567
 msgid ""
 "#borrow(params..)\n"
 "extern \"C\" fn c_ffi(..) -> .. = ..\n"
@@ -957,11 +965,11 @@ msgstr ""
 "#borrow(params..)\n"
 "extern \"C\" fn c_ffi(..) -> .. = ..\n"
 
-#: ../../language/ffi.md:569
+#: ../../language/ffi.md:572
 msgid "where `params` is a subset of the parameters of `c_ffi`."
 msgstr "ここで `params` は `c_ffi` の引数の部分集合です。"
 
-#: ../../language/ffi.md:571
+#: ../../language/ffi.md:574
 msgid ""
 "Parameters of `#borrow` will be passed using borrow based calling "
 "convention, that is, the invoked function does not need to `decref` these"
@@ -975,7 +983,7 @@ msgstr ""
 "する必要がありません。FFI 関数が引数をローカルに読むだけなら（つまり引数を返さず、データ構造にも保存しないなら）、`#borrow` "
 "属性を直接使えます。例えば、前述の `open` 関数は `#borrow` を使うと次のように書き換えられます："
 
-#: ../../language/ffi.md:573
+#: ../../language/ffi.md:576
 msgid ""
 "#borrow(filename)\n"
 "extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open\"\n"
@@ -983,7 +991,7 @@ msgstr ""
 "#borrow(filename)\n"
 "extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open\"\n"
 
-#: ../../language/ffi.md:578
+#: ../../language/ffi.md:581
 msgid ""
 "There is no need for a stub function anymore: we are binding to the "
 "original version of `open` here. With the `#borrow` attribute, this "
@@ -992,7 +1000,7 @@ msgstr ""
 "もはやスタブ関数は不要です。ここでは `open` の元の版に直接バインドしています。`#borrow` "
 "属性を使っても、この版はライフタイム的に正しいままです。"
 
-#: ../../language/ffi.md:580
+#: ../../language/ffi.md:583
 msgid ""
 "Even if a stub function is still necessary for other reasons, `#borrow` "
 "can often simplify the lifetime management. Here are the rules for the "
@@ -1002,15 +1010,15 @@ msgstr ""
 "他の理由でスタブ関数が必要な場合でも、`#borrow` によってライフタイム管理を簡単にできることがよくあります。**borrow 引数** "
 "に対して必要な操作は、状況ごとに次のとおりです："
 
-#: ../../language/ffi.md:558
+#: ../../language/ffi.md:561
 msgid "read field / element"
 msgstr "フィールド / 要素を読む"
 
-#: ../../language/ffi.md:558
+#: ../../language/ffi.md:561
 msgid "passed to other C function / `#borrow` MoonBit function"
 msgstr "他の C 関数 / `#borrow` 付き MoonBit 関数に渡す"
 
-#: ../../language/ffi.md:591
+#: ../../language/ffi.md:594
 msgid ""
 "The opposite is the `#owned` semantic, where the parameter is stored by "
 "the FFI function, and the `decref` needs to be executed manually later. "

@@ -251,11 +251,14 @@ The table below shows the underlying representation of some MoonBit types:
 | external type (`#external type T`) | `any`   |
 | `String` | `string` |
 | `FixedArray[Byte]`/`Bytes` | `Uint8Array` |
-| `FixedArray[T]` / `Array[T]` | `T[]` |
+| `FixedArray[T]` | `T[]` |
 | `FuncRef[T]` | `Function` |
 
 ```{note}
 The `FixedArray[T]` for numbers may migrate to `TypedArray` in the future.
+
+Using `Array[T]` in a JavaScript FFI signature is deprecated. Use
+`FixedArray[T]` instead.
 ```
 
 ``````

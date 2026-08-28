@@ -111,7 +111,7 @@ fn Grid::format(self : Grid[@sorted_set.SortedSet[Char]]) -> String {
     maxWidth = @cmp.maximum(rep[i].length(), maxWidth)
     i = i + 1
   }
-  let buf = StringBuilder::new(size_hint=1000)
+  let buf = StringBuilder(size_hint=1000)
   i = 0
   while i < 81 {
     buf.write_string(" ")
