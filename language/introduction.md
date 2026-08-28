@@ -87,7 +87,7 @@ The following are the keywords and should not be used:
   "traitalias", "derive", "while", "break", "continue", "import", "return",
   "throw", "raise", "try", "catch", "pub", "priv", "proof_assert", "proof_let",
   "readonly", "true", "false", "_", "test", "loop", "for", "in", "impl", "with",
-  "guard", "async", "is", "suberror", "and", "letrec", "enumview", "noraise",
+  "guard", "async", "is", "suberror", "and", "letrec", "enumview", "noraise", "nocancel",
   "defer", "lexmatch", "lexscan", "where", "declare", "nobreak",
 ]
 ```

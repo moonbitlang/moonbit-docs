@@ -2769,7 +2769,7 @@ like `write_string`, `write_char`, `write_object`, etc., we often need to perfor
 a series of operations on the same `StringBuilder` value:
 
 ```moonbit
-let builder = StringBuilder::new()
+let builder = StringBuilder()
 builder.write_char('a')
 builder.write_char('a')
 builder.write_object(1001)
@@ -2784,7 +2784,7 @@ for all methods that return `Unit`, cascade operator can be used for
 consecutive operations without the need to modify the return type of the methods.
 
 ```moonbit
-let result = StringBuilder::new()
+let result = StringBuilder()
   ..write_char('a')
   ..write_char('a')
   ..write_object(1001)
