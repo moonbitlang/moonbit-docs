@@ -224,7 +224,7 @@ keyword ::= "as" | "else" | "extern" | "fn" | "if" | "let"
           | "proof_assert" | "proof_let" | "readonly" | "true" | "false"
           | "test" | "loop" | "for" | "in" | "impl" | "with"
           | "guard" | "async" | "is" | "suberror" | "and" | "letrec"
-          | "enumview" | "noraise" | "defer" | "lexscan"
+          | "enumview" | "noraise" | "nocancel" | "defer" | "lexscan"
           | "where" | "declare" | "nobreak" | "extend" | "try!" | "guard!"
 ```
 
