@@ -143,7 +143,8 @@ package to expose dependency functionality.
 
 ```{note}
 The native backend does not currently support exporting a `foreign_library`
-package as a library artifact.
+package as a linkable library artifact, including shared libraries such as a
+`.dll` or `.so`.
 ```
 
 (is-main)=
@@ -953,13 +954,16 @@ Here is a brief summarization to [compiler_flags.rs](https://github.com/moonbitl
 
 ##### C Compiler
 
-Search in PATH for the following items from top to bottom.
+On Windows, the native backend requires an MSVC-compatible toolchain with C++
+tools and the Windows SDK. Both Microsoft `cl.exe` and LLVM `clang-cl.exe` are
+supported. MinGW toolchains are not supported.
 
-- cl
+On other platforms, Moon searches PATH for the following items from top to
+bottom.
+
 - gcc
 - clang
 - cc
-- the internal tcc
 
 For GCC-like compilers, the default compile & link command is as follows.
 `[]` is used to indicate the flags may not exist in some modes.
@@ -969,7 +973,8 @@ cc -o $target -I$MOON_HOME/include -L$MOON_HOME/lib [-g] [-shared -fPIC] \
    $sources -lm $cc_flags $cc_link_flags
 ```
 
-For MSVC, the default compile & link command is as follows.
+For MSVC-compatible compiler drivers on Windows, the default compile & link
+command is as follows.
 ```shell
 cl (/Fo|/Fe)$target -I$MOON_HOME/include [/LD] /utf-8 /wd4819 /nologo (/O2|/Od) \
    /link /LIBPATH:$MOON_HOME/lib
