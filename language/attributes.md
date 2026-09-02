@@ -557,8 +557,8 @@ package.
 
 #### NOTE
 The native backend does not currently support exporting a `foreign_library`
-package as a library artifact. Use Wasm or JavaScript if you need an exported
-library.
+package as a linkable library artifact, including shared libraries such as a
+`.dll` or `.so`. Use Wasm or JavaScript if you need an exported library.
 
 See [Export Functions](https://docs.moonbitlang.com/en/latest/language/ffi.html#export-functions) for backend-specific
 alternatives.

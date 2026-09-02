@@ -349,7 +349,8 @@ function and applies to every backend that supports foreign-library output.
 
 #### NOTE
 The native backend does not currently support exporting a `foreign_library`
-package as a library artifact.
+package as a linkable library artifact, including shared libraries such as a
+`.dll` or `.so`.
 
 Use the backend-specific `exports` field in
 [link configuration](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#link-options) when the export
