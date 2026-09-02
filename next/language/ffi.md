@@ -411,7 +411,8 @@ function and applies to every backend that supports foreign-library output.
 
 ```{note}
 The native backend does not currently support exporting a `foreign_library`
-package as a library artifact.
+package as a linkable library artifact, including shared libraries such as a
+`.dll` or `.so`.
 ```
 
 Use the backend-specific `exports` field in
