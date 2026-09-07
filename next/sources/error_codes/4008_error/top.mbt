@@ -1,1 +1,1 @@
-pub extern "js" fn id[T](x : T) -> T = "(x) => x"
+pub extern "js" fn[T] id(x : T) -> T = "(x) => x"

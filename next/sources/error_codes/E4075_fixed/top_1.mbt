@@ -1,2 +1,2 @@
-fn f[T](param: T) -> Unit {
+fn[T] f(param: T) -> Unit {
 }

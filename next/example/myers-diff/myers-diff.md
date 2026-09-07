@@ -91,7 +91,7 @@ In fact, it is one of the shortest edit sequences that can transform text a into
     set : RHTable[T, Unit]
   }
 +
-+ fn RHSet::new[T](capacity : Int) -> RHSet[T] {
++ fn[T] RHSet::new(capacity : Int) -> RHSet[T] {
 +  let set : RHTable[T, Unit]= RHTable::new(capacity)
 +  { set : set }
 + }
@@ -102,7 +102,7 @@ In fact, it is one of the shortest edit sequences that can transform text a into
     set : RHTable[T, Unit]
 + }
 +
-+ fn RHSet::new[T](capacity : Int) -> RHSet[T] {
++ fn[T] RHSet::new(capacity : Int) -> RHSet[T] {
 +  let set : RHTable[T, Unit]= RHTable::new(capacity)
 +  { set : set }
   }

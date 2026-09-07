@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-18 13:58+0800\n"
+"POT-Creation-Date: 2026-09-07 11:44+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,54 +28,19 @@ msgstr ""
 
 #: ../../language/error_codes/E0027.md:5
 msgid ""
-"The syntax is deprecated. Please refer to the warning message on the "
-"reason and potential fix."
-msgstr "语法已弃用。请参考警告消息，了解原因和潜在修复方法。"
+"The compiler may emit this warning when it still accepts outdated syntax "
+"for compatibility. Follow the diagnostic's suggested replacement and "
+"migrate the code promptly."
+msgstr "当编译器为了兼容性仍接受过时语法时，可能会发出此警告。请按照诊断中建议的替代写法，尽快迁移代码。"
 
-#: ../../language/error_codes/E0027.md:8
+#: ../../language/error_codes/E0027.md:9
 msgid ""
-"For example, one deprecated usage is declaring a polymorphic function as "
-"`fn f[T]`. Instead, write the type parameters before the function name, "
-"as in `fn[T] f`."
-msgstr "例如，一种已弃用的用法是将多态函数声明为 `fn f[T]`。应改为将类型参数写在函数名之前，例如 `fn[T] f`。"
-
-#: ../../language/error_codes/E0027.md:12
-msgid "Erroneous example"
-msgstr "错误示例"
-
-#: ../../language/error_codes/E0027.md:14
-msgid ""
-"fn identity[T](value : T) -> T {\n"
-"  //\n"
-"  // Warning: The syntax fn f[..] for declaring polymorphic function is\n"
-"  // deprecated. Use fn[..] f instead.\n"
-"  value\n"
-"}\n"
-"\n"
-"fn main {\n"
-"  println(identity(\"Hello, world!\"))\n"
-"}\n"
+"Deprecated syntax is temporary and may be removed in a later compiler "
+"release. After removal, the same source may produce a syntax error "
+"instead of this warning. Therefore, this page does not use a checked "
+"source example tied to one particular deprecated form; refer to the "
+"diagnostic for its exact replacement."
 msgstr ""
-
-#: ../../language/error_codes/E0027.md:18
-msgid "Suggestion"
-msgstr "建议"
-
-#: ../../language/error_codes/E0027.md:20
-msgid ""
-"Migrate the code according to the warning message. In this case, move the"
-" type parameter list before the function name."
-msgstr "根据警告信息迁移代码。在这种情况下，请将类型参数列表移动到函数名之前。"
-
-#: ../../language/error_codes/E0027.md:23
-msgid ""
-"///|\n"
-"fn[T] identity(value : T) -> T {\n"
-"  value\n"
-"}\n"
-"\n"
-"///|\n"
-"fn main {\n"
-"  println(identity(\"Hello, world!\"))\n"
-"}\n"
-msgstr ""
+"弃用语法是临时兼容形式，可能会在后续编译器版本中移除。移除后，同一份源码可"
+"能不再触发此警告，而是产生语法错误。因此，本页不提供绑定某一种弃用形式的受"
+"检源码示例；请以具体诊断给出的替代写法为准。"
