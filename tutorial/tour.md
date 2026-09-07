@@ -186,7 +186,7 @@ trait Show {
 And the `assert_eq` uses them to constraint the passed parameters so that it can compare the two values and print them when they are not equal:
 
 ```moonbit
-fn assert_eq![A : Eq + Show](value : A, other : A) -> Unit {
+fn[A : Eq + Show] assert_eq!(value : A, other : A) -> Unit {
   ...
 }
 ```
