@@ -6,6 +6,7 @@ on:
       - main
   pull_request:
     paths:
+      - .github/workflows/next-check.yml
       - next/**
   schedule:
     - cron: "0 10 * * 2"
@@ -40,11 +41,37 @@ jobs:
         run: |
           python next/check_error_docs.py all
 
-      - name: Set up Rust
-        uses: dtolnay/rust-toolchain@stable
-
       - name: Install scrut
-        run: cargo install --locked scrut
+        shell: bash
+        run: |
+          case "$RUNNER_OS-$RUNNER_ARCH" in
+            Linux-X64)
+              scrut_archive=scrut-v0.4.3-linux-x86_64.tar.gz
+              scrut_dir=scrut-linux-x86_64
+              ;;
+            macOS-ARM64)
+              scrut_archive=scrut-v0.4.3-macos-aarch64.tar.gz
+              scrut_dir=scrut-macos-aarch64
+              ;;
+            Windows-X64)
+              scrut_archive=scrut-v0.4.3-windows-x86_64.zip
+              scrut_dir=scrut-windows-x86_64
+              ;;
+            *)
+              echo "Unsupported runner: $RUNNER_OS-$RUNNER_ARCH" >&2
+              exit 1
+              ;;
+          esac
+          mkdir -p "$RUNNER_TEMP/scrut"
+          curl --fail --location --retry 3 \
+            --output "$RUNNER_TEMP/scrut/$scrut_archive" \
+            "https://github.com/facebookincubator/scrut/releases/download/v0.4.3/$scrut_archive"
+          if [[ "$RUNNER_OS" == Windows ]]; then
+            unzip -q "$RUNNER_TEMP/scrut/$scrut_archive" -d "$RUNNER_TEMP/scrut"
+          else
+            tar -xzf "$RUNNER_TEMP/scrut/$scrut_archive" -C "$RUNNER_TEMP/scrut"
+          fi
+          echo "$RUNNER_TEMP/scrut/$scrut_dir" >> "$GITHUB_PATH"
 
       - name: Workspace command transcript
         shell: bash
