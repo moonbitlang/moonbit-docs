@@ -186,6 +186,33 @@ test "derive hash struct" {
 
 `derive(Arbitrary)` will generate random values of the given type.
 
+## Shrink
+
+`derive(Shrink)` implements `@quickcheck.Shrink` for property-based testing.
+Struct fields are shrunk one at a time in source order. Enum values keep their
+current constructor while its payload is shrunk; constructors without payloads
+produce no candidates. Every field or payload used by the derived
+implementation must itself implement `Shrink`.
+
+```moonbit
+///|
+struct ShrinkPoint {
+  x : Int
+  y : Int
+} derive(Shrink)
+
+///|
+fn shrink_candidates(point : ShrinkPoint) -> Iter[ShrinkPoint] {
+  @quickcheck.Shrink::shrink(point)
+}
+
+///|
+test "derive shrink struct" {
+  let candidates = shrink_candidates(ShrinkPoint::{ x: 10, y: 20, }).collect()
+  assert_true(candidates.length() > 0)
+}
+```
+
 ## FromJson and ToJson
 
 `derive(FromJson)` and `derive(ToJson)` automatically generate round-trippable

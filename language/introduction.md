@@ -82,9 +82,9 @@ The following are the keywords and should not be used:
 
 ```json
 [
-  "as", "else", "extern", "fn", "fnalias", "if", "let", "const", "match", "using",
-  "mut", "type", "typealias", "struct", "enum", "extenum", "trait",
-  "traitalias", "derive", "while", "break", "continue", "import", "return",
+  "as", "else", "extern", "fn", "if", "let", "const", "match", "using",
+  "mut", "type", "struct", "enum", "extenum", "trait",
+  "derive", "while", "break", "continue", "import", "return",
   "throw", "raise", "try", "catch", "pub", "priv", "proof_assert", "proof_let",
   "readonly", "true", "false", "_", "test", "loop", "for", "in", "impl", "with",
   "guard", "async", "is", "suberror", "and", "letrec", "enumview", "noraise", "nocancel",

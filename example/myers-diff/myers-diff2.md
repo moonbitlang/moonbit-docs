@@ -74,7 +74,7 @@ fn backtrack(
 ) -> Array[Edit] {
   let mut x = old.length()
   let mut y = new.length()
-  let edits = Array::new(capacity=trace.length())
+  let edits = Array(capacity=trace.length())
 ```
 
 The method of backtracking is essentially the same as forward search, just in reverse.

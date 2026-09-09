@@ -220,7 +220,7 @@ Then, define a helper function that splits a string into `Array[Line]` based on 
 
 ```moonbit
 fn lines(str : String) -> Array[Line] {
-  let lines = Array::new(capacity=50)
+  let lines = Array(capacity=50)
   let mut line_number = 0
   for line in str.split("\n") {
     line_number = line_number + 1

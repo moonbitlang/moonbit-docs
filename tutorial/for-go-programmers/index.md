@@ -115,10 +115,11 @@ Type aliases can be created using the `type ... = ...` syntax in Go:
 type Description = string
 ```
 
-In MoonBit, the `typealias` keyword is used instead:
+MoonBit uses the same `type Alias = ExistingType` form, with the alias name
+first:
 
 ```moonbit
-typealias String as Description
+type Description = String
 ```
 
 ## Structures

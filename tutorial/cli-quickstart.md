@@ -100,11 +100,14 @@ The package descriptor imports `argparse` from `moonbitlang/core` and the async 
 ```moonbit
 import {
   "moonbitlang/core/argparse",
-  "moonbitlang/core/test",
   "moonbitlang/async/fs",
   "moonbitlang/async/http",
   "moonbitlang/async/stdio",
 }
+
+import {
+  "moonbitlang/core/test",
+} for "test"
 ```
 
 ## Put async IO behind one function

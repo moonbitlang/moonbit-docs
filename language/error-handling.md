@@ -25,9 +25,6 @@ suberror E3 { // error type E3 has three constructors like a normal enum type
 }
 ```
 
-#### WARNING
-The older `suberror A B` syntax is deprecated. Use `suberror A { A(B) }` instead.
-
 The error types can be promoted to the `Error` type automatically, and pattern
 matched back:
 
@@ -57,6 +54,23 @@ fn f(e : Error) -> Unit {
 
 The `Error` is meant to be used where no concrete error type is needed, or a
 catch-all for all kinds of sub-errors is needed.
+
+To match every constructor of one particular suberror type, use the wildcard
+constructor pattern `Type::_`. The pattern may capture the refined suberror
+value with `as`, but a final `_` arm is still needed to cover other suberror
+types:
+
+```moonbit
+fn handle_e3(error : Error) -> Unit {
+  match error {
+    E3::_ as e => {
+      ignore(e)
+      println("E3 error")
+    }
+    _ => println("another error type")
+  }
+}
+```
 
 ### Failure
 

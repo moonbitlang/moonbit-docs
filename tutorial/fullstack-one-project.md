@@ -55,7 +55,7 @@ version = "0.1.0"
 
 import {
   "moonbitlang/async@0.20.2",
-  "moonbit-community/rabbita@0.11.5",
+  "moonbit-community/rabbita@0.11.6",
 }
 
 preferred_target = "native"

@@ -2262,9 +2262,6 @@ John Doe
 
 MoonBit supports type alias via the syntax `type NewType = OldType`:
 
-#### WARNING
-The old syntax `typealias OldType as NewType` may be removed in the future.
-
 ```moonbit
 pub type Index = Int
 pub type MyIndex = Int
