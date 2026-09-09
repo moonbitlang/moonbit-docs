@@ -73,12 +73,6 @@ msgstr ""
 "  C(mut x~ : String, Char, y~ : Bool)\n"
 "}\n"
 
-#: ../../language/error-handling.md:24
-msgid ""
-"The older `suberror A B` syntax is deprecated. Use `suberror A { A(B) }` "
-"instead."
-msgstr "旧的 `suberror A B` 语法已弃用。请改用 `suberror A { A(B) }`。"
-
 #: ../../language/error-handling.md:27
 msgid ""
 "The error types can be promoted to the `Error` type automatically, and "
@@ -123,6 +117,27 @@ msgid ""
 "catch-all for all kinds of sub-errors is needed."
 msgstr ""
 "`Error` 通常用于不需要具体错误类型的情况，或者简单地用来捕获所有的子错误。"
+
+#: ../../language/error-handling.md:44
+msgid ""
+"To match every constructor of one particular suberror type, use the wildcard "
+"constructor pattern `Type::_`. The pattern may capture the refined suberror "
+"value with `as`, but a final `_` arm is still needed to cover other suberror "
+"types:"
+msgstr "要匹配某个特定子错误类型的所有构造器，请使用通配构造器模式 `Type::_`。该模式可以使用 `as` 捕获类型细化后的子错误值，但仍需最后一个 `_` 分支来覆盖其他子错误类型："
+
+#: ../../language/error-handling.md:49
+msgid ""
+"fn handle_e3(error : Error) -> Unit {\n"
+"  match error {\n"
+"    E3::_ as e => {\n"
+"      ignore(e)\n"
+"      println(\"E3 error\")\n"
+"    }\n"
+"    _ => println(\"another error type\")\n"
+"  }\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error-handling.md:48
 msgid "Failure"

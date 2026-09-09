@@ -275,6 +275,40 @@ msgid "`derive(Arbitrary)` will generate random values of the given type."
 msgstr "`derive(Arbitrary)` 将生成给定类型的随机值。"
 
 #: ../../language/derive.md:101
+msgid "Shrink"
+msgstr "缩小"
+
+#: ../../language/derive.md:103
+msgid ""
+"`derive(Shrink)` implements `@quickcheck.Shrink` for property-based "
+"testing. Struct fields are shrunk one at a time in source order. Enum "
+"values keep their current constructor while its payload is shrunk; "
+"constructors without payloads produce no candidates. Every field or "
+"payload used by the derived implementation must itself implement `Shrink`."
+msgstr ""
+"`derive(Shrink)` 为基于属性的测试实现 `@quickcheck.Shrink`。结构体字段按源码顺序逐个缩小。枚举值在缩小负载时保持当前构造器；不带负载的构造器不会产生候选值。派生实现使用的每个字段或负载本身都必须实现 `Shrink`。"
+
+#: ../../language/derive.md:109
+msgid ""
+"///|\n"
+"struct ShrinkPoint {\n"
+"  x : Int\n"
+"  y : Int\n"
+"} derive(Shrink)\n"
+"\n"
+"///|\n"
+"fn shrink_candidates(point : ShrinkPoint) -> Iter[ShrinkPoint] {\n"
+"  @quickcheck.Shrink::shrink(point)\n"
+"}\n"
+"\n"
+"///|\n"
+"test \"derive shrink struct\" {\n"
+"  let candidates = shrink_candidates(ShrinkPoint::{ x: 10, y: 20, }).collect()\n"
+"  assert_true(candidates.length() > 0)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/derive.md:101
 msgid "FromJson and ToJson"
 msgstr "从/到 Json"
 

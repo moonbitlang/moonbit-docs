@@ -1717,10 +1717,6 @@ Besides pattern matching, you can also use index to access the elements similar 
 ### Type alias
 MoonBit supports type alias via the syntax `type NewType = OldType`:
 
-```{warning}
-The old syntax `typealias OldType as NewType` may be removed in the future.
-```
-
 ```{literalinclude} /sources/language/src/data/top.mbt
 :language: moonbit
 :start-after: start typealias 1

@@ -71,6 +71,18 @@ fn f(e : Error) -> Unit {
 }
 // end error 6
 
+// start suberror wildcard
+fn handle_e3(error : Error) -> Unit {
+  match error {
+    E3::_ as e => {
+      ignore(e)
+      println("E3 error")
+    }
+    _ => println("another error type")
+  }
+}
+// end suberror wildcard
+
 // start error 7
 fn div_reraise(x : Int, y : Int) -> Int raise DivError {
   div(x, y) // Rethrow the error if `div` raised an error

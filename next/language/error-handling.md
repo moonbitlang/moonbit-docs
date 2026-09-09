@@ -20,10 +20,6 @@ be defined, in the following forms:
 :end-before: end error 1
 ```
 
-```{warning}
-The older `suberror A B` syntax is deprecated. Use `suberror A { A(B) }` instead.
-```
-
 The error types can be promoted to the `Error` type automatically, and pattern
 matched back:
 
@@ -44,6 +40,17 @@ Since the type `Error` can include multiple error types, pattern matching on the
 
 The `Error` is meant to be used where no concrete error type is needed, or a
 catch-all for all kinds of sub-errors is needed.
+
+To match every constructor of one particular suberror type, use the wildcard
+constructor pattern `Type::_`. The pattern may capture the refined suberror
+value with `as`, but a final `_` arm is still needed to cover other suberror
+types:
+
+```{literalinclude} /sources/language/src/error/top.mbt
+:language: moonbit
+:start-after: start suberror wildcard
+:end-before: end suberror wildcard
+```
 
 ### Failure
 

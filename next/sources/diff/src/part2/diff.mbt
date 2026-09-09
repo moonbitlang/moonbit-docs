@@ -53,7 +53,7 @@ fn backtrack(
 ) -> Array[Edit] {
   let mut x = old.length()
   let mut y = new.length()
-  let edits = Array::new(capacity=trace.length())
+  let edits = Array(capacity=trace.length())
   // end backtrack_fst definition
   // start backtrack_snd definition
   for i = trace.length() - 1; i >= 0; i = i - 1 {

@@ -107,7 +107,7 @@ fn Tokens::eat(
 
 ///|
 fn tokenize(source : String) -> Tokens {
-  let tokens : Array[Token] = Array::new(capacity=source.length() / 2)
+  let tokens : Array[Token] = Array(capacity=source.length() / 2)
   let mut current = 0
   let source = source.to_array()
   fn peek() -> Char {

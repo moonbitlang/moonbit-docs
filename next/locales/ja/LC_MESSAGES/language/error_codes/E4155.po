@@ -23,23 +23,20 @@ msgid "E4155"
 msgstr ""
 
 #: ../../language/error_codes/E4155.md:3
-msgid "Cycle in `const`, `fnalias`, `typealias` or `traitalias` declaration."
-msgstr ""
+msgid "Cycle in a `const` or type alias declaration."
+msgstr "`const` または型エイリアスの宣言に循環があります。"
 
 #: ../../language/error_codes/E4155.md:5
 msgid ""
-"`const` declaration can refer to other constants defined in the same "
-"package, and `fnalias` can alias other function alias in the same "
-"package, too. `typealias` and `traitalias` can also refer to other "
-"`typealias`/`traitalias` in current package. But these definitions must "
-"not form cycle, otherwise this error will be reported."
-msgstr ""
+"Constants and type aliases can refer to other declarations in the same "
+"package, but the references must not form a cycle."
+msgstr "定数と型エイリアスは同じパッケージ内の別の宣言を参照できますが、その参照が循環してはいけません。"
+
+#: ../../language/error_codes/E4155.md:8
+msgid "Erroneous example"
+msgstr "誤った例"
 
 #: ../../language/error_codes/E4155.md:10
-msgid "Erroneous example"
-msgstr ""
-
-#: ../../language/error_codes/E4155.md:11
 msgid ""
 "///|\n"
 "const A : Int = B + 1\n"
@@ -48,20 +45,41 @@ msgid ""
 "const B : Int = A + 1\n"
 "\n"
 "///|\n"
-"fnalias f as g\n"
+"type T1 = T2\n"
 "\n"
 "///|\n"
-"fnalias g as f\n"
+"type T2 = T1\n"
+msgstr ""
+
+#: ../../language/error_codes/E4155.md:14
+msgid "Suggestion"
+msgstr "修正案"
+
+#: ../../language/error_codes/E4155.md:16
+msgid "Break the cycle so that every constant and type alias eventually resolves to a concrete value or type."
+msgstr "循環を解消し、各定数と型エイリアスが最終的に具体的な値または型へ解決されるようにしてください。"
+
+#: ../../language/error_codes/E4155.md:19
+msgid ""
+"///|\n"
+"const A : Int = 1\n"
 "\n"
 "///|\n"
-"typealias T1 as T2\n"
+"const B : Int = A + 1\n"
 "\n"
 "///|\n"
-"typealias T2 as T1\n"
+"type T1 = Int\n"
 "\n"
 "///|\n"
-"traitalias I1 as I2\n"
+"type T2 = T1\n"
 "\n"
 "///|\n"
-"traitalias I2 as I1\n"
+"fn use_declarations(value : T2) -> Int {\n"
+"  value + B\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  assert_eq(use_declarations(A), 3)\n"
+"}\n"
 msgstr ""

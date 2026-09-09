@@ -9,7 +9,7 @@
 project = 'MoonBit'
 author = 'International Digital Economy Academy'
 copyright = '%Y, {author}'.format(author=author)
-release = 'v0.10.11'
+release = 'v0.10.12'
 
 # I18N based on Readthedocs Environment
 # https://docs.readthedocs.io/en/stable/reference/environment-variables.html

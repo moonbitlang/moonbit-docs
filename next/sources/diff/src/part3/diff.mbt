@@ -196,7 +196,7 @@ fn linear_diff(old~ : Array[Line], new~ : Array[Line]) -> Array[Edit]? {
   let xy = points[0] // (0, 0)
   let mut x1 = xy.0
   let mut y1 = xy.1
-  let edits = Array::new(capacity=old.length() + new.length())
+  let edits = Array(capacity=old.length() + new.length())
   for i = 1; i < points.length(); i = i + 1 {
     let xy = points[i]
     let x2 = xy.0

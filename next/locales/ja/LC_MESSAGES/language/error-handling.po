@@ -75,12 +75,6 @@ msgstr ""
 "  C(mut x~ : String, Char, y~ : Bool)\n"
 "}\n"
 
-#: ../../language/error-handling.md:24
-msgid ""
-"The older `suberror A B` syntax is deprecated. Use `suberror A { A(B) }` "
-"instead."
-msgstr "古い `suberror A B` 構文は非推奨です。代わりに `suberror A { A(B) }` を使ってください。"
-
 #: ../../language/error-handling.md:27
 msgid ""
 "The error types can be promoted to the `Error` type automatically, and "
@@ -132,6 +126,27 @@ msgid ""
 "The `Error` is meant to be used where no concrete error type is needed, "
 "or a catch-all for all kinds of sub-errors is needed."
 msgstr "`Error` は、具体的なエラー型が不要な場面や、あらゆる種類のサブエラーを一括で扱いたい場面で使うことを想定しています。"
+
+#: ../../language/error-handling.md:44
+msgid ""
+"To match every constructor of one particular suberror type, use the wildcard "
+"constructor pattern `Type::_`. The pattern may capture the refined suberror "
+"value with `as`, but a final `_` arm is still needed to cover other suberror "
+"types:"
+msgstr "特定の suberror 型に属するすべてのコンストラクタへ一致させるには、ワイルドカードコンストラクタパターン `Type::_` を使います。このパターンでは `as` により型が絞り込まれた suberror 値を取り出せますが、ほかの suberror 型を扱うため、最後に `_` のアームが必要です："
+
+#: ../../language/error-handling.md:49
+msgid ""
+"fn handle_e3(error : Error) -> Unit {\n"
+"  match error {\n"
+"    E3::_ as e => {\n"
+"      ignore(e)\n"
+"      println(\"E3 error\")\n"
+"    }\n"
+"    _ => println(\"another error type\")\n"
+"  }\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error-handling.md:48
 msgid "Failure"

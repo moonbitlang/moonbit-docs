@@ -11,7 +11,7 @@ fn Line::new(number : Int, text : String) -> Self {
 
 ///|
 fn lines(str : String) -> Array[Line] {
-  let lines = Array::new(capacity=50)
+  let lines = Array(capacity=50)
   let mut line_number = 0
   for line in str.split("\n") {
     line_number = line_number + 1

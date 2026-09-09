@@ -98,6 +98,20 @@ for example `HashMap`s and `HashSet`s.
 
 `derive(Arbitrary)` will generate random values of the given type.
 
+## Shrink
+
+`derive(Shrink)` implements `@quickcheck.Shrink` for property-based testing.
+Struct fields are shrunk one at a time in source order. Enum values keep their
+current constructor while its payload is shrunk; constructors without payloads
+produce no candidates. Every field or payload used by the derived
+implementation must itself implement `Shrink`.
+
+```{literalinclude} /sources/language/src/derive/shrink.mbt
+:language: moonbit
+:start-after: start derive shrink struct
+:end-before: end derive shrink struct
+```
+
 ## FromJson and ToJson
 
 `derive(FromJson)` and `derive(ToJson)` automatically generate round-trippable
