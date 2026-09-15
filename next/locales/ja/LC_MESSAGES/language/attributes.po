@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 14:33+0800\n"
+"POT-Creation-Date: 2026-09-15 14:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -924,11 +924,45 @@ msgstr "設定アトリビュート"
 
 #: ../../language/attributes/cfg.md:4
 msgid ""
-"The `#cfg` attribute is used to perform conditional compilation. Examples"
-" are:"
-msgstr "`#cfg` アトリビュートは条件付きコンパイルを行うために使います。例は次のとおりです："
+"The `#cfg` attribute controls whether a declaration is included in "
+"compilation. Conditions are evaluated at compile time and can use:"
+msgstr "`#cfg` アトリビュートは、宣言をコンパイルに含めるかどうかを制御します。条件はコンパイル時に評価され、次のものを使用できます："
+
+#: ../../language/attributes/cfg.md:7
+msgid "`true` or `false` to always include or exclude a declaration."
+msgstr "`true` または `false`：宣言を常に含めるか除外します。"
 
 #: ../../language/attributes/cfg.md:8
+msgid "`target` to select a compilation backend, such as `target=\"wasm\"`."
+msgstr "`target`：`target=\"wasm\"` のようにコンパイルバックエンドを選択します。"
+
+#: ../../language/attributes/cfg.md:9
+msgid ""
+"`platform` to select an operating system for the native backend, such as "
+"`platform=\"windows\"`."
+msgstr "`platform`：`platform=\"windows\"` のように native バックエンドのオペレーティングシステムを選択します。"
+
+#: ../../language/attributes/cfg.md:11
+msgid ""
+"`not(...)`, `all(...)`, or `any(...)` to negate a condition, require all "
+"conditions, or require at least one condition."
+msgstr "`not(...)`、`all(...)`、`any(...)`：それぞれ条件の否定、すべての条件の成立、少なくとも一つの条件の成立を表します。"
+
+#: ../../language/attributes/cfg.md:15
+msgid ""
+"A `platform` condition currently also restricts the target to `native`. "
+"For example, `platform=\"windows\"` is equivalent to "
+"`all(target=\"native\", platform=\"windows\")`."
+msgstr "`platform` 条件を指定すると、現時点では target も `native` に制限されます。たとえば、`platform=\"windows\"` は `all(target=\"native\", platform=\"windows\")` と同じ意味です。"
+
+#: ../../language/attributes/cfg.md:19
+msgid ""
+"This matters under negation: `not(platform=\"windows\")` also matches "
+"every non-native target. To select native builds other than Windows, use "
+"`all(target=\"native\", not(platform=\"windows\"))`."
+msgstr "否定する場合はこの点に注意してください。`not(platform=\"windows\")` は、`native` 以外のすべての target にも一致します。Windows 以外の native ビルドだけを選択するには、`all(target=\"native\", not(platform=\"windows\"))` を使用してください。"
+
+#: ../../language/attributes/cfg.md:26
 msgid ""
 "#cfg(true)\n"
 "fn cfg_true() -> Unit {\n"
@@ -945,13 +979,18 @@ msgid ""
 "  ()\n"
 "}\n"
 "\n"
-"#cfg(not(target=\"wasm\"))\n"
-"fn cfg_not_wasm() -> Unit {\n"
+"#cfg(platform=\"windows\")\n"
+"fn cfg_native_windows() -> Unit {\n"
 "  ()\n"
 "}\n"
 "\n"
-"#cfg(all(target=\"wasm\", true))\n"
-"fn cfg_all() -> Unit {\n"
+"#cfg(not(platform=\"windows\"))\n"
+"fn cfg_except_native_windows() -> Unit {\n"
+"  ()\n"
+"}\n"
+"\n"
+"#cfg(all(target=\"native\", not(platform=\"windows\")))\n"
+"fn cfg_native_non_windows() -> Unit {\n"
 "  ()\n"
 "}\n"
 "\n"

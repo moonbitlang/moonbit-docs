@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 14:33+0800\n"
+"POT-Creation-Date: 2026-09-15 14:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -903,11 +903,45 @@ msgstr "`cfg` 属性"
 
 #: ../../language/attributes/cfg.md:4
 msgid ""
-"The `#cfg` attribute is used to perform conditional compilation. Examples"
-" are:"
-msgstr "`#cfg` 属性用于执行条件编译。例子有："
+"The `#cfg` attribute controls whether a declaration is included in "
+"compilation. Conditions are evaluated at compile time and can use:"
+msgstr "`#cfg` 属性控制某个声明是否参与编译。条件在编译时求值，可以使用："
+
+#: ../../language/attributes/cfg.md:7
+msgid "`true` or `false` to always include or exclude a declaration."
+msgstr "`true` 或 `false`：始终包含或排除某个声明。"
 
 #: ../../language/attributes/cfg.md:8
+msgid "`target` to select a compilation backend, such as `target=\"wasm\"`."
+msgstr "`target`：选择编译后端，例如 `target=\"wasm\"`。"
+
+#: ../../language/attributes/cfg.md:9
+msgid ""
+"`platform` to select an operating system for the native backend, such as "
+"`platform=\"windows\"`."
+msgstr "`platform`：选择 native 后端的操作系统，例如 `platform=\"windows\"`。"
+
+#: ../../language/attributes/cfg.md:11
+msgid ""
+"`not(...)`, `all(...)`, or `any(...)` to negate a condition, require all "
+"conditions, or require at least one condition."
+msgstr "`not(...)`、`all(...)` 或 `any(...)`：分别表示条件取反、所有条件均成立或至少一个条件成立。"
+
+#: ../../language/attributes/cfg.md:15
+msgid ""
+"A `platform` condition currently also restricts the target to `native`. "
+"For example, `platform=\"windows\"` is equivalent to "
+"`all(target=\"native\", platform=\"windows\")`."
+msgstr "目前，`platform` 条件也会将 target 限定为 `native`。例如，`platform=\"windows\"` 等价于 `all(target=\"native\", platform=\"windows\")`。"
+
+#: ../../language/attributes/cfg.md:19
+msgid ""
+"This matters under negation: `not(platform=\"windows\")` also matches "
+"every non-native target. To select native builds other than Windows, use "
+"`all(target=\"native\", not(platform=\"windows\"))`."
+msgstr "对条件取反时需要注意这一点：`not(platform=\"windows\")` 也会匹配所有 target 不为 `native` 的情况。若只想选择 Windows 以外的 native 构建，请使用 `all(target=\"native\", not(platform=\"windows\"))`。"
+
+#: ../../language/attributes/cfg.md:26
 msgid ""
 "#cfg(true)\n"
 "fn cfg_true() -> Unit {\n"
@@ -924,13 +958,18 @@ msgid ""
 "  ()\n"
 "}\n"
 "\n"
-"#cfg(not(target=\"wasm\"))\n"
-"fn cfg_not_wasm() -> Unit {\n"
+"#cfg(platform=\"windows\")\n"
+"fn cfg_native_windows() -> Unit {\n"
 "  ()\n"
 "}\n"
 "\n"
-"#cfg(all(target=\"wasm\", true))\n"
-"fn cfg_all() -> Unit {\n"
+"#cfg(not(platform=\"windows\"))\n"
+"fn cfg_except_native_windows() -> Unit {\n"
+"  ()\n"
+"}\n"
+"\n"
+"#cfg(all(target=\"native\", not(platform=\"windows\")))\n"
+"fn cfg_native_non_windows() -> Unit {\n"
 "  ()\n"
 "}\n"
 "\n"
@@ -1033,7 +1072,9 @@ msgid ""
 "`foreign_library` package as a linkable library artifact, including "
 "shared libraries such as a `.dll` or `.so`. Use Wasm or JavaScript if you"
 " need an exported library."
-msgstr "native 后端目前不支持将 `foreign_library` 包导出为可链接的库产物，包括 `.dll` 或 `.so` 等共享库。如需导出的库，请使用 Wasm 或 JavaScript。"
+msgstr ""
+"native 后端目前不支持将 `foreign_library` 包导出为可链接的库产物，包括 `.dll` 或 `.so` "
+"等共享库。如需导出的库，请使用 Wasm 或 JavaScript。"
 
 #: ../../language/attributes/export_name.md:45
 msgid ""
