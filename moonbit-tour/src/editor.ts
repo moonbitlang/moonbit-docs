@@ -4,7 +4,6 @@ import * as util from "./util";
 
 const moon = moonbitMode.init({
   onigWasmUrl: new URL("./onig.wasm", import.meta.url).toString(),
-  mooncWorkerFactory: () => new Worker("/moonc-worker.js"),
 });
 
 // @ts-ignore
@@ -25,29 +24,46 @@ const output = document.querySelector<HTMLPreElement>("#output")!;
 const trace = moonbitMode.traceCommandFactory();
 
 async function run(debug: boolean) {
-  if (debug) {
-    const result = await moon.runSingleFile({
-      code: model.getValue(),
-      filename: "main.mbt",
-      debugMain: true,
-    });
-    switch (result.kind) {
-      case "success": {
-        output.textContent = result.output;
-        return;
+  const version = model.getVersionId();
+  const runId = ++latestRun;
+  const isCurrent = () =>
+    runId === latestRun && version === model.getVersionId();
+  output.textContent = "";
+  try {
+    if (debug) {
+      const result = await moon.runSingleFile({
+        code: model.getValue(),
+        filename: "main.mbt",
+        debugMain: true,
+      });
+      if (!isCurrent()) return;
+      switch (result.kind) {
+        case "success": {
+          output.textContent = result.output;
+          return;
+        }
+        case "error": {
+          console.error(result.diagnostics ?? result.message);
+          output.textContent = result.message;
+        }
       }
-      case "error": {
-        console.error(result.diagnostics ?? result.message);
-        output.textContent = result.message;
-      }
+      return;
     }
-    return;
+    const stdout = await trace(monaco.Uri.file("/main.mbt").toString());
+    if (!isCurrent() || stdout === undefined) return;
+    output.textContent = stdout;
+  } catch (error) {
+    if (isCurrent()) {
+      output.textContent =
+        error instanceof Error ? error.message : String(error);
+    }
   }
-  const stdout = await trace(monaco.Uri.file("/main.mbt").toString());
-  if (stdout === undefined) return;
-  output.textContent = stdout;
 }
 
+let latestRun = 0;
+model.onDidChangeContent(() => {
+  output.textContent = "";
+});
 model.onDidChangeContent(util.debounce(() => run(false), 100));
 
 monaco.editor.onDidCreateEditor(() => {

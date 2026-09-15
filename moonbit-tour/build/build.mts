@@ -41,7 +41,7 @@ const plugin = (): esbuild.Plugin => {
 
         await fs.cp("./public", "./dist", { recursive: true });
 
-        const names = ["moonc-worker.js", "onig.wasm"];
+        const names = ["onig.wasm"];
         await Promise.all(
           names.map((name) =>
             fs.copyFile(
