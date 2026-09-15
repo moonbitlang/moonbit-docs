@@ -189,17 +189,17 @@ fn cfg_wasm() -> Unit {
 }
 
 #cfg(platform="windows")
-fn cfg_windows() -> Unit {
+fn cfg_native_windows() -> Unit {
   ()
 }
 
 #cfg(not(platform="windows"))
-fn cfg_non_windows() -> Unit {
+fn cfg_except_native_windows() -> Unit {
   ()
 }
 
-#cfg(all(target="native", platform="windows"))
-fn cfg_all() -> Unit {
+#cfg(all(target="native", not(platform="windows")))
+fn cfg_native_non_windows() -> Unit {
   ()
 }
 
