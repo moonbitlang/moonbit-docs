@@ -9,11 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - uses: pnpm/action-setup@v4
         with:
           package_json_file: moonbit-tour/package.json
       - name: check
         run: |
           cd moonbit-tour
-          pnpm install
+          pnpm install --frozen-lockfile
           pnpm build
+          pnpm exec playwright install --with-deps chromium
+          pnpm test
