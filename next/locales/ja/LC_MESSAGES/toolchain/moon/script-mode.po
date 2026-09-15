@@ -114,6 +114,40 @@ msgid ""
 "version in the local registry index."
 msgstr "import パスで明示的にバージョンを指定しない場合は、ローカルのレジストリインデックスにある最新バージョンが使われます。"
 
+#: ../../toolchain/moon/script-mode.md:51
+msgid ""
+"A script may use `*` in place of an alias to bring all definitions from a "
+"package into its scope:"
+msgstr ""
+"スクリプトでは、エイリアスの代わりに `*` を使い、パッケージ内のすべての定義を現在のスコープへ取り込めます："
+
+#: ../../toolchain/moon/script-mode.md:54
+msgid ""
+"///|\n"
+"import {\n"
+"  \"moonbitlang/core/queue\" *\n"
+"}\n"
+"\n"
+"///|\n"
+"fn main {\n"
+"  let queue = Queue([1, 2, 3])\n"
+"  println(queue.length())\n"
+"  let qualified = @queue.Queue([4, 5])\n"
+"  println(qualified.length())\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/script-mode.md:58
+msgid ""
+"The package's default alias remains available, so the example can use both "
+"`Queue` and `@queue.Queue`. Import-all syntax is limited to `.mbtx` scripts; "
+"regular packages should use package aliases or `using` declarations. Prefer "
+"explicit imports when name conflicts would make a script difficult to read."
+msgstr ""
+"パッケージのデフォルトエイリアスも引き続き利用できるため、この例では `Queue` と `@queue.Queue` の両方を使用できます。"
+"全インポート構文は `.mbtx` スクリプト専用です。通常のパッケージでは、パッケージエイリアスまたは `using` 宣言を使用してください。"
+"名前の衝突でスクリプトが読みにくくなる場合は、明示的なインポートを優先してください。"
+
 #: ../../toolchain/moon/script-mode.md:52
 msgid "Run a `.mbtx` script from stdin"
 msgstr "stdin から `.mbtx` スクリプトを実行する"

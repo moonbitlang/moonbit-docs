@@ -1185,7 +1185,7 @@ unnecessary_annotation     unnecessary type annotation                          
 missing_doc                Missing documentation for public definition                     74 off
 unnecessary_view_op        Unnecessary `[:]` view operator                                 75 off
 result_error_return        Using `Result[T, E]` where `E` is an error type.                78 off
-implicit_impl_as_method    `impl` implicitly promoted as method                            79 off
+implicit_impl_as_method    `impl` implicitly promoted as method                            79 warn
 regex_match_missing_before Missing `before` binding in `regex match`.                      80 warn
 regex_match_missing_after  Missing `after` binding in `regex match`.                       81 warn
 ambiguous_braces           Ambiguous `{}` braces.                                          82 warn

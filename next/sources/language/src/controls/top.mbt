@@ -163,6 +163,16 @@ fn e() -> Unit {
   // end for loop 7
 }
 
+// start for loop pattern
+test "destructuring patterns in for-in loops" {
+  let mut total = 0
+  for (x, y) in [(1, 2), (3, 4)] {
+    total += x + y
+  }
+  assert_eq(total, 10)
+}
+// end for loop pattern
+
 test "for loop 7" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start for loop 7

@@ -6,14 +6,18 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+import os
+
 project = 'MoonBit'
 author = 'International Digital Economy Academy'
 copyright = '%Y, {author}'.format(author=author)
-release = 'v0.10.12'
+rtd_version = os.getenv('READTHEDOCS_VERSION') or ''
+release = os.getenv('DOCS_RELEASE') or (
+    rtd_version if rtd_version and rtd_version != 'latest' else 'nightly'
+)
 
 # I18N based on Readthedocs Environment
 # https://docs.readthedocs.io/en/stable/reference/environment-variables.html
-import os
 rtd_language = (os.getenv('READTHEDOCS_LANGUAGE') or '').lower()
 local_language = (os.getenv('LANGUAGE') or '').split('.')[0]
 if rtd_language == 'zh-cn' or local_language == 'zh_CN':  # For local build

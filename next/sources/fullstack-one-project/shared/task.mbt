@@ -5,6 +5,15 @@ pub(all) struct SubmitTitleRequest {
 } derive(Eq, ToJson, FromJson)
 
 ///|
+pub extend SubmitTitleRequest with Eq::{not_equal, equal}
+
+///|
+pub extend SubmitTitleRequest with ToJson::{to_json}
+
+///|
+pub extend SubmitTitleRequest with @moonbitlang/core/json.FromJson::{from_json}
+
+///|
 pub(all) suberror TitleValidationError {
   EmptyTitle
   TooLong(Int)
@@ -12,11 +21,29 @@ pub(all) suberror TitleValidationError {
 } derive(Eq, ToJson, FromJson)
 
 ///|
+pub extend TitleValidationError with Eq::{not_equal, equal}
+
+///|
+pub extend TitleValidationError with ToJson::{to_json}
+
+///|
+pub extend TitleValidationError with @moonbitlang/core/json.FromJson::{from_json}
+
+///|
 pub(all) enum SubmitTitleResponse {
   Accepted(String)
   ValidationError(TitleValidationError)
   InvalidJson
 } derive(Eq, ToJson, FromJson)
+
+///|
+pub extend SubmitTitleResponse with Eq::{not_equal, equal}
+
+///|
+pub extend SubmitTitleResponse with ToJson::{to_json}
+
+///|
+pub extend SubmitTitleResponse with @moonbitlang/core/json.FromJson::{from_json}
 
 ///|
 pub fn validate_request(
@@ -50,4 +77,7 @@ pub impl Show for SubmitTitleResponse with output(self, logger) {
   }
   logger.write_string(text)
 }
+
+///|
+pub extend SubmitTitleResponse with Show::{to_string, output}
 /// end shared-model

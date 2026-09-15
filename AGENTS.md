@@ -41,18 +41,18 @@ an interactive language tour.
 - When touching examples under `next/sources/`, avoid broad `moon fmt` runs that
   rewrite unrelated files.
 
-## Stable toolchain updates
-- Use `~/repos/moon-stable/bin/moon` as the entry point when validating the
-  stable toolchain, and inspect the complete version output with
-  `~/repos/moon-stable/bin/moon version --all`.
-- Do not update docs against a nightly toolchain. The `moon version --all`
-  output must not contain `-nightly`.
-- Compare the `moonc` release reported by `moon version --all` with `release`
-  in `next/conf.py`. When the stable toolchain advances, tag the last published
-  commit on `origin/main` with the previous release before bumping `conf.py`.
-  Never place this release tag on an unmerged PR commit.
-- Apply stable toolchain updates in this order: tag the previous release, bump
-  `next/conf.py`, fix new warnings in checked examples, then update the docs.
+## Toolchain and release updates
+- The default branch and the English `latest` documentation track the nightly
+  toolchain. Inspect the complete version output with `moon version --all` and
+  confirm that `moonc` reports a nightly build before updating nightly-only
+  language or diagnostic documentation.
+- Keep the default value of `release` in `next/conf.py` as `nightly`. Tagged
+  builds derive their displayed release from the build environment.
+- Stable documentation is an immutable semantic-version tag on a merged commit.
+  Validate the intended commit with the stable toolchain before tagging it, and
+  never place a release tag on an unmerged pull-request commit.
+- The Chinese website is published from stable release tags, not from the
+  default branch. Do not make its release workflow publish nightly content.
 
 ## moonbit-tour
 - Install/build: `just tour-install && just tour-build && just tour-preview`

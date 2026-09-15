@@ -1,3 +1,7 @@
 Script mode command transcript
   $ moon run -c 'fn main { println("hello") }' | tr -d '\r'
   hello
+
+  $ moon run "$TESTDIR/import-all.mbtx" | tr -d '\r'
+  3
+  2

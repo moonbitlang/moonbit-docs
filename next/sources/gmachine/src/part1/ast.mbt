@@ -10,11 +10,15 @@ enum RawExpr[T] {
   Case(RawExpr[T], List[(Int, List[T], RawExpr[T])])
 } derive(Debug)
 
+pub extend RawExpr with @moonbitlang/core/debug.Debug::{to_repr}
+
 struct ScDef[T] {
   name : String
   args : List[T]
   body : RawExpr[T]
 } derive(Debug)
+
+pub extend ScDef with @moonbitlang/core/debug.Debug::{to_repr}
 // end expr_and_scdef definition
 
 fn[T] ScDef::new(name : String, args : List[T], body : RawExpr[T]) -> ScDef[T] {

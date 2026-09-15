@@ -4,6 +4,10 @@ struct DeriveEqCompare {
   y : Int
 } derive(Eq, Compare)
 
+pub extend DeriveEqCompare with Eq::{not_equal, equal}
+
+pub extend DeriveEqCompare with Compare::{op_lt, op_le, op_ge, compare, op_gt}
+
 test "derive eq_compare struct" {
   let p1 = DeriveEqCompare::{ x: 1, y: 2 }
   let p2 = DeriveEqCompare::{ x: 2, y: 1 }
@@ -36,6 +40,10 @@ enum DeriveEqCompareEnum {
   Case2(label~ : String)
   Case3
 } derive(Eq, Compare)
+
+pub extend DeriveEqCompareEnum with Eq::{not_equal, equal}
+
+pub extend DeriveEqCompareEnum with Compare::{op_lt, op_le, op_ge, compare, op_gt}
 
 test "derive eq_compare enum" {
   let p1 = DeriveEqCompareEnum::Case1(42)

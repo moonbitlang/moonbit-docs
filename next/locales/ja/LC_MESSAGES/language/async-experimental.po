@@ -143,6 +143,26 @@ msgstr ""
 "で非同期コードのテストを書けます。非同期テストは、デフォルトで自動的に並列実行されます。`async fn main` と `async "
 "test` を使うには、パッケージ内で `moonbitlang/async` を import する必要がある点に注意してください。"
 
+#: ../../language/async-experimental.md:52
+msgid ""
+"Async functions are cancellable by default. Add `nocancel` to promise that a "
+"function does not introduce cancellation. A `nocancel` async function may call "
+"synchronous functions and other `nocancel` async functions, but it cannot call "
+"a cancellable async function. This effect is independent of ordinary errors: "
+"`noraise` rules out ordinary errors, while `noraise + nocancel` rules out both "
+"ordinary errors and cancellation."
+msgstr ""
+"非同期関数はデフォルトでキャンセル可能です。`nocancel` を付けると、その関数がキャンセルを発生させないことを保証します。"
+"`nocancel` 非同期関数は同期関数と他の `nocancel` 非同期関数を呼び出せますが、キャンセル可能な非同期関数は呼び出せません。"
+"この効果は通常のエラーとは独立しています。`noraise` は通常のエラーを除外し、`noraise + nocancel` は通常のエラーとキャンセルの両方を除外します。"
+
+#: ../../language/async-experimental.md:59
+msgid ""
+"async fn record_completion() -> Unit noraise + nocancel {\n"
+"  println(\"completed\")\n"
+"}\n"
+msgstr ""
+
 #: ../../language/async-experimental.md:58
 msgid "Structured concurrency and task group"
 msgstr "構造化並行性とタスクグループ"
@@ -362,16 +382,15 @@ msgstr ""
 " では、`with_task_group` "
 "を含むすべての非同期操作がデフォルトでキャンセル可能です。そのため、これらの基本的な非同期操作を組み合わせてより大きなプログラムを作っても、どれほど複雑であっても自動的にキャンセル可能になります。"
 
-#: ../../language/async-experimental.md:143
+#: ../../language/async-experimental.md:150
 msgid ""
-"When a piece of asynchronous code is cancelled, the cancellation signal "
-"is represented as an error raised at the point where the code previously "
-"blocked. So there is no need to handle cancellation specially: the "
-"cancellation signal will automically propagate through the program, "
-"triggering cleanup operations in `defer` and error handlers."
+"When a piece of asynchronous code is cancelled, the cancellation signal is "
+"raised at the point where the code previously blocked. Ordinary `catch` "
+"handlers do not intercept this signal. It propagates automatically through "
+"the program, while cleanup registered with `defer` or `errdefer` still runs."
 msgstr ""
-"非同期コードの一部がキャンセルされると、そのキャンセル信号は、以前ブロックしていた地点で送出されるエラーとして表現されます。そのため、キャンセルを特別に処理する必要はありません。キャンセル信号は自動的にプログラム全体に伝播し、`defer`"
-" やエラーハンドラ内のクリーンアップ処理を発火させます。"
+"非同期コードがキャンセルされると、以前ブロックしていた地点でキャンセル信号が送出されます。通常の `catch` ハンドラはこの信号を捕捉しません。"
+"信号はプログラム内を自動的に伝播しますが、`defer` または `errdefer` で登録したクリーンアップは実行されます。"
 
 #: ../../language/async-experimental.md:149
 msgid ""

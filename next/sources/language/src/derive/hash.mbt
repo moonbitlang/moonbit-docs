@@ -4,6 +4,10 @@ struct DeriveHash {
   y : String?
 } derive(Hash, Eq)
 
+pub extend DeriveHash with Hash::{hash, hash_combine}
+
+pub extend DeriveHash with Eq::{not_equal, equal}
+
 test "derive hash struct" {
   let hs = @hashset.HashSet([])
   hs.add(DeriveHash::{ x: 123, y: None })

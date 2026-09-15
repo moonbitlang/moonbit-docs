@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-14 16:31+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4228.md:1
+msgid "E4228"
+msgstr ""
+
+#: ../../language/error_codes/E4228.md:3
+msgid "Compiler diagnostic name: `invalid_import_all`."
+msgstr "コンパイラ診断名：`invalid_import_all`。"
+
+#: ../../language/error_codes/E4228.md:5
+msgid "An import uses `*` outside a `.mbtx` script."
+msgstr "`.mbtx` スクリプト以外の import で `*` を使用しています。"
+
+#: ../../language/error_codes/E4228.md:7
+msgid ""
+"Import-all syntax brings a package's definitions into the script's scope and "
+"is intentionally limited to script mode. Regular packages must access an "
+"import through its package alias or import selected names with `using`."
+msgstr ""
+"全インポート構文は、パッケージの定義をスクリプトのスコープへ取り込み、意図的"
+"にスクリプトモードだけで利用できるよう制限されています。通常のパッケージで"
+"は、パッケージエイリアスを通して import にアクセスするか、`using` で選択した"
+"名前をインポートする必要があります。"
+
+#: ../../language/error_codes/E4228.md:11
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E4228.md:13
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/list\" *\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4228.md:17
+msgid "Suggestion"
+msgstr "提案"
+
+#: ../../language/error_codes/E4228.md:19
+msgid ""
+"Use a normal package alias in `moon.pkg`, then qualify names from that "
+"package. Alternatively, move genuinely script-like code and its import "
+"header to a `.mbtx` file."
+msgstr ""
+"`moon.pkg` では通常のパッケージエイリアスを使用し、そのパッケージの名前を修飾"
+"してください。または、実際にスクリプトとして適したコードと import ヘッダーを "
+"`.mbtx` ファイルへ移します。"
+
+#: ../../language/error_codes/E4228.md:23
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/list\" @list\n"
+"}\n"
+msgstr ""

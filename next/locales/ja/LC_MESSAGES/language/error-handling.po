@@ -198,9 +198,11 @@ msgstr ""
 "関数の型宣言では、`raise` とエラー型を組み合わせて、その関数が実行中にエラーを送出する可能性があることを示せます。例えば次の `div` "
 "関数は `DivError` 型のエラーを返す可能性があります："
 
-#: ../../language/error-handling.md:75
+#: ../../language/error-handling.md:82
 msgid ""
 "suberror DivError { DivError(String) } derive(Debug)\n"
+"\n"
+"pub extend DivError with Debug::{to_repr}\n"
 "\n"
 "fn div(x : Int, y : Int) -> Int raise DivError {\n"
 "  if y == 0 {\n"

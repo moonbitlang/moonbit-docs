@@ -18,7 +18,7 @@ test {
 // make public
 
 ///|
-struct Code2(Int) derive(Debug)
+struct Code2(Int)
 
 ///|
 pub fn Code2::new(value : Int) -> Code2 {

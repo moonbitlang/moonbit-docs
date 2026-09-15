@@ -17,6 +17,8 @@ struct X {
   x : Int
 } derive(Debug)
 
+pub extend X with Debug::{to_repr}
+
 test "show snapshot test" {
   debug_inspect({ x: 10 }, content="{ x: 10 }")
 }
@@ -27,6 +29,10 @@ enum Rec {
   End
   Really_long_name_that_is_difficult_to_read(Rec)
 } derive(Debug, ToJson)
+
+pub extend Rec with Debug::{to_repr}
+
+pub extend Rec with ToJson::{to_json}
 
 test "json snapshot test" {
   let r = Really_long_name_that_is_difficult_to_read(

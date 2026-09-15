@@ -31,20 +31,10 @@ SKIPPED_ERROR_CODES = {
     '4054',
     '4066',
     '4092',
-    # These diagnostics belonged to older lexical-pattern forms. Current
-    # lexmatch/lexscan syntax either accepts the construct or reports a newer,
-    # more specific diagnostic.
-    '4176',
-    '4182',
-    '4183',
-    '4184',
-    '4185',
-    '4186',
     # These diagnostics are no longer independently reachable from source.
-    # Their pages document that invalid template-writing operands and
-    # lexmatch/lexscan guards are now rejected earlier by the parser with E3002.
+    # Its page documents that invalid template-writing operands are now
+    # rejected earlier by the parser with E3002.
     '4215',
-    '4217',
     # These internal diagnostics are not meant to appear as independent
     # user-facing errors.
     '1000',
