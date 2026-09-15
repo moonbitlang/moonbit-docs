@@ -11,8 +11,47 @@ on:
     - cron: "0 10 * * 2"
 
 jobs:
-  build:
+  compatibility:
+    name: compatibility (${{ matrix.os }}, ${{ matrix.version }})
+    continue-on-error: true
     strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        version:
+          - nightly
+          - pre-release
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install
+        uses: ./.github/actions/setup
+        with:
+          version: ${{ matrix.version }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+
+      - name: moon check and test
+        run: |
+          python scripts/check-document.py
+
+      - name: check error-code examples
+        if: always()
+        run: |
+          python next/check_error_docs.py all
+
+  transcripts:
+    name: transcripts (${{ matrix.os }}, nightly)
+    continue-on-error: true
+    strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-latest
@@ -24,21 +63,8 @@ jobs:
 
       - name: install
         uses: ./.github/actions/setup
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
         with:
-          python-version: "3.x"
-
-      - name: moon check and test
-        run: |
-          python scripts/check-document.py
-
-      - name: check error-code examples
-        env:
-          CHECK_ERROR_DOCS_ALLOW_TOOLCHAIN_DRIFT: "1"
-        run: |
-          python next/check_error_docs.py all
+          version: nightly
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
