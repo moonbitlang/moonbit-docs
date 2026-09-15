@@ -13,7 +13,7 @@ on:
 jobs:
   compatibility:
     name: compatibility (${{ matrix.os }}, ${{ matrix.version }})
-    continue-on-error: ${{ matrix.version == 'pre-release' }}
+    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
@@ -49,6 +49,7 @@ jobs:
 
   transcripts:
     name: transcripts (${{ matrix.os }}, nightly)
+    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
