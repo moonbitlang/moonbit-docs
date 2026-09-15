@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 14:33+0800\n"
+"POT-Creation-Date: 2026-09-15 11:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -903,11 +903,36 @@ msgstr "`cfg` 属性"
 
 #: ../../language/attributes/cfg.md:4
 msgid ""
-"The `#cfg` attribute is used to perform conditional compilation. Examples"
-" are:"
-msgstr "`#cfg` 属性用于执行条件编译。例子有："
+"The `#cfg` attribute controls whether a declaration is included in "
+"compilation. Conditions are evaluated at compile time and can use:"
+msgstr "`#cfg` 属性控制某个声明是否参与编译。条件在编译时求值，可以使用："
+
+#: ../../language/attributes/cfg.md:7
+msgid "`true` or `false` to always include or exclude a declaration."
+msgstr "`true` 或 `false`：始终包含或排除某个声明。"
 
 #: ../../language/attributes/cfg.md:8
+msgid "`target` to select a compilation backend, such as `target=\"wasm\"`."
+msgstr "`target`：选择编译后端，例如 `target=\"wasm\"`。"
+
+#: ../../language/attributes/cfg.md:9
+msgid "`platform` to select an operating system, such as `platform=\"windows\"`."
+msgstr "`platform`：选择操作系统，例如 `platform=\"windows\"`。"
+
+#: ../../language/attributes/cfg.md:10
+msgid ""
+"`not(...)`, `all(...)`, or `any(...)` to negate a condition, require all "
+"conditions, or require at least one condition."
+msgstr "`not(...)`、`all(...)` 或 `any(...)`：分别表示条件取反、所有条件均成立或至少一个条件成立。"
+
+#: ../../language/attributes/cfg.md:13
+msgid ""
+"For example, `not(platform=\"windows\")` includes a declaration on non-"
+"Windows platforms, while `all(target=\"native\", platform=\"windows\")` "
+"includes it only for the native backend on Windows."
+msgstr "例如，`not(platform=\"windows\")` 在非 Windows 平台上包含声明，而 `all(target=\"native\", platform=\"windows\")` 仅在 Windows 上使用 native 后端时包含声明。"
+
+#: ../../language/attributes/cfg.md:19
 msgid ""
 "#cfg(true)\n"
 "fn cfg_true() -> Unit {\n"
@@ -924,12 +949,17 @@ msgid ""
 "  ()\n"
 "}\n"
 "\n"
-"#cfg(not(target=\"wasm\"))\n"
-"fn cfg_not_wasm() -> Unit {\n"
+"#cfg(platform=\"windows\")\n"
+"fn cfg_windows() -> Unit {\n"
 "  ()\n"
 "}\n"
 "\n"
-"#cfg(all(target=\"wasm\", true))\n"
+"#cfg(not(platform=\"windows\"))\n"
+"fn cfg_non_windows() -> Unit {\n"
+"  ()\n"
+"}\n"
+"\n"
+"#cfg(all(target=\"native\", platform=\"windows\"))\n"
 "fn cfg_all() -> Unit {\n"
 "  ()\n"
 "}\n"
@@ -1033,7 +1063,9 @@ msgid ""
 "`foreign_library` package as a linkable library artifact, including "
 "shared libraries such as a `.dll` or `.so`. Use Wasm or JavaScript if you"
 " need an exported library."
-msgstr "native 后端目前不支持将 `foreign_library` 包导出为可链接的库产物，包括 `.dll` 或 `.so` 等共享库。如需导出的库，请使用 Wasm 或 JavaScript。"
+msgstr ""
+"native 后端目前不支持将 `foreign_library` 包导出为可链接的库产物，包括 `.dll` 或 `.so` "
+"等共享库。如需导出的库，请使用 Wasm 或 JavaScript。"
 
 #: ../../language/attributes/export_name.md:45
 msgid ""

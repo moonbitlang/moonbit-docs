@@ -188,12 +188,17 @@ fn cfg_wasm() -> Unit {
   ()
 }
 
-#cfg(not(target="wasm"))
-fn cfg_not_wasm() -> Unit {
+#cfg(platform="windows")
+fn cfg_windows() -> Unit {
   ()
 }
 
-#cfg(all(target="wasm", true))
+#cfg(not(platform="windows"))
+fn cfg_non_windows() -> Unit {
+  ()
+}
+
+#cfg(all(target="native", platform="windows"))
 fn cfg_all() -> Unit {
   ()
 }
