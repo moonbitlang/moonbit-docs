@@ -112,11 +112,15 @@ enum RawExpr[T] {
   Case(RawExpr[T], List[(Int, List[T], RawExpr[T])])
 } derive(Debug)
 
+pub extend RawExpr with @moonbitlang/core/debug.Debug::{to_repr}
+
 struct ScDef[T] {
   name : String
   args : List[T]
   body : RawExpr[T]
 } derive(Debug)
+
+pub extend ScDef with @moonbitlang/core/debug.Debug::{to_repr}
 ```
 
 Additionally, some predefined coreF programs are required.
@@ -318,6 +322,10 @@ In this simple version of the G-Machine, the state includes:
   /// Use the struct tuple to encapsulate an address type.
   struct Addr(Int) derive(Eq, Debug)
 
+  pub extend Addr with Eq::{not_equal, equal}
+
+  pub extend Addr with @moonbitlang/core/debug.Debug::{to_repr}
+
   /// Describe graph nodes with an enumeration type.
   enum Node {
     NNum(Int)
@@ -329,6 +337,10 @@ In this simple version of the G-Machine, the state includes:
     // The Indirection node. The key component of implementing lazy evaluation
     NInd(Addr)
   } derive(Eq, Debug)
+
+  pub extend Node with Eq::{not_equal, equal}
+
+  pub extend Node with @moonbitlang/core/debug.Debug::{to_repr}
 
   struct GHeap {
     // The heap uses an array, 
@@ -435,6 +447,10 @@ enum Instruction {
   Update(Int)
   Pop(Int)
 } derive(Eq, Debug)
+
+pub extend Instruction with Eq::{not_equal, equal}
+
+pub extend Instruction with @moonbitlang/core/debug.Debug::{to_repr}
 ```
 
 The `PushInt` instruction is the simplest. It allocates an `NNum` node on the heap and pushes its address onto the stack.

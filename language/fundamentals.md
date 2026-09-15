@@ -1260,6 +1260,20 @@ for x in [1, 2, 3] {
 `for .. in` loop is translated to the use of `Iter` in MoonBit's standard library. Any type with a method `.iter() : Iter[T]` can be traversed using `for .. in`.
 For more information of the `Iter` type, see [Iterator]() below.
 
+The loop binding may be an exhaustive pattern, so an item can be destructured
+directly in the loop header. The pattern must match every possible item; handle
+refutable alternatives such as `Some(value)` inside the loop body instead.
+
+```moonbit
+test "destructuring patterns in for-in loops" {
+  let mut total = 0
+  for (x, y) in [(1, 2), (3, 4)] {
+    total += x + y
+  }
+  assert_eq(total, 10)
+}
+```
+
 `for .. in` loop also supports iterating through a sequence of integers, such as:
 
 ```moonbit
@@ -1759,6 +1773,8 @@ examples start with a struct:
 struct IntBox {
   value : Int
 } derive(Debug)
+
+pub extend IntBox with Debug::{to_repr}
 ```
 
 The constructor should then be implemented as a method whose name is the same as
@@ -1787,6 +1803,8 @@ struct StructWithConstr {
   x : Int
   y : Int
 } derive(Debug)
+
+pub extend StructWithConstr with Debug::{to_repr}
 ```
 
 ```moonbit
@@ -1807,9 +1825,13 @@ suberror BuildError {
   NegativeInput
 } derive(Debug)
 
+pub extend BuildError with Debug::{to_repr}
+
 struct Positive {
   value : Int
 } derive(Debug)
+
+pub extend Positive with Debug::{to_repr}
 ```
 
 ```moonbit
@@ -1840,6 +1862,8 @@ enum Endpoint {
   Host(String, Int)
 } derive(Debug)
 
+pub extend Endpoint with Debug::{to_repr}
+
 fn Endpoint::Endpoint(host : String, port? : Int = 80) -> Endpoint {
   Host(host, port)
 }
@@ -1857,6 +1881,9 @@ can be used inside async code:
 struct AsyncBox {
   value : Int
 } derive(Debug)
+
+///|
+pub extend AsyncBox with Debug::{to_repr}
 ```
 
 ```moonbit
@@ -2053,6 +2080,8 @@ enum Object {
 
 suberror NotImplementedError derive(Debug)
 
+pub extend NotImplementedError with Debug::{to_repr}
+
 fn Object::distance_with(
   self : Object,
   other : Object,
@@ -2167,8 +2196,9 @@ pub(all) extenum LogEvent[T] += {
 }
 ```
 
-To extend an extensible enum from another package, qualify the target type with
-the package that defines the type:
+To extend an extensible enum from another package, the original declaration
+must be fully public with `pub(all)`. Qualify the target type with the package
+that defines the type:
 
 ```moonbit
 pub(all) extenum @base.LogEvent[T] += {
@@ -2210,7 +2240,9 @@ Pattern matching must include a wildcard branch, because more constructors
 can be added outside the current declaration.
 
 Only `extenum` declarations can be extended. Regular `enum` declarations are
-closed.
+closed. An `extenum` declared with `pub` is read-only outside its defining
+package: other packages can inspect its constructors, but cannot construct or
+add constructors to it.
 
 ### Tuple Struct
 

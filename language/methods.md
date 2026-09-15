@@ -277,6 +277,8 @@ pub impl MyShow for MyType with to_string(self) {
   ...
 }
 
+pub extend MyType with MyShow::{to_string}
+
 struct MyContainer[_] {}
 
 /// trait implementation with type parameters.
@@ -285,6 +287,8 @@ struct MyContainer[_] {}
 pub impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) {
   ...
 }
+
+pub extend MyContainer with MyShow::{to_string}
 ```
 
 Type annotation can be omitted for trait `impl`: MoonBit will automatically infer the type based on the signature of `Trait::method` and the self type.
@@ -383,7 +387,7 @@ pub impl Show for MyCustomType with output(self, logger) {
   ...
 }
 
-extend MyCustomType with Show::{to_string}
+pub extend MyCustomType with Show::{to_string, output}
 
 fn f() -> Unit {
   let x = MyCustomType::{  }
@@ -407,9 +411,8 @@ with dot syntax, or keep using `Trait::method(value, ...)` when no method-style
 API is intended.
 
 For compatibility, the compiler still accepts the old implicit attachment. It
-can report an `implicit_impl_as_method` deprecation diagnostic when warning 79
-is enabled; this warning is disabled in the default warning configuration. New
-code should use `extend` rather than rely on the compatibility behavior.
+reports an `implicit_impl_as_method` deprecation diagnostic by default. New code
+should use `extend` rather than rely on the compatibility behavior.
 
 If an implicitly attached method should remain callable temporarily but is not
 part of the intended method-style API, add a corresponding `extend` declaration
@@ -596,6 +599,14 @@ struct T {
   a : Int
   b : Int
 } derive(Eq, Compare, Debug, Default)
+
+pub extend T with Eq::{not_equal, equal}
+
+pub extend T with Compare::{op_lt, op_le, op_ge, compare, op_gt}
+
+pub extend T with Debug::{to_repr}
+
+pub extend T with Default::{default}
 
 test {
   let t1 : T = Default::default()

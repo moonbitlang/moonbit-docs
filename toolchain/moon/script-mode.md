@@ -48,6 +48,29 @@ All imported packages from the same module must use the same version.
 If the import path is not explicitly versioned, it uses the latest version
 in the local registry index.
 
+A script may use `*` in place of an alias to bring all definitions from a
+package into its scope:
+
+```moonbit
+///|
+import {
+  "moonbitlang/core/queue" *
+}
+
+///|
+fn main {
+  let queue = Queue([1, 2, 3])
+  println(queue.length())
+  let qualified = @queue.Queue([4, 5])
+  println(qualified.length())
+}
+```
+
+The package's default alias remains available, so the example can use both
+`Queue` and `@queue.Queue`. Import-all syntax is limited to `.mbtx` scripts;
+regular packages should use package aliases or `using` declarations. Prefer
+explicit imports when name conflicts would make a script difficult to read.
+
 ## Run a `.mbtx` script from stdin
 
 Moon supports running a `.mbtx` script from stdin:

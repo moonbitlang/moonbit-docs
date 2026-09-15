@@ -100,6 +100,8 @@ example, the following function `div` might return an error of type `DivError`:
 ```moonbit
 suberror DivError { DivError(String) } derive(Debug)
 
+pub extend DivError with Debug::{to_repr}
+
 fn div(x : Int, y : Int) -> Int raise DivError {
   if y == 0 {
     raise DivError("division by zero")

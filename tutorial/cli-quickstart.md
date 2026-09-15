@@ -59,6 +59,9 @@ pub struct Config {
 } derive(Eq)
 
 ///|
+pub extend Config with Eq::{not_equal, equal}
+
+///|
 pub fn command() -> @argparse.Command {
   @argparse.Command(
     "moon-fetch",

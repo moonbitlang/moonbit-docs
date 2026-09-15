@@ -2,12 +2,19 @@
 
 MoonBit supports deriving a number of builtin traits automatically from the type definition.
 
-To derive a trait `T`, it is required that all fields used in the type implements `T`.
-For example, deriving `Show` for a struct `struct A { x: T1; y: T2 }` requires both `T1: Show` and `T2: Show`
+To derive a trait `T`, all fields used in the type must implement `T`.
+For example, deriving `Show` for a struct `struct A { x: T1; y: T2 }`
+requires both `T1 : Show` and `T2 : Show`.
+
+`derive` generates a trait implementation. The examples below also use
+[`extend`](https://docs.moonbitlang.com/en/latest/language/methods.html#attaching-trait-methods-with-extend) to state explicitly
+which generated trait functions are part of the type's method-style API. This
+avoids relying on the deprecated implicit attachment of methods from an
+implementation.
 
 ## Eq and Compare
 
-`derive(Eq)` and `derive(Compare)` will generate the corresponding method for testing equality and comparison.
+`derive(Eq)` and `derive(Compare)` generate the corresponding implementations for testing equality and comparison.
 Fields are compared in the same order as their definitions.
 For enums, the order between cases ascends in the order of definition.
 
@@ -16,6 +23,10 @@ struct DeriveEqCompare {
   x : Int
   y : Int
 } derive(Eq, Compare)
+
+pub extend DeriveEqCompare with Eq::{not_equal, equal}
+
+pub extend DeriveEqCompare with Compare::{op_lt, op_le, op_ge, compare, op_gt}
 
 test "derive eq_compare struct" {
   let p1 = DeriveEqCompare::{ x: 1, y: 2 }
@@ -50,6 +61,10 @@ enum DeriveEqCompareEnum {
   Case3
 } derive(Eq, Compare)
 
+pub extend DeriveEqCompareEnum with Eq::{not_equal, equal}
+
+pub extend DeriveEqCompareEnum with Compare::{op_lt, op_le, op_ge, compare, op_gt}
+
 test "derive eq_compare enum" {
   let p1 = DeriveEqCompareEnum::Case1(42)
   let p2 = DeriveEqCompareEnum::Case1(43)
@@ -79,7 +94,7 @@ test "derive eq_compare enum" {
 
 ## Debug
 
-`derive(Debug)` will generate a structural debugging implementation for the type.
+`derive(Debug)` generates a structural debugging implementation for the type.
 It is useful with `debug_inspect` in tests and `@debug.to_string` when formatting diagnostic messages.
 
 ```moonbit
@@ -87,6 +102,8 @@ struct DebugPoint {
   x : Int
   y : Int
 } derive(Debug)
+
+pub extend DebugPoint with Debug::{to_repr}
 
 test "derive debug struct" {
   let point = DebugPoint::{ x: 1, y: 2 }
@@ -102,6 +119,8 @@ enum DebugShape {
   Rect(width~ : Int, height~ : Int)
 } derive(Debug)
 
+pub extend DebugShape with Debug::{to_repr}
+
 test "derive debug enum" {
   let shape = DebugShape::Rect(width=3, height=4)
   debug_inspect(shape, content="Rect(width=3, height=4)")
@@ -112,9 +131,8 @@ test "derive debug enum" {
 
 `derive(Default)` generates a `Default` implementation for the type. Call
 `Default::default()` with the expected type specified so MoonBit can select the
-implementation. Deriving the trait does not by itself attach `default` as a
-type method; use an explicit [`extend`](https://docs.moonbitlang.com/en/latest/language/methods.html#attaching-trait-methods-with-extend)
-declaration if a method-style API is desired.
+implementation. Use an explicit `extend` declaration if `default` should also
+be part of the type's method-style API.
 
 For structs, the default value is the struct with all fields set as their default value.
 
@@ -123,6 +141,10 @@ struct DeriveDefault {
   x : Int
   y : String?
 } derive(Default, Eq)
+
+pub extend DeriveDefault with Default::{default}
+
+pub extend DeriveDefault with Eq::{not_equal, equal}
 
 test "derive default struct" {
   let p : DeriveDefault = Default::default()
@@ -138,6 +160,10 @@ enum DeriveDefaultEnum {
   Case2(label~ : String)
   Case3
 } derive(Default, Eq)
+
+pub extend DeriveDefaultEnum with Default::{default}
+
+pub extend DeriveDefaultEnum with Eq::{not_equal, equal}
 
 test "derive default enum" {
   let value : DeriveDefaultEnum = Default::default()
@@ -162,7 +188,7 @@ enum CannotDerive2 {
 
 ## Hash
 
-`derive(Hash)` will generate a hash implementation for the type.
+`derive(Hash)` generates a hash implementation for the type.
 This will allow the type to be used in places that expects a `Hash` implementation,
 for example `HashMap`s and `HashSet`s.
 
@@ -171,6 +197,10 @@ struct DeriveHash {
   x : Int
   y : String?
 } derive(Hash, Eq)
+
+pub extend DeriveHash with Hash::{hash, hash_combine}
+
+pub extend DeriveHash with Eq::{not_equal, equal}
 
 test "derive hash struct" {
   let hs = @hashset.HashSet([])
@@ -202,6 +232,9 @@ struct ShrinkPoint {
 } derive(Shrink)
 
 ///|
+pub extend ShrinkPoint with @shrink.Shrink::{shrink}
+
+///|
 fn shrink_candidates(point : ShrinkPoint) -> Iter[ShrinkPoint] {
   @quickcheck.Shrink::shrink(point)
 }
@@ -226,10 +259,22 @@ struct JsonTest1 {
   y : Int
 } derive(FromJson, ToJson, Eq)
 
+pub extend JsonTest1 with @moonbitlang/core/json.FromJson::{from_json}
+
+pub extend JsonTest1 with ToJson::{to_json}
+
+pub extend JsonTest1 with Eq::{not_equal, equal}
+
 enum JsonTest2 {
   A(x~ : Int)
   B(x~ : Int, y~ : Int)
 } derive(FromJson(style="legacy"), ToJson(style="legacy"), Eq)
+
+pub extend JsonTest2 with @moonbitlang/core/json.FromJson::{from_json}
+
+pub extend JsonTest2 with ToJson::{to_json}
+
+pub extend JsonTest2 with Eq::{not_equal, equal}
 
 test "json basic" {
   let input = JsonTest1::{ x: 123, y: 456 }
@@ -267,10 +312,22 @@ struct JsonTest3 {
   Eq,
 )
 
+pub extend JsonTest3 with @moonbitlang/core/json.FromJson::{from_json}
+
+pub extend JsonTest3 with ToJson::{to_json}
+
+pub extend JsonTest3 with Eq::{not_equal, equal}
+
 enum JsonTest4 {
   A(x~ : Int)
   B(x~ : Int, y~ : Int)
 } derive(FromJson, ToJson, Eq)
+
+pub extend JsonTest4 with @moonbitlang/core/json.FromJson::{from_json}
+
+pub extend JsonTest4 with ToJson::{to_json}
+
+pub extend JsonTest4 with Eq::{not_equal, equal}
 
 test "json args" {
   let input = JsonTest3::{ x: 123, y: 456 }
@@ -329,6 +386,8 @@ struct A {
   y : Int??
   z : (Int?, Int??)
 } derive(ToJson)
+
+pub extend A with ToJson::{to_json}
 
 test {
   json_inspect({ x: None, y: None, z: (None, None) }, content={
