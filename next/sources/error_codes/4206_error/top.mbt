@@ -22,3 +22,6 @@ impl Render with debug(_) {
 pub impl Render for Token with debug(_) {
   "token"
 }
+
+///|
+pub extend Token with Render::{render, debug}

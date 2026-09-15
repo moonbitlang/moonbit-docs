@@ -100,6 +100,38 @@ msgid ""
 "version in the local registry index."
 msgstr "如果导入路径没有显式指定版本，则会使用本地索引中的最新版本。"
 
+#: ../../toolchain/moon/script-mode.md:51
+msgid ""
+"A script may use `*` in place of an alias to bring all definitions from a "
+"package into its scope:"
+msgstr "脚本可以用 `*` 代替别名，将包中的所有定义引入当前作用域："
+
+#: ../../toolchain/moon/script-mode.md:54
+msgid ""
+"///|\n"
+"import {\n"
+"  \"moonbitlang/core/queue\" *\n"
+"}\n"
+"\n"
+"///|\n"
+"fn main {\n"
+"  let queue = Queue([1, 2, 3])\n"
+"  println(queue.length())\n"
+"  let qualified = @queue.Queue([4, 5])\n"
+"  println(qualified.length())\n"
+"}\n"
+msgstr ""
+
+#: ../../toolchain/moon/script-mode.md:58
+msgid ""
+"The package's default alias remains available, so the example can use both "
+"`Queue` and `@queue.Queue`. Import-all syntax is limited to `.mbtx` scripts; "
+"regular packages should use package aliases or `using` declarations. Prefer "
+"explicit imports when name conflicts would make a script difficult to read."
+msgstr ""
+"包的默认别名仍然可用，因此示例可以同时使用 `Queue` 和 `@queue.Queue`。全量导入语法仅适用于 `.mbtx` "
+"脚本；普通包应使用包别名或 `using` 声明。当名称冲突会让脚本难以阅读时，优先使用显式导入。"
+
 #: ../../toolchain/moon/script-mode.md:52
 msgid "Run a `.mbtx` script from stdin"
 msgstr "从 stdin 运行 `.mbtx` 脚本"

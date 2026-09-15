@@ -1,0 +1,89 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-14 16:31+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4227.md:1
+msgid "E4227"
+msgstr ""
+
+#: ../../language/error_codes/E4227.md:3
+msgid "Compiler diagnostic name: `cancel_not_allowed_in_context`."
+msgstr "コンパイラ診断名：`cancel_not_allowed_in_context`。"
+
+#: ../../language/error_codes/E4227.md:5
+msgid ""
+"A cancellable async function is called from an async context declared with "
+"`nocancel`."
+msgstr ""
+"`nocancel` と宣言された非同期コンテキストから、キャンセル可能な非同期関数を呼"
+"び出しています。"
+
+#: ../../language/error_codes/E4227.md:8
+msgid ""
+"`nocancel` promises that cancellation cannot be introduced by the function. "
+"Such a function may call synchronous functions and other `nocancel` async "
+"functions, but not cancellable async functions."
+msgstr ""
+"`nocancel` は、その関数がキャンセルを発生させないことを保証します。このような"
+"関数は同期関数と他の `nocancel` 非同期関数を呼び出せますが、キャンセル可能な"
+"非同期関数は呼び出せません。"
+
+#: ../../language/error_codes/E4227.md:12
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E4227.md:14
+msgid ""
+"///|\n"
+"async fn cancellable_operation() -> Unit {\n"
+"  ()\n"
+"}\n"
+"\n"
+"///|\n"
+"pub async fn run_without_cancellation() -> Unit nocancel {\n"
+"  cancellable_operation()\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4227.md:18
+msgid "Suggestion"
+msgstr "提案"
+
+#: ../../language/error_codes/E4227.md:20
+msgid ""
+"Remove `nocancel` from the caller when it needs to perform a cancellable "
+"operation. If the callee genuinely cannot be cancelled, declare the callee "
+"with `nocancel` as well."
+msgstr ""
+"呼び出し元でキャンセル可能な操作が必要な場合は、`nocancel` を外してください。"
+"呼び出し先が実際にキャンセルされない場合は、呼び出し先にも `nocancel` を宣言"
+"します。"
+
+#: ../../language/error_codes/E4227.md:24
+msgid ""
+"///|\n"
+"async fn noncancellable_operation() -> Unit nocancel {\n"
+"  ()\n"
+"}\n"
+"\n"
+"///|\n"
+"pub async fn run_without_cancellation() -> Unit nocancel {\n"
+"  noncancellable_operation()\n"
+"}\n"
+msgstr ""

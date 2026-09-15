@@ -143,6 +143,26 @@ msgstr ""
 "来编写异步测试。默认情况下，多个异步测试可以并行地同时运行。注意使用 `async fn main` 或 `async test` 需要在 "
 "`moon.pkg` 中添加 `moonbitlang/async` 作为依赖。"
 
+#: ../../language/async-experimental.md:52
+msgid ""
+"Async functions are cancellable by default. Add `nocancel` to promise that a "
+"function does not introduce cancellation. A `nocancel` async function may call "
+"synchronous functions and other `nocancel` async functions, but it cannot call "
+"a cancellable async function. This effect is independent of ordinary errors: "
+"`noraise` rules out ordinary errors, while `noraise + nocancel` rules out both "
+"ordinary errors and cancellation."
+msgstr ""
+"异步函数默认可取消。添加 `nocancel` 表示函数不会引入取消。`nocancel` 异步函数可以调用同步函数和其他 "
+"`nocancel` 异步函数，但不能调用可取消的异步函数。这个效应与普通错误相互独立：`noraise` 排除普通错误，而 "
+"`noraise + nocancel` 同时排除普通错误和取消。"
+
+#: ../../language/async-experimental.md:59
+msgid ""
+"async fn record_completion() -> Unit noraise + nocancel {\n"
+"  println(\"completed\")\n"
+"}\n"
+msgstr ""
+
 #: ../../language/async-experimental.md:58
 msgid "Structured concurrency and task group"
 msgstr "结构化并发与任务组"
@@ -351,16 +371,15 @@ msgstr ""
 "中，包括 `with_task_group` "
 "在内的所有异步操作默认都是可取消的。所以，当用户使用这些基础操作组合出大规模的异步程序时，无论最终得到的程序有多复杂，它依然自动是可取消的。"
 
-#: ../../language/async-experimental.md:143
+#: ../../language/async-experimental.md:150
 msgid ""
-"When a piece of asynchronous code is cancelled, the cancellation signal "
-"is represented as an error raised at the point where the code previously "
-"blocked. So there is no need to handle cancellation specially: the "
-"cancellation signal will automically propagate through the program, "
-"triggering cleanup operations in `defer` and error handlers."
+"When a piece of asynchronous code is cancelled, the cancellation signal is "
+"raised at the point where the code previously blocked. Ordinary `catch` "
+"handlers do not intercept this signal. It propagates automatically through "
+"the program, while cleanup registered with `defer` or `errdefer` still runs."
 msgstr ""
-"当一段异步代码被取消时，取消信号会变成从这段代码中断的地方抛出的错误。所以，用户的程序无需对取消进行特殊处理：取消信号会通过错误处理机制自动传播，并触发"
-" `defer` 表达式和 `catch` 中的各种清理代码。"
+"当一段异步代码被取消时，取消信号会在代码先前阻塞的位置被抛出。普通的 `catch` 处理器不会捕获该信号。它会自动在程序中传播，同时由 "
+"`defer` 或 `errdefer` 注册的清理仍然会运行。"
 
 #: ../../language/async-experimental.md:149
 msgid ""

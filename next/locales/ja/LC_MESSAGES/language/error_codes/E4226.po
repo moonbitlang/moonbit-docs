@@ -1,0 +1,94 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-14 16:31+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4226.md:1
+msgid "E4226"
+msgstr ""
+
+#: ../../language/error_codes/E4226.md:3
+msgid "Compiler diagnostic name: `constr_any_pattern_scrutinee_not_error`."
+msgstr "コンパイラ診断名：`constr_any_pattern_scrutinee_not_error`。"
+
+#: ../../language/error_codes/E4226.md:5
+msgid ""
+"The wildcard constructor pattern `Type::_` is being matched against a value "
+"whose type is not `Error`."
+msgstr ""
+"ワイルドカードコンストラクタパターン `Type::_` を、型が `Error` ではない値に"
+"対してマッチさせています。"
+
+#: ../../language/error_codes/E4226.md:8
+msgid ""
+"`Type::_` selects every constructor belonging to one suberror type while "
+"matching the open `Error` type. It is not an alternative spelling for an "
+"ordinary exhaustive match on a value already typed as that suberror."
+msgstr ""
+"`Type::_` は、開いた `Error` 型をマッチするときに、ある suberror 型に属するす"
+"べてのコンストラクタを選択します。すでにその suberror 型を持つ値に対する通常"
+"の網羅的マッチを別の書き方にしたものではありません。"
+
+#: ../../language/error_codes/E4226.md:12
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E4226.md:14
+msgid ""
+"///|\n"
+"priv suberror ParseError {\n"
+"  InvalidSyntax\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn is_parse_error(error : ParseError) -> Bool {\n"
+"  match error {\n"
+"    ParseError::_ => true\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4226.md:18
+msgid "Suggestion"
+msgstr "提案"
+
+#: ../../language/error_codes/E4226.md:20
+msgid ""
+"Use `Type::_` when matching an `Error`, and retain a final `_` branch for "
+"other suberror types. When the matched value already has the concrete "
+"suberror type, list its constructors normally."
+msgstr ""
+"`Error` をマッチするときに `Type::_` を使用し、他の suberror 型を処理するため"
+"最後に `_` 分岐を残してください。マッチ対象がすでに具体的な suberror 型を持つ"
+"場合は、そのコンストラクタを通常どおり列挙します。"
+
+#: ../../language/error_codes/E4226.md:24
+msgid ""
+"///|\n"
+"priv suberror ParseError {\n"
+"  InvalidSyntax\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn is_parse_error(error : Error) -> Bool {\n"
+"  match error {\n"
+"    ParseError::_ => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""

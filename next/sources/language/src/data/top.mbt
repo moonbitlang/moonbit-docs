@@ -50,6 +50,8 @@ test "struct 4" (t : @test.Test) {
 struct IntBox {
   value : Int
 } derive(Debug)
+
+pub extend IntBox with Debug::{to_repr}
 // end struct constructor 1
 
 // start struct constructor 2
@@ -70,6 +72,8 @@ struct StructWithConstr {
   x : Int
   y : Int
 } derive(Debug)
+
+pub extend StructWithConstr with Debug::{to_repr}
 // end struct constructor 4
 
 // start struct constructor 5
@@ -90,9 +94,13 @@ suberror BuildError {
   NegativeInput
 } derive(Debug)
 
+pub extend BuildError with Debug::{to_repr}
+
 struct Positive {
   value : Int
 } derive(Debug)
+
+pub extend Positive with Debug::{to_repr}
 // end struct constructor 7
 
 // start struct constructor 8
@@ -121,6 +129,8 @@ test "struct constructor raise" {
 enum Endpoint {
   Host(String, Int)
 } derive(Debug)
+
+pub extend Endpoint with Debug::{to_repr}
 
 fn Endpoint::Endpoint(host : String, port? : Int = 80) -> Endpoint {
   Host(host, port)
@@ -270,6 +280,8 @@ enum Object {
 }
 
 suberror NotImplementedError derive(Debug)
+
+pub extend NotImplementedError with Debug::{to_repr}
 
 fn Object::distance_with(
   self : Object,

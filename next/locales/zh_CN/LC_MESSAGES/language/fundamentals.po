@@ -2431,6 +2431,27 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1014
 msgid ""
+"The loop binding may be an exhaustive pattern, so an item can be destructured "
+"directly in the loop header. The pattern must match every possible item; "
+"handle refutable alternatives such as `Some(value)` inside the loop body "
+"instead."
+msgstr ""
+"循环绑定可以使用穷尽模式，因此可以直接在循环头中解构元素。模式必须能匹配所有可能的元素；像 `Some(value)` "
+"这样可反驳的情况应在循环体内处理。"
+
+#: ../../language/fundamentals.md:1019
+msgid ""
+"test \"destructuring patterns in for-in loops\" {\n"
+"  let mut total = 0\n"
+"  for (x, y) in [(1, 2), (3, 4)] {\n"
+"    total += x + y\n"
+"  }\n"
+"  assert_eq(total, 10)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1014
+msgid ""
 "`for .. in` loop also supports iterating through a sequence of integers, "
 "such as:"
 msgstr "`for .. in` 循环还支持遍历整数序列，例如："
@@ -3200,11 +3221,13 @@ msgid ""
 "type. The following examples start with a struct:"
 msgstr "MoonBit 支持为任意类型定义自定义构造器。构造器是一种特殊方法，其名称与返回类型相同。下面先从结构体示例开始："
 
-#: ../../language/fundamentals.md:1401
+#: ../../language/fundamentals.md:1411
 msgid ""
 "struct IntBox {\n"
 "  value : Int\n"
 "} derive(Debug)\n"
+"\n"
+"pub extend IntBox with Debug::{to_repr}\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:1407
@@ -3245,12 +3268,14 @@ msgid ""
 "normal functions:"
 msgstr "构造器也可以像普通函数一样使用带标签参数和可选参数："
 
-#: ../../language/fundamentals.md:1429
+#: ../../language/fundamentals.md:1439
 msgid ""
 "struct StructWithConstr {\n"
 "  x : Int\n"
 "  y : Int\n"
 "} derive(Debug)\n"
+"\n"
+"pub extend StructWithConstr with Debug::{to_repr}\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:1435
@@ -3273,15 +3298,19 @@ msgid ""
 " raise errors:"
 msgstr "由于结构体构造器由普通函数实现，因此它们也可以抛出错误："
 
-#: ../../language/fundamentals.md:1449
+#: ../../language/fundamentals.md:1459
 msgid ""
 "suberror BuildError {\n"
 "  NegativeInput\n"
 "} derive(Debug)\n"
 "\n"
+"pub extend BuildError with Debug::{to_repr}\n"
+"\n"
 "struct Positive {\n"
 "  value : Int\n"
 "} derive(Debug)\n"
+"\n"
+"pub extend Positive with Debug::{to_repr}\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:1455
@@ -3313,11 +3342,13 @@ msgid ""
 "type:"
 msgstr "其他类型也可以使用同样的 `fn Type::Type(...) -> Type` 形式。自定义构造器不能与该类型已有的构造器同名："
 
-#: ../../language/fundamentals.md:1470
+#: ../../language/fundamentals.md:1480
 msgid ""
 "enum Endpoint {\n"
 "  Host(String, Int)\n"
 "} derive(Debug)\n"
+"\n"
+"pub extend Endpoint with Debug::{to_repr}\n"
 "\n"
 "fn Endpoint::Endpoint(host : String, port? : Int = 80) -> Endpoint {\n"
 "  Host(host, port)\n"
@@ -3335,11 +3366,14 @@ msgid ""
 " and can be used inside async code:"
 msgstr "异步构造器使用 `async fn TypeName::TypeName` 声明，并且可以在异步代码中使用："
 
-#: ../../language/fundamentals.md:1479
+#: ../../language/fundamentals.md:1489
 msgid ""
 "struct AsyncBox {\n"
 "  value : Int\n"
 "} derive(Debug)\n"
+"\n"
+"///|\n"
+"pub extend AsyncBox with Debug::{to_repr}\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:1485
@@ -3672,7 +3706,7 @@ msgid ""
 "accessing struct fields in pattern matching:"
 msgstr "也可以像在模式匹配中访问结构体字段一样访问构造函数的有标签参数："
 
-#: ../../language/fundamentals.md:1598
+#: ../../language/fundamentals.md:1608
 msgid ""
 "enum Object {\n"
 "  Point(x~ : Double, y~ : Double)\n"
@@ -3680,6 +3714,8 @@ msgid ""
 "}\n"
 "\n"
 "suberror NotImplementedError derive(Debug)\n"
+"\n"
+"pub extend NotImplementedError with Debug::{to_repr}\n"
 "\n"
 "fn Object::distance_with(\n"
 "  self : Object,\n"
@@ -3701,32 +3737,6 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
-"enum Object {\n"
-"  Point(x~ : Double, y~ : Double)\n"
-"  Circle(x~ : Double, y~ : Double, radius~ : Double)\n"
-"}\n"
-"\n"
-"suberror NotImplementedError derive(Debug)\n"
-"\n"
-"fn Objecct::distance_with(\n"
-"  self : Object,\n"
-"  other : Object,\n"
-") -> Double raise NotImplementedError {\n"
-"  match (self, other) {\n"
-"    // 对于通过 `Point(..) as p` 定义的变量，\n"
-"    // 编译器知道它必须是构造函数 `Point`，\n"
-"    // 因此可以通过 `p.x`、`p.y` 等直接访问 `Point` 的字段。\n"
-"    (Point(_) as p1, Point(_) as p2) => {\n"
-"      let dx = p2.x - p1.x\n"
-"      let dy = p2.y - p1.y\n"
-"      (dx * dx + dy * dy).sqrt()\n"
-"    }\n"
-"    (Point(_), Circle(_)) | (Circle(_), Point(_)) | (Circle(_), "
-"Circle(_)) =>\n"
-"      raise NotImplementedError\n"
-"  }\n"
-"}\n"
-"\n"
 
 #: ../../language/fundamentals.md:1604
 msgid ""
@@ -3892,11 +3902,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1648
+#: ../../language/fundamentals.md:1658
 msgid ""
-"To extend an extensible enum from another package, qualify the target "
-"type with the package that defines the type:"
-msgstr "要扩展另一个包中的可扩展枚举，需要用定义该类型的包来限定目标类型："
+"To extend an extensible enum from another package, the original declaration "
+"must be fully public with `pub(all)`. Qualify the target type with the package "
+"that defines the type:"
+msgstr ""
+"要从另一个包扩展可扩展枚举，原始声明必须使用 `pub(all)` 完全公开。目标类型还需要由定义该类型的包限定："
 
 #: ../../language/fundamentals.md:1651
 msgid ""
@@ -3953,11 +3965,15 @@ msgid ""
 "constructors can be added outside the current declaration."
 msgstr "模式匹配必须包含通配符分支，因为当前声明之外还可以继续添加更多构造器。"
 
-#: ../../language/fundamentals.md:1676
+#: ../../language/fundamentals.md:1687
 msgid ""
-"Only `extenum` declarations can be extended. Regular `enum` declarations "
-"are closed."
-msgstr "只有 `extenum` 声明可以被扩展。普通的 `enum` 声明是封闭的。"
+"Only `extenum` declarations can be extended. Regular `enum` declarations are "
+"closed. An `extenum` declared with `pub` is read-only outside its defining "
+"package: other packages can inspect its constructors, but cannot construct or "
+"add constructors to it."
+msgstr ""
+"只有 `extenum` 声明可以被扩展。普通的 `enum` 声明是封闭的。使用 `pub` 声明的 `extenum` "
+"在定义它的包之外是只读的：其他包可以查看其构造器，但不能构造其值或为其添加构造器。"
 
 #: ../../language/fundamentals.md:1679
 msgid "Tuple Struct"

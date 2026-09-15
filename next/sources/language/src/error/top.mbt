@@ -13,6 +13,8 @@ suberror E3 { // error type E3 has three constructors like a normal enum type
 // start error 2
 suberror DivError { DivError(String) } derive(Debug)
 
+pub extend DivError with Debug::{to_repr}
+
 fn div(x : Int, y : Int) -> Int raise DivError {
   if y == 0 {
     raise DivError("division by zero")

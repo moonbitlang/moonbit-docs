@@ -49,6 +49,19 @@ or use `async test` to write test for asynchronous code.
 Asynchronous tests are automatically run in parallel by default.
 Notice that you must import `moonbitlang/async` in your package to use `async fn main` and `async test`.
 
+Async functions are cancellable by default. Add `nocancel` to promise that a
+function does not introduce cancellation. A `nocancel` async function may call
+synchronous functions and other `nocancel` async functions, but it cannot call
+a cancellable async function. This effect is independent of ordinary errors:
+`noraise` rules out ordinary errors, while `noraise + nocancel` rules out both
+ordinary errors and cancellation.
+
+```{literalinclude} /sources/async/src/async.mbt
+:language: moonbit
+:start-after: start nocancel function
+:end-before: end nocancel function
+```
+
 ## Structured concurrency and task group
 If an asynchronous program only call async function directly (i.e. `await`),
 then the control flow of the program is linear,
@@ -134,11 +147,10 @@ In `moonbitlang/async`, every asynchronous operation is cancellable by default, 
 So when you compose these basic asynchronous operations into bigger program,
 no matter how complex your program is, it is automatically cancellable.
 
-When a piece of asynchronous code is cancelled,
-the cancellation signal is represented as an error raised at the point where the code previously blocked.
-So there is no need to handle cancellation specially:
-the cancellation signal will automically propagate through the program,
-triggering cleanup operations in `defer` and error handlers.
+When a piece of asynchronous code is cancelled, the cancellation signal is
+raised at the point where the code previously blocked. Ordinary `catch`
+handlers do not intercept this signal. It propagates automatically through the
+program, while cleanup registered with `defer` or `errdefer` still runs.
 
 The ability to cancel arbitrary async code makes async programs highly modular in MoonBit.
 The `moonbitlang/async` package provides many useful combinators that perform

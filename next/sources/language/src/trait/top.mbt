@@ -17,6 +17,8 @@ pub impl MyShow for MyType with to_string(self) {
   ...
 }
 
+pub extend MyType with MyShow::{to_string}
+
 struct MyContainer[_] {}
 
 /// trait implementation with type parameters.
@@ -25,6 +27,8 @@ struct MyContainer[_] {}
 pub impl[X : MyShow] MyShow for MyContainer[X] with to_string(self) {
   ...
 }
+
+pub extend MyContainer with MyShow::{to_string}
 // end trait 2
 
 /// start trait 3
@@ -98,7 +102,7 @@ pub impl Show for MyCustomType with output(self, logger) {
   ...
 }
 
-extend MyCustomType with Show::{to_string}
+pub extend MyCustomType with Show::{to_string, output}
 
 fn f() -> Unit {
   let x = MyCustomType::{  }
@@ -111,6 +115,14 @@ struct T {
   a : Int
   b : Int
 } derive(Eq, Compare, Debug, Default)
+
+pub extend T with Eq::{not_equal, equal}
+
+pub extend T with Compare::{op_lt, op_le, op_ge, compare, op_gt}
+
+pub extend T with Debug::{to_repr}
+
+pub extend T with Default::{default}
 
 test {
   let t1 : T = Default::default()

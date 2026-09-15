@@ -1,6 +1,10 @@
 /// Use the struct tuple to encapsulate an address type.
 struct Addr(Int) derive(Eq, Debug)
 
+pub extend Addr with Eq::{not_equal, equal}
+
+pub extend Addr with @moonbitlang/core/debug.Debug::{to_repr}
+
 /// Describe graph nodes with an enumeration type.
 enum Node {
   NNum(Int)
@@ -13,6 +17,10 @@ enum Node {
   NInd(Addr)
   NConstr(Int, List[Addr])
 } derive(Eq, Debug)
+
+pub extend Node with Eq::{not_equal, equal}
+
+pub extend Node with @moonbitlang/core/debug.Debug::{to_repr}
 
 struct GHeap {
   // The heap uses an array, 

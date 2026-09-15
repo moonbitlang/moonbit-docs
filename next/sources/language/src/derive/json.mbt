@@ -4,10 +4,22 @@ struct JsonTest1 {
   y : Int
 } derive(FromJson, ToJson, Eq)
 
+pub extend JsonTest1 with @moonbitlang/core/json.FromJson::{from_json}
+
+pub extend JsonTest1 with ToJson::{to_json}
+
+pub extend JsonTest1 with Eq::{not_equal, equal}
+
 enum JsonTest2 {
   A(x~ : Int)
   B(x~ : Int, y~ : Int)
 } derive(FromJson(style="legacy"), ToJson(style="legacy"), Eq)
+
+pub extend JsonTest2 with @moonbitlang/core/json.FromJson::{from_json}
+
+pub extend JsonTest2 with ToJson::{to_json}
+
+pub extend JsonTest2 with Eq::{not_equal, equal}
 
 test "json basic" {
   let input = JsonTest1::{ x: 123, y: 456 }
@@ -31,10 +43,22 @@ struct JsonTest3 {
   Eq,
 )
 
+pub extend JsonTest3 with @moonbitlang/core/json.FromJson::{from_json}
+
+pub extend JsonTest3 with ToJson::{to_json}
+
+pub extend JsonTest3 with Eq::{not_equal, equal}
+
 enum JsonTest4 {
   A(x~ : Int)
   B(x~ : Int, y~ : Int)
 } derive(FromJson, ToJson, Eq)
+
+pub extend JsonTest4 with @moonbitlang/core/json.FromJson::{from_json}
+
+pub extend JsonTest4 with ToJson::{to_json}
+
+pub extend JsonTest4 with Eq::{not_equal, equal}
 
 test "json args" {
   let input = JsonTest3::{ x: 123, y: 456 }
@@ -54,6 +78,8 @@ struct A {
   y : Int??
   z : (Int?, Int??)
 } derive(ToJson)
+
+pub extend A with ToJson::{to_json}
 
 test {
   json_inspect({ x: None, y: None, z: (None, None) }, content={

@@ -4,6 +4,10 @@ struct DeriveDefault {
   y : String?
 } derive(Default, Eq)
 
+pub extend DeriveDefault with Default::{default}
+
+pub extend DeriveDefault with Eq::{not_equal, equal}
+
 test "derive default struct" {
   let p : DeriveDefault = Default::default()
   assert_true(p == DeriveDefault::{ x: 0, y: None })
@@ -16,6 +20,10 @@ enum DeriveDefaultEnum {
   Case2(label~ : String)
   Case3
 } derive(Default, Eq)
+
+pub extend DeriveDefaultEnum with Default::{default}
+
+pub extend DeriveDefaultEnum with Eq::{not_equal, equal}
 
 test "derive default enum" {
   let value : DeriveDefaultEnum = Default::default()

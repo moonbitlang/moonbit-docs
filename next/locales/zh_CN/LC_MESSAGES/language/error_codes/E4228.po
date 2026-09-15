@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-14 16:31+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4228.md:1
+msgid "E4228"
+msgstr ""
+
+#: ../../language/error_codes/E4228.md:3
+msgid "Compiler diagnostic name: `invalid_import_all`."
+msgstr "编译器诊断名称：`invalid_import_all`。"
+
+#: ../../language/error_codes/E4228.md:5
+msgid "An import uses `*` outside a `.mbtx` script."
+msgstr "某个 import 在 `.mbtx` 脚本之外使用了 `*`。"
+
+#: ../../language/error_codes/E4228.md:7
+msgid ""
+"Import-all syntax brings a package's definitions into the script's scope and "
+"is intentionally limited to script mode. Regular packages must access an "
+"import through its package alias or import selected names with `using`."
+msgstr ""
+"全部导入语法会将一个包中的定义引入脚本作用域，并且有意限定为仅用于脚本模式。"
+"普通包必须通过包别名访问 import，或用 `using` 导入选定的名称。"
+
+#: ../../language/error_codes/E4228.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4228.md:13
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/list\" *\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4228.md:17
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4228.md:19
+msgid ""
+"Use a normal package alias in `moon.pkg`, then qualify names from that "
+"package. Alternatively, move genuinely script-like code and its import "
+"header to a `.mbtx` file."
+msgstr ""
+"请在 `moon.pkg` 中使用普通的包别名，然后用该别名限定包内名称。或者，将真正适"
+"合作为脚本的代码及其 import 头部移入 `.mbtx` 文件。"
+
+#: ../../language/error_codes/E4228.md:23
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/list\" @list\n"
+"}\n"
+msgstr ""

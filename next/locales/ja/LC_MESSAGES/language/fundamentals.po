@@ -2825,6 +2825,27 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1014
 msgid ""
+"The loop binding may be an exhaustive pattern, so an item can be destructured "
+"directly in the loop header. The pattern must match every possible item; "
+"handle refutable alternatives such as `Some(value)` inside the loop body "
+"instead."
+msgstr ""
+"ループの束縛には網羅的なパターンを使用でき、ループヘッダーで要素を直接分解できます。"
+"パターンはすべての要素にマッチする必要があります。`Some(value)` のような反証可能な分岐は、ループ本体で処理してください。"
+
+#: ../../language/fundamentals.md:1019
+msgid ""
+"test \"destructuring patterns in for-in loops\" {\n"
+"  let mut total = 0\n"
+"  for (x, y) in [(1, 2), (3, 4)] {\n"
+"    total += x + y\n"
+"  }\n"
+"  assert_eq(total, 10)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1014
+msgid ""
 "`for .. in` loop also supports iterating through a sequence of integers, "
 "such as:"
 msgstr "`for .. in` ループは、次のような整数列の反復もサポートします："
@@ -3687,11 +3708,13 @@ msgid ""
 "type. The following examples start with a struct:"
 msgstr ""
 
-#: ../../language/fundamentals.md:1401
+#: ../../language/fundamentals.md:1411
 msgid ""
 "struct IntBox {\n"
 "  value : Int\n"
 "} derive(Debug)\n"
+"\n"
+"pub extend IntBox with Debug::{to_repr}\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:1407
@@ -3734,12 +3757,14 @@ msgid ""
 "normal functions:"
 msgstr "コンストラクタでも、通常の関数と同じようにラベル付き引数やオプション引数を使えます："
 
-#: ../../language/fundamentals.md:1429
+#: ../../language/fundamentals.md:1439
 msgid ""
 "struct StructWithConstr {\n"
 "  x : Int\n"
 "  y : Int\n"
 "} derive(Debug)\n"
+"\n"
+"pub extend StructWithConstr with Debug::{to_repr}\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:1435
@@ -3762,15 +3787,19 @@ msgid ""
 " raise errors:"
 msgstr "struct コンストラクタは通常の関数として実装されるため、エラーを送出することもできます："
 
-#: ../../language/fundamentals.md:1449
+#: ../../language/fundamentals.md:1459
 msgid ""
 "suberror BuildError {\n"
 "  NegativeInput\n"
 "} derive(Debug)\n"
 "\n"
+"pub extend BuildError with Debug::{to_repr}\n"
+"\n"
 "struct Positive {\n"
 "  value : Int\n"
 "} derive(Debug)\n"
+"\n"
+"pub extend Positive with Debug::{to_repr}\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:1455
@@ -3802,11 +3831,13 @@ msgid ""
 "type:"
 msgstr ""
 
-#: ../../language/fundamentals.md:1470
+#: ../../language/fundamentals.md:1480
 msgid ""
 "enum Endpoint {\n"
 "  Host(String, Int)\n"
 "} derive(Debug)\n"
+"\n"
+"pub extend Endpoint with Debug::{to_repr}\n"
 "\n"
 "fn Endpoint::Endpoint(host : String, port? : Int = 80) -> Endpoint {\n"
 "  Host(host, port)\n"
@@ -3824,11 +3855,14 @@ msgid ""
 " and can be used inside async code:"
 msgstr "非同期コンストラクタは `async fn TypeName::TypeName` として宣言し、非同期コードの中で使えます："
 
-#: ../../language/fundamentals.md:1479
+#: ../../language/fundamentals.md:1489
 msgid ""
 "struct AsyncBox {\n"
 "  value : Int\n"
 "} derive(Debug)\n"
+"\n"
+"///|\n"
+"pub extend AsyncBox with Debug::{to_repr}\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:1485
@@ -4165,7 +4199,7 @@ msgid ""
 "accessing struct fields in pattern matching:"
 msgstr "パターンマッチでは、コンストラクタのラベル付き引数にも struct フィールドのようにアクセスできます："
 
-#: ../../language/fundamentals.md:1598
+#: ../../language/fundamentals.md:1608
 msgid ""
 "enum Object {\n"
 "  Point(x~ : Double, y~ : Double)\n"
@@ -4173,6 +4207,8 @@ msgid ""
 "}\n"
 "\n"
 "suberror NotImplementedError derive(Debug)\n"
+"\n"
+"pub extend NotImplementedError with Debug::{to_repr}\n"
 "\n"
 "fn Object::distance_with(\n"
 "  self : Object,\n"
@@ -4315,11 +4351,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1648
+#: ../../language/fundamentals.md:1658
 msgid ""
-"To extend an extensible enum from another package, qualify the target "
-"type with the package that defines the type:"
-msgstr "別パッケージの拡張可能 enum を拡張するには、その型を定義しているパッケージで対象の型を修飾します："
+"To extend an extensible enum from another package, the original declaration "
+"must be fully public with `pub(all)`. Qualify the target type with the package "
+"that defines the type:"
+msgstr ""
+"別パッケージから拡張可能 enum を拡張するには、元の宣言を `pub(all)` で完全公開する必要があります。"
+"対象の型は、その型を定義したパッケージで修飾します："
 
 #: ../../language/fundamentals.md:1651
 msgid ""
@@ -4377,11 +4416,15 @@ msgid ""
 "constructors can be added outside the current declaration."
 msgstr "現在の宣言の外側でさらにコンストラクタを追加できるため、パターンマッチにはワイルドカード分岐を含める必要があります。"
 
-#: ../../language/fundamentals.md:1676
+#: ../../language/fundamentals.md:1687
 msgid ""
-"Only `extenum` declarations can be extended. Regular `enum` declarations "
-"are closed."
-msgstr "拡張できるのは `extenum` 宣言だけです。通常の `enum` 宣言は閉じています。"
+"Only `extenum` declarations can be extended. Regular `enum` declarations are "
+"closed. An `extenum` declared with `pub` is read-only outside its defining "
+"package: other packages can inspect its constructors, but cannot construct or "
+"add constructors to it."
+msgstr ""
+"拡張できるのは `extenum` 宣言だけです。通常の `enum` 宣言は閉じています。`pub` で宣言された `extenum` "
+"は定義元パッケージの外では読み取り専用です。他のパッケージはコンストラクタを確認できますが、値を構築したりコンストラクタを追加したりすることはできません。"
 
 #: ../../language/fundamentals.md:1679
 msgid "Tuple Struct"

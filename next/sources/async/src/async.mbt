@@ -9,6 +9,13 @@ async fn my_async_function() -> String {
 }
 // end async function declaration
 
+///|
+// start nocancel function
+async fn record_completion() -> Unit noraise + nocancel {
+  println("completed")
+}
+// end nocancel function
+
 // start optional arguments async
 
 ///|
@@ -32,6 +39,9 @@ async fn use_value() -> Int {
 struct AsyncBox {
   value : Int
 } derive(Debug)
+
+///|
+pub extend AsyncBox with Debug::{to_repr}
 // end struct constructor async 1
 
 ///|

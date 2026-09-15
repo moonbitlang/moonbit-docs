@@ -11,22 +11,30 @@ on:
     - cron: "0 10 * * 2"
 
 jobs:
-  build:
+  validation:
+    name: validation (${{ matrix.os }}, ${{ matrix.version }})
+    continue-on-error: true
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-latest
           - macos-latest
           - windows-latest
+        version:
+          - nightly
+          - pre-release
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
 
       - name: install
         uses: ./.github/actions/setup
+        with:
+          version: ${{ matrix.version }}
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v7
         with:
           python-version: "3.x"
 
@@ -35,21 +43,24 @@ jobs:
           python scripts/check-document.py
 
       - name: check error-code examples
-        env:
-          CHECK_ERROR_DOCS_ALLOW_TOOLCHAIN_DRIFT: "1"
+        if: always()
         run: |
           python next/check_error_docs.py all
 
       - name: Set up Rust
+        if: always()
         uses: dtolnay/rust-toolchain@stable
 
       - name: Install scrut
+        if: always()
         run: cargo install --locked scrut
 
       - name: Workspace command transcript
+        if: always()
         shell: bash
         run: scrut test --shell bash next/sources/workspace/workspace.cram
 
       - name: Script mode command transcript
+        if: always()
         shell: bash
         run: scrut test --shell bash next/sources/script-mode/script-mode.cram

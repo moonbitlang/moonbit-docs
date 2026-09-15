@@ -28,4 +28,8 @@ enum Instruction {
   Split
   Print
 } derive(Eq, Debug)
+
+pub extend Instruction with Eq::{not_equal, equal}
+
+pub extend Instruction with @moonbitlang/core/debug.Debug::{to_repr}
 // end instr definition

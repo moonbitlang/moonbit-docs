@@ -1011,6 +1011,16 @@ MoonBit supports traversing elements of different data structures and sequences 
 `for .. in` loop is translated to the use of `Iter` in MoonBit's standard library. Any type with a method `.iter() : Iter[T]` can be traversed using `for .. in`.
 For more information of the `Iter` type, see [Iterator](#iterator) below.
 
+The loop binding may be an exhaustive pattern, so an item can be destructured
+directly in the loop header. The pattern must match every possible item; handle
+refutable alternatives such as `Some(value)` inside the loop body instead.
+
+```{literalinclude} /sources/language/src/controls/top.mbt
+:language: moonbit
+:start-after: start for loop pattern
+:end-before: end for loop pattern
+```
+
 `for .. in` loop also supports iterating through a sequence of integers, such as:
 
 ```{literalinclude} /sources/language/src/controls/top.mbt
@@ -1645,8 +1655,9 @@ same package:
 :end-before: end extenum local extension
 ```
 
-To extend an extensible enum from another package, qualify the target type with
-the package that defines the type:
+To extend an extensible enum from another package, the original declaration
+must be fully public with `pub(all)`. Qualify the target type with the package
+that defines the type:
 
 ```{literalinclude} /sources/language/src/extenum/plugin/top.mbt
 :language: moonbit
@@ -1674,7 +1685,9 @@ Pattern matching must include a wildcard branch, because more constructors
 can be added outside the current declaration.
 
 Only `extenum` declarations can be extended. Regular `enum` declarations are
-closed.
+closed. An `extenum` declared with `pub` is read-only outside its defining
+package: other packages can inspect its constructors, but cannot construct or
+add constructors to it.
 
 ### Tuple Struct
 

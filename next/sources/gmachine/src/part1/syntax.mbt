@@ -14,6 +14,12 @@ enum Token {
 } derive(Eq, Debug)
 
 ///|
+pub extend Token with Eq::{not_equal, equal}
+
+///|
+pub extend Token with @moonbitlang/core/debug.Debug::{to_repr}
+
+///|
 fn between(this : Char, lw : Char, up : Char) -> Bool {
   this >= lw && this <= up
 }
@@ -58,6 +64,9 @@ struct Tokens {
   tokens : Array[Token]
   mut current : Int
 } derive(Debug)
+
+///|
+pub extend Tokens with @moonbitlang/core/debug.Debug::{to_repr}
 
 ///|
 fn Tokens::new(tokens : Array[Token]) -> Tokens {

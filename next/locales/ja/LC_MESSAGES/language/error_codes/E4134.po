@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-14 16:31+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4134.md:1
+msgid "E4134"
+msgstr ""
+
+#: ../../language/error_codes/E4134.md:3
+msgid "Compiler diagnostic name: `invalid_foreach_pattern`."
+msgstr "コンパイラ診断名：`invalid_foreach_pattern`。"
+
+#: ../../language/error_codes/E4134.md:5
+msgid ""
+"A pattern in a `for .. in` binding is not exhaustive for the value being "
+"iterated over."
+msgstr ""
+"`for .. in` の束縛パターンが、反復対象の値に対して網羅的ではありません。"
+
+#: ../../language/error_codes/E4134.md:8
+msgid ""
+"The loop body runs once for every item, so its binding pattern must match "
+"every possible item. For example, `Some(value)` cannot bind an `Option[T]`, "
+"because an item may be `None`."
+msgstr ""
+"ループ本体は各要素について一度ずつ実行されるため、束縛パターンは可能なすべて"
+"の要素にマッチする必要があります。例えば、要素が `None` の可能性があるため、"
+"`Some(value)` で `Option[T]` を束縛することはできません。"
+
+#: ../../language/error_codes/E4134.md:12
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E4134.md:14
+msgid ""
+"///|\n"
+"pub fn print_values(values : Array[Option[Int]]) -> Unit {\n"
+"  for Some(value) in values {\n"
+"    println(value)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4134.md:18
+msgid "Suggestion"
+msgstr "提案"
+
+#: ../../language/error_codes/E4134.md:20
+msgid ""
+"Bind the whole item and handle alternatives inside the loop, or use an "
+"exhaustive destructuring pattern such as a tuple or record pattern."
+msgstr ""
+"要素全体を束縛してループ本体で各分岐を処理するか、タプルパターンやレコードパ"
+"ターンなどの網羅的な分解パターンを使用してください。"
+
+#: ../../language/error_codes/E4134.md:23
+msgid ""
+"///|\n"
+"pub fn print_values(values : Array[Option[Int]]) -> Unit {\n"
+"  for value in values {\n"
+"    match value {\n"
+"      Some(value) => println(value)\n"
+"      None => ()\n"
+"    }\n"
+"  }\n"
+"}\n"
+msgstr ""

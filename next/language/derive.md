@@ -2,12 +2,19 @@
 
 MoonBit supports deriving a number of builtin traits automatically from the type definition.
 
-To derive a trait `T`, it is required that all fields used in the type implements `T`.
-For example, deriving `Show` for a struct `struct A { x: T1; y: T2 }` requires both `T1: Show` and `T2: Show`
+To derive a trait `T`, all fields used in the type must implement `T`.
+For example, deriving `Show` for a struct `struct A { x: T1; y: T2 }`
+requires both `T1 : Show` and `T2 : Show`.
+
+`derive` generates a trait implementation. The examples below also use
+[`extend`](methods.md#attaching-trait-methods-with-extend) to state explicitly
+which generated trait functions are part of the type's method-style API. This
+avoids relying on the deprecated implicit attachment of methods from an
+implementation.
 
 ## Eq and Compare
 
-`derive(Eq)` and `derive(Compare)` will generate the corresponding method for testing equality and comparison.
+`derive(Eq)` and `derive(Compare)` generate the corresponding implementations for testing equality and comparison.
 Fields are compared in the same order as their definitions.
 For enums, the order between cases ascends in the order of definition.
 
@@ -25,7 +32,7 @@ For enums, the order between cases ascends in the order of definition.
 
 ## Debug
 
-`derive(Debug)` will generate a structural debugging implementation for the type.
+`derive(Debug)` generates a structural debugging implementation for the type.
 It is useful with `debug_inspect` in tests and `@debug.to_string` when formatting diagnostic messages.
 
 ```{literalinclude} /sources/language/src/derive/debug.mbt
@@ -46,9 +53,8 @@ Enums can derive `Debug` as well:
 
 `derive(Default)` generates a `Default` implementation for the type. Call
 `Default::default()` with the expected type specified so MoonBit can select the
-implementation. Deriving the trait does not by itself attach `default` as a
-type method; use an explicit [`extend`](methods.md#attaching-trait-methods-with-extend)
-declaration if a method-style API is desired.
+implementation. Use an explicit `extend` declaration if `default` should also
+be part of the type's method-style API.
 
 For structs, the default value is the struct with all fields set as their default value.
 
@@ -84,7 +90,7 @@ enum CannotDerive2 {
 
 ## Hash
 
-`derive(Hash)` will generate a hash implementation for the type.
+`derive(Hash)` generates a hash implementation for the type.
 This will allow the type to be used in places that expects a `Hash` implementation,
 for example `HashMap`s and `HashSet`s.
 

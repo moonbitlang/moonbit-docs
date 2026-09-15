@@ -1,0 +1,95 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-14 16:31+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4225.md:1
+msgid "E4225"
+msgstr ""
+
+#: ../../language/error_codes/E4225.md:3
+msgid "Compiler diagnostic name: `constr_any_pattern_not_suberror`."
+msgstr "编译器诊断名称：`constr_any_pattern_not_suberror`。"
+
+#: ../../language/error_codes/E4225.md:5
+msgid ""
+"The wildcard constructor pattern `Type::_` does not name a usable suberror "
+"type."
+msgstr "通配构造器模式 `Type::_` 指定的不是可用的 suberror 类型。"
+
+#: ../../language/error_codes/E4225.md:8
+msgid ""
+"This pattern stands for all visible constructors of one suberror type. The "
+"named type must therefore be a suberror with at least one constructor, and "
+"its constructors must be visible at the pattern's use site. It cannot be an "
+"ordinary enum, struct, built-in type, empty suberror, or opaque suberror "
+"whose constructors are unavailable."
+msgstr ""
+"该模式代表某个 suberror 类型的所有可见构造器。因此，指定的类型必须是至少包含"
+"一个构造器的 suberror，并且在模式使用处必须能看到这些构造器。它不能是普通枚"
+"举、结构体、内置类型、空的 suberror，或构造器不可见的不透明 suberror。"
+
+#: ../../language/error_codes/E4225.md:14
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4225.md:16
+msgid ""
+"///|\n"
+"enum Status {\n"
+"  Ready\n"
+"  Busy\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn is_status(error : Error) -> Bool {\n"
+"  match error {\n"
+"    Status::_ => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4225.md:20
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4225.md:22
+msgid ""
+"Name a visible, non-empty suberror type. If the value is not an error, use "
+"that type's ordinary patterns instead."
+msgstr ""
+"请指定一个可见且非空的 suberror 类型。如果该值不是错误，请改用该类型的普通模"
+"式。"
+
+#: ../../language/error_codes/E4225.md:25
+msgid ""
+"///|\n"
+"priv suberror StatusError {\n"
+"  NotReady\n"
+"  Busy\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn is_status_error(error : Error) -> Bool {\n"
+"  match error {\n"
+"    StatusError::_ => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""

@@ -6,6 +6,9 @@ struct ShrinkPoint {
 } derive(Shrink)
 
 ///|
+pub extend ShrinkPoint with @shrink.Shrink::{shrink}
+
+///|
 fn shrink_candidates(point : ShrinkPoint) -> Iter[ShrinkPoint] {
   @quickcheck.Shrink::shrink(point)
 }

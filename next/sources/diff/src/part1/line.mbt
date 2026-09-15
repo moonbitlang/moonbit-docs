@@ -6,6 +6,9 @@ struct Line {
 } derive(ToJson)
 
 ///|
+pub extend Line with ToJson::{to_json}
+
+///|
 fn Line::new(number : Int, text : String) -> Line {
   Line::{ number, text }
 }
