@@ -6489,3 +6489,20 @@ msgstr ""
 "fn todo_in_func() -> Int {\n"
 "  ...\n"
 "}\n"
+
+#: ../../language/fundamentals.md:1577
+msgid "Non-exhaustive enums"
+msgstr "非網羅 enum"
+
+#: ../../language/fundamentals.md:1579
+msgid ""
+"A library can mark an enum with "
+"[`#non_exhaustive`](attributes.md#non-exhaustive-enum-attribute) when later "
+"releases may add constructors. Downstream pattern matches must cover the "
+"currently known constructors and then use `Type::..` to handle constructors "
+"introduced by a future version of the library."
+msgstr ""
+"ライブラリの将来のリリースでコンストラクタが追加される可能性がある場合、enum に "
+"[`#non_exhaustive`](attributes.md#non-exhaustive-enum-attribute) を付けられます。"
+"下流のパターンマッチでは、現在既知のコンストラクタをすべて扱ったうえで、将来の"
+"バージョンで追加されるコンストラクタを `Type::..` で処理する必要があります。"

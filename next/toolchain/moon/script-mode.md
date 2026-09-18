@@ -48,17 +48,18 @@ All imported packages from the same module must use the same version.
 If the import path is not explicitly versioned, it uses the latest version
 in the local registry index.
 
-A script may use `*` in place of an alias to bring all definitions from a
-package into its scope:
+A script may add `*` after an import to bring all definitions from that package
+into its scope. The import may also set a custom package alias with `@alias`:
 
 ```{literalinclude} /sources/script-mode/import-all.mbtx
 :language: moonbit
 ```
 
-The package's default alias remains available, so the example can use both
-`Queue` and `@queue.Queue`. Import-all syntax is limited to `.mbtx` scripts;
-regular packages should use package aliases or `using` declarations. Prefer
-explicit imports when name conflicts would make a script difficult to read.
+The package alias remains available, so the example can use both `Queue` and
+`@q.Queue`. Without an explicit `@alias`, the package's default alias is used.
+Import-all syntax is limited to `.mbtx` scripts; regular packages should use
+package aliases or `using` declarations. Prefer explicit imports when name
+conflicts would make a script difficult to read.
 
 ## Test a `.mbtx` script
 

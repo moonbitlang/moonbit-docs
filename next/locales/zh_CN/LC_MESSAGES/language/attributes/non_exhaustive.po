@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-18 15:34+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/non_exhaustive.md:1
+msgid "Non-exhaustive Enum Attribute"
+msgstr "非穷尽枚举属性"
+
+#: ../../language/attributes/non_exhaustive.md:3
+msgid ""
+"The `#non_exhaustive` attribute marks an `enum` whose defining package "
+"may add constructors in a future release. It is valid only on enum "
+"declarations."
+msgstr ""
+"`#non_exhaustive` 属性用于标记定义包可能在未来版本中添加构造器的 "
+"`enum`。它只能用于枚举声明。"
+
+#: ../../language/attributes/non_exhaustive.md:6
+msgid ""
+"///|\n"
+"#non_exhaustive\n"
+"pub(all) enum Response {\n"
+"  Ok(String)\n"
+"  NotFound\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/non_exhaustive.md:12
+msgid ""
+"Code outside the defining package must handle potential future "
+"constructors with a `Type::..` pattern:"
+msgstr "定义包之外的代码必须使用 `Type::..` 模式处理未来可能出现的构造器："
+
+#: ../../language/attributes/non_exhaustive.md:15
+msgid ""
+"///|\n"
+"pub fn render(response : @base.Response) -> String {\n"
+"  match response {\n"
+"    @base.Ok(body) => body\n"
+"    @base.NotFound => \"not found\"\n"
+"    @base.Response::.. => \"unsupported response\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/non_exhaustive.md:21
+msgid ""
+"The `Type::..` pattern is specifically for forward compatibility. It does"
+" not replace the enum's currently known constructors: match those "
+"constructors explicitly before this pattern. A wildcard pattern (`_`) is "
+"not a substitute for `Type::..` when handling constructors added by a "
+"future version of the defining package."
+msgstr ""
+"`Type::..` 模式专用于前向兼容。它不能替代枚举中当前已知的构造器：这些"
+"构造器必须在该模式之前显式匹配。处理定义包未来版本新增的构造器时，通配符"
+"模式（`_`）不能替代 `Type::..`。"
+
+#: ../../language/attributes/non_exhaustive.md:27
+msgid ""
+"Adding a constructor to a `#non_exhaustive` enum is therefore compatible "
+"with downstream matches that use `Type::..`."
+msgstr ""
+"因此，只要下游匹配使用了 `Type::..`，为 `#non_exhaustive` 枚举新增构造器"
+"就是兼容变更。"
