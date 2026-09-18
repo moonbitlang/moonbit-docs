@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-16 16:24+0800\n"
+"POT-Creation-Date: 2026-09-18 15:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -102,8 +102,8 @@ msgstr "如果导入路径没有显式指定版本，则会使用本地索引中
 
 #: ../../toolchain/moon/script-mode.md:51
 msgid ""
-"A script may use `*` in place of an alias to bring all definitions from a "
-"package into its scope:"
+"A script may use `*` in place of an alias to bring all definitions from a"
+" package into its scope:"
 msgstr "脚本可以用 `*` 代替别名，将包中的所有定义引入当前作用域："
 
 #: ../../toolchain/moon/script-mode.md:54
@@ -124,41 +124,64 @@ msgstr ""
 
 #: ../../toolchain/moon/script-mode.md:58
 msgid ""
-"The package's default alias remains available, so the example can use both "
-"`Queue` and `@queue.Queue`. Import-all syntax is limited to `.mbtx` scripts; "
-"regular packages should use package aliases or `using` declarations. Prefer "
-"explicit imports when name conflicts would make a script difficult to read."
+"The package's default alias remains available, so the example can use "
+"both `Queue` and `@queue.Queue`. Import-all syntax is limited to `.mbtx` "
+"scripts; regular packages should use package aliases or `using` "
+"declarations. Prefer explicit imports when name conflicts would make a "
+"script difficult to read."
 msgstr ""
 "包的默认别名仍然可用，因此示例可以同时使用 `Queue` 和 `@queue.Queue`。全量导入语法仅适用于 `.mbtx` "
 "脚本；普通包应使用包别名或 `using` 声明。当名称冲突会让脚本难以阅读时，优先使用显式导入。"
 
-#: ../../toolchain/moon/script-mode.md:52
+#: ../../toolchain/moon/script-mode.md:63
+msgid "Test a `.mbtx` script"
+msgstr "测试 `.mbtx` 脚本"
+
+#: ../../toolchain/moon/script-mode.md:65
+msgid "Pass a script path to `moon test` to test that script by itself:"
+msgstr "将脚本路径传给 `moon test`，即可单独测试该脚本："
+
+#: ../../toolchain/moon/script-mode.md:67
+msgid "moon test script.mbtx\n"
+msgstr ""
+
+#: ../../toolchain/moon/script-mode.md:71
+msgid ""
+"The script must define `fn main`, but the generated test entrypoint does "
+"not run it. An explicit `.mbtx` path selects only that script, even when "
+"it is inside a project; conversely, package-wide test runs do not include"
+" `.mbtx` scripts."
+msgstr ""
+"脚本必须定义 `fn main`，但生成的测试入口不会运行它。即使脚本位于项目内，显式传入 `.mbtx` "
+"路径也只会测试该脚本；反过来，对整个包运行测试时不会包含 `.mbtx` 脚本。"
+
+#: ../../toolchain/moon/script-mode.md:76
 msgid "Run a `.mbtx` script from stdin"
 msgstr "从 stdin 运行 `.mbtx` 脚本"
 
-#: ../../toolchain/moon/script-mode.md:54
+#: ../../toolchain/moon/script-mode.md:78
 msgid "Moon supports running a `.mbtx` script from stdin:"
 msgstr "Moon 支持从 stdin 运行 `.mbtx` 脚本："
 
-#: ../../toolchain/moon/script-mode.md:56
+#: ../../toolchain/moon/script-mode.md:80
 msgid "$ cat script.mbtx | moon run -\n"
 msgstr "$ cat script.mbtx | moon run -\n"
 
-#: ../../toolchain/moon/script-mode.md:60
+#: ../../toolchain/moon/script-mode.md:84
 msgid "For short scripts, pass the `.mbtx` source directly with `-c`:"
 msgstr "对于简短脚本，可以使用 `-c` 直接传入 `.mbtx` 源码："
 
-#: ../../toolchain/moon/script-mode.md:62
+#: ../../toolchain/moon/script-mode.md:86
 msgid ""
 "$ moon run -c \"<script>\"\n"
 "$ moon run -c 'fn main { println(\"hello\") }'\n"
 msgstr ""
 
-#: ../../toolchain/moon/script-mode.md:67
+#: ../../toolchain/moon/script-mode.md:91
 msgid "You can also use a heredoc, a feature provided by the shell:"
 msgstr "你也可以使用 heredoc（由 shell 提供的一项功能）："
 
-#: ../../toolchain/moon/script-mode.md:69
+#: ../../toolchain/moon/script-mode.md:93
 msgid ""
 "$ moon run - <<EOF\n"
 "fn main {\n"

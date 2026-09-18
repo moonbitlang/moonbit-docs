@@ -1,3 +1,3 @@
 test "answer" {
-  inspect(answer(), content="42")
+  inspect(@workspace-mod-b.answer(), content="42")
 }

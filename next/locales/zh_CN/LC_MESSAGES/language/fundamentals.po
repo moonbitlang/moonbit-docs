@@ -3883,16 +3883,26 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1633
 msgid ""
-"pub(all) extenum LogEvent[T] {\n"
-"  Info(T)\n"
-"}\n"
+"pub extenum LogEvent[T]\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:1639
 msgid ""
-"Use `extenum Type += { ... }` to add constructors to an extensible enum "
-"in the same package:"
-msgstr "使用 `extenum Type += { ... }` 为同一个包中的可扩展枚举添加构造器："
+"The declaration defines the type without constructors. Add the initial "
+"constructors with `extenum Type += { ... }`; the visibility on the extension "
+"controls the visibility of those constructors:"
+msgstr "该声明只定义类型，不包含构造器。通过 `extenum Type += { ... }` 添加初始构造器；扩展上的可见性决定这些构造器的可见性："
+
+#: ../../language/fundamentals.md:1644
+msgid ""
+"pub(all) extenum LogEvent[T] += {\n"
+"  Info(T)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1651
+msgid "The same package can add more constructors later:"
+msgstr "同一个包之后还可以继续添加更多构造器："
 
 #: ../../language/fundamentals.md:1642
 msgid ""
@@ -3904,11 +3914,9 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1658
 msgid ""
-"To extend an extensible enum from another package, the original declaration "
-"must be fully public with `pub(all)`. Qualify the target type with the package "
-"that defines the type:"
-msgstr ""
-"要从另一个包扩展可扩展枚举，原始声明必须使用 `pub(all)` 完全公开。目标类型还需要由定义该类型的包限定："
+"To extend an extensible enum from another package, the original type declaration "
+"must use `pub`. Qualify the target type with the package that defines it:"
+msgstr "要从另一个包扩展可扩展枚举，原始类型声明必须使用 `pub`。目标类型还需要由定义它的包限定："
 
 #: ../../language/fundamentals.md:1651
 msgid ""
@@ -3968,12 +3976,9 @@ msgstr "模式匹配必须包含通配符分支，因为当前声明之外还可
 #: ../../language/fundamentals.md:1687
 msgid ""
 "Only `extenum` declarations can be extended. Regular `enum` declarations are "
-"closed. An `extenum` declared with `pub` is read-only outside its defining "
-"package: other packages can inspect its constructors, but cannot construct or "
-"add constructors to it."
-msgstr ""
-"只有 `extenum` 声明可以被扩展。普通的 `enum` 声明是封闭的。使用 `pub` 声明的 `extenum` "
-"在定义它的包之外是只读的：其他包可以查看其构造器，但不能构造其值或为其添加构造器。"
+"closed. Use a regular `enum` when downstream packages should not be able to add "
+"constructors; private or read-only `extenum` declarations are deprecated."
+msgstr "只有 `extenum` 声明可以被扩展。普通的 `enum` 声明是封闭的。如果不希望下游包添加构造器，请使用普通 `enum`；私有或只读的 `extenum` 声明已被弃用。"
 
 #: ../../language/fundamentals.md:1679
 msgid "Tuple Struct"

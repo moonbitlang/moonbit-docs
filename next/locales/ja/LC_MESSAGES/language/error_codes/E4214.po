@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-02 17:59+0800\n"
+"POT-Creation-Date: 2026-09-18 15:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -61,12 +61,16 @@ msgid "Suggestion"
 msgstr ""
 
 #: ../../language/error_codes/E4214.md:21
-msgid "Declare the type as `extenum` before extending it."
-msgstr ""
-
-#: ../../language/error_codes/E4214.md:23
 msgid ""
-"pub extenum Event {\n"
+"Declare the public `extenum` type separately, then add its initial "
+"constructors with an extension."
+msgstr "公開 `extenum` 型を個別に宣言し、拡張によって初期コンストラクタを追加してください。"
+
+#: ../../language/error_codes/E4214.md:24
+msgid ""
+"pub extenum Event\n"
+"\n"
+"pub(all) extenum Event += {\n"
 "  Started\n"
 "}\n"
 "\n"

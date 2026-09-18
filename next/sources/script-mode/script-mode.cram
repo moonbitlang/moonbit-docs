@@ -5,3 +5,6 @@ Script mode command transcript
   $ moon run "$TESTDIR/import-all.mbtx" | tr -d '\r'
   3
   2
+
+  $ moon test "$TESTDIR/test-script.mbtx" 2>&1 | tr -d '\r' | tail -n 1
+  Total tests: 1, passed: 1, failed: 0.

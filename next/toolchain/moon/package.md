@@ -1137,7 +1137,7 @@ missing_pattern_arguments  Some arguments of constructor are omitted in pattern.
 ambiguous_block            Ambiguous block.                                                22 warn
 unused_try                 Useless try expression.                                         23 warn
 unused_error_type          Useless error type.                                             24 warn
-test_unqualified_package   Using implicitly imported API in test.                          25 off
+test_unqualified_package   Using implicitly imported API in test.                          25 warn
 unused_catch_all           Useless catch all.                                              26 warn
 deprecated_syntax          Deprecated syntax.                                              27 warn
 todo                       Todo                                                            28 warn

@@ -6,16 +6,27 @@
 
 These commands use semantic analysis rather than text matching, making them more precise than grep-based searching for code navigation tasks.
 
+Navigation commands work with modules, multi-module workspaces, and standalone
+`.mbtx` scripts. In a multi-module workspace, `moon ide` follows each module's
+configured backend. For a single module, commands that offer `--target` can
+select the backend used by the project check.
+
 ### Available Commands
 
 - **`moon ide peek-def`**: Locate symbol definitions with inline context
 - **`moon ide find-references`**: Locate all usages of a symbol across the project
+- **`moon ide rename`**: Compute or apply semantic rename edits
+- **`moon ide hover`**: Show type and documentation at a source position
 - **`moon ide outline`**: Get a structural overview of files or packages
+- **`moon ide analyze`**: Report public API usage counts
 - **`moon ide doc`**: Discover and explore APIs with documentation
+- **`moon ide workspace-symbols`**: Search top-level workspace symbols
+- **`moon ide codelens`**: Return reference CodeLens entries as JSON
+- **`moon ide gen-symbols`**: Generate a package symbol index
 
 ## Symbol Syntax
 
-All `moon ide` subcommands accept a `<symbol>` argument using these patterns:
+Commands that accept a `<symbol>` argument use these patterns:
 
 **Basic symbols:**
 
@@ -25,6 +36,7 @@ All `moon ide` subcommands accept a `<symbol>` argument using these patterns:
 **Type members:**
 
 - `[@pkg.]Type::member` - Type methods, struct fields, enum variants, trait methods
+- `Trait::method for Type` - A trait method implementation for a type
 - Examples: `Array::length`, `@http.Request::new`, `Option::None`
 
 Package prefix `@pkg.` is optional for symbols in the current package and standard library.
@@ -36,16 +48,19 @@ Quickly locate symbol definitions with surrounding context. This is faster and m
 ### Usage
 
 ```bash
-moon ide peek-def <symbol> [-loc filename:line[:col]]
+moon ide peek-def <symbol> [--loc filename[:line[:col]]]
 ```
 
-**Two modes:**
+**Lookup modes:**
 
-1. **Global search** (no `-loc`): Searches the entire project using the symbol syntax described above
-2. **Contextual search** (`-loc` provided): Matches `<symbol>` as a substring at the specified location
-   - Line number must be precise; column is optional (used as a hint)
-   - The `<symbol>` argument is matched as plain text, not parsed as symbol syntax
-   - Useful when a symbol name is ambiguous or appears in multiple contexts
+1. **Global search** (no `--loc`): Searches the module or workspace using the
+   symbol syntax described above.
+2. **File-restricted search** (`--loc filename`): Restricts the initial symbol
+   lookup to one file.
+3. **Source-position lookup** (`--loc filename:line[:col]`): Resolves the symbol
+   at that position, which is useful for local variables, shadowed names, and
+   ambiguous symbols. When line and column are both present, the separate
+   `<symbol>` argument may be omitted.
 
 ### Examples
 
@@ -64,7 +79,7 @@ Found 1 symbols matching 'Agent':
 ```
 
 ```bash
-$ moon ide peek-def Agent -loc ./maria.mbt:7
+$ moon ide peek-def Agent --loc ./maria.mbt:7
 Definition found at file ./maria/agent/agent.mbt
    | ///
    | /// The `Agent` struct encapsulates the complete state and behavior of an AI agent,
@@ -83,14 +98,22 @@ Discover where and how a symbol is used throughout your codebase.
 
 ```bash
 moon ide find-references <symbol>
+moon ide find-references <token> --loc <path[:line[:col]]>
+moon ide find-references --loc <path:line:col>
 ```
 
-Note: The `-loc` argument is not yet supported. Always searches globally.
+Without `--loc`, the command searches for a semantic symbol across the current
+module or workspace. File and source-position forms behave like those of
+`peek-def`, including support for local variables and shadowed names.
+
+Definitions are excluded by default. Add `--include-definition` to include
+them. With `--json`, each result also has an `is_test` field that identifies
+references in test blocks and test files.
 
 ### Example
 
 ```bash
-$ moon ide find-references Agent
+$ moon ide find-references Agent --include-definition
 `pub (all) struct Agent` in package moonbitlang/maria/agent at ./agent/agent.mbt:17-47
 17 | ///|
    | /// Represents an AI agent that interacts with language models and executes tools.
@@ -109,6 +132,18 @@ Found 98 references of this symbol:
    |   tool_names : Set[String],
 ...
 ```
+
+## `moon ide codelens` - Get Reference Code Lenses
+
+Return local- and global-reference CodeLens entries for top-level declarations
+in a source file:
+
+```bash
+moon ide codelens path/to/file.mbt
+```
+
+The output is always a JSON array. Local-reference locations include an
+`is_test` field, and ranges use one-based `line:column-line:column` positions.
 
 ## `moon ide outline` - Get Structural Overview
 
@@ -182,8 +217,6 @@ The query syntax is specialized for symbol and package discovery:
 
 - `moon ide doc "[@pkg.]function_name"` - Find functions or values
 - `moon ide doc "[@pkg.]TypeName"` - Find types (builtin types don't need prefix)
-- `moon ide doc "[@pkg.]Type::member"` - Find type methods or fields
-
 - `moon ide doc "[@pkg.]Type::member"` - Find type methods or fields
 
 **Package exploration:**
