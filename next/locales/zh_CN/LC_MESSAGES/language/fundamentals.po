@@ -5887,3 +5887,20 @@ msgid ""
 "  ...\n"
 "}\n"
 msgstr ""
+
+#: ../../language/fundamentals.md:1577
+msgid "Non-exhaustive enums"
+msgstr "非穷尽枚举"
+
+#: ../../language/fundamentals.md:1579
+msgid ""
+"A library can mark an enum with "
+"[`#non_exhaustive`](attributes.md#non-exhaustive-enum-attribute) when later "
+"releases may add constructors. Downstream pattern matches must cover the "
+"currently known constructors and then use `Type::..` to handle constructors "
+"introduced by a future version of the library."
+msgstr ""
+"当库的后续版本可能添加构造器时，可以用 "
+"[`#non_exhaustive`](attributes.md#non-exhaustive-enum-attribute) 标记枚举。"
+"下游的模式匹配必须覆盖当前已知的构造器，然后使用 `Type::..` 处理库未来版本"
+"新增的构造器。"

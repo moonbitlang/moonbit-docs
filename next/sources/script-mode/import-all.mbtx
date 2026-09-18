@@ -1,12 +1,12 @@
 ///|
 import {
-  "moonbitlang/core/queue" *
+  "moonbitlang/core/queue" @q *
 }
 
 ///|
 fn main {
   let queue = Queue([1, 2, 3])
   println(queue.length())
-  let qualified = @queue.Queue([4, 5])
+  let qualified = @q.Queue([4, 5])
   println(qualified.length())
 }

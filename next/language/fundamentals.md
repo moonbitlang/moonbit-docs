@@ -1574,6 +1574,13 @@ Enum cases can also carry payload data. Here's an example of defining an integer
 :caption: Output
 ```
 
+#### Non-exhaustive enums
+
+A library can mark an enum with [`#non_exhaustive`](attributes.md#non-exhaustive-enum-attribute)
+when later releases may add constructors. Downstream pattern matches must cover
+the currently known constructors and then use `Type::..` to handle constructors
+introduced by a future version of the library.
+
 #### Constructor with labelled arguments
 
 Enum constructors can have labelled argument:

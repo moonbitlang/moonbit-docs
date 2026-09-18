@@ -59,6 +59,10 @@ We prefer to use compile-time code generation, keeping the benefits of static ty
 :heading-offset: 1
 ```
 
+```{include} /language/attributes/non_exhaustive.md
+:heading-offset: 1
+```
+
 ```{include} /language/attributes/internal.md
 :heading-offset: 1
 ```
