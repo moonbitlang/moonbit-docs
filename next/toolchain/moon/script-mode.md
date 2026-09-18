@@ -60,6 +60,18 @@ The package's default alias remains available, so the example can use both
 regular packages should use package aliases or `using` declarations. Prefer
 explicit imports when name conflicts would make a script difficult to read.
 
+## Test a `.mbtx` script
+
+Pass a script path to `moon test` to test that script by itself:
+
+```bash
+moon test script.mbtx
+```
+
+The script must define `fn main`, but the generated test entrypoint does not
+run it. An explicit `.mbtx` path selects only that script, even when it is
+inside a project; conversely, package-wide test runs do not include `.mbtx`
+scripts.
 
 ## Run a `.mbtx` script from stdin
 

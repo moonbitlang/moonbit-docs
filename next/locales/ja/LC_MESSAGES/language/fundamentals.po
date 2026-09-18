@@ -4332,16 +4332,26 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1633
 msgid ""
-"pub(all) extenum LogEvent[T] {\n"
-"  Info(T)\n"
-"}\n"
+"pub extenum LogEvent[T]\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:1639
 msgid ""
-"Use `extenum Type += { ... }` to add constructors to an extensible enum "
-"in the same package:"
-msgstr "同じパッケージ内の拡張可能 enum にコンストラクタを追加するには、`extenum Type += { ... }` を使います："
+"The declaration defines the type without constructors. Add the initial "
+"constructors with `extenum Type += { ... }`; the visibility on the extension "
+"controls the visibility of those constructors:"
+msgstr "この宣言はコンストラクタを含まない型だけを定義します。`extenum Type += { ... }` で初期コンストラクタを追加します。拡張の可視性が、それらのコンストラクタの可視性を決めます："
+
+#: ../../language/fundamentals.md:1644
+msgid ""
+"pub(all) extenum LogEvent[T] += {\n"
+"  Info(T)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:1651
+msgid "The same package can add more constructors later:"
+msgstr "同じパッケージから、後でさらにコンストラクタを追加できます："
 
 #: ../../language/fundamentals.md:1642
 msgid ""
@@ -4353,12 +4363,9 @@ msgstr ""
 
 #: ../../language/fundamentals.md:1658
 msgid ""
-"To extend an extensible enum from another package, the original declaration "
-"must be fully public with `pub(all)`. Qualify the target type with the package "
-"that defines the type:"
-msgstr ""
-"別パッケージから拡張可能 enum を拡張するには、元の宣言を `pub(all)` で完全公開する必要があります。"
-"対象の型は、その型を定義したパッケージで修飾します："
+"To extend an extensible enum from another package, the original type declaration "
+"must use `pub`. Qualify the target type with the package that defines it:"
+msgstr "別パッケージから拡張可能 enum を拡張するには、元の型宣言に `pub` が必要です。対象の型は、その型を定義したパッケージで修飾します："
 
 #: ../../language/fundamentals.md:1651
 msgid ""
@@ -4419,12 +4426,9 @@ msgstr "現在の宣言の外側でさらにコンストラクタを追加でき
 #: ../../language/fundamentals.md:1687
 msgid ""
 "Only `extenum` declarations can be extended. Regular `enum` declarations are "
-"closed. An `extenum` declared with `pub` is read-only outside its defining "
-"package: other packages can inspect its constructors, but cannot construct or "
-"add constructors to it."
-msgstr ""
-"拡張できるのは `extenum` 宣言だけです。通常の `enum` 宣言は閉じています。`pub` で宣言された `extenum` "
-"は定義元パッケージの外では読み取り専用です。他のパッケージはコンストラクタを確認できますが、値を構築したりコンストラクタを追加したりすることはできません。"
+"closed. Use a regular `enum` when downstream packages should not be able to add "
+"constructors; private or read-only `extenum` declarations are deprecated."
+msgstr "拡張できるのは `extenum` 宣言だけです。通常の `enum` 宣言は閉じています。下流パッケージによるコンストラクタの追加を許可しない場合は、通常の `enum` を使ってください。非公開または読み取り専用の `extenum` 宣言は非推奨です。"
 
 #: ../../language/fundamentals.md:1679
 msgid "Tuple Struct"

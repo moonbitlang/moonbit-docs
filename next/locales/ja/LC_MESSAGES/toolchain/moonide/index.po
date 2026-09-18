@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-04 16:08+0800\n"
+"POT-Creation-Date: 2026-09-18 15:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -20,11 +20,11 @@ msgstr ""
 
 #: ../../toolchain/moonide/index.md:1
 msgid "MoonBit Agent IDE"
-msgstr ""
+msgstr "MoonBit Agent IDE"
 
 #: ../../toolchain/moonide/index.md:3
 msgid "Overview"
-msgstr ""
+msgstr "概要"
 
 #: ../../toolchain/moonide/index.md:5
 msgid ""
@@ -32,132 +32,175 @@ msgid ""
 "and exploring MoonBit codebases. It provides semantic-aware tools for "
 "code discovery using the compiler's knowledge of your project structure."
 msgstr ""
+"`moon ide` は、MoonBit コードベースのナビゲーション、理解、探索に特化した CLI ツール群です。"
+"コンパイラが把握しているプロジェクト構造を利用し、意味解析に基づくコード探索機能を提供します。"
 
 #: ../../toolchain/moonide/index.md:7
 msgid ""
 "These commands use semantic analysis rather than text matching, making "
 "them more precise than grep-based searching for code navigation tasks."
 msgstr ""
+"これらのコマンドはテキスト照合ではなく意味解析を使用するため、コードナビゲーションでは grep "
+"による検索よりも正確です。"
 
 #: ../../toolchain/moonide/index.md:9
+msgid ""
+"Navigation commands work with modules, multi-module workspaces, and "
+"standalone `.mbtx` scripts. In a multi-module workspace, `moon ide` "
+"follows each module's configured backend. For a single module, commands "
+"that offer `--target` can select the backend used by the project check."
+msgstr ""
+"ナビゲーションコマンドは、モジュール、複数モジュールのワークスペース、単独の `.mbtx` スクリプトで利用できます。"
+"複数モジュールのワークスペースでは、`moon ide` は各モジュールに設定されたバックエンドに従います。"
+"単一モジュールでは、`--target` を備えたコマンドでプロジェクトのチェックに使用するバックエンドを選択できます。"
+
+#: ../../toolchain/moonide/index.md:14
 msgid "Available Commands"
-msgstr ""
+msgstr "利用可能なコマンド"
 
-#: ../../toolchain/moonide/index.md:11
+#: ../../toolchain/moonide/index.md:16
 msgid "**`moon ide peek-def`**: Locate symbol definitions with inline context"
-msgstr ""
+msgstr "**`moon ide peek-def`**：周辺の文脈とともにシンボル定義を特定します"
 
-#: ../../toolchain/moonide/index.md:12
+#: ../../toolchain/moonide/index.md:17
 msgid ""
 "**`moon ide find-references`**: Locate all usages of a symbol across the "
 "project"
 msgstr ""
-
-#: ../../toolchain/moonide/index.md:13
-msgid "**`moon ide outline`**: Get a structural overview of files or packages"
-msgstr ""
-
-#: ../../toolchain/moonide/index.md:14
-msgid "**`moon ide doc`**: Discover and explore APIs with documentation"
-msgstr ""
-
-#: ../../toolchain/moonide/index.md:16
-msgid "Symbol Syntax"
-msgstr ""
+"**`moon ide find-references`**：プロジェクト全体からシンボルの使用箇所を特定します"
 
 #: ../../toolchain/moonide/index.md:18
-msgid ""
-"All `moon ide` subcommands accept a `<symbol>` argument using these "
-"patterns:"
-msgstr ""
+msgid "**`moon ide rename`**: Compute or apply semantic rename edits"
+msgstr "**`moon ide rename`**：意味に基づく名前変更の編集を計算または適用します"
+
+#: ../../toolchain/moonide/index.md:19
+msgid "**`moon ide hover`**: Show type and documentation at a source position"
+msgstr "**`moon ide hover`**：ソース位置の型とドキュメントを表示します"
 
 #: ../../toolchain/moonide/index.md:20
-msgid "**Basic symbols:**"
-msgstr ""
+msgid "**`moon ide outline`**: Get a structural overview of files or packages"
+msgstr "**`moon ide outline`**：ファイルまたはパッケージの構造を概観します"
+
+#: ../../toolchain/moonide/index.md:21
+msgid "**`moon ide analyze`**: Report public API usage counts"
+msgstr "**`moon ide analyze`**：公開 API の使用回数を報告します"
 
 #: ../../toolchain/moonide/index.md:22
-msgid "`[@pkg.]symbol` - Symbol in a package (e.g. `parse_int`, `Array`)"
-msgstr ""
+msgid "**`moon ide doc`**: Discover and explore APIs with documentation"
+msgstr "**`moon ide doc`**：ドキュメントを使って API を検索、探索します"
 
 #: ../../toolchain/moonide/index.md:23
-msgid "If `@pkg.` is omitted, searches current package and prelude"
-msgstr ""
+msgid "**`moon ide workspace-symbols`**: Search top-level workspace symbols"
+msgstr "**`moon ide workspace-symbols`**：ワークスペースのトップレベルシンボルを検索します"
+
+#: ../../toolchain/moonide/index.md:24
+msgid "**`moon ide codelens`**: Return reference CodeLens entries as JSON"
+msgstr "**`moon ide codelens`**：参照 CodeLens エントリを JSON で返します"
 
 #: ../../toolchain/moonide/index.md:25
-msgid "**Type members:**"
-msgstr ""
+msgid "**`moon ide gen-symbols`**: Generate a package symbol index"
+msgstr "**`moon ide gen-symbols`**：パッケージのシンボル索引を生成します"
 
 #: ../../toolchain/moonide/index.md:27
+msgid "Symbol Syntax"
+msgstr "シンボル構文"
+
+#: ../../toolchain/moonide/index.md:29
+msgid "Commands that accept a `<symbol>` argument use these patterns:"
+msgstr "`<symbol>` 引数を受け取るコマンドでは、次の形式を使用します："
+
+#: ../../toolchain/moonide/index.md:31
+msgid "**Basic symbols:**"
+msgstr "**基本シンボル：**"
+
+#: ../../toolchain/moonide/index.md:33
+msgid "`[@pkg.]symbol` - Symbol in a package (e.g. `parse_int`, `Array`)"
+msgstr "`[@pkg.]symbol` - パッケージ内のシンボル（例：`parse_int`、`Array`）"
+
+#: ../../toolchain/moonide/index.md:34
+msgid "If `@pkg.` is omitted, searches current package and prelude"
+msgstr "`@pkg.` を省略すると、現在のパッケージと prelude を検索します"
+
+#: ../../toolchain/moonide/index.md:36
+msgid "**Type members:**"
+msgstr "**型メンバー：**"
+
+#: ../../toolchain/moonide/index.md:38
 msgid ""
 "`[@pkg.]Type::member` - Type methods, struct fields, enum variants, trait"
 " methods"
 msgstr ""
+"`[@pkg.]Type::member` - 型メソッド、構造体フィールド、列挙型バリアント、トレイトメソッド"
 
-#: ../../toolchain/moonide/index.md:28
+#: ../../toolchain/moonide/index.md:39
+msgid "`Trait::method for Type` - A trait method implementation for a type"
+msgstr "`Trait::method for Type` - ある型に対するトレイトメソッドの実装"
+
+#: ../../toolchain/moonide/index.md:40
 msgid "Examples: `Array::length`, `@http.Request::new`, `Option::None`"
-msgstr ""
+msgstr "例：`Array::length`、`@http.Request::new`、`Option::None`"
 
-#: ../../toolchain/moonide/index.md:30
+#: ../../toolchain/moonide/index.md:42
 msgid ""
 "Package prefix `@pkg.` is optional for symbols in the current package and"
 " standard library."
 msgstr ""
+"現在のパッケージと標準ライブラリのシンボルでは、パッケージ接頭辞 `@pkg.` を省略できます。"
 
-#: ../../toolchain/moonide/index.md:32
+#: ../../toolchain/moonide/index.md:44
 msgid "`moon ide peek-def` - View Symbol Definitions"
-msgstr ""
+msgstr "`moon ide peek-def` - シンボル定義を表示する"
 
-#: ../../toolchain/moonide/index.md:34
+#: ../../toolchain/moonide/index.md:46
 msgid ""
 "Quickly locate symbol definitions with surrounding context. This is "
 "faster and more precise than grepping for declarations."
 msgstr ""
+"周辺の文脈とともにシンボル定義をすばやく特定します。宣言を grep で探すより高速で正確です。"
 
-#: ../../toolchain/moonide/index.md:36 ../../toolchain/moonide/index.md:82
-#: ../../toolchain/moonide/index.md:117 ../../toolchain/moonide/index.md:164
+#: ../../toolchain/moonide/index.md:48 ../../toolchain/moonide/index.md:97
+#: ../../toolchain/moonide/index.md:152 ../../toolchain/moonide/index.md:199
 msgid "Usage"
+msgstr "使用法"
+
+#: ../../toolchain/moonide/index.md:50
+msgid "moon ide peek-def <symbol> [--loc filename[:line[:col]]]\n"
 msgstr ""
 
-#: ../../toolchain/moonide/index.md:38
-msgid "moon ide peek-def <symbol> [-loc filename:line[:col]]\n"
-msgstr ""
+#: ../../toolchain/moonide/index.md:54
+msgid "**Lookup modes:**"
+msgstr "**検索モード：**"
 
-#: ../../toolchain/moonide/index.md:42
-msgid "**Two modes:**"
-msgstr ""
-
-#: ../../toolchain/moonide/index.md:44
+#: ../../toolchain/moonide/index.md:56
 msgid ""
-"**Global search** (no `-loc`): Searches the entire project using the "
-"symbol syntax described above"
+"**Global search** (no `--loc`): Searches the module or workspace using "
+"the symbol syntax described above."
 msgstr ""
+"**グローバル検索**（`--loc` なし）：上記のシンボル構文を使ってモジュールまたはワークスペースを検索します。"
 
-#: ../../toolchain/moonide/index.md:45
+#: ../../toolchain/moonide/index.md:58
 msgid ""
-"**Contextual search** (`-loc` provided): Matches `<symbol>` as a "
-"substring at the specified location"
+"**File-restricted search** (`--loc filename`): Restricts the initial "
+"symbol lookup to one file."
 msgstr ""
+"**ファイル限定検索**（`--loc filename`）：最初のシンボル検索を 1 つのファイルに限定します。"
 
-#: ../../toolchain/moonide/index.md:46
-msgid "Line number must be precise; column is optional (used as a hint)"
-msgstr ""
-
-#: ../../toolchain/moonide/index.md:47
+#: ../../toolchain/moonide/index.md:60
 msgid ""
-"The `<symbol>` argument is matched as plain text, not parsed as symbol "
-"syntax"
+"**Source-position lookup** (`--loc filename:line[:col]`): Resolves the "
+"symbol at that position, which is useful for local variables, shadowed "
+"names, and ambiguous symbols. When line and column are both present, the "
+"separate `<symbol>` argument may be omitted."
 msgstr ""
+"**ソース位置検索**（`--loc filename:line[:col]`）：指定位置のシンボルを解決します。"
+"ローカル変数、隠蔽された名前、曖昧なシンボルに有用です。行と列の両方を指定した場合、別個の `<symbol>` 引数は省略できます。"
 
-#: ../../toolchain/moonide/index.md:48
-msgid "Useful when a symbol name is ambiguous or appears in multiple contexts"
-msgstr ""
-
-#: ../../toolchain/moonide/index.md:50 ../../toolchain/moonide/index.md:128
-#: ../../toolchain/moonide/index.md:200
+#: ../../toolchain/moonide/index.md:65 ../../toolchain/moonide/index.md:163
+#: ../../toolchain/moonide/index.md:233
 msgid "Examples"
-msgstr ""
+msgstr "例"
 
-#: ../../toolchain/moonide/index.md:52
+#: ../../toolchain/moonide/index.md:67
 msgid ""
 "$ moon ide peek-def Agent\n"
 "Found 1 symbols matching 'Agent':\n"
@@ -174,9 +217,9 @@ msgid ""
 "...| }\n"
 msgstr ""
 
-#: ../../toolchain/moonide/index.md:66
+#: ../../toolchain/moonide/index.md:81
 msgid ""
-"$ moon ide peek-def Agent -loc ./maria.mbt:7\n"
+"$ moon ide peek-def Agent --loc ./maria.mbt:7\n"
 "Definition found at file ./maria/agent/agent.mbt\n"
 "   | ///\n"
 "   | /// The `Agent` struct encapsulates the complete state and behavior "
@@ -188,29 +231,47 @@ msgid ""
 "...|\n"
 msgstr ""
 
-#: ../../toolchain/moonide/index.md:78
+#: ../../toolchain/moonide/index.md:93
 msgid "`moon ide find-references` - Track All Usages"
-msgstr ""
+msgstr "`moon ide find-references` - すべての使用箇所を追跡する"
 
-#: ../../toolchain/moonide/index.md:80
+#: ../../toolchain/moonide/index.md:95
 msgid "Discover where and how a symbol is used throughout your codebase."
-msgstr ""
+msgstr "コードベース全体でシンボルがどこでどのように使われているかを調べます。"
 
-#: ../../toolchain/moonide/index.md:84
-msgid "moon ide find-references <symbol>\n"
-msgstr ""
-
-#: ../../toolchain/moonide/index.md:88
-msgid "Note: The `-loc` argument is not yet supported. Always searches globally."
-msgstr ""
-
-#: ../../toolchain/moonide/index.md:90
-msgid "Example"
-msgstr ""
-
-#: ../../toolchain/moonide/index.md:92
+#: ../../toolchain/moonide/index.md:99
 msgid ""
-"$ moon ide find-references Agent\n"
+"moon ide find-references <symbol>\n"
+"moon ide find-references <token> --loc <path[:line[:col]]>\n"
+"moon ide find-references --loc <path:line:col>\n"
+msgstr ""
+"`--loc` がない場合、このコマンドは現在のモジュールまたはワークスペース全体から意味上のシンボルを検索します。"
+"ファイル形式とソース位置形式は `peek-def` と同様に動作し、ローカル変数や隠蔽された名前も扱えます。"
+
+#: ../../toolchain/moonide/index.md:105
+msgid ""
+"Without `--loc`, the command searches for a semantic symbol across the "
+"current module or workspace. File and source-position forms behave like "
+"those of `peek-def`, including support for local variables and shadowed "
+"names."
+msgstr ""
+"デフォルトでは定義を除外します。定義も含めるには `--include-definition` を追加します。"
+"`--json` を使うと、各結果にはテストブロックやテストファイル内の参照を示す `is_test` フィールドも含まれます。"
+
+#: ../../toolchain/moonide/index.md:109
+msgid ""
+"Definitions are excluded by default. Add `--include-definition` to "
+"include them. With `--json`, each result also has an `is_test` field that"
+" identifies references in test blocks and test files."
+msgstr ""
+
+#: ../../toolchain/moonide/index.md:113
+msgid "Example"
+msgstr "例"
+
+#: ../../toolchain/moonide/index.md:115
+msgid ""
+"$ moon ide find-references Agent --include-definition\n"
 "`pub (all) struct Agent` in package moonbitlang/maria/agent at "
 "./agent/agent.mbt:17-47\n"
 "17 | ///|\n"
@@ -234,39 +295,63 @@ msgid ""
 "...\n"
 msgstr ""
 
-#: ../../toolchain/moonide/index.md:113
-msgid "`moon ide outline` - Get Structural Overview"
+#: ../../toolchain/moonide/index.md:136
+msgid "`moon ide codelens` - Get Reference Code Lenses"
+msgstr "`moon ide codelens` - 参照 CodeLens を取得する"
+
+#: ../../toolchain/moonide/index.md:138
+msgid ""
+"Return local- and global-reference CodeLens entries for top-level "
+"declarations in a source file:"
+msgstr ""
+"ソースファイル内のトップレベル宣言について、ローカル参照とグローバル参照の CodeLens エントリを返します："
+
+#: ../../toolchain/moonide/index.md:141
+msgid "moon ide codelens path/to/file.mbt\n"
+msgstr ""
+"出力は常に JSON 配列です。ローカル参照の位置には `is_test` フィールドが含まれ、範囲は 1 始まりの "
+"`line:column-line:column` 形式を使用します。"
+
+#: ../../toolchain/moonide/index.md:145
+msgid ""
+"The output is always a JSON array. Local-reference locations include an "
+"`is_test` field, and ranges use one-based `line:column-line:column` "
+"positions."
 msgstr ""
 
-#: ../../toolchain/moonide/index.md:115
+#: ../../toolchain/moonide/index.md:148
+msgid "`moon ide outline` - Get Structural Overview"
+msgstr "`moon ide outline` - 構造の概要を取得する"
+
+#: ../../toolchain/moonide/index.md:150
 msgid ""
 "Quickly scan the structure of a file or package to understand its "
 "organization."
-msgstr ""
+msgstr "ファイルまたはパッケージの構造をすばやく調べ、その構成を把握します。"
 
-#: ../../toolchain/moonide/index.md:119
+#: ../../toolchain/moonide/index.md:154
 msgid "moon ide outline <path/to/file_or_directory>\n"
 msgstr ""
 
-#: ../../toolchain/moonide/index.md:123
+#: ../../toolchain/moonide/index.md:158
 msgid "Two modes:"
-msgstr ""
+msgstr "2 つのモード："
 
-#: ../../toolchain/moonide/index.md:125
+#: ../../toolchain/moonide/index.md:160
 msgid "`moon ide outline path/to/file.mbt` - Outline a specific file"
-msgstr ""
+msgstr "`moon ide outline path/to/file.mbt` - 指定したファイルの概要を表示します"
 
-#: ../../toolchain/moonide/index.md:126
+#: ../../toolchain/moonide/index.md:161
 msgid ""
 "`moon ide outline path/to/directory` - Outline all `.mbt` files in the "
 "package"
-msgstr ""
+msgstr "`moon ide outline path/to/directory` - パッケージ内のすべての `.mbt` ファイルの概要を表示します"
 
-#: ../../toolchain/moonide/index.md:130
+#: ../../toolchain/moonide/index.md:165
 msgid "**Package outline** - See all files and their top-level symbols:"
-msgstr ""
+msgstr "**パッケージの概要** - すべてのファイルとトップレベルシンボルを表示します："
 
-#: ../../toolchain/moonide/index.md:132
+#: ../../toolchain/moonide/index.md:167
 msgid ""
 "moon ide outline .\n"
 "maria.mbt:\n"
@@ -278,11 +363,11 @@ msgid ""
 "{\n"
 msgstr ""
 
-#: ../../toolchain/moonide/index.md:142
+#: ../../toolchain/moonide/index.md:177
 msgid "**File outline** - Detailed view of a single file:"
-msgstr ""
+msgstr "**ファイルの概要** - 1 つのファイルの詳細を表示します："
 
-#: ../../toolchain/moonide/index.md:144
+#: ../../toolchain/moonide/index.md:179
 msgid ""
 "$ moon ide outline ./internal/readline/readline.mbt\n"
 " L0002 | priv struct Edit {\n"
@@ -299,101 +384,101 @@ msgid ""
 "         ...\n"
 msgstr ""
 
-#: ../../toolchain/moonide/index.md:160
+#: ../../toolchain/moonide/index.md:195
 msgid "`moon ide doc` - Discover and Explore APIs"
-msgstr ""
+msgstr "`moon ide doc` - API を検索、探索する"
 
-#: ../../toolchain/moonide/index.md:162
+#: ../../toolchain/moonide/index.md:197
 msgid "Query documentation and discover available symbols, packages, and APIs."
-msgstr ""
+msgstr "ドキュメントを照会し、利用可能なシンボル、パッケージ、API を探します。"
 
-#: ../../toolchain/moonide/index.md:166
+#: ../../toolchain/moonide/index.md:201
 msgid "moon ide doc '<query>'\n"
 msgstr ""
 
-#: ../../toolchain/moonide/index.md:170
+#: ../../toolchain/moonide/index.md:205
 msgid "Query Syntax"
-msgstr ""
+msgstr "クエリ構文"
 
-#: ../../toolchain/moonide/index.md:172
+#: ../../toolchain/moonide/index.md:207
 msgid "The query syntax is specialized for symbol and package discovery:"
-msgstr ""
+msgstr "クエリ構文はシンボルとパッケージの探索に特化しています："
 
-#: ../../toolchain/moonide/index.md:174
+#: ../../toolchain/moonide/index.md:209
 msgid "**Empty query** - List available packages or symbols:"
-msgstr ""
+msgstr "**空のクエリ** - 利用可能なパッケージまたはシンボルを一覧表示します："
 
-#: ../../toolchain/moonide/index.md:176
+#: ../../toolchain/moonide/index.md:211
 msgid "`moon ide doc ''`"
-msgstr ""
+msgstr "`moon ide doc ''`"
 
-#: ../../toolchain/moonide/index.md:177
+#: ../../toolchain/moonide/index.md:212
 msgid ""
 "In a module: Shows all available packages (including dependencies and "
 "`moonbitlang/core`)"
-msgstr ""
+msgstr "モジュール内：依存関係と `moonbitlang/core` を含む、利用可能なすべてのパッケージを表示します"
 
-#: ../../toolchain/moonide/index.md:178
+#: ../../toolchain/moonide/index.md:213
 msgid "In a package: Shows all symbols in current package"
-msgstr ""
+msgstr "パッケージ内：現在のパッケージにあるすべてのシンボルを表示します"
 
-#: ../../toolchain/moonide/index.md:179
+#: ../../toolchain/moonide/index.md:214
 msgid "Outside package: Shows all available packages"
-msgstr ""
+msgstr "パッケージ外：利用可能なすべてのパッケージを表示します"
 
-#: ../../toolchain/moonide/index.md:181
+#: ../../toolchain/moonide/index.md:216
 msgid "**Lookup by name:**"
-msgstr ""
+msgstr "**名前による検索：**"
 
-#: ../../toolchain/moonide/index.md:183
+#: ../../toolchain/moonide/index.md:218
 msgid "`moon ide doc \"[@pkg.]function_name\"` - Find functions or values"
-msgstr ""
+msgstr "`moon ide doc \"[@pkg.]function_name\"` - 関数または値を検索します"
 
-#: ../../toolchain/moonide/index.md:184
+#: ../../toolchain/moonide/index.md:219
 msgid ""
 "`moon ide doc \"[@pkg.]TypeName\"` - Find types (builtin types don't need"
 " prefix)"
-msgstr ""
+msgstr "`moon ide doc \"[@pkg.]TypeName\"` - 型を検索します（組み込み型には接頭辞は不要です）"
 
-#: ../../toolchain/moonide/index.md:185 ../../toolchain/moonide/index.md:187
+#: ../../toolchain/moonide/index.md:220
 msgid "`moon ide doc \"[@pkg.]Type::member\"` - Find type methods or fields"
-msgstr ""
+msgstr "`moon ide doc \"[@pkg.]Type::member\"` - 型メソッドまたはフィールドを検索します"
 
-#: ../../toolchain/moonide/index.md:189
+#: ../../toolchain/moonide/index.md:222
 msgid "**Package exploration:**"
-msgstr ""
+msgstr "**パッケージの探索：**"
 
-#: ../../toolchain/moonide/index.md:191
+#: ../../toolchain/moonide/index.md:224
 msgid "`moon ide doc \"@pkg\"` - List all exported symbols in a package"
-msgstr ""
+msgstr "`moon ide doc \"@pkg\"` - パッケージが公開するすべてのシンボルを一覧表示します"
 
-#: ../../toolchain/moonide/index.md:192
+#: ../../toolchain/moonide/index.md:225
 msgid "`moon ide doc \"@encoding/utf8\"` - Works with nested packages"
-msgstr ""
+msgstr "`moon ide doc \"@encoding/utf8\"` - ネストしたパッケージにも使用できます"
 
-#: ../../toolchain/moonide/index.md:193
+#: ../../toolchain/moonide/index.md:226
 msgid "Examples: `moon ide doc \"@json\"`, `moon ide doc \"@buffer\"`"
-msgstr ""
+msgstr "例：`moon ide doc \"@json\"`、`moon ide doc \"@buffer\"`"
 
-#: ../../toolchain/moonide/index.md:195
+#: ../../toolchain/moonide/index.md:228
 msgid "**Globbing** - Use `*` wildcard for partial matches:"
-msgstr ""
+msgstr "**グロブ** - 部分一致には `*` ワイルドカードを使用します："
 
-#: ../../toolchain/moonide/index.md:197
+#: ../../toolchain/moonide/index.md:230
 msgid ""
 "`moon ide doc \"String::*rev*\"` - Find all String methods containing "
 "\"rev\""
-msgstr ""
+msgstr "`moon ide doc \"String::*rev*\"` - 名前に \"rev\" を含むすべての String メソッドを検索します"
 
-#: ../../toolchain/moonide/index.md:198
+#: ../../toolchain/moonide/index.md:231
 msgid "`moon ide doc \"*parse*\"` - Find all symbols with \"parse\" in the name"
-msgstr ""
+msgstr "`moon ide doc \"*parse*\"` - 名前に \"parse\" を含むすべてのシンボルを検索します"
 
-#: ../../toolchain/moonide/index.md:202
+#: ../../toolchain/moonide/index.md:235
 msgid "**Search for type methods:**"
-msgstr ""
+msgstr "**型メソッドを検索する：**"
 
-#: ../../toolchain/moonide/index.md:204
+#: ../../toolchain/moonide/index.md:237
 msgid ""
 "# Search for String methods in standard library:\n"
 "$ moon ide doc \"String\"\n"
@@ -404,11 +489,11 @@ msgid ""
 "  # ... more methods omitted ...\n"
 msgstr ""
 
-#: ../../toolchain/moonide/index.md:214
+#: ../../toolchain/moonide/index.md:247
 msgid "**Explore a package:**"
-msgstr ""
+msgstr "**パッケージを探索する：**"
 
-#: ../../toolchain/moonide/index.md:216
+#: ../../toolchain/moonide/index.md:249
 msgid ""
 "$ moon ide doc \"@buffer\"\n"
 "moonbitlang/core/buffer\n"
@@ -417,11 +502,11 @@ msgid ""
 "# ... omitted ...\n"
 msgstr ""
 
-#: ../../toolchain/moonide/index.md:224
+#: ../../toolchain/moonide/index.md:257
 msgid "**Query a specific function:**"
-msgstr ""
+msgstr "**特定の関数を照会する：**"
 
-#: ../../toolchain/moonide/index.md:226
+#: ../../toolchain/moonide/index.md:259
 msgid ""
 "$ moon ide doc \"@buffer.new\"\n"
 "package \"moonbitlang/core/buffer\"\n"
@@ -430,11 +515,11 @@ msgid ""
 "  Creates ... omitted ...\n"
 msgstr ""
 
-#: ../../toolchain/moonide/index.md:234
+#: ../../toolchain/moonide/index.md:267
 msgid "**Use globbing to find related functions:**"
-msgstr ""
+msgstr "**グロブを使って関連する関数を検索する：**"
 
-#: ../../toolchain/moonide/index.md:236
+#: ../../toolchain/moonide/index.md:269
 msgid ""
 "$ moon ide doc \"String::*rev*\"\n"
 "package \"moonbitlang/core/string\"\n"

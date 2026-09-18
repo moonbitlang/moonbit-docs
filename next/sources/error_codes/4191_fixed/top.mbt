@@ -2,7 +2,7 @@
 ///
 /// ```mbt check
 /// test {
-///   inspect(answer(), content="42")
+///   inspect(@E4191-fixed.answer(), content="42")
 /// }
 /// ```
 pub fn answer() -> Int {

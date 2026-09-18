@@ -1,4 +1,6 @@
-pub extenum Event {
+pub extenum Event
+
+pub(all) extenum Event += {
   Started
 }
 

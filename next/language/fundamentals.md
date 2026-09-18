@@ -1646,8 +1646,17 @@ extension-point type, while other packages contribute their own cases.
 :end-before: end extenum declare
 ```
 
-Use `extenum Type += { ... }` to add constructors to an extensible enum in the
-same package:
+The declaration defines the type without constructors. Add the initial
+constructors with `extenum Type += { ... }`; the visibility on the extension
+controls the visibility of those constructors:
+
+```{literalinclude} /sources/language/src/extenum/base/top.mbt
+:language: moonbit
+:start-after: start extenum initial constructors
+:end-before: end extenum initial constructors
+```
+
+The same package can add more constructors later:
 
 ```{literalinclude} /sources/language/src/extenum/base/top.mbt
 :language: moonbit
@@ -1655,9 +1664,8 @@ same package:
 :end-before: end extenum local extension
 ```
 
-To extend an extensible enum from another package, the original declaration
-must be fully public with `pub(all)`. Qualify the target type with the package
-that defines the type:
+To extend an extensible enum from another package, the original type declaration
+must use `pub`. Qualify the target type with the package that defines it:
 
 ```{literalinclude} /sources/language/src/extenum/plugin/top.mbt
 :language: moonbit
@@ -1685,9 +1693,8 @@ Pattern matching must include a wildcard branch, because more constructors
 can be added outside the current declaration.
 
 Only `extenum` declarations can be extended. Regular `enum` declarations are
-closed. An `extenum` declared with `pub` is read-only outside its defining
-package: other packages can inspect its constructors, but cannot construct or
-add constructors to it.
+closed. Use a regular `enum` when downstream packages should not be able to add
+constructors; private or read-only `extenum` declarations are deprecated.
 
 ### Tuple Struct
 

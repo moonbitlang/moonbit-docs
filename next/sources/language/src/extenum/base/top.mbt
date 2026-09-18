@@ -1,8 +1,12 @@
 // start extenum declare
-pub(all) extenum LogEvent[T] {
+pub extenum LogEvent[T]
+// end extenum declare
+
+// start extenum initial constructors
+pub(all) extenum LogEvent[T] += {
   Info(T)
 }
-// end extenum declare
+// end extenum initial constructors
 
 // start extenum local extension
 pub(all) extenum LogEvent[T] += {

@@ -1,3 +1,3 @@
 test "plus" {
-  inspect(plus(20, 22), content="42")
+  inspect(@workspace-mod-a.plus(20, 22), content="42")
 }
