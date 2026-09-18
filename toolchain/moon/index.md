@@ -13,6 +13,7 @@
   * [Adding Tests](https://docs.moonbitlang.com/en/latest/toolchain/moon/tutorial.html#adding-tests)
 * [Running `.mbtx` Scripts](https://docs.moonbitlang.com/en/latest/toolchain/moon/script-mode.html)
   * [Run a `.mbtx` file](https://docs.moonbitlang.com/en/latest/toolchain/moon/script-mode.html#run-a-mbtx-file)
+  * [Test a `.mbtx` script](https://docs.moonbitlang.com/en/latest/toolchain/moon/script-mode.html#test-a-mbtx-script)
   * [Run a `.mbtx` script from stdin](https://docs.moonbitlang.com/en/latest/toolchain/moon/script-mode.html#run-a-mbtx-script-from-stdin)
 * [Use and publish packages](https://docs.moonbitlang.com/en/latest/toolchain/moon/package-manage-tour.html)
   * [Setup mooncakes.io account](https://docs.moonbitlang.com/en/latest/toolchain/moon/package-manage-tour.html#setup-mooncakes-io-account)

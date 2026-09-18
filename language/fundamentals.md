@@ -2181,13 +2181,20 @@ This is useful when a package wants to define the shared event, message, or
 extension-point type, while other packages contribute their own cases.
 
 ```moonbit
-pub(all) extenum LogEvent[T] {
+pub extenum LogEvent[T]
+```
+
+The declaration defines the type without constructors. Add the initial
+constructors with `extenum Type += { ... }`; the visibility on the extension
+controls the visibility of those constructors:
+
+```moonbit
+pub(all) extenum LogEvent[T] += {
   Info(T)
 }
 ```
 
-Use `extenum Type += { ... }` to add constructors to an extensible enum in the
-same package:
+The same package can add more constructors later:
 
 ```moonbit
 pub(all) extenum LogEvent[T] += {
@@ -2196,9 +2203,8 @@ pub(all) extenum LogEvent[T] += {
 }
 ```
 
-To extend an extensible enum from another package, the original declaration
-must be fully public with `pub(all)`. Qualify the target type with the package
-that defines the type:
+To extend an extensible enum from another package, the original type declaration
+must use `pub`. Qualify the target type with the package that defines it:
 
 ```moonbit
 pub(all) extenum @base.LogEvent[T] += {
@@ -2240,9 +2246,8 @@ Pattern matching must include a wildcard branch, because more constructors
 can be added outside the current declaration.
 
 Only `extenum` declarations can be extended. Regular `enum` declarations are
-closed. An `extenum` declared with `pub` is read-only outside its defining
-package: other packages can inspect its constructors, but cannot construct or
-add constructors to it.
+closed. Use a regular `enum` when downstream packages should not be able to add
+constructors; private or read-only `extenum` declarations are deprecated.
 
 ### Tuple Struct
 

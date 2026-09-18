@@ -25,6 +25,7 @@
   * [Symbol Syntax](https://docs.moonbitlang.com/en/latest/toolchain/moonide/index.html#symbol-syntax)
   * [`moon ide peek-def` - View Symbol Definitions](https://docs.moonbitlang.com/en/latest/toolchain/moonide/index.html#moon-ide-peek-def-view-symbol-definitions)
   * [`moon ide find-references` - Track All Usages](https://docs.moonbitlang.com/en/latest/toolchain/moonide/index.html#moon-ide-find-references-track-all-usages)
+  * [`moon ide codelens` - Get Reference Code Lenses](https://docs.moonbitlang.com/en/latest/toolchain/moonide/index.html#moon-ide-codelens-get-reference-code-lenses)
   * [`moon ide outline` - Get Structural Overview](https://docs.moonbitlang.com/en/latest/toolchain/moonide/index.html#moon-ide-outline-get-structural-overview)
   * [`moon ide doc` - Discover and Explore APIs](https://docs.moonbitlang.com/en/latest/toolchain/moonide/index.html#moon-ide-doc-discover-and-explore-apis)
 * [MoonBit VSCode Plugin](https://docs.moonbitlang.com/en/latest/toolchain/vscode/index.html)
