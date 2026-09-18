@@ -245,8 +245,6 @@ msgid ""
 "moon ide find-references <token> --loc <path[:line[:col]]>\n"
 "moon ide find-references --loc <path:line:col>\n"
 msgstr ""
-"`--loc` がない場合、このコマンドは現在のモジュールまたはワークスペース全体から意味上のシンボルを検索します。"
-"ファイル形式とソース位置形式は `peek-def` と同様に動作し、ローカル変数や隠蔽された名前も扱えます。"
 
 #: ../../toolchain/moonide/index.md:105
 msgid ""
@@ -255,8 +253,8 @@ msgid ""
 "those of `peek-def`, including support for local variables and shadowed "
 "names."
 msgstr ""
-"デフォルトでは定義を除外します。定義も含めるには `--include-definition` を追加します。"
-"`--json` を使うと、各結果にはテストブロックやテストファイル内の参照を示す `is_test` フィールドも含まれます。"
+"`--loc` がない場合、このコマンドは現在のモジュールまたはワークスペース全体から意味上のシンボルを検索します。"
+"ファイル形式とソース位置形式は `peek-def` と同様に動作し、ローカル変数や隠蔽された名前も扱えます。"
 
 #: ../../toolchain/moonide/index.md:109
 msgid ""
@@ -264,6 +262,8 @@ msgid ""
 "include them. With `--json`, each result also has an `is_test` field that"
 " identifies references in test blocks and test files."
 msgstr ""
+"デフォルトでは定義を除外します。定義も含めるには `--include-definition` を追加します。"
+"`--json` を使うと、各結果にはテストブロックやテストファイル内の参照を示す `is_test` フィールドも含まれます。"
 
 #: ../../toolchain/moonide/index.md:113
 msgid "Example"
@@ -309,8 +309,6 @@ msgstr ""
 #: ../../toolchain/moonide/index.md:141
 msgid "moon ide codelens path/to/file.mbt\n"
 msgstr ""
-"出力は常に JSON 配列です。ローカル参照の位置には `is_test` フィールドが含まれ、範囲は 1 始まりの "
-"`line:column-line:column` 形式を使用します。"
 
 #: ../../toolchain/moonide/index.md:145
 msgid ""
@@ -318,6 +316,8 @@ msgid ""
 "`is_test` field, and ranges use one-based `line:column-line:column` "
 "positions."
 msgstr ""
+"出力は常に JSON 配列です。ローカル参照の位置には `is_test` フィールドが含まれ、範囲は 1 始まりの "
+"`line:column-line:column` 形式を使用します。"
 
 #: ../../toolchain/moonide/index.md:148
 msgid "`moon ide outline` - Get Structural Overview"
