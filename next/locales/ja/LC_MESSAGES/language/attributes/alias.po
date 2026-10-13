@@ -78,12 +78,45 @@ msgstr "別名を非推奨としてマークします。メッセージを指定
 
 #: ../../language/attributes/alias.md:23
 msgid ""
+"`#alias` cannot be applied to `declare fn` or `declare let`. Put the "
+"attribute on the corresponding definition instead."
+msgstr "`#alias` は `declare fn` や `declare let` には指定できません。対応する定義に属性を付けてください。"
+
+#: ../../language/attributes/alias.md:26
+msgid ""
+"To expose an alias through a declaration-based interface, declare the alias "
+"name separately with `declare fn` or `declare let`. The declarations specify"
+" the names and their types, but do not require an alias relationship between"
+" them. Whether the implementation uses `#alias` or separate definitions is "
+"an implementation detail."
+msgstr ""
+"宣言ベースのインターフェースで別名を公開するには、`declare fn` または `declare let` "
+"でその名前を個別に宣言します。宣言は名前と型を指定しますが、名前同士が別名であることは要求しません。`#alias` "
+"を使うか、それぞれを別々に定義するかは実装の詳細です。"
+
+#: ../../language/attributes/alias.md:32
+msgid ""
+"///|\n"
+"declare pub fn new_name() -> Int32\n"
+"\n"
+"///|\n"
+"declare pub fn old_name() -> Int32\n"
+"\n"
+"///|\n"
+"#alias(old_name)\n"
+"pub fn new_name() -> Int32 {\n"
+"  42\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/alias.md:36
+msgid ""
 "To graceful migration from old API to new API, you can rename the old API"
 " directly, and create an alias with the old name, mark it as deprecated. "
 "For example:"
 msgstr "古い API から新しい API へ滑らかに移行するには、古い API を直接リネームし、古い名前の別名を作成して非推奨にできます。例えば："
 
-#: ../../language/attributes/alias.md:26
+#: ../../language/attributes/alias.md:39
 msgid ""
 "#alias(old_name, deprecated)\n"
 "fn new_name() -> Unit {\n"

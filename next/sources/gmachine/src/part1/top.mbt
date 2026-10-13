@@ -15,7 +15,7 @@ fn run(codes : List[String]) -> Node {
   let (heap, globals) = build_initial_heap(codes)
   let initialState : GState = {
     heap,
-    stack: @list.empty(),
+    stack: @list.List([]),
     code: @list.List([PushGlobal("main"), Unwind]),
     globals,
     stats: 0,

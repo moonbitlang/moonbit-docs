@@ -77,7 +77,7 @@ pub extend StructWithConstr with Debug::{to_repr}
 // end struct constructor 4
 
 // start struct constructor 5
-fn StructWithConstr::StructWithConstr(x~ : Int32, y? : Int32 = x) -> StructWithConstr {
+fn StructWithConstr::StructWithConstr(x~ : Int32, y~ : Int32 = x) -> StructWithConstr {
   { x, y }
 }
 // end struct constructor 5
@@ -132,7 +132,7 @@ enum Endpoint {
 
 pub extend Endpoint with Debug::{to_repr}
 
-fn Endpoint::Endpoint(host : String, port? : Int32 = 80) -> Endpoint {
+fn Endpoint::Endpoint(host : String, port~ : Int32 = 80) -> Endpoint {
   Host(host, port)
 }
 

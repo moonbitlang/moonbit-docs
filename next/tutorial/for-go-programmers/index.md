@@ -533,7 +533,7 @@ MoonBit functions also support named arguments with an optional
 default value using the `label? : Type` syntax:
 
 ```moonbit
-fn named_args(named~ : Int32, optional? : Int32 = 42) -> Int32 {
+fn named_args(named~ : Int32, optional~ : Int32 = 42) -> Int32 {
   named + optional
 }
 

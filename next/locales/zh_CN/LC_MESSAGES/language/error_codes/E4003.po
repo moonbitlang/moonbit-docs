@@ -29,32 +29,41 @@ msgid ""
 msgstr "这是一个保留的类型名称。不能将其声明为类型变量、类型或特性。"
 
 #: ../../language/error_codes/E4003.md:5
+msgid ""
+"Primitive type names such as `Int32` and `String` cannot be redeclared. Not "
+"every type from the prelude is reserved: `Array` and `Result`, for example, "
+"can be used for user-defined types."
+msgstr ""
+"`Int32` 和 `String` 等基本类型名称不能被重新声明。并非所有预导入类型名称都被保留，例如 `Array` 和 `Result` "
+"可以用作用户定义的类型名称。"
+
+#: ../../language/error_codes/E4003.md:9
 msgid "Erroneous Example"
 msgstr "错误示例："
 
-#: ../../language/error_codes/E4003.md:7
+#: ../../language/error_codes/E4003.md:11
 msgid "struct Error {}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4003.md:11
+#: ../../language/error_codes/E4003.md:15
 msgid ""
 "`Error` is the reserved name for the built-in error type, so it cannot be"
 " used for a custom type. This will give the following error on line 1:"
 msgstr "`Error` 是内置错误类型的保留名称，因此不能用于自定义类型。这会在第 1 行出现如下错误："
 
-#: ../../language/error_codes/E4003.md:14
+#: ../../language/error_codes/E4003.md:18
 msgid "\"Error\" is a reserved type name. Cannot declare it as type\n"
 msgstr ""
 
-#: ../../language/error_codes/E4003.md:18
+#: ../../language/error_codes/E4003.md:22
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4003.md:20
+#: ../../language/error_codes/E4003.md:24
 msgid "Consider using another name for your type, such as `MyError` or `Error_`."
 msgstr "考虑将你的类型命名为其他名称，例如 `MyError` 或 `Error_`。"
 
-#: ../../language/error_codes/E4003.md:22
+#: ../../language/error_codes/E4003.md:26
 msgid ""
 "///|\n"
 "priv struct MyError {}\n"

@@ -54,7 +54,7 @@ fn Term::bruijn(self : Self) -> Result[TermDBI, String] {
       Abs(varname, body) => {
         let m = m
           .map(fn(index) { { name: index.name, depth: index.depth + 1 } })
-          .add({ name: varname, depth: 0 })
+          .prepend({ name: varname, depth: 0 })
         let res = go(m, body)
         match res {
           Err(name) => Err(name)
@@ -70,7 +70,7 @@ fn Term::bruijn(self : Self) -> Result[TermDBI, String] {
     }
   }
 
-  go(@list.empty(), self)
+  go(@list.List([]), self)
 }
 
 ///|

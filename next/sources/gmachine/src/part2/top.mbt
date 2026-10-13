@@ -17,11 +17,11 @@ fn run(codes : List[String]) -> Node {
   // start init definition
   let initialState : GState = {
     heap,
-    stack: @list.empty(),
+    stack: @list.List([]),
     code: @list.List([PushGlobal("main"), Eval]),
     globals,
     stats: 0,
-    dump: @list.empty(),
+    dump: @list.List([]),
   }
   // end init definition
   GState::reify(initialState)

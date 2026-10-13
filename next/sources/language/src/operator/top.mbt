@@ -172,7 +172,7 @@ struct DataView(String)
 struct Data {}
 
 #alias("_[_:_]")
-fn Data::as_view(_self : Data, start? : Int32 = 0, end? : Int32) -> DataView {
+fn Data::as_view(_self : Data, start~ : Int32 = 0, end? : Int32) -> DataView {
   "[\{start}, \{end.unwrap_or(100)})"
 }
 

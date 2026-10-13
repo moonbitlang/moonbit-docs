@@ -28,7 +28,7 @@ fn new_name() -> Unit {
 // start label_migration fill
 #label_migration(x, fill=true)
 #label_migration(y, fill=false)
-fn label_migration_fill(x? : Int32 = 0, y? : Int32 = 1) -> Int32 {
+fn label_migration_fill(x~ : Int32 = 0, y~ : Int32 = 1) -> Int32 {
   x + y
 }
 // end label_migration fill

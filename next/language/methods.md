@@ -263,7 +263,9 @@ with dot syntax, or keep using `Trait::method(value, ...)` when no method-style
 API is intended.
 
 For compatibility, the compiler still accepts the old implicit attachment. It
-reports an `implicit_impl_as_method` deprecation diagnostic by default. New code
+reports an `implicit_impl_as_method` deprecation diagnostic by default. For an
+abstract trait, a `pub impl` alone does not trigger this diagnostic; using an
+implicitly attached method does. New code
 should use `extend` rather than rely on the compatibility behavior.
 
 If an implicitly attached method should remain callable temporarily but is not

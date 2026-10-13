@@ -1,23 +1,23 @@
 ///|
-let html_headers : Map[String, String] = {
+let html_headers : Map[@http.CaseInsensitiveString, String] = {
   "Content-Type": "text/html; charset=utf-8",
   "Access-Control-Allow-Origin": "*",
 }
 
 ///|
-let js_headers : Map[String, String] = {
+let js_headers : Map[@http.CaseInsensitiveString, String] = {
   "Content-Type": "text/javascript; charset=utf-8",
   "Access-Control-Allow-Origin": "*",
 }
 
 ///|
-let json_headers : Map[String, String] = {
+let json_headers : Map[@http.CaseInsensitiveString, String] = {
   "Content-Type": "application/json; charset=utf-8",
   "Access-Control-Allow-Origin": "*",
 }
 
 ///|
-let text_headers : Map[String, String] = {
+let text_headers : Map[@http.CaseInsensitiveString, String] = {
   "Content-Type": "text/plain; charset=utf-8",
   "Access-Control-Allow-Origin": "*",
 }
@@ -32,7 +32,7 @@ let frontend_js_path = "_build/js/debug/build/frontend/frontend.js"
 async fn send_file(
   conn : @http.ServerConnection,
   file_path : String,
-  headers : Map[String, String],
+  headers : Map[@http.CaseInsensitiveString, String],
   missing_message : String,
 ) -> Unit {
   if @fs.exists(file_path) {

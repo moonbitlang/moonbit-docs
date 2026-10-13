@@ -4,9 +4,10 @@ moon uses a package file to identify and describe a package. The legacy format
 is `moon.pkg.json`, and the new format is `moon.pkg`. For full JSON schema,
 please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/pkg.schema.json).
 
-Support for `moon.pkg.json` is deprecated. New projects should use `moon.pkg`;
-existing JSON configuration can be migrated with `moon fmt` as described
-below.
+`moon.pkg.json` is no longer accepted by ordinary toolchain commands.
+Use `moon fmt` to migrate existing JSON manifests before checking or building.
+The JSON examples below are migration references, not configurations for new
+projects.
 
 ## New format (`moon.pkg`)
 
@@ -30,10 +31,12 @@ In `moon.pkg`, dependencies are declared in an `import { ... }` block. Use
 :language: moonbit
 ```
 
-Most fields from `moon.pkg.json` can be represented in an `options(...)` block.
-Stable declarations such as `formatter` and `pkgtype` have dedicated top-level
-forms. Legacy keys that contain `-` must be quoted when they are used inside
-`options`.
+Simple package settings can be written directly, using underscore-separated
+names, for example `proof_enabled = true` or `regex_backend = "table"`.
+Declarations such as `formatter`, `pkgtype`, and `virtual` have dedicated
+top-level forms. `moon fmt` migrates supported settings from `options(...)`
+to these forms. Legacy keys that remain inside `options` and contain `-`
+must be quoted.
 
 ```{literalinclude} /sources/language/src/packages/virtual/moon.pkg
 :language: moonbit
@@ -1250,11 +1253,7 @@ For example, the following declares a virtual package with default implementatio
 `````````{tab-set}
 ``````{tab-item} moon.pkg
 ```moonbit
-options(
-  virtual: {
-    "has-default": true,
-  },
-)
+virtual(has_default: true)
 ```
 ``````
 ``````{tab-item} moon.pkg.json
@@ -1270,16 +1269,15 @@ options(
 
 ### Implementations
 
-The `implement` field is used to declare the virtual package to be implemented by the current package.
+Use `virtual(implement: "package/path")` to declare the virtual package
+implemented by the current package.
 
 For example, the following implements a virtual package:
 
 `````````{tab-set}
 ``````{tab-item} moon.pkg
 ```moonbit
-options(
-  implement: "moonbitlang/core/abort",
-)
+virtual(implement: "moonbitlang/core/abort")
 ```
 ``````
 ``````{tab-item} moon.pkg.json

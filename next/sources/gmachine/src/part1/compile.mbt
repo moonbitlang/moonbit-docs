@@ -7,7 +7,7 @@ fn ScDef::compileSC(self : ScDef[String]) -> (String, Int32, List[Instruction]) 
     match args {
       Empty => {
         arity = i
-        return @list.empty()
+        return @list.List([])
       }
       More(s, tail=ss) => gen_env(i + 1, ss).prepend((s, i))
     }

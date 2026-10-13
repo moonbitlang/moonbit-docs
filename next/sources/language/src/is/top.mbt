@@ -4,7 +4,7 @@ fn[T] is_none(x : T?) -> Bool {
 }
 
 fn start_with_lower_letter(s : String) -> Bool {
-  s is ['a'..='z', ..]
+  s is ['a'..<='z', ..]
 }
 // end is 1
 
@@ -16,7 +16,7 @@ fn f(x : Int32?) -> Bool {
 
 // start is 3
 fn g(x : Array[Int32?]) -> Unit {
-  if x is [v, .. rest] && v is Some(i) && i is (0..=10) {
+  if x is [v, .. rest] && v is Some(i) && i is (0..<=10) {
     debug(v)
     println(i)
     debug(rest)

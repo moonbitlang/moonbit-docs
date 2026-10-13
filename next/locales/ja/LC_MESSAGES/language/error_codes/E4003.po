@@ -29,32 +29,41 @@ msgid ""
 msgstr ""
 
 #: ../../language/error_codes/E4003.md:5
+msgid ""
+"Primitive type names such as `Int32` and `String` cannot be redeclared. Not "
+"every type from the prelude is reserved: `Array` and `Result`, for example, "
+"can be used for user-defined types."
+msgstr ""
+"`Int32` や `String` などのプリミティブ型名は再宣言できません。prelude の型名がすべて予約されているわけではなく、例えば "
+"`Array` と `Result` はユーザー定義の型名として使えます。"
+
+#: ../../language/error_codes/E4003.md:9
 msgid "Erroneous Example"
 msgstr ""
 
-#: ../../language/error_codes/E4003.md:7
+#: ../../language/error_codes/E4003.md:11
 msgid "struct Error {}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4003.md:11
+#: ../../language/error_codes/E4003.md:15
 msgid ""
 "`Error` is the reserved name for the built-in error type, so it cannot be"
 " used for a custom type. This will give the following error on line 1:"
 msgstr ""
 
-#: ../../language/error_codes/E4003.md:14
+#: ../../language/error_codes/E4003.md:18
 msgid "\"Error\" is a reserved type name. Cannot declare it as type\n"
 msgstr ""
 
-#: ../../language/error_codes/E4003.md:18
+#: ../../language/error_codes/E4003.md:22
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4003.md:20
+#: ../../language/error_codes/E4003.md:24
 msgid "Consider using another name for your type, such as `MyError` or `Error_`."
 msgstr ""
 
-#: ../../language/error_codes/E4003.md:22
+#: ../../language/error_codes/E4003.md:26
 msgid ""
 "///|\n"
 "priv struct MyError {}\n"

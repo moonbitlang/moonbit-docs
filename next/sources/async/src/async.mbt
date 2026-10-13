@@ -24,7 +24,7 @@ async fn fetch_default() -> Int32 {
 }
 
 ///|
-async fn build(x? : Int32 = fetch_default()) -> Int32 {
+async fn build(x~ : Int32 = fetch_default()) -> Int32 {
   ...
 }
 

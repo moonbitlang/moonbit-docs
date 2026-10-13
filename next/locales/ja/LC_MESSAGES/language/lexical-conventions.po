@@ -22,173 +22,335 @@ msgstr ""
 msgid "Lexical Conventions"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:4
-msgid "This page is a work in progress and is currently incomplete."
-msgstr ""
-
-#: ../../language/lexical-conventions.md:7
+#: ../../language/lexical-conventions.md:3
 msgid ""
 "This page specifies MoonBit lexical forms. Runtime representation, APIs, "
 "and literal overloading are covered in [Fundamentals](fundamentals.md"
 "#built-in-data-structures)."
 msgstr ""
 
-#: ../../language/lexical-conventions.md:11
+#: ../../language/lexical-conventions.md:7
 msgid ""
-"In the productions, `{ symbol }` means zero or more repetitions, `{ "
-"symbol }+` means one or more repetitions, and `x ... y` denotes an "
-"inclusive range."
+"MoonBit source text must be well-formed UTF-8. Malformed input reports a "
+"lexical error. At each position, the lexer consumes the longest valid token."
+" Whitespace is discarded, while newlines participate in automatic semicolon "
+"insertion."
 msgstr ""
 
-#: ../../language/lexical-conventions.md:15
+#: ../../language/lexical-conventions.md:12
+msgid ""
+"In the productions, `{ symbol }` means zero or more repetitions, `{ symbol "
+"}+` means one or more repetitions, `[ symbol ]` means zero or one "
+"occurrence, and `x...y` denotes an inclusive range. Parentheses group a "
+"form. An `except` clause removes the listed forms from the complete form on "
+"its left."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:17
 msgid "Common Lexical Classes"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:30
+#: ../../language/lexical-conventions.md:32
 msgid "String Literals"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:48
+#: ../../language/lexical-conventions.md:52
 msgid "The simple escape sequences have the following meanings:"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Sequence"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Character"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\\\`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Backslash (U+005C)"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\\"`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Double quote (U+0022)"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\'`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Single quote (U+0027)"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\/`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Forward slash (U+002F)"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\n`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Line feed (U+000A)"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\r`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Carriage return (U+000D)"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\t`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Horizontal tab (U+0009)"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\b`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Backspace (U+0008)"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "`\\f`"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:32
+#: ../../language/lexical-conventions.md:34
 msgid "Form feed (U+000C)"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:62
+#: ../../language/lexical-conventions.md:66
 msgid ""
-"A Unicode escape must denote a Unicode scalar value. A CR or LF before "
-"the closing quote reports an unterminated string literal."
+"A Unicode escape must denote a Unicode scalar value. A newline before the "
+"closing quote reports an unterminated string literal."
 msgstr ""
 
-#: ../../language/lexical-conventions.md:65
+#: ../../language/lexical-conventions.md:69
 msgid "Interpolation"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:71
+#: ../../language/lexical-conventions.md:75
 msgid ""
-"The expression must be nonempty and end at the matching `}`. Braces "
-"inside nested literals do not affect matching; nested interpolations are "
-"recognized recursively. CR, LF, `//` comments, attributes, and multiline "
-"string literals are not permitted."
+"The expression must be nonempty and end at the matching `}`. Braces inside "
+"nested literals do not affect matching. Nested interpolations are recognized"
+" recursively. Newlines, `//` comments, attributes, and multiline string "
+"literals are not permitted."
 msgstr ""
 
-#: ../../language/lexical-conventions.md:76
+#: ../../language/lexical-conventions.md:80
 msgid "Multiline String Literals"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:95
+#: ../../language/lexical-conventions.md:97
 msgid ""
-"The prefixes are omitted from the result, and lines are joined with "
-"U+000A. A final empty prefixed line adds a trailing line feed. A `#|` "
-"line is literal; in a `$|` line, only `\\{` begins interpolation. "
-"Multiline strings are not permitted inside interpolation expressions."
+"The prefixes are omitted from the result, and lines are joined with U+000A. "
+"A final empty prefixed line adds a trailing line feed. A `#|` line is "
+"literal. In a `$|` line, only `\\{` begins interpolation. Multiline strings "
+"are not permitted inside interpolation expressions."
 msgstr ""
 
-#: ../../language/lexical-conventions.md:100
+#: ../../language/lexical-conventions.md:102
 msgid "Bytes Literals"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:114
+#: ../../language/lexical-conventions.md:116
 msgid ""
-"A CR or LF before the closing quote reports an unterminated literal. Non-"
-"ASCII source characters contribute their UTF-8 encoding; `\\xHH` and "
-"`\\oDDD` each contribute one byte with a value from 0 to 255. "
-"Interpolation follows the string-literal rules. There is no multiline "
-"bytes-literal form."
+"A newline before the closing quote reports an unterminated literal. Non-"
+"ASCII source characters contribute their UTF-8 encoding. `\\xHH` and "
+"`\\oDDD` each contribute one byte with a value from 0 to 255. Interpolation "
+"follows the string-literal rules. There is no multiline bytes-literal form."
 msgstr ""
 
-#: ../../language/lexical-conventions.md:119
-msgid "Character Literals"
+#: ../../language/lexical-conventions.md:121
+msgid "Regex Literals"
 msgstr ""
 
 #: ../../language/lexical-conventions.md:131
+msgid ""
+"Backslashes are preserved for the regex parser, while `\\{` starts an "
+"interpolation. Interpolated regex literals are accepted only in lex-pattern "
+"contexts. A newline before the closing quote reports an unterminated "
+"literal. See [Regex Literal Expression](fundamentals.md#regex-literal-"
+"expression)."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:136
+msgid "Character Literals"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:149
 msgid ""
 "A character literal contains exactly one Unicode scalar value or escape "
 "sequence."
 msgstr ""
 
-#: ../../language/lexical-conventions.md:134
+#: ../../language/lexical-conventions.md:152
 msgid "Byte Literals"
 msgstr ""
 
-#: ../../language/lexical-conventions.md:146
+#: ../../language/lexical-conventions.md:165
 msgid "An unescaped byte is ASCII. Unicode escapes are invalid in byte literals."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:167
+msgid "Comments"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:175
+msgid ""
+"`doc-comment` takes precedence over `line-comment` when both match. MoonBit "
+"has no block-comment form."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:178
+msgid "Identifiers"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:210
+msgid ""
+"These exact ranges are used, without Unicode normalization. A `uident` "
+"begins with an ASCII uppercase letter. All other identifier spellings begin "
+"with an ASCII lowercase letter, `_`, or a character in `non-ascii`. The "
+"exact spelling `_` is a dedicated token. Keywords also use their own tokens."
+" A leading ASCII decimal digit starts a numeric literal."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:216
+msgid "Keywords"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:231
+msgid "Keywords take precedence over identifiers."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:233
+msgid ""
+"The following spellings are reserved. A spelling that is not already a "
+"keyword is otherwise tokenized as an identifier or label and reports a "
+"reserved-keyword warning."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:252
+msgid "Labels"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:259
+msgid ""
+"The `~` must immediately follow the name. ASCII-uppercase identifiers and "
+"keywords cannot form labels."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:262
+msgid "Package Names"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:270
+msgid ""
+"Package names are ASCII-only. A hyphen cannot begin a package part. The "
+"leading `@`, slashes, and parts must be adjacent."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:273
+msgid "Attributes"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:281
+msgid ""
+"After the optional dot-qualified name, everything through the next newline "
+"is the raw payload. Attributes are not permitted inside an `interpolation`. "
+"See [Attribute](attributes.md) for the payload grammar."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:285
+msgid "Numeric Literals"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:315
+msgid ""
+"After the first digit of a numeral, underscores may repeat or trail. "
+"Uppercase suffixes select `UInt32` (`U`), `Int64` (`L`), `UInt64` (`UL`), "
+"`BigInt` (`N`), or `Float` (`F`). An unsuffixed floating-point literal is a "
+"`Double`."
+msgstr ""
+"数値の最初の数字の後では、アンダースコアを連続させたり末尾に置いたりできます。大文字の接尾辞は "
+"`UInt32`（`U`）、`Int64`（`L`）、`UInt64`（`UL`）、`BigInt`（`N`）、`Float`（`F`）を指定します。接尾辞のない浮動小数点リテラルは"
+" `Double` です。"
+
+#: ../../language/lexical-conventions.md:319
+msgid ""
+"Floating-point literals always contain a decimal point. A hexadecimal "
+"`Float` requires a `p` or `P` exponent before `F`, so `0x1.F` is a `Double`."
+" Signs are separate tokens. Before `..`, an integer ends first, so `1..=2` "
+"begins with `1` and `..=`."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:324
+msgid "`1.` and `1.F` are also valid double and float literal."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:326
+msgid "Dot-Prefixed Tokens"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:334
+msgid ""
+"These forms contain no whitespace. Tuple accessors do not permit "
+"underscores, and dot-identifiers use the identifier case rules without "
+"consulting the keyword table, so `.if` is valid. A single `.` reports a "
+"lexical error."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:338
+msgid "Operators and Delimiters"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:355
+msgid ""
+"The longest listed token wins. MoonBit has no generic operator-name syntax."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:357
+msgid "Automatic Semicolon Insertion"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:359
+msgid ""
+"After a newline, the lexer may insert `;` when the preceding token can end a"
+" statement and the following token can begin one. End of file is also an "
+"eligible follower. It does not insert one before `}` or between adjacent "
+"multiline string lines."
+msgstr ""
+
+#: ../../language/lexical-conventions.md:364
+msgid "`.mbti` Extensions"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:366
+msgid "The `.mbti` lexical grammar adds this keyword to `.mbt`:"
+msgstr ""
+
+#: ../../language/lexical-conventions.md:372
+msgid ""
+"In `.mbti`, `package` takes precedence over identifiers and cannot form a "
+"label. In `.mbt`, it follows the reserved-word behavior above and can form "
+"`package~`."
 msgstr ""

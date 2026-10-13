@@ -78,12 +78,44 @@ msgstr "将别名标记为弃用的。如果提供了 `message` 信息，当别�
 
 #: ../../language/attributes/alias.md:23
 msgid ""
+"`#alias` cannot be applied to `declare fn` or `declare let`. Put the "
+"attribute on the corresponding definition instead."
+msgstr "`#alias` 不能用于 `declare fn` 或 `declare let`。请将该属性放在对应的定义上。"
+
+#: ../../language/attributes/alias.md:26
+msgid ""
+"To expose an alias through a declaration-based interface, declare the alias "
+"name separately with `declare fn` or `declare let`. The declarations specify"
+" the names and their types, but do not require an alias relationship between"
+" them. Whether the implementation uses `#alias` or separate definitions is "
+"an implementation detail."
+msgstr ""
+"若要在基于声明的接口中暴露别名，请用 `declare fn` 或 `declare let` "
+"单独声明别名。声明指定名称及其类型，但不要求这些名称之间存在别名关系。实现使用 `#alias` 还是分别提供定义，属于实现细节。"
+
+#: ../../language/attributes/alias.md:32
+msgid ""
+"///|\n"
+"declare pub fn new_name() -> Int32\n"
+"\n"
+"///|\n"
+"declare pub fn old_name() -> Int32\n"
+"\n"
+"///|\n"
+"#alias(old_name)\n"
+"pub fn new_name() -> Int32 {\n"
+"  42\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/alias.md:36
+msgid ""
 "To graceful migration from old API to new API, you can rename the old API"
 " directly, and create an alias with the old name, mark it as deprecated. "
 "For example:"
 msgstr "如果要优雅地将一个旧的 API 迁移到新的 API，可以直接将旧的 API 重命名成新的名字；然后，使用旧名字创建一个别名，同时将它标记成弃用的。"
 
-#: ../../language/attributes/alias.md:26
+#: ../../language/attributes/alias.md:39
 msgid ""
 "#alias(old_name, deprecated)\n"
 "fn new_name() -> Unit {\n"

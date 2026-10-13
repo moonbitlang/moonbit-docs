@@ -122,7 +122,7 @@ test {
 // end labelled arguments 2
 
 // start optional arguments 1
-fn optional(opt? : Int32 = 42) -> Int32 {
+fn optional(opt~ : Int32 = 42) -> Int32 {
   opt
 }
 
@@ -133,7 +133,7 @@ test {
 // end optional arguments 1
 
 // start optional arguments 2
-fn incr(counter? : Ref[Int32] = { val: 0 }) -> Ref[Int32] {
+fn incr(counter~ : Ref[Int32] = { val: 0 }) -> Ref[Int32] {
   counter.val = counter.val + 1
   counter
 }
@@ -150,7 +150,7 @@ test {
 // start optional arguments 3
 let default_counter : Ref[Int32] = { val: 0 }
 
-fn incr_2(counter? : Ref[Int32] = default_counter) -> Int32 {
+fn incr_2(counter~ : Ref[Int32] = default_counter) -> Int32 {
   counter.val = counter.val + 1
   counter.val
 }
@@ -162,7 +162,7 @@ test {
 // end optional arguments 3
 
 // start optional arguments 4
-fn create_rectangle(a : Int32, b? : Int32 = a) -> (Int32, Int32) {
+fn create_rectangle(a : Int32, b~ : Int32 = a) -> (Int32, Int32) {
   (a, b)
 }
 
@@ -179,7 +179,7 @@ fn may_fail(x : Int32) -> Int32 raise Failure {
   x
 }
 
-fn add_with_optional(base : Int32, extra? : Int32 = 1) -> Int32 {
+fn add_with_optional(base : Int32, extra~ : Int32 = 1) -> Int32 {
   base + extra
 }
 

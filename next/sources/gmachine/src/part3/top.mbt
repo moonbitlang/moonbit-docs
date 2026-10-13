@@ -18,11 +18,11 @@ fn run(codes : List[String]) -> String {
   let initialState : GState = {
     output: StringBuilder(size_hint=60),
     heap,
-    stack: @list.empty(),
+    stack: @list.List([]),
     code: @list.List([PushGlobal("main"), Eval, Print]),
     globals,
     stats: 0,
-    dump: @list.empty(),
+    dump: @list.List([]),
   }
   // end init definition
   GState::reify(initialState)

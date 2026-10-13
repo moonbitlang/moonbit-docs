@@ -7,7 +7,7 @@ fn ScDef::compileSC(self : ScDef[String]) -> (String, Int32, List[Instruction]) 
     match args {
       Empty => {
         arity = i
-        return @list.empty()
+        return @list.List([])
       }
       More(s, tail=ss) => gen_env(i + 1, ss).prepend((s, i))
     }
@@ -71,7 +71,7 @@ fn compileLet(
   expr : RawExpr[String],
   env : List[(String, Int32)],
 ) -> List[Instruction] {
-  let (env, codes) = for env = env, acc = @list.empty(), remaining = defs {
+  let (env, codes) = for env = env, acc = @list.List([]), remaining = defs {
     match remaining {
       Empty => break (env, acc)
       More((name, expr), tail=rest) => {

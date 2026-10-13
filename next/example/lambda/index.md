@@ -159,7 +159,7 @@ Now we can complete the `bruijn()` function.
 ```{literalinclude} /sources/lambda-expression/src/top.mbt
 :language: moonbit
 :start-at: fn go
-:end-at: go(@list.empty(), self)
+:end-at: go(@list.List([]), self)
 :dedent:
 ```
 

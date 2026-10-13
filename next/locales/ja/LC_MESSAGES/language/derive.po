@@ -50,7 +50,7 @@ msgstr ""
 "に含めるかを明示するために [`extend`](methods.md#attaching-trait-methods-with-extend) も使用しています。"
 "これにより、実装からメソッドを暗黙的に付加する非推奨の動作に依存せずに済みます。"
 
-#: ../../language/derive.md:8
+#: ../../language/derive.md:15
 msgid "Eq and Compare"
 msgstr "Eq と Compare"
 
@@ -143,7 +143,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:26
+#: ../../language/derive.md:33
 msgid "Debug"
 msgstr "Debug"
 
@@ -171,7 +171,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:37
+#: ../../language/derive.md:44
 msgid "Enums can derive `Debug` as well:"
 msgstr "列挙型も `Debug` を derive できます:"
 
@@ -190,7 +190,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:45
+#: ../../language/derive.md:52
 msgid "Default"
 msgstr "Default"
 
@@ -205,7 +205,7 @@ msgstr ""
 " `Default::default()` を呼び出します。`default` も型のメソッド形式 API に含める場合は、明示的に `extend` "
 "を宣言してください。"
 
-#: ../../language/derive.md:53
+#: ../../language/derive.md:59
 msgid ""
 "For structs, the default value is the struct with all fields set as their"
 " default value."
@@ -228,7 +228,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:61
+#: ../../language/derive.md:67
 msgid "For enums, the default value is the only case that has no parameters."
 msgstr "enum では、パラメータを持たない唯一のケースがデフォルト値になります。"
 
@@ -250,13 +250,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:69
+#: ../../language/derive.md:75
 msgid ""
 "Enums that has no cases or more than one cases without parameters cannot "
 "derive `Default`."
 msgstr "ケースがない enum や、パラメータなしケースが複数ある enum は `Default` を derive できません。"
 
-#: ../../language/derive.md:73
+#: ../../language/derive.md:79
 msgid ""
 "enum CannotDerive1 {\n"
 "    Case1(String)\n"
@@ -280,7 +280,7 @@ msgstr ""
 "} derive(Default) // Case1 and Case2 are both candidates as default "
 "constructor\n"
 
-#: ../../language/derive.md:85
+#: ../../language/derive.md:91
 msgid "Hash"
 msgstr "Hash"
 
@@ -314,19 +314,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:97
+#: ../../language/derive.md:103
 msgid "Arbitrary"
 msgstr "Arbitrary"
 
-#: ../../language/derive.md:99
+#: ../../language/derive.md:105
 msgid "`derive(Arbitrary)` will generate random values of the given type."
 msgstr "`derive(Arbitrary)` は指定した型のランダム値を生成します。"
 
-#: ../../language/derive.md:101
+#: ../../language/derive.md:107
 msgid "Shrink"
 msgstr "Shrink"
 
-#: ../../language/derive.md:103
+#: ../../language/derive.md:109
 msgid ""
 "`derive(Shrink)` implements `@quickcheck.Shrink` for property-based "
 "testing. Struct fields are shrunk one at a time in source order. Enum "
@@ -360,11 +360,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:101
+#: ../../language/derive.md:121
 msgid "FromJson and ToJson"
 msgstr "FromJson と ToJson"
 
-#: ../../language/derive.md:103
+#: ../../language/derive.md:123
 msgid ""
 "`derive(FromJson)` and `derive(ToJson)` automatically generate round-"
 "trippable trait implementations used for serializing the type to and from"
@@ -412,17 +412,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:114
+#: ../../language/derive.md:134
 msgid ""
 "Both derive directives accept a number of arguments to configure the "
 "exact behavior of serialization and deserialization."
 msgstr "どちらの derive 指示子も、シリアライズとデシリアライズの具体的な振る舞いを設定するための複数の引数を受け取れます。"
 
-#: ../../language/derive.md:117
+#: ../../language/derive.md:137
 msgid "The actual behavior of JSON serialization arguments is unstable."
 msgstr "JSON シリアライズ引数の実際の振る舞いは不安定です。"
 
-#: ../../language/derive.md:121
+#: ../../language/derive.md:141
 msgid ""
 "JSON derivation arguments are only for coarse-grained control of the "
 "derived format. If you need to precisely control how the types are laid "
@@ -431,7 +431,7 @@ msgstr ""
 "JSON derive 引数は、生成される形式を大まかに制御するためのものです。型のレイアウトを厳密に制御したいなら、**代わりに 2 つの "
 "trait を直接実装することを検討してください**。"
 
-#: ../../language/derive.md:125
+#: ../../language/derive.md:145
 msgid ""
 "We have recently deprecated a large number of advanced layout tweaking "
 "arguments. For such usage and future usage of them, please manually "
@@ -481,11 +481,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:136
+#: ../../language/derive.md:156
 msgid "Enum styles"
 msgstr "enum のスタイル"
 
-#: ../../language/derive.md:138
+#: ../../language/derive.md:158
 msgid ""
 "There are currently two styles of enum serialization: `legacy` and "
 "`flat`, which the user must select one using the `style` argument. "
@@ -494,7 +494,7 @@ msgstr ""
 "現在、enum のシリアライズには `legacy` と `flat` の 2 種類のスタイルがあり、`style` "
 "引数でどちらかを選ぶ必要があります。次の enum 定義を考えます："
 
-#: ../../language/derive.md:142
+#: ../../language/derive.md:162
 msgid ""
 "enum E {\n"
 "  One\n"
@@ -508,11 +508,11 @@ msgstr ""
 "  Axes(x~: Int32, y~: Int32)\n"
 "}\n"
 
-#: ../../language/derive.md:150
+#: ../../language/derive.md:170
 msgid "With `derive(ToJson(style=\"legacy\"))`, the enum is formatted into:"
 msgstr "`derive(ToJson(style=\"legacy\"))` では、enum は次のように出力されます："
 
-#: ../../language/derive.md:152
+#: ../../language/derive.md:172
 msgid ""
 "E::One              => { \"$tag\": \"One\" }\n"
 "E::Uniform(2)       => { \"$tag\": \"Uniform\", \"0\": 2 }\n"
@@ -522,11 +522,11 @@ msgstr ""
 "E::Uniform(2)       => { \"$tag\": \"Uniform\", \"0\": 2 }\n"
 "E::Axes(x=-1, y=1)  => { \"$tag\": \"Axes\", \"x\": -1, \"y\": 1 }\n"
 
-#: ../../language/derive.md:158
+#: ../../language/derive.md:178
 msgid "With `derive(ToJson(style=\"flat\"))`, the enum is formatted into:"
 msgstr "`derive(ToJson(style=\"flat\"))` では、enum は次のように出力されます："
 
-#: ../../language/derive.md:160
+#: ../../language/derive.md:180
 msgid ""
 "E::One              => \"One\"\n"
 "E::Uniform(2)       => [ \"Uniform\", 2 ]\n"
@@ -536,11 +536,11 @@ msgstr ""
 "E::Uniform(2)       => [ \"Uniform\", 2 ]\n"
 "E::Axes(x=-1, y=1)  => [ \"Axes\", -1, 1 ]\n"
 
-#: ../../language/derive.md:166
+#: ../../language/derive.md:186
 msgid "Deriving `Option`"
 msgstr "`Option` の derive"
 
-#: ../../language/derive.md:168
+#: ../../language/derive.md:188
 msgid ""
 "A notable exception is the builtin type `Option[T]`. Ideally, it would be"
 " interpreted as `T | undefined`, but the issue is that it would be  "
@@ -551,7 +551,7 @@ msgstr ""
 "と解釈したいところですが、`Option[Option[T]]` に対して `Some(None)` と `None` "
 "を区別できなくなるという問題があります。"
 
-#: ../../language/derive.md:172
+#: ../../language/derive.md:192
 msgid ""
 "As a result, it interpreted as `T | undefined` iff it is a direct field "
 "of a struct, and `[T] | null` otherwise:"
@@ -588,11 +588,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:181
+#: ../../language/derive.md:201
 msgid "Container arguments"
 msgstr "コンテナ引数"
 
-#: ../../language/derive.md:183
+#: ../../language/derive.md:203
 msgid ""
 "`rename_fields` and `rename_cases` (enum only) batch renames fields (for "
 "enums and structs) and enum cases to the given format. Available "
@@ -601,39 +601,39 @@ msgstr ""
 "`rename_fields` と `rename_cases`（enum のみ）は、フィールド（enum と struct）および enum "
 "ケースを指定した形式へ一括でリネームします。利用できる形式は次のとおりです："
 
-#: ../../language/derive.md:187
+#: ../../language/derive.md:207
 msgid "`lowercase`"
 msgstr "`lowercase`"
 
-#: ../../language/derive.md:188
+#: ../../language/derive.md:208
 msgid "`UPPERCASE`"
 msgstr "`UPPERCASE`"
 
-#: ../../language/derive.md:189
+#: ../../language/derive.md:209
 msgid "`camelCase`"
 msgstr "`camelCase`"
 
-#: ../../language/derive.md:190
+#: ../../language/derive.md:210
 msgid "`PascalCase`"
 msgstr "`PascalCase`"
 
-#: ../../language/derive.md:191
+#: ../../language/derive.md:211
 msgid "`snake_case`"
 msgstr "`snake_case`"
 
-#: ../../language/derive.md:192
+#: ../../language/derive.md:212
 msgid "`SCREAMING_SNAKE_CASE`"
 msgstr "`SCREAMING_SNAKE_CASE`"
 
-#: ../../language/derive.md:193
+#: ../../language/derive.md:213
 msgid "`kebab-case`"
 msgstr "`kebab-case`"
 
-#: ../../language/derive.md:194
+#: ../../language/derive.md:214
 msgid "`SCREAMING-KEBAB-CASE`"
 msgstr "`SCREAMING-KEBAB-CASE`"
 
-#: ../../language/derive.md:196
+#: ../../language/derive.md:216
 msgid ""
 "Example: `rename_fields = \"PascalCase\"` for a field named "
 "`my_long_field_name` results in `MyLongFieldName`."
@@ -641,25 +641,25 @@ msgstr ""
 "例：`my_long_field_name` というフィールドに対して `rename_fields = \"PascalCase\"` "
 "を指定すると、`MyLongFieldName` になります。"
 
-#: ../../language/derive.md:200
+#: ../../language/derive.md:220
 msgid ""
 "Renaming assumes the name of fields in `snake_case` and the name of "
 "structs/enum cases in `PascalCase`."
 msgstr "リネームは、フィールド名が `snake_case`、struct/enum ケース名が `PascalCase` であることを前提にしています。"
 
-#: ../../language/derive.md:203
+#: ../../language/derive.md:223
 msgid "`cases(...)` (enum only) controls the layout of enum cases."
 msgstr "`cases(...)`（enum のみ）は enum ケースのレイアウトを制御します。"
 
-#: ../../language/derive.md:206
+#: ../../language/derive.md:226
 msgid "This might be replaced with case attributes in the future."
 msgstr "これは将来、case アトリビュートに置き換えられる可能性があります。"
 
-#: ../../language/derive.md:209
+#: ../../language/derive.md:229
 msgid "For example, for an enum"
 msgstr "例えば、次の enum では"
 
-#: ../../language/derive.md:211
+#: ../../language/derive.md:231
 msgid ""
 "enum E {\n"
 "  A(...)\n"
@@ -671,27 +671,27 @@ msgstr ""
 "  B(...)\n"
 "}\n"
 
-#: ../../language/derive.md:218
+#: ../../language/derive.md:238
 msgid "you are able to control each case using `cases(A(...), B(...))`."
 msgstr "`cases(A(...), B(...))` を使って各ケースを制御できます。"
 
-#: ../../language/derive.md:220
+#: ../../language/derive.md:240
 msgid "See [Case arguments](#case-arguments) below for details."
 msgstr "詳細は以下の [Case arguments](#case-arguments) を参照してください。"
 
-#: ../../language/derive.md:222
+#: ../../language/derive.md:242
 msgid "`fields(...)` (struct only) controls the layout of struct fields."
 msgstr "`fields(...)`（struct のみ）は struct フィールドのレイアウトを制御します。"
 
-#: ../../language/derive.md:225
+#: ../../language/derive.md:245
 msgid "This might be replaced with field attributes in the future."
 msgstr "これは将来、field アトリビュートに置き換えられる可能性があります。"
 
-#: ../../language/derive.md:228
+#: ../../language/derive.md:248
 msgid "For example, for a struct"
 msgstr "例えば、次の struct では"
 
-#: ../../language/derive.md:230
+#: ../../language/derive.md:250
 msgid ""
 "struct S {\n"
 "  x: Int32\n"
@@ -703,35 +703,36 @@ msgstr ""
 "  y: Int32\n"
 "}\n"
 
-#: ../../language/derive.md:237
+#: ../../language/derive.md:257
 msgid "you are able to control each field using `fields(x(...), y(...))`"
 msgstr "`fields(x(...), y(...))` を使って各フィールドを制御できます。"
 
-#: ../../language/derive.md:239 ../../language/derive.md:249
+#: ../../language/derive.md:259
+#: ../../language/derive.md:269
 msgid "See [Field arguments](#field-arguments) below for details."
 msgstr "詳細は以下の [Field arguments](#field-arguments) を参照してください。"
 
-#: ../../language/derive.md:241
+#: ../../language/derive.md:261
 msgid "Case arguments"
 msgstr "Case 引数"
 
-#: ../../language/derive.md:243
+#: ../../language/derive.md:263
 msgid ""
 "`rename = \"...\"` renames this specific case, overriding existing "
 "container-wide rename directive if any."
 msgstr "`rename = \"...\"` はこの特定の case の名前を変更し、既存のコンテナ全体のリネーム指定があればそれを上書きします。"
 
-#: ../../language/derive.md:246
+#: ../../language/derive.md:266
 msgid ""
 "`fields(...)` controls the layout of the payload of this case. Note that "
 "renaming positional fields are not possible currently."
 msgstr "`fields(...)` はこの case のペイロードのレイアウトを制御します。なお、位置引数フィールドのリネームは現在できません。"
 
-#: ../../language/derive.md:251
+#: ../../language/derive.md:271
 msgid "Field arguments"
 msgstr "Field 引数"
 
-#: ../../language/derive.md:253
+#: ../../language/derive.md:273
 msgid ""
 "`rename = \"...\"` renames this specific field, overriding existing "
 "container-wide rename directives if any."

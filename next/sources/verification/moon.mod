@@ -3,7 +3,7 @@ name = "moonbit-community/verification-doc"
 version = "0.1.0"
 
 import {
-  "moonbit-community/verified@0.0.2",
+  "moonbit-community/verified@0.0.3",
 }
 
 readme = "README.md"

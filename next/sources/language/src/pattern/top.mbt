@@ -201,9 +201,9 @@ fn sign(x : Int32) -> Int32 {
 
 fn classify_char(c : Char) -> String {
   match c {
-    'a'..='z' => "lowercase"
-    'A'..='Z' => "uppercase"
-    '0'..='9' => "digit"
+    'a'..<='z' => "lowercase"
+    'A'..<='Z' => "uppercase"
+    '0'..<='9' => "digit"
     _ => "other"
   }
 }
@@ -332,7 +332,7 @@ const REGEX_IDENT_CONT = re"[A-Za-z0-9_]*"
 
 const REGEX_AB : Regex = re"a" + re"b"
 
-fn regex_default_arg(re? : Regex = re"abc") -> Bool {
+fn regex_default_arg(re~ : Regex = re"abc") -> Bool {
   re.execute("zabc") is Some(_)
 }
 
