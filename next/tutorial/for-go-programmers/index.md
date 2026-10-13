@@ -529,8 +529,8 @@ fn[T : Show] double_string(t : T) -> String {
 
 ### Named Parameters
 
-MoonBit functions also support named arguments with an optional
-default value using the `label? : Type` syntax:
+MoonBit functions also support named arguments using `label~ : Type`.
+To provide a default value, use `label~ : Type = default_expr`:
 
 ```moonbit
 fn named_args(named~ : Int32, optional~ : Int32 = 42) -> Int32 {

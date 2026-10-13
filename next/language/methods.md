@@ -142,6 +142,9 @@ When overloading `_[_]`/`_[_] = _`/`_[_:_]`, the method must have a correcnt sig
 - `_[_]=_` should have signature `(Self, Index, Value) -> Unit`, used as `self[index] = value`
 - `_[_:_]` should have signature `(Self, start? : Index, end? : Index) -> Result`, used as `let result = self[start:end]`
 
+For `_[_:_]`, a bound can also have an explicit default, such as
+`start~ : Index = default_expr`, as in the example below.
+
 By implementing `_[_:_]` method, you can create a view for a user-defined type. Here is an example:
 
 ```{literalinclude} /sources/language/src/operator/top.mbt
