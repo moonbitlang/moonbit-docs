@@ -2,7 +2,7 @@
 ///  start node definition
 enum Node {
   Nil
-  Node(Int, Node, Node)
+  Node(Int32, Node, Node)
 }
 // end node definition
 
@@ -32,7 +32,7 @@ impl Add for Node with add(self : Node, v : Node) -> Node {
 
 ///|
 /// start build definition
-fn build(data : ArrayView[Int]) -> Node {
+fn build(data : ArrayView[Int32]) -> Node {
   if data.length() == 1 {
     Node(data[0], Nil, Nil)
   } else {
@@ -61,10 +61,10 @@ let empty_node : Node = Node(0, Nil, Nil)
 ///|
 fn Node::query(
   self : Node,
-  l : Int,
-  r : Int,
-  query_l : Int,
-  query_r : Int,
+  l : Int32,
+  r : Int32,
+  query_l : Int32,
+  query_r : Int32,
 ) -> Node {
   if query_l > r || l > query_r {
     empty_node

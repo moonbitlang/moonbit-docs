@@ -1,6 +1,6 @@
 ///|
 priv enum E {
-  A(Int, Double, String)
+  A(Int32, Double, String)
 }
 
 ///|

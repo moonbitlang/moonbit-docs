@@ -6,6 +6,6 @@ fn init {
   f(h)
 }
 
-fn h(x : Int) -> Unit {
+fn h(x : Int32) -> Unit {
   ignore(x)
 }

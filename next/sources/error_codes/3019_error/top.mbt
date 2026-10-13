@@ -1,5 +1,5 @@
 ///|
-fn describe(value : Int) -> String {
+fn describe(value : Int32) -> String {
   match value {
     0..=_ => "non-negative"
     _ => "negative"

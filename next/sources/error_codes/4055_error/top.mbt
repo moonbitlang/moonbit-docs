@@ -1,5 +1,5 @@
 ///|
 struct A {
-  a : Int
+  a : Int32
   a : Double
 }

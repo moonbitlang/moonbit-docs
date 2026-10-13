@@ -117,7 +117,7 @@ public, non-generic function in generated Wasm, JavaScript, or C output:
 
 ```moonbit
 #export_name("attr_add")
-pub fn add_by_attr(n : Int) -> Int {
+pub fn add_by_attr(n : Int32) -> Int32 {
   n + 42
 }
 ```

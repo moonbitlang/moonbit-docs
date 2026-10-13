@@ -355,12 +355,12 @@ trait Eq {
 
 trait Compare : Eq {
   // `0` for equal, `-1` for smaller, `1` for greater
-  compare(Self, Self) -> Int
+  compare(Self, Self) -> Int32
 }
 
 trait Hash {
   hash_combine(Self, Hasher) -> Unit // to be implemented
-  hash(Self) -> Int // has default implementation
+  hash(Self) -> Int32 // has default implementation
 }
 
 trait Show {

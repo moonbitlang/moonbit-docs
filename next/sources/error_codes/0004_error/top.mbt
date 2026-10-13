@@ -1,8 +1,8 @@
 ///|
-struct Code(Int)
+struct Code(Int32)
 
 ///|
-fn Code::new(code : Int) -> Code {
+fn Code::new(code : Int32) -> Code {
   Code(code)
 }
 

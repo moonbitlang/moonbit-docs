@@ -89,7 +89,7 @@ The [basic data types](/language/fundamentals.md#built-in-data-structures) in Mo
 
 - `Unit`
 - `Bool`
-- `Int`, `UInt`, `Int64`, `UInt64`, `Byte`, ...
+- `Int32`, `UInt32`, `Int64`, `UInt64`, `Byte`, ...
 - `Float`, `Double`
 - `Char`, `String`, ...
 - `Array[T]`, ...
@@ -146,7 +146,7 @@ We also need to find out how many students have passed an exam:
 fn count_qualified_students(
   students : Array[Student],
   is_qualified : (Student) -> ExamResult
-) -> Int {
+) -> Int32 {
   ...
 }
 ```
@@ -273,7 +273,7 @@ A naive version is by using a mutable value and a [`for` loop](/language/fundame
 fn count_qualified_students(
   students : Array[Student],
   is_qualified : (Student) -> ExamResult
-) -> Int {
+) -> Int32 {
   let mut count = 0
   for i = 0; i < students.length(); i = i + 1 {
     if is_qualified(students[i]) == Pass {
@@ -291,7 +291,7 @@ However, this is neither efficient (due to the border check) nor intuitive, so w
 fn count_qualified_students(
   students : Array[Student],
   is_qualified : (Student) -> ExamResult
-) -> Int {
+) -> Int32 {
   let mut count = 0
   for student in students {
     if is_qualified(student) == Pass { count += 1}
@@ -307,7 +307,7 @@ Still another way is use the functions defined for [iterator](/language/fundamen
 fn count_qualified_students(
   students : Array[Student],
   is_qualified : (Student) -> ExamResult
-) -> Int {
+) -> Int32 {
   students.iter().filter(fn(student) { is_qualified(student) == Pass }).count()
 }
 ```

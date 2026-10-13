@@ -260,7 +260,7 @@ fn from_array(ArrayView[Byte]) -> Buffer
 $ moon ide doc "@buffer.new"
 package "moonbitlang/core/buffer"
 
-pub fn new(size_hint? : Int) -> Buffer
+pub fn new(size_hint? : Int32) -> Buffer
   Creates ... omitted ...
 ```
 
@@ -274,6 +274,6 @@ pub fn String::rev(String) -> String
   Returns ... omitted ...
   # ... more
 
-pub fn String::rev_find(String, StringView) -> Int?
+pub fn String::rev_find(String, StringView) -> Int32?
   Returns ... omitted ...
 ```

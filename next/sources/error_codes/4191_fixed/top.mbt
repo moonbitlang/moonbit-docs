@@ -5,6 +5,6 @@
 ///   inspect(@E4191-fixed.answer(), content="42")
 /// }
 /// ```
-pub fn answer() -> Int {
+pub fn answer() -> Int32 {
   42
 }

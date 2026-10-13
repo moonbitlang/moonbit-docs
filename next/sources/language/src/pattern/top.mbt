@@ -124,11 +124,11 @@ test {
 /// start bit pattern signed
 test {
   let bytes = b"\x80"
-  let u : UInt = match bytes[:] {
+  let u : UInt32 = match bytes[:] {
     [u1be(u), ..] => u
     _ => fail("u1be")
   }
-  let i : Int = match bytes[:] {
+  let i : Int32 = match bytes[:] {
     [i1be(i), ..] => i
     _ => fail("i1be")
   }
@@ -149,7 +149,7 @@ test {
 
 test {
   let bytes = b"\x01\x02"
-  let le : UInt = match bytes[:] {
+  let le : UInt32 = match bytes[:] {
     [u16le(x), ..] => x
     _ => fail("u16le")
   }
@@ -172,12 +172,12 @@ test {
 // end bit pattern v128
 
 enum Arith {
-  Lit(Int)
+  Lit(Int32)
   Add(Arith, Arith)
   Mul(Arith, Arith)
 }
 
-fn eval(expr : Arith) -> Int {
+fn eval(expr : Arith) -> Int32 {
   // start pattern 3
   match expr {
     //! Add(e1, e2) | Lit(e1) => ...
@@ -191,7 +191,7 @@ fn eval(expr : Arith) -> Int {
 /// start pattern 4
 const Zero = 0
 
-fn sign(x : Int) -> Int {
+fn sign(x : Int32) -> Int32 {
   match x {
     _..<Zero => -1
     Zero => 0
@@ -237,7 +237,7 @@ fn json() -> Unit {
 /// start simple pattern 1
 const ONE = 1
 
-fn match_int(x : Int) -> Unit {
+fn match_int(x : Int32) -> Unit {
   match x {
     0 => println("zero")
     ONE => println("one")
@@ -248,9 +248,9 @@ fn match_int(x : Int) -> Unit {
 
 /// start simple pattern 2
 struct Point3D {
-  x : Int
-  y : Int
-  z : Int
+  x : Int32
+  y : Int32
+  z : Int32
 }
 
 fn match_point3D(p : Point3D) -> Unit {
@@ -261,7 +261,7 @@ fn match_point3D(p : Point3D) -> Unit {
 }
 
 enum Point[T] {
-  Point2D(Int, Int, name~ : String, payload~ : T)
+  Point2D(Int32, Int32, name~ : String, payload~ : T)
 }
 
 fn[T] match_point(p : Point[T]) -> Unit {
@@ -275,13 +275,13 @@ fn[T] match_point(p : Point[T]) -> Unit {
 // end simple pattern 2
 
 // start or pattern defaults
-fn option_value(value : Int?) -> Int {
+fn option_value(value : Int32?) -> Int32 {
   match value {
     Some(x) | (None with x = 0) => x
   }
 }
 
-fn pair_value(value : (Int, Int)?) -> Int {
+fn pair_value(value : (Int32, Int32)?) -> Int32 {
   match value {
     Some((x, y)) | (None with x = 0, y = 0) => x + y
   }
@@ -296,8 +296,8 @@ test {
 // end or pattern defaults
 
 /// start guard condition 1
-fn guard_cond(x : Int?) -> Int {
-  fn f(x : Int) -> Array[Int] {
+fn guard_cond(x : Int32?) -> Int32 {
+  fn f(x : Int32) -> Array[Int32] {
     [x, x + 42]
   }
 
@@ -316,7 +316,7 @@ test {
 // end guard condition 1
 
 /// start guard condition 2
-fn guard_check(x : Int?) -> Unit {
+fn guard_check(x : Int32?) -> Unit {
   match x {
     Some(a) if a >= 0 => ()
     Some(a) if a < 0 => ()

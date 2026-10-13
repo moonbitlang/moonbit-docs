@@ -13,7 +13,7 @@ pub fn f1() -> Unit {
 }
 
 pub fn f2() -> Unit {
-  fn f(x : Array[_]) -> Int {
+  fn f(x : Array[_]) -> Int32 {
 //     ^ Warning: The type of this expression is Array[_/0], which contains
 //                unresolved type variables. The type variable is default to
 //                Unit.

@@ -1,7 +1,7 @@
 ///|
 pub(all) struct User {
   name : String
-  priv id : Int
+  priv id : Int32
 }
 
 ///|

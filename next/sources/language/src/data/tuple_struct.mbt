@@ -1,5 +1,5 @@
 // simple definition
-struct UserId(Int)
+struct UserId(Int32)
 
 struct UserInfo(UserId, String)
 // end simple definition
@@ -9,7 +9,7 @@ test "tuple struct 2" (t : @test.Test) {
   // create and destructure tuple struct
   let id : UserId = UserId(1)
   let name : UserInfo = UserInfo(id, "John Doe")
-  let UserId(uid) = id // uid : Int
+  let UserId(uid) = id // uid : Int32
   let UserInfo(_, uname) = name // uname: String
   println(uid)
   println(uname)
@@ -22,7 +22,7 @@ test "tuple struct 3" (t : @test.Test) {
   // access tuple struct by index
   let id : UserId = UserId(1)
   let info : UserInfo = UserInfo(id, "John Doe")
-  let uid : Int = id.0
+  let uid : Int32 = id.0
   let uname : String = info.1
   println(uid)
   println(uname)

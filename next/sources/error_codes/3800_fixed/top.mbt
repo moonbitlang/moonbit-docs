@@ -5,7 +5,7 @@ enum V {
 
 ///|
 struct S {
-  a : Int
+  a : Int32
 }
 
 ///|

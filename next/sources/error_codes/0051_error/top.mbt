@@ -1,4 +1,4 @@
 ///|
-pub fn f() -> Int {
+pub fn f() -> Int32 {
   1 + 2 << 3
 }

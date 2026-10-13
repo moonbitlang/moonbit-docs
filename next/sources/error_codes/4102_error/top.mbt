@@ -1,5 +1,5 @@
 ///|
-pub fn f(xs : Array[Int]) -> Int {
+pub fn f(xs : Array[Int32]) -> Int32 {
   for i in xs {
     ignore(i)
   } nobreak {
@@ -9,7 +9,7 @@ pub fn f(xs : Array[Int]) -> Int {
 }
 
 ///|
-pub fn g(x : Int) -> Unit {
+pub fn g(x : Int32) -> Unit {
   continue x
   // ^^^^^^^^ Error: 'continue' outside of a loop
 }

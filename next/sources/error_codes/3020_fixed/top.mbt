@@ -1,7 +1,7 @@
 ///|
 pub(all) struct S {
-  a : Int
-  b : Int
+  a : Int32
+  b : Int32
 }
 
 ///|

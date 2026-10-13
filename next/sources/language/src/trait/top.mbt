@@ -1,8 +1,8 @@
 /// start trait 1
 pub(open) trait I {
-  method_(Int) -> Int
-  method_with_label(Int, label~ : Int) -> Int
-  //! method_with_label(Int, label?: Int) -> Int
+  method_(Int32) -> Int32
+  method_with_label(Int32, label~ : Int32) -> Int32
+  //! method_with_label(Int32, label?: Int32) -> Int32
 }
 // end trait 1
 
@@ -44,7 +44,7 @@ impl J with f_twice(self) {
 // end trait 3
 
 /// start trait 4
-impl J for Int with f(self) {
+impl J for Int32 with f(self) {
   println(self)
 }
 
@@ -73,8 +73,8 @@ fn[X : Eq] contains(xs : Array[X], elem : X) -> Bool {
 
 /// start trait 6
 struct Point {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 }
 
 impl Eq for Point with equal(p1, p2) {
@@ -112,8 +112,8 @@ fn f() -> Unit {
 
 /// start trait 9
 struct T {
-  a : Int
-  b : Int
+  a : Int32
+  b : Int32
 } derive(Eq, Compare, Debug, Default)
 
 pub extend T with Eq::{not_equal, equal}
@@ -136,11 +136,11 @@ test {
 
 /// start super trait 1
 pub(open) trait Position {
-  pos(Self) -> (Int, Int)
+  pos(Self) -> (Int32, Int32)
 }
 
 pub(open) trait Draw {
-  draw(Self, Int, Int) -> Unit
+  draw(Self, Int32, Int32) -> Unit
 }
 
 pub(open) trait Object: Position + Draw {}

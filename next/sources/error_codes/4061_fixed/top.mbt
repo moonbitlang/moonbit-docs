@@ -2,7 +2,7 @@
 priv struct WrapA(@a.A)
 
 ///|
-impl @a.B for WrapA with to_int(self : WrapA) -> Int {
+impl @a.B for WrapA with to_int(self : WrapA) -> Int32 {
   let _ = self.0
   0
 }

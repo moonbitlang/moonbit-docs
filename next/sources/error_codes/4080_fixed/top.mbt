@@ -1,5 +1,5 @@
 ///|
-fn f(x : Int, y : Double) -> Unit {
+fn f(x : Int32, y : Double) -> Unit {
   ignore((x, y))
 }
 

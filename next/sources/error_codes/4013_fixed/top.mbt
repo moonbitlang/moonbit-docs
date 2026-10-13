@@ -1,4 +1,4 @@
 ///|
-pub fn f() -> (Int) -> Int {
-  fn(x : Int) { x }
+pub fn f() -> (Int32) -> Int32 {
+  fn(x : Int32) { x }
 }

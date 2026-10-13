@@ -1,4 +1,4 @@
 ///|
 struct S {
-  value : Int
+  value : Int32
 }

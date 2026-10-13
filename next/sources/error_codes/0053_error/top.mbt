@@ -7,6 +7,6 @@ pub fn[T : Any] check(_ : T) -> Unit {
 }
 
 ///|
-pub fn[T : Compare] shortlex(a : Array[T], b : Array[T]) -> Int {
-  Int::compare(a.length(), b.length())
+pub fn[T : Compare] shortlex(a : Array[T], b : Array[T]) -> Int32 {
+  Int32::compare(a.length(), b.length())
 }

@@ -1,5 +1,5 @@
 ///|
 enum E {
   A
-  A(Int)
+  A(Int32)
 }

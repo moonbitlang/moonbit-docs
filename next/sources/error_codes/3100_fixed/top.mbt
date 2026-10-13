@@ -1,4 +1,4 @@
 ///|
-pub fn value() -> Int {
+pub fn value() -> Int32 {
   1
 }

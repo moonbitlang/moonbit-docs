@@ -2,7 +2,7 @@
 const A = 3
 
 ///|
-fn describe(value : Int) -> String {
+fn describe(value : Int32) -> String {
   match value {
     0..<A => "between"
     _ => "outside"

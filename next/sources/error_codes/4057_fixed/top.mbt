@@ -1,7 +1,7 @@
 ///|
 priv enum E {
   A
-  B(Int)
+  B(Int32)
 }
 
 ///|

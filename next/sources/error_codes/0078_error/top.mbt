@@ -4,6 +4,6 @@ pub(all) suberror ParseError {
 }
 
 ///|
-pub fn parse_number() -> Result[Int, ParseError] {
+pub fn parse_number() -> Result[Int32, ParseError] {
   Err(ParseError)
 }

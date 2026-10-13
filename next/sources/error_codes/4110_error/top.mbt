@@ -1,5 +1,5 @@
 ///|
-pub fn f(x : Int) -> Unit {
+pub fn f(x : Int32) -> Unit {
   for i in 0..<=x {
     break i
     //  ^^^^^^^^ Error: The for loop is not expected to yield a value, please

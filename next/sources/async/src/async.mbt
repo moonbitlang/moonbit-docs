@@ -19,17 +19,17 @@ async fn record_completion() -> Unit noraise + nocancel {
 // start optional arguments async
 
 ///|
-async fn fetch_default() -> Int {
+async fn fetch_default() -> Int32 {
   ...
 }
 
 ///|
-async fn build(x? : Int = fetch_default()) -> Int {
+async fn build(x? : Int32 = fetch_default()) -> Int32 {
   ...
 }
 
 ///|
-async fn use_value() -> Int {
+async fn use_value() -> Int32 {
   build(x=fetch_default())
 }
 // end optional arguments async
@@ -37,7 +37,7 @@ async fn use_value() -> Int {
 ///|
 // start struct constructor async 1
 struct AsyncBox {
-  value : Int
+  value : Int32
 } derive(Debug)
 
 ///|
@@ -46,7 +46,7 @@ pub extend AsyncBox with Debug::{to_repr}
 
 ///|
 // start struct constructor async 2
-async fn AsyncBox::AsyncBox(x : Int) -> AsyncBox {
+async fn AsyncBox::AsyncBox(x : Int32) -> AsyncBox {
   @async.sleep(0)
   { value: x }
 }
@@ -88,7 +88,7 @@ async test "with_task_group" {
 
 ///|
 // start custom with_timeout example
-async fn with_timeout(timeout : Int, f : async () -> Unit) -> Unit {
+async fn with_timeout(timeout : Int32, f : async () -> Unit) -> Unit {
   @async.with_task_group(group => {
     group.spawn_bg(no_wait=true, () => {
       @async.sleep(timeout)

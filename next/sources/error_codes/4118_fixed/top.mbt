@@ -1,10 +1,10 @@
 ///|
 priv struct MyMap {
-  entries : Map[String, Int]
+  entries : Map[String, Int32]
 }
 
 ///|
-fn MyMap::get(self : MyMap, key : String) -> Int? {
+fn MyMap::get(self : MyMap, key : String) -> Int32? {
   self.entries.get(key)
 }
 

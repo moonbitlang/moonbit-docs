@@ -1,4 +1,4 @@
-fn values() -> Iter[Int] {
+fn values() -> Iter[Int32] {
   [| for i in 0..<3 => i |]
 }
 

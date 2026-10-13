@@ -43,7 +43,7 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-3.md:9
 msgid ""
-"let compiled_primitives : List[(String, Int, List[Instruction])] = "
+"let compiled_primitives : List[(String, Int32, List[Instruction])] = "
 "@list.List([\n"
 "    // Arith\n"
 "    (\n"
@@ -513,7 +513,7 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-3.md:144
 msgid ""
-"The corresponding graph node for a list is `NConstr(Int, List[Addr])`, "
+"The corresponding graph node for a list is `NConstr(Int32, List[Addr])`, "
 "which consists of two parts:"
 msgstr ""
 
@@ -544,7 +544,7 @@ msgstr ""
 
 #: ../../example/gmachine/gmachine-3.md:153
 msgid ""
-"fn GState::pack(self : GState, t : Int, n : Int) -> Unit {\n"
+"fn GState::pack(self : GState, t : Int32, n : Int32) -> Unit {\n"
 "  let addrs = self.stack.take(n)\n"
 "  self.stack = self.stack.drop(n)\n"
 "  let addr = self.heap.alloc(NConstr(t, addrs))\n"
@@ -572,7 +572,7 @@ msgstr ""
 msgid ""
 "fn GState::casejump(\n"
 "  self : GState,\n"
-"  table : List[(Int, List[Instruction])],\n"
+"  table : List[(Int32, List[Instruction])],\n"
 ") -> Unit {\n"
 "  let addr = self.pop1()\n"
 "  match self.heap[addr] {\n"

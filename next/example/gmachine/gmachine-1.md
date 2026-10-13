@@ -125,7 +125,7 @@ In this case, `(square 3)` would be evaluated twice, which is certainly not desi
 To illustrate this more clearly, let's make a somewhat improper analogy using MoonBit code:
 
 ```moonbit
-fn square(thunk : () -> Int) -> Int {
+fn square(thunk : () -> Int32) -> Int32 {
   thunk() * thunk()
 }
 ```

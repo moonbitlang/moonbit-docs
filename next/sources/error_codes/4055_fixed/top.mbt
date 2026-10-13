@@ -1,6 +1,6 @@
 ///|
 priv struct A {
-  a : Int
+  a : Int32
   b : Double
 }
 

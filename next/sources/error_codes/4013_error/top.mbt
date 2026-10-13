@@ -1,3 +1,3 @@
-fn f() -> (() -> Int) {
-  fn (x: Int) { x }
+fn f() -> (() -> Int32) {
+  fn (x: Int32) { x }
 }

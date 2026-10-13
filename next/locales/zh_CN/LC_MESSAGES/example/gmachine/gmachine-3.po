@@ -45,7 +45,7 @@ msgstr "让我们回顾一下我们在 [上一篇教程](gmachine-2.md) 中如�
 
 #: ../../example/gmachine/gmachine-3.md:9
 msgid ""
-"let compiled_primitives : List[(String, Int, List[Instruction])] = "
+"let compiled_primitives : List[(String, Int32, List[Instruction])] = "
 "@list.List([\n"
 "    // Arith\n"
 "    (\n"
@@ -536,9 +536,9 @@ msgstr "如上所示，可以使用 `case` 表达式进行列表的简单模式�
 
 #: ../../example/gmachine/gmachine-3.md:144
 msgid ""
-"The corresponding graph node for a list is `NConstr(Int, List[Addr])`, "
+"The corresponding graph node for a list is `NConstr(Int32, List[Addr])`, "
 "which consists of two parts:"
-msgstr "列表的对应图节点是 `NConstr(Int, List[Addr])`，由两部分组成："
+msgstr "列表的对应图节点是 `NConstr(Int32, List[Addr])`，由两部分组成："
 
 #: ../../example/gmachine/gmachine-3.md:146
 msgid ""
@@ -567,7 +567,7 @@ msgstr "我们需要添加两个指令，`Split` 和 `Pack`，来解构和构建
 
 #: ../../example/gmachine/gmachine-3.md:153
 msgid ""
-"fn GState::pack(self : GState, t : Int, n : Int) -> Unit {\n"
+"fn GState::pack(self : GState, t : Int32, n : Int32) -> Unit {\n"
 "  let addrs = self.stack.take(n)\n"
 "  self.stack = self.stack.drop(n)\n"
 "  let addr = self.heap.alloc(NConstr(t, addrs))\n"
@@ -595,7 +595,7 @@ msgstr "此外，需要一个 `CaseJump` 指令来实现 `case` 表达式。"
 msgid ""
 "fn GState::casejump(\n"
 "  self : GState,\n"
-"  table : List[(Int, List[Instruction])],\n"
+"  table : List[(Int32, List[Instruction])],\n"
 ") -> Unit {\n"
 "  let addr = self.pop1()\n"
 "  match self.heap[addr] {\n"

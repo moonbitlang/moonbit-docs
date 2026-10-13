@@ -1,6 +1,6 @@
 ///|
 fn run(codes : List[String]) -> Node {
-  fn parse_then_compile(code : String) -> (String, Int, List[Instruction]) {
+  fn parse_then_compile(code : String) -> (String, Int32, List[Instruction]) {
     let tokens = tokenize(code)
     let code = try tokens.parse_sc() catch {
       ParseError(s) => abort(s)

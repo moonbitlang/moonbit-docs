@@ -1,1 +1,1 @@
-pub fn[T] id(a : Int) -> Int { a }
+pub fn[T] id(a : Int32) -> Int32 { a }

@@ -1,8 +1,8 @@
 ///|
-priv struct A(Int)
+priv struct A(Int32)
 
 ///|
-fn A::f(self : A) -> Int {
+fn A::f(self : A) -> Int32 {
   self.0
 }
 

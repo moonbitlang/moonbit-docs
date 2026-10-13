@@ -275,7 +275,7 @@ msgid ""
 msgstr "您可以通过函数名称导入一个外部函数："
 
 #: ../../language/ffi.md:166
-msgid "extern \"C\" fn put_char(ch : UInt) -> Unit = \"function_name\"\n"
+msgid "extern \"C\" fn put_char(ch : UInt32) -> Unit = \"function_name\"\n"
 msgstr ""
 
 #: ../../language/ffi.md:170
@@ -522,7 +522,7 @@ msgstr ""
 #: ../../language/ffi.md:390
 msgid ""
 "#export_name(\"add\")\n"
-"pub fn add_one(value : Int) -> Int {\n"
+"pub fn add_one(value : Int32) -> Int32 {\n"
 "  value + 1\n"
 "}\n"
 msgstr ""
@@ -802,7 +802,7 @@ msgstr "下面的例子是一个正确维护引用计数的、标准的打开文
 
 #: ../../language/ffi.md:528
 msgid ""
-"extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open_ffi\""
+"extern \"C\" fn open(filename : Bytes, flags : Int32) -> Int32 = \"open_ffi\""
 "\n"
 msgstr ""
 
@@ -826,8 +826,8 @@ msgid ""
 msgstr "下面的类型不是分配在堆上的，不需要管理生命周期："
 
 #: ../../language/ffi.md:544
-msgid "builtin number types, such as `Int` and `Double`"
-msgstr "内置数字类型，例如 `Int` 和 `Double`"
+msgid "builtin number types, such as `Int32` and `Double`"
+msgstr "内置数字类型，例如 `Int32` 和 `Double`"
 
 #: ../../language/ffi.md:545
 msgid "constant `enum` (`enum` where all constructors have no payload)"
@@ -904,7 +904,7 @@ msgstr ""
 #: ../../language/ffi.md:577
 msgid ""
 "#borrow(filename)\n"
-"extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open\"\n"
+"extern \"C\" fn open(filename : Bytes, flags : Int32) -> Int32 = \"open\"\n"
 msgstr ""
 
 #: ../../language/ffi.md:582

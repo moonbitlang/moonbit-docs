@@ -1,5 +1,5 @@
 priv struct User {
-  id : Int
+  id : Int32
   name : String
   email : String
 }

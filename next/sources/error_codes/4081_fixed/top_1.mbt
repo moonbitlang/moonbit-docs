@@ -1,5 +1,5 @@
 ///|
-fn g(a : Int?, b : Int?) -> Unit {
+fn g(a : Int32?, b : Int32?) -> Unit {
   match (a, b) {
     (Some(_), Some(a)) => println("Some(\{a})")
     _ => println("None")

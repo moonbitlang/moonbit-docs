@@ -1,5 +1,5 @@
 /// Use the struct tuple to encapsulate an address type.
-struct Addr(Int) derive(Eq, Debug)
+struct Addr(Int32) derive(Eq, Debug)
 
 pub extend Addr with Eq::{not_equal, equal}
 
@@ -7,15 +7,15 @@ pub extend Addr with @moonbitlang/core/debug.Debug::{to_repr}
 
 /// Describe graph nodes with an enumeration type.
 enum Node {
-  NNum(Int)
+  NNum(Int32)
   /// The application node
   NApp(Addr, Addr)
   /// To store the number of parameters and 
   /// the corresponding sequence of instructions for a super combinator
-  NGlobal(String, Int, List[Instruction])
+  NGlobal(String, Int32, List[Instruction])
   /// The Indirection node，The key component of implementing lazy evaluation
   NInd(Addr)
-  NConstr(Int, List[Addr])
+  NConstr(Int32, List[Addr])
 } derive(Eq, Debug)
 
 pub extend Node with Eq::{not_equal, equal}
@@ -25,18 +25,18 @@ pub extend Node with @moonbitlang/core/debug.Debug::{to_repr}
 struct GHeap {
   // The heap uses an array, 
   // and the space with None content in the array is available as free memory.
-  mut object_count : Int
+  mut object_count : Int32
   memory : Array[Node?]
 }
 
 /// Allocate heap space for nodes.
 fn GHeap::alloc(self : GHeap, node : Node) -> Addr {
   let heap = self
-  fn next(n : Int) -> Int {
+  fn next(n : Int32) -> Int32 {
     (n + 1) % heap.memory.length()
   }
 
-  fn free(i : Int) -> Bool {
+  fn free(i : Int32) -> Bool {
     match heap.memory[i] {
       None => true
       _ => false
@@ -76,7 +76,7 @@ struct GState {
   mut stats : GStats
 }
 
-struct GStats(Int)
+struct GStats(Int32)
 
 fn GState::stat_incr(self : GState) -> Unit {
   self.stats = self.stats.0 + 1
@@ -119,7 +119,7 @@ fn GState::pop2(self : GState) -> (Addr, Addr) {
   }
 }
 
-fn GState::push_int(self : GState, num : Int) -> Unit {
+fn GState::push_int(self : GState, num : Int32) -> Unit {
   let addr = self.heap.alloc(NNum(num))
   self.put_stack(addr)
 }
@@ -131,19 +131,19 @@ fn GState::push_global(self : GState, name : String) -> Unit {
   self.put_stack(addr)
 }
 
-fn GState::push(self : GState, offset : Int) -> Unit {
+fn GState::push(self : GState, offset : Int32) -> Unit {
   // Push(n) a0 : . . . : an : s
   //     =>  an : a0 : . . . : an : s
   let addr = self.stack.unsafe_nth(offset)
   self.put_stack(addr)
 }
 
-fn GState::slide(self : GState, n : Int) -> Unit {
+fn GState::slide(self : GState, n : Int32) -> Unit {
   let addr = self.pop1()
   self.stack = self.stack.drop(n).prepend(addr)
 }
 
-fn GState::rearrange(self : GState, n : Int) -> Unit {
+fn GState::rearrange(self : GState, n : Int32) -> Unit {
   let appnodes = self.stack.take(n)
   let args = appnodes.map(fn(addr) {
     guard! self.heap[addr] is NApp(_, arg)
@@ -158,7 +158,7 @@ fn GState::mk_apply(self : GState) -> Unit {
   self.put_stack(appaddr)
 }
 
-fn GState::update(self : GState, n : Int) -> Unit {
+fn GState::update(self : GState, n : Int32) -> Unit {
   let addr = self.pop1()
   let dst = self.stack.unsafe_nth(n)
   self.heap[dst] = NInd(addr)
@@ -224,7 +224,7 @@ fn GState::unwind(self : GState) -> Unit {
   }
 }
 
-fn GState::alloc_nodes(self : GState, n : Int) -> Unit {
+fn GState::alloc_nodes(self : GState, n : Int32) -> Unit {
   let dummynode : Node = NInd(Addr(-1))
   for i = 0; i < n; i = i + 1 {
     let addr = self.heap.alloc(dummynode)
@@ -271,7 +271,7 @@ fn GState::negate(self : GState) -> Unit {
   }
 }
 
-fn GState::lift_arith2(self : GState, op : (Int, Int) -> Int) -> Unit {
+fn GState::lift_arith2(self : GState, op : (Int32, Int32) -> Int32) -> Unit {
   let (a1, a2) = self.pop2()
   match (self.heap[a1], self.heap[a2]) {
     (NNum(n1), NNum(n2)) => {
@@ -286,7 +286,7 @@ fn GState::lift_arith2(self : GState, op : (Int, Int) -> Int) -> Unit {
   }
 }
 
-fn GState::lift_cmp2(self : GState, op : (Int, Int) -> Bool) -> Unit {
+fn GState::lift_cmp2(self : GState, op : (Int32, Int32) -> Bool) -> Unit {
   let (a1, a2) = self.pop2()
   match (self.heap[a1], self.heap[a2]) {
     (NNum(n1), NNum(n2)) => {
@@ -303,7 +303,7 @@ fn GState::lift_cmp2(self : GState, op : (Int, Int) -> Bool) -> Unit {
 }
 
 /// start split_pack definition
-fn GState::pack(self : GState, t : Int, n : Int) -> Unit {
+fn GState::pack(self : GState, t : Int32, n : Int32) -> Unit {
   let addrs = self.stack.take(n)
   self.stack = self.stack.drop(n)
   let addr = self.heap.alloc(NConstr(t, addrs))
@@ -324,7 +324,7 @@ fn GState::split(self : GState) -> Unit {
 /// start casejump definition
 fn GState::casejump(
   self : GState,
-  table : List[(Int, List[Instruction])],
+  table : List[(Int32, List[Instruction])],
 ) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {
@@ -365,7 +365,7 @@ fn GState::gprint(self : GState) -> Unit {
 // end gprint definition
 
 fn build_initial_heap(
-  scdefs : List[(String, Int, List[Instruction])],
+  scdefs : List[(String, Int32, List[Instruction])],
 ) -> (GHeap, @hashmap.HashMap[String, Addr]) {
   let heap = { object_count: 0, memory: Array::make(10000, None) }
   let globals = @hashmap.HashMap([], capacity=50)

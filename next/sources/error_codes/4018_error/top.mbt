@@ -9,7 +9,7 @@ impl HasDefault with f(_) {
 }
 
 ///|
-struct S(Int)
+struct S(Int32)
 
 ///|
 test {

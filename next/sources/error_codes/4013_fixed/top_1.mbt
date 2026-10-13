@@ -1,4 +1,4 @@
 ///|
-pub fn g(x : Int) -> () -> Int {
+pub fn g(x : Int32) -> () -> Int32 {
   fn() { x }
 }

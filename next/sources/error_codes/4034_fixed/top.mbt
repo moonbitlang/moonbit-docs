@@ -1,11 +1,11 @@
 pub struct S {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 }
 
 pub struct T {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 }
 
 pub let c : S = { x: 2, y: 1 }

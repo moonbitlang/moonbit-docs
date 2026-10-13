@@ -10,8 +10,8 @@ fn shadowed_println() -> String {
 }
 
 ///|
-fn builtin_answer() -> Int {
-  let answer : Int = 42
+fn builtin_answer() -> Int32 {
+  let answer : Int32 = 42
   answer
 }
 // end prelude and builtin names 1

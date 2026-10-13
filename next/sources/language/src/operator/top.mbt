@@ -1,6 +1,6 @@
 /// start operator 1
 struct T {
-  x : Int
+  x : Int32
 }
 
 impl Add for T with add(self : T, other : T) -> T {
@@ -16,12 +16,12 @@ test {
 
 /// start operator 2
 struct Coord {
-  mut x : Int
-  mut y : Int
+  mut x : Int32
+  mut y : Int32
 }
 
 #alias("_[_]")
-fn Coord::get(coord : Self, key : String) -> Int {
+fn Coord::get(coord : Self, key : String) -> Int32 {
   match key {
     "x" => coord.x
     "y" => coord.y
@@ -29,7 +29,7 @@ fn Coord::get(coord : Self, key : String) -> Int {
 }
 
 #alias("_[_]=_")
-fn Coord::set(coord : Self, key : String, val : Int) -> Unit {
+fn Coord::set(coord : Self, key : String, val : Int32) -> Unit {
   match key {
     "x" => coord.x = val
     "y" => coord.y = val
@@ -50,7 +50,7 @@ test "operator 3" (t : @test.Test) {
   t.snapshot(filename="operator_3")
 }
 
-fn add(i : Int, j : Int) -> Int {
+fn add(i : Int32, j : Int32) -> Int32 {
   i + j
 }
 
@@ -134,11 +134,11 @@ impl BitXOr for T with lxor(self : T, other : T) -> T {
   { x: self.x ^ other.x }
 }
 
-impl Shl for T with shl(self : T, other : Int) -> T {
+impl Shl for T with shl(self : T, other : Int32) -> T {
   { x: self.x << other }
 }
 
-impl Shr for T with shr(self : T, other : Int) -> T {
+impl Shr for T with shr(self : T, other : Int32) -> T {
   { x: self.x >> other }
 }
 
@@ -155,12 +155,12 @@ test {
 /// start view 1
 test {
   let xs = [0, 1, 2, 3, 4, 5]
-  let s1 : ArrayView[Int] = xs[2:]
+  let s1 : ArrayView[Int32] = xs[2:]
   @test.assert_eq(s1.to_owned(), [2, 3, 4, 5])
   @test.assert_eq(xs[:4].to_owned(), [0, 1, 2, 3])
   @test.assert_eq(xs[2:5].to_owned(), [2, 3, 4])
   @test.assert_eq(xs[:].to_owned(), [0, 1, 2, 3, 4, 5])
-  let mv : MutArrayView[Int] = xs.mut_view(start=1, end=3)
+  let mv : MutArrayView[Int32] = xs.mut_view(start=1, end=3)
   mv[0] = 99
   inspect(xs[1], content="99")
 }
@@ -172,7 +172,7 @@ struct DataView(String)
 struct Data {}
 
 #alias("_[_:_]")
-fn Data::as_view(_self : Data, start? : Int = 0, end? : Int) -> DataView {
+fn Data::as_view(_self : Data, start? : Int32 = 0, end? : Int32) -> DataView {
   "[\{start}, \{end.unwrap_or(100)})"
 }
 
@@ -187,10 +187,10 @@ test {
 
 /// start spread 1
 test {
-  let a1 : Array[Int] = [1, 2, 3]
-  let a2 : FixedArray[Int] = [4, 5, 6]
-  let a3 : @list.List[Int] = @list.List([7, 8, 9])
-  let a : Array[Int] = [..a1, ..a2, ..a3, 10]
+  let a1 : Array[Int32] = [1, 2, 3]
+  let a2 : FixedArray[Int32] = [4, 5, 6]
+  let a3 : @list.List[Int32] = @list.List([7, 8, 9])
+  let a : Array[Int32] = [..a1, ..a2, ..a3, 10]
   debug_inspect(a, content="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
 }
 // end spread 1

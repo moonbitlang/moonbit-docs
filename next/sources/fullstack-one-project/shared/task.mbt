@@ -16,7 +16,7 @@ pub extend SubmitTitleRequest with @moonbitlang/core/json.FromJson::{from_json}
 ///|
 pub(all) suberror TitleValidationError {
   EmptyTitle
-  TooLong(Int)
+  TooLong(Int32)
   ForbiddenHash
 } derive(Eq, ToJson, FromJson)
 

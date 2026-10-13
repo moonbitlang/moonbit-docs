@@ -1,5 +1,5 @@
 ///|
 #callsite(autofill(parameter))
-fn f(parameter~ : Int) -> Unit {
-  // ^~~~~~~~~ Error: Cannot auto-fill parameter of type Int
+fn f(parameter~ : Int32) -> Unit {
+  // ^~~~~~~~~ Error: Cannot auto-fill parameter of type Int32
 }

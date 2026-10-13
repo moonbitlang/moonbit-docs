@@ -1,5 +1,5 @@
 ///|
-fn value() -> Int {
+fn value() -> Int32 {
   0
 }
 

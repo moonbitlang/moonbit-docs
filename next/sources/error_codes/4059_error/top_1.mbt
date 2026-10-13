@@ -1,4 +1,4 @@
 ///|
-pub fn Int::g(self : Int) -> Int {
+pub fn Int32::g(self : Int32) -> Int32 {
   self
 }

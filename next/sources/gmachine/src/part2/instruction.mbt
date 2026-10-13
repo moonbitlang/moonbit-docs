@@ -3,13 +3,13 @@
 enum Instruction {
   Unwind
   PushGlobal(String)
-  PushInt(Int)
-  Push(Int)
+  PushInt(Int32)
+  Push(Int32)
   MkApp
-  Slide(Int)
-  Update(Int)
-  Pop(Int)
-  Alloc(Int)
+  Slide(Int32)
+  Update(Int32)
+  Pop(Int32)
+  Alloc(Int32)
   Eval
   Add
   Sub

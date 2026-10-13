@@ -313,7 +313,7 @@ float-literal ::= `float-dec` | `float-hex`
 ```
 
 After the first digit of a numeral, underscores may repeat or trail. Uppercase
-suffixes select `UInt` (`U`), `Int64` (`L`), `UInt64` (`UL`), `BigInt` (`N`),
+suffixes select `UInt32` (`U`), `Int64` (`L`), `UInt64` (`UL`), `BigInt` (`N`),
 or `Float` (`F`). An unsuffixed floating-point literal is a `Double`.
 
 Floating-point literals always contain a decimal point. A hexadecimal `Float`

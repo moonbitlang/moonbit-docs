@@ -1,11 +1,11 @@
 // start error 1
-suberror E1 { E1(Int) } // error type E1 has one constructor E1 with an Int payload
+suberror E1 { E1(Int32) } // error type E1 has one constructor E1 with an Int32 payload
 
 suberror E2 // error type E2 has one constructor E2 with no payload
 
 suberror E3 { // error type E3 has three constructors like a normal enum type
   A
-  B(Int, x~ : String)
+  B(Int32, x~ : String)
   C(mut x~ : String, Char, y~ : Bool)
 }
 // end error 1
@@ -15,7 +15,7 @@ suberror DivError { DivError(String) } derive(Debug)
 
 pub extend DivError with Debug::{to_repr}
 
-fn div(x : Int, y : Int) -> Int raise DivError {
+fn div(x : Int32, y : Int32) -> Int32 raise DivError {
   if y == 0 {
     raise DivError("division by zero")
   }
@@ -53,13 +53,13 @@ fn[T, E : Error] unwrap_or_error(result : Result[T, E]) -> T raise E {
 // end error 5
 
 // start noraise
-fn add(a : Int, b : Int) -> Int noraise {
+fn add(a : Int32, b : Int32) -> Int32 noraise {
   a + b
 }
 // end noraise
 
 test {
-  (Ok(1) : Result[Int, Error]).unwrap_or_error() |> ignore
+  (Ok(1) : Result[Int32, Error]).unwrap_or_error() |> ignore
 }
 
 // start error 6
@@ -86,14 +86,14 @@ fn handle_e3(error : Error) -> Unit {
 // end suberror wildcard
 
 // start error 7
-fn div_reraise(x : Int, y : Int) -> Int raise DivError {
+fn div_reraise(x : Int32, y : Int32) -> Int32 raise DivError {
   div(x, y) // Rethrow the error if `div` raised an error
 }
 // end error 7
 
 // start error 8
 test {
-  let res : Result[Int, DivError] = Ok(div(6, 0) * div(6, 3)) catch {
+  let res : Result[Int32, DivError] = Ok(div(6, 0) * div(6, 3)) catch {
     error => Err(error)
   }
   match res {
@@ -150,7 +150,7 @@ fn catch_() -> Unit raise {
 }
 
 // start error 14
-fn remainder(a : Int, b : Int) -> Int raise DivError {
+fn remainder(a : Int32, b : Int32) -> Int32 raise DivError {
   if b == 0 {
     raise DivError("division by zero")
   }
@@ -160,7 +160,7 @@ fn remainder(a : Int, b : Int) -> Int raise DivError {
 // end error 14
 
 // start custom error conversion
-suberror CustomError { CustomError(UInt) }
+suberror CustomError { CustomError(UInt32) }
 
 test {
   let e : Error = CustomError(42)

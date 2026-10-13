@@ -3,7 +3,7 @@ pub(open) trait T {
 }
 
 pub struct Handler {
-  run : (Int) -> Unit
+  run : (Int32) -> Unit
 }
 
 impl T for Handler with f(self) {

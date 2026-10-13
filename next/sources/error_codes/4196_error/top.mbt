@@ -1,7 +1,7 @@
 ///|
 fn keep(
-  x : Int,
-) -> Int where {
+  x : Int32,
+) -> Int32 where {
   proof_ensure: result => result == x,
   proof_reasoning: x,
 } {

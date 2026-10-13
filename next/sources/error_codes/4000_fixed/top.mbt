@@ -11,7 +11,7 @@ fn[A, B] transform(x : A, f : (A) -> B) -> B {
 
 ///|
 test {
-  let container : Container[Int, String] = { first: 1, second: "one" }
+  let container : Container[Int32, String] = { first: 1, second: "one" }
   inspect(container.first, content="1")
   inspect(container.second, content="one")
   inspect(transform(1, fn(x) { x.to_string() }), content="1")

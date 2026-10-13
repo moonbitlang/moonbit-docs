@@ -1,16 +1,16 @@
 pub enum Tree {
   Empty
-  Node(Tree, Int, Tree, Int)
+  Node(Tree, Int32, Tree, Int32)
 }
 
 pub struct Bridge {
-  reserve : Int
-  used_nonces : Int
+  reserve : Int32
+  used_nonces : Int32
 }
 
 // start proof pure 1
 #proof_pure
-fn height(t : Tree) -> Int {
+fn height(t : Tree) -> Int32 {
   match t {
     Empty => 0
     Node(_, _, _, h) => h
@@ -18,32 +18,32 @@ fn height(t : Tree) -> Int {
 }
 // end proof pure 1
 
-pub fn cached_height(t : Tree) -> Int where {
+pub fn cached_height(t : Tree) -> Int32 where {
   proof_ensure: result => cached_height_ok(t, result),
 } {
   height(t)
 }
 
-pub fn leaf(x : Int) -> Tree {
+pub fn leaf(x : Int32) -> Tree {
   Node(Empty, x, Empty, 1)
 }
 
 // start contract 1
 pub fn binary_search(
-  xs : FixedArray[Int],
-  key : Int,
-) -> Int? where {
+  xs : FixedArray[Int32],
+  key : Int32,
+) -> Int32? where {
   proof_require: sorted(xs),
   proof_ensure: result => binary_search_ok(xs, key, result),
 } {
   for i = 0, j = xs.length(); i < j; {
     let h = i + (j - i) / 2
     if xs[h] < key {
-      proof_assert ∀ idx : Int,
+      proof_assert ∀ idx : Int32,
         (0 <= idx) && (idx < h + 1) → xs[idx] < key
       continue h + 1, j
     } else if key < xs[h] {
-      proof_assert ∀ idx : Int,
+      proof_assert ∀ idx : Int32,
         (h <= idx) && (idx < xs.length()) → key < xs[idx]
       continue i, h
     } else {
@@ -56,8 +56,8 @@ pub fn binary_search(
     proof_invariant: 0 <= i,
     proof_invariant: i <= j,
     proof_invariant: j <= xs.length(),
-    proof_invariant: ∀ idx : Int, (0 <= idx) && (idx < i) → xs[idx] < key,
-    proof_invariant: ∀ idx : Int, (j <= idx) && (idx < xs.length()) → key < xs[idx],
+    proof_invariant: ∀ idx : Int32, (0 <= idx) && (idx < i) → xs[idx] < key,
+    proof_invariant: ∀ idx : Int32, (j <= idx) && (idx < xs.length()) → key < xs[idx],
     proof_yield: res => binary_search_ok(xs, key, res),
     proof_reasoning: (
       #| The loop maintains a candidate window `[i, j)`.
@@ -78,20 +78,20 @@ pub fn binary_search(
 
 // start loop invariant 1
 pub fn search_window(
-  xs : FixedArray[Int],
-  key : Int,
-) -> Int? where {
+  xs : FixedArray[Int32],
+  key : Int32,
+) -> Int32? where {
   proof_require: sorted(xs),
   proof_ensure: result => binary_search_ok(xs, key, result),
 } {
   for i = 0, j = xs.length(); i < j; {
     let h = i + (j - i) / 2
     if xs[h] < key {
-      proof_assert ∀ idx : Int,
+      proof_assert ∀ idx : Int32,
         (0 <= idx) && (idx < h + 1) → xs[idx] < key
       continue h + 1, j
     } else if key < xs[h] {
-      proof_assert ∀ idx : Int,
+      proof_assert ∀ idx : Int32,
         (h <= idx) && (idx < xs.length()) → key < xs[idx]
       continue i, h
     } else {
@@ -104,14 +104,14 @@ pub fn search_window(
     proof_invariant: 0 <= i,
     proof_invariant: i <= j,
     proof_invariant: j <= xs.length(),
-    proof_invariant: ∀ idx : Int, (0 <= idx) && (idx < i) → xs[idx] < key,
-    proof_invariant: ∀ idx : Int, (j <= idx) && (idx < xs.length()) → key < xs[idx],
+    proof_invariant: ∀ idx : Int32, (0 <= idx) && (idx < i) → xs[idx] < key,
+    proof_invariant: ∀ idx : Int32, (j <= idx) && (idx < xs.length()) → key < xs[idx],
     proof_yield: res => binary_search_ok(xs, key, res),
   }
 }
 // end loop invariant 1
 
-pub fn deposit(bridge : Bridge, amount : Int) -> Bridge where {
+pub fn deposit(bridge : Bridge, amount : Int32) -> Bridge where {
   proof_require: bridge_inv(bridge),
   proof_require: 0 <= amount,
   proof_ensure: result => deposit_post(bridge, amount, result),
@@ -120,7 +120,7 @@ pub fn deposit(bridge : Bridge, amount : Int) -> Bridge where {
 }
 
 // start proof decrease 1
-pub fn countdown(n : Int) -> Int where {
+pub fn countdown(n : Int32) -> Int32 where {
   proof_decrease: n,
   proof_require: 0 <= n,
   proof_ensure: result => 0 <= result,
@@ -134,7 +134,7 @@ pub fn countdown(n : Int) -> Int where {
 // end proof decrease 1
 
 // start proof axiomatized 1
-pub fn assumed_nonnegative(x : Int) -> Int where {
+pub fn assumed_nonnegative(x : Int32) -> Int32 where {
   proof_axiomatized: true,
   proof_require: 0 <= x,
   proof_ensure: result => 0 <= result,

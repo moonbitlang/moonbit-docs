@@ -1,6 +1,6 @@
 ///|
 priv struct S {
-  x : Int
+  x : Int32
 }
 
 ///|

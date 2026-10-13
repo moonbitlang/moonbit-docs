@@ -1,2 +1,2 @@
 ///|
-pub extern "C" fn getchar() -> Int = "getchar"
+pub extern "C" fn getchar() -> Int32 = "getchar"

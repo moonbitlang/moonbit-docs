@@ -1,6 +1,6 @@
 ///|
 test {
-  let x : Int = 42
+  let x : Int32 = 42
   let buf = Buffer()
   let bytes : Bytes = buf
     ..write_string_utf8("(")

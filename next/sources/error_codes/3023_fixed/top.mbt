@@ -4,4 +4,4 @@ pub trait Named {
 }
 
 ///|
-pub impl Named for Int with name(_self) { "user" }
+pub impl Named for Int32 with name(_self) { "user" }

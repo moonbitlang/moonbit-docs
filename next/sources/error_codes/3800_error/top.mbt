@@ -7,7 +7,7 @@ enum V {
 ///|
 struct S {
   // Error: Expecting a newline or `;` here, but encountered `,`.
-  a : Int,
+  a : Int32,
 }
 
 ///|

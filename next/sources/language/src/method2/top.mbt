@@ -6,7 +6,7 @@ enum List[X] {
 }
 
 ///|
-fn[X] List::length(xs : List[X]) -> Int {
+fn[X] List::length(xs : List[X]) -> Int32 {
   ...
 }
 // end method declaration example
@@ -14,7 +14,7 @@ fn[X] List::length(xs : List[X]) -> Int {
 ///|
 fn _call_syntax_example() -> Unit {
   // start method call syntax example
-  let l : List[Int] = Nil
+  let l : List[Int32] = Nil
   println(l.length())
   println(List::length(l))
   // end method call syntax example

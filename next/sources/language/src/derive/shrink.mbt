@@ -1,8 +1,8 @@
 // start derive shrink struct
 ///|
 struct ShrinkPoint {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 } derive(Shrink)
 
 ///|

@@ -1,10 +1,10 @@
 // start expression
-fn foo() -> Int {
+fn foo() -> Int32 {
   let x = 1
   x + 1
 }
 
-fn bar() -> Int {
+fn bar() -> Int32 {
   let x = 1
   //! x + 1
   x + 2
@@ -12,23 +12,23 @@ fn bar() -> Int {
 // end expression
 
 // start top-level functions
-fn add3(x : Int, y : Int, z : Int) -> Int {
+fn add3(x : Int32, y : Int32, z : Int32) -> Int32 {
   x + y + z
 }
 // end top-level functions
 
 // start declared functions
-declare fn declared_add(x : Int, y : Int) -> Int
+declare fn declared_add(x : Int32, y : Int32) -> Int32
 
-fn declared_add(x : Int, y : Int) -> Int {
+fn declared_add(x : Int32, y : Int32) -> Int32 {
   x + y
 }
 
-struct DeclaredCounter(Int)
+struct DeclaredCounter(Int32)
 
-declare fn DeclaredCounter::value(self : Self) -> Int
+declare fn DeclaredCounter::value(self : Self) -> Int32
 
-fn DeclaredCounter::value(self : Self) -> Int {
+fn DeclaredCounter::value(self : Self) -> Int32 {
   self.0
 }
 
@@ -55,19 +55,19 @@ test {
 // end function application 2
 
 // start partial application 1
-fn add(x : Int, y : Int) -> Int {
+fn add(x : Int32, y : Int32) -> Int32 {
   x + y
 }
 
 test {
-  let add10 : (Int) -> Int = x => add(10, x)
+  let add10 : (Int32) -> Int32 = x => add(10, x)
   println(add10(5)) // prints 15
   println(add10(10)) // prints 20
 }
 // end partial application 1
 
 // start local functions 1
-fn local_1() -> Int {
+fn local_1() -> Int32 {
   fn inc(x) { // named as `inc`
     x + 1
   }
@@ -83,7 +83,7 @@ test {
 // start local functions 2
 let global_y = 3
 
-fn local_2(x : Int) -> (Int, Int) {
+fn local_2(x : Int32) -> (Int32, Int32) {
   fn inc() {
     x + 1
   }
@@ -109,7 +109,7 @@ test {
 }
 
 // start labelled arguments 1
-fn labelled_1(arg1~ : Int, arg2~ : Int) -> Int {
+fn labelled_1(arg1~ : Int32, arg2~ : Int32) -> Int32 {
   arg1 + arg2
 }
 // end labelled arguments 1
@@ -122,7 +122,7 @@ test {
 // end labelled arguments 2
 
 // start optional arguments 1
-fn optional(opt? : Int = 42) -> Int {
+fn optional(opt? : Int32 = 42) -> Int32 {
   opt
 }
 
@@ -133,7 +133,7 @@ test {
 // end optional arguments 1
 
 // start optional arguments 2
-fn incr(counter? : Ref[Int] = { val: 0 }) -> Ref[Int] {
+fn incr(counter? : Ref[Int32] = { val: 0 }) -> Ref[Int32] {
   counter.val = counter.val + 1
   counter
 }
@@ -148,9 +148,9 @@ test {
 // end optional arguments 2
 
 // start optional arguments 3
-let default_counter : Ref[Int] = { val: 0 }
+let default_counter : Ref[Int32] = { val: 0 }
 
-fn incr_2(counter? : Ref[Int] = default_counter) -> Int {
+fn incr_2(counter? : Ref[Int32] = default_counter) -> Int32 {
   counter.val = counter.val + 1
   counter.val
 }
@@ -162,7 +162,7 @@ test {
 // end optional arguments 3
 
 // start optional arguments 4
-fn create_rectangle(a : Int, b? : Int = a) -> (Int, Int) {
+fn create_rectangle(a : Int32, b? : Int32 = a) -> (Int32, Int32) {
   (a, b)
 }
 
@@ -172,14 +172,14 @@ test {
 // end optional arguments 4
 
 // start optional arguments 5
-fn may_fail(x : Int) -> Int raise Failure {
+fn may_fail(x : Int32) -> Int32 raise Failure {
   if x < 0 {
     fail("negative")
   }
   x
 }
 
-fn add_with_optional(base : Int, extra? : Int = 1) -> Int {
+fn add_with_optional(base : Int32, extra? : Int32 = 1) -> Int32 {
   base + extra
 }
 
@@ -189,12 +189,12 @@ test {
 // end optional arguments 5
 
 struct Image {
-  width : Int
-  height : Int
+  width : Int32
+  height : Int32
 }
 
 // start optional arguments 6
-fn new_image(width? : Int, height? : Int) -> Image {
+fn new_image(width? : Int32, height? : Int32) -> Image {
   if width is Some(w) {
     ...
   }
@@ -205,18 +205,18 @@ let img2 : Image = new_image(width=1920, height=1080)
 // end optional arguments 6
 
 // start optional arguments 7
-fn image(width? : Int, height? : Int) -> Image {
+fn image(width? : Int32, height? : Int32) -> Image {
   ...
 }
 
-fn fixed_width_image(height? : Int) -> Image {
+fn fixed_width_image(height? : Int32) -> Image {
   image(width=1920, height?)
 }
 // end optional arguments 7
 
 // start autofill arguments
 #callsite(autofill(loc, args_loc))
-fn f(_x : Int, loc~ : SourceLoc, args_loc~ : ArgsLoc) -> String {
+fn f(_x : Int32, loc~ : SourceLoc, args_loc~ : ArgsLoc) -> String {
   (
     $|loc of whole function call: \{loc}
     $|loc of arguments: \{args_loc}

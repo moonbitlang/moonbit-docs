@@ -5,7 +5,7 @@ fn example_context_usage() -> Unit {
       None => ()
       Some(a) => println(a + 1)
       //                ^^^^^ through this usage, the compiler can infer the
-      //                      type of `x` is `Option[Int]`.
+      //                      type of `x` is `Option[Int32]`.
     }
   }
 

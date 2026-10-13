@@ -1,5 +1,5 @@
 ///|
-fn describe(value : Int, limit : Int) -> String {
+fn describe(value : Int32, limit : Int32) -> String {
   match value {
     0..<limit => "between"
     _ => "outside"

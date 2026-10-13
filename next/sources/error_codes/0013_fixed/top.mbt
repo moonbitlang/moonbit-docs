@@ -1,6 +1,6 @@
 ///|
 pub fn f1() -> Unit {
-  fn f(x : Int?) {
+  fn f(x : Int32?) {
     match x {
       None => ()
       Some(a) => println(a)
@@ -12,7 +12,7 @@ pub fn f1() -> Unit {
 
 ///|
 pub fn f2() -> Unit {
-  fn f(x : Array[Int]) -> Int {
+  fn f(x : Array[Int32]) -> Int32 {
     x.length()
   }
 

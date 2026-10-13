@@ -1,5 +1,5 @@
 pub enum Item {
-  Value(Int)
+  Value(Int32)
 }
 
 pub fn sample() -> Item {

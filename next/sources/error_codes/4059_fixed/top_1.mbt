@@ -2,7 +2,7 @@
 priv struct WrapA(@a.A)
 
 ///|
-fn WrapA::f(self : WrapA) -> Int {
+fn WrapA::f(self : WrapA) -> Int32 {
   let _ = self.0
   0
 }

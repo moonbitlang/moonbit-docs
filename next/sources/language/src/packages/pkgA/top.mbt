@@ -1,5 +1,5 @@
 ///|
-pub fn incr(x : Int) -> Int {
+pub fn incr(x : Int32) -> Int32 {
   x + 1
 }
 

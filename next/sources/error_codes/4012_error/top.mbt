@@ -1,3 +1,3 @@
 enum E {
-  F(mut x : Int)
+  F(mut x : Int32)
 }

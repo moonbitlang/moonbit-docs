@@ -1,5 +1,5 @@
 ///|
-pub struct Original(Int)
+pub struct Original(Int32)
 
 ///|
 type Alias = Original

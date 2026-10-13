@@ -1,7 +1,7 @@
 // start derive debug struct
 struct DebugPoint {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 } derive(Debug)
 
 pub extend DebugPoint with Debug::{to_repr}
@@ -14,8 +14,8 @@ test "derive debug struct" {
 
 // start derive debug enum
 enum DebugShape {
-  Circle(radius~ : Int)
-  Rect(width~ : Int, height~ : Int)
+  Circle(radius~ : Int32)
+  Rect(width~ : Int32, height~ : Int32)
 } derive(Debug)
 
 pub extend DebugShape with Debug::{to_repr}

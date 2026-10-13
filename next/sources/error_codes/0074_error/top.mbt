@@ -1,5 +1,5 @@
 ///|
-pub fn exposed() -> Int {
+pub fn exposed() -> Int32 {
   1
 }
 

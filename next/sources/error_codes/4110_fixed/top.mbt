@@ -1,5 +1,5 @@
 ///|
-pub fn stop_at_zero(x : Int) -> Unit {
+pub fn stop_at_zero(x : Int32) -> Unit {
   for i in 0..<=x {
     if i == 0 {
       break

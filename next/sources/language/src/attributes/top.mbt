@@ -13,7 +13,7 @@ pub(all) enum Bar {
 
 // start alert
 #alert(unsafe, "This function is unsafe.")
-fn[A] alert_unsafe_get(arr : Array[A], index : Int) -> A {
+fn[A] alert_unsafe_get(arr : Array[A], index : Int32) -> A {
   arr[index]
 }
 // end alert
@@ -28,14 +28,14 @@ fn new_name() -> Unit {
 // start label_migration fill
 #label_migration(x, fill=true)
 #label_migration(y, fill=false)
-fn label_migration_fill(x? : Int = 0, y? : Int = 1) -> Int {
+fn label_migration_fill(x? : Int32 = 0, y? : Int32 = 1) -> Int32 {
   x + y
 }
 // end label_migration fill
 
 // start label_migration allow_positional
 #label_migration(x, allow_positional=true)
-fn label_migration_allow_positional(x~ : Int) -> Int {
+fn label_migration_allow_positional(x~ : Int32) -> Int32 {
   x
 }
 // end label_migration allow_positional
@@ -43,7 +43,7 @@ fn label_migration_allow_positional(x~ : Int) -> Int {
 // start label_migration alias
 #label_migration(x, alias=xx)
 #label_migration(x, alias=y, msg="warning")
-fn label_migration_alias(x~ : Int) -> Int {
+fn label_migration_alias(x~ : Int32) -> Int32 {
   x
 }
 // end label_migration alias
@@ -52,8 +52,8 @@ fn label_migration_alias(x~ : Int) -> Int {
 // in @util package
 #visibility(change_to="readonly", "Point will be readonly in the future.")
 pub(all) struct Point {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 }
 
 #visibility(change_to="abstract", "Use new_text and new_binary instead.")
@@ -85,7 +85,7 @@ fn main {
 
 // start internal
 #internal(unsafe, "This is an unsafe function")
-fn[A] internal_unsafe_get(arr : Array[A], index : Int) -> A {
+fn[A] internal_unsafe_get(arr : Array[A], index : Int32) -> A {
   arr[index]
 }
 // end internal
@@ -141,14 +141,14 @@ impl RequireSelectedMethod for SelectedImpl with g(_) { () }
 
 // start inline default
 #inline
-fn add_one(x : Int) -> Int {
+fn add_one(x : Int32) -> Int32 {
   x + 1
 }
 // end inline default
 
 // start inline never
 #inline(never)
-fn keep_stack_frame(x : Int) -> Int {
+fn keep_stack_frame(x : Int32) -> Int32 {
   x + 1
 }
 // end inline never
@@ -211,5 +211,5 @@ fn cfg_any() -> Unit {
 
 // start module
 #module("math-utils")
-pub extern "js" fn add_from_module(x : Int, y : Int) -> Int = "add"
+pub extern "js" fn add_from_module(x : Int32, y : Int32) -> Int32 = "add"
 // end module

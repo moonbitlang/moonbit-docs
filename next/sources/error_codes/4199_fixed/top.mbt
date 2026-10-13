@@ -1,10 +1,10 @@
 ///|
 pub(all) struct Point {
-  x : Int
+  x : Int32
 }
 
 ///|
-fn make_point(x : Int) -> Point {
+fn make_point(x : Int32) -> Point {
   { x, }
 }
 

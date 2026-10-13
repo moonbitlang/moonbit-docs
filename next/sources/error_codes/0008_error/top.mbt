@@ -1,11 +1,11 @@
 ///|
 struct A {
-  priv value : Int
+  priv value : Int32
   //^^
 }
 
 ///|
 pub struct B {
-  pub value : Int
+  pub value : Int32
   //^
 }

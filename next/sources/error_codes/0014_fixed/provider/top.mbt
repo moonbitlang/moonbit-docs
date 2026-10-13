@@ -1,4 +1,4 @@
 ///|
-pub fn stable() -> Int {
+pub fn stable() -> Int32 {
   1
 }

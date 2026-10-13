@@ -1,7 +1,7 @@
 ///|
 trait T {
-  f(Self) -> Int
+  f(Self) -> Int32
 }
 
 ///|
-struct A(Int) derive(T) // Error: Don't know how to derive trait T for type A
+struct A(Int32) derive(T) // Error: Don't know how to derive trait T for type A

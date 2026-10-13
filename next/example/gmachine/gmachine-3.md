@@ -141,7 +141,7 @@ The data structure type definition in Haskell is similar to the `enum` in MoonBi
 
 As shown above, you can use the `case` expression for simple pattern matching on lists.
 
-The corresponding graph node for a list is `NConstr(Int, List[Addr])`, which consists of two parts:
+The corresponding graph node for a list is `NConstr(Int32, List[Addr])`, which consists of two parts:
 
 - A tag for different value constructors: the tag for `Nil` is 0, and the tag for `Cons` is 1.
 - A list of addresses for storing substructures, whose length corresponds to the number of parameters (arity) of a value constructor.

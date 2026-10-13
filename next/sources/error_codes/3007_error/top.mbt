@@ -1,10 +1,10 @@
 pub(all) struct S {
-  a : Int
-  b : Int
-  c : Int
+  a : Int32
+  b : Int32
+  c : Int32
 }
 
-fn sum_selected(s : S) -> Int {
+fn sum_selected(s : S) -> Int32 {
   let { a, .., c } = s
   a + c
 }

@@ -42,7 +42,7 @@ We use a classic approach to represent the Segment Tree:
 :end-before: end node definition
 ```
 
-Here, `Nil` represents an empty tree, while a `Node` contains the stored data (of type Int) and its left and right children.
+Here, `Nil` represents an empty tree, while a `Node` contains the stored data (of type Int32) and its left and right children.
 
 ### Building the Tree
 

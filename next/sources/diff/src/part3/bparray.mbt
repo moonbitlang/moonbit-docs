@@ -2,7 +2,7 @@
 struct BPArray[T](Array[T]) // BiPolar Array
 
 ///|
-fn[T] BPArray::make(capacity : Int, default : T) -> BPArray[T] {
+fn[T] BPArray::make(capacity : Int32, default : T) -> BPArray[T] {
   let arr = Array::make(capacity, default)
   BPArray(arr)
 }
@@ -15,7 +15,7 @@ fn[T] BPArray::copy(self : BPArray[T]) -> BPArray[T] {
 
 ///|
 #alias("_[_]")
-fn[T] BPArray::get(self : Self[T], idx : Int) -> T {
+fn[T] BPArray::get(self : Self[T], idx : Int32) -> T {
   let BPArray(arr) = self
   if idx < 0 {
     arr[arr.length() + idx]
@@ -26,7 +26,7 @@ fn[T] BPArray::get(self : Self[T], idx : Int) -> T {
 
 ///|
 #alias("_[_]=_")
-fn[T] BPArray::set(self : Self[T], idx : Int, elem : T) -> Unit {
+fn[T] BPArray::set(self : Self[T], idx : Int32, elem : T) -> Unit {
   let BPArray(arr) = self
   if idx < 0 {
     arr[arr.length() + idx] = elem

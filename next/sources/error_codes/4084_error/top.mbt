@@ -1,5 +1,5 @@
 ///|
-pub fn f(a~ : Int) -> Unit {
+pub fn f(a~ : Int32) -> Unit {
   println("Hello, \{a}")
 }
 

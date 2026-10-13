@@ -1,6 +1,6 @@
 ///|
 pub(all) enum A {
-  A(b~ : Int)
+  A(b~ : Int32)
 }
 
 ///|

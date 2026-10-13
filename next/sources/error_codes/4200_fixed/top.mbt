@@ -1,10 +1,10 @@
 ///|
 priv struct Point {
-  x : Int
+  x : Int32
 }
 
 ///|
-fn Point::Point(x : Int) -> Point {
+fn Point::Point(x : Int32) -> Point {
   { x, }
 }
 

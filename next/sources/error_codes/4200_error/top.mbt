@@ -1,9 +1,9 @@
 ///|
 priv struct Point {
-  x : Int
+  x : Int32
 }
 
 ///|
-fn Point::Point(_: Int) -> String {
+fn Point::Point(_: Int32) -> String {
   ""
 }

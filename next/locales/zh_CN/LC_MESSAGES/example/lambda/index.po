@@ -308,7 +308,7 @@ msgstr "我们定义一个新类型 `TermDBI` 来表示使用德布朗指数的 
 #: ../../example/lambda/index.md:110
 msgid ""
 "enum TermDBI {\n"
-"  Var(String, Int)\n"
+"  Var(String, Int32)\n"
 "  Abs(String, TermDBI)\n"
 "  App(TermDBI, TermDBI)\n"
 "}\n"
@@ -367,7 +367,7 @@ msgstr "我们采取一种笨办法来保存变量名与相关联的嵌套深度
 msgid ""
 "struct Index {\n"
 "  name : String\n"
-"  depth : Int\n"
+"  depth : Int32\n"
 "}\n"
 msgstr ""
 
@@ -380,7 +380,7 @@ msgstr "然后写一个从 `@list.List[Index]` 中根据特定 `name` 查找对�
 #: ../../example/lambda/index.md:146
 msgid ""
 "// Find the depth corresponding to the first varname in the environment\n"
-"fn find(map : @list.List[Index], varname : String) -> Result[Int, String]"
+"fn find(map : @list.List[Index], varname : String) -> Result[Int32, String]"
 " {\n"
 "  match map {\n"
 "    Empty => Err(varname)\n"
@@ -502,7 +502,7 @@ msgstr ""
 #: ../../example/lambda/index.md:180
 msgid ""
 "fn subst(t1 : TermDBI, t2 : TermDBI) -> TermDBI {\n"
-"  fn go(t1 : TermDBI, t2 : TermDBI, depth : Int) -> TermDBI {\n"
+"  fn go(t1 : TermDBI, t2 : TermDBI, depth : Int32) -> TermDBI {\n"
 "    match t1 {\n"
 "      Var(_, d) => if d == depth { t2 } else { t1 }\n"
 "      Abs(name, t) => Abs(name, go(t, t2, depth + 1))\n"

@@ -1,6 +1,6 @@
 ///|
 fn invalid_predicate() -> Unit {
-  let _ = ∀ i : Int, 0 <= i
+  let _ = ∀ i : Int32, 0 <= i
 }
 
 ///|

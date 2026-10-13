@@ -2,7 +2,7 @@
 using @builtin {type Array}
 
 ///|
-fn length(values : Array[Int]) -> Int {
+fn length(values : Array[Int32]) -> Int32 {
   values.length()
 }
 

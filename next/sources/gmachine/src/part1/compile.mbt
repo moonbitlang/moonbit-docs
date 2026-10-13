@@ -1,9 +1,9 @@
 // start compile_sc definition
-fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
+fn ScDef::compileSC(self : ScDef[String]) -> (String, Int32, List[Instruction]) {
   let name = self.name
   let body = self.body
   let mut arity = 0
-  fn gen_env(i : Int, args : List[String]) -> List[(String, Int)] {
+  fn gen_env(i : Int32, args : List[String]) -> List[(String, Int32)] {
     match args {
       Empty => {
         arity = i
@@ -21,8 +21,8 @@ fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
 // start compile_r definition
 fn RawExpr::compileR(
   self : RawExpr[String],
-  env : List[(String, Int)],
-  arity : Int
+  env : List[(String, Int32)],
+  arity : Int32
 ) -> List[Instruction] {
   if arity == 0 {
     self.compileC(env) + @list.List([Update(arity), Unwind])
@@ -35,7 +35,7 @@ fn RawExpr::compileR(
 // start compile_c definition
 fn RawExpr::compileC(
   self : RawExpr[String],
-  env : List[(String, Int)]
+  env : List[(String, Int32)]
 ) -> List[Instruction] {
   match self {
     Var(s) =>
@@ -53,7 +53,7 @@ fn RawExpr::compileC(
 }
 // end compile_c definition
 
-fn argOffset(n : Int, env : List[(String, Int)]) -> List[(String, Int)] {
+fn argOffset(n : Int32, env : List[(String, Int32)]) -> List[(String, Int32)] {
   env.map(fn (entry) {
     let (name, offset) = entry
     (name, offset + n)

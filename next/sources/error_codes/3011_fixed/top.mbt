@@ -1,5 +1,5 @@
 ///|
-fn assign_mutable() -> Int {
+fn assign_mutable() -> Int32 {
   let mut n = 4
   n = 5
   n

@@ -1,1 +1,1 @@
-pub let a : Option[Int] = Some(3)
+pub let a : Option[Int32] = Some(3)

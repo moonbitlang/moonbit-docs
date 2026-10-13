@@ -1,3 +1,3 @@
 pub trait Sealed {
-  to_int(Self) -> Int
+  to_int(Self) -> Int32
 }

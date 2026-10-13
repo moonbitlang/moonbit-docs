@@ -1,30 +1,30 @@
 // start predicate 1
-predicate in_bounds(xs : FixedArray[Int], i : Int) {
+predicate in_bounds(xs : FixedArray[Int32], i : Int32) {
   (0 <= i) && (i < xs.length())
 }
 
-predicate sorted(xs : FixedArray[Int]) {
-  ∀ i : Int, ∀ j : Int,
+predicate sorted(xs : FixedArray[Int32]) {
+  ∀ i : Int32, ∀ j : Int32,
     in_bounds(xs, i) && in_bounds(xs, j) && (i <= j) →
       xs[i] <= xs[j]
 }
 
-predicate binary_search_ok(xs : FixedArray[Int], key : Int, result : Option[Int]) {
+predicate binary_search_ok(xs : FixedArray[Int32], key : Int32, result : Option[Int32]) {
   match result {
-    None => ∀ i : Int, in_bounds(xs, i) → xs[i] != key
+    None => ∀ i : Int32, in_bounds(xs, i) → xs[i] != key
     Some(result) => in_bounds(xs, result) && xs[result] == key
   }
 }
 // end predicate 1
 
 // start proof pure use 1
-predicate cached_height_ok(t : Tree, result : Int) {
+predicate cached_height_ok(t : Tree, result : Int32) {
   result == height(t)
 }
 // end proof pure use 1
 
 // start model 1
-fn model(bridge : Bridge) -> @fset.Fset[Int] {
+fn model(bridge : Bridge) -> @fset.Fset[Int32] {
   @fset.fset_empty().add(bridge.used_nonces)
 }
 
@@ -32,7 +32,7 @@ predicate bridge_inv(bridge : Bridge) {
   0 <= bridge.reserve
 }
 
-predicate deposit_post(bridge : Bridge, amount : Int, result : Bridge) {
+predicate deposit_post(bridge : Bridge, amount : Int32, result : Bridge) {
   bridge_inv(result) &&
   result.reserve == bridge.reserve + amount &&
   result.used_nonces == bridge.used_nonces &&

@@ -9,7 +9,7 @@ enum Token {
   Open(Char) // { [ (
   Close(Char) // } ] )
   Id(String)
-  Number(Int)
+  Number(Int32)
   EOF
 } derive(Eq, Debug)
 
@@ -45,7 +45,7 @@ fn isWhiteSpace(this : Char) -> Bool {
 }
 
 ///|
-fn to_number(this : Char) -> Int {
+fn to_number(this : Char) -> Int32 {
   this.to_int() - 48
 }
 
@@ -62,7 +62,7 @@ fn isClose(this : Char) -> Bool {
 ///|
 struct Tokens {
   tokens : Array[Token]
-  mut current : Int
+  mut current : Int32
 } derive(Debug)
 
 ///|
@@ -268,7 +268,7 @@ fn Tokens::parse_case(self : Tokens) -> RawExpr[String] raise ParseError {
 ///|
 fn Tokens::parse_alts(
   self : Tokens,
-) -> List[(Int, List[String], RawExpr[String])] raise ParseError {
+) -> List[(Int32, List[String], RawExpr[String])] raise ParseError {
   for tok = self.peek(), acc = @list.empty() {
     match tok {
       Open('[') => {

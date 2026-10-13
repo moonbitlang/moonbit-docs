@@ -1,7 +1,7 @@
 // Assume `Tree`, `height`, and `Fset` are defined elsewhere.
 
 // start model 1
-fn Tree::model(self : Tree) -> Fset[Int] {
+fn Tree::model(self : Tree) -> Fset[Int32] {
   match self {
     Empty => Fset::empty()
     Node(l, x, r, _) => l.model().union(r.model()).add(x)
@@ -14,8 +14,8 @@ predicate avl_inv(t : Tree) {
     Node(l, x, r, h) =>
       avl_inv(l) &&
       avl_inv(r) &&
-      (∀ y : Int, l.model().mem(y) → y < x) &&
-      (∀ y : Int, r.model().mem(y) → x < y) &&
+      (∀ y : Int32, l.model().mem(y) → y < x) &&
+      (∀ y : Int32, r.model().mem(y) → x < y) &&
       h == 1 + max2(height(l), height(r)) &&
       -1 <= height(l) - height(r) &&
       height(l) - height(r) <= 1

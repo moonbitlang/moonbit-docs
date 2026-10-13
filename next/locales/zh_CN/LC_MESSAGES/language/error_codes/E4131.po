@@ -42,7 +42,7 @@ msgstr "错误示例"
 
 #: ../../language/error_codes/E4131.md:12
 msgid ""
-"pub type FuncAlias = (Int) -> Unit\n"
+"pub type FuncAlias = (Int32) -> Unit\n"
 "\n"
 "pub fn FuncAlias::call(self : FuncAlias) -> Unit {\n"
 "  //   ^~~~~~~~~\n"
@@ -64,13 +64,13 @@ msgstr "如果您想为函数类型定义方法，您应该定义一个新类型
 
 #: ../../language/error_codes/E4131.md:21
 msgid ""
-"pub struct FuncWrap((Int) -> Unit)\n"
+"pub struct FuncWrap((Int32) -> Unit)\n"
 "\n"
 "pub fn FuncWrap::call(self : FuncWrap) -> Unit {\n"
 "  self.0(0)\n"
 "}\n"
 "\n"
-"pub fn make(f : (Int) -> Unit) -> FuncWrap {\n"
+"pub fn make(f : (Int32) -> Unit) -> FuncWrap {\n"
 "  FuncWrap(f)\n"
 "}\n"
 msgstr ""

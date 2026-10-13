@@ -8,13 +8,13 @@ test "test_name" {
 
 /// start test 2
 test "panic_test" {
-  let _ : Int = Option::None.unwrap()
+  let _ : Int32 = Option::None.unwrap()
 }
 // end test 2
 
 /// start snapshot test 1
 struct X {
-  x : Int
+  x : Int32
 } derive(Debug)
 
 pub extend X with Debug::{to_repr}

@@ -1,7 +1,7 @@
 // start derive eq_compare struct
 struct DeriveEqCompare {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 } derive(Eq, Compare)
 
 pub extend DeriveEqCompare with Eq::{not_equal, equal}
@@ -36,7 +36,7 @@ test "derive eq_compare struct" {
 
 // start derive eq_compare enum
 enum DeriveEqCompareEnum {
-  Case1(Int)
+  Case1(Int32)
   Case2(label~ : String)
   Case3
 } derive(Eq, Compare)

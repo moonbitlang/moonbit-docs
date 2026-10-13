@@ -1,6 +1,6 @@
-pub const Value : Int = 1
+pub const Value : Int32 = 1
 
-pub fn classify(value : Int) -> String {
+pub fn classify(value : Int32) -> String {
   match value {
     Value(_) => "Value"
   //^~~~~

@@ -1,5 +1,5 @@
 ///|
 test {
-  let int : Int = 256
+  let int : Int32 = 256
   inspect(int, content="256")
 }

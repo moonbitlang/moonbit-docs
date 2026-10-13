@@ -1,8 +1,8 @@
 ///|
-const A : Int = B + 1
+const A : Int32 = B + 1
 
 ///|
-const B : Int = A + 1
+const B : Int32 = A + 1
 
 ///|
 type T1 = T2

@@ -23,7 +23,7 @@ fn[T] LazyRef::extract(self : LazyRef[T]) -> T {
 }
 
 ///|
-fn square(x : LazyRef[Int]) -> Int {
+fn square(x : LazyRef[Int32]) -> Int32 {
   x.extract() * x.extract()
 }
 // end lazy definition

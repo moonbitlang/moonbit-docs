@@ -56,9 +56,9 @@ shadows the prelude definition.
 through it participate in normal unqualified name resolution without an
 explicit `import`.
 
-Compiler builtins are a separate category. Types such as `Int` are built into
+Compiler builtins are a separate category. Types such as `Int32` are built into
 the language itself, not imported from any package, so there is no
-`@builtin.Int`. The same distinction applies to other compiler-known names such
+`@builtin.Int32`. The same distinction applies to other compiler-known names such
 as `String`, `Bool`, and `Unit`.
 
 ### Internal Packages
@@ -138,7 +138,7 @@ There is no restriction within the same package where `pub` types are defined.
 ```moonbit
 // Package A
 pub struct RO {
-  field: Int
+  field: Int32
 }
 test {
   let r = { field: 4 }       // OK
@@ -230,8 +230,8 @@ fn[N : Number] sub(x : N, y: N) -> N {
   Number::op_sub(x, y)
 }
 
-impl Number for Int with op_add(x, y) { x + y }
-impl Number for Int with op_sub(x, y) { x - y }
+impl Number for Int32 with op_add(x, y) { x + y }
+impl Number for Int32 with op_sub(x, y) { x - y }
 
 impl Number for Double with op_add(x, y) { x + y }
 impl Number for Double with op_sub(x, y) { x - y }
@@ -245,11 +245,11 @@ trait Number
 fn[N : Number] op_add(x : N, y : N) -> N
 fn[N : Number] op_sub(x : N, y : N) -> N
 
-impl Number for Int
+impl Number for Int32
 impl Number for Double
 ```
 
-The author of `Number` can make use of the fact that only `Int` and `Double` can ever implement `Number`,
+The author of `Number` can make use of the fact that only `Int32` and `Double` can ever implement `Number`,
 because new implementations are not allowed outside.
 
 ## Virtual Packages

@@ -52,7 +52,7 @@ msgstr "但是，`Error` 不能直接构造。必须定义一个具体的错误�
 
 #: ../../language/error-handling.md:16
 msgid ""
-"suberror E1 { E1(Int) } // error type E1 has one constructor E1 with an Int "
+"suberror E1 { E1(Int32) } // error type E1 has one constructor E1 with an Int32 "
 "payload\n"
 "\n"
 "suberror E2 // error type E2 has one constructor E2 with no payload\n"
@@ -60,16 +60,16 @@ msgid ""
 "suberror E3 { // error type E3 has three constructors like a normal enum "
 "type\n"
 "  A\n"
-"  B(Int, x~ : String)\n"
+"  B(Int32, x~ : String)\n"
 "  C(mut x~ : String, Char, y~ : Bool)\n"
 "}\n"
 msgstr ""
-"suberror E1 { E1(Int) }  // 错误类型 E1 具有一个构造器 E1，并带有一个 Int 负"
+"suberror E1 { E1(Int32) }  // 错误类型 E1 具有一个构造器 E1，并带有一个 Int32 负"
 "载\n"
 "suberror E2              // 错误类型 E2 具有一个没有负载的构造器 E2\n"
 "suberror E3 {            // 错误类型 E3 类似于普通的枚举类型，有三个构造器\n"
 "  A\n"
-"  B(Int, x~ : String)\n"
+"  B(Int32, x~ : String)\n"
 "  C(mut x~ : String, Char, y~ : Bool)\n"
 "}\n"
 
@@ -81,7 +81,7 @@ msgstr "错误类型可以自动提升为 `Error` 类型，并且可以模式匹
 
 #: ../../language/error-handling.md:30
 msgid ""
-"suberror CustomError { CustomError(UInt) }\n"
+"suberror CustomError { CustomError(UInt32) }\n"
 "\n"
 "test {\n"
 "  let e : Error = CustomError(42)\n"
@@ -190,7 +190,7 @@ msgid ""
 "\n"
 "pub extend DivError with Debug::{to_repr}\n"
 "\n"
-"fn div(x : Int, y : Int) -> Int raise DivError {\n"
+"fn div(x : Int32, y : Int32) -> Int32 raise DivError {\n"
 "  if y == 0 {\n"
 "    raise DivError(\"division by zero\")\n"
 "  }\n"
@@ -245,7 +245,7 @@ msgstr "对于不抛出错误的函数，您可以在签名中添加 `noraise`�
 
 #: ../../language/error-handling.md:106
 msgid ""
-"fn add(a : Int, b : Int) -> Int noraise {\n"
+"fn add(a : Int32, b : Int32) -> Int32 noraise {\n"
 "  a + b\n"
 "}\n"
 msgstr ""
@@ -336,11 +336,11 @@ msgstr "直接调用函数会在出现错误时直接重新抛出错误。例如
 
 #: ../../language/error-handling.md:146
 msgid ""
-"fn div_reraise(x : Int, y : Int) -> Int raise DivError {\n"
+"fn div_reraise(x : Int32, y : Int32) -> Int32 raise DivError {\n"
 "  div(x, y) // Rethrow the error if `div` raised an error\n"
 "}\n"
 msgstr ""
-"fn div_reraise(x : Int, y : Int) -> Int raise DivError {\n"
+"fn div_reraise(x : Int32, y : Int32) -> Int32 raise DivError {\n"
 "  div(x, y) // 如果 `div` 引发错误，则重新抛出错误\n"
 "}\n"
 
@@ -428,7 +428,7 @@ msgstr ""
 #: ../../language/error-handling.md:199
 msgid ""
 "test {\n"
-"  let res : Result[Int, DivError] = Ok(div(6, 0) * div(6, 3)) catch {\n"
+"  let res : Result[Int32, DivError] = Ok(div(6, 0) * div(6, 3)) catch {\n"
 "    error => Err(error)\n"
 "  }\n"
 "  match res {\n"
@@ -449,7 +449,7 @@ msgstr "如果发生意外错误，您也可以直接引发崩溃："
 
 #: ../../language/error-handling.md:209
 msgid ""
-"fn remainder(a : Int, b : Int) -> Int raise DivError {\n"
+"fn remainder(a : Int32, b : Int32) -> Int32 raise DivError {\n"
 "  if b == 0 {\n"
 "    raise DivError(\"division by zero\")\n"
 "  }\n"

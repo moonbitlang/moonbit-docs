@@ -1,1 +1,1 @@
-pub const A : Int = 3 // This is a constant value.
+pub const A : Int32 = 3 // This is a constant value.

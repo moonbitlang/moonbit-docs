@@ -1,3 +1,3 @@
 pub struct S {
-  pub(open) field: Int
+  pub(open) field: Int32
 }

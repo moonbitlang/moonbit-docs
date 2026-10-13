@@ -91,7 +91,7 @@ In fact, it is one of the shortest edit sequences that can transform text a into
     set : RHTable[T, Unit]
   }
 +
-+ fn[T] RHSet::new(capacity : Int) -> RHSet[T] {
++ fn[T] RHSet::new(capacity : Int32) -> RHSet[T] {
 +  let set : RHTable[T, Unit]= RHTable::new(capacity)
 +  { set : set }
 + }
@@ -102,7 +102,7 @@ In fact, it is one of the shortest edit sequences that can transform text a into
     set : RHTable[T, Unit]
 + }
 +
-+ fn[T] RHSet::new(capacity : Int) -> RHSet[T] {
++ fn[T] RHSet::new(capacity : Int32) -> RHSet[T] {
 +  let set : RHTable[T, Unit]= RHTable::new(capacity)
 +  { set : set }
   }
@@ -233,7 +233,7 @@ Now we can start writing the search function. Before searching for the complete 
 
 <!-- MANUAL CHECK -->
 ```moonbit
-fn shortest_edit(old~ : Array[Line], new~ : Array[Line]) -> Int {
+fn shortest_edit(old~ : Array[Line], new~ : Array[Line]) -> Int32 {
   let n = old.length()
   let m = new.length()
   let max = n + m

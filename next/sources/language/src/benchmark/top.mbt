@@ -1,5 +1,5 @@
 // start bench 1
-fn fib(n : Int) -> Int {
+fn fib(n : Int32) -> Int32 {
   if n < 2 {
     return n
   }
@@ -18,7 +18,7 @@ test (b : @bench.T) {
 // end bench 2
 
 // start bench 3
-fn fast_fib(n : Int) -> Int {
+fn fast_fib(n : Int32) -> Int32 {
   if n < 2 {
     return n
   } else {

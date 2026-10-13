@@ -1,5 +1,5 @@
 ///|
-fn Int::local_abs(i : Int) -> Int {
+fn Int32::local_abs(i : Int32) -> Int32 {
   if i > 0 {
     i
   } else {

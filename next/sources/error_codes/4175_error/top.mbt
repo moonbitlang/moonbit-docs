@@ -1,3 +1,3 @@
 fn invalid_cast() -> Unit {
-  let _ = 1 as Int
+  let _ = 1 as Int32
 }

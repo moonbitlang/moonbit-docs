@@ -3,11 +3,11 @@
 enum Instruction {
   Unwind
   PushGlobal(String)
-  PushInt(Int)
-  PushArg(Int)
+  PushInt(Int32)
+  PushArg(Int32)
   MkApp
-  Update(Int)
-  Pop(Int)
+  Update(Int32)
+  Pop(Int32)
 } derive(Eq, Debug)
 
 pub extend Instruction with Eq::{not_equal, equal}

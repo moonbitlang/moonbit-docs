@@ -31,7 +31,7 @@ fn[X, Y] Stream::map(self : Stream[X], f : (X) -> Y) -> Stream[Y] {
 
 ///|
 /// start take definition
-fn[T] Stream::take(self : Stream[T], n : Int) -> List[T] {
+fn[T] Stream::take(self : Stream[T], n : Int32) -> List[T] {
   if n == 0 {
     @list.empty()
   } else {

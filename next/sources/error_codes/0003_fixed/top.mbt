@@ -2,7 +2,7 @@
 
 ///|
 pub struct Foo {
-  bar : Int
+  bar : Int32
 }
 // end make public
 
