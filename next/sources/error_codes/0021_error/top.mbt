@@ -1,5 +1,5 @@
 enum E {
-  A(Int, w~ : Int, h~ : Int)
+  A(Int32, w~ : Int32, h~ : Int32)
 }
 
 fn main {

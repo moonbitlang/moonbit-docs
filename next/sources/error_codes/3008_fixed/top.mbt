@@ -1,5 +1,5 @@
 ///|
-fn outer_sum(array : Array[Int]) -> Int {
+fn outer_sum(array : Array[Int32]) -> Int32 {
   match array {
     [fst, .., snd] => fst + snd
     _ => 0

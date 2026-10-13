@@ -1,5 +1,5 @@
-declare pub fn declared_increment(x : Int) -> Int
+declare pub fn declared_increment(x : Int32) -> Int32
 
-pub fn declared_increment(x : Int) -> Double {
+pub fn declared_increment(x : Int32) -> Double {
   x.to_double()
 }

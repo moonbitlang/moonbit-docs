@@ -28,15 +28,15 @@ let squares : Squares = cross(rows, cols, _ => true)
 fn unit_of(square : String) -> Squares {
   guard! square is [row, col, ..]
   let rows = match row {
-    'A'..='C' => "ABC"
-    'D'..='F' => "DEF"
-    'G'..='I' => "GHI"
+    'A'..<='C' => "ABC"
+    'D'..<='F' => "DEF"
+    'G'..<='I' => "GHI"
     _ => abort("unitOf: invalid row \{row}")
   }
   let cols = match col {
-    '1'..='3' => "123"
-    '4'..='6' => "456"
-    '7'..='9' => "789"
+    '1'..<='3' => "123"
+    '4'..<='6' => "456"
+    '7'..<='9' => "789"
     _ => abort("unitOf: invalid col \{col}")
   }
   cross(rows, cols, s => s != square)
@@ -86,12 +86,12 @@ fn Grid::parse(s : String) -> Grid[@sorted_set.SortedSet[Char]] {
   let values = Grid::new(digits)
   let chars = s
     .iter()
-    .filter(fn(ch) { ch is ('0'..='9') || ch == '.' })
+    .filter(fn(ch) { ch is ('0'..<='9') || ch == '.' })
     .collect()
   let pairs = squares.to_array().zip(chars)
   for p in pairs {
     let (square, digit) = p
-    if digit is ('1'..='9') {
+    if digit is ('1'..<='9') {
       if !assign(values, square, digit) {
         // println("parseGrid(): found contradiction")
         abort("parseGrid(): found contradiction")

@@ -20,6 +20,19 @@ Both forms allowed additional arguments:
 
   Marks the alias as deprecated. If a message is provided, it will be displayed as a warning when the alias is used.
 
+`#alias` cannot be applied to `declare fn` or `declare let`. Put the attribute
+on the corresponding definition instead.
+
+To expose an alias through a declaration-based interface, declare the alias
+name separately with `declare fn` or `declare let`. The declarations specify
+the names and their types, but do not require an alias relationship between
+them. Whether the implementation uses `#alias` or separate definitions is an
+implementation detail.
+
+```{literalinclude} /sources/error_codes/4229_fixed/top.mbt
+:language: moonbit
+```
+
 To graceful migration from old API to new API, you can rename the old API directly, and create an alias with the old name, mark it as deprecated. For
 example:
 

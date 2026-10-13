@@ -1,4 +1,4 @@
 ///|
-fn module_() -> Int {
+fn module_() -> Int32 {
   3
 }

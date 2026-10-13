@@ -28,11 +28,10 @@ msgstr ""
 
 #: ../../language/error_codes/E0032.md:5
 msgid ""
-"Default value of optional argument is unused. This implies at every call "
-"site of this function, the optional argument is always explicitly "
-"supplied with a value. This means the optional argument can be refactored"
-" into a labelled argument."
-msgstr "可选参数的默认值未被使用。这意味着在这个函数的每个调用点，可选参数总是显式地提供一个值。这意味着可选参数可以重构为带标签的参数。"
+"The default value of an optional argument is unused: every call site "
+"explicitly supplies a value. Remove the default value to make it a required "
+"labelled argument, keeping the `~` in its declaration."
+msgstr "可选参数的默认值未被使用：所有调用处都显式提供了值。删除默认值即可将其改为必需的标签参数，声明中的 `~` 保持不变。"
 
 #: ../../language/error_codes/E0032.md:7
 msgid "Erroneous example"
@@ -62,7 +61,7 @@ msgstr ""
 #: ../../language/error_codes/E0032.md:17
 msgid ""
 "///|\n"
-"fn f(opt? : Int = 4) -> Int {\n"
+"fn f(opt~ : Int32 = 4) -> Int32 {\n"
 "  ignore(opt)\n"
 "  0\n"
 "}\n"
@@ -79,13 +78,13 @@ msgid "Suggestion"
 msgstr "建议"
 
 #: ../../language/error_codes/E0032.md:24
-msgid "Turn the optional argument into a labelled argument:"
-msgstr "将可选参数转换为带标签的参数："
+msgid "Remove the default value to make the labelled argument required:"
+msgstr "删除默认值，使该标签参数成为必需参数："
 
 #: ../../language/error_codes/E0032.md:26
 msgid ""
 "///|\n"
-"fn f(opt~ : Int) -> Int {\n"
+"fn f(opt~ : Int32) -> Int32 {\n"
 "  ignore(opt)\n"
 "  0\n"
 "}\n"

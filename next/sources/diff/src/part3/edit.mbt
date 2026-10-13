@@ -11,7 +11,7 @@ enum Edit {
 let line_width = 4
 
 ///|
-fn pad_right(s : String, width : Int) -> String {
+fn pad_right(s : String, width : Int32) -> String {
   String::make(width - s.length(), ' ') + s
 }
 

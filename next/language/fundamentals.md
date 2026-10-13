@@ -35,14 +35,17 @@ MoonBit have integer type and floating point type:
 | type     | description                                       | example                    |
 | -------- | ------------------------------------------------- | -------------------------- |
 | `Int16`  | 16-bit signed integer                             | `(42 : Int16)`             |
-| `Int`    | 32-bit signed integer                             | `42`                       |
+| `Int32`  | 32-bit signed integer                             | `42`                       |
 | `Int64`  | 64-bit signed integer                             | `1000L`                    |
 | `UInt16` | 16-bit unsigned integer                           | `(14 : UInt16)`            |
-| `UInt`   | 32-bit unsigned integer                           | `14U`                      |
+| `UInt32` | 32-bit unsigned integer                           | `14U`                      |
 | `UInt64` | 64-bit unsigned integer                           | `14UL`                     |
 | `Double` | 64-bit floating point, defined by IEEE754         | `3.14`                     |
 | `Float`  | 32-bit floating point                             | `(3.14 : Float)`           |
 | `BigInt` | represents numeric values larger than other types | `10000000000000000000000N` |
+
+`Int` and `UInt` remain accepted as aliases of `Int32` and `UInt32`.
+The formatter uses the explicit-width names `Int32` and `UInt32`.
 
 MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
@@ -201,7 +204,7 @@ API: <https://mooncakes.io/docs/moonbitlang/core/string>
 :end-before: end char 1
 ```
 
-Char literals can be overloaded to type `Int` or `UInt16` when it is the expected type:
+Char literals can be overloaded to type `Int32` or `UInt16` when it is the expected type:
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
@@ -409,7 +412,7 @@ A common pitfall is creating `FixedArray` with the same initial value:
 :end-before: end array pitfall
 ```
 
-This is because all the cells reference to the same object (the `FixedArray[Int]` in this case). One should use `FixedArray::makei()` instead which creates an object for each index.
+This is because all the cells reference to the same object (the `FixedArray[Int32]` in this case). One should use `FixedArray::makei()` instead which creates an object for each index.
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
@@ -503,7 +506,7 @@ Overloaded literals allow you to use the same syntax to represent different type
 An empty `{}` literal is ambiguous: it may mean an empty map, an empty JSON
 object, an empty record, or a block. Write the intended form explicitly:
 `Map([])`, `Json::empty_object()`, `Record::{}`, or `{ () }`, respectively.
-For example, you can use `1` to represent `UInt` or `Double` depending on the expected type. If the expected type is not known, the literal will be interpreted as `Int` by default.
+For example, you can use `1` to represent `UInt32` or `Double` depending on the expected type. If the expected type is not known, the literal will be interpreted as `Int32` by default.
 
 ```{literalinclude} /sources/language/src/builtin/top.mbt
 :language: moonbit
@@ -515,9 +518,9 @@ The overloaded literals can be composed. If array literal can be overloaded to `
 
 | Overloaded literal             | Default type | Can be overloaded to                                                                      | 
 | ------------------------------ | ------------ | ----------------------------------------------------------------------------------------- |
-| `10`, `0xFF`, `0o377`, `10_000` | `Int` | `UInt`, `Int64`, `UInt64`, `Int16`, `UInt16`, `Byte`, `Double`, `Float`, `BigInt` |
+| `10`, `0xFF`, `0o377`, `10_000` | `Int32` | `UInt32`, `Int64`, `UInt64`, `Int16`, `UInt16`, `Byte`, `Double`, `Float`, `BigInt` |
 | `"str"` | `String` | — |
-| `'c'` | `Char` | `Int` |
+| `'c'` | `Char` | `Int32` |
 | `3.14` | `Double` | `Float` |
 | `[a, b, c]` (where the types of literals a, b, and c are E) | `Array[E]` | `FixedArray[E]`, `String`  (if E is of type Char), `Bytes` (if E is of type Byte) |
 
@@ -571,6 +574,18 @@ This is useful when you want to make an API shape available before placing its i
 ```
 
 If a declared function has an implementation, the declaration and the implementation must agree on the function name, visibility, type parameters, parameters, return type, and effects.
+
+Top-level values can also be declared with `declare let name : Type`.
+Provide the matching `let` definition in the same package:
+
+```{literalinclude} /sources/language/src/functions/declarations.mbt
+:language: moonbit
+:start-after: start declared values
+:end-before: end declared values
+```
+
+`#alias` belongs on the definition, not on a `declare fn` or `declare let`
+declaration.
 
 ### Local Functions
 
@@ -680,7 +695,7 @@ Labelled function can be supplied in any order. The evaluation order of argument
 
 ### Optional arguments
 
-An argument can be made optional by supplying a default expression with the syntax `label?: Type = default_expr`, where the `default_expr` may be omitted. If this argument is not supplied at call site, the default expression will be used:
+An argument can be made optional by supplying a default expression with the syntax `label~ : Type = default_expr`. If this argument is not supplied at the call site, the default expression will be used. For an optional argument without an explicit default, use `label? : Type` (see below).
 
 ```{literalinclude} /sources/language/src/functions/top.mbt
 :language: moonbit
@@ -1902,7 +1917,7 @@ Result types depend on width:
 
 | Width                        | Result type   |
 |-----------------------------|---------------|
-| 1..32 bits (`u`/`i`)        | `UInt` / `Int` |
+| 1..32 bits (`u`/`i`)        | `UInt32` / `Int32` |
 | 33..64 bits (`u`)           | `UInt64`       |
 | 33..64 bits (`i`)           | `Int64`        |
 
@@ -1924,7 +1939,10 @@ incompatibility between Windows and SSE2.
 ### Range Pattern
 For builtin integer types and `Char`, MoonBit allows matching whether the value falls in a specific range.
 
-Range patterns have the form `a..<b` or `a..=b`, where `..<` means the upper bound is exclusive, and `..=` means inclusive upper bound.
+Range patterns have the form `a..<b` or `a..<=b`, where `..<` means the upper bound is exclusive, and `..<=` means the upper bound is inclusive. The older inclusive spelling `a..=b` is accepted and formatted as `a..<=b`.
+
+Descending range patterns `a>..b` and `a>=..b` are also accepted, but produce a warning recommending the equivalent ascending form.
+
 `a` and `b` can be one of:
 
 - literal

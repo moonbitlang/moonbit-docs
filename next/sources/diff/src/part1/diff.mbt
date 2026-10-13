@@ -1,7 +1,7 @@
 ///|
 /// start shortest_edit definition
 ///
-fn shortest_edit(old~ : Array[Line], new~ : Array[Line]) -> Int {
+fn shortest_edit(old~ : Array[Line], new~ : Array[Line]) -> Int32 {
   let n = old.length()
   let m = new.length()
   let max = n + m

@@ -1,5 +1,5 @@
 ///|
-pub fn f(parameter? : Int = 0) -> Int {
+pub fn f(parameter~ : Int32 = 0) -> Int32 {
   parameter
 }
 

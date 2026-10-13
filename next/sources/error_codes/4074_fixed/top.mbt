@@ -1,2 +1,2 @@
 ///|
-pub let a : Int = 1 + 1
+pub let a : Int32 = 1 + 1

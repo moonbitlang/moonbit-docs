@@ -1,6 +1,6 @@
 const N = 4
 
-fn assign_const() -> Int {
+fn assign_const() -> Int32 {
   N = 5 // Error: Invalid left value for assignment.
   N
 }

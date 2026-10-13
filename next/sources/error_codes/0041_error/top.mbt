@@ -1,5 +1,5 @@
 ///|
-fn f(map : Map[String, Int]) -> Bool {
+fn f(map : Map[String, Int32]) -> Bool {
   match map {
     // the pattern still matches 
     // if `map` contain elements other than "x" and "y"

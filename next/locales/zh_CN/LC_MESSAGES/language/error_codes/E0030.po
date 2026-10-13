@@ -28,24 +28,24 @@ msgstr ""
 
 #: ../../language/error_codes/E0030.md:5
 msgid ""
-"The package alias is empty. The default package alias will be used "
-"instead. This warning can occur when checking the deprecated "
-"`moon.pkg.json` format; current `moon.pkg` files cannot express an "
-"explicitly empty alias."
+"The package alias is empty. The default package alias will be used instead. "
+"This warning applies to the legacy `moon.pkg.json` format. Current `moon` "
+"commands reject JSON manifests, and `moon.pkg` cannot express an explicitly "
+"empty alias. The examples below are retained as migration references."
 msgstr ""
-"包别名为空。此时将使用默认包别名。检查已弃用的 `moon.pkg.json` 格式时可能出现此警告；当前的 `moon.pkg` "
-"文件无法显式表示空别名。"
+"包别名为空，将使用默认包别名。此警告适用于旧的 `moon.pkg.json` 格式。当前 `moon` 命令会拒绝 JSON 配置文件，而 "
+"`moon.pkg` 无法表示显式的空别名。以下示例保留作为迁移参考。"
 
-#: ../../language/error_codes/E0030.md:9
+#: ../../language/error_codes/E0030.md:10
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E0030.md:11
-#: ../../language/error_codes/E0030.md:20
+#: ../../language/error_codes/E0030.md:12
+#: ../../language/error_codes/E0030.md:21
 msgid "moon.pkg.json"
 msgstr ""
 
-#: ../../language/error_codes/E0030.md:11
+#: ../../language/error_codes/E0030.md:12
 msgid ""
 "{\n"
 "  \"import\": [\n"
@@ -54,18 +54,18 @@ msgid ""
 "      \"alias\": \"\"\n"
 "    }\n"
 "  ]\n"
-"}"
+"}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0030.md:16
+#: ../../language/error_codes/E0030.md:17
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0030.md:18
+#: ../../language/error_codes/E0030.md:19
 msgid "Use a non-empty alias for the package:"
 msgstr "为包使用非空别名："
 
-#: ../../language/error_codes/E0030.md:20
+#: ../../language/error_codes/E0030.md:21
 msgid ""
 "{\n"
 "  \"import\": [\n"
@@ -74,5 +74,5 @@ msgid ""
 "      \"alias\": \"hello\"\n"
 "    }\n"
 "  ]\n"
-"}"
+"}\n"
 msgstr ""

@@ -1,5 +1,5 @@
 pub struct MyStruct {
-  field : Int
+  field : Int32
 }
 
 pub type StructAlias = MyStruct derive(Debug)

@@ -164,7 +164,7 @@ extern "js" fn cos(d : Double) -> Double =
 You can declare a foreign function by importing a function given the function name:
 
 ```moonbit
-extern "C" fn put_char(ch : UInt) -> Unit = "function_name"
+extern "C" fn put_char(ch : UInt32) -> Unit = "function_name"
 ```
 
 If a package needs to dynamically link with foreign C library, add `cc-link-flags` to `moon.pkg`. It would be passed to C compiler directly.
@@ -205,54 +205,54 @@ The table below shows the underlying representation of some MoonBit types:
 ``````{tab-item} Wasm
 :sync: wasm1
 
-| MoonBit type |   ABI      |
-|--------------|------------|
-| `Bool`       | `i32`   |
-| `Int`        | `i32`   |
-| `UInt`       | `i32`   |
-| `Int64`      | `i64`   |
-| `UInt64`     | `i64`   |
-| `Float`      | `f32`   |
-| `Double`     | `f64`   |
-| constant `enum` | `i32` |
-| external type (`#external type T`) | `externref` |
-| `FuncRef[T]` | `funcref` |
+| MoonBit type                         | ABI           |
+| ------------------------------------ | ------------- |
+| `Bool`                               | `i32`         |
+| `Int32`                              | `i32`         |
+| `UInt32`                             | `i32`         |
+| `Int64`                              | `i64`         |
+| `UInt64`                             | `i64`         |
+| `Float`                              | `f32`         |
+| `Double`                             | `f64`         |
+| constant `enum`                      | `i32`         |
+| external type (`#external type T`)   | `externref`   |
+| `FuncRef[T]`                         | `funcref`     |
 ``````
 
 ``````{tab-item} Wasm GC
 :sync: wasm-gc
 
-| MoonBit type |   ABI      |
-|--------------|------------|
-| `Bool`       | `i32`   |
-| `Int`        | `i32`   |
-| `UInt`       | `i32`   |
-| `Int64`      | `i64`   |
-| `UInt64`     | `i64`   |
-| `Float`      | `f32`   |
-| `Double`     | `f64`   |
-| constant `enum` | `i32` |
-| external type (`#external type T`) | `externref` |
-| `String` | `externref` iff JS string builtin is on |
-| `FuncRef[T]` | `funcref` |
+| MoonBit type                         | ABI                                      |
+| ------------------------------------ | ---------------------------------------- |
+| `Bool`                               | `i32`                                    |
+| `Int32`                              | `i32`                                    |
+| `UInt32`                             | `i32`                                    |
+| `Int64`                              | `i64`                                    |
+| `UInt64`                             | `i64`                                    |
+| `Float`                              | `f32`                                    |
+| `Double`                             | `f64`                                    |
+| constant `enum`                      | `i32`                                    |
+| external type (`#external type T`)   | `externref`                              |
+| `String`                             | `externref` iff JS string builtin is on  |
+| `FuncRef[T]`                         | `funcref`                                |
 ``````
 
 ``````{tab-item} JavaScript
 :sync: js
 
-| MoonBit type |   ABI      |
-|--------------|------------|
-| `Bool`       | `boolean`  |
-| `Int`        | `number`   |
-| `UInt`       | `number`   |
-| `Float`      | `number`   |
-| `Double`     | `number`   |
-| constant `enum` | `number` |
-| external type (`#external type T`) | `any`   |
-| `String` | `string` |
-| `FixedArray[Byte]`/`Bytes` | `Uint8Array` |
-| `FixedArray[T]` | `T[]` |
-| `FuncRef[T]` | `Function` |
+| MoonBit type                         | ABI            |
+| ------------------------------------ | -------------- |
+| `Bool`                               | `boolean`      |
+| `Int32`                              | `number`       |
+| `UInt32`                             | `number`       |
+| `Float`                              | `number`       |
+| `Double`                             | `number`       |
+| constant `enum`                      | `number`       |
+| external type (`#external type T`)   | `any`          |
+| `String`                             | `string`       |
+| `FixedArray[Byte]`/`Bytes`           | `Uint8Array`   |
+| `FixedArray[T]`                      | `T[]`          |
+| `FuncRef[T]`                         | `Function`     |
 
 ```{note}
 The `FixedArray[T]` for numbers may migrate to `TypedArray` in the future.
@@ -266,21 +266,21 @@ Using `Array[T]` in a JavaScript FFI signature is deprecated. Use
 ``````{tab-item} C
 :sync: c
 
-| MoonBit type |   ABI      |
-|--------------|------------|
-| `Bool`       | `int32_t`  |
-| `Int`        | `int32_t`  |
-| `UInt`       | `uint32_t` |
-| `Int64`      | `int64_t`  |
-| `UInt64`     | `uint64_t` |
-| `Float`      | `float`    |
-| `Double`     | `double`   |
-| constant `enum` | `int32_t` |
-| abstract type (`type T`) | pointer (must be valid MoonBit object) |
-| external type (`#external type T`) | `void*` |
-| `FixedArray[Byte]`/`Bytes` | `uint8_t*` |
-| `FixedArray[T]` | `T*` |
-| `FuncRef[T]` | Function pointer |
+| MoonBit type                       | ABI                                    |
+| ---------------------------------- | -------------------------------------- |
+| `Bool`                             | `int32_t`                              |
+| `Int32`                            | `int32_t`                              |
+| `UInt32`                           | `uint32_t`                             |
+| `Int64`                            | `int64_t`                              |
+| `UInt64`                           | `uint64_t`                             |
+| `Float`                            | `float`                                |
+| `Double`                           | `double`                               |
+| constant `enum`                    | `int32_t`                              |
+| abstract type (`type T`)           | pointer (must be valid MoonBit object) |
+| external type (`#external type T`) | `void*`                                |
+| `FixedArray[Byte]`/`Bytes`         | `uint8_t*`                             |
+| `FixedArray[T]`                    | `T*`                                   |
+| `FuncRef[T]`                       | Function pointer                       |
 
 ```{note}
 A foreign function returning `Unit` corresponds to a C function returning `void`. If the return type of `T` in `FuncRef[T]` is `Unit`, then it points to a function that returns `void`.
@@ -389,7 +389,7 @@ pkgtype(kind: "foreign_library")
 
 ```moonbit
 #export_name("add")
-pub fn add_one(value : Int) -> Int {
+pub fn add_one(value : Int32) -> Int32 {
   value + 1
 }
 ```
@@ -526,7 +526,7 @@ By default, MoonBit uses an owned calling convention for reference counting. Tha
 For example, here's a lifetime-correct binding to the standard `open` function for opening a file:
 
 ```moonbit
-extern "C" fn open(filename : Bytes, flags : Int) -> Int = "open_ffi"
+extern "C" fn open(filename : Bytes, flags : Int32) -> Int32 = "open_ffi"
 ```
 
 ```c
@@ -541,7 +541,7 @@ int open_ffi(moonbit_bytes_t filename, int flags) {
 
 The following types are always unboxed, so there is no need to manage their lifetime:
 
-- builtin number types, such as `Int` and `Double`
+- builtin number types, such as `Int32` and `Double`
 - constant `enum` (`enum` where all constructors have no payload)
 
 The following types are always boxed and reference counted:
@@ -576,7 +576,7 @@ Parameters of `#borrow` will be passed using borrow based calling convention, th
 
 ```moonbit
 #borrow(filename)
-extern "C" fn open(filename : Bytes, flags : Int) -> Int = "open"
+extern "C" fn open(filename : Bytes, flags : Int32) -> Int32 = "open"
 ```
 
 There is no need for a stub function anymore: we are binding to the original version of `open` here. With the `#borrow` attribute, this version is still lifetime-correct.

@@ -13,12 +13,12 @@ MoonBit distinguishes between statements and expressions. In a function body, on
 
 ```{code-block} moonbit
 :class: top-level
-fn foo() -> Int {
+fn foo() -> Int32 {
   let x = 1
   x + 1
 }
 
-fn bar() -> Int {
+fn bar() -> Int32 {
   let x = 1
   //! x + 1
   x + 2

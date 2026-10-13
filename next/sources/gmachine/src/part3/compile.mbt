@@ -1,13 +1,13 @@
 ///|
-fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
+fn ScDef::compileSC(self : ScDef[String]) -> (String, Int32, List[Instruction]) {
   let name = self.name
   let body = self.body
   let mut arity = 0
-  fn gen_env(i : Int, args : List[String]) -> List[(String, Int)] {
+  fn gen_env(i : Int32, args : List[String]) -> List[(String, Int32)] {
     match args {
       Empty => {
         arity = i
-        return @list.empty()
+        return @list.List([])
       }
       More(s, tail=ss) => gen_env(i + 1, ss).prepend((s, i))
     }
@@ -20,8 +20,8 @@ fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
 ///|
 fn RawExpr::compileR(
   self : RawExpr[String],
-  env : List[(String, Int)],
-  arity : Int,
+  env : List[(String, Int32)],
+  arity : Int32,
 ) -> List[Instruction] {
   if arity == 0 {
     self.compileE(env) + @list.List([Update(arity), Unwind])
@@ -33,7 +33,7 @@ fn RawExpr::compileR(
 ///|
 fn RawExpr::compileC(
   self : RawExpr[String],
-  env : List[(String, Int)],
+  env : List[(String, Int32)],
 ) -> List[Instruction] {
   match self {
     Var(s) =>
@@ -68,7 +68,7 @@ fn RawExpr::compileC(
 ///|
 fn RawExpr::compileE(
   self : RawExpr[String],
-  env : List[(String, Int)],
+  env : List[(String, Int32)],
 ) -> List[Instruction] {
   match self {
     // start num definition
@@ -122,21 +122,21 @@ fn RawExpr::compileE(
 
 ///|
 fn compileAlts(
-  alts : List[(Int, List[String], RawExpr[String])],
-  env : List[(String, Int)],
-) -> List[(Int, List[Instruction])] {
-  fn buildenv(variables : List[String], off : Int) -> List[(String, Int)] {
+  alts : List[(Int32, List[String], RawExpr[String])],
+  env : List[(String, Int32)],
+) -> List[(Int32, List[Instruction])] {
+  fn buildenv(variables : List[String], off : Int32) -> List[(String, Int32)] {
     match variables {
-      Empty => @list.empty()
+      Empty => @list.List([])
       More(v, tail=vs) => buildenv(vs, off + 1).prepend((v, off))
     }
   }
 
   fn go(
-    alts : List[(Int, List[String], RawExpr[String])],
-  ) -> List[(Int, List[Instruction])] {
+    alts : List[(Int32, List[String], RawExpr[String])],
+  ) -> List[(Int32, List[Instruction])] {
     match alts {
-      Empty => @list.empty()
+      Empty => @list.List([])
       More(alt, tail=rest) => {
         let (tag, variables, body) = alt
         let offset = variables.length()
@@ -153,7 +153,7 @@ fn compileAlts(
 }
 
 ///|
-fn argOffset(n : Int, env : List[(String, Int)]) -> List[(String, Int)] {
+fn argOffset(n : Int32, env : List[(String, Int32)]) -> List[(String, Int32)] {
   env.map(fn(entry) {
     let (name, offset) = entry
     (name, offset + n)
@@ -162,12 +162,12 @@ fn argOffset(n : Int, env : List[(String, Int)]) -> List[(String, Int)] {
 
 ///|
 fn compileLet(
-  comp : (RawExpr[String], List[(String, Int)]) -> List[Instruction],
+  comp : (RawExpr[String], List[(String, Int32)]) -> List[Instruction],
   defs : List[(String, RawExpr[String])],
   expr : RawExpr[String],
-  env : List[(String, Int)],
+  env : List[(String, Int32)],
 ) -> List[Instruction] {
-  let (env, codes) = for env = env, acc = @list.empty(), remaining = defs {
+  let (env, codes) = for env = env, acc = @list.List([]), remaining = defs {
     match remaining {
       Empty => break (env, acc)
       More((name, expr), tail=rest) => {
@@ -182,10 +182,10 @@ fn compileLet(
 
 ///|
 fn compileLetrec(
-  comp : (RawExpr[String], List[(String, Int)]) -> List[Instruction],
+  comp : (RawExpr[String], List[(String, Int32)]) -> List[Instruction],
   defs : List[(String, RawExpr[String])],
   expr : RawExpr[String],
-  env : List[(String, Int)],
+  env : List[(String, Int32)],
 ) -> List[Instruction] {
   let mut env = env
   for remaining = defs {
@@ -200,7 +200,7 @@ fn compileLetrec(
   let n = defs.length()
   fn compileDefs(
     defs : List[(String, RawExpr[String])],
-    offset : Int,
+    offset : Int32,
   ) -> List[Instruction] {
     match defs {
       Empty => comp(expr, env) + @list.List([Slide(n)])
@@ -214,7 +214,7 @@ fn compileLetrec(
 }
 
 ///|
-let compiled_primitives : List[(String, Int, List[Instruction])] = @list.List([
+let compiled_primitives : List[(String, Int32, List[Instruction])] = @list.List([
     // Arith
     (
       "add",

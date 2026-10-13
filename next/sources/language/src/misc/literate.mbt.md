@@ -1,7 +1,7 @@
 <!-- start literate fences 1 -->
 ```mbt nocheck
 ///|
-fn helper() -> Int {
+fn helper() -> Int32 {
   42
 }
 ```

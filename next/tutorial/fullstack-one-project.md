@@ -23,8 +23,8 @@ The key is `supported_targets`:
 ```bash
 moon new fullstack_one_project
 cd fullstack_one_project
-moon add moonbitlang/async@0.20.2
-moon add moonbit-community/rabbita
+moon add moonbitlang/async@0.22.4
+moon add moonbit-community/rabbita@0.16.4
 ```
 
 Project layout:

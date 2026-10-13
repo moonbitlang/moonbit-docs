@@ -8,12 +8,12 @@ enum Term {
 ///|
 struct Index {
   name : String
-  depth : Int
+  depth : Int32
 }
 
 ///|
 enum TermDBI {
-  Var(String, Int)
+  Var(String, Int32)
   Abs(String, TermDBI)
   App(TermDBI, TermDBI)
 }
@@ -30,7 +30,7 @@ impl Show for TermDBI with output(self, logger) -> Unit {
 ///| https://bor0.wordpress.com/2019/03/19/writing-a-lambda-calculus-evaluator-in-haskell/
 fn Term::bruijn(self : Self) -> Result[TermDBI, String] {
   // Find the depth corresponding to the first varname in the environment
-  fn find(map : @list.List[Index], varname : String) -> Result[Int, String] {
+  fn find(map : @list.List[Index], varname : String) -> Result[Int32, String] {
     match map {
       Empty => Err(varname)
       More(i, tail=rest) =>
@@ -54,7 +54,7 @@ fn Term::bruijn(self : Self) -> Result[TermDBI, String] {
       Abs(varname, body) => {
         let m = m
           .map(fn(index) { { name: index.name, depth: index.depth + 1 } })
-          .add({ name: varname, depth: 0 })
+          .prepend({ name: varname, depth: 0 })
         let res = go(m, body)
         match res {
           Err(name) => Err(name)
@@ -70,12 +70,12 @@ fn Term::bruijn(self : Self) -> Result[TermDBI, String] {
     }
   }
 
-  go(@list.empty(), self)
+  go(@list.List([]), self)
 }
 
 ///|
 fn subst(t1 : TermDBI, t2 : TermDBI) -> TermDBI {
-  fn go(t1 : TermDBI, t2 : TermDBI, depth : Int) -> TermDBI {
+  fn go(t1 : TermDBI, t2 : TermDBI, depth : Int32) -> TermDBI {
     match t1 {
       Var(_, d) => if d == depth { t2 } else { t1 }
       Abs(name, t) => Abs(name, go(t, t2, depth + 1))

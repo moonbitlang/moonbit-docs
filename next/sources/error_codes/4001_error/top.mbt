@@ -1,3 +1,3 @@
 priv struct S {
-  pub field: Int
+  pub field: Int32
 }

@@ -1,12 +1,12 @@
 pub enum A {
-  A(Int)
+  A(Int32)
   B(Bool)
   C(Double)
 }
 
 pub enum B {
   A(Double)
-  B(Int)
+  B(Int32)
   C(Bool)
 }
 

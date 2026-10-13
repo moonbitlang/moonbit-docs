@@ -1,0 +1,3 @@
+name = "moonbit-community/E0014-fixed-provider"
+
+version = "0.1.0"

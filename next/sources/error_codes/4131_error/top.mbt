@@ -1,4 +1,4 @@
-pub type FuncAlias = (Int) -> Unit
+pub type FuncAlias = (Int32) -> Unit
 
 pub fn FuncAlias::call(self : FuncAlias) -> Unit {
   //   ^~~~~~~~~

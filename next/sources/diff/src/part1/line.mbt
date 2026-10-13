@@ -1,7 +1,7 @@
 ///|
 /// start line definition
 struct Line {
-  number : Int // Line number
+  number : Int32 // Line number
   text : String // Does not include newline
 } derive(ToJson)
 
@@ -9,7 +9,7 @@ struct Line {
 pub extend Line with ToJson::{to_json}
 
 ///|
-fn Line::new(number : Int, text : String) -> Line {
+fn Line::new(number : Int32, text : String) -> Line {
   Line::{ number, text }
 }
 // end line definition

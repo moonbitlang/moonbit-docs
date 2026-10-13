@@ -5,13 +5,13 @@ More often, it involves using other people's work: most noticeably is the [core]
 
 ## Packages and modules
 
-In MoonBit, the most important unit for code organization is a package, which consists of a number of source code files and a single package configuration file (`moon.pkg`, or the legacy `moon.pkg.json` format).
+In MoonBit, the most important unit for code organization is a package, which consists of a number of source code files and a single package configuration file (`moon.pkg`).
 A package is a library by default. A package containing a `main` function is
 declared executable with [`pkgtype(kind: "executable")`](/toolchain/moon/package.md#package-type).
 
 A project, corresponding to a module, consists of multiple packages and a
-single `moon.mod` configuration file. Older projects may still use the legacy
-`moon.mod.json` format.
+single `moon.mod` configuration file. Run `moon fmt` to migrate older projects
+that still contain `moon.mod.json` or `moon.pkg.json` before using other commands.
 
 A module is identified by the [`name`](/toolchain/moon/module.md#name) field, which usually consists of two parts, separated by `/`: `user-name/project-name`.
 A package is identified by the relative path to the source root defined by the [`source`](/toolchain/moon/module.md#source-directory) field. The full identifier would be `user-name/project-name/path-to-pkg`.
@@ -19,7 +19,7 @@ A package is identified by the relative path to the source root defined by the [
 When using things from another package, the dependency between modules should
 first be declared in `moon.mod` with an
 [`import`](/toolchain/moon/module.md#dependency-management) declaration.
-The dependency between packages should then be declared in the package file (`moon.pkg`, or legacy `moon.pkg.json`) by the [`import`](/toolchain/moon/package.md#import) field.
+The dependency between packages should then be declared in the package file (`moon.pkg`) by the [`import`](/toolchain/moon/package.md#import) field.
 Most core packages follow the same rule: if you use `@json`, `@test`, or other
 ordinary core aliases, add the corresponding `moonbitlang/core/...` package to
 `import` to avoid `core_package_not_imported` warnings.
@@ -56,9 +56,9 @@ shadows the prelude definition.
 through it participate in normal unqualified name resolution without an
 explicit `import`.
 
-Compiler builtins are a separate category. Types such as `Int` are built into
+Compiler builtins are a separate category. Types such as `Int32` are built into
 the language itself, not imported from any package, so there is no
-`@builtin.Int`. The same distinction applies to other compiler-known names such
+`@builtin.Int32`. The same distinction applies to other compiler-known names such
 as `String`, `Bool`, and `Unit`.
 
 ### Internal Packages
@@ -138,7 +138,7 @@ There is no restriction within the same package where `pub` types are defined.
 ```moonbit
 // Package A
 pub struct RO {
-  field: Int
+  field: Int32
 }
 test {
   let r = { field: 4 }       // OK
@@ -230,8 +230,8 @@ fn[N : Number] sub(x : N, y: N) -> N {
   Number::op_sub(x, y)
 }
 
-impl Number for Int with op_add(x, y) { x + y }
-impl Number for Int with op_sub(x, y) { x - y }
+impl Number for Int32 with op_add(x, y) { x + y }
+impl Number for Int32 with op_sub(x, y) { x - y }
 
 impl Number for Double with op_add(x, y) { x + y }
 impl Number for Double with op_sub(x, y) { x - y }
@@ -245,11 +245,11 @@ trait Number
 fn[N : Number] op_add(x : N, y : N) -> N
 fn[N : Number] op_sub(x : N, y : N) -> N
 
-impl Number for Int
+impl Number for Int32
 impl Number for Double
 ```
 
-The author of `Number` can make use of the fact that only `Int` and `Double` can ever implement `Number`,
+The author of `Number` can make use of the fact that only `Int32` and `Double` can ever implement `Number`,
 because new implementations are not allowed outside.
 
 ## Virtual Packages

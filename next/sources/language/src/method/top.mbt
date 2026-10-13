@@ -18,7 +18,7 @@ pub fn[X, Y] List::map(self : List[X], f : (X) -> Y) -> List[Y] {
 
 // start method overload example
 struct T1 {
-  x1 : Int
+  x1 : Int32
 }
 
 fn T1::default() -> T1 {
@@ -26,7 +26,7 @@ fn T1::default() -> T1 {
 }
 
 struct T2 {
-  x2 : Int
+  x2 : Int32
 }
 
 fn T2::default() -> T2 {
@@ -55,7 +55,7 @@ test {
 // end method alias
 
 // start local method
-fn Int::my_int_method(self : Int) -> Int {
+fn Int32::my_int_method(self : Int32) -> Int32 {
   self * self + self
 }
 

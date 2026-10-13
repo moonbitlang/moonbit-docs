@@ -7,7 +7,7 @@ test {
 
 ///|
 priv struct S {
-  mut x : Int
+  mut x : Int32
 }
 
 ///|

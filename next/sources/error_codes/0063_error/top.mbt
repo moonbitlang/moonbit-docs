@@ -1,5 +1,5 @@
 ///|
-pub fn consume(value? : Int) -> Unit {
+pub fn consume(value? : Int32) -> Unit {
   ignore(value)
 }
 

@@ -1,6 +1,6 @@
 ///|
 fn checked_predicate() -> Unit {
-  proof_assert ∀ i : Int, i == i
+  proof_assert ∀ i : Int32, i == i
 }
 
 ///|

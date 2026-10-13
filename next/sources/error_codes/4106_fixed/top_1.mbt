@@ -1,5 +1,5 @@
 ///|
-pub fn g(x : Int) -> Unit {
+pub fn g(x : Int32) -> Unit {
   let mut j = 0
   for i = 0; i < x; i = i + 1 {
     println(i)

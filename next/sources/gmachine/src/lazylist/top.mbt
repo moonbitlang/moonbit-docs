@@ -31,13 +31,13 @@ fn[X, Y] Stream::map(self : Stream[X], f : (X) -> Y) -> Stream[Y] {
 
 ///|
 /// start take definition
-fn[T] Stream::take(self : Stream[T], n : Int) -> List[T] {
+fn[T] Stream::take(self : Stream[T], n : Int32) -> List[T] {
   if n == 0 {
-    @list.empty()
+    @list.List([])
   } else {
     match self {
-      Empty => @list.empty()
-      Cons(x, xs) => xs().take(n - 1).add(x)
+      Empty => @list.List([])
+      Cons(x, xs) => xs().take(n - 1).prepend(x)
     }
   }
 }

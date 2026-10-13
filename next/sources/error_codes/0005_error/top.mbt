@@ -1,10 +1,10 @@
 ///|
 priv struct Foo[T] {
-  bar : Int
+  bar : Int32
 }
 
 ///|
 test {
-  let bar : Foo[Int] = { bar: 42 }
+  let bar : Foo[Int32] = { bar: 42 }
   inspect(bar.bar, content="42")
 }

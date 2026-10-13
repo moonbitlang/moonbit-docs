@@ -105,7 +105,7 @@ ageInt := int(age)
 Newtypes are defined as tuple struct in MoonBit:
 
 ```moonbit
-struct Age(Int)
+struct Age(Int32)
 
 let age = Age(25)
 let age_int = age.0
@@ -156,7 +156,7 @@ using the `struct` keyword:
 ```moonbit
 struct Person {
   name : String
-  age : Int
+  age : Int32
 }
 ```
 
@@ -205,7 +205,7 @@ enum IntList {
   /// `Cons` represents a non-empty list and has two payloads:
   /// 1. The first element of the list;
   /// 2. The remaining parts of the list.
-  Cons(Int, IntList)
+  Cons(Int32, IntList)
 }
 ```
 
@@ -356,7 +356,7 @@ In MoonBit, function definitions use the `fn` keyword and a
 slightly different syntax:
 
 ```moonbit
-fn add(a : Int, b : Int) -> Int {
+fn add(a : Int32, b : Int32) -> Int32 {
   a + b
 }
 ```
@@ -432,7 +432,7 @@ of a **mutable type** is passed by reference. -->
 Notable **primitive types** in MoonBit include
 [`Unit`](../../language/fundamentals.md#unit)
 , [`Boolean`](../../language/fundamentals.md#boolean)
-, integers ([`Int`](../../language/fundamentals.md#number), [`Int64`](../../language/fundamentals.md#number), [`UInt`](../../language/fundamentals.md#number), etc.)
+, integers ([`Int32`](../../language/fundamentals.md#number), [`Int64`](../../language/fundamentals.md#number), [`UInt32`](../../language/fundamentals.md#number), etc.)
 , floating-point numbers ([`Double`](../../language/fundamentals.md#number), [`Float`](../../language/fundamentals.md#number), etc.)
 , [`String`](../../language/fundamentals.md#string)
 , [`Char`](../../language/fundamentals.md#char)
@@ -453,8 +453,8 @@ For example, we can rewrite some of the above Go examples in MoonBit:
 
 ```moonbit
 struct Point {
-  mut x : Int
-  mut y : Int
+  mut x : Int32
+  mut y : Int32
 }
 
 fn modify_point_ref(p : Point) -> Unit {
@@ -467,13 +467,13 @@ fn main {
   println("\{point.x}")   // Prints 100
 }
 
-fn increment_array(nums : Array[Int]) -> Unit {
+fn increment_array(nums : Array[Int32]) -> Unit {
   for i = 0; i < nums.length(); i = i + 1 {
     nums[i] += 1 // Modifies the original array
   }
 }
 
-fn modify_map(m : Map[String, Int]) -> Unit {
+fn modify_map(m : Map[String, Int32]) -> Unit {
   m["key"] = 42 // Modifies the original map
 }
 ```
@@ -494,7 +494,7 @@ With the help of `Ref[T]`, you can create mutable references to a value
 just like you would with pointers in Go:
 
 ```moonbit
-fn increment_counter(counter : Ref[Int]) -> Unit {
+fn increment_counter(counter : Ref[Int32]) -> Unit {
   counter.val = counter.val + 1
 }
 
@@ -529,11 +529,11 @@ fn[T : Show] double_string(t : T) -> String {
 
 ### Named Parameters
 
-MoonBit functions also support named arguments with an optional
-default value using the `label? : Type` syntax:
+MoonBit functions also support named arguments using `label~ : Type`.
+To provide a default value, use `label~ : Type = default_expr`:
 
 ```moonbit
-fn named_args(named~ : Int, optional? : Int = 42) -> Int {
+fn named_args(named~ : Int32, optional~ : Int32 = 42) -> Int32 {
   named + optional
 }
 
@@ -565,7 +565,7 @@ In MoonBit, to return an optional value, you will simply need to return `T?`
 (shorthand for `Option[T]`):
 
 ```moonbit
-fn maybe_divide(a : Int, b : Int) -> Int? {
+fn maybe_divide(a : Int32, b : Int32) -> Int32? {
   if b == 0 {
     None
   } else {
@@ -607,7 +607,7 @@ position, where `E` is an error type declared with `suberror`:
 ```moonbit
 suberror ValueError { ValueError(String) }
 
-fn divide(a : Int, b : Int) -> Int raise ValueError {
+fn divide(a : Int32, b : Int32) -> Int32 raise ValueError {
   if b == 0 {
     raise ValueError("division by zero")
   }
@@ -629,7 +629,7 @@ fn use_divide_propagate() -> Unit raise ValueError {
 fn use_divide_try() -> Unit raise ValueError {
   // The type annotation is optional
   let mq : Result[
-    Int,
+    Int32,
     ValueError,
   ] = try {
     Ok(divide(10, 2))
@@ -676,7 +676,7 @@ MoonBit, on the other hand, offers comprehensive pattern matching with the `matc
 You can match against literal values such as booleans, integers, strings, etc.:
 
 ```moonbit
-fn fibonacci(n : Int) -> Int {
+fn fibonacci(n : Int32) -> Int32 {
   match n {
     0 => 0
     // `|` combines multiple patterns
@@ -691,9 +691,9 @@ In addition, it is possible to perform destructuring of structures and tuples:
 
 ```moonbit
 struct Point3D {
-  x : Int
-  y : Int
-  z : Int
+  x : Int32
+  y : Int32
+  z : Int32
 }
 
 fn use_point3d(p : Point3D) -> Unit {
@@ -710,7 +710,7 @@ fn use_point3d(p : Point3D) -> Unit {
 Finally, array patterns allow you to easily destructure arrays, bytes, strings, and views:
 
 ```moonbit
-fn categorize_array(array : Array[Int]) -> String {
+fn categorize_array(array : Array[Int32]) -> String {
   match array {
     [] => "empty"
     [x] => "only=\{x}"
@@ -913,11 +913,11 @@ MoonBit traits can explicitly extend other traits, allowing you to build on exis
 
 ```moonbit
 pub(open) trait Position {
-  pos(Self) -> (Int, Int)
+  pos(Self) -> (Int32, Int32)
 }
 
 pub(open) trait Draw {
-  draw(Self, Int, Int) -> Unit
+  draw(Self, Int32, Int32) -> Unit
 }
 
 pub(open) trait Object: Position + Draw {

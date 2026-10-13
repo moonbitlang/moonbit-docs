@@ -1,5 +1,5 @@
 pub struct MyStruct {
-  field : Int
+  field : Int32
 } derive(Debug)
 
 pub extend MyStruct with Debug::{to_repr}

@@ -1,4 +1,4 @@
-fn a() -> Int {
+fn a() -> Int32 {
   let x = 1
   let y = 1
   let z = 1
@@ -256,7 +256,7 @@ test "lazy iterator" {
   // start list comprehension 3
   let mut p1 = 1
   let mut p2 = 0
-  let fib_numbers : Iter[Int] = Iter::new(fn() {
+  let fib_numbers : Iter[Int32] = Iter::new(fn() {
     let next = p1
     p1 = p1 + p2
     p2 = next
@@ -312,7 +312,7 @@ test "continue label" {
 // end loop label
 
 // start labelled block
-fn absolute(n : Int) -> Int {
+fn absolute(n : Int32) -> Int32 {
   result~: {
     if n < 0 {
       break result~ -n
@@ -323,7 +323,7 @@ fn absolute(n : Int) -> Int {
 // end labelled block
 
 // start guard 1
-fn guarded_get(array : Array[Int], index : Int) -> Int? {
+fn guarded_get(array : Array[Int32], index : Int32) -> Int32? {
   guard index >= 0 && index < array.length() else { None }
   Some(array[index])
 }
@@ -365,14 +365,14 @@ fn g() -> Unit {
 }
 
 // start guard 4
-fn require_some(value : Int?) -> Int {
+fn require_some(value : Int32?) -> Int32 {
   guard! value is Some(result)
   result
 }
 // end guard 4
 
 // start match 1
-fn decide_sport(weather : String, humidity : Int) -> String {
+fn decide_sport(weather : String, humidity : Int32) -> String {
   match weather {
     "sunny" => "tennis"
     "rainy" => if humidity > 80 { "swimming" } else { "football" }
@@ -431,7 +431,7 @@ test "errdefer" {
 }
 // end errdefer
 
-priv struct Tcp(Int)
+priv struct Tcp(Int32)
 
 fn Tcp::close(_sock : Tcp) -> Unit {}
 

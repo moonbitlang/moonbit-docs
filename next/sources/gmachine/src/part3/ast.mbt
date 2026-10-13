@@ -2,11 +2,11 @@ using @list {type List}
 
 enum RawExpr[T] {
   Var(T)
-  Num(Int)
-  Constructor(tag~ : Int, arity~ : Int) // tag, arity
+  Num(Int32)
+  Constructor(tag~ : Int32, arity~ : Int32) // tag, arity
   App(RawExpr[T], RawExpr[T])
   Let(Bool, List[(T, RawExpr[T])], RawExpr[T]) // isRec, Defs, Body
-  Case(RawExpr[T], List[(Int, List[T], RawExpr[T])])
+  Case(RawExpr[T], List[(Int32, List[T], RawExpr[T])])
 } derive(Debug)
 
 pub extend RawExpr with @moonbitlang/core/debug.Debug::{to_repr}

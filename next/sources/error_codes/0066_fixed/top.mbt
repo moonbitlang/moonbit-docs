@@ -1,5 +1,5 @@
 test {
-  let xs : FixedArray[Int] = [1, 2, 3]
+  let xs : FixedArray[Int32] = [1, 2, 3]
   xs[0] = 4
   inspect(xs[0], content="4")
 }

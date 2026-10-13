@@ -1,6 +1,6 @@
 ///|
 pub struct T {
-  mut value : Int
+  mut value : Int32
 }
 
 ///|
@@ -9,6 +9,6 @@ pub fn T::new() -> T {
 }
 
 ///|
-pub fn T::set(self : T, value : Int) -> Unit {
+pub fn T::set(self : T, value : Int32) -> Unit {
   self.value = value
 }

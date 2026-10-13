@@ -1,10 +1,10 @@
 /// Returns the answer.
 ///
 /// ```mbt check
-/// fn helper() -> Int {
+/// fn helper() -> Int32 {
 ///   42
 /// }
 /// ```
-pub fn answer() -> Int {
+pub fn answer() -> Int32 {
   42
 }

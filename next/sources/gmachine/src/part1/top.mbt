@@ -1,6 +1,6 @@
 ///| start run definition
 fn run(codes : List[String]) -> Node {
-  fn parse_then_compile(code : String) -> (String, Int, List[Instruction]) {
+  fn parse_then_compile(code : String) -> (String, Int32, List[Instruction]) {
     let tokens = tokenize(code)
     let code = try tokens.parse_sc() catch {
       ParseError(s) => abort(s)
@@ -15,7 +15,7 @@ fn run(codes : List[String]) -> Node {
   let (heap, globals) = build_initial_heap(codes)
   let initialState : GState = {
     heap,
-    stack: @list.empty(),
+    stack: @list.List([]),
     code: @list.List([PushGlobal("main"), Unwind]),
     globals,
     stats: 0,

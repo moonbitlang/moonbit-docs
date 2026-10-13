@@ -1,7 +1,7 @@
 ///|
 fn keep(
-  x : Int,
-) -> Int where {
+  x : Int32,
+) -> Int32 where {
   proof_require: x >= 0,
   proof_ensure: result => result == x,
   proof_reasoning: "The function returns its argument unchanged.",

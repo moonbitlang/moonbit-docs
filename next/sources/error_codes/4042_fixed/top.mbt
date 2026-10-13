@@ -1,1 +1,1 @@
-pub fn ffi(value : Int) -> Unit = "mod" "ffi"
+pub fn ffi(value : Int32) -> Unit = "mod" "ffi"

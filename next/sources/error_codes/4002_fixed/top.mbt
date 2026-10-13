@@ -1,6 +1,6 @@
 ///|
 pub struct S {
-  field : Int
+  field : Int32
 }
 
 ///|

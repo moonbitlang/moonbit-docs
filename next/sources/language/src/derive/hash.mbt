@@ -1,6 +1,6 @@
 // start derive hash struct
 struct DeriveHash {
-  x : Int
+  x : Int32
   y : String?
 } derive(Hash, Eq)
 

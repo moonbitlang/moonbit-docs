@@ -2,13 +2,13 @@
 
 ///|
 enum Data {
-  Data(sum~ : Int, len~ : Int)
+  Data(sum~ : Int32, len~ : Int32)
 }
 
 ///|
 enum LazyTag {
   Nil
-  Tag(Int)
+  Tag(Int32)
 }
 
 ///|
@@ -102,7 +102,7 @@ fn Node::apply(self : Node, v : LazyTag) -> Node {
 // start build definition
 
 ///|
-fn build(data : ArrayView[Int]) -> Node {
+fn build(data : ArrayView[Int32]) -> Node {
   if data.length() == 1 {
     Node(data=Data(sum=data[0], len=1), tag=Nil, left=Nil, right=Nil)
   } else {
@@ -117,10 +117,10 @@ fn build(data : ArrayView[Int]) -> Node {
 ///|
 fn Node::modify(
   self : Node,
-  l : Int,
-  r : Int,
-  modify_l : Int,
-  modify_r : Int,
+  l : Int32,
+  r : Int32,
+  modify_l : Int32,
+  modify_r : Int32,
   tag : LazyTag,
 ) -> Node {
   if modify_l > r || l > modify_r {
@@ -149,10 +149,10 @@ let empty_node : Node = Node(
 ///|
 fn Node::query(
   self : Node,
-  l : Int,
-  r : Int,
-  query_l : Int,
-  query_r : Int,
+  l : Int32,
+  r : Int32,
+  query_l : Int32,
+  query_r : Int32,
 ) -> Node {
   if query_l > r || l > query_r {
     empty_node

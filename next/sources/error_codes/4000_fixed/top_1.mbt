@@ -10,7 +10,7 @@ fn[A] identity(x : A) -> A {
 
 ///|
 test {
-  let container : Box[Int] = { value: 1 }
+  let container : Box[Int32] = { value: 1 }
   inspect(container.value, content="1")
   inspect(identity("value"), content="value")
 }

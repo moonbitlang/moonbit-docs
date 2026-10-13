@@ -1,9 +1,9 @@
 ///|
 struct Foo {
-  bar : Int
+  bar : Int32
 }
 
 ///|
 struct Bar {
-  foot : Int
+  foot : Int32
 }

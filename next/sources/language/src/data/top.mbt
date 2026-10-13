@@ -1,6 +1,6 @@
 // start struct 1
 struct User {
-  id : Int
+  id : Int32
   name : String
   mut email : String
 }
@@ -48,14 +48,14 @@ test "struct 4" (t : @test.Test) {
 
 // start struct constructor 1
 struct IntBox {
-  value : Int
+  value : Int32
 } derive(Debug)
 
 pub extend IntBox with Debug::{to_repr}
 // end struct constructor 1
 
 // start struct constructor 2
-fn IntBox::IntBox(value : Int) -> IntBox {
+fn IntBox::IntBox(value : Int32) -> IntBox {
   { value, }
 }
 // end struct constructor 2
@@ -69,15 +69,15 @@ test "struct constructor positional" {
 
 // start struct constructor 4
 struct StructWithConstr {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 } derive(Debug)
 
 pub extend StructWithConstr with Debug::{to_repr}
 // end struct constructor 4
 
 // start struct constructor 5
-fn StructWithConstr::StructWithConstr(x~ : Int, y? : Int = x) -> StructWithConstr {
+fn StructWithConstr::StructWithConstr(x~ : Int32, y~ : Int32 = x) -> StructWithConstr {
   { x, y }
 }
 // end struct constructor 5
@@ -97,14 +97,14 @@ suberror BuildError {
 pub extend BuildError with Debug::{to_repr}
 
 struct Positive {
-  value : Int
+  value : Int32
 } derive(Debug)
 
 pub extend Positive with Debug::{to_repr}
 // end struct constructor 7
 
 // start struct constructor 8
-fn Positive::Positive(x : Int) -> Positive raise BuildError {
+fn Positive::Positive(x : Int32) -> Positive raise BuildError {
   guard x >= 0 else { raise NegativeInput }
   { value: x }
 }
@@ -127,12 +127,12 @@ test "struct constructor raise" {
 
 // start custom constructor enum
 enum Endpoint {
-  Host(String, Int)
+  Host(String, Int32)
 } derive(Debug)
 
 pub extend Endpoint with Debug::{to_repr}
 
-fn Endpoint::Endpoint(host : String, port? : Int = 80) -> Endpoint {
+fn Endpoint::Endpoint(host : String, port~ : Int32 = 80) -> Endpoint {
   Host(host, port)
 }
 
@@ -156,7 +156,7 @@ test "enum 3" (t : @test.Test) {
   let println = fn(show) { t.writeln(show) }
   // start enum 2
   /// compare the ordering relation between two integers
-  fn compare_int(x : Int, y : Int) -> Relation {
+  fn compare_int(x : Int32, y : Int32) -> Relation {
     if x < y {
       // when creating an enum, if the target type is known, 
       // you can write the constructor name directly
@@ -197,7 +197,7 @@ enum Lst {
   Nil
   // constructor `Cons` carries additional payload: the first element of the list,
   // and the remaining parts of the list
-  Cons(Int, Lst)
+  Cons(Int32, Lst)
 }
 // end enum 4
 
@@ -247,7 +247,7 @@ test "enum 6" (t : @test.Test) {
 // start enum 7
 enum E {
   // `x` and `y` are labelled argument
-  C(x~ : Int, y~ : Int)
+  C(x~ : Int32, y~ : Int32)
 }
 // end enum 7
 
@@ -368,7 +368,7 @@ fn[X : Compare] Tree::insert(
 // end enum 12
 
 // start typealias 1
-pub type Index = Int
-pub type MyIndex = Int
-pub type MyMap = Map[Int, String]
+pub type Index = Int32
+pub type MyIndex = Int32
+pub type MyMap = Map[Int32, String]
 // end typealias 1

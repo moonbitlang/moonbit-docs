@@ -1,4 +1,4 @@
 ///|
-pub fn f() -> Int {
+pub fn f() -> Int32 {
   42
 }

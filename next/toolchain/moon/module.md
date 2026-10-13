@@ -3,8 +3,10 @@
 moon uses a module file to identify and describe a module. The legacy format is `moon.mod.json`, 
 and the new format is `moon.mod`. For full JSON schema, please check [moon's repository](https://github.com/moonbitlang/moon/blob/main/crates/moonbuild/template/mod.schema.json).
 
-Support for `moon.mod.json` is deprecated. Prefer `moon.mod` for new projects
-and migrate existing JSON files with `moon fmt`.
+`moon.mod.json` is no longer accepted by ordinary toolchain commands.
+Run `moon fmt` to migrate existing JSON manifests to `moon.mod` and `moon.pkg`
+before checking or building the project. The JSON examples below are migration
+references, not configurations for new projects.
 
 
 Full syntax of moon.mod is as follows:

@@ -8,7 +8,7 @@ moonbit:
 ---
 
 ```mbt check
-fn answer() -> Int {
+fn answer() -> Int32 {
   let cell = @ref.Ref::{ val: 41 }
   cell.val + 1
 }

@@ -1,5 +1,5 @@
 ///|
-using @html {button, div, h2, input, nothing, p}
+using @html {button, div, h2, input, p}
 
 ///|
 fn local_warning(title : String) -> String? {
@@ -17,7 +17,7 @@ struct Model {
   title : String
   warning : String?
   server_message : String?
-}
+} derive(Eq)
 
 ///|
 enum Msg {
@@ -29,36 +29,32 @@ enum Msg {
 ///|
 /// start frontend-main
 fn main {
-  let app = @rabbita.cell(
+  let app = @rabbita.elmish(
     model={ title: "", warning: None, server_message: None },
-    update=(dispatch, msg, model) => {
+    update=(model, msg, dispatch) => {
       match msg {
         Edit(title) => {
           let warning = local_warning(title)
-          (@rabbita.none, { title, warning, server_message: None })
+          ({ title, warning, server_message: None }, @rabbita.none)
         }
         Submit =>
           match model.warning {
             Some(message) =>
               (
-                @rabbita.none,
                 { ..model, server_message: Some("not sent: \{message}") },
+                @rabbita.none,
               )
             None => {
               let request = @shared.SubmitTitleRequest::{ title: model.title }
               let request_json = request.to_json().stringify()
-              let expect : @rhttp.Expecting[@rabbita.Cmd, Unit] = @rhttp.Expecting::Text(result => {
-                  dispatch(ServerReplied(result))
-                },
-              )
-              let cmd = @rhttp.post(
-                "http://127.0.0.1:8080/submit",
-                @rhttp.Body::Text(request_json),
-                expect~,
-              )
+              let cmd = @rhttp.post("http://127.0.0.1:8080/submit")
+                .with_text(request_json)
+                .expect_text(result => dispatch(ServerReplied(
+                  result.map_err(err => err.to_string()),
+                )))
               (
-                cmd,
                 { ..model, server_message: Some("sending json request...") },
+                cmd,
               )
             }
           }
@@ -75,11 +71,11 @@ fn main {
               }
             Err(err) => Some("request failed: \{err}")
           }
-          (@rabbita.none, { ..model, server_message, })
+          ({ ..model, server_message, }, @rabbita.none)
         }
       }
     },
-    view=(dispatch, model) => {
+    view=(model, dispatch) => {
       let warning_line = match model.warning {
         Some(message) => p("warning: \{message}")
         None => p("local validation passed")
@@ -95,7 +91,6 @@ fn main {
           input_type=Text,
           value~,
           on_input=text => dispatch(Edit(text)),
-          nothing,
         ),
         button(on_click=dispatch(Submit), "Submit as JSON"),
         warning_line,
@@ -103,6 +98,6 @@ fn main {
       ])
     },
   )
-  @rabbita.new(app).mount("app")
+  app.mount("app")
 }
 /// end frontend-main

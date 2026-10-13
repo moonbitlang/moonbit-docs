@@ -41,7 +41,7 @@ msgid "Types that **are** type constructors:"
 msgstr ""
 
 #: ../../language/error_codes/E4053.md:12
-msgid "Tuple: `(Int, Bool)`"
+msgid "Tuple: `(Int32, Bool)`"
 msgstr ""
 
 #: ../../language/error_codes/E4053.md:13
@@ -55,7 +55,7 @@ msgid "Types that **are not** type constructors:"
 msgstr ""
 
 #: ../../language/error_codes/E4053.md:17
-msgid "Function: `(Int) -> Bool`"
+msgid "Function: `(Int32) -> Bool`"
 msgstr ""
 
 #: ../../language/error_codes/E4053.md:18
@@ -72,7 +72,7 @@ msgid ""
 "  f(Self) -> Unit\n"
 "}\n"
 "\n"
-"impl T for (Int) -> Unit with f(self) {\n"
+"impl T for (Int32) -> Unit with f(self) {\n"
 "  //                         ^\n"
 "  // Error: Invalid type for \"self\": must be a type constructor.\n"
 "  self(0)\n"
@@ -97,7 +97,7 @@ msgid ""
 "}\n"
 "\n"
 "pub struct Handler {\n"
-"  run : (Int) -> Unit\n"
+"  run : (Int32) -> Unit\n"
 "}\n"
 "\n"
 "impl T for Handler with f(self) {\n"

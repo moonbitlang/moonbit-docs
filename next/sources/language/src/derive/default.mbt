@@ -1,6 +1,6 @@
 // start derive default struct
 struct DeriveDefault {
-  x : Int
+  x : Int32
   y : String?
 } derive(Default, Eq)
 
@@ -16,7 +16,7 @@ test "derive default struct" {
 
 // start derive default enum
 enum DeriveDefaultEnum {
-  Case1(Int)
+  Case1(Int32)
   Case2(label~ : String)
   Case3
 } derive(Default, Eq)

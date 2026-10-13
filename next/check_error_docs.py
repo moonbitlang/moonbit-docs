@@ -17,6 +17,8 @@ SKIPPED_ERROR_CODES = {
     # Deprecated syntax is inherently temporary. Once a compatibility form is
     # removed, its example becomes a syntax error instead of emitting E0027.
     '0027',
+    # E0030 requires legacy JSON configuration, rejected by current moon.
+    '0030',
     '0034',
     # Reproducing E0033 requires an extremely long source segment to exceed the
     # compiler's internal line/column limits, so we do not monitor it with a

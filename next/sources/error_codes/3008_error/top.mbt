@@ -1,4 +1,4 @@
-fn outer_sum(array : Array[Int]) -> Int {
+fn outer_sum(array : Array[Int32]) -> Int32 {
   let [fst, .., .., snd] = array
   fst + snd
 }

@@ -1,1 +1,1 @@
-pub let a : Int = true.to_int()
+pub let a : Int32 = true.to_int()

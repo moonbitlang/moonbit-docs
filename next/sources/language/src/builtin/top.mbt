@@ -13,8 +13,8 @@ let boolean : Unit = {
 let number : Unit = {
   // start number 1
   let a = 1234
-  let b : Int = 1_000_000 + a
-  let unsigned_num       : UInt   = 4_294_967_295U
+  let b : Int32 = 1_000_000 + a
+  let unsigned_num       : UInt32   = 4_294_967_295U
   let large_num          : Int64  = 9_223_372_036_854_775_807L
   let unsigned_large_num : UInt64 = 18_446_744_073_709_551_615UL
   // end number 1
@@ -45,8 +45,8 @@ let number : Unit = {
   // end number 7
 
   // start number 5
-  let int : Int = 42
-  let uint : UInt = 42
+  let int : Int32 = 42
+  let uint : UInt32 = 42
   let int64 : Int64 = 42
   let double : Double = 42
   let float : Float = 42
@@ -120,7 +120,7 @@ test {
   let s : String = "hello"
   let b : UInt16 = s.code_unit_at(0) // 'h'
   assert_eq(b, 'h') // 'h' is overloaded to UInt16
-  let c : Int = '兔'
+  let c : Int32 = '兔'
   // Not ok : exceed range
   // let d : UInt16 = '𠮷'
 }
@@ -180,10 +180,10 @@ test "tuple 1" (t : @test.Test) {
   // start tuple 1
   fn pack(
     a : Bool,
-    b : Int,
+    b : Int32,
     c : String,
     d : Double
-  ) -> (Bool, Int, String, Double) {
+  ) -> (Bool, Int32, String, Double) {
     (a, b, c, d)
   }
 
@@ -223,11 +223,11 @@ test {
 // end array 2
 
 // start array 3
-let fixed_array_1 : FixedArray[Int] = [1, 2, 3]
+let fixed_array_1 : FixedArray[Int32] = [1, 2, 3]
 
-let fixed_array_2 = ([1, 2, 3] : FixedArray[Int])
+let fixed_array_2 = ([1, 2, 3] : FixedArray[Int32])
 
-let array_3 : Array[Int] = [1, 2, 3] // Array[Int]
+let array_3 : Array[Int32] = [1, 2, 3] // Array[Int32]
 // end array 3
 
 // start array pitfall
@@ -249,7 +249,7 @@ test {
 // end array pitfall solution
 
 // start map 1
-let map : Map[String, Int] = { "x": 1, "y": 2, "z": 3 }
+let map : Map[String, Int32] = { "x": 1, "y": 2, "z": 3 }
 // end map 1
 
 // start json 1
@@ -260,7 +260,7 @@ let moon_pkg_json_example : Json = {
 // end json 1
 
 // start ref 1
-let a : Ref[Int] = { val: 100 }
+let a : Ref[Int32] = { val: 100 }
 
 test {
   a.val = 200
@@ -272,10 +272,10 @@ test {
 
 // start option result 1
 test {
-  let a : Int? = None
-  let b : Option[Int] = Some(42)
-  let c : Result[Int, String] = Ok(42)
-  let d : Result[Int, String] = Err("error")
+  let a : Int32? = None
+  let b : Option[Int32] = Some(42)
+  let c : Result[Int32, String] = Ok(42)
+  let d : Result[Int32, String] = Err("error")
   match a {
     Some(_) => assert_true(false)
     None => assert_true(true)
@@ -293,7 +293,7 @@ fn expect_double(x : Double) -> Unit {
 }
 
 test {
-  let x = 1 // type of x is Int
+  let x = 1 // type of x is Int32
   let y : Double = 1
   expect_double(1)
 }

@@ -4,6 +4,6 @@ pub(all) suberror ParseError {
 }
 
 ///|
-pub fn parse_number() -> Int raise ParseError {
+pub fn parse_number() -> Int32 raise ParseError {
   raise ParseError
 }

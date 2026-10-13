@@ -34,7 +34,7 @@ pub enum T2 {
 }
 
 ///|
-pub fn T2::new(value : Int) -> T2 {
+pub fn T2::new(value : Int32) -> T2 {
   match value {
     0 => T2::A
     1 => T2::B

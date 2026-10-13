@@ -19,8 +19,8 @@ pub fn[T : Any] check_any(t : T) -> Unit {
 // start example 2
 
 ///|
-pub fn[T : Compare] shortlex(a : Array[T], b : Array[T]) -> Int {
-  match Int::compare(a.length(), b.length()) {
+pub fn[T : Compare] shortlex(a : Array[T], b : Array[T]) -> Int32 {
+  match Int32::compare(a.length(), b.length()) {
     _..<0 => -1
     1..<_ => 1
     0 =>

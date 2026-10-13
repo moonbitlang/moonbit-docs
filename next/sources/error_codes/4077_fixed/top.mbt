@@ -1,13 +1,13 @@
 ///|
 priv trait T {
-  f(Self) -> Int
+  f(Self) -> Int32
 }
 
 ///|
-priv struct A(Int)
+priv struct A(Int32)
 
 ///|
-impl T for A with f(self : A) -> Int {
+impl T for A with f(self : A) -> Int32 {
   self.0
 }
 

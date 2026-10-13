@@ -1,6 +1,6 @@
 /// start heap definition
 /// Use the struct tuple to encapsulate an address type.
-struct Addr(Int) derive(Eq, Debug)
+struct Addr(Int32) derive(Eq, Debug)
 
 pub extend Addr with Eq::{not_equal, equal}
 
@@ -8,12 +8,12 @@ pub extend Addr with @moonbitlang/core/debug.Debug::{to_repr}
 
 /// Describe graph nodes with an enumeration type.
 enum Node {
-  NNum(Int)
+  NNum(Int32)
   // The application node
   NApp(Addr, Addr)
   // To store the number of parameters and 
   // the corresponding sequence of instructions for a super combinator
-  NGlobal(String, Int, List[Instruction])
+  NGlobal(String, Int32, List[Instruction])
   // The Indirection node. The key component of implementing lazy evaluation
   NInd(Addr)
 } derive(Eq, Debug)
@@ -25,18 +25,18 @@ pub extend Node with @moonbitlang/core/debug.Debug::{to_repr}
 struct GHeap {
   // The heap uses an array, 
   // and the space with None content in the array is available as free memory.
-  mut object_count : Int
+  mut object_count : Int32
   memory : Array[Node?]
 }
 
 /// Allocate heap space for nodes.
 fn GHeap::alloc(self : GHeap, node : Node) -> Addr {
   let heap = self
-  fn next(n : Int) -> Int {
+  fn next(n : Int32) -> Int32 {
     (n + 1) % heap.memory.length()
   }
 
-  fn free(i : Int) -> Bool {
+  fn free(i : Int32) -> Bool {
     match heap.memory[i] {
       None => true
       _ => false
@@ -76,7 +76,7 @@ struct GState {
   mut stats : GStats
 }
 
-struct GStats(Int)
+struct GStats(Int32)
 
 fn GState::stat_incr(self : GState) -> Unit {
   self.stats = self.stats.0 + 1
@@ -113,7 +113,7 @@ fn GState::pop2(self : GState) -> (Addr, Addr) {
 // end state definition
 
 /// start push_int definition
-fn GState::push_int(self : GState, num : Int) -> Unit {
+fn GState::push_int(self : GState, num : Int32) -> Unit {
   let addr = self.heap.alloc(NNum(num))
   self.put_stack(addr)
 }
@@ -129,7 +129,7 @@ fn GState::push_global(self : GState, name : String) -> Unit {
 // end push_global definition
 
 /// start push_arg definition
-fn GState::push_arg(self : GState, offset : Int) -> Unit {
+fn GState::push_arg(self : GState, offset : Int32) -> Unit {
   let appaddr = self.stack.unsafe_nth(offset + 1)
   let arg = match self.heap[appaddr] {
     NApp(_, arg) => arg
@@ -151,7 +151,7 @@ fn GState::mk_apply(self : GState) -> Unit {
 // end mk_apply definition
 
 /// start update definition
-fn GState::update(self : GState, n : Int) -> Unit {
+fn GState::update(self : GState, n : Int32) -> Unit {
   let addr = self.pop1()
   let dst = self.stack.unsafe_nth(n)
   self.heap[dst] = NInd(addr)
@@ -185,7 +185,7 @@ fn GState::unwind(self : GState) -> Unit {
 
 /// start build_ih definition
 fn build_initial_heap(
-  scdefs : List[(String, Int, List[Instruction])],
+  scdefs : List[(String, Int32, List[Instruction])],
 ) -> (GHeap, @hashmap.HashMap[String, Addr]) {
   let heap = { object_count: 0, memory: Array::make(10000, None) }
   let globals = @hashmap.HashMap([], capacity=50)

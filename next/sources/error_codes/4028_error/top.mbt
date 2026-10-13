@@ -1,5 +1,5 @@
 pub struct T {
-  a : Int
+  a : Int32
 }
 
-pub let a : Int = { a: 42 }
+pub let a : Int32 = { a: 42 }

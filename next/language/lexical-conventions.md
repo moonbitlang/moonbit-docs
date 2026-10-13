@@ -224,7 +224,7 @@ keyword ::= "as" | "else" | "extern" | "fn" | "if" | "let"
           | "proof_assert" | "proof_let" | "readonly" | "true" | "false"
           | "test" | "loop" | "for" | "in" | "impl" | "with"
           | "guard" | "async" | "is" | "suberror" | "and" | "letrec"
-          | "enumview" | "noraise" | "nocancel" | "defer" | "lexscan"
+          | "enumview" | "noraise" | "nocancel" | "defer" | "lexscan" | "lexmatch"
           | "where" | "declare" | "nobreak" | "extend" | "try!" | "guard!"
 ```
 
@@ -313,7 +313,7 @@ float-literal ::= `float-dec` | `float-hex`
 ```
 
 After the first digit of a numeral, underscores may repeat or trail. Uppercase
-suffixes select `UInt` (`U`), `Int64` (`L`), `UInt64` (`UL`), `BigInt` (`N`),
+suffixes select `UInt32` (`U`), `Int64` (`L`), `UInt64` (`UL`), `BigInt` (`N`),
 or `Float` (`F`). An unsuffixed floating-point literal is a `Double`.
 
 Floating-point literals always contain a decimal point. A hexadecimal `Float`

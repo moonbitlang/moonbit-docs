@@ -1,9 +1,9 @@
 ///|
 priv struct S {
-  field : Int
+  field : Int32
 }
 
 ///|
-pub fn get_field() -> Int {
+pub fn get_field() -> Int32 {
   S::{ field: 0 }.field
 }

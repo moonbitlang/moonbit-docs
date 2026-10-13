@@ -3,7 +3,7 @@
 pub fn[A, B] map(
   arr : ArrayView[A],
   f : (A) -> B,
-  target? : Array[B] = [],
+  target~ : Array[B] = [],
 ) -> Array[B] {
   match arr {
     [hd, .. tl] => {

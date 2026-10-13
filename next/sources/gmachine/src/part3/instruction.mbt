@@ -3,13 +3,13 @@
 enum Instruction {
   Unwind
   PushGlobal(String)
-  PushInt(Int)
-  Push(Int)
+  PushInt(Int32)
+  Push(Int32)
   MkApp
-  Slide(Int)
-  Update(Int)
-  Pop(Int)
-  Alloc(Int)
+  Slide(Int32)
+  Update(Int32)
+  Pop(Int32)
+  Alloc(Int32)
   Eval
   Add
   Sub
@@ -23,8 +23,8 @@ enum Instruction {
   Gt // >
   Ge // >=
   Cond(List[Instruction], List[Instruction])
-  Pack(Int, Int) // tag, arity
-  CaseJump(List[(Int, List[Instruction])])
+  Pack(Int32, Int32) // tag, arity
+  CaseJump(List[(Int32, List[Instruction])])
   Split
   Print
 } derive(Eq, Debug)

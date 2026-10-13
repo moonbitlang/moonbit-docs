@@ -1,7 +1,7 @@
 ///|
 priv struct Point {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 }
 
 ///|

@@ -1,12 +1,12 @@
 ///|
 priv enum E {
-  A(Int)
-  B(value~ : Int)
+  A(Int32)
+  B(value~ : Int32)
 }
 
 ///|
 priv struct S {
-  value : Int
+  value : Int32
 }
 
 ///|

@@ -62,7 +62,7 @@ msgid ""
 "}\n"
 "\n"
 "///|\n"
-"fn[X] List::length(xs : List[X]) -> Int {\n"
+"fn[X] List::length(xs : List[X]) -> Int32 {\n"
 "  ...\n"
 "}\n"
 msgstr ""
@@ -76,7 +76,7 @@ msgstr "要调用一个方法，可以使用语法 `T::method_name(..)`，或者
 
 #: ../../language/methods.md:28
 msgid ""
-"let l : List[Int] = Nil\n"
+"let l : List[Int32] = Nil\n"
 "println(l.length())\n"
 "println(List::length(l))\n"
 msgstr ""
@@ -129,7 +129,7 @@ msgstr "用 `TypeName::method_name` 形式定义出的方法支持重载：由�
 #: ../../language/methods.md:54
 msgid ""
 "struct T1 {\n"
-"  x1 : Int\n"
+"  x1 : Int32\n"
 "}\n"
 "\n"
 "fn T1::default() -> T1 {\n"
@@ -137,7 +137,7 @@ msgid ""
 "}\n"
 "\n"
 "struct T2 {\n"
-"  x2 : Int\n"
+"  x2 : Int32\n"
 "}\n"
 "\n"
 "fn T2::default() -> T2 {\n"
@@ -171,7 +171,7 @@ msgstr ""
 
 #: ../../language/methods.md:68
 msgid ""
-"fn Int::my_int_method(self : Int) -> Int {\n"
+"fn Int32::my_int_method(self : Int32) -> Int32 {\n"
 "  self * self + self\n"
 "}\n"
 "\n"
@@ -223,7 +223,7 @@ msgstr "MoonBit 通过内建的特征支持中缀运算符的重载，例如："
 #: ../../language/methods.md:93
 msgid ""
 "struct T {\n"
-"  x : Int\n"
+"  x : Int32\n"
 "}\n"
 "\n"
 "impl Add for T with add(self : T, other : T) -> T {\n"
@@ -246,12 +246,12 @@ msgstr "其他运算符通过带有属性的方法重载，例如 `_[_]` 和 `_[
 #: ../../language/methods.md:101
 msgid ""
 "struct Coord {\n"
-"  mut x : Int\n"
-"  mut y : Int\n"
+"  mut x : Int32\n"
+"  mut y : Int32\n"
 "}\n"
 "\n"
 "#alias(\"_[_]\")\n"
-"fn Coord::get(coord : Self, key : String) -> Int {\n"
+"fn Coord::get(coord : Self, key : String) -> Int32 {\n"
 "  match key {\n"
 "    \"x\" => coord.x\n"
 "    \"y\" => coord.y\n"
@@ -259,7 +259,7 @@ msgid ""
 "}\n"
 "\n"
 "#alias(\"_[_]=_\")\n"
-"fn Coord::set(coord : Self, key : String, val : Int) -> Unit {\n"
+"fn Coord::set(coord : Self, key : String, val : Int32) -> Unit {\n"
 "  match key {\n"
 "    \"x\" => coord.x = val\n"
 "    \"y\" => coord.y = val\n"
@@ -453,19 +453,24 @@ msgstr ""
 
 #: ../../language/methods.md:145
 msgid ""
+"For `_[_:_]`, a bound can also have an explicit default, such as `start~ : "
+"Index = default_expr`, as in the example below."
+msgstr "对于 `_[_:_]`，范围边界也可以有显式默认值，例如 `start~ : Index = default_expr`，如下例所示。"
+
+#: ../../language/methods.md:148
+msgid ""
 "By implementing `_[_:_]` method, you can create a view for a user-defined"
 " type. Here is an example:"
 msgstr "通过实现 `_[_:_]` 方法，可以为用户定义的类型创建视图。以下是一个例子："
 
-#: ../../language/methods.md:147
+#: ../../language/methods.md:150
 msgid ""
 "struct DataView(String)\n"
 "\n"
 "struct Data {}\n"
 "\n"
 "#alias(\"_[_:_]\")\n"
-"fn Data::as_view(_self : Data, start? : Int = 0, end? : Int) -> DataView "
-"{\n"
+"fn Data::as_view(_self : Data, start~ : Int32 = 0, end? : Int32) -> DataView {\n"
 "  \"[\\{start}, \\{end.unwrap_or(100)})\"\n"
 "}\n"
 "\n"
@@ -478,58 +483,58 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:153
+#: ../../language/methods.md:156
 msgid "Trait system"
 msgstr "Trait（特征）系统"
 
-#: ../../language/methods.md:155
+#: ../../language/methods.md:158
 msgid ""
 "MoonBit provides a trait system for overloading/ad-hoc polymorphism. "
 "Traits declare a list of operations, which must be supplied when a type "
 "wants to implement the trait. Traits can be declared as follows:"
 msgstr "MoonBit 具有用于重载/特殊多态的结构特征系统。特征声明一系列操作，当类型想要实现特征时，必须提供这些操作。特征可以如下声明："
 
-#: ../../language/methods.md:157
+#: ../../language/methods.md:160
 msgid ""
 "pub(open) trait I {\n"
-"  method_(Int) -> Int\n"
-"  method_with_label(Int, label~ : Int) -> Int\n"
-"  //! method_with_label(Int, label?: Int) -> Int\n"
+"  method_(Int32) -> Int32\n"
+"  method_with_label(Int32, label~ : Int32) -> Int32\n"
+"  //! method_with_label(Int32, label?: Int32) -> Int32\n"
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:163
+#: ../../language/methods.md:166
 msgid ""
 "In the body of a trait definition, a special type `Self` is used to refer"
 " to the type that implements the trait."
 msgstr "在特征定义的主体中，使用特殊类型 `Self` 来引用实现特征的类型。"
 
-#: ../../language/methods.md:165
+#: ../../language/methods.md:168
 msgid "Extending traits"
 msgstr "扩展特征"
 
-#: ../../language/methods.md:167
+#: ../../language/methods.md:170
 msgid "A trait can depend on other traits, for example:"
 msgstr "特征（子特征）可以依赖于其他特征（超特征），例如："
 
-#: ../../language/methods.md:169
+#: ../../language/methods.md:172
 msgid ""
 "pub(open) trait Position {\n"
-"  pos(Self) -> (Int, Int)\n"
+"  pos(Self) -> (Int32, Int32)\n"
 "}\n"
 "\n"
 "pub(open) trait Draw {\n"
-"  draw(Self, Int, Int) -> Unit\n"
+"  draw(Self, Int32, Int32) -> Unit\n"
 "}\n"
 "\n"
 "pub(open) trait Object: Position + Draw {}\n"
 msgstr ""
 
-#: ../../language/methods.md:175
+#: ../../language/methods.md:178
 msgid "Implementing traits"
 msgstr "实现特征"
 
-#: ../../language/methods.md:177
+#: ../../language/methods.md:180
 msgid ""
 "To implement a trait, a type must explicitly provide all the methods "
 "required by the trait using the syntax `impl Trait for Type with "
@@ -538,7 +543,7 @@ msgstr ""
 "如果某类型想要实现一个特征，它需要显式地实现特征中的所有方法。实现特征方法的语法是 `impl Trait for Type with "
 "method_name(...) { ... }`，例如："
 
-#: ../../language/methods.md:180
+#: ../../language/methods.md:183
 msgid ""
 "pub(open) trait MyShow {\n"
 "  to_string(Self) -> String\n"
@@ -564,20 +569,20 @@ msgid ""
 "pub extend MyContainer with MyShow::{to_string}\n"
 msgstr ""
 
-#: ../../language/methods.md:186
+#: ../../language/methods.md:189
 msgid ""
 "Type annotation can be omitted for trait `impl`: MoonBit will "
 "automatically infer the type based on the signature of `Trait::method` "
 "and the self type."
 msgstr "`impl` 实现的类型注释可以省略：MoonBit 将根据 `Trait::method` 的签名和 self 类型自动推断类型。"
 
-#: ../../language/methods.md:188
+#: ../../language/methods.md:191
 msgid ""
 "The author of the trait can also define **default implementations** for "
 "some methods in the trait, for example:"
 msgstr "特征的作者还可以为特征中的某些方法定义**默认实现**，例如："
 
-#: ../../language/methods.md:190
+#: ../../language/methods.md:193
 msgid ""
 "pub(open) trait J {\n"
 "  f(Self) -> Unit\n"
@@ -590,7 +595,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:196
+#: ../../language/methods.md:199
 msgid ""
 "Note that in addition to the actual default implementation `impl J with "
 "f_twice`, a mark `= _` is also required in the declaration of `f_twice` "
@@ -601,7 +606,7 @@ msgstr ""
 "注意除了实际的默认实现 `impl J with f_twice` 外，在 `J` 中、`f_twice` 的声明里，还需要提供一个 `= _` "
 "标记。这一标记能让代码的读者一眼知道哪些方法有默认实现，改善可读性。"
 
-#: ../../language/methods.md:201
+#: ../../language/methods.md:204
 msgid ""
 "Implementers of trait `J` don't have to provide an implementation for "
 "`f_twice`: to implement `J`, only `f` is necessary. They can always "
@@ -611,9 +616,9 @@ msgstr ""
 " `J` 的类型实现特征时不必为 `f_twice` 提供实现：要实现 `J`，只有 `f` 是必要的。如果需要，他们总是可以显式地用 `impl"
 " J for Type with f_twice` 覆盖默认实现。"
 
-#: ../../language/methods.md:204
+#: ../../language/methods.md:207
 msgid ""
-"impl J for Int with f(self) {\n"
+"impl J for Int32 with f(self) {\n"
 "  println(self)\n"
 "}\n"
 "\n"
@@ -628,13 +633,13 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../language/methods.md:210
+#: ../../language/methods.md:213
 msgid ""
 "To implement the sub trait, one will have to implement the super traits, "
 "and the methods defined in the sub trait. For example:"
 msgstr "要实现子特征，必须实现超特征，以及子特征中的方法。"
 
-#: ../../language/methods.md:213
+#: ../../language/methods.md:216
 msgid ""
 "impl Position for Point with pos(self) {\n"
 "  (self.x, self.y)\n"
@@ -657,7 +662,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:219
+#: ../../language/methods.md:222
 msgid ""
 "In a generic function constrained by a subtrait, call methods inherited "
 "from a supertrait with qualified syntax such as `Position::pos(obj)`. "
@@ -668,7 +673,7 @@ msgstr ""
 "在受子 trait 约束的泛型函数中，请使用 `Position::pos(obj)` 这样的限定语法调用继承自父 trait "
 "的方法。由于这类方法来自父 trait，而不是直接写出的约束，因此已弃用通过点语法在类型参数上调用它们。"
 
-#: ../../language/methods.md:224
+#: ../../language/methods.md:227
 msgid ""
 "For traits where all methods have default implementation, it is still "
 "necessary to explicitly implement them, in order to support features such"
@@ -683,22 +688,22 @@ msgstr ""
 "相同）`impl Trait for Type` 保证了 `Type` 会实现 `Trait`，MoonBit 会自动检查 `Trait` "
 "中的每个方法是否都有对应的实现。"
 
-#: ../../language/methods.md:231
+#: ../../language/methods.md:234
 msgid ""
 "In addition to handling traits where every methods has a default "
 "implementation, the `impl Trait for Type` can also serve as "
 "documentation, or a TODO mark before filling actual implementation."
 msgstr "除了用于处理每个方法都有默认实现的特征，`impl Trait for Type` 还可以用作文档，或是在实际完成实现之前的一个待办标记。"
 
-#: ../../language/methods.md:235
+#: ../../language/methods.md:238
 msgid "Currently, an empty trait without any method is implemented automatically."
 msgstr "目前，没有任何方法的空特征会自动实现。"
 
-#: ../../language/methods.md:238
+#: ../../language/methods.md:241
 msgid "Attaching trait methods with `extend`"
 msgstr "使用 `extend` 附加 trait 方法"
 
-#: ../../language/methods.md:240
+#: ../../language/methods.md:243
 msgid ""
 "An `impl Trait for Type` declaration records that `Type` implements "
 "`Trait`. Use an `extend` declaration to explicitly attach selected trait "
@@ -707,7 +712,7 @@ msgstr ""
 "`impl Trait for Type` 声明记录 `Type` 实现了 `Trait`。使用 `extend` 声明可以把选定的 trait "
 "方法显式附加到类型上，从而通过点语法调用："
 
-#: ../../language/methods.md:244
+#: ../../language/methods.md:247
 msgid ""
 "struct MyCustomType {}\n"
 "\n"
@@ -723,7 +728,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:250
+#: ../../language/methods.md:253
 msgid ""
 "The general form is `extend Type with Trait::{method1, method2}`. Add "
 "`pub` to make the attached methods public; without `pub`, they are "
@@ -733,7 +738,7 @@ msgstr ""
 "一般形式为 `extend Type with Trait::{method1, method2}`。添加 `pub` 会把附加的方法公开；不加 "
 "`pub` 时，这些方法仅在当前包中可用。私有类型仍可使用私有的 `extend` 声明。"
 
-#: ../../language/methods.md:254
+#: ../../language/methods.md:257
 msgid ""
 "When an attached trait method uses a default implementation, `Self` in "
 "that implementation is specialized to `Type`. Trait-object types can also"
@@ -742,7 +747,7 @@ msgstr ""
 "当附加的 trait 方法使用默认实现时，该实现中的 `Self` 会特化为 `Type`。trait object 类型也可以扩展，例如 "
 "`extend &Derived with Super::{method}`。"
 
-#: ../../language/methods.md:258
+#: ../../language/methods.md:261
 msgid ""
 "Automatically attaching every method from an `impl` is deprecated. "
 "Besides being implicit, that behavior is not refactoring-safe: a new "
@@ -755,17 +760,18 @@ msgstr ""
 "新增带默认实现的方法后，已有的点调用可能产生歧义。库作者应为需要点语法调用的方法添加显式 `extend`；如果无意提供方法式 API，则继续使用"
 " `Trait::method(value, ...)`。"
 
-#: ../../language/methods.md:265
+#: ../../language/methods.md:268
 msgid ""
-"For compatibility, the compiler still accepts the old implicit "
-"attachment. It reports an `implicit_impl_as_method` deprecation "
-"diagnostic by default. New code should use `extend` rather than rely on "
-"the compatibility behavior."
+"For compatibility, the compiler still accepts the old implicit attachment. "
+"It reports an `implicit_impl_as_method` deprecation diagnostic by default. "
+"For an abstract trait, a `pub impl` alone does not trigger this diagnostic; "
+"using an implicitly attached method does. New code should use `extend` "
+"rather than rely on the compatibility behavior."
 msgstr ""
-"为保持兼容，编译器仍接受旧的隐式附加，但默认会报告 `implicit_impl_as_method` "
-"弃用诊断。新代码应使用 `extend`，而不应依赖这一兼容行为。"
+"为兼容旧代码，编译器仍接受旧的隐式方法附加行为，并默认报告 `implicit_impl_as_method` 弃用诊断。对于抽象特征，仅声明 `pub"
+" impl` 不会触发该诊断；使用隐式附加的方法时才会触发。新代码应使用 `extend`，而不是依赖这种兼容行为。"
 
-#: ../../language/methods.md:270
+#: ../../language/methods.md:274
 msgid ""
 "If an implicitly attached method should remain callable temporarily but "
 "is not part of the intended method-style API, add a corresponding "
@@ -776,18 +782,18 @@ msgstr ""
 "如果某个隐式附加的方法需要暂时保持可调用、但不属于预期的方法式 API，请添加对应的 `extend` 声明并用 `#deprecated` "
 "标记。这样既能为下游代码保留迁移路径，也能引导用户改用 `Trait::method(value)` 等限定调用。"
 
-#: ../../language/methods.md:275
+#: ../../language/methods.md:279
 msgid "Using traits"
 msgstr "使用特征"
 
-#: ../../language/methods.md:277
+#: ../../language/methods.md:281
 msgid ""
 "When declaring a generic function, the type parameters can be annotated "
 "with the traits they should implement, allowing the definition of "
 "constrained generic functions. For example:"
 msgstr "在声明泛型函数时，可以使用特征注释类型参数，来定义受约束的泛型函数。例如："
 
-#: ../../language/methods.md:279
+#: ../../language/methods.md:283
 msgid ""
 "fn[X : Eq] contains(xs : Array[X], elem : X) -> Bool {\n"
 "  for x in xs {\n"
@@ -800,7 +806,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:285
+#: ../../language/methods.md:289
 msgid ""
 "Without the `Eq` requirement, the expression `x == elem` in `contains` "
 "will result in a type error. Now, the function `contains` can be called "
@@ -809,11 +815,11 @@ msgstr ""
 "如果没有 `Eq` 要求，`contains` 中的表达式 `x == elem` 将产生类型错误。现在，函数 `contains` "
 "可以使用任何实现 `Eq` 的类型调用，例如："
 
-#: ../../language/methods.md:287
+#: ../../language/methods.md:291
 msgid ""
 "struct Point {\n"
-"  x : Int\n"
-"  y : Int\n"
+"  x : Int32\n"
+"  y : Int32\n"
 "}\n"
 "\n"
 "impl Eq for Point with equal(p1, p2) {\n"
@@ -827,11 +833,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:293
+#: ../../language/methods.md:297
 msgid "Invoke trait methods directly"
 msgstr "直接调用特征方法"
 
-#: ../../language/methods.md:295
+#: ../../language/methods.md:299
 msgid ""
 "Methods of a trait can be called directly via `Trait::method`. MoonBit "
 "will infer the type of `Self` and check if `Self` indeed implements "
@@ -840,7 +846,7 @@ msgstr ""
 "可以通过 `Trait::method` 直接调用特征的方法。MoonBit 将推断 `Self` 的类型，并检查 `Self` 是否确实实现了 "
 "`Trait`，例如："
 
-#: ../../language/methods.md:297
+#: ../../language/methods.md:301
 msgid ""
 "test {\n"
 "  assert_eq(Show::to_string(42), \"42\")\n"
@@ -848,7 +854,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:303
+#: ../../language/methods.md:307
 msgid ""
 "For a future-proof concrete-type API, explicitly attach trait methods "
 "that should support dot syntax with [`extend`](#attaching-trait-methods-"
@@ -859,7 +865,7 @@ msgstr ""
 "为了让具体类型的 API 经得起未来演进，请使用 [`extend`](#attaching-trait-methods-with-extend)"
 " 显式附加需要支持点语法的 trait 方法。普通方法的优先级高于附加的 trait 方法。为保持兼容，现有的隐式点调用仍会被接受，但已经弃用。"
 
-#: ../../language/methods.md:309
+#: ../../language/methods.md:313
 msgid ""
 "For type parameters, a method from the single written constraint may be "
 "called with dot syntax. Use qualified syntax for methods inherited from a"
@@ -872,11 +878,11 @@ msgstr ""
 "方法都应使用限定语法，从而明确所选 trait。trait object 也遵循同样原则：使用限定语法调用父 trait 方法，或显式扩展该 "
 "trait object 类型。"
 
-#: ../../language/methods.md:316
+#: ../../language/methods.md:320
 msgid "Trait objects"
 msgstr "特征对象"
 
-#: ../../language/methods.md:318
+#: ../../language/methods.md:322
 msgid ""
 "MoonBit supports runtime polymorphism via trait objects. If `t` is of "
 "type `T`, which implements trait `I`, one can pack the methods of `T` "
@@ -890,7 +896,7 @@ msgstr ""
 "的 `T` 的方法与 `t` 一起打包到运行时对象中。如果从上下文可以知道某个表达式的类型是特征对象类型，则 `as &I` "
 "可以省略。特征对象擦除了值的具体类型，因此可以将从不同具体类型创建的对象放入相同的数据结构并统一处理："
 
-#: ../../language/methods.md:326
+#: ../../language/methods.md:330
 msgid ""
 "pub(open) trait Animal {\n"
 "  speak(Self) -> String\n"
@@ -931,29 +937,29 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:332
+#: ../../language/methods.md:336
 msgid ""
 "Not all traits can be used to create objects. \"object-safe\" traits' "
 "methods must satisfy the following conditions:"
 msgstr "并非所有特征都可以用于创建对象。“对象安全”特征的方法必须满足以下条件："
 
-#: ../../language/methods.md:335
+#: ../../language/methods.md:339
 msgid "`Self` must be the first parameter of a method"
 msgstr "`Self` 必须是方法的第一个参数"
 
-#: ../../language/methods.md:336
+#: ../../language/methods.md:340
 msgid ""
 "There must be only one occurrence of `Self` in the type of the method "
 "(i.e. the first parameter)"
 msgstr "方法的类型中只能出现一个 `Self`（即第一个参数）"
 
-#: ../../language/methods.md:338
+#: ../../language/methods.md:342
 msgid ""
 "Users can define new methods for trait objects, just like defining new "
 "methods for structs and enums:"
 msgstr "用户可以为特征对象定义新方法，就像为结构体和枚举定义新方法一样："
 
-#: ../../language/methods.md:340
+#: ../../language/methods.md:344
 msgid ""
 "pub(open) trait Logger {\n"
 "  write_string(Self, String) -> Unit\n"
@@ -1005,15 +1011,15 @@ msgstr ""
 "  .write_string(\")\")\n"
 "}\n"
 
-#: ../../language/methods.md:346
+#: ../../language/methods.md:350
 msgid "Builtin traits"
 msgstr "内建特征"
 
-#: ../../language/methods.md:348
+#: ../../language/methods.md:352
 msgid "MoonBit provides the following useful builtin traits:"
 msgstr "MoonBit 提供了以下有用的内建特征："
 
-#: ../../language/methods.md:352
+#: ../../language/methods.md:356
 msgid ""
 "trait Eq {\n"
 "  op_equal(Self, Self) -> Bool\n"
@@ -1021,12 +1027,12 @@ msgid ""
 "\n"
 "trait Compare : Eq {\n"
 "  // `0` for equal, `-1` for smaller, `1` for greater\n"
-"  compare(Self, Self) -> Int\n"
+"  compare(Self, Self) -> Int32\n"
 "}\n"
 "\n"
 "trait Hash {\n"
 "  hash_combine(Self, Hasher) -> Unit // to be implemented\n"
-"  hash(Self) -> Int // has default implementation\n"
+"  hash(Self) -> Int32 // has default implementation\n"
 "}\n"
 "\n"
 "trait Show {\n"
@@ -1044,12 +1050,12 @@ msgstr ""
 "\n"
 "trait Compare : Eq {\n"
 "  // `0` 代表相等，`-1` 代表小于，`1` 代表大于\n"
-"  compare(Self, Self) -> Int\n"
+"  compare(Self, Self) -> Int32\n"
 "}\n"
 "\n"
 "trait Hash {\n"
 "  hash_combine(Self, Hasher) -> Unit // 待实现\n"
-"  hash(Self) -> Int // 有默认实现\n"
+"  hash(Self) -> Int32 // 有默认实现\n"
 "}\n"
 "\n"
 "trait Show {\n"
@@ -1061,19 +1067,19 @@ msgstr ""
 "  default() -> Self\n"
 "}\n"
 
-#: ../../language/methods.md:377
+#: ../../language/methods.md:381
 msgid "Deriving builtin traits"
 msgstr "派生内建特征"
 
-#: ../../language/methods.md:379
+#: ../../language/methods.md:383
 msgid "MoonBit can automatically derive implementations for some builtin traits:"
 msgstr "MoonBit 可以自动为一些内建特征派生实现："
 
-#: ../../language/methods.md:380
+#: ../../language/methods.md:385
 msgid ""
 "struct T {\n"
-"  a : Int\n"
-"  b : Int\n"
+"  a : Int32\n"
+"  b : Int32\n"
 "} derive(Eq, Compare, Debug, Default)\n"
 "\n"
 "pub extend T with Eq::{not_equal, equal}\n"
@@ -1094,6 +1100,6 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:387
+#: ../../language/methods.md:391
 msgid "See [Deriving](./derive.md) for more information about deriving traits."
 msgstr "参见 [派生](./derive.md) 了解有关派生特征的更多信息。"

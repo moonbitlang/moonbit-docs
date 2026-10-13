@@ -1,4 +1,4 @@
 #valtype
 struct Counter {
-  mut value : Int
+  mut value : Int32
 }

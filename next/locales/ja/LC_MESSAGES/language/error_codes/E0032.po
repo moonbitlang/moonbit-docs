@@ -28,11 +28,12 @@ msgstr ""
 
 #: ../../language/error_codes/E0032.md:5
 msgid ""
-"Default value of optional argument is unused. This implies at every call "
-"site of this function, the optional argument is always explicitly "
-"supplied with a value. This means the optional argument can be refactored"
-" into a labelled argument."
+"The default value of an optional argument is unused: every call site "
+"explicitly supplies a value. Remove the default value to make it a required "
+"labelled argument, keeping the `~` in its declaration."
 msgstr ""
+"省略可能な引数のデフォルト値が使われていません。すべての呼び出し箇所で明示的に値が渡されています。宣言の `~` "
+"を残したままデフォルト値を削除すると、必須のラベル付き引数になります。"
 
 #: ../../language/error_codes/E0032.md:7
 msgid "Erroneous example"
@@ -64,7 +65,7 @@ msgstr ""
 #: ../../language/error_codes/E0032.md:17
 msgid ""
 "///|\n"
-"fn f(opt? : Int = 4) -> Int {\n"
+"fn f(opt~ : Int32 = 4) -> Int32 {\n"
 "  ignore(opt)\n"
 "  0\n"
 "}\n"
@@ -81,13 +82,13 @@ msgid "Suggestion"
 msgstr ""
 
 #: ../../language/error_codes/E0032.md:24
-msgid "Turn the optional argument into a labelled argument:"
-msgstr ""
+msgid "Remove the default value to make the labelled argument required:"
+msgstr "デフォルト値を削除して、ラベル付き引数を必須にしてください："
 
 #: ../../language/error_codes/E0032.md:26
 msgid ""
 "///|\n"
-"fn f(opt~ : Int) -> Int {\n"
+"fn f(opt~ : Int32) -> Int32 {\n"
 "  ignore(opt)\n"
 "  0\n"
 "}\n"

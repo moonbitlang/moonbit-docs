@@ -2,13 +2,13 @@
 
 ///|
 priv enum E {
-  A(Int)
-  B(value~ : Int)
+  A(Int32)
+  B(value~ : Int32)
 }
 
 ///|
 priv struct S {
-  value : Int
+  value : Int32
 }
 
 ///|
@@ -52,13 +52,13 @@ test {
 
 ///|
 pub enum E3 {
-  A3(Int)
-  B3(value~ : Int)
+  A3(Int32)
+  B3(value~ : Int32)
 }
 
 ///|
 pub struct S3 {
-  value : Int
+  value : Int32
 }
 // end make public
 
@@ -68,11 +68,11 @@ fn S3::_new() -> S3 {
 }
 
 ///|
-pub fn E3::new_a(value : Int) -> E3 {
+pub fn E3::new_a(value : Int32) -> E3 {
   return E3::A3(value)
 }
 
 ///|
-pub fn E3::new_b(value : Int) -> E3 {
+pub fn E3::new_b(value : Int32) -> E3 {
   return E3::B3(value~)
 }

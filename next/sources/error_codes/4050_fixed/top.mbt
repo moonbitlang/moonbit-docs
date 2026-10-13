@@ -1,5 +1,5 @@
 ///|
-pub let a : Ref[Int?] = Ref(None)
+pub let a : Ref[Int32?] = Ref(None)
 
 ///|
 fn init {
@@ -7,6 +7,6 @@ fn init {
 }
 
 ///|
-fn f() -> Int {
+fn f() -> Int32 {
   a.val.unwrap()
 }

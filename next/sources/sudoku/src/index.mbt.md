@@ -97,7 +97,7 @@ convert coordinates A1-I9 to indices 0-80:
 
 ```moonbit check
 // A1 => 0, A2 => 1
-fn square_to_int(s : String) -> Int {
+fn square_to_int(s : String) -> Int32 {
   if s is [('A'..='I') as a, ('1'..='9') as b, ..] {
     let row = a.to_int() - 'A'.to_int() // 'A' <=> 0
     let col = b.to_int() - '1'.to_int() // '1' <=> 0

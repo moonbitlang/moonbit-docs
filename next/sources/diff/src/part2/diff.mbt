@@ -4,13 +4,13 @@
 fn shortest_edit(
   old~ : Array[Line],
   new~ : Array[Line],
-) -> Array[(BPArray[Int], Int)] {
+) -> Array[(BPArray[Int32], Int32)] {
   let n = old.length()
   let m = new.length()
   let max = n + m
   let v = BPArray::make(2 * max + 1, 0)
   let trace = []
-  fn push(v : BPArray[Int], d : Int) -> Unit {
+  fn push(v : BPArray[Int32], d : Int32) -> Unit {
     trace.push((v, d))
   }
   // v[1] = 0
@@ -49,7 +49,7 @@ fn shortest_edit(
 fn backtrack(
   new~ : Array[Line],
   old~ : Array[Line],
-  trace : Array[(BPArray[Int], Int)],
+  trace : Array[(BPArray[Int32], Int32)],
 ) -> Array[Edit] {
   let mut x = old.length()
   let mut y = new.length()

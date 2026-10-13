@@ -1,5 +1,5 @@
 ///|
-fn f(opt? : Int) -> Unit {
+fn f(opt? : Int32) -> Unit {
   let opt = match opt {
     Some(opt) => opt
     None => 4

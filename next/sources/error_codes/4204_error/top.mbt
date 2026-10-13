@@ -1,5 +1,5 @@
 ///|
-fn count_down(n : Int) -> Int {
+fn count_down(n : Int32) -> Int32 {
   loop n {
     0 => break 0
     i => continue i - 1

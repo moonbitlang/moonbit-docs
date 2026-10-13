@@ -1,5 +1,5 @@
 ///|
-fn length(view : ArrayView[Int]) -> Int {
+fn length(view : ArrayView[Int32]) -> Int32 {
   view.length()
 }
 

@@ -79,7 +79,7 @@ Enums that has no cases or more than one cases without parameters cannot derive 
 ```moonbit
 enum CannotDerive1 {
     Case1(String)
-    Case2(Int)
+    Case2(Int32)
 } derive(Default) // cannot find a constant constructor as default
 
 enum CannotDerive2 {
@@ -162,8 +162,8 @@ Considering the following enum definition:
 ```moonbit
 enum E {
   One
-  Uniform(Int)
-  Axes(x~: Int, y~: Int)
+  Uniform(Int32)
+  Axes(x~: Int32, y~: Int32)
 }
 ```
 
@@ -249,8 +249,8 @@ of a struct, and `[T] | null` otherwise:
 
   ```moonbit
   struct S {
-    x: Int
-    y: Int
+    x: Int32
+    y: Int32
   }
   ```
 

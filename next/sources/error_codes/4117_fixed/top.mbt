@@ -1,5 +1,5 @@
 ///|
-pub fn accumulate(acc~ : Int, value : Int) -> Int {
+pub fn accumulate(acc~ : Int32, value : Int32) -> Int32 {
   acc + value
 }
 

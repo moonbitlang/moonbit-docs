@@ -1,7 +1,7 @@
 // start json basic
 struct JsonTest1 {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 } derive(FromJson, ToJson, Eq)
 
 pub extend JsonTest1 with @moonbitlang/core/json.FromJson::{from_json}
@@ -11,8 +11,8 @@ pub extend JsonTest1 with ToJson::{to_json}
 pub extend JsonTest1 with Eq::{not_equal, equal}
 
 enum JsonTest2 {
-  A(x~ : Int)
-  B(x~ : Int, y~ : Int)
+  A(x~ : Int32)
+  B(x~ : Int32, y~ : Int32)
 } derive(FromJson(style="legacy"), ToJson(style="legacy"), Eq)
 
 pub extend JsonTest2 with @moonbitlang/core/json.FromJson::{from_json}
@@ -35,8 +35,8 @@ test "json basic" {
 
 // start json args
 struct JsonTest3 {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 } derive (
   FromJson(fields(x(rename="renamedX"))),
   ToJson(fields(x(rename="renamedX"))),
@@ -50,8 +50,8 @@ pub extend JsonTest3 with ToJson::{to_json}
 pub extend JsonTest3 with Eq::{not_equal, equal}
 
 enum JsonTest4 {
-  A(x~ : Int)
-  B(x~ : Int, y~ : Int)
+  A(x~ : Int32)
+  B(x~ : Int32, y~ : Int32)
 } derive(FromJson, ToJson, Eq)
 
 pub extend JsonTest4 with @moonbitlang/core/json.FromJson::{from_json}
@@ -74,9 +74,9 @@ test "json args" {
 
 // start json optional
 struct A {
-  x : Int?
-  y : Int??
-  z : (Int?, Int??)
+  x : Int32?
+  y : Int32??
+  z : (Int32?, Int32??)
 } derive(ToJson)
 
 pub extend A with ToJson::{to_json}

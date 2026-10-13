@@ -1,7 +1,7 @@
 ///|
 
 ///|
-fn first_or_zero(values : Array[Int]) -> Int {
+fn first_or_zero(values : Array[Int32]) -> Int32 {
   match values {
     [head, .. _tail] => head
     [] => 0

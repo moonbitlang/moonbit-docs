@@ -4,11 +4,11 @@ pub(open) trait Ider {
 }
 
 ///|
-impl Ider for Int with id(self) {
+impl Ider for Int32 with id(self) {
   concrete_id(self)
 }
 
 ///|
-pub fn trait_id(x : Int) -> Int {
+pub fn trait_id(x : Int32) -> Int32 {
   Ider::id(x)
 }

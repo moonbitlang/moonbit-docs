@@ -1,8 +1,8 @@
 pub struct S {
-  x : Int
-  fn constr(x : Int) -> S
+  x : Int32
+  fn constr(x : Int32) -> S
 }
 
-fn S::constr(x : Int) -> S {
+fn S::constr(x : Int32) -> S {
   { x, }
 }

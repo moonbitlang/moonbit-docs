@@ -1,1 +1,1 @@
-pub let a : Int = @bool.to_integer(true)
+pub let a : Int32 = @bool.to_integer(true)

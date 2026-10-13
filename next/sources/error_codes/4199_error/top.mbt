@@ -1,6 +1,6 @@
 ///|
 pub(all) struct Point {
-  x : Int
+  x : Int32
 }
 
 ///|

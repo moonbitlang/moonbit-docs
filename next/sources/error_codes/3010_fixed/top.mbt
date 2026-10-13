@@ -1,4 +1,4 @@
 ///|
-pub fn greet(name? : String = "World") -> Unit {
+pub fn greet(name~ : String = "World") -> Unit {
   println("Hello, " + name + "!")
 }

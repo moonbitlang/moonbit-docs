@@ -1,2 +1,2 @@
 ///|
-pub(all) struct A(Int)
+pub(all) struct A(Int32)

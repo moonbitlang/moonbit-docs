@@ -1,10 +1,10 @@
 ///|
 pub(all) struct S {
-  value : Int
+  value : Int32
 }
 
 ///|
-pub fn S::get(self : S, index : String) -> Int? {
+pub fn S::get(self : S, index : String) -> Int32? {
   if index == "value" {
     return Some(self.value)
   }

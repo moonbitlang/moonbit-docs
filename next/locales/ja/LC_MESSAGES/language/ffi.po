@@ -284,8 +284,8 @@ msgid ""
 msgstr "関数名を指定して関数をインポートすることで、外部関数を宣言できます："
 
 #: ../../language/ffi.md:166
-msgid "extern \"C\" fn put_char(ch : UInt) -> Unit = \"function_name\"\n"
-msgstr "extern \"C\" fn put_char(ch : UInt) -> Unit = \"function_name\"\n"
+msgid "extern \"C\" fn put_char(ch : UInt32) -> Unit = \"function_name\"\n"
+msgstr "extern \"C\" fn put_char(ch : UInt32) -> Unit = \"function_name\"\n"
 
 #: ../../language/ffi.md:170
 msgid ""
@@ -576,7 +576,7 @@ msgstr ""
 #: ../../language/ffi.md:390
 msgid ""
 "#export_name(\"add\")\n"
-"pub fn add_one(value : Int) -> Int {\n"
+"pub fn add_one(value : Int32) -> Int32 {\n"
 "  value + 1\n"
 "}\n"
 msgstr ""
@@ -874,10 +874,10 @@ msgstr "例えば、ファイルを開く標準の `open` 関数に対する、�
 
 #: ../../language/ffi.md:528
 msgid ""
-"extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open_ffi\""
+"extern \"C\" fn open(filename : Bytes, flags : Int32) -> Int32 = \"open_ffi\""
 "\n"
 msgstr ""
-"extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open_ffi\""
+"extern \"C\" fn open(filename : Bytes, flags : Int32) -> Int32 = \"open_ffi\""
 "\n"
 
 #: ../../language/ffi.md:532
@@ -905,8 +905,8 @@ msgid ""
 msgstr "次の型は常に unboxed であり、ライフタイムを管理する必要はありません："
 
 #: ../../language/ffi.md:544
-msgid "builtin number types, such as `Int` and `Double`"
-msgstr "`Int` や `Double` などの組み込み数値型"
+msgid "builtin number types, such as `Int32` and `Double`"
+msgstr "`Int32` や `Double` などの組み込み数値型"
 
 #: ../../language/ffi.md:545
 msgid "constant `enum` (`enum` where all constructors have no payload)"
@@ -989,10 +989,10 @@ msgstr ""
 #: ../../language/ffi.md:577
 msgid ""
 "#borrow(filename)\n"
-"extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open\"\n"
+"extern \"C\" fn open(filename : Bytes, flags : Int32) -> Int32 = \"open\"\n"
 msgstr ""
 "#borrow(filename)\n"
-"extern \"C\" fn open(filename : Bytes, flags : Int) -> Int = \"open\"\n"
+"extern \"C\" fn open(filename : Bytes, flags : Int32) -> Int32 = \"open\"\n"
 
 #: ../../language/ffi.md:582
 msgid ""

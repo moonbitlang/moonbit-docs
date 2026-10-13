@@ -1,5 +1,5 @@
 ///|
-fn f(opt~ : Int) -> Int {
+fn f(opt~ : Int32) -> Int32 {
   ignore(opt)
   0
 }

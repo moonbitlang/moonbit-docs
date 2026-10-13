@@ -1,5 +1,5 @@
 ///|
-fn f(map : Map[String, Int]) -> Bool {
+fn f(map : Map[String, Int32]) -> Bool {
   match map {
     { "x": x, "y": y, .. } if map.length() == 2 => true
     _ => false

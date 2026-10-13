@@ -7,7 +7,7 @@ pub let p = 42
 // side effect solution
 
 ///|
-let side_effect : Ref[Int] = { val: 0 }
+let side_effect : Ref[Int32] = { val: 0 }
 
 ///|
 fn init {
@@ -18,7 +18,7 @@ fn init {
 // ignore unused
 
 ///|
-let p_unused : Int = 42
+let p_unused : Int32 = 42
 
 ///|
 test {
