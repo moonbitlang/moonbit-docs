@@ -42,7 +42,7 @@ Wrap the snippet in `test { .. }` when you want a test block:
 ///   inspect(@misc.incr(41), content="42")
 /// }
 /// ```
-pub fn incr(x : Int) -> Int {
+pub fn incr(x : Int32) -> Int32 {
   x + 1
 }
 ```
@@ -55,7 +55,7 @@ mark it with a language id other than `mbt check` on the markdown code block:
 /// ```c
 /// x++
 /// ```
-pub fn c_incr(x : Ref[Int]) -> Int {
+pub fn c_incr(x : Ref[Int32]) -> Int32 {
   let old = x.val
   x.val += 1
   old
@@ -95,7 +95,7 @@ For example:
 ```markdown
 ```mbt nocheck
 ///|
-fn helper() -> Int {
+fn helper() -> Int32 {
   42
 }
 ```
@@ -129,7 +129,7 @@ moonbit:
 ---
 
 ```mbt check
-fn answer() -> Int {
+fn answer() -> Int32 {
   let cell = @ref.Ref::{ val: 41 }
   cell.val + 1
 }

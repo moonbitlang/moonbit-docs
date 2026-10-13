@@ -5,7 +5,7 @@ the API, MoonBit emits an alert warning.
 
 ```moonbit
 #alert(unsafe, "This function is unsafe.")
-fn[A] alert_unsafe_get(arr : Array[A], index : Int) -> A {
+fn[A] alert_unsafe_get(arr : Array[A], index : Int32) -> A {
   arr[index]
 }
 ```

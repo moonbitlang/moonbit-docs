@@ -74,35 +74,35 @@ We'll start by defining `Snake` and `Box` types, representing the middle snake a
 ```moonbit
 ///
 struct Box {
-  left : Int
-  right : Int
-  top : Int
-  bottom : Int
+  left : Int32
+  right : Int32
+  top : Int32
+  bottom : Int32
 }
 
 ///|
 struct Snake {
-  start : (Int, Int)
-  end : (Int, Int)
+  start : (Int32, Int32)
+  end : (Int32, Int32)
 }
 
 ///|
-fn Box::width(self : Self) -> Int {
+fn Box::width(self : Self) -> Int32 {
   self.right - self.left
 }
 
 ///|
-fn Box::height(self : Self) -> Int {
+fn Box::height(self : Self) -> Int32 {
   self.bottom - self.top
 }
 
 ///|
-fn Box::size(self : Self) -> Int {
+fn Box::size(self : Self) -> Int32 {
   self.width() + self.height()
 }
 
 ///|
-fn Box::delta(self : Self) -> Int {
+fn Box::delta(self : Self) -> Int32 {
   self.width() - self.height()
 }
 
@@ -116,7 +116,7 @@ fn Box::find_path(
   box : Self,
   old~ : Array[Line],
   new~ : Array[Line],
-) -> Iter[(Int, Int)]? {
+) -> Iter[(Int32, Int32)]? {
   guard box.midpoint(old~, new~) is Some(snake) else { None }
   let start = snake.start
   let end = snake.end
@@ -190,9 +190,9 @@ The forward and backward searches have some modifications compared to the origin
 ///|
 fn Box::forward(
   self : Self,
-  forward~ : BPArray[Int],
-  backward~ : BPArray[Int],
-  depth : Int,
+  forward~ : BPArray[Int32],
+  backward~ : BPArray[Int32],
+  depth : Int32,
   old~ : Array[Line],
   new~ : Array[Line],
 ) -> Snake? {
@@ -226,9 +226,9 @@ fn Box::forward(
 ///|
 fn Box::backward(
   self : Self,
-  forward~ : BPArray[Int],
-  backward~ : BPArray[Int],
-  depth : Int,
+  forward~ : BPArray[Int32],
+  backward~ : BPArray[Int32],
+  depth : Int32,
   old~ : Array[Line],
   new~ : Array[Line],
 ) -> Snake? {

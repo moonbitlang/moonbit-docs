@@ -17,7 +17,7 @@ be released by the foreign side when it is no longer needed.
 
 ```moonbit
 #borrow(filename)
-extern "C" fn open(filename : Bytes, flags : Int) -> Int = "open"
+extern "C" fn open(filename : Bytes, flags : Int32) -> Int32 = "open"
 ```
 
 For the full calling-convention rules, see

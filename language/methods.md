@@ -22,7 +22,7 @@ enum List[X] {
 }
 
 ///|
-fn[X] List::length(xs : List[X]) -> Int {
+fn[X] List::length(xs : List[X]) -> Int32 {
   ...
 }
 ```
@@ -30,7 +30,7 @@ fn[X] List::length(xs : List[X]) -> Int {
 To call a method, you can either invoke using qualified syntax `T::method_name(..)`, or using dot syntax where the first argument is the type of `T`:
 
 ```moonbit
-let l : List[Int] = Nil
+let l : List[Int32] = Nil
 println(l.length())
 println(List::length(l))
 ```
@@ -59,7 +59,7 @@ different types can define methods of the same name, because each method lives i
 
 ```moonbit
 struct T1 {
-  x1 : Int
+  x1 : Int32
 }
 
 fn T1::default() -> T1 {
@@ -67,7 +67,7 @@ fn T1::default() -> T1 {
 }
 
 struct T2 {
-  x2 : Int
+  x2 : Int32
 }
 
 fn T2::default() -> T2 {
@@ -90,7 +90,7 @@ These local methods can override methods from the type's own package (MoonBit wi
 and provide extension/complementary to upstream API:
 
 ```moonbit
-fn Int::my_int_method(self : Int) -> Int {
+fn Int32::my_int_method(self : Int32) -> Int32 {
   self * self + self
 }
 
@@ -127,7 +127,7 @@ MoonBit supports overloading infix operators of builtin operators via several bu
 
 ```moonbit
 struct T {
-  x : Int
+  x : Int32
 }
 
 impl Add for T with add(self : T, other : T) -> T {
@@ -145,12 +145,12 @@ Other operators are overloaded via methods with annotations, for example `_[_]` 
 
 ```moonbit
 struct Coord {
-  mut x : Int
-  mut y : Int
+  mut x : Int32
+  mut y : Int32
 }
 
 #alias("_[_]")
-fn Coord::get(coord : Self, key : String) -> Int {
+fn Coord::get(coord : Self, key : String) -> Int32 {
   match key {
     "x" => coord.x
     "y" => coord.y
@@ -158,7 +158,7 @@ fn Coord::get(coord : Self, key : String) -> Int {
 }
 
 #alias("_[_]=_")
-fn Coord::set(coord : Self, key : String, val : Int) -> Unit {
+fn Coord::set(coord : Self, key : String, val : Int32) -> Unit {
   match key {
     "x" => coord.x = val
     "y" => coord.y = val
@@ -210,6 +210,9 @@ When overloading `_[_]`/`_[_] = _`/`_[_:_]`, the method must have a correcnt sig
 - `_[_]=_` should have signature `(Self, Index, Value) -> Unit`, used as `self[index] = value`
 - `_[_:_]` should have signature `(Self, start? : Index, end? : Index) -> Result`, used as `let result = self[start:end]`
 
+For `_[_:_]`, a bound can also have an explicit default, such as
+`start~ : Index = default_expr`, as in the example below.
+
 By implementing `_[_:_]` method, you can create a view for a user-defined type. Here is an example:
 
 ```moonbit
@@ -218,7 +221,7 @@ struct DataView(String)
 struct Data {}
 
 #alias("_[_:_]")
-fn Data::as_view(_self : Data, start? : Int = 0, end? : Int) -> DataView {
+fn Data::as_view(_self : Data, start~ : Int32 = 0, end? : Int32) -> DataView {
   "[\{start}, \{end.unwrap_or(100)})"
 }
 
@@ -237,9 +240,9 @@ MoonBit provides a trait system for overloading/ad-hoc polymorphism. Traits decl
 
 ```moonbit
 pub(open) trait I {
-  method_(Int) -> Int
-  method_with_label(Int, label~ : Int) -> Int
-  //! method_with_label(Int, label?: Int) -> Int
+  method_(Int32) -> Int32
+  method_with_label(Int32, label~ : Int32) -> Int32
+  //! method_with_label(Int32, label?: Int32) -> Int32
 }
 ```
 
@@ -251,11 +254,11 @@ A trait can depend on other traits, for example:
 
 ```moonbit
 pub(open) trait Position {
-  pos(Self) -> (Int, Int)
+  pos(Self) -> (Int32, Int32)
 }
 
 pub(open) trait Draw {
-  draw(Self, Int, Int) -> Unit
+  draw(Self, Int32, Int32) -> Unit
 }
 
 pub(open) trait Object: Position + Draw {}
@@ -316,7 +319,7 @@ Implementers of trait `J` don't have to provide an implementation for `f_twice`:
 They can always override the default implementation with an explicit `impl J for Type with f_twice`, if desired, though.
 
 ```moonbit
-impl J for Int with f(self) {
+impl J for Int32 with f(self) {
   println(self)
 }
 
@@ -411,7 +414,9 @@ with dot syntax, or keep using `Trait::method(value, ...)` when no method-style
 API is intended.
 
 For compatibility, the compiler still accepts the old implicit attachment. It
-reports an `implicit_impl_as_method` deprecation diagnostic by default. New code
+reports an `implicit_impl_as_method` deprecation diagnostic by default. For an
+abstract trait, a `pub impl` alone does not trigger this diagnostic; using an
+implicitly attached method does. New code
 should use `extend` rather than rely on the compatibility behavior.
 
 If an implicitly attached method should remain callable temporarily but is not
@@ -439,8 +444,8 @@ Without the `Eq` requirement, the expression `x == elem` in `contains` will resu
 
 ```moonbit
 struct Point {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 }
 
 impl Eq for Point with equal(p1, p2) {
@@ -572,12 +577,12 @@ trait Eq {
 
 trait Compare : Eq {
   // `0` for equal, `-1` for smaller, `1` for greater
-  compare(Self, Self) -> Int
+  compare(Self, Self) -> Int32
 }
 
 trait Hash {
   hash_combine(Self, Hasher) -> Unit // to be implemented
-  hash(Self) -> Int // has default implementation
+  hash(Self) -> Int32 // has default implementation
 }
 
 trait Show {
@@ -596,8 +601,8 @@ MoonBit can automatically derive implementations for some builtin traits:
 
 ```moonbit
 struct T {
-  a : Int
-  b : Int
+  a : Int32
+  b : Int32
 } derive(Eq, Compare, Debug, Default)
 
 pub extend T with Eq::{not_equal, equal}

@@ -10,8 +10,8 @@ For outside usages, if the usage will be invalidated by the visibility change in
 // in @util package
 #visibility(change_to="readonly", "Point will be readonly in the future.")
 pub(all) struct Point {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 }
 
 #visibility(change_to="abstract", "Use new_text and new_binary instead.")

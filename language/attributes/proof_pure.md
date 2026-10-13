@@ -5,7 +5,7 @@ executable code and proof-oriented logic.
 
 ```moonbit
 #proof_pure
-fn height(t : Tree) -> Int {
+fn height(t : Tree) -> Int32 {
   match t {
     Empty => 0
     Node(_, _, _, h) => h

@@ -149,7 +149,7 @@ It can be used to simulate many async control flow operation.
 For example, here's a function that run an async function with a timeout:
 
 ```moonbit
-async fn with_timeout(timeout : Int, f : async () -> Unit) -> Unit {
+async fn with_timeout(timeout : Int32, f : async () -> Unit) -> Unit {
   @async.with_task_group(group => {
     group.spawn_bg(no_wait=true, () => {
       @async.sleep(timeout)

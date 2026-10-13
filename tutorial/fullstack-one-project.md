@@ -23,8 +23,8 @@ The key is `supported_targets`:
 ```bash
 moon new fullstack_one_project
 cd fullstack_one_project
-moon add moonbitlang/async@0.20.2
-moon add moonbit-community/rabbita
+moon add moonbitlang/async@0.22.4
+moon add moonbit-community/rabbita@0.16.4
 ```
 
 Project layout:
@@ -54,8 +54,8 @@ name = "moonbit-community/fullstack-one-project-doc"
 version = "0.1.0"
 
 import {
-  "moonbitlang/async@0.20.2",
-  "moonbit-community/rabbita@0.11.6",
+  "moonbitlang/async@0.22.4",
+  "moonbit-community/rabbita@0.16.4",
 }
 
 preferred_target = "native"
@@ -69,7 +69,7 @@ Both frontend and backend import this package.
 
 ```moonbit
 import {
-  "moonbitlang/core/json" @json,
+  "moonbitlang/core/json",
 }
 ```
 
@@ -90,7 +90,7 @@ pub extend SubmitTitleRequest with @moonbitlang/core/json.FromJson::{from_json}
 ///|
 pub(all) suberror TitleValidationError {
   EmptyTitle
-  TooLong(Int)
+  TooLong(Int32)
   ForbiddenHash
 } derive(Eq, ToJson, FromJson)
 
@@ -166,10 +166,10 @@ Frontend behavior:
 
 ```moonbit
 import {
-  "moonbit-community/fullstack-one-project-doc/shared" @shared,
-  "moonbitlang/core/json" @json,
-  "moonbit-community/rabbita" @rabbita,
-  "moonbit-community/rabbita/html" @html,
+  "moonbit-community/fullstack-one-project-doc/shared",
+  "moonbitlang/core/json",
+  "moonbit-community/rabbita",
+  "moonbit-community/rabbita/html",
   "moonbit-community/rabbita/http" @rhttp,
 }
 
@@ -180,36 +180,32 @@ pkgtype(kind: "executable")
 
 ```moonbit
 fn main {
-  let app = @rabbita.cell(
+  let app = @rabbita.elmish(
     model={ title: "", warning: None, server_message: None },
-    update=(dispatch, msg, model) => {
+    update=(model, msg, dispatch) => {
       match msg {
         Edit(title) => {
           let warning = local_warning(title)
-          (@rabbita.none, { title, warning, server_message: None })
+          ({ title, warning, server_message: None }, @rabbita.none)
         }
         Submit =>
           match model.warning {
             Some(message) =>
               (
-                @rabbita.none,
                 { ..model, server_message: Some("not sent: \{message}") },
+                @rabbita.none,
               )
             None => {
               let request = @shared.SubmitTitleRequest::{ title: model.title }
               let request_json = request.to_json().stringify()
-              let expect : @rhttp.Expecting[@rabbita.Cmd, Unit] = @rhttp.Expecting::Text(result => {
-                  dispatch(ServerReplied(result))
-                },
-              )
-              let cmd = @rhttp.post(
-                "http://127.0.0.1:8080/submit",
-                @rhttp.Body::Text(request_json),
-                expect~,
-              )
+              let cmd = @rhttp.post("http://127.0.0.1:8080/submit")
+                .with_text(request_json)
+                .expect_text(result => dispatch(ServerReplied(
+                  result.map_err(err => err.to_string()),
+                )))
               (
-                cmd,
                 { ..model, server_message: Some("sending json request...") },
+                cmd,
               )
             }
           }
@@ -226,11 +222,11 @@ fn main {
               }
             Err(err) => Some("request failed: \{err}")
           }
-          (@rabbita.none, { ..model, server_message, })
+          ({ ..model, server_message, }, @rabbita.none)
         }
       }
     },
-    view=(dispatch, model) => {
+    view=(model, dispatch) => {
       let warning_line = match model.warning {
         Some(message) => p("warning: \{message}")
         None => p("local validation passed")
@@ -246,7 +242,6 @@ fn main {
           input_type=Text,
           value~,
           on_input=text => dispatch(Edit(text)),
-          nothing,
         ),
         button(on_click=dispatch(Submit), "Submit as JSON"),
         warning_line,
@@ -254,7 +249,7 @@ fn main {
       ])
     },
   )
-  @rabbita.new(app).mount("app")
+  app.mount("app")
 }
 ```
 
@@ -268,12 +263,12 @@ Backend behavior:
 
 ```moonbit
 import {
-  "moonbit-community/fullstack-one-project-doc/shared" @shared,
-  "moonbitlang/core/json" @json,
+  "moonbit-community/fullstack-one-project-doc/shared",
+  "moonbitlang/core/json",
   "moonbitlang/async",
-  "moonbitlang/async/fs" @fs,
-  "moonbitlang/async/http" @http,
-  "moonbitlang/async/socket" @socket,
+  "moonbitlang/async/fs",
+  "moonbitlang/async/http",
+  "moonbitlang/async/socket",
   "moonbitlang/async/stdio",
 }
 

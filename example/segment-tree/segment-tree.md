@@ -39,11 +39,11 @@ We use a classic approach to represent the Segment Tree:
 ```moonbit
 enum Node {
   Nil
-  Node(Int, Node, Node)
+  Node(Int32, Node, Node)
 }
 ```
 
-Here, `Nil` represents an empty tree, while a `Node` contains the stored data (of type Int) and its left and right children.
+Here, `Nil` represents an empty tree, while a `Node` contains the stored data (of type Int32) and its left and right children.
 
 ### Building the Tree
 
@@ -67,7 +67,7 @@ With this operation defined, we can easily merge two `Node` instances while main
 We can leverage MoonBit's `ArrayView` feature (known as `slice` in some languages) to recursively build the tree from a segment of a linear structure at a low cost, achieving O(Log N) complexity:
 
 ```moonbit
-fn build(data : ArrayView[Int]) -> Node {
+fn build(data : ArrayView[Int32]) -> Node {
   if data.length() == 1 {
     Node(data[0], Nil, Nil)
   } else {
@@ -109,10 +109,10 @@ let empty_node : Node = Node(0, Nil, Nil)
 ///|
 fn Node::query(
   self : Node,
-  l : Int,
-  r : Int,
-  query_l : Int,
-  query_r : Int,
+  l : Int32,
+  r : Int32,
+  query_l : Int32,
+  query_r : Int32,
 ) -> Node {
   if query_l > r || l > query_r {
     empty_node

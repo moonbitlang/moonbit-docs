@@ -14,13 +14,13 @@ However, an `Error` cannot be constructed directly. A concrete error type must
 be defined, in the following forms:
 
 ```moonbit
-suberror E1 { E1(Int) } // error type E1 has one constructor E1 with an Int payload
+suberror E1 { E1(Int32) } // error type E1 has one constructor E1 with an Int32 payload
 
 suberror E2 // error type E2 has one constructor E2 with no payload
 
 suberror E3 { // error type E3 has three constructors like a normal enum type
   A
-  B(Int, x~ : String)
+  B(Int32, x~ : String)
   C(mut x~ : String, Char, y~ : Bool)
 }
 ```
@@ -29,7 +29,7 @@ The error types can be promoted to the `Error` type automatically, and pattern
 matched back:
 
 ```moonbit
-suberror CustomError { CustomError(UInt) }
+suberror CustomError { CustomError(UInt32) }
 
 test {
   let e : Error = CustomError(42)
@@ -102,7 +102,7 @@ suberror DivError { DivError(String) } derive(Debug)
 
 pub extend DivError with Debug::{to_repr}
 
-fn div(x : Int, y : Int) -> Int raise DivError {
+fn div(x : Int32, y : Int32) -> Int32 raise DivError {
   if y == 0 {
     raise DivError("division by zero")
   }
@@ -143,7 +143,7 @@ For functions that do not raise an error, you can add `noraise` in the
 signature. For example:
 
 ```moonbit
-fn add(a : Int, b : Int) -> Int noraise {
+fn add(a : Int32, b : Int32) -> Int32 noraise {
   a + b
 }
 ```
@@ -205,7 +205,7 @@ Applying the function normally will rethrow the error directly in case of an
 error. For example:
 
 ```moonbit
-fn div_reraise(x : Int, y : Int) -> Int raise DivError {
+fn div_reraise(x : Int32, y : Int32) -> Int32 raise DivError {
   div(x, y) // Rethrow the error if `div` raised an error
 }
 ```
@@ -258,7 +258,7 @@ of the [`Result`](https://docs.moonbitlang.com/en/latest/language/fundamentals.h
 
 ```moonbit
 test {
-  let res : Result[Int, DivError] = Ok(div(6, 0) * div(6, 3)) catch {
+  let res : Result[Int32, DivError] = Ok(div(6, 0) * div(6, 3)) catch {
     error => Err(error)
   }
   match res {
@@ -273,7 +273,7 @@ test {
 You can also panic directly when an unexpected error occurs:
 
 ```moonbit
-fn remainder(a : Int, b : Int) -> Int raise DivError {
+fn remainder(a : Int32, b : Int32) -> Int32 raise DivError {
   if b == 0 {
     raise DivError("division by zero")
   }

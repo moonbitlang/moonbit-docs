@@ -6,7 +6,7 @@ name is used in generated Wasm, JavaScript, or C output:
 
 ```moonbit
 #export_name("add")
-pub fn add_one(value : Int) -> Int {
+pub fn add_one(value : Int32) -> Int32 {
   value + 1
 }
 ```

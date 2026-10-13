@@ -20,8 +20,8 @@ For enums, the order between cases ascends in the order of definition.
 
 ```moonbit
 struct DeriveEqCompare {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 } derive(Eq, Compare)
 
 pub extend DeriveEqCompare with Eq::{not_equal, equal}
@@ -56,7 +56,7 @@ test "derive eq_compare struct" {
 
 ```moonbit
 enum DeriveEqCompareEnum {
-  Case1(Int)
+  Case1(Int32)
   Case2(label~ : String)
   Case3
 } derive(Eq, Compare)
@@ -99,8 +99,8 @@ It is useful with `debug_inspect` in tests and `@debug.to_string` when formattin
 
 ```moonbit
 struct DebugPoint {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 } derive(Debug)
 
 pub extend DebugPoint with Debug::{to_repr}
@@ -115,8 +115,8 @@ Enums can derive `Debug` as well:
 
 ```moonbit
 enum DebugShape {
-  Circle(radius~ : Int)
-  Rect(width~ : Int, height~ : Int)
+  Circle(radius~ : Int32)
+  Rect(width~ : Int32, height~ : Int32)
 } derive(Debug)
 
 pub extend DebugShape with Debug::{to_repr}
@@ -138,7 +138,7 @@ For structs, the default value is the struct with all fields set as their defaul
 
 ```moonbit
 struct DeriveDefault {
-  x : Int
+  x : Int32
   y : String?
 } derive(Default, Eq)
 
@@ -156,7 +156,7 @@ For enums, the default value is the only case that has no parameters.
 
 ```moonbit
 enum DeriveDefaultEnum {
-  Case1(Int)
+  Case1(Int32)
   Case2(label~ : String)
   Case3
 } derive(Default, Eq)
@@ -177,7 +177,7 @@ Enums that has no cases or more than one cases without parameters cannot derive 
 ```moonbit
 enum CannotDerive1 {
     Case1(String)
-    Case2(Int)
+    Case2(Int32)
 } derive(Default) // cannot find a constant constructor as default
 
 enum CannotDerive2 {
@@ -194,7 +194,7 @@ for example `HashMap`s and `HashSet`s.
 
 ```moonbit
 struct DeriveHash {
-  x : Int
+  x : Int32
   y : String?
 } derive(Hash, Eq)
 
@@ -227,8 +227,8 @@ implementation must itself implement `Shrink`.
 ```moonbit
 ///|
 struct ShrinkPoint {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 } derive(Shrink)
 
 ///|
@@ -255,8 +255,8 @@ The implementation is mainly for debugging and storing the types in a human-read
 
 ```moonbit
 struct JsonTest1 {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 } derive(FromJson, ToJson, Eq)
 
 pub extend JsonTest1 with @moonbitlang/core/json.FromJson::{from_json}
@@ -266,8 +266,8 @@ pub extend JsonTest1 with ToJson::{to_json}
 pub extend JsonTest1 with Eq::{not_equal, equal}
 
 enum JsonTest2 {
-  A(x~ : Int)
-  B(x~ : Int, y~ : Int)
+  A(x~ : Int32)
+  B(x~ : Int32, y~ : Int32)
 } derive(FromJson(style="legacy"), ToJson(style="legacy"), Eq)
 
 pub extend JsonTest2 with @moonbitlang/core/json.FromJson::{from_json}
@@ -304,8 +304,8 @@ The arguments include: `repr`, `case_repr`, `default`, `rename_all`, etc.
 
 ```moonbit
 struct JsonTest3 {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 } derive (
   FromJson(fields(x(rename="renamedX"))),
   ToJson(fields(x(rename="renamedX"))),
@@ -319,8 +319,8 @@ pub extend JsonTest3 with ToJson::{to_json}
 pub extend JsonTest3 with Eq::{not_equal, equal}
 
 enum JsonTest4 {
-  A(x~ : Int)
-  B(x~ : Int, y~ : Int)
+  A(x~ : Int32)
+  B(x~ : Int32, y~ : Int32)
 } derive(FromJson, ToJson, Eq)
 
 pub extend JsonTest4 with @moonbitlang/core/json.FromJson::{from_json}
@@ -350,8 +350,8 @@ Considering the following enum definition:
 ```moonbit
 enum E {
   One
-  Uniform(Int)
-  Axes(x~: Int, y~: Int)
+  Uniform(Int32)
+  Axes(x~: Int32, y~: Int32)
 }
 ```
 
@@ -382,9 +382,9 @@ of a struct, and `[T] | null` otherwise:
 
 ```moonbit
 struct A {
-  x : Int?
-  y : Int??
-  z : (Int?, Int??)
+  x : Int32?
+  y : Int32??
+  z : (Int32?, Int32??)
 } derive(ToJson)
 
 pub extend A with ToJson::{to_json}
@@ -450,8 +450,8 @@ test {
   For example, for a struct
   ```moonbit
   struct S {
-    x: Int
-    y: Int
+    x: Int32
+    y: Int32
   }
   ```
 

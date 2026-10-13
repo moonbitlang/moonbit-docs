@@ -11,7 +11,7 @@ The measurements and statistical analysis will be conducted and passed to `moon`
 where they will be displayed in the console output.
 
 ```moonbit
-fn fib(n : Int) -> Int {
+fn fib(n : Int32) -> Int32 {
   if n < 2 {
     return n
   }
@@ -51,7 +51,7 @@ In this case, you may want to bench them in a batch within a block for easy comp
 The `name` parameter of the `@bench.T::bench` method can be used to identify the benchmark.
 
 ```moonbit
-fn fast_fib(n : Int) -> Int {
+fn fast_fib(n : Int32) -> Int32 {
   if n < 2 {
     return n
   } else {

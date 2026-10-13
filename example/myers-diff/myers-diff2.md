@@ -11,13 +11,13 @@ The first step to obtaining the complete edit sequence is to save the entire edi
 fn shortest_edit(
   old~ : Array[Line],
   new~ : Array[Line],
-) -> Array[(BPArray[Int], Int)] {
+) -> Array[(BPArray[Int32], Int32)] {
   let n = old.length()
   let m = new.length()
   let max = n + m
   let v = BPArray::make(2 * max + 1, 0)
   let trace = []
-  fn push(v : BPArray[Int], d : Int) -> Unit {
+  fn push(v : BPArray[Int32], d : Int32) -> Unit {
     trace.push((v, d))
   }
   // v[1] = 0
@@ -70,7 +70,7 @@ Next, let's perform the backtracking.
 fn backtrack(
   new~ : Array[Line],
   old~ : Array[Line],
-  trace : Array[(BPArray[Int], Int)],
+  trace : Array[(BPArray[Int32], Int32)],
 ) -> Array[Edit] {
   let mut x = old.length()
   let mut y = new.length()
@@ -133,7 +133,7 @@ To print a neat diff, we need to left-align the text. Also, due to the order iss
 let line_width = 4
 
 ///|
-fn pad_right(s : String, width : Int) -> String {
+fn pad_right(s : String, width : Int32) -> String {
   String::make(width - s.length(), ' ') + s
 }
 

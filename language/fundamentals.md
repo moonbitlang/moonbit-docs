@@ -36,14 +36,17 @@ MoonBit have integer type and floating point type:
 | type     | description                                       | example                    |
 |----------|---------------------------------------------------|----------------------------|
 | `Int16`  | 16-bit signed integer                             | `(42 : Int16)`             |
-| `Int`    | 32-bit signed integer                             | `42`                       |
+| `Int32`  | 32-bit signed integer                             | `42`                       |
 | `Int64`  | 64-bit signed integer                             | `1000L`                    |
 | `UInt16` | 16-bit unsigned integer                           | `(14 : UInt16)`            |
-| `UInt`   | 32-bit unsigned integer                           | `14U`                      |
+| `UInt32` | 32-bit unsigned integer                           | `14U`                      |
 | `UInt64` | 64-bit unsigned integer                           | `14UL`                     |
 | `Double` | 64-bit floating point, defined by IEEE754         | `3.14`                     |
 | `Float`  | 32-bit floating point                             | `(3.14 : Float)`           |
 | `BigInt` | represents numeric values larger than other types | `10000000000000000000000N` |
+
+`Int` and `UInt` remain accepted as aliases of `Int32` and `UInt32`.
+The formatter uses the explicit-width names `Int32` and `UInt32`.
 
 MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
@@ -54,8 +57,8 @@ To improve readability, you may place underscores in the middle of numeric liter
   By default, an int literal is signed 32-bit number. For unsigned numbers, a postfix `U` is needed; for 64-bit numbers, a postfix `L` is needed.
   ```moonbit
   let a = 1234
-  let b : Int = 1_000_000 + a
-  let unsigned_num       : UInt   = 4_294_967_295U
+  let b : Int32 = 1_000_000 + a
+  let unsigned_num       : UInt32   = 4_294_967_295U
   let large_num          : Int64  = 9_223_372_036_854_775_807L
   let unsigned_large_num : UInt64 = 18_446_744_073_709_551_615UL
   ```
@@ -92,8 +95,8 @@ To improve readability, you may place underscores in the middle of numeric liter
 When the expected type is known, MoonBit can automatically overload literal, and there is no need to specify the type of number via letter postfix:
 
 ```moonbit
-let int : Int = 42
-let uint : UInt = 42
+let int : Int32 = 42
+let uint : UInt32 = 42
 let int64 : Int64 = 42
 let double : Double = 42
 let float : Float = 42
@@ -202,14 +205,14 @@ let zero = '\u{30}'
 let zero = '\u0030'
 ```
 
-Char literals can be overloaded to type `Int` or `UInt16` when it is the expected type:
+Char literals can be overloaded to type `Int32` or `UInt16` when it is the expected type:
 
 ```moonbit
 test {
   let s : String = "hello"
   let b : UInt16 = s.code_unit_at(0) // 'h'
   assert_eq(b, 'h') // 'h' is overloaded to UInt16
-  let c : Int = '兔'
+  let c : Int32 = '兔'
   // Not ok : exceed range
   // let d : UInt16 = '𠮷'
 }
@@ -340,10 +343,10 @@ A tuple is a collection of finite values constructed using round brackets `()` w
 fn main {
   fn pack(
     a : Bool,
-    b : Int,
+    b : Int32,
     c : String,
     d : Double
-  ) -> (Bool, Int, String, Double) {
+  ) -> (Bool, Int32, String, Double) {
     (a, b, c, d)
   }
 
@@ -377,7 +380,7 @@ A `Ref[T]` is a mutable reference containing a value `val` of type `T`.
 It can be constructed using `{ val : x }`, and can be accessed using `ref.val`. See [struct]() for detailed explanation.
 
 ```moonbit
-let a : Ref[Int] = { val: 100 }
+let a : Ref[Int32] = { val: 100 }
 
 test {
   a.val = 200
@@ -401,10 +404,10 @@ See [enum]() for detailed explanation.
 
 ```moonbit
 test {
-  let a : Int? = None
-  let b : Option[Int] = Some(42)
-  let c : Result[Int, String] = Ok(42)
-  let d : Result[Int, String] = Err("error")
+  let a : Int32? = None
+  let b : Option[Int32] = Some(42)
+  let c : Result[Int32, String] = Ok(42)
+  let d : Result[Int32, String] = Err("error")
   match a {
     Some(_) => assert_true(false)
     None => assert_true(true)
@@ -457,7 +460,7 @@ test {
 }
 ```
 
-This is because all the cells reference to the same object (the `FixedArray[Int]` in this case). One should use `FixedArray::makei()` instead which creates an object for each index.
+This is because all the cells reference to the same object (the `FixedArray[Int32]` in this case). One should use `FixedArray::makei()` instead which creates an object for each index.
 
 ```moonbit
 test {
@@ -473,11 +476,11 @@ When the expected type is known, MoonBit can automatically overload array, other
 `Array[T]` is created:
 
 ```moonbit
-let fixed_array_1 : FixedArray[Int] = [1, 2, 3]
+let fixed_array_1 : FixedArray[Int32] = [1, 2, 3]
 
-let fixed_array_2 = ([1, 2, 3] : FixedArray[Int])
+let fixed_array_2 = ([1, 2, 3] : FixedArray[Int32])
 
-let array_3 : Array[Int] = [1, 2, 3] // Array[Int]
+let array_3 : Array[Int32] = [1, 2, 3] // Array[Int32]
 ```
 
 #### SEE ALSO
@@ -500,12 +503,12 @@ Both `start` and `end` indices can be omitted.
 ```moonbit
 test {
   let xs = [0, 1, 2, 3, 4, 5]
-  let s1 : ArrayView[Int] = xs[2:]
+  let s1 : ArrayView[Int32] = xs[2:]
   @test.assert_eq(s1.to_owned(), [2, 3, 4, 5])
   @test.assert_eq(xs[:4].to_owned(), [0, 1, 2, 3])
   @test.assert_eq(xs[2:5].to_owned(), [2, 3, 4])
   @test.assert_eq(xs[:].to_owned(), [0, 1, 2, 3, 4, 5])
-  let mv : MutArrayView[Int] = xs.mut_view(start=1, end=3)
+  let mv : MutArrayView[Int32] = xs.mut_view(start=1, end=3)
   mv[0] = 99
   inspect(xs[1], content="99")
 }
@@ -520,7 +523,7 @@ MoonBit provides a hash map data structure that preserves insertion order called
 `Map`s can be created via a convenient literal syntax:
 
 ```moonbit
-let map : Map[String, Int] = { "x": 1, "y": 2, "z": 3 }
+let map : Map[String, Int32] = { "x": 1, "y": 2, "z": 3 }
 ```
 
 Currently keys in map literal syntax must be constant. `Map`s can also be destructed elegantly with pattern matching, see [Map Pattern]().
@@ -556,7 +559,7 @@ Overloaded literals allow you to use the same syntax to represent different type
 An empty `{}` literal is ambiguous: it may mean an empty map, an empty JSON
 object, an empty record, or a block. Write the intended form explicitly:
 `Map([])`, `Json::empty_object()`, `Record::{}`, or `{ () }`, respectively.
-For example, you can use `1` to represent `UInt` or `Double` depending on the expected type. If the expected type is not known, the literal will be interpreted as `Int` by default.
+For example, you can use `1` to represent `UInt32` or `Double` depending on the expected type. If the expected type is not known, the literal will be interpreted as `Int32` by default.
 
 ```moonbit
 fn expect_double(x : Double) -> Unit {
@@ -564,7 +567,7 @@ fn expect_double(x : Double) -> Unit {
 }
 
 test {
-  let x = 1 // type of x is Int
+  let x = 1 // type of x is Int32
   let y : Double = 1
   expect_double(1)
 }
@@ -572,13 +575,13 @@ test {
 
 The overloaded literals can be composed. If array literal can be overloaded to `Bytes` , and number literal can be overloaded to `Byte` , then you can overload `[1,2,3]` to `Bytes` as well. Here is a table of overloaded literals in MoonBit:
 
-| Overloaded literal                                          | Default type   | Can be overloaded to                                                              |
-|-------------------------------------------------------------|----------------|-----------------------------------------------------------------------------------|
-| `10`, `0xFF`, `0o377`, `10_000`                             | `Int`          | `UInt`, `Int64`, `UInt64`, `Int16`, `UInt16`, `Byte`, `Double`, `Float`, `BigInt` |
-| `"str"`                                                     | `String`       | —                                                                                 |
-| `'c'`                                                       | `Char`         | `Int`                                                                             |
-| `3.14`                                                      | `Double`       | `Float`                                                                           |
-| `[a, b, c]` (where the types of literals a, b, and c are E) | `Array[E]`     | `FixedArray[E]`, `String`  (if E is of type Char), `Bytes` (if E is of type Byte) |
+| Overloaded literal                                          | Default type   | Can be overloaded to                                                                |
+|-------------------------------------------------------------|----------------|-------------------------------------------------------------------------------------|
+| `10`, `0xFF`, `0o377`, `10_000`                             | `Int32`        | `UInt32`, `Int64`, `UInt64`, `Int16`, `UInt16`, `Byte`, `Double`, `Float`, `BigInt` |
+| `"str"`                                                     | `String`       | —                                                                                   |
+| `'c'`                                                       | `Char`         | `Int32`                                                                             |
+| `3.14`                                                      | `Double`       | `Float`                                                                             |
+| `[a, b, c]` (where the types of literals a, b, and c are E) | `Array[E]`     | `FixedArray[E]`, `String`  (if E is of type Char), `Bytes` (if E is of type Byte)   |
 
 There are also some similar overloading rules in pattern. For more details, see [Pattern Matching]().
 
@@ -608,7 +611,7 @@ Functions take arguments and produce a result. In MoonBit, functions are first-c
 Functions can be defined as top-level or local. We can use the `fn` keyword to define a top-level function that sums three integers and returns the result, as follows:
 
 ```moonbit
-fn add3(x : Int, y : Int, z : Int) -> Int {
+fn add3(x : Int32, y : Int32, z : Int32) -> Int32 {
   x + y + z
 }
 ```
@@ -620,17 +623,17 @@ A declared function has a signature but no body, and a later implementation must
 This is useful when you want to make an API shape available before placing its implementation.
 
 ```moonbit
-declare fn declared_add(x : Int, y : Int) -> Int
+declare fn declared_add(x : Int32, y : Int32) -> Int32
 
-fn declared_add(x : Int, y : Int) -> Int {
+fn declared_add(x : Int32, y : Int32) -> Int32 {
   x + y
 }
 
-struct DeclaredCounter(Int)
+struct DeclaredCounter(Int32)
 
-declare fn DeclaredCounter::value(self : Self) -> Int
+declare fn DeclaredCounter::value(self : Self) -> Int32
 
-fn DeclaredCounter::value(self : Self) -> Int {
+fn DeclaredCounter::value(self : Self) -> Int32 {
   self.0
 }
 
@@ -642,12 +645,26 @@ test "declared functions" {
 
 If a declared function has an implementation, the declaration and the implementation must agree on the function name, visibility, type parameters, parameters, return type, and effects.
 
+Top-level values can also be declared with `declare let name : Type`.
+Provide the matching `let` definition in the same package:
+
+```moonbit
+///|
+declare pub let default_limit : Int32
+
+///|
+pub let default_limit : Int32 = 100
+```
+
+`#alias` belongs on the definition, not on a `declare fn` or `declare let`
+declaration.
+
 ### Local Functions
 
 Local functions can be named or anonymous. Type annotations can be omitted for local function definitions: they can be automatically inferred in most cases. For example:
 
 ```moonbit
-fn local_1() -> Int {
+fn local_1() -> Int32 {
   fn inc(x) { // named as `inc`
     x + 1
   }
@@ -679,7 +696,7 @@ Functions, whether named or anonymous, are *lexical closures*: any identifiers w
 ```moonbit
 let global_y = 3
 
-fn local_2(x : Int) -> (Int, Int) {
+fn local_2(x : Int32) -> (Int32, Int32) {
   fn inc() {
     x + 1
   }
@@ -753,12 +770,12 @@ test {
 Partial application is a technique of applying a function to some of its arguments, resulting in a new function that takes the remaining arguments. In MoonBit, partial application is achieved by using the `_` operator in function application:
 
 ```moonbit
-fn add(x : Int, y : Int) -> Int {
+fn add(x : Int32, y : Int32) -> Int32 {
   x + y
 }
 
 test {
-  let add10 : (Int) -> Int = x => add(10, x)
+  let add10 : (Int32) -> Int32 = x => add(10, x)
   println(add10(5)) // prints 15
   println(add10(10)) // prints 20
 }
@@ -777,7 +794,7 @@ The syntax `f(a, _, b)` for partial application is deprecated. Use `x => f(a, x,
 **Top-level** functions can declare labelled argument with the syntax `label~ : Type`. `label` will also serve as parameter name inside function body:
 
 ```moonbit
-fn labelled_1(arg1~ : Int, arg2~ : Int) -> Int {
+fn labelled_1(arg1~ : Int32, arg2~ : Int32) -> Int32 {
   arg1 + arg2
 }
 ```
@@ -795,10 +812,10 @@ Labelled function can be supplied in any order. The evaluation order of argument
 
 ### Optional arguments
 
-An argument can be made optional by supplying a default expression with the syntax `label?: Type = default_expr`, where the `default_expr` may be omitted. If this argument is not supplied at call site, the default expression will be used:
+An argument can be made optional by supplying a default expression with the syntax `label~ : Type = default_expr`. If this argument is not supplied at the call site, the default expression will be used. For an optional argument without an explicit default, use `label? : Type` (see below).
 
 ```moonbit
-fn optional(opt? : Int = 42) -> Int {
+fn optional(opt~ : Int32 = 42) -> Int32 {
   opt
 }
 
@@ -811,7 +828,7 @@ test {
 The default expression will be evaluated every time it is used. And the side effect in the default expression, if any, will also be triggered. For example:
 
 ```moonbit
-fn incr(counter? : Ref[Int] = { val: 0 }) -> Ref[Int] {
+fn incr(counter~ : Ref[Int32] = { val: 0 }) -> Ref[Int32] {
   counter.val = counter.val + 1
   counter
 }
@@ -830,14 +847,14 @@ expressions that may raise errors or call async functions when in a `raise` or
 `async` context:
 
 ```moonbit
-fn may_fail(x : Int) -> Int raise Failure {
+fn may_fail(x : Int32) -> Int32 raise Failure {
   if x < 0 {
     fail("negative")
   }
   x
 }
 
-fn add_with_optional(base : Int, extra? : Int = 1) -> Int {
+fn add_with_optional(base : Int32, extra~ : Int32 = 1) -> Int32 {
   base + extra
 }
 
@@ -852,17 +869,17 @@ usual:
 ```moonbit
 
 ///|
-async fn fetch_default() -> Int {
+async fn fetch_default() -> Int32 {
   ...
 }
 
 ///|
-async fn build(x? : Int = fetch_default()) -> Int {
+async fn build(x~ : Int32 = fetch_default()) -> Int32 {
   ...
 }
 
 ///|
-async fn use_value() -> Int {
+async fn use_value() -> Int32 {
   build(x=fetch_default())
 }
 ```
@@ -870,9 +887,9 @@ async fn use_value() -> Int {
 If you want to share the result of default expression between different function calls, you can lift the default expression to a toplevel `let` declaration:
 
 ```moonbit
-let default_counter : Ref[Int] = { val: 0 }
+let default_counter : Ref[Int32] = { val: 0 }
 
-fn incr_2(counter? : Ref[Int] = default_counter) -> Int {
+fn incr_2(counter~ : Ref[Int32] = default_counter) -> Int32 {
   counter.val = counter.val + 1
   counter.val
 }
@@ -886,7 +903,7 @@ test {
 The default expression can depend on previous arguments, such as:
 
 ```moonbit
-fn create_rectangle(a : Int, b? : Int = a) -> (Int, Int) {
+fn create_rectangle(a : Int32, b~ : Int32 = a) -> (Int32, Int32) {
   (a, b)
 }
 
@@ -902,7 +919,7 @@ Optional arguments without default values have type `T?` and `None` as the defau
 When supplying this kind of optional argument directly, MoonBit will automatically wrap the value with `Some`:
 
 ```moonbit
-fn new_image(width? : Int, height? : Int) -> Image {
+fn new_image(width? : Int32, height? : Int32) -> Image {
   if width is Some(w) {
     ...
   }
@@ -917,11 +934,11 @@ for example when forwarding optional argument.
 MoonBit provides a syntax `label?=value` for this, with `label?` being an abbreviation of `label?=label`:
 
 ```moonbit
-fn image(width? : Int, height? : Int) -> Image {
+fn image(width? : Int32, height? : Int32) -> Image {
   ...
 }
 
-fn fixed_width_image(height? : Int) -> Image {
+fn fixed_width_image(height? : Int32) -> Image {
   image(width=1920, height?)
 }
 ```
@@ -939,7 +956,7 @@ and `ArgsLoc`, which is an array containing the source location of each argument
 
 ```moonbit
 #callsite(autofill(loc, args_loc))
-fn f(_x : Int, loc~ : SourceLoc, args_loc~ : ArgsLoc) -> String {
+fn f(_x : Int32, loc~ : SourceLoc, args_loc~ : ArgsLoc) -> String {
   (
     $|loc of whole function call: \{loc}
     $|loc of arguments: \{args_loc}
@@ -996,7 +1013,7 @@ The `else` clause can only be omitted if the return value has type `Unit`.
 The `match` expression is similar to conditional expression, but it uses [pattern matching]() to decide which consequent to evaluate and extracting variables at the same time.
 
 ```moonbit
-fn decide_sport(weather : String, humidity : Int) -> String {
+fn decide_sport(weather : String, humidity : Int32) -> String {
   match weather {
     "sunny" => "tennis"
     "rainy" => if humidity > 80 { "swimming" } else { "football" }
@@ -1019,7 +1036,7 @@ the subsequent statements and returns. If the condition is not satisfied (i.e., 
 the code in the `else` block is executed and its evaluation result is returned (the subsequent statements are skipped).
 
 ```moonbit
-fn guarded_get(array : Array[Int], index : Int) -> Int? {
+fn guarded_get(array : Array[Int32], index : Int32) -> Int32? {
   guard index >= 0 && index < array.length() else { None }
   Some(array[index])
 }
@@ -1070,7 +1087,7 @@ When a condition or pattern is exhaustive, use plain `guard` without an `else`.
 The compiler reports a warning for a redundant `!` or `else` clause.
 
 ```moonbit
-fn require_some(value : Int?) -> Int {
+fn require_some(value : Int32?) -> Int32 {
   guard! value is Some(result)
   result
 }
@@ -1406,7 +1423,7 @@ collection:
 ```moonbit
 let mut p1 = 1
 let mut p2 = 0
-let fib_numbers : Iter[Int] = Iter::new(fn() {
+let fib_numbers : Iter[Int32] = Iter::new(fn() {
   let next = p1
   p1 = p1 + p2
   p2 = next
@@ -1469,7 +1486,7 @@ and makes `value` the result of the block. This is useful for returning early
 from nested control flow without returning from the enclosing function.
 
 ```moonbit
-fn absolute(n : Int) -> Int {
+fn absolute(n : Int32) -> Int32 {
   result~: {
     if n < 0 {
       break result~ -n
@@ -1611,16 +1628,16 @@ Almost all built-in sequential data structures have implemented `Iter`:
 
 ```moonbit
 ///|
-fn filter_even(l : Array[Int]) -> Array[Int] {
-  let l_iter : Iter[Int] = l.iter()
+fn filter_even(l : Array[Int32]) -> Array[Int32] {
+  let l_iter : Iter[Int32] = l.iter()
   l_iter.filter(x => (x & 1) == 0).collect()
 }
 
 ///|
-fn fact(n : Int) -> Int {
+fn fact(n : Int32) -> Int32 {
   let start = 1
-  let range : Iter[Int] = start.until(n)
-  range.fold(Int::mul, init=start)
+  let range : Iter[Int32] = start.until(n)
+  range.fold(Int32::mul, init=start)
 }
 ```
 
@@ -1700,7 +1717,7 @@ using the dot syntax `s.f`. If a field is marked as mutable using the keyword
 
 ```moonbit
 struct User {
-  id : Int
+  id : Int32
   name : String
   mut email : String
 }
@@ -1771,7 +1788,7 @@ examples start with a struct:
 
 ```moonbit
 struct IntBox {
-  value : Int
+  value : Int32
 } derive(Debug)
 
 pub extend IntBox with Debug::{to_repr}
@@ -1781,7 +1798,7 @@ The constructor should then be implemented as a method whose name is the same as
 the struct type. Its return value must be the struct itself:
 
 ```moonbit
-fn IntBox::IntBox(value : Int) -> IntBox {
+fn IntBox::IntBox(value : Int32) -> IntBox {
   { value, }
 }
 ```
@@ -1800,15 +1817,15 @@ Constructors may also use labeled and optional arguments, just like normal funct
 
 ```moonbit
 struct StructWithConstr {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 } derive(Debug)
 
 pub extend StructWithConstr with Debug::{to_repr}
 ```
 
 ```moonbit
-fn StructWithConstr::StructWithConstr(x~ : Int, y? : Int = x) -> StructWithConstr {
+fn StructWithConstr::StructWithConstr(x~ : Int32, y~ : Int32 = x) -> StructWithConstr {
   { x, y }
 }
 ```
@@ -1828,14 +1845,14 @@ suberror BuildError {
 pub extend BuildError with Debug::{to_repr}
 
 struct Positive {
-  value : Int
+  value : Int32
 } derive(Debug)
 
 pub extend Positive with Debug::{to_repr}
 ```
 
 ```moonbit
-fn Positive::Positive(x : Int) -> Positive raise BuildError {
+fn Positive::Positive(x : Int32) -> Positive raise BuildError {
   guard x >= 0 else { raise NegativeInput }
   { value: x }
 }
@@ -1859,12 +1876,12 @@ constructor cannot have the same name as an existing constructor of that type:
 
 ```moonbit
 enum Endpoint {
-  Host(String, Int)
+  Host(String, Int32)
 } derive(Debug)
 
 pub extend Endpoint with Debug::{to_repr}
 
-fn Endpoint::Endpoint(host : String, port? : Int = 80) -> Endpoint {
+fn Endpoint::Endpoint(host : String, port~ : Int32 = 80) -> Endpoint {
   Host(host, port)
 }
 
@@ -1879,7 +1896,7 @@ can be used inside async code:
 
 ```moonbit
 struct AsyncBox {
-  value : Int
+  value : Int32
 } derive(Debug)
 
 ///|
@@ -1887,7 +1904,7 @@ pub extend AsyncBox with Debug::{to_repr}
 ```
 
 ```moonbit
-async fn AsyncBox::AsyncBox(x : Int) -> AsyncBox {
+async fn AsyncBox::AsyncBox(x : Int32) -> AsyncBox {
   @async.sleep(0)
   { value: x }
 }
@@ -1930,7 +1947,7 @@ enum Relation {
 
 ```moonbit
 /// compare the ordering relation between two integers
-fn compare_int(x : Int, y : Int) -> Relation {
+fn compare_int(x : Int32, y : Int32) -> Relation {
   if x < y {
     // when creating an enum, if the target type is known, 
     // you can write the constructor name directly
@@ -1980,7 +1997,7 @@ enum Lst {
   Nil
   // constructor `Cons` carries additional payload: the first element of the list,
   // and the remaining parts of the list
-  Cons(Int, Lst)
+  Cons(Int32, Lst)
 }
 ```
 
@@ -2047,7 +2064,7 @@ Enum constructors can have labelled argument:
 ```moonbit
 enum E {
   // `x` and `y` are labelled argument
-  C(x~ : Int, y~ : Int)
+  C(x~ : Int32, y~ : Int32)
 }
 ```
 
@@ -2261,7 +2278,7 @@ constructors; private or read-only `extenum` declarations are deprecated.
 MoonBit supports a special kind of struct called tuple struct:
 
 ```moonbit
-struct UserId(Int)
+struct UserId(Int32)
 
 struct UserInfo(UserId, String)
 ```
@@ -2272,7 +2289,7 @@ Tuple structs are similar to enum with only one constructor (with the same name 
 fn main {
   let id : UserId = UserId(1)
   let name : UserInfo = UserInfo(id, "John Doe")
-  let UserId(uid) = id // uid : Int
+  let UserId(uid) = id // uid : Int32
   let UserInfo(_, uname) = name // uname: String
   println(uid)
   println(uname)
@@ -2290,7 +2307,7 @@ Besides pattern matching, you can also use index to access the elements similar 
 fn main {
   let id : UserId = UserId(1)
   let info : UserInfo = UserInfo(id, "John Doe")
-  let uid : Int = id.0
+  let uid : Int32 = id.0
   let uname : String = info.1
   println(uid)
   println(uname)
@@ -2307,9 +2324,9 @@ John Doe
 MoonBit supports type alias via the syntax `type NewType = OldType`:
 
 ```moonbit
-pub type Index = Int
-pub type MyIndex = Int
-pub type MyMap = Map[Int, String]
+pub type Index = Int32
+pub type MyIndex = Int32
+pub type MyMap = Map[Int32, String]
 ```
 
 Unlike all other kinds of type declaration above, type alias does not define a new type,
@@ -2337,7 +2354,7 @@ and so on. We can define identifiers to bind the matched values so that they can
 ```moonbit
 const ONE = 1
 
-fn match_int(x : Int) -> Unit {
+fn match_int(x : Int32) -> Unit {
   match x {
     0 => println("zero")
     ONE => println("one")
@@ -2350,9 +2367,9 @@ We can use `_` as wildcards for the values we don't care about, and use `..` to 
 
 ```moonbit
 struct Point3D {
-  x : Int
-  y : Int
-  z : Int
+  x : Int32
+  y : Int32
+  z : Int32
 }
 
 fn match_point3D(p : Point3D) -> Unit {
@@ -2363,7 +2380,7 @@ fn match_point3D(p : Point3D) -> Unit {
 }
 
 enum Point[T] {
-  Point2D(Int, Int, name~ : String, payload~ : T)
+  Point2D(Int32, Int32, name~ : String, payload~ : T)
 }
 
 fn[T] match_point(p : Point[T]) -> Unit {
@@ -2541,11 +2558,11 @@ or `1`, while `i1be` yields `0` or `-1`:
 ```moonbit
 test {
   let bytes = b"\x80"
-  let u : UInt = match bytes[:] {
+  let u : UInt32 = match bytes[:] {
     [u1be(u), ..] => u
     _ => fail("u1be")
   }
-  let i : Int = match bytes[:] {
+  let i : Int32 = match bytes[:] {
     [i1be(i), ..] => i
     _ => fail("i1be")
   }
@@ -2556,11 +2573,11 @@ test {
 
 Result types depend on width:
 
-| Width                | Result type    |
-|----------------------|----------------|
-| 1..32 bits (`u`/`i`) | `UInt` / `Int` |
-| 33..64 bits (`u`)    | `UInt64`       |
-| 33..64 bits (`i`)    | `Int64`        |
+| Width                | Result type        |
+|----------------------|--------------------|
+| 1..32 bits (`u`/`i`) | `UInt32` / `Int32` |
+| 33..64 bits (`u`)    | `UInt64`           |
+| 33..64 bits (`i`)    | `Int64`            |
 
 Use `v128le(pattern)` at a byte-aligned offset to extract a 128-bit
 little-endian SIMD value. Its payload has type `V128`.
@@ -2585,7 +2602,10 @@ incompatibility between Windows and SSE2.
 
 For builtin integer types and `Char`, MoonBit allows matching whether the value falls in a specific range.
 
-Range patterns have the form `a..<b` or `a..=b`, where `..<` means the upper bound is exclusive, and `..=` means inclusive upper bound.
+Range patterns have the form `a..<b` or `a..<=b`, where `..<` means the upper bound is exclusive, and `..<=` means the upper bound is inclusive. The older inclusive spelling `a..=b` is accepted and formatted as `a..<=b`.
+
+Descending range patterns `a>..b` and `a>=..b` are also accepted, but produce a warning recommending the equivalent ascending form.
+
 `a` and `b` can be one of:
 
 - literal
@@ -2597,7 +2617,7 @@ Here are some examples:
 ```moonbit
 const Zero = 0
 
-fn sign(x : Int) -> Int {
+fn sign(x : Int32) -> Int32 {
   match x {
     _..<Zero => -1
     Zero => 0
@@ -2607,9 +2627,9 @@ fn sign(x : Int) -> Int {
 
 fn classify_char(c : Char) -> String {
   match c {
-    'a'..='z' => "lowercase"
-    'A'..='Z' => "uppercase"
-    '0'..='9' => "digit"
+    'a'..<='z' => "lowercase"
+    'A'..<='Z' => "uppercase"
+    '0'..<='9' => "digit"
     _ => "other"
   }
 }
@@ -2656,13 +2676,13 @@ Use `with` on an alternative to provide defaults for variables that it does not
 bind structurally:
 
 ```moonbit
-fn option_value(value : Int?) -> Int {
+fn option_value(value : Int32?) -> Int32 {
   match value {
     Some(x) | (None with x = 0) => x
   }
 }
 
-fn pair_value(value : (Int, Int)?) -> Int {
+fn pair_value(value : (Int32, Int32)?) -> Int32 {
   match value {
     Some((x, y)) | (None with x = 0, y = 0) => x + y
   }
@@ -2690,8 +2710,8 @@ If the guard condition is false, the case is skipped and the next case is tried.
 For example:
 
 ```moonbit
-fn guard_cond(x : Int?) -> Int {
-  fn f(x : Int) -> Array[Int] {
+fn guard_cond(x : Int32?) -> Int32 {
+  fn f(x : Int32) -> Array[Int32] {
     [x, x + 42]
   }
 
@@ -2714,7 +2734,7 @@ patterns are covered by the match expression. So you will see a warning of
 partial match for the following case:
 
 ```moonbit
-fn guard_check(x : Int?) -> Unit {
+fn guard_check(x : Int32?) -> Unit {
   match x {
     Some(a) if a >= 0 => ()
     Some(a) if a < 0 => ()
@@ -2845,7 +2865,7 @@ fn[T] is_none(x : T?) -> Bool {
 }
 
 fn start_with_lower_letter(s : String) -> Bool {
-  s is ['a'..='z', ..]
+  s is ['a'..<='z', ..]
 }
 ```
 
@@ -2856,7 +2876,7 @@ contexts:
    binders introduced in the left-hand expression can be used in the right-hand
    expression
    ```moonbit
-   fn f(x : Int?) -> Bool {
+   fn f(x : Int32?) -> Bool {
      x is Some(v) && v >= 0
    }
    ```
@@ -2864,8 +2884,8 @@ contexts:
    boolean expressions `e1 && e2 && ...`, the binders introduced by the `is`
    expression can be used in the branch where the condition evaluates to `true`.
    ```moonbit
-   fn g(x : Array[Int?]) -> Unit {
-     if x is [v, .. rest] && v is Some(i) && i is (0..=10) {
+   fn g(x : Array[Int32?]) -> Unit {
+     if x is [v, .. rest] && v is Some(i) && i is (0..<=10) {
        debug(v)
        println(i)
        debug(rest)
@@ -2875,14 +2895,14 @@ contexts:
 3. In the following statements after a successful `guard` or `guard!`
    condition:
    ```moonbit
-   fn h(x : Int?) -> Unit {
+   fn h(x : Int32?) -> Unit {
      guard! x is Some(v)
      println(v)
    }
    ```
 4. In the body of a `while` loop:
    ```moonbit
-   fn i(x : Int?) -> Unit {
+   fn i(x : Int32?) -> Unit {
      let mut m = x
      while m is Some(v) {
        println(v)
@@ -2896,7 +2916,7 @@ Note that `is` expression can only take a simple pattern. If you need to use
 example:
 
 ```moonbit
-fn j(x : Int) -> Int? {
+fn j(x : Int32) -> Int32? {
   Some(x)
 }
 
@@ -2936,7 +2956,7 @@ const REGEX_IDENT_CONT = re"[A-Za-z0-9_]*"
 
 const REGEX_AB : Regex = re"a" + re"b"
 
-fn regex_default_arg(re? : Regex = re"abc") -> Bool {
+fn regex_default_arg(re~ : Regex = re"abc") -> Bool {
   re.execute("zabc") is Some(_)
 }
 
@@ -3362,10 +3382,10 @@ For example, we can use the spread operator to construct an array:
 
 ```moonbit
 test {
-  let a1 : Array[Int] = [1, 2, 3]
-  let a2 : FixedArray[Int] = [4, 5, 6]
-  let a3 : @list.List[Int] = @list.List([7, 8, 9])
-  let a : Array[Int] = [..a1, ..a2, ..a3, 10]
+  let a1 : Array[Int32] = [1, 2, 3]
+  let a2 : FixedArray[Int32] = [4, 5, 6]
+  let a3 : @list.List[Int32] = @list.List([7, 8, 9])
+  let a : Array[Int32] = [..a1, ..a2, ..a3, 10]
   debug_inspect(a, content="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]")
 }
 ```
@@ -3418,7 +3438,7 @@ test {
 The `todo` syntax (`...`) is a special construct used to mark sections of code that are not yet implemented or are placeholders for future functionality. For example:
 
 ```moonbit
-fn todo_in_func() -> Int {
+fn todo_in_func() -> Int32 {
   ...
 }
 ```

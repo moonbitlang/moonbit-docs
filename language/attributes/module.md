@@ -7,5 +7,5 @@ In `cjs` format, it is interpreted as `require`, and in `esm` format, it is inte
 <!-- MANUAL CHECK -->
 ```moonbit
 #module("math-utils")
-pub extern "js" fn add_from_module(x : Int, y : Int) -> Int = "add"
+pub extern "js" fn add_from_module(x : Int32, y : Int32) -> Int32 = "add"
 ```

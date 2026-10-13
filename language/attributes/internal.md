@@ -5,7 +5,7 @@ Any usage of the internal function or type in other modules will emit an alert w
 
 ```moonbit
 #internal(unsafe, "This is an unsafe function")
-fn[A] internal_unsafe_get(arr : Array[A], index : Int) -> A {
+fn[A] internal_unsafe_get(arr : Array[A], index : Int32) -> A {
   arr[index]
 }
 ```

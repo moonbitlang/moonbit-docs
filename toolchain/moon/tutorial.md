@@ -92,7 +92,7 @@ The `username/my_project` package contains `my_project.mbt` and `my_project_test
 
 ```moonbit
 ///|
-pub fn fib(n : Int) -> Int64 {
+pub fn fib(n : Int32) -> Int64 {
   for i = 0, a = 0L, b = 1L; i < n; i = i + 1, a = b, b = a + b {
 
   } nobreak {
@@ -186,7 +186,7 @@ mkdir fib
 Now, you can create new files under `fib`:
 
 ```moonbit
-pub fn fib_slow(n : Int) -> Int {
+pub fn fib_slow(n : Int32) -> Int32 {
   match n {
     0 => 0
     1 => 1
@@ -196,7 +196,7 @@ pub fn fib_slow(n : Int) -> Int {
 ```
 
 ```moonbit
-pub fn fib_fast(num : Int) -> Int {
+pub fn fib_fast(num : Int32) -> Int32 {
   fn aux(n, acc1, acc2) {
     match n {
       0 => acc1

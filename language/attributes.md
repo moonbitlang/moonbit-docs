@@ -87,7 +87,7 @@ the API, MoonBit emits an alert warning.
 
 ```moonbit
 #alert(unsafe, "This function is unsafe.")
-fn[A] alert_unsafe_get(arr : Array[A], index : Int) -> A {
+fn[A] alert_unsafe_get(arr : Array[A], index : Int32) -> A {
   arr[index]
 }
 ```
@@ -117,6 +117,29 @@ Both forms allowed additional arguments:
 
   Marks the alias as deprecated. If a message is provided, it will be displayed as a warning when the alias is used.
 
+`#alias` cannot be applied to `declare fn` or `declare let`. Put the attribute
+on the corresponding definition instead.
+
+To expose an alias through a declaration-based interface, declare the alias
+name separately with `declare fn` or `declare let`. The declarations specify
+the names and their types, but do not require an alias relationship between
+them. Whether the implementation uses `#alias` or separate definitions is an
+implementation detail.
+
+```moonbit
+///|
+declare pub fn new_name() -> Int32
+
+///|
+declare pub fn old_name() -> Int32
+
+///|
+#alias(old_name)
+pub fn new_name() -> Int32 {
+  42
+}
+```
+
 To graceful migration from old API to new API, you can rename the old API directly, and create an alias with the old name, mark it as deprecated. For
 example:
 
@@ -145,7 +168,7 @@ It has three following forms:
   ```moonbit
   #label_migration(x, fill=true)
   #label_migration(y, fill=false)
-  fn label_migration_fill(x? : Int = 0, y? : Int = 1) -> Int {
+  fn label_migration_fill(x~ : Int32 = 0, y~ : Int32 = 1) -> Int32 {
     x + y
   }
   ```
@@ -159,7 +182,7 @@ It has three following forms:
   The `msg` argument is an string that provides additional information about the migration.
   ```moonbit
   #label_migration(x, allow_positional=true)
-  fn label_migration_allow_positional(x~ : Int) -> Int {
+  fn label_migration_allow_positional(x~ : Int32) -> Int32 {
     x
   }
   ```
@@ -174,7 +197,7 @@ It has three following forms:
   ```moonbit
   #label_migration(x, alias=xx)
   #label_migration(x, alias=y, msg="warning")
-  fn label_migration_alias(x~ : Int) -> Int {
+  fn label_migration_alias(x~ : Int32) -> Int32 {
     x
   }
   ```
@@ -191,8 +214,8 @@ For outside usages, if the usage will be invalidated by the visibility change in
 // in @util package
 #visibility(change_to="readonly", "Point will be readonly in the future.")
 pub(all) struct Point {
-  x : Int
-  y : Int
+  x : Int32
+  y : Int32
 }
 
 #visibility(change_to="abstract", "Use new_text and new_binary instead.")
@@ -277,7 +300,7 @@ Any usage of the internal function or type in other modules will emit an alert w
 
 ```moonbit
 #internal(unsafe, "This is an unsafe function")
-fn[A] internal_unsafe_get(arr : Array[A], index : Int) -> A {
+fn[A] internal_unsafe_get(arr : Array[A], index : Int32) -> A {
   arr[index]
 }
 ```
@@ -391,7 +414,7 @@ compiler to inline the function when possible:
 
 ```moonbit
 #inline
-fn add_one(x : Int) -> Int {
+fn add_one(x : Int32) -> Int32 {
   x + 1
 }
 ```
@@ -400,7 +423,7 @@ Use `#inline(never)` to ask the compiler not to inline a function:
 
 ```moonbit
 #inline(never)
-fn keep_stack_frame(x : Int) -> Int {
+fn keep_stack_frame(x : Int32) -> Int32 {
   x + 1
 }
 ```
@@ -440,7 +463,7 @@ be released by the foreign side when it is no longer needed.
 
 ```moonbit
 #borrow(filename)
-extern "C" fn open(filename : Bytes, flags : Int) -> Int = "open"
+extern "C" fn open(filename : Bytes, flags : Int32) -> Int32 = "open"
 ```
 
 For the full calling-convention rules, see
@@ -466,9 +489,9 @@ The `#as_free_fn` attribute is used to mark a method that it is declared as a fr
 It can also change the visibility of the free function, the name of the free function, and provide separate deprecation warning.
 
 ```moonbit
-#as_free_fn(dec, visibility="pub", deprecated="use `Int::decrement` instead")
+#as_free_fn(dec, visibility="pub", deprecated="use `Int32::decrement` instead")
 #as_free_fn(visibility="pub")
-fn Int::decrement(i : Self) -> Self {
+fn Int32::decrement(i : Self) -> Self {
   i - 1
 }
 
@@ -575,7 +598,7 @@ In `cjs` format, it is interpreted as `require`, and in `esm` format, it is inte
 <!-- MANUAL CHECK -->
 ```moonbit
 #module("math-utils")
-pub extern "js" fn add_from_module(x : Int, y : Int) -> Int = "add"
+pub extern "js" fn add_from_module(x : Int32, y : Int32) -> Int32 = "add"
 ```
 
 ## Export Name Attribute
@@ -586,7 +609,7 @@ name is used in generated Wasm, JavaScript, or C output:
 
 ```moonbit
 #export_name("add")
-pub fn add_one(value : Int) -> Int {
+pub fn add_one(value : Int32) -> Int32 {
   value + 1
 }
 ```
@@ -629,7 +652,7 @@ executable code and proof-oriented logic.
 
 ```moonbit
 #proof_pure
-fn height(t : Tree) -> Int {
+fn height(t : Tree) -> Int32 {
   match t {
     Empty => 0
     Node(_, _, _, h) => h
@@ -671,15 +694,15 @@ the Why3 symbol; it is not an executable MoonBit expression.
 
 ```moonbit
 #proof_import("set.Fset")
-fn proof_set_mem(x : Int, set : ProofSet[Int]) -> Bool = "mem"
+fn proof_set_mem(x : Int32, set : ProofSet[Int32]) -> Bool = "mem"
 
 #proof_import("set.Fset")
-fn proof_set_empty() -> ProofSet[Int] = "empty"
+fn proof_set_empty() -> ProofSet[Int32] = "empty"
 
 #proof_import("set.Fset")
-fn proof_set_add(x : Int, set : ProofSet[Int]) -> ProofSet[Int] = "add"
+fn proof_set_add(x : Int32, set : ProofSet[Int32]) -> ProofSet[Int32] = "add"
 
-lemma proof_set_add_contains(x : Int) where {
+lemma proof_set_add_contains(x : Int32) where {
   proof_ensure: proof_set_mem(
     x,
     proof_set_add(x, proof_set_empty()),

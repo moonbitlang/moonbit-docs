@@ -5,7 +5,7 @@ compiler to inline the function when possible:
 
 ```moonbit
 #inline
-fn add_one(x : Int) -> Int {
+fn add_one(x : Int32) -> Int32 {
   x + 1
 }
 ```
@@ -14,7 +14,7 @@ Use `#inline(never)` to ask the compiler not to inline a function:
 
 ```moonbit
 #inline(never)
-fn keep_stack_frame(x : Int) -> Int {
+fn keep_stack_frame(x : Int32) -> Int32 {
   x + 1
 }
 ```

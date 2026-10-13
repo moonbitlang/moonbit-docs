@@ -7,7 +7,7 @@ This article is the third in a series on implementing Haskell's lazy evaluation 
 Let's review how we implemented primitives in the [last tutorial](https://docs.moonbitlang.com/en/latest/example/gmachine/gmachine-2.html).
 
 ```moonbit
-let compiled_primitives : List[(String, Int, List[Instruction])] = @list.List([
+let compiled_primitives : List[(String, Int32, List[Instruction])] = @list.List([
     // Arith
     (
       "add",
@@ -332,7 +332,7 @@ The data structure type definition in Haskell is similar to the `enum` in MoonBi
 
 As shown above, you can use the `case` expression for simple pattern matching on lists.
 
-The corresponding graph node for a list is `NConstr(Int, List[Addr])`, which consists of two parts:
+The corresponding graph node for a list is `NConstr(Int32, List[Addr])`, which consists of two parts:
 
 - A tag for different value constructors: the tag for `Nil` is 0, and the tag for `Cons` is 1.
 - A list of addresses for storing substructures, whose length corresponds to the number of parameters (arity) of a value constructor.
@@ -342,7 +342,7 @@ The corresponding graph node for a list is `NConstr(Int, List[Addr])`, which con
 We need to add two instructions, `Split` and `Pack`, to deconstruct and construct lists.
 
 ```moonbit
-fn GState::pack(self : GState, t : Int, n : Int) -> Unit {
+fn GState::pack(self : GState, t : Int32, n : Int32) -> Unit {
   let addrs = self.stack.take(n)
   self.stack = self.stack.drop(n)
   let addr = self.heap.alloc(NConstr(t, addrs))
@@ -365,7 +365,7 @@ Additionally, a `CaseJump` instruction is needed to implement the `case` express
 ```moonbit
 fn GState::casejump(
   self : GState,
-  table : List[(Int, List[Instruction])],
+  table : List[(Int32, List[Instruction])],
 ) -> Unit {
   let addr = self.pop1()
   match self.heap[addr] {
@@ -438,11 +438,11 @@ Finally, change the initial code of the G-Machine to:
 let initialState : GState = {
   output: StringBuilder(size_hint=60),
   heap,
-  stack: @list.empty(),
+  stack: @list.List([]),
   code: @list.List([PushGlobal("main"), Eval, Print]),
   globals,
   stats: 0,
-  dump: @list.empty(),
+  dump: @list.List([]),
 }
 ```
 

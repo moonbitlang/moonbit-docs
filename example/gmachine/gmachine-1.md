@@ -59,13 +59,13 @@ fn[X, Y] Stream::map(self : Stream[X], f : (X) -> Y) -> Stream[Y] {
 The `take` function is responsible for performing computations, and it can extract n elements as needed.
 
 ```moonbit
-fn[T] Stream::take(self : Stream[T], n : Int) -> List[T] {
+fn[T] Stream::take(self : Stream[T], n : Int32) -> List[T] {
   if n == 0 {
-    @list.empty()
+    @list.List([])
   } else {
     match self {
-      Empty => @list.empty()
-      Cons(x, xs) => xs().take(n - 1).add(x)
+      Empty => @list.List([])
+      Cons(x, xs) => xs().take(n - 1).prepend(x)
     }
   }
 }
@@ -105,11 +105,11 @@ Super combinators will eventually be parsed into `ScDef[String]`, but writing a 
 ```moonbit
 enum RawExpr[T] {
   Var(T)
-  Num(Int)
-  Constructor(tag~ : Int, arity~ : Int) // tag, arity
+  Num(Int32)
+  Constructor(tag~ : Int32, arity~ : Int32) // tag, arity
   App(RawExpr[T], RawExpr[T])
   Let(Bool, List[(T, RawExpr[T])], RawExpr[T]) // isRec, Defs, Body
-  Case(RawExpr[T], List[(Int, List[T], RawExpr[T])])
+  Case(RawExpr[T], List[(Int32, List[T], RawExpr[T])])
 } derive(Debug)
 
 pub extend RawExpr with @moonbitlang/core/debug.Debug::{to_repr}
@@ -172,7 +172,7 @@ In this case, `(square 3)` would be evaluated twice, which is certainly not desi
 To illustrate this more clearly, let's make a somewhat improper analogy using MoonBit code:
 
 ```moonbit
-fn square(thunk : () -> Int) -> Int {
+fn square(thunk : () -> Int32) -> Int32 {
   thunk() * thunk()
 }
 ```
@@ -204,7 +204,7 @@ fn[T] LazyRef::extract(self : LazyRef[T]) -> T {
 }
 
 ///|
-fn square(x : LazyRef[Int]) -> Int {
+fn square(x : LazyRef[Int32]) -> Int32 {
   x.extract() * x.extract()
 }
 ```
@@ -320,7 +320,7 @@ In this simple version of the G-Machine, the state includes:
 - Heap: This is where the expression graph and the sequences of instructions corresponding to super combinators are stored.
   ```moonbit
   /// Use the struct tuple to encapsulate an address type.
-  struct Addr(Int) derive(Eq, Debug)
+  struct Addr(Int32) derive(Eq, Debug)
 
   pub extend Addr with Eq::{not_equal, equal}
 
@@ -328,12 +328,12 @@ In this simple version of the G-Machine, the state includes:
 
   /// Describe graph nodes with an enumeration type.
   enum Node {
-    NNum(Int)
+    NNum(Int32)
     // The application node
     NApp(Addr, Addr)
     // To store the number of parameters and 
     // the corresponding sequence of instructions for a super combinator
-    NGlobal(String, Int, List[Instruction])
+    NGlobal(String, Int32, List[Instruction])
     // The Indirection node. The key component of implementing lazy evaluation
     NInd(Addr)
   } derive(Eq, Debug)
@@ -345,18 +345,18 @@ In this simple version of the G-Machine, the state includes:
   struct GHeap {
     // The heap uses an array, 
     // and the space with None content in the array is available as free memory.
-    mut object_count : Int
+    mut object_count : Int32
     memory : Array[Node?]
   }
 
   /// Allocate heap space for nodes.
   fn GHeap::alloc(self : GHeap, node : Node) -> Addr {
     let heap = self
-    fn next(n : Int) -> Int {
+    fn next(n : Int32) -> Int32 {
       (n + 1) % heap.memory.length()
     }
 
-    fn free(i : Int) -> Bool {
+    fn free(i : Int32) -> Bool {
       match heap.memory[i] {
         None => true
         _ => false
@@ -388,7 +388,7 @@ struct GState {
   mut stats : GStats
 }
 
-struct GStats(Int)
+struct GStats(Int32)
 
 fn GState::stat_incr(self : GState) -> Unit {
   self.stats = self.stats.0 + 1
@@ -441,11 +441,11 @@ The highly simplified G-Machine currently consists of 7 instructions.
 enum Instruction {
   Unwind
   PushGlobal(String)
-  PushInt(Int)
-  PushArg(Int)
+  PushInt(Int32)
+  PushArg(Int32)
   MkApp
-  Update(Int)
-  Pop(Int)
+  Update(Int32)
+  Pop(Int32)
 } derive(Eq, Debug)
 
 pub extend Instruction with Eq::{not_equal, equal}
@@ -456,7 +456,7 @@ pub extend Instruction with @moonbitlang/core/debug.Debug::{to_repr}
 The `PushInt` instruction is the simplest. It allocates an `NNum` node on the heap and pushes its address onto the stack.
 
 ```moonbit
-fn GState::push_int(self : GState, num : Int) -> Unit {
+fn GState::push_int(self : GState, num : Int32) -> Unit {
   let addr = self.heap.alloc(NNum(num))
   self.put_stack(addr)
 }
@@ -476,7 +476,7 @@ fn GState::push_global(self : GState, name : String) -> Unit {
 The `PushArg` instruction is a bit more complex. It has specific requirements regarding the layout of addresses on the stack: the first address should point to the super combinator node, followed by n addresses pointing to N `NApp` nodes. `PushArg` retrieves the Nth parameter, starting from the `offset + 1`.
 
 ```moonbit
-fn GState::push_arg(self : GState, offset : Int) -> Unit {
+fn GState::push_arg(self : GState, offset : Int32) -> Unit {
   let appaddr = self.stack.unsafe_nth(offset + 1)
   let arg = match self.heap[appaddr] {
     NApp(_, arg) => arg
@@ -502,7 +502,7 @@ fn GState::mk_apply(self : GState) -> Unit {
 The `Update` instruction assumes that the first address on the stack points to the current redex's evaluation result. It skips the addresses of the immediately following super combinator nodes and replaces the Nth `NApp` node with an indirect node pointing to the evaluation result. If the current redex is a CAF, it directly replaces its corresponding `NGlobal` node on the heap. From this, we can see why in lazy functional languages, there is not much distinction between functions without parameters and ordinary variables.
 
 ```moonbit
-fn GState::update(self : GState, n : Int) -> Unit {
+fn GState::update(self : GState, n : Int32) -> Unit {
   let addr = self.pop1()
   let dst = self.stack.unsafe_nth(n)
   self.heap[dst] = NInd(addr)
@@ -556,15 +556,15 @@ When compiling a super combinator, we need to maintain an environment that allow
 
 > Here, "parameters" refer to addresses pointing to App nodes on the heap, and the actual parameter addresses can be accessed through the `PushArg` instruction.
 ```moonbit
-fn ScDef::compileSC(self : ScDef[String]) -> (String, Int, List[Instruction]) {
+fn ScDef::compileSC(self : ScDef[String]) -> (String, Int32, List[Instruction]) {
   let name = self.name
   let body = self.body
   let mut arity = 0
-  fn gen_env(i : Int, args : List[String]) -> List[(String, Int)] {
+  fn gen_env(i : Int32, args : List[String]) -> List[(String, Int32)] {
     match args {
       Empty => {
         arity = i
-        return @list.empty()
+        return @list.List([])
       }
       More(s, tail=ss) => gen_env(i + 1, ss).prepend((s, i))
     }
@@ -584,8 +584,8 @@ The `compileR` function generates code for instantiating super combinators by ca
 ```moonbit
 fn RawExpr::compileR(
   self : RawExpr[String],
-  env : List[(String, Int)],
-  arity : Int
+  env : List[(String, Int32)],
+  arity : Int32
 ) -> List[Instruction] {
   if arity == 0 {
     self.compileC(env) + @list.List([Update(arity), Unwind])
@@ -600,7 +600,7 @@ When compiling the definition of super combinators, a rather crude approach is u
 ```moonbit
 fn RawExpr::compileC(
   self : RawExpr[String],
-  env : List[(String, Int)]
+  env : List[(String, Int32)]
 ) -> List[Instruction] {
   match self {
     Var(s) =>
@@ -624,7 +624,7 @@ Once the super combinators are compiled, they need to be placed on the heap (alo
 
 ```moonbit
 fn build_initial_heap(
-  scdefs : List[(String, Int, List[Instruction])],
+  scdefs : List[(String, Int32, List[Instruction])],
 ) -> (GHeap, @hashmap.HashMap[String, Addr]) {
   let heap = { object_count: 0, memory: Array::make(10000, None) }
   let globals = @hashmap.HashMap([], capacity=50)
@@ -689,7 +689,7 @@ Combine the above components.
 
 ```moonbit
 fn run(codes : List[String]) -> Node {
-  fn parse_then_compile(code : String) -> (String, Int, List[Instruction]) {
+  fn parse_then_compile(code : String) -> (String, Int32, List[Instruction]) {
     let tokens = tokenize(code)
     let code = try tokens.parse_sc() catch {
       ParseError(s) => abort(s)
@@ -704,7 +704,7 @@ fn run(codes : List[String]) -> Node {
   let (heap, globals) = build_initial_heap(codes)
   let initialState : GState = {
     heap,
-    stack: @list.empty(),
+    stack: @list.List([]),
     code: @list.List([PushGlobal("main"), Unwind]),
     globals,
     stats: 0,

@@ -6,15 +6,15 @@ the Why3 symbol; it is not an executable MoonBit expression.
 
 ```moonbit
 #proof_import("set.Fset")
-fn proof_set_mem(x : Int, set : ProofSet[Int]) -> Bool = "mem"
+fn proof_set_mem(x : Int32, set : ProofSet[Int32]) -> Bool = "mem"
 
 #proof_import("set.Fset")
-fn proof_set_empty() -> ProofSet[Int] = "empty"
+fn proof_set_empty() -> ProofSet[Int32] = "empty"
 
 #proof_import("set.Fset")
-fn proof_set_add(x : Int, set : ProofSet[Int]) -> ProofSet[Int] = "add"
+fn proof_set_add(x : Int32, set : ProofSet[Int32]) -> ProofSet[Int32] = "add"
 
-lemma proof_set_add_contains(x : Int) where {
+lemma proof_set_add_contains(x : Int32) where {
   proof_ensure: proof_set_mem(
     x,
     proof_set_add(x, proof_set_empty()),

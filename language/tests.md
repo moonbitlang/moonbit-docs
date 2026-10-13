@@ -32,7 +32,7 @@ If a test name starts with `"panic"`, it indicates that the expected behavior of
 
 ```moonbit
 test "panic_test" {
-  let _ : Int = Option::None.unwrap()
+  let _ : Int32 = Option::None.unwrap()
 }
 ```
 
@@ -49,7 +49,7 @@ The labelled argument `content` can be omitted as `moon test --update` will inse
 
 ```moonbit
 struct X {
-  x : Int
+  x : Int32
 } derive(Debug)
 
 pub extend X with Debug::{to_repr}

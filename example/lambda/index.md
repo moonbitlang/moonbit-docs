@@ -107,7 +107,7 @@ We define a new type `TermDBI` to represent Lambda terms using de Bruijn indices
 
 ```moonbit
 enum TermDBI {
-  Var(String, Int)
+  Var(String, Int32)
   Abs(String, TermDBI)
   App(TermDBI, TermDBI)
 }
@@ -137,7 +137,7 @@ We take a clumsy approach to save variable names and their associated nesting de
 ```moonbit
 struct Index {
   name : String
-  depth : Int
+  depth : Int32
 }
 ```
 
@@ -145,7 +145,7 @@ Then we write a helper function to find the corresponding `depth` based on a spe
 
 ```moonbit
 // Find the depth corresponding to the first varname in the environment
-fn find(map : @list.List[Index], varname : String) -> Result[Int, String] {
+fn find(map : @list.List[Index], varname : String) -> Result[Int32, String] {
   match map {
     Empty => Err(varname)
     More(i, tail=rest) =>
@@ -178,7 +178,7 @@ fn go(m : @list.List[Index], term : Term) -> Result[TermDBI, String] {
     Abs(varname, body) => {
       let m = m
         .map(fn(index) { { name: index.name, depth: index.depth + 1 } })
-        .add({ name: varname, depth: 0 })
+        .prepend({ name: varname, depth: 0 })
       let res = go(m, body)
       match res {
         Err(name) => Err(name)
@@ -194,7 +194,7 @@ fn go(m : @list.List[Index], term : Term) -> Result[TermDBI, String] {
   }
 }
 
-go(@list.empty(), self)
+go(@list.List([]), self)
 ```
 
 ## Reduce on TermDBI
@@ -223,7 +223,7 @@ The implementation of the `subst` function becomes much simpler when we don't ne
 
 ```moonbit
 fn subst(t1 : TermDBI, t2 : TermDBI) -> TermDBI {
-  fn go(t1 : TermDBI, t2 : TermDBI, depth : Int) -> TermDBI {
+  fn go(t1 : TermDBI, t2 : TermDBI, depth : Int32) -> TermDBI {
     match t1 {
       Var(_, d) => if d == depth { t2 } else { t1 }
       Abs(name, t) => Abs(name, go(t, t2, depth + 1))

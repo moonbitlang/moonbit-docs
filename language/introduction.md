@@ -12,12 +12,12 @@ A MoonBit program consists of top-level definitions including:
 MoonBit distinguishes between statements and expressions. In a function body, only the last clause should be an expression, which serves as a return value. For example:
 
 ```moonbit
-fn foo() -> Int {
+fn foo() -> Int32 {
   let x = 1
   x + 1
 }
 
-fn bar() -> Int {
+fn bar() -> Int32 {
   let x = 1
   //! x + 1
   x + 2

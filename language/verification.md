@@ -27,27 +27,25 @@ fits together. It shows:
 First, enable proofs for the package:
 
 ```moonbit
-options(
-  "proof-enabled": true,
-)
+proof_enabled = true
 ```
 
 Then define the logic-side specification in `.mbtp`:
 
 ```moonbit
-predicate in_bounds(xs : FixedArray[Int], i : Int) {
+predicate in_bounds(xs : FixedArray[Int32], i : Int32) {
   (0 <= i) && (i < xs.length())
 }
 
-predicate sorted(xs : FixedArray[Int]) {
-  ∀ i : Int, ∀ j : Int,
+predicate sorted(xs : FixedArray[Int32]) {
+  ∀ i : Int32, ∀ j : Int32,
     in_bounds(xs, i) && in_bounds(xs, j) && (i <= j) →
       xs[i] <= xs[j]
 }
 
-predicate binary_search_ok(xs : FixedArray[Int], key : Int, result : Option[Int]) {
+predicate binary_search_ok(xs : FixedArray[Int32], key : Int32, result : Option[Int32]) {
   match result {
-    None => ∀ i : Int, in_bounds(xs, i) → xs[i] != key
+    None => ∀ i : Int32, in_bounds(xs, i) → xs[i] != key
     Some(result) => in_bounds(xs, result) && xs[result] == key
   }
 }
@@ -57,20 +55,20 @@ Finally, implement the executable function in `.mbt`:
 
 ```moonbit
 pub fn binary_search(
-  xs : FixedArray[Int],
-  key : Int,
-) -> Int? where {
+  xs : FixedArray[Int32],
+  key : Int32,
+) -> Int32? where {
   proof_require: sorted(xs),
   proof_ensure: result => binary_search_ok(xs, key, result),
 } {
   for i = 0, j = xs.length(); i < j; {
     let h = i + (j - i) / 2
     if xs[h] < key {
-      proof_assert ∀ idx : Int,
+      proof_assert ∀ idx : Int32,
         (0 <= idx) && (idx < h + 1) → xs[idx] < key
       continue h + 1, j
     } else if key < xs[h] {
-      proof_assert ∀ idx : Int,
+      proof_assert ∀ idx : Int32,
         (h <= idx) && (idx < xs.length()) → key < xs[idx]
       continue i, h
     } else {
@@ -83,8 +81,8 @@ pub fn binary_search(
     proof_invariant: 0 <= i,
     proof_invariant: i <= j,
     proof_invariant: j <= xs.length(),
-    proof_invariant: ∀ idx : Int, (0 <= idx) && (idx < i) → xs[idx] < key,
-    proof_invariant: ∀ idx : Int, (j <= idx) && (idx < xs.length()) → key < xs[idx],
+    proof_invariant: ∀ idx : Int32, (0 <= idx) && (idx < i) → xs[idx] < key,
+    proof_invariant: ∀ idx : Int32, (j <= idx) && (idx < xs.length()) → key < xs[idx],
     proof_yield: res => binary_search_ok(xs, key, res),
     proof_reasoning: (
       #| The loop maintains a candidate window `[i, j)`.
@@ -242,7 +240,7 @@ predicates and postconditions, while still being visible on the program side.
 
 ```moonbit
 #proof_pure
-fn height(t : Tree) -> Int {
+fn height(t : Tree) -> Int32 {
   match t {
     Empty => 0
     Node(_, _, _, h) => h
@@ -253,7 +251,7 @@ fn height(t : Tree) -> Int {
 The same helper can then be used in a specification:
 
 ```moonbit
-predicate cached_height_ok(t : Tree, result : Int) {
+predicate cached_height_ok(t : Tree, result : Int32) {
   result == height(t)
 }
 ```
@@ -306,15 +304,15 @@ symbol:
 
 ```moonbit
 #proof_import("set.Fset")
-fn proof_set_mem(x : Int, set : ProofSet[Int]) -> Bool = "mem"
+fn proof_set_mem(x : Int32, set : ProofSet[Int32]) -> Bool = "mem"
 
 #proof_import("set.Fset")
-fn proof_set_empty() -> ProofSet[Int] = "empty"
+fn proof_set_empty() -> ProofSet[Int32] = "empty"
 
 #proof_import("set.Fset")
-fn proof_set_add(x : Int, set : ProofSet[Int]) -> ProofSet[Int] = "add"
+fn proof_set_add(x : Int32, set : ProofSet[Int32]) -> ProofSet[Int32] = "add"
 
-lemma proof_set_add_contains(x : Int) where {
+lemma proof_set_add_contains(x : Int32) where {
   proof_ensure: proof_set_mem(
     x,
     proof_set_add(x, proof_set_empty()),
@@ -339,7 +337,7 @@ mapping to Why3 symbols are a trusted integration boundary.
 `proof_decrease` supplies a termination measure for recursive definitions.
 
 ```moonbit
-pub fn countdown(n : Int) -> Int where {
+pub fn countdown(n : Int32) -> Int32 where {
   proof_decrease: n,
   proof_require: 0 <= n,
   proof_ensure: result => 0 <= result,
@@ -372,7 +370,7 @@ In practice, `proof_axiomatized` should be used sparingly:
 For example:
 
 ```moonbit
-pub fn assumed_nonnegative(x : Int) -> Int where {
+pub fn assumed_nonnegative(x : Int32) -> Int32 where {
   proof_axiomatized: true,
   proof_require: 0 <= x,
   proof_ensure: result => 0 <= result,
@@ -403,19 +401,19 @@ For example, predicates in `.mbtp` can define the logical vocabulary used by
 contracts:
 
 ```moonbit
-predicate in_bounds(xs : FixedArray[Int], i : Int) {
+predicate in_bounds(xs : FixedArray[Int32], i : Int32) {
   (0 <= i) && (i < xs.length())
 }
 
-predicate sorted(xs : FixedArray[Int]) {
-  ∀ i : Int, ∀ j : Int,
+predicate sorted(xs : FixedArray[Int32]) {
+  ∀ i : Int32, ∀ j : Int32,
     in_bounds(xs, i) && in_bounds(xs, j) && (i <= j) →
       xs[i] <= xs[j]
 }
 
-predicate binary_search_ok(xs : FixedArray[Int], key : Int, result : Option[Int]) {
+predicate binary_search_ok(xs : FixedArray[Int32], key : Int32, result : Option[Int32]) {
   match result {
-    None => ∀ i : Int, in_bounds(xs, i) → xs[i] != key
+    None => ∀ i : Int32, in_bounds(xs, i) → xs[i] != key
     Some(result) => in_bounds(xs, result) && xs[result] == key
   }
 }
@@ -486,7 +484,7 @@ For data structures and stateful systems, the most useful pattern is often:
 An AVL tree is a representative example of this style:
 
 ```moonbit
-fn Tree::model(self : Tree) -> Fset[Int] {
+fn Tree::model(self : Tree) -> Fset[Int32] {
   match self {
     Empty => Fset::empty()
     Node(l, x, r, _) => l.model().union(r.model()).add(x)
@@ -499,8 +497,8 @@ predicate avl_inv(t : Tree) {
     Node(l, x, r, h) =>
       avl_inv(l) &&
       avl_inv(r) &&
-      (∀ y : Int, l.model().mem(y) → y < x) &&
-      (∀ y : Int, r.model().mem(y) → x < y) &&
+      (∀ y : Int32, l.model().mem(y) → y < x) &&
+      (∀ y : Int32, r.model().mem(y) → x < y) &&
       h == 1 + max2(height(l), height(r)) &&
       -1 <= height(l) - height(r) &&
       height(l) - height(r) <= 1

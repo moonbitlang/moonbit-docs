@@ -16,7 +16,7 @@ It has three following forms:
   ```moonbit
   #label_migration(x, fill=true)
   #label_migration(y, fill=false)
-  fn label_migration_fill(x? : Int = 0, y? : Int = 1) -> Int {
+  fn label_migration_fill(x~ : Int32 = 0, y~ : Int32 = 1) -> Int32 {
     x + y
   }
   ```
@@ -30,7 +30,7 @@ It has three following forms:
   The `msg` argument is an string that provides additional information about the migration.
   ```moonbit
   #label_migration(x, allow_positional=true)
-  fn label_migration_allow_positional(x~ : Int) -> Int {
+  fn label_migration_allow_positional(x~ : Int32) -> Int32 {
     x
   }
   ```
@@ -45,7 +45,7 @@ It has three following forms:
   ```moonbit
   #label_migration(x, alias=xx)
   #label_migration(x, alias=y, msg="warning")
-  fn label_migration_alias(x~ : Int) -> Int {
+  fn label_migration_alias(x~ : Int32) -> Int32 {
     x
   }
   ```
