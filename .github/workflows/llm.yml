@@ -2,6 +2,20 @@ name: upload llm.txt
 
 on:
   workflow_dispatch:
+    inputs:
+      locale:
+        description: Language to publish
+        type: choice
+        options: [all, en, zh]
+        default: all
+      source_ref:
+        description: Optional source branch or release tag
+        type: string
+      target:
+        description: Chinese deployment destination
+        type: choice
+        options: [both, aws, aliyun]
+        default: both
 
 defaults:
   run:
@@ -9,9 +23,12 @@ defaults:
 
 jobs:
   llm-upload-en:
+    if: inputs.locale != 'zh'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_ref || github.ref }}
       - uses: actions/setup-python@v5
       - name: install
         run: pip install -r requirements.txt
@@ -29,9 +46,15 @@ jobs:
           aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_CLOUDFRONT_HOMEPAGE_DISTRIBUTION_ID}} --paths "/llms.txt"
 
   llm-upload-zh:
+    if: inputs.locale != 'en'
+    concurrency:
+      group: publish-homepage-cn-llms
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_ref || github.ref }}
       - uses: actions/setup-python@v5
       - name: install
         run: pip install -r requirements.txt
@@ -40,8 +63,22 @@ jobs:
       - name: compilation
         run: python3 llm.py
       - uses: aliyun/setup-aliyun-cli-action@v1
+        if: inputs.target != 'aws'
       - name: upload
+        if: inputs.target != 'aws'
         run: |
           aliyun configure set --profile default --mode AK --access-key-id ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_ID}} --access-key-secret ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET}} --region ${{secrets.ALIBABA_REGION}}
           echo y | aliyun oss cp ./_build/markdown/llm.md ${{secrets.ALIYUN_HOMEPAGE_BUCKET}}/llms.txt
           aliyun cdn RefreshObjectCaches --ObjectPath https://www.moonbitlang.cn/llms.txt --ObjectType File
+      - name: Upload Chinese llms.txt to AWS
+        if: inputs.target != 'aliyun'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-west-2
+          BUCKET: ${{ vars.AWS_CN_HOMEPAGE_BUCKET }}
+          DISTRIBUTION_ID: ${{ vars.AWS_CN_HOMEPAGE_DISTRIBUTION_ID }}
+        run: |
+          test -n "$BUCKET" && test -n "$DISTRIBUTION_ID"
+          aws s3 cp ./_build/markdown/llm.md "s3://$BUCKET/llms.txt" --content-type 'text/plain; charset=utf-8' --only-show-errors
+          aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" --paths "/llms.txt"
