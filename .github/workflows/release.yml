@@ -13,8 +13,8 @@ on:
       target:
         description: Chinese deployment destination
         type: choice
-        options: [both, aws, aliyun]
-        default: both
+        options: [aws, both, aliyun]
+        default: aws
 
 defaults:
   run:
@@ -45,9 +45,9 @@ jobs:
           LANGUAGE="zh_CN" python3 llm.py
           LANGUAGE="zh_CN" make html
       - uses: aliyun/setup-aliyun-cli-action@v1
-        if: inputs.target != 'aws'
+        if: inputs.target == 'aliyun' || inputs.target == 'both'
       - name: upload
-        if: inputs.target != 'aws'
+        if: inputs.target == 'aliyun' || inputs.target == 'both'
         run: |
           aliyun configure set --profile default --mode AK --access-key-id ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_ID}} --access-key-secret ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET}} --region ${{secrets.ALIBABA_REGION}}
           aliyun oss sync ./_build/html/ ${{secrets.ALIYUN_OSS_BUCKET}} --force --delete
