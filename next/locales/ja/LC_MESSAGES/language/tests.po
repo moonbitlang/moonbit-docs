@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 13:54+0800\n"
+"POT-Creation-Date: 2026-10-13 17:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -62,9 +62,9 @@ msgid ""
 " an error message and terminates the test. The string `\"test_name\"` is "
 "used to identify the test case and is optional."
 msgstr ""
-"test コードブロックは本質的に `() -> Unit raise Error` 型の関数です。`Unit` を返し、"
-"[`Error`](/language/error-handling.md#error-types) を送出する可能性があります。これは `moon "
-"test` の実行中に呼び出され、ビルドシステムを通じてテストレポートを出力します。`assert_eq` "
+"test コードブロックは本質的に `() -> Unit raise Error` 型の関数です。`Unit` "
+"を返し、[`Error`](/language/error-handling.md#error-types) を送出する可能性があります。これは "
+"`moon test` の実行中に呼び出され、ビルドシステムを通じてテストレポートを出力します。`assert_eq` "
 "関数は標準ライブラリ由来で、アサーションが失敗するとエラーメッセージを表示してテストを終了します。文字列 `\"test_name\"` "
 "はテストケースを識別するために使われますが、省略可能です。"
 
@@ -242,10 +242,169 @@ msgid ""
 msgstr "`@test.T::snapshot` は常に例外を送出するため、テストブロックの最後で使う必要がある点に注意してください。"
 
 #: ../../language/tests.md:89
+msgid "Property-Based Tests"
+msgstr "プロパティベーステスト"
+
+#: ../../language/tests.md:91
+msgid ""
+"Example-based tests check particular inputs. Property-based tests "
+"describe a relationship that should hold for many generated inputs. Use "
+"the standard library's `quickcheck` package inside an ordinary `test` "
+"block; no additional module dependency is needed. For examples in a "
+"`_test.mbt` file, add this import to `moon.pkg`:"
+msgstr ""
+"例に基づくテストは特定の入力を検証します。プロパティベーステストは、生成された多数の入力について成り立つべき関係を記述します。通常の `test`"
+" ブロック内で標準ライブラリの `quickcheck` パッケージを使います。追加のモジュール依存関係は不要です。`_test.mbt` "
+"ファイルに例を書く場合は、`moon.pkg` に次のインポートを追加します："
+
+#: ../../language/tests.md:97
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/quickcheck\",\n"
+"} for \"test\"\n"
+msgstr ""
+
+#: ../../language/tests.md:103
+msgid "Checking a Property"
+msgstr "プロパティの検証"
+
+#: ../../language/tests.md:105
+msgid "Adding zero should leave an integer unchanged:"
+msgstr "ゼロを足しても整数の値は変わらないはずです："
+
+#: ../../language/tests.md:107
+msgid ""
+"test \"adding zero preserves an integer\" {\n"
+"  @quickcheck.check((x : Int32) => x + 0 == x, count=100, seed=2026)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/tests.md:113
+msgid ""
+"Run this test with `moon test`. `check` generates inputs and calls the "
+"property for each one. Returning `true` accepts a case; returning `false`"
+" or raising an error causes `check` to report a failure. Here, `count` "
+"requests 100 cases and `seed` makes the run repeatable. Generated `Int32`"
+" values are not limited to small numbers: they can include values near "
+"the limits of the type."
+msgstr "`moon test` でこのテストを実行します。`check` は入力を生成し、それぞれに対してプロパティを呼び出します。`true` を返すとそのケースは成功し、`false` を返すかエラーを送出すると `check` が失敗を報告します。ここでは、`count` が100ケースの検証を指定し、`seed` が実行を再現可能にします。生成される `Int32` の値は小さな数に限らず、型の上限や下限に近い値も含まれます。"
+
+#: ../../language/tests.md:119
+msgid ""
+"The input type must implement `Arbitrary` to generate values, `Shrink` to"
+" simplify failing inputs, and `Debug` to display them. These "
+"implementations are provided for common types, including `Int32`. Keep "
+"properties deterministic and avoid mutating their inputs."
+msgstr "入力の型には、値を生成する `Arbitrary`、失敗した入力を単純化する `Shrink`、入力を表示する `Debug` の実装が必要です。`Int32` などの一般的な型には、これらの実装が用意されています。プロパティは決定的にし、入力を変更しないようにします。"
+
+#: ../../language/tests.md:124
+msgid "Understanding a Counterexample"
+msgstr "反例の理解"
+
+#: ../../language/tests.md:126
+msgid ""
+"What about adding one? `x + 1 > x` holds for mathematical integers, but "
+"does it hold for `Int32`? Small examples such as 0, 1, and 100 would all "
+"pass. The following example uses `report` to look for a counterexample. "
+"It returns a result instead of raising a test failure, so we can record "
+"the failure report in a snapshot while keeping the demonstration itself a"
+" passing test:"
+msgstr "では、1を足す場合はどうでしょうか。`x + 1 > x` は数学の整数では成り立ちますが、`Int32` でも成り立つでしょうか。0、1、100 などの小さな例はすべて成功します。次の例では `report` で反例を探します。テスト失敗を送出する代わりに結果を返すため、失敗レポートをスナップショットに記録しながら、デモ自体は成功するテストにできます："
+
+#: ../../language/tests.md:132
+msgid ""
+"test \"adding one does not always increase an integer\" {\n"
+"  let report = @quickcheck.report(\n"
+"    (x : Int32) => x + 1 > x,\n"
+"    count=100,\n"
+"    seed=2026,\n"
+"  )\n"
+"  debug_inspect(\n"
+"    report,\n"
+"    content=(\n"
+"      #|Falsified(\n"
+"      #|  counterexample=2147483647,\n"
+"      #|  tests=18,\n"
+"      #|  size=17,\n"
+"      #|  shrinks=0,\n"
+"      #|  shrink_attempts=31,\n"
+"      #|)\n"
+"    ),\n"
+"  )\n"
+"}\n"
+msgstr ""
+
+#: ../../language/tests.md:138
+msgid ""
+"`Falsified` means the property returned `false`. The counterexample is "
+"`2147483647`, the largest `Int32`. Adding one overflows and wraps to "
+"`-2147483648`, so the result is smaller, not larger. This is a mistaken "
+"assumption about fixed-width arithmetic, not a bug in addition."
+msgstr "`Falsified` は、プロパティが `false` を返したことを意味します。反例は `Int32` の最大値である `2147483647` です。1を足すとオーバーフローして `-2147483648` に折り返すため、結果は大きくなるのではなく小さくなります。これは固定幅整数の演算についての誤った仮定であり、加算のバグではありません。"
+
+#: ../../language/tests.md:143
+msgid ""
+"QuickCheck also tries simpler inputs that still fail, a process called "
+"shrinking. Here, `shrinks=0`: no smaller input preserves the failure, "
+"since only the largest `Int32` fails this property. The optional "
+"`max_shrinks` argument limits the number of candidates examined; "
+"shrinking does not in general guarantee the smallest counterexample. Use "
+"`check`, rather than `report`, when a false property should fail your "
+"test suite."
+msgstr "QuickCheck は、同じく失敗するより単純な入力も試します。この処理を縮小（shrinking）と呼びます。ここでは `shrinks=0` です。このプロパティに違反するのは `Int32` の最大値だけなので、より小さな入力では失敗を維持できません。省略可能な `max_shrinks` 引数は調べる候補の数を制限します。一般に、縮小は最小の反例を保証しません。プロパティが成り立たないときにテストスイートを失敗させるには、`report` ではなく `check` を使ってください。"
+
+#: ../../language/tests.md:150
+msgid "Keeping a Regression Test"
+msgstr "回帰テストの保存"
+
+#: ../../language/tests.md:152
+msgid ""
+"To reproduce a run, keep the seed, settings, property, and "
+"toolchain/library version the same. Generated cases and shrink results "
+"can change between versions. Once a counterexample reveals a bug or a "
+"mistaken expectation, keep that concrete input in an example-based test "
+"with the correct expected behavior:"
+msgstr "実行を再現するには、シード、設定、プロパティ、ツールチェーンおよびライブラリのバージョンを同じにします。生成されるケースや縮小結果は、バージョン間で変わる可能性があります。反例によってバグや誤った期待が見つかったら、その具体的な入力と正しい期待動作を、例に基づくテストとして残します："
+
+#: ../../language/tests.md:157
+msgid ""
+"test \"adding one at the Int32 boundary\" {\n"
+"  let x : Int32 = 2147483647\n"
+"  assert_eq(x + 1, -2147483648)\n"
+"  assert_eq(x.to_int64() + 1, 2147483648L)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/tests.md:163
+msgid ""
+"The second assertion converts to `Int64` **before** adding one, which is "
+"wide enough for this calculation. Converting the result after `Int32` "
+"addition would be too late: the overflow would already have happened."
+msgstr "2つ目のアサーションでは、1を足す**前に** `Int64` に変換しています。`Int64` の範囲はこの計算には十分です。`Int32` で加算した後に結果を変換しても、すでにオーバーフローしているため手遅れです。"
+
+#: ../../language/tests.md:167
+msgid ""
+"Keep both kinds of tests: the regression test always checks the "
+"discovered case, while the property test can explore more inputs with "
+"other seeds and settings. Passing generated cases is not a proof that a "
+"property holds for all inputs."
+msgstr "両方のテストを残しましょう。回帰テストは発見されたケースを常に検証し、プロパティテストは別のシードや設定でより多くの入力を探索できます。生成されたケースがすべて成功しても、すべての入力に対してプロパティが成り立つ証明にはなりません。"
+
+#: ../../language/tests.md:172
+msgid ""
+"For custom generators and more ways to choose useful properties, see "
+"[Property-Based Testing in MoonBit](https://www.moonbitlang.com/blog"
+"/property-based-testing-moonbit)."
+msgstr ""
+"カスタム生成器や有用なプロパティの選び方については、[MoonBit "
+"のプロパティベーステスト](https://www.moonbitlang.com/blog/property-based-testing-"
+"moonbit)を参照してください。"
+
+#: ../../language/tests.md:175
 msgid "BlackBox Tests and WhiteBox Tests"
 msgstr "ブラックボックステストとホワイトボックステスト"
 
-#: ../../language/tests.md:91
+#: ../../language/tests.md:177
 msgid ""
 "When developing libraries, it is important to verify if the user can use "
 "it correctly. For example, one may forget to make a type or a function "
@@ -255,7 +414,7 @@ msgstr ""
 "ライブラリを開発するときは、利用者が正しく使えるかを確認することが重要です。例えば、型や関数を public にし忘れることがあります。そのため "
 "MoonBit には BlackBox テストがあり、開発者が利用者の立場を把握しやすくしています。"
 
-#: ../../language/tests.md:93
+#: ../../language/tests.md:179
 msgid ""
 "A test that has access to all the members in a package is called a "
 "WhiteBox tests as we can see everything. Such tests can be defined inline"
@@ -264,7 +423,7 @@ msgstr ""
 "パッケージ内のすべてのメンバーにアクセスできるテストは、すべてが見えるため WhiteBox "
 "テストと呼ばれます。この種のテストは、インラインで定義することも、名前が `_wbtest.mbt` で終わるファイルに定義することもできます。"
 
-#: ../../language/tests.md:95
+#: ../../language/tests.md:181
 msgid ""
 "A test that has access only to the public members in a package is called "
 "a BlackBox tests. Such tests need to be defined in a file whose name ends"
@@ -273,7 +432,7 @@ msgstr ""
 "パッケージの public メンバーのみにアクセスできるテストは、BlackBox テストと呼ばれます。この種のテストは、名前が "
 "`_test.mbt` で終わるファイルに定義する必要があります。"
 
-#: ../../language/tests.md:97
+#: ../../language/tests.md:183
 msgid ""
 "The WhiteBox test files (`_wbtest.mbt`) imports the packages defined in "
 "the `import` and `wbtest-import` sections of the package configuration "
@@ -283,7 +442,7 @@ msgstr ""
 "`moon.pkg.json`）の `import` および `wbtest-import` セクションで定義されたパッケージを import "
 "します。"
 
-#: ../../language/tests.md:99
+#: ../../language/tests.md:185
 msgid ""
 "The BlackBox test files (`_test.mbt`) imports the current package and the"
 " packages defined in the `import` and `test-import` sections of the "

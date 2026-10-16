@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-17 13:54+0800\n"
+"POT-Creation-Date: 2026-10-13 17:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -235,10 +235,168 @@ msgid ""
 msgstr "请注意，`@test.T::snapshot` 应该在测试块的末尾使用，因为它总是引发异常。"
 
 #: ../../language/tests.md:89
+msgid "Property-Based Tests"
+msgstr "基于性质的测试"
+
+#: ../../language/tests.md:91
+msgid ""
+"Example-based tests check particular inputs. Property-based tests "
+"describe a relationship that should hold for many generated inputs. Use "
+"the standard library's `quickcheck` package inside an ordinary `test` "
+"block; no additional module dependency is needed. For examples in a "
+"`_test.mbt` file, add this import to `moon.pkg`:"
+msgstr ""
+"基于示例的测试检查特定输入，而基于性质的测试描述大量生成的输入都应满足的关系。在普通的 `test` 块中使用标准库的 `quickcheck` "
+"包即可，无需添加额外的模块依赖。对于 `_test.mbt` 文件中的示例，在 `moon.pkg` 中添加以下导入："
+
+#: ../../language/tests.md:97
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/quickcheck\",\n"
+"} for \"test\"\n"
+msgstr ""
+
+#: ../../language/tests.md:103
+msgid "Checking a Property"
+msgstr "检查性质"
+
+#: ../../language/tests.md:105
+msgid "Adding zero should leave an integer unchanged:"
+msgstr "加零应当保持整数不变："
+
+#: ../../language/tests.md:107
+msgid ""
+"test \"adding zero preserves an integer\" {\n"
+"  @quickcheck.check((x : Int32) => x + 0 == x, count=100, seed=2026)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/tests.md:113
+msgid ""
+"Run this test with `moon test`. `check` generates inputs and calls the "
+"property for each one. Returning `true` accepts a case; returning `false`"
+" or raising an error causes `check` to report a failure. Here, `count` "
+"requests 100 cases and `seed` makes the run repeatable. Generated `Int32`"
+" values are not limited to small numbers: they can include values near "
+"the limits of the type."
+msgstr "使用 `moon test` 运行这个测试。`check` 会生成输入，并逐一调用性质函数。返回 `true` 表示该用例通过；返回 `false` 或抛出错误会使 `check` 报告失败。这里，`count` 指定检查 100 个用例，`seed` 使运行可以复现。生成的 `Int32` 值并不限于较小的数，也可能接近该类型的极限。"
+
+#: ../../language/tests.md:119
+msgid ""
+"The input type must implement `Arbitrary` to generate values, `Shrink` to"
+" simplify failing inputs, and `Debug` to display them. These "
+"implementations are provided for common types, including `Int32`. Keep "
+"properties deterministic and avoid mutating their inputs."
+msgstr "输入类型必须实现 `Arbitrary` 来生成值、`Shrink` 来简化失败的输入，以及 `Debug` 来显示这些输入。常见类型（包括 `Int32`）已提供这些实现。性质函数应保持确定性，并避免修改输入。"
+
+#: ../../language/tests.md:124
+msgid "Understanding a Counterexample"
+msgstr "理解反例"
+
+#: ../../language/tests.md:126
+msgid ""
+"What about adding one? `x + 1 > x` holds for mathematical integers, but "
+"does it hold for `Int32`? Small examples such as 0, 1, and 100 would all "
+"pass. The following example uses `report` to look for a counterexample. "
+"It returns a result instead of raising a test failure, so we can record "
+"the failure report in a snapshot while keeping the demonstration itself a"
+" passing test:"
+msgstr "那么加一呢？`x + 1 > x` 对数学中的整数成立，但对 `Int32` 也成立吗？0、1、100 等较小的示例都会通过。下面使用 `report` 寻找反例。它返回结果而不是抛出测试失败，因此可以用快照记录失败报告，同时让演示本身保持为通过的测试："
+
+#: ../../language/tests.md:132
+msgid ""
+"test \"adding one does not always increase an integer\" {\n"
+"  let report = @quickcheck.report(\n"
+"    (x : Int32) => x + 1 > x,\n"
+"    count=100,\n"
+"    seed=2026,\n"
+"  )\n"
+"  debug_inspect(\n"
+"    report,\n"
+"    content=(\n"
+"      #|Falsified(\n"
+"      #|  counterexample=2147483647,\n"
+"      #|  tests=18,\n"
+"      #|  size=17,\n"
+"      #|  shrinks=0,\n"
+"      #|  shrink_attempts=31,\n"
+"      #|)\n"
+"    ),\n"
+"  )\n"
+"}\n"
+msgstr ""
+
+#: ../../language/tests.md:138
+msgid ""
+"`Falsified` means the property returned `false`. The counterexample is "
+"`2147483647`, the largest `Int32`. Adding one overflows and wraps to "
+"`-2147483648`, so the result is smaller, not larger. This is a mistaken "
+"assumption about fixed-width arithmetic, not a bug in addition."
+msgstr "`Falsified` 表示性质函数返回了 `false`。反例是 `2147483647`，即最大的 `Int32`。加一会溢出并回绕到 `-2147483648`，所以结果变小了，而非变大。这是对固定宽度整数运算的错误假设，不是加法实现的缺陷。"
+
+#: ../../language/tests.md:143
+msgid ""
+"QuickCheck also tries simpler inputs that still fail, a process called "
+"shrinking. Here, `shrinks=0`: no smaller input preserves the failure, "
+"since only the largest `Int32` fails this property. The optional "
+"`max_shrinks` argument limits the number of candidates examined; "
+"shrinking does not in general guarantee the smallest counterexample. Use "
+"`check`, rather than `report`, when a false property should fail your "
+"test suite."
+msgstr "QuickCheck 还会尝试仍然导致失败的更简单输入，这个过程称为缩减（shrinking）。这里 `shrinks=0`：没有更小的输入能保留这个失败，因为只有最大的 `Int32` 不满足该性质。可选参数 `max_shrinks` 限制检查的候选输入数量；一般而言，缩减并不保证找到最小的反例。如果性质不成立时应当让测试套件失败，请使用 `check` 而不是 `report`。"
+
+#: ../../language/tests.md:150
+msgid "Keeping a Regression Test"
+msgstr "保留回归测试"
+
+#: ../../language/tests.md:152
+msgid ""
+"To reproduce a run, keep the seed, settings, property, and "
+"toolchain/library version the same. Generated cases and shrink results "
+"can change between versions. Once a counterexample reveals a bug or a "
+"mistaken expectation, keep that concrete input in an example-based test "
+"with the correct expected behavior:"
+msgstr "要复现一次运行，需要保持种子、设置、性质函数以及工具链和库版本不变。不同版本生成的用例和缩减结果可能不同。一旦反例揭示了缺陷或错误的预期，就应将该具体输入保留在基于示例的测试中，并写明正确的预期行为："
+
+#: ../../language/tests.md:157
+msgid ""
+"test \"adding one at the Int32 boundary\" {\n"
+"  let x : Int32 = 2147483647\n"
+"  assert_eq(x + 1, -2147483648)\n"
+"  assert_eq(x.to_int64() + 1, 2147483648L)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/tests.md:163
+msgid ""
+"The second assertion converts to `Int64` **before** adding one, which is "
+"wide enough for this calculation. Converting the result after `Int32` "
+"addition would be too late: the overflow would already have happened."
+msgstr "第二个断言在加一**之前**转换为 `Int64`，其范围足以容纳这次计算的结果。如果在 `Int32` 加法完成后再转换结果就太晚了：溢出已经发生。"
+
+#: ../../language/tests.md:167
+msgid ""
+"Keep both kinds of tests: the regression test always checks the "
+"discovered case, while the property test can explore more inputs with "
+"other seeds and settings. Passing generated cases is not a proof that a "
+"property holds for all inputs."
+msgstr "两种测试都应保留：回归测试始终检查已发现的用例，而性质测试可以通过其他种子和设置探索更多输入。生成的用例全部通过，并不能证明性质对所有输入都成立。"
+
+#: ../../language/tests.md:172
+msgid ""
+"For custom generators and more ways to choose useful properties, see "
+"[Property-Based Testing in MoonBit](https://www.moonbitlang.com/blog"
+"/property-based-testing-moonbit)."
+msgstr ""
+"关于自定义生成器及更多选择有效性质的方法，请参阅 [MoonBit "
+"中基于性质的测试](https://www.moonbitlang.com/blog/property-based-testing-"
+"moonbit)。"
+
+#: ../../language/tests.md:175
 msgid "BlackBox Tests and WhiteBox Tests"
 msgstr "黑盒测试和白盒测试"
 
-#: ../../language/tests.md:91
+#: ../../language/tests.md:177
 msgid ""
 "When developing libraries, it is important to verify if the user can use "
 "it correctly. For example, one may forget to make a type or a function "
@@ -248,7 +406,7 @@ msgstr ""
 "在开发库时，验证用户是否可以正确使用它是很重要的。例如，可能会忘记使类型或函数公开。这就是为什么 MoonBit "
 "提供了黑盒测试，允许开发人员了解其他人的感受。"
 
-#: ../../language/tests.md:93
+#: ../../language/tests.md:179
 msgid ""
 "A test that has access to all the members in a package is called a "
 "WhiteBox tests as we can see everything. Such tests can be defined inline"
@@ -257,21 +415,21 @@ msgstr ""
 "能够访问包中所有成员的测试称为白盒测试，因为我们可以看到一切。这样的测试可以内联定义，也可以在文件中定义，文件名以 `_wbtest.mbt` "
 "结尾。"
 
-#: ../../language/tests.md:95
+#: ../../language/tests.md:181
 msgid ""
 "A test that has access only to the public members in a package is called "
 "a BlackBox tests. Such tests need to be defined in a file whose name ends"
 " with `_test.mbt`."
 msgstr "只能访问包中公开成员的测试称为黑盒测试。这样的测试需要在文件中定义，文件名以 `_test.mbt` 结尾。"
 
-#: ../../language/tests.md:97
+#: ../../language/tests.md:183
 msgid ""
 "The WhiteBox test files (`_wbtest.mbt`) imports the packages defined in "
 "the `import` and `wbtest-import` sections of the package configuration "
 "(`moon.pkg`, or legacy `moon.pkg.json`)."
 msgstr ""
 
-#: ../../language/tests.md:99
+#: ../../language/tests.md:185
 msgid ""
 "The BlackBox test files (`_test.mbt`) imports the current package and the"
 " packages defined in the `import` and `test-import` sections of the "
