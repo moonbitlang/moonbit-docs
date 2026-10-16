@@ -18,8 +18,8 @@ test "adding one does not always increase an integer" {
     content=(
       #|Falsified(
       #|  counterexample=2147483647,
-      #|  tests=18,
-      #|  size=17,
+      #|  tests=99,
+      #|  size=98,
       #|  shrinks=0,
       #|  shrink_attempts=31,
       #|)
