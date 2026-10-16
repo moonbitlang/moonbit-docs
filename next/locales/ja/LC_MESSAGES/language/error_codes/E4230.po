@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-16 14:02+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4230.md:1
+msgid "E4230"
+msgstr ""
+
+#: ../../language/error_codes/E4230.md:3
+msgid "Invalid use of the `#builtin` attribute."
+msgstr "`#builtin` アトリビュートの使用が不正です。"
+
+#: ../../language/error_codes/E4230.md:5
+msgid ""
+"`#builtin` is reserved for the standard library's built-in type "
+"declarations; it cannot be used to mark a type in an ordinary application"
+" or library package as built-in."
+msgstr "`#builtin` は標準ライブラリの組み込み型宣言専用です。通常のアプリケーションやライブラリのパッケージにある型を、組み込み型として指定するためには使えません。"
+
+#: ../../language/error_codes/E4230.md:9
+msgid "Erroneous example"
+msgstr "エラーのある例"
+
+#: ../../language/error_codes/E4230.md:11
+msgid ""
+"///|\n"
+"#builtin\n"
+"pub(all) struct Counter {\n"
+"  value : Int32\n"
+"}\n"
+msgstr ""
+#: ../../language/error_codes/E4230.md:15
+msgid "Suggestion"
+msgstr "修正案"
+
+#: ../../language/error_codes/E4230.md:17
+msgid ""
+"Remove `#builtin` and declare the type normally. To use an existing "
+"built-in type, refer to that type directly rather than trying to "
+"redeclare it."
+msgstr "`#builtin` を削除し、通常どおり型を宣言してください。既存の組み込み型を使う場合は、再宣言しようとせず、その型を直接参照してください。"
+
+#: ../../language/error_codes/E4230.md:20
+msgid ""
+"///|\n"
+"pub(all) struct Counter {\n"
+"  value : Int32\n"
+"}\n"
+msgstr ""
