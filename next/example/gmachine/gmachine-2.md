@@ -101,7 +101,7 @@ The semantics of `letrec` are more complex - it allows the N variables within th
 The steps to compile letrec are similar to `let`:
 
 - Use `Alloc(n)` to allocate N addresses.
-- Use the `loop` expression to build a complete environment.
+- Use a `for` loop to build a complete environment.
 - Compile the local variables in `defs`, using the `Update` instruction to update the results to the pre-allocated addresses after compiling each one.
 - Compile the main expression and use the `Slide` instruction to clean up.
 

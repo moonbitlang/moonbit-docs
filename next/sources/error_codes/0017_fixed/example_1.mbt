@@ -4,12 +4,14 @@ test (ctx : @test.Test) {
   // start example
   let a : StringView = "asdf"
   let b = a
-  loop a {
-    [_, .. d] => {
-      println(b)
-      continue d
+  for remaining = a {
+    match remaining {
+      [_, .. d] => {
+        println(b)
+        continue d
+      }
+      [] => break
     }
-    [] => ()
   }
   // end example
   ctx.snapshot(filename="snapshot_1")

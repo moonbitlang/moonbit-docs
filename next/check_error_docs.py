@@ -11,6 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent
 ERROR_CODES_DIR = BASE_DIR / 'language/error_codes'
 ERROR_CODES_SOURCE_DIR = BASE_DIR / 'sources/error_codes'
 RUN_ONLY_ERROR_CODES = set()
+# Keep checking the replacements without retaining deprecated syntax to trigger
+# these historical diagnostics.
+FIXED_ONLY_ERROR_CODES = {'0017', '0018', '4204'}
 SKIPPED_ERROR_CODES = {
     # Current MoonBit does not emit this warning.
     '0016',
@@ -56,6 +59,8 @@ SKIPPED_ERROR_CODES = {
 
 def example_status(error_code):
     """Return whether examples for this error code are fully monitored."""
+    if error_code in FIXED_ONLY_ERROR_CODES:
+        return 'fixed-only'
     if error_code in SKIPPED_ERROR_CODES:
         return 'skipped'
 
@@ -128,6 +133,8 @@ def run_moon_test(file_path, error_code=None):
 
 def check_error_code(error_code):
     """Check specific error code documentation"""
+    if error_code in FIXED_ONLY_ERROR_CODES:
+        return run_moon_test(str(ERROR_CODES_SOURCE_DIR / f"{error_code}_fixed"))
     if error_code in SKIPPED_ERROR_CODES:
         return True
 
@@ -169,6 +176,7 @@ def print_coverage_summary(error_codes):
     """Print example coverage for all known error codes."""
     missing = []
     partial = []
+    fixed_only = []
     skipped = []
 
     for error_code in error_codes:
@@ -177,13 +185,16 @@ def print_coverage_summary(error_codes):
             missing.append(error_code)
         elif status == 'partial':
             partial.append(error_code)
+        elif status == 'fixed-only':
+            fixed_only.append(error_code)
         elif status == 'skipped':
             skipped.append(error_code)
 
     total = len(error_codes)
-    full = total - len(missing) - len(partial) - len(skipped)
+    full = total - len(missing) - len(partial) - len(fixed_only) - len(skipped)
     print(
         f"Coverage: {full} full, {len(partial)} partial, "
+        f"{len(fixed_only)} fixed-only, "
         f"{len(missing)} missing, {len(skipped)} skipped, {total} total")
 
     if partial:
@@ -191,6 +202,9 @@ def print_coverage_summary(error_codes):
 
     if missing:
         print(f"MISSING: {', '.join(missing)}")
+
+    if fixed_only:
+        print(f"FIXED-ONLY: {', '.join(fixed_only)}")
 
     if skipped:
         print(f"SKIPPED: {', '.join(skipped)}")
@@ -231,7 +245,7 @@ def main():
         if args.require_examples:
             incomplete = [
                 error_code for error_code in error_codes
-                if example_status(error_code) != 'full'
+                if example_status(error_code) not in {'full', 'fixed-only'}
                 and error_code not in SKIPPED_ERROR_CODES
             ]
             if incomplete:
@@ -249,7 +263,7 @@ def main():
         if (
             args.require_examples
             and args.target not in SKIPPED_ERROR_CODES
-            and example_status(args.target) != 'full'
+            and example_status(args.target) not in {'full', 'fixed-only'}
         ):
             print(f"INCOMPLETE: {args.target}")
             return 1

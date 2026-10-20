@@ -24,25 +24,27 @@ pub fn check_collision(
   if offset.1 + len_r > grid_row_count {
     return true
   }
-  loop (grid, 0) {
-    (More(v, tail=n), r) => {
-      if r < offset.1 {
-        continue (n, r + 1)
-      }
-      if r >= offset.1 + len_r {
-        return false
-      }
-      for c = 0; c < len_c; c = c + 1 {
-        if shap[r - offset.1][c] == 0 {
-          continue c + 1
+  for rows = grid, r = 0 {
+    match rows {
+      More(v, tail=n) => {
+        if r < offset.1 {
+          continue n, r + 1
         }
-        if v[c + offset.0] != 0 {
-          return true
+        if r >= offset.1 + len_r {
+          return false
         }
+        for c = 0; c < len_c; c = c + 1 {
+          if shap[r - offset.1][c] == 0 {
+            continue c + 1
+          }
+          if v[c + offset.0] != 0 {
+            return true
+          }
+        }
+        continue n, r + 1
       }
-      continue (n, r + 1)
+      Empty => break false
     }
-    (Empty, _) => false
   }
 }
 

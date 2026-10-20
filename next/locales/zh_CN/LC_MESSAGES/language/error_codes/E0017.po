@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-03 15:17+0800\n"
+"POT-Creation-Date: 2026-10-20 15:27+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,105 +28,45 @@ msgstr ""
 
 #: ../../language/error_codes/E0017.md:5
 msgid ""
-"The usage of identifier is ambiguous. If it refers to the loop variable, "
-"please use `as <id>` to bind it in the pattern. If it refers to the "
-"original value of the variable before entering the loop, please bind it "
-"to a new binder outside the loop."
-msgstr ""
-"标识符的使用存在歧义。如果它指的是循环变量，请使用 `as <id>` "
-"在模式中绑定它。如果它指的是变量在进入循环前的原始值，请在循环外部将其绑定到一个新的绑定器。"
+"This warning applies to an ambiguous reference to the initial state of "
+"the deprecated functional-loop syntax. Use a `for` loop with explicit "
+"state bindings instead. This makes the current state distinct from the "
+"original value, without relying on a pattern alias."
+msgstr "此警告针对已弃用的函数式循环语法中对初始状态的歧义引用。请改用显式绑定状态的 `for` 循环。这样无需依赖模式别名，就能区分当前状态和原始值。"
 
 #: ../../language/error_codes/E0017.md:10
-msgid "Erroneous example"
-msgstr "错误示例"
-
-#: ../../language/error_codes/E0017.md:12
-msgid ""
-"///|\n"
-"fn main {\n"
-"  let a : StringView = \"asdf\"\n"
-"  loop a {\n"
-"    [_, .. d] => {\n"
-"      println(a)\n"
-"      //      ^\n"
-"      // Warning: The usage of 'a' is ambiguous. If it refers to the loop"
-"\n"
-"      // variable, please use `as a` to bind it in the pattern. If it "
-"refers to\n"
-"      // the original value of 'a' before entering the loop, please bind "
-"it to a\n"
-"      // new binder outside the loop.\n"
-"      continue d\n"
-"    }\n"
-"    [] => ()\n"
-"  }\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0017.md:20
-#: ../../language/error_codes/E0017.md:52
-#: ../../language/error_codes/E0017.md:68
-msgid "Output:"
-msgstr "输出："
-
-#: ../../language/error_codes/E0017.md:22
-#: ../../language/error_codes/E0017.md:70
-msgid ""
-"asdf\n"
-"asdf\n"
-"asdf\n"
-"asdf\n"
-msgstr ""
-
-#: ../../language/error_codes/E0017.md:25
-msgid ""
-"Because `a` refers to the value of `a` before entering the loop, "
-"therefore the value is always the same."
-msgstr "因为 `a` 指的是进入循环前的 `a` 的值，因此该值始终相同。"
-
-#: ../../language/error_codes/E0017.md:28
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0017.md:30
+#: ../../language/error_codes/E0017.md:12
 msgid ""
-"Since `loop` syntax will be removed soon, prefer rewriting new code with "
-"a `for` loop when possible. For example, this code can be written as:"
-msgstr ""
-"由于 `loop` 语法很快会被移除，若条件允许，建议优先将新代码改写为 `for` 循环。例如，这段代码可以写成："
+"To refer to the state that changes on each iteration, use the variable "
+"bound in the `for` header:"
+msgstr "要引用每次迭代都会变化的状态，请使用 `for` 头部绑定的变量："
 
-#: ../../language/error_codes/E0017.md:33
-msgid ""
-"let text : StringView = \"asdf\"\n"
-"for i = 0; i < text.length(); i = i + 1 {\n"
-"  println(text[i:])\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0017.md:40
-msgid ""
-"If you are maintaining existing `loop` code, and you want to refer to the"
-" loop variable that changes with loop iterations, use `as <id>` to bind "
-"it in the pattern."
-msgstr ""
-"如果你是在维护现有的 `loop` 代码，并且想引用随循环迭代而变化的循环变量，请使用 `as <id>` 在模式中绑定它。"
-
-#: ../../language/error_codes/E0017.md:44
+#: ../../language/error_codes/E0017.md:15
 msgid ""
 "///|\n"
 "fn main {\n"
 "  let a : StringView = \"asdf\"\n"
-"  loop a {\n"
-"    [_, .. d] as a => {\n"
-"      println(a)\n"
-"      continue d\n"
+"  for remaining = a {\n"
+"    match remaining {\n"
+"      [_, .. d] => {\n"
+"        println(remaining)\n"
+"        continue d\n"
+"      }\n"
+"      [] => break\n"
 "    }\n"
-"    [] => ()\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0017.md:54
+#: ../../language/error_codes/E0017.md:23
+#: ../../language/error_codes/E0017.md:38
+msgid "Output:"
+msgstr "输出："
+
+#: ../../language/error_codes/E0017.md:25
 msgid ""
 "asdf\n"
 "sdf\n"
@@ -134,24 +74,42 @@ msgid ""
 "f\n"
 msgstr ""
 
-#: ../../language/error_codes/E0017.md:57
-msgid ""
-"Or, if you want to refer to the original value of the variable before "
-"entering the loop, explicitly bind it to another name outside the loop."
-msgstr "或者，如果你想在进入循环之前引用变量的原始值，可以显式地将其绑定到循环外的另一个名称。"
+#: ../../language/error_codes/E0017.md:28
+msgid "To refer to the original value, bind it outside the loop:"
+msgstr "要引用原始值，请在循环外绑定它："
 
-#: ../../language/error_codes/E0017.md:60
+#: ../../language/error_codes/E0017.md:30
 msgid ""
 "///|\n"
 "fn main {\n"
 "  let a : StringView = \"asdf\"\n"
 "  let b = a\n"
-"  loop a {\n"
-"    [_, .. d] => {\n"
-"      println(b)\n"
-"      continue d\n"
+"  for remaining = a {\n"
+"    match remaining {\n"
+"      [_, .. d] => {\n"
+"        println(b)\n"
+"        continue d\n"
+"      }\n"
+"      [] => break\n"
 "    }\n"
-"    [] => ()\n"
 "  }\n"
 "}\n"
 msgstr ""
+
+#: ../../language/error_codes/E0017.md:40
+msgid ""
+"asdf\n"
+"asdf\n"
+"asdf\n"
+"asdf\n"
+msgstr ""
+
+#~ msgid "Erroneous example"
+#~ msgstr "错误示例"
+
+#~ msgid ""
+#~ "let text : StringView = \"asdf\"\n"
+#~ "for i = 0; i < text.length(); i = i + 1 {\n"
+#~ "  println(text[i:])\n"
+#~ "}\n"
+#~ msgstr ""
