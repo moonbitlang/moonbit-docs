@@ -1,0 +1,1 @@
+name = "palindrome_string"

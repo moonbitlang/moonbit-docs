@@ -26,7 +26,6 @@ def main():
 
         print(f"Processing {example.name}")
         try:
-            subprocess.run(["moon", "install"], cwd=example, check=True)
             subprocess.run(
                 ["moon", "check", "--target", check_targets],
                 cwd=example,
