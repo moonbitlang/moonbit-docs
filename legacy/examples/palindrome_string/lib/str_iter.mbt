@@ -14,11 +14,10 @@
 
 ///|
 pub fn is_palindrome(chars : String) -> Bool {
-  for remaining = chars[:] {
-    match remaining {
-      [] | [_] => break true
-      [hd, .. mid, tl] if hd == tl => continue mid
-      _ => break false
+  for chars = chars[:]; chars is [hd, .. mid, tl]; chars = mid {
+    if hd != tl {
+      return false
     }
   }
+  true
 }
