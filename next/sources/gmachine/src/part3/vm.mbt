@@ -369,15 +369,9 @@ fn build_initial_heap(
 ) -> (GHeap, @hashmap.HashMap[String, Addr]) {
   let heap = { object_count: 0, memory: Array::make(10000, None) }
   let globals = @hashmap.HashMap([], capacity=50)
-  for scdefs = scdefs {
-    match scdefs {
-      Empty => break
-      More((name, arity, instrs), tail=rest) => {
-        let addr = heap.alloc(NGlobal(name, arity, instrs))
-        globals[name] = addr
-        continue rest
-      }
-    }
+  for (name, arity, instrs) in scdefs {
+    let addr = heap.alloc(NGlobal(name, arity, instrs))
+    globals[name] = addr
   }
   return (heap, globals)
 }

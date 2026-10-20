@@ -14,7 +14,7 @@
 
 ///|
 pub fn is_palindrome(chars : String) -> Bool {
-  for chars = chars[:]; chars is [hd, .. mid, tl]; chars = mid {
+  for remaining = chars[:]; remaining is [hd, .. mid, tl]; remaining = mid {
     if hd != tl {
       return false
     }
