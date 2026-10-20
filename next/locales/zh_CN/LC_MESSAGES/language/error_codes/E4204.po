@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 10:40+0800\n"
+"POT-Creation-Date: 2026-10-20 15:27+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,47 +28,23 @@ msgstr "编译器诊断名称：`loop_nobreak_not_supported`。"
 
 #: ../../language/error_codes/E4204.md:5
 msgid ""
-"The `loop` expression does not support a `nobreak` block. `nobreak` is "
-"for loop forms where normal completion is possible, while `loop` is an "
-"explicit functional loop that continues or breaks from its body."
-msgstr ""
-"`loop` 表达式不支持 `nobreak` 块。`nobreak` 适用于可能正常结束的循环形式，"
-"而 `loop` 是一种显式的函数式循环，需要在循环体中 `continue` 或 `break`。"
+"This diagnostic applies to a `nobreak` clause on the deprecated "
+"functional-loop syntax. Use a `for` loop with explicit state bindings "
+"instead."
+msgstr "此诊断针对已弃用的函数式循环语法上的 `nobreak` 子句。请改用显式绑定状态的 `for` 循环。"
 
-#: ../../language/error_codes/E4204.md:9
-msgid "Erroneous example"
-msgstr "错误示例"
-
-#: ../../language/error_codes/E4204.md:11
-msgid ""
-"///|\n"
-"fn count_down(n : Int32) -> Int32 {\n"
-"  loop n {\n"
-"    0 => break 0\n"
-"    i => continue i - 1\n"
-"  } nobreak {\n"
-"    -1\n"
-"  }\n"
-"}\n"
-"\n"
-"///|\n"
-"test {\n"
-"  ignore(count_down)\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E4204.md:15
+#: ../../language/error_codes/E4204.md:8
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4204.md:17
+#: ../../language/error_codes/E4204.md:10
 msgid ""
-"Rewrite the code as a `for` loop when you need loop state and an explicit"
-" result."
-msgstr ""
-"当你需要循环状态和显式结果时，将代码改写为 `for` 循环。"
+"Use `break` with a value to return the result. A `for` loop without a "
+"condition continues until an explicit exit, so no `nobreak` clause is "
+"needed:"
+msgstr "使用带值的 `break` 返回结果。没有条件的 `for` 循环会一直执行到显式退出，因此不需要 `nobreak` 子句："
 
-#: ../../language/error_codes/E4204.md:20
+#: ../../language/error_codes/E4204.md:13
 msgid ""
 "///|\n"
 "fn count_down(n : Int32) -> Int32 {\n"
@@ -85,3 +61,6 @@ msgid ""
 "  inspect(count_down(3), content=\"0\")\n"
 "}\n"
 msgstr ""
+
+#~ msgid "Erroneous example"
+#~ msgstr "错误示例"

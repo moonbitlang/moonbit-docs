@@ -37,7 +37,7 @@ class MoonBitLexer(RegexLexer):
             (words(('type', 'enum', 'struct', 'trait', 'suberror', 'extenum', 'declare'), suffix=r"\b"), token.Keyword.Declaration),
             (words(('async', 'fn', 'const', 'let', 'mut', 'impl', 'extend', 'with', 'derive'), suffix=r"\b"), token.Keyword.Declaration),
             (words(('self', 'Self'), suffix=r"\b"), token.Keyword),
-            (words(('guard', 'if', 'while', 'match', 'lexmatch', 'lexscan', 'else', 'loop', 'for', 'in', 'is'), suffix=r"\b"), token.Keyword),
+            (words(('guard', 'if', 'while', 'match', 'lexmatch', 'lexscan', 'else', 'for', 'in', 'is'), suffix=r"\b"), token.Keyword),
             (words(('return', 'break', 'continue'), suffix=r"\b"), token.Keyword),
             (words(('try', 'catch', 'raise', 'noraise'), suffix=r"\b"), token.Keyword),
             (r"\bas\b", token.Keyword),
