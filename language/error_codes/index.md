@@ -314,3 +314,4 @@ This page lists all error codes produced by the MoonBit compiler.
 * [E4227](https://docs.moonbitlang.com/en/latest/language/error_codes/E4227.html)
 * [E4228](https://docs.moonbitlang.com/en/latest/language/error_codes/E4228.html)
 * [E4229](https://docs.moonbitlang.com/en/latest/language/error_codes/E4229.html)
+* [E4230](https://docs.moonbitlang.com/en/latest/language/error_codes/E4230.html)
