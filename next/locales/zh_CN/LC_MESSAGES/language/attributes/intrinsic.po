@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-21 15:01+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/intrinsic.md:1
+msgid "Intrinsic Attribute"
+msgstr "内建指令属性"
+
+#: ../../language/attributes/intrinsic.md:3
+msgid ""
+"`#intrinsic(\"name\")` associates a function with a compiler intrinsic "
+"while retaining an ordinary function body."
+msgstr "`#intrinsic(\"name\")` 将函数与编译器内建指令关联，同时保留普通函数体。"
+
+#: ../../language/attributes/intrinsic.md:7
+msgid ""
+"Intrinsics are not a stable API. They may change without notice and are "
+"not recommended for application code. Prefer ordinary functions and "
+"public standard-library APIs."
+msgstr "内建指令不是稳定的 API，可能在不通知的情况下发生变化，不建议在应用代码中使用。请优先使用普通函数和标准库公开的 API。"
+
+#: ../../language/attributes/intrinsic.md:12
+msgid ""
+"If the compiler does not recognize the name, it reports "
+"[E0094](/language/error_codes/E0094.md), ignores the attribute, and uses "
+"the ordinary function body. This is different from a direct intrinsic "
+"declaration (`fn f(x : Int32) -> Int32 = \"name\"`), which has no "
+"ordinary body and reports [E4070](/language/error_codes/E4070.md) for an "
+"unknown name."
+msgstr "如果编译器无法识别该名称，它会报告 [E0094](/language/error_codes/E0094.md)，忽略属性并使用普通函数体。这与直接声明内建指令（`fn f(x : Int32) -> Int32 = \"name\"`）不同：后者没有普通函数体，遇到未知名称时会报告 [E4070](/language/error_codes/E4070.md)。"
+
+#: ../../language/attributes/intrinsic.md:18
+msgid ""
+"Specifying multiple intrinsics for one function is not supported; see "
+"[E4071](/language/error_codes/E4071.md)."
+msgstr "不支持为同一个函数指定多个内建指令，参见 [E4071](/language/error_codes/E4071.md)。"

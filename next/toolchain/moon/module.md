@@ -610,6 +610,8 @@ unused_lexcase             `lexmatch`/`lexscan` branch that can never be selecte
 unused_errdefer            unused `errdefer` statement                                     91 warn
 fragile_catch_all          fragile `catch` handler that can be converted to `defer` or `errdefer`  92 warn
 unknown_constr_pat_on_exhaustive_type using `TypeName::..` pattern on a type not marked with `#non_exhaustive`  93 warn
+unknown_intrinsic          `#intrinsic` attribute names an unknown intrinsic.              94 warn
+nan_pattern                Pattern on a NaN constant, which never matches.                 95 warn
 all                        all warnings
 state: warn = enabled, error = promoted to error, off = disabled
 note: default alert exceptions: alert_unsafe=off

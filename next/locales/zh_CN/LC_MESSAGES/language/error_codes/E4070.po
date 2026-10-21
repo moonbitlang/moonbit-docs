@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-20 11:15+0800\n"
+"POT-Creation-Date: 2026-10-21 15:01+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -28,31 +28,40 @@ msgstr "未知的内建指令。MoonBit 编译器不知道这种内建指令。"
 
 #: ../../language/error_codes/E4070.md:5
 msgid ""
+"This error applies to a direct intrinsic declaration (`fn ... = "
+"\"name\"`), which has no ordinary function body to fall back to. An "
+"unknown name in a `#intrinsic(\"name\")` attribute instead produces "
+"warning [E0094](E0094.md): the attribute is ignored and the ordinary "
+"function body is used."
+msgstr "此错误针对直接声明内建指令的形式（`fn ... = \"name\"`），该形式没有可供回退的普通函数体。`#intrinsic(\"name\")` 属性中的未知名称则会产生警告 [E0094](E0094.md)：属性被忽略，改用普通函数体。"
+
+#: ../../language/error_codes/E4070.md:10
+msgid ""
 "Intrinsics are not intended for usage outside of `moonbitlang/core`. They"
 " are subject to change without notice, and we highly recommend "
 "**against** using them."
 msgstr "内建指令不应在 `moonbitlang/core` 之外使用。它们可能会在不通知的情况下变更，我们强烈建议 **不要使用它们**。"
 
-#: ../../language/error_codes/E4070.md:8
+#: ../../language/error_codes/E4070.md:13
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4070.md:10
+#: ../../language/error_codes/E4070.md:15
 msgid ""
 "///|\n"
 "pub fn my_abort(message : String) -> Unit = \"%not_a_real_intrinsic\"\n"
 "// Error: Unknown intrinsic: %not_a_real_intrinsic\n"
 msgstr ""
 
-#: ../../language/error_codes/E4070.md:14
+#: ../../language/error_codes/E4070.md:19
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4070.md:16
+#: ../../language/error_codes/E4070.md:21
 msgid "You probably want to use the `abort` function from `moonbitlang/core`:"
 msgstr "您可能需要使用 `moonbitlang/core` 中的 `abort` 函数："
 
-#: ../../language/error_codes/E4070.md:18
+#: ../../language/error_codes/E4070.md:23
 msgid ""
 "///|\n"
 "pub fn my_abort(message : String) -> Unit {\n"
@@ -60,7 +69,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4070.md:22
+#: ../../language/error_codes/E4070.md:27
 msgid ""
 "If you really need to use the intrinsic, you can check the source code of"
 " `moonbitlang/core` for further usage of the corresponding intrinsic."

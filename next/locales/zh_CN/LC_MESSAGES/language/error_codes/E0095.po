@@ -1,0 +1,87 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-21 14:48+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0095.md:1
+msgid "E0095"
+msgstr ""
+
+#: ../../language/error_codes/E0095.md:3
+msgid "Warning name: `nan_pattern`"
+msgstr "警告名称：`nan_pattern`"
+
+#: ../../language/error_codes/E0095.md:5
+msgid ""
+"A pattern uses a floating-point constant whose value is NaN (not a "
+"number). NaN is not equal to any value, including itself, so this pattern"
+" never matches. This warning is enabled by default."
+msgstr "模式使用了值为 NaN（非数）的浮点常量。NaN 不等于任何值，包括它自身，因此此模式永远无法匹配。此警告默认启用。"
+
+#: ../../language/error_codes/E0095.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0095.md:11
+msgid ""
+"///|\n"
+"const Infinity : Double = 1.0e308 * 1.0e308\n"
+"\n"
+"///|\n"
+"const NaN : Double = Infinity - Infinity\n"
+"\n"
+"///|\n"
+"pub fn describe(value : Double) -> String {\n"
+"  match value {\n"
+"    NaN => \"not a number\"\n"
+"    _ => \"number\"\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0095.md:15
+msgid "The `NaN` branch is not selected even when `value` is NaN."
+msgstr "即使 `value` 是 NaN，也不会选择 `NaN` 分支。"
+
+#: ../../language/error_codes/E0095.md:17
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0095.md:19
+msgid ""
+"Use `is_nan()` in a match guard instead of matching against a NaN "
+"constant:"
+msgstr "请在匹配分支的守卫条件中调用 `is_nan()`，而不是使用 NaN 常量进行匹配："
+
+#: ../../language/error_codes/E0095.md:21
+msgid ""
+"///|\n"
+"pub fn describe(value : Double) -> String {\n"
+"  match value {\n"
+"    x if x.is_nan() => \"not a number\"\n"
+"    _ => \"number\"\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(describe(0.0 / 0.0), content=\"not a number\")\n"
+"  inspect(describe(1.0), content=\"number\")\n"
+"}\n"
+msgstr ""
