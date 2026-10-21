@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-21 15:01+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/intrinsic.md:1
+msgid "Intrinsic Attribute"
+msgstr "組み込み命令属性"
+
+#: ../../language/attributes/intrinsic.md:3
+msgid ""
+"`#intrinsic(\"name\")` associates a function with a compiler intrinsic "
+"while retaining an ordinary function body."
+msgstr "`#intrinsic(\"name\")` は、通常の関数本体を残したまま、関数をコンパイラの組み込み命令に関連付けます。"
+
+#: ../../language/attributes/intrinsic.md:7
+msgid ""
+"Intrinsics are not a stable API. They may change without notice and are "
+"not recommended for application code. Prefer ordinary functions and "
+"public standard-library APIs."
+msgstr "組み込み命令は安定した API ではありません。予告なく変更される可能性があり、アプリケーションコードでの使用は推奨されません。通常の関数や標準ライブラリの公開 API を優先してください。"
+
+#: ../../language/attributes/intrinsic.md:12
+msgid ""
+"If the compiler does not recognize the name, it reports "
+"[E0094](/language/error_codes/E0094.md), ignores the attribute, and uses "
+"the ordinary function body. This is different from a direct intrinsic "
+"declaration (`fn f(x : Int32) -> Int32 = \"name\"`), which has no "
+"ordinary body and reports [E4070](/language/error_codes/E4070.md) for an "
+"unknown name."
+msgstr "コンパイラが名前を認識できない場合は [E0094](/language/error_codes/E0094.md) を報告し、属性を無視して通常の関数本体を使用します。直接の組み込み命令宣言（`fn f(x : Int32) -> Int32 = \"name\"`）とは異なります。後者には通常の関数本体がなく、未知の名前に対して [E4070](/language/error_codes/E4070.md) を報告します。"
+
+#: ../../language/attributes/intrinsic.md:18
+msgid ""
+"Specifying multiple intrinsics for one function is not supported; see "
+"[E4071](/language/error_codes/E4071.md)."
+msgstr "1 つの関数に複数の組み込み命令を指定することはできません。[E4071](/language/error_codes/E4071.md) を参照してください。"

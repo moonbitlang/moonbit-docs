@@ -1,0 +1,91 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-21 15:01+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0094.md:1
+msgid "E0094"
+msgstr ""
+
+#: ../../language/error_codes/E0094.md:3
+msgid "Warning name: `unknown_intrinsic`"
+msgstr "警告名称：`unknown_intrinsic`"
+
+#: ../../language/error_codes/E0094.md:5
+msgid ""
+"The [`#intrinsic`](/language/attributes/intrinsic.md) attribute names an "
+"intrinsic that the compiler does not recognize. The compiler ignores the "
+"attribute and uses the ordinary function body instead. This warning is "
+"enabled by default."
+msgstr "[`#intrinsic`](/language/attributes/intrinsic.md) 属性指定了编译器无法识别的内建指令名称。编译器会忽略该属性，改用普通函数体。此警告默认启用。"
+
+#: ../../language/error_codes/E0094.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0094.md:11
+msgid ""
+"The name below is deliberately fictitious. The function still returns "
+"`42` for the input `41`, but its attribute produces a warning:"
+msgstr ""
+
+#: ../../language/error_codes/E0094.md:14
+msgid ""
+"///|\n"
+"#intrinsic(\"%not_a_real_intrinsic\")\n"
+"pub fn add_one(value : Int32) -> Int32 {\n"
+"  value + 1\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  assert_eq(add_one(41), 42)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0094.md:18
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0094.md:20
+msgid ""
+"Remove the attribute and keep the ordinary implementation. Intrinsics are"
+" not a stable API and are not recommended for application code."
+msgstr "删除属性并保留普通实现。内建指令不是稳定的 API，不建议在应用代码中使用。"
+
+#: ../../language/error_codes/E0094.md:23
+msgid ""
+"///|\n"
+"pub fn add_one(value : Int32) -> Int32 {\n"
+"  value + 1\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  assert_eq(add_one(41), 42)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0094.md:27
+msgid ""
+"This differs from [E4070](E4070.md): a declaration such as `fn f(x : "
+"Int32) -> Int32 = \"%not_a_real_intrinsic\"` has no ordinary function "
+"body to fall back to, so an unknown intrinsic is an error rather than a "
+"warning."
+msgstr "这与 [E4070](E4070.md) 不同：`fn f(x : Int32) -> Int32 = \"%not_a_real_intrinsic\"` 这样的声明没有可供回退的普通函数体，因此未知内建指令会导致错误，而不是警告。"
