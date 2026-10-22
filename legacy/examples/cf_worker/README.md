@@ -13,25 +13,18 @@ To set up a new project, just run `pnpm create cloudflare@2.5.0` and answer the 
 
 ## Adding MoonBit
 
-Create `moon.mod.json` and `top.mbt`, plus a package configuration file. Current projects use `moon.pkg`; this example repository keeps the equivalent legacy `moon.pkg.json`:
+Create `moon.mod`, `moon.pkg`, and `top.mbt`:
 
-```json title=moon.mod.json
-{
-  "name": "username/hello",
-  "version": "0.1.0"
-}
+```moonbit title=moon.mod
+name = "username/hello"
+
+version = "0.1.0"
 ```
 
-```json title=moon.pkg.json
-{
-  "link": {
-    "wasm-gc": {
-      "exports": [
-        "fib"
-      ]
-    }
-  }
-}
+```moonbit title=moon.pkg
+options(
+  link: { "wasm-gc": { "exports": [ "fib" ] } },
+)
 ```
 
 ```moonbit title=top.mbt
