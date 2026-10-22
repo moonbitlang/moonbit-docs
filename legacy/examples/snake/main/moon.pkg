@@ -1,0 +1,14 @@
+import {
+  "snake/extern",
+  "snake/lib",
+}
+
+pkgtype(kind: "executable")
+
+options(
+  targets: {
+    "main.js.mbt": [ "js" ],
+    "main.wasm-gc.mbt": [ "wasm-gc" ],
+    "main.wasm.mbt": [ "wasm" ],
+  },
+)

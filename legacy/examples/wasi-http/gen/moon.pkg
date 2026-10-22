@@ -1,0 +1,19 @@
+import {
+  "moonbit-community/wasi-http/gen/interface/wasi/http/incomingHandler",
+  "moonbit-community/wasi-http/interface/wasi/http/types",
+}
+
+warnings = "-invalid_inline_wasm"
+
+options(
+  link: {
+    "wasm": {
+      "exports": [
+        "mbt_ffi_cabi_realloc:cabi_realloc",
+        "wasmExportHandle:wasi:http/incoming-handler@0.2.1#handle",
+      ],
+      "export-memory-name": "memory",
+      "heap-start-address": 16,
+    },
+  },
+)
