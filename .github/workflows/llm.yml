@@ -16,6 +16,15 @@ on:
         type: choice
         options: [aws, both, aliyun]
         default: aws
+      aws_account:
+        description: AWS account to publish (both keeps the rollback copy current)
+        type: choice
+        options: [legacy, moonbit, both]
+        default: legacy
+
+permissions:
+  contents: read
+  id-token: write
 
 defaults:
   run:
@@ -30,13 +39,17 @@ jobs:
         with:
           ref: ${{ inputs.source_ref || github.ref }}
       - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: install
         run: pip install -r requirements.txt
       - name: build
         run: make markdown
       - name: compilation
+        id: compilation
         run: python3 llm.py
-      - name: upload
+      - name: Upload English llms.txt to legacy AWS
+        if: inputs.aws_account != 'moonbit'
         env:
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
@@ -44,6 +57,24 @@ jobs:
         run: |
           aws s3 cp ./_build/markdown/llm.md ${{secrets.AWS_HOMEPAGE_BUCKET}}/llms.txt
           aws cloudfront create-invalidation --distribution-id ${{secrets.AWS_CLOUDFRONT_HOMEPAGE_DISTRIBUTION_ID}} --paths "/llms.txt"
+      - name: Authenticate to MoonBit AWS
+        id: moonbit-credentials
+        if: ${{ !cancelled() && steps.compilation.outcome == 'success' && (inputs.aws_account == 'moonbit' || inputs.aws_account == 'both') }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_MOONBIT_ROLE_ARN }}
+          aws-region: us-west-2
+          allowed-account-ids: ${{ secrets.AWS_MOONBIT_ACCOUNT_ID }}
+          mask-aws-account-id: true
+      - name: Upload English llms.txt to MoonBit AWS
+        if: ${{ !cancelled() && steps.moonbit-credentials.outcome == 'success' }}
+        env:
+          BUCKET: ${{ secrets.AWS_MOONBIT_EN_BUCKET }}
+          DISTRIBUTION_ID: ${{ secrets.AWS_MOONBIT_EN_DISTRIBUTION_ID }}
+        run: |
+          test -n "$BUCKET" && test -n "$DISTRIBUTION_ID"
+          aws s3 cp ./_build/markdown/llm.md "s3://$BUCKET/llms.txt" --content-type 'text/plain; charset=utf-8' --only-show-errors
+          aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" --paths "/llms.txt" --query 'Invalidation.Status' --output text
 
   llm-upload-zh:
     if: inputs.locale != 'en'
@@ -56,6 +87,8 @@ jobs:
         with:
           ref: ${{ inputs.source_ref || github.ref }}
       - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: install
         run: pip install -r requirements.txt
       - name: build
@@ -72,7 +105,7 @@ jobs:
           echo y | aliyun oss cp ./_build/markdown/llm.md ${{secrets.ALIYUN_HOMEPAGE_BUCKET}}/llms.txt
           aliyun cdn RefreshObjectCaches --ObjectPath https://www.moonbitlang.cn/llms.txt --ObjectType File
       - name: Upload Chinese llms.txt to AWS
-        if: ${{ !cancelled() && steps.compilation.outcome == 'success' && inputs.target != 'aliyun' }}
+        if: ${{ !cancelled() && steps.compilation.outcome == 'success' && inputs.target != 'aliyun' && inputs.aws_account != 'moonbit' }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -83,3 +116,22 @@ jobs:
           test -n "$BUCKET" && test -n "$DISTRIBUTION_ID"
           aws s3 cp ./_build/markdown/llm.md "s3://$BUCKET/llms.txt" --content-type 'text/plain; charset=utf-8' --only-show-errors
           aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" --paths "/llms.txt"
+      - name: Authenticate to MoonBit AWS
+        id: moonbit-credentials
+        if: ${{ !cancelled() && steps.compilation.outcome == 'success' && (inputs.aws_account == 'moonbit' || inputs.aws_account == 'both') && inputs.target != 'aliyun' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_MOONBIT_ROLE_ARN }}
+          aws-region: us-west-2
+          allowed-account-ids: ${{ secrets.AWS_MOONBIT_ACCOUNT_ID }}
+          mask-aws-account-id: true
+      - name: Upload Chinese llms.txt to MoonBit AWS
+        if: ${{ !cancelled() && steps.moonbit-credentials.outcome == 'success' }}
+        env:
+          BUCKET: ${{ secrets.AWS_MOONBIT_CN_BUCKET }}
+          DISTRIBUTION_ID: ${{ secrets.AWS_MOONBIT_CN_DISTRIBUTION_ID }}
+        run: |
+          test -n "$BUCKET" && test -n "$DISTRIBUTION_ID"
+          aws s3 cp ./_build/markdown/llm.md "s3://$BUCKET/llms.txt" --content-type 'text/plain; charset=utf-8' --only-show-errors
+          aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" --paths "/llms.txt" --query 'Invalidation.Status' --output text
+
