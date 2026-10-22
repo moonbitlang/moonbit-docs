@@ -61,6 +61,9 @@ jobs:
         id: moonbit-credentials
         if: ${{ !cancelled() && steps.compilation.outcome == 'success' && (inputs.aws_account == 'moonbit' || inputs.aws_account == 'both') }}
         uses: aws-actions/configure-aws-credentials@v4
+        env:
+          # Register the action's opaque role identifier for runner log masking.
+          MASKED_ROLE_ID: ${{ secrets.AWS_MOONBIT_ROLE_ID }}
         with:
           role-to-assume: ${{ secrets.AWS_MOONBIT_ROLE_ARN }}
           aws-region: us-west-2
@@ -120,6 +123,9 @@ jobs:
         id: moonbit-credentials
         if: ${{ !cancelled() && steps.compilation.outcome == 'success' && (inputs.aws_account == 'moonbit' || inputs.aws_account == 'both') && inputs.target != 'aliyun' }}
         uses: aws-actions/configure-aws-credentials@v4
+        env:
+          # Register the action's opaque role identifier for runner log masking.
+          MASKED_ROLE_ID: ${{ secrets.AWS_MOONBIT_ROLE_ID }}
         with:
           role-to-assume: ${{ secrets.AWS_MOONBIT_ROLE_ARN }}
           aws-region: us-west-2
