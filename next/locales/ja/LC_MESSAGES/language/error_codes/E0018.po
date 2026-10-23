@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-22 21:04+0800\n"
+"POT-Creation-Date: 2026-10-20 15:27+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -27,82 +27,51 @@ msgid "Warning name: `useless_loop`"
 msgstr ""
 
 #: ../../language/error_codes/E0018.md:5
-msgid "There is no `continue` in this loop expression, so `loop` is useless here."
-msgstr ""
-
-#: ../../language/error_codes/E0018.md:7
 msgid ""
-"This error occurs when using a `loop` expression that contains no "
-"`continue` statement. In MoonBit, a `loop` without any `continue` "
-"statements is equivalent to an block expression that will be executed "
-"only once, making the `loop` keyword redundant in such cases. You should "
-"either add a `continue` statement if you need to restart the loop from "
-"the beginning, or use a simpler control flow construct like `match` or "
-"`if`."
-msgstr ""
+"This warning applies to the deprecated functional-loop syntax when it has"
+" no `continue` statement and therefore executes only once. Use a `for` "
+"loop for repeated execution, or `if`/`match` for a single conditional "
+"evaluation."
+msgstr "この警告は、非推奨の関数型ループ構文に `continue` 文がなく、一度しか実行されない場合に出力されます。繰り返し実行するには `for` ループを、一度だけ条件分岐するには `if`/`match` を使ってください。"
 
-#: ../../language/error_codes/E0018.md:14
-msgid "Erroneous example"
-msgstr ""
-
-#: ../../language/error_codes/E0018.md:16
-msgid ""
-"///|\n"
-"fn main {\n"
-"  let count = 2\n"
-"  loop count {\n"
-"    _..<0 => break\n"
-"    _ => println(count)\n"
-"  }\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0018.md:24
-#: ../../language/error_codes/E0018.md:41
-#: ../../language/error_codes/E0018.md:56
-msgid "Output:"
-msgstr ""
-
-#: ../../language/error_codes/E0018.md:26
-#: ../../language/error_codes/E0018.md:58
-msgid "2\n"
-msgstr ""
-
-#: ../../language/error_codes/E0018.md:29
+#: ../../language/error_codes/E0018.md:9
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E0018.md:31
-msgid "Either add a `continue` statement if you need to restart the loop:"
-msgstr ""
+#: ../../language/error_codes/E0018.md:11
+msgid ""
+"Use explicit state bindings, a condition, and an update clause to count "
+"down:"
+msgstr "状態の明示的な束縛、条件、更新節を使ってカウントダウンします。"
 
-#: ../../language/error_codes/E0018.md:33
+#: ../../language/error_codes/E0018.md:13
 msgid ""
 "///|\n"
 "fn main {\n"
 "  let count = 2\n"
-"  loop count {\n"
-"    _..<0 => break\n"
-"    count => {\n"
-"      println(count)\n"
-"      continue count - 1\n"
-"    }\n"
+"  for remaining = count; remaining >= 0; remaining = remaining - 1 {\n"
+"    println(remaining)\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0018.md:43
+#: ../../language/error_codes/E0018.md:21
+#: ../../language/error_codes/E0018.md:36
+msgid "Output:"
+msgstr ""
+
+#: ../../language/error_codes/E0018.md:23
 msgid ""
 "2\n"
 "1\n"
 "0\n"
 msgstr ""
 
-#: ../../language/error_codes/E0018.md:46
-msgid "Or use `if`/`match` you don't need to use `continue`:"
-msgstr ""
+#: ../../language/error_codes/E0018.md:26
+msgid "Use `if`/`match` when no repetition is needed:"
+msgstr "繰り返しが不要な場合は `if`/`match` を使います。"
 
-#: ../../language/error_codes/E0018.md:48
+#: ../../language/error_codes/E0018.md:28
 msgid ""
 "///|\n"
 "fn main {\n"
@@ -113,3 +82,13 @@ msgid ""
 "  }\n"
 "}\n"
 msgstr ""
+
+#: ../../language/error_codes/E0018.md:38
+msgid "2\n"
+msgstr ""
+
+#~ msgid "Erroneous example"
+#~ msgstr ""
+
+#~ msgid "Or use `if`/`match` you don't need to use `continue`:"
+#~ msgstr ""

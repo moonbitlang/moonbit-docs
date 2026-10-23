@@ -32,7 +32,7 @@ Expressions include:
 - Accesses to array elements (e.g. `a[0]`), struct fields (e.g `r.x`), tuple components (e.g. `t.0`), etc.
 - Variables and (capitalized) enum constructors
 - Anonymous local function definitions
-- `match`, `if`, `loop` expressions, etc.
+- `match`, `if`, `for` expressions, etc.
 
 Statements include:
 

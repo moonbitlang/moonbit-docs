@@ -167,16 +167,13 @@ fn compileLet(
   expr : RawExpr[String],
   env : List[(String, Int32)],
 ) -> List[Instruction] {
-  let (env, codes) = for env = env, acc = @list.List([]), remaining = defs {
-    match remaining {
-      Empty => break (env, acc)
-      More((name, expr), tail=rest) => {
-        let code = expr.compileC(env)
-        let env = argOffset(1, env).prepend((name, 0))
-        continue env, acc + code, rest
-      }
-    }
-  }
+  let (env, codes) = defs.fold(init=(env, @list.List([])), fn(acc, def) {
+    let (env, codes) = acc
+    let (name, expr) = def
+    let code = expr.compileC(env)
+    let env = argOffset(1, env).prepend((name, 0))
+    (env, codes + code)
+  })
   codes + comp(expr, env) + @list.List([Slide(defs.length())])
 }
 
