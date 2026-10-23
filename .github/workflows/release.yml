@@ -37,6 +37,8 @@ jobs:
         with:
           ref: refs/tags/${{ inputs.release_tag || github.ref_name }}
       - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - name: install
         run: pip install -r requirements.txt
       - name: build
@@ -55,12 +57,12 @@ jobs:
       - name: Upload Chinese documentation to AWS
         if: ${{ !cancelled() && steps.build.outcome == 'success' && inputs.target != 'aliyun' }}
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_MOONBIT_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_MOONBIT_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-west-2
-          BUCKET: ${{ vars.AWS_CN_DOCS_BUCKET }}
-          DISTRIBUTION_ID: ${{ vars.AWS_CN_DOCS_DISTRIBUTION_ID }}
+          BUCKET: ${{ secrets.AWS_MOONBIT_CN_DOCS_BUCKET }}
+          DISTRIBUTION_ID: ${{ secrets.AWS_MOONBIT_CN_DOCS_DISTRIBUTION_ID }}
         run: |
           test -n "$BUCKET" && test -n "$DISTRIBUTION_ID"
           aws s3 sync ./_build/html/ "s3://$BUCKET" --delete --only-show-errors
-          aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" --paths "/*"
+          aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" --paths "/*" --query 'Invalidation.Status' --output text
