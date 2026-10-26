@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-03 15:17+0800\n"
+"POT-Creation-Date: 2026-10-20 16:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -28,107 +28,40 @@ msgstr "警告名: `ambiguous_loop_argument`"
 
 #: ../../language/error_codes/E0017.md:5
 msgid ""
-"The usage of identifier is ambiguous. If it refers to the loop variable, "
-"please use `as <id>` to bind it in the pattern. If it refers to the "
-"original value of the variable before entering the loop, please bind it "
-"to a new binder outside the loop."
+"This warning applies to an ambiguous reference to the initial state of "
+"the deprecated functional-loop syntax. Use a `for` loop with explicit "
+"state bindings instead. This makes the current state distinct from the "
+"original value, without relying on a pattern alias."
 msgstr ""
-"識別子の参照先が曖昧です。ループ変数を指す場合は、パターン内で `as <id>` を使って束縛してください。ループに入る前の元の値を指す場合は、ルー"
-"プの外で別の束縛名にしてください。"
+"この警告は、非推奨の関数型ループ構文における初期状態への曖昧な参照に対して出力されます。代わりに、状態を明示的に束縛する `for` "
+"ループを使ってください。パターンの別名に頼らず、現在の状態と元の値を区別できます。"
 
 #: ../../language/error_codes/E0017.md:10
-msgid "Erroneous example"
-msgstr "問題のある例"
-
-#: ../../language/error_codes/E0017.md:12
-msgid ""
-"///|\n"
-"fn main {\n"
-"  let a : StringView = \"asdf\"\n"
-"  loop a {\n"
-"    [_, .. d] => {\n"
-"      println(a)\n"
-"      //      ^\n"
-"      // Warning: The usage of 'a' is ambiguous. If it refers to the loop"
-"\n"
-"      // variable, please use `as a` to bind it in the pattern. If it "
-"refers to\n"
-"      // the original value of 'a' before entering the loop, please bind "
-"it to a\n"
-"      // new binder outside the loop.\n"
-"      continue d\n"
-"    }\n"
-"    [] => ()\n"
-"  }\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0017.md:20
-#: ../../language/error_codes/E0017.md:52
-#: ../../language/error_codes/E0017.md:68
-msgid "Output:"
-msgstr "出力:"
-
-#: ../../language/error_codes/E0017.md:22
-#: ../../language/error_codes/E0017.md:70
-msgid ""
-"asdf\n"
-"asdf\n"
-"asdf\n"
-"asdf\n"
-msgstr ""
-
-#: ../../language/error_codes/E0017.md:25
-msgid ""
-"Because `a` refers to the value of `a` before entering the loop, "
-"therefore the value is always the same."
-msgstr "`a` はループに入る前の `a` の値を参照しているため、値は常に同じになります。"
-
-#: ../../language/error_codes/E0017.md:28
 msgid "Suggestion"
 msgstr "対処"
 
-#: ../../language/error_codes/E0017.md:30
+#: ../../language/error_codes/E0017.md:12
 msgid ""
-"Since `loop` syntax will be removed soon, prefer rewriting new code with "
-"a `for` loop when possible. For example, this code can be written as:"
-msgstr ""
-"`loop` 構文はまもなく削除される予定なので、新しいコードでは可能なら `for` ループに書き換えることを勧めます。たとえば、次のように書けま"
-"す。"
+"To refer to the state that changes on each iteration, use the variable "
+"bound in the `for` header:"
+msgstr "反復ごとに変化する状態を参照するには、`for` のヘッダーで束縛した変数を使います。"
 
-#: ../../language/error_codes/E0017.md:33
-msgid ""
-"let text : StringView = \"asdf\"\n"
-"for i = 0; i < text.length(); i = i + 1 {\n"
-"  println(text[i:])\n"
-"}\n"
-msgstr ""
-
-#: ../../language/error_codes/E0017.md:40
-msgid ""
-"If you are maintaining existing `loop` code, and you want to refer to the"
-" loop variable that changes with loop iterations, use `as <id>` to bind "
-"it in the pattern."
-msgstr ""
-"既存の `loop` コードを保守していて、反復ごとに変化するループ変数を参照したい場合は、パターン内で `as <id>` を使って束縛してくださ"
-"い。"
-
-#: ../../language/error_codes/E0017.md:44
+#: ../../language/error_codes/E0017.md:15
 msgid ""
 "///|\n"
 "fn main {\n"
-"  let a : StringView = \"asdf\"\n"
-"  loop a {\n"
-"    [_, .. d] as a => {\n"
-"      println(a)\n"
-"      continue d\n"
-"    }\n"
-"    [] => ()\n"
+"  for a = \"asdf\"[:]; a is [_, .. d]; a = d {\n"
+"    println(a)\n"
 "  }\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0017.md:54
+#: ../../language/error_codes/E0017.md:23
+#: ../../language/error_codes/E0017.md:38
+msgid "Output:"
+msgstr "出力:"
+
+#: ../../language/error_codes/E0017.md:25
 msgid ""
 "asdf\n"
 "sdf\n"
@@ -136,25 +69,35 @@ msgid ""
 "f\n"
 msgstr ""
 
-#: ../../language/error_codes/E0017.md:57
-msgid ""
-"Or, if you want to refer to the original value of the variable before "
-"entering the loop, explicitly bind it to another name outside the loop."
-msgstr ""
-"あるいは、ループに入る前の元の変数値を参照したい場合は、ループの外で別の名前に明示的に束縛してください。"
+#: ../../language/error_codes/E0017.md:28
+msgid "To refer to the original value, bind it outside the loop:"
+msgstr "元の値を参照するには、ループの外で束縛します。"
 
-#: ../../language/error_codes/E0017.md:60
+#: ../../language/error_codes/E0017.md:30
 msgid ""
 "///|\n"
 "fn main {\n"
-"  let a : StringView = \"asdf\"\n"
-"  let b = a\n"
-"  loop a {\n"
-"    [_, .. d] => {\n"
-"      println(b)\n"
-"      continue d\n"
-"    }\n"
-"    [] => ()\n"
+"  let b : StringView = \"asdf\"\n"
+"  for a = b; a is [_, .. d]; a = d {\n"
+"    println(b)\n"
 "  }\n"
 "}\n"
 msgstr ""
+
+#: ../../language/error_codes/E0017.md:40
+msgid ""
+"asdf\n"
+"asdf\n"
+"asdf\n"
+"asdf\n"
+msgstr ""
+
+#~ msgid "Erroneous example"
+#~ msgstr "問題のある例"
+
+#~ msgid ""
+#~ "let text : StringView = \"asdf\"\n"
+#~ "for i = 0; i < text.length(); i = i + 1 {\n"
+#~ "  println(text[i:])\n"
+#~ "}\n"
+#~ msgstr ""
