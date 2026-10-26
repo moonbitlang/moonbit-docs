@@ -40,25 +40,19 @@ msgstr ""
 
 #: ../../language/attributes/export_name.md:14
 msgid ""
-"MoonBit currently requires the exported name to be unique within the "
-"package and to be a valid C symbol identifier, regardless of the selected"
-" backend."
-msgstr ""
+"Export names must be unique within the package. Name restrictions depend "
+"on the backend: native requires valid C symbol identifiers, while "
+"WebAssembly export names are UTF-8 strings and are not limited to C "
+"identifiers."
+msgstr "エクスポート名はパッケージ内で一意でなければなりません。名前の制約はバックエンドによって異なります。native では有効な C シンボル識別子が必要ですが、WebAssembly のエクスポート名は UTF-8 文字列であり、C 識別子の制約はありません。"
 
 #: ../../language/attributes/export_name.md:18
-msgid ""
-"Known compiler issue: `#export_name` currently applies its C-symbol-"
-"identifier restriction to every backend. WebAssembly export names are "
-"UTF-8 strings and are not limited to C identifiers."
-msgstr ""
-
-#: ../../language/attributes/export_name.md:23
 msgid ""
 "The attribute cannot be used on generic functions, functions with "
 "optional arguments, methods, or declarations without a body."
 msgstr ""
 
-#: ../../language/attributes/export_name.md:26
+#: ../../language/attributes/export_name.md:21
 msgid ""
 "Prefer `#export_name` over backend-specific `exports` link configuration "
 "for new exports. It keeps the exported name next to the function and "
@@ -67,7 +61,7 @@ msgid ""
 "the source cannot be annotated."
 msgstr ""
 
-#: ../../language/attributes/export_name.md:32
+#: ../../language/attributes/export_name.md:27
 msgid ""
 "Export declarations are scoped to the package that produces the artifact."
 " An attribute in a dependency applies when that dependency is built as "
@@ -76,7 +70,7 @@ msgid ""
 " in the exporting package."
 msgstr ""
 
-#: ../../language/attributes/export_name.md:39
+#: ../../language/attributes/export_name.md:34
 msgid ""
 "The native backend does not currently support exporting a "
 "`foreign_library` package as a linkable library artifact, including "
@@ -86,7 +80,7 @@ msgstr ""
 "native バックエンドは現在、`foreign_library` パッケージをリンク可能なライブラリアーティファクトとしてエクスポートできません。"
 "これには `.dll` や `.so` などの共有ライブラリも含まれます。エクスポート可能なライブラリが必要な場合は、Wasm または JavaScript を使用してください。"
 
-#: ../../language/attributes/export_name.md:44
+#: ../../language/attributes/export_name.md:39
 msgid ""
 "See [Export Functions](/language/ffi.md#export-functions) for backend-"
 "specific alternatives."

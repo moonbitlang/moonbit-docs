@@ -28,51 +28,60 @@ msgstr "编译器诊断名称：`invalid_export_name`。"
 
 #: ../../language/error_codes/E4219.md:5
 msgid ""
-"The `#export_name` attribute is invalid. MoonBit currently requires "
-"exported names to be unique valid C symbol identifiers for every backend."
-" The attribute may be used only on public, non-generic function "
-"definitions without optional arguments in a foreign-library package."
-msgstr ""
-"`#export_name` 属性无效。MoonBit 目前要求所有后端的导出名都是唯一且有效的 C "
-"符号标识符。该属性只能用于外部库包中无可选参数的公开、非泛型函数定义。"
-
-#: ../../language/error_codes/E4219.md:11
-msgid ""
-"Known compiler issue: `#export_name` currently applies its C-symbol-"
-"identifier restriction to every backend. WebAssembly export names are "
+"The `#export_name` attribute is invalid. Export names must be unique "
+"within the package. Name restrictions depend on the backend: native "
+"requires valid C symbol identifiers, while WebAssembly export names are "
 "UTF-8 strings and are not limited to C identifiers."
-msgstr ""
-"已知编译器问题：`#export_name` 目前会对所有后端施加 C 符号标识符限制。WebAssembly 导出名是 UTF-8 "
-"字符串，并不限于 C 标识符。"
+msgstr "`#export_name` 属性无效。导出名称在包内必须唯一。名称限制取决于后端：native 要求名称是合法的 C 符号标识符，而 WebAssembly 的导出名称是 UTF-8 字符串，不受 C 标识符规则限制。"
 
-#: ../../language/error_codes/E4219.md:16
+#: ../../language/error_codes/E4219.md:9
+msgid ""
+"The attribute may be used only on public, non-generic function "
+"definitions without optional arguments in a foreign-library package."
+msgstr "该属性只能用于外部库包中没有可选参数的公开非泛型函数定义。"
+
+#: ../../language/error_codes/E4219.md:12
 msgid "Erroneous example"
 msgstr "错误示例"
 
-#: ../../language/error_codes/E4219.md:18
-msgid ""
-"///|\n"
-"#export_name(\"bad-name\")\n"
-"pub fn add_one(value : Int32) -> Int32 {\n"
-"  value + 1\n"
-"}\n"
-msgstr ""
+#: ../../language/error_codes/E4219.md:14
+msgid "Both functions use the export name `add_one`, which must be unique:"
+msgstr "两个函数都使用了导出名称 `add_one`，但该名称必须唯一："
 
-#: ../../language/error_codes/E4219.md:22
-msgid "Suggestion"
-msgstr "修改建议"
-
-#: ../../language/error_codes/E4219.md:24
-msgid ""
-"Use a valid symbol name and declare the package as a foreign library with"
-" `pkgtype(kind: \"foreign_library\")`."
-msgstr "使用有效的符号名称，并通过 `pkgtype(kind: \"foreign_library\")` 将包声明为外部库。"
-
-#: ../../language/error_codes/E4219.md:27
+#: ../../language/error_codes/E4219.md:16
 msgid ""
 "///|\n"
 "#export_name(\"add_one\")\n"
 "pub fn add_one(value : Int32) -> Int32 {\n"
 "  value + 1\n"
+"}\n"
+"\n"
+"///|\n"
+"#export_name(\"add_one\")\n"
+"pub fn add_two(value : Int32) -> Int32 {\n"
+"  value + 2\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4219.md:20
+msgid "Suggestion"
+msgstr "修改建议"
+
+#: ../../language/error_codes/E4219.md:22
+msgid "Give each function a distinct export name:"
+msgstr "为每个函数指定不同的导出名称："
+
+#: ../../language/error_codes/E4219.md:24
+msgid ""
+"///|\n"
+"#export_name(\"add_one\")\n"
+"pub fn add_one(value : Int32) -> Int32 {\n"
+"  value + 1\n"
+"}\n"
+"\n"
+"///|\n"
+"#export_name(\"add_two\")\n"
+"pub fn add_two(value : Int32) -> Int32 {\n"
+"  value + 2\n"
 "}\n"
 msgstr ""

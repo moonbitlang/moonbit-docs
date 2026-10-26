@@ -42,27 +42,19 @@ msgstr ""
 
 #: ../../language/attributes/export_name.md:14
 msgid ""
-"MoonBit currently requires the exported name to be unique within the "
-"package and to be a valid C symbol identifier, regardless of the selected"
-" backend."
-msgstr "MoonBit 目前要求导出名在包内唯一，并且无论选择哪个后端，都必须是有效的 C 符号标识符。"
+"Export names must be unique within the package. Name restrictions depend "
+"on the backend: native requires valid C symbol identifiers, while "
+"WebAssembly export names are UTF-8 strings and are not limited to C "
+"identifiers."
+msgstr "导出名称在包内必须唯一。名称限制取决于后端：native 要求名称是合法的 C 符号标识符，而 WebAssembly 的导出名称是 UTF-8 字符串，不受 C 标识符规则限制。"
 
 #: ../../language/attributes/export_name.md:18
-msgid ""
-"Known compiler issue: `#export_name` currently applies its C-symbol-"
-"identifier restriction to every backend. WebAssembly export names are "
-"UTF-8 strings and are not limited to C identifiers."
-msgstr ""
-"已知编译器问题：`#export_name` 目前会对所有后端施加 C 符号标识符限制。WebAssembly 导出名是 UTF-8 "
-"字符串，并不限于 C 标识符。"
-
-#: ../../language/attributes/export_name.md:23
 msgid ""
 "The attribute cannot be used on generic functions, functions with "
 "optional arguments, methods, or declarations without a body."
 msgstr "该属性不能用于泛型函数、带可选参数的函数、方法或没有函数体的声明。"
 
-#: ../../language/attributes/export_name.md:26
+#: ../../language/attributes/export_name.md:21
 msgid ""
 "Prefer `#export_name` over backend-specific `exports` link configuration "
 "for new exports. It keeps the exported name next to the function and "
@@ -74,7 +66,7 @@ msgstr ""
 "链接配置。它将导出名称放在函数旁，并适用于所有支持外部库输出的后端。当导出集合或名称需要因后端而异，或者无法修改源代码添加属性时，使用 "
 "`exports`。"
 
-#: ../../language/attributes/export_name.md:32
+#: ../../language/attributes/export_name.md:27
 msgid ""
 "Export declarations are scoped to the package that produces the artifact."
 " An attribute in a dependency applies when that dependency is built as "
@@ -83,7 +75,7 @@ msgid ""
 " in the exporting package."
 msgstr "导出声明的作用域是生成产物的包。依赖中的属性在该依赖自身构建为产物时生效，但不会向下游包的产物添加符号。若要暴露依赖的功能，请在执行导出的包中定义并导出一个包装函数。"
 
-#: ../../language/attributes/export_name.md:39
+#: ../../language/attributes/export_name.md:34
 msgid ""
 "The native backend does not currently support exporting a "
 "`foreign_library` package as a linkable library artifact, including "
@@ -91,7 +83,7 @@ msgid ""
 " need an exported library."
 msgstr "native 后端目前不支持将 `foreign_library` 包导出为可链接的库产物，包括 `.dll` 或 `.so` 等共享库。如需导出的库，请使用 Wasm 或 JavaScript。"
 
-#: ../../language/attributes/export_name.md:44
+#: ../../language/attributes/export_name.md:39
 msgid ""
 "See [Export Functions](/language/ffi.md#export-functions) for backend-"
 "specific alternatives."
