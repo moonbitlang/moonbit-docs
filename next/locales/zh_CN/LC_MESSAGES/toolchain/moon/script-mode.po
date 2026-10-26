@@ -39,10 +39,11 @@ msgstr "编写脚本 `script.mbtx`："
 
 #: ../../toolchain/moon/script-mode.md:10
 msgid ""
-"///|\n"
+"---\n"
 "import {\n"
 "  \"moonbitlang/core/list\" @ls\n"
 "}\n"
+"---\n"
 "\n"
 "///|\n"
 "async fn main {\n"
@@ -50,39 +51,32 @@ msgid ""
 "  debug(xs)\n"
 "}\n"
 msgstr ""
-"///|\n"
-"import {\n"
-"  \"moonbitlang/core/list\" @ls\n"
-"}\n"
-"\n"
-"///|\n"
-"async fn main {\n"
-"  let xs = @ls.List([\"1\", \"2\", \"3\"])\n"
-"  debug(xs)\n"
-"}\n"
 
-#: ../../toolchain/moon/script-mode.md:23
+#: ../../toolchain/moon/script-mode.md:24
 msgid "Then run this script directly:"
 msgstr "然后直接运行该脚本："
 
-#: ../../toolchain/moon/script-mode.md:25
+#: ../../toolchain/moon/script-mode.md:26
 msgid "$ moon run script.mbtx\n"
 msgstr "$ moon run script.mbtx\n"
 
-#: ../../toolchain/moon/script-mode.md:29
+#: ../../toolchain/moon/script-mode.md:30
 msgid ""
-"In `.mbtx`, you can declare imports at the top of the file using the same"
-" syntax as package configuration. There is one difference: import paths "
+"In `.mbtx`, declare imports in frontmatter enclosed by `---` lines at "
+"the beginning of the file, using the same syntax as package "
+"configuration. Imports outside frontmatter are deprecated "
+"(`unfenced_import`, warning 96). There is one difference: import paths "
 "can optionally include a version `@version` after the module name:"
-msgstr "在 `.mbtx` 中，你可以在文件顶部声明导入，语法与包配置相同。不同之处在于：导入路径可以在模块名后可选地包含版本 `@version`："
+msgstr "在 `.mbtx` 中，应在文件开头由 `---` 行包围的 frontmatter 中声明导入，语法与包配置相同。frontmatter 外的导入已弃用（`unfenced_import`，警告 96）。不同之处在于：导入路径可以在模块名后可选地包含版本 `@version`："
 
-#: ../../toolchain/moon/script-mode.md:33
+#: ../../toolchain/moon/script-mode.md:36
 msgid ""
-"///|\n"
+"---\n"
 "import {\n"
 "  \"moonbitlang/async@0.20.2/fs\",\n"
 "  \"moonbitlang/async@0.20.2\",\n"
 "}\n"
+"---\n"
 "\n"
 "///|\n"
 "async fn main {\n"
@@ -90,17 +84,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/script-mode.md:46
+#: ../../toolchain/moon/script-mode.md:50
 msgid "All imported packages from the same module must use the same version."
 msgstr "来自同一模块的所有导入包必须使用相同版本。"
 
-#: ../../toolchain/moon/script-mode.md:48
+#: ../../toolchain/moon/script-mode.md:52
 msgid ""
 "If the import path is not explicitly versioned, it uses the latest "
 "version in the local registry index."
 msgstr "如果导入路径没有显式指定版本，则会使用本地索引中的最新版本。"
 
-#: ../../toolchain/moon/script-mode.md:51
+#: ../../toolchain/moon/script-mode.md:55
 msgid ""
 "A script may add `*` after an import to bring all definitions from that "
 "package into its scope. The import may also set a custom package alias with "
@@ -109,12 +103,13 @@ msgstr ""
 "脚本可以在导入后添加 `*`，将该包中的所有定义引入当前作用域。还可以用 "
 "`@alias` 为该导入设置自定义包别名："
 
-#: ../../toolchain/moon/script-mode.md:54
+#: ../../toolchain/moon/script-mode.md:58
 msgid ""
-"///|\n"
+"---\n"
 "import {\n"
 "  \"moonbitlang/core/queue\" @q *\n"
 "}\n"
+"---\n"
 "\n"
 "///|\n"
 "fn main {\n"
@@ -125,7 +120,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/script-mode.md:58
+#: ../../toolchain/moon/script-mode.md:62
 msgid ""
 "The package alias remains available, so the example can use both `Queue` and "
 "`@q.Queue`. Without an explicit `@alias`, the package's default alias is "
@@ -137,19 +132,19 @@ msgstr ""
 "`@alias` 时，使用包的默认别名。全量导入语法仅限 `.mbtx` 脚本；普通包应使用"
 "包别名或 `using` 声明。当名称冲突会让脚本难以阅读时，优先使用显式导入。"
 
-#: ../../toolchain/moon/script-mode.md:63
+#: ../../toolchain/moon/script-mode.md:68
 msgid "Test a `.mbtx` script"
 msgstr "测试 `.mbtx` 脚本"
 
-#: ../../toolchain/moon/script-mode.md:65
+#: ../../toolchain/moon/script-mode.md:70
 msgid "Pass a script path to `moon test` to test that script by itself:"
 msgstr "将脚本路径传给 `moon test`，即可单独测试该脚本："
 
-#: ../../toolchain/moon/script-mode.md:67
+#: ../../toolchain/moon/script-mode.md:72
 msgid "moon test script.mbtx\n"
 msgstr ""
 
-#: ../../toolchain/moon/script-mode.md:71
+#: ../../toolchain/moon/script-mode.md:76
 msgid ""
 "The script must define `fn main`, but the generated test entrypoint does "
 "not run it. An explicit `.mbtx` path selects only that script, even when "
@@ -159,33 +154,33 @@ msgstr ""
 "脚本必须定义 `fn main`，但生成的测试入口不会运行它。即使脚本位于项目内，显式传入 `.mbtx` "
 "路径也只会测试该脚本；反过来，对整个包运行测试时不会包含 `.mbtx` 脚本。"
 
-#: ../../toolchain/moon/script-mode.md:76
+#: ../../toolchain/moon/script-mode.md:81
 msgid "Run a `.mbtx` script from stdin"
 msgstr "从 stdin 运行 `.mbtx` 脚本"
 
-#: ../../toolchain/moon/script-mode.md:78
+#: ../../toolchain/moon/script-mode.md:83
 msgid "Moon supports running a `.mbtx` script from stdin:"
 msgstr "Moon 支持从 stdin 运行 `.mbtx` 脚本："
 
-#: ../../toolchain/moon/script-mode.md:80
+#: ../../toolchain/moon/script-mode.md:85
 msgid "$ cat script.mbtx | moon run -\n"
 msgstr "$ cat script.mbtx | moon run -\n"
 
-#: ../../toolchain/moon/script-mode.md:84
+#: ../../toolchain/moon/script-mode.md:89
 msgid "For short scripts, pass the `.mbtx` source directly with `-c`:"
 msgstr "对于简短脚本，可以使用 `-c` 直接传入 `.mbtx` 源码："
 
-#: ../../toolchain/moon/script-mode.md:86
+#: ../../toolchain/moon/script-mode.md:91
 msgid ""
 "$ moon run -c \"<script>\"\n"
 "$ moon run -c 'fn main { println(\"hello\") }'\n"
 msgstr ""
 
-#: ../../toolchain/moon/script-mode.md:91
+#: ../../toolchain/moon/script-mode.md:96
 msgid "You can also use a heredoc, a feature provided by the shell:"
 msgstr "你也可以使用 heredoc（由 shell 提供的一项功能）："
 
-#: ../../toolchain/moon/script-mode.md:93
+#: ../../toolchain/moon/script-mode.md:98
 msgid ""
 "$ moon run - <<EOF\n"
 "fn main {\n"

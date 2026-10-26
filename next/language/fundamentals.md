@@ -1820,6 +1820,16 @@ We can use `as` to give a name to some pattern, and we can use `|` to match seve
 :end-before: end pattern 3
 ```
 
+### NaN in Patterns
+
+A floating-point NaN constant does not match any value, including NaN itself.
+Matching against such a constant produces warning [E0095](error_codes/E0095.md)
+(`nan_pattern`). Use `is_nan()` in a match guard instead:
+
+```{literalinclude} /sources/error_codes/0095_fixed/top.mbt
+:language: moonbit
+```
+
 ### Array Pattern
 
 Array patterns can be used to match on the following types to obtain their

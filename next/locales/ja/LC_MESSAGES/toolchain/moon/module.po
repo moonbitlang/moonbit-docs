@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-20 17:02+0800\n"
+"POT-Creation-Date: 2026-10-21 14:48+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -922,16 +922,20 @@ msgid ""
 "to `defer` or `errdefer`  92 warn\n"
 "unknown_constr_pat_on_exhaustive_type using `TypeName::..` pattern on a "
 "type not marked with `#non_exhaustive`  93 warn\n"
+"unknown_intrinsic          `#intrinsic` attribute names an unknown "
+"intrinsic.              94 warn\n"
+"nan_pattern                Pattern on a NaN constant, which never "
+"matches.                 95 warn\n"
 "all                        all warnings\n"
 "state: warn = enabled, error = promoted to error, off = disabled\n"
 "note: default alert exceptions: alert_unsafe=off\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:618
+#: ../../toolchain/moon/module.md:620
 msgid "Rule"
 msgstr "rule"
 
-#: ../../toolchain/moon/module.md:620
+#: ../../toolchain/moon/module.md:622
 msgid ""
 "The module-level `rule` entry declares a reusable pre-build command that "
 "is visible to every `moon.pkg` in the module. A module-level rule does "
@@ -946,7 +950,7 @@ msgstr ""
 "エントリを追加します。パッケージレベルの設定については、[パッケージ設定](/toolchain/moon/package.md#rule-"
 "and-dev_build) の「`rule` と `dev_build`」セクションを参照してください。"
 
-#: ../../toolchain/moon/module.md:627
+#: ../../toolchain/moon/module.md:629
 msgid ""
 "Use `rule(name: \"...\", command: \"...\")`, where `name` identifies the "
 "rule and `command` is a shell command string. The command can refer to "
@@ -959,29 +963,29 @@ msgstr ""
 " `rule` を使用するパッケージレベルの `dev_build` エントリから提供されます。モジュールは複数のモジュールレベル `rule` "
 "エントリを宣言できます。"
 
-#: ../../toolchain/moon/module.md:634
+#: ../../toolchain/moon/module.md:636
 msgid "rule(name: \"tool\", command: \"tool $input -o $output\")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:639
+#: ../../toolchain/moon/module.md:641
 msgid "This feature is not supported in `moon.mod.json`."
 msgstr "この機能は `moon.mod.json` ではサポートされていません。"
 
-#: ../../toolchain/moon/module.md:643
+#: ../../toolchain/moon/module.md:645
 msgid "Scripts"
 msgstr "スクリプト"
 
-#: ../../toolchain/moon/module.md:645
+#: ../../toolchain/moon/module.md:647
 msgid ""
 "The `scripts` field is used to define custom scripts associated with the "
 "module."
 msgstr "`scripts` フィールドは、モジュールに関連付けるカスタムスクリプトを定義するために使います。"
 
-#: ../../toolchain/moon/module.md:647
+#: ../../toolchain/moon/module.md:649
 msgid "postadd script"
 msgstr "postadd スクリプト"
 
-#: ../../toolchain/moon/module.md:649
+#: ../../toolchain/moon/module.md:651
 msgid ""
 "The `postadd` script runs automatically after the module has been added. "
 "When executed, the script's current working directory (cwd) is set to the"
@@ -990,7 +994,7 @@ msgstr ""
 "`postadd` スクリプトは、モジュールが追加された後に自動的に実行されます。実行時、スクリプトの現在の作業ディレクトリ（cwd）は "
 "モジュール設定ファイルがあるディレクトリに設定されます。"
 
-#: ../../toolchain/moon/module.md:655
+#: ../../toolchain/moon/module.md:657
 msgid ""
 "options(\n"
 "  scripts: {\n"
@@ -999,7 +1003,7 @@ msgid ""
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:664
+#: ../../toolchain/moon/module.md:666
 msgid ""
 "{\n"
 "  \"scripts\": {\n"
@@ -1008,23 +1012,23 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:675
+#: ../../toolchain/moon/module.md:677
 msgid "\\[Experimental\\] Pre-build config script"
 msgstr "\\[実験的\\] 事前ビルド設定スクリプト"
 
-#: ../../toolchain/moon/module.md:678
+#: ../../toolchain/moon/module.md:680
 msgid ""
 "This feature is extremely experimental, and its API may change at any "
 "time. This documentation reflects the implementation as of 2025-06-03."
 msgstr "この機能は非常に実験的であり、API はいつでも変更される可能性があります。このドキュメントは 2025-06-03 時点の実装を反映しています。"
 
-#: ../../toolchain/moon/module.md:683
+#: ../../toolchain/moon/module.md:685
 msgid ""
 "Using this feature may execute arbitrary code in your computer. Please "
 "use with caution and only with trusted dependencies."
 msgstr "この機能を使うと、コンピュータ上で任意のコードが実行される可能性があります。注意して使用し、信頼できる依存関係に対してのみ使ってください。"
 
-#: ../../toolchain/moon/module.md:687
+#: ../../toolchain/moon/module.md:689
 msgid ""
 "The pre-build config script is added in order to aid native target "
 "programming. To use such a script, add it to your module configuration:"
@@ -1032,21 +1036,21 @@ msgstr ""
 "事前ビルド設定スクリプトは、native "
 "ターゲット向けプログラミングを支援するために追加されました。使用するには、モジュール設定にスクリプトを追加します："
 
-#: ../../toolchain/moon/module.md:693
+#: ../../toolchain/moon/module.md:695
 msgid ""
 "options(\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\",\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:700
+#: ../../toolchain/moon/module.md:702
 msgid ""
 "{\n"
 "  \"--moonbit-unstable-prebuild\": \"<path/to/build-script>\"\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:708
+#: ../../toolchain/moon/module.md:710
 msgid ""
 "The path is a relative path from the root of the project. The script may "
 "either be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) "
@@ -1057,17 +1061,17 @@ msgstr ""
 "`.js`、`.cjs`、`.mjs`）か、`python3` または `python` で実行される Python スクリプト（拡張子 "
 "`.py`）を指定できます。"
 
-#: ../../toolchain/moon/module.md:713
+#: ../../toolchain/moon/module.md:715
 msgid "Input"
 msgstr "入力"
 
-#: ../../toolchain/moon/module.md:715
+#: ../../toolchain/moon/module.md:717
 msgid ""
 "The script will be provided with a JSON with the structure of "
 "`BuildScriptEnvironment` from standard input stream (stdin):"
 msgstr "スクリプトには、標準入力ストリーム（stdin）から `BuildScriptEnvironment` 構造の JSON が渡されます："
 
-#: ../../toolchain/moon/module.md:718
+#: ../../toolchain/moon/module.md:720
 msgid ""
 "/** Represents the environment a build script receives */\n"
 "interface BuildScriptEnvironment {\n"
@@ -1089,17 +1093,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:738
+#: ../../toolchain/moon/module.md:740
 msgid "Output"
 msgstr "出力"
 
-#: ../../toolchain/moon/module.md:740
+#: ../../toolchain/moon/module.md:742
 msgid ""
 "The script is expected to print a JSON string in its standard output "
 "stream (stdout) with the structure of `BuildScriptOutput`:"
 msgstr "スクリプトは、標準出力ストリーム（stdout）に `BuildScriptOutput` 構造の JSON 文字列を出力することが期待されます："
 
-#: ../../toolchain/moon/module.md:743
+#: ../../toolchain/moon/module.md:745
 msgid ""
 "interface BuildScriptOutput {\n"
 "  /** Build variables */\n"
@@ -1130,11 +1134,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:772
+#: ../../toolchain/moon/module.md:774
 msgid "Build variables"
 msgstr "ビルド変数"
 
-#: ../../toolchain/moon/module.md:774
+#: ../../toolchain/moon/module.md:776
 msgid ""
 "You may use the variables emitted in the `vars` fields in the native "
 "linking arguments in `moon.pkg` as `${build.<var_name>}`."
@@ -1142,34 +1146,34 @@ msgstr ""
 "`vars` フィールドに出力された変数は、`moon.pkg` の native リンク引数内で `${build.<var_name>}` "
 "として使用できます。"
 
-#: ../../toolchain/moon/module.md:777
+#: ../../toolchain/moon/module.md:779
 msgid "For example, if your build script outputs:"
 msgstr "例えば、ビルドスクリプトが次を出力する場合："
 
-#: ../../toolchain/moon/module.md:779
+#: ../../toolchain/moon/module.md:781
 msgid "{ \"vars\": { \"CC\": \"gcc\" } }\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:783
+#: ../../toolchain/moon/module.md:785
 msgid "and your `moon.pkg` is structured like:"
 msgstr "そして `moon.pkg` が次のような構成の場合："
 
-#: ../../toolchain/moon/module.md:785
+#: ../../toolchain/moon/module.md:787
 msgid "moon.pkg"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:785
+#: ../../toolchain/moon/module.md:787
 msgid ""
 "options(\n"
 "  link: { \"native\": { \"cc\": \"${build.CC}\" } },\n"
 ")\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:790
+#: ../../toolchain/moon/module.md:792
 msgid "It will be transformed into"
 msgstr "次のように変換されます"
 
-#: ../../toolchain/moon/module.md:792
+#: ../../toolchain/moon/module.md:794
 msgid ""
 "{\n"
 "  \"link\": {\n"

@@ -83,6 +83,10 @@ We prefer to use compile-time code generation, keeping the benefits of static ty
 :heading-offset: 1
 ```
 
+```{include} /language/attributes/intrinsic.md
+:heading-offset: 1
+```
+
 ```{include} /language/attributes/external.md
 :heading-offset: 1
 ```

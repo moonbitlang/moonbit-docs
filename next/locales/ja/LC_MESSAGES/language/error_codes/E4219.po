@@ -28,47 +28,60 @@ msgstr ""
 
 #: ../../language/error_codes/E4219.md:5
 msgid ""
-"The `#export_name` attribute is invalid. MoonBit currently requires "
-"exported names to be unique valid C symbol identifiers for every backend."
-" The attribute may be used only on public, non-generic function "
-"definitions without optional arguments in a foreign-library package."
-msgstr ""
-
-#: ../../language/error_codes/E4219.md:11
-msgid ""
-"Known compiler issue: `#export_name` currently applies its C-symbol-"
-"identifier restriction to every backend. WebAssembly export names are "
+"The `#export_name` attribute is invalid. Export names must be unique "
+"within the package. Name restrictions depend on the backend: native "
+"requires valid C symbol identifiers, while WebAssembly export names are "
 "UTF-8 strings and are not limited to C identifiers."
-msgstr ""
+msgstr "`#export_name` 属性が無効です。エクスポート名はパッケージ内で一意でなければなりません。名前の制約はバックエンドによって異なります。native では有効な C シンボル識別子が必要ですが、WebAssembly のエクスポート名は UTF-8 文字列であり、C 識別子の制約はありません。"
 
-#: ../../language/error_codes/E4219.md:16
+#: ../../language/error_codes/E4219.md:9
+msgid ""
+"The attribute may be used only on public, non-generic function "
+"definitions without optional arguments in a foreign-library package."
+msgstr "この属性は、外部ライブラリパッケージ内の、オプション引数を持たない公開の非ジェネリック関数定義にのみ使用できます。"
+
+#: ../../language/error_codes/E4219.md:12
 msgid "Erroneous example"
 msgstr ""
 
-#: ../../language/error_codes/E4219.md:18
-msgid ""
-"///|\n"
-"#export_name(\"bad-name\")\n"
-"pub fn add_one(value : Int32) -> Int32 {\n"
-"  value + 1\n"
-"}\n"
-msgstr ""
+#: ../../language/error_codes/E4219.md:14
+msgid "Both functions use the export name `add_one`, which must be unique:"
+msgstr "両方の関数がエクスポート名 `add_one` を使用していますが、この名前は一意でなければなりません："
 
-#: ../../language/error_codes/E4219.md:22
-msgid "Suggestion"
-msgstr ""
-
-#: ../../language/error_codes/E4219.md:24
-msgid ""
-"Use a valid symbol name and declare the package as a foreign library with"
-" `pkgtype(kind: \"foreign_library\")`."
-msgstr ""
-
-#: ../../language/error_codes/E4219.md:27
+#: ../../language/error_codes/E4219.md:16
 msgid ""
 "///|\n"
 "#export_name(\"add_one\")\n"
 "pub fn add_one(value : Int32) -> Int32 {\n"
 "  value + 1\n"
+"}\n"
+"\n"
+"///|\n"
+"#export_name(\"add_one\")\n"
+"pub fn add_two(value : Int32) -> Int32 {\n"
+"  value + 2\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4219.md:20
+msgid "Suggestion"
+msgstr ""
+
+#: ../../language/error_codes/E4219.md:22
+msgid "Give each function a distinct export name:"
+msgstr "各関数に異なるエクスポート名を指定してください："
+
+#: ../../language/error_codes/E4219.md:24
+msgid ""
+"///|\n"
+"#export_name(\"add_one\")\n"
+"pub fn add_one(value : Int32) -> Int32 {\n"
+"  value + 1\n"
+"}\n"
+"\n"
+"///|\n"
+"#export_name(\"add_two\")\n"
+"pub fn add_two(value : Int32) -> Int32 {\n"
+"  value + 2\n"
 "}\n"
 msgstr ""
