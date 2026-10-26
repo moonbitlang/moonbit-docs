@@ -2404,6 +2404,28 @@ match expr {
 }
 ```
 
+### NaN in Patterns
+
+A floating-point NaN constant does not match any value, including NaN itself.
+Matching against such a constant produces warning [E0095](https://docs.moonbitlang.com/en/latest/language/error_codes/E0095.html)
+(`nan_pattern`). Use `is_nan()` in a match guard instead:
+
+```moonbit
+///|
+pub fn describe(value : Double) -> String {
+  match value {
+    x if x.is_nan() => "not a number"
+    _ => "number"
+  }
+}
+
+///|
+test {
+  inspect(describe(0.0 / 0.0), content="not a number")
+  inspect(describe(1.0), content="number")
+}
+```
+
 ### Array Pattern
 
 Array patterns can be used to match on the following types to obtain their

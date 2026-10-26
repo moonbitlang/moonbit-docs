@@ -431,6 +431,25 @@ fn keep_stack_frame(x : Int32) -> Int32 {
 These attributes are hints. They do not change the source-level behavior of the
 function.
 
+## Intrinsic Attribute
+
+`#intrinsic("name")` associates a function with a compiler intrinsic while
+retaining an ordinary function body.
+
+#### WARNING
+Intrinsics are not a stable API. They may change without notice and are not
+recommended for application code. Prefer ordinary functions and public
+standard-library APIs.
+
+If the compiler does not recognize the name, it reports
+[E0094](https://docs.moonbitlang.com/en/latest/language/error_codes/E0094.html), ignores the attribute, and uses the
+ordinary function body. This is different from a direct intrinsic declaration
+(`fn f(x : Int32) -> Int32 = "name"`), which has no ordinary body and reports
+[E4070](https://docs.moonbitlang.com/en/latest/language/error_codes/E4070.html) for an unknown name.
+
+Specifying multiple intrinsics for one function is not supported; see
+[E4071](https://docs.moonbitlang.com/en/latest/language/error_codes/E4071.html).
+
 ## External Attribute
 
 The `#external` attribute is used to mark an abstract type as external type.
@@ -614,13 +633,9 @@ pub fn add_one(value : Int32) -> Int32 {
 }
 ```
 
-MoonBit currently requires the exported name to be unique within the package
-and to be a valid C symbol identifier, regardless of the selected backend.
-
-#### WARNING
-Known compiler issue: `#export_name` currently applies its C-symbol-identifier
-restriction to every backend. WebAssembly export names are UTF-8 strings and
-are not limited to C identifiers.
+Export names must be unique within the package. Name restrictions depend on
+the backend: native requires valid C symbol identifiers, while WebAssembly
+export names are UTF-8 strings and are not limited to C identifiers.
 
 The attribute cannot be used on generic functions, functions with optional
 arguments, methods, or declarations without a body.

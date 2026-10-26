@@ -11,13 +11,9 @@ pub fn add_one(value : Int32) -> Int32 {
 }
 ```
 
-MoonBit currently requires the exported name to be unique within the package
-and to be a valid C symbol identifier, regardless of the selected backend.
-
-#### WARNING
-Known compiler issue: `#export_name` currently applies its C-symbol-identifier
-restriction to every backend. WebAssembly export names are UTF-8 strings and
-are not limited to C identifiers.
+Export names must be unique within the package. Name restrictions depend on
+the backend: native requires valid C symbol identifiers, while WebAssembly
+export names are UTF-8 strings and are not limited to C identifiers.
 
 The attribute cannot be used on generic functions, functions with optional
 arguments, methods, or declarations without a body.

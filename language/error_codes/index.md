@@ -99,6 +99,8 @@ This page lists all error codes produced by the MoonBit compiler.
 * [E0091](https://docs.moonbitlang.com/en/latest/language/error_codes/E0091.html)
 * [E0092](https://docs.moonbitlang.com/en/latest/language/error_codes/E0092.html)
 * [E0093](https://docs.moonbitlang.com/en/latest/language/error_codes/E0093.html)
+* [E0094](https://docs.moonbitlang.com/en/latest/language/error_codes/E0094.html)
+* [E0095](https://docs.moonbitlang.com/en/latest/language/error_codes/E0095.html)
 * [E1000](https://docs.moonbitlang.com/en/latest/language/error_codes/E1000.html)
 * [E1001](https://docs.moonbitlang.com/en/latest/language/error_codes/E1001.html)
 * [E3001](https://docs.moonbitlang.com/en/latest/language/error_codes/E3001.html)
