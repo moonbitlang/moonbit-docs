@@ -102,16 +102,13 @@ fn compileLet(
   expr : RawExpr[String],
   env : List[(String, Int32)],
 ) -> List[Instruction] {
-  let (env, codes) = for env = env, acc = @list.List([]), remaining = defs {
-    match remaining {
-      Empty => break (env, acc)
-      More((name, expr), tail=rest) => {
-        let code = expr.compileC(env)
-        let env = argOffset(1, env).prepend((name, 0))
-        continue env, acc + code, rest
-      }
-    }
-  }
+  let (env, codes) = defs.fold(init=(env, @list.List([])), fn(acc, def) {
+    let (env, codes) = acc
+    let (name, expr) = def
+    let code = expr.compileC(env)
+    let env = argOffset(1, env).prepend((name, 0))
+    (env, codes + code)
+  })
   codes + comp(expr, env) + @list.List([Slide(defs.length())])
 }
 ```
@@ -132,7 +129,7 @@ fn GState::alloc_nodes(self : GState, n : Int32) -> Unit {
 The steps to compile letrec are similar to `let`:
 
 - Use `Alloc(n)` to allocate N addresses.
-- Use the `loop` expression to build a complete environment.
+- Use a `for` loop to build a complete environment.
 - Compile the local variables in `defs`, using the `Update` instruction to update the results to the pre-allocated addresses after compiling each one.
 - Compile the main expression and use the `Slide` instruction to clean up.
 
