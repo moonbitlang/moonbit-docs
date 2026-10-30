@@ -48,7 +48,7 @@ pub fn JsString::from_string(str : String) -> JsString {
 
 ///|
 pub fn JsString::to_string(str : JsString) -> String {
-  let buffer = StringBuilder::new()
+  let buffer = StringBuilder()
   str.iter(fn(i : Int) { buffer.write_char(i.unsafe_to_char()) })
   buffer.to_string()
 }

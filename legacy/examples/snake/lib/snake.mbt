@@ -28,6 +28,9 @@ pub(all) enum Direction {
 } derive(Eq)
 
 ///|
+pub extend Direction with Eq::{equal, not_equal}
+
+///|
 priv enum GridType {
   Body
   Food
@@ -141,7 +144,7 @@ pub fn GameState::step(self : Self, action : Direction) -> Unit {
 pub fn new() -> GameState {
   let game : GameState = {
     grid: FixedArray::make(grid_row_count * grid_col_count, None),
-    body: @deque.new(),
+    body: @deque.Deque([]),
     dir: Up,
   }
   game.initialize()

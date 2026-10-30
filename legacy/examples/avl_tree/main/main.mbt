@@ -26,7 +26,7 @@ fn main {
 
   // Check values from 0 to iter-1 in the AVL tree
   for i = 0; i < iter; i = i + 1 {
-    if not(v.mem(i)) {
+    if !v.mem(i) {
       abort("impossible")
     }
   }

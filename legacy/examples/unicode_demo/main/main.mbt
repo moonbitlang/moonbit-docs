@@ -24,12 +24,15 @@ fn T😯::😀(self : T😯) -> Int {
 pub(all) enum E😆😆 {
   A
   B
-} derive(Show)
+} derive(Debug)
+
+///|
+pub extend E😆😆 with Debug::{to_repr}
 
 ///|
 test {
   let 🤣 = T😯::T😯(3)
   inspect(🤣.😀(), content="3")
   let 😆 = E😆😆::A
-  inspect(😆, content="A")
+  debug_inspect(😆, content="A")
 }
