@@ -36,7 +36,7 @@ class Visitor(NodeVisitor):
                         temp_file.flush()
                         temp_file_path = temp_file.name
 
-                        result = subprocess.run(["moonc", "compile", "-stop-after-parsing", temp_file_path], capture_output=True)
+                        result = subprocess.run(["moonc", "syncheck", temp_file_path], capture_output=True)
                         if result.returncode != 0:
                             logger.error(f"code check failed: {result.stderr.decode().strip()}")
 
@@ -47,7 +47,7 @@ class Visitor(NodeVisitor):
                         temp_file.flush()
                         temp_file_path = temp_file.name
                     
-                        result = subprocess.run(["moonc", "compile", "-stop-after-parsing", temp_file_path], capture_output=True)
+                        result = subprocess.run(["moonc", "syncheck", temp_file_path], capture_output=True)
                         if result.returncode != 0:
                             logger.error(f"code check failed: {result.stderr.decode().strip()}", location=node)
     def unknown_visit(self, _node):
