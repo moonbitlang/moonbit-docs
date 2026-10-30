@@ -147,7 +147,6 @@ This page lists all error codes produced by the MoonBit compiler.
 * [E4017](https://docs.moonbitlang.com/en/latest/language/error_codes/E4017.html)
 * [E4018](https://docs.moonbitlang.com/en/latest/language/error_codes/E4018.html)
 * [E4019](https://docs.moonbitlang.com/en/latest/language/error_codes/E4019.html)
-* [E4020](https://docs.moonbitlang.com/en/latest/language/error_codes/E4020.html)
 * [E4021](https://docs.moonbitlang.com/en/latest/language/error_codes/E4021.html)
 * [E4022](https://docs.moonbitlang.com/en/latest/language/error_codes/E4022.html)
 * [E4023](https://docs.moonbitlang.com/en/latest/language/error_codes/E4023.html)

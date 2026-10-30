@@ -216,7 +216,7 @@ import {
 
 Most core packages are not special here: if you use `@json`, `@test`, or other
 ordinary core aliases, add the corresponding `moonbitlang/core/...` package to
-`import` to avoid `core_package_not_imported` warnings.
+`import`; otherwise, the compiler reports E4037 (package not imported).
 
 `prelude` is the exception. It is available by default, so the names it exposes
 do not need an explicit package import.

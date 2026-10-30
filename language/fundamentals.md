@@ -2469,7 +2469,7 @@ palindrome:
 ```moonbit
 test {
   fn palindrome(s : String) -> Bool {
-    for view = s.view() {
+    for view = s[:] {
       match view {
         [] | [_] => break true
         [a, .. rest, b] => if a == b { continue rest } else { break false }
