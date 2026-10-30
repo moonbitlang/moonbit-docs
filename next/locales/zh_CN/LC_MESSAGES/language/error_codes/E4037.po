@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-12 14:18+0800\n"
+"POT-Creation-Date: 2026-10-30 14:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -27,43 +27,40 @@ msgid "Compiler diagnostic name: `pkg_not_imported`."
 msgstr "编译器诊断名称：`pkg_not_imported`。"
 
 #: ../../language/error_codes/E4037.md:5
-msgid "Cannot perform action: package is not imported."
-msgstr "无法完成操作：包未导入。"
+msgid "The referenced package is not imported."
+msgstr "引用的包未导入。"
 
 #: ../../language/error_codes/E4037.md:7
 msgid ""
-"Some language features require an explicit package import because the "
-"compiler needs runtime support from that package. For example, `async fn "
-"main` and `async test` require `moonbitlang/async`."
-msgstr "有些语言特性需要显式导入包，因为编译器需要该包提供运行时支持。例如，`async fn main` 和 `async test` 需要 `moonbitlang/async`。"
+"The example refers to `@boolean`, but no package with that alias is "
+"imported."
+msgstr "此示例引用了 `@boolean`，但没有导入使用该别名的包。"
+
+#: ../../language/error_codes/E4037.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
 
 #: ../../language/error_codes/E4037.md:11
-msgid "Erroneous example"
-msgstr "错误示例："
-
-#: ../../language/error_codes/E4037.md:13
 msgid ""
-"async fn main {\n"
-"//^~~~~\n"
-"// Error: Cannot use `async fn main`: package moonbitlang/async is not "
-"imported.\n"
-"  ()\n"
+"fn main {\n"
+"  println(@boolean.Bool::to_int(true))\n"
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E4037.md:17
+#: ../../language/error_codes/E4037.md:15
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4037.md:19
+#: ../../language/error_codes/E4037.md:17
 msgid ""
-"Import the required package if you intend to use the feature. If you do "
-"not need the feature, remove the construct that requires the package."
-msgstr "如果你确实需要使用该特性，请导入所需的包。如果不需要该特性，请移除依赖该包的语法结构。"
+"Check the package name and import the required package in `moon.pkg`. In "
+"this example, `Bool` is a built-in type, so call its method directly "
+"without a package alias."
+msgstr "检查包名，并在 `moon.pkg` 中导入所需的包。在此示例中，`Bool` 是内置类型，因此直接调用其方法即可，无需包别名。"
 
-#: ../../language/error_codes/E4037.md:22
+#: ../../language/error_codes/E4037.md:21
 msgid ""
 "fn main {\n"
-"  ()\n"
+"  println(true.to_int())\n"
 "}\n"
 msgstr ""

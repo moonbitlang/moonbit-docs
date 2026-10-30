@@ -24,22 +24,28 @@ msgstr ""
 
 #: ../../language/error_codes/E0071.md:3
 msgid "Warning name: `core_package_not_imported`"
-msgstr ""
+msgstr "警告名称：`core_package_not_imported`"
 
 #: ../../language/error_codes/E0071.md:5
 msgid "Core package used without an explicit import."
-msgstr "使用了未显式导入的 core 包。"
+msgstr "未显式导入就使用核心库包。"
 
 #: ../../language/error_codes/E0071.md:7
 msgid ""
-"MoonBit still recognizes some packages under `moonbitlang/core` when they"
-" are referenced by their conventional aliases, but relying on that "
-"implicit import is deprecated. Add the package to `moon.pkg` instead."
-msgstr ""
-"当代码通过约定俗成的别名引用 `moonbitlang/core` 下的某些包时，MoonBit "
-"仍会识别它们，但依赖这种隐式导入的写法已经被弃用。请改为在 `moon.pkg` 中添加对应的包。"
+"This warning describes older compiler behavior. Current compilers require"
+" explicit imports for core packages and report [E4037](./E4037.md) "
+"instead."
+msgstr "此警告描述旧版编译器的行为。当前编译器要求显式导入核心库包，否则会报告 [E4037](./E4037.md)。"
 
-#: ../../language/error_codes/E0071.md:11
+#: ../../language/error_codes/E0071.md:10
+msgid ""
+"Older compilers recognized some packages under `moonbitlang/core` by "
+"their conventional aliases and warned about implicit imports. Add the "
+"package to `moon.pkg` instead; the following erroneous example now "
+"produces E4037."
+msgstr "旧版编译器会通过惯用别名识别 `moonbitlang/core` 下的部分包，并对隐式导入发出警告。应在 `moon.pkg` 中导入该包；下面的错误示例现在会产生 E4037。"
+
+#: ../../language/error_codes/E0071.md:14
 msgid "Erroneous example"
 msgstr "错误示例"
 
@@ -57,13 +63,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0071.md:17
+#: ../../language/error_codes/E0071.md:20
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E0071.md:19
+#: ../../language/error_codes/E0071.md:22
 msgid "Declare the core package import in `moon.pkg`."
-msgstr "在 `moon.pkg` 中声明 core 包导入。"
+msgstr "在 `moon.pkg` 中声明核心库包的导入。"
 
 #: ../../language/error_codes/E0071.md:21
 msgid ""

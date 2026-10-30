@@ -29,7 +29,7 @@ struct Tetris {
 pub fn Tetris::reset_game(self : Tetris) -> Unit {
   self.dead = false
   self.score = 0
-  self.grid = for i = 0, grid = @list.empty()
+  self.grid = for i = 0, grid = @list.List([])
                   i < grid_row_count
                   i = i + 1, grid = @list.cons(
                       Array::make(grid_col_count, 0),
@@ -73,7 +73,7 @@ pub fn Tetris::get_next_piece(self : Tetris, pop : Bool) -> PIECE {
 
 ///|
 pub fn Tetris::generate_piece_pool(self : Tetris) -> Unit {
-  self.piece_pool = @list.from_array([
+  self.piece_pool = @list.List([
     PIECE::I,
     PIECE::J,
     PIECE::L,
@@ -107,7 +107,7 @@ pub fn Tetris::on_piece_collision(self : Tetris) -> Unit {
   // Delete the complete row
   let (new_grid, row_completed) = self.grid
     .rev()
-    .fold(init=(@list.empty(), 0), (acc, v) => {
+    .fold(init=(@list.List([]), 0), (acc, v) => {
       let (new_grid, row_completed) = acc
       if v.contains(0) {
         (@list.cons(v, new_grid), row_completed)
@@ -211,8 +211,8 @@ pub fn step(tetris : Tetris, action : Int) -> Unit {
 pub fn new() -> Tetris {
   let tetris = {
     dead: false,
-    grid: @list.empty(),
-    piece_pool: @list.empty(),
+    grid: @list.List([]),
+    piece_pool: @list.List([]),
     current: I,
     piece_x: 0,
     piece_y: 0,

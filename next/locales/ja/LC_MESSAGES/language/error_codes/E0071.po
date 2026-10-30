@@ -24,22 +24,30 @@ msgstr ""
 
 #: ../../language/error_codes/E0071.md:3
 msgid "Warning name: `core_package_not_imported`"
-msgstr ""
+msgstr "警告名：`core_package_not_imported`"
 
 #: ../../language/error_codes/E0071.md:5
 msgid "Core package used without an explicit import."
-msgstr ""
+msgstr "明示的なインポートなしでコアパッケージを使用しています。"
 
 #: ../../language/error_codes/E0071.md:7
 msgid ""
-"MoonBit still recognizes some packages under `moonbitlang/core` when they"
-" are referenced by their conventional aliases, but relying on that "
-"implicit import is deprecated. Add the package to `moon.pkg` instead."
-msgstr ""
+"This warning describes older compiler behavior. Current compilers require"
+" explicit imports for core packages and report [E4037](./E4037.md) "
+"instead."
+msgstr "この警告は以前のコンパイラの動作を説明しています。現在のコンパイラではコアパッケージの明示的なインポートが必要で、代わりに [E4037](./E4037.md) が報告されます。"
 
-#: ../../language/error_codes/E0071.md:11
+#: ../../language/error_codes/E0071.md:10
+msgid ""
+"Older compilers recognized some packages under `moonbitlang/core` by "
+"their conventional aliases and warned about implicit imports. Add the "
+"package to `moon.pkg` instead; the following erroneous example now "
+"produces E4037."
+msgstr "以前のコンパイラは `moonbitlang/core` 内の一部のパッケージを慣用的な別名で認識し、暗黙のインポートに警告を出していました。代わりに `moon.pkg` でパッケージをインポートしてください。以下のエラー例は現在 E4037 を発生させます。"
+
+#: ../../language/error_codes/E0071.md:14
 msgid "Erroneous example"
-msgstr ""
+msgstr "エラーのある例"
 
 #: ../../language/error_codes/E0071.md:13
 #: ../../language/error_codes/E0071.md:25
@@ -55,13 +63,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E0071.md:17
+#: ../../language/error_codes/E0071.md:20
 msgid "Suggestion"
-msgstr ""
+msgstr "修正案"
 
-#: ../../language/error_codes/E0071.md:19
+#: ../../language/error_codes/E0071.md:22
 msgid "Declare the core package import in `moon.pkg`."
-msgstr ""
+msgstr "`moon.pkg` でコアパッケージのインポートを宣言してください。"
 
 #: ../../language/error_codes/E0071.md:21
 msgid ""

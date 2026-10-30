@@ -58,7 +58,7 @@ pub fn draw(canvas : Canvas_ctx, tetris : Tetris) -> Unit {
   draw_piece(canvas, tetris.grid, (0, 0))
   draw_piece(
     canvas,
-    @list.from_array(tetris.piece_shape),
+    @list.List(tetris.piece_shape),
     (tetris.piece_x, tetris.piece_y),
   )
   if tetris.dead {

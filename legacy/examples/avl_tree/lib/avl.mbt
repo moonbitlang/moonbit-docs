@@ -168,7 +168,10 @@ pub fn[U : Compare] T::remove(self : T[U], x : U) -> T[U] {
 }
 
 ///|
-/// `to_string[U:Show](self: T[U]) -> String`
+pub extend T with Show::{output, to_string}
+
+///|
+/// `fn[U : Show] T::to_string(self : T[U]) -> String`
 ///
 /// convert the AVL tree to string.
 pub impl[U : Show] Show for T[U] with output(self : T[U], logger) -> Unit {
@@ -206,11 +209,11 @@ fn repeat_str(s : String, n : Int) -> String {
 }
 
 ///|
-/// `print_tree[U:Show](self: T[U])`
+/// `fn[U : Show] T::print_tree(self : T[U]) -> Unit`
 ///
 /// Print the AVL tree
 pub fn[U : Show] T::print_tree(self : T[U]) -> Unit {
-  let buffer = StringBuilder::new()
+  let buffer = StringBuilder()
   fn helper(node : T[U], level : Int) {
     match node {
       Empty => ()

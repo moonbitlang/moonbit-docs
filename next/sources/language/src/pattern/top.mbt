@@ -36,7 +36,7 @@ test {
 /// start array pattern 1
 test {
   fn palindrome(s : String) -> Bool {
-    for view = s.view() {
+    for view = s[:] {
       match view {
         [] | [_] => break true
         [a, .. rest, b] => if a == b { continue rest } else { break false }

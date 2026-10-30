@@ -141,7 +141,10 @@ def check_error_code(error_code):
         return run_moon_test(str(error_path)) and run_moon_test(str(fixed_path))
 
     # Test error case should produce warning/error
-    error_ok = run_moon_test(str(error_path), error_code)
+    # E0071 documents the migration from implicit core imports to E4037.
+    # Keep checking both examples, including the replacement diagnostic.
+    expected_code = '4037' if error_code == '0071' else error_code
+    error_ok = run_moon_test(str(error_path), expected_code)
 
     # Test fixed case should have no warnings/errors
     fixed_ok = run_moon_test(str(fixed_path))
