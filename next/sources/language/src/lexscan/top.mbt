@@ -64,7 +64,7 @@ test "scan an in-memory string with a maintained cursor" {
 
 ///|
 test "StringScanner cursor is relative to its StringView" {
-  let data = "xx🤣yzz".view(start_offset=2, end_offset=5)
+  let data = "xx🤣yzz".exact_view(start=2, end=5)
   let input = @lexbuf.StringScanner::{ data, cursor: 0 }
   guard next_string_token(input) is Punctuation(mark) else {
     fail("expected punctuation")
