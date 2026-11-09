@@ -403,6 +403,15 @@ msgstr ""
 "非同期コードがキャンセルされると、以前ブロックしていた地点でキャンセル信号が送出されます。通常の `catch` ハンドラはこの信号を捕捉しません。"
 "信号はプログラム内を自動的に伝播しますが、`defer` または `errdefer` で登録したクリーンアップは実行されます。"
 
+#: ../../language/async-experimental.md:163
+msgid ""
+"Running a cleanup block does not make its asynchronous operations immune "
+"to cancellation. Cancellable operations inside it can be cancelled "
+"immediately. Protect required asynchronous cleanup from cancellation; see"
+" [E0098](/language/error_codes/E0098.md) for an example using the core "
+"runtime."
+msgstr "クリーンアップブロックが実行されても、その非同期操作がキャンセルから保護されるわけではありません。キャンセル可能な操作は直ちにキャンセルされることがあります。必要な非同期クリーンアップを保護してください。コアランタイムを使った例は [E0098](/language/error_codes/E0098.md) を参照してください。"
+
 #: ../../language/async-experimental.md:155
 msgid ""
 "The ability to cancel arbitrary async code makes async programs highly "

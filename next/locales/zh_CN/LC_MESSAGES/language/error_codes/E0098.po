@@ -1,0 +1,85 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-09 17:17+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E0098.md:1
+msgid "E0098"
+msgstr ""
+
+#: ../../language/error_codes/E0098.md:3
+msgid "Warning name: `cancellable_defer`"
+msgstr "警告名称：`cancellable_defer`"
+
+#: ../../language/error_codes/E0098.md:5
+msgid ""
+"A `defer` or `errdefer` expression contains cancellable asynchronous "
+"code. If cancellation triggers the cleanup, its asynchronous operations "
+"can be cancelled immediately as well, preventing the cleanup from "
+"completing."
+msgstr "`defer` 或 `errdefer` 表达式包含可取消的异步代码。如果清理由取消触发，其中的异步操作也可能立即被取消，导致清理无法完成。"
+
+#: ../../language/error_codes/E0098.md:9
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0098.md:11
+msgid "The examples use the experimental standard-library async runtime:"
+msgstr "这些示例使用实验性的标准库异步运行时："
+
+#: ../../language/error_codes/E0098.md:13
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/async\",\n"
+"}\n"
+"options(\"allow-experimental-packages\": true)\n"
+msgstr ""
+
+#: ../../language/error_codes/E0098.md:17
+msgid ""
+"///|\n"
+"pub async fn operation() -> Unit {\n"
+"  defer @async.sleep(1)\n"
+"  @async.sleep(1)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0098.md:21
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E0098.md:23
+msgid ""
+"Protect required asynchronous cleanup from cancellation. With "
+"`moonbitlang/core/async`, wrap it in `@async.protect_from_cancel`:"
+msgstr "应保护必要的异步清理，避免其被取消。使用 `moonbitlang/core/async` 时，将清理代码包装在 `@async.protect_from_cancel` 中："
+
+#: ../../language/error_codes/E0098.md:26
+msgid ""
+"///|\n"
+"pub async fn operation() -> Unit {\n"
+"  defer @async.protect_from_cancel(() => @async.sleep(1))\n"
+"  @async.sleep(1)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0098.md:30
+msgid ""
+"Synchronous cleanup does not need this wrapper. Keep protected cleanup "
+"bounded so that cancellation does not wait indefinitely for it to finish."
+msgstr "同步清理不需要此包装。受保护的清理应能在有限时间内完成，避免取消操作无限等待。"

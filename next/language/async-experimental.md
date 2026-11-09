@@ -160,6 +160,11 @@ raised at the point where the code previously blocked. Ordinary `catch`
 handlers do not intercept this signal. It propagates automatically through the
 program, while cleanup registered with `defer` or `errdefer` still runs.
 
+Running a cleanup block does not make its asynchronous operations immune to
+cancellation. Cancellable operations inside it can be cancelled immediately.
+Protect required asynchronous cleanup from cancellation; see
+[E0098](/language/error_codes/E0098.md) for an example using the core runtime.
+
 The ability to cancel arbitrary async code makes async programs highly modular in MoonBit.
 The `moonbitlang/async` package provides many useful combinators that perform
 timeout limit, automatic retry, etc. for async program,
