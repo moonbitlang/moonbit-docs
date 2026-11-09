@@ -354,102 +354,33 @@ msgstr ""
 
 #: ../../tutorial/tour.md:170
 msgid ""
-"We will get an error message, reminding us that `Show` and `Eq` are not "
-"implemented for `ExamResult`."
-msgstr "`ExamResult` に `Show` と `Eq` が実装されていないことを示すエラーメッセージが出ます。"
+"`assert_eq` requires the compared type to implement `Eq` and `Debug`. "
+"`Eq` supplies equality comparison, while `Debug` supplies a "
+"representation for failure messages. These are **traits**: interfaces "
+"describing operations that a type supports."
+msgstr "`assert_eq` で比較する型は `Eq` と `Debug` を実装する必要があります。`Eq` は等価比較を、`Debug` は失敗メッセージに使う値の表現を提供します。これらは型がサポートする操作を表すインターフェースである**トレイト**です。"
 
-#: ../../tutorial/tour.md:172
+#: ../../tutorial/tour.md:175
 msgid ""
-"`Show` and `Eq` are **traits**. A trait in MoonBit defines some common "
-"operations that a type should be able to perform."
-msgstr "`Show` と `Eq` は **trait** です。MoonBit の trait は、ある型が提供すべき共通操作を定義します。"
+"For this enum, derive both implementations by placing `#derive(Eq, "
+"Debug)` before the type definition:"
+msgstr "この列挙型では、型定義の前に `#derive(Eq, Debug)` を付けることで両方の実装を派生できます："
 
-#: ../../tutorial/tour.md:174
+#: ../../tutorial/tour.md:178
 msgid ""
-"For example, `Eq` defines that there should be a way to compare two "
-"values of the same type with a function called `op_equal`:"
-msgstr "例えば `Eq` では、同じ型の 2 つの値を `op_equal` という関数で比較できることを定義します："
-
-#: ../../tutorial/tour.md:176
-msgid ""
-"trait Eq {\n"
-"  op_equal(Self, Self) -> Bool\n"
-"}"
-msgstr ""
-
-#: ../../tutorial/tour.md:183
-msgid ""
-"and `Show` defines that there should be a way to either convert a value "
-"of a type into `String` or write it using a `Logger`:"
-msgstr "一方 `Show` では、値を `String` に変換するか、`Logger` を使って出力できることを定義します："
-
-#: ../../tutorial/tour.md:185
-msgid ""
-"trait Show {\n"
-"  output(Self, &Logger) -> Unit\n"
-"  to_string(Self) -> String\n"
-"}"
-msgstr ""
-
-#: ../../tutorial/tour.md:193
-msgid ""
-"And the `assert_eq` uses them to constraint the passed parameters so that"
-" it can compare the two values and print them when they are not equal:"
-msgstr ""
-"そして `assert_eq` はこれらの trait を使って、渡された 2 "
-"つの値を比較し、等しくない場合に表示できるよう、型パラメータに制約を付けています："
-
-#: ../../tutorial/tour.md:195
-msgid ""
-"fn[A : Eq + Show] assert_eq!(value : A, other : A) -> Unit {\n"
-"  ...\n"
-"}"
-msgstr ""
-
-#: ../../tutorial/tour.md:202
-msgid ""
-"We need to implement `Eq` and `Show` for our `ExamResult`. There are two "
-"ways to do so."
-msgstr "`ExamResult` に対して `Eq` と `Show` を実装する必要があります。方法は 2 つあります。"
-
-#: ../../tutorial/tour.md:204
-msgid "By defining an explicit implementation:"
-msgstr "明示的な実装を定義する方法です："
-
-#: ../../tutorial/tour.md:206
-msgid ""
-"impl Eq for ExamResult with equal(self, other) {\n"
-"  match (self, other) {\n"
-"    (Pass, Pass) | (Fail, Fail) => true\n"
-"    _ => false\n"
-"  }\n"
-"}"
-msgstr ""
-
-#: ../../tutorial/tour.md:216
-msgid ""
-"Here we use [pattern matching](/language/fundamentals.md#pattern-"
-"matching) to check the cases of the `ExamResult`."
-msgstr ""
-"ここでは [パターンマッチング](/language/fundamentals.md#pattern-matching) を使って "
-"`ExamResult` の各ケースを判定しています。"
-
-#: ../../tutorial/tour.md:218
-msgid ""
-"An alternative way is by [deriving](/language/derive.md) since `Eq` and "
-"`Show` are [builtin traits](/language/methods.md#builtin-traits) and the "
-"output for `ExamResult` is quite straightforward:"
-msgstr ""
-"もう 1 つの方法は [derive](/language/derive.md) を使うことです。`Eq` と `Show` は[組み込み "
-"trait](/language/methods.md#builtin-traits) であり、`ExamResult` の出力はかなり単純です："
-
-#: ../../tutorial/tour.md:220
-msgid ""
+"#derive(Eq, Debug)\n"
 "enum ExamResult {\n"
 "  Pass\n"
 "  Fail\n"
-"} derive(Show)"
+"}\n"
 msgstr ""
+
+#: ../../tutorial/tour.md:184
+msgid ""
+"For custom behavior, write an explicit [trait "
+"implementation](/language/methods.md#implementing-traits) instead of "
+"deriving it."
+msgstr "独自の動作が必要な場合は、派生する代わりに[トレイト実装](/language/methods.md#implementing-traits)を明示的に記述してください。"
 
 #: ../../tutorial/tour.md:228
 msgid ""

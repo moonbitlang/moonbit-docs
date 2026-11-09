@@ -481,7 +481,7 @@ There's another `format` option to export as CommonJS module (`cjs`), ES Module 
 ``````{tab-item} C
 :sync: c
 ```{note}
-Renaming the exported function is not supported for now
+Use `#export_name` to set the native symbol name.
 ```
 ``````
 `````````
