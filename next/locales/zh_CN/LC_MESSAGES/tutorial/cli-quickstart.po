@@ -117,10 +117,11 @@ msgstr "根包定义 CLI 契约。它负责命令的形状，并把 argv 转成�
 
 #: ../../tutorial/cli-quickstart.md:55
 msgid ""
+"#derive(Eq)\n"
 "pub struct Config {\n"
 "  url : String\n"
 "  output : String?\n"
-"} derive(Eq)\n"
+"}\n"
 "\n"
 "///|\n"
 "pub extend Config with Eq::{not_equal, equal}\n"

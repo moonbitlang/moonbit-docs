@@ -52,8 +52,8 @@ msgstr "但是，`Error` 不能直接构造。必须定义一个具体的错误�
 
 #: ../../language/error-handling.md:16
 msgid ""
-"suberror E1 { E1(Int32) } // error type E1 has one constructor E1 with an Int32 "
-"payload\n"
+"suberror E1 { E1(Int32) } // error type E1 has one constructor E1 with an"
+" Int32 payload\n"
 "\n"
 "suberror E2 // error type E2 has one constructor E2 with no payload\n"
 "\n"
@@ -64,14 +64,6 @@ msgid ""
 "  C(mut x~ : String, Char, y~ : Bool)\n"
 "}\n"
 msgstr ""
-"suberror E1 { E1(Int32) }  // 错误类型 E1 具有一个构造器 E1，并带有一个 Int32 负"
-"载\n"
-"suberror E2              // 错误类型 E2 具有一个没有负载的构造器 E2\n"
-"suberror E3 {            // 错误类型 E3 类似于普通的枚举类型，有三个构造器\n"
-"  A\n"
-"  B(Int32, x~ : String)\n"
-"  C(mut x~ : String, Char, y~ : Bool)\n"
-"}\n"
 
 #: ../../language/error-handling.md:23
 msgid ""
@@ -186,7 +178,8 @@ msgstr ""
 
 #: ../../language/error-handling.md:82
 msgid ""
-"suberror DivError { DivError(String) } derive(Debug)\n"
+"#derive(Debug)\n"
+"suberror DivError { DivError(String) }\n"
 "\n"
 "pub extend DivError with Debug::{to_repr}\n"
 "\n"
@@ -340,9 +333,6 @@ msgid ""
 "  div(x, y) // Rethrow the error if `div` raised an error\n"
 "}\n"
 msgstr ""
-"fn div_reraise(x : Int32, y : Int32) -> Int32 raise DivError {\n"
-"  div(x, y) // 如果 `div` 引发错误，则重新抛出错误\n"
-"}\n"
 
 #: ../../language/error-handling.md:159
 msgid "However, you may want to handle the errors."

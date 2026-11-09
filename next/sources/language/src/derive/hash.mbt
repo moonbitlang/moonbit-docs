@@ -1,8 +1,9 @@
 // start derive hash struct
+#derive(Hash, Eq)
 struct DeriveHash {
   x : Int32
   y : String?
-} derive(Hash, Eq)
+}
 
 pub extend DeriveHash with Hash::{hash, hash_combine}
 

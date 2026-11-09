@@ -1,0 +1,87 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-02 14:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4232.md:1
+msgid "E4232"
+msgstr ""
+
+#: ../../language/error_codes/E4232.md:3
+msgid "Compiler diagnostic name: `regex_constant_in_pattern`."
+msgstr "コンパイラ診断名：`regex_constant_in_pattern`。"
+
+#: ../../language/error_codes/E4232.md:5
+msgid ""
+"A regex constant cannot be used as an ordinary pattern. Matching a "
+"constant in a regular `match` is not the same as applying a regex to text"
+" or bytes."
+msgstr ""
+"正規表現定数は通常のパターンとして使用できません。通常の `match` "
+"で定数を照合することは、テキストやバイト列に正規表現を適用することとは異なります。"
+
+#: ../../language/error_codes/E4232.md:8
+msgid "Erroneous example"
+msgstr "エラーのある例"
+
+#: ../../language/error_codes/E4232.md:10
+msgid ""
+"///|\n"
+"pub const WORD = re\"[a-z]+\"\n"
+"\n"
+"///|\n"
+"pub fn matches(value : Regex) -> Bool {\n"
+"  match value {\n"
+"    WORD => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4232.md:14
+msgid "Suggestion"
+msgstr "修正案"
+
+#: ../../language/error_codes/E4232.md:16
+msgid ""
+"For text matching, use the regex with `=~`, `lexmatch`, or `lexscan`. Do "
+"not use an ordinary constant pattern to compare regex values."
+msgstr ""
+"テキストの照合には、正規表現を `=~`、`lexmatch`、または `lexscan` "
+"と組み合わせて使用してください。正規表現の値を比較するために通常の定数パターンを使わないでください。"
+
+#: ../../language/error_codes/E4232.md:19
+msgid ""
+"///|\n"
+"pub const WORD = re\"[a-z]+\"\n"
+"\n"
+"///|\n"
+"pub fn matches(text : String) -> Bool {\n"
+"  text =~ WORD\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  assert_true(matches(\"hello\"))\n"
+"  assert_false(matches(\"123\"))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4232.md:23
+msgid "For a byte regex constant, use its `execute` method to match bytes."
+msgstr "バイト正規表現定数では、`execute` メソッドを使ってバイト列を照合してください。"

@@ -30,12 +30,16 @@ msgstr "MoonBit 支持从类型定义中自动派生一些内建特征。"
 
 #: ../../language/derive.md:5
 msgid ""
+"Place `#derive(...)` before the type definition. Run `moon fmt` to "
+"migrate the older trailing `derive(...)` syntax."
+msgstr "将 `#derive(...)` 放在类型定义前。运行 `moon fmt` 可迁移旧的尾置 `derive(...)` 语法。"
+
+#: ../../language/derive.md:8
+msgid ""
 "To derive a trait `T`, all fields used in the type must implement `T`. "
-"For example, deriving `Show` for a struct `struct A { x: T1; y: T2 }` "
-"requires both `T1 : Show` and `T2 : Show`."
-msgstr ""
-"要派生特征 `T`，类型中使用的所有字段都必须实现 `T`。例如，为结构体 `struct A { x: T1; y: T2 }` 派生 "
-"`Show` 需要 `T1 : Show` 和 `T2 : Show`。"
+"For example, deriving `Debug` for a struct `struct A { x: T1; y: T2 }` "
+"requires both `T1 : Debug` and `T2 : Debug`."
+msgstr "要派生特征 `T`，类型中的所有字段都必须实现 `T`。例如，为 `struct A { x: T1; y: T2 }` 派生 `Debug`，需要同时满足 `T1 : Debug` 和 `T2 : Debug`。"
 
 #: ../../language/derive.md:9
 msgid ""
@@ -52,22 +56,21 @@ msgstr ""
 msgid "Eq and Compare"
 msgstr "相等和比较"
 
-#: ../../language/derive.md:17
+#: ../../language/derive.md:20
 msgid ""
-"`derive(Eq)` and `derive(Compare)` generate the corresponding "
+"`#derive(Eq)` and `#derive(Compare)` generate the corresponding "
 "implementations for testing equality and comparison. Fields are compared "
 "in the same order as their definitions. For enums, the order between "
 "cases ascends in the order of definition."
-msgstr ""
-"`derive(Eq)` 和 `derive(Compare)` "
-"会生成用于测试相等性和比较的相应实现。字段按照定义顺序进行比较。对于枚举，构造器的顺序按照定义顺序升序排列。"
+msgstr "`#derive(Eq)` 和 `#derive(Compare)` 会生成用于测试相等性和比较的相应实现。字段按照定义顺序进行比较。对于枚举，构造器的顺序按照定义顺序升序排列。"
 
-#: ../../language/derive.md:21
+#: ../../language/derive.md:24
 msgid ""
+"#derive(Eq, Compare)\n"
 "struct DeriveEqCompare {\n"
 "  x : Int32\n"
 "  y : Int32\n"
-"} derive(Eq, Compare)\n"
+"}\n"
 "\n"
 "pub extend DeriveEqCompare with Eq::{not_equal, equal}\n"
 "\n"
@@ -100,13 +103,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:27
+#: ../../language/derive.md:30
 msgid ""
+"#derive(Eq, Compare)\n"
 "enum DeriveEqCompareEnum {\n"
 "  Case1(Int32)\n"
 "  Case2(label~ : String)\n"
 "  Case3\n"
-"} derive(Eq, Compare)\n"
+"}\n"
 "\n"
 "pub extend DeriveEqCompareEnum with Eq::{not_equal, equal}\n"
 "\n"
@@ -144,21 +148,20 @@ msgstr ""
 msgid "Debug"
 msgstr "Debug"
 
-#: ../../language/derive.md:35
-msgid ""
-"`derive(Debug)` generates a structural debugging implementation for the "
-"type. It is useful with `debug_inspect` in tests and `@debug.to_string` "
-"when formatting diagnostic messages."
-msgstr ""
-"`derive(Debug)` 会为类型生成结构化的调试实现。它可用于测试中的 `debug_inspect`，也可在格式化诊断信息时配合 "
-"`@debug.to_string` 使用。"
-
 #: ../../language/derive.md:38
 msgid ""
+"`#derive(Debug)` generates a structural debugging implementation for the "
+"type. It is useful with `debug_inspect` in tests and `@debug.to_string` "
+"when formatting diagnostic messages."
+msgstr "`#derive(Debug)` 会为类型生成结构化的调试实现。它可用于测试中的 `debug_inspect`，也可在格式化诊断信息时配合 `@debug.to_string` 使用。"
+
+#: ../../language/derive.md:41
+msgid ""
+"#derive(Debug)\n"
 "struct DebugPoint {\n"
 "  x : Int32\n"
 "  y : Int32\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "pub extend DebugPoint with Debug::{to_repr}\n"
 "\n"
@@ -172,12 +175,13 @@ msgstr ""
 msgid "Enums can derive `Debug` as well:"
 msgstr "枚举也可以派生 `Debug`："
 
-#: ../../language/derive.md:46
+#: ../../language/derive.md:49
 msgid ""
+"#derive(Debug)\n"
 "enum DebugShape {\n"
 "  Circle(radius~ : Int32)\n"
 "  Rect(width~ : Int32, height~ : Int32)\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "pub extend DebugShape with Debug::{to_repr}\n"
 "\n"
@@ -191,16 +195,13 @@ msgstr ""
 msgid "Default"
 msgstr "默认值"
 
-#: ../../language/derive.md:54
+#: ../../language/derive.md:57
 msgid ""
-"`derive(Default)` generates a `Default` implementation for the type. Call"
-" `Default::default()` with the expected type specified so MoonBit can "
-"select the implementation. Use an explicit `extend` declaration if "
+"`#derive(Default)` generates a `Default` implementation for the type. "
+"Call `Default::default()` with the expected type specified so MoonBit can"
+" select the implementation. Use an explicit `extend` declaration if "
 "`default` should also be part of the type's method-style API."
-msgstr ""
-"`derive(Default)` 会为该类型生成 `Default` 实现。调用 `Default::default()` "
-"时需要提供预期类型，以便 MoonBit 选择相应的实现。如果还希望让 `default` 成为该类型的方法式 API 的一部分，请显式声明 "
-"`extend`。"
+msgstr "`#derive(Default)` 会为该类型生成 `Default` 实现。调用 `Default::default()` 时需要提供预期类型，以便 MoonBit 选择相应的实现。如果还希望让 `default` 成为该类型的方法式 API 的一部分，请显式声明 `extend`。"
 
 #: ../../language/derive.md:59
 msgid ""
@@ -208,12 +209,13 @@ msgid ""
 " default value."
 msgstr "对于结构体，默认值是所有字段设置为它们的默认值的结构体。"
 
-#: ../../language/derive.md:61
+#: ../../language/derive.md:64
 msgid ""
+"#derive(Default, Eq)\n"
 "struct DeriveDefault {\n"
 "  x : Int32\n"
 "  y : String?\n"
-"} derive(Default, Eq)\n"
+"}\n"
 "\n"
 "pub extend DeriveDefault with Default::{default}\n"
 "\n"
@@ -229,13 +231,14 @@ msgstr ""
 msgid "For enums, the default value is the only case that has no parameters."
 msgstr "对于枚举，默认值是唯一没有参数的构造器。"
 
-#: ../../language/derive.md:69
+#: ../../language/derive.md:72
 msgid ""
+"#derive(Default, Eq)\n"
 "enum DeriveDefaultEnum {\n"
 "  Case1(Int32)\n"
 "  Case2(label~ : String)\n"
 "  Case3\n"
-"} derive(Default, Eq)\n"
+"}\n"
 "\n"
 "pub extend DeriveDefaultEnum with Default::{default}\n"
 "\n"
@@ -253,39 +256,40 @@ msgid ""
 "derive `Default`."
 msgstr "没有构造器或有多个没有参数的构造器的枚举不能派生 `Default`。"
 
-#: ../../language/derive.md:79
+#: ../../language/derive.md:82
 msgid ""
+"#derive(Default) // cannot find a constant constructor as default\n"
 "enum CannotDerive1 {\n"
 "    Case1(String)\n"
 "    Case2(Int32)\n"
-"} derive(Default) // cannot find a constant constructor as default\n"
+"}\n"
 "\n"
+"#derive(Default) // Case1 and Case2 are both candidates as default "
+"constructor\n"
 "enum CannotDerive2 {\n"
 "    Case1\n"
 "    Case2\n"
-"} derive(Default) // Case1 and Case2 are both candidates as default "
-"constructor\n"
+"}\n"
 msgstr ""
 
 #: ../../language/derive.md:91
 msgid "Hash"
 msgstr "哈希值"
 
-#: ../../language/derive.md:93
+#: ../../language/derive.md:98
 msgid ""
-"`derive(Hash)` generates a hash implementation for the type. This will "
+"`#derive(Hash)` generates a hash implementation for the type. This will "
 "allow the type to be used in places that expects a `Hash` implementation,"
 " for example `HashMap`s and `HashSet`s."
-msgstr ""
-"`derive(Hash)` 将为类型生成一个哈希实现。这将允许类型在期望 `Hash` 实现的地方使用，例如 `HashMap` 和 "
-"`HashSet`。"
+msgstr "`#derive(Hash)` 将为类型生成一个哈希实现。这将允许类型在期望 `Hash` 实现的地方使用，例如 `HashMap` 和 `HashSet`。"
 
-#: ../../language/derive.md:97
+#: ../../language/derive.md:102
 msgid ""
+"#derive(Hash, Eq)\n"
 "struct DeriveHash {\n"
 "  x : Int32\n"
 "  y : String?\n"
-"} derive(Hash, Eq)\n"
+"}\n"
 "\n"
 "pub extend DeriveHash with Hash::{hash, hash_combine}\n"
 "\n"
@@ -305,31 +309,32 @@ msgstr ""
 msgid "Arbitrary"
 msgstr "任意值"
 
-#: ../../language/derive.md:105
-msgid "`derive(Arbitrary)` will generate random values of the given type."
-msgstr "`derive(Arbitrary)` 将生成给定类型的随机值。"
+#: ../../language/derive.md:110
+msgid "`#derive(Arbitrary)` will generate random values of the given type."
+msgstr "`#derive(Arbitrary)` 将生成给定类型的随机值。"
 
 #: ../../language/derive.md:107
 msgid "Shrink"
 msgstr "缩小"
 
-#: ../../language/derive.md:109
+#: ../../language/derive.md:114
 msgid ""
-"`derive(Shrink)` implements `@quickcheck.Shrink` for property-based "
+"`#derive(Shrink)` implements `@quickcheck.Shrink` for property-based "
 "testing. Struct fields are shrunk one at a time in source order. Enum "
 "values keep their current constructor while its payload is shrunk; "
 "constructors without payloads produce no candidates. Every field or "
-"payload used by the derived implementation must itself implement `Shrink`."
-msgstr ""
-"`derive(Shrink)` 为基于属性的测试实现 `@quickcheck.Shrink`。结构体字段按源码顺序逐个缩小。枚举值在缩小负载时保持当前构造器；不带负载的构造器不会产生候选值。派生实现使用的每个字段或负载本身都必须实现 `Shrink`。"
+"payload used by the derived implementation must itself implement "
+"`Shrink`."
+msgstr "`#derive(Shrink)` 为基于属性的测试实现 `@quickcheck.Shrink`。结构体字段按源码顺序逐个缩小。枚举值在缩小负载时保持当前构造器；不带负载的构造器不会产生候选值。派生实现使用的每个字段或负载本身都必须实现 `Shrink`。"
 
-#: ../../language/derive.md:115
+#: ../../language/derive.md:120
 msgid ""
 "///|\n"
+"#derive(Shrink)\n"
 "struct ShrinkPoint {\n"
 "  x : Int32\n"
 "  y : Int32\n"
-"} derive(Shrink)\n"
+"}\n"
 "\n"
 "///|\n"
 "pub extend ShrinkPoint with @shrink.Shrink::{shrink}\n"
@@ -351,24 +356,22 @@ msgstr ""
 msgid "FromJson and ToJson"
 msgstr "从/到 Json"
 
-#: ../../language/derive.md:123
+#: ../../language/derive.md:128
 msgid ""
-"`derive(FromJson)` and `derive(ToJson)` automatically generate round-"
+"`#derive(FromJson)` and `#derive(ToJson)` automatically generate round-"
 "trippable trait implementations used for serializing the type to and from"
 " JSON. Trait functions can be called with qualified syntax such as "
 "`ToJson::to_json(value)`. The implementation is mainly for debugging and "
 "storing the types in a human-readable format."
-msgstr ""
-"`derive(FromJson)` 和 `derive(ToJson)` 会自动生成可往返的 trait 实现，用于将类型序列化为 JSON "
-"以及从 JSON 反序列化。可以使用限定语法调用 trait 函数，例如 `ToJson::to_json(value)`。该实现主要"
-"用于调试和以人类可读的格式存储类型。"
+msgstr "`#derive(FromJson)` 和 `#derive(ToJson)` 会自动生成可往返的 trait 实现，用于将类型序列化为 JSON 以及从 JSON 反序列化。可以使用限定语法调用 trait 函数，例如 `ToJson::to_json(value)`。该实现主要用于调试和以人类可读的格式存储类型。"
 
-#: ../../language/derive.md:128
+#: ../../language/derive.md:133
 msgid ""
+"#derive(FromJson, ToJson, Eq)\n"
 "struct JsonTest1 {\n"
 "  x : Int32\n"
 "  y : Int32\n"
-"} derive(FromJson, ToJson, Eq)\n"
+"}\n"
 "\n"
 "pub extend JsonTest1 with @moonbitlang/core/json.FromJson::{from_json}\n"
 "\n"
@@ -376,10 +379,11 @@ msgid ""
 "\n"
 "pub extend JsonTest1 with Eq::{not_equal, equal}\n"
 "\n"
+"#derive(FromJson(style=\"legacy\"), ToJson(style=\"legacy\"), Eq)\n"
 "enum JsonTest2 {\n"
 "  A(x~ : Int32)\n"
 "  B(x~ : Int32, y~ : Int32)\n"
-"} derive(FromJson(style=\"legacy\"), ToJson(style=\"legacy\"), Eq)\n"
+"}\n"
 "\n"
 "pub extend JsonTest2 with @moonbitlang/core/json.FromJson::{from_json}\n"
 "\n"
@@ -426,16 +430,14 @@ msgstr ""
 "我们最近弃用了大量高级布局调整参数。对于这种用法和将来对它们的使用，请手动实现这些特征。这些参数包括：`repr`、`case_repr`、`default`、`rename_all`"
 " 等。"
 
-#: ../../language/derive.md:150
+#: ../../language/derive.md:155
 msgid ""
+"#derive(FromJson(fields(x(rename=\"renamedX\"))), "
+"ToJson(fields(x(rename=\"renamedX\"))), Eq)\n"
 "struct JsonTest3 {\n"
 "  x : Int32\n"
 "  y : Int32\n"
-"} derive (\n"
-"  FromJson(fields(x(rename=\"renamedX\"))),\n"
-"  ToJson(fields(x(rename=\"renamedX\"))),\n"
-"  Eq,\n"
-")\n"
+"}\n"
 "\n"
 "pub extend JsonTest3 with @moonbitlang/core/json.FromJson::{from_json}\n"
 "\n"
@@ -443,10 +445,11 @@ msgid ""
 "\n"
 "pub extend JsonTest3 with Eq::{not_equal, equal}\n"
 "\n"
+"#derive(FromJson, ToJson, Eq)\n"
 "enum JsonTest4 {\n"
 "  A(x~ : Int32)\n"
 "  B(x~ : Int32, y~ : Int32)\n"
-"} derive(FromJson, ToJson, Eq)\n"
+"}\n"
 "\n"
 "pub extend JsonTest4 with @moonbitlang/core/json.FromJson::{from_json}\n"
 "\n"
@@ -486,9 +489,9 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:170
-msgid "With `derive(ToJson(style=\"legacy\"))`, the enum is formatted into:"
-msgstr "使用 `derive(ToJson(style=\"legacy\"))`，枚举格式化为："
+#: ../../language/derive.md:175
+msgid "With `#derive(ToJson(style=\"legacy\"))`, the enum is formatted into:"
+msgstr "使用 `#derive(ToJson(style=\"legacy\"))`，枚举格式化为："
 
 #: ../../language/derive.md:172
 msgid ""
@@ -497,9 +500,9 @@ msgid ""
 "E::Axes(x=-1, y=1)  => { \"$tag\": \"Axes\", \"x\": -1, \"y\": 1 }\n"
 msgstr ""
 
-#: ../../language/derive.md:178
-msgid "With `derive(ToJson(style=\"flat\"))`, the enum is formatted into:"
-msgstr "使用 `derive(ToJson(style=\"flat\"))`，枚举格式化为："
+#: ../../language/derive.md:183
+msgid "With `#derive(ToJson(style=\"flat\"))`, the enum is formatted into:"
+msgstr "使用 `#derive(ToJson(style=\"flat\"))`，枚举格式化为："
 
 #: ../../language/derive.md:180
 msgid ""
@@ -528,13 +531,14 @@ msgid ""
 "of a struct, and `[T] | null` otherwise:"
 msgstr "因此，当且仅当它是结构体的直接字段时，它被解释为 `T | undefined`，否则解释为 `[T] | null`："
 
-#: ../../language/derive.md:195
+#: ../../language/derive.md:200
 msgid ""
+"#derive(ToJson)\n"
 "struct A {\n"
 "  x : Int32?\n"
 "  y : Int32??\n"
 "  z : (Int32?, Int32??)\n"
-"} derive(ToJson)\n"
+"}\n"
 "\n"
 "pub extend A with ToJson::{to_json}\n"
 "\n"

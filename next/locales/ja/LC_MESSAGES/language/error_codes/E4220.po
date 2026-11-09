@@ -32,15 +32,13 @@ msgstr "字句ケースで、そのマッチモードでは利用できない束
 
 #: ../../language/error_codes/E4220.md:7
 msgid ""
-"For `String` and `StringView` inputs, first-match `lexmatch` supports "
-"both `before=` and `after=`. Longest-match mode starts at the beginning "
-"of the input, so it supports `after=` but not `before=`. `lexscan` does "
-"not support either binding: streaming targets consume their input "
-"buffers, while an in-memory `@lexbuf.StringScanner` stores the next scan "
-"position in its `cursor` field."
-msgstr ""
-"`String` と `StringView` の入力では、先頭一致の `lexmatch` は `before=` と `after=` の両方をサポートします。最長一致モードは入力の先頭から始まるため、`after=` はサポートしますが `before=` はサポートしません。"
-"`lexscan` はどちらの束縛もサポートしません。ストリーミング対象は入力バッファを消費し、メモリ内の `@lexbuf.StringScanner` は次のスキャン位置を `cursor` フィールドに保存します。"
+"For text and byte inputs, first-match `lexmatch` supports both `before=` "
+"and `after=`. Longest-match mode starts at the beginning of the input, so"
+" it supports `after=` but not `before=`. `lexscan` does not support "
+"either binding: streaming targets consume their input buffers, while an "
+"in-memory `@lexbuf.StringScanner` stores the next scan position in its "
+"`cursor` field."
+msgstr "テキストとバイト入力では、first-match の `lexmatch` は `before=` と `after=` の両方をサポートします。longest-match は入力の先頭から開始するため、`after=` のみをサポートします。`lexscan` はどちらもサポートしません。ストリーミング対象は入力バッファを消費し、メモリ内の `@lexbuf.StringScanner` は次の走査位置を `cursor` フィールドに保持します。"
 
 #: ../../language/error_codes/E4220.md:13
 msgid "Erroneous example"

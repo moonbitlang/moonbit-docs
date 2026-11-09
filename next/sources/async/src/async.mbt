@@ -36,9 +36,10 @@ async fn use_value() -> Int32 {
 
 ///|
 // start struct constructor async 1
+#derive(Debug)
 struct AsyncBox {
   value : Int32
-} derive(Debug)
+}
 
 ///|
 pub extend AsyncBox with Debug::{to_repr}

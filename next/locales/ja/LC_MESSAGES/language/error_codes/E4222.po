@@ -32,16 +32,14 @@ msgstr "字句マッチの対象が不正です。"
 
 #: ../../language/error_codes/E4222.md:7
 msgid ""
-"`lexmatch` accepts an in-memory `String` or `StringView`. `lexscan` "
-"accepts an in-memory `@lexbuf.StringScanner`, a synchronous "
-"`@lexbuf.Lexbuf`, or an asynchronous `@lexbuf.AsyncLexbuf`. A `String` or"
-" `StringView` value is not a valid `lexscan` target; use `lexmatch` for "
-"one in-memory match, or construct a `StringScanner` to maintain a cursor "
-"between scans. Other values, such as numbers or user-defined lexbuf-like "
-"types, cannot be matched by these expressions."
-msgstr ""
-"`lexmatch` はメモリ内の `String` または `StringView` を受け付けます。`lexscan` はメモリ内の `@lexbuf.StringScanner`、同期ストリーミングの `@lexbuf.Lexbuf`、または非同期ストリーミングの `@lexbuf.AsyncLexbuf` を受け付けます。"
-"`String` または `StringView` の値は有効な `lexscan` 対象ではありません。メモリ内で 1 回だけ照合する場合は `lexmatch` を使い、複数回のスキャンでカーソルを維持する場合は `StringScanner` を作成してください。数値やユーザー定義の字句バッファ類似型など、その他の値はこれらの式では照合できません。"
+"`lexmatch` accepts an in-memory `String`, `StringView`, `Bytes`, or "
+"`BytesView`. `lexscan` accepts an in-memory `@lexbuf.StringScanner`, a "
+"synchronous `@lexbuf.Lexbuf`, or an asynchronous `@lexbuf.AsyncLexbuf`. A"
+" `String` or `StringView` value is not a valid `lexscan` target; use "
+"`lexmatch` for one in-memory match, or construct a `StringScanner` to "
+"maintain a cursor between scans. Other values, such as numbers or user-"
+"defined lexbuf-like types, cannot be matched by these expressions."
+msgstr "`lexmatch` はメモリ内の `String`、`StringView`、`Bytes`、`BytesView` を受け取ります。`lexscan` はメモリ内の `@lexbuf.StringScanner`、同期の `@lexbuf.Lexbuf`、非同期の `@lexbuf.AsyncLexbuf` を受け取ります。`String` や `StringView` は `lexscan` の対象にできません。一度のメモリ内マッチには `lexmatch`、走査間でカーソルを維持するには `StringScanner` を使います。数値やユーザー定義の lexbuf に似た型などは対象にできません。"
 
 #: ../../language/error_codes/E4222.md:15
 msgid "Erroneous example"
@@ -61,11 +59,11 @@ msgstr ""
 msgid "Suggestion"
 msgstr "提案"
 
-#: ../../language/error_codes/E4222.md:23
+#: ../../language/error_codes/E4222.md:24
 msgid ""
-"Use `lexmatch` with a string-like value, or create a `StringScanner`, "
-"`Lexbuf`, or `AsyncLexbuf` for `lexscan`."
-msgstr "文字列相当の値には `lexmatch` を使うか、`lexscan` 用に `StringScanner`、`Lexbuf`、または `AsyncLexbuf` を作成してください。"
+"Use `lexmatch` with text or bytes, or create a `StringScanner`, `Lexbuf`,"
+" or `AsyncLexbuf` for `lexscan`."
+msgstr "テキストやバイトには `lexmatch` を使い、`lexscan` には `StringScanner`、`Lexbuf`、`AsyncLexbuf` を作成してください。"
 
 #: ../../language/error_codes/E4222.md:26
 msgid ""

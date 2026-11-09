@@ -22,7 +22,7 @@ first be declared in `moon.mod` with an
 The dependency between packages should then be declared in the package file (`moon.pkg`) by the [`import`](/toolchain/moon/package.md#import) field.
 Most core packages follow the same rule: if you use `@json`, `@test`, or other
 ordinary core aliases, add the corresponding `moonbitlang/core/...` package to
-`import` to avoid `core_package_not_imported` warnings.
+`import`. Using an ordinary core package without an explicit import is an error.
 
 (default-alias)=
 The **default alias** of a package is the last part of the identifier split by `/`.

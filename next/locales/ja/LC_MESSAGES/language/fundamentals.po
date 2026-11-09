@@ -241,6 +241,29 @@ msgstr ""
 
 #: ../../language/fundamentals.md:50
 msgid ""
+"Floating-point arithmetic and comparison operators follow IEEE semantics:"
+" `-0.0 == 0.0`, and NaN is unequal to every value, including itself. The "
+"result of `compare` involving NaN is unspecified; avoid NaN keys in hash "
+"tables. For sorting or searching with NaN values, use "
+"`Float::total_compare` or `Double::total_compare`. They place NaN before "
+"negative infinity, followed by finite numbers in numeric order and "
+"positive infinity. Both zeros compare equal."
+msgstr "浮動小数点演算と比較演算子は IEEE の意味論に従います。`-0.0 == 0.0` ですが、NaN は自身を含むすべての値と等しくありません。NaN を含む `compare` の結果は未規定です。ハッシュテーブルのキーに NaN を使用しないでください。NaN を含む値のソートや検索には `Float::total_compare` または `Double::total_compare` を使います。NaN、負の無限大、数値順の有限数、正の無限大の順に並べ、正負のゼロは等しいと比較します。"
+
+#: ../../language/fundamentals.md:57
+msgid ""
+"///|\n"
+"test \"total comparison with NaN\" {\n"
+"  let nan = 0.0 / 0.0\n"
+"  assert_false(nan == nan)\n"
+"  assert_eq(Double::total_compare(nan, -1.0 / 0.0), -1)\n"
+"  assert_eq(Double::total_compare(nan, nan), 0)\n"
+"  assert_eq(Double::total_compare(-0.0, 0.0), 0)\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:50
+msgid ""
 "MoonBit also supports numeric literals, including decimal, binary, octal,"
 " and hexadecimal numbers."
 msgstr "MoonBit は、10 進数、2 進数、8 進数、16 進数を含む数値リテラルもサポートしています。"
@@ -1331,6 +1354,13 @@ msgstr "API 参照：<https://mooncakes.io/docs/moonbitlang/core/builtin#Map>"
 #: ../../language/fundamentals.md:483
 msgid "Json"
 msgstr "Json"
+
+#: ../../language/fundamentals.md:496
+msgid ""
+"`Json` and `ToJson` are defined in `moonbitlang/core/json`. To convert a "
+"value, use `Json(value)` or `ToJson::to_json(value)`; do not assume every"
+" built-in type provides a `.to_json()` method."
+msgstr "`Json` と `ToJson` は `moonbitlang/core/json` で定義されています。値の変換には `Json(value)` または `ToJson::to_json(value)` を使い、すべての組み込み型に `.to_json()` メソッドがあると仮定しないでください。"
 
 #: ../../language/fundamentals.md:485
 msgid ""
@@ -3657,7 +3687,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:1370
+#: ../../language/fundamentals.md:1385
 msgid ""
 "fn main {\n"
 "  let u = User::{ id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
@@ -3668,14 +3698,6 @@ msgid ""
 "  println(u.email)\n"
 "}\n"
 msgstr ""
-"fn main {\n"
-"  let u = User::{ id: 0, name: \"John Doe\", email: \"john@doe.com\" }\n"
-"  u.email = \"john@doe.name\"\n"
-"  //! u.id = 10\n"
-"  println(u.id)\n"
-"  println(u.name)\n"
-"  println(u.email)\n"
-"}\n"
 
 #: ../../language/fundamentals.md:1378
 msgid ""
@@ -3700,15 +3722,12 @@ msgstr ""
 "`name` や `email` のような変数がすでにあるなら、struct "
 "を構築するときにそれらの名前を繰り返すのは冗長です。代わりに省略記法を使えます。振る舞いはまったく同じです："
 
-#: ../../language/fundamentals.md:1386
+#: ../../language/fundamentals.md:1401
 msgid ""
 "let name = \"john\"\n"
 "let email = \"john@doe.com\"\n"
 "let u = User::{ id: 0, name, email }\n"
 msgstr ""
-"let name = \"john\"\n"
-"let email = \"john@doe.com\"\n"
-"let u = User::{ id: 0, name, email }\n"
 
 #: ../../language/fundamentals.md:1393
 msgid ""
@@ -3768,11 +3787,12 @@ msgid ""
 "type. The following examples start with a struct:"
 msgstr ""
 
-#: ../../language/fundamentals.md:1426
+#: ../../language/fundamentals.md:1441
 msgid ""
+"#derive(Debug)\n"
 "struct IntBox {\n"
 "  value : Int32\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "pub extend IntBox with Debug::{to_repr}\n"
 msgstr ""
@@ -3817,12 +3837,13 @@ msgid ""
 "normal functions:"
 msgstr "コンストラクタでも、通常の関数と同じようにラベル付き引数やオプション引数を使えます："
 
-#: ../../language/fundamentals.md:1454
+#: ../../language/fundamentals.md:1469
 msgid ""
+"#derive(Debug)\n"
 "struct StructWithConstr {\n"
 "  x : Int32\n"
 "  y : Int32\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "pub extend StructWithConstr with Debug::{to_repr}\n"
 msgstr ""
@@ -3846,17 +3867,19 @@ msgid ""
 " raise errors:"
 msgstr "struct コンストラクタは通常の関数として実装されるため、エラーを送出することもできます："
 
-#: ../../language/fundamentals.md:1474
+#: ../../language/fundamentals.md:1489
 msgid ""
+"#derive(Debug)\n"
 "suberror BuildError {\n"
 "  NegativeInput\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "pub extend BuildError with Debug::{to_repr}\n"
 "\n"
+"#derive(Debug)\n"
 "struct Positive {\n"
 "  value : Int32\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "pub extend Positive with Debug::{to_repr}\n"
 msgstr ""
@@ -3890,11 +3913,12 @@ msgid ""
 "type:"
 msgstr ""
 
-#: ../../language/fundamentals.md:1495
+#: ../../language/fundamentals.md:1510
 msgid ""
+"#derive(Debug)\n"
 "enum Endpoint {\n"
 "  Host(String, Int32)\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "pub extend Endpoint with Debug::{to_repr}\n"
 "\n"
@@ -3914,11 +3938,12 @@ msgid ""
 " and can be used inside async code:"
 msgstr "非同期コンストラクタは `async fn TypeName::TypeName` として宣言し、非同期コードの中で使えます："
 
-#: ../../language/fundamentals.md:1504
+#: ../../language/fundamentals.md:1519
 msgid ""
+"#derive(Debug)\n"
 "struct AsyncBox {\n"
 "  value : Int32\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "///|\n"
 "pub extend AsyncBox with Debug::{to_repr}\n"
@@ -4275,14 +4300,15 @@ msgid ""
 "accessing struct fields in pattern matching:"
 msgstr "パターンマッチでは、コンストラクタのラベル付き引数にも struct フィールドのようにアクセスできます："
 
-#: ../../language/fundamentals.md:1630
+#: ../../language/fundamentals.md:1645
 msgid ""
 "enum Object {\n"
 "  Point(x~ : Double, y~ : Double)\n"
 "  Circle(x~ : Double, y~ : Double, radius~ : Double)\n"
 "}\n"
 "\n"
-"suberror NotImplementedError derive(Debug)\n"
+"#derive(Debug)\n"
+"suberror NotImplementedError\n"
 "\n"
 "pub extend NotImplementedError with Debug::{to_repr}\n"
 "\n"
@@ -6054,14 +6080,12 @@ msgstr ""
 msgid "Lexmatch"
 msgstr "Lexmatch"
 
-#: ../../language/fundamentals.md:2324
+#: ../../language/fundamentals.md:2339
 msgid ""
-"Use `lexmatch` to match an in-memory `String` or `StringView` against "
-"several regex cases and evaluate the body of the selected case. Its "
-"syntax is:"
-msgstr ""
-"`lexmatch` は、メモリ上の `String` または `StringView` "
-"を複数の正規表現ケースと照合し、選択されたケースの本体を評価します。構文は次のとおりです："
+"Use `lexmatch` to match an in-memory `String`, `StringView`, `Bytes`, or "
+"`BytesView` against several regex cases and evaluate the body of the "
+"selected case. Its syntax is:"
+msgstr "`lexmatch` はメモリ内の `String`、`StringView`、`Bytes`、`BytesView` を複数の正規表現ケースと照合し、選択されたケースの本体を評価します。構文は次のとおりです："
 
 #: ../../language/fundamentals.md:2327
 msgid ""
@@ -6072,14 +6096,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2335
+#: ../../language/fundamentals.md:2350
 msgid ""
 "Each regex case contains a regex constant expression, optionally with "
-"`as`, `before=`, and `after=` bindings. `Bytes`, `BytesView`, and other "
-"input types are not supported."
-msgstr ""
-"各正規表現ケースには正規表現定数式があり、必要に応じて `as`、`before=`、`after=` "
-"による束縛を指定できます。`Bytes`、`BytesView`、その他の入力型はサポートされません。"
+"`as`, `before=`, and `after=` bindings. Use text regexes for text input "
+"and byte regexes for byte input; mixing the two produces "
+"[E4234](error_codes/E4234.md)."
+msgstr "各ケースは正規表現の定数式を含み、`as`、`before=`、`after=` の束縛を指定できます。テキスト入力にはテキスト正規表現、バイト入力にはバイト正規表現を使用します。混在させると [E4234](error_codes/E4234.md) になります。"
 
 #: ../../language/fundamentals.md:2339
 msgid "The strategy controls how overlapping cases are resolved:"
@@ -6182,6 +6205,52 @@ msgstr ""
 "が報告されます。キャッチオールを記述する場合は最後に置く必要があります。どの正規表現ケースにもマッチしない場合、`rest` "
 "のような束縛は入力全体を受け取り、`_` はそれを破棄します。正規表現ケースまたはキャッチオールが決して選択されない場合、コンパイラは "
 "[E0090](error_codes/E0090.md) を報告します。"
+
+#: ../../language/fundamentals.md:2396
+msgid "Byte Regexes"
+msgstr "バイト正規表現"
+
+#: ../../language/fundamentals.md:2398
+msgid ""
+"Use `reb\"...\"` with `=~` or `lexmatch` to match `Bytes` and `BytesView`"
+" without decoding them. A byte regex literal has type `BytesRegex`; like "
+"`Regex`, it can be stored in a constant and combined with `+` or `|`."
+msgstr "`reb\"...\"` を `=~` または `lexmatch` と組み合わせると、デコードせずに `Bytes` と `BytesView` を照合できます。バイト正規表現リテラルの型は `BytesRegex` です。`Regex` と同様に定数に保存し、`+` や `|` で組み合わせられます。"
+
+#: ../../language/fundamentals.md:2402
+msgid ""
+"Captures matching exactly one byte have type `Byte`. Other captures and "
+"the `before` and `after` bindings have type `BytesView`."
+msgstr "ちょうど 1 バイトにマッチするキャプチャは `Byte` 型になります。それ以外のキャプチャと `before`、`after` の束縛は `BytesView` 型です。"
+
+#: ../../language/fundamentals.md:2405
+msgid ""
+"///|\n"
+"test \"byte regex captures\" {\n"
+"  let input : Bytes = b\"\\xff123!\"\n"
+"  lexmatch input {\n"
+"    ((reb\"^.\" as first) + (reb\"[0-9]+\" as digits), after=rest) => {\n"
+"      let byte : Byte = first\n"
+"      let number : BytesView = digits\n"
+"      assert_eq(byte, 0xff)\n"
+"      assert_eq(number, b\"123\"[:])\n"
+"      assert_eq(rest, b\"!\"[:])\n"
+"    }\n"
+"    _ => fail(\"expected a byte followed by digits\")\n"
+"  }\n"
+"  assert_true(input =~ reb\"^\\xff\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:2409
+msgid ""
+"Only ASCII characters may appear directly in byte regex literals. Use "
+"`\\xHH` for other bytes, including in character classes and ranges; "
+"`\\u{...}` is not supported. `.` and negated classes match any single "
+"byte, even above `0x7f`. Case-insensitive matching, word boundaries, and "
+"`[[:word:]]` use ASCII semantics. `lexscan` does not support byte "
+"regexes."
+msgstr "バイト正規表現リテラルに直接書けるのは ASCII 文字だけです。その他のバイトには、文字クラスや範囲内も含めて `\\xHH` を使います。`\\u{...}` は使えません。`.` と否定文字クラスは `0x7f` より大きい値も含む任意の 1 バイトにマッチします。大文字小文字を無視するマッチ、単語境界、`[[:word:]]` は ASCII の意味論を使用します。`lexscan` はバイト正規表現をサポートしません。"
 
 #: ../../language/fundamentals.md:2381
 msgid "Lexscan"

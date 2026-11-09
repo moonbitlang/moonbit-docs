@@ -1,9 +1,10 @@
 // start derive shrink struct
 ///|
+#derive(Shrink)
 struct ShrinkPoint {
   x : Int32
   y : Int32
-} derive(Shrink)
+}
 
 ///|
 pub extend ShrinkPoint with @shrink.Shrink::{shrink}

@@ -1,4 +1,5 @@
 ///|
+#derive(Eq, Debug)
 enum Token {
   DefFn
   Let
@@ -11,7 +12,7 @@ enum Token {
   Id(String)
   Number(Int32)
   EOF
-} derive(Eq, Debug)
+}
 
 ///|
 pub extend Token with Eq::{not_equal, equal}
@@ -60,10 +61,11 @@ fn isClose(this : Char) -> Bool {
 }
 
 ///|
+#derive(Debug)
 struct Tokens {
   tokens : Array[Token]
   mut current : Int32
-} derive(Debug)
+}
 
 ///|
 pub extend Tokens with @moonbitlang/core/debug.Debug::{to_repr}

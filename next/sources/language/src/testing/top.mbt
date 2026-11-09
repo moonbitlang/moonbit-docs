@@ -13,9 +13,10 @@ test "panic_test" {
 // end test 2
 
 /// start snapshot test 1
+#derive(Debug)
 struct X {
   x : Int32
-} derive(Debug)
+}
 
 pub extend X with Debug::{to_repr}
 
@@ -25,10 +26,11 @@ test "show snapshot test" {
 // end snapshot test 1
 
 /// start snapshot test 2
+#derive(Debug, ToJson)
 enum Rec {
   End
   Really_long_name_that_is_difficult_to_read(Rec)
-} derive(Debug, ToJson)
+}
 
 pub extend Rec with Debug::{to_repr}
 

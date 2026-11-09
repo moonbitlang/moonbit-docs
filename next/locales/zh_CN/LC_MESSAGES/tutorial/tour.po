@@ -343,100 +343,33 @@ msgstr ""
 
 #: ../../tutorial/tour.md:170
 msgid ""
-"We will get an error message, reminding us that `Show` and `Eq` are not "
-"implemented for `ExamResult`."
-msgstr "我们会收到报错信息，提醒我们 `ExamResult` 没有实现 `Show` 和 `Eq`。"
+"`assert_eq` requires the compared type to implement `Eq` and `Debug`. "
+"`Eq` supplies equality comparison, while `Debug` supplies a "
+"representation for failure messages. These are **traits**: interfaces "
+"describing operations that a type supports."
+msgstr "`assert_eq` 要求被比较的类型实现 `Eq` 和 `Debug`。`Eq` 提供相等比较，`Debug` 提供失败信息中的值表示。它们都是**特征**，即描述类型支持哪些操作的接口。"
 
-#: ../../tutorial/tour.md:172
+#: ../../tutorial/tour.md:175
 msgid ""
-"`Show` and `Eq` are **traits**. A trait in MoonBit defines some common "
-"operations that a type should be able to perform."
-msgstr "`Show` 和 `Eq` 是 **traits**。在 MoonBit 中，trait 定义了一个类型应该能够执行的一些常见操作。"
+"For this enum, derive both implementations by placing `#derive(Eq, "
+"Debug)` before the type definition:"
+msgstr "对于这个枚举，在类型定义前添加 `#derive(Eq, Debug)` 即可派生这两种实现："
 
-#: ../../tutorial/tour.md:174
+#: ../../tutorial/tour.md:178
 msgid ""
-"For example, `Eq` defines that there should be a way to compare two "
-"values of the same type with a function called `op_equal`:"
-msgstr "例如，`Eq` 定义了应该有一种方法来比较两个相同类型的值，这个方法叫做 `op_equal`："
-
-#: ../../tutorial/tour.md:176
-msgid ""
-"trait Eq {\n"
-"  op_equal(Self, Self) -> Bool\n"
-"}"
-msgstr ""
-
-#: ../../tutorial/tour.md:183
-msgid ""
-"and `Show` defines that there should be a way to either convert a value "
-"of a type into `String` or write it using a `Logger`:"
-msgstr "`Show` 定义了应该有一种方法，要么将一个类型的值转换为 `String`，要么使用 `Logger` 写入："
-
-#: ../../tutorial/tour.md:185
-msgid ""
-"trait Show {\n"
-"  output(Self, &Logger) -> Unit\n"
-"  to_string(Self) -> String\n"
-"}"
-msgstr ""
-
-#: ../../tutorial/tour.md:193
-msgid ""
-"And the `assert_eq` uses them to constraint the passed parameters so that"
-" it can compare the two values and print them when they are not equal:"
-msgstr "`assert_eq` 使用它们来约束传递的参数，以便比较两个值并在它们不相等时打印它们："
-
-#: ../../tutorial/tour.md:195
-msgid ""
-"fn[A : Eq + Show] assert_eq!(value : A, other : A) -> Unit {\n"
-"  ...\n"
-"}"
-msgstr ""
-
-#: ../../tutorial/tour.md:202
-msgid ""
-"We need to implement `Eq` and `Show` for our `ExamResult`. There are two "
-"ways to do so."
-msgstr "我们需要为我们的 `ExamResult` 实现 `Eq` 和 `Show`。有两种方法可以实现。"
-
-#: ../../tutorial/tour.md:204
-msgid "By defining an explicit implementation:"
-msgstr "通过定义一个显式实现："
-
-#: ../../tutorial/tour.md:206
-msgid ""
-"impl Eq for ExamResult with equal(self, other) {\n"
-"  match (self, other) {\n"
-"    (Pass, Pass) | (Fail, Fail) => true\n"
-"    _ => false\n"
-"  }\n"
-"}"
-msgstr ""
-
-#: ../../tutorial/tour.md:216
-msgid ""
-"Here we use [pattern matching](/language/fundamentals.md#pattern-"
-"matching) to check the cases of the `ExamResult`."
-msgstr ""
-"在这里，我们使用 [模式匹配](/language/fundamentals.md#pattern-matching) 来检查 "
-"`ExamResult` 的情况。"
-
-#: ../../tutorial/tour.md:218
-msgid ""
-"An alternative way is by [deriving](/language/derive.md) since `Eq` and "
-"`Show` are [builtin traits](/language/methods.md#builtin-traits) and the "
-"output for `ExamResult` is quite straightforward:"
-msgstr ""
-"另一种方法是通过 [派生](/language/derive.md) ，因为 `Eq` 和 `Show` 是 [内置 "
-"traits](/language/methods.md#builtin-traits) 并且 `ExamResult` 的输出非常直接："
-
-#: ../../tutorial/tour.md:220
-msgid ""
+"#derive(Eq, Debug)\n"
 "enum ExamResult {\n"
 "  Pass\n"
 "  Fail\n"
-"} derive(Show)"
+"}\n"
 msgstr ""
+
+#: ../../tutorial/tour.md:184
+msgid ""
+"For custom behavior, write an explicit [trait "
+"implementation](/language/methods.md#implementing-traits) instead of "
+"deriving it."
+msgstr "如需自定义行为，请编写显式的[特征实现](/language/methods.md#implementing-traits)，而不是使用派生。"
 
 #: ../../tutorial/tour.md:228
 msgid ""

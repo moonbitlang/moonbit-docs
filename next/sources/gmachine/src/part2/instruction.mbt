@@ -1,5 +1,6 @@
 // start instr definition
 
+#derive(Eq, Debug)
 enum Instruction {
   Unwind
   PushGlobal(String)
@@ -23,7 +24,7 @@ enum Instruction {
   Gt // >
   Ge // >=
   Cond(List[Instruction], List[Instruction])
-} derive(Eq, Debug)
+}
 
 pub extend Instruction with Eq::{not_equal, equal}
 
