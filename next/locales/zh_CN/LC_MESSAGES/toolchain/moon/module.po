@@ -107,6 +107,14 @@ msgid ""
 msgstr "对于发布到 [mooncakes.io](https://mooncakes.io) 的模块，模块名称必须以用户名开头。"
 
 #: ../../toolchain/moon/module.md:57
+msgid ""
+"A major-version module path can end in `/vN`, as in `owner/library/v2`. "
+"The root package's default alias is still `@library`; use explicit "
+"aliases when importing multiple major versions. Publishing version "
+"`1.0.0` or later is not supported before MoonBit 1.0."
+msgstr "主版本模块路径可以以 `/vN` 结尾，例如 `owner/library/v2`。根包默认别名仍为 `@library`；同时导入多个主版本时请使用显式别名。MoonBit 1.0 之前不支持发布 1.0.0 或更高版本。"
+
+#: ../../toolchain/moon/module.md:57
 msgid "Version"
 msgstr "版本"
 
@@ -138,6 +146,10 @@ msgstr ""
 #: ../../toolchain/moon/module.md:78
 msgid "Dependency Management"
 msgstr "依赖管理"
+
+#: ../../toolchain/moon/module.md:85
+msgid "A dependency's declared version must exist in the registry."
+msgstr "依赖声明的版本必须在注册表中存在。"
 
 #: ../../toolchain/moon/module.md:80
 msgid ""
@@ -729,7 +741,7 @@ msgstr ""
 "你可以使用 `moonc check -warn-help` 查看预设编译器警告编号列表。在下面的输出中，`mnemonic` "
 "是警告列表中使用的符号名称，`id` 是同一警告的数字形式。"
 
-#: ../../toolchain/moon/module.md:523
+#: ../../toolchain/moon/module.md:530
 msgid ""
 "$ moonc check -warn-help\n"
 "Available warnings:\n"
@@ -876,7 +888,7 @@ msgid ""
 "unnecessary_view_op        Unnecessary `[:]` view operator"
 "                                 75 off\n"
 "result_error_return        Using `Result[T, E]` where `E` is an error "
-"type.                78 off\n"
+"type.                78 warn\n"
 "implicit_impl_as_method    `impl` implicitly promoted as method"
 "                            79 warn\n"
 "regex_match_missing_before Missing `before` binding in `regex match`."
@@ -912,6 +924,12 @@ msgid ""
 "intrinsic.              94 warn\n"
 "nan_pattern                Pattern on a NaN constant, which never "
 "matches.                 95 warn\n"
+"unfenced_import            Deprecated import declarations outside "
+"frontmatter.             96 warn\n"
+"regex_runtime_fallback     Regex match over the compile limits, which "
+"runs on the runtime engine.  97 off\n"
+"cancellable_defer          Fragile cancellable async code inside "
+"`defer`/`errdefer`        98 warn\n"
 "all                        all warnings\n"
 "state: warn = enabled, error = promoted to error, off = disabled\n"
 "note: default alert exceptions: alert_unsafe=off\n"

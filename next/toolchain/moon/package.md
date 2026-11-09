@@ -64,6 +64,27 @@ array ::= "[" (expr ",")* expr? "]"
 object ::= "{" (field ",")* field? "}"
 ```
 
+## Conditional Imports
+
+Use `#cfg` on an import block to select dependencies for a backend. Different
+dependencies can share an alias when their conditions do not overlap:
+
+```moonbit
+#cfg(target = "native")
+import { "example/app/native_impl" @platform }
+
+#cfg(target = "js")
+import { "example/app/js_impl" @platform }
+```
+
+The same syntax applies to imports marked `for "test"` or `for "wbtest"`.
+
+## Experimental Packages
+
+Set `experimental = true` in a package's `moon.pkg` to warn direct consumers
+that its API is experimental. Consumers can opt in with
+`options("allow-experimental-packages": true)`.
+
 ## Name
 
 The package name is not configurable; it is determined by the directory name of the package.
@@ -140,9 +161,10 @@ downstream package's artifact. Define and export a wrapper in the exporting
 package to expose dependency functionality.
 
 ```{note}
-The native backend does not currently support exporting a `foreign_library`
-package as a linkable library artifact, including shared libraries such as a
-`.dll` or `.so`.
+The native backend produces a static archive (`.a`, or `.lib` on Windows),
+not a shared library such as a `.dll` or `.so`. See
+[Native Static Libraries](/language/ffi.md#native-static-libraries) for host
+initialization and linking.
 ```
 
 (is-main)=
@@ -1182,7 +1204,7 @@ unqualified_local_using    unqualified local using                              
 unnecessary_annotation     unnecessary type annotation                                     73 off
 missing_doc                Missing documentation for public definition                     74 off
 unnecessary_view_op        Unnecessary `[:]` view operator                                 75 off
-result_error_return        Using `Result[T, E]` where `E` is an error type.                78 off
+result_error_return        Using `Result[T, E]` where `E` is an error type.                78 warn
 implicit_impl_as_method    `impl` implicitly promoted as method                            79 warn
 regex_match_missing_before Missing `before` binding in `regex match`.                      80 warn
 regex_match_missing_after  Missing `after` binding in `regex match`.                       81 warn
@@ -1200,6 +1222,9 @@ fragile_catch_all          fragile `catch` handler that can be converted to `def
 unknown_constr_pat_on_exhaustive_type using `TypeName::..` pattern on a type not marked with `#non_exhaustive`  93 warn
 unknown_intrinsic          `#intrinsic` attribute names an unknown intrinsic.              94 warn
 nan_pattern                Pattern on a NaN constant, which never matches.                 95 warn
+unfenced_import            Deprecated import declarations outside frontmatter.             96 warn
+regex_runtime_fallback     Regex match over the compile limits, which runs on the runtime engine.  97 off
+cancellable_defer          Fragile cancellable async code inside `defer`/`errdefer`        98 warn
 all                        all warnings
 state: warn = enabled, error = promoted to error, off = disabled
 note: default alert exceptions: alert_unsafe=off

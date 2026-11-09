@@ -8,6 +8,14 @@ The API of `moonbitlang/async` is not considered stable, and may change in the f
 
 <!-- We highly appreciate any feedback or experiment with current design. -->
 
+The standard library also provides experimental async packages under
+`moonbitlang/core/async`, such as `moonbitlang/core/async/http`. Their APIs are
+still evolving, so the examples here continue to use `moonbitlang/async`.
+To opt into experimental packages, add
+`options("allow-experimental-packages": true)` to `moon.pkg`.
+The core runtime can coexist with `moonbitlang/async` version `0.22.7` or later
+during migration.
+
 ## Getting started
 To use `moonbitlang/async` for asynchronous programming,
 you should first run `moon add moonbitlang/async@0.20.2` in your project

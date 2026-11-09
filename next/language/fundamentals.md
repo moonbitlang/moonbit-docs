@@ -47,6 +47,17 @@ MoonBit have integer type and floating point type:
 `Int` and `UInt` remain accepted as aliases of `Int32` and `UInt32`.
 The formatter uses the explicit-width names `Int32` and `UInt32`.
 
+Floating-point arithmetic and comparison operators follow IEEE semantics:
+`-0.0 == 0.0`, and NaN is unequal to every value, including itself. The result
+of `compare` involving NaN is unspecified; avoid NaN keys in hash tables.
+For sorting or searching with NaN values, use `Float::total_compare` or
+`Double::total_compare`. They place NaN before negative infinity, followed by
+finite numbers in numeric order and positive infinity. Both zeros compare equal.
+
+```{literalinclude} /sources/language/src/builtin/float_compare_test.mbt
+:language: moonbit
+```
+
 MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
 To improve readability, you may place underscores in the middle of numeric literals such as `1_000_000`. Note that underscores can be placed anywhere within a number, not just every three digits.
@@ -480,7 +491,11 @@ API: <https://mooncakes.io/docs/moonbitlang/core/builtin#Map>
 [Overloaded Literals](#overloaded-literals)
 ```
 
-### Json 
+### Json
+
+`Json` and `ToJson` are defined in `moonbitlang/core/json`. To convert a value,
+use `Json(value)` or `ToJson::to_json(value)`; do not assume every built-in type
+provides a `.to_json()` method.
 
 MoonBit supports convenient json handling by overloading literals.
 When the expected type of an expression is `Json`, number, string, array and map literals can be directly used to create json data:
@@ -2321,7 +2336,7 @@ matches exactly one character.
 
 ### Lexmatch
 
-Use `lexmatch` to match an in-memory `String` or `StringView` against several
+Use `lexmatch` to match an in-memory `String`, `StringView`, `Bytes`, or `BytesView` against several
 regex cases and evaluate the body of the selected case. Its syntax is:
 
 ```moonbit
@@ -2333,8 +2348,8 @@ lexmatch input [with first|longest] {
 ```
 
 Each regex case contains a regex constant expression, optionally with `as`,
-`before=`, and `after=` bindings. `Bytes`, `BytesView`, and other input types
-are not supported.
+`before=`, and `after=` bindings. Use text regexes for text input and byte
+regexes for byte input; mixing the two produces [E4234](error_codes/E4234.md).
 
 The strategy controls how overlapping cases are resolved:
 
@@ -2377,6 +2392,25 @@ A present catch-all must be last; a binder such as `rest` receives the entire
 input when no regex case matches, while `_` discards it. The compiler reports
 [E0090](error_codes/E0090.md) when a regex case or catch-all can never be
 selected.
+
+### Byte Regexes
+
+Use `reb"..."` with `=~` or `lexmatch` to match `Bytes` and `BytesView`
+without decoding them. A byte regex literal has type `BytesRegex`; like
+`Regex`, it can be stored in a constant and combined with `+` or `|`.
+
+Captures matching exactly one byte have type `Byte`. Other captures and the
+`before` and `after` bindings have type `BytesView`.
+
+```{literalinclude} /sources/language/src/lexscan/bytes_test.mbt
+:language: moonbit
+```
+
+Only ASCII characters may appear directly in byte regex literals. Use `\xHH`
+for other bytes, including in character classes and ranges; `\u{...}` is not
+supported. `.` and negated classes match any single byte, even above `0x7f`.
+Case-insensitive matching, word boundaries, and `[[:word:]]` use ASCII semantics.
+`lexscan` does not support byte regexes.
 
 ### Lexscan
 

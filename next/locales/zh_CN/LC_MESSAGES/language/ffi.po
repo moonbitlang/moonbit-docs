@@ -548,12 +548,82 @@ msgid ""
 "output."
 msgstr "对于新的导出，优先使用 `#export_name`。它将导出名称放在函数旁，并适用于所有支持外部库输出的后端。"
 
-#: ../../language/ffi.md:408
+#: ../../language/ffi.md:407
+msgid "Native Static Libraries"
+msgstr "Native 静态库"
+
+#: ../../language/ffi.md:409
 msgid ""
-"The native backend does not currently support exporting a "
-"`foreign_library` package as a linkable library artifact, including "
-"shared libraries such as a `.dll` or `.so`."
-msgstr "native 后端目前不支持将 `foreign_library` 包导出为可链接的库产物，包括 `.dll` 或 `.so` 等共享库。"
+"The native backend builds a `foreign_library` package as a static "
+"archive: `.a`, or `.lib` on Windows. It does not produce a shared library"
+" such as a `.dll` or `.so`."
+msgstr "native 后端将 `foreign_library` 包构建为静态归档：`.a`，或 Windows 上的 `.lib`。它不生成 `.dll` 或 `.so` 等共享库。"
+
+#: ../../language/ffi.md:413
+msgid ""
+"pkgtype(kind: \"foreign_library\")\n"
+"supported_targets = \"native\"\n"
+msgstr ""
+
+#: ../../language/ffi.md:417
+msgid ""
+"///|\n"
+"let offset : Int32 = 2\n"
+"\n"
+"///|\n"
+"#export_name(\"add\")\n"
+"pub fn add(a : Int32, b : Int32) -> Int32 {\n"
+"  a + b + offset\n"
+"}\n"
+msgstr ""
+
+#: ../../language/ffi.md:421
+msgid ""
+"Run `moon build --target native --release` and use the archive path "
+"printed in the artifact list. Before calling exported functions, the host"
+" must call `moonbit_init()` to initialize the runtime and top-level "
+"values:"
+msgstr "运行 `moon build --target native --release`，并使用产物列表中输出的归档路径。调用导出函数之前，宿主必须先调用 `moonbit_init()`，初始化运行时和顶层值："
+
+#: ../../language/ffi.md:425
+#, python-format
+msgid ""
+"#include \"moonbit.h\"\n"
+"#include <stdio.h>\n"
+"\n"
+"extern int32_t add(int32_t a, int32_t b);\n"
+"\n"
+"int main(void) {\n"
+"  moonbit_init();\n"
+"  printf(\"%d\\n\", add(40, 2));\n"
+"  return 0;\n"
+"}\n"
+msgstr ""
+
+#: ../../language/ffi.md:429
+msgid ""
+"On Unix-like systems, compile the host with the toolchain's include "
+"directory and generated archive, for example:"
+msgstr "在类 Unix 系统上，使用工具链的头文件目录和生成的归档编译宿主程序，例如："
+
+#: ../../language/ffi.md:432
+msgid ""
+"cc -I \"$MOON_HOME/include\" host.c path/to/lib.a -lm -o host\n"
+"./host\n"
+"# 44\n"
+msgstr ""
+
+#: ../../language/ffi.md:438
+msgid ""
+"Here `MOON_HOME` is the MoonBit installation directory. On Windows, use "
+"MSVC or clang-cl with the generated `.lib` and the corresponding include "
+"directory. Debug archives may require additional backtrace-library "
+"dependencies; the command above uses a release archive."
+msgstr "这里 `MOON_HOME` 是 MoonBit 安装目录。在 Windows 上，使用 MSVC 或 clang-cl，并指定生成的 `.lib` 和对应头文件目录。Debug 归档可能需要额外链接回溯库；上述命令使用 release 归档。"
+
+#: ../../language/ffi.md:443
+msgid "Backend-specific Exports"
+msgstr "后端专用导出配置"
 
 #: ../../language/ffi.md:413
 msgid ""

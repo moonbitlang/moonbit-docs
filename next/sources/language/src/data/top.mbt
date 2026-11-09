@@ -47,9 +47,10 @@ test "struct 4" (t : @test.Test) {
 }
 
 // start struct constructor 1
+#derive(Debug)
 struct IntBox {
   value : Int32
-} derive(Debug)
+}
 
 pub extend IntBox with Debug::{to_repr}
 // end struct constructor 1
@@ -68,10 +69,11 @@ test "struct constructor positional" {
 }
 
 // start struct constructor 4
+#derive(Debug)
 struct StructWithConstr {
   x : Int32
   y : Int32
-} derive(Debug)
+}
 
 pub extend StructWithConstr with Debug::{to_repr}
 // end struct constructor 4
@@ -90,15 +92,17 @@ test "struct constructor optional" {
 }
 
 // start struct constructor 7
+#derive(Debug)
 suberror BuildError {
   NegativeInput
-} derive(Debug)
+}
 
 pub extend BuildError with Debug::{to_repr}
 
+#derive(Debug)
 struct Positive {
   value : Int32
-} derive(Debug)
+}
 
 pub extend Positive with Debug::{to_repr}
 // end struct constructor 7
@@ -126,9 +130,10 @@ test "struct constructor raise" {
 }
 
 // start custom constructor enum
+#derive(Debug)
 enum Endpoint {
   Host(String, Int32)
-} derive(Debug)
+}
 
 pub extend Endpoint with Debug::{to_repr}
 
@@ -279,7 +284,8 @@ enum Object {
   Circle(x~ : Double, y~ : Double, radius~ : Double)
 }
 
-suberror NotImplementedError derive(Debug)
+#derive(Debug)
+suberror NotImplementedError
 
 pub extend NotImplementedError with Debug::{to_repr}
 

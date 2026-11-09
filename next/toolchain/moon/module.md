@@ -54,6 +54,11 @@ The module name can contain letters, numbers, `_`, `-`, and `/`.
 
 For modules published to [mooncakes.io](https://mooncakes.io), the module name must begin with the username. 
 
+A major-version module path can end in `/vN`, as in `owner/library/v2`.
+The root package's default alias is still `@library`; use explicit aliases
+when importing multiple major versions. Publishing version `1.0.0` or later
+is not supported before MoonBit 1.0.
+
 ## Version
 
 The `version` field is used to specify the version of the module.
@@ -76,6 +81,8 @@ version = "0.1.0"
 `````````
 
 ## Dependency Management
+
+A dependency's declared version must exist in the registry.
 
 Module dependencies are declared with `import` in `moon.mod`. The legacy
 `moon.mod.json` format represents the same information in its `deps` field.
@@ -594,7 +601,7 @@ unqualified_local_using    unqualified local using                              
 unnecessary_annotation     unnecessary type annotation                                     73 off
 missing_doc                Missing documentation for public definition                     74 off
 unnecessary_view_op        Unnecessary `[:]` view operator                                 75 off
-result_error_return        Using `Result[T, E]` where `E` is an error type.                78 off
+result_error_return        Using `Result[T, E]` where `E` is an error type.                78 warn
 implicit_impl_as_method    `impl` implicitly promoted as method                            79 warn
 regex_match_missing_before Missing `before` binding in `regex match`.                      80 warn
 regex_match_missing_after  Missing `after` binding in `regex match`.                       81 warn
@@ -612,6 +619,9 @@ fragile_catch_all          fragile `catch` handler that can be converted to `def
 unknown_constr_pat_on_exhaustive_type using `TypeName::..` pattern on a type not marked with `#non_exhaustive`  93 warn
 unknown_intrinsic          `#intrinsic` attribute names an unknown intrinsic.              94 warn
 nan_pattern                Pattern on a NaN constant, which never matches.                 95 warn
+unfenced_import            Deprecated import declarations outside frontmatter.             96 warn
+regex_runtime_fallback     Regex match over the compile limits, which runs on the runtime engine.  97 off
+cancellable_defer          Fragile cancellable async code inside `defer`/`errdefer`        98 warn
 all                        all warnings
 state: warn = enabled, error = promoted to error, off = disabled
 note: default alert exceptions: alert_unsafe=off

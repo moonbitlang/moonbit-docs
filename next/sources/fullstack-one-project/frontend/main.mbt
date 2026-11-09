@@ -13,11 +13,12 @@ fn local_warning(title : String) -> String? {
 }
 
 ///|
+#derive(Eq)
 struct Model {
   title : String
   warning : String?
   server_message : String?
-} derive(Eq)
+}
 
 ///|
 enum Msg {

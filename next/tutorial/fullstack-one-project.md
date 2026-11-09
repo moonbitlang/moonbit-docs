@@ -55,7 +55,7 @@ Module config:
 
 ## Step 2: Implement shared domain validation
 
-Define request/response types with `derive(ToJson, FromJson)` and one `suberror`-based validator in `shared/`.
+Define request/response types with `#derive(ToJson, FromJson)` and one `suberror`-based validator in `shared/`.
 Both frontend and backend import this package.
 
 ```{literalinclude} /sources/fullstack-one-project/shared/moon.pkg

@@ -1,5 +1,6 @@
 using @list {type List}
 
+#derive(Debug)
 enum RawExpr[T] {
   Var(T)
   Num(Int32)
@@ -7,15 +8,16 @@ enum RawExpr[T] {
   App(RawExpr[T], RawExpr[T])
   Let(Bool, List[(T, RawExpr[T])], RawExpr[T]) // isRec, Defs, Body
   Case(RawExpr[T], List[(Int32, List[T], RawExpr[T])])
-} derive(Debug)
+}
 
 pub extend RawExpr with @moonbitlang/core/debug.Debug::{to_repr}
 
+#derive(Debug)
 struct ScDef[T] {
   name : String
   args : List[T]
   body : RawExpr[T]
-} derive(Debug)
+}
 
 pub extend ScDef with @moonbitlang/core/debug.Debug::{to_repr}
 

@@ -111,10 +111,11 @@ fn f() -> Unit {
 // end trait 8
 
 /// start trait 9
+#derive(Eq, Compare, Debug, Default)
 struct T {
   a : Int32
   b : Int32
-} derive(Eq, Compare, Debug, Default)
+}
 
 pub extend T with Eq::{not_equal, equal}
 

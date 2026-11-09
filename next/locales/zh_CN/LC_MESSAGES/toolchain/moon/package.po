@@ -135,6 +135,43 @@ msgid ""
 msgstr ""
 
 #: ../../toolchain/moon/package.md:67
+msgid "Conditional Imports"
+msgstr "条件导入"
+
+#: ../../toolchain/moon/package.md:69
+msgid ""
+"Use `#cfg` on an import block to select dependencies for a backend. "
+"Different dependencies can share an alias when their conditions do not "
+"overlap:"
+msgstr "在导入块上使用 `#cfg`，为不同后端选择依赖。条件不重叠时，不同依赖可以共用别名："
+
+#: ../../toolchain/moon/package.md:72
+msgid ""
+"#cfg(target = \"native\")\n"
+"import { \"example/app/native_impl\" @platform }\n"
+"\n"
+"#cfg(target = \"js\")\n"
+"import { \"example/app/js_impl\" @platform }\n"
+msgstr ""
+
+#: ../../toolchain/moon/package.md:80
+msgid ""
+"The same syntax applies to imports marked `for \"test\"` or `for "
+"\"wbtest\"`."
+msgstr "相同语法也适用于标记为 `for \"test\"` 或 `for \"wbtest\"` 的导入。"
+
+#: ../../toolchain/moon/package.md:82
+msgid "Experimental Packages"
+msgstr "实验性包"
+
+#: ../../toolchain/moon/package.md:84
+msgid ""
+"Set `experimental = true` in a package's `moon.pkg` to warn direct "
+"consumers that its API is experimental. Consumers can opt in with "
+"`options(\"allow-experimental-packages\": true)`."
+msgstr "在包的 `moon.pkg` 中设置 `experimental = true`，即可向直接使用者警告该 API 为实验性。使用者可以通过 `options(\"allow-experimental-packages\": true)` 选择接受。"
+
+#: ../../toolchain/moon/package.md:67
 msgid "Name"
 msgstr "名称"
 
@@ -253,12 +290,13 @@ msgstr ""
 "导出声明的作用域是生成产物的包。依赖中的属性或 `exports` "
 "配置在该依赖自身构建为产物时生效，但不会向下游包的产物添加符号。若要暴露依赖的功能，请在执行导出的包中定义并导出一个包装函数。"
 
-#: ../../toolchain/moon/package.md:143
+#: ../../toolchain/moon/package.md:164
 msgid ""
-"The native backend does not currently support exporting a "
-"`foreign_library` package as a linkable library artifact, including "
-"shared libraries such as a `.dll` or `.so`."
-msgstr "native 后端目前不支持将 `foreign_library` 包导出为可链接的库产物，包括 `.dll` 或 `.so` 等共享库。"
+"The native backend produces a static archive (`.a`, or `.lib` on "
+"Windows), not a shared library such as a `.dll` or `.so`. See [Native "
+"Static Libraries](/language/ffi.md#native-static-libraries) for host "
+"initialization and linking."
+msgstr "native 后端生成静态归档（`.a`，Windows 上为 `.lib`），而不是 `.dll` 或 `.so` 等共享库。宿主初始化和链接方法见 [Native 静态库](/language/ffi.md#native-static-libraries)。"
 
 #: ../../toolchain/moon/package.md:149
 msgid "is-main (deprecated)"
@@ -1620,7 +1658,7 @@ msgstr "也可以在 `warnings` 中使用警告编号。在以下输出中，`mn
 msgid "The current list from `moonc check -warn-help` is:"
 msgstr "`moonc check -warn-help` 当前输出的列表如下："
 
-#: ../../toolchain/moon/package.md:1112
+#: ../../toolchain/moon/package.md:1134
 msgid ""
 "Available warnings:\n"
 "mnemonic                   description"
@@ -1766,7 +1804,7 @@ msgid ""
 "unnecessary_view_op        Unnecessary `[:]` view operator"
 "                                 75 off\n"
 "result_error_return        Using `Result[T, E]` where `E` is an error "
-"type.                78 off\n"
+"type.                78 warn\n"
 "implicit_impl_as_method    `impl` implicitly promoted as method"
 "                            79 warn\n"
 "regex_match_missing_before Missing `before` binding in `regex match`."
@@ -1798,8 +1836,16 @@ msgid ""
 "to `defer` or `errdefer`  92 warn\n"
 "unknown_constr_pat_on_exhaustive_type using `TypeName::..` pattern on a "
 "type not marked with `#non_exhaustive`  93 warn\n"
-"unknown_intrinsic          `#intrinsic` attribute names an unknown intrinsic.              94 warn\n"
-"nan_pattern                Pattern on a NaN constant, which never matches.                 95 warn\n"
+"unknown_intrinsic          `#intrinsic` attribute names an unknown "
+"intrinsic.              94 warn\n"
+"nan_pattern                Pattern on a NaN constant, which never "
+"matches.                 95 warn\n"
+"unfenced_import            Deprecated import declarations outside "
+"frontmatter.             96 warn\n"
+"regex_runtime_fallback     Regex match over the compile limits, which "
+"runs on the runtime engine.  97 off\n"
+"cancellable_defer          Fragile cancellable async code inside "
+"`defer`/`errdefer`        98 warn\n"
 "all                        all warnings\n"
 "state: warn = enabled, error = promoted to error, off = disabled\n"
 "note: default alert exceptions: alert_unsafe=off\n"

@@ -404,11 +404,43 @@ arguments, methods, or declarations without a body.
 Prefer `#export_name` for new exports. It keeps the exported name next to the
 function and applies to every backend that supports foreign-library output.
 
-```{note}
-The native backend does not currently support exporting a `foreign_library`
-package as a linkable library artifact, including shared libraries such as a
+### Native Static Libraries
+
+The native backend builds a `foreign_library` package as a static archive:
+`.a`, or `.lib` on Windows. It does not produce a shared library such as a
 `.dll` or `.so`.
+
+```{literalinclude} /sources/native-export/lib/moon.pkg
+:language: moonbit
 ```
+
+```{literalinclude} /sources/native-export/lib/top.mbt
+:language: moonbit
+```
+
+Run `moon build --target native --release` and use the archive path printed in the
+artifact list. Before calling exported functions, the host must call
+`moonbit_init()` to initialize the runtime and top-level values:
+
+```{literalinclude} /sources/native-export/host.c
+:language: c
+```
+
+On Unix-like systems, compile the host with the toolchain's include directory
+and generated archive, for example:
+
+```bash
+cc -I "$MOON_HOME/include" host.c path/to/lib.a -lm -o host
+./host
+# 44
+```
+
+Here `MOON_HOME` is the MoonBit installation directory. On Windows, use MSVC
+or clang-cl with the generated `.lib` and the corresponding include directory.
+Debug archives may require additional backtrace-library dependencies; the
+command above uses a release archive.
+
+### Backend-specific Exports
 
 Use the backend-specific `exports` field in
 [link configuration](/toolchain/moon/package.md#link-options) when the export

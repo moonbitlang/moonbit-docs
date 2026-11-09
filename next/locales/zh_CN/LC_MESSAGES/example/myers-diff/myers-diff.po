@@ -388,10 +388,11 @@ msgstr "让我们首先定义 `Line` 结构，它代表文本中的一行。"
 
 #: ../../example/myers-diff/myers-diff.md:210
 msgid ""
+"#derive(ToJson)\n"
 "struct Line {\n"
 "  number : Int32 // Line number\n"
 "  text : String // Does not include newline\n"
-"} derive(ToJson)\n"
+"}\n"
 "\n"
 "///|\n"
 "pub extend Line with ToJson::{to_json}\n"

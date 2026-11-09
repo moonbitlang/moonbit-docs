@@ -72,13 +72,10 @@ msgstr ""
 
 #: ../../language/attributes/export_name.md:34
 msgid ""
-"The native backend does not currently support exporting a "
-"`foreign_library` package as a linkable library artifact, including "
-"shared libraries such as a `.dll` or `.so`. Use Wasm or JavaScript if you"
-" need an exported library."
-msgstr ""
-"native バックエンドは現在、`foreign_library` パッケージをリンク可能なライブラリアーティファクトとしてエクスポートできません。"
-"これには `.dll` や `.so` などの共有ライブラリも含まれます。エクスポート可能なライブラリが必要な場合は、Wasm または JavaScript を使用してください。"
+"The native backend produces a static archive (`.a`, or `.lib` on "
+"Windows), not a shared library such as a `.dll` or `.so`. The host must "
+"call `moonbit_init()` before calling exported functions."
+msgstr "native バックエンドは静的アーカイブ（`.a`、Windows では `.lib`）を生成し、`.dll` や `.so` などの共有ライブラリは生成しません。ホストはエクスポート関数を呼ぶ前に `moonbit_init()` を呼ぶ必要があります。"
 
 #: ../../language/attributes/export_name.md:39
 msgid ""

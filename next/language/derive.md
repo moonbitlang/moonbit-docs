@@ -2,9 +2,12 @@
 
 MoonBit supports deriving a number of builtin traits automatically from the type definition.
 
+Place `#derive(...)` before the type definition. Run `moon fmt` to migrate
+the older trailing `derive(...)` syntax.
+
 To derive a trait `T`, all fields used in the type must implement `T`.
-For example, deriving `Show` for a struct `struct A { x: T1; y: T2 }`
-requires both `T1 : Show` and `T2 : Show`.
+For example, deriving `Debug` for a struct `struct A { x: T1; y: T2 }`
+requires both `T1 : Debug` and `T2 : Debug`.
 
 `derive` generates a trait implementation. The examples below also use
 [`extend`](methods.md#attaching-trait-methods-with-extend) to state explicitly
@@ -14,7 +17,7 @@ implementation.
 
 ## Eq and Compare
 
-`derive(Eq)` and `derive(Compare)` generate the corresponding implementations for testing equality and comparison.
+`#derive(Eq)` and `#derive(Compare)` generate the corresponding implementations for testing equality and comparison.
 Fields are compared in the same order as their definitions.
 For enums, the order between cases ascends in the order of definition.
 
@@ -32,7 +35,7 @@ For enums, the order between cases ascends in the order of definition.
 
 ## Debug
 
-`derive(Debug)` generates a structural debugging implementation for the type.
+`#derive(Debug)` generates a structural debugging implementation for the type.
 It is useful with `debug_inspect` in tests and `@debug.to_string` when formatting diagnostic messages.
 
 ```{literalinclude} /sources/language/src/derive/debug.mbt
@@ -51,7 +54,7 @@ Enums can derive `Debug` as well:
 
 ## Default
 
-`derive(Default)` generates a `Default` implementation for the type. Call
+`#derive(Default)` generates a `Default` implementation for the type. Call
 `Default::default()` with the expected type specified so MoonBit can select the
 implementation. Use an explicit `extend` declaration if `default` should also
 be part of the type's method-style API.
@@ -77,20 +80,22 @@ Enums that has no cases or more than one cases without parameters cannot derive 
 <!-- MANUAL CHECK  should not compile -->
 
 ```moonbit
+#derive(Default) // cannot find a constant constructor as default
 enum CannotDerive1 {
     Case1(String)
     Case2(Int32)
-} derive(Default) // cannot find a constant constructor as default
+}
 
+#derive(Default) // Case1 and Case2 are both candidates as default constructor
 enum CannotDerive2 {
     Case1
     Case2
-} derive(Default) // Case1 and Case2 are both candidates as default constructor
+}
 ```
 
 ## Hash
 
-`derive(Hash)` generates a hash implementation for the type.
+`#derive(Hash)` generates a hash implementation for the type.
 This will allow the type to be used in places that expects a `Hash` implementation,
 for example `HashMap`s and `HashSet`s.
 
@@ -102,11 +107,11 @@ for example `HashMap`s and `HashSet`s.
 
 ## Arbitrary
 
-`derive(Arbitrary)` will generate random values of the given type.
+`#derive(Arbitrary)` will generate random values of the given type.
 
 ## Shrink
 
-`derive(Shrink)` implements `@quickcheck.Shrink` for property-based testing.
+`#derive(Shrink)` implements `@quickcheck.Shrink` for property-based testing.
 Struct fields are shrunk one at a time in source order. Enum values keep their
 current constructor while its payload is shrunk; constructors without payloads
 produce no candidates. Every field or payload used by the derived
@@ -120,7 +125,7 @@ implementation must itself implement `Shrink`.
 
 ## FromJson and ToJson
 
-`derive(FromJson)` and `derive(ToJson)` automatically generate round-trippable
+`#derive(FromJson)` and `#derive(ToJson)` automatically generate round-trippable
 trait implementations used for serializing the type to and from JSON. Trait
 functions can be called with qualified syntax such as `ToJson::to_json(value)`.
 The implementation is mainly for debugging and storing the types in a human-readable format.
@@ -167,7 +172,7 @@ enum E {
 }
 ```
 
-With `derive(ToJson(style="legacy"))`, the enum is formatted into:
+With `#derive(ToJson(style="legacy"))`, the enum is formatted into:
 
 ```
 E::One              => { "$tag": "One" }
@@ -175,7 +180,7 @@ E::Uniform(2)       => { "$tag": "Uniform", "0": 2 }
 E::Axes(x=-1, y=1)  => { "$tag": "Axes", "x": -1, "y": 1 }
 ```
 
-With `derive(ToJson(style="flat"))`, the enum is formatted into:
+With `#derive(ToJson(style="flat"))`, the enum is formatted into:
 
 ```
 E::One              => "One"

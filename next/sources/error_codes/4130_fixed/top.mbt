@@ -1,6 +1,7 @@
+#derive(Debug)
 pub struct MyStruct {
   field : Int32
-} derive(Debug)
+}
 
 pub extend MyStruct with Debug::{to_repr}
 

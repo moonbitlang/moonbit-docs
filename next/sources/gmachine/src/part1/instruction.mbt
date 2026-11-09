@@ -1,5 +1,6 @@
 // start instr definition
 
+#derive(Eq, Debug)
 enum Instruction {
   Unwind
   PushGlobal(String)
@@ -8,7 +9,7 @@ enum Instruction {
   MkApp
   Update(Int32)
   Pop(Int32)
-} derive(Eq, Debug)
+}
 
 pub extend Instruction with Eq::{not_equal, equal}
 

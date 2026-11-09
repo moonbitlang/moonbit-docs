@@ -30,13 +30,16 @@ msgstr "MoonBit では、型定義からいくつかの組み込み trait を自
 
 #: ../../language/derive.md:5
 msgid ""
+"Place `#derive(...)` before the type definition. Run `moon fmt` to "
+"migrate the older trailing `derive(...)` syntax."
+msgstr "`#derive(...)` は型定義の前に置きます。旧来の末尾に置く `derive(...)` 構文は `moon fmt` で移行できます。"
+
+#: ../../language/derive.md:8
+msgid ""
 "To derive a trait `T`, all fields used in the type must implement `T`. "
-"For example, deriving `Show` for a struct `struct A { x: T1; y: T2 }` "
-"requires both `T1 : Show` and `T2 : Show`."
-msgstr ""
-"trait `T` を derive するには、その型で使われているすべてのフィールドが `T` "
-"を実装している必要があります。例えば、`struct A { x: T1; y: T2 }` に対して `Show` を derive "
-"するには、`T1 : Show` と `T2 : Show` の両方が必要です。"
+"For example, deriving `Debug` for a struct `struct A { x: T1; y: T2 }` "
+"requires both `T1 : Debug` and `T2 : Debug`."
+msgstr "トレイト `T` を派生するには、型のすべてのフィールドが `T` を実装している必要があります。例えば `struct A { x: T1; y: T2 }` に `Debug` を派生するには、`T1 : Debug` と `T2 : Debug` の両方が必要です。"
 
 #: ../../language/derive.md:9
 msgid ""
@@ -54,23 +57,21 @@ msgstr ""
 msgid "Eq and Compare"
 msgstr "Eq と Compare"
 
-#: ../../language/derive.md:17
+#: ../../language/derive.md:20
 msgid ""
-"`derive(Eq)` and `derive(Compare)` generate the corresponding "
+"`#derive(Eq)` and `#derive(Compare)` generate the corresponding "
 "implementations for testing equality and comparison. Fields are compared "
 "in the same order as their definitions. For enums, the order between "
 "cases ascends in the order of definition."
-msgstr ""
-"`derive(Eq)` と `derive(Compare)` "
-"は、それぞれ等価性と比較のための対応する実装を生成します。フィールドは定義順に比較されます。enum "
-"では、ケース同士の順序は定義順になります。"
+msgstr "`#derive(Eq)` と `#derive(Compare)` は、それぞれ等価性と比較のための対応する実装を生成します。フィールドは定義順に比較されます。enum では、ケース同士の順序は定義順になります。"
 
-#: ../../language/derive.md:21
+#: ../../language/derive.md:24
 msgid ""
+"#derive(Eq, Compare)\n"
 "struct DeriveEqCompare {\n"
 "  x : Int32\n"
 "  y : Int32\n"
-"} derive(Eq, Compare)\n"
+"}\n"
 "\n"
 "pub extend DeriveEqCompare with Eq::{not_equal, equal}\n"
 "\n"
@@ -103,13 +104,14 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/derive.md:27
+#: ../../language/derive.md:30
 msgid ""
+"#derive(Eq, Compare)\n"
 "enum DeriveEqCompareEnum {\n"
 "  Case1(Int32)\n"
 "  Case2(label~ : String)\n"
 "  Case3\n"
-"} derive(Eq, Compare)\n"
+"}\n"
 "\n"
 "pub extend DeriveEqCompareEnum with Eq::{not_equal, equal}\n"
 "\n"
@@ -147,21 +149,20 @@ msgstr ""
 msgid "Debug"
 msgstr "Debug"
 
-#: ../../language/derive.md:35
-msgid ""
-"`derive(Debug)` generates a structural debugging implementation for the "
-"type. It is useful with `debug_inspect` in tests and `@debug.to_string` "
-"when formatting diagnostic messages."
-msgstr ""
-"`derive(Debug)` は、その型に対する構造的なデバッグ実装を生成します。これはテストで `debug_inspect` "
-"と一緒に使ったり、診断メッセージを整形するときに `@debug.to_string` と一緒に使ったりできます。"
-
 #: ../../language/derive.md:38
 msgid ""
+"`#derive(Debug)` generates a structural debugging implementation for the "
+"type. It is useful with `debug_inspect` in tests and `@debug.to_string` "
+"when formatting diagnostic messages."
+msgstr "`#derive(Debug)` は、その型に対する構造的なデバッグ実装を生成します。これはテストで `debug_inspect` と一緒に使ったり、診断メッセージを整形するときに `@debug.to_string` と一緒に使ったりできます。"
+
+#: ../../language/derive.md:41
+msgid ""
+"#derive(Debug)\n"
 "struct DebugPoint {\n"
 "  x : Int32\n"
 "  y : Int32\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "pub extend DebugPoint with Debug::{to_repr}\n"
 "\n"
@@ -175,12 +176,13 @@ msgstr ""
 msgid "Enums can derive `Debug` as well:"
 msgstr "列挙型も `Debug` を derive できます:"
 
-#: ../../language/derive.md:46
+#: ../../language/derive.md:49
 msgid ""
+"#derive(Debug)\n"
 "enum DebugShape {\n"
 "  Circle(radius~ : Int32)\n"
 "  Rect(width~ : Int32, height~ : Int32)\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "pub extend DebugShape with Debug::{to_repr}\n"
 "\n"
@@ -194,16 +196,13 @@ msgstr ""
 msgid "Default"
 msgstr "Default"
 
-#: ../../language/derive.md:54
+#: ../../language/derive.md:57
 msgid ""
-"`derive(Default)` generates a `Default` implementation for the type. Call"
-" `Default::default()` with the expected type specified so MoonBit can "
-"select the implementation. Use an explicit `extend` declaration if "
+"`#derive(Default)` generates a `Default` implementation for the type. "
+"Call `Default::default()` with the expected type specified so MoonBit can"
+" select the implementation. Use an explicit `extend` declaration if "
 "`default` should also be part of the type's method-style API."
-msgstr ""
-"`derive(Default)` はその型の `Default` 実装を生成します。MoonBit が実装を選択できるよう、期待する型を指定して"
-" `Default::default()` を呼び出します。`default` も型のメソッド形式 API に含める場合は、明示的に `extend` "
-"を宣言してください。"
+msgstr "`#derive(Default)` はその型の `Default` 実装を生成します。MoonBit が実装を選択できるよう、期待する型を指定して `Default::default()` を呼び出します。`default` も型のメソッド形式 API に含める場合は、明示的に `extend` を宣言してください。"
 
 #: ../../language/derive.md:59
 msgid ""
@@ -211,12 +210,13 @@ msgid ""
 " default value."
 msgstr "struct では、すべてのフィールドをデフォルト値にした struct がデフォルト値になります。"
 
-#: ../../language/derive.md:61
+#: ../../language/derive.md:64
 msgid ""
+"#derive(Default, Eq)\n"
 "struct DeriveDefault {\n"
 "  x : Int32\n"
 "  y : String?\n"
-"} derive(Default, Eq)\n"
+"}\n"
 "\n"
 "pub extend DeriveDefault with Default::{default}\n"
 "\n"
@@ -232,13 +232,14 @@ msgstr ""
 msgid "For enums, the default value is the only case that has no parameters."
 msgstr "enum では、パラメータを持たない唯一のケースがデフォルト値になります。"
 
-#: ../../language/derive.md:69
+#: ../../language/derive.md:72
 msgid ""
+"#derive(Default, Eq)\n"
 "enum DeriveDefaultEnum {\n"
 "  Case1(Int32)\n"
 "  Case2(label~ : String)\n"
 "  Case3\n"
-"} derive(Default, Eq)\n"
+"}\n"
 "\n"
 "pub extend DeriveDefaultEnum with Default::{default}\n"
 "\n"
@@ -256,49 +257,40 @@ msgid ""
 "derive `Default`."
 msgstr "ケースがない enum や、パラメータなしケースが複数ある enum は `Default` を derive できません。"
 
-#: ../../language/derive.md:79
+#: ../../language/derive.md:82
 msgid ""
+"#derive(Default) // cannot find a constant constructor as default\n"
 "enum CannotDerive1 {\n"
 "    Case1(String)\n"
 "    Case2(Int32)\n"
-"} derive(Default) // cannot find a constant constructor as default\n"
+"}\n"
 "\n"
+"#derive(Default) // Case1 and Case2 are both candidates as default "
+"constructor\n"
 "enum CannotDerive2 {\n"
 "    Case1\n"
 "    Case2\n"
-"} derive(Default) // Case1 and Case2 are both candidates as default "
-"constructor\n"
+"}\n"
 msgstr ""
-"enum CannotDerive1 {\n"
-"    Case1(String)\n"
-"    Case2(Int32)\n"
-"} derive(Default) // cannot find a constant constructor as default\n"
-"\n"
-"enum CannotDerive2 {\n"
-"    Case1\n"
-"    Case2\n"
-"} derive(Default) // Case1 and Case2 are both candidates as default "
-"constructor\n"
 
 #: ../../language/derive.md:91
 msgid "Hash"
 msgstr "Hash"
 
-#: ../../language/derive.md:93
+#: ../../language/derive.md:98
 msgid ""
-"`derive(Hash)` generates a hash implementation for the type. This will "
+"`#derive(Hash)` generates a hash implementation for the type. This will "
 "allow the type to be used in places that expects a `Hash` implementation,"
 " for example `HashMap`s and `HashSet`s."
-msgstr ""
-"`derive(Hash)` はその型の hash 実装を生成します。これにより、`HashMap` や `HashSet` など、`Hash` "
-"実装を期待する場所でその型を使えるようになります。"
+msgstr "`#derive(Hash)` はその型の hash 実装を生成します。これにより、`HashMap` や `HashSet` など、`Hash` 実装を期待する場所でその型を使えるようになります。"
 
-#: ../../language/derive.md:97
+#: ../../language/derive.md:102
 msgid ""
+"#derive(Hash, Eq)\n"
 "struct DeriveHash {\n"
 "  x : Int32\n"
 "  y : String?\n"
-"} derive(Hash, Eq)\n"
+"}\n"
 "\n"
 "pub extend DeriveHash with Hash::{hash, hash_combine}\n"
 "\n"
@@ -318,31 +310,32 @@ msgstr ""
 msgid "Arbitrary"
 msgstr "Arbitrary"
 
-#: ../../language/derive.md:105
-msgid "`derive(Arbitrary)` will generate random values of the given type."
-msgstr "`derive(Arbitrary)` は指定した型のランダム値を生成します。"
+#: ../../language/derive.md:110
+msgid "`#derive(Arbitrary)` will generate random values of the given type."
+msgstr "`#derive(Arbitrary)` は指定した型のランダム値を生成します。"
 
 #: ../../language/derive.md:107
 msgid "Shrink"
 msgstr "Shrink"
 
-#: ../../language/derive.md:109
+#: ../../language/derive.md:114
 msgid ""
-"`derive(Shrink)` implements `@quickcheck.Shrink` for property-based "
+"`#derive(Shrink)` implements `@quickcheck.Shrink` for property-based "
 "testing. Struct fields are shrunk one at a time in source order. Enum "
 "values keep their current constructor while its payload is shrunk; "
 "constructors without payloads produce no candidates. Every field or "
-"payload used by the derived implementation must itself implement `Shrink`."
-msgstr ""
-"`derive(Shrink)` はプロパティベーステスト用の `@quickcheck.Shrink` を実装します。struct のフィールドはソース上の順序で一つずつ縮小されます。enum 値は現在のコンストラクタを保ったままペイロードを縮小し、ペイロードのないコンストラクタは候補を生成しません。派生実装で使われる各フィールドまたはペイロードも `Shrink` を実装している必要があります。"
+"payload used by the derived implementation must itself implement "
+"`Shrink`."
+msgstr "`#derive(Shrink)` はプロパティベーステスト用の `@quickcheck.Shrink` を実装します。struct のフィールドはソース上の順序で一つずつ縮小されます。enum 値は現在のコンストラクタを保ったままペイロードを縮小し、ペイロードのないコンストラクタは候補を生成しません。派生実装で使われる各フィールドまたはペイロードも `Shrink` を実装している必要があります。"
 
-#: ../../language/derive.md:115
+#: ../../language/derive.md:120
 msgid ""
 "///|\n"
+"#derive(Shrink)\n"
 "struct ShrinkPoint {\n"
 "  x : Int32\n"
 "  y : Int32\n"
-"} derive(Shrink)\n"
+"}\n"
 "\n"
 "///|\n"
 "pub extend ShrinkPoint with @shrink.Shrink::{shrink}\n"
@@ -364,24 +357,22 @@ msgstr ""
 msgid "FromJson and ToJson"
 msgstr "FromJson と ToJson"
 
-#: ../../language/derive.md:123
+#: ../../language/derive.md:128
 msgid ""
-"`derive(FromJson)` and `derive(ToJson)` automatically generate round-"
+"`#derive(FromJson)` and `#derive(ToJson)` automatically generate round-"
 "trippable trait implementations used for serializing the type to and from"
 " JSON. Trait functions can be called with qualified syntax such as "
 "`ToJson::to_json(value)`. The implementation is mainly for debugging and "
 "storing the types in a human-readable format."
-msgstr ""
-"`derive(FromJson)` と `derive(ToJson)` は、型を JSON へ変換し、JSON から復元する往復可能な trait 実装を"
-"自動的に生成します。trait 関数は `ToJson::to_json(value)` のような修飾構文で呼び出せます。この実装の"
-"主な用途はデバッグや、人間が読める形式での保存です。"
+msgstr "`#derive(FromJson)` と `#derive(ToJson)` は、型を JSON へ変換し、JSON から復元する往復可能な trait 実装を自動的に生成します。trait 関数は `ToJson::to_json(value)` のような修飾構文で呼び出せます。この実装の主な用途はデバッグや、人間が読める形式での保存です。"
 
-#: ../../language/derive.md:128
+#: ../../language/derive.md:133
 msgid ""
+"#derive(FromJson, ToJson, Eq)\n"
 "struct JsonTest1 {\n"
 "  x : Int32\n"
 "  y : Int32\n"
-"} derive(FromJson, ToJson, Eq)\n"
+"}\n"
 "\n"
 "pub extend JsonTest1 with @moonbitlang/core/json.FromJson::{from_json}\n"
 "\n"
@@ -389,10 +380,11 @@ msgid ""
 "\n"
 "pub extend JsonTest1 with Eq::{not_equal, equal}\n"
 "\n"
+"#derive(FromJson(style=\"legacy\"), ToJson(style=\"legacy\"), Eq)\n"
 "enum JsonTest2 {\n"
 "  A(x~ : Int32)\n"
 "  B(x~ : Int32, y~ : Int32)\n"
-"} derive(FromJson(style=\"legacy\"), ToJson(style=\"legacy\"), Eq)\n"
+"}\n"
 "\n"
 "pub extend JsonTest2 with @moonbitlang/core/json.FromJson::{from_json}\n"
 "\n"
@@ -441,16 +433,14 @@ msgstr ""
 "最近、多数の高度なレイアウト調整引数を非推奨にしました。そうした用途や今後それらを使う場合は、trait を手動実装してください。引数には "
 "`repr`、`case_repr`、`default`、`rename_all` などがあります。"
 
-#: ../../language/derive.md:150
+#: ../../language/derive.md:155
 msgid ""
+"#derive(FromJson(fields(x(rename=\"renamedX\"))), "
+"ToJson(fields(x(rename=\"renamedX\"))), Eq)\n"
 "struct JsonTest3 {\n"
 "  x : Int32\n"
 "  y : Int32\n"
-"} derive (\n"
-"  FromJson(fields(x(rename=\"renamedX\"))),\n"
-"  ToJson(fields(x(rename=\"renamedX\"))),\n"
-"  Eq,\n"
-")\n"
+"}\n"
 "\n"
 "pub extend JsonTest3 with @moonbitlang/core/json.FromJson::{from_json}\n"
 "\n"
@@ -458,10 +448,11 @@ msgid ""
 "\n"
 "pub extend JsonTest3 with Eq::{not_equal, equal}\n"
 "\n"
+"#derive(FromJson, ToJson, Eq)\n"
 "enum JsonTest4 {\n"
 "  A(x~ : Int32)\n"
 "  B(x~ : Int32, y~ : Int32)\n"
-"} derive(FromJson, ToJson, Eq)\n"
+"}\n"
 "\n"
 "pub extend JsonTest4 with @moonbitlang/core/json.FromJson::{from_json}\n"
 "\n"
@@ -508,9 +499,9 @@ msgstr ""
 "  Axes(x~: Int32, y~: Int32)\n"
 "}\n"
 
-#: ../../language/derive.md:170
-msgid "With `derive(ToJson(style=\"legacy\"))`, the enum is formatted into:"
-msgstr "`derive(ToJson(style=\"legacy\"))` では、enum は次のように出力されます："
+#: ../../language/derive.md:175
+msgid "With `#derive(ToJson(style=\"legacy\"))`, the enum is formatted into:"
+msgstr "`#derive(ToJson(style=\"legacy\"))` では、enum は次のように出力されます："
 
 #: ../../language/derive.md:172
 msgid ""
@@ -522,9 +513,9 @@ msgstr ""
 "E::Uniform(2)       => { \"$tag\": \"Uniform\", \"0\": 2 }\n"
 "E::Axes(x=-1, y=1)  => { \"$tag\": \"Axes\", \"x\": -1, \"y\": 1 }\n"
 
-#: ../../language/derive.md:178
-msgid "With `derive(ToJson(style=\"flat\"))`, the enum is formatted into:"
-msgstr "`derive(ToJson(style=\"flat\"))` では、enum は次のように出力されます："
+#: ../../language/derive.md:183
+msgid "With `#derive(ToJson(style=\"flat\"))`, the enum is formatted into:"
+msgstr "`#derive(ToJson(style=\"flat\"))` では、enum は次のように出力されます："
 
 #: ../../language/derive.md:180
 msgid ""
@@ -559,13 +550,14 @@ msgstr ""
 "そのため、struct の直接フィールドである場合に限って `T | undefined` と解釈し、それ以外では `[T] | null` "
 "と解釈されます："
 
-#: ../../language/derive.md:195
+#: ../../language/derive.md:200
 msgid ""
+"#derive(ToJson)\n"
 "struct A {\n"
 "  x : Int32?\n"
 "  y : Int32??\n"
 "  z : (Int32?, Int32??)\n"
-"} derive(ToJson)\n"
+"}\n"
 "\n"
 "pub extend A with ToJson::{to_json}\n"
 "\n"
