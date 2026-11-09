@@ -392,6 +392,15 @@ msgstr ""
 "当一段异步代码被取消时，取消信号会在代码先前阻塞的位置被抛出。普通的 `catch` 处理器不会捕获该信号。它会自动在程序中传播，同时由 "
 "`defer` 或 `errdefer` 注册的清理仍然会运行。"
 
+#: ../../language/async-experimental.md:163
+msgid ""
+"Running a cleanup block does not make its asynchronous operations immune "
+"to cancellation. Cancellable operations inside it can be cancelled "
+"immediately. Protect required asynchronous cleanup from cancellation; see"
+" [E0098](/language/error_codes/E0098.md) for an example using the core "
+"runtime."
+msgstr "执行清理块并不意味着其中的异步操作不会被取消。可取消的操作可能立即被取消。应保护必要的异步清理，避免其被取消；使用核心运行时的示例见 [E0098](/language/error_codes/E0098.md)。"
+
 #: ../../language/async-experimental.md:155
 msgid ""
 "The ability to cancel arbitrary async code makes async programs highly "
