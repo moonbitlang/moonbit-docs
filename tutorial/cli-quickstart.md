@@ -53,10 +53,11 @@ download_cli
 The root package defines the CLI contract. It owns the command shape and turns argv into a typed config value:
 
 ```moonbit
+#derive(Eq)
 pub struct Config {
   url : String
   output : String?
-} derive(Eq)
+}
 
 ///|
 pub extend Config with Eq::{not_equal, equal}

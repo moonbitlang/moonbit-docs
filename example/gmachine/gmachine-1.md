@@ -103,6 +103,7 @@ coreF excludes anonymous functions because anonymous functions introduce extra f
 Super combinators will eventually be parsed into `ScDef[String]`, but writing a parser is a tedious task. I will provide it along with the final code.
 
 ```moonbit
+#derive(Debug)
 enum RawExpr[T] {
   Var(T)
   Num(Int32)
@@ -110,15 +111,16 @@ enum RawExpr[T] {
   App(RawExpr[T], RawExpr[T])
   Let(Bool, List[(T, RawExpr[T])], RawExpr[T]) // isRec, Defs, Body
   Case(RawExpr[T], List[(Int32, List[T], RawExpr[T])])
-} derive(Debug)
+}
 
 pub extend RawExpr with @moonbitlang/core/debug.Debug::{to_repr}
 
+#derive(Debug)
 struct ScDef[T] {
   name : String
   args : List[T]
   body : RawExpr[T]
-} derive(Debug)
+}
 
 pub extend ScDef with @moonbitlang/core/debug.Debug::{to_repr}
 ```
@@ -320,13 +322,15 @@ In this simple version of the G-Machine, the state includes:
 - Heap: This is where the expression graph and the sequences of instructions corresponding to super combinators are stored.
   ```moonbit
   /// Use the struct tuple to encapsulate an address type.
-  struct Addr(Int32) derive(Eq, Debug)
+  #derive(Eq, Debug)
+  struct Addr(Int32)
 
   pub extend Addr with Eq::{not_equal, equal}
 
   pub extend Addr with @moonbitlang/core/debug.Debug::{to_repr}
 
   /// Describe graph nodes with an enumeration type.
+  #derive(Eq, Debug)
   enum Node {
     NNum(Int32)
     // The application node
@@ -336,7 +340,7 @@ In this simple version of the G-Machine, the state includes:
     NGlobal(String, Int32, List[Instruction])
     // The Indirection node. The key component of implementing lazy evaluation
     NInd(Addr)
-  } derive(Eq, Debug)
+  }
 
   pub extend Node with Eq::{not_equal, equal}
 
@@ -438,6 +442,7 @@ The highly simplified G-Machine currently consists of 7 instructions.
 
 ```moonbit
 
+#derive(Eq, Debug)
 enum Instruction {
   Unwind
   PushGlobal(String)
@@ -446,7 +451,7 @@ enum Instruction {
   MkApp
   Update(Int32)
   Pop(Int32)
-} derive(Eq, Debug)
+}
 
 pub extend Instruction with Eq::{not_equal, equal}
 

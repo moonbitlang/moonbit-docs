@@ -600,10 +600,11 @@ trait Default {
 MoonBit can automatically derive implementations for some builtin traits:
 
 ```moonbit
+#derive(Eq, Compare, Debug, Default)
 struct T {
   a : Int32
   b : Int32
-} derive(Eq, Compare, Debug, Default)
+}
 
 pub extend T with Eq::{not_equal, equal}
 

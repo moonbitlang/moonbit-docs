@@ -51,7 +51,7 @@ This document contains the help content for the `moon` command-line program.
 * `bench` — Run benchmarks in the current package
 * `add` — Add a dependency
 * `remove` — Remove a dependency
-* `install` — Install dependencies
+* `install` — Install a MoonBit executable
 * `tree` — Display the dependency tree
 * `login` — Log in to your account
 * `register` — Register an account at mooncakes.io
@@ -114,7 +114,9 @@ Build the current package
 
 ## `moon check`
 
-Check the current package, but don't build object files
+Check the current package, but don't build object files. A successful check
+also updates `pkg.generated.mbti` for checked local packages whose preferred
+backend is included. Use `--no-mbti` to skip updating interface files.
 
 **Usage:** `moon check [OPTIONS] [SINGLE_FILE]`
 
@@ -236,7 +238,7 @@ Test the current package
   Default value: `256`
 * `--frozen` — Do not sync dependencies, assuming local dependencies are up-to-date
 * `--build-only` — Only build, do not run the tests
-* `--no-parallelize` — Run the tests in a target backend sequentially
+* `--no-parallelize` — Run test executables sequentially while keeping the build parallel. By default, executables run in parallel according to the CPU count; use `-j N` to limit concurrency. This does not control async tests within one package.
 * `--test-failure-json` — Print failure message in JSON format
 * `--patch-file <PATCH_FILE>` — Path to the patch file
 * `--doc` — Run doc test
@@ -369,7 +371,9 @@ Remove a dependency
 
 ## `moon install`
 
-Install dependencies
+Install a MoonBit executable. Dependency synchronization happens automatically
+during commands such as `moon check`, `moon build`, and `moon test`; do not use
+`moon install` for that purpose.
 
 **Usage:** `moon install`
 

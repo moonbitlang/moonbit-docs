@@ -48,6 +48,24 @@ MoonBit have integer type and floating point type:
 `Int` and `UInt` remain accepted as aliases of `Int32` and `UInt32`.
 The formatter uses the explicit-width names `Int32` and `UInt32`.
 
+Floating-point arithmetic and comparison operators follow IEEE semantics:
+`-0.0 == 0.0`, and NaN is unequal to every value, including itself. The result
+of `compare` involving NaN is unspecified; avoid NaN keys in hash tables.
+For sorting or searching with NaN values, use `Float::total_compare` or
+`Double::total_compare`. They place NaN before negative infinity, followed by
+finite numbers in numeric order and positive infinity. Both zeros compare equal.
+
+```moonbit
+///|
+test "total comparison with NaN" {
+  let nan = 0.0 / 0.0
+  assert_false(nan == nan)
+  assert_eq(Double::total_compare(nan, -1.0 / 0.0), -1)
+  assert_eq(Double::total_compare(nan, nan), 0)
+  assert_eq(Double::total_compare(-0.0, 0.0), 0)
+}
+```
+
 MoonBit also supports numeric literals, including decimal, binary, octal, and hexadecimal numbers.
 
 To improve readability, you may place underscores in the middle of numeric literals such as `1_000_000`. Note that underscores can be placed anywhere within a number, not just every three digits.
@@ -534,6 +552,10 @@ API: [https://mooncakes.io/docs/moonbitlang/core/builtin#Map](https://mooncakes.
 [Overloaded Literals]()
 
 ### Json
+
+`Json` and `ToJson` are defined in `moonbitlang/core/json`. To convert a value,
+use `Json(value)` or `ToJson::to_json(value)`; do not assume every built-in type
+provides a `.to_json()` method.
 
 MoonBit supports convenient json handling by overloading literals.
 When the expected type of an expression is `Json`, number, string, array and map literals can be directly used to create json data:
@@ -1787,9 +1809,10 @@ special method whose name is the same as its result type. The following
 examples start with a struct:
 
 ```moonbit
+#derive(Debug)
 struct IntBox {
   value : Int32
-} derive(Debug)
+}
 
 pub extend IntBox with Debug::{to_repr}
 ```
@@ -1816,10 +1839,11 @@ parameters can be written in the familiar `TypeName(value)` form.
 Constructors may also use labeled and optional arguments, just like normal functions:
 
 ```moonbit
+#derive(Debug)
 struct StructWithConstr {
   x : Int32
   y : Int32
-} derive(Debug)
+}
 
 pub extend StructWithConstr with Debug::{to_repr}
 ```
@@ -1838,15 +1862,17 @@ fn StructWithConstr::StructWithConstr(x~ : Int32, y~ : Int32 = x) -> StructWithC
 Because struct constructors are implemented by normal functions, they may raise errors:
 
 ```moonbit
+#derive(Debug)
 suberror BuildError {
   NegativeInput
-} derive(Debug)
+}
 
 pub extend BuildError with Debug::{to_repr}
 
+#derive(Debug)
 struct Positive {
   value : Int32
-} derive(Debug)
+}
 
 pub extend Positive with Debug::{to_repr}
 ```
@@ -1875,9 +1901,10 @@ Other types can use the same `fn Type::Type(...) -> Type` form. A custom
 constructor cannot have the same name as an existing constructor of that type:
 
 ```moonbit
+#derive(Debug)
 enum Endpoint {
   Host(String, Int32)
-} derive(Debug)
+}
 
 pub extend Endpoint with Debug::{to_repr}
 
@@ -1895,9 +1922,10 @@ Asynchronous constructors are declared with `async fn TypeName::TypeName` and
 can be used inside async code:
 
 ```moonbit
+#derive(Debug)
 struct AsyncBox {
   value : Int32
-} derive(Debug)
+}
 
 ///|
 pub extend AsyncBox with Debug::{to_repr}
@@ -2102,7 +2130,8 @@ enum Object {
   Circle(x~ : Double, y~ : Double, radius~ : Double)
 }
 
-suberror NotImplementedError derive(Debug)
+#derive(Debug)
+suberror NotImplementedError
 
 pub extend NotImplementedError with Debug::{to_repr}
 
@@ -3121,7 +3150,7 @@ matches exactly one character.
 
 ### Lexmatch
 
-Use `lexmatch` to match an in-memory `String` or `StringView` against several
+Use `lexmatch` to match an in-memory `String`, `StringView`, `Bytes`, or `BytesView` against several
 regex cases and evaluate the body of the selected case. Its syntax is:
 
 ```moonbit
@@ -3133,8 +3162,8 @@ lexmatch input [with first|longest] {
 ```
 
 Each regex case contains a regex constant expression, optionally with `as`,
-`before=`, and `after=` bindings. `Bytes`, `BytesView`, and other input types
-are not supported.
+`before=`, and `after=` bindings. Use text regexes for text input and byte
+regexes for byte input; mixing the two produces [E4234](https://docs.moonbitlang.com/en/latest/language/error_codes/E4234.html).
 
 The strategy controls how overlapping cases are resolved:
 
@@ -3192,6 +3221,39 @@ A present catch-all must be last; a binder such as `rest` receives the entire
 input when no regex case matches, while `_` discards it. The compiler reports
 [E0090](https://docs.moonbitlang.com/en/latest/language/error_codes/E0090.html) when a regex case or catch-all can never be
 selected.
+
+### Byte Regexes
+
+Use `reb"..."` with `=~` or `lexmatch` to match `Bytes` and `BytesView`
+without decoding them. A byte regex literal has type `BytesRegex`; like
+`Regex`, it can be stored in a constant and combined with `+` or `|`.
+
+Captures matching exactly one byte have type `Byte`. Other captures and the
+`before` and `after` bindings have type `BytesView`.
+
+```moonbit
+///|
+test "byte regex captures" {
+  let input : Bytes = b"\xff123!"
+  lexmatch input {
+    ((reb"^." as first) + (reb"[0-9]+" as digits), after=rest) => {
+      let byte : Byte = first
+      let number : BytesView = digits
+      assert_eq(byte, 0xff)
+      assert_eq(number, b"123"[:])
+      assert_eq(rest, b"!"[:])
+    }
+    _ => fail("expected a byte followed by digits")
+  }
+  assert_true(input =~ reb"^\xff")
+}
+```
+
+Only ASCII characters may appear directly in byte regex literals. Use `\xHH`
+for other bytes, including in character classes and ranges; `\u{...}` is not
+supported. `.` and negated classes match any single byte, even above `0x7f`.
+Case-insensitive matching, word boundaries, and `[[:word:]]` use ASCII semantics.
+`lexscan` does not support byte regexes.
 
 ### Lexscan
 

@@ -205,10 +205,11 @@ You can see that in each round of searching, `k` is strictly within the range `[
 Let's first define the `Line` struct, which represents a line in the text.
 
 ```moonbit
+#derive(ToJson)
 struct Line {
   number : Int32 // Line number
   text : String // Does not include newline
-} derive(ToJson)
+}
 
 ///|
 pub extend Line with ToJson::{to_json}

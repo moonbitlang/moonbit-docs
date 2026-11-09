@@ -17,9 +17,10 @@ attribute-arguments ::= attribute-argument (',' attribute-argument )*
 attribute-argument ::= expr | LIDENT '=' expr
 
 expr ::= LIDENT | UIDENT | STRING | 'true' | 'false'
-       | LIDENT '.' LIDENT
+       | '@' LIDENT '.' LIDENT | '@' LIDENT '.' UIDENT
+       | '[' (expr (',' expr)* ','?)? ']'
        | LIDENT '(' attribute-arguments ')'
-       | LIDENT '.' LIDENT '(' attribute-arguments ')'
+       | UIDENT '(' attribute-arguments ')'
 ```
 
 Attributes have two categories: the built-in attributes and user-defined attributes. For example:
@@ -37,6 +38,30 @@ The second attribute is a user-defined attribute; it has a namespace prefix `cus
 MoonBit is designed not to support runtime reflection. It's easy to abuse, making it impossible for toolchains (e.g., the compiler) to catch errors at compile time, which makes code harder to maintain. It also negatively impacts performance optimization.
 
 We prefer to use compile-time code generation, keeping the benefits of static typing and performance (should also be used judiciously to avoid unnecessary complexity).
+
+## Derive Attribute
+
+Use `#derive(...)` before a type definition to generate implementations of
+supported traits. Each field must satisfy the requirements of the derived
+trait.
+
+```moonbit
+#derive(Debug)
+struct DebugPoint {
+  x : Int32
+  y : Int32
+}
+
+pub extend DebugPoint with Debug::{to_repr}
+
+test "derive debug struct" {
+  let point = DebugPoint::{ x: 1, y: 2 }
+  debug_inspect(point, content="{ x: 1, y: 2 }")
+}
+```
+
+See [Deriving traits](https://docs.moonbitlang.com/en/latest/language/derive.html) for supported traits and their
+options. `moon fmt` migrates the older trailing `derive(...)` syntax.
 
 ## Deprecated Attribute
 
@@ -653,9 +678,9 @@ expose dependency functionality, define and export a wrapper in the exporting
 package.
 
 #### NOTE
-The native backend does not currently support exporting a `foreign_library`
-package as a linkable library artifact, including shared libraries such as a
-`.dll` or `.so`. Use Wasm or JavaScript if you need an exported library.
+The native backend produces a static archive (`.a`, or `.lib` on Windows),
+not a shared library such as a `.dll` or `.so`. The host must call
+`moonbit_init()` before calling exported functions.
 
 See [Export Functions](https://docs.moonbitlang.com/en/latest/language/ffi.html#export-functions) for backend-specific
 alternatives.

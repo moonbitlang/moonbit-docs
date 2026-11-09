@@ -64,7 +64,7 @@ supported_targets = "+wasm+wasm-gc+js+native"
 
 ## Step 2: Implement shared domain validation
 
-Define request/response types with `derive(ToJson, FromJson)` and one `suberror`-based validator in `shared/`.
+Define request/response types with `#derive(ToJson, FromJson)` and one `suberror`-based validator in `shared/`.
 Both frontend and backend import this package.
 
 ```moonbit
@@ -74,9 +74,10 @@ import {
 ```
 
 ```moonbit
+#derive(Eq, ToJson, FromJson)
 pub(all) struct SubmitTitleRequest {
   title : String
-} derive(Eq, ToJson, FromJson)
+}
 
 ///|
 pub extend SubmitTitleRequest with Eq::{not_equal, equal}
@@ -88,11 +89,12 @@ pub extend SubmitTitleRequest with ToJson::{to_json}
 pub extend SubmitTitleRequest with @moonbitlang/core/json.FromJson::{from_json}
 
 ///|
+#derive(Eq, ToJson, FromJson)
 pub(all) suberror TitleValidationError {
   EmptyTitle
   TooLong(Int32)
   ForbiddenHash
-} derive(Eq, ToJson, FromJson)
+}
 
 ///|
 pub extend TitleValidationError with Eq::{not_equal, equal}
@@ -104,11 +106,12 @@ pub extend TitleValidationError with ToJson::{to_json}
 pub extend TitleValidationError with @moonbitlang/core/json.FromJson::{from_json}
 
 ///|
+#derive(Eq, ToJson, FromJson)
 pub(all) enum SubmitTitleResponse {
   Accepted(String)
   ValidationError(TitleValidationError)
   InvalidJson
-} derive(Eq, ToJson, FromJson)
+}
 
 ///|
 pub extend SubmitTitleResponse with Eq::{not_equal, equal}

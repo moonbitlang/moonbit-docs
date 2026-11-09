@@ -2,9 +2,12 @@
 
 MoonBit supports deriving a number of builtin traits automatically from the type definition.
 
+Place `#derive(...)` before the type definition. Run `moon fmt` to migrate
+the older trailing `derive(...)` syntax.
+
 To derive a trait `T`, all fields used in the type must implement `T`.
-For example, deriving `Show` for a struct `struct A { x: T1; y: T2 }`
-requires both `T1 : Show` and `T2 : Show`.
+For example, deriving `Debug` for a struct `struct A { x: T1; y: T2 }`
+requires both `T1 : Debug` and `T2 : Debug`.
 
 `derive` generates a trait implementation. The examples below also use
 [`extend`](https://docs.moonbitlang.com/en/latest/language/methods.html#attaching-trait-methods-with-extend) to state explicitly
@@ -14,15 +17,16 @@ implementation.
 
 ## Eq and Compare
 
-`derive(Eq)` and `derive(Compare)` generate the corresponding implementations for testing equality and comparison.
+`#derive(Eq)` and `#derive(Compare)` generate the corresponding implementations for testing equality and comparison.
 Fields are compared in the same order as their definitions.
 For enums, the order between cases ascends in the order of definition.
 
 ```moonbit
+#derive(Eq, Compare)
 struct DeriveEqCompare {
   x : Int32
   y : Int32
-} derive(Eq, Compare)
+}
 
 pub extend DeriveEqCompare with Eq::{not_equal, equal}
 
@@ -55,11 +59,12 @@ test "derive eq_compare struct" {
 ```
 
 ```moonbit
+#derive(Eq, Compare)
 enum DeriveEqCompareEnum {
   Case1(Int32)
   Case2(label~ : String)
   Case3
-} derive(Eq, Compare)
+}
 
 pub extend DeriveEqCompareEnum with Eq::{not_equal, equal}
 
@@ -94,14 +99,15 @@ test "derive eq_compare enum" {
 
 ## Debug
 
-`derive(Debug)` generates a structural debugging implementation for the type.
+`#derive(Debug)` generates a structural debugging implementation for the type.
 It is useful with `debug_inspect` in tests and `@debug.to_string` when formatting diagnostic messages.
 
 ```moonbit
+#derive(Debug)
 struct DebugPoint {
   x : Int32
   y : Int32
-} derive(Debug)
+}
 
 pub extend DebugPoint with Debug::{to_repr}
 
@@ -114,10 +120,11 @@ test "derive debug struct" {
 Enums can derive `Debug` as well:
 
 ```moonbit
+#derive(Debug)
 enum DebugShape {
   Circle(radius~ : Int32)
   Rect(width~ : Int32, height~ : Int32)
-} derive(Debug)
+}
 
 pub extend DebugShape with Debug::{to_repr}
 
@@ -129,7 +136,7 @@ test "derive debug enum" {
 
 ## Default
 
-`derive(Default)` generates a `Default` implementation for the type. Call
+`#derive(Default)` generates a `Default` implementation for the type. Call
 `Default::default()` with the expected type specified so MoonBit can select the
 implementation. Use an explicit `extend` declaration if `default` should also
 be part of the type's method-style API.
@@ -137,10 +144,11 @@ be part of the type's method-style API.
 For structs, the default value is the struct with all fields set as their default value.
 
 ```moonbit
+#derive(Default, Eq)
 struct DeriveDefault {
   x : Int32
   y : String?
-} derive(Default, Eq)
+}
 
 pub extend DeriveDefault with Default::{default}
 
@@ -155,11 +163,12 @@ test "derive default struct" {
 For enums, the default value is the only case that has no parameters.
 
 ```moonbit
+#derive(Default, Eq)
 enum DeriveDefaultEnum {
   Case1(Int32)
   Case2(label~ : String)
   Case3
-} derive(Default, Eq)
+}
 
 pub extend DeriveDefaultEnum with Default::{default}
 
@@ -175,28 +184,31 @@ Enums that has no cases or more than one cases without parameters cannot derive 
 
 <!-- MANUAL CHECK  should not compile -->
 ```moonbit
+#derive(Default) // cannot find a constant constructor as default
 enum CannotDerive1 {
     Case1(String)
     Case2(Int32)
-} derive(Default) // cannot find a constant constructor as default
+}
 
+#derive(Default) // Case1 and Case2 are both candidates as default constructor
 enum CannotDerive2 {
     Case1
     Case2
-} derive(Default) // Case1 and Case2 are both candidates as default constructor
+}
 ```
 
 ## Hash
 
-`derive(Hash)` generates a hash implementation for the type.
+`#derive(Hash)` generates a hash implementation for the type.
 This will allow the type to be used in places that expects a `Hash` implementation,
 for example `HashMap`s and `HashSet`s.
 
 ```moonbit
+#derive(Hash, Eq)
 struct DeriveHash {
   x : Int32
   y : String?
-} derive(Hash, Eq)
+}
 
 pub extend DeriveHash with Hash::{hash, hash_combine}
 
@@ -214,11 +226,11 @@ test "derive hash struct" {
 
 ## Arbitrary
 
-`derive(Arbitrary)` will generate random values of the given type.
+`#derive(Arbitrary)` will generate random values of the given type.
 
 ## Shrink
 
-`derive(Shrink)` implements `@quickcheck.Shrink` for property-based testing.
+`#derive(Shrink)` implements `@quickcheck.Shrink` for property-based testing.
 Struct fields are shrunk one at a time in source order. Enum values keep their
 current constructor while its payload is shrunk; constructors without payloads
 produce no candidates. Every field or payload used by the derived
@@ -226,10 +238,11 @@ implementation must itself implement `Shrink`.
 
 ```moonbit
 ///|
+#derive(Shrink)
 struct ShrinkPoint {
   x : Int32
   y : Int32
-} derive(Shrink)
+}
 
 ///|
 pub extend ShrinkPoint with @shrink.Shrink::{shrink}
@@ -248,16 +261,17 @@ test "derive shrink struct" {
 
 ## FromJson and ToJson
 
-`derive(FromJson)` and `derive(ToJson)` automatically generate round-trippable
+`#derive(FromJson)` and `#derive(ToJson)` automatically generate round-trippable
 trait implementations used for serializing the type to and from JSON. Trait
 functions can be called with qualified syntax such as `ToJson::to_json(value)`.
 The implementation is mainly for debugging and storing the types in a human-readable format.
 
 ```moonbit
+#derive(FromJson, ToJson, Eq)
 struct JsonTest1 {
   x : Int32
   y : Int32
-} derive(FromJson, ToJson, Eq)
+}
 
 pub extend JsonTest1 with @moonbitlang/core/json.FromJson::{from_json}
 
@@ -265,10 +279,11 @@ pub extend JsonTest1 with ToJson::{to_json}
 
 pub extend JsonTest1 with Eq::{not_equal, equal}
 
+#derive(FromJson(style="legacy"), ToJson(style="legacy"), Eq)
 enum JsonTest2 {
   A(x~ : Int32)
   B(x~ : Int32, y~ : Int32)
-} derive(FromJson(style="legacy"), ToJson(style="legacy"), Eq)
+}
 
 pub extend JsonTest2 with @moonbitlang/core/json.FromJson::{from_json}
 
@@ -303,14 +318,11 @@ For such usage and future usage of them, please manually implement the traits.
 The arguments include: `repr`, `case_repr`, `default`, `rename_all`, etc.
 
 ```moonbit
+#derive(FromJson(fields(x(rename="renamedX"))), ToJson(fields(x(rename="renamedX"))), Eq)
 struct JsonTest3 {
   x : Int32
   y : Int32
-} derive (
-  FromJson(fields(x(rename="renamedX"))),
-  ToJson(fields(x(rename="renamedX"))),
-  Eq,
-)
+}
 
 pub extend JsonTest3 with @moonbitlang/core/json.FromJson::{from_json}
 
@@ -318,10 +330,11 @@ pub extend JsonTest3 with ToJson::{to_json}
 
 pub extend JsonTest3 with Eq::{not_equal, equal}
 
+#derive(FromJson, ToJson, Eq)
 enum JsonTest4 {
   A(x~ : Int32)
   B(x~ : Int32, y~ : Int32)
-} derive(FromJson, ToJson, Eq)
+}
 
 pub extend JsonTest4 with @moonbitlang/core/json.FromJson::{from_json}
 
@@ -355,7 +368,7 @@ enum E {
 }
 ```
 
-With `derive(ToJson(style="legacy"))`, the enum is formatted into:
+With `#derive(ToJson(style="legacy"))`, the enum is formatted into:
 
 ```none
 E::One              => { "$tag": "One" }
@@ -363,7 +376,7 @@ E::Uniform(2)       => { "$tag": "Uniform", "0": 2 }
 E::Axes(x=-1, y=1)  => { "$tag": "Axes", "x": -1, "y": 1 }
 ```
 
-With `derive(ToJson(style="flat"))`, the enum is formatted into:
+With `#derive(ToJson(style="flat"))`, the enum is formatted into:
 
 ```none
 E::One              => "One"
@@ -381,11 +394,12 @@ As a result, it interpreted as `T | undefined` iff it is a direct field
 of a struct, and `[T] | null` otherwise:
 
 ```moonbit
+#derive(ToJson)
 struct A {
   x : Int32?
   y : Int32??
   z : (Int32?, Int32??)
-} derive(ToJson)
+}
 
 pub extend A with ToJson::{to_json}
 

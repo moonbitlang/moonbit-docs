@@ -38,7 +38,9 @@ The provided functionalities are:
 
 - Format: format the code block
 - Test / Bench: test or bench the test block
-- Debug (JavaScript backend only): test the test block with debugger
+- Debug: debug a test or `main`. For Native, install CodeLLDB and set
+  `preferred_target = "native"` in `moon.mod`. JavaScript and LLVM debugging
+  are also supported.
 - Update: update the [snapshot tests](https://docs.moonbitlang.com/en/latest/language/tests.html#snapshot-tests) in the
   code block
 - Trace: turn on/off the tracing of the test block where each assignment will

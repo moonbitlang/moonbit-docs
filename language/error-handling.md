@@ -98,7 +98,8 @@ indicate that the function might raise an error during an execution. For
 example, the following function `div` might return an error of type `DivError`:
 
 ```moonbit
-suberror DivError { DivError(String) } derive(Debug)
+#derive(Debug)
+suberror DivError { DivError(String) }
 
 pub extend DivError with Debug::{to_repr}
 

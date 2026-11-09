@@ -70,6 +70,8 @@
   * [Scripts](https://docs.moonbitlang.com/en/latest/toolchain/moon/module.html#scripts)
 * [Package Configuration](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html)
   * [New format (`moon.pkg`)](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#new-format-moon-pkg)
+  * [Conditional Imports](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#conditional-imports)
+  * [Experimental Packages](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#experimental-packages)
   * [Name](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#name)
   * [Formatter](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#formatter)
   * [Package type](https://docs.moonbitlang.com/en/latest/toolchain/moon/package.html#package-type)

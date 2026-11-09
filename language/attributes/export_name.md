@@ -31,9 +31,9 @@ expose dependency functionality, define and export a wrapper in the exporting
 package.
 
 #### NOTE
-The native backend does not currently support exporting a `foreign_library`
-package as a linkable library artifact, including shared libraries such as a
-`.dll` or `.so`. Use Wasm or JavaScript if you need an exported library.
+The native backend produces a static archive (`.a`, or `.lib` on Windows),
+not a shared library such as a `.dll` or `.so`. The host must call
+`moonbit_init()` before calling exported functions.
 
 See [Export Functions](https://docs.moonbitlang.com/en/latest/language/ffi.html#export-functions) for backend-specific
 alternatives.
