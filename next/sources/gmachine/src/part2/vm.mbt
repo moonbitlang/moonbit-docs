@@ -1,6 +1,7 @@
 // Use the struct tuple to encapsulate an address type.
 
-struct Addr(Int32) derive(Eq, Debug)
+#derive(Eq, Debug)
+struct Addr(Int32)
 
 pub extend Addr with Eq::{not_equal, equal}
 
@@ -8,6 +9,7 @@ pub extend Addr with @moonbitlang/core/debug.Debug::{to_repr}
 
 // Describe graph nodes with an enumeration type.
 
+#derive(Eq, Debug)
 enum Node {
   NNum(Int32)
   // The application node
@@ -17,7 +19,7 @@ enum Node {
   NGlobal(String, Int32, List[Instruction])
   // The Indirection node，The key component of implementing lazy evaluation
   NInd(Addr)
-} derive(Eq, Debug)
+}
 
 pub extend Node with Eq::{not_equal, equal}
 

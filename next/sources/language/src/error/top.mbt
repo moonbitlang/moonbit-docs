@@ -11,7 +11,8 @@ suberror E3 { // error type E3 has three constructors like a normal enum type
 // end error 1
 
 // start error 2
-suberror DivError { DivError(String) } derive(Debug)
+#derive(Debug)
+suberror DivError { DivError(String) }
 
 pub extend DivError with Debug::{to_repr}
 

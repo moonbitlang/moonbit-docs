@@ -602,14 +602,82 @@ msgid ""
 "output."
 msgstr ""
 
-#: ../../language/ffi.md:408
+#: ../../language/ffi.md:407
+msgid "Native Static Libraries"
+msgstr "Native 静的ライブラリ"
+
+#: ../../language/ffi.md:409
 msgid ""
-"The native backend does not currently support exporting a "
-"`foreign_library` package as a linkable library artifact, including "
-"shared libraries such as a `.dll` or `.so`."
+"The native backend builds a `foreign_library` package as a static "
+"archive: `.a`, or `.lib` on Windows. It does not produce a shared library"
+" such as a `.dll` or `.so`."
+msgstr "native バックエンドは `foreign_library` パッケージを静的アーカイブ（`.a`、Windows では `.lib`）としてビルドします。`.dll` や `.so` などの共有ライブラリは生成しません。"
+
+#: ../../language/ffi.md:413
+msgid ""
+"pkgtype(kind: \"foreign_library\")\n"
+"supported_targets = \"native\"\n"
 msgstr ""
-"native バックエンドは現在、`foreign_library` パッケージをリンク可能なライブラリアーティファクトとしてエクスポートできません。"
-"これには `.dll` や `.so` などの共有ライブラリも含まれます。"
+
+#: ../../language/ffi.md:417
+msgid ""
+"///|\n"
+"let offset : Int32 = 2\n"
+"\n"
+"///|\n"
+"#export_name(\"add\")\n"
+"pub fn add(a : Int32, b : Int32) -> Int32 {\n"
+"  a + b + offset\n"
+"}\n"
+msgstr ""
+
+#: ../../language/ffi.md:421
+msgid ""
+"Run `moon build --target native --release` and use the archive path "
+"printed in the artifact list. Before calling exported functions, the host"
+" must call `moonbit_init()` to initialize the runtime and top-level "
+"values:"
+msgstr "`moon build --target native --release` を実行し、成果物一覧に表示されるアーカイブのパスを使用します。エクスポート関数を呼ぶ前に、ホストは `moonbit_init()` を呼び、ランタイムとトップレベルの値を初期化する必要があります："
+
+#: ../../language/ffi.md:425
+#, python-format
+msgid ""
+"#include \"moonbit.h\"\n"
+"#include <stdio.h>\n"
+"\n"
+"extern int32_t add(int32_t a, int32_t b);\n"
+"\n"
+"int main(void) {\n"
+"  moonbit_init();\n"
+"  printf(\"%d\\n\", add(40, 2));\n"
+"  return 0;\n"
+"}\n"
+msgstr ""
+
+#: ../../language/ffi.md:429
+msgid ""
+"On Unix-like systems, compile the host with the toolchain's include "
+"directory and generated archive, for example:"
+msgstr "Unix 系のシステムでは、ツールチェーンのインクルードディレクトリと生成したアーカイブを指定してホストをコンパイルします。例："
+
+#: ../../language/ffi.md:432
+msgid ""
+"cc -I \"$MOON_HOME/include\" host.c path/to/lib.a -lm -o host\n"
+"./host\n"
+"# 44\n"
+msgstr ""
+
+#: ../../language/ffi.md:438
+msgid ""
+"Here `MOON_HOME` is the MoonBit installation directory. On Windows, use "
+"MSVC or clang-cl with the generated `.lib` and the corresponding include "
+"directory. Debug archives may require additional backtrace-library "
+"dependencies; the command above uses a release archive."
+msgstr "ここで `MOON_HOME` は MoonBit のインストール先です。Windows では MSVC または clang-cl を使い、生成した `.lib` と対応するインクルードディレクトリを指定します。Debug アーカイブでは追加のバックトレースライブラリが必要な場合があるため、上記は release アーカイブを使用します。"
+
+#: ../../language/ffi.md:443
+msgid "Backend-specific Exports"
+msgstr "バックエンド固有のエクスポート"
 
 #: ../../language/ffi.md:413
 msgid ""
@@ -664,9 +732,9 @@ msgstr ""
 "CommonJS モジュール（`cjs`）、ES Module（`esm`）、`iife` としてエクスポートするための別の `format` "
 "オプションもあります。"
 
-#: ../../language/ffi.md:452
-msgid "Renaming the exported function is not supported for now"
-msgstr "エクスポートした関数の名前変更は、現時点ではサポートしていません"
+#: ../../language/ffi.md:484
+msgid "Use `#export_name` to set the native symbol name."
+msgstr "native のシンボル名は `#export_name` で指定してください。"
 
 #: ../../language/ffi.md:457
 msgid "Lifetime management"

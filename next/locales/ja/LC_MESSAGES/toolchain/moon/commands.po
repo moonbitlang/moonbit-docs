@@ -213,8 +213,8 @@ msgid "`remove` — Remove a dependency"
 msgstr ""
 
 #: ../../toolchain/moon/commands.md:58
-msgid "`install` — Install dependencies"
-msgstr ""
+msgid "`install` — Install a MoonBit executable"
+msgstr "`install` — MoonBit 実行ファイルをインストール"
 
 #: ../../toolchain/moon/commands.md:59
 msgid "`tree` — Display the dependency tree"
@@ -464,8 +464,12 @@ msgid "`moon check`"
 msgstr ""
 
 #: ../../toolchain/moon/commands.md:129
-msgid "Check the current package, but don't build object files"
-msgstr ""
+msgid ""
+"Check the current package, but don't build object files. A successful "
+"check also updates `pkg.generated.mbti` for checked local packages whose "
+"preferred backend is included. Use `--no-mbti` to skip updating interface"
+" files."
+msgstr "現在のパッケージを検査しますが、オブジェクトファイルは生成しません。検査対象に優先バックエンドが含まれるローカルパッケージでは、成功後に `pkg.generated.mbti` も更新します。`--no-mbti` でインターフェースファイルの更新を省略できます。"
 
 #: ../../toolchain/moon/commands.md:131
 msgid "**Usage:** `moon check [OPTIONS] [SINGLE_FILE]`"
@@ -585,9 +589,13 @@ msgstr ""
 msgid "`--build-only` — Only build, do not run the tests"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:261
-msgid "`--no-parallelize` — Run the tests in a target backend sequentially"
-msgstr ""
+#: ../../toolchain/moon/commands.md:263
+msgid ""
+"`--no-parallelize` — Run test executables sequentially while keeping the "
+"build parallel. By default, executables run in parallel according to the "
+"CPU count; use `-j N` to limit concurrency. This does not control async "
+"tests within one package."
+msgstr "`--no-parallelize` — ビルドの並列性を維持したままテスト実行ファイルを順次実行します。既定では CPU 数に応じて並列実行し、`-j N` で同時実行数を制限できます。パッケージ内の非同期テストの並列性には影響しません。"
 
 #: ../../toolchain/moon/commands.md:262
 msgid "`--test-failure-json` — Print failure message in JSON format"
@@ -769,9 +777,12 @@ msgstr ""
 msgid "`moon install`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:414
-msgid "Install dependencies"
-msgstr ""
+#: ../../toolchain/moon/commands.md:416
+msgid ""
+"Install a MoonBit executable. Dependency synchronization happens "
+"automatically during commands such as `moon check`, `moon build`, and "
+"`moon test`; do not use `moon install` for that purpose."
+msgstr "MoonBit 実行ファイルをインストールします。依存関係は `moon check`、`moon build`、`moon test` などで自動同期されるため、その目的で `moon install` を使わないでください。"
 
 #: ../../toolchain/moon/commands.md:416
 msgid "**Usage:** `moon install`"

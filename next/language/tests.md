@@ -34,15 +34,23 @@ If a test name starts with `"panic"`, it indicates that the expected behavior of
 :end-before: end test 2
 ```
 
+## Documentation Tests
+
+Code blocks marked `mbt check` in `///` documentation comments can contain
+tests run by `moon test`. A documentation test does not inherit the documented
+function's `#cfg` attribute. If the test only supports certain backends,
+put the appropriate `#cfg` attribute on the test block itself.
+
 ## Snapshot Tests
 
 Writing tests can be tedious when specifying the expected values. Thus, MoonBit provides three kinds of snapshot tests.
 All of which can be inserted or updated automatically using `moon test --update`.
 
-### Snapshotting `Show`
+### Snapshotting `Debug`
 
-We can use `inspect(x, content="x")` to inspect anything that implements `Show` trait. 
-As we mentioned before, `Show` is a builtin trait that can be derived, providing `to_string` that will print the content of the data structures. 
+Use `debug_inspect(x, content="...")` for values implementing `Debug`.
+Add `#derive(Debug)` before a type definition to generate a structural
+representation. Use `inspect` for values with a custom `Show` implementation.
 The labelled argument `content` can be omitted as `moon test --update` will insert it for you:
 
 ```{literalinclude} /sources/language/src/testing/top.mbt
@@ -53,9 +61,10 @@ The labelled argument `content` can be omitted as `moon test --update` will inse
 
 ### Snapshotting `JSON`
 
-The problem with the derived `Show` trait is that it does not perform pretty printing, resulting in extremely long output.
+Structural debugging output can become long for deeply nested values.
 
-The solution is to use `@json.inspect(x, content=x)`. The benefit is that the resulting content is a JSON structure, which can be more readable after being formatted.
+Use `json_inspect(x, content=x)` to record a JSON structure, which can be more
+readable after formatting.
 
 ```{literalinclude} /sources/language/src/testing/top.mbt
 :language: moonbit

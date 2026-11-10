@@ -46,9 +46,10 @@ msgid ""
 "attribute-argument ::= expr | LIDENT '=' expr\n"
 "\n"
 "expr ::= LIDENT | UIDENT | STRING | 'true' | 'false'\n"
-"       | LIDENT '.' LIDENT\n"
+"       | '@' LIDENT '.' LIDENT | '@' LIDENT '.' UIDENT\n"
+"       | '[' (expr (',' expr)* ','?)? ']'\n"
 "       | LIDENT '(' attribute-arguments ')'\n"
-"       | LIDENT '.' LIDENT '(' attribute-arguments ')'\n"
+"       | UIDENT '(' attribute-arguments ')'\n"
 msgstr ""
 
 #: ../../language/attributes.md:25
@@ -98,6 +99,39 @@ msgid ""
 "static typing and performance (should also be used judiciously to avoid "
 "unnecessary complexity)."
 msgstr "私たちはコンパイル時コード生成を使うことを好みます。これにより静的型付けと性能の利点を保てます（ただし、不要な複雑さを避けるため慎重に使うべきです）。"
+
+#: ../../language/attributes/derive.md:2
+msgid "Derive Attribute"
+msgstr "Derive 属性"
+
+#: ../../language/attributes/derive.md:4
+msgid ""
+"Use `#derive(...)` before a type definition to generate implementations "
+"of supported traits. Each field must satisfy the requirements of the "
+"derived trait."
+msgstr "型定義の前に `#derive(...)` を付けると、対応するトレイトの実装を生成できます。各フィールドは派生するトレイトの要件を満たす必要があります。"
+
+#: ../../language/attributes/derive.md:8
+msgid ""
+"#derive(Debug)\n"
+"struct DebugPoint {\n"
+"  x : Int32\n"
+"  y : Int32\n"
+"}\n"
+"\n"
+"pub extend DebugPoint with Debug::{to_repr}\n"
+"\n"
+"test \"derive debug struct\" {\n"
+"  let point = DebugPoint::{ x: 1, y: 2 }\n"
+"  debug_inspect(point, content=\"{ x: 1, y: 2 }\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/derive.md:14
+msgid ""
+"See [Deriving traits](/language/derive.md) for supported traits and their"
+" options. `moon fmt` migrates the older trailing `derive(...)` syntax."
+msgstr "対応するトレイトとオプションは[トレイトの派生](/language/derive.md)を参照してください。`moon fmt` で旧来の末尾に置く `derive(...)` 構文を移行できます。"
 
 #: ../../language/attributes/deprecated.md:2
 msgid "Deprecated Attribute"
@@ -1175,17 +1209,11 @@ msgstr ""
 
 #: ../../language/attributes/export_name.md:15
 msgid ""
-"MoonBit currently requires the exported name to be unique within the "
-"package and to be a valid C symbol identifier, regardless of the selected"
-" backend."
-msgstr ""
-
-#: ../../language/attributes/export_name.md:19
-msgid ""
-"Known compiler issue: `#export_name` currently applies its C-symbol-"
-"identifier restriction to every backend. WebAssembly export names are "
-"UTF-8 strings and are not limited to C identifiers."
-msgstr ""
+"Export names must be unique within the package. Name restrictions depend "
+"on the backend: native requires valid C symbol identifiers, while "
+"WebAssembly export names are UTF-8 strings and are not limited to C "
+"identifiers."
+msgstr "エクスポート名はパッケージ内で一意である必要があります。名前の制約はバックエンドによって異なり、native では有効な C シンボル識別子が必要ですが、WebAssembly のエクスポート名は UTF-8 文字列であり C 識別子に限定されません。"
 
 #: ../../language/attributes/export_name.md:24
 msgid ""
@@ -1211,15 +1239,12 @@ msgid ""
 " in the exporting package."
 msgstr ""
 
-#: ../../language/attributes/export_name.md:40
+#: ../../language/attributes/export_name.md:35
 msgid ""
-"The native backend does not currently support exporting a "
-"`foreign_library` package as a linkable library artifact, including "
-"shared libraries such as a `.dll` or `.so`. Use Wasm or JavaScript if you"
-" need an exported library."
-msgstr ""
-"native バックエンドは現在、`foreign_library` パッケージをリンク可能なライブラリアーティファクトとしてエクスポートできません。"
-"これには `.dll` や `.so` などの共有ライブラリも含まれます。エクスポート可能なライブラリが必要な場合は、Wasm または JavaScript を使用してください。"
+"The native backend produces a static archive (`.a`, or `.lib` on "
+"Windows), not a shared library such as a `.dll` or `.so`. The host must "
+"call `moonbit_init()` before calling exported functions."
+msgstr "native バックエンドは静的アーカイブ（`.a`、Windows では `.lib`）を生成し、`.dll` や `.so` などの共有ライブラリは生成しません。ホストはエクスポート関数を呼ぶ前に `moonbit_init()` を呼ぶ必要があります。"
 
 #: ../../language/attributes/export_name.md:45
 msgid ""

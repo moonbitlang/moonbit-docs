@@ -167,63 +167,22 @@ test "is qualified" {
 }
 ```
 
-We will get an error message, reminding us that `Show` and `Eq` are not implemented for `ExamResult`. 
+`assert_eq` requires the compared type to implement `Eq` and `Debug`.
+`Eq` supplies equality comparison, while `Debug` supplies a representation for
+failure messages. These are **traits**: interfaces describing operations that
+a type supports.
 
-`Show` and `Eq` are **traits**. A trait in MoonBit defines some common operations that a type should be able to perform.
+For this enum, derive both implementations by placing `#derive(Eq, Debug)`
+before the type definition:
 
-For example, `Eq` defines that there should be a way to compare two values of the same type with a function called `op_equal`:
-
-```{code-block} moonbit
-:class: top-level
-trait Eq {
-  op_equal(Self, Self) -> Bool
-}
+```{literalinclude} /sources/language/src/testing/exam_test.mbt
+:language: moonbit
+:start-after: start exam traits
+:end-before: end exam traits
 ```
 
-and `Show` defines that there should be a way to either convert a value of a type into `String` or write it using a `Logger`:
-
-```{code-block} moonbit
-:class: top-level
-trait Show {
-  output(Self, &Logger) -> Unit
-  to_string(Self) -> String
-}
-```
-
-And the `assert_eq` uses them to constraint the passed parameters so that it can compare the two values and print them when they are not equal:
-
-```{code-block} moonbit
-:class: top-level
-fn[A : Eq + Show] assert_eq!(value : A, other : A) -> Unit {
-  ...
-}
-```
-
-We need to implement `Eq` and `Show` for our `ExamResult`. There are two ways to do so.
-
-1. By defining an explicit implementation:
-
-    ```{code-block} moonbit
-    :class: top-level
-    impl Eq for ExamResult with equal(self, other) {
-      match (self, other) {
-        (Pass, Pass) | (Fail, Fail) => true
-        _ => false
-      }
-    }
-    ```
-
-    Here we use [pattern matching](/language/fundamentals.md#pattern-matching) to check the cases of the `ExamResult`.
-
-2. An alternative way is by [deriving](/language/derive.md) since `Eq` and `Show` are [builtin traits](/language/methods.md#builtin-traits) and the output for `ExamResult` is quite straightforward:
-
-    ```{code-block} moonbit
-    :class: top-level
-    enum ExamResult {
-      Pass
-      Fail
-    } derive(Show)
-    ```
+For custom behavior, write an explicit [trait implementation](/language/methods.md#implementing-traits)
+instead of deriving it.
 
 Now that we've implemented the traits, we can continue with our test implementations:
 

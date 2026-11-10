@@ -95,6 +95,19 @@ msgid ""
 msgstr ""
 
 #: ../../language/tests.md:37
+msgid "Documentation Tests"
+msgstr "ドキュメントテスト"
+
+#: ../../language/tests.md:39
+msgid ""
+"Code blocks marked `mbt check` in `///` documentation comments can "
+"contain tests run by `moon test`. A documentation test does not inherit "
+"the documented function's `#cfg` attribute. If the test only supports "
+"certain backends, put the appropriate `#cfg` attribute on the test block "
+"itself."
+msgstr "`///` ドキュメントコメント内の `mbt check` コードブロックには、`moon test` で実行するテストを記述できます。ドキュメントテストは対象関数の `#cfg` 属性を継承しません。特定のバックエンドだけをサポートするテストには、テストブロック自体に適切な `#cfg` 属性を付けてください。"
+
+#: ../../language/tests.md:37
 msgid "Snapshot Tests"
 msgstr "スナップショットテスト"
 
@@ -107,27 +120,25 @@ msgstr ""
 "期待値を細かく指定しながらテストを書くのは面倒なことがあります。そのため MoonBit には 3 "
 "種類のスナップショットテストがあります。いずれも `moon test --update` で自動的に挿入または更新できます。"
 
-#: ../../language/tests.md:42
-msgid "Snapshotting `Show`"
-msgstr "`Show` のスナップショット"
+#: ../../language/tests.md:49
+msgid "Snapshotting `Debug`"
+msgstr "`Debug` のスナップショット"
 
-#: ../../language/tests.md:44
+#: ../../language/tests.md:51
 msgid ""
-"We can use `inspect(x, content=\"x\")` to inspect anything that "
-"implements `Show` trait.  As we mentioned before, `Show` is a builtin "
-"trait that can be derived, providing `to_string` that will print the "
-"content of the data structures.  The labelled argument `content` can be "
-"omitted as `moon test --update` will insert it for you:"
-msgstr ""
-"`Show` トレイトを実装しているものなら、`inspect(x, content=\"x\")` "
-"を使って検査できます。前述のとおり、`Show` は導出可能な組み込みトレイトであり、データ構造の内容を表示する `to_string` "
-"を提供します。ラベル付き引数 `content` は、`moon test --update` が自動で挿入するため省略できます："
+"Use `debug_inspect(x, content=\"...\")` for values implementing `Debug`. "
+"Add `#derive(Debug)` before a type definition to generate a structural "
+"representation. Use `inspect` for values with a custom `Show` "
+"implementation. The labelled argument `content` can be omitted as `moon "
+"test --update` will insert it for you:"
+msgstr "`Debug` を実装する値には `debug_inspect(x, content=\"...\")` を使います。型定義の前に `#derive(Debug)` を付けると構造的な表現を生成できます。独自の `Show` 実装を持つ値には `inspect` を使います。ラベル付き引数 `content` は省略でき、`moon test --update` が挿入します："
 
-#: ../../language/tests.md:48
+#: ../../language/tests.md:56
 msgid ""
+"#derive(Debug)\n"
 "struct X {\n"
 "  x : Int32\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "pub extend X with Debug::{to_repr}\n"
 "\n"
@@ -140,27 +151,23 @@ msgstr ""
 msgid "Snapshotting `JSON`"
 msgstr "`JSON` のスナップショット"
 
-#: ../../language/tests.md:56
-msgid ""
-"The problem with the derived `Show` trait is that it does not perform "
-"pretty printing, resulting in extremely long output."
-msgstr "導出された `Show` トレイトの問題は、整形出力をしないため、出力が非常に長くなることです。"
+#: ../../language/tests.md:64
+msgid "Structural debugging output can become long for deeply nested values."
+msgstr "深く入れ子になった値の構造的なデバッグ出力は長くなることがあります。"
 
-#: ../../language/tests.md:58
+#: ../../language/tests.md:66
 msgid ""
-"The solution is to use `@json.inspect(x, content=x)`. The benefit is that"
-" the resulting content is a JSON structure, which can be more readable "
-"after being formatted."
-msgstr ""
-"解決策は `@json.inspect(x, content=x)` を使うことです。これにより、出力は JSON "
-"構造になり、整形後に読みやすくなります。"
+"Use `json_inspect(x, content=x)` to record a JSON structure, which can be"
+" more readable after formatting."
+msgstr "`json_inspect(x, content=x)` で JSON 構造を記録すると、整形後に読みやすくなります。"
 
-#: ../../language/tests.md:60
+#: ../../language/tests.md:69
 msgid ""
+"#derive(Debug, ToJson)\n"
 "enum Rec {\n"
 "  End\n"
 "  Really_long_name_that_is_difficult_to_read(Rec)\n"
-"} derive(Debug, ToJson)\n"
+"}\n"
 "\n"
 "pub extend Rec with Debug::{to_repr}\n"
 "\n"

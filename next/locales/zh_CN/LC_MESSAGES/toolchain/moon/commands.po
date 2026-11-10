@@ -215,8 +215,8 @@ msgid "`remove` — Remove a dependency"
 msgstr "`remove` — 移除一个依赖"
 
 #: ../../toolchain/moon/commands.md:58
-msgid "`install` — Install dependencies"
-msgstr "`install` — 安装依赖"
+msgid "`install` — Install a MoonBit executable"
+msgstr "`install` — 安装 MoonBit 可执行程序"
 
 #: ../../toolchain/moon/commands.md:59
 msgid "`tree` — Display the dependency tree"
@@ -466,8 +466,12 @@ msgid "`moon check`"
 msgstr ""
 
 #: ../../toolchain/moon/commands.md:129
-msgid "Check the current package, but don't build object files"
-msgstr "检查当前包，但不构建对象文件"
+msgid ""
+"Check the current package, but don't build object files. A successful "
+"check also updates `pkg.generated.mbti` for checked local packages whose "
+"preferred backend is included. Use `--no-mbti` to skip updating interface"
+" files."
+msgstr "检查当前包，但不构建目标文件。检查成功后，还会更新已检查且包含其首选后端的本地包的 `pkg.generated.mbti`。使用 `--no-mbti` 可跳过接口文件更新。"
 
 #: ../../toolchain/moon/commands.md:131
 msgid "**Usage:** `moon check [OPTIONS] [SINGLE_FILE]`"
@@ -587,9 +591,13 @@ msgstr "默认值：`256`"
 msgid "`--build-only` — Only build, do not run the tests"
 msgstr "`--build-only` — 仅构建，不运行测试"
 
-#: ../../toolchain/moon/commands.md:261
-msgid "`--no-parallelize` — Run the tests in a target backend sequentially"
-msgstr "`--no-parallelize` — 顺序运行目标后端中的测试"
+#: ../../toolchain/moon/commands.md:263
+msgid ""
+"`--no-parallelize` — Run test executables sequentially while keeping the "
+"build parallel. By default, executables run in parallel according to the "
+"CPU count; use `-j N` to limit concurrency. This does not control async "
+"tests within one package."
+msgstr "`--no-parallelize` — 顺序执行测试程序，但仍并行构建。默认按 CPU 数量并行运行测试程序，使用 `-j N` 可限制并发数。此选项不控制单个包内异步测试的并发。"
 
 #: ../../toolchain/moon/commands.md:262
 msgid "`--test-failure-json` — Print failure message in JSON format"
@@ -769,9 +777,12 @@ msgstr "`<包路径>` — 要移除的包路径"
 msgid "`moon install`"
 msgstr ""
 
-#: ../../toolchain/moon/commands.md:414
-msgid "Install dependencies"
-msgstr "安装依赖"
+#: ../../toolchain/moon/commands.md:416
+msgid ""
+"Install a MoonBit executable. Dependency synchronization happens "
+"automatically during commands such as `moon check`, `moon build`, and "
+"`moon test`; do not use `moon install` for that purpose."
+msgstr "安装 MoonBit 可执行程序。`moon check`、`moon build`、`moon test` 等命令会自动同步依赖，不应为此使用 `moon install`。"
 
 #: ../../toolchain/moon/commands.md:416
 msgid "**Usage:** `moon install`"

@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-02 14:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4232.md:1
+msgid "E4232"
+msgstr ""
+
+#: ../../language/error_codes/E4232.md:3
+msgid "Compiler diagnostic name: `regex_constant_in_pattern`."
+msgstr "编译器诊断名称：`regex_constant_in_pattern`。"
+
+#: ../../language/error_codes/E4232.md:5
+msgid ""
+"A regex constant cannot be used as an ordinary pattern. Matching a "
+"constant in a regular `match` is not the same as applying a regex to text"
+" or bytes."
+msgstr "正则表达式常量不能用作普通模式。在普通 `match` 中匹配常量，不等同于用正则表达式匹配文本或字节。"
+
+#: ../../language/error_codes/E4232.md:8
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4232.md:10
+msgid ""
+"///|\n"
+"pub const WORD = re\"[a-z]+\"\n"
+"\n"
+"///|\n"
+"pub fn matches(value : Regex) -> Bool {\n"
+"  match value {\n"
+"    WORD => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4232.md:14
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4232.md:16
+msgid ""
+"For text matching, use the regex with `=~`, `lexmatch`, or `lexscan`. Do "
+"not use an ordinary constant pattern to compare regex values."
+msgstr "匹配文本时，请通过 `=~`、`lexmatch` 或 `lexscan` 使用正则表达式。不要使用普通常量模式比较正则表达式的值。"
+
+#: ../../language/error_codes/E4232.md:19
+msgid ""
+"///|\n"
+"pub const WORD = re\"[a-z]+\"\n"
+"\n"
+"///|\n"
+"pub fn matches(text : String) -> Bool {\n"
+"  text =~ WORD\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  assert_true(matches(\"hello\"))\n"
+"  assert_false(matches(\"123\"))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4232.md:23
+msgid "For a byte regex constant, use its `execute` method to match bytes."
+msgstr "对于字节正则表达式常量，使用其 `execute` 方法匹配字节。"

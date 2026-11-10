@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-09 16:58+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/attributes/derive.md:1
+msgid "Derive Attribute"
+msgstr "Derive 属性"
+
+#: ../../language/attributes/derive.md:3
+msgid ""
+"Use `#derive(...)` before a type definition to generate implementations "
+"of supported traits. Each field must satisfy the requirements of the "
+"derived trait."
+msgstr "在类型定义前使用 `#derive(...)`，为支持的特征生成实现。每个字段都必须满足所派生特征的要求。"
+
+#: ../../language/attributes/derive.md:7
+msgid ""
+"#derive(Debug)\n"
+"struct DebugPoint {\n"
+"  x : Int32\n"
+"  y : Int32\n"
+"}\n"
+"\n"
+"pub extend DebugPoint with Debug::{to_repr}\n"
+"\n"
+"test \"derive debug struct\" {\n"
+"  let point = DebugPoint::{ x: 1, y: 2 }\n"
+"  debug_inspect(point, content=\"{ x: 1, y: 2 }\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/derive.md:13
+msgid ""
+"See [Deriving traits](/language/derive.md) for supported traits and their"
+" options. `moon fmt` migrates the older trailing `derive(...)` syntax."
+msgstr "支持的特征及其选项见[特征派生](/language/derive.md)。`moon fmt` 可以迁移旧的尾置 `derive(...)` 语法。"

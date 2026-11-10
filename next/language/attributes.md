@@ -17,9 +17,10 @@ attribute-arguments ::= attribute-argument (',' attribute-argument )*
 attribute-argument ::= expr | LIDENT '=' expr
 
 expr ::= LIDENT | UIDENT | STRING | 'true' | 'false'
-       | LIDENT '.' LIDENT
+       | '@' LIDENT '.' LIDENT | '@' LIDENT '.' UIDENT
+       | '[' (expr (',' expr)* ','?)? ']'
        | LIDENT '(' attribute-arguments ')'
-       | LIDENT '.' LIDENT '(' attribute-arguments ')'
+       | UIDENT '(' attribute-arguments ')'
 ```
 
 Attributes have two categories: the built-in attributes and user-defined attributes. For example:
@@ -37,6 +38,10 @@ The second attribute is a user-defined attribute; it has a namespace prefix `cus
 MoonBit is designed not to support runtime reflection. It's easy to abuse, making it impossible for toolchains (e.g., the compiler) to catch errors at compile time, which makes code harder to maintain. It also negatively impacts performance optimization.
 
 We prefer to use compile-time code generation, keeping the benefits of static typing and performance (should also be used judiciously to avoid unnecessary complexity).
+```
+
+```{include} /language/attributes/derive.md
+:heading-offset: 1
 ```
 
 ```{include} /language/attributes/deprecated.md

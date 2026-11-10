@@ -2,4 +2,5 @@ pub struct MyStruct {
   field : Int32
 }
 
-pub type StructAlias = MyStruct derive(Debug)
+#derive(Debug)
+pub type StructAlias = MyStruct

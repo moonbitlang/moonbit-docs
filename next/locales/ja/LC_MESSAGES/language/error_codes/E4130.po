@@ -45,7 +45,8 @@ msgid ""
 "  field : Int32\n"
 "}\n"
 "\n"
-"pub type StructAlias = MyStruct derive(Debug)\n"
+"#derive(Debug)\n"
+"pub type StructAlias = MyStruct\n"
 msgstr ""
 
 #: ../../language/error_codes/E4130.md:16
@@ -58,9 +59,10 @@ msgstr ""
 
 #: ../../language/error_codes/E4130.md:20
 msgid ""
+"#derive(Debug)\n"
 "pub struct MyStruct {\n"
 "  field : Int32\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "pub extend MyStruct with Debug::{to_repr}\n"
 "\n"

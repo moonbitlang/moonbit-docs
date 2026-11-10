@@ -108,6 +108,14 @@ msgid ""
 msgstr "[mooncakes.io](https://mooncakes.io) に公開するモジュールでは、モジュール名をユーザー名で始める必要があります。"
 
 #: ../../toolchain/moon/module.md:57
+msgid ""
+"A major-version module path can end in `/vN`, as in `owner/library/v2`. "
+"The root package's default alias is still `@library`; use explicit "
+"aliases when importing multiple major versions. Publishing version "
+"`1.0.0` or later is not supported before MoonBit 1.0."
+msgstr "メジャーバージョンを示すモジュールパスは `owner/library/v2` のように `/vN` で終えることができます。ルートパッケージの既定の別名は引き続き `@library` です。複数のメジャーバージョンをインポートする場合は別名を明示してください。MoonBit 1.0 より前は、1.0.0 以降のバージョンの公開はサポートされません。"
+
+#: ../../toolchain/moon/module.md:57
 msgid "Version"
 msgstr "バージョン"
 
@@ -140,6 +148,10 @@ msgstr ""
 #: ../../toolchain/moon/module.md:78
 msgid "Dependency Management"
 msgstr "依存関係管理"
+
+#: ../../toolchain/moon/module.md:85
+msgid "A dependency's declared version must exist in the registry."
+msgstr "宣言する依存バージョンはレジストリに存在する必要があります。"
 
 #: ../../toolchain/moon/module.md:80
 msgid ""
@@ -743,7 +755,7 @@ msgstr ""
 "`moonc check -warn-help` を使うと、プリセットコンパイラ警告番号の一覧を確認できます。以下の出力では、`mnemonic`"
 " は警告リストで使われる記号名で、`id` は同じ警告の数値形式です。"
 
-#: ../../toolchain/moon/module.md:523
+#: ../../toolchain/moon/module.md:530
 msgid ""
 "$ moonc check -warn-help\n"
 "Available warnings:\n"
@@ -890,7 +902,7 @@ msgid ""
 "unnecessary_view_op        Unnecessary `[:]` view operator"
 "                                 75 off\n"
 "result_error_return        Using `Result[T, E]` where `E` is an error "
-"type.                78 off\n"
+"type.                78 warn\n"
 "implicit_impl_as_method    `impl` implicitly promoted as method"
 "                            79 warn\n"
 "regex_match_missing_before Missing `before` binding in `regex match`."
@@ -926,6 +938,12 @@ msgid ""
 "intrinsic.              94 warn\n"
 "nan_pattern                Pattern on a NaN constant, which never "
 "matches.                 95 warn\n"
+"unfenced_import            Deprecated import declarations outside "
+"frontmatter.             96 warn\n"
+"regex_runtime_fallback     Regex match over the compile limits, which "
+"runs on the runtime engine.  97 off\n"
+"cancellable_defer          Fragile cancellable async code inside "
+"`defer`/`errdefer`        98 warn\n"
 "all                        all warnings\n"
 "state: warn = enabled, error = promoted to error, off = disabled\n"
 "note: default alert exceptions: alert_unsafe=off\n"

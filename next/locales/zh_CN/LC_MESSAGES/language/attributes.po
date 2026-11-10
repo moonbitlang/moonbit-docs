@@ -46,9 +46,10 @@ msgid ""
 "attribute-argument ::= expr | LIDENT '=' expr\n"
 "\n"
 "expr ::= LIDENT | UIDENT | STRING | 'true' | 'false'\n"
-"       | LIDENT '.' LIDENT\n"
+"       | '@' LIDENT '.' LIDENT | '@' LIDENT '.' UIDENT\n"
+"       | '[' (expr (',' expr)* ','?)? ']'\n"
 "       | LIDENT '(' attribute-arguments ')'\n"
-"       | LIDENT '.' LIDENT '(' attribute-arguments ')'\n"
+"       | UIDENT '(' attribute-arguments ')'\n"
 msgstr ""
 
 #: ../../language/attributes.md:25
@@ -94,6 +95,39 @@ msgid ""
 "static typing and performance (should also be used judiciously to avoid "
 "unnecessary complexity)."
 msgstr "我们更倾向于使用编译时的代码生成，维持静态类型分析和性能上的优势（代码生成也需要节约地使用，避免不必要的复杂性）。"
+
+#: ../../language/attributes/derive.md:2
+msgid "Derive Attribute"
+msgstr "Derive 属性"
+
+#: ../../language/attributes/derive.md:4
+msgid ""
+"Use `#derive(...)` before a type definition to generate implementations "
+"of supported traits. Each field must satisfy the requirements of the "
+"derived trait."
+msgstr "在类型定义前使用 `#derive(...)`，为支持的特征生成实现。每个字段都必须满足所派生特征的要求。"
+
+#: ../../language/attributes/derive.md:8
+msgid ""
+"#derive(Debug)\n"
+"struct DebugPoint {\n"
+"  x : Int32\n"
+"  y : Int32\n"
+"}\n"
+"\n"
+"pub extend DebugPoint with Debug::{to_repr}\n"
+"\n"
+"test \"derive debug struct\" {\n"
+"  let point = DebugPoint::{ x: 1, y: 2 }\n"
+"  debug_inspect(point, content=\"{ x: 1, y: 2 }\")\n"
+"}\n"
+msgstr ""
+
+#: ../../language/attributes/derive.md:14
+msgid ""
+"See [Deriving traits](/language/derive.md) for supported traits and their"
+" options. `moon fmt` migrates the older trailing `derive(...)` syntax."
+msgstr "支持的特征及其选项见[特征派生](/language/derive.md)。`moon fmt` 可以迁移旧的尾置 `derive(...)` 语法。"
 
 #: ../../language/attributes/deprecated.md:2
 msgid "Deprecated Attribute"
@@ -1151,19 +1185,11 @@ msgstr ""
 
 #: ../../language/attributes/export_name.md:15
 msgid ""
-"MoonBit currently requires the exported name to be unique within the "
-"package and to be a valid C symbol identifier, regardless of the selected"
-" backend."
-msgstr "MoonBit 目前要求导出名在包内唯一，并且无论选择哪个后端，都必须是有效的 C 符号标识符。"
-
-#: ../../language/attributes/export_name.md:19
-msgid ""
-"Known compiler issue: `#export_name` currently applies its C-symbol-"
-"identifier restriction to every backend. WebAssembly export names are "
-"UTF-8 strings and are not limited to C identifiers."
-msgstr ""
-"已知编译器问题：`#export_name` 目前会对所有后端施加 C 符号标识符限制。WebAssembly 导出名是 UTF-8 "
-"字符串，并不限于 C 标识符。"
+"Export names must be unique within the package. Name restrictions depend "
+"on the backend: native requires valid C symbol identifiers, while "
+"WebAssembly export names are UTF-8 strings and are not limited to C "
+"identifiers."
+msgstr "导出名称在包内必须唯一。名称限制取决于后端：native 要求合法的 C 符号标识符，而 WebAssembly 导出名称是 UTF-8 字符串，不限于 C 标识符。"
 
 #: ../../language/attributes/export_name.md:24
 msgid ""
@@ -1192,15 +1218,12 @@ msgid ""
 " in the exporting package."
 msgstr "导出声明的作用域是生成产物的包。依赖中的属性在该依赖自身构建为产物时生效，但不会向下游包的产物添加符号。若要暴露依赖的功能，请在执行导出的包中定义并导出一个包装函数。"
 
-#: ../../language/attributes/export_name.md:40
+#: ../../language/attributes/export_name.md:35
 msgid ""
-"The native backend does not currently support exporting a "
-"`foreign_library` package as a linkable library artifact, including "
-"shared libraries such as a `.dll` or `.so`. Use Wasm or JavaScript if you"
-" need an exported library."
-msgstr ""
-"native 后端目前不支持将 `foreign_library` 包导出为可链接的库产物，包括 `.dll` 或 `.so` "
-"等共享库。如需导出的库，请使用 Wasm 或 JavaScript。"
+"The native backend produces a static archive (`.a`, or `.lib` on "
+"Windows), not a shared library such as a `.dll` or `.so`. The host must "
+"call `moonbit_init()` before calling exported functions."
+msgstr "native 后端生成静态归档（`.a`，Windows 上为 `.lib`），而不是 `.dll` 或 `.so` 等共享库。宿主必须在调用导出函数前调用 `moonbit_init()`。"
 
 #: ../../language/attributes/export_name.md:45
 msgid ""

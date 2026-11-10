@@ -41,6 +41,17 @@ msgstr ""
 " の API は安定版とは見なされておらず、将来変更される可能性があります。"
 
 #: ../../language/async-experimental.md:11
+msgid ""
+"The standard library also provides experimental async packages under "
+"`moonbitlang/core/async`, such as `moonbitlang/core/async/http`. Their "
+"APIs are still evolving, so the examples here continue to use "
+"`moonbitlang/async`. To opt into experimental packages, add `options"
+"(\"allow-experimental-packages\": true)` to `moon.pkg`. The core runtime "
+"can coexist with `moonbitlang/async` version `0.22.7` or later during "
+"migration."
+msgstr "標準ライブラリは `moonbitlang/core/async` 以下にも実験的な非同期パッケージを提供します（例：`moonbitlang/core/async/http`）。API はまだ変更されるため、本ページの例では引き続き `moonbitlang/async` を使用します。実験的なパッケージを使うには、`moon.pkg` に `options(\"allow-experimental-packages\": true)` を追加します。移行中はコアランタイムと `moonbitlang/async` 0.22.7 以降を同じプログラムで使用できます。"
+
+#: ../../language/async-experimental.md:11
 msgid "Getting started"
 msgstr "はじめに"
 
@@ -391,6 +402,15 @@ msgid ""
 msgstr ""
 "非同期コードがキャンセルされると、以前ブロックしていた地点でキャンセル信号が送出されます。通常の `catch` ハンドラはこの信号を捕捉しません。"
 "信号はプログラム内を自動的に伝播しますが、`defer` または `errdefer` で登録したクリーンアップは実行されます。"
+
+#: ../../language/async-experimental.md:163
+msgid ""
+"Running a cleanup block does not make its asynchronous operations immune "
+"to cancellation. Cancellable operations inside it can be cancelled "
+"immediately. Protect required asynchronous cleanup from cancellation; see"
+" [E0098](/language/error_codes/E0098.md) for an example using the core "
+"runtime."
+msgstr "クリーンアップブロックが実行されても、その非同期操作がキャンセルから保護されるわけではありません。キャンセル可能な操作は直ちにキャンセルされることがあります。必要な非同期クリーンアップを保護してください。コアランタイムを使った例は [E0098](/language/error_codes/E0098.md) を参照してください。"
 
 #: ../../language/async-experimental.md:155
 msgid ""

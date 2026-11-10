@@ -1,8 +1,9 @@
 // start derive default struct
+#derive(Default, Eq)
 struct DeriveDefault {
   x : Int32
   y : String?
-} derive(Default, Eq)
+}
 
 pub extend DeriveDefault with Default::{default}
 
@@ -15,11 +16,12 @@ test "derive default struct" {
 // end derive default struct
 
 // start derive default enum
+#derive(Default, Eq)
 enum DeriveDefaultEnum {
   Case1(Int32)
   Case2(label~ : String)
   Case3
-} derive(Default, Eq)
+}
 
 pub extend DeriveDefaultEnum with Default::{default}
 

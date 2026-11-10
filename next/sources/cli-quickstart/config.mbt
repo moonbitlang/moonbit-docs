@@ -1,9 +1,10 @@
 ///|
 /// start config
+#derive(Eq)
 pub struct Config {
   url : String
   output : String?
-} derive(Eq)
+}
 
 ///|
 pub extend Config with Eq::{not_equal, equal}

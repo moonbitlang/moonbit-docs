@@ -90,6 +90,19 @@ msgid ""
 msgstr ""
 
 #: ../../language/tests.md:37
+msgid "Documentation Tests"
+msgstr "文档测试"
+
+#: ../../language/tests.md:39
+msgid ""
+"Code blocks marked `mbt check` in `///` documentation comments can "
+"contain tests run by `moon test`. A documentation test does not inherit "
+"the documented function's `#cfg` attribute. If the test only supports "
+"certain backends, put the appropriate `#cfg` attribute on the test block "
+"itself."
+msgstr "`///` 文档注释中标记为 `mbt check` 的代码块可以包含由 `moon test` 执行的测试。文档测试不继承被说明函数的 `#cfg` 属性。如果测试只支持特定后端，请在测试块本身添加相应的 `#cfg` 属性。"
+
+#: ../../language/tests.md:37
 msgid "Snapshot Tests"
 msgstr "快照测试"
 
@@ -102,27 +115,25 @@ msgstr ""
 "在指定预期值时，编写测试可能会很繁琐。因此，MoonBit 提供了三种快照测试。所有这些都可以使用 `moon test --update` "
 "自动插入或更新。"
 
-#: ../../language/tests.md:42
-msgid "Snapshotting `Show`"
-msgstr "快照 `Show`"
+#: ../../language/tests.md:49
+msgid "Snapshotting `Debug`"
+msgstr "`Debug` 快照"
 
-#: ../../language/tests.md:44
+#: ../../language/tests.md:51
 msgid ""
-"We can use `inspect(x, content=\"x\")` to inspect anything that "
-"implements `Show` trait.  As we mentioned before, `Show` is a builtin "
-"trait that can be derived, providing `to_string` that will print the "
-"content of the data structures.  The labelled argument `content` can be "
-"omitted as `moon test --update` will insert it for you:"
-msgstr ""
-"我们可以使用 `inspect(x, content=\"x\")` 来检查实现了 `Show` 特征的任何内容。正如我们之前提到的，`Show`"
-" 是一个可以派生的内建特征，提供了 `to_string`来打印数据结构的内容。标记参数 `content` 可以省略，因为 `moon test"
-" --update` 会自动插入："
+"Use `debug_inspect(x, content=\"...\")` for values implementing `Debug`. "
+"Add `#derive(Debug)` before a type definition to generate a structural "
+"representation. Use `inspect` for values with a custom `Show` "
+"implementation. The labelled argument `content` can be omitted as `moon "
+"test --update` will insert it for you:"
+msgstr "对实现 `Debug` 的值使用 `debug_inspect(x, content=\"...\")`。在类型定义前添加 `#derive(Debug)` 可生成结构化表示。具有自定义 `Show` 实现的值则使用 `inspect`。可省略带标签参数 `content`，`moon test --update` 会自动填入："
 
-#: ../../language/tests.md:48
+#: ../../language/tests.md:56
 msgid ""
+"#derive(Debug)\n"
 "struct X {\n"
 "  x : Int32\n"
-"} derive(Debug)\n"
+"}\n"
 "\n"
 "pub extend X with Debug::{to_repr}\n"
 "\n"
@@ -135,25 +146,23 @@ msgstr ""
 msgid "Snapshotting `JSON`"
 msgstr "快照 `JSON`"
 
-#: ../../language/tests.md:56
-msgid ""
-"The problem with the derived `Show` trait is that it does not perform "
-"pretty printing, resulting in extremely long output."
-msgstr "派生的 `Show` 特征的问题是它不能对输出进行格式化，导致输出非常长。"
+#: ../../language/tests.md:64
+msgid "Structural debugging output can become long for deeply nested values."
+msgstr "深层嵌套值的结构化调试输出可能很长。"
 
-#: ../../language/tests.md:58
+#: ../../language/tests.md:66
 msgid ""
-"The solution is to use `@json.inspect(x, content=x)`. The benefit is that"
-" the resulting content is a JSON structure, which can be more readable "
-"after being formatted."
-msgstr "解决方案是使用 `@json.inspect(x, content=x)`。其好处是生成的内容是一个 JSON 结构，在格式化后更易读。"
+"Use `json_inspect(x, content=x)` to record a JSON structure, which can be"
+" more readable after formatting."
+msgstr "使用 `json_inspect(x, content=x)` 记录 JSON 结构，格式化后更易阅读。"
 
-#: ../../language/tests.md:60
+#: ../../language/tests.md:69
 msgid ""
+"#derive(Debug, ToJson)\n"
 "enum Rec {\n"
 "  End\n"
 "  Really_long_name_that_is_difficult_to_read(Rec)\n"
-"} derive(Debug, ToJson)\n"
+"}\n"
 "\n"
 "pub extend Rec with Debug::{to_repr}\n"
 "\n"

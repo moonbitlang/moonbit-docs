@@ -1,5 +1,6 @@
 // start instr definition
 
+#derive(Eq, Debug)
 enum Instruction {
   Unwind
   PushGlobal(String)
@@ -27,7 +28,7 @@ enum Instruction {
   CaseJump(List[(Int32, List[Instruction])])
   Split
   Print
-} derive(Eq, Debug)
+}
 
 pub extend Instruction with Eq::{not_equal, equal}
 

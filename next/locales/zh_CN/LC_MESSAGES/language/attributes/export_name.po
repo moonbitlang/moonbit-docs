@@ -77,11 +77,10 @@ msgstr "导出声明的作用域是生成产物的包。依赖中的属性在该
 
 #: ../../language/attributes/export_name.md:34
 msgid ""
-"The native backend does not currently support exporting a "
-"`foreign_library` package as a linkable library artifact, including "
-"shared libraries such as a `.dll` or `.so`. Use Wasm or JavaScript if you"
-" need an exported library."
-msgstr "native 后端目前不支持将 `foreign_library` 包导出为可链接的库产物，包括 `.dll` 或 `.so` 等共享库。如需导出的库，请使用 Wasm 或 JavaScript。"
+"The native backend produces a static archive (`.a`, or `.lib` on "
+"Windows), not a shared library such as a `.dll` or `.so`. The host must "
+"call `moonbit_init()` before calling exported functions."
+msgstr "native 后端生成静态归档（`.a`，Windows 上为 `.lib`），而不是 `.dll` 或 `.so` 等共享库。宿主必须在调用导出函数前调用 `moonbit_init()`。"
 
 #: ../../language/attributes/export_name.md:39
 msgid ""

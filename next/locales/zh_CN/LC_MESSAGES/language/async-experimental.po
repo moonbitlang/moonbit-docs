@@ -40,6 +40,17 @@ msgstr ""
 "后端的支持有限，并提供实验性的 Wasm1 支持。`moonbitlang/async` 的 API 尚未稳定，未来可能发生变化。"
 
 #: ../../language/async-experimental.md:11
+msgid ""
+"The standard library also provides experimental async packages under "
+"`moonbitlang/core/async`, such as `moonbitlang/core/async/http`. Their "
+"APIs are still evolving, so the examples here continue to use "
+"`moonbitlang/async`. To opt into experimental packages, add `options"
+"(\"allow-experimental-packages\": true)` to `moon.pkg`. The core runtime "
+"can coexist with `moonbitlang/async` version `0.22.7` or later during "
+"migration."
+msgstr "标准库还在 `moonbitlang/core/async` 下提供实验性异步包，例如 `moonbitlang/core/async/http`。这些 API 仍在演进，因此本文示例继续使用 `moonbitlang/async`。若要使用实验性包，请在 `moon.pkg` 中添加 `options(\"allow-experimental-packages\": true)`。迁移期间，核心运行时可以与 `moonbitlang/async` 0.22.7 或更高版本共存。"
+
+#: ../../language/async-experimental.md:11
 msgid "Getting started"
 msgstr "在 MoonBit 中使用异步编程"
 
@@ -380,6 +391,15 @@ msgid ""
 msgstr ""
 "当一段异步代码被取消时，取消信号会在代码先前阻塞的位置被抛出。普通的 `catch` 处理器不会捕获该信号。它会自动在程序中传播，同时由 "
 "`defer` 或 `errdefer` 注册的清理仍然会运行。"
+
+#: ../../language/async-experimental.md:163
+msgid ""
+"Running a cleanup block does not make its asynchronous operations immune "
+"to cancellation. Cancellable operations inside it can be cancelled "
+"immediately. Protect required asynchronous cleanup from cancellation; see"
+" [E0098](/language/error_codes/E0098.md) for an example using the core "
+"runtime."
+msgstr "执行清理块并不意味着其中的异步操作不会被取消。可取消的操作可能立即被取消。应保护必要的异步清理，避免其被取消；使用核心运行时的示例见 [E0098](/language/error_codes/E0098.md)。"
 
 #: ../../language/async-experimental.md:155
 msgid ""
