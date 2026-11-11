@@ -5,6 +5,7 @@
 :caption: Contents:
 tutorial
 script-mode
+moonx
 package-manage-tour
 workspace
 commands

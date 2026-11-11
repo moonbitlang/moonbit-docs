@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-11 14:19+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../toolchain/moon/moonx.md:1
+msgid "Running Scripts and Tools with `moonx`"
+msgstr "使用 `moonx` 运行脚本和工具"
+
+#: ../../toolchain/moon/moonx.md:3
+msgid ""
+"`moonx` runs a local `.mbtx` script or an executable package from "
+"Mooncakes without a separate `moon install` step. It is a separate "
+"command, not a subcommand of `moon`."
+msgstr "`moonx` 可以运行本地 `.mbtx` 脚本或 Mooncakes 上的可执行包，无需先执行 `moon install`。它是独立命令，不是 `moon` 的子命令。"
+
+#: ../../toolchain/moon/moonx.md:7
+msgid "Run a local script"
+msgstr "运行本地脚本"
+
+#: ../../toolchain/moon/moonx.md:9
+msgid "Given a `script.mbtx` file, run:"
+msgstr "对于一个 `script.mbtx` 文件，运行："
+
+#: ../../toolchain/moon/moonx.md:11
+msgid "moonx script.mbtx\n"
+msgstr ""
+
+#: ../../toolchain/moon/moonx.md:15
+msgid ""
+"No `moon.mod` or `moon.pkg` is needed. See [Running `.mbtx` Scripts"
+"](script-mode.md) for script syntax and imports."
+msgstr "不需要 `moon.mod` 或 `moon.pkg`。脚本语法和导入方式请参阅[运行 `.mbtx` 脚本](script-mode.md)。"
+
+#: ../../toolchain/moon/moonx.md:18
+msgid "Arguments after the script path are passed to the script:"
+msgstr "脚本路径之后的参数会传递给脚本："
+
+#: ../../toolchain/moon/moonx.md:20
+msgid "moonx script.mbtx --help\n"
+msgstr ""
+
+#: ../../toolchain/moon/moonx.md:24
+msgid ""
+"Here, `--help` is an argument to the script. Use `moonx --help` to "
+"display help for `moonx` itself."
+msgstr "这里的 `--help` 是传给脚本的参数。要查看 `moonx` 自身的帮助，请使用 `moonx --help`。"
+
+#: ../../toolchain/moon/moonx.md:27
+msgid "Run a Mooncakes package"
+msgstr "运行 Mooncakes 包"
+
+#: ../../toolchain/moon/moonx.md:29
+msgid "Specify the executable package path and optionally a module version:"
+msgstr "指定可执行包的路径，并可选择指定模块版本："
+
+#: ../../toolchain/moon/moonx.md:31
+msgid "moonx user/module/package@1.2.3\n"
+msgstr ""
+
+#: ../../toolchain/moon/moonx.md:35
+msgid ""
+"Replace `user/module/package` and `1.2.3` with a published executable "
+"package and an existing version. The version goes after the complete "
+"package path. `moonx` obtains the package's Wasm executable from the "
+"registry and runs it; this can require a download. Only run tools you "
+"trust."
+msgstr "请将 `user/module/package` 和 `1.2.3` 替换为已发布的可执行包和实际存在的版本。版本号放在完整的包路径之后。`moonx` 从注册表获取并运行包的 Wasm 可执行文件；这可能需要下载。请只运行您信任的工具。"
+
+#: ../../toolchain/moon/moonx.md:40
+msgid "`@1.2.3` selects that exact version."
+msgstr "`@1.2.3` 选择该确切版本。"
+
+#: ../../toolchain/moon/moonx.md:41
+msgid "`@latest` refreshes the registry index before choosing the latest version."
+msgstr "`@latest` 会先刷新注册表索引，再选择最新版本。"
+
+#: ../../toolchain/moon/moonx.md:42
+msgid ""
+"Omitting the version uses the latest version already known to the local "
+"registry index, which may not be the newest published version."
+msgstr "省略版本号时，使用本地注册表索引中已知的最新版本，它不一定是最新发布的版本。"
+
+#: ../../toolchain/moon/moonx.md:45
+msgid ""
+"As with scripts, arguments after the package coordinate are passed to the"
+" program. For example:"
+msgstr "与脚本类似，包坐标之后的参数会传递给程序。例如："
+
+#: ../../toolchain/moon/moonx.md:48
+msgid "moonx user/module/package@1.2.3 --help\n"
+msgstr ""
+
+#: ../../toolchain/moon/moonx.md:52
+msgid "`moonx` or `moon run`?"
+msgstr "使用 `moonx` 还是 `moon run`？"
+
+#: ../../toolchain/moon/moonx.md:54
+msgid ""
+"Use `moonx` for standalone scripts and published command-line tools. It "
+"uses the linear-memory Wasm backend (`wasm`), not `wasm-gc`, `js`, or "
+"`native`; registry packages must provide a compatible Wasm executable."
+msgstr "对于独立脚本和已发布的命令行工具，使用 `moonx`。它使用线性内存 Wasm 后端（`wasm`），而非 `wasm-gc`、`js` 或 `native`；注册表中的包必须提供兼容的 Wasm 可执行文件。"
+
+#: ../../toolchain/moon/moonx.md:58
+msgid ""
+"Use [`moon run`](commands.md#moon-run) to build and run a package in the "
+"project you are developing, including when selecting another backend. "
+"`moon run script.mbtx` also runs a standalone script; `moonx` provides a "
+"dedicated entry point for scripts and registry tools."
+msgstr "对于正在开发的项目中的包，使用 [`moon run`](commands.md#moon-run) 构建并运行，也可以选择其他后端。`moon run script.mbtx` 同样能运行独立脚本；`moonx` 则为脚本和注册表工具提供专门的入口。"

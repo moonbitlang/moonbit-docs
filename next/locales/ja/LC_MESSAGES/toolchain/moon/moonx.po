@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-11 14:19+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../toolchain/moon/moonx.md:1
+msgid "Running Scripts and Tools with `moonx`"
+msgstr "`moonx` でスクリプトとツールを実行する"
+
+#: ../../toolchain/moon/moonx.md:3
+msgid ""
+"`moonx` runs a local `.mbtx` script or an executable package from "
+"Mooncakes without a separate `moon install` step. It is a separate "
+"command, not a subcommand of `moon`."
+msgstr "`moonx` は、別途 `moon install` を実行せずに、ローカルの `.mbtx` スクリプトや Mooncakes の実行可能パッケージを実行します。`moon` のサブコマンドではなく、独立したコマンドです。"
+
+#: ../../toolchain/moon/moonx.md:7
+msgid "Run a local script"
+msgstr "ローカルスクリプトを実行する"
+
+#: ../../toolchain/moon/moonx.md:9
+msgid "Given a `script.mbtx` file, run:"
+msgstr "`script.mbtx` ファイルを実行するには、次のコマンドを使います："
+
+#: ../../toolchain/moon/moonx.md:11
+msgid "moonx script.mbtx\n"
+msgstr ""
+
+#: ../../toolchain/moon/moonx.md:15
+msgid ""
+"No `moon.mod` or `moon.pkg` is needed. See [Running `.mbtx` Scripts"
+"](script-mode.md) for script syntax and imports."
+msgstr "`moon.mod` や `moon.pkg` は不要です。スクリプトの構文とインポートについては、[`.mbtx` スクリプトの実行](script-mode.md)を参照してください。"
+
+#: ../../toolchain/moon/moonx.md:18
+msgid "Arguments after the script path are passed to the script:"
+msgstr "スクリプトのパスの後に指定した引数は、スクリプトに渡されます："
+
+#: ../../toolchain/moon/moonx.md:20
+msgid "moonx script.mbtx --help\n"
+msgstr ""
+
+#: ../../toolchain/moon/moonx.md:24
+msgid ""
+"Here, `--help` is an argument to the script. Use `moonx --help` to "
+"display help for `moonx` itself."
+msgstr "ここでの `--help` はスクリプトに渡す引数です。`moonx` 自体のヘルプを表示するには、`moonx --help` を使ってください。"
+
+#: ../../toolchain/moon/moonx.md:27
+msgid "Run a Mooncakes package"
+msgstr "Mooncakes のパッケージを実行する"
+
+#: ../../toolchain/moon/moonx.md:29
+msgid "Specify the executable package path and optionally a module version:"
+msgstr "実行可能パッケージのパスを指定します。モジュールのバージョンも指定できます："
+
+#: ../../toolchain/moon/moonx.md:31
+msgid "moonx user/module/package@1.2.3\n"
+msgstr ""
+
+#: ../../toolchain/moon/moonx.md:35
+msgid ""
+"Replace `user/module/package` and `1.2.3` with a published executable "
+"package and an existing version. The version goes after the complete "
+"package path. `moonx` obtains the package's Wasm executable from the "
+"registry and runs it; this can require a download. Only run tools you "
+"trust."
+msgstr "`user/module/package` と `1.2.3` を、公開済みの実行可能パッケージと存在するバージョンに置き換えてください。バージョンは完全なパッケージパスの末尾に指定します。`moonx` はレジストリからパッケージの Wasm 実行ファイルを取得して実行するため、ダウンロードが必要になる場合があります。信頼できるツールだけを実行してください。"
+
+#: ../../toolchain/moon/moonx.md:40
+msgid "`@1.2.3` selects that exact version."
+msgstr "`@1.2.3` は指定したバージョンを選択します。"
+
+#: ../../toolchain/moon/moonx.md:41
+msgid "`@latest` refreshes the registry index before choosing the latest version."
+msgstr "`@latest` はレジストリのインデックスを更新してから最新バージョンを選択します。"
+
+#: ../../toolchain/moon/moonx.md:42
+msgid ""
+"Omitting the version uses the latest version already known to the local "
+"registry index, which may not be the newest published version."
+msgstr "バージョンを省略すると、ローカルのレジストリインデックスにある最新バージョンを使います。最新の公開バージョンとは限りません。"
+
+#: ../../toolchain/moon/moonx.md:45
+msgid ""
+"As with scripts, arguments after the package coordinate are passed to the"
+" program. For example:"
+msgstr "スクリプトと同様に、パッケージ指定の後の引数はプログラムに渡されます。例："
+
+#: ../../toolchain/moon/moonx.md:48
+msgid "moonx user/module/package@1.2.3 --help\n"
+msgstr ""
+
+#: ../../toolchain/moon/moonx.md:52
+msgid "`moonx` or `moon run`?"
+msgstr "`moonx` と `moon run` の使い分け"
+
+#: ../../toolchain/moon/moonx.md:54
+msgid ""
+"Use `moonx` for standalone scripts and published command-line tools. It "
+"uses the linear-memory Wasm backend (`wasm`), not `wasm-gc`, `js`, or "
+"`native`; registry packages must provide a compatible Wasm executable."
+msgstr "独立したスクリプトや公開済みのコマンドラインツールには `moonx` を使います。`wasm-gc`、`js`、`native` ではなく、リニアメモリ Wasm バックエンド（`wasm`）を使用します。レジストリのパッケージには、互換性のある Wasm 実行ファイルが必要です。"
+
+#: ../../toolchain/moon/moonx.md:58
+msgid ""
+"Use [`moon run`](commands.md#moon-run) to build and run a package in the "
+"project you are developing, including when selecting another backend. "
+"`moon run script.mbtx` also runs a standalone script; `moonx` provides a "
+"dedicated entry point for scripts and registry tools."
+msgstr "開発中のプロジェクト内のパッケージをビルドして実行するには、[`moon run`](commands.md#moon-run) を使います。別のバックエンドも選択できます。`moon run script.mbtx` でも独立したスクリプトを実行できます。`moonx` はスクリプトとレジストリのツールに特化した入口を提供します。"
