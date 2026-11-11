@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 14:48+0800\n"
+"POT-Creation-Date: 2026-11-11 11:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -1034,11 +1034,11 @@ msgstr ""
 msgid "\\[Experimental\\] Pre-build config script"
 msgstr "\\[実験的\\] 事前ビルド設定スクリプト"
 
-#: ../../toolchain/moon/module.md:680
+#: ../../toolchain/moon/module.md:690
 msgid ""
 "This feature is extremely experimental, and its API may change at any "
-"time. This documentation reflects the implementation as of 2025-06-03."
-msgstr "この機能は非常に実験的であり、API はいつでも変更される可能性があります。このドキュメントは 2025-06-03 時点の実装を反映しています。"
+"time."
+msgstr "この機能は非常に実験的であり、API は随時変更される可能性があります。"
 
 #: ../../toolchain/moon/module.md:685
 msgid ""
@@ -1068,58 +1068,136 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:710
+#: ../../toolchain/moon/module.md:719
 msgid ""
 "The path is a relative path from the root of the project. The script may "
 "either be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) "
-"executed with `node`, or a Python script (with extension `.py`) executed "
-"with `python3` or `python`."
-msgstr ""
-"パスはプロジェクトルートからの相対パスです。スクリプトには、`node` で実行される JavaScript スクリプト（拡張子 "
-"`.js`、`.cjs`、`.mjs`）か、`python3` または `python` で実行される Python スクリプト（拡張子 "
-"`.py`）を指定できます。"
+"executed with `node`, a Python script (with extension `.py`) executed "
+"with `python3` or `python`, or a MoonBit script (`.mbtx`) compiled to "
+"Wasm and executed with `moonrun`. Its working directory is the module "
+"root."
+msgstr "パスはプロジェクトのルートからの相対パスです。`node` で実行する JavaScript（`.js`、`.cjs`、`.mjs`）、`python3` または `python` で実行する Python（`.py`）、Wasm にコンパイルして `moonrun` で実行する MoonBit（`.mbtx`）に対応しています。作業ディレクトリはモジュールのルートです。"
 
 #: ../../toolchain/moon/module.md:715
 msgid "Input"
 msgstr "入力"
 
-#: ../../toolchain/moon/module.md:717
+#: ../../toolchain/moon/module.md:727
 msgid ""
-"The script will be provided with a JSON with the structure of "
-"`BuildScriptEnvironment` from standard input stream (stdin):"
-msgstr "スクリプトには、標準入力ストリーム（stdin）から `BuildScriptEnvironment` 構造の JSON が渡されます："
+"Read build information from environment variables, not standard input. "
+"The legacy JSON input on stdin is retained only for compatibility with "
+"older scripts."
+msgstr "ビルド情報は標準入力ではなく環境変数から読み取ってください。stdin の従来の JSON 入力は、古いスクリプトとの互換性のためだけに残されています。"
 
-#: ../../toolchain/moon/module.md:720
+#: ../../toolchain/moon/module.md:710
+msgid "Variable"
+msgstr "変数"
+
+#: ../../toolchain/moon/module.md:710
+msgid "Meaning"
+msgstr "意味"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_MOD`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Path to the module's configuration file (`moon.mod` or `moon.mod.json`)."
+msgstr "モジュール設定ファイル（`moon.mod` または `moon.mod.json`）のパス。"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_BUILD_DIR`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Writable output directory for this module's build script."
+msgstr "このモジュールのビルドスクリプトが書き込める出力ディレクトリ。"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_HOST_OS`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Host operating system, such as `linux`, `macos`, or `windows`."
+msgstr "ホストの OS（`linux`、`macos`、`windows` など）。"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_HOST_ARCH`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Host architecture, such as `x86_64` or `aarch64`."
+msgstr "ホストのアーキテクチャ（`x86_64`、`aarch64` など）。"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_BACKEND`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Selected backend, such as `native`, `llvm`, `wasm`, `wasm-gc`, or `js`."
+msgstr "選択されたバックエンド（`native`、`llvm`、`wasm`、`wasm-gc`、`js` など）。"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_PROFILE`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Build profile: `debug` or `release`."
+msgstr "ビルドプロファイル：`debug` または `release`。"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_JOBS`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Number of parallel jobs available to the build, as a decimal string."
+msgstr "ビルドで使用できる並列ジョブ数を表す十進数の文字列。"
+
+#: ../../toolchain/moon/module.md:740
 msgid ""
-"/** Represents the environment a build script receives */\n"
-"interface BuildScriptEnvironment {\n"
-"  env: Record<string, string>\n"
-"  paths: Paths\n"
-"}\n"
+"`MOON_HOST_OS` and `MOON_HOST_ARCH` describe the machine running the "
+"script, not a cross-compilation target. Write generated files under "
+"`MOON_BUILD_DIR` instead of modifying dependency source directories. Use "
+"the supplied path rather than relying on a particular build-directory "
+"layout."
+msgstr "`MOON_HOST_OS` と `MOON_HOST_ARCH` はクロスコンパイルのターゲットではなく、スクリプトを実行するマシンを表します。依存モジュールのソースディレクトリを変更せず、生成ファイルは `MOON_BUILD_DIR` に書き込んでください。特定のビルドディレクトリ構成に依存せず、提供されたパスを使用してください。"
+
+#: ../../toolchain/moon/module.md:745
+msgid ""
+"For example, a Python build script can expose its output directory as a "
+"build variable without reading stdin:"
+msgstr "たとえば、Python のビルドスクリプトでは、stdin を読み取らずに出力ディレクトリをビルド変数として提供できます："
+
+#: ../../toolchain/moon/module.md:748
+msgid ""
+"import json\n"
+"import os\n"
 "\n"
-"interface BuildInfo {\n"
-"  /** The target info for the build script currently being run. */\n"
-"  host: TargetInfo\n"
-"  /** The target info for the module being built. */\n"
-"  target: TargetInfo\n"
-"}\n"
-"\n"
-"interface TargetInfo {\n"
-"  /** The actual backend we're using, e.g. `wasm32`, `wasmgc`, `js`, `c`,"
-" `llvm` */\n"
-"  kind: string // TargetBackend\n"
-"}\n"
+"print(json.dumps({\"vars\": {\"OUT_DIR\": "
+"os.environ[\"MOON_BUILD_DIR\"]}}))\n"
 msgstr ""
 
 #: ../../toolchain/moon/module.md:740
 msgid "Output"
 msgstr "出力"
 
-#: ../../toolchain/moon/module.md:742
+#: ../../toolchain/moon/module.md:757
 msgid ""
 "The script is expected to print a JSON string in its standard output "
-"stream (stdout) with the structure of `BuildScriptOutput`:"
-msgstr "スクリプトは、標準出力ストリーム（stdout）に `BuildScriptOutput` 構造の JSON 文字列を出力することが期待されます："
+"stream (stdout) with the structure of `BuildScriptOutput`. Reserve stdout"
+" for this JSON object and write diagnostic messages to stderr. Exit with "
+"a nonzero status if the script fails."
+msgstr "スクリプトは `BuildScriptOutput` の構造を持つ JSON 文字列を標準出力（stdout）に出力します。stdout はこの JSON オブジェクト専用とし、診断メッセージは stderr に書き込んでください。失敗した場合はゼロ以外の終了ステータスで終了してください。"
+
+#: ../../toolchain/moon/module.md:763
+msgid ""
+"Unlike `dev_build`, pre-build configuration scripts can also run for "
+"dependencies. Only build dependencies whose scripts you trust."
+msgstr "`dev_build` と異なり、事前ビルド設定スクリプトは依存モジュールでも実行されることがあります。スクリプトを信頼できる依存モジュールだけをビルドしてください。"
+
+#: ../../toolchain/moon/module.md:767
+msgid "The output has the following fields:"
+msgstr "出力には以下のフィールドがあります："
 
 #: ../../toolchain/moon/module.md:745
 msgid ""
