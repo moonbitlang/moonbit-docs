@@ -658,7 +658,6 @@ options(
 
 #### WARNING
 This feature is extremely experimental, and its API may change at any time.
-This documentation reflects the implementation as of 2025-06-03.
 
 #### IMPORTANT
 Using this feature may execute arbitrary code in your computer.
@@ -685,38 +684,52 @@ options(
 
 The path is a relative path from the root of the project. The script may either
 be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) executed with
-`node`, or a Python script (with extension `.py`) executed with `python3` or
-`python`.
+`node`, a Python script (with extension `.py`) executed with `python3` or
+`python`, or a MoonBit script (`.mbtx`) compiled to Wasm and executed with
+`moonrun`. Its working directory is the module root.
 
 #### Input
 
-The script will be provided with a JSON with the structure of
-`BuildScriptEnvironment` from standard input stream (stdin):
+Read build information from environment variables, not standard input. The
+legacy JSON input on stdin is retained only for compatibility with older scripts.
 
-```ts
-/** Represents the environment a build script receives */
-interface BuildScriptEnvironment {
-  env: Record<string, string>
-  paths: Paths
-}
+| Variable         | Meaning                                                                  |
+|------------------|--------------------------------------------------------------------------|
+| `MOON_MOD`       | Path to the module's configuration file (`moon.mod` or `moon.mod.json`). |
+| `MOON_BUILD_DIR` | Writable output directory for this module's build script.                |
+| `MOON_HOST_OS`   | Host operating system, such as `linux`, `macos`, or `windows`.           |
+| `MOON_HOST_ARCH` | Host architecture, such as `x86_64` or `aarch64`.                        |
+| `MOON_BACKEND`   | Selected backend, such as `native`, `llvm`, `wasm`, `wasm-gc`, or `js`.  |
+| `MOON_PROFILE`   | Build profile: `debug` or `release`.                                     |
+| `MOON_JOBS`      | Number of parallel jobs available to the build, as a decimal string.     |
 
-interface BuildInfo {
-  /** The target info for the build script currently being run. */
-  host: TargetInfo
-  /** The target info for the module being built. */
-  target: TargetInfo
-}
+`MOON_HOST_OS` and `MOON_HOST_ARCH` describe the machine running the script,
+not a cross-compilation target. Write generated files under `MOON_BUILD_DIR`
+instead of modifying dependency source directories. Use the supplied path
+rather than relying on a particular build-directory layout.
 
-interface TargetInfo {
-  /** The actual backend we're using, e.g. `wasm32`, `wasmgc`, `js`, `c`, `llvm` */
-  kind: string // TargetBackend
-}
+For example, a Python build script can expose its output directory as a build
+variable without reading stdin:
+
+```python
+import json
+import os
+
+print(json.dumps({"vars": {"OUT_DIR": os.environ["MOON_BUILD_DIR"]}}))
 ```
 
 #### Output
 
 The script is expected to print a JSON string in its standard output stream
-(stdout) with the structure of `BuildScriptOutput`:
+(stdout) with the structure of `BuildScriptOutput`. Reserve stdout for this JSON
+object and write diagnostic messages to stderr. Exit with a nonzero status if
+the script fails.
+
+#### NOTE
+Unlike `dev_build`, pre-build configuration scripts can also run for dependencies.
+Only build dependencies whose scripts you trust.
+
+The output has the following fields:
 
 ```ts
 interface BuildScriptOutput {
