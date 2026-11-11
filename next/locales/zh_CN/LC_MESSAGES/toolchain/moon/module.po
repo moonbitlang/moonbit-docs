@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 14:48+0800\n"
+"POT-Creation-Date: 2026-11-11 11:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -1016,11 +1016,11 @@ msgstr ""
 msgid "\\[Experimental\\] Pre-build config script"
 msgstr "\\[实验性\\] 预构建配置脚本"
 
-#: ../../toolchain/moon/module.md:680
+#: ../../toolchain/moon/module.md:690
 msgid ""
 "This feature is extremely experimental, and its API may change at any "
-"time. This documentation reflects the implementation as of 2025-06-03."
-msgstr "这个功能是极其实验性的，其 API 可能随时发生变化。本文件反映了截至 2025-06-03 的实现。"
+"time."
+msgstr "此功能仍处于高度实验阶段，其 API 可能随时变化。"
 
 #: ../../toolchain/moon/module.md:685
 msgid ""
@@ -1048,74 +1048,136 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/module.md:710
+#: ../../toolchain/moon/module.md:719
 msgid ""
 "The path is a relative path from the root of the project. The script may "
 "either be a JavaScript script (with extension `.js`, `.cjs`, `.mjs`) "
-"executed with `node`, or a Python script (with extension `.py`) executed "
-"with `python3` or `python`."
-msgstr ""
-"路径是相对于项目根目录的相对路径。脚本可以是 JavaScript 脚本（扩展名为 `.js`、`.cjs`、`.mjs`）使用 `node` "
-"执行，或者是 Python 脚本（扩展名为 `.py`）使用 `python3` 或 `python` 执行。"
+"executed with `node`, a Python script (with extension `.py`) executed "
+"with `python3` or `python`, or a MoonBit script (`.mbtx`) compiled to "
+"Wasm and executed with `moonrun`. Its working directory is the module "
+"root."
+msgstr "路径相对于项目根目录。支持通过 `node` 执行的 JavaScript（`.js`、`.cjs`、`.mjs`）、通过 `python3` 或 `python` 执行的 Python（`.py`），以及编译为 Wasm 并通过 `moonrun` 执行的 MoonBit（`.mbtx`）。工作目录为模块根目录。"
 
 #: ../../toolchain/moon/module.md:715
 msgid "Input"
 msgstr "输入"
 
-#: ../../toolchain/moon/module.md:717
+#: ../../toolchain/moon/module.md:727
 msgid ""
-"The script will be provided with a JSON with the structure of "
-"`BuildScriptEnvironment` from standard input stream (stdin):"
-msgstr "脚本将从标准输入流（stdin）接收一个具有 `BuildScriptEnvironment` 结构的 JSON："
+"Read build information from environment variables, not standard input. "
+"The legacy JSON input on stdin is retained only for compatibility with "
+"older scripts."
+msgstr "请从环境变量读取构建信息，而不是标准输入。stdin 上的旧 JSON 输入仅为兼容旧脚本而保留。"
 
-#: ../../toolchain/moon/module.md:720
-msgid ""
-"/** Represents the environment a build script receives */\n"
-"interface BuildScriptEnvironment {\n"
-"  env: Record<string, string>\n"
-"  paths: Paths\n"
-"}\n"
-"\n"
-"interface BuildInfo {\n"
-"  /** The target info for the build script currently being run. */\n"
-"  host: TargetInfo\n"
-"  /** The target info for the module being built. */\n"
-"  target: TargetInfo\n"
-"}\n"
-"\n"
-"interface TargetInfo {\n"
-"  /** The actual backend we're using, e.g. `wasm32`, `wasmgc`, `js`, `c`,"
-" `llvm` */\n"
-"  kind: string // TargetBackend\n"
-"}\n"
+#: ../../toolchain/moon/module.md:710
+msgid "Variable"
+msgstr "变量"
+
+#: ../../toolchain/moon/module.md:710
+msgid "Meaning"
+msgstr "含义"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_MOD`"
 msgstr ""
-"/** 表示构建脚本接收的环境 */\n"
-"interface BuildScriptEnvironment {\n"
-"  env: Record<string, string>\n"
-"  paths: Paths\n"
-"}\n"
+
+#: ../../toolchain/moon/module.md:710
+msgid "Path to the module's configuration file (`moon.mod` or `moon.mod.json`)."
+msgstr "模块配置文件（`moon.mod` 或 `moon.mod.json`）的路径。"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_BUILD_DIR`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Writable output directory for this module's build script."
+msgstr "此模块构建脚本可写入的输出目录。"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_HOST_OS`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Host operating system, such as `linux`, `macos`, or `windows`."
+msgstr "宿主操作系统，例如 `linux`、`macos` 或 `windows`。"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_HOST_ARCH`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Host architecture, such as `x86_64` or `aarch64`."
+msgstr "宿主架构，例如 `x86_64` 或 `aarch64`。"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_BACKEND`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Selected backend, such as `native`, `llvm`, `wasm`, `wasm-gc`, or `js`."
+msgstr "所选后端，例如 `native`、`llvm`、`wasm`、`wasm-gc` 或 `js`。"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_PROFILE`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Build profile: `debug` or `release`."
+msgstr "构建配置：`debug` 或 `release`。"
+
+#: ../../toolchain/moon/module.md:710
+msgid "`MOON_JOBS`"
+msgstr ""
+
+#: ../../toolchain/moon/module.md:710
+msgid "Number of parallel jobs available to the build, as a decimal string."
+msgstr "构建可用的并行任务数，以十进制字符串表示。"
+
+#: ../../toolchain/moon/module.md:740
+msgid ""
+"`MOON_HOST_OS` and `MOON_HOST_ARCH` describe the machine running the "
+"script, not a cross-compilation target. Write generated files under "
+"`MOON_BUILD_DIR` instead of modifying dependency source directories. Use "
+"the supplied path rather than relying on a particular build-directory "
+"layout."
+msgstr "`MOON_HOST_OS` 和 `MOON_HOST_ARCH` 描述运行脚本的机器，而非交叉编译的目标。请将生成文件写入 `MOON_BUILD_DIR`，不要修改依赖的源码目录。应使用提供的路径，不要依赖特定的构建目录布局。"
+
+#: ../../toolchain/moon/module.md:745
+msgid ""
+"For example, a Python build script can expose its output directory as a "
+"build variable without reading stdin:"
+msgstr "例如，Python 构建脚本无需读取 stdin，即可将输出目录作为构建变量提供："
+
+#: ../../toolchain/moon/module.md:748
+msgid ""
+"import json\n"
+"import os\n"
 "\n"
-"interface BuildInfo {\n"
-"  /** 当前构建脚本正在运行的目标信息 */\n"
-"  host: TargetInfo\n"
-"  /** 正在构建的模块的目标信息 */\n"
-"  target: TargetInfo\n"
-"}\n"
-"\n"
-"interface TargetInfo {\n"
-"  /** 我们正在使用的实际后端，例如 `wasm32`、`wasmgc`、`js`、`c`、`llvm` */\n"
-"  kind: string // TargetBackend\n"
-"}\n"
+"print(json.dumps({\"vars\": {\"OUT_DIR\": "
+"os.environ[\"MOON_BUILD_DIR\"]}}))\n"
+msgstr ""
 
 #: ../../toolchain/moon/module.md:740
 msgid "Output"
 msgstr "输出"
 
-#: ../../toolchain/moon/module.md:742
+#: ../../toolchain/moon/module.md:757
 msgid ""
 "The script is expected to print a JSON string in its standard output "
-"stream (stdout) with the structure of `BuildScriptOutput`:"
-msgstr "脚本预计将在其标准输出流（stdout）中打印一个具有 `BuildScriptOutput` 结构的 JSON 字符串："
+"stream (stdout) with the structure of `BuildScriptOutput`. Reserve stdout"
+" for this JSON object and write diagnostic messages to stderr. Exit with "
+"a nonzero status if the script fails."
+msgstr "脚本应向标准输出（stdout）打印符合 `BuildScriptOutput` 结构的 JSON 字符串。stdout 仅用于此 JSON 对象，诊断信息应写入 stderr。脚本失败时应以非零状态退出。"
+
+#: ../../toolchain/moon/module.md:763
+msgid ""
+"Unlike `dev_build`, pre-build configuration scripts can also run for "
+"dependencies. Only build dependencies whose scripts you trust."
+msgstr "与 `dev_build` 不同，预构建配置脚本也可能为依赖执行。请只构建您信任其脚本的依赖。"
+
+#: ../../toolchain/moon/module.md:767
+msgid "The output has the following fields:"
+msgstr "输出包含以下字段："
 
 #: ../../toolchain/moon/module.md:745
 msgid ""
