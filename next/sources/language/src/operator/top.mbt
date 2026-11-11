@@ -209,7 +209,7 @@ test {
 /// start spread 2
 test {
   let s1 : String = "Hello"
-  let s2 : StringView = "World".view()
+  let s2 : StringView = "World"
   let s3 : Array[Char] = [..s1, ' ', ..s2, '!']
   let s : String = [..s1, ' ', ..s2, '!', ..s3]
   inspect(s, content="Hello World!Hello World!")
