@@ -136,7 +136,7 @@ Currently, the following operators can be overloaded:
 | `\|`                  | trait `BitOr`           |
 | `^`                   | trait `BitXOr`          |
 
-When overloading `_[_]`/`_[_] = _`/`_[_:_]`, the method must have a correcnt signature:
+When overloading `_[_]`/`_[_] = _`/`_[_:_]`, the method must have a correct signature:
 
 - `_[_]` should have signature `(Self, Index) -> Result`, used as `let result = self[index]`
 - `_[_]=_` should have signature `(Self, Index, Value) -> Unit`, used as `self[index] = value`
