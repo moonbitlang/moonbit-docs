@@ -27,6 +27,9 @@ Then run this script directly:
 $ moon run script.mbtx
 ```
 
+You can also use `moonx script.mbtx`; see
+[Running Scripts and Tools with `moonx`](moonx.md).
+
 In `.mbtx`, declare imports in frontmatter enclosed by `---` lines at the
 beginning of the file, using the same syntax as package configuration.
 Imports outside frontmatter are deprecated (`unfenced_import`, warning 96).
