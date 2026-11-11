@@ -14,6 +14,7 @@
 * [Moon Build System](https://docs.moonbitlang.com/en/latest/toolchain/moon/index.html)
   * [MoonBit's Build System Tutorial](https://docs.moonbitlang.com/en/latest/toolchain/moon/tutorial.html)
   * [Running `.mbtx` Scripts](https://docs.moonbitlang.com/en/latest/toolchain/moon/script-mode.html)
+  * [Running Scripts and Tools with `moonx`](https://docs.moonbitlang.com/en/latest/toolchain/moon/moonx.html)
   * [Use and publish packages](https://docs.moonbitlang.com/en/latest/toolchain/moon/package-manage-tour.html)
   * [Workspace Support](https://docs.moonbitlang.com/en/latest/toolchain/moon/workspace.html)
   * [Command-Line Help for `moon`](https://docs.moonbitlang.com/en/latest/toolchain/moon/commands.html)

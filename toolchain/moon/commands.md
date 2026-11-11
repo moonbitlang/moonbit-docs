@@ -2,6 +2,9 @@
 
 This document contains the help content for the `moon` command-line program.
 
+For the separate `moonx` command, which runs scripts and published tools without
+installing them first, see [Running Scripts and Tools with `moonx`](https://docs.moonbitlang.com/en/latest/toolchain/moon/moonx.html).
+
 **Command Overview:**
 
 * [`moon`↴]()
