@@ -40,8 +40,29 @@ msgid ""
 msgstr "この警告はデフォルトでは無効です。パッケージの警告設定で `regex_runtime_fallback` を有効にすると報告されます。"
 
 #: ../../language/error_codes/E0097.md:12
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E0097.md:14
+msgid ""
+"///|\n"
+"pub fn matches(input : String) -> Bool {\n"
+"  input =~ re\"^[01]*1[01]{20}$\"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0097.md:18
+msgid ""
+"This pattern matches binary strings whose twenty-first character from the "
+"end is `1`. Compiling it exceeds a resource limit; the runtime engine can "
+"still match it. The exact limit may change between compiler versions."
+msgstr ""
+"このパターンは、末尾から 21 番目の文字が `1` "
+"である二進文字列にマッチします。コンパイル時にリソース制限を超えますが、実行時エンジンではマッチングできます。具体的な制限はコンパイラのバージョンによって変わる場合があります。"
+
+#: ../../language/error_codes/E0097.md:22
 msgid "Suggestion"
-msgstr "修正案"
+msgstr "対処方法"
 
 #: ../../language/error_codes/E0097.md:14
 msgid ""
@@ -49,6 +70,27 @@ msgid ""
 "performance matters, measure the affected operation and consider "
 "simplifying the patterns or splitting the match into smaller operations."
 msgstr "フォールバックを許容できる場合、正しさのための修正は不要です。性能が重要な場合は、影響を受ける処理を計測し、パターンの簡略化や照合の分割を検討してください。"
+
+#: ../../language/error_codes/E0097.md:28
+msgid ""
+"To choose runtime matching explicitly while preserving the pattern, call "
+"`execute` and check whether it returns a match:"
+msgstr "パターンを維持したまま実行時のマッチングを明示的に選ぶには、`execute` を呼び出し、マッチ結果が返されたかを確認します。"
+
+#: ../../language/error_codes/E0097.md:31
+msgid ""
+"///|\n"
+"pub fn matches(input : String) -> Bool {\n"
+"  re\"^[01]*1[01]{20}$\".execute(input) is Some(_)\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(matches(\"100000000000000000000\"), content=\"true\")\n"
+"  inspect(matches(\"000000000000000000000\"), content=\"false\")\n"
+"  inspect(matches(\"1\"), content=\"false\")\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E0097.md:18
 msgid ""

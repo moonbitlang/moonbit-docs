@@ -33,6 +33,22 @@ msgid ""
 msgstr "`.mbtx` 脚本在 frontmatter 之外声明了导入。这种旧写法已弃用。"
 
 #: ../../language/error_codes/E0096.md:8
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0096.md:10
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/queue\" @queue\n"
+"}\n"
+"\n"
+"///|\n"
+"fn main {\n"
+"  println(@queue.Queue([1, 2]).length())\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0096.md:8
 msgid "Suggestion"
 msgstr "建议"
 
@@ -43,20 +59,17 @@ msgid ""
 "delimiters."
 msgstr "将导入移到脚本开头的 frontmatter 中，用 `---` 行包围。`moon.pkg` 中的包导入不需要这些分隔符。"
 
-#: ../../language/error_codes/E0096.md:13
+#: ../../language/error_codes/E0096.md:19
 msgid ""
 "---\n"
 "import {\n"
-"  \"moonbitlang/core/queue\" @q *\n"
+"  \"moonbitlang/core/queue\" @queue\n"
 "}\n"
 "---\n"
 "\n"
 "///|\n"
 "fn main {\n"
-"  let queue = Queue([1, 2, 3])\n"
-"  println(queue.length())\n"
-"  let qualified = @q.Queue([4, 5])\n"
-"  println(qualified.length())\n"
+"  println(@queue.Queue([1, 2]).length())\n"
 "}\n"
 msgstr ""
 

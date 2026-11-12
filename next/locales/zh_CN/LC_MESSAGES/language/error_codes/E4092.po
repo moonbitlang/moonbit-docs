@@ -24,24 +24,55 @@ msgstr ""
 
 #: ../../language/error_codes/E4092.md:3
 msgid "Compiler diagnostic name: `record_type_missing`."
-msgstr ""
+msgstr "编译器诊断名称：`record_type_missing`。"
 
 #: ../../language/error_codes/E4092.md:5
 msgid "Missing annotation for this empty struct."
-msgstr "这个空记录缺少注释。"
+msgstr "此空结构体缺少类型标注。"
 
 #: ../../language/error_codes/E4092.md:7
 msgid ""
 "MoonBit needs a concrete struct type before it can type-check an empty "
-"struct literal such as `T::{}`. In current compiler output, this "
-"diagnostic can appear as a follow-up error when the type name itself "
-"cannot be resolved."
-msgstr "MoonBit 需要先得到具体的结构体类型，才能对 `T::{}` 这样的空结构体字面量进行类型检查。在当前编译器输出中，当类型名本身无法解析时，此诊断可能作为后续错误出现。"
+"struct literal such as `T::{}`. In current compiler output, this diagnostic "
+"can appear as a follow-up error when the type name itself cannot be "
+"resolved."
+msgstr ""
+"MoonBit 需要确定具体的结构体类型，才能对 `T::{}` "
+"这样的空结构体字面量进行类型检查。当类型名称本身无法解析时，当前编译器可能将此诊断作为后续错误报告。"
 
 #: ../../language/error_codes/E4092.md:11
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4092.md:13
 msgid ""
-"This page has no checked source example because the available small "
-"reproduction also reports the missing type as the primary error. Prefer "
-"adding an explicit type annotation or using a struct type that is in "
-"scope."
-msgstr "此页面没有受检查的源码示例，因为可用的小型复现也会把缺失类型报告为主错误。请优先添加显式类型标注，或使用作用域内的结构体类型。"
+"This example reports E4024 for the unknown type and E4092 for the empty "
+"struct literal whose type could not be resolved."
+msgstr "此示例会针对未知类型报告 E4024，并针对无法确定类型的空结构体字面量报告 E4092。"
+
+#: ../../language/error_codes/E4092.md:16
+msgid ""
+"///|\n"
+"pub fn example() -> Unit {\n"
+"  let _ = Missing::{}\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4092.md:20
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4092.md:22
+msgid "Use a struct type that is defined and in scope:"
+msgstr "使用已定义且在作用域内的结构体类型："
+
+#: ../../language/error_codes/E4092.md:24
+msgid ""
+"///|\n"
+"priv struct Marker {}\n"
+"\n"
+"///|\n"
+"pub fn example() -> Unit {\n"
+"  let _ = Marker::{}\n"
+"}\n"
+msgstr ""

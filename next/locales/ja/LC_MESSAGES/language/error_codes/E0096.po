@@ -33,8 +33,24 @@ msgid ""
 msgstr "`.mbtx` スクリプトで frontmatter の外にインポートが宣言されています。この旧形式は非推奨です。"
 
 #: ../../language/error_codes/E0096.md:8
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E0096.md:10
+msgid ""
+"import {\n"
+"  \"moonbitlang/core/queue\" @queue\n"
+"}\n"
+"\n"
+"///|\n"
+"fn main {\n"
+"  println(@queue.Queue([1, 2]).length())\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0096.md:14
 msgid "Suggestion"
-msgstr "修正案"
+msgstr "対処方法"
 
 #: ../../language/error_codes/E0096.md:10
 msgid ""
@@ -43,20 +59,17 @@ msgid ""
 "delimiters."
 msgstr "インポートをスクリプト先頭の frontmatter に移し、`---` の行で囲んでください。`moon.pkg` 内のパッケージインポートにはこの区切りは不要です。"
 
-#: ../../language/error_codes/E0096.md:13
+#: ../../language/error_codes/E0096.md:19
 msgid ""
 "---\n"
 "import {\n"
-"  \"moonbitlang/core/queue\" @q *\n"
+"  \"moonbitlang/core/queue\" @queue\n"
 "}\n"
 "---\n"
 "\n"
 "///|\n"
 "fn main {\n"
-"  let queue = Queue([1, 2, 3])\n"
-"  println(queue.length())\n"
-"  let qualified = @q.Queue([4, 5])\n"
-"  println(qualified.length())\n"
+"  println(@queue.Queue([1, 2]).length())\n"
 "}\n"
 msgstr ""
 

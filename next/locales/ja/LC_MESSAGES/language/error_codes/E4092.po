@@ -24,24 +24,55 @@ msgstr ""
 
 #: ../../language/error_codes/E4092.md:3
 msgid "Compiler diagnostic name: `record_type_missing`."
-msgstr ""
+msgstr "コンパイラ診断名: `record_type_missing`。"
 
 #: ../../language/error_codes/E4092.md:5
 msgid "Missing annotation for this empty struct."
-msgstr ""
+msgstr "この空の構造体には型注釈がありません。"
 
 #: ../../language/error_codes/E4092.md:7
 msgid ""
 "MoonBit needs a concrete struct type before it can type-check an empty "
-"struct literal such as `T::{}`. In current compiler output, this "
-"diagnostic can appear as a follow-up error when the type name itself "
-"cannot be resolved."
+"struct literal such as `T::{}`. In current compiler output, this diagnostic "
+"can appear as a follow-up error when the type name itself cannot be "
+"resolved."
 msgstr ""
+"MoonBit が `T::{}` "
+"のような空の構造体リテラルを型検査するには、具体的な構造体型が必要です。現在のコンパイラでは、型名自体を解決できない場合に、この診断が後続のエラーとして報告されることがあります。"
 
 #: ../../language/error_codes/E4092.md:11
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E4092.md:13
 msgid ""
-"This page has no checked source example because the available small "
-"reproduction also reports the missing type as the primary error. Prefer "
-"adding an explicit type annotation or using a struct type that is in "
-"scope."
+"This example reports E4024 for the unknown type and E4092 for the empty "
+"struct literal whose type could not be resolved."
+msgstr "この例では、不明な型に対して E4024 が報告され、型を解決できない空の構造体リテラルに対して E4092 が報告されます。"
+
+#: ../../language/error_codes/E4092.md:16
+msgid ""
+"///|\n"
+"pub fn example() -> Unit {\n"
+"  let _ = Missing::{}\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4092.md:20
+msgid "Suggestion"
+msgstr "対処方法"
+
+#: ../../language/error_codes/E4092.md:22
+msgid "Use a struct type that is defined and in scope:"
+msgstr "定義済みでスコープ内にある構造体型を使用してください。"
+
+#: ../../language/error_codes/E4092.md:24
+msgid ""
+"///|\n"
+"priv struct Marker {}\n"
+"\n"
+"///|\n"
+"pub fn example() -> Unit {\n"
+"  let _ = Marker::{}\n"
+"}\n"
 msgstr ""
