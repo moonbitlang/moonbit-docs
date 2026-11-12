@@ -9,13 +9,8 @@ on:
         options: [all, en, zh]
         default: all
       source_ref:
-        description: Optional source branch or release tag
+        description: Source ref (Chinese requires a stable tag such as v0.10.20)
         type: string
-      target:
-        description: Chinese deployment destination
-        type: choice
-        options: [aws, both, aliyun]
-        default: aws
 
 defaults:
   run:
@@ -53,11 +48,16 @@ jobs:
     concurrency:
       group: publish-homepage-cn-llms
       cancel-in-progress: false
+    env:
+      DOCS_RELEASE: ${{ inputs.source_ref }}
     runs-on: ubuntu-latest
     steps:
+      - name: Validate Chinese stable source tag
+        working-directory: ${{ github.workspace }}
+        run: '[[ "$DOCS_RELEASE" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]'
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.source_ref || github.ref }}
+          ref: refs/tags/${{ inputs.source_ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -69,22 +69,14 @@ jobs:
         id: compilation
         run: python3 llm.py
       - uses: aliyun/setup-aliyun-cli-action@v1
-        if: inputs.target == 'aliyun' || inputs.target == 'both'
-      - name: upload
-        if: inputs.target == 'aliyun' || inputs.target == 'both'
-        run: |
-          aliyun configure set --profile default --mode AK --access-key-id ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_ID}} --access-key-secret ${{secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET}} --region ${{secrets.ALIBABA_REGION}}
-          echo y | aliyun oss cp ./_build/markdown/llm.md ${{secrets.ALIYUN_HOMEPAGE_BUCKET}}/llms.txt
-          aliyun cdn RefreshObjectCaches --ObjectPath https://www.moonbitlang.cn/llms.txt --ObjectType File
-      - name: Upload Chinese llms.txt to AWS
-        if: ${{ !cancelled() && steps.compilation.outcome == 'success' && inputs.target != 'aliyun' }}
+      - name: Upload Chinese llms.txt to OSS and refresh ESA
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_MOONBIT_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_MOONBIT_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: us-west-2
-          BUCKET: ${{ secrets.AWS_MOONBIT_CN_BUCKET }}
-          DISTRIBUTION_ID: ${{ secrets.AWS_MOONBIT_CN_DISTRIBUTION_ID }}
+          ALIBABA_CLOUD_ACCESS_KEY_ID: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_ID }}
+          ALIBABA_CLOUD_ACCESS_KEY_SECRET: ${{ secrets.ALIBABA_CLOUD_ACCESS_KEY_SECRET }}
+          BUCKET: ${{ secrets.ALIYUN_HOMEPAGE_BUCKET }}
+          ESA_SITE_ID: ${{ vars.ALIYUN_ESA_SITE_ID }}
         run: |
-          test -n "$BUCKET" && test -n "$DISTRIBUTION_ID"
-          aws s3 cp ./_build/markdown/llm.md "s3://$BUCKET/llms.txt" --content-type 'text/plain; charset=utf-8' --only-show-errors
-          aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION_ID" --paths "/llms.txt" --query 'Invalidation.Status' --output text
+          test -n "$BUCKET" && test -n "$ESA_SITE_ID"
+          aliyun configure set --profile default --mode AK --access-key-id "$ALIBABA_CLOUD_ACCESS_KEY_ID" --access-key-secret "$ALIBABA_CLOUD_ACCESS_KEY_SECRET" --region cn-hangzhou
+          aliyun oss cp ./_build/markdown/llm.md "$BUCKET/llms.txt" --endpoint oss-cn-shenzhen.aliyuncs.com --force --meta 'Content-Type:text/plain; charset=utf-8'
+          aliyun esa PurgeCaches --region cn-hangzhou --SiteId "$ESA_SITE_ID" --Type file --Content '{"Files":["https://www.moonbitlang.cn/llms.txt","https://moonbitlang.cn/llms.txt"]}'
