@@ -280,7 +280,11 @@ Using `Array[T]` in a JavaScript FFI signature is deprecated. Use
 | external type (`#external type T`) | `void*`                                |
 | `FixedArray[Byte]`/`Bytes`         | `uint8_t*`                             |
 | `FixedArray[T]`                    | `T*`                                   |
+| `Ref[T]`                           | `T*`                                   |
 | `FuncRef[T]`                       | Function pointer                       |
+
+For `Ref[T]`, `T*` is a pointer to the C representation of the referenced value.
+For example, `Ref[Int32]` corresponds to `int32_t*`.
 
 ```{note}
 A foreign function returning `Unit` corresponds to a C function returning `void`. If the return type of `T` in `FuncRef[T]` is `Unit`, then it points to a function that returns `void`.
