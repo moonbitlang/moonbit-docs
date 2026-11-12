@@ -3311,7 +3311,7 @@ manually.
 Construct a string scanner with its cursor at `0`:
 
 ```moonbit
-let scanner = @lexbuf.StringScanner::{ data: text[:], cursor: 0 }
+let scanner = @lexbuf.StringScanner(text)
 ```
 
 Both the cursor and the `StringView` indexes are measured in UTF-16 code units.
@@ -3343,7 +3343,7 @@ fn next_string_token(input : @lexbuf.StringScanner) -> Token {
 
 ///|
 test "scan an in-memory string with a maintained cursor" {
-  let input = @lexbuf.StringScanner::{ data: "hello 123!"[:], cursor: 0 }
+  let input = @lexbuf.StringScanner("hello 123!")
   guard next_string_token(input) is Word(word) else { fail("expected word") }
   assert_true(word == "hello")
   assert_eq(input.cursor, 5)
