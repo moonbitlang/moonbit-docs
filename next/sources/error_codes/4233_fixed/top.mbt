@@ -20,3 +20,15 @@ test {
     assert_eq(matches(input), expected)
   }
 }
+
+///|
+test "rejected binary input is consumed" {
+  let chunks = ["1"].iter()
+  let input = @lexbuf.Lexbuf::from_fn(() => chunks.next())
+  assert_false(matches(input))
+  let at_end = lexscan input {
+    re"^." => false
+    _ => true
+  }
+  assert_true(at_end)
+}
