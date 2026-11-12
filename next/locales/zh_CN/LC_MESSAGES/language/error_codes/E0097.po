@@ -40,6 +40,26 @@ msgid ""
 msgstr "此警告默认关闭。在包的警告配置中启用 `regex_runtime_fallback` 后即可收到此警告。"
 
 #: ../../language/error_codes/E0097.md:12
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E0097.md:14
+msgid ""
+"///|\n"
+"pub fn matches(input : String) -> Bool {\n"
+"  input =~ re\"^[01]*1[01]{20}$\"\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E0097.md:18
+msgid ""
+"This pattern matches binary strings whose twenty-first character from the "
+"end is `1`. Compiling it exceeds a resource limit; the runtime engine can "
+"still match it. The exact limit may change between compiler versions."
+msgstr ""
+"此模式匹配倒数第 21 个字符为 `1` 的二进制字符串。编译该模式会超出资源限制，但运行时引擎仍可执行匹配。具体限制可能随编译器版本变化。"
+
+#: ../../language/error_codes/E0097.md:12
 msgid "Suggestion"
 msgstr "建议"
 
@@ -49,6 +69,27 @@ msgid ""
 "performance matters, measure the affected operation and consider "
 "simplifying the patterns or splitting the match into smaller operations."
 msgstr "如果可以接受回退执行，则无需为正确性进行修复。如果性能很重要，应测量受影响的操作，并考虑简化模式或将匹配拆分为较小的操作。"
+
+#: ../../language/error_codes/E0097.md:28
+msgid ""
+"To choose runtime matching explicitly while preserving the pattern, call "
+"`execute` and check whether it returns a match:"
+msgstr "要保持模式不变并显式选择运行时匹配，可以调用 `execute` 并检查是否返回匹配结果："
+
+#: ../../language/error_codes/E0097.md:31
+msgid ""
+"///|\n"
+"pub fn matches(input : String) -> Bool {\n"
+"  re\"^[01]*1[01]{20}$\".execute(input) is Some(_)\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  inspect(matches(\"100000000000000000000\"), content=\"true\")\n"
+"  inspect(matches(\"000000000000000000000\"), content=\"false\")\n"
+"  inspect(matches(\"1\"), content=\"false\")\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E0097.md:18
 msgid ""

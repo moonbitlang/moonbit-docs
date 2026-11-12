@@ -32,7 +32,9 @@ SKIPPED_ERROR_CODES = {
     '0077',
     '4054',
     '4066',
-    '4092',
+    # E4120 requires a raising infix operator after resolution. Current infix
+    # operator traits do not allow that effect in an ordinary source program.
+    '4120',
     # These diagnostics are no longer independently reachable from source.
     # Its page documents that invalid template-writing operands are now
     # rejected earlier by the parser with E3002.
@@ -61,8 +63,8 @@ def example_status(error_code):
 
     error_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_error"
     fixed_path = ERROR_CODES_SOURCE_DIR / f"{error_code}_fixed"
-    has_error = is_moon_project(error_path)
-    has_fixed = is_moon_project(fixed_path)
+    has_error = is_moon_project(error_path) or (error_path / 'main.mbtx').exists()
+    has_fixed = is_moon_project(fixed_path) or (fixed_path / 'main.mbtx').exists()
 
     if has_error and has_fixed:
         return 'full'
@@ -89,11 +91,13 @@ def has_error_code(output, error_code):
 def run_moon_test(file_path, error_code=None):
     """Execute moon check command and return results"""
     try:
-        if not is_moon_project(Path(file_path)):
+        is_script = (Path(file_path) / 'main.mbtx').exists()
+        if not is_script and not is_moon_project(Path(file_path)):
             return True
-        subprocess.run(['moon', 'clean'], cwd=file_path)
+        if not is_script:
+            subprocess.run(['moon', 'clean'], cwd=file_path)
         result = subprocess.run(
-            ['moon', 'check'],
+            ['moon', 'check', 'main.mbtx'] if is_script else ['moon', 'check'],
             capture_output=True,
             text=True,
             env={**os.environ, 'NO_COLOR': '1'},

@@ -34,14 +34,72 @@ msgid ""
 msgstr "正規表現の照合がコンパイル時のリソース制限を超え、実行時へのフォールバックも使用できません。これはコンパイル時のエラーであり、入力の照合中のタイムアウトではありません。"
 
 #: ../../language/error_codes/E4233.md:8
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E4233.md:10
+msgid ""
+"///|\n"
+"pub fn matches(input : @lexbuf.Lexbuf) -> Bool {\n"
+"  lexscan input {\n"
+"    re\"^[01]*1[01]{20}$\" => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4233.md:14
+msgid ""
+"This streaming scan exceeds the compilation limit and cannot use runtime "
+"fallback. It matches binary strings whose twenty-first character from the "
+"end is `1`."
+msgstr ""
+"このストリーミングスキャンはコンパイル制限を超えており、実行時へのフォールバックも利用できません。末尾から 21 番目の文字が `1` "
+"である二進文字列にマッチします。"
+
+#: ../../language/error_codes/E4233.md:18
 msgid "Suggestion"
-msgstr "修正案"
+msgstr "対処方法"
 
 #: ../../language/error_codes/E4233.md:10
 msgid ""
 "Simplify the regex patterns or split the operation into smaller matches. "
 "Preserve the intended matching order and captures when splitting a match."
 msgstr "正規表現パターンを簡単にするか、処理をより小さな照合に分割してください。分割する際は、意図した照合順序とキャプチャを維持してください。"
+
+#: ../../language/error_codes/E4233.md:23
+msgid ""
+"Here, scan the binary digits with a simpler pattern, then check the "
+"character position directly. This preserves the condition tested by the "
+"original pattern."
+msgstr ""
+"ここでは、より単純なパターンで二進数字をスキャンしてから、指定位置の文字を直接確認します。これにより、元のパターンの判定条件を維持できます。"
+
+#: ../../language/error_codes/E4233.md:26
+msgid ""
+"///|\n"
+"pub fn matches(input : @lexbuf.Lexbuf) -> Bool {\n"
+"  lexscan input {\n"
+"    re\"^[01]+$\" as bits =>\n"
+"      bits.length() >= 21 && bits[bits.length() - 21] == '1'\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+"\n"
+"///|\n"
+"test {\n"
+"  for (text, expected) in [\n"
+"    (\"100000000000000000000\", true),\n"
+"    (\"000000000000000000000\", false),\n"
+"    (\"1\", false),\n"
+"    (\"10000000000000000000x\", false),\n"
+"  ] {\n"
+"    let chunks = [text].iter()\n"
+"    let input = @lexbuf.Lexbuf::from_fn(() => chunks.next())\n"
+"    assert_eq(matches(input), expected)\n"
+"  }\n"
+"}\n"
+msgstr ""
 
 #: ../../language/error_codes/E4233.md:13
 msgid ""

@@ -26,18 +26,24 @@ msgstr ""
 msgid ""
 "Legacy constructor functions declared inside a `struct` must have name "
 "`new`."
-msgstr ""
+msgstr "`struct` 内で宣言する旧形式のコンストラクタ関数は、`new` という名前でなければなりません。"
 
 #: ../../language/error_codes/E3024.md:5
 msgid ""
-"This error happens when a constructor function declared inside a `struct`"
-" is not named `new`. MoonBit treats `new` as the constructor entry point "
-"for the struct."
+"This error happens when a constructor function declared inside a `struct` is"
+" not named `new`. This is a legacy syntax diagnostic: renaming the nested "
+"function to `new` is not a migration to current syntax. The compiler also "
+"rejects nested constructor declarations with E3002; use a top-level "
+"constructor instead."
 msgstr ""
+"`struct` 内で宣言されたコンストラクタ関数の名前が `new` "
+"でない場合に、このエラーが発生します。これは旧構文に対する診断であり、入れ子の関数を `new` "
+"に改名しても現行構文への移行にはなりません。コンパイラは入れ子のコンストラクタ宣言を E3002 "
+"でも拒否するため、トップレベルのコンストラクタを使用してください。"
 
-#: ../../language/error_codes/E3024.md:9
+#: ../../language/error_codes/E3024.md:11
 msgid "Erroneous example"
-msgstr ""
+msgstr "誤った例"
 
 #: ../../language/error_codes/E3024.md:11
 msgid ""
@@ -51,13 +57,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/error_codes/E3024.md:15
-msgid "Suggestion"
-msgstr ""
-
 #: ../../language/error_codes/E3024.md:17
+msgid "Suggestion"
+msgstr "対処方法"
+
+#: ../../language/error_codes/E3024.md:19
 msgid "Define the constructor with the current top-level `Type::Type` form:"
-msgstr ""
+msgstr "現行のトップレベルの `Type::Type` 形式でコンストラクタを定義してください。"
 
 #: ../../language/error_codes/E3024.md:19
 msgid ""
