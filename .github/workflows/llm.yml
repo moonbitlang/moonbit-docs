@@ -67,7 +67,7 @@ jobs:
         run: LANGUAGE="zh_CN" make markdown
       - name: compilation
         id: compilation
-        run: python3 llm.py
+        run: LANGUAGE="zh_CN" python3 llm.py
       - uses: aliyun/setup-aliyun-cli-action@v1
       - name: Upload Chinese llms.txt to OSS and refresh ESA
         env:
