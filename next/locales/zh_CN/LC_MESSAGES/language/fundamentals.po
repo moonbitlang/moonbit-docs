@@ -5724,8 +5724,8 @@ msgstr ""
 msgid "Construct a string scanner with its cursor at `0`:"
 msgstr "构造字符串扫描器时，将其游标设为 `0`："
 
-#: ../../language/fundamentals.md:2433
-msgid "let scanner = @lexbuf.StringScanner::{ data: text[:], cursor: 0 }\n"
+#: ../../language/fundamentals.md:2467
+msgid "let scanner = @lexbuf.StringScanner(text)\n"
 msgstr ""
 
 #: ../../language/fundamentals.md:2437
@@ -5744,7 +5744,7 @@ msgid ""
 "The test also shows that `lexscan` maintains the cursor:"
 msgstr "以下扫描器会跳过空白，并在每次调用时返回一个词元。测试还展示了 `lexscan` 如何维护游标："
 
-#: ../../language/fundamentals.md:2445
+#: ../../language/fundamentals.md:2479
 msgid ""
 "priv enum Token {\n"
 "  Word(StringView)\n"
@@ -5766,8 +5766,7 @@ msgid ""
 "\n"
 "///|\n"
 "test \"scan an in-memory string with a maintained cursor\" {\n"
-"  let input = @lexbuf.StringScanner::{ data: \"hello 123!\"[:], cursor: 0"
-" }\n"
+"  let input = @lexbuf.StringScanner(\"hello 123!\")\n"
 "  guard next_string_token(input) is Word(word) else { fail(\"expected "
 "word\") }\n"
 "  assert_true(word == \"hello\")\n"

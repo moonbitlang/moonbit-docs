@@ -43,7 +43,7 @@ fn next_string_token(input : @lexbuf.StringScanner) -> Token {
 
 ///|
 test "scan an in-memory string with a maintained cursor" {
-  let input = @lexbuf.StringScanner::{ data: "hello 123!"[:], cursor: 0 }
+  let input = @lexbuf.StringScanner("hello 123!")
   guard next_string_token(input) is Word(word) else { fail("expected word") }
   assert_true(word == "hello")
   assert_eq(input.cursor, 5)
@@ -65,7 +65,7 @@ test "scan an in-memory string with a maintained cursor" {
 ///|
 test "StringScanner cursor is relative to its StringView" {
   let data = "xx🤣yzz".exact_view(start=2, end=5)
-  let input = @lexbuf.StringScanner::{ data, cursor: 0 }
+  let input = @lexbuf.StringScanner(data)
   guard next_string_token(input) is Punctuation(mark) else {
     fail("expected punctuation")
   }

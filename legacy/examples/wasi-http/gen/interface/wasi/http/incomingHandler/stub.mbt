@@ -30,7 +30,7 @@ pub fn handle(
       guard body.write() is Ok(stream)
       defer stream.drop()
       stream
-      .write(FixedArray::from_iter(@encoding/utf8.encode("Hello World").iter()))
+      .write(FixedArray::from_iter(@utf8.encode("Hello World").iter()))
       .unwrap()
     }
     Some(p) => {
@@ -42,7 +42,7 @@ pub fn handle(
       defer stream.drop()
       stream
       .write(
-        FixedArray::from_iter(@encoding/utf8.encode("Not found: \{p}").iter()),
+        FixedArray::from_iter(@utf8.encode("Not found: \{p}").iter()),
       )
       .unwrap()
     }
