@@ -7,6 +7,7 @@ on:
   pull_request:
     paths:
       - next/**
+      - .github/workflows/next-check.yml
   schedule:
     - cron: "0 10 * * 2"
 
@@ -25,6 +26,8 @@ jobs:
           - nightly
           - pre-release
     runs-on: ${{ matrix.os }}
+    env:
+      SCRUT_VERSION: "0.5.1"
     steps:
       - uses: actions/checkout@v4
 
@@ -47,13 +50,27 @@ jobs:
         run: |
           python next/check_error_docs.py all
 
-      - name: Set up Rust
+      - name: Cache scrut
         if: always()
+        id: scrut-cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/scrut
+          key: scrut-${{ matrix.os }}-${{ runner.arch }}-${{ env.SCRUT_VERSION }}-v1
+
+      - name: Set up Rust
+        if: always() && steps.scrut-cache.outputs.cache-hit != 'true'
         uses: dtolnay/rust-toolchain@stable
 
       - name: Install scrut
+        if: always() && steps.scrut-cache.outputs.cache-hit != 'true'
+        run: cargo install --locked --version "$env:SCRUT_VERSION" --root "${{ runner.temp }}/scrut" scrut
+        shell: pwsh
+
+      - name: Add scrut to PATH
         if: always()
-        run: cargo install --locked scrut
+        shell: pwsh
+        run: '"${{ runner.temp }}/scrut/bin" >> $env:GITHUB_PATH'
 
       - name: Workspace command transcript
         if: always()
