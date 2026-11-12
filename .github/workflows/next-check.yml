@@ -41,43 +41,31 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: scrut-${{ env.SCRUT_VERSION }}
+          cache-targets: false
+          cache-on-failure: true
+
+      - name: Install scrut
+        shell: bash
+        run: cargo install --locked --version "$SCRUT_VERSION" scrut
+
       - name: moon check and test
         run: |
           python scripts/check-document.py
 
       - name: check error-code examples
-        if: always()
         run: |
           python next/check_error_docs.py all
 
-      - name: Cache scrut
-        if: always()
-        id: scrut-cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ runner.temp }}/scrut
-          key: scrut-${{ matrix.os }}-${{ runner.arch }}-${{ env.SCRUT_VERSION }}-v1
-
-      - name: Set up Rust
-        if: always() && steps.scrut-cache.outputs.cache-hit != 'true'
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Install scrut
-        if: always() && steps.scrut-cache.outputs.cache-hit != 'true'
-        run: cargo install --locked --version "$env:SCRUT_VERSION" --root "${{ runner.temp }}/scrut" scrut
-        shell: pwsh
-
-      - name: Add scrut to PATH
-        if: always()
-        shell: pwsh
-        run: '"${{ runner.temp }}/scrut/bin" >> $env:GITHUB_PATH'
-
       - name: Workspace command transcript
-        if: always()
         shell: bash
         run: scrut test --shell bash next/sources/workspace/workspace.cram
 
       - name: Script mode command transcript
-        if: always()
         shell: bash
         run: scrut test --shell bash next/sources/script-mode/script-mode.cram
