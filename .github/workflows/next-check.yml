@@ -51,8 +51,8 @@ jobs:
           cache-on-failure: true
 
       - name: Install scrut
-        shell: bash
-        run: cargo install --locked --version "$SCRUT_VERSION" scrut
+        shell: pwsh
+        run: cargo install --locked --version "$env:SCRUT_VERSION" scrut
 
       - name: moon check and test
         run: |
