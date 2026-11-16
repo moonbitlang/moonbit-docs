@@ -1,6 +1,10 @@
 default:
     just --list
 
+# Regenerate the documentation dependency lock for supported Python versions.
+docs-lock:
+    uv pip compile next/requirements.in --python 3.12 --python-version 3.11.5 --universal --custom-compile-command "just docs-lock" --output-file next/requirements.txt
+
 # Build the default Sphinx docs with uv-managed Python dependencies.
 docs-html:
     cd next && uv run --with-requirements requirements.txt make html
