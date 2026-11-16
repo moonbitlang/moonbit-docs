@@ -33,27 +33,31 @@ You can also use `moonx script.mbtx`; see
 In `.mbtx`, declare imports in frontmatter enclosed by `---` lines at the
 beginning of the file, using the same syntax as package configuration.
 Imports outside frontmatter are deprecated (`unfenced_import`, warning 96).
-There is one difference: import paths can optionally include a version
-`@version` after the module name:
+For example, an async script can import the standard library's
+`moonbitlang/core/async` package in frontmatter:
 
-```mbt
----
-import {
-  "moonbitlang/async@0.20.2/fs",
-  "moonbitlang/async@0.20.2",
-}
----
-
-///|
-async fn main {
-  ...
-}
+```{literalinclude} /sources/script-mode/async.mbtx
+:language: moonbit
 ```
 
+Run this example with `moon run --target native async.mbtx`.
+
+```{note}
+Running this script currently reports an experimental-package warning.
+Unlike `moon.pkg`, script frontmatter does not support the
+`options("allow-experimental-packages": true)` opt-in. The warning does not
+prevent the script from running.
+```
+
+For third-party dependencies, import paths can optionally include a version
+`@version` after the module name, in the form `author/module@version/package`.
 All imported packages from the same module must use the same version.
 
 If the import path is not explicitly versioned, it uses the latest version
 in the local registry index.
+
+Standard library imports such as `moonbitlang/core/async` use the version
+bundled with the toolchain and do not need a version in the import path.
 
 A script may add `*` after an import to bring all definitions from that package
 into its scope. The import may also set a custom package alias with `@alias`:

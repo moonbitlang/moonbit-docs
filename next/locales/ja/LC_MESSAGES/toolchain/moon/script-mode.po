@@ -68,39 +68,61 @@ msgid ""
 " `moonx`](moonx.md)."
 msgstr "`moonx script.mbtx` も使用できます。[`moonx` でスクリプトとツールを実行する](moonx.md)を参照してください。"
 
-#: ../../toolchain/moon/script-mode.md:30
+#: ../../toolchain/moon/script-mode.md:33
 msgid ""
-"In `.mbtx`, declare imports in frontmatter enclosed by `---` lines at "
-"the beginning of the file, using the same syntax as package "
-"configuration. Imports outside frontmatter are deprecated "
-"(`unfenced_import`, warning 96). There is one difference: import paths "
-"can optionally include a version `@version` after the module name:"
-msgstr "`.mbtx` では、ファイル先頭の `---` 行で囲まれた frontmatter 内に、パッケージ設定と同じ構文で import を宣言します。frontmatter 外の import は非推奨です（`unfenced_import`、警告 96）。違いは、import パスにモジュール名の後ろへ `@version` を任意で付けられる点です："
+"In `.mbtx`, declare imports in frontmatter enclosed by `---` lines at the"
+" beginning of the file, using the same syntax as package configuration. "
+"Imports outside frontmatter are deprecated (`unfenced_import`, warning "
+"96). For example, an async script can import the standard library's "
+"`moonbitlang/core/async` package in frontmatter:"
+msgstr "`.mbtx` では、ファイル先頭の `---` で囲まれたフロントマターに、パッケージ設定と同じ構文でインポートを宣言します。フロントマターの外でのインポートは非推奨です（`unfenced_import`、警告 96）。例えば、非同期スクリプトはフロントマターで標準ライブラリの `moonbitlang/core/async` パッケージをインポートできます。"
 
-#: ../../toolchain/moon/script-mode.md:36
+#: ../../toolchain/moon/script-mode.md:39
 msgid ""
 "---\n"
 "import {\n"
-"  \"moonbitlang/async@0.20.2/fs\",\n"
-"  \"moonbitlang/async@0.20.2\",\n"
+"  \"moonbitlang/core/async\",\n"
 "}\n"
 "---\n"
 "\n"
 "///|\n"
 "async fn main {\n"
-"  ...\n"
+"  @async.sleep(0)\n"
+"  println(\"done\")\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/script-mode.md:50
-msgid "All imported packages from the same module must use the same version."
-msgstr "同じモジュールから import するすべてのパッケージは、同じバージョンを使う必要があります。"
+#: ../../toolchain/moon/script-mode.md:43
+msgid "Run this example with `moon run --target native async.mbtx`."
+msgstr "この例は `moon run --target native async.mbtx` で実行します。"
+
+#: ../../toolchain/moon/script-mode.md:46
+msgid ""
+"Running this script currently reports an experimental-package warning. "
+"Unlike `moon.pkg`, script frontmatter does not support the `options"
+"(\"allow-experimental-packages\": true)` opt-in. The warning does not "
+"prevent the script from running."
+msgstr "このスクリプトを実行すると、現在は実験的なパッケージに関する警告が表示されます。`moon.pkg` と異なり、スクリプトのフロントマターでは `options(\"allow-experimental-packages\": true)` によるオプトインを設定できません。この警告が表示されてもスクリプトは実行されます。"
+
+#: ../../toolchain/moon/script-mode.md:52
+msgid ""
+"For third-party dependencies, import paths can optionally include a "
+"version `@version` after the module name, in the form "
+"`author/module@version/package`. All imported packages from the same "
+"module must use the same version."
+msgstr "サードパーティの依存関係では、モジュール名の後に `@version` を付けて、`author/module@version/package` の形式でバージョンを指定できます。同じモジュールからインポートするすべてのパッケージは同じバージョンを使用する必要があります。"
 
 #: ../../toolchain/moon/script-mode.md:52
 msgid ""
 "If the import path is not explicitly versioned, it uses the latest "
 "version in the local registry index."
 msgstr "import パスで明示的にバージョンを指定しない場合は、ローカルのレジストリインデックスにある最新バージョンが使われます。"
+
+#: ../../toolchain/moon/script-mode.md:59
+msgid ""
+"Standard library imports such as `moonbitlang/core/async` use the version"
+" bundled with the toolchain and do not need a version in the import path."
+msgstr "`moonbitlang/core/async` などの標準ライブラリのインポートでは、ツールチェーンに同梱されたバージョンが使用されるため、インポートパスでのバージョン指定は不要です。"
 
 #: ../../toolchain/moon/script-mode.md:55
 msgid ""

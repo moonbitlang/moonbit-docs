@@ -45,7 +45,7 @@ async fn send_file(
   } else {
     conn
     ..send_response(404, "NotFound", extra_headers=text_headers)
-    ..write(missing_message)
+    ..write_string(missing_message)
     .end_response()
   }
 }
@@ -53,15 +53,15 @@ async fn send_file(
 ///|
 /// start backend-main
 async fn main {
-  @stdio.stdout.write("starting backend on http://127.0.0.1:8080\n")
+  @stdio.stdout.text.write("starting backend on http://127.0.0.1:8080\n")
   let server = @http.Server(@socket.Addr::parse("127.0.0.1:8080")) catch {
     err => {
-      @stdio.stdout.write("failed to start backend: \{err}\n")
+      @stdio.stdout.text.write("failed to start backend: \{err}\n")
       return
     }
   }
 
-  server.run_forever((request, body, conn) => {
+  server.run_forever((request, conn) => {
     match (request.meth, request.path) {
       (Get, "/") =>
         send_file(
@@ -72,7 +72,7 @@ async fn main {
           conn, frontend_js_path, js_headers, "missing frontend bundle; run `moon build frontend --target js`",
         )
       (Post, "/submit") => {
-        let raw_body = body.read_all().text() catch { _ => "" }
+        let raw_body = conn.text.read_all() catch { _ => "" }
         let response : @shared.SubmitTitleResponse = try {
           let request : @shared.SubmitTitleRequest = @json.from_json(
             @json.parse(raw_body),
@@ -95,13 +95,13 @@ async fn main {
         let reason = if code == 200 { "OK" } else { "BadRequest" }
         conn
         ..send_response(code, reason, extra_headers=json_headers)
-        ..write(response.to_json().stringify())
+        ..write_string(response.to_json().stringify())
         .end_response()
       }
       _ =>
         conn
         ..send_response(404, "NotFound", extra_headers=text_headers)
-        ..write("Not Found")
+        ..write_string("Not Found")
         .end_response()
     }
   })

@@ -1,13 +1,15 @@
 import {
   "moonbit-community/fullstack-one-project-doc/shared",
   "moonbitlang/core/json",
-  "moonbitlang/async",
-  "moonbitlang/async/fs",
-  "moonbitlang/async/http",
-  "moonbitlang/async/socket",
-  "moonbitlang/async/stdio",
+  "moonbitlang/core/async",
+  "moonbitlang/core/async/fs",
+  "moonbitlang/core/async/http",
+  "moonbitlang/core/async/socket",
+  "moonbitlang/core/async/stdio",
 }
 
 supported_targets = "native"
 
 pkgtype(kind: "executable")
+
+options("allow-experimental-packages": true)

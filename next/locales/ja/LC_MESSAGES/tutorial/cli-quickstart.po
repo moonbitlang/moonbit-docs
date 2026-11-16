@@ -35,8 +35,8 @@ msgid "keep `cmd/main` small"
 msgstr "`cmd/main` は小さく保つ"
 
 #: ../../tutorial/cli-quickstart.md:7
-msgid "use `moonbitlang/async` for native IO"
-msgstr "ネイティブ I/O には `moonbitlang/async` を使う"
+msgid "use `moonbitlang/core/async` for native IO"
+msgstr "ネイティブ I/O には `moonbitlang/core/async` を使う"
 
 #: ../../tutorial/cli-quickstart.md:8
 msgid "test the pure parts without touching the network"
@@ -44,9 +44,12 @@ msgstr "ネットワークに触れずに純粋な部分をテストする"
 
 #: ../../tutorial/cli-quickstart.md:10
 msgid ""
-"This example uses `moonbitlang/async`, which currently supports the "
-"native backend best."
-msgstr "この例では `moonbitlang/async` を使用します。現時点では native バックエンドのサポートが最も充実しています。"
+"This example uses the standard library's experimental "
+"`moonbitlang/core/async` packages, which currently support the native "
+"backend best."
+msgstr ""
+"この例では標準ライブラリの実験的な `moonbitlang/core/async` "
+"パッケージを使用します。現在はネイティブバックエンドへの対応が最も充実しています。"
 
 #: ../../tutorial/cli-quickstart.md:12
 msgid "Create the project"
@@ -56,34 +59,31 @@ msgstr "プロジェクトを作成する"
 msgid "Start with a normal MoonBit module:"
 msgstr "通常の MoonBit モジュールから始めます。"
 
-#: ../../tutorial/cli-quickstart.md:16
+#: ../../tutorial/cli-quickstart.md:17
 msgid ""
 "moon new download_cli\n"
 "cd download_cli\n"
-"moon add moonbitlang/async@0.20.2\n"
 msgstr ""
 
 #: ../../tutorial/cli-quickstart.md:22
 msgid ""
-"`argparse` is already part of the standard library, so this quickstart "
-"only adds `moonbitlang/async`."
-msgstr "`argparse` はすでに標準ライブラリに含まれているため、このクイックスタートでは `moonbitlang/async` のみ追加します。"
-
-#: ../../tutorial/cli-quickstart.md:24
-msgid ""
-"Set the preferred target to native in `moon.mod` so `moon run` and `moon "
-"build` default to the backend that `moonbitlang/async` supports best:"
-msgstr ""
-"`moon.mod` で preferred target を native に設定すると、`moon run` と `moon build` は"
-" `moonbitlang/async` のサポートが最も良いバックエンドを既定で使います。"
+"Both `argparse` and `moonbitlang/core/async` are part of the standard "
+"library; no extra module dependency is needed. To suppress experimental-"
+"package warnings, add `options(\"allow-experimental-packages\": true)` to"
+" each importing package's `moon.pkg`, as shown below."
+msgstr "`argparse` と `moonbitlang/core/async` はどちらも標準ライブラリに含まれるため、追加のモジュール依存関係は不要です。実験的なパッケージに関する警告を抑制するには、以下のようにインポートする各パッケージの `moon.pkg` に `options(\"allow-experimental-packages\": true)` を追加します。"
 
 #: ../../tutorial/cli-quickstart.md:27
 msgid ""
+"Set the preferred target to native in `moon.mod` so `moon run` and `moon "
+"build` default to the backend that `moonbitlang/core/async` supports "
+"best:"
+msgstr "`moon.mod` で preferred target を native に設定すると、`moon run` と `moon build` は `moonbitlang/core/async` のサポートが最も良いバックエンドを既定で使います。"
+
+#: ../../tutorial/cli-quickstart.md:30
+msgid ""
 "name = \"username/download_cli\"\n"
 "version = \"0.1.0\"\n"
-"import {\n"
-"  \"moonbitlang/async@0.20.2\",\n"
-"}\n"
 "preferred_target = \"native\"\n"
 msgstr ""
 
@@ -174,14 +174,16 @@ msgstr "パッケージ記述子では、`moonbitlang/core` の `argparse` と�
 msgid ""
 "import {\n"
 "  \"moonbitlang/core/argparse\",\n"
-"  \"moonbitlang/async/fs\",\n"
-"  \"moonbitlang/async/http\",\n"
-"  \"moonbitlang/async/stdio\",\n"
+"  \"moonbitlang/core/async/fs\",\n"
+"  \"moonbitlang/core/async/http\",\n"
+"  \"moonbitlang/core/async/stdio\",\n"
 "}\n"
 "\n"
 "import {\n"
 "  \"moonbitlang/core/test\",\n"
 "} for \"test\"\n"
+"\n"
+"options(\"allow-experimental-packages\": true)\n"
 msgstr ""
 
 #: ../../tutorial/cli-quickstart.md:67
@@ -209,7 +211,7 @@ msgid ""
 "      let file = @fs.create(path, permission=0o644)\n"
 "      defer file.close()\n"
 "      file.write_reader(body)\n"
-"      @stdio.stderr.write(\"saved \\{config.url} to \\{path}\\n\")\n"
+"      @stdio.stderr.text.write(\"saved \\{config.url} to \\{path}\\n\")\n"
 "    }\n"
 "    None => @stdio.stdout.write_reader(body)\n"
 "  }\n"
@@ -231,10 +233,12 @@ msgid ""
 "import {\n"
 "  \"moonbit-community/cli-quickstart-doc\" @app,\n"
 "  \"moonbitlang/core/env\",\n"
-"  \"moonbitlang/async\",\n"
+"  \"moonbitlang/core/async\",\n"
 "}\n"
 "\n"
 "pkgtype(kind: \"executable\")\n"
+"\n"
+"options(\"allow-experimental-packages\": true)\n"
 msgstr ""
 
 #: ../../tutorial/cli-quickstart.md:85
