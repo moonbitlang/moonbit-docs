@@ -4,7 +4,7 @@ This project showcases how to generate a compact WebAssembly (Wasm) by MoonBit, 
 
 ## Setup Wrangler
 
-Before you begin, make sure you have `node` and `pnpm` (or `npm`) installed.
+Before you begin, make sure you have Node.js 22.12 or newer and `pnpm` (or `npm`) installed.
 
 To set up a new project, just run `pnpm create cloudflare@2.5.0` and answer the prompts:
 - Application Type: Select "Hello World" worker.
@@ -43,9 +43,8 @@ This will export a function named `fib` with the wasm-gc backend.
 ## Integrate MoonBit to worker
 - Add the following to the `src/index.ts`
   ```typescript title=src/index.ts
-  import wasm from '../target/wasm-gc/release/build/hello.wasm';
+  import wasm from '../_build/wasm-gc/release/build/hello.wasm';
   const module = await WebAssembly.instantiate(wasm);
-  module.exports._start();
 
   export interface Env {}
 
@@ -55,13 +54,13 @@ This will export a function named `fib` with the wasm-gc backend.
     }
   };
   ```
-- Modify the `start` script in `package.json` to `"start": "moon build --target wasm-gc && wrangler dev",`.
+- Modify the `start` script in `package.json` to `"start": "moon build --target wasm-gc --release && wrangler dev",`.
 - Append the following to `.gitignore`:
 
   ```gitignore
   # MoonBit project
   
-  target/
+  _build/
   .mooncakes/
   ```
 

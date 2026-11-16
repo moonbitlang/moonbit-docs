@@ -21,7 +21,7 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
-import wasm from '../target/wasm-gc/release/build/hello.wasm';
+import wasm from '../_build/wasm-gc/release/build/hello.wasm';
 
 const module = await WebAssembly.instantiate(wasm);
 
