@@ -66,39 +66,61 @@ msgid ""
 " `moonx`](moonx.md)."
 msgstr "也可以使用 `moonx script.mbtx`；请参阅[使用 `moonx` 运行脚本和工具](moonx.md)。"
 
-#: ../../toolchain/moon/script-mode.md:30
+#: ../../toolchain/moon/script-mode.md:33
 msgid ""
-"In `.mbtx`, declare imports in frontmatter enclosed by `---` lines at "
-"the beginning of the file, using the same syntax as package "
-"configuration. Imports outside frontmatter are deprecated "
-"(`unfenced_import`, warning 96). There is one difference: import paths "
-"can optionally include a version `@version` after the module name:"
-msgstr "在 `.mbtx` 中，应在文件开头由 `---` 行包围的 frontmatter 中声明导入，语法与包配置相同。frontmatter 外的导入已弃用（`unfenced_import`，警告 96）。不同之处在于：导入路径可以在模块名后可选地包含版本 `@version`："
+"In `.mbtx`, declare imports in frontmatter enclosed by `---` lines at the"
+" beginning of the file, using the same syntax as package configuration. "
+"Imports outside frontmatter are deprecated (`unfenced_import`, warning "
+"96). For example, an async script can import the standard library's "
+"`moonbitlang/core/async` package in frontmatter:"
+msgstr "在 `.mbtx` 中，导入声明应放在文件开头以 `---` 包围的 frontmatter 中，语法与包配置相同。frontmatter 外的导入已弃用（`unfenced_import`，警告 96）。例如，异步脚本可以在 frontmatter 中导入标准库的 `moonbitlang/core/async` 包："
 
-#: ../../toolchain/moon/script-mode.md:36
+#: ../../toolchain/moon/script-mode.md:39
 msgid ""
 "---\n"
 "import {\n"
-"  \"moonbitlang/async@0.20.2/fs\",\n"
-"  \"moonbitlang/async@0.20.2\",\n"
+"  \"moonbitlang/core/async\",\n"
 "}\n"
 "---\n"
 "\n"
 "///|\n"
 "async fn main {\n"
-"  ...\n"
+"  @async.sleep(0)\n"
+"  println(\"done\")\n"
 "}\n"
 msgstr ""
 
-#: ../../toolchain/moon/script-mode.md:50
-msgid "All imported packages from the same module must use the same version."
-msgstr "来自同一模块的所有导入包必须使用相同版本。"
+#: ../../toolchain/moon/script-mode.md:43
+msgid "Run this example with `moon run --target native async.mbtx`."
+msgstr "使用 `moon run --target native async.mbtx` 运行这个示例。"
+
+#: ../../toolchain/moon/script-mode.md:46
+msgid ""
+"Running this script currently reports an experimental-package warning. "
+"Unlike `moon.pkg`, script frontmatter does not support the `options"
+"(\"allow-experimental-packages\": true)` opt-in. The warning does not "
+"prevent the script from running."
+msgstr "运行这个脚本目前会产生实验性包警告。与 `moon.pkg` 不同，脚本 frontmatter 不支持 `options(\"allow-experimental-packages\": true)` 设置。该警告不会阻止脚本运行。"
+
+#: ../../toolchain/moon/script-mode.md:52
+msgid ""
+"For third-party dependencies, import paths can optionally include a "
+"version `@version` after the module name, in the form "
+"`author/module@version/package`. All imported packages from the same "
+"module must use the same version."
+msgstr "对于第三方依赖，导入路径可以在模块名后添加 `@version`，形式为 `author/module@version/package`。同一模块的所有导入包必须使用相同版本。"
 
 #: ../../toolchain/moon/script-mode.md:52
 msgid ""
 "If the import path is not explicitly versioned, it uses the latest "
 "version in the local registry index."
 msgstr "如果导入路径没有显式指定版本，则会使用本地索引中的最新版本。"
+
+#: ../../toolchain/moon/script-mode.md:59
+msgid ""
+"Standard library imports such as `moonbitlang/core/async` use the version"
+" bundled with the toolchain and do not need a version in the import path."
+msgstr "`moonbitlang/core/async` 等标准库导入使用工具链自带的版本，无需在导入路径中指定版本。"
 
 #: ../../toolchain/moon/script-mode.md:55
 msgid ""

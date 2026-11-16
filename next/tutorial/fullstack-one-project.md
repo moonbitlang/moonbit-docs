@@ -23,9 +23,12 @@ The key is `supported_targets`:
 ```bash
 moon new fullstack_one_project
 cd fullstack_one_project
-moon add moonbitlang/async@0.22.4
 moon add moonbit-community/rabbita@0.16.4
 ```
+
+The backend uses `moonbitlang/core/async` from the standard library; it does not
+need a separate async module dependency. Its `moon.pkg` opts into these
+experimental packages with `options("allow-experimental-packages": true)`.
 
 Project layout:
 

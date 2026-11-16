@@ -1,4 +1,8 @@
 Script mode command transcript
+  $ moon run --target native "$TESTDIR/async.mbtx" 2>&1 | tr -d '\r'
+  Warning: Package `moon/test/single` depends on experimental package `moonbitlang/core/async`. Set `options("allow-experimental-packages": ["moonbitlang/core/async"])` in the importing package's moon.pkg to acknowledge this dependency.
+  done
+
   $ moon run -c 'fn main { println("hello") }' | tr -d '\r'
   hello
 

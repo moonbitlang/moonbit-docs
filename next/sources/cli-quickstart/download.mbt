@@ -13,7 +13,7 @@ pub async fn run(config : Config) -> Unit {
       let file = @fs.create(path, permission=0o644)
       defer file.close()
       file.write_reader(body)
-      @stdio.stderr.write("saved \{config.url} to \{path}\n")
+      @stdio.stderr.text.write("saved \{config.url} to \{path}\n")
     }
     None => @stdio.stdout.write_reader(body)
   }

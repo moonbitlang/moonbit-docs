@@ -1,11 +1,14 @@
 warnings = "-unused_value-unused_value-missing_priv-unresolved_type_variable-todo-unused_async"
 
+// start async imports
 import {
-  "moonbitlang/async",
-  "moonbitlang/async/fs",
-  "moonbitlang/async/http",
+  "moonbitlang/core/async",
+  "moonbitlang/core/async/fs",
+  "moonbitlang/core/async/http",
 }
 
 options(
+  "allow-experimental-packages": true,
   targets: { "async.mbt": [ "native" ] },
 )
+// end async imports

@@ -35,8 +35,8 @@ msgid "keep `cmd/main` small"
 msgstr "保持 `cmd/main` 简洁"
 
 #: ../../tutorial/cli-quickstart.md:7
-msgid "use `moonbitlang/async` for native IO"
-msgstr "使用 `moonbitlang/async` 处理原生 IO"
+msgid "use `moonbitlang/core/async` for native IO"
+msgstr "使用 `moonbitlang/core/async` 处理原生 IO"
 
 #: ../../tutorial/cli-quickstart.md:8
 msgid "test the pure parts without touching the network"
@@ -44,9 +44,10 @@ msgstr "在不接触网络的情况下测试纯逻辑部分"
 
 #: ../../tutorial/cli-quickstart.md:10
 msgid ""
-"This example uses `moonbitlang/async`, which currently supports the "
-"native backend best."
-msgstr "这个示例使用 `moonbitlang/async`，它目前对 native 后端支持最好。"
+"This example uses the standard library's experimental "
+"`moonbitlang/core/async` packages, which currently support the native "
+"backend best."
+msgstr "这个示例使用标准库中实验性的 `moonbitlang/core/async` 包，目前这些包对原生后端的支持最完善。"
 
 #: ../../tutorial/cli-quickstart.md:12
 msgid "Create the project"
@@ -56,34 +57,31 @@ msgstr "创建项目"
 msgid "Start with a normal MoonBit module:"
 msgstr "先从一个普通的 MoonBit 模块开始："
 
-#: ../../tutorial/cli-quickstart.md:16
+#: ../../tutorial/cli-quickstart.md:17
 msgid ""
 "moon new download_cli\n"
 "cd download_cli\n"
-"moon add moonbitlang/async@0.20.2\n"
 msgstr ""
 
 #: ../../tutorial/cli-quickstart.md:22
 msgid ""
-"`argparse` is already part of the standard library, so this quickstart "
-"only adds `moonbitlang/async`."
-msgstr "`argparse` 已经属于标准库，因此这个快速开始只需要添加 `moonbitlang/async`。"
-
-#: ../../tutorial/cli-quickstart.md:24
-msgid ""
-"Set the preferred target to native in `moon.mod` so `moon run` and `moon "
-"build` default to the backend that `moonbitlang/async` supports best:"
-msgstr ""
-"在 `moon.mod` 中把首选目标设置为 native，这样 `moon run` 和 `moon build` 默认就会使用 "
-"`moonbitlang/async` 支持最好的后端："
+"Both `argparse` and `moonbitlang/core/async` are part of the standard "
+"library; no extra module dependency is needed. To suppress experimental-"
+"package warnings, add `options(\"allow-experimental-packages\": true)` to"
+" each importing package's `moon.pkg`, as shown below."
+msgstr "`argparse` 和 `moonbitlang/core/async` 都属于标准库，无需额外添加模块依赖。要消除实验性包警告，可以在每个导入它们的包的 `moon.pkg` 中添加 `options(\"allow-experimental-packages\": true)`，如下所示。"
 
 #: ../../tutorial/cli-quickstart.md:27
 msgid ""
+"Set the preferred target to native in `moon.mod` so `moon run` and `moon "
+"build` default to the backend that `moonbitlang/core/async` supports "
+"best:"
+msgstr "在 `moon.mod` 中把首选目标设置为 native，这样 `moon run` 和 `moon build` 默认就会使用 `moonbitlang/core/async` 支持最好的后端："
+
+#: ../../tutorial/cli-quickstart.md:30
+msgid ""
 "name = \"username/download_cli\"\n"
 "version = \"0.1.0\"\n"
-"import {\n"
-"  \"moonbitlang/async@0.20.2\",\n"
-"}\n"
 "preferred_target = \"native\"\n"
 msgstr ""
 
@@ -174,14 +172,16 @@ msgstr "包描述文件从 `moonbitlang/core` 导入 `argparse`，并导入实�
 msgid ""
 "import {\n"
 "  \"moonbitlang/core/argparse\",\n"
-"  \"moonbitlang/async/fs\",\n"
-"  \"moonbitlang/async/http\",\n"
-"  \"moonbitlang/async/stdio\",\n"
+"  \"moonbitlang/core/async/fs\",\n"
+"  \"moonbitlang/core/async/http\",\n"
+"  \"moonbitlang/core/async/stdio\",\n"
 "}\n"
 "\n"
 "import {\n"
 "  \"moonbitlang/core/test\",\n"
 "} for \"test\"\n"
+"\n"
+"options(\"allow-experimental-packages\": true)\n"
 msgstr ""
 
 #: ../../tutorial/cli-quickstart.md:67
@@ -209,30 +209,12 @@ msgid ""
 "      let file = @fs.create(path, permission=0o644)\n"
 "      defer file.close()\n"
 "      file.write_reader(body)\n"
-"      @stdio.stderr.write(\"saved \\{config.url} to \\{path}\\n\")\n"
+"      @stdio.stderr.text.write(\"saved \\{config.url} to \\{path}\\n\")\n"
 "    }\n"
 "    None => @stdio.stdout.write_reader(body)\n"
 "  }\n"
 "}\n"
 msgstr ""
-"pub async fn run(config : Config) -> Unit {\n"
-"  let (response, body) = @http.get_stream(config.url)\n"
-"  defer body.close()\n"
-"\n"
-"  guard response.code is (200..<300) else {\n"
-"    fail(\"download failed: \\{response.code} \\{response.reason}\")\n"
-"  }\n"
-"\n"
-"  match config.output {\n"
-"    Some(path) => {\n"
-"      let file = @fs.create(path, permission=0o644)\n"
-"      defer file.close()\n"
-"      file.write_reader(body)\n"
-"      @stdio.stderr.write(\"saved \\{config.url} to \\{path}\\n\")\n"
-"    }\n"
-"    None => @stdio.stdout.write_reader(body)\n"
-"  }\n"
-"}\n"
 
 #: ../../tutorial/cli-quickstart.md:77
 msgid "Keep `main` thin"
@@ -249,10 +231,12 @@ msgid ""
 "import {\n"
 "  \"moonbit-community/cli-quickstart-doc\" @app,\n"
 "  \"moonbitlang/core/env\",\n"
-"  \"moonbitlang/async\",\n"
+"  \"moonbitlang/core/async\",\n"
 "}\n"
 "\n"
 "pkgtype(kind: \"executable\")\n"
+"\n"
+"options(\"allow-experimental-packages\": true)\n"
 msgstr ""
 
 #: ../../tutorial/cli-quickstart.md:85
