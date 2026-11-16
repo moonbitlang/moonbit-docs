@@ -4,10 +4,11 @@ This quickstart shows a simple but proper MoonBit CLI layout:
 
 - keep argument parsing and business logic in a library package
 - keep `cmd/main` small
-- use `moonbitlang/async` for native IO
+- use `moonbitlang/core/async` for native IO
 - test the pure parts without touching the network
 
-This example uses `moonbitlang/async`, which currently supports the native backend best.
+This example uses the standard library's experimental `moonbitlang/core/async`
+packages, which currently support the native backend best.
 
 ## Create the project
 
@@ -16,20 +17,19 @@ Start with a normal MoonBit module:
 ```bash
 moon new download_cli
 cd download_cli
-moon add moonbitlang/async@0.20.2
 ```
 
-`argparse` is already part of the standard library, so this quickstart only adds `moonbitlang/async`.
+Both `argparse` and `moonbitlang/core/async` are part of the standard library;
+no extra module dependency is needed. To suppress experimental-package warnings,
+add `options("allow-experimental-packages": true)` to each importing package's
+`moon.pkg`, as shown below.
 
 Set the preferred target to native in `moon.mod` so `moon run` and `moon build`
-default to the backend that `moonbitlang/async` supports best:
+default to the backend that `moonbitlang/core/async` supports best:
 
 ```moonbit
 name = "username/download_cli"
 version = "0.1.0"
-import {
-  "moonbitlang/async@0.20.2",
-}
 preferred_target = "native"
 ```
 
@@ -104,14 +104,16 @@ The package descriptor imports `argparse` from `moonbitlang/core` and the async 
 ```moonbit
 import {
   "moonbitlang/core/argparse",
-  "moonbitlang/async/fs",
-  "moonbitlang/async/http",
-  "moonbitlang/async/stdio",
+  "moonbitlang/core/async/fs",
+  "moonbitlang/core/async/http",
+  "moonbitlang/core/async/stdio",
 }
 
 import {
   "moonbitlang/core/test",
 } for "test"
+
+options("allow-experimental-packages": true)
 ```
 
 ## Put async IO behind one function
@@ -132,7 +134,7 @@ pub async fn run(config : Config) -> Unit {
       let file = @fs.create(path, permission=0o644)
       defer file.close()
       file.write_reader(body)
-      @stdio.stderr.write("saved \{config.url} to \{path}\n")
+      @stdio.stderr.text.write("saved \{config.url} to \{path}\n")
     }
     None => @stdio.stdout.write_reader(body)
   }
@@ -147,10 +149,12 @@ pub async fn run(config : Config) -> Unit {
 import {
   "moonbit-community/cli-quickstart-doc" @app,
   "moonbitlang/core/env",
-  "moonbitlang/async",
+  "moonbitlang/core/async",
 }
 
 pkgtype(kind: "executable")
+
+options("allow-experimental-packages": true)
 ```
 
 ```moonbit
