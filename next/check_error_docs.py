@@ -30,6 +30,8 @@ SKIPPED_ERROR_CODES = {
     '0047',
     '0076',
     '0077',
+    # E0079 documents legacy implicit attachment; its examples now check E4015.
+    '0079',
     '4054',
     '4066',
     # E4120 requires a raising infix operator after resolution. Current infix

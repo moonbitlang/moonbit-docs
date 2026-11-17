@@ -41,16 +41,14 @@ msgid ""
 "requires both `T1 : Debug` and `T2 : Debug`."
 msgstr "要派生特征 `T`，类型中的所有字段都必须实现 `T`。例如，为 `struct A { x: T1; y: T2 }` 派生 `Debug`，需要同时满足 `T1 : Debug` 和 `T2 : Debug`。"
 
-#: ../../language/derive.md:9
+#: ../../language/derive.md:12
 msgid ""
 "`derive` generates a trait implementation. The examples below also use "
 "[`extend`](methods.md#attaching-trait-methods-with-extend) to state "
 "explicitly which generated trait functions are part of the type's method-"
-"style API. This avoids relying on the deprecated implicit attachment of "
-"methods from an implementation."
-msgstr ""
-"`derive` 会生成 trait 实现。下面的示例还使用 [`extend`](methods.md#attaching-trait-methods-with-extend) "
-"显式声明哪些生成的 trait 函数属于该类型的方法式 API，从而避免依赖已弃用的从实现中隐式附加方法的行为。"
+"style API. A generated trait implementation does not automatically attach"
+" its methods to the type."
+msgstr "`derive` 会生成特征实现。下面的示例还使用 [`extend`](methods.md#attaching-trait-methods-with-extend) 明确指定哪些生成的特征函数属于该类型的方法式 API。生成特征实现并不会自动将其方法附加到类型上。"
 
 #: ../../language/derive.md:15
 msgid "Eq and Compare"

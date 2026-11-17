@@ -749,38 +749,29 @@ msgstr ""
 
 #: ../../language/methods.md:261
 msgid ""
-"Automatically attaching every method from an `impl` is deprecated. "
-"Besides being implicit, that behavior is not refactoring-safe: a new "
-"default method in an upstream trait can make an existing dot call "
-"ambiguous. Library authors should add an explicit `extend` for methods "
-"that are intended to be callable with dot syntax, or keep using "
-"`Trait::method(value, ...)` when no method-style API is intended."
-msgstr ""
-"自动附加 `impl` 中所有方法的行为已经弃用。它不仅是隐式的，也不具备重构安全性：上游 trait "
-"新增带默认实现的方法后，已有的点调用可能产生歧义。库作者应为需要点语法调用的方法添加显式 `extend`；如果无意提供方法式 API，则继续使用"
-" `Trait::method(value, ...)`。"
+"An `impl` does not automatically attach its methods to the implementing "
+"type. Library authors should add an explicit `extend` for methods "
+"intended to be callable with dot syntax, or use `Trait::method(value, "
+"...)` when no method-style API is intended. Calling a trait "
+"implementation with dot syntax without an attached method produces "
+"[E4015](error_codes/E4015.md)."
+msgstr "`impl` 不会自动将其方法附加到实现类型上。库作者应为需要支持点语法调用的方法显式添加 `extend`；如果不打算提供方法式 API，则使用 `Trait::method(value, ...)`。未附加方法时，通过点语法调用特征实现会产生 [E4015](error_codes/E4015.md)。"
 
-#: ../../language/methods.md:268
+#: ../../language/methods.md:267
 msgid ""
-"For compatibility, the compiler still accepts the old implicit attachment. "
-"It reports an `implicit_impl_as_method` deprecation diagnostic by default. "
-"For an abstract trait, a `pub impl` alone does not trigger this diagnostic; "
-"using an implicitly attached method does. New code should use `extend` "
-"rather than rely on the compatibility behavior."
-msgstr ""
-"为兼容旧代码，编译器仍接受旧的隐式方法附加行为，并默认报告 `implicit_impl_as_method` 弃用诊断。对于抽象特征，仅声明 `pub"
-" impl` 不会触发该诊断；使用隐式附加的方法时才会触发。新代码应使用 `extend`，而不是依赖这种兼容行为。"
+"Explicit attachment avoids ambiguity when an upstream trait adds a new "
+"default method. The old implicit attachment behavior is no longer "
+"supported."
+msgstr "显式附加方法可以避免上游特征新增默认方法时产生歧义。旧的隐式附加行为已不再支持。"
 
-#: ../../language/methods.md:274
+#: ../../language/methods.md:270
 msgid ""
-"If an implicitly attached method should remain callable temporarily but "
-"is not part of the intended method-style API, add a corresponding "
-"`extend` declaration marked with `#deprecated`. This preserves a "
-"migration path for downstream code while directing users to qualified "
-"calls such as `Trait::method(value)`."
-msgstr ""
-"如果某个隐式附加的方法需要暂时保持可调用、但不属于预期的方法式 API，请添加对应的 `extend` 声明并用 `#deprecated` "
-"标记。这样既能为下游代码保留迁移路径，也能引导用户改用 `Trait::method(value)` 等限定调用。"
+"If a previously implicitly attached method should remain callable "
+"temporarily but is not part of the intended method-style API, add a "
+"corresponding `extend` declaration marked with `#deprecated`. This "
+"preserves a migration path for downstream code while directing users to "
+"qualified calls such as `Trait::method(value)`."
+msgstr "如果以前隐式附加的方法需要暂时保留供调用，但不属于预期的方法式 API，可以添加对应的 `extend` 声明并标记 `#deprecated`。这样既为下游代码保留迁移途径，又能引导用户改用 `Trait::method(value)` 等限定调用。"
 
 #: ../../language/methods.md:279
 msgid "Using traits"
@@ -854,16 +845,16 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../language/methods.md:307
+#: ../../language/methods.md:303
 msgid ""
 "For a future-proof concrete-type API, explicitly attach trait methods "
 "that should support dot syntax with [`extend`](#attaching-trait-methods-"
 "with-extend). A regular method takes precedence over an attached trait "
-"method. Existing implicit dot calls remain accepted for compatibility but"
-" are deprecated."
+"method. Implicit dot calls must be migrated to explicit attachment or "
+"qualified calls such as `Trait::method(value)`."
 msgstr ""
 "为了让具体类型的 API 经得起未来演进，请使用 [`extend`](#attaching-trait-methods-with-extend)"
-" 显式附加需要支持点语法的 trait 方法。普通方法的优先级高于附加的 trait 方法。为保持兼容，现有的隐式点调用仍会被接受，但已经弃用。"
+" 显式附加需要支持点语法的 trait 方法。普通方法的优先级高于附加的 trait 方法。隐式点调用必须迁移为显式附加方法或 `Trait::method(value)` 这样的限定调用。"
 
 #: ../../language/methods.md:313
 msgid ""

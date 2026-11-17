@@ -41,17 +41,14 @@ msgid ""
 "requires both `T1 : Debug` and `T2 : Debug`."
 msgstr "トレイト `T` を派生するには、型のすべてのフィールドが `T` を実装している必要があります。例えば `struct A { x: T1; y: T2 }` に `Debug` を派生するには、`T1 : Debug` と `T2 : Debug` の両方が必要です。"
 
-#: ../../language/derive.md:9
+#: ../../language/derive.md:12
 msgid ""
 "`derive` generates a trait implementation. The examples below also use "
 "[`extend`](methods.md#attaching-trait-methods-with-extend) to state "
 "explicitly which generated trait functions are part of the type's method-"
-"style API. This avoids relying on the deprecated implicit attachment of "
-"methods from an implementation."
-msgstr ""
-"`derive` は trait 実装を生成します。以下の例では、生成された trait 関数のうち、どれを型のメソッド形式 API "
-"に含めるかを明示するために [`extend`](methods.md#attaching-trait-methods-with-extend) も使用しています。"
-"これにより、実装からメソッドを暗黙的に付加する非推奨の動作に依存せずに済みます。"
+"style API. A generated trait implementation does not automatically attach"
+" its methods to the type."
+msgstr "`derive` はトレイト実装を生成します。以下の例では [`extend`](methods.md#attaching-trait-methods-with-extend) を使い、生成されたトレイト関数のうち、型のメソッドとして公開するものを明示しています。生成されたトレイト実装のメソッドが型に自動的に追加されることはありません。"
 
 #: ../../language/derive.md:15
 msgid "Eq and Compare"

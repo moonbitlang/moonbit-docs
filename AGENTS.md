@@ -42,10 +42,13 @@ an interactive language tour.
   rewrite unrelated files.
 
 ## Toolchain and release updates
-- The default branch and the English `latest` documentation track the nightly
-  toolchain. Inspect the complete version output with `moon version --all` and
-  confirm that `moonc` reports a nightly build before updating nightly-only
-  language or diagnostic documentation.
+- Use the published pre-release toolchain as the source of truth for upcoming
+  release documentation and runnable examples when it is available. Fall back
+  to nightly only when no pre-release is available. Inspect `moon version --all`
+  and confirm the published channel before changing language or diagnostic docs.
+- Nightly represents ongoing development and may differ from the upcoming
+  release. Keep both CI channels as compatibility signals, but do not preserve
+  obsolete pre-release documentation solely to make nightly checks pass.
 - Keep the default value of `release` in `next/conf.py` as `nightly`. Tagged
   builds derive their displayed release from the build environment.
 - Stable documentation is an immutable semantic-version tag on a merged commit.
