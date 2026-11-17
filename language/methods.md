@@ -406,20 +406,16 @@ When an attached trait method uses a default implementation, `Self` in that
 implementation is specialized to `Type`. Trait-object types can also be
 extended, for example `extend &Derived with Super::{method}`.
 
-Automatically attaching every method from an `impl` is deprecated. Besides
-being implicit, that behavior is not refactoring-safe: a new default method in
-an upstream trait can make an existing dot call ambiguous. Library authors
-should add an explicit `extend` for methods that are intended to be callable
-with dot syntax, or keep using `Trait::method(value, ...)` when no method-style
-API is intended.
+An `impl` does not automatically attach its methods to the implementing type.
+Library authors should add an explicit `extend` for methods intended to be
+callable with dot syntax, or use `Trait::method(value, ...)` when no method-style
+API is intended. Calling a trait implementation with dot syntax without an
+attached method produces [E4015](https://docs.moonbitlang.com/en/latest/language/error_codes/E4015.html).
 
-For compatibility, the compiler still accepts the old implicit attachment. It
-reports an `implicit_impl_as_method` deprecation diagnostic by default. For an
-abstract trait, a `pub impl` alone does not trigger this diagnostic; using an
-implicitly attached method does. New code
-should use `extend` rather than rely on the compatibility behavior.
+Explicit attachment avoids ambiguity when an upstream trait adds a new default
+method. The old implicit attachment behavior is no longer supported.
 
-If an implicitly attached method should remain callable temporarily but is not
+If a previously implicitly attached method should remain callable temporarily but is not
 part of the intended method-style API, add a corresponding `extend` declaration
 marked with `#deprecated`. This preserves a migration path for downstream code
 while directing users to qualified calls such as `Trait::method(value)`.
@@ -473,8 +469,8 @@ test {
 For a future-proof concrete-type API, explicitly attach trait methods that
 should support dot syntax with
 [`extend`](). A regular method takes
-precedence over an attached trait method. Existing implicit dot calls remain
-accepted for compatibility but are deprecated.
+precedence over an attached trait method. Implicit dot calls must be migrated
+to explicit attachment or qualified calls such as `Trait::method(value)`.
 
 For type parameters, a method from the single written constraint may be called
 with dot syntax. Use qualified syntax for methods inherited from a supertrait,
