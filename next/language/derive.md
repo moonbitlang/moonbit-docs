@@ -11,9 +11,9 @@ requires both `T1 : Debug` and `T2 : Debug`.
 
 `derive` generates a trait implementation. The examples below also use
 [`extend`](methods.md#attaching-trait-methods-with-extend) to state explicitly
-which generated trait functions are part of the type's method-style API. This
-avoids relying on the deprecated implicit attachment of methods from an
-implementation.
+which generated trait functions are part of the type's method-style API.
+A generated trait implementation does not automatically attach its methods to
+the type.
 
 ## Eq and Compare
 
