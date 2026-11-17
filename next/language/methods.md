@@ -303,8 +303,8 @@ Methods of a trait can be called directly via `Trait::method`. MoonBit will infe
 For a future-proof concrete-type API, explicitly attach trait methods that
 should support dot syntax with
 [`extend`](#attaching-trait-methods-with-extend). A regular method takes
-precedence over an attached trait method. Existing implicit dot calls remain
-accepted for compatibility but are deprecated.
+precedence over an attached trait method. Implicit dot calls must be migrated
+to explicit attachment or qualified calls such as `Trait::method(value)`.
 
 For type parameters, a method from the single written constraint may be called
 with dot syntax. Use qualified syntax for methods inherited from a supertrait,
