@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 14:33+0800\n"
+"POT-Creation-Date: 2026-11-25 10:12+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -352,16 +352,21 @@ msgid "The table below shows the underlying representation of some MoonBit types
 msgstr "下の表は、いくつかの MoonBit 型の内部表現を示しています："
 
 #: ../../language/ffi.md:259
-msgid "The `FixedArray[T]` for numbers may migrate to `TypedArray` in the future."
-msgstr "数値用の `FixedArray[T]` は、将来的に `TypedArray` に移行する可能性があります。"
-
-#: ../../language/ffi.md:261
 msgid ""
-"Using `Array[T]` in a JavaScript FFI signature is deprecated. Use "
-"`FixedArray[T]` instead."
+"`FixedArray[T]` is represented as a JavaScript `Array`, except that "
+"`FixedArray[Byte]` is represented as a `Uint8Array`."
 msgstr ""
-"JavaScript FFI のシグネチャで `Array[T]` を使用することは非推奨です。代わりに `FixedArray[T]` "
-"を使用してください。"
+"`FixedArray[T]` は JavaScript の `Array` で表現されます。ただし、`FixedArray[Byte]` は "
+"`Uint8Array` で表現されます。"
+
+#: ../../language/ffi.md:262
+msgid ""
+"Numeric `FixedArray[T]` types may use `TypedArray` representations in the"
+" future. For forward compatibility, we recommend using only APIs shared "
+"by JavaScript `Array` and `TypedArray` when working with these arrays in "
+"JavaScript, rather than relying on `Array`-only operations such as `push`"
+" or `pop`."
+msgstr "数値型の `FixedArray[T]` は、将来 `TypedArray` で表現される可能性があります。将来の変更との互換性を保つため、JavaScript でこれらの配列を扱う際は、`push` や `pop` などの `Array` 固有の操作に依存せず、`Array` と `TypedArray` に共通する API のみを使用することを推奨します。"
 
 #: ../../language/ffi.md:287
 msgid ""

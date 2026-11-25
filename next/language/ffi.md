@@ -255,10 +255,13 @@ The table below shows the underlying representation of some MoonBit types:
 | `FuncRef[T]`                         | `Function`     |
 
 ```{note}
-The `FixedArray[T]` for numbers may migrate to `TypedArray` in the future.
+`FixedArray[T]` is represented as a JavaScript `Array`, except that
+`FixedArray[Byte]` is represented as a `Uint8Array`.
 
-Using `Array[T]` in a JavaScript FFI signature is deprecated. Use
-`FixedArray[T]` instead.
+Numeric `FixedArray[T]` types may use `TypedArray` representations in the
+future. For forward compatibility, we recommend using only APIs shared by
+JavaScript `Array` and `TypedArray` when working with these arrays in JavaScript,
+rather than relying on `Array`-only operations such as `push` or `pop`.
 ```
 
 ``````
