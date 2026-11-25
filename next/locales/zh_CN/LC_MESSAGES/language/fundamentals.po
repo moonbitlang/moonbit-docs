@@ -2729,11 +2729,11 @@ msgid ""
 "limited before collection:"
 msgstr "对于惰性或无穷序列，请直接创建 `Iter[T]`。下面的迭代器在捕获的变量中保存斐波那契状态，并在收集前限制长度："
 
-#: ../../language/fundamentals.md:1145
+#: ../../language/fundamentals.md:1160
 msgid ""
 "let mut p1 = 1\n"
 "let mut p2 = 0\n"
-"let fib_numbers : Iter[Int32] = Iter::new(fn() {\n"
+"let fib_numbers : Iter[Int32] = Iter(fn() {\n"
 "  let next = p1\n"
 "  p1 = p1 + p2\n"
 "  p2 = next\n"
@@ -3126,12 +3126,12 @@ msgstr ""
 "预定义的序列结构如 `Array` 及其迭代器应该足够使用。但是，为了在自定义序列（元素类型为 `S`）中使用这些方法，我们需要实现 "
 "`Iter`，即返回 `Iter[S]` 的函数。以 `Bytes` 为例："
 
-#: ../../language/fundamentals.md:1322
+#: ../../language/fundamentals.md:1337
 msgid ""
 "///|\n"
 "fn iter(data : Bytes) -> Iter[Byte] {\n"
 "  let mut index = 0\n"
-"  Iter::new(fn() -> Byte? {\n"
+"  Iter(fn() -> Byte? {\n"
 "    if index < data.length() {\n"
 "      let byte = data[index]\n"
 "      index += 1\n"
@@ -4664,17 +4664,14 @@ msgstr ""
 msgid "Map Pattern"
 msgstr "Map 模式"
 
-#: ../../language/fundamentals.md:1973
+#: ../../language/fundamentals.md:1988
 msgid ""
-"MoonBit allows convenient matching on map-like data structures. Inside a "
-"map pattern, the `key : value` syntax will match if `key` exists in the "
-"map, and match the value of `key` with pattern `value`. The `key? : "
-"value` syntax will match no matter `key` exists or not, and `value` will "
-"be matched against `map[key]` (an optional)."
-msgstr ""
-"MoonBit 允许在类似 map 的数据结构上方便地进行匹配。在 map 模式内，`key : value` 语法将在 map 中存在 "
-"`key` 时匹配，并将 `key` 的值与模式 `value` 匹配。`key? : value` 语法将无论 `key` "
-"是否存在都匹配，`value` 将与 `map[key]`（一个可选项）匹配。"
+"MoonBit allows convenient matching on the standard library's `Map` type. "
+"Inside a map pattern, the `key : value` syntax will match if `key` exists"
+" in the map, and match the value of `key` with pattern `value`. The `key?"
+" : value` syntax will match no matter `key` exists or not, and `value` "
+"will be matched against `map[key]` (an optional)."
+msgstr "MoonBit 支持对标准库的 `Map` 类型进行便捷的模式匹配。在 map 模式中，`key : value` 语法在 map 中存在 `key` 时匹配，并将其值与模式 `value` 匹配。`key? : value` 语法无论 `key` 是否存在都匹配，`value` 将与 `map[key]`（可选值）匹配。"
 
 #: ../../language/fundamentals.md:1977
 msgid ""
@@ -4697,14 +4694,11 @@ msgstr ""
 "  // 编译器报告缺失的情况：{ \"b\"? : None, \"a\"? : None }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1984
+#: ../../language/fundamentals.md:1999
 msgid ""
-"To match a data type `T` using map pattern, `T` must have a method "
-"`get(Self, K) -> Option[V]` for some type `K` and `V` (see [method and "
-"trait](./methods.md))."
-msgstr ""
-"要使用 map 模式匹配数据类型 `T`，`T` 必须具有某种类型 `K` 和 `V` 的方法 `get(Self, K) -> "
-"Option[V]`（请参见 [方法和特征](./methods.md)）。"
+"Matching custom types through a `get` method is deprecated. Use `Map` for"
+" map patterns instead."
+msgstr "通过 `get` 方法对自定义类型进行匹配的用法已弃用。请改用 `Map` 进行 map 模式匹配。"
 
 #: ../../language/fundamentals.md:1985
 msgid "Currently, the key part of map pattern must be a literal or constant"

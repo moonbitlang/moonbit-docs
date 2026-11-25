@@ -17,7 +17,7 @@ fn fact(n : Int32) -> Int32 {
 ///|
 fn iter(data : Bytes) -> Iter[Byte] {
   let mut index = 0
-  Iter::new(fn() -> Byte? {
+  Iter(fn() -> Byte? {
     if index < data.length() {
       let byte = data[index]
       index += 1

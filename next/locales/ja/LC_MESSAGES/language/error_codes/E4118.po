@@ -28,9 +28,10 @@ msgstr ""
 
 #: ../../language/error_codes/E4118.md:5
 msgid ""
-"You can use map patterns on custom types, as long as they have a method "
-"`get` that returns an optional value for a given key."
-msgstr ""
+"This diagnostic is reported when a map pattern is used on a type without "
+"a suitable `get` method. Map patterns on custom types with a `get` method"
+" are deprecated; use the standard library's `Map` type instead."
+msgstr "適切な `get` メソッドを持たない型にマップパターンを使用すると、この診断が報告されます。`get` メソッドを持つ独自の型へのマップパターンの使用は非推奨です。代わりに標準ライブラリの `Map` 型を使用してください。"
 
 #: ../../language/error_codes/E4118.md:8
 msgid "Erroneous example"
@@ -57,25 +58,17 @@ msgstr ""
 msgid "Suggestion"
 msgstr ""
 
-#: ../../language/error_codes/E4118.md:16
-msgid "Implement the `get` method as suggested in the error message."
-msgstr ""
+#: ../../language/error_codes/E4118.md:17
+msgid ""
+"Use a `Map` for map-pattern matching, rather than adding a `get` method "
+"to a custom type solely to support this syntax."
+msgstr "この構文をサポートするためだけに独自の型へ `get` メソッドを追加するのではなく、マップパターンのマッチングには `Map` を使用してください。"
 
-#: ../../language/error_codes/E4118.md:18
+#: ../../language/error_codes/E4118.md:20
 msgid ""
 "///|\n"
-"priv struct MyMap {\n"
-"  entries : Map[String, Int32]\n"
-"}\n"
-"\n"
-"///|\n"
-"fn MyMap::get(self : MyMap, key : String) -> Int32? {\n"
-"  self.entries.get(key)\n"
-"}\n"
-"\n"
-"///|\n"
 "test {\n"
-"  let map : MyMap = { entries: { \"a\": 1, \"b\": 2, \"c\": 3 } }\n"
+"  let map : Map[String, Int32] = { \"a\": 1, \"b\": 2, \"c\": 3 }\n"
 "  match map {\n"
 "    { \"a\": a, .. } => println(\"a: \\{a}\")\n"
 "    _ => println(\"missing\")\n"

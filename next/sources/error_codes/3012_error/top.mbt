@@ -1,17 +1,7 @@
-struct S {
-  value : Int32
-}
-
-pub fn S::get(self : S, index : String) -> Int32? {
-  if index == "value" {
-    return Some(self.value)
-  }
-  return None
-}
-
+///|
 test {
-  let s : S = { value: 42 }
-  match s {
+  let map : Map[String, Int32] = { "value": 42 }
+  match map {
     { "value": value, value, .. } => println("Value is: \{value}") // Error: Struct pattern and map pattern cannot be mixed.
     _ => println("No value")
   }
