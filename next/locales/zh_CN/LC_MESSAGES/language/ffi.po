@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MoonBit \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-01 14:33+0800\n"
+"POT-Creation-Date: 2026-11-25 10:12+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -329,14 +329,21 @@ msgid "The table below shows the underlying representation of some MoonBit types
 msgstr "下面的表格展示了一些 MoonBit 类型的底层表示："
 
 #: ../../language/ffi.md:259
-msgid "The `FixedArray[T]` for numbers may migrate to `TypedArray` in the future."
-msgstr "对于数字类型，`FixedArray[T]` 在将来可能会被迁移到 `TypedArray`。"
-
-#: ../../language/ffi.md:261
 msgid ""
-"Using `Array[T]` in a JavaScript FFI signature is deprecated. Use "
-"`FixedArray[T]` instead."
-msgstr "在 JavaScript FFI 签名中使用 `Array[T]` 已弃用。请改用 `FixedArray[T]`。"
+"`FixedArray[T]` is represented as a JavaScript `Array`, except that "
+"`FixedArray[Byte]` is represented as a `Uint8Array`."
+msgstr ""
+"`FixedArray[T]` 用 JavaScript 的 `Array` 表示，但 `FixedArray[Byte]` 用 "
+"`Uint8Array` 表示。"
+
+#: ../../language/ffi.md:262
+msgid ""
+"Numeric `FixedArray[T]` types may use `TypedArray` representations in the"
+" future. For forward compatibility, we recommend using only APIs shared "
+"by JavaScript `Array` and `TypedArray` when working with these arrays in "
+"JavaScript, rather than relying on `Array`-only operations such as `push`"
+" or `pop`."
+msgstr "数值类型的 `FixedArray[T]` 将来可能改用 `TypedArray` 表示。为了兼容未来的变化，建议在 JavaScript 中操作这些数组时，只使用 `Array` 和 `TypedArray` 共有的 API，而不要依赖 `push`、`pop` 等 `Array` 独有的操作。"
 
 #: ../../language/ffi.md:287
 msgid ""
