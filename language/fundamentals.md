@@ -1445,7 +1445,7 @@ collection:
 ```moonbit
 let mut p1 = 1
 let mut p2 = 0
-let fib_numbers : Iter[Int32] = Iter::new(fn() {
+let fib_numbers : Iter[Int32] = Iter(fn() {
   let next = p1
   p1 = p1 + p2
   p2 = next
@@ -1689,7 +1689,7 @@ an `Iter[S]`. Take `Bytes` as an example:
 ///|
 fn iter(data : Bytes) -> Iter[Byte] {
   let mut index = 0
-  Iter::new(fn() -> Byte? {
+  Iter(fn() -> Byte? {
     if index < data.length() {
       let byte = data[index]
       index += 1
@@ -2688,7 +2688,7 @@ fn classify_char(c : Char) -> String {
 
 ### Map Pattern
 
-MoonBit allows convenient matching on map-like data structures.
+MoonBit allows convenient matching on the standard library's `Map` type.
 Inside a map pattern, the `key : value` syntax will match if `key` exists in the map, and match the value of `key` with pattern `value`.
 The `key? : value` syntax will match no matter `key` exists or not, and `value` will be matched against `map[key]` (an optional).
 
@@ -2703,7 +2703,7 @@ match map {
 }
 ```
 
-- To match a data type `T` using map pattern, `T` must have a method `get(Self, K) -> Option[V]` for some type `K` and `V` (see [method and trait](https://docs.moonbitlang.com/en/latest/language/methods.html)).
+- Matching custom types through a `get` method is deprecated. Use `Map` for map patterns instead.
 - Currently, the key part of map pattern must be a literal or constant
 - Map patterns are always open: the unmatched keys are silently ignored, and `..` needs to be added to identify this nature
 - Map pattern will be compiled to efficient code: every key will be fetched at most once

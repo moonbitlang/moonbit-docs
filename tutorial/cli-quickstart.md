@@ -149,7 +149,6 @@ pub async fn run(config : Config) -> Unit {
 import {
   "moonbit-community/cli-quickstart-doc" @app,
   "moonbitlang/core/env",
-  "moonbitlang/core/async",
 }
 
 pkgtype(kind: "executable")

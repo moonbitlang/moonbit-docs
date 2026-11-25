@@ -270,7 +270,6 @@ Backend behavior:
 import {
   "moonbit-community/fullstack-one-project-doc/shared",
   "moonbitlang/core/json",
-  "moonbitlang/core/async",
   "moonbitlang/core/async/fs",
   "moonbitlang/core/async/http",
   "moonbitlang/core/async/socket",
