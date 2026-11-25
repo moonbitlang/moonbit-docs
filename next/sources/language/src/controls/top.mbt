@@ -256,7 +256,7 @@ test "lazy iterator" {
   // start list comprehension 3
   let mut p1 = 1
   let mut p2 = 0
-  let fib_numbers : Iter[Int32] = Iter::new(fn() {
+  let fib_numbers : Iter[Int32] = Iter(fn() {
     let next = p1
     p1 = p1 + p2
     p2 = next

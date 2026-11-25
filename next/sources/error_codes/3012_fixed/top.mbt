@@ -1,19 +1,6 @@
 ///|
-pub(all) struct S {
-  value : Int32
-}
-
-///|
-pub fn S::get(self : S, index : String) -> Int32? {
-  if index == "value" {
-    return Some(self.value)
-  }
-  return None
-}
-
-///|
-fn use_map_pattern(s : S) -> Unit {
-  match s {
+fn use_map_pattern(map : Map[String, Int32]) -> Unit {
+  match map {
     { "value": value, .. } => println("Value is: \{value}")
     _ => println("No value")
   }
@@ -21,7 +8,6 @@ fn use_map_pattern(s : S) -> Unit {
 
 ///|
 test {
-  let s : S = { value: 42 }
-  use_map_pattern(s)
-  use_struct_pattern(s)
+  let map : Map[String, Int32] = { "value": 42 }
+  use_map_pattern(map)
 }

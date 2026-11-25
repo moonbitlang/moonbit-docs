@@ -3158,11 +3158,11 @@ msgstr ""
 "遅延列や無限列には、`Iter[T]` "
 "を直接作成します。次のイテレータは、捕捉した変数にフィボナッチ数列の状態を保持し、収集する前に長さを制限しています："
 
-#: ../../language/fundamentals.md:1145
+#: ../../language/fundamentals.md:1160
 msgid ""
 "let mut p1 = 1\n"
 "let mut p2 = 0\n"
-"let fib_numbers : Iter[Int32] = Iter::new(fn() {\n"
+"let fib_numbers : Iter[Int32] = Iter(fn() {\n"
 "  let next = p1\n"
 "  p1 = p1 + p2\n"
 "  p2 = next\n"
@@ -3582,12 +3582,12 @@ msgstr ""
 "の独自シーケンスでこれらのメソッドを活用するには、`Iter` を実装する必要があります。つまり、`Iter[S]` "
 "を返す関数です。`Bytes` を例に取ると："
 
-#: ../../language/fundamentals.md:1322
+#: ../../language/fundamentals.md:1337
 msgid ""
 "///|\n"
 "fn iter(data : Bytes) -> Iter[Byte] {\n"
 "  let mut index = 0\n"
-"  Iter::new(fn() -> Byte? {\n"
+"  Iter(fn() -> Byte? {\n"
 "    if index < data.length() {\n"
 "      let byte = data[index]\n"
 "      index += 1\n"
@@ -3598,19 +3598,6 @@ msgid ""
 "  })\n"
 "}\n"
 msgstr ""
-"///|\n"
-"fn iter(data : Bytes) -> Iter[Byte] {\n"
-"  let mut index = 0\n"
-"  Iter::new(fn() -> Byte? {\n"
-"    if index < data.length() {\n"
-"      let byte = data[index]\n"
-"      index += 1\n"
-"      Some(byte)\n"
-"    } else {\n"
-"      None\n"
-"    }\n"
-"  })\n"
-"}\n"
 
 #: ../../language/fundamentals.md:1328
 msgid ""
@@ -5221,17 +5208,14 @@ msgstr ""
 msgid "Map Pattern"
 msgstr "Map パターン"
 
-#: ../../language/fundamentals.md:1973
+#: ../../language/fundamentals.md:1988
 msgid ""
-"MoonBit allows convenient matching on map-like data structures. Inside a "
-"map pattern, the `key : value` syntax will match if `key` exists in the "
-"map, and match the value of `key` with pattern `value`. The `key? : "
-"value` syntax will match no matter `key` exists or not, and `value` will "
-"be matched against `map[key]` (an optional)."
-msgstr ""
-"MoonBit では、map のようなデータ構造に対して便利にマッチできます。map パターンの中では、`key : value` 構文は "
-"`key` が map に存在する場合に一致し、`key` の値をパターン `value` でマッチします。`key? : value` 構文は "
-"`key` の有無にかかわらず一致し、`value` は `map[key]`（Optional）と照合されます。"
+"MoonBit allows convenient matching on the standard library's `Map` type. "
+"Inside a map pattern, the `key : value` syntax will match if `key` exists"
+" in the map, and match the value of `key` with pattern `value`. The `key?"
+" : value` syntax will match no matter `key` exists or not, and `value` "
+"will be matched against `map[key]` (an optional)."
+msgstr "MoonBit では、標準ライブラリの `Map` 型に対して便利にマッチできます。マップパターンでは、`key : value` 構文は `key` が存在する場合に一致し、その値をパターン `value` と照合します。`key? : value` 構文は `key` の有無にかかわらず一致し、`value` は `map[key]`（オプション値）と照合されます。"
 
 #: ../../language/fundamentals.md:1977
 msgid ""
@@ -5255,12 +5239,11 @@ msgstr ""
 "  // compiler reports missing case: { \"b\"? : None, \"a\"? : None }\n"
 "}\n"
 
-#: ../../language/fundamentals.md:1984
+#: ../../language/fundamentals.md:1999
 msgid ""
-"To match a data type `T` using map pattern, `T` must have a method "
-"`get(Self, K) -> Option[V]` for some type `K` and `V` (see [method and "
-"trait](./methods.md))."
-msgstr ""
+"Matching custom types through a `get` method is deprecated. Use `Map` for"
+" map patterns instead."
+msgstr "`get` メソッドを通じた独自の型のマッチングは非推奨です。マップパターンには `Map` を使用してください。"
 
 #: ../../language/fundamentals.md:1985
 msgid "Currently, the key part of map pattern must be a literal or constant"
