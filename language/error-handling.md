@@ -72,6 +72,10 @@ fn handle_e3(error : Error) -> Unit {
 }
 ```
 
+For a `#non_exhaustive` suberror, `Type::_` also covers future constructors when
+the matched value has type `Error`. Do not use `Type::..` in this case; that
+pattern is for matching the concrete non-exhaustive type, not `Error`.
+
 ### Failure
 
 A builtin error type is `Failure`.
