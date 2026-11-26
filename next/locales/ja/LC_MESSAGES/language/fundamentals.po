@@ -6231,26 +6231,24 @@ msgid ""
 "`\\xHH` for other bytes, including in character classes and ranges; "
 "`\\u{...}` is not supported. `.` and negated classes match any single "
 "byte, even above `0x7f`. Case-insensitive matching, word boundaries, and "
-"`[[:word:]]` use ASCII semantics. `lexscan` does not support byte "
-"regexes."
-msgstr "バイト正規表現リテラルに直接書けるのは ASCII 文字だけです。その他のバイトには、文字クラスや範囲内も含めて `\\xHH` を使います。`\\u{...}` は使えません。`.` と否定文字クラスは `0x7f` より大きい値も含む任意の 1 バイトにマッチします。大文字小文字を無視するマッチ、単語境界、`[[:word:]]` は ASCII の意味論を使用します。`lexscan` はバイト正規表現をサポートしません。"
+"`[[:word:]]` use ASCII semantics. Use byte regexes with byte-oriented "
+"`lexscan` targets as described below."
+msgstr "バイト正規表現リテラルに直接記述できるのは ASCII 文字だけです。文字クラスや範囲を含め、その他のバイトには `\\xHH` を使います。`\\u{...}` は使用できません。`.` と否定文字クラスは `0x7f` を超える値も含め、任意の1バイトにマッチします。大文字小文字の無視、単語境界、`[[:word:]]` は ASCII の意味論に従います。バイト正規表現は、以下で説明するバイト用の `lexscan` 対象に使用できます。"
 
 #: ../../language/fundamentals.md:2381
 msgid "Lexscan"
 msgstr "Lexscan"
 
-#: ../../language/fundamentals.md:2383
+#: ../../language/fundamentals.md:2417
 msgid ""
 "Use `lexscan` to consume successive tokens while it updates the cursor "
-"stored in its target. The target can be an in-memory "
-"`@lexbuf.StringScanner`, a synchronous streaming `@lexbuf.Lexbuf`, or an "
-"asynchronous streaming `@lexbuf.AsyncLexbuf`. `lexscan` uses the same "
+"stored in its target. For text, use `@lexbuf.StringScanner`, "
+"`@lexbuf.Lexbuf`, or `@lexbuf.AsyncLexbuf`; for bytes, use "
+"`@lexbuf.BytesScanner`, `@lexbuf.BytesLexbuf`, or "
+"`@lexbuf.AsyncBytesLexbuf`. Custom in-memory scanners can implement "
+"`@lexbuf.Scannable` or `@lexbuf.BytesScannable`. `lexscan` uses the same "
 "case syntax and `first` or `longest` strategies as `lexmatch`:"
-msgstr ""
-"`lexscan` は対象に保存されたカーソルを更新しながら、連続するトークンを消費します。対象には、メモリ内の "
-"`@lexbuf.StringScanner`、同期ストリーミングの `@lexbuf.Lexbuf`、または非同期ストリーミングの "
-"`@lexbuf.AsyncLexbuf` を使用できます。`lexscan` は `lexmatch` と同じケース構文、および `first`"
-" または `longest` 戦略を使用します："
+msgstr "`lexscan` は対象に保存されたカーソルを更新しながら、連続するトークンを消費します。テキストには `@lexbuf.StringScanner`、`@lexbuf.Lexbuf`、`@lexbuf.AsyncLexbuf`、バイト列には `@lexbuf.BytesScanner`、`@lexbuf.BytesLexbuf`、`@lexbuf.AsyncBytesLexbuf` を使います。独自のインメモリスキャナは `@lexbuf.Scannable` または `@lexbuf.BytesScannable` を実装できます。`lexscan` は `lexmatch` と同じ分岐構文と `first`、`longest` 戦略を使います："
 
 #: ../../language/fundamentals.md:2389
 msgid ""
@@ -6279,16 +6277,14 @@ msgid ""
 "options(\"allow-experimental-packages\": true)\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2405
+#: ../../language/fundamentals.md:2441
 msgid ""
 "Every `lexscan` regex must start with `^`, because scanning always begins"
 " at the target's current cursor. `lexscan` cases do not support `before=`"
-" or `after=`. They may still use `as` to bind matched text, with the same"
-" `StringView` and `Char` capture types as `lexmatch`."
-msgstr ""
-"スキャンは常に対象の現在のカーソル位置から始まるため、すべての `lexscan` 正規表現は `^` で始める必要があります。`lexscan`"
-" のケースでは `before=` と `after=` は使用できません。`as` によるマッチ文字列の束縛は使用でき、キャプチャ型は "
-"`lexmatch` と同じく `StringView` または `Char` です。"
+" or `after=`. They may still use `as` to bind matches, with the same "
+"capture types as `lexmatch`: `StringView` and `Char` for text, or "
+"`BytesView` and `Byte` for bytes."
+msgstr "`lexscan` の正規表現はすべて `^` で始める必要があります。スキャンは常に対象の現在のカーソルから始まるためです。`lexscan` の分岐では `before=` と `after=` は使えませんが、`as` でマッチ結果を束縛できます。キャプチャの型は `lexmatch` と同じで、テキストでは `StringView` と `Char`、バイト列では `BytesView` と `Byte` です。"
 
 #: ../../language/fundamentals.md:2410
 msgid ""
@@ -6304,16 +6300,13 @@ msgstr ""
 "間で最も左のマッチ位置やマッチ長を比較するものではありません。すべての `lexscan` 正規表現は `^` でアンカーされるため、すべての "
 "case は同じ現在のカーソル位置から試されます。"
 
-#: ../../language/fundamentals.md:2416
+#: ../../language/fundamentals.md:2452
 msgid ""
-"A `String` or `StringView` value is not a valid `lexscan` target. Use "
-"`lexmatch` to match one in-memory value, or put a `StringView` in a "
-"`StringScanner` when successive scans should share a cursor. `Bytes`, "
-"`BytesView`, and user-defined lexbuf-like types are not supported."
-msgstr ""
-"`String` または `StringView` の値は有効な `lexscan` 対象ではありません。メモリ内の値を 1 回照合する場合は "
-"`lexmatch` を使い、複数回のスキャンでカーソルを共有する場合は `StringView` を `StringScanner` "
-"に格納してください。`Bytes`、`BytesView`、およびユーザー定義の字句バッファ類似型はサポートされません。"
+"A plain `String`, `StringView`, `Bytes`, or `BytesView` is not a valid "
+"`lexscan` target. Use `lexmatch` to match one in-memory value, or "
+"construct a `StringScanner` or `BytesScanner` when successive scans "
+"should share a cursor."
+msgstr "通常の `String`、`StringView`、`Bytes`、`BytesView` は有効な `lexscan` の対象ではありません。メモリ上の値を一度マッチするには `lexmatch` を使い、連続したスキャンでカーソルを共有するには `StringScanner` または `BytesScanner` を作成します。"
 
 #: ../../language/fundamentals.md:2421
 msgid "String scanners"
@@ -6402,6 +6395,122 @@ msgid ""
 "  assert_eq(input.cursor, input.data.length())\n"
 "}\n"
 msgstr ""
+
+#: ../../language/fundamentals.md:2487
+msgid "Byte scanners"
+msgstr "バイトスキャナ"
+
+#: ../../language/fundamentals.md:2489
+msgid ""
+"`@lexbuf.BytesScanner` scans an in-memory `BytesView` using `reb\"...\"` "
+"patterns. Its cursor is a byte offset relative to its input. A successful"
+" case advances the cursor before its body runs; `_` leaves it unchanged."
+msgstr "`@lexbuf.BytesScanner` は `reb\"...\"` パターンでメモリ上の `BytesView` をスキャンします。カーソルは入力に対するバイトオフセットです。マッチした分岐の本体を実行する前にカーソルが進み、`_` では変化しません。"
+
+#: ../../language/fundamentals.md:2493
+msgid ""
+"///|\n"
+"test \"scan bytes with a maintained cursor\" {\n"
+"  let scanner = @lexbuf.BytesScanner(b\"abc\\xff\")\n"
+"  lexscan scanner {\n"
+"    reb\"^[a-z]+\" as word => {\n"
+"      assert_true(word == b\"abc\")\n"
+"      assert_eq(scanner.cursor, 3)\n"
+"    }\n"
+"    _ => fail(\"expected a word\")\n"
+"  }\n"
+"  lexscan scanner {\n"
+"    reb\"^.\" as byte => {\n"
+"      assert_eq(byte, b'\\xff')\n"
+"      assert_eq(scanner.cursor, 4)\n"
+"    }\n"
+"    _ => fail(\"expected a byte\")\n"
+"  }\n"
+"  lexscan scanner {\n"
+"    reb\"^.\" => fail(\"expected end of input\")\n"
+"    _ => assert_eq(scanner.cursor, 4)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:2497
+msgid ""
+"For streaming byte input, use `@lexbuf.BytesLexbuf` or "
+"`@lexbuf.AsyncBytesLexbuf`, the byte counterparts of the text streaming "
+"types below."
+msgstr "ストリーミングのバイト入力には `@lexbuf.BytesLexbuf` または `@lexbuf.AsyncBytesLexbuf` を使います。これらは以下のテキストストリーム型に対応するバイト版です。"
+
+#: ../../language/fundamentals.md:2501
+msgid "Custom scanners"
+msgstr "独自のスキャナ"
+
+#: ../../language/fundamentals.md:2503
+msgid ""
+"Implement `@lexbuf.Scannable` for a custom in-memory text scanner, or "
+"`@lexbuf.BytesScannable` for a byte scanner. Both traits provide "
+"`scan_input`, `scan_cursor`, and `set_scan_cursor`. The input is a "
+"`StringView` or `BytesView`; the cursor is relative to that view, in "
+"UTF-16 code units or bytes respectively."
+msgstr "独自のインメモリテキストスキャナには `@lexbuf.Scannable`、バイトスキャナには `@lexbuf.BytesScannable` を実装します。両トレイトは `scan_input`、`scan_cursor`、`set_scan_cursor` を提供します。入力は `StringView` または `BytesView` で、カーソルはそのビューに対するオフセットです。単位はそれぞれ UTF-16 コード単位とバイトです。"
+
+#: ../../language/fundamentals.md:2508
+msgid ""
+"Keep the input unchanged during a scan. The cursor must be within the "
+"input, and a text cursor must not split a surrogate pair. `lexscan` "
+"updates the cursor before the selected case body runs; a catch-all case "
+"leaves its position unchanged."
+msgstr "スキャン中は入力を変更しないでください。カーソルは入力の範囲内にあり、テキストのカーソルはサロゲートペアを分断してはいけません。`lexscan` は選択した分岐の本体を実行する前にカーソルを更新し、フォールバック分岐では位置を変えません。"
+
+#: ../../language/fundamentals.md:2513
+msgid ""
+"///|\n"
+"priv struct WordScanner {\n"
+"  input : StringView\n"
+"  mut cursor : Int32\n"
+"}\n"
+"\n"
+"///|\n"
+"impl @lexbuf.Scannable for WordScanner with fn scan_input(self) {\n"
+"  self.input\n"
+"}\n"
+"\n"
+"///|\n"
+"impl @lexbuf.Scannable for WordScanner with fn scan_cursor(self) {\n"
+"  self.cursor\n"
+"}\n"
+"\n"
+"///|\n"
+"impl @lexbuf.Scannable for WordScanner with fn set_scan_cursor(self, "
+"cursor) {\n"
+"  self.cursor = cursor\n"
+"}\n"
+"\n"
+"///|\n"
+"test \"scan with a cursor stored in a custom type\" {\n"
+"  let scanner = WordScanner::{ input: \"hello!\", cursor: 0, }\n"
+"  lexscan scanner {\n"
+"    re\"^[a-z]+\" as word => {\n"
+"      inspect(word, content=\"hello\")\n"
+"      assert_eq(scanner.cursor, 5)\n"
+"    }\n"
+"    _ => fail(\"expected a word\")\n"
+"  }\n"
+"  lexscan scanner {\n"
+"    re\"^[a-z]+\" => fail(\"expected punctuation\")\n"
+"    _ => assert_eq(scanner.cursor, 5)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:2517
+msgid ""
+"The target type must be known at the scan and support exactly one "
+"scanning trait. Generic implementations must cover every instance of the "
+"type without type parameter bounds; alternatively, a non-generic "
+"implementation can cover the exact target type. See "
+"[E4235](error_codes/E4235.md), [E4236](error_codes/E4236.md), and "
+"[E4237](error_codes/E4237.md)."
+msgstr "スキャン時に対象の型が判明しており、スキャン用トレイトをちょうど1つだけサポートする必要があります。ジェネリック実装は型パラメータの制約なしですべての型のインスタンスに適用できなければなりません。または、対象の正確な型に対する非ジェネリック実装を提供できます。[E4235](error_codes/E4235.md)、[E4236](error_codes/E4236.md)、[E4237](error_codes/E4237.md) を参照してください。"
 
 #: ../../language/fundamentals.md:2452
 msgid "Streaming scanners"
@@ -6502,43 +6611,6 @@ msgid ""
 msgstr ""
 "`lexmatch` と `lexscan` "
 "のケース本体にはガードを付けられません。式は本体を評価する前にケースを選択するため、追加の条件は本体の中に置いてください。"
-
-#: ../../language/fundamentals.md:2490
-msgid "Legacy lexical pattern syntax"
-msgstr "レガシー字句パターン構文"
-
-#: ../../language/fundamentals.md:2492
-msgid ""
-"Earlier experimental versions used string-piece `lexmatch` patterns and a"
-" `lexmatch?` boolean form. Those forms have been removed. The `lexmatch` "
-"keyword now denotes the in-memory regex-case expression described above."
-msgstr ""
-"以前の実験的なバージョンでは、文字列断片からなる `lexmatch` パターンと、真偽値形式の `lexmatch?` "
-"が使われていました。これらの形式は削除されました。現在の `lexmatch` キーワードは、上で説明したメモリ上の正規表現ケース式を表します。"
-
-#: ../../language/fundamentals.md:2496
-msgid "For example, older code may look like this:"
-msgstr "たとえば、以前のコードは次のようになっていることがあります："
-
-#: ../../language/fundamentals.md:2498
-msgid ""
-"lexmatch text {\n"
-"  (before, \"a\" (\"b*\" as b) \"c\", after) => ...\n"
-"  _ => ...\n"
-"}\n"
-"\n"
-"if text lexmatch? (\"a\" (\"b*\" as b) \"c\") && b.length() > 0 {\n"
-"  ...\n"
-"}\n"
-msgstr ""
-
-#: ../../language/fundamentals.md:2509
-msgid ""
-"Convert case-based code to `lexmatch` with regex constant expressions. "
-"For a single boolean search, use [`=~`](#regex-match-expression) instead."
-msgstr ""
-"ケースを使ったコードは、正規表現定数式を用いる `lexmatch` に変換してください。単一の真偽値検索には、代わりに "
-"[`=~`](#regex-match-expression) を使用します。"
 
 #: ../../language/fundamentals.md:2512
 msgid "Spread Operator"

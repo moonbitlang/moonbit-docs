@@ -570,13 +570,9 @@ msgstr "非網羅 enum アトリビュート"
 
 #: ../../language/attributes/non_exhaustive.md:4
 msgid ""
-"The `#non_exhaustive` attribute marks an `enum` whose defining package "
-"may add constructors in a future release. It is valid only on enum "
-"declarations."
-msgstr ""
-"`#non_exhaustive` アトリビュートは、定義元パッケージが将来のリリースで"
-"コンストラクタを追加する可能性のある `enum` を示します。このアトリビュートは "
-"enum 宣言にのみ使用できます。"
+"The `#non_exhaustive` attribute marks an `enum` or `suberror` whose "
+"defining package may add constructors in a future release."
+msgstr "`#non_exhaustive` 属性は、定義元のパッケージが将来のリリースでコンストラクタを追加できる `enum` または `suberror` を示します。"
 
 #: ../../language/attributes/non_exhaustive.md:7
 msgid ""
@@ -623,11 +619,17 @@ msgstr ""
 
 #: ../../language/attributes/non_exhaustive.md:28
 msgid ""
-"Adding a constructor to a `#non_exhaustive` enum is therefore compatible "
+"Adding a constructor to a `#non_exhaustive` type is therefore compatible "
 "with downstream matches that use `Type::..`."
-msgstr ""
-"したがって、下流の match が `Type::..` を使用していれば、`#non_exhaustive` "
-"enum へのコンストラクタ追加は互換性のある変更です。"
+msgstr "そのため、`#non_exhaustive` 型へのコンストラクタの追加は、`Type::..` を使う下流のマッチと互換性があります。"
+
+#: ../../language/attributes/non_exhaustive.md:31
+msgid ""
+"When matching a concrete non-exhaustive suberror type, the same "
+"`Type::..` rule applies. When matching or catching the supertype `Error`,"
+" use `Type::_` to cover that suberror type instead: `Type::..` is not "
+"supported there. See [E4238](/language/error_codes/E4238.md)."
+msgstr "具体的な非網羅的サブエラー型のマッチには、同じ `Type::..` の規則が適用されます。上位型 `Error` をマッチまたは捕捉する場合は、代わりに `Type::_` でそのサブエラー型を処理してください。ここでは `Type::..` は使えません。[E4238](/language/error_codes/E4238.md) を参照してください。"
 
 #: ../../language/attributes/internal.md:2
 msgid "Internal Attribute"

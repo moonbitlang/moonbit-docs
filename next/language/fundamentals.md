@@ -2410,14 +2410,16 @@ Only ASCII characters may appear directly in byte regex literals. Use `\xHH`
 for other bytes, including in character classes and ranges; `\u{...}` is not
 supported. `.` and negated classes match any single byte, even above `0x7f`.
 Case-insensitive matching, word boundaries, and `[[:word:]]` use ASCII semantics.
-`lexscan` does not support byte regexes.
+Use byte regexes with byte-oriented `lexscan` targets as described below.
 
 ### Lexscan
 
 Use `lexscan` to consume successive tokens while it updates the cursor stored
-in its target. The target can be an in-memory `@lexbuf.StringScanner`, a
-synchronous streaming `@lexbuf.Lexbuf`, or an asynchronous streaming
-`@lexbuf.AsyncLexbuf`. `lexscan` uses the same case syntax and `first` or
+in its target. For text, use `@lexbuf.StringScanner`, `@lexbuf.Lexbuf`, or
+`@lexbuf.AsyncLexbuf`; for bytes, use `@lexbuf.BytesScanner`,
+`@lexbuf.BytesLexbuf`, or `@lexbuf.AsyncBytesLexbuf`. Custom in-memory scanners
+can implement `@lexbuf.Scannable` or `@lexbuf.BytesScannable`.
+`lexscan` uses the same case syntax and `first` or
 `longest` strategies as `lexmatch`:
 
 ```moonbit
@@ -2438,8 +2440,8 @@ asynchronous scanner can be tested with `async test`:
 
 Every `lexscan` regex must start with `^`, because scanning always begins at the
 target's current cursor. `lexscan` cases do not support `before=` or `after=`.
-They may still use `as` to bind matched text, with the same `StringView` and
-`Char` capture types as `lexmatch`.
+They may still use `as` to bind matches, with the same capture types as
+`lexmatch`: `StringView` and `Char` for text, or `BytesView` and `Byte` for bytes.
 
 In `first` mode, `lexscan` tests the cases from top to bottom, like `match`, and
 selects the first regex that matches at the current cursor. Here `first` refers
@@ -2447,10 +2449,9 @@ to case priority: it does not compare leftmost match positions or match lengths
 across cases. Because every `lexscan` regex is anchored with `^`, all cases are
 tested from the same current cursor position.
 
-A `String` or `StringView` value is not a valid `lexscan` target. Use `lexmatch`
-to match one in-memory value, or put a `StringView` in a `StringScanner` when
-successive scans should share a cursor. `Bytes`, `BytesView`, and user-defined
-lexbuf-like types are not supported.
+A plain `String`, `StringView`, `Bytes`, or `BytesView` is not a valid `lexscan`
+target. Use `lexmatch` to match one in-memory value, or construct a
+`StringScanner` or `BytesScanner` when successive scans should share a cursor.
 
 #### String scanners
 
@@ -2482,6 +2483,42 @@ test also shows that `lexscan` maintains the cursor:
 :start-after: start lexscan string scanner
 :end-before: end lexscan string scanner
 ```
+
+#### Byte scanners
+
+`@lexbuf.BytesScanner` scans an in-memory `BytesView` using `reb"..."` patterns.
+Its cursor is a byte offset relative to its input. A successful case advances
+the cursor before its body runs; `_` leaves it unchanged.
+
+```{literalinclude} /sources/language/src/lexscan/bytes_scanner_test.mbt
+:language: moonbit
+```
+
+For streaming byte input, use `@lexbuf.BytesLexbuf` or
+`@lexbuf.AsyncBytesLexbuf`, the byte counterparts of the text streaming types
+below.
+
+#### Custom scanners
+
+Implement `@lexbuf.Scannable` for a custom in-memory text scanner, or
+`@lexbuf.BytesScannable` for a byte scanner. Both traits provide `scan_input`,
+`scan_cursor`, and `set_scan_cursor`. The input is a `StringView` or `BytesView`;
+the cursor is relative to that view, in UTF-16 code units or bytes respectively.
+
+Keep the input unchanged during a scan. The cursor must be within the input,
+and a text cursor must not split a surrogate pair. `lexscan` updates the cursor
+before the selected case body runs; a catch-all case leaves its position
+unchanged.
+
+```{literalinclude} /sources/language/src/lexscan/custom_test.mbt
+:language: moonbit
+```
+
+The target type must be known at the scan and support exactly one scanning
+trait. Generic implementations must cover every instance of the type without
+type parameter bounds; alternatively, a non-generic implementation can cover
+the exact target type. See [E4235](error_codes/E4235.md),
+[E4236](error_codes/E4236.md), and [E4237](error_codes/E4237.md).
 
 #### Streaming scanners
 
@@ -2520,28 +2557,6 @@ async code.
 `lexmatch` and `lexscan` case bodies cannot have guards. The expression selects
 a case before it evaluates the body, so put any additional condition inside
 that body.
-
-### Legacy lexical pattern syntax
-
-Earlier experimental versions used string-piece `lexmatch` patterns and a
-`lexmatch?` boolean form. Those forms have been removed. The `lexmatch` keyword
-now denotes the in-memory regex-case expression described above.
-
-For example, older code may look like this:
-
-```moonbit
-lexmatch text {
-  (before, "a" ("b*" as b) "c", after) => ...
-  _ => ...
-}
-
-if text lexmatch? ("a" ("b*" as b) "c") && b.length() > 0 {
-  ...
-}
-```
-
-Convert case-based code to `lexmatch` with regex constant expressions. For a
-single boolean search, use [`=~`](#regex-match-expression) instead.
 
 ### Spread Operator
 

@@ -33,13 +33,21 @@ msgstr "无效的词法匹配目标。"
 #: ../../language/error_codes/E4222.md:7
 msgid ""
 "`lexmatch` accepts an in-memory `String`, `StringView`, `Bytes`, or "
-"`BytesView`. `lexscan` accepts an in-memory `@lexbuf.StringScanner`, a "
-"synchronous `@lexbuf.Lexbuf`, or an asynchronous `@lexbuf.AsyncLexbuf`. A"
-" `String` or `StringView` value is not a valid `lexscan` target; use "
-"`lexmatch` for one in-memory match, or construct a `StringScanner` to "
-"maintain a cursor between scans. Other values, such as numbers or user-"
-"defined lexbuf-like types, cannot be matched by these expressions."
-msgstr "`lexmatch` 接受内存中的 `String`、`StringView`、`Bytes` 或 `BytesView`。`lexscan` 接受内存中的 `@lexbuf.StringScanner`、同步的 `@lexbuf.Lexbuf` 或异步的 `@lexbuf.AsyncLexbuf`。`String` 或 `StringView` 不是合法的 `lexscan` 目标；单次内存匹配使用 `lexmatch`，需要在多次扫描间维护游标时则构造 `StringScanner`。这些表达式不接受数字或用户定义的类似 lexbuf 的类型等其他值。"
+"`BytesView`. `lexscan` accepts `@lexbuf.StringScanner`, `@lexbuf.Lexbuf`,"
+" and `@lexbuf.AsyncLexbuf` for text, or `@lexbuf.BytesScanner`, "
+"`@lexbuf.BytesLexbuf`, and `@lexbuf.AsyncBytesLexbuf` for bytes. It also "
+"accepts custom types that implement `@lexbuf.Scannable` or "
+"`@lexbuf.BytesScannable`."
+msgstr "`lexmatch` 接受内存中的 `String`、`StringView`、`Bytes` 或 `BytesView`。`lexscan` 对文本接受 `@lexbuf.StringScanner`、`@lexbuf.Lexbuf` 和 `@lexbuf.AsyncLexbuf`，对字节接受 `@lexbuf.BytesScanner`、`@lexbuf.BytesLexbuf` 和 `@lexbuf.AsyncBytesLexbuf`。它也接受实现了 `@lexbuf.Scannable` 或 `@lexbuf.BytesScannable` 的自定义类型。"
+
+#: ../../language/error_codes/E4222.md:13
+msgid ""
+"A plain `String`, `StringView`, `Bytes`, or `BytesView` is not a valid "
+"`lexscan` target. Use `lexmatch` for one in-memory match, or construct a "
+"`StringScanner` or `BytesScanner` to maintain a cursor between scans. "
+"Merely defining methods with the same names as a scanning trait does not "
+"implement that trait."
+msgstr "普通的 `String`、`StringView`、`Bytes` 或 `BytesView` 不是有效的 `lexscan` 目标。单次匹配内存中的值时使用 `lexmatch`，或构造 `StringScanner`、`BytesScanner` 在多次扫描间保留游标。仅定义与扫描 trait 同名的方法，并不等于实现了该 trait。"
 
 #: ../../language/error_codes/E4222.md:15
 msgid "Erroneous example"
@@ -59,11 +67,13 @@ msgstr ""
 msgid "Suggestion"
 msgstr "建议"
 
-#: ../../language/error_codes/E4222.md:24
+#: ../../language/error_codes/E4222.md:26
 msgid ""
-"Use `lexmatch` with text or bytes, or create a `StringScanner`, `Lexbuf`,"
-" or `AsyncLexbuf` for `lexscan`."
-msgstr "对文本或字节使用 `lexmatch`，或构造 `StringScanner`、`Lexbuf`、`AsyncLexbuf` 供 `lexscan` 使用。"
+"Use `lexmatch` with text or bytes, or use one of the supported scanner "
+"types for `lexscan`. For a custom in-memory scanner, implement the "
+"appropriate scanning trait; see [custom scanners](../fundamentals.md"
+"#custom-scanners)."
+msgstr "对文本或字节使用 `lexmatch`，或为 `lexscan` 使用支持的扫描器类型。自定义内存扫描器应实现相应的扫描 trait，参见[自定义扫描器](../fundamentals.md#custom-scanners)。"
 
 #: ../../language/error_codes/E4222.md:26
 msgid ""

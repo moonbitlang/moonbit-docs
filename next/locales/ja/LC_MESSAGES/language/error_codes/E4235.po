@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-26 12:00+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4235.md:1
+msgid "E4235"
+msgstr ""
+
+#: ../../language/error_codes/E4235.md:3
+msgid "Compiler diagnostic name: `lexscan_target_type_unknown`."
+msgstr "コンパイラ診断名：`lexscan_target_type_unknown`。"
+
+#: ../../language/error_codes/E4235.md:5
+msgid ""
+"The type of a `lexscan` target is not known when the expression is "
+"checked. The compiler needs this type to determine whether to scan text "
+"or bytes."
+msgstr "`lexscan` 式を検査する時点で、対象の型が判明していません。コンパイラはテキストとバイトのどちらをスキャンするか判断するために、この型を必要とします。"
+
+#: ../../language/error_codes/E4235.md:8
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E4235.md:10
+msgid ""
+"///|\n"
+"pub fn scan_word() -> Bool {\n"
+"  let scan = fn(target) {\n"
+"    lexscan target {\n"
+"      re\"^[a-z]+\" => true\n"
+"      _ => false\n"
+"    }\n"
+"  }\n"
+"  scan(@lexbuf.StringScanner(\"hello\"))\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4235.md:14
+msgid "Suggestion"
+msgstr "修正案"
+
+#: ../../language/error_codes/E4235.md:16
+msgid ""
+"Annotate the target or the parameter that supplies it. In this example, "
+"annotate the local function's parameter rather than relying on its later "
+"call to infer the type."
+msgstr "対象または対象を渡すパラメータに型注釈を付けてください。この例では、後の呼び出しからの型推論に頼らず、ローカル関数のパラメータに注釈を付けます。"
+
+#: ../../language/error_codes/E4235.md:20
+msgid ""
+"///|\n"
+"pub fn scan_word() -> Bool {\n"
+"  let scan = fn(target : @lexbuf.StringScanner) {\n"
+"    lexscan target {\n"
+"      re\"^[a-z]+\" => true\n"
+"      _ => false\n"
+"    }\n"
+"  }\n"
+"  scan(@lexbuf.StringScanner(\"hello\"))\n"
+"}\n"
+msgstr ""

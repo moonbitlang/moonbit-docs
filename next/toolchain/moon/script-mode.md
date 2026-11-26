@@ -32,7 +32,8 @@ You can also use `moonx script.mbtx`; see
 
 In `.mbtx`, declare imports in frontmatter enclosed by `---` lines at the
 beginning of the file, using the same syntax as package configuration.
-Imports outside frontmatter are deprecated (`unfenced_import`, warning 96).
+Imports must be inside frontmatter. Imports outside it are rejected with
+[E3001](/language/error_codes/E3001.md).
 For example, an async script can import the standard library's
 `moonbitlang/core/async` package in frontmatter:
 

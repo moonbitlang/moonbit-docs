@@ -5614,26 +5614,24 @@ msgid ""
 "`\\xHH` for other bytes, including in character classes and ranges; "
 "`\\u{...}` is not supported. `.` and negated classes match any single "
 "byte, even above `0x7f`. Case-insensitive matching, word boundaries, and "
-"`[[:word:]]` use ASCII semantics. `lexscan` does not support byte "
-"regexes."
-msgstr "字节正则字面量中只能直接写 ASCII 字符。其他字节使用 `\\xHH`，字符类和范围中也一样；不支持 `\\u{...}`。`.` 和取反字符类匹配任意单字节，包括大于 `0x7f` 的字节。不区分大小写匹配、单词边界和 `[[:word:]]` 使用 ASCII 语义。`lexscan` 不支持字节正则。"
+"`[[:word:]]` use ASCII semantics. Use byte regexes with byte-oriented "
+"`lexscan` targets as described below."
+msgstr "字节正则字面量中只能直接出现 ASCII 字符。其他字节（包括字符类和范围中的字节）使用 `\\xHH`，不支持 `\\u{...}`。`.` 和否定字符类可以匹配任意单个字节，包括大于 `0x7f` 的字节。忽略大小写、单词边界和 `[[:word:]]` 使用 ASCII 语义。字节正则可以用于下文所述的字节型 `lexscan` 目标。"
 
 #: ../../language/fundamentals.md:2381
 msgid "Lexscan"
 msgstr "Lexscan"
 
-#: ../../language/fundamentals.md:2383
+#: ../../language/fundamentals.md:2417
 msgid ""
 "Use `lexscan` to consume successive tokens while it updates the cursor "
-"stored in its target. The target can be an in-memory "
-"`@lexbuf.StringScanner`, a synchronous streaming `@lexbuf.Lexbuf`, or an "
-"asynchronous streaming `@lexbuf.AsyncLexbuf`. `lexscan` uses the same "
+"stored in its target. For text, use `@lexbuf.StringScanner`, "
+"`@lexbuf.Lexbuf`, or `@lexbuf.AsyncLexbuf`; for bytes, use "
+"`@lexbuf.BytesScanner`, `@lexbuf.BytesLexbuf`, or "
+"`@lexbuf.AsyncBytesLexbuf`. Custom in-memory scanners can implement "
+"`@lexbuf.Scannable` or `@lexbuf.BytesScannable`. `lexscan` uses the same "
 "case syntax and `first` or `longest` strategies as `lexmatch`:"
-msgstr ""
-"使用 `lexscan` 可连续消费词元，同时由它更新目标中存储的游标。目标可以是内存中的 "
-"`@lexbuf.StringScanner`、同步流式 `@lexbuf.Lexbuf` 或异步流式 "
-"`@lexbuf.AsyncLexbuf`。`lexscan` 与 `lexmatch` 使用相同的分支语法，以及 `first` 或 "
-"`longest` 策略："
+msgstr "使用 `lexscan` 连续消费词法单元，同时更新目标中保存的游标。文本使用 `@lexbuf.StringScanner`、`@lexbuf.Lexbuf` 或 `@lexbuf.AsyncLexbuf`；字节使用 `@lexbuf.BytesScanner`、`@lexbuf.BytesLexbuf` 或 `@lexbuf.AsyncBytesLexbuf`。自定义内存扫描器可以实现 `@lexbuf.Scannable` 或 `@lexbuf.BytesScannable`。`lexscan` 与 `lexmatch` 使用相同的分支语法以及 `first`、`longest` 策略："
 
 #: ../../language/fundamentals.md:2389
 msgid ""
@@ -5662,15 +5660,14 @@ msgid ""
 "options(\"allow-experimental-packages\": true)\n"
 msgstr ""
 
-#: ../../language/fundamentals.md:2405
+#: ../../language/fundamentals.md:2441
 msgid ""
 "Every `lexscan` regex must start with `^`, because scanning always begins"
 " at the target's current cursor. `lexscan` cases do not support `before=`"
-" or `after=`. They may still use `as` to bind matched text, with the same"
-" `StringView` and `Char` capture types as `lexmatch`."
-msgstr ""
-"每个 `lexscan` 正则都必须以 `^` 开头，因为扫描总是从目标的当前游标处开始。`lexscan` 分支不支持 `before=` 或 "
-"`after=`。它们仍可使用 `as` 绑定匹配文本，其 `StringView` 和 `Char` 捕获类型与 `lexmatch` 相同。"
+" or `after=`. They may still use `as` to bind matches, with the same "
+"capture types as `lexmatch`: `StringView` and `Char` for text, or "
+"`BytesView` and `Byte` for bytes."
+msgstr "每个 `lexscan` 正则都必须以 `^` 开头，因为扫描总是从目标的当前游标开始。`lexscan` 分支不支持 `before=` 或 `after=`，但仍可用 `as` 绑定匹配结果。捕获类型与 `lexmatch` 相同：文本为 `StringView` 和 `Char`，字节为 `BytesView` 和 `Byte`。"
 
 #: ../../language/fundamentals.md:2410
 msgid ""
@@ -5685,16 +5682,13 @@ msgstr ""
 "`first` 指 case 优先级；它不会在 case 之间比较最靠左的匹配位置或匹配长度。由于每个 `lexscan` 正则都用 `^` "
 "锚定，因此所有 case 都从同一个当前游标位置开始尝试。"
 
-#: ../../language/fundamentals.md:2416
+#: ../../language/fundamentals.md:2452
 msgid ""
-"A `String` or `StringView` value is not a valid `lexscan` target. Use "
-"`lexmatch` to match one in-memory value, or put a `StringView` in a "
-"`StringScanner` when successive scans should share a cursor. `Bytes`, "
-"`BytesView`, and user-defined lexbuf-like types are not supported."
-msgstr ""
-"`String` 或 `StringView` 值不是有效的 `lexscan` 目标。如只需匹配一个内存值，请使用 "
-"`lexmatch`；如需让连续多次扫描共享游标，请将 `StringView` 放入 `StringScanner`。不支持 "
-"`Bytes`、`BytesView` 及用户自定义的类词法缓冲区类型。"
+"A plain `String`, `StringView`, `Bytes`, or `BytesView` is not a valid "
+"`lexscan` target. Use `lexmatch` to match one in-memory value, or "
+"construct a `StringScanner` or `BytesScanner` when successive scans "
+"should share a cursor."
+msgstr "普通的 `String`、`StringView`、`Bytes` 或 `BytesView` 不是有效的 `lexscan` 目标。单次匹配内存中的值时使用 `lexmatch`；连续扫描需要共享游标时，构造 `StringScanner` 或 `BytesScanner`。"
 
 #: ../../language/fundamentals.md:2421
 msgid "String scanners"
@@ -5780,6 +5774,122 @@ msgid ""
 "  assert_eq(input.cursor, input.data.length())\n"
 "}\n"
 msgstr ""
+
+#: ../../language/fundamentals.md:2487
+msgid "Byte scanners"
+msgstr "字节扫描器"
+
+#: ../../language/fundamentals.md:2489
+msgid ""
+"`@lexbuf.BytesScanner` scans an in-memory `BytesView` using `reb\"...\"` "
+"patterns. Its cursor is a byte offset relative to its input. A successful"
+" case advances the cursor before its body runs; `_` leaves it unchanged."
+msgstr "`@lexbuf.BytesScanner` 使用 `reb\"...\"` 模式扫描内存中的 `BytesView`。其游标是相对于输入的字节偏移量。成功匹配的分支会在执行分支体前推进游标，`_` 则保持游标不变。"
+
+#: ../../language/fundamentals.md:2493
+msgid ""
+"///|\n"
+"test \"scan bytes with a maintained cursor\" {\n"
+"  let scanner = @lexbuf.BytesScanner(b\"abc\\xff\")\n"
+"  lexscan scanner {\n"
+"    reb\"^[a-z]+\" as word => {\n"
+"      assert_true(word == b\"abc\")\n"
+"      assert_eq(scanner.cursor, 3)\n"
+"    }\n"
+"    _ => fail(\"expected a word\")\n"
+"  }\n"
+"  lexscan scanner {\n"
+"    reb\"^.\" as byte => {\n"
+"      assert_eq(byte, b'\\xff')\n"
+"      assert_eq(scanner.cursor, 4)\n"
+"    }\n"
+"    _ => fail(\"expected a byte\")\n"
+"  }\n"
+"  lexscan scanner {\n"
+"    reb\"^.\" => fail(\"expected end of input\")\n"
+"    _ => assert_eq(scanner.cursor, 4)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:2497
+msgid ""
+"For streaming byte input, use `@lexbuf.BytesLexbuf` or "
+"`@lexbuf.AsyncBytesLexbuf`, the byte counterparts of the text streaming "
+"types below."
+msgstr "流式字节输入使用 `@lexbuf.BytesLexbuf` 或 `@lexbuf.AsyncBytesLexbuf`，它们对应下文文本流类型的字节版本。"
+
+#: ../../language/fundamentals.md:2501
+msgid "Custom scanners"
+msgstr "自定义扫描器"
+
+#: ../../language/fundamentals.md:2503
+msgid ""
+"Implement `@lexbuf.Scannable` for a custom in-memory text scanner, or "
+"`@lexbuf.BytesScannable` for a byte scanner. Both traits provide "
+"`scan_input`, `scan_cursor`, and `set_scan_cursor`. The input is a "
+"`StringView` or `BytesView`; the cursor is relative to that view, in "
+"UTF-16 code units or bytes respectively."
+msgstr "自定义内存文本扫描器应实现 `@lexbuf.Scannable`，字节扫描器应实现 `@lexbuf.BytesScannable`。两个 trait 都提供 `scan_input`、`scan_cursor` 和 `set_scan_cursor`。输入为 `StringView` 或 `BytesView`，游标相对于该视图，分别以 UTF-16 码元或字节为单位。"
+
+#: ../../language/fundamentals.md:2508
+msgid ""
+"Keep the input unchanged during a scan. The cursor must be within the "
+"input, and a text cursor must not split a surrogate pair. `lexscan` "
+"updates the cursor before the selected case body runs; a catch-all case "
+"leaves its position unchanged."
+msgstr "扫描过程中输入必须保持不变。游标必须位于输入范围内，文本游标不得拆分代理对。`lexscan` 会在执行选中分支的分支体前更新游标；兜底分支保持游标位置不变。"
+
+#: ../../language/fundamentals.md:2513
+msgid ""
+"///|\n"
+"priv struct WordScanner {\n"
+"  input : StringView\n"
+"  mut cursor : Int32\n"
+"}\n"
+"\n"
+"///|\n"
+"impl @lexbuf.Scannable for WordScanner with fn scan_input(self) {\n"
+"  self.input\n"
+"}\n"
+"\n"
+"///|\n"
+"impl @lexbuf.Scannable for WordScanner with fn scan_cursor(self) {\n"
+"  self.cursor\n"
+"}\n"
+"\n"
+"///|\n"
+"impl @lexbuf.Scannable for WordScanner with fn set_scan_cursor(self, "
+"cursor) {\n"
+"  self.cursor = cursor\n"
+"}\n"
+"\n"
+"///|\n"
+"test \"scan with a cursor stored in a custom type\" {\n"
+"  let scanner = WordScanner::{ input: \"hello!\", cursor: 0, }\n"
+"  lexscan scanner {\n"
+"    re\"^[a-z]+\" as word => {\n"
+"      inspect(word, content=\"hello\")\n"
+"      assert_eq(scanner.cursor, 5)\n"
+"    }\n"
+"    _ => fail(\"expected a word\")\n"
+"  }\n"
+"  lexscan scanner {\n"
+"    re\"^[a-z]+\" => fail(\"expected punctuation\")\n"
+"    _ => assert_eq(scanner.cursor, 5)\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/fundamentals.md:2517
+msgid ""
+"The target type must be known at the scan and support exactly one "
+"scanning trait. Generic implementations must cover every instance of the "
+"type without type parameter bounds; alternatively, a non-generic "
+"implementation can cover the exact target type. See "
+"[E4235](error_codes/E4235.md), [E4236](error_codes/E4236.md), and "
+"[E4237](error_codes/E4237.md)."
+msgstr "扫描时必须已知目标类型，且该类型只能支持一种扫描 trait。泛型实现必须覆盖该类型的所有实例，且不能有类型参数约束；也可以提供适用于目标确切类型的非泛型实现。参见 [E4235](error_codes/E4235.md)、[E4236](error_codes/E4236.md) 和 [E4237](error_codes/E4237.md)。"
 
 #: ../../language/fundamentals.md:2452
 msgid "Streaming scanners"
@@ -5877,43 +5987,6 @@ msgid ""
 "selects a case before it evaluates the body, so put any additional "
 "condition inside that body."
 msgstr "`lexmatch` 和 `lexscan` 的分支主体不能带 guard。表达式会先选择分支，再求值其主体，因此请将其他条件放到主体内部。"
-
-#: ../../language/fundamentals.md:2490
-msgid "Legacy lexical pattern syntax"
-msgstr "旧版词法模式语法"
-
-#: ../../language/fundamentals.md:2492
-msgid ""
-"Earlier experimental versions used string-piece `lexmatch` patterns and a"
-" `lexmatch?` boolean form. Those forms have been removed. The `lexmatch` "
-"keyword now denotes the in-memory regex-case expression described above."
-msgstr ""
-"较早的实验版本使用由字符串片段组成的 `lexmatch` 模式，以及布尔形式 "
-"`lexmatch?`。这些形式已经移除。现在，`lexmatch` 关键字表示上文所述的内存中正则分支表达式。"
-
-#: ../../language/fundamentals.md:2496
-msgid "For example, older code may look like this:"
-msgstr "例如，旧代码可能如下："
-
-#: ../../language/fundamentals.md:2498
-msgid ""
-"lexmatch text {\n"
-"  (before, \"a\" (\"b*\" as b) \"c\", after) => ...\n"
-"  _ => ...\n"
-"}\n"
-"\n"
-"if text lexmatch? (\"a\" (\"b*\" as b) \"c\") && b.length() > 0 {\n"
-"  ...\n"
-"}\n"
-msgstr ""
-
-#: ../../language/fundamentals.md:2509
-msgid ""
-"Convert case-based code to `lexmatch` with regex constant expressions. "
-"For a single boolean search, use [`=~`](#regex-match-expression) instead."
-msgstr ""
-"将基于分支的代码转换为使用正则常量表达式的 `lexmatch`。单个布尔搜索则使用 [`=~`](#regex-match-"
-"expression)。"
 
 #: ../../language/fundamentals.md:2512
 msgid "Spread Operator"

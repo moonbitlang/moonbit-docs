@@ -619,9 +619,9 @@ fragile_catch_all          fragile `catch` handler that can be converted to `def
 unknown_constr_pat_on_exhaustive_type using `TypeName::..` pattern on a type not marked with `#non_exhaustive`  93 warn
 unknown_intrinsic          `#intrinsic` attribute names an unknown intrinsic.              94 warn
 nan_pattern                Pattern on a NaN constant, which never matches.                 95 warn
-unfenced_import            Deprecated import declarations outside frontmatter.             96 warn
 regex_runtime_fallback     Regex match over the compile limits, which runs on the runtime engine.  97 off
 cancellable_defer          Fragile cancellable async code inside `defer`/`errdefer`        98 warn
+pending_deprecated         Usage of an API marked `#pending_deprecated`, to migrate with `moon fix`.  99 off
 all                        all warnings
 state: warn = enabled, error = promoted to error, off = disabled
 note: default alert exceptions: alert_unsafe=off

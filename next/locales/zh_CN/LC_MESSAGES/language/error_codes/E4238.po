@@ -1,0 +1,85 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-26 12:00+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4238.md:1
+msgid "E4238"
+msgstr ""
+
+#: ../../language/error_codes/E4238.md:3
+msgid "Compiler diagnostic name: `unknown_constr_pat_on_error`."
+msgstr "编译器诊断名称：`unknown_constr_pat_on_error`。"
+
+#: ../../language/error_codes/E4238.md:5
+msgid ""
+"The pattern `Type::..` cannot be used when matching or catching a value "
+"of type `Error`. This pattern handles future constructors of a concrete "
+"[`#non_exhaustive`](../attributes/non_exhaustive.md) type, not the open "
+"set of suberror types represented by `Error`."
+msgstr "匹配或捕获 `Error` 类型的值时，不能使用 `Type::..` 模式。该模式用于处理具体的 [`#non_exhaustive`](../attributes/non_exhaustive.md) 类型未来增加的构造器，而不是 `Error` 所表示的开放子错误类型集合。"
+
+#: ../../language/error_codes/E4238.md:10
+msgid "Erroneous example"
+msgstr "错误示例"
+
+#: ../../language/error_codes/E4238.md:12
+msgid ""
+"///|\n"
+"#non_exhaustive\n"
+"pub(all) suberror ParseError {\n"
+"  InvalidInput\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn is_parse_error(error : Error) -> Bool {\n"
+"  match error {\n"
+"    ParseError::InvalidInput => true\n"
+"    ParseError::.. => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4238.md:16
+msgid "Suggestion"
+msgstr "建议"
+
+#: ../../language/error_codes/E4238.md:18
+msgid ""
+"Use `Type::_` to match all constructors of one suberror type, and `_` to "
+"handle other error types. To handle known constructors separately, place "
+"their cases before `Type::_`."
+msgstr "使用 `Type::_` 匹配某一子错误类型的全部构造器，用 `_` 处理其他错误类型。如果需要单独处理已知构造器，将对应分支放在 `Type::_` 之前。"
+
+#: ../../language/error_codes/E4238.md:22
+msgid ""
+"///|\n"
+"#non_exhaustive\n"
+"pub(all) suberror ParseError {\n"
+"  InvalidInput\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn is_parse_error(error : Error) -> Bool {\n"
+"  match error {\n"
+"    ParseError::_ => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""
