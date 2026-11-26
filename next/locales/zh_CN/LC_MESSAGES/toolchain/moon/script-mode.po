@@ -70,10 +70,11 @@ msgstr "也可以使用 `moonx script.mbtx`；请参阅[使用 `moonx` 运行脚
 msgid ""
 "In `.mbtx`, declare imports in frontmatter enclosed by `---` lines at the"
 " beginning of the file, using the same syntax as package configuration. "
-"Imports outside frontmatter are deprecated (`unfenced_import`, warning "
-"96). For example, an async script can import the standard library's "
-"`moonbitlang/core/async` package in frontmatter:"
-msgstr "在 `.mbtx` 中，导入声明应放在文件开头以 `---` 包围的 frontmatter 中，语法与包配置相同。frontmatter 外的导入已弃用（`unfenced_import`，警告 96）。例如，异步脚本可以在 frontmatter 中导入标准库的 `moonbitlang/core/async` 包："
+"Imports must be inside frontmatter. Imports outside it are rejected with "
+"[E3001](/language/error_codes/E3001.md). For example, an async script can"
+" import the standard library's `moonbitlang/core/async` package in "
+"frontmatter:"
+msgstr "在 `.mbtx` 中，使用与包配置相同的语法，在文件开头由 `---` 行包围的 frontmatter 中声明导入。导入必须位于 frontmatter 内；写在外面会报 [E3001](/language/error_codes/E3001.md)。例如，异步脚本可以在 frontmatter 中导入标准库的 `moonbitlang/core/async` 包："
 
 #: ../../toolchain/moon/script-mode.md:39
 msgid ""

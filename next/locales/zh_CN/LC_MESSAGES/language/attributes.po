@@ -557,12 +557,9 @@ msgstr "非穷尽枚举属性"
 
 #: ../../language/attributes/non_exhaustive.md:4
 msgid ""
-"The `#non_exhaustive` attribute marks an `enum` whose defining package "
-"may add constructors in a future release. It is valid only on enum "
-"declarations."
-msgstr ""
-"`#non_exhaustive` 属性用于标记定义包可能在未来版本中添加构造器的 "
-"`enum`。它只能用于枚举声明。"
+"The `#non_exhaustive` attribute marks an `enum` or `suberror` whose "
+"defining package may add constructors in a future release."
+msgstr "`#non_exhaustive` 属性用于标记 `enum` 或 `suberror`，表示其定义包可能在未来版本中增加构造器。"
 
 #: ../../language/attributes/non_exhaustive.md:7
 msgid ""
@@ -606,11 +603,17 @@ msgstr ""
 
 #: ../../language/attributes/non_exhaustive.md:28
 msgid ""
-"Adding a constructor to a `#non_exhaustive` enum is therefore compatible "
+"Adding a constructor to a `#non_exhaustive` type is therefore compatible "
 "with downstream matches that use `Type::..`."
-msgstr ""
-"因此，只要下游匹配使用了 `Type::..`，为 `#non_exhaustive` 枚举新增构造器"
-"就是兼容变更。"
+msgstr "因此，为 `#non_exhaustive` 类型增加构造器，与下游使用 `Type::..` 的匹配是兼容的。"
+
+#: ../../language/attributes/non_exhaustive.md:31
+msgid ""
+"When matching a concrete non-exhaustive suberror type, the same "
+"`Type::..` rule applies. When matching or catching the supertype `Error`,"
+" use `Type::_` to cover that suberror type instead: `Type::..` is not "
+"supported there. See [E4238](/language/error_codes/E4238.md)."
+msgstr "匹配具体的非穷尽子错误类型时，同样适用 `Type::..` 规则。匹配或捕获父类型 `Error` 时，应使用 `Type::_` 覆盖该子错误类型；此处不支持 `Type::..`。参见 [E4238](/language/error_codes/E4238.md)。"
 
 #: ../../language/attributes/internal.md:2
 msgid "Internal Attribute"

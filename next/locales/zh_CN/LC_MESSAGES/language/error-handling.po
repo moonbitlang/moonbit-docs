@@ -132,6 +132,14 @@ msgid ""
 msgstr ""
 
 #: ../../language/error-handling.md:55
+msgid ""
+"For a `#non_exhaustive` suberror, `Type::_` also covers future "
+"constructors when the matched value has type `Error`. Do not use "
+"`Type::..` in this case; that pattern is for matching the concrete non-"
+"exhaustive type, not `Error`."
+msgstr "对于 `#non_exhaustive` 子错误，当匹配值的类型为 `Error` 时，`Type::_` 也会覆盖未来增加的构造器。此时不要使用 `Type::..`；该模式用于匹配具体的非穷尽类型，而非 `Error`。"
+
+#: ../../language/error-handling.md:55
 msgid "Failure"
 msgstr ""
 

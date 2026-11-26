@@ -1,0 +1,85 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, International Digital Economy Academy
+# This file is distributed under the same license as the MoonBit package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MoonBit \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-26 12:00+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: ../../language/error_codes/E4238.md:1
+msgid "E4238"
+msgstr ""
+
+#: ../../language/error_codes/E4238.md:3
+msgid "Compiler diagnostic name: `unknown_constr_pat_on_error`."
+msgstr "コンパイラ診断名：`unknown_constr_pat_on_error`。"
+
+#: ../../language/error_codes/E4238.md:5
+msgid ""
+"The pattern `Type::..` cannot be used when matching or catching a value "
+"of type `Error`. This pattern handles future constructors of a concrete "
+"[`#non_exhaustive`](../attributes/non_exhaustive.md) type, not the open "
+"set of suberror types represented by `Error`."
+msgstr "`Error` 型の値をマッチまたは捕捉する場合、`Type::..` パターンは使用できません。このパターンは、具体的な [`#non_exhaustive`](../attributes/non_exhaustive.md) 型に将来追加されるコンストラクタを処理するもので、`Error` が表す開かれたサブエラー型の集合を処理するものではありません。"
+
+#: ../../language/error_codes/E4238.md:10
+msgid "Erroneous example"
+msgstr "誤った例"
+
+#: ../../language/error_codes/E4238.md:12
+msgid ""
+"///|\n"
+"#non_exhaustive\n"
+"pub(all) suberror ParseError {\n"
+"  InvalidInput\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn is_parse_error(error : Error) -> Bool {\n"
+"  match error {\n"
+"    ParseError::InvalidInput => true\n"
+"    ParseError::.. => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../language/error_codes/E4238.md:16
+msgid "Suggestion"
+msgstr "修正案"
+
+#: ../../language/error_codes/E4238.md:18
+msgid ""
+"Use `Type::_` to match all constructors of one suberror type, and `_` to "
+"handle other error types. To handle known constructors separately, place "
+"their cases before `Type::_`."
+msgstr "`Type::_` で1つのサブエラー型の全コンストラクタをマッチし、`_` でその他のエラー型を処理します。既知のコンストラクタを個別に処理する場合は、それらの分岐を `Type::_` より前に置いてください。"
+
+#: ../../language/error_codes/E4238.md:22
+msgid ""
+"///|\n"
+"#non_exhaustive\n"
+"pub(all) suberror ParseError {\n"
+"  InvalidInput\n"
+"}\n"
+"\n"
+"///|\n"
+"pub fn is_parse_error(error : Error) -> Bool {\n"
+"  match error {\n"
+"    ParseError::_ => true\n"
+"    _ => false\n"
+"  }\n"
+"}\n"
+msgstr ""

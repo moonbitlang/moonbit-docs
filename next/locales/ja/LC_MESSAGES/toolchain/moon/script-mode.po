@@ -72,10 +72,11 @@ msgstr "`moonx script.mbtx` も使用できます。[`moonx` でスクリプト�
 msgid ""
 "In `.mbtx`, declare imports in frontmatter enclosed by `---` lines at the"
 " beginning of the file, using the same syntax as package configuration. "
-"Imports outside frontmatter are deprecated (`unfenced_import`, warning "
-"96). For example, an async script can import the standard library's "
-"`moonbitlang/core/async` package in frontmatter:"
-msgstr "`.mbtx` では、ファイル先頭の `---` で囲まれたフロントマターに、パッケージ設定と同じ構文でインポートを宣言します。フロントマターの外でのインポートは非推奨です（`unfenced_import`、警告 96）。例えば、非同期スクリプトはフロントマターで標準ライブラリの `moonbitlang/core/async` パッケージをインポートできます。"
+"Imports must be inside frontmatter. Imports outside it are rejected with "
+"[E3001](/language/error_codes/E3001.md). For example, an async script can"
+" import the standard library's `moonbitlang/core/async` package in "
+"frontmatter:"
+msgstr "`.mbtx` では、パッケージ設定と同じ構文を使い、ファイル先頭の `---` の行で囲まれた frontmatter にインポートを宣言します。インポートは必ず frontmatter 内に記述してください。外に記述すると [E3001](/language/error_codes/E3001.md) になります。例えば、非同期スクリプトは frontmatter で標準ライブラリの `moonbitlang/core/async` パッケージをインポートできます："
 
 #: ../../toolchain/moon/script-mode.md:39
 msgid ""
